@@ -1,0 +1,7 @@
+extends ../../components/main_layout/templates/index
+
+block locals
+  assetPackage = 'page'
+
+block body
+  #page-markdown-content!= page.mdToHtml('content')
