@@ -1,0 +1,35 @@
+//- 
+//- Common external script like fonts.com, typekit, etc.
+//- 
+
+//- This beacon for fonts.com determines how many page views to charge us for. Limit to production.
+if sd.NODE_ENV == 'production'
+  script.
+    var MTIProjectId='f7f47a40-b25b-44ee-9f9c-cfdfc8bb2741';
+    (function() {
+      var mtiTracking = document.createElement('script');
+      mtiTracking.type='text/javascript';
+      mtiTracking.async='true';
+      mtiTracking.src=('https:'==document.location.protocol?'https:':'http:')+'//fast.fonts.net/t/trackingCode.js';
+      (document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild( mtiTracking );
+    })();
+
+//- Typekit for Garamond
+if sd.NODE_ENV != 'test'
+  script.
+    (function() {
+      var config = {
+        kitId: 'jyb7dwm',
+        scriptTimeout: 3000
+      };
+      var h=document.getElementsByTagName("html")[0];h.className+=" wf-loading";var t=setTimeout(function(){h.className=h.className.replace(/(\s|^)wf-loading(\s|$)/g," ");h.className+=" wf-inactive"},config.scriptTimeout);var tk=document.createElement("script"),d=false;tk.src='//use.typekit.net/'+config.kitId+'.js';tk.type="text/javascript";tk.async="true";tk.onload=tk.onreadystatechange=function(){var a=this.readyState;if(d||a&&a!="complete"&&a!="loaded")return;d=true;clearTimeout(t);try{Typekit.load(config)}catch(b){}};var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(tk,s)
+    })();
+
+//- Mixpanel & Google analytics script
+if sd.NODE_ENV != 'test'
+  include ./mixpanel.html
+  include ./google_analytics.html
+
+//- Wire up sharify
+if sharifyScript
+  != sharifyScript()

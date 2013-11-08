@@ -1,0 +1,57 @@
+@import '../../../components/stylus_lib'
+@import './search'
+
+home-logo-size = 52px
+
+#main-layout-header
+  border-bottom 1px solid light-gray-border-color
+  nav
+    display flex
+
+#main-layout-header-left
+
+#main-layout-header-left
+  float left
+  clearfix()
+  flex 1
+  #main-layout-header-home-logo
+  #main-layout-search-input
+    float left
+  #main-layout-header-home-logo
+    width home-logo-size
+    height home-logo-size
+    display block
+    background no-repeat center center
+    background-size 30px
+  #main-layout-search-input
+    border-width 0
+    width calc(100% - 53px)
+    border-left 1px solid light-gray-border-color
+    height home-logo-size
+    padding-left 26px
+
+#main-layout-header-right
+  float right
+  avant-garde()
+  a
+    text-decoration none
+    padding 17px 20px 13px 20px
+    display inline-block
+    font-size 13px
+    border-right 1px solid light-gray-border-color
+    &:last-child
+      border-right none
+    &:first-child
+      border-left 1px solid light-gray-border-color
+
+#main-layout-welcome-header
+  clearfix()
+  background no-repeat center calc(50% - 2px)
+  background-size 131px
+  border-bottom 1px solid light-gray-border-color
+  aside
+    text-transform uppercase
+    float left
+    padding 22px 51px
+    letter-spacing 1px
+    font-size default-garamond-font-size - 1

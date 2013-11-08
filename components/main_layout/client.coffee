@@ -1,0 +1,1 @@
+require './header/client.coffee'

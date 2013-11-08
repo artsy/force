@@ -1,0 +1,15 @@
+@import '../../stylus_lib'
+
+.bordered-input
+  border 2px solid light-gray-border-color
+  border-radius 0
+  box-shadow none
+  padding 10px
+  font-size default-garamond-font-size
+  margin 0
+  background-color transparent
+  &:focus, &:active
+    border-color highlight-color
+    outline none
+  &:disabled
+    border dotted 2px light-gray-border-color
