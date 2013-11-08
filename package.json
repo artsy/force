@@ -1,0 +1,39 @@
+{
+  "name": "force",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "make s"
+  },
+  "dependencies": {
+    "express": "*",
+    "jade": "*",
+    "sharify": "*",
+    "Backbone": "*",
+    "backbone-super-sync": "*",
+    "coffee-script": "*",
+    "artsy-xapp-middleware": "*",
+    "http-proxy": "*",
+    "showdown": "git://github.com/craigspaeth/showdown.git",
+    "underscore": "*"
+  },
+  "devDependencies": {
+    "components-jquery": "git://github.com/components/jquery.git",
+    "browserify": "*",
+    "stylus": "0.39.x",
+    "jadeify2": "*",
+    "browserify-dev-middleware": "*",
+    "should": "*",
+    "mocha": "*",
+    "sinon": "*",
+    "benv": "*",
+    "zombie": "*",
+    "html5": "*",
+    "sqwish": "*",
+    "uglify-js": "*",
+    "caching-coffeeify": "*",
+    "antigravity": "git+https://artsy-submodule:g0g3tDemGemZ@github.com/artsy/antigravity.git",
+    "nib": "*",
+    "superagent": "*"
+  }
+}
