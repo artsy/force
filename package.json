@@ -18,7 +18,6 @@
     "underscore": "*"
   },
   "devDependencies": {
-    "components-jquery": "git://github.com/components/jquery.git",
     "browserify": "*",
     "stylus": "0.39.x",
     "jadeify2": "*",
@@ -34,6 +33,7 @@
     "caching-coffeeify": "*",
     "antigravity": "git+https://artsy-submodule:g0g3tDemGemZ@github.com/artsy/antigravity.git",
     "nib": "*",
-    "superagent": "*"
+    "superagent": "*",
+    "cheerio": "*"
   }
 }

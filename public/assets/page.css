@@ -1,0 +1,323 @@
+#main-layout-search-container {
+  position: relative;
+  border-left: 1px solid #e5e5e5;
+  width: calc(100% - 53px);
+}
+#main-layout-search-container:hover #main-layout-search-input-border {
+  display: block;
+}
+#main-layout-search-input {
+  border-width: 0;
+  height: 100%;
+  padding-left: 26px;
+}
+#main-layout-search-input-border {
+  border: 3px solid #000;
+  width: calc(100% + 2px);
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  display: none;
+}
+#main-layout-header {
+  border-bottom: 1px solid #e5e5e5;
+}
+#main-layout-header nav {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+}
+#main-layout-header-left {
+  float: left;
+  zoom: 1;
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  -o-box-flex: 1;
+  box-flex: 1;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+#main-layout-header-left:before,
+#main-layout-header-left:after {
+  content: "";
+  display: table;
+}
+#main-layout-header-left:after {
+  clear: both;
+}
+#main-layout-header-left #main-layout-header-home-logo,
+#main-layout-header-left #main-layout-search-container {
+  float: left;
+}
+#main-layout-header-left #main-layout-search-container {
+  height: 52px;
+}
+#main-layout-header-left #main-layout-header-home-logo {
+  width: 52px;
+  height: 52px;
+  display: block;
+  background: no-repeat center center;
+  -webkit-background-size: 30px;
+  -moz-background-size: 30px;
+  background-size: 30px;
+}
+#main-layout-header-right {
+  float: right;
+  font-family: 'AvantGardeGothicITCW01D 731075', 'AvantGardeGothicITCW01Dm', 'Helvetica', 'sans-serif';
+  -webkit-font-smoothing: antialiased;
+  text-transform: uppercase;
+}
+#main-layout-header-right a {
+  text-decoration: none;
+  padding: 17px 20px 13px 20px;
+  display: inline-block;
+  font-size: 13px;
+  border-right: 1px solid #e5e5e5;
+}
+#main-layout-header-right a:last-child {
+  border-right: none;
+}
+#main-layout-header-right a:first-child {
+  border-left: 1px solid #e5e5e5;
+}
+#main-layout-welcome-header {
+  zoom: 1;
+  background: no-repeat center calc(50% - 2px);
+  -webkit-background-size: 131px;
+  -moz-background-size: 131px;
+  background-size: 131px;
+  border-bottom: 1px solid #e5e5e5;
+}
+#main-layout-welcome-header:before,
+#main-layout-welcome-header:after {
+  content: "";
+  display: table;
+}
+#main-layout-welcome-header:after {
+  clear: both;
+}
+#main-layout-welcome-header aside {
+  text-transform: uppercase;
+  float: left;
+  padding: 22px 51px;
+  letter-spacing: 1px;
+  font-size: 15px;
+}
+#main-layout-header-home-logo,
+#main-layout-header-right a {
+  position: relative;
+}
+#main-layout-header-home-logo:after,
+#main-layout-header-right a:after {
+  content: '.';
+  color: transparent;
+  border: 3px solid #000;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(100% - 4px);
+  height: calc(100% - 6px);
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+  z-index: 2;
+}
+#main-layout-header-home-logo:hover:after,
+#main-layout-header-right a:hover:after {
+  opacity: 1;
+  -ms-filter: none;
+  filter: none;
+}
+@font-face {
+  font-family: 'AvantGardeGothicITCW01D 731075';
+  font-weight: normal;
+  font-style: style;
+  src: url("/fonts/c18aee57-7585-4a8b-9a1c-69d226301d73.woff") format("woff");
+}
+#main-layout-welcome-header {
+  background-image: url("/images/logo_large.svg") !important;
+}
+#main-layout-header-home-logo {
+  background-image: url("/images/logo_square.svg") !important;
+}
+.bordered-input {
+  border: 2px solid #e5e5e5;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  padding: 10px;
+  font-size: 16px;
+  margin: 0;
+  background-color: transparent;
+}
+.bordered-input:focus,
+.bordered-input:active {
+  border-color: highlight-color;
+  outline: none;
+}
+.bordered-input:disabled {
+  border: dotted 2px #e5e5e5;
+}
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-weight: inherit;
+  font-style: inherit;
+  font-family: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+body {
+  line-height: 1;
+  color: #000;
+  background: #fff;
+}
+ol,
+ul {
+  list-style: none;
+}
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  vertical-align: middle;
+}
+caption,
+th,
+td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+a img {
+  border: none;
+}
+body {
+  font-family: 'adobe-garamond-pro', 'AGaramondPro-Regular', 'Times New Roman', 'Times', 'serif';
+  -webkit-font-smoothing: antialiased;
+  font-size: 16px;
+  line-height: 1.4em;
+  text-rendering: optimizeLegibility;
+  min-width: 800px;
+}
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+a {
+  color: #000;
+}
+b,
+strong {
+  font-weight: bold;
+}
+em {
+  font-style: italic;
+}
+input {
+  font-family: 'adobe-garamond-pro', 'AGaramondPro-Regular', 'Times New Roman', 'Times', 'serif';
+  -webkit-font-smoothing: antialiased;
+  font-size: default-font-size;
+}
+input:focus {
+  outline: none;
+}
+html.wf-loading {
+  visibility: hidden;
+}
+#page-markdown-content {
+  width: 600px;
+  margin: 60px auto;
+  font-size: 19px;
+}
+#page-markdown-content h1,
+#page-markdown-content h2 {
+  display: block;
+  text-align: center;
+  font-family: 'AvantGardeGothicITCW01D 731075', 'AvantGardeGothicITCW01Dm', 'Helvetica', 'sans-serif';
+  -webkit-font-smoothing: antialiased;
+  text-transform: uppercase;
+}
+#page-markdown-content h1 {
+  margin: 1em 0 1.8em 0;
+  font-size: 20px;
+}
+#page-markdown-content h2 {
+  margin-bottom: 1.5em;
+  font-size: 13px;
+}
+#page-markdown-content p {
+  margin-bottom: 1em;
+  line-height: 1.5em;
+}
+#page-markdown-content ul {
+  list-style: disc;
+}
+#page-markdown-content ul li {
+  margin-bottom: 1em;
+}

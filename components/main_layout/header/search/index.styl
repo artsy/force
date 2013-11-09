@@ -1,0 +1,21 @@
+#main-layout-search-container
+  position relative
+  border-left 1px solid light-gray-border-color
+  width calc(100% - 53px)
+  &:hover #main-layout-search-input-border
+    display block
+
+#main-layout-search-input
+  border-width 0
+  height 100%
+  padding-left 26px
+
+#main-layout-search-input-border
+  border 3px solid black
+  width calc(100% + 2px)
+  height 100%
+  position absolute
+  top 0
+  left 0
+  z-index 2
+  display none
