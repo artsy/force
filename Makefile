@@ -33,7 +33,7 @@ assets:
 		$(BIN)/uglifyjs public/$(file).js > public/$(file).min.js; \
 		gzip -f public/$(file).min.js; \
 	)
-	$(BIN)/stylus assets -o public/assets
+	$(BIN)/stylus assets -o public/assets --inline --include public/
 	$(foreach file, $(shell find assets -name '*.styl' | cut -d '.' -f 1), \
 		$(BIN)/sqwish public/$(file).css -o public/$(file).min.css; \
 		gzip -f public/$(file).min.css; \
