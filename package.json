@@ -9,7 +9,7 @@
     "express": "*",
     "jade": "*",
     "sharify": "*",
-    "Backbone": "*",
+    "backbone": "*",
     "backbone-super-sync": "*",
     "coffee-script": "*",
     "artsy-xapp-middleware": "*",
@@ -34,6 +34,7 @@
     "antigravity": "git+https://artsy-submodule:g0g3tDemGemZ@github.com/artsy/antigravity.git",
     "nib": "*",
     "superagent": "*",
-    "cheerio": "*"
+    "cheerio": "*",
+    "bucket-assets": "*"
   }
 }
