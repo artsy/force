@@ -3,23 +3,10 @@
   border-left: 1px solid #e5e5e5;
   width: calc(100% - 53px);
 }
-#main-layout-search-container:hover #main-layout-search-input-border {
-  display: block;
-}
 #main-layout-search-input {
   border-width: 0;
   height: 100%;
   padding-left: 26px;
-}
-#main-layout-search-input-border {
-  border: 3px solid #000;
-  width: calc(100% + 2px);
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 2;
-  display: none;
 }
 #main-layout-header {
   border-bottom: 1px solid #e5e5e5;
