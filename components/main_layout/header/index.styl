@@ -1,5 +1,5 @@
 @import '../../../components/stylus_lib'
-@import './search'
+@import './search_bar'
 
 home-logo-size = 52px
 
@@ -9,26 +9,19 @@ home-logo-size = 52px
     display flex
 
 #main-layout-header-left
-
-#main-layout-header-left
   float left
   clearfix()
   flex 1
-  #main-layout-header-home-logo
-  #main-layout-search-input
+  #main-layout-header-home-logo, #main-layout-search-bar-container
     float left
+  #main-layout-search-bar-container
+    height home-logo-size
   #main-layout-header-home-logo
     width home-logo-size
     height home-logo-size
     display block
     background no-repeat center center
     background-size 30px
-  #main-layout-search-input
-    border-width 0
-    width calc(100% - 53px)
-    border-left 1px solid light-gray-border-color
-    height home-logo-size
-    padding-left 26px
 
 #main-layout-header-right
   float right
@@ -55,3 +48,19 @@ home-logo-size = 52px
     padding 22px 51px
     letter-spacing 1px
     font-size default-garamond-font-size - 1
+
+#main-layout-header-home-logo, #main-layout-header-right a
+  position relative
+  &:after
+    content '.'
+    color transparent
+    border 3px solid black
+    position absolute
+    top 0
+    left 0
+    width calc(100% - 4px)
+    height calc(100% - 6px)
+    opacity 0
+    z-index 2
+  &:hover:after
+    opacity 1
