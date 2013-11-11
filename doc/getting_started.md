@@ -6,7 +6,7 @@ Before you can set up Force for development you will want to set up [Gravity](ht
 
 ## Ezel
 
-Read up on [Ezel](http://ezeljs.com/) and familarize yourself with the concepts used by Force by understanding the foundation it was built on.
+Read up on [Ezel](http://ezeljs.com/) and familarize yourself with Force concepts by understanding the foundation it was built on.
 
 ## Install Node.js
 
