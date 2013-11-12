@@ -16,7 +16,8 @@
     "artsy-xapp-middleware": "*",
     "http-proxy": "*",
     "showdown": "git://github.com/craigspaeth/showdown.git",
-    "underscore": "*"
+    "underscore": "*",
+    "newrelic": "*"
   },
   "devDependencies": {
     "browserify": "*",
