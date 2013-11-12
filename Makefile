@@ -46,7 +46,7 @@ assets:
 deploy: assets
 	$(BIN)/bucketassets -d public/assets/ -b force-$(env)
 	heroku config:add \
-		CDN_URL=//$(CDN_DOMAIN_$(env)).cloudfront.net/assets/$(shell git rev-parse --short HEAD)/ \
+		ASSET_PATH=//$(CDN_DOMAIN_$(env)).cloudfront.net/assets/$(shell git rev-parse --short HEAD)/ \
 		--app=force-$(env)
 	git push git@heroku.com:force-$(env).git master
 

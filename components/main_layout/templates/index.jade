@@ -6,7 +6,7 @@ doctype 5
 html
   head
     title Artsy - Discover Fine Art
-    link( type='text/css', rel='stylesheet', href=(sd.CDN_URL + assetPackage + sd.CSS_EXT) )
+    link( type='text/css', rel='stylesheet', href=(sd.ASSET_PATH + assetPackage + sd.CSS_EXT) )
     include head
     block head
   body
@@ -14,5 +14,5 @@ html
     block body
     #scripts
       include scripts
-      script( src=(sd.CDN_URL + assetPackage + sd.JS_EXT) )
+      script( src=(sd.ASSET_PATH + assetPackage + sd.JS_EXT) )
       block scripts

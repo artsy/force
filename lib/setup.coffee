@@ -5,7 +5,7 @@
 #
 
 { GRAVITY_URL, NODE_ENV, CLIENT_ID, CLIENT_SECRET, SESSION_SECRET, PORT,
-  CDN_URL } = require "../config"
+  ASSET_PATH } = require "../config"
 { parse } = require 'url'
 express = require "express"
 Backbone = require "backbone"
@@ -26,7 +26,7 @@ module.exports = (app) ->
     GRAVITY_URL: GRAVITY_URL
     JS_EXT: (if "production" is NODE_ENV then ".min.js.gz" else ".js")
     CSS_EXT: (if "production" is NODE_ENV then ".min.css.gz" else ".css")
-    CDN_URL: CDN_URL
+    ASSET_PATH: ASSET_PATH
   
   # General settings
   app.use express.favicon()
