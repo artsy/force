@@ -1,2 +1,6 @@
 #main-layout-search-bar-container
-  input#main-layout-search-bar-input.bordered-input( placeholder='Search...' )
+  input#main-layout-search-bar-input.bordered-input( placeholder!='Search&hellip;', tabindex=1 )
+  #main-layout-search-bar-spinner
+    .loading-spinner-small
+  #main-layout-search-bar-suggested
+    span Search Artists, Artworks, Movements, Mediums or Keyword&hellip;

@@ -1,14 +1,16 @@
-// 
+//
 // A library of mixins and variables commonly used throughout stylesheets.
-// 
+//
 // Do NOT put any actual style declarations here. We don't want this to impact
 // CSS size.
-// 
+//
 
 @import '../../node_modules/nib'
 
-default-garamond-font-size = 16px
-light-gray-border-color = #e5e5e5
+default-garamond-font-size    = 16px
+light-gray-border-color       = #e5e5e5
+dark-gray-text-color          = #666
+light-gray-background-color   = #efefef
 
 avant-garde()
   font-family 'AvantGardeGothicITCW01D 731075', 'AvantGardeGothicITCW01Dm', 'Helvetica', 'sans-serif'
@@ -18,3 +20,8 @@ avant-garde()
 garamond()
   font-family 'adobe-garamond-pro', 'AGaramondPro-Regular', 'Times New Roman', 'Times', 'serif'
   font-smoothing antialiased
+
+ellipsis()
+  text-overflow ellipsis
+  white-space nowrap
+  overflow hidden
