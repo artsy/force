@@ -24,8 +24,8 @@ module.exports = (app) ->
   # Setup some initial data for shared modules
   app.use sharify
     GRAVITY_URL: GRAVITY_URL
-    JS_EXT: (if "production" is NODE_ENV then ".min.js" else ".js")
-    CSS_EXT: (if "production" is NODE_ENV then ".min.css" else ".css")
+    JS_EXT: (if "production" is NODE_ENV then ".min.js.gz" else ".js")
+    CSS_EXT: (if "production" is NODE_ENV then ".min.css.gz" else ".css")
     CDN_URL: CDN_URL
   
   # General settings

@@ -44,7 +44,7 @@ assets:
 deploy: assets
 	$(BIN)/bucketassets -d public/assets/ -b force-$(env)
 	heroku config:add \
-		CDN_URL=http://force-staging.s3.amazonaws.com/assets/$(shell git rev-parse --short HEAD)/ \
+		CDN_URL=http://force-$(env).s3.amazonaws.com/assets/$(shell git rev-parse --short HEAD)/ \
 		--app=force-$(env)
 	git push git@heroku.com:force-$(env).git master
 
