@@ -1,0 +1,55 @@
+logo-size = 30px
+
+#main-layout-footer
+  padding 18px
+  background #000
+  clearfix()
+  a,
+  span
+    display inline-block
+    margin 0 7px
+    height logo-size
+    line-height logo-size
+    vertical-align middle
+    color #fff
+    text-decoration none
+    transition opacity 0.25s
+    &:first-child
+      margin-left 0
+    &:last-child
+      margin-right 0
+  a
+    &:hover
+      opacity 0.8
+
+#main-layout-footer-internal
+  float left
+
+#main-layout-footer-external
+  float right
+
+#main-layout-footer-logo,
+.mlf-social-twitter,
+.mlf-social-facebook,
+.mlf-social-tumblr
+  display inline-block
+  background-repeat no-repeat
+  background-position center center
+
+#main-layout-footer-logo
+  width logo-size
+  height logo-size
+  background-size logo-size
+  margin-right 20px
+
+.mlf-social-twitter,
+.mlf-social-facebook,
+.mlf-social-tumblr
+  width 20px
+  height @width
+  background-size @width
+  margin-left 20px
+
+.mlf-links
+  // Visual vertical center
+  padding-top 1px
