@@ -17,7 +17,8 @@
     "http-proxy": "*",
     "showdown": "git://github.com/craigspaeth/showdown.git",
     "underscore": "*",
-    "newrelic": "*"
+    "newrelic": "*",
+    "underscore.string": "*"
   },
   "devDependencies": {
     "browserify": "*",
@@ -37,6 +38,9 @@
     "nib": "*",
     "superagent": "*",
     "cheerio": "*",
-    "bucket-assets": "*"
+    "bucket-assets": "*",
+    "rewire": "*",
+    "spin.js": "*",
+    "typeahead.js": "git://github.com/zamiang/typeahead.js.git#gravity"
   }
 }

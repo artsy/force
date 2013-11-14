@@ -1,9 +1,9 @@
-// 
+//
 // Common styles used for initial page rendering throughout the project.
-// 
+//
 // Be VERY picky about what is allowed to be put in this file because any style
 // that isn't used throughout most pages will unecessarily slow down initial page load.
-// 
+//
 // Examples of styles that belong here are global default styles or CSS reset-like styles 
 // such as `box-sizing: border-box` on all elements, or removing outlines on all inputs,
 // ensuring links aren't purple or blue by default, etc. Things that are more stylistic
@@ -17,18 +17,21 @@
 @import '../header'
 @import './embedded'
 @import './form_elements'
+@import './spinners'
 
 global-reset()
 
 // General tag styles
+*,
+*:before,
+*:after
+  box-sizing border-box
 body
   garamond()
   font-size default-garamond-font-size
   line-height 1.4em
   text-rendering optimizeLegibility
   min-width 800px
-*
-  box-sizing border-box
 a
   color black
 b, strong

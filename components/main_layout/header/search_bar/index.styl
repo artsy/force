@@ -1,10 +1,108 @@
+logo-size                   = 52px
+suggestion-thumbnail-size   = 32px
+
 #main-layout-search-bar-container
   position relative
+  width 'calc(100% - %s)' % logo-size
   border-left 1px solid light-gray-border-color
-  width calc(100% - 53px)
+
+  &.is-open
+    #main-layout-search-bar-suggested
+      transition all 0.125s
+      height logo-size
+      opacity 1
+
+  &.is-loading
+    #main-layout-search-bar-spinner
+      display block
+    #main-layout-search-bar-suggested
+      display none
+
+#main-layout-search-bar-suggested
+  display block
+  position absolute
+  width calc(100% + 2px)
+  height 0
+  top 100%
+  left 0px
+  right auto
+  padding 0 (logo-size / 2)
+  margin-left -1px
+  line-height logo-size
+  opacity 0
+  background-color #fff
+  border 1px solid light-gray-border-color
+  background-color light-gray-background-color
+  ellipsis()
+
+#main-layout-search-bar-spinner
+  display none
+  position absolute
+  top 10px
+  right 10px
+  width suggestion-thumbnail-size
+  height suggestion-thumbnail-size
 
 #main-layout-search-bar-input
-  border-width 0
   height 100%
   width @height
-  padding-left 26px
+  padding 0 (logo-size / 2)
+  border none
+
+// Results dropdown
+#main-layout-search-bar-container
+  .twitter-typeahead
+    display block
+    width 100%
+    height 100%
+
+  .tt-hint
+    display none
+
+  .tt-dropdown-menu
+    width calc(100% + 2px)
+    margin-left -1px
+    background-color #fff
+    border 1px solid light-gray-border-color
+
+  .tt-suggestion
+    border-bottom 1px solid light-gray-border-color
+    &:last-child
+      border-bottom none
+
+    &:hover,
+    &.tt-is-under-cursor
+      background-color #000
+      *
+        color #fff
+
+.mlsb-suggestion
+  display block
+  width 100%
+  text-decoration none
+  overflow hidden
+
+.mlsb-suggestion-thumbnail,
+.mlsb-suggestion-value
+  display inline-block
+  line-height suggestion-thumbnail-size
+  height (suggestion-thumbnail-size + 20px)
+  vertical-align top
+
+.mlsb-suggestion-thumbnail
+  padding 10px
+  & > img
+    width suggestion-thumbnail-size
+    height suggestion-thumbnail-size
+    vertical-align bottom
+
+.mlsb-suggestion-value
+  padding 10px 10px 10px 0
+
+.mlsb-suggestion-display
+  ellipsis()
+
+.mlsb-suggestion-kind
+  margin-left 10px
+  font-style italic
+  color dark-gray-text-color
