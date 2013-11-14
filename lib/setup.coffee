@@ -21,13 +21,6 @@ module.exports = (app) ->
   Backbone.sync = require "backbone-super-sync"
   Backbone.sync.editRequest = (req) -> req.set('X-XAPP-TOKEN': sharify.data.GRAVITY_XAPP_TOKEN)
   
-  # Setup some initial data for shared modules
-  app.use sharify
-    GRAVITY_URL: GRAVITY_URL
-    JS_EXT: (if "production" is NODE_ENV then ".min.js.gz" else ".js")
-    CSS_EXT: (if "production" is NODE_ENV then ".min.css.gz" else ".css")
-    ASSET_PATH: ASSET_PATH
-  
   # General settings
   app.use express.favicon()
   app.use express.logger('dev')
@@ -40,6 +33,13 @@ module.exports = (app) ->
     clientSecret: CLIENT_SECRET
     sharifyData: sharify.data
   ) unless app.get('env') is 'test'
+
+  # Setup some initial data for shared modules
+  app.use sharify
+    GRAVITY_URL: GRAVITY_URL
+    JS_EXT: (if "production" is NODE_ENV then ".min.js.gz" else ".js")
+    CSS_EXT: (if "production" is NODE_ENV then ".min.css.gz" else ".css")
+    ASSET_PATH: ASSET_PATH
 
   # Development only
   if "development" is NODE_ENV
