@@ -1,0 +1,38 @@
+.avant-garde-button
+  display inline-block
+  position relative
+  padding 18px
+  cursor pointer
+  border none
+  background-color light-gray-background-color
+  avant-garde()
+  font-size 13px
+  line-height 1.6
+  transition background-color 0.5s
+  text-decoration none
+  &:focus, &:hover, &.is-hover
+    outline none
+    background-color light-gray-background-hover-color
+
+  &[data-state='error'], &.is-error
+    background-color bad-red-color
+    color #fff
+
+  &[data-state='loading'], &.is-loading
+    background-color highlight-color
+    color transparent
+    // Note:
+    // Giving the loading state to input[type='submit']
+    // or input[type='button'] will *not* display a spinner.
+    // These elements don't support psuedo-elements.
+    &::before
+      display block
+      content ''
+      spinner(25px, 6px, #fff)
+
+// Variants
+.avant-garde-button-full-width
+  @extends .avant-garde-button
+  margin 0
+  width 100%
+  text-align center
