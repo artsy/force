@@ -1,0 +1,37 @@
+// Disable scroll on body when open
+body.is-modal
+  overflow hidden
+
+#modal
+  &[data-state='open'], &.is-open
+    & > .modal-backdrop
+      opacity 1
+
+.modal-backdrop
+  position fixed
+  top 0
+  right 0
+  bottom 0
+  left 0
+  z-index 1
+  background-color rgba(0, 0, 0, 0.5)
+  opacity 0
+  transition opacity 0.25s
+
+.modal-dialog
+  position fixed
+  overflow-y auto
+  background-color #fff
+  max-width 90%
+  max-height 90%
+
+.modal-close
+  position absolute
+  top 0
+  right 0
+  padding 20px
+  font-size 65px
+  cursor pointer
+  transition opacity 0.25s
+  &:hover
+    opacity 0.5

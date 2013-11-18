@@ -1,0 +1,21 @@
+h2 Comments
+
+p
+  | Thanks for helping us improve Artsy. You can also email any feedback to&nbsp;
+  a( href="mailto:support@artsy.net" ) support@artsy.net
+
+form
+  p
+    label( name='name' ) Your name
+      input.bordered-input-full-width( type='text', name='user_name', autofocus )
+
+    label( name='email' ) Your email
+      input.bordered-input-full-width( type='email', name='user_email' )
+
+    textarea.bordered-input-full-width(
+      placeholder='Leave your comments', name='message', required
+    )
+
+  a#feedback-submit.avant-garde-button-full-width(
+    href='#', data-state='ok'
+  ) Share with Artsy

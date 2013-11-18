@@ -10,9 +10,11 @@ html
     include head
     block head
   body
+    include ../../modal/template
     include ../header/template
     block body
     #scripts
       include scripts
       script( src=(sd.ASSET_PATH + assetPackage + sd.JS_EXT) )
       block scripts
+    include ../footer/template
