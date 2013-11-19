@@ -4,13 +4,15 @@
 .avant-garde-button
   display inline-block
   position relative
-  padding 10px 30px
+  // Avant Garde sits high on the baseline
+  // Account for this with extra padding on top
+  padding 15px 30px 13px
+  font-size 13px
+  line-height 1
   cursor pointer
   border none
   background-color light-gray-background-color
   avant-garde()
-  font-size 13px
-  line-height 1.6
   transition background-color 0.5s, color 0.5s
   text-decoration none
   &:focus, &:hover, &.is-hover
@@ -18,8 +20,9 @@
     background-color light-gray-background-hover-color
 
   &[data-state='error'], &.is-error
-    background-color bad-red-color
-    color #fff
+    &, &:focus
+      background-color bad-red-color
+      color #fff
 
   &[data-state='loading'], &.is-loading
     background-color highlight-color
@@ -31,14 +34,19 @@
     &::before
       display block
       content ''
-      spinner(25px, 6px, #fff)
+      spinner(20px, 5px, #fff)
+
+  &.is-block
+    width 100%
+    text-align center
 
 // Variants
-.avant-garde-button-full-width
+.avant-garde-button-black
   @extends .avant-garde-button
-  margin 0
-  width 100%
-  text-align center
+  background-color #000
+  color #fff
+  &:focus, &:hover, &.is-hover
+    background-color highlight-color
 
 .avant-garde-button-white
   @extends .avant-garde-button

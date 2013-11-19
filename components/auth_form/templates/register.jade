@@ -1,0 +1,19 @@
+include ./_header
+  p
+    | Enter your name, email and password to join
+
+section#auth-body
+  .auth-register
+    form.auth-form
+      input.bordered-input.is-block(
+        name='name', type='text', placeholder='Full Name' autofocus, required
+      )
+      input.bordered-input.is-block(
+        name='email', type='email', placeholder='Email', required
+      )
+      input.bordered-input.is-block(
+        name='password', type='password', placeholder='Password', autocomplete='on', required
+      )
+      button#auth-submit.avant-garde-button-black.is-block Join Artsy
+
+include ./_signup_footer

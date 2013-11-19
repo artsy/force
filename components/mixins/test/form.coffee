@@ -1,17 +1,31 @@
-benv  = require 'benv'
-Form  = require '../form.coffee'
+_               = require 'underscore'
+benv            = require 'benv'
+Form            = require '../form.coffee'
+Backbone        = require 'backbone'
+errorResponses  = require './error_responses'
+
+class FormView extends Backbone.View
+  _.extend @prototype, Form
+
+  template: ->
+    """
+      <form>
+        <input name='name'>
+        <input name='email' required>
+        <textarea name='comment' required></textarea>
+      </form>
+    """
+
+  render: ->
+    @$el.html @template()
+    this
 
 describe 'Form', ->
   beforeEach (done) ->
     benv.setup =>
       benv.expose { $: require 'components-jquery' }
-      @$form = $ """
-        <form>
-          <input name='name'>
-          <input name='email' required>
-          <textarea name='comment' required></textarea>
-        </form>
-      """
+      Backbone.$ = $
+      @view = new FormView().render()
       done()
 
   afterEach ->
@@ -19,17 +33,26 @@ describe 'Form', ->
 
   describe '#serializeForm', ->
     it 'should return all named inputs as keys regardless of values', ->
-      Form.serializeForm(@$form).should.have.keys 'name', 'email', 'comment'
+      @view.serializeForm().should.have.keys 'name', 'email', 'comment'
 
     it 'should return all values corresponding to keys', ->
       values = { name: 'Foo Bar', email: 'foo@bar.com', comment: 'Baz Qux Whatever' }
-      @$form.find('input[name=name]').val values['name']
-      @$form.find('input[name=email]').val values['email']
-      @$form.find('textarea[name=comment]').val values['comment']
-      Form.serializeForm(@$form).should.include values
+      @view.$('form').find('input[name=name]').val values['name']
+      @view.$('form').find('input[name=email]').val values['email']
+      @view.$('form').find('textarea[name=comment]').val values['comment']
+      @view.serializeForm().should.include values
 
   describe '#validateForm', ->
     it 'should check all required fields and set their state to error if they are empty', ->
-      Form.validateForm(@$form)
-      @$form.find(':input[required]').each ->
+      @view.validateForm()
+      @view.$('form').find(':input[required]').each ->
         $(this).data('state').should.equal 'error'
+
+  describe '#errorMessage', ->
+    _.each errorResponses, (responseObj) ->
+      it 'should handle a real world error response', ->
+        @view.errorMessage({ responseText: responseObj.error }).should.equal responseObj.message
+
+    it 'should set the error state on inputs when there is a param_error', ->
+      @view.errorMessage({ responseText: errorResponses[0].error })
+      @view.$('input[name=email]').data('state').should.equal 'error'

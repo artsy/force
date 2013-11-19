@@ -1,7 +1,8 @@
 _               = require 'underscore'
 Backbone        = require 'backbone'
 mediator        = require '../../lib/mediator.coffee'
-modalTemplate   = -> require('./window.jade') arguments...
+modalTemplate   = -> require('./modal.jade') arguments...
+Transition      = require '../mixins/transition.coffee'
 
 module.exports = class ModalView extends Backbone.View
   id: 'modal'
@@ -41,6 +42,14 @@ module.exports = class ModalView extends Backbone.View
     @$dialog.css
       top:  (($(window).height() - @$dialog.height()) / 2) + 'px'
       left: (($(window).width() - @$dialog.width()) / 2) + 'px'
+
+  # Fade out body,
+  # re-render the (presumably changed) template,
+  # then fade back in and re-center
+  reRender: ->
+    Transition.fade @$body,
+      out:  => @$body.html @template()
+      in:   => @setPosition()
 
   setup: ->
     # Render outer

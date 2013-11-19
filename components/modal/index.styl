@@ -6,6 +6,9 @@ body.is-modal
   &[data-state='open'], &.is-open
     & > .modal-backdrop
       opacity 1
+      & > .modal-dialog
+        // Avoid transitioning the initial open
+        transition all 0.25s
 
 .modal-backdrop
   position fixed
@@ -13,7 +16,7 @@ body.is-modal
   right 0
   bottom 0
   left 0
-  z-index 1
+  z-index 3
   background-color rgba(0, 0, 0, 0.5)
   opacity 0
   transition opacity 0.25s
@@ -24,6 +27,8 @@ body.is-modal
   background-color #fff
   max-width 90%
   max-height 90%
+  // Hack to prevent shifting content
+  transform translateZ(0)
 
 .modal-close
   position absolute
@@ -35,3 +40,10 @@ body.is-modal
   transition opacity 0.25s
   &:hover
     opacity 0.5
+
+.modal-body
+  transition opacity 0.25s
+  &[data-state='fade-out'], &.is-fade-out
+    opacity 0
+  &[data-state='fade-in'], &.is-fade-in
+    opacity 1
