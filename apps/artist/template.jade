@@ -4,19 +4,22 @@ block locals
   assetPackage = 'artist'
 
 block body
-  header#artist-header
-    h1.avant-garde-header-center= artist.get('name')
-    h2= [artist.get('nationality'), artist.get('years')].join(', ')
-    button#artist-follow-button.avant-garde-button-white Follow
-    ul#artist-social-media
-      li#artist-facebook
-      li#artist-twitter
-      li#artist-pinterest
-  #artist-available-works
-    h3 Available Works
-  #artist-institution-works
-    h3 Available Works
-  .artist-related-section
-    h1.avant-garde-header-center Related Artists
-  .artist-related-section
-    h1.avant-garde-header-center Related Contemporary
+  .responsive-side-margin
+    header#artist-header
+      h1.avant-garde-header-center= artist.get('name')
+      h2= [artist.get('nationality'), artist.get('years')].join(', ')
+      button#artist-follow-button.avant-garde-button-white Follow
+      ul#artist-social-media
+        li#artist-facebook
+        li#artist-twitter
+        li#artist-pinterest
+    .artist-works-section
+      h3 Available Works
+      #artist-available-works
+    .artist-works-section
+      h3 Museums and other collections
+      #artist-institution-works
+    .artist-related-section
+      h1.avant-garde-header-center Related Artists
+    .artist-related-section
+      h1.avant-garde-header-center Related Contemporary

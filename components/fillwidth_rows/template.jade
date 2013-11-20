@@ -1,0 +1,9 @@
+ul
+  for artwork in artworks
+    li
+      = artwork.defaultImageUrl()
+      br
+      p= artwork.get('artist').name
+      p #{[artwork.get('title'), artwork.get('date')].join(',')}
+      if artwork.get('price')
+        p= artwork.get('price')

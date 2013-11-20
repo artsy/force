@@ -1,7 +1,12 @@
+@import '../../components/stylus_lib'
+
 #page-markdown-content
   width 600px
-  margin 60px auto
   font-size 19px
+  margin content-margin-top auto 0 auto
+  h1, h2, p, ul
+    &:first-child
+      margin-top 0
   h1, h2
     display block
     text-align center
