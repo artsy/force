@@ -12,9 +12,11 @@ describe 'HeaderView', ->
     benv.setup =>
       Backbone.$ = cheerio.load(document.documentElement.innerHTML)
       benv.render '../template.jade', {}, =>
-        @view = new HeaderView $window: @$window =
-          on: sinon.stub()
-          off: sinon.stub()
+        @view = new HeaderView
+          $window: @$window =
+            on: sinon.stub()
+            off: sinon.stub()
+          $body: $ 'body'
         done()
 
   it 'hides the welcome header on scroll', ->
