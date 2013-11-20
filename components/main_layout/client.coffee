@@ -12,5 +12,5 @@ $.ajaxSettings.headers =
   'X-ACCESS-TOKEN': sd.GRAVITY_ACCESS_TOKEN
 
 $ ->
-  new HeaderView el: $('#main-layout-header'), $window: $(window)
+  new HeaderView el: $('#main-layout-header'), $window: $(window), $body: $('body')
   new FooterView el: $('#main-layout-footer')

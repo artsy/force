@@ -1,0 +1,14 @@
+// 
+// Styles that affect the layout at large such as when the header becomes fixed
+// or when a featured banner/view in room changes the content to fit underneath
+// a transparent header.
+// 
+
+main-header-height = 54px
+
+// When the header is fixed add some margin to the top of the body
+// to make sure content is underneath it.
+.body-header-fixed
+  margin-top main-header-height + content-margin-top
+  #main-layout-header
+    position fixed
