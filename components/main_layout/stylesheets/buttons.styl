@@ -1,14 +1,16 @@
+@import '../../stylus_lib'
+
 .avant-garde-button
   display inline-block
   position relative
-  padding 18px
+  padding 10px 30px
   cursor pointer
   border none
   background-color light-gray-background-color
   avant-garde()
   font-size 13px
   line-height 1.6
-  transition background-color 0.5s
+  transition background-color 0.5s, color 0.5s
   text-decoration none
   &:focus, &:hover, &.is-hover
     outline none
@@ -36,3 +38,11 @@
   margin 0
   width 100%
   text-align center
+
+.avant-garde-button-white
+  @extends .avant-garde-button
+  background white
+  border 1px solid light-gray-border-color
+  &:focus, &:hover, &:active
+    color highlight-color
+    background white

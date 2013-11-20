@@ -64,6 +64,7 @@ module.exports = (app) ->
 
   # Mount apps
   app.use require "../apps/page"
+  app.use require "../apps/artist"
   
   # More general middleware
   app.use express.static(path.resolve __dirname, "../public")
