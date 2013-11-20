@@ -2,11 +2,11 @@ Backbone        = require 'backbone'
 SearchBarView   = require './search_bar/view.coffee'
 
 module.exports = class HeaderView extends Backbone.View
+  
   initialize: (options) ->
-    { @$window } = options
+    { @$window, @$body } = options
     @$welcomeHeader = @$('#main-layout-welcome-header')
     @$window.on 'scroll', @hideWelcomeHeader
-
     @searchBarView = new SearchBarView
       el:       @$('#main-layout-search-bar-container')
       $input:   @$('#main-layout-search-bar-input')
@@ -14,5 +14,6 @@ module.exports = class HeaderView extends Backbone.View
   hideWelcomeHeader: =>
     return if @$window.scrollTop() < @$welcomeHeader.height()
     @$welcomeHeader.hide()
+    @$body.addClass('body-header-fixed')
     @$window.off 'scroll', @hideWelcomeHeader
     @$window.scrollTop(0)
