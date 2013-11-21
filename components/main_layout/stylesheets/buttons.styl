@@ -1,4 +1,5 @@
 @import '../../stylus_lib'
+@import './spinners'
 
 .avant-garde-button
   display inline-block
@@ -46,3 +47,20 @@
   &:focus, &:hover, &:active
     color highlight-color
     background white
+
+.avant-garde-button-text
+  @extends .avant-garde-button
+  background transparent
+  padding 0 0 2px 0
+  display block
+  text-align center
+  &:focus, &:hover, &:active
+    border-bottom 2px solid
+    padding-bottom 0
+    background transparent
+  &[data-state='loading'], &.is-loading
+    background transparent
+    border-color transparent
+    transition color 0
+    &::before
+      background black
