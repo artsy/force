@@ -3,6 +3,8 @@ benv      = require 'benv'
 Backbone  = require 'backbone'
 sinon     = require 'sinon'
 mediator  = require '../../../lib/mediator.coffee'
+{ resolve } = require 'path'
+ModalView = benv.requireWithJadeify resolve(__dirname, '../view'), ['modalTemplate']
 
 describe 'ModalView', ->
   beforeEach (done) ->
@@ -14,7 +16,6 @@ describe 'ModalView', ->
       $.fn.emulateTransitionEnd   = -> sinon.stub()
 
       benv.render '../template.jade', {}, =>
-        ModalView     = benv.requireWithJadeify '../view', ['modalTemplate']
         @closeSpy     = sinon.spy ModalView.prototype, 'close'
         @openSpy      = sinon.spy ModalView.prototype, 'open'
         @mediatorSpy  = sinon.spy mediator, 'trigger'

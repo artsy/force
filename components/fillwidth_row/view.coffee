@@ -17,7 +17,6 @@ module.exports = class FillwidthView extends Backbone.View
   render: =>
     @$el.html template artworks: @collection.models, seeMore: @seeMore
     @$('ul').fillwidth()
-    console.log @page
     if @seeMore and @page is 2
       _.defer @hidePastFirstRow
 

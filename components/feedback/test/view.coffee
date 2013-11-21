@@ -9,7 +9,7 @@ describe 'ModalView', ->
       benv.expose { $: require 'components-jquery' }
       Backbone.$ = $
       benv.render '../template.jade', {}, =>
-        FeedbackView = benv.requireWithJadeify '../view', ['template']
+        FeedbackView = benv.requireWithJadeify resolve(__dirname, '../view'), ['template']
         @modal = new FeedbackView(width: '500px')
         done()
 
