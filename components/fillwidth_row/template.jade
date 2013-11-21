@@ -1,0 +1,13 @@
+ul.fillwidth-list
+  for artwork in artworks
+    li
+      a( href="/artwork/#{artwork.get('id')}" )
+        .fillwidth-img-container
+          img( src=artwork.defaultImageUrl() )      
+        .fillwidth-details-container
+          p= artwork.get('artist').name
+          p #{[artwork.get('title'), artwork.get('date')].join(',')}
+          if artwork.get('price')
+            p= artwork.get('price')
+if seeMore
+  button.avant-garde-button-text.fillwidth-see-more See More
