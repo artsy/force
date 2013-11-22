@@ -6,12 +6,11 @@
 
 { GRAVITY_URL, NODE_ENV, CLIENT_ID, CLIENT_SECRET, SESSION_SECRET, PORT,
   ASSET_PATH } = require "../config"
-{ parse } = require 'url'
+{ parse, format } = require 'url'
 express = require "express"
 Backbone = require "backbone"
 sharify = require "sharify"
 path = require "path"
-passport = require 'passport'
 artsyXappMiddlware = require 'artsy-xapp-middleware'
 httpProxy = require 'http-proxy'
 proxy = new httpProxy.RoutingProxy()
@@ -28,8 +27,6 @@ module.exports = (app) ->
   app.use express.bodyParser()
   app.use express.cookieParser(SESSION_SECRET)
   app.use express.cookieSession()
-  app.use passport.initialize()
-  app.use passport.session()
   app.use artsyXappMiddlware(
     artsyUrl: GRAVITY_URL
     clientId: CLIENT_ID
@@ -63,6 +60,13 @@ module.exports = (app) ->
   # Router helper methods
   app.use (req, res, next) ->
     res.backboneError = (m, e) -> next e.text
+    next()
+
+  # Adjust the asset path if the request came from SSL
+  app.use (req, res, next) ->
+    pathObj = parse res.locals.sd.ASSET_PATH
+    pathObj.protocol = if req.get('X-Forwarded-Proto') is 'https' then 'https' else 'http'
+    res.locals.sd.ASSET_PATH = format(pathObj)
     next()
 
   # Mount apps
