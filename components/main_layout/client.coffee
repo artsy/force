@@ -7,6 +7,7 @@ sd          = require('sharify').data
 require '../../node_modules/typeahead.js/dist/typeahead.min.js'
 require('jquery.transition')($, document)
 require 'jquery.fillwidth'
+require 'jquery.dotdotdot'
 
 $.ajaxSettings.headers =
   'X-XAPP-TOKEN':   sd.GRAVITY_XAPP_TOKEN
