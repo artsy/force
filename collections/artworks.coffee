@@ -6,7 +6,7 @@ module.exports = class Artworks extends Backbone.Collection
 
   model: Artwork
 
-  # Maps each artwork's images into an array of image [width, height] pairs meant to be
+  # Maps each artwork's images into an array of image { width, height } hashes meant to be
   # passed into fillwidth.
   #
   # @param {Number} maxHeight The max height the image can be
