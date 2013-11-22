@@ -21,7 +21,8 @@ module.exports = class FillwidthView extends Backbone.View
       _.defer @hidePastFirstRow
 
   hidePastFirstRow: =>
-    firstItemTop = @$('ul li').first().offset().top
+    firstItem = @$('ul li').first()
+    firstItemTop = firstItem.offset().top if firstItem.length
     @$('ul li').each ->
       $(@).hide() if $(@).offset().top > firstItemTop
 

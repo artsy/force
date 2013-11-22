@@ -43,6 +43,7 @@
     "typeahead.js": "git://github.com/zamiang/typeahead.js.git#gravity",
     "components-jquery": "git://github.com/components/jquery.git",
     "jquery.transition": "git://github.com/dzucconi/jquery.transition.git",
-    "jquery.fillwidth": "*"
+    "jquery.fillwidth": "*",
+    "jquery.dotdotdot": "git://github.com/mzikherman/jquery.dotdotdot.git"
   }
 }
