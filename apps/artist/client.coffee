@@ -9,8 +9,10 @@ relatedArtistsTemplate = -> require('./templates/related_artists.jade') argument
 module.exports.ArtistView = class ArtistView extends Backbone.View
 
   initialize: (options) ->
-    @relatedArtistsPage = 1
-    @relatedContemporaryPage = 1
+    @setupArtworkRows()
+    @setupArtistRows()
+
+  setupArtworkRows: ->
     @availableArtworks = new Backbone.Collection [], model: Artwork
     @availableArtworks.url = @model.url() + '/artworks'
     @institutionArtworks = new Backbone.Collection [], model: Artwork
@@ -27,38 +29,38 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
       fetchOptions: { 'filter[]': 'not_for_sale' }
       seeMore: true
     ).nextPage()
-    @model.relatedArtists.on 'sync', @renderRelatedArtists
-    @nextRelatedArtistsPage()
-    @nextRelatedContemporaryPage()
 
-  renderRelatedArtists: =>
-    @$('#artist-related-artists .responsive-side-margin').html relatedArtistsTemplate
-      artists: @model.relatedArtists.models
-    @model.relatedArtists.each (artist, i) =>
-      @renderRelatedRow artist, i, '#artist-related-artists'
+  setupArtistRows: ->
+    @relatedArtistsPage = 1
+    @relatedContemporaryPage = 1
+    @model.relatedArtists.on 'sync', => @renderRelatedArtists 'Artists'
+    @model.relatedContemporary.on 'sync', => @renderRelatedArtists 'Contemporary'
+    @nextRelatedArtistsPage 'Artists'
+    @nextRelatedArtistsPage 'Contemporary'
 
-  renderRelatedContemporary: =>
-    @$('#artist-related-contemporary .responsive-side-margin').html relatedArtistsTemplate
-      artists: @model.relatedContemporary.models
-    @model.relatedContemporary.each (artist, i) =>
-      @renderRelatedRow artist, i, '#artist-related-contemporary'
+  renderRelatedArtists: (type) =>
+    @$("#artist-related-#{type.toLowerCase()}").html(
+      relatedArtistsTemplate artists: @model.relatedArtists.models
+    )
+    @model["related#{type}"].each (artist, i) =>
+      console.log artist.get('name')
+      @renderRelatedArtist artist, i, type
 
-  renderRelatedRow: (artist, i, scope) ->
+  renderRelatedArtist: (artist, i, type) ->
     artist.fetchArtworks data: { size: 10 }, success: (artworks) =>
       view = new FillwidthView
         collection: artworks
-        el: @$ "#{scope} li:nth-child(#{i + 1}) .artist-related-artist-artworks"
+        el: @$("#artist-related-#{type.toLowerCase()} " +
+               "li:nth-child(#{i + 1}) .artist-related-artist-artworks")
       view.render()
       _.defer view.hideFirstRow
 
   events:
-    'click #artist-related-artists .artist-related-see-more': 'nextRelatedArtistsPage'
+    'click .artist-related-see-more': 'nextRelatedPage'
 
-  nextRelatedArtistsPage: ->
-    @model.fetchRelatedArtists data: page: @relatedArtistsPage++
-
-  fetchRelatedContemporary: ->
-    @model.fetchRelatedContemporary data: page: @relatedContemporaryPage++
+  nextRelatedArtistsPage: (e) ->
+    type = if _.isString(e) then e else $(e).data 'type'
+    @model.fetchRelatedArtists type, data: { page: @["related#{type}Page"]++ }
 
 module.exports.init = ->
   new ArtistView el: $('body'), model: new Artist sd.ARTIST
