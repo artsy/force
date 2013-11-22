@@ -6,7 +6,7 @@ Artist = require '../../../models/artist'
 { fabricate } = require 'antigravity'
 
 describe 'ArtistView', ->
-  
+
   before (done) ->
     benv.setup =>
       benv.expose { $: require 'components-jquery' }
@@ -16,12 +16,15 @@ describe 'ArtistView', ->
   after -> benv.teardown()
 
   beforeEach (done) ->
-    benv.render '../template.jade', {
+    benv.render '../templates/index.jade', {
       sd: {}
       artist: new Artist fabricate 'artist'
     }, =>
-      { ArtistView, @init } = mod = rewire '../client'
-      mod.__set__ 'FillwidthView', @fillwidthViewStub = sinon.stub()
+      { ArtistView, @init } = mod = rewire '../client/index'
+      @FillwidthView = sinon.stub()
+      @FillwidthView.nextPage = sinon.stub()
+      @FillwidthView.returns @FillwidthView
+      mod.__set__ 'FillwidthView', @FillwidthView
       mod.__set__ 'BlurbView', @blurbStub = sinon.stub()
       @view = new ArtistView
         el: $ 'body'
@@ -31,8 +34,8 @@ describe 'ArtistView', ->
   describe '#initialize', ->
 
     it 'sets up fillwidth views with collections pointing to for sale and not for sale works', ->
-      view1Opts = @fillwidthViewStub.args[0][0]
-      view2Opts = @fillwidthViewStub.args[1][0]
+      view1Opts = @FillwidthView.args[0][0]
+      view2Opts = @FillwidthView.args[1][0]
       view1Opts.fetchOptions['filter[]'].should.equal 'for_sale'
       view2Opts.fetchOptions['filter[]'].should.equal 'not_for_sale'
       view1Opts.collection.url.should.include '/artworks'
