@@ -6,7 +6,7 @@ mediator  = require '../../../../lib/mediator.coffee'
 
 HeaderView = rewire '../view'
 HeaderView.__set__ 'SearchBarView', sinon.stub()
-HeaderView.__set__ 'AuthFormView', sinon.stub()
+HeaderView.__set__ 'AuthModalView', sinon.stub()
 
 { resolve } = require 'path'
 

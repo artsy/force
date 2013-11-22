@@ -1,7 +1,7 @@
 _               = require 'underscore'
 Backbone        = require 'backbone'
 mediator        = require '../../lib/mediator.coffee'
-AuthModalView   = require '../../components/auth_form/view.coffee'
+AuthModalView   = require '../../components/auth_modal/view.coffee'
 
 _.mixin(require 'underscore.string')
 

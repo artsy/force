@@ -1,6 +1,6 @@
 Backbone        = require 'backbone'
 SearchBarView   = require './search_bar/view.coffee'
-AuthFormView    = require '../../auth_form/view.coffee'
+AuthModalView   = require '../../auth_modal/view.coffee'
 mediator        = require '../../../lib/mediator.coffee'
 
 module.exports = class HeaderView extends Backbone.View
@@ -38,4 +38,4 @@ module.exports = class HeaderView extends Backbone.View
     mediator.trigger 'open:auth', { mode: 'login' }
 
   openAuth: (options) ->
-    @modal = new AuthFormView(mode: options.mode, width: '900px')
+    @modal = new AuthModalView(mode: options.mode, width: '900px')

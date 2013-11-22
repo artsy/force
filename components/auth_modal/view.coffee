@@ -25,7 +25,7 @@ models =
   forgot:   Forgot
   register: require '../../models/user.coffee'
 
-module.exports = class AuthFormView extends ModalView
+module.exports = class AuthModalView extends ModalView
   _.extend @prototype, Form
 
   className: 'auth'
