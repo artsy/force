@@ -4,7 +4,7 @@
 // Be VERY picky about what is allowed to be put in this file because any style
 // that isn't used throughout most pages will unecessarily slow down initial page load.
 //
-// Examples of styles that belong here are global default styles or CSS reset-like styles 
+// Examples of styles that belong here are global default styles or CSS reset-like styles
 // such as `box-sizing: border-box` on all elements, or removing outlines on all inputs,
 // ensuring links aren't purple or blue by default, etc. Things that are more stylistic
 // even if they seem to apply to all elements, such as buttons being flat with avant garde,
@@ -51,6 +51,8 @@ input
   font-size default-font-size
   &:focus
     outline none
+button, input
+  margin 0
 
 // Hide the document until typekit loads Garamond
 html.wf-loading

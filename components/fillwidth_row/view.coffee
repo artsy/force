@@ -9,7 +9,7 @@ module.exports = class FillwidthView extends Backbone.View
     @page = 1
     @listenTo @collection, 'request', @renderSpinner
     @listenTo @collection, 'sync', @render
-    @nextPage()
+    @
 
   renderSpinner: ->
     @$('.fillwidth-see-more').attr 'data-state', 'loading'
@@ -18,9 +18,9 @@ module.exports = class FillwidthView extends Backbone.View
     @$el.html template artworks: @collection.models, seeMore: @seeMore
     @$('ul').fillwidth()
     if @seeMore and @page is 2
-      _.defer @hidePastFirstRow
+      _.defer @hideFirstRow
 
-  hidePastFirstRow: =>
+  hideFirstRow: =>
     firstItemTop = @$('ul li').first().offset().top
     @$('ul li').each ->
       $(@).hide() if $(@).offset().top > firstItemTop
