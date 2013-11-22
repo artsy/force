@@ -29,12 +29,19 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     ).nextPage()
     @model.relatedArtists.on 'sync', @renderRelatedArtists
     @nextRelatedArtistsPage()
+    @nextRelatedContemporaryPage()
 
   renderRelatedArtists: =>
     @$('#artist-related-artists .responsive-side-margin').html relatedArtistsTemplate
       artists: @model.relatedArtists.models
     @model.relatedArtists.each (artist, i) =>
       @renderRelatedRow artist, i, '#artist-related-artists'
+
+  renderRelatedContemporary: =>
+    @$('#artist-related-contemporary .responsive-side-margin').html relatedArtistsTemplate
+      artists: @model.relatedContemporary.models
+    @model.relatedContemporary.each (artist, i) =>
+      @renderRelatedRow artist, i, '#artist-related-contemporary'
 
   renderRelatedRow: (artist, i, scope) ->
     artist.fetchArtworks data: { size: 10 }, success: (artworks) =>
@@ -50,6 +57,8 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
   nextRelatedArtistsPage: ->
     @model.fetchRelatedArtists data: page: @relatedArtistsPage++
 
+  fetchRelatedContemporary: ->
+    @model.fetchRelatedContemporary data: page: @relatedContemporaryPage++
 
 module.exports.init = ->
   new ArtistView el: $('body'), model: new Artist sd.ARTIST
