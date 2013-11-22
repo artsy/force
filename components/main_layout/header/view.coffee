@@ -38,4 +38,4 @@ module.exports = class HeaderView extends Backbone.View
     mediator.trigger 'open:auth', { mode: 'login' }
 
   openAuth: (options) ->
-    new AuthFormView(mode: options.mode, width: '900px')
+    @modal = new AuthFormView(mode: options.mode, width: '900px')
