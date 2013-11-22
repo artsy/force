@@ -22,6 +22,7 @@ describe 'ArtistView', ->
     }, =>
       { ArtistView, @init } = mod = rewire '../client'
       mod.__set__ 'FillwidthView', @fillwidthViewStub = sinon.stub()
+      mod.__set__ 'BlurbView', @blurbStub = sinon.stub()
       @view = new ArtistView
         el: $ 'body'
         model: new Artist fabricate 'artist'
@@ -36,3 +37,9 @@ describe 'ArtistView', ->
       view2Opts.fetchOptions['filter[]'].should.equal 'not_for_sale'
       view1Opts.collection.url.should.include '/artworks'
       view2Opts.collection.url.should.include '/artworks'
+
+    it 'sets up the blurb view if there is one', ->
+      viewBlurbOpts = @blurbStub.args[0][0]
+      viewBlurbOpts.updateOnResize.should.equal true
+      viewBlurbOpts.lineCount.should.equal 6
+      @view.$el.html().should.include @view.model.get('blurb')

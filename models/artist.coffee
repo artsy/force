@@ -2,8 +2,11 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
 Artwork = require '../models/artwork.coffee'
+markdownMixin = require './mixins/markdown.coffee'
 
 module.exports = class Artist extends Backbone.Model
+
+  _.extend @prototype, markdownMixin
 
   urlRoot: -> "#{sd.GRAVITY_URL}/api/v1/artist"
 
