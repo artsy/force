@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
-Artwork = require '../models/artwork.coffee'
+Artworks = require '../collections/artworks.coffee'
 markdownMixin = require './mixins/markdown.coffee'
 
 module.exports = class Artist extends Backbone.Model
@@ -26,6 +26,6 @@ module.exports = class Artist extends Backbone.Model
     , options
 
   fetchArtworks: (options) ->
-    col = new Backbone.Collection([], model: Artwork)
+    col = new Artworks
     col.url = "#{sd.GRAVITY_URL}/api/v1/artist/#{@get 'id'}/artworks"
     col.fetch options

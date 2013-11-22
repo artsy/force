@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-Artwork = require '../../../models/artwork.coffee'
+Artworks = require '../../../collections/artworks.coffee'
 Artist = require '../../../models/artist.coffee'
 sd = require('sharify').data
 FillwidthView = require '../../../components/fillwidth_row/view.coffee'
@@ -10,8 +10,8 @@ BlurbView = require './blurb.coffee'
 module.exports.ArtistView = class ArtistView extends Backbone.View
 
   initialize: (options) ->
-    @setupArtworkRows()
-    @setupArtistRows()
+    @setupArtworks()
+    @setupRelatedArtists()
     @setupBlurb()
 
   setupBlurb: ->
@@ -22,10 +22,10 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
         updateOnResize: true
         lineCount: 6
 
-  setupArtworkRows: ->
-    @availableArtworks = new Backbone.Collection [], model: Artwork
+  setupArtworks: ->
+    @availableArtworks = new Artworks
     @availableArtworks.url = @model.url() + '/artworks'
-    @institutionArtworks = new Backbone.Collection [], model: Artwork
+    @institutionArtworks = new Artworks
     @institutionArtworks.url = @model.url() + '/artworks'
     new FillwidthView(
       collection: @availableArtworks
@@ -40,7 +40,7 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
       seeMore: true
     ).nextPage()
 
-  setupArtistRows: ->
+  setupRelatedArtists: ->
     @relatedArtistsPage = 1
     @relatedContemporaryPage = 1
     @model.relatedArtists.on 'sync', => @renderRelatedArtists 'Artists'
