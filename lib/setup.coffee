@@ -73,6 +73,7 @@ module.exports = (app) ->
   app.use require "../apps/page"
   app.use require "../apps/artist"
   app.use require "../apps/auth"
+  app.use require "../apps/about"
 
   # More general middleware
   app.use express.static(path.resolve __dirname, "../public")

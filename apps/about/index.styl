@@ -1,0 +1,46 @@
+page-width      = 900px
+content-width   = 600px
+
+#about-page
+  width page-width
+  margin content-margin-top auto 0 auto
+  padding-top 80px
+
+  #page-markdown-content
+    width content-width
+    margin 0
+
+  h1, h2
+    garamond()
+    text-align left
+
+  h1
+    padding-top home-logo-size
+    margin 0 0 10px 0
+    font-size 17px
+    letter-spacing 1px
+    text-transform uppercase
+
+  h2
+    margin 40px 0 20px
+    font-size 28px
+    line-height 1.2
+    text-transform none
+
+#about-page-nav
+  float right
+
+  a
+    display block
+    margin-bottom 30px
+    text-decoration none
+    text-transform uppercase
+    letter-spacing 1px
+    font-weight normal
+
+// .jump-to-top
+@import '../../components/jump/index.styl'
+
+#about-page-jump
+  // Offset to line up with nav
+  margin-left -15px

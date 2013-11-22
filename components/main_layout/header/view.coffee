@@ -29,6 +29,7 @@ module.exports = class HeaderView extends Backbone.View
 
     @$window.scrollTop(0)
 
+
   signup: (e) ->
     e.preventDefault()
     mediator.trigger 'open:auth', { mode: 'signup' }

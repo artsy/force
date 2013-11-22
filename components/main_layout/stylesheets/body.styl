@@ -1,8 +1,8 @@
-// 
+//
 // Styles that affect the layout at large such as when the header becomes fixed
 // or when a featured banner/view in room changes the content to fit underneath
 // a transparent header.
-// 
+//
 
 main-header-height = 54px
 
@@ -13,3 +13,5 @@ main-header-height = 54px
   #main-layout-header
     position fixed
     z-index 2
+    // Prevent repaints
+    force-hardware-acceleration()
