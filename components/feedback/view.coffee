@@ -26,7 +26,6 @@ module.exports = class FeedbackView extends ModalView
     if @validateForm($form)
       $submit = @$('#feedback-submit')
       $submit.attr 'data-state', 'loading'
-      feedback = new Feedback()
-      feedback.save @serializeForm($form),
+      new Feedback().save @serializeForm($form),
         success:  -> mediator.trigger 'modal:close'
         error:    -> $submit.attr 'data-state', 'error'

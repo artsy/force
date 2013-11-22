@@ -7,15 +7,15 @@ p
 form
   p
     label( name='name' ) Your name
-      input.bordered-input-full-width( type='text', name='user_name', autofocus )
+      input.bordered-input.is-block( type='text', name='user_name', autofocus )
 
     label( name='email' ) Your email
-      input.bordered-input-full-width( type='email', name='user_email' )
+      input.bordered-input.is-block( type='email', name='user_email' )
 
-    textarea.bordered-input-full-width(
+    textarea.bordered-input.is-block(
       placeholder='Leave your comments', name='message', required
     )
 
-  a#feedback-submit.avant-garde-button-full-width(
+  a#feedback-submit.avant-garde-button.is-block(
     href='#', data-state='ok'
   ) Share with Artsy

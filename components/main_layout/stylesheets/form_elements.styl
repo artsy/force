@@ -8,6 +8,8 @@ bordered-input-placeholder()
   transition opacity 0.5s
 bordered-input-placeholder--focus()
   opacity 0
+bordered-input-placeholder--autofocus-focus()
+  opacity 1
 
 .bordered-input
   margin 0
@@ -24,20 +26,23 @@ bordered-input-placeholder--focus()
     border-color highlight-color
     outline none
     placeholder(bordered-input-placeholder--focus)
+
   &:disabled
     border dotted 2px light-gray-border-color
+
+  // Autofocused inputs should retain placeholders
+  &[autofocus]:focus
+    placeholder(bordered-input-placeholder--autofocus-focus)
+
   &[data-state=error],
   &.is-error
     border-color bad-red-color
 
+  &.is-block
+    display block
+    width 100%
+
 // Textarea-specific
-textarea.bordered-input,
-textarea.bordered-input-full-width
+textarea.bordered-input
   resize none
   padding 5px
-
-// Variants
-.bordered-input-full-width
-  @extends .bordered-input
-  display block
-  width 100%
