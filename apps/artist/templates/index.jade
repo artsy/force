@@ -1,4 +1,4 @@
-extends ../../components/main_layout/templates/index
+extends ../../../components/main_layout/templates/index
 
 block locals
   assetPackage = 'artist'
@@ -21,14 +21,17 @@ block body
       h3 Museums and other collections
       #artist-institution-works
         .loading-spinner
-    //- .artist-related-section
-    //-   h1.avant-garde-header-center Related Artists
-    //- .artist-related-section
-    //-   h1.avant-garde-header-center Related Contemporary
-    .artist-info-section
+  .artist-info-section
+    .responsive-side-margin
       if artist.get('blurb')
         .artist-blurb
           h1.avant-garde-header-center= ['About', artist.get('name')].join(' ')
           .blurb
             != artist.mdToHtml('blurb')
       //- Post container
+  .artist-related-section
+    h3.avant-garde-header-center Related Artists
+    #artist-related-artists.responsive-side-margin
+  .artist-related-section
+    h3.avant-garde-header-center Related Contemporary
+    #artist-related-contemporary.responsive-side-margin

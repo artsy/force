@@ -3,12 +3,12 @@ benv = require 'benv'
 Backbone = require 'backbone'
 sinon = require 'sinon'
 { fabricate } = require 'antigravity'
-Artwork = require '../../../models/artwork'
+Artworks = require '../../../collections/artworks'
 { resolve } = require 'path'
 FillwidthView = benv.requireWithJadeify resolve(__dirname, '../view'), ['template']
 
 describe 'FillwidthView', ->
-  
+
   before (done) ->
     benv.setup =>
       benv.expose { $: require 'components-jquery' }
@@ -21,7 +21,7 @@ describe 'FillwidthView', ->
 
   beforeEach (done) ->
     sinon.stub Backbone, 'sync'
-    col = new Backbone.Collection [fabricate 'artwork'], model: Artwork
+    col = new Artworks [fabricate 'artwork']
     col.url = 'foo/bar'
     @view = new FillwidthView { el: $('body'), collection: col }
     done()

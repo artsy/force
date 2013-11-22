@@ -7,7 +7,7 @@ mediator  = require '../../../lib/mediator.coffee'
 
 { resolve } = require 'path'
 
-describe 'ArtistView', ->
+describe 'AuthModalRouter', ->
   before (done) ->
     benv.setup =>
       benv.expose { $: require 'components-jquery' }

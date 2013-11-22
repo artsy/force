@@ -9,18 +9,19 @@ module.exports = class FillwidthView extends Backbone.View
     @page = 1
     @listenTo @collection, 'request', @renderSpinner
     @listenTo @collection, 'sync', @render
-    @nextPage()
+    @
 
   renderSpinner: ->
     @$('.fillwidth-see-more').attr 'data-state', 'loading'
 
   render: =>
     @$el.html template artworks: @collection.models, seeMore: @seeMore
-    @$('ul').fillwidth()
+    maxHeight = parseInt(@$('img').first().css('max-height')) or 260
+    @$('ul').fillwidth({ imageDimensions: @collection.fillwidthDimensions(maxHeight) })
     if @seeMore and @page is 2
-      _.defer @hidePastFirstRow
+      _.defer @hideFirstRow
 
-  hidePastFirstRow: =>
+  hideFirstRow: =>
     firstItem = @$('ul li').first()
     firstItemTop = firstItem.offset().top if firstItem.length
     @$('ul li').each ->

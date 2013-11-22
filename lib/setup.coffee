@@ -1,6 +1,6 @@
-# 
-# Sets up intial project settings, middleware, mounted apps, and 
-# global configuration such as overriding Backbone.sync and 
+#
+# Sets up intial project settings, middleware, mounted apps, and
+# global configuration such as overriding Backbone.sync and
 # populating sharify data
 #
 
@@ -16,11 +16,11 @@ httpProxy = require 'http-proxy'
 proxy = new httpProxy.RoutingProxy()
 
 module.exports = (app) ->
-  
+
   # Override Backbone to use server-side sync
   Backbone.sync = require "backbone-super-sync"
   Backbone.sync.editRequest = (req) -> req.set('X-XAPP-TOKEN': sharify.data.GRAVITY_XAPP_TOKEN)
-  
+
   # General settings
   app.use express.favicon()
   app.use express.logger('dev')
@@ -51,12 +51,12 @@ module.exports = (app) ->
     app.use require("browserify-dev-middleware")
       src: path.resolve(__dirname, "../")
       transforms: [require("jadeify2"), require('caching-coffeeify')]
-  
+
   # Test only
   if "test" is NODE_ENV
     # Mount fake API server
-    app.use "/__api", require("../test/helpers/integration.coffee").api  
-  
+    app.use "/__api", require("../test/helpers/integration.coffee").api
+
   # Router helper methods
   app.use (req, res, next) ->
     res.backboneError = (m, e) -> next e.text
@@ -73,10 +73,10 @@ module.exports = (app) ->
   app.use require "../apps/page"
   app.use require "../apps/artist"
   app.use require "../apps/auth"
-  
+
   # More general middleware
   app.use express.static(path.resolve __dirname, "../public")
-  
+
   # Proxy unhandled requests to Gravity using node-http-proxy
   app.use (req, res) ->
     proxy.proxyRequest req, res,
