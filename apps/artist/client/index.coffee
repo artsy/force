@@ -2,10 +2,12 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 Artworks = require '../../../collections/artworks.coffee'
 Artist = require '../../../models/artist.coffee'
+Post = require '../../../models/post.coffee'
 sd = require('sharify').data
 FillwidthView = require '../../../components/fillwidth_row/view.coffee'
 relatedArtistsTemplate = -> require('../templates/related_artists.jade') arguments...
 BlurbView = require './blurb.coffee'
+RelatedPostsView = require './related_posts.coffee'
 
 module.exports.ArtistView = class ArtistView extends Backbone.View
 
@@ -13,6 +15,7 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     @setupArtworks()
     @setupRelatedArtists()
     @setupBlurb()
+    @setupRelatedPosts()
 
   setupBlurb: ->
     $blurbEl = @$('.artist-info-section .artist-blurb .blurb')
@@ -39,6 +42,13 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
       fetchOptions: { 'filter[]': 'not_for_sale' }
       seeMore: true
     ).nextPage()
+
+  setupRelatedPosts: ->
+    @model.fetchRelatedPosts success: (posts) =>
+      new RelatedPostsView
+        el: @$('.artist-info-right .artist-related-posts')
+        numToShow: 2
+        collection: new Backbone.Collection posts.models, model: Post
 
   setupRelatedArtists: ->
     @relatedArtistsPage = 1

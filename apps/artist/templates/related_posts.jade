@@ -1,0 +1,22 @@
+h1.avant-garde-header-center Featured Posts About This Artist
+ul
+  for post in posts
+    -var profile = post.profile()
+    li.artist-related-post
+      .content
+        if post.get('title')
+          h1
+            a( href='/post' + post.get('id') )!= post.get('title')
+        if post.get('summary')
+          .artist-related-post-body
+            != post.get('summary')
+      unless profile.isNew()
+        .profile
+          a( href='/' + profile.get('id') )
+            -var icon = profile.icon()
+            unless icon.isNew()
+              -var imageType = profile.get('default_icon_version')
+              if icon.hasImage(imageType)
+                .icon_container
+                  img( src=icon.imageUrl(imageType) )
+                h2.avant-garde-header-center= profile.displayName()
