@@ -7,6 +7,7 @@ FillwidthView = require '../../../components/fillwidth_row/view.coffee'
 relatedArtistsTemplate = -> require('../templates/related_artists.jade') arguments...
 BlurbView = require './blurb.coffee'
 RelatedPostsView = require './related_posts.coffee'
+RelatedGenesView = require './genes.coffee'
 
 module.exports.ArtistView = class ArtistView extends Backbone.View
 
@@ -15,6 +16,7 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     @setupRelatedArtists()
     @setupBlurb()
     @setupRelatedPosts()
+    @setupRelatedGenes()
 
   setupBlurb: ->
     $blurbEl = @$('.artist-info-section .artist-blurb .blurb')
@@ -23,6 +25,11 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
         el: $blurbEl
         updateOnResize: true
         lineCount: 6
+
+  setupRelatedGenes: ->
+    new RelatedGenesView
+      model: @model
+      el: @$('.artist-info-section .artist-related-genes')
 
   setupArtworks: ->
     @availableArtworks = new Artworks
