@@ -14,7 +14,6 @@ module.exports =
   # @param {$Object} $form
   # @returns {Object}
   serializeForm: ($form) ->
-    debugger
     $form ||= @$('form')
     _.reduce($form.serializeArray(), (memo, input) ->
       memo[input.name] = _.trim input.value
