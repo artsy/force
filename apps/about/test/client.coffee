@@ -13,8 +13,6 @@ describe 'Client-side code for About page', ->
       Backbone.$ = $
       done()
 
-  after -> benv.teardown()
-
   beforeEach (done) ->
     page = new Page fabricate 'page'
     benv.render '../template.jade', {
