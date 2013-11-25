@@ -21,7 +21,7 @@ describe 'RelatedGenesView', ->
   beforeEach (done) ->
     sinon.stub Backbone, 'sync'
     artist = new Artist fabricate 'artist', id: 'bitty'
-    benv.render '../templates/index.jade', {
+    benv.render resolve(__dirname, '../templates/index.jade'), {
       sd: {}
       artist: new Artist fabricate 'artist'
     }, =>

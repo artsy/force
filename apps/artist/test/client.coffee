@@ -6,7 +6,6 @@ Artist        = require '../../../models/artist'
 _             = require 'underscore'
 { resolve }   = require 'path'
 { fabricate } = require 'antigravity'
-{ resolve } = require 'path'
 
 describe 'ArtistView', ->
 
@@ -23,7 +22,7 @@ describe 'ArtistView', ->
 
   beforeEach (done) ->
     sinon.stub Backbone, 'sync'
-    benv.render '../templates/index.jade', {
+    benv.render resolve(__dirname, '../templates/index.jade'), {
       sd: {}
       artist: new Artist fabricate 'artist'
     }, =>
