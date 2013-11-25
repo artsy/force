@@ -38,9 +38,9 @@ describe 'RelatedPostsView', ->
       Backbone.sync.args[0][1].url.should.include 'api/v1/related/posts'
       Backbone.sync.args[0][2].data['artist[]'].should.equal @view.model.get('id')
 
-    xit 'doesnt render anything if there are no results', ->
-      Backbone.sync.args[0][2].success []
-      @view.$el.find('.artist-info-right .artist-related-posts').html().should.equal ''
+    #it 'doesnt render anything if there are no results', ->
+    #  Backbone.sync.args[0][2].success []
+    #  @view.$el.find('.artist-info-right .artist-related-posts').html().should.equal ''
 
     it 'renders the right content', ->
       Backbone.sync.args[0][2].success [
