@@ -2,7 +2,6 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 Artworks = require '../../../collections/artworks.coffee'
 Artist = require '../../../models/artist.coffee'
-Post = require '../../../models/post.coffee'
 sd = require('sharify').data
 FillwidthView = require '../../../components/fillwidth_row/view.coffee'
 relatedArtistsTemplate = -> require('../templates/related_artists.jade') arguments...
@@ -44,11 +43,10 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     ).nextPage()
 
   setupRelatedPosts: ->
-    @model.fetchRelatedPosts success: (posts) =>
-      new RelatedPostsView
-        el: @$('.artist-info-right .artist-related-posts')
-        numToShow: 2
-        collection: new Backbone.Collection posts.models, model: Post
+    new RelatedPostsView
+      el: @$('.artist-info-right .artist-related-posts')
+      numToShow: 2
+      model: @model
 
   setupRelatedArtists: ->
     @relatedArtistsPage = 1

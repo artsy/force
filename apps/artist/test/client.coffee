@@ -34,6 +34,7 @@ describe 'ArtistView', ->
       @FillwidthView.returns @FillwidthView
       mod.__set__ 'FillwidthView', @FillwidthView
       mod.__set__ 'BlurbView', @blurbStub = sinon.stub()
+      mod.__set__ 'RelatedPostsView', @relatedPostStub = sinon.stub()
       @view = new ArtistView
         el: $ 'body'
         model: new Artist fabricate 'artist'
@@ -61,6 +62,11 @@ describe 'ArtistView', ->
     it 'sets up related artists', ->
       @view.relatedArtistsPage.should.equal 2
       @view.relatedContemporaryPage.should.equal 2
+
+    it 'sets up related posts', ->
+      viewRelatedPostOpts = @relatedPostStub.args[0][0]
+      viewRelatedPostOpts.numToShow.should.equal 2
+      viewRelatedPostOpts.model.should.equal @view.model
 
   describe '#setupRelatedArtists', ->
 
