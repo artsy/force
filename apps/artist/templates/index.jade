@@ -23,12 +23,15 @@ block body
         .loading-spinner
   .artist-info-section
     .responsive-side-margin
-      if artist.get('blurb')
-        .artist-blurb
-          h1.avant-garde-header-center= ['About', artist.get('name')].join(' ')
-          .blurb
-            != artist.mdToHtml('blurb')
-      .artist-related-genes
+      .artist-info-left
+        if artist.get('blurb')
+          .artist-blurb
+            h1.avant-garde-header-center= ['About', artist.get('name')].join(' ')
+            .blurb
+              != artist.mdToHtml('blurb')
+          .artist-related-genes
+      .artist-info-right
+        .artist-related-posts
   .artist-related-section
     h3.avant-garde-header-center Related Artists
     #artist-related-artists.responsive-side-margin

@@ -54,11 +54,65 @@
   margin 40px 0
   h1
     margin 40px 0px 20px 0px
-  > div
-    width 50%
-  .artist-related-genes
-    a
-      color #6a0bc1
+.artist-info-left
+  width 52%
+  display inline-block
+  vertical-align top
+  padding-right 55px
+.artist-info-right
+  width 46%
+  display inline-block
+.artist-related-posts
+  li
+    cursor pointer
+    border-bottom none
+    border-top 1px solid #e5e5e5
+    padding 10px
+    &:hover
+      background-color: #eee
+      .artist-related-post-content a
+        color #6a00cc
+    .artist-related-post-content
+      width 70%
+      display inline-block
+    .artist-related-post-profile
+      width 20%
+      display inline-block
+      margin-left 20px
+      vertical-align top
+      text-align center
+    .artist-related-post-icon-container
+      margin-left 20px
+    img
+      width 72px
+      height 72px
+    h1
+      font-size 18px
+      margin 0
+      text-align left
+      text-transform none
       text-decoration none
-      &:hover
-        text-decoration underline
+    h2
+      font-size 12px
+      margin-top 10px
+    a
+      text-decoration none
+  .artist-related-post-show-all
+    margin-top 24px
+    display block
+    text-align right
+    text-transform uppercase
+    font-size 12px
+    float right
+    text-decoration none
+    avant-garde()
+.artist-related-post-body
+  margin-bottom 10px
+  overflow hidden
+  font-size 14px
+.artist-related-genes
+  a
+    color #6a0bc1
+    text-decoration none
+    &:hover
+      text-decoration underline
