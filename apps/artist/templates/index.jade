@@ -28,7 +28,7 @@ block body
           h1.avant-garde-header-center= ['About', artist.get('name')].join(' ')
           .blurb
             != artist.mdToHtml('blurb')
-      //- Post container
+      .artist-related-genes
   .artist-related-section
     h3.avant-garde-header-center Related Artists
     #artist-related-artists.responsive-side-margin

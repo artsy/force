@@ -1,8 +1,10 @@
-_ = require 'underscore'
-benv = require 'benv'
-Backbone = require 'backbone'
-sinon = require 'sinon'
-Artist = require '../../../models/artist'
+rewire        = require 'rewire'
+benv          = require 'benv'
+Backbone      = require 'backbone'
+sinon         = require 'sinon'
+Artist        = require '../../../models/artist'
+_             = require 'underscore'
+{ resolve }   = require 'path'
 { fabricate } = require 'antigravity'
 { resolve } = require 'path'
 
@@ -34,6 +36,7 @@ describe 'ArtistView', ->
       @FillwidthView.returns @FillwidthView
       mod.__set__ 'FillwidthView', @FillwidthView
       mod.__set__ 'BlurbView', @blurbStub = sinon.stub()
+      mod.__set__ 'RelatedGenesView', @genesStub = sinon.stub()
       @view = new ArtistView
         el: $ 'body'
         model: new Artist fabricate 'artist'
@@ -57,6 +60,10 @@ describe 'ArtistView', ->
       viewBlurbOpts.updateOnResize.should.equal true
       viewBlurbOpts.lineCount.should.equal 6
       @view.$el.html().should.include @view.model.get('blurb')
+
+    it 'sets up the related genes view properly', ->
+      viewGeneOpts = @genesStub.args[0][0]
+      viewGeneOpts.model.should.equal @view.model
 
     it 'sets up related artists', ->
       @view.relatedArtistsPage.should.equal 2
