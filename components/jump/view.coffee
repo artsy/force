@@ -3,7 +3,7 @@ Backbone  = require 'backbone'
 mediator  = require '../../lib/mediator.coffee'
 
 module.exports = class JumpView extends Backbone.View
-  className: 'jump-to-top'
+  className: 'jump-to-top icon-chevron-up'
 
   initialize: (options) ->
     { @duration, @threshold, @frequency } =
