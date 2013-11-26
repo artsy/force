@@ -40,3 +40,9 @@ module.exports = class Artist extends Backbone.Model
         size: 15
         'artist[]': @get 'id'
     , options
+
+  hasImage: (version = 'large') ->
+    version in (@get('image_versions') || [])
+
+  imageUrl: (version = 'large') ->
+    @get('image_url').replace(':version', version)

@@ -1,13 +1,16 @@
-_ = require 'underscore'
-Backbone = require 'backbone'
-Artworks = require '../../../collections/artworks.coffee'
-Artist = require '../../../models/artist.coffee'
-sd = require('sharify').data
-FillwidthView = require '../../../components/fillwidth_row/view.coffee'
-relatedArtistsTemplate = -> require('../templates/related_artists.jade') arguments...
-BlurbView = require './blurb.coffee'
-RelatedPostsView = require './related_posts.coffee'
-RelatedGenesView = require './genes.coffee'
+_                       = require 'underscore'
+Backbone                = require 'backbone'
+Artworks                = require '../../../collections/artworks.coffee'
+Artist                  = require '../../../models/artist.coffee'
+sd                      = require('sharify').data
+FillwidthView           = require '../../../components/fillwidth_row/view.coffee'
+relatedArtistsTemplate  = -> require('../templates/related_artists.jade') arguments...
+BlurbView               = require './blurb.coffee'
+RelatedPostsView        = require './related_posts.coffee'
+RelatedGenesView        = require './genes.coffee'
+AuthModalView           = require '../../../components/auth_modal/view.coffee'
+mediator                = require '../../../lib/mediator.coffee'
+InitializeShareButtons  = require '../../../components/mixins/initialize_share.coffee' 
 
 module.exports.ArtistView = class ArtistView extends Backbone.View
 
@@ -17,6 +20,16 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     @setupBlurb()
     @setupRelatedPosts()
     @setupRelatedGenes()
+    @setupShareButtons()
+
+  setupShareButtons: ->
+    path = "/artist/#{@model.get 'id'}"
+    url = "#{sd.GRAVITY_URL}#{path}"
+    text = "#{@model.get 'name'} on Artsy"
+    if @model.hasImage('large')
+      imageUrl = @model.imageUrl('large')
+
+    InitializeShareButtons.initAndRender(el: @$el, url: url, text: text, imageUrl: imageUrl)
 
   setupBlurb: ->
     $blurbEl = @$('.artist-info-section .artist-blurb .blurb')
@@ -80,7 +93,13 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
       _.defer view.hideFirstRow
 
   events:
-    'click .artist-related-see-more': 'nextRelatedPage'
+    'click .artist-related-see-more'        : 'nextRelatedPage'
+    'click li.artist-related-artist button,
+           button#artist-follow-button'     : 'followArtist'
+
+  followArtist: (e) ->
+    e.preventDefault()
+    mediator.trigger 'open:auth', { mode: 'login' }
 
   nextRelatedArtistsPage: (e) ->
     type = if _.isString(e) then e else $(e).data 'type'
