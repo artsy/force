@@ -22,7 +22,7 @@ describe 'RelatedPostsView', ->
   beforeEach (done) ->
     sinon.stub Backbone, 'sync'
     artist = new Artist fabricate 'artist'
-    benv.render '../templates/index.jade', {
+    benv.render resolve(__dirname, '../templates/index.jade'), {
       sd: {}
       artist: artist
     }, =>

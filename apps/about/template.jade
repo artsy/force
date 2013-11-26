@@ -1,0 +1,11 @@
+extends ../../components/main_layout/templates/index
+
+block locals
+  assetPackage = 'about'
+
+block body
+  #about-page
+    #about-page-nav
+      != nav.mdToHtml('content')
+      #about-page-jump
+    #page-markdown-content!= page.mdToHtml('content')

@@ -1,5 +1,5 @@
 #
-# Pages like Terms of Use, Privacy, etc. that display relatively static content.
+# About page requires different enough functionality from page app
 #
 
 express   = require 'express'
@@ -9,4 +9,5 @@ app = module.exports = express()
 app.set 'views', __dirname
 app.set 'view engine', 'jade'
 
-app.get '/terms', routes.vanityUrl('terms')
+app.get '/about', routes.about
+app.get '/about/*', routes.about
