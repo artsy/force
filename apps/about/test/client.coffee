@@ -6,11 +6,12 @@ Page            = require '../../../models/page.coffee'
 mediator        = require '../../../lib/mediator.coffee'
 { fabricate }   = require 'antigravity'
 
-describe 'Client-side code for About page', ->
+describe 'AboutRouter', ->
   before (done) ->
     benv.setup =>
       benv.expose { $: require 'components-jquery' }
       Backbone.$ = $
+      Backbone.history.start = sinon.stub
       done()
 
   beforeEach (done) ->
@@ -20,42 +21,35 @@ describe 'Client-side code for About page', ->
       page: page,
       nav: page
     }, =>
-      { AboutRouter, AboutView } = require '../client'
-      @router   = new AboutRouter
-      @view     = @router.view
+      { @AboutRouter, @init } = require '../client'
+      @router = new @AboutRouter
       # The fabricated page doesnt have nav content; insert an example
-      @view.$('#about-page-nav').prepend('<a href="/about/jobs"></a>')
+      $('#about-page-nav').prepend('<a href="/about/jobs"></a>')
+      @init() # Attach click handlers
       done()
 
   describe 'AboutView', ->
     describe '#initialize', ->
       it 'should render a jump navigation and set its right CSS prop to inherit', ->
-        @view.$jumpContainer.html().should.include 'jump-to-top'
-        @view.$jumpContainer.html().should.include 'right: inherit'
+        @router.$jumpContainer.html().should.include 'jump-to-top'
+        @router.$jumpContainer.html().should.include 'right: inherit'
 
     describe 'events', ->
       beforeEach ->
-        @triggerSpy = sinon.spy mediator, 'trigger'
+        sinon.spy @AboutRouter.prototype, 'navigate'
 
       afterEach ->
-        mediator.trigger.restore()
+        @router.navigate.restore()
 
       describe '#toTop', ->
         it 'triggers a event for /about', ->
-          @view.$jumpContainer.click()
-          @triggerSpy.args[0][1].should.equal 'about'
+          @router.$jumpContainer.click()
+          @router.navigate.args[0][0].should.equal '/about'
 
       describe '#toSection', ->
         it 'triggers an event for the slug of the link', ->
-          @view.$('#about-page-nav a').first().click()
-          @triggerSpy.args[0][1].should.equal '/about/jobs'
+          $('#about-page-nav a').first().click()
+          @router.navigate.args[0][0].should.equal '/about/jobs'
 
     describe '#positionFromSlug', ->
       it 'should return the distance from the top, minus the header height, of a given section heading'
-
-  describe 'AboutRouter', ->
-    it '#triggerSection', ->
-      navigateSpy = sinon.spy @router, 'navigate'
-      @router.triggerSection '/about/jobs'
-      navigateSpy.args[0][0].should.equal '/about/jobs'
-      navigateSpy.restore()

@@ -5,51 +5,40 @@ mediator  = require '../../lib/mediator.coffee'
 
 module.exports.AboutRouter = class AboutRouter extends Backbone.Router
   routes:
-    'about': 'scrollToTop'
-    'about/:slug': 'scrollToSection'
+    'about': 'toTop'
+    'about/:slug': 'toSection'
 
   initialize: ->
-    @view = new AboutView el: $('#about-page'), $header: $('#main-layout-header')
-    mediator.on 'about:selected', @triggerSection, this
-
-  triggerSection: (slug) ->
-    @navigate slug, { trigger: true }
-
-  scrollToTop: ->
-    mediator.trigger 'scroll:top'
-
-  scrollToSection: (slug) ->
-    mediator.trigger 'scroll:position', @view.positionFromSlug(slug)
-
-module.exports.AboutView = class AboutView extends Backbone.View
-  events:
-    'click #about-page-jump': 'toTop'
-    'click #about-page-nav a': 'toSection'
-
-  initialize: (options) ->
-    { @$header }      = options
-    @$jumpContainer   = @$('#about-page-jump')
+    @$header          = $('#main-layout-header')
+    @$jumpContainer   = $('#about-page-jump')
     @jump             = new JumpView threshold: @_getThreshold()
 
     @$jumpContainer.html @jump.$el.css
       # Line up jump nav with container
       right: 'inherit'
 
+  toTop: ->
+    mediator.trigger 'scroll:top'
+
+  toSection: (slug) ->
+    mediator.trigger 'scroll:position', @_positionFromSlug(slug)
+
+  _positionFromSlug: (slug) ->
+    section = slug.replace /\/about\/|\-/g, ''
+    $("##{section}").offset().top - @$header.height()
+
   _getThreshold: ->
-    $nav = @$('#about-page-nav')
+    $nav = $('#about-page-nav')
     $nav.offset().top + $nav.height()
 
-  toTop: ->
-    mediator.trigger 'about:selected', 'about'
-
-  toSection: (e) ->
-    e.preventDefault()
-    mediator.trigger 'about:selected', $(e.target).attr('href')
-
-  positionFromSlug: (slug) ->
-    section   = slug.replace(/\/about\/|\-/g, '')
-    @$("##{section}").offset().top - @$header.height()
-
 module.exports.init = ->
-  @router = new AboutRouter
+  router = new AboutRouter
+
+  $('#about-page-jump').on 'click', ->
+    router.navigate '/about'
+
+  $('#about-page-nav a').on 'click', (e) ->
+    e.preventDefault()
+    router.navigate $(this).attr('href'), { trigger: true }
+
   Backbone.history.start(pushState: true)
