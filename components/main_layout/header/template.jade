@@ -1,12 +1,15 @@
 header#main-layout-header
   header#main-layout-welcome-header
-    aside
-      | Discover art from leading galleries,
-      br
-      | museums, and private collections.
+    #main-layout-welcome-header-aside
+      .mlwha-outer
+        .mlwha-inner
+          | Discover art from leading galleries,
+          br
+          | museums, and private collections.
+    i#main-layout-welcome-logo.icon-logo-type
   nav
     #main-layout-header-left
-      a#main-layout-header-home-logo( href='/' )
+      a#main-layout-header-home-logo.icon-logo-glyph( href='/' )
       include ./search_bar/template
     #main-layout-header-right
       a( href='/browse' ) Browse

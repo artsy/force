@@ -10,7 +10,7 @@ module.exports = class PinterestCustomView extends Backbone.View
     'click .share-to-pinterest': 'showPopUp'
 
   render: ->
-    @$pinterestLink = $("<a class='share-to-pinterest'></a>")
+    @$pinterestLink = $("<a class='share-to-pinterest icon-pinterest'></a>")
     options =
       url: (@url or window.location.href)
       media: @media

@@ -21,9 +21,10 @@
 #main-layout-header-home-logo
   width home-logo-size
   height home-logo-size
+  font-size (home-logo-size - 20px)
+  padding 10px
   display block
-  background no-repeat center center
-  background-size 30px
+  text-decoration none
 
 #main-layout-header-right
   float right
@@ -40,16 +41,32 @@
       border-left 1px solid light-gray-border-color
 
 #main-layout-welcome-header
-  clearfix()
-  background no-repeat center calc(50% - 2px)
-  background-size 131px
+  position relative
   border-bottom 1px solid light-gray-border-color
-  aside
-    text-transform uppercase
-    float left
-    padding 22px 51px
-    letter-spacing 1px
-    font-size default-garamond-font-size - 1
+
+#main-layout-welcome-header-aside
+  position absolute
+  top 0
+  bottom 0
+  left 0
+  > .mlwha-outer
+    display table
+    height 100%
+    > .mlwha-inner
+      height 100%
+      padding 0 50px
+      vertical-align middle
+      display table-cell
+      text-transform uppercase
+      letter-spacing 1px
+      line-height 1.35
+      font-size default-garamond-font-size - 1
+
+#main-layout-welcome-logo
+  display block
+  font-size 45px
+  text-align center
+  padding 20px 0
 
 #main-layout-header-home-logo, #main-layout-header-right a
   position relative
