@@ -78,6 +78,9 @@ module.exports = (app) ->
   # More general middleware
   app.use express.static(path.resolve __dirname, "../public")
 
+  app.get '/system/up', (req, res) ->
+    res.send 200, { status: 'OK' }
+
   # Proxy unhandled requests to Gravity using node-http-proxy
   app.use (req, res) ->
     proxy.proxyRequest req, res,
