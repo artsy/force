@@ -1,6 +1,13 @@
 @import '../../stylus_lib'
 @import './spinners'
 
+.highlight-link
+  line-height 1.1
+  text-decoration none
+  transition color 0.5s
+  &:hover
+    color highlight-color
+
 .avant-garde-button
   display inline-block
   position relative
@@ -61,8 +68,7 @@
   @extends .avant-garde-button
   background transparent
   padding 0 0 2px 0
-  display block
-  text-align center
+  display inline-block
   &:focus, &:hover, &:active
     border-bottom 2px solid
     padding-bottom 0

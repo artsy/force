@@ -18,7 +18,8 @@
     "showdown": "git://github.com/craigspaeth/showdown.git",
     "underscore": "*",
     "newrelic": "*",
-    "underscore.string": "*"
+    "underscore.string": "*",
+    "q": "*"
   },
   "devDependencies": {
     "browserify": "*",
