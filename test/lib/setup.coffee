@@ -40,4 +40,9 @@ describe 'Setup', ->
     request.get('http://localhost:3456/terms').set('X-Forwarded-Proto': 'https').end (res) ->
       res.text.should.include 'https://cdn.com/'
       done()
+
+  it 'returns an ok status when /system/up pinged', (done) ->
+    request.get('http://localhost:3456/system/up').end (res) ->
+      JSON.parse(res.text).status.should.equal 'OK'
+      done()
     
