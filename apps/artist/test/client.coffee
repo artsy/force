@@ -62,10 +62,18 @@ describe 'ArtistView', ->
       view2Opts.collection.url.should.include '/artworks'
 
     it 'sets up the blurb view if there is one', ->
+      fixture = """
+        <div class='artist-info-section'>
+          <div class='artist-blurb'>
+            <div class='blurb'></div>
+          </div>
+        </div>
+      """
+      @view.$el.html fixture
+      @view.setupBlurb()
       viewBlurbOpts = @blurbStub.args[0][0]
       viewBlurbOpts.updateOnResize.should.equal true
       viewBlurbOpts.lineCount.should.equal 6
-      @view.$el.html().should.include @view.model.get('blurb')
 
     it 'sets up the related genes view properly', ->
       viewGeneOpts = @genesStub.args[0][0]
