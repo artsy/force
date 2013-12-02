@@ -10,7 +10,7 @@ RelatedPostsView        = require './related_posts.coffee'
 RelatedGenesView        = require './genes.coffee'
 AuthModalView           = require '../../../components/auth_modal/view.coffee'
 mediator                = require '../../../lib/mediator.coffee'
-InitializeShareButtons  = require '../../../components/mixins/initialize_share.coffee' 
+InitializeShareButtons  = require '../../../components/mixins/initialize_share.coffee'
 
 module.exports.ArtistView = class ArtistView extends Backbone.View
 
