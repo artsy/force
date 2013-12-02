@@ -50,6 +50,9 @@ describe 'ArtistView', ->
 
   describe '#initialize', ->
 
+    beforeEach ->
+      @view.initialize()
+
     it 'sets up fillwidth views with collections pointing to for sale and not for sale works', ->
       view1Opts = @FillwidthView.args[0][0]
       view2Opts = @FillwidthView.args[1][0]
@@ -94,6 +97,7 @@ describe 'ArtistView', ->
   describe '#renderRelatedArtists', ->
 
     it 'renders related artists', ->
+      @view.$el.html "<div id='artist-related-artists'></div>"
       @view.model.relatedArtists.reset [fabricate 'artist', name: 'Andy Foobar']
       @view.renderRelatedArtists 'Artists'
       @view.$el.html().should.include 'Andy Foobar'
