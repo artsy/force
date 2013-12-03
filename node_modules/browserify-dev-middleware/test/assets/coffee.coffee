@@ -1,0 +1,1 @@
+@foo = -> 'MOO BAR TO THE BAZ'

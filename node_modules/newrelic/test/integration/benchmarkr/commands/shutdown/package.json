@@ -1,0 +1,15 @@
+{
+  "name": "shutdown",
+  "version": "0.0.0",
+  "main": "index.js",
+  "private": true,
+  "plugin": {
+    "consumes": [
+      "mongodbProcess",
+      "mysqldProcess",
+      "redisProcess",
+      "memcachedProcess"
+    ],
+    "provides" : ["shutdown"]
+  }
+}
