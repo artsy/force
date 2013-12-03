@@ -1,0 +1,5 @@
+--require should
+--reporter list
+--ui bdd
+--compilers coffee:coffee-script
+--timeout 30000

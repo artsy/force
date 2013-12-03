@@ -1,0 +1,25 @@
+{
+  "node": true,
+  "laxcomma": true,
+  "eqeqeq": true,
+  "forin": true,
+  "immed": true,
+  "unused": true,
+  "undef": true,
+  "latedef": true,
+  "maxlen": 90,
+  "maxdepth": 3,
+  "maxparams": 4,
+  "newcap": true,
+  "nonew": true,
+  "sub": true,
+  "shadow": false,
+  "predef": [
+    "after",
+    "afterEach",
+    "before",
+    "beforeEach",
+    "describe",
+    "it"
+  ]
+}
