@@ -20,6 +20,8 @@ module.exports = (app) ->
   # Override Backbone to use server-side sync
   Backbone.sync = require "backbone-super-sync"
   Backbone.sync.editRequest = (req) -> req.set('X-XAPP-TOKEN': sharify.data.GRAVITY_XAPP_TOKEN)
+  # Augment sync with Q promises
+  require('./deferred-sync.coffee')(Backbone, require 'q')
 
   # General settings
   app.use express.favicon()
@@ -74,6 +76,7 @@ module.exports = (app) ->
   app.use require "../apps/artist"
   app.use require "../apps/auth"
   app.use require "../apps/about"
+  app.use require "../apps/browse"
 
   # More general middleware
   app.use express.static(path.resolve __dirname, "../public")
