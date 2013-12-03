@@ -12,7 +12,8 @@ html
   body
     include ../../modal/template
     include ../header/template
-    block body
+    #main-layout-container
+      block body
     #scripts
       include scripts
       script( src=(sd.ASSET_PATH + assetPackage + sd.JS_EXT) )

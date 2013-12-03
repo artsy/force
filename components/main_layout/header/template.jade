@@ -9,13 +9,13 @@ header#main-layout-header
     i#main-layout-welcome-logo.icon-logo-type
   nav
     #main-layout-header-left
-      a#main-layout-header-home-logo.icon-logo-glyph( href='/' )
+      a#main-layout-header-home-logo.icon-logo-glyph( href='/', data-transition )
       include ./search_bar/template
     #main-layout-header-right
-      a( href='/browse' ) Browse
-      a( href='/filter/artworks' ) Filter
-      a( href='/partners' ) partners
-      a( href='/posts' ) Posts
-      a( href='/about' ) About
+      a( href='/browse', data-transition ) Browse
+      a( href='/filter/artworks', data-transition ) Filter
+      a( href='/partners', data-transition ) partners
+      a( href='/posts', data-transition ) Posts
+      a( href='/about', data-transition ) About
       a.mlh-login( href='/log_in' ) Log in
       a.mlh-signup( href='/sign_up' ) Sign up
