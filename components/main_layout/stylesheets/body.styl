@@ -15,3 +15,11 @@ main-header-height = 54px
     z-index 2
     // Prevent repaints
     force-hardware-acceleration()
+
+#main-layout-container
+  opacity 0
+  transition opacity 0.25s
+  &[data-state='fade-in']
+    opacity 1
+  &[data-state='fade-out']
+    opacity 0

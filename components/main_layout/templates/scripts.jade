@@ -1,6 +1,6 @@
-//- 
+//-
 //- Common external script like fonts.com, typekit, etc.
-//- 
+//-
 
 //- This beacon for fonts.com determines how many page views to charge us for. Limit to production.
 if sd.NODE_ENV == 'production'
@@ -36,3 +36,13 @@ if sharifyScript
 
 //- Add Google's jQuery
 script( src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" )
+
+//- Simulate page transitions
+script
+  $(function() {
+    var $container = $('#main-layout-container');
+    $container.attr('data-state', 'fade-in');
+    $('a[data-transition]').on('click', function() {
+      $container.attr('data-state', 'fade-out');
+    });
+  });
