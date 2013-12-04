@@ -4,9 +4,9 @@ AuthModalView   = require '../../auth_modal/view.coffee'
 mediator        = require '../../../lib/mediator.coffee'
 
 module.exports = class HeaderView extends Backbone.View
-  events:
-    'click .mlh-login': 'login'
-    'click .mlh-signup': 'signup'
+  # events:
+  #   'click .mlh-login': 'login'
+  #   'click .mlh-signup': 'signup'
 
   initialize: (options) ->
     { @$window, @$body } = options
