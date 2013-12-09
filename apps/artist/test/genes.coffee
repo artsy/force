@@ -42,7 +42,8 @@ describe 'RelatedGenesView', ->
 
     it 'doesnt render anything if there are no results', ->
       _.last(Backbone.sync.args)[2].success []
-      @view.$el.find('.artist-related-genes').html().should.equal ''
+      @view.$el.find('.artist-related-genes').length.should.equal 1
+      @view.$el.find('.artist-related-genes .genes').length.should.equal 0
 
     it 'renders the right content', ->
       _.last(Backbone.sync.args)[2].success [
