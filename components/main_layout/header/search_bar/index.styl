@@ -3,7 +3,7 @@ suggestion-thumbnail-size   = 32px
 
 #main-layout-search-bar-container
   position relative
-  width 'calc(100% - %s)' % logo-size
+  width calc('100% - %s' % logo-size)
   border-left 1px solid light-gray-border-color
 
   &.is-open
@@ -21,7 +21,7 @@ suggestion-thumbnail-size   = 32px
 #main-layout-search-bar-suggested
   display block
   position absolute
-  width calc(100% + 2px)
+  width calc('100% + 2px')
   height 0
   top 100%
   left 0px
@@ -60,7 +60,7 @@ suggestion-thumbnail-size   = 32px
     display none
 
   .tt-dropdown-menu
-    width calc(100% + 2px)
+    width calc('100% + 2px')
     margin-left -1px
     background-color #fff
     border 1px solid light-gray-border-color

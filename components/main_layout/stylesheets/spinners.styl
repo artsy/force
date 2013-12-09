@@ -18,8 +18,8 @@ spinner(width=25px, height=6px, color=#000)
   width width
   height height
   position absolute
-  top 'calc(50% - (%s / 2))' % height
-  left 'calc(50% - (%s / 2))' % width
+  top calc('50% - (%s / 2)' % height)
+  left calc('50% - (%s / 2)' % width)
   animation spin 1s infinite
 
 .loading-spinner
