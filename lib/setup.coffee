@@ -19,7 +19,7 @@ module.exports = (app) ->
 
   # Override Backbone to use server-side sync
   Backbone.sync = require "backbone-super-sync"
-  Backbone.sync.editRequest = (req) -> req.set('X-XAPP-TOKEN': sharify.data.GRAVITY_XAPP_TOKEN)
+  Backbone.sync.editRequest = (req) -> req.set('X-XAPP-TOKEN': artsyXappMiddlware.token)
   # Augment sync with Q promises
   require('./deferred-sync.coffee')(Backbone, require 'q')
 
@@ -33,7 +33,6 @@ module.exports = (app) ->
     artsyUrl: GRAVITY_URL
     clientId: CLIENT_ID
     clientSecret: CLIENT_SECRET
-    sharifyData: sharify.data
   ) unless app.get('env') is 'test'
 
   # Setup some initial data for shared modules
@@ -69,6 +68,11 @@ module.exports = (app) ->
     pathObj = parse res.locals.sd.ASSET_PATH
     pathObj.protocol = if req.get('X-Forwarded-Proto') is 'https' then 'https' else 'http'
     res.locals.sd.ASSET_PATH = format(pathObj)
+    next()
+
+  # Set the xapp token in locals
+  app.use (req, res, next) ->
+    res.locals.sd.GRAVITY_XAPP_TOKEN = res.locals.artsyXappToken
     next()
 
   # Mount apps

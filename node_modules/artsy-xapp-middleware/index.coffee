@@ -12,7 +12,7 @@
 request = require 'superagent'
 moment = require 'moment'
 
-@token = null
+module.exports.token = null
 
 module.exports = (options) =>
 
@@ -26,13 +26,13 @@ module.exports = (options) =>
       expireTokenIn res.body.expires_in
 
   expireTokenIn = (expiresIn) =>
-    setTimeout (=> @token = null), moment(expiresIn).unix() - moment().unix()
+    setTimeout (=> module.exports.token = null), moment(expiresIn).unix() - moment().unix()
 
   (req, res, next) =>
-    unless @token?
+    unless module.exports.token?
       fetch (err, token) =>
-        res.locals.artsyXappToken = @token = token
+        res.locals.artsyXappToken = module.exports.token = token
         next()
     else
-      res.locals.artsyXappToken = @token
+      res.locals.artsyXappToken = module.exports.token
       next()
