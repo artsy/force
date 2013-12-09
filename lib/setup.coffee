@@ -19,8 +19,7 @@ module.exports = (app) ->
 
   # Override Backbone to use server-side sync
   Backbone.sync = require "backbone-super-sync"
-  Backbone.sync.editRequest = (req) ->
-    req.set('X-XAPP-TOKEN': artsyXappMiddlware.token)
+  Backbone.sync.editRequest = (req) -> req.set('X-XAPP-TOKEN': artsyXappMiddlware.token)
   # Augment sync with Q promises
   require('./deferred-sync.coffee')(Backbone, require 'q')
 
@@ -71,7 +70,7 @@ module.exports = (app) ->
     res.locals.sd.ASSET_PATH = format(pathObj)
     next()
 
-  # set the xapp token
+  # Set the xapp token in locals
   app.use (req, res, next) ->
     res.locals.sd.GRAVITY_XAPP_TOKEN = res.locals.artsyXappToken
     next()
