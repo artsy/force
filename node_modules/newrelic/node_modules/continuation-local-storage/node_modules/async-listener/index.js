@@ -87,6 +87,11 @@ wrap(net.Socket.prototype, 'connect', function (original) {
   };
 });
 
+// need unwrapped nextTick for use within < 0.9 async error handling
+if (!process._fatalException) {
+  process._originalNextTick = process.nextTick;
+}
+
 var processors = ['nextTick'];
 if (process._nextDomainTick) processors.push('_nextDomainTick');
 if (process._tickDomainCallback) processors.push('_tickDomainCallback');
