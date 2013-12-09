@@ -203,13 +203,6 @@ if (process._fatalException) {
 // 0.8 and below
 else {
   /**
-   * The error handler in the error-checker for old Node must rethrow to give
-   * domains and other uncaughtException handlers a chance to fire, but there's
-   * nothing for the uncaughtException handler to do.
-   */
-  var threw = false;
-
-  /**
    * If an error handler in asyncWrap throws, the process must die. Under 0.8
    * and earlier the only way to put a bullet through the head of the process
    * is to rethrow from inside the exception handler, so rethrow and set
@@ -223,11 +216,6 @@ else {
    * by putting everything in a try-catch.
    */
   asyncCatcher = function uncaughtCatcher(er) {
-    if (threw) {
-      threw = false;
-      return;
-    }
-
     // going down hard
     if (errorThrew) throw er;
 
@@ -273,6 +261,14 @@ else {
      * async method like this does).
      */
     return function () {
+      /*jshint maxdepth:4*/
+
+      // after() handlers don't run if threw
+      var threw = false;
+
+      // ...unless the error is handled
+      var handled = false;
+
       /* More than one listener can end up inside these closures, so save the
        * current listeners on a stack.
        */
@@ -299,7 +295,7 @@ else {
         returned = original.apply(this, arguments);
       }
       catch (er) {
-        var handled = false;
+        threw = true;
         for (var i = 0; i < length; ++i) {
           var error = listeners[i].callbacks.error;
           if (typeof error === 'function') {
@@ -313,34 +309,40 @@ else {
           }
         }
 
+        if (!handled) {
+          // having an uncaughtException handler here alters crash semantics
+          process.removeListener('uncaughtException', asyncCatcher);
+          process._originalNextTick(function () {
+            process.addListener('uncaughtException', asyncCatcher);
+          });
+
+          throw er;
+        }
+      }
+      finally {
+        /*
+         * after handlers (not run if original throws)
+         */
+        if (!threw || handled) {
+          inAsyncTick = true;
+          for (i = 0; i < length; ++i) {
+            var after = list[i].callbacks && list[i].callbacks.after;
+            if (typeof after === 'function') after(this, values[i], returned);
+          }
+          inAsyncTick = false;
+        }
+
         // back to the previous listener list on the stack
         listeners = listenerStack.pop();
-
-        if (handled) return;
-
-        threw = true;
-        throw er;
       }
 
-      /*
-       * after handlers (not run if original throws)
-       */
-      inAsyncTick = true;
-      for (i = 0; i < length; ++i) {
-        var after = list[i].callbacks && list[i].callbacks.after;
-        if (typeof after === 'function') after(this, values[i], returned);
-      }
-      inAsyncTick = false;
-
-      // back to the previous listener list on the stack
-      listeners = listenerStack.pop();
 
       return returned;
     };
   };
 
   // will be the first to fire if async-listener is the first module loaded
-  process.on('uncaughtException', asyncCatcher);
+  process.addListener('uncaughtException', asyncCatcher);
 }
 
 // for performance in the case where there are no handlers, just the listener

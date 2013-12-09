@@ -26,8 +26,7 @@ var _vars = {
     Buffer: function () {
         return {
             id: bufferModulePath,
-            source: bufferModuleSrc,
-            suffix: ".Buffer"
+            source: bufferModuleSrc
         }
     },
     __filename: function (row, basedir) {
