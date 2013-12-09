@@ -35,10 +35,9 @@ describe 'artsyXappMiddleware', ->
       done()
 
   it 'expires the token after the expiration time', (done) ->
-    token = artsyXappMiddleware.token
     request('http://localhost:4000/foo').end (res) ->
       res.text.should.equal 'x-foo-token'
       setTimeout ->
-        (token?).should.not.be.ok
+        (artsyXappMiddleware.token?).should.not.be.ok
         done()
       , 2000
