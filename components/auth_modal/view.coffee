@@ -15,7 +15,7 @@ templates =
 
 class Login extends Backbone.Model
   url: (if sd.NODE_ENV is 'development' then 'http' else 'https') +
-       "://#{parse(sd.APP_URL).host}/users/sign_in"
+       "://#{parse(sd.APP_URL or '').host}/users/sign_in"
 
 class Forgot extends Backbone.Model
   save: (data, options) ->

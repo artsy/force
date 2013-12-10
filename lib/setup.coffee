@@ -24,7 +24,7 @@ module.exports = (app) ->
   # Override Backbone to use server-side sync & augment sync with Q promises
   Backbone.sync = require "backbone-super-sync"
   Backbone.sync.editRequest = (req) -> req.set('X-XAPP-TOKEN': artsyXappMiddlware.token)
-  require('./deferred-sync.coffee')(Backbone, require 'q')
+  require('./deferred_sync.coffee')(Backbone, require 'q')
 
   # Setup Artsy XAPP middleware
   app.use artsyXappMiddlware(
@@ -46,7 +46,7 @@ module.exports = (app) ->
   app.use express.cookieParser(SESSION_SECRET)
   app.use express.cookieSession()
   app.use express.bodyParser()
-  app.use artsyPassport _.extend config, CurrentUser: CurrentUser
+  app.use artsyPassport _.extend(config, CurrentUser: CurrentUser)
 
   # General
   app.use express.favicon()
@@ -91,12 +91,12 @@ module.exports = (app) ->
   app.use require "../apps/about"
   app.use require "../apps/browse"
 
-  # More general middleware
-  app.use express.static(path.resolve __dirname, "../public")
-
   # Route to ping for system up
   app.get '/system/up', (req, res) ->
     res.send 200, { status: 'OK' }
+
+  # More general middleware
+  app.use express.static(path.resolve __dirname, "../public")
 
   # Proxy unhandled requests to Gravity using node-http-proxy
   app.use (req, res) ->
