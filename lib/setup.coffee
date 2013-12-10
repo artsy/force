@@ -5,7 +5,7 @@
 #
 
 { GRAVITY_URL, NODE_ENV, ARTSY_ID, ARTSY_SECRET, SESSION_SECRET, PORT,
-  ASSET_PATH } = config = require "../config"
+  ASSET_PATH, APP_URL } = config = require "../config"
 { parse, format } = require 'url'
 _ = require 'underscore'
 express = require "express"
@@ -17,39 +17,45 @@ artsyXappMiddlware = require 'artsy-xapp-middleware'
 httpProxy = require 'http-proxy'
 proxy = new httpProxy.RoutingProxy()
 CurrentUser = require '../models/current_user'
+cors = require 'cors'
 
 module.exports = (app) ->
 
-  # Override Backbone to use server-side sync
+  # Override Backbone to use server-side sync & augment sync with Q promises
   Backbone.sync = require "backbone-super-sync"
   Backbone.sync.editRequest = (req) -> req.set('X-XAPP-TOKEN': artsyXappMiddlware.token)
-  # Augment sync with Q promises
   require('./deferred-sync.coffee')(Backbone, require 'q')
 
-  # General settings
-  app.use express.favicon()
-  app.use express.logger('dev')
-  app.use express.bodyParser()
-  app.use express.cookieParser(SESSION_SECRET)
-  app.use express.cookieSession()
+  # Setup Artsy XAPP middleware
   app.use artsyXappMiddlware(
     artsyUrl: GRAVITY_URL
     clientId: ARTSY_ID
     clientSecret: ARTSY_SECRET
   ) unless app.get('env') is 'test'
-  app.use artsyPassport _.extend config, CurrentUser: CurrentUser
 
-  # Setup some initial data for shared modules
+  # Setup Sharify
   app.use sharify
-    GRAVITY_URL: GRAVITY_URL
     JS_EXT: (if "production" is NODE_ENV then ".min.js.gz" else ".js")
     CSS_EXT: (if "production" is NODE_ENV then ".min.css.gz" else ".css")
     ASSET_PATH: ASSET_PATH
+    APP_URL: APP_URL
+    GRAVITY_URL: GRAVITY_URL
+    NODE_ENV: NODE_ENV
 
-  # Development only
+  # Setup Artsy Passport
+  app.use express.cookieParser(SESSION_SECRET)
+  app.use express.cookieSession()
+  app.use express.bodyParser()
+  app.use artsyPassport _.extend config, CurrentUser: CurrentUser
+
+  # General
+  app.use express.favicon()
+  app.use express.logger('dev')
+  app.use cors()
+
+  # Development
   if "development" is NODE_ENV
     app.use express.errorHandler()
-    # Compile assets on request in development
     app.use require("stylus").middleware
       src: path.resolve(__dirname, "../")
       dest: path.resolve(__dirname, "../public")
@@ -57,9 +63,8 @@ module.exports = (app) ->
       src: path.resolve(__dirname, "../")
       transforms: [require("jadeify2"), require('caching-coffeeify')]
 
-  # Test only
+  # Test
   if "test" is NODE_ENV
-    # Mount fake API server
     app.use "/__api", require("../test/helpers/integration.coffee").api
 
   # Router helper methods
@@ -89,6 +94,7 @@ module.exports = (app) ->
   # More general middleware
   app.use express.static(path.resolve __dirname, "../public")
 
+  # Route to ping for system up
   app.get '/system/up', (req, res) ->
     res.send 200, { status: 'OK' }
 

@@ -20,7 +20,8 @@
     "newrelic": "*",
     "underscore.string": "*",
     "q": "*",
-    "artsy-passport": "*"
+    "artsy-passport": "*",
+    "cors": "*"
   },
   "devDependencies": {
     "browserify": "*",

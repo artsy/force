@@ -17,5 +17,8 @@ header#main-layout-header
       a( href='/partners', data-transition ) partners
       a( href='/posts', data-transition ) Posts
       a( href='/about', data-transition ) About
-      a.mlh-login( href='/log_in' ) Log in
-      a.mlh-signup( href='/sign_up' ) Sign up
+      if user
+        a= user.get('name')
+      else
+        a.mlh-login( href='/log_in' ) Log in
+        a.mlh-signup( href='/sign_up' ) Sign up
