@@ -3,6 +3,7 @@ Backbone = require 'backbone'
 sd = require('sharify').data
 Artworks = require '../collections/artworks.coffee'
 markdownMixin = require './mixins/markdown.coffee'
+{ smartTruncate } = require '../components/util/string.coffee'
 Post = require '../models/post.coffee'
 
 module.exports = class Artist extends Backbone.Model
@@ -46,3 +47,14 @@ module.exports = class Artist extends Backbone.Model
 
   imageUrl: (version = 'large') ->
     @get('image_url').replace(':version', version)
+
+  toPageTitle: ->
+    "#{@htmlToText('name')} | Artsy"
+
+  toPageDescription: (length=200) ->
+    # artists are usually displayed: Name (Nationality, Born-Died)
+    info = _.compact([@get('nationality'), @get('years')]).join(', ')
+    smartTruncate(_.compact([
+     (if info?.length > 0 then "#{@get('name')} (#{info})" else @get('name'))
+     (if @get('blurb')?.length > 0 then @mdToHtmlToText('blurb') else undefined)
+    ]).join(". "), length)

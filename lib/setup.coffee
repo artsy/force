@@ -5,7 +5,7 @@
 #
 
 { GRAVITY_URL, NODE_ENV, CLIENT_ID, CLIENT_SECRET, SESSION_SECRET, PORT,
-  ASSET_PATH } = require "../config"
+  ASSET_PATH, FACEBOOK_APP_NAMESPACE, MOBILE_MEDIA_QUERY, CANONICAL_MOBILE_URL } = require "../config"
 { parse, format } = require 'url'
 express = require "express"
 Backbone = require "backbone"
@@ -41,6 +41,9 @@ module.exports = (app) ->
     JS_EXT: (if "production" is NODE_ENV then ".min.js.gz" else ".js")
     CSS_EXT: (if "production" is NODE_ENV then ".min.css.gz" else ".css")
     ASSET_PATH: ASSET_PATH
+    MOBILE_MEDIA_QUERY: MOBILE_MEDIA_QUERY
+    CANONICAL_MOBILE_URL: CANONICAL_MOBILE_URL
+    FACEBOOK_APP_NAMESPACE: FACEBOOK_APP_NAMESPACE
 
   # Development only
   if "development" is NODE_ENV
