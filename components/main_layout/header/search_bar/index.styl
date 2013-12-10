@@ -91,10 +91,13 @@ suggestion-thumbnail-size   = 32px
 
 .mlsb-suggestion-thumbnail
   padding 10px
-  & > img
+  > span
+    display block
     width suggestion-thumbnail-size
     height suggestion-thumbnail-size
-    vertical-align bottom
+    background-color light-gray-background-color
+    > img
+      vertical-align bottom
 
 .mlsb-suggestion-value
   padding 10px 10px 10px 0
