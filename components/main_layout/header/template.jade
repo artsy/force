@@ -9,14 +9,14 @@ header#main-layout-header
     i#main-layout-welcome-logo.icon-logo-type
   nav
     #main-layout-header-left
-      a#main-layout-header-home-logo.icon-logo-glyph( href='/', data-transition )
+      a#main-layout-header-home-logo.icon-logo-glyph( href='/' )
       include ./search_bar/template
     #main-layout-header-right
-      a( href='/browse', data-transition ) Browse
-      a( href='/filter/artworks', data-transition ) Filter
-      a( href='/partners', data-transition ) partners
-      a( href='/posts', data-transition ) Posts
-      a( href='/about', data-transition ) About
+      a( href='/browse' ) Browse
+      a( href='/filter/artworks' ) Filter
+      a( href='/partners' ) partners
+      a( href='/posts' ) Posts
+      a( href='/about' ) About
       if user
         a= user.get('name')
       else

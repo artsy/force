@@ -36,3 +36,10 @@ ellipsis()
 
 force-hardware-acceleration()
   transform translate3d(0, 0, 0)
+
+// Surprisingly, nib doesn't support calc
+calc()
+  for prefix in webkit moz ms o
+    arguments = unquote(arguments) if typeof(arguments) is string
+    add-property(current-property[0], s('-%s-calc(%s)', prefix, arguments))
+  s('calc(%s)', arguments)
