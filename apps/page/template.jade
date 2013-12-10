@@ -1,5 +1,20 @@
 extends ../../components/main_layout/templates/index
 
+block head
+  case page.get('id')
+    when 'terms'
+      include meta/terms
+    when 'past-terms'
+      include meta/terms
+    when 'past-terms-10-29-12'
+      include meta/terms
+    when 'privacy'
+      include meta/privacy
+    when 'press'
+      include meta/press
+    default
+      include ../../components/main_layout/templates/common_head
+
 block locals
   assetPackage = 'page'
 

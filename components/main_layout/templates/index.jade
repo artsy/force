@@ -5,10 +5,9 @@ block locals
 doctype 5
 html
   head
-    title Artsy - Discover Fine Art
-    link( type='text/css', rel='stylesheet', href=(sd.ASSET_PATH + assetPackage + sd.CSS_EXT) )
-    include head
     block head
+    include head
+    link( type='text/css', rel='stylesheet', href=(sd.ASSET_PATH + assetPackage + sd.CSS_EXT) )
   body
     include ../../modal/template
     include ../header/template
