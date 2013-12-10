@@ -4,16 +4,19 @@
 # populating sharify data
 #
 
-{ GRAVITY_URL, NODE_ENV, CLIENT_ID, CLIENT_SECRET, SESSION_SECRET, PORT,
-  ASSET_PATH } = require "../config"
+{ GRAVITY_URL, NODE_ENV, ARTSY_ID, ARTSY_SECRET, SESSION_SECRET, PORT,
+  ASSET_PATH } = config = require "../config"
 { parse, format } = require 'url'
+_ = require 'underscore'
 express = require "express"
 Backbone = require "backbone"
 sharify = require "sharify"
 path = require "path"
+artsyPassport = require 'artsy-passport'
 artsyXappMiddlware = require 'artsy-xapp-middleware'
 httpProxy = require 'http-proxy'
 proxy = new httpProxy.RoutingProxy()
+CurrentUser = require '../models/current_user'
 
 module.exports = (app) ->
 
@@ -31,9 +34,10 @@ module.exports = (app) ->
   app.use express.cookieSession()
   app.use artsyXappMiddlware(
     artsyUrl: GRAVITY_URL
-    clientId: CLIENT_ID
-    clientSecret: CLIENT_SECRET
+    clientId: ARTSY_ID
+    clientSecret: ARTSY_SECRET
   ) unless app.get('env') is 'test'
+  app.use artsyPassport _.extend config, CurrentUser: CurrentUser
 
   # Setup some initial data for shared modules
   app.use sharify
@@ -78,7 +82,7 @@ module.exports = (app) ->
   # Mount apps
   app.use require "../apps/page"
   app.use require "../apps/artist"
-  # app.use require "../apps/auth"
+  app.use require "../apps/auth"
   app.use require "../apps/about"
   app.use require "../apps/browse"
 
