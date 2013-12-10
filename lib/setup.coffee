@@ -100,7 +100,7 @@ module.exports = (app) ->
     res.send 200, { status: 'OK' }
 
   # More general middleware
-  # app.use express.static(path.resolve __dirname, "../public")
+  app.use express.static(path.resolve __dirname, "../public")
 
   # Proxy unhandled requests to Gravity using node-http-proxy
   app.use (req, res) ->
