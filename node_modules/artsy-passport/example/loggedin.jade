@@ -1,0 +1,10 @@
+doctype 5
+html(lang="en")
+  head
+    title Login
+  body
+    h1 Hello #{user.get('name')}
+    a( href='/logout' ) Logout
+    != sharifyScript()
+    script( src='//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js' )
+    script( src='/client.js' )
