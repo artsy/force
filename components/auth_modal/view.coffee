@@ -3,6 +3,8 @@ Backbone    = require 'backbone'
 ModalView   = require '../modal/view.coffee'
 Form        = require '../mixins/form.coffee'
 mediator    = require '../../lib/mediator.coffee'
+{ parse }   = require 'url'
+sd          = require('sharify').data
 
 templates =
   signup:   -> require('./templates/signup.jade') arguments...
@@ -12,8 +14,8 @@ templates =
   reset:    -> require('./templates/reset.jade') arguments...
 
 class Login extends Backbone.Model
-  save: (data, options) ->
-    options.success()
+  url: (if sd.NODE_ENV is 'development' then 'http' else 'https') +
+       "://#{parse(sd.APP_URL or '').host}/users/sign_in"
 
 class Forgot extends Backbone.Model
   save: (data, options) ->
@@ -62,7 +64,7 @@ module.exports = class AuthModalView extends ModalView
 
       new models[@state.get('mode')]().save @serializeForm(),
         success: ->
-          mediator.trigger 'modal:close'
+          location.reload()
 
         error: (model, xhr, options) =>
           $submit.attr 'data-state', 'error'

@@ -4,9 +4,6 @@ AuthModalView   = require '../../auth_modal/view.coffee'
 mediator        = require '../../../lib/mediator.coffee'
 
 module.exports = class HeaderView extends Backbone.View
-  # events:
-  #   'click .mlh-login': 'login'
-  #   'click .mlh-signup': 'signup'
 
   initialize: (options) ->
     { @$window, @$body } = options
@@ -20,6 +17,9 @@ module.exports = class HeaderView extends Backbone.View
     @$window.on 'scroll', @hideWelcomeHeader
     mediator.on 'open:auth', @openAuth, this
 
+  openAuth: (options) ->
+    @modal = new AuthModalView(mode: options.mode, width: '900px')
+
   hideWelcomeHeader: =>
     return if @$window.scrollTop() < @$welcomeHeader.height()
 
@@ -29,6 +29,9 @@ module.exports = class HeaderView extends Backbone.View
 
     @$window.scrollTop(0)
 
+  events:
+    'click .mlh-login': 'login'
+    'click .mlh-signup': 'signup'
 
   signup: (e) ->
     e.preventDefault()
@@ -37,6 +40,3 @@ module.exports = class HeaderView extends Backbone.View
   login: (e) ->
     e.preventDefault()
     mediator.trigger 'open:auth', { mode: 'login' }
-
-  openAuth: (options) ->
-    @modal = new AuthModalView(mode: options.mode, width: '900px')
