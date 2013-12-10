@@ -40,5 +40,4 @@ process.on "exit", @closeServer
 # this module directly and opening up localhost:5000.
 # e.g. `coffee test/helpers/integration.coffee`
 return unless module is require.main
-console.log 'moo'
 @startServer => @child.stdout.on "data", (data) -> console.log data.toString()

@@ -5,7 +5,8 @@
 #
 
 { GRAVITY_URL, NODE_ENV, ARTSY_ID, ARTSY_SECRET, SESSION_SECRET, PORT,
-  ASSET_PATH, APP_URL } = config = require "../config"
+  ASSET_PATH, FACEBOOK_APP_NAMESPACE, MOBILE_MEDIA_QUERY, CANONICAL_MOBILE_URL,
+  APP_URL } = config = require "../config"
 { parse, format } = require 'url'
 _ = require 'underscore'
 express = require "express"
@@ -41,6 +42,9 @@ module.exports = (app) ->
     APP_URL: APP_URL
     GRAVITY_URL: GRAVITY_URL
     NODE_ENV: NODE_ENV
+    MOBILE_MEDIA_QUERY: MOBILE_MEDIA_QUERY
+    CANONICAL_MOBILE_URL: CANONICAL_MOBILE_URL
+    FACEBOOK_APP_NAMESPACE: FACEBOOK_APP_NAMESPACE
 
   # Setup Artsy Passport
   app.use express.cookieParser(SESSION_SECRET)
@@ -96,7 +100,7 @@ module.exports = (app) ->
     res.send 200, { status: 'OK' }
 
   # More general middleware
-  app.use express.static(path.resolve __dirname, "../public")
+  # app.use express.static(path.resolve __dirname, "../public")
 
   # Proxy unhandled requests to Gravity using node-http-proxy
   app.use (req, res) ->
