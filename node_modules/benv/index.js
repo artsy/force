@@ -6,14 +6,15 @@ var fs = require('fs');
 var domGlobals = [
   'navigator',
   'document',
-  'location'
+  'location',
+  'getComputedStyle'
 ];
 
 var globals = {};
 
-// Exposes a stubbed browser API and benv.globals into the node.js global namespace 
+// Exposes a stubbed browser API and benv.globals into the node.js global namespace
 // so the current process can act like a browser environment.
-// 
+//
 // @param {Function} callback
 
 module.exports.setup = function(callback) {
@@ -31,7 +32,7 @@ module.exports.setup = function(callback) {
 }
 
 // Pass in common client-side dependencies and expose them globally.
-// 
+//
 // @param {Object} globals
 
 module.exports.expose = function(_globals) {
@@ -40,7 +41,7 @@ module.exports.expose = function(_globals) {
   }
 }
 
-// Deletes the stubbed browser API, benv.globals, and cleans things up so other 
+// Deletes the stubbed browser API, benv.globals, and cleans things up so other
 // tests can run without being harmed.
 
 module.exports.teardown = function() {
@@ -54,7 +55,7 @@ module.exports.teardown = function() {
 }
 
 // Require non-commonjs modules by specifying their global variable.
-// 
+//
 // @param {String} filename Path to non-commonjs file
 // @param {String} globalVarName Exposed global like Zepto or GMaps
 
@@ -67,7 +68,7 @@ module.exports.require = function(filename, globalVarName) {
 
 // Renders a server-side template into a fake browser's body.
 // Will strip out all script tag first to avoid jsdom trying to run scripts.
-// 
+//
 // @param {String} filename
 // @param {Object} data data passed into template like jade locals
 
@@ -91,7 +92,7 @@ module.exports.render = function(filename, data, callback) {
 }
 
 // Rewires jadeify templates to work in node again.
-// 
+//
 // @param {String} filename
 // @param {Array} varNames Strings of template variable names
 
