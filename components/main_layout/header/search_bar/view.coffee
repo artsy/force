@@ -58,6 +58,7 @@ module.exports = class SearchBarView extends Backbone.View
         complete: (xhr) =>
           mediator.trigger 'search:complete', xhr
           mediator.trigger 'search:doge' if @$input.val() is 'doge'
+          @$('img').error -> $(this).hide()
 
   selectResult: (e, model) ->
     window.location = model.get 'location'

@@ -25,6 +25,6 @@ module.exports = class SearchResult extends Backbone.Model
 
   imageUrl: ->
     src = if @get('model') is 'artwork' then 'default_image.jpg' else 'image'
-    url = "/api/v1/#{@get('model')}/#{@id}/#{src}"
+    url = "#{sd.GRAVITY_URL}/api/v1/#{@get('model')}/#{@id}/#{src}"
     url = url + "?xapp_token=#{sd.GRAVITY_XAPP_TOKEN}" if sd.GRAVITY_XAPP_TOKEN?
     url

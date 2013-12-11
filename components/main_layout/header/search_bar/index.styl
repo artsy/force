@@ -91,10 +91,25 @@ suggestion-thumbnail-size   = 32px
 
 .mlsb-suggestion-thumbnail
   padding 10px
-  & > img
-    width suggestion-thumbnail-size
-    height suggestion-thumbnail-size
+
+.mlsb-suggestion-fallback
+  position relative
+  display block
+  width suggestion-thumbnail-size
+  height suggestion-thumbnail-size
+  background-color light-gray-background-color
+  // Display person icon
+  &::before
+    display block
+    position absolute
+    content '\e61a'
+    font-family 'artsy-icons'
+    font-size suggestion-thumbnail-size
+    line-height suggestion-thumbnail-size
+    color #fff
+  > img
     vertical-align bottom
+    position absolute
 
 .mlsb-suggestion-value
   padding 10px 10px 10px 0

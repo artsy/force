@@ -1,6 +1,7 @@
 a.mlsb-suggestion( href=item.location )
   span.mlsb-suggestion-thumbnail
-    img( src=item.image_url, width='32' height='32' )
+    span.mlsb-suggestion-fallback
+      img( src=item.image_url, width='32', height='32' )
   span.mlsb-suggestion-value
     span.mlsb-suggestion-display
       = item.display
