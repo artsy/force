@@ -18,7 +18,6 @@ artsyXappMiddlware = require 'artsy-xapp-middleware'
 httpProxy = require 'http-proxy'
 proxy = new httpProxy.RoutingProxy()
 CurrentUser = require '../models/current_user'
-cors = require 'cors'
 
 module.exports = (app) ->
 
@@ -55,7 +54,6 @@ module.exports = (app) ->
   # General
   app.use express.favicon()
   app.use express.logger('dev')
-  app.use cors()
 
   # Development
   if "development" is NODE_ENV
