@@ -78,7 +78,7 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
 
   renderRelatedArtists: (type) =>
     @$("#artist-related-#{type.toLowerCase()}").html(
-      relatedArtistsTemplate artists: @model.relatedArtists.models
+      relatedArtistsTemplate artists: @model["related#{type}"].models
     )
     @model["related#{type}"].each (artist, i) =>
       @renderRelatedArtist artist, i, type

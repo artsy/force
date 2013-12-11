@@ -110,6 +110,12 @@ describe 'ArtistView', ->
       @view.renderRelatedArtists 'Artists'
       @view.$el.html().should.include 'Andy Foobar'
 
+    it 'renders related contemporary artists', ->
+      @view.$el.html "<div id='artist-related-contemporary'></div>"
+      @view.model.relatedContemporary.reset [fabricate 'artist', name: 'Bitty the cat Z']
+      @view.renderRelatedArtists 'Contemporary'
+      @view.$el.html().should.include 'Bitty the cat Z'    
+
   describe '#renderRelatedArtist', ->
 
     it 'fetches and renders a single artist row by injecting a fillwidth view', ->

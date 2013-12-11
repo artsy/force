@@ -38,12 +38,11 @@ describe 'RelatedGenesView', ->
       @view.initialize({ el: $('body'), model: @artist })
 
     it 'makes the right API call', ->
-      _.last(Backbone.sync.args)[1].url.should.equal '/api/v1/related/genes?artist[]=bitty'
+      _.last(Backbone.sync.args)[1].url.should.include '/api/v1/related/genes?artist[]=bitty'
 
     it 'doesnt render anything if there are no results', ->
       _.last(Backbone.sync.args)[2].success []
-      @view.$el.find('.artist-related-genes').length.should.equal 1
-      @view.$el.find('.artist-related-genes .genes').length.should.equal 0
+      @view.$el.find('.artist-related-genes').html().should.equal ''
 
     it 'renders the right content', ->
       _.last(Backbone.sync.args)[2].success [
