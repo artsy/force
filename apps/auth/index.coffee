@@ -3,8 +3,9 @@
 # Render the homepage but force open the appropriate modals
 #
 
-express   = require 'express'
-routes    = require './routes'
+express = require 'express'
+routes = require './routes'
+cors = require 'cors'
 { loginPath, signupPath, twitterCallbackPath,
   facebookCallbackPath } = require('artsy-passport').options
 
@@ -17,4 +18,4 @@ app.get '/sign_up', routes.index
 app.get '/forgot', routes.index
 
 # Artsy Passport auth handlers
-app.post loginPath, routes.submitLogin
+app.post loginPath, cors(), routes.submitLogin
