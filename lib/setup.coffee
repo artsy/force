@@ -97,7 +97,7 @@ module.exports = (app) ->
 
   # Route to ping for system up
   app.get '/system/up', (req, res) ->
-    res.send 200, { status: 'OK' }
+    res.send 200, { nodejs: true }
 
   # More general middleware
   app.use express.static(path.resolve __dirname, "../public")

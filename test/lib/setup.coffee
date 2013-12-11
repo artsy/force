@@ -43,5 +43,5 @@ describe 'Setup', ->
 
   it 'returns an ok status when /system/up pinged', (done) ->
     request.get('http://localhost:3456/system/up').end (res) ->
-      JSON.parse(res.text).status.should.equal 'OK'
+      JSON.parse(res.text).nodejs.should.be.ok
       done()
