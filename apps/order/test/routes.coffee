@@ -6,7 +6,7 @@ routes    = require '../routes'
 describe 'Order routes', ->
   beforeEach ->
     @req = { params: {} }
-    @res = { render: sinon.stub(), locals: { sd: {} } }
+    @res = { render: sinon.stub(), redirect: sinon.stub(), locals: { sd: {} } }
 
   describe '#index', ->
 
