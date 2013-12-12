@@ -1,0 +1,71 @@
+@import '../../components/pagination'
+
+#auction-lot-header
+  text-align center
+  margin 80px 0 40px
+  > h1
+    font-size 24px
+
+.auction-lots-table-header
+  margin 20px 0
+  display table
+  width 100%
+
+.auction-lots-total
+.auction-lots-sort
+  display table-cell
+  width 50%
+
+.auction-lots-sort
+  text-align right
+  *
+    text-align left
+  > span
+    margin-right 10px
+
+.auction-lots-table
+  width 100%
+  border-top 1px solid light-gray-border-color
+  border-bottom 1px solid light-gray-border-color
+  th
+  td
+    padding 10px
+    &:first-child
+    &:last-child
+      padding 10px 5px
+  th
+    avant-garde()
+    font-size 11px
+  td
+    vertical-align top
+    border-top 1px solid light-gray-border-color
+
+.auction-lot-title-container
+  display table
+
+.auction-lot-image
+.auction-lot-title
+  display table-cell
+  vertical-align top
+
+.auction-lot-image
+  width 80px
+  margin-right 20px
+
+.auction-lot-title
+.auction-lot-medium
+  max-width 160px
+
+.auction-lot-meta > td
+  border-top 0
+
+.auction-lot-details-link
+  avant-garde()
+  text-decoration none
+  font-size 11px
+  > i
+    display none
+    font-size 14px
+
+.zoom-modal .modal-header
+  display none

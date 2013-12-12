@@ -4,11 +4,17 @@ body.is-modal
 
 #modal
   &[data-state='open'], &.is-open
-    & > .modal-backdrop
+    > .modal-backdrop
       opacity 1
-      & > .modal-dialog
+      > .modal-dialog
         // Avoid transitioning the initial open
-        transition all 0.25s
+        transition all 0.25s, width 0
+
+  &.is-loading
+    > .modal-backdrop::before
+      display block
+      content ''
+      spinner(20px, 5px, #fff)
 
 .modal-backdrop
   position fixed
@@ -29,6 +35,8 @@ body.is-modal
   max-height 90%
   // Hack to prevent shifting content
   transform translateZ(0)
+  &.is-notransition
+    transition none !important
 
 .modal-close
   position absolute
@@ -41,6 +49,7 @@ body.is-modal
   &:hover
     opacity 0.5
 
+.modal-dialog
 .modal-body
   transition opacity 0.25s
   &[data-state='fade-out'], &.is-fade-out
