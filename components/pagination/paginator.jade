@@ -3,7 +3,7 @@ mixin paginate(current, total, urlBase)
   - var pagesInterval = 3
 
   if total && total !== 1
-    nav.pagination
+    nav.bordered-pagination
       //- Previous button
       - if (current !== 1)
         ul
@@ -25,7 +25,7 @@ mixin paginate(current, total, urlBase)
         - }
 
         //- Current page
-        li: a.paginator-current.is-disabled( class='is-active', data-value=current )= current
+        li: a.paginator-current.is-active( data-value=current )= current
 
         //- Right surrounding pages
         - for (var i = 1; i <= pagesInterval; i++) {
