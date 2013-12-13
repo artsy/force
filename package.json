@@ -21,7 +21,8 @@
     "underscore.string": "*",
     "q": "*",
     "artsy-passport": "*",
-    "cors": "*"
+    "cors": "*",
+    "backbone-pageable": "*"
   },
   "devDependencies": {
     "browserify": "*",
