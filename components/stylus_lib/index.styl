@@ -9,7 +9,9 @@
 
 default-garamond-font-size          = 16px
 light-gray-border-color             = #e5e5e5
+dark-gray-border-color              = #ccc
 dark-gray-text-color                = #666
+light-gray-text-color               = #999
 light-gray-background-color         = #efefef
 light-gray-background-hover-color   = #dbdbdb
 highlight-color                     = #6a0bc1
@@ -43,3 +45,14 @@ calc()
     arguments = unquote(arguments) if typeof(arguments) is string
     add-property(current-property[0], s('-%s-calc(%s)', prefix, arguments))
   s('calc(%s)', arguments)
+
+caret()
+  display inline-block
+  content ''
+  width 0
+  height 0
+  vertical-align middle
+  border-top 8px solid
+  border-right 4px solid transparent
+  border-left 4px solid transparent
+  margin 2px 0 4px 4px

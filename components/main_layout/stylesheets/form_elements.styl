@@ -46,3 +46,41 @@ bordered-input-placeholder--autofocus-focus()
 textarea.bordered-input
   resize none
   padding 5px
+
+.bordered-pulldown
+  display inline-block
+  width 200px
+  position relative
+  border 2px solid light-gray-border-color
+  &:hover > .bordered-pulldown-options
+    display block
+    border-color dark-gray-border-color
+
+.bordered-pulldown-toggle
+.bordered-pulldown-options > a
+  display block
+  padding 8px 10px 6px
+
+.bordered-pulldown-toggle
+  > .bordered-pulldown-toggle-caret
+    float right
+    padding-left 5px
+    border-left 1px solid light-gray-border-color
+    > .caret
+      caret()
+      color dark-gray-border-color
+
+.bordered-pulldown-options
+  display none
+  position absolute
+  background #fff
+  border 2px solid light-gray-border-color
+  // Offset border width
+  top -2px
+  left -2px
+  right -2px
+  > a
+    text-decoration none
+    ellipsis()
+    &:hover
+      background-color light-gray-background-color

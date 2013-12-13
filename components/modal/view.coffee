@@ -51,6 +51,9 @@ module.exports = class ModalView extends Backbone.View
       out:  => @$body.html @template()
       in:   => @setPosition()
 
+  setWidth: ->
+    @$dialog.css { width: @width }
+
   setup: ->
     # Render outer
     @$el.html modalTemplate()
@@ -59,16 +62,20 @@ module.exports = class ModalView extends Backbone.View
     @$body = @$('.modal-body')
     @$body.html @template()
     @$dialog = @$('.modal-dialog')
-    @$dialog.css { width: @width }
+    @setWidth()
 
     # Display
     $(@container).html @$el
+
+    @postRender()
 
     # Disable scroll on body
     $('body').addClass 'is-modal'
 
     # Fade in
     _.defer => @$el.attr 'data-state', 'open'
+
+  postRender: -> #
 
   open: ->
     @setup()
