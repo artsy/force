@@ -72,6 +72,7 @@ describe 'ArtistView', ->
       @view.$el.html fixture
       @view.setupBlurb()
       viewBlurbOpts = @blurbStub.args[0][0]
+      viewBlurbOpts.updateOnResize.should.equal true
       viewBlurbOpts.lineCount.should.equal 6
 
     it 'sets up the related genes view properly', ->
