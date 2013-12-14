@@ -54,13 +54,13 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
       collection  : @availableArtworks
       seeMore     : true
       el          : @$ '#artist-available-works'
-    ).nextPage(10)
+    ).nextPage(false, 10)
     new FillwidthView(
       fetchOptions: { 'filter[]': 'not_for_sale' }
       collection  : @institutionArtworks
       seeMore     : true
       el          : @$('#artist-institution-works')
-    ).nextPage(10)
+    ).nextPage(false, 10)
 
   setupRelatedPosts: ->
     new RelatedPostsView
@@ -110,4 +110,4 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
 module.exports.init = ->
   new ArtistView
     model: new Artist sd.ARTIST
-    el: $('body')
+    el   : $('body')
