@@ -34,3 +34,7 @@ module.exports = class FillwidthView extends Backbone.View
     @collection.fetch
       remove: false
       data: _.extend { size: 15, page: @page++ }, @fetchOptions
+
+  # Remove items that are not shown to reduce DOM footprint
+  removeHiddenItems: ->
+    @$('ul li:hidden').remove()

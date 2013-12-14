@@ -1,0 +1,76 @@
+
+// CSS trick to adjust the border-bottom to make it look like a nicer text-decoration: underline
+.faux-underline
+  &
+    display: inline
+    position: relative
+    text-decoration: none
+
+  &:before
+    content: ''
+    position: absolute
+    left: 0
+    display: inline-block
+    height: 1em
+    width: 100%
+    margin-top: 0.15em
+    border-bottom: 1px solid #777
+    color: rgb(80, 80, 80)
+
+  &:hover
+    text-decoration: none
+
+.faux-underline-hover
+  &
+    display: inline
+    position: relative
+    text-decoration: none
+    &:hover, &:focus
+      &:before
+        content: ''
+        position: absolute
+        left: 0
+        display: inline-block
+        height: 1em
+        width: 100%
+        margin-top: 0.2em
+        border-bottom: 1px solid #777
+        color: rgb(80, 80, 80)
+
+// used for AvantGardeGothic
+.faux-underline-large
+  &
+    display: inline
+    position: relative
+    text-decoration: none
+  &:before
+    content: ''
+    position: absolute
+    left: 0
+    display: inline-block
+    height: 1em
+    width: 100%
+    margin-top: 0.4em
+    border-bottom: 2px solid #333
+    color: rgb(80, 80, 80)
+
+  &:hover
+    text-decoration: none
+
+// used for AvantGardeGothic
+.faux-underline-hover-large
+  &
+    display: inline
+    position: relative
+    text-decoration: none
+    &:hover
+      &:before
+        content: ''
+        position: absolute
+        left: 0
+        display: inline-block
+        height: 1em
+        width: 100%
+        margin-top: 0.4em
+        border-bottom: 2px solid #333
+        color: rgb(80, 80, 80)
