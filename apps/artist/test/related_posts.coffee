@@ -26,7 +26,9 @@ describe 'RelatedPostsView', ->
       sd: {}
       artist: artist
     }, =>
-      @view = new RelatedPostsView { el: $('body'), model: artist, numToShow: 2 }
+      @calledNoPosts = false
+      @noPosts = -> @calledNoPosts = true
+      @view = new RelatedPostsView { el: $('body'), model: artist, numToShow: 2, noPosts: @noPosts }
       done()
 
   afterEach ->
@@ -38,9 +40,9 @@ describe 'RelatedPostsView', ->
       Backbone.sync.args[0][1].url.should.include 'api/v1/related/posts'
       Backbone.sync.args[0][2].data['artist[]'].should.equal @view.model.get('id')
 
-    #it 'doesnt render anything if there are no results', ->
-    #  Backbone.sync.args[0][2].success []
-    #  @view.$el.find('.artist-info-right .artist-related-posts').html().should.equal ''
+    it 'doesnt render anything if there are no results', ->
+      Backbone.sync.args[0][2].success []
+      @calledNoPosts.should.be_true
 
     it 'renders the right content', ->
       Backbone.sync.args[0][2].success [

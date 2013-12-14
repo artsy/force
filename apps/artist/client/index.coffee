@@ -67,8 +67,8 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
       el: @$('.artist-info-right .artist-related-posts')
       numToShow: 2
       model: @model
-      noPosts: ($el) =>
-        $el.remove()
+      noPosts: =>
+        @$('.artist-info-right').remove()
         @$('.artist-info-left').removeClass('artist-info-left').addClass 'artist-info-center'
 
   setupRelatedArtists: ->

@@ -72,7 +72,6 @@ describe 'ArtistView', ->
       @view.$el.html fixture
       @view.setupBlurb()
       viewBlurbOpts = @blurbStub.args[0][0]
-      viewBlurbOpts.updateOnResize.should.equal true
       viewBlurbOpts.lineCount.should.equal 6
 
     it 'sets up the related genes view properly', ->
@@ -114,7 +113,7 @@ describe 'ArtistView', ->
       @view.$el.html "<div id='artist-related-contemporary'></div>"
       @view.model.relatedContemporary.reset [fabricate 'artist', name: 'Bitty the cat Z']
       @view.renderRelatedArtists 'Contemporary'
-      @view.$el.html().should.include 'Bitty the cat Z'    
+      @view.$el.html().should.include 'Bitty the cat Z'
 
   describe '#renderRelatedArtist', ->
 
