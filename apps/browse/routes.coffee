@@ -9,8 +9,8 @@ OrderedSets   = require '../../collections/ordered_sets.coffee'
     OrderedSets.new({ key: 'browse:gene-categories' })
   ]
 
-  Q.allSettled(_.map(requests, (xs) -> xs.fetch())).then ->
-    Q.allSettled(_.flatten(_.map(requests, (xs) -> xs.fetchSets()))).then ->
+  Q.allSettled(_.map(requests, (xs) -> xs.fetch(cache: true))).then ->
+    Q.allSettled(_.flatten(_.map(requests, (xs) -> xs.fetchSets(cache: true)))).then ->
       res.render 'template', {
         featuredGenes: featuredGenes,
         popularCategories: popularCategories,
