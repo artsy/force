@@ -39,6 +39,7 @@ describe 'Artwork', ->
       @artwork.titleAndYear().should.equal '<em>title</em>, 1905'
 
   describe '#partnerName', ->
+
     it "collecting institution over partner name", ->
       @artwork.set partner: fabricate 'partner'
       @artwork.set collecting_institution: 'collecting'

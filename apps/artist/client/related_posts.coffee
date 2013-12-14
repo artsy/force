@@ -7,11 +7,12 @@ module.exports = class RelatedPostsView extends Backbone.View
 
   initialize: (options) ->
     { @numToShow } = options
+    @noPosts = options.noPosts
     @model.fetchRelatedPosts success: (posts) =>
       @render()
 
   render: ->
-    return if @model.relatedPosts.length == 0
+    return @noPosts(@$el) if @model.relatedPosts.length == 0
     @$el.html relatedPostsTemplate posts: _.first(@model.relatedPosts.models, @numToShow), remaining: @model.relatedPosts.length - @numToShow
 
   events:
