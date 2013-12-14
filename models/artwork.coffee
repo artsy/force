@@ -28,13 +28,14 @@ module.exports = class Artwork extends Backbone.Model
       @get('partner').name
     else
       ""
+
   partnerLink: ->
     partner = @get('partner')
     return unless partner
-    if partner.get('default_profile_public') && partner.has('default_profile_id')
-      return "/#{partner.get('default_profile_id')}"
-    if partner.hasWebsite()
-      return partner.get('website')
+    if partner.default_profile_public && partner.default_profile_id
+      return "/#{partner.default_profile_id}"
+    if partner.website?.length > 0
+      return partner.website
 
   partnerLinkTarget: ->
     linkType = @get('partner').linkType()
