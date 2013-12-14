@@ -6,7 +6,7 @@
 
 { GRAVITY_URL, NODE_ENV, ARTSY_ID, ARTSY_SECRET, SESSION_SECRET, PORT,
   ASSET_PATH, FACEBOOK_APP_NAMESPACE, MOBILE_MEDIA_QUERY, CANONICAL_MOBILE_URL,
-  APP_URL } = config = require "../config"
+  APP_URL, REDIS_URL, DEFAULT_CACHE_TIME } = config = require "../config"
 { parse, format } = require 'url'
 _ = require 'underscore'
 express = require "express"
@@ -18,12 +18,15 @@ artsyXappMiddlware = require 'artsy-xapp-middleware'
 httpProxy = require 'http-proxy'
 proxy = new httpProxy.RoutingProxy()
 CurrentUser = require '../models/current_user'
+backboneCacheSync = require 'backbone-cache-sync'
 
 module.exports = (app) ->
 
   # Override Backbone to use server-side sync & augment sync with Q promises
   Backbone.sync = require "backbone-super-sync"
+
   Backbone.sync.editRequest = (req) -> req.set('X-XAPP-TOKEN': artsyXappMiddlware.token)
+  backboneCacheSync(Backbone.sync, REDIS_URL, DEFAULT_CACHE_TIME, NODE_ENV)# if REDIS_URL
   require('./deferred_sync.coffee')(Backbone, require 'q')
 
   # Setup Artsy XAPP middleware
