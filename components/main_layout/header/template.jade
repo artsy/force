@@ -18,7 +18,10 @@ header#main-layout-header
       a( href='/posts' ) Posts
       a( href='/about' ) About
       if user
-        a= user.get('name')
+        if user.get('name')
+          a= user.get('name')
+        else
+          a account
       else
         a.mlh-login( href='/log_in' ) Log in
         a.mlh-signup( href='/sign_up' ) Sign up

@@ -114,7 +114,7 @@ describe 'ArtistView', ->
       @view.$el.html "<div id='artist-related-contemporary'></div>"
       @view.model.relatedContemporary.reset [fabricate 'artist', name: 'Bitty the cat Z']
       @view.renderRelatedArtists 'Contemporary'
-      @view.$el.html().should.include 'Bitty the cat Z'    
+      @view.$el.html().should.include 'Bitty the cat Z'
 
   describe '#renderRelatedArtist', ->
 
