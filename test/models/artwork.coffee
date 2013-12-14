@@ -1,4 +1,5 @@
 sinon = require 'sinon'
+should = require 'should'
 Backbone = require 'backbone'
 Artwork = require '../../models/artwork'
 { fabricate } = require 'antigravity'
@@ -22,3 +23,50 @@ describe 'Artwork', ->
     it 'works if there are no images', ->
       @artwork.set images: []
       @artwork.defaultImageUrl().should.equal ''
+
+  describe '#titleAndYear', ->
+
+    it 'returns empty string without title or year', ->
+      @artwork.set title: false, date: false
+      @artwork.titleAndYear().should.equal ''
+
+    it 'renderes correctly with just a date', ->
+      @artwork.set title: false, date: '1905'
+      @artwork.titleAndYear().should.equal '1905'
+
+    it 'emphasises the title', ->
+      @artwork.set title: 'title', date: '1905'
+      @artwork.titleAndYear().should.equal '<em>title</em>, 1905'
+
+  describe '#partnerName', ->
+    it "collecting institution over partner name", ->
+      @artwork.set partner: fabricate 'partner'
+      @artwork.set collecting_institution: 'collecting'
+      @artwork.partnerName().should.equal 'collecting'
+
+    it "nothing without partner name or collecting institution", ->
+      @artwork.unset 'partner'
+      @artwork.unset 'collecting_institution'
+      @artwork.partnerName().should.equal ''
+
+    it "partner name", ->
+      @artwork.set partner: fabricate 'partner'
+      @artwork.unset 'collecting_institution'
+      @artwork.partnerName().should.equal 'Gagosian Gallery'
+
+  describe '#partnerLink', ->
+
+    it "empty without partner", ->
+      @artwork.unset 'partner'
+      should.strictEqual(undefined, @artwork.partnerLink())
+
+    it "partner profile", ->
+      @artwork.get('partner').default_profile_public = true
+      @artwork.get('partner').default_profile_id = 'profile-id'
+      @artwork.partnerLink().should.equal '/profile-id'
+
+    it "partner website if profile and profile is private", ->
+      @artwork.get('partner').default_profile_public = false
+      @artwork.get('partner').default_profile_id = 'profile-id'
+      @artwork.get('partner').website = 'mah-website.com'
+      @artwork.partnerLink().should.equal 'mah-website.com'
