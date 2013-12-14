@@ -90,7 +90,9 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
         el: @$("#artist-related-#{type.toLowerCase()} " +
                "li:nth-child(#{i + 1}) .artist-related-artist-artworks")
       view.render()
-      _.defer view.hideFirstRow
+      _.defer ->
+        view.hideFirstRow()
+        view.removeHiddenItems()
 
   events:
     'click .artist-related-see-more'        : 'nextRelatedPage'

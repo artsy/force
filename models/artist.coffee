@@ -12,6 +12,8 @@ module.exports = class Artist extends Backbone.Model
 
   urlRoot: -> "#{sd.GRAVITY_URL}/api/v1/artist"
 
+  clientUrl: -> "/artist/#{@get('id')}"
+
   initialize: ->
     @relatedArtists = new Backbone.Collection [], model: Artist
     @relatedArtists.url = "#{sd.GRAVITY_URL}/api/v1/related/layer/main/artists"
