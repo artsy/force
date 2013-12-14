@@ -17,7 +17,8 @@ module.exports = class FillwidthView extends Backbone.View
   render: =>
     @$el.html template artworks: @collection.models, seeMore: @seeMore
     maxHeight = parseInt(@$('img').first().css('max-height')) or 260
-    @$('ul').fillwidth({ imageDimensions: @collection.fillwidthDimensions(maxHeight) })
+    @$('ul').fillwidth
+      imageDimensions: @collection.fillwidthDimensions(maxHeight)
     if @seeMore and @page is 2
       _.defer @hideFirstRow
 
@@ -30,10 +31,10 @@ module.exports = class FillwidthView extends Backbone.View
   events:
     'click .fillwidth-see-more': 'nextPage'
 
-  nextPage: ->
+  nextPage: (size=20) ->
     @collection.fetch
       remove: false
-      data: _.extend { size: 15, page: @page++ }, @fetchOptions
+      data: _.extend { size: size, page: @page++ }, @fetchOptions
 
   # Remove items that are not shown to reduce DOM footprint
   removeHiddenItems: ->

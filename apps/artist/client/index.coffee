@@ -50,17 +50,17 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     @institutionArtworks = new Artworks
     @institutionArtworks.url = @model.url() + '/artworks'
     new FillwidthView(
-      collection: @availableArtworks
-      el: @$ '#artist-available-works'
       fetchOptions: { 'filter[]': 'for_sale' }
-      seeMore: true
-    ).nextPage()
+      collection  : @availableArtworks
+      seeMore     : true
+      el          : @$ '#artist-available-works'
+    ).nextPage(10)
     new FillwidthView(
-      collection: @institutionArtworks
-      el: @$ '#artist-institution-works'
       fetchOptions: { 'filter[]': 'not_for_sale' }
-      seeMore: true
-    ).nextPage()
+      collection  : @institutionArtworks
+      seeMore     : true
+      el          : @$('#artist-institution-works')
+    ).nextPage(10)
 
   setupRelatedPosts: ->
     new RelatedPostsView
@@ -108,4 +108,6 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     @model.fetchRelatedArtists type, data: { page: @["related#{type}Page"]++ }
 
 module.exports.init = ->
-  new ArtistView el: $('body'), model: new Artist sd.ARTIST
+  new ArtistView
+    model: new Artist sd.ARTIST
+    el: $('body')

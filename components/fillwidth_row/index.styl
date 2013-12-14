@@ -1,4 +1,4 @@
-details-height = 70px
+details-height = 90px
 
 .fillwidth-list li
   margin 0 15px 15px 0
@@ -11,14 +11,21 @@ details-height = 70px
 
 .fillwidth-details-container
   font-size 15px
-  color dark-gray-text-color
   line-height 1.2em
   position absolute
   bottom 0
   height details-height
   padding-top 15px
+  ellipsis()
   p
     ellipsis()
+  p, a, .partner
+    color dark-gray-text-color
+  .artist-name
+    font-weight: bold
+  .artist-name
+    display: inline-block
+
 
 .fillwidth-see-more
   display block
