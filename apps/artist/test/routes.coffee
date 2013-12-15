@@ -10,6 +10,7 @@ describe 'Artist routes', ->
     sinon.stub Backbone, 'sync'
     @req = { params: { id: 'foo' } }
     @res = { render: sinon.stub(), locals: { sd: {} } }
+
   afterEach ->
     Backbone.sync.restore()
 

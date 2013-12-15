@@ -8,6 +8,7 @@ Form        = require '../mixins/form.coffee'
 template    = -> require('./template.jade') arguments...
 
 module.exports = class FeedbackView extends ModalView
+
   _.extend @prototype, Form
 
   template: -> template()

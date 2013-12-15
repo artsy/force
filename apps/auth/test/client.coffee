@@ -40,4 +40,3 @@ describe 'AuthModalRouter', ->
       Backbone.history.fragment = 'log_in'
       @router.openAuth()
       _.isUndefined(@router.modal).should.be.ok
-

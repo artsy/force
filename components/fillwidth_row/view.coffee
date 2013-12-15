@@ -1,6 +1,8 @@
-_ = require 'underscore'
-Backbone = require 'backbone'
-template = -> require('./template.jade') arguments...
+_            = require 'underscore'
+Backbone     = require 'backbone'
+template     = -> require('./template.jade') arguments...
+SaveControls = require('./save_controls.coffee')
+sd           = require('sharify').data
 
 module.exports = class FillwidthView extends Backbone.View
 
@@ -21,6 +23,27 @@ module.exports = class FillwidthView extends Backbone.View
     @$('ul').fillwidth
       imageDimensions: @collection.fillwidthDimensions(maxHeight)
     @handleSeeMore() if @seeMore
+    @initializeArtworks @collection
+
+  initializeArtworks: (artworks) ->
+    $list = @$('.uninitialized')
+    return unless $list.length > 0
+    listItems =
+      for artwork, index in artworks.models
+        item = new SaveControls
+          model: artwork
+          el: $($list[index]).find('.overlay-container')
+
+    # Todo: setup impression tracking
+    # @initializeImpressionTracking listItems, $list
+    
+    @syncSavedArtworks artworks
+
+  syncSavedArtworks: (artworks) ->
+    defaultCollection = sd.currentUserModel?.defaultArtworkCollection()
+    if defaultCollection
+      defaultCollection.addRepoArtworks artworks
+      _.delay (-> defaultCollection.syncSavedArtworks()), 500
 
   handleSeeMore: ->
     if @page is 2

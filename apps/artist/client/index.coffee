@@ -103,8 +103,12 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
            button#artist-follow-button'     : 'followArtist'
 
   followArtist: (e) ->
-    e.preventDefault()
-    mediator.trigger 'open:auth', { mode: 'login' }
+    currentUser = sd.currentUserModel
+    if currentUser 
+      currentUser.followArtist()
+    else
+      e.preventDefault()
+      mediator.trigger 'open:auth', { mode: 'login' }
 
   nextRelatedArtistsPage: (e) ->
     type = if _.isString(e) then e else $(e).data 'type'

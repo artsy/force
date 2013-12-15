@@ -1,12 +1,13 @@
 header#main-layout-header
-  header#main-layout-welcome-header
-    #main-layout-welcome-header-aside
-      .mlwha-outer
-        .mlwha-inner
-          | Discover art from leading galleries,
-          br
-          | museums, and private collections.
-    i#main-layout-welcome-logo.icon-logotype
+  if !user
+    header#main-layout-welcome-header
+      #main-layout-welcome-header-aside
+        .mlwha-outer
+          .mlwha-inner
+            | Discover art from leading galleries,
+            br
+            | museums, and private collections.
+      i#main-layout-welcome-logo.icon-logotype
   nav
     #main-layout-header-left
       a#main-layout-header-home-logo.icon-logoglyph( href='/' )
