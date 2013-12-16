@@ -2,7 +2,7 @@ rewire        = require 'rewire'
 benv          = require 'benv'
 Backbone      = require 'backbone'
 sinon         = require 'sinon'
-Artist        = require '../../../models/artist'
+Artist        = require '../../../../models/artist'
 _             = require 'underscore'
 { resolve }   = require 'path'
 { fabricate } = require 'antigravity'
@@ -22,12 +22,12 @@ describe 'ArtistView', ->
 
   beforeEach (done) ->
     sinon.stub Backbone, 'sync'
-    benv.render resolve(__dirname, '../templates/index.jade'), {
+    benv.render resolve(__dirname, '../../templates/index.jade'), {
       sd: {}
       artist: new Artist fabricate 'artist'
     }, =>
       { ArtistView, @init } = mod = benv.requireWithJadeify(
-        (resolve __dirname, '../client/index'), ['relatedArtistsTemplate']
+        (resolve __dirname, '../../client/index'), ['relatedArtistsTemplate']
       )
       @FillwidthView = sinon.stub()
       @FillwidthView.nextPage = sinon.stub()
