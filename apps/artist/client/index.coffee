@@ -12,8 +12,6 @@ AuthModalView           = require '../../../components/auth_modal/view.coffee'
 mediator                = require '../../../lib/mediator.coffee'
 InitializeShareButtons  = require '../../../components/mixins/initialize_share.coffee'
 CurrentUser             = require '../../../models/current_user.coffee'
-FollowArtistCollection  = require '../../../models/follow_artist_collection.coffee'
-
 
 module.exports.ArtistView = class ArtistView extends Backbone.View
 
