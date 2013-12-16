@@ -213,7 +213,7 @@ module.exports = class ArtworkCollection extends Backbone.Model
           options?.error?(response)
         success: (response) =>
           savedArtworks = []
-          _.each response, (savedArtworkJSON) =>
+          _.each response.models, (savedArtworkJSON) =>
             savedArtwork = new Artwork savedArtworkJSON
             savedArtworks.push savedArtwork
             @removeFromUnsavedCache savedArtwork

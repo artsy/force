@@ -13,10 +13,10 @@ module.exports = class SaveControls extends Backbone.View
     throw 'You must pass a model' unless @model?
 
     # Listen to save changes for this work
-    defaultArtworkCollection = window.currentUser.defaultArtworkCollection()
-    if defaultArtworkCollection
-      @listenTo defaultArtworkCollection, "add:#{@model.get('id')}", @onArtworkSaveChange
-      @listenTo defaultArtworkCollection, "remove:#{@model.get('id')}", @onArtworkSaveChange
+    @defaultArtworkCollection = window.currentUser.defaultArtworkCollection()
+    if @defaultArtworkCollection
+      @listenTo @defaultArtworkCollection, "add:#{@model.get('id')}", @onArtworkSaveChange
+      @listenTo @defaultArtworkCollection, "remove:#{@model.get('id')}", @onArtworkSaveChange
       @onArtworkSaveChange()
 
   onArtworkSaveChange: ->
@@ -39,12 +39,12 @@ module.exports = class SaveControls extends Backbone.View
 
     if @model.isSaved()
       # Analytics.click @analyticsRemoveMessage, @model
-      @model.unsave
+      @defaultArtworkCollection.unsaveArtwork @model.get('id'),
         success: => @$el.addClass('committed')
         error: => @$el.removeClass('unsaved').addClass('saved')
     else
       # Analytics.click @analyticsSaveMessage, @model
-      @model.save
+      @defaultArtworkCollection.saveArtwork @model.get('id'),
         success: => @$el.addClass('committed')
         error: => @$el.removeClass('saved').addClass('unsaved')
       @$el.addClass('clicked')
