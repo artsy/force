@@ -2,7 +2,6 @@ _         = require 'underscore'
 sinon     = require 'sinon'
 Backbone  = require 'backbone'
 routes    = require '../routes'
-Order     = require '../../../models/order'
 { fabricate } = require 'antigravity'
 { APP_URL } = require('../../../config')
 
