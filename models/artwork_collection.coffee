@@ -185,8 +185,11 @@ module.exports = class ArtworkCollection extends Backbone.Model
   fetch: (options) ->
     privateCollection = sd.CURRENT_USER?.id == @get('userId')
     model = new Backbone.Model
-    model.url = "#{@url()}?user_id=#{@get('userId')}&private=#{privateCollection}"
+    model.url = @url()
     model.fetch
+      data:
+        user_id: @get('userId')
+        private: privateCollection
       success: (response) =>
         @collectionExists = true
         @set response
@@ -205,7 +208,7 @@ module.exports = class ArtworkCollection extends Backbone.Model
       artworks.fetch
         data:
           user_id: @get('userId')
-          private: @get('private')
+          private: true
         error: (response) =>
           options?.error?(response)
         success: (response) =>

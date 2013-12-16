@@ -31,7 +31,7 @@ module.exports = class SaveControls extends Backbone.View
     'click .save' : 'saveClick'
 
   saveClick: (event) ->
-    unless sd.currentUserModel
+    unless window.currentUser
       mediator.trigger 'open:auth', { mode: 'login' }
       return false
 

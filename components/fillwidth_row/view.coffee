@@ -26,7 +26,7 @@ module.exports = class FillwidthView extends Backbone.View
     @initializeArtworks @collection
 
   initializeArtworks: (artworks) ->
-    $list = @$('.uninitialized')
+    $list = @$('.fillwidth-img-container')
     return unless $list.length > 0
     listItems =
       for artwork, index in artworks.models
