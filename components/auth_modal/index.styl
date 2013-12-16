@@ -9,25 +9,33 @@
     padding 20px
     text-align center
 
+#auth-page
+  height 520px
+  overflow-y auto
+
 #auth-header
-  & > aside
+  > aside
     margin 20px
     font-size 26px
     line-height 1.3
-
-  & > p
+  > p
     margin 20px
     font-size 18px
 
-#auth-header-errors
+#auth-body
+  width 350px
+  margin 0 auto
+
+.auth-errors
   color bad-red-color
+  text-align left
 
 #auth-header-logo
-  margin 20px 0
+  margin 0 0 20px 0
   font-size 55px
+  line-height 55px
 
 .auth-options
-  width 425px
   max-width 100%
   margin 10px auto
   > a
@@ -39,30 +47,19 @@
       margin-right 10px
       vertical-align middle
 
-.auth-login-options
-  margin 20px 0
-  clearfix()
-  .auth-login-option
-    float left
-    width 50%
-    &:first-child
-      border-right 1px solid light-gray-border-color
-      padding 0 20px 0 40px
-
-    &:last-child
-      padding 0 40px 0 20px
-
 .auth-form
 .auth-form > input,
 .auth-login-social
   margin 10px 0
 
 .auth-form-options
-  margin 10px 0
+  margin 20px 0 30px
   clearfix()
-  & > label
+  &, & a
+    color dark-gray-text-color
+  > label
     float left
-  & > a
+  > a
     float right
 
 .auth-register
@@ -71,13 +68,43 @@
 
 .auth-reset
   margin 40px 0
-  font-size 25px
+  font-size 26px
+  line-height 1.3
 
 #auth-footer
   margin-top 20px
-
-  & > aside
+  > aside
     font-style italic
     font-size 15px
-    margin 20px 0
+    margin 20px 0 30px
     opacity 0.8
+    &, & a
+      color dark-gray-text-color
+
+hr.horizontal-rule-or
+  margin 30px 0
+  &::after
+    position absolute
+    display block
+    content 'or'
+    @extends .small-caps
+    top 0
+    left 50%
+    width 50px
+    height (@width / 2)
+    line-height @height
+    margin-top -(@height / 2)
+    margin-left -(@width / 2)
+    text-align center
+    background-color #fff
+
+// Vertical centering utility classes
+.vam-outer
+.vam-inner
+  width 100%
+  height 100%
+.vam-outer
+  display table
+.vam-inner
+  display table-cell
+  vertical-align middle

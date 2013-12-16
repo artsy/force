@@ -16,17 +16,16 @@ module.exports = class ModalView extends Backbone.View
     'click .modal-close': 'close'
     'click .modal-dialog': '_intercept'
 
-  initialize: (options) ->
-    { @width, @height } =
-      _.defaults (options || {}), { width: '400px', height: 'auto' }
+  initialize: (options={}) ->
+    { @width } = _.defaults options, { width: '400px' }
 
-    @resize = _.debounce @setPosition, 100
+    @resize = _.debounce @updatePosition, 100
 
     $(window).on 'keyup', @escape
     $(window).on 'resize', @resize
 
     mediator.on 'modal:close', @close, this
-    mediator.on 'modal:opened', @setPosition, this
+    mediator.on 'modal:opened', @updatePosition, this
 
     @open()
 
@@ -38,7 +37,7 @@ module.exports = class ModalView extends Backbone.View
 
     mediator.trigger 'modal:close'
 
-  setPosition: =>
+  updatePosition: =>
     @$dialog.css
       top:  (($(window).height() - @$dialog.height()) / 2) + 'px'
       left: (($(window).width() - @$dialog.width()) / 2) + 'px'
@@ -49,10 +48,10 @@ module.exports = class ModalView extends Backbone.View
   reRender: ->
     Transition.fade @$body,
       out:  => @$body.html @template()
-      in:   => @setPosition()
+      in:   => @updatePosition()
 
-  setWidth: ->
-    @$dialog.css { width: @width }
+  setWidth: (width) ->
+    @$dialog.css { width: width || @width }
 
   setup: ->
     # Render outer

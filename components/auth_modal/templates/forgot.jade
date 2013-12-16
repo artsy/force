@@ -1,16 +1,15 @@
-include ./_header
+#auth-page.vam-outer
+  .vam-inner
+    include ./_header
 
-section#auth-body
-  .auth-register
-    form.auth-form
-      input.bordered-input.is-block(
-        name='email', type='email', placeholder='Email' autofocus, required
-      )
-      button#auth-submit.avant-garde-button-black.is-block Send me reset instructions
-      footer.auth-form-options
-        a.auth-toggle( href='/log_in', data-mode='login' ) I remember it!
+    section#auth-body
+      .auth-register
+        form.auth-form
+          input.bordered-input.is-block(
+            name='email', type='email', placeholder='Email' autofocus, required
+          )
+          button#auth-submit.avant-garde-button-black.is-block Send me reset instructions
+          footer.auth-form-options
+            a.auth-toggle( href='/log_in', data-mode='login' ) I remember it!
 
-footer#auth-footer
-  p
-    | Don&rsquo;t have an account?&nbsp;
-    a.auth-toggle.small-caps( href='/sign_up', data-mode='signup' ) Sign up
+    include ./_login_footer.jade

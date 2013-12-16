@@ -20,11 +20,12 @@ bordered-input-placeholder--autofocus-focus()
   garamond()
   font-size default-garamond-font-size
   background-color transparent
-  transition border-color 0.5s
+  transition border-color 0.25s
   placeholder(bordered-input-placeholder)
   &:focus, &:active
     border-color highlight-color
     outline none
+    transition border-color 0.5s
     placeholder(bordered-input-placeholder--focus)
 
   &:disabled

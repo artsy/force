@@ -1,7 +1,9 @@
-include ./_header
+#auth-page.vam-outer
+  .vam-inner
+    include ./_header
 
-section#auth-body
-  p.auth-reset
-    | Please check your email for instructions on how to reset your password
-  p
-    a.auth-toggle.small-caps( href='/log_in', data-mode='login' ) Log in
+    section#auth-body
+      p.auth-reset
+        | Please check your email for instructions on how to reset your password
+      p
+        a.faux-underline.auth-toggle.small-caps( href='/log_in', data-mode='login' ) Log in
