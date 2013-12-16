@@ -28,10 +28,6 @@ module.exports = class ArtworkCollection extends Backbone.Model
   defaultPageSize: 20
   defaultSortOrder: "-position"
 
-  # This collection keepss around known artworks that were *not* saved
-  # to prevent duplicate requests.
-  unsavedCache: []
-
   # All artwork ids
   repoArtworkIds: []
 
@@ -73,7 +69,6 @@ module.exports = class ArtworkCollection extends Backbone.Model
     else
       @get('artworks').add artwork, { at: 0 }
       @trigger "add:#{artwork.get('id')}"
-    @removeFromUnsavedCache artwork
 
   unsaveArtwork: (artworkId, options) ->
     artwork = new Artwork(id: artworkId)
@@ -96,8 +91,6 @@ module.exports = class ArtworkCollection extends Backbone.Model
     else
       @get('artworks').remove artwork
       @trigger "remove:#{artwork.get('id')}"
-    @unsavedCache.push artwork.get('id')
-    @unsavedCache.sort()
 
   isSaved: (artwork) ->
     @get('artworks').get(artwork.get('id'))?
@@ -105,23 +98,16 @@ module.exports = class ArtworkCollection extends Backbone.Model
   broadcastSaved: ->
     @get('artworks').each((artwork) => @trigger("add:#{artwork.get('id')}"))
 
-  # Returns all ids of the Repository artworks that are not in
-  # this collection and are not in this.unsavedCache.
+  # Returns all ids of the Repository artworks that are not in @repoArtworkIds
   artworkIdsToSync: ->
     # Filter out the current saved favs, and requested non-favs
     artworkIds = []
     if @repoArtworkIds.length > 0
       # Filter out known saves
       artworkIds = _.difference @repoArtworkIds, @get('artworks').pluck('id')
-      # Filter out known unsaves,
-      artworkIds = _.difference artworkIds, @unsavedCache
 
     # These are ids we have not requested before
     artworkIds
-
-  removeFromUnsavedCache: (artwork) ->
-    index = _.indexOf(@unsavedCache, artwork.get('id'), true)
-    @unsavedCache.splice(index, 1) if index isnt -1
 
   # Call this from views after one or more artworks are fetched
   syncSavedArtworks: ->
@@ -135,20 +121,11 @@ module.exports = class ArtworkCollection extends Backbone.Model
 
     if @allFetched
       # clean up the internal state
-      @unsavedCache = @pendingRequests = @completedRequests = []
+      @pendingRequests = @completedRequests = []
       return
 
     artworkIds = @artworkIdsToSync()
     return false if artworkIds.length < 1
-
-    # Assume all of these new ids to check will fail (are not saved)
-    if @unsavedCache.length is 0
-      # if this is the first run, assume all of these are not saved
-      @unsavedCache = artworkIds
-    else
-      _.each artworkIds, (id) => @unsavedCache.push(id)
-    @unsavedCache.sort()
-    @unsavedCache = _.uniq @unsavedCache, true
 
     # Add URLs to the queue, @requestSlugMax artworkIds at a time
     artworkIdsCopy = artworkIds[..]
@@ -217,7 +194,6 @@ module.exports = class ArtworkCollection extends Backbone.Model
           _.each response.models, (savedArtworkJSON) =>
             savedArtwork = new Artwork savedArtworkJSON
             savedArtworks.push savedArtwork
-            @removeFromUnsavedCache savedArtwork
             # We're adding these wholesale, so we need to trigger 'add' for individual listeners
             _.defer => @trigger "add:#{savedArtworkJSON.id}"
           @get('artworks').add savedArtworks, { silent: true }
