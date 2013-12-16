@@ -8,20 +8,20 @@ module.exports = class SaveControls extends Backbone.View
   analyticsRemoveMessage: "Removed artwork from collection, via result rows"
   analyticsSaveMessage: "Added artwork to collection, via result rows"
 
-  initialize: ->
+  initialize: (options) ->
     throw 'You must pass an el' unless @el?
     throw 'You must pass a model' unless @model?
-    return unless window.currentUser
+    return unless options.artworkCollection
+    { @artworkCollection } = options
 
     # Listen to save changes for this work
-    @defaultArtworkCollection = window.currentUser.defaultArtworkCollection()
-    if @defaultArtworkCollection
-      @listenTo @defaultArtworkCollection, "add:#{@model.get('id')}", @onArtworkSaveChange
-      @listenTo @defaultArtworkCollection, "remove:#{@model.get('id')}", @onArtworkSaveChange
+    if @artworkCollection
+      @listenTo @artworkCollection, "add:#{@model.get('id')}", @onArtworkSaveChange
+      @listenTo @artworkCollection, "remove:#{@model.get('id')}", @onArtworkSaveChange
       @onArtworkSaveChange()
 
   onArtworkSaveChange: ->
-    if @model.isSaved()
+    if @model.isSaved @artworkCollection
       @$el.removeClass('overlay-artwork-unsaved').addClass('overlay-artwork-saved')
       @$('.label').text('Saved')
     else
@@ -31,21 +31,21 @@ module.exports = class SaveControls extends Backbone.View
   events:
     'click .overlay-artwork-save' : 'saveClick'
 
-  saveClick: (event) ->
-    unless window.currentUser
+  saveClick: (event) =>
+    unless @artworkCollection
       mediator.trigger 'open:auth', { mode: 'login' }
       return false
 
     @$el.removeClass('committed')
 
-    if @model.isSaved()
+    if @model.isSaved @artworkCollection
       # Analytics.click @analyticsRemoveMessage, @model
-      @defaultArtworkCollection.unsaveArtwork @model.get('id'),
+      @artworkCollection.unsaveArtwork @model.get('id'),
         success: => @$el.addClass('committed')
         error: => @$el.removeClass('unsaved').addClass('saved')
     else
       # Analytics.click @analyticsSaveMessage, @model
-      @defaultArtworkCollection.saveArtwork @model.get('id'),
+      @artworkCollection.saveArtwork @model.get('id'),
         success: => @$el.addClass('committed')
         error: => @$el.removeClass('saved').addClass('unsaved')
       @$el.addClass('overlay-artwork-clicked')

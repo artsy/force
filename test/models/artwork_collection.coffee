@@ -24,7 +24,6 @@ describe 'ArtworkCollection', ->
     @currentUser = new CurrentUser(id: "user_id", email: "a@b.c")
     sd.GRAVITY_URL = "http://localhost:5000/__api"
     sd.NODE_ENV = 'test'
-    window.currentUser = @currentUser
     @artworkCollection = new ArtworkCollection(userId: @currentUser.get('id'))
     @artworks = new Artworks
     @artworks.add [

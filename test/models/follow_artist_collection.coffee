@@ -24,7 +24,6 @@ describe 'FollowArtistCollection', ->
     @currentUser = new CurrentUser(id: "user_id", email: "a@b.c")
     sd.GRAVITY_URL = "http://localhost:5000/__api"
     sd.NODE_ENV = 'test'
-    window.currentUser = @currentUser
     @followArtistCollection = new FollowArtistCollection()
     @artists = new Artists
     @artists.add [

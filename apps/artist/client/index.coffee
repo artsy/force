@@ -11,16 +11,23 @@ RelatedGenesView        = require './genes.coffee'
 AuthModalView           = require '../../../components/auth_modal/view.coffee'
 mediator                = require '../../../lib/mediator.coffee'
 InitializeShareButtons  = require '../../../components/mixins/initialize_share.coffee'
+CurrentUser             = require '../../../models/current_user.coffee'
 
 module.exports.ArtistView = class ArtistView extends Backbone.View
 
   initialize: (options) ->
+    @setupCurrentUser()
     @setupArtworks()
     @setupRelatedArtists()
     @setupBlurb()
     @setupRelatedPosts()
     @setupRelatedGenes()
     @setupShareButtons()
+
+  setupCurrentUser: ->
+    @currentUser = CurrentUser.orNull()
+    @currentUser?.initializeDefaultArtworkCollection()
+    @artworkCollection = @currentUser?.defaultArtworkCollection()
 
   setupShareButtons: ->
     path = "/artist/#{@model.get 'id'}"
@@ -50,16 +57,18 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     @institutionArtworks = new Artworks
     @institutionArtworks.url = @model.url() + '/artworks'
     new FillwidthView(
+      artworkCollection: @artworkCollection
       fetchOptions: { 'filter[]': 'for_sale' }
-      collection  : @availableArtworks
-      seeMore     : true
-      el          : @$ '#artist-available-works'
+      collection: @availableArtworks
+      seeMore: true
+      el: @$ '#artist-available-works'
     ).nextPage(false, 10)
     new FillwidthView(
+      artworkCollection: @artworkCollection
       fetchOptions: { 'filter[]': 'not_for_sale' }
-      collection  : @institutionArtworks
-      seeMore     : true
-      el          : @$('#artist-institution-works')
+      collection: @institutionArtworks
+      seeMore: true
+      el: @$('#artist-institution-works')
     ).nextPage(false, 10)
 
   setupRelatedPosts: ->
@@ -89,6 +98,7 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
   renderRelatedArtist: (artist, i, type) ->
     artist.fetchArtworks data: { size: 10 }, success: (artworks) =>
       view = new FillwidthView
+        artworkCollection: @artworkCollection
         collection: artworks
         el: @$("#artist-related-#{type.toLowerCase()} " +
                "li:nth-child(#{i + 1}) .artist-related-artist-artworks")

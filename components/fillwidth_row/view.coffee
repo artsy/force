@@ -7,7 +7,7 @@ sd           = require('sharify').data
 module.exports = class FillwidthView extends Backbone.View
 
   initialize: (options) ->
-    { @seeMore, @fetchOptions } = options
+    { @seeMore, @fetchOptions, @artworkCollection } = options
     @page = 1
     @fetched = 0
     @listenTo @collection, 'request', @renderSpinner
@@ -33,19 +33,17 @@ module.exports = class FillwidthView extends Backbone.View
     listItems =
       for artwork, index in artworks.models
         item = new SaveControls
+          artworkCollection: @artworkCollection
           model: artwork
           el: $($list[index]).find('.overlay-container')
 
     # Todo: setup impression tracking
     # @initializeImpressionTracking listItems, $list
-    
-    @syncSavedArtworks artworks
+    @syncSavedArtworks(artworks) if @artworkCollection
 
   syncSavedArtworks: (artworks) ->
-    defaultCollection = window.currentUser?.defaultArtworkCollection()
-    if defaultCollection
-      defaultCollection.addRepoArtworks artworks
-      _.delay (-> defaultCollection.syncSavedArtworks()), 500
+    @artworkCollection.addRepoArtworks artworks
+    _.delay (=> @artworkCollection.syncSavedArtworks()), 500
 
   handleSeeMore: ->
     if @page is 2

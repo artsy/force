@@ -125,7 +125,7 @@ module.exports = class ArtworkCollection extends Backbone.Model
 
   # Call this from views after one or more artworks are fetched
   syncSavedArtworks: ->
-    return false unless window.currentUser
+    return false unless sd.CURRENT_USER?.id
 
     # After adding a work to the collection for the 1st time, we will have a 'real' collection
     @collectionExists = true
