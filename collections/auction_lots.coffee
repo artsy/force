@@ -12,7 +12,7 @@ module.exports = class AuctionLots extends PageableCollection
     'date,-auction_date': 'Most Recent'
     'organization,-auction_date': 'Auction House'
     '-high_estimate_dollar,-auction_date': 'Estimate'
-    '-price_realized_dollar,-auction_date': 'Sale'
+    '-price_realized_dollar,-auction_date': 'Sale Price'
 
   url: ->
     "#{sd.GRAVITY_URL}/api/v1/artist/#{@id}/auction_lots?page=#{@state.currentPage}&size=#{@state.pageSize}&sort=#{@sortBy}&total_count=1"

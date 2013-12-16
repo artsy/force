@@ -62,11 +62,8 @@ describe 'Auction lots template', ->
         auctionLots: @auctionLots
       )
 
-    it 'Does not display the sale column', ->
-      @template.should.not.include '<th>Sale</th>'
-
-    it 'Should have a more specific details link', ->
-      @template.should.include 'See sale price & details'
+    it 'Displays the sign up link instead of the sale price in the sale column', ->
+      @template.should.include 'Sign up to see sale price'
 
     it 'Should not have a link to sort by sale price', ->
       @template.should.not.include '<a href="?sort=-price_realized_dollar,-auction_date">Sale</a>'
@@ -83,11 +80,8 @@ describe 'Auction lots template', ->
         user: @user
       )
 
-    it 'Displays the sale column', ->
-      @template.should.include '<th>Sale</th>'
+    it 'Does not display the sign up call to action', ->
+      @template.should.not.include '<a class="auction-lot-sale-signup">Sign up to see sale price</a>'
 
-    it 'Has a less specific details link', ->
-      @template.should.include 'See details'
-
-    it 'Has a link to sort by sale', ->
-      @template.should.include '<a href="?sort=-price_realized_dollar,-auction_date">Sale</a>'
+    it 'Has a link to sort by sale price', ->
+      @template.should.include '<a href="?sort=-price_realized_dollar,-auction_date">Sale Price</a>'

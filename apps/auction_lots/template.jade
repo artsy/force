@@ -7,6 +7,8 @@ block locals
 block body
   #auction-results-page.main-layout-container
     header#auction-lot-header
+      a.auction-lots-return-link
+        | Back to #{artist.get('name')}
       h1.avant-garde-header-center
         | Auction results for #{artist.get('name')}
 
@@ -24,9 +26,11 @@ block body
             .bordered-pulldown-toggle-caret
               span.caret
           .bordered-pulldown-options
-            for k, v in auctionLots.sortCriteria
-              - if (!user && k === 'Sale') { return }
-              a( href="?sort=#{v}" )= k
+            a( href="?sort=#{auctionLots.sortBy}" )
+              = auctionLots.sortCriteria[auctionLots.sortBy]
+            - for k, v in auctionLots.sortCriteria
+              - if (!(!user && k === 'Sale' || v === auctionLots.sortBy))
+                a( href="?sort=#{v}" )= k
 
     table.auction-lots-table
       thead
@@ -38,8 +42,7 @@ block body
           th Auction House
           th Date
           th Estimate
-          if user
-            th Sale
+          th Sale Price
       tbody
         - for lot in auctionLots.models
           tr.auction-lot( id="auction-lot-#{lot.id}" )
@@ -50,29 +53,28 @@ block body
                     href=lot.get('image_url').replace(/thumbnail/, 'original')
                   )
                     img.auction-lot-image( src!= lot.get('image_url'), alt= lot.get('title') )
-                em.auction-lot-title= lot.get('title')
+                - else
+                  .auction-lot-image-placeholder
+                .auction-lot-title
+                  em= lot.get('title')
+                  - if (lot.get('external_url'))
+                    a.auction-lot-details-link(
+                      href=lot.get('external_url'), target='_blank'
+                    ) See details
             td= lot.get('dates_text')
             td.auction-lot-medium= lot.get('medium_text')
             td
               = lot.get('dimensions').in
               br
               = lot.get('dimensions').cm
-            td= lot.get('organization')
+            td.auction-lot-organization= lot.get('organization')
             td= lot.get('auction_dates_text')
             td!= lot.get('estimate_text')
-            if user
-              td= lot.get('price_realized_text')
-
-          //- Details link
-          - if (lot.get('external_url'))
-            tr.auction-lot-meta
-              td( colspan=(user ? 7 : 6) )
-              td
-                a.auction-lot-details-link( href=lot.get('external_url'), target='_blank' )
-                  if user
-                    | See details
-                  else
-                    | See sale price & details
-                  i.icon-chevron-right
+            td
+              - if (user)
+                = lot.get('price_realized_text')
+              - else
+                a.auction-lot-sale-signup
+                  | Sign up to see sale price
 
     +paginate(auctionLots.state.currentPage, auctionLots.state.totalPages, '?sort=' + auctionLots.sortBy + '&')

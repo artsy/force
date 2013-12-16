@@ -1,15 +1,18 @@
 @import '../../components/pagination'
 
-page-width = 1024px
-
-#auction-results-page
-  width page-width
-
 #auction-lot-header
+  position relative
+  padding 40px 0
   text-align center
-  margin 80px 0 40px
   > h1
     font-size 24px
+
+.auction-lots-return-link
+  position absolute
+  top 0
+  left 0
+  avant-garde()
+  font-size 13px
 
 .auction-lots-table-header
   margin 20px 0
@@ -54,25 +57,26 @@ page-width = 1024px
   vertical-align top
 
 .auction-lot-image
+.auction-lot-image-placeholder
   width 80px
   margin-right 20px
 
 .auction-lot-title
 .auction-lot-medium
+.auction-lot-organization
   max-width 160px
 
-.auction-lot-meta > td
-  border-top 0
-
+.auction-lot-sale-signup
 .auction-lot-details-link
   avant-garde()
   text-decoration none
   font-size 11px
   line-height 1
   white-space nowrap
-  > i
-    display none
-    font-size 14px
+
+.auction-lot-details-link
+  display block
+  margin-top 10px
 
 .zoom-modal .modal-header
   display none
