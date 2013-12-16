@@ -13,6 +13,8 @@ header#main-layout-header
       a#main-layout-header-home-logo.icon-logoglyph( href='/' )
       include ./search_bar/template
     #main-layout-header-right
+      if user
+        a.header-post-button.icon-write( href='/post' )
       a( href='/browse' ) Browse
       a( href='/filter/artworks' ) Filter
       a( href='/partners' ) partners
