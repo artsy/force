@@ -13,7 +13,7 @@ module.exports = class SaveControls extends Backbone.View
     throw 'You must pass a model' unless @model?
 
     # Listen to save changes for this work
-    defaultArtworkCollection = sd.currentUserModel.defaultArtworkCollection()
+    defaultArtworkCollection = window.currentUser.defaultArtworkCollection()
     if defaultArtworkCollection
       @listenTo defaultArtworkCollection, "add:#{@model.get('id')}", @onArtworkSaveChange
       @listenTo defaultArtworkCollection, "remove:#{@model.get('id')}", @onArtworkSaveChange

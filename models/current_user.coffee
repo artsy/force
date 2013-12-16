@@ -27,29 +27,7 @@ module.exports = class CurrentUser extends Backbone.Model
 
   # Removes the artwork from the user's saved-artwork collection.
   removeArtwork: (artworkId, options = {}) =>
-    @defaultArtworkCollection().saveArtwork(artworkId, options)
-
-  # Retreive a list of artists the user is following
-  #
-  # @param {Object} options Provide `success` and `error` callbacks similar to Backbone's fetch
-  followingArtists: (options) ->
-    new Backbone.Collection(null
-      url: "#{sd.GRAVITY_URL}/api/v1/me/follow/artists"
-    ).fetch options
-
-  followArtist: (artistId, options) ->
-    $.ajax "#{sd.GRAVITY_URL}/api/v1/me/follow/artist?artist_id=#{artistId}",
-      type : "POST",
-      success: options?.success
-      error: options?.error
-    false
-
-  unfollowArtist: (artistId, options) ->
-    $.ajax "#{sd.GRAVITY_URL}/api/v1/me/follow/artist?artist_id=#{artistId}",
-      type : "DELETE",
-      success: options?.success
-      error: options?.error
-    false
+    @defaultArtworkCollection().unsaveArtwork(artworkId, options)
 
   # Convenience for getting the bootstrapped user or returning null.
   # This should only be used on the client.

@@ -14,9 +14,6 @@ describe 'ArtworkCollection', ->
 
   before (done) ->
     benv.setup =>
-      benv.expose { $: require 'components-jquery' }
-      Backbone.$ = $
-      @ajaxSpy = sinon.spy $, 'ajax'
       done()
 
   after benv.teardown
@@ -26,8 +23,8 @@ describe 'ArtworkCollection', ->
 
     @currentUser = new CurrentUser(id: "user_id", email: "a@b.c")
     sd.GRAVITY_URL = "http://localhost:5000/__api"
-    sd.currentUserModel = @currentUser
     sd.NODE_ENV = 'test'
+    window.currentUser = @currentUser
     @artworkCollection = new ArtworkCollection(userId: @currentUser.get('id'))
     @artworks = new Artworks
     @artworks.add [
@@ -49,10 +46,11 @@ describe 'ArtworkCollection', ->
       @artworkCollection.isSaved(artwork).should.be.true
       @artworkCollection.get('artworks').length.should.equal len + 1
 
-    xit 'makes an API request to sync the action', ->
+    it 'makes an API request to sync the action', ->
       artwork = new Artwork { id: 'baz', title: 'Baz' }
       @artworkCollection.saveArtwork artwork.get('id')
-      @ajaxSpy.args[0][0].should.include '/api/v1/collection/saved-artwork/artwork/baz'
+      Backbone.sync.args[0][0].should.equal 'create'
+      Backbone.sync.args[0][1].url.should.include '/api/v1/collection/saved-artwork/artwork/baz'
 
     it 'can trigger add events for a specific artwork', ->
       specificArtworkAddedCalls = 0
@@ -84,10 +82,11 @@ describe 'ArtworkCollection', ->
       @artworkCollection.isSaved(artwork).should.be.false
       @artworkCollection.get('artworks').length.should.equal len - 1
 
-    xit 'makes an API request to sync the action', ->
+    it 'makes an API request to sync the action', ->
       artwork = @artworkCollection.get('artworks').first()
       @artworkCollection.unsaveArtwork artwork.get('id')
-      @ajaxSpy.args[0][0].should.include '/api/v1/collection/saved-artwork/artwork/baz'
+      Backbone.sync.args[0][0].should.equal 'delete'
+      Backbone.sync.args[0][1].url.should.include '/api/v1/collection/saved-artwork/artwork/foo'
 
     it 'can trigger remove events for a specific artwork', ->
       specificArtworkRemovedCalls = 0
@@ -174,7 +173,7 @@ describe 'ArtworkCollection', ->
 
   describe 'processRequests', ->
 
-    it 'makes multiple requests determined by @requestSlugMax', ->
+    xit 'makes multiple requests determined by @requestSlugMax', ->
       @artworkCollection.artworkIdsToSync = sinon.stub().returns(['moo', 'foo', 'bar'])
       @artworkCollection.syncSavedArtworks()
       @artworkCollection.requestSlugMax = 2

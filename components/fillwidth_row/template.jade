@@ -1,6 +1,6 @@
 ul.fillwidth-list
   for artwork in artworks
-    li.uninitialized
+    li.fillwidth-row-uninitialized
       .fillwidth-img-container
         a( href="/artwork/#{artwork.get('id')}" )
           img( src=artwork.defaultImageUrl(), nopin="nopin" )

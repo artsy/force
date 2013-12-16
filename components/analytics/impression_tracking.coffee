@@ -6,7 +6,7 @@ Backbone    = require 'backbone'
 # - only tracks VISIBLE artworks (useful for things like fillwidth rows where we don't display all artworks in the api response)
 # - will track an artwork multiple times if it is seen multiple times
 # - does not track artworks displayed after clicking 'see more' on shows
-module.exports = class ImpressionTracking extends ModalView
+module.exports = class ImpressionTracking
 
   initialize: (listItems, $list) ->
     @$window = $('window')

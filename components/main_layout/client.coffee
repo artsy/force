@@ -18,12 +18,5 @@ $ ->
   new HeaderView el: $('#main-layout-header'), $window: $(window), $body: $('body')
   new FooterView el: $('#main-layout-footer')
 
-  sd.currentUserModel = CurrentUser.orNull()
-  sd.currentUserModel?.initializeDefaultArtworkCollection()
-
-  # track impressions every 15 seconds
-  # window.setInterval ->
-  #   return unless window.viewedArtworkIds.length > 0
-  #   Analytics.multi "Impression", "Artwork", window.viewedArtworkIds
-  #   windowviewedArtworkIds = []
-  # ), 15000
+  window.currentUser = CurrentUser.orNull()
+  window.currentUser?.initializeDefaultArtworkCollection()

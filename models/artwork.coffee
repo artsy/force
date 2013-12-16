@@ -10,7 +10,7 @@ module.exports = class Artwork extends Backbone.Model
     @get('images')?[0]?.image_url.replace(':version', version) ? ''
 
   isSaved: ->
-    defaultCollection = sd.currentUserModel?.defaultArtworkCollection()
+    defaultCollection = window.currentUser?.defaultArtworkCollection()
     defaultCollection && defaultCollection.isSaved(@)
 
   titleAndYear: ->

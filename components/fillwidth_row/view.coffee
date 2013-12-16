@@ -40,7 +40,7 @@ module.exports = class FillwidthView extends Backbone.View
     @syncSavedArtworks artworks
 
   syncSavedArtworks: (artworks) ->
-    defaultCollection = sd.currentUserModel?.defaultArtworkCollection()
+    defaultCollection = window.currentUser?.defaultArtworkCollection()
     if defaultCollection
       defaultCollection.addRepoArtworks artworks
       _.delay (-> defaultCollection.syncSavedArtworks()), 500

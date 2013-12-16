@@ -103,7 +103,7 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
            button#artist-follow-button'     : 'followArtist'
 
   followArtist: (e) ->
-    currentUser = sd.currentUserModel
+    currentUser = window.currentUser
     if currentUser 
       currentUser.followArtist()
     else

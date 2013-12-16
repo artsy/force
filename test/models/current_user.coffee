@@ -2,17 +2,8 @@ CurrentUser = require '../../models/current_user'
 fabricate = require('antigravity').fabricate
 sinon = require 'sinon'
 Backbone = require 'backbone'
-benv = require 'benv'
 
 describe 'CurrentUser', ->
-
-  before (done) ->
-    benv.setup =>
-      benv.expose { $: require 'components-jquery' }
-      Backbone.$ = $
-      done()
-
-  after benv.teardown
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
@@ -30,27 +21,14 @@ describe 'CurrentUser', ->
 
   describe '#saveArtwork', ->
 
-    it 'makes the correct api call if the current user id is set', ->
-      @user.set 'id': 'bitty'
+    it 'makes the correct api call', ->
+      @user.initializeDefaultArtworkCollection()
       @user.saveArtwork('masterpiece', null)
-      Backbone.sync.args[0][0].should.equal 'create'
+      Backbone.sync.args[1][0].should.equal 'create'
 
   describe '#removeArtwork', ->
 
-    it 'makes the correct api call if the current user id is set', ->
-      @user.set 'id': 'bitty'
+    it 'makes the correct api call', ->
+      @user.initializeDefaultArtworkCollection()
       @user.removeArtwork('masterpiece', null)
-      Backbone.sync.args[0][0].should.equal 'delete'
-
-  describe '#followingArtists', ->
-
-    xit 'makes the correct API call to retreive a list of artists the user is following', ->
-      @user.followingArtists()
-      Backbone.sync.args[0][0].should.equal 'read'
-
-  describe '#followArtist', ->
-
-    it 'makes the correct API call to follow an artist', ->
-      @user.followArtist 'foo-bar', null
-      Backbone.sync.args[0][1].attributes.artist_id.should.equal 'foo-bar'
-      Backbone.sync.args[0][0].should.equal 'create'
+      Backbone.sync.args[1][0].should.equal 'delete'

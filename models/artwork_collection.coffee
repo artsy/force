@@ -58,10 +58,9 @@ module.exports = class ArtworkCollection extends Backbone.Model
   saveArtwork: (artworkId, options) ->
     artwork = new Artwork(id: artworkId)
     @_save artwork, options
-    $.ajax "#{@url()}/artwork/#{artwork.get('id')}",
-      type: "POST",
-      data:
-        user_id: @get('userId')
+    model = new Backbone.Model
+    model.url = "#{@url()}/artwork/#{artworkId}?user_id=#{@get('userId')}"
+    model.save
       success: options?.success
       error: (error) =>
         unless sd.NODE_ENV == 'test'
@@ -80,16 +79,15 @@ module.exports = class ArtworkCollection extends Backbone.Model
   unsaveArtwork: (artworkId, options) ->
     artwork = new Artwork(id: artworkId)
     @_unsave artwork, options
-    $.ajax "#{@url()}/artwork/#{artwork.get('id')}",
-      type: "DELETE",
-      data:
-        user_id: @get('userId')
+    model = new Backbone.Model
+    model.url = "#{@url()}/artwork/#{artworkId}?user_id=#{@get('userId')}"
+    model.isNew = -> false
+    model.destroy
       success: options?.success
       error: (error) =>
         unless sd.NODE_ENV == 'test'
           @_save artwork, options
         options?.error?(error)
-    false
 
   _unsave: (artwork, options) ->
     if options?.silent? and options.silent
@@ -126,7 +124,7 @@ module.exports = class ArtworkCollection extends Backbone.Model
 
   # Call this from views after one or more artworks are fetched
   syncSavedArtworks: ->
-    return false unless sd.currentUserModel
+    return false unless window.currentUser
 
     # After adding a work to the collection for the 1st time, we will have a 'real' collection
     @collectionExists = true
@@ -156,6 +154,7 @@ module.exports = class ArtworkCollection extends Backbone.Model
     paramIds = artworkIdsCopy[0..@requestSlugMax]
     while paramIds.length > 0
       artworkIdsCopy = artworkIdsCopy[@requestSlugMax..]
+      # Todo: find a jQuery.param substitute
       params = $.param({ artworks: paramIds })
       if _.indexOf(@completedRequests, params, true) is -1
         @pendingRequests.push params
@@ -184,38 +183,26 @@ module.exports = class ArtworkCollection extends Backbone.Model
   # - pass in user_id and private params
   # - cope with a non-existant collection (users who have never saved an artwork have no collection)
   fetch: (options) ->
-    $.ajax @url(),
-      type: "GET"
-      data:
-        user_id: @get('userId')
-        private: (sd.CURRENT_USER.id == @get('userId'))
-      error: (response) =>
-        @collectionExists = false
-        @set fetched: true
-        options?.error?(response)
+    privateCollection = sd.CURRENT_USER?.id == @get('userId')
+    model = new Backbone.Model
+    model.url = "#{@url()}?user_id=#{@get('userId')}&private=#{privateCollection}"
+    model.fetch
       success: (response) =>
         @collectionExists = true
         @set response
         @set fetched: true
         options?.success?(response)
-
-  # @override
-  save: ->
-    $.ajax @url(),
-      type: "PUT"
-      data:
-        user_id: @get('userId')
-        private: @get('private')
       error: (response) =>
+        @collectionExists = false
+        @set fetched: true
         options?.error?(response)
-      success: (response) =>
-        options?.success?(response)
 
   fetchArtworks: (options) ->
     # ensure that this model is fetched before seeing if artworks are in the collection
     @ensureFetched =>
-      $.ajax "#{@url()}/artworks?#{options.params}",
-        type: "GET"
+      artworks = new Artworks
+      artworks.url = "#{@url()}/artworks?#{options.params}"
+      artworks.fetch
         data:
           user_id: @get('userId')
           private: @get('private')
