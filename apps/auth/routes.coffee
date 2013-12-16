@@ -3,3 +3,7 @@
 
 @submitLogin = (req, res) ->
   res.send { success: true }
+
+@logout = (req, res) ->
+  req.logout()
+  res.redirect '/'

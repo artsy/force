@@ -7,7 +7,7 @@ block locals
   assetPackage = 'artist'
 
 block body
-  .responsive-side-margin
+  .main-layout-container
     header#artist-header
       h1.avant-garde-header-center= artist.get('name')
       h2= [artist.get('nationality'), artist.get('years')].join(', ')
@@ -28,7 +28,7 @@ block body
       #artist-institution-works
         .loading-spinner
   .artist-info-section
-    .responsive-side-margin
+    .main-layout-container
       .artist-info-left
         if artist.get('blurb')
           .artist-blurb
@@ -40,7 +40,7 @@ block body
         .artist-related-posts
   .artist-related-section
     h3.avant-garde-header-center Related Artists
-    #artist-related-artists.responsive-side-margin
+    #artist-related-artists.main-layout-container
   .artist-related-section
     h3.avant-garde-header-center Related Contemporary
-    #artist-related-contemporary.responsive-side-margin
+    #artist-related-contemporary.main-layout-container

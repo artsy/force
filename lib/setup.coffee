@@ -6,7 +6,7 @@
 
 { GRAVITY_URL, NODE_ENV, ARTSY_ID, ARTSY_SECRET, SESSION_SECRET, PORT,
   ASSET_PATH, FACEBOOK_APP_NAMESPACE, MOBILE_MEDIA_QUERY, CANONICAL_MOBILE_URL,
-  APP_URL, REDIS_URL, DEFAULT_CACHE_TIME } = config = require "../config"
+  APP_URL, REDIS_URL, DEFAULT_CACHE_TIME, SECURE_APP_URL } = config = require "../config"
 { parse, format } = require 'url'
 _ = require 'underscore'
 express = require "express"
@@ -19,15 +19,21 @@ httpProxy = require 'http-proxy'
 proxy = new httpProxy.RoutingProxy()
 CurrentUser = require '../models/current_user'
 backboneCacheSync = require 'backbone-cache-sync'
+redirectMobile = require './middleware/redirect_mobile'
+localsMiddleware = require './middleware/locals'
+helpersMiddleware = require './middleware/helpers'
 
 module.exports = (app) ->
 
-  # Override Backbone to use server-side sync & augment sync with Q promises
+  # Override Backbone to use server-side sync, inject the XAPP token,
+  # add redis caching, and augment sync with Q promises.
   Backbone.sync = require "backbone-super-sync"
-
   Backbone.sync.editRequest = (req) -> req.set('X-XAPP-TOKEN': artsyXappMiddlware.token)
   backboneCacheSync(Backbone.sync, REDIS_URL, DEFAULT_CACHE_TIME, NODE_ENV) if REDIS_URL
   require('./deferred_sync.coffee')(Backbone, require 'q')
+
+  # Redirect mobile browsers to Martsy
+  app.use redirectMobile
 
   # Setup Artsy XAPP middleware
   app.use artsyXappMiddlware(
@@ -47,6 +53,7 @@ module.exports = (app) ->
     MOBILE_MEDIA_QUERY: MOBILE_MEDIA_QUERY
     CANONICAL_MOBILE_URL: CANONICAL_MOBILE_URL
     FACEBOOK_APP_NAMESPACE: FACEBOOK_APP_NAMESPACE
+    SECURE_APP_URL: SECURE_APP_URL
 
   # Setup Artsy Passport
   app.use express.cookieParser(SESSION_SECRET)
@@ -55,6 +62,8 @@ module.exports = (app) ->
   app.use artsyPassport _.extend(config, CurrentUser: CurrentUser)
 
   # General
+  app.use localsMiddleware
+  app.use helpersMiddleware
   app.use express.favicon()
   app.use express.logger('dev')
 
@@ -71,23 +80,6 @@ module.exports = (app) ->
   # Test
   if "test" is NODE_ENV
     app.use "/__api", require("../test/helpers/integration.coffee").api
-
-  # Router helper methods
-  app.use (req, res, next) ->
-    res.backboneError = (m, e) -> next e.text
-    next()
-
-  # Adjust the asset path if the request came from SSL
-  app.use (req, res, next) ->
-    pathObj = parse res.locals.sd.ASSET_PATH
-    pathObj.protocol = if req.get('X-Forwarded-Proto') is 'https' then 'https' else 'http'
-    res.locals.sd.ASSET_PATH = format(pathObj)
-    next()
-
-  # Set the xapp token in locals
-  app.use (req, res, next) ->
-    res.locals.sd.GRAVITY_XAPP_TOKEN = res.locals.artsyXappToken
-    next()
 
   # Mount apps
   app.use require "../apps/page"

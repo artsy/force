@@ -22,7 +22,6 @@
 @import './buttons'
 @import './headers'
 @import './body'
-@import './responsive_side_margin'
 @import './icons'
 @import './faux_underline'
 
@@ -69,3 +68,8 @@ hr
 // Hide the document until typekit loads Garamond
 html.wf-loading
   visibility hidden
+
+// The 1400px max inner container
+.main-layout-container
+  max-width: default-max-page-width
+  margin: auto 55px
