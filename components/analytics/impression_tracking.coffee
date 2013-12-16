@@ -1,6 +1,5 @@
 _           = require 'underscore'
 sd          = require('sharify').data
-Backbone    = require 'backbone'
 
 # very basic impression tracking that tracks all visible artworks when the $list is scrolled to
 # - only tracks VISIBLE artworks (useful for things like fillwidth rows where we don't display all artworks in the api response)

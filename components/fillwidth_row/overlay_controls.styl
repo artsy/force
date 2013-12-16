@@ -20,23 +20,23 @@
   background-color: rgba(0, 0, 0, 0.4)
   color: white
   opacity 0
-  z-index 10
+  z-index 1
   text-align: center
   &.visible
     opacity 1
-  &.saved
+  &.overlay-artwork-saved
     background-color: highlight-color
     opacity 1
   &:hover
     background: black
-  &.clicked
+  &.overlay-artwork-clicked
     background-color: highlight-color
-  &.saved
+  &.overlay-artwork-saved
     &:hover
       background-color: bad-red-color
-      &.clicked
+      &.overlay-artwork-clicked
         background-color: highlight-color
-  .save
+  .overlay-artwork-save
     cursor: pointer
     font-size: 29px
     line-height: 29px

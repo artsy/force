@@ -11,6 +11,7 @@ module.exports = class SaveControls extends Backbone.View
   initialize: ->
     throw 'You must pass an el' unless @el?
     throw 'You must pass a model' unless @model?
+    return unless window.currentUser
 
     # Listen to save changes for this work
     @defaultArtworkCollection = window.currentUser.defaultArtworkCollection()
@@ -21,14 +22,14 @@ module.exports = class SaveControls extends Backbone.View
 
   onArtworkSaveChange: ->
     if @model.isSaved()
-      @$el.removeClass('unsaved').addClass('saved')
+      @$el.removeClass('overlay-artwork-unsaved').addClass('overlay-artwork-saved')
       @$('.label').text('Saved')
     else
-      @$el.removeClass('saved').addClass('unsaved')
+      @$el.removeClass('overlay-artwork-saved').addClass('overlay-artwork-unsaved')
       @$('.label').text('Favorite')
 
   events:
-    'click .save' : 'saveClick'
+    'click .overlay-artwork-save' : 'saveClick'
 
   saveClick: (event) ->
     unless window.currentUser
@@ -47,8 +48,8 @@ module.exports = class SaveControls extends Backbone.View
       @defaultArtworkCollection.saveArtwork @model.get('id'),
         success: => @$el.addClass('committed')
         error: => @$el.removeClass('saved').addClass('unsaved')
-      @$el.addClass('clicked')
+      @$el.addClass('overlay-artwork-clicked')
       setTimeout =>
-        @$el.removeClass('clicked')
+        @$el.removeClass('overlay-artwork-clicked')
       , 1500
     false

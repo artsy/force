@@ -4,33 +4,32 @@ sd = require('sharify').data
 Artworks = require '../collections/artworks.coffee'
 Artwork = require './artwork.coffee'
 
-##
+#
 # Lifecycle for determining if artworks belong to this collection:
 #
-#  1. When artworks are initialized in groups via the `InitializeArtworks` mixin,
+#  1. When artworks are initialized in groups
 #     `CurrentUser.defaultArtworkCollection().syncSavedArtworks` is called.
 #  2. Now `@artworkIdsToSync` looks at its models, the contents of
-#     `App.Repositories.Artworks`, and an array of artwork slugs that are currently
+#     `repoArtworkIds`, and an array of artwork slugs that are currently
 #     being requested or have already been requested, `@unsavedCache`. The result is
 #     an array or artwork slugs to ask the server if they belong in this collection.
 #  3. This array result is queued as an array of params, `@pendingRequests`, in groups
 #     of `@requestSlugMax` (currently 20). This keeps server response time reasonable.
 #  4. Results fire add events for individual artworks and are silently added to the
 #     collection in groups until the `@pendingRequets` is empty.
-#  5. If `App.Views.UserFavorites` gets to its footer, it will set `@allFetched`
+#  5. If `UserFavorites` gets to its footer, it will set `@allFetched`
 #     to true, some internal clean up is done, and no more requests are necessary.
 #
 
 # Corresponds to the rails model called 'Collection'
-
 module.exports = class ArtworkCollection extends Backbone.Model
 
   allFetched: false
   defaultPageSize: 20
   defaultSortOrder: "-position"
 
-  # This collection stores the saves, keep around known artworks
-  # that were *not* saved to prevent duplicate requests.
+  # This collection keepss around known artworks that were *not* saved
+  # to prevent duplicate requests.
   unsavedCache: []
 
   # All artwork ids
@@ -83,6 +82,8 @@ module.exports = class ArtworkCollection extends Backbone.Model
     model.url = "#{@url()}/artwork/#{artworkId}?user_id=#{@get('userId')}"
     model.isNew = -> false
     model.destroy
+      data:
+        user_id: @get('userId')
       success: options?.success
       error: (error) =>
         unless sd.NODE_ENV == 'test'
