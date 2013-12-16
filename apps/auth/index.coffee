@@ -19,3 +19,4 @@ app.get '/forgot', routes.index
 
 # Artsy Passport auth handlers
 app.post loginPath, cors(), routes.submitLogin
+app.get '/users/sign_out', routes.logout

@@ -1,10 +1,10 @@
-_           = require 'underscore'
-Backbone    = require 'backbone'
-ModalView   = require '../modal/view.coffee'
-Form        = require '../mixins/form.coffee'
-mediator    = require '../../lib/mediator.coffee'
-{ parse }   = require 'url'
-sd          = require('sharify').data
+_                  = require 'underscore'
+Backbone           = require 'backbone'
+ModalView          = require '../modal/view.coffee'
+Form               = require '../mixins/form.coffee'
+mediator           = require '../../lib/mediator.coffee'
+{ parse }          = require 'url'
+{ SECURE_APP_URL } = require('sharify').data
 
 templates =
   signup:   -> require('./templates/signup.jade') arguments...
@@ -14,8 +14,7 @@ templates =
   reset:    -> require('./templates/reset.jade') arguments...
 
 class Login extends Backbone.Model
-  url: (if sd.NODE_ENV is 'development' then 'http' else 'https') +
-       "://#{parse(sd.APP_URL or '').host}/users/sign_in"
+  url: "#{SECURE_APP_URL}/users/sign_in"
 
 class Forgot extends Backbone.Model
   save: (data, options) ->
