@@ -1,4 +1,5 @@
-ZoomView = require '../../components/modal/zoom.coffee'
+ZoomView  = require '../../components/modal/zoom.coffee'
+mediator  = require '../../lib/mediator.coffee'
 
 module.exports.init = ->
   $ ->
