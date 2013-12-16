@@ -4,6 +4,7 @@ Backbone = require 'backbone'
 sinon = require 'sinon'
 { fabricate } = require 'antigravity'
 Artworks = require '../../../collections/artworks'
+CurrentUser = require '../../../models/current_user'
 { resolve } = require 'path'
 FillwidthView = benv.requireWithJadeify resolve(__dirname, '../view'), ['template']
 
@@ -20,6 +21,10 @@ describe 'FillwidthView', ->
     benv.teardown()
 
   beforeEach (done) ->
+
+    @currentUser = new CurrentUser(id: "user_id", email: "a@b.c")
+    window.currentUser = @currentUser
+    window.currentUser.initializeDefaultArtworkCollection()
     sinon.stub Backbone, 'sync'
     col = new Artworks [fabricate 'artwork']
     col.url = 'foo/bar'
