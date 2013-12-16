@@ -1,0 +1,42 @@
+@import '../stylus_lib'
+
+// artwork image container
+.fillwidth-img-container
+  .overlay-container
+    opacity 0
+  &:hover .overlay-container
+    opacity 1
+
+// save container
+.overlay-container
+  position: absolute
+  padding: 4px
+  bottom: 5px
+  right: 5px
+  border-radius 19px
+  padding: 5px 4px 4px 4px
+  width: 39px
+  background-color: #999999
+  background-color: rgba(0, 0, 0, 0.4)
+  color: white
+  opacity 0
+  z-index 1
+  text-align: center
+  &.visible
+    opacity 1
+  &.overlay-artwork-saved
+    background-color: highlight-color
+    opacity 1
+  &:hover
+    background: black
+  &.overlay-artwork-clicked
+    background-color: highlight-color
+  &.overlay-artwork-saved
+    &:hover
+      background-color: bad-red-color
+      &.overlay-artwork-clicked
+        background-color: highlight-color
+  .overlay-artwork-save
+    cursor: pointer
+    font-size: 29px
+    line-height: 29px

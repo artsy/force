@@ -1,19 +1,20 @@
 ul.fillwidth-list
   for artwork in artworks
-    li
+    li.fillwidth-row-uninitialized
       .fillwidth-img-container
-        a( href="/artwork/#{artwork.get('id')}" )
-          img( src=artwork.defaultImageUrl(), nopin="nopin" )
+        .img-inner
           include overlay_controls
-        .fillwidth-details-container
-          a.faux-underline-hover.artist-name( href=artwork.artistLink() )= artwork.get('artist').name
-          p!= artwork.titleAndYear()
-          if artwork.get('partner') || artwork.hasCollectingInstitution()
-            if artwork.get('partner').default_profile_public && artwork.get('partner').default_profile_id
-              a.partner.faux-underline-hover( href="/" + artwork.get('partner').default_profile_id )= artwork.partnerName()
-            else
-              .partner= artwork.partnerName()
-          if artwork.get('price')
-            p= artwork.get('price')
+          a( href="/artwork/#{artwork.get('id')}" )
+            img( src=artwork.defaultImageUrl(), nopin="nopin" )
+      .fillwidth-details-container
+        a.faux-underline-hover.artist-name( href=artwork.artistLink() )= artwork.get('artist').name
+        p!= artwork.titleAndYear()
+        if artwork.get('partner') || artwork.hasCollectingInstitution()
+          if artwork.get('partner').default_profile_public && artwork.get('partner').default_profile_id
+            a.partner.faux-underline-hover( href="/" + artwork.get('partner').default_profile_id )= artwork.partnerName()
+          else
+            .partner= artwork.partnerName()
+        if artwork.get('price')
+          p= artwork.get('price')
 if seeMore
   button.avant-garde-button-text.fillwidth-see-more See More

@@ -10,8 +10,8 @@ require 'jquery.fillwidth'
 require 'jquery.dotdotdot'
 
 $.ajaxSettings.headers =
-  'X-XAPP-TOKEN':   sd.GRAVITY_XAPP_TOKEN
-  'X-ACCESS-TOKEN': sd.GRAVITY_ACCESS_TOKEN
+  'X-XAPP-TOKEN'  : sd.GRAVITY_XAPP_TOKEN
+  'X-ACCESS-TOKEN': sd.CURRENT_USER?.accessToken
 
 $ ->
   new HeaderView el: $('#main-layout-header'), $window: $(window), $body: $('body')

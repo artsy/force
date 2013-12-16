@@ -9,6 +9,9 @@ module.exports = class Artwork extends Backbone.Model
   defaultImageUrl: (version = 'medium') ->
     @get('images')?[0]?.image_url.replace(':version', version) ? ''
 
+  isSaved: (artworkCollection) ->
+    artworkCollection && artworkCollection.isSaved(@)
+
   titleAndYear: ->
     _.compact([
       if @get('title')? and @get('title').length > 0 then "<em>#{@get('title')}</em>" else null,

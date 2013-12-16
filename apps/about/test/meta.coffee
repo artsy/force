@@ -13,7 +13,7 @@ describe 'Meta tags', ->
         MOBILE_MEDIA_QUERY   : 'mobile-media-query'
         GRAVITY_URL          : 'http://localhost:5000'
       @html = jade.render fs.readFileSync(@file).toString(),
-        sd : @sd
+        sd: @sd
 
     it 'includes mobile alternate, canonical, twitter card and og tags', ->
       @html.should.include "<link rel=\"alternate\" media=\"mobile-media-query\" href=\"http://m.localhost:5000/about"

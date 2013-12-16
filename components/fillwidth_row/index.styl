@@ -1,11 +1,17 @@
+@import './overlay_controls'
 details-height = 90px
 
-.fillwidth-list li
-  margin 0 15px 15px 0
-  position relative
+.fillwidth-list
+  li
+    margin 0 15px 15px 0
+    position relative
 
 .fillwidth-img-container
-  padding-bottom details-height
+  position: relative
+  .img-inner
+    display: inline-block
+    position: relative
+    overflow: hidden
   img
     background-color #f2f2f2
 
