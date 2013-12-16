@@ -9,4 +9,4 @@ app = module.exports = express()
 app.set 'views', __dirname
 app.set 'view engine', 'jade'
 
-app.get '/artist/:id/auction-lots', routes.index
+app.get '/artist/:id/auction-results', routes.index
