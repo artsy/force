@@ -18,13 +18,16 @@ class Login extends Backbone.Model
        "://#{parse(sd.APP_URL or '').host}/users/sign_in"
 
 class Forgot extends Backbone.Model
+  url: "#{sd.GRAVITY_URL}/api/v1/users/send_reset_password_instructions"
+
   save: (data, options) ->
-    mediator.trigger 'auth:change:mode', 'reset'
+    options.success = ->
+      mediator.trigger 'auth:change:mode', 'reset'
+    super
 
 models =
-  # Login and Forgot are just temporary (obvs)
-  login:    Login
-  forgot:   Forgot
+  login: Login
+  forgot: Forgot
   register: require '../../models/user.coffee'
 
 module.exports = class AuthModalView extends ModalView
@@ -65,12 +68,6 @@ module.exports = class AuthModalView extends ModalView
       new models[@state.get('mode')]().save @serializeForm(),
         success: ->
           location.reload()
-
         error: (model, xhr, options) =>
           $submit.attr 'data-state', 'error'
-
-          # Display error
-          @$('#auth-header-errors').html @errorMessage(xhr)
-
-          # Re-center
-          @setPosition()
+          @$('.auth-errors').text @errorMessage(xhr) # Display error

@@ -1,9 +1,24 @@
-include ./_header
+#auth-page.vam-outer
+  .vam-inner
+    section#auth-body
+      .auth-login-social
+        p.small-caps Log in to Artsy
+        nav.auth-options
+          a.auth-login-facebook.avant-garde-button-black(
+            href='/users/auth/facebook?sign_up=true'
+          )
+            i.icon-facebook
+            | Log in using Facebook
+          a.auth-login-twitter.avant-garde-button-black(
+            href='/users/auth/twitter?sign_up=true'
+          )
+            i.icon-twitter
+            | Log in using Twitter
 
-section#auth-body
-  .auth-login-options
-    .auth-login-option
-      form.auth-form( action='/users/sign_in' )
+      hr.horizontal-rule-or
+
+      form.auth-login-email.auth-form( action='/users/sign_in' )
+        .auth-errors
         input.bordered-input.is-block(
           name='email', type='email', placeholder='Email' autofocus, required
         )
@@ -18,21 +33,6 @@ section#auth-body
               name='remember_me', type='checkbox', value='1', checked
             )
             | &nbsp;Remember me
-          a.auth-toggle( href='/forgot', data-mode='forgot' ) Forgot Password?
+          a.faux-underline.auth-toggle( href='/forgot', data-mode='forgot' ) Forgot Password?
 
-    .auth-login-option
-      .auth-login-social
-        p.small-caps Log in with Facebook or Twitter
-        nav.auth-options
-          a.auth-login-facebook.avant-garde-button-black(
-            href='/users/auth/facebook?sign_up=true'
-          )
-            i.icon-facebook
-            | Facebook
-          a.auth-login-twitter.avant-garde-button-black(
-            href='/users/auth/twitter?sign_up=true'
-          )
-            i.icon-twitter
-            | Twitter
-
-include ./_login_footer.jade
+    include ./_login_footer.jade

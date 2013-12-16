@@ -18,7 +18,7 @@ module.exports = class HeaderView extends Backbone.View
     mediator.on 'open:auth', @openAuth, this
 
   openAuth: (options) ->
-    @modal = new AuthModalView(mode: options.mode, width: '900px')
+    @modal = new AuthModalView(mode: options.mode, width: '500px')
 
   hideWelcomeHeader: =>
     return if @$window.scrollTop() < @$welcomeHeader.height()
