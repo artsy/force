@@ -12,18 +12,12 @@ module.exports = class Order extends Backbone.Model
 
   update: (options) ->
     @url = @urlRoot + @id
-    @save null,
-      success: options.success
-      error: options.error
+    @save null, options
 
   submit: (options) ->
     @url = @urlRoot + @id + '/submit'
-    @save
-      success: options.success
-      error: options.error
+    @save null, options
 
   resume: (options) ->
     @url = @urlRoot + @id + '/resume'
-    @save
-      success: options.success
-      error: options.error
+    @save null, options
