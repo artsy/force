@@ -8,7 +8,7 @@ block body
   #auction-results-page.main-layout-container
     header#auction-lot-header
       a.auction-lots-return-link(
-        href="/artists/#{artist.get('slug')}"
+        href="/artist/#{artist.id}"
       )
         i.icon-chevron-small-left
         | Back to #{artist.get('name')}
