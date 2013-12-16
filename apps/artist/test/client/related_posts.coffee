@@ -3,13 +3,13 @@ Backbone          = require 'backbone'
 sinon             = require 'sinon'
 { resolve }       = require 'path'
 { fabricate }     = require 'antigravity'
-Post              = require '../../../models/post'
-Artist            = require '../../../models/artist'
-RelatedPostsView  = benv.requireWithJadeify resolve(__dirname, '../client/related_posts'), ['relatedPostsTemplate']
+Post              = require '../../../../models/post'
+Artist            = require '../../../../models/artist'
+RelatedPostsView  = benv.requireWithJadeify resolve(__dirname, '../../client/related_posts'), ['relatedPostsTemplate']
 _                 = require 'underscore'
 
 describe 'RelatedPostsView', ->
-  
+
   before (done) ->
     benv.setup =>
       benv.expose { $: require 'components-jquery' }
@@ -22,7 +22,7 @@ describe 'RelatedPostsView', ->
   beforeEach (done) ->
     sinon.stub Backbone, 'sync'
     artist = new Artist fabricate 'artist'
-    benv.render resolve(__dirname, '../templates/index.jade'), {
+    benv.render resolve(__dirname, '../../templates/index.jade'), {
       sd: {}
       artist: artist
     }, =>

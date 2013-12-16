@@ -4,9 +4,9 @@ Backbone          = require 'backbone'
 sinon             = require 'sinon'
 { resolve }       = require 'path'
 { fabricate }     = require 'antigravity'
-Genes             = require '../../../collections/genes'
-Artist            = require '../../../models/artist'
-RelatedGenesView  = benv.requireWithJadeify resolve(__dirname, '../client/genes'), ['genesTemplate']
+Genes             = require '../../../../collections/genes'
+Artist            = require '../../../../models/artist'
+RelatedGenesView  = benv.requireWithJadeify resolve(__dirname, '../../client/genes'), ['genesTemplate']
 
 describe 'RelatedGenesView', ->
 
@@ -22,11 +22,12 @@ describe 'RelatedGenesView', ->
   beforeEach (done) ->
     sinon.stub Backbone, 'sync'
     @artist = new Artist fabricate 'artist', id: 'bitty'
-    benv.render resolve(__dirname, '../templates/index.jade'), {
+    benv.render resolve(__dirname, '../../templates/index.jade'), {
       sd: {}
       artist: new Artist fabricate 'artist'
     }, =>
-      @view = new RelatedGenesView { el: $('body'), model: @artist }
+      $('body').html '<div id="genes"></div>'
+      @view = new RelatedGenesView { el: $('#genes'), model: @artist }
       done()
 
   afterEach ->
@@ -42,7 +43,7 @@ describe 'RelatedGenesView', ->
 
     it 'doesnt render anything if there are no results', ->
       _.last(Backbone.sync.args)[2].success []
-      if @view.$el.find('.artist-related-genes')
+      if @view.$el.find('.artist-related-genes').length
         @view.$el.find('.artist-related-genes').html().should.equal ''
       else
         @view.$el.find('.artist-related-genes').length.should.equal 0
