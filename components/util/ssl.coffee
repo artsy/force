@@ -1,4 +1,6 @@
 # serverside SSL helper
 module.exports =
 
-  isSSL: (req) -> req.protocol is 'https'
+  isSSL: (req) ->
+    req.protocol is 'https'
+    true
