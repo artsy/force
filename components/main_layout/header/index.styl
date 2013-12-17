@@ -26,15 +26,19 @@
   display block
   text-decoration none
 
-#main-layout-header-right
-  float right
+#main-layout-header-right, #main-layout-header-user-nav
   avant-garde()
-  a
+  a, .header-user-name
     text-decoration none
     padding 17px 20px 13px 20px
     display inline-block
     font-size 13px
     border-right 1px solid light-gray-border-color
+
+#main-layout-header-right
+  float right
+  text-align: center
+  a
     &:last-child
       border-right none
     &:first-child
@@ -43,6 +47,35 @@
       font-size: 32px
       padding: 10px 12px 10px 14px
       vertical-align: top
+  .header-user-name
+    min-width: 146px
+    text-align: center
+    border-right none
+    &:hover
+      #main-layout-header-user-nav
+        display: block
+
+#main-layout-header-user-nav
+  display: none
+  position: absolute
+  top: 0px
+  right: 0px
+  border 3px solid black
+  border-right: 0px solid
+  z-index: 2
+  background: white
+  a
+    display: block
+    text-align: center
+    width: 100%
+    border-top 1px solid light-gray-border-color
+    padding-right: 22px
+    border-right 0px solid
+    &:first-child
+      border-top 0px solid
+      padding-top: 14px
+    &:hover
+      background-color: #f3f3f3
 
 #main-layout-welcome-header
   position relative
@@ -73,7 +106,7 @@
   text-align center
   padding 20px 0
 
-#main-layout-header-home-logo, #main-layout-header-right a
+#main-layout-header-home-logo, #main-layout-header-right > a
   position relative
   &:after
     content '.'

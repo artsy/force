@@ -25,7 +25,7 @@ describe 'HeaderView', ->
         done()
 
   it 'hides the welcome header on scroll', ->
-    @$window.on.args[0][0].should.equal 'scroll'
+    @$window.on.args[0][0].should.equal 'scroll.welcome-header'
     @$window.on.args[0][1].should.equal @view.hideWelcomeHeader
 
   describe '#hideWelcomeHeader', ->

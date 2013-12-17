@@ -1,0 +1,9 @@
+if user.get('name')
+  a( href="/" + user.get('default_profile_id') )= user.get('name')
+else
+  a account
+a( href="/following/artists" ) Following
+a( href="/invite" ) Invite Friends
+a( href="/profile/edit" ) Edit Profile
+a( href="/user/edit" ) Settings
+a( href="/users/sign_out" ) Log out

@@ -8,13 +8,11 @@ module.exports = class HeaderView extends Backbone.View
   initialize: (options) ->
     { @$window, @$body } = options
     @$welcomeHeader = @$('#main-layout-welcome-header')
-    @$window.on 'scroll', @hideWelcomeHeader
-
     @searchBarView = new SearchBarView
       el:       @$('#main-layout-search-bar-container')
       $input:   @$('#main-layout-search-bar-input')
 
-    @$window.on 'scroll', @hideWelcomeHeader
+    @$window.on 'scroll.welcome-header', @hideWelcomeHeader
     mediator.on 'open:auth', @openAuth, this
 
   openAuth: (options) ->
@@ -25,7 +23,7 @@ module.exports = class HeaderView extends Backbone.View
 
     @$welcomeHeader.hide()
     @$body.addClass('body-header-fixed')
-    @$window.off 'scroll', @hideWelcomeHeader
+    @$window.off '.welcome-header'
 
     @$window.scrollTop(0)
 
