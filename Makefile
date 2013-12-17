@@ -50,6 +50,7 @@ assets:
 # Run with `make deploy env=staging` or `make deploy env=production`.
 deploy: assets
 	$(BIN)/bucketassets -d public/assets/ -b force-$(env)
+        $(BIN)/bucketassets -d public/images/ -b force-$(env)
 	heroku config:add \
 		ASSET_PATH=//$(CDN_DOMAIN_$(env)).cloudfront.net/assets/$(shell git rev-parse --short HEAD)/ \
 		--app=force-$(env)
