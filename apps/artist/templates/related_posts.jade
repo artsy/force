@@ -1,25 +1,30 @@
-.avant-garde-header-center= [posts.length, 'Featured Posts About This Artist'].join(' ')
+.avant-garde-header-center
+  | #{posts.length} Featured Posts About This Artist
+
 ul
   for post in posts
-    -var profile = post.profile()
+    - var profile = post.profile()
     li.artist-related-post
-      .artist-related-post-content
+      a.artist-related-post-content( href="/post/#{post.get('id')}" )
         if post.get('title')
-          .post-title
-            a( href='/post/' + post.get('id') )!= post.get('title')
+          .arpc-title
+            != post.get('title')
         if post.get('summary')
-          .artist-related-post-body
+          .arpc-body
             != post.get('summary')
+
       unless profile.isNew()
-        .artist-related-post-profile
-          a( href='/' + profile.get('id') )
-            -var icon = profile.icon()
+        figure.artist-related-post-profile
+          a( href="/#{profile.get('id')}" )
+            - var icon = profile.icon()
             unless icon.isNew()
-              -var imageType = profile.get('default_icon_version')
+              - var imageType = profile.get('default_icon_version')
               if icon.hasImage(imageType)
                 .artist-related-post-icon-container
                   img( src=icon.imageUrl(imageType) )
-                .avant-garde-header-center= profile.displayName()
+                figcaption
+                  = profile.displayName()
 
 if remaining > 0
-  a.artist-related-post-show-all( href='#' )= 'Show All Featured Posts (' + remaining + ')'
+  a.artist-related-post-show-all( href='#' )
+    | Show All Featured Posts (#{remaining})
