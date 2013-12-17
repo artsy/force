@@ -5,9 +5,6 @@
 
 express = require 'express'
 routes = require './routes'
-cors = require 'cors'
-{ loginPath, signupPath, twitterCallbackPath,
-  facebookCallbackPath } = require('artsy-passport').options
 
 app = module.exports = express()
 app.set 'views', __dirname
@@ -18,5 +15,5 @@ app.get '/sign_up', routes.index
 app.get '/forgot', routes.index
 
 # Artsy Passport auth handlers
-app.post loginPath, cors(), routes.submitLogin
+app.post '/users/sign_in', routes.submitLogin
 app.get '/users/sign_out', routes.logout
