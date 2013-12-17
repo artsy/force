@@ -1,7 +1,5 @@
-_ = require 'underscore'
 Backbone = require 'backbone'
 mediator = require '../../lib/mediator.coffee'
-sd       = require('sharify').data
 
 module.exports = class SaveControls extends Backbone.View
 
@@ -15,10 +13,9 @@ module.exports = class SaveControls extends Backbone.View
     { @artworkCollection } = options
 
     # Listen to save changes for this work
-    if @artworkCollection
-      @listenTo @artworkCollection, "add:#{@model.get('id')}", @onArtworkSaveChange
-      @listenTo @artworkCollection, "remove:#{@model.get('id')}", @onArtworkSaveChange
-      @onArtworkSaveChange()
+    @listenTo @artworkCollection, "add:#{@model.get('id')}", @onArtworkSaveChange
+    @listenTo @artworkCollection, "remove:#{@model.get('id')}", @onArtworkSaveChange
+    @onArtworkSaveChange()
 
   onArtworkSaveChange: ->
     if @model.isSaved @artworkCollection
@@ -36,18 +33,14 @@ module.exports = class SaveControls extends Backbone.View
       mediator.trigger 'open:auth', { mode: 'login' }
       return false
 
-    @$el.removeClass('committed')
-
     if @model.isSaved @artworkCollection
       # Analytics.click @analyticsRemoveMessage, @model
       @artworkCollection.unsaveArtwork @model.get('id'),
-        success: => @$el.addClass('committed')
-        error: => @$el.removeClass('unsaved').addClass('saved')
+        error: => @$el.removeClass('overlay-artwork-unsaved').addClass('overlay-artwork-saved')
     else
       # Analytics.click @analyticsSaveMessage, @model
       @artworkCollection.saveArtwork @model.get('id'),
-        success: => @$el.addClass('committed')
-        error: => @$el.removeClass('saved').addClass('unsaved')
+        error: => @$el.removeClass('overlay-artwork-saved').addClass('overlay-artwork-unsaved')
       @$el.addClass('overlay-artwork-clicked')
       setTimeout =>
         @$el.removeClass('overlay-artwork-clicked')
