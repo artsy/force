@@ -4,7 +4,7 @@ markdownMixin = require './mixins/markdown.coffee'
 _ = require 'underscore'
 
 module.exports = class Page extends Backbone.Model
-  
+
   _.extend @prototype, markdownMixin
-  
-  urlRoot: "#{sd.GRAVITY_URL}/api/v1/page"
+
+  urlRoot: "#{sd.ARTSY_URL}/api/v1/page"

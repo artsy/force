@@ -2,7 +2,7 @@
 # Detects a mobile browser by user agent and redirects it to Microgravity
 #
 
-{ CANONICAL_MOBILE_URL } = require '../../config'
+{ MOBILE_URL } = require '../../config'
 
 module.exports = (req, res, next) ->
   return next() unless ua = req.get 'user-agent'
@@ -12,6 +12,6 @@ module.exports = (req, res, next) ->
             (ua.match(/BB10/i)) ||
             (ua.match(/BlackBerry/i))
   if isPhone
-    res.redirect CANONICAL_MOBILE_URL + req.url
+    res.redirect MOBILE_URL + req.url
   else
     next()

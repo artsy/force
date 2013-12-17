@@ -4,7 +4,7 @@ ModalView          = require '../modal/view.coffee'
 Form               = require '../mixins/form.coffee'
 mediator           = require '../../lib/mediator.coffee'
 { parse }          = require 'url'
-{ SECURE_APP_URL, GRAVITY_URL } = require('sharify').data
+{ SECURE_APP_URL, ARTSY_URL } = require('sharify').data
 
 templates =
   signup:   -> require('./templates/signup.jade') arguments...
@@ -17,7 +17,7 @@ class Login extends Backbone.Model
   url: "#{SECURE_APP_URL}/users/sign_in"
 
 class Forgot extends Backbone.Model
-  url: "#{GRAVITY_URL}/api/v1/users/send_reset_password_instructions"
+  url: "#{ARTSY_URL}/api/v1/users/send_reset_password_instructions"
 
   save: (data, options) ->
     options.success = ->

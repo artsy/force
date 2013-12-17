@@ -3,7 +3,7 @@ Backbone  = require 'backbone'
 Item      = require '../models/item.coffee'
 
 module.exports = class Items extends Backbone.Collection
-  url: -> "#{sd.GRAVITY_URL}/api/v1/set/#{@id}/items"
+  url: -> "#{sd.ARTSY_URL}/api/v1/set/#{@id}/items"
 
   model: (attrs, options) ->
     switch attrs.item_type

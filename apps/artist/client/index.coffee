@@ -28,7 +28,7 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
 
   setupFollowButton: ->
     if @currentUser
-      @followArtistCollection = new FollowArtistCollection 
+      @followArtistCollection = new FollowArtistCollection
     new FollowButton
       followArtistCollection: @followArtistCollection
       model: @model
@@ -41,7 +41,7 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
 
   setupShareButtons: ->
     path = "/artist/#{@model.get 'id'}"
-    url = "#{sd.GRAVITY_URL}#{path}"
+    url = "#{sd.ARTSY_URL}#{path}"
     text = "#{@model.get 'name'} on Artsy"
     if @model.hasImage('large')
       imageUrl = @model.imageUrl('large')
