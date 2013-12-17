@@ -17,6 +17,6 @@ module.exports =
 
   imageUrl: (version) ->
     if _.contains(@get('image_versions'), version)
-      @fullyQualifiedImageUrl(@get 'image_url').replace(':version', version)
+      @fullyQualifiedImageUrl(@get 'image_url').replace ':version', version
     else
       @missingImageUrl()
