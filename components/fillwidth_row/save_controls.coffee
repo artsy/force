@@ -1,5 +1,6 @@
 Backbone = require 'backbone'
 mediator = require '../../lib/mediator.coffee'
+track    = require('../../lib/analytics.coffee').track
 
 module.exports = class SaveControls extends Backbone.View
 
@@ -34,11 +35,11 @@ module.exports = class SaveControls extends Backbone.View
       return false
 
     if @model.isSaved @artworkCollection
-      # Analytics.click @analyticsRemoveMessage, @model
+      track.click @analyticsRemoveMessage, @model
       @artworkCollection.unsaveArtwork @model.get('id'),
         error: => @$el.removeClass('overlay-artwork-unsaved').addClass('overlay-artwork-saved')
     else
-      # Analytics.click @analyticsSaveMessage, @model
+      track.click @analyticsSaveMessage, @model
       @artworkCollection.saveArtwork @model.get('id'),
         error: => @$el.removeClass('overlay-artwork-saved').addClass('overlay-artwork-unsaved')
       @$el.addClass('overlay-artwork-clicked')
