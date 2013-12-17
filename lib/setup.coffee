@@ -33,9 +33,10 @@ module.exports = (app) ->
   backboneCacheSync(Backbone.sync, REDIS_URL, DEFAULT_CACHE_TIME, NODE_ENV) if REDIS_URL
   require('./deferred_sync.coffee')(Backbone, require 'q')
 
-  # Redirect mobile browsers to Martsy
-  app.use '/users/sign_in', cors()
+  # Add up front middleware such as redirecting to Martsy and CORS support for login
   app.use redirectMobile
+  app.options '/users/sign_in', cors()
+  app.post '/users/sign_in', cors()
 
   # Setup Artsy XAPP middleware
   app.use artsyXappMiddlware(
