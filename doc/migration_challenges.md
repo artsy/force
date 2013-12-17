@@ -4,11 +4,11 @@ This document will outline the challenges of migrating from the Gravity Rails ap
 
 ## Cross Domain
 
-If we need to support IE8 then we can't rely on CORs for cross-origin ajax requests. Our options are to either use an iframe hack like [Foursquare](http://engineering.foursquare.com/2011/12/08/web-sites-are-clients-too/) or to use node-http-proxy to proxy our local requests. 
+If we need to support IE8 then we can't rely on CORs for cross-origin ajax requests. Our options are to either use an iframe hack like [Foursquare](http://engineering.foursquare.com/2011/12/08/web-sites-are-clients-too/) or to use node-http-proxy to proxy our local requests.
 
 ### Proxy solution
 
-If we have to proxy the proper solution is to probably use relative paths like /api/v1 and edit the server-side sync to prepend the GRAVITY_URL.
+If we have to proxy the proper solution is to probably use relative paths like /api/v1 and edit the server-side sync to prepend the ARTSY_URL.
 
 ## Sharing Code
 
@@ -16,7 +16,7 @@ Now that Microgravity and Force have the same foundation it begs the question ho
 
 ## Falling back to Gravity
 
-To sanely migrate we need a good strategy for migrating from Gravity to Force. Right now we're proxying unhandled urls to Gravity, but it doesn't throw you back once you're in Gravity because of it being thick-client without page refreshes. 
+To sanely migrate we need a good strategy for migrating from Gravity to Force. Right now we're proxying unhandled urls to Gravity, but it doesn't throw you back once you're in Gravity because of it being thick-client without page refreshes.
 
 ### Martsy
 

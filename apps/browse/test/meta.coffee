@@ -9,9 +9,9 @@ describe 'Meta tags', ->
     before ->
       @file = "#{process.cwd()}/apps/browse/meta.jade"
       @sd =
-        CANONICAL_MOBILE_URL : 'http://m.localhost:5000'
+        MOBILE_URL : 'http://m.localhost:5000'
         MOBILE_MEDIA_QUERY   : 'mobile-media-query'
-        GRAVITY_URL          : 'http://localhost:5000'
+        ARTSY_URL          : 'http://localhost:5000'
       @html = jade.render fs.readFileSync(@file).toString(),
         sd : @sd
 

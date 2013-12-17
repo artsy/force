@@ -4,8 +4,8 @@
 # populating sharify data
 #
 
-{ GRAVITY_URL, NODE_ENV, ARTSY_ID, ARTSY_SECRET, SESSION_SECRET, PORT,
-  ASSET_PATH, FACEBOOK_APP_NAMESPACE, MOBILE_MEDIA_QUERY, CANONICAL_MOBILE_URL,
+{ ARTSY_URL, NODE_ENV, ARTSY_ID, ARTSY_SECRET, SESSION_SECRET, PORT,
+  ASSET_PATH, FACEBOOK_APP_NAMESPACE, MOBILE_MEDIA_QUERY, MOBILE_URL,
   APP_URL, REDIS_URL, DEFAULT_CACHE_TIME, SECURE_APP_URL } = config = require "../config"
 { parse, format } = require 'url'
 _ = require 'underscore'
@@ -40,7 +40,7 @@ module.exports = (app) ->
 
   # Setup Artsy XAPP middleware
   app.use artsyXappMiddlware(
-    artsyUrl: GRAVITY_URL
+    artsyUrl: ARTSY_URL
     clientId: ARTSY_ID
     clientSecret: ARTSY_SECRET
   ) unless app.get('env') is 'test'
@@ -51,10 +51,10 @@ module.exports = (app) ->
     CSS_EXT: (if "production" is NODE_ENV then ".min.css.gz" else ".css")
     ASSET_PATH: ASSET_PATH
     APP_URL: APP_URL
-    GRAVITY_URL: GRAVITY_URL
+    ARTSY_URL: ARTSY_URL
     NODE_ENV: NODE_ENV
     MOBILE_MEDIA_QUERY: MOBILE_MEDIA_QUERY
-    CANONICAL_MOBILE_URL: CANONICAL_MOBILE_URL
+    MOBILE_URL: MOBILE_URL
     FACEBOOK_APP_NAMESPACE: FACEBOOK_APP_NAMESPACE
     SECURE_APP_URL: SECURE_APP_URL
 
@@ -103,5 +103,5 @@ module.exports = (app) ->
   # Proxy unhandled requests to Gravity using node-http-proxy
   app.use (req, res) ->
     proxy.proxyRequest req, res,
-      host: parse(GRAVITY_URL).hostname
-      port: parse(GRAVITY_URL).port or 80
+      host: parse(ARTSY_URL).hostname
+      port: parse(ARTSY_URL).port or 80

@@ -5,7 +5,7 @@ redirectMobile = rewire '../../../lib/middleware/redirect_mobile'
 describe 'Redirect mobile middleware', ->
 
   beforeEach ->
-    redirectMobile.__set__ 'CANONICAL_MOBILE_URL', 'm.foobart.sy'
+    redirectMobile.__set__ 'MOBILE_URL', 'm.foobart.sy'
     @req = { params: {}, logout: sinon.stub() }
     @res = { redirect: sinon.stub() }
 

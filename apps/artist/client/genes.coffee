@@ -12,7 +12,7 @@ module.exports = class RelatedGenesView extends Backbone.View
 
   fetchThenRender: ->
     @genes = new Genes
-    @genes.url = "#{sd.GRAVITY_URL}/api/v1/related/genes?artist[]=#{@model.id}"
+    @genes.url = "#{sd.ARTSY_URL}/api/v1/related/genes?artist[]=#{@model.id}"
     @genes.fetch
       success: (collection) =>
         return unless collection.length > 0

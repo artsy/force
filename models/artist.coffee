@@ -10,17 +10,17 @@ module.exports = class Artist extends Backbone.Model
 
   _.extend @prototype, markdownMixin
 
-  urlRoot: -> "#{sd.GRAVITY_URL}/api/v1/artist"
+  urlRoot: -> "#{sd.ARTSY_URL}/api/v1/artist"
 
   clientUrl: -> "/artist/#{@get('id')}"
 
   initialize: ->
     @relatedArtists = new Backbone.Collection [], model: Artist
-    @relatedArtists.url = "#{sd.GRAVITY_URL}/api/v1/related/layer/main/artists"
+    @relatedArtists.url = "#{sd.ARTSY_URL}/api/v1/related/layer/main/artists"
     @relatedContemporary = new Backbone.Collection [], model: Artist
-    @relatedContemporary.url = "#{sd.GRAVITY_URL}/api/v1/related/layer/contemporary/artists"
+    @relatedContemporary.url = "#{sd.ARTSY_URL}/api/v1/related/layer/contemporary/artists"
     @relatedPosts = new Backbone.Collection [], model: Post
-    @relatedPosts.url = "#{sd.GRAVITY_URL}/api/v1/related/posts"
+    @relatedPosts.url = "#{sd.ARTSY_URL}/api/v1/related/posts"
 
   fetchRelatedArtists: (type, options = {}) ->
     @["related#{type}"].fetch _.extend
@@ -33,7 +33,7 @@ module.exports = class Artist extends Backbone.Model
 
   fetchArtworks: (options) ->
     col = new Artworks
-    col.url = "#{sd.GRAVITY_URL}/api/v1/artist/#{@get 'id'}/artworks"
+    col.url = "#{sd.ARTSY_URL}/api/v1/artist/#{@get 'id'}/artworks"
     col.fetch options
 
   fetchRelatedPosts: (options = {}) ->

@@ -9,7 +9,7 @@ Artist = require './artist.coffee'
 # coresspond to a server side model
 module.exports = class FollowArtistCollection extends Backbone.Model
 
-  url: -> "#{sd.GRAVITY_URL}/api/v1/me/follow"
+  url: -> "#{sd.ARTSY_URL}/api/v1/me/follow"
 
   # This collection keeps around known artists that were *not*
   # followed to prevent duplicate requests.

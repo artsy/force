@@ -13,7 +13,7 @@ module.exports = class AuctionLots extends PageableCollection
     '-price_realized_dollar,-auction_date': 'Sale Price'
 
   url: ->
-    "#{sd.GRAVITY_URL}/api/v1/artist/#{@id}/auction_lots?page=#{@state.currentPage}&size=#{@state.pageSize}&sort=#{@sortBy}&total_count=1"
+    "#{sd.ARTSY_URL}/api/v1/artist/#{@id}/auction_lots?page=#{@state.currentPage}&size=#{@state.pageSize}&sort=#{@sortBy}&total_count=1"
 
   initialize: (models, options={}) ->
     { @id, @sortBy } = _.defaults(options, { sortBy: 'date,-auction_date' })

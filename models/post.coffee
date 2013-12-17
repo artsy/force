@@ -3,8 +3,8 @@ sd = require('sharify').data
 Profile = require('./profile.coffee')
 
 module.exports = class Post extends Backbone.Model
-  
-  urlRoot: "#{sd.GRAVITY_URL}/api/v1/post"
+
+  urlRoot: "#{sd.ARTSY_URL}/api/v1/post"
 
   profile: ->
     new Profile @get('profile')

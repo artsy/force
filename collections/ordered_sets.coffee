@@ -6,7 +6,7 @@ FeaturedLink  = require '../models/featured_link.coffee'
 OrderedSet    = require '../models/ordered_set.coffee'
 
 class OrderedSets extends Backbone.Collection
-  url: "#{sd.GRAVITY_URL}/api/v1/sets"
+  url: "#{sd.ARTSY_URL}/api/v1/sets"
 
   model: (attrs, options) ->
     switch attrs?.item_type

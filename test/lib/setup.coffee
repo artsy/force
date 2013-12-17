@@ -8,7 +8,7 @@ gravity.get '/foobarbaz', (req, res) -> res.send 'Foobar page!'
 gravity.get '/api/v1/page/:id', (req, res) -> res.send { content: 'foobar' }
 startServer = (callback) ->
   envVars =
-    GRAVITY_URL: "http://localhost:1234"
+    ARTSY_URL: "http://localhost:1234"
     ASSET_PATH: "http://cdn.com/"
     PORT: 3456
   envVars[k] = val for k, val of process.env when not envVars[k]?

@@ -39,7 +39,7 @@ module.exports = class ArtworkCollection extends Backbone.Model
   pendingRequests: []
   completedRequests: []
 
-  url: -> "#{sd.GRAVITY_URL}/api/v1/collection/#{@get('id')}"
+  url: -> "#{sd.ARTSY_URL}/api/v1/collection/#{@get('id')}"
 
   defaults:
     id: 'saved-artwork'
