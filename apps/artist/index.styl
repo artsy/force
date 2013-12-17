@@ -67,6 +67,7 @@
 
 .artist-related-section
   border-top 1px solid light-gray-border-color
+  margin 40px 0
   h3
     margin 30px 0 10px 0
   .main-layout-container
@@ -97,75 +98,66 @@
 .artist-info-section
   border-top 1px solid light-gray-border-color
   margin 40px 0
-  padding-top: 40px
+  padding-top 30px
   .avant-garde-header-center
-    margin 0px 0px 20px 0px
+    margin 0 0 20px 0
 
 .artist-info-left
-  width 52%
+  width 60%
   display inline-block
   vertical-align top
-  padding-right 55px
+  padding-right 5%
 
 .artist-info-right
-  width 46%
+  width 40%
   display inline-block
 
 .artist-info-center
   width 52%
-  margin: 0px auto
+  margin 0 auto
   display block
 
+// Related posts module
 .artist-related-posts
-  li
-    cursor pointer
-    border-bottom none
-    border-top 1px solid #e5e5e5
-    padding 10px
-    &:hover
-      background-color: #eee
-      .artist-related-post-content a
-        color #6a00cc
-    .artist-related-post-content
-      width 70%
-      display inline-block
-    .artist-related-post-profile
-      width 20%
-      display inline-block
-      margin-left 20px
-      vertical-align top
-      text-align center
-    .artist-related-post-icon-container
-      margin-left 20px
-    img
-      width 72px
-      height 72px
-    .post-title
-      font-size 18px
-      margin 0
-      text-align left
-      text-transform none
-      text-decoration none
-    .avant-garde-header-center
-      font-size 12px
-      margin-top 10px
-    a
-      text-decoration none
-  .artist-related-post-show-all
-    margin-top 24px
-    display block
-    text-align right
-    text-transform uppercase
-    font-size 12px
-    float right
+  //
+.artist-related-post
+  display table
+  border-top 1px solid light-gray-border-color
+  *
     text-decoration none
-    avant-garde()
-
-.artist-related-post-body
-  margin-bottom 10px
-  overflow hidden
+  &:hover
+    background-color faint-gray-background-hover-color
+    .arpc-title
+      color highlight-color
+.arpc-title
+  font-size 18px
+.artist-related-post-content
+.artist-related-post-profile
+  display table-cell
+  padding 10px
+.artist-related-post-content
+  vertical-align top
   font-size 14px
+.artist-related-post-profile
+  width 150px
+  vertical-align middle
+  text-align center
+  img
+    display inline-block
+    width 72px
+    height 72px
+  figcaption
+    text-align center
+    avant-garde()
+    font-size 10px
+.artist-related-post-show-all
+  margin-top 20px
+  float right
+  avant-garde()
+  font-size 12px
+  text-decoration none
 
+// Related genes module
 .artist-related-genes
   margin-top: 40px
   a

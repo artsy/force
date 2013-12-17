@@ -38,24 +38,28 @@ block body
       h3 Available Works
       #artist-available-works
         .loading-spinner
+
     .artist-works-section
       h3 Museums and other collections
       #artist-institution-works
         .loading-spinner
+
     .artist-info-section
       .main-layout-container
         .artist-info-left
           if artist.get('blurb')
             .artist-blurb
-              .avant-garde-header-center= ['About', artist.get('name')].join(' ')
+              .avant-garde-header-center About #{artist.get('name')}
               .blurb
                 != artist.mdToHtml('blurb')
             .artist-related-genes
         .artist-info-right
           .artist-related-posts
+
     .artist-related-section
       h3.avant-garde-header-center Related Artists
       #artist-related-artists.main-layout-container
+
     .artist-related-section
       h3.avant-garde-header-center Related Contemporary
       #artist-related-contemporary.main-layout-container

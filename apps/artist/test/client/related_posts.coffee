@@ -49,8 +49,8 @@ describe 'RelatedPostsView', ->
         fabricate 'post', id: 'cats-rule-dogs-drool-literally', title: 'Cats rule, and dogs drool'
         fabricate 'post', id: 'bitty-the-queen', title: 'Bitty is the best cat'
       ]
-      @view.$el.html().should.include "<a href=\"/post/cats-rule-dogs-drool-literally\">Cats rule, and dogs drool</a>"
-      @view.$el.html().should.include "<a href=\"/post/bitty-the-queen\">Bitty is the best cat</a>"
+      @view.$el.html().should.include '<a href="/post/cats-rule-dogs-drool-literally" class="artist-related-post-content">'
+      @view.$el.html().should.include '<a href="/post/bitty-the-queen" class="artist-related-post-content">'
       @view.$el.find('li').length.should.equal 2
       @view.$el.find('a.artist-related-post-show-all').length.should.equal 0
 
@@ -60,12 +60,12 @@ describe 'RelatedPostsView', ->
         fabricate 'post', id: 'bitty-the-queen', title: 'Bitty is the best cat'
         fabricate 'post', id: 'dogs-are-just-ok', title: 'Dogs are eh'
       ]
-      @view.$el.html().should.include "<a href=\"/post/cats-rule-dogs-drool-literally\">Cats rule, and dogs drool</a>"
-      @view.$el.html().should.include "<a href=\"/post/bitty-the-queen\">Bitty is the best cat</a>"
+      @view.$el.html().should.include '<a href="/post/cats-rule-dogs-drool-literally" class="artist-related-post-content">'
+      @view.$el.html().should.include '<a href="/post/bitty-the-queen" class="artist-related-post-content">'
       @view.$el.find('li').length.should.equal 2
       @view.$el.find('a.artist-related-post-show-all').length.should.equal 1
       @view.$el.find('a.artist-related-post-show-all').click()
-      @view.$el.html().should.include "<a href=\"/post/cats-rule-dogs-drool-literally\">Cats rule, and dogs drool</a>"
-      @view.$el.html().should.include "<a href=\"/post/bitty-the-queen\">Bitty is the best cat</a>"
-      @view.$el.html().should.include "<a href=\"/post/dogs-are-just-ok\">Dogs are eh</a>"
+      @view.$el.html().should.include '<a href="/post/cats-rule-dogs-drool-literally" class="artist-related-post-content">'
+      @view.$el.html().should.include '<a href="/post/bitty-the-queen" class="artist-related-post-content">'
+      @view.$el.html().should.include '<a href="/post/dogs-are-just-ok" class="artist-related-post-content">'
       @view.$el.find('li').length.should.equal 3
