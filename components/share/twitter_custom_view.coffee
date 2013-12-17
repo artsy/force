@@ -10,7 +10,7 @@ module.exports = class TwitterCustomView extends Backbone.View
     @$window = $(window)
 
   render: ->
-    @$tweetLink = $("<a class='share-to-twitter tip' data-message='Share on Twitter'><i class='icon-twitter'></i></a>")
+    @$tweetLink = $("<a class='share-to-twitter black-tooltip' data-message='Share on Twitter'><i class='icon-twitter'></i></a>")
     options =
       text: @text
       url: (@url or window.location.href)

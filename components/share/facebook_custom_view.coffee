@@ -10,7 +10,7 @@ module.exports = class FacebookCustomView extends Backbone.View
     @$window = $(window)
 
   render: ->
-    @$fbLink = $("<a class='share-to-facebook tip' data-message='Post to Facebook'><i class='icon-facebook'></i></a>")
+    @$fbLink = $("<a class='share-to-facebook black-tooltip' data-message='Post to Facebook'><i class='icon-facebook'></i></a>")
     options = u: (@url or window.location.href)
     @$fbLink.attr href: "http://www.facebook.com/sharer.php?#{$.param(options)}"
     @$el.html @$fbLink
