@@ -60,7 +60,6 @@ module.exports = (app) ->
     SECURE_APP_URL: SECURE_APP_URL
     SECURE_IMAGES_URL: SECURE_IMAGES_URL
     IMAGES_URL_PREFIX: IMAGES_URL_PREFIX
-    IS_SSL: false # todo
 
   # Setup Artsy Passport
   app.use express.cookieParser(SESSION_SECRET)
