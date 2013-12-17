@@ -14,9 +14,9 @@ OrderedSets   = require '../../collections/ordered_sets.coffee'
     Q.allSettled(_.flatten(_.map(requests, (xs) -> xs.fetchSets(cache: true)))).then ->
       underSSL = isSSL req
       if underSSL
-        featuredGenes.invoke 'set', underSSl: underSSL
-        popularCategories.invoke 'set', underSSl: underSSL
-        geneCategories.invoke 'set', underSSl: underSSL
+        featuredGenes.invoke 'set', underSSL: underSSL
+        popularCategories.invoke 'set', underSSL: underSSL
+        geneCategories.invoke 'set', underSSL: underSSL
       res.render 'template', {
         featuredGenes: featuredGenes,
         popularCategories: popularCategories,

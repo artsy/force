@@ -1,13 +1,16 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
 sd = require('sharify').data
+Image = require './mixins/image.coffee'
 
 module.exports = class Artwork extends Backbone.Model
+
+  _.extend @prototype, Image
 
   urlRoot: -> "#{sd.ARTSY_URL}/api/v1/artwork"
 
   defaultImageUrl: (version = 'medium') ->
-    @get('images')?[0]?.image_url.replace(':version', version) ? ''
+    @fullyQualifiedImageUrl(@get('images')?[0]?.image_url.replace(':version', version) ? '')
 
   isSaved: (artworkCollection) ->
     artworkCollection && artworkCollection.isSaved(@)
@@ -31,7 +34,6 @@ module.exports = class Artwork extends Backbone.Model
       @get('partner').name
     else
       ""
-
   partnerLink: ->
     partner = @get('partner')
     return unless partner
