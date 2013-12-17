@@ -19,6 +19,8 @@ header#main-layout-header
       a( href='/filter/artworks' ) Filter
       a( href='/partners' ) partners
       a( href='/posts' ) Posts
+      if user
+        a( href='/favorites' ) Favorites
       a( href='/about' ) About
       if user
         if user.get('name')
