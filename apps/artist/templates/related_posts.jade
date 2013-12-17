@@ -1,11 +1,11 @@
-h1.avant-garde-header-center= [posts.length, 'Featured Posts About This Artist'].join(' ')
+.avant-garde-header-center= [posts.length, 'Featured Posts About This Artist'].join(' ')
 ul
   for post in posts
     -var profile = post.profile()
     li.artist-related-post
       .artist-related-post-content
         if post.get('title')
-          h1
+          .post-title
             a( href='/post/' + post.get('id') )!= post.get('title')
         if post.get('summary')
           .artist-related-post-body
@@ -19,7 +19,7 @@ ul
               if icon.hasImage(imageType)
                 .artist-related-post-icon-container
                   img( src=icon.imageUrl(imageType) )
-                h2.avant-garde-header-center= profile.displayName()
+                .avant-garde-header-center= profile.displayName()
 
 if remaining > 0
   a.artist-related-post-show-all( href='#' )= 'Show All Featured Posts (' + remaining + ')'

@@ -32,7 +32,7 @@ block body
       .artist-info-left
         if artist.get('blurb')
           .artist-blurb
-            h1.avant-garde-header-center= ['About', artist.get('name')].join(' ')
+            .avant-garde-header-center= ['About', artist.get('name')].join(' ')
             .blurb
               != artist.mdToHtml('blurb')
           .artist-related-genes
