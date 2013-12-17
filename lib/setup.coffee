@@ -6,7 +6,7 @@
 
 { ARTSY_URL, NODE_ENV, ARTSY_ID, ARTSY_SECRET, SESSION_SECRET, PORT, ASSET_PATH,
   FACEBOOK_APP_NAMESPACE, MOBILE_MEDIA_QUERY, MOBILE_URL, APP_URL, REDIS_URL, DEFAULT_CACHE_TIME,
-  SECURE_APP_URL, CANONICAL_MOBILE_URL } = config = require "../config"
+  SECURE_APP_URL, CANONICAL_MOBILE_URL, IMAGES_URL_PREFIX, SECURE_IMAGES_URL } = config = require "../config"
 { parse, format } = require 'url'
 _ = require 'underscore'
 express = require "express"
@@ -58,6 +58,8 @@ module.exports = (app) ->
     MOBILE_URL: MOBILE_URL
     FACEBOOK_APP_NAMESPACE: FACEBOOK_APP_NAMESPACE
     SECURE_APP_URL: SECURE_APP_URL
+    SECURE_IMAGES_URL: SECURE_IMAGES_URL
+    IMAGES_URL_PREFIX: IMAGES_URL_PREFIX
 
   # Setup Artsy Passport
   app.use express.cookieParser(SESSION_SECRET)
