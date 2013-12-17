@@ -16,11 +16,11 @@ s:
 
 # Start the server pointing to staging
 ss:
-	GRAVITY_URL=http://staging.artsy.net SECURE_URL=https://staging.artsy.net $(BIN)/coffee index.coffee
+	GRAVITY_URL=http://staging.artsy.net SECURE_ARTSY_URL=https://staging.artsy.net $(BIN)/coffee index.coffee
 
 # Start the server pointing to production
 sp:
-	GRAVITY_URL=http://artsy.net SECURE_URL=https://artsy.net $(BIN)/coffee index.coffee
+	GRAVITY_URL=http://artsy.net SECURE_ARTSY_URL=https://artsy.net $(BIN)/coffee index.coffee
 
 # Run all of the project-level tests, followed by app-level tests
 test: assets

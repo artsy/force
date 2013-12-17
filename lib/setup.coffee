@@ -22,6 +22,7 @@ backboneCacheSync = require 'backbone-cache-sync'
 redirectMobile = require './middleware/redirect_mobile'
 localsMiddleware = require './middleware/locals'
 helpersMiddleware = require './middleware/helpers'
+cors = require 'cors'
 
 module.exports = (app) ->
 
@@ -33,6 +34,7 @@ module.exports = (app) ->
   require('./deferred_sync.coffee')(Backbone, require 'q')
 
   # Redirect mobile browsers to Martsy
+  app.use '/users/sign_in', cors()
   app.use redirectMobile
 
   # Setup Artsy XAPP middleware

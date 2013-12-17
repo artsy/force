@@ -57,7 +57,7 @@ socialAuth = (provider) ->
 socialSignup = (provider) ->
   (req, res, next) ->
     return next() unless req.query.sign_up
-    request.post(opts.SECURE_URL + '/api/v1/user').send(
+    request.post(opts.SECURE_ARTSY_URL + '/api/v1/user').send(
       provider: provider
       oauth_token: req.query.oauth_token
       oauth_token_secret: req.query.oauth_verifier
@@ -65,7 +65,7 @@ socialSignup = (provider) ->
     ).end onCreateUser(next)
 
 signup = (req, res, next) ->
-  request.post(opts.SECURE_URL + '/api/v1/user').send(
+  request.post(opts.SECURE_ARTSY_URL + '/api/v1/user').send(
     name: req.body.name
     email: req.body.email
     password: req.body.password
@@ -108,7 +108,7 @@ initPassport = ->
 # Passport callbacks
 #
 artsyCallback = (username, password, done) ->
-  request.get("#{opts.SECURE_URL}/oauth2/access_token").query(
+  request.get("#{opts.SECURE_ARTSY_URL}/oauth2/access_token").query(
     client_id: opts.ARTSY_ID
     client_secret: opts.ARTSY_SECRET
     grant_type: 'credentials'
@@ -117,7 +117,7 @@ artsyCallback = (username, password, done) ->
   ).end accessTokenCallback(done)
 
 facebookCallback = (accessToken, refreshToken, profile, done) ->
-  request.get("#{opts.SECURE_URL}/oauth2/access_token").query(
+  request.get("#{opts.SECURE_ARTSY_URL}/oauth2/access_token").query(
     client_id: opts.ARTSY_ID
     client_secret: opts.ARTSY_SECRET
     grant_type: 'oauth_token'
@@ -126,7 +126,7 @@ facebookCallback = (accessToken, refreshToken, profile, done) ->
   ).end accessTokenCallback(done)
 
 twitterCallback = (token, tokenSecret, profile, done) ->
-  request.get("#{opts.SECURE_URL}/oauth2/access_token").query(
+  request.get("#{opts.SECURE_ARTSY_URL}/oauth2/access_token").query(
     client_id: opts.ARTSY_ID
     client_secret: opts.ARTSY_SECRET
     grant_type: 'oauth_token'
@@ -138,8 +138,8 @@ twitterCallback = (token, tokenSecret, profile, done) ->
 accessTokenCallback = (done) ->
   return (err, res) ->
     done(
-      (res.body.error_description or err)
-      new opts.CurrentUser(accessToken: res.body.access_token)
+      (err or res?.body.error_description)
+      new opts.CurrentUser(accessToken: res?.body.access_token)
     )
 
 #
