@@ -1,9 +1,10 @@
 Browser = require 'zombie'
+rewire = require 'rewire'
 app = require '../example'
 { ARTSY_EMAIL, ARTSY_PASSWORD, TWITTER_EMAIL, TWITTER_PASSWORD,
   FACEBOOK_EMAIL, FACEBOOK_PASSWORD } = require '../config'
 
-describe 'Artsy Passport', ->
+describe 'Artsy Passport integration', ->
 
   before (done) ->
     app.listen 5000, done
@@ -45,3 +46,19 @@ describe 'Artsy Passport', ->
         .pressButton "Signup", ->
           browser.html().should.include 'Personalize Flow for'
           done()
+
+describe 'Artsy Passport methods', ->
+
+  before ->
+    @artsyPassport = rewire '../index.coffee'
+
+  describe '#accessTokenCallback', ->
+
+    before ->
+      opts = @artsyPassport.__get__ 'opts'
+      opts.CurrentUser = ->
+      @accessTokenCallback = @artsyPassport.__get__ 'accessTokenCallback'
+
+
+    it 'is okay if there is no response object', ->
+      @accessTokenCallback(->)({ bad: 'news' }, null)

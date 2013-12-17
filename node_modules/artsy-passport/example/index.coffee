@@ -9,7 +9,7 @@ backboneSuperSync = require 'backbone-super-sync'
 
 # CurrentUser class
 class CurrentUser extends Backbone.Model
-  url: -> "#{config.SECURE_URL}/api/v1/me"
+  url: -> "#{config.SECURE_ARTSY_URL}/api/v1/me"
   sync: (method, model, options = {}) ->
     options.data ?= {}
     options.data.access_token = @get 'accessToken'
@@ -27,7 +27,7 @@ app.use express.cookieSession()
 app.use express.static __dirname + '/public'
 app.use sharify config
 app.use require('artsy-xapp-middleware')
-  artsyUrl: config.SECURE_URL
+  artsyUrl: config.SECURE_ARTSY_URL
   clientId: config.ARTSY_ID
   clientSecret: config.ARTSY_SECRET
 
