@@ -10,14 +10,35 @@
   nav
     display flex
 
+#main-layout-header-home-logo
+#main-layout-header-right > a
+  position relative
+  &:after
+    content '.'
+    color transparent
+    border 3px solid black
+    position absolute
+    top 0
+    left 0
+    width 100%
+    height 100%
+    opacity 0
+    z-index 2
+  &:hover:after
+    opacity 1
+
 #main-layout-header-left
   float left
   clearfix()
   flex 1
-#main-layout-header-home-logo, #main-layout-search-bar-container
+
+#main-layout-header-home-logo
+#main-layout-search-bar-container
   float left
+
 #main-layout-search-bar-container
   height home-logo-size
+
 #main-layout-header-home-logo
   width home-logo-size
   height home-logo-size
@@ -25,8 +46,11 @@
   padding 10px
   display block
   text-decoration none
+  &:after
+    border-left none
 
-#main-layout-header-right, #main-layout-header-user-nav
+#main-layout-header-right
+#main-layout-header-user-nav
   avant-garde()
   a, .header-user-name
     text-decoration none
@@ -37,45 +61,46 @@
 
 #main-layout-header-right
   float right
-  text-align: center
+  text-align center
   a
     &:last-child
       border-right none
     &:first-child
       border-left 1px solid light-gray-border-color
     &.header-post-button
-      font-size: 32px
-      padding: 10px 12px 10px 14px
-      vertical-align: top
+      font-size 32px
+      padding 10px 12px 10px 14px
+      vertical-align top
   .header-user-name
-    min-width: 146px
-    text-align: center
+    min-width 146px
+    text-align center
     border-right none
     &:hover
       #main-layout-header-user-nav
-        display: block
+        display block
 
 #main-layout-header-user-nav
-  display: none
-  position: absolute
-  top: 0px
-  right: 0px
+  display none
+  position absolute
+  top 0
+  right 0
   border 3px solid black
-  border-right: 0px solid
-  z-index: 2
-  background: white
+  border-right 0 solid
+  margin-right -2px
+  z-index 2
+  background white
   a
-    display: block
-    text-align: center
-    width: 100%
+    display block
+    text-align center
+    width 100%
     border-top 1px solid light-gray-border-color
-    padding-right: 22px
-    border-right 0px solid
+    padding-right 22px
+    border-right 0 solid
     &:first-child
-      border-top 0px solid
-      padding-top: 14px
+      border-top 0 solid
+      padding-top 14px
     &:hover
-      background-color: #f3f3f3
+      background-color #f3f3f3
 
 #main-layout-welcome-header
   position relative
@@ -105,19 +130,3 @@
   line-height 1
   text-align center
   padding 20px 0
-
-#main-layout-header-home-logo, #main-layout-header-right > a
-  position relative
-  &:after
-    content '.'
-    color transparent
-    border 3px solid black
-    position absolute
-    top 0
-    left 0
-    width 100%
-    height 100%
-    opacity 0
-    z-index 2
-  &:hover:after
-    opacity 1

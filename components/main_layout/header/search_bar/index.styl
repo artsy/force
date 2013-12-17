@@ -43,11 +43,15 @@ suggestion-thumbnail-size   = 32px
   width suggestion-thumbnail-size
   height suggestion-thumbnail-size
 
+search-bar-input-placeholder()
+  color #000
+
 #main-layout-search-bar-input
   height 100%
   width @height
   padding 0 (logo-size / 2)
   border none
+  placeholder(search-bar-input-placeholder)
 
 // Results dropdown
 #main-layout-search-bar-container
