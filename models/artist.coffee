@@ -60,3 +60,7 @@ module.exports = class Artist extends Backbone.Model
      (if info?.length > 0 then "#{@get('name')} (#{info})" else @get('name'))
      (if @get('blurb')?.length > 0 then @mdToHtmlToText('blurb') else undefined)
     ]).join(". "), length)
+
+  isFollowed: (followArtistCollection) ->
+    followArtistCollection && followArtistCollection.isFollowed(@)
+

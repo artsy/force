@@ -9,20 +9,30 @@ BlurbView               = require './blurb.coffee'
 RelatedPostsView        = require './related_posts.coffee'
 RelatedGenesView        = require './genes.coffee'
 AuthModalView           = require '../../../components/auth_modal/view.coffee'
-mediator                = require '../../../lib/mediator.coffee'
 InitializeShareButtons  = require '../../../components/mixins/initialize_share.coffee'
 CurrentUser             = require '../../../models/current_user.coffee'
+FollowArtistCollection  = require '../../../models/follow_artist_collection.coffee'
+FollowButton            = require './follow_button.coffee'
 
 module.exports.ArtistView = class ArtistView extends Backbone.View
 
   initialize: (options) ->
     @setupCurrentUser()
+    @setupFollowButton()
     @setupArtworks()
     @setupRelatedArtists()
     @setupBlurb()
     @setupRelatedPosts()
     @setupRelatedGenes()
     @setupShareButtons()
+
+  setupFollowButton: ->
+    if @currentUser
+      @followArtistCollection = new FollowArtistCollection 
+    new FollowButton
+      followArtistCollection: @followArtistCollection
+      model: @model
+      el: @$('button#artist-follow-button')
 
   setupCurrentUser: ->
     @currentUser = CurrentUser.orNull()
@@ -97,24 +107,23 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
 
   renderRelatedArtist: (artist, i, type) ->
     artist.fetchArtworks data: { size: 10 }, success: (artworks) =>
+      $artistRow = @$("#artist-related-#{type.toLowerCase()} li:nth-child(#{i + 1})")
       view = new FillwidthView
         artworkCollection: @artworkCollection
         collection: artworks
-        el: @$("#artist-related-#{type.toLowerCase()} " +
-               "li:nth-child(#{i + 1}) .artist-related-artist-artworks")
+        el: $artistRow.find('.artist-related-artist-artworks')
       view.render()
+      new FollowButton
+        followArtistCollection: @followArtistCollection
+        model: artist
+        el: $artistRow.find('.avant-garde-button-white')
+
       _.defer ->
         view.hideFirstRow()
         view.removeHiddenItems()
 
   events:
-    'click .artist-related-see-more'        : 'nextRelatedPage'
-    'click li.artist-related-artist button,
-           button#artist-follow-button'     : 'followArtist'
-
-  followArtist: (e) ->
-    e.preventDefault()
-    mediator.trigger 'open:auth', { mode: 'login' }
+    'click .artist-related-see-more' : 'nextRelatedPage'
 
   nextRelatedArtistsPage: (e) ->
     type = if _.isString(e) then e else $(e).data 'type'

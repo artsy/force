@@ -49,7 +49,7 @@ describe 'FollowArtistCollection', ->
       artist = new Artist { id: 'baz', title: 'Baz' }
       @followArtistCollection.follow artist.get('id')
       Backbone.sync.args[0][0].should.equal 'create'
-      Backbone.sync.args[0][1].url.should.include '/api/v1/me/follow/artist/baz'
+      Backbone.sync.args[0][1].url.should.include '/api/v1/me/follow/artist?artist_id=baz'
 
     it 'can trigger add events for a specific artist', ->
       specificArtistAddedCalls = 0

@@ -11,6 +11,10 @@ module.exports = class FollowArtistCollection extends Backbone.Model
 
   url: -> "#{sd.GRAVITY_URL}/api/v1/me/follow"
 
+  # This collection keeps around known artists that were *not*
+  # followed to prevent duplicate requests.
+  unfollowedCache: []
+
   # All artist ids
   repoArtistIds: []
 
@@ -20,6 +24,9 @@ module.exports = class FollowArtistCollection extends Backbone.Model
 
   initialize: ->
     @set 'artists', new Artists
+
+  addRepoArtist: (artistId) ->
+    @repoArtistIds = _.union(@repoArtistIds, [artistId])
 
   addRepoArtists: (artists) ->
     @repoArtistIds = _.union(@repoArtistIds, artists.pluck('id'))
@@ -31,7 +38,7 @@ module.exports = class FollowArtistCollection extends Backbone.Model
     artist = new Artist(id: artistId)
     @_follow artist, options
     model = new Backbone.Model
-    model.url = "#{@url()}/artist/#{artistId}"
+    model.url = "#{@url()}/artist?artist_id=#{artistId}"
     model.save
       success: options?.success
       error: (error) =>
@@ -46,6 +53,7 @@ module.exports = class FollowArtistCollection extends Backbone.Model
     else
       @get('artists').add artist, { at: 0 }
       @trigger "add:#{artist.get('id')}"
+    @removeFromUnfollowedCache artist
 
   unfollow: (artistId, options) ->
     artist = new Artist(id: artistId)
@@ -66,6 +74,8 @@ module.exports = class FollowArtistCollection extends Backbone.Model
     else
       @get('artists').remove artist
       @trigger "remove:#{artist.get('id')}"
+    @unfollowedCache.push artist.get('id')
+    @unfollowedCache.sort()
 
   isFollowed: (artist) ->
     @get('artists').get(artist.get('id'))?
@@ -73,31 +83,42 @@ module.exports = class FollowArtistCollection extends Backbone.Model
   broadcastFollowed: ->
     @get('artists').each((artist) => @trigger("add:#{artist.get('id')}"))
 
-  # Returns all ids of the Repository artists that are not in @repoArtistIds
+  # Returns all ids of the Repository artists that are not in
+  # this collection and are not in this.unfollowedCache.
   artistIdsToSync: ->
     # Filter out the current favorited artists, and requested unfollows
     artistIds = []
     if @repoArtistIds.length > 0
       # Filter out known follows
       artistIds = _.difference @repoArtistIds, @get('artists').pluck('id')
+      # Filter out known unfollows,
+      artistIds = _.difference artistIds, @unfollowedCache
 
     # These are ids we have not requested before
     artistIds
 
+  removeFromUnfollowedCache: (artist) ->
+    index = _.indexOf(@unfollowedCache, artist.get('id'), true)
+    @unfollowedCache.splice(index, 1) if index isnt -1
+
   # Call this from views after one or more artists are fetched
   syncFollowedArtists: ->
-    return false unless window.currentUser
+    return false unless sd.CURRENT_USER?.id
 
     # Re-trigger any existing follows.
     @broadcastFollowed()
 
-    if @allFetched
-      # clean up the internal state
-      @pendingRequests = @completedRequests = []
-      return
-
     artistIds = @artistIdsToSync()
     return false if artistIds.length < 1
+
+    # Assume all of these new ids to check will fail (are not followed)
+    if @unfollowedCache.length is 0
+      # if this is the first run, assume all of these are not followed
+      @unfollowedCache = artistIds
+    else
+      _.each artistIds, (id) => @unfollowedCache.push(id)
+    @unfollowedCache.sort()
+    @unfollowedCache = _.uniq @unfollowedCache, true
 
     # Add URLs to the queue, @requestSlugMax artistIds at a time
     artistIdsCopy = artistIds[..]
@@ -124,18 +145,18 @@ module.exports = class FollowArtistCollection extends Backbone.Model
         @processRequests()
 
   fetchArtists: (options) ->
-    artists = new Artists
+    artists = new Backbone.Collection
     artists.url = "#{@url()}/artists?#{options.params}"
     artists.fetch
       error: (response) =>
         options?.error?(response)
       success: (response) =>
         followedArtists = []
-        _.each response.models, (followedArtistJSON) =>
-          followedArtist = new Artist followedArtistJSON
+        _.each response.models, (followArtist) =>
+          followedArtist = new Artist followArtist.get('artist')
           followedArtists.push followedArtist
+          @removeFromUnfollowedCache followedArtist
           # We're adding these wholesale, so we need to trigger 'add' for individual listeners
-          _.defer => @trigger "add:#{followedArtistJSON.id}"
+          _.defer => @trigger "add:#{followedArtist.get('id')}"
         @get('artists').add followedArtists, { silent: true }
         options?.success?(followedArtists)
-        @trigger 'artistsFetched'
