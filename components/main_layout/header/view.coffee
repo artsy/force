@@ -8,7 +8,6 @@ module.exports = class HeaderView extends Backbone.View
   initialize: (options) ->
     { @$window, @$body } = options
     @$welcomeHeader = @$('#main-layout-welcome-header')
-    @$userNav = @$('#main-layout-header-user-nav')
     @searchBarView = new SearchBarView
       el:       @$('#main-layout-search-bar-container')
       $input:   @$('#main-layout-search-bar-input')
