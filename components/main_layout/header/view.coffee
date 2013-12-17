@@ -8,13 +8,12 @@ module.exports = class HeaderView extends Backbone.View
   initialize: (options) ->
     { @$window, @$body } = options
     @$welcomeHeader = @$('#main-layout-welcome-header')
-    @$window.on 'scroll', @hideWelcomeHeader
-
+    @$userNav = @$('#main-layout-header-user-nav')
     @searchBarView = new SearchBarView
       el:       @$('#main-layout-search-bar-container')
       $input:   @$('#main-layout-search-bar-input')
 
-    @$window.on 'scroll', @hideWelcomeHeader
+    @$window.on 'scroll.welcome-header', @hideWelcomeHeader
     mediator.on 'open:auth', @openAuth, this
 
   openAuth: (options) ->
@@ -25,13 +24,15 @@ module.exports = class HeaderView extends Backbone.View
 
     @$welcomeHeader.hide()
     @$body.addClass('body-header-fixed')
-    @$window.off 'scroll', @hideWelcomeHeader
+    @$window.off '.welcome-header'
 
     @$window.scrollTop(0)
 
   events:
     'click .mlh-login': 'login'
     'click .mlh-signup': 'signup'
+    'mouseenter .header-user-name': 'showUserNav'
+    'mouseleave #main-layout-header-user-nav' : 'hideUserNav'
 
   signup: (e) ->
     e.preventDefault()
@@ -40,3 +41,8 @@ module.exports = class HeaderView extends Backbone.View
   login: (e) ->
     e.preventDefault()
     mediator.trigger 'open:auth', { mode: 'login' }
+
+  hideUserNav: => @$userNav.hide()
+  showUserNav: =>
+    #Analytics.hover("Hovered over user dropdown")
+    @$userNav.show()
