@@ -22,12 +22,13 @@ header#main-layout-header
       a( href='/about' ) About
       if user
         if user.get('name')
-          a.header-user-name( href="/" + user.get('default_profile_id') )= user.get('name')
+          .header-user-name= user.get('name')
+            #main-layout-header-user-nav
+              include ./user_nav
         else
-          a.header-user-name account
+          .header-user-name account
+            #main-layout-header-user-nav
+              include ./user_nav
       else
         a.mlh-login( href='/log_in' ) Log in
         a.mlh-signup( href='/sign_up' ) Sign up
-    if user
-      #main-layout-header-user-nav
-        include ./user_nav

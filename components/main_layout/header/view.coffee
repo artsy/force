@@ -31,8 +31,6 @@ module.exports = class HeaderView extends Backbone.View
   events:
     'click .mlh-login': 'login'
     'click .mlh-signup': 'signup'
-    'mouseenter .header-user-name': 'showUserNav'
-    'mouseleave #main-layout-header-user-nav' : 'hideUserNav'
 
   signup: (e) ->
     e.preventDefault()
@@ -41,8 +39,3 @@ module.exports = class HeaderView extends Backbone.View
   login: (e) ->
     e.preventDefault()
     mediator.trigger 'open:auth', { mode: 'login' }
-
-  hideUserNav: => @$userNav.hide()
-  showUserNav: =>
-    #Analytics.hover("Hovered over user dropdown")
-    @$userNav.show()

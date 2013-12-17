@@ -28,7 +28,7 @@
 
 #main-layout-header-right, #main-layout-header-user-nav
   avant-garde()
-  a
+  a, .header-user-name
     text-decoration none
     padding 17px 20px 13px 20px
     display inline-block
@@ -39,7 +39,7 @@
   float right
   text-align: center
   a
-    &:last-child
+    &:last-child, .header-user-name
       border-right none
     &:first-child
       border-left 1px solid light-gray-border-color
@@ -47,9 +47,12 @@
       font-size: 32px
       padding: 10px 12px 10px 14px
       vertical-align: top
-    &.header-user-name
-      min-width: 146px
-      text-align: center
+  .header-user-name
+    min-width: 146px
+    text-align: center
+    &:hover
+      #main-layout-header-user-nav
+        display: block
 
 #main-layout-header-user-nav
   display: none
@@ -68,12 +71,8 @@
     padding-right: 22px
     border-right 0px solid
     &:first-child
-      background: transparent
       border-top 0px solid
       padding-top: 14px
-      cursor: default
-      &:hover
-        background-color: transparent
     &:hover
       background-color: #f3f3f3
 
@@ -106,7 +105,7 @@
   text-align center
   padding 20px 0
 
-#main-layout-header-home-logo, #main-layout-header-right a
+#main-layout-header-home-logo, #main-layout-header-right > a
   position relative
   &:after
     content '.'
