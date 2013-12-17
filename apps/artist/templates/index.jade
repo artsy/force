@@ -10,37 +10,56 @@ block body
   .main-layout-container
     header#artist-header
       h1.avant-garde-header-center= artist.get('name')
-      h2= [artist.get('nationality'), artist.get('years')].join(', ')
-      .artist-actions
-        ul
-          li
+
+      - if (artist.get('nationality') && artist.get('years'))
+        h2 #{artist.get('nationality')}, #{artist.get('years')}
+
+      .artist-header-actions
+        .artist-follow-container
+          .afc-button
             button#artist-follow-button.avant-garde-button-white Follow
-          ul#artist-social-media
-            li#artist-facebook
-            li#artist-twitter
-            li#artist-pinterest
+          .afc-aside
+            span
+              | Get updates about
+              br
+              | new shows and works
+
+        nav.artist-sections.garamond-tablist
+          a.garamond-tab.is-active( href="/artist/#{artist.id}" ) Overview
+          span.garamond-tab-separator
+          a.garamond-tab( href="/artist/#{artist.id}/auction-results" ) Auction&nbsp;Results
+
+        nav.artist-social-media
+          #artist-facebook
+          #artist-twitter
+          #artist-pinterest
+
     .artist-works-section
       h3 Available Works
       #artist-available-works
         .loading-spinner
+
     .artist-works-section
       h3 Museums and other collections
       #artist-institution-works
         .loading-spinner
-  .artist-info-section
-    .main-layout-container
-      .artist-info-left
-        if artist.get('blurb')
-          .artist-blurb
-            .avant-garde-header-center= ['About', artist.get('name')].join(' ')
-            .blurb
-              != artist.mdToHtml('blurb')
-          .artist-related-genes
-      .artist-info-right
-        .artist-related-posts
-  .artist-related-section
-    h3.avant-garde-header-center Related Artists
-    #artist-related-artists.main-layout-container
-  .artist-related-section
-    h3.avant-garde-header-center Related Contemporary
-    #artist-related-contemporary.main-layout-container
+
+    .artist-info-section
+      .main-layout-container
+        .artist-info-left
+          if artist.get('blurb')
+            .artist-blurb
+              .avant-garde-header-center About #{artist.get('name')}
+              .blurb
+                != artist.mdToHtml('blurb')
+            .artist-related-genes
+        .artist-info-right
+          .artist-related-posts
+
+    .artist-related-section
+      h3.avant-garde-header-center Related Artists
+      #artist-related-artists.main-layout-container
+
+    .artist-related-section
+      h3.avant-garde-header-center Related Contemporary
+      #artist-related-contemporary.main-layout-container
