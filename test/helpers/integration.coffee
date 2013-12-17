@@ -18,7 +18,7 @@ express = require "express"
 @startServer = (callback) ->
   envVars =
     NODE_ENV: "test"
-    GRAVITY_URL: "http://localhost:5000/__api"
+    ARTSY_URL: "http://localhost:5000/__api"
     PORT: 5000
   envVars[k] = val for k, val of process.env when not envVars[k]?
   @child = spawn "make", ["s"],

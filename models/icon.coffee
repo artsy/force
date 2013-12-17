@@ -3,8 +3,8 @@ sd = require('sharify').data
 Icon = require './icon.coffee'
 
 module.exports = class Icon extends Backbone.Model
-  
-  urlRoot: "#{sd.GRAVITY_URL}/api/v1/#{@profileId}/icon"
+
+  urlRoot: "#{sd.ARTSY_URL}/api/v1/#{@profileId}/icon"
 
   hasImage: (version = 'circle') ->
     version in (@get('versions') || [])

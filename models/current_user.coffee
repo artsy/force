@@ -5,7 +5,7 @@ ArtworkCollection = require './artwork_collection.coffee'
 
 module.exports = class CurrentUser extends Backbone.Model
 
-  url: -> "#{sd.GRAVITY_URL}/api/v1/me"
+  url: -> "#{sd.ARTSY_URL}/api/v1/me"
 
   # Should only be run after the user has been fetched and has an id
   initializeDefaultArtworkCollection: (options) ->

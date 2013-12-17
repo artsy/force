@@ -22,7 +22,7 @@ describe 'ArtworkCollection', ->
     sinon.stub Backbone, 'sync'
 
     @currentUser = new CurrentUser(id: "user_id", email: "a@b.c")
-    sd.GRAVITY_URL = "http://localhost:5000/__api"
+    sd.ARTSY_URL = "http://localhost:5000/__api"
     sd.NODE_ENV = 'test'
     @artworkCollection = new ArtworkCollection(userId: @currentUser.get('id'))
     @artworks = new Artworks
