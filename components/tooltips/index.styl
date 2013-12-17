@@ -1,0 +1,31 @@
+.tip
+  position relative
+  &:hover
+    &:before
+    &:after
+      opacity 1
+      transition-delay 0.0625s
+  &:before
+  &:after
+    top calc('100% + 8px')
+    left 50%
+    position absolute
+    pointer-events none
+    opacity 0
+    transition 0.125s
+    z-index 1
+  &:before
+    margin-top -12px
+    margin-left -6px
+    content ''
+    background transparent
+    border 6px solid transparent
+    border-bottom-color #000
+  &:after
+    content attr(data-message)
+    width 150px
+    color #fff
+    background-color #000
+    padding 8px 10px
+    margin-left -(@width / 2)
+    text-align center
