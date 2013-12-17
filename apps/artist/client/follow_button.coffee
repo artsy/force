@@ -1,5 +1,6 @@
-_                       = require 'underscore'
-Backbone                = require 'backbone'
+_        = require 'underscore'
+Backbone = require 'backbone'
+mediator = require '../../lib/mediator.coffee'
 
 module.exports = class FollowButton extends Backbone.View
 
