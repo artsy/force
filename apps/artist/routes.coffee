@@ -6,6 +6,6 @@ Artist    = require '../../models/artist'
     cache  : true
     success: (artist) ->
       res.locals.sd.ARTIST = artist.toJSON()
-      artist.set 'underSSL': isSSL(req, res.locals.sd.SECURE_APP_URL)
+      artist.set 'underSSL': isSSL(req)
       res.render 'index', artist: artist
     error: res.backboneError

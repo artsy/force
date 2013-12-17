@@ -12,7 +12,7 @@ OrderedSets   = require '../../collections/ordered_sets.coffee'
 
   Q.allSettled(_.map(requests, (xs) -> xs.fetch(cache: true))).then ->
     Q.allSettled(_.flatten(_.map(requests, (xs) -> xs.fetchSets(cache: true)))).then ->
-      underSSL = isSSL(req, res.locals.sd.SECURE_APP_URL)
+      underSSL = isSSL req
       if underSSL
         featuredGenes.invoke 'set', underSSl: underSSL
         popularCategories.invoke 'set', underSSl: underSSL
