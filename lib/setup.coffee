@@ -57,6 +57,7 @@ module.exports = (app) ->
     res.set "Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS"
     res.set "Access-Control-Allow-Headers", "Content-Type, Authorization, Content-Length, X-Requested-With, X-XAPP-TOKEN"
     if "OPTIONS" is req.method
+      console.log "\n\n\n\nOPTIONS REQUEST!\n\n\n\n", req.url
       res.send 200
     else
       next()
