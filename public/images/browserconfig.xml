@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Please read: http://msdn.microsoft.com/en-us/library/ie/dn455106.aspx -->
+<browserconfig>
+    <msapplication>
+        <tile>
+            <square70x70logo src="icon-72.png"/>
+            <square150x150logo src="og_image.png"/>
+            <square310x310logo src="og_image.png"/>
+        </tile>
+    </msapplication>
+</browserconfig>
