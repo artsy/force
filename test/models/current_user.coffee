@@ -32,3 +32,43 @@ describe 'CurrentUser', ->
       @user.initializeDefaultArtworkCollection()
       @user.removeArtwork('masterpiece', null)
       Backbone.sync.args[1][0].should.equal 'delete'
+
+  describe 'Order methods', ->
+
+    beforeEach ->
+      @user.set accessToken: 'foobar'
+
+    describe '#fetchPendingOrder', ->
+
+      it 'constructs the correct url', ->
+        @user.fetchPendingOrder()
+        Backbone.sync.args[0][2].url.should.include 'api/v1/me/order/pending'
+
+    describe '#updateOrder', ->
+
+      it 'constructs the correct url', ->
+        @order = new Backbone.Model fabricate 'order'
+        @user.updateOrder @order.id, success: (order) =>
+          order.id.should.equal 'updated'
+        Backbone.sync.args[0][2].url.should.include "api/v1/me/order/#{@order.id}"
+        Backbone.sync.args[0][2].success(fabricate 'order', id: 'updated')
+
+    describe '#submitOrder', ->
+
+      it 'constructs the correct url', ->
+        @order = new Backbone.Model fabricate 'order', state: 'pending'
+        @user.submitOrder @order.id, success: (order) =>
+          order.get('state').should.equal 'submitted'
+        Backbone.sync.args[0][2].url.should.include "api/v1/me/order/#{@order.id}/submit"
+        Backbone.sync.args[0][2].success(fabricate 'order', state: 'submitted')
+
+    describe '#resumeOrder', ->
+
+      it 'constructs the correct url', ->
+        @order = new Backbone.Model fabricate 'order', { state: 'abandonned', token: 'abcdef' }
+        @user.resumeOrder @order.id, @order.token, success: (order) =>
+          order.get('state').should.equal 'pending'
+        Backbone.sync.args[0][2].url.should.include "api/v1/me/order/#{@order.id}/resume"
+        Backbone.sync.args[0][2].success(fabricate 'order', state: 'pending')
+
+

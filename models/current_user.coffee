@@ -33,3 +33,20 @@ module.exports = class CurrentUser extends Backbone.Model
   # This should only be used on the client.
   @orNull: ->
     if sd.CURRENT_USER then new @(sd.CURRENT_USER) else null
+
+# Methods for the a user's Order
+  fetchPendingOrder: (options) ->
+    url = "#{@url()}/order/pending"
+    new Backbone.Model().fetch _.extend({ url: url, data: { access_token: @get('accessToken') } }, options)
+
+  updateOrder: (orderId, options) ->
+    url = "#{@url()}/order/#{orderId}"
+    new Backbone.Model(id: orderId).save({ access_token: @get('accessToken') }, _.extend({url: url}, options))
+
+  submitOrder: (orderId, options) ->
+    url = "#{@url()}/order/#{orderId}/submit"
+    new Backbone.Model(id: orderId).save({ access_token: @get('accessToken') }, _.extend({url: url}, options))
+
+  resumeOrder: (orderId, token, options) ->
+    url = "#{@url()}/order/#{orderId}/resume"
+    new Backbone.Model(id: orderId).save({ access_token: @get('accessToken'), token: token }, _.extend({url: url}, options))
