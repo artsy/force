@@ -1,8 +1,8 @@
 include ../../../components/share/template
+include ../../../components/util/activator
 
 mixin artist-header(artist, title)
   - var title = title || ''
-  - function activeClass(path) { if (sd.CURRENT_PATH) { return path === sd.CURRENT_PATH.split('?').shift() ? 'is-active' : 'is-inactive' } }
 
   header.artist-header
     h1.avant-garde-header-center
