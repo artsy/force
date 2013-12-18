@@ -23,6 +23,5 @@ app.get '/force/users/sign_out', routes.logout
 
 # Auth submission handlers
 app.post loginPath, routes.redirectAfterLogin
-app.post signupPath, routes.redirectAfterLogin
 app.get twitterCallbackPath, routes.redirectAfterLogin
 app.get facebookCallbackPath, routes.redirectAfterLogin
