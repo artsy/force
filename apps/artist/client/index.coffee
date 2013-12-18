@@ -8,11 +8,10 @@ relatedArtistsTemplate  = -> require('../templates/related_artists.jade') argume
 BlurbView               = require './blurb.coffee'
 RelatedPostsView        = require './related_posts.coffee'
 RelatedGenesView        = require './genes.coffee'
-AuthModalView           = require '../../../components/auth_modal/view.coffee'
-InitializeShareButtons  = require '../../../components/mixins/initialize_share.coffee'
 CurrentUser             = require '../../../models/current_user.coffee'
 FollowArtistCollection  = require '../../../models/follow_artist_collection.coffee'
 FollowButton            = require './follow_button.coffee'
+ShareView               = require '../../../components/share/view.coffee'
 
 module.exports.ArtistView = class ArtistView extends Backbone.View
 
@@ -26,6 +25,9 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     @setupRelatedGenes()
     @setupShareButtons()
 
+  setupShareButtons: ->
+    new ShareView el: @$('.artist-share')
+
   setupFollowButton: ->
     if @currentUser
       @followArtistCollection = new FollowArtistCollection
@@ -38,15 +40,6 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     @currentUser = CurrentUser.orNull()
     @currentUser?.initializeDefaultArtworkCollection()
     @artworkCollection = @currentUser?.defaultArtworkCollection()
-
-  setupShareButtons: ->
-    path = "/artist/#{@model.get 'id'}"
-    url = "#{sd.ARTSY_URL}#{path}"
-    text = "#{@model.get 'name'} on Artsy"
-    if @model.hasImage('large')
-      imageUrl = @model.imageUrl('large')
-
-    InitializeShareButtons.initAndRender(el: @$el, url: url, text: text, imageUrl: imageUrl)
 
   setupBlurb: ->
     $blurbEl = @$('.artist-info-section .artist-blurb .blurb')

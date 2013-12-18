@@ -33,13 +33,10 @@ describe 'ArtistView', ->
       @FillwidthView.nextPage = sinon.stub()
       @FillwidthView.render = sinon.stub()
       @FillwidthView.returns @FillwidthView
-      @InitializeShareButtons = sinon.stub()
-      @InitializeShareButtons.initAndRender = sinon.stub()
       mod.__set__ 'FillwidthView', @FillwidthView
       mod.__set__ 'BlurbView', @blurbStub = sinon.stub()
       mod.__set__ 'RelatedPostsView', @relatedPostStub = sinon.stub()
       mod.__set__ 'RelatedGenesView', @genesStub = sinon.stub()
-      mod.__set__ 'InitializeShareButtons', @InitializeShareButtons
       @view = new ArtistView
         el: $ 'body'
         model: new Artist fabricate 'artist'
@@ -87,12 +84,6 @@ describe 'ArtistView', ->
       viewRelatedPostOpts = @relatedPostStub.args[0][0]
       viewRelatedPostOpts.numToShow.should.equal 2
       viewRelatedPostOpts.model.should.equal @view.model
-
-    it 'sets up the share button views', ->
-      viewShareOpts = @InitializeShareButtons.initAndRender.args[0][0]
-      viewShareOpts.el.should.equal @view.$el
-      viewShareOpts.url.should.include "/artist/#{@view.model.get 'id'}"
-      viewShareOpts.text.should.equal "#{@view.model.get 'name'} on Artsy"
 
   describe '#setupRelatedArtists', ->
 

@@ -1,19 +1,13 @@
 extends ../../components/main_layout/templates/index
 include ../../components/pagination/paginator
+include ../artist/templates/header
 
 block locals
   assetPackage = 'auction_lots'
 
 block body
   #auction-results-page.main-layout-container
-    header#auction-lot-header
-      a.auction-lots-return-link(
-        href="/artist/#{artist.id}"
-      )
-        i.icon-chevron-small-left
-        | Back to #{artist.get('name')}
-      h1.avant-garde-header-center
-        | Auction results for #{artist.get('name')}
+    +artist-header(artist, 'Auction results for ')
 
     .auction-lots-table-header
       .auction-lots-total
