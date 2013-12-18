@@ -60,6 +60,11 @@ module.exports = (app) ->
     SECURE_IMAGES_URL: SECURE_IMAGES_URL
     IMAGES_URL_PREFIX: IMAGES_URL_PREFIX
 
+  # Inject the current path into Sharify
+  app.use (req, res, next) ->
+    res.locals.sd.CURRENT_PATH = req.url
+    next()
+
   # Setup Artsy Passport
   app.use express.cookieParser(SESSION_SECRET)
   app.use express.cookieSession()
