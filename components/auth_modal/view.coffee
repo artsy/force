@@ -14,7 +14,7 @@ templates =
   reset:    -> require('./templates/reset.jade') arguments...
 
 class Login extends Backbone.Model
-  url: "#{SECURE_APP_URL}/users/sign_in"
+  url: "#{SECURE_APP_URL}/force/users/sign_in"
 
 class Forgot extends Backbone.Model
   url: "#{ARTSY_URL}/api/v1/users/send_reset_password_instructions"
