@@ -35,7 +35,7 @@ module.exports = (app) ->
 
   # Add up front middleware such as redirecting to Martsy and CORS support for login
   app.use redirectMobile
-  app.use '/users/sign_in', cors()
+  app.use '/force/users/sign_in', cors()
 
   # Setup Artsy XAPP middleware
   app.use artsyXappMiddlware(
