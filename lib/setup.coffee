@@ -64,7 +64,15 @@ module.exports = (app) ->
   app.use express.cookieParser(SESSION_SECRET)
   app.use express.cookieSession()
   app.use express.bodyParser()
-  app.use artsyPassport _.extend(config, CurrentUser: CurrentUser)
+  app.use artsyPassport _.extend(config,
+    CurrentUser: CurrentUser
+    facebookPath: '/force/users/auth/facebook'
+    twitterPath: '/force/users/auth/twitter'
+    loginPath: '/force/users/sign_in'
+    signupPath: '/force/users/invitation/accept'
+    twitterCallbackPath: '/force/users/auth/twitter/callback'
+    facebookCallbackPath: '/force/users/auth/facebook/callback'
+  )
 
   # General
   app.use localsMiddleware
