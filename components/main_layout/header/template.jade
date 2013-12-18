@@ -1,3 +1,5 @@
+include ../../util/activator
+
 header#main-layout-header
   if !user
     header#main-layout-welcome-header
@@ -10,18 +12,18 @@ header#main-layout-header
       i#main-layout-welcome-logo.icon-logotype
   nav
     #main-layout-header-left
-      a#main-layout-header-home-logo.icon-logoglyph( href='/' )
+      a#main-layout-header-home-logo.icon-logoglyph( href='/', class=activeClass('/') )
       include ./search_bar/template
     #main-layout-header-right
       if user
-        a.header-post-button.icon-write( href='/post' )
-      a( href='/browse' ) Browse
-      a( href='/filter/artworks' ) Filter
-      a( href='/partners' ) partners
-      a( href='/posts' ) Posts
+        a.header-post-button.icon-write( href='/post', class=activeClass('/post') )
+      a( href='/browse', class=activeClass('/browse') ) Browse
+      a( href='/filter/artworks', class=activeClass('/filter/artworks') ) Filter
+      a( href='/partners', class=activeClass('/partners') ) partners
+      a( href='/posts', class=activeClass('/posts') ) Posts
       if user
-        a( href='/favorites' ) Favorites
-      a( href='/about' ) About
+        a( href='/favorites', class=activeClass('/favorites') ) Favorites
+      a( href='/about', class=activeClass('/about') ) About
       if user
         if user.get('name')
           .header-user-name= user.get('name')
