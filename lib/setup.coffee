@@ -6,7 +6,8 @@
 
 { ARTSY_URL, NODE_ENV, ARTSY_ID, ARTSY_SECRET, SESSION_SECRET, PORT, ASSET_PATH,
   FACEBOOK_APP_NAMESPACE, MOBILE_MEDIA_QUERY, MOBILE_URL, APP_URL, REDIS_URL, DEFAULT_CACHE_TIME,
-  SECURE_APP_URL, CANONICAL_MOBILE_URL, IMAGES_URL_PREFIX, SECURE_IMAGES_URL } = config = require "../config"
+  SECURE_APP_URL, CANONICAL_MOBILE_URL, IMAGES_URL_PREFIX, SECURE_IMAGES_URL,
+  GOOGLE_ANALYTICS_ID, MIXPANEL_ID } = config = require "../config"
 { parse, format } = require 'url'
 _ = require 'underscore'
 express = require "express"
@@ -59,6 +60,8 @@ module.exports = (app) ->
     SECURE_APP_URL: SECURE_APP_URL
     SECURE_IMAGES_URL: SECURE_IMAGES_URL
     IMAGES_URL_PREFIX: IMAGES_URL_PREFIX
+    GOOGLE_ANALYTICS_ID: GOOGLE_ANALYTICS_ID
+    MIXPANEL_ID: MIXPANEL_ID
 
   # Inject the current path into Sharify
   app.use (req, res, next) ->
