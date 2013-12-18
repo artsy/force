@@ -23,7 +23,10 @@ describe 'Base64.js', ->
     assert.strictEqual btoa('qrstuvwxyz{|}~'), 'cXJzdHV2d3h5ent8fX4='
 
   it 'cannot encode non-ASCII input', ->
-    assert.throws -> btoa '✈'
+    assert.throws (-> btoa '✈'), (err) ->
+      err instanceof Error and
+      err.name is 'InvalidCharacterError' and
+      err.message is "'btoa' failed: The string to be encoded contains characters outside of the Latin1 range."
 
   it 'can decode Base64-encoded input', ->
     assert.strictEqual atob(''), ''
@@ -43,4 +46,7 @@ describe 'Base64.js', ->
     assert.strictEqual atob('cXJzdHV2d3h5ent8fX4='), 'qrstuvwxyz{|}~'
 
   it 'cannot decode invalid input', ->
-    assert.throws -> atob 'a'
+    assert.throws (-> atob 'a'), (err) ->
+      err instanceof Error and
+      err.name is 'InvalidCharacterError' and
+      err.message is "'atob' failed: The string to be decoded is not correctly encoded."

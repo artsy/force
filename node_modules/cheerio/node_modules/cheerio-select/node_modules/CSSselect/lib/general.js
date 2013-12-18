@@ -3,10 +3,7 @@ var DomUtils    = require("domutils"),
     getParent   = DomUtils.getParent,
     getChildren = DomUtils.getChildren,
     getSiblings = DomUtils.getSiblings,
-    getName     = DomUtils.getName,
-    BaseFuncs   = require("./basefunctions.js"),
-    rootFunc    = BaseFuncs.rootFunc,
-    trueFunc    = BaseFuncs.trueFunc;
+    getName     = DomUtils.getName;
 
 /*
 	all available rules
@@ -78,6 +75,6 @@ module.exports = {
 		};
 	},
 	universal: function(next){
-		return next === rootFunc ? trueFunc : next;
+		return next;
 	}
 };

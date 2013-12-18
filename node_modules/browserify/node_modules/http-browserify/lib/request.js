@@ -15,7 +15,8 @@ var Request = module.exports = function (xhr, params) {
         + (params.path || '/')
     ;
     
-    xhr.withCredentials = true;
+    try { xhr.withCredentials = true }
+    catch (e) {}
     
     xhr.open(
         params.method || 'GET',
