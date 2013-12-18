@@ -35,33 +35,7 @@ module.exports = (app) ->
 
   # Add up front middleware such as redirecting to Martsy and CORS support for login
   app.use redirectMobile
-
-  # Enable CORS with module
-  # corsOpts =
-  #   origin: [
-  #     'http://force.artsy.net'
-  #     'https://force.artsy.net'
-  #     'http://artsy.net'
-  #     'https://artsy.net'
-  #     'http://localhost:3003'
-  #     'https://localhost:3003'
-  #     'http://local.artsy.net:3003'
-  #     'https://local.artsy.net:3003'
-  #   ]
-  # app.options '/users/sign_in', cors(corsOpts)
-  # app.use '/users/sign_in', cors(corsOpts)
-
-  # Manual CORS (-__-)
-  enableCORS = (req, res, next) ->
-    res.set "Access-Control-Allow-Origin", "*"
-    res.set "Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS"
-    res.set "Access-Control-Allow-Headers", "Content-Type, Authorization, Content-Length, X-Requested-With, X-XAPP-TOKEN"
-    if "OPTIONS" is req.method
-      console.log "\n\n\n\nOPTIONS REQUEST!\n\n\n\n", req.url
-      res.send 200
-    else
-      next()
-  app.use enableCORS
+  app.use '/users/sign_in', cors()
 
   # Setup Artsy XAPP middleware
   app.use artsyXappMiddlware(
