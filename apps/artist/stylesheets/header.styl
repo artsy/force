@@ -1,0 +1,55 @@
+.artist-header
+  position relative
+  text-align center
+  padding 40px 0 20px
+  h1
+    font-size 24px
+  h2
+    margin 10px 0
+  a
+    text-decoration none
+
+.artist-header-actions
+  display table
+  width 100%
+  min-height 50px
+.aha-cell
+  display table-cell
+  text-align center
+  vertical-align middle
+  width 33.3%
+  &:first-child
+    text-align left
+  &:last-child
+    text-align right
+
+.artist-follow-container
+  display table
+  width 100%
+
+.afc-button
+.afc-aside
+  display table-cell
+  vertical-align middle
+
+.afc-button
+  // Set an explicit width to prevent content
+  // from shifting around when state changes
+  width 150px
+  > button
+    width 100%
+    text-align center
+
+.afc-aside
+  padding 0 20px
+  > span
+    white-space nowrap
+
+// Hide follow explanation if screen becomes too narrow
+@media screen and (max-width: 1000px)
+  .afc-aside > span
+    display none
+
+.artist-share > a
+    display inline-block
+    text-decoration none
