@@ -5,19 +5,19 @@
         p.small-caps Log in to Artsy
         nav.auth-options
           a.auth-login-facebook.avant-garde-button-black(
-            href='/users/auth/facebook?sign_up=true'
+            href='/force/users/auth/facebook?sign_up=true'
           )
             i.icon-facebook
             | Log in using Facebook
           a.auth-login-twitter.avant-garde-button-black(
-            href='/users/auth/twitter?sign_up=true'
+            href='/force/users/auth/twitter?sign_up=true'
           )
             i.icon-twitter
             | Log in using Twitter
 
       hr.horizontal-rule-or
 
-      form.auth-login-email.auth-form( action='/users/sign_in' )
+      form.auth-login-email.auth-form( action='/force/users/sign_in' )
         .auth-errors
         input.bordered-input.is-block(
           name='email', type='email', placeholder='Email' autofocus, required
