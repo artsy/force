@@ -69,8 +69,10 @@ module.exports = (app) ->
     next()
 
   # Setup Artsy Passport
-  app.use express.cookieParser(SESSION_SECRET)
-  app.use express.cookieSession()
+  app.use express.cookieParser()
+  app.use express.cookieSession
+    secret: SESSION_SECRET
+    cookie: { domain: COOKIE_DOMAIN }
   app.use express.bodyParser()
   app.use artsyPassport _.extend(config,
     CurrentUser: CurrentUser
