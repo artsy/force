@@ -12,3 +12,4 @@ results
 /node_modules
 npm-debug.log
 /test/cli.js
+.DS_Store

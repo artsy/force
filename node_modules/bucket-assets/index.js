@@ -30,10 +30,10 @@ module.exports = function(options) {
       var s3Path = '/assets/' + commitHash.trim() + '/' + path.relative(options.dir, filename);
       client.putFile(filename, s3Path, headers, function(err, res) {
         if (err) {
-          console.warn('Error uploading ' + filename + ' to ' + 
+          console.warn('Error uploading ' + filename + ' to ' +
                         options.bucket + s3Path + ': ' + err);
         } else {
-          console.warn('Uploaded ' + filename + ' to ' + 
+          console.warn('Uploaded ' + filename + ' to ' +
                         options.bucket + s3Path + '(' + contentType + ')' );
           options.callback()
         }
@@ -46,7 +46,9 @@ module.exports = function(options) {
 var contentTypeMap = {
   '.css': 'text/css',
   '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
   '.png': 'image/png',
   '.js':  'application/javascript',
-  '.ico': 'image/x-icon'
+  '.ico': 'image/x-icon',
+  '.xml': 'text/xml'
 };
