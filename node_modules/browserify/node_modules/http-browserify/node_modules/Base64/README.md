@@ -1,6 +1,6 @@
 # Base64.js
 
-< 500 byte* polyfill for browsers which don't provide [`window.btoa`][1] and
+≈ 500 byte* polyfill for browsers which don't provide [`window.btoa`][1] and
 [`window.atob`][2].
 
 Although the script does no harm in browsers which do provide these functions,
