@@ -25,7 +25,6 @@
     "redis": "0.9.1",
     "node-uuid": "*",
     "artsy-passport": "*",
-    "cors": "*",
     "backbone-pageable": "*"
   },
   "devDependencies": {
