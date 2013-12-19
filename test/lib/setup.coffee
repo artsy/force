@@ -26,7 +26,11 @@ closeServer = =>
 describe 'Setup', ->
 
   before (done) ->
-    @server = gravity.listen 1234, -> startServer -> done()
+    @server = gravity.listen 1234, ->
+      console.log 'Gravity listening'
+      startServer ->
+        console.log 'Server listening'
+        done()
 
   after ->
     @server.close()
