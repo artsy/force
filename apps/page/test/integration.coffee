@@ -3,9 +3,9 @@ Browser = require 'zombie'
 
 describe 'Static page', ->
 
-  before startServer
+  before (done) -> startServer done
 
-  after closeServer
+  after -> closeServer()
 
   it 'shows the page contents', (done) ->
     browser = new Browser

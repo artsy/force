@@ -6,7 +6,7 @@ OrderedSets = require '../../collections/ordered_sets.coffee'
 Partner     = require '../../models/partner'
 Partners    = require '../../collections/partners'
 Profile     = require '../../models/profile'
-Q           = require 'Q'
+Q           = require 'q'
 
 #@galleries = (req, res) ->
 
