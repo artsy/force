@@ -24,7 +24,6 @@
     "hiredis": "0.1.16",
     "redis": "0.9.1",
     "artsy-passport": "*",
-    "cors": "*",
     "backbone-pageable": "*"
   },
   "devDependencies": {

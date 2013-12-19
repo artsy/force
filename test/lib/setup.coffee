@@ -10,6 +10,7 @@ startServer = (callback) ->
   envVars =
     ARTSY_URL: "http://localhost:1234"
     ASSET_PATH: "http://cdn.com/"
+    APP_URL: "http://localhost:3456"
     PORT: 3456
   envVars[k] = val for k, val of process.env when not envVars[k]?
   child = spawn "make", ["s"],
