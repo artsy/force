@@ -5,9 +5,18 @@ block locals
 
 block body
   #search-page.main-layout-container
+    if referrer
+      .search-query-referrer
+        | The page you requested
+        em &nbsp;&lt;#{sd.ARTSY_URL}#{referrer}&gt;&nbsp;
+        | does not exist
+
     .search-query
       if term
-        | Search results for
+        if referrer
+          | Instead showing results for
+        else
+          | Search results for
         em
           | &ldquo;
           span#search-term= term
