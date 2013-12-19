@@ -3,7 +3,7 @@ _             = require 'underscore'
 sinon         = require 'sinon'
 Backbone      = require 'backbone'
 routes        = require '../routes'
-Q             = require 'Q'
+Q             = require 'q'
 
 describe 'Partners routes', ->
   beforeEach ->
