@@ -1,5 +1,5 @@
 #
-# Makes sure that any https requests get redirected to https
+# Makes sure that any http requests get redirected to https
 #
 
 { APP_URL } = require '../../config'
