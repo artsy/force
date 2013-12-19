@@ -1,10 +1,10 @@
-# 
+#
 # A function that helps create fixture data modeled after the Gravity API.
 # Pass in the name of the model and any extending data and it'll return
 # a vanilla javascript object populated with fixture json data.
-# 
+#
 # e.g. `fabricate('artwork', { title: 'Three Wolf Moon'` })
-# 
+#
 
 _ = require 'underscore'
 
@@ -109,6 +109,31 @@ module.exports = fabricate = (type, extObj = {}) ->
       admin: fabricate 'user'
       representations: []
 
+    when 'profile_cover_image'
+      id: _.uniqueId()
+      position: 36
+      default: false
+      aspect_ratio: 1.75
+      original_height: 550
+
+    when 'partner_profile'
+      bio: "The J. Paul Getty Trust is a cultural and philanthropic institution dedicated to critical thinking in the presentation, conservation, and interpretation of the world's artistic legacy."
+      cover_image: fabricate 'profile_cover_image'
+      default_icon_version: "square"
+      follows_count: 667
+      icon: fabricate 'profile_icon'
+      id: "getty"
+      location: ""
+      owner: fabricate 'partner'
+      owner_type: "PartnerMuseum"
+      posts_count: 1
+      private: false
+      published: true
+      reposts_count: 1
+      short_description: null
+      subtype: null
+      website: "http://getty.edu/"
+
     when 'artist'
       id: 'pablo-picasso' + _.uniqueId()
       name: 'Pablo Picasso'
@@ -164,7 +189,7 @@ module.exports = fabricate = (type, extObj = {}) ->
       follows_count: 50
       short_description: null
       published: true
-      
+
     when 'profile_icon'
       id: _.uniqueId()
       image_filename: "original.jpg"
@@ -293,7 +318,7 @@ module.exports = fabricate = (type, extObj = {}) ->
       image_url: "/local/partner_shows/id/:version.jpg"
       image_versions: ['four_thirds', 'square', 'four_thirds_retina']
       partner: fabricate 'partner'
-      
+
     when 'page'
       content: 'This is an awesome page'
       id: _.uniqueId()
@@ -363,7 +388,7 @@ module.exports = fabricate = (type, extObj = {}) ->
       user: fabricate 'user'
       line_items: [ fabricate 'order_line_item' ]
       token: 'foobaz'
-      
+
     when 'order_line_item'
       id: _.uniqueId()
       artwork: fabricate 'artwork'
@@ -381,7 +406,7 @@ module.exports = fabricate = (type, extObj = {}) ->
       about: 'We Rawk!'
       organizer:
         profile_id: 'the-armory-show'
-        name: 'Armory Show' 
+        name: 'Armory Show'
 
     when 'sale'
       id: "whtney-art-party"
@@ -400,7 +425,30 @@ module.exports = fabricate = (type, extObj = {}) ->
       item_type: 'FeaturedLink'
       display_on_mobile: true
       display_on_desktop: true
-      
+
+    when 'featured_partners'
+      created_at: "2013-08-27T01:28:36Z"
+      description: ""
+      display_on_desktop: true
+      display_on_mobile: true
+      id: _.uniqueId()
+      item_type: "Profile"
+      key: "partners:featured-partners"
+      name: "Featured Partners"
+      owner: null
+      owner_type: null
+      published: true
+
+    when 'featured_partners_profiles'
+      [
+        fabricate 'partner_profile',
+        fabricate 'partner_profile',
+        fabricate 'partner_profile',
+        fabricate 'partner_profile',
+        fabricate 'partner_profile',
+        fabricate 'partner_profile'
+      ]
+
     when 'sale_artwork'
       id: _.uniqueId()
       user_notes: 'This is a very nice note.'
@@ -413,20 +461,20 @@ module.exports = fabricate = (type, extObj = {}) ->
       url: 'http://www.google.com'
       position: 1
       description: 'This is a very nice description'
-      
+
     when 'delayed_task'
       id: _.uniqueId()
       description: "Contains eligible artworks for upcoming partner shows."
       last_updated: "2012-11-14T08:53:42Z"
       name: "Currently featured partner show artworks"
-      
+
     when 'delayed_job_worker'
       id: _.uniqueId()
       name: "delayed_job.99  host:ip-10-46-218-45"
       queues: "[imgs]"
       status: "stopped"
       updated_at: "2012-11-09T02:55:47Z"
-      
+
     when 'delayed_job'
       attempts: 24
       handler: "foo"
@@ -437,14 +485,14 @@ module.exports = fabricate = (type, extObj = {}) ->
       name: "Artwork[50c932a7b7902c88ea000d01].additional_images.find()#recreate_image_versions!"
       priority: 3
       run_at: "2013-01-03T21:42:37Z"
-      
+
     when 'mail_template'
       class_name: "ArtworkInquiryRequestMailer"
       content: "foobuu"
       id: "artworkinquiryrequestmailer-artwork-inquiry-batch-confirmation-email"
       method_name: "artwork_inquiry_batch_confirmation_email"
       subject: "boofoo"
-      
+
     when 'weekly_email'
       id: _.uniqueId()
       subject: "artsy mail"
@@ -453,14 +501,14 @@ module.exports = fabricate = (type, extObj = {}) ->
     when 'email'
       subject: "artsy mail"
       html: "<html><body>Fancy html is here</body></html>"
-    
+
     when 'weekly_email_new'
       subject: ""
       html: ""
-    
+
     when 'weekly_email_section'
       _type: ""
-    
+
     when 'weekly_email_section_artworks'
       id: _.uniqueId()
       _type: "WeeklyEmailSectionArtworks"
@@ -468,7 +516,7 @@ module.exports = fabricate = (type, extObj = {}) ->
       name: "Artworks Selection"
       description: "some text to go with artworks"
       artworks: [fabricate 'artwork']
-    
+
     when 'gene_automation_rule'
       acts_on: "artwork"
       created_at: "2012-08-24T15:39:51Z"
@@ -476,19 +524,19 @@ module.exports = fabricate = (type, extObj = {}) ->
       id: _.uniqueId()
       satisfies: "obj.artist.genome.genes['Career Stage Gene']"
       value: "obj.artist.genome.genes['Career Stage Gene']"
-      
+
     when 'tag'
       id: _.uniqueId()
       count: 10
       name: 'Cow'
-    
+
     when 'genome_map'
       genes:
         "A - Awesome Genes":
           "Bad Art": 0
         "B - Kewl Art":
          'Contemporary Pugalism': 80, 'Furry': 10
-         
+
     when 'post'
       _id: _.uniqueId()
       _type: "Post"
@@ -512,13 +560,13 @@ module.exports = fabricate = (type, extObj = {}) ->
       title: ""
       updated_at: "2013-06-27T15:31:21Z"
       profile: fabricate 'profile'
-      
+
     when 'author'
       default_profile_id: "billpowers"
       id: _.uniqueId()
       name: "Bill Powers"
       type: "User"
-  
+
     when 'auction_result'
       auction_date: "2012-05-23T00:00:00Z"
       auction_dates_text: "May 23, 2012"
@@ -555,5 +603,5 @@ module.exports = fabricate = (type, extObj = {}) ->
       max_bid_amount_cents: 310000
       suggested_next_bid_cents: 325000
       updated_at: "2013-11-14T00:03:27Z"
-  
+
   , extObj

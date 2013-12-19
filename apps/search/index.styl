@@ -1,0 +1,73 @@
+.is-highlighted
+  background-color highlighter-background-color
+  color #000
+
+#search-page
+  padding 20px 100px
+
+.search-results
+  margin 20px 0
+
+.search-result
+  display table
+  position relative
+  width 100%
+  border-top 1px solid light-gray-border-color
+  text-decoration none
+  transition all 0.125s
+  &:last-child
+    border-bottom 1px solid light-gray-border-color
+  &:after
+    display block
+    position absolute
+    top 50%
+    right 10px
+    height 32px
+    margin-top -(@height / 2)
+    iconfont-styling()
+    content '\e61c'
+    color dark-gray-border-color
+  &:hover
+    background-color #000
+    &
+    &:after
+    .search-result-kind
+      color #fff
+
+.search-result-thumbnail
+.search-result-info
+  display table-cell
+  vertical-align middle
+
+.search-result-thumbnail
+  padding 15px
+
+.search-result-thumbnail-fallback
+  position relative
+  width 70px
+  height @width
+  background-color light-gray-background-color
+  &.is-human::before
+    display block
+    position absolute
+    iconfont-styling()
+    content '\e61a'
+    font-size @width
+    line-height @width
+    color #fff
+  > img
+    display block
+    position absolute
+
+.search-result-info
+  // Force width
+  width 100%
+  padding 15px 40px 15px 0
+
+.search-result-display
+  font-size 24px
+
+.search-result-kind
+  padding-top 10px
+  line-height 1
+  color dark-gray-text-color

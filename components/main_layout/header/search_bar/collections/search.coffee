@@ -1,7 +1,7 @@
 _             = require 'underscore'
 sd            = require('sharify').data
 Backbone      = require 'backbone'
-SearchResult  = require '../models/search_result.coffee'
+SearchResult  = require '../../../../../models/search_result.coffee'
 
 module.exports = class Search extends Backbone.Collection
   url: "#{sd.ARTSY_URL}/api/v1/match?visible_to_public=true"

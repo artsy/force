@@ -6,8 +6,8 @@
 
 { ARTSY_URL, NODE_ENV, ARTSY_ID, ARTSY_SECRET, SESSION_SECRET, PORT, ASSET_PATH,
   FACEBOOK_APP_NAMESPACE, MOBILE_MEDIA_QUERY, MOBILE_URL, APP_URL, REDIS_URL, DEFAULT_CACHE_TIME,
-  SECURE_APP_URL, CANONICAL_MOBILE_URL, IMAGES_URL_PREFIX, SECURE_IMAGES_URL,
-  GOOGLE_ANALYTICS_ID, MIXPANEL_ID, COOKIE_DOMAIN } = config = require "../config"
+  CANONICAL_MOBILE_URL, IMAGES_URL_PREFIX, SECURE_IMAGES_URL, GOOGLE_ANALYTICS_ID, MIXPANEL_ID,
+  COOKIE_DOMAIN } = config = require "../config"
 { parse, format } = require 'url'
 _ = require 'underscore'
 express = require "express"
@@ -23,7 +23,8 @@ backboneCacheSync = require 'backbone-cache-sync'
 redirectMobile = require './middleware/redirect_mobile'
 localsMiddleware = require './middleware/locals'
 helpersMiddleware = require './middleware/helpers'
-cors = require 'cors'
+ensureSSLMiddleware = require './middleware/ensure_ssl'
+errorsMiddleware = require('./middleware/errors').errorHandler
 
 module.exports = (app) ->
 
@@ -34,9 +35,10 @@ module.exports = (app) ->
   backboneCacheSync(Backbone.sync, REDIS_URL, DEFAULT_CACHE_TIME, NODE_ENV) if REDIS_URL
   require('./deferred_sync.coffee')(Backbone, require 'q')
 
-  # Add up front middleware such as redirecting to Martsy and CORS support for login
+  # Add up front middleware such as redirecting to Martsy
+  # or redirecting to https.
   app.use redirectMobile
-  app.use '/force/users/sign_in', cors()
+  app.use ensureSSLMiddleware
 
   # Setup Artsy XAPP middleware
   app.use artsyXappMiddlware(
@@ -57,7 +59,6 @@ module.exports = (app) ->
     CANONICAL_MOBILE_URL: CANONICAL_MOBILE_URL
     MOBILE_URL: MOBILE_URL
     FACEBOOK_APP_NAMESPACE: FACEBOOK_APP_NAMESPACE
-    SECURE_APP_URL: SECURE_APP_URL
     SECURE_IMAGES_URL: SECURE_IMAGES_URL
     IMAGES_URL_PREFIX: IMAGES_URL_PREFIX
     GOOGLE_ANALYTICS_ID: GOOGLE_ANALYTICS_ID
@@ -112,6 +113,8 @@ module.exports = (app) ->
   app.use require "../apps/browse"
   app.use require "../apps/order"
   app.use require "../apps/auction_lots"
+  app.use require "../apps/featured_partners"
+  app.use require "../apps/search"
 
   # Route to ping for system up
   app.get '/system/up', (req, res) ->
@@ -125,3 +128,6 @@ module.exports = (app) ->
     proxy.proxyRequest req, res,
       host: parse(ARTSY_URL).hostname
       port: parse(ARTSY_URL).port or 80
+
+  # Handle errors
+  app.use errorsMiddleware
