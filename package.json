@@ -23,6 +23,7 @@
     "q": "*",
     "hiredis": "0.1.16",
     "redis": "0.9.1",
+    "node-uuid": "*",
     "artsy-passport": "*",
     "backbone-pageable": "*"
   },

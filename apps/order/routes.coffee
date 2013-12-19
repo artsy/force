@@ -9,10 +9,8 @@ CurrentUser = require '../../models/current_user'
       res.redirect '/'
 
 @resume = (req, res) ->
-  unless (token = req.query.token) && (orderId = req.params.id)
-    res.redirect '/'
-  unless req.user
-    res.redirect '/'
+  unless req.user or ((token = req.query.token) && (orderId = req.params.id))
+    return res.redirect '/'
   req.user.resumeOrder orderId, token,
     success: ->
       res.redirect '/order'
