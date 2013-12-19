@@ -9,4 +9,5 @@ Search = require '../../collections/search'
       res.render 'template',
         results: search.models
         term: term
+        referrer: req.query.referrer
     error: res.backboneError

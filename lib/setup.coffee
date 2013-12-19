@@ -24,6 +24,7 @@ redirectMobile = require './middleware/redirect_mobile'
 localsMiddleware = require './middleware/locals'
 helpersMiddleware = require './middleware/helpers'
 ensureSSLMiddleware = require './middleware/ensure_ssl'
+errorsMiddleware = require('./middleware/errors').errorHandler
 
 module.exports = (app) ->
 
@@ -127,3 +128,6 @@ module.exports = (app) ->
     proxy.proxyRequest req, res,
       host: parse(ARTSY_URL).hostname
       port: parse(ARTSY_URL).port or 80
+
+  # Handle errors
+  app.use errorsMiddleware
