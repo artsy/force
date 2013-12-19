@@ -20,7 +20,7 @@ startServer = (callback) ->
   child.on "message", callback
   child.stdout.on "data", (data) -> console.log data.toString()
 closeServer = =>
-  child?.kill()
+  child.kill()
   child = null
 
 describe 'Setup', ->
