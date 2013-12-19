@@ -1,6 +1,6 @@
-sd              = require('sharify').data
-Backbone        = require 'backbone'
-CoverImage      = require './icon.coffee'
+sd        = require('sharify').data
+Backbone  = require 'backbone'
+Icon      = require './icon.coffee'
 
 module.exports = class Partner extends Backbone.Model
 
