@@ -107,6 +107,7 @@ module.exports = (app) ->
   app.use require "../apps/browse"
   app.use require "../apps/order"
   app.use require "../apps/auction_lots"
+  app.use require "../apps/featured_partners"
 
   # Route to ping for system up
   app.get '/system/up', (req, res) ->

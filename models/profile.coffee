@@ -1,6 +1,7 @@
-Backbone = require 'backbone'
 sd = require('sharify').data
+Backbone = require 'backbone'
 Icon = require './icon.coffee'
+CoverImage = require './cover_image.coffee'
 
 module.exports = class Profile extends Backbone.Model
 
@@ -11,3 +12,6 @@ module.exports = class Profile extends Backbone.Model
 
   displayName: ->
   	@get('owner')?.name
+
+  coverImage: ->
+    new CoverImage @get('cover_image'), profileId: @get('id')
