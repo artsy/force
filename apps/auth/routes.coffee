@@ -1,3 +1,7 @@
+request = require 'superagent'
+CurrentUser = require '../../models/current_user.coffee'
+{ ARTSY_ID, ARTSY_SECRET, SECURE_ARTSY_URL } = require('../../config')
+
 @index = (req, res) ->
   res.render 'template'
 
@@ -10,3 +14,15 @@
 
 @redirectAfterLogin = (req, res) ->
   res.redirect req.body['redirect-to'] or req.session.signupReferrer or '/'
+
+@loginWithTrustToken = (req, res) ->
+  request.post(SECURE_ARTSY_URL + '/oauth2/access_token').send(
+    grant_type    : 'trust_token'
+    client_id     : ARTSY_ID
+    client_secret : ARTSY_SECRET
+    code          : req.query['token']
+    ).end((err, response) ->
+      (err or response?.body.error_description)
+      new CurrentUser(accessToken: response?.body.access_token)
+      res.redirect req.query['redirect-to'] or req.session.signupReferrer or '/'
+  )
