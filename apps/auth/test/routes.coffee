@@ -39,6 +39,6 @@ describe 'Auth routes', ->
       @res.redirect.args[0][0].should.include '/foo/bar'
 
     it 'redirects to the signup referrer page stored in the session', ->
-      @req.session.signupReferrer = '/feature/two-x-two'
+      @req.get = -> '/feature/two-x-two'
       routes.redirectAfterLogin @req, @res
       @res.redirect.args[0][0].should.include '/feature/two-x-two'
