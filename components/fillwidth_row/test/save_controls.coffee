@@ -23,7 +23,7 @@ describe 'SaveControls', ->
           done()
 
     afterEach ->
-      # benv.teardown()
+      benv.teardown()
 
     it 'triggers the login modal if theres no artworkCollection', ->
       sinon.spy mediator, 'trigger'
@@ -42,7 +42,7 @@ describe 'SaveControls', ->
             done()
 
       afterEach ->
-        # benv.teardown()
+        benv.teardown()
 
       it 'saves the artwork if it is not in the collection', ->
         @view.model.isSaved = -> false
@@ -51,13 +51,13 @@ describe 'SaveControls', ->
         @view.artworkCollection.trigger 'add:artwork'
         @view.artworkCollection.saveArtwork.called.should.be.ok
         @view.artworkCollection.saveArtwork.args[0][0].should.equal model.id
-        @view.$button.data('state').should.equal 'saved'
+        @view.$button.attr('data-state').should.equal 'saved'
 
       it 'unsaves the artwork if it is in the collection', ->
         @view.model.isSaved = -> true
         @view.$button.click()
         @view.model.isSaved = -> false
-        @view.artworkCollection.trigger 'add:artwork'
+        @view.artworkCollection.trigger 'remove:artwork'
         @view.artworkCollection.unsaveArtwork.called.should.be.ok
         @view.artworkCollection.unsaveArtwork.args[0][0].should.equal model.id
-        @view.$button.data('state').should.equal 'unsaved'
+        @view.$button.attr('data-state').should.equal 'unsaved'
