@@ -23,7 +23,8 @@ module.exports = class SearchBarView extends Backbone.View
     'keyup input': 'checkSubmission'
 
   checkSubmission: (e) ->
-    window.location = "/search?q=#{@$input.val()}" if e.which is 13
+    return if !(e.which is 13) or @selected
+    window.location = "/search?q=#{@$input.val()}"
 
   indicateLoading: ->
     @$el.addClass 'is-loading'
@@ -67,6 +68,7 @@ module.exports = class SearchBarView extends Backbone.View
           @$('img').error -> $(this).hide()
 
   selectResult: (e, model) ->
+    @selected = true
     window.location = model.get 'location'
 
   remove: ->
