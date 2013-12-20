@@ -21,6 +21,7 @@ module.exports = function(options) {
       // Generate headers
       var contentType = contentTypeMap[path.extname(filename.replace('.gz', ''))];
       var headers = {
+        'Cache-Control': 'max-age=315360000, public',
         'Content-Type': contentType,
         'x-amz-acl': 'public-read'
       }
