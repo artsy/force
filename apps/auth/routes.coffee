@@ -13,7 +13,7 @@ CurrentUser = require '../../models/current_user.coffee'
   res.redirect '/'
 
 @redirectAfterLogin = (req, res) ->
-  res.redirect req.body['redirect-to'] or req.session.signupReferrer or '/'
+  res.redirect req.body['redirect-to'] or req.get('Referrer') or '/'
 
 @loginWithTrustToken = (req, res) ->
   request.post(SECURE_ARTSY_URL + '/oauth2/access_token').send(
@@ -23,6 +23,6 @@ CurrentUser = require '../../models/current_user.coffee'
     code          : req.query['token']
     ).end((err, response) ->
       (err or response?.body.error_description)
-      new CurrentUser(accessToken: response?.body.access_token)
-      res.redirect req.query['redirect-to'] or req.session.signupReferrer or '/'
+      req.login new CurrentUser(accessToken: response?.body.access_token), ->
+        res.redirect req.query['redirect-to'] or req.get('Referrer') or '/'
   )
