@@ -19,6 +19,12 @@ module.exports = class SearchBarView extends Backbone.View
 
     @setupTypeahead()
 
+  events:
+    'keyup input': 'checkSubmission'
+
+  checkSubmission: (e) ->
+    window.location = "/search?q=#{@$input.val()}" if e.which is 13
+
   indicateLoading: ->
     @$el.addClass 'is-loading'
 

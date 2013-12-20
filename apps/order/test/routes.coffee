@@ -4,7 +4,6 @@ Backbone  = require 'backbone'
 routes    = require '../routes'
 CurrentUser = require '../../../models/current_user'
 { fabricate } = require 'antigravity'
-{ APP_URL } = require('../../../config')
 
 describe 'Order routes', ->
   beforeEach ->
@@ -36,4 +35,4 @@ describe 'Order routes', ->
       it 'redirects to the home page', ->
         routes.index @req, @res
         Backbone.sync.args[0][2].error()
-        @res.redirect.args[0][0].should.equal APP_URL
+        @res.redirect.args[0][0].should.equal '/'

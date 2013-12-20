@@ -3,13 +3,20 @@ Browser = require 'zombie'
 
 describe 'Static page', ->
 
-  before startServer
+  before (done) -> startServer done
 
-  after closeServer
+  after -> closeServer()
 
   it 'shows the page contents', (done) ->
     browser = new Browser
     browser.visit 'http://localhost:5000/terms', ->
+      browser.wait ->
+        browser.html().should.include 'This <em>page</em> is awesome!'
+        done()
+
+  it 'shows the jobs page contents', (done) ->
+    browser = new Browser
+    browser.visit 'http://localhost:5000/job/terms', ->
       browser.wait ->
         browser.html().should.include 'This <em>page</em> is awesome!'
         done()
