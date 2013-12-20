@@ -1,9 +1,11 @@
 _         = require 'underscore'
 sd        = require('sharify').data
 Backbone  = require 'backbone'
+Image     = require './mixins/image.coffee'
 
 module.exports = class SearchResult extends Backbone.Model
   _.mixin(require 'underscore.string')
+  _.extend @prototype, Image
 
   initialize: ->
     @set
@@ -32,7 +34,7 @@ module.exports = class SearchResult extends Backbone.Model
     src = if @get('model') is 'artwork' then 'default_image.jpg' else 'image'
     url = "#{sd.ARTSY_URL}/api/v1/#{@get('model')}/#{@id}/#{src}"
     url = url + "?xapp_token=#{sd.GRAVITY_XAPP_TOKEN}" if sd.GRAVITY_XAPP_TOKEN?
-    url
+    @fullyQualifiedImageUrl(url)
 
   isHuman: ->
     (@get('model') is 'profile') or (@get('model') is 'artist')

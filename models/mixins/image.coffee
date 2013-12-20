@@ -13,6 +13,9 @@ module.exports =
     else
       url
 
+  hasImage: (version = 'large') ->
+    _.contains(@get('image_versions'), version)
+
   imageUrl: (version) ->
     if _.contains(@get('image_versions'), version)
       @fullyQualifiedImageUrl(@get 'image_url').replace ':version', version
