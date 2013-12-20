@@ -24,14 +24,15 @@ $ ->
     analytics(mixpanel: mixpanel, ga: ga)
     analytics.trackPageview()
 
-  $.ajax
-    type: "POST"
-    url: "#{sd.SECURE_ARTSY_URL}/api/v1/me/trust_token"
-    success: (response) ->
-      $.ajax
-        type: "POST"
-        url: "/force/users/sign_in_trust_token?token=#{response.trust_token}&redirect-to=#{window.location.pathname}"
-        success: (response) ->
-          console.log response
-        error: (error) ->
-          console.log error
+  if sd.AUTO_GRAVITY_LOGIN
+    $.ajax
+      type: "POST"
+      url: "/api/v1/me/trust_token"
+      success: (response) ->
+        $.ajax
+          type: "POST"
+          url: "/force/users/sign_in_trust_token?token=#{response.trust_token}&redirect-to=#{window.location.pathname}"
+          success: (response) ->
+            console.log response
+          error: (error) ->
+            console.log error

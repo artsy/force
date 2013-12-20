@@ -1,5 +1,7 @@
 request = require 'superagent'
+CurrentUser = require '../../models/current_user.coffee'
 { ARTSY_ID, ARTSY_SECRET, SECURE_ARTSY_URL } = require('../../config')
+
 @index = (req, res) ->
   res.render 'template'
 
@@ -21,5 +23,6 @@ request = require 'superagent'
     code          : req.query['token']
     ).end((err, response) ->
       (err or response?.body.error_description)
-      res.send { success: true, accessToken: response?.body.access_token }
+      new CurrentUser(accessToken: response?.body.access_token)
+      res.redirect req.query['redirect-to'] or req.session.signupReferrer or '/'
   )
