@@ -29,7 +29,7 @@ block body
             .search-result-thumbnail
               .search-result-thumbnail-fallback( class=result.humanClass() )
                 img(
-                  src= result.get('image_url'),
+                  src= result.imageUrl(),
                   width=70, height=70,
                   alt= result.get('display'),
                   onerror='this.style.display="none";'
