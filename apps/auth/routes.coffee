@@ -1,5 +1,6 @@
 { SECURE_ARTSY_URL, ARTSY_ID, ARTSY_SECRET, APP_URL } = require '../../config'
 request = require 'superagent'
+{ parse } = require 'url'
 
 @index = (req, res) ->
   res.render 'template'
@@ -14,11 +15,11 @@ request = require 'superagent'
     .end (trustRes) ->
       res.redirect "#{SECURE_ARTSY_URL}/users/sign_in?" +
                    "trust_token=#{trustRes.body.trust_token}&" +
-                   "redirect_uri=#{APP_URL + req.get 'Referrer'}"
+                   "redirect_uri=#{APP_URL + (parse(req.get('Referrer') or '').path or '')}"
 
 @logout = (req, res) ->
   req.logout()
-  res.redirect '/'
+  res.redirect req.get('Referrer') or '/'
 
 @redirectAfterLogin = (req, res) ->
   res.redirect req.get('Referrer') or '/'

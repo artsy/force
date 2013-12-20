@@ -1,11 +1,12 @@
 _         = require 'underscore'
 sinon     = require 'sinon'
 Backbone  = require 'backbone'
-routes    = require '../routes'
+rewire    = require 'rewire'
+routes    = rewire '../routes'
 
 describe 'Auth routes', ->
   beforeEach ->
-    @req = { params: {}, logout: sinon.stub() }
+    @req = { params: {}, logout: sinon.stub(), user: new Backbone.Model(), get: -> }
     @res = { render: sinon.stub(), locals: { sd: {} }, send: sinon.stub(), redirect: sinon.stub() }
 
   describe '#index', ->
@@ -37,3 +38,16 @@ describe 'Auth routes', ->
       @req.get = -> '/feature/two-x-two'
       routes.redirectAfterLogin @req, @res
       @res.redirect.args[0][0].should.include '/feature/two-x-two'
+
+  describe '#loginToArtsy', ->
+
+    it 'single signs in to Artsy', ->
+      request = routes.__get__ 'request'
+      request.post = -> send: -> end: (callback) -> callback {
+        body: {
+          trust_token: 'foobar'
+        }
+      }
+      @req.get = -> 'ref'
+      routes.loginToArtsy @req, @res
+      @res.redirect.args[0][0].should.include '/users/sign_in?trust_token=foobar'

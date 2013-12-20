@@ -66,8 +66,7 @@ module.exports = class AuthModalView extends ModalView
 
       new models[@state.get('mode')]().save @serializeForm(),
         success: ->
-          window.location = '/login-to-artsy'
-          # Somehow since /login-to-artsy redirects us back here, it doesn't reload the page
+          window.location.href = '/login-to-artsy'
         error: (model, xhr, options) =>
           $submit.attr 'data-state', 'error'
           @$('.auth-errors').text @errorMessage(xhr) # Display error
