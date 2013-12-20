@@ -1,6 +1,5 @@
 request = require 'superagent'
-{ ARTSY_ID, ARTSY_SECRET } = require('../../config')
-sd      = require('sharify').data
+{ ARTSY_ID, ARTSY_SECRET, SECURE_ARTSY_URL } = require('../../config')
 @index = (req, res) ->
   res.render 'template'
 
@@ -15,7 +14,7 @@ sd      = require('sharify').data
   res.redirect req.body['redirect-to'] or req.session.signupReferrer or '/'
 
 @loginWithTrustToken = (req, res) ->
-  request.post(sd.SECURE_ARTSY_URL + '/oauth2/access_token').send(
+  request.post(SECURE_ARTSY_URL + '/oauth2/access_token').send(
     grant_type    : 'trust_token'
     client_id     : ARTSY_ID
     client_secret : ARTSY_SECRET
