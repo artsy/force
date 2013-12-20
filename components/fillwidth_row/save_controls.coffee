@@ -1,35 +1,32 @@
-Backbone = require 'backbone'
-mediator = require '../../lib/mediator.coffee'
-track    = require('../../lib/analytics.coffee').track
+Backbone  = require 'backbone'
+mediator  = require '../../lib/mediator.coffee'
+track     = require('../../lib/analytics.coffee').track
 
 module.exports = class SaveControls extends Backbone.View
-
   analyticsRemoveMessage: "Removed artwork from collection, via result rows"
   analyticsSaveMessage: "Added artwork to collection, via result rows"
+
+  events:
+    'click .overlay-button-save': 'save'
 
   initialize: (options) ->
     throw 'You must pass an el' unless @el?
     throw 'You must pass a model' unless @model?
     return unless options.artworkCollection
+
     { @artworkCollection } = options
 
-    # Listen to save changes for this work
+    @$button = @$('.overlay-button-save')
+
     @listenTo @artworkCollection, "add:#{@model.get('id')}", @onArtworkSaveChange
     @listenTo @artworkCollection, "remove:#{@model.get('id')}", @onArtworkSaveChange
     @onArtworkSaveChange()
 
   onArtworkSaveChange: ->
-    if @model.isSaved @artworkCollection
-      @$el.removeClass('overlay-artwork-unsaved').addClass('overlay-artwork-saved')
-      @$('.label').text('Saved')
-    else
-      @$el.removeClass('overlay-artwork-saved').addClass('overlay-artwork-unsaved')
-      @$('.label').text('Favorite')
+    state = if @model.isSaved @artworkCollection then 'saved' else 'unsaved'
+    @$button.attr 'data-state', state
 
-  events:
-    'click .overlay-artwork-save' : 'saveClick'
-
-  saveClick: (event) =>
+  save: (e) =>
     unless @artworkCollection
       mediator.trigger 'open:auth', { mode: 'login' }
       return false
@@ -37,13 +34,13 @@ module.exports = class SaveControls extends Backbone.View
     if @model.isSaved @artworkCollection
       track.click @analyticsRemoveMessage, @model
       @artworkCollection.unsaveArtwork @model.get('id'),
-        error: => @$el.removeClass('overlay-artwork-unsaved').addClass('overlay-artwork-saved')
+        error: => @$button.attr 'data-state', 'saved'
     else
       track.click @analyticsSaveMessage, @model
       @artworkCollection.saveArtwork @model.get('id'),
-        error: => @$el.removeClass('overlay-artwork-saved').addClass('overlay-artwork-unsaved')
-      @$el.addClass('overlay-artwork-clicked')
-      setTimeout =>
-        @$el.removeClass('overlay-artwork-clicked')
-      , 1500
+        error: => @$button.attr 'data-state', 'unsaved'
+
+      # Delay transition to red background color
+      @$button.addClass 'is-clicked'
+      setTimeout (=> @$button.removeClass 'is-clicked'), 1500
     false
