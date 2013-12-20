@@ -23,6 +23,6 @@ CurrentUser = require '../../models/current_user.coffee'
     code          : req.query['token']
     ).end((err, response) ->
       (err or response?.body.error_description)
-      req.login new CurrentUser(accessToken: token), ->
+      req.login new CurrentUser(accessToken: response?.body.access_token), ->
         res.redirect req.query['redirect-to'] or req.get('Referrer') or '/'
   )
