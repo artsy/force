@@ -15,7 +15,7 @@ describe 'AuthModalView', ->
       done()
 
   after ->
-    benv.teardown()
+    # benv.teardown()
 
   beforeEach ->
     @view = new @AuthModalView el: $('#fixture')

@@ -18,26 +18,26 @@ module.exports = class SaveControls extends Backbone.View
 
     @$button = @$('.overlay-button-save')
 
-    @listenTo @artworkCollection, "add:#{@model.get('id')}", @onArtworkSaveChange
-    @listenTo @artworkCollection, "remove:#{@model.get('id')}", @onArtworkSaveChange
+    @listenTo @artworkCollection, "add:#{@model.id}", @onArtworkSaveChange
+    @listenTo @artworkCollection, "remove:#{@model.id}", @onArtworkSaveChange
     @onArtworkSaveChange()
 
   onArtworkSaveChange: ->
     state = if @model.isSaved @artworkCollection then 'saved' else 'unsaved'
     @$button.attr 'data-state', state
 
-  save: (e) =>
+  save: (e) ->
     unless @artworkCollection
       mediator.trigger 'open:auth', { mode: 'login' }
       return false
 
     if @model.isSaved @artworkCollection
       track.click @analyticsRemoveMessage, @model
-      @artworkCollection.unsaveArtwork @model.get('id'),
+      @artworkCollection.unsaveArtwork @model.id,
         error: => @$button.attr 'data-state', 'saved'
     else
       track.click @analyticsSaveMessage, @model
-      @artworkCollection.saveArtwork @model.get('id'),
+      @artworkCollection.saveArtwork @model.id,
         error: => @$button.attr 'data-state', 'unsaved'
 
       # Delay transition to red background color
