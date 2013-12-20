@@ -13,7 +13,7 @@ module.exports =
       url
 
   hasImage: (version='large') ->
-    @hasImage or= _.contains(@get('image_versions') + @get('versions'), version)
+    _.contains(@get('image_versions'), version) or _.contains(@get('versions'), version)
 
   imageUrl: (version) ->
     if @hasImage version
