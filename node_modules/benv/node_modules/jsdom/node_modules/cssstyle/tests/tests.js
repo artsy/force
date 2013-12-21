@@ -158,5 +158,18 @@ module.exports = {
         test.ok(2 === style.length, 'length is not 2');
         test.ok('clear: both; clip: rect(0px, 3em, 2pt, 50%);' === style.cssText, 'cssText is not "clear: both; clip: rect(0px, 3em, 2pt, 50%);"');
         test.done();
+    },
+    'Test colors': function (test) {
+        var style = new cssstyle.CSSStyleDeclaration();
+        test.expect(4);
+        style.color = 'rgba(0,0,0,0)';
+        test.ok('rgba(0, 0, 0, 0)' === style.color, 'color is not rgba(0, 0, 0, 0)');
+        style.color = 'rgba(5%, 10%, 20%, 0.4)';
+        test.ok('rgba(12, 25, 51, 0.4)' === style.color, 'color is not rgba(12, 25, 51, 0.4)');
+        style.color = 'rgb(33%, 34%, 33%)';
+        test.ok('rgb(84, 86, 84)' === style.color, 'color is not rgb(84, 86, 84)');
+        style.color = 'rgba(300, 200, 100, 1.5)';
+        test.ok('rgb(255, 200, 100)' === style.color, 'color is not rgb(255, 200, 100) ' + style.color);
+        test.done();
     }
 };
