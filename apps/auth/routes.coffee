@@ -23,6 +23,8 @@ CurrentUser = require '../../models/current_user.coffee'
     code          : req.query['token']
     ).end((err, response) ->
       (err or response?.body.error_description)
+      # Delete all connect cookies - we have some under artsy.net and others under .artsy.net.
+      res.clearCookie 'connect.sess'
       req.login new CurrentUser(accessToken: response?.body.access_token), ->
         res.redirect req.query['redirect-to'] or req.get('Referrer') or '/'
   )
