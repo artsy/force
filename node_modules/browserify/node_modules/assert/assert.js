@@ -28,6 +28,7 @@
 var util = require('util/');
 
 var pSlice = Array.prototype.slice;
+var hasOwn = Object.prototype.hasOwnProperty;
 
 // 1. The assert module provides functions that throw
 // AssertionError's when particular conditions are not met. The
@@ -216,8 +217,8 @@ function objEquiv(a, b) {
     return _deepEqual(a, b);
   }
   try {
-    var ka = Object.keys(a),
-        kb = Object.keys(b),
+    var ka = objectKeys(a),
+        kb = objectKeys(b),
         key, i;
   } catch (e) {//happens when one is a string literal and the other isn't
     return false;
@@ -330,3 +331,11 @@ assert.doesNotThrow = function(block, /*optional*/message) {
 };
 
 assert.ifError = function(err) { if (err) {throw err;}};
+
+var objectKeys = Object.keys || function (obj) {
+  var keys = [];
+  for (var key in obj) {
+    if (hasOwn.call(obj, key)) keys.push(key);
+  }
+  return keys;
+};

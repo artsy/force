@@ -77,3 +77,15 @@ test('util._extend', function () {
   assert.deepEqual(util._extend({a:1}, {b:2}),      {a:1, b:2});
   assert.deepEqual(util._extend({a:1, b:2}, {b:3}), {a:1, b:3});
 });
+
+test('util.isBuffer', function () {
+  assert.equal(true, util.isBuffer(new Buffer(4)));
+  assert.equal(true, util.isBuffer(Buffer(4)));
+  assert.equal(true, util.isBuffer(new Buffer(4)));
+  assert.equal(true, util.isBuffer(new Buffer([1, 2, 3, 4])));
+  assert.equal(false, util.isBuffer({}));
+  assert.equal(false, util.isBuffer([]));
+  assert.equal(false, util.isBuffer(new Error()));
+  assert.equal(false, util.isRegExp(new Date()));
+  assert.equal(true, util.isBuffer(Object.create(Buffer.prototype)));
+});

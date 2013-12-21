@@ -1,11 +1,8 @@
-var sd = require('../').data;
+var sayHi = require('./shared-module').sayHi,
+    USER_AGENT = require('../').data.USER_AGENT
+    ENV = require('../').data.ENV;
+
 $(function() {
-  alert('Your user agent is ' + sd.USER_AGENT);
-  $.ajax({ url: sd.API_URL + '/system/up' }).then(function(data) {
-    if (data.rails) {
-      alert("Artsy is up!");
-    } else {
-      alert("Uh oh, Artsy is down!");
-    }
-  });
+  alert(sayHi() + ', your user agent is: ' + USER_AGENT);
+  $('h4').html(JSON.stringify(ENV));
 });
