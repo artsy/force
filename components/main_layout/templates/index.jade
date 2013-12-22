@@ -14,6 +14,8 @@ html
     #main-layout-container
       block body
     #scripts
+      if sharify
+        sharify.script()
       include scripts
       script( src=(sd.ASSET_PATH + assetPackage + sd.JS_EXT) )
       block scripts
