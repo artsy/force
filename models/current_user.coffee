@@ -1,11 +1,11 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
-sd = require('sharify').data
+{ ARTSY_URL, CURRENT_USER } = require('sharify').data
 ArtworkCollection = require './artwork_collection.coffee'
 
 module.exports = class CurrentUser extends Backbone.Model
 
-  url: -> "#{sd.ARTSY_URL}/api/v1/me"
+  url: -> "#{ARTSY_URL}/api/v1/me"
 
   # Should only be run after the user has been fetched and has an id
   initializeDefaultArtworkCollection: (options) ->
@@ -32,7 +32,7 @@ module.exports = class CurrentUser extends Backbone.Model
   # Convenience for getting the bootstrapped user or returning null.
   # This should only be used on the client.
   @orNull: ->
-    if sd.CURRENT_USER then new @(sd.CURRENT_USER) else null
+    if CURRENT_USER then new @(CURRENT_USER) else null
 
 # Methods for the a user's Order
   fetchPendingOrder: (options) ->

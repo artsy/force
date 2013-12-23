@@ -11,7 +11,7 @@ require 'jquery.fillwidth'
 require 'jquery.dotdotdot'
 
 $.ajaxSettings.headers =
-  'X-XAPP-TOKEN'  : sd.GRAVITY_XAPP_TOKEN
+  'X-XAPP-TOKEN'  : sd.ARTSY_XAPP_TOKEN
   'X-ACCESS-TOKEN': sd.CURRENT_USER?.accessToken
 
 $ ->

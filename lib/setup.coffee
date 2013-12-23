@@ -18,7 +18,6 @@ artsyPassport = require 'artsy-passport'
 artsyXappMiddlware = require 'artsy-xapp-middleware'
 httpProxy = require 'http-proxy'
 proxy = new httpProxy.RoutingProxy()
-CurrentUser = require '../models/current_user'
 backboneCacheSync = require 'backbone-cache-sync'
 redirectMobile = require './middleware/redirect_mobile'
 localsMiddleware = require './middleware/locals'
@@ -26,7 +25,7 @@ helpersMiddleware = require './middleware/helpers'
 ensureSSLMiddleware = require './middleware/ensure_ssl'
 errorsMiddleware = require('./middleware/errors').errorHandler
 
-# Setup sharify constants
+# Setup sharify constants & require dependencies that use sharify data
 sharify.data =
   JS_EXT: (if "production" is NODE_ENV then ".min.js.gz" else ".js")
   CSS_EXT: (if "production" is NODE_ENV then ".min.css.gz" else ".css")
@@ -43,6 +42,7 @@ sharify.data =
   GOOGLE_ANALYTICS_ID: GOOGLE_ANALYTICS_ID
   MIXPANEL_ID: MIXPANEL_ID
   AUTO_GRAVITY_LOGIN: AUTO_GRAVITY_LOGIN
+CurrentUser = require '../models/current_user'
 
 module.exports = (app) ->
 
@@ -65,18 +65,13 @@ module.exports = (app) ->
     clientSecret: ARTSY_SECRET
   ) unless app.get('env') is 'test'
 
-  # Inject the current path into Sharify
-  app.use (req, res, next) ->
-    res.locals.sd.CURRENT_PATH = req.url
-    next()
-
   # Setup Artsy Passport
   app.use express.cookieParser()
   app.use express.cookieSession
     secret: SESSION_SECRET
     cookie: { domain: COOKIE_DOMAIN }
   app.use express.bodyParser()
-  app.use artsyPassport _.extend(config,
+  app.use artsyPassport _.extend config,
     CurrentUser: CurrentUser
     facebookPath: '/force/users/auth/facebook'
     twitterPath: '/force/users/auth/twitter'
@@ -84,7 +79,6 @@ module.exports = (app) ->
     signupPath: '/force/users/invitation/accept'
     twitterCallbackPath: '/force/users/auth/twitter/callback'
     facebookCallbackPath: '/force/users/auth/facebook/callback'
-  )
 
   # General
   app.use localsMiddleware

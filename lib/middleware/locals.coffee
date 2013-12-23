@@ -7,15 +7,10 @@ uuid = require 'node-uuid'
 
 module.exports = (req, res, next) ->
 
-  # Adjust the asset path based on SSL
-  pathObj = parse res.locals.sd.ASSET_PATH
-  pathObj.protocol = if req.get('X-Forwarded-Proto') is 'https' then 'https' else 'http'
-  res.locals.sd.ASSET_PATH = format(pathObj)
-
-  # Generate a session id to be passed among sharify data
+  # Inject some project-wide sharify data such as the session id, the current path
+  # and the xapp token.
   res.locals.sd.SESSION_ID = req.session?.id ?= uuid.v1()
-
-  # Inject the xapp token in sharify data
-  res.locals.sd.GRAVITY_XAPP_TOKEN = res.locals.artsyXappToken
+  res.locals.sd.CURRENT_PATH = req.url
+  res.locals.sd.ARTSY_XAPP_TOKEN = res.locals.artsyXappToken
 
   next()

@@ -29,7 +29,7 @@ describe 'SearchResult', ->
 
       it 'has an image_url attribute that with the token appened when logged in', ->
         token = 'token'
-        SearchResult.__set__ 'sd', { GRAVITY_XAPP_TOKEN: token }
+        SearchResult.__set__ 'sd', { ARTSY_XAPP_TOKEN: token }
         model = new SearchResult(fabricate('artwork', model: 'artwork'))
         model.get('image_url').should.include "/api/v1/artwork/#{model.id}/default_image.jpg?xapp_token=#{token}"
 

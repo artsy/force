@@ -4,7 +4,7 @@ ModalView          = require '../modal/view.coffee'
 Form               = require '../mixins/form.coffee'
 mediator           = require '../../lib/mediator.coffee'
 { parse }          = require 'url'
-{ ARTSY_URL } = require('sharify').data
+{ ARTSY_URL }      = require('sharify').data
 
 templates =
   signup:   -> require('./templates/signup.jade') arguments...
