@@ -10,5 +10,5 @@ module.exports = class Search extends Backbone.Collection
   url: "#{sd.ARTSY_URL}/api/v1/match?visible_to_public=true"
 
   parse: (response, options) ->
-    sd.GRAVITY_XAPP_TOKEN = options.res.req._headers['x-xapp-token']
+    sd.ARTSY_XAPP_TOKEN = options.res.req._headers['x-xapp-token']
     response

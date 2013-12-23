@@ -19,6 +19,7 @@ app.set 'view engine', 'jade'
 
 # Artsy Passport auth handlers
 app.post '/force/users/sign_in', routes.submitLogin
+app.get '/log_in_to_artsy', routes.loginToArtsy
 app.get '/force/users/sign_out', routes.logout
 
 app.post '/force/users/sign_in_trust_token', routes.loginWithTrustToken

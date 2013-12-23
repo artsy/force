@@ -60,7 +60,7 @@ module.exports = class SearchBarView extends Backbone.View
         url: "#{@search.url}&term=%QUERY"
         filter: @search._parse
         beforeSend: (xhr) ->
-          xhr.setRequestHeader 'X-XAPP-TOKEN', sd.GRAVITY_XAPP_TOKEN
+          xhr.setRequestHeader 'X-XAPP-TOKEN', sd.ARTSY_XAPP_TOKEN
           mediator.trigger 'search:start', xhr
         complete: (xhr) =>
           mediator.trigger 'search:complete', xhr

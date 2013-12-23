@@ -26,7 +26,7 @@ describe 'AuthModalView', ->
 
   describe '#submit', ->
 
-    it 'reloads the page after a successful login', ->
+    it 'directs to logging into Gravity after a successful login', ->
       sinon.stub location, 'reload'
       @view.validateForm = -> true
       @view.state = new Backbone.Model
@@ -34,5 +34,4 @@ describe 'AuthModalView', ->
       @view.submit { preventDefault: -> }
       Backbone.sync.args[0][1].url.should.include 'users/sign_in'
       Backbone.sync.args[0][2].success {}
-      location.reload.called.should.be.ok
-      location.reload.restore()
+      location.href.should.include 'log_in_to_artsy'
