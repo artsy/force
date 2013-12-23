@@ -66,7 +66,7 @@ module.exports = class AuthModalView extends ModalView
 
       new models[@state.get('mode')]().save @serializeForm(),
         success: ->
-          window.location.href = '/log_in_to_artsy'
+          window.location.href = '/force/log_in_to_artsy'
         error: (model, xhr, options) =>
           $submit.attr 'data-state', 'error'
           @$('.auth-errors').text @errorMessage(xhr) # Display error
