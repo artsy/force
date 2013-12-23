@@ -34,4 +34,4 @@ describe 'AuthModalView', ->
       @view.submit { preventDefault: -> }
       Backbone.sync.args[0][1].url.should.include 'users/sign_in'
       Backbone.sync.args[0][2].success {}
-      location.href.should.include 'login-to-artsy'
+      location.href.should.include 'log_in_to_artsy'
