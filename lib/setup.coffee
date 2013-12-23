@@ -7,7 +7,7 @@
 { ARTSY_URL, NODE_ENV, ARTSY_ID, ARTSY_SECRET, SESSION_SECRET, PORT, ASSET_PATH,
   FACEBOOK_APP_NAMESPACE, MOBILE_MEDIA_QUERY, MOBILE_URL, APP_URL, REDIS_URL, DEFAULT_CACHE_TIME,
   CANONICAL_MOBILE_URL, IMAGES_URL_PREFIX, SECURE_IMAGES_URL, GOOGLE_ANALYTICS_ID, MIXPANEL_ID,
-  COOKIE_DOMAIN } = config = require "../config"
+  COOKIE_DOMAIN, AUTO_GRAVITY_LOGIN } = config = require "../config"
 { parse, format } = require 'url'
 _ = require 'underscore'
 express = require "express"
@@ -24,6 +24,25 @@ redirectMobile = require './middleware/redirect_mobile'
 localsMiddleware = require './middleware/locals'
 helpersMiddleware = require './middleware/helpers'
 ensureSSLMiddleware = require './middleware/ensure_ssl'
+errorsMiddleware = require('./middleware/errors').errorHandler
+
+# Setup sharify constants
+sharify.data =
+  JS_EXT: (if "production" is NODE_ENV then ".min.js.gz" else ".js")
+  CSS_EXT: (if "production" is NODE_ENV then ".min.css.gz" else ".css")
+  ASSET_PATH: ASSET_PATH
+  APP_URL: APP_URL
+  ARTSY_URL: ARTSY_URL
+  NODE_ENV: NODE_ENV
+  MOBILE_MEDIA_QUERY: MOBILE_MEDIA_QUERY
+  CANONICAL_MOBILE_URL: CANONICAL_MOBILE_URL
+  MOBILE_URL: MOBILE_URL
+  FACEBOOK_APP_NAMESPACE: FACEBOOK_APP_NAMESPACE
+  SECURE_IMAGES_URL: SECURE_IMAGES_URL
+  IMAGES_URL_PREFIX: IMAGES_URL_PREFIX
+  GOOGLE_ANALYTICS_ID: GOOGLE_ANALYTICS_ID
+  MIXPANEL_ID: MIXPANEL_ID
+  AUTO_GRAVITY_LOGIN: AUTO_GRAVITY_LOGIN
 
 module.exports = (app) ->
 
@@ -34,8 +53,8 @@ module.exports = (app) ->
   backboneCacheSync(Backbone.sync, REDIS_URL, DEFAULT_CACHE_TIME, NODE_ENV) if REDIS_URL
   require('./deferred_sync.coffee')(Backbone, require 'q')
 
-  # Add up front middleware such as redirecting to Martsy
-  # or redirecting to https.
+  # Add up front middleware
+  app.use sharify
   app.use redirectMobile
   app.use ensureSSLMiddleware
 
@@ -45,23 +64,6 @@ module.exports = (app) ->
     clientId: ARTSY_ID
     clientSecret: ARTSY_SECRET
   ) unless app.get('env') is 'test'
-
-  # Setup Sharify
-  app.use sharify
-    JS_EXT: (if "production" is NODE_ENV then ".min.js.gz" else ".js")
-    CSS_EXT: (if "production" is NODE_ENV then ".min.css.gz" else ".css")
-    ASSET_PATH: ASSET_PATH
-    APP_URL: APP_URL
-    ARTSY_URL: ARTSY_URL
-    NODE_ENV: NODE_ENV
-    MOBILE_MEDIA_QUERY: MOBILE_MEDIA_QUERY
-    CANONICAL_MOBILE_URL: CANONICAL_MOBILE_URL
-    MOBILE_URL: MOBILE_URL
-    FACEBOOK_APP_NAMESPACE: FACEBOOK_APP_NAMESPACE
-    SECURE_IMAGES_URL: SECURE_IMAGES_URL
-    IMAGES_URL_PREFIX: IMAGES_URL_PREFIX
-    GOOGLE_ANALYTICS_ID: GOOGLE_ANALYTICS_ID
-    MIXPANEL_ID: MIXPANEL_ID
 
   # Inject the current path into Sharify
   app.use (req, res, next) ->
@@ -127,3 +129,6 @@ module.exports = (app) ->
     proxy.proxyRequest req, res,
       host: parse(ARTSY_URL).hostname
       port: parse(ARTSY_URL).port or 80
+
+  # Handle errors
+  app.use errorsMiddleware

@@ -23,3 +23,14 @@ $ ->
   unless typeof mixpanel is 'undefined'
     analytics(mixpanel: mixpanel, ga: ga)
     analytics.trackPageview()
+
+  if sd.AUTO_GRAVITY_LOGIN and not sd.CURRENT_USER
+    $.ajax
+      type: "POST"
+      url: "/api/v1/me/trust_token"
+      success: (response) ->
+        $.ajax
+          type: "POST"
+          url: "/force/users/sign_in_trust_token?token=#{response.trust_token}&redirect-to=#{window.location.pathname}"
+          success: (response) ->
+            window.location.reload()

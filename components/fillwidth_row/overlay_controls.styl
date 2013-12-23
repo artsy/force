@@ -1,42 +1,44 @@
-@import '../stylus_lib'
-
-// artwork image container
 .fillwidth-img-container
-  .overlay-container
+  .overlay-button-save
     opacity 0
-  &:hover .overlay-container
+  &:hover .overlay-button-save
     opacity 1
 
-// save container
 .overlay-container
-  position: absolute
-  padding: 4px
-  bottom: 5px
-  right: 5px
-  border-radius 19px
-  padding: 5px 4px 4px 4px
-  width: 39px
-  background-color: #999999
-  background-color: rgba(0, 0, 0, 0.4)
-  color: white
-  opacity 0
-  z-index 1
-  text-align: center
-  &.visible
-    opacity 1
-  &.overlay-artwork-saved
-    background-color: highlight-color
-    opacity 1
+  position absolute
+  right 5px
+  bottom 5px
+
+// Extend this class and add content
+// to its before pseudo element to use
+.overlay-button
+  iconfont-styling()
+  display inline-block
+  width 40px
+  height @width
+  cursor pointer
+  color white
+  background-color dark-gray-text-color
+  background-color rgba(0, 0, 0, 0.4)
+  text-align center
+  font-size 16px
+  line-height @height
+  border-radius (@width / 2)
+  opacity 1
+  transition opacity 0.125s
   &:hover
-    background: black
-  &.overlay-artwork-clicked
-    background-color: highlight-color
-  &.overlay-artwork-saved
+    background-color black
+  &[data-state='saved']
+    opacity 1
+    background-color highlight-color
     &:hover
-      background-color: bad-red-color
-      &.overlay-artwork-clicked
-        background-color: highlight-color
-  .overlay-artwork-save
-    cursor: pointer
-    font-size: 29px
-    line-height: 29px
+      background-color bad-red-color
+      &:before
+        content '\e621'
+      &.is-clicked
+        background-color highlight-color
+
+.overlay-button-save
+  @extends .overlay-button
+  &:before
+    content '\e622'

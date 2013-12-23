@@ -75,7 +75,7 @@ exports.valueType = function valueType(val) {
         if (parts.length !== 3) {
             return undefined;
         }
-        if (parts.every(percentRegEx.test.bind()) || parts.every(integerRegEx.test.bind())) {
+        if (parts.every(percentRegEx.test.bind(percentRegEx)) || parts.every(integerRegEx.test.bind(integerRegEx))) {
             return exports.TYPES.COLOR;
         }
         return undefined;
@@ -86,8 +86,10 @@ exports.valueType = function valueType(val) {
         if (parts.length !== 4) {
             return undefined;
         }
-        if (parts.every(percentRegEx.test.bind()) || parts.every(integerRegEx.test.bind())) {
-            return exports.TYPES.COLOR;
+        if (parts.slice(0, 3).every(percentRegEx.test.bind(percentRegEx)) || parts.every(integerRegEx.test.bind(integerRegEx))) {
+            if (numberRegEx.test(parts[3])) {
+                return exports.TYPES.COLOR;
+            }
         }
         return undefined;
     }
@@ -298,9 +300,9 @@ exports.parseColor = function parseColor(val) {
             return undefined;
         }
         if (parts.every(percentRegEx.test.bind(percentRegEx))) {
-            red = parseFloat(parts[0].substr(0, -1));
-            green = parseFloat(parts[1].substr(0, -1));
-            blue = parseFloat(parts[2].substr(0, -1));
+            red = Math.floor(parseFloat(parts[0].slice(0, -1)) * 255 / 100);
+            green = Math.floor(parseFloat(parts[1].slice(0, -1)) * 255 / 100);
+            blue = Math.floor(parseFloat(parts[2].slice(0, -1)) * 255 / 100);
         } else if (parts.every(integerRegEx.test.bind(integerRegEx))) {
             red = parseInt(parts[0], 10);
             green = parseInt(parts[1], 10);
@@ -320,12 +322,12 @@ exports.parseColor = function parseColor(val) {
         if (parts.length !== 4) {
             return undefined;
         }
-        if (parts.every(percentRegEx.test.bind(percentRegEx))) {
-            red = parseFloat(parts[0].substr(0, -1));
-            green = parseFloat(parts[1].substr(0, -1));
-            blue = parseFloat(parts[2].substr(0, -1));
+        if (parts.slice(0, 3).every(percentRegEx.test.bind(percentRegEx))) {
+            red = Math.floor(parseFloat(parts[0].slice(0, -1)) * 255 / 100);
+            green = Math.floor(parseFloat(parts[1].slice(0, -1)) * 255 / 100);
+            blue = Math.floor(parseFloat(parts[2].slice(0, -1)) * 255 / 100);
             alpha = parseFloat(parts[3]);
-        } else if (parts.every(integerRegEx.test.bind(integerRegEx))) {
+        } else if (parts.slice(0, 3).every(integerRegEx.test.bind(integerRegEx))) {
             red = parseInt(parts[0], 10);
             green = parseInt(parts[1], 10);
             blue = parseInt(parts[2], 10);

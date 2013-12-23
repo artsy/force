@@ -1,3 +1,11 @@
+mixin paginateHead(current, total, urlBase)
+  - var urlBase = urlBase || '?'
+  if total && total !== 1
+    if (current !== 1)
+      link( rel='prev', href="#{urlBase}page=#{current - 1}" )
+    if (current !== total)
+      link( rel='next', href="#{urlBase}page=#{current + 1}" )
+
 mixin paginate(current, total, urlBase)
   - var urlBase = urlBase || '?'
   - var pagesInterval = 3

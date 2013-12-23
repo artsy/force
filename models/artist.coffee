@@ -1,14 +1,16 @@
-_ = require 'underscore'
-Backbone = require 'backbone'
-sd = require('sharify').data
-Artworks = require '../collections/artworks.coffee'
+_             = require 'underscore'
+Backbone      = require 'backbone'
+sd            = require('sharify').data
+Artworks      = require '../collections/artworks.coffee'
 markdownMixin = require './mixins/markdown.coffee'
+Image         = require './mixins/image.coffee'
+Post          = require './post.coffee'
 { smartTruncate } = require '../components/util/string.coffee'
-Post = require '../models/post.coffee'
 
 module.exports = class Artist extends Backbone.Model
 
   _.extend @prototype, markdownMixin
+  _.extend @prototype, Image
 
   urlRoot: -> "#{sd.ARTSY_URL}/api/v1/artist"
 
@@ -43,12 +45,6 @@ module.exports = class Artist extends Backbone.Model
         size: 15
         'artist[]': @get 'id'
     , options
-
-  hasImage: (version = 'large') ->
-    version in (@get('image_versions') || [])
-
-  imageUrl: (version = 'large') ->
-    @get('image_url').replace(':version', version)
 
   toPageTitle: ->
     "#{@htmlToText('name')} | Artsy"

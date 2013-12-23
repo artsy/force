@@ -2,6 +2,9 @@ extends ../../components/main_layout/templates/index
 include ../../components/pagination/paginator
 include ../artist/templates/header
 
+block head
+  +paginateHead(auctionLots.state.currentPage, auctionLots.state.totalPages, '?sort=' + auctionLots.sortBy + '&')
+
 block locals
   assetPackage = 'auction_lots'
 

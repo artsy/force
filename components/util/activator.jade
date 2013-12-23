@@ -1,1 +1,2 @@
-- function activeClass(path) { if (sd && sd.CURRENT_PATH) { return path === sd.CURRENT_PATH.split('?').shift() ? 'is-active' : 'is-inactive' } }
+- function isActive(path) { return path.replace(/\/$/, '') === sd.CURRENT_PATH.split('?').shift().replace(/\/$/, '') }
+- function activeClass(path) { if (sd && sd.CURRENT_PATH) { return isActive(path) ? 'is-active' : 'is-inactive' } }

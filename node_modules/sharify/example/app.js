@@ -5,18 +5,21 @@ var sharify = require('../');
 app.set('views', __dirname);
 app.set('view engine', 'jade');
 app.use(express.static(__dirname + '/public'));
+app.use(sharify);
 
-app.use(sharify({
-  NAME: 'Craig',
-  API_URL: 'http://artsy.net/api/v1',
-  PASSWORD: 'Super Secret!'
-}));
-app.use(function(req, res, next) {
-  res.locals.sd.USER_AGENT = req.headers['user-agent'];
-  next();
-});
+// Setup sharify's static data
+sharify.data = {
+  NAME: 'Sharify User',
+  ENV: process.env
+};
 
+// Require modules dependent on sharify data
+var sayHi = require('./shared-module').sayHi;
+
+// Bootstrap the User Agent into sharify, use the shared module on the server.
 app.get('*', function(req, res) {
+  res.locals.sharify.data.USER_AGENT = req.headers['user-agent'];
+  res.locals.sayHi = sayHi;
   res.render('index');
 });
 

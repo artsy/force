@@ -27,12 +27,10 @@ describe 'Image Mixin', ->
 
       describe 'ssl with an asset url', ->
         beforeEach ->
-          @model.set underSSL: true
           sd.IMAGES_URL_PREFIX = "http://stazic%d.artsy.net"
           sd.SECURE_IMAGES_URL = "https://ssl.artsy.net"
 
         afterEach ->
-          @model.set underSSL: false
           sd.IMAGES_URL_PREFIX = undefined
           sd.SECURE_IMAGES_URL = undefined
 
@@ -64,13 +62,10 @@ describe 'Image Mixin', ->
       describe 'ssl with an asset url', ->
 
         beforeEach ->
-          @model.set underSSL: true
-          sd.IS_SSL = true
           sd.IMAGES_URL_PREFIX = "http://stazic%d.artsy.net"
           sd.SECURE_IMAGES_URL = "https://ssl.artsy.net"
 
         afterEach ->
-          @model.set underSSL: false
           sd.IMAGES_URL_PREFIX = undefined
           sd.SECURE_IMAGES_URL = undefined
 
