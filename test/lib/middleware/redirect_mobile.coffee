@@ -18,3 +18,9 @@ describe 'Redirect mobile middleware', ->
     @req.get = -> 'Chome'
     redirectMobile @req, @res, ->
     @res.redirect.called.should.not.be.ok
+
+  it 'does not redirect desktop user agents', ->
+    @req.get = -> 'Mobile Android'
+    @res.query = stop_microgravity_redirect: true
+    redirectMobile @req, @res, ->
+    @res.redirect.called.should.not.be.ok

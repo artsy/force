@@ -11,7 +11,7 @@ module.exports = (req, res, next) ->
             (ua.match(/Windows Phone/i)) ||
             (ua.match(/BB10/i)) ||
             (ua.match(/BlackBerry/i))
-  if isPhone
+  if isPhone and not res.query?.stop_microgravity_redirect
     res.redirect MOBILE_URL + req.url
   else
     next()
