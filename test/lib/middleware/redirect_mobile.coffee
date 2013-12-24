@@ -19,7 +19,7 @@ describe 'Redirect mobile middleware', ->
     redirectMobile @req, @res, ->
     @res.redirect.called.should.not.be.ok
 
-  it 'does not redirect desktop user agents', ->
+  it 'respects stop_microgravity_redirect param', ->
     @req.get = -> 'Mobile Android'
     @res.query = stop_microgravity_redirect: true
     redirectMobile @req, @res, ->
