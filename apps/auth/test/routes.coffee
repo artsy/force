@@ -26,7 +26,7 @@ describe 'Auth routes', ->
     it 'logs out and redirects home', ->
       routes.logout @req, @res
       @req.logout.called.should.be.ok
-      @res.redirect.args[0][0].should.equal '/'
+      @res.redirect.args[0][0].should.include '/users/sign_out?redirect_uri=http://localhost:3004'
 
   describe '#redirectAfterLogin', ->
 

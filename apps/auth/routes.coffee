@@ -20,7 +20,8 @@ CurrentUser = require '../../models/current_user.coffee'
 
 @logout = (req, res) ->
   req.logout()
-  res.redirect req.get('Referrer') or '/'
+  res.redirect "#{SECURE_ARTSY_URL}/users/sign_out?" +
+               "redirect_uri=#{APP_URL + (parse(req.get('Referrer') or '').path or '')}"
 
 @redirectAfterLogin = (req, res) ->
   res.redirect req.body['redirect-to'] or req.get('Referrer') or '/'
