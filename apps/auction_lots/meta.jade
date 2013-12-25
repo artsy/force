@@ -1,0 +1,11 @@
+title= "Auction Results for " + artist.get('name')
+meta( property="og:title", content= "Auction Results for " + artist.get('name') )
+meta( name="description", content="Auction Results for " + artist.get('name') )
+meta( property="og:description", content="Auction Results for " + artist.get('name') )
+link( rel="canonical", href=(sd.ARTSY_URL + "/artist/" + artist.get('id') + "/auction-results") )
+meta( property="og:url", content=(sd.ARTSY_URL + "/artist/" + artist.get('id') + "/auction-results") )
+if artist.hasImage('large')
+  meta( property="twitter:card", content="summary_large_image" )
+  meta( property="og:image", content=(sd.ARTSY_URL + "/artist/" + artist.get('id') + ".jpg") )
+else
+  meta( property="twitter:card", content="summary" )
