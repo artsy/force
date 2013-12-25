@@ -1,15 +1,27 @@
 // Middleware that injects the shared data and sharify script
 module.exports = function(req, res, next) {
+  
+  // Clone the "constant" sharify data for the request so 
+  // request-level data isn't shared across the server potentially
+  // exposing sensitive data.
+  var data = {};
+  for(var key in module.exports.data) {
+    data[key] = module.exports.data[key];
+  };
+
+  // Inject a sharify object into locals for `= sharify.data` and `= sharify.script()`
   res.locals.sharify = {
-    data: module.exports.data,
+    data: data,
     script: function() {
       return '<script type="text/javascript">' +
-               'window.__sharifyData = ' + JSON.stringify(module.exports.data) + ';' +
+               'window.__sharifyData = ' + JSON.stringify(data) + ';' +
              '</script>';
     }
   };
+
   // Alias the sharify short-hand for convience
   res.locals.sd = res.locals.sharify.data;
+
   next();
 };
 

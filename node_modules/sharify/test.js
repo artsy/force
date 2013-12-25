@@ -23,6 +23,28 @@ describe('sharify', function() {
       var sd = require('./').data;
       sd.foo.should.equal('bar');
     });
+
+    it('does not persist res.locals', function() {
+      var locals = {};
+      sharify.data.foo = 'bar';
+      sharify({}, { locals: locals }, function(){});
+      locals.sd.location = "NY";
+      locals.sharify.script().should.include('window.__sharifyData = {"foo":"bar","location":"NY"};');
+
+      locals = {};
+      sharify({}, { locals: locals }, function(){});
+      locals.sharify.script().should.include('window.__sharifyData = {"foo":"bar"};');
+    });
+
+    it('does not inject locals data into the constant data', function() {
+      var locals = {};
+      sharify.data.foo = 'baz';
+      sharify({}, { locals: locals }, function(){});
+      locals.sharify.data.foo = 'bar';
+      locals.sd.foo = 'bar';
+      sharify.data.foo.should.equal('baz');
+      locals.sd.foo.should.equal('bar');
+    });
   });
 
   describe('on the client', function() {
