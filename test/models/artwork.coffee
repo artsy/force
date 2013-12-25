@@ -75,7 +75,7 @@ describe 'Artwork', ->
   describe '#toAltText', ->
 
     it "Includes title, date and artist name", ->
-      @artwork.toAltText().should.equal "Skull, 1999, Andy Warhol"
+      @artwork.toAltText().should.equal "Skull, 1999, by Andy Warhol"
 
     it "Works without title, date and artist name", ->
       @artwork.set

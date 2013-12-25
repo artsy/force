@@ -52,5 +52,5 @@ module.exports = class Artwork extends Backbone.Model
     _.compact([
       @get('title'),
       @get('date'),
-      @get('artist')?.name
+      (if @get('artist')?.name then "by #{@get('artist')?.name}" else undefined)
     ]).join(", ")
