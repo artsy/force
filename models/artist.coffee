@@ -47,7 +47,7 @@ module.exports = class Artist extends Backbone.Model
     , options
 
   toPageTitle: ->
-    "#{@htmlToText('name')} | Artsy"
+    "#{@htmlToText('name')} | Artist Bio and Art for Sale | Artsy"
 
   toPageDescription: (length=200) ->
     # artists are usually displayed: Name (Nationality, Born-Died)
@@ -59,4 +59,3 @@ module.exports = class Artist extends Backbone.Model
 
   isFollowed: (followArtistCollection) ->
     followArtistCollection && followArtistCollection.isFollowed(@)
-

@@ -47,3 +47,10 @@ module.exports = class Artwork extends Backbone.Model
     if linkType == "external" then "_blank" else "_self"
 
   artistLink: -> "/artist/#{@get('artist').id}"
+
+  toAltText: ->
+    _.compact([
+      @get('title'),
+      @get('date'),
+      @get('artist')?.name
+    ]).join(", ")
