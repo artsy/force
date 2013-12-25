@@ -70,6 +70,7 @@ module.exports = (app) ->
   app.use express.cookieSession
     secret: SESSION_SECRET
     cookie: { domain: COOKIE_DOMAIN }
+    key   : 'force.sess'
   app.use express.bodyParser()
   app.use artsyPassport _.extend config,
     CurrentUser: CurrentUser
