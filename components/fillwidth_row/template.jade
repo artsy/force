@@ -5,7 +5,7 @@ ul.fillwidth-list
         .img-inner
           include overlay_controls
           a( href="/artwork/#{artwork.get('id')}" )
-            img( src=artwork.defaultImageUrl(), nopin="nopin" )
+            img( src=artwork.defaultImageUrl(), nopin="nopin", alt=artwork.toAltText() )
       .fillwidth-details-container
         a.faux-underline-hover.artist-name( href=artwork.artistLink() )= artwork.get('artist').name
         p!= artwork.titleAndYear()
