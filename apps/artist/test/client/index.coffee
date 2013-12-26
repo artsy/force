@@ -117,12 +117,16 @@ describe 'ArtistView', ->
 
   describe "#setupAuctionResults", ->
 
+    beforeEach ->
+      fixture = "<div class='artist-sections'>Auction</div>"
+      @view.$el.html fixture
+
+    it "keeps artist sections if auction results", ->
+      @view.setupAuctionResults()
+      _.last(Backbone.sync.args)[2].success new AuctionLots([fabricate 'auction_result', { state: { totalRecords: 10 } } ])
+      @view.$el.html().should.include 'Auction'
+
     it "hides artist sections if no auction results", ->
       @view.setupAuctionResults()
       _.last(Backbone.sync.args)[2].success()
       @view.$el.html().should.not.include 'Auction'
-
-    it "keeps artist sections if auction results", ->
-      @view.setupAuctionResults()
-      _.last(Backbone.sync.args)[2].success new AuctionLots(_.times(10, (-> fabricate 'auction_result')), { state: { totalRecords: 10 }})
-      @view.$el.html().should.include 'Auction'
