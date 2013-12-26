@@ -1,4 +1,5 @@
-Image = require './mixins/image.coffee'
+_        = require 'underscore'
+Image    = require './mixins/image.coffee'
 Backbone = require 'backbone'
 
 module.exports = class AuctionLot extends Backbone.Model
