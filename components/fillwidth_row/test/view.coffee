@@ -28,7 +28,8 @@ describe 'FillwidthView', ->
     sinon.stub Backbone, 'sync'
     col = new Artworks [fabricate 'artwork']
     col.url = 'foo/bar'
-    @view = new FillwidthView { el: $('body'), collection: col }
+    @removed = false
+    @view = new FillwidthView { el: $('body'), collection: col, empty: (=> @removed = true ) }
     done()
 
   afterEach ->
@@ -49,3 +50,10 @@ describe 'FillwidthView', ->
       _.last(Backbone.sync.args)[1].url.should.include 'foo/bar'
       _.last(Backbone.sync.args)[2].data.page.should.equal 0
       @view.page.should.equal 1
+
+  describe '#empty', ->
+
+    it 'runs empty if the collection has no items in it', ->
+      @view.collection = new Artworks()
+      @view.render()
+      @removed.should.equal true

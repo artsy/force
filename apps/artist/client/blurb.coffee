@@ -9,7 +9,7 @@ module.exports = class BlurbView extends Backbone.View
     $(window).on 'resize', => @attachEllipsis() if @updateOnResize
 
   attachEllipsis: ->
-    return unless @$el.length > 0 
+    return unless @$el.length > 0
     return if @seeMoreClicked
     seeMoreSpan =  $('<span class="see-more-blurb">... <a href="#">Show more</a></span>')
     # The six-pixel wiggle room below is dirty, but works. Things like q's or
