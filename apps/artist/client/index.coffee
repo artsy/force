@@ -12,6 +12,7 @@ CurrentUser             = require '../../../models/current_user.coffee'
 FollowArtistCollection  = require '../../../models/follow_artist_collection.coffee'
 FollowButton            = require './follow_button.coffee'
 ShareView               = require '../../../components/share/view.coffee'
+AuctionLots             = require '../../../collections/auction_lots.coffee'
 
 module.exports.ArtistView = class ArtistView extends Backbone.View
 
@@ -24,6 +25,15 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     @setupRelatedPosts()
     @setupRelatedGenes()
     @setupShareButtons()
+    @setupAuctionResults()
+
+  setupAuctionResults: ->
+    new AuctionLots([],
+      id : @model.get('id')
+    ).fetch
+      success: (response) =>
+        unless response.length > 0
+          @$('.artist-sections').remove()
 
   setupShareButtons: ->
     new ShareView el: @$('.artist-share')
