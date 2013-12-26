@@ -59,19 +59,26 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     @availableArtworks.url = @model.url() + '/artworks'
     @institutionArtworks = new Artworks
     @institutionArtworks.url = @model.url() + '/artworks'
+
+    $availableWorks = @$('#artist-available-works')
+    $institutionalWorks = @$('#artist-institution-works')
+
     new FillwidthView(
       artworkCollection: @artworkCollection
       fetchOptions: { 'filter[]': 'for_sale' }
       collection: @availableArtworks
       seeMore: true
-      el: @$ '#artist-available-works'
+      empty: (-> @$el.parent().remove() )
+      el: $availableWorks
     ).nextPage(false, 10)
+
     new FillwidthView(
       artworkCollection: @artworkCollection
       fetchOptions: { 'filter[]': 'not_for_sale' }
       collection: @institutionArtworks
       seeMore: true
-      el: @$('#artist-institution-works')
+      empty: (-> @$el.parent().remove() )
+      el: $institutionalWorks
     ).nextPage(false, 10)
 
   setupRelatedPosts: ->
@@ -92,7 +99,10 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     @nextRelatedArtistsPage 'Contemporary'
 
   renderRelatedArtists: (type) =>
-    @$("#artist-related-#{type.toLowerCase()}").html(
+    $artistContainer = @$("#artist-related-#{type.toLowerCase()}")
+    return $artistContainer.parent().remove() unless @model["related#{type}"]?.models.length > 0
+
+    $artistContainer.html(
       relatedArtistsTemplate artists: @model["related#{type}"].models
     )
     @model["related#{type}"].each (artist, i) =>

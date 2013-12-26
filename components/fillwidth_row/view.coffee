@@ -7,7 +7,7 @@ sd           = require('sharify').data
 module.exports = class FillwidthView extends Backbone.View
 
   initialize: (options) ->
-    { @seeMore, @fetchOptions, @artworkCollection } = options
+    { @seeMore, @fetchOptions, @artworkCollection, @empty } = options
     @page = 1
     @fetched = 0
     @listenTo @collection, 'request', @renderSpinner
@@ -18,6 +18,7 @@ module.exports = class FillwidthView extends Backbone.View
     @$('.fillwidth-see-more').attr 'data-state', 'loading'
 
   render: =>
+    return @empty?() if @collection.length < 1
     @$el.html template artworks: @collection.models, seeMore: @seeMore
     maxHeight = parseInt(@$('img').first().css('max-height')) or 260
     @$('li').css 'min-height': maxHeight + 90
