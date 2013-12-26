@@ -2,6 +2,7 @@ rewire        = require 'rewire'
 benv          = require 'benv'
 Backbone      = require 'backbone'
 sinon         = require 'sinon'
+AuctionLots   = require '../../../../collections/auction_lots'
 Artist        = require '../../../../models/artist'
 _             = require 'underscore'
 { resolve }   = require 'path'
@@ -113,3 +114,19 @@ describe 'ArtistView', ->
       @view.renderRelatedArtist new Artist(fabricate 'artist', name: 'Andy Foobar'), 0, 'Artists'
       _.last(Backbone.sync.args)[2].success [fabricate 'artwork', title: 'Andy Foobar Skull']
       _.last(@FillwidthView.args)[0].collection.first().get('title').should.equal 'Andy Foobar Skull'
+
+  describe "#setupAuctionResults", ->
+
+    beforeEach ->
+      fixture = "<div class='artist-sections'>Auction</div>"
+      @view.$el.html fixture
+
+    it "keeps artist sections if auction results", ->
+      @view.setupAuctionResults()
+      _.last(Backbone.sync.args)[2].success new AuctionLots([fabricate 'auction_result', { state: { totalRecords: 10 } } ])
+      @view.$el.html().should.include 'Auction'
+
+    it "hides artist sections if no auction results", ->
+      @view.setupAuctionResults()
+      _.last(Backbone.sync.args)[2].success()
+      @view.$el.html().should.not.include 'Auction'

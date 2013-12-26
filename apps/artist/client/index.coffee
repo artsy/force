@@ -29,7 +29,7 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
 
   setupAuctionResults: ->
     new AuctionLots([],
-      id : @model.get('id')
+      id: @model.get('id')
     ).fetch
       success: (response) =>
         unless response.length > 0

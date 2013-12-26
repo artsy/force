@@ -51,9 +51,9 @@ block body
               .auction-lot-title-container
                 - if (lot.get('image_url') != '/assets/shared/missing_image.png')
                   a.auction-lot-image-zoom(
-                    href=lot.get('image_url').replace(/thumbnail/, 'original')
+                    href=lot.imageUrl('original')
                   )
-                    img.auction-lot-image( src!= lot.get('image_url'), alt= lot.get('title') )
+                    img.auction-lot-image( src!= lot.imageUrl('thumbnail'), alt= lot.get('title') )
                 - else
                   .auction-lot-image-placeholder
                 .auction-lot-title
