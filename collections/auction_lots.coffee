@@ -20,4 +20,5 @@ module.exports = class AuctionLots extends PageableCollection
     super
 
   parseState: (resp, queryParams, state, options) ->
-    { totalRecords: parseInt(options.res.headers['x-total-count']) }
+    if options.res
+      { totalRecords: parseInt(options.res.headers['x-total-count']) }
