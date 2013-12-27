@@ -9,18 +9,18 @@ AuctionLots     = require '../../../collections/auction_lots'
 User            = require '../../../models/user'
 
 render = (templateName) ->
-  filename = path.resolve __dirname, "../#{templateName}.jade"
+  filename = path.resolve __dirname, "../templates/#{templateName}.jade"
   jade.compile(
     fs.readFileSync(filename),
     { filename: filename }
   )
 
-describe 'Auction lots template', ->
+describe 'Artist auction lots template', ->
   describe 'Sparse results', ->
     beforeEach ->
       @artist       = new Artist fabricate 'artist'
       @auctionLots  = new AuctionLots(_.times(10, (-> fabricate 'auction_result')), { state: { totalRecords: 10 }})
-      @template     = render('template')(
+      @template     = render('artist')(
         sd: {}
         artist: @artist
         auctionLots: @auctionLots
@@ -40,7 +40,7 @@ describe 'Auction lots template', ->
     beforeEach ->
       @artist       = new Artist fabricate 'artist'
       @auctionLots  = new AuctionLots(_.times(26, (-> fabricate 'auction_result')), { state: { totalRecords: 26 }})
-      @template     = render('template')(
+      @template     = render('artist')(
         sd: {}
         artist: @artist
         auctionLots: @auctionLots
@@ -56,7 +56,7 @@ describe 'Auction lots template', ->
     beforeEach ->
       @artist       = new Artist fabricate 'artist'
       @auctionLots  = new AuctionLots([fabricate 'auction_result'], { state: { totalRecords: 1 }})
-      @template     = render('template')(
+      @template     = render('artist')(
         sd: {}
         artist: @artist
         auctionLots: @auctionLots
@@ -73,7 +73,7 @@ describe 'Auction lots template', ->
       @artist       = new Artist fabricate 'artist'
       @auctionLots  = new AuctionLots([fabricate 'auction_result'], { state: { totalRecords: 1 }})
       @user         = new User fabricate 'user'
-      @template     = render('template')(
+      @template     = render('artist')(
         sd: {}
         artist: @artist
         auctionLots: @auctionLots

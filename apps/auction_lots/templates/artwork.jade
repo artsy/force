@@ -1,0 +1,58 @@
+extends ../../../components/main_layout/templates/index
+
+block locals
+  assetPackage = 'auction_lots'
+
+block body
+  #auction-results-page.main-layout-container
+    header.artist-header
+      h1.avant-garde-header-center
+        | Auction Results for
+        a( href="/artist/#{artwork.get('artist').id}")  #{artwork.get('artist').name},&nbsp;
+        a( href="/artwork/#{artwork.id}" ) #{artwork.get('title')}&nbsp;
+        | (#{artwork.get('date')})
+
+    .auction-lots-table-header
+      .auction-lots-total
+        em Work on Artsy
+
+    table.auction-lots-table
+      thead
+        tr
+          th Title
+          th Year
+          th Medium
+          th Size
+          if artwork.get('price')
+            th Price
+      tbody
+        tr.auction-lot
+          td
+            .auction-lot-title-container
+              a( href="/artwork/#{artwork.id}" )
+                img.auction-lot-image( src!= artwork.defaultImageUrl(), alt= artwork.get('title') )
+              .auction-lot-title
+                a( href="/artwork/#{artwork.id}" )
+                  em= artwork.get('title')
+                a.auction-lot-details-link(
+                  href="/artwork/#{artwork.id}"
+                ) Go to work
+          td= artwork.get('date')
+          td.auction-lot-medium= artwork.get('medium')
+          td
+            = artwork.get('dimensions').in
+            br
+            = artwork.get('dimensions').cm
+          if artwork.get('price')
+            td= artwork.get('price')
+
+    .auction-lots-table-header
+      .auction-lots-total
+        em Comparable auction results
+      .auction-lots-sort
+        span Order:
+        .bordered-pulldown.is-disabled
+          .bordered-pulldown-toggle
+            | Most similar
+
+    include ./auction_lots_table
