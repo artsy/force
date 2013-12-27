@@ -6,6 +6,7 @@ AuctionLots   = require '../../collections/auction_lots'
   artist        = null
   auctionLots   = null
   currentPage   = parseInt req.query.page || 1
+  sort          = req.query.sort
 
   render = _.after 2, ->
     res.render 'template',
@@ -19,7 +20,7 @@ AuctionLots   = require '../../collections/auction_lots'
 
   new AuctionLots([],
     id    : req.params.id
-    sortBy: req.query.sort
+    sortBy: sort
     state : { currentPage: currentPage }
   ).fetch
     cache  : true
