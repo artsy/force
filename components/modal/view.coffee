@@ -20,6 +20,8 @@ module.exports = class ModalView extends Backbone.View
   initialize: (options={}) ->
     { @width } = _.defaults options, { width: '400px' }
 
+    @templateData ||= {}
+
     @resize = _.debounce @updatePosition, 100
 
     $(window).on 'keyup', @escape
@@ -48,7 +50,7 @@ module.exports = class ModalView extends Backbone.View
   # then fade back in and re-center
   reRender: ->
     Transition.fade @$body,
-      out:  => @$body.html @template()
+      out:  => @$body.html @template(@templateData)
       in:   => @updatePosition()
 
   setWidth: (width) ->
@@ -60,7 +62,7 @@ module.exports = class ModalView extends Backbone.View
 
     # Render inner
     @$body = @$('.modal-body')
-    @$body.html @template()
+    @$body.html @template(@templateData)
     @$dialog = @$('.modal-dialog')
     @setWidth()
 
