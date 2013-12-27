@@ -31,7 +31,7 @@ mixin artist-header(artist, title)
         +artist-tab-nav
         if onOverview()
           p
-            | There are no Marcos Piffer works on Artsy yet.
+            | There are no #{artist.get('name')} works on Artsy yet.
             br
             | Follow the artist to get alerts when works are added.
           button#artist-follow-button.avant-garde-button-white Follow
