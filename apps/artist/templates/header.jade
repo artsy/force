@@ -1,8 +1,19 @@
 include ../../../components/share/template
 include ../../../components/util/activator
 
+mixin artist-tab-nav
+  nav.artist-sections.garamond-tablist
+    a.garamond-tab(
+      href="/artist/#{artist.id}", class=activeClass('/artist/' + artist.id)
+    ) Overview
+    span.garamond-tab-separator
+    a.garamond-tab(
+      href="/artist/#{artist.id}/auction-results", class=activeClass('/artist/' + artist.id + '/auction-results')
+    ) Auction&nbsp;Results
+
 mixin artist-header(artist, title)
   - var title = title || ''
+  - function onOverview() { return (sd.CURRENT_PATH === '/artist/' + artist.id); }
 
   header.artist-header
     h1.avant-garde-header-center
@@ -15,26 +26,29 @@ mixin artist-header(artist, title)
     if (artist.get('nationality') && artist.get('years'))
       h2 #{artist.get('nationality')}, #{artist.get('years')}
 
-    .artist-header-actions
-      .aha-cell
-        .artist-follow-container
-          if (sd.CURRENT_PATH === '/artist/' + artist.id)
-            .afc-button
-              button#artist-follow-button.avant-garde-button-white Follow
-            .afc-aside
-              span
-                | Get updates about
-                br
-                | new shows and works
-      .aha-cell
-        nav.artist-sections.garamond-tablist
-          a.garamond-tab(
-            href="/artist/#{artist.id}", class=activeClass('/artist/' + artist.id)
-          ) Overview
-          span.garamond-tab-separator
-          a.garamond-tab(
-            href="/artist/#{artist.id}/auction-results", class=activeClass('/artist/' + artist.id + '/auction-results')
-          ) Auction&nbsp;Results
-      .aha-cell
-        nav.artist-share
-          +share(title + artist.get('name') + ' on Artsy', artist.imageUrl('large'))
+    if artist.get('published_artworks_count') === 0
+      .artist-header-empty
+        +artist-tab-nav
+        if onOverview()
+          p
+            | There are no #{artist.get('name')} works on Artsy yet.
+            br
+            | Follow the artist to get alerts when works are added.
+          button#artist-follow-button.avant-garde-button-white Follow
+    else
+      .artist-header-actions
+        .aha-cell
+          .artist-follow-container
+            if onOverview()
+              .afc-button
+                button#artist-follow-button.avant-garde-button-white Follow
+              .afc-aside
+                span
+                  | Get updates about
+                  br
+                  | new shows and works
+        .aha-cell
+          +artist-tab-nav
+        .aha-cell
+          nav.artist-share
+            +share(title + artist.get('name') + ' on Artsy', artist.imageUrl('large'))
