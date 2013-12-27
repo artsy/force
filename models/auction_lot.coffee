@@ -14,4 +14,4 @@ module.exports = class AuctionLot extends Backbone.Model
     string.replace /\ -\ /, '&nbsp;&ndash;<br>'
 
   imageUrl: (version) ->
-    @fullyQualifiedImageUrl(@get('image_url')).replace ':version', version
+    @fullyQualifiedImageUrl(@get('image_url')).replace 'thumbnail', version
