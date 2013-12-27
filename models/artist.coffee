@@ -47,7 +47,7 @@ module.exports = class Artist extends Backbone.Model
     , options
 
   toPageTitle: ->
-    "#{@htmlToText('name')} | Artist Bio and Art for Sale | Artsy"
+    "#{if @get('name') then @htmlToText('name') else 'Unnamed Artist'} | Artist Bio and Art for Sale | Artsy"
 
   toPageDescription: (length=200) ->
     # artists are usually displayed: Name (Nationality, Born-Died)
