@@ -28,9 +28,9 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     @setupAuctionResults()
 
   setupAuctionResults: ->
-    new AuctionLots([],
-      id: @model.get('id')
-    ).fetch
+    auctionLots = new AuctionLots([], id: @model.get('id') )
+    auctionLots.state.pageSize = 1
+    auctionLots.fetch
       success: (response) =>
         unless response.length > 0
           @$('.artist-sections').remove()
