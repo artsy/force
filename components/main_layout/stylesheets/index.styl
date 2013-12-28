@@ -56,6 +56,7 @@ img
 input
   garamond()
   font-size default-font-size
+  -webkit-appearance: none
   &:focus
     outline none
 button, input
@@ -74,9 +75,11 @@ html.wf-loading
 
 #main-layout-container
   margin: content-margin-top 55px auto
+  // To stick footer at the bottom of the page
   min-height: 100%
   height: auto !important
   height: 100%
+  // Footer height + top margin
   margin-bottom: -106px
 
 #main-layout-footer, .main-layout-footer-push
