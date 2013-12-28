@@ -17,6 +17,7 @@ AuctionLots             = require '../../../collections/auction_lots.coffee'
 module.exports.ArtistView = class ArtistView extends Backbone.View
 
   initialize: (options) ->
+    @setupAuctionResults()
     @setupCurrentUser()
     @setupFollowButton()
     @setupArtworks()
@@ -25,7 +26,6 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     @setupRelatedPosts()
     @setupRelatedGenes()
     @setupShareButtons()
-    @setupAuctionResults()
 
   setupAuctionResults: ->
     auctionLots = new AuctionLots([], id: @model.get('id') )
