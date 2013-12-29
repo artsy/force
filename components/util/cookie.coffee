@@ -11,16 +11,16 @@ module.exports =
       expires = "; expires="+date.toGMTString()
     else
       expires = ""
-    document.cookie = name + "=" + value + expires + "; path=/"
+    document.cookie = "#{name}=#{value + expires}; path=/"
 
   readCookie: (name) ->
-    nameEQ = name + "="
-    ca = document.cookie.split(';')
+    nameEQ = "#{name}="
+    ca = document.cookie.split ';'
     for c in ca
-      while (c.charAt(0)==' ')
-        c = c.substring(1, c.length)
+      while (c.charAt(0) == ' ')
+        c = c.substring 1, c.length
       if (c.indexOf(nameEQ) == 0) then result = c.substring(nameEQ.length, c.length)
     result
 
   deleteCookie: (name) ->
-    App.createCookie(name,"",-1);
+    @createCookie name, "", -1
