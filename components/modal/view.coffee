@@ -1,8 +1,9 @@
-_               = require 'underscore'
-Backbone        = require 'backbone'
-mediator        = require '../../lib/mediator.coffee'
-modalTemplate   = -> require('./modal.jade') arguments...
-Transition      = require '../mixins/transition.coffee'
+_                 = require 'underscore'
+Backbone          = require 'backbone'
+mediator          = require '../../lib/mediator.coffee'
+modalTemplate     = -> require('./modal.jade') arguments...
+Transition        = require '../mixins/transition.coffee'
+{ isTouchDevice } = require '../../components/util/device.coffee'
 
 module.exports = class ModalView extends Backbone.View
   id: 'modal'
@@ -62,6 +63,10 @@ module.exports = class ModalView extends Backbone.View
     @$body.html @template()
     @$dialog = @$('.modal-dialog')
     @setWidth()
+
+    # Add autofocus on non-touch devices
+    unless isTouchDevice()
+      @$el.find("input[type='email']:first").attr autofocus: true
 
     # Display
     $(@container).html @$el
