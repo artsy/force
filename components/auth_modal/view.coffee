@@ -39,7 +39,7 @@ module.exports = class AuthModalView extends ModalView
 
   events: -> _.extend super,
     'click .auth-toggle': 'toggleMode'
-    'submit form': 'submit'
+    'submit form'       : 'submit'
     'click #auth-submit': 'submit'
 
   initialize: (options) ->
