@@ -2,6 +2,9 @@ Backbone        = require 'backbone'
 SearchBarView   = require './search_bar/view.coffee'
 AuthModalView   = require '../../auth_modal/view.coffee'
 mediator        = require '../../../lib/mediator.coffee'
+sd              = require('sharify').data
+{ isTouchDevice } = require '../../util/device.coffee'
+{ readCookie, createCookie } = require '../../util/cookie.coffee'
 
 module.exports = class HeaderView extends Backbone.View
 
@@ -12,20 +15,25 @@ module.exports = class HeaderView extends Backbone.View
       el:       @$('#main-layout-search-bar-container')
       $input:   @$('#main-layout-search-bar-input')
 
-    @$window.on 'scroll.welcome-header', @hideWelcomeHeader
+    @$window.on 'scroll.welcome-header', @checkRemoveWelcomeHeader
     mediator.on 'open:auth', @openAuth, this
+    @checkRemoveWelcomeHeader()
+
+  checkRemoveWelcomeHeader: =>
+    if sd.CURRENT_USER or readCookie('hide-force-header') or @$window.scrollTop() > @$welcomeHeader.height()
+      @removeWelcomeHeader()
 
   openAuth: (options) ->
     @modal = new AuthModalView(mode: options.mode, width: '500px')
 
-  hideWelcomeHeader: =>
-    return if @$window.scrollTop() < @$welcomeHeader.height()
-
-    @$welcomeHeader.hide()
-    @$body.addClass('body-header-fixed')
+  removeWelcomeHeader: ->
+    @$welcomeHeader.remove()
+    @$body.addClass 'body-header-fixed'
     @$window.off '.welcome-header'
+    unless isTouchDevice()
+      @$window.scrollTop(0)
 
-    @$window.scrollTop(0)
+    createCookie 'hide-force-header', true, 365
 
   events:
     'click .mlh-login': 'login'
