@@ -3,7 +3,7 @@ include ../../../components/pagination/paginator
 include ../../artist/templates/header
 
 block head
-  include meta
+  include artist-meta
   +paginateHead(auctionLots.state.currentPage, auctionLots.state.totalPages, '?sort=' + auctionLots.sortBy + '&')
 
 block locals
