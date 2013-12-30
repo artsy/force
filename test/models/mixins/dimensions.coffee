@@ -29,19 +29,15 @@ describe 'Dimensions Mixin', ->
 
   describe '#fractionToDecimal', ->
     it 'converts fraction strings to decimals', ->
-      @model.set 'dimensions', { cm: '35 4/5 × 1/2 cm' }
-      @model.expressAsMetric(@model.get('dimensions').cm).should.equal '35.8 × 0.5 cm'
-      @model.set 'dimensions', { cm: '35 8/5 × 10 1/2 cm' }
-      @model.expressAsMetric(@model.get('dimensions').cm).should.equal '36.6 × 10.5 cm'
-      @model.set 'dimensions', { cm: '10 1/2 cm' }
-      @model.expressAsMetric(@model.get('dimensions').cm).should.equal '10.5 cm'
-      @model.set 'dimensions', { cm: '1/2 cm' }
-      @model.expressAsMetric(@model.get('dimensions').cm).should.equal '0.5 cm'
-      @model.set 'dimensions', { cm: '10 × 10 cm' }
-      @model.expressAsMetric(@model.get('dimensions').cm).should.equal '10 × 10 cm'
-      @model.set 'dimensions', { cm: '10.5 × 10.25 cm' }
-      @model.expressAsMetric(@model.get('dimensions').cm).should.equal '10.5 × 10.25 cm'
-      @model.set 'dimensions', { cm: 'foobar' }
-      @model.expressAsMetric(@model.get('dimensions').cm).should.equal 'foobar'
-      @model.set 'dimensions', { cm: '20 1/10 × 20 1/10 × 1 1/2 cm' }
-      @model.expressAsMetric(@model.get('dimensions').cm).should.equal '20.1 × 20.1 × 1.5 cm'
+      @model.expressAsMetric('35 4/5 × 1/2 cm').should.equal '35.8 × 0.5 cm'
+      @model.expressAsMetric('35 8/5 × 10 1/2 cm').should.equal '36.6 × 10.5 cm'
+      @model.expressAsMetric('10 1/2 cm').should.equal '10.5 cm'
+      @model.expressAsMetric('1/2 cm').should.equal '0.5 cm'
+      @model.expressAsMetric('10 × 10 cm').should.equal '10 × 10 cm'
+      @model.expressAsMetric('10.5 × 10.25 cm').should.equal '10.5 × 10.25 cm'
+      @model.expressAsMetric('foobar').should.equal 'foobar'
+      @model.expressAsMetric('20 1/10 × 20 1/10 × 1 1/2 cm').should.equal '20.1 × 20.1 × 1.5 cm'
+      @model.expressAsMetric('10 1/0').should.equal '10 1/0'
+      @model.expressAsMetric('10 1/').should.equal '10 1/'
+      @model.expressAsMetric('10 0/').should.equal '10 0/'
+      @model.expressAsMetric('10 1/ 1/').should.equal '10 1/ 1/'
