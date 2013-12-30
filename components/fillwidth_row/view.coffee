@@ -64,7 +64,7 @@ module.exports = class FillwidthView extends Backbone.View
   events:
     'click .fillwidth-see-more': 'nextPage'
 
-  nextPage: (evt, size=20) ->
+  nextPage: (evt, size=10) ->
     @fetched += size
     @collection.fetch
       remove: false
