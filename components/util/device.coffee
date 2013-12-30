@@ -6,4 +6,4 @@ module.exports =
 
   # http://stackoverflow.com/questions/4817029/whats-the-best-way-to-detect-a-touch-screen-device-using-javascript
   isTouchDevice: ->
-    'ontouchstart' in window or 'onmsgesturechange' in window
+    'ontouchstart' of window or 'onmsgesturechange' of window
