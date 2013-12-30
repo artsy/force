@@ -41,3 +41,4 @@ describe 'Dimensions Mixin', ->
       @model.expressAsMetric('10 1/').should.equal '10 1/'
       @model.expressAsMetric('10 0/').should.equal '10 0/'
       @model.expressAsMetric('10 1/ 1/').should.equal '10 1/ 1/'
+      @model.expressAsMetric('10 1/3').should.equal '10.33'

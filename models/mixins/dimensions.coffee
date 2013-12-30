@@ -12,7 +12,7 @@ module.exports =
     decimal   = parseInt(split[0], 10) / parseInt(split[1], 10)
     if decimal is Infinity
       throw new Error('Division by zero')
-    decimal
+    decimal.toFixed(2)
 
   expressAsMetric: (string) ->
     string?.replace /((\d+)(?:\s+)(\d+\/\d+)|(\d+\/\d+))/g, (match) =>
