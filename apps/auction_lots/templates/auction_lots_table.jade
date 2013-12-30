@@ -30,9 +30,9 @@ table.auction-lots-table
         td= lot.get('dates_text')
         td.auction-lot-medium= lot.get('medium_text')
         td
-          = lot.get('dimensions').in
+          != lot.superscriptFractions(lot.get('dimensions').in)
           br
-          = lot.get('dimensions').cm
+          != lot.expressAsMetric(lot.get('dimensions').cm)
         td.auction-lot-organization= lot.get('organization')
         td= lot.get('auction_dates_text')
         td!= lot.get('estimate_text')

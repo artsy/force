@@ -27,7 +27,7 @@ describe 'Artist auction lots template', ->
       )
 
     it 'Displays the <h1>', ->
-      @template.should.include "Auction results for #{@artist.get('name')}"
+      @template.should.include @artist.get('name')
 
     it 'Shows only the number of results and not the number of pages', ->
       @template.should.include '10 Results'
