@@ -57,5 +57,11 @@ module.exports = class Artist extends Backbone.Model
      (if @get('blurb')?.length > 0 then @mdToHtmlToText('blurb') else undefined)
     ]).join(". "), length)
 
+  toAuctionResultsPageTitle: ->
+    "Auction Results for #{if @get('name') then @htmlToText('name') else 'Unnamed Artist'} | Artsy"
+
+  toAuctionResultsPageDescription: ->
+    "Auction Results for #{if @get('name') then @htmlToText('name') else 'Unnamed Artist'} | Artsy"
+
   isFollowed: (followArtistCollection) ->
     followArtistCollection && followArtistCollection.isFollowed(@)

@@ -83,3 +83,58 @@ describe 'Artwork', ->
         date: undefined
         title: undefined
       @artwork.toAltText().should.equal ""
+
+  describe "#toPageTitle", ->
+
+    it "renders correctly", ->
+      new Artwork(title: "", forsale: false).toPageTitle().should.equal "Artsy"
+      new Artwork(title: "title", forsale: false).toPageTitle().should.equal "title | Artsy"
+      new Artwork(title: "title", forsale: true).toPageTitle().should.equal "title, Available for Sale | Artsy"
+      new Artwork(title: "title", forsale: false, artist: { name: "first last" }).toPageTitle().should.equal "first last | title | Artsy"
+      new Artwork(title: "title", forsale: false, artist: { name: "first middle last" }).toPageTitle().should.equal "first middle last | title | Artsy"
+      new Artwork(title: "", forsale: false, artist: { name: "last" }).toPageTitle().should.equal "last | Artsy"
+      new Artwork(title: "title", forsale: false, date: "2010" ).toPageTitle().should.equal "title (2010) | Artsy"
+      new Artwork(title: "title", forsale: false, date: "2010", artist: { name: "last" }).toPageTitle().should.equal "last | title (2010) | Artsy"
+      new Artwork(title: "title", forsale: false, date: "2010-2011", artist: { name: "first last" }).toPageTitle().should.equal "first last | title (2010-2011) | Artsy"
+      new Artwork(title: "title", forsale: false, date: "2010, 2011, 2012", artist: { name: "first last" }).toPageTitle().should.equal "first last | title (2010, 2011, 2012) | Artsy"
+
+  describe "#toAuctionResultsPageTitle", ->
+
+    it "renders correctly", ->
+      new Artwork(title: "").toAuctionResultsPageTitle().should.equal "Related Auction Results | Artsy"
+      new Artwork(title: "title").toAuctionResultsPageTitle().should.equal "title | Related Auction Results | Artsy"
+      new Artwork(title: "title", artist: { name: "first last" }).toAuctionResultsPageTitle().should.equal "first last, title | Related Auction Results | Artsy"
+      new Artwork(title: "title", artist: { name: "first middle last" }).toAuctionResultsPageTitle().should.equal "first middle last, title | Related Auction Results | Artsy"
+      new Artwork(title: "title", artist: { name: "first" }).toAuctionResultsPageTitle().should.equal "first, title | Related Auction Results | Artsy"
+      new Artwork(title: "title", artist: { name: "last" }).toAuctionResultsPageTitle().should.equal "last, title | Related Auction Results | Artsy"
+      new Artwork(title: "", artist: { name: "last" }).toAuctionResultsPageTitle().should.equal "last | Related Auction Results | Artsy"
+      new Artwork(title: "title", date: "2010").toAuctionResultsPageTitle().should.equal "title (2010) | Related Auction Results | Artsy"
+      new Artwork(title: "title", date: "2010", artist: { name: "first last" }).toAuctionResultsPageTitle().should.equal "first last, title (2010) | Related Auction Results | Artsy"
+      new Artwork(title: "title", date: "2010-2011", artist: { name: "first last" }).toAuctionResultsPageTitle().should.equal "first last, title (2010-2011) | Related Auction Results | Artsy"
+      new Artwork(title: "title", date: "2010, 2011, 2012", artist: { name: "first last" }).toAuctionResultsPageTitle().should.equal "first last, title (2010, 2011, 2012) | Related Auction Results | Artsy"
+
+  describe "#toPageDescription", ->
+
+    it "renders correctly", ->
+      new Artwork(title: "title").toPageDescription().should.equal "title"
+      new Artwork(title: "title", partner: { name: 'partner' }, forsale: false).toPageDescription().should.equal "From partner, title"
+      new Artwork(title: "title", partner: { name: 'partner' }, forsale: true).toPageDescription().should.equal "Available for sale from partner, title"
+      new Artwork(title: "title", dimensions: { in: "2 × 1 × 3 in" }, metric: 'in', forsale: false).toPageDescription().should.equal "title, 2 × 1 × 3 in"
+      new Artwork(title: "title", dimensions: { in: "2 × 1 × 3 in" }, metric: 'in', medium: "Awesomeness", forsale: false).toPageDescription().should.equal "title, Awesomeness, 2 × 1 × 3 in"
+      new Artwork(title: "title", dimensions: { cm: "45000000 × 2000000000 cm" }, metric: 'cm', forsale: false).toPageDescription().should.equal "title, 45000000 × 2000000000 cm"
+      new Artwork(title: "title", dimensions: { cm: "45000000 × 2000000000 cm" }, metric: 'cm', medium: "Awesomeness", forsale: false).toPageDescription().should.equal "title, Awesomeness, 45000000 × 2000000000 cm"
+      new Artwork(title: "title", dimensions: { cm: "20 cm diameter" }, metric: 'cm', forsale: false).toPageDescription().should.equal "title, 20 cm diameter"
+      new Artwork(title: "title", dimensions: { cm: "20 cm diameter" }, metric: 'cm', medium: "Awesomeness", forsale: false).toPageDescription().should.equal "title, Awesomeness, 20 cm diameter"
+      new Artwork(title: "title", dimensions: { cm: "20 cm diameter" }, metric: 'cm', medium: "Awesomeness", artist: { name: "first last" }, forsale: false).toPageDescription().should.equal "first last, title, Awesomeness, 20 cm diameter"
+
+  describe "toAuctionResultsPageDescription", ->
+
+    it "renders correctly", ->
+      new Artwork(title: "title").toAuctionResultsPageDescription().should.equal "Related auction results for title"
+      new Artwork(title: "title", dimensions: { in: "2 × 1 × 3 in" }, metric: 'in').toAuctionResultsPageDescription().should.equal "Related auction results for title, 2 × 1 × 3 in"
+      new Artwork(title: "title", dimensions: { in: "2 × 1 × 3 in" }, metric: 'in', medium: "Awesomeness").toAuctionResultsPageDescription().should.equal "Related auction results for title, Awesomeness, 2 × 1 × 3 in"
+      new Artwork(title: "title", dimensions: { cm: "45000000 × 2000000000 cm" }, metric: 'cm').toAuctionResultsPageDescription().should.equal "Related auction results for title, 45000000 × 2000000000 cm"
+      new Artwork(title: "title", dimensions: { cm: "45000000 × 2000000000 cm" }, metric: 'cm', medium: "Awesomeness").toAuctionResultsPageDescription().should.equal "Related auction results for title, Awesomeness, 45000000 × 2000000000 cm"
+      new Artwork(title: "title", dimensions: { cm: "20 cm diameter" }, metric: 'cm').toAuctionResultsPageDescription().should.equal "Related auction results for title, 20 cm diameter"
+      new Artwork(title: "title", dimensions: { cm: "20 cm diameter" }, metric: 'cm', medium: "Awesomeness").toAuctionResultsPageDescription().should.equal "Related auction results for title, Awesomeness, 20 cm diameter"
+      new Artwork(title: "title", dimensions: { cm: "20 cm diameter" }, metric: 'cm', medium: "Awesomeness", artist: { name: "first last" }).toAuctionResultsPageDescription().should.equal "Related auction results for first last, title, Awesomeness, 20 cm diameter"
