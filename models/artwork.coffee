@@ -45,22 +45,6 @@ module.exports = class Artwork extends Backbone.Model
 
   artistLink: -> "/artist/#{@get('artist').id}"
 
-  displayDimensions: ->
-    # Return the first edition sets dimensions or dimensions, editions if there is one edition set
-    edition_sets = @get('edition_sets')
-    if edition_sets.length is 1
-      edition_set = _.first(edition_sets)
-      _.compact([ @superScriptFractions(edition_set.dimensions?.in), edition_set.dimensions?.cm, edition_set.editions ]).join('<br />')
-    else if edition_sets.length > 1
-      # If there is more than one edition set we display each one in a list -- and return undefined here as we display nothing
-      undefined
-    else
-      dimensions = @dimensions()
-      _.compact([ @superScriptFractions(dimensions?.in), dimensions?.cm, (if @get('unique') then "Unique" else undefined) ]).join('<br />')
-
-  displayDimensionsForEdition: (edition_set) ->
-    _.compact([ @superScriptFractions(edition_set.dimensions?.in), edition_set.dimensions?.cm ]).join('<br />')
-
   getTitle: -> if @get('title') then @get('title') else '(Untitled)'
 
   titleAndYear: ->
