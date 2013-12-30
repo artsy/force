@@ -2,10 +2,12 @@ Backbone = require 'backbone'
 _ = require 'underscore'
 sd = require('sharify').data
 Image = require './mixins/image.coffee'
+Dimensions = require './mixins/dimensions.coffee'
 
 module.exports = class Artwork extends Backbone.Model
 
   _.extend @prototype, Image
+  _.extend @prototype, Dimensions
 
   urlRoot: -> "#{sd.ARTSY_URL}/api/v1/artwork"
 
@@ -28,6 +30,7 @@ module.exports = class Artwork extends Backbone.Model
       @get('partner').name
     else
       ""
+
   partnerLink: ->
     partner = @get('partner')
     return unless partner
@@ -41,6 +44,22 @@ module.exports = class Artwork extends Backbone.Model
     if linkType == "external" then "_blank" else "_self"
 
   artistLink: -> "/artist/#{@get('artist').id}"
+
+  displayDimensions: ->
+    # Return the first edition sets dimensions or dimensions, editions if there is one edition set
+    edition_sets = @get('edition_sets')
+    if edition_sets.length is 1
+      edition_set = _.first(edition_sets)
+      _.compact([ @superScriptFractions(edition_set.dimensions?.in), edition_set.dimensions?.cm, edition_set.editions ]).join('<br />')
+    else if edition_sets.length > 1
+      # If there is more than one edition set we display each one in a list -- and return undefined here as we display nothing
+      undefined
+    else
+      dimensions = @dimensions()
+      _.compact([ @superScriptFractions(dimensions?.in), dimensions?.cm, (if @get('unique') then "Unique" else undefined) ]).join('<br />')
+
+  displayDimensionsForEdition: (edition_set) ->
+    _.compact([ @superScriptFractions(edition_set.dimensions?.in), edition_set.dimensions?.cm ]).join('<br />')
 
   getTitle: -> if @get('title') then @get('title') else '(Untitled)'
 
@@ -60,29 +79,29 @@ module.exports = class Artwork extends Backbone.Model
   toTitleWithDate: ->
     _.compact([
       @get('title'),
-      (if @get('date') then "(#{date})" else undefined),
+      (if @get('date') then "(#{@get('date')})" else undefined),
     ]).join(" ")
 
-  toTitleWidthDateForSale: ->
+  toTitleWithDateForSale: ->
     _.compact([
-      toTitleWithDate()
+      @toTitleWithDate()
       (if @get('forsale') then 'Available for Sale' else undefined)
-    ]).compact.join(", ")
+    ]).join(", ")
 
   toPageTitle: ->
     _.compact([
-      @get('artist')?.name,
-      @toTitleWithDateForSale(),
-     "Artsy"
-    ]).compact.join(" | ")
+      @get('artist')?.name
+      @toTitleWithDateForSale()
+      "Artsy"
+    ]).join(" | ")
 
   toAuctionResultsPageTitle: ->
     _.compact([
-      (if @get('artist')?.name then "#{@get('artist').name}#{',' if @get('title')}" else undefined)
+      (if @get('artist')?.name then "#{@get('artist').name}#{if @get('title') then ',' else ''}" else undefined)
       @toTitleWithDate()
       (if @get('artist')?.name or @get('title') then "| Related Auction Results" else "Related Auction Results")
       "| Artsy"
-    ]).compact.join(" ")
+    ]).join(" ")
 
   titleByArtist: ->
     _.compact([
@@ -96,11 +115,12 @@ module.exports = class Artwork extends Backbone.Model
 
   # for meta descriptions
   toPageDescription: ->
-    _.compact([@partnerDescription(),
-     @get('artist')?.name ? @get('artist').name : undefined,
-     @toTitleWithDate(),
-     @get('medium'),
-     @get('dimensions')
+    _.compact([
+      @partnerDescription()
+      (if @get('artist')?.name then @get('artist').name else undefined)
+      @toTitleWithDate()
+      @get('medium')
+      @dimensions()
     ]).join(", ")
 
   # for meta descriptions

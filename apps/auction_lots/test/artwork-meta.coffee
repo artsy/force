@@ -1,0 +1,41 @@
+fs            = require 'fs'
+jade          = require 'jade'
+Artwork       = require '../../../models/artwork'
+{ fabricate } = require 'antigravity'
+
+describe 'Meta tags', ->
+
+  before ->
+    @file = "#{process.cwd()}/apps/auction_lots/templates/artwork-meta.jade"
+    @sd =
+      ARTSY_URL: 'http://localhost:5000'
+      CANONICAL_MOBILE_URL: 'http://m.localhost:5000'
+      MOBILE_MEDIA_QUERY: 'mobile-media-query'
+
+  describe 'basic artwork with name and short blurb', ->
+
+    beforeEach ->
+      @artwork = new Artwork fabricate 'artwork'
+      @html = jade.render fs.readFileSync(@file).toString(),
+        artwork: @artwork
+        sd     : @sd
+
+    it 'includes mobile alternate, canonical, twitter card and og tags', ->
+      @html.should.include "<meta property=\"twitter:card\" content=\"summary"
+      @html.should.include "<link rel=\"canonical\" href=\"http://localhost:5000/artwork/#{@artwork.get('id')}"
+      @html.should.include "<meta property=\"og:url\" content=\"http://localhost:5000/artwork/#{@artwork.get('id')}"
+      @html.should.include "<meta property=\"og:description\" content=\"Related auction results for From Gagosian Gallery, Andy Warhol, Skull (1999), Watercolor on Paper, 10 x 20 x 30in"
+      @html.should.include "<meta property=\"og:title\" content=\"Andy Warhol, Skull (1999) | Related Auction Results | Artsy"
+
+  describe 'with an image', ->
+
+    beforeEach ->
+      @artwork = new Artwork fabricate 'artwork'
+      @artwork.set image_versions: ["large"]
+      @html = jade.render fs.readFileSync(@file).toString(),
+        artwork: @artwork
+        sd     : @sd
+
+    it 'includes og:image and twitter card', ->
+      @html.should.include "<meta property=\"og:image\" content=\"http://localhost:5000/artwork/#{@artwork.get('id')}.jpg"
+      @html.should.include "<meta property=\"twitter:card\" content=\"summary_large_image"
