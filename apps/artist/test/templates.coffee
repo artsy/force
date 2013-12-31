@@ -72,7 +72,7 @@ describe 'Artist header', ->
       )
 
     it 'should not display tab navigation if no', ->
-      @artist.get('auction_lots_count').should.be.above 0
+      @artist.get('auction_lots_count').should.equal 0
       @artist.get('published_artworks_count').should.be.above 0
       @template.should.not.include "Overview"
       @template.should.not.include "Auction"
