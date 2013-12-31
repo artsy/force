@@ -24,7 +24,7 @@ addWith("obj || {}", "console.log(helper(a))", ["helper"])
 
 ## API
 
-### addWith(obj, src, [exclude])
+### addWith(obj, src, [exclude], [environments])
 
 The idea is that this is roughly equivallent to:
 
@@ -34,7 +34,13 @@ with (obj) {
 }
 ```
 
-There are a few differences though.  For starters, it will be assumed that all variables used in `src` come from `obj` so any that don't (e.g. template helpers) need to have their names parsed to `exclude` as an array.
+There are a few differences though.  For starters, it will be assumed that all variables used in `src` come from `obj` so any that don't (e.g. template helpers) need to have their names parsed to `exclude` as an array.  If you want to have browser globals available you can pass a collection of `environments`, e.g.
+
+```js
+addWith('obj', 'document.createElement(foo)', [], ['reservedVars', 'ecmaIdentifiers', 'nonstandard', 'browser'])
+```
+
+The default environment is: `['reservedVars', 'ecmaIdentifiers', 'nonstandard', 'node']`
 
 It also makes everything be declared, so you can always do:
 

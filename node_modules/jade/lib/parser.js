@@ -1,19 +1,12 @@
-/*!
- * Jade - Parser
- * Copyright(c) 2010 TJ Holowaychuk <tj@vision-media.ca>
- * MIT Licensed
- */
+'use strict';
 
-/**
- * Module dependencies.
- */
-
-var Lexer = require('./lexer')
-  , nodes = require('./nodes')
-  , utils = require('./utils')
-  , filters = require('./filters')
-  , path = require('path')
-  , extname = path.extname;
+var Lexer = require('./lexer');
+var nodes = require('./nodes');
+var utils = require('./utils');
+var filters = require('./filters');
+var path = require('path');
+var parseJSExpression = require('character-parser').parseMax;
+var extname = path.extname;
 
 /**
  * Initialize `Parser` with the given input `str` and `filename`.
@@ -27,7 +20,7 @@ var Lexer = require('./lexer')
 var Parser = exports = module.exports = function Parser(str, filename, options){
   //Strip any UTF-8 BOM off of the start of `str`, if it exists.
   this.input = str.replace(/^\uFEFF/, '');
-  this.lexer = new Lexer(this.input, options);
+  this.lexer = new Lexer(this.input);
   this.filename = filename;
   this.blocks = {};
   this.mixins = {};
@@ -36,16 +29,16 @@ var Parser = exports = module.exports = function Parser(str, filename, options){
 };
 
 /**
- * Tags that may not contain tags.
- */
-
-var textOnly = exports.textOnly = ['script', 'style'];
-
-/**
  * Parser prototype.
  */
 
 Parser.prototype = {
+
+  /**
+   * Save original constructor
+   */
+
+  constructor: Parser,
 
   /**
    * Push `parser` onto the context stack,
@@ -125,13 +118,18 @@ Parser.prototype = {
 
   parse: function(){
     var block = new nodes.Block, parser;
-    block.line = this.line();
+    block.line = 0;
+    block.filename = this.filename;
 
     while ('eos' != this.peek().type) {
       if ('newline' == this.peek().type) {
         this.advance();
       } else {
-        block.push(this.parseExpr());
+        var next = this.peek();
+        var expr = this.parseExpr();
+        expr.filename = this.options.filename;
+        expr.line = next.line;
+        block.push(expr);
       }
     }
 
@@ -201,6 +199,8 @@ Parser.prototype = {
         return this.parseMixin();
       case 'block':
         return this.parseBlock();
+      case 'mixin-block':
+        return this.parseMixinBlock();
       case 'case':
         return this.parseCase();
       case 'when':
@@ -249,8 +249,12 @@ Parser.prototype = {
 
   parseText: function(){
     var tok = this.expect('text');
-    var node = new nodes.Text(tok.val);
-    node.line = this.line();
+    var tokens = this.parseTextWithInlineTags(tok.val);
+    if (tokens.length === 1) return tokens[0];
+    var node = new nodes.Block;
+    for (var i = 0; i < tokens.length; i++) {
+      node.push(tokens[i]);
+    };
     return node;
   },
 
@@ -326,7 +330,9 @@ Parser.prototype = {
     var node;
 
     if ('indent' == this.peek().type) {
-      node = new nodes.BlockComment(tok.val, this.block(), tok.buffer);
+      this.lexer.pipeless = true;
+      node = new nodes.BlockComment(tok.val, this.parseTextBlock(), tok.buffer);
+      this.lexer.pipeless = false;
     } else {
       node = new nodes.Comment(tok.val, tok.buffer);
     }
@@ -422,7 +428,7 @@ Parser.prototype = {
     if ('.jade' != path.substr(-5)) path += '.jade';
 
     var str = fs.readFileSync(path, 'utf8');
-    var parser = new Parser(str, path, this.options);
+    var parser = new this.constructor(str, path, this.options);
 
     parser.blocks = this.blocks;
     parser.contexts = this.contexts;
@@ -471,25 +477,36 @@ Parser.prototype = {
     return this.blocks[name] = block;
   },
 
+  parseMixinBlock: function () {
+    var block = this.expect('mixin-block');
+    return new nodes.MixinBlock();
+  },
+
   /**
    * include block?
    */
 
   parseInclude: function(){
     var fs = require('fs');
+    var tok = this.expect('include');
 
-    var path = this.resolvePath(this.expect('include').val.trim(), 'include');
+    var path = this.resolvePath(tok.val.trim(), 'include');
+
+    // has-filter
+    if (tok.filter) {
+      var str = fs.readFileSync(path, 'utf8').replace(/\r/g, '');
+      str = filters(tok.filter, str, { filename: path });
+      return new nodes.Literal(str);
+    }
 
     // non-jade
     if ('.jade' != path.substr(-5)) {
       var str = fs.readFileSync(path, 'utf8').replace(/\r/g, '');
-      var ext = extname(path).slice(1);
-      if (filters.exists(ext)) str = filters(ext, str, { filename: path });
       return new nodes.Literal(str);
     }
 
     var str = fs.readFileSync(path, 'utf8');
-    var parser = new Parser(str, path, this.options);
+    var parser = new this.constructor(str, path, this.options);
     parser.blocks = utils.merge({}, this.blocks);
 
     parser.mixins = this.mixins;
@@ -546,6 +563,37 @@ Parser.prototype = {
     }
   },
 
+  parseTextWithInlineTags: function (str) {
+    var line = this.line();
+
+    var match = /(\\)?#\[((?:.|\n)*)$/.exec(str);
+    if (match) {
+      if (match[1]) { // escape
+        var text = new nodes.Text(str.substr(0, match.index) + '#[');
+        text.line = line;
+        var rest = this.parseTextWithInlineTags(match[2]);
+        if (rest[0].type === 'Text') {
+          text.val += rest[0].val;
+          rest.shift();
+        }
+        return [text].concat(rest);
+      } else {
+        var text = new nodes.Text(str.substr(0, match.index));
+        text.line = line;
+        var buffer = [text];
+        var rest = match[2];
+        var range = parseJSExpression(rest);
+        var inner = new Parser(range.src, this.filename, this.options);
+        buffer.push(inner.parse());
+        return buffer.concat(this.parseTextWithInlineTags(rest.substr(range.end + 1)));
+      }
+    } else {
+      var text = new nodes.Text(str);
+      text.line = line;
+      return [text];
+    }
+  },
+
   /**
    * indent (text | newline)* outdent
    */
@@ -562,19 +610,21 @@ Parser.prototype = {
           this.advance();
           break;
         case 'indent':
-          this.parseTextBlock().nodes.forEach(function(node){
+          this.parseTextBlock(true).nodes.forEach(function(node){
             block.push(node);
           });
           break;
         default:
-          var text = new nodes.Text(indent + this.advance().val);
-          text.line = this.line();
-          block.push(text);
+          var texts = this.parseTextWithInlineTags(indent + this.advance().val);
+          texts.forEach(function (text) {
+            block.push(text);
+          });
       }
     }
 
     if (spaces == this._spaces) this._spaces = null;
     this.expect('outdent');
+
     return block;
   },
 
@@ -585,12 +635,15 @@ Parser.prototype = {
   block: function(){
     var block = new nodes.Block;
     block.line = this.line();
+    block.filename = this.filename;
     this.expect('indent');
     while ('outdent' != this.peek().type) {
       if ('newline' == this.peek().type) {
         this.advance();
       } else {
-        block.push(this.parseExpr());
+        var expr = this.parseExpr();
+        expr.filename = this.filename;
+        block.push(expr);
       }
     }
     this.expect('outdent');
@@ -630,8 +683,6 @@ Parser.prototype = {
    */
 
   tag: function(tag){
-    var dot;
-
     tag.line = this.line();
 
     var seenAttrs = false;
@@ -662,14 +713,18 @@ Parser.prototype = {
               tag.setAttribute(name, val, escaped[name]);
             }
             continue;
+          case '&attributes':
+            var tok = this.advance();
+            tag.addAttributes(tok.val);
+            break;
           default:
             break out;
         }
       }
 
     // check immediate '.'
-    if ('.' == this.peek().val) {
-      dot = tag.textOnly = true;
+    if ('dot' == this.peek().type) {
+      tag.textOnly = true;
       this.advance();
     }
 
@@ -698,23 +753,9 @@ Parser.prototype = {
     // newline*
     while ('newline' == this.peek().type) this.advance();
 
-    tag.textOnly = tag.textOnly || ~textOnly.indexOf(tag.name);
-
-    // script special-case
-    if ('script' == tag.name) {
-      var type = tag.getAttribute('type');
-      if (!dot && type && 'text/javascript' != type.replace(/^['"]|['"]$/g, '')) {
-        tag.textOnly = false;
-      }
-    }
-
     // block?
     if ('indent' == this.peek().type) {
       if (tag.textOnly) {
-        if (!dot) {
-          console.warn(this.filename + ', line ' + this.peek().line + ':')
-          console.warn('Implicit textOnly for `script` and `style` is deprecated.  Use `script.` or `style.` instead.');
-        }
         this.lexer.pipeless = true;
         tag.block = this.parseTextBlock();
         this.lexer.pipeless = false;

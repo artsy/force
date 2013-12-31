@@ -1,14 +1,20 @@
 var uglify = require('uglify-js')
-
+var globalVars = require('./vars')
 
 module.exports = addWith
 
-function addWith(obj, src, exclude) {
+function addWith(obj, src, exclude, environments) {
+  environments = environments || ['reservedVars', 'ecmaIdentifiers', 'nonstandard', 'node']
   exclude = exclude || []
   exclude = exclude.concat(detect(obj))
   var vars = detect('(function () {' + src + '}())')//allows the `return` keyword
     .filter(function (v) {
-      return !(v in global) && exclude.indexOf(v) === -1
+      for (var i = 0; i < environments.length; i++) {
+        if (v in globalVars[environments[i]]) {
+          return false;
+        }
+      }
+      return exclude.indexOf(v) === -1
     })
 
   if (vars.length === 0) return src

@@ -1,8 +1,4 @@
-/*!
- * Jade - filters
- * Copyright(c) 2010 TJ Holowaychuk <tj@vision-media.ca>
- * MIT Licensed
- */
+'use strict';
 
 var transformers = require('transformers');
 
@@ -12,13 +8,6 @@ function filter(name, str, options) {
     var res = filter[name](str, options);
   } else if (transformers[name]) {
     var res = transformers[name].renderSync(str, options);
-    if (transformers[name].outputFormat === 'js') {
-      res = '<script type="text/javascript">\n' + res + '</script>';
-    } else if (transformers[name].outputFormat === 'css') {
-      res = '<style type="text/css">' + res + '</style>';
-    } else if (transformers[name].outputFormat === 'xml') {
-      res = res.replace(/'/g, '&#39;');
-    }
   } else {
     throw new Error('unknown filter ":' + name + '"');
   }
