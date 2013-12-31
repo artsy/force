@@ -1,4 +1,4 @@
-var test = require('tap').test;
+var test = require('tape');
 var path  = require('path')
 var mdeps = require('../')
 
@@ -30,7 +30,6 @@ test('can filter core deps', function (t) {
         t.equal(d.entry, true)
     })
     .on('end', function () {
-        console.error(collect)
         t.equal(collect.length, 1)
         t.end()
     })

@@ -28,7 +28,7 @@
     "backbone-pageable": "*"
   },
   "devDependencies": {
-    "browserify": "3.16.1",
+    "browserify": "*",
     "stylus": "0.39.x",
     "jadeify2": "*",
     "browserify-dev-middleware": "*",
