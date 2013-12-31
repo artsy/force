@@ -18,7 +18,7 @@ describe 'Image Mixin', ->
       @model.fullyQualifiedImageUrl('whatever').should.equal 'whatever'
 
     describe 'with an image url', ->
-  
+
       beforeEach ->
         @image = "http://stazic1.artsy.net/additional_images/42/round.jpg"
 
@@ -41,7 +41,7 @@ describe 'Image Mixin', ->
 
     it 'returns missing image', ->
       sd.ASSET_PATH = "/assets/shared/"
-      @model.imageUrl().should.equal '/assets/shared/missing_image.png'
+      @model.imageUrl('foo').should.equal '/assets/shared/missing_image.png'
 
     it 'returns an image URL when passed a valid version', ->
       @model.imageUrl('small_square').should.equal '/bitty/small_square'
