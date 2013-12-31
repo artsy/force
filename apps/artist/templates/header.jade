@@ -47,8 +47,9 @@ mixin artist-header(artist, title)
                   | Get updates about
                   br
                   | new shows and works
-        .aha-cell
-          +artist-tab-nav
+        if artist.get('auction_lots_count') > 0
+          .aha-cell
+            +artist-tab-nav
         .aha-cell
           nav.artist-share
             +share(title + artist.get('name') + ' on Artsy', artist.imageUrl('large'))

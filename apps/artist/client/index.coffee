@@ -17,7 +17,6 @@ AuctionLots             = require '../../../collections/auction_lots.coffee'
 module.exports.ArtistView = class ArtistView extends Backbone.View
 
   initialize: (options) ->
-    @setupAuctionResults()
     @setupCurrentUser()
     @setupFollowButton()
     @setupArtworks()
@@ -26,14 +25,6 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     @setupRelatedPosts()
     @setupRelatedGenes()
     @setupShareButtons()
-
-  setupAuctionResults: ->
-    auctionLots = new AuctionLots([], id: @model.get('id') )
-    auctionLots.state.pageSize = 1
-    auctionLots.fetch
-      success: (response) =>
-        unless response.length > 0
-          @$('.artist-sections').remove()
 
   setupShareButtons: ->
     new ShareView el: @$('.artist-share')
