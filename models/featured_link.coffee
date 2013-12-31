@@ -4,6 +4,6 @@ Items     = require '../collections/items.coffee'
 
 module.exports = class FeaturedLink extends Backbone.Model
 
-  fetchItems: (cache) ->
+  fetchItems: (cache=false) ->
     items = new Items null, { id: @id }
     items.fetch(cache: cache).then => @set { items: items }

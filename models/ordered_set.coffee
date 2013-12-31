@@ -4,7 +4,7 @@ Items     = require '../collections/items.coffee'
 
 module.exports = class OrderedSet extends Backbone.Model
 
-  fetchItems: (cache=false)->
+  fetchItems: (cache=false) ->
     featuredLinks = new Items null, { id: @id }
     @set { items: featuredLinks }
 

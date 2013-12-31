@@ -25,8 +25,8 @@ class OrderedSets extends Backbone.Collection
     _.defaults options, { data: qs }
     Backbone.Collection::fetch.call this, options
 
-  fetchSets: ->
-    @map (model) -> model.fetchItems()
+  fetchSets: (options={}) ->
+    @map (model) -> model.fetchItems(options?.cache)
 
 class OrderedSetMeta extends Backbone.Model
   defaults:
