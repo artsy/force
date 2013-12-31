@@ -1,5 +1,5 @@
 var mdeps = require('../');
-var test = require('tape');
+var test = require('tap').test;
 var JSONStream = require('JSONStream');
 var packer = require('browser-pack');
 var concat = require('concat-stream');
