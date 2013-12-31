@@ -426,6 +426,13 @@ module.exports = fabricate = (type, extObj = {}) ->
       display_on_mobile: true
       display_on_desktop: true
 
+    when 'featured_link'
+      id: _.uniqueId()
+      href: "http://artsy.net/gene/abstract-painting"
+      title: "Abstract Painting"
+      image_versions: ["large_square", "medium_square", "small_square", "medium_rectangle", "large_rectangle","small_rectangle"]
+      image_url: "/local/featured_links/abstract/:version.jpg"
+
     when 'featured_partners'
       created_at: "2013-08-27T01:28:36Z"
       description: ""

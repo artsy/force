@@ -1,3 +1,5 @@
+var indexOf = require('indexof');
+
 var Object_keys = function (obj) {
     if (Object.keys) return Object.keys(obj)
     else {
@@ -39,10 +41,17 @@ Script.prototype.runInNewContext = function (context) {
         win.execScript('null');
     }
     
+    var winKeys = Object_keys(win);
+
     var res = win.eval(this.code);
     
     forEach(Object_keys(win), function (key) {
-        context[key] = win[key];
+        // Avoid copying circular objects like `top` and `window` by only
+        // updating existing context properties or new properties in the `win`
+        // that was only introduced after the eval.
+        if (key in context || indexOf(winKeys, key) === -1) {
+            context[key] = win[key];
+        }
     });
     
     document.body.removeChild(iframe);

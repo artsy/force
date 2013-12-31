@@ -7,8 +7,8 @@
     "test": "make test"
   },
   "dependencies": {
-    "express": "3.4.5",
-    "jade": "*",
+    "express": "3.4.7",
+    "jade": "0.35.0",
     "sharify": "*",
     "backbone": "*",
     "backbone-super-sync": "*",
@@ -22,7 +22,7 @@
     "underscore.string": "*",
     "q": "*",
     "hiredis": "0.1.16",
-    "redis": "0.9.1",
+    "redis": "0.10.0",
     "node-uuid": "*",
     "artsy-passport": "*",
     "backbone-pageable": "*"

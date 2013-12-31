@@ -34,7 +34,7 @@ var isUint8Array = typeof Uint8Array !== 'undefined'
 ;
 var isArrayBuffer = typeof ArrayBuffer !== 'undefined'
   ? function (x) { return x instanceof ArrayBuffer }
-  : function () {
+  : function (x) {
     return x && x.constructor && x.constructor.name === 'ArrayBuffer'
   }
 ;

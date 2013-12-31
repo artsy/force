@@ -20,6 +20,7 @@ module.exports = (function(){
       this.removeAllListeners();
       return this;
     };
+    return d;
   };
   return domain;
 }).call(this);
