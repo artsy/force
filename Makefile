@@ -46,9 +46,14 @@ assets:
 		gzip -f public/$(file).min.css; \
 	)
 
+# TODO: Put this in a foreach and iterate through all js and css files
+verify:
+	if [ $(shell wc -c < public/assets/artist.min.css.gz) -gt 0 ] ; then echo ; echo "Artist CSS exists" ; else echo ; echo "Artist CSS asset compilation failed" ; exit 1 ; fi
+	if [ $(shell wc -c < public/assets/artist.min.js.gz) -gt 0 ] ; then echo ; echo "Artist JS exists" ; else echo; echo "Artist JS asset compilation failed" ; exit 1 ; fi
+
 # Runs all the necessary build tasks to push to staging or production.
 # Run with `make deploy env=staging` or `make deploy env=production`.
-deploy: assets
+deploy: assets verify
 	$(BIN)/bucketassets -d public/assets -b force-$(env)
 	$(BIN)/bucketassets -d public/images -b force-$(env)
 	heroku config:add \
