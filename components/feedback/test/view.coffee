@@ -1,7 +1,33 @@
-describe 'ModalView', ->
-  describe '#submit', ->
-    it 'should validate the form before submitting'
+_         = require 'underscore'
+benv      = require 'benv'
+sinon     = require 'sinon'
+Backbone  = require 'backbone'
+rewire    = require 'rewire'
 
-    it 'should submit the form'
+describe 'FeedbackView', ->
+  before (done) ->
+    benv.setup =>
+      benv.expose { $: require 'components-jquery' }
+      Backbone.$ = $
+      @FeedbackView = rewire '../view'
+      sinon.stub @FeedbackView.prototype, 'open'
+      sinon.stub @FeedbackView.prototype, 'updatePosition'
+      done()
 
-    it 'should close the modal after successfully submitting'
+  after ->
+    # benv.teardown()
+
+  describe 'User not logged in', ->
+    beforeEach ->
+      @view = new @FeedbackView
+
+    it 'should pass a null user', ->
+      _.isNull(@view.templateData.user).should.be.ok
+
+  describe 'User logged in', ->
+    beforeEach ->
+      @FeedbackView.__set__ 'CurrentUser', { orNull: -> true }
+      @view = new @FeedbackView
+
+    it 'should pass a user', ->
+      @view.templateData.user.should.be.ok
