@@ -45,6 +45,5 @@ ComparableSales   = require '../../collections/comparable_sales'
   new ComparableSales([],
     id: req.params.id
   ).fetch
-    cache   : true
     success : (response) -> auctionLots = response; render()
     error   : res.backboneError
