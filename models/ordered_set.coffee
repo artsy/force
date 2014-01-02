@@ -11,7 +11,7 @@ module.exports = class OrderedSet extends Backbone.Model
     deferred = Q.defer()
 
     Q.allSettled(featuredLinks.fetch(cache: cache).then =>
-      featuredLinks.map (featuredLink) -> featuredLink.fetchItems(cache: cache)
+      featuredLinks.map (featuredLink) -> featuredLink.fetchItems(cache)
     ).then (promises) => deferred.resolve(promises)
 
     deferred.promise
