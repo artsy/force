@@ -1,0 +1,14 @@
+.follow-button
+  &:before
+    content 'Follow'
+
+  &[data-state='following'], &.is-following
+    color highlight-color
+    &:before
+      content 'Following'
+    &:hover
+      color bad-red-color
+      &:before
+        content 'Unfollow'
+      &.is-clicked:before
+        content 'Following'

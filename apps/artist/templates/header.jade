@@ -34,13 +34,13 @@ mixin artist-header(artist, title)
             | There are no #{artist.get('name')} works on Artsy yet.
             br
             | Follow the artist to get alerts when works are added.
-          button#artist-follow-button.avant-garde-button-white Follow
+          button#artist-follow-button.avant-garde-button-white.follow-button
     else
       .artist-header-actions
         .aha-cell
           .artist-follow-container
             .afc-button
-              button#artist-follow-button.avant-garde-button-white Follow
+              button#artist-follow-button.avant-garde-button-white.follow-button
             .afc-aside
               span
                 | Get updates about

@@ -1,12 +1,14 @@
-_        = require 'underscore'
-Backbone = require 'backbone'
-mediator = require '../../../lib/mediator.coffee'
-track    = require('../../../lib/analytics.coffee').track
+_         = require 'underscore'
+Backbone  = require 'backbone'
+mediator  = require '../../../lib/mediator.coffee'
+track     = require('../../../lib/analytics.coffee').track
 
 module.exports = class FollowButton extends Backbone.View
-
   analyticsUnfollowMessage: "Unfollowed artist from artist result row"
   analyticsFollowMessage: "Followed artist from artist result row"
+
+  events:
+    'click' : 'followArtist'
 
   initialize: (options) ->
     return unless options.followArtistCollection
@@ -18,20 +20,11 @@ module.exports = class FollowButton extends Backbone.View
     @listenTo @followArtistCollection, "add:#{@model.get('id')}", @onFollowArtistSaveChange
     @listenTo @followArtistCollection, "remove:#{@model.get('id')}", @onFollowArtistSaveChange
     @onFollowArtistSaveChange()
-    _.delay =>
-      @followArtistCollection.syncFollowedArtists()
-    , 500
+    _.delay (=> @followArtistCollection.syncFollowedArtists()), 500
 
   onFollowArtistSaveChange: ->
-    if @model.isFollowed @followArtistCollection
-      @$el.removeClass('follow-button-unfollowed').addClass('follow-button-followed').text('following')
-    else
-      @$el.removeClass('follow-button-followed').addClass('follow-button-unfollowed').text('follow')
-
-  events:
-    'click' : 'followArtist'
-    'mouseenter' : 'followingEnter'
-    'mouseleave' : 'followingLeave'
+    state = if @model.isFollowed @followArtistCollection then 'following' else 'follow'
+    @$el.attr 'data-state', state
 
   followArtist: (e) ->
     unless @followArtistCollection
@@ -41,22 +34,13 @@ module.exports = class FollowButton extends Backbone.View
     if @model.isFollowed @followArtistCollection
       track.click @analyticsUnfollowMessage, @model
       @followArtistCollection.unfollow @model.get('id'),
-        error: => @$el.removeClass('follow-button-unfollowed').addClass('follow-button-followed').text('following')
+        error: => @$el.attr('data-state', 'following')
     else
       track.click @analyticsFollowMessage, @model
       @followArtistCollection.follow @model.get('id'),
-        error: => @$el.removeClass('follow-button-followed').addClass('follow-button-unfollowed').text('follow')
+        error: => @$el.attr('data-state', 'follow')
 
-      @$el.addClass('follow-button-clicked')
-      setTimeout =>
-        @$el.removeClass('follow-button-clicked')
-       , 1500
+      # Delay label change
+      @$el.addClass 'is-clicked'
+      setTimeout (=> @$el.removeClass 'is-clicked'), 1500
     false
-
-  followingEnter: (event) ->
-    if @model.isFollowed @followArtistCollection
-      @$el.text('Unfollow')
-
-  followingLeave: (event) ->
-    if @model.isFollowed @followArtistCollection
-      @$el.text('Following')
