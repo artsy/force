@@ -23,7 +23,6 @@ AuctionLots   = require '../../collections/auction_lots'
     sortBy: sort
     state : { currentPage: currentPage }
   ).fetch
-    cache  : true
     success: (response) -> auctionLots = response; render()
     error  : res.backboneError
 
