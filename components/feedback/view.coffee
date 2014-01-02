@@ -6,14 +6,19 @@ mediator    = require '../../lib/mediator.coffee'
 Feedback    = require '../../models/feedback.coffee'
 Form        = require '../mixins/form.coffee'
 template    = -> require('./template.jade') arguments...
+CurrentUser = require '../../models/current_user.coffee'
 
 module.exports = class FeedbackView extends ModalView
 
   _.extend @prototype, Form
 
-  template: -> template()
+  template: (data) -> template(data)
 
   className: 'feedback'
+
+  initialize: (options) ->
+    @templateData = { user: CurrentUser.orNull() }
+    super
 
   events: -> _.extend super,
     'submit form': 'submit'
