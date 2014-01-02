@@ -23,7 +23,6 @@ AuctionLots   = require '../../collections/auction_lots'
     sortBy: sort
     state : { currentPage: currentPage }
   ).fetch
-    cache  : true
     success: (response) -> auctionLots = response; render()
     error  : res.backboneError
 
@@ -45,5 +44,6 @@ ComparableSales   = require '../../collections/comparable_sales'
   new ComparableSales([],
     id: req.params.id
   ).fetch
+    cache   : true
     success : (response) -> auctionLots = response; render()
     error   : res.backboneError
