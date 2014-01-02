@@ -1,0 +1,43 @@
+@import '../components/stylus_lib'
+
+.a-to-z-row
+  border-bottom 1px solid dark-gray-border-color
+  padding 30px 0px 15px 0px
+  width 100%
+
+.a-to-z-row-letter
+  display inline-block
+  font-size 50px
+  line-height 100%
+  margin-left 1%
+  margin-right 2%
+  text-transform uppercase
+  vertical-align top
+  width 22%
+
+.a-to-z-column
+  text-align left
+  display inline-block
+  vertical-align top
+  width 19%
+  margin-left 1.4%
+  margin-right 2%
+  &:first-child
+    margin-left 0px
+  &:last-child
+    margin-right 0px
+
+.a-to-z-item
+  font-size 17px
+  line-height 120%
+  margin-top 5px
+  overflow ellipsis
+  padding 4px 0px
+  vertical-align top
+  a
+    text-decoration none
+    &.selected, &:hover
+      color highlight-color
+
+.a-to-z-item-disabled
+  color: dark-gray-text-color
