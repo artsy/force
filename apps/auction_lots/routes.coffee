@@ -10,6 +10,7 @@ AuctionLots   = require '../../collections/auction_lots'
   sort          = req.query.sort
 
   render = _.after 2, ->
+    res.locals.sd.ARTIST = artist.toJSON()
     res.render 'artist',
       auctionLots : auctionLots
       artist      : artist

@@ -39,14 +39,13 @@ mixin artist-header(artist, title)
       .artist-header-actions
         .aha-cell
           .artist-follow-container
-            if onOverview()
-              .afc-button
-                button#artist-follow-button.avant-garde-button-white Follow
-              .afc-aside
-                span
-                  | Get updates about
-                  br
-                  | new shows and works
+            .afc-button
+              button#artist-follow-button.avant-garde-button-white Follow
+            .afc-aside
+              span
+                | Get updates about
+                br
+                | new shows and works
         if artist.get('auction_lots_count') > 0
           .aha-cell
             +artist-tab-nav
