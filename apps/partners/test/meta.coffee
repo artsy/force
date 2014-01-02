@@ -6,7 +6,7 @@ describe 'Meta tags', ->
   describe 'featured partners page', ->
 
     before ->
-      @file = "#{process.cwd()}/apps/featured_partners/meta.jade"
+      @file = "#{process.cwd()}/apps/partners/meta.jade"
       @sd =
         ARTSY_URL : 'http://localhost:5000'
         ASSET_PATH: 'http://localhost:5000'

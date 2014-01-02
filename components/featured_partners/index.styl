@@ -1,0 +1,71 @@
+@import '../stylus_lib'
+
+#featured-partners
+  margin content-margin-top auto 0 auto
+  min-height 800px
+  padding-top 40px
+  width calc('100% - 150px')
+  > section
+    margin-bottom 40px
+  > footer
+    text-align right
+    .featured-partners-nav
+      float none
+
+.featured-partners-title
+  clear both
+  font-size 33px
+  padding 24px 0
+  text-align center
+
+.featured-partners-header-info
+  float left
+  margin-bottom 40px
+
+.featured-partners-nav
+  float right
+  letter-spacing 2px
+  margin-bottom 40px
+  a
+    text-decoration none
+    text-transform uppercase
+    white-space nowrap
+    &.selected
+      border-bottom 1px solid highlight-underline-color
+      color highlight-color
+    &:hover
+      border-bottom 1px solid black
+
+.featured-partner-profile
+  display inline-block
+  margin 20px 30px 20px 0
+  text-align center
+  width calc('25% - 23px')
+  vertical-align top
+  &:nth-child(4n)
+    margin-right 0
+  .featured-partner-profile-cover-link
+    background-color #000
+    display block
+    margin-bottom 15px
+  img
+    // Hack to prevent shifting content opacity fade
+    transform translateZ(0)
+    transition opacity 0.3s
+    vertical-align bottom
+    width 100%
+    &:hover
+      opacity 0.5
+  a
+    text-decoration none
+    vertical-align baseline
+  .featured-partner-profile-name
+    avant-garde()
+    font-size 13px
+    line-height 1.45
+  .featured-partner-profile-location
+    font-size 17px
+
+.featured-institions-list
+  margin 0px auto
+  width 80%
