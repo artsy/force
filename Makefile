@@ -9,6 +9,7 @@
 BIN = node_modules/.bin
 CDN_DOMAIN_production = d3df9uo7bhy7ev
 CDN_DOMAIN_staging = dvvrm5xieopg5
+MIN_FILE_SIZE = 1000
 
 # Start the server
 s:
@@ -48,8 +49,8 @@ assets:
 
 # TODO: Put this in a foreach and iterate through all js and css files
 verify:
-	if [ $(shell wc -c < public/assets/artist.min.css.gz) -gt 0 ] ; then echo ; echo "Artist CSS exists" ; else echo ; echo "Artist CSS asset compilation failed" ; exit 1 ; fi
-	if [ $(shell wc -c < public/assets/artist.min.js.gz) -gt 0 ] ; then echo ; echo "Artist JS exists" ; else echo; echo "Artist JS asset compilation failed" ; exit 1 ; fi
+	if [ $(shell wc -c < public/assets/artist.min.css.gz) -gt $(MIN_FILE_SIZE) ] ; then echo ; echo "Artist CSS exists" ; else echo ; echo "Artist CSS asset compilation failed" ; exit 1 ; fi
+	if [ $(shell wc -c < public/assets/artist.min.js.gz) -gt  $(MIN_FILE_SIZE) ] ; then echo ; echo "Artist JS exists" ; else echo; echo "Artist JS asset compilation failed" ; exit 1 ; fi
 
 # Runs all the necessary build tasks to push to staging or production.
 # Run with `make deploy env=staging` or `make deploy env=production`.
