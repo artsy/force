@@ -6,7 +6,7 @@ Profiles      = require '../../collections/profiles'
 
 @index = (req, res) ->
   institutions = OrderedSets.new({ key: 'institutions' })
-  institutions.fetch().then ->
+  institutions.fetch({ cache: true }).then ->
     institutions = institutions.first()
     profiles = new Profiles([], { models: [] })
     console.log profiles
