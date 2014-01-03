@@ -19,7 +19,7 @@ Q             = require 'q'
       Q.allSettled(_.map(profiles.models, (profile) ->
         partner = new Partner(profile.get('owner'))
         profile.set 'owner', partner
-        return partner.locations().fetch()
+        return partner.locations().fetch({ cache: true })
       )).then ->
         # Final data set is a collection of profiles with populated
         # partners and locations
