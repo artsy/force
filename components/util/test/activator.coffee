@@ -16,7 +16,7 @@ describe 'Activator', ->
     before (done) ->
       benv.setup =>
         benv.expose {
-          $: require 'components-jquery'
+          $: benv.require 'components-jquery'
           sd: { CURRENT_PATH: '/foo/bar' }
         }
         @$cases = $(render('activator')())
@@ -34,7 +34,7 @@ describe 'Activator', ->
     before (done) ->
       benv.setup =>
         benv.expose {
-          $: require 'components-jquery'
+          $: benv.require 'components-jquery'
           sd: { CURRENT_PATH: '/foo/bar/' }
         }
         @$cases = $(render('activator')())
@@ -52,7 +52,7 @@ describe 'Activator', ->
     before (done) ->
       benv.setup =>
         benv.expose {
-          $: require 'components-jquery'
+          $: benv.require 'components-jquery'
           sd: { CURRENT_PATH: '/foo/baz' }
         }
         @$cases = $(render('activator')())

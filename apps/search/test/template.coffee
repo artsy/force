@@ -18,11 +18,11 @@ render = (templateName) ->
 describe 'Search results template', ->
   before (done) ->
     benv.setup =>
-      benv.expose { $: require 'components-jquery'}
+      benv.expose { $: benv.require 'components-jquery'}
       done()
 
   after ->
-    # benv.teardown()
+    benv.teardown()
 
   beforeEach ->
     @search = new Search

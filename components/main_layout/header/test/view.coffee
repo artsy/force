@@ -15,7 +15,7 @@ HeaderView.__set__ 'createCookie', sinon.stub()
 describe 'HeaderView', ->
   beforeEach (done) ->
     benv.setup =>
-      benv.expose { $: require 'components-jquery' }
+      benv.expose { $: benv.require 'components-jquery' }
       Backbone.$ = $
       benv.render resolve(__dirname, '../template.jade'), {}, =>
         @view = new HeaderView

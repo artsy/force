@@ -12,12 +12,12 @@ describe 'RelatedPostsView', ->
 
   before (done) ->
     benv.setup =>
-      benv.expose { $: require 'components-jquery' }
+      benv.expose { $: benv.require 'components-jquery' }
       Backbone.$ = $
       done()
 
   after ->
-    # benv.teardown()
+    benv.teardown()
 
   beforeEach (done) ->
     sinon.stub Backbone, 'sync'
