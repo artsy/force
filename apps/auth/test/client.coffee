@@ -14,7 +14,8 @@ describe 'AuthModalRouter', ->
       Backbone.$ = $
       done()
 
-  after -> benv.teardown()
+  after ->
+    # benv.teardown()
 
   beforeEach (done) ->
     benv.render resolve(__dirname, '../template.jade'), { sd: {} }, =>

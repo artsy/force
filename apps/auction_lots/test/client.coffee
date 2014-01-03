@@ -16,7 +16,7 @@ describe 'Auction results client-side code', ->
       done()
 
   after ->
-    benv.teardown()
+    # benv.teardown()
 
   beforeEach (done) ->
     @artist       = new Artist fabricate 'artist'

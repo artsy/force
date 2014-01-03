@@ -22,7 +22,7 @@ describe 'Search results template', ->
       done()
 
   after ->
-    benv.teardown()
+    # benv.teardown()
 
   beforeEach ->
     @search = new Search
