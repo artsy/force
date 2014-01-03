@@ -12,7 +12,7 @@ describe 'FillwidthView', ->
 
   before (done) ->
     benv.setup =>
-      benv.expose { $: require 'components-jquery' }
+      benv.expose { $: benv.require 'components-jquery' }
       $.fn.fillwidth = ->
       Backbone.$ = $
       done()

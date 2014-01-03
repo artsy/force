@@ -7,7 +7,7 @@ describe 'AuthModalView', ->
 
   before (done) ->
     benv.setup =>
-      benv.expose { $: require 'components-jquery' }
+      benv.expose { $: benv.require 'components-jquery' }
       Backbone.$ = $
       $('body').html $ "<div id='fixture'></div>"
       @AuthModalView = require '../view'
@@ -15,7 +15,7 @@ describe 'AuthModalView', ->
       done()
 
   after ->
-    # benv.teardown()
+    benv.teardown()
 
   beforeEach ->
     @view = new @AuthModalView el: $('#fixture')

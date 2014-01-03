@@ -9,7 +9,7 @@ ModalView = benv.requireWithJadeify resolve(__dirname, '../view'), ['modalTempla
 describe 'ModalView', ->
   beforeEach (done) ->
     benv.setup =>
-      benv.expose { $: require 'components-jquery' }
+      benv.expose { $: benv.require 'components-jquery' }
 
       Backbone.$                  = $
       $.support.transition        = { end: '' }

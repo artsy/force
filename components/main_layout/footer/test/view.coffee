@@ -9,7 +9,7 @@ FooterView.__set__ 'FeedbackView', Backbone.View
 describe 'FooterView', ->
   beforeEach (done) ->
     benv.setup =>
-      benv.expose { $: require 'components-jquery' }
+      benv.expose { $: benv.require 'components-jquery' }
       Backbone.$ = $
       benv.render '../template.jade', {}, =>
         @view = new FooterView el: $('#main-layout-footer')

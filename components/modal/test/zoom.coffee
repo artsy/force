@@ -11,7 +11,7 @@
 describe 'ZoomView', ->
   # beforeEach (done) ->
   #   benv.setup =>
-  #     benv.expose { $: require 'components-jquery' }
+  #     benv.expose { $: benv.require 'components-jquery' }
   #     Backbone.$ = $
   #     benv.render resolve(__dirname, '../template.jade'), {}, =>
   #       @view = new ZoomView imgSrc: 'foobar.jpg'

@@ -61,9 +61,10 @@ module.exports.teardown = function() {
 
 module.exports.require = function(filename, globalVarName) {
   var fullPath = path.resolve(path.dirname(module.parent.filename), filename);
+  if (!fs.existsSync(fullPath)) fullPath = require.resolve(filename);
   var mod = rewire(fullPath);
   var w = mod.__get__('window');
-  return w[globalVarName] || mod.__get__(globalVarName);
+  return globalVarName ? (w[globalVarName] || mod.__get__(globalVarName)) : mod;
 }
 
 // Renders a server-side template into a fake browser's body.

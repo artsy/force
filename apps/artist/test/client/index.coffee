@@ -13,13 +13,13 @@ describe 'ArtistView', ->
   before (done) ->
     sinon.stub _, 'defer'
     benv.setup =>
-      benv.expose { $: require 'components-jquery' }
+      benv.expose { $: benv.require 'components-jquery' }
       Backbone.$ = $
       done()
 
   after ->
     _.defer.restore()
-    # benv.teardown()
+    benv.teardown()
 
   beforeEach (done) ->
     sinon.stub Backbone, 'sync'
