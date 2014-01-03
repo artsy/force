@@ -10,8 +10,14 @@ module.exports = class Profile extends Backbone.Model
   icon: ->
     new Icon @get('icon'), profileId: @get('id')
 
-  displayName: ->
-  	@get('owner')?.name
-
   coverImage: ->
     new CoverImage @get('cover_image'), profileId: @get('id')
+
+  alphaSortKey: ->
+    @displayName()
+
+  href: ->
+    "#{sd.ARTSY_URL}/#{@get('id')}"
+
+  displayName: ->
+    @get('owner')?.name
