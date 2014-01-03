@@ -75,9 +75,9 @@
     &.is-active
       color highlight-color
   .header-user-name
-    min-width 146px
+    position relative
     text-align center
-    border-right none
+    border none
     &:hover
       #main-layout-header-user-nav
         display block
@@ -85,24 +85,43 @@
 #main-layout-header-user-nav
   display none
   position absolute
-  top 0px
-  right 0px
-  border 3px solid black
-  border-right 0 solid
+  top 0
+  right 0
+  left 0
   z-index 2
-  background white
+  background-color white
+  &:before
+  &:after
+  a:last-child:after
+    display block
+    content ''
+    position absolute
+    background-color black
+  &:before
+    top 0
+    bottom 0
+    left 0
+    width 3px
+  &:after
+    top 0
+    left 0
+    width 100%
+    height 3px
   a
     display block
     text-align center
     width 100%
+    border none
     border-top 1px solid light-gray-border-color
-    padding-right 20px
-    border-right 0 solid
     &:first-child
-      border-top 0 solid
-      padding-top 14px
+      border none
+    &:last-child:after
+      bottom 0
+      left 0
+      width 100%
+      height 3px
     &:hover
-      background-color #f3f3f3
+      background-color faint-gray-background-hover-color
 
 #main-layout-welcome-header
   position relative
