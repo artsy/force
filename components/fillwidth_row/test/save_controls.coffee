@@ -23,7 +23,7 @@ describe 'SaveControls', ->
           done()
 
     afterEach ->
-      benv.teardown()
+      # benv.teardown()
 
     it 'triggers the login modal if theres no artworkCollection', ->
       sinon.spy mediator, 'trigger'
@@ -42,7 +42,7 @@ describe 'SaveControls', ->
             done()
 
       afterEach ->
-        benv.teardown()
+        # benv.teardown()
 
       it 'saves the artwork if it is not in the collection', ->
         @view.model.isSaved = -> false

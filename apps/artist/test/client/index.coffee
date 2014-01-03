@@ -19,7 +19,7 @@ describe 'ArtistView', ->
 
   after ->
     _.defer.restore()
-    benv.teardown()
+    # benv.teardown()
 
   beforeEach (done) ->
     sinon.stub Backbone, 'sync'

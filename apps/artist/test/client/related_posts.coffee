@@ -17,7 +17,7 @@ describe 'RelatedPostsView', ->
       done()
 
   after ->
-    benv.teardown()
+    # benv.teardown()
 
   beforeEach (done) ->
     sinon.stub Backbone, 'sync'
