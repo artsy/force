@@ -21,7 +21,7 @@ module.exports.AboutRouter = class AboutRouter extends Backbone.Router
     mediator.trigger 'scroll:top'
 
   toSection: (slug) ->
-    mediator.trigger 'scroll:position', @_positionFromSlug(slug)
+    _.defer => mediator.trigger 'scroll:position', @_positionFromSlug(slug)
 
   _positionFromSlug: (slug) ->
     section = slug.replace /\/about\/|\-/g, ''
