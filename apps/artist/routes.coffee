@@ -15,7 +15,7 @@ FollowArtistCollection = require '../../models/follow_artist_collection'
     cache  : true
     success: (artist) ->
       res.locals.sd.ARTIST = artist.toJSON()
-      followArtistCollection = new FollowArtistCollection(userId: req.user.get('id'))
+      followArtistCollection = new FollowArtistCollection
       followArtistCollection.follow req.params.id,
         success: ->
           res.render 'index', artist: artist

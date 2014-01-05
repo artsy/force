@@ -72,6 +72,15 @@ describe 'FollowArtistCollection', ->
         specificArtistAddedCalls.should.equal 0
       , 100
 
+    it 'calls the success callback passed in', ->
+      successCb = sinon.stub()
+      artist = new Artist { id: 'baz', title: 'Baz' }
+      @followArtistCollection.follow artist.get('id'), { success: successCb }
+      Backbone.sync.args[0][0].should.equal 'create'
+      Backbone.sync.args[0][1].url.should.include '/api/v1/me/follow/artist?artist_id=baz'
+      Backbone.sync.args[0][2].success { foo: 'bar' }
+      successCb.called.should.be.ok
+
   describe 'unfollow', ->
 
     it 'removes artist from the followed artists followArtistCollection', ->
@@ -107,6 +116,15 @@ describe 'FollowArtistCollection', ->
         artistRemovedCalls.should.equal 0
         specificArtistRemovedCalls.should.equal 0
       , 100
+
+    it 'calls the success callback passed in', ->
+      successCb = sinon.stub()
+      artist = @followArtistCollection.get('artists').first()
+      @followArtistCollection.unfollow artist.get('id'), { success: successCb }
+      Backbone.sync.args[0][0].should.equal 'delete'
+      Backbone.sync.args[0][1].url.should.include '/api/v1/me/follow/artist/foo'
+      Backbone.sync.args[0][2].success { foo: 'bar' }
+      successCb.called.should.be.ok
 
   describe 'isFollowed', ->
 

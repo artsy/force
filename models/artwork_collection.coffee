@@ -59,7 +59,7 @@ module.exports = class ArtworkCollection extends Backbone.Model
     @_save artwork, options
     model = new Backbone.Model
     model.url = "#{@url()}/artwork/#{artworkId}?user_id=#{@get('userId')}"
-    model.save
+    model.save null,
       success: options?.success
       error: (error) =>
         unless sd.NODE_ENV == 'test'
