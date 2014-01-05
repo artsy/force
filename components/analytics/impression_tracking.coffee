@@ -13,7 +13,7 @@ module.exports.trackListItems = (listItems, $list) ->
   eventId = listItems[0].model.get('id')
   $window.off(".#{eventId}")
   $window.on "scroll.#{eventId}", _.throttle(->
-    if ($window.scrollTop() + $window.height()) > top
+    if ($window.scrollTop() + ($window.height() or 0)) >= top
       $window.off(".#{eventId}")
       viewedArtworkIds = _.compact(_.map(listItems, (artworkView) -> artworkView.model.get('id') ))
       analytics.trackImpression 'Artwork', viewedArtworkIds

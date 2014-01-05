@@ -36,7 +36,7 @@ module.exports.track =
   _.reduce(Object.keys(categories), (memo, kind) ->
     memo[kind] = (description, options) ->
 
-     # Send mixpanel event
+      # Send mixpanel event
       unless typeof mixpanel is 'undefined'
         options.category  = categories[kind] || categories.other
 
@@ -81,7 +81,7 @@ module.exports.multi = (description, modelName, ids) ->
   chunkedIds = _.groupBy(ids, (a, b) => return Math.floor(b / maxTrackableMultiIds))
 
   for chunk, index in _.toArray(chunkedIds)
-    # only fire log events 1x per second
+    # Fire log events at 1/2 second intervals
     ((encodedIds) =>
       _.delay( =>
         @trackMulti description, @modelNameAndIdToLabel(modelName, encodedIds)
