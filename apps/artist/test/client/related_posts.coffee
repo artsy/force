@@ -5,7 +5,7 @@ sinon             = require 'sinon'
 { fabricate }     = require 'antigravity'
 Post              = require '../../../../models/post'
 Artist            = require '../../../../models/artist'
-RelatedPostsView  = benv.requireWithJadeify resolve(__dirname, '../../client/related_posts'), ['relatedPostsTemplate']
+RelatedPostsView  = benv.requireWithJadeify resolve(__dirname, '../../client/related_posts'), ['relatedPostsTemplate', 'noPostsTemplate']
 _                 = require 'underscore'
 
 describe 'RelatedPostsView', ->
@@ -26,9 +26,7 @@ describe 'RelatedPostsView', ->
       sd: {}
       artist: artist
     }, =>
-      @calledNoPosts = false
-      @noPosts = -> @calledNoPosts = true
-      @view = new RelatedPostsView { el: $('body'), model: artist, numToShow: 2, noPosts: @noPosts }
+      @view = new RelatedPostsView { el: $('body'), model: artist, numToShow: 2 }
       done()
 
   afterEach ->
@@ -42,7 +40,8 @@ describe 'RelatedPostsView', ->
 
     it 'doesnt render anything if there are no results', ->
       Backbone.sync.args[0][2].success []
-      @calledNoPosts.should.be_true
+      @view.$el.html().should.include 'Do you have an interesting insight'
+      @view.$el.html().should.include '<div class="artist-add-post-button button avant-garde-button-white"><div class="icon-write"></div><span>Add Post</span></div>'
 
     it 'renders the right content', ->
       Backbone.sync.args[0][2].success [
