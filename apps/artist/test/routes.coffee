@@ -10,7 +10,7 @@ describe 'Artist routes', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
     @req = { params: { id: 'foo' } }
-    @res = { render: sinon.stub(), locals: { sd: { ARTSY_URL: 'http://localhost:5000'} } }
+    @res = { render: sinon.stub(), redirect: sinon.stub(), locals: { sd: { ARTSY_URL: 'http://localhost:5000'} } }
 
   afterEach ->
     Backbone.sync.restore()
@@ -30,11 +30,9 @@ describe 'Artist routes', ->
 
   describe '#follow', ->
 
-    it 'renders the artist template without a current user', ->
+    it 'redirect to artist page without user', ->
       routes.follow @req, @res
-      _.last(Backbone.sync.args)[2].success fabricate 'artist', id: 'andy-foobar'
-      @res.render.args[0][0].should.equal 'index'
-      @res.render.args[0][1].artist.get('id').should.equal 'andy-foobar'
+      @res.redirect.args[0][0].should.equal '/artist/foo'
 
     it 'follows an artist and renders the artist template', ->
       @req.user = new CurrentUser fabricate 'user'
