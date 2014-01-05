@@ -4,9 +4,9 @@
 # services like Google Analytics are integrated.
 #
 
-_      = require 'underscore'
-sd     = require('sharify').data
-crypto = require 'crypto'
+_          = require 'underscore'
+sd         = require('sharify').data
+createHash = require('crypto').createHash
 
 _.mixin(require 'underscore.string')
 
@@ -68,7 +68,7 @@ maxTrackableMultiIds = 50
 
 module.exports.encodeMulti = (ids) ->
   ids = _.compact(ids)
-  (_.map ids, (id) -> crypto.createHash('md5').update(id).digest('hex').substr(0, 8)).join("-")
+  (_.map ids, (id) -> createHash('md5').update(id).digest('hex').substr(0, 8)).join("-")
 
 module.exports.trackMulti = (description, data) =>
   # Send google analytics event
