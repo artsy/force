@@ -72,6 +72,15 @@ describe 'ArtworkCollection', ->
         specificArtworkAddedCalls.should.equal 0
       , 100
 
+    it 'calls the success callback', ->
+      successCb = sinon.stub()
+      artwork = new Artwork { id: 'baz', title: 'Baz' }
+      @artworkCollection.saveArtwork artwork.get('id'), { success: successCb }
+      Backbone.sync.args[0][0].should.equal 'create'
+      Backbone.sync.args[0][1].url.should.include '/api/v1/collection/saved-artwork/artwork/baz'
+      Backbone.sync.args[0][1].success
+      successCb.called.should.be.ok
+
   describe 'unsaveArtwork', ->
 
     it 'removes artwork from the saved artworks artworkCollection', ->
@@ -107,6 +116,15 @@ describe 'ArtworkCollection', ->
         artworkRemovedCalls.should.equal 0
         specificArtworkRemovedCalls.should.equal 0
       , 100
+
+    it 'calls the success callback', ->
+      successCb = sinon.stub()
+      artwork = @artworkCollection.get('artworks').first()
+      @artworkCollection.unsaveArtwork artwork.get('id'), { success: successCb }
+      Backbone.sync.args[0][0].should.equal 'delete'
+      Backbone.sync.args[0][1].url.should.include '/api/v1/collection/saved-artwork/artwork/foo'
+      Backbone.sync.args[0][2].success
+      successCb.called.should.be.ok
 
   describe 'isSaved', ->
 
