@@ -111,6 +111,7 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
       $artistRow = @$("#artist-related-#{type.toLowerCase()} li:nth-child(#{i + 1})")
       view = new FillwidthView
         artworkCollection: @artworkCollection
+        doneFetching: true
         collection: artworks
         el: $artistRow.find('.artist-related-artist-artworks')
       view.render()
