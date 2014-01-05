@@ -1,11 +1,10 @@
-rewire    = require 'rewire'
 benv      = require 'benv'
 analytics = require '../../../lib/analytics'
 Artwork   = require '../../../models/artwork'
 sinon     = require 'sinon'
 Backbone  = require 'backbone'
 sd        = require('sharify').data
-impressionTracking = rewire '../impression_tracking'
+impressionTracking = require '../impression_tracking'
 
 describe 'ImpressionTracking', ->
   before (done) ->
