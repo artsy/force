@@ -10,7 +10,7 @@ FollowArtistCollection = require '../../models/follow_artist_collection'
     error: res.backboneError
 
 @follow = (req, res) ->
-  return @index(req, res) unless req.user
+  return res.redirect("/artist/#{req.params.id}") unless req.user
   new Artist(id: req.params.id).fetch
     cache  : true
     success: (artist) ->
