@@ -78,7 +78,7 @@ describe 'ArtworkCollection', ->
       @artworkCollection.saveArtwork artwork.get('id'), { success: successCb }
       Backbone.sync.args[0][0].should.equal 'create'
       Backbone.sync.args[0][1].url.should.include '/api/v1/collection/saved-artwork/artwork/baz'
-      Backbone.sync.args[0][1].success
+      Backbone.sync.args[0][2].success { foo: 'bar' }
       successCb.called.should.be.ok
 
   describe 'unsaveArtwork', ->
@@ -123,7 +123,7 @@ describe 'ArtworkCollection', ->
       @artworkCollection.unsaveArtwork artwork.get('id'), { success: successCb }
       Backbone.sync.args[0][0].should.equal 'delete'
       Backbone.sync.args[0][1].url.should.include '/api/v1/collection/saved-artwork/artwork/foo'
-      Backbone.sync.args[0][2].success
+      Backbone.sync.args[0][2].success { foo: 'bar' }
       successCb.called.should.be.ok
 
   describe 'isSaved', ->

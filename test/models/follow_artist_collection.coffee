@@ -78,7 +78,7 @@ describe 'FollowArtistCollection', ->
       @followArtistCollection.follow artist.get('id'), { success: successCb }
       Backbone.sync.args[0][0].should.equal 'create'
       Backbone.sync.args[0][1].url.should.include '/api/v1/me/follow/artist?artist_id=baz'
-      Backbone.sync.args[0][1].success
+      Backbone.sync.args[0][2].success { foo: 'bar' }
       successCb.called.should.be.ok
 
   describe 'unfollow', ->
@@ -123,7 +123,7 @@ describe 'FollowArtistCollection', ->
       @followArtistCollection.unfollow artist.get('id'), { success: successCb }
       Backbone.sync.args[0][0].should.equal 'delete'
       Backbone.sync.args[0][1].url.should.include '/api/v1/me/follow/artist/foo'
-      Backbone.sync.args[0][1].success
+      Backbone.sync.args[0][2].success { foo: 'bar' }
       successCb.called.should.be.ok
 
   describe 'isFollowed', ->

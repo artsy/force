@@ -39,8 +39,8 @@ module.exports = class FollowArtistCollection extends Backbone.Model
     @_follow artist, options
     model = new Backbone.Model
     model.url = "#{@url()}/artist?artist_id=#{artistId}"
-    model.save
-      success: options?.success?()
+    model.save null,
+      success: options?.success
       error: (error) =>
         unless sd.NODE_ENV == 'test'
           @_unfollow artist, options
@@ -62,7 +62,7 @@ module.exports = class FollowArtistCollection extends Backbone.Model
     model.url = "#{@url()}/artist/#{artistId}"
     model.isNew = -> false
     model.destroy
-      success: options?.success?()
+      success: options?.success
       error: (error) =>
         unless sd.NODE_ENV == 'test'
           @_follow artist, options
