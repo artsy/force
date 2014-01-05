@@ -1,8 +1,9 @@
-_            = require 'underscore'
-Backbone     = require 'backbone'
-template     = -> require('./template.jade') arguments...
-SaveControls = require('./save_controls.coffee')
-sd           = require('sharify').data
+_              = require 'underscore'
+Backbone       = require 'backbone'
+template       = -> require('./template.jade') arguments...
+SaveControls   = require('./save_controls.coffee')
+sd             = require('sharify').data
+trackListItems = require("../analytics/impression_tracking.coffee").trackListItems
 
 module.exports = class FillwidthView extends Backbone.View
 
@@ -11,7 +12,7 @@ module.exports = class FillwidthView extends Backbone.View
     @page = 1
     @fetched = 0
     @listenTo @collection, 'request', @renderSpinner
-    @listenTo @collection, 'sync', @render
+    @listenTo(@collection, 'sync', @render) unless options.doneFetching
     @
 
   renderSpinner: ->
@@ -33,13 +34,12 @@ module.exports = class FillwidthView extends Backbone.View
     return unless $list.length > 0
     listItems =
       for artwork, index in artworks.models
-        item = new SaveControls
+        new SaveControls
           artworkCollection: @artworkCollection
           model: artwork
           el: $($list[index]).find('.overlay-container')
 
-    # Todo: setup impression tracking
-    # @initializeImpressionTracking listItems, $list
+    trackListItems listItems, $list
     @syncSavedArtworks(artworks) if @artworkCollection
 
   syncSavedArtworks: (artworks) ->

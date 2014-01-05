@@ -1,4 +1,4 @@
-#!
+#
 # Simple wrapper around mixpanel to simplify common analytics actions.
 # This should also provide a central place to put analytics logic when/if other
 # services like Google Analytics are integrated.
@@ -36,7 +36,7 @@ module.exports.track =
   _.reduce(Object.keys(categories), (memo, kind) ->
     memo[kind] = (description, options) ->
 
-      # Send mixpanel event
+     # Send mixpanel event
       unless typeof mixpanel is 'undefined'
         options.category  = categories[kind] || categories.other
 

@@ -32,11 +32,11 @@ module.exports = class FollowButton extends Backbone.View
       return false
 
     if @model.isFollowed @followArtistCollection
-      analytics.track.click @analyticsUnfollowMessage, analytics.modelToLabel(@model)
+      analytics.track.click @analyticsUnfollowMessage, label: analytics.modelToLabel(@model)
       @followArtistCollection.unfollow @model.get('id'),
         error: => @$el.attr('data-state', 'following')
     else
-      analytics.track.click @analyticsFollowMessage, analytics.modelToLabel(@model)
+      analytics.track.click @analyticsFollowMessage, label: analytics.modelToLabel(@model)
       @followArtistCollection.follow @model.get('id'),
         error: => @$el.attr('data-state', 'follow')
 
