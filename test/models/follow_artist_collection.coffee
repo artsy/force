@@ -51,16 +51,17 @@ describe 'FollowArtistCollection', ->
       Backbone.sync.args[0][0].should.equal 'create'
       Backbone.sync.args[0][1].url.should.include '/api/v1/me/follow/artist?artist_id=baz'
 
-    it 'can trigger add events for a specific artist', ->
+    it 'can trigger add events for a specific artist', (done) ->
       specificArtistAddedCalls = 0
       artist = new Artist({ id: 'baz', title: 'Baz' })
       @followArtistCollection.on "add:#{artist.get('id')}", -> specificArtistAddedCalls += 1
       @followArtistCollection.follow artist.get('id')
       setTimeout ->
         specificArtistAddedCalls.should.equal 1
+        done()
       , 100
 
-    it 'can accept a silent option to prevent event triggers', ->
+    it 'can accept a silent option to prevent event triggers', (done) ->
       artistAddedCalls = 0
       specificArtistAddedCalls = 0
       artist = new Artist({ id: 'baz', title: 'Baz' })
@@ -70,6 +71,7 @@ describe 'FollowArtistCollection', ->
       setTimeout ->
         artistAddedCalls.should.equal 0
         specificArtistAddedCalls.should.equal 0
+        done()
       , 100
 
     it 'calls the success callback passed in', ->
@@ -96,16 +98,17 @@ describe 'FollowArtistCollection', ->
       Backbone.sync.args[0][0].should.equal 'delete'
       Backbone.sync.args[0][1].url.should.include '/api/v1/me/follow/artist/foo'
 
-    it 'can trigger remove events for a specific artist', ->
+    it 'can trigger remove events for a specific artist', (done) ->
       specificArtistRemovedCalls = 0
       artist = @followArtistCollection.get('artists').first()
       @followArtistCollection.on "remove:#{artist.get('id')}", -> specificArtistRemovedCalls += 1
       @followArtistCollection.unfollow artist.get('id')
       setTimeout ->
         specificArtistRemovedCalls.should.equal 1
+        done()
       , 100
 
-    it 'can accept a silent option to prevent event triggers', ->
+    it 'can accept a silent option to prevent event triggers', (done) ->
       artistRemovedCalls = 0
       specificArtistRemovedCalls = 0
       artist = @followArtistCollection.get('artists').first()
@@ -115,6 +118,7 @@ describe 'FollowArtistCollection', ->
       setTimeout ->
         artistRemovedCalls.should.equal 0
         specificArtistRemovedCalls.should.equal 0
+        done()
       , 100
 
     it 'calls the success callback passed in', ->
@@ -136,7 +140,7 @@ describe 'FollowArtistCollection', ->
 
   describe 'broadcastFollowed', ->
 
-    it 'triggers an artist specific add for all artists in the followArtistCollection', ->
+    it 'triggers an artist specific add for all artists in the followArtistCollection', (done) ->
       specificArtistAddedCalls = 0
       a1 = @followArtistCollection.get('artists').at 0
       a2 = @followArtistCollection.get('artists').at 1
@@ -145,6 +149,7 @@ describe 'FollowArtistCollection', ->
       @followArtistCollection.broadcastFollowed()
       setTimeout ->
         specificArtistAddedCalls.should.equal 2
+        done()
       , 100
 
   describe 'artistIdsToSync', ->

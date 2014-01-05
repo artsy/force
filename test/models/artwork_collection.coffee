@@ -51,16 +51,17 @@ describe 'ArtworkCollection', ->
       Backbone.sync.args[0][0].should.equal 'create'
       Backbone.sync.args[0][1].url.should.include '/api/v1/collection/saved-artwork/artwork/baz'
 
-    it 'can trigger add events for a specific artwork', ->
+    it 'can trigger add events for a specific artwork', (done) ->
       specificArtworkAddedCalls = 0
       artwork = new Artwork({ id: 'baz', title: 'Baz' })
       @artworkCollection.on "add:#{artwork.get('id')}", -> specificArtworkAddedCalls += 1
       @artworkCollection.saveArtwork artwork.get('id')
       setTimeout ->
         specificArtworkAddedCalls.should.equal 1
+        done()
       , 100
 
-    it 'can accept a silent option to prevent event triggers', ->
+    it 'can accept a silent option to prevent event triggers', (done) ->
       artworkAddedCalls = 0
       specificArtworkAddedCalls = 0
       artwork = new Artwork({ id: 'baz', title: 'Baz' })
@@ -70,6 +71,7 @@ describe 'ArtworkCollection', ->
       setTimeout ->
         artworkAddedCalls.should.equal 0
         specificArtworkAddedCalls.should.equal 0
+        done()
       , 100
 
     it 'calls the success callback', ->
@@ -96,16 +98,17 @@ describe 'ArtworkCollection', ->
       Backbone.sync.args[0][0].should.equal 'delete'
       Backbone.sync.args[0][1].url.should.include '/api/v1/collection/saved-artwork/artwork/foo'
 
-    it 'can trigger remove events for a specific artwork', ->
+    it 'can trigger remove events for a specific artwork', (done) ->
       specificArtworkRemovedCalls = 0
       artwork = @artworkCollection.get('artworks').first()
       @artworkCollection.on "remove:#{artwork.get('id')}", -> specificArtworkRemovedCalls += 1
       @artworkCollection.unsaveArtwork artwork.get('id')
       setTimeout ->
         specificArtworkRemovedCalls.should.equal 1
+        done()
       , 100
 
-    it 'can accept a silent option to prevent event triggers', ->
+    it 'can accept a silent option to prevent event triggers', (done) ->
       artworkRemovedCalls = 0
       specificArtworkRemovedCalls = 0
       artwork = @artworkCollection.get('artworks').first()
@@ -115,6 +118,7 @@ describe 'ArtworkCollection', ->
       setTimeout ->
         artworkRemovedCalls.should.equal 0
         specificArtworkRemovedCalls.should.equal 0
+        done()
       , 100
 
     it 'calls the success callback', ->
@@ -136,7 +140,7 @@ describe 'ArtworkCollection', ->
 
   describe 'broadcastSaved', ->
 
-    it 'triggers an artwork specific add for all artworks in the artworkCollection', ->
+    it 'triggers an artwork specific add for all artworks in the artworkCollection', (done) ->
       specificArtworkAddedCalls = 0
       a1 = @artworkCollection.get('artworks').at 0
       a2 = @artworkCollection.get('artworks').at 1
@@ -145,6 +149,7 @@ describe 'ArtworkCollection', ->
       @artworkCollection.broadcastSaved()
       setTimeout ->
         specificArtworkAddedCalls.should.equal 2
+        done()
       , 100
 
   describe 'artworkIdsToSync', ->
