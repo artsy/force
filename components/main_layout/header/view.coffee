@@ -1,3 +1,4 @@
+_               = require 'underscore'
 Backbone        = require 'backbone'
 SearchBarView   = require './search_bar/view.coffee'
 AuthModalView   = require '../../auth_modal/view.coffee'
@@ -20,11 +21,12 @@ module.exports = class HeaderView extends Backbone.View
     @checkRemoveWelcomeHeader()
 
   checkRemoveWelcomeHeader: =>
-    if sd.CURRENT_USER or readCookie('hide-force-header') or @$window.scrollTop() > @$welcomeHeader.height()
+    if sd.CURRENT_USER or readCookie('hide-force-header') or
+       @$window.scrollTop() > @$welcomeHeader.height()
       @removeWelcomeHeader()
 
   openAuth: (options) ->
-    @modal = new AuthModalView(mode: options.mode, width: '500px')
+    @modal = new AuthModalView _.extend({ width: '500px' }, options)
 
   removeWelcomeHeader: ->
     @$welcomeHeader.remove()

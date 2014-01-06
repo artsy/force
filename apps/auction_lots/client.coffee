@@ -42,7 +42,7 @@ module.exports.AuctionResultsView = class AuctionResultsView extends Backbone.Vi
   signUp: (e) ->
     e.preventDefault()
     # Use login until signup form works
-    mediator.trigger 'open:auth', { mode: 'login' }
+    mediator.trigger 'open:auth', { mode: 'register', copy: 'Sign up to see sale price' }
 
 module.exports.init = ->
   $ ->

@@ -28,7 +28,7 @@ module.exports = class FollowButton extends Backbone.View
 
   followArtist: (e) ->
     unless @followArtistCollection
-      mediator.trigger 'open:auth', { mode: 'login' }
+      mediator.trigger 'open:auth', { mode: 'register', copy: 'Sign up to follow artists' }
       return false
 
     if @model.isFollowed @followArtistCollection
