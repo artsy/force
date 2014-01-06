@@ -16,6 +16,9 @@ templates =
 class Login extends Backbone.Model
   url: "/force/users/sign_in"
 
+class Signup extends Backbone.Model
+  url: "/force/users/invitation/accept"
+
 class Forgot extends Backbone.Model
   url: "#{ARTSY_URL}/api/v1/users/send_reset_password_instructions"
 
@@ -27,7 +30,7 @@ class Forgot extends Backbone.Model
 models =
   login: Login
   forgot: Forgot
-  register: require '../../models/user.coffee'
+  register: Signup
 
 module.exports = class AuthModalView extends ModalView
   _.extend @prototype, Form
@@ -65,8 +68,10 @@ module.exports = class AuthModalView extends ModalView
       $submit.attr 'data-state', 'loading'
 
       new models[@state.get('mode')]().save @serializeForm(),
-        success: ->
-          window.location.href = '/force/log_in_to_artsy'
+        success: =>
+          href = '/force/log_in_to_artsy'
+          href += '?redirect-to=/personalize/collect' if @state.get('mode') is 'register'
+          location.href = href
         error: (model, xhr, options) =>
           $submit.attr 'data-state', 'error'
           @$('.auth-errors').text @errorMessage(xhr) # Display error
