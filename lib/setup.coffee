@@ -22,7 +22,7 @@ backboneCacheSync = require 'backbone-cache-sync'
 redirectMobile = require './middleware/redirect_mobile'
 localsMiddleware = require './middleware/locals'
 helpersMiddleware = require './middleware/helpers'
-ensureSSLMiddleware = require './middleware/ensure_ssl'
+ensureSSL = require './middleware/ensure_ssl'
 errorsMiddleware = require('./middleware/errors').errorHandler
 
 # Setup sharify constants & require dependencies that use sharify data
@@ -56,22 +56,20 @@ module.exports = (app) ->
   # Add up front middleware
   app.use sharify
   app.use redirectMobile
-  app.use ensureSSLMiddleware
+  app.use ensureSSL
 
-  # Setup Artsy XAPP middleware
+  # Setup Artsy XAPP & Passport middleware
   app.use artsyXappMiddlware(
     artsyUrl: ARTSY_URL
     clientId: ARTSY_ID
     clientSecret: ARTSY_SECRET
   ) unless app.get('env') is 'test'
-
-  # Setup Artsy Passport
+  app.use express.bodyParser()
   app.use express.cookieParser()
   app.use express.cookieSession
     secret: SESSION_SECRET
     cookie: { domain: COOKIE_DOMAIN }
     key   : 'force.sess'
-  app.use express.bodyParser()
   app.use artsyPassport _.extend config,
     CurrentUser: CurrentUser
     facebookPath: '/force/users/auth/facebook'

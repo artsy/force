@@ -5,12 +5,12 @@
         p.small-caps Log in to Artsy
         nav.auth-options
           a.auth-login-facebook.avant-garde-button-black(
-            href='/force/users/auth/facebook?sign_up=true'
+            href='/force/users/auth/facebook?redirect-to=' + pathname
           )
             i.icon-facebook
             | Log in using Facebook
           a.auth-login-twitter.avant-garde-button-black(
-            href='/force/users/auth/twitter?sign_up=true'
+            href='/force/users/auth/twitter?redirect-to=' + pathname
           )
             i.icon-twitter
             | Log in using Twitter
