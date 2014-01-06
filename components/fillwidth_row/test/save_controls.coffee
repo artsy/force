@@ -25,11 +25,11 @@ describe 'SaveControls', ->
     afterEach ->
       benv.teardown()
 
-    it 'triggers the login modal if theres no artworkCollection', ->
+    it 'triggers the register modal if theres no artworkCollection', ->
       sinon.spy mediator, 'trigger'
       @view.$('.overlay-button-save').click()
       mediator.trigger.args[0][0].should.equal 'open:auth'
-      mediator.trigger.args[0][1].mode.should.equal 'login'
+      mediator.trigger.args[0][1].mode.should.equal 'register'
       mediator.trigger.restore()
 
     describe 'logged in behavior', ->

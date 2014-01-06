@@ -49,6 +49,12 @@ describe 'HeaderView', ->
       @view.$welcomeHeader.remove.called.should.be.ok
       @view.$window.off.called.should.be.ok
 
+  describe '#openAuth', ->
+
+    it 'opens with custom copy', ->
+      @view.openAuth copy: 'Sign up to foo bar'
+      console.log @view.$el.html()
+
   # describe '#login', ->
   #   it 'triggers the mediator', ->
   #     spy = sinon.spy mediator, 'trigger'
