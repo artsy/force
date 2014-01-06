@@ -39,8 +39,7 @@ module.exports = class HeaderView extends Backbone.View
 
   events:
     'click .mlh-login': 'login'
-    # Removing this event until we can work out signup bugs
-    #'click .mlh-signup': 'signup'
+    'click .mlh-signup': 'signup'
 
   signup: (e) ->
     e.preventDefault()
