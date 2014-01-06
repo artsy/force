@@ -112,6 +112,7 @@ module.exports = (app) ->
   app.use require "../apps/galleries"
   app.use require "../apps/institutions"
   app.use require "../apps/order"
+  app.use require "../apps/personalize"
   app.use require "../apps/page"
   app.use require "../apps/partners"
   app.use require "../apps/search"

@@ -3,21 +3,26 @@ sd        = require('sharify').data
 Backbone  = require 'backbone'
 Image     = require './mixins/image.coffee'
 
+_.mixin(require 'underscore.string')
+
 module.exports = class SearchResult extends Backbone.Model
-  _.mixin(require 'underscore.string')
   _.extend @prototype, Image
 
-  initialize: ->
+  initialize: (options) ->
     @set
-      display: @trimDisplay()
-      image_url: @imageUrl()
-      display_model: @displayModel()
-      location: @location()
-      is_human: @isHuman()
+      display:        @display()
+      image_url:      @imageUrl()
+      display_model:  @displayModel()
+      location:       @location()
+      is_human:       @isHuman()
 
-    @value = @get 'display'
+    # Set value attribute for autocomplete usage
+    @value = @display()
 
-  trimDisplay: ->
+  display: ->
+    @get('name') || @trimmedDisplay()
+
+  trimmedDisplay: ->
     _.trim(_.truncate(@get('display'), 75))
 
   location: ->

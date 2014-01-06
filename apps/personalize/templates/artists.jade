@@ -1,0 +1,17 @@
+a.avant-garde-button-white.personalize-skip Skip
+
+header.personalize-header
+  h2= state.stepDisplay()
+  h1 Follow artists you are interested in
+  aside Get notified when new shows open or works are added
+
+section.personalize-step( data-step='artists' )
+  #personalize-artist-search-container
+    input#personalize-artist-search.bordered-input.is-block(
+      type='text', placeholder!='Type your favorite artist&rsquo;s name', autofocus
+    )
+    #personalize-artist-search-spinner: .loading-spinner-small
+
+  #personalize-artists-followed
+
+#personalize-artists-suggestions
