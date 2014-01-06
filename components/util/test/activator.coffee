@@ -12,6 +12,9 @@ render = (templateName) ->
   )
 
 describe 'Activator', ->
+  after ->
+    benv.teardown()
+
   describe '/foo/bar', ->
     before (done) ->
       benv.setup =>
@@ -29,6 +32,8 @@ describe 'Activator', ->
       @$cases.find('#case-2').text().should.equal 'is-active'
       @$cases.find('#case-3').text().should.equal 'is-inactive'
       @$cases.find('#case-4').text().should.equal 'is-inactive'
+      @$cases.find('#case-5').text().should.equal 'is-inactive'
+      @$cases.find('#case-6').text().should.equal 'is-inactive'
 
   describe '/foo/bar', ->
     before (done) ->
@@ -47,6 +52,8 @@ describe 'Activator', ->
       @$cases.find('#case-2').text().should.equal 'is-active'
       @$cases.find('#case-3').text().should.equal 'is-inactive'
       @$cases.find('#case-4').text().should.equal 'is-inactive'
+      @$cases.find('#case-5').text().should.equal 'is-inactive'
+      @$cases.find('#case-6').text().should.equal 'is-inactive'
 
   describe '/foo/baz', ->
     before (done) ->
@@ -65,3 +72,46 @@ describe 'Activator', ->
       @$cases.find('#case-2').text().should.equal 'is-inactive'
       @$cases.find('#case-3').text().should.equal 'is-active'
       @$cases.find('#case-4').text().should.equal 'is-inactive'
+      @$cases.find('#case-5').text().should.equal 'is-inactive'
+      @$cases.find('#case-6').text().should.equal 'is-inactive'
+
+  describe '/about', ->
+    before (done) ->
+      benv.setup =>
+        benv.expose {
+          $: benv.require 'components-jquery'
+          sd: { CURRENT_PATH: '/about' }
+        }
+        @$cases = $(render('activator')())
+        done()
+
+    after -> @$cases.remove()
+
+    it 'activates properly', ->
+      @$cases.find('#case-1').text().should.equal 'is-inactive'
+      @$cases.find('#case-2').text().should.equal 'is-inactive'
+      @$cases.find('#case-3').text().should.equal 'is-inactive'
+      @$cases.find('#case-4').text().should.equal 'is-inactive'
+      @$cases.find('#case-5').text().should.equal 'is-active'
+      @$cases.find('#case-6').text().should.equal 'is-inactive'
+
+  describe '/about/foobar', ->
+    before (done) ->
+      benv.setup =>
+        benv.expose {
+          $: benv.require 'components-jquery'
+          sd: { CURRENT_PATH: '/about/foobar' }
+        }
+        @$cases = $(render('activator')())
+        done()
+
+    after -> @$cases.remove()
+
+    it 'activates properly', ->
+      @$cases.find('#case-1').text().should.equal 'is-inactive'
+      @$cases.find('#case-2').text().should.equal 'is-inactive'
+      @$cases.find('#case-3').text().should.equal 'is-inactive'
+      @$cases.find('#case-4').text().should.equal 'is-inactive'
+      @$cases.find('#case-5').text().should.equal 'is-active'
+      @$cases.find('#case-6').text().should.equal 'is-active'
+
