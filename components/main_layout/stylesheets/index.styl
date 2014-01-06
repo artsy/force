@@ -56,7 +56,9 @@ img
 input
   garamond()
   font-size default-font-size
-  -webkit-appearance: none
+  appearance none
+  &[type='checkbox']
+    appearance checkbox
   &:focus
     outline none
 button, input
