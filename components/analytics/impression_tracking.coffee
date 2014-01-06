@@ -1,6 +1,6 @@
 _         = require 'underscore'
 sd        = require('sharify').data
-analytics = require('../../lib/analytics')
+analytics = require('../../lib/analytics.coffee')
 
 # very basic impression tracking that tracks all visible artworks when the $list is scrolled to
 # - only tracks VISIBLE artworks (useful for things like fillwidth rows where we don't display all artworks in the api response)
