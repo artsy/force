@@ -20,6 +20,7 @@ opts =
   signupPath: '/users/invitation/accept'
   twitterCallbackPath: '/users/auth/twitter/callback'
   facebookCallbackPath: '/users/auth/facebook/callback'
+  userKeys: ['id', 'type', 'name', 'email', 'phone', 'lab_features', 'default_profile_id']
 
 #
 # Main function that overrides/injects any options, sets up passport, sets up an app to
@@ -148,7 +149,9 @@ accessTokenCallback = (done) ->
 #
 serializeUser = (user, done) ->
   user.fetch
-    success: -> done null, user.toJSON()
+    success: ->
+      keys = ['accessToken'].concat opts.userKeys
+      done null, user.pick(keys)
     error: (m, e) -> done e.text
 
 deserializeUser = (userData, done) ->
