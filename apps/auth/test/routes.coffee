@@ -58,6 +58,6 @@ describe 'Auth routes', ->
       @res.redirect.args[0][0].should.include '/users/sign_in?trust_token=foobar'
 
     it 'follows a redirec to query param', ->
-      @req.query['redirect-to'] = 'foobar.google.net'
+      @req.query['redirect-to'] = 'personalize/collect'
       routes.loginToArtsy @req, @res
-      @res.redirect.args[0][0].should.include 'foobar.google.net'
+      @res.redirect.args[0][0].should.include 'personalize/collect'
