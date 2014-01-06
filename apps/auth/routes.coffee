@@ -9,9 +9,6 @@ CurrentUser = require '../../models/current_user.coffee'
 @submitLogin = (req, res) ->
   res.send { success: true, user: req.user?.toJSON() }
 
-@submitSignup = (req, res) ->
-  res.send { success: true, user: req.user?.toJSON() }
-
 @loginToArtsy = (req, res) ->
   request
     .post("#{SECURE_ARTSY_URL}/api/v1/me/trust_token")

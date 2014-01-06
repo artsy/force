@@ -22,6 +22,6 @@ app.get '/force/users/sign_out', routes.logout
 app.post '/force/users/sign_in_trust_token', routes.loginWithTrustToken
 app.get '/force/log_in_to_artsy', routes.loginToArtsy
 app.post loginPath, routes.submitLogin
-app.post signupPath, routes.submitSignup
+app.post signupPath, routes.submitLogin
 app.get twitterCallbackPath, routes.redirectAfterLogin
 app.get facebookCallbackPath, routes.redirectAfterLogin

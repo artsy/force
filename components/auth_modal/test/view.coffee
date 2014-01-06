@@ -26,12 +26,24 @@ describe 'AuthModalView', ->
 
   describe '#submit', ->
 
-    it 'directs to logging into Gravity after a successful login', ->
+    beforeEach ->
       sinon.stub location, 'reload'
       @view.validateForm = -> true
       @view.state = new Backbone.Model
+
+    afterEach ->
+      location.reload.restore()
+
+    it 'directs to logging into Gravity after a successful login', ->
       @view.state.set mode: 'login'
       @view.submit { preventDefault: -> }
       Backbone.sync.args[0][1].url.should.include 'users/sign_in'
+      Backbone.sync.args[0][2].success {}
+      location.href.should.include 'log_in_to_artsy'
+
+    it 'submits to signup when in that mode', ->
+      @view.state.set mode: 'register'
+      @view.submit { preventDefault: -> }
+      Backbone.sync.args[0][1].url.should.include 'users/invitation/accept'
       Backbone.sync.args[0][2].success {}
       location.href.should.include 'log_in_to_artsy'
