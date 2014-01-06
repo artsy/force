@@ -2,6 +2,7 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 sd = require('sharify').data
+mediator = require '../../../lib/mediator'
 
 describe 'AuthModalView', ->
 
@@ -23,6 +24,12 @@ describe 'AuthModalView', ->
 
   afterEach ->
     Backbone.sync.restore()
+
+  describe '#preInitialize', ->
+
+    it 'can render custom copy', ->
+      @view.preInitialize copy: 'Sign up to foobar.'
+      @view.templateData.copy.should.include 'Sign up to foobar'
 
   describe '#submit', ->
 

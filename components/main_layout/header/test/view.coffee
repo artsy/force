@@ -49,6 +49,12 @@ describe 'HeaderView', ->
       @view.$welcomeHeader.remove.called.should.be.ok
       @view.$window.off.called.should.be.ok
 
+  describe '#openAuth', ->
+
+    it 'opens with custom copy', ->
+      @view.openAuth copy: 'Sign up to foo bar'
+      HeaderView.__get__('AuthModalView').args[0][0].copy.should.include 'Sign up to foo bar'
+
   # describe '#login', ->
   #   it 'triggers the mediator', ->
   #     spy = sinon.spy mediator, 'trigger'

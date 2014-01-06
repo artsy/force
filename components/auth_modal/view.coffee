@@ -38,7 +38,7 @@ module.exports = class AuthModalView extends ModalView
   className: 'auth'
 
   template: ->
-    templates[@state.get('mode')]
+    templates[@state.get('mode')] arguments...
 
   events: -> _.extend super,
     'click .auth-toggle': 'toggleMode'
@@ -46,12 +46,14 @@ module.exports = class AuthModalView extends ModalView
     'click #auth-submit': 'submit'
 
   initialize: (options) ->
-    @state = new Backbone.Model(mode: options.mode)
+    @preInitialize options
+    super
 
+  preInitialize: (options) ->
+    @state = new Backbone.Model(mode: options.mode)
+    @templateData = { copy: options.copy or 'Enter your name, email and password to join' }
     @listenTo @state, 'change:mode', @reRender
     mediator.on 'auth:change:mode', @setMode, this
-
-    super
 
   setMode: (mode) ->
     @state.set 'mode', mode
