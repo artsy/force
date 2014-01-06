@@ -20,8 +20,8 @@ app.set 'view engine', 'jade'
 # Auth submission handlers
 app.get '/force/users/sign_out', routes.logout
 app.post '/force/users/sign_in_trust_token', routes.loginWithTrustToken
-app.get '/force/log_in_to_artsy', routes.loginToArtsy
 app.post loginPath, routes.submitLogin
 app.post signupPath, routes.submitLogin
-app.get twitterCallbackPath, routes.redirectAfterLogin
-app.get facebookCallbackPath, routes.redirectAfterLogin
+app.get '/force/log_in_to_artsy', routes.loginToArtsy
+app.get twitterCallbackPath, routes.loginToArtsy
+app.get facebookCallbackPath, routes.loginToArtsy

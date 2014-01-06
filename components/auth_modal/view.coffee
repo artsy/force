@@ -51,7 +51,9 @@ module.exports = class AuthModalView extends ModalView
 
   preInitialize: (options) ->
     @state = new Backbone.Model(mode: options.mode)
-    @templateData = { copy: options.copy or 'Enter your name, email and password to join' }
+    @templateData =
+      copy: options.copy or 'Enter your name, email and password to join'
+      pathname: location.pathname
     @listenTo @state, 'change:mode', @reRender
     mediator.on 'auth:change:mode', @setMode, this
 

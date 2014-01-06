@@ -10,7 +10,8 @@ CurrentUser = require '../../models/current_user.coffee'
   res.send { success: true, user: req.user?.toJSON() }
 
 @loginToArtsy = (req, res) ->
-  redirectTo = req.query['redirect-to'] or parse(req.get('Referrer') or '').path or '/'
+  redirectTo = req.body['redirect-to'] or req.query['redirect-to'] or
+               parse(req.get('Referrer') or '').path or '/'
   request
     .post("#{SECURE_ARTSY_URL}/api/v1/me/trust_token")
     .send(access_token: req.user.get 'accessToken')
@@ -23,9 +24,6 @@ CurrentUser = require '../../models/current_user.coffee'
   req.logout()
   res.redirect "#{SECURE_ARTSY_URL}/users/sign_out?" +
                "redirect_uri=#{APP_URL + (parse(req.get('Referrer') or '').path or '')}"
-
-@redirectAfterLogin = (req, res) ->
-  res.redirect req.body['redirect-to'] or req.get('Referrer') or '/'
 
 @loginWithTrustToken = (req, res) ->
   request.post(SECURE_ARTSY_URL + '/oauth2/access_token').send(

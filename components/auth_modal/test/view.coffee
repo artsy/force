@@ -31,6 +31,13 @@ describe 'AuthModalView', ->
       @view.preInitialize copy: 'Sign up to foobar.'
       @view.templateData.copy.should.include 'Sign up to foobar'
 
+    it 'passes the pathname to the template', ->
+      _location = global.location
+      global.location = pathname: 'foobarbaz'
+      @view.preInitialize {}
+      @view.templateData.pathname.should.equal 'foobarbaz'
+      global.location = _location
+
   describe '#submit', ->
 
     beforeEach ->
