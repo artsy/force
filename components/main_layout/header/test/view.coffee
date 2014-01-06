@@ -53,7 +53,7 @@ describe 'HeaderView', ->
 
     it 'opens with custom copy', ->
       @view.openAuth copy: 'Sign up to foo bar'
-      console.log @view.$el.html()
+      HeaderView.__get__('AuthModalView').args[0][0].copy.should.include 'Sign up to foo bar'
 
   # describe '#login', ->
   #   it 'triggers the mediator', ->
