@@ -1,2 +1,13 @@
-- function isActive(path) { return path.replace(/\/$/, '') === sd.CURRENT_PATH.split('?').shift().replace(/\/$/, '') }
-- function activeClass(path) { if (sd && sd.CURRENT_PATH) { return isActive(path) ? 'is-active' : 'is-inactive' } }
+- function isActive(path) {
+-   var exceptions, currentPath;
+-   exceptions    = ['/about'];
+-   path          = path.replace(/\/$/, ''); // Strip trailing slash
+-   currentPath   = sd.CURRENT_PATH.split('?').shift().replace(/\/$/, ''); // Strip trailing slash and query string
+-   if (exceptions.indexOf(path) != -1) {
+-     return currentPath.indexOf(path) != -1;
+-   } else {
+-     return path === currentPath;
+-   }
+- };
+
+- function activeClass(path) { if (sd && sd.CURRENT_PATH) return isActive(path) ? 'is-active' : 'is-inactive'; };
