@@ -18,6 +18,8 @@ class CurrentUser extends Backbone.Model
 app = module.exports = express()
 
 # Generic setup
+sharify.data = config
+app.use sharify
 Backbone.sync = backboneSuperSync
 app.set 'views', __dirname
 app.set 'view engine', 'jade'
@@ -25,7 +27,6 @@ app.use express.bodyParser()
 app.use express.cookieParser('foobar')
 app.use express.cookieSession()
 app.use express.static __dirname + '/public'
-app.use sharify config
 app.use require('artsy-xapp-middleware')
   artsyUrl: config.SECURE_ARTSY_URL
   clientId: config.ARTSY_ID
@@ -34,7 +35,6 @@ app.use require('artsy-xapp-middleware')
 # Setup Artsy Passport
 app.use artsyPassport _.extend config,
   CurrentUser: CurrentUser
-  sharifyData: sharify.data
 { loginPath, signupPath, twitterCallbackPath, facebookCallbackPath } = artsyPassport.options
 
 # Artsy passport route handlers

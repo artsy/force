@@ -121,7 +121,7 @@ module.exports =
   TWITTER_SECRET: ''
   ARTSY_ID: ''
   ARTSY_SECRET: ''
-  SECURE_URL: 'https://staging.artsy.net'
+  SECURE_ARTSY_URL: 'https://staging.artsy.net'
   APP_URL: 'http://local.artsy.net:3000'
   # An Artsy user that's linked to facebook and twitter
   ARTSY_EMAIL: 'craig@artsy.net'

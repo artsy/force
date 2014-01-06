@@ -137,8 +137,9 @@ twitterCallback = (token, tokenSecret, profile, done) ->
 
 accessTokenCallback = (done) ->
   return (err, res) ->
+    err = (err or res?.body.error_description)
     done(
-      (err or res?.body.error_description)
+      if err then new Error(err) else null
       new opts.CurrentUser(accessToken: res?.body.access_token)
     )
 

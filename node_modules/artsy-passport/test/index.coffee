@@ -59,6 +59,11 @@ describe 'Artsy Passport methods', ->
       opts.CurrentUser = ->
       @accessTokenCallback = @artsyPassport.__get__ 'accessTokenCallback'
 
-
     it 'is okay if there is no response object', ->
       @accessTokenCallback(->)({ bad: 'news' }, null)
+
+    it 'sends error messages in an error object', (done) ->
+      @accessTokenCallback((err) ->
+        err.message.should.include 'Epic Fail'
+        done()
+      )(null, { body: error_description: 'Epic Fail' })
