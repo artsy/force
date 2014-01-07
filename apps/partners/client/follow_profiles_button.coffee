@@ -23,7 +23,7 @@ module.exports = class FollowProfileButton extends Backbone.View
 
   onFollowClick: (e) ->
     unless @collection
-      mediator.trigger 'open:auth', { mode: 'login' }
+      mediator.trigger 'open:auth', { mode: 'register', copy: 'Sign up to follow galleries and museums' }
       return false
 
     if @collection.isFollowing @model
