@@ -63,7 +63,12 @@ module.exports = class SearchBarView extends Backbone.View
       engine: @_engine
       remote:
         url: "#{@search.url}&term=%QUERY"
-        filter: @search._parse
+        filter: (items) =>
+          if items?.length
+            analytics.track.funnel "Searched from header, with results", { query: @$input.val() }
+          else
+            analytics.track.funnel "Searched from header, with no results", { query: @$input.val() }
+          @search._parse(items)
         beforeSend: (xhr) ->
           xhr.setRequestHeader 'X-XAPP-TOKEN', sd.ARTSY_XAPP_TOKEN
           mediator.trigger 'search:start', xhr
