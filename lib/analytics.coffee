@@ -18,7 +18,6 @@ module.exports = (options) =>
 
 module.exports.trackPageview = =>
   @ga? 'send', 'pageview'
-  @mixpanel?.track? 'Viewed page', { path: @location.pathname }
 
 # This basically just sets some defaults loosely based on the
 # Analytics wrapper class from Gravity
@@ -41,7 +40,7 @@ module.exports.track =
         options.category  = categories[kind] || categories.other
 
         _.defaults options,
-          path: window?.location.pathname
+          page: window?.location.pathname
           noninteraction: true
 
         mixpanel.track? description, options

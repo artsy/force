@@ -4,6 +4,7 @@ sd            = require('sharify').data
 Search        = require './collections/search.coffee'
 itemTemplate  = -> require('./templates/item.jade') arguments...
 mediator      = require '../../../../lib/mediator.coffee'
+analytics     = require '../../../../lib/analytics.coffee'
 
 module.exports = class SearchBarView extends Backbone.View
   initialize: (options) ->
@@ -21,6 +22,10 @@ module.exports = class SearchBarView extends Backbone.View
 
   events:
     'keyup input': 'checkSubmission'
+    'focus input': 'trackFocusInput'
+
+  trackFocusInput: ->
+    analytics.click "Focused on search input"
 
   checkSubmission: (e) ->
     return if !(e.which is 13) or @selected
@@ -66,8 +71,10 @@ module.exports = class SearchBarView extends Backbone.View
           mediator.trigger 'search:complete', xhr
           mediator.trigger 'search:doge' if @$input.val() is 'doge'
           @$('img').error -> $(this).hide()
+          @query = @$input.val()
 
   selectResult: (e, model) ->
+    analytics.click "Selected item from search", { label: analytics.modelNameAndIdToLabel(model.model, model.id), query: @query }
     @selected = true
     window.location = model.get 'location'
 
