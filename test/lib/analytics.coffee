@@ -3,7 +3,6 @@ rewiredAnalytics = rewire '../../lib/analytics'
 analytics = require '../../lib/analytics'
 Artwork = require '../../models/artwork'
 sinon = require 'sinon'
-Backbone = require 'backbone'
 sd = require('sharify').data
 
 describe 'analytics', ->

@@ -79,7 +79,7 @@ module.exports = class SearchBarView extends Backbone.View
           @query = @$input.val()
 
   selectResult: (e, model) ->
-    analytics.track.click "Selected item from search", { label: analytics.modelNameAndIdToLabel(model.model, model.id), query: @query }
+    analytics.track.click "Selected item from search", { label: analytics.modelNameAndIdToLabel(model.get('display_model'), model.get('id')), query: @query }
     @selected = true
     window.location = model.get 'location'
 
