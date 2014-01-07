@@ -4,7 +4,7 @@ block head
   include meta
 
 block locals
-  assetPackage = 'featured_partners'
+  assetPackage = 'partners'
 
 block body
   #featured-partners.main-layout-container
@@ -33,6 +33,7 @@ block body
             h3.featured-partner-profile-name
               a( href="/" + profile.get('id') )= partner.get('name')
             h4.featured-partner-profile-location= [partner.get('type'), location.get('city')].join(' - ')
+            button.avant-garde-button-white.follow-button
 
     footer
       nav.featured-partners-nav

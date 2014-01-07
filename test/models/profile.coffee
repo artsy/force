@@ -9,9 +9,6 @@ Profile       = require '../../models/profile'
 describe 'Profile', ->
 
   before ->
-    @sd =
-      ARTSY_URL : 'http://localhost:5000'
-      ASSET_PATH: 'http://localhost:5000'
     @profile = new Profile(fabricate('featured_partners_profiles',
       owner:
         type: "Museum"
@@ -28,7 +25,7 @@ describe 'Profile', ->
   describe '#href', ->
 
     it "returns the client link to this profile", ->
-      @profile.href().should.equal "#{sd.ARTSY_URL}/#{@profile.get('id')}"
+      @profile.href().should.include "/#{@profile.get('id')}"
 
   describe '#displayName', ->
 
