@@ -23,6 +23,6 @@ urlPatterns = [
 
 @loginError = (err, req, res, next) ->
   res.status switch err.message
-    when 'invalid email or password' then 404
+    when 'invalid email or password' then 403
     else 500
   res.send { error: err.message }
