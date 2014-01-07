@@ -28,11 +28,6 @@ describe 'analytics', ->
 
   describe '#trackPageview', ->
 
-    it 'sends a pageview in mixpanel', ->
-      analytics.trackPageview()
-      @mixpanelStub.track.args[0][0].should.equal 'Viewed page'
-      @mixpanelStub.track.args[0][1].path.should.equal 'foobar'
-
     it 'sends a google pageview', ->
       analytics.trackPageview()
       @gaStub.args[1][0].should.equal 'send'
