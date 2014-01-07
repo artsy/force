@@ -33,7 +33,7 @@ categories =
 
 module.exports.track =
   _.reduce(Object.keys(categories), (memo, kind) ->
-    memo[kind] = (description, options) ->
+    memo[kind] = (description, options={}) ->
 
       # Send mixpanel event
       unless typeof mixpanel is 'undefined'
