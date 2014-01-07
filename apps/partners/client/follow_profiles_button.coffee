@@ -1,7 +1,7 @@
 _              = require 'underscore'
 Backbone       = require 'backbone'
 mediator       = require '../../../lib/mediator.coffee'
-track          = require('../../../lib/analytics.coffee').track
+track          = require '../../../lib/analytics.coffee'
 FollowProfiles = require '../../../collections/follow_profiles.coffee'
 
 module.exports = class FollowProfileButton extends Backbone.View
@@ -27,14 +27,14 @@ module.exports = class FollowProfileButton extends Backbone.View
       return false
 
     if @collection.isFollowing @model
-      track.click @analyticsUnfollowMessage, @model
+      analytics.track.click @analyticsUnfollowMessage, label: analytics.modelToLabel(@model)
       @collection.unfollow @model.get('id'),
         success: =>
           @$el.attr('data-state', 'follow')
         error  : =>
           @$el.attr('data-state', 'following')
     else
-      track.click @analyticsFollowMessage, @model
+      analytics.track.click @analyticsFollowMessage, label: analytics.modelToLabel(@model)
       @collection.follow @model.get('id'),
         success: =>
           @$el.attr('data-state', 'following')
