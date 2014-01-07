@@ -8,15 +8,21 @@ urlPatterns = [
   'auction-results'
 ]
 
-module.exports.extractTerm = extractTerm = (url) ->
+@extractTerm = extractTerm = (url) ->
   parts   = url.split '/'
   term    = _.reject(parts, (x) -> _.contains urlPatterns, x).join ' '
 
   _.humanize term
 
-module.exports.errorHandler = (err, req, res, next) ->
+@notFoundError = (err, req, res, next) ->
   # Send 404s over to the search
   if res.statusCode is 404
     res.redirect "/search?q=#{extractTerm(req.url)}&referrer=#{encodeURIComponent(req.url)}"
   else
     next(err)
+
+@loginError = (err, req, res, next) ->
+  res.status switch err.message
+    when 'invalid email or password' then 404
+    else 500
+  res.send { error: err.message }

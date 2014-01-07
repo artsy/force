@@ -23,12 +23,12 @@ redirectMobile = require './middleware/redirect_mobile'
 localsMiddleware = require './middleware/locals'
 helpersMiddleware = require './middleware/helpers'
 ensureSSL = require './middleware/ensure_ssl'
-errorsMiddleware = require('./middleware/errors').errorHandler
+{ notFoundError, loginError } = require('./middleware/errors')
 
 # Setup sharify constants & require dependencies that use sharify data
 sharify.data =
-  JS_EXT: (if "production" is NODE_ENV then ".min.js.gz" else ".js")
-  CSS_EXT: (if "production" is NODE_ENV then ".min.css.gz" else ".css")
+  JS_EXT: (if "production" is NODE_ENV then ".min.js" else ".js")
+  CSS_EXT: (if "production" is NODE_ENV then ".min.css" else ".css")
   ASSET_PATH: ASSET_PATH
   APP_URL: APP_URL
   ARTSY_URL: ARTSY_URL
@@ -126,4 +126,5 @@ module.exports = (app) ->
       port: parse(ARTSY_URL).port or 80
 
   # Handle errors
-  app.use errorsMiddleware
+  app.use '/force/users/sign_in', loginError
+  app.use notFoundError
