@@ -23,7 +23,7 @@ redirectMobile = require './middleware/redirect_mobile'
 localsMiddleware = require './middleware/locals'
 helpersMiddleware = require './middleware/helpers'
 ensureSSL = require './middleware/ensure_ssl'
-errorsMiddleware = require('./middleware/errors').errorHandler
+{ notFoundError, loginError } = require('./middleware/errors')
 
 # Setup sharify constants & require dependencies that use sharify data
 sharify.data =
@@ -126,4 +126,5 @@ module.exports = (app) ->
       port: parse(ARTSY_URL).port or 80
 
   # Handle errors
-  app.use errorsMiddleware
+  app.use '/force/users/sign_in', loginError
+  app.use notFoundError
