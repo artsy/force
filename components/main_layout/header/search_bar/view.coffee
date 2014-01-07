@@ -25,7 +25,7 @@ module.exports = class SearchBarView extends Backbone.View
     'focus input': 'trackFocusInput'
 
   trackFocusInput: ->
-    analytics.click "Focused on search input"
+    analytics.track.click "Focused on search input"
 
   checkSubmission: (e) ->
     return if !(e.which is 13) or @selected
@@ -74,7 +74,7 @@ module.exports = class SearchBarView extends Backbone.View
           @query = @$input.val()
 
   selectResult: (e, model) ->
-    analytics.click "Selected item from search", { label: analytics.modelNameAndIdToLabel(model.model, model.id), query: @query }
+    analytics.track.click "Selected item from search", { label: analytics.modelNameAndIdToLabel(model.model, model.id), query: @query }
     @selected = true
     window.location = model.get 'location'
 
