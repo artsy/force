@@ -1,3 +1,4 @@
+Backbone = require 'backbone'
 Browser = require 'zombie'
 rewire = require 'rewire'
 app = require '../example'
@@ -51,6 +52,19 @@ describe 'Artsy Passport methods', ->
 
   before ->
     @artsyPassport = rewire '../index.coffee'
+
+  describe '#serializeUser', ->
+
+    before ->
+      @serializeUser = @artsyPassport.__get__ 'serializeUser'
+
+    it 'only stores select data in the session', (done) ->
+      model = new Backbone.Model({ id: 'craig', foo: 'baz', bam: 'bop' })
+      model.fetch = (opts) -> opts.success()
+      @serializeUser model, (err, user) ->
+        (user.foo?).should.not.be.ok
+        (user.bam?).should.not.be.ok
+        done()
 
   describe '#accessTokenCallback', ->
 
