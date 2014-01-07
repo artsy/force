@@ -4,6 +4,7 @@ sd            = require('sharify').data
 Search        = require './collections/search.coffee'
 itemTemplate  = -> require('./templates/item.jade') arguments...
 mediator      = require '../../../../lib/mediator.coffee'
+analytics     = require '../../../../lib/analytics.coffee'
 
 module.exports = class SearchBarView extends Backbone.View
   initialize: (options) ->
@@ -21,6 +22,10 @@ module.exports = class SearchBarView extends Backbone.View
 
   events:
     'keyup input': 'checkSubmission'
+    'focus input': 'trackFocusInput'
+
+  trackFocusInput: ->
+    analytics.track.click "Focused on search input"
 
   checkSubmission: (e) ->
     return if !(e.which is 13) or @selected
@@ -58,7 +63,12 @@ module.exports = class SearchBarView extends Backbone.View
       engine: @_engine
       remote:
         url: "#{@search.url}&term=%QUERY"
-        filter: @search._parse
+        filter: (items) =>
+          if items?.length
+            analytics.track.funnel "Searched from header, with results", { query: @$input.val() }
+          else
+            analytics.track.funnel "Searched from header, with no results", { query: @$input.val() }
+          @search._parse(items)
         beforeSend: (xhr) ->
           xhr.setRequestHeader 'X-XAPP-TOKEN', sd.ARTSY_XAPP_TOKEN
           mediator.trigger 'search:start', xhr
@@ -66,8 +76,10 @@ module.exports = class SearchBarView extends Backbone.View
           mediator.trigger 'search:complete', xhr
           mediator.trigger 'search:doge' if @$input.val() is 'doge'
           @$('img').error -> $(this).hide()
+          @query = @$input.val()
 
   selectResult: (e, model) ->
+    analytics.track.click "Selected item from search", { label: analytics.modelNameAndIdToLabel(model.get('display_model'), model.get('id')), query: @query }
     @selected = true
     window.location = model.get 'location'
 

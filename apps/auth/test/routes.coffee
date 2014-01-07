@@ -6,7 +6,7 @@ routes    = rewire '../routes'
 
 describe 'Auth routes', ->
   beforeEach ->
-    @req = { params: {}, logout: sinon.stub(), user: new Backbone.Model(), get: -> }
+    @req = { params: {}, logout: sinon.stub(), user: new Backbone.Model(), body: {}, query: {}, get: -> }
     @res = { render: sinon.stub(), locals: { sd: {} }, send: sinon.stub(), redirect: sinon.stub() }
 
   describe '#index', ->
@@ -28,22 +28,6 @@ describe 'Auth routes', ->
       @req.logout.called.should.be.ok
       @res.redirect.args[0][0].should.include '/users/sign_out?redirect_uri=http://localhost:3004'
 
-  describe '#redirectAfterLogin', ->
-
-    beforeEach ->
-      @req = { session: {}, body: {} }
-      @res = { redirect: sinon.stub() }
-
-    it 'redirects to redirect-to', ->
-      @req.body['redirect-to'] = '/foo/bar'
-      routes.redirectAfterLogin @req, @res
-      @res.redirect.args[0][0].should.include '/foo/bar'
-
-    it 'redirects to the referrer', ->
-      @req.get = -> '/feature/two-x-two'
-      routes.redirectAfterLogin @req, @res
-      @res.redirect.args[0][0].should.include '/feature/two-x-two'
-
   describe '#loginToArtsy', ->
 
     it 'single signs in to Artsy', ->
@@ -56,3 +40,8 @@ describe 'Auth routes', ->
       @req.get = -> 'ref'
       routes.loginToArtsy @req, @res
       @res.redirect.args[0][0].should.include '/users/sign_in?trust_token=foobar'
+
+    it 'follows a redirec to query param', ->
+      @req.query['redirect-to'] = 'personalize/collect'
+      routes.loginToArtsy @req, @res
+      @res.redirect.args[0][0].should.include 'personalize/collect'

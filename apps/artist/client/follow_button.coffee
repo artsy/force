@@ -1,7 +1,7 @@
 _         = require 'underscore'
 Backbone  = require 'backbone'
 mediator  = require '../../../lib/mediator.coffee'
-track     = require('../../../lib/analytics.coffee').track
+analytics = require('../../../lib/analytics.coffee')
 
 module.exports = class FollowButton extends Backbone.View
   analyticsUnfollowMessage: "Unfollowed artist from artist result row"
@@ -28,15 +28,15 @@ module.exports = class FollowButton extends Backbone.View
 
   followArtist: (e) ->
     unless @followArtistCollection
-      mediator.trigger 'open:auth', { mode: 'login' }
+      mediator.trigger 'open:auth', { mode: 'register', copy: 'Sign up to follow artists' }
       return false
 
     if @model.isFollowed @followArtistCollection
-      track.click @analyticsUnfollowMessage, @model
+      analytics.track.click @analyticsUnfollowMessage, label: analytics.modelToLabel(@model)
       @followArtistCollection.unfollow @model.get('id'),
         error: => @$el.attr('data-state', 'following')
     else
-      track.click @analyticsFollowMessage, @model
+      analytics.track.click @analyticsFollowMessage, label: analytics.modelToLabel(@model)
       @followArtistCollection.follow @model.get('id'),
         error: => @$el.attr('data-state', 'follow')
 

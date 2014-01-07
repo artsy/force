@@ -11,12 +11,12 @@ _             = require 'underscore'
 describe 'Auction results client-side code', ->
   before (done) ->
     benv.setup =>
-      benv.expose { $: require 'components-jquery' }
+      benv.expose { $: benv.require 'components-jquery' }
       Backbone.$ = $
       done()
 
   after ->
-    # benv.teardown()
+    benv.teardown()
 
   beforeEach (done) ->
     @artist       = new Artist fabricate 'artist'

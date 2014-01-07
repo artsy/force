@@ -45,7 +45,7 @@ module.exports =
     message = if _.has(parsed, 'text')
       parsed.text
     else if _.has(parsed, 'error')
-      parsed.error
+      parsed.error.message or parsed.error
     else if _.has(parsed, 'details') and _.isArray(parsed.details)
       parsed.details.join('; ')
     else if _.has(parsed, 'detail')

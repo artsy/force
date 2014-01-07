@@ -6,4 +6,5 @@ module.exports =
     { error: """{"error":"User Already Exists"}""", message: 'User Already Exists' },
     { error: """{"error":"User Already Exists","text":"A user with this email has already signed up with Twitter.","providers":["Twitter"]}""", message: 'A user with this email has already signed up with Twitter.' }
     { error: """{"error":"User Already Exists","text":"A user with this email has already signed up with Facebook.","providers":["Facebook"]}""", message: 'A user with this email has already signed up with Facebook.' }
+    { error: '''{"error":{"message":"invalidemailorpassword","stack":""}}''', message: 'invalidemailorpassword' }
   ]

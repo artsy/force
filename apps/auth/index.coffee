@@ -17,14 +17,11 @@ app.set 'view engine', 'jade'
 # app.get '/sign_up', routes.index
 # app.get '/forgot', routes.index
 
-# Artsy Passport auth handlers
-app.post '/force/users/sign_in', routes.submitLogin
-app.get '/force/log_in_to_artsy', routes.loginToArtsy
-app.get '/force/users/sign_out', routes.logout
-
-app.post '/force/users/sign_in_trust_token', routes.loginWithTrustToken
-
 # Auth submission handlers
-app.post loginPath, routes.redirectAfterLogin
-app.get twitterCallbackPath, routes.redirectAfterLogin
-app.get facebookCallbackPath, routes.redirectAfterLogin
+app.get '/force/users/sign_out', routes.logout
+app.post '/force/users/sign_in_trust_token', routes.loginWithTrustToken
+app.post loginPath, routes.submitLogin
+app.post signupPath, routes.submitLogin
+app.get '/force/log_in_to_artsy', routes.loginToArtsy
+app.get twitterCallbackPath, routes.loginToArtsy
+app.get facebookCallbackPath, routes.loginToArtsy

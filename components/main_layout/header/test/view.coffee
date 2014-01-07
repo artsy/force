@@ -15,7 +15,7 @@ HeaderView.__set__ 'createCookie', sinon.stub()
 describe 'HeaderView', ->
   beforeEach (done) ->
     benv.setup =>
-      benv.expose { $: require 'components-jquery' }
+      benv.expose { $: benv.require 'components-jquery' }
       Backbone.$ = $
       benv.render resolve(__dirname, '../template.jade'), {}, =>
         @view = new HeaderView
@@ -48,6 +48,12 @@ describe 'HeaderView', ->
       @view.checkRemoveWelcomeHeader()
       @view.$welcomeHeader.remove.called.should.be.ok
       @view.$window.off.called.should.be.ok
+
+  describe '#openAuth', ->
+
+    it 'opens with custom copy', ->
+      @view.openAuth copy: 'Sign up to foo bar'
+      HeaderView.__get__('AuthModalView').args[0][0].copy.should.include 'Sign up to foo bar'
 
   # describe '#login', ->
   #   it 'triggers the mediator', ->

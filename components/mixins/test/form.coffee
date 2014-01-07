@@ -23,7 +23,7 @@ class FormView extends Backbone.View
 describe 'Form', ->
   beforeEach (done) ->
     benv.setup =>
-      benv.expose { $: require 'components-jquery' }
+      benv.expose { $: benv.require 'components-jquery' }
       Backbone.$ = $
       @view = new FormView().render()
       done()

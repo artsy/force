@@ -10,7 +10,7 @@ rewire          = require 'rewire'
 describe 'AboutRouter', ->
   before (done) ->
     benv.setup =>
-      benv.expose { $: require 'components-jquery' }
+      benv.expose { $: benv.require 'components-jquery' }
       Backbone.$ = $
       Backbone.history.start = sinon.stub
       done()

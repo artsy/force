@@ -8,7 +8,7 @@ ShareView     = require '../view.coffee'
 describe 'ShareView', ->
   beforeEach (done) ->
     benv.setup =>
-      benv.expose { $: require 'components-jquery' }
+      benv.expose { $: benv.require 'components-jquery' }
       Backbone.$  = $
       @openSpy    = sinon.spy window, 'open'
       @view       = new ShareView el: $("""
