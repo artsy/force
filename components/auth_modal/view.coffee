@@ -57,9 +57,6 @@ module.exports = class AuthModalView extends ModalView
     @listenTo @state, 'change:mode', @reRender
     mediator.on 'auth:change:mode', @setMode, this
 
-  postRender: ->
-    @$(':input').first().focus()
-
   setMode: (mode) ->
     @state.set 'mode', mode
 

@@ -38,14 +38,6 @@ describe 'AuthModalView', ->
       @view.templateData.pathname.should.equal 'foobarbaz'
       global.location = _location
 
-  describe '#postRender', ->
-
-    it 'focuses on the first input', ->
-      spy = sinon.spy $.fn, 'focus'
-      @view.$el.html ($input = $ "<input value='foo'>")
-      @view.postRender()
-      spy.thisValues[0].val().should.equal 'foo'
-
   describe '#submit', ->
 
     beforeEach ->
