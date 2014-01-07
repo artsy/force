@@ -23,5 +23,6 @@ Q             = require 'q'
       )).then ->
         # Final data set is a collection of profiles with populated
         # partners and locations
+        res.locals.sd.PROFILES = profiles
         res.render 'template',
           featuredPartnerProfiles: profiles

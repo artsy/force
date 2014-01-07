@@ -81,3 +81,11 @@ describe 'Partners', ->
       $('.featured-partners-nav').length.should.equal 2
       $(".featured-partners-nav a[href='/galleries']").length.should.equal 2
       $(".featured-partners-nav a[href='/institutions']").length.should.equal 2
+
+    it 'includes a button to follow partner profiles', ->
+      $ = cheerio.load @html
+      $('.follow-button').should.have.lengthOf @profiles.length
+
+    it 'renders all follow buttons in an unfollowed state', ->
+      $ = cheerio.load @html
+      $(".follow-button[data-state='following']").should.have.lengthOf 0
