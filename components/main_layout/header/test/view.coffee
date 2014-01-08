@@ -15,7 +15,9 @@ HeaderView.__set__ 'createCookie', sinon.stub()
 describe 'HeaderView', ->
   beforeEach (done) ->
     benv.setup =>
-      benv.expose { $: benv.require 'components-jquery' }
+      benv.expose
+        $: benv.require('components-jquery')
+        sd: { HIDE_HEADER: false }
       Backbone.$ = $
       benv.render resolve(__dirname, '../template.jade'), {}, =>
         @view = new HeaderView
@@ -42,31 +44,23 @@ describe 'HeaderView', ->
       @view.$welcomeHeader.remove.called.should.be.ok
       @view.$window.off.called.should.be.ok
 
-    it 'hides the welcome header if there is a cookie', ->
-      HeaderView.__set__ 'readCookie', -> true
-      @view.$window.scrollTop = -> 0
-      @view.checkRemoveWelcomeHeader()
-      @view.$welcomeHeader.remove.called.should.be.ok
-      @view.$window.off.called.should.be.ok
-
   describe '#openAuth', ->
-
     it 'opens with custom copy', ->
       @view.openAuth copy: 'Sign up to foo bar'
       HeaderView.__get__('AuthModalView').args[0][0].copy.should.include 'Sign up to foo bar'
 
-  # describe '#login', ->
-  #   it 'triggers the mediator', ->
-  #     spy = sinon.spy mediator, 'trigger'
-  #     @view.$('.mlh-login').click()
-  #     spy.args[0][0].should.equal 'open:auth'
-  #     spy.args[0][1].mode.should.equal 'login'
-  #     mediator.trigger.restore()
+  describe '#login', ->
+    it 'triggers the mediator', ->
+      spy = sinon.spy mediator, 'trigger'
+      @view.$('.mlh-login').click()
+      spy.args[0][0].should.equal 'open:auth'
+      spy.args[0][1].mode.should.equal 'login'
+      mediator.trigger.restore()
 
-  # describe '#signup', ->
-  #   it 'triggers the mediator', ->
-  #     spy = sinon.spy mediator, 'trigger'
-  #     @view.$('.mlh-signup').click()
-  #     spy.args[0][0].should.equal 'open:auth'
-  #     spy.args[0][1].mode.should.equal 'signup'
-  #     mediator.trigger.restore()
+  describe '#signup', ->
+    it 'triggers the mediator', ->
+      spy = sinon.spy mediator, 'trigger'
+      @view.$('.mlh-signup').click()
+      spy.args[0][0].should.equal 'open:auth'
+      spy.args[0][1].mode.should.equal 'signup'
+      mediator.trigger.restore()
