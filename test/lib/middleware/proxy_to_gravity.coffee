@@ -4,8 +4,8 @@ express = require 'express'
 
 child = null
 gravity = express()
-gravity.get '/foobarbaz', (req, res) -> res.send 'Foobar page!'
-gravity.get '/api/v1/page/:id', (req, res) -> res.send { content: 'foobar' }
+gravity.get '/onlysupportedongravity', (req, res) -> res.send 'I can handle it!'
+gravity.get '/dontknowwhatitis', (req, res) -> res.send 404
 startServer = (callback) ->
   envVars =
     ARTSY_URL: "http://localhost:5001"
@@ -28,7 +28,13 @@ describe 'Setup', ->
     @server.close()
     closeServer()
 
-  it 'returns an ok status when /system/up pinged', (done) ->
-    request.get('http://localhost:5000/system/up').end (res) ->
-      JSON.parse(res.text).nodejs.should.be.ok
+  it 'proxies unhandled requests to Gravity if they are supported', (done) ->
+    request.get('http://localhost:5000/onlysupportedongravity').end (res) ->
+      res.text.should.equal 'I can handle it!'
+      done()
+
+  it 'passes unsupported routes on Gravity to my own error handler', (done) ->
+    request.get('http://localhost:5000/dontknowwhatitis').end (res) ->
+      res.text.should.include 'The page you were looking for doesn\'t exist.'
+      res.statusCode.should.equal 404
       done()
