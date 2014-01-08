@@ -14,12 +14,12 @@ block body
     +artist-header(artist)
 
     .auction-lots-table-header
-      .auction-lots-total
+      .auction-lots-left
           | #{auctionLots.state.totalRecords} Results
           - if (auctionLots.state.totalPages > 1)
             | &mdash;Page #{auctionLots.state.currentPage} of #{auctionLots.state.totalPages}
 
-      .auction-lots-sort
+      .auction-lots-right
         span Order:
         .bordered-pulldown
           a.bordered-pulldown-toggle

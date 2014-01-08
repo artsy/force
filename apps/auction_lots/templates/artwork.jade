@@ -16,8 +16,8 @@ block body
         | (#{artwork.get('date')})
 
     .auction-lots-table-header
-      .auction-lots-total
-        em Work on Artsy
+      .auction-lots-left
+        span.auction-lots-sub-header Work on Artsy
 
     table.auction-lots-table
       thead
@@ -50,9 +50,10 @@ block body
             td= artwork.get('price')
 
     .auction-lots-table-header
-      .auction-lots-total
-        em Comparable auction results
-      .auction-lots-sort
+      .auction-lots-left
+        span.auction-lots-sub-header Comparable auction results
+
+      .auction-lots-right
         span Order:
         .bordered-pulldown.is-disabled
           .bordered-pulldown-toggle
