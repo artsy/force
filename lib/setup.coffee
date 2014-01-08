@@ -23,7 +23,7 @@ redirectMobile = require './middleware/redirect_mobile'
 localsMiddleware = require './middleware/locals'
 helpersMiddleware = require './middleware/helpers'
 ensureSSL = require './middleware/ensure_ssl'
-errorsMiddleware = require('./middleware/errors').errorHandler
+errorHandler = require "../components/error_handler"
 
 # Setup sharify constants & require dependencies that use sharify data
 sharify.data =
@@ -120,10 +120,10 @@ module.exports = (app) ->
   app.use express.static(path.resolve __dirname, "../public")
 
   # Proxy unhandled requests to Gravity using node-http-proxy
-  app.use (req, res) ->
-    proxy.proxyRequest req, res,
-      host: parse(ARTSY_URL).hostname
-      port: parse(ARTSY_URL).port or 80
+  #app.use (req, res) ->
+  #  proxy.proxyRequest req, res,
+  #    host: parse(ARTSY_URL).hostname
+  #    port: parse(ARTSY_URL).port or 80
 
-  # Handle errors
-  app.use errorsMiddleware
+  app.use errorHandler.pageNotFound
+  app.use errorHandler.internalError
