@@ -31,8 +31,12 @@ block body
           th Year
           th Medium
           th Size
-          if artwork.get('price')
-            th Price
+          th
+          th
+          th
+          th
+            if artwork.get('price')
+              | Price
       tbody
         tr.auction-lot
           td
@@ -51,17 +55,20 @@ block body
             != artwork.superscriptFractions(artwork.get('dimensions').in)
             br
             != artwork.expressAsMetric(artwork.get('dimensions').cm)
-          if artwork.get('price')
-            td= artwork.get('price')
+          td
+          td
+          td
+          td= artwork.get('price')
 
-    .auction-lots-table-header
-      .auction-lots-left
-        span.auction-lots-sub-header Comparable auction results
+        tr.auction-lots-interstital
+          td( colspan=4 )
+            span.auction-lots-sub-header
+              | Comparable auction results
 
-      .auction-lots-right
-        span Order:
-        .bordered-pulldown.is-disabled
-          .bordered-pulldown-toggle
-            | Most similar
+          td( colspan=4 ).auction-lots-sort
+            span Order:
+            .bordered-pulldown.is-disabled
+              .bordered-pulldown-toggle
+                | Most similar
 
-    include ./auction_lots_table
+      include ./auction_lots_table

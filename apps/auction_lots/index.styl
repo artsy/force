@@ -8,23 +8,6 @@
   > h1
     font-size 24px
 
-.auction-lots-table-header
-  margin 20px 0
-  display table
-  width 100%
-
-.auction-lots-left
-.auction-lots-right
-  display table-cell
-  width 50%
-
-.auction-lots-right
-  text-align right
-  *
-    text-align left
-  > span
-    margin-right 10px
-
 .auction-lots-sub-header
   avant-garde()
   font-size 13px
@@ -48,6 +31,27 @@
     border-top 1px solid light-gray-border-color
   a
     text-decoration none
+
+div.auction-lots-interstital
+  display table
+  margin 20px 0
+  width 100%
+
+.auction-lots-interstital
+  > div
+    display table-cell
+    width 50%
+  > td
+  > td:last-child
+    padding 20px 0
+    vertical-align bottom
+
+.auction-lots-sort
+  text-align right
+  *
+    text-align left
+  > span
+    margin-right 10px
 
 .auction-lot-title-container
   display table
