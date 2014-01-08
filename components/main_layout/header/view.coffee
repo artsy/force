@@ -16,13 +16,15 @@ module.exports = class HeaderView extends Backbone.View
       el:       @$('#main-layout-search-bar-container')
       $input:   @$('#main-layout-search-bar-input')
 
-    @$window.on 'scroll.welcome-header', @checkRemoveWelcomeHeader
+    unless sd.HIDE_HEADER # Already hidden
+      @$window.on 'scroll.welcome-header', @checkRemoveWelcomeHeader
+
     mediator.on 'open:auth', @openAuth, this
+
     @checkRemoveWelcomeHeader()
 
   checkRemoveWelcomeHeader: =>
-    if sd.CURRENT_USER or readCookie('hide-force-header') or
-       @$window.scrollTop() > @$welcomeHeader.height()
+    if sd.CURRENT_USER or (@$window.scrollTop() > @$welcomeHeader.height())
       @removeWelcomeHeader()
 
   openAuth: (options) ->
