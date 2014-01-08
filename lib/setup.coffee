@@ -20,9 +20,11 @@ httpProxy = require 'http-proxy'
 proxy = new httpProxy.RoutingProxy()
 backboneCacheSync = require 'backbone-cache-sync'
 redirectMobile = require './middleware/redirect_mobile'
+proxyGravity = require './middleware/proxy_to_gravity'
 localsMiddleware = require './middleware/locals'
 helpersMiddleware = require './middleware/helpers'
 ensureSSL = require './middleware/ensure_ssl'
+errorHandler = require "../components/error_handler"
 { notFoundError, loginError } = require('./middleware/errors')
 
 # Setup sharify constants & require dependencies that use sharify data
@@ -120,12 +122,10 @@ module.exports = (app) ->
   # More general middleware
   app.use express.static(path.resolve __dirname, "../public")
 
-  # Proxy unhandled requests to Gravity using node-http-proxy
-  app.use (req, res) ->
-    proxy.proxyRequest req, res,
-      host: parse(ARTSY_URL).hostname
-      port: parse(ARTSY_URL).port or 80
+  # Try to proxy unsupported route to Gravity before showing errors
+  app.use proxyGravity
 
-  # Handle errors
+  # 404 and error handling middleware
+  app.use errorHandler.pageNotFound
   app.use '/force/users/sign_in', loginError
-  app.use notFoundError
+  app.use errorHandler.internalError
