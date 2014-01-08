@@ -1,19 +1,15 @@
 extends ../main_layout/templates/index
 
+block head
+  include ../main_layout/templates/common_head
+
+block locals
+  assetPackage = 'error'
+
 block body
-  #error-handler
-    header#main-header
-      a#main-header-logo( href="/" )
-        #main-header-logo-icon
-      .tagline Discover fine art.
-    main
-      if code === 404
-        h1 The page you were looking for doesn't exist.
-      else
-        h1= error.message
-      p Please contact <a href="mailto:support@artsy.net">support@artsy.net</a> with any questions.
-    footer
-      ul.error-handler-footer
-        li.copy: a( href=("/about") ) &copy;2013 Artsy
-        li.terms: a( href=("/terms") ) Terms of Use
-        li.privacy: a( href=("/privacy") ) Privacy Policy
+  main#error-handler
+    if code === 404
+      h1 The page you were looking for doesn't exist.
+    else
+      h1= error.message
+    p Please contact <a href="mailto:support@artsy.net">support@artsy.net</a> with any questions.
