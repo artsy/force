@@ -13,8 +13,8 @@ block body
   #auction-results-page.main-layout-container
     +artist-header(artist)
 
-    .auction-lots-table-header
-      .auction-lots-total
+    .auction-lots-interstital
+      .auction-lots-page-total
           | #{auctionLots.state.totalRecords} Results
           - if (auctionLots.state.totalPages > 1)
             | &mdash;Page #{auctionLots.state.currentPage} of #{auctionLots.state.totalPages}
@@ -33,6 +33,7 @@ block body
               - if (!(!user && k === 'Sale' || v === auctionLots.sortBy))
                 a( href="?sort=#{v}" )= k
 
-    include ./auction_lots_table
+    table.auction-lots-table
+      include ./auction_lots_table
 
     +paginate(auctionLots.state.currentPage, auctionLots.state.totalPages, '?sort=' + auctionLots.sortBy + '&')

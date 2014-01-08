@@ -1,34 +1,23 @@
 @import '../../components/pagination'
 @import '../artist/stylesheets/header'
 
-#auction-lot-header
-  position relative
-  padding 40px 0
-  text-align center
-  > h1
-    font-size 24px
+.auction-lots-header
+  @extends .artist-header
+  padding 0
+  margin 20px 0 30px 0
 
-.auction-lots-table-header
+.auction-lots-beta-alert
   margin 20px 0
-  display table
-  width 100%
 
-.auction-lots-total
-.auction-lots-sort
-  display table-cell
-  width 50%
-
-.auction-lots-sort
-  text-align right
-  *
-    text-align left
-  > span
-    margin-right 10px
+.auction-lots-sub-header
+  avant-garde()
+  font-size 13px
 
 .auction-lots-table
   width 100%
   border-top 1px solid light-gray-border-color
   border-bottom 1px solid light-gray-border-color
+  margin 20px 0
   th
   td
     padding 10px
@@ -43,6 +32,27 @@
     border-top 1px solid light-gray-border-color
   a
     text-decoration none
+
+div.auction-lots-interstital
+  display table
+  margin 20px 0
+  width 100%
+
+.auction-lots-interstital
+  > div
+    display table-cell
+    width 50%
+  > td
+  > td:last-child
+    padding 20px 0
+    vertical-align bottom
+
+.auction-lots-sort
+  text-align right
+  *
+    text-align left
+  > span
+    margin-right 10px
 
 .auction-lot-title-container
   display table
