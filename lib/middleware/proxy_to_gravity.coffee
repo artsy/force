@@ -13,8 +13,9 @@ url       = require 'url'
 module.exports = exports = (req, res, next) ->
   urlObj = url.parse(ARTSY_URL + req.url)
   options =
-    host: urlObj.host
+    host: urlObj.hostname
     path: urlObj.path
+    port: urlObj.port or 80
 
   # Ping Gravity first, if the url is supported,
   # proxy the req to it. Otherwise, pass it.
