@@ -12,5 +12,6 @@ module.exports = (req, res, next) ->
   res.locals.sd.SESSION_ID = req.session?.id ?= uuid.v1()
   res.locals.sd.CURRENT_PATH = req.url
   res.locals.sd.ARTSY_XAPP_TOKEN = res.locals.artsyXappToken
+  res.locals.sd.HIDE_HEADER = req.cookies?['hide-force-header']?
 
   next()

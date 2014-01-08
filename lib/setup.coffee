@@ -25,6 +25,7 @@ localsMiddleware = require './middleware/locals'
 helpersMiddleware = require './middleware/helpers'
 ensureSSL = require './middleware/ensure_ssl'
 errorHandler = require "../components/error_handler"
+{ notFoundError, loginError } = require('./middleware/errors')
 
 # Setup sharify constants & require dependencies that use sharify data
 sharify.data =
@@ -112,6 +113,7 @@ module.exports = (app) ->
   app.use require "../apps/page"
   app.use require "../apps/partners"
   app.use require "../apps/search"
+  app.use require "../apps/genes"
 
   # Route to ping for system up
   app.get '/system/up', (req, res) ->
@@ -125,4 +127,5 @@ module.exports = (app) ->
 
   # 404 and error handling middleware
   app.use errorHandler.pageNotFound
+  app.use '/force/users/sign_in', loginError
   app.use errorHandler.internalError

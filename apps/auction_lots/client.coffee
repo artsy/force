@@ -16,8 +16,9 @@ module.exports.AuctionResultsView = class AuctionResultsView extends Backbone.Vi
     @touchAdjustments() if isTouchDevice()
 
   events:
-    'click .auction-lot-image-zoom'  : 'zoomImage'
-    'click .auction-lot-sale-signup' : 'signUp'
+    'click .auction-lot-image-zoom'     : 'zoomImage'
+    'click .auction-lot-sale-signup'    : 'signUp'
+    'click .auction-lots-feedback-link' : 'feedback'
 
   setupShareButtons: ->
     new ShareView el: @$('.artist-share')
@@ -41,8 +42,11 @@ module.exports.AuctionResultsView = class AuctionResultsView extends Backbone.Vi
 
   signUp: (e) ->
     e.preventDefault()
-    # Use login until signup form works
     mediator.trigger 'open:auth', { mode: 'register', copy: 'Sign up to see sale price' }
+
+  feedback: (e) ->
+    e.preventDefault()
+    mediator.trigger 'open:feedback'
 
 module.exports.init = ->
   $ ->

@@ -8,16 +8,25 @@ block locals
 
 block body
   #auction-results-page.main-layout-container
-    header.artist-header
+    a( href="/artwork/#{artwork.id}" ).contextual-return-link
+      i.icon-chevron-small-left
+      | Back to artwork
+
+    header.auction-lots-header
       h1.avant-garde-header-center
         | Auction Results for
         a( href="/artist/#{artwork.get('artist').id}")  #{artwork.get('artist').name},&nbsp;
         a( href="/artwork/#{artwork.id}" ) #{artwork.get('title')}&nbsp;
         | (#{artwork.get('date')})
 
+    .auction-lots-beta-alert.garamond-alert-info
+      em Note:&nbsp;
+      | Auction results are an experimental feature with limited data. Have feedback?&nbsp;
+      a.auction-lots-feedback-link.faux-underline Let us know.
+
     .auction-lots-table-header
-      .auction-lots-total
-        em Work on Artsy
+      .auction-lots-left
+        span.auction-lots-sub-header Work on Artsy
 
     table.auction-lots-table
       thead
@@ -26,8 +35,12 @@ block body
           th Year
           th Medium
           th Size
-          if artwork.get('price')
-            th Price
+          th
+          th
+          th
+          th
+            if artwork.get('price')
+              | Price
       tbody
         tr.auction-lot
           td
@@ -43,19 +56,23 @@ block body
           td= artwork.get('date')
           td.auction-lot-medium= artwork.get('medium')
           td
-            = artwork.get('dimensions').in
+            != artwork.superscriptFractions(artwork.get('dimensions').in)
             br
-            = artwork.get('dimensions').cm
-          if artwork.get('price')
-            td= artwork.get('price')
+            != artwork.expressAsMetric(artwork.get('dimensions').cm)
+          td
+          td
+          td
+          td= artwork.get('price')
 
-    .auction-lots-table-header
-      .auction-lots-total
-        em Comparable auction results
-      .auction-lots-sort
-        span Order:
-        .bordered-pulldown.is-disabled
-          .bordered-pulldown-toggle
-            | Most similar
+        tr.auction-lots-interstital
+          td( colspan=4 )
+            span.auction-lots-sub-header
+              | Comparable auction results
 
-    include ./auction_lots_table
+          td( colspan=4 ).auction-lots-sort
+            span Order:
+            .bordered-pulldown.is-disabled
+              .bordered-pulldown-toggle
+                | Most similar
+
+      include ./auction_lots_table

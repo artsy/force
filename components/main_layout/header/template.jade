@@ -1,7 +1,7 @@
 include ../../util/activator
 
 header#main-layout-header
-  if !user
+  unless user || sd.HIDE_HEADER
     header#main-layout-welcome-header
       #main-layout-welcome-header-aside
         .mlwha-outer

@@ -8,7 +8,7 @@ html
     block head
     include head
     link( type='text/css', rel='stylesheet', href=(sd.ASSET_PATH + assetPackage + sd.CSS_EXT) )
-  body
+  body( class=(sd.HIDE_HEADER ? 'body-header-fixed' : '') )
     include ../../modal/template
     include ../header/template
     #main-layout-container
