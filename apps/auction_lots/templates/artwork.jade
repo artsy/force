@@ -48,9 +48,9 @@ block body
           td= artwork.get('date')
           td.auction-lot-medium= artwork.get('medium')
           td
-            = artwork.get('dimensions').in
+            != artwork.superscriptFractions(artwork.get('dimensions').in)
             br
-            = artwork.get('dimensions').cm
+            != artwork.expressAsMetric(artwork.get('dimensions').cm)
           if artwork.get('price')
             td= artwork.get('price')
 
