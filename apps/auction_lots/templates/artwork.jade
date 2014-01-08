@@ -8,6 +8,10 @@ block locals
 
 block body
   #auction-results-page.main-layout-container
+    a( href="/artwork/#{artwork.id}" ).contextual-return-link
+      i.icon-chevron-small-left
+      | Back to artwork
+
     .garamond-alert-info
       em Note:&nbsp;
       | Auction results are an experimental feature with limited data. Have feedback?&nbsp;
