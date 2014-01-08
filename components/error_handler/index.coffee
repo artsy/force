@@ -12,7 +12,7 @@ errorHandler = module.exports = exports = {}
 # use()d, we assume 404, as nothing else responded.
 errorHandler.pageNotFound = (req, res, next) ->
   if req.accepts 'html' # respond with html page
-    res.send 404, renderTemplate { code: 404, error: "Not Found", sd: res.locals?.sd || {} }
+    res.send 404, renderTemplate { code: 404, error: "Not Found", sd: res.locals?.sd or {} }
     return
 
   if req.accepts 'json' # respond with json
@@ -24,7 +24,7 @@ errorHandler.pageNotFound = (req, res, next) ->
 
 # Error-handling middleware
 errorHandler.internalError = (err, req, res, next) ->
-  res.send 500, renderTemplate { code: 500, error: err, sd: res.locals?.sd || {} }
+  res.send 500, renderTemplate { code: 500, error: err, sd: res.locals?.sd or {} }
 
 errorHandler.javascriptError = (req, res, next) ->
   console.log req.body # Logs client-side errors to stdout for debugging purpose
