@@ -17,7 +17,7 @@ module.exports = class CurrentUser extends Backbone.Model
 
   # Add the access token to fetches and saves
   sync: (method, model, options = {}) ->
-    options.data ?= {}
+    options.data ?= if method in ['create', 'update'] then _.omit(@toJSON(), 'accessToken') else {}
     options.data.access_token = @get 'accessToken'
     super
 

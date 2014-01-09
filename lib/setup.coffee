@@ -80,6 +80,7 @@ module.exports = (app) ->
     signupPath: '/force/users/invitation/accept'
     twitterCallbackPath: '/force/users/auth/twitter/callback'
     facebookCallbackPath: '/force/users/auth/facebook/callback'
+    twitterSignupPath: '/force/users/auth/twitter/email'
 
   # General
   app.use localsMiddleware

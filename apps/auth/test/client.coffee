@@ -1,10 +1,9 @@
-_         = require 'underscore'
-benv      = require 'benv'
-rewire    = require 'rewire'
-Backbone  = require 'backbone'
-sinon     = require 'sinon'
-mediator  = require '../../../lib/mediator.coffee'
-
+_           = require 'underscore'
+benv        = require 'benv'
+rewire      = require 'rewire'
+Backbone    = require 'backbone'
+sinon       = require 'sinon'
+mediator    = require '../../../lib/mediator.coffee'
 { resolve } = require 'path'
 
 describe 'AuthModalRouter', ->
@@ -18,7 +17,7 @@ describe 'AuthModalRouter', ->
     benv.teardown()
 
   beforeEach (done) ->
-    benv.render resolve(__dirname, '../template.jade'), { sd: {} }, =>
+    benv.render resolve(__dirname, './template.jade'), { sd: {} }, =>
       { AuthModalRouter, @init } = mod = rewire '../client'
       mod.__set__ 'AuthModalView', Backbone.View
       @router = new AuthModalRouter

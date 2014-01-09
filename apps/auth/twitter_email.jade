@@ -1,0 +1,12 @@
+doctype html
+html
+  head
+    title Artsy - Discover, Research, and Collect the World's Best Art Online
+    link( type='text/css', rel='stylesheet', href=(sd.ASSET_PATH + 'auth' + sd.CSS_EXT) )
+  body
+    #auth-twitter-email
+      #auth-artsy-logo.icon-logotype
+      h1 Just one more step
+      form( method='post', action='/force/users/auth/twitter/email' )
+        input.bordered-input( type='email', placeholder='Email', autofocus=true, name='email' )
+        button.avant-garde-button-black Join Artsy

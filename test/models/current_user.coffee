@@ -19,6 +19,11 @@ describe 'CurrentUser', ->
       @user.fetch()
       Backbone.sync.args[0][2].data.access_token.should.equal 'foobar'
 
+    it 'doesnt override model data for create/update', ->
+      @user.set accessToken: 'foobar', foo: 'bar'
+      @user.save()
+      Backbone.sync.args[0][2].data.foo.should.equal 'bar'
+
   describe '#saveArtwork', ->
 
     it 'makes the correct api call', ->
