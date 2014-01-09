@@ -74,7 +74,7 @@ module.exports = class AuthModalView extends ModalView
       new models[@state.get('mode')]().save @serializeForm(),
         success: =>
           href = '/force/log_in_to_artsy'
-          href += '?redirect-to=/personalize/collect' if @state.get('mode') is 'register'
+          href += '?redirect-to=/personalize' if @state.get('mode') is 'register'
           location.href = href
         error: (model, xhr, options) =>
           $submit.attr 'data-state', 'error'

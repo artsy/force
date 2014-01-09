@@ -49,13 +49,13 @@ describe 'Auth routes', ->
   describe '#submitTwitterLastStep', ->
 
     beforeEach ->
-      @req = { get: (-> 'http://arts.net?redirect-to=/personalize/collect'), body: { email: 'foo@bar.com' } }
+      @req = { get: (-> 'http://arts.net?redirect-to=/personalize'), body: { email: 'foo@bar.com' } }
       @res = { redirect: sinon.stub() }
 
     it 'redirects to twitter login passing through the email and redirect-to', ->
       routes.submitTwitterLastStep @req, @res
       @res.redirect.args[0][0].should.equal(
-        '/force/users/auth/twitter?email=foo@bar.com&redirect-to=/personalize/collect'
+        '/force/users/auth/twitter?email=foo@bar.com&redirect-to=/personalize'
       )
 
   describe '#submitEmailForTwitter', ->
