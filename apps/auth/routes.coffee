@@ -2,6 +2,7 @@ request = require 'superagent'
 CurrentUser = require '../../models/current_user.coffee'
 { SECURE_ARTSY_URL, ARTSY_ID, ARTSY_SECRET, APP_URL } = require('../../config')
 { parse } = require 'url'
+qs = require 'querystring'
 
 @index = (req, res) ->
   res.render 'template'
@@ -38,3 +39,22 @@ CurrentUser = require '../../models/current_user.coffee'
       req.login new CurrentUser(accessToken: response?.body.access_token), ->
         res.redirect req.query['redirect-to'] or req.get('Referrer') or '/'
   )
+
+@twitterLastStep = (req, res) ->
+  res.render 'twitter_email'
+
+@submitTwitterLastStep = (req, res) ->
+  redirectTo = qs.parse(parse(req.get 'referrer').query)['redirect-to']
+  url = "/force/users/auth/twitter?email=#{req.body.email}&redirect-to=#{redirectTo}"
+  res.redirect url
+
+@submitEmailForTwitter = (req, res, next) ->
+  req.user.save {
+    email: req.query.email
+    email_confirmation: req.query.email
+  }, {
+    success: (m, r) -> next()
+    error: (m, e) ->
+      return next() if e.text.match 'Error from MailChimp API'
+      res.backboneError arguments...
+  }
