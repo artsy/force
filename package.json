@@ -25,7 +25,8 @@
     "redis": "0.10.0",
     "node-uuid": "*",
     "artsy-passport": "*",
-    "backbone-pageable": "*"
+    "backbone-pageable": "*",
+    "moment": "*"
   },
   "devDependencies": {
     "browserify": "*",
