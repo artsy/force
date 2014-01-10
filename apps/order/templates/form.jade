@@ -1,0 +1,53 @@
+form.order-form( method='post' )
+
+  .order-form-container.shipping
+    header
+      h2 Shipping
+      .order-log-in.order-form-hidden
+        | Have an account?
+        a.log_in( href='/log_in' ) Log in
+
+    section
+      .order-form-shipping-address
+        include ./shipping_address
+      .email.order-form-left.hidden
+        label Email
+        input.email( type='email', name='email', value=order.get('email') || '' )
+
+      .method.order-form-left.clear
+        h3 Shipping &amp; Taxes
+        .order-form-shipping-note
+          if order.shippingNote()
+            = order.shippingNote()
+          else
+            | Unless otherwise stated, the order total on this page does not include shipping or taxes. After your order is processed, an Artsy representative will connect you with the seller to arrange shipping. The seller may then collect payment for applicable shipping fees or taxes, if not already included.
+
+  .order-form-section.payment
+    header
+      h2 Payment
+      .order-form-cc-brands
+        .visa( data-brand='VISA' )
+        .mc( data-brand='Mastercard' )
+        .amex( data-brand='American Express' )
+        .discover( data-brand='Discover Card' )
+
+    section
+      .order-form-credit-card-section
+        include ./credit_card
+      .order-form-billing-address.order-form-left
+        h3 Billing Address
+        input( name='copy_shipping', type='checkbox', checked=true ) Use same as shipping address
+        .order-form-billing-address
+          include ./billing_address
+
+  .order-form-section.submit
+    .order-form-conditions
+      input( name='conditions', type='checkbox' )
+      | I agree to the&nbsp;
+      a( href='/conditions-of-sale', target='terms' ) Conditions of Sale
+      if order.sellersTerms()
+        | &nbsp;and&nbsp;
+        a( href=order.sellersTerms(), target='terms' )= "seller's additional terms"
+      | .
+
+  button.order-form-button( type='submit') Purchase

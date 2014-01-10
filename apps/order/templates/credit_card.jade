@@ -1,0 +1,26 @@
+- var name = (typeof order.get('card_name')) !== 'undefined' ? order.get('card_name') : ''
+- var number = (typeof order.get('card_number')) !== 'undefined' ? order.get('card_number') : ''
+- var security_code = (typeof order.get('card_security_code')) !== 'undefined' ? order.get('card_security_code') : ''
+
+.card_name.order-form-left
+  label( for='card_name' ) Name on Card
+  input( type='text', name='card_name', value=name, autocomplete='off' )
+
+.card_expiration.order-form-right
+  label( for='card_expiration' ) Expiration
+  .month.order-form-left
+    select( name='card_expiration_month' )
+      each month in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+        option( value=month )!= month
+  .year.order-form-right
+    select( name='card_expiration_year' )
+      each year in [2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023]
+        option( value=year )!= year
+
+.card_number.order-form-left
+  label( for='card_number' ) Credit Card Number
+  input( type='text', name='card_number', value=number, autocomplete='off' )
+
+.card_security_code.order-form-right
+  label( for='card_security_code' ) Security Code
+  input( type='text', name='card_security_code', value=security_code, autocomplete='off' )

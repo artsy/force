@@ -3,8 +3,8 @@ CurrentUser = require '../../models/current_user'
 @index = (req, res) ->
   return res.redirect('/') unless req.user
   req.user.fetchPendingOrder
-    success: (order) =>
-      res.render 'template', {order: order}
+    success: (order) ->
+      res.render 'templates/index', { order: order }
     error: ->
       res.redirect '/'
 

@@ -24,7 +24,7 @@ describe 'Order routes', ->
         Backbone.sync.args[0][2].success(@order)
 
       it 'renders the order page', ->
-        @res.render.args[0][0].should.equal 'template'
+        @res.render.args[0][0].should.equal 'templates/index'
 
       it 'passes the order to the template', ->
         @res.render.args[0][1]['order'].toJSON().id.should.equal @order.id
