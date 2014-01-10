@@ -7,12 +7,15 @@ benv          = require 'benv'
 
 describe "PartnerLocation", ->
 
-  beforeEach (done) ->
+  before (done) ->
     @location = 'Address, City, State 00000'
     benv.setup =>
       benv.expose { $: benv.require 'components-jquery' }
       sd.GOOGLE_MAPS_API_KEY = 'GOOGLE-MAPS-API-KEY'
       done()
+
+  after ->
+    benv.teardown()
 
   describe '#mapImgSrc', ->
 
