@@ -7,7 +7,7 @@
 { ARTSY_URL, NODE_ENV, ARTSY_ID, ARTSY_SECRET, SESSION_SECRET, PORT, ASSET_PATH,
   FACEBOOK_APP_NAMESPACE, MOBILE_MEDIA_QUERY, MOBILE_URL, APP_URL, REDIS_URL, DEFAULT_CACHE_TIME,
   CANONICAL_MOBILE_URL, IMAGES_URL_PREFIX, SECURE_IMAGES_URL, GOOGLE_ANALYTICS_ID, MIXPANEL_ID,
-  COOKIE_DOMAIN, AUTO_GRAVITY_LOGIN, GOOGLE_MAPS_API_KEY } = config = require "../config"
+  COOKIE_DOMAIN, AUTO_GRAVITY_LOGIN } = config = require "../config"
 { parse, format } = require 'url'
 _ = require 'underscore'
 express = require "express"
@@ -20,12 +20,10 @@ httpProxy = require 'http-proxy'
 proxy = new httpProxy.RoutingProxy()
 backboneCacheSync = require 'backbone-cache-sync'
 redirectMobile = require './middleware/redirect_mobile'
-proxyGravity = require './middleware/proxy_to_gravity'
 localsMiddleware = require './middleware/locals'
 helpersMiddleware = require './middleware/helpers'
 ensureSSL = require './middleware/ensure_ssl'
-errorHandler = require "../components/error_handler"
-{ notFoundError, loginError } = require('./middleware/errors')
+errorsMiddleware = require('./middleware/errors').errorHandler
 
 # Setup sharify constants & require dependencies that use sharify data
 sharify.data =
@@ -44,7 +42,6 @@ sharify.data =
   GOOGLE_ANALYTICS_ID: GOOGLE_ANALYTICS_ID
   MIXPANEL_ID: MIXPANEL_ID
   AUTO_GRAVITY_LOGIN: AUTO_GRAVITY_LOGIN
-  GOOGLE_MAPS_API_KEY: GOOGLE_MAPS_API_KEY
 CurrentUser = require '../models/current_user'
 
 module.exports = (app) ->
@@ -81,7 +78,6 @@ module.exports = (app) ->
     signupPath: '/force/users/invitation/accept'
     twitterCallbackPath: '/force/users/auth/twitter/callback'
     facebookCallbackPath: '/force/users/auth/facebook/callback'
-    twitterSignupPath: '/force/users/auth/twitter/email'
 
   # General
   app.use localsMiddleware
@@ -115,7 +111,6 @@ module.exports = (app) ->
   app.use require "../apps/page"
   app.use require "../apps/partners"
   app.use require "../apps/search"
-  app.use require "../apps/genes"
 
   # Route to ping for system up
   app.get '/system/up', (req, res) ->
@@ -124,11 +119,11 @@ module.exports = (app) ->
   # More general middleware
   app.use express.static(path.resolve __dirname, "../public")
 
-  # Try to proxy unsupported route to Gravity before showing errors
-  app.use proxyGravity
+  # Proxy unhandled requests to Gravity using node-http-proxy
+  app.use (req, res) ->
+    proxy.proxyRequest req, res,
+      host: parse(ARTSY_URL).hostname
+      port: parse(ARTSY_URL).port or 80
 
-  # 404 and error handling middleware
-  app.use errorHandler.pageNotFound
-  app.use '/force/users/sign_in', loginError
-  app.post '/force/javascripterr', errorHandler.javascriptError
-  app.use errorHandler.internalError
+  # Handle errors
+  app.use errorsMiddleware
