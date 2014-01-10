@@ -1,8 +1,11 @@
-Backbone = require 'backbone'
-_ = require 'underscore'
-Artwork = require '../models/artwork.coffee'
+_             = require 'underscore'
+Artwork       = require '../models/artwork.coffee'
+Backbone      = require 'backbone'
+fetchUntilEnd = require './mixins/fetch_until_end.coffee'
 
 module.exports = class Artworks extends Backbone.Collection
+
+  _.extend @prototype, fetchUntilEnd
 
   model: Artwork
 
@@ -18,3 +21,28 @@ module.exports = class Artworks extends Backbone.Collection
       height = if width < maxHeight then maxHeight else width / image.aspect_ratio
       { width: width, height: height }
     _.without imageWidths, null
+
+  # Groups models in to an array of n arrays where n is the numberOfColumns requested.
+  # For a collection of eight artworks
+  # [
+  #   [artworks.at(0), artworks.at(3), artworks.at(6)]
+  #   [artworks.at(1), artworks.at(4), artworks.at(7)]
+  #   [artworks.at(2), artworks.at(6)]
+  # ]
+  #
+  # @param {Number} numberOfColumns The number of columns of models to return in an array
+
+  groupByColumnsInOrder: (numberOfColumns = 3) ->
+    return [@models] if numberOfColumns < 2
+    # Set up the columns to avoid a check in every model pass
+    columns = []
+    for column in [0..numberOfColumns-1]
+      columns[column] = []
+    # Put models in each column in order
+    column = 0
+    for model in @models
+      columns[column].push model
+      column = column + 1
+      if column is numberOfColumns
+        column = 0
+    columns

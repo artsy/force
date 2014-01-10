@@ -72,6 +72,11 @@ describe 'Artwork', ->
       @artwork.get('partner').website = 'mah-website.com'
       @artwork.partnerLink().should.equal 'mah-website.com'
 
+  describe '#href', ->
+
+    it 'creates an href for linking to this artwork', ->
+      @artwork.href().should.equal "/artwork/#{@artwork.get('id')}"
+
   describe '#toAltText', ->
 
     it "Includes title, date and artist name", ->
