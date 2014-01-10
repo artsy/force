@@ -8,12 +8,15 @@ mediator        = require '../../../lib/mediator.coffee'
 rewire          = require 'rewire'
 
 describe 'AboutRouter', ->
-  before (done) ->
+  beforeEach (done) ->
     benv.setup =>
       benv.expose { $: benv.require 'components-jquery' }
       Backbone.$ = $
       Backbone.history.start = sinon.stub
       done()
+
+  afterEach ->
+    benv.teardown()
 
   beforeEach (done) ->
     page = new Page fabricate 'page'
