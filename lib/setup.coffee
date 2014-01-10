@@ -130,4 +130,5 @@ module.exports = (app) ->
   # 404 and error handling middleware
   app.use errorHandler.pageNotFound
   app.use '/force/users/sign_in', loginError
+  app.post '/force/javascripterr', errorHandler.javascriptError
   app.use errorHandler.internalError

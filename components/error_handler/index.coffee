@@ -8,7 +8,7 @@ renderTemplate = jade.compile(
 
 errorHandler = module.exports = exports = {}
 
-# Since this is the last non-error-handling middleware 
+# Since this is the last non-error-handling middleware
 # use()d, we assume 404, as nothing else responded.
 errorHandler.pageNotFound = (req, res, next) ->
   if req.accepts 'html' # respond with html page
@@ -27,6 +27,5 @@ errorHandler.internalError = (err, req, res, next) ->
   res.send 500, renderTemplate { code: 500, error: err, sd: res.locals?.sd or {} }
 
 errorHandler.javascriptError = (req, res, next) ->
-  console.log req.body # Logs client-side errors to stdout for debugging purpose
+  console?.log(req.body) # Logs client-side errors to stdout for debugging purpose
   next new Error(JSON.stringify req.body)
-
