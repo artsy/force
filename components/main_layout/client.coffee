@@ -14,6 +14,20 @@ $.ajaxSettings.headers =
   'X-XAPP-TOKEN'  : sd.ARTSY_XAPP_TOKEN
   'X-ACCESS-TOKEN': sd.CURRENT_USER?.accessToken
 
+# Add global error handler that sends javascript errors to an
+# endpoint for New Relic to track.
+window.onerror = (msg, url, lineno, linecol, err) ->
+  $.ajax
+    url: '/force/javascripterr'
+    type: 'POST'
+    data:
+      msg: msg
+      fileurl: url
+      lineno: lineno
+      linecol: linecol
+      stack: err.stack
+      href: location.href
+
 $ ->
   new HeaderView el: $('#main-layout-header'), $window: $(window), $body: $('body')
   new FooterView el: $('#main-layout-footer')
