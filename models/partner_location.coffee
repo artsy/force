@@ -1,10 +1,10 @@
-_        = require 'underscore'
-sd       = require('sharify').data
-Backbone = require 'backbone'
+_                              = require 'underscore'
+Backbone                       = require 'backbone'
+{ getMapImageSrc, getMapLink } = require "../components/util/google_maps.coffee"
 
 module.exports = class PartnerLocation extends Backbone.Model
 
-  addressLines: ->
+  lines: ->
     _.compact([
       @get 'address' || ''
       @get 'address_2' || ''
@@ -33,5 +33,25 @@ module.exports = class PartnerLocation extends Backbone.Model
       ]).join(' ')
     ]).join(', ')
 
-  toString: ->
-    @addressLines().join ', '
+  toHtml: ->
+    telephone = "Tel: #{@get('phone')}" if @get('phone')
+    _.compact(_.flatten([@lines(), telephone])).join '<br/>'
+
+  displayAddress: -> if @lines() then @lines().join(", ") else ""
+
+  displayName: -> if @has("display") then @get("display") else @get("name")
+
+  googleMapsLink: ->
+    location = @displayAddress()
+    return unless location
+    getMapLink location
+
+  mapImageSrc: (width, height) ->
+    location = @displayAddress()
+    return unless location
+
+    getMapImageSrc(
+      size: "#{width}x#{height}"
+      center:  location
+      markers: "color:0x873ff0|#{location}"
+    )

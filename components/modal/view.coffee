@@ -68,7 +68,7 @@ module.exports = class ModalView extends Backbone.View
 
     # Add autofocus on non-touch devices
     unless isTouchDevice()
-      @$el.find("input[type='email']:first").attr autofocus: true
+      @$el.find(":input:first").attr autofocus: true
 
     # Display
     $(@container).html @$el

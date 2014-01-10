@@ -1,0 +1,16 @@
+extends ../../../components/main_layout/templates/index
+
+block locals
+  assetPackage = 'order'
+
+block body
+  #order-page
+    h2.garamond-header-center Purchase
+    p
+      | Questions about this work or purchasing directly through Artsy? Feel free to email Ibiayi Briggs at 
+      a( href='mailto:orders@artsymail.com?subject!=Order+support' ) orders@artsymail.com
+      | .
+    .order-form
+      include ./form
+    .order-summary
+      include ./summary

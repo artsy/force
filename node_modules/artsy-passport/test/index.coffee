@@ -2,6 +2,7 @@ Backbone = require 'backbone'
 Browser = require 'zombie'
 rewire = require 'rewire'
 app = require '../example'
+sinon = require 'sinon'
 { ARTSY_EMAIL, ARTSY_PASSWORD, TWITTER_EMAIL, TWITTER_PASSWORD,
   FACEBOOK_EMAIL, FACEBOOK_PASSWORD } = require '../config'
 
@@ -72,12 +73,65 @@ describe 'Artsy Passport methods', ->
       opts = @artsyPassport.__get__ 'opts'
       opts.CurrentUser = ->
       @accessTokenCallback = @artsyPassport.__get__ 'accessTokenCallback'
+      @request = @artsyPassport.__get__ 'request'
 
     it 'is okay if there is no response object', ->
       @accessTokenCallback(->)({ bad: 'news' }, null)
 
     it 'sends error messages in an error object', (done) ->
       @accessTokenCallback((err) ->
-        err.message.should.include 'Epic Fail'
+        err.should.include 'Epic Fail'
         done()
       )(null, { body: error_description: 'Epic Fail' })
+
+
+    context 'With a "no account linked" error', ->
+
+      beforeEach ->
+        sinon.stub @request, 'post'
+        end = sinon.stub()
+        @done = sinon.stub()
+        @request.post.returns send: => end: end
+        @accessTokenCallback(@done, { xapp_token: 'foobar' })(
+          null,
+          { body: error_description: 'no account linked' }
+        )
+        @end = end.args[0][0]
+
+      afterEach ->
+        @request.post.restore()
+
+      it 'creates a user', ->
+        @request.post.args[0][0].should.include '/api/v1/user'
+
+      it 'passes a custom error for our socialSignup callback to redirect to login', ->
+        @end null, body: { name: 'Craig' }
+        @done.args[0][0].should.equal 'artsy-passport: created user from social'
+
+  describe '#socialSignup', ->
+
+    before ->
+      opts = @artsyPassport.__get__ 'opts'
+      opts.CurrentUser = ->
+      @socialSignup = @artsyPassport.__get__ 'socialSignup'
+      @err = ''
+      @req = { query: {} }
+      @res = { redirect: sinon.stub() }
+      @next = sinon.stub()
+
+    it 'passes on unless the error is our custom error message', ->
+      @socialSignup('twitter')('Some other error', @req, @res, @next)
+      @next.called.should.be.ok
+
+    it 'strips out the expired auth query params before logging in', ->
+      @req.query.code = 'foo'
+      @req.query.oauth_token = 'bar'
+      @req.query.oauth_verifier = 'baz'
+      @socialSignup('twitter')('artsy-passport: created user from social', @req, @res, @next)
+      @res.redirect.args[0][0].should.not.include 'foo'
+      @res.redirect.args[0][0].should.not.include 'bar'
+      @res.redirect.args[0][0].should.not.include 'baz'
+
+    it 'redirects to log in', ->
+      @socialSignup('twitter')('artsy-passport: created user from social', @req, @res, @next)
+      @res.redirect.args[0][0].should.include '/users/auth/twitter'

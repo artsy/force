@@ -36,6 +36,14 @@ app.use artsyPassport
   # The user data to cache in the session
   userKeys: ['id', 'type', 'name', 'email', 'phone', 'lab_features', 'default_profile_id']
   CurrentUser: # Backbone Model class to serialize the user into e.g. `CurrentUser`
+  # Temporary generated email for twitter signup.
+  twitterSignupTempEmail: (token, secret, profile) -> 'md5hash@artsy.net'
+  # (optional) After signing up with a provider Artsy Passport will redirect to the
+  # login url. Override this to intecerpt with your own path such as a UI to prompt
+  # for an email address to replace the Twitter temporary email. Just make sure that
+  # UI will then redirect to `twitterPath` to log in via twitter.
+  twitterSignupPath: this.twitterPath
+  facebookSignupPath: this.facebookPath
 ````
 
 The keys are cased so it's convenient to pass in a configuration hash. A minimal setup could look like this:

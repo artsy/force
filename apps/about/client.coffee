@@ -11,6 +11,7 @@ module.exports.AboutRouter = class AboutRouter extends Backbone.Router
   initialize: ->
     @$header          = $('#main-layout-header')
     @$jumpContainer   = $('#about-page-jump')
+    @$window          = $(window)
     @jump             = new JumpView threshold: @_getThreshold()
 
     @$jumpContainer.html @jump.$el.css
@@ -18,7 +19,8 @@ module.exports.AboutRouter = class AboutRouter extends Backbone.Router
       right: 'inherit'
 
   toTop: ->
-    mediator.trigger 'scroll:top'
+    if @$window.scrollTop() != 0
+      mediator.trigger 'scroll:top'
 
   toSection: (slug) ->
     _.defer => mediator.trigger 'scroll:position', @_positionFromSlug(slug)

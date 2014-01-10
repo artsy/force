@@ -1,0 +1,25 @@
+h3 Order Summary
+each artwork in order.getLineItemArtworks()
+  img.line-item-image( src=artwork.imageUrl('medium') )
+ul.totals.reserved
+  li.item_total
+    .label Item:
+    .value= order.get('item_total')
+    .dots
+  if order.get('tax_total_cents') > 0
+    li.tax_total
+      .label Tax:
+      .value= order.get('tax_total')
+      .dots
+  li.total
+    .label Total:
+    .value= order.get('total')
+    .dots
+.seller
+  h3 Seller
+  ul
+    each partner in order.getLineItemPartners()
+      li
+        .name= partner.get('name')
+        if partner.get('partner_location')
+          .location!= partner.get('partner_location').toHtml()

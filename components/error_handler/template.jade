@@ -1,0 +1,15 @@
+extends ../main_layout/templates/index
+
+block head
+  include ../main_layout/templates/common_head
+
+block locals
+  assetPackage = 'error'
+
+block body
+  main#error-handler
+    if code === 404
+      h1 The page you were looking for doesn't exist.
+    else
+      h1= error.message
+    p Please contact <a href="mailto:support@artsy.net">support@artsy.net</a> with any questions.

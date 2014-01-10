@@ -1,0 +1,35 @@
+- var scope = scope || 'address'
+- var address = address || {}
+- var phone = phone || ''
+- var showName = (typeof showName) == 'undefined' ? true : showName
+- var nameLabel = (typeof nameLabel) == 'undefined' ? 'Name' : nameLabel
+
+if showName
+  .name.order-form-left
+    label= nameLabel
+    input.name( name=(scope + '[name]'), type='text', value=(address.name || '') )
+
+.country.order-form-left
+  label Country
+  select.country( name=(scope + '[country]') )
+    include ./country_options
+
+.street.order-form-left
+  label Address
+  input.street( name=(scope + '[street]'), type='text', value=(address.street || '') )
+
+.city.order-form-left
+  label City
+  input.city( name=(scope + '[city]'), type='text', value=(address.city || '') )
+
+.region.order-form-left
+  label State
+  input.region( name=(scope + '[region]'), type='text', value=(address.region || '') )
+
+.postal_code.order-form-right
+  label Zip code
+  input.postal_code( name=(scope + '[postal_code]'), type='text', value=(address.postal_code || '') )
+
+.telephone.order-form-right
+  label Telephone
+  input.telephone( type='tel', name='telephone', value=(phone || '') )

@@ -28,11 +28,6 @@ describe 'Setup', ->
     @server.close()
     closeServer()
 
-  it 'proxies unhandled requests to Gravity', (done) ->
-    request.get('http://localhost:5000/foobarbaz').end (res) ->
-      res.text.should.equal 'Foobar page!'
-      done()
-
   it 'returns an ok status when /system/up pinged', (done) ->
     request.get('http://localhost:5000/system/up').end (res) ->
       JSON.parse(res.text).nodejs.should.be.ok

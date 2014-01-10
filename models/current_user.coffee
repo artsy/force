@@ -2,6 +2,7 @@ Backbone = require 'backbone'
 _ = require 'underscore'
 { ARTSY_URL, CURRENT_USER } = require('sharify').data
 ArtworkCollection = require './artwork_collection.coffee'
+Order = require './order.coffee'
 
 module.exports = class CurrentUser extends Backbone.Model
 
@@ -17,7 +18,7 @@ module.exports = class CurrentUser extends Backbone.Model
 
   # Add the access token to fetches and saves
   sync: (method, model, options = {}) ->
-    options.data ?= {}
+    options.data ?= if method in ['create', 'update'] then _.omit(@toJSON(), 'accessToken') else {}
     options.data.access_token = @get 'accessToken'
     super
 
@@ -34,19 +35,19 @@ module.exports = class CurrentUser extends Backbone.Model
   @orNull: ->
     if CURRENT_USER then new @(CURRENT_USER) else null
 
-# Methods for the a user's Order
+  # Methods for the a user's Order
   fetchPendingOrder: (options) ->
     url = "#{@url()}/order/pending"
-    new Backbone.Model().fetch _.extend({ url: url, data: { access_token: @get('accessToken') } }, options)
+    new Order().fetch _.extend({ url: url, data: { access_token: @get('accessToken') } }, options)
 
   updateOrder: (orderId, options) ->
     url = "#{@url()}/order/#{orderId}"
-    new Backbone.Model(id: orderId).save({ access_token: @get('accessToken') }, _.extend({url: url}, options))
+    new Order(id: orderId).save({ access_token: @get('accessToken') }, _.extend({url: url}, options))
 
   submitOrder: (orderId, options) ->
     url = "#{@url()}/order/#{orderId}/submit"
-    new Backbone.Model(id: orderId).save({ access_token: @get('accessToken') }, _.extend({url: url}, options))
+    new Order(id: orderId).save({ access_token: @get('accessToken') }, _.extend({url: url}, options))
 
   resumeOrder: (orderId, token, options) ->
     url = "#{@url()}/order/#{orderId}/resume"
-    new Backbone.Model(id: orderId).save({ access_token: @get('accessToken'), token: token }, _.extend({url: url}, options))
+    new Order(id: orderId).save({ access_token: @get('accessToken'), token: token }, _.extend({url: url}, options))
