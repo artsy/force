@@ -12,7 +12,7 @@ render = (templateName) ->
 
 describe 'Header template', ->
   it 'displays the welcome header', ->
-    render('template')(sd: { HIDE_HEADER: false }).should.include 'main-layout-welcome-header'
+    render('template')(sd: { HIDE_HEADER: false }, user: undefined).should.include 'main-layout-welcome-header'
 
   it 'hides the welcome header', ->
-    render('template')(sd: { HIDE_HEADER: true }).should.not.include 'main-layout-welcome-header'
+    render('template')(sd: { HIDE_HEADER: true }, user: undefined).should.not.include 'main-layout-welcome-header'
