@@ -4,6 +4,7 @@ fs              = require 'fs'
 Backbone        = require 'backbone'
 { fabricate }   = require 'antigravity'
 Order           = require '../../../models/order'
+cheerio         = require 'cheerio'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../templates/#{templateName}.jade"
@@ -23,5 +24,6 @@ describe "Order Templates", ->
     )
 
   it "renders the order form", ->
-    @template.should.include @order.get('total')
-    @template.should.include @order.get('line_items')[0].partner_location.city
+    $ = cheerio.load @template
+    $('.order-summary .value').text().should.include @order.get('total')
+    $('.order-summary .seller .location').text().should.include @order.get('line_items')[0].partner_location.city
