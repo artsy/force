@@ -4,6 +4,10 @@ describe('sharify', function() {
 
   describe('constructor', function() {
 
+    beforeEach(function () {
+      sharify.data = {};
+    });
+
     it('returns middleware that adds the data to locals', function() {
       var locals = {};
       sharify.data.foo = 'bar';
@@ -11,14 +15,23 @@ describe('sharify', function() {
       locals.sharify.data.foo.should.equal('bar');
     });
 
+    it('returns middleware that properly escapes HTML within JSON', function() {
+      var locals = {};
+      sharify.data.escapeHTML = '--></script>';
+      sharify({}, { locals: locals }, function(){});
+      locals.sharify.script().should.include('window.__sharifyData = {"escapeHTML":"--\\>\\u003c/script>"};');
+    });
+
     it('returns middleware that adds a sharify script to locals', function() {
       var locals = {};
+      sharify.data.foo = 'bar';
       sharify({}, { locals: locals }, function(){});
       locals.sharify.script().should.include('window.__sharifyData = {"foo":"bar"};');
     });
 
     it('exports the data to be required elsewhere', function() {
       var locals = {};
+      sharify.data.foo = 'bar';
       sharify({}, { locals: locals }, function(){});
       var sd = require('./').data;
       sd.foo.should.equal('bar');

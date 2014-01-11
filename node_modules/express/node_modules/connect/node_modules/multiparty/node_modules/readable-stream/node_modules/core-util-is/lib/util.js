@@ -77,7 +77,8 @@ function isDate(d) {
 exports.isDate = isDate;
 
 function isError(e) {
-  return isObject(e) && objectToString(e) === '[object Error]';
+  return isObject(e) &&
+      (objectToString(e) === '[object Error]' || e instanceof Error);
 }
 exports.isError = isError;
 
@@ -97,7 +98,7 @@ function isPrimitive(arg) {
 exports.isPrimitive = isPrimitive;
 
 function isBuffer(arg) {
-  return arg instanceof Buffer;
+  return Buffer.isBuffer(arg);
 }
 exports.isBuffer = isBuffer;
 

@@ -1,7 +1,7 @@
 // Middleware that injects the shared data and sharify script
 module.exports = function(req, res, next) {
-  
-  // Clone the "constant" sharify data for the request so 
+
+  // Clone the "constant" sharify data for the request so
   // request-level data isn't shared across the server potentially
   // exposing sensitive data.
   var data = {};
@@ -14,8 +14,13 @@ module.exports = function(req, res, next) {
     data: data,
     script: function() {
       return '<script type="text/javascript">' +
-               'window.__sharifyData = ' + JSON.stringify(data) + ';' +
-             '</script>';
+               'window.__sharifyData = ' +
+               //There are tricky rules about safely embedding JSON within HTML
+               //see http://stackoverflow.com/a/4180424/266795
+               JSON.stringify(data)
+                 .replace(/</g, '\\u003c')
+                 .replace(/-->/g, '--\\>') +
+               ';</script>';
     }
   };
 
