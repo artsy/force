@@ -20,6 +20,7 @@ describe 'Paginator template', ->
 
   after ->
     @$cases.remove()
+    benv.teardown()
 
   describe '#paginate', ->
     describe '10 pages, @ page 5', ->

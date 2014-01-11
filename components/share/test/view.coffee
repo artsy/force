@@ -6,7 +6,8 @@ ShareView     = require '../view.coffee'
 { resolve }   = require 'path'
 
 describe 'ShareView', ->
-  beforeEach (done) ->
+
+  before (done) ->
     benv.setup =>
       benv.expose { $: benv.require 'components-jquery' }
       Backbone.$  = $
@@ -17,6 +18,8 @@ describe 'ShareView', ->
         </div>
       """)
       done()
+
+  after benv.teardown
 
   describe '#initialize', ->
     it '#', ->

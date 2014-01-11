@@ -12,8 +12,8 @@ render = (templateName) ->
   )
 
 describe 'Activator', ->
-  after ->
-    benv.teardown()
+
+  after benv.teardown
 
   describe '/foo/bar', ->
     before (done) ->
@@ -114,4 +114,3 @@ describe 'Activator', ->
       @$cases.find('#case-4').text().should.equal 'is-inactive'
       @$cases.find('#case-5').text().should.equal 'is-active'
       @$cases.find('#case-6').text().should.equal 'is-active'
-
