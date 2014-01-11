@@ -26,7 +26,7 @@ module.exports = class FillwidthView extends Backbone.View
     @$('li .fillwidth-img-container').height maxHeight
     @$('ul').fillwidth
       imageDimensions: @collection.fillwidthDimensions(maxHeight)
-    @handleSeeMore() if @seeMore
+    _.defer => @handleSeeMore() if @seeMore
     @initializeArtworks @collection
 
   initializeArtworks: (artworks) ->
@@ -48,8 +48,9 @@ module.exports = class FillwidthView extends Backbone.View
 
   handleSeeMore: ->
     if @page is 2
-      _.defer @hideFirstRow
-    if @collection.models.length < @fetched
+      @hideFirstRow()
+
+    if @collection.models.length < @fetched and @$('.fillwidth-row-uninitialized:hidden').length < 1
       @hideSeeMore()
 
   hideSeeMore: ->

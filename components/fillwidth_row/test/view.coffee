@@ -57,3 +57,9 @@ describe 'FillwidthView', ->
       @view.collection = new Artworks()
       @view.render()
       @removed.should.equal true
+
+  describe '#handleSeeMore', ->
+
+    xit "Hides first row"
+    xit "Shows see more if got # of artowrks asked for"
+    xit "Shows see more if got fewer artworks than asked but not all fit on row"
