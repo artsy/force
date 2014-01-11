@@ -3,7 +3,7 @@ should          = require 'should'
 Backbone        = require 'backbone'
 PartnerLocation = require '../../models/partner_location'
 
-describe "PartnerLocation", ->
+describe 'PartnerLocation', ->
 
   beforeEach ->
     @partnerLocation = new PartnerLocation
@@ -20,6 +20,44 @@ describe "PartnerLocation", ->
       city: 'City'
       address: 'Address'
 
+
+  describe '#singleLine', ->
+
+    it "formats location on a single line", ->
+      @partnerLocation.singleLine().should.equal 'City, Address'
+      @partnerLocationMissingInfo.set 'city', ''
+      @partnerLocationMissingInfo.singleLine().should.equal 'Address'
+      @partnerLocation.singleLine().should.equal "#{@partnerLocation.get('city')}, #{@partnerLocation.get('address')}"
+      @partnerLocation.set 'address_2', 'Ste 227'
+      @partnerLocation.singleLine().should.equal "#{@partnerLocation.get('city')}, #{@partnerLocation.get('address')} #{@partnerLocation.get('address_2')}"
+
+  describe '#lines', ->
+
+    it 'returns an array of strings for the address', ->
+      @partnerLocation.lines().should.include @partnerLocation.get 'address'
+      @partnerLocation.lines().should.include @partnerLocation.cityStatePostalCode()
+      @partnerLocation.set
+        address_2: '25th Floor'
+        country: 'USA'
+      @partnerLocation.lines().should.include @partnerLocation.get 'address'
+      @partnerLocation.lines().should.include @partnerLocation.get 'address_2'
+      @partnerLocation.lines().should.include @partnerLocation.cityStatePostalCode()
+      @partnerLocation.lines().should.include @partnerLocation.get 'country'
+
+  describe '#cityState', ->
+
+    it 'ignores blank values', ->
+      @partnerLocation.set 'city', ''
+      @partnerLocation.cityState().should.equal @partnerLocation.get('state')
+      @partnerLocation.set { city: 'Beverly Hills', state: '' }
+      @partnerLocation.cityState().should.equal @partnerLocation.get('city')
+
+  describe '#cityStatePostalCode', ->
+
+    it 'returns a string for city, state, and postal code omitting missing values', ->
+      pl = @partnerLocation
+      pl.cityStatePostalCode().should.equal "#{pl.get('city')}, #{pl.get('state')} #{pl.get('postal_code')}"
+
   describe '#displayName', ->
 
     it 'Formatted displayName', ->
@@ -31,12 +69,6 @@ describe "PartnerLocation", ->
     it 'Formats address', ->
       @partnerLocation.displayAddress().should.equal 'Address, City, State 00000'
       @partnerLocationMissingInfo.displayAddress().should.equal 'Address, City'
-
-  describe '#singleLine', ->
-
-    it "formats location on a single line", ->
-      @partnerLocation.singleLine().should.equal 'City, Address'
-      @partnerLocationMissingInfo.singleLine().should.equal 'City, Address'
 
   describe '#toHtml', ->
 

@@ -31,6 +31,9 @@ module.exports = class Artwork extends Backbone.Model
     else
       ""
 
+  href: ->
+    "/artwork/#{@get('id')}"
+
   partnerLink: ->
     partner = @get('partner')
     return unless partner
