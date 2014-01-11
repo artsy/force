@@ -7,6 +7,7 @@ FooterView  = rewire '../view'
 FooterView.__set__ 'FeedbackView', Backbone.View
 
 describe 'FooterView', ->
+
   beforeEach (done) ->
     benv.setup =>
       benv.expose { $: benv.require 'components-jquery' }
@@ -14,6 +15,8 @@ describe 'FooterView', ->
       benv.render '../template.jade', {}, =>
         @view = new FooterView el: $('#main-layout-footer')
         done()
+
+  afterEach benv.teardown
 
   it 'knows what year it is', ->
     now = (new Date).getFullYear()

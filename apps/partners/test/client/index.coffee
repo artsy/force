@@ -23,6 +23,7 @@ describe 'FeaturedPartnersView', ->
 
   after ->
     _.defer.restore()
+    benv.teardown()
 
   beforeEach (done) ->
     @followProfile = new FollowProfile({ id: '111', profile: { id: 'getty' } })

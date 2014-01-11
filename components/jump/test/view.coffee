@@ -13,6 +13,8 @@ describe 'JumpView', ->
       @view = new JumpView
       done()
 
+  afterEach benv.teardown
+
   describe '#initialize', ->
     it 'should have some defaults', ->
       @view.state.should.equal 'hidden'
