@@ -10,6 +10,6 @@ If you are writing a bundler to package modules for client side use, make sure y
 
 See https://gist.github.com/4339901 for details.
 
-The [script](https://github.com/shtylman/node-script) module will properly handle this field.
+The [browserify](https://github.com/substack/node-browserify) module will properly handle this field when bundling your files.
 
 

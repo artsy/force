@@ -1,11 +1,11 @@
 diff --git a/lib/util.js b/lib/util.js
-index 9901a66..007fa10 100644
+index a03e874..9074e8e 100644
 --- a/lib/util.js
 +++ b/lib/util.js
-@@ -19,425 +19,6 @@
+@@ -19,430 +19,6 @@
  // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
  // USE OR OTHER DEALINGS IN THE SOFTWARE.
- 
+
 -var formatRegExp = /%[sdj%]/g;
 -exports.format = function(f) {
 -  if (!isString(f)) {
@@ -310,8 +310,13 @@ index 9901a66..007fa10 100644
 -                                             .replace(/\\"/g, '"') + '\'';
 -    return ctx.stylize(simple, 'string');
 -  }
--  if (isNumber(value))
+-  if (isNumber(value)) {
+-    // Format -0 as '-0'. Strict equality won't distinguish 0 from -0,
+-    // so instead we use the fact that 1 / -0 < 0 whereas 1 / 0 > 0 .
+-    if (value === 0 && 1 / value < 0)
+-      return ctx.stylize('-0', 'number');
 -    return ctx.stylize('' + value, 'number');
+-  }
 -  if (isBoolean(value))
 -    return ctx.stylize('' + value, 'boolean');
 -  // For some reason typeof null is "object", so special case here.
@@ -428,10 +433,18 @@ index 9901a66..007fa10 100644
  // NOTE: These type checking functions intentionally don't use `instanceof`
  // because it is fragile and can be easily faked with `Object.create()`.
  function isArray(ar) {
-@@ -523,159 +104,3 @@ exports.isBuffer = isBuffer;
+@@ -522,166 +98,10 @@ function isPrimitive(arg) {
+ exports.isPrimitive = isPrimitive;
+
+ function isBuffer(arg) {
+-  return arg instanceof Buffer;
++  return Buffer.isBuffer(arg);
+ }
+ exports.isBuffer = isBuffer;
+
  function objectToString(o) {
    return Object.prototype.toString.call(o);
- }
+-}
 -
 -
 -function pad(n) {
@@ -588,3 +601,4 @@ index 9901a66..007fa10 100644
 -  e.syscall = syscall;
 -  return e;
 -};
++}
