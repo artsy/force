@@ -1,20 +1,25 @@
-_               = require 'underscore'
-Backbone        = require 'backbone'
-SearchBarView   = require './search_bar/view.coffee'
-AuthModalView   = require '../../auth_modal/view.coffee'
-mediator        = require '../../../lib/mediator.coffee'
-sd              = require('sharify').data
-{ isTouchDevice } = require '../../util/device.coffee'
-{ readCookie, createCookie } = require '../../util/cookie.coffee'
+_                   = require 'underscore'
+Backbone            = require 'backbone'
+SearchBarView       = require './search_bar/view.coffee'
+AuthModalView       = require '../../auth_modal/view.coffee'
+mediator            = require '../../../lib/mediator.coffee'
+sd                  = require('sharify').data
+{ isTouchDevice }   = require '../../util/device.coffee'
+{ createCookie }    = require '../../util/cookie.coffee'
 
 module.exports = class HeaderView extends Backbone.View
 
   initialize: (options) ->
     { @$window, @$body } = options
+
     @$welcomeHeader = @$('#main-layout-welcome-header')
+
     @searchBarView = new SearchBarView
-      el:       @$('#main-layout-search-bar-container')
-      $input:   @$('#main-layout-search-bar-input')
+      el: @$('#main-layout-search-bar-container')
+      $input: @$('#main-layout-search-bar-input')
+
+    @searchBarView.on 'search:entered', (term) -> window.location = "/search?q=#{term}"
+    @searchBarView.on 'search:selected', @searchBarView.selectResult
 
     unless sd.HIDE_HEADER # Already hidden
       @$window.on 'scroll.welcome-header', @checkRemoveWelcomeHeader
@@ -34,6 +39,7 @@ module.exports = class HeaderView extends Backbone.View
     @$welcomeHeader.remove()
     @$body.addClass 'body-header-fixed'
     @$window.off '.welcome-header'
+
     unless isTouchDevice()
       @$window.scrollTop(0)
 

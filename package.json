@@ -53,6 +53,7 @@
     "components-jquery": "git://github.com/components/jquery.git",
     "jquery.transition": "git://github.com/dzucconi/jquery.transition.git",
     "jquery.fillwidth": "*",
-    "jquery.dotdotdot": "git://github.com/mzikherman/jquery.dotdotdot.git"
+    "jquery.dotdotdot": "git://github.com/mzikherman/jquery.dotdotdot.git",
+    "geoformatter": "git://github.com/dzucconi/geo_formatter.git"
   }
 }

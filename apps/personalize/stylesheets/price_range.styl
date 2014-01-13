@@ -1,0 +1,51 @@
+.personalize-step
+  &[data-step='price_range']
+    width 560px
+    aside
+      margin 40px 0
+      color dark-gray-text-color
+      font-size 16px
+
+// 3d toggle button
+.flipper
+  position relative
+  display inline-block
+  vertical-align bottom
+  margin 10px
+  width 120px
+  height @width
+  line-height @width
+  text-align center
+  avant-garde()
+  font-size 13px
+  overflow ellipsis
+  cursor pointer
+  &.is-flipped > .flipper-card
+    transform rotateX(-180deg)
+
+.flipper-card
+  width 100%
+  height 100%
+  transform-style preserve-3d
+  transition transform 0.3s
+
+.flipper-face
+  width 100%
+  height 100%
+  position absolute
+  backface-visibility hidden
+  z-index 2
+  cursor pointer
+  border 2px solid light-gray-border-color
+  border-radius (@width / 2)
+  transition border-color 0.25s
+  &:hover
+    border-color highlight-color
+  &.is-front
+    position absolute
+    z-index 1
+  &.is-back
+    transform rotateX(-180deg)
+    background-color highlight-color
+    border-color highlight-color
+    color white

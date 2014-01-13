@@ -1,0 +1,61 @@
+[
+  {
+    "address_components":[
+      {
+        "long_name":"Cairo",
+        "short_name":"Cairo",
+        "types":[
+          "locality",
+          "political"
+        ]
+      },
+      {
+        "long_name":"Cairo Governorate",
+        "short_name":"Cairo Governorate",
+        "types":[
+          "administrative_area_level_1",
+          "political"
+        ]
+      },
+      {
+        "long_name":"Egypt",
+        "short_name":"EG",
+        "types":[
+          "country",
+          "political"
+        ]
+      }
+    ],
+    "adr_address":"Cairo, <span class=\"region\">Cairo Governorate</span>, <span class=\"country-name\">Egypt</span>",
+    "formatted_address":"Cairo, Cairo Governorate, Egypt",
+    "geometry":{
+      "location":{
+        "jb":30.0444196,
+        "kb":31.23571160000006
+      },
+      "viewport":{
+        "ba":{
+          "b":30.0092282,
+          "d":30.1106024
+        },
+        "fa":{
+          "b":31.222066900000073,
+          "d":31.30197290000001
+        }
+      }
+    },
+    "icon":"http://maps.gstatic.com/mapfiles/place_api/icons/geocode-71.png",
+    "id":"a0e1b9bbf82400da1813eb0880ebc39efd3ad15a",
+    "name":"Cairo",
+    "reference":"CoQBfgAAAOhOekk3ouP7NfhU9KkvtHcM6y1BdeyDQkSPl3PT2ujpwzAnklkhBVxwEfc1LS8nReeK5zNQTaDiRPDpEiXDw_OQaC9nzV8XDcIlVmdQ6CXIKMgSRYkUlxE-MkHdfORi_G3i5T7ql3PcGN0xgW0T79gMuiaN3vefaA6KlCcf4bgJEhDGVWPbHqFgGQrJykZpcEavGhS7g_dDsKYMcSeWnzOwDoU3N6Kzng",
+    "types":[
+      "locality",
+      "political"
+    ],
+    "url":"https://maps.google.com/maps/place?q=Cairo&ftid=0x14583fa60b21beeb:0x79dfb296e8423bba",
+    "vicinity":"Cairo",
+    "html_attributions":[
+
+    ]
+  }
+]

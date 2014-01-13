@@ -1,0 +1,5 @@
+.personalize-followed-artists
+  for artist in artists
+    .personalize-followed-artist
+      span.pfa-name= artist.get('name')
+      a.pfa-remove( data-id= artist.id )
