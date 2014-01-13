@@ -1,8 +1,8 @@
 _            = require 'underscore'
 Backbone     = require 'backbone'
 Order        = require '../../../models/order.coffee'
-ShippingView = require('./shipping.coffee').ShippingView
-CheckoutView = require('./checkout.coffee').CheckoutView
+ShippingForm = require('./shipping_form.coffee').ShippingForm
+CheckoutForm = require('./checkout_form.coffee').CheckoutForm
 sd           = require('sharify').data
 
 module.exports.OrderRouter = class OrderRouter extends Backbone.Router
@@ -11,8 +11,8 @@ module.exports.OrderRouter = class OrderRouter extends Backbone.Router
     'order/checkout' : 'checkout'
     'order'          : 'shipping'
 
-  checkout: -> new CheckoutView(model: new Order(sd.ORDER), el: $('#order-page'))
-  shipping: -> new ShippingView(model: new Order(sd.ORDER), el: $('#order-page'))
+  checkout: -> new CheckoutForm(model: new Order(sd.ORDER), el: $('#order-page'), success: -> window.location = 'order/complete')
+  shipping: -> new ShippingForm(model: new Order(sd.ORDER), el: $('#order-page'), success: -> window.location = 'order/checkout')
 
 module.exports.init = ->
   new OrderRouter

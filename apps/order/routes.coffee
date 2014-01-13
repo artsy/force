@@ -1,5 +1,3 @@
-CurrentUser = require '../../models/current_user'
-
 @shipping = (req, res) ->
   return res.redirect('/') unless req.user
   req.user.fetchPendingOrder
@@ -13,6 +11,8 @@ CurrentUser = require '../../models/current_user'
   return res.redirect('/') unless req.user
   req.user.fetchPendingOrder
     success: (order) ->
+      unless order.get('shipping_address')
+        return res.redirect('/order')
       res.locals.sd.ORDER = order.toJSON()
       res.render 'templates/checkout', { order: order }
     error: ->
@@ -30,6 +30,7 @@ CurrentUser = require '../../models/current_user'
 @resume = (req, res) ->
   unless ((token = req.query.token) && (orderId = req.params.id)) && req.user
     return res.redirect '/'
+
   req.user.resumeOrder orderId, token,
     success: ->
       res.redirect '/order'
