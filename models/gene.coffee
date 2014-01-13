@@ -1,4 +1,5 @@
 Backbone = require 'backbone'
+Artworks = require '../collections/artworks.coffee'
 sd = require('sharify').data
 
 module.exports = class Gene extends Backbone.Model
@@ -10,3 +11,8 @@ module.exports = class Gene extends Backbone.Model
   displayName: -> @get('name')
 
   alphaSortKey: -> @get('id')
+
+  fetchArtworks: (options) ->
+    artworks = new Artworks
+    artworks.url = "#{@urlRoot}/#{@get 'id'}/artworks"
+    artworks.fetch options

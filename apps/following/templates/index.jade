@@ -1,0 +1,20 @@
+extends ../../../components/main_layout/templates/index
+include ./header
+include ./empty
+
+block head
+  include meta
+
+block locals
+  assetPackage = 'following'
+
+block body
+  main.main-layout-container
+    +following-tab-nav
+    section.following(id=type)
+      +empty(type)(style=items.length > 0 ? "display:none;" : "")
+      - each item in items.slice(0, itemsPerPage)
+        .item(id=item.id)
+          h3= item.name
+          button.artist-follow-button.avant-garde-button-white.follow-button
+          .artworks

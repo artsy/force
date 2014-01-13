@@ -2,6 +2,8 @@ _                 = require 'underscore'
 Backbone          = require 'backbone'
 ArtworkCollection = require './artwork_collection.coffee'
 { ARTSY_URL, CURRENT_USER, SESSION_ID } = require('sharify').data
+Order = require './order.coffee'
+Genes = require '../collections/genes.coffee'
 
 module.exports = class CurrentUser extends Backbone.Model
 
@@ -32,6 +34,18 @@ module.exports = class CurrentUser extends Backbone.Model
   # Removes the artwork from the user's saved-artwork collection.
   removeArtwork: (artworkId, options = {}) =>
     @defaultArtworkCollection().unsaveArtwork(artworkId, options)
+
+  # Retreive a list of artists the user is following
+  #
+  # @param {Object} options Provide `success` and `error` callbacks similar to Backbone's fetch
+  followingArtists: (options) ->
+    url = "#{@url()}/follow/artists"
+    new Backbone.Collection().fetch _.extend({url: url, data: {access_token: @get('accessToken')}}, options)
+
+  # Retreive a list of genes the user is following
+  followingGenes: (options) ->
+    url = "#{@url()}/follow/genes"
+    new Genes().fetch _.extend({url: url, data: {access_token: @get('accessToken')}}, options)
 
   # Convenience for getting the bootstrapped user or returning null.
   # This should only be used on the client.
