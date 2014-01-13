@@ -12,6 +12,8 @@ suggestedArtistsTemplate  = -> require('../../templates/suggested_artists.jade')
 FollowArtistCollection  = require '../../../../models/follow_artist_collection.coffee'
 FollowButton            = require '../../../artist/client/follow_button.coffee'
 
+{ isTouchDevice } = require '../../../../components/util/device.coffee'
+
 module.exports = class ArtistsView extends StepView
   events:
     'click .personalize-skip' : 'advance'
@@ -92,7 +94,7 @@ module.exports = class ArtistsView extends StepView
     @$('#personalize-artists-followed').html followedTemplate(artists: @followed.models)
 
   render: ->
-    @$el.html template(state: @state)
+    @$el.html template(state: @state, isTouchDevice: isTouchDevice())
     @setupSearch()
     this
 

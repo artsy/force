@@ -1,6 +1,7 @@
 _         = require 'underscore'
 Backbone  = require 'backbone'
 template  = -> require('./template.jade') arguments...
+{ isTouchDevice } = require '../util/device.coffee'
 
 module.exports = class LocationSearchView extends Backbone.View
   announce: (location) ->
@@ -11,7 +12,7 @@ module.exports = class LocationSearchView extends Backbone.View
       @announce @autocomplete.getPlace()
 
   render: ->
-    @$el.html template()
+    @$el.html template(isTouchDevice: isTouchDevice())
     @postRender()
     this
 
