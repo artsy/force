@@ -3,6 +3,7 @@ Backbone          = require 'backbone'
 PersonalizeState  = require './state.coffee'
 CurrentUser       = require '../../../models/current_user.coffee'
 Transition        = require '../../../components/mixins/transition.coffee'
+track             = require('../../../lib/analytics.coffee').track
 
 views =
   CollectView:    require './views/collect.coffee'
@@ -24,18 +25,24 @@ module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Rout
     @listenTo @state, 'transition:next', @next
     @listenTo @state, 'done', @done
 
+    track.funnel 'Landed on personalize page', { label: "User:#{@user.id}" }
+
   step: (step) ->
+    track.funnel "Starting #{step}", { label: "User:#{@user.id}" }
+
     Transition.fade @$el, out: =>
       @view?.remove()
-      @state.setStep(step)
-      klass   = "#{_.classify(step)}View"
-      @view   = new views[klass](state: @state, user: @user)
+      @state.setStep step
+
+      @view = new views["#{_.classify(step)}View"] state: @state, user: @user
       @$el.html @view.render().$el
 
   next: ->
     @navigate "/personalize/#{@state.get('current_step')}", trigger: true
 
   done: ->
+    track.funnel 'Finished personalize', { label: "User:#{@user.id}" }
+
     @$el.attr 'data-state', 'loading'
     @user.save null,
       complete: =>

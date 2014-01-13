@@ -1,4 +1,5 @@
-Backbone = require 'backbone'
+Backbone  = require 'backbone'
+track     = require('../../../../lib/analytics.coffee').track
 
 module.exports = class StepView extends Backbone.View
   className: 'personalize-frame'
@@ -7,5 +8,7 @@ module.exports = class StepView extends Backbone.View
     { @state, @user } = options
 
   advance: (e) ->
+    track.funnel "Finishing #{@state.get('current_step')}", { label: "User:#{@user.id}" }
+
     e?.preventDefault()
     @state.trigger 'transition:next'
