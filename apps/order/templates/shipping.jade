@@ -1,0 +1,24 @@
+extends ../../../components/main_layout/templates/index
+
+block locals
+  assetPackage = 'order'
+
+block body
+
+  #order-page
+    h2.garamond-header-center Purchase
+    .order-page-content
+      .order-summary
+        include ./summary
+      form.order-form( method="post" )
+        header
+          unless user
+            .order-log-in.order-form-hidden
+              | Have an account?
+              .order-form-login Log in
+            .email.order-form-left.hidden
+              label Email
+              input.email.bordered-input( type='email', name='email', value=order.get('email') || '' )
+        section.order-form-shipping-address
+          include ./shipping_address
+        button.order-form-button.avant-garde-button-black( type='submit') Continue to Checkout

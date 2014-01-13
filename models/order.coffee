@@ -35,3 +35,16 @@ module.exports = class Order extends Backbone.Model
       partner = new Partner(lineItem.partner)
       partner.set partner_location: new PartnerLocation(lineItem.partner_location)
       partner
+
+  formatShippingLocal: ->
+    address = @get('shipping_address')
+    _.compact([ _.compact([address?.city, address?.region]).join(', '), address?.postal_code]).join(' ')
+
+  formatShippingAddress: ->
+    address = @get('shipping_address')
+    _.compact([
+      address?.name
+      @get('telephone')
+      address?.street
+      @formatShippingLocal()
+    ]).join('<br />')

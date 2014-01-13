@@ -1,0 +1,60 @@
+extends ../../../components/main_layout/templates/index
+
+block locals
+  assetPackage = 'order'
+
+block body
+  #order-page
+    h2.garamond-header-center Checkout
+    .order-page-content
+      .order-summary
+        include ./summary
+      .order-form
+        section.order-ship-to
+          h2.order-page-sm-heading Ship To
+          .order-form-text-address
+            != order.formatShippingAddress()
+          .order-form-shipping-note
+            if order.shippingNote()
+              = order.shippingNote()
+            else
+              | Unless otherwise stated, the order total on this page does not include shipping or taxes. 
+              | After your order is processed, an Artsy representative will connect you with the seller 
+              | to arrange shipping. The seller may then collect payment for applicable shipping fees or 
+              | taxes, if not already included.
+        section.order-form-credit-card-section
+          h2.order-page-sm-heading Payment Method
+          .order-form-cc-brands
+            .visa.icon( data-brand='VISA' )
+            .mastercard.icon( data-brand='Mastercard' )
+            .amex.icon( data-brand='American Express' )
+            .discover.icon( data-brand='Discover Card' )
+          include ./credit_card
+        section.order-form-billing-address
+          include ./billing_address
+        section.order-summary-section
+          h2.order-page-sm-heading Order Summary
+          include ./small_artwork
+          ul.order-summary-totals
+            li.item-total
+              .label Item:
+              .value= order.get('item_total')
+              .dots
+            if order.get('tax_total_cents') > 0
+              li.tax-total
+                .label Tax:
+                .value= order.get('tax_total')
+                .dots
+            li.total-amount
+              .label Total:
+              .value= order.get('total')
+              .dots
+          .order-form-conditions.order-form-checkbox
+            input( name='conditions', type='checkbox' )
+            | I agree to the&nbsp;
+            a( href='/conditions-of-sale', target='terms' ) Conditions of Sale
+            if order.sellersTerms()
+              |  and 
+              a( href=order.sellersTerms(), target='terms' )= "seller's additional terms"
+              | .
+          button.order-form-button.avant-garde-button-black( type='submit') Purchase
