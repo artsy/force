@@ -1,5 +1,5 @@
 for suggestionSet in suggestions
-  .personalize-suggestions-set
+  .personalize-suggestions-set( data-id= suggestionSet.id )
     header Artists related to #{suggestionSet.get('name')}
 
     for artist in suggestionSet.get('suggestions').models

@@ -33,9 +33,9 @@ module.exports = class ArtistsView extends StepView
     @listenTo @suggestions, 'add', @renderSuggestions
     @listenTo @suggestions, 'remove', @renderSuggestions
 
-  setupFollowButton: (model, el) ->
+  setupFollowButton: (key, model, el) ->
     @followButtonViews ||= {}
-    @followButtonViews[model.id] = new FollowButton
+    @followButtonViews[key] ||= new FollowButton
       followArtistCollection: @followArtistCollection
       notes: 'Followed from /personalize'
       model: model
@@ -79,16 +79,22 @@ module.exports = class ArtistsView extends StepView
   disposeSuggestionSet: (model) ->
     suggestionSet = @suggestions.remove model.id
     _.each suggestionSet.get('suggestions').pluck('id'), (id) =>
-      @followButtonViews[id].remove()
-      @followButtonViews[id] = null
+      key = "#{suggestionSet.id}_#{id}"
+      @followButtonViews[key].remove()
+      @followButtonViews[key] = null
 
   renderSuggestions: ->
     (@$suggestions ||= @$('#personalize-artists-suggestions')).
       html suggestedArtistsTemplate suggestions: @suggestions.models
 
-    _.each @suggestions.pluck('suggestions'), (set) =>
-      _.each set.models, (artist) =>
-        @setupFollowButton(artist, @$suggestions.find(".follow-button[data-id='#{artist.id}']"))
+    # Attach FollowButton views
+    @suggestions.each (suggestionSet) =>
+      suggestionSet.get('suggestions').each (artist) =>
+        $button = @$suggestions.
+          find(".personalize-suggestions-set[data-id='#{suggestionSet.id}']").
+          find(".follow-button[data-id='#{artist.id}']")
+
+        @setupFollowButton "#{suggestionSet.id}_#{artist.id}", artist, $button
 
   renderFollowed: ->
     @$('#personalize-artists-followed').html followedTemplate(artists: @followed.models)
