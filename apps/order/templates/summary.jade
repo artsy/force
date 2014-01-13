@@ -1,25 +1,17 @@
-h3 Order Summary
-each artwork in order.getLineItemArtworks()
-  img.line-item-image( src=artwork.imageUrl('medium') )
-ul.totals.reserved
-  li.item_total
+h2.order-page-sm-heading Your Order
+include ./small_artwork
+ul.order-summary-totals
+  li.item-total
     .label Item:
     .value= order.get('item_total')
     .dots
-  if order.get('tax_total_cents') > 0
-    li.tax_total
-      .label Tax:
-      .value= order.get('tax_total')
-      .dots
-  li.total
-    .label Total:
-    .value= order.get('total')
-    .dots
-.seller
-  h3 Seller
-  ul
-    each partner in order.getLineItemPartners()
-      li
-        .name= partner.get('name')
-        if partner.get('partner_location')
-          .location!= partner.get('partner_location').toHtml()
+.order-seller-section
+  h2.order-page-sm-heading Seller
+  each partner in order.getLineItemPartners()
+    .name= partner.get('name')
+    if partner.get('partner_location')
+      .location!= partner.get('partner_location').toHtml()
+.order-questions-section
+  h2.order-page-sm-heading Questions?
+  | Email us at 
+  a( href='mailto:orders@artsymail.com?subject!=Order+support' ) orders@artsymail.com

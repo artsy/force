@@ -13,11 +13,11 @@ render = (templateName) ->
     { filename: filename }
   )
 
-describe "Order Templates", ->
+describe "Shipping Templates", ->
 
   beforeEach ->
     @order = new Order(fabricate 'order')
-    @template = render('index')(
+    @template = render('shipping')(
       sd:
         ASSET_PATH: 'localhost:3000'
       order: @order
@@ -26,4 +26,35 @@ describe "Order Templates", ->
   it "renders the order form", ->
     $ = cheerio.load @template
     $('.order-summary .value').text().should.include @order.get('total')
-    $('.order-summary .seller .location').text().should.include @order.get('line_items')[0].partner_location.city
+    $('.country.order-input-section select').val().should.include 'USA'
+    $('.order-summary .order-seller-section .location').text().should.include @order.get('line_items')[0].partner_location.city
+
+describe "Checkout Templates", ->
+
+  beforeEach ->
+    @order = new Order(fabricate 'order')
+    @template = render('checkout')(
+      sd:
+        ASSET_PATH: 'localhost:3000'
+      order: @order
+    )
+
+  it "renders the order form", ->
+    $ = cheerio.load @template
+    $('.order-summary .value').text().should.include @order.get('total')
+    $('.country.order-input-section select').val().should.include 'USA'
+    $('.order-summary .order-seller-section .location').text().should.include @order.get('line_items')[0].partner_location.city
+
+describe "Complete Templates", ->
+
+  beforeEach ->
+    @order = new Order(fabricate 'order')
+    @template = render('complete')(
+      sd:
+        ASSET_PATH: 'localhost:3000'
+      order: @order
+    )
+
+  it "renders the order form", ->
+    $ = cheerio.load @template
+    $('h2.garamond-header-center').text().should.include 'Congratulations'

@@ -1,4 +1,148 @@
+#main-layout-footer, #main-layout-header, .main-layout-footer-push
+  display none
+
 #order-page
   width 1024px
   margin 20px auto 0 auto
-  padding-top 40px
+  padding-bottom 60px
+  &.order-page-complete
+    width: 400px
+
+.order-page-content
+  position relative
+  margin-top: 30px
+
+.order-page-sm-heading
+  text-transform uppercase
+  margin-bottom 12px
+  letter-spacing 1px
+
+.line-item-image-large
+  margin 10px auto
+
+.order-summary
+  position absolute
+  right 0px
+  top 0px
+  width 220px
+  .order-seller-section
+    margin-bottom 20px
+    .location
+      margin-top: 13px
+  .order-summary-totals
+    margin-bottom 32px
+
+.line-item-image
+  max-width 58px
+  max-height 100%
+.line-item-image-info, .line-item-image
+  display inline-block
+  vertical-align top
+.line-item-image-info
+  width: 150px
+  margin-left 12px
+
+.order-form-text-address
+  margin-bottom 15px
+.order-summary-totals
+  margin-bottom 20px
+.item-total, .total-amount, .tax-total
+  margin-top: 12px
+  .dots
+    float: center
+    border-bottom: 1px dotted dark-gray-border-color
+    height: 16px
+    overflow: hidden
+  .value
+    float: right
+    margin-left: 5px
+  .label
+    float: left
+    margin-right: 5px
+
+.total-amount
+  font-size 22px
+
+.order-form
+  width: 450px
+  margin: 0px auto
+  label
+    avant-garde()
+    font-size 13px
+    display block
+  .bordered-input
+    width: 100%
+    &.street-two
+      margin-top 10px
+  .order-form-button
+    margin-top 20px
+  .error
+    margin-top 8px
+    color bad-red-color
+  .order-input-section
+    margin-bottom 12px
+    &.region, &.city, &.postal-code, &.card-name, &.card-expiration, &.card-number, &.card-security-code
+      display inline-block
+      vertical-align top
+    &.city, &.card-name, &.card-number, &.card-security-code
+      width: 50%
+      margin-right: 2%
+    &.card-security-code
+      width: 48%
+      margin-right: 0%
+    &.region
+      width: 23%
+      margin-right: 2%
+    &.postal-code
+      width: 23%
+    &.card-expiration
+      width: 48%
+      .month, .year
+        display inline-block
+        vertical-align top
+      .month
+        width 33%
+        margin-right: 4%
+      .year
+        width: 62%
+
+  .order-form-button
+    width: 100%
+  .order-form-checkbox
+    input
+      margin-right: 5px
+      margin-top: 4px
+      vertical-align: top
+
+.order-form-hidden
+  display none
+  margin-top 18px
+
+.order-form-credit-card-section
+  margin-top 20px
+  position relative
+  .order-page-sm-heading
+    margin-bottom 24px
+
+.order-summary-section
+  margin-top 20px
+  padding-top 20px
+  border-top 1px solid light-gray-border-color
+
+.order-form-cc-brands
+  position absolute
+  top 0px
+  right 0px
+  .icon
+    background-repeat: no-repeat
+    width: 50px
+    height: 30px
+    display inline-block
+  .amex
+    background-position: 0 0
+  .discover
+    background-position: 0 -30px
+  .mastercard
+    background-position: 0 -60px
+  .visa
+    background-position: 0 -90px

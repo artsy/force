@@ -26,7 +26,8 @@
     "node-uuid": "*",
     "artsy-passport": "*",
     "backbone-pageable": "*",
-    "moment": "*"
+    "moment": "*",
+    "validator": "*"
   },
   "devDependencies": {
     "browserify": "*",

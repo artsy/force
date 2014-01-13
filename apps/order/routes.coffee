@@ -1,10 +1,29 @@
 CurrentUser = require '../../models/current_user'
 
-@index = (req, res) ->
+@shipping = (req, res) ->
   return res.redirect('/') unless req.user
   req.user.fetchPendingOrder
     success: (order) ->
-      res.render 'templates/index', { order: order }
+      res.locals.sd.ORDER = order.toJSON()
+      res.render 'templates/shipping', { order: order }
+    error: ->
+      res.redirect '/'
+
+@checkout = (req, res) ->
+  return res.redirect('/') unless req.user
+  req.user.fetchPendingOrder
+    success: (order) ->
+      res.locals.sd.ORDER = order.toJSON()
+      res.render 'templates/checkout', { order: order }
+    error: ->
+      res.redirect '/'
+
+@complete = (req, res) ->
+  return res.redirect('/') unless req.user
+  req.user.fetchPendingOrder
+    success: (order) ->
+      res.locals.sd.ORDER = order.toJSON()
+      res.render 'templates/complete', { order: order }
     error: ->
       res.redirect '/'
 
