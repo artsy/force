@@ -35,6 +35,7 @@ module.exports = class ArtistsView extends StepView
     @followButtonViews ||= {}
     @followButtonViews[model.id] = new FollowButton
       followArtistCollection: @followArtistCollection
+      notes: 'Followed from /personalize'
       model: model
       el: el
 
@@ -48,7 +49,7 @@ module.exports = class ArtistsView extends StepView
   follow: (e, artist) ->
     @setSkipLabel() unless @_labelSet?
     @$input.val ''
-    @followArtistCollection.follow artist.id
+    @followArtistCollection.follow artist.id, { notes: 'Followed from /personalize' }
     @followed.unshift artist.toJSON() # Re-cast
 
   # Click handler for unfollow in search dropdown

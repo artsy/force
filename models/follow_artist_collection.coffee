@@ -39,7 +39,7 @@ module.exports = class FollowArtistCollection extends Backbone.Model
     @_follow artist, options
     model = new Backbone.Model
     model.url = "#{@url()}/artist?artist_id=#{artistId}"
-    model.save null,
+    model.save { notes: options?.notes },
       success: options?.success
       error: (error) =>
         unless sd.NODE_ENV == 'test'

@@ -12,7 +12,7 @@ module.exports = class FollowButton extends Backbone.View
 
   initialize: (options) ->
     return unless options.followArtistCollection
-    { @followArtistCollection } = options
+    { @followArtistCollection, @notes } = options
 
     @followArtistCollection.addRepoArtist @model.get('id')
 
@@ -38,6 +38,7 @@ module.exports = class FollowButton extends Backbone.View
     else
       analytics.track.click @analyticsFollowMessage, label: analytics.modelToLabel(@model)
       @followArtistCollection.follow @model.get('id'),
+        notes: @notes
         error: => @$el.attr('data-state', 'follow')
 
       # Delay label change
