@@ -38,13 +38,13 @@ module.exports = class Order extends Backbone.Model
 
   formatShippingLocal: ->
     address = @get('shipping_address')
-    _.compact([ _.compact([address.city, address.region]).join(', '), address.postal_code]).join(' ')
+    _.compact([ _.compact([address?.city, address?.region]).join(', '), address?.postal_code]).join(' ')
 
   formatShippingAddress: ->
     address = @get('shipping_address')
     _.compact([
-      address.name
+      address?.name
       @get('telephone')
-      address.street
+      address?.street
       @formatShippingLocal()
     ]).join('<br />')
