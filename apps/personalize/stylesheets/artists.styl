@@ -1,0 +1,101 @@
+// Auto-complete
+#personalize-artist-search-container
+  position relative
+  &.is-loading
+    #personalize-artist-search-spinner
+      display block
+      > .loading-spinner-small
+        background-color highlight-color
+
+  .twitter-typeahead
+    display block
+    width 100%
+    height 100%
+  .tt-hint
+    display none
+  .tt-dropdown-menu
+    width 100%
+    background-color #fff
+    border 2px solid highlight-color
+    border-top none
+  .tt-suggestion
+    border-bottom 1px solid light-gray-border-color
+    &:last-child
+      border-bottom none
+    &:hover,
+    &.tt-is-under-cursor
+      background-color #000
+      *
+        color #fff
+
+#personalize-artist-search-spinner
+  display none
+  position absolute
+  top 0
+  right 0
+  width 50px
+  height 100%
+
+// Followed list
+.personalize-followed-artists
+  margin-top 20px
+.personalize-followed-artist
+  clearfix()
+  padding 0 5px
+  line-height 50px
+  vertical-align middle
+  border-top 1px solid light-gray-border-color
+  &:last-child
+    border-bottom 1px solid light-gray-border-color
+.pfa-name
+  float left
+  avant-garde()
+  font-size 13px
+  width calc('100% - 90px')
+  overflow ellipsis
+.pfa-remove
+  float right
+  width 90px
+  text-align center
+  avant-garde()
+  font-size 13px
+  &:before
+    content 'Following'
+    color highlight-color
+  &:hover:before
+      content 'Unfollow'
+      color bad-red-color
+
+// Suggestions
+#personalize-artists-suggestions
+  margin-top 90px
+
+.personalize-suggestions-set
+  width 850px
+  margin 20px auto
+  text-align center
+  border-bottom 1px solid light-gray-border-color
+  > header
+    font-size 20px
+  &:last-child
+    border-bottom none
+
+.personalize-suggestion
+  display inline-block
+  width 150px
+  margin 40px 10px 30px
+
+.personalize-suggestion-thumbnail
+  margin 0 auto
+  background-color light-gray-background-color
+
+.personalize-suggestion-name
+  margin-top 10px
+  avant-garde()
+  font-size 13px
+  overflow ellipsis
+
+.personalize-suggestion-info
+  margin-bottom 10px
+  color dark-gray-text-color
+  overflow ellipsis
