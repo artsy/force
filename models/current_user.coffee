@@ -42,16 +42,16 @@ module.exports = class CurrentUser extends Backbone.Model
   # Methods for the a user's Order
   fetchPendingOrder: (options) ->
     url = @formatOrderUrl "#{@url()}/order/pending", (options.session_id or SESSION_ID)
-    new Order().fetch _.extend({ url: url, data: { access_token: @get('accessToken'), session_id: SESSION_ID } }, options)
+    new Order().fetch _.extend({ url: url, data: { access_token: @get('accessToken') } }, options)
 
   updateOrder: (orderId, options) ->
     url = @formatOrderUrl "#{@url()}/order/#{orderId}", (options.session_id or SESSION_ID)
-    new Order(id: orderId).save({ access_token: @get('accessToken'), session_id: SESSION_ID }, _.extend({url: url}, options))
+    new Order(id: orderId).save({ access_token: @get('accessToken') }, _.extend({url: url}, options))
 
   submitOrder: (orderId, options) ->
     url = @formatOrderUrl "#{@url()}/order/#{orderId}/submit", (options.session_id or SESSION_ID)
-    new Order(id: orderId).save({ access_token: @get('accessToken'), session_id: SESSION_ID }, _.extend({url: url}, options))
+    new Order(id: orderId).save({ access_token: @get('accessToken') }, _.extend({url: url}, options))
 
   resumeOrder: (orderId, token, options) ->
     url = @formatOrderUrl "#{@url()}/order/#{orderId}/resume", (options.session_id or SESSION_ID)
-    new Order(id: orderId).save({ access_token: @get('accessToken'), token: token, session_id: SESSION_ID }, _.extend({url: url}, options))
+    new Order(id: orderId).save({ access_token: @get('accessToken'), token: token }, _.extend({url: url}, options))
