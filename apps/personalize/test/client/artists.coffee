@@ -40,9 +40,10 @@ describe 'ArtistsView', ->
   describe '#setupFollowButton', ->
     it 'sets up a FollowButton view that can be accessed later', ->
       artist  = new Artist fabricate 'artist'
-      view    = @view.setupFollowButton artist, $('<div></div>')
+      key     = _.uniqueId(artist.id)
+      view    = @view.setupFollowButton key, artist, $('<div></div>')
       view.constructor.name.should.equal 'FollowButton'
-      @view.followButtonViews[artist.id].should.equal view
+      @view.followButtonViews[key].should.equal view
 
   describe '#setSkipLabel', ->
     it 'sets the label to "next" if we are not quite done; "Done" if we are almost done', ->
@@ -96,10 +97,12 @@ describe 'ArtistsView', ->
       model = fabricate 'artist'
       _.isUndefined(@view.followButtonViews).should.be.ok
       @view.suggestions.add mockSuggestionSet(model)
-      suggested = @view.suggestions.at(0).get('suggestions').at(0)
-      _.isUndefined(@view.followButtonViews[suggested.id]).should.not.be.ok
+      suggestionSet   = @view.suggestions.at(0)
+      suggested       = suggestionSet.get('suggestions').at(0)
+      key             = "#{suggestionSet.id}_#{suggested.id}"
+      _.isUndefined(@view.followButtonViews[key]).should.not.be.ok
       @view.disposeSuggestionSet model
-      _.isNull(@view.followButtonViews[suggested.id]).should.be.ok
+      _.isNull(@view.followButtonViews[key]).should.be.ok
 
   describe '#renderSuggestions', ->
     it 'renders related artists based on following', ->
