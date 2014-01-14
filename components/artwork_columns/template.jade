@@ -1,0 +1,8 @@
+for column in artworkColumns
+  .artwork-column
+    for artwork in column
+      include ../artwork_item/template
+    
+if seeMore
+  .see_more
+    button.avant-garde-button-text.fillwidth-see-more See More

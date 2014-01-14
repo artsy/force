@@ -12,6 +12,7 @@ module.exports = class Artwork extends Backbone.Model
   urlRoot: -> "#{sd.ARTSY_URL}/api/v1/artwork"
 
   defaultImageUrl: (version = 'medium') ->
+    return @missingImageUrl() unless _.contains @get('images')?[0]?.image_versions, version
     @fullyQualifiedImageUrl(@get('images')?[0]?.image_url.replace(':version', version) ? '')
 
   isSaved: (artworkCollection) ->
@@ -26,7 +27,7 @@ module.exports = class Artwork extends Backbone.Model
   partnerName: ->
     if @hasCollectingInstitution()
       @get('collecting_institution')
-    else if @get('partner')?
+    else if @has 'partner'
       @get('partner').name
     else
       ""
@@ -35,7 +36,7 @@ module.exports = class Artwork extends Backbone.Model
     "/artwork/#{@get('id')}"
 
   partnerLink: ->
-    partner = @get('partner')
+    partner = @get 'partner'
     return unless partner
     if partner.default_profile_public && partner.default_profile_id
       return "/#{partner.default_profile_id}"
@@ -52,7 +53,7 @@ module.exports = class Artwork extends Backbone.Model
 
   titleAndYear: ->
     _.compact([
-      if @get('title')? and @get('title').length > 0 then "<em>#{@get('title')}</em>" else null,
+      if @get('title')? and @get('title').length > 0 then "<em>#{@get('title')}</em>" else '',
       @get('date')
     ]).join(", ")
 
@@ -113,3 +114,7 @@ module.exports = class Artwork extends Backbone.Model
   # for meta descriptions
   toAuctionResultsPageDescription: ->
     "Related auction results for #{@toPageDescription()}"
+
+  saleMessage: ->
+    return undefined if @get('sale_message') is 'Contact For Price'
+    @get 'sale_message'

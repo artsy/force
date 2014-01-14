@@ -1,0 +1,94 @@
+height = 480px
+
+.carousel
+  clear both
+  margin-bottom 20px
+  width 100%
+
+  &.carousel-loading
+    background url("images/search/large_loader.gif") no-repeat scroll center center #fff
+    .carousel-figures-clip
+      opacity 0
+
+  // Figures
+  .carousel-figures-clip
+    min-height height
+    margin 0 0 20px 0
+    opacity 1
+    overflow hidden
+    top 0
+    transition opacity 0.5s
+
+  .carousel-track
+    left 0
+    position relative
+    transition left 0.5s cubic-bezier(.51, .01, .37, .98)
+    white-space nowrap
+
+  .carousel-set
+    display inline-block
+
+  .carousel-figure
+    display inline-block
+    margin 0 15px
+    &.loading
+      background url("images/search/large_loader.gif") no-repeat scroll center center #fff
+      img
+        opacity 0
+  img
+    height height
+    opacity 1
+    transition opacity 0.25s ease-in-out
+
+    // Active states / animation from the old home page
+    transition all, 0.25s
+    opacity 1
+    height height
+    &:hover
+      img
+        transition all, 0.25s
+        box-shadow #666 0px 5px 10px
+
+  // Carousel Controls
+  .carousel-controls
+    clear both
+    height 46px
+
+  .carousel-arrow-left, .carousel-arrow-right
+    border 3px solid transparent
+    cursor pointer
+    float left
+    height 45px
+    left 20px
+    line-height 1.2
+    padding-left 2px
+    position absolute
+    transition border 0.2s ease-in-out
+    width 45px
+    z-index 1
+    &:hover
+      border 3px solid black
+
+  .carousel-arrow-right
+    float right
+    left auto
+    padding-left 5px
+    right 20px
+
+  .carousel-dots
+    font-family Verdana, sans-serif
+    font-size 20px
+    line-height 1
+    margin 0 auto
+    position relative
+    text-align center
+    top 13px
+
+  .carousel-dot
+    color #cdcdcd
+    cursor pointer
+    display inline-block
+    margin 0 2px
+    transition color 0.2s ease-in-out
+    &:hover, &.carousel-active
+      color black

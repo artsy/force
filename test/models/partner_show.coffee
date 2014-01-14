@@ -76,12 +76,6 @@ describe 'PartnerShow', ->
       @partnerShow.attributes.partner.type = "Museum"
       @partnerShow.metaTitle().should.not.include ", Artwork for Sale"
 
-  describe '#metaDescription', ->
-
-    it 'creates a description of the show', ->
-      @partnerShow.set 'fair_location', @partnerShow.get('location')
-      @partnerShow.set 'location', null
-
   describe '#location', ->
 
     xit 'returns a partner or fair location', ->
