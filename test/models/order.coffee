@@ -4,6 +4,15 @@ Backbone        = require 'backbone'
 { fabricate }   = require 'antigravity'
 Order           = require '../../models/order.coffee'
 
+shippingInfo =
+  telephone: '8675309'
+  shipping_address:
+    city: 'New York'
+    region: "NY"
+    postal_code: '10012'
+    name: 'Artsy'
+    street: '401 Broadway'
+
 describe "Order", ->
 
   beforeEach ->
@@ -36,14 +45,7 @@ describe "Order", ->
       @order.formatShippingLocal().should.equal ''
 
     it "formatted shipping info", ->
-      @order.set
-        telephone: '8675309'
-        shipping_address:
-          city: 'New York'
-          region: "NY"
-          postal_code: '10012'
-          name: 'Artsy'
-          street: '401 Broadway'
+      @order.set shippingInfo
       @order.formatShippingLocal().should.equal 'New York, NY 10012'
 
   describe '#formatShippingAddress', ->
@@ -52,12 +54,5 @@ describe "Order", ->
       @order.formatShippingAddress().should.equal ''
 
     it "formatted shipping info", ->
-      @order.set
-        telephone: '8675309'
-        shipping_address:
-          city: 'New York'
-          region: "NY"
-          postal_code: '10012'
-          name: 'Artsy'
-          street: '401 Broadway'
+      @order.set shippingInfo
       @order.formatShippingAddress().should.equal 'Artsy<br />8675309<br />401 Broadway<br />New York, NY 10012'

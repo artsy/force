@@ -1,4 +1,4 @@
-extends ../../../components/main_layout/templates/index
+extends ../../../components/main_layout/templates/minimal_header
 
 block locals
   assetPackage = 'order'
@@ -13,15 +13,16 @@ block body
         section.order-ship-to
           h2.order-page-sm-heading Ship To
           .order-form-text-address
-            != order.formatShippingAddress()
+            != order.formatShippingAddress() + " "
+            a( href="/order" ) Edit
+          h2.order-page-sm-heading Shipping Method
           .order-form-shipping-note
             if order.shippingNote()
               = order.shippingNote()
             else
-              | Unless otherwise stated, the order total on this page does not include shipping or taxes. 
-              | After your order is processed, an Artsy representative will connect you with the seller 
-              | to arrange shipping. The seller may then collect payment for applicable shipping fees or 
-              | taxes, if not already included.
+              | After your order is processed, an Artsy specialist will connect 
+              |  you with the seller to arrange shipping. Payment for shipping and 
+              | applicable taxes will be collected at that time.
         section.order-form-credit-card-section
           h2.order-page-sm-heading Payment Method
           .order-form-cc-brands

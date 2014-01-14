@@ -44,11 +44,11 @@ describe 'Order routes', ->
       it 'renders the order page order has shipping address', ->
         @order = fabricate('order')
         @order.shipping_address =
-            city: 'New York'
-            region: "NY"
-            postal_code: '10012'
-            name: 'Artsy'
-            street: '401 Broadway'
+          city: 'New York'
+          region: "NY"
+          postal_code: '10012'
+          name: 'Artsy'
+          street: '401 Broadway'
         routes.checkout @req, @res
         Backbone.sync.args[0][2].success(@order)
         @res.render.args[0][0].should.equal 'templates/checkout'
