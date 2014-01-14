@@ -110,12 +110,13 @@ module.exports = (app) ->
   app.use require "../apps/auth"
   app.use require "../apps/browse"
   app.use require "../apps/galleries"
+  app.use require "../apps/genes"
   app.use require "../apps/institutions"
   app.use require "../apps/order"
   app.use require "../apps/page"
   app.use require "../apps/partners"
   app.use require "../apps/search"
-  app.use require "../apps/genes"
+  app.use require "../apps/show"
 
   # Route to ping for system up
   app.get '/system/up', (req, res) ->

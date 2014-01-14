@@ -1,0 +1,36 @@
+extends ../../components/main_layout/templates/index
+include ../../components/share/template
+
+block head
+  include meta
+
+block locals
+  assetPackage = 'show'
+
+block body
+  #show
+    header.show-header
+      .profile-badge-small
+        include ../../components/profile_badge/template
+      nav.show-share
+        +share(show.shareTitle())
+      h1.show-heading-title!= show.title()
+
+    section.show-installation-shot-carousel.carousel.carousel-loading
+      include ../../components/carousel/template
+
+    header.show-header.show-header-last
+      h2.show-subheading
+        if partner.has('default_profile_id')
+          a( href= partner.href() )!= partner.get('name')
+        else
+          != partner.get('name')
+      h2.show-subheading!= show.runningDates()
+      if fair
+        h2.show-subheading
+          a( href=show.href() )!= fair.get('name')
+      if location
+        h2.show-subheading!= location.singleLine()
+
+    section.show-artworks.artworks-columns
+      include ../../components/artwork_columns/template

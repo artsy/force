@@ -1,0 +1,13 @@
+//- TODO: Add image to twitter card / OG if the show has an image
+- description = "Artsy is an easy new way to discover, learn about, and buy art you'll love, featuring fine art, design, and photography from the leading international galleries, museums, and private collections."
+title!= show.metaTitle() + " | Artsy"
+meta( property="og:title", content!="#{show.metaTitle()} | Artsy" )
+meta( name="description", content=description )
+meta( property="og:description", content=description )
+meta( property="twitter:description", content=description )
+link( rel="canonical", href=show.href() )
+meta( property="og:url", content=show.href() )
+meta( property="og:type", content="article" )
+meta( property="og:published_time", content=show.get('publish_at') )
+meta( property="twitter:card", content="summary" )
+meta( property="og:image", content="#{sd.ASSET_PATH}metadata/og_image.jpeg" )

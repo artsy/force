@@ -22,7 +22,7 @@ describe 'Artwork', ->
 
     it 'works if there are no images', ->
       @artwork.set images: []
-      @artwork.defaultImageUrl().should.equal ''
+      @artwork.defaultImageUrl().should.equal @artwork.missingImageUrl()
 
   describe '#titleAndYear', ->
 

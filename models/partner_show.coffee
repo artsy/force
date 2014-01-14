@@ -38,21 +38,6 @@ module.exports = class PartnerShow extends Backbone.Model
       @runningDates() || ''
     ]).join ' | '
 
-  metaDescription: ->
-    description = _.compact([
-      @get 'name' || ''
-      @get('partner')?.name || ''
-      @get('fair')?.name || ''
-      @location()?.toString() || ''
-      @runningDates() || ''
-      @get 'description'  || ''
-    ]).join ', '
-    if _.isEmpty description
-      description = "Artsy is an easy new way to discover, learn about, and buy art you'll love, featuring fine art, design, and photography from the leading international galleries, museums, and private collections."
-    if description.length > 200
-      description = description[0..200]
-    description
-
   title: ->
     @get 'name'
 
