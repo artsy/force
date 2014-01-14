@@ -1,10 +1,10 @@
-a.mlsb-suggestion( href=item.location )
+a.mlsb-suggestion
   span.mlsb-suggestion-thumbnail
     span.mlsb-suggestion-fallback
-      img( src=item.image_url, width='32', height='32' )
+      img( src=item.imageUrl(), width='32', height='32', onerror='this.style.display="none";' )
   span.mlsb-suggestion-value
     span.mlsb-suggestion-display
-      = item.display
-    if item.model
+      = item.display()
+    if item.get('model')
       em.mlsb-suggestion-kind
-        = item.display_model
+        = item.displayModel()

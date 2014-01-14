@@ -5,7 +5,7 @@ sinon     = require 'sinon'
 mediator  = require '../../../../lib/mediator.coffee'
 
 HeaderView = rewire '../view'
-HeaderView.__set__ 'SearchBarView', sinon.stub()
+HeaderView.__set__ 'SearchBarView', Backbone.View
 HeaderView.__set__ 'AuthModalView', sinon.stub()
 HeaderView.__set__ 'readCookie', sinon.stub()
 HeaderView.__set__ 'createCookie', sinon.stub()
@@ -13,7 +13,8 @@ HeaderView.__set__ 'createCookie', sinon.stub()
 { resolve } = require 'path'
 
 describe 'HeaderView', ->
-  beforeEach (done) ->
+
+  before (done) ->
     benv.setup =>
       benv.expose
         $: benv.require('components-jquery')
@@ -28,6 +29,8 @@ describe 'HeaderView', ->
             scrollTop: -> 55
           $body: $('body')
         done()
+
+  after benv.teardown
 
   it 'hides the welcome header on scroll', ->
     @$window.on.args[0][0].should.equal 'scroll.welcome-header'

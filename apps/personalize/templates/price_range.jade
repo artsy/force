@@ -1,0 +1,12 @@
+header.personalize-header.avant-garde-header-center
+  h2= state.stepDisplay()
+  h1 What price range are you considering?
+
+section.personalize-step( data-step='price_range' )
+  for price in prices
+    .flipper( data-value= price.value )
+      .flipper-card
+        .flipper-face.is-front= price.display
+        .flipper-face.is-back= price.display
+  aside
+    | Your answer will be kept private and can always adjusted later

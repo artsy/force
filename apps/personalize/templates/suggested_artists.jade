@@ -1,0 +1,19 @@
+for suggestionSet in suggestions
+  .personalize-suggestions-set( data-id= suggestionSet.id )
+    header Artists related to #{suggestionSet.get('name')}
+
+    for artist in suggestionSet.get('suggestions').models
+      .personalize-suggestion
+        img.personalize-suggestion-thumbnail(
+          src=artist.imageUrl('square')
+          width=120, height=120, alt=artist.get('name')
+        )
+        .personalize-suggestion-name
+          = artist.get('name')
+        .personalize-suggestion-info
+          if artist.get('nationality') && artist.get('years')
+            | #{artist.get('nationality')}, #{artist.get('years')}
+          else
+            | &nbsp;
+
+        a.avant-garde-button-white.follow-button( data-id=artist.id )

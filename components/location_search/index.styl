@@ -1,0 +1,49 @@
+// Overwrites Google's styling for Place Autocomplete results
+
+faux-bordered-input()
+  // Google forces the width of the result set
+  // based on the width of the input sans border.
+  // We compensate by creating a inner border using
+  // box-shadow and increase the padding to make up for it.
+  border none
+  box-shadow inset 0 0 0 2px light-gray-border-color
+  padding 12px
+  transition box-shadow 0.25s
+  &:focus
+    transition box-shadow 0.25s
+    box-shadow inset 0 0 0 2px highlight-color
+
+.pac-container
+  position relative
+  box-shadow none
+  border 2px solid highlight-color
+  border-top 0
+  border-radius 0
+  // Google logo
+  &:after
+    default-garamond-font-size
+    padding 20px 0
+    background-position 100% 50%
+    margin-right 10px
+
+.pac-item
+  position relative
+  padding 10px
+  box-sizing content-box
+  border-color light-gray-border-color
+  &:first-child
+    border-top none
+  &:last-child
+    border-bottom 1px solid light-gray-border-color
+  &:hover
+    background-color light-gray-background-color
+  &.pac-item-selected
+    border-color transparent
+    background-color #000
+    > .pac-item-query
+      color #fff
+
+.pac-item,
+.pac-item-query
+  garamond()
+  font-size default-garamond-font-size

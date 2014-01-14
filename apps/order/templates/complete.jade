@@ -1,0 +1,13 @@
+extends ../../../components/main_layout/templates/index
+
+block locals
+  assetPackage = 'order'
+
+block body
+  #order-page.order-page-complete
+    h2.garamond-header-center Congratulations! Your order is complete.
+    each artwork in order.getLineItemArtworks()
+      img.line-item-image-large( src=artwork.defaultImageUrl('large') )
+    | We've sent you an email confirming your order. An Artsy representative 
+    | will be in touch to introduce you to the seller and arrange for pick-up 
+    | or shipping. Thanks for collecting on Artsy!

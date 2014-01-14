@@ -5,31 +5,31 @@
 - var nameLabel = (typeof nameLabel) == 'undefined' ? 'Name' : nameLabel
 
 if showName
-  .name.order-form-left
+  .name.order-input-section
     label= nameLabel
-    input.name( name=(scope + '[name]'), type='text', value=(address.name || '') )
+    input.bordered-input.name( name=(scope + '[name]'), type='text', value=(address.name || ''), autocomplete='name' )
 
-.country.order-form-left
+.street.order-input-section
+  label Address
+  input.bordered-input.street( name=(scope + '[street]'), type='text', value=(address.street || ''), autocomplete='street-address' )
+
+.country.order-input-section
   label Country
-  select.country( name=(scope + '[country]') )
+  select.bordered-select.country( name=(scope + '[country]'), autocomplete='country' )
     include ./country_options
 
-.street.order-form-left
-  label Address
-  input.street( name=(scope + '[street]'), type='text', value=(address.street || '') )
-
-.city.order-form-left
+.city.order-input-section
   label City
-  input.city( name=(scope + '[city]'), type='text', value=(address.city || '') )
+  input.bordered-input.city( name=(scope + '[city]'), type='text', value=(address.city || ''), autocomplete='locality' )
 
-.region.order-form-left
+.region.order-input-section
   label State
-  input.region( name=(scope + '[region]'), type='text', value=(address.region || '') )
+  input.bordered-input.region( name=(scope + '[region]'), type='text', value=(address.region || ''), autocomplete='region' )
 
-.postal_code.order-form-right
+.postal-code.order-input-section
   label Zip code
-  input.postal_code( name=(scope + '[postal_code]'), type='text', value=(address.postal_code || '') )
+  input.bordered-input.postal-code( name=(scope + '[postal_code]'), type='text', value=(address.postal_code || ''), autocomplete='postal-code' )
 
-.telephone.order-form-right
+.telephone.order-input-section
   label Telephone
-  input.telephone( type='tel', name='telephone', value=(phone || '') )
+  input.bordered-input.telephone( type='tel', name='telephone', value=(order.get('telephone') || ''), autocomplete='tel' )

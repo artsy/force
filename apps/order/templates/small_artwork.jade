@@ -1,0 +1,6 @@
+each artwork in order.getLineItemArtworks()
+  img.line-item-image( src=artwork.defaultImageUrl() )
+  .line-item-image-info
+    if artwork.get('artist')
+      .artist= artwork.get('artist').name
+    .title!= artwork.titleAndYear()

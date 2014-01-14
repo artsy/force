@@ -8,28 +8,29 @@ analytics     = require '../../../../lib/analytics.coffee'
 
 module.exports = class SearchBarView extends Backbone.View
   initialize: (options) ->
-    @search = new Search
+    return unless @$el.length
 
-    @$input   = options.$input
+    { @mode, @$input } = options
 
-    mediator.on 'search:start', @indicateLoading, this
-    mediator.on 'search:complete', @concealLoading, this
-    mediator.on 'search:selected', @selectResult, this
-    mediator.on 'search:opened', @displaySuggestions, this
-    mediator.on 'search:closed', @hideSuggestions, this
+    @search = new Search mode: @mode
+
+    @on 'search:start', @indicateLoading
+    @on 'search:complete', @concealLoading
+    @on 'search:opened', @displaySuggestions
+    @on 'search:closed', @hideSuggestions
 
     @setupTypeahead()
 
   events:
-    'keyup input': 'checkSubmission'
-    'focus input': 'trackFocusInput'
+    'keyup input' : 'checkSubmission'
+    'focus input' : 'trackFocusInput'
 
   trackFocusInput: ->
     analytics.track.click "Focused on search input"
 
   checkSubmission: (e) ->
-    return if !(e.which is 13) or @selected
-    window.location = "/search?q=#{@$input.val()}"
+    return if !(e.which is 13) or @selected?
+    @trigger 'search:entered', @$input.val()
 
   indicateLoading: ->
     @$el.addClass 'is-loading'
@@ -49,33 +50,32 @@ module.exports = class SearchBarView extends Backbone.View
   _engine:
     compile: ->
       render: (item) ->
-        itemTemplate item: item.toJSON()
+        itemTemplate item: item
 
   setupTypeahead: ->
     _.each ['opened', 'closed', 'selected'], (action) =>
-      @$input.on "typeahead:#{action}", (args...) ->
-        mediator.trigger "search:#{action}", args...
+      @$input.on "typeahead:#{action}", (args...) =>
+        @trigger "search:#{action}", args...
 
     @$input.typeahead
       template: 'custom'
-      name: 'search'
+      name: _.uniqueId('search')
       limit: 10
       engine: @_engine
       remote:
-        url: "#{@search.url}&term=%QUERY"
+        url: "#{@search._url()}&term=%QUERY"
         filter: (items) =>
           if items?.length
             analytics.track.funnel "Searched from header, with results", { query: @$input.val() }
           else
             analytics.track.funnel "Searched from header, with no results", { query: @$input.val() }
           @search._parse(items)
-        beforeSend: (xhr) ->
+        beforeSend: (xhr) =>
           xhr.setRequestHeader 'X-XAPP-TOKEN', sd.ARTSY_XAPP_TOKEN
-          mediator.trigger 'search:start', xhr
+          @trigger 'search:start', xhr
         complete: (xhr) =>
-          mediator.trigger 'search:complete', xhr
+          @trigger 'search:complete', xhr
           mediator.trigger 'search:doge' if @$input.val() is 'doge'
-          @$('img').error -> $(this).hide()
           @query = @$input.val()
 
   selectResult: (e, model) ->

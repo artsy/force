@@ -211,9 +211,8 @@ var nextTick =(function () {
 // If you need a security guarantee, these primordials need to be
 // deeply frozen anyway, and if you don’t need a security guarantee,
 // this is just plain paranoid.
-// However, this does have the nice side-effect of reducing the size
-// of the code by reducing x.call() to merely x(), eliminating many
-// hard-to-minify characters.
+// However, this **might** have the nice side-effect of reducing the size of
+// the minified code by reducing x.call() to merely x()
 // See Mark Miller’s explanation of what this does.
 // http://wiki.ecmascript.org/doku.php?id=conventions:safe_meta_programming
 var call = Function.call;
@@ -529,7 +528,7 @@ function defer() {
     };
 
     // XXX deprecated
-    promise.valueOf = deprecate(function () {
+    promise.valueOf = function () {
         if (messages) {
             return promise;
         }
@@ -538,7 +537,7 @@ function defer() {
             resolvedPromise = nearerValue; // shorten chain
         }
         return nearerValue;
-    }, "valueOf", "inspect");
+    };
 
     promise.inspect = function () {
         if (!resolvedPromise) {
@@ -770,14 +769,14 @@ function Promise(descriptor, fallback, inspect) {
             promise.exception = inspected.reason;
         }
 
-        promise.valueOf = deprecate(function () {
+        promise.valueOf = function () {
             var inspected = inspect();
             if (inspected.state === "pending" ||
                 inspected.state === "rejected") {
                 return promise;
             }
             return inspected.value;
-        });
+        };
     }
 
     return promise;
@@ -985,7 +984,6 @@ function displayUnhandledReasons() {
     if (
         !unhandledReasonsDisplayed &&
         typeof window !== "undefined" &&
-        !window.Touch &&
         window.console
     ) {
         console.warn("[Q] Unhandled rejection reasons (should be empty):",
