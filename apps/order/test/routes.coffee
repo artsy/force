@@ -14,6 +14,39 @@ describe 'Order routes', ->
   afterEach ->
     Backbone.sync.restore()
 
+  describe '#resume', ->
+
+    describe 'logged out', ->
+
+      beforeEach ->
+        @req =
+          user: undefined
+          query:
+            token: 'an-order-token'
+          params:
+            id: 'order-id'
+        routes.resume @req, @res
+
+      it 'redirects to the order page', ->
+        Backbone.sync.args[0][2].success()
+        @res.redirect.args[0][0].should.equal '/order'
+
+    describe 'logged in', ->
+
+      beforeEach ->
+        @req.query = token: 'an-order-token'
+        @req.params = id: 'order-id'
+
+        routes.resume @req, @res
+
+      it 'redirects to the home page on error', ->
+        Backbone.sync.args[0][2].error()
+        @res.redirect.args[0][0].should.equal '/'
+
+      it 'redirects to the order page', ->
+        Backbone.sync.args[0][2].success()
+        @res.redirect.args[0][0].should.equal '/order'
+
   describe '#shipping', ->
 
     describe 'with a pending order', ->
