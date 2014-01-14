@@ -15,7 +15,6 @@ Profile         = require '../../models/profile'
               profile.fetch
                 cache: true
                 success: (profile) ->
-                  console.log profile.get('icon')
                   res.locals.sd.SHOW = show.toJSON()
                   res.locals.sd.ARTWORKS = artworks
                   res.locals.sd.INSTALL_SHOTS = installShots

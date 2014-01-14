@@ -9,7 +9,6 @@ Profiles      = require '../../collections/profiles'
   institutions.fetch({ cache: true }).then ->
     institutions = institutions.first()
     profiles = new Profiles([], { models: [] })
-    console.log profiles
     currentLength = profiles.length
     options =
       data   : { size: 20 }
