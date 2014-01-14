@@ -10,9 +10,10 @@ module.exports = class Order extends Backbone.Model
 
   submit: (options = {}) ->
     model = new Backbone.Model
-      url             : "#{@url()}/submit"
-      credit_card_uri : options.credit_card_uri
-    model.save
+      credit_card_uri : options.creditCardUri
+    model.isNew = -> false
+    model.url = "#{@url()}/submit"
+    model.save null,
       success: options?.success
       error: options?.error
 
@@ -48,3 +49,14 @@ module.exports = class Order extends Backbone.Model
       address?.street
       @formatShippingLocal()
     ]).join('<br />')
+
+  getMonthRange: -> [1..12]
+
+  getYearRange: (range=10) ->
+    startDate = new Date()
+    startYear = startDate.getFullYear()
+
+    endDate = new Date "01 Jan #{startYear + range}"
+    endYear = endDate.getFullYear()
+
+    [startYear..endYear]

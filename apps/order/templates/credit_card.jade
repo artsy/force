@@ -10,11 +10,11 @@
   label( for='card_expiration' ) Expiration
   .month
     select.bordered-select( name='card_expiration_month', autocomplete="cc-exp-month" )
-      each month in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+      each month in order.getMonthRange()
         option( value=month )!= month
   .year
     select.bordered-select( name='card_expiration_year', autocomplete="cc-exp-year" )
-      each year in [2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023]
+      each year in order.getYearRange()
         option( value=year )!= year
 
 .card-number.order-input-section

@@ -13,37 +13,91 @@ render = (templateName) ->
     { filename: filename }
   )
 
+shippingInfo =
+  telephone: '8675309'
+  shipping_address:
+    city: 'New York'
+    region: "NY"
+    postal_code: '10012'
+    name: 'Artsy'
+    street: '401 Broadway'
+
 describe "Shipping Templates", ->
 
-  beforeEach ->
-    @order = new Order(fabricate 'order')
-    @template = render('shipping')(
-      sd:
-        ASSET_PATH: 'localhost:3000'
-      order: @order
-    )
+  describe "Order without shipping information", ->
 
-  it "renders the order form", ->
-    $ = cheerio.load @template
-    $('.order-summary .value').text().should.include @order.get('total')
-    $('.country.order-input-section select').val().should.include 'USA'
-    $('.order-summary .order-seller-section .location').text().should.include @order.get('line_items')[0].partner_location.city
+    beforeEach ->
+      @order = new Order(fabricate 'order')
+      @template = render('shipping')(
+        sd:
+          ASSET_PATH: 'localhost:3000'
+        order: @order
+      )
+
+    it "renders the order form", ->
+      $ = cheerio.load @template
+      $('.order-summary .value').text().should.include @order.get('total')
+      $('.country.order-input-section select').val().should.include 'USA'
+      $('.order-summary .order-seller-section .name').text().should.include @order.get('line_items')[0].partner.name
+
+  describe "Order with shipping information", ->
+
+    beforeEach ->
+      @order = new Order(fabricate 'order')
+      @order.set shippingInfo
+      @template = render('shipping')(
+        sd:
+          ASSET_PATH: 'localhost:3000'
+        order: @order
+      )
+
+    it "renders the order form", ->
+      $ = cheerio.load @template
+      $('.order-summary .value').text().should.include @order.get('total')
+      $('.country.order-input-section select').val().should.include 'USA'
+      $('.order-summary .order-seller-section .name').text().should.include @order.get('line_items')[0].partner.name
+
+      $('.order-form .telephone input').val().should.include shippingInfo.telephone
+      $('.order-form .street input').val().should.include shippingInfo.shipping_address.street
 
 describe "Checkout Templates", ->
 
-  beforeEach ->
-    @order = new Order(fabricate 'order')
-    @template = render('checkout')(
-      sd:
-        ASSET_PATH: 'localhost:3000'
-      order: @order
-    )
+  describe "Order without shipping information", ->
 
-  it "renders the order form", ->
-    $ = cheerio.load @template
-    $('.order-summary .value').text().should.include @order.get('total')
-    $('.country.order-input-section select').val().should.include 'USA'
-    $('.order-summary .order-seller-section .location').text().should.include @order.get('line_items')[0].partner_location.city
+    beforeEach ->
+      @order = new Order(fabricate 'order')
+      @template = render('checkout')(
+        sd:
+          ASSET_PATH: 'localhost:3000'
+        order: @order
+      )
+
+    it "renders the order form", ->
+      $ = cheerio.load @template
+      $('.order-summary .value').text().should.include @order.get('total')
+      $('.country.order-input-section select').val().should.include 'USA'
+      $('.order-summary .order-seller-section .name').text().should.include @order.get('line_items')[0].partner.name
+
+  describe "Order with shipping information", ->
+
+    beforeEach ->
+      @order = new Order(fabricate 'order')
+      @order.set shippingInfo
+
+      @template = render('checkout')(
+        sd:
+          ASSET_PATH: 'localhost:3000'
+        order: @order
+      )
+
+    it "renders the order form", ->
+      $ = cheerio.load @template
+      $('.order-summary .value').text().should.include @order.get('total')
+      $('.country.order-input-section select').val().should.include 'USA'
+      $('.order-summary .order-seller-section .name').text().should.include @order.get('line_items')[0].partner.name
+
+      $('.order-form .telephone input').val().should.include shippingInfo.telephone
+      $('.order-form .street input').val().should.include shippingInfo.shipping_address.street
 
 describe "Complete Templates", ->
 

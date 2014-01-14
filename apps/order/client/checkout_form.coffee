@@ -2,10 +2,11 @@ Backbone     = require 'backbone'
 analytics    = require '../../../lib/analytics.coffee'
 Marketplace  = require '../../../models/marketplace.coffee'
 sd           = require('sharify').data
-isCreditCard = require('validator').isCreditCard
 ShippingForm = require('./shipping_form.coffee').ShippingForm
 
 module.exports.CheckoutForm = class CheckoutForm extends ShippingForm
+
+  balanced: false
 
   events:
     'click .order-form-button'         : 'onSubmit'
@@ -19,16 +20,31 @@ module.exports.CheckoutForm = class CheckoutForm extends ShippingForm
 
   setUpFields: ->
     @fields =
-      'name on card': { el: @$el.find('input[name=card_name]'), validator: @isPresent }
-      'card number': { el: @$el.find('input[name=card_number]'), validator: @isCardNumber }
-      expiration: { el: @$el.find('.card_expiration select'), validator: @isPresent }
-      'security code': { el: @$el.find('input[name=card_security_code]'), validator: @isPresent }
-      billing_street: { el: @$el.find('input.street'), validator: @isPresent, label: 'street' }
-      billing_city: { el: @$el.find('input.city'), validator: @isPresent, label: 'city' }
-      billing_state: { el: @$el.find('input.region'), validator: @isState, label: 'state' }
-      billing_zip: { el: @$el.find('input.postal_code'), validator: @isZip, label: 'zip' }
+      'name on card': { el: @$('input[name=card_name]'), validator: @isPresent }
+      'card number': { el: @$('input[name=card_number]'), validator: @isCardNumber }
+      expiration: { el: @$('.card-expiration select'), validator: @isPresent }
+      'security code': { el: @$('input[name=card_security_code]'), validator: @isPresent }
+      billing_street: { el: @$('input.street'), validator: @isPresent, label: 'street' }
+      billing_city: { el: @$('input.city'), validator: @isPresent, label: 'city' }
+      billing_state: { el: @$('input.region'), validator: @isState, label: 'state' }
+      billing_zip: { el: @$('input.postal-code'), validator: @isZip }
+      conditions: { el: @$('.order-form-conditions input'), validator: @isChecked, message: 'Conditions must be accepted' }
+    @internationalizeFields()
 
-  isCardNumber: ($el) => isCreditCard $el.val()
+  cardCallback: (response) =>
+    switch response.status
+      when 201  # success
+        @model.submit
+          creditCardUri: response.data.uri
+          success: =>
+            analytics.track.funnel 'Order submitted', label: analytics.modelToLabel(@model)
+            @success()
+          error: (xhr) => @showError xhr, "Order submission error"
+        analytics.track.funnel 'Order card validated', label: analytics.modelToLabel(@model)
+      when 400, 403 then @showError @errors.missingOrMalformed, "Order card missing or malformed"
+      when 402 then @showError @errors.couldNotAuthorize, "Order card could not be authorized"
+      when 404 then @showError @errors.other, "Order marketplace invalid"
+      else @showError @errors.other, "Order card - other error"
 
   cardData: ->
     name: @fields['name on card'].el.val()
@@ -38,15 +54,15 @@ module.exports.CheckoutForm = class CheckoutForm extends ShippingForm
     security_code: @fields['security code'].el.val()
     street_address: @fields.billing_street.el.val()
     postal_code: @fields.billing_zip.el.val()
-    country: @$el.find("select[name='billing_address[country]']").val()
+    country: @$("select[name='billing_address[country]']").val()
 
   tokenizeCard: =>
     marketplace = new Marketplace
     marketplace.fetch
       success: (marketplace) =>
-        balanced.init marketplace.get('uri')
-        balanced.card.create @cardData(), @cardCallback
-        @success()
+        @balanced ||= require('../../../lib/vendor/balanced.js')
+        @balanced.init marketplace.get('uri')
+        @balanced.card.create @cardData(), @cardCallback
       error: =>
         @showError @errors.other, "Error fetching the balanced marketplace"
 
@@ -54,12 +70,10 @@ module.exports.CheckoutForm = class CheckoutForm extends ShippingForm
     return if @$submit.hasClass('is-loading')
     @$submit.addClass 'is-loading'
 
-    analytics.track.funnel 'Order submit shipping', @model
+    analytics.track.funnel 'Order submit shipping', label: analytics.modelToLabel(@model)
 
     if @validateForm()
-      @model.save @orderAttrs(),
-        success: @tokenizeCard
-        error: (model, xhr, options) => @showError xhr, 'Order update error'
+      @tokenizeCard()
     else
       @showError 'Please review the error(s) above and try again.'
     false

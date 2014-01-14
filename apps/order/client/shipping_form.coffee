@@ -2,7 +2,6 @@ _                       = require 'underscore'
 Backbone                = require 'backbone'
 CurrentUser             = require '../../../models/current_user.coffee'
 sd                      = require('sharify').data
-isEmail                 = require('validator').isEmail
 ErrorHandlingForm       = require('./form_base.coffee').ErrorHandlingForm
 analytics               = require('../../../lib/analytics.coffee')
 
@@ -14,14 +13,14 @@ module.exports.ShippingForm = class ShippingForm extends ErrorHandlingForm
   initialize: (options) ->
     throw 'You must pass a success callback' unless options.success
     @success = options.success
-    @$submit = @$el.find('.order-form-button')
+    @$submit = @$('.order-form-button')
     @setUpFields()
 
   onSubmit: =>
     return if @$submit.hasClass('is-loading')
     @$submit.addClass 'is-loading'
 
-    analytics.track.funnel 'Order submit shipping', @model
+    analytics.track.funnel 'Order submit shipping', label: analytics.modelToLabel(@model)
 
     if @validateForm()
       @model.save @orderAttrs(),
@@ -32,19 +31,21 @@ module.exports.ShippingForm = class ShippingForm extends ErrorHandlingForm
     false
 
   internationalizeFields: ->
-    @$el.find('select.country').change =>
-      if @$el.find('select.country').val() == 'USA'
-        @$el.removeClass('not_usa')
-        @$el.find('.postal_code label').text 'Zip Code'
+    @$('select.country').change =>
+      if @$('select.country').val() == 'USA'
+        @$el.removeClass('not-usa')
+        @$('.postal-code label').text 'Zip Code'
       else
-        @$el.addClass('not_usa')
-        @$el.find('.postal_code label').text 'Postal Code'
+        @$el.addClass('not-usa')
+        @$('.postal-code label').text 'Postal Code'
 
   orderAttrs: ->
-    reserve: true
-    email: @fields.email.el.val()
-    telephone: @$el.find('.telephone input').val()
-    shipping_address: @shippingAttrs()
+    attrs =
+      reserve: true
+      telephone: @$('.telephone input').val()
+      shipping_address: @shippingAttrs()
+    attrs.email = @fields.email.el.val() if @fields.email?.el.val()
+    attrs
 
   shippingAttrs: ->
     name: @fields.name.el.val()
@@ -56,18 +57,11 @@ module.exports.ShippingForm = class ShippingForm extends ErrorHandlingForm
 
   setUpFields: ->
     @fields =
-      email: { el: @$el.find('input.email'), validator: @isEmail }
-      name: { el: @$el.find('input.name'), validator: @isPresent }
-      street: { el: @$el.find('input.street'), validator: @isPresent }
-      city: { el: @$el.find('input.city'), validator: @isPresent }
-      state: { el: @$el.find('input.region'), validator: @isState }
-      zip: { el: @$el.find('input.postal-code'), validator: @isZip }
-      country: { el: @$el.find('select.country'), validator: -> true }
-
-    @shippingFields = _.pick @fields, ['name', 'street', 'city', 'state', 'zip', 'country']
+      email: { el: @$('input.email'), validator: @isEmail }
+      name: { el: @$('input.name'), validator: @isPresent }
+      street: { el: @$('input.street'), validator: @isPresent }
+      city: { el: @$('input.city'), validator: @isPresent }
+      state: { el: @$('input.region'), validator: @isState }
+      zip: { el: @$('input.postal-code'), validator: @isZip }
+      country: { el: @$('select.country'), validator: -> true }
     @internationalizeFields()
-
-  isEmail: ($el) -> isEmail($el.val())
-  isPresent: ($el) -> $el.val()? && $.trim($el.val()).length > 0
-  isState: ($el) => @isPresent($el) || $el.parent().parent().find('select.country').val() != 'USA'
-  isZip: ($el) => @isPresent($el) && ($el.parent().parent().find('select.country').val() != 'USA' || $el.val().trim().match(/^\d{5}/))
