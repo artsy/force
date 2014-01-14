@@ -23,7 +23,7 @@ module.exports.ShippingForm = class ShippingForm extends ErrorHandlingForm
     analytics.track.funnel 'Order submit shipping', label: analytics.modelToLabel(@model)
 
     if @validateForm()
-      @model.save @orderAttrs(),
+      @model.update @orderAttrs(),
         success: @success
         error: (model, xhr, options) => @showError xhr, 'Order update error'
     else

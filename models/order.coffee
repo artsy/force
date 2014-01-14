@@ -1,12 +1,13 @@
-Backbone        = require 'backbone'
 _               = require 'underscore'
+Backbone        = require 'backbone'
 Artwork         = require './artwork.coffee'
 Partner         = require './partner.coffee'
 PartnerLocation = require './partner_location.coffee'
+{ ARTSY_URL, SESSION_ID } = require('sharify').data
 
 module.exports = class Order extends Backbone.Model
 
-  urlRoot: "/api/v1/me/order/"
+  urlRoot: -> "#{ARTSY_URL}/api/v1/me/order"
 
   submit: (options = {}) ->
     model = new Backbone.Model
@@ -60,3 +61,34 @@ module.exports = class Order extends Backbone.Model
     endYear = endDate.getFullYear()
 
     [startYear..endYear]
+
+  # Orders require a unique identifiier. If a user is logged in, that is the accessToken, otherwise it is the session id
+  getSessionData: (session_id, accessToken) ->
+    data = {}
+    if accessToken
+      data.access_token = accessToken
+    else if session_id
+      data.session_id = session_id
+    data
+
+  fetchPendingOrder: (options) ->
+    @fetch
+      url: "#{@urlRoot()}/pending"
+      success: options.success
+      error: options.error
+      data: @getSessionData((options.session_id or SESSION_ID), options.accessToken)
+
+  update: (data, options) ->
+    @save data,
+      url: @url()
+      success: options.success
+      error: options.error
+      data: @getSessionData((options.session_id or SESSION_ID), options.accessToken)
+
+  resume: (options) =>
+    @isSaved = -> false
+    @save null,
+      url: "#{@url()}/resume"
+      success: options.success
+      error: options.error
+      data: @getSessionData((options.session_id or SESSION_ID), options.accessToken)
