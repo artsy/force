@@ -42,21 +42,17 @@ module.exports = class CurrentUser extends Backbone.Model
 
   # Methods for the a user's Order
   fetchPendingOrder: (options) ->
-    url = "#{@url()}/order/pending"
-    url = @formatOrderUrl url
+    url = @formatOrderUrl "#{@url()}/order/pending"
     new Order().fetch _.extend({ url: url, data: { access_token: @get('accessToken') } }, options)
 
   updateOrder: (orderId, options) ->
-    url = "#{@url()}/order/#{orderId}"
-    url = @formatOrderUrl url
+    url = @formatOrderUrl "#{@url()}/order/#{orderId}"
     new Order(id: orderId).save({ access_token: @get('accessToken') }, _.extend({url: url}, options))
 
   submitOrder: (orderId, options) ->
-    url = "#{@url()}/order/#{orderId}/submit"
-    url = @formatOrderUrl url
+    url = @formatOrderUrl "#{@url()}/order/#{orderId}/submit"
     new Order(id: orderId).save({ access_token: @get('accessToken') }, _.extend({url: url}, options))
 
   resumeOrder: (orderId, token, options) ->
-    url = "#{@url()}/order/#{orderId}/resume"
-    url = @formatOrderUrl url
+    url = @formatOrderUrl "#{@url()}/order/#{orderId}/resume"
     new Order(id: orderId).save({ access_token: @get('accessToken'), token: token }, _.extend({url: url}, options))
