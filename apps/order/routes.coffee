@@ -1,10 +1,12 @@
-CurrentUser = require '../../models/current_user.coffee'
+_     = require 'underscore'
+Order = require '../../models/order.coffee'
 
 fetchPendingOrder = (req, res, options) ->
-  currentUser = req.user or new CurrentUser
-  options.error = -> res.redirect '/'
-  options.session_id = req.session?.id
-  currentUser.fetchPendingOrder options
+  new Order().fetchPendingOrder _.extend(
+    error: -> res.redirect '/'
+    session_id: req.session?.id
+    accessToken: req.user?.get('accessToken')
+  , options)
 
 @shipping = (req, res) ->
   fetchPendingOrder req, res,
@@ -30,10 +32,12 @@ fetchPendingOrder = (req, res, options) ->
   unless (token = req.query.token) and (orderId = req.params.id)
     return res.redirect '/'
 
-  currentUser = req.user or new CurrentUser
-  currentUser.resumeOrder orderId, token,
+  order = new Order
+    id: orderId
+    token: token
+
+  order.resume
     session_id: req.session?.id
-    success: ->
-      res.redirect '/order'
-    error: ->
-      res.redirect '/'
+    accessToken: req.user?.get('accessToken')
+    success: -> res.redirect '/order'
+    error: -> res.redirect '/'

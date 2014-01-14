@@ -3,6 +3,7 @@ should          = require 'should'
 Backbone        = require 'backbone'
 { fabricate }   = require 'antigravity'
 Order           = require '../../models/order.coffee'
+sinon           = require 'sinon'
 
 shippingInfo =
   telephone: '8675309'
@@ -16,7 +17,11 @@ shippingInfo =
 describe "Order", ->
 
   beforeEach ->
+    sinon.stub Backbone, 'sync'
     @order = new Order(fabricate 'order')
+
+  afterEach ->
+    Backbone.sync.restore()
 
   describe '#sellersTerms', ->
 
@@ -56,3 +61,25 @@ describe "Order", ->
     it "formatted shipping info", ->
       @order.set shippingInfo
       @order.formatShippingAddress().should.equal 'Artsy<br />8675309<br />401 Broadway<br />New York, NY 10012'
+
+  describe '#fetchPendingOrder', ->
+
+    it 'constructs the correct url', ->
+      @order.fetchPendingOrder({})
+      Backbone.sync.args[0][2].url.should.include 'api/v1/me/order/pending'
+
+  describe '#update', ->
+
+    it 'constructs the correct url', ->
+      @order.update null, success: (order) =>
+        order.id.should.equal 'updated'
+      Backbone.sync.args[0][2].url.should.include "api/v1/me/order/#{@order.id}"
+      Backbone.sync.args[0][2].success(fabricate 'order', id: 'updated')
+
+  describe '#resume', ->
+
+    it 'constructs the correct url', ->
+      @order.resume success: (order) =>
+        order.get('state').should.equal 'pending'
+      Backbone.sync.args[0][2].url.should.include "api/v1/me/order/#{@order.id}/resume"
+      Backbone.sync.args[0][2].success(fabricate 'order', state: 'pending')
