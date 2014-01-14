@@ -23,7 +23,6 @@ describe "Order", ->
   afterEach ->
     Backbone.sync.restore()
 
-
   describe '#sellersTerms', ->
 
     it "returns links to the sellers terms", ->
