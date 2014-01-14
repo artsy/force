@@ -46,7 +46,7 @@ describe 'CurrentUser', ->
     describe '#fetchPendingOrder', ->
 
       it 'constructs the correct url', ->
-        @user.fetchPendingOrder()
+        @user.fetchPendingOrder({})
         Backbone.sync.args[0][2].url.should.include 'api/v1/me/order/pending'
 
     describe '#updateOrder', ->
@@ -75,5 +75,3 @@ describe 'CurrentUser', ->
           order.get('state').should.equal 'pending'
         Backbone.sync.args[0][2].url.should.include "api/v1/me/order/#{@order.id}/resume"
         Backbone.sync.args[0][2].success(fabricate 'order', state: 'pending')
-
-
