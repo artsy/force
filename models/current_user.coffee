@@ -3,6 +3,7 @@ _ = require 'underscore'
 { ARTSY_URL, CURRENT_USER } = require('sharify').data
 ArtworkCollection = require './artwork_collection.coffee'
 Order = require './order.coffee'
+sd            = require('sharify').data
 
 module.exports = class CurrentUser extends Backbone.Model
 
@@ -35,19 +36,23 @@ module.exports = class CurrentUser extends Backbone.Model
   @orNull: ->
     if CURRENT_USER then new @(CURRENT_USER) else null
 
+  formatOrderUrl: (url) ->
+    return url if CURRENT_USER
+    "#{url}?session_id=#{sd.SESSION_ID}"
+
   # Methods for the a user's Order
   fetchPendingOrder: (options) ->
-    url = "#{@url()}/order/pending"
+    url = @formatOrderUrl "#{@url()}/order/pending"
     new Order().fetch _.extend({ url: url, data: { access_token: @get('accessToken') } }, options)
 
   updateOrder: (orderId, options) ->
-    url = "#{@url()}/order/#{orderId}"
+    url = @formatOrderUrl "#{@url()}/order/#{orderId}"
     new Order(id: orderId).save({ access_token: @get('accessToken') }, _.extend({url: url}, options))
 
   submitOrder: (orderId, options) ->
-    url = "#{@url()}/order/#{orderId}/submit"
+    url = @formatOrderUrl "#{@url()}/order/#{orderId}/submit"
     new Order(id: orderId).save({ access_token: @get('accessToken') }, _.extend({url: url}, options))
 
   resumeOrder: (orderId, token, options) ->
-    url = "#{@url()}/order/#{orderId}/resume"
+    url = @formatOrderUrl "#{@url()}/order/#{orderId}/resume"
     new Order(id: orderId).save({ access_token: @get('accessToken'), token: token }, _.extend({url: url}, options))

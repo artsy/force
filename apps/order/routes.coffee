@@ -1,37 +1,36 @@
+CurrentUser = require '../../models/current_user.coffee'
+
+@fetchPendingOrder = (user, res, options) ->
+  currentUser = user or new CurrentUser
+  options.error = -> res.redirect '/'
+  currentUser.fetchPendingOrder options
+
 @shipping = (req, res) ->
-  return res.redirect('/') unless req.user
-  req.user.fetchPendingOrder
+  @fetchPendingOrder req.user,res,
     success: (order) ->
       res.locals.sd.ORDER = order.toJSON()
       res.render 'templates/shipping', { order: order }
-    error: ->
-      res.redirect '/'
 
 @checkout = (req, res) ->
-  return res.redirect('/') unless req.user
-  req.user.fetchPendingOrder
+  @fetchPendingOrder req.user, res,
     success: (order) ->
       unless order.get('shipping_address')
         return res.redirect('/order')
       res.locals.sd.ORDER = order.toJSON()
       res.render 'templates/checkout', { order: order }
-    error: ->
-      res.redirect '/'
 
 @complete = (req, res) ->
-  return res.redirect('/') unless req.user
-  req.user.fetchPendingOrder
+  @fetchPendingOrder req.user,res,
     success: (order) ->
       res.locals.sd.ORDER = order.toJSON()
       res.render 'templates/complete', { order: order }
-    error: ->
-      res.redirect '/'
 
 @resume = (req, res) ->
-  unless ((token = req.query.token) && (orderId = req.params.id)) && req.user
+  unless (token = req.query.token) and (orderId = req.params.id)
     return res.redirect '/'
 
-  req.user.resumeOrder orderId, token,
+  currentUser = req.user or new CurrentUser
+  currentUser.resumeOrder orderId, token,
     success: ->
       res.redirect '/order'
     error: ->
