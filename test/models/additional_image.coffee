@@ -1,27 +1,13 @@
 _               = require 'underscore'
 sd              = require('sharify').data
+{ fabricate }   = require 'antigravity'
 Backbone        = require 'backbone'
 AdditionalImage = require '../../models/additional_image'
 
 describe 'AdditionalImage', ->
 
   beforeEach ->
-    @model = new AdditionalImage
-      id: "525cb7488b3b810e050001af"
-      position: 2282
-      default: false
-      aspect_ratio: 1.33
-      original_height: 3312
-      original_width: 4416
-      image_versions: [
-        "medium"
-        "tall"
-        "large"
-        "larger"
-        "featured"
-        "general"
-      ]
-      image_url: "http://static1.artsy.net/partner_show_images/525cb7488b3b810e050001af/1/:version.jpg"
+    @model = new AdditionalImage fabricate('show_install_shot')
 
   describe '.sizes', ->
 
