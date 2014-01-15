@@ -9,7 +9,7 @@ Profile       = require '../../models/profile'
 describe 'Profile', ->
 
   beforeEach ->
-    @profile = new Profile(fabricate('featured_partners_profiles',
+    @profile = new Profile(fabricate('partner_profile',
       owner:
         type: "Museum"
         sortable_id: "getty-museum"
@@ -28,9 +28,9 @@ describe 'Profile', ->
   describe '#iconImageUrl', ->
 
     it "returns the icon url for the model's default icon version", ->
-      @profile.iconImageUrl().should.include "circle"
-      @profile.set 'default_icon_version', 'square'
       @profile.iconImageUrl().should.include "square"
+      @profile.set 'default_icon_version', 'circle'
+      @profile.iconImageUrl().should.include "circle"
 
   describe '#alphaSortKey', ->
 

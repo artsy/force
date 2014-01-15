@@ -95,6 +95,17 @@ module.exports = fabricate = (type, extObj = {}) ->
       tile_overlap: 0
       tile_size: 512
 
+    when 'show_install_shot'
+      id: "525cb7488b3b810e050001af#{_.uniqueId()}"
+      position: 2282
+      default: false
+      aspect_ratio: 1.33
+      original_height: 3312
+      original_width: 4416
+      image_versions: [ "medium", "tall", "large", "larger", "featured", "general" ]
+      image_url: "http://static1.artsy.net/partner_show_images/525cb7488b3b810e050001af/1/:version.jpg"
+
+
     when 'edition_set'
       id: '34f4wawe' + _.uniqueId()
       editions: '1,2,3 of 10'
@@ -107,6 +118,9 @@ module.exports = fabricate = (type, extObj = {}) ->
       id: 'gagosian' + _.uniqueId()
       name: 'Gagosian Gallery'
       admin: fabricate 'user'
+      sortable_id: 'gagosian'
+      default_profile_id: 'gagosian'
+      type: 'Gallery'
       representations: []
 
     when 'profile_cover_image'
@@ -196,6 +210,7 @@ module.exports = fabricate = (type, extObj = {}) ->
       image_url: "/local/profile_icons/id/:version.jpg"
       versions: ['square', 'circle']
       profileId: 'user_profile'
+      width: 140
 
     when 'invitation'
       email: "erchaves@gmail.com"
@@ -310,14 +325,25 @@ module.exports = fabricate = (type, extObj = {}) ->
           "last 60 days": 0.22
 
     when 'show'
-      id: "someone-puts-a-pineapple-together" + _.uniqueId()
-      artworks_count: 6
-      end_at: "2012-02-04T11:00:00-05:00"
-      name: "Someone Puts a Pineapple Together"
-      start_at: "2012-01-07T11:00:00-05:00"
-      image_url: "/local/partner_shows/id/:version.jpg"
-      image_versions: ['four_thirds', 'square', 'four_thirds_retina']
+      id: 'gagosian-gallery-inez-and-vinoodh' + _.uniqueId()
       partner: fabricate 'partner'
+      fair: null
+      location: fabricate('location')
+      fair_location: null
+      partner: fabricate('partner')
+      name: 'Inez & Vinoodh'
+      image_url: '/local/partner_show_images/51f6a51d275b24a787000c36/1/:version.jpg'
+      image_versions: [ 'medium', 'tall', 'large', 'larger', 'featured', 'general' ]
+      featured: false
+      start_at: '2013-07-12T04:00:00+00:00'
+      end_at: '2013-08-23T04:00:00+00:00'
+      eligible_artworks_count: 6
+      displayable: true
+      images_count: 0
+      status: 'closed'
+      updated_at: '2013-09-26T15:03:29Z'
+      coordinates: null
+
 
     when 'page'
       content: 'This is an awesome page'
