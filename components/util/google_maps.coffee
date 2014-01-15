@@ -13,7 +13,7 @@ module.exports =
       key     : sd.GOOGLE_MAPS_API_KEY
       sensor  : false
     )
-    "http://maps.googleapis.com/maps/api/staticmap?#{$.param(options)}"
+    "https://maps.googleapis.com/maps/api/staticmap?#{$.param(options)}"
 
   getMapLink: (location) ->
     options =

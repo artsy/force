@@ -24,7 +24,7 @@ describe "PartnerLocation", ->
         size: "300x300"
         center:  @location
         markers: "color:0x873ff0|#{@location}"
-      ).should.equal 'http://maps.googleapis.com/maps/api/staticmap?size=300x300&center=Address%2C+City%2C+State+00000&markers=color%3A0x873ff0%7CAddress%2C+City%2C+State+00000&maptype=roadmap&sensor=false&style=lightness%3A50%7Csaturation%3A-100&zoom=16&key=GOOGLE-MAPS-API-KEY'
+      ).should.equal 'https://maps.googleapis.com/maps/api/staticmap?size=300x300&center=Address%2C+City%2C+State+00000&markers=color%3A0x873ff0%7CAddress%2C+City%2C+State+00000&maptype=roadmap&sensor=false&style=lightness%3A50%7Csaturation%3A-100&zoom=16&key=GOOGLE-MAPS-API-KEY'
 
   describe '#googleMapsLink', ->
 
