@@ -37,3 +37,8 @@ describe 'OrderedSets', ->
       @orderedSets.add [fabricate 'featured_link']
       @orderedSets.fetchSets()
       fetchSpy.calledTwice.should.be.ok
+
+  describe '#fetchAll', ->
+    it 'fetches everything all the way down'
+
+    it 'listens to sync:complete'
