@@ -7,7 +7,7 @@ Profiles      = require '../../collections/profiles'
 Q             = require 'q'
 
 @index = (req, res) ->
-  featuredPartners = OrderedSets.new({ key: 'partners:featured-partners' })
+  featuredPartners = new OrderedSets(key: 'partners:featured-partners')
   # Fetch the featured partners (OrderedSet)
   featuredPartners.fetch({ cache: true }).then ->
     featuredPartners = featuredPartners.first()

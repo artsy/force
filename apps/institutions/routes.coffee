@@ -5,11 +5,10 @@ OrderedSets   = require '../../collections/ordered_sets.coffee'
 Profiles      = require '../../collections/profiles'
 
 @index = (req, res) ->
-  institutions = OrderedSets.new({ key: 'institutions' })
+  institutions = new OrderedSets(key: 'institutions')
   institutions.fetch({ cache: true }).then ->
     institutions = institutions.first()
     profiles = new Profiles([], { models: [] })
-    console.log profiles
     currentLength = profiles.length
     options =
       data   : { size: 20 }
