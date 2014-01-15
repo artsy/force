@@ -16,7 +16,7 @@ block body
             .order-log-in.order-form-hidden
               | Have an account?
               .order-form-login Log in
-            .email.order-form-left.hidden
+            .email.order-input-section
               label Email
               input.email.bordered-input( type='email', name='email', value=order.get('email') || '' )
         section.order-form-shipping-address
