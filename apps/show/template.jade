@@ -16,8 +16,9 @@ block body
         +share(show.shareTitle())
       h1.show-heading-title!= show.title()
 
-    section.show-installation-shot-carousel.carousel.carousel-loading
-      include ../../components/carousel/template
+    if carouselFigures.length > 0
+      section.show-installation-shot-carousel.carousel.carousel-loading
+        include ../../components/carousel/template
 
     header.show-header.show-header-last
       h2.show-subheading
