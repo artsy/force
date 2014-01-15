@@ -13,7 +13,7 @@ block body
         - featuredGene = featuredGenes.at(0)
         h2.garamond-header-center
           | Featured Genes
-  
+
         .browse-featured-gene-set
           if featuredGene.get('items').models
             for gene in featuredGene.get('items').models
@@ -33,7 +33,7 @@ block body
                 for category in categorySet.get('items').models
                   a.highlight-link( href=category.get('href') )
                     = category.get('title')
-  
+
           .bpc-column.bpc-fixed
             .bpc-column-subsection
               h2.garamond-header-center Browse by Price
@@ -43,7 +43,7 @@ block body
               a.highlight-link( href='/filter/artworks/price_range=-1:50000' ) Up to $50,000
               a.highlight-link( href='/filter/artworks/price_range=-1:100000' ) Up to $100,000
               a.highlight-link( href='/filter/artworks/price_range=100000:1000000000000' ) Above $100,000
-  
+
             .bpc-column-subsection
               h2.garamond-header-center Browse All
               a.highlight-link( href='/filter/artworks' ) See all artworks
