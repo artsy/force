@@ -14,7 +14,4 @@ block body
     section.following(id=type)
       +empty(type)(style=items.length > 0 ? "display:none;" : "")
       - each item in items.slice(0, itemsPerPage)
-        .item(id=item.id)
-          h3= item.name
-          button.avant-garde-button-white.follow-button
-          .artworks
+        include following_item

@@ -9,7 +9,7 @@ FillwidthView           = require '../../../components/fillwidth_row/view.coffee
 CurrentUser             = require '../../../models/current_user.coffee'
 FollowArtistCollection  = require '../../../models/follow_artist_collection.coffee'
 FollowButton            = require './follow_button.coffee'
-itemTemplate            = -> require('../templates/following_artist.jade') arguments...
+itemTemplate            = -> require('../templates/following_item.jade') arguments...
 
 module.exports.FollowingView = class FollowingView extends Backbone.View
 

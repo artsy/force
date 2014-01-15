@@ -14,5 +14,5 @@ module.exports = class Gene extends Backbone.Model
 
   fetchArtworks: (options) ->
     artworks = new Artworks
-    artworks.url = "#{@urlRoot}/#{@get 'id'}/artworks"
+    artworks.url = "#{@url()}/artworks"
     artworks.fetch options
