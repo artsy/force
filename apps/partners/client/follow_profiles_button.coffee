@@ -5,15 +5,18 @@ analytics      = require '../../../lib/analytics.coffee'
 FollowProfiles = require '../../../collections/follow_profiles.coffee'
 
 module.exports = class FollowProfileButton extends Backbone.View
-
-  analyticsFollowMessage  : "Followed partner profile from /partners"
-  analyticsUnfollowMessage: "Unfollowed partner profile from /partners"
+  analyticsFollowMessage: 'Followed partner profile from /partners'
+  analyticsUnfollowMessage: 'Unfollowed partner profile from /partners'
 
   events:
     'click' : 'onFollowClick'
 
   initialize: (options) ->
     return unless @collection
+
+    @analyticsUnfollowMessage ||= options.analyticsUnfollowMessage
+    @analyticsFollowMessage ||= options.analyticsFollowMessage
+
     @listenTo @collection, "add:#{@model.get('id')}", @onFollowChange
     @listenTo @collection, "remove:#{@model.get('id')}", @onFollowChange
 
@@ -28,18 +31,10 @@ module.exports = class FollowProfileButton extends Backbone.View
 
     if @collection.isFollowing @model
       analytics.track.click @analyticsUnfollowMessage, label: analytics.modelToLabel(@model)
-      @collection.unfollow @model.get('id'),
-        success: =>
-          @$el.attr('data-state', 'follow')
-        error  : =>
-          @$el.attr('data-state', 'following')
+      @collection.unfollow @model.get('id')
     else
       analytics.track.click @analyticsFollowMessage, label: analytics.modelToLabel(@model)
-      @collection.follow @model.get('id'),
-        success: =>
-          @$el.attr('data-state', 'following')
-        error  : =>
-          @$el.attr('data-state', 'follow')
+      @collection.follow @model.get('id')
 
       # Delay label change
       @$el.addClass 'is-clicked'

@@ -89,27 +89,20 @@ describe 'FollowProfiles', ->
 
     describe "#follow", ->
 
-      it 'throws an exception without a success callback', ->
-        (-> @followProfiles.follow(@profileId, { })).should.throw()
-        (-> @followProfiles.follow(@profileId)).should.throw()
-
       it 'creates a follow through the API and updates the collection', ->
         onAdd = sinon.spy()
         onSuccess = sinon.spy()
         @followProfiles.on "add:#{@profileId}", onAdd
         @followProfiles.follow @profileId, { success: onSuccess }
         Backbone.sync.args[0][0].should.equal 'create'
-        Backbone.sync.args[0][1].attributes.should.have.keys 'profile_id'
+        Backbone.sync.args[0][1].attributes.should.have.keys 'profile_id', 'profile'
+        Backbone.sync.args[0][1].attributes.profile.id.should.equal @profileId
         Backbone.sync.args[0][2].success @followProfile2.attributes
         onAdd.callCount.should.equal 1
         onSuccess.callCount.should.equal 1
         @followProfiles.should.have.lengthOf 2
 
     describe "#unfollow", ->
-
-      it 'throws an exception without a success callback', ->
-        (-> @followProfiles.follow(@profileId, { })).should.throw()
-        (-> @followProfiles.follow(@profileId)).should.throw()
 
       it 'destroys a follow through the API and updates the collection', ->
         @followProfiles.add @followProfile2
