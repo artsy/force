@@ -1,17 +1,18 @@
+_         = require 'underscore'
 Q         = require 'q'
 Backbone  = require 'backbone'
 Items     = require '../collections/items.coffee'
 
 module.exports = class OrderedSet extends Backbone.Model
-
   fetchItems: (cache=false) ->
-    featuredLinks = new Items null, { id: @id }
-    @set { items: featuredLinks }
+    deferred  = Q.defer()
+    items     = new Items null, { id: @id }
 
-    deferred = Q.defer()
+    @set { items: items }
 
-    Q.allSettled(featuredLinks.fetch(cache: cache).then =>
-      featuredLinks.map (featuredLink) -> featuredLink.fetchItems(cache)
-    ).then (promises) => deferred.resolve(promises)
+    Q.allSettled(items.fetch(cache: cache).then ->
+      items.map (item) ->
+        if _.isFunction(item.fetchItems) then item.fetchItems(cache) else item
+    ).then -> deferred.resolve.apply this, arguments
 
     deferred.promise

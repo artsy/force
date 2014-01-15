@@ -20,9 +20,9 @@ describe 'Browse', ->
   describe 'with all 3 ordered sets', ->
     beforeEach ->
       [featuredGenes, popularCategories, geneCategories] = [
-        OrderedSets.new({ key: 'browse:featured-genes' }),
-        OrderedSets.new({ key: 'browse:popular-categories' }),
-        OrderedSets.new({ key: 'browse:gene-categories' })
+        new OrderedSets({ key: 'browse:featured-genes' }),
+        new OrderedSets({ key: 'browse:popular-categories' }),
+        new OrderedSets({ key: 'browse:gene-categories' })
       ]
 
       # featuredGenes

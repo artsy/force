@@ -26,12 +26,17 @@ class OrderedSets extends Backbone.Collection
     Backbone.Collection::fetch.call this, options
 
   fetchSets: (options={}) ->
-    @map (model) -> model.fetchItems(options?.cache)
+    deferred  = Q.defer()
+    promises  = @map (model) -> model.fetchItems options?.cache
+    Q.allSettled(promises).then -> deferred.resolve.apply this, arguments
+    deferred.promise
+
+  fetchAll: (options={}) ->
+    @fetch(options).then => @fetchSets(options).then => @trigger 'sync:complete'
 
 class OrderedSetMeta extends Backbone.Model
-  defaults:
-    public: true
+  defaults: { public: true }
 
-module.exports =
-  new: (options) ->
-    new OrderedSets(null, meta: new OrderedSetMeta(options))
+module.exports = class _OrderedSets
+  constructor: (options) ->
+    return new OrderedSets(null, meta: new OrderedSetMeta(options))
