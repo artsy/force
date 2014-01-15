@@ -14,8 +14,8 @@ module.exports = class FollowButton extends Backbone.View
     return unless options.followArtistCollection
     { @followArtistCollection, @notes } = options
 
-    @analyticsUnfollowMessage = options.analyticsUnfollowMessage if options.analyticsUnfollowMessage
-    @analyticsFollowMessage = options.analyticsFollowMessage if options.analyticsFollowMessage
+    @analyticsUnfollowMessage ||= options.analyticsUnfollowMessage
+    @analyticsFollowMessage ||= options.analyticsFollowMessage
 
     @followArtistCollection.addRepoArtist @model.get('id')
 
