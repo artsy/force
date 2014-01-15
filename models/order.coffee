@@ -79,16 +79,20 @@ module.exports = class Order extends Backbone.Model
       data: @getSessionData((options.session_id or SESSION_ID), options.accessToken)
 
   update: (data, options) ->
+    sessionData = @getSessionData((options.session_id or SESSION_ID), options.accessToken)
+    if sessionData.session_id
+      data.session_id = sessionData.session_id
     @save data,
       url: @url()
       success: options.success
       error: options.error
-      data: @getSessionData((options.session_id or SESSION_ID), options.accessToken)
 
   resume: (options) =>
     @isSaved = -> false
+    data = @getSessionData((options.session_id or SESSION_ID), options.accessToken)
+    data.token = options.token
     @save null,
       url: "#{@url()}/resume"
+      data: data
       success: options.success
       error: options.error
-      data: @getSessionData((options.session_id or SESSION_ID), options.accessToken)

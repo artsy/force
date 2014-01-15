@@ -3,6 +3,7 @@ analytics    = require '../../../lib/analytics.coffee'
 Marketplace  = require '../../../models/marketplace.coffee'
 sd           = require('sharify').data
 ShippingForm = require('./shipping_form.coffee').ShippingForm
+{ SESSION_ID } = require('sharify').data
 
 module.exports.CheckoutForm = class CheckoutForm extends ShippingForm
 
@@ -34,11 +35,18 @@ module.exports.CheckoutForm = class CheckoutForm extends ShippingForm
   cardCallback: (response) =>
     switch response.status
       when 201  # success
-        @model.submit
-          creditCardUri: response.data.uri
+        data = @model.getSessionData(SESSION_ID)
+        data.credit_card_uri = response.data.uri
+        @model.save data,
+          url: "#{@model.url()}/submit"
           success: =>
             analytics.track.funnel 'Order submitted', label: analytics.modelToLabel(@model)
             @success()
+            @$el.addClass 'order-page-complete'
+            @$('.checkout-form').hide()
+            @$('.success-form').show()
+            $('body').removeClass 'minimal-header'
+
           error: (xhr) => @showError xhr, "Order submission error"
         analytics.track.funnel 'Order card validated', label: analytics.modelToLabel(@model)
       when 400, 403 then @showError @errors.missingOrMalformed, "Order card missing or malformed"

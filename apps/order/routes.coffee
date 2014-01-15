@@ -22,21 +22,13 @@ fetchPendingOrder = (req, res, options) ->
       res.locals.sd.ORDER = order.toJSON()
       res.render 'templates/checkout', { order: order }
 
-@complete = (req, res) ->
-  fetchPendingOrder req, res,
-    success: (order) ->
-      res.locals.sd.ORDER = order.toJSON()
-      res.render 'templates/complete', { order: order }
-
 @resume = (req, res) ->
   unless (token = req.query.token) and (orderId = req.params.id)
     return res.redirect '/'
 
-  order = new Order
-    id: orderId
-    token: token
-
+  order = new Order id: orderId
   order.resume
+    token: token
     session_id: req.session?.id
     accessToken: req.user?.get('accessToken')
     success: -> res.redirect '/order'
