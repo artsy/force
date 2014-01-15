@@ -22,7 +22,7 @@ render = (templateName) ->
 describe 'Partner Show', ->
 
   before ->
-    sd =
+    @sd =
       ARTSY_URL : 'http://localhost:5000'
       ASSET_PATH: 'http://localhost:5000'
     @show = new PartnerShow(
@@ -93,7 +93,7 @@ describe 'Partner Show', ->
       fair            : @show.fair()
       location        : @show.location()
       partner         : @show.partner()
-      sd              : sd
+      sd              : @sd
       show            : @show
       profile         : @profile
     })
@@ -103,6 +103,20 @@ describe 'Partner Show', ->
     it 'renders install shots', ->
       $ = cheerio.load @html
       $('.carousel').should.have.lengthOf 1
+
+    it 'does not render the install shot carousel container if there are no install shots', ->
+      @html = render('template')({
+        artworkColumns  : @artworks.groupByColumnsInOrder 3
+        carouselFigures : []
+        fair            : @show.fair()
+        location        : @show.location()
+        partner         : @show.partner()
+        sd              : @sd
+        show            : @show
+        profile         : @profile
+      })
+      $ = cheerio.load @html
+      $('.carousel').should.have.lengthOf 0
 
     it 'renders a small profile badge', ->
       $ = cheerio.load @html
