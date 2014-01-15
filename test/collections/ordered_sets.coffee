@@ -14,7 +14,7 @@ OrderedSets.__set__ 'FeaturedLink', FeaturedLink
 describe 'OrderedSets', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    @orderedSets = OrderedSets.new { key: 'browse:featured-genes' }
+    @orderedSets = new OrderedSets { key: 'browse:featured-genes' }
 
   afterEach ->
     Backbone.sync.restore()
