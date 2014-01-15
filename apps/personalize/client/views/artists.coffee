@@ -32,8 +32,8 @@ module.exports = class ArtistsView extends StepView
     @suggestions              = new Backbone.Collection
 
     @listenTo @followed, 'add', @renderFollowed
-    @listenTo @followed, 'add', @fetchRelatedArtists
     @listenTo @followed, 'remove', @renderFollowed
+    @listenTo @followed, 'add', @fetchRelatedArtists
     @listenTo @followed, 'remove', @disposeSuggestionSet
     @listenTo @suggestions, 'add', @renderSuggestions
     @listenTo @suggestions, 'remove', @renderSuggestions
@@ -43,11 +43,11 @@ module.exports = class ArtistsView extends StepView
     @followButtonViews[key].remove() if @followButtonViews[key]?
     @followButtonViews[key] = new FollowButton
       analyticsUnfollowMessage: "Unfollowed artist from personalize artist suggestions"
-      analyticsFollowMessage: "Followed artist from personalize artist suggestions"
-      followArtistCollection: @followArtistCollection
-      notes: 'Followed from /personalize'
-      model: model
-      el: el
+      analyticsFollowMessage:   "Followed artist from personalize artist suggestions"
+      notes:                    'Followed from /personalize'
+      followArtistCollection:   @followArtistCollection
+      model:                    model
+      el:                       el
 
   setSkipLabel: ->
     label = if @state.almostDone() then 'Done' else 'Next'
@@ -82,7 +82,7 @@ module.exports = class ArtistsView extends StepView
     artist.fetchRelatedArtists 'Artists',
       success: (model, response) =>
         if response.length > 0 # If there are any suggestions
-          @suggestions.unshift @createSuggestionSet artist
+          @suggestions.add @createSuggestionSet artist
 
   # Removes the corresponding suggestionSet and disposes of
   # its FollowButton views
@@ -96,7 +96,7 @@ module.exports = class ArtistsView extends StepView
       @followButtonViews[key] = null
 
   renderSuggestions: ->
-    (@$suggestions ||= @$('#personalize-artists-suggestions')).
+    (@$suggestions ||= @$('#personalize-suggestions')).
       html suggestedArtistsTemplate suggestions: @suggestions.models
 
     # Attach FollowButton views
@@ -109,7 +109,7 @@ module.exports = class ArtistsView extends StepView
         @setupFollowButton "#{suggestionSet.id}_#{artist.id}", artist, $button
 
   renderFollowed: ->
-    @$('#personalize-artists-followed').html followedTemplate(artists: @followed.models)
+    @$('#personalize-followed').html followedTemplate(models: @followed.models)
 
   render: ->
     @$el.html template(state: @state, isTouchDevice: isTouchDevice())
@@ -119,8 +119,8 @@ module.exports = class ArtistsView extends StepView
   setupSearch: ->
     @searchBarView = new SearchBarView
       mode: 'artists'
-      el: @$('#personalize-artist-search-container')
-      $input: (@$input = @$('#personalize-artist-search'))
+      el: @$('#personalize-search-container')
+      $input: (@$input = @$('#personalize-search'))
 
     @listenTo @searchBarView, 'search:selected', @follow
 

@@ -1,5 +1,9 @@
-.personalize-followed-artists
-  for artist in artists
-    .personalize-followed-artist
-      span.pfa-name= artist.get('name')
-      a.pfa-remove( data-id= artist.id )
+.personalize-followeds
+  for model in models
+    .personalize-followed
+      span.pfa-name
+        if model.get('owner')
+          = model.get('owner').name
+        else
+          = model.get('name')
+      a.pfa-remove( data-id= model.id )

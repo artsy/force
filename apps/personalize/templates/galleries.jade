@@ -1,0 +1,25 @@
+a.avant-garde-button-white.personalize-skip Skip
+
+header.personalize-header
+  h2= state.stepDisplay()
+  h1 Follow galleries on Artsy
+  aside Receive notifications on upcoming shows and fairs
+
+section.personalize-step( data-step='galleries' )
+  #personalize-search-container
+    input#personalize-search.bordered-input.is-block(
+      type='text', placeholder!='Type your favorite gallery name', autofocus=!isTouchDevice
+    )
+    #personalize-search-spinner: .loading-spinner-small
+
+  #personalize-followed
+
+#personalize-suggestions-container
+  header.personalize-suggestions-header
+    | We&rsquo;ve auto-followed a few leading galleries we think you’ll enjoy.
+    a.pss-unfollow-all.faux-underline Unfollow all
+
+  #personalize-suggestions: .loading-spinner
+
+  a.avant-garde-button-white.personalize-suggestions-more
+    | Show more galleries

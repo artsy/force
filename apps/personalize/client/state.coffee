@@ -4,11 +4,12 @@ Backbone  = require 'backbone'
 module.exports = class PersonalizeState extends Backbone.Model
   defaults:
     _steps:
-      casual: ['collect', 'location', 'artists']
-      collector: ['collect', 'location', 'artists', 'price_range']
-    current_step: 'collect'
+      casual: ['collect', 'location', 'galleries', 'artists']
+      collector: ['collect', 'location', 'artists', 'galleries', 'price_range']
     levels: ['Yes, I buy art', 'Interested in starting', 'Just looking and learning']
     track: 'collector'
+    current_step: 'collect'
+    current_level: 2 # Interested in starting
 
   initialize: ->
     super

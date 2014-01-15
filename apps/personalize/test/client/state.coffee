@@ -37,9 +37,9 @@ describe 'state', ->
 
   describe '#stepDisplay', ->
     it 'displays a human readable step count', ->
-      @state.stepDisplay().should.equal 'Step 0 of 3'
+      @state.stepDisplay().should.equal "Step 0 of #{@state.get('steps').length - 1}"
       @state.next()
-      @state.stepDisplay().should.equal 'Step 1 of 3'
+      @state.stepDisplay().should.equal "Step 1 of #{@state.get('steps').length - 1}"
 
   describe '#almostDone', ->
     it 'lets you know if you are on the last step', ->

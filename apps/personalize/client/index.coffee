@@ -9,6 +9,7 @@ views =
   CollectView:    require './views/collect.coffee'
   LocationView:   require './views/location.coffee'
   ArtistsView:    require './views/artists.coffee'
+  GalleriesView:  require './views/galleries.coffee'
   PriceRangeView: require './views/price_range.coffee'
 
 module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Router

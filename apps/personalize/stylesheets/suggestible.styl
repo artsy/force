@@ -1,0 +1,82 @@
+suggestion-row-width = 850px
+
+#personalize-suggestions-container
+  width suggestion-row-width
+  margin 0 auto
+  text-align center
+  // Hack to prevent shifting content
+  transform translateZ(0)
+  > .personalize-suggestions-more
+    display none
+  &[data-state='loaded']
+    > .personalize-suggestions-more
+      display inline-block
+    .loading-spinner
+      display none
+
+#personalize-suggestions
+  position relative
+  text-align center
+  min-height 200px
+
+.personalize-suggestions-set
+  margin 20px auto
+  border-bottom 1px solid light-gray-border-color
+  &:last-child
+    border-bottom none
+
+.personalize-suggestions-header
+  position relative
+  font-size 20px
+  margin 90px auto 40px
+
+.personalize-suggestions-set-header
+  @extends .personalize-suggestions-header
+  margin 40px 0
+
+.pss-unfollow-all
+  position absolute
+  right 20px
+  color light-gray-text-color
+  &:before
+    border-color light-gray-border-color
+
+.personalize-suggestion-row
+  @extends .personalize-suggestions-set
+
+.personalize-suggestion
+  display inline-block
+  padding 0 10px
+  &.is-gallery
+    width (suggestion-row-width / 4)
+    margin 0 0 30px
+    > .personalize-suggestion-thumbnail
+      width 177px
+      height 117px
+  &.is-artist
+    width (suggestion-row-width / 5)
+    margin 0 0 30px 0
+    > .personalize-suggestion-thumbnail
+      width 120px
+      height @width
+
+.personalize-suggestion-thumbnail
+  margin 0 auto
+  line-height @height
+  background-color light-gray-background-color
+  > img
+    max-width 100%
+    max-height 100%
+    vertical-align middle
+    display inline-block
+
+.personalize-suggestion-name
+  margin-top 10px
+  avant-garde()
+  font-size 13px
+  overflow ellipsis
+
+.personalize-suggestion-info
+  margin-bottom 10px
+  color dark-gray-text-color
+  overflow ellipsis

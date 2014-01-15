@@ -1,0 +1,15 @@
+for row in galleryRows
+  .personalize-suggestion-row
+    for gallery in row
+      .personalize-suggestion.is-gallery
+        .personalize-suggestion-thumbnail: img(
+          src= gallery.coverImage().imageUrl('medium')
+          alt= gallery.get('owner').name,
+          onerror='this.style.display="none";'
+        )
+        .personalize-suggestion-name
+          = gallery.get('owner').name
+        .personalize-suggestion-info
+          = gallery.get('locations')
+
+        a.avant-garde-button-white.follow-button( data-id= gallery.id )
