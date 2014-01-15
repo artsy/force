@@ -40,7 +40,8 @@ module.exports = class ArtistsView extends StepView
 
   setupFollowButton: (key, model, el) ->
     @followButtonViews ||= {}
-    @followButtonViews[key] ||= new FollowButton
+    @followButtonViews[key].remove() if @followButtonViews[key]?
+    @followButtonViews[key] = new FollowButton
       analyticsUnfollowMessage: "Unfollowed artist from personalize artist suggestions"
       analyticsFollowMessage: "Followed artist from personalize artist suggestions"
       followArtistCollection: @followArtistCollection
