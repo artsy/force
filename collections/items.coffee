@@ -18,13 +18,9 @@ module.exports = class Items extends PageableCollection
 
   url: => "#{sd.ARTSY_URL}/api/v1/set/#{@id}/items"
 
-  model: (attrs, options) ->
+  model: (attrs, options) =>
     # Add types as needed:
-    heuristicType = (attrs) ->
-      return attrs.item_type if attrs.item_type?
-      return 'Profile' if _.has attrs, 'cover_image'
-
-    switch heuristicType(attrs)
+    switch (attrs.item_type || @item_type)
       when 'FeaturedLink'
         FeaturedLink = require '../models/featured_link.coffee'
         new FeaturedLink attrs, options
@@ -35,5 +31,5 @@ module.exports = class Items extends PageableCollection
         new Item attrs, options
 
   initialize: (models, options) ->
-    { @id } = options
+    { @id, @item_type } = options
     super
