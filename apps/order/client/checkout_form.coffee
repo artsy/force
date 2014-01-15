@@ -46,7 +46,7 @@ module.exports.CheckoutForm = class CheckoutForm extends ShippingForm
             @$('.checkout-form').hide()
             @$('.success-form').show()
             $('body').removeClass 'minimal-header'
-
+            $('html, body').scrollTop(0)
           error: (xhr) => @showError xhr, "Order submission error"
         analytics.track.funnel 'Order card validated', label: analytics.modelToLabel(@model)
       when 400, 403 then @showError @errors.missingOrMalformed, "Order card missing or malformed"
