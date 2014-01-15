@@ -12,7 +12,7 @@ module.exports.OrderRouter = class OrderRouter extends Backbone.Router
     'order'          : 'shipping'
 
   shipping: -> new ShippingForm(model: new Order(sd.ORDER), el: $('#order-page'), success: -> window.location = '/order/checkout')
-  checkout: -> new CheckoutForm(model: new Order(sd.ORDER), el: $('#order-page'), success: -> window.location = '/order/complete')
+  checkout: -> new CheckoutForm(model: new Order(sd.ORDER), el: $('#order-page'), success: -> )
 
 module.exports.init = ->
   new OrderRouter

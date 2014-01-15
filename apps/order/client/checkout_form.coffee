@@ -41,10 +41,12 @@ module.exports.CheckoutForm = class CheckoutForm extends ShippingForm
           url: "#{@model.url()}/submit"
           success: =>
             analytics.track.funnel 'Order submitted', label: analytics.modelToLabel(@model)
+            @success()
             @$el.addClass 'order-page-complete'
             @$('.checkout-form').hide()
             @$('.success-form').show()
             $('body').removeClass 'minimal-header'
+
           error: (xhr) => @showError xhr, "Order submission error"
         analytics.track.funnel 'Order card validated', label: analytics.modelToLabel(@model)
       when 400, 403 then @showError @errors.missingOrMalformed, "Order card missing or malformed"
