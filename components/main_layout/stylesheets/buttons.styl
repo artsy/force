@@ -64,6 +64,11 @@
   &:focus, &:hover, &:active
     color highlight-color
     background white
+  &[data-state='loading'], &.is-loading
+    background-color white
+    color transparent
+    &::before
+      background-color highlight-color
 
 .avant-garde-button-text
   @extends .avant-garde-button
