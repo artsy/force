@@ -5,6 +5,7 @@ StepView        = require './step.coffee'
 SearchBarView   = require '../../../../components/main_layout/header/search_bar/view.coffee'
 Artist          = require '../../../../models/artist.coffee'
 template        = -> require('../../templates/artists.jade') arguments...
+analytics       = require('../../../../lib/analytics.coffee')
 
 followedTemplate          = -> require('../../templates/followed.jade') arguments...
 suggestedArtistsTemplate  = -> require('../../templates/suggested_artists.jade') arguments...
@@ -15,6 +16,10 @@ FollowButton            = require '../../../artist/client/follow_button.coffee'
 { isTouchDevice } = require '../../../../components/util/device.coffee'
 
 module.exports = class ArtistsView extends StepView
+
+  analyticsUnfollowMessage: "Unfollowed artist from personalize artist search"
+  analyticsFollowMessage: "Followed artist from personalize artist search"
+
   events:
     'click .personalize-skip' : 'advance'
     'click .pfa-remove'       : 'unfollow'
@@ -36,6 +41,8 @@ module.exports = class ArtistsView extends StepView
   setupFollowButton: (key, model, el) ->
     @followButtonViews ||= {}
     @followButtonViews[key] ||= new FollowButton
+      analyticsUnfollowMessage: "Unfollowed artist from personalize artist suggestions"
+      analyticsFollowMessage: "Followed artist from personalize artist suggestions"
       followArtistCollection: @followArtistCollection
       notes: 'Followed from /personalize'
       model: model
@@ -54,11 +61,15 @@ module.exports = class ArtistsView extends StepView
     @followArtistCollection.follow artist.id, { notes: 'Followed from /personalize' }
     @followed.unshift artist.toJSON() # Re-cast
 
+    analytics.track.click @analyticsFollowMessage, label: analytics.modelToLabel(artist)
+
   # Click handler for unfollow in search dropdown
   unfollow: (e) ->
     id = $(e.currentTarget).data 'id'
     @followed.remove id
     @followArtistCollection.unfollow id
+
+    analytics.track.click @analyticsUnfollowMessage, label: "Artist:#{id}"
 
   createSuggestionSet: (artist) ->
     new Backbone.Model
