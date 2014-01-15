@@ -1,6 +1,5 @@
 _                       = require 'underscore'
 Backbone                = require 'backbone'
-Artworks                = require '../../../collections/artworks.coffee'
 Artist                  = require '../../../models/artist.coffee'
 Artists                 = require '../../../collections/artists.coffee'
 Gene                    = require '../../../models/gene.coffee'
@@ -10,8 +9,7 @@ FillwidthView           = require '../../../components/fillwidth_row/view.coffee
 CurrentUser             = require '../../../models/current_user.coffee'
 FollowArtistCollection  = require '../../../models/follow_artist_collection.coffee'
 FollowButton            = require './follow_button.coffee'
-ArtworkCollection = require '../../../models/artwork_collection.coffee'
-itemTemplate = -> require('../templates/following_artist.jade') arguments...
+itemTemplate            = -> require('../templates/following_artist.jade') arguments...
 
 module.exports.FollowingView = class FollowingView extends Backbone.View
 
@@ -19,8 +17,7 @@ module.exports.FollowingView = class FollowingView extends Backbone.View
     @pageNum = 1
     @itemsPerPage = sd.ITEMS_PER_PAGE or 5
     @setupCurrentUser()
-    @setupFollowingArtists()
-    @setupFollowingGenes()
+    @setupFollowingItems()
 
   setupCurrentUser: ->
     @currentUser = CurrentUser.orNull()
@@ -28,14 +25,20 @@ module.exports.FollowingView = class FollowingView extends Backbone.View
     @artworkCollection = @currentUser?.defaultArtworkCollection()
     @followArtistCollection = new FollowArtistCollection
 
-  _showArtist: (artist) ->
-    artist.fetchArtworks success: (artworks) =>
+  setupFollowingItems: ->
+    @followingItems = @_bootstrapItems sd.TYPE, sd.FOLLOWING_ITEMS
+    if @followingItems.length > @itemsPerPage
+      $(window).bind 'scroll.following', _.throttle(@_infiniteScroll, 150)
+    @_loadNextPage()
+
+  _showItem: (item) =>
+    item.fetchArtworks success: (artworks) =>
       $parent = @$('.following')
-      $container = @$('#artists #' + artist.id)
+      $container = @$("##{sd.TYPE} ##{item.id}")
       if $container.length is 0
-        $container = $( itemTemplate item: artist.toJSON() )
+        $container = $( itemTemplate item: item.toJSON() )
         $parent.append $container
-      $followButton = $container.find('.artist-follow-button')
+      $followButton = $container.find(".follow-button")
       $artworks = $container.find('.artworks')
       new FillwidthView(
         artworkCollection: @artworkCollection
@@ -45,58 +48,40 @@ module.exports.FollowingView = class FollowingView extends Backbone.View
         empty: (-> @$el.parent().remove() )
         el: $artworks
       ).nextPage(false, 10)
+
+      ###
+      # TODO Refactor FollowButton to allow following different types
       new FollowButton
         followArtistCollection: @followArtistCollection
-        model: artist
+        model: item
         el: $followButton
+      ###
 
   _loadNextPage: ->
     end = @itemsPerPage * @pageNum
     start = end - @itemsPerPage
-    return unless @followingArtists.length > start
-    console.log "Loading page #" + @pageNum + ", start: " + start + " end: " + end
-    @showingArtists = @followingArtists.slice start, end
-    _.each @showingArtists, @_showArtist
+    return unless @followingItems.length > start
+
+    showingItems = @followingItems.slice start, end
+    _.each showingItems, @_showItem
     ++@pageNum
 
   _infiniteScroll: =>
-    console.log "Calling infiniteScroll()"
-    $(window).unbind('.following') unless @pageNum * @itemsPerPage < @followingArtists.length
+    $(window).unbind('.following') unless @pageNum * @itemsPerPage < @followingItems.length
     fold = $(window).height() + $(window).scrollTop()
     $lastItem = @$('.following > .item:last')
-    if fold >= $lastItem.offset()?.top + $lastItem.height()
-      console.log "About to load the next page"
-      @_loadNextPage()
+    @_loadNextPage() unless fold < $lastItem.offset()?.top + $lastItem.height()
 
-  setupFollowingArtists: ->
-    @followingArtists = new Artists _.map sd.FOLLOWING_ARTISTS, (a) -> new Artist(a)
-    if @followingArtists.length > @itemsPerPage
-      $(window).bind 'scroll.following', _.throttle(@_infiniteScroll, 150)
-    console.log "Total items: " + @followingArtists.length
-    @_loadNextPage()
+  _bootstrapItems: (type, items) ->
+    #TODO Use a more intelligent method
+    dict =
+      artists: collection: Artists, model: Artist
+      genes: collection: Genes, model: Gene
 
-  setupFollowingGenes: ->
-    @followingGenes = new Genes _.map sd.FOLLOWING_GENES, (g) -> new Gene(g)
-    @followingGenes.each (gene) =>
-      gene.fetchArtworks
-        success: (artworks) =>
-          $container = @$('#genes #' + gene.id)
-          $followButton = $container.find('.artist-follow-button')
-          $artworks = $container.find('.artworks')
-          new FillwidthView(
-            artworkCollection: @artworkCollection
-            fetchOptions: { 'filter[]': 'for_sale' }
-            collection: artworks
-            seeMore: true
-            empty: (-> @$el.parent().remove() )
-            el: $artworks
-          ).nextPage(false, 10)
-          # TODO Make FollowButton reusable for genes
-          new FollowButton
-            followArtistCollection: @followArtistCollection
-            model: gene
-            el: $followButton
-        error: (data) =>
+    collection = if dict[type]? then new dict[type].collection(
+      _.map items, (i) -> new dict[type].model i
+    ) else []
+
 
 module.exports.init = ->
   new FollowingView
