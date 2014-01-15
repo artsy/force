@@ -1,0 +1,26 @@
+default-mobile-width = 400px
+
+@media screen and (max-device-width: 480px)
+  html, body
+    height: 100%
+    width: 100%
+    -webkit-text-size-adjust: none
+    -webkit-overflow-scrolling: touch
+    min-width: 480px
+    min-height: 1024px
+    max-width: 480px
+    #main-layout-container
+      margin-left 40px
+      margin-right 40px
+    #order-page
+      width default-mobile-width
+      margin-left 0px
+      margin-right 0px
+      &.order-page-complete
+        width default-mobile-width
+      .order-form
+        width: default-mobile-width
+    .line-item-image-large
+      width default-mobile-width
+    #main-layout-header, #main-layout-welcome-header, .order-summary
+      display none
