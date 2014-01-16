@@ -25,13 +25,12 @@ For more detail see:
 ## Caching in Force and Microgravity
 
 Caching in these API consuming node-based apps is a very new
-thing. Currently, we use Redis to cache API get requests by overriding
-Backbone.sync with
+thing. Downstream cache is hard! Currently, we use Redis to cache API
+get requests by overriding Backbone.sync with
 [backbone-cache-sync](https://github.com/artsy/backbone-cache-sync). Since
-we already cache the API endpoints in Gravity, this
-backbone-cache-sync is really only useful in special cases. Here are a
-few things to keep in mined when deciding whether you should use
-caching in these apps:
+we already cache the API endpoints in Gravity, backbone-cache-sync is
+really only useful in special cases. Here are a few things to keep in
+mind when deciding whether you should use caching in these apps:
 - No active invalidation
 - Expiration is customizeable but the default is 12 hours
 - Our average API response time is around 100ms and median is 50ms
@@ -42,6 +41,11 @@ In production, the Microgravity Redis instance is a writeable slave of
 the Force Redis instance. This means that cache additions and
 invalidation in Force cascade to Microgravity. This eases cache
 invalidation and increases our cache footprint.
+
+### Things not to cache in Redis
+
+- User specific information
+- Information that our users or partners edit a lot (posts, partner shows, filter results)
 
 ## Examples of Caching in Force and Microgravity
 
@@ -70,11 +74,6 @@ slightly out of date information. Our partners however, would not be
 happy if their new important work by an artist failed to apper on the
 artist's page for 12 hours.
 
-### Things not to cache in Redis
-
-- User specific information
-- Information that our users or partners edit a lot (posts, partner shows, filter results)
-
 # Managing the Force and Microgravity cache
 ## Redis Dashboard
 
@@ -100,5 +99,6 @@ Keys are the url for the respective api endpoint
 
 - Start the CLI
 - `$ RANDOMKEY` to get a sample key
+- '$ get "https://artsy.net/foo"` # will return `(nil)` if it finds nothing. `'[]'` is a cached endpoint with no results
 - '$ del "https://artsy.net/foo"`
 - done!
