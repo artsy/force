@@ -1,10 +1,10 @@
 _             = require 'underscore'
 sd            = require('sharify').data
 Backbone      = require 'backbone'
-SearchResult  = require '../../../../../models/search_result.coffee'
+SearchResult  = require '../../../models/search_result.coffee'
 
 module.exports = class Search extends Backbone.Collection
-  initialize: (options) ->
+  initialize: (options={}) ->
     { @mode, @restrictType } = options
 
   _url: ->

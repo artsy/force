@@ -1,5 +1,5 @@
 Backbone        = require 'backbone'
-SearchBarView   = require '../../../../components/main_layout/header/search_bar/view.coffee'
+SearchBarView   = require '../../../../components/search_bar/view.coffee'
 
 followedTemplate = -> require('../../templates/followed.jade') arguments...
 

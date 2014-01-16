@@ -1,6 +1,6 @@
 _                   = require 'underscore'
 Backbone            = require 'backbone'
-SearchBarView       = require './search_bar/view.coffee'
+SearchBarView       = require '../../search_bar/view.coffee'
 AuthModalView       = require '../../auth_modal/view.coffee'
 mediator            = require '../../../lib/mediator.coffee'
 sd                  = require('sharify').data
