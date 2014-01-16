@@ -1,5 +1,11 @@
 extends ../../components/main_layout/templates/index
 
+mixin partner-tab-nav
+  nav.featured-partners-nav.garamond-tablist
+    a.garamond-tab.is-active( data-tab="galleries" href="/galleries" ) Galleries A&#8211;Z
+    span &nbsp;&nbsp;|&nbsp;&nbsp;
+    a.garamond-tab( data-tab: "institutions", href='/institutions' ) Institutions A&#8211;Z
+
 block head
   include meta
 
@@ -17,17 +23,11 @@ block body
         .featured-partners-partner-invite
           | Interested in partnering with Artsy?&nbsp;
           a( target='_blank', href='https://artsy.wufoo.com/forms/artsy-partnership-request-form/' ) Contact us
-      nav.featured-partners-nav
-        a.featured-partners-nav-selected( data-tab="galleries", href='/galleries' ) Galleries A&#8211;Z
-        span &nbsp;&nbsp;|&nbsp;&nbsp;
-        a( data-tab: "institutions", href='/institutions' ) Institutions A&#8211;Z
+      +partner-tab-nav
       h1.featured-partners-title Selected Galleries
 
     section.featured-partners-galleries-list
       include ../../components/a_to_z_list/template
 
     footer
-      nav.featured-partners-nav
-        a.featured-partners-nav-selected( data-tab="galleries", href='/galleries' ) Galleries A&#8211;Z
-        span &nbsp;&nbsp;|&nbsp;&nbsp;
-        a( data-tab: "institutions", href='/institutions' ) Institutions A&#8211;Z
+      +partner-tab-nav
