@@ -26,13 +26,13 @@ module.exports.FollowingView = class FollowingView extends Backbone.View
     @artworkCollection = @currentUser?.defaultArtworkCollection()
 
   setupFollowingItems: ->
-    @followingItems = @_bootstrapItems sd.TYPE, sd.FOLLOWING_ITEMS
+    @followingItems = @bootstrapItems sd.TYPE, sd.FOLLOWING_ITEMS
     @followItemCollection = @initFollowItemCollection sd.TYPE
     if @followingItems.length > @itemsPerPage
-      $(window).bind 'scroll.following', _.throttle(@_infiniteScroll, 150)
-    @_loadNextPage()
+      $(window).bind 'scroll.following', _.throttle(@infiniteScroll, 150)
+    @loadNextPage()
 
-  _showItem: (item) =>
+  showItem: (item) =>
     item.fetchArtworks success: (artworks) =>
       $parent = @$('.following')
       $container = @$("##{sd.TYPE} ##{item.id}")
@@ -56,22 +56,22 @@ module.exports.FollowingView = class FollowingView extends Backbone.View
         view.hideFirstRow()
         view.removeHiddenItems()
 
-  _loadNextPage: ->
+  loadNextPage: ->
     end = @itemsPerPage * @pageNum
     start = end - @itemsPerPage
     return unless @followingItems.length > start
 
     showingItems = @followingItems.slice start, end
-    _.each showingItems, @_showItem
+    _.each showingItems, @showItem
     ++@pageNum
 
-  _infiniteScroll: =>
+  infiniteScroll: =>
     $(window).unbind('.following') unless @pageNum * @itemsPerPage < @followingItems.length
     fold = $(window).height() + $(window).scrollTop()
     $lastItem = @$('.following > .item:last')
-    @_loadNextPage() unless fold < $lastItem.offset()?.top + $lastItem.height()
+    @loadNextPage() unless fold < $lastItem.offset()?.top + $lastItem.height()
 
-  _bootstrapItems: (type, items) ->
+  bootstrapItems: (type, items) ->
     #TODO Use a more intelligent method, maybe passed in the initialize options
     dict =
       artists: collection: Artists, model: Artist
