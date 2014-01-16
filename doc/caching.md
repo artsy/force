@@ -35,6 +35,7 @@ caching in these apps:
 - No active invalidation
 - Expiration is customizeable but the default is 12 hours
 - Our average API response time is around 100ms and median is 50ms
+- Average Redis response time: ~5ms
 - We use an API's url + params as it's key (do not cache a /me route!)
 
 In production, the Microgravity Redis instance is a writeable slave of
@@ -42,22 +43,19 @@ the Force Redis instance. This means that cache additions and
 invalidation in Force cascade to Microgravity. This eases cache
 invalidation and increases our cache footprint.
 
-Some numbers
-- Average API response time: ~100ms
-- Median API response time: ~50ms
-- Average Redis response time: ~5ms
+## Examples of Caching in Force and Microgravity
 
 If you are in doubt that something can be cached, don't cache it and
 just fetch it on the client. I'll just take 100ms and everything will
-be fine.
+be fine. Here are some examples of how and why we cache or don't cache
+things in Force.
 
-## Examples of Caching in Force and Microgravity
 ### Excellent uses of caching
 
 - /browse, /partners, /institutions, /galleries
 
-These pages work particularly well because they are managed entirely
-by the Artsy team and require many, many synchronus
+These pages work particularly well because the content is managed
+entirely by the Artsy team and the pages require many, many synchronus
 requests to render. When we added caching, we saw these pages drop
 from taking upwards of 15 seconds to render to taking less than 50ms.
 
