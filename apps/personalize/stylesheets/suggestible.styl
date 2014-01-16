@@ -2,15 +2,15 @@ suggestion-row-width = 850px
 
 #personalize-suggestions-container
   width suggestion-row-width
-  margin 0 auto
+  margin 90px auto
   text-align center
   // Hack to prevent shifting content
   transform translateZ(0)
-  > .personalize-suggestions-more
+  > .personalize-suggestions-more-container
     display none
   &[data-state='loaded']
-    > .personalize-suggestions-more
-      display inline-block
+    > .personalize-suggestions-more-container
+      display block
     .loading-spinner
       display none
 
@@ -18,6 +18,11 @@ suggestion-row-width = 850px
   position relative
   text-align center
   min-height 200px
+
+.personalize-suggestions-more-container
+  padding-top 20px
+  text-align center
+  border-top 1px solid light-gray-border-color
 
 .personalize-suggestions-set
   margin 20px auto
@@ -43,11 +48,12 @@ suggestion-row-width = 850px
 
 .personalize-suggestion-row
   @extends .personalize-suggestions-set
+  margin-bottom 0
 
 .personalize-suggestion
   display inline-block
   padding 0 10px
-  &.is-gallery
+  &.is-profile
     width (suggestion-row-width / 4)
     margin 0 0 30px
     > .personalize-suggestion-thumbnail

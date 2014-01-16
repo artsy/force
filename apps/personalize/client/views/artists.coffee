@@ -4,21 +4,22 @@ Backbone        = require 'backbone'
 StepView        = require './step.coffee'
 SearchBarView   = require '../../../../components/main_layout/header/search_bar/view.coffee'
 Artist          = require '../../../../models/artist.coffee'
-template        = -> require('../../templates/artists.jade') arguments...
 analytics       = require('../../../../lib/analytics.coffee')
+Followable      = require '../mixins/followable.coffee'
 
-followedTemplate          = -> require('../../templates/followed.jade') arguments...
+template                  = -> require('../../templates/artists.jade') arguments...
 suggestedArtistsTemplate  = -> require('../../templates/suggested_artists.jade') arguments...
 
-FollowArtistCollection  = require '../../../../models/follow_artist_collection.coffee'
-FollowButton            = require '../../../artist/client/follow_button.coffee'
+FollowCollection  = require '../../../../models/follow_artist_collection.coffee'
+FollowButton      = require '../../../artist/client/follow_button.coffee'
 
 { isTouchDevice } = require '../../../../components/util/device.coffee'
 
 module.exports = class ArtistsView extends StepView
+  _.extend @prototype, Followable
 
-  analyticsUnfollowMessage: "Unfollowed artist from personalize artist search"
-  analyticsFollowMessage: "Followed artist from personalize artist search"
+  analyticsUnfollowMessage: 'Unfollowed artist from personalize artist search'
+  analyticsFollowMessage:   'Followed artist from personalize artist search'
 
   events:
     'click .personalize-skip' : 'advance'
@@ -27,12 +28,12 @@ module.exports = class ArtistsView extends StepView
   initialize: (options) ->
     super
 
-    @followArtistCollection   = new FollowArtistCollection
-    @followed                 = new Backbone.Collection [], model: Artist
-    @suggestions              = new Backbone.Collection
+    @followCollection   = new FollowCollection
+    @suggestions        = new Backbone.Collection
 
-    @listenTo @followed, 'add', @renderFollowed
-    @listenTo @followed, 'remove', @renderFollowed
+    @followed = new Backbone.Collection [], model: Artist
+    @initializeFollowable()
+
     @listenTo @followed, 'add', @fetchRelatedArtists
     @listenTo @followed, 'remove', @disposeSuggestionSet
     @listenTo @suggestions, 'add', @renderSuggestions
@@ -42,35 +43,12 @@ module.exports = class ArtistsView extends StepView
     @followButtonViews ||= {}
     @followButtonViews[key].remove() if @followButtonViews[key]?
     @followButtonViews[key] = new FollowButton
-      analyticsUnfollowMessage: "Unfollowed artist from personalize artist suggestions"
-      analyticsFollowMessage:   "Followed artist from personalize artist suggestions"
+      analyticsUnfollowMessage: 'Unfollowed artist from personalize artist suggestions'
+      analyticsFollowMessage:   'Followed artist from personalize artist suggestions'
       notes:                    'Followed from /personalize'
-      followArtistCollection:   @followArtistCollection
+      followArtistCollection:   @followCollection
       model:                    model
       el:                       el
-
-  setSkipLabel: ->
-    label = if @state.almostDone() then 'Done' else 'Next'
-    @$('.personalize-skip').text label
-    @_labelSet = true
-
-  # Called when a search result is selected.
-  # Follows the selected artist
-  follow: (e, artist) ->
-    @setSkipLabel() unless @_labelSet?
-    @$input.val ''
-    @followArtistCollection.follow artist.id, { notes: 'Followed from /personalize' }
-    @followed.unshift artist.toJSON() # Re-cast
-
-    analytics.track.click @analyticsFollowMessage, label: analytics.modelToLabel(artist)
-
-  # Click handler for unfollow in search dropdown
-  unfollow: (e) ->
-    id = $(e.currentTarget).data 'id'
-    @followed.remove id
-    @followArtistCollection.unfollow id
-
-    analytics.track.click @analyticsUnfollowMessage, label: "Artist:#{id}"
 
   createSuggestionSet: (artist) ->
     new Backbone.Model
@@ -108,21 +86,10 @@ module.exports = class ArtistsView extends StepView
 
         @setupFollowButton "#{suggestionSet.id}_#{artist.id}", artist, $button
 
-  renderFollowed: ->
-    @$('#personalize-followed').html followedTemplate(models: @followed.models)
-
   render: ->
     @$el.html template(state: @state, isTouchDevice: isTouchDevice())
-    @setupSearch()
+    @setupSearch { mode: 'artists' }
     this
-
-  setupSearch: ->
-    @searchBarView = new SearchBarView
-      mode: 'artists'
-      el: @$('#personalize-search-container')
-      $input: (@$input = @$('#personalize-search'))
-
-    @listenTo @searchBarView, 'search:selected', @follow
 
   remove: ->
     @searchBarView.remove()

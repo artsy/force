@@ -6,7 +6,7 @@ followedTemplate = -> require('../../templates/followed.jade') arguments...
 # Common functionality between views with auto-complete/following
 module.exports =
   initializeFollowable: ->
-    @followed = new Backbone.Collection
+    @followed ||= new Backbone.Collection
 
     @listenTo @followed, 'add', @renderFollowed
     @listenTo @followed, 'remove', @renderFollowed
@@ -33,10 +33,14 @@ module.exports =
   follow: (e, model) ->
     @setSkipLabel() unless @_labelSet?
     @$searchInput.val '' # Clear input
-    @followed.unshift model
-    @followCollection.follow model.id
+    @followed.unshift model.toJSON()
+    @followCollection.follow model.id, { notes: 'Followed from /personalize' }
+
+    # Track with analytics
 
   unfollow: (e) ->
     id = $(e.currentTarget).data 'id'
     @followed.remove id
     @followCollection.unfollow id
+
+    # Track with analytics
