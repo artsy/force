@@ -41,18 +41,20 @@ module.exports.FollowingView = class FollowingView extends Backbone.View
         $parent.append $container
       $followButton = $container.find(".follow-button")
       $artworks = $container.find('.artworks')
-      new FillwidthView(
+      view = new FillwidthView
         artworkCollection: @artworkCollection
         fetchOptions: { 'filter[]': 'for_sale' }
         collection: artworks
-        seeMore: true
         empty: (-> @$el.parent().remove() )
         el: $artworks
-      ).nextPage(false, 10)
+      view.render()
       new FollowButton
         followItemCollection: @followItemCollection
         model: item
         el: $followButton
+      _.defer ->
+        view.hideFirstRow()
+        view.removeHiddenItems()
 
   _loadNextPage: ->
     end = @itemsPerPage * @pageNum
