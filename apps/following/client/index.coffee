@@ -7,9 +7,10 @@ Genes                   = require '../../../collections/genes.coffee'
 sd                      = require('sharify').data
 FillwidthView           = require '../../../components/fillwidth_row/view.coffee'
 CurrentUser             = require '../../../models/current_user.coffee'
-FollowArtistCollection  = require '../../../models/follow_artist_collection.coffee'
 FollowButton            = require './follow_button.coffee'
 itemTemplate            = -> require('../templates/following_item.jade') arguments...
+FollowArtists           = require '../../../collections/follow_artists.coffee'
+FollowGenes             = require '../../../collections/follow_genes.coffee'
 
 module.exports.FollowingView = class FollowingView extends Backbone.View
 
@@ -23,10 +24,10 @@ module.exports.FollowingView = class FollowingView extends Backbone.View
     @currentUser = CurrentUser.orNull()
     @currentUser?.initializeDefaultArtworkCollection()
     @artworkCollection = @currentUser?.defaultArtworkCollection()
-    @followArtistCollection = new FollowArtistCollection
 
   setupFollowingItems: ->
     @followingItems = @_bootstrapItems sd.TYPE, sd.FOLLOWING_ITEMS
+    @followItemCollection = @initFollowItemCollection sd.TYPE
     if @followingItems.length > @itemsPerPage
       $(window).bind 'scroll.following', _.throttle(@_infiniteScroll, 150)
     @_loadNextPage()
@@ -48,14 +49,10 @@ module.exports.FollowingView = class FollowingView extends Backbone.View
         empty: (-> @$el.parent().remove() )
         el: $artworks
       ).nextPage(false, 10)
-
-      ###
-      # TODO Refactor FollowButton to allow following different types
       new FollowButton
-        followArtistCollection: @followArtistCollection
+        followItemCollection: @followItemCollection
         model: item
         el: $followButton
-      ###
 
   _loadNextPage: ->
     end = @itemsPerPage * @pageNum
@@ -73,7 +70,7 @@ module.exports.FollowingView = class FollowingView extends Backbone.View
     @_loadNextPage() unless fold < $lastItem.offset()?.top + $lastItem.height()
 
   _bootstrapItems: (type, items) ->
-    #TODO Use a more intelligent method
+    #TODO Use a more intelligent method, maybe passed in the initialize options
     dict =
       artists: collection: Artists, model: Artist
       genes: collection: Genes, model: Gene
@@ -82,6 +79,9 @@ module.exports.FollowingView = class FollowingView extends Backbone.View
       _.map items, (i) -> new dict[type].model i
     ) else []
 
+  initFollowItemCollection: (type) ->
+    dict = artists: FollowArtists, genes: FollowGenes
+    collection = new dict[type]?() or []
 
 module.exports.init = ->
   new FollowingView
