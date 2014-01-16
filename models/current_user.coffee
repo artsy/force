@@ -16,9 +16,13 @@ module.exports = class CurrentUser extends Backbone.Model
   defaultArtworkCollection: -> @get('artworkCollections')[0]
 
   # Add the access token to fetches and saves
-  sync: (method, model, options = {}) ->
-    options.data ?= if method in ['create', 'update'] then _.omit(@toJSON(), 'accessToken') else {}
-    options.data.access_token = @get 'accessToken'
+  sync: (method, model, options={}) ->
+    if method in ['create', 'update']
+      # If persisting to the server overwrite attrs
+      options.attrs = _.omit(@toJSON(), 'accessToken')
+    else
+      # Otherwise overwrite data
+      _.defaults(options, { data: { access_token: @get('accessToken') } })
     super
 
   # Saves the artwork to the user's saved-artwork collection. API creates colletion if user's first save.
