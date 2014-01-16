@@ -2,7 +2,6 @@ _               = require 'underscore'
 sd              = require('sharify').data
 Backbone        = require 'backbone'
 StepView        = require './step.coffee'
-SearchBarView   = require '../../../../components/search_bar/view.coffee'
 Artist          = require '../../../../models/artist.coffee'
 analytics       = require('../../../../lib/analytics.coffee')
 Followable      = require '../mixins/followable.coffee'

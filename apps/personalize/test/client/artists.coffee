@@ -19,8 +19,8 @@ describe 'ArtistsView', ->
     benv.setup =>
       benv.expose { $: benv.require 'components-jquery' }
       Backbone.$    = $
-      @ArtistsView  = benv.requireWithJadeify resolve(__dirname, '../../client/views/artists'), ['template', 'followedTemplate', 'suggestedArtistsTemplate']
-      @ArtistsView.__set__ 'SearchBarView', Backbone.View
+      @ArtistsView  = benv.requireWithJadeify resolve(__dirname, '../../client/views/artists'), ['template', 'suggestedArtistsTemplate']
+      @ArtistsView::setupSearch = sinon.stub
       done()
 
   after ->
@@ -44,43 +44,6 @@ describe 'ArtistsView', ->
       view    = @view.setupFollowButton key, artist, $('<div></div>')
       view.constructor.name.should.equal 'FollowButton'
       @view.followButtonViews[key].should.equal view
-
-  describe '#setSkipLabel', ->
-    it 'sets the label to "next" if we are not quite done; "Done" if we are almost done', ->
-      $button = @view.$('.personalize-skip')
-      $button.text().should.equal 'Skip'
-      @view.state.almostDone().should.not.be.ok
-      @view.setSkipLabel()
-      $button.text().should.equal 'Next'
-      @view._labelSet.should.be.ok
-      @view.state.setStep(_.last(@view.state.get('steps')))
-      @view.state.almostDone().should.be.ok
-      @view.setSkipLabel()
-      $button.text().should.equal 'Done'
-
-  describe '#follow', ->
-    beforeEach ->
-      @artist = new Artist fabricate 'artist'
-
-    it 'sets the skip label (once)', ->
-      skipSpy = sinon.spy @view, 'setSkipLabel'
-      @view.follow({}, @artist)
-      skipSpy.called.should.be.ok
-      @view.follow({}, @artist)
-      skipSpy.callCount.should.equal 1
-
-    it 'follows the artist', ->
-      @view.follow({}, @artist)
-      @view.followArtistCollection.get('artists').at(0).id.should.equal @artist.id
-      @view.followed.at(0).id.should.equal @artist.id
-
-  describe '#unfollow', ->
-    it 'handles the unfollow click', ->
-      @view.stopListening @view.followed, 'remove', @view.disposeSuggestionSet
-      @view.followed.add fabricate 'artist'
-      @view.$('.pfa-remove').click()
-      @view.followed.length.should.equal 0
-      @view.followArtistCollection.get('artists').length.should.equal 0
 
   describe '#fetchRelatedArtists', ->
     it 'fetches related artists', ->
@@ -111,11 +74,6 @@ describe 'ArtistsView', ->
       @view.renderSuggestions()
       @view.$el.html().should.include "Artists related to #{@view.suggestions.at(0).get('name')}"
       @view.$('.personalize-suggestion-name').text().should.equal @view.suggestions.at(0).get('suggestions').at(0).get('name')
-
-  describe '#renderFollowed', ->
-    it 'renders artists when you follow them', ->
-      @view.followed.add fabricate 'artist'
-      @view.$('.pfa-name').text().should.equal @view.followed.at(0).get('name')
 
   describe '#render', ->
     it 'renders the template', ->
