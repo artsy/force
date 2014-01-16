@@ -22,7 +22,7 @@ describe 'CurrentUser', ->
     it 'doesnt override model data for create/update', ->
       @user.set accessToken: 'foobar', foo: 'bar'
       @user.save()
-      Backbone.sync.args[0][2].data.foo.should.equal 'bar'
+      Backbone.sync.args[0][2].attrs.foo.should.equal 'bar'
 
   describe '#saveArtwork', ->
 

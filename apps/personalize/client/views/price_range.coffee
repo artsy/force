@@ -25,13 +25,13 @@ module.exports = class PriceRangeView extends StepView
 
     (@$flippers ||= $('.flipper')).removeClass 'is-flipped'
 
-    ($target = $(e.currentTarget)).
+    @user.set 'price_range', ($target = $(e.currentTarget)).data('value')
+
+    $target.
       addClass('is-flipped').
       one($.support.transition.end, =>
         @advance()
       ).emulateTransitionEnd 500
-
-    @user.set 'price_range', $target.data('value')
 
   render: ->
     @$el.html template(state: @state, prices: @prices)
