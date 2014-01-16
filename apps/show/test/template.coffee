@@ -21,56 +21,37 @@ render = (templateName) ->
 
 describe 'Partner Show', ->
 
-  before ->
+  beforeEach ->
     @sd =
       ARTSY_URL : 'http://localhost:5000'
       ASSET_PATH: 'http://localhost:5000'
     @show = new PartnerShow fabricate('show')
     @profile = new Profile fabricate 'partner_profile'
-    @artworks = new Artworks [
-      new Artwork fabricate 'artwork'
-      new Artwork fabricate 'artwork'
-      new Artwork fabricate 'artwork'
-      new Artwork fabricate 'artwork'
-      new Artwork fabricate 'artwork'
-      new Artwork fabricate 'artwork'
-    ]
-    @installShots = new Backbone.Collection [
-      new AdditionalImage fabricate 'artwork_image', { default: true }
-      new AdditionalImage fabricate 'artwork_image'
-      new AdditionalImage fabricate 'artwork_image'
-      new AdditionalImage fabricate 'artwork_image'
-      new AdditionalImage fabricate 'artwork_image'
-      new AdditionalImage fabricate 'artwork_image'
-    ]
     @html = render('template')({
-      artworkColumns  : @artworks.groupByColumnsInOrder 3
-      carouselFigures : @installShots.models
-      fair            : @show.fair()
-      location        : @show.location()
-      partner         : @show.partner()
-      sd              : @sd
-      show            : @show
-      profile         : @profile
+      fair    : @show.fair()
+      location: @show.location()
+      partner : @show.partner()
+      sd      : @sd
+      show    : @show
+      profile : @profile
     })
 
   describe 'template', ->
 
-    it 'renders install shots', ->
+    it 'renders a container for install shots if the show has them', ->
+      @show.set 'images_count', 3
+      @html = render('template')({
+        fair    : @show.fair()
+        location: @show.location()
+        partner : @show.partner()
+        sd      : @sd
+        show    : @show
+        profile : @profile
+      })
       $ = cheerio.load @html
       $('.carousel').should.have.lengthOf 1
 
     it 'does not render the install shot carousel container if there are no install shots', ->
-      @html = render('template')({
-        artworkColumns  : @artworks.groupByColumnsInOrder 3
-        carouselFigures : []
-        fair            : @show.fair()
-        location        : @show.location()
-        partner         : @show.partner()
-        sd              : @sd
-        show            : @show
-        profile         : @profile
-      })
       $ = cheerio.load @html
       $('.carousel').should.have.lengthOf 0
 
@@ -95,9 +76,6 @@ describe 'Partner Show', ->
       $('.show-header-last').text().should.include @show.location().singleLine()
       $('.show-header-last').html().should.include @show.runningDates()
 
-    it 'renders show artworks in three columns', ->
+    it 'renders a container for artwork columns', ->
       $ = cheerio.load @html
-      @artworks.each (artwork) ->
-        $(".artwork-item[data-artwork='#{artwork.get('id')}']").should.have.lengthOf 1
-        $(".artwork-item[data-artwork='#{artwork.get('id')}'] img").attr('src').should.include artwork.defaultImageUrl()
-      $(".artwork-column").should.have.lengthOf 3
+      $(".artworks-columns").should.have.lengthOf 1

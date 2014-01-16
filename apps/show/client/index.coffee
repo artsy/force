@@ -8,17 +8,27 @@ CurrentUser     = require '../../../models/current_user.coffee'
 SaveControls    = require '../../../components/fillwidth_row/save_controls.coffee'
 PartnerShow     = require '../../../models/partner_show.coffee'
 ShareView       = require '../../../components/share/view.coffee'
+artworkColumns  = -> require('../../../components/artwork_columns/template.jade') arguments...
 
 module.exports.PartnerShowView = class PartnerShowView extends Backbone.View
 
   initialize: (options) ->
     @shareView = new ShareView
       el        : @$('.show-share')
-    @carouselView = new CarouselView
-      el        : @$('.carousel')
-      collection: new Backbone.Collection sd.INSTALL_SHOTS, { model: AdditionalImage }
     @setupCurrentUser()
-    @setupArtworkSaveControls()
+
+    @model.fetchInstallShots
+      success: (installShots) =>
+        @carouselView = new CarouselView
+          el        : @$('.carousel')
+          collection: installShots
+          height    : 400
+
+    @model.fetchArtworks
+      success: (artworks) =>
+        @collection = artworks
+        @$('.show-artworks').html artworkColumns artworkColumns: artworks.groupByColumnsInOrder(3)
+        @setupArtworkSaveControls()
 
   setupCurrentUser: ->
     @currentUser = CurrentUser.orNull()
@@ -37,10 +47,8 @@ module.exports.PartnerShowView = class PartnerShowView extends Backbone.View
       @artworkCollection.addRepoArtworks @collection
       @artworkCollection.syncSavedArtworks()
 
-
 module.exports.init = ->
 
   new PartnerShowView
-    el        : $('#show')
-    model     : new PartnerShow sd.SHOW
-    collection: new Artworks sd.ARTWORKS
+    el   : $('#show')
+    model: new PartnerShow sd.SHOW

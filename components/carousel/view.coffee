@@ -1,6 +1,7 @@
 _                = require 'underscore'
 Backbone         = require 'backbone'
 imagesLoaded     = require '../../lib/vendor/imagesloaded.js'
+carouselTemplate = -> require('./template.jade') arguments...
 
 module.exports = class Carousel extends Backbone.View
 
@@ -30,12 +31,17 @@ module.exports = class Carousel extends Backbone.View
   transitionDuration: '0.5s'
   transitionEvents: 'transitionEnd oTransitionEnd msTransitionEnd transitionend webkitTransitionEnd'
 
-  initialize: ->
+  initialize: (options) ->
     throw 'You must pass a collection' unless @collection?
     @$window = $(window)
     @$document = $(document)
     @length = @collection.length
     @noTransitions = $('html').hasClass('no-csstransitions')
+    @height = options.height
+    @render()
+
+  render: ->
+    @$el.html carouselTemplate carouselFigures: @collection.models, height: @height
 
     if @length < @minLength
       @$el.empty()
