@@ -23,8 +23,8 @@ describe 'FollowArtists', ->
     it 'binds to add / remove callbacks to proxy model specific event triggers', ->
       onAdd = sinon.spy()
       onRemove = sinon.spy()
-      @followArtists.on "add:#{@followArtist2.getItem().id}", onAdd
-      @followArtists.on "remove:#{@followArtist2.getItem().id}", onRemove
+      @followArtists.on "add:#{@followArtist2.getItem().get('id')}", onAdd
+      @followArtists.on "remove:#{@followArtist2.getItem().get('id')}", onRemove
       @followArtists.add @followArtist2
       @followArtists.remove @followArtist2
       onAdd.callCount.should.equal 1
@@ -33,11 +33,11 @@ describe 'FollowArtists', ->
   describe "#isFollowing", ->
 
     it 'returns true if the artist is in this collection', ->
-      artist = new Artist @followArtist1.getItem()
+      artist = @followArtist1.getItem()
       @followArtists.isFollowing(artist.id).should.be.true
 
     it 'returns false if the artist is not in this collection', ->
-      artist = new Artist @followArtist2.getItem()
+      artist = @followArtist2.getItem()
       @followArtists.isFollowing(artist.id).should.be.false
 
   describe "#findByArtistId", ->
@@ -50,13 +50,13 @@ describe 'FollowArtists', ->
   describe '#syncFollows', ->
     it 'returns without a current user', ->
       fetchSpy = sinon.spy @followArtists, 'fetch'
-      @followArtists.syncFollows [@followArtist2.getItem().id]
+      @followArtists.syncFollows [@followArtist2.getItem().get('id')]
       fetchSpy.callCount.should.equal 0
 
   describe "with a current user", ->
 
     beforeEach ->
-      @artistId = @followArtist2.getItem().id
+      @artistId = @followArtist2.getItem().get('id')
       sinon.stub Backbone, 'sync'
       sinon.stub CurrentUser, 'orNull', -> new CurrentUser(fabricate('user'))
 
@@ -71,7 +71,7 @@ describe 'FollowArtists', ->
         onAdd = sinon.spy()
         @followArtists.on "add:#{@artistId}", onAdd
         @followArtists.syncFollows [@artistId]
-        Backbone.sync.args[0][2].data.artists.should.include @followArtist2.getItem().id
+        Backbone.sync.args[0][2].data.artists.should.include @followArtist2.getItem().get('id')
         Backbone.sync.args[0][2].success [ @followArtist2.attributes ]
         onAdd.callCount.should.equal 1
         @followArtists.should.have.lengthOf 2

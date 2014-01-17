@@ -13,15 +13,15 @@ module.exports = class FollowItems extends Backbone.Collection
   
   initialize: (models, options) ->
     @on 'add', (model) =>
-      @trigger "add:#{model.getItem().id}"
+      @trigger "add:#{model.getItem().get('id')}"
     @on 'remove', (model) =>
-      @trigger "remove:#{model.getItem().id}"
+      @trigger "remove:#{model.getItem().get('id')}"
 
   isFollowing: (itemId) ->
     (@findByItemId itemId)?
 
   findByItemId: (itemId) ->
-    @find (m) -> m.getItem().id is itemId
+    @find (m) -> m.getItem().get('id') is itemId
 
   syncFollows: (itemIds, options) ->
     return unless CurrentUser.orNull()
@@ -42,7 +42,7 @@ module.exports = class FollowItems extends Backbone.Collection
       followItem.save followItem.getFollowParams(itemId), options
 
   unfollow: (itemId, options) ->
-    followItem =  @find (m) -> m.getItem().id is itemId
+    followItem =  @find (m) -> m.getItem().get('id') is itemId
     if followItem?
       success = options?.success
       options.success = (model, repsponse, options) =>

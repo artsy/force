@@ -23,8 +23,8 @@ describe 'FollowGenes', ->
     it 'binds to add / remove callbacks to proxy model specific event triggers', ->
       onAdd = sinon.spy()
       onRemove = sinon.spy()
-      @followGenes.on "add:#{@followGene2.getItem().id}", onAdd
-      @followGenes.on "remove:#{@followGene2.getItem().id}", onRemove
+      @followGenes.on "add:#{@followGene2.getItem().get('id')}", onAdd
+      @followGenes.on "remove:#{@followGene2.getItem().get('id')}", onRemove
       @followGenes.add @followGene2
       @followGenes.remove @followGene2
       onAdd.callCount.should.equal 1
@@ -50,13 +50,13 @@ describe 'FollowGenes', ->
   describe '#syncFollows', ->
     it 'returns without a current user', ->
       fetchSpy = sinon.spy @followGenes, 'fetch'
-      @followGenes.syncFollows [@followGene2.getItem().id]
+      @followGenes.syncFollows [@followGene2.getItem().get('id')]
       fetchSpy.callCount.should.equal 0
 
   describe "with a current user", ->
 
     beforeEach ->
-      @geneId = @followGene2.getItem().id
+      @geneId = @followGene2.getItem().get('id')
       sinon.stub Backbone, 'sync'
       sinon.stub CurrentUser, 'orNull', -> new CurrentUser(fabricate('user'))
 
@@ -71,7 +71,7 @@ describe 'FollowGenes', ->
         onAdd = sinon.spy()
         @followGenes.on "add:#{@geneId}", onAdd
         @followGenes.syncFollows [@geneId]
-        Backbone.sync.args[0][2].data.genes.should.include @followGene2.getItem().id
+        Backbone.sync.args[0][2].data.genes.should.include @followGene2.getItem().get('id')
         Backbone.sync.args[0][2].success [ @followGene2.attributes ]
         onAdd.callCount.should.equal 1
         @followGenes.should.have.lengthOf 2
