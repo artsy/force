@@ -87,5 +87,5 @@ describe 'Partners', ->
       $ = cheerio.load @html
       $('.featured-partners-nav').length.should.equal 2
       $(".featured-partners-nav a[href='/galleries']").length.should.equal 2
-      $(".featured-partners-nav-selected").length.should.equal 2
-      $(".featured-partners-nav-selected").attr('href').should.equal "/institutions"
+      $(".featured-partners-nav .is-active").length.should.equal 2
+      $(".featured-partners-nav .is-active").attr('href').should.equal "/institutions"

@@ -26,16 +26,10 @@
   float right
   letter-spacing 2px
   margin-bottom 40px
-  a
-    text-decoration none
-    text-transform uppercase
-    white-space nowrap
-    &:hover
-      border-bottom 1px solid black
-
-.featured-partners-nav-selected
-  border-bottom 1px solid highlight-underline-color
-  color highlight-color
+  a:hover
+    border-bottom 1px solid black
+    &.is-active:hover
+      border-bottom 1px solid highlight-underline-color
 
 .featured-partner-profile
   display inline-block
