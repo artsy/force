@@ -23,13 +23,13 @@ module.exports = class FollowItems extends Backbone.Collection
   findByItemId: (itemId) ->
     @find (m) -> m.getItem().id is itemId
 
-  syncFollows: (itemIds) ->
+  syncFollows: (itemIds, options) ->
     return unless CurrentUser.orNull()
-    @fetch
+    @fetch _.extend
       data: @getSyncFollowsData(itemIds)
       cache: false
       remove: false
-      merge: true
+      merge: true, options
 
   follow: (itemId, options) ->
     followItem = @findByItemId itemId
