@@ -43,17 +43,6 @@ describe 'Auction results client-side code', ->
   afterEach ->
     @view.undelegateEvents()
 
-  describe '#setupShareButtons', ->
-    it 'sets up the share buttons', ->
-      html = @shareStub.args[0][0].el.html()
-      html.should.include 'Post to Facebook'
-      html.should.include 'Share on Twitter'
-      html.should.include 'Pin It on Pinterest'
-
-  describe '#setupFollowButton', ->
-    it 'sets up the follow button', ->
-      @followButtonStub.called.should.be.ok
-
   describe '#zoomImage', ->
     it 'should instantiate a new ZoomView when a thumbnail is clicked', ->
       @zoomStub.called.should.not.be.ok

@@ -52,6 +52,28 @@
   display inline-block
   vertical-align top
   padding-right 5%
+  .avant-garde-header-center
+    text-align left
+    font-size 15px
+  > *
+    margin-top 40px
+    &:first-child
+      margin-top 0
+
+.artist-auction-results-link
+  display block
+  avant-garde()
+  text-decoration none
+  font-size 15px
+  > .icon-chevron-small-right
+    font-size 19px
+    line-height 0
+    margin-left 5px
+    vertical-align -3px
+    color dark-gray-border-color
+    transition color 0.25s
+  &:hover > .icon-chevron-small-right
+    color black
 
 .artist-info-right
   width 40%
@@ -120,7 +142,6 @@
 
 // Related genes module
 .artist-related-genes
-  margin-top: 40px
   a
     color #6a0bc1
     text-decoration none

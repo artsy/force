@@ -57,11 +57,10 @@ describe 'Artist header', ->
         artist: @artist
       )
 
-    it 'should not display the no works message if there is more than 0 artworks', ->
+    it 'displays a link to the auction results', ->
       @artist.get('published_artworks_count').should.be.above 0
       @artist.get('auction_lots_count').should.be.above 0
-      @template.should.include "Overview"
-      @template.should.include "Auction"
+      @template.should.include 'artist-auction-results-link'
 
   describe 'artist with no auction results', ->
     beforeEach ->
@@ -71,8 +70,7 @@ describe 'Artist header', ->
         artist: @artist
       )
 
-    it 'should not display tab navigation if no', ->
+    it 'does not display a link to the auction results', ->
       @artist.get('auction_lots_count').should.equal 0
       @artist.get('published_artworks_count').should.be.above 0
-      @template.should.not.include "Overview"
-      @template.should.not.include "Auction"
+      @template.should.not.include 'artist-auction-results-link'
