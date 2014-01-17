@@ -15,7 +15,8 @@ FollowGenes             = require '../../../collections/follow_genes.coffee'
 module.exports.FollowingView = class FollowingView extends Backbone.View
 
   initialize: (options) ->
-    @pageNum = 1
+    @followItems  = @model  # More readable alias
+    @pageNum      = 0       # Last page loaded
     @itemsPerPage = sd.ITEMS_PER_PAGE or 5
     @setupCurrentUser()
     @setupFollowingItems()
@@ -26,19 +27,45 @@ module.exports.FollowingView = class FollowingView extends Backbone.View
     @artworkCollection = @currentUser?.defaultArtworkCollection()
 
   setupFollowingItems: ->
-    @followingItems = @bootstrapItems sd.TYPE, sd.FOLLOWING_ITEMS
-    @followItemCollection = @initFollowItemCollection sd.TYPE
-    if @followingItems.length > @itemsPerPage
-      $(window).bind 'scroll.following', _.throttle(@infiniteScroll, 150)
-    @loadNextPage()
+    @followItems.syncFollows? [], success: (col) =>
+      if @followItems.length > @itemsPerPage
+        $(window).bind 'scroll.following', _.throttle(@infiniteScroll, 150)
+      @loadNextPage()
 
-  showItem: (item) =>
+  loadNextPage: ->
+    end = @itemsPerPage * (@pageNum + 1)
+    start = end - @itemsPerPage
+    return unless @followItems.length > start
+
+    showingItems = @followItems.slice start, end
+    _.each showingItems, (item) =>
+      @appendItemSkeleton(item)
+      @showItemContent(item)
+    ++@pageNum
+
+  infiniteScroll: =>
+    $(window).unbind('.following') unless @pageNum * @itemsPerPage < @followItems.length
+    fold = $(window).height() + $(window).scrollTop()
+    $lastItem = @$('.following > .item:last')
+    @loadNextPage() unless fold < $lastItem.offset()?.top + $lastItem.height()
+
+  # Append the item with name, spinner, etc (without content) to the container
+  #
+  # So that we can display some stuff to users asap.
+  # @param {Object} followItem an item from the followItems collection 
+  appendItemSkeleton: (followItem) ->
+    $container = @$('.following')
+    $skeleton = $( itemTemplate item: followItem.getItem() )
+    $container.append $skeleton
+
+  # Display item content
+  #
+  # The function assumes the skeleton (container) of this item already exists.
+  # @param {Object} followItem an item from a followItems collection 
+  showItemContent: (followItem) =>
+    item = followItem.getItem() # Actual item model, e.g. an Artist
     item.fetchArtworks success: (artworks) =>
-      $parent = @$('.following')
-      $container = @$("##{sd.TYPE} ##{item.id}")
-      if $container.length is 0
-        $container = $( itemTemplate item: item.toJSON() )
-        $parent.append $container
+      $container = @$("##{sd.TYPE} ##{item.get('id')}")
       $followButton = $container.find(".follow-button")
       $artworks = $container.find('.artworks')
       view = new FillwidthView
@@ -49,42 +76,14 @@ module.exports.FollowingView = class FollowingView extends Backbone.View
         el: $artworks
       view.render()
       new FollowButton
-        followItemCollection: @followItemCollection
+        followItemCollection: @followItems
         model: item
         el: $followButton
       _.defer ->
         view.hideFirstRow()
         view.removeHiddenItems()
 
-  loadNextPage: ->
-    end = @itemsPerPage * @pageNum
-    start = end - @itemsPerPage
-    return unless @followingItems.length > start
-
-    showingItems = @followingItems.slice start, end
-    _.each showingItems, @showItem
-    ++@pageNum
-
-  infiniteScroll: =>
-    $(window).unbind('.following') unless @pageNum * @itemsPerPage < @followingItems.length
-    fold = $(window).height() + $(window).scrollTop()
-    $lastItem = @$('.following > .item:last')
-    @loadNextPage() unless fold < $lastItem.offset()?.top + $lastItem.height()
-
-  bootstrapItems: (type, items) ->
-    #TODO Use a more intelligent method, maybe passed in the initialize options
-    dict =
-      artists: collection: Artists, model: Artist
-      genes: collection: Genes, model: Gene
-
-    collection = if dict[type]? then new dict[type].collection(
-      _.map items, (i) -> new dict[type].model i
-    ) else []
-
-  initFollowItemCollection: (type) ->
-    dict = artists: FollowArtists, genes: FollowGenes
-    collection = new dict[type]?() or []
-
 module.exports.init = ->
-  new FollowingView
-    el   : $('body')
+  dict = artists: FollowArtists, genes: FollowGenes
+  followItemCollection = if dict[sd.TYPE]? then new dict[sd.TYPE]() else []
+  new FollowingView model: followItemCollection, el: $('body')

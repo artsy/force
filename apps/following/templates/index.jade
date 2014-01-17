@@ -12,6 +12,3 @@ block body
   main.main-layout-container
     +following-tab-nav
     section.following(id=type)
-      +empty(type)(style=items.length > 0 ? "display:none;" : "")
-      - each item in items.slice(0, itemsPerPage)
-        include following_item
