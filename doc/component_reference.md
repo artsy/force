@@ -9,22 +9,22 @@ If a separate doc is required, add it to the component's directory as a
 - [Garamond Tab List](#garamond-tab-list)
 - [Profile Badge](#profile-badge)
 
----
 
-## Artwork Columns <a name="artwork-columns"></a>
+
+## Artwork Columns
 ![](images/artwork_columns.png)
 
----
 
-## Artwork Item <a name="artwork-item"></a>
+
+## Artwork Item
 ![](images/artwork_item.png)
 
 AKA "ol' reliable", this view is a work horse and will have a place on any page
 that displays artwork.
 
----
 
-## Garamond Tab List <a name="garamond-tab-list"></a>
+
+## Garamond Tab List
 ![](images/garamond_tab_list.png)
 
 Defined in `components/main_layout/stylesheets/navigation.styl`
@@ -43,9 +43,9 @@ other seperators typically wrapped in a span (to keep links displayed inline).
 [/institutions](http://artsy.net/institutions)
 - Partner Profiles [/guggenheim](http://artsy.net/guggenheim)
 
----
 
-## Profile Badge <a name="profile-badge"></a>
+
+## Profile Badge
 ![](images/profile_badge.png)
 
 This component displays linked profile icons with a profile owner's name. Different
@@ -97,5 +97,4 @@ See `apps/artist/stylesheets/index.styl` for an example of a customized layout
 ```
 ##### Uses: 
 - Artist Pages - Featured Posts [/artist/andy-warhol](http://artsy.net/artist/andy-warhol)
-- Partner Shows [/show/](http://artsy.net/parnters)
----
+- Partner Shows [/show/333-montezuma-arts-elegy](http://artsy.net/show/333-montezuma-arts-elegy)
