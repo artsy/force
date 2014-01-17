@@ -1,0 +1,13 @@
+extends ../../components/main_layout/templates/index
+
+block head
+  include meta
+
+block locals
+  assetPackage = 'feature'
+
+block body
+  #feature( data-feature=feature.get('id') )
+    if feature.hasImage() && feature.imageUrl()
+      .feature-page-image( style="background-image: url(#{feature.imageUrl('wide')})" )
+    h1.feature-page-title!= feature.get('name')
