@@ -7,6 +7,7 @@ CurrentUser       = require '../../../../models/current_user.coffee'
 Artist            = require '../../../../models/artist.coffee'
 { fabricate }     = require 'antigravity'
 { resolve }       = require 'path'
+ArtistsView       = benv.requireWithJadeify resolve(__dirname, '../../client/views/artists'), ['template', 'suggestedArtistsTemplate']
 
 mockSuggestionSet = (model) ->
   new Backbone.Model
@@ -18,9 +19,8 @@ describe 'ArtistsView', ->
   before (done) ->
     benv.setup =>
       benv.expose { $: benv.require 'components-jquery' }
-      Backbone.$    = $
-      @ArtistsView  = benv.requireWithJadeify resolve(__dirname, '../../client/views/artists'), ['template', 'suggestedArtistsTemplate']
-      @ArtistsView::setupSearch = sinon.stub
+      Backbone.$ = $
+      ArtistsView::setupSearch = sinon.stub
       done()
 
   after ->
@@ -31,7 +31,7 @@ describe 'ArtistsView', ->
 
     @state  = new PersonalizeState
     @user   = new CurrentUser fabricate 'user'
-    @view   = new @ArtistsView(state: @state, user: @user)
+    @view   = new ArtistsView(state: @state, user: @user)
     @view.render()
 
   afterEach ->

@@ -6,11 +6,9 @@ Artist            = require '../../../../models/artist.coffee'
 PersonalizeState  = require '../../client/state'
 CurrentUser       = require '../../../../models/current_user.coffee'
 FollowCollection  = require '../../../../models/follow_artist_collection.coffee'
-
-{ resolve }     = require 'path'
-{ fabricate }   = require 'antigravity'
-
-Followable = benv.requireWithJadeify resolve(__dirname, '../../client/mixins/followable'), ['followedTemplate']
+{ resolve }       = require 'path'
+{ fabricate }     = require 'antigravity'
+Followable        = benv.requireWithJadeify resolve(__dirname, '../../client/mixins/followable'), ['followedTemplate']
 
 class TestView extends Backbone.View
   _.extend @prototype, Followable

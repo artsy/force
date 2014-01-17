@@ -6,11 +6,9 @@ PersonalizeState  = require '../../client/state'
 CurrentUser       = require '../../../../models/current_user'
 Items             = require '../../../../collections/items'
 Profile           = require '../../../../models/profile'
-
-{ fabricate }   = require 'antigravity'
-{ resolve }     = require 'path'
-
-SuggestionsView  = benv.requireWithJadeify resolve(__dirname, '../../client/views/suggestions'), ['suggestedTemplate']
+{ fabricate }     = require 'antigravity'
+{ resolve }       = require 'path'
+SuggestionsView   = benv.requireWithJadeify resolve(__dirname, '../../client/views/suggestions'), ['suggestedTemplate']
 
 module.exports = class TestView extends SuggestionsView
   template: ->

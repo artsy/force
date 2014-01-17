@@ -1,14 +1,12 @@
-_                 = require 'underscore'
-Backbone          = require 'backbone'
-StepView          = require './step.coffee'
-Followable        = require '../mixins/followable.coffee'
-OrderedSets       = require '../../../../collections/ordered_sets.coffee'
-FollowButton      = require '../../../partners/client/follow_profiles_button.coffee'
-FollowCollection  = require '../../../../collections/follow_profiles.coffee'
-
-{ isTouchDevice } = require '../../../../components/util/device.coffee'
-
-suggestedTemplate = -> require('../../templates/suggested_profiles.jade') arguments...
+_                   = require 'underscore'
+Backbone            = require 'backbone'
+StepView            = require './step.coffee'
+Followable          = require '../mixins/followable.coffee'
+OrderedSets         = require '../../../../collections/ordered_sets.coffee'
+FollowButton        = require '../../../partners/client/follow_profiles_button.coffee'
+FollowCollection    = require '../../../../collections/follow_profiles.coffee'
+{ isTouchDevice }   = require '../../../../components/util/device.coffee'
+suggestedTemplate   = -> require('../../templates/suggested_profiles.jade') arguments...
 
 module.exports = class SuggestionsView extends StepView
   _.extend @prototype, Followable
@@ -66,10 +64,6 @@ module.exports = class SuggestionsView extends StepView
   rows: (n) ->
     _.compact @suggestions.map (model, i) =>
       @suggestions.slice(i, i + n) if i % n is 0
-
-  # Todo: depends on bulk follow endpoint
-  # autoFollow: ->
-  #   ids = @suggestions.pluck('id').slice 0, 12
 
   renderSuggestions: ->
     (@$suggestions ||= @$('#personalize-suggestions')).

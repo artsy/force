@@ -1,18 +1,16 @@
-_               = require 'underscore'
-sd              = require('sharify').data
-Backbone        = require 'backbone'
-StepView        = require './step.coffee'
-Artist          = require '../../../../models/artist.coffee'
-analytics       = require('../../../../lib/analytics.coffee')
-Followable      = require '../mixins/followable.coffee'
+_                   = require 'underscore'
+sd                  = require('sharify').data
+Backbone            = require 'backbone'
+StepView            = require './step.coffee'
+Artist              = require '../../../../models/artist.coffee'
+analytics           = require('../../../../lib/analytics.coffee')
+Followable          = require '../mixins/followable.coffee'
+FollowCollection    = require '../../../../models/follow_artist_collection.coffee'
+FollowButton        = require '../../../artist/client/follow_button.coffee'
+{ isTouchDevice }   = require '../../../../components/util/device.coffee'
 
 template                  = -> require('../../templates/artists.jade') arguments...
 suggestedArtistsTemplate  = -> require('../../templates/suggested_artists.jade') arguments...
-
-FollowCollection  = require '../../../../models/follow_artist_collection.coffee'
-FollowButton      = require '../../../artist/client/follow_button.coffee'
-
-{ isTouchDevice } = require '../../../../components/util/device.coffee'
 
 module.exports = class ArtistsView extends StepView
   _.extend @prototype, Followable
@@ -63,8 +61,6 @@ module.exports = class ArtistsView extends StepView
 
   # Removes the corresponding suggestionSet and disposes of
   # its FollowButton views
-  #
-  # @param {Object}
   disposeSuggestionSet: (model) ->
     suggestionSet = @suggestions.remove model.id
     _.each suggestionSet.get('suggestions').pluck('id'), (id) =>
