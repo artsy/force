@@ -9,6 +9,7 @@ FillwidthView           = require '../../../components/fillwidth_row/view.coffee
 CurrentUser             = require '../../../models/current_user.coffee'
 FollowButton            = require './follow_button.coffee'
 itemTemplate            = -> require('../templates/following_item.jade') arguments...
+hintTemplate            = -> require('../templates/empty.jade') arguments...
 FollowArtists           = require '../../../collections/follow_artists.coffee'
 FollowGenes             = require '../../../collections/follow_genes.coffee'
 
@@ -28,6 +29,7 @@ module.exports.FollowingView = class FollowingView extends Backbone.View
 
   setupFollowingItems: ->
     @followItems.syncFollows? [], success: (col) =>
+      @showEmptyHint() unless @followItems.length > 0
       if @followItems.length > @itemsPerPage
         $(window).bind 'scroll.following', _.throttle(@infiniteScroll, 150)
       @loadNextPage()
@@ -49,14 +51,15 @@ module.exports.FollowingView = class FollowingView extends Backbone.View
     $lastItem = @$('.following > .item:last')
     @loadNextPage() unless fold < $lastItem.offset()?.top + $lastItem.height()
 
+  showEmptyHint: () ->
+    @$('.following').append $( hintTemplate type: sd.TYPE )
+
   # Append the item with name, spinner, etc (without content) to the container
   #
   # So that we can display some stuff to users asap.
   # @param {Object} followItem an item from the followItems collection 
   appendItemSkeleton: (followItem) ->
-    $container = @$('.following')
-    $skeleton = $( itemTemplate item: followItem.getItem() )
-    $container.append $skeleton
+    @$('.following').append $( itemTemplate item: followItem.getItem() )
 
   # Display item content
   #

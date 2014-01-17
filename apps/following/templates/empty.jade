@@ -1,12 +1,11 @@
-mixin empty(type)
-  .following-empty(style!=attributes.style)
-    case type
-      when "artists"
-        p Follow artists throughout Artsy to get updates about 
-          | new available works and upcoming exhibitions.
-      when "genes"
-        p Follow genes throughout Artsy to get updates about
-          | new available works and upcoming exhibitions.
-      when "artworks"
-        p 
-    .following-hint
+.following-empty
+  case type
+    when "artists"
+      p Follow artists to get notified about new shows and works
+    when "genes"
+      p Follow categories to improve your recommendations
+    when "artworks"
+      p Add works to your favorites by clicking on artworks
+  .following-recommendation
+    h2 Find something you like
+    .recommended-artworks
