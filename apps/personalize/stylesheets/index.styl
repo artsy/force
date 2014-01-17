@@ -40,11 +40,9 @@
     color dark-gray-text-color
 
 .personalize-step
-  clearfix()
   width 400px
   margin auto
   > aside
-    text-align center
     margin 20px 0
     font-size 22px
 
@@ -54,10 +52,11 @@
 .personalize-skip
   position fixed
   z-index 1
-  top 10px
-  right 10px
+  top 80px
+  right 100px
   force-hardware-acceleration()
 
 @import './location'
-@import './artists'
+@import './followable'
+@import './suggestible'
 @import './price_range'

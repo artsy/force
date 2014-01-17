@@ -6,7 +6,7 @@ Items     = require '../collections/items.coffee'
 module.exports = class OrderedSet extends Backbone.Model
   fetchItems: (cache=false) ->
     deferred  = Q.defer()
-    items     = new Items null, { id: @id }
+    items     = new Items null, { id: @id, item_type: @get('item_type') }
 
     @set { items: items }
 

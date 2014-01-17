@@ -6,10 +6,12 @@ Transition        = require '../../../components/mixins/transition.coffee'
 track             = require('../../../lib/analytics.coffee').track
 
 views =
-  CollectView:    require './views/collect.coffee'
-  LocationView:   require './views/location.coffee'
-  ArtistsView:    require './views/artists.coffee'
-  PriceRangeView: require './views/price_range.coffee'
+  CollectView:      require './views/collect.coffee'
+  LocationView:     require './views/location.coffee'
+  ArtistsView:      require './views/artists.coffee'
+  GalleriesView:    require './views/galleries.coffee'
+  InstitutionsView: require './views/institutions.coffee'
+  PriceRangeView:   require './views/price_range.coffee'
 
 module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Router
   redirectLocation: '/'

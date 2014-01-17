@@ -38,20 +38,23 @@ module.exports = class FollowProfiles extends Backbone.Collection
       merge : true
     @fetch options
 
-  follow: (profileId, options) ->
-    throw 'You must pass a success callback' unless options?.success? and _.isFunction options.success
-    followProfile = new FollowProfile()
-    success = options.success
-    options.success = (model, response, options) =>
-      @add model
-      success arguments
-    followProfile.save { profile_id: profileId }, options
-
-  unfollow: (profileId, options) ->
-    throw 'You must pass a success callback' unless options?.success? and _.isFunction options.success
-    followProfile =  @find (model) -> model.get('profile').id is profileId
-    success = options.success
-    options.success = (model, repsponse, options) =>
+  follow: (profileId, options={}) ->
+    error = options.error
+    options.error = (model, response, options) =>
       @remove model
-      success arguments
-    followProfile.destroy options
+      error arguments if error
+
+    followProfile = new FollowProfile
+    followProfile.save { profile_id: profileId }, options
+    followProfile.set { profile: { id: profileId } }
+    @add followProfile
+
+  unfollow: (profileId, options={}) ->
+    error = options.error
+    options.error = (model, repsponse, options) =>
+      @add model
+      error arguments if error
+
+    followProfile = @find (model) -> model.get('profile').id is profileId
+    followProfile?.destroy options
+    @remove followProfile

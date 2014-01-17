@@ -3,16 +3,16 @@ Backbone      = require 'backbone'
 sd            = require('sharify').data
 Search        = require './collections/search.coffee'
 itemTemplate  = -> require('./templates/item.jade') arguments...
-mediator      = require '../../../../lib/mediator.coffee'
-analytics     = require '../../../../lib/analytics.coffee'
+mediator      = require '../../lib/mediator.coffee'
+analytics     = require '../../lib/analytics.coffee'
 
 module.exports = class SearchBarView extends Backbone.View
   initialize: (options) ->
     return unless @$el.length
 
-    { @mode, @$input } = options
+    { @mode, @restrictType, @$input } = options
 
-    @search = new Search mode: @mode
+    @search = new Search mode: @mode, restrictType: @restrictType
 
     @on 'search:start', @indicateLoading
     @on 'search:complete', @concealLoading
