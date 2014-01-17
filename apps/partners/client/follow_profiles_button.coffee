@@ -5,7 +5,7 @@ analytics      = require '../../../lib/analytics.coffee'
 FollowProfiles = require '../../../collections/follow_profiles.coffee'
 
 module.exports = class FollowProfileButton extends Backbone.View
-  analyticsFollowMessage: 'Followed partner profile from /partners'
+  analyticsFollowMessage:   'Followed partner profile from /partners'
   analyticsUnfollowMessage: 'Unfollowed partner profile from /partners'
 
   events:
@@ -14,8 +14,8 @@ module.exports = class FollowProfileButton extends Backbone.View
   initialize: (options) ->
     return unless @collection
 
-    @analyticsUnfollowMessage ||= options.analyticsUnfollowMessage
-    @analyticsFollowMessage ||= options.analyticsFollowMessage
+    @analyticsUnfollowMessage   = options.analyticsUnfollowMessage || @analyticsUnfollowMessage
+    @analyticsFollowMessage     = options.analyticsFollowMessage || @analyticsFollowMessage
 
     @listenTo @collection, "add:#{@model.get('id')}", @onFollowChange
     @listenTo @collection, "remove:#{@model.get('id')}", @onFollowChange

@@ -3,7 +3,6 @@ sd                  = require('sharify').data
 Backbone            = require 'backbone'
 StepView            = require './step.coffee'
 Artist              = require '../../../../models/artist.coffee'
-analytics           = require('../../../../lib/analytics.coffee')
 Followable          = require '../mixins/followable.coffee'
 FollowCollection    = require '../../../../models/follow_artist_collection.coffee'
 FollowButton        = require '../../../artist/client/follow_button.coffee'

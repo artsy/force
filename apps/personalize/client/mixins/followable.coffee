@@ -1,7 +1,7 @@
-Backbone        = require 'backbone'
-SearchBarView   = require '../../../../components/search_bar/view.coffee'
-
-followedTemplate = -> require('../../templates/followed.jade') arguments...
+Backbone          = require 'backbone'
+SearchBarView     = require '../../../../components/search_bar/view.coffee'
+analytics         = require '../../../../lib/analytics.coffee'
+followedTemplate  = -> require('../../templates/followed.jade') arguments...
 
 # Common functionality between views with auto-complete/following
 module.exports =
@@ -36,11 +36,12 @@ module.exports =
     @followed.unshift model.toJSON()
     @followCollection.follow model.id, { notes: 'Followed from /personalize' }
 
-    # Track with analytics
+    analytics.track.click @analyticsFollowMessage, label: analytics.modelToLabel(model)
 
   unfollow: (e) ->
-    id = $(e.currentTarget).data 'id'
-    @followed.remove id
+    id      = $(e.currentTarget).data 'id'
+    model   = @followed.remove id
     @followCollection.unfollow id
 
-    # Track with analytics
+    analytics.track.click @analyticsUnfollowMessage, label: "#{model.get('display_model')}:#{id}"
+
