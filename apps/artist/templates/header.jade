@@ -1,15 +1,4 @@
 include ../../../components/share/template
-include ../../../components/util/activator
-
-mixin artist-tab-nav
-  nav.artist-sections.garamond-tablist
-    a.garamond-tab(
-      href="/artist/#{artist.id}", class=activeClass('/artist/' + artist.id)
-    ) Overview
-    span.garamond-tab-separator
-    a.garamond-tab(
-      href="/artist/#{artist.id}/auction-results", class=activeClass('/artist/' + artist.id + '/auction-results')
-    ) Auction&nbsp;Results
 
 mixin artist-header(artist, title)
   - var title = title || ''
@@ -28,7 +17,6 @@ mixin artist-header(artist, title)
 
     if artist.get('published_artworks_count') === 0
       .artist-header-empty
-        +artist-tab-nav
         if onOverview()
           p
             | There are no #{artist.get('name')} works on Artsy yet.
@@ -38,17 +26,9 @@ mixin artist-header(artist, title)
     else
       .artist-header-actions
         .aha-cell
-          .artist-follow-container
-            .afc-button
-              button#artist-follow-button.avant-garde-button-white.follow-button
-            .afc-aside
-              span
-                | Get updates about
-                br
-                | new shows and works
-        if artist.get('auction_lots_count') > 0
-          .aha-cell
-            +artist-tab-nav
+          | &nbsp;
+        .aha-cell
+          button#artist-follow-button.avant-garde-button-white.follow-button
         .aha-cell
           nav.artist-share
             +share(title + artist.get('name') + ' on Artsy', artist.imageUrl('large'))

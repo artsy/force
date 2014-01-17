@@ -11,7 +11,14 @@ block locals
 
 block body
   #auction-results-page.main-layout-container
-    +artist-header(artist)
+    a( href="/artist/#{artist.id}" ).contextual-return-link
+      i.icon-chevron-small-left
+      | Back to #{artist.get('name')}
+
+    header.auction-lots-header
+      h1.avant-garde-header-center
+        | Auction results for&nbsp;
+        a( href="/artist/#{artist.id}")= artist.get('name')
 
     .auction-lots-interstital
       .auction-lots-page-total

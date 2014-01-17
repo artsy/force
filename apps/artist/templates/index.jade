@@ -30,6 +30,10 @@ block body
               .blurb
                 != artist.mdToHtml('blurb')
             .artist-related-genes
+          if artist.get('auction_lots_count') > 0
+            a.artist-auction-results-link( href="/artist/#{artist.id}/auction-results" )
+              | Auction results
+              i.icon-chevron-small-right
         .artist-info-right
           .artist-related-posts
 

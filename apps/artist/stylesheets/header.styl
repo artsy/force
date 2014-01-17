@@ -10,9 +10,8 @@
   a
     text-decoration none
 
-.artist-header-empty
-  > p
-    margin 40px 0
+.artist-header-empty > p
+  margin 40px 0
 
 .artist-header-actions
   display table
@@ -28,33 +27,6 @@
   &:last-child
     text-align right
 
-.artist-follow-container
-  display table
-  width 100%
-
-.afc-button
-.afc-aside
-  display table-cell
-  vertical-align middle
-
-.afc-button
-  // Set an explicit width to prevent content
-  // from shifting around when state changes
-  width 150px
-  > button
-    width 100%
-    text-align center
-
-.afc-aside
-  padding 0 20px
-  > span
-    white-space nowrap
-
-// Hide follow explanation if screen becomes too narrow
-@media screen and (max-width: 1000px)
-  .afc-aside > span
-    display none
-
 .artist-share > a
-    display inline-block
-    text-decoration none
+  display inline-block
+  text-decoration none
