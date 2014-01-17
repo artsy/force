@@ -27,6 +27,9 @@ module.exports = class Items extends PageableCollection
       when 'Profile'
         Profile = require '../models/profile.coffee'
         new Profile attrs, options
+      when 'Gene'
+        Gene = require '../models/gene.coffee'
+        new Gene attrs, options
       else
         new Item attrs, options
 

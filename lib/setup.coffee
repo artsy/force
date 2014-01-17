@@ -106,6 +106,7 @@ module.exports = (app) ->
   # Mount apps
   app.use require "../apps/about"
   app.use require "../apps/artist"
+  app.use require "../apps/artists"
   app.use require "../apps/auction_lots"
   app.use require "../apps/auth"
   app.use require "../apps/browse"

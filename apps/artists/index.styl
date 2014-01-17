@@ -1,0 +1,146 @@
+#artists-page
+  padding 40px 80px
+  > h1
+    margin 40px 0
+    font-size 24px
+
+// Carousel
+carousel-image-height = 360px
+bumper-width = 40px
+
+.artists-featured-carousel
+  position relative
+  margin 40px 0
+  &[data-transitions=false]
+    *
+      transition none
+      opacity 1 !important
+  &[data-position='start'] .afc-prev
+  &[data-position='end'] .afc-next
+      opacity 0 !important
+      cursor default
+
+.afc-track-container
+  position relative
+  overflow hidden
+
+.afc-track
+  white-space nowrap
+  transition all 0.25s
+  &[data-state='transitioning']
+    .afc-artist-information
+      opacity 0
+      transition none
+  &[data-state='transitioned']
+    .afc-artist-information
+      opacity 1
+
+.afc-prev
+.afc-next
+  position absolute
+  top 0
+  width bumper-width
+  height carousel-image-height
+  text-align center
+  color dark-gray-text-color
+  background-color light-gray-background-color
+  transition all 0.25s
+  cursor pointer
+  user-select none
+  z-index 1
+  > i
+    display block
+    position relative
+    top 50%
+    font-size 26px
+    line-height @font-size
+    margin-top -(@font-size / 2)
+  &:hover
+    color black
+    background-color light-gray-border-color
+
+.afc-next
+  right -(bumper-width * 1.5)
+.afc-prev
+  left -(bumper-width * 1.5)
+
+.afc-artist
+  display inline-block
+  width 50%
+  &:nth-child(odd)
+    padding-right 20px
+    border-right 1px solid dark-gray-border-color
+  &:nth-child(even)
+    padding-left 20px
+  &.is-active
+    background-color yellow
+  > a
+    display block
+    width 100%
+    height carousel-image-height
+    background-size cover
+    background-position center center
+
+.afc-artist-information
+  display table
+  width 100%
+  transition opacity 0.5s
+
+.afc-artist-information-left
+.afc-artist-information-right
+  display table-cell
+  vertical-align top
+  padding-top 20px
+
+.afc-artist-information-right
+  text-align right
+
+.afc-artist-name
+  avant-garde()
+  font-size 15px
+  > a
+    text-decoration none
+
+// Featured Genes
+.artists-featured-genes-gene
+  margin 40px 0
+  > h4
+    margin 20px 0
+
+.afg-artist
+  display inline-block
+  width 23%
+  margin 0 1%
+  vertical-align top
+  &:first-child
+  &:last-child
+    width 24%
+  &:first-child
+    margin-left 0
+  &:last-child
+    margin-right 0
+  > a
+    display block
+    width 100%
+    height 160px
+    background-color light-gray-background-color
+    overflow hidden
+    background-size cover
+    background-position center center
+
+.afg-artist-name
+  @extends .afc-artist-name
+  font-size 13px
+  width 50%
+  overflow ellipsis
+
+.afg-artist-information
+  position relative
+  padding 20px 0
+  text-transform capitalize
+  > .follow-button
+    position absolute
+    top 20px
+    right 0
+    font-size 11px
+    padding 7px 20px
