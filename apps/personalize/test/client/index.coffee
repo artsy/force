@@ -12,11 +12,10 @@ describe 'PersonalizeRouter', ->
       benv.expose { $: benv.require 'components-jquery' }
       Backbone.$ = $
       { @PersonalizeRouter, init } = mod = rewire '../../client/index'
-      mod.__set__ 'CurrentUser', { orNull: -> fabricate 'user' }
       mod.__set__ 'Transition', { fade: (@fadeStub = sinon.stub()) }
       mod.__set__ 'views', { LocationView: => { render: => { $el: 'location' } } }
       sinon.spy @PersonalizeRouter.prototype, 'navigate'
-      @router = new @PersonalizeRouter
+      @router = new @PersonalizeRouter user: fabricate 'user'
       done()
 
   afterEach ->
