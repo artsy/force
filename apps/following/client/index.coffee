@@ -18,7 +18,7 @@ module.exports.FollowingView = class FollowingView extends Backbone.View
   initialize: (options) ->
     @followItems  = @model  # More readable alias
     @pageNum      = 0       # Last page loaded
-    @itemsPerPage = sd.ITEMS_PER_PAGE or 5
+    @itemsPerPage = options.itemsPerPage or 10
     @setupCurrentUser()
     @setupFollowingItems()
 
@@ -89,4 +89,7 @@ module.exports.FollowingView = class FollowingView extends Backbone.View
 module.exports.init = ->
   dict = artists: FollowArtists, genes: FollowGenes
   followItemCollection = if dict[sd.TYPE]? then new dict[sd.TYPE]() else []
-  new FollowingView model: followItemCollection, el: $('body')
+  new FollowingView
+    model: followItemCollection
+    el: $('body')
+    itemsPerPage: 10

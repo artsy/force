@@ -7,9 +7,8 @@ Artists = require '../../collections/artists.coffee'
   itemsPerPage = 5
 
   if (type = req.params.type) in ['artists', 'genes']
-    res.locals.sd.ITEMS_PER_PAGE = itemsPerPage
     res.locals.sd.TYPE = type
-    res.render 'index', { type: type, itemsPerPage: itemsPerPage }
+    res.render 'index', type: type
   else
     next()
 
