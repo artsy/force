@@ -13,11 +13,5 @@ describe 'Personalize routes', ->
 
   describe '#index', ->
     it 'renders the personalize page', ->
-      @req.user = true
       routes.index @req, @res
       @res.render.args[0][0].should.equal 'template'
-
-    it 'redirects home if a user is not present', ->
-      @req.user = false
-      routes.index @req, @res
-      @res.redirect.args[0][0].should.equal '/'
