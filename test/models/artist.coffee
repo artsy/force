@@ -1,7 +1,7 @@
-_ = require 'underscore'
-sinon = require 'sinon'
-Backbone = require 'backbone'
-Artist = require '../../models/artist'
+_             = require 'underscore'
+sinon         = require 'sinon'
+Backbone      = require 'backbone'
+Artist        = require '../../models/artist'
 { fabricate } = require 'antigravity'
 
 describe 'Artist', ->

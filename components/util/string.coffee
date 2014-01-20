@@ -1,6 +1,7 @@
 module.exports =
 
-  smartTruncate: (text, limit) ->
+  smartTruncate: (text, limit=200) ->
+    return unless text
     size = 0
     textArray = for token in text.split(' ')
       size += (token.length + 1)
