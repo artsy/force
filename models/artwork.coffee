@@ -11,9 +11,11 @@ module.exports = class Artwork extends Backbone.Model
 
   urlRoot: -> "#{sd.ARTSY_URL}/api/v1/artwork"
 
+  defaultImage: -> @get('images')?[0]
+
   defaultImageUrl: (version = 'medium') ->
-    return @missingImageUrl() unless _.contains @get('images')?[0]?.image_versions, version
-    @fullyQualifiedImageUrl(@get('images')?[0]?.image_url.replace(':version', version) ? '')
+    return @missingImageUrl() unless _.contains @defaultImage()?.image_versions, version
+    @fullyQualifiedImageUrl(@defaultImage()?.image_url.replace(':version', version) ? '')
 
   isSaved: (artworkCollection) ->
     artworkCollection && artworkCollection.isSaved(@)
@@ -82,6 +84,13 @@ module.exports = class Artwork extends Backbone.Model
       @toTitleWithDateForSale()
       "Artsy"
     ]).join(" | ")
+
+  # same as .to_s in Gravity
+  toOneLine: ->
+    _.compact([
+      @get('artist')?.name
+      @toTitleWithDate()
+    ]).join(" ")
 
   toAuctionResultsPageTitle: ->
     _.compact([

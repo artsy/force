@@ -1,6 +1,6 @@
-Backbone = require 'backbone'
-_ = require 'underscore'
-Artist = require '../models/artist.coffee'
+_           = require 'underscore'
+Backbone    = require 'backbone'
+Artist      = require '../models/artist.coffee'
 
 module.exports = class Artist extends Backbone.Collection
 
