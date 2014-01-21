@@ -1,0 +1,28 @@
+{ fabricate } = require 'antigravity'
+_ = require 'underscore'
+sinon = require 'sinon'
+Backbone = require 'backbone'
+routes = require '../routes'
+CurrentUser = require '../../../models/current_user.coffee'
+
+describe 'Following routes', ->
+
+  beforeEach ->
+    sinon.stub Backbone, 'sync'
+    @req = { params: { type: 'artists' } }
+    @res = { render: sinon.stub(), redirect: sinon.stub(), locals: { sd: { ARTSY_URL: 'http://localhost:5000'} } }
+
+  afterEach ->
+    Backbone.sync.restore()
+
+  describe '#index', ->
+
+    it 'redirect to the home page without user', ->
+      routes.following @req, @res
+      @res.redirect.args[0][0].should.equal '/'
+
+    it 'renders the following artists template', ->
+      @req.user = new CurrentUser fabricate 'user'
+      routes.following @req, @res
+      @res.render.args[0][0].should.equal 'index'
+      @res.render.args[0][1].type.should.equal 'artists'
