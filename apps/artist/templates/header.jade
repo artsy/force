@@ -11,6 +11,9 @@ mixin artist-header(artist, title)
         a( href="/artist/#{artist.id}")= artist.get('name')
       else
         = artist.get('name')
+      if artist.get('published_artworks_count') != 0
+        nav.artist-share
+          +share(title + artist.get('name') + ' on Artsy', artist.imageUrl('large'))
 
     if (artist.get('nationality') && artist.get('years'))
       h2 #{artist.get('nationality')}, #{artist.get('years')}
@@ -30,5 +33,9 @@ mixin artist-header(artist, title)
         .aha-cell
           button#artist-follow-button.avant-garde-button-white.follow-button
         .aha-cell
-          nav.artist-share
-            +share(title + artist.get('name') + ' on Artsy', artist.imageUrl('large'))
+          span.artist-works-sort-select
+            | Order:
+          .artist-works-sort
+            select.bordered-select( name='artist-artworks-sort' )
+              each sort in [ 'Most Relevant', 'Recently Added' ]
+                option( value=sort)!= sort

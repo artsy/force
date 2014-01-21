@@ -86,6 +86,31 @@ describe 'ArtistView', ->
       viewRelatedPostOpts.numToShow.should.equal 2
       viewRelatedPostOpts.model.should.equal @view.model
 
+  describe 'sorting', ->
+
+    beforeEach ->
+      @view.initialize()
+
+    it 'passes the correct sort option into setupArtworks when sorting by Recently Added', ->
+      $fixture = $ """
+        <select name="artist-artworks-sort" class="bordered-select">
+          <option value="Recently Added">Recently Added</option>
+        </select>
+      """
+      @view.setupArtworks = sinon.spy()
+      @view.onSortChange({ currentTarget: $fixture})
+      @view.setupArtworks.args[0][0].should.equal '-published_at'
+
+    it 'passes the correct sort option into setupArtworks when sorting by Relevancy', ->
+      $fixture = $ """
+        <select name="artist-artworks-sort" class="bordered-select">
+          <option value="Most Relevant">Most Relevant</option>
+        </select>
+      """
+      @view.setupArtworks = sinon.spy()
+      @view.onSortChange({ currentTarget: $fixture})
+      (@view.setupArtworks.args[0][0]?).should.not.be.ok
+
   describe '#setupRelatedArtists', ->
 
     it 'renders related artists on sync', ->
