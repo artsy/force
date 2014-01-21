@@ -9,4 +9,4 @@
 
 @favorites = (req, res) ->
   return res.redirect("/") unless req.user
-  # TODO Render user's favorites page
+  res.render 'favorites'
