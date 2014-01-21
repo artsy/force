@@ -55,15 +55,19 @@ module.exports.FollowingView = class FollowingView extends Backbone.View
 
   showEmptyHint: () ->
     @$('.following').append $( hintTemplate type: sd.TYPE )
+    # Recommend 5 random genes
+    # TODO Consider more personalized recommendation
     (new Genes()).fetch
       data:
         size: 5
-        page: Math.floor Math.random() * 100 + 1 # randomized page number (1, 100)
+        # randomized page number in range (1, 100)
+        page: Math.floor Math.random() * 100 + 1
         published: true
         sort: "counts.artists"
       cache: true
       success: (col) ->
-        @$('.following').append $( recTemplate recItems: col.models )
+        @$('.recommendations .loading-spinner').hide()
+        @$('.recommendations').append $( recTemplate recItems: col.models )
 
   # Append the item with name, spinner, etc (without content) to the container
   #
