@@ -9,7 +9,7 @@ describe 'Artist routes', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    @req = { params: { id: 'foo' } }
+    @req = { params: { id: 'foo' }, query: { sort: '-published_at' } }
     @res = { render: sinon.stub(), redirect: sinon.stub(), locals: { sd: { ARTSY_URL: 'http://localhost:5000'} } }
 
   afterEach ->
@@ -27,6 +27,11 @@ describe 'Artist routes', ->
       routes.index @req, @res
       _.last(Backbone.sync.args)[2].success fabricate 'artist', id: 'andy-foobar'
       @res.locals.sd.ARTIST.id.should.equal 'andy-foobar'
+
+    it 'makes the right API call using the passed in sort', ->
+      routes.index @req, @res
+      _.last(Backbone.sync.args)[2].success fabricate 'artist', id: 'andy-foobar'
+      @res.locals.sd.sortBy.should.equal '-published_at'
 
   describe '#follow', ->
 
