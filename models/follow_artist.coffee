@@ -27,5 +27,5 @@ module.exports = class FollowArtist extends Backbone.Model
   # stuff in the prototype (or mistakenly calling methods of the actual model
   # with wrong model url), we lazily create/cache an instance of the model.
   getItem: ->
-    @item = new Artist @get 'artist' unless @item?
+    @item ?= new Artist @get 'artist'
     @item

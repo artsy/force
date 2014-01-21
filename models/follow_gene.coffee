@@ -27,5 +27,5 @@ module.exports = class FollowGene extends Backbone.Model
   # stuff in the prototype (or mistakenly calling methods of the actual model
   # with wrong model url), we lazily create/cache an instance of the model.
   getItem: ->
-    @item = new Gene @get 'gene' unless @item?
+    @item ?= new Gene @get 'gene'
     @item
