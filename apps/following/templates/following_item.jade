@@ -1,0 +1,7 @@
+.item(id=item.id)
+  h3
+    span.name
+      a(href=item.clientUrl())= item.get('name')
+    button.avant-garde-button-white.follow-button
+  .artworks
+    .loading-spinner
