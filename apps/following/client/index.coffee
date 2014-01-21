@@ -1,8 +1,5 @@
 _                       = require 'underscore'
 Backbone                = require 'backbone'
-Artist                  = require '../../../models/artist.coffee'
-Artists                 = require '../../../collections/artists.coffee'
-Gene                    = require '../../../models/gene.coffee'
 Genes                   = require '../../../collections/genes.coffee'
 sd                      = require('sharify').data
 FillwidthView           = require '../../../components/fillwidth_row/view.coffee'
@@ -30,7 +27,6 @@ module.exports.FollowingView = class FollowingView extends Backbone.View
 
   setupFollowingItems: ->
     @followItems.syncFollows? [], success: (col) =>
-      @followItems.length = 0
       @showEmptyHint() unless @followItems.length > 0
       if @followItems.length > @itemsPerPage
         $(window).bind 'scroll.following', _.throttle(@infiniteScroll, 150)

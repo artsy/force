@@ -20,7 +20,6 @@ module.exports = class FollowButton extends Backbone.View
     _.delay (=> @followItemCollection.syncFollows([])), 500
 
   onFollowChange: ->
-    console.log @followItemCollection
     state = if @followItemCollection.isFollowing @modelId then 'following' else 'follow'
     @$el.attr 'data-state', state
 
@@ -33,12 +32,10 @@ module.exports = class FollowButton extends Backbone.View
       return false
 
     if @followItemCollection.isFollowing @modelId
-      console.log "About to unfollow #{@modelId}"
       analytics.track.click @analyticsUnfollowMessage, label: analytics.modelToLabel(@model)
       @followItemCollection.unfollow @modelId,
         error: => @$el.attr('data-state', 'following')
     else
-      console.log "About to follow #{@modelId}"
       analytics.track.click @analyticsFollowMessage, label: analytics.modelToLabel(@model)
       @followItemCollection.follow @modelId,
         error: => @$el.attr('data-state', 'follow')

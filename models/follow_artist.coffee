@@ -11,7 +11,7 @@ module.exports = class FollowArtist extends Backbone.Model
   urlRoot: ->
     "#{sd.ARTSY_URL}/api/v1/me/follow/artist"
 
-  # Store (and cache) an actual Artist instance
+  # Store (and cache) the actual Artist instance
   item: null
 
   # Returns the api params to be used for following the artist
