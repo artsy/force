@@ -55,7 +55,7 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
       model: @model
       el: @$('.artist-info-section .artist-related-genes')
 
-  setupArtworks: ->
+  setupArtworks: (sort = '') ->
     @availableArtworks = new Artworks
     @availableArtworks.url = @model.url() + '/artworks'
     @institutionArtworks = new Artworks
@@ -64,18 +64,28 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     $availableWorks = @$('#artist-available-works')
     $institutionalWorks = @$('#artist-institution-works')
 
+    # Available Works
+    if sort != ''
+      opts = { 'filter[]': 'for_sale', 'sort': sort }
+    else
+      opts = { 'filter[]': 'for_sale' }
     new FillwidthView(
       artworkCollection: @artworkCollection
-      fetchOptions: { 'filter[]': 'for_sale' }
+      fetchOptions: opts
       collection: @availableArtworks
       seeMore: true
       empty: (-> @$el.parent().remove() )
       el: $availableWorks
     ).nextPage(false, 10)
 
+    # Works at Museums/Institutions
+    if sort != ''
+      opts = { 'filter[]': 'not_for_sale', 'sort': sort }
+    else
+      opts = { 'filter[]': 'not_for_sale' }
     new FillwidthView(
       artworkCollection: @artworkCollection
-      fetchOptions: { 'filter[]': 'not_for_sale' }
+      fetchOptions: opts
       collection: @institutionArtworks
       seeMore: true
       empty: (-> @$el.parent().remove() )
@@ -125,7 +135,15 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
         view.removeHiddenItems()
 
   events:
-    'click .artist-related-see-more' : 'nextRelatedPage'
+    'click .artist-related-see-more'    : 'nextRelatedPage'
+    'change .artist-works-sort select'  : 'onSortChange'
+
+  onSortChange: (e) ->
+    selectedSort = $(e.currentTarget).val()
+    if selectedSort == 'Most Relevant'
+      @setupArtworks()  # Default sort
+    else
+      @setupArtworks('-published_at')
 
   nextRelatedArtistsPage: (e) ->
     type = if _.isString(e) then e else $(e).data 'type'
