@@ -10,6 +10,7 @@ CurrentUser             = require '../../../models/current_user.coffee'
 FollowButton            = require './follow_button.coffee'
 itemTemplate            = -> require('../templates/following_item.jade') arguments...
 hintTemplate            = -> require('../templates/empty.jade') arguments...
+recTemplate             = -> require('../templates/recommendation.jade') arguments...
 FollowArtists           = require '../../../collections/follow_artists.coffee'
 FollowGenes             = require '../../../collections/follow_genes.coffee'
 
@@ -29,6 +30,7 @@ module.exports.FollowingView = class FollowingView extends Backbone.View
 
   setupFollowingItems: ->
     @followItems.syncFollows? [], success: (col) =>
+      @followItems.length = 0
       @showEmptyHint() unless @followItems.length > 0
       if @followItems.length > @itemsPerPage
         $(window).bind 'scroll.following', _.throttle(@infiniteScroll, 150)
@@ -53,6 +55,15 @@ module.exports.FollowingView = class FollowingView extends Backbone.View
 
   showEmptyHint: () ->
     @$('.following').append $( hintTemplate type: sd.TYPE )
+    (new Genes()).fetch
+      data:
+        size: 5
+        page: Math.floor Math.random() * 100 + 1 # randomized page number (1, 100)
+        published: true
+        sort: "counts.artists"
+      cache: true
+      success: (col) ->
+        @$('.following').append $( recTemplate recItems: col.models )
 
   # Append the item with name, spinner, etc (without content) to the container
   #
