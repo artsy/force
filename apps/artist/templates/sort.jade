@@ -1,13 +1,11 @@
-mixin artist-artworks-sort(artist, sortBy)
-  .artist-works-sort
-    span Order:
-    .bordered-pulldown
-      a.bordered-pulldown-toggle
-        = artist.sortCriteriaForArtworks[sortBy]
-        .bordered-pulldown-toggle-caret
-          span.caret
-      .bordered-pulldown-options
-        a( href=sortBy )= artist.sortCriteriaForArtworks[sortBy]
-        - for k, v in artist.sortCriteriaForArtworks
-          - if (v != sortBy)
-            a( href="?sort=#{v}" )= k 
+span Order:
+.bordered-pulldown
+  a.bordered-pulldown-toggle
+    = artist.sortCriteriaForArtworks[sortBy]
+    .bordered-pulldown-toggle-caret
+      span.caret
+  .bordered-pulldown-options
+    a( data-sort=sortBy )= artist.sortCriteriaForArtworks[sortBy]
+    - for k, v in artist.sortCriteriaForArtworks
+      - if (v != sortBy)
+        a( data-sort=v )= k 

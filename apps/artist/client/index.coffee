@@ -13,6 +13,7 @@ FollowArtistCollection  = require '../../../models/follow_artist_collection.coff
 FollowButton            = require './follow_button.coffee'
 ShareView               = require '../../../components/share/view.coffee'
 AuctionLots             = require '../../../collections/auction_lots.coffee'
+artistSort              = -> require('../templates/sort.jade') arguments...
 
 module.exports.ArtistView = class ArtistView extends Backbone.View
 
@@ -56,7 +57,7 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
       model: @model
       el: @$('.artist-info-section .artist-related-genes')
 
-  setupArtworks: (sort = '') ->
+  setupArtworks: ->
     @availableArtworks = new Artworks
     @availableArtworks.url = @model.url() + '/artworks'
     @institutionArtworks = new Artworks
@@ -137,6 +138,19 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
 
   events:
     'click .artist-related-see-more'    : 'nextRelatedPage'
+    'click .artist-works-sort a'        : 'onSortChange'
+
+  onSortChange: (e) ->
+    sort = $(e.currentTarget).data('sort')
+    sort ||= ''
+    @sortBy = sort
+    @setupArtworks()
+    @renderSortSelect() # Optimistically toggle the pseudo select dropdown
+
+  renderSortSelect: ->
+    @$('.artist-works-sort').html(
+      artistSort artist: @model, sortBy: @sortBy
+    )
 
   nextRelatedArtistsPage: (e) ->
     type = if _.isString(e) then e else $(e).data 'type'

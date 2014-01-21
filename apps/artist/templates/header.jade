@@ -1,5 +1,4 @@
 include ../../../components/share/template
-include ../templates/sort
 
 mixin artist-header(artist, title)
   - var title = title || ''
@@ -33,4 +32,5 @@ mixin artist-header(artist, title)
           | &nbsp;
         .aha-cell
           button#artist-follow-button.avant-garde-button-white.follow-button
-        +artist-artworks-sort(artist, sortBy)
+        .artist-works-sort
+          include ../templates/sort
