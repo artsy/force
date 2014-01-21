@@ -1,8 +1,9 @@
 include ../../../components/share/template
+include ../templates/sort
 
 mixin artist-header(artist, title)
   - var title = title || ''
-  - function onOverview() { return (sd.CURRENT_PATH === '/artist/' + artist.id); }
+  - function onOverview() { return (sd.CURRENT_PATH === '/artist/' + artist.id); }              
 
   header.artist-header
     h1.avant-garde-header-center
@@ -32,10 +33,4 @@ mixin artist-header(artist, title)
           | &nbsp;
         .aha-cell
           button#artist-follow-button.avant-garde-button-white.follow-button
-        .aha-cell
-          span.artist-works-sort-select
-            | Order:
-          .artist-works-sort
-            select.bordered-select( name='artist-artworks-sort' )
-              each sort in [ 'Most Relevant', 'Recently Added' ]
-                option( value=sort)!= sort
+        +artist-artworks-sort(artist, sortBy)

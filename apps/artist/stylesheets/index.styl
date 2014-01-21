@@ -147,12 +147,17 @@
     &:hover
       text-decoration underline
 .artist-works-sort
+  text-align right
   float right
-  width 50%
-.artist-works-sort-select
-  position relative
-  top 12px
-  padding-right 8px
+  padding-top 10px
+  *
+    text-align left
+  > span
+    margin-right 10px
+  &:hover > .bordered-pulldown-options
+    display block
+    border-color dark-gray-border-color
+    
 .artist-share
   position absolute
   right 0

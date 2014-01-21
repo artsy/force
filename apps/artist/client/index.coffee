@@ -17,6 +17,7 @@ AuctionLots             = require '../../../collections/auction_lots.coffee'
 module.exports.ArtistView = class ArtistView extends Backbone.View
 
   initialize: (options) ->
+    @sortBy = options.sortBy
     @setupCurrentUser()
     @setupFollowButton()
     @setupArtworks()
@@ -65,8 +66,8 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     $institutionalWorks = @$('#artist-institution-works')
 
     # Available Works
-    if sort != ''
-      opts = { 'filter[]': 'for_sale', 'sort': sort }
+    if @sortBy != ''
+      opts = { 'filter[]': 'for_sale', 'sort': @sortBy }
     else
       opts = { 'filter[]': 'for_sale' }
     new FillwidthView(
@@ -79,8 +80,8 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     ).nextPage(false, 10)
 
     # Works at Museums/Institutions
-    if sort != ''
-      opts = { 'filter[]': 'not_for_sale', 'sort': sort }
+    if @sortBy != ''
+      opts = { 'filter[]': 'not_for_sale', 'sort': @sortBy }
     else
       opts = { 'filter[]': 'not_for_sale' }
     new FillwidthView(
@@ -136,14 +137,6 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
 
   events:
     'click .artist-related-see-more'    : 'nextRelatedPage'
-    'change .artist-works-sort select'  : 'onSortChange'
-
-  onSortChange: (e) ->
-    selectedSort = $(e.currentTarget).val()
-    if selectedSort == 'Most Relevant'
-      @setupArtworks()  # Default sort
-    else
-      @setupArtworks('-published_at')
 
   nextRelatedArtistsPage: (e) ->
     type = if _.isString(e) then e else $(e).data 'type'
@@ -151,5 +144,6 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
 
 module.exports.init = ->
   new ArtistView
-    model: new Artist sd.ARTIST
-    el   : $('body')
+    model  : new Artist sd.ARTIST
+    el     : $('body')
+    sortBy : sd.sortBy
