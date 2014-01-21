@@ -1,8 +1,40 @@
+@import '../../components/pagination'
+
 #artists-page
   padding 40px 80px
-  > h1
+  h1
     margin 40px 0
     font-size 24px
+
+// ABC Listing
+.alphabetical-index
+  display table
+  font-size 20px
+  width 100%
+  border-top 1px solid light-gray-border-color
+  border-bottom 1px solid light-gray-border-color
+
+.alphabetical-index-label
+.alphabetical-index-range
+  display table-cell
+  white-space nowrap
+
+.alphabetical-index-label
+  width 200px
+  padding 20px 20px 20px 0
+
+.alphabetical-index-range
+  display table-cell
+  text-align right
+  > a
+    display inline-block
+    padding 20px 0.75%
+    text-transform uppercase
+    text-decoration none
+    transition color 0.25s
+    &:hover
+    &.is-active
+      color highlight-color
 
 // Carousel
 carousel-image-height = 360px
@@ -144,3 +176,18 @@ bumper-width = 40px
     right 0
     font-size 11px
     padding 7px 20px
+
+// Letter page
+#letter-page
+  position relative
+  > .contextual-return-link
+    position absolute
+    top 0
+    left 0
+
+.artists-columns
+  column-count 4
+
+  > a
+    display block
+    padding 5px 10px 5px 0

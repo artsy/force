@@ -8,6 +8,12 @@ block locals
 
 block body
   #artists-page.main-layout-container
+    nav.alphabetical-index
+      .alphabetical-index-label Browse 7,000 artists
+      .alphabetical-index-range
+        for letter in letterRange
+          a( href="/artists/#{letter}" )= letter
+
     h1.avant-garde-header-center
       = featuredArtists.get('name')
 
