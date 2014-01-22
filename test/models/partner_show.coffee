@@ -4,6 +4,8 @@ sd            = require('sharify').data
 should        = require 'should'
 Backbone      = require 'backbone'
 PartnerShow   = require '../../models/partner_show'
+PartnerLocation = require '../../models/partner_location'
+FairLocation    = require '../../models/partner_location'
 
 describe 'PartnerShow', ->
 
@@ -34,9 +36,76 @@ describe 'PartnerShow', ->
 
   describe '#location', ->
 
-    xit 'returns a partner or fair location', ->
+    it 'returns a partner location', ->
+      show = new PartnerShow fabricate 'show'
+      show.location().should.be.instanceOf(PartnerLocation)
+
+    it 'returns a fair location', ->
+      show = new PartnerShow(fabricate 'show',
+        fair_location:
+          display: 'Booth 1234'
+      )
+      show.location().should.be.instanceOf(FairLocation)
 
   describe '#runningDates', ->
 
     it 'gives a formatted date span for the running dates', ->
       @partnerShow.runningDates().should.equal "Jul. 12th &#x2013; Aug. 23rd 2013"
+
+  describe '#fairRunningDates', ->
+
+    it 'includes fair location', ->
+      @partnerShow.set
+        fair:
+          start_at: @partnerShow.get('start_at')
+          end_at: @partnerShow.get('end_at')
+        fair_location:
+          display: 'Booth 1234'
+
+      @partnerShow.fairRunningDates().should.equal "Jul. 12th &#x2013; Aug. 23rd 2013, Booth 1234"
+
+  describe '#shareTitle', ->
+
+    it "includes fair location", ->
+      @partnerShow.set
+        fair_location:
+          display: 'Booth 1234'
+
+      @partnerShow.shareTitle().should.equal "Inez & Vinoodh, Booth 1234 See it on @artsy"
+
+    it "include partner name", ->
+      @partnerShow.shareTitle().should.equal 'See "Inez & Vinoodh" at Gagosian Gallery on @artsy'
+
+  describe '#formatArtists', ->
+
+    beforeEach ->
+      @partnerShow.set
+        artists: [
+          fabricate('artist', id: 'picasso-1')
+          fabricate('artist', id: 'picasso-2')
+          fabricate('artist', id: 'picasso-3')
+          fabricate('artist', id: 'picasso-4')
+        ]
+
+    it "correctly limits artists", ->
+      @partnerShow.formatArtists(2).should.equal "<a href='/artist/picasso-1'>Pablo Picasso</a>, <a href='/artist/picasso-2'>Pablo Picasso</a> and 2 more"
+
+    it "correctly limits artists", ->
+      @partnerShow.formatArtists().should.equal "<a href='/artist/picasso-1'>Pablo Picasso</a>, <a href='/artist/picasso-2'>Pablo Picasso</a>, <a href='/artist/picasso-3'>Pablo Picasso</a>, <a href='/artist/picasso-4'>Pablo Picasso</a>"
+
+  describe '#fairLocationDisplay', ->
+
+    it "Returns fair location", ->
+      @partnerShow.set
+        fair_location:
+          display: 'Booth 1234'
+
+      @partnerShow.fairLocationDisplay().should.equal "Booth 1234"
+
+    it "show updated at if the update at is recent", ->
+      @partnerShow.set
+        updated_at: new Date().valueOf()
+        fair_location:
+          display: 'Booth 1234'
+
+      @partnerShow.fairLocationDisplay().should.equal "Booth 1234<span class='updated'>updated a few seconds ago</span>"

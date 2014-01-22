@@ -1,5 +1,5 @@
-mixin share(description, media)
-  url           = encodeURIComponent(sd.ARTSY_URL + sd.CURRENT_PATH)
+mixin share(description, media, url)
+  url           = url || encodeURIComponent(sd.ARTSY_URL + sd.CURRENT_PATH)
   description   = description || ''
   media         = media || ''
 

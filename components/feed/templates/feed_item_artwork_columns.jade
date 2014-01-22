@@ -1,0 +1,5 @@
+- var artworkColumns = artworks.groupByColumnsInOrder(4)
+section.feed-large-artworks-columns
+  include ../../artwork_columns/template.jade
+if feedItem.formatSeeMoreText
+  .see-more= feedItem.formatSeeMoreText()
