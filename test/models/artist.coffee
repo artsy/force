@@ -31,3 +31,10 @@ describe 'Artist', ->
     it 'fetches the artists artworks', ->
       @artist.fetchArtworks()
       _.last(Backbone.sync.args)[1].url.should.include "artist/#{@artist.get 'id'}/artworks"
+
+  describe '#validSort', ->
+
+    it 'only returns true for values in the valid sort hash', ->
+      _(_.keys(@artist.sortCriteriaForArtworks)).each (key) =>
+        @artist.validSort(key).should.be.ok
+      @artist.validSort('random').should.not.be.ok

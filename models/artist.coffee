@@ -16,6 +16,9 @@ module.exports = class Artist extends Backbone.Model
     ''               : 'Most Relevant'
     '-published_at'  : 'Recently Added'
 
+  validSort: (sort) ->
+    _.contains(_.keys(@sortCriteriaForArtworks), sort)
+
   urlRoot: -> "#{sd.ARTSY_URL}/api/v1/artist"
 
   clientUrl: -> "/artist/#{@get('id')}"

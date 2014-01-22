@@ -4,6 +4,7 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 routes = require '../routes'
 CurrentUser = require '../../../models/current_user.coffee'
+Artist = require '../../../models/artist.coffee'
 
 describe 'Artist routes', ->
 
@@ -32,6 +33,12 @@ describe 'Artist routes', ->
       routes.index @req, @res
       _.last(Backbone.sync.args)[2].success fabricate 'artist', id: 'andy-foobar'
       @res.locals.sd.sortBy.should.equal '-published_at'
+
+    it 'sets the default sort if not a valid sort', ->
+      @req.query.sort = 'bogus'
+      routes.index @req, @res
+      _.last(Backbone.sync.args)[2].success fabricate 'artist', id: 'andy-foobar'
+      @res.locals.sd.sortBy.should.equal ''
 
   describe '#follow', ->
 
