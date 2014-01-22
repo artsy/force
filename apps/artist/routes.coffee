@@ -3,7 +3,7 @@ FollowArtistCollection = require '../../models/follow_artist_collection'
 
 @index = (req, res) ->
   sort = req.query.sort
-  sort ||= ''
+  sort = '' unless (new Artist).validSort(sort)
   new Artist(id: req.params.id).fetch
     cache  : true
     success: (artist) ->
