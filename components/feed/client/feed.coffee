@@ -16,7 +16,6 @@ feedItemsContainerTemplate = -> require('../templates/feed_items_container.jade'
 module.exports.FeedView = class FeedView extends Backbone.View
 
   rendered: false
-  maxItemsInDom: 20
   marginLeftRight: 110
   maxWidth: 1084
   items: []
@@ -105,25 +104,8 @@ module.exports.FeedView = class FeedView extends Backbone.View
   handleFetchedItems: (items) ->
     return @handleDoneFetching() unless items.length > 0
     @latestItems = items
-    $items = @getFeedItemHtml items
-    $feedItems = @$('.feed-item')
-
-    # removes 1st @maxItemsInDom items from the dom
-    if $feedItems.length > @maxItemsInDom
-      itemsRemoved = @maxItemsInDom/2
-      $removedItems = $feedItems.slice(0, itemsRemoved)
-      height = 0
-      for item in $removedItems
-        height += $(item).outerHeight()
-      bottom = $removedItems.offset().top + height
-      $removedItems.remove()
-      @$feedItems.append $items
-      if @scrollTop > bottom
-        @$htmlBody.scrollTop(@scrollTop - height)
-    else
-      @$feedItems.append $items
-
-    @lastItem = $feedItems.last()
+    @$feedItems.append @getFeedItemHtml(items)
+    @lastItem = @$('.feed-item:last')
 
   infiniteScroll: ->
     @scrollTop = @$window.scrollTop()
