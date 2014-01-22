@@ -118,13 +118,9 @@ module.exports.FeedView = class FeedView extends Backbone.View
     if @scrollTop + 1500 > top
       @fetchMoreItems()
 
-  #
-  # Helpers
   getFixedWidth: ->
     windowWidth = @$window.innerWidth()  || 800
     if windowWidth > @maxWidth then @maxWidth else windowWidth - @marginLeftRight
-  showLoading: => @$el.addClass('loading')
-  hideLoading: => @$el.removeClass('loading')
 
   setupCurrentUser: ->
     @currentUser = CurrentUser.orNull()

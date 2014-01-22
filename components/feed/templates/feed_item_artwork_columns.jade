@@ -2,4 +2,6 @@
 section.feed-large-artworks-columns
   include ../../artwork_columns/template.jade
 if feedItem.formatSeeMoreText
-  .see-more= feedItem.formatSeeMoreText()
+  .see-more
+    != feedItem.formatSeeMoreText()
+    .loading-spinner-small
