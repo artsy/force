@@ -31,7 +31,7 @@ module.exports.FeedItemView = class FeedItemView extends Backbone.View
 
   fetchMoreArtworks: ->
     @$seeMore ?= @$('.see-more')
-    @$seeMore.addClass 'loading'
+    @$seeMore.addClass 'is-loading'
     @model.toChildModel().fetchArtworks
       success: (artworks) =>
         @$seeMore.remove()

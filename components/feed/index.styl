@@ -4,33 +4,6 @@
   min-width: 900px
   min-height: 500px
   text-align: left
-  &.loading
-    section.feed_items
-      opacity 0
-      height: 500px
-
-  .empty
-    display: none
-    font-style italic
-    font-size: 18px
-    margin-top: 5px
-    padding-top: 5px
-    text-align: center
-    text-transform: none
-    img
-      margin: 0 5px
-
-  .back-to-page-one
-    width: 100%
-    margin-top: 40px
-    display: none
-    .text
-      color: white
-      padding: 20px
-      width: 243px
-      margin: 0px auto
-      padding: 20px 0px 15px 55px
-      cursor: pointer
 
 section.feed-items
   margin 0px auto
@@ -46,9 +19,6 @@ section.feed-items
     position: relative
     &:last-child
       border-bottom: 0px solid
-
-    .hidden
-      display: none
 
     .feed-large-artworks-columns
       width 100%
@@ -67,9 +37,17 @@ section.feed-items
       margin-bottom: 0px
       height: 22px
       text-align center
+      position relative
       avant-garde()
       cursor pointer
       font-size 13px
+      transition color 0.25s
+      .loading-spinner-small
+        display none
+      &.is-loading
+        color transparent
+        .loading-spinner-small
+          display block
 
     .feed-column
       display: inline-block
