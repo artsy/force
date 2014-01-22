@@ -4,7 +4,8 @@ sd                      = require('sharify').data
 CurrentUser             = require '../../../models/current_user.coffee'
 ArtworkCollection       = require '../../../models/artwork_collection.coffee'
 Artworks                = require '../../../collections/artworks.coffee'
-artworkColumns  = -> require('../../../components/artwork_columns/template.jade') arguments...
+artworkColumns          = -> require('../../../components/artwork_columns/template.jade') arguments...
+ShareView               = require '../../../components/share/view.coffee'
 
 module.exports.FavoritesView = class FavoritesView extends Backbone.View
   defaults:
@@ -20,6 +21,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
       if @collection.length > @numOfCols * @numOfRowsPerPage
         $(window).bind 'scroll.following', _.throttle(@infiniteScroll, 150)
       @loadNextPage()
+    @shareView = new ShareView el: @$('.favorites-share')
 
   setupCurrentUser: ->
     @currentUser = CurrentUser.orNull()

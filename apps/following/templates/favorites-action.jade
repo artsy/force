@@ -1,0 +1,12 @@
+include ../../../components/share/template
+
+.favorites-actions
+  aside.favorites-share
+    +share()
+  .favorites-meta
+    if private
+      p Favorite works are Private &ndash; 
+        a Make Public
+    else
+      p Favorite works are Public &ndash; 
+        a Edit Profile Settings
