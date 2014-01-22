@@ -1,6 +1,7 @@
 //- Override any locals with `append locals`
 block locals
   assetPackage = 'all'
+  bodyClass = (sd.HIDE_HEADER ? 'body-header-fixed' : '')
 
 doctype html
 html
@@ -8,7 +9,7 @@ html
     block head
     include head
     link( type='text/css', rel='stylesheet', href=(sd.ASSET_PATH + assetPackage + sd.CSS_EXT) )
-  body( class=(sd.HIDE_HEADER ? 'body-header-fixed' : '') )
+  body( class=bodyClass )
     include ../../modal/template
     include ../header/template
     #main-layout-container

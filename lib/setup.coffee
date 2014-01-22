@@ -104,6 +104,7 @@ module.exports = (app) ->
     app.use "/__api", require("../test/helpers/integration.coffee").api
 
   # Mount apps
+  app.use require "../apps/home"
   app.use require "../apps/about"
   app.use require "../apps/artist"
   app.use require "../apps/artists"

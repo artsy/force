@@ -1,0 +1,17 @@
+extends ../../components/main_layout/templates/index
+
+block head
+  include meta
+
+append locals
+  assetPackage = 'home'
+  bodyClass = 'body-no-margins body-transparent-header-white'
+
+block body
+  ul#home-hero-units
+    for heroUnit in heroUnits.reverse()
+      li( class=heroUnit.cssClass() )
+        img( src=heroUnit.get('background_image_url') )
+  pre
+    for heroUnit in heroUnits
+      != JSON.stringify(heroUnit.toJSON())

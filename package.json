@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "browserify": "*",
-    "stylus": "0.39.x",
+    "stylus": "*",
     "jadeify2": "*",
     "browserify-dev-middleware": "*",
     "should": "*",
