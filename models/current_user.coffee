@@ -41,6 +41,20 @@ module.exports = class CurrentUser extends Backbone.Model
   removeArtwork: (artworkId, options = {}) =>
     @defaultArtworkCollection().unsaveArtwork(artworkId, options)
 
+  addToPendingOrder: (options) =>
+    model = new Backbone.Model
+      edition_set_id : options.editionSetId
+      artwork_id     : options.artworkId
+      replace_order  : true
+      quantity       : options.quantity
+
+    model.save null,
+      success: options.success
+      error  : options.error
+      url    : "#{@url()}/order/pending/items"
+
+  isAdmin: -> (@get('type') is 'Admin') and ! @get('is_slumming')
+
   # Retreive a list of artists the user is following
   #
   # @param {Object} options Provide `success` and `error` callbacks similar to Backbone's fetch

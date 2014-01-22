@@ -1,0 +1,7 @@
+if feedItem.isPost()
+  .content( style="width: #{maxDimension}px;" )
+    // != JST['templates/posts/text']({ profile: profile, post: feedItemChildModel, feedItem: feedItem })
+    // != JST['templates/posts/actions']({ profile: profile, post: feedItemChildModel })
+
+else if feedItem.isPartnerShow()
+  include ./labels/partner_show

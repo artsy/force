@@ -1,0 +1,27 @@
+include ../../../share/template
+
+.feed-item-top-section
+  .feed-item-share-section
+    +share(feedItemChildModel.shareTitle(), undefined, feedItemChildModel.href())
+
+  if feedItemChildModel.partnerName()
+    .exhibitor
+      a( href=feedItemChildModel.href() )!= feedItemChildModel.partnerName()
+
+  if feedItemChildModel.get('fair')
+    .heading!= feedItemChildModel.fairName()
+    if feedItemChildModel.get('fair').start_at && feedItemChildModel.get('fair').end_at
+      .timeframe!= feedItemChildModel.fairRunningDates()
+      if feedItemChildModel.fairLocationDisplay()
+        .fair-location!= feedItemChildModel.fairLocationDisplay()
+
+  else
+    .heading
+      a( href=feedItemChildModel.href() )!= feedItemChildModel.formatFeedItemHeading()
+
+    if feedItemChildModel.get('start_at') && feedItemChildModel.get('end_at')
+      .timeframe
+        != feedItemChildModel.runningDates()
+        if feedItemChildModel.formatCity()
+          | , 
+          != feedItemChildModel.formatCity()

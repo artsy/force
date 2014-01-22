@@ -1,0 +1,118 @@
+// Stylesheet for displaying feed items on the homepage
+.feed
+  margin-bottom: 50px
+  min-width: 900px
+  min-height: 500px
+  text-align: left
+  &.loading
+    section.feed_items
+      opacity 0
+      height: 500px
+
+  .empty
+    display: none
+    font-style italic
+    font-size: 18px
+    margin-top: 5px
+    padding-top: 5px
+    text-align: center
+    text-transform: none
+    img
+      margin: 0 5px
+
+  .back-to-page-one
+    width: 100%
+    margin-top: 40px
+    display: none
+    .text
+      color: white
+      padding: 20px
+      width: 243px
+      margin: 0px auto
+      padding: 20px 0px 15px 55px
+      cursor: pointer
+
+section.feed-items
+  margin 0px auto
+
+  article.feed-item
+    margin-top: 0px
+    margin-bottom: 0px
+    padding: 60px 0px
+    width: 100%
+    border-bottom: 1px solid light-gray-border-color
+    overflow: visible
+    text-align: left
+    position: relative
+    &:last-child
+      border-bottom: 0px solid
+
+    .hidden
+      display: none
+
+    .feed-large-artworks-columns
+      width 100%
+      .artwork-column
+        width: 22.3%
+        margin: 0 1.8%
+        &:first-child
+          margin-left 0%
+        &:last-child
+          margin-right 0%
+
+    //
+    // see all artworks for partner shows
+    .see-more
+      margin-top: 20px
+      margin-bottom: 0px
+      height: 22px
+      text-align center
+      avant-garde()
+      cursor pointer
+      font-size 13px
+
+    .feed-column
+      display: inline-block
+      vertical-align: top
+      text-align: left
+      font-size: 17px
+      line-height: 141%
+      z-index: 1
+
+      .feed-item-top-section
+        margin-bottom 20px
+        position relative
+        width 100%
+
+      .feed-item-share-section
+        position absolute
+        bottom 0px
+        right 0px
+        a
+          text-decoration none
+        .share-to-pinterest
+          display none
+
+      .fair-location
+        display: none
+
+      .exhibitor, .heading
+        font-size: 32px
+        line-height: 110%
+        margin-bottom: 0px
+        margin-top: 0px
+        a
+          text-decoration: none
+
+      .updated
+        text-transform: uppercase
+        color: #888
+        font-size: 11px
+        padding-top: 4px
+        padding-left: 10px
+
+      .timeframe
+        margin-top: 5px
+
+      .location
+        margin-top: 2px
