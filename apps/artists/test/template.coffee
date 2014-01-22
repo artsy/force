@@ -45,6 +45,7 @@ describe 'Artists', ->
 
         template = render('index')(
           sd: {}
+          letterRange:      ['a', 'b', 'c']
           featuredArtists:  @featuredArtists
           featuredGenes:    @genes
         )
@@ -52,6 +53,9 @@ describe 'Artists', ->
         @$template = $(template)
 
         done()
+
+    it 'renders the alphabetical nav', ->
+      @$template.find('.alphabetical-index-range').text().should.equal 'abc'
 
     it 'has a single <h1> that displays the name of the artists set', ->
       $h1 = @$template.find('h1')

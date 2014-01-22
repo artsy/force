@@ -6,14 +6,13 @@ FollowButton      = require '../artist/client/follow_button.coffee'
 Artist            = require '../../models/artist.coffee'
 
 module.exports.CarouselView = class CarouselView extends Backbone.View
+  increment: 2
+  active: 0
   events:
     'click .afc-next' : 'next'
     'click .afc-prev' : 'prev'
 
   initialize: (options) ->
-    @increment  = 2
-    @active     = 0
-
     @resize = _.debounce @updateValues, 100
     $(window).on 'resize', @resize
 
@@ -21,12 +20,15 @@ module.exports.CarouselView = class CarouselView extends Backbone.View
 
   updateValues: (e) =>
     @$panels ||= @$('.afc-artist')
+    @$images ||= @$panels.find('img')
+    @$bumpers ||= @$('.afc-next, .afc-prev')
 
     panelWidth  = @$el.width() / @increment
     @positions  = _.map @$panels, (panel, i) -> panelWidth * i
     @stopAt     = @positions.length - @increment
 
     @$panels.outerWidth "#{panelWidth}px"
+    @$bumpers.height "#{@$images.height()}px"
 
     @moveToActive(!e?) if e?
     @setPosition()
