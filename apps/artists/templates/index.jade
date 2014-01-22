@@ -8,6 +8,12 @@ block locals
 
 block body
   #artists-page.main-layout-container
+    nav.alphabetical-index
+      .alphabetical-index-label Browse 7,000 artists
+      .alphabetical-index-range
+        for letter in letterRange
+          a( href="/artists/#{letter}" )= letter
+
     h1.avant-garde-header-center
       = featuredArtists.get('name')
 
@@ -19,13 +25,19 @@ block body
           for link in featuredArtists.get('items').models
             if link.hasImage('large_rectangle')
               .afc-artist
-                a( href= link.get('href'), style="background-image: url(#{link.imageUrl('large_rectangle')})" )
+                a( href= link.get('href') )
+                  img( src= link.imageUrl('large_rectangle'), alt= link.get('title') )
                 .afc-artist-information
                   .afc-artist-information-left
                     h2.afc-artist-name
                       a( href= link.get('href') )= link.get('title')
+                    if link.get('subtitle')
+                      p.afc-artist-notes
+                        = link.get('subtitle')
                   .afc-artist-information-right
-                    a.avant-garde-button-white.follow-button( data-id= link.get('href').replace('/artist/', '') )
+                    a.avant-garde-button-white.follow-button(
+                      data-id= link.get('href').replace(/\/?artist\//, '')
+                    )
 
     .artists-featured-genes
       for gene in featuredGenes.models
