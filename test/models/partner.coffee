@@ -58,5 +58,8 @@ describe 'Partner', ->
 
     it 'handles n locations', ->
       @partner.get('locations').add fabricate 'location'
-      @partner.get('locations').add fabricate 'location'
+      @partner.get('locations').add fabricate 'location', city: 'Paris'
       @partner.displayLocations().should.equal 'New York + 3 other locations'
+
+    it 'displays a preferred location if passed in', ->
+      @partner.displayLocations('Paris').should.equal 'Paris + 3 other locations'
