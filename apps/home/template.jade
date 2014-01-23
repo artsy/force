@@ -5,13 +5,24 @@ block head
 
 append locals
   assetPackage = 'home'
-  bodyClass = 'body-no-margins body-transparent-header-white'
+  bodyClass = 'body-no-margins'
 
 block body
   ul#home-hero-units
-    for heroUnit in heroUnits.reverse()
-      li( class=heroUnit.cssClass() )
-        img( src=heroUnit.get('background_image_url') )
+    for heroUnit, i in heroUnits
+      li.home-hero-unit(
+        class=heroUnit.cssClass() + (i == 0 ? ' home-hero-unit-active' : ''),
+        style="background-image: url(#{heroUnit.get('background_image_url')})"
+      )
+        a( href=heroUnit.get('link') )
+          h1!= heroUnit.get('heading')
+          img.home-hero-unit-title(
+            src=heroUnit.get('title_image_url'),
+            alt=heroUnit.get('name')
+          )
+          h2!= heroUnit.mdToHtml('description')
+          .avant-garde-button( href=heroUnit.get('link') )= heroUnit.get('link_text')
+
   pre
     for heroUnit in heroUnits
       != JSON.stringify(heroUnit.toJSON())

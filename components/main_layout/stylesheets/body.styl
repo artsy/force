@@ -41,11 +41,16 @@ search-bar-input-placeholder-white()
 .body-transparent-header
   #main-layout-header
     background transparent
+.body-transparent-header
+  #main-layout-header
+    border-color rgba(0,0,0,0.3)
+    *:not(.tt-suggestion):not(.tt-dropdown-menu)
+      border-color rgba(0,0,0,0.3)
 
 // Dark banners and backgrounds need the header it to be white text and outlines
 // for visiblity.
 .body-transparent-header-white
-  a, .header-user-name
+  #main-layout-header-right a, .header-user-name, #main-layout-header-home-logo
     color white
   #main-layout-header-right a::after
     border-color white
@@ -62,5 +67,11 @@ search-bar-input-placeholder-white()
         background-color #333
       &:last-child::after
         background white
-  *
-    border-color rgba(255,255,255,0.3) !important
+  #main-layout-header
+    border-color rgba(255,255,255,0.3)
+    *:not(.tt-suggestion):not(.tt-dropdown-menu)
+      border-color rgba(255,255,255,0.3)
+  #main-layout-search-bar-container.is-loading .loading-spinner-small
+    background white
+  #main-layout-header-home-logo::after
+    border-color white
