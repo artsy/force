@@ -49,10 +49,12 @@ describe 'FollowProfiles', ->
       followProfile.should.equal @followProfile1
 
   describe '#syncFollows', ->
+
     it 'returns without a current user', ->
       fetchSpy = sinon.spy @followProfiles, 'fetch'
       @followProfiles.syncFollows [@followProfile2.get('profile').id]
       fetchSpy.callCount.should.equal 0
+      fetchSpy.restore()
 
   describe "with a current user", ->
 
@@ -86,6 +88,35 @@ describe 'FollowProfiles', ->
         @followProfiles.syncFollows [@profileId]
         Backbone.sync.args[0][2].remove.should.be.false
         Backbone.sync.args[0][2].merge.should.be.true
+
+      it 'breaks sync requests up so that no more than @maxSyncSize are requested at a time', ->
+        profileIds = []
+        sinon.spy @followProfiles, 'syncFollows'
+        @followProfiles.maxSyncSize = 10
+        _(22).times (n) =>
+          profileIds.push "profile-#{n}"
+        @followProfiles.syncFollows profileIds
+
+        @followProfiles.syncFollows.getCall(0).args[0].should.equal profileIds
+        Backbone.sync.args[0][2].data.profiles.should.have.lengthOf 10
+        Backbone.sync.args[0][2].success []
+
+        rest = _.rest profileIds, 10
+        for n in _.rest(profileIds, 10)
+          @followProfiles.syncFollows.getCall(1).args[0].should.contain n
+        Backbone.sync.args[1][2].data.profiles.should.have.lengthOf 10
+        Backbone.sync.args[1][2].success []
+
+        rest = _.rest profileIds, 20
+        for n in _.rest(profileIds, 20)
+          @followProfiles.syncFollows.getCall(2).args[0].should.contain n
+        Backbone.sync.args[2][2].data.profiles.should.have.lengthOf 2
+        Backbone.sync.args[2][2].success []
+
+        @followProfiles.syncFollows.getCall(3).args[0].should.have.lengthOf 0
+        @followProfiles.syncFollows.callCount.should.equal 4
+
+        @followProfiles.syncFollows.restore()
 
     describe "#follow", ->
 
