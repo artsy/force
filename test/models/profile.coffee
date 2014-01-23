@@ -86,3 +86,30 @@ describe 'Profile', ->
     it 'formats website', ->
       @profile.set website: 'https://artsy.net'
       @profile.getFormattedWebsite().should.equal 'artsy.net'
+
+  describe '#metaTitle', ->
+
+    it 'correctly formats title for users', ->
+      @profile.set owner_type: 'User'
+      @profile.metaTitle().should.equal 'J. Paul Getty Museum | Artsy'
+
+    it 'correctly formats title for galleries', ->
+      @profile.set owner_type: 'PartnerGallery'
+      @profile.metaTitle().should.equal 'J. Paul Getty Museum | Artists, Art for Sale, and Contact Info | Artsy'
+
+    it 'correctly formats title for non-gallery partners', ->
+      @profile.set owner_type: 'PartnerMuseum'
+      @profile.metaTitle().should.equal 'J. Paul Getty Museum | Artists, Artworks, and Contact Info | Artsy'
+
+    it 'correctly formats title for fairs', ->
+      @profile.set owner_type: 'FairOrganizer'
+      @profile.metaTitle().should.equal 'J. Paul Getty Museum | Artists, Artworks, and Contact Info | Fair Info, Artists, and Art for Sale | Artsy'
+
+  describe '#metaDescription', ->
+
+    it 'correctly formats description', ->
+      @profile.set('bio', 'bio')
+      @profile.metaDescription().should.equal 'bio'
+
+      @profile.set('bio', undefined)
+      @profile.metaDescription().should.equal 'J. Paul Getty Museum on Artsy'

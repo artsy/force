@@ -55,6 +55,7 @@ module.exports = class Profile extends Backbone.Model
   isInstitution: -> _.contains @INSTITUTION_OWNER_TYPES, @get('owner_type')
   isGallery:     -> _.contains @GALLERY_OWNER_TYPES, @get('owner_type')
   isPartner:     -> ! _.contains ['User', 'Admin'], @get('owner_type')
+  isFairOranizer: -> @get('owner_type') == 'FairOrganizer'
 
   isMe: ->
     return @get('isCurrentUser') if @has('isCurrentUser')
@@ -66,3 +67,18 @@ module.exports = class Profile extends Backbone.Model
     return unless @has('follows_count')
     follows = @get('follows_count')
     "#{_.numberFormat(follows)} Follower#{if follows is 1 then '' else 's'}"
+
+  metaTitle: ->
+    _.compact([
+      (if @displayName() then "#{@displayName()}" else "Profile")
+      (if @isGallery() then "Artists, Art for Sale, and Contact Info" else null)
+      (if @isPartner() and !@isGallery() then "Artists, Artworks, and Contact Info" else null)
+      (if @isFairOranizer() then "Fair Info, Artists, and Art for Sale" else null)
+      "Artsy"
+    ]).join(" | ")
+
+  metaDescription: ->
+    if @get('bio')
+      @get('bio')
+    else
+      if @displayName() then "#{@displayName()} on Artsy" else "Profile on Artsy"
