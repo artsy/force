@@ -74,3 +74,15 @@ describe 'Profile', ->
 
       @profile.get('owner').name = "2 % Johan _ Gregor 37"
       @profile.defaultIconInitials().should.equal "2J"
+
+  describe '#formatFollowText', ->
+
+    it 'returns formatted follows text', ->
+      @profile.set follows_count: 1234567
+      @profile.formatFollowText().should.equal '1,234,567 Followers'
+
+  describe '#getFormattedWebsite', ->
+
+    it 'formats website', ->
+      @profile.set website: 'https://artsy.net'
+      @profile.getFormattedWebsite().should.equal 'artsy.net'

@@ -68,14 +68,14 @@ module.exports.FollowingView = class FollowingView extends Backbone.View
   # Append the item with name, spinner, etc (without content) to the container
   #
   # So that we can display some stuff to users asap.
-  # @param {Object} followItem an item from the followItems collection 
+  # @param {Object} followItem an item from the followItems collection
   appendItemSkeleton: (followItem) ->
     @$('.following').append $( itemTemplate item: followItem.getItem() )
 
   # Display item content
   #
   # The function assumes the skeleton (container) of this item already exists.
-  # @param {Object} followItem an item from a followItems collection 
+  # @param {Object} followItem an item from a followItems collection
   showItemContent: (followItem) =>
     item = followItem.getItem() # Actual item model, e.g. an Artist
     item.fetchArtworks success: (artworks) =>
