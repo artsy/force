@@ -10,8 +10,13 @@ Partner         = require './partner.coffee'
 PartnerLocation = require './partner_location.coffee'
 DateHelpers     = require '../components/util/date_helpers.coffee'
 ImageMixin      = require './mixins/image.coffee'
+moment          = require 'moment'
 
 module.exports = class PartnerShow extends Backbone.Model
+
+  maxDisplayedArtists: 5
+  fairDisplayUpdatedDayLimit: 14
+  maxFeedArtworks: 8
 
   _.extend @prototype, ImageMixin
 
@@ -43,8 +48,11 @@ module.exports = class PartnerShow extends Backbone.Model
 
   shareTitle: ->
     if @has('fair_location')
-      return "#{@get('name')}, #{@get('fair_location').name} See it on @artsy"
-    "See \"#{@get('name')}\" at #{@get('partner').name} on @artsy"
+      "#{@get('name')}, #{@get('fair_location').display} See it on @artsy"
+    else if @has('partner')
+      "See \"#{@get('name')}\" at #{@get('partner').name} on @artsy"
+    else
+      "See \"#{@get('name')}\" on @artsy"
 
   href: ->
     if @has('fair') and @get('fair').organizer
@@ -54,6 +62,13 @@ module.exports = class PartnerShow extends Backbone.Model
 
   runningDates: ->
     DateHelpers.timespanInWords @get('start_at'), @get('end_at')
+
+  fairRunningDates: ->
+    display = DateHelpers.timespanInWords @get('fair').start_at, @get('fair').end_at
+
+    if @get('fair_location') && @get('fair_location').display
+      display += ", #{@get('fair_location').display}"
+    display
 
   fetchInstallShots: (callbacks) ->
     throw "You must pass a success callback" unless callbacks?.success? and _.isFunction(callbacks.success)
@@ -97,3 +112,36 @@ module.exports = class PartnerShow extends Backbone.Model
       new Partner @get 'partner'
     else
       null
+
+  partnerName: -> @get('partner')?.name
+
+  fair: ->
+    if @has 'partner'
+      new Partner @get 'partner'
+    else
+      null
+
+  fairName: -> @get('fair').name
+
+  formatArtists: (max=Infinity) ->
+    return "" unless @has('artists')
+    artists = @get('artists').map (artist) -> "<a href='/artist/#{artist.id}'>#{artist.name}</a>"
+    if artists?.length <= max
+      artists.join(', ')
+    else
+      "#{artists[0..(max-1)].join(', ')} and #{artists[(max-1)..].length - 1} more"
+
+  formatCity: =>
+    @get('location')?.city
+
+  formatFeedItemHeading: ->
+    return @get('name') if @get('name')?.length > 0
+    @formatArtists @maxDisplayedArtists
+
+  updatedAt: -> moment(@get('updated_at')).fromNow()
+
+  fairLocationDisplay: ->
+    display = @get('fair_location').display
+    if @get('updated_at') && moment().diff(moment(@get('updated_at')), 'days') <= @fairDisplayUpdatedDayLimit
+      display += "<span class='updated'>updated #{@updatedAt()}</span>"
+    display

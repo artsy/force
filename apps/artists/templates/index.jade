@@ -1,0 +1,58 @@
+extends ../../../components/main_layout/templates/index
+
+block head
+  include meta
+
+block locals
+  assetPackage = 'artists'
+
+block body
+  #artists-page.main-layout-container
+    nav.alphabetical-index
+      .alphabetical-index-label Browse 7,000 artists
+      .alphabetical-index-range
+        for letter in letterRange
+          a( href="/artists/#{letter}" )= letter
+
+    h1.avant-garde-header-center
+      = featuredArtists.get('name')
+
+    .artists-featured-carousel
+      .afc-prev: i.icon-chevron-left
+      .afc-next: i.icon-chevron-right
+      .afc-track-container
+        .afc-track
+          for link in featuredArtists.get('items').models
+            if link.hasImage('large_rectangle')
+              .afc-artist
+                a( href= link.get('href') )
+                  img( src= link.imageUrl('large_rectangle'), alt= link.get('title') )
+                .afc-artist-information
+                  .afc-artist-information-left
+                    h2.afc-artist-name
+                      a( href= link.get('href') )= link.get('title')
+                    if link.get('subtitle')
+                      p.afc-artist-notes
+                        = link.get('subtitle')
+                  .afc-artist-information-right
+                    a.avant-garde-button-white.follow-button(
+                      data-id= link.get('href').replace(/\/?artist\//, '')
+                    )
+
+    .artists-featured-genes
+      for gene in featuredGenes.models
+        .artists-featured-genes-gene
+          h4
+            a.avant-garde-jump-link( href="/gene/#{gene.id}" )
+              = gene.get('name')
+              i.icon-chevron-small-right
+          .afg-featured-artists
+            for artist in gene.trendingArtists
+              .afg-artist
+                a( href="/artist/#{artist.id}", style="background-image: url(#{artist.imageUrl('large')})" )
+                .afg-artist-information
+                  h2.afg-artist-name
+                    a( href="/artist/#{artist.id}" )= artist.get('name')
+                  .afg-years= artist.get('years')
+                  a.avant-garde-button-white.follow-button( data-id= artist.id )
+

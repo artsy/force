@@ -106,6 +106,7 @@ module.exports = (app) ->
   # Mount apps
   app.use require "../apps/about"
   app.use require "../apps/artist"
+  app.use require "../apps/artists"
   app.use require "../apps/auction_lots"
   app.use require "../apps/auth"
   app.use require "../apps/browse"
@@ -122,6 +123,8 @@ module.exports = (app) ->
   app.use require "../apps/shows"
   app.use require "../apps/post"
   app.use require "../apps/posts"
+  app.use require "../apps/genes"
+  app.use require "../apps/following"
 
   # Route to ping for system up
   app.get '/system/up', (req, res) ->

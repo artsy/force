@@ -1,0 +1,207 @@
+@import '../../components/pagination'
+
+#artists-page
+  padding 40px 80px
+  h1
+    margin 40px 0
+    font-size 24px
+
+// ABC Listing
+.alphabetical-index
+  display table
+  table-layout fixed
+  font-size 20px
+  width 100%
+  border-top 1px solid light-gray-border-color
+  border-bottom 1px solid light-gray-border-color
+
+.alphabetical-index-label
+.alphabetical-index-range
+  display table-cell
+  white-space nowrap
+
+.alphabetical-index-label
+  width 200px
+  padding 20px 20px 20px 0
+
+.alphabetical-index-range
+  text-align right
+  > a
+    display inline-block
+    padding 20px 0.75%
+    text-transform uppercase
+    text-decoration none
+    transition color 0.25s
+    &:hover
+    &.is-active
+      color highlight-color
+
+// Carousel
+bumper-width = 40px
+
+.artists-featured-carousel
+  position relative
+  margin 40px 0
+  &[data-transitions=false]
+    *
+      transition none
+      opacity 1 !important
+  // Bumper visible states
+  &[data-position='start'] .afc-next
+  &[data-position='end'] .afc-prev
+  &[data-position='middle'] .afc-next
+  &[data-position='middle'] .afc-prev
+    cursor pointer
+    opacity 1
+
+.afc-track-container
+  position relative
+  overflow hidden
+
+.afc-track
+  white-space nowrap
+  transition all 0.25s
+  &[data-state='transitioning']
+    .afc-artist-information
+      opacity 0
+      transition none
+  &[data-state='transitioned']
+    .afc-artist-information
+      opacity 1
+
+.afc-prev
+.afc-next
+  position absolute
+  top 0
+  width bumper-width
+  height 100%
+  text-align center
+  color dark-gray-text-color
+  background-color light-gray-background-color
+  transition all 0.25s
+  user-select none
+  z-index 1
+  // Deactivated by default
+  opacity 0
+  cursor default
+  > i
+    display block
+    position relative
+    top 50%
+    font-size 26px
+    line-height @font-size
+    margin-top -(@font-size / 2)
+  &:hover
+    color black
+    background-color light-gray-border-color
+
+.afc-next
+  right -(bumper-width * 1.5)
+.afc-prev
+  left -(bumper-width * 1.5)
+
+.afc-artist
+  display inline-block
+  width 50%
+  vertical-align top
+  &:nth-child(odd)
+    padding-right 20px
+    border-right 1px solid dark-gray-border-color
+  &:nth-child(even)
+    padding-left 20px
+  &.is-active
+    background-color yellow
+  > a
+    display block
+    width 100%
+    background-color light-gray-background-color
+    > img
+      width 100%
+
+.afc-artist-information
+  display table
+  table-layout fixed
+  width 100%
+  transition opacity 0.5s
+
+.afc-artist-information-left
+.afc-artist-information-right
+  display table-cell
+  vertical-align top
+  padding-top 20px
+
+.afc-artist-information-left
+  padding-right 20px
+
+.afc-artist-information-right
+  text-align right
+  width 150px
+
+.afc-artist-name
+  avant-garde()
+  font-size 15px
+  > a
+    text-decoration none
+
+.afc-artist-name
+.afc-artist-notes
+  overflow ellipsis
+
+// Featured Genes
+.artists-featured-genes-gene
+  margin 40px 0
+  > h4
+    margin 20px 0
+
+.afg-artist
+  display inline-block
+  width 23%
+  margin 0 1%
+  vertical-align top
+  &:first-child
+  &:last-child
+    width 24%
+  &:first-child
+    margin-left 0
+  &:last-child
+    margin-right 0
+  > a
+    display block
+    width 100%
+    height 160px
+    background-color light-gray-background-color
+    overflow hidden
+    background-size cover
+    background-position center center
+
+.afg-artist-name
+  @extends .afc-artist-name
+  font-size 13px
+  width 50%
+  overflow ellipsis
+
+.afg-artist-information
+  position relative
+  padding 20px 0
+  text-transform capitalize
+  > .follow-button
+    position absolute
+    top 20px
+    right 0
+    font-size 11px
+    padding 7px 20px
+
+// Letter page
+#letter-page
+  position relative
+  > .contextual-return-link
+    position absolute
+    top 0
+    left 0
+
+.artists-columns
+  column-count 4
+
+  > a
+    display block
+    padding 5px 10px 5px 0

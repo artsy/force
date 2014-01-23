@@ -26,9 +26,10 @@ describe 'ArtistView', ->
     benv.render resolve(__dirname, '../../templates/index.jade'), {
       sd     : {}
       artist : new Artist(fabricate('artist'))
+      sortBy : '-published_at'
     }, =>
       { ArtistView, @init } = mod = benv.requireWithJadeify(
-        (resolve __dirname, '../../client/index'), ['relatedArtistsTemplate']
+        (resolve __dirname, '../../client/index'), ['relatedArtistsTemplate', 'artistSort']
       )
       @FillwidthView = sinon.stub()
       @FillwidthView.nextPage = sinon.stub()
@@ -39,17 +40,15 @@ describe 'ArtistView', ->
       mod.__set__ 'RelatedPostsView', @relatedPostStub = sinon.stub()
       mod.__set__ 'RelatedGenesView', @genesStub = sinon.stub()
       @view = new ArtistView
-        el: $ 'body'
-        model: new Artist fabricate 'artist'
+        el     : $ 'body'
+        model  : new Artist fabricate 'artist'
+        sortBy : '-published_at'
       done()
 
   afterEach ->
     Backbone.sync.restore()
 
   describe '#initialize', ->
-
-    beforeEach ->
-      @view.initialize()
 
     it 'sets up fillwidth views with collections pointing to for sale and not for sale works', ->
       view1Opts = @FillwidthView.args[0][0]
@@ -85,6 +84,28 @@ describe 'ArtistView', ->
       viewRelatedPostOpts = @relatedPostStub.args[0][0]
       viewRelatedPostOpts.numToShow.should.equal 2
       viewRelatedPostOpts.model.should.equal @view.model
+
+  describe 'sorting', ->
+
+    it 'passes the correct sort option into setupArtworks when sorting by Recently Added, and updates the picker', ->
+      $fixture = $ """
+        <div class="bordered-pulldown-options">
+          <a data-sort="-published_at">Recently Added<a>
+        </div>
+      """
+      @view.onSortChange({ currentTarget: $fixture.find('a')})
+      @view.sortBy.should.equal '-published_at'
+      @view.$el.find('a.bordered-pulldown-toggle').html().should.include 'Recently Added'
+
+    it 'passes the correct sort option into setupArtworks when sorting by Relevancy', ->
+      $fixture = $ """
+        <div class="bordered-pulldown-options">
+          <a data-sort>Most Relevant<a>
+        </div>
+      """
+      @view.onSortChange({ currentTarget: $fixture.find('a')})
+      @view.sortBy.should.equal ''
+      @view.$el.find('a.bordered-pulldown-toggle').html().should.include 'Most Relevant'
 
   describe '#setupRelatedArtists', ->
 

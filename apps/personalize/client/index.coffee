@@ -20,9 +20,9 @@ module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Rout
     'personalize/:step': 'step'
 
   initialize: (options) ->
-    @state  = new PersonalizeState
-    @user   = CurrentUser.orNull()
-    @$el    = $('#personalize-page')
+    { @user }   = options
+    @state      = new PersonalizeState
+    @$el        = $('#personalize-page')
 
     @listenTo @state, 'transition:next', @next
     @listenTo @state, 'done', @done
@@ -52,5 +52,7 @@ module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Rout
 
 module.exports.init = ->
   $ ->
-    router = new PersonalizeRouter
+    user = CurrentUser.orNull()
+    return unless user
+    router = new PersonalizeRouter(user: user)
     Backbone.history.start pushState: true

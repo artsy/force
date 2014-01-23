@@ -1,0 +1,4 @@
+if profile.has('icon')
+  .profile-badge-icon( style="background-image: url(#{profile.iconImageUrl()})" )
+if profile.isPartner() && !profile.has('icon')
+  .profile-badge-initials= profile.defaultIconInitials()

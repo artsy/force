@@ -8,3 +8,6 @@ module.exports =
       break if size > limit
       token
     textArray.join(" ") + (if text.length > limit then "..." else "")
+
+  underscore: (text) ->
+    text.toLowerCase().replace(/[\s]+/g, '_')

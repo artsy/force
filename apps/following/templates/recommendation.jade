@@ -1,0 +1,6 @@
+ul.recommendation-row
+  each item in recItems
+    li.recommendation-item
+      a(href=item.clientUrl())
+        img(src=item.imageUrl('thumb'))
+      a(href=item.clientUrl())= item.get('name')

@@ -1,0 +1,22 @@
+- var artworks = feedItem.initialArtworks()
+- var profile = feedItem.get('profile')
+- var linkToPost = false
+- var artworkSize = 'large'
+- var feedItemChildModel = feedItem.toChildModel()
+- var artworksDisplayed = 8
+article.feed-item( style="width: #{fixedWidth}px" )
+  if feedItem.isPartnerShow()
+    section.feed-column.full-width-column
+      include ./feed_item_body_label
+      include ./feed_item_artwork_columns
+  else
+    section.feed-column
+      include ./feed_item_body_label
+    section.feed-column
+      if feedItem.isPost()
+        b POST
+        // include ./templates/posts/media profile: feedItem.get('profile'), post: feedItem.toChildModel(), maxDimension: maxDimension, attachments: feedItem.toChildModel().get('attachments').models, linkToPost: false
+      else
+        section.feed-large-artworks
+          for artwork in artworks
+            include ../../artwork_item/template

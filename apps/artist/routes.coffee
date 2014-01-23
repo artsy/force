@@ -2,11 +2,14 @@ Artist                 = require '../../models/artist'
 FollowArtistCollection = require '../../models/follow_artist_collection'
 
 @index = (req, res) ->
+  sort = req.query.sort
+  sort = '' unless (new Artist).validSort(sort)
   new Artist(id: req.params.id).fetch
     cache  : true
     success: (artist) ->
       res.locals.sd.ARTIST = artist.toJSON()
-      res.render 'index', artist: artist
+      res.locals.sd.sortBy = sort
+      res.render 'index', artist: artist, sortBy: sort
     error: res.backboneError
 
 @follow = (req, res) ->
@@ -18,6 +21,6 @@ FollowArtistCollection = require '../../models/follow_artist_collection'
       followArtistCollection = new FollowArtistCollection
       followArtistCollection.follow req.params.id,
         success: ->
-          res.render 'index', artist: artist
+          res.render 'index', artist: artist, sortBy: ''
         error: res.backboneError
     error: res.backboneError
