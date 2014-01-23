@@ -27,9 +27,6 @@ block body
         else
           != partner.get('name')
       h2.show-subheading!= show.runningDates()
-      if fair
-        h2.show-subheading
-          a( href=show.href() )!= fair.get('name')
       if location
         h2.show-subheading!= location.singleLine()
 
