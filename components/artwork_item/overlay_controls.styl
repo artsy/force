@@ -1,9 +1,3 @@
-.fillwidth-img-container
-  .overlay-button-save
-    opacity 0
-  &:hover .overlay-button-save
-    opacity 1
-
 .overlay-container
   position absolute
   right 5px
@@ -42,3 +36,12 @@
   @extends .overlay-button
   &:before
     content '\e622'
+
+.artwork-item
+  &:hover
+    .overlay-button-save
+      opacity 1
+  .overlay-button-save
+    opacity 0
+    &[data-state='saved']
+      opacity 1
