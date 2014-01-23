@@ -1,20 +1,6 @@
 ul.fillwidth-list
   for artwork in artworks
     li.fillwidth-row-uninitialized
-      .fillwidth-img-container
-        .img-inner
-          include overlay_controls
-          a( href="/artwork/#{artwork.get('id')}" )
-            img( src=artwork.defaultImageUrl(), nopin="nopin", alt=artwork.toAltText() )
-      .fillwidth-details-container
-        a.faux-underline-hover.artist-name( href=artwork.artistLink() )= artwork.get('artist').name
-        p!= artwork.titleAndYear()
-        if artwork.get('partner')
-          if artwork.get('partner').default_profile_public && artwork.get('partner').default_profile_id
-            a.partner.faux-underline-hover( href="/" + artwork.get('partner').default_profile_id )= artwork.partnerName()
-          else
-            .partner= artwork.partnerName()
-        if artwork.get('price')
-          p= artwork.get('price')
+      include ../../components/artwork_item/template
 if seeMore
   button.avant-garde-button-text.fillwidth-see-more See More

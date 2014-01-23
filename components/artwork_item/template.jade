@@ -2,8 +2,12 @@
 figure.artwork-item( data-artwork=artwork.get('id') )
   .artwork-item-image-container
     a.artwork-item-image-link(href=artwork.href())
-      img.artwork-item-image( src=artwork.defaultImageUrl(artworkSize), alt=artwork.toAltText() )
-      include ../fillwidth_row/overlay_controls
+      img.artwork-item-image( 
+        src=artwork.defaultImageUrl(artworkSize)
+        nopin=artwork.noPinAttr()
+        alt=artwork.toAltText()
+      )
+      include ./overlay_controls
   figcaption.artwork-item-caption
     if artwork.has('artist')
       p.artwork-item-artist
@@ -13,6 +17,7 @@ figure.artwork-item( data-artwork=artwork.get('id') )
           != artwork.get('artist').name
     p.artwork-item-title!= artwork.titleAndYear()
     if artwork.partnerName()
+      //- Note: if the <a..> is in a <p..> text-overflow ellipsis doesn't work
       p.artwork-item-partner
         if artwork.partnerLink()
           a.faux-underline-hover( href=artwork.partnerLink() )!= artwork.partnerName()

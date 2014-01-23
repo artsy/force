@@ -14,14 +14,74 @@ If a separate doc is required, add it to the component's directory as a
 ## Artwork Columns
 ![](images/artwork_columns.png)
 
+Dependencies: 
+- Artwork Item Component `components/artwork_item`
+
+There are two different ways you can use the Artwork Columns component. It has a template and a view. 
+  1. Pass models to the template yourself
+  2. Use the `ArtworkColumnsView`
+
+#### Pass models to the template yourself
+Include the template, and the artwork item save controls.
+The template can be rendered with items that are already sorted with the results of an `Artworks` 
+collection's `groupByColumnsInOrder` method. This returns the models ready to go to pass to the template.
+
+```jade
+# Dependencies for the view
+Artworks        = require '../../../collections/artworks.coffee'
+Backbone        = require 'backbone'
+CurrentUser     = require '../../../models/current_user.coffee'
+SaveControls    = require '../../../components/artwork_item/save_controls.coffee'
+artworkColumnsTemplate  = -> require('../../../components/artwork_columns/template.jade') arguments...
+
+# When the view has artworks to render
+@$('.show-artworks').html artworkColumnsTemplate artworkColumns: artworks.groupByColumnsInOrder(3)
+
+# Set up the save controls on each rendered artwork item and sync with the server
+# Fillwidth rows and artwork columns do this on their own when rendering artwork items
+listItems =
+  for artwork, index in artworks.models
+    overlay = @$(".artwork-item[data-artwork='#{artwork.get('id')}']").find('.overlay-container')
+    new SaveControls
+      artworkCollection: @artworkCollection  # This is the current user's saved artworks collection,
+                                             # which is a model...
+      el               : overlay
+      model            : artwork
+if @artworkCollection
+  @artworkCollection.addRepoArtworks @collection
+  @artworkCollection.syncSavedArtworks()
+```
+
+Note that the template will need to got in a containing element with a class of `.artwork-columns` to get
+some of the default styling.
+
+#### Use the `ArtworkColumnsView`
+Benefits:
+- Alternate column balancing layout (default option) where artworks are added to the shortest column
+- Paging - the view allows you to add arrays of models and they will be rendered and initialized with save controls
+- See more option to reveal more works
+```coffeescript
+  @columnsView = new ArtworkColumnsView
+    el:         @$ '.artwork-columns'
+    collection: new Artworks @saleArtworks.pluck('artwork')
+    gutterWidth: 40 
+    totalWidth: 1000 # Desired width of the container
+    seeMore: false    # If true, will look at `initialItemCount` 
+                      # and hide / reveal any more than that value
+    isOrdered: false  # If false will add artworks to the 
+                      # shortest column (left to right) to balance columns
+    maxArtworkHeight: 400  # used to avoid tall works from spanning the 
+                           # whole view port and looking too large
+```
+Downsides are currently that this will inject a lot of CSS, so we may need to kill that or add more
+params for percentage width / fluid layouts.
 
 
 ## Artwork Item
 ![](images/artwork_item.png)
 
 AKA "ol' reliable", this view is a work horse and will have a place on any page
-that displays artwork.
-
+that displays artwork. This component contains the save controls template and view.
 
 
 ## Garamond Tab List

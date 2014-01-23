@@ -1,7 +1,7 @@
 _              = require 'underscore'
 Backbone       = require 'backbone'
 template       = -> require('./template.jade') arguments...
-SaveControls   = require('./save_controls.coffee')
+SaveControls   = require('../artwork_item/save_controls.coffee')
 sd             = require('sharify').data
 trackListItems = require("../analytics/impression_tracking.coffee").trackListItems
 
@@ -23,14 +23,14 @@ module.exports = class FillwidthView extends Backbone.View
     @$el.html template artworks: @collection.models, seeMore: @seeMore
     maxHeight = parseInt(@$('img').first().css('max-height')) or 260
     @$('li').css 'min-height': maxHeight + 90
-    @$('li .fillwidth-img-container').height maxHeight
+    @$('li .artwork-item-image-container').height maxHeight
     @$('ul').fillwidth
       imageDimensions: @collection.fillwidthDimensions(maxHeight)
     _.defer => @handleSeeMore() if @seeMore
     @initializeArtworks @collection
 
   initializeArtworks: (artworks) ->
-    $list = @$('.fillwidth-img-container')
+    $list = @$('.artwork-item')
     return unless $list.length > 0
     listItems =
       for artwork, index in artworks.models

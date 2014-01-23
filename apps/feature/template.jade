@@ -11,3 +11,5 @@ block body
     if feature.hasImage() && feature.imageUrl()
       .feature-page-image( style="background-image: url(#{feature.imageUrl('wide')})" )
     h1.feature-page-title!= feature.get('name')
+
+    .feature-artworks.artwork-columns

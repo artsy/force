@@ -1,4 +1,3 @@
-@import './overlay_controls'
 details-height = 90px
 
 .fillwidth-list
@@ -6,31 +5,22 @@ details-height = 90px
     margin 0 15px 15px 0
     position relative
 
-.fillwidth-img-container
-  position: relative
-  .img-inner
-    display: inline-block
-    position: relative
-    overflow: hidden
-  img
-    background-color #f2f2f2
-
-.fillwidth-details-container
-  font-size 15px
-  line-height 1.2em
-  position absolute
-  bottom 0
-  height details-height
-  padding-top 15px
-  overflow ellipsis
-  p
+  .artwork-item
+    margin 0
+  .artwork-item-image-container
+    margin-bottom 0
+    position relative
+    .artwork-item-image-link
+      display inline-block
+    img
+      background-color #f2f2f2
+  .artwork-item-caption
+    bottom 0
+    height details-height
+    line-height 1.2em
     overflow ellipsis
-  p, a, .partner
-    color dark-gray-text-color
-  .artist-name
-    font-weight: bold
-  .artist-name
-    display: inline-block
+    padding-top 15px
+    position absolute
 
 .fillwidth-see-more
   display block

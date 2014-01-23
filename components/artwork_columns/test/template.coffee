@@ -45,3 +45,8 @@ describe 'Artwork Columns template', ->
     $ = cheerio.load render('template')({ artworkColumns: eightCols })
     $('.artwork-column').first().find('.artwork-item').should.have.lengthOf 1
     $('.artwork-column').should.have.lengthOf 8
+
+  it 'can render empty columns to be populated by the view', ->
+    $ = cheerio.load render('template')({ numberOfColumns: 5 })
+    $('.artwork-column').should.have.lengthOf 5
+    $('.artwork-column').is(':empty').should.be.true

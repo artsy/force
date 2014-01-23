@@ -1,8 +1,12 @@
-for column in artworkColumns
-  .artwork-column
-    for artwork in column
-      include ../artwork_item/template
+if artworkColumns
+  for column in artworkColumns
+    .artwork-column
+      for artwork in column
+        include ../artwork_item/template
+
+if numberOfColumns
+  - for (var i = 0; i < numberOfColumns; i++)
+    .artwork-column
     
 if seeMore
-  .see_more
-    button.avant-garde-button-text.fillwidth-see-more See More
+  button.avant-garde-button-text.artwork-columns-see-more= buttonLabel

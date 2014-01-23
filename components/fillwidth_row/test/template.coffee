@@ -1,3 +1,4 @@
+cheerio         = require 'cheerio'
 jade            = require 'jade'
 path            = require 'path'
 fs              = require 'fs'
@@ -35,13 +36,22 @@ describe 'Fillwidth row', ->
     it 'correctly renders and displays the partner name', ->
       @template.should.include 'MOMA'
 
-  describe 'artwork with no partner and a stale collecting institution field', ->
-    beforeEach ->
-      @artworks = [new Artwork fabricate 'artwork', { collecting_institution: 'House of Bitty', partner: null }]
+  describe 'artwork with a partner and a collecting institution field', ->
+    it 'correctly renders and does not display the partner name', ->
+      @artworks = [new Artwork fabricate 'artwork', { collecting_institution: 'House of Bitty', partner: fabricate('partner') }]
       @template = render('index')(
         sd: {}
         artworks: @artworks
       )
+      @template.should.include 'House of Bitty'
 
+  describe 'artwork with no partner and no collecting institution field', ->
+    beforeEach ->
+      @artworks = [new Artwork fabricate 'artwork', { collecting_institution: '', partner: null }]
+      @template = render('index')(
+        sd: {}
+        artworks: @artworks
+      )
     it 'correctly renders and does not display the partner name', ->
-      @template.should.not.include 'House of Bitty'
+      $ = cheerio.load @template
+      $('.artwork-item-partner').should.have.lengthOf 0

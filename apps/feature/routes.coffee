@@ -5,5 +5,6 @@ Feature = require '../../models/feature.coffee'
     cache  : true
     error  : res.backboneError
     success: (feature) ->
+      res.locals.sd.FEATURE = JSON.stringify feature
       res.render 'template',
         feature: feature
