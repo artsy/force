@@ -18,6 +18,7 @@
               onMouseOver="this.style.color='##{heroUnit.get('link_color_hover_hex') || '000'}'",
               onMouseOut="this.style.color=null"
             )= heroUnit.get('link_text')
+            .home-hero-unit-credit= heroUnit.get('credit_line')
   #home-hero-units-controls
     button#home-hero-units-left-arrow.icon-chevron-left
     ul#home-hero-unit-dots
