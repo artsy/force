@@ -40,7 +40,7 @@ describe 'Partner', ->
   describe '#href', ->
 
     it "returns the client link to this partner profile slug", ->
-      @partner.href().should.equal "#{sd.ARTSY_URL}/#{@partner.get('default_profile_id')}"
+      @partner.href().should.equal "/#{@partner.get('default_profile_id')}"
 
   describe '#displayName', ->
 

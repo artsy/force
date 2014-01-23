@@ -13,7 +13,7 @@ module.exports = class Gene extends Backbone.Model
 
   clientUrl: -> "/gene/#{@get('id')}"
 
-  href: -> "#{sd.ARTSY_URL}/gene/#{@get('id')}"
+  href: -> "/gene/#{@get('id')}"
 
   displayName: -> @get('name')
 
