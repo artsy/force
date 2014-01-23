@@ -10,6 +10,8 @@ FollowProfile = require '../models/follow_profile.coffee'
 # to retrieve
 module.exports = class FollowProfiles extends Backbone.Collection
 
+  maxSyncSize: 10
+
   url: "#{sd.ARTSY_URL}/api/v1/me/follow/profiles"
 
   model: FollowProfile
@@ -28,15 +30,19 @@ module.exports = class FollowProfiles extends Backbone.Collection
 
   # Call this from views after one or more profiles are fetched
   # to see if they are followed by the current user
+  # Recursively chunks the list of ids by @maxSyncSize
   syncFollows: (profileIds) ->
     return unless CurrentUser.orNull()
     return if profileIds.length is 0
+    # Fetch the first up to @maxSyncSize
     options =
-      data  : { profiles: profileIds }
+      data  : { profiles: _.first(profileIds, @maxSyncSize) }
       cache : false
       remove: false
       merge : true
     @fetch options
+    # Recursively fetch the rest
+    @syncFollows _.rest(profileIds, @maxSyncSize)
 
   follow: (profileId, options={}) ->
     error = options.error
