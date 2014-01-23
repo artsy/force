@@ -75,6 +75,7 @@ describe 'Partner Show', ->
       $('.show-header-last').text().should.include @show.get('partner').name
       $('.show-header-last').text().should.include @show.location().singleLine()
       $('.show-header-last').html().should.include @show.runningDates()
+      $(".show-header-last a[href*='/show/#{@show.get('id')}']").should.have.lengthOf 0
 
     it 'renders a container for artwork columns', ->
       $ = cheerio.load @html
