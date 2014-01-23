@@ -7,7 +7,7 @@ for suggestionSet in suggestions
       .personalize-suggestion.is-artist
         img.personalize-suggestion-thumbnail(
           src= artist.imageUrl('square')
-          alt=artist.get('name'),
+          alt= artist.get('name')
           onerror='this.style.display="none";'
         )
         .personalize-suggestion-name
