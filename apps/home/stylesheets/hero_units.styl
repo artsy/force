@@ -66,5 +66,43 @@ fade-duration = 0.2s
     border-color white
     color white
     &:hover, &:focus, &:active
-      color black
       background white
+
+#home-hero-units-controls
+  width 100%
+  position relative
+  height 60px
+  text-align center
+  button
+    width 45px
+    height @width
+    background transparent
+    border none
+    position absolute
+    top 10px
+    cursor pointer
+    border 3px solid transparent
+    &:hover, &:active, &:focus
+      border-color black
+  #home-hero-units-left-arrow
+    left 0
+    padding 0 3px 0 0
+    margin-left layout-side-margin
+  #home-hero-units-right-arrow
+    right 0
+    padding 0 0 0 3px
+    margin-right layout-side-margin
+
+#home-hero-unit-dots
+  display inline-block
+  margin-top 23px
+  li
+    width 8px
+    height @width
+    border-radius @width
+    margin-right 10px
+    background #CDCDCD
+    display inline-block
+    cursor pointer
+    &.hhud-active
+      background black

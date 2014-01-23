@@ -2,11 +2,15 @@ Backbone = require 'backbone'
 
 module.exports.HeroUnitView = class HeroUnitView extends Backbone.View
 
-  el: '#home-hero-units'
+  el: '#home-hero-units-container'
 
   initialize: (options) ->
     { @$body } = options
     @setBodyClass()
+    @setInterval()
+
+  setInterval: ->
+    clearInterval @interval
     @interval = setInterval @nextHeroUnit, 8000
 
   setBodyClass: ->
@@ -19,12 +23,37 @@ module.exports.HeroUnitView = class HeroUnitView extends Backbone.View
     else
       @$body.removeClass 'body-transparent-header body-transparent-header-white'
 
-  nextHeroUnit: =>
-    $next = @$('> li.home-hero-unit-active').next()
-    $next = @$('> li').first() unless $next.length
-    @$('li').removeClass('home-hero-unit-active')
-    $next.addClass('home-hero-unit-active')
+  nextHeroUnit: (direction = 1) =>
+    if direction is 1
+      $next = @$('.home-hero-unit.home-hero-unit-active').next()
+      $next = @$('.home-hero-unit').first() unless $next.length
+    else
+      $next = @$('.home-hero-unit.home-hero-unit-active').prev()
+      $next = @$('.home-hero-unit').last() unless $next.length
+    @showHeroUnit $next.index()
+
+  showHeroUnit: (index) ->
+    @$('.home-hero-unit').removeClass('home-hero-unit-active')
+    $('.home-hero-unit').eq(index).addClass('home-hero-unit-active')
+    @$("#home-hero-unit-dots li").removeClass 'hhud-active'
+    @$("#home-hero-unit-dots li").eq(index).addClass('hhud-active')
     @setBodyClass()
+
+  events:
+    'click #home-hero-units-left-arrow': 'onLeftArrow'
+    'click #home-hero-units-right-arrow': 'onRightArrow'
+    'click #home-hero-unit-dots li': 'onDot'
+
+  onLeftArrow: ->
+    @setInterval()
+    @nextHeroUnit -1
+
+  onRightArrow: ->
+    @setInterval()
+    @nextHeroUnit()
+
+  onDot: (e) ->
+    @showHeroUnit $(e.target).index()
 
 module.exports.init = ->
   window.view = new HeroUnitView $body: $('body')
