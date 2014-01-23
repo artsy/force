@@ -1,0 +1,10 @@
+section.recommended-genes
+  h3 Find Something You Like
+  .recommendations
+    ul.recommendation-row
+      each g in genes
+        li.recommendation-item
+          a(href=g.clientUrl())
+            .img-container
+              img(src=g.imageUrl('tall'))
+            .name= g.get('name')

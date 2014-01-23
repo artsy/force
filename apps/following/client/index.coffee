@@ -10,6 +10,7 @@ hintTemplate            = -> require('../templates/empty.jade') arguments...
 recTemplate             = -> require('../templates/recommendation.jade') arguments...
 FollowArtists           = require '../../../collections/follow_artists.coffee'
 FollowGenes             = require '../../../collections/follow_genes.coffee'
+RecommendedGenesView    = require '../../../components/recommended_genes/view.coffee'
 
 module.exports.FollowingView = class FollowingView extends Backbone.View
 
@@ -51,19 +52,10 @@ module.exports.FollowingView = class FollowingView extends Backbone.View
 
   showEmptyHint: () ->
     @$('.following').append $( hintTemplate type: sd.TYPE )
-    # Recommend 5 random genes
-    # TODO Consider more personalized recommendation
-    (new Genes()).fetch
-      data:
-        size: 5
-        # randomized page number in range (1, 100)
-        page: Math.floor Math.random() * 100 + 1
-        published: true
-        sort: "counts.artists"
-      cache: true
-      success: (col) ->
-        @$('.recommendations .loading-spinner').hide()
-        @$('.recommendations').append $( recTemplate recItems: col.models )
+    (new RecommendedGenesView
+      el: @$('.suggested-genes')
+      user: @currentUser
+    ).render()
 
   # Append the item with name, spinner, etc (without content) to the container
   #

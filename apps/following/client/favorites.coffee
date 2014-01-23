@@ -6,6 +6,7 @@ ArtworkCollection       = require '../../../models/artwork_collection.coffee'
 Artworks                = require '../../../collections/artworks.coffee'
 artworkColumns          = -> require('../../../components/artwork_columns/template.jade') arguments...
 ShareView               = require '../../../components/share/view.coffee'
+RecommendedGenesView    = require '../../../components/recommended_genes/view.coffee'
 
 module.exports.FavoritesView = class FavoritesView extends Backbone.View
   defaults:
@@ -18,6 +19,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
     @collection ?= new Artworks()
     @setupCurrentUser()
     @fetchAllSavedArtworks success: =>
+      @showEmptyHint() unless @collection.length > 0
       if @collection.length > @numOfCols * @numOfRowsPerPage
         $(window).bind 'scroll.following', _.throttle(@infiniteScroll, 150)
       @loadNextPage()
@@ -68,6 +70,12 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
 
   renderArtworks: (artworks) ->
     @$('.favorite-artworks').append artworkColumns artworkColumns: artworks.groupByColumnsInOrder(3)
+
+  showEmptyHint: () ->
+    (new RecommendedGenesView
+      el: @$('.suggested-genes')
+      user: @currentUser
+    ).render()
 
 module.exports.init = ->
   new FavoritesView el: $('body')
