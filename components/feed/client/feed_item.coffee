@@ -5,7 +5,7 @@ sd                      = require('sharify').data
 ShareView               = require '../../share/view.coffee'
 AcquireArtwork          = require('../../acquire/view.coffee').acquireArtwork
 analytics               = require('../../../lib/analytics.coffee')
-SaveControls            = require '../../fillwidth_row/save_controls.coffee'
+SaveControls            = require '../../artwork_item/save_controls.coffee'
 artworkColumns          = -> require('../../artwork_columns/template.jade') arguments...
 ShareView               = require '../../share/view.coffee'
 
