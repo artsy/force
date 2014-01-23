@@ -5,6 +5,7 @@ Followable          = require '../mixins/followable.coffee'
 OrderedSets         = require '../../../../collections/ordered_sets.coffee'
 FollowButton        = require '../../../partners/client/follow_profiles_button.coffee'
 FollowCollection    = require '../../../../collections/follow_profiles.coffee'
+Partner             = require '../../../../models/partner.coffee'
 { isTouchDevice }   = require '../../../../components/util/device.coffee'
 suggestedTemplate   = -> require('../../templates/suggested_profiles.jade') arguments...
 
@@ -71,9 +72,20 @@ module.exports = class SuggestionsView extends StepView
 
     @followCollection.syncFollows @suggestions.pluck('id')
 
+    @fetchAndRenderLocations()
+
     # Attach FollowButton views
     @suggestions.each (model) =>
       @setupFollowButton model, @$suggestions.find(".follow-button[data-id='#{model.id}']")
+
+  fetchAndRenderLocations: ->
+    @suggestions.each (profile) =>
+      partner = new Partner(profile.get 'owner')
+      partner.locations().fetch
+        success: =>
+          @$suggestions.
+            find(".personalize-suggestion-location[data-id='#{partner.id}']").
+            html partner.displayLocations()
 
   remove: ->
     @searchBarView.remove()

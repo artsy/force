@@ -46,3 +46,17 @@ describe 'Partner', ->
 
     it "returns the partner's name", ->
       @partner.displayName().should.equal @partner.get('name')
+
+  describe '#displayLocations', ->
+
+    it "returns a string representing the partner's locations", ->
+      @partner.displayLocations().should.equal 'New York'
+
+    it 'handles 2 locations', ->
+      @partner.get('locations').add fabricate 'location'
+      @partner.displayLocations().should.equal 'New York + 1 other location'
+
+    it 'handles n locations', ->
+      @partner.get('locations').add fabricate 'location'
+      @partner.get('locations').add fabricate 'location'
+      @partner.displayLocations().should.equal 'New York + 3 other locations'
