@@ -33,7 +33,7 @@ module.exports = class Profile extends Backbone.Model
     @displayName()
 
   href: ->
-    "#{sd.ARTSY_URL}/#{@get('id')}"
+    "/#{@get('id')}"
 
   displayName: ->
     @get('owner')?.name

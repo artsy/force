@@ -15,7 +15,7 @@ render = (res, show, profile=null) ->
     cache  : true
     error  : res.backboneError
     success: (show) =>
-      if show.get('partner').default_profile_id and show.get('partner').default_profile_public
+      if show.partner().isLinkable()
         profile = new Profile { id: show.get('partner').default_profile_id }
         profile.fetch
           cache: true

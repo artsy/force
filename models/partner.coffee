@@ -16,11 +16,13 @@ module.exports = class Partner extends Backbone.Model
     @set 'locations', locations
     locations
 
+  isLinkable: -> @get('default_profile_id') and @get('default_profile_public')
+
   alphaSortKey: ->
     @get('sortable_id')
 
   href: ->
-    "#{sd.ARTSY_URL}/#{@get('default_profile_id')}"
+    "/#{@get('default_profile_id')}"
 
   displayName: ->
     @get('name')
