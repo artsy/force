@@ -1,0 +1,36 @@
+.popover-parent
+  // Avoid adding any declarations here
+  prevent-content-shift()
+  &:hover .popover
+    opacity 1
+    transform translateY(-10px)
+    transition all 0.125s
+    transition-delay 0.25s
+
+.popover
+  position absolute
+  bottom 100%
+  right -20px
+  left -20px
+  padding 20px
+  pointer-events none
+  background-color white
+  text-align left
+  border 1px solid light-gray-border-color
+  box-shadow 0 5px 15px -5px rgba(0,0,0,.25)
+  opacity 0
+  transition all 0.0625s
+  &:before
+  &:after
+    top 100%
+    left 50%
+    position absolute
+    z-index 1
+    margin-left -6px
+    content ''
+    background transparent
+    border 6px solid transparent
+    border-top-color light-gray-border-color
+  &:after
+    border-top-color white
+    margin-top -1px
