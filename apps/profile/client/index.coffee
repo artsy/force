@@ -1,13 +1,12 @@
 _                       = require 'underscore'
 Backbone                = require 'backbone'
 sd                      = require('sharify').data
-Post                    = require '../../../models/post.coffee'
 Profile                 = require '../../../models/profile.coffee'
 CurrentUser             = require '../../../models/current_user.coffee'
 FollowProfileButton     = require '../../partners/client/follow_profiles_button.coffee'
 FollowProfiles          = require '../../../collections/follow_profiles.coffee'
 
-module.exports.PostView = class PostView extends Backbone.View
+module.exports.ProfileView = class ProfileView extends Backbone.View
 
   initialize: (options) ->
     @followProfiles = if CurrentUser.orNull() then new FollowProfiles [] else null
@@ -21,7 +20,6 @@ module.exports.PostView = class PostView extends Backbone.View
       model: profile
 
 module.exports.init = ->
-  new PostView
+  new ProfileView
     profile: new Profile sd.PROFILE
-    model  : new Post sd.POST
-    el     : $('#post')
+    el     : $('#profile')
