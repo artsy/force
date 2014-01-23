@@ -1,0 +1,11 @@
+extends ../../../components/main_layout/templates/index
+
+block head
+  include meta
+
+append locals
+  assetPackage = 'home'
+  bodyClass = 'body-no-margins'
+
+block body
+  include hero_units

@@ -1,0 +1,119 @@
+@import '../../../components/stylus_lib'
+
+fade-duration = 0.2s
+
+#home-hero-units
+  position relative
+  height 470px
+  background black
+
+.home-hero-unit
+  position absolute
+  top 0
+  left 0
+  height 100%
+  width 100%
+  background center center no-repeat
+  background-size cover
+  transition opacity fade-duration ease-out
+  opacity 0
+  z-index 0
+  &.home-hero-unit-active
+    opacity 1
+    z-index 1
+    transition opacity fade-duration ease-in fade-duration
+  > a
+    text-decoration none
+    display block
+    width 100%
+    height 100%
+    padding 0 layout-side-margin
+    padding-top main-header-height + 65px
+    position absolute
+    top 0
+    left 0
+  h1, h2
+    display block
+  h1
+    text-transform uppercase
+    letter-spacing 1px
+    font-size 21px
+  h2
+    font-size 27px
+    line-height 1.3em
+  img
+    margin 35px 0 25px 0
+    display inline-block
+  .main-layout-container
+    position relative
+    height 100%
+  .home-hero-unit-credit
+    color white
+    font-style italic
+    font-size 11px
+    opacity 0.65
+    position absolute
+    bottom 5px
+    width 100%
+  .avant-garde-button
+    margin-top 30px
+    padding 10px 20px
+    border 3px solid black
+    background transparent
+
+.home-hero-unit-center
+  text-align center
+  h1, h2, img
+    margin-left auto
+    margin-right auto
+
+.home-hero-unit-right
+  text-align right
+
+.home-hero-unit-black
+  h1, h2
+    color white
+  .avant-garde-button
+    border-color white
+    color white
+    &:hover, &:focus, &:active
+      background white
+
+#home-hero-units-controls
+  width 100%
+  position relative
+  height 60px
+  text-align center
+  button
+    width 45px
+    height @width
+    background transparent
+    border none
+    position absolute
+    top 10px
+    cursor pointer
+    border 3px solid transparent
+    &:hover, &:active, &:focus
+      border-color black
+  #home-hero-units-left-arrow
+    left 0
+    padding 0 3px 0 0
+    margin-left layout-side-margin
+  #home-hero-units-right-arrow
+    right 0
+    padding 0 0 0 3px
+    margin-right layout-side-margin
+
+#home-hero-unit-dots
+  display inline-block
+  margin-top 23px
+  li
+    width 8px
+    height @width
+    border-radius @width
+    margin-right 10px
+    background #CDCDCD
+    display inline-block
+    cursor pointer
+    &.hhud-active
+      background black

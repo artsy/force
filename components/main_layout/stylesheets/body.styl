@@ -4,6 +4,13 @@
 // a transparent header.
 //
 
+@import '../../stylus_lib'
+
+search-bar-input-placeholder-white()
+  color white
+
+// When you arrive at a page logged out there is a welcome header, then you
+// scroll down and the header becomes fixed. This is the fixed header.
 .body-header-fixed
   #main-layout-container
     margin-top: main-header-height + content-margin-top
@@ -13,6 +20,8 @@
     // Prevent repaints
     force-hardware-acceleration()
 
+// Pages like checkout or onboarding remove options from the header to heavily
+// focus on the task at hand.
 .minimal-header
   #main-layout-header
     position relative !important
@@ -20,3 +29,49 @@
     display none
   #main-layout-header-home-logo
     border-right 1px solid light-gray-border-color
+
+// Some elements need to break out of the standard side and top margins to fill
+// the full viewport.
+.body-no-margins #main-layout-container
+  margin 0
+
+// View in room and home page hero units will sit underneath a transparent
+// header.
+.body-transparent-header-white
+.body-transparent-header
+  #main-layout-header
+    background transparent
+.body-transparent-header
+  #main-layout-header
+    border-color rgba(0,0,0,0.3)
+    *:not(.tt-suggestion):not(.tt-dropdown-menu)
+      border-color rgba(0,0,0,0.3)
+
+// Dark banners and backgrounds need the header it to be white text and outlines
+// for visiblity.
+.body-transparent-header-white
+  #main-layout-header-right a, .header-user-name, #main-layout-header-home-logo
+    color white
+  #main-layout-header-right a::after
+    border-color white
+  #main-layout-search-bar-input
+    color white
+    placeholder(search-bar-input-placeholder-white)
+  #main-layout-header-user-nav
+    background black
+    &::before, &::after
+      background white
+    a
+      border-top-color white
+      &:hover
+        background-color #333
+      &:last-child::after
+        background white
+  #main-layout-header
+    border-color rgba(255,255,255,0.3)
+    *:not(.tt-suggestion):not(.tt-dropdown-menu)
+      border-color rgba(255,255,255,0.3)
+  #main-layout-search-bar-container.is-loading .loading-spinner-small
+    background white
+  #main-layout-header-home-logo::after
+    border-color white
