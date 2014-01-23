@@ -85,7 +85,7 @@ module.exports = class SuggestionsView extends StepView
         success: =>
           @$suggestions.
             find(".personalize-suggestion-location[data-id='#{partner.id}']").
-            html partner.displayLocations()
+            html partner.displayLocations(@user.get('location')?.city)
 
   remove: ->
     @searchBarView.remove()

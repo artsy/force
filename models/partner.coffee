@@ -25,10 +25,16 @@ module.exports = class Partner extends Backbone.Model
   displayName: ->
     @get('name')
 
-  displayLocations: ->
+  # @param {String} preferredLocation (optional)
+  displayLocations: (preferredLocation) ->
     if @get('locations').length
-      string = @get('locations').first().get('city') or @get('locations').first().get('country')
+      string =
+        @get('locations').findWhere(city: preferredLocation)?.get('city') or
+        @get('locations').first().get('city') or
+        @get('locations').first().get('country')
+
       if @get('locations').length > 1
         string += " + #{@get('locations').length - 1} other location"
         string += "s" unless @get('locations').length is 2
+
       string
