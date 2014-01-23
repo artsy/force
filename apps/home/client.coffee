@@ -14,6 +14,7 @@ module.exports.HeroUnitView = class HeroUnitView extends Backbone.View
     @interval = setInterval @nextHeroUnit, 8000
 
   setBodyClass: ->
+    # TODO: Toggle this based on whether the user scrolled past the hero unit.
     if true
       $activeLi = @$('> li.home-hero-unit-active')
       @$body.addClass if $activeLi.hasClass('home-hero-unit-white')
