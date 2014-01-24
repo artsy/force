@@ -1,6 +1,5 @@
 _                = require 'underscore'
 Backbone         = require 'backbone'
-imagesLoaded     = require '../../lib/vendor/imagesloaded.js'
 carouselTemplate = -> require('./template.jade') arguments...
 
 module.exports = class Carousel extends Backbone.View
@@ -32,6 +31,7 @@ module.exports = class Carousel extends Backbone.View
   transitionEvents: 'transitionEnd oTransitionEnd msTransitionEnd transitionend webkitTransitionEnd'
 
   initialize: (options) ->
+    imagesLoaded     = require '../../lib/vendor/imagesloaded.js'
     throw 'You must pass a collection' unless @collection?
     @$window = $(window)
     @$document = $(document)
@@ -41,13 +41,14 @@ module.exports = class Carousel extends Backbone.View
     @render()
 
   render: ->
-    @$el.html carouselTemplate carouselFigures: @collection.models, height: @height
+    figures = @collection.models
+
+    @$el.html carouselTemplate carouselFigures: figures, height: @height
 
     if @length < @minLength
       @$el.empty()
       return @
 
-    figures = @collection.models
     preFigures = figures[..]
     postFigures = figures[..]
     center = Math.ceil(@length / 2)
@@ -58,7 +59,8 @@ module.exports = class Carousel extends Backbone.View
     # Store jQuery ref to the track that shifts
     @$track = @$('.carousel-track')
     # When images are loaded, do the math
-    @$el.imagesLoaded => @setStops()
+    if @$el?.imagesLoaded
+      @$el.imagesLoaded => @setStops()
     # Ensure the carousel is revealed even if an image gets stuck
     _.delay (=>
       @$el.removeClass('carousel-loading')
