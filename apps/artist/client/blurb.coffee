@@ -11,7 +11,7 @@ module.exports = class BlurbView extends Backbone.View
   attachEllipsis: ->
     return unless @$el.length > 0
     return if @seeMoreClicked
-    seeMoreSpan =  $('<span class="see-more-blurb">... <a href="#">Show more</a></span>')
+    seeMoreSpan = $('<span class="see-more-blurb">&hellip; <a href="#">Show more</a></span>')
     # The six-pixel wiggle room below is dirty, but works. Things like q's or
     # underlines cause the height of 6 lines of text to exceed 6 * line-height
     @$el.dotdotdot
@@ -28,5 +28,8 @@ module.exports = class BlurbView extends Backbone.View
         false
 
   detachEllipsis: ->
-    _.delay (=> @$el.trigger 'destroy'), 260
+    @$el.height(
+      @$el.height(@$el.height()). # Fix the current height in place
+        trigger('destroy')[0].scrollHeight # Destroy dotdotdot and return the actual height
+    ) # Set the real height (transition happens with CSS)
     $(window).off 'resize'

@@ -2,13 +2,13 @@ _               = require 'underscore'
 sd              = require('sharify').data
 Backbone        = require 'backbone'
 Gene            = require '../models/gene.coffee'
-{ GRAVITY_URL } = require('sharify').data
+{ ARTSY_URL } = require('sharify').data
 { Fetch, AToZ } = require 'artsy-backbone-mixins'
 
 module.exports = class Genes extends Backbone.Collection
 
   _.extend @prototype, AToZ
-  _.extend @prototype, Fetch(GRAVITY_URL)
+  _.extend @prototype, Fetch(ARTSY_URL)
 
   model: Gene
 
