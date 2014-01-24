@@ -20,12 +20,20 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
     { @numOfCols, @numOfRowsPerPage, @nextPage } = _.defaults options or {}, @defaults
     @collection ?= new Artworks()
     @setupCurrentUser()
+    @listenTo @collection, 'request', @renderLoading
     @fetchAllSavedArtworks success: =>
+      @doneRenderLoading()
       @showEmptyHint() unless @collection.length > 0
       if @collection.length > @numOfCols * @numOfRowsPerPage
         $(window).bind 'scroll.following', _.throttle(@infiniteScroll, 150)
       @loadNextPage()
-    @shareView = new ShareView el: @$('.favorites-share')
+
+  renderLoading: ->
+    unless @$('.favorite-artworks .loading-spinner').length > 0
+      @$('.favorite-artworks').html '<div class="loading-spinner"></div>'
+
+  doneRenderLoading: ->
+    @$('.favorite-artworks .loading-spinner').remove()
 
   setupCurrentUser: ->
     @currentUser = CurrentUser.orNull()
