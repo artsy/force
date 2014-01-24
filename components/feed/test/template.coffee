@@ -178,7 +178,7 @@ describe 'Feed Templates', ->
       # PostEmbed
       $('.feed-right-column figure.post-embed').length.should.equal 1
 
-      # PostEmbed
+      # PostLink
       $('.feed-right-column figure.video-link').length.should.equal 1
 
       @html.should.not.include "undefined"
