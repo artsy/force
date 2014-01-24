@@ -1,11 +1,42 @@
+@import '../../components/pagination'
+
 #artists-page
   padding 40px 80px
-  > h1
+  h1
     margin 40px 0
     font-size 24px
 
+// ABC Listing
+.alphabetical-index
+  display table
+  table-layout fixed
+  font-size 20px
+  width 100%
+  border-top 1px solid light-gray-border-color
+  border-bottom 1px solid light-gray-border-color
+
+.alphabetical-index-label
+.alphabetical-index-range
+  display table-cell
+  white-space nowrap
+
+.alphabetical-index-label
+  width 200px
+  padding 20px 20px 20px 0
+
+.alphabetical-index-range
+  text-align right
+  > a
+    display inline-block
+    padding 20px 0.75%
+    text-transform uppercase
+    text-decoration none
+    transition color 0.25s
+    &:hover
+    &.is-active
+      color highlight-color
+
 // Carousel
-carousel-image-height = 360px
 bumper-width = 40px
 
 .artists-featured-carousel
@@ -15,10 +46,13 @@ bumper-width = 40px
     *
       transition none
       opacity 1 !important
-  &[data-position='start'] .afc-prev
-  &[data-position='end'] .afc-next
-      opacity 0 !important
-      cursor default
+  // Bumper visible states
+  &[data-position='start'] .afc-next
+  &[data-position='end'] .afc-prev
+  &[data-position='middle'] .afc-next
+  &[data-position='middle'] .afc-prev
+    cursor pointer
+    opacity 1
 
 .afc-track-container
   position relative
@@ -40,14 +74,16 @@ bumper-width = 40px
   position absolute
   top 0
   width bumper-width
-  height carousel-image-height
+  height 100%
   text-align center
   color dark-gray-text-color
   background-color light-gray-background-color
   transition all 0.25s
-  cursor pointer
   user-select none
   z-index 1
+  // Deactivated by default
+  opacity 0
+  cursor default
   > i
     display block
     position relative
@@ -67,6 +103,7 @@ bumper-width = 40px
 .afc-artist
   display inline-block
   width 50%
+  vertical-align top
   &:nth-child(odd)
     padding-right 20px
     border-right 1px solid dark-gray-border-color
@@ -77,12 +114,13 @@ bumper-width = 40px
   > a
     display block
     width 100%
-    height carousel-image-height
-    background-size cover
-    background-position center center
+    background-color light-gray-background-color
+    > img
+      width 100%
 
 .afc-artist-information
   display table
+  table-layout fixed
   width 100%
   transition opacity 0.5s
 
@@ -92,14 +130,22 @@ bumper-width = 40px
   vertical-align top
   padding-top 20px
 
+.afc-artist-information-left
+  padding-right 20px
+
 .afc-artist-information-right
   text-align right
+  width 150px
 
 .afc-artist-name
   avant-garde()
   font-size 15px
   > a
     text-decoration none
+
+.afc-artist-name
+.afc-artist-notes
+  overflow ellipsis
 
 // Featured Genes
 .artists-featured-genes-gene
@@ -144,3 +190,18 @@ bumper-width = 40px
     right 0
     font-size 11px
     padding 7px 20px
+
+// Letter page
+#letter-page
+  position relative
+  > .contextual-return-link
+    position absolute
+    top 0
+    left 0
+
+.artists-columns
+  column-count 4
+
+  > a
+    display block
+    padding 5px 10px 5px 0

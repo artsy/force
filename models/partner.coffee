@@ -16,11 +16,27 @@ module.exports = class Partner extends Backbone.Model
     @set 'locations', locations
     locations
 
+  isLinkable: -> @get('default_profile_id') and @get('default_profile_public')
+
   alphaSortKey: ->
     @get('sortable_id')
 
   href: ->
-    "#{sd.ARTSY_URL}/#{@get('default_profile_id')}"
+    "/#{@get('default_profile_id')}"
 
   displayName: ->
     @get('name')
+
+  # @param {String} preferredLocation (optional)
+  displayLocations: (preferredLocation) ->
+    if @get('locations').length
+      string =
+        @get('locations').findWhere(city: preferredLocation)?.get('city') or
+        @get('locations').first().get('city') or
+        @get('locations').first().get('country')
+
+      if @get('locations').length > 1
+        string += " + #{@get('locations').length - 1} other location"
+        string += "s" unless @get('locations').length is 2
+
+      string

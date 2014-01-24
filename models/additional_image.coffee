@@ -47,3 +47,10 @@ module.exports = class AdditionalImage extends Backbone.Model
 
   aspectRatio: ->
     @get 'aspect_ratio'
+
+  maxHeightForWidth: (width, maxDimension) ->
+    aspectRatio = @aspectRatio()
+    maxDimension = maxDimension || @get 'original_height'
+    if aspectRatio?
+      height = Math.round width / @aspectRatio()
+      if height > maxDimension then maxDimension else Math.floor(height)

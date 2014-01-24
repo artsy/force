@@ -33,8 +33,7 @@ body.is-modal
   background-color #fff
   max-width 90%
   max-height 90%
-  // Hack to prevent shifting content
-  transform translateZ(0)
+  prevent-content-shift()
   &.is-notransition
     transition none !important
 

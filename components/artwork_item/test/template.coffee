@@ -58,6 +58,7 @@ describe 'Artwork Item template', ->
       @artwork.get('partner').default_profile_public = true
       @artwork.get('partner').default_profile_id = 'moma'
       $ = cheerio.load render('template')({ artwork: @artwork })
+      $('.artwork-item-partner a').should.have.lengthOf 1
       $('.artwork-item-partner a').text().should.equal @artwork.partnerName()
       $('.artwork-item-partner a').attr('href').should.equal @artwork.partnerLink()
 
@@ -65,3 +66,18 @@ describe 'Artwork Item template', ->
       @artwork.set 'sale_message', "$5,200"
       $ = cheerio.load render('template')({ artwork: @artwork })
       $('.artwork-item-sale-price').text().should.equal @artwork.get 'sale_message'
+
+  describe 'nopin', ->
+    beforeEach ->
+      @artwork = new Artwork fabricate 'artwork'
+      @html = render('template')({ artwork: @artwork })
+
+    it 'renders a nopin attribute if the artwork is not sharable', ->
+      @artwork.set 'can_share_image', false
+      $ = cheerio.load render('template')({ artwork: @artwork })
+      $('.artwork-item-image').attr('nopin').should.equal 'nopin'
+
+    it 'does not render a nopin attribute if the artwork is sharable', ->
+      @artwork.set 'can_share_image', true
+      $ = cheerio.load render('template')({ artwork: @artwork })
+      $('.artwork-item-image[nopin]').should.have.lengthOf 0

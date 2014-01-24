@@ -4,8 +4,7 @@ suggestion-row-width = 850px
   width suggestion-row-width
   margin 90px auto
   text-align center
-  // Hack to prevent shifting content
-  transform translateZ(0)
+  prevent-content-shift()
   > .personalize-suggestions-more-container
     display none
   &[data-state='loaded']
@@ -52,7 +51,7 @@ suggestion-row-width = 850px
 
 .personalize-suggestion
   display inline-block
-  padding 0 10px
+  position relative
   &.is-profile
     width (suggestion-row-width / 4)
     margin 0 0 30px
@@ -80,6 +79,13 @@ suggestion-row-width = 850px
   margin-top 10px
   avant-garde()
   font-size 13px
+  overflow ellipsis
+
+.personalize-popover-name
+  avant-garde()
+  font-size 13px
+
+.personalize-suggestion-location
   overflow ellipsis
 
 .personalize-suggestion-info

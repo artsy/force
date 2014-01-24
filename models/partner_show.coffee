@@ -56,9 +56,9 @@ module.exports = class PartnerShow extends Backbone.Model
 
   href: ->
     if @has('fair') and @get('fair').organizer
-      "#{sd.ARTSY_URL}/#{@get('fair').organizer.profile_id}/browse/show/#{@get('partner').id}"
+      "/#{@get('fair').organizer.profile_id}/browse/show/#{@get('partner').id}"
     else
-      "#{sd.ARTSY_URL}/show/#{@get('id')}"
+      "/show/#{@get('id')}"
 
   runningDates: ->
     DateHelpers.timespanInWords @get('start_at'), @get('end_at')

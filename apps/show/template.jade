@@ -4,14 +4,15 @@ include ../../components/share/template
 block head
   include meta
 
-block locals
+append locals
   assetPackage = 'show'
 
 block body
   #show
     header.show-header
-      .profile-badge-small
-        include ../../components/profile_badge/template
+      if profile
+        .profile-badge-small
+          include ../../components/profile_badge/template
       nav.show-share
         +share(show.shareTitle())
       h1.show-heading-title!= show.title()
@@ -22,14 +23,11 @@ block body
 
     header.show-header.show-header-last
       h2.show-subheading
-        if partner.has('default_profile_id')
+        if partner.has('default_profile_id') && partner.get('default_profile_public')
           a( href= partner.href() )!= partner.get('name')
         else
           != partner.get('name')
       h2.show-subheading!= show.runningDates()
-      if fair
-        h2.show-subheading
-          a( href=show.href() )!= fair.get('name')
       if location
         h2.show-subheading!= location.singleLine()
 

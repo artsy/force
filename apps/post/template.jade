@@ -3,11 +3,9 @@ extends ../../components/main_layout/templates/index
 block head
   include meta
 
-block locals
+append locals
   assetPackage = 'post'
 
 block body
   #post
-    header.post-header
-      .profile-badge-small
-        include ../../components/profile_badge/template
+    include ../../components/profile_header/template

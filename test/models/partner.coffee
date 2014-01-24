@@ -40,9 +40,26 @@ describe 'Partner', ->
   describe '#href', ->
 
     it "returns the client link to this partner profile slug", ->
-      @partner.href().should.equal "#{sd.ARTSY_URL}/#{@partner.get('default_profile_id')}"
+      @partner.href().should.equal "/#{@partner.get('default_profile_id')}"
 
   describe '#displayName', ->
 
     it "returns the partner's name", ->
       @partner.displayName().should.equal @partner.get('name')
+
+  describe '#displayLocations', ->
+
+    it "returns a string representing the partner's locations", ->
+      @partner.displayLocations().should.equal 'New York'
+
+    it 'handles 2 locations', ->
+      @partner.get('locations').add fabricate 'location'
+      @partner.displayLocations().should.equal 'New York + 1 other location'
+
+    it 'handles n locations', ->
+      @partner.get('locations').add fabricate 'location'
+      @partner.get('locations').add fabricate 'location', city: 'Paris'
+      @partner.displayLocations().should.equal 'New York + 3 other locations'
+
+    it 'displays a preferred location if passed in', ->
+      @partner.displayLocations('Paris').should.equal 'Paris + 3 other locations'

@@ -74,3 +74,42 @@ describe 'Profile', ->
 
       @profile.get('owner').name = "2 % Johan _ Gregor 37"
       @profile.defaultIconInitials().should.equal "2J"
+
+  describe '#formatFollowText', ->
+
+    it 'returns formatted follows text', ->
+      @profile.set follows_count: 1234567
+      @profile.formatFollowText().should.equal '1,234,567 Followers'
+
+  describe '#getFormattedWebsite', ->
+
+    it 'formats website', ->
+      @profile.set website: 'https://artsy.net'
+      @profile.getFormattedWebsite().should.equal 'artsy.net'
+
+  describe '#metaTitle', ->
+
+    it 'correctly formats title for users', ->
+      @profile.set owner_type: 'User'
+      @profile.metaTitle().should.equal 'J. Paul Getty Museum | Artsy'
+
+    it 'correctly formats title for galleries', ->
+      @profile.set owner_type: 'PartnerGallery'
+      @profile.metaTitle().should.equal 'J. Paul Getty Museum | Artists, Art for Sale, and Contact Info | Artsy'
+
+    it 'correctly formats title for non-gallery partners', ->
+      @profile.set owner_type: 'PartnerMuseum'
+      @profile.metaTitle().should.equal 'J. Paul Getty Museum | Artists, Artworks, and Contact Info | Artsy'
+
+    it 'correctly formats title for fairs', ->
+      @profile.set owner_type: 'FairOrganizer'
+      @profile.metaTitle().should.equal 'J. Paul Getty Museum | Artists, Artworks, and Contact Info | Fair Info, Artists, and Art for Sale | Artsy'
+
+  describe '#metaDescription', ->
+
+    it 'correctly formats description', ->
+      @profile.set('bio', 'bio')
+      @profile.metaDescription().should.equal 'bio'
+
+      @profile.set('bio', undefined)
+      @profile.metaDescription().should.equal 'J. Paul Getty Museum on Artsy'

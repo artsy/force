@@ -42,6 +42,9 @@ garamond()
 force-hardware-acceleration()
   transform translate3d(0, 0, 0)
 
+prevent-content-shift()
+  transform translateZ(0)
+
 // Surprisingly, nib doesn't support calc
 calc()
   for prefix in webkit moz ms o

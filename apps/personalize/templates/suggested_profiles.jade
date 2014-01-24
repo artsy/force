@@ -1,14 +1,21 @@
 for row in rows
   .personalize-suggestion-row
     for profile in row
-      .personalize-suggestion.is-profile
+      .personalize-suggestion.is-profile.popover-parent
+        if profile.get('bio')
+          .popover
+            .personalize-popover-name
+              = profile.get('owner').name
+            p= profile.get('bio')
         .personalize-suggestion-thumbnail: img(
           src= profile.coverImage().imageUrl('medium')
-          alt= profile.get('owner').name,
+          alt= profile.get('owner').name
           onerror='this.style.display="none";'
         )
         .personalize-suggestion-name
           = profile.get('owner').name
+        .personalize-suggestion-location( data-id= profile.get('owner').id )
+          | &hellip;
         .personalize-suggestion-info
           = profile.get('locations')
 
