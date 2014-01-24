@@ -14,11 +14,8 @@ module.exports = class PostLink extends Backbone.Model
   isImage: -> @get('oembed_json')?.type == 'photo'
   isRich: ->  @get('oembed_json')?.type == 'rich'
 
-  safeEmbedHtml: (maxWidth = 600) ->
-    @safeEmbedElement(maxWidth).wrap('<div></div>').parent().html()
-
   canBeDisplayed: ->
-    @isImage() || (@hasEmbed() && @safeEmbedElement())
+    @isImage() || @hasEmbed()
 
   title: ->
     @get('oembed_json')?.title
@@ -35,13 +32,20 @@ module.exports = class PostLink extends Backbone.Model
   imageHeight: ->
     if @isImage() then @get('oembed_json')?.height else @get('oembed_json')?.thumbnail_height
 
-  maxHeightForWidth: (width) ->
-    aspectRatio = @aspectRatio()
-    if aspectRatio?
-      height = Math.round(width / aspectRatio)
-      if height > @imageHeight() then @imageHeight() else height
-    else
-      width
+  aspectRatio: ->
+    @get('aspect_ratio') || (@imageWidth() / @imageHeight())
 
-  maxWidthForWidth: (width) ->
-    if width > @imageWidth() then @imageWidth() else width
+  maxHeightForWidth: (maxDimension=600) ->
+    aspectRatio = @aspectRatio()
+    maxDimension = maxDimension || @get('original_height')
+    height = @imageHeight()
+    width = @imageWidth()
+    if aspectRatio?
+      height = Math.round(width / @aspectRatio())
+      if height > maxDimension then maxDimension else Math.floor(height)
+
+  maxWidthForWidth: (maxDimension=600) ->
+    aspectRatio = @aspectRatio()
+    width = @imageWidth()
+    if aspectRatio?
+      if width > maxDimension then maxDimension else Math.floor(width)

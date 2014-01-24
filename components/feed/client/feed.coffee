@@ -131,3 +131,23 @@ module.exports.FeedView = class FeedView extends Backbone.View
     @currentUser = CurrentUser.orNull()
     @currentUser?.initializeDefaultArtworkCollection()
     @artworkCollection = @currentUser?.defaultArtworkCollection()
+
+  # cleanupAttachments: ->
+
+  # safeEmbedElement: (maxWidth = 600) ->
+  #   # Only support externally sourced iframe embeds
+  #   iframe = $(@get('oembed_json').html).empty()
+  #   return unless iframe.attr('src')
+
+  #   # Strip protocol, to match current page (and avoid unsafe iframe warnings)
+  #   iframe.attr('src', iframe.attr('src').replace(/^https?:/, ''))
+
+  #   width = parseInt(iframe.attr('width'))
+  #   height = parseInt(iframe.attr('height'))
+  #   if width > maxWidth
+  #     iframe.attr 'width', maxWidth
+  #     iframe.attr 'height', maxWidth * (height / width)
+  #   iframe
+
+  # safeEmbedHtml: (maxWidth = 600) ->
+  #   @safeEmbedElement(maxWidth).wrap('<div></div>').parent().html()

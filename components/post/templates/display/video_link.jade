@@ -7,4 +7,5 @@ figure.video-link( style="width=" + attachment.maxWidthForWidth(maxDimension) + 
   .details
     p.title
       em!=attachment.title()
-      | !=', ' + attachment.sourceName()
+      | , 
+      span= attachment.sourceName()

@@ -4,4 +4,5 @@ figure.rich-link( id='link_' + attachment.id, data-attachment=attachment.id, sty
   .details
     p.title
       em!= attachment.title() 
-      | != ', ' + attachment.sourceName()
+      | , 
+      span= attachment.sourceName()

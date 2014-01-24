@@ -15,10 +15,6 @@ section.post-media
     else if attachment.get('type') == "PostImage"
       include ./display/post_image
 
-    else if attachment.get('type') == "Artwork"
-      - var artwork = attachment.artwork()
-      include ../../artwork_item/template
-
-    else if attachment.get('type') == "PostArtwork" && attachment.get('artwork')
+    else if attachment.get('type') == "PostArtwork"
       - var artwork = attachment.artwork()
       include ../../artwork_item/template
