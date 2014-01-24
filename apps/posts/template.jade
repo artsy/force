@@ -17,12 +17,12 @@ block body
       a.add-to-post-button Add Post
       | on any artwork or artist page to post your own.
     if currentUser
-      .tabs
-        a.featured( data-tab='featured' ) Featured By Artsy
+      .garamond-tablist
+        a.garamond-tab( data-tab='featured' ) Featured By Artsy
         span &nbsp;&nbsp;&#8260;&nbsp;&nbsp;
-        a.personalized( data-tab='personalized' ) Following
+        a.garamond-tab( data-tab='personalized' ) Following
         if currentUser.isAdmin()
           span &nbsp;&nbsp;&#8260;&nbsp;&nbsp;
-          a.all( data-tab='all' ) All Posts
+          a.garamond-tab( data-tab='all' ) All Posts
 
     .feed.loading
