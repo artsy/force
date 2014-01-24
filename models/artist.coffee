@@ -2,14 +2,14 @@ _             = require 'underscore'
 Backbone      = require 'backbone'
 sd            = require('sharify').data
 Artworks      = require '../collections/artworks.coffee'
-markdownMixin = require './mixins/markdown.coffee'
+{ Markdown }  = require 'artsy-backbone-mixins'
 Image         = require './mixins/image.coffee'
 Post          = require './post.coffee'
 { smartTruncate } = require '../components/util/string.coffee'
 
 module.exports = class Artist extends Backbone.Model
 
-  _.extend @prototype, markdownMixin
+  _.extend @prototype, Markdown
   _.extend @prototype, Image
 
   sortCriteriaForArtworks:

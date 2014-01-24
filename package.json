@@ -30,7 +30,8 @@
     "artsy-passport": "*",
     "backbone-pageable": "*",
     "moment": "*",
-    "validator": "*"
+    "validator": "*",
+    "artsy-backbone-mixins": "*"
   },
   "devDependencies": {
     "browserify": "*",
