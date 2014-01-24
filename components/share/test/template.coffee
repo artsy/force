@@ -15,7 +15,7 @@ describe 'Share template', ->
   before (done) ->
     benv.setup =>
       benv.expose {
-        $: benv.require 'components-jquery'
+        $: benv.require 'jquery'
         sd: {
           ARTSY_URL: 'http://artsy.net'
           CURRENT_PATH: '/artist/andy-warhol'

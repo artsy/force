@@ -11,7 +11,7 @@ _             = require 'underscore'
 describe 'Auction results client-side code', ->
   before (done) ->
     benv.setup =>
-      benv.expose { $: benv.require 'components-jquery' }
+      benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       done()
 
@@ -52,4 +52,3 @@ describe 'Auction results client-side code', ->
     it 'passes the original sized image to the ZoomView', ->
       @view.$('.auction-lot-image-zoom').click()
       @zoomStub.args[0][0].imgSrc.should.equal @auctionLots.at(0).imageUrl('original')
-

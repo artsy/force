@@ -26,7 +26,7 @@ fixture   = """
 describe 'Artists client-side code', ->
   before (done) ->
     benv.setup =>
-      benv.expose { $: benv.require 'components-jquery' }
+      benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       $.support.transition = { end: 'transitionend' }
       $.fn.emulateTransitionEnd = -> @trigger $.support.transition.end
@@ -109,4 +109,3 @@ describe 'Artists client-side code', ->
       @view.prev()
       @view.prev()
       @view.moveToActive.calledTwice.should.be.ok
-

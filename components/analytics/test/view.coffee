@@ -9,7 +9,7 @@ impressionTracking = require '../impression_tracking'
 describe 'ImpressionTracking', ->
   before (done) ->
     benv.setup =>
-      benv.expose { $: benv.require 'components-jquery' }
+      benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       sd.GOOGLE_ANALYTICS_ID = 'goog that analytics'
       @gaStub = sinon.stub()

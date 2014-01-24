@@ -8,7 +8,7 @@ JumpView      = require '../view.coffee'
 describe 'JumpView', ->
   beforeEach (done) ->
     benv.setup =>
-      benv.expose { $: benv.require 'components-jquery' }
+      benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       @view = new JumpView
       done()

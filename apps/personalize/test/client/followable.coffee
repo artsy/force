@@ -26,7 +26,7 @@ class TestView extends Backbone.View
 describe 'Followable', ->
   before (done) ->
     benv.setup ->
-      benv.expose { $: benv.require 'components-jquery' }
+      benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       done()
 

@@ -10,7 +10,7 @@ CurrentUser       = require '../../../../models/current_user.coffee'
 describe 'LocationView', ->
   before (done) ->
     benv.setup =>
-      benv.expose { $: benv.require 'components-jquery' }
+      benv.expose { $: benv.require 'jquery' }
       Backbone.$      = $
       @LocationView   = benv.requireWithJadeify resolve(__dirname, '../../client/views/location'), ['template']
       @LocationView.__set__ 'LocationSearchView', Backbone.View
