@@ -18,7 +18,7 @@ module.exports.CarouselView = class CarouselView extends Backbone.View
     $(window).on 'resize', @resize
 
     # Wait for the first image to load before enabling anything
-    @$el.imagesLoaded().progress _.once(@updateValues)
+    @$el.imagesLoaded?().progress _.once(@updateValues)
 
   updateValues: (e) =>
     @$panels ||= @$('.afc-artist')
