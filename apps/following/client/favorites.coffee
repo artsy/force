@@ -5,7 +5,9 @@ CurrentUser             = require '../../../models/current_user.coffee'
 ArtworkCollection       = require '../../../models/artwork_collection.coffee'
 Artworks                = require '../../../collections/artworks.coffee'
 artworkColumns          = -> require('../../../components/artwork_columns/template.jade') arguments...
+hintTemplate            = -> require('../templates/empty.jade') arguments...
 ShareView               = require '../../../components/share/view.coffee'
+SaveControls            = require '../../../components/artwork_item/save_controls.coffee'
 RecommendedGenesView    = require '../../../components/recommended_genes/view.coffee'
 
 module.exports.FavoritesView = class FavoritesView extends Backbone.View
@@ -36,7 +38,9 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
     return unless @collection.length > start
     console.log "Loading page ##{@nextPage} (#{start}, #{end}], @collection has #{@collection.length} artworks."
     console.log "Rendering page ##{@nextPage}\n"
-    @renderArtworks(new Artworks(@collection.slice(start, end)))
+    artworks = new Artworks @collection.slice start, end
+    @renderArtworks artworks
+    @setupArtworkSaveControls artworks
     ++@nextPage
 
   infiniteScroll: =>
@@ -68,10 +72,22 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
       private: true
     @collection.fetch _.extend { url: url, data: data, add: true, remove: false, merge: false }, options
 
+  setupArtworkSaveControls: (artworkCollection) ->
+    for artwork in artworkCollection.models
+      overlay = @$(".artwork-item[data-artwork='#{artwork.get('id')}']").find('.overlay-container')
+      new SaveControls
+        artworkCollection: @artworkCollection
+        el               : overlay
+        model            : artwork
+    if @artworkCollection
+      @artworkCollection.addRepoArtworks artworkCollection
+      @artworkCollection.syncSavedArtworks()
+
   renderArtworks: (artworks) ->
     @$('.favorite-artworks').append artworkColumns artworkColumns: artworks.groupByColumnsInOrder(3)
 
   showEmptyHint: () ->
+    @$('.follows-empty-hint').html $( hintTemplate type: 'artworks' )
     (new RecommendedGenesView
       el: @$('.suggested-genes')
       user: @currentUser
