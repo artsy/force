@@ -3,13 +3,13 @@ sd            = require('sharify').data
 Backbone      = require 'backbone'
 CoverImage    = require './cover_image.coffee'
 Icon          = require './icon.coffee'
-markdownMixin = require './mixins/markdown.coffee'
+{ Markdown }  = require 'artsy-backbone-mixins'
 
 _.mixin(require 'underscore.string')
 
 module.exports = class Profile extends Backbone.Model
 
-  _.extend @prototype, markdownMixin
+  _.extend @prototype, Markdown
 
   GALLERY_OWNER_TYPES: ['PartnerGallery']
   USER_OWNER_TYPES: [ 'User', 'Admin' ]
