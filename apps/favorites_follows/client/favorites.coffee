@@ -8,7 +8,7 @@ artworkColumns          = -> require('../../../components/artwork_columns/templa
 hintTemplate            = -> require('../templates/empty_hint.jade') arguments...
 ShareView               = require '../../../components/share/view.coffee'
 SaveControls            = require '../../../components/artwork_item/save_controls.coffee'
-RecommendedGenesView    = require '../../../components/recommended_genes/view.coffee'
+SuggestedGenesView      = require '../../../components/suggested_genes/view.coffee'
 
 module.exports.FavoritesView = class FavoritesView extends Backbone.View
   defaults:
@@ -96,7 +96,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
 
   showEmptyHint: () ->
     @$('.follows-empty-hint').html $( hintTemplate type: 'artworks' )
-    (new RecommendedGenesView
+    (new SuggestedGenesView
       el: @$('.suggested-genes')
       user: @currentUser
     ).render()

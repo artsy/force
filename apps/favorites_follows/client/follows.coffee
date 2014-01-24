@@ -7,10 +7,9 @@ CurrentUser             = require '../../../models/current_user.coffee'
 FollowButton            = require './follow_button.coffee'
 itemTemplate            = -> require('../templates/follows_item.jade') arguments...
 hintTemplate            = -> require('../templates/empty_hint.jade') arguments...
-recTemplate             = -> require('../templates/recommendation.jade') arguments...
 FollowArtists           = require '../../../collections/follow_artists.coffee'
 FollowGenes             = require '../../../collections/follow_genes.coffee'
-RecommendedGenesView    = require '../../../components/recommended_genes/view.coffee'
+SuggestedGenesView      = require '../../../components/suggested_genes/view.coffee'
 
 module.exports.FollowsView = class FollowsView extends Backbone.View
 
@@ -52,7 +51,7 @@ module.exports.FollowsView = class FollowsView extends Backbone.View
 
   showEmptyHint: () ->
     @$('.follows-empty-hint').html $( hintTemplate type: sd.TYPE )
-    (new RecommendedGenesView
+    (new SuggestedGenesView
       el: @$('.suggested-genes')
       user: @currentUser
     ).render()
