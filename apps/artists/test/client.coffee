@@ -38,6 +38,7 @@ describe 'Artists client-side code', ->
   beforeEach ->
     { CarouselView } = require '../client.coffee'
     @view = new CarouselView el: $(fixture), skipN: 2
+    @view.updateValues($.Event()) # Imitate imagesLoaded
 
   describe '#initalize', ->
     it 'starts at the beginning', ->
