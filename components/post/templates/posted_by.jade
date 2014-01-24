@@ -1,0 +1,4 @@
+.posted-by.profile-icon-container.profile-badge
+  include ../../profile_badge/template
+  if post.get('last_promoted_at')
+    .posted-at= post.postedAt()

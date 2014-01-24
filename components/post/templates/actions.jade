@@ -1,0 +1,30 @@
+if currentUser && currentUser.canAdministerContent()
+  include ./actions_feature
+include ../../share/template
+.see-post
+.post-modifier-actions
+  +share(post.shareTitle(), null)
+  if profile && profile.isCurrentProfile()
+    a.edit Edit
+  if (profile && profile.isCurrentProfile()) || (currentUser && currentUser.canAdministerContent())
+    a.remove Delete
+
+  if currentUser && currentUser.canAdministerContent()
+    if post.get('featured')
+      a.unfeature Unfeature
+    else
+      a.feature Feature
+
+    if post.get('flagged')
+      a.flagged Flagged
+      a.toggle Posts
+    else
+      a.flag Flag
+
+  if (profile && !profile.isCurrentProfile()) && currentUser && currentUser.canRepost()
+    if post.get('reposts').length == 0
+      a.repost Repost
+    else
+      a.unrepost Unrepost
+
+  a.permalink( href=post.href() )

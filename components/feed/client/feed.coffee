@@ -11,13 +11,13 @@ FeedItemView            = require('./feed_item.coffee').FeedItemView
 feedItemsTemplate       = -> require('../templates/feed_items.jade') arguments...
 feedItemsContainerTemplate = -> require('../templates/feed_items_container.jade') arguments...
 
-# TODO: add jump module
-
 module.exports.FeedView = class FeedView extends Backbone.View
 
   rendered: false
   marginLeftRight: 110
   maxWidth: 1084
+  textColumnWidth: 404
+  textColumnMargin: 80
   items: []
 
   initialize: (options) ->
@@ -52,11 +52,13 @@ module.exports.FeedView = class FeedView extends Backbone.View
     @latestItems = items
 
     @fixedWidth = @getFixedWidth()
+    @maxDimension = @getMaxDimension()
 
     @$el.html feedItemsContainerTemplate(
       headingText       : @headingText
       headingSortOrder  : @headingSortOrder
       fixedWidth        : @fixedWidth
+      maxDimension      : @maxDimension
     )
 
     @$feedItems = @$('section.feed-items')
@@ -121,6 +123,9 @@ module.exports.FeedView = class FeedView extends Backbone.View
   getFixedWidth: ->
     windowWidth = @$window.innerWidth()  || 800
     if windowWidth > @maxWidth then @maxWidth else windowWidth - @marginLeftRight
+
+  getMaxDimension: ->
+    @fixedWidth - @textColumnWidth - @textColumnMargin
 
   setupCurrentUser: ->
     @currentUser = CurrentUser.orNull()

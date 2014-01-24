@@ -1,7 +1,5 @@
 - var artworks = feedItem.initialArtworks()
 - var profile = feedItem.get('profile')
-- var linkToPost = false
-- var artworkSize = 'large'
 - var feedItemChildModel = feedItem.toChildModel()
 - var artworksDisplayed = 8
 article.feed-item( style="width: #{fixedWidth}px" )
@@ -10,12 +8,13 @@ article.feed-item( style="width: #{fixedWidth}px" )
       include ./feed_item_body_label
       include ./feed_item_artwork_columns
   else
-    section.feed-column
+    section.feed-column.feed-left-column( style="width: #{textColumnWidth}px")
       include ./feed_item_body_label
-    section.feed-column
+      .body!= feedItemChildModel.get('body')
+      include ../../post/templates/actions
+    section.feed-column.feed-right-column( style="width: #{maxDimension}px")
       if feedItem.isPost()
-        b POST
-        // include ./templates/posts/media profile: feedItem.get('profile'), post: feedItem.toChildModel(), maxDimension: maxDimension, attachments: feedItem.toChildModel().get('attachments').models, linkToPost: false
+        include ../../post/templates/media
       else
         section.feed-large-artworks
           for artwork in artworks

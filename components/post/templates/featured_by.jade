@@ -1,0 +1,5 @@
+.featured-by
+  if post.get('featured')
+    .post-featured Featured by Artsy
+  else if post.repostedBy()
+    .post-featured Featured by #{post.repostedBy()}

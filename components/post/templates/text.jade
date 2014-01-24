@@ -1,0 +1,4 @@
+.feed-item-top-section
+  include ./featured_by
+  if post.get('title')
+    a.post-title( href=post.href() )!= post.get('title')

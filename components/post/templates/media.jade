@@ -1,0 +1,20 @@
+- var artworkSize = 'large'
+section.post-media
+  for attachment in post.attachments()
+    if attachment.get('type') == "PostLink" && attachment.canBeDisplayed()
+      if (attachment.isVideo())
+        include ./display/video_link
+      else if (attachment.isImage())
+        include ./display/image_link
+      else if (attachment.isRich())
+        include ./display/rich_link
+
+    else if attachment.get('type') == "PostEmbed"
+      include ./display/embed
+
+    else if attachment.get('type') == "PostImage"
+      include ./display/post_image
+
+    else if attachment.get('type') == "PostArtwork"
+      - var artwork = attachment.artwork()
+      include ../../artwork_item/template

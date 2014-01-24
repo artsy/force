@@ -1,0 +1,161 @@
+.feed-right-column
+  figure
+    margin 0px
+    padding: 30px 0px
+    &:last-child
+      padding-bottom: 0px
+    &:first-child
+      padding-bottom: 0px
+
+.feed-left-column
+  .body
+    margin-bottom: 20px
+    overflow: hidden
+    h1
+      font-size: 34px
+      line-height: 123%
+      margin-bottom: 20px
+      word-wrap: break-word
+      a
+        text-decoration: none
+
+    h2
+      avant-garde()
+      font-size: 13px
+      text-align: left
+      padding: 0px
+      margin: 0px
+      a
+        text-decoration: none
+        &:hover
+          color: $artsy-bright
+
+    a
+      text-decoration: underline
+    strong, b
+      font-weight: bold
+      font-size: 17px
+      line-height: 150%
+    em, i
+      font-style italic
+      font-size: 17px
+    p
+      font-size: 17px
+      line-height: 150%
+      margin: 1.4em 0
+      &:first-child
+        margin-top: 0px
+      &:last-child
+        margin-bottom: 0px
+
+  .profile-badge-icon, .profile-badge-initials
+    float: left
+    height: 33px
+    width: 33px
+    margin-right 9px
+
+  .post-title
+    font-size: 34px
+    line-height: 123%
+    margin-bottom: 20px
+    word-wrap: break-word
+    text-decoration none
+
+  .featured-by
+    avant-garde()
+    font-size: 13px
+    color: #888
+    line-height: 138%
+    padding: 0px
+    margin: 0px
+    padding-bottom: 12px
+
+  .posted-at
+    avant-garde()
+    color: #888
+    font-size: 9px
+    text-align: left
+    margin-top: -5px
+
+.feed-item-post-label
+  margin-bottom: 26px
+
+.post-modifier-actions
+  border-top: 1px dotted light-gray-border-color
+  padding-top: 8px
+  position: relative
+  a
+    avant-garde()
+    display: inline-block
+    font-size: 13px
+    margin-right: 0px
+    padding-top: 2px
+    text-transform: uppercase
+    text-decoration: none
+    &:hover
+      color: $artsy-bright
+      text-decoration: none
+    &.unrepost, &.repost
+      display: none
+
+//
+// feature (admins)
+.posts-dialog
+  display: none
+  background-color: #fff
+  border: 1px solid black
+  margin-top: -280px
+  margin-left: 60px
+  opacity 0
+  padding: 20px 10px
+  position: absolute
+  width: 350px
+  z-index: -1
+  display: none
+  avant-garde()
+  .close
+    cursor: pointer
+    width: 20px
+    height: 20px
+    background-position: center center
+    position: relative
+    float: right
+    top: -6px
+    left: -6px
+  &.on
+    display: block
+    opacity 1
+    z-index: 99
+  .menu
+    ul
+      padding: 10px 0 0 10px
+      margin: -2px 20px 0 10px
+      li
+        cursor: pointer
+        border-bottom: 1px solid #eee
+        margin-bottom: 1px
+        padding: 2px
+        width: 90%
+        a.working
+          color: #eee
+        a.feature_attachment
+          text-decoration: none
+          &:before
+            content: 'Post On'
+        a.unfeature_attachment
+          text-decoration: underline
+          &:before
+            content: 'Remove From'
+        &.slug
+          border: none
+          input.post
+            margin-left: 5px
+            margin-right: 5px
+            width: 150px
+          span.feature_by_slug
+            text-decoration: underline
+          .error
+            garamond()
+            color: bad_red_color
+            font-size: 12px
+            margin-left: 45p

@@ -12,4 +12,17 @@ block body
       | Posts
     h2.garamond-header-center
       | Posts are stories, facts and reflections added by the community.
-      | Click ADD POST on any artwork or artist page to post your own.
+      br
+      | Click
+      a.add-to-post-button Add Post
+      | on any artwork or artist page to post your own.
+    if currentUser
+      .garamond-tablist
+        a.garamond-tab( data-tab='featured' ) Featured By Artsy
+        span &nbsp;&nbsp;&#8260;&nbsp;&nbsp;
+        a.garamond-tab( data-tab='personalized' ) Following
+        if currentUser.isAdmin()
+          span &nbsp;&nbsp;&#8260;&nbsp;&nbsp;
+          a.garamond-tab( data-tab='all' ) All Posts
+
+    .feed.loading
