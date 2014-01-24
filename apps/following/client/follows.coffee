@@ -5,28 +5,28 @@ sd                      = require('sharify').data
 FillwidthView           = require '../../../components/fillwidth_row/view.coffee'
 CurrentUser             = require '../../../models/current_user.coffee'
 FollowButton            = require './follow_button.coffee'
-itemTemplate            = -> require('../templates/following_item.jade') arguments...
-hintTemplate            = -> require('../templates/empty.jade') arguments...
+itemTemplate            = -> require('../templates/follows_item.jade') arguments...
+hintTemplate            = -> require('../templates/empty_hint.jade') arguments...
 recTemplate             = -> require('../templates/recommendation.jade') arguments...
 FollowArtists           = require '../../../collections/follow_artists.coffee'
 FollowGenes             = require '../../../collections/follow_genes.coffee'
 RecommendedGenesView    = require '../../../components/recommended_genes/view.coffee'
 
-module.exports.FollowingView = class FollowingView extends Backbone.View
+module.exports.FollowsView = class FollowsView extends Backbone.View
 
   initialize: (options) ->
     @followItems  = @model  # More readable alias
     @pageNum      = 0       # Last page loaded
     @itemsPerPage = options.itemsPerPage or 10
     @setupCurrentUser()
-    @setupFollowingItems()
+    @setupFollowsItems()
 
   setupCurrentUser: ->
     @currentUser = CurrentUser.orNull()
     @currentUser?.initializeDefaultArtworkCollection()
     @artworkCollection = @currentUser?.defaultArtworkCollection()
 
-  setupFollowingItems: ->
+  setupFollowsItems: ->
     @followItems.syncFollows? [], success: (col) =>
       @showEmptyHint() unless @followItems.length > 0
       if @followItems.length > @itemsPerPage
@@ -47,11 +47,11 @@ module.exports.FollowingView = class FollowingView extends Backbone.View
   infiniteScroll: =>
     $(window).unbind('.following') unless @pageNum * @itemsPerPage < @followItems.length
     fold = $(window).height() + $(window).scrollTop()
-    $lastItem = @$('.following > .item:last')
+    $lastItem = @$('.follows > .item:last')
     @loadNextPage() unless fold < $lastItem.offset()?.top + $lastItem.height()
 
   showEmptyHint: () ->
-    @$('.following').append $( hintTemplate type: sd.TYPE )
+    @$('.follows-empty-hint').html $( hintTemplate type: sd.TYPE )
     (new RecommendedGenesView
       el: @$('.suggested-genes')
       user: @currentUser
@@ -62,7 +62,7 @@ module.exports.FollowingView = class FollowingView extends Backbone.View
   # So that we can display some stuff to users asap.
   # @param {Object} followItem an item from the followItems collection
   appendItemSkeleton: (followItem) ->
-    @$('.following').append $( itemTemplate item: followItem.getItem() )
+    @$('.follows').append $( itemTemplate item: followItem.getItem() )
 
   # Display item content
   #
@@ -73,6 +73,7 @@ module.exports.FollowingView = class FollowingView extends Backbone.View
     item.fetchArtworks success: (artworks) =>
       $container = @$("##{item.get('id')}")
       $followButton = $container.find(".follow-button")
+      console.log $followButton
       $artworks = $container.find('.artworks')
       view = new FillwidthView
         artworkCollection: @artworkCollection
@@ -92,7 +93,7 @@ module.exports.FollowingView = class FollowingView extends Backbone.View
 module.exports.init = ->
   dict = artists: FollowArtists, genes: FollowGenes
   followItemCollection = if dict[sd.TYPE]? then new dict[sd.TYPE]() else []
-  new FollowingView
+  new FollowsView
     model: followItemCollection
     el: $('body')
     itemsPerPage: 10

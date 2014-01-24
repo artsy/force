@@ -5,16 +5,15 @@ block head
   include meta
 
 block locals
-  assetPackage = 'favorites'
+  assetPackage = 'follows'
 
 block body
-  #favorites
+  #follows
     .main-layout-container
       header.follows-header
         h1.avant-garde-header-center Favorites &amp; Follows
         +follows-tab-nav
-        //include favorites_action
       main
-        section.favorite-artworks
+        section.follows(id=type)
         section.follows-empty-hint
         section.suggested-genes
