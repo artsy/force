@@ -2,12 +2,14 @@
   // Avoid adding any declarations here
   prevent-content-shift()
   &:hover .popover
+    visibility visible
     opacity 1
     transform translateY(-10px)
     transition all 0.125s
     transition-delay 0.25s
 
 .popover
+  visibility hidden
   position absolute
   bottom 100%
   right -20px
