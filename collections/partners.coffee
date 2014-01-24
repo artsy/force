@@ -1,14 +1,14 @@
-_             = require 'underscore'
-sd            = require('sharify').data
-Backbone      = require 'backbone'
-Partner       = require '../models/partner.coffee'
-aToZ          = require './mixins/a_to_z.coffee'
-{ Fetch }     = require 'artsy-backbone-mixins'
+_               = require 'underscore'
+sd              = require('sharify').data
+Backbone        = require 'backbone'
+Partner         = require '../models/partner.coffee'
+{ GRAVITY_URL } = require('sharify').data
+{ Fetch, AToZ } = require 'artsy-backbone-mixins'
 
 module.exports = class Partners extends Backbone.Collection
 
-  _.extend @prototype, aToZ
-  _.extend @prototype, Fetch
+  _.extend @prototype, AToZ
+  _.extend @prototype, Fetch(GRAVITY_URL)
 
   model: Partner
 

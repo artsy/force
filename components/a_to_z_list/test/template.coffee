@@ -1,5 +1,5 @@
 _         = require 'underscore'
-aToZ      = require '../../../collections/mixins/a_to_z.coffee'
+{ AToZ }  = require 'artsy-backbone-mixins'
 Backbone  = require 'backbone'
 cheerio   = require 'cheerio'
 fs        = require 'fs'
@@ -19,7 +19,7 @@ class AToZCollectionModel extends Backbone.Model
   href        : -> "/#{@get('sortable_id')}"
 
 class AToZCollection extends Backbone.Collection
-  _.extend @prototype, aToZ
+  _.extend @prototype, AToZ
   model: AToZCollectionModel
 
 describe 'A to Z List Template', ->

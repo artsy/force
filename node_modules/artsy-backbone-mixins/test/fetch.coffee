@@ -68,3 +68,12 @@ describe 'fetch set items by key mixin', ->
         @collection.models.length.should.equal 0
         done()
       Backbone.sync.args[0][2].success []
+
+    it 'retains the collections model definition', ->
+      class Foo extends Backbone.Model
+        fooId: 'bar'
+      @collection.model = Foo
+      @collection.fetchSetItemsByKey 'foo:bar', success: =>
+        @collection.first().fooId.should.equal 'bar'
+        done()
+      Backbone.sync.args[0][2].success [{}]

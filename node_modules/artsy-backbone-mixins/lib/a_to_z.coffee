@@ -13,11 +13,8 @@ module.exports =
   # }
   groupByAlpha: ->
     instance = new @model()
-    unless _.isFunction instance.alphaSortKey
-      throw "You must implement an `alphaSortKey` method for these models."
-
     @groupBy (model) ->
-      key = model.alphaSortKey()
+      key = model.alphaSortKey?() or model.get('sortable_id')
       letter = key[0]
       if /^\d$/.test letter
         '0-9'
