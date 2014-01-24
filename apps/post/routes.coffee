@@ -1,5 +1,5 @@
-Post    = require '../../models/post'
-Profile = require '../../models/profile'
+Post     = require '../../models/post.coffee'
+Profile  = require '../../models/profile.coffee'
 
 @index = (req, res) ->
   new Post(id: req.params.id).fetch

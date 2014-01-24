@@ -1,0 +1,7 @@
+figure.rich-link( id='link_' + attachment.id, data-attachment=attachment.id, style="width=" + attachment.maxWidthForWidth(maxDimension) + "px;" )
+  .rich_player
+    != attachment.safeEmbedHtml()
+  .details
+    p.title
+      em!= attachment.title() 
+      | != ', ' + attachment.sourceName()

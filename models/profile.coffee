@@ -82,3 +82,6 @@ module.exports = class Profile extends Backbone.Model
       @get('bio')
     else
       if @displayName() then "#{@displayName()} on Artsy" else "Profile on Artsy"
+
+  isCurrentProfile: ->
+    sd.CURRENT_USER?.default_profile_id == @get('id')

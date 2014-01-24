@@ -53,7 +53,14 @@ module.exports = class CurrentUser extends Backbone.Model
       error  : options.error
       url    : "#{@url()}/order/pending/items"
 
-  isAdmin: -> (@get('type') is 'Admin') and ! @get('is_slumming')
+  isAdmin: ->
+    (@get('type') is 'Admin') and ! @get('is_slumming')
+  hasLabFeature: (featureName) ->
+    _.contains @get('lab_features'), featureName
+  canAdministerContent: ->
+    @get('is_content_administrator')
+  canRepost: ->
+    @hasLabFeature("Reposting")
 
   # Retreive a list of artists the user is following
   #

@@ -3,6 +3,8 @@ Backbone          = require 'backbone'
 sd                = require('sharify').data
 Profile           = require('./profile.coffee')
 Artwork           = require('./artwork.coffee')
+Attachments       = require('../collections/post_attachments.coffee')
+moment            = require 'moment'
 
 { smartTruncate } = require '../components/util/string.coffee'
 
@@ -65,7 +67,17 @@ module.exports = class Post extends Backbone.Model
     )
     _.map postArtworks, (postArtwork) -> new Artwork(postArtwork.artwork)
 
+  hasArworks: -> @artworks()?.length > 0
+
   images: ->
     _.filter(@get('attachments'), (attachment) ->
       attachment.type == "PostImage"
     )
+
+  postedAt: ->
+    moment(@get('last_promoted_at')).fromNow()
+
+  repostedBy: ->
+    @get('reposts')?[0]?.profile?.owner?.name
+
+  attachments: -> new Attachments(@get('attachments')).models

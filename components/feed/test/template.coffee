@@ -22,6 +22,7 @@ describe 'Feed Templates', ->
     describe 'with artists and artworks', ->
       beforeEach ->
         sd.ARTSY_URL = 'localhost:3003'
+        sd.ASSET_PATH = 'assets/'
         @partnerShow = new FeedItem fabricate('show',
           _type: "PartnerShow",
           artists: [fabricate('artist')]
@@ -47,6 +48,7 @@ describe 'Feed Templates', ->
     describe 'in an art fair', ->
       beforeEach ->
         sd.ARTSY_URL = 'localhost:3003'
+        sd.ASSET_PATH = 'assets/'
         fairLocation =
           display: 'Booth 1234'
 
@@ -99,9 +101,10 @@ describe 'Feed Templates', ->
         @html.should.not.include "undefined"
         @html.should.not.include "\#{"
 
-  describe 'post', ->
+  describe 'Post Feed Item', ->
     beforeEach ->
       sd.ARTSY_URL = 'localhost:3003'
+      sd.CURRENT_PATH = '/post/id'
       @post = new FeedItem fabricate('post',
         _type: "Post",
       )
@@ -111,6 +114,8 @@ describe 'Feed Templates', ->
         feedItems: @feedItems.models
         fixedWidth: 1000
         maxDimension: 500
+        sd: sd
+        textColumnWidth: 404
       )
 
     it 'Renders a feed of partner shows', ->

@@ -1,5 +1,4 @@
 _               = require 'underscore'
-moment          = require 'moment'
 sd              = require('sharify').data
 Artworks        = require '../collections/artworks.coffee'
 AdditionalImage = require './additional_image.coffee'

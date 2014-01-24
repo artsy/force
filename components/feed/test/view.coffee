@@ -14,10 +14,8 @@ describe 'FeedView', ->
   before (done) ->
     benv.setup =>
       sd.ARTSY_URL = 'localhost:3003'
-      benv.expose {
-        $: benv.require 'components-jquery'
-        ARTSY_URL: 'localhost:3003'
-      }
+      sd.ASSET_PATH = 'assets/'
+      benv.expose { $: benv.require 'components-jquery' }
       sinon.stub Backbone, 'sync'
       Backbone.$  = $
       @partnerShow = new FeedItem fabricate('show',
