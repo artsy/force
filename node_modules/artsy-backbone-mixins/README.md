@@ -96,7 +96,7 @@ artist.dimensions(format: 'decimal')
 
 ## Fetch
 
-* Remember to pass in the artsy url.
+_Remember to pass in the artsy url._
 
 ````coffeescript
 { Fetch } = require 'artsy-backbone-mixins'

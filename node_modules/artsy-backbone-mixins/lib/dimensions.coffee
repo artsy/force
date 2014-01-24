@@ -4,7 +4,7 @@ module.exports =
 
   dimensions: (options = {}) ->
     options.metric ?= @get('metric')
-    dimensions = @get('dimensions')[options.metric]
+    dimensions = @get('dimensions')?[options.metric]
     dimensions = switch options.format
       when 'superscript' then superscriptFractions dimensions
       when 'decimal' then expressAsMetric dimensions

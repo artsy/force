@@ -12,6 +12,10 @@ describe 'Dimensions Mixin', ->
 
   describe '#dimensions', ->
 
+    it 'can still function with missing dimensions data', ->
+      @model.set metric: 'in', dimensions: null
+      @model.dimensions()
+
     it 'returns the dimensions chosen by metric', ->
       @model.set metric: 'in', dimensions: { in: 'foobar' }
       @model.dimensions().should.include 'foobar'
