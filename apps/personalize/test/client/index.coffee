@@ -9,7 +9,7 @@ rewire          = require 'rewire'
 describe 'PersonalizeRouter', ->
   beforeEach (done) ->
     benv.setup =>
-      benv.expose { $: benv.require 'components-jquery' }
+      benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       { @PersonalizeRouter, init } = mod = rewire '../../client/index'
       mod.__set__ 'Transition', { fade: (@fadeStub = sinon.stub()) }

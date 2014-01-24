@@ -17,7 +17,7 @@ describe 'HeaderView', ->
   before (done) ->
     benv.setup =>
       benv.expose
-        $: benv.require('components-jquery')
+        $: benv.require('jquery')
         sd: { HIDE_HEADER: false }
       Backbone.$ = $
       benv.render resolve(__dirname, '../template.jade'), {}, =>

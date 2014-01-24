@@ -11,7 +11,7 @@ describe 'AboutRouter', ->
 
   before (done) ->
     benv.setup =>
-      benv.expose { $: benv.require 'components-jquery' }
+      benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       Backbone.history.start = sinon.stub
       done()

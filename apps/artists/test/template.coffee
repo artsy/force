@@ -25,7 +25,7 @@ describe 'Artists', ->
 
     before (done) ->
       benv.setup =>
-        benv.expose { $: benv.require 'components-jquery' }
+        benv.expose { $: benv.require 'jquery' }
 
         @artistCollection = new Artists(
           _.times(2, -> new Artist(fabricate('artist')))

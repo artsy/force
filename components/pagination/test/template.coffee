@@ -14,7 +14,7 @@ render = (templateName) ->
 describe 'Paginator template', ->
   before (done) ->
     benv.setup =>
-      benv.expose { $: benv.require 'components-jquery' }
+      benv.expose { $: benv.require 'jquery' }
       @$cases = $(render('test')())
       done()
 

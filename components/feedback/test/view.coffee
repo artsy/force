@@ -7,7 +7,7 @@ rewire    = require 'rewire'
 describe 'FeedbackView', ->
   before (done) ->
     benv.setup =>
-      benv.expose { $: benv.require 'components-jquery' }
+      benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       @FeedbackView = rewire '../view'
       sinon.stub @FeedbackView.prototype, 'open'

@@ -10,7 +10,7 @@ CurrentUser       = require '../../../../models/current_user.coffee'
 describe 'CollectView', ->
   before (done) ->
     benv.setup =>
-      benv.expose { $: benv.require 'components-jquery' }
+      benv.expose { $: benv.require 'jquery' }
       Backbone.$    = $
       @CollectView  = benv.requireWithJadeify resolve(__dirname, '../../client/views/collect'), ['template']
       done()

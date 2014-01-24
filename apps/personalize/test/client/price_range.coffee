@@ -10,7 +10,7 @@ CurrentUser       = require '../../../../models/current_user.coffee'
 describe 'PriceRangeView', ->
   before (done) ->
     benv.setup =>
-      benv.expose { $: benv.require 'components-jquery' }
+      benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       $.support.transition = { end: 'transitionend' }
       $.fn.emulateTransitionEnd = -> @trigger $.support.transition.end

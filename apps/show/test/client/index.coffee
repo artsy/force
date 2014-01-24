@@ -20,7 +20,7 @@ describe 'Partner Show View', ->
   before (done) ->
     sinon.stub _, 'defer'
     benv.setup =>
-      benv.expose { $: require 'components-jquery' }
+      benv.expose { $: require 'jquery' }
       Backbone.$ = $
       done()
 

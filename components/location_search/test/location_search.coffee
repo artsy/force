@@ -6,7 +6,7 @@ Backbone      = require 'backbone'
 describe 'Location Search', ->
   beforeEach (done) ->
     benv.setup =>
-      benv.expose { $: benv.require 'components-jquery' }
+      benv.expose { $: benv.require 'jquery' }
       Backbone.$  = $
       LocationSearchView = benv.requireWithJadeify(resolve(__dirname, '../index'), ['template'])
       LocationSearchView.__set__ 'google', {

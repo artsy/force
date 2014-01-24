@@ -12,7 +12,7 @@ describe 'CheckoutForm', ->
 
   before (done) ->
     benv.setup =>
-      benv.expose { $: benv.require 'components-jquery' }
+      benv.expose { $: benv.require 'jquery' }
       sinon.stub global, 'setInterval'
       Backbone.$ = $
       done()

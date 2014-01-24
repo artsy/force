@@ -9,7 +9,7 @@ describe 'Homepage client-side code', ->
 
   before (done) ->
     benv.setup =>
-      benv.expose { $: benv.require 'components-jquery' }
+      benv.expose { $: benv.require 'jquery' }
       benv.render '../templates/index.jade', {
         heroUnits: new HeroUnits([
           fabricate 'site_hero_unit'

@@ -11,7 +11,7 @@ SearchBarView   = require '../view'
 describe 'SearchBarView', ->
   beforeEach (done) ->
     benv.setup =>
-      benv.expose { $: benv.require 'components-jquery' }
+      benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
 
       benv.render resolve(__dirname, '../template.jade'), {}, =>
