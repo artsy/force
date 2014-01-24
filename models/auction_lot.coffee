@@ -1,7 +1,7 @@
-_           = require 'underscore'
-Backbone    = require 'backbone'
-Image       = require './mixins/image.coffee'
-Dimensions  = require '../models/mixins/dimensions.coffee'
+_              = require 'underscore'
+Backbone       = require 'backbone'
+Image          = require './mixins/image.coffee'
+{ Dimensions } = require 'artsy-backbone-mixins'
 
 module.exports = class AuctionLot extends Backbone.Model
   _.extend @prototype, Dimensions

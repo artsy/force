@@ -1,11 +1,11 @@
 _             = require 'underscore'
 Artwork       = require '../models/artwork.coffee'
 Backbone      = require 'backbone'
-fetchUntilEnd = require './mixins/fetch_until_end.coffee'
+{ Fetch }     = require 'artsy-backbone-mixins'
 
 module.exports = class Artworks extends Backbone.Collection
 
-  _.extend @prototype, fetchUntilEnd
+  _.extend @prototype, Fetch
 
   model: Artwork
 

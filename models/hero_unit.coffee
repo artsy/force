@@ -1,10 +1,10 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-markdownMixin = require './mixins/markdown.coffee'
+{ Markdown } = require 'artsy-backbone-mixins'
 
 module.exports = class HeroUnit extends Backbone.Model
 
-  _.extend @prototype, markdownMixin
+  _.extend @prototype, Markdown
 
   cssClass: ->
     [

@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
 
-module.exports.HeroUnitView = class HeroUnitView extends Backbone.View
+module.exports = class HeroUnitView extends Backbone.View
 
   el: '#home-hero-units-container'
 
@@ -55,6 +55,3 @@ module.exports.HeroUnitView = class HeroUnitView extends Backbone.View
 
   onDot: (e) ->
     @showHeroUnit $(e.target).index()
-
-module.exports.init = ->
-  window.view = new HeroUnitView $body: $('body')
