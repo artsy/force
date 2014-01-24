@@ -138,4 +138,7 @@ gravity.get '/api/v1/me', (req, res) ->
 gravity.post '/api/v1/me/unsubscribe*', (req, res) ->
   res.send [fabricate 'user']
 
+gravity.post '/api/v1/me/artwork_inquiry_request', (req, res) ->
+  res.send fabricate 'user'
+
 gravity.all '*', (req, res) -> res.send 404, "Not Found."
