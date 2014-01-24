@@ -34,7 +34,7 @@ module.exports = (artsyUrl) ->
           url: "#{artsyUrl}/api/v1/set/#{sets.first().get 'id'}/items"
           cache: options.cache
           success: (col) =>
-            @reset col.models
+            @reset col.toJSON()
             options.success @
           error: options.error
       error: options.error
