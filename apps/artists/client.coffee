@@ -4,6 +4,7 @@ Backbone          = require 'backbone'
 FollowCollection  = require '../../models/follow_artist_collection.coffee'
 FollowButton      = require '../artist/client/follow_button.coffee'
 Artist            = require '../../models/artist.coffee'
+imagesLoaded      = require '../../lib/vendor/imagesloaded.js'
 
 module.exports.CarouselView = class CarouselView extends Backbone.View
   increment: 2
@@ -16,7 +17,8 @@ module.exports.CarouselView = class CarouselView extends Backbone.View
     @resize = _.debounce @updateValues, 100
     $(window).on 'resize', @resize
 
-    @updateValues()
+    # Wait for the first image to load before enabling anything
+    @$el.imagesLoaded().progress _.once(@updateValues)
 
   updateValues: (e) =>
     @$panels ||= @$('.afc-artist')
@@ -31,7 +33,6 @@ module.exports.CarouselView = class CarouselView extends Backbone.View
     @$bumpers.height "#{@$images.height()}px"
 
     @moveToActive(!e?) if e?
-    @setPosition()
 
   setPosition: ->
     position = if @active is 0
