@@ -6,7 +6,7 @@ block head
   include artist-meta
   +paginateHead(auctionLots.state.currentPage, auctionLots.state.totalPages, '?sort=' + auctionLots.sortBy + '&')
 
-block locals
+append locals
   assetPackage = 'auction_lots'
 
 block body
