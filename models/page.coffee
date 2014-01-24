@@ -1,10 +1,10 @@
 Backbone = require 'backbone'
 sd = require('sharify').data
-markdownMixin = require './mixins/markdown.coffee'
+{ Markdown } = require 'artsy-backbone-mixins'
 _ = require 'underscore'
 
 module.exports = class Page extends Backbone.Model
 
-  _.extend @prototype, markdownMixin
+  _.extend @prototype, Markdown
 
   urlRoot: "#{sd.ARTSY_URL}/api/v1/page"

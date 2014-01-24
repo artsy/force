@@ -2,7 +2,7 @@ Backbone = require 'backbone'
 _ = require 'underscore'
 sd = require('sharify').data
 Image = require './mixins/image.coffee'
-Dimensions = require './mixins/dimensions.coffee'
+{ Dimensions } = require 'artsy-backbone-mixins'
 
 module.exports = class Artwork extends Backbone.Model
 
