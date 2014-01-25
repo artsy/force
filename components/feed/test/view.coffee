@@ -7,7 +7,6 @@ sd            = require('sharify').data
 FeedItem      = require '../models/feed_item'
 FeedItems     = require '../collections/feed_items'
 { fabricate } = require 'antigravity'
-{ resolve }   = require 'path'
 
 describe 'FeedView', ->
 
