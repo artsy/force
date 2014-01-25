@@ -10,7 +10,7 @@ _             = require 'underscore'
 { resolve }   = require 'path'
 { fabricate } = require 'antigravity'
 
-describe 'FollowingView', ->
+describe 'FollowsView', ->
 
   before (done) ->
     sinon.stub _, 'defer'
@@ -27,28 +27,20 @@ describe 'FollowingView', ->
 
     beforeEach (done) ->
       sinon.stub Backbone, 'sync'
-      benv.render resolve(__dirname, '../../templates/index.jade'), {
+      benv.render resolve(__dirname, '../../templates/follows.jade'), {
         sd: { type: 'artists' }
       }, =>
-        { FollowingView, @init } = mod = benv.requireWithJadeify(
-          (resolve __dirname, '../../client/index'), ['itemTemplate', 'hintTemplate', 'recTemplate']
+        { FollowsView, @init } = mod = benv.requireWithJadeify(
+          (resolve __dirname, '../../client/follows'), ['itemTemplate', 'hintTemplate']
         )
         followArtists = new FollowArtists()
         syncStub = sinon.stub followArtists, "syncFollows", (ids, options) ->
           options.success?(followArtists)
-        @Genes = sinon.stub()
-        @Genes.fetch = sinon.stub().yieldsTo "success", {
-          models: [
-            new Gene(_.extend fabricate 'gene', image_url: ''),
-            new Gene(_.extend fabricate 'gene', image_url: ''),
-            new Gene(_.extend fabricate 'gene', image_url: ''),
-            new Gene(_.extend fabricate 'gene', image_url: ''),
-            new Gene(_.extend fabricate 'gene', image_url: '')
-          ]
-        }
-        @Genes.returns @Genes
-        mod.__set__ 'Genes', @Genes
-        @view = new FollowingView
+        @SuggestedGenesView = sinon.stub()
+        @SuggestedGenesView.render = sinon.stub()
+        @SuggestedGenesView.returns @SuggestedGenesView
+        mod.__set__ 'SuggestedGenesView', @SuggestedGenesView
+        @view = new FollowsView
           el: $ 'body'
           model: followArtists
           itemsPerPage: 2
@@ -59,22 +51,18 @@ describe 'FollowingView', ->
 
     describe '#showEmptyHint', ->
 
-      it 'shows the hint of following artists', ->
-        @view.$el.html().should.include 'Find Something You Like'
-
-      it 'shows 5 recommended genes', ->
-        @Genes.fetch.should.calledOnce
-        @view.$el.find('.recommendation-item').length.should.equal 5
+      it 'shows suggested genes genes', ->
+        @SuggestedGenesView.render.should.calledOnce
 
   describe 'with following items', ->
 
     beforeEach (done) ->
       sinon.stub Backbone, 'sync'
-      benv.render resolve(__dirname, '../../templates/index.jade'), {
+      benv.render resolve(__dirname, '../../templates/follows.jade'), {
         sd: { type: 'artists' }
       }, =>
-        { FollowingView, @init } = mod = benv.requireWithJadeify(
-          (resolve __dirname, '../../client/index'), ['itemTemplate', 'hintTemplate', 'recTemplate']
+        { FollowsView, @init } = mod = benv.requireWithJadeify(
+          (resolve __dirname, '../../client/follows'), ['itemTemplate', 'hintTemplate']
         )
         followArtists = new FollowArtists()
         syncStub = sinon.stub followArtists, "syncFollows", (ids, options) ->
@@ -90,7 +78,7 @@ describe 'FollowingView', ->
         @FillwidthView.render = sinon.stub()
         @FillwidthView.returns @FillwidthView
         mod.__set__ 'FillwidthView', @FillwidthView
-        @view = new FollowingView
+        @view = new FollowsView
           el: $ 'body'
           model: followArtists
           itemsPerPage: 2
@@ -107,7 +95,7 @@ describe 'FollowingView', ->
     describe '#setupFollowingItems', ->
 
       it 'renders the first page of following artists', ->
-        $results = @view.$el.find('.following').children()
+        $results = @view.$el.find('.follows').children()
         $results.length.should.equal 2
         $results.eq(0).html().should.include 'artist1'
         $results.eq(1).html().should.include 'artist2'
@@ -116,7 +104,7 @@ describe 'FollowingView', ->
     describe '#loadNextPage', ->
 
       it 'renders the next pages individually until the end', ->
-        $following = @view.$el.find('.following')
+        $following = @view.$el.find('.follows')
         @view.loadNextPage()
         $following.children().length.should.equal 4
         $following.children().eq(0).html().should.include 'artist1'

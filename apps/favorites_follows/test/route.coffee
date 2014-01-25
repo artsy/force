@@ -15,14 +15,25 @@ describe 'Following routes', ->
   afterEach ->
     Backbone.sync.restore()
 
-  describe '#index', ->
+  describe '#follows', ->
 
     it 'redirect to the home page without user', ->
-      routes.following @req, @res
+      routes.follows @req, @res
       @res.redirect.args[0][0].should.equal '/'
 
     it 'renders the following artists template', ->
       @req.user = new CurrentUser fabricate 'user'
-      routes.following @req, @res
-      @res.render.args[0][0].should.equal 'index'
+      routes.follows @req, @res
+      @res.render.args[0][0].should.equal 'follows'
       @res.render.args[0][1].type.should.equal 'artists'
+
+  describe '#favorites', ->
+
+    it 'redirect to the home page without user', ->
+      routes.favorites @req, @res
+      @res.redirect.args[0][0].should.equal '/'
+
+    it 'renders the favorites template', ->
+      @req.user = new CurrentUser fabricate 'user'
+      routes.favorites @req, @res
+      @res.render.args[0][0].should.equal 'favorites'
