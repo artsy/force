@@ -1,6 +1,6 @@
 _         = require 'underscore'
 Backbone  = require 'backbone'
-Image     = require './mixins/image.coffee'
+{ Image } = require 'artsy-backbone-mixins'
 
 module.exports = class AdditionalImage extends Backbone.Model
 

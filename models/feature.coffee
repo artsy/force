@@ -5,14 +5,14 @@
 #
 _             = require 'underscore'
 sd            = require('sharify').data
-imageMixin    = require './mixins/image.coffee'
+{ Image } = require 'artsy-backbone-mixins'
 Artworks      = require '../collections/artworks.coffee'
 Backbone      = require 'backbone'
 { smartTruncate } = require "../components/util/string.coffee"
 
 module.exports = class Feature extends Backbone.Model
 
-  _.extend @prototype, imageMixin
+  _.extend @prototype, Image
 
   urlRoot: -> "#{sd.ARTSY_URL}/api/v1/feature"
 

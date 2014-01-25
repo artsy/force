@@ -1,7 +1,7 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
 sd = require('sharify').data
-Image = require './mixins/image.coffee'
+{ Image } = require 'artsy-backbone-mixins'
 { Dimensions } = require 'artsy-backbone-mixins'
 
 module.exports = class Artwork extends Backbone.Model
@@ -15,7 +15,7 @@ module.exports = class Artwork extends Backbone.Model
 
   defaultImageUrl: (version = 'medium') ->
     return @missingImageUrl() unless _.contains @defaultImage()?.image_versions, version
-    @fullyQualifiedImageUrl(@defaultImage()?.image_url.replace(':version', version) ? '')
+    @defaultImage()?.image_url.replace(':version', version) ? ''
 
   isSaved: (artworkCollection) ->
     artworkCollection && artworkCollection.isSaved(@)

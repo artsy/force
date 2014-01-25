@@ -1,0 +1,6 @@
+for featuredLink in featuredLinks
+  li.home-top-feature-link
+    img( src=featuredLink.imageUrl('small_rectangle') )
+    .home-top-feature-link-details
+      h3= featuredLink.get('title')
+      h4= featuredLink.get('subtitle')

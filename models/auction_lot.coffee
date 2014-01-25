@@ -1,6 +1,6 @@
 _              = require 'underscore'
 Backbone       = require 'backbone'
-Image          = require './mixins/image.coffee'
+{ Image } = require 'artsy-backbone-mixins'
 { Dimensions } = require 'artsy-backbone-mixins'
 
 module.exports = class AuctionLot extends Backbone.Model
@@ -15,4 +15,4 @@ module.exports = class AuctionLot extends Backbone.Model
     string.replace /\ -\ /, '&nbsp;&ndash;<br>'
 
   imageUrl: (version) ->
-    @fullyQualifiedImageUrl(@get('image_url')).replace 'thumbnail', version
+    @get('image_url').replace 'thumbnail', version

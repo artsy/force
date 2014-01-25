@@ -3,8 +3,10 @@ sd        = require('sharify').data
 Backbone  = require 'backbone'
 Backbone  = require 'backbone'
 Artworks  = require '../collections/artworks.coffee'
-Image     = require './mixins/image.coffee'
+{ Image } = require 'artsy-backbone-mixins'
 Artist    = require '../models/artist.coffee'
+
+console.log
 
 module.exports = class Gene extends Backbone.Model
   _.extend @prototype, Image
@@ -34,4 +36,4 @@ module.exports = class Gene extends Backbone.Model
     artworks.fetch options
 
   imageUrl: (version) ->
-    @fullyQualifiedImageUrl(@get('image_url')).replace ':version', version
+    @get('image_url').replace ':version', version
