@@ -57,6 +57,7 @@
     "jquery": "2.1.0",
     "jquery.transition": "git://github.com/dzucconi/jquery.transition.git",
     "jquery.fillwidth": "*",
+    "jquery.poplockit": "*",
     "jquery.dotdotdot": "git://github.com/mzikherman/jquery.dotdotdot.git",
     "geoformatter": "git://github.com/dzucconi/geo_formatter.git"
   }
