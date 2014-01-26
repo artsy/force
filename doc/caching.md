@@ -102,3 +102,12 @@ Keys are the url for the respective api endpoint
 - '$ get "https://artsy.net/foo"` # will return `(nil)` if it finds nothing. `'[]'` is a cached endpoint with no results
 - '$ del "https://artsy.net/foo"`
 - done!
+
+Here are some keys that are in use for the current 'browse' and the about/job pages, which are nice to know how to clear on demand:
+
+- `$ del "https://artsy.net/api/v1/page/about"`
+- `$ del https://artsy.net/api/v1/set/51ba3bcb0abd8521b3000022/items{\"page\":1,\"size\":20}" # Featured Genes (browse)
+- `$ del https://artsy.net/api/v1/set/51b8bfb99f2aab4c1d000001/items{\"page\":1,\"size\":20}" # Popular Categories (browse)
+- `$ del https://artsy.net/api/v1/set/51ba3bcb0abd8521b3000021/items{\"page\":1,\"size\":20}" # Gene Categories (browse)
+
+Note that query params are included in the cache key.
