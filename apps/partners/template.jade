@@ -28,14 +28,18 @@ block body
     section.featured-partners-grid
       for profile in featuredPartnerProfiles.models
         - var partner = profile.get('owner')
-        - var location = partner.get('locations').first()
+        if partner.get('locations').length > 0
+          - var location = partner.get('locations').first()
         figure.featured-partner-profile( data-profile-id=profile.get('id') )
           a.featured-partner-profile-cover-link( href="/" + profile.get('id') )
             img.profile-cover-image( src=profile.coverImage().imageUrl('medium') )
           figcaption
             h3.featured-partner-profile-name
               a( href="/" + profile.get('id') )= partner.get('name')
-            h4.featured-partner-profile-location= [partner.get('type'), location.get('city')].join(' - ')
+            if location && location.has('city') && location.get('city') != ''
+              h4.featured-partner-profile-location= [partner.get('type'), location.get('city')].join(' - ')
+            else
+              h4.featured-partner-profile-location= partner.get('type')
             button.avant-garde-button-white.follow-button
 
     footer
