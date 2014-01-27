@@ -1,2 +1,2 @@
 a( data-post_id=post.get('id'), data-artist_id=artist.get('id'), data-model_name='artist' )
-  = " #{artist.get('name')}'s Artist Page"
+  != artist.get('name') + "'s Artist Page"

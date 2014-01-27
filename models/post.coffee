@@ -3,6 +3,8 @@ Backbone          = require 'backbone'
 sd                = require('sharify').data
 Profile           = require('./profile.coffee')
 Artwork           = require('./artwork.coffee')
+Artists           = require('../collections/artists.coffee')
+Artworks          = require('../collections/artworks.coffee')
 Attachments       = require('../components/post/collections/post_attachments.coffee')
 Reposts           = require('../components/post/collections/reposts.coffee')
 moment            = require 'moment'
@@ -83,14 +85,12 @@ module.exports = class Post extends Backbone.Model
 
   attachments: -> new Attachments(@get('attachments')).models
 
-  reposts: -> new Reposts(@get('reposts'))
+  reposts: -> @get('reposts')
 
   ensureRepostsFetched: (callback) ->
-    if @get('reposts_count') > 0 and not @get('reposts')
-      collection = new Backbone.Collection
-        url: "/api/v1/reposts"
+    unless @get('reposts')
+      collection = new Reposts()
       collection.fetch
-        url: "/api/v1/reposts"
         data:
           post_id: @get('id')
         success: =>
@@ -100,11 +100,11 @@ module.exports = class Post extends Backbone.Model
     else
       callback?(@get('reposts'))
 
-
   #
   # Admin for editing, flagging  and reposting
   #
   feature: (options) ->
+    console.log @url()
     @set featured: true
     @save
       success: options?.success
@@ -129,20 +129,43 @@ module.exports = class Post extends Backbone.Model
       error: options?.error
 
   repost: (options) ->
-    model = new Backbone.Model
-      url: "/api/v1/repost"
+    model = new Backbone.Model()
+    model.url = "#{sd.ARTSY_URL}/api/v1/repost"
     model.save
-      data:
-        post_id: @get('id')
+      post_id: @get('id')
       success: (data, status, xhr) =>
-        @get('reposts').push data
+        @get('reposts').add data
         options?.success(data, status, xhr)
       error: options?.error
 
   unrepost: (repost, options) ->
-    model = new Backbone.Model
-      id: repost.get('id')
-      urlRoot: "/api/v1/repost"
+    model = new Backbone.Model id: @get('id')
+    model.url = "#{sd.ARTSY_URL}/api/v1/repost"
     model.destroy
+      data:
+        post_id: @get('id')
       success: options?.success
       error: options?.error
+
+  ensureFeatureArtworksFetched: (callback) ->
+    if ! @get('feature_artworks')
+      artworks = new Artworks()
+      artworks.fetch
+        url: "#{@url()}/features/artworks"
+        success: (artworks) =>
+          @set('feature_artworks', artworks)
+          callback?(artworks)
+    else
+      callback?(@get('feature_artworks'))
+
+  ensureFeatureArtistsFetched: (callback) ->
+    if ! @get('feature_artists')
+      artists = new Backbone.Collection()
+      artists.fetch
+        url: "#{@url()}/features/artists"
+        success: =>
+          @set('feature_artists', artists)
+          callback?(artists)
+        error: (x,c,b)-> console.log(x,c,b)
+    else
+      callback?(@get('feature_artists'))
