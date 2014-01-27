@@ -2,7 +2,7 @@
 - var profile = feedItem.get('profile')
 - var feedItemChildModel = feedItem.toChildModel()
 - var artworksDisplayed = 8
-article.feed-item( style="width: #{fixedWidth}px" )
+article.feed-item.unrendered-feed-item( style="width: #{fixedWidth}px" )
   if feedItem.isPartnerShow()
     section.feed-column.full-width-column
       include ./feed_item_body_label

@@ -126,6 +126,7 @@ module.exports = (app) ->
   app.use require "../apps/posts"
   app.use require "../apps/genes"
   app.use require "../apps/following"
+  app.use require "../apps/profile"
 
   # Route to ping for system up
   app.get '/system/up', (req, res) ->

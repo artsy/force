@@ -11,7 +11,7 @@ describe 'Meta tags', ->
       @sd =
         ASSET_PATH: "http://localhost:5000"
         ARTSY_URL: "http://localhost:5000"
-      @file = "#{process.cwd()}/apps/profile/meta.jade"
+      @file = "#{process.cwd()}/apps/profile/templates/meta.jade"
       @profile = new Profile fabricate('profile')
       @html = jade.render fs.readFileSync(@file).toString(),
         sd  : @sd

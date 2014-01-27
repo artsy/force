@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-Artwork  = require('./artwork.coffee')
+Artwork  = require('../../../models/artwork.coffee')
 
 module.exports = class PostArtwork extends Backbone.Model
 

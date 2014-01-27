@@ -1,7 +1,7 @@
 _                       = require 'underscore'
 Backbone                = require 'backbone'
 sd                      = require('sharify').data
-FeedView                = require('../../../components/feed/client/feed.coffee').FeedView
+FeedView                = require('../../../components/feed/client/feed.coffee')
 FeedItems               = require('../../../components/feed/collections/feed_items.coffee')
 
 module.exports.ShowsView = class ShowsView extends Backbone.View

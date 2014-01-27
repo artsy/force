@@ -1,2 +1,2 @@
 figure.post-image( data-attachment=attachment.id )
-  img( src=attachment.imageUrl('original'), nopin="nopin" )
+  img( height=attachment.maxHeightForWidth(maxDimension), width=attachment.maxWidthForWidth(maxDimension), src=attachment.imageUrl('larger'), nopin="nopin" )
