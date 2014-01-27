@@ -20,7 +20,7 @@ render = (templateName) ->
 describe 'Partners', ->
 
   before ->
-    sd =
+    @sd =
       ARTSY_URL : 'http://localhost:5000'
       ASSET_PATH: 'http://localhost:5000'
     @profiles = new Profiles [
@@ -49,7 +49,7 @@ describe 'Partners', ->
       )
     ]
     @html = render('template')({
-      sd: sd
+      sd: @sd
       featuredPartnerProfiles: @profiles
     })
 
@@ -89,3 +89,31 @@ describe 'Partners', ->
     it 'renders all follow buttons in an unfollowed state', ->
       $ = cheerio.load @html
       $(".follow-button[data-state='following']").should.have.lengthOf 0
+
+    describe 'with incomplete location data', ->
+
+    it 'renders without a location', ->
+      @profiles = new Profiles [
+        fabricate('featured_partners_profiles',
+          id: 'gagosian'
+          owner: new Partner(fabricate('partner',
+            type: "Gallery"
+            locations: new Backbone.Collection()  # No locations
+          ))
+        )
+        fabricate('featured_partners_profiles',
+          id: 'pace'
+          owner: new Partner(fabricate('partner',
+            type: "Gallery"
+            locations: new Backbone.Collection([fabricate 'location', city: ''])  # No city
+          ))
+        )
+      ]
+      html = render('template')({
+        sd: @sd
+        featuredPartnerProfiles: @profiles
+      })
+      $ = cheerio.load html
+      $(".featured-partner-profile-location").length.should.equal 2
+      $($(".featured-partner-profile-location")[0]).text().should.equal 'Gallery'
+      $($(".featured-partner-profile-location")[1]).text().should.equal 'Gallery'
