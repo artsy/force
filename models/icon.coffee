@@ -6,7 +6,7 @@ Icon     = require './icon.coffee'
 
 module.exports = class Icon extends Backbone.Model
 
-  _.extend @prototype, Image
+  _.extend @prototype, Image(sd.SECURE_IMAGES_URL)
 
   urlRoot: "#{sd.ARTSY_URL}/api/v1/#{@profileId}/icon"
 
