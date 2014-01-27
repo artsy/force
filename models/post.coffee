@@ -104,7 +104,6 @@ module.exports = class Post extends Backbone.Model
   # Admin for editing, flagging  and reposting
   #
   feature: (options) ->
-    console.log @url()
     @set featured: true
     @save
       success: options?.success
