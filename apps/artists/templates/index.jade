@@ -12,7 +12,7 @@ block body
       .alphabetical-index-label Browse 7,000 artists
       .alphabetical-index-range
         for letter in letterRange
-          a( href="/artists/#{letter}" )= letter
+          a( href="/artists/artists-starting-with-#{letter}" )= letter
 
     h1.avant-garde-header-center
       = featuredArtists.get('name')
@@ -25,6 +25,7 @@ block body
           for link in featuredArtists.get('items').models
             if link.hasImage('large_rectangle')
               .afc-artist
+                - var artist = link.get('artist');
                 a( href= link.get('href') )
                   img( src= link.imageUrl('large_rectangle'), alt= link.get('title') )
                 .afc-artist-information
@@ -34,10 +35,17 @@ block body
                     if link.get('subtitle')
                       p.afc-artist-notes
                         = link.get('subtitle')
+                      .afc-artist-works-count
+                        if artist.get('forsale_artworks_count') > 1
+                          | #{artist.get('forsale_artworks_count')} Works available
+                        else if artist.get('forsale_artworks_count') === 1
+                          | 1 Work available
+                        //- If no available works and some published works
+                        if artist.get('forsale_artworks_count') === 0 && artist.get('published_artworks_count') > 1
+                          | #{artist.get('published_artworks_count')} Works on Artsy
+
                   .afc-artist-information-right
-                    a.avant-garde-button-white.follow-button(
-                      data-id= link.get('href').replace(/\/?artist\//, '')
-                    )
+                    a.avant-garde-button-white.follow-button( data-id= artist.id )
 
     .artists-featured-genes
       for gene in featuredGenes.models
@@ -53,6 +61,9 @@ block body
                 .afg-artist-information
                   h2.afg-artist-name
                     a( href="/artist/#{artist.id}" )= artist.get('name')
-                  .afg-years= artist.get('years')
-                  a.avant-garde-button-white.follow-button( data-id= artist.id )
+                  if artist.get('nationality')
+                    .afg-nationality= artist.get('nationality')
+                  if artist.get('years')
+                    .afg-years= artist.get('years')
+                  a.avant-garde-button-white.follow-button.is-small( data-id= artist.id )
 

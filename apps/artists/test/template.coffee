@@ -32,7 +32,11 @@ describe 'Artists', ->
         )
 
         @featuredLinksCollection = new Items(
-          _.times(3, -> new FeaturedLink(fabricate('featured_link'))), { id: 'foobar', item_type: 'FeaturedLink' }
+          _.times(3, ->
+            link = new FeaturedLink(fabricate('featured_link'))
+            link.set 'artist', new Artist(fabricate('artist'))
+            link
+          ), { id: 'foobar', item_type: 'FeaturedLink' }
         )
 
         @genes = new Items(_.times(2, =>

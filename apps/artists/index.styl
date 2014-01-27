@@ -147,7 +147,11 @@ bumper-width = 40px
 
 .afc-artist-name
 .afc-artist-notes
+.afc-artist-works-count
   overflow ellipsis
+
+.afc-artist-works-count
+  color dark-gray-text-color
 
 // Featured Genes
 .artists-featured-genes-gene
@@ -179,7 +183,8 @@ bumper-width = 40px
 .afg-artist-name
   @extends .afc-artist-name
   font-size 13px
-  width 50%
+  // Accommodate follow button
+  width calc('100% - 120px')
   overflow ellipsis
 
 .afg-artist-information
@@ -190,8 +195,6 @@ bumper-width = 40px
     position absolute
     top 20px
     right 0
-    font-size 11px
-    padding 7px 20px
 
 // Letter page
 #letter-page
