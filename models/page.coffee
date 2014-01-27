@@ -4,6 +4,6 @@ Backbone     = require 'backbone'
 { Markdown } = require 'artsy-backbone-mixins'
 
 module.exports = class Page extends Backbone.Model
-  _.extend @prototype, Image(sd.SECURE_IMAGES_URL)
+  _.extend @prototype, Markdown
 
   urlRoot: "#{sd.ARTSY_URL}/api/v1/page"
