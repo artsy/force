@@ -3,7 +3,7 @@ Backbone      = require 'backbone'
 sd            = require('sharify').data
 Artworks      = require '../collections/artworks.coffee'
 { Markdown }  = require 'artsy-backbone-mixins'
-Image         = require './mixins/image.coffee'
+{ Image } = require 'artsy-backbone-mixins'
 Post          = require './post.coffee'
 { smartTruncate } = require '../components/util/string.coffee'
 

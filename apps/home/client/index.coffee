@@ -1,8 +1,9 @@
 HeroUnitView = require './hero_unit_view.coffee'
 OrderedSets = require '../../../collections/ordered_sets.coffee'
-
-featuredSections = new OrderedSets(key: 'homepage:featured-sections')
+FeaturedLinks = require '../../../collections/featured_links.coffee'
+featuredLinksTemplate = -> require('../templates/featured_links.jade') arguments...
 
 module.exports.init = ->
   new HeroUnitView $body: $('body')
-  featuredSections.fetchAll success: -> console.log arguments
+  new FeaturedLinks().fetchSetItemsByKey 'homepage:featured-sections', success: (featuredLinks) ->
+    $('#home-top-featured-links').html featuredLinksTemplate(featuredLinks: featuredLinks.models)

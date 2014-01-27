@@ -2,12 +2,12 @@ _               = require 'underscore'
 sinon           = require 'sinon'
 Backbone        = require 'backbone'
 { fabricate }   = require 'antigravity'
-imageMixin      = require '../../../models/mixins/image'
+{ Image }       = require 'artsy-backbone-mixins'
 imageSizesMixin = require '../../../models/mixins/image_sizes'
 sd              = require('sharify').data
 
 class Model extends Backbone.Model
-  _.extend @prototype, imageMixin
+  _.extend @prototype, Image
   _.extend @prototype, imageSizesMixin
 
 describe 'Image Sizes Mixin', ->
