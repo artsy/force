@@ -11,6 +11,6 @@ module.exports =
 
   imageUrl: (version = @defaultImageVersion()) ->
     if @hasImage version
-      @get('image_url').replace(':version', version).replace('http://', '//')
+      @get('image_url').replace(':version', version)
     else
       @missingImageUrl()
