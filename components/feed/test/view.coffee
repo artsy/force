@@ -24,7 +24,7 @@ describe 'FeedView', ->
       )
       @feedItems = new FeedItems
       @feedItems.add @partnerShow
-      @view = new FeedView.FeedView
+      @view = new FeedView
         el: $("<div class='feed'></div>")
         feedItems: @feedItems
       done()

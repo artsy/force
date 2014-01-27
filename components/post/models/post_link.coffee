@@ -33,16 +33,10 @@ module.exports = class PostLink extends Backbone.Model
     if @isImage() then @get('oembed_json')?.height else @get('oembed_json')?.thumbnail_height
 
   aspectRatio: ->
-    @get('aspect_ratio') || (@imageWidth() / @imageHeight())
+    @get('aspect_ratio') || (@imageHeight() / @imageWidth())
 
   maxHeightForWidth: (maxDimension=600) ->
-    aspectRatio = @aspectRatio()
-    maxDimension = maxDimension || @get('original_height')
-    height = @imageHeight()
-    width = @imageWidth()
-    if aspectRatio?
-      height = Math.round(width / @aspectRatio())
-      if height > maxDimension then maxDimension else Math.floor(height)
+    @maxWidthForWidth(maxDimension) * @aspectRatio()
 
   maxWidthForWidth: (maxDimension=600) ->
     aspectRatio = @aspectRatio()

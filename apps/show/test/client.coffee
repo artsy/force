@@ -3,9 +3,9 @@ Backbone        = require 'backbone'
 benv            = require 'benv'
 sinon           = require 'sinon'
 sd              = require('sharify').data
-{ fabricate }   = require 'antigravity'
 PartnerShow     = require '../../../models/partner_show.coffee'
 Profile         = require '../../../models/profile.coffee'
+{ fabricate }   = require 'antigravity'
 { resolve }     = require 'path'
 
 describe 'Partner Show View', ->

@@ -9,6 +9,7 @@ require '../../node_modules/typeahead.js/dist/typeahead.min.js'
 require('jquery.transition')($, document)
 require 'jquery.fillwidth'
 require 'jquery.dotdotdot'
+require 'jquery.poplockit'
 
 $.ajaxSettings.headers =
   'X-XAPP-TOKEN'  : sd.ARTSY_XAPP_TOKEN
