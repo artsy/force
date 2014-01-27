@@ -47,7 +47,7 @@ parseGenes = (collection) ->
 
 @letter = (req, res) ->
   currentPage   = parseInt(req.query.page) or 1
-  letter        = req.params.letter
+  letter        = req.params.letter.replace('artists-starting-with-', '')
   artists       = new ArtistsByLetter([], { letter: letter, state: { currentPage: currentPage } })
 
   artists.fetch(cache: true).then ->

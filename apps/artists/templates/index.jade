@@ -12,7 +12,7 @@ block body
       .alphabetical-index-label Browse 7,000 artists
       .alphabetical-index-range
         for letter in letterRange
-          a( href="/artists/#{letter}" )= letter
+          a( href="/artists/artists-starting-with-#{letter}" )= letter
 
     h1.avant-garde-header-center
       = featuredArtists.get('name')
