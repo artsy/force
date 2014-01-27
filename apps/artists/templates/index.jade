@@ -53,6 +53,9 @@ block body
                 .afg-artist-information
                   h2.afg-artist-name
                     a( href="/artist/#{artist.id}" )= artist.get('name')
-                  .afg-years= artist.get('years')
+                  if artist.get('nationality')
+                    .afg-nationality= artist.get('nationality')
+                  if artist.get('years')
+                    .afg-years= artist.get('years')
                   a.avant-garde-button-white.follow-button.is-small( data-id= artist.id )
 
