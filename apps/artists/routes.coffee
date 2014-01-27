@@ -1,33 +1,7 @@
-_             = require 'underscore'
-sd            = require('sharify').data
-Q             = require 'q'
-Artist        = require '../../models/artist.coffee'
-OrderedSets   = require '../../collections/ordered_sets.coffee'
-
-letterRange = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
-
-# This collection to be extracted and cleaned up at a later time
-PageableCollection = require 'backbone-pageable'
-class ArtistsByLetter extends PageableCollection
-  url: ->
-    "#{sd.ARTSY_URL}/api/v1/artists/#{@letter}?total_count=1"
-
-  model: Artist
-
-  state:
-    pageSize: 100
-
-  queryParams:
-    currentPage: 'page'
-    pageSize: 'size'
-
-  parseState: (resp, queryParams, state, options) ->
-    if options.res
-      { totalRecords: parseInt(options.res.headers['x-total-count']) }
-
-  initialize: (models, options={}) ->
-    { @letter } = options
-    super
+_                 = require 'underscore'
+Q                 = require 'q'
+OrderedSets       = require '../../collections/ordered_sets'
+ArtistsByLetter   = require './collections/artists_by_letter'
 
 parseGenes = (collection) ->
   collection.chain().
@@ -47,24 +21,33 @@ parseGenes = (collection) ->
 
   genePromise = featuredGenes.fetchAll(cache: true)
   requests.push genePromise
+
   genePromise.then ->
     genesSet  = featuredGenes.findWhere item_type: 'Gene'
     genes     = genesSet.get 'items'
 
-    genes.each (gene) ->
-      promise = gene.fetchArtists 'trending', { cache: true }
-      promise.then -> gene.trendingArtists = parseGenes gene.trendingArtists
-      requests.push promise
+    requests = requests.concat genes.map (gene) ->
+      deferred      = Q.defer()
+      genePromise   = gene.fetchArtists 'trending', { cache: true }
+
+      genePromise.then ->
+        gene.trendingArtists = parseGenes gene.trendingArtists
+        # Fetch full attributes for the 4 randomly selected artists
+        Q.allSettled(gene.trendingArtists.map (artist) ->
+          artist.fetch(cache: true)
+        ).then -> deferred.resolve.apply this, arguments
+
+      deferred.promise
 
     Q.allSettled(requests).then ->
       res.render 'index',
-        letterRange:      letterRange
+        letterRange:      ArtistsByLetter::range
         featuredArtists:  featuredArtists.at 0
         featuredGenes:    genes
 
 @letter = (req, res) ->
   # Should probably 404, throw error for the time being
-  throw new Error('Invalid option') unless _.contains(letterRange, req.params.letter)
+  throw new Error('Invalid option') unless _.contains(ArtistsByLetter::range, req.params.letter)
 
   currentPage   = parseInt(req.query.page) or 1
   letter        = req.params.letter
@@ -73,6 +56,6 @@ parseGenes = (collection) ->
   artists.fetch(cache: true).then ->
     res.render 'letter',
       artists:      artists
-      letterRange:  letterRange
+      letterRange:  artists.range
       letter:       letter
 
