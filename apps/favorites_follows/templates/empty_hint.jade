@@ -1,13 +1,11 @@
-.following-empty
+.follows-empty
   case type
     when "artists"
       p.hint Follow artists to get notified about new shows and works
     when "genes"
       p.hint Follow categories to improve your recommendations
     when "artworks"
-      p.hint Add works to your favorites by clicking on artworks
-
-section.following-recommendation
-  h3 Find Something You Like
-  .recommendations
-    .loading-spinner
+      p.hint
+        | Add works to your favorites by clicking 
+        span.circle-control-container: i.icon-heart
+        |  on artworks

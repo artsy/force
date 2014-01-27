@@ -1,0 +1,19 @@
+extends ../../../components/main_layout/templates/index
+include ./header
+
+block head
+  include meta
+
+block locals
+  assetPackage = 'follows'
+
+block body
+  #follows
+    .main-layout-container
+      header.follows-header
+        h1.avant-garde-header-center Favorites &amp; Follows
+        +follows-tab-nav
+      main
+        section.follows(id=type)
+        section.follows-empty-hint
+        section.suggested-genes
