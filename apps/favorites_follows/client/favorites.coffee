@@ -92,7 +92,11 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
       @artworkCollection.syncSavedArtworks()
 
   renderArtworks: (artworks) ->
-    @$('.favorite-artworks').append artworkColumns artworkColumns: artworks.groupByColumnsInOrder @numOfCols
+    # TODO Use the ArtworkColumns views instead
+    $columns = $ artworkColumns artworkColumns: artworks.groupByColumnsInOrder @numOfCols
+    @$('.favorite-artworks').append $columns unless @nextPage > 1
+    for col, i in $columns
+      @$('.favorite-artworks .artwork-column').eq(i).append $(col).children()
 
   showEmptyHint: () ->
     @$('.follows-empty-hint').html $( hintTemplate type: 'artworks' )
