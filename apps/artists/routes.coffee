@@ -46,9 +46,6 @@ parseGenes = (collection) ->
         featuredGenes:    genes
 
 @letter = (req, res) ->
-  # Should probably 404, throw error for the time being
-  throw new Error('Invalid option') unless _.contains(ArtistsByLetter::range, req.params.letter)
-
   currentPage   = parseInt(req.query.page) or 1
   letter        = req.params.letter
   artists       = new ArtistsByLetter([], { letter: letter, state: { currentPage: currentPage } })

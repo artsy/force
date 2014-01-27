@@ -1,3 +1,4 @@
+_                   = require 'underscore'
 sd                  = require('sharify').data
 Artist              = require '../../../models/artist'
 PageableCollection  = require 'backbone-pageable'
@@ -23,4 +24,7 @@ module.exports = class ArtistsByLetter extends PageableCollection
 
   initialize: (models, options={}) ->
     { @letter } = options
+
+    throw new Error('Out of range') unless _.contains(@range, @letter)
+
     super
