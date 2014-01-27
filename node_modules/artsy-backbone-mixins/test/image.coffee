@@ -28,6 +28,10 @@ describe 'Image Mixin', ->
     it 'returns the first image version by default', ->
       @model.imageUrl().should.equal '/bitty/large_square'
 
+    it 'returns a http(s) agnostic url', ->
+      @model.set image_url: 'http://foo/bar.jpg'
+      @model.imageUrl().should.equal '//foo/bar.jpg'
+
     describe 'with a round image', ->
       beforeEach ->
         @model.set
@@ -35,7 +39,7 @@ describe 'Image Mixin', ->
           image_url: 'http://stazic1.artsy.net/additional_images/42/:version.jpg'
 
       it 'returns an image url', ->
-        @model.imageUrl('round').should.equal 'http://stazic1.artsy.net/additional_images/42/round.jpg'
+        @model.imageUrl('round').should.equal '//stazic1.artsy.net/additional_images/42/round.jpg'
 
       it "returns missing image for a version that doesn't exist", ->
         @model.imageUrl('square').should.equal '/images/missing_image.png'
