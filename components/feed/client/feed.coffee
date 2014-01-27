@@ -36,7 +36,11 @@ module.exports = class FeedView extends Backbone.View
     @setupCurrentUser()
 
     @initialFeedItems = @feedItems.removeFlagged()
-    @render @initialFeedItems
+    if @currentUser
+      @currentUser.fetch success: =>
+        @render @initialFeedItems
+    else
+      @render @initialFeedItems
 
     throttledInfiniteScroll = _.throttle (=> @infiniteScroll()), 250
     @$window.on 'scroll', throttledInfiniteScroll
@@ -130,7 +134,7 @@ module.exports = class FeedView extends Backbone.View
 
     # return if done or if have not computed size yet
     return if @feedItems.doneFetching or @waiting
-    return unless @lastItem.length
+    return unless @lastItem?.length
 
     top = if @lastItem.offset() then @lastItem.offset().top else 0
     if @scrollTop + 1500 > top

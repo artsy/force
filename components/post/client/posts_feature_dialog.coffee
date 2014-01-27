@@ -4,16 +4,21 @@ sd                 = require('sharify').data
 Artists            = require('../../../collections/artists.coffee')
 Artworks           = require('../../../collections/artworks.coffee')
 featurePostArtworkTemplate = -> require('../templates/actions_feature_post_artwork.jade') arguments...
-featurePostArtistTemplate = -> require('../templates/actions_feature_post_artist.jade') arguments...
+featurePostArtistTemplate  = -> require('../templates/actions_feature_post_artist.jade') arguments...
 
 module.exports = class PostsFeatureDialog extends Backbone.View
 
   events:
-    'click .posts-dialog a.close'  : 'hide'
-    'click .feature-by-slug'       : 'featureBySlug'
+    'click .feature-by-slug'   : 'featureBySlug'
+    'click a.post-feature'     : 'featurePostOnPage'
+    'click a.post-unfeature'   : 'unfeaturePostOnPage'
+
+  getFeatureUrl: (modelName, modelId) ->
+    "#{sd.ARTSY_URL}/api/v1/post/#{@model.get('id')}/#{modelName}/#{modelId}/feature"
 
   initialize: ->
     @$postsDialog = @$('.posts-dialog')
+    @$error = @$('.slug-container .error')
 
   show: ->
     if ! @$postsDialog.is(':visible')
@@ -26,79 +31,88 @@ module.exports = class PostsFeatureDialog extends Backbone.View
     @model.ensureFeatureArtistsFetched @displayFeatureArtists
     @model.ensureFeatureArtworksFetched @displayFeatureArtworks
 
-  displayFeatureArtworks: (artworks) =>
-    featureArtworks = @$('.posts-dialog ul.artworks')
+  displayFeatureArtworks: (artworksCollection) =>
+    featureArtworks = @$('.posts-dialog .feature-artworks')
 
-    artworksCollection = new Artworks( artworks.models )
-    for attachment in @model.get('attachments')
-      if attachment.type == 'PostArtwork'
-        artworksCollection.add attachment.get('artwork')
+    if @model.artworks()?.length
+      for artwork in @model.artworks()
+        artworksCollection.add artwork
 
     html = artworksCollection.map((artwork) =>
       featurePostArtworkTemplate( post: @model, artwork: artwork )
     ).join('')
     featureArtworks.html html
 
-    artworksCollection.map (artwork) => @updateFeatured(artwork)
+    artworksCollection.map (artwork) => @updateFeatured(artwork.get('id'), 'artwork')
 
-  displayFeatureArtists: (artists) =>
-    featureArtists = @$('.posts-dialog ul.artists')
+  displayFeatureArtists: (artistsCollection) =>
+    featureArtists = @$('.posts-dialog .feature-artists')
 
-    artistsCollection = new Artists( artists.models )
-    for attachment in @model.get('attachments')
-      if attachment.type == 'PostArtwork'
-        artist = attachment.artwork?.artist
-        artistsCollection.add artist
+    for artwork in @model.artworks()
+      artistsCollection.add artwork.get('artist')
 
     html = artistsCollection.map((artist) =>
       featurePostArtistTemplate( post: @model, artist: artist )
     ).join('')
     featureArtists.html html
 
-    artistsCollection.map (artist) =>  @updateFeatured(artist)
+    artistsCollection.map (artist) => @updateFeatured(artist.get('id'), 'artist')
 
   displayFeatureBySlugError: (response) ->
-    response.suppressAppMessages = true
-    @$('li.slug .error').text _.compact([
+    @$error.text _.compact([
       (JSON.parse(response.responseText).error ? response.statusText),
-      @$('li.slug .error').text()
+      @$error.text()
     ]).join(", ")
 
-  featureBySlug: (event) ->
-    $featureBySlugButton = @$('li.slug a')
+  featureBySlug: ->
+    $featureBySlugButton = @$('.slug-container a')
     return false if $featureBySlugButton.hasClass('working')
     $featureBySlugButton.addClass('working')
 
-    @$('li.slug .error').text('')
+    @$error.text('')
 
-    slug = @$('input[name=feature_slug]').val()
+    modelId = @$('input[name=post-feature-model-id]').val()
+    return unless modelId && modelId.length > 0
+
+    modelName = @$('input[name=post-feature-model-name]').val()
     return unless slug && slug.length > 0
 
-    # Todo: Figure out a better way of getting modelname and model id
-    model = new Backbone.Model
+    model = new Backbone.Model()
     model.save
-      url    : "/api/v1/post/#{@model.get('id')}/#{modelName}/#{modelId}/feature",
+      url    : @getFeatureUrl(modelName, modelId)
       success: =>
-        @$('li.slug .error').text('')
-        @model.set "feature_#{model.modelName}s", null
-        @loadPosts()
+        @$error.text('')
         $featureBySlugButton.removeClass('working')
       error: (response) =>
         $featureBySlugButton.removeClass('working')
         @displayFeatureBySlugError(response)
 
-  updateFeatured: (model) ->
-    modelId = model.get('id')
-    modelName = model.modelName
-    selector = ".posts-dialog ul.#{modelName}s a[data-#{modelName}_id=#{modelId}]"
+  updateFeatured: (modelId, modelName) =>
+    selector = ".posts-dialog a[data-#{modelName}_id=#{modelId}]".toLowerCase()
+    model = new Backbone.Model()
+    model.fetch
+      url: @getFeatureUrl(modelName, modelId)
+      success: =>
+        @$(selector).addClass('post-unfeature')
+      error: (xhr) =>
+        @$(selector).addClass('post-feature')
 
-    if @model.get("feature_#{model.modelName}s")?.get(model.id)?
-      @$(selector).addClass('unfeature_attachment')
-    else
-      model = new Backbone.Model
-      model.save
-        url: -> "/api/v1/post/#{@model.get('id')}/#{modelName}/#{modelId}/feature"
-        success: =>
-          @$(selector).addClass('unfeature_attachment')
-        error: (xhr) =>
-          @$(selector).addClass('feature_attachment')
+  featurePostOnPage: (event) ->
+    modelName = $(event.target).attr('data-model_name')
+    modelId = $(event.target).attr("data-#{modelName}_id")
+
+    model = new Backbone.Model
+    model.url = @getFeatureUrl(modelName, modelId)
+    model.save
+      success: =>
+        @loadPosts()
+
+  unfeaturePostOnPage: (event) ->
+    modelName = $(event.target).attr('data-model_name')
+    modelId = $(event.target).attr("data-#{modelName}_id")
+
+    model = new Backbone.Model(id: _.uniqueId)
+    model.destroy
+      url: @getFeatureUrl(modelName, modelId)
+      success: =>
+        @loadPosts()
