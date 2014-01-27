@@ -1,4 +1,3 @@
-rewire        = require 'rewire'
 benv          = require 'benv'
 Backbone      = require 'backbone'
 sinon         = require 'sinon'
@@ -11,14 +10,12 @@ _             = require 'underscore'
 describe 'FavoritesView', ->
 
   before (done) ->
-    sinon.stub _, 'defer'
     benv.setup =>
-      benv.expose { $: benv.require 'components-jquery' }
+      benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       done()
 
   after ->
-    _.defer.restore()
     benv.teardown()
 
   describe 'without favorites items', ->
@@ -50,6 +47,9 @@ describe 'FavoritesView', ->
       Backbone.sync.restore()
 
     describe '#showEmptyHint', ->
+        
+      it 'shows hint for adding favorite artworks', ->
+        @view.$el.html().should.include 'Add works to your favorites'
 
       it 'shows suggested genes genes', ->
         @SuggestedGenesView.render.should.calledOnce
@@ -104,12 +104,12 @@ describe 'FavoritesView', ->
         @artworkColumns.should.calledOnce
         @artworkColumns.args[0][0].artworkColumns.length.should.equal 2
 
-      it 'renders the next pages individually until the end', ->
+      it 'uses ArtworkColumns to render the next pages individually until the end', ->
         @view.loadNextPage()
         @view.nextPage.should.equal 3
-        _.last(@artworkColumns.args)[0].artworkColumns[0][0].attributes.artwork.id.should.equal 'artwork3'
-        _.last(@artworkColumns.args)[0].artworkColumns[1][0].attributes.artwork.id.should.equal 'artwork4'
+        _.last(@artworkColumns.args)[0].artworkColumns[0][0].get('artwork').id.should.equal 'artwork3'
+        _.last(@artworkColumns.args)[0].artworkColumns[1][0].get('artwork').id.should.equal 'artwork4'
         @view.loadNextPage()
         @view.nextPage.should.equal 4
-        _.last(@artworkColumns.args)[0].artworkColumns[0][0].attributes.artwork.id.should.equal 'artwork5'
-        _.last(@artworkColumns.args)[0].artworkColumns[1][0].attributes.artwork.id.should.equal 'artwork6'
+        _.last(@artworkColumns.args)[0].artworkColumns[0][0].get('artwork').id.should.equal 'artwork5'
+        _.last(@artworkColumns.args)[0].artworkColumns[1][0].get('artwork').id.should.equal 'artwork6'

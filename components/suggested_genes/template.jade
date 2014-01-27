@@ -1,9 +1,9 @@
-section.recommended-genes
+section.suggested-genes
   h3 Find Something You Like
-  .recommendations
-    ul.recommendation-row
+  .suggestions
+    ul.suggestion-row
       each g in genes
-        li.recommendation-item
+        li.suggestion-item
           a(href=g.clientUrl())
             .img-container
               img(src=g.imageUrl('tall'))

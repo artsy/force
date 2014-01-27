@@ -5,7 +5,7 @@ Genes          = require '../../collections/genes.coffee'
 OrderedSets    = require '../../collections/ordered_sets.coffee'
 template       = -> require('./template.jade') arguments...
 
-module.exports = class RecommendedGenes extends Backbone.View
+module.exports = class SuggestedGenesView extends Backbone.View
   
   defaults:
     numberOfItems: 5
@@ -16,18 +16,23 @@ module.exports = class RecommendedGenes extends Backbone.View
     @collection = new Genes()
     @listenTo @collection, 'request', @renderLoading
     @listenTo @collection, 'sync', @render
-    @fetchRecommendedGenes()
+    @fetchSuggestedGenes()
     @
 
   renderLoading: ->
-    @$el.find('.recommendations').html '<div class="loading-spinner"></div>'
+    @$el.find('.suggestions').html '<div class="loading-spinner"></div>'
 
   render: ->
     genes = if @isShuffle then _.shuffle @collection.models else @collection.models
     @$el.html template genes: genes.slice(0, @numberOfItems)
     @
 
-  fetchRecommendedGenes: (options) ->
+  #
+  # Fetch suggested genes via api, if empty result, simply fetch random genes
+  # It fetches double the size of `numOfItems` to simulate randomization.
+  #
+  # @param {Object} options Provide `success` and `error` callbacks similar to Backbone's fetch
+  fetchSuggestedGenes: (options) ->
     (new OrderedSets key: 'favorites:suggested-genes').fetch
       success: (geneSets) =>
         @fetchRandomGenes options unless (setId = geneSets.first()?.get 'id')
@@ -35,6 +40,10 @@ module.exports = class RecommendedGenes extends Backbone.View
         data = size: @numberOfItems * 2
         @collection.fetch(_.extend { url: url, data: data }, options)
 
+  #
+  # Utility function to fetch random gene collection
+  #
+  # @param {Object} options Provide `success` and `error` callbacks similar to Backbone's fetch
   fetchRandomGenes: (options) ->
     data =
       size: @numberOfItems

@@ -2,11 +2,9 @@ _                       = require 'underscore'
 Backbone                = require 'backbone'
 sd                      = require('sharify').data
 CurrentUser             = require '../../../models/current_user.coffee'
-ArtworkCollection       = require '../../../models/artwork_collection.coffee'
 Artworks                = require '../../../collections/artworks.coffee'
 artworkColumns          = -> require('../../../components/artwork_columns/template.jade') arguments...
 hintTemplate            = -> require('../templates/empty_hint.jade') arguments...
-ShareView               = require '../../../components/share/view.coffee'
 SaveControls            = require '../../../components/artwork_item/save_controls.coffee'
 SuggestedGenesView      = require '../../../components/suggested_genes/view.coffee'
 
@@ -44,30 +42,27 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
     end = @numOfCols * @numOfRowsPerPage * @nextPage # 0-indexed, not including
     start = end - @numOfCols * @numOfRowsPerPage
     return unless @collection.length > start
-    console.log "Loading page ##{@nextPage} (#{start}, #{end}], @collection has #{@collection.length} artworks."
-    console.log "Rendering page ##{@nextPage}\n"
     artworks = new Artworks @collection.slice start, end
     @renderArtworks artworks
     @setupArtworkSaveControls artworks
     ++@nextPage
 
   infiniteScroll: =>
-    console.log "Infinite scrolling..."
     $(window).unbind('.following') unless @numOfCols * @numOfRowsPerPage * (@nextPage - 1) < @collection.length
     fold = $(window).height() + $(window).scrollTop()
     $lastItem = @$('.favorite-artworks')
     @loadNextPage() unless fold < $lastItem.offset()?.top + $lastItem.height()
 
+  #
   # Fetch all saved artworks and save them to @collection
   #
   # @param {Object} options Provide `success` and `error` callbacks similar to Backbone's fetch
   fetchAllSavedArtworks: (options) ->
     url = "#{sd.ARTSY_URL}/api/v1/collection/saved-artwork/artworks"
-    data =
-      user_id: @currentUser.get('id')
-      private: true
+    data = user_id: @currentUser.get('id'), private: true
     @collection.fetchUntilEnd _.extend { url: url, data: data }, options
 
+  #
   # Fetch the next page of saved artworks and (blindly) append them to @collection
   #
   # @param {Object} options Provide `success` and `error` callbacks similar to Backbone's fetch
@@ -91,9 +86,9 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
       @artworkCollection.addRepoArtworks artworkCollection
       @artworkCollection.syncSavedArtworks()
 
-  renderArtworks: (artworks) ->
-    # TODO Use the ArtworkColumns views instead
-    $columns = $ artworkColumns artworkColumns: artworks.groupByColumnsInOrder @numOfCols
+  renderArtworks: (artworkCollection) ->
+    # TODO Use the ArtworkColumns views when ready instead
+    $columns = $ artworkColumns artworkColumns: artworkCollection.groupByColumnsInOrder @numOfCols
     @$('.favorite-artworks').append $columns unless @nextPage > 1
     for col, i in $columns
       @$('.favorite-artworks .artwork-column').eq(i).append $(col).children()

@@ -7,14 +7,13 @@ OrderedSets    = require '../../../collections/ordered_sets.coffee'
 Gene = require '../../../models/gene'
 Genes = require '../../../collections/genes'
 { resolve } = require 'path'
-RecommendedGenesView = mod = benv.requireWithJadeify resolve(__dirname, '../view'), ['template']
+SuggestedGenesView = mod = benv.requireWithJadeify resolve(__dirname, '../view'), ['template']
 
-describe 'RecommendedGenesView', ->
+describe 'SuggestedGenesView', ->
 
   before (done) ->
     benv.setup =>
-      benv.expose { $: benv.require 'components-jquery' }
-      $.fn.fillwidth = ->
+      benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       done()
 
@@ -24,14 +23,14 @@ describe 'RecommendedGenesView', ->
   beforeEach (done) ->
 
     sinon.stub Backbone, 'sync'
-    @OrderedSets = sinon.stub()
-    @OrderedSets.fetch = sinon.stub()
     geneSets = new OrderedSets()
     geneSets.add {id: '123'}
+    @OrderedSets = sinon.stub()
+    @OrderedSets.fetch = sinon.stub()
     @OrderedSets.fetch.yieldsTo "success", geneSets
     @OrderedSets.returns @OrderedSets
     mod.__set__ 'OrderedSets', @OrderedSets
-    @view = new RecommendedGenesView
+    @view = new SuggestedGenesView
       el: $('body')
       numberOfItems: 2
     done()
@@ -44,9 +43,10 @@ describe 'RecommendedGenesView', ->
     it 'calls suggested genes api to get suggested genes', ->
       _.last(Backbone.sync.args)[2].url.should.include '/api/v1/set/123/items'
 
-    it 'renders a the exact number of genes', ->
+    it 'renders the exact number of genes', ->
+      @view.collection.add fabricate 'gene', image_url: ''
       @view.collection.add fabricate 'gene', image_url: ''
       @view.collection.add fabricate 'gene', image_url: ''
       @view.collection.add fabricate 'gene', image_url: ''
       @view.render()
-      @view.$el.find('.recommendation-item').length.should.equal 2
+      @view.$el.find('.suggestion-item').length.should.equal 2

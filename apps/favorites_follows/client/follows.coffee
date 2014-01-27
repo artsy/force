@@ -72,7 +72,6 @@ module.exports.FollowsView = class FollowsView extends Backbone.View
     item.fetchArtworks success: (artworks) =>
       $container = @$("##{item.get('id')}")
       $followButton = $container.find(".follow-button")
-      console.log $followButton
       $artworks = $container.find('.artworks')
       view = new FillwidthView
         artworkCollection: @artworkCollection

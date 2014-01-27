@@ -3,7 +3,6 @@ Backbone          = require 'backbone'
 ArtworkCollection = require './artwork_collection.coffee'
 Genes             = require '../collections/genes.coffee'
 Artists           = require '../collections/artists.coffee'
-Artworks          = require '../collections/artworks.coffee'
 { ARTSY_URL, CURRENT_USER, SESSION_ID } = require('sharify').data
 Order = require './order.coffee'
 Genes = require '../collections/genes.coffee'
@@ -15,7 +14,6 @@ module.exports = class CurrentUser extends Backbone.Model
   defaults:
     followArtists       : null
     followGenes         : null
-    favoriteArtworks    : null
 
   # Should only be run after the user has been fetched and has an id
   initializeDefaultArtworkCollection: (options) ->
@@ -81,12 +79,6 @@ module.exports = class CurrentUser extends Backbone.Model
     data = access_token: @get('accessToken')
     @set followGenes: new Genes()
     @get('followGenes').fetchUntilEnd(_.extend { url: url, data: data }, options)
-
-  savedArtworks: (options) ->
-    url = "#{ARTSY_URL}/api/v1/collection/saved-artwork/artworks"
-    data = user_id: @get('id'), private: true
-    @set favoriteArtworks: new Artworks()
-    @get('favoriteArtworks').fetchUntilEnd(_.extend { url: url, data: data}, options)
 
   # Convenience for getting the bootstrapped user or returning null.
   # This should only be used on the client.
