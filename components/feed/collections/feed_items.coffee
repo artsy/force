@@ -1,4 +1,5 @@
 _           = require 'underscore'
+sd          = require('sharify').data
 Backbone    = require 'backbone'
 FeedItem    = require '../models/feed_item.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
@@ -7,7 +8,7 @@ module.exports = class FeedItems extends Backbone.Collection
 
   model: FeedItem
 
-  urlRoot: "/api/v1/me/feed"
+  urlRoot: "#{sd.ARTSY_URL}/api/v1/me/feed"
 
   pageSize: 3
   nextPage: 1

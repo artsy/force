@@ -1,13 +1,15 @@
 _               = require 'underscore'
 sd              = require('sharify').data
+Backbone        = require 'backbone'
+
 AdditionalImage = require '../../../models/additional_image.coffee'
 Artworks        = require '../../../collections/artworks.coffee'
-Backbone        = require 'backbone'
 CarouselView    = require '../../../components/carousel/view.coffee'
 CurrentUser     = require '../../../models/current_user.coffee'
 SaveControls    = require '../../../components/artwork_item/save_controls.coffee'
 PartnerShow     = require '../../../models/partner_show.coffee'
 ShareView       = require '../../../components/share/view.coffee'
+
 artworkColumns  = -> require('../../../components/artwork_columns/template.jade') arguments...
 
 module.exports.PartnerShowView = class PartnerShowView extends Backbone.View

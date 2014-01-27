@@ -7,7 +7,6 @@ sd            = require('sharify').data
 FeedItem      = require '../models/feed_item'
 FeedItems     = require '../collections/feed_items'
 { fabricate } = require 'antigravity'
-{ resolve }   = require 'path'
 
 describe 'FeedView', ->
 
@@ -25,7 +24,7 @@ describe 'FeedView', ->
       )
       @feedItems = new FeedItems
       @feedItems.add @partnerShow
-      @view = new FeedView.FeedView
+      @view = new FeedView
         el: $("<div class='feed'></div>")
         feedItems: @feedItems
       done()

@@ -1,8 +1,3 @@
 figure.rich-link( id='link_' + attachment.id, data-attachment=attachment.id, style="width=" + attachment.maxWidthForWidth(maxDimension) + "px;" )
   .rich-player
-    != attachment.safeEmbedHtml()
-  .details
-    p.title
-      em!= attachment.title() 
-      | , 
-      span= attachment.sourceName()
+    != attachment.get('oembed_json').html

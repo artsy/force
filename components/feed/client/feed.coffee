@@ -7,11 +7,11 @@ CurrentUser             = require '../../../models/current_user.coffee'
 FeedItems               = require '../collections/feed_items.coffee'
 FeedItem                = require '../models/feed_item.coffee'
 FeedItemView            = require('./feed_item.coffee').FeedItemView
-{ isTouchDevice }       = require '../../util/device.coffee'
+FeedItemPost            = require('../../post/client/feed_item_post.coffee').FeedItemPost
 feedItemsTemplate       = -> require('../templates/feed_items.jade') arguments...
 feedItemsContainerTemplate = -> require('../templates/feed_items_container.jade') arguments...
 
-module.exports.FeedView = class FeedView extends Backbone.View
+module.exports = class FeedView extends Backbone.View
 
   rendered: false
   marginLeftRight: 110
@@ -19,6 +19,10 @@ module.exports.FeedView = class FeedView extends Backbone.View
   textColumnWidth: 404
   textColumnMargin: 80
   items: []
+
+  feedItemViews:
+    Post: FeedItemPost
+    PartnerShow: FeedItemView
 
   initialize: (options) ->
     throw 'Requires options' unless options
@@ -29,12 +33,17 @@ module.exports.FeedView = class FeedView extends Backbone.View
     @windowHeight = @$window.innerHeight()
     @$htmlBody = $('html, body')
     @storeOptions options
+    @setupCurrentUser()
 
     @initialFeedItems = @feedItems.removeFlagged()
     @render @initialFeedItems
 
     throttledInfiniteScroll = _.throttle (=> @infiniteScroll()), 250
     @$window.on 'scroll', throttledInfiniteScroll
+
+    if @onResize
+      throttledOnResize = _.throttle (=> @onResize()), 250
+      @$window.on 'resize', throttledOnResize
 
   storeOptions: (options) ->
     @feedItems             = options.feedItems
@@ -48,7 +57,6 @@ module.exports.FeedView = class FeedView extends Backbone.View
     @sortOrder             = options.sortOrder
 
   render: (items) =>
-    return @handleFetchedItems(items) if @rendered
     @latestItems = items
 
     @fixedWidth = @getFixedWidth()
@@ -59,17 +67,16 @@ module.exports.FeedView = class FeedView extends Backbone.View
       headingSortOrder  : @headingSortOrder
       fixedWidth        : @fixedWidth
       maxDimension      : @maxDimension
+      sd                : sd
     )
 
     @$feedItems = @$('section.feed-items')
-    @handleFetchedItems items
 
-    if @$feedItems.length and items.length and @latestItems.length
-      @lastItem = @$('.feed-item:last')
-      @rendered = true
-      @afterLoadCont() if @afterLoadCont
-    else
-      @fetchMoreItems()
+    @handleFetchedItems items
+    @afterLoadCont() if @afterLoadCont
+
+    @lastItem = @$('.feed-item:last')
+    @rendered = true
 
   # Fetch / create items
   fetchMoreItems: =>
@@ -93,24 +100,33 @@ module.exports.FeedView = class FeedView extends Backbone.View
     $html = $(feedItemsTemplate(
       feedItems         : items
       fixedWidth        : @fixedWidth
+      textColumnWidth   : @textColumnWidth
+      maxDimension      : @maxDimension
+      sd                : sd
+      currentUser       : @currentUser
     ))
     for $item, index in $html
-      @items.push (new FeedItemView
-        artworkCollection: @artworkCollection
-        model  : items[index]
-        el     : $item
-        parent : @
-      )
+      if @feedItemViews[items[index].get('_type')]
+        @items.push (new @feedItemViews[items[index].get('_type')]
+          limitPostBodyHeight: @limitPostBodyHeight
+          artworkCollection  : @artworkCollection
+          currentUser        : @currentUser
+          model  : items[index]
+          el     : $item
+          parent : @
+        )
     $html
 
   handleFetchedItems: (items) ->
     return @handleDoneFetching() unless items.length > 0
     @latestItems = items
+    @removeItemsFromTop() if @removeItemsFromTop
     @$feedItems.append @getFeedItemHtml(items)
     @lastItem = @$('.feed-item:last')
+    @handleDoneFetching() if @handleDoneFetching
 
-  infiniteScroll: ->
-    @scrollTop = @$window.scrollTop()
+  infiniteScroll: (scrollTop) ->
+    @scrollTop = scrollTop || @$window.scrollTop()
 
     # return if done or if have not computed size yet
     return if @feedItems.doneFetching or @waiting

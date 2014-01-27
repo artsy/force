@@ -1,8 +1,8 @@
-Backbone = require 'backbone'
-_ = require 'underscore'
-Genes = require '../../../collections/genes.coffee'
+_             = require 'underscore'
+Backbone      = require 'backbone'
+Genes         = require '../../../collections/genes.coffee'
 genesTemplate = -> require('../templates/related_genes.jade') arguments...
-sd = require('sharify').data
+sd            = require('sharify').data
 
 module.exports = class RelatedGenesView extends Backbone.View
 

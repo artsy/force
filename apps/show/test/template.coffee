@@ -11,7 +11,6 @@ AdditionalImage = require '../../../models/additional_image'
 Artwork         = require '../../../models/artwork'
 Artworks        = require '../../../collections/artworks'
 
-
 render = (templateName) ->
   filename = path.resolve __dirname, "../#{templateName}.jade"
   jade.compile(
