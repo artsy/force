@@ -8,7 +8,7 @@ If a separate doc is required, add it to the component's directory as a
 - [Artwork Item](#artwork-item)
 - [Garamond Tab List](#garamond-tab-list)
 - [Profile Badge](#profile-badge)
-
+- [Suggested Genes](#suggested-genes)
 
 
 ## Artwork Columns
@@ -158,3 +158,26 @@ See `apps/artist/stylesheets/index.styl` for an example of a customized layout
 ##### Uses: 
 - Artist Pages - Featured Posts [/artist/andy-warhol](http://artsy.net/artist/andy-warhol)
 - Partner Shows [/show/333-montezuma-arts-elegy](http://artsy.net/show/333-montezuma-arts-elegy)
+
+## Suggested Genes
+![](images/suggested_genes.png)
+
+This component fetches and displays suggested genes in rows. `numberOfItems`
+ (default to `5`) and `isShuffle` (default to `true`) options can be 
+passed when creating an instance. It has to call `render()` explicitly
+to show the component.
+
+Example
+```jade
+SuggestedGenesView = require '../../../components/suggested_genes/view.coffee'
+
+(new SuggestedGenesView
+  el: @$('.suggested-genes')
+  numberOfItems: 10
+  isShuffle: false
+).render()
+```
+
+##### Uses:
+- Favorites
+- Follows
