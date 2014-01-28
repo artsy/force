@@ -1,6 +1,7 @@
-errorHandler = require '../'
+rewire = require 'rewire'
 sinon = require 'sinon'
 express = require 'express'
+errorHandler = rewire '../'
 
 describe '#internalError', ->
 
@@ -8,6 +9,12 @@ describe '#internalError', ->
     errorHandler.internalError new Error("Some blah error"), {}, { send: spy = sinon.spy() }
     spy.args[0][0].should.equal 500
     spy.args[0][1].should.include "Some blah error"
+
+  it 'hides error details in production', ->
+    errorHandler.__set__ 'REVEAL_ERRORS', false
+    errorHandler.internalError new Error("Some blah error"), {}, { send: spy = sinon.spy() }
+    spy.args[0][0].should.equal 500
+    spy.args[0][1].should.not.include "Some blah error"
 
 describe '#pageNotFound', ->
 
