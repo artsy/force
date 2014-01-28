@@ -24,9 +24,10 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
   renderLoading: ->
     unless @$('.favorite-artworks .loading-spinner').length > 0
       @$('.favorite-artworks').append '<div class="loading-spinner"></div>'
+    @$('.favorite-artworks .loading-spinner').show()
 
   doneRenderLoading: ->
-    @$('.favorite-artworks .loading-spinner').remove()
+    @$('.favorite-artworks .loading-spinner').hide()
 
   setupCurrentUser: ->
     @currentUser = CurrentUser.orNull()
@@ -38,10 +39,10 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
       # some setups for the first page
       if @nextPage is 1
         @showEmptyHint() unless res.length > 0
-        $(window).bind 'scroll.following', _.throttle(@infiniteScroll, 150) unless res.length < @numOfCols * @numOfRowsPerPage
+        $(window).bind 'scroll.favorites', _.throttle(@infiniteScroll, 150) unless res.length < @numOfCols * @numOfRowsPerPage
       # try unbind following event for following pages
       else if res.length < @numOfCols * @numOfRowsPerPage or res.length is 0
-        $(window).unbind('.following')
+        $(window).unbind('.favorites')
       @doneRenderLoading()
       end = @numOfCols * @numOfRowsPerPage * @nextPage # 0-indexed, not including
       start = end - @numOfCols * @numOfRowsPerPage
