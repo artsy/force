@@ -76,7 +76,7 @@ describe 'FavoritesView', ->
         numberOfColumns = 2
         numberOfRowsPerPage = 1
         artworks = new Artworks()
-        sinon.stub artworks, "fetch", (options) =>
+        @fetchStub = sinon.stub artworks, "fetch", (options) =>
           dest = @src.splice(0, numberOfColumns*numberOfRowsPerPage)
           artworks.add dest unless dest.length is 0
           options.success?(artworks, dest)
@@ -134,3 +134,8 @@ describe 'FavoritesView', ->
         @view.loadNextPage()
         @view.nextPage.should.equal 5
         @view.nextPage.should.equal 5
+
+      it 'passes sort=-position when fetching saved artworks', ->
+        _.last(@fetchStub.args)[0].data.sort.should.equal '-position'
+        @view.loadNextPage()
+        _.last(@fetchStub.args)[0].data.sort.should.equal '-position'
