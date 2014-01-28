@@ -1,13 +1,13 @@
 @import '../../../components/stylus_lib'
+@import '../../../node_modules/nib'
 
 #home-top-featured-links
   position relative
-  .loading-spinner
-    margin-top 70px
+  min-height 120px
 
 .home-top-feature-link
   display inline-block
-  padding 25px
+  padding 20px
   border-right 1px solid light-gray-border-color
   border-bottom @border-right
   width 25%
@@ -27,3 +27,79 @@
 
 .home-top-feature-link-details
   avant-garde()
+
+.home-featured-header
+  font-size 38px
+  padding 30px 0
+  border-top 1px solid light-gray-border-color
+  clear both
+  &:first-of-type
+    border-top 0
+
+.home-featured-list
+  position relative
+  min-height 300px
+
+.home-browse-all
+  margin 30px 0
+  float right
+  font-size 14px
+
+#home-featured-artworks li
+  display inline-block
+  width 25%
+  vertical-align top
+  padding-right 40px
+  img
+    width 100%
+  figure
+    margin 0
+
+.home-featured-show
+  display inline-block
+  vertical-align top
+  width (home-page-width / 4)
+  padding-right 40px
+  padding-bottom 20px
+  .home-featured-show-cover
+    height ((home-page-width / 4) / 1.5)
+  &:nth-child(6), &:nth-child(10), &:nth-child(2)
+    padding-right 0
+  &:first-child, &:nth-child(2)
+    width (home-page-width / 2)
+    .home-featured-show-cover
+      height ((home-page-width / 2) / 1.5)
+  img
+    width 100%
+  h6
+    color dark-gray-text-color
+    font-size 12px
+  h4
+    avant-garde()
+    font-size 13px
+  h5
+    font-size 18px
+  h4, h5, h6
+    overflow ellipsis
+
+.home-featured-show-cover
+  overflow hidden
+  margin-bottom 10px
+
+.home-featured-post-link
+  display inline-block
+  vertical-align top
+  margin-right 28px
+  width 206px
+  img
+    width 100%
+  h5
+    avant-garde()
+    font-size 11px
+  &:first-child
+    h4
+      font-size 24px
+  &:nth-child(4)
+    margin-right 0
+  &:last-child
+    margin-right 0

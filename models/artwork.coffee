@@ -1,13 +1,13 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
 sd = require('sharify').data
-{ Image } = require 'artsy-backbone-mixins'
-{ Dimensions } = require 'artsy-backbone-mixins'
+{ Image, Dimensions, Markdown } = require 'artsy-backbone-mixins'
 
 module.exports = class Artwork extends Backbone.Model
 
   _.extend @prototype, Image
   _.extend @prototype, Dimensions
+  _.extend @prototype, Markdown
 
   urlRoot: -> "#{sd.ARTSY_URL}/api/v1/artwork"
 

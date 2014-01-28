@@ -116,7 +116,8 @@ fade-duration = 0.2s
     background #CDCDCD
     display inline-block
     cursor pointer
-    &.hhud-active
+    transition background-color 0.3s
+    &.hhud-active, &:hover, &:focus, &:active
       background black
     &:last-child
       margin-right 0
