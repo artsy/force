@@ -26,10 +26,10 @@ describe 'FavoritesView', ->
         sd: {}
       }, =>
         { FavoritesView, @init } = mod = benv.requireWithJadeify(
-          (resolve __dirname, '../../client/favorites'), ['artworkColumns', 'hintTemplate']
+          (resolve __dirname, '../../client/favorites'), ['hintTemplate']
         )
         artworks = new Artworks()
-        sinon.stub artworks, "fetchUntilEnd", (options) -> options.success?()
+        sinon.stub artworks, "fetch", (options) -> options.success?([], [])
         @SuggestedGenesView = sinon.stub()
         @SuggestedGenesView.render = sinon.stub()
         @SuggestedGenesView.returns @SuggestedGenesView
@@ -64,29 +64,37 @@ describe 'FavoritesView', ->
         { FavoritesView, @init } = mod = benv.requireWithJadeify(
           (resolve __dirname, '../../client/favorites'), ['hintTemplate']
         )
+        @src = [
+          { artwork: fabricate 'artwork', id: 'artwork1' },
+          { artwork: fabricate 'artwork', id: 'artwork2' },
+          { artwork: fabricate 'artwork', id: 'artwork3' },
+          { artwork: fabricate 'artwork', id: 'artwork4' },
+          { artwork: fabricate 'artwork', id: 'artwork5' },
+          { artwork: fabricate 'artwork', id: 'artwork6' },
+          { artwork: fabricate 'artwork', id: 'artwork7' }
+        ]
+        numberOfColumns = 2
+        numberOfRowsPerPage = 1
         artworks = new Artworks()
-        sinon.stub artworks, "fetchUntilEnd", (options) ->
-          artworks.add [
-            { artwork: fabricate 'artwork', id: 'artwork1' },
-            { artwork: fabricate 'artwork', id: 'artwork2' },
-            { artwork: fabricate 'artwork', id: 'artwork3' },
-            { artwork: fabricate 'artwork', id: 'artwork4' },
-            { artwork: fabricate 'artwork', id: 'artwork5' },
-            { artwork: fabricate 'artwork', id: 'artwork6' },
-          ]
-          options.success?()
+        sinon.stub artworks, "fetch", (options) =>
+          dest = @src.splice(0, numberOfColumns*numberOfRowsPerPage)
+          artworks.add dest unless dest.length is 0
+          options.success?(artworks, dest)
         mod.__set__ 'CurrentUser',
           orNull: -> _.extend fabricate 'user',
             initializeDefaultArtworkCollection: sinon.stub()
             defaultArtworkCollection: sinon.stub()
-        @artworkColumns = sinon.stub()
-        mod.__set__ 'artworkColumns', @artworkColumns
+        @ArtworkColumnsView = sinon.stub()
+        @ArtworkColumnsView.render = sinon.stub()
+        @ArtworkColumnsView.appendArtworks = sinon.stub()
+        @ArtworkColumnsView.returns @ArtworkColumnsView
+        mod.__set__ 'ArtworkColumnsView', @ArtworkColumnsView
         mod.__set__ 'SaveControls', sinon.stub()
         @view = new FavoritesView
           el: $ 'body'
           collection: artworks
-          numOfCols: 2
-          numOfRowsPerPage: 1
+          numOfCols: numberOfColumns
+          numOfRowsPerPage: numberOfRowsPerPage
         done()
 
     afterEach ->
@@ -94,22 +102,35 @@ describe 'FavoritesView', ->
 
     describe '#initialize', ->
 
-      it 'sets up following items collection of the current user', ->
-        @view.collection.length.should.equal 6
+      it 'sets up the first page items of the current user', ->
+        @view.collection.length.should.equal 2
 
     describe '#loadNextPage', ->
 
-      it 'calls artworkColumns to render the first page', ->
+      it 'calls ArtworkColumnsView to render the first page', ->
+        @ArtworkColumnsView.render.should.calledOnce
         @view.nextPage.should.equal 2
-        @artworkColumns.should.calledOnce
-        @artworkColumns.args[0][0].artworkColumns.length.should.equal 2
 
       it 'uses ArtworkColumns to render the next pages individually until the end', ->
         @view.loadNextPage()
         @view.nextPage.should.equal 3
-        _.last(@artworkColumns.args)[0].artworkColumns[0][0].get('artwork').id.should.equal 'artwork3'
-        _.last(@artworkColumns.args)[0].artworkColumns[1][0].get('artwork').id.should.equal 'artwork4'
+        artworks = _.last(@ArtworkColumnsView.appendArtworks.args)[0]
+        artworks.length.should.equal 2
+        artworks[0].get('artwork').id.should.equal 'artwork3'
+        artworks[1].get('artwork').id.should.equal 'artwork4'
         @view.loadNextPage()
         @view.nextPage.should.equal 4
-        _.last(@artworkColumns.args)[0].artworkColumns[0][0].get('artwork').id.should.equal 'artwork5'
-        _.last(@artworkColumns.args)[0].artworkColumns[1][0].get('artwork').id.should.equal 'artwork6'
+        artworks = _.last(@ArtworkColumnsView.appendArtworks.args)[0]
+        artworks.length.should.equal 2
+        artworks[0].get('artwork').id.should.equal 'artwork5'
+        artworks[1].get('artwork').id.should.equal 'artwork6'
+        @view.loadNextPage()
+        @view.nextPage.should.equal 5
+        artworks = _.last(@ArtworkColumnsView.appendArtworks.args)[0]
+        artworks.length.should.equal 1
+        artworks[0].get('artwork').id.should.equal 'artwork7'
+        @view.loadNextPage()
+        @view.loadNextPage()
+        @view.loadNextPage()
+        @view.nextPage.should.equal 5
+        @view.nextPage.should.equal 5

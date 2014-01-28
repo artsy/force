@@ -61,7 +61,8 @@ module.exports = class ArtworkColumns extends Backbone.View
     @$el
       .css('width', "#{@totalWidth}px")
       .find('.artwork-column').css
-        'margin-left': "#{@gutterWidth}px"
+        'margin-left': "#{Math.floor(@gutterWidth / 2)}px"
+        'margin-right': "#{Math.floor(@gutterWidth / 2)}px"
         width: "#{@columnWidth}px"
 
     @$el.find('.artwork-column:first-child').css('margin-left', '0')
