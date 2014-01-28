@@ -1,7 +1,9 @@
-_               = require 'underscore'
-sd              = require('sharify').data
-Backbone        = require 'backbone'
-AdditionalImage = require './additional_image.coffee'
+_                 = require 'underscore'
+sd                = require('sharify').data
+Backbone          = require 'backbone'
+Edition           = require './edition.coffee'
+AdditionalImage   = require './additional_image.coffee'
+
 { Image, Dimensions, Markdown } = require 'artsy-backbone-mixins'
 
 module.exports = class Artwork extends Backbone.Model
@@ -10,18 +12,93 @@ module.exports = class Artwork extends Backbone.Model
   _.extend @prototype, Dimensions
   _.extend @prototype, Markdown
 
-  urlRoot: -> "#{sd.ARTSY_URL}/api/v1/artwork"
+  urlRoot: ->
+    "#{sd.ARTSY_URL}/api/v1/artwork"
 
-  defaultImage: -> new AdditionalImage(@get('images')?[0])
+  parse: (response, options) ->
+    @editions = new Backbone.Collection response?.edition_sets, model: Edition
+    response
+
+  defaultImage: ->
+    @__defaultImage__ or= new AdditionalImage(@get('images')?[0])
 
   defaultImageUrl: (version = 'medium') ->
     @defaultImage()?.imageUrl(version)
 
   isSaved: (artworkCollection) ->
-    artworkCollection && artworkCollection.isSaved(@)
+    artworkCollection and artworkCollection.isSaved(@)
 
-  hasWebsite: ->
-    !!@get('website')
+  # Can the user download the default image
+  #
+  # return {Boolean}
+  isDownloadable: ->
+    @defaultImage().get('downloadable')
+
+  # Are there comparable artworks;
+  # such that we can display a link to auction results
+  #
+  # return {Boolean}
+  isComparable: ->
+    (@get('comparables_count') > 0) and (@get('category') isnt 'Architecture')
+
+  # Can we display a price?
+  #
+  # return {Boolean}
+  isPriceDisplayable: ->
+    (@has('price')) and
+    not @isMultipleEditions() and
+    (@get('inquireable') or @get('sold')) and
+    not @isUnavailableButInquireable()
+
+  # Should we render a full set of editions,
+  # as opposed to a single string? (See: #editionStatus)
+  #
+  # return {Boolean}
+  isMultipleEditions: ->
+    @get('edition_sets')?.length > 1
+
+  # Is the work two-dimensional and can be
+  # used in conjunction with 'View in Room'?
+  #
+  # return {Boolean}
+  isHangable: ->
+    return false if @get('category')?.match /sculpture|installation|design/i
+    return false if @hasDimension('depth')
+    return true  if @hasDimension('width') and @hasDimension('height') # and @dimensions(metric: 'in', format: 'decimal') < 600 # todo
+    return true  if @hasDimension('diameter')
+
+    false
+
+  # Should we include a button to contact the partner?
+  #
+  # return {Boolean}
+  isContactable: ->
+    @get('forsale') and @has('partner') and not @get('acquireable')
+
+  # The work is not for sale but a buyer may be interested
+  # in related works
+  #
+  # return {Boolean}
+  isUnavailableButInquireable: ->
+    not @get('forsale') and @get('inquireable') and not @get('sold')
+
+  # Assuming there is something *vaguely* numeric here
+  # this will return true
+  #
+  # return {Boolean}
+  hasDimension: (attr) ->
+    parseFloat(@get(attr)) > 0
+
+  hasMoreInfo: ->
+    @get('artist')?.blurb or
+    @has('provenance') or
+    @has('exhibition_history') or
+    @has('signature') or
+    @has('additional_information') or
+    @has('literature')
+
+  contactLabel: ->
+    if @get('partner')?.type is 'Gallery' then 'Contact Gallery' else 'Contact Seller'
 
   hasCollectingInstitution: ->
     @get('collecting_institution')?.length > 0
@@ -32,26 +109,64 @@ module.exports = class Artwork extends Backbone.Model
     else if @has 'partner'
       @get('partner').name
     else
-      ""
+      ''
+
+  priceLabel: ->
+    if @get('sold') then 'Sold' else 'Price:'
+
+  # If the price is hidden, contact for price.
+  # Fallback on the sale message as well,
+  # sometimes this will be 'Contact for Price'
+  # without the price_hidden attribute being set
+  #
+  # return {String}
+  priceDisplay: ->
+    if (@get('availability') is 'for sale') and @get('price_hidden')
+      'Contact for Price'
+    else
+      @get('price') or @get('sale_message')
+
+  inquiryMicroCopy: ->
+    if @isUnavailableButInquireable()
+      'Interested in related works?'
+    else if @get('acquireable')
+      'Questions about this work?'
+
+  artworkPageSaleMessage: ->
+    if @isUnavailableButInquireable()
+      'Work is Not for Sale'
+    else
+      @get('sale_message')
+
+  # For edition sets larger than 1 we render the full list,
+  # otherwise this string is displayed
+  #
+  # return {String}
+  editionStatus: ->
+    if @get('unique')
+      'Unique'
+    else if @editions?.length is 1
+      @editions.first().get('editions')
 
   href: ->
-    "/artwork/#{@get('id')}"
+    "/artwork/#{@id}"
 
   partnerLink: ->
     partner = @get 'partner'
     return unless partner
-    if partner.default_profile_public && partner.default_profile_id
+    if partner.default_profile_public and partner.default_profile_id
       return "/#{partner.default_profile_id}"
     if partner.website?.length > 0
       return partner.website
 
   partnerLinkTarget: ->
-    linkType = @get('partner').linkType()
-    if linkType == "external" then "_blank" else "_self"
+    if @get('partner').linkType() is 'external' then '_blank' else '_self'
 
-  artistLink: -> "/artist/#{@get('artist').id}"
+  artistLink: ->
+    "/artist/#{@get('artist').id}"
 
-  getTitle: -> if @get('title') then @get('title') else '(Untitled)'
+  getTitle: ->
+    if @get('title') then @get('title') else '(Untitled)'
 
   titleAndYear: ->
     _.compact([
@@ -102,13 +217,13 @@ module.exports = class Artwork extends Backbone.Model
 
   titleByArtist: ->
     _.compact([
-      if @get('title') then @get('title') else '(Untitled)'
+      @getTitle()
       @get('artist')?.name
     ]).join(' by ')
 
   partnerDescription: ->
     return undefined unless @get('partner')?.name
-    if @get('forsale') then "Available for sale from #{@get('partner').name}" else"From #{@get('partner').name}"
+    if @get('forsale') then "Available for sale from #{@get('partner').name}" else "From #{@get('partner').name}"
 
   # for meta descriptions
   toPageDescription: ->

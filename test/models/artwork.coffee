@@ -1,11 +1,11 @@
-sinon = require 'sinon'
-should = require 'should'
-Backbone = require 'backbone'
-Artwork = require '../../models/artwork'
-{ fabricate } = require 'antigravity'
+_               = require 'underscore'
+sinon           = require 'sinon'
+should          = require 'should'
+Backbone        = require 'backbone'
+Artwork         = require '../../models/artwork'
+{ fabricate }   = require 'antigravity'
 
 describe 'Artwork', ->
-
   beforeEach ->
     sinon.stub Backbone, 'sync'
     @artwork = new Artwork fabricate 'artwork'
@@ -13,8 +13,126 @@ describe 'Artwork', ->
   afterEach ->
     Backbone.sync.restore()
 
-  describe '#defaultImageUrl', ->
+  describe 'display conditions:', ->
+    it 'can be downloadable', ->
+      @artwork.defaultImage().set 'downloadable', false
+      @artwork.isDownloadable().should.not.be.ok
+      @artwork.defaultImage().set 'downloadable', true
+      @artwork.isDownloadable().should.be.ok
 
+    it 'can be compared', ->
+      @artwork.set 'comparables_count', 1
+      @artwork.isComparable()
+      @artwork.isComparable().should.be.ok
+      @artwork.set 'comparables_count', 0
+      @artwork.isComparable().should.not.be.ok
+      @artwork.set { comparables_count: 1, category: 'Architecture' }
+      @artwork.isComparable().should.not.be.ok
+
+    it 'can have a price displayed', ->
+      sinon.stub(@artwork, 'isMultipleEditions').returns false
+      sinon.stub(@artwork, 'isUnavailableButInquireable').returns false
+      @artwork.set { price: 'existy', inquireable: true }
+      @artwork.isPriceDisplayable().should.be.ok
+      @artwork.set { inquireable: false, sold: true }
+      @artwork.isPriceDisplayable().should.be.ok
+      @artwork.set { inquireable: false, sold: false }
+      @artwork.isPriceDisplayable().should.not.be.ok
+      @artwork.set { inquireable: true, price: undefined }
+      @artwork.isPriceDisplayable().should.not.be.ok
+      @artwork.set { inquireable: true, price: 'existy' }
+      @artwork.isPriceDisplayable().should.be.ok
+      @artwork.isMultipleEditions.restore()
+      @artwork.isUnavailableButInquireable.restore()
+
+    it 'can have multiple editions', ->
+      @artwork.set 'edition_sets', undefined
+      @artwork.isMultipleEditions().should.not.be.ok
+      @artwork.set 'edition_sets', [0]
+      @artwork.isMultipleEditions().should.not.be.ok
+      @artwork.set 'edition_sets', [0, 0]
+      @artwork.isMultipleEditions().should.be.ok
+
+    it 'can be hung', ->
+      @artwork.set { depth: undefined, height: 1, width: '1' }
+      @artwork.set 'category', 'Design'
+      @artwork.isHangable().should.not.be.ok
+      @artwork.set 'category', 'Painting'
+      @artwork.isHangable().should.be.ok
+      @artwork.set 'depth', 1
+      @artwork.isHangable().should.not.be.ok
+
+    it 'can be contacted', ->
+      @artwork.set { forsale: true, partner: 'existy', acquireable: false }
+      @artwork.isContactable().should.be.ok
+      @artwork.set { forsale: true, partner: 'existy', acquireable: true }
+      @artwork.isContactable().should.not.be.ok
+      @artwork.set { forsale: false, partner: 'existy', acquireable: false }
+      @artwork.isContactable().should.not.be.ok
+      @artwork.set { forsale: true, partner: undefined, acquireable: false }
+      @artwork.isContactable().should.not.be.ok
+
+    it 'might be unavailable... but inquireable', ->
+      @artwork.set { forsale: false, inquireable: true, sold: false }
+      @artwork.isUnavailableButInquireable().should.be.ok
+      @artwork.set { forsale: true, inquireable: true, sold: false }
+      @artwork.isUnavailableButInquireable().should.not.be.ok
+      @artwork.set { forsale: false, inquireable: true, sold: true }
+      @artwork.isUnavailableButInquireable().should.not.be.ok
+
+  describe '#hasDimension', ->
+    it 'returns true on any attribute vaguely numeric', ->
+      @artwork.set { width: 1 }
+      @artwork.hasDimension('width').should.be.ok
+      @artwork.set { width: 'nope' }
+      @artwork.hasDimension('width').should.not.be.ok
+      @artwork.set { width: '1 nope' }
+      @artwork.hasDimension('width').should.be.ok
+      @artwork.set { width: '1 1/2 in' }
+      @artwork.hasDimension('width').should.be.ok
+      @artwork.unset 'width'
+      @artwork.hasDimension('width').should.not.be.ok
+
+  describe '#hasMoreInfo', ->
+    it 'has more info', ->
+      @artwork.set { artist: { blurb: 'existy' }, provenance: undefined, exhibition_history: undefined, signature: undefined, additional_information: undefined, literature: undefined }
+      @artwork.hasMoreInfo().should.be.ok
+      @artwork.set { artist: { blurb: undefined } }
+      @artwork.hasMoreInfo().should.not.be.ok
+      @artwork.unset 'artist'
+      @artwork.hasMoreInfo().should.not.be.ok
+      @artwork.set 'literature', 'existy'
+      @artwork.hasMoreInfo().should.be.ok
+
+  describe '#contactLabel', ->
+    it 'says to contact the appropriate thing', ->
+      @artwork.set 'partner', { type: 'Gallery' }
+      @artwork.contactLabel().should.equal 'Contact Gallery'
+      @artwork.set 'partner', { type: 'Institution' }
+      @artwork.contactLabel().should.equal 'Contact Seller'
+      @artwork.unset 'partner'
+      @artwork.contactLabel().should.equal 'Contact Seller'
+
+  describe '#priceDisplay', ->
+    it 'displays the price or not', ->
+      @artwork.set { availability: 'for sale', price_hidden: false, price: '$_$' }
+      @artwork.priceDisplay().should.equal '$_$'
+      @artwork.set { availability: 'for sale', price_hidden: false, price: undefined, sale_message: 'Contact for Price' }
+      @artwork.priceDisplay().should.equal 'Contact for Price'
+      @artwork.set { availability: 'for sale', price_hidden: true, price: '$_$' }
+      @artwork.priceDisplay().should.equal 'Contact for Price'
+
+  describe '#editionStatus', ->
+    it 'displays what kind of edition it is otherwise is undefined', ->
+      @artwork.set { unique: true }
+      @artwork.editions = new Backbone.Collection
+      @artwork.editionStatus().should.equal 'Unique'
+      @artwork.set { unique: false }
+      _.isUndefined(@artwork.editionStatus()).should.be.ok
+      @artwork.editions.add { editions: '1 of 5' }
+      @artwork.editionStatus().should.equal '1 of 5'
+
+  describe '#defaultImageUrl', ->
     it 'returns the first medium image url by default', ->
       @artwork.defaultImageUrl().should.match(
         /// /local/additional_images/.*/medium.jpg ///
@@ -25,7 +143,6 @@ describe 'Artwork', ->
       @artwork.defaultImageUrl().should.equal @artwork.missingImageUrl()
 
   describe '#titleAndYear', ->
-
     it 'returns empty string without title or year', ->
       @artwork.set title: false, date: false
       @artwork.titleAndYear().should.equal ''
@@ -39,7 +156,6 @@ describe 'Artwork', ->
       @artwork.titleAndYear().should.equal '<em>title</em>, 1905'
 
   describe '#partnerName', ->
-
     it "collecting institution over partner name", ->
       @artwork.set partner: fabricate 'partner'
       @artwork.set collecting_institution: 'collecting'
@@ -56,7 +172,6 @@ describe 'Artwork', ->
       @artwork.partnerName().should.equal 'Gagosian Gallery'
 
   describe '#partnerLink', ->
-
     it "empty without partner", ->
       @artwork.unset 'partner'
       should.strictEqual(undefined, @artwork.partnerLink())
@@ -73,12 +188,10 @@ describe 'Artwork', ->
       @artwork.partnerLink().should.equal 'mah-website.com'
 
   describe '#href', ->
-
     it 'creates an href for linking to this artwork', ->
       @artwork.href().should.equal "/artwork/#{@artwork.get('id')}"
 
   describe '#toAltText', ->
-
     it "Includes title, date and artist name", ->
       @artwork.toAltText().should.equal "Skull, 1999, by Andy Warhol"
 
@@ -90,7 +203,6 @@ describe 'Artwork', ->
       @artwork.toAltText().should.equal ""
 
   describe "#toPageTitle", ->
-
     it "renders correctly", ->
       new Artwork(title: "", forsale: false).toPageTitle().should.equal "Artsy"
       new Artwork(title: "title", forsale: false).toPageTitle().should.equal "title | Artsy"
@@ -104,7 +216,6 @@ describe 'Artwork', ->
       new Artwork(title: "title", forsale: false, date: "2010, 2011, 2012", artist: { name: "first last" }).toPageTitle().should.equal "first last | title (2010, 2011, 2012) | Artsy"
 
   describe "#toAuctionResultsPageTitle", ->
-
     it "renders correctly", ->
       new Artwork(title: "").toAuctionResultsPageTitle().should.equal "Related Auction Results | Artsy"
       new Artwork(title: "title").toAuctionResultsPageTitle().should.equal "title | Related Auction Results | Artsy"
@@ -119,7 +230,6 @@ describe 'Artwork', ->
       new Artwork(title: "title", date: "2010, 2011, 2012", artist: { name: "first last" }).toAuctionResultsPageTitle().should.equal "first last, title (2010, 2011, 2012) | Related Auction Results | Artsy"
 
   describe "#toPageDescription", ->
-
     it "renders correctly", ->
       new Artwork(title: "title").toPageDescription().should.equal "title"
       new Artwork(title: "title", partner: { name: 'partner' }, forsale: false).toPageDescription().should.equal "From partner, title"
@@ -133,7 +243,6 @@ describe 'Artwork', ->
       new Artwork(title: "title", dimensions: { cm: "20 cm diameter" }, metric: 'cm', medium: "Awesomeness", artist: { name: "first last" }, forsale: false).toPageDescription().should.equal "first last, title, Awesomeness, 20 cm diameter"
 
   describe "toAuctionResultsPageDescription", ->
-
     it "renders correctly", ->
       new Artwork(title: "title").toAuctionResultsPageDescription().should.equal "Related auction results for title"
       new Artwork(title: "title", dimensions: { in: "2 × 1 × 3 in" }, metric: 'in').toAuctionResultsPageDescription().should.equal "Related auction results for title, 2 × 1 × 3 in"
