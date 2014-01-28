@@ -214,3 +214,4 @@ describe 'Feed Templates', ->
       $('.post-modifier-actions a.post-remove').length.should.equal 1
       $('.post-modifier-actions a.post-edit').length.should.equal 1
       $('.post-modifier-actions a').length.should.equal 2
+      sd.CURRENT_USER = null
