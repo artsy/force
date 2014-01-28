@@ -1,6 +1,8 @@
 _             = require 'underscore'
 Backbone      = require 'backbone'
 CurrentUser   = require '../models/current_user.coffee'
+{ ARTSY_URL } = require('sharify').data
+{ Fetch } = require 'artsy-backbone-mixins'
 
 #
 # FollowItems
@@ -11,11 +13,16 @@ CurrentUser   = require '../models/current_user.coffee'
 # The model of the subclass must implement `getFollowParams` and `getItem` methods.
 module.exports = class FollowItems extends Backbone.Collection
   
+  _.extend @prototype, Fetch(ARTSY_URL)
+
   initialize: (models, options) ->
     @on 'add', (model) =>
       @trigger "add:#{model.getItem().get('id')}"
     @on 'remove', (model) =>
       @trigger "remove:#{model.getItem().get('id')}"
+
+  comparator: (item) ->
+    item.getItem()?.get('name') or item.getItem()?.get('id')
 
   isFollowing: (itemId) ->
     (@findByItemId itemId)?
@@ -25,7 +32,7 @@ module.exports = class FollowItems extends Backbone.Collection
 
   syncFollows: (itemIds, options) ->
     return unless CurrentUser.orNull()
-    @fetch _.extend
+    @fetchUntilEnd _.extend
       data: @getSyncFollowsData(itemIds)
       cache: false
       remove: false

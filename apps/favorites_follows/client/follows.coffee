@@ -46,7 +46,7 @@ module.exports.FollowsView = class FollowsView extends Backbone.View
   infiniteScroll: =>
     $(window).unbind('.following') unless @pageNum * @itemsPerPage < @followItems.length
     fold = $(window).height() + $(window).scrollTop()
-    $lastItem = @$('.follows > .item:last')
+    $lastItem = @$('.follows > .follows-item:last')
     @loadNextPage() unless fold < $lastItem.offset()?.top + $lastItem.height()
 
   showEmptyHint: () ->
