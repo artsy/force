@@ -14,6 +14,7 @@ describe 'FeedView', ->
     benv.setup =>
       sd.ARTSY_URL = 'localhost:3003'
       sd.ASSET_PATH = 'assets/'
+      sd.CURRENT_PATH = ""
       benv.expose { $: benv.require 'jquery' }
       sinon.stub Backbone, 'sync'
       Backbone.$  = $
@@ -53,16 +54,17 @@ describe 'FeedView', ->
         artists: [fabricate('artist')]
         artworks: [fabricate('artwork')]
       )
+      post = new FeedItem fabricate('post', _type: "Post")
       response =
         feed: "shows"
         next: "1390262261:52d09ba39c18db698900091a"
-        results: [partnerShow]
+        results: [partnerShow, post]
 
       @view.fetchMoreItems()
 
       Backbone.sync.args[0][2].success response
 
-      @view.$('.feed-item').length.should.equal 2
+      @view.$('.feed-item').length.should.equal 3
 
       @view.$el.html().should.not.include 'undefined'
       @view.$el.html().should.not.include "\#{"
