@@ -7,6 +7,7 @@ hintTemplate            = -> require('../templates/empty_hint.jade') arguments..
 SaveControls            = require '../../../components/artwork_item/save_controls.coffee'
 ArtworkColumnsView      = require '../../../components/artwork_columns/view.coffee'
 SuggestedGenesView      = require '../../../components/suggested_genes/view.coffee'
+ShareView               = require '../../../components/share/view.coffee'
 
 module.exports.FavoritesView = class FavoritesView extends Backbone.View
   defaults:
@@ -20,6 +21,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
     @setupCurrentUser()
     @listenTo @collection, 'request', @renderLoading
     @loadNextPage()
+    @setupShareButton()
 
   renderLoading: ->
     unless @$('.favorite-artworks .loading-spinner').length > 0
@@ -33,6 +35,9 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
     @currentUser = CurrentUser.orNull()
     @currentUser?.initializeDefaultArtworkCollection()
     @artworkCollection = @currentUser?.defaultArtworkCollection()
+
+  setupShareButton: ->
+    new ShareView el: @$('.favorites-share')
 
   loadNextPage: =>
     @fetchNextPageSavedArtworks success: (col, res) =>

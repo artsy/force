@@ -1,8 +1,11 @@
 include ../../../components/share/template
 
+- var shareDescription = 'Check out my favorite artworks on @artsy'
+- var media = ''
+- var url = [sd.ARTSY_URL, profileId, 'favorites'].join('/')
 .favorites-actions
   aside.favorites-share
-    +share()
+    +share(shareDescription, media, url)
   .favorites-meta
     if private
       p Favorite works are Private &ndash; 

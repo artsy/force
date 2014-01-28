@@ -9,4 +9,4 @@
 
 @favorites = (req, res) ->
   return res.redirect("/") unless req.user
-  res.render 'favorites'
+  res.render 'favorites', profileId: req.user.get('default_profile_id')
