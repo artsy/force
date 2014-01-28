@@ -24,9 +24,10 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
   renderLoading: ->
     unless @$('.favorite-artworks .loading-spinner').length > 0
       @$('.favorite-artworks').append '<div class="loading-spinner"></div>'
+    @$('.favorite-artworks .loading-spinner').show()
 
   doneRenderLoading: ->
-    @$('.favorite-artworks .loading-spinner').remove()
+    @$('.favorite-artworks .loading-spinner').hide()
 
   setupCurrentUser: ->
     @currentUser = CurrentUser.orNull()
