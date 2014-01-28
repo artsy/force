@@ -70,6 +70,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
       user_id: @currentUser.get('id')
       page: @nextPage
       size: @numOfCols * @numOfRowsPerPage
+      sort: "-position"
       private: true
     @collection.fetch _.extend { url: url, data: data, add: true, remove: false, merge: false }, options
 
