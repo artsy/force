@@ -7,6 +7,7 @@ cheerio         = require 'cheerio'
 { fabricate }   = require 'antigravity'
 FeedItem        = require '../models/feed_item'
 FeedItems       = require '../collections/feed_items'
+CurrentUser     = require '../../../models/current_user.coffee'
 sd              = require('sharify').data
 
 render = (templateName) ->
@@ -154,18 +155,18 @@ describe 'Feed Templates', ->
           }
         ]
       )
-      @feedItems  = new FeedItems
-      @feedItems.add @post
-      @html      = render('feed_items')(
-        feedItems: @feedItems.models
+
+    it 'Renders a feed of posts', ->
+      feedItems  = new FeedItems
+      feedItems.add @post
+      html      = render('feed_items')(
+        feedItems: feedItems.models
         fixedWidth: 1000
         maxDimension: 500
         sd: sd
         textColumnWidth: 404
       )
-
-    it 'Renders a feed of posts', ->
-      $ = cheerio.load @html
+      $ = cheerio.load html
       $('.feed-item').length.should.equal 1
       $('.feed-right-column section.post-media').length.should.equal 1
 
@@ -183,3 +184,34 @@ describe 'Feed Templates', ->
 
       @html.should.not.include "undefined"
       @html.should.not.include "\#{"
+
+    it 'includes admin controls for content administrator', ->
+      feedItems  = new FeedItems
+      feedItems.add @post
+      html      = render('feed_items')(
+        feedItems: feedItems.models
+        fixedWidth: 1000
+        maxDimension: 500
+        sd: sd
+        textColumnWidth: 404
+        currentUser: new CurrentUser(is_content_administrator: true, type: 'Admin')
+      )
+      $ = cheerio.load html
+      $('.post-modifier-actions a').length.should.equal 4
+
+    it 'includes admin controls for user who created the post', ->
+      feedItems  = new FeedItems
+      feedItems.add @post
+      sd.CURRENT_USER = default_profile_id: @post.get('profile').id
+      html      = render('feed_items')(
+        feedItems: feedItems.models
+        fixedWidth: 1000
+        maxDimension: 500
+        sd: sd
+        textColumnWidth: 404
+      )
+      $ = cheerio.load html
+      $('.post-modifier-actions a.post-remove').length.should.equal 1
+      $('.post-modifier-actions a.post-edit').length.should.equal 1
+      $('.post-modifier-actions a').length.should.equal 2
+      sd.CURRENT_USER = null
