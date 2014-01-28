@@ -27,6 +27,7 @@ module.exports.FollowsView = class FollowsView extends Backbone.View
 
   setupFollowsItems: ->
     @followItems.syncFollows? [], success: (col) =>
+      @$('.follows .loading-spinner').hide()
       @showEmptyHint() unless @followItems.length > 0
       if @followItems.length > @itemsPerPage
         $(window).bind 'scroll.following', _.throttle(@infiniteScroll, 150)
