@@ -8,7 +8,7 @@ FairLocation    = require './fair_location.coffee'
 Partner         = require './partner.coffee'
 PartnerLocation = require './partner_location.coffee'
 DateHelpers     = require '../components/util/date_helpers.coffee'
-{ Image } = require 'artsy-backbone-mixins'
+{ Image }       = require 'artsy-backbone-mixins'
 moment          = require 'moment'
 
 module.exports = class PartnerShow extends Backbone.Model
@@ -17,7 +17,7 @@ module.exports = class PartnerShow extends Backbone.Model
   fairDisplayUpdatedDayLimit: 14
   maxFeedArtworks: 8
 
-  _.extend @prototype, Image
+  _.extend @prototype, Image(sd.SECURE_IMAGES_URL)
 
   url: ->
     if @has('partner')
