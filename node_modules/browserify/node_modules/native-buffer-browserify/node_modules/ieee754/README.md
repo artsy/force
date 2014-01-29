@@ -1,17 +1,18 @@
-ieee754
-===============
+# ieee754
+[![Build Status](http://img.shields.io/travis/feross/ieee754.svg)](https://travis-ci.org/feross/ieee754)
+[![NPM Version](http://img.shields.io/npm/v/ieee754.svg)](https://npmjs.org/package/ieee754)
+[![NPM](http://img.shields.io/npm/dm/ieee754.svg)](https://npmjs.org/package/ieee754)
+[![Gittip](http://img.shields.io/gittip/feross.svg)](https://www.gittip.com/feross/)
 
-Read/write IEEE754 floating point numbers from/to a Buffer or array-like object.
-
-[![build status](https://secure.travis-ci.org/feross/ieee754.png)](http://travis-ci.org/feross/ieee754)
+## Read/write IEEE754 floating point numbers from/to a Buffer or array-like object.
 
 [![testling badge](https://ci.testling.com/feross/ieee754.png)](https://ci.testling.com/feross/ieee754)
 
 ## install
 
-With [npm](https://npmjs.org) do:
-
-`npm install ieee754`
+```
+npm install ieee754
+```
 
 ## methods
 

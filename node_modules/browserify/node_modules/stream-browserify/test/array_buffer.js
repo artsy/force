@@ -25,7 +25,7 @@ TestWritable.prototype._write = function(chunk, encoding, cb) {
 var typedArray = new xUint8Array(1);
 typedArray[0] = 88;
 
-if (typeof Uint8array !== 'undefined') {
+if (typeof Uint8Array !== 'undefined') {
     test('.writable writing ArrayBuffer', function(t) {
         var writable = new TestWritable();
         
