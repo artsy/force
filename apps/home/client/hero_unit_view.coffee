@@ -3,10 +3,10 @@ _ = require 'underscore'
 
 module.exports = class HeroUnitView extends Backbone.View
 
-  initialize: (options) ->
+  initialize: ->
+    @$window = $ window
     @$mainHeader = @$('#main-layout-header')
     @$heroUnits = @$('#home-hero-units')
-    @$window = $ window
     @setBodyClass()
     @setInterval()
     @$window .on 'scroll', _.throttle @setBodyClass, 100
@@ -36,7 +36,7 @@ module.exports = class HeroUnitView extends Backbone.View
 
   showHeroUnit: (index) ->
     @$('.home-hero-unit').removeClass('home-hero-unit-active')
-    $('.home-hero-unit').eq(index).addClass('home-hero-unit-active')
+    @$('.home-hero-unit').eq(index).addClass('home-hero-unit-active')
     @$("#home-hero-unit-dots li").removeClass 'hhud-active'
     @$("#home-hero-unit-dots li").eq(index).addClass('hhud-active')
     @setBodyClass()
