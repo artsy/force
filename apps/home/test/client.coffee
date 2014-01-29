@@ -12,11 +12,14 @@ describe 'HeroUnitView', ->
   before (done) ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
-      benv.render '../templates/index.jade', {
+      benv.render resolve(__dirname, '../templates/index.jade'), {
         heroUnits: new HeroUnits([
           fabricate 'site_hero_unit'
           fabricate 'site_hero_unit'
           fabricate 'site_hero_unit'
+        ]).models
+        featuredLinks: new FeaturedLinks([
+          fabricate 'featured_link'
         ]).models
         sd: {}
       }
@@ -28,7 +31,7 @@ describe 'HeroUnitView', ->
 
   beforeEach ->
     HeroUnitView = require '../client/hero_unit_view.coffee'
-    @view = new HeroUnitView $body: $('body')
+    @view = new HeroUnitView el: $('body')
 
   describe '#setBodyClass', ->
 
@@ -75,7 +78,7 @@ describe 'Homepage init code', ->
     benv.teardown()
 
   beforeEach ->
-    { @init } = mod = benv.requireWithJadeify '../client/index.coffee', [
+    { @init } = mod = benv.requireWithJadeify resolve(__dirname, '../client/index.coffee'), [
       'featuredLinksTemplate'
       'featuredArtworksTemplate'
       'featuredShowsTemplate'
