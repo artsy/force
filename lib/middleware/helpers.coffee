@@ -5,7 +5,11 @@
 module.exports = (req, res, next) ->
   res.backboneError = (m, e) ->
     res.statusCode  = e.error.status
-    parsed          = JSON.parse e.text
+    try
+      parsed        = JSON.parse e.text
+      errorText     = parsed.error
+    catch e
+      errorText        = e.text
 
-    next new Error(parsed.error)
+    next new Error(errorText)
   next()
