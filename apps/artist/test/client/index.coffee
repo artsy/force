@@ -100,12 +100,12 @@ describe 'ArtistView', ->
     it 'passes the correct sort option into setupArtworks when sorting by Relevancy', ->
       $fixture = $ """
         <div class="bordered-pulldown-options">
-          <a data-sort>Most Relevant<a>
+          <a data-sort>Relevancy<a>
         </div>
       """
       @view.onSortChange({ currentTarget: $fixture.find('a')})
       @view.sortBy.should.equal ''
-      @view.$el.find('a.bordered-pulldown-toggle').html().should.include 'Most Relevant'
+      @view.$el.find('a.bordered-pulldown-toggle').html().should.include 'Relevancy'
 
   describe '#setupRelatedArtists', ->
 

@@ -63,9 +63,18 @@ describe 'Artwork Item template', ->
       $('.artwork-item-partner a').attr('href').should.equal @artwork.partnerLink()
 
     it 'displays a sale message', ->
-      @artwork.set 'sale_message', "$5,200"
+      @artwork.set
+        sale_message: "$5,200"
+        forsale: true
       $ = cheerio.load render('template')({ artwork: @artwork })
       $('.artwork-item-sale-price').text().should.equal @artwork.get 'sale_message'
+
+    it 'doesnt display a sale message unless work is for sale', ->
+      @artwork.set
+        sale_message: "$5,200"
+        forsale: false
+      $ = cheerio.load render('template')({ artwork: @artwork })
+      $('.artwork-item-sale-price').length.should.equal 0
 
   describe 'nopin', ->
     beforeEach ->
