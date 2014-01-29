@@ -48,7 +48,7 @@ describe 'Post', ->
         type: 'PostArtwork'
       post = new Post(attachments: [postImage, postArtwork])
 
-      post.defaultImage().should.equal image
+      post.defaultImage().get('is_default').should.equal image.is_default
 
     it 'returns the first image if there is no artwork', ->
       image =

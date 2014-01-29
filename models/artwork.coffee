@@ -1,6 +1,7 @@
-Backbone = require 'backbone'
-_ = require 'underscore'
-sd = require('sharify').data
+_               = require 'underscore'
+sd              = require('sharify').data
+Backbone        = require 'backbone'
+AdditionalImage = require './additional_image.coffee'
 { Image, Dimensions, Markdown } = require 'artsy-backbone-mixins'
 
 module.exports = class Artwork extends Backbone.Model
@@ -11,11 +12,10 @@ module.exports = class Artwork extends Backbone.Model
 
   urlRoot: -> "#{sd.ARTSY_URL}/api/v1/artwork"
 
-  defaultImage: -> @get('images')?[0]
+  defaultImage: -> new AdditionalImage(@get('images')?[0])
 
   defaultImageUrl: (version = 'medium') ->
-    return @missingImageUrl() unless _.contains @defaultImage()?.image_versions, version
-    @defaultImage()?.image_url.replace(':version', version) ? ''
+    @defaultImage()?.imageUrl(version)
 
   isSaved: (artworkCollection) ->
     artworkCollection && artworkCollection.isSaved(@)

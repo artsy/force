@@ -78,7 +78,7 @@ describe 'ArtworkColumns', ->
         { original_width: 700, original_height: 200, aspect_ratio: 3.5 } # col 1, 1500
       ]
       @artworks.each (artwork, index) ->
-        _.extend artwork.defaultImage(), dims[index]
+        _.extend artwork.get('images')[0], dims[index]
       $('body').empty()
 
     describe 'when columns are ordered', ->
@@ -114,13 +114,13 @@ describe 'ArtworkColumns', ->
 
         # Add a work to verify it goes to the shortest column
         artwork = new Artwork fabricate 'artwork'
-        _.extend artwork.defaultImage(), { original_width: 700, original_height: 200, aspect_ratio: 3.5 }
+        _.extend artwork.get('images')[0], { original_width: 700, original_height: 200, aspect_ratio: 3.5 }
         @view.appendArtworks [artwork]
         $('.artwork-column:eq(2) .artwork-item').should.have.lengthOf 3
         @view.shortestColumn.should.equal 2
 
         artwork = new Artwork fabricate 'artwork'
-        _.extend artwork.defaultImage(), { original_width: 700, original_height: 200, aspect_ratio: 3.5 }
+        _.extend artwork.get('images')[0], { original_width: 700, original_height: 200, aspect_ratio: 3.5 }
         @view.appendArtworks [artwork]
         $('.artwork-column:eq(2) .artwork-item').should.have.lengthOf 4
         @view.shortestColumn.should.equal 2

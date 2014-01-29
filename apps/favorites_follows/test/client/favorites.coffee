@@ -30,9 +30,17 @@ describe 'FavoritesView', ->
         )
         artworks = new Artworks()
         sinon.stub artworks, "fetch", (options) -> options.success?([], [])
+
         @SuggestedGenesView = sinon.stub()
         @SuggestedGenesView.render = sinon.stub()
         @SuggestedGenesView.returns @SuggestedGenesView
+
+        @ArtworkColumnsView = sinon.stub()
+        @ArtworkColumnsView.render = sinon.stub()
+        @ArtworkColumnsView.appendArtworks = sinon.stub()
+        @ArtworkColumnsView.returns @ArtworkColumnsView
+
+        mod.__set__ 'ArtworkColumnsView', @ArtworkColumnsView
         mod.__set__ 'SuggestedGenesView', @SuggestedGenesView
         mod.__set__ 'CurrentUser',
           orNull: -> _.extend fabricate 'user',
@@ -47,7 +55,7 @@ describe 'FavoritesView', ->
       Backbone.sync.restore()
 
     describe '#showEmptyHint', ->
-        
+
       it 'shows hint for adding favorite artworks', ->
         @view.$el.html().should.include 'Add works to your favorites'
 
@@ -73,17 +81,18 @@ describe 'FavoritesView', ->
           { artwork: fabricate 'artwork', id: 'artwork6' },
           { artwork: fabricate 'artwork', id: 'artwork7' }
         ]
-        numberOfColumns = 2
-        numberOfRowsPerPage = 1
+
         artworks = new Artworks()
         @fetchStub = sinon.stub artworks, "fetch", (options) =>
-          dest = @src.splice(0, numberOfColumns*numberOfRowsPerPage)
-          artworks.add dest unless dest.length is 0
-          options.success?(artworks, dest)
+          start = (options.data.page - 1) * options.data.size
+          end = start + options.data.size
+          dest = new Artworks(@src[start...end])
+          options.success?(dest)
         mod.__set__ 'CurrentUser',
           orNull: -> _.extend fabricate 'user',
             initializeDefaultArtworkCollection: sinon.stub()
             defaultArtworkCollection: sinon.stub()
+
         @ArtworkColumnsView = sinon.stub()
         @ArtworkColumnsView.render = sinon.stub()
         @ArtworkColumnsView.appendArtworks = sinon.stub()
@@ -93,17 +102,11 @@ describe 'FavoritesView', ->
         @view = new FavoritesView
           el: $ 'body'
           collection: artworks
-          numOfCols: numberOfColumns
-          numOfRowsPerPage: numberOfRowsPerPage
+          pageSize: 2
         done()
 
     afterEach ->
       Backbone.sync.restore()
-
-    describe '#initialize', ->
-
-      it 'sets up the first page items of the current user', ->
-        @view.collection.length.should.equal 2
 
     describe '#loadNextPage', ->
 
@@ -116,23 +119,25 @@ describe 'FavoritesView', ->
         @view.nextPage.should.equal 3
         artworks = _.last(@ArtworkColumnsView.appendArtworks.args)[0]
         artworks.length.should.equal 2
+
         artworks[0].get('artwork').id.should.equal 'artwork3'
         artworks[1].get('artwork').id.should.equal 'artwork4'
         @view.loadNextPage()
         @view.nextPage.should.equal 4
         artworks = _.last(@ArtworkColumnsView.appendArtworks.args)[0]
         artworks.length.should.equal 2
+
         artworks[0].get('artwork').id.should.equal 'artwork5'
         artworks[1].get('artwork').id.should.equal 'artwork6'
         @view.loadNextPage()
         @view.nextPage.should.equal 5
         artworks = _.last(@ArtworkColumnsView.appendArtworks.args)[0]
         artworks.length.should.equal 1
+
         artworks[0].get('artwork').id.should.equal 'artwork7'
         @view.loadNextPage()
         @view.loadNextPage()
         @view.loadNextPage()
-        @view.nextPage.should.equal 5
         @view.nextPage.should.equal 5
 
       it 'passes sort=-position when fetching saved artworks', ->
