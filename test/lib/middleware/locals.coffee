@@ -12,3 +12,7 @@ describe 'locals middleware', ->
   it 'sets the hide header flag', ->
     middleware req = { cookies: { 'hide-force-header': true }, session: {}, get: (->)}, res = { locals: { sd: { ASSET_PATH: '' } } }, ->
     res.locals.sd.HIDE_HEADER.should.be.ok
+
+  it 'adds the user agent', ->
+    middleware req = { get: -> 'foobar' }, res = { locals: { sd: { ASSET_PATH: '' } } }, ->
+    res.locals.userAgent.should.equal 'foobar'

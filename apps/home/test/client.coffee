@@ -3,6 +3,7 @@ benv            = require 'benv'
 Backbone        = require 'backbone'
 sinon           = require 'sinon'
 HeroUnits       = require '../../../collections/hero_units'
+FeaturedLinks   = require '../../../collections/featured_links'
 { resolve }     = require 'path'
 { fabricate }   = require 'antigravity'
 
@@ -35,6 +36,8 @@ describe 'HeroUnitView', ->
       @view.setBodyClass()
       $('body').attr('class').should.include 'body-transparent-header-white'
 
+    it 'toggles the body class if you scroll past the hero unit'
+
   describe '#nextHeroUnit', ->
 
     it 'activates the next hero unit', ->
@@ -59,6 +62,9 @@ describe 'Homepage init code', ->
           fabricate 'site_hero_unit'
           fabricate 'site_hero_unit'
         ]).models
+        featuredLinks: new FeaturedLinks([
+          fabricate 'featured_link'
+        ]).models
         sd: {}
       }
       sinon.stub Backbone, 'sync'
@@ -71,11 +77,28 @@ describe 'Homepage init code', ->
   beforeEach ->
     { @init } = mod = benv.requireWithJadeify '../client/index.coffee', [
       'featuredLinksTemplate'
+      'featuredArtworksTemplate'
+      'featuredShowsTemplate'
+      'featuredPostsTemplate'
+      'featuredArtistsTemplate'
+      'artworkItemTemplate'
     ]
     mod.__set__ 'HeroUnitView', ->
     @init()
 
-  it 'renders featured links', ->
-    Backbone.sync.args[0][2].success [fabricate 'featured_link', title: "Foo At Bar"]
-    _.last(Backbone.sync.args)[2].success [fabricate 'featured_link', title: "Foo At Bar"]
+  it 'renders featured artworks', ->
+    Backbone.sync.args[0][2].success [fabricate 'set']
+    _.last(Backbone.sync.args)[2].success [fabricate 'artwork', title: "Foo At Bar"]
     $('body').html().should.include "Foo At Bar"
+
+  it 'renders featured show', ->
+    Backbone.sync.args[1][2].success [fabricate 'set']
+    _.last(Backbone.sync.args)[2].success [fabricate 'show', name: "Fooshow At Bar"]
+    $('body').html().should.include "Fooshow At Bar"
+
+  it 'renders featured posts', ->
+    Backbone.sync.args[2][2].success [fabricate 'set']
+    _.last(Backbone.sync.args)[2].success [fabricate 'post', title: "Retrospect on Andy Foobar"]
+    $('body').html().should.include "Retrospect on Andy Foobar"
+
+  it 'renders featured artists'
