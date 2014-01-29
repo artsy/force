@@ -1,27 +1,20 @@
-#home-hero-units-container
-  ul#home-hero-units
-    for heroUnit, i in heroUnits
-      li.home-hero-unit(
-        class=heroUnit.cssClass() + (i == 0 ? ' home-hero-unit-active' : ''),
-        style="background-image: url('#{heroUnit.get('background_image_url')}')"
-      )
-        a( href=heroUnit.get('link') )
-          .home-container
-            h1!= heroUnit.get('heading')
-            img.home-hero-unit-title(
-              src=heroUnit.get('title_image_url'),
-              alt=heroUnit.get('name')
-            )
-            h2!= heroUnit.mdToHtml('description')
-            .avant-garde-button(
-              href=heroUnit.get('link'),
-              onMouseOver="this.style.color='##{heroUnit.get('link_color_hover_hex') || '000'}'",
-              onMouseOut="this.style.color=null"
-            )= heroUnit.get('link_text')
-            .home-hero-unit-credit= heroUnit.get('credit_line')
-  #home-hero-units-controls
-    button#home-hero-units-left-arrow.icon-chevron-left
-    ul#home-hero-unit-dots
-      for x, i in heroUnits
-        li( class=(i == 0 ? 'hhud-active' : '') )
-    button#home-hero-units-right-arrow.icon-chevron-right
+ul#home-hero-units
+  for heroUnit, i in heroUnits
+    li.home-hero-unit(
+      class=heroUnit.cssClass() + (i == 0 ? ' home-hero-unit-active' : ''),
+      style="background-image: url('#{heroUnit.get('background_image_url')}')"
+    )
+      a( href=heroUnit.get('link') )
+        .home-container
+          h1!= heroUnit.get('heading')
+          img.home-hero-unit-title(
+            src=heroUnit.get('title_image_url'),
+            alt=heroUnit.get('name')
+          )
+          h2!= heroUnit.mdToHtml('description')
+          .avant-garde-button(
+            href=heroUnit.get('link'),
+            onMouseOver="this.style.color='##{heroUnit.get('link_color_hover_hex') || '000'}'",
+            onMouseOut="this.style.color=null"
+          )= heroUnit.get('link_text')
+          .home-hero-unit-credit= heroUnit.get('credit_line')

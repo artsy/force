@@ -2,7 +2,7 @@
 figure.artwork-item( data-artwork=artwork.get('id') )
   .artwork-item-image-container
     a.artwork-item-image-link(href=artwork.href())
-      img.artwork-item-image( 
+      img.artwork-item-image(
         src=artwork.defaultImageUrl(artworkSize)
         nopin=artwork.noPinAttr()
         alt=artwork.toAltText()
@@ -25,3 +25,5 @@ figure.artwork-item( data-artwork=artwork.get('id') )
           != artwork.partnerName()
     if artwork.saleMessage()
       p.artwork-item-sale-price!= artwork.saleMessage()
+  if showBlurb && artwork.get('blurb')
+    .artwork-item-blurb!= artwork.mdToHtml('blurb')

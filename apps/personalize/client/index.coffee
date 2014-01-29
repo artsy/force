@@ -13,6 +13,8 @@ views =
   InstitutionsView: require './views/institutions.coffee'
   PriceRangeView:   require './views/price_range.coffee'
 
+_.mixin(require 'underscore.string')
+
 module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Router
   redirectLocation: '/'
 
@@ -30,11 +32,11 @@ module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Rout
     track.funnel 'Landed on personalize page', { label: "User:#{@user.id}" }
 
   step: (step) ->
-    track.funnel "Starting #{step}", { label: "User:#{@user.id}" }
-
     Transition.fade @$el, out: =>
       @view?.remove()
       @state.setStep step
+
+      track.funnel "Starting Personalize #{@state.currentStepLabel()}", { label: "User:#{@user.id}" }
 
       @view = new views["#{_.classify(step)}View"] state: @state, user: @user
       @$el.html @view.render().$el

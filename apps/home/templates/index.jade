@@ -5,10 +5,37 @@ block head
 
 append locals
   assetPackage = 'home'
-  bodyClass = 'body-no-margins body-transparent-header-' + (heroUnits[0].get('menu_color_class') == 'black' ? 'white' : '')
+  bodyClass = bodyClass + ' body-no-margins body-transparent-header'
+  bodyClass = bodyClass + (heroUnits[0].get('menu_color_class') == 'black' ? '-white' : '')
 
 block body
   include hero_units
-  .home-container
-    ul#home-top-featured-links
-      .loading-spinner
+  #home-foreground
+    #home-hero-units-controls
+      button#home-hero-units-left-arrow.icon-chevron-left
+      ul#home-hero-unit-dots
+        for x, i in heroUnits
+          li( class=(i == 0 ? 'hhud-active' : '') )
+      button#home-hero-units-right-arrow.icon-chevron-right
+    #home-body
+      ul#home-top-featured-links
+        include featured_links
+      h2.home-featured-header Featured Artworks for Sale
+      ul.home-featured-list#home-featured-artworks
+        .loading-spinner
+      a.home-browse-all.avant-garde-button-text(
+        href='/filter/artworks/price_range=-1:1000000000000&sort=-date_added&page=1'
+      ) Browse all for sale artworks
+      h2.home-featured-header Featured Shows
+      ul.home-featured-list#home-featured-shows
+        .loading-spinner
+      a.home-browse-all.avant-garde-button-text( href='/shows' ) Browse all Shows
+      h2.home-featured-header Featured Posts
+      ul.home-featured-list#home-featured-posts
+        .loading-spinner
+      a.home-browse-all.avant-garde-button-text( href='/posts/featured' ) Browse all Posts
+      h2.home-featured-header Featured Artists
+      ul.home-featured-list#home-featured-artists
+        .loading-spinner
+      #home-footer-links
+        include footer_links

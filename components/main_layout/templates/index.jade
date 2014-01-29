@@ -4,7 +4,7 @@ block locals
   bodyClass = (sd.HIDE_HEADER ? 'body-header-fixed' : '')
 
 doctype html
-html
+html( data-useragent=userAgent )
   head
     block head
     include head

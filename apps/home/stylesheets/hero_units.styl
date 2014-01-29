@@ -2,11 +2,6 @@
 
 fade-duration = 0.2s
 
-#home-hero-units
-  position relative
-  height 470px
-  background black
-
 .home-hero-unit
   position absolute
   top 0
@@ -48,7 +43,6 @@ fade-duration = 0.2s
     position relative
     height 100%
   .home-hero-unit-credit
-    color white
     font-style italic
     font-size 11px
     opacity 0.65
@@ -61,6 +55,8 @@ fade-duration = 0.2s
     padding 10px 20px
     border 3px solid black
     background transparent
+    &:hover, &:focus, &:active
+      background black
 
 .home-hero-unit-center
   text-align center
@@ -79,6 +75,8 @@ fade-duration = 0.2s
     color white
     &:hover, &:focus, &:active
       background white
+  .home-hero-unit-credit
+    color white
 
 #home-hero-units-controls
   width 100%
@@ -116,7 +114,8 @@ fade-duration = 0.2s
     background #CDCDCD
     display inline-block
     cursor pointer
-    &.hhud-active
+    transition background-color 0.3s
+    &.hhud-active, &:hover, &:focus, &:active
       background black
     &:last-child
       margin-right 0

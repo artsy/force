@@ -1,0 +1,8 @@
+for link in artistLinks
+  li.home-featured-artist-link
+    .home-featured-cover-img(
+      style="background-image: url(" + link.imageUrl('medium_rectangle') + ")",
+    )
+      img( src=link.imageUrl('medium_rectangle') )
+    h4= link.get('title')
+    h5= link.get('subtitle')

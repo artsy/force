@@ -1,5 +1,6 @@
 StepView  = require './step.coffee'
 template  = -> require('../../templates/collect.jade') arguments...
+track     = require('../../../../lib/analytics.coffee').track
 
 module.exports = class CollectView extends StepView
   events:
@@ -10,6 +11,9 @@ module.exports = class CollectView extends StepView
     value = parseInt $(e.target).data 'value'
     @user.set 'collector_level', value
     @state.setLevel value
+
+    track.funnel "Personalize collector level:#{value}", { label: "User:#{@user.id}" }
+
     @advance()
 
   render: ->
