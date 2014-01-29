@@ -44,9 +44,8 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
           @showEmptyHint() unless collection.length > 0
 
         else if collection.length < 1
-          $(window).off('.favorites')
+          return $(window).off('.favorites')
 
-        console.log collection.length
         @artworkColumnsView.appendArtworks collection.models
         ++@nextPage
 
@@ -61,7 +60,6 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
   fetchNextPageSavedArtworks: (options) ->
     collection = @collection
     url = "#{sd.ARTSY_URL}/api/v1/collection/saved-artwork/artworks"
-    console.log @pageSize
     data =
       user_id: @currentUser.get('id')
       page: @nextPage

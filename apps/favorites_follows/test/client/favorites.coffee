@@ -86,8 +86,8 @@ describe 'FavoritesView', ->
         @fetchStub = sinon.stub artworks, "fetch", (options) =>
           start = (options.data.page - 1) * options.data.size
           end = start + options.data.size
-          dest = @src[start...end]
-          options.success?(dest, dest)
+          dest = new Artworks(@src[start...end])
+          options.success?(dest)
         mod.__set__ 'CurrentUser',
           orNull: -> _.extend fabricate 'user',
             initializeDefaultArtworkCollection: sinon.stub()
@@ -108,11 +108,6 @@ describe 'FavoritesView', ->
     afterEach ->
       Backbone.sync.restore()
 
-    describe '#initialize', ->
-
-      it 'sets up the first page items of the current user', ->
-        @view.collection.length.should.equal 2
-
     describe '#loadNextPage', ->
 
       it 'calls ArtworkColumnsView to render the first page', ->
@@ -123,27 +118,26 @@ describe 'FavoritesView', ->
         @view.loadNextPage()
         @view.nextPage.should.equal 3
         artworks = _.last(@ArtworkColumnsView.appendArtworks.args)[0]
-        console.log 'hello', artworks
         artworks.length.should.equal 2
+
         artworks[0].get('artwork').id.should.equal 'artwork3'
         artworks[1].get('artwork').id.should.equal 'artwork4'
         @view.loadNextPage()
         @view.nextPage.should.equal 4
         artworks = _.last(@ArtworkColumnsView.appendArtworks.args)[0]
-        console.log 'hello', artworks
         artworks.length.should.equal 2
+
         artworks[0].get('artwork').id.should.equal 'artwork5'
         artworks[1].get('artwork').id.should.equal 'artwork6'
         @view.loadNextPage()
         @view.nextPage.should.equal 5
         artworks = _.last(@ArtworkColumnsView.appendArtworks.args)[0]
-        console.log 'hello'
         artworks.length.should.equal 1
+
         artworks[0].get('artwork').id.should.equal 'artwork7'
         @view.loadNextPage()
         @view.loadNextPage()
         @view.loadNextPage()
-        @view.nextPage.should.equal 5
         @view.nextPage.should.equal 5
 
       it 'passes sort=-position when fetching saved artworks', ->
