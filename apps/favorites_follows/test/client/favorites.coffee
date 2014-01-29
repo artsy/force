@@ -40,14 +40,13 @@ describe 'FavoritesView', ->
             defaultArtworkCollection: -> return
         @view = new FavoritesView
           el: $ 'body'
-          collection: artworks
         done()
 
     afterEach ->
       Backbone.sync.restore()
 
     describe '#showEmptyHint', ->
-        
+
       it 'shows hint for adding favorite artworks', ->
         @view.$el.html().should.include 'Add works to your favorites'
 
