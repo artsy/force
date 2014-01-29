@@ -55,8 +55,8 @@ module.exports = class SuggestionsView extends StepView
     @followButtonViews ||= {}
     @followButtonViews[key].remove() if @followButtonViews[key]?
     @followButtonViews[key] = new FollowButton
-      analyticsUnfollowMessage: 'Unfollowed profile from personalize profile suggestions'
-      analyticsFollowMessage:   'Followed profile from personalize profile suggestions'
+      analyticsUnfollowMessage: "Unfollowed #{@kind} from personalize #{@kind} suggestions"
+      analyticsFollowMessage:   "Followed #{@kind} from personalize #{@kind} suggestions"
       notes:                    'Followed from /personalize'
       collection:               @followCollection
       model:                    model
