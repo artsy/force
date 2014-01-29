@@ -27,7 +27,7 @@ module.exports.getUserAgent = ->
 module.exports.trackPageview = =>
   @ga? 'send', 'pageview'
 
-# This basically jut ssets some defaults loosely based on the
+# This basically just sets some defaults loosely based on the
 # Analytics wrapper class from Gravity
 categories =
   impression: 'Impressions'
