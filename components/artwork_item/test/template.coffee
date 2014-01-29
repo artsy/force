@@ -33,6 +33,12 @@ describe 'Artwork Item template', ->
       $('.artwork-item-image').attr('src').should.not.include 'banana'
       $('.artwork-item-image').attr('src').should.include 'missing'
 
+    it 'renders with a fixed with', ->
+      $ = cheerio.load render('template')({ artwork: @artwork, imageWidth: 500 })
+      $('.artwork-item-image').attr('width').should.equal '500'
+      $('.artwork-item-image').attr('height').should.equal '250'
+      $('.artwork-item-image').attr('src').should.include 'medium'
+
   describe 'artwork caption', ->
     beforeEach ->
       @artwork = new Artwork fabricate 'artwork'

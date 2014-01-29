@@ -30,9 +30,7 @@ module.exports =
       @imageUrlFor height, height
 
   imageUrlForWidth: (width) ->
-
     aspectRatio = @aspectRatio()
-    console.log width, aspectRatio
     if aspectRatio?
       @imageUrlFor width, (width / @aspectRatio())
     else
