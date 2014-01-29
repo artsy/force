@@ -11,5 +11,5 @@ module.exports = (req, res, next) ->
     catch e
       errorText        = e.text
 
-    next new Error(error)
+    next new Error(errorText)
   next()
