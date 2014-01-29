@@ -7,8 +7,9 @@ module.exports = (req, res, next) ->
     res.statusCode  = e.error.status
     try
       parsed        = JSON.parse e.text
+      errorText     = parsed.error
     catch e
-      parsed        = e.text
+      errorText        = e.text
 
-    next new Error(parsed.error)
+    next new Error(error)
   next()
