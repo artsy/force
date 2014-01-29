@@ -1,2 +1,2 @@
-require '../components/main_layout/client.coffee'
+require('backbone').$  = $
 require('../apps/about/client.coffee').init()

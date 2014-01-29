@@ -77,11 +77,11 @@
 .avant-garde-button-text
   @extends .avant-garde-button
   background transparent
-  padding 0 0 2px 0
+  padding 0
+  border-bottom 2px solid transparent
   display inline-block
   &:focus, &:hover, &:active
-    border-bottom 2px solid
-    padding-bottom 0
+    border-color black
     background transparent
   &[data-state='loading'], &.is-loading
     background transparent
@@ -89,6 +89,10 @@
     transition color 0
     &::before
       background black
+
+.avant-garde-button-underlined
+  @extends .avant-garde-button-text
+  border-color black
 
 .stacked-button-menu
   max-width 100%

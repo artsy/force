@@ -13,7 +13,7 @@
     "tap": "~0.3.3"
   },
   "scripts": {
-    "test": "./node_modules/.bin/tap test/*.test.js"
+    "test": "tap test/*.test.js"
   },
   "repository": {
     "type": "git",
