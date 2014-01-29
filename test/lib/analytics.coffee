@@ -123,16 +123,16 @@ describe 'analytics', ->
 
     describe 'initialize function', ->
 
-      it 'initializes mixpanel with the MIXPANEL_ID', ->
+      it 'doesnt init mixpanel with the MIXPANEL_ID', ->
         @mixpanelStub.init.args.length.should.equal 0
 
-      it 'inits ga with the GOOGLE_ANALYTICS_ID', ->
+      it 'doesnt init ga with the GOOGLE_ANALYTICS_ID', ->
         @gaStub.args.length.should.equal 0
         @gaStub.args.length.should.equal 0
 
     describe '#trackPageview', ->
 
-      it 'sends a google pageview', ->
+      it 'doesnt track pageviews', ->
         analytics.trackPageview()
         @gaStub.args.length.should.equal 0
         @gaStub.args.length.should.equal 0
