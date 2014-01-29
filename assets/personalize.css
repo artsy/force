@@ -1,0 +1,380 @@
+.pac-container {
+  position: relative;
+  box-shadow: none;
+  border: 2px solid highlight-color;
+  border-top: 0;
+  border-radius: 0;
+}
+.pac-container:after {
+default-garamond-font-size
+  padding: 20px 0;
+  background-position: 100% 50%;
+  margin-right: 10px;
+}
+.pac-item {
+  position: relative;
+  padding: 10px;
+  box-sizing: content-box;
+  border-color: light-gray-border-color;
+}
+.pac-item:first-child {
+  border-top: none;
+}
+.pac-item:last-child {
+  border-bottom: 1px solid light-gray-border-color;
+}
+.pac-item:hover {
+  background-color: light-gray-background-color;
+}
+.pac-item.pac-item-selected {
+  border-color: transparent;
+  background-color: #000;
+}
+.pac-item.pac-item-selected > .pac-item-query {
+  color: #fff;
+}
+.pac-item,
+.pac-item-query {
+  font-size: default-garamond-font-size;
+}
+.popover-parent:hover .popover {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(-10px);
+  transition: all 0.125s;
+  transition-delay: 0.25s;
+}
+.popover {
+  visibility: hidden;
+  position: absolute;
+  bottom: 100%;
+  right: -20px;
+  left: -20px;
+  padding: 20px;
+  pointer-events: none;
+  background-color: #fff;
+  text-align: left;
+  border: 1px solid light-gray-border-color;
+  box-shadow: 0 5px 15px -5px rgba(0,0,0,0.25);
+  opacity: 0;
+  transition: all 0.0625s;
+}
+.popover:before,
+.popover:after {
+  top: 100%;
+  left: 50%;
+  position: absolute;
+  z-index: 1;
+  margin-left: -6px;
+  content: '';
+  background: transparent;
+  border: 6px solid transparent;
+  border-top-color: light-gray-border-color;
+}
+.popover:after {
+  border-top-color: #fff;
+  margin-top: -1px;
+}
+#personalize-page {
+  transition: opacity 0.25s;
+}
+#personalize-page[data-state='fade-in'] {
+  opacity: 1;
+}
+#personalize-page[data-state='fade-out'] {
+  opacity: 0;
+}
+#personalize-page[data-state='loading'] > * {
+  opacity: 0.125;
+  pointer-events: none;
+}
+#personalize-page[data-state='loading']:after {
+  display: block;
+  content: '';
+}
+.personalize-frame {
+  padding: 40px;
+  background-color: #fff;
+  transition: opacity 0.25s;
+}
+.personalize-initial-logotype {
+  display: block;
+  text-align: center;
+  font-size: 50px;
+  line-height: 1;
+}
+.personalize-header {
+  text-align: center;
+  margin: 40px 0;
+}
+.personalize-header > h2 {
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+.personalize-header > h1 {
+  margin: 10px 0;
+  font-size: 20px;
+  line-height: 1;
+}
+.personalize-header > aside {
+  color: dark-gray-text-color;
+}
+.personalize-step {
+  width: 400px;
+  margin: auto;
+}
+.personalize-step > aside {
+  margin: 20px 0;
+  font-size: 22px;
+}
+.personalize-continue {
+  margin-top: 10px;
+}
+.personalize-skip {
+  position: fixed;
+  z-index: 1;
+  top: 80px;
+  right: 100px;
+}
+#personalize-location-search input {
+  border: none;
+  box-shadow: inset 0 0 0 2px light-gray-border-color;
+  padding: 12px;
+  transition: box-shadow 0.25s;
+}
+#personalize-location-search input:focus {
+  transition: box-shadow 0.25s;
+  box-shadow: inset 0 0 0 2px highlight-color;
+}
+#personalize-search-container {
+  position: relative;
+  line-height: 0;
+}
+#personalize-search-container.is-loading #personalize-search-spinner {
+  display: block;
+}
+#personalize-search-container.is-loading #personalize-search-spinner > .loading-spinner-small {
+  background-color: highlight-color;
+}
+#personalize-search-container .twitter-typeahead {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+#personalize-search-container .tt-hint {
+  display: none;
+}
+#personalize-search-container .tt-dropdown-menu {
+  width: 100%;
+  background-color: #fff;
+  border: 2px solid highlight-color;
+  border-top: none;
+}
+#personalize-search-container .tt-suggestion {
+  border-bottom: 1px solid light-gray-border-color;
+}
+#personalize-search-container .tt-suggestion:last-child {
+  border-bottom: none;
+}
+#personalize-search-container .tt-suggestion:hover,
+#personalize-search-container .tt-suggestion.tt-is-under-cursor {
+  background-color: #000;
+}
+#personalize-search-container .tt-suggestion:hover *,
+#personalize-search-container .tt-suggestion.tt-is-under-cursor * {
+  color: #fff;
+}
+#personalize-search-spinner {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50px;
+  height: 100%;
+}
+.personalize-followeds {
+  margin-top: 20px;
+}
+.personalize-followed {
+  padding: 0 5px;
+  line-height: 50px;
+  vertical-align: middle;
+  border-top: 1px solid light-gray-border-color;
+}
+.personalize-followed:last-child {
+  border-bottom: 1px solid light-gray-border-color;
+}
+.pfa-name {
+  float: left;
+  font-size: 13px;
+  width: calc('100% - 90px');
+  overflow: ellipsis;
+}
+.pfa-remove {
+  float: right;
+  width: 90px;
+  font-size: 13px;
+}
+.pfa-remove:before {
+  content: 'Following';
+  color: highlight-color;
+}
+.pfa-remove:hover:before {
+  content: 'Unfollow';
+  color: bad-red-color;
+}
+#personalize-suggestions-container {
+  width: 850px;
+  margin: 90px auto;
+  text-align: center;
+}
+#personalize-suggestions-container > .personalize-suggestions-more-container {
+  display: none;
+}
+#personalize-suggestions-container[data-state='loaded'] > .personalize-suggestions-more-container {
+  display: block;
+}
+#personalize-suggestions-container[data-state='loaded'] .loading-spinner {
+  display: none;
+}
+#personalize-suggestions {
+  position: relative;
+  text-align: center;
+  min-height: 200px;
+}
+.personalize-suggestions-more-container {
+  padding-top: 20px;
+  text-align: center;
+  border-top: 1px solid light-gray-border-color;
+}
+.personalize-suggestions-set,
+.personalize-suggestion-row {
+  margin: 20px auto;
+  border-bottom: 1px solid light-gray-border-color;
+}
+.personalize-suggestions-set:last-child,
+.personalize-suggestion-row:last-child {
+  border-bottom: none;
+}
+.personalize-suggestions-header,
+.personalize-suggestions-set-header {
+  position: relative;
+  font-size: 20px;
+  margin: 90px auto 40px;
+}
+.personalize-suggestions-set-header {
+  margin: 40px 0;
+}
+.pss-unfollow-all {
+  position: absolute;
+  right: 20px;
+  color: light-gray-text-color;
+}
+.pss-unfollow-all:before {
+  border-color: light-gray-border-color;
+}
+.personalize-suggestion-row {
+  margin-bottom: 0;
+}
+.personalize-suggestion {
+  display: inline-block;
+  position: relative;
+}
+.personalize-suggestion.is-profile {
+  width: 212.5px;
+  margin: 0 0 30px;
+}
+.personalize-suggestion.is-profile > .personalize-suggestion-thumbnail {
+  width: 177px;
+  height: 117px;
+}
+.personalize-suggestion.is-artist {
+  width: 170px;
+  margin: 0 0 30px 0;
+}
+.personalize-suggestion.is-artist > .personalize-suggestion-thumbnail {
+  width: 120px;
+  height: 120px;
+}
+.personalize-suggestion-thumbnail {
+  margin: 0 auto;
+  line-height: ;
+  background-color: light-gray-background-color;
+}
+.personalize-suggestion-thumbnail > img {
+  max-width: 100%;
+  max-height: 100%;
+  vertical-align: middle;
+  display: inline-block;
+}
+.personalize-suggestion-name {
+  margin-top: 10px;
+  font-size: 13px;
+  overflow: ellipsis;
+}
+.personalize-popover-name {
+  font-size: 13px;
+}
+.personalize-suggestion-location {
+  overflow: ellipsis;
+}
+.personalize-suggestion-info {
+  margin-bottom: 10px;
+  color: dark-gray-text-color;
+  overflow: ellipsis;
+}
+.personalize-step[data-step='price_range'] {
+  width: 560px;
+}
+.personalize-step[data-step='price_range'] aside {
+  text-align: center;
+  margin: 40px 0;
+  color: dark-gray-text-color;
+  font-size: 16px;
+}
+.flipper {
+  position: relative;
+  display: inline-block;
+  vertical-align: bottom;
+  margin: 10px;
+  width: 120px;
+  height: 120px;
+  line-height: 120px;
+  text-align: center;
+  font-size: 13px;
+  overflow: ellipsis;
+  cursor: pointer;
+}
+.flipper.is-flipped > .flipper-card {
+  transform: rotateX(-180deg);
+}
+.flipper-card {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.3s;
+}
+.flipper-face {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  backface-visibility: hidden;
+  z-index: 2;
+  cursor: pointer;
+  border: 2px solid light-gray-border-color;
+  border-radius: 50%;
+  transition: border-color 0.25s;
+}
+.flipper-face:hover {
+  border-color: highlight-color;
+}
+.flipper-face.is-front {
+  position: absolute;
+  z-index: 1;
+}
+.flipper-face.is-back {
+  transform: rotateX(-180deg);
+  background-color: highlight-color;
+  border-color: highlight-color;
+  color: #fff;
+}

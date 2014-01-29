@@ -1,0 +1,241 @@
+.fillwidth-list li {
+  margin: 0 15px 15px 0;
+  position: relative;
+}
+.fillwidth-list .artwork-item {
+  margin: 0;
+}
+.fillwidth-list .artwork-item-image-container {
+  margin-bottom: 0;
+  position: relative;
+}
+.fillwidth-list .artwork-item-image-container .artwork-item-image-link {
+  display: inline-block;
+}
+.fillwidth-list .artwork-item-image-container img {
+  background-color: #f2f2f2;
+}
+.fillwidth-list .artwork-item-caption {
+  bottom: 0;
+  height: 90px;
+  line-height: 1.2em;
+  overflow: ellipsis;
+  padding-top: 15px;
+  position: absolute;
+}
+.fillwidth-see-more {
+  display: block;
+  margin: 0 auto 20px auto;
+  position: relative;
+}
+.black-tooltip {
+  position: relative;
+}
+.black-tooltip:hover:before,
+.black-tooltip:hover:after {
+  opacity: 1;
+  transition-delay: 0.0625s;
+}
+.black-tooltip:before,
+.black-tooltip:after {
+  top: calc('100% + 8px');
+  left: 50%;
+  position: absolute;
+  pointer-events: none;
+  opacity: 0;
+  transition: 0.125s;
+  z-index: 1;
+}
+.black-tooltip:before {
+  margin-top: -12px;
+  margin-left: -6px;
+  content: '';
+  background: transparent;
+  border: 6px solid transparent;
+  border-bottom-color: #000;
+}
+.black-tooltip:after {
+  content: attr(data-message);
+  width: 135px;
+  color: #fff;
+  background-color: #000;
+  padding: 8px 10px;
+  margin-left: -67.5px;
+  text-align: center;
+}
+.bordered-pagination {
+  margin: 20px 0;
+}
+.bordered-pagination > ul {
+  display: inline-block;
+  margin: 0 10px;
+  list-style: none;
+  border: 2px solid dark-gray-border-color;
+}
+.bordered-pagination > ul:first-child {
+  margin-left: 0;
+}
+.bordered-pagination > ul:last-child {
+  margin-right: 0;
+}
+.bordered-pagination > ul > li {
+  display: inline-block;
+  border-left: 1px solid light-gray-border-color;
+}
+.bordered-pagination > ul > li:first-child {
+  border: none;
+}
+.bordered-pagination > ul > li > a {
+  display: block;
+  padding: 8px 15px 6px;
+  text-decoration: none;
+}
+.bordered-pagination > ul > li > a.is-active {
+  background-color: light-gray-background-color;
+  cursor: default;
+}
+.bordered-pagination > ul > li > a > span {
+  color: light-gray-text-color;
+}
+.artist-header,
+.auction-lots-header {
+  position: relative;
+  text-align: center;
+  padding: 40px 0 20px;
+}
+.artist-header h1,
+.auction-lots-header h1 {
+  font-size: 24px;
+}
+.artist-header h1,
+.auction-lots-header h1,
+.artist-header h2,
+.auction-lots-header h2 {
+  margin: 10px 0;
+}
+.artist-header a,
+.auction-lots-header a {
+  text-decoration: none;
+}
+.artist-header-empty > p {
+  margin: 40px 0;
+}
+.artist-header-actions {
+  display: table;
+  width: 100%;
+  min-height: 50px;
+}
+.aha-cell {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  width: 33.3%;
+}
+.aha-cell:first-child {
+  text-align: left;
+}
+.aha-cell:last-child {
+  text-align: right;
+}
+.artist-share > a {
+  display: inline-block;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: normal;
+  text-transform: none;
+}
+.auction-lots-header {
+  padding: 0;
+  margin: 20px 0 30px 0;
+}
+.auction-lots-header > h1 {
+  font-size: 30px;
+  line-height: 1;
+}
+.auction-lots-beta-alert {
+  margin: 20px 0;
+}
+.auction-lots-sub-header {
+  font-size: 13px;
+}
+.auction-lots-table {
+  width: 100%;
+  border-top: 1px solid light-gray-border-color;
+  border-bottom: 1px solid light-gray-border-color;
+  margin: 20px 0;
+}
+.auction-lots-table th,
+.auction-lots-table td {
+  padding: 10px;
+}
+.auction-lots-table th:first-child,
+.auction-lots-table td:first-child,
+.auction-lots-table th:last-child,
+.auction-lots-table td:last-child {
+  padding: 10px 5px;
+}
+.auction-lots-table th {
+  font-size: 11px;
+}
+.auction-lots-table td {
+  vertical-align: top;
+  border-top: 1px solid light-gray-border-color;
+}
+.auction-lots-table a {
+  text-decoration: none;
+}
+div.auction-lots-interstital {
+  display: table;
+  margin: 20px 0;
+  width: 100%;
+}
+.auction-lots-interstital > div {
+  display: table-cell;
+  width: 50%;
+}
+.auction-lots-interstital > td,
+.auction-lots-interstital > td:last-child {
+  padding: 20px 0;
+  vertical-align: bottom;
+}
+.auction-lots-sort {
+  text-align: right;
+}
+.auction-lots-sort * {
+  text-align: left;
+}
+.auction-lots-sort > span {
+  margin-right: 10px;
+}
+.auction-lot-title-container {
+  display: table;
+}
+.auction-lot-image,
+.auction-lot-title {
+  display: table-cell;
+  vertical-align: top;
+}
+.auction-lot-image,
+.auction-lot-image-placeholder {
+  width: 80px;
+  margin-right: 20px;
+}
+.auction-lot-title,
+.auction-lot-medium,
+.auction-lot-organization {
+  max-width: 160px;
+}
+.auction-lot-sale-signup,
+.auction-lot-details-link {
+  text-decoration: none;
+  font-size: 11px;
+  line-height: 1;
+  white-space: nowrap;
+}
+.auction-lot-details-link {
+  display: block;
+  margin-top: 10px;
+}
+.zoom-modal .modal-header {
+  display: none;
+}

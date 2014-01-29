@@ -1,0 +1,22 @@
+#error-handler {
+  padding: 120px 0;
+  text-align: center;
+}
+#error-handler p {
+  font-size: 19px;
+}
+#error-handler h1 {
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 1.2em;
+  margin: 20px auto;
+}
+#error-handler pre {
+  max-width: 75%;
+  text-align: left;
+  font-family: monospace;
+  background: #eee;
+  padding: 10px;
+  margin: 20px auto;
+  overflow-x: auto;
+}
