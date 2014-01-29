@@ -1,8 +1,8 @@
-_ = require 'underscore'
-sinon = require 'sinon'
-Backbone = require 'backbone'
+_             = require 'underscore'
+sinon         = require 'sinon'
+Backbone      = require 'backbone'
 { fabricate } = require 'antigravity'
-Artworks = require '../../collections/artworks'
+Artworks      = require '../../collections/artworks'
 
 describe 'Artworks', ->
 

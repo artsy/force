@@ -7,7 +7,7 @@ imageSizesMixin = require '../../../models/mixins/image_sizes'
 sd              = require('sharify').data
 
 class Model extends Backbone.Model
-  _.extend @prototype, Image
+  _.extend @prototype, Image()
   _.extend @prototype, imageSizesMixin
 
 describe 'Image Sizes Mixin', ->
@@ -44,7 +44,7 @@ describe 'Image Sizes Mixin', ->
       }
       @model.imageUrlFor(2080, 2080).should.equal 'larger.jpg'
 
-  describe '#imageUrlForHeight()', ->
+  describe '#imageUrlForHeight', ->
     it 'returns versions for the largest image for the given height', ->
       @model.set {
         id: 'tall-@model-00193920390'
@@ -58,7 +58,7 @@ describe 'Image Sizes Mixin', ->
       @model.imageUrlForHeight(600).should.equal 'large.jpg'
       @model.imageUrlForHeight(1000).should.equal 'larger.jpg'
 
-  describe '#imageUrlForWidth()', ->
+  describe '#imageUrlForWidth', ->
     it 'returns versions for the largest image for the given width', ->
       @model.set {
         id: 'tall-image-00193920390'
@@ -72,7 +72,7 @@ describe 'Image Sizes Mixin', ->
       @model.imageUrlForWidth(300).should.equal 'large.jpg'
       @model.imageUrlForWidth(1000).should.equal 'larger.jpg'
 
-  describe '#imageUrlForMaxSize()', ->
+  describe '#imageUrlForMaxSize', ->
     it 'picks the last size in the list', ->
       @model.set { image_versions: ['small', 'large'] }
       @model.imageUrlForMaxSize().should.equal @model.imageUrlFor('large.jpg')

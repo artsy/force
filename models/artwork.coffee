@@ -5,7 +5,7 @@ sd = require('sharify').data
 
 module.exports = class Artwork extends Backbone.Model
 
-  _.extend @prototype, Image
+  _.extend @prototype, Image(sd.SECURE_IMAGES_URL)
   _.extend @prototype, Dimensions
   _.extend @prototype, Markdown
 

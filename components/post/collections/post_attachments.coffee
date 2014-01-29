@@ -16,7 +16,3 @@ module.exports = class PostAttachments extends Backbone.Collection
       else super
 
   comparator: (attachment) -> attachment.get('position')
-
-  forFeaturedPostThumb: ->
-    # Filter for post attachments that are either an Artwork or an Image
-    _.filter(@models, (attachment) -> attachment.get('type') == "PostArtwork" or attachment.get('type') == "PostImage")[0]

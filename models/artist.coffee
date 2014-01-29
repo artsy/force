@@ -3,14 +3,15 @@ Backbone      = require 'backbone'
 sd            = require('sharify').data
 Artworks      = require '../collections/artworks.coffee'
 { Markdown }  = require 'artsy-backbone-mixins'
-{ Image } = require 'artsy-backbone-mixins'
+{ Image }     = require 'artsy-backbone-mixins'
 Post          = require './post.coffee'
-{ smartTruncate } = require '../components/util/string.coffee'
+{ smartTruncate }     = require '../components/util/string.coffee'
+{ SECURE_IMAGES_URL } = require('sharify').data
 
 module.exports = class Artist extends Backbone.Model
 
   _.extend @prototype, Markdown
-  _.extend @prototype, Image
+  _.extend @prototype, Image(SECURE_IMAGES_URL)
 
   sortCriteriaForArtworks:
     ''               : 'Most Relevant'

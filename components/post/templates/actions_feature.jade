@@ -1,12 +1,8 @@
 .posts-dialog
-  a.close
-  .menu
-    ul.artists
-    ul.artworks
-    ul
-      li.slug
-        a
-          | Slug:
-          input.post( name='feature_slug' )
-          span.feature-by-slug Post
-        .error
+  .feature-artists
+  .feature-artworks
+  .slug-container
+    input.bordered-input.is-block( name='post-feature-model-id', placeholder="Id or Slug" )
+    input.bordered-input.is-block( name='post-feature-model-name', placeholder="Model Name (Artist, Artwork)" )
+    .feature-by-slug.avant-garde-button-white.is-block Post
+    .error

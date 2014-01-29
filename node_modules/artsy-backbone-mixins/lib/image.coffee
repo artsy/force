@@ -1,6 +1,6 @@
 _   = require 'underscore'
 
-module.exports =
+module.exports = (secureImagesUrl, imagesUrlPrefix='http://static%d.artsy.net') ->
 
   defaultImageVersion: -> (@get('image_versions') or @get('versions'))[0]
 
@@ -11,6 +11,13 @@ module.exports =
 
   imageUrl: (version = @defaultImageVersion()) ->
     if @hasImage version
-      @get('image_url').replace(':version', version)
+      @sslUrl @get('image_url').replace(':version', version)
     else
       @missingImageUrl()
+
+  # Replace the image URL with an https:// URL
+  sslUrl: (url) ->
+    return url unless secureImagesUrl and imagesUrlPrefix
+
+    @imagesUrlPrefixRE ?= new RegExp(imagesUrlPrefix.replace('%d', '\\d'))
+    url.replace @imagesUrlPrefixRE, secureImagesUrl

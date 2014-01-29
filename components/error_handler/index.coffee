@@ -1,5 +1,6 @@
 fs = require 'fs'
 jade = require 'jade'
+{ REVEAL_ERRORS } = require '../../config'
 
 renderTemplate = jade.compile(
   fs.readFileSync(__dirname + '/template.jade')
@@ -24,7 +25,8 @@ errorHandler.pageNotFound = (req, res, next) ->
 
 # Error-handling middleware
 errorHandler.internalError = (err, req, res, next) ->
-  res.send 500, renderTemplate { code: 500, error: err, sd: res.locals?.sd or {} }
+  detail = if REVEAL_ERRORS then err.message else null
+  res.send 500, renderTemplate { code: 500, error: err, sd: res.locals?.sd or {}, detail: detail }
 
 errorHandler.javascriptError = (req, res, next) ->
   console?.log(req.body) # Logs client-side errors to stdout for debugging purpose

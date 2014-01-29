@@ -14,7 +14,7 @@ render = (template) ->
     { filename: filename }
   )
 
-describe 'Profile Badge template', ->
+describe 'Profile Header template', ->
 
   beforeEach ->
     @profile = new Profile fabricate 'profile'

@@ -8,7 +8,7 @@ Artist    = require '../models/artist.coffee'
 
 module.exports = class Gene extends Backbone.Model
 
-  _.extend @prototype, Image
+  _.extend @prototype, Image(sd.SECURE_IMAGES_URL)
 
   urlRoot: "#{sd.ARTSY_URL}/api/v1/gene"
 

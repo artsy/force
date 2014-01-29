@@ -2,19 +2,20 @@ _                  = require 'underscore'
 Backbone           = require 'backbone'
 sd                 = require('sharify').data
 featuredByTemplate = -> require('../templates/featured_by.jade') arguments...
+PostFeatureDialog  = require('./posts_feature_dialog.coffee')
 
 module.exports = class PostAdmin extends Backbone.View
 
   events:
-    'click a.remove'              : 'removePostClick'
-    'click a.edit'                : 'editPostClick'
-    'click a.feature'             : 'featurePostClick'
-    'click a.unfeature'           : 'unfeaturePostClick'
-    'click a.repost'              : 'repostPostClick'
-    'click a.unrepost'            : 'unrepostPostClick'
-    'click a.flag'                : 'flagPostClick'
-    'click a.flagged'             : 'unflagPostClick'
-    'click a.toggle'              : 'showPostsFeatureDialog'
+    'click a.post-remove'              : 'removePostClick'
+    'click a.post-edit'                : 'editPostClick'
+    'click a.post-feature'             : 'featurePostClick'
+    'click a.post-unfeature'           : 'unfeaturePostClick'
+    'click a.post-repost'              : 'repostPostClick'
+    'click a.post-unrepost'            : 'unrepostPostClick'
+    'click a.post-flag'                : 'flagPostClick'
+    'click a.post-flagged'             : 'unflagPostClick'
+    'click a.post-show-feature-dialog' : 'showPostsFeatureDialog'
 
   initialize: (options) ->
     throw 'requires currentUser' unless options.currentUser
@@ -25,6 +26,7 @@ module.exports = class PostAdmin extends Backbone.View
 
     @model.ensureRepostsFetched @showOrHideRepostControls
     @reposts = @model.reposts()
+
     @reposts.on 'all', @renderFeaturedBy, @
     @reposts.on 'all', @showOrHideRepostControls, @
 
@@ -34,8 +36,8 @@ module.exports = class PostAdmin extends Backbone.View
     false
 
   showPostsFeatureDialog: ->
-    @postsFeatureDialog ||= new PostsFeatureDialog
-      el: @$el
+    @postsFeatureDialog ||= new PostFeatureDialog
+      el   : @$el
       model: @model
     @postsFeatureDialog.show()
     false
@@ -52,15 +54,15 @@ module.exports = class PostAdmin extends Backbone.View
   featurePost: =>
     @model.feature()
     alert("Post has been featured.")
-    @$('a.feature').addClass('unfeature').removeClass('feature').text('unfeature')
+    @$('a.post-feature').addClass('unfeature').removeClass('feature').text('unfeature')
 
   unfeaturePost: =>
     @model.unfeature()
     alert("Post has been unfeatured.")
-    @$('a.unfeature').addClass('feature').removeClass('unfeature').text('feature')
+    @$('a.post-unfeature').addClass('feature').removeClass('unfeature').text('feature')
 
   repostPost: =>
-    @model.repost?() ? @model.repost()
+    @model.repost()
 
   unrepostPost: =>
     return unless @myRepost
@@ -76,11 +78,11 @@ module.exports = class PostAdmin extends Backbone.View
   showOrHideRepostControls: =>
     @setMyRepost()
     if @myRepost
-      @$('a.unrepost').show() if @myRepost.get('id')
-      @$('a.repost').hide()
+      @$('a.post-unrepost').show() if @myRepost.get('id')
+      @$('a.post-repost').hide()
     else
-      @$('a.unrepost').hide()
-      @$('a.repost').show()
+      @$('a.post-unrepost').hide()
+      @$('a.post-repost').show()
 
   removePostClick: (event) ->
     return false unless confirm("Are you sure you want to delete this post?")
@@ -109,11 +111,11 @@ module.exports = class PostAdmin extends Backbone.View
 
   flagPost: ->
     @model.flag()
-    @$('a.flag').addClass('flagged').removeClass('flag').text('Flagged')
+    @$('a.post-flag').addClass('flagged').removeClass('flag').text('Flagged')
 
   unflagPost: ->
     @model.unflag()
-    @$('a.flagged').addClass('flag').removeClass('flagged').text('Flag')
+    @$('a.post-flagged').addClass('flag').removeClass('flagged').text('Flag')
 
   repostPostClick: (event) ->
     @repostPost()

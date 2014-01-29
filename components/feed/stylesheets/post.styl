@@ -146,59 +146,61 @@
 .posts-dialog
   display: none
   background-color: #fff
-  border: 1px solid black
-  margin-top: -280px
-  margin-left: 60px
+  border: 1px solid light-gray-border-color
   opacity 0
-  padding: 20px 10px
+  padding: 10px
   position: absolute
-  width: 350px
   z-index: -1
   display: none
-  avant-garde()
-  .close
-    cursor: pointer
-    width: 20px
-    height: 20px
-    background-position: center center
-    position: relative
-    float: right
-    top: -6px
-    left: -6px
+  bottom: 48px
+  width: 404px
+  left: 0px
+  margin-left: 0px
   &.on
     display: block
     opacity 1
     z-index: 99
-  .menu
-    ul
-      padding: 10px 0 0 10px
-      margin: -2px 20px 0 10px
-      li
-        cursor: pointer
-        border-bottom: 1px solid #eee
-        margin-bottom: 1px
-        padding: 2px
-        width: 90%
-        a.working
-          color: #eee
-        a.feature_attachment
-          text-decoration: none
-          &:before
-            content: 'Post On'
-        a.unfeature_attachment
-          text-decoration: underline
-          &:before
-            content: 'Remove From'
-        &.slug
-          border: none
-          input.post
-            margin-left: 5px
-            margin-right: 5px
-            width: 150px
-          .feature-by-slug
-            text-decoration: underline
-          .error
-            garamond()
-            color: bad_red_color
-            font-size: 12px
-            margin-left: 45p
+
+  .slug-container
+    input:first-child
+      margin-bottom: 10px
+
+  .feature-by-slug
+    margin-top: 15px
+
+  .error
+    garamond()
+    color: bad_red_color
+    font-size: 12px
+    margin-left: 45px
+
+  .feature_attachment
+    text-decoration: none
+    &:before
+      content: 'Post On'
+
+  .unfeature_attachment
+    text-decoration: underline
+    &:before
+      content: 'Remove From'
+
+  .feature-artworks, .feature-artists
+    a
+      border-bottom: 1px solid light-gray-border-color
+      padding: 5px
+      font-size: 13px
+      display: block
+      &:hover
+        background: light-gray-border-color
+
+    .post-feature
+      text-decoration: none
+      &:before
+        content: 'Post On '
+    .post-unfeature
+      text-decoration: underline
+      &:before
+        content: 'Remove From '
+
+  .feature-artworks
+    margin-bottom: 20px

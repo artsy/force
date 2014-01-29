@@ -6,7 +6,7 @@ Backbone  = require 'backbone'
 _.mixin(require 'underscore.string')
 
 module.exports = class SearchResult extends Backbone.Model
-  _.extend @prototype, Image
+  _.extend @prototype, Image(sd.SECURE_IMAGES_URL)
 
   initialize: (options) ->
     @set
