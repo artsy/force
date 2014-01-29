@@ -20,7 +20,7 @@ module.exports = class Artwork extends Backbone.Model
     response
 
   defaultImage: ->
-    @__defaultImage__ or= new AdditionalImage(@get('images')?[0])
+    new AdditionalImage(@get('images')?[0])
 
   defaultImageUrl: (version = 'medium') ->
     @defaultImage()?.imageUrl(version)
