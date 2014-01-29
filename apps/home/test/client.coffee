@@ -31,7 +31,11 @@ describe 'HeroUnitView', ->
 
   beforeEach ->
     HeroUnitView = require '../client/hero_unit_view.coffee'
+    sinon.stub Backbone, 'sync'
     @view = new HeroUnitView el: $('body')
+
+  afterEach ->
+    Backbone.sync.restore()
 
   describe '#setBodyClass', ->
 
@@ -56,10 +60,11 @@ describe 'HeroUnitView', ->
 
 
 describe 'Homepage init code', ->
+
   before (done) ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
-      benv.render '../templates/index.jade', {
+      benv.render resolve(__dirname, '../templates/index.jade'), {
         heroUnits: new HeroUnits([
           fabricate 'site_hero_unit'
           fabricate 'site_hero_unit'
@@ -70,7 +75,6 @@ describe 'Homepage init code', ->
         ]).models
         sd: {}
       }
-      sinon.stub Backbone, 'sync'
       Backbone.$ = $
       done()
 
@@ -87,7 +91,11 @@ describe 'Homepage init code', ->
       'artworkItemTemplate'
     ]
     mod.__set__ 'HeroUnitView', ->
+    sinon.stub Backbone, 'sync'
     @init()
+
+  afterEach ->
+    Backbone.sync.restore()
 
   it 'renders featured artworks', ->
     Backbone.sync.args[0][2].success [fabricate 'set']

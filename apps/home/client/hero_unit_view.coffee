@@ -4,8 +4,8 @@ _ = require 'underscore'
 module.exports = class HeroUnitView extends Backbone.View
 
   initialize: (options) ->
-    @$mainHeader = $('#main-layout-header')
-    @$heroUnits = $('#home-hero-units')
+    @$mainHeader = @$('#main-layout-header')
+    @$heroUnits = @$('#home-hero-units')
     @$window = $ window
     @setBodyClass()
     @setInterval()
