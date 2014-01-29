@@ -10,12 +10,15 @@ SuggestedGenesView      = require '../../../components/suggested_genes/view.coff
 
 module.exports.FavoritesView = class FavoritesView extends Backbone.View
 
-  pageSize: 10
-  nextPage: 1 # page number of the next page to render
+  defaults:
+    pageSize: 10
+    nextPage: 1 # page number of the next page to render
 
   initialize: (options) ->
-    @collection ?= new Artworks()
+    { @pageSize, @nextPage } = _.defaults options or {}, @defaults
     @setupCurrentUser()
+
+    @collection ?= new Artworks()
 
     @$favoriteArtworks = @$('.favorite-artworks')
     @$loadingSpinner = @$('.loading-spinner')
@@ -38,10 +41,12 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
 
         if @nextPage is 1
           $(window).on 'scroll.favorites', _.throttle(@infiniteScroll, 150)
+          @showEmptyHint() unless collection.length > 0
 
         else if collection.length < 1
           $(window).off('.favorites')
 
+        console.log collection.length
         @artworkColumnsView.appendArtworks collection.models
         ++@nextPage
 
@@ -54,17 +59,22 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
   #
   # @param {Object} options Provide `success` and `error` callbacks similar to Backbone's fetch
   fetchNextPageSavedArtworks: (options) ->
-    collection = new Artworks
+    collection = @collection
     url = "#{sd.ARTSY_URL}/api/v1/collection/saved-artwork/artworks"
+    console.log @pageSize
     data =
       user_id: @currentUser.get('id')
       page: @nextPage
       size: @pageSize
       sort: "-position"
       private: true
-    collection.fetch _.extend { url: url, data: data, add: true, remove: false, merge: false }, options
+    collection.fetch
+      url: url
+      data: data
+      success: options?.success
+      error: options?.error
 
-  showEmptyHint: () ->
+  showEmptyHint: ->
     @$('.follows-empty-hint').html $( hintTemplate type: 'artworks' )
     (new SuggestedGenesView
       el: @$('.suggested-genes')
