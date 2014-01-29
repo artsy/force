@@ -1,6 +1,8 @@
 _         = require 'underscore'
 Backbone  = require 'backbone'
 
+_.mixin(require 'underscore.string')
+
 module.exports = class PersonalizeState extends Backbone.Model
   defaults:
     _steps:
@@ -31,6 +33,9 @@ module.exports = class PersonalizeState extends Backbone.Model
 
   currentStepIndex: ->
     _.indexOf @get('steps'), @get('current_step')
+
+  currentStepLabel: ->
+    _.map(@get('current_step').split('_'), _.capitalize).join ' '
 
   stepDisplay: ->
     "Step #{(@currentStepIndex())} of #{@get('steps').length - 1}"
