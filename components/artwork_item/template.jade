@@ -23,7 +23,7 @@ figure.artwork-item( data-artwork=artwork.get('id') )
           a.faux-underline-hover( href=artwork.partnerLink() )!= artwork.partnerName()
         else
           != artwork.partnerName()
-    if artwork.saleMessage()
+    if artwork.get('forsale') && artwork.saleMessage()
       p.artwork-item-sale-price!= artwork.saleMessage()
   if showBlurb && artwork.get('blurb')
     .artwork-item-blurb!= artwork.mdToHtml('blurb')
