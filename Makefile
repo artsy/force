@@ -24,14 +24,14 @@ sp:
 	ARTSY_URL=http://artsy.net SECURE_ARTSY_URL=https://artsy.net $(BIN)/coffee index.coffee
 
 # Run all of the project-level tests, followed by app-level tests
-test: assets
+test: assets-fast
 	$(BIN)/mocha $(shell find test -name '*.coffee' -not -path 'test/helpers/*')
 	$(BIN)/mocha $(shell find components/*/test -name '*.coffee' -not -path 'test/helpers/*')
 	$(BIN)/mocha $(shell find components/**/*/test -name '*.coffee' -not -path 'test/helpers/*')
 	$(BIN)/mocha $(shell find apps/*/test -name '*.coffee' -not -path 'test/helpers/*')
 
 # Start the integration server for debugging
-test-s: assets
+test-s: assets-fast
 	$(BIN)/coffee test/helpers/integration.coffee
 
 # Generate minified assets from the /assets folder and output it to /public.
@@ -46,6 +46,13 @@ assets:
 		$(BIN)/sqwish public/$(file).css -o public/$(file).min.css; \
 		gzip -f public/$(file).min.css; \
 	)
+
+# Generate unminified assets for testing and development.
+assets-fast:
+	$(foreach file, $(shell find assets -name '*.coffee' | cut -d '.' -f 1), \
+		$(BIN)/browserify --fast $(file).coffee -t jadeify2 -t caching-coffeeify > public/$(file).js; \
+	)
+	$(BIN)/stylus assets -o public/assets
 
 # TODO: Put this in a foreach and iterate through all js and css files
 verify:

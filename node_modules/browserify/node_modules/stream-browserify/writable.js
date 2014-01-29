@@ -180,7 +180,7 @@ Writable.prototype.write = function(chunk, encoding, cb) {
     encoding = null;
   }
 
-  if (isUint8Array(chunk))
+  if (!Buffer.isBuffer(chunk) && isUint8Array(chunk))
     chunk = new Buffer(chunk);
   if (isArrayBuffer(chunk) && typeof Uint8Array !== 'undefined')
     chunk = new Buffer(new Uint8Array(chunk));
