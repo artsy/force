@@ -4,10 +4,13 @@ sd                      = require('sharify').data
 CurrentUser             = require '../../../models/current_user.coffee'
 Artworks                = require '../../../collections/artworks.coffee'
 hintTemplate            = -> require('../templates/empty_hint.jade') arguments...
+favoritesStatusTemplate = -> require('../templates/favorites_status.jade') arguments...
 SaveControls            = require '../../../components/artwork_item/save_controls.coffee'
 ArtworkColumnsView      = require '../../../components/artwork_columns/view.coffee'
 SuggestedGenesView      = require '../../../components/suggested_genes/view.coffee'
 ShareView               = require '../../../components/share/view.coffee'
+FavoritesStatusModal    = require '../../../components/favorites_status_modal/view.coffee'
+mediator                = require '../../../lib/mediator.coffee'
 
 module.exports.FavoritesView = class FavoritesView extends Backbone.View
   defaults:
@@ -15,12 +18,17 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
     numOfRowsPerPage: 3
     nextPage: 1 # page number of the next page to render
 
+  events:
+    'click .make-public'  : 'makePublic'
+    'click .make-private' : 'makePrivate'
+
   initialize: (options) ->
     { @numOfCols, @numOfRowsPerPage, @nextPage } = _.defaults options or {}, @defaults
     @collection ?= new Artworks()
     @setupCurrentUser()
     @listenTo @collection, 'request', @renderLoading
     @loadNextPage()
+    @setupStatus()
     @setupShareButton()
 
   renderLoading: ->
@@ -35,6 +43,16 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
     @currentUser = CurrentUser.orNull()
     @currentUser?.initializeDefaultArtworkCollection()
     @artworkCollection = @currentUser?.defaultArtworkCollection()
+
+  setupStatus: ->
+    @savedArtworkCollection = new Backbone.Model()
+    @listenTo @savedArtworkCollection, 'change:private', @renderStatus
+    @savedArtworkCollection.url = "#{sd.ARTSY_URL}/api/v1/collection/saved-artwork"
+    @savedArtworkCollection.fetch
+      data: { user_id: @currentUser.get('id'), private: true }
+      success: =>
+        @showStatusDialog() unless not @savedArtworkCollection.get('private')
+    mediator.on 'favorites:make:public', @makePublic, this
 
   setupShareButton: ->
     new ShareView el: @$('.favorites-share')
@@ -85,6 +103,19 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
       el: @$('.suggested-genes')
       user: @currentUser
     ).render()
+
+  makePrivate: ->
+    window.location = "/profile/edit"
+
+  makePublic: ->
+    @savedArtworkCollection.set(private: false).save user_id: @currentUser.get('id')
+
+  showStatusDialog: ->
+    new FavoritesStatusModal width: '400px'
+
+  renderStatus: () ->
+    status = @savedArtworkCollection.get('private')
+    @$('.favorites-privacy').html $( favoritesStatusTemplate private: status )
 
 module.exports.init = ->
   new FavoritesView el: $('body')

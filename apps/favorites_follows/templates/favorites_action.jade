@@ -4,12 +4,7 @@ include ../../../components/share/template
 - var media = ''
 - var url = [sd.ARTSY_URL, profileId, 'favorites'].join('/')
 .favorites-actions
-  aside.favorites-share
+  .favorites-share
     +share(shareDescription, media, url)
-  .favorites-meta
-    if private
-      p Favorite works are Private &ndash; 
-        a Make Public
-    else
-      p Favorite works are Public &ndash; 
-        a Edit Profile Settings
+  .favorites-privacy
+    include favorites_status
