@@ -64,13 +64,13 @@ module.exports = class FeedView extends Backbone.View
     @latestItems = items
 
     @fixedWidth = @getFixedWidth()
-    @maxDimension = @getMaxDimension()
+    @imageWidth = @getImageWidth()
 
     @$el.html feedItemsContainerTemplate(
       headingText       : @headingText
       headingSortOrder  : @headingSortOrder
       fixedWidth        : @fixedWidth
-      maxDimension      : @maxDimension
+      imageWidth        : @imageWidth
       sd                : sd
     )
 
@@ -104,8 +104,8 @@ module.exports = class FeedView extends Backbone.View
     $html = $(feedItemsTemplate(
       feedItems         : items
       fixedWidth        : @fixedWidth
+      imageWidth        : @imageWidth
       textColumnWidth   : @textColumnWidth
-      maxDimension      : @maxDimension
       sd                : sd
       currentUser       : @currentUser
     ))
@@ -144,7 +144,7 @@ module.exports = class FeedView extends Backbone.View
     windowWidth = @$window.innerWidth()  || 800
     if windowWidth > @maxWidth then @maxWidth else windowWidth - @marginLeftRight
 
-  getMaxDimension: ->
+  getImageWidth: ->
     @fixedWidth - @textColumnWidth - @textColumnMargin
 
   setupCurrentUser: ->
