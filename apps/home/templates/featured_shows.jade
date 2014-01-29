@@ -1,7 +1,10 @@
 for show, i in shows
+  imgUrl = show.imageUrl(i < 2 ? 'featured' : 'large')
   li.home-featured-show
-    .home-featured-show-cover
-      img( src=show.imageUrl(i < 2 ? 'featured' : 'large') )
+    .home-featured-cover-img(
+      style="background-image: url(" + imgUrl + ")",
+    )
+      img( src=imgUrl, alt=show.get('name') )
     h6!= show.runningDates()
     h4= show.partnerName()
     h5= show.get('name')

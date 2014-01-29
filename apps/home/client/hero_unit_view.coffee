@@ -1,28 +1,29 @@
 Backbone = require 'backbone'
+_ = require 'underscore'
 
 module.exports = class HeroUnitView extends Backbone.View
 
-  el: '#home-hero-units-container'
-
   initialize: (options) ->
-    { @$body } = options
+    @$mainHeader = $('#main-layout-header')
+    @$heroUnits = $('#home-hero-units')
+    @$window = $ window
     @setBodyClass()
     @setInterval()
+    @$window .on 'scroll', _.throttle @setBodyClass, 100
 
   setInterval: ->
     clearInterval @interval
     @interval = setInterval @nextHeroUnit, 8000
 
-  setBodyClass: ->
-    # TODO: Toggle this based on whether the user scrolled past the hero unit.
-    if true
-      $activeLi = @$('> li.home-hero-unit-active')
-      @$body.addClass if $activeLi.hasClass('home-hero-unit-white')
-                        'body-transparent-header'
-                      else
-                        'body-transparent-header-white'
+  setBodyClass: =>
+    if @$window.scrollTop() + @$mainHeader.height() <= @$heroUnits.height()
+      $activeLi = @$('.home-hero-unit.home-hero-unit-active')
+      if $activeLi.hasClass('home-hero-unit-white')
+        @$el.removeClass('body-transparent-header-white').addClass 'body-transparent-header'
+      else
+        @$el.removeClass('body-transparent-header').addClass 'body-transparent-header-white'
     else
-      @$body.removeClass 'body-transparent-header body-transparent-header-white'
+      @$el.removeClass 'body-transparent-header body-transparent-header-white'
 
   nextHeroUnit: (direction = 1) =>
     if direction is 1

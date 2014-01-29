@@ -12,13 +12,16 @@
   border-bottom @border-right
   width 25%
   vertical-align top
+  &:first-child
+    padding-left 0
   &:last-child
     border-right 0
+    padding-right 0
   img
     max-width 95px
     max-height @max-width
     float left
-    margin-right 15px
+    margin-right 10px
   h4
     font-size 15px
   h3
@@ -61,16 +64,14 @@
   width (home-page-width / 4)
   padding-right 40px
   padding-bottom 20px
-  .home-featured-show-cover
+  .home-featured-cover-img
     height ((home-page-width / 4) / 1.5)
   &:nth-child(6), &:nth-child(10), &:nth-child(2)
     padding-right 0
   &:first-child, &:nth-child(2)
     width (home-page-width / 2)
-    .home-featured-show-cover
+    .home-featured-cover-img
       height ((home-page-width / 2) / 1.5)
-  img
-    width 100%
   h6
     color dark-gray-text-color
     font-size 12px
@@ -81,25 +82,60 @@
     font-size 18px
   h4, h5, h6
     overflow ellipsis
+  .home-featured-cover-img
+    margin-bottom 10px
 
-.home-featured-show-cover
+.home-featured-cover-img
   overflow hidden
-  margin-bottom 10px
+  background no-repeat center center
+  background-size cover
+  img
+    display none
 
 .home-featured-post-link
   display inline-block
   vertical-align top
-  margin-right 28px
+  margin-right 34px
   width 206px
   img
     width 100%
+    margin-bottom 10px
   h5
     avant-garde()
     font-size 11px
+    margin-top 3px
   &:first-child
+    float left
+    width 412px
     h4
       font-size 24px
+      line-height 1.2em
   &:nth-child(4)
     margin-right 0
   &:last-child
     margin-right 0
+  &:nth-child(1), &:nth-child(2), &:nth-child(3)
+    margin-bottom 23px
+
+.home-featured-artist-link
+  display inline-block
+  vertical-align top
+  width 25%
+  padding 0 25px
+  img
+    max-width 100%
+  &:last-child
+    padding-right 0
+  &:first-child
+    padding-left 0
+  h4, h5
+    avant-garde()
+    text-align center
+  h4
+    margin 12px 0 6px 0
+    font-size 13px
+  h5
+    font-size 11px
+    line-height 1.6em
+  .home-featured-cover-img
+    height 184px
