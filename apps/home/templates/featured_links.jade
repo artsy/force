@@ -1,6 +1,6 @@
-for featuredLink in featuredLinks
+for link in featuredLinks
   li.home-top-feature-link
-    img( src=featuredLink.imageUrl('small_rectangle') )
+    img( src=link.imageUrl('small_rectangle') )
     .home-top-feature-link-details
-      h3= featuredLink.get('title')
-      h4= featuredLink.get('subtitle')
+      h3= link.get('title')
+      h4= link.get('subtitle')

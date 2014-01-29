@@ -99,7 +99,7 @@ module.exports = class ArtworkColumns extends Backbone.View
 
   addToShortestColumn: (artwork, notes) ->
     return unless @columns?.length > 0
-    img = new AdditionalImage artwork.defaultImage()
+    img = artwork.defaultImage()
     height = img.maxHeightForWidth @columnWidth, @maxArtworkHeight
     $artwork = @appendFigure artwork, @shortestColumn, notes
     @columns[@shortestColumn].height += height
@@ -133,6 +133,7 @@ module.exports = class ArtworkColumns extends Backbone.View
       displayMoreInfo     : @displayMoreInfo
       displayAuctionPrice : displayAuctionPrice
       estimate            : estimate
+      artworkSize         : 'tall'
     $renderedArtwork = $(renderedArtwork)
     @$(".artwork-column:eq(#{column})").append $renderedArtwork
     $renderedArtwork

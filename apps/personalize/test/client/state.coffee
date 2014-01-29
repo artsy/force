@@ -35,6 +35,14 @@ describe 'state', ->
       @state.next()
       @state.currentStepIndex().should.equal 1
 
+  describe '#currentStepLabel', ->
+    it 'humanizes and capitalizes the step name', ->
+      @state.setStep 'price_range'
+      @state.currentStepLabel().should.equal 'Price Range'
+      @state.setStep 'artists'
+      @state.currentStepLabel().should.equal 'Artists'
+
+
   describe '#stepDisplay', ->
     it 'displays a human readable step count', ->
       @state.stepDisplay().should.equal "Step 0 of #{@state.get('steps').length - 1}"

@@ -8,7 +8,7 @@ module.exports = class StepView extends Backbone.View
     { @state, @user } = options
 
   advance: (e) ->
-    track.funnel "Finishing #{@state.get('current_step')}", { label: "User:#{@user.id}" }
+    track.funnel "Finishing Personalize #{@state.currentStepLabel()}", { label: "User:#{@user.id}" }
 
     e?.preventDefault()
     @state.trigger 'transition:next'

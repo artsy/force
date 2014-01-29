@@ -1,7 +1,36 @@
 @import './hero_units.styl'
 @import './featured_items.styl'
+@import './footer_links.styl'
 
-.home-container
-  max-width default-max-page-width
-  min-width 1000px
+hero-units-height = 470px
+
+#home-body
+  width home-page-width + (layout-side-margin * 2)
   margin auto
+  padding 0 layout-side-margin
+
+#home-foreground
+  z-index 1
+  width 100%
+  background white
+  margin-top hero-units-height
+
+#home-hero-units
+  height hero-units-height
+  position fixed
+  top 0
+  width 100%
+  background black
+  z-index -1
+  position fixed
+
+// Transform the layout into a more locked in layout. Even though iPad can
+// support fixed elements, it has many rendering bugs with how the hero unit and
+// foreground layer intersect (http://cl.ly/image/3P0V1S362w3l).
+html[data-useragent*="iPad"]
+  #home-hero-units
+    position relative
+  #home-hero-units, #home-hero-units-controls, #main-layout-footer
+    width home-page-width + (layout-side-margin * 2)
+  #home-foreground
+    margin-top 0
