@@ -53,6 +53,8 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
       success: =>
         @showStatusDialog() unless not @savedArtworkCollection.get('private')
     mediator.on 'favorites:make:public', @makePublic, this
+    # intercept click events before bubbling up to ShareView
+    @$('[class^="share-to-"]').on 'click', @checkStatusBeforeSharing
 
   setupShareButton: ->
     new ShareView el: @$('.favorites-share')
@@ -114,6 +116,15 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
   renderStatus: () ->
     status = @savedArtworkCollection.get('private')
     @$('.favorites-privacy').html $( favoritesStatusTemplate private: status )
+
+  # Check the favorites status and show the status dialog instead of
+  # sharing window if it's private.
+  checkStatusBeforeSharing: (e) =>
+    e.preventDefault()
+
+    if @savedArtworkCollection.get('private')
+      @showStatusDialog()
+      e.stopPropagation()
 
   renderLoading: -> @$loadingSpinner.show()
   doneRenderLoading: -> @$loadingSpinner.hide()
