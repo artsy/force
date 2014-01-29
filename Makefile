@@ -52,7 +52,7 @@ assets-fast:
 	$(foreach file, $(shell find assets -name '*.coffee' | cut -d '.' -f 1), \
 		$(BIN)/browserify --fast $(file).coffee -t jadeify2 -t caching-coffeeify > public/$(file).js; \
 	)
-	$(BIN)/stylus assets --include public/
+	$(BIN)/stylus assets -o public/assets
 
 # TODO: Put this in a foreach and iterate through all js and css files
 verify:
