@@ -23,12 +23,13 @@ describe 'FavoritesStatusModalView', ->
     beforeEach ->
       @close = sinon.stub @FavoritesStatusModalView.prototype, 'close'
       @view = new @FavoritesStatusModalView el: $('#fixture')
+      @trigger = sinon.stub mediator, 'trigger'
 
     afterEach ->
       @close.restore()
+      @trigger.restore()
 
     it 'triggers the favorites:make:public event and close the modal after making public', ->
-      @trigger = sinon.stub mediator, 'trigger'
       @view.makePublic()
       @trigger.args[0][0].should.equal 'favorites:make:public'
       @close.calledOnce.should.be.ok

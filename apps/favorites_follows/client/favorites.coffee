@@ -20,7 +20,6 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
 
   events:
     'click .make-public'  : 'makePublic'
-    'click .make-private' : 'makePrivate'
 
   initialize: (options) ->
     { @pageSize, @nextPage } = _.defaults options or {}, @defaults
@@ -103,9 +102,6 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
       el: @$('.suggested-genes')
       user: @currentUser
     ).render()
-
-  makePrivate: ->
-    window.location = "/profile/edit"
 
   makePublic: ->
     @savedArtworkCollection.set(private: false).save user_id: @currentUser.get('id')
