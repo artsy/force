@@ -12,11 +12,6 @@ app = module.exports = express()
 app.set 'views', __dirname
 app.set 'view engine', 'jade'
 
-# we should just proxy to Gravity until we build the homepage in Force
-# app.get '/log_in', routes.index
-# app.get '/sign_up', routes.index
-# app.get '/forgot', routes.index
-
 # Auth submission handlers
 app.get '/force/users/sign_out', routes.logout
 app.post '/force/users/sign_in_trust_token', routes.loginWithTrustToken
