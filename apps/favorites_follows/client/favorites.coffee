@@ -107,7 +107,9 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
     @savedArtworkCollection.set(private: false).save user_id: @currentUser.get('id')
 
   showStatusDialog: ->
-    new FavoritesStatusModal width: '400px'
+    new FavoritesStatusModal
+      top: @$('.favorites-actions').offset().top + 'px'
+      width: '350px'
 
   renderStatus: () ->
     status = @savedArtworkCollection.get('private')
