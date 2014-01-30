@@ -1,4 +1,5 @@
 _         = require 'underscore'
 Backbone  = require 'backbone'
 
-module.exports = _.extend {}, Backbone.Events
+mediator = _.extend({}, Backbone.Events)
+module.exports = (window?.__mediator ?= mediator) or mediator

@@ -23,10 +23,12 @@ describe 'HeroUnitView', ->
         ]).models
         sd: {}
       }
+      sinon.stub _, 'defer'
       Backbone.$ = $
       done()
 
   after ->
+    _.defer.restore()
     benv.teardown()
 
   beforeEach ->
@@ -75,10 +77,12 @@ describe 'Homepage init code', ->
         ]).models
         sd: {}
       }
+      sinon.stub _, 'defer'
       Backbone.$ = $
       done()
 
   after ->
+    _.defer.restore()
     benv.teardown()
 
   beforeEach ->
@@ -113,3 +117,31 @@ describe 'Homepage init code', ->
     $('body').html().should.include "Retrospect on Andy Foobar"
 
   it 'renders featured artists'
+
+describe 'HomeAuthRouter', ->
+
+  before (done) ->
+    benv.setup => done()
+
+  after ->
+    benv.teardown()
+
+  beforeEach ->
+    HomeAuthRouter = benv.require resolve __dirname, '../client/auth_router.coffee'
+    HomeAuthRouter.__set__ 'mediator', @mediator = { trigger: sinon.stub() }
+    @router = new HomeAuthRouter
+
+  it 'on login opens the login modal', ->
+    @router.login()
+    @mediator.trigger.args[0][0].should.equal 'open:auth'
+    @mediator.trigger.args[0][1].mode.should.equal 'login'
+
+  it 'on signup opens the signup modal', ->
+    @router.signup()
+    @mediator.trigger.args[0][0].should.equal 'open:auth'
+    @mediator.trigger.args[0][1].mode.should.equal 'register'
+
+  it 'on forgot opens the forgot modal', ->
+    @router.forgot()
+    @mediator.trigger.args[0][0].should.equal 'open:auth'
+    @mediator.trigger.args[0][1].mode.should.equal 'forgot'
