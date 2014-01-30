@@ -35,7 +35,7 @@ describe 'Feed Templates', ->
         @html    = render('feed_items')(
           feedItems: @feedItems.models
           fixedWidth: 1000
-          maxDimension: 500
+          imageWidth: 500
         )
 
       it 'Renders a feed of partner shows', ->
@@ -66,7 +66,7 @@ describe 'Feed Templates', ->
         @html    = render('feed_items')(
           feedItems: @feedItems.models
           fixedWidth: 1000
-          maxDimension: 500
+          imageWidth: 500
         )
 
       it 'Shows fair info', ->
@@ -92,7 +92,7 @@ describe 'Feed Templates', ->
         @html    = render('feed_items')(
           feedItems: @feedItems.models
           fixedWidth: 1000
-          maxDimension: 500
+          imageWidth: 500
         )
 
       it 'Renders a feed of partner shows', ->
@@ -162,7 +162,7 @@ describe 'Feed Templates', ->
       html      = render('feed_items')(
         feedItems: feedItems.models
         fixedWidth: 1000
-        maxDimension: 500
+        imageWidth: 500
         sd: sd
         textColumnWidth: 404
       )
@@ -191,7 +191,7 @@ describe 'Feed Templates', ->
       html      = render('feed_items')(
         feedItems: feedItems.models
         fixedWidth: 1000
-        maxDimension: 500
+        imageWidth: 500
         sd: sd
         textColumnWidth: 404
         currentUser: new CurrentUser(is_content_administrator: true, type: 'Admin')
@@ -206,7 +206,7 @@ describe 'Feed Templates', ->
       html      = render('feed_items')(
         feedItems: feedItems.models
         fixedWidth: 1000
-        maxDimension: 500
+        imageWidth: 500
         sd: sd
         textColumnWidth: 404
       )

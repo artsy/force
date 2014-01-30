@@ -1,12 +1,12 @@
 - artworkSize = artworkSize || 'medium'
+- imageWidth = imageWidth || false
 figure.artwork-item( data-artwork=artwork.get('id') )
   .artwork-item-image-container
     a.artwork-item-image-link(href=artwork.href())
-      img.artwork-item-image(
-        src=artwork.defaultImageUrl(artworkSize)
-        nopin=artwork.noPinAttr()
-        alt=artwork.toAltText()
-      )
+      if imageWidth
+        include ./fixed_width_image
+      else
+        include ./variable_width_image
       include ./overlay_controls
   figcaption.artwork-item-caption
     if artwork.has('artist')

@@ -10,6 +10,6 @@ meta( property="og:type", content=(sd.FACEBOOK_APP_NAMESPACE + ":artist" ) )
 meta( name="fragment", content="!" )
 if artist.hasImage('large')
   meta( property="twitter:card", content="summary_large_image" )
-  meta( property="og:image", content=(sd.ARTSY_URL + "/artist/" + artist.get('id') + ".jpg") )
+  meta( property="og:image", content=artist.imageUrl('large'))
 else
   meta( property="twitter:card", content="summary" )
