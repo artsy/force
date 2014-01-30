@@ -1,0 +1,226 @@
+.circle-icon-button
+  iconfont-styling()
+  display inline-block
+  position relative
+  width 58px
+  margin 0 5px 20px
+  height @width
+  cursor pointer
+  color black
+  background-color transparent
+  text-align center
+  line-height @height
+  border 2px solid light-gray-border-color
+  border-radius (@width / 2)
+  opacity 1
+  transition opacity 0.125s
+  user-select none
+  &, &:after
+    transition all 0.125s
+  &:after
+    avant-garde()
+    position absolute
+    top 100%
+    font-size 13px
+    line-height 2.5
+    text-align center
+    // Account for a small
+    // amount of overflow
+    right -5px
+    left -5px
+  &:hover
+    background-color dark-gray-text-color
+    border-color @background-color
+    color white
+    &:after
+      color black
+
+.circle-icon-button-save
+  @extends .circle-icon-button
+  &:before
+    content '\e60d'
+  &:after
+    content 'Favorite'
+
+.circle-icon-button-share
+  @extends .circle-icon-button
+  &:before
+    content '\e602'
+  &:after
+    content 'Share'
+
+artwork-detail-width        = 220px
+artwork-detail-item-height  = 36px
+
+#artwork-page
+  padding 20px 0
+
+.artwork-container
+  clearfix()
+  position relative
+  width 100%
+  height auto
+
+.artwork-image-zoom
+  cursor -moz-zoom-in
+  cursor -webkit-zoom-in
+
+.artwork-image
+  float left
+  width calc('100% - %s' % artwork-detail-width)
+  height 100%
+  padding 0 20px 0 artwork-detail-width
+  margin-right -(artwork-detail-width)
+  text-align center
+  img
+    display inline-block
+    max-width 100%
+    max-height 100%
+
+  // Better usage of space at smaller screen sizes
+  @media screen and (max-width: 1024px)
+    margin-right 0
+    padding 0 20px
+
+.artwork-image-actions
+  padding 10px
+
+.artwork-detail
+  float right
+  width artwork-detail-width
+  font-size 17px
+
+.artwork-detail-artist
+  avant-garde()
+  > a
+    text-decoration none
+    &:hover
+      text-decoration underline
+
+.artwork-detail-title
+  font-style italic
+  margin-bottom 10px
+
+.artwork-meta-photo-credit
+  margin-top 10px
+  font-size 11px
+  line-height 1.2
+
+.artwork-meta-partner
+  margin-top 10px
+  > a
+    text-decoration none
+
+.artwork-meta-price
+  display table
+  width 100%
+  border-top 1px dotted light-gray-border-color
+  border-bottom 1px dotted light-gray-border-color
+  margin 10px 0
+  line-height artwork-detail-item-height
+.artwork-meta-price-label
+.artwork-meta-price-amount
+  display table-cell
+.artwork-meta-price-amount
+  text-align right
+.artwork-meta-price-label
+  &.is-sold
+    avant-garde()
+    font-size 15px
+    color bad-red-color
+
+.artwork-actions
+  margin-top 20px
+  .avant-garde-button-black
+    display block
+    padding 13px 30px 10px
+
+.artwork-inquiry
+  margin 20px 0
+  text-align center
+  > .small-caps
+    font-size 11px
+    line-height 1.2
+    letter-spacing 0
+    color dark-gray-text-color
+
+.artwork-edition-sets
+  margin 10px 0
+.artwork-edition-set
+  position relative
+  padding 5px 0
+  font-size 13px
+  line-height 1.5
+  border-bottom 1px dotted dark-gray-border-color
+  &:first-child
+    border-top 1px dotted dark-gray-border-color
+.aes-edition-size
+  color dark-gray-text-color
+.aes-price
+  position absolute
+  top 5px
+  right 5px
+
+
+.artwork-actions-list
+  margin-top 20px
+  > a
+    display block
+    position relative
+    line-height artwork-detail-item-height
+    padding-left @line-height
+    text-decoration none
+    transition all 0.125s
+    border-bottom 1px dotted light-gray-border-color
+    > i
+      position absolute
+      line-height @line-height
+      left 0
+    > sup
+      text-transform uppercase
+      margin-left 0.5em
+      // Tone down superscript a bit
+      vertical-align 4px
+
+    &:first-child
+      border-top 1px dotted light-gray-border-color
+    &:hover
+      background-color highlight-color
+      border-color @background-color
+      color white
+      transition none
+
+// Below the fold
+.artwork-related-information
+  clearfix()
+  margin 20px 0
+  padding 20px 0
+  border-top 1px solid light-gray-border-color
+  h3
+    margin 10px 0
+    font-size 15px
+
+.artwork-artist
+.artwork-featured-posts
+  width 50%
+  padding 0 10px
+  text-align center
+
+.artwork-artist
+  float left
+
+.artwork-featured-posts
+  float right
+
+.artwork-artist-blurb
+  margin 20px 0
+  font-size 17px
+  line-height 1.5
+  text-align left
+
+.artwork-artist-blurb-link
+  display inline-block
+  text-align center
+  avant-garde()
+  font-size 13px
+  text-decoration none

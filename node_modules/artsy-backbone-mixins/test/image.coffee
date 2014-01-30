@@ -67,3 +67,9 @@ describe 'Image Mixin', ->
 
       it 'returns the first image version by default', ->
         @model.imageUrl().should.equal 'https://ssl.artsy.net/bitty/large_square'
+
+    describe '#hasImage', ->
+
+      it 'returns false if there are no image versions', ->
+        @model.set 'image_versions', null
+        @model.hasImage().should.be.false

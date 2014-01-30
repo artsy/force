@@ -12,7 +12,7 @@ article.feed-item.unrendered-feed-item( style="width: #{fixedWidth}px" )
       include ./feed_item_body_label
       .body!= feedItemChildModel.get('body')
       include ../../post/templates/actions
-    section.feed-column.feed-right-column( style="width: #{maxDimension}px")
+    section.feed-column.feed-right-column( style="width: #{imageWidth}px")
       if feedItem.isPost()
         include ../../post/templates/media
       else

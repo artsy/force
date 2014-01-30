@@ -2,7 +2,7 @@ var test = require('tape');
 var vm = require('../');
 
 test('vmRunInNewContext', function (t) {
-    t.plan(5);
+    t.plan(6);
     
     t.equal(vm.runInNewContext('a + 5', { a : 100 }), 105);
     
@@ -16,6 +16,7 @@ test('vmRunInNewContext', function (t) {
         var vars = { x : 10 };
         t.equal(vm.runInNewContext('var y = 3; y + x++', vars), 13);
         t.equal(vars.x, 11);
+        t.equal(vars.y, 3);
     })();
     
     t.end();

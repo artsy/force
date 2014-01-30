@@ -3,9 +3,6 @@ extends ../main_layout/templates/index
 block head
   include ../main_layout/templates/common_head
 
-append locals
-  assetPackage = 'error'
-
 block body
   main#error-handler
     if code === 404

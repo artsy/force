@@ -2,7 +2,11 @@ _   = require 'underscore'
 
 module.exports = (secureImagesUrl, imagesUrlPrefix='http://static%d.artsy.net') ->
 
-  defaultImageVersion: -> (@get('image_versions') or @get('versions'))[0]
+  defaultImageVersion: ->
+    if @has 'image_versions' or @has 'versions'
+      (@get('image_versions') or @get('versions'))[0]
+    else
+      null
 
   missingImageUrl: -> "/images/missing_image.png"
 
