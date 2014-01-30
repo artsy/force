@@ -20,15 +20,10 @@ module.exports = class FeedView extends Backbone.View
   textColumnMargin: 80
   items: []
 
-  feedItemViews:
-    Post: FeedItemPost
-    PartnerShow: FeedItemView
-
   initialize: (options) ->
     throw 'Requires options' unless options
     throw 'Requires options.feedItems' unless options.feedItems?.length
 
-    @items = []
     @$window = $(window)
     @windowHeight = @$window.innerHeight()
     @$htmlBody = $('html, body')
@@ -110,16 +105,21 @@ module.exports = class FeedView extends Backbone.View
       currentUser       : @currentUser
     ))
     for $item, index in $html
-      if @feedItemViews[items[index].get('_type')]
-        @items.push (new @feedItemViews[items[index].get('_type')]
-          limitPostBodyHeight: @limitPostBodyHeight
-          artworkCollection  : @artworkCollection
-          currentUser        : @currentUser
-          model  : items[index]
-          el     : $item
-          parent : @
-        )
+      @initializeFeedItem $item, items[index]
     $html
+
+  initializeFeedItem: ($item, model) ->
+    params =
+      limitPostBodyHeight: @limitPostBodyHeight
+      artworkCollection  : @artworkCollection
+      currentUser        : @currentUser
+      model              : model
+      el                 : $item
+      parent             : @
+
+    new FeedItemView params
+    if model.get('_type') == 'Post'
+      new FeedItemPost params
 
   handleFetchedItems: (items) ->
     return @handleDoneFetching() unless items.length > 0

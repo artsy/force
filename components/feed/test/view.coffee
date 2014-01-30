@@ -69,3 +69,8 @@ describe 'FeedView', ->
       @view.$el.html().should.not.include 'undefined'
       @view.$el.html().should.not.include "\#{"
       @view.$el.html().should.not.include "NaN"
+
+  describe "save buttons", ->
+
+    xit 'able to save artworks in a post', ->
+    xit 'able to save artworks in a show', ->

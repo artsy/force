@@ -62,13 +62,13 @@ module.exports = class Post extends Backbone.Model
     ]).join(" | ")
 
   defaultImage: ->
-    _.first(@artworks())?.defaultImage() or _.first(@images()) or {}
+    _.first(@artworks().models)?.defaultImage() or _.first(@images()) or {}
 
   artworks: ->
-    postArtworks = _.filter(@get('attachments'), (attachment) ->
-      attachment.type == "PostArtwork"
+    new Artworks(@get('attachments')
+      .filter((attachment) -> attachment.type == "PostArtwork" )
+      .map((attachment) -> attachment.artwork )
     )
-    _.map postArtworks, (postArtwork) -> new Artwork(postArtwork.artwork)
 
   hasArworks: -> @artworks()?.length > 0
 
