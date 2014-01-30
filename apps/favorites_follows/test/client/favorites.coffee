@@ -65,12 +65,12 @@ describe 'FavoritesView', ->
   describe 'with favorites items', ->
 
     beforeEach (done) ->
-      sinon.stub Backbone, 'sync'
+      @sync = sinon.stub Backbone, 'sync'
       benv.render resolve(__dirname, '../../templates/favorites.jade'), {
         sd: {}
       }, =>
         { FavoritesView, @init } = mod = benv.requireWithJadeify(
-          (resolve __dirname, '../../client/favorites'), ['hintTemplate']
+          (resolve __dirname, '../../client/favorites'), ['hintTemplate','favoritesStatusTemplate']
         )
         @src = [
           { artwork: fabricate 'artwork', id: 'artwork1' },
@@ -99,6 +99,9 @@ describe 'FavoritesView', ->
         @ArtworkColumnsView.returns @ArtworkColumnsView
         mod.__set__ 'ArtworkColumnsView', @ArtworkColumnsView
         mod.__set__ 'SaveControls', sinon.stub()
+        @FavoritesStatusModal = sinon.stub()
+        @FavoritesStatusModal.returns @FavoritesStatusModal
+        mod.__set__ 'FavoritesStatusModal', @FavoritesStatusModal
         @view = new FavoritesView
           el: $ 'body'
           collection: artworks
@@ -144,3 +147,14 @@ describe 'FavoritesView', ->
         _.last(@fetchStub.args)[0].data.sort.should.equal '-position'
         @view.loadNextPage()
         _.last(@fetchStub.args)[0].data.sort.should.equal '-position'
+
+    describe '#showStatusDialog', ->
+
+      it 'shows the status dialog when trying to share if the favorites is private', ->
+        @view.savedArtworkCollection.set private: true
+        @view.$el.find('.share-to-facebook').trigger 'click'
+
+      it 'does not show the status dialog when trying to share if the favorites is public', ->
+        @view.savedArtworkCollection.set private: false
+        @view.$el.find('.share-to-facebook').trigger 'click'
+        @FavoritesStatusModal.called.should.not.be.ok
