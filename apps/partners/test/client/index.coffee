@@ -1,19 +1,17 @@
-_                   = require 'underscore'
-benv                = require 'benv'
-sinon               = require 'sinon'
-rewire              = require 'rewire'
-{ resolve }         = require 'path'
-{ fabricate }       = require 'antigravity'
-Backbone            = require 'backbone'
-CurrentUser         = require '../../../../models/current_user.coffee'
-FollowProfileButton = require '../../client/follow_profiles_button.coffee'
-FollowProfile       = require '../../../../models/follow_profile.coffee'
-FollowProfiles      = require '../../../../collections/follow_profiles.coffee'
-Partner             = require '../../../../models/partner.coffee'
-Profiles            = require '../../../../collections/profiles.coffee'
+_               = require 'underscore'
+sd              = require('sharify').data
+benv            = require 'benv'
+sinon           = require 'sinon'
+rewire          = require 'rewire'
+{ resolve }     = require 'path'
+{ fabricate }   = require 'antigravity'
+Backbone        = require 'backbone'
+CurrentUser     = require '../../../../models/current_user.coffee'
+Follow          = require '../../../../components/follow_button/model.coffee'
+Partner         = require '../../../../models/partner.coffee'
+Profiles        = require '../../../../collections/profiles.coffee'
 
 describe 'FeaturedPartnersView', ->
-
   before (done) ->
     sinon.stub _, 'defer'
     benv.setup =>
@@ -26,7 +24,7 @@ describe 'FeaturedPartnersView', ->
     benv.teardown()
 
   beforeEach (done) ->
-    @followProfile = new FollowProfile({ id: '111', profile: { id: 'getty' } })
+    @follow = new Follow({ id: '111', profile: { id: 'getty' } })
     @profiles = new Profiles [
       fabricate('featured_partners_profiles',
         id: 'gagosian'
@@ -67,7 +65,6 @@ describe 'FeaturedPartnersView', ->
     Backbone.sync.restore()
 
   describe '#initialize', ->
-
     beforeEach ->
       @view.initialize()
 
@@ -75,34 +72,30 @@ describe 'FeaturedPartnersView', ->
       @view.collection.should.equal @profiles
 
     it 'does not have a follow profiles collection', ->
-      (@view.followProfiles is null).should.be.true
+      _.isUndefined(@view.following).should.be.true
 
     describe '#initFollowButtons', ->
-
       it 'creates a follow button view for each profile', ->
         @view.followButtons.should.have.lengthOf @profiles.length
 
   describe 'with a current user', ->
-
     beforeEach ->
-      sinon.stub CurrentUser, 'orNull', -> new CurrentUser(fabricate('user'))
+      sd.CURRENT_USER = 'existy'
       @view.initialize()
 
     afterEach ->
-      CurrentUser.orNull.restore()
+      delete sd.CURRENT_USER
 
     describe '#initialize', ->
-
       it 'creates a follow profiles collection for syncing with the server', ->
-        @view.followProfiles.should.be.an.Object
+        @view.following.should.be.an.Object
 
       it 'syncs follow state with the server for rendered profiles', ->
         @profiles.each (profile) ->
           Backbone.sync.args[0][2].data.profiles.should.include profile.get('id')
 
     describe 'FollowButtonView', ->
-
       it 'updates button to indicate profiles that are followed', ->
-        Backbone.sync.args[0][2].success [ @followProfile.attributes ]
+        Backbone.sync.args[0][2].success [ @follow.attributes ]
         $profile = @view.$(".follow-button[data-state='following']").closest('.featured-partner-profile')
-        $profile.data('profile-id').should.equal @followProfile.get('profile').id
+        $profile.data('profile-id').should.equal @follow.get('profile').id
