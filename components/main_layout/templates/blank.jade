@@ -7,11 +7,13 @@ html
   head
     block head
     include head
+    link( type='text/css', rel='stylesheet', href=(sd.ASSET_PATH + 'main_layout' + sd.CSS_EXT) )
     link( type='text/css', rel='stylesheet', href=(sd.ASSET_PATH + assetPackage + sd.CSS_EXT) )
   body
     #blank-layout-container
       block body
     #scripts
       include scripts
+      script( src=(sd.ASSET_PATH + 'main_layout' + sd.JS_EXT) )
       script( src=(sd.ASSET_PATH + assetPackage + sd.JS_EXT) )
       block scripts
