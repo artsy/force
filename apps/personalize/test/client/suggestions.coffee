@@ -87,11 +87,11 @@ describe 'SuggestionsView', ->
       @view.$suggestions.find('.personalize-suggestion-row').length.should.equal 2
       @view.$suggestions.find('.personalize-suggestion.is-profile').length.should.equal 8
 
-    it 'syncs the new ids with the followCollection', ->
-      syncSpy = sinon.spy @view.followCollection, 'syncFollows'
+    it 'syncs the new ids with the following', ->
+      syncSpy = sinon.spy @view.following, 'syncFollows'
       @view.suggestedSets.trigger 'sync:complete'
       syncSpy.args[0][0].should.eql @view.suggestions.pluck('id')
-      @view.followCollection.syncFollows.restore()
+      @view.following.syncFollows.restore()
 
     it 'should be able to find corresponding els', ->
       @view.suggestedSets.trigger 'sync:complete'
@@ -104,7 +104,7 @@ describe 'SuggestionsView', ->
       views = @view.suggestions.map (model) =>
         @view.followButtonViews[model.id].constructor.name
       views.length.should.equal @view.suggestions.length
-      _.uniq(views)[0].should.equal 'FollowProfileButton'
+      _.uniq(views)[0].should.equal 'FollowButton'
 
   describe '#render', ->
     it 'renders the template', ->

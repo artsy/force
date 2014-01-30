@@ -11,7 +11,7 @@ module.exports =
     @listenTo @followed, 'add', @renderFollowed
     @listenTo @followed, 'remove', @renderFollowed
 
-    throw 'Followable requires a @followCollection' unless @followCollection?
+    throw 'Followable requires a @following collection' unless @following?
 
   setupSearch: (options={}) ->
     @searchBarView = new SearchBarView
@@ -34,14 +34,14 @@ module.exports =
     @setSkipLabel() unless @_labelSet?
     @$searchInput.val '' # Clear input
     @followed.unshift model.toJSON()
-    @followCollection.follow model.id, { notes: 'Followed from /personalize' }
+    @following.follow model.id, { notes: 'Followed from /personalize' }
 
     analytics.track.click @analyticsFollowMessage, label: analytics.modelToLabel(model)
 
   unfollow: (e) ->
     id      = $(e.currentTarget).data 'id'
     model   = @followed.remove id
-    @followCollection.unfollow id
+    @following.unfollow id
 
     analytics.track.click @analyticsUnfollowMessage, label: "#{model.get('display_model')}:#{id}"
 
