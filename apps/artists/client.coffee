@@ -1,10 +1,10 @@
-_                 = require 'underscore'
-sd                = require('sharify').data
-Backbone          = require 'backbone'
-FollowCollection  = require '../../models/follow_artist_collection.coffee'
-FollowButton      = require '../artist/client/follow_button.coffee'
-Artist            = require '../../models/artist.coffee'
-imagesLoaded      = require '../../lib/vendor/imagesloaded.js'
+_             = require 'underscore'
+sd            = require('sharify').data
+Backbone      = require 'backbone'
+imagesLoaded  = require '../../lib/vendor/imagesloaded.js'
+Artist        = require '../../models/artist.coffee'
+
+{ Following, FollowButton } = require '../../components/follow_button/index.coffee'
 
 module.exports.CarouselView = class CarouselView extends Backbone.View
   increment: 2
@@ -71,15 +71,19 @@ module.exports.CarouselView = class CarouselView extends Backbone.View
 module.exports.init = ->
   $ ->
     # Setup follow button views
-    followCollection = new FollowCollection if sd.CURRENT_USER?
-    $('.follow-button').each ->
-      $this   = $(this)
-      model   = new Artist id: $this.data('id')
+    following = new Following(null, kind: 'artist') if sd.CURRENT_USER?
+    ids = _.map $('.follow-button'), (el) ->
+      $el     = $(el)
+      id      = $el.data 'id'
+      model   = new Artist id: id
       new FollowButton
-        followArtistCollection: followCollection
+        following: following
         notes: 'Followed from /artists'
         model: model
-        el: $this
+        el: $el
+      id
+
+    following?.syncFollows(ids)
 
     # Carousel
     carousel = new CarouselView el: $('.artists-featured-carousel')
