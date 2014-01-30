@@ -22,8 +22,9 @@ module.exports.FeedItemView = class FeedItemView extends Backbone.View
     throw 'requires a model' unless @model
     throw 'requires an $el' unless @$el.length > 0
     @artworkCollection = options.artworkCollection
-    @setupArtworkSaveControls()
-    @setupShareButtons()
+    _.defer =>
+      @setupArtworkSaveControls()
+      @setupShareButtons()
 
   moreArtworksClick: (event) =>
     analytics.track.click "Clicked show all artworks on feed item"
@@ -46,9 +47,9 @@ module.exports.FeedItemView = class FeedItemView extends Backbone.View
           overlay = @$(".artwork-item[data-artwork='#{artwork.get('id')}']").find('.overlay-container')
           if overlay.length
             new SaveControls
-              artworkCollection: @artworkCollection
               el               : overlay
               model            : artwork
+              artworkCollection: @artworkCollection
 
     if @artworkCollection
       @artworkCollection.addRepoArtworks @model.artworks()
