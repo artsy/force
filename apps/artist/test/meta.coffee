@@ -54,7 +54,7 @@ describe 'Meta tags', ->
         sd    : @sd
 
     it 'includes og:image and twitter card', ->
-      @html.should.include "<meta property=\"og:image\" content=\"http://localhost:5000/artist/pablo-picasso"
+      @html.should.include "<meta property=\"og:image\" content=\"/foo/bar/large"
       @html.should.include "<meta property=\"twitter:card\" content=\"summary_large_image"
 
   describe 'with a long blurb', ->
