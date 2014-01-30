@@ -127,7 +127,7 @@ describe 'HomeAuthRouter', ->
     benv.teardown()
 
   beforeEach ->
-    HomeAuthRouter = benv.require '../client/auth_router.coffee'
+    HomeAuthRouter = benv.require resolve __dirname, '../client/auth_router.coffee'
     HomeAuthRouter.__set__ 'mediator', @mediator = { trigger: sinon.stub() }
     @router = new HomeAuthRouter
 
