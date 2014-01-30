@@ -1,4 +1,5 @@
 Backbone = require 'backbone'
+mediator = require '../../../lib/mediator.coffee'
 
 module.exports = class HomeAuthRouter extends Backbone.Router
 

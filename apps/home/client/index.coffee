@@ -1,3 +1,4 @@
+_ = require 'underscore'
 Backbone = require 'backbone'
 HeroUnitView = require './hero_unit_view.coffee'
 OrderedSets = require '../../../collections/ordered_sets.coffee'
@@ -20,8 +21,8 @@ module.exports.init = ->
     $mainHeader: $('#main-layout-header')
 
   # Set up a router for the /log_in /sign_up and /forgot routes
-  window.router = new HomeAuthRouter
-  Backbone.history.start pushState: true
+  new HomeAuthRouter
+  _.defer -> Backbone.history.start pushState: true
 
   # Render all of the featured sections
   new Artworks().fetchSetItemsByKey 'homepage:featured-artworks', success: (artworks) ->
