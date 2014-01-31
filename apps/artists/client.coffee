@@ -3,6 +3,7 @@ sd            = require('sharify').data
 Backbone      = require 'backbone'
 imagesLoaded  = require '../../lib/vendor/imagesloaded.js'
 Artist        = require '../../models/artist.coffee'
+analytics     = require '../../lib/analytics.coffee'
 
 { Following, FollowButton } = require '../../components/follow_button/index.coffee'
 
@@ -60,13 +61,19 @@ module.exports.CarouselView = class CarouselView extends Backbone.View
 
   next: (e) ->
     e?.preventDefault()
+
     @active += @increment
     @moveToActive()
 
+    analytics.track.click 'Previous page in /artists carousel'
+
   prev: (e) ->
     e?.preventDefault()
+
     @active -= @increment
     @moveToActive()
+
+    analytics.track.click 'Previous page in /artists carousel'
 
 module.exports.init = ->
   $ ->
