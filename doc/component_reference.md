@@ -205,3 +205,22 @@ following.syncFollows myIds
 ```
 
 Optionally you can pass in an `analyticsFollowMessage` and `analyticsUnfollowMessage` to the view. This falls back to a sensible default: `"#{action} #{@model.constructor.name.toLowerCase()} from #{window?.location.pathname}"`
+
+## Artist Fillwidth List
+
+Used in related artists for the artist page and the gene page where there's a fillwidth row of artists.
+
+![](images/artist_fillwidth_list.png)
+
+Example:
+```coffeescript
+view = new ArtistFillwidthList
+  collection: artists
+  el: $('container')
+  user: CurrentUser.orNull()
+view.fetchAndRender()
+```
+
+`fetchAndRender` will fetch every artist's artworks and the individual list items will re-render as they sync.
+
+NOTE: The view will listen for artist `sync` calls and re-render the invidual lists as well.

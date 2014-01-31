@@ -4,7 +4,7 @@ Artworks                = require '../../../collections/artworks.coffee'
 Artist                  = require '../../../models/artist.coffee'
 sd                      = require('sharify').data
 FillwidthView           = require '../../../components/fillwidth_row/view.coffee'
-relatedArtistsTemplate  = -> require('../templates/related_artists.jade') arguments...
+ArtistFillwidthList     = require '../../../components/artist_fillwidth_list/view.coffee'
 BlurbView               = require './blurb.coffee'
 RelatedPostsView        = require './related_posts.coffee'
 RelatedGenesView        = require './genes.coffee'
@@ -110,31 +110,14 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
 
   renderRelatedArtists: (type) =>
     $artistContainer = @$("#artist-related-#{type.toLowerCase()}")
-    return $artistContainer.parent().remove() unless @model["related#{type}"]?.models.length > 0
-
-    $artistContainer.html(
-      relatedArtistsTemplate artists: @model["related#{type}"].models
-    )
-    @model["related#{type}"].each (artist, i) =>
-      @renderRelatedArtist artist, i, type
-
-  renderRelatedArtist: (artist, i, type) ->
-    artist.fetchArtworks data: { size: 10 }, success: (artworks) =>
-      $artistRow = @$("#artist-related-#{type.toLowerCase()} li:nth-child(#{i + 1})")
-      view = new FillwidthView
-        artworkCollection: @artworkCollection
-        doneFetching: true
-        collection: artworks
-        el: $artistRow.find('.artist-related-artist-artworks')
-      view.render()
-      new FollowButton
+    if @model["related#{type}"]?.models.length > 0
+      new ArtistFillwidthList
+        el: @$("#artist-related-#{type.toLowerCase()}")
+        collection: @model["related#{type}"]
+        currentUserArtworkCollection: @artworkCollection
         followArtistCollection: @followArtistCollection
-        model: artist
-        el: $artistRow.find('.avant-garde-button-white')
-
-      _.defer ->
-        view.hideFirstRow()
-        view.removeHiddenItems()
+    else
+      $artistContainer.parent().remove()
 
   events:
     'click .artist-related-see-more'    : 'nextRelatedPage'
