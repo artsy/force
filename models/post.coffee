@@ -70,11 +70,12 @@ module.exports = class Post extends Backbone.Model
       .map((attachment) -> attachment.artwork )
     )
 
-  relatedArtists: (limit) ->
+  relatedArtists: (limit=10) ->
     artists = _.compact @artworks().map (artwork) ->
       artwork.get('artist')
 
-    new Artists artists[0...limit]
+    if artists[0...limit]
+      new Artists(artists[0...limit])
 
   hasArworks: -> @artworks()?.length > 0
 

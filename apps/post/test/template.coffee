@@ -39,37 +39,28 @@ describe 'Post', ->
 describe 'Related Artists', ->
 
   beforeEach ->
-    @sd =
-      ARTSY_URL : 'http://localhost:5000'
-      ASSET_PATH: 'http://localhost:5000'
     postAttachments = [
       {
-        id: _.uniqueId()
         position: 1
         type: "PostArtwork"
         artwork: fabricate('artwork', artist: fabricate('artist', id: 'andy-01', name: 'andy 1'))
       }, {
-        id: _.uniqueId()
         position: 2
         type: "PostArtwork"
         artwork: fabricate('artwork', artist: fabricate('artist', id: 'andy-02', name: 'andy 2'))
       }, {
-        id: _.uniqueId()
         position: 3
         type: "PostArtwork"
         artwork: fabricate('artwork', artist: fabricate('artist', id: 'andy-03', name: 'andy 3'))
       }]
 
     post = new Post fabricate('post', attachments: postAttachments)
-    post.set
-
     artists = post.relatedArtists(3).models
 
     for artist in artists
       artist.set poster_artwork: new Artwork(fabricate('artwork'))
 
     @html = render('related_artists')({
-      sd: @sd
       artists: artists
     })
 
@@ -86,9 +77,6 @@ describe 'Related Artists', ->
 describe 'Featured Posts', ->
 
   beforeEach ->
-    @sd =
-      ARTSY_URL : 'http://localhost:5000'
-      ASSET_PATH: 'http://localhost:5000'
     attachment =
       id: _.uniqueId()
       position: 1
