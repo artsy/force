@@ -75,22 +75,34 @@ module.exports.CarouselView = class CarouselView extends Backbone.View
 
     analytics.track.click 'Previous page in /artists carousel'
 
-module.exports.init = ->
-  $ ->
-    # Setup follow button views
-    following = new Following(null, kind: 'artist') if sd.CURRENT_USER?
-    ids = _.map $('.follow-button'), (el) ->
-      $el     = $(el)
-      id      = $el.data 'id'
-      model   = new Artist id: id
+module.exports.ArtistsView = class ArtistsView extends Backbone.View
+  initialize: (options) ->
+    @setupCarouselView()
+
+    @following = new Following(null, kind: 'artist') if sd.CURRENT_USER?
+    @setupFollowing()
+
+  setupCarouselView: ->
+    @carouselView = new CarouselView el: @$('.artists-featured-carousel')
+
+  setupFollowing: ->
+    featuredArtistFollowIds   = @setupFollowButtons @$('.artists-featured-carousel .follow-button'), 'Followed from /artists featured'
+    trendingArtistFollowIds   = @setupFollowButtons @$('.artists-featured-genes .follow-button'), 'Followed from /artists trending'
+
+    @following?.syncFollows featuredArtistFollowIds.concat(trendingArtistFollowIds)
+
+  # return {Array} array of artist IDs
+  setupFollowButtons: ($buttons, message) ->
+    _.map $buttons, (el) =>
+      id = ($el = $(el)).data 'id'
       new FollowButton
-        following: following
-        notes: 'Followed from /artists'
-        model: model
+        analyticsFollowMessage: message
+        following: @following
+        notes: message
+        model: new Artist id: id
         el: $el
       id
 
-    following?.syncFollows(ids)
-
-    # Carousel
-    carousel = new CarouselView el: $('.artists-featured-carousel')
+module.exports.init = ->
+  $ ->
+    new ArtistsView el: $('body')
