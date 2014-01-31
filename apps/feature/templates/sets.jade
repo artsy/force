@@ -1,0 +1,11 @@
+include ./featured_links
+
+for set in sets
+  section.feature-set
+    if set.has('name')
+      h2.feature-set-title!= set.mdToHtml('name')
+    if set.has('description')
+      h3.feature-set-description!= set.mdToHtml('description')
+    case set.get('type')
+      when 'featured links'
+        +featuredLinks(set.models())

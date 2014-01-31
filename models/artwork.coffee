@@ -48,7 +48,8 @@ module.exports = class Artwork extends Backbone.Model
     (@has('price')) and
     not @isMultipleEditions() and
     (@get('inquireable') or @get('sold')) and
-    not @isUnavailableButInquireable()
+    not @isUnavailableButInquireable() and
+    @get('sale_message') isnt 'Contact For Price'
 
   # Should we render a full set of editions,
   # as opposed to a single string? (See: #editionStatus)
@@ -122,9 +123,9 @@ module.exports = class Artwork extends Backbone.Model
   # return {String}
   priceDisplay: ->
     if (@get('availability') is 'for sale') and @get('price_hidden')
-      'Contact for Price'
+      'Contact For Price'
     else
-      @get('price') or @get('sale_message')
+      @get('price') or ((@get('sale_message') unless @get('sale_message') is 'Sold'))
 
   inquiryMicroCopy: ->
     if @isUnavailableButInquireable()

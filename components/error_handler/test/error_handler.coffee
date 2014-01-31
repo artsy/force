@@ -34,3 +34,9 @@ describe '#javascriptError', ->
     }, {}, (err) ->
       err.toString().should.include 'Yay for stack traces'
       done()
+
+describe '#socialAuthError', ->
+
+  it 'redirects to a login error from facebook', ->
+    errorHandler.socialAuthError "User Already Exists", {}, @res = { redirect: sinon.stub() }
+    @res.redirect.args[0][0].should.equal '/log_in?error=already-signed-up'

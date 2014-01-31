@@ -1,7 +1,7 @@
 fs            = require 'fs'
 jade          = require 'jade'
 { fabricate } = require 'antigravity'
-Feature       = require '../../../models/feature'
+Feature       = require '../../../../models/feature'
 
 describe 'Meta tags', ->
 
@@ -11,7 +11,7 @@ describe 'Meta tags', ->
       @sd =
         ASSET_PATH: "http://localhost:5000"
         ARTSY_URL : "http://localhost:5000"
-      @file = "#{process.cwd()}/apps/feature/meta.jade"
+      @file = "#{process.cwd()}/apps/feature/templates/meta.jade"
       @feature = new Feature fabricate('feature')
       @html = jade.render fs.readFileSync(@file).toString(),
         sd     : @sd

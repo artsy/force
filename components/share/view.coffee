@@ -20,8 +20,8 @@ module.exports = class ShareView extends Backbone.View
       status: 1
       width:  width
       height: height
-      top:    (wTop + ($window.height() / 2) - (height / 2)) || 0
-      left:   (wLeft + ($window.width() / 2) - (width / 2)) || 0
+      top:    (wTop + ($window.height() / 2) - (height / 2)) or 0
+      left:   (wLeft + ($window.width() / 2) - (width / 2)) or 0
 
     opts = _.map(options, (value, key) -> "#{key}=#{value}").join ','
     window.open $target.attr('href'), $target.data('service'), opts

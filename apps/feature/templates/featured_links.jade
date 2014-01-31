@@ -1,0 +1,21 @@
+mixin featuredLinks(items)
+  for item in items
+    figure( class="feature-set-item feature-set-item-#{item.layoutStyle(items.length)}" )
+      if item.has('href') && item.hasImageForLayout(items.length)
+        a( href=item.get('href') )
+          img( src=item.imageUrlForLayout(items.length) )
+      else if item.hasImageForLayout(items.length)
+        img( src=item.imageUrlForLayout(items.length) )
+      figcaption.feature-set-item-caption
+        if item.has('title')
+          h3.feature-set-item-caption-heading
+            if item.has('href')
+              a( href=item.get('href') )!= item.mdToHtml('title')
+            else
+              != item.mdToHtml('title')
+        if item.get('subtitle')
+          h4.feature-set-item-caption-subheading
+            if item.get('href')
+              a( href=item.get('href') )!= item.mdToHtml('subtitle')
+            else
+              != item.mdToHtml('subtitle')

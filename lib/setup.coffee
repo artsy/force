@@ -82,6 +82,7 @@ module.exports = (app) ->
     twitterCallbackPath: '/force/users/auth/twitter/callback'
     facebookCallbackPath: '/force/users/auth/facebook/callback'
     twitterSignupPath: '/force/users/auth/twitter/email'
+  app.use errorHandler.socialAuthError
 
   # General
   app.use localsMiddleware
