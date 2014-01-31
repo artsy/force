@@ -2,13 +2,13 @@ rewire        = require 'rewire'
 benv          = require 'benv'
 Backbone      = require 'backbone'
 sinon         = require 'sinon'
-FollowArtists = require '../../../../collections/follow_artists'
-FollowArtist  = require '../../../../models/follow_artist'
 CurrentUser   = require '../../../../models/current_user.coffee'
 Gene          = require '../../../../models/gene'
 _             = require 'underscore'
 { resolve }   = require 'path'
 { fabricate } = require 'antigravity'
+Follow        = require '../../../../components/follow_button/model.coffee'
+{ Following, FollowButton } = require '../../../../components/follow_button/index.coffee'
 
 describe 'FollowsView', ->
 
@@ -33,8 +33,8 @@ describe 'FollowsView', ->
         { FollowsView, @init } = mod = benv.requireWithJadeify(
           (resolve __dirname, '../../client/follows'), ['itemTemplate', 'hintTemplate']
         )
-        followArtists = new FollowArtists()
-        syncStub = sinon.stub followArtists, "syncFollows", (ids, options) ->
+        followArtists = new Following null, kind: 'artist'
+        syncStub = sinon.stub followArtists, "fetchUntilEnd", (options) ->
           options.success?(followArtists)
         @SuggestedGenesView = sinon.stub()
         @SuggestedGenesView.render = sinon.stub()
@@ -42,7 +42,7 @@ describe 'FollowsView', ->
         mod.__set__ 'SuggestedGenesView', @SuggestedGenesView
         @view = new FollowsView
           el: $ 'body'
-          model: followArtists
+          collection: followArtists
           itemsPerPage: 2
         done()
 
@@ -64,23 +64,21 @@ describe 'FollowsView', ->
         { FollowsView, @init } = mod = benv.requireWithJadeify(
           (resolve __dirname, '../../client/follows'), ['itemTemplate', 'hintTemplate']
         )
-        followArtists = new FollowArtists()
-        syncStub = sinon.stub followArtists, "syncFollows", (ids, options) ->
-          followArtists.add [
-              { artist: fabricate 'artist', name: 'artist1' },
-              { artist: fabricate 'artist', name: 'artist2' },
-              { artist: fabricate 'artist', name: 'artist3' },
-              { artist: fabricate 'artist', name: 'artist4' },
-              { artist: fabricate 'artist', name: 'artist5' }
-          ]
-          options.success?(followArtists)
+        followArtists = new Following null, kind: 'artist'
+        syncStub = sinon.stub followArtists, "fetchUntilEnd", (options) ->
+          for i in [1..5]
+            followArtists.add new Follow(
+              { artist: fabricate('artist', { id: _.uniqueId(), name: 'artist'+i }) },
+              { kind: 'artist' }
+            )
+          options.success?()
         @FillwidthView = sinon.stub()
         @FillwidthView.render = sinon.stub()
         @FillwidthView.returns @FillwidthView
         mod.__set__ 'FillwidthView', @FillwidthView
         @view = new FollowsView
           el: $ 'body'
-          model: followArtists
+          collection: followArtists
           itemsPerPage: 2
         done()
 
