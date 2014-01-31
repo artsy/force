@@ -8,16 +8,14 @@ ShareView = require '../../../components/share/view.coffee'
 
 module.exports.GeneView = class GeneView extends Backbone.View
 
-  el: 'body'
-
   initialize: (options) ->
     { @user } = options
     if @user
-      new FollowButton
+      @followButtonView = new FollowButton
         el: $('#gene-header .follow-button')
         following: new Following null, kind: 'gene'
         model: new Gene GENE
-    new ShareView el: @$('#gene-share-buttons')
+    @shareView = new ShareView el: @$('#gene-share-buttons')
 
   events:
     'click #gene-header .follow-button': 'signupToFollow'
@@ -26,4 +24,4 @@ module.exports.GeneView = class GeneView extends Backbone.View
     mediator.trigger 'open:auth', { mode: 'register', copy: 'Sign up to follow genes.' }
 
 module.exports.init = ->
-  new GeneView user: CurrentUser.orNull()
+  new GeneView user: CurrentUser.orNull(), el: $ 'body'
