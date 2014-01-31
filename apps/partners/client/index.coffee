@@ -1,24 +1,24 @@
-_                   = require 'underscore'
-sd                  = require('sharify').data
-Backbone            = require 'backbone'
-CurrentUser         = require '../../../models/current_user.coffee'
-FollowProfileButton = require './follow_profiles_button.coffee'
-FollowProfiles      = require '../../../collections/follow_profiles.coffee'
-Profiles            = require '../../../collections/profiles.coffee'
+_             = require 'underscore'
+sd            = require('sharify').data
+Backbone      = require 'backbone'
+CurrentUser   = require '../../../models/current_user.coffee'
+Profiles      = require '../../../collections/profiles.coffee'
+
+{ Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 
 module.exports.FeaturedPartnersView = class FeaturedPartnersView extends Backbone.View
-
   initialize: (options) ->
-    @followProfiles = if CurrentUser.orNull() then new FollowProfiles [] else null
+    @following = new Following(null, kind: 'profile') if sd.CURRENT_USER?
     @initFollowButtons()
-    @followProfiles?.syncFollows @collection.pluck('id')
+    @following?.syncFollows @collection.pluck('id')
 
   initFollowButtons: ->
-    @followButtons = []
-    @collection.each (profile) =>
-      @followButtons.push new FollowProfileButton
+    @followButtons = @collection.map (profile) =>
+      new FollowButton
+        analyticsFollowMessage: 'Followed partner profile from /partners'
+        analyticsUnfollowMessage: 'Unfollowed partner profile from /partners'
         el: @$(".featured-partner-profile[data-profile-id='#{profile.get('id')}'] .follow-button")
-        collection: @followProfiles
+        following: @following
         model: profile
 
 module.exports.init = ->

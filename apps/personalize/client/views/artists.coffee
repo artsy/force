@@ -24,8 +24,8 @@ module.exports = class ArtistsView extends StepView
   initialize: (options) ->
     super
 
-    @followCollection   = new FollowCollection
-    @suggestions        = new Backbone.Collection
+    @following    = new FollowCollection
+    @suggestions  = new Backbone.Collection
 
     @followed = new Backbone.Collection [], model: Artist
     @initializeFollowable()
@@ -42,7 +42,7 @@ module.exports = class ArtistsView extends StepView
       analyticsUnfollowMessage: 'Unfollowed artist from personalize artist suggestions'
       analyticsFollowMessage:   'Followed artist from personalize artist suggestions'
       notes:                    'Followed from /personalize'
-      followArtistCollection:   @followCollection
+      followArtistCollection:   @following
       model:                    model
       el:                       el
 

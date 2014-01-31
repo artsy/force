@@ -3,11 +3,11 @@ Backbone            = require 'backbone'
 StepView            = require './step.coffee'
 Followable          = require '../mixins/followable.coffee'
 OrderedSets         = require '../../../../collections/ordered_sets.coffee'
-FollowButton        = require '../../../partners/client/follow_profiles_button.coffee'
-FollowCollection    = require '../../../../collections/follow_profiles.coffee'
 Partner             = require '../../../../models/partner.coffee'
 { isTouchDevice }   = require '../../../../components/util/device.coffee'
 suggestedTemplate   = -> require('../../templates/suggested_profiles.jade') arguments...
+
+{ FollowButton, Following } = require '../../../../components/follow_button/index.coffee'
 
 module.exports = class SuggestionsView extends StepView
   _.extend @prototype, Followable
@@ -20,8 +20,8 @@ module.exports = class SuggestionsView extends StepView
   initialize: (options) ->
     super
 
-    @followCollection   = new FollowCollection
-    @suggestedSets      = new OrderedSets(key: @key)
+    @following      = new Following null, kind: @followKind
+    @suggestedSets  = new OrderedSets(key: @key)
 
     @suggestedSets.fetchAll()
 
@@ -58,7 +58,7 @@ module.exports = class SuggestionsView extends StepView
       analyticsUnfollowMessage: "Unfollowed #{@kind} from personalize #{@kind} suggestions"
       analyticsFollowMessage:   "Followed #{@kind} from personalize #{@kind} suggestions"
       notes:                    'Followed from /personalize'
-      collection:               @followCollection
+      following:                @following
       model:                    model
       el:                       el
 
@@ -70,7 +70,7 @@ module.exports = class SuggestionsView extends StepView
     (@$suggestions ||= @$('#personalize-suggestions')).
       append suggestedTemplate(rows: @rows(4))
 
-    @followCollection.syncFollows @suggestions.pluck('id')
+    @following.syncFollows @suggestions.pluck('id')
 
     @fetchAndRenderLocations()
 
