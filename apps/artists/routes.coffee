@@ -29,19 +29,25 @@ parseGenes = (collection) ->
       id      = link.get('href').replace(/\/?artist\//, '')
       artist  = new Artist(id: id)
       link.set 'artist', artist
-      artist.fetch(cache: true)
+      artist.fetch cache: true
     ).then render
 
   featuredGenes.fetchAll(cache: true).then ->
     genesSet  = featuredGenes.findWhere item_type: 'Gene'
     genes     = genesSet.get 'items'
     requests  = genes.map (gene) ->
-      gene.fetchArtists('trending', { cache: true }).then ->
+      # Set up a promise that gets resolved when the randomly selected
+      # artists are fetched
+      dfd = Q.defer()
+      gene.fetchArtists('trending', cache: true).then ->
         gene.trendingArtists = parseGenes gene.trendingArtists
         # Fetch full attributes for the 4 randomly selected artists
         Q.allSettled(gene.trendingArtists.map (artist) ->
-          artist.fetch(cache: true)
-        ).then render
+          artist.fetch cache: true
+        ).then dfd.resolve
+      dfd.promise
+
+    Q.allSettled(requests).then render
 
 @letter = (req, res) ->
   currentPage   = parseInt(req.query.page) or 1
