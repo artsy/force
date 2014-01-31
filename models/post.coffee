@@ -70,6 +70,12 @@ module.exports = class Post extends Backbone.Model
       .map((attachment) -> attachment.artwork )
     )
 
+  relatedArtists: (limit) ->
+    artists = _.compact @artworks().map (artwork) ->
+      artwork.get('artist')
+
+    new Artists artists[0...limit]
+
   hasArworks: -> @artworks()?.length > 0
 
   images: ->
@@ -84,6 +90,12 @@ module.exports = class Post extends Backbone.Model
     @get('reposts')?[0]?.profile?.owner?.name
 
   attachments: -> new Attachments(@get('attachments')).models
+
+  featuredPostsThumbnail: ->
+    # Filter for post attachments that are either an Artwork or an Image
+    @attachments().filter((attachment) ->
+      attachment.get('type') == "PostArtwork" or attachment.get('type') == "PostImage"
+    )[0]
 
   reposts: -> @get('reposts')
 
@@ -147,24 +159,23 @@ module.exports = class Post extends Backbone.Model
       error: options?.error
 
   ensureFeatureArtworksFetched: (callback) ->
-    if ! @get('feature_artworks')
+    if @get('feature_artworks')
+      callback?(@get('feature_artworks'))
+    else
       artworks = new Artworks()
       artworks.fetch
         url: "#{@url()}/features/artworks"
         success: (artworks) =>
           @set('feature_artworks', artworks)
           callback?(artworks)
-    else
-      callback?(@get('feature_artworks'))
 
   ensureFeatureArtistsFetched: (callback) ->
-    if ! @get('feature_artists')
+    if @get('feature_artists')
+      callback?(@get('feature_artists'))
+    else
       artists = new Backbone.Collection()
       artists.fetch
         url: "#{@url()}/features/artists"
-        success: =>
+        success: (artists)  =>
           @set('feature_artists', artists)
           callback?(artists)
-        error: (x,c,b)-> console.log(x,c,b)
-    else
-      callback?(@get('feature_artists'))

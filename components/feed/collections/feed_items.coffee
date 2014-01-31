@@ -66,5 +66,5 @@ module.exports = class FeedItems extends Backbone.Collection
   removeFlagged: ->
     currentUser = CurrentUser.orNull()
     filtered = @filter (feedItem) =>
-      ! feedItem.flagged() || feedItem.get('author').id == currentUser.get('id') || currentUser.isAdmin()
+      ! feedItem.flagged() or (feedItem.get('author').id == currentUser?.get('id')) or currentUser?.isAdmin()
     @reset filtered

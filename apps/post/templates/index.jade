@@ -1,0 +1,16 @@
+extends ../../../components/main_layout/templates/index
+
+block head
+  include meta
+
+append locals
+  assetPackage = 'post'
+
+block body
+  #post
+    include ../../../components/profile_header/template
+    .feed
+      section.feed-items
+        .loading-spinner
+    .post-related-artists.post-page-section
+    .post-featured-posts.post-page-section
