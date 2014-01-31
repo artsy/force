@@ -21,7 +21,7 @@ describe 'GeneView', ->
     benv.teardown()
 
   beforeEach ->
-    { GeneView } = mod = benv.require '../client/index.coffee'
+    { GeneView } = mod = benv.require resolve __dirname, '../client/index.coffee'
     mod.__set__ 'mediator', @mediator = { trigger: sinon.stub() }
     @view = new GeneView el: $('body')
 
