@@ -80,6 +80,5 @@ module.exports = class AuthModalView extends ModalView
           @errorMessage(xhr) # Display error
 
   showError: (msg) =>
-    console.log msg
     @$('button').attr 'data-state', 'error'
     @$('.auth-errors').text msg
