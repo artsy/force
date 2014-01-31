@@ -21,9 +21,9 @@ module.exports.CarouselView = class CarouselView extends Backbone.View
     @$el.imagesLoaded?().progress _.once(@updateValues)
 
   updateValues: (e) =>
-    @$panels ||= @$('.afc-artist')
-    @$images ||= @$panels.find('img')
-    @$bumpers ||= @$('.afc-next, .afc-prev')
+    @$panels    ?= @$('.afc-artist')
+    @$images    ?= @$panels.find('img')
+    @$bumpers   ?= @$('.afc-next, .afc-prev')
 
     panelWidth  = @$el.width() / @increment
     @positions  = _.map @$panels, (panel, i) -> panelWidth * i
@@ -51,7 +51,7 @@ module.exports.CarouselView = class CarouselView extends Backbone.View
     @$el.attr 'data-transitions', transition
     @setPosition()
 
-    (@$track ||= @$('.afc-track')).
+    (@$track ?= @$('.afc-track')).
       attr('data-state', 'transitioning').
       css('marginLeft', "-#{@positions[@active]}px").
       one($.support.transition.end, =>
