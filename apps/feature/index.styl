@@ -6,21 +6,99 @@
   margin-right 0
   margin-top 53px !important
 
-.feature-page-image
+.feature-image
   background-posiition center center
   background-repeat norepeat
   height 300px
   margin 0
   width 100%
 
-.feature-page-title
+.feature-content
+  margin-bottom 125px 
+
+.feature-title
   garamond()
   font-size 41px
   line-height 1.25
-  margin 50px 0
+  margin 50px 0 24px
   text-align center
   width 100%
 
-#feature
-  .artwork-columns
-    margin 0 auto
+.feature-description
+  border-bottom 1px solid dark-gray-border-color
+  border-top @border-bottom
+  font-size 24px
+  margin-bottom 20px
+  padding 24px 100px 17px
+  text-align center
+  width 100%
+  p
+    line-height 1.33
+
+.feature-set
+  border-bottom 1px solid dark-gray-border-color
+  margin-bottom 35px
+  text-align center
+  &:last-child
+    border-bottom none
+
+.feature-set-title
+  font-size 30px
+  margin-bottom 30px
+
+.feature-set-description
+  font-size 22px
+  margin-bottom 30px
+
+.feature-set-item
+  display inline-block
+  vertical-align top
+  margin 0
+  a
+    text-decoration none
+  img
+    margin-bottom 14px
+    width 100%
+
+.feature-set-item-full
+  width 100%
+
+.feature-set-item-half
+  width 47%
+  &:first-of-type
+    margin-right 3%
+
+.feature-set-item-third
+  width 31%
+  margin 0 1%
+  &:first-child
+    margin-left 0
+  &:last-child
+    margin-right 0
+
+.feature-set-item-quarter
+  margin 0 1%
+  width 22.8%
+
+  img
+    margin-bottom 10px
+
+  .feature-set-item-caption
+    text-align left
+
+.feature-set-item-caption
+  margin-bottom 21px
+  text-align center
+
+  .feature-set-item-caption-heading
+    font-size 21px
+    line-height 1.15
+    &:empty
+      display none
+
+  .feature-set-item-caption-subheading
+    color dark-gray-text-color
+    a
+      color dark-gray-text-color
+    &:empty
+      display none
