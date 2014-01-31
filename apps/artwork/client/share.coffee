@@ -15,9 +15,9 @@ module.exports = class ShareView extends ModalView
     { @artwork } = options
 
     @templateData =
-      url: encodeURIComponent(sd.ARTSY_URL + sd.CURRENT_PATH)
-      media: @artwork.defaultImageUrl('large')
-      description: @artwork.toAltText()
+      url: encodeURIComponent sd.ARTSY_URL + sd.CURRENT_PATH
+      media: encodeURIComponent @artwork.defaultImageUrl('large')
+      description: encodeURIComponent @artwork.toAltText()
 
     super
 
