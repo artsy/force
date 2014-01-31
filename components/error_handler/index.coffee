@@ -31,3 +31,11 @@ errorHandler.internalError = (err, req, res, next) ->
 errorHandler.javascriptError = (req, res, next) ->
   console?.log(req.body) # Logs client-side errors to stdout for debugging purpose
   next new Error(JSON.stringify req.body)
+
+errorHandler.socialAuthError = (err, req, res, next) ->
+  if err.toString().match('User Already Exists')
+    res.redirect '/log_in?error=already-signed-up'
+  else if err.toString().match('Failed to find request token in session')
+    res.redirect '/log_in?error=account-not-found'
+  else
+    next()
