@@ -1,0 +1,38 @@
+.artwork-share-modal
+  .modal-dialog
+    background-color black
+    &, a
+      color white
+  .modal-body
+    padding 25px 0
+  h1
+    avant-garde()
+
+.artwork-share-menu
+  margin 20px 0
+  border-bottom 1px solid rgba(255,255,255,0.125)
+  a
+  span
+    display block
+    width 100%
+    margin 0 0 -1px 0
+    padding 15px 20px 15px 10px
+    border-top 1px solid rgba(255,255,255,0.125)
+    > i
+      line-height 0
+      margin-right 10px
+      vertical-align middle
+  a
+    avant-garde()
+    font-size 13px
+    text-decoration none
+    transition background-color 0.125s
+    &:hover
+      background-color highlight-color
+  span
+    input[type='text']
+      // Fill out width by subtracting the width
+      // of the icon (32px) + the rightmost padding (20px)
+      width calc('100% - 52px')
+      border-style solid
+      background-color white

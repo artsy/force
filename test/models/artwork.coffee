@@ -117,10 +117,10 @@ describe 'Artwork', ->
     it 'displays the price or not', ->
       @artwork.set { availability: 'for sale', price_hidden: false, price: '$_$' }
       @artwork.priceDisplay().should.equal '$_$'
-      @artwork.set { availability: 'for sale', price_hidden: false, price: undefined, sale_message: 'Contact for Price' }
-      @artwork.priceDisplay().should.equal 'Contact for Price'
+      @artwork.set { availability: 'for sale', price_hidden: false, price: undefined, sale_message: 'Contact For Price' }
+      @artwork.priceDisplay().should.equal 'Contact For Price'
       @artwork.set { availability: 'for sale', price_hidden: true, price: '$_$' }
-      @artwork.priceDisplay().should.equal 'Contact for Price'
+      @artwork.priceDisplay().should.equal 'Contact For Price'
 
   describe '#editionStatus', ->
     it 'displays what kind of edition it is otherwise is undefined', ->
