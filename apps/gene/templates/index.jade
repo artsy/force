@@ -1,0 +1,17 @@
+extends ../../../components/main_layout/templates/index
+include ../../../components/share/template
+
+block head
+  include meta
+
+append locals
+  assetPackage = 'gene'
+
+block body
+  header#gene-header
+    h1.avant-garde-header-center= gene.get('name')
+    .avant-garde-button-white.follow-button
+    #gene-share-buttons
+      +share(gene.get('name') + ' on Artsy', gene.imageUrl())
+  #gene-description
+    #gene-description-inner!= gene.mdToHtml('description')
