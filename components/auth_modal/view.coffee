@@ -56,6 +56,7 @@ module.exports = class AuthModalView extends ModalView
       pathname: location.pathname
     @listenTo @state, 'change:mode', @reRender
     mediator.on 'auth:change:mode', @setMode, this
+    mediator.on 'auth:error', @showError
 
   setMode: (mode) ->
     @state.set 'mode', mode
@@ -68,8 +69,7 @@ module.exports = class AuthModalView extends ModalView
     e.preventDefault()
 
     if @validateForm()
-      $submit = @$('button')
-      $submit.attr 'data-state', 'loading'
+      @$('button').attr 'data-state', 'loading'
 
       new models[@state.get('mode')]().save @serializeForm(),
         success: =>
@@ -77,5 +77,8 @@ module.exports = class AuthModalView extends ModalView
           href += '?redirect-to=/personalize' if @state.get('mode') is 'register'
           location.href = href
         error: (model, xhr, options) =>
-          $submit.attr 'data-state', 'error'
-          @$('.auth-errors').text @errorMessage(xhr) # Display error
+          @errorMessage(xhr) # Display error
+
+  showError: (msg) =>
+    @$('button').attr 'data-state', 'error'
+    @$('.auth-errors').text msg
