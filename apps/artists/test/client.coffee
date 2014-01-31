@@ -30,82 +30,103 @@ describe 'Artists client-side code', ->
       Backbone.$ = $
       $.support.transition = { end: 'transitionend' }
       $.fn.emulateTransitionEnd = -> @trigger $.support.transition.end
+      { @CarouselView, @ArtistsView } = require '../client.coffee'
       done()
 
   after ->
     benv.teardown()
 
-  beforeEach ->
-    { CarouselView } = require '../client.coffee'
-    @view = new CarouselView el: $(fixture), skipN: 2
-    @view.updateValues($.Event()) # Imitate imagesLoaded
+  describe 'CarouselView', ->
+    beforeEach ->
+      @view = new @CarouselView el: $(fixture), skipN: 2
+      @view.updateValues($.Event()) # Imitate imagesLoaded
 
-  describe '#initalize', ->
-    it 'starts at the beginning', ->
-      @view.$el.data('position').should.equal 'start'
-    it 'parses the panels', ->
-      @view.$panels.length.should.equal 6
-    it 'sets the stop positions', ->
-      @view.positions.length.should.equal @view.$panels.length
-      _.each @view.positions, (position) ->
-        position.should.be.type 'number'
-    it 'sets fixed pixel dimensions on the panels', ->
-      @view.$panels.first().attr('style').should.include "width: #{elWidth / @view.increment}px"
+    afterEach ->
+      delete @view
 
-  describe '#setPosition', ->
-    it 'sets the position appropriately', ->
-      @view.active = 2
-      @view.setPosition()
-      @view.$el.attr('data-position').should.equal 'middle'
-      @view.active = 0
-      @view.setPosition()
-      @view.$el.attr('data-position').should.equal 'start'
-      @view.active = 4
-      @view.setPosition()
-      @view.$el.attr('data-position').should.equal 'end'
-      @view.active = 6
-      @view.setPosition()
-      @view.$el.attr('data-position').should.equal 'end'
+    describe '#initalize', ->
+      it 'starts at the beginning', ->
+        @view.$el.data('position').should.equal 'start'
+      it 'parses the panels', ->
+        @view.$panels.length.should.equal 6
+      it 'sets the stop positions', ->
+        @view.positions.length.should.equal @view.$panels.length
+        _.each @view.positions, (position) ->
+          position.should.be.type 'number'
+      it 'sets fixed pixel dimensions on the panels', ->
+        @view.$panels.first().attr('style').should.include "width: #{elWidth / @view.increment}px"
 
-  describe '#moveToActive', ->
-    it 'disallows movement past the bounds of the positions array', ->
-      @view.setPosition = sinon.stub()
-      @view.active = -1
-      @view.moveToActive()
-      @view.active.should.equal 0
-      @view.setPosition.called.should.not.be.ok
-      @view.active = @view.positions.length + 1
-      @view.moveToActive()
-      @view.active.should.equal @view.stopAt
-      @view.setPosition.called.should.not.be.ok
-    it 'moves the track to the appropriate position', ->
-      @view.active = 2
-      @view.moveToActive()
-      @view.$track.css('marginLeft').should.equal "-#{@view.positions[@view.active]}px"
+    describe '#setPosition', ->
+      it 'sets the position appropriately', ->
+        @view.active = 2
+        @view.setPosition()
+        @view.$el.attr('data-position').should.equal 'middle'
+        @view.active = 0
+        @view.setPosition()
+        @view.$el.attr('data-position').should.equal 'start'
+        @view.active = 4
+        @view.setPosition()
+        @view.$el.attr('data-position').should.equal 'end'
+        @view.active = 6
+        @view.setPosition()
+        @view.$el.attr('data-position').should.equal 'end'
 
-  describe '#next', ->
-    it 'increments the active attribute', ->
-      @view.active.should.equal 0
-      @view.next()
-      @view.active.should.equal @view.increment
-      @view.next()
-      @view.active.should.equal @view.increment * 2
-    it 'calls #moveToActive', ->
-      @view.moveToActive = sinon.stub()
-      @view.next()
-      @view.next()
-      @view.moveToActive.calledTwice.should.be.ok
+    describe '#moveToActive', ->
+      it 'disallows movement past the bounds of the positions array', ->
+        @view.setPosition = sinon.stub()
+        @view.active = -1
+        @view.moveToActive()
+        @view.active.should.equal 0
+        @view.setPosition.called.should.not.be.ok
+        @view.active = @view.positions.length + 1
+        @view.moveToActive()
+        @view.active.should.equal @view.stopAt
+        @view.setPosition.called.should.not.be.ok
+      it 'moves the track to the appropriate position', ->
+        @view.active = 2
+        @view.moveToActive()
+        @view.$track.css('marginLeft').should.equal "-#{@view.positions[@view.active]}px"
 
-  describe '#prev', ->
-    it 'increments the active attribute', ->
-      @view.active.should.equal 0
-      @view.prev()
-      @view.active.should.equal 0
-      @view.active = 4
-      @view.prev()
-      @view.active.should.equal 4 - @view.increment
-    it 'calls #moveToActive', ->
-      @view.moveToActive = sinon.stub()
-      @view.prev()
-      @view.prev()
-      @view.moveToActive.calledTwice.should.be.ok
+    describe '#next', ->
+      it 'increments the active attribute', ->
+        @view.active.should.equal 0
+        @view.next()
+        @view.active.should.equal @view.increment
+        @view.next()
+        @view.active.should.equal @view.increment * 2
+      it 'calls #moveToActive', ->
+        @view.moveToActive = sinon.stub()
+        @view.next()
+        @view.next()
+        @view.moveToActive.calledTwice.should.be.ok
+
+    describe '#prev', ->
+      it 'increments the active attribute', ->
+        @view.active.should.equal 0
+        @view.prev()
+        @view.active.should.equal 0
+        @view.active = 4
+        @view.prev()
+        @view.active.should.equal 4 - @view.increment
+      it 'calls #moveToActive', ->
+        @view.moveToActive = sinon.stub()
+        @view.prev()
+        @view.prev()
+        @view.moveToActive.calledTwice.should.be.ok
+
+  describe 'ArtistsView', ->
+    beforeEach ->
+      @view = new @ArtistsView
+
+    describe '#setupFollowButtons', ->
+      before ->
+        @artists    = _.times(3, (-> new Artist(fabricate 'artist')))
+        @$fixture   = _.reduce(@artists, ($memo, artist) ->
+          $div = $('<div class="fixture"></div>')
+          $div.data 'id', artist.id
+          $memo.append $div
+        , $('<div></div>')).find('.fixture')
+
+      it 'should setup up the appropriate buttons and return artist IDs', ->
+        artistIds = _.map @artists, (artist) -> artist.id
+        @view.setupFollowButtons(@$fixture, 'foobar').should.eql artistIds
