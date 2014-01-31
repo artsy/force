@@ -10,8 +10,8 @@ Profile         = require '../../../models/profile'
 
 describe 'Follows', ->
   beforeEach ->
-    @follow1  = new Follow { id: '111', profile: { id: 'profile-1' } }
-    @follow2  = new Follow { id: '222', profile: { id: 'profile-2' } }
+    @follow1  = new Follow { id: '111', name: 'follow1', profile: { id: 'profile-1' } }
+    @follow2  = new Follow { id: '222', name: 'follow2', profile: { id: 'profile-2' } }
     @follows  = new Following null, kind: 'profile'
     @follows.reset()
     @follows.add @follow1
@@ -121,6 +121,7 @@ describe 'Follows', ->
         onAdd.callCount.should.equal 1
         onSuccess.callCount.should.equal 1
         @follows.should.have.lengthOf 2
+        @follows.findByModelId(@profileId).get('name').should.equal @follow2.get('name')
 
     describe "#unfollow", ->
       it 'destroys a follow through the API and updates the collection', ->
