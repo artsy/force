@@ -3,12 +3,13 @@ sd        = require('sharify').data
 Backbone  = require 'backbone'
 Backbone  = require 'backbone'
 Artworks  = require '../collections/artworks.coffee'
-{ Image } = require 'artsy-backbone-mixins'
+{ Image, Markdown } = require 'artsy-backbone-mixins'
 Artist    = require '../models/artist.coffee'
 
 module.exports = class Gene extends Backbone.Model
 
   _.extend @prototype, Image(sd.SECURE_IMAGES_URL)
+  _.extend @prototype, Markdown
 
   urlRoot: "#{sd.ARTSY_URL}/api/v1/gene"
 

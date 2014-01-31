@@ -9,21 +9,22 @@ If a separate doc is required, add it to the component's directory as a
 - [Garamond Tab List](#garamond-tab-list)
 - [Profile Badge](#profile-badge)
 - [Suggested Genes](#suggested-genes)
+- [Follow Button](#follow-button)
 
 
 ## Artwork Columns
 ![](images/artwork_columns.png)
 
-Dependencies: 
+Dependencies:
 - Artwork Item Component `components/artwork_item`
 
-There are two different ways you can use the Artwork Columns component. It has a template and a view. 
+There are two different ways you can use the Artwork Columns component. It has a template and a view.
   1. Pass models to the template yourself
   2. Use the `ArtworkColumnsView`
 
 #### Pass models to the template yourself
 Include the template, and the artwork item save controls.
-The template can be rendered with items that are already sorted with the results of an `Artworks` 
+The template can be rendered with items that are already sorted with the results of an `Artworks`
 collection's `groupByColumnsInOrder` method. This returns the models ready to go to pass to the template.
 
 ```jade
@@ -64,13 +65,13 @@ Benefits:
   @columnsView = new ArtworkColumnsView
     el:         @$ '.artwork-columns'
     collection: new Artworks @saleArtworks.pluck('artwork')
-    gutterWidth: 40 
+    gutterWidth: 40
     totalWidth: 1000 # Desired width of the container
-    seeMore: false    # If true, will look at `initialItemCount` 
+    seeMore: false    # If true, will look at `initialItemCount`
                       # and hide / reveal any more than that value
-    isOrdered: false  # If false will add artworks to the 
+    isOrdered: false  # If false will add artworks to the
                       # shortest column (left to right) to balance columns
-    maxArtworkHeight: 400  # used to avoid tall works from spanning the 
+    maxArtworkHeight: 400  # used to avoid tall works from spanning the
                            # whole view port and looking too large
 ```
 Downsides are currently that this will inject a lot of CSS, so we may need to kill that or add more
@@ -95,11 +96,11 @@ Example:
   span.garamond-tab-separator
   a.garamond-tab( href="/artist/#{artist.id}" ) Inactive Tab
 ```
-The tab seperator will add a slash as an image. Can alternatively be used with 
+The tab seperator will add a slash as an image. Can alternatively be used with
 other seperators typically wrapped in a span (to keep links displayed inline).
 
-##### Uses: 
-- Featured Partners [/partners](http://artsy.net/parnters), [/galleries](http://artsy.net/galleries), 
+##### Uses:
+- Featured Partners [/partners](http://artsy.net/parnters), [/galleries](http://artsy.net/galleries),
 [/institutions](http://artsy.net/institutions)
 - Partner Profiles [/guggenheim](http://artsy.net/guggenheim)
 
@@ -155,7 +156,7 @@ See `apps/artist/stylesheets/index.styl` for an example of a customized layout
     font-size 10px
     text-align center
 ```
-##### Uses: 
+##### Uses:
 - Artist Pages - Featured Posts [/artist/andy-warhol](http://artsy.net/artist/andy-warhol)
 - Partner Shows [/show/333-montezuma-arts-elegy](http://artsy.net/show/333-montezuma-arts-elegy)
 
@@ -163,7 +164,7 @@ See `apps/artist/stylesheets/index.styl` for an example of a customized layout
 ![](images/suggested_genes.png)
 
 This component fetches and displays suggested genes in rows. `numberOfItems`
- (default to `5`) and `isShuffle` (default to `true`) options can be 
+ (default to `5`) and `isShuffle` (default to `true`) options can be
 passed when creating an instance. It has to call `render()` explicitly
 to show the component.
 
@@ -181,3 +182,26 @@ SuggestedGenesView = require '../../../components/suggested_genes/view.coffee'
 ##### Uses:
 - Favorites
 - Follows
+
+## Follow Button
+
+Used in many pages that you can "follow" like the gene page, artist page, etc.
+
+![](images/follow_1.png)
+![](images/follow_2.png)
+
+Example:
+```coffeescript
+{ Following, FollowButton } = require '../../components/follow_button/index.coffee'
+
+following = new Following null, kind: 'artist'
+
+new FollowButton
+   el: $('.my-follow-button')
+   following: following
+   model: myModel
+
+following.syncFollows myIds
+```
+
+Optionally you can pass in an `analyticsFollowMessage` and `analyticsUnfollowMessage` to the view. This falls back to a sensible default: `"#{action} #{@model.constructor.name.toLowerCase()} from #{window?.location.pathname}"`

@@ -4,7 +4,7 @@ converter = new Showdown.converter()
 module.exports =
 
   mdToHtml: (attr) ->
-    converter.makeHtml @get attr
+    converter.makeHtml @get(attr) or ''
 
   mdToHtmlToText: (attr) ->
     @mdToHtml(attr).replace(/<(?:.|\n)*?>/gm, '')
