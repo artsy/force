@@ -11,8 +11,6 @@ module.exports.FeatureView = class FeatureView extends Backbone.View
     @model.fetchSets
       success: (sets) =>
         @$('.feature-content').append setsTemplate { sets: sets }
-      error: (error) ->
-        console.log "error: #{error}"
 
 module.exports.init = ->
 
