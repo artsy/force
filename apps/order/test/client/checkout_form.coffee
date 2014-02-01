@@ -71,6 +71,7 @@ describe 'CheckoutForm', ->
       @view.fields.billing_city.el.val 'Cool city'
       @view.fields.billing_state.el.val 'NY'
       @view.fields.billing_zip.el.val '11238'
+      @view.fields.expiration.el.first().val '12'
       @view.fields.conditions.el.prop('checked', true)
       @view.balanced.should.not.be.ok
 
