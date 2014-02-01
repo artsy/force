@@ -25,26 +25,12 @@ module.exports = class FeaturedPosts extends Backbone.View
     feedItems.fetchFeedItems
       pageSize: @pageSize * 1.5
       success: (items) =>
-        if items.length > 0
-          options.success? @getFeatureablePosts(items)
+        options.success? items.getFeatureablePosts(@model.get('id'))
       error: => @remove()
 
   render: (posts) ->
     return @remove() if posts.length is 0
-    @$el.html featuredPostsTemplate( posts: posts )
+    @$el.html featuredPostsTemplate( posts: posts[...@pageSize] )
 
     @$el.imagesLoaded?().progress =>
       setupFixedDimensionsThumbnails @$('.fixed-dimensions img')
-
-  getFeatureablePosts: (feedItems) ->
-    posts = feedItems.map (feedItem) -> feedItem.toChildModel()
-
-    filteredPosts = posts.filter (item) =>
-      if item.id != @model.get('id')
-        thumbnail = item.featuredPostsThumbnail()
-        if thumbnail
-          item.set featured_posts_thumbnail: thumbnail
-          return true
-      false
-
-    return filteredPosts[...@pageSize]

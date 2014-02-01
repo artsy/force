@@ -78,7 +78,6 @@ describe 'Featured Posts', ->
 
   beforeEach ->
     attachment =
-      id: _.uniqueId()
       position: 1
       type: "PostArtwork"
       artwork: fabricate('artwork', artist: fabricate('artist', id: 'andy-01', name: 'andy 1'))

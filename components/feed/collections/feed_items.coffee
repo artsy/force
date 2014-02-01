@@ -68,3 +68,14 @@ module.exports = class FeedItems extends Backbone.Collection
     filtered = @filter (feedItem) =>
       ! feedItem.flagged() or (feedItem.get('author').id == currentUser?.get('id')) or currentUser?.isAdmin()
     @reset filtered
+
+  getFeatureablePosts: (filterId)->
+    posts = @models.map (feedItem) -> feedItem.toChildModel()
+
+    posts.filter (item) =>
+      if item.id != filterId
+        thumbnail = item.featuredPostsThumbnail()
+        if thumbnail
+          item.set featured_posts_thumbnail: thumbnail
+          return true
+      false
