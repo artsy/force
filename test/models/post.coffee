@@ -60,3 +60,60 @@ describe 'Post', ->
     it 'returns object if there are no attachments', ->
       post = new Post(attachments: [])
       post.defaultImage().should.be.type('object')
+
+  describe '#relatedArtists', ->
+
+    it 'returns related artists', ->
+      postAttachments = [
+        {
+          position: 1
+          type: "PostArtwork"
+          artwork: fabricate('artwork', artist: fabricate('artist', id: 'andy-01', name: 'andy 1'))
+        }, {
+          position: 2
+          type: "PostArtwork"
+          artwork: fabricate('artwork', artist: fabricate('artist', id: 'andy-02', name: 'andy 2'))
+        }, {
+          position: 3
+          type: "PostArtwork"
+          artwork: fabricate('artwork', artist: fabricate('artist', id: 'andy-03', name: 'andy 3'))
+        }]
+
+      post = new Post fabricate('post', attachments: postAttachments)
+      relatedArtists = post.relatedArtists(3).models
+      relatedArtists.length.should.equal 3
+      relatedArtists[0].get('id').should.equal postAttachments[0].artwork.artist.id
+      relatedArtists[1].get('id').should.equal postAttachments[1].artwork.artist.id
+      relatedArtists[2].get('id').should.equal postAttachments[2].artwork.artist.id
+
+    it 'doesnt error with no artists', ->
+      post = new Post fabricate('post')
+      post.relatedArtists(3).should.be.ok
+
+  describe '#featuredPostsThumbnail', ->
+
+    it 'returns thumbnail', ->
+      attachments = [
+        {
+          id: _.uniqueId()
+          position: 1
+          type: "PostLink"
+          url: "http://www.youtube.com/watch?v=d7zaja7ytWI"
+        }, {
+          id: _.uniqueId()
+          html: "<iframe></iframe>"
+          position: 4
+          sanitized_html: "<iframe></iframe>"
+          type: "PostEmbed"
+        }, {
+          position: 1
+          type: "PostArtwork"
+          artwork: fabricate('artwork', artist: fabricate('artist', id: 'andy-01', name: 'andy 1'))
+        }]
+
+      post = new Post(fabricate('post', attachments: attachments))
+      post.featuredPostsThumbnail().get('artwork').id.should.equal attachments[2].artwork.id
+
+    it 'doesnt error', ->
+      post = new Post(fabricate('post'))
+      _.isUndefined(post.featuredPostsThumbnail()).should.be.ok
