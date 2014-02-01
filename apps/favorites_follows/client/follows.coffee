@@ -4,18 +4,20 @@ Genes                   = require '../../../collections/genes.coffee'
 sd                      = require('sharify').data
 FillwidthView           = require '../../../components/fillwidth_row/view.coffee'
 CurrentUser             = require '../../../models/current_user.coffee'
-FollowButton            = require './follow_button.coffee'
 itemTemplate            = -> require('../templates/follows_item.jade') arguments...
 hintTemplate            = -> require('../templates/empty_hint.jade') arguments...
-FollowArtists           = require '../../../collections/follow_artists.coffee'
-FollowGenes             = require '../../../collections/follow_genes.coffee'
+Artist                  = require '../../../models/artist.coffee'
+Gene                    = require '../../../models/gene.coffee'
 SuggestedGenesView      = require '../../../components/suggested_genes/view.coffee'
+{ Following, FollowButton } = require '../../../components/follow_button/index.coffee'
+
+kindToModel = artist: Artist, gene: Gene
 
 module.exports.FollowsView = class FollowsView extends Backbone.View
 
   initialize: (options) ->
-    @followItems  = @model  # More readable alias
-    @pageNum      = 0       # Last page loaded
+    @followItems  = @collection # More readable alias
+    @pageNum      = 0           # Last page loaded
     @itemsPerPage = options.itemsPerPage or 10
     @setupCurrentUser()
     @setupFollowsItems()
@@ -26,7 +28,7 @@ module.exports.FollowsView = class FollowsView extends Backbone.View
     @artworkCollection = @currentUser?.defaultArtworkCollection()
 
   setupFollowsItems: ->
-    @followItems.syncFollows? [], success: (col) =>
+    @followItems.fetchUntilEnd success: (col) =>
       @$('.follows .loading-spinner').hide()
       @showEmptyHint() unless @followItems.length > 0
       if @followItems.length > @itemsPerPage
@@ -40,8 +42,9 @@ module.exports.FollowsView = class FollowsView extends Backbone.View
 
     showingItems = @followItems.slice start, end
     _.each showingItems, (item) =>
-      @appendItemSkeleton(item)
-      @showItemContent(item)
+      model = new kindToModel[item.kind] item.get(item.kind)
+      @appendItemSkeleton(model)
+      @showItemContent(model)
     ++@pageNum
 
   infiniteScroll: =>
@@ -62,16 +65,15 @@ module.exports.FollowsView = class FollowsView extends Backbone.View
   # So that we can display some stuff to users asap.
   # @param {Object} followItem an item from the followItems collection
   appendItemSkeleton: (followItem) ->
-    @$('.follows').append $( itemTemplate item: followItem.getItem() )
+    @$('.follows').append $( itemTemplate item: followItem )
 
   # Display item content
   #
   # The function assumes the skeleton (container) of this item already exists.
   # @param {Object} followItem an item from a followItems collection
   showItemContent: (followItem) =>
-    item = followItem.getItem() # Actual item model, e.g. an Artist
-    item.fetchArtworks success: (artworks) =>
-      $container = @$("##{item.get('id')}")
+    followItem.fetchArtworks success: (artworks) =>
+      $container = @$("##{followItem.get('id')}")
       $followButton = $container.find(".follow-button")
       $artworks = $container.find('.artworks')
       view = new FillwidthView
@@ -82,17 +84,17 @@ module.exports.FollowsView = class FollowsView extends Backbone.View
         el: $artworks
       view.render()
       new FollowButton
-        followItemCollection: @followItems
-        model: item
+        following: @followItems
+        model: followItem
         el: $followButton
       _.defer ->
         view.hideFirstRow()
         view.removeHiddenItems()
 
 module.exports.init = ->
-  dict = artists: FollowArtists, genes: FollowGenes
-  followItemCollection = if dict[sd.TYPE]? then new dict[sd.TYPE]() else []
   new FollowsView
-    model: followItemCollection
+    collection: new Following null,
+      kind: sd.KIND
+      comparator: (item) -> item.get(item.kind).name or ""
     el: $('body')
     itemsPerPage: 10
