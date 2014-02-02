@@ -31,7 +31,7 @@ module.exports = class PostAdmin extends Backbone.View
     @reposts.on 'all', @renderFeaturedBy, @
     @reposts.on 'all', @showOrHideRepostControls, @
 
-  editPostClick: (event) ->
+  editPostClick: (event) =>
     createCookie 'current_post', @model.get('id'), 1
     window.location = "/post"
     false
