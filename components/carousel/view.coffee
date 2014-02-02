@@ -43,7 +43,7 @@ module.exports = class Carousel extends Backbone.View
   render: ->
     figures = @collection.models
 
-    @$el.html carouselTemplate carouselFigures: figures, height: @height
+    @$el.html(carouselTemplate carouselFigures: figures, height: @height)
 
     if @length < @minLength
       @$el.empty()
