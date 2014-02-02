@@ -11,7 +11,7 @@ describe 'Meta tags', ->
       @sd =
         ASSET_PATH: "http://localhost:5000"
         ARTSY_URL: "http://localhost:5000"
-      @file = "#{process.cwd()}/apps/post/meta.jade"
+      @file = "#{process.cwd()}/apps/post/templates/meta.jade"
       @post = new Post fabricate('post')
       @html = jade.render fs.readFileSync(@file).toString(),
         sd  : @sd
@@ -30,7 +30,7 @@ describe 'Meta tags', ->
       @sd =
         ASSET_PATH: "http://localhost:5000"
         ARTSY_URL: "http://localhost:5000"
-      @file = "#{process.cwd()}/apps/post/meta.jade"
+      @file = "#{process.cwd()}/apps/post/templates/meta.jade"
       @post = new Post fabricate('post', shareable_image_url: 'http://share.me/image')
       @html = jade.render fs.readFileSync(@file).toString(),
         sd  : @sd

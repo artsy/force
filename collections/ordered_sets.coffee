@@ -25,6 +25,9 @@ class OrderedSets extends Backbone.Collection
     _.defaults options, { data: qs }
     Backbone.Collection::fetch.call this, options
 
+  fetchItemsByOwner: (owner_type, owner_id) ->
+    @fetchItems "/api/v1/sets?owner_type=#{owner_type}&owner_id=#{owner_id}&sort=key", "#{owner_type}:#{owner_id}"
+
   fetchSets: (options={}) ->
     deferred  = Q.defer()
     promises  = @map (model) -> model.fetchItems options?.cache

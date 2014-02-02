@@ -11,6 +11,6 @@ Profile  = require '../../models/profile.coffee'
         success: (profile) ->
           res.locals.sd.POST = post.toJSON()
           res.locals.sd.PROFILE = profile.toJSON()
-          res.render 'template',
+          res.render 'templates/index',
             post    : post
             profile : profile
