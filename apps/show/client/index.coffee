@@ -19,18 +19,29 @@ module.exports.PartnerShowView = class PartnerShowView extends Backbone.View
       el        : @$('.show-share')
     @setupCurrentUser()
 
+    @$showArtworks = @$('.show-artworks')
+    @$carousel = @$('.carousel')
+
     @model.fetchInstallShots
       success: (installShots) =>
-        @carouselView = new CarouselView
-          el        : @$('.carousel')
-          collection: installShots
-          height    : 400
+        if installShots.length > 0
+          @carouselView = new CarouselView
+            el        : @$carousel
+            collection: installShots
+            height    : 400
+        else
+          @$carousel.remove()
+      error: => @$carousel.remove()
 
     @model.fetchArtworks
       success: (artworks) =>
-        @collection = artworks
-        @$('.show-artworks').html artworkColumns artworkColumns: artworks.groupByColumnsInOrder(3)
-        @setupArtworkSaveControls()
+        if artworks.length > 0
+          @collection = artworks
+          @$showArtworks.html artworkColumns artworkColumns: artworks.groupByColumnsInOrder(3)
+          @setupArtworkSaveControls()
+        else
+          @$showArtworks.remove()
+      error: => @$showArtworks.remove()
 
   setupCurrentUser: ->
     @currentUser = CurrentUser.orNull()
