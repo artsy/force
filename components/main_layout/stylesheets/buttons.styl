@@ -9,6 +9,29 @@
   &:hover
     color highlight-color
 
+.play-button
+  background-color: #000
+  cursor: pointer
+  display: none
+  height: 78px
+  width: 78px
+  left: 50%
+  margin-left: -39px
+  padding: 24px
+  position: absolute
+  transition background-color 0.3s
+  &:hover
+    background-color: highlight-color
+  .play-button-arrow
+    width: 0
+    height: 0
+    border-top: 15px solid transparent
+    border-bottom: 15px solid transparent
+    border-left: 15px solid white
+    position: absolute
+    top: 24px
+    left: 31px
+
 .avant-garde-button
   display inline-block
   position relative
