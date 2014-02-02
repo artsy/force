@@ -3,6 +3,7 @@ Backbone           = require 'backbone'
 sd                 = require('sharify').data
 featuredByTemplate = -> require('../templates/featured_by.jade') arguments...
 PostFeatureDialog  = require('./posts_feature_dialog.coffee')
+{ createCookie }   = require('../../../components/util/cookie.coffee')
 
 module.exports = class PostAdmin extends Backbone.View
 
@@ -31,7 +32,7 @@ module.exports = class PostAdmin extends Backbone.View
     @reposts.on 'all', @showOrHideRepostControls, @
 
   editPostClick: (event) ->
-    # TODO
+    createCookie 'current_post', @model.get('id'), 1
     window.location = "/post"
     false
 
