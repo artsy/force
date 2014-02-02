@@ -54,7 +54,7 @@ describe 'Partner Show View', ->
 
   describe '#initialize', ->
 
-    it 'renders install shos and artwork columns', ->
+    it 'renders install shots and artwork columns', ->
       @view.model.should.equal @show
 
       Backbone.sync.args[0][2].success @installShots

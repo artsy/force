@@ -17,7 +17,7 @@ block body
         +share(show.shareTitle())
       h1.show-heading-title!= show.title()
 
-    section.show-installation-shot-carousel.carousel
+    section.show-installation-shot-carousel.carousel( style="display: #{show.carouselDisplay()}")
       .loading-spinner
 
     header.show-header.show-header-last
@@ -30,5 +30,5 @@ block body
       if location
         h2.show-subheading!= location.singleLine()
 
-    section.show-artworks.artworks-columns
+    section.show-artworks.artworks-columns( style="display: #{show.artworksDisplay()}" )
       .loading-spinner
