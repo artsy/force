@@ -25,9 +25,8 @@ module.exports = class PostView extends Backbone.View
     @followProfiles?.syncFollows [options.profile.get('id')]
     @renderPost()
 
-    _.defer =>
-      @renderRelatedArtists()
-      @renderFeaturedPosts()
+    @renderRelatedArtists()
+    @renderFeaturedPosts()
 
   fetchSets: ->
     @orderedSets = new OrderedSets

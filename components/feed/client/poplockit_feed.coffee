@@ -16,9 +16,8 @@ module.exports = class PoplockitFeed extends FeedView
     @$feedItems.removeClass 'unrendered-feed-item'
     @popLockItInitialized = true
 
-    _.delay =>
+    _.defer =>
       @recomputeEachShowHeight()
-    , 100
 
   onResize: =>
     return if @width == @$window.innerWidth()
@@ -52,9 +51,8 @@ module.exports = class PoplockitFeed extends FeedView
     @createNewItems $unrenderedItems
     $unrenderedItems.removeClass 'unrendered-feed-item'
 
-    _.delay =>
+    _.defer =>
       @recomputeEachShowHeight()
-    , 100
 
   createNewItems: ($items) ->
     return unless $items and $items.length
