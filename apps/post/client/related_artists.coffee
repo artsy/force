@@ -15,17 +15,17 @@ module.exports = class RelatedArtists extends Backbone.View
     @pageSize = options.pageSize
 
     @artists = @model.relatedArtists(@pageSize).models
-    @renderOnce = _.after @artists.length, => @render()
+    return @$el.remove() if @artists.length is 0
 
+    @renderOnce = _.after @artists.length, => @render()
     @getArtistImages @artists
 
   render: ->
-    return @$el.remove() if @artists.length is 0
-
     @$el.html relatedArtistsTemplate( artists: @artists, currentUser: @currentUser )
 
     @setupFollowing() if @currentUser
 
+    setupFixedDimensionsThumbnails @$('.fixed-dimensions img')
     @$el.imagesLoaded?().progress =>
       setupFixedDimensionsThumbnails @$('.fixed-dimensions img')
 

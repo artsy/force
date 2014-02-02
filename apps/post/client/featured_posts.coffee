@@ -32,5 +32,6 @@ module.exports = class FeaturedPosts extends Backbone.View
     return @remove() if posts.length is 0
     @$el.html featuredPostsTemplate( posts: posts[...@pageSize] )
 
+    setupFixedDimensionsThumbnails @$('.fixed-dimensions img')
     @$el.imagesLoaded?().progress =>
       setupFixedDimensionsThumbnails @$('.fixed-dimensions img')
