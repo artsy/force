@@ -52,9 +52,9 @@ describe 'Partner Show', ->
         $ = cheerio.load @html
         $('.carousel').should.have.lengthOf 1
 
-      it 'does not render the install shot carousel container if there are no install shots', ->
+      it 'renders the install shot carousel container if there are no install shots', ->
         $ = cheerio.load @html
-        $('.carousel').should.have.lengthOf 0
+        $('.carousel').should.have.lengthOf 1
 
       it 'renders a small profile badge', ->
         $ = cheerio.load @html
@@ -113,9 +113,9 @@ describe 'Partner Show', ->
         $ = cheerio.load @html
         $('.carousel').should.have.lengthOf 1
 
-      it 'does not render the install shot carousel container if there are no install shots', ->
+      it 'renders the install shot carousel container if there are no install shots', ->
         $ = cheerio.load @html
-        $('.carousel').should.have.lengthOf 0
+        $('.carousel').should.have.lengthOf 1
 
       it 'doesnt render a small profile badge', ->
         $ = cheerio.load @html

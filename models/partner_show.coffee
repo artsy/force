@@ -144,3 +144,6 @@ module.exports = class PartnerShow extends Backbone.Model
     if @get('updated_at') && moment().diff(moment(@get('updated_at')), 'days') <= @fairDisplayUpdatedDayLimit
       display += "<span class='updated'>updated #{@updatedAt()}</span>"
     display
+
+  carouselDisplay: -> if @get('images_count') > 0 then "block" else "none"
+  artworksDisplay: -> if @get('eligible_artworks_count') > 0 then "block" else "none"
