@@ -3,14 +3,14 @@
 #
 
 module.exports = (req, res, next) ->
-  res.backboneError = (m, res) ->
-    res.statusCode = res.error.status
+  res.backboneError = (m, r) ->
     try
-      parsed = JSON.parse res.text
+      parsed = JSON.parse r.text
       errorText = parsed.error
     catch e
       errorText = e.text
-    errorText ?= res.error?.toString()
+    errorText ?= r.error?.toString()
     console.warn errorText
+    res.status(r.error.status)
     next new Error(errorText)
   next()
