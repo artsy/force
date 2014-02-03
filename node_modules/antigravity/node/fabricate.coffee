@@ -385,9 +385,45 @@ module.exports = fabricate = (type, extObj = {}) ->
       position: ""
 
     when 'gene'
-      id: "abstract-expressionism" + _.uniqueId()
-      name: "Abstract Expressionism"
-      counts: {artworks: 5, artists: 10}
+      type:
+        properties: [
+          {
+            key: "use_as_filter"
+            value: "true"
+          }
+          {
+            key: "use_in_artist_related_genes"
+            value: "true"
+          }
+          {
+            key: "browse_category"
+            value: "Style or Movement"
+          }
+        ]
+        id: "j1-style-or-movement"
+        name: "J1 - Style or Movement"
+        published: false
+
+      influential_artist: null
+      influential_gene: null
+      id: "pop-art" + _.uniqueId()
+      name: "Pop Art"
+      description: "_“The Pop artists did images that anybody walking down Broadway could recognize in a split second—comics, picnic tables, men’s trousers, celebrities, shower curtains, refrigerators, coke bottles—all the great modern things that the Abstract Expressionists tried so hard not to notice at all.” –[Andy Warhol](/artist/andy-warhol)_\n\n&nbsp;\n\nPop Art was the dominant movement in early-1960s American art. Short for “popular art,” it featured common household objects and consumer products like Coca-Cola and Campbell’s Soup cans, as well as forms of media—such as comics, newspapers, and magazines—recognizable to the masses. Artists often created Pop works using mechanical or commercial techniques, such as silk-screening. As Warhol suggests, the choice of mundane subject matter and machine-like techniques was a blunt rejection of the heroic subjects and methods of [Abstract Expressionism](/gene/abstract-expressionism), the leading American movement of the 1950s. Not often discussed is the fact that Pop Art originated in England and paralleled similar movements in France and Germany."
+      image_url: "http://static0.artsy.net/genes/4e5e41670d2c670001030350/:version.jpg"
+      image_versions: [
+        "thumb"
+        "square"
+        "tall"
+        "big_and_tall"
+      ]
+      counts:
+        artworks: 1611
+        artists: 80
+
+      published: true
+      follow_count: 511
+      browseable: true
+      created_at: "2011-08-31T14:12:55Z"
 
     when 'gene_type'
       id: "art-historical-influences" + _.uniqueId()

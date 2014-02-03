@@ -36,6 +36,12 @@ describe 'GeneView', ->
     it 'sets up a share view', ->
       @view.shareView.$el.attr('id').should.equal 'gene-share-buttons'
 
+    it 'does not setup artists if the gene is a subject matter gene', ->
+      @view.setupArtistFillwidth = sinon.stub()
+      @view.model.set type: { properties: [{ value: 'Subject Matter' }] }
+      @view.initialize {}
+      @view.setupArtistFillwidth.called.should.not.be.ok
+
   describe '#setupArtistFillwidth', ->
 
     it 'inits a artist fillwidth view', ->

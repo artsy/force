@@ -34,3 +34,6 @@ module.exports = class Gene extends Backbone.Model
     artworks = new Artworks
     artworks.url = "#{@url()}/artworks"
     artworks.fetch options
+
+  isSubjectMatter: ->
+    "Subject Matter" in _.pluck @get('type').properties, 'value'
