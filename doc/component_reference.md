@@ -214,11 +214,11 @@ Used in related artists for the artist page and the gene page where there's a fi
 
 Example:
 ```coffeescript
-view = new ArtistFillwidthList
+new ArtistFillwidthList(
   collection: artists
   el: $('container')
   user: CurrentUser.orNull()
-view.fetchAndRender()
+).fetchAndRender()
 ```
 
 `fetchAndRender` will fetch every artist's artworks and the individual list items will re-render as they sync.

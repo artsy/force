@@ -8,7 +8,9 @@ module.exports = class ArtistFillwidthList extends Backbone.View
 
   initialize: (options) ->
     { @user } = options
+    @following = new Following(null, kind: 'artist') if @user
     @fetchAndRender()
+    @
 
   fetchAndRender: ->
     @$el.html template artists: @collection.models
@@ -20,7 +22,7 @@ module.exports = class ArtistFillwidthList extends Backbone.View
 
       # Add fillwidth view
       fillwidthView = new FillwidthView
-        artworkCollection: @currentUserArtworkCollection
+        artworkCollection: @user?.defaultArtworkCollection()
         doneFetching: true
         collection: artworks
         el: $row.find('.artist-fillwidth-list-artworks')
@@ -29,8 +31,9 @@ module.exports = class ArtistFillwidthList extends Backbone.View
       # Add follow button
       new FollowButton
         el: $row.find('.avant-garde-button-white')
-        following: new Following @followArtistCollection, kind: 'artist'
+        following: @following
         model: artist
+      @following.syncFollows @collection.pluck('id')
 
       # After rendering the row do some fillwidth things unique to this layout
       _.defer ->

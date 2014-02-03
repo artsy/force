@@ -114,8 +114,7 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
       new ArtistFillwidthList
         el: @$("#artist-related-#{type.toLowerCase()}")
         collection: @model["related#{type}"]
-        currentUserArtworkCollection: @artworkCollection
-        followArtistCollection: @followArtistCollection
+        user: @currentUser
     else
       $artistContainer.parent().remove()
 
