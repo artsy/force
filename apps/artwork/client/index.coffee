@@ -1,3 +1,5 @@
+require '../../../lib/vendor/openseadragon.js'
+
 sd              = require('sharify').data
 Backbone        = require 'backbone'
 Artist          = require '../../../models/artist.coffee'

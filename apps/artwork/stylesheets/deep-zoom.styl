@@ -1,0 +1,130 @@
+@import '../../../components/stylus_lib'
+
+dz-slider-height = 36px
+
+#deep-zoom
+  position fixed
+  top 0
+  right 0
+  bottom 0
+  left 0
+  background-color black
+  z-index 9
+  transition opacity 0.5s
+  &[data-state='fade-in']
+    opacity 1
+  &[data-state='fade-out']
+    opacity 0
+  &[data-state='loading']
+    .loading-spinner-white
+      display block
+  .loading-spinner-white
+    display none
+  &[data-focus='inactive']
+    .dz-close
+    .dz-slider
+      opacity 0
+
+.dz-close
+  position absolute
+  top 20px
+  left @top
+  width 75px
+  height @width
+  text-align center
+  background-color dark-gray-text-color
+  z-index 1
+  opacity 0.6
+  transition opacity 0.25s
+  > i
+    color light-gray-text-color
+    font-size 50px
+    line-height @width
+  &:hover
+    opacity 1
+
+.dz-slider
+  position absolute
+  bottom 20px
+  width 500px
+  height dz-slider-height
+  left 50%
+  margin-left -(@width / 2)
+  z-index 1
+  border-radius 2px
+  background-color black
+  background-color rgba(0,0,0,0.75)
+  transition opacity 0.25s
+  // Minus / Track / Plus
+  > *
+    display block
+    position absolute
+    height dz-slider-height
+    line-height @height
+
+.dz-slider-track
+  left dz-slider-height
+  right @left
+  &:after
+    display block
+    position absolute
+    content ''
+    left 0
+    right 0
+    top 50%
+    margin-top -2px
+    height 4px
+    background-color dark-gray-text-color
+    z-index -1
+
+.dz-slider-minus
+.dz-slider-plus
+  width 36px
+  text-align center
+  user-select none
+  color light-gray-text-color
+  transition color 0.25s
+  > i
+    font-size 16px
+    line-height @width
+  &:hover
+    color white
+
+.dz-slider-minus
+  left 0
+
+.dz-slider-plus
+  right 0
+
+dz-slider-range()
+  background-color transparent
+  width 100%
+  height 100%
+  box-shadow none
+  border none
+  outline none
+  &:focus
+    outline none
+  &::-moz-focus-inner
+    outline none
+.dz-slider-range
+  dz-slider-range()
+.dz-slider-range::-moz-range-track
+  dz-slider-range()
+
+dz-slider-range-handle()
+  appearance none
+  width 25px
+  height @width
+  border-radius (@width / 2)
+  cursor pointer
+  background-color white
+  border none
+  &:focus
+    outline none
+  &:active
+    background-color light-gray-border-color
+.dz-slider-range::-webkit-slider-thumb
+  dz-slider-range-handle()
+.dz-slider-range::-moz-range-thumb
+  dz-slider-range-handle()
