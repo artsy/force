@@ -7,7 +7,7 @@ describe 'Tag page', ->
 
   after -> closeServer()
 
-  it 'shows the tag name', (done) ->
+  xit 'shows the tag name', (done) ->
     browser = new Browser
     browser.visit 'http://localhost:5000/tag/cow', ->
       browser.wait ->
