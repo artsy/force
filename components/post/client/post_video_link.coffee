@@ -17,12 +17,12 @@ module.exports = class PostVideoLink extends Backbone.View
     height = Number(@$img.attr 'height')
     return unless width > 0 && height > 0
 
-    @$('.play')
+    @$('.play-button')
       .css('top', Math.floor((height - 78) / 2) + "px")
       .show()
 
   events:
-    'click .play'    :  'showVideo'
+    'click .play-button' : 'showVideo'
 
   showVideo: =>
     @$('.video').append(@model.get('oembed_json').html).show()

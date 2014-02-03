@@ -60,8 +60,9 @@ module.exports = class UserProfileView extends Backbone.View
         if items.models.length > 0
           items.urlRoot = url
           new PoplockitFeed
-            feedItems : items
-            el        : @$('.feed')
+            limitPostBodyHeight : true
+            feedItems           : items
+            el                  : @$('.feed')
         else
           callback?.error()
 

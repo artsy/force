@@ -2,8 +2,13 @@ _         = require 'underscore'
 sd        = require('sharify').data
 Backbone  = require 'backbone'
 Follow    = require './model.coffee'
+{ ARTSY_URL } = require('sharify').data
+{ Fetch } = require 'artsy-backbone-mixins'
 
 module.exports = class Following extends Backbone.Collection
+
+  _.extend @prototype, Fetch(ARTSY_URL)
+
   kind: 'artist'
 
   maxSyncSize: 10
@@ -56,6 +61,11 @@ module.exports = class Following extends Backbone.Collection
       @remove model
       error(model, response, options) if error
 
+    success = options.success
+    options.success = (model, response, options) =>
+      model.set kind: @kind
+      @add model, merge: true
+      success?(model, response, options)
     follow = new Follow null, kind: @kind
 
     data = { notes: options?.notes }

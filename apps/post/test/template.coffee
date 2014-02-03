@@ -7,30 +7,91 @@ Backbone        = require 'backbone'
 { fabricate }   = require 'antigravity'
 Post            = require '../../../models/post'
 Profile         = require '../../../models/profile'
+Artwork         = require '../../../models/artwork'
 
 render = (templateName) ->
-  filename = path.resolve __dirname, "../#{templateName}.jade"
+  filename = path.resolve __dirname, "../templates/#{templateName}.jade"
   jade.compile(
     fs.readFileSync(filename),
     { filename: filename }
   )
 
-describe 'Partner Show', ->
+describe 'Post Templates', ->
 
-  beforeEach ->
-    @sd =
-      ARTSY_URL : 'http://localhost:5000'
-      ASSET_PATH: 'http://localhost:5000'
-    @post = new Post fabricate('show')
-    @profile = new Profile fabricate 'profile'
-    @html = render('template')({
-      sd      : @sd
-      post    : @post
-      profile : @profile
-    })
+  describe 'Post', ->
 
-  describe 'template', ->
+    beforeEach ->
+      sd =
+        ARTSY_URL : 'http://localhost:5000'
+        ASSET_PATH: 'http://localhost:5000'
+      post = new Post fabricate('post')
+      profile = new Profile fabricate 'profile'
+      @html = render('index')({
+        sd      : sd
+        post    : post
+        profile : profile
+      })
 
-    it 'renders post header', ->
-      $ = cheerio.load @html
-      $('#post').html().should.contain 'Craig Spaeth'
+    describe 'template', ->
+
+      it 'renders post header', ->
+        $ = cheerio.load @html
+        $('#post').html().should.contain 'Craig Spaeth'
+
+  describe 'Related Artists', ->
+
+    beforeEach ->
+      postAttachments = [
+        {
+          position: 1
+          type: "PostArtwork"
+          artwork: fabricate('artwork')
+        }]
+
+      post = new Post fabricate('post', attachments: postAttachments)
+      artists = post.relatedArtists(1).models
+
+      for artist in artists
+        artist.set poster_artwork: new Artwork(fabricate('artwork'))
+
+      @html = render('related_artists')({
+        artists: artists
+      })
+
+    describe 'template', ->
+
+      xit 'renders post header', ->
+        $ = cheerio.load @html
+        $('.related-artists-container').html().should.contain 'Artists Mentioned In Post'
+        $('.related-artists-container').html().should.contain 'Andy Warhol'
+        $('.post-page-feature-item img').length.should.equal 1
+
+  describe 'Featured Posts', ->
+
+    beforeEach ->
+      attachment =
+        position: 1
+        type: "PostArtwork"
+        artwork: fabricate('artwork', artist: fabricate('artist'))
+
+      posts = [
+        new Post(fabricate('post', attachments: [attachment]))
+        new Post(fabricate('post', attachments: [attachment]))
+        new Post(fabricate('post', attachments: [attachment]))
+      ]
+
+      for post in posts
+        thumbnail = post.featuredPostsThumbnail()
+        post.set featured_posts_thumbnail: thumbnail
+
+      @html = render('featured_posts')({
+        posts: posts
+      })
+
+    describe 'template', ->
+
+      xit 'renders post header', ->
+        $ = cheerio.load @html
+        $('.featured-posts-container').html().should.contain 'Featured Posts'
+        $('.featured-post-item').length.should.equal 3
+        $('.featured-post-item .fixed-post-image').length.should.equal 3

@@ -15,7 +15,8 @@ module.exports = class FeedView extends Backbone.View
 
   rendered: false
   marginLeftRight: 110
-  maxWidth: 1084
+  maxWidth: 1194
+  minWidth: 950
   textColumnWidth: 404
   textColumnMargin: 80
   items: []
@@ -54,6 +55,7 @@ module.exports = class FeedView extends Backbone.View
     @afterFetchCont        = options.afterFetch
     @widthOffset           = options.widthOffset or 0
     @sortOrder             = options.sortOrder
+    @limitPostBodyHeight   = options.limitPostBodyHeight
 
   render: (items) =>
     @latestItems = items
@@ -141,8 +143,16 @@ module.exports = class FeedView extends Backbone.View
       @fetchMoreItems()
 
   getFixedWidth: ->
-    windowWidth = @$window.innerWidth()  || 800
-    if windowWidth > @maxWidth then @maxWidth else windowWidth - @marginLeftRight
+    windowWidth = @$window.innerWidth() || @minWidth
+    windowWidth =
+      if windowWidth < @minWidth
+        @minWidth
+      else if windowWidth > @maxWidth
+        @maxWidth
+      else
+        windowWidth
+
+    windowWidth - @marginLeftRight
 
   getImageWidth: ->
     @fixedWidth - @textColumnWidth - @textColumnMargin

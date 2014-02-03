@@ -18,6 +18,8 @@ module.exports = class FollowButton extends Backbone.View
     @analyticsFollowMessage     = options.analyticsFollowMessage or @defaultAnalyticsMessage('Followed')
     @analyticsUnfollowMessage   = options.analyticsUnfollowMessage or @defaultAnalyticsMessage('Unfollowed')
 
+    @change()
+
   defaultAnalyticsMessage: (action) ->
     "#{action} #{@model.constructor.name.toLowerCase()} from #{window?.location.pathname}"
 

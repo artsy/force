@@ -1,0 +1,13 @@
+- attachment = post.get('featured_posts_thumbnail')
+- profile = post.profile()
+.featured-post-item.post-page-feature-item( data-id=post.get('id') )
+  .featured-post-content
+    .featured-post-attachment
+      if attachment
+        include ./attachment
+    .featured-post-text
+      if post.get('title')
+        .featured-post-title
+          a( href=post.href() )!= post.get('title')
+      if post.has('profile')
+        include ./../../../components/profile_badge/template

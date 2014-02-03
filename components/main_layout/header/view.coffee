@@ -21,7 +21,9 @@ module.exports = class HeaderView extends Backbone.View
     @searchBarView.on 'search:entered', (term) -> window.location = "/search?q=#{term}"
     @searchBarView.on 'search:selected', @searchBarView.selectResult
 
-    unless sd.HIDE_HEADER # Already hidden
+    if isTouchDevice()
+      @removeWelcomeHeader()
+    else unless sd.HIDE_HEADER # Already hidden
       @$window.on 'scroll.welcome-header', @checkRemoveWelcomeHeader
 
     mediator.on 'open:auth', @openAuth, this

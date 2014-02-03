@@ -1,0 +1,13 @@
+- artwork = artist.get('poster_artwork')
+- url = artwork.defaultImage().imageUrlFor(249, 167)
+
+.related-artists-item.post-page-feature-item
+  .related-artists-content
+    .featured-post-attachment
+      figure.fixed-post-image.fixed-dimensions
+        a( href=artist.href() )
+          img( src=url )
+    .avant-garde-header-center
+      a( href=artist.href() )!= artist.get('name')
+    if currentUser
+      button.avant-garde-button-white.follow-button( data-id=artist.get('id') )

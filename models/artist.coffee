@@ -23,6 +23,7 @@ module.exports = class Artist extends Backbone.Model
   urlRoot: -> "#{sd.ARTSY_URL}/api/v1/artist"
 
   clientUrl: -> "/artist/#{@get('id')}"
+  href: -> "/artist/#{@get('id')}"
 
   initialize: ->
     @relatedArtists = new Backbone.Collection [], model: Artist
@@ -43,8 +44,17 @@ module.exports = class Artist extends Backbone.Model
 
   fetchArtworks: (options) ->
     col = new Artworks
-    col.url = "#{sd.ARTSY_URL}/api/v1/artist/#{@get 'id'}/artworks"
+    col.url = "#{@url()}/artworks"
     col.fetch options
+
+  fetchPosterArtwork: (options) ->
+    @fetchArtworks
+      data:
+        page: 1
+        size: 1
+      success: (artworks) =>
+        @set { poster_artwork: artworks.models[0] }
+        @
 
   fetchRelatedPosts: (options = {}) ->
     @relatedPosts.fetch _.extend
