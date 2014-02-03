@@ -23,7 +23,7 @@ module.exports = class CurrentUser extends Backbone.Model
 
   defaultArtworkCollection: ->
     unless @get('artworkCollections')?[0]?
-      throw "Must call CurrentUser#initializeDefaultArtworkCollection " +
+      throw Error "Must call CurrentUser#initializeDefaultArtworkCollection " +
             "before accessing the default artwork collection."
       return
     @get('artworkCollections')[0]

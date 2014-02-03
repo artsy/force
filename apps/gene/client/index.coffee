@@ -12,17 +12,19 @@ module.exports.GeneView = class GeneView extends Backbone.View
   initialize: (options) ->
     { @user } = options
     @setupFollowButton()
-    @setupArtistFillwidth()
+    if @user
+      @user.initializeDefaultArtworkCollection().always @setupArtistFillwidth
+    else
+      @setupArtistFillwidth()
     @shareView = new ShareView el: @$('#gene-share-buttons')
 
-  setupArtistFillwidth: ->
-    @user.initializeDefaultArtworkCollection success: =>
-      @model.fetchArtists 'related', success: (artists) =>
-        new ArtistFillwidthList(
-          collection: artists
-          el: $('#gene-artists')
-          user: @user
-        ).fetchAndRender()
+  setupArtistFillwidth: =>
+    @model.fetchArtists 'related', success: (artists) =>
+      new ArtistFillwidthList(
+        collection: artists
+        el: $('#gene-artists')
+        user: @user
+      ).fetchAndRender()
 
   setupFollowButton: ->
     new FollowButton

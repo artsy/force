@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-template = require './template.jade'
+template = -> require('./template.jade') arguments...
 FillwidthView = require '../fillwidth_row/view.coffee'
 { Following, FollowButton } = require '../follow_button/index.coffee'
 
@@ -9,7 +9,6 @@ module.exports = class ArtistFillwidthList extends Backbone.View
   initialize: (options) ->
     { @user } = options
     @following = new Following(null, kind: 'artist') if @user
-    @fetchAndRender()
     @
 
   fetchAndRender: ->
@@ -18,7 +17,7 @@ module.exports = class ArtistFillwidthList extends Backbone.View
 
   renderArtist: (artist, i) =>
     artist.fetchArtworks data: { size: 10 }, success: (artworks) =>
-      $row = @$(".artist-fillwidth-list-item:nth-child(#{i + 1})")
+      $row = @$(".artist-fillwidth-list-item:eq(#{i})")
 
       # Add fillwidth view
       fillwidthView = new FillwidthView
@@ -33,7 +32,7 @@ module.exports = class ArtistFillwidthList extends Backbone.View
         el: $row.find('.avant-garde-button-white')
         following: @following
         model: artist
-      @following.syncFollows @collection.pluck('id')
+      @following?.syncFollows @collection.pluck('id')
 
       # After rendering the row do some fillwidth things unique to this layout
       _.defer ->

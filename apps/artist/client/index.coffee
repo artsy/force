@@ -111,10 +111,11 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
   renderRelatedArtists: (type) =>
     $artistContainer = @$("#artist-related-#{type.toLowerCase()}")
     if @model["related#{type}"]?.models.length > 0
-      new ArtistFillwidthList
+      new ArtistFillwidthList(
         el: @$("#artist-related-#{type.toLowerCase()}")
         collection: @model["related#{type}"]
         user: @currentUser
+      ).fetchAndRender()
     else
       $artistContainer.parent().remove()
 

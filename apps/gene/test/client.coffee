@@ -23,16 +23,9 @@ describe 'GeneView', ->
   beforeEach ->
     { GeneView } = mod = benv.require resolve __dirname, '../client/index.coffee'
     mod.__set__ 'mediator', @mediator = { trigger: sinon.stub() }
-    @view = new GeneView el: $('body')
+    @view = new GeneView el: $('body'), model: new Gene fabricate 'gene'
 
   describe '#initialize', ->
 
     it 'sets up a share view', ->
       @view.shareView.$el.attr('id').should.equal 'gene-share-buttons'
-
-  describe '#signupToFollow', ->
-
-    it 'opens the auth modal', ->
-      @view.signupToFollow()
-      @mediator.trigger.args[0][0].should.equal 'open:auth'
-      @mediator.trigger.args[0][1].mode.should.equal 'register'
