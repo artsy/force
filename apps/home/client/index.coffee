@@ -13,7 +13,6 @@ featuredArtworksTemplate = -> require('../templates/featured_artworks.jade') arg
 featuredShowsTemplate = -> require('../templates/featured_shows.jade') arguments...
 featuredPostsTemplate = -> require('../templates/featured_posts.jade') arguments...
 featuredArtistsTemplate = -> require('../templates/featured_artists.jade') arguments...
-artworkItemTemplate = -> require('../../../components/artwork_item/template.jade') arguments...
 
 module.exports.init = ->
 
@@ -28,10 +27,7 @@ module.exports.init = ->
 
   # Render all of the featured sections
   new Artworks().fetchSetItemsByKey 'homepage:featured-artworks', success: (artworks) ->
-    $('#home-featured-artworks').html featuredArtworksTemplate(
-      artworks: artworks.models[0..3]
-      artworkItemTemplate: artworkItemTemplate
-    )
+    $('#home-featured-artworks').html featuredArtworksTemplate(artworks: artworks.models[0..3])
   new PartnerShows().fetchSetItemsByKey 'homepage:featured-shows', success: (shows) ->
     $('#home-featured-shows').html featuredShowsTemplate(shows: shows.models[0..9])
   new FeaturedLinks().fetchSetItemsByKey 'homepage:featured-links', success: (links) ->

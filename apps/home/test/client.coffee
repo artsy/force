@@ -90,7 +90,6 @@ describe 'Homepage init code', ->
       'featuredShowsTemplate'
       'featuredPostsTemplate'
       'featuredArtistsTemplate'
-      'artworkItemTemplate'
     ]
     @mod.__set__ 'HeroUnitView', ->
     sinon.stub _, 'defer'

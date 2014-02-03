@@ -43,6 +43,9 @@ gravity.get '/api/v1/profile/alessandra', (req, res) ->
 gravity.get '/api/v1/fair/:id', (req, res) ->
   res.send fabricate('fair')
 
+gravity.get '/api/v1/tag/:id', (req, res) ->
+  res.send fabricate 'tag'
+
 gravity.get '/api/v1/fair/:id/sections', (req, res) ->
   res.send [
     { section: "FOCUS", partner_shows_count: 13 }
