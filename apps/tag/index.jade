@@ -1,0 +1,10 @@
+extends ../../components/main_layout/templates/index
+
+block head
+  include meta
+
+append locals
+  assetPackage = 'tag'
+
+block body
+  h1#tag-header.avant-garde-header-center Artwork related to “#{tag.get('name')}”

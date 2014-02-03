@@ -1,7 +1,6 @@
 _         = require 'underscore'
 sd        = require('sharify').data
 Backbone  = require 'backbone'
-Backbone  = require 'backbone'
 Artworks  = require '../collections/artworks.coffee'
 { Image, Markdown } = require 'artsy-backbone-mixins'
 Artist    = require '../models/artist.coffee'
