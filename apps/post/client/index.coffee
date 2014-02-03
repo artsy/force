@@ -53,8 +53,9 @@ module.exports = class PostView extends Backbone.View
     items = new FeedItems()
     items.add feedItem
     new PoplockitFeed
-      feedItems : items
-      el        : @$('.feed')
+      limitPostBodyHeight : false
+      feedItems           : items
+      el                  : @$('.feed')
 
   renderFeaturedPosts: ->
     @featuredPosts = new FeaturedPosts

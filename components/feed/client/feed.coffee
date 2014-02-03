@@ -55,6 +55,7 @@ module.exports = class FeedView extends Backbone.View
     @afterFetchCont        = options.afterFetch
     @widthOffset           = options.widthOffset or 0
     @sortOrder             = options.sortOrder
+    @limitPostBodyHeight   = options.limitPostBodyHeight
 
   render: (items) =>
     @latestItems = items
