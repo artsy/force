@@ -17,7 +17,7 @@ render = (res, post, profile) ->
     success: (post) ->
       author = post.get('author')
       if author?.default_profile_id
-        profile = new Profile { id: post.get('author').default_profile_id }
+        profile = new Profile { id: author.default_profile_id }
         profile.fetch
           cache: true
           error: ->
