@@ -29,7 +29,7 @@ describe 'ArtistView', ->
       sortBy : '-published_at'
     }, =>
       { ArtistView, @init } = mod = benv.requireWithJadeify(
-        (resolve __dirname, '../../client/index'), ['relatedArtistsTemplate', 'artistSort']
+        (resolve __dirname, '../../client/index'), ['artistSort']
       )
       @FillwidthView = sinon.stub()
       @FillwidthView.nextPage = sinon.stub()
@@ -39,6 +39,7 @@ describe 'ArtistView', ->
       mod.__set__ 'BlurbView', @blurbStub = sinon.stub()
       mod.__set__ 'RelatedPostsView', @relatedPostStub = sinon.stub()
       mod.__set__ 'RelatedGenesView', @genesStub = sinon.stub()
+      mod.__set__ 'ArtistFillwidthList', @artistFillwidthView = sinon.stub()
       @view = new ArtistView
         el     : $ 'body'
         model  : new Artist fabricate 'artist'
@@ -114,24 +115,3 @@ describe 'ArtistView', ->
       @view.setupRelatedArtists()
       @view.model.relatedArtists.trigger 'sync'
       @view.renderRelatedArtists.args[0][0].should.equal 'Artists'
-
-  describe '#renderRelatedArtists', ->
-
-    it 'renders related artists', ->
-      @view.$el.html "<div id='artist-related-artists'></div>"
-      @view.model.relatedArtists.reset [fabricate 'artist', name: 'Andy Foobar']
-      @view.renderRelatedArtists 'Artists'
-      @view.$el.html().should.include 'Andy Foobar'
-
-    it 'renders related contemporary artists', ->
-      @view.$el.html "<div id='artist-related-contemporary'></div>"
-      @view.model.relatedContemporary.reset [fabricate 'artist', name: 'Bitty the cat Z']
-      @view.renderRelatedArtists 'Contemporary'
-      @view.$el.html().should.include 'Bitty the cat Z'
-
-  describe '#renderRelatedArtist', ->
-
-    it 'fetches and renders a single artist row by injecting a fillwidth view', ->
-      @view.renderRelatedArtist new Artist(fabricate 'artist', name: 'Andy Foobar'), 0, 'Artists'
-      _.last(Backbone.sync.args)[2].success [fabricate 'artwork', title: 'Andy Foobar Skull']
-      _.last(@FillwidthView.args)[0].collection.first().get('title').should.equal 'Andy Foobar Skull'
