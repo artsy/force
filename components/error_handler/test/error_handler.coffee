@@ -6,15 +6,20 @@ errorHandler = rewire '../'
 describe '#internalError', ->
 
   it 'renders a 500 page', ->
-    errorHandler.internalError new Error("Some blah error"), {}, { send: spy = sinon.spy() }
+    errorHandler.internalError new Error("Some blah error"), {}, { statusCode: 500, send: spy = sinon.spy() }
     spy.args[0][0].should.equal 500
     spy.args[0][1].should.include "Some blah error"
 
   it 'hides error details in production', ->
     errorHandler.__set__ 'REVEAL_ERRORS', false
-    errorHandler.internalError new Error("Some blah error"), {}, { send: spy = sinon.spy() }
+    errorHandler.internalError new Error("Some blah error"), {}, { statusCode: 500, send: spy = sinon.spy() }
     spy.args[0][0].should.equal 500
     spy.args[0][1].should.not.include "Some blah error"
+
+  it 'renders the status code', ->
+    errorHandler.internalError new Error("Some blah error"), {}, { statusCode: 404, send: spy = sinon.spy() }
+    spy.args[0][0].should.equal 404
+
 
 describe '#pageNotFound', ->
 
