@@ -1,4 +1,6 @@
 _ = require 'underscore'
+mediator = require '../../../lib/mediator.coffee'
+CurrentUser = require '../../../models/current_user.coffee'
 Backbone = require 'backbone'
 HeroUnitView = require './hero_unit_view.coffee'
 OrderedSets = require '../../../collections/ordered_sets.coffee'
@@ -36,3 +38,6 @@ module.exports.init = ->
     $('#home-featured-posts').html featuredPostsTemplate(postLinks: links.models[0..6])
   new FeaturedLinks().fetchSetItemsByKey 'homepage:featured-artists', success: (links) ->
     $('#home-featured-artists').html featuredArtistsTemplate(artistLinks: links.models[0..3])
+
+  # Open the signup modal for logged out users
+  _.defer (-> mediator.trigger 'open:auth', mode: 'signup') unless CurrentUser.orNull()
