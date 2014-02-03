@@ -12,9 +12,9 @@ module.exports.GeneView = class GeneView extends Backbone.View
   initialize: (options) ->
     { @user } = options
     @setupFollowButton()
-    if @user
+    if @user and not @model.isSubjectMatter()
       @user.initializeDefaultArtworkCollection().always @setupArtistFillwidth
-    else
+    else if not @model.isSubjectMatter()
       @setupArtistFillwidth()
     @shareView = new ShareView el: @$('#gene-share-buttons')
 
