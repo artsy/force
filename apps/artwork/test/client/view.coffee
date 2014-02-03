@@ -14,6 +14,8 @@ describe 'ArtworkView', ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
+      $.support.transition = { end: 'transitionend' }
+      $.fn.emulateTransitionEnd = -> @trigger $.support.transition.end
       done()
 
   after ->
@@ -29,21 +31,16 @@ describe 'ArtworkView', ->
       artist: @artist
       artwork: @artwork
     }, =>
-      { ArtworkView } = mod = rewire '../../client/index'
+      ArtworkView = rewire '../../client/view'
+      ArtworkView.__set__ 'ShareView', (@shareViewStub = sinon.stub())
 
-      mod.__set__ 'ShareView', (@shareViewStub = sinon.stub())
-      mod.__set__ 'sd', ARTIST: @artist, ARTWORK: @artwork
-
-      @view = new ArtworkView el: $('body')
+      @view = new ArtworkView el: $('#artwork-page'), artist: @artist, artwork: @artwork
       done()
 
   afterEach ->
     Backbone.sync.restore()
 
   describe '#initialize', ->
-    beforeEach ->
-      @view.initialize()
-
     it 'has an artist and an artwork', ->
       @view.artwork.id.should.equal @artwork.id
       @view.artist.id.should.equal @artist.id
@@ -53,3 +50,12 @@ describe 'ArtworkView', ->
       @view.$('.circle-icon-button-share').click()
       @shareViewStub.args[0][0].artwork.id.should.equal @artwork.id
       @shareViewStub.args[0][0].width.should.equal '350px'
+
+  describe '#route', ->
+    it 'transitions the state of the el with data attributes', ->
+      @view.$el.attr('data-route').should.equal 'show'
+      @view.route('more-info')
+      @view.$el.attr('data-route-pending').should.equal 'more-info'
+      @view.$el.attr('data-route').should.equal 'more-info'
+
+

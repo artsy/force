@@ -1,0 +1,19 @@
+if artwork.get('provenance')
+  h4 Provenance
+  != artwork.mdToHtml('provenance')
+
+if artwork.get('exhibition_history')
+  h4 Exhibition History
+  != artwork.mdToHtml('exhibition_history')
+
+if artwork.get('signature')
+  h4 Signature
+  != artwork.mdToHtml('signature')
+
+if artwork.get('additional_information')
+  h4 Additional Information
+  != artwork.mdToHtml('additional_information')
+
+if artwork.get('literature')
+  h4 Literature
+  != artwork.mdToHtml('literature')

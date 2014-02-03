@@ -95,11 +95,7 @@ describe 'Artwork', ->
 
   describe '#hasMoreInfo', ->
     it 'has more info', ->
-      @artwork.set { artist: { blurb: 'existy' }, provenance: undefined, exhibition_history: undefined, signature: undefined, additional_information: undefined, literature: undefined }
-      @artwork.hasMoreInfo().should.be.ok
-      @artwork.set { artist: { blurb: undefined } }
-      @artwork.hasMoreInfo().should.not.be.ok
-      @artwork.unset 'artist'
+      @artwork.set { provenance: undefined, exhibition_history: '', signature: '', additional_information: undefined, literature: undefined }
       @artwork.hasMoreInfo().should.not.be.ok
       @artwork.set 'literature', 'existy'
       @artwork.hasMoreInfo().should.be.ok

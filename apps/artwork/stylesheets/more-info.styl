@@ -1,0 +1,53 @@
+#artwork-page[data-route='more-info']
+  // Toggle information
+  .artwork-overview
+    margin-right 0
+    padding 0 20px
+    .artwork-image
+    .artwork-more-info
+      float left
+    .artwork-image
+      width 45%
+    .artwork-more-info
+      display block
+      width 55%
+    .artwork-image-actions
+      display none
+
+  // Toggle button
+  .artwork-more-info-link
+    display none
+  .artwork-exit-more-info-link
+    display block
+
+// Fade transition for artwork overview
+.artwork-overview
+  transition opacity 0.5s
+#artwork-page
+  &[data-state='fade-in']
+    .artwork-overview
+      opacity 1
+  // Only fade out artwork-overview
+  // when transitioning the 'more-info' route
+  &[data-route-pending='more-info'][data-state='fade-out']
+  &[data-route='more-info'][data-state='fade-out']
+    .artwork-overview
+      opacity 0
+
+.artwork-more-info
+  padding 0 20px
+  text-align left
+  font-size 17px
+  line-height 1.5
+  h4
+    margin 20px 0 10px
+    avant-garde()
+    font-size 13px
+    &:first-child
+      margin-top 0
+  p
+    margin 10px 0
+    &:first-child
+      margin-top 0
+    &:last-child
+      margin-bottom 0

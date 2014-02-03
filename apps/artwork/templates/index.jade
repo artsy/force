@@ -7,122 +7,29 @@ append locals
   assetPackage = 'artwork'
 
 block body
-  #artwork-page.main-layout-container
-
+  #artwork-page.main-layout-container( data-route='show' )
     article.artwork-container
-      .artwork-image
-        a.artwork-image-zoom(
-          rel='zoom'
-        )
-          img(
-            src= artwork.defaultImageUrl('larger')
-            alt= artwork.get('title')
-            title= artwork.get('title')
+      section.artwork-overview
+        .artwork-image
+          a.artwork-image-zoom(
+            rel='zoom'
           )
+            img#the-artwork-image(
+              alt= artwork.get('title')
+              title= artwork.get('title')
+              nopin= artwork.noPinAttr()
+              src= artwork.defaultImage().imageUrlFor(500, 500)
+            )
+
+        .artwork-more-info
+          include ./_more-info
 
         .artwork-image-actions
           a.circle-icon-button-share
           a.circle-icon-button-save
 
       aside.artwork-detail
-        .artwork-meta
-          //- Primary artwork metadata
-          h2.artwork-detail-artist
-            a( href= "/artist/#{artist.id}" )= artist.get('name')
-
-          if artwork.get('title')
-            h1.artwork-detail-title
-              = artwork.get('title')
-              if artwork.get('date')
-                | , #{artwork.get('date')}
-          .artwork-detail-medium= artwork.get('medium')
-          .artwork-detail-dimensions
-            .amd-imperial!= artwork.dimensions({ metric: 'in', format: 'superscript' })
-            .amd-metric= artwork.dimensions({ metric: 'cm', format: 'decimal' })
-          if artwork.editionStatus()
-            .artwork-edition-status
-              = artwork.editionStatus()
-
-          //- Image rights/credits
-          if artwork.get('image_rights')
-            .artwork-meta-photo-credit= artwork.get('image_rights')
-
-          //- Edition Sets
-          if artwork.isMultipleEditions()
-            .artwork-edition-sets
-              for edition in artwork.editions.models
-                .artwork-edition-set
-                  .aes-imperial!= edition.dimensions({ metric: 'in', format: 'superscript' })
-                  .aes-metric= edition.dimensions({ metric: 'cm', format: 'decimal' })
-                  .aes-edition-size= edition.get('editions')
-                  .aes-price= edition.get('price')
-
-          //- Partner link
-          .artwork-meta-partner
-            a( href= artwork.partnerLink() )
-              = artwork.partnerName()
-
-          //- Price/sale message
-          if artwork.isPriceDisplayable()
-            .artwork-meta-price
-              .artwork-meta-price-label( class=(artwork.get('sold') ? 'is-sold' : 'is-not-sold') )
-                = artwork.priceLabel()
-              .artwork-meta-price-amount= artwork.priceDisplay()
-          else
-            if artwork.artworkPageSaleMessage()
-              .artwork-meta-price
-                = artwork.artworkPageSaleMessage()
-
-        .artwork-actions
-          //- Large contact button
-          if artwork.isContactable()
-            a.avant-garde-button-black= artwork.contactLabel()
-
-          //- Auction # todo
-
-          //- Buy # todo
-          if artwork.get('acquireable')
-            a.avant-garde-button-black Buy
-
-          //- Contact a specialist
-          if artwork.get('inquireable')
-            .artwork-inquiry
-              //- Inquiry microcopy
-              if artwork.inquiryMicroCopy()
-                small.small-caps= artwork.inquiryMicroCopy()
-              a.avant-garde-button-underlined
-                | Contact Artsy Specialist
-
-          nav.artwork-actions-list
-            if artwork.isHangable()
-              a( href="/artwork/#{artwork.id}/view-in-room" )
-                i.icon-view-in-room
-                | View in Room
-            if artwork.hasMoreInfo()
-              a( href="/artwork/#{artwork.id}/artwork-info" )
-                i.icon-info
-                | More Info
-            a.artwork-artist-follow-button
-              i.icon-follow
-              | Follow Artist
-            if artwork.isComparable()
-              a( href="/artwork/#{artwork.id}/auction-results" )
-                i.icon-auction
-                | Auction Results
-                sup Beta
-            if artwork.isDownloadable()
-              a( href=artwork.defaultImageUrl('larger'), target='_blank', download)
-                i.icon-download
-                | Download Image
-
-            //- Administrative actions
-            if user && user.isAdmin()
-              a( href="http://admin.artsy.net/artworks/artwork/#{artwork.id}", target='_blank' )
-                i.icon-edit
-                | Edit
-              a( href="http://admin.artsy.net/genome/artwork/#{artwork.id}", target='_blank' )
-                i.icon-genome
-                | Genome
+        include ./_detail
 
     section.artwork-related-information
       .artwork-artist
