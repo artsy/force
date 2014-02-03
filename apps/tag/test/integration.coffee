@@ -1,13 +1,13 @@
 { startServer, closeServer } = require '../../../test/helpers/integration'
 Browser = require 'zombie'
 
-describe 'Tag page', ->
+xdescribe 'Tag page', ->
 
   before (done) -> startServer done
 
   after -> closeServer()
 
-  xit 'shows the tag name', (done) ->
+  it 'shows the tag name', (done) ->
     browser = new Browser
     browser.visit 'http://localhost:5000/tag/cow', ->
       browser.wait ->
