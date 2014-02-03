@@ -222,5 +222,3 @@ new ArtistFillwidthList(
 ```
 
 `fetchAndRender` will fetch every artist's artworks and the individual list items will re-render as they sync.
-
-NOTE: The view will listen for artist `sync` calls and re-render the invidual lists as well.
