@@ -79,7 +79,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
         else if page < @nextPage # duplicate response that is too late
           return
 
-        else if collection.length < page * @pageSize
+        if collection.length < page * @pageSize
           $(window).off('.favorites')
 
         end = page * @pageSize
