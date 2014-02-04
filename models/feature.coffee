@@ -15,6 +15,7 @@ Artworks      = require '../collections/artworks.coffee'
 Backbone      = require 'backbone'
 FeaturedLinks = require '../collections/featured_links.coffee'
 FeaturedSet   = require './featured_set.coffee'
+Sale          = require './sale.coffee'
 
 { smartTruncate }   = require "../components/util/string.coffee"
 { Markdown, Image } = require 'artsy-backbone-mixins'
@@ -91,6 +92,21 @@ module.exports = class Feature extends Backbone.Model
                 type: 'featured links'
               finalItems.push set
               callback()
+
+            when 'Sale'
+              # We're going to assume we wouldn't stack multiple sales next to each other
+              # because that would be silly. So we'll just use the first item.
+              # Set it on the feature for convenience.
+              @set sale: (sale = new Sale items.first().toJSON())
+              set.set
+                type : if sale.get 'is_auction' then 'auction artworks' else 'sale artworks'
+                index: set.get 'index'
+              finalItems.push set
+              sale.fetchArtworks
+                success: (saleArtworks) =>
+                  set.set 'data', Artworks.fromSale(saleArtworks)
+                  callback()
+                error: (e) -> err = e; callback()
 
             else
               callback()

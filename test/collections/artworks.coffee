@@ -36,3 +36,27 @@ describe 'Artworks', ->
       columns[0][0].get('id').should.equal @artworks.first().get('id')
       columns[1][0].get('id').should.equal @artworks.at(1).get('id')
       columns[2][0].get('id').should.equal @artworks.at(2).get('id')
+
+  describe '@fromSale', ->
+
+    it "returns sale info injected in artworks", ->
+      artworks = Artworks.fromSale new Backbone.Collection [{
+        artwork: fabricate 'artwork'
+        user_notes: "The vomit on this canvas is truely exquisit."
+      }]
+      artworks.first().get('saleArtwork').get('user_notes').should.include 'vomit'
+
+    it "sorts by position", ->
+      artworks = Artworks.fromSale new Backbone.Collection [
+        { artwork: fabricate('artwork', title: 'b'), position: 2 }
+        { artwork: fabricate('artwork', title: 'a'), position: 1 }
+        { artwork: fabricate('artwork', title: 'c'), position: 3 }
+      ]
+      artworks.pluck('title').join('').should.equal 'abc'
+
+    it 'sets the current bid', ->
+      artworks = Artworks.fromSale new Backbone.Collection [{
+        artwork: fabricate 'artwork'
+        highest_bid_amount_cents: 1000
+      }]
+      artworks.first().get('saleArtwork').currentBid().should.include '$10'

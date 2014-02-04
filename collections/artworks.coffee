@@ -1,8 +1,9 @@
-_ = require 'underscore'
-Artwork = require '../models/artwork.coffee'
-Backbone = require 'backbone'
+_             = require 'underscore'
+Artwork       = require '../models/artwork.coffee'
+Backbone      = require 'backbone'
+SaleArtwork   = require '../models/sale_artwork.coffee'
 { ARTSY_URL } = require('sharify').data
-{ Fetch } = require 'artsy-backbone-mixins'
+{ Fetch }     = require 'artsy-backbone-mixins'
 
 module.exports = class Artworks extends Backbone.Collection
 
@@ -47,3 +48,17 @@ module.exports = class Artworks extends Backbone.Collection
       if column is numberOfColumns
         column = 0
     columns
+
+  # Pass in sale_artworks and this will flip it into a collection of artworks with sale info
+  # injected into it. Useful for reusing views meant for artworks that have a little bit of
+  # sales info along-side such as the artwork_columns component.
+  #
+  # @param {Collection} saleArtworks Backbone Collection from `/api/v1/sale/:id/sale_artworks`
+  # @return The new artworks collection
+
+  @fromSale: (saleArtworks) ->
+    artworks = new Artworks saleArtworks.map (saleArtwork) ->
+      _.extend saleArtwork.get('artwork'),
+        saleArtwork: new SaleArtwork saleArtwork.omit('artwork')
+    artworks.comparator = (artwork) -> artwork.get('saleArtwork').get('position')
+    artworks.sort()

@@ -246,5 +246,11 @@ module.exports = class Artwork extends Backbone.Model
     return undefined if @get('sale_message') is 'Contact For Price'
     @get 'sale_message'
 
+  salePrice: (isAuction = false) ->
+    @saleMessage() if @saleMessage() and not isAuction
+
   noPinAttr: ->
     if @get('can_share_image') then undefined else "nopin"
+
+  showMoreInfo: ->
+    not _.isFunction @saleMessage

@@ -1,0 +1,8 @@
+.artwork-column-artist-list
+  h3.artwork-column-artist-list-heading Jump to Artist
+  for group in artworkGroups
+    .artwork-column-artist-list
+      for artwork in group
+        if artwork.get('artist')
+          .artwork-column-artist
+            a( href=artwork.searchPath() )!= artwork.get('artist').get('name')
