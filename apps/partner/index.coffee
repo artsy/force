@@ -19,7 +19,7 @@ vanityRoutes = [
   '/:id/contact'     #    x
   '/:id/about'       #              x
   '/:id/posts'       #    x         x
-  '/:id/shop'        #    x         x
+  '/:id/shop'        #              x
 ]
 
 app.get(route, routes.setProfile) for route in vanityRoutes
