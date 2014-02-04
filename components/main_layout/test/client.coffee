@@ -7,14 +7,14 @@ sd = require('sharify').data
 
 describe 'Layout init code', ->
 
-  before (done) ->
+  beforeEach (done) ->
     benv.setup =>
       benv.expose { $: require 'jquery' }
       sinon.stub $, 'ajax'
       { @syncAuth } = require '../client'
       done()
 
-  after benv.teardown
+  afterEach -> benv.teardown()
 
   it 'logs you out if Gravity throws an auth error', ->
     sd.CURRENT_USER = fabricate 'user'
@@ -22,3 +22,4 @@ describe 'Layout init code', ->
     $.ajax.args[0][0].url.should.include 'api/v1/me'
     $.ajax.args[0][0].error()
     window.location.should.equal '/force/users/sign_out'
+    sd.CURRENT_USER = null

@@ -1,7 +1,7 @@
 { startServer, closeServer } = require '../../../test/helpers/integration'
 Browser = require 'zombie'
 
-describe 'Main layout template', ->
+xdescribe 'Main layout template', ->
 
   before (done) -> startServer done
 
