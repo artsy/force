@@ -30,7 +30,7 @@ module.exports = class ArtworkColumns extends Backbone.View
     unless @collectionLength
       @collectionLength = @collection.length
 
-    @columnWidth = Math.floor((@totalWidth - ((@numberOfColumns - 1) * @gutterWidth)) / @numberOfColumns) - 2
+    @columnWidth = Math.floor((@totalWidth - ((@numberOfColumns - 1) * @gutterWidth)) / @numberOfColumns)
 
     @seeMore = (@seeMore and @collectionLength > @initialItemCount)
     @numberOfColumns ||= 3

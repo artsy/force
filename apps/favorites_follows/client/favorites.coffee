@@ -38,6 +38,8 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
     @artworkColumnsView = new ArtworkColumnsView
       el: @$favoriteArtworks
       collection: @collection
+      numberOfColumns: 4
+      gutterWidth: 40
 
   setupCurrentUser: ->
     @currentUser = CurrentUser.orNull()
