@@ -79,13 +79,15 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
         else if page < @nextPage # duplicate response that is too late
           return
 
-        if collection.length < page * @pageSize
-          $(window).off('.favorites')
-
         end = page * @pageSize
         start = end - @pageSize
-        @artworkColumnsView.appendArtworks collection.slice start, end
-        @nextPage = page + 1
+
+        if collection.length < end
+          $(window).off('.favorites')
+
+        if collection.length > start
+          @artworkColumnsView.appendArtworks collection.slice start, end
+          @nextPage = page + 1
 
   infiniteScroll: =>
     fold = $(window).height() + $(window).scrollTop()

@@ -44,16 +44,19 @@ module.exports.FollowsView = class FollowsView extends Backbone.View
         else if page < @nextPage # duplicate response
           return
 
-        if @followItems.length < page * @pageSize
+        end = page * @pageSize
+        start = end - @pageSize
+
+        if @followItems.length < end
           $(window).off '.following'
 
-        end = page * @pageSize; start = end - @pageSize
-        showingItems = @followItems.slice start, end
-        _.each showingItems, (item) =>
-          model = new kindToModel[item.kind] item.get(item.kind)
-          @appendItemSkeleton(model)
-          @showItemContent(model)
-        @nextPage = page + 1
+        if @followItems.length > start
+          showingItems = @followItems.slice start, end
+          _.each showingItems, (item) =>
+            model = new kindToModel[item.kind] item.get(item.kind)
+            @appendItemSkeleton(model)
+            @showItemContent(model)
+          @nextPage = page + 1
 
   fetchNextPage: (options) ->
     data =
