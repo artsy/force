@@ -68,6 +68,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
   loadNextPage: =>
     @fetchNextPageSavedArtworks
       success: (collection, response, options) =>
+        @isFetching = false
         @doneRenderLoading()
 
         page = options?.data?.page or @nextPage # fetched page
@@ -75,9 +76,6 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
         if page is 1
           $(window).on 'scroll.favorites', _.throttle(@infiniteScroll, 150)
           @showEmptyHint() unless collection.length > 0
-
-        else if page < @nextPage # duplicate response that is too late
-          return
 
         end = page * @pageSize
         start = end - @pageSize
@@ -98,6 +96,9 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
   #
   # @param {Object} options Provide `success` and `error` callbacks similar to Backbone's fetch
   fetchNextPageSavedArtworks: (options) ->
+    return unless not @isFetching
+    @isFetching = true
+
     url = "#{sd.ARTSY_URL}/api/v1/collection/saved-artwork/artworks"
     data =
       user_id: @currentUser.get('id')

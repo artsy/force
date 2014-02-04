@@ -33,6 +33,7 @@ module.exports.FollowsView = class FollowsView extends Backbone.View
   loadNextPage: ->
     @fetchNextPage
       success: (collection, response, options) =>
+        @isFetching = false
         @$('.follows .loading-spinner').hide()
 
         page = options?.data?.page or @nextPage # fetched page
@@ -40,9 +41,6 @@ module.exports.FollowsView = class FollowsView extends Backbone.View
         if page is 1
           $(window).on 'scroll.following', _.throttle(@infiniteScroll, 150)
           @showEmptyHint() unless @followItems.length > 0
-
-        else if page < @nextPage # duplicate response
-          return
 
         end = page * @pageSize
         start = end - @pageSize
@@ -59,6 +57,9 @@ module.exports.FollowsView = class FollowsView extends Backbone.View
           @nextPage = page + 1
 
   fetchNextPage: (options) ->
+    return unless not @isFetching
+    @isFetching = true
+
     data =
       page: @nextPage
       size: @pageSize
