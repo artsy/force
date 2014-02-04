@@ -6,7 +6,7 @@ block head
 append locals
   assetPackage = 'home'
   bodyClass = bodyClass + ' body-no-margins body-transparent-header'
-  bodyClass = bodyClass + (heroUnits[0].get('menu_color_class') == 'black' ? '-white' : '')
+  bodyClass = bodyClass + (heroUnits.length && heroUnits[0].get('menu_color_class') == 'black' ? '-white' : '')
 
 block body
   include hero_units
