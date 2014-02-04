@@ -35,7 +35,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
     @setupShareButton()
 
   initializeArtworkColumns: ->
-    minWidth = 940
+    minWidth = 850
     maxWidth = 1120
     containerWidth = @$favoriteArtworks.width()
     width = Math.max(minWidth, Math.min(containerWidth, maxWidth))
