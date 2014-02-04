@@ -9,3 +9,6 @@ for set in sets
     case set.get('type')
       when 'featured links'
         +featuredLinks(set.models())
+      when 'sale artworks'
+        - var artworkColumns = set.get('data').groupByColumnsInOrder()
+        include ../../../components/artwork_columns/template

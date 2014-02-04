@@ -3,10 +3,13 @@ jade          = require 'jade'
 path          = require 'path'
 fs            = require 'fs'
 cheerio       = require 'cheerio'
+Artworks      = require '../../../../collections/artworks.coffee'
 Backbone      = require 'backbone'
 { fabricate } = require 'antigravity'
 FeaturedSet   = require '../../../../models/featured_set.coffee'
 FeaturedLink  = require '../../../../models/featured_link.coffee'
+FeaturedLinks = require '../../../../collections/featured_links.coffee'
+SaleArtwork   = require '../../../../models/sale_artwork.coffee'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../../templates/#{templateName}.jade"
@@ -31,17 +34,16 @@ describe 'Featured Sets', ->
       item_type  : "FeaturedLink"
       type       : "featured links"
       owner_type : "Feature"
-    @html = render('sets')({ sets : [ @set ] })
 
   describe 'template', ->
 
     it 'renders the name of the set', ->
-      $ = cheerio.load @html
+      $ = cheerio.load render('sets')({ sets: [ @set ] })
       $('.feature-set-title').should.have.lengthOf 1
       $('.feature-set-title').text().should.equal @set.get('name')
 
     it 'renders the set description if there is one', ->
-      $ = cheerio.load @html
+      $ = cheerio.load render('sets')({ sets: [ @set ] })
       $('.feature-set-description').should.have.lengthOf 1
       $('.feature-set-description').text().should.equal @set.mdToHtmlToText 'description'
 
@@ -51,3 +53,20 @@ describe 'Featured Sets', ->
       $('.feature-set-title').should.have.lengthOf 0
       $('.feature-set-description').should.have.lengthOf 0
       $('.feature-set').should.have.lengthOf 1
+
+  describe "fetured links", ->
+
+    it 'renders a featured link', ->
+      @set.set 'data', new FeaturedLinks([ fabricate('featured_link')])
+      @html = render('sets')({ sets : [ @set ] })
+      $ = cheerio.load render('sets')({ sets: [ @set ] })
+      $('.feature-set-item').should.have.lengthOf 1
+
+  describe "sale artworks", ->
+
+    it 'renders sale artworks in an artwork column component', ->
+      @set.set 'type', 'sale artworks'
+      @set.set 'data', Artworks.fromSale([new SaleArtwork(fabricate('sale_artwork')), new SaleArtwork(fabricate('sale_artwork'))])
+      @html = render('sets')({ sets : [ @set ] })
+      $ = cheerio.load render('sets')({ sets: [ @set ] })
+      $('.feature-set .artwork-column').should.have.lengthOf 3

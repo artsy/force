@@ -42,6 +42,24 @@
   &:last-child
     border-bottom none
 
+  .artwork-column
+    border-left 1px solid dark-gray-border-color
+    border-right 1px solid dark-gray-border-color
+    margin-left 0
+    margin-right 0
+    &:first-child
+      margin-right -1px
+      border-left none
+    &:last-child
+      margin-left -1px
+      border-right none
+  .artwork-item
+    border-bottom 1px solid dark-gray-border-color
+    padding 25px
+    &:last-child
+      border-bottom none
+    
+
 .feature-set-title
   font-size 30px
   margin-bottom 30px
@@ -102,3 +120,4 @@
       color dark-gray-text-color
     &:empty
       display none
+
