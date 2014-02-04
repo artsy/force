@@ -1,14 +1,15 @@
-{ startServer, closeServer } = require '../../../test/helpers/integration'
-Browser = require 'zombie'
+jade = require 'jade'
+{ resolve } = require 'path'
+fs = require 'fs'
 
-xdescribe 'Main layout template', ->
+render = ->
+  filename = resolve __dirname, "../templates/index.jade"
+  jade.compile(
+    fs.readFileSync(filename),
+    { filename: filename }
+  )
 
-  before (done) -> startServer done
+describe 'Main layout template', ->
 
-  after -> closeServer()
-
-  it 'includes the sharify data', ->
-    new Browser().visit 'http://localhost:5000', ->
-      browser.wait ->
-        browser.html().should.include '__sharifyData = {"JS_EXT":".js"'
-        done()
+  it 'includes the sharify script', ->
+    render()(sd: {}, sharify: { script: -> 'foobar' }).should.include 'foobar'
