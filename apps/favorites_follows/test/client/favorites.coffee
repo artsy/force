@@ -86,8 +86,8 @@ describe 'FavoritesView', ->
         @fetchStub = sinon.stub artworks, "fetch", (options) =>
           start = (options.data.page - 1) * options.data.size
           end = start + options.data.size
-          dest = new Artworks(@src[start...end])
-          options.success?(dest)
+          dest = new Artworks(@src[0...end])
+          options.success?(dest, null, options)
         mod.__set__ 'CurrentUser',
           orNull: -> _.extend fabricate 'user',
             initializeDefaultArtworkCollection: sinon.stub()
