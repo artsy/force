@@ -90,13 +90,15 @@ module.exports = class Artwork extends Backbone.Model
   hasDimension: (attr) ->
     parseFloat(@get(attr)) > 0
 
+  # Can the more info toggle be displayed?
+  #
+  # return {Boolean}
   hasMoreInfo: ->
-    @get('artist')?.blurb or
-    @has('provenance') or
-    @has('exhibition_history') or
-    @has('signature') or
-    @has('additional_information') or
-    @has('literature')
+    not _.isEmpty(@get('provenance')) or
+    not _.isEmpty(@get('exhibition_history')) or
+    not _.isEmpty(@get('signature')) or
+    not _.isEmpty(@get('additional_information')) or
+    not _.isEmpty(@get('literature'))
 
   contactLabel: ->
     if @get('partner')?.type is 'Gallery' then 'Contact Gallery' else 'Contact Seller'

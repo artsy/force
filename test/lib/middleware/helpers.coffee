@@ -5,7 +5,7 @@ describe 'Helpers middleware', ->
 
   beforeEach ->
     @req = {}
-    @res = {}
+    @res = { status: sinon.stub() }
     @next = sinon.stub()
     helpers @req, @res, @next
 

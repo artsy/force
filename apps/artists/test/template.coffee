@@ -78,4 +78,4 @@ describe 'Artists', ->
     it 'has jump links to the various gene pages', ->
       $links = @$template.find('.avant-garde-jump-link')
       $links.length.should.equal 2
-      $links.first().text().should.equal 'Abstract Expressionism'
+      $links.first().text().should.equal fabricate('gene').name

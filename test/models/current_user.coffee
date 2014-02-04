@@ -2,6 +2,7 @@ Backbone    = require 'backbone'
 sinon       = require 'sinon'
 CurrentUser = require '../../models/current_user'
 fabricate   = require('antigravity').fabricate
+should      = require 'should'
 
 describe 'CurrentUser', ->
 
@@ -11,6 +12,11 @@ describe 'CurrentUser', ->
 
   afterEach ->
     Backbone.sync.restore()
+
+  describe '#defaultArtworkCollection', ->
+
+    it 'throws a sensible error when you forget to initialize artwork collections', ->
+      (=> @user.defaultArtworkCollection()).should.throw /Must call/
 
   describe "#sync", ->
 

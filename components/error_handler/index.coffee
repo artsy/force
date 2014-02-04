@@ -26,7 +26,11 @@ errorHandler.pageNotFound = (req, res, next) ->
 # Error-handling middleware
 errorHandler.internalError = (err, req, res, next) ->
   detail = if REVEAL_ERRORS then err.message else null
-  res.send 500, renderTemplate { code: 500, error: err, sd: res.locals?.sd or {}, detail: detail }
+  res.send res.statusCode, renderTemplate
+    code: res.statusCode
+    error: err
+    sd: res.locals?.sd or {}
+    detail: detail
 
 errorHandler.javascriptError = (req, res, next) ->
   console?.log(req.body) # Logs client-side errors to stdout for debugging purpose

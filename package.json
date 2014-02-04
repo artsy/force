@@ -38,7 +38,7 @@
   "devDependencies": {
     "browserify": "*",
     "stylus": "0.39.x",
-    "jadeify2": "*",
+    "jadeify": "*",
     "browserify-dev-middleware": "*",
     "should": "*",
     "mocha": "*",
@@ -49,7 +49,7 @@
     "sqwish": "*",
     "uglify-js": "*",
     "caching-coffeeify": "*",
-    "antigravity": "git+https://artsy-submodule:g0g3tDemGemZ@github.com/artsy/antigravity.git",
+    "antigravity": "git+ssh://git@github.com:artsy/antigravity.git",
     "nib": "*",
     "superagent": "*",
     "cheerio": "*",

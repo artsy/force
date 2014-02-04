@@ -1,4 +1,5 @@
 @import '../../../components/stylus_lib'
+@import './more-info'
 @import './share'
 
 .circle-icon-button
@@ -68,22 +69,26 @@ artwork-detail-item-height  = 36px
   cursor -moz-zoom-in
   cursor -webkit-zoom-in
 
-.artwork-image
+.artwork-more-info
+  display none
+
+.artwork-overview
   float left
   width calc('100% - %s' % artwork-detail-width)
   height 100%
-  padding 0 20px 0 artwork-detail-width
+  padding-left artwork-detail-width
   margin-right -(artwork-detail-width)
   text-align center
-  img
-    display inline-block
-    max-width 100%
-    max-height 100%
-
+  prevent-content-shift()
   // Better usage of space at smaller screen sizes
   @media screen and (max-width: 1024px)
     margin-right 0
-    padding 0 20px
+    padding-left 20px
+
+#the-artwork-image
+  display inline-block
+  max-width 100%
+  max-height 100%
 
 .artwork-image-actions
   padding 10px
@@ -91,6 +96,7 @@ artwork-detail-item-height  = 36px
 .artwork-detail
   float right
   width artwork-detail-width
+  padding-left 20px
   font-size 17px
 
 .artwork-detail-artist
@@ -117,8 +123,10 @@ artwork-detail-item-height  = 36px
 .artwork-meta-price
   display table
   width 100%
-  border-top 1px dotted light-gray-border-color
-  border-bottom 1px dotted light-gray-border-color
+  border-top 1px dotted
+  border-bottom 1px dotted
+  border-color light-gray-border-color
+  border-color rgba(0,0,0,.125)
   margin 10px 0
   line-height artwork-detail-item-height
 .artwork-meta-price-label
@@ -154,16 +162,17 @@ artwork-detail-item-height  = 36px
   padding 5px 0
   font-size 13px
   line-height 1.5
-  border-bottom 1px dotted dark-gray-border-color
+  border-bottom 1px dotted
+  border-color light-gray-border-color
+  border-color rgba(0,0,0,.125)
   &:first-child
-    border-top 1px dotted dark-gray-border-color
+    border-top 1px dotted
 .aes-edition-size
   color dark-gray-text-color
 .aes-price
   position absolute
   top 5px
   right 5px
-
 
 .artwork-actions-list
   margin-top 20px
@@ -174,7 +183,11 @@ artwork-detail-item-height  = 36px
     padding-left @line-height
     text-decoration none
     transition all 0.125s
-    border-bottom 1px dotted light-gray-border-color
+    border-bottom 1px dotted
+    border-color light-gray-border-color
+    border-color rgba(0,0,0,.125)
+    &.is-hidden
+      display none
     > i
       position absolute
       line-height @line-height
@@ -186,7 +199,9 @@ artwork-detail-item-height  = 36px
       vertical-align 4px
 
     &:first-child
-      border-top 1px dotted light-gray-border-color
+      border-top 1px dotted
+      border-color light-gray-border-color
+      border-color rgba(0,0,0,.125)
     &:hover
       background-color highlight-color
       border-color @background-color

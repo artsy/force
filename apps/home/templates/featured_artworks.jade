@@ -1,2 +1,6 @@
+
 for artwork in artworks
-  li!= artworkItemTemplate({ artwork: artwork, artworkSize: 'square', showBlurb: true })
+  li
+    artworkSize = 'square'
+    showBlurb = true
+    include ../../../components/artwork_item/template

@@ -21,7 +21,12 @@ module.exports = class CurrentUser extends Backbone.Model
       @set artworkCollections: [new ArtworkCollection(userId: @get('id'))]
     @defaultArtworkCollection().fetch(options) unless @defaultArtworkCollection.fetched
 
-  defaultArtworkCollection: -> @get('artworkCollections')[0]
+  defaultArtworkCollection: ->
+    unless @get('artworkCollections')?[0]?
+      throw Error "Must call CurrentUser#initializeDefaultArtworkCollection " +
+            "before accessing the default artwork collection."
+      return
+    @get('artworkCollections')[0]
 
   # Add the access token to fetches and saves
   sync: (method, model, options={}) ->

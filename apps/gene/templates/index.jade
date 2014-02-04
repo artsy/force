@@ -15,3 +15,10 @@ block body
       +share(gene.get('name') + ' on Artsy', gene.imageUrl())
   #gene-description
     #gene-description-inner!= gene.mdToHtml('description')
+  unless gene.isSubjectMatter()
+    #gene-tabs.garamond-tablist
+      a.garamond-tab.is-active Artists
+      span.garamond-tab-separator
+      a.garamond-tab Filter All #{gene.get('name')}
+    #gene-artists
+      .loading-spinner

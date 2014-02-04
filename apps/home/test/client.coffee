@@ -77,29 +77,28 @@ describe 'Homepage init code', ->
         ]).models
         sd: {}
       }
-      sinon.stub _, 'defer'
       Backbone.$ = $
       done()
 
   after ->
-    _.defer.restore()
     benv.teardown()
 
   beforeEach ->
-    { @init } = mod = benv.requireWithJadeify resolve(__dirname, '../client/index.coffee'), [
+    { @init } = @mod = benv.requireWithJadeify resolve(__dirname, '../client/index.coffee'), [
       'featuredLinksTemplate'
       'featuredArtworksTemplate'
       'featuredShowsTemplate'
       'featuredPostsTemplate'
       'featuredArtistsTemplate'
-      'artworkItemTemplate'
     ]
-    mod.__set__ 'HeroUnitView', ->
+    @mod.__set__ 'HeroUnitView', ->
+    sinon.stub _, 'defer'
     sinon.stub Backbone, 'sync'
     @init()
 
   afterEach ->
     Backbone.sync.restore()
+    _.defer.restore()
 
   it 'renders featured artworks', ->
     Backbone.sync.args[0][2].success [fabricate 'set']
@@ -116,7 +115,18 @@ describe 'Homepage init code', ->
     _.last(Backbone.sync.args)[2].success [fabricate 'post', title: "Retrospect on Andy Foobar"]
     $('body').html().should.include "Retrospect on Andy Foobar"
 
-  it 'renders featured artists'
+  it 'renders links', ->
+    Backbone.sync.args[2][2].success [fabricate 'set']
+    _.last(Backbone.sync.args)[2].success [fabricate 'post', title: "Retrospect on Andy Foobar"]
+    $('.home-featured-post-link').first().html().should.include '<a>'
+
+  xit 'renders featured artists'
+
+  it 'opens the signup modal', ->
+    mediator = @mod.__get__ 'mediator'
+    mediator.on 'open:auth', spy = sinon.spy()
+    _.last(_.defer.args)[0]()
+    spy.args[0][0].mode.should.equal 'signup'
 
 describe 'HomeAuthRouter', ->
 
