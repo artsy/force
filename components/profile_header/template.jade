@@ -1,9 +1,10 @@
 header.profile-header
   .profile-info-container
     .profile-icon-container.profile-badge
-      include ../profile_badge/profile_icon
+      a( href=profile.href() )
+        include ../profile_badge/profile_icon
     .profile-info
-      .profile-badge-name=profile.displayName()
+      a( href=profile.href() ).profile-badge-name=profile.displayName()
       if profile.get('bio')
         .profile-bio!= profile.mdToHtml('bio') + ' '
       if profile.isMe()

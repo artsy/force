@@ -52,6 +52,7 @@ module.exports = class PostView extends Backbone.View
     feedItem.set _type: 'Post'
     items = new FeedItems()
     items.add feedItem
+    items.doneFetching = true
     new PoplockitFeed
       limitPostBodyHeight : false
       feedItems           : items
