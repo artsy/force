@@ -25,7 +25,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
     { @pageSize, @nextPage } = _.defaults options or {}, @defaults
     @setupCurrentUser()
 
-    @collection ?= new Artworks()
+    @collection ?= new Artworks() # Maintain all saved artworks fetched so far
 
     @$favoriteArtworks = @$('.favorite-artworks')
     @$loadingSpinner = @$('.loading-spinner')
@@ -67,18 +67,25 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
 
   loadNextPage: =>
     @fetchNextPageSavedArtworks
-      success: (collection) =>
+      success: (collection, response, options) =>
         @doneRenderLoading()
 
-        if @nextPage is 1
+        page = options?.data?.page or @nextPage # fetched page
+
+        if page is 1
           $(window).on 'scroll.favorites', _.throttle(@infiniteScroll, 150)
           @showEmptyHint() unless collection.length > 0
 
-        else if collection.length < 1
-          return $(window).off('.favorites')
+        else if page < @nextPage # duplicate response that is too late
+          return
 
-        @artworkColumnsView.appendArtworks collection.models
-        ++@nextPage
+        else if collection.length < page * @pageSize
+          $(window).off('.favorites')
+
+        end = page * @pageSize
+        start = end - @pageSize
+        @artworkColumnsView.appendArtworks collection.slice start, end
+        @nextPage = page + 1
 
   infiniteScroll: =>
     fold = $(window).height() + $(window).scrollTop()
@@ -89,7 +96,6 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
   #
   # @param {Object} options Provide `success` and `error` callbacks similar to Backbone's fetch
   fetchNextPageSavedArtworks: (options) ->
-    collection = @collection
     url = "#{sd.ARTSY_URL}/api/v1/collection/saved-artwork/artworks"
     data =
       user_id: @currentUser.get('id')
@@ -97,9 +103,11 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
       size: @pageSize
       sort: "-position"
       private: true
-    collection.fetch
+    @collection.fetch
       url: url
       data: data
+      remove: false
+      merge: true
       success: options?.success
       error: options?.error
 
