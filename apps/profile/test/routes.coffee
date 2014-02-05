@@ -3,6 +3,7 @@ _ = require 'underscore'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 routes = require '../routes'
+Profile = require '../../../models/profile.coffee'
 Shortcut = require '../../../models/shortcut.coffee'
 
 describe 'Shortcut routes', ->
@@ -17,7 +18,8 @@ describe 'Shortcut routes', ->
 
   describe '#index', ->
 
-    it 'redirects to the long url', ->
+    it 'renders the profile template', ->
       routes.index @req, @res
-      _.last(Backbone.sync.args)[2].success { short: 'shortcut', long: 'https://long-url.com' }
-      @res.redirect.args[0][0].should.equal 'https://long-url.com'
+      _.last(Backbone.sync.args)[2].success fabricate 'profile', id: 'andy-foobar'
+      @res.render.args[0][0].should.equal 'templates'
+      @res.render.args[0][1].profile.get('id').should.equal 'andy-foobar'

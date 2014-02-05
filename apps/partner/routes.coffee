@@ -5,6 +5,7 @@ Partner       = require '../../models/partner'
 Profile       = require '../../models/profile'
 
 @setProfile = (req, res, next) ->
+  return next() if req.profile
   new Profile(id: req.params.id).fetch
     cache: true
     success: (profile) -> req.profile = profile; next()
