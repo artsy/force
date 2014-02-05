@@ -163,11 +163,8 @@ bumper-width = 40px
 .afg-artist
   display inline-block
   width 23%
-  margin 0 1%
+  margin 0 1.33%
   vertical-align top
-  &:first-child
-  &:last-child
-    width 24%
   &:first-child
     margin-left 0
   &:last-child
@@ -175,11 +172,13 @@ bumper-width = 40px
   > a
     display block
     width 100%
-    height 160px
-    background-color light-gray-background-color
-    overflow hidden
-    background-size cover
-    background-position center center
+    background-color black
+    > img
+      max-width 100%
+      transition opacity 0.3s
+      prevent-content-shift()
+    &:hover > img
+      opacity 0.5
 
 .afg-artist-name
   @extends .afc-artist-name
