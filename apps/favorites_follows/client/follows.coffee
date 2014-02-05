@@ -15,46 +15,68 @@ kindToModel = artist: Artist, gene: Gene
 
 module.exports.FollowsView = class FollowsView extends Backbone.View
 
-  initialize: (options) ->
+  defaults:
+    pageSize: 10
+    nextPage: 1   # page number of the next page to load
+
+  initialize: (options={}) ->
+    { @pageSize, @nextPage } = _.defaults options, @defaults
     @followItems  = @collection # More readable alias
-    @pageNum      = 0           # Last page loaded
-    @itemsPerPage = options.itemsPerPage or 10
     @setupCurrentUser()
-    @setupFollowsItems()
+    @loadNextPage()
 
   setupCurrentUser: ->
     @currentUser = CurrentUser.orNull()
     @currentUser?.initializeDefaultArtworkCollection()
     @artworkCollection = @currentUser?.defaultArtworkCollection()
 
-  setupFollowsItems: ->
-    @followItems.fetchUntilEnd success: (col) =>
-      @$('.follows .loading-spinner').hide()
-      @showEmptyHint() unless @followItems.length > 0
-      if @followItems.length > @itemsPerPage
-        $(window).bind 'scroll.following', _.throttle(@infiniteScroll, 150)
-      @loadNextPage()
-
   loadNextPage: ->
-    end = @itemsPerPage * (@pageNum + 1)
-    start = end - @itemsPerPage
-    return unless @followItems.length > start
+    @fetchNextPage
+      success: (collection, response, options) =>
+        @isFetching = false
+        @$('.follows .loading-spinner').hide()
 
-    showingItems = @followItems.slice start, end
-    _.each showingItems, (item) =>
-      model = new kindToModel[item.kind] item.get(item.kind)
-      @appendItemSkeleton(model)
-      @showItemContent(model)
-    ++@pageNum
+        page = options?.data?.page or @nextPage # fetched page
+
+        if page is 1
+          $(window).on 'scroll.following', _.throttle(@infiniteScroll, 150)
+          @showEmptyHint() unless @followItems.length > 0
+
+        end = page * @pageSize
+        start = end - @pageSize
+
+        if @followItems.length < end
+          $(window).off '.following'
+
+        if @followItems.length > start
+          showingItems = @followItems.slice start, end
+          _.each showingItems, (item) =>
+            model = new kindToModel[item.kind] item.get(item.kind)
+            @appendItemSkeleton(model)
+            @showItemContent(model)
+          @nextPage = page + 1
+
+  fetchNextPage: (options) ->
+    return unless not @isFetching
+    @isFetching = true
+
+    data =
+      page: @nextPage
+      size: @pageSize
+    @followItems.fetch
+      data: data
+      remove: false
+      merge: true
+      success: options?.success
+      error: options?.error
 
   infiniteScroll: =>
-    $(window).unbind('.following') unless @pageNum * @itemsPerPage < @followItems.length
     fold = $(window).height() + $(window).scrollTop()
     $lastItem = @$('.follows > .follows-item:last')
     @loadNextPage() unless fold < $lastItem.offset()?.top + $lastItem.height()
 
   showEmptyHint: () ->
-    @$('.follows-empty-hint').html $( hintTemplate type: sd.TYPE )
+    @$('.follows-empty-hint').html $( hintTemplate type: sd.KIND+'s' )
     (new SuggestedGenesView
       el: @$('.suggested-genes')
       user: @currentUser
@@ -93,8 +115,6 @@ module.exports.FollowsView = class FollowsView extends Backbone.View
 
 module.exports.init = ->
   new FollowsView
-    collection: new Following null,
-      kind: sd.KIND
-      comparator: (item) -> item.get(item.kind).name or ""
+    collection: new Following null, kind: sd.KIND
     el: $('body')
-    itemsPerPage: 10
+    pageSize: 10

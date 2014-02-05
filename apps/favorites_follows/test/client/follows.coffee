@@ -43,7 +43,7 @@ describe 'FollowsView', ->
         @view = new FollowsView
           el: $ 'body'
           collection: followArtists
-          itemsPerPage: 2
+          pageSize: 2
         done()
 
     afterEach ->
@@ -64,14 +64,20 @@ describe 'FollowsView', ->
         { FollowsView, @init } = mod = benv.requireWithJadeify(
           (resolve __dirname, '../../client/follows'), ['itemTemplate', 'hintTemplate']
         )
+        src = [
+          { artist: fabricate('artist', { id: _.uniqueId(), name: 'artist1'}) },
+          { artist: fabricate('artist', { id: _.uniqueId(), name: 'artist2'}) },
+          { artist: fabricate('artist', { id: _.uniqueId(), name: 'artist3'}) },
+          { artist: fabricate('artist', { id: _.uniqueId(), name: 'artist4'}) },
+          { artist: fabricate('artist', { id: _.uniqueId(), name: 'artist5'}) }
+        ]
         followArtists = new Following null, kind: 'artist'
-        syncStub = sinon.stub followArtists, "fetchUntilEnd", (options) ->
-          for i in [1..5]
-            followArtists.add new Follow(
-              { artist: fabricate('artist', { id: _.uniqueId(), name: 'artist'+i }) },
-              { kind: 'artist' }
-            )
-          options.success?()
+        syncStub = sinon.stub followArtists, "fetch", (options) ->
+          start = (options.data.page - 1) * options.data.size
+          end = start + options.data.size
+          for artist in src[start...end]
+            followArtists.add new Follow(artist, { kind: 'artist' })
+          options.success?(followArtists, null, options)
         @FillwidthView = sinon.stub()
         @FillwidthView.render = sinon.stub()
         @FillwidthView.returns @FillwidthView
@@ -79,7 +85,7 @@ describe 'FollowsView', ->
         @view = new FollowsView
           el: $ 'body'
           collection: followArtists
-          itemsPerPage: 2
+          pageSize: 2
         done()
 
     afterEach ->
@@ -88,7 +94,7 @@ describe 'FollowsView', ->
     describe '#initialize', ->
 
       it 'sets up following items collection of the current user', ->
-        @view.followItems.length.should.equal 5
+        @view.followItems.length.should.equal 2
 
     describe '#setupFollowingItems', ->
 

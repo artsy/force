@@ -25,7 +25,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
     { @pageSize, @nextPage } = _.defaults options or {}, @defaults
     @setupCurrentUser()
 
-    @collection ?= new Artworks()
+    @collection ?= new Artworks() # Maintain all saved artworks fetched so far
 
     @$favoriteArtworks = @$('.favorite-artworks')
     @$loadingSpinner = @$('.loading-spinner')
@@ -35,9 +35,16 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
     @setupShareButton()
 
   initializeArtworkColumns: ->
+    minWidth = 850
+    maxWidth = 1120
+    containerWidth = @$favoriteArtworks.width()
+    width = Math.max(minWidth, Math.min(containerWidth, maxWidth))
     @artworkColumnsView = new ArtworkColumnsView
       el: @$favoriteArtworks
       collection: @collection
+      numberOfColumns: 4
+      gutterWidth: 40
+      totalWidth: width
 
   setupCurrentUser: ->
     @currentUser = CurrentUser.orNull()
@@ -60,18 +67,25 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
 
   loadNextPage: =>
     @fetchNextPageSavedArtworks
-      success: (collection) =>
+      success: (collection, response, options) =>
+        @isFetching = false
         @doneRenderLoading()
 
-        if @nextPage is 1
+        page = options?.data?.page or @nextPage # fetched page
+
+        if page is 1
           $(window).on 'scroll.favorites', _.throttle(@infiniteScroll, 150)
           @showEmptyHint() unless collection.length > 0
 
-        else if collection.length < 1
-          return $(window).off('.favorites')
+        end = page * @pageSize
+        start = end - @pageSize
 
-        @artworkColumnsView.appendArtworks collection.models
-        ++@nextPage
+        if collection.length < end
+          $(window).off('.favorites')
+
+        if collection.length > start
+          @artworkColumnsView.appendArtworks collection.slice start, end
+          @nextPage = page + 1
 
   infiniteScroll: =>
     fold = $(window).height() + $(window).scrollTop()
@@ -82,7 +96,9 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
   #
   # @param {Object} options Provide `success` and `error` callbacks similar to Backbone's fetch
   fetchNextPageSavedArtworks: (options) ->
-    collection = @collection
+    return unless not @isFetching
+    @isFetching = true
+
     url = "#{sd.ARTSY_URL}/api/v1/collection/saved-artwork/artworks"
     data =
       user_id: @currentUser.get('id')
@@ -90,9 +106,11 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
       size: @pageSize
       sort: "-position"
       private: true
-    collection.fetch
+    @collection.fetch
       url: url
       data: data
+      remove: false
+      merge: true
       success: options?.success
       error: options?.error
 
