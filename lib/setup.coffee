@@ -131,6 +131,7 @@ module.exports = (app) ->
   app.use require "../apps/favorites_follows"
   app.use require "../apps/partner"
   app.use require "../apps/profile"
+  app.use require "../apps/shortcuts"
 
   # Route to ping for system up
   app.get '/system/up', (req, res) ->
