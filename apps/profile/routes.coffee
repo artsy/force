@@ -1,31 +1,47 @@
 Profile = require '../../models/profile'
 
-fetchProfile = (req, res, next) ->
-  profile = req.profile
-  return next() unless req.profile and req.profile.isUser()
-  res.locals.sd.PROFILE = profile.toJSON()
-
-@setProfile = (req, res, next) ->
-  return next() if req.profile
-  new Profile(id: req.params.id).fetch
+fetchProfile = (req, res, next, success) ->
+  profile = new Profile { id: req.params.id }
+  profile.fetch
     cache: true
-    success: (profile) -> req.profile = profile; next()
-    error: -> next()
+    success: (profile) ->
+      return next() unless profile and (profile.isUser() or profile.isPartner())
+      res.locals.sd.PROFILE = profile.toJSON()
+      success(profile)
+    error: next
+
+getTemplateForProfileType = (profile) ->
+  if profile.isPartner()
+    "../partner/templates"
+  else
+    "templates"
 
 @index = (req, res, next) ->
-  fetchProfile req, res, next
-  res.render 'templates',
-    profile : req.profile
+  fetchProfile req, res, next, (profile) ->
+    res.render getTemplateForProfileType(profile),
+      profile : profile
 
 @posts = (req, res, next) ->
-  fetchProfile req, res, next
-  if profile.get('posts_count')
-    res.render 'templates',
-      profile : req.profile
-  else
-    res.redirect profile.href()
+  fetchProfile req, res, next, (profile) ->
+    if profile.get('posts_count')
+      res.render getTemplateForProfileType(profile),
+        profile : profile
+    else
+      res.redirect profile.href()
 
 @favorites = (req, res, next) ->
-  fetchProfile req, res, next
-  res.render 'templates',
-    profile : req.profile
+  fetchProfile req, res, next, (profile) ->
+    if profile.isUser()
+      res.render getTemplateForProfileType(profile),
+        profile : profile
+    else
+      res.redirect profile.href()
+
+@contact = (req, res, next) ->
+  fetchProfile req, res, next, (profile) ->
+    if profile.isPartner()
+      res.locals.sd.CURRENT_TAB = 'contact'
+      res.render getTemplateForProfileType(profile),
+        profile : profile
+    else
+      res.redirect profile.href()
