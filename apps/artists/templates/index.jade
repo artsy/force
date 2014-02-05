@@ -27,7 +27,7 @@ block body
               .afc-artist
                 - var artist = link.get('artist');
                 a( href= link.get('href') )
-                  img( src= link.imageUrl('large_rectangle'), alt= link.get('title') )
+                  img( src= link.imageUrl('large_rectangle'), alt= link.get('title'), title= link.get('title') )
                 .afc-artist-information
                   .afc-artist-information-left
                     h2.afc-artist-name
@@ -57,7 +57,8 @@ block body
           .afg-featured-artists
             for artist in gene.trendingArtists
               .afg-artist
-                a( href="/artist/#{artist.id}", style="background-image: url(#{artist.imageUrl('large')})" )
+                a( href="/artist/#{artist.id}" )
+                  img( src=artist.imageUrl('four_thirds'), alt= artist.get('name'), title= artist.get('name') )
                 .afg-artist-information
                   h2.afg-artist-name
                     a( href="/artist/#{artist.id}" )= artist.get('name')
