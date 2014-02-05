@@ -5,46 +5,78 @@ CurrentUser   = require '../../../models/current_user.coffee'
 Partner       = require '../../../models/partner.coffee'
 Profile       = require '../../../models/profile.coffee'
 ContactView   = require './contact.coffee'
+tablistTemplate = -> require('../templates/tablist.jade') arguments...
 
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 
-tabToView =
+sectionToView =
   contact: ContactView
 
 module.exports.PartnerView = class PartnerView extends Backbone.View
 
   defaults:
-    tabs: []
-    currentTab: 'overview'
+    sections: []
+    currentSection: 'overview'
 
   initialize: (options={}) ->
-    { @tabs, @currentTab } = _.defaults options, @defaults
+    { @sections, @currentSection } = _.defaults options, @defaults
+    @profile = @model # alias
+    @partner = new Partner @profile.get('owner')
     @initTabs()
     @initContent()
     @following = new Following(null, kind: 'profile') if sd.CURRENT_USER?
     @initFollowButton()
-    @following?.syncFollows [@model.get('id')]
+    @following?.syncFollows [@profile.get('id')]
 
   initTabs: ->
-    return
+    @partner?.fetch
+      cache: true
+      success: =>
+        sections = @getDisplaySections @getSections()
+        @$('.partner-nav').html(
+          $( tablistTemplate profile: @profile, sections: sections, sd: sd )
+        )
 
   initContent: ->
-    new tabToView[@currentTab]?(
+    new sectionToView[@currentSection]?(
       el: @$('.partner-content')
-      model: @model
+      profile: @profile
+      partner: @partner
     )
 
   initFollowButton: ->
     @followButtons = new FollowButton
       analyticsFollowMessage: 'Followed partner profile from /partner'
       analyticsUnfollowMessage: 'Unfollowed partner profile from /partner'
-      el: @$(".partner-actions .partner-follow")
+      el: @$(".partner-actions .follow-button")
       following: @following
       model: @model
+
+  getSections: ->
+    # The order in the array will be used for presentation
+    gallery     = ['overview', 'shows', 'artists', 'posts', 'contact']
+    institution = ['shows', 'collection', 'posts', 'shop', 'about']
+
+    if @profile.isGallery() then gallery
+    else if @profile.isInstitution() then institution
+    else []
+    
+  getDisplaySections: (sections) ->
+    criteria =
+      overview:   => true
+      shows:      => @partner.get('displayable_shows_count') > 0
+      artists:    => @partner.get('partner_artists_count') > 0
+      collection: => @partner.get('published_not_for_sale_artworks_count') > 0
+      contact:    => true
+      about:      => true
+      posts:      => true # TODO not sure how for now :P
+      shop:       => @partner.get('published_for_sale_artworks_count') > 0
+
+    _.filter sections, (s) -> criteria[s]?()
 
 module.exports.init = ->
   new PartnerView
     model: new Profile sd.PROFILE
     el: $('#partner')
-    tabs: sd.TABS
-    currentTab: sd.CURRENT_TAB
+    sections: sd.SECTIONS
+    currentSection: sd.SECTION

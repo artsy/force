@@ -1,0 +1,15 @@
+include ../../../components/util/activator
+
+- var id = profile.get('id')
+- function transform(section) {
+-   var map = { collection: 'works' };
+-   return map[section] || section;
+- };
+
+nav.partner-tabs.garamond-tablist
+  each section, index in sections
+    if index > 0
+      span.garamond-tab-separator
+    a.garamond-tab(
+      href="/#{id}/#{section}", class=activeClass("/#{id}/#{section}")
+    )= transform(section)

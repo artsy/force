@@ -24,3 +24,4 @@ vanityRoutes = [
 
 app.get(route, routes.setProfile) for route in vanityRoutes
 app.get '/:id/contact', routes.contact
+app.get '/:id/about', routes.about

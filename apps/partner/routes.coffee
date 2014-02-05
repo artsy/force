@@ -10,14 +10,20 @@ Profile       = require '../../models/profile'
     success: (profile) -> req.profile = profile; next()
     error: -> next()
 
-partnerFromProfile = (req) ->
-  if req.profile?.isPartner()
-    new Partner req.profile.get('owner')
+partnerFromProfile = (profile) ->
+  if profile.isPartner()
+    new Partner profile.get('owner')
   else
     false
 
 @contact = (req, res) ->
-  return next() unless (profile = req.profile)?.isPartner()
+  return next() unless (profile = req.profile)?.isGallery()
   res.locals.sd.PROFILE = profile.toJSON()
-  res.locals.sd.CURRENT_TAB = 'contact'
+  res.locals.sd.SECTION = 'contact'
+  res.render 'templates', profile: profile
+
+@about = (req, res) ->
+  return next() unless (profile = req.profile)?.isInstitution()
+  res.locals.sd.PROFILE = profile.toJSON()
+  res.locals.sd.SECTION = 'contact'
   res.render 'templates', profile: profile
