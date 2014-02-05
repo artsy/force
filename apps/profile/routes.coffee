@@ -5,24 +5,43 @@ fetchProfile = (req, res, next, success) ->
   profile.fetch
     cache: true
     success: (profile) ->
+      return next() unless profile and (profile.isUser() or profile.isPartner())
       res.locals.sd.PROFILE = profile.toJSON()
       success(profile)
-    error: next
+    error: -> next()
+
+getTemplateForProfileType = (profile) ->
+  if profile.isPartner()
+    "../partner/templates"
+  else
+    "templates"
 
 @index = (req, res, next) ->
   fetchProfile req, res, next, (profile) ->
-    res.render 'templates',
+    res.render getTemplateForProfileType(profile),
       profile : profile
 
 @posts = (req, res, next) ->
   fetchProfile req, res, next, (profile) ->
     if profile.get('posts_count')
-      res.render 'templates',
+      res.render getTemplateForProfileType(profile),
         profile : profile
     else
       res.redirect profile.href()
 
 @favorites = (req, res, next) ->
   fetchProfile req, res, next, (profile) ->
-    res.render 'templates',
-      profile : profile
+    if profile.isUser()
+      res.render getTemplateForProfileType(profile),
+        profile : profile
+    else
+      res.redirect profile.href()
+
+@contact = (req, res, next) ->
+  fetchProfile req, res, next, (profile) ->
+    if profile.isPartner()
+      res.locals.sd.CURRENT_TAB = 'contact'
+      res.render getTemplateForProfileType(profile),
+        profile : profile
+    else
+      res.redirect profile.href()

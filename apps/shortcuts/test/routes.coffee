@@ -17,7 +17,7 @@ describe 'Shortcut routes', ->
 
   describe '#index', ->
 
-    it 'renders the artist template', ->
+    it 'redirects to the long url', ->
       routes.index @req, @res
       _.last(Backbone.sync.args)[2].success { short: 'shortcut', long: 'https://long-url.com' }
       @res.redirect.args[0][0].should.equal 'https://long-url.com'
