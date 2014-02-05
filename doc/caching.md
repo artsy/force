@@ -103,6 +103,32 @@ Keys are the url for the respective api endpoint
 - '$ del "https://artsy.net/foo"`
 - done!
 
+------
+
+You can use the [`SCAN`](http://redis.io/commands/scan) command in combination with it's `MATCH` option to search for keys:
+
+```
+scan 0 count 1000 match *gene*
+1) "3928"
+2) 1) "https://artsy.net/api/v1/artist/w-eugene-smith"
+
+scan 3928 count 1000 match *gene*
+1) "32684"
+2) 1) "https://artsy.net/api/v1/artists/trending?gene=Minimalism"
+   2) "https://artsy.net/api/v1/genes{\"size\":100,\"published\":true,\"sort\":\"name\",\"page\":2}"
+   3) "https://artsy.net/api/v1/artist/gene-davis"
+   4) "https://artsy.net/api/v1/genes{\"size\":100,\"published\":true,\"sort\":\"name\",\"page\":9}"
+   5) "https://artsy.net/api/v1/artist/eugene-printz"
+   6) "https://artsy.net/api/v1/artist/eugene-rousseau"
+
+scan 32684 count 1000 match *gene*
+...
+```
+
+`SCAN` returns 1) an updated cursor position and 2) the set of keys found during that iteration. When the cursor returns 0, you've iterated through the full keyspace.
+
+------
+
 Here are some keys that are in use for the current 'browse' and the about/job pages, which are nice to know how to clear on demand:
 
 - `$ del "https://artsy.net/api/v1/page/about"`
