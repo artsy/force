@@ -1,13 +1,73 @@
 @import '../../../components/stylus_lib'
 @import '../../../node_modules/nib'
 
+column-gap = 30px
+
+// Generic elements
+// ----------------
+
+.home-featured-header
+  font-size 38px
+  padding 30px 0
+  border-top 1px solid light-gray-border-color
+  clear both
+  &:first-of-type
+    border-top 0
+
+.home-featured-list
+  position relative
+  min-height 300px
+
+.home-browse-all
+  margin 30px 0
+  float right
+  font-size 14px
+
+.home-featured-cover-img
+  overflow hidden
+  background no-repeat center center
+  background-size cover
+  padding-bottom 70%
+  img
+    display none
+
+.home-two-items li
+  &:nth-child(1), &:nth-child(2)
+    width 50%
+  &:nth-child(1)
+    padding-right (column-gap / 2)
+  &:nth-child(2)
+    padding-left (column-gap / 2)
+
+.home-four-items li
+  display inline-block
+  vertical-align top
+  width 25%
+  a
+    text-decoration none
+  img
+    width 100%
+  &:nth-child(1)
+    padding-right column-gap * .75
+  &:nth-child(2)
+    padding-left column-gap * .25
+    padding-right column-gap * .5
+  &:nth-child(3)
+    padding-left column-gap * .5
+    padding-right column-gap * .25
+  &:nth-child(4)
+    padding-left column-gap * .75
+
+// Top featured links
+// ------------------
+
 #home-top-featured-links
   position relative
   min-height 120px
 
 .home-top-feature-link
   display inline-block
-  padding 20px
+  padding (column-gap / 2)
   padding-right 0
   border-right 1px solid light-gray-border-color
   border-bottom @border-right
@@ -35,52 +95,29 @@
 .home-top-feature-link-details
   avant-garde()
 
-.home-featured-header
-  font-size 38px
-  padding 30px 0
-  border-top 1px solid light-gray-border-color
-  clear both
-  &:first-of-type
-    border-top 0
 
-.home-featured-list
-  position relative
-  min-height 300px
-
-.home-browse-all
-  margin 30px 0
-  float right
-  font-size 14px
+// Featured artworks
+// -----------------
 
 #home-featured-artworks li
-  display inline-block
-  width 25%
-  vertical-align top
-  padding-right 40px
-  img
-    width 100%
   figure
     margin 0
+  a
+    width 100%
+
+// Featured shows
+// --------------
 
 .home-featured-show
   display inline-block
   vertical-align top
-  width (home-page-width / 4)
-  padding-right 40px
   padding-bottom 20px
-  .home-featured-cover-img
-    height ((home-page-width / 4) / 1.5)
-  &:nth-child(6), &:nth-child(10), &:nth-child(2)
-    padding-right 0
-  &:first-child, &:nth-child(2)
-    width (home-page-width / 2)
-    .home-featured-cover-img
-      height ((home-page-width / 2) / 1.5)
   a
     text-decoration none
   h6
     color dark-gray-text-color
     font-size 12px
+    margin-top 5px
   h4
     avant-garde()
     font-size 13px
@@ -88,64 +125,52 @@
     font-size 18px
   h4, h5, h6
     overflow ellipsis
-  .home-featured-cover-img
-    margin-bottom 10px
 
-.home-featured-cover-img
-  overflow hidden
-  background no-repeat center center
-  background-size cover
-  img
-    display none
+// Featured posts
+// --------------
 
 .home-featured-post-link
   display inline-block
   vertical-align top
-  margin-right 34px
-  width 206px
+  width 20%
+  height 250px
   &:first-child
     float left
-    width 412px
+    width (golden-ratio-small-percent + 2)
+    padding-right column-gap
+    height auto
+    .home-featured-cover-img
+      padding-bottom 410px
     h4
       font-size 24px
       line-height 1.2em
-  &:nth-child(4)
-    margin-right 0
-  &:last-child
-    margin-right 0
-  &:nth-child(1), &:nth-child(2), &:nth-child(3)
-    margin-bottom 23px
-  img
-    width 100%
-    margin-bottom 10px
+  &:nth-child(2), &:nth-child(5)
+    padding-right (column-gap * .66)
+  &:nth-child(3), &:nth-child(6)
+    padding-right (column-gap * .33)
+    padding-left (column-gap * .33)
+  &:nth-child(4), &:nth-child(7)
+    padding-left (column-gap * .66)
+  &:nth-child(2), &:nth-child(3), &:nth-child(4)
+    margin-bottom 20px
+  .home-featured-cover-img
+    padding-bottom 140px
+  h4
+    margin-top 10px
   h5
     avant-garde()
     font-size 11px
-    margin-top 3px
+    padding-top 3px
   a
     text-decoration none
 
+// Featured artists
+// ----------------
+
 .home-featured-artist-link
-  display inline-block
-  vertical-align top
-  width 25%
-  padding 0 25px
-  &:last-child
-    padding-right 0
-  &:first-child
-    padding-left 0
-  a
-    text-decoration none
-  img
-    max-width 100%
   h4, h5
-    avant-garde()
     text-align center
   h4
+    avant-garde()
     margin 12px 0 6px 0
     font-size 13px
-  h5
-    font-size 11px
-    line-height 1.6em
-  .home-featured-cover-img
-    height 184px

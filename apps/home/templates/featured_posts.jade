@@ -1,6 +1,8 @@
 for link, i in postLinks
+  imgUrl = link.imageUrl(i == 0 ? 'large_square' : 'medium_rectangle')
   li.home-featured-post-link
     a( href=link.get('href') )
-      img( src=link.imageUrl(i == 0 ? 'large_square' : 'medium_rectangle') )
+      .home-featured-cover-img( style="background-image: url(" + imgUrl + ")" )
+        img( src=imgUrl )
       h4= link.get('title')
       h5= link.get('subtitle')
