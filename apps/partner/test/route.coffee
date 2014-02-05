@@ -10,7 +10,7 @@ describe 'Partner routes', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
     routes.setProfile = sinon.stub
-    @req = { params: { id: 'some gallery' }, profile: new Profile fabricate 'partner' }
+    @req = { params: { id: 'some gallery' }, profile: new Profile fabricate 'partner_profile' }
     @res = { render: sinon.stub(), locals: { sd: {} } }
 
   afterEach ->

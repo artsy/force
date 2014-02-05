@@ -1,7 +1,8 @@
 Profile = require '../../models/profile'
 
-fetchProfile = (req, next) ->
-  return next() unless (profile = req.profile)?.isUser()
+fetchProfile = (req, res, next) ->
+  profile = req.profile
+  return next() unless req.profile and req.profile.isUser()
   res.locals.sd.PROFILE = profile.toJSON()
 
 @setProfile = (req, res, next) ->
@@ -9,17 +10,15 @@ fetchProfile = (req, next) ->
   new Profile(id: req.params.id).fetch
     cache: true
     success: (profile) -> req.profile = profile; next()
-    error: ->
-      console.log '!!!!!!!!!!!!!!!! running next'
-      next()
+    error: -> next()
 
 @index = (req, res, next) ->
-  fetchProfile req, next
+  fetchProfile req, res, next
   res.render 'templates',
     profile : req.profile
 
 @posts = (req, res, next) ->
-  fetchProfile req, next
+  fetchProfile req, res, next
   if profile.get('posts_count')
     res.render 'templates',
       profile : req.profile
@@ -27,6 +26,6 @@ fetchProfile = (req, next) ->
     res.redirect profile.href()
 
 @favorites = (req, res, next) ->
-  fetchProfile req, next
+  fetchProfile req, res, next
   res.render 'templates',
     profile : req.profile
