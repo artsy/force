@@ -8,7 +8,7 @@ fetchProfile = (req, res, next, success) ->
       return next() unless profile and (profile.isUser() or profile.isPartner())
       res.locals.sd.PROFILE = profile.toJSON()
       success(profile)
-    error: next
+    error: -> next()
 
 getTemplateForProfileType = (profile) ->
   if profile.isPartner()

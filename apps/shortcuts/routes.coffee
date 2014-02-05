@@ -4,6 +4,5 @@ Shortcut = require '../../models/shortcut'
   new Shortcut(id: req.params.short).fetch
     cache  : true
     success: (shortcut) ->
-      console.log '!!!!!!!!!!!!!!!!!!!!!!!', shortcut.get('long')
       res.redirect shortcut.get('long')
     error: res.backboneError
