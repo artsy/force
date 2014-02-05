@@ -111,6 +111,12 @@ describe 'FavoritesView', ->
     afterEach ->
       Backbone.sync.restore()
 
+    it 'only shows the overlay saved state on hover', ->
+      @view.$('.artwork-item:first-child .overlay-button-save').is(':visible').should.be.false
+      # If we could trigger / force a hover state here...
+      # @view.$('.artwork-item:first-child').hover()
+      # @view.$('.artwork-item:first-child .overlay-button-save').is(':visible').should.be.true
+
     describe '#loadNextPage', ->
 
       it 'calls ArtworkColumnsView to render the first page', ->

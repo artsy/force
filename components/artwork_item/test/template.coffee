@@ -96,3 +96,18 @@ describe 'Artwork Item template', ->
       @artwork.set 'can_share_image', true
       $ = cheerio.load render('template')({ artwork: @artwork })
       $('.artwork-item-image[nopin]').should.have.lengthOf 0
+
+  describe 'blurb', ->
+
+    it 'renders a blurb when the artwork has one and the blurb is requested', ->
+      @artwork = new Artwork fabricate 'artwork'
+      $ = cheerio.load render('template')({ artwork: @artwork })
+      $('.artwork-item-blurb').should.have.lengthOf 0
+
+      @artwork.set 'blurb', 'This is the blurb'
+      $ = cheerio.load render('template')({ artwork: @artwork })
+      $('.artwork-item-blurb').should.have.lengthOf 0
+
+      $ = cheerio.load render('template')({ artwork: @artwork, showBlurb: true })
+      $('.artwork-item-blurb').should.have.lengthOf 1
+      $('.artwork-item-blurb').text().should.equal @artwork.get 'blurb'
