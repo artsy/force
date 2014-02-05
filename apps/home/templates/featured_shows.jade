@@ -1,4 +1,4 @@
-for show, i in shows
+mixin list-item(show)
   imgUrl = show.imageUrl(i < 2 ? 'featured' : 'large')
   li.home-featured-show
     a( href=show.href() )
@@ -9,3 +9,13 @@ for show, i in shows
       h6!= show.runningDates()
       h4= show.partnerName()
       h5= show.get('name')
+
+ul.home-two-items
+  for show, i in shows.slice(0, 2)
+    +list-item(show)
+ul.home-four-items
+  for show, i in shows.slice(2, 6)
+    +list-item(show)
+ul.home-four-items
+  for show, i in shows.slice(6, 10)
+    +list-item(show)
