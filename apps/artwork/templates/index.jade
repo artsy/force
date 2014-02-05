@@ -7,12 +7,15 @@ append locals
   assetPackage = 'artwork'
 
 block body
+  #artwork-deep-zoom-container
   #artwork-page.main-layout-container( data-route='show' )
     article.artwork-container
       section.artwork-overview
         .artwork-image
           a.artwork-image-zoom(
+            href="/artwork/#{artwork.id}/zoom"
             rel='zoom'
+            data-client
           )
             img#the-artwork-image(
               alt= artwork.get('title')

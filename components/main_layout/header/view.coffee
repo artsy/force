@@ -38,7 +38,6 @@ module.exports = class HeaderView extends Backbone.View
     @modal = new AuthModalView _.extend({ width: '500px' }, options)
 
   removeWelcomeHeader: ->
-    @$welcomeHeader.remove()
     @$body.addClass 'body-header-fixed'
     @$window.off '.welcome-header'
 

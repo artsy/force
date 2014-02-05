@@ -1,5 +1,9 @@
-
+//
 // CSS trick to adjust the border-bottom to make it look like a nicer text-decoration: underline
+//
+
+underline-margin = 0.4em
+
 .faux-underline
   &
     display: inline
@@ -33,7 +37,7 @@
         display: inline-block
         height: 1em
         width: 100%
-        margin-top: 0.2em
+        margin-top: underline-margin
         border-bottom: 1px solid #777
         color: rgb(80, 80, 80)
 
@@ -50,7 +54,7 @@
     display: inline-block
     height: 1em
     width: 100%
-    margin-top: 0.4em
+    margin-top: underline-margin
     border-bottom: 2px solid #333
     color: rgb(80, 80, 80)
 
@@ -71,6 +75,6 @@
         display: inline-block
         height: 1em
         width: 100%
-        margin-top: 0.4em
+        margin-top: underline-margin
         border-bottom: 2px solid #333
         color: rgb(80, 80, 80)

@@ -1,2 +1,2 @@
 require('backbone').$  = $
-require('../apps/about/client.coffee').init()
+$ require('../apps/about/client.coffee').init

@@ -13,7 +13,7 @@
     transform rotate(360deg)
     animation-timing-function linear
 
-spinner(width=25px, height=6px, color=#000)
+spinner(width=25px, height=6px, color=black)
   background color
   width width
   height height
@@ -27,3 +27,11 @@ spinner(width=25px, height=6px, color=#000)
 
 .loading-spinner-small
   spinner(20px, 4px)
+
+.loading-spinner-white
+  @extends .loading-spinner
+  background white
+
+.loading-spinner-small-white
+  @extends .loading-spinner-small
+  background white

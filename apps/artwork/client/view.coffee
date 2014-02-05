@@ -20,7 +20,9 @@ module.exports = class ArtworkView extends Backbone.View
     @$el.attr 'data-route-pending', (@__route__ = route)
 
     Transition.fade @$el,
-      out: => @$el.attr 'data-route', @__route__
+      duration: 250
+      out: =>
+        @$el.attr 'data-route', @__route__
 
   # Handle links with the data-client attribute via pushState
   intercept: (e) ->

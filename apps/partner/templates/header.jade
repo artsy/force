@@ -1,0 +1,23 @@
+header.partner-header
+  .partner-info-container
+    a.partner-icon( href="#" )
+      include ../../../components/profile_badge/profile_icon
+    .partner-info
+      h1.avant-garde-header.partner-name= profile.displayName()
+      p.partner-bio= profile.get('bio')
+      .partner-followers= profile.formatFollowText()
+      .partner-actions
+        .partner-follow
+  .partner-nav
+    .garamond-tablist
+      a.garamond-tab.is-active( href="#{profile.href()}" ) Overview
+      span.garamond-tab-separator
+      a.garamond-tab( href="#{profile.href()}" ) Overview
+      span.garamond-tab-separator
+      a.garamond-tab( href="#{profile.href()}/shows" ) Shows
+      span.garamond-tab-separator
+      a.garamond-tab( href="#{profile.href()}/artists" ) Artists
+      span.garamond-tab-separator
+      a.garamond-tab( href="#{profile.href()}/posts" ) Posts
+      span.garamond-tab-separator
+      a.garamond-tab( href="#{profile.href()}/contact" ) Contact
