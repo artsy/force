@@ -41,10 +41,9 @@ describe 'HeaderView', ->
       @view.$welcomeHeader = height: (-> 50), remove: sinon.stub()
 
     it 'hides the welcome header when scrolling past the search bar', ->
-      @view.$welcomeHeader = height: (-> 50), remove: sinon.stub()
       @view.$window.scrollTop = -> 55
       @view.checkRemoveWelcomeHeader()
-      @view.$welcomeHeader.remove.called.should.be.ok
+      $('body').hasClass('body-header-fixed').should.be.ok
       @view.$window.off.called.should.be.ok
 
   describe '#openAuth', ->
