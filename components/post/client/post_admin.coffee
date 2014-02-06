@@ -44,7 +44,7 @@ module.exports = class PostAdmin extends Backbone.View
     false
 
   removePost: =>
-    return false unless @isMe || @currentUser.canAdministerContent()
+    return false unless @isMe || @currentUser.isAdmin()
     @parent.feedItems.remove @model
     post = @model
     post.destroy()
@@ -101,12 +101,12 @@ module.exports = class PostAdmin extends Backbone.View
     false
 
   flagPostClick: (event) ->
-    return false unless @currentUser.canAdministerContent() && confirm("Are you sure you want to flag this post?")
+    return false unless @currentUser.isAdmin() && confirm("Are you sure you want to flag this post?")
     @flagPost()
     false
 
   unflagPostClick: (event) ->
-    return false unless @currentUser.canAdministerContent() && confirm("Are you sure you want to unflag this post?")
+    return false unless @currentUser.isAdmin() && confirm("Are you sure you want to unflag this post?")
     @unflagPost()
     false
 

@@ -34,8 +34,9 @@ module.exports = class PostsFeatureDialog extends Backbone.View
   displayFeatureArtworks: (artworksCollection) =>
     featureArtworks = @$('.posts-dialog .feature-artworks')
 
-    if @model.artworks()?.length
-      for artwork in @model.artworks()
+    postArtworks = @model.artworks()
+    if postArtworks?.length
+      for artwork in postArtworks.models
         artworksCollection.add artwork
 
     html = artworksCollection.map((artwork) =>
@@ -48,8 +49,10 @@ module.exports = class PostsFeatureDialog extends Backbone.View
   displayFeatureArtists: (artistsCollection) =>
     featureArtists = @$('.posts-dialog .feature-artists')
 
-    for artwork in @model.artworks()
-      artistsCollection.add artwork.get('artist')
+    postArtworks = @model.artworks()
+    if postArtworks?.length
+      for artwork in postArtworks.models
+        artistsCollection.add artwork.get('artist')
 
     html = artistsCollection.map((artist) =>
       featurePostArtistTemplate( post: @model, artist: artist )

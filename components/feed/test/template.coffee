@@ -185,19 +185,21 @@ describe 'Feed Templates', ->
       @html.should.not.include "undefined"
       @html.should.not.include "\#{"
 
-    it 'includes admin controls for content administrator', ->
+    it 'includes admin controls', ->
       feedItems  = new FeedItems
       feedItems.add @post
+      sd.ADMIN_URL = 'admin.com'
       html      = render('feed_items')(
         feedItems: feedItems.models
         fixedWidth: 1000
         imageWidth: 500
         sd: sd
         textColumnWidth: 404
-        currentUser: new CurrentUser(is_content_administrator: true, type: 'Admin')
+        currentUser: new CurrentUser(type: 'Admin')
       )
       $ = cheerio.load html
-      $('.post-modifier-actions a').length.should.equal 4
+      $('.post-modifier-actions a').length.should.equal 5
+      $('.post-modifier-actions a.post-admin').attr('href').should.equal "admin.com/post/#{@post.get('id')}"
 
     it 'includes admin controls for user who created the post', ->
       feedItems  = new FeedItems

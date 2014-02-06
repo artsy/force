@@ -25,7 +25,7 @@ module.exports.FeedItemPost = class FeedItemPost extends Backbone.View
 
     if options.currentUser
       isMe = @isMe()
-      if isMe or options.currentUser.canAdministerContent()
+      if isMe or options.currentUser.isAdmin()
         new PostAdmin
           el         : @el
           isMe       : isMe

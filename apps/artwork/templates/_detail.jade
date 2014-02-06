@@ -99,9 +99,9 @@
 
     //- Administrative actions
     if user && user.isAdmin()
-      a( href="http://admin.artsy.net/artworks/artwork/#{artwork.id}", target='_blank' )
+      a( href="#{sd.ADMIN_URL}/artworks/artwork/#{artwork.id}", target='_blank' )
         i.icon-edit
         | Edit
-      a( href="http://admin.artsy.net/genome/artwork/#{artwork.id}", target='_blank' )
+      a( href="#{sd.ADMIN_URL}/genome/artwork/#{artwork.id}", target='_blank' )
         i.icon-genome
         | Genome
