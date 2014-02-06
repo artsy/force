@@ -6,4 +6,8 @@ a( href="/following/artists" ) Following
 a( href="/invite" ) Invite Friends
 a( href="/profile/edit" ) Edit Profile
 a( href="/user/edit" ) Settings
+if user.isAdmin()
+  a( href=sd.ADMIN_URL ) Admin
+if user.isAdmin() || user.get('has_partner_access')
+  a( href=sd.CMS_URL ) CMS
 a( href="/force/users/sign_out" ) Log out
