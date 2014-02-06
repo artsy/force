@@ -78,5 +78,4 @@ module.exports.init = ->
   new PartnerView
     model: new Profile sd.PROFILE
     el: $('#partner')
-    sections: sd.SECTIONS
     currentSection: sd.SECTION
