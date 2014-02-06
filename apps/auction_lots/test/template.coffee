@@ -6,7 +6,7 @@ Backbone        = require 'backbone'
 { fabricate }   = require 'antigravity'
 Artist          = require '../../../models/artist'
 AuctionLots     = require '../../../collections/auction_lots'
-User            = require '../../../models/user'
+CurrentUser     = require '../../../models/current_user'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../templates/#{templateName}.jade"
@@ -72,7 +72,7 @@ describe 'Artist auction lots template', ->
     beforeEach ->
       @artist       = new Artist fabricate 'artist'
       @auctionLots  = new AuctionLots([fabricate 'auction_result'], { state: { totalRecords: 1 }})
-      @user         = new User fabricate 'user'
+      @user         = new CurrentUser fabricate 'user'
       @template     = render('artist')(
         sd: {}
         artist: @artist
