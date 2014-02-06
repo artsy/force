@@ -37,6 +37,9 @@ getTemplateForProfileType = (profile) ->
     else
       res.redirect profile.href()
 
+#
+# Gallery only routes
+#
 @contact = (req, res, next) ->
   fetchProfile req, res, next, (profile) ->
     if profile.isGallery()
@@ -46,10 +49,23 @@ getTemplateForProfileType = (profile) ->
     else
       res.redirect profile.href()
 
+
+#
+# Institution only routes
+#
 @about = (req, res, next) ->
   fetchProfile req, res, next, (profile) ->
     if profile.isInstitution()
       res.locals.sd.SECTION = 'contact'
+      res.render getTemplateForProfileType(profile),
+        profile : profile
+    else
+      res.redirect profile.href()
+
+@collection = (req, res, next) ->
+  fetchProfile req, res, next, (profile) ->
+    if profile.isInstitution()
+      res.locals.sd.SECTION = 'collection'
       res.render getTemplateForProfileType(profile),
         profile : profile
     else
