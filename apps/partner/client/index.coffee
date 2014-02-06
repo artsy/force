@@ -1,16 +1,18 @@
-_             = require 'underscore'
-sd            = require('sharify').data
-Backbone      = require 'backbone'
-CurrentUser   = require '../../../models/current_user.coffee'
-Partner       = require '../../../models/partner.coffee'
-Profile       = require '../../../models/profile.coffee'
-ContactView   = require './contact.coffee'
+_               = require 'underscore'
+sd              = require('sharify').data
+Backbone        = require 'backbone'
+CurrentUser     = require '../../../models/current_user.coffee'
+Partner         = require '../../../models/partner.coffee'
+Profile         = require '../../../models/profile.coffee'
+ContactView     = require './contact.coffee'
+CollectionView  = require './collection.coffee'
 tablistTemplate = -> require('../templates/tablist.jade') arguments...
 
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 
 sectionToView =
-  contact: ContactView
+  contact     : ContactView
+  collection  : CollectionView
 
 module.exports.PartnerView = class PartnerView extends Backbone.View
 
