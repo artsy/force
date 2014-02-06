@@ -49,11 +49,21 @@ describe 'Partner routes', ->
       @res.render.args[0][0].should.equal '../partner/templates'
       @res.render.args[0][1].profile.isPartner()
 
+  describe '#about', ->
+
+    it 'renders the contact template', ->
+      routes.about @req, @res
+      _.last(Backbone.sync.args)[2].success fabricate 'partner_profile'
+      @res.render.args[0][0].should.equal '../partner/templates'
+      @res.render.args[0][1].profile.isPartner()
+
   describe '#contact', ->
 
     it 'renders the contact template', ->
       routes.contact @req, @res
-      _.last(Backbone.sync.args)[2].success fabricate 'partner_profile'
+      gallery = fabricate 'partner_profile'
+      gallery.owner_type = 'PartnerGallery'
+      _.last(Backbone.sync.args)[2].success gallery
       @res.render.args[0][0].should.equal '../partner/templates'
       @res.render.args[0][1].profile.isPartner()
 

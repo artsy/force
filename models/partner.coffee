@@ -40,3 +40,12 @@ module.exports = class Partner extends Backbone.Model
         string += "s" unless @get('locations').length is 2
 
       string
+
+  getMailTo: ->
+    return "" unless @has('email') && @get('email').length > 0
+    subject = encodeURIComponent "Connecting with #{@get('name')} via Artsy"
+    "mailto:#{@get('email')}?subject=#{subject}&cc=inquiries@artsy.net"
+
+  getSimpleWebsite: ->
+    return "" unless @has('website') && @get('website').length > 0
+    @get('website').replace('http://', '').replace(/\/$/g, '')

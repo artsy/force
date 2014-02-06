@@ -7,15 +7,15 @@ template      = -> require('../templates/contact.jade') arguments...
 
 module.exports = class PartnerContactView extends Backbone.View
   initialize: (options) ->
+    { @profile, @partner } = options
     @render()
 
   fetchLocations: ->
-    partner = new Partner @model.get('owner')
     @locations = new PartnerLocations()
-    @locations.url = "#{partner.url()}/locations"
-    @locations.fetchUntilEnd # probably don't need pagination here
-      success: => @render()
+    @locations.url = "#{@partner.url()}/locations"
+    @locations.fetchUntilEnd success: => @render()
 
   render: ->
     return @fetchLocations() unless @locations
-    @$el.html $( template locations: @locations.models)
+    @$el.html $( template profile: @profile, partner: @partner, locationGroups: @locations.groupBy('city'))
+    @

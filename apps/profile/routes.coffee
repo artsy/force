@@ -39,8 +39,17 @@ getTemplateForProfileType = (profile) ->
 
 @contact = (req, res, next) ->
   fetchProfile req, res, next, (profile) ->
-    if profile.isPartner()
-      res.locals.sd.CURRENT_TAB = 'contact'
+    if profile.isGallery()
+      res.locals.sd.SECTION = 'contact'
+      res.render getTemplateForProfileType(profile),
+        profile : profile
+    else
+      res.redirect profile.href()
+
+@about = (req, res, next) ->
+  fetchProfile req, res, next, (profile) ->
+    if profile.isInstitution()
+      res.locals.sd.SECTION = 'contact'
       res.render getTemplateForProfileType(profile),
         profile : profile
     else
