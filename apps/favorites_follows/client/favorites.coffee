@@ -65,7 +65,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
   setupShareButton: ->
     new ShareView el: @$('.favorites-share')
 
-  loadNextPage: =>
+  loadNextPage: ->
     @fetchNextPageSavedArtworks
       success: (collection, response, options) =>
         @isFetching = false
@@ -77,14 +77,10 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
           $(window).on 'scroll.favorites', _.throttle(@infiniteScroll, 150)
           @showEmptyHint() unless collection.length > 0
 
-        end = page * @pageSize
-        start = end - @pageSize
-
-        if collection.length < end
+        if collection.length is 0
           $(window).off('.favorites')
-
-        if collection.length > start
-          @artworkColumnsView.appendArtworks collection.slice start, end
+        else
+          @artworkColumnsView.appendArtworks collection.models
           @nextPage = page + 1
 
   infiniteScroll: =>
@@ -96,7 +92,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
   #
   # @param {Object} options Provide `success` and `error` callbacks similar to Backbone's fetch
   fetchNextPageSavedArtworks: (options) ->
-    return unless not @isFetching
+    return if @isFetching
     @isFetching = true
 
     url = "#{sd.ARTSY_URL}/api/v1/collection/saved-artwork/artworks"
@@ -109,8 +105,8 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
     @collection.fetch
       url: url
       data: data
-      remove: false
-      merge: true
+      remove: true
+      merge: false
       success: options?.success
       error: options?.error
 
