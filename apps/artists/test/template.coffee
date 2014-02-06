@@ -28,7 +28,9 @@ describe 'Artists', ->
         benv.expose { $: benv.require 'jquery' }
 
         @artistCollection = new Artists(
-          _.times(2, -> new Artist(fabricate('artist')))
+          _.times(2, ->
+            new Artist(fabricate('artist', { image_versions: ['four_thirds', 'tall'] }))
+          )
         )
 
         @featuredLinksCollection = new Items(
@@ -79,3 +81,6 @@ describe 'Artists', ->
       $links = @$template.find('.avant-garde-jump-link')
       $links.length.should.equal 2
       $links.first().text().should.equal fabricate('gene').name
+
+    it 'uses four_thirds images', ->
+      @$template.find('.afg-artist img').attr('src').should.include 'four_thirds'

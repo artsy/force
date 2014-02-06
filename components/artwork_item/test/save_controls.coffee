@@ -61,3 +61,7 @@ describe 'SaveControls', ->
         @view.artworkCollection.unsaveArtwork.called.should.be.ok
         @view.artworkCollection.unsaveArtwork.args[0][0].should.equal model.id
         @view.$button.attr('data-state').should.equal 'unsaved'
+
+      it 'shows the control if the work is saved', ->
+        @view.model.isSaved = -> true
+        @view.$('.overlay-button-save').is(':visible').should.be.true

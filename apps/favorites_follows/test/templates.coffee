@@ -16,7 +16,7 @@ describe 'Favorites and follows tab', ->
         sd: { type: 'artists', CURRENT_PATH: '/following/artists' }
       )
 
-    it 'should contains three tabs for favorite artworks and followings', ->
+    it 'should contain three tabs for favorite artworks and followings', ->
 
       @template.should.include "Works"
       @template.should.include "Artists"
@@ -34,7 +34,7 @@ describe 'Favorites and follows tab', ->
         sd: { type: 'genes', CURRENT_PATH: '/following/genes' }
       )
 
-    it 'should contains three tabs for favorite artworks and followings', ->
+    it 'should contain three tabs for favorite artworks and followings', ->
 
       @template.should.include "Works"
       @template.should.include "Artists"
@@ -52,7 +52,7 @@ describe 'Favorites and follows tab', ->
         sd: { CURRENT_PATH: '/favorites' }
       )
 
-    it 'should contains three tabs for favorite artworks and followings', ->
+    it 'should contain three tabs for favorite artworks and followings', ->
 
       @template.should.include "Works"
       @template.should.include "Artists"

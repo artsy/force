@@ -224,6 +224,10 @@ module.exports = fabricate = (type, extObj = {}) ->
       created_at: '2011-11-25T01:10:56-05:00'
       title: 'needs follow-up'
 
+    when 'shortcut'
+      short: 'short'
+      long: "http://localhost:5000/terms"
+
     when 'offer'
       id: 'offer_id' + _.uniqueId()
       artwork: fabricate 'artwork'

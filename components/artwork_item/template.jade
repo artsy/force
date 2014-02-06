@@ -1,5 +1,6 @@
 - artworkSize = artworkSize || 'medium'
 - imageWidth = imageWidth || false
+- showBlurb = showBlurb || false
 figure.artwork-item( data-artwork=artwork.get('id') )
   .artwork-item-image-container
     a.artwork-item-image-link(href=artwork.href())
@@ -26,7 +27,7 @@ figure.artwork-item( data-artwork=artwork.get('id') )
     if artwork.get('forsale') && artwork.saleMessage()
       p.artwork-item-sale-price!= artwork.saleMessage()
 
-    if artwork.has('blurb')
+    if artwork.has('blurb') && showBlurb
       .artwork-item-blurb!= artwork.mdToHtml('blurb')
 
     if artwork.has('saleArtwork')
