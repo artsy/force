@@ -8,7 +8,7 @@ ArtworkRouter   = require './router.coffee'
 
 module.exports.init = ->
   artist    = new Artist sd.ARTIST
-  artwork   = new Artwork sd.ARTWORK
+  artwork   = new Artwork sd.ARTWORK, parse: true
 
   $ ->
     new ArtworkRouter artwork: artwork, artist: artist

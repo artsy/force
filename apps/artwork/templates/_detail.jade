@@ -67,6 +67,10 @@
         | Contact Artsy Specialist
 
   nav.artwork-actions-list
+    if artwork.get('website')
+      a( href= artwork.get('website'), target='_blank' )
+        i.icon-website
+        | Visit Website
     if artwork.isHangable()
       a( href="/artwork/#{artwork.id}/view-in-room" )
         i.icon-view-in-room
