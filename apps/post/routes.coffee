@@ -15,9 +15,8 @@ render = (res, post, profile) ->
   new Post(id: req.params.id).fetch
     error  : res.backboneError
     success: (post) ->
-      author = post.get('author')
-      if author?.default_profile_id
-        profile = new Profile { id: author.default_profile_id }
+      if post.get('profile')?.id
+        profile = new Profile { id: post.get('profile').id }
         profile.fetch
           cache: true
           error: ->
