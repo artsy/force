@@ -29,3 +29,4 @@ app.get '/:id/posts', routes.posts
 app.get '/:id/contact', routes.contact
 app.get '/:id/about', routes.about
 app.get '/:id/collection', routes.collection
+app.get '/:id/shows', routes.shows

@@ -6,6 +6,7 @@ Partner         = require '../../../models/partner.coffee'
 Profile         = require '../../../models/profile.coffee'
 ContactView     = require './contact.coffee'
 CollectionView  = require './collection.coffee'
+ShowsView       = require './shows.coffee'
 tablistTemplate = -> require('../templates/tablist.jade') arguments...
 
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
@@ -13,6 +14,7 @@ tablistTemplate = -> require('../templates/tablist.jade') arguments...
 sectionToView =
   contact     : ContactView
   collection  : CollectionView
+  shows       : ShowsView
 
 module.exports.PartnerView = class PartnerView extends Backbone.View
 

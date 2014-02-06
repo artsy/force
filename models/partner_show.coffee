@@ -25,6 +25,8 @@ module.exports = class PartnerShow extends Backbone.Model
     else
       "#{sd.ARTSY_URL}/api/v1/show/#{@get('id')}"
 
+  clientUrl: -> "/show/#{@get('id')}"
+
   metaImage: ->
     if @has 'image_url' and @get 'image_versions' and @hasImage 'large'
       @imageUrl 'large'
@@ -41,6 +43,15 @@ module.exports = class PartnerShow extends Backbone.Model
       @location()?.singleLine() || ''
       @runningDates() || ''
     ]).join ' | '
+
+  posterImageUrl: (featured=false) ->
+    size = if featured then 'featured' else 'large'
+    return @imageUrl size if @hasImage(size)
+    # TODO Need to somehow fetch artworks
+    if @get('artworks').length > 0
+      size = 'larger' if featured
+      return @get('artworks').first().defaultImage().imageUrl size
+    false
 
   title: ->
     @get 'name'
@@ -147,3 +158,10 @@ module.exports = class PartnerShow extends Backbone.Model
 
   carouselDisplay: -> if @get('images_count') > 0 then "block" else "none"
   artworksDisplay: -> if @get('eligible_artworks_count') > 0 then "block" else "none"
+
+  upcoming: -> @get('status') is 'upcoming'
+  running: -> @get('status') is 'running'
+  closed: -> @get('status') is 'closed'
+  renderable: -> @get('eligible_artworks_count') > 0 || @get('images_count') > 3
+  featurable: -> @renderable()
+  linkable: -> @renderable()
