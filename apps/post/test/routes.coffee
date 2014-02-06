@@ -20,7 +20,7 @@ describe 'Post routes', ->
 
     it 'renders the post template without an author', ->
       routes.index @req, @res
-      _.last(Backbone.sync.args)[2].success fabricate('post', author: undefined, id: 'post-id')
+      _.last(Backbone.sync.args)[2].success fabricate('post', profile: undefined, id: 'post-id')
       @res.render.args[0][0].should.equal 'templates/index'
       @res.render.args[0][1].post.get('id').should.equal 'post-id'
 
