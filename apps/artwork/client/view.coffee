@@ -8,6 +8,7 @@ module.exports = class ArtworkView extends Backbone.View
     'click .circle-icon-button-share'     : 'openShare'
     'click .circle-icon-button-save'      : 'saveArtwork'
     'click .artwork-artist-follow-button' : 'followArtist'
+    'click .artwork-additional-image'     : 'changeImage'
 
   initialize: (options) ->
     { @artwork, @artist } = options
@@ -38,3 +39,17 @@ module.exports = class ArtworkView extends Backbone.View
 
   followArtist: (e) ->
     e.preventDefault()
+
+  changeImage: (e) ->
+    e.preventDefault()
+
+    (@$artworkAdditionalImages ?= @$('.artwork-additional-image')).
+      removeClass 'is-active'
+
+    ($target = $(e.currentTarget)).
+      addClass 'is-active'
+
+    (@$artworkImage ?= @$('#the-artwork-image')).
+      attr('src', $target.data 'href')
+
+    @artwork.setActiveImage($target.data 'id')

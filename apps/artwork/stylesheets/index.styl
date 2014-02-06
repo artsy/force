@@ -91,6 +91,22 @@ artwork-detail-item-height  = 36px
   max-width 100%
   max-height 100%
 
+.artwork-additional-images
+  margin 20px auto
+
+.artwork-additional-image
+  display inline-block
+  height 45px
+  padding 3px
+  margin 5px
+  vertical-align middle
+  transition background-color 0.125s
+  > img
+    height 100%
+  &.is-active
+  &[data-state='active']
+    background-color highlight-color
+
 .artwork-image-actions
   padding 10px
 

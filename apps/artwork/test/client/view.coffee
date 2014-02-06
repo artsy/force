@@ -23,7 +23,13 @@ describe 'ArtworkView', ->
 
   beforeEach (done) ->
     @artist = new Artist(fabricate 'artist')
-    @artwork = new Artwork(fabricate 'artwork')
+
+    # Interestingly: jQuery "Every attempt is made to convert the string to a
+    # JavaScript value (this includes booleans, numbers, objects, arrays, and null)"
+    # and we're using numeric-looking strings for fabricated artwork image IDs.
+    _.each (artworkJson = fabricate('artwork')).images, (image) ->
+      image.id = _.uniqueId('stringy')
+    @artwork = new Artwork(artworkJson, parse: true)
 
     sinon.stub Backbone, 'sync'
     benv.render resolve(__dirname, '../../templates/index.jade'), {
@@ -58,4 +64,21 @@ describe 'ArtworkView', ->
       @view.$el.attr('data-route-pending').should.equal 'more-info'
       @view.$el.attr('data-route').should.equal 'more-info'
 
+  describe '#changeImage', ->
+    beforeEach ->
+      @$imageLink = @view.$('.artwork-additional-image.is-inactive').first()
+      # The artwork images are fabricated with identical links
+      # so lets change that
+      @$imageLink.data('href', 'foobar')
+      @$imageLink.click()
+
+    it 'changes the primary image src', ->
+      @view.$('#the-artwork-image').attr('src').
+        should.equal 'foobar'
+
+    it 'changes the activeImage on the artwork model', ->
+      @view.artwork.activeImage().id.should.equal @$imageLink.data('id')
+
+    it 'sets the class of the clicked link to is-active', ->
+      @$imageLink.hasClass('is-active').should.be.ok
 

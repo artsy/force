@@ -13,16 +13,29 @@ block body
       section.artwork-overview
         .artwork-image
           a.artwork-image-zoom(
-            href="/artwork/#{artwork.id}/zoom"
-            rel='zoom'
+            href  = "/artwork/#{artwork.id}/zoom"
+            rel   = 'zoom'
             data-client
           )
             img#the-artwork-image(
-              alt= artwork.get('title')
-              title= artwork.get('title')
-              nopin= artwork.noPinAttr()
-              src= artwork.defaultImage().imageUrlFor(500, 500)
+              alt     = artwork.get('title')
+              title   = artwork.get('title')
+              nopin   = artwork.noPinAttr()
+              src     = artwork.defaultImage().imageUrlFor(640, 640)
             )
+
+        if artwork.hasAdditionalImages()
+          .artwork-additional-images
+            for image, i in artwork.images.models
+              a.artwork-additional-image(
+                class       = i === 0 ? 'is-active' : 'is-inactive'
+                data-id     = image.id
+                data-href   = image.imageUrlFor(640, 640)
+              )
+                img(
+                  src= image.imageUrl('small')
+                  alt= "#{artwork.get('title')} (#{i + 1})"
+                )
 
         .artwork-more-info
           include ./_more-info
