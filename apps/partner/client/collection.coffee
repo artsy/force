@@ -5,12 +5,11 @@ CurrentUser   = require '../../../models/current_user.coffee'
 Partner       = require '../../../models/partner.coffee'
 Artworks      = require '../../../collections/artworks.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
-template      = -> require('../templates/contact.jade') arguments...
 
 module.exports = class PartnerCollectionView extends Backbone.View
 
   defaults:
-    pageSize: 16
+    pageSize: 16 # 4 by 4
     nextPage: 1
 
   initialize: (options={}) ->
