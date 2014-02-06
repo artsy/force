@@ -86,8 +86,9 @@ describe 'FavoritesView', ->
         @fetchStub = sinon.stub artworks, "fetch", (options) =>
           start = (options.data.page - 1) * options.data.size
           end = start + options.data.size
-          dest = new Artworks(@src[0...end])
+          dest = new Artworks(@src[start...end])
           options.success?(dest, null, options)
+
         mod.__set__ 'CurrentUser',
           orNull: -> _.extend fabricate 'user',
             initializeDefaultArtworkCollection: sinon.stub()
@@ -127,27 +128,32 @@ describe 'FavoritesView', ->
         @view.loadNextPage()
         @view.nextPage.should.equal 3
         artworks = _.last(@ArtworkColumnsView.appendArtworks.args)[0]
-        artworks.length.should.equal 2
+        artworks.should.have.lengthOf 2
 
         artworks[0].get('artwork').id.should.equal 'artwork3'
         artworks[1].get('artwork').id.should.equal 'artwork4'
         @view.loadNextPage()
         @view.nextPage.should.equal 4
         artworks = _.last(@ArtworkColumnsView.appendArtworks.args)[0]
-        artworks.length.should.equal 2
+        artworks.should.have.lengthOf 2
 
         artworks[0].get('artwork').id.should.equal 'artwork5'
         artworks[1].get('artwork').id.should.equal 'artwork6'
         @view.loadNextPage()
         @view.nextPage.should.equal 5
         artworks = _.last(@ArtworkColumnsView.appendArtworks.args)[0]
-        artworks.length.should.equal 1
+        artworks.should.have.lengthOf 1
 
         artworks[0].get('artwork').id.should.equal 'artwork7'
         @view.loadNextPage()
+        @view.nextPage.should.equal 5
+
         @view.loadNextPage()
         @view.loadNextPage()
         @view.nextPage.should.equal 5
+
+        # 7 works, page size 2, 4 calls to get all
+        @ArtworkColumnsView.appendArtworks.callCount.should.equal 4
 
       it 'passes sort=-position when fetching saved artworks', ->
         _.last(@fetchStub.args)[0].data.sort.should.equal '-position'
@@ -164,3 +170,92 @@ describe 'FavoritesView', ->
         @view.savedArtworkCollection.set private: false
         @view.$el.find('.share-to-facebook').trigger 'click'
         @FavoritesStatusModal.called.should.not.be.ok
+
+  describe 'with favorites items and variable responses', ->
+
+    beforeEach (done) ->
+      @sync = sinon.stub Backbone, 'sync'
+      benv.render resolve(__dirname, '../../templates/favorites.jade'), {
+        sd: {}
+      }, =>
+        { FavoritesView, @init } = mod = benv.requireWithJadeify(
+          (resolve __dirname, '../../client/favorites'), ['hintTemplate','favoritesStatusTemplate']
+        )
+        @src = [
+          { artwork: fabricate 'artwork', id: 'artwork1' },
+          { artwork: fabricate 'artwork', id: 'artwork2' },
+          { artwork: fabricate 'artwork', id: 'artwork3' },
+          { artwork: fabricate 'artwork', id: 'artwork4' },
+          { artwork: fabricate 'artwork', id: 'artwork5' },
+          { artwork: fabricate 'artwork', id: 'artwork6' },
+          { artwork: fabricate 'artwork', id: 'artwork7' }
+        ]
+
+        artworks = new Artworks []
+        @fetchStub = sinon.stub artworks, "fetch", (options) =>
+          works = []
+          n = if options.data.page is 2 then 2 else 3
+          _(n).times =>
+            work = @src.shift()
+            works.push work unless _.isUndefined work
+          dest = new Artworks works
+          options.success?(dest, null, options)
+
+        mod.__set__ 'CurrentUser',
+          orNull: -> _.extend fabricate 'user',
+            initializeDefaultArtworkCollection: sinon.stub()
+            defaultArtworkCollection: sinon.stub()
+
+        @ArtworkColumnsView = sinon.stub()
+        @ArtworkColumnsView.render = sinon.stub()
+        @ArtworkColumnsView.appendArtworks = sinon.stub()
+        @ArtworkColumnsView.returns @ArtworkColumnsView
+        mod.__set__ 'ArtworkColumnsView', @ArtworkColumnsView
+        mod.__set__ 'SaveControls', sinon.stub()
+        @FavoritesStatusModal = sinon.stub()
+        @FavoritesStatusModal.returns @FavoritesStatusModal
+        mod.__set__ 'FavoritesStatusModal', @FavoritesStatusModal
+        @view = new FavoritesView
+          el: $ 'body'
+          collection: artworks
+          pageSize: 3
+        done()
+
+    afterEach ->
+      Backbone.sync.restore()
+
+    describe "#loadNextPage", ->
+
+      it 'keeps fetching even if the API does not respond with a full page', ->
+        # fetches page 1 on init...
+        @view.nextPage.should.equal 2
+        artworks = _.last(@ArtworkColumnsView.appendArtworks.args)[0]
+        artworks.should.have.lengthOf 3
+        artworks[0].get('artwork').id.should.equal 'artwork1'
+        artworks[1].get('artwork').id.should.equal 'artwork2'
+        artworks[2].get('artwork').id.should.equal 'artwork3'
+
+        # on page 2, the response is not a full page
+        @view.loadNextPage()
+        artworks = _.last(@ArtworkColumnsView.appendArtworks.args)[0]
+        artworks.should.have.lengthOf 2
+        artworks[0].get('artwork').id.should.equal 'artwork4'
+        artworks[1].get('artwork').id.should.equal 'artwork5'
+        @view.nextPage.should.equal 3
+
+        # only two left in the whole set
+        @view.loadNextPage()
+        artworks = _.last(@ArtworkColumnsView.appendArtworks.args)[0]
+        artworks.should.have.lengthOf 2
+        artworks[0].get('artwork').id.should.equal 'artwork6'
+        artworks[1].get('artwork').id.should.equal 'artwork7'
+        @view.nextPage.should.equal 4
+
+        @view.loadNextPage()
+        @view.nextPage.should.equal 4
+        @view.loadNextPage()
+        @view.loadNextPage()
+        @view.nextPage.should.equal 4
+
+        # 7 works, page size 3, then 2, then 3, 3 calls to get all
+        @ArtworkColumnsView.appendArtworks.callCount.should.equal 3
