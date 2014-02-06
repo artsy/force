@@ -5,11 +5,12 @@ include ../../share/template
   .post-modifier-actions
     if profile && profile.isCurrentProfile()
       a.post-edit Edit
-    if (profile && profile.isCurrentProfile()) || (currentUser && currentUser.canAdministerContent())
+    if (profile && profile.isCurrentProfile()) || (currentUser && currentUser.isAdmin())
       a.post-remove Delete
 
-    if currentUser && currentUser.canAdministerContent()
+    if currentUser && currentUser.isAdmin()
       a.post-show-feature-dialog Posts
+
       if post.get('featured')
         a.post-unfeature Unfeature
       else
@@ -19,11 +20,8 @@ include ../../share/template
         a.post-flagged Flagged
       else
         a.post-flag Flag
+      
+      a.post-admin( href="#{sd.ADMIN_URL}/post/#{post.get('id')}") Admin
 
-    if (profile && !profile.isCurrentProfile()) && currentUser && currentUser.canRepost()
-      if !post.get('reposts') || post.get('reposts').length == 0
-        a.post-repost Repost
-      else
-        a.post-unrepost Unrepost
-if currentUser && currentUser.canAdministerContent()
+if currentUser && currentUser.isAdmin()
   include ./actions_feature

@@ -62,8 +62,6 @@ module.exports = class CurrentUser extends Backbone.Model
     (@get('type') is 'Admin') and ! @get('is_slumming')
   hasLabFeature: (featureName) ->
     _.contains @get('lab_features'), featureName
-  canAdministerContent: ->
-    @get('is_content_administrator')
   canRepost: ->
     @hasLabFeature("Reposting")
 
