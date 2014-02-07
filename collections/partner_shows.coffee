@@ -1,6 +1,7 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
 sd = require('sharify').data
+moment = require 'moment'
 PartnerShow = require '../models/partner_show.coffee'
 { ARTSY_URL } = require('sharify').data
 { Fetch } = require 'artsy-backbone-mixins'

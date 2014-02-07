@@ -44,6 +44,12 @@ module.exports = class PartnerShow extends Backbone.Model
       @runningDates() || ''
     ]).join ' | '
 
+  #
+  # Get the poster image url of the show (e.g. used in the shows tab in 
+  # partner profile.)
+  #
+  # If no available images, it will fetch one for you and trigger a
+  # `fetch:posterImageUrl` event on success with the image url.
   posterImageUrl: (featured=false) ->
     size = if featured then 'featured' else 'large'
     return @imageUrl size if @hasImage(size)

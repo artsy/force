@@ -25,7 +25,7 @@ module.exports = class PartnerShowsView extends Backbone.View
     return if @isFetchedAllShows
 
     @renderLoading()
-    data = sort: "-featured,-end_at", size: 30
+    data = sort: "-featured,-end_at"
     @collection.url = "#{@partner.url()}/shows"
     @collection.fetchUntilEnd
       data: data

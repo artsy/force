@@ -1,7 +1,7 @@
 mixin showFigureContent(show, isFeatured)
-  .cover-image( style="background-image: url(#{show.posterImageUrl(isFeatured)})" )
-    .overlay
-  figurecaption
+  .partner-show-cover-image( style="background-image: url(#{show.posterImageUrl(isFeatured)})" )
+    .partner-show-overlay
+  figurecaption.partner-show-caption
     h5.partner-show-heading= show.formatLeadHeading()
     if show.has('artists')
       h3.partner-show-artists= show.formatArtists()
@@ -9,29 +9,31 @@ mixin showFigureContent(show, isFeatured)
     h6.partner-show-time!= show.runningDates()
 
 mixin showsGallery(shows, isFeatured)
-  each show in shows
-    figure.partner-show-summary
-      if show.linkable()
-        a( href=show.clientUrl() )
+  .partner-shows-container
+    each show in shows
+      figure.partner-show
+        if show.linkable()
+          a( href=show.clientUrl() )
+            +showFigureContent(show, isFeatured)
+        else
           +showFigureContent(show, isFeatured)
-      else
-        +showFigureContent(show, isFeatured)
 
-if featured
-  section.partner-shows-section.featured
-    +showsGallery([featured], true)
+#partner-shows
+  if featured
+    section.partner-shows-section.featured
+      +showsGallery([featured], true)
 
-if current.length > 0
-  h2 Current Shows
-  section.partner-shows-section.current
-    +showsGallery(current, false)
+  if current.length > 0
+    section.partner-shows-section.current
+      h2.avant-garde-header-center Current Shows
+      +showsGallery(current, false)
 
-if upcoming.length > 0
-  h2 Upcoming Shows
-  section.partner-shows-section.upcoming
-    +showsGallery(upcoming, false)
+  if upcoming.length > 0
+    section.partner-shows-section.upcoming
+      h2.avant-garde-header-center Upcoming Shows
+      +showsGallery(upcoming, false)
 
-if past.length > 0
-  h2 Past Shows
-  section.partner-shows-section.past
-    +showsGallery(past, false)
+  if past.length > 0
+    section.partner-shows-section.past
+      h2.avant-garde-header-center Past Shows
+      +showsGallery(past, false)
