@@ -260,7 +260,11 @@ The set of filter menus for artworks including the "All Works" button and "Price
 ![](images/filter_artwork_nav.png)
 
 ````coffeescript
-new FilterArtworksNav(el: $ '#browse-filter-header')
+new FilterArtworksNav
+  el: $ '#browse-filter-header'
+  # Pass in filter options (e.g. /api/v1/search/filtered/fair/armory-show-2013/options)
+  # to render the dynamic parts.
+  filterOptions:
 ````
 
 This view will trigger events on the filter mediator when clicking on menu items.
