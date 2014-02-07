@@ -100,5 +100,5 @@ describe 'ArtworkView', ->
       @view = new @ArtworkView el: $('#artwork-page'), artist: @artist, artwork: @artwork
 
     describe '#initialize', ->
-      it 'does not have a following collection if the user is logged in', ->
+      it 'does not have a following collection if the user is not logged in', ->
         _.isUndefined(@view.following).should.be.ok
