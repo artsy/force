@@ -222,3 +222,61 @@ new ArtistFillwidthList(
 ```
 
 `fetchAndRender` will fetch every artist's artworks and the individual list items will re-render as they sync.
+
+## Filter
+
+A library of components used in the multi-faceted fitler UIs across the site. E.g. in /browse and /gene/:id or /fair.
+
+![](images/filter_overview.png)
+
+Filter isn't a full-blown component itself. It is instead a library of smaller common filter components that talk to the filter mediator. It's up to you to use the filter mediator and it's sub-components to build the appropriate UI for the app.
+
+For instance a simple UI like the browse page filter uses the filter/artworks_nav component in conjunction with the /artwork_columns component to create a filterable list view of all artworks accross the site. An example of gluing this together might look like:
+
+````coffeescript
+mediator = require '../../components/filter/mediator.coffee'
+FilterArtworksNav = require '../../components/filter/common_menus/view.coffee'
+ArtworkColumns = require '../../components/artwork_columns/view.coffee'
+
+# Set up a collection of site-wide artworks
+artworks = new Artworks
+artworks.url = '/api/v1/search/filtered/main'
+
+# Instantiate the filter and list views involved
+artworksNav = new FilterArtworksNav el: $('#browse-filter-header')
+list = new ArtworkColumns el: $('#browse-filter-list'), collection: artworks
+
+# When clicking "Price > Under $500" on the `artworksNav` view it will trigger
+# this mediator event. We hook into that to re-fetch the artworks collection
+# filtered by `?price_range` causing the columns view to re-render.
+mediator.on 'filter:price', (range) ->
+  artworks.fetch(data: { price_range: range })
+````
+
+### Filter Artworks Nav
+
+The set of filter menus for artworks including the "All Works" button and "Price", "Medium", and "Size" dropdowns.
+
+![](images/filter_artwork_nav.png)
+
+````coffeescript
+new FilterArtworksNav(el: $ '#browse-filter-header')
+````
+
+This view will trigger events on the filter mediator when clicking on menu items.
+
+````coffeescript
+mediator = require '../../components/filter/mediator.coffee'
+
+# When clicking the "All works button"
+mediator.on 'filter:allworks', ->
+
+# When clicking a price menu item. (range) is the value that can be passed into the `price_range` query param e.g. "5000:10000".
+mediator.on 'filter:price', (range) ->
+
+# When clicking a medium menu item. (medium) is the value that can be passed into the `medium` query param e.g. "sculpture".
+mediator.on 'filter:medium', (medium) ->
+
+# When clicking a medium size item. (size) is the value taht can be passed into the `dimension` query param e.g. "48".
+mediator.on 'filter:size', (dimension) ->
+````
