@@ -91,6 +91,22 @@ artwork-detail-item-height  = 36px
   max-width 100%
   max-height 100%
 
+.artwork-additional-images
+  margin 20px auto
+
+.artwork-additional-image
+  display inline-block
+  height 45px
+  padding 3px
+  margin 5px
+  vertical-align middle
+  transition background-color 0.125s
+  > img
+    height 100%
+  &.is-active
+  &[data-state='active']
+    background-color highlight-color
+
 .artwork-image-actions
   padding 10px
 
@@ -208,6 +224,15 @@ artwork-detail-item-height  = 36px
       border-color @background-color
       color white
       transition none
+
+// Follow button states
+.artwork-artist-follow-button
+  > span:before
+    content 'Follow artist'
+  &[data-state='following']
+    color highlight-color
+    > span:before
+      content 'Following artist'
 
 // Below the fold
 .artwork-related-information

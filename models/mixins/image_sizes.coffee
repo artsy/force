@@ -17,10 +17,18 @@ module.exports =
 
   # Given a desired width and height, return the image url that won't pixelate
   imageUrlFor: (width, height) ->
+    size = @imageSizeForDimensions width, height
+    if size
+      return @imageUrl size
+    @imageUrlForMaxSize()
+
+  imageSizeForDimensions: (width, height) ->
     for size in @sizes
       if width <= size[1].width && height <= size[1].height
-        return @imageUrl(size[0]) if _.indexOf(@get('image_versions'), size[0]) >= 0
-    return @imageUrlForMaxSize()
+        return size[0] if _.indexOf(@get('image_versions'), size[0]) >= 0
+
+  imageSizeForHeight: (height) ->
+    @imageSizeForDimensions height * @aspectRatio(), height
 
   imageUrlForHeight: (height) ->
     aspectRatio = @aspectRatio()

@@ -6,6 +6,10 @@
   margin-right 0
   margin-top 53px !important
 
+#feature
+  .main-layout-container
+    max-width 1150px
+
 .feature-image
   background-posiition center center
   background-repeat norepeat
@@ -18,17 +22,26 @@
 
 .feature-title
   garamond()
+  display inline-block
   font-size 41px
   line-height 1.25
   margin 50px 0 24px
   text-align center
   width 100%
 
+.feature-share
+  float right
+  margin-top 35px
+  position absolute
+  right 50px
+  .share-to-pinterest
+    display none
+
 .feature-description
   border-bottom 1px solid dark-gray-border-color
   border-top @border-bottom
   font-size 24px
-  margin-bottom 20px
+  margin-bottom 50px
   padding 24px 100px 17px
   text-align center
   width 100%
@@ -47,19 +60,25 @@
     border-right 1px solid dark-gray-border-color
     margin-left 0
     margin-right 0
+    width calc(33.33%)
     &:first-child
       margin-right -1px
       border-left none
+      .artwork-item
+        padding-left 0
     &:last-child
       margin-left -1px
       border-right none
+      .artwork-item
+        padding-right 0
   .artwork-item
     border-bottom 1px solid dark-gray-border-color
-    padding 25px
+    padding 0 30px 30px 30px
     &:last-child
       border-bottom none
+    img
+      height 400px
     
-
 .feature-set-title
   font-size 30px
   margin-bottom 30px
@@ -70,36 +89,77 @@
 
 .feature-set-item
   display inline-block
-  vertical-align top
   margin 0
+  overflow hidden
+  vertical-align top
   a
     text-decoration none
-  img
-    margin-bottom 14px
-    width 100%
+
+.feature-set-item-image-link
+  background-color black
+  display inline-block
+  margin 0 0 14px 0
+  position relative
+  &:hover
+    .feature-set-item-image
+      opacity 0.5
+
+.feature-set-item-image
+  opacity 1
+  transition opacity, 0.3s
+  width 100%
+
+.feature-set-item-artist-list
+  border-bottom 1px solid dark-gray-border-color
+  margin-bottom 30px
+  padding-bottom 10px
+
+.feature-set-item-artist-list-heading
+  avant-garde()
+  font-size 13px
+  margin-bottom 15px
+  text-align center
+
+.feature-set-item-artist-list-group
+  display inline-block
+  padding 0 25px
+  width 50%
+  &:last-of-type
+    padding-right: 0
+
+.feature-set-item-artist-link
+  display block
+  margin-bottom 12px
+  overflow ellipsis
+  text-align left
+  text-decoration none
+  transition color 0.25s
+  &:hover
+    color highlight-color
 
 .feature-set-item-full
   width 100%
 
 .feature-set-item-half
+  margin 0 1.5%
   width 47%
-  &:first-of-type
-    margin-right 3%
+  .feature-set-item-caption 
+    > *
+      margin-left auto
+      margin-right auto
+      width 75%
+    h1
+      font-size 30px
+      line-height 1.3
+      margin-bottom 19px
 
 .feature-set-item-third
-  width 31%
   margin 0 1%
-  &:first-child
-    margin-left 0
-  &:last-child
-    margin-right 0
+  width 31%
 
 .feature-set-item-quarter
   margin 0 1%
   width 22.8%
-
-  img
-    margin-bottom 10px
 
   .feature-set-item-caption
     text-align left

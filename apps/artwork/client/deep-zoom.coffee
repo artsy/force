@@ -32,7 +32,7 @@ module.exports = class DeepZoomView extends Backbone.View
     ), @inactiveDuration
 
   render: ->
-    return unless (defaultImage = @artwork.defaultImage()).canDeepZoom()
+    return unless (image = @artwork.activeImage()).canDeepZoom()
 
     @$el.html(template).
       attr 'data-state', 'loading'
@@ -53,7 +53,7 @@ module.exports = class DeepZoomView extends Backbone.View
       zoomPerScroll: 1.1
       constrainDuringPan: true
       visibilityRatio: 1
-      tileSources: defaultImage.deepZoomJson()
+      tileSources: image.deepZoomJson()
       error: @return
 
     @postRender()

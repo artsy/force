@@ -1,16 +1,22 @@
+sd          = require('sharify').data
 Backbone    = require 'backbone'
 ShareView   = require './share.coffee'
 Transition  = require '../../../components/mixins/transition.coffee'
+
+{ Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 
 module.exports = class ArtworkView extends Backbone.View
   events:
     'click a[data-client]'                : 'intercept'
     'click .circle-icon-button-share'     : 'openShare'
     'click .circle-icon-button-save'      : 'saveArtwork'
-    'click .artwork-artist-follow-button' : 'followArtist'
+    'click .artwork-additional-image'     : 'changeImage'
 
   initialize: (options) ->
     { @artwork, @artist } = options
+
+    @following = new Following(null, kind: 'artist') if sd.CURRENT_USER?
+    @setupFollowButton()
 
   route: (route) ->
     # Initial server rendered route is 'show'
@@ -36,5 +42,24 @@ module.exports = class ArtworkView extends Backbone.View
   saveArtwork: (e) ->
     e.preventDefault()
 
-  followArtist: (e) ->
+  setupFollowButton: ->
+    @followButton = new FollowButton
+      el: @$('.artwork-artist-follow-button')
+      following: @following
+      model: @artist
+
+    @following?.syncFollows [@artist.id]
+
+  changeImage: (e) ->
     e.preventDefault()
+
+    (@$artworkAdditionalImages ?= @$('.artwork-additional-image')).
+      removeClass 'is-active'
+
+    ($target = $(e.currentTarget)).
+      addClass 'is-active'
+
+    (@$artworkImage ?= @$('#the-artwork-image')).
+      attr('src', $target.data 'href')
+
+    @artwork.setActiveImage($target.data 'id')

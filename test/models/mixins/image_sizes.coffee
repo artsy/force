@@ -44,6 +44,20 @@ describe 'Image Sizes Mixin', ->
       }
       @model.imageUrlFor(2080, 2080).should.equal 'larger.jpg'
 
+  describe '#imageSizeForHeight', ->
+    it 'returns a version size for a given height', ->
+      @model.set {
+        id: 'tall-@model-00193920390'
+        image_versions: ["small", "tall", "medium", "large", "larger"]
+        image_url: ":version.jpg"
+        aspect_ratio: 0.53
+        original_height: 2253
+        original_width: 1200
+      }
+      @model.imageSizeForHeight(800).should.equal 'larger'
+      @model.imageSizeForHeight(400).should.equal 'tall'
+      @model.imageSizeForHeight(200).should.equal 'small'
+
   describe '#imageUrlForHeight', ->
     it 'returns versions for the largest image for the given height', ->
       @model.set {

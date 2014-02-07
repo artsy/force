@@ -1,4 +1,5 @@
 extends ../../../components/main_layout/templates/index
+include ../../../components/share/template
 
 block head
   include meta
@@ -13,6 +14,8 @@ block body
 
     .feature-content.main-layout-container
 
+      nav.feature-share
+        +share(feature.shareTitle())
       h1.feature-title!= feature.get('name')
 
       .feature-description!= feature.mdToHtml('description')
