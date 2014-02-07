@@ -10,7 +10,7 @@
 #
 _             = require 'underscore'
 sd            = require('sharify').data
-{ Image }      = require 'artsy-backbone-mixins'
+{ Image }     = require 'artsy-backbone-mixins'
 Artworks      = require '../collections/artworks.coffee'
 Backbone      = require 'backbone'
 FeaturedLinks = require '../collections/featured_links.coffee'
@@ -33,11 +33,11 @@ module.exports = class Feature extends Backbone.Model
   metaTitle: ->
     "#{@get('name')} | Artsy"
 
-  metaDescription: (truncate = false) ->
-    if truncate
-      smartTruncate "#{@get('name')} on Artsy", 200
-    else
-      "#{@get('name')} on Artsy"
+  metaDescription: ->
+    smartTruncate @get('description')
+
+  shareTitle: (truncate = false) ->
+    smartTruncate "#{@get('name')} on Artsy #{sd.ARTSY_URL}#{@href()}", 140
 
   href: ->
     "/feature/#{@get('id')}"
@@ -88,8 +88,9 @@ module.exports = class Feature extends Backbone.Model
 
             when 'FeaturedLink'
               set.set
-                data: new FeaturedLinks items.map (link) -> link.toJSON()
-                type: 'featured links'
+                data : new FeaturedLinks items.map (link) -> link.toJSON()
+                type : 'featured links'
+                index: set.get('key')
               finalItems.push set
               callback()
 
@@ -97,15 +98,17 @@ module.exports = class Feature extends Backbone.Model
               # We're going to assume we wouldn't stack multiple sales next to each other
               # because that would be silly. So we'll just use the first item.
               # Set it on the feature for convenience.
+
               @set sale: (sale = new Sale items.first().toJSON())
-              set.set
-                type : if sale.get 'is_auction' then 'auction artworks' else 'sale artworks'
-                index: set.get 'index'
-              finalItems.push set
               sale.fetchArtworks
-                success: (saleArtworks) =>
-                  set.set 'data', Artworks.fromSale(saleArtworks)
+                success: _.bind ((set, saleArtworks) =>
+                  set.set
+                    type : if sale.get('is_auction') then 'auction artworks' else 'sale artworks'
+                    data : Artworks.fromSale(saleArtworks)
+                    index: set.get('key')
+                  finalItems.push set
                   callback()
+                ), @, set
                 error: (e) -> err = e; callback()
 
             else

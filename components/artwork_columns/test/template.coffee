@@ -50,3 +50,15 @@ describe 'Artwork Columns template', ->
     $ = cheerio.load render('template')({ numberOfColumns: 5 })
     $('.artwork-column').should.have.lengthOf 5
     $('.artwork-column').is(':empty').should.be.true
+
+  it 'will pass an image version for a given height to the artwork item template', ->
+    threeCols = @artworks.groupByColumnsInOrder 3
+    $ = cheerio.load render('template')({ artworkColumns: threeCols, setHeight: 200 })
+    artwork = @artworks.models[0]
+    imgSrc = $(".artwork-item[data-artwork='#{artwork.get('id')}'] .artwork-item-image").attr 'src'
+    imgSrc.should.include artwork.defaultImage().imageSizeForHeight 200
+
+    $ = cheerio.load render('template')({ artworkColumns: threeCols, setHeight: 400 })
+    artwork = @artworks.models[0]
+    imgSrc = $(".artwork-item[data-artwork='#{artwork.get('id')}'] .artwork-item-image").attr 'src'
+    imgSrc.should.include artwork.defaultImage().imageSizeForHeight 400

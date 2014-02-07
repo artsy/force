@@ -24,11 +24,12 @@ figure.artwork-item( data-artwork=artwork.get('id') )
           a.faux-underline-hover( href=artwork.partnerLink() )!= artwork.partnerName()
         else
           != artwork.partnerName()
+
     if artwork.get('forsale') && artwork.saleMessage()
       p.artwork-item-sale-price!= artwork.saleMessage()
 
-    if artwork.has('blurb') && showBlurb
-      .artwork-item-blurb!= artwork.mdToHtml('blurb')
-
     if artwork.has('saleArtwork')
+      if artwork.has('blurb')
+        .artwork-item-blurb!= artwork.mdToHtml('blurb')
       .artwork-item-more-info.avant-garde-button-black( data-id=artwork.get('id') ) More Info
+
