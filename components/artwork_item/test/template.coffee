@@ -99,7 +99,7 @@ describe 'Artwork Item template', ->
 
   describe 'blurb', ->
 
-    it 'renders a blurb when the artwork has one and the blurb is requested', ->
+    it 'renders a blurb when the artwork has one and is part of a sale', ->
       @artwork = new Artwork fabricate 'artwork'
       $ = cheerio.load render('template')({ artwork: @artwork })
       $('.artwork-item-blurb').should.have.lengthOf 0
@@ -108,6 +108,7 @@ describe 'Artwork Item template', ->
       $ = cheerio.load render('template')({ artwork: @artwork })
       $('.artwork-item-blurb').should.have.lengthOf 0
 
-      $ = cheerio.load render('template')({ artwork: @artwork, showBlurb: true })
+      @artwork.set 'saleArtwork', fabricate 'sale_artwork'
+      $ = cheerio.load render('template')({ artwork: @artwork })
       $('.artwork-item-blurb').should.have.lengthOf 1
       $('.artwork-item-blurb').text().should.equal @artwork.get 'blurb'

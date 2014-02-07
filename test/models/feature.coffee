@@ -31,3 +31,11 @@ describe 'Feature', ->
       _.last(Backbone.sync.args)[2].success([
         fabricate 'featured_link', title: 'Featured link for this awesome page'
       ])
+
+  describe '#shareTitle', ->
+
+    it 'returns the name, a link, and truncates to a tweet', ->
+      shareThis = @feature.shareTitle()
+      shareThis.should.include @feature.get 'name'
+      shareThis.should.include 'on Artsy'
+      shareThis.should.include @feature.href()

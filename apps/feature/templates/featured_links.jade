@@ -2,10 +2,10 @@ mixin featuredLinks(items)
   for item in items
     figure( class="feature-set-item feature-set-item-#{item.layoutStyle(items.length)}" )
       if item.has('href') && item.hasImageForLayout(items.length)
-        a( href=item.get('href') )
-          img( src=item.imageUrlForLayout(items.length) )
+        a.feature-set-item-image-link( href=item.get('href') )
+          img.feature-set-item-image( src=item.imageUrlForLayout(items.length) )
       else if item.hasImageForLayout(items.length)
-        img( src=item.imageUrlForLayout(items.length) )
+        img.feature-set-item-image( src=item.imageUrlForLayout(items.length) )
       figcaption.feature-set-item-caption
         if item.has('title')
           h3.feature-set-item-caption-heading

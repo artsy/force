@@ -62,6 +62,14 @@ describe 'Featured Sets', ->
       $ = cheerio.load render('sets')({ sets: [ @set ] })
       $('.feature-set-item').should.have.lengthOf 1
 
+  describe "videos", ->
+
+    it 'renders videos', ->
+      @set.set 'data', new FeaturedLinks([ fabricate('featured_link')])
+      @html = render('sets')({ sets : [ @set ] })
+      $ = cheerio.load render('sets')({ sets: [ @set ] })
+      $('.feature-set-item').should.have.lengthOf 1
+
   describe "sale artworks", ->
 
     it 'renders sale artworks in an artwork column component', ->
