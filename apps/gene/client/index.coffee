@@ -3,6 +3,7 @@ Backbone = require 'backbone'
 Gene = require '../../../models/gene.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 ArtistFillwidthList = require '../../../components/artist_fillwidth_list/view.coffee'
+FilterArtworksNav = require '../../../components/filter/artworks_nav/view.coffee'
 { GENE, CURRENT_USER } = require('sharify').data
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 ShareView = require '../../../components/share/view.coffee'
@@ -37,3 +38,5 @@ module.exports.init = ->
     user: CurrentUser.orNull()
     el: $ 'body'
     model: new Gene GENE
+  new FilterArtworksNav
+    el: $ '#gene-filter'
