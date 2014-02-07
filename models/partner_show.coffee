@@ -148,6 +148,11 @@ module.exports = class PartnerShow extends Backbone.Model
     return @get('name') if @get('name')?.length > 0
     @formatArtists @maxDisplayedArtists
 
+  formatLeadHeading: ->
+    if @running() then return 'Current Show'
+    if @upcoming() then return 'Upcoming Show'
+    if @closed() then return 'Past Show'
+
   updatedAt: -> moment(@get('updated_at')).fromNow()
 
   fairLocationDisplay: ->

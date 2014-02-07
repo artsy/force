@@ -2,11 +2,11 @@ mixin figureContent(show)
   .cover-image( style="background-image: url(#{show.posterImageUrl(isFeature)})")
     .overlay
   figurecaption
-    //h5.partner-show-heading= show.getLeadHeading()
+    h5.partner-show-heading= show.formatLeadHeading()
     if show.has('artists')
       h3.partner-show-artists= show.formatArtists()
     h4.partner-show-name= show.formatFeedItemHeading()
-    h6.partner-show-time= show.get('start_at')
+    h6.partner-show-time!= show.runningDates()
 
 mixin figuresOfShows(shows)
   each show in shows
