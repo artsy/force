@@ -9,17 +9,16 @@ FilterArtworksNav = benv.requireWithJadeify resolve(__dirname, '../view'), ['tem
 
 describe 'FilterArtworksNav', ->
 
-  before (done) ->
-    benv.setup ->
+  beforeEach (done) ->
+    benv.setup =>
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
+      FilterArtworksNav.__set__ 'mediator', @mediator = trigger: sinon.stub()
+      @view = new FilterArtworksNav el: $ "<div></div>"
       done()
 
-  after benv.teardown
-
-  beforeEach ->
-    FilterArtworksNav.__set__ 'mediator', @mediator = trigger: sinon.stub()
-    @view = new FilterArtworksNav el: $('body')
+  afterEach ->
+    benv.teardown()
 
   it 'renders medium if passed', ->
     @view.filterOptions = medium: { "Finger Painting": 'finger-painting' }
