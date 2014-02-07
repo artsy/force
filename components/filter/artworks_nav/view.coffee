@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-template = require './template.jade'
+template = -> require('./template.jade') arguments...
 mediator = require '../mediator.coffee'
 
 module.exports = class FilterArtworksNav extends Backbone.View
