@@ -225,6 +225,15 @@ artwork-detail-item-height  = 36px
       color white
       transition none
 
+// Follow button states
+.artwork-artist-follow-button
+  > span:before
+    content 'Follow artist'
+  &[data-state='following']
+    color highlight-color
+    > span:before
+      content 'Following artist'
+
 // Below the fold
 .artwork-related-information
   clearfix()

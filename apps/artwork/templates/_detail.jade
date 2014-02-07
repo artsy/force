@@ -90,7 +90,8 @@
         | Exit More Info
     a.artwork-artist-follow-button
       i.icon-follow
-      | Follow Artist
+      span
+        //- Text label is handled in the CSS
     if artwork.isComparable()
       a( href="/artwork/#{artwork.id}/auction-results" )
         i.icon-auction
