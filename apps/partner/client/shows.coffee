@@ -11,7 +11,7 @@ module.exports = class PartnerShowsView extends Backbone.View
   initialize: (options={}) ->
     { @profile, @partner } = options
     @collection ?= new PartnerShows()
-    @initShows()
+    @initializeShows()
 
   render: ->
     @$el.html $( template(
@@ -21,20 +21,26 @@ module.exports = class PartnerShowsView extends Backbone.View
       past: @past.models
     ))
 
-  initShows: ->
-    return if @isFetchedAll
+  initializeShows: ->
+    return if @isFetchedAllShows
+
+    @renderLoading()
     data = sort: "-featured,-end_at", size: 30
     @collection.url = "#{@partner.url()}/shows"
     @collection.fetchUntilEnd
       data: data
       success: =>
-        @featured = @collection.featured()
-        @current = @collection.current [@featured]
-        @upcoming = @collection.upcoming [@featured]
-        @past = @collection.past [@featured]
-        @isFetchedAll = true
-        
+        @isFetchedAllShows = true
+        @organizeShows()
+        @hideLoading()
         @render()
+
+  organizeShows: ->
+    @featured = if @profile.isGallery() then null else @collection.featured()
+    exclude   = if @profile.isGallery() then [] else [@featured]
+    @current  = @collection.current exclude
+    @upcoming = @collection.upcoming exclude
+    @past     = @collection.past exclude
 
   renderLoading: ->
     unless @$loadingSpinner?

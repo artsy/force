@@ -1,5 +1,5 @@
-mixin figureContent(show)
-  .cover-image( style="background-image: url(#{show.posterImageUrl(isFeature)})")
+mixin showFigureContent(show, isFeatured)
+  .cover-image( style="background-image: url(#{show.posterImageUrl(isFeatured)})" )
     .overlay
   figurecaption
     h5.partner-show-heading= show.formatLeadHeading()
@@ -8,29 +8,30 @@ mixin figureContent(show)
     h4.partner-show-name= show.formatFeedItemHeading()
     h6.partner-show-time!= show.runningDates()
 
-mixin figuresOfShows(shows)
+mixin showsGallery(shows, isFeatured)
   each show in shows
     figure.partner-show-summary
       if show.linkable()
         a( href=show.clientUrl() )
-          +figureContent(show)
+          +showFigureContent(show, isFeatured)
       else
-        +figureContent(show)
+        +showFigureContent(show, isFeatured)
 
 if featured
   section.partner-shows-section.featured
+    +showsGallery([featured], true)
 
 if current.length > 0
   h2 Current Shows
   section.partner-shows-section.current
-    +figuresOfShows(current)
+    +showsGallery(current, false)
 
 if upcoming.length > 0
   h2 Upcoming Shows
   section.partner-shows-section.upcoming
-    +figuresOfShows(upcoming)
+    +showsGallery(upcoming, false)
 
 if past.length > 0
   h2 Past Shows
   section.partner-shows-section.past
-    +figuresOfShows(past)
+    +showsGallery(past, false)
