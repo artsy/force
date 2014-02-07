@@ -1,7 +1,8 @@
-sd          = require('sharify').data
-Backbone    = require 'backbone'
-ShareView   = require './share.coffee'
-Transition  = require '../../../components/mixins/transition.coffee'
+Backbone      = require 'backbone'
+ShareView     = require './share.coffee'
+Transition    = require '../../../components/mixins/transition.coffee'
+CurrentUser   = require '../../../models/current_user.coffee'
+SaveButton  = require '../../../components/save_button/view.coffee'
 
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 
@@ -15,8 +16,15 @@ module.exports = class ArtworkView extends Backbone.View
   initialize: (options) ->
     { @artwork, @artist } = options
 
-    @following = new Following(null, kind: 'artist') if sd.CURRENT_USER?
+    @setupCurrentUser()
     @setupFollowButton()
+    @setupSaveButton()
+
+  setupCurrentUser: ->
+    @currentUser = CurrentUser.orNull()
+    @currentUser?.initializeDefaultArtworkCollection()
+    @saved      = @currentUser?.defaultArtworkCollection()
+    @following  = new Following(null, kind: 'artist') if @currentUser?
 
   route: (route) ->
     # Initial server rendered route is 'show'
@@ -49,6 +57,18 @@ module.exports = class ArtworkView extends Backbone.View
       model: @artist
 
     @following?.syncFollows [@artist.id]
+
+  setupSaveButton: ->
+    new SaveButton
+      analyticsSaveMessage: 'Added artwork to collection, via artwork info'
+      analyticsUnsaveMessage: 'Removed artwork from collection, via artwork info'
+      el: @$('.circle-icon-button-save')
+      saved: @saved
+      model: @artwork
+
+    if @saved
+      @saved.addRepoArtworks new Backbone.Collection @artwork
+      @saved.syncSavedArtworks()
 
   changeImage: (e) ->
     e.preventDefault()
