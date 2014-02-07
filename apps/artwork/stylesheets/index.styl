@@ -2,57 +2,7 @@
 @import './more-info'
 @import './share'
 @import './deep-zoom'
-
-.circle-icon-button
-  iconfont-styling()
-  display inline-block
-  position relative
-  width 58px
-  margin 0 5px 20px
-  height @width
-  cursor pointer
-  color black
-  background-color transparent
-  text-align center
-  line-height @height
-  border 2px solid light-gray-border-color
-  border-radius (@width / 2)
-  opacity 1
-  transition opacity 0.125s
-  user-select none
-  &, &:after
-    transition all 0.125s
-  &:after
-    avant-garde()
-    position absolute
-    top 100%
-    font-size 13px
-    line-height 2.5
-    text-align center
-    // Account for a small
-    // amount of overflow
-    right -5px
-    left -5px
-  &:hover
-    background-color dark-gray-text-color
-    border-color @background-color
-    color white
-    &:after
-      color black
-
-.circle-icon-button-save
-  @extends .circle-icon-button
-  &:before
-    content '\e60d'
-  &:after
-    content 'Favorite'
-
-.circle-icon-button-share
-  @extends .circle-icon-button
-  &:before
-    content '\e624'
-  &:after
-    content 'Share'
+@import './circle-buttons'
 
 artwork-detail-width        = 220px
 artwork-detail-item-height  = 36px
