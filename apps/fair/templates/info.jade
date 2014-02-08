@@ -1,0 +1,20 @@
+#page-markdown-content.fair-info-section
+  if fair.get('about')
+    .fair-info-content!= fair.mdToHtml('about')
+  .fair-info-nav
+    if fair.get('location')
+      .location-section
+        h2 Location
+        .body-text
+          a( target="_blank", href=fair.location().googleMapsLink() )
+            img.map
+          if fair.get('location') && fair.get('location').summary
+            .location-caption!= fair.location().mdToHtml('summary')
+    if fair.get('contact')
+      .contact-section
+        h2 Contact
+        .body-text!= fair.mdToHtml('contact')
+    if fair.get('links')
+      .links-section
+        h2 Links
+        .body-text!= fair.mdToHtml('links')

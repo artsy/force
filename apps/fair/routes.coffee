@@ -54,7 +54,7 @@ fetchFair = (req, res, next, success) ->
 
 @forYou = (req, res, next) ->
   fetchFair req, res, next, (fair, profile) ->
-    res.locals.sd.SECTION = 'info'
+    res.locals.sd.SECTION = 'forYou'
     res.render 'templates/index',
       profile : profile
       fair    : fair
