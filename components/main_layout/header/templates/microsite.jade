@@ -1,0 +1,20 @@
+include ../../../util/activator
+
+header#main-layout-header
+  nav
+    #main-layout-header-left
+      a#main-layout-header-home-logo.icon-logoglyph( href='/' )
+      a.header-text( href='/' ) Back to Artsy.net
+
+    #microsite-header-right
+      if user
+        a.header-text( href='/favorites' ) Favorites
+        .header-spacer |
+        if user.get('name')
+          a.header-text( href="/" + user.get('default_profile_id') )= user.get('name')
+        else
+          .header-user-name Account
+      else
+        a.header-text.mlh-login( href='/log_in' ) Log in
+        .header-spacer |
+        a.header-text.mlh-signup( href='/sign_up' ) Sign up

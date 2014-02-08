@@ -1,29 +1,35 @@
 Profile = require '../../models/profile'
 
+{ overview, fairPosts } = require '../fair/routes'
+
 fetchProfile = (req, res, next, success) ->
   profile = new Profile { id: req.params.id }
   profile.fetch
     cache: true
     success: (profile) ->
-      return next() unless profile and (profile.isUser() or profile.isPartner())
+      return next() unless profile and (profile.isUser() or profile.isPartner() or profile.isFairOranizer())
       res.locals.sd.PROFILE = profile.toJSON()
       success(profile)
     error: -> next()
 
 getTemplateForProfileType = (profile) ->
-  if profile.isPartner()
+  if profile.isFairOranizer()
+    "../fair/templates"
+  else if profile.isPartner()
     "../partner/templates"
   else
     "templates"
 
 @index = (req, res, next) ->
   fetchProfile req, res, next, (profile) ->
+    return overview(req, res, next) if profile.isFairOranizer()
     res.render getTemplateForProfileType(profile),
       profile : profile
 
 @posts = (req, res, next) ->
   fetchProfile req, res, next, (profile) ->
-    if profile.get('posts_count')
+    return fairPosts(req, res, next) if profile.isFairOranizer()
+    if profile.get('posts_count') > 0 or profile.get('reposts_count') > 0
       res.render getTemplateForProfileType(profile),
         profile : profile
     else

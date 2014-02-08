@@ -1,0 +1,21 @@
+header.fair-page-header
+  .fair-logo( alt=fair.get('name') )
+  #fair-search-container
+    input#fair-search-input.bordered-input( placeholder!='Search&hellip;', tabindex=1, value=term )
+    #fair-search-spinner: .loading-spinner-small
+  nav.fair-tabs.garamond-tablist
+    a.garamond-tab(
+      href="#{profile.href()}/browse", class=activeClass("#{profile.href()}/browse")
+    ) Browse
+    span.garamond-tab-separator
+    a.garamond-tab(
+      href="#{profile.href()}/for-you", class=activeClass("#{profile.href()}/for-you")
+    ) For You
+    span.garamond-tab-separator
+    a.garamond-tab(
+      href="#{profile.href()}/posts", class=activeClass("#{profile.href()}/posts")
+    ) Posts
+    span.garamond-tab-separator
+    a.garamond-tab(
+      href="#{profile.href()}/info", class=activeClass("#{profile.href()}/info")
+    ) Info

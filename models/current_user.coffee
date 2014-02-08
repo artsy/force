@@ -15,6 +15,8 @@ module.exports = class CurrentUser extends Backbone.Model
     followArtists       : null
     followGenes         : null
 
+  href: -> "/#{@get('default_profile_id')}"
+
   # Should only be run after the user has been fetched and has an id
   initializeDefaultArtworkCollection: (options) ->
     unless @get('artworkCollections')?.length > 0
@@ -60,10 +62,9 @@ module.exports = class CurrentUser extends Backbone.Model
 
   isAdmin: ->
     (@get('type') is 'Admin') and ! @get('is_slumming')
+
   hasLabFeature: (featureName) ->
     _.contains @get('lab_features'), featureName
-  canRepost: ->
-    @hasLabFeature("Reposting")
 
   # Retreive a list of artists the user is following
   #
