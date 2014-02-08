@@ -31,6 +31,6 @@ fairRoutes = [
 ]
 
 app.get '/:id/info', routes.info
-app.get '/:id/for-your', routes.forYou
+app.get '/:id/for-you', routes.forYou
 app.get '/:id/overview', routes.overview
 app.get '/:id/search', routes.search

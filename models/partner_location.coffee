@@ -1,8 +1,11 @@
 _                              = require 'underscore'
 Backbone                       = require 'backbone'
 { getMapImageSrc, getMapLink } = require "../components/util/google_maps.coffee"
+{ Markdown }                   = require 'artsy-backbone-mixins'
 
 module.exports = class PartnerLocation extends Backbone.Model
+
+  _.extend @prototype, Markdown
 
   lines: ->
     _.compact([

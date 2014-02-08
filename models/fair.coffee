@@ -1,13 +1,18 @@
 sd        = require('sharify').data
 _         = require 'underscore'
 Backbone  = require 'backbone'
-{ Image } = require 'artsy-backbone-mixins'
+{ Image, Markdown } = require 'artsy-backbone-mixins'
+PartnerLocation = require './partner_location.coffee'
 
 module.exports = class Fair extends Backbone.Model
 
   _.extend @prototype, Image(sd.SECURE_IMAGES_URL)
+  _.extend @prototype, Markdown
 
   urlRoot: -> "#{sd.ARTSY_URL}/api/v1/fair"
 
   href: ->
     "/#{@get('id')}"
+
+  location: ->
+    new PartnerLocation @get('location')
