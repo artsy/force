@@ -51,12 +51,25 @@ module.exports = class PartnerShow extends Backbone.Model
   # If no available images, it will fetch one for you and trigger a
   # `fetch:posterImageUrl` event on success with the image url.
   posterImageUrl: (featured=false) ->
+    # try the image of the show
     size = if featured then 'featured' else 'large'
     return @imageUrl size if @hasImage(size)
-    # TODO Need to somehow fetch artworks
-    if @get('artworks').length > 0
-      size = 'larger' if featured
-      return @get('artworks').first().defaultImage().imageUrl size
+
+    # if not, try the image of its first artwork, if we already have some
+    size = 'larger' if featured
+    if @artworks?.length > 0
+      return @artworks.first().defaultImage().imageUrl size
+
+    # if not, fetch some artworks and use one of their images
+    @artworks = new Artworks []
+    options =
+      data    : { size: 10, published: true }
+      url     : "#{@url()}/artworks"
+      cache   : true
+      success : =>
+        imageUrl = @artworks.first().defaultImage().imageUrl size
+        @trigger "fetch:posterImageUrl", imageUrl
+    @artworks.fetch options
     false
 
   title: ->

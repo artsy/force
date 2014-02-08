@@ -12,6 +12,11 @@ module.exports = class PartnerShows extends Backbone.Collection
 
   model: PartnerShow
 
+  #
+  # Get the running partner shows collection.
+  #
+  # @param {Object} exclude an array of PartnerShow objects to be excluded
+  #
   current: (exclude=[]) ->
     new PartnerShows _.filter(@models, (show) ->
       show.running() and show.renderable() and show not in exclude

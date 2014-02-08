@@ -31,9 +31,19 @@ module.exports = class PartnerShowsView extends Backbone.View
       data: data
       success: =>
         @isFetchedAllShows = true
+        @ensurePosterImages()
         @organizeShows()
         @hideLoading()
         @render()
+
+  ensurePosterImages: ->
+    @collection.each (show) =>
+      @listenTo show, "fetch:posterImageUrl", (url) =>
+        @renderShowPosterImage(show, url)
+
+  renderShowPosterImage: (show, imageUrl) ->
+    @$(".partner-show[data-show-id='#{show.get('id')}'] .partner-show-cover-image").css
+      "background-image": "url(#{imageUrl})"
 
   organizeShows: ->
     @featured = if @profile.isGallery() then null else @collection.featured()
