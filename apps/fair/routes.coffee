@@ -61,17 +61,27 @@ fetchFair = (req, res, next, success) ->
 
 @search = (req, res, next) ->
   term    = req.query.q
-  # TODO: Use fair search url
-  # TODO: Search both artsy and the fair
-  search  = new Search
   fetchFair req, res, next, (fair, profile) ->
-    search.fetch
-      data: { term: term }
+    fairSearch  = new Search
+    fairSearch.fetch
+      data:
+        term: term
+        fair_id: fair.get('id')
       cache: true
       success: ->
-        res.render 'templates/index',
-          profile : profile
-          fair    : fair
-          results : search.models
-          term    : term
+        fairSearch.updateLocationsForFair(fair)
+        search  = new Search
+        search.fetch
+          data:
+            term: term
+          cache: true
+          success: ->
+            res.locals.sd.SECTION = 'search'
+            res.render 'templates/index',
+              profile     : profile
+              fair        : fair
+              term        : term
+              fairResults : fairSearch.models
+              results     : search.models
+          error: res.backboneError
       error: res.backboneError

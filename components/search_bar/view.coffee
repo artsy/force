@@ -10,11 +10,13 @@ module.exports = class SearchBarView extends Backbone.View
   initialize: (options) ->
     return unless @$el.length
 
-    { @mode, @restrictType, @$input } = options
+    # Search takes a fair_id param specific to fairs. Doesn't work for other models
+    { @mode, @restrictType, @$input, @fairId } = options
 
     @search = new Search
       restrictType: @restrictType
       mode: @mode
+      fairId: @fairId
 
     @on 'search:start', @indicateLoading
     @on 'search:complete', @concealLoading

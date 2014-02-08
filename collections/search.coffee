@@ -12,3 +12,8 @@ module.exports = class Search extends Backbone.Collection
   parse: (response, options) ->
     sd.ARTSY_XAPP_TOKEN = options.res.req._headers['x-xapp-token']
     response
+
+  updateLocationsForFair: (fair) ->
+    href = fair.href()
+    @map (result) ->
+      result.set location: "#{href}#{result.get('location')}"
