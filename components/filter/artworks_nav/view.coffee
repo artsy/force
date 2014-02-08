@@ -14,7 +14,7 @@ module.exports = class FilterArtworksNav extends Backbone.View
 
   events:
     'click .filter-artworks-nav-allworks': 'allWorks'
-    'click .filter-artworks-nav-allworks a': 'filterPrice'
+    'click .filter-artworks-nav-price a': 'filterPrice'
 
   allWorks: ->
     mediator.trigger 'filter:allworks'

@@ -1,1 +1,83 @@
-@import './artworks_nav'
+@import '../stylus_lib'
+
+tab-height = 46px
+dark-border-color = #333
+color-transition-duration = 0.2s
+tab-padding = 13px 20px 10px 20px
+
+.filter-nav
+  display inline-block
+
+.filter-button
+  transition color color-transition-duration
+  &:hover, &:focus, &:active, &.is-active
+    color highlight-color
+
+.filter-button, .filter-dropdown
+  display inline-block
+  border 1px solid light-gray-border-color
+  avant-garde()
+  font-size 13px
+  padding tab-padding
+  background transparent
+  cursor pointer
+  display inline-block
+  + .filter-button, + .filter-dropdown
+    border-left 0
+
+.filter-dropdown
+  position relative
+  padding-right 35px
+  &:hover
+    background black
+    color white
+    nav
+      display block
+  nav
+    z-index 2
+    background black
+    position absolute
+    top (tab-height - 1)
+    left 0
+    width 280px
+    display none
+    border-top 1px solid dark-border-color
+  a
+    color white
+    garamond()
+    font-size default-garamond-font-size
+    text-transform none
+    display block
+    border-bottom 1px solid dark-border-color
+    padding tab-padding
+    transition background-color color-transition-duration
+    &:hover, &:active, &:focus
+      background-color #262626
+      border-color @background-color
+  .icon-triangle-down
+    font-size 8px
+    display block
+    position absolute
+    top 7px
+    right 17px
+
+.filter-artwork-columns
+  column-count 4
+  column-gap 60px
+  .artwork-item
+    margin 0
+    margin-bottom 40px
+    display inline-block
+    vertical-align top
+    width 100%
+    .artwork-item-image-link
+      width 100%
+    img
+      width 100%
+
+.filter-artwork-columns-no-works
+  text-align center
+  display block
+  position absolute
+  top 50px
+  width 100%
