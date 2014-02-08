@@ -6,8 +6,9 @@ sinon           = require 'sinon'
 { resolve }     = require 'path'
 { fabricate }   = require 'antigravity'
 
-Artist    = require '../../../../models/artist'
-Artwork   = require '../../../../models/artwork'
+Artist        = require '../../../../models/artist'
+Artwork       = require '../../../../models/artwork'
+CurrentUser   = require '../../../../models/current_user'
 
 describe 'ArtworkView', ->
   before (done) ->
@@ -46,7 +47,7 @@ describe 'ArtworkView', ->
 
   describe 'user logged in', ->
     beforeEach ->
-      @ArtworkView.__set__ 'sd', CURRENT_USER: 'existy'
+      @ArtworkView.__set__ 'CurrentUser', { orNull: -> new CurrentUser(fabricate 'user') }
       @view = new @ArtworkView el: $('#artwork-page'), artist: @artist, artwork: @artwork
 
     describe '#initialize', ->
@@ -96,9 +97,9 @@ describe 'ArtworkView', ->
 
   describe 'user logged out', ->
     beforeEach ->
-      @ArtworkView.__set__ 'sd', CURRENT_USER: null
+      @ArtworkView.__set__ 'CurrentUser', { orNull: -> null }
       @view = new @ArtworkView el: $('#artwork-page'), artist: @artist, artwork: @artwork
 
     describe '#initialize', ->
-      it 'does not have a following collection if the user is logged in', ->
+      it 'does not have a following collection if the user is not logged in', ->
         _.isUndefined(@view.following).should.be.ok

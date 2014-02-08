@@ -1,6 +1,5 @@
 Artwork   = require '../../models/artwork'
 Artist    = require '../../models/artist'
-sd        = require('sharify').data
 
 @index = (req, res) ->
   artwork = new Artwork id: req.params.id
@@ -18,4 +17,3 @@ sd        = require('sharify').data
           res.render 'index',
             artwork: artwork
             artist : artist
-            sd     : sd
