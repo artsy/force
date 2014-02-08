@@ -4,11 +4,13 @@ SearchBarView     = require '../../../components/search_bar/view.coffee'
 Profile           = require '../../../models/profile.coffee'
 Fair              = require '../../../models/fair.coffee'
 FairInfoView      = require './info.coffee'
+FairPostsView     = require './posts.coffee'
 
 module.exports.FairView = class FairView extends Backbone.View
 
   sectionHash:
     info: FairInfoView
+    posts: FairPostsView
 
   initialize: (options) ->
     @setupSearch()
