@@ -62,7 +62,7 @@ module.exports.PartnerView = class PartnerView extends Backbone.View
     if @profile.isGallery() then gallery
     else if @profile.isInstitution() then institution
     else []
-    
+
   getDisplaySections: (sections) ->
     criteria =
       overview:   => true

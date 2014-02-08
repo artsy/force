@@ -3,8 +3,6 @@ _ = require 'underscore'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 routes = require '../routes'
-Profile = require '../../../models/profile.coffee'
-Shortcut = require '../../../models/shortcut.coffee'
 
 describe 'User profile routes', ->
 
@@ -73,3 +71,33 @@ describe 'Partner routes', ->
       routes.favorites @req, @res
       _.last(Backbone.sync.args)[2].success fabricate 'partner_profile'
       @res.redirect.args[0][0].should.equal '/getty'
+
+describe 'Fair routes', ->
+
+  beforeEach ->
+    sinon.stub Backbone, 'sync'
+    @req = { params: { id: 'some-fair' } }
+    @res = { render: sinon.stub(), redirect: sinon.stub(), locals: { sd: { ARTSY_URL: 'http://localhost:5000'} } }
+
+  afterEach ->
+    Backbone.sync.restore()
+
+  describe '#index', ->
+
+    it 'renders the index template', ->
+      routes.index @req, @res
+      _.last(Backbone.sync.args)[2].success fabricate 'fair_profile'
+      _.last(Backbone.sync.args)[2].success fabricate 'fair_profile'
+      _.last(Backbone.sync.args)[2].success fabricate 'fair'
+      @res.render.args[0][0].should.equal '../fair/templates/index'
+      @res.render.args[0][1].profile.isFairOranizer()
+
+  describe '#posts', ->
+
+    it 'renders the posts template', ->
+      routes.posts @req, @res
+      _.last(Backbone.sync.args)[2].success fabricate 'fair_profile'
+      _.last(Backbone.sync.args)[2].success fabricate 'fair_profile'
+      _.last(Backbone.sync.args)[2].success fabricate 'fair'
+      @res.render.args[0][0].should.equal '../fair/templates/index'
+      @res.render.args[0][1].profile.isFairOranizer()

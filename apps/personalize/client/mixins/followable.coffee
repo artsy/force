@@ -44,4 +44,3 @@ module.exports =
     @following.unfollow id
 
     analytics.track.click @analyticsUnfollowMessage, label: "#{model.get('display_model')}:#{id}"
-

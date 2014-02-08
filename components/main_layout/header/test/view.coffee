@@ -20,7 +20,7 @@ describe 'HeaderView', ->
         $: benv.require('jquery')
         sd: { HIDE_HEADER: false }
       Backbone.$ = $
-      benv.render resolve(__dirname, '../template.jade'), {}, =>
+      benv.render resolve(__dirname, '../templates/index.jade'), {}, =>
         @view = new HeaderView
           el: $('#main-layout-header')
           $window: @$window =

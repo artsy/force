@@ -2,15 +2,15 @@
 # /:id
 #
 
-express = require 'express'
-routes  = require './routes'
+express     = require 'express'
+routes      = require './routes'
 
 app = module.exports = express()
 app.set 'views', __dirname
 app.set 'view engine', 'jade'
 
 vanityRoutes = [
-  # route            | gallery | institution | user
+  # route            | gallery | institution | user | fair
   '/:id'             #    x         x
   '/:id/overview'    #    x
   '/:id/shows'       #    x         x
@@ -18,7 +18,7 @@ vanityRoutes = [
   '/:id/collection'  #              x
   '/:id/contact'     #    x
   '/:id/about'       #              x
-  '/:id/posts'       #    x         x            x
+  '/:id/posts'       #    x         x            x     x
   '/:id/shop'        #              x
   '/:id/favorites'   #                           x
 ]

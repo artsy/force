@@ -5,6 +5,7 @@ Search = require '../../collections/search'
   search  = new Search
   search.fetch
     data: { term: term }
+    cache: true
     success: ->
       res.render 'template',
         results: search.models

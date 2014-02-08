@@ -12,7 +12,9 @@ module.exports = class SearchBarView extends Backbone.View
 
     { @mode, @restrictType, @$input } = options
 
-    @search = new Search mode: @mode, restrictType: @restrictType
+    @search = new Search
+      restrictType: @restrictType
+      mode: @mode
 
     @on 'search:start', @indicateLoading
     @on 'search:complete', @concealLoading
