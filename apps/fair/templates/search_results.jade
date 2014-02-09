@@ -6,7 +6,7 @@
         em
           | &ldquo;
           span#search-term= term
-          | &rdquo;
+          | &rdquo; 
         | at 
         = fair.get('name')
   
@@ -20,7 +20,7 @@
         em
           | &ldquo;
           span#search-term= term
-          | &rdquo;
+          | &rdquo; 
         | at 
         = fair.get('name')
 
@@ -32,18 +32,20 @@
         em
           | &ldquo;
           span#search-term= term
-          | &rdquo;
-        | on Artsy.
+          | &rdquo; 
+        | on Artsy
   
   .search-results
     if results.length > 0
       for result in results
-        include ../../search/search_result
+        .artsy-search-result
+          include ../../search/search_result
+          .search-result-artsy-link Visit On Artsy
     else
       .garamond-header-center
         | Sorry, no results for 
         em
           | &ldquo;
           span#search-term= term
-          | &rdquo;
-        | on Artsy.
+          | &rdquo; 
+        | on Artsy

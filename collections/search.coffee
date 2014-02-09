@@ -14,6 +14,4 @@ module.exports = class Search extends Backbone.Collection
     response
 
   updateLocationsForFair: (fair) ->
-    href = fair.href()
-    @map (result) ->
-      result.set location: "#{href}#{result.get('location')}"
+    @map (result) -> result.updateForFair fair

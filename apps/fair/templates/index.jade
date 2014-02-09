@@ -10,5 +10,7 @@ block body
   #fair-page
     include ./header
     .fair-page-content
-      if results || fairResults
+      if sd.SECTION == 'search'
         include ./search_results
+      else if sd.SECTION == 'info'
+        include ./info

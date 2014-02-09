@@ -1,6 +1,7 @@
 fabricate     = require('antigravity').fabricate
 rewire        = require 'rewire'
 SearchResult  = rewire '../../models/search_result.coffee'
+Fair          = require '../../models/fair.coffee'
 
 describe 'SearchResult', ->
   describe '#initialize', ->
@@ -51,3 +52,17 @@ describe 'SearchResult', ->
         modelB = new SearchResult(fabricate('artist', model: 'artist'))
         modelA.humanClass().should.equal 'is-not-human'
         modelB.humanClass().should.equal 'is-human'
+
+    describe '#updateForFair', ->
+      it 'cleans up data returned from fair search API', ->
+        fair = new Fair(fabricate 'fair')
+        modelA = new SearchResult(fabricate('show', model: 'partnershow'))
+        modelB = new SearchResult(fabricate('artist', model: 'artist'))
+
+        modelA.updateForFair(fair)
+        modelB.updateForFair(fair)
+
+        modelA.get('display_model').should.equal 'Booth'
+        modelA.get('location').should.equal '/show/gagosian-gallery-inez-and-vinoodh66'
+
+        modelB.get('location').should.contain "/armory-show-2013/artist/"

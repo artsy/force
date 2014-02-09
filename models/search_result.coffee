@@ -26,10 +26,22 @@ module.exports = class SearchResult extends Backbone.Model
     _.trim(_.truncate(@get('display'), 75))
 
   location: ->
-    if @get('model') is 'profile' then "/#{@id}" else "/#{@get('model')}/#{@id}"
+    if @get('model') is 'profile'
+      "/#{@id}"
+    else if @get('model') is 'partnershow'
+      "/show/#{@id}"
+    else
+      "/#{@get('model')}/#{@id}"
 
   displayModel: ->
-    _.capitalize(if @get('model') is 'gene' then 'category' else @get('model'))
+    model =
+      if @get('model') is 'gene'
+        'category'
+      else if @get('model') is 'partnershow'
+        'show'
+      else @get('model')
+
+    _.capitalize model
 
   highlightedDisplay: (term) ->
     text = @get('display')
@@ -46,3 +58,9 @@ module.exports = class SearchResult extends Backbone.Model
 
   humanClass: ->
     if @isHuman() then 'is-human' else 'is-not-human'
+
+  updateForFair: (fair) ->
+    if @get('display_model') == 'Show'
+      @set display_model: 'Booth'
+    else
+      @set location: "#{fair.href()}#{@get('location')}"

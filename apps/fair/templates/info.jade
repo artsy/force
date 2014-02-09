@@ -6,7 +6,7 @@
       .location-section
         h2 Location
         .body-text
-          a( target="_blank", href=fair.location().googleMapsLink() )
+          a.fair-map-link( target="_blank" )
             img.map
           if fair.get('location') && fair.get('location').summary
             .location-caption!= fair.location().mdToHtml('summary')
