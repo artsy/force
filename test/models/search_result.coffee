@@ -10,6 +10,10 @@ describe 'SearchResult', ->
         model = new SearchResult(fabricate('artwork', model: 'artwork'))
         model.get('location').should.include '/artwork/skull'
 
+      it 'has a location attribute when it is a show', ->
+        model = new SearchResult(fabricate('show', model: 'partnershow'))
+        model.get('location').should.include '/show/gagosian-gallery-inez-and-vinoodh'
+
       it 'has a location attribute when it is a profile', ->
         model = new SearchResult(fabricate('profile', model: 'profile'))
         model.get('location').should.equal '/alessandra'
@@ -18,6 +22,10 @@ describe 'SearchResult', ->
       it 'has a display_model attribute when it is a artwork', ->
         model = new SearchResult(fabricate('artwork', model: 'artwork'))
         model.get('display_model').should.equal 'Artwork'
+
+      it 'has a display_model attribute when it is a show', ->
+        model = new SearchResult(fabricate('show', model: 'partnershow'))
+        model.get('display_model').should.equal 'Show'
 
       it 'has a display_model attribute when it is a gene', ->
         model = new SearchResult(model: 'gene')
@@ -63,6 +71,6 @@ describe 'SearchResult', ->
         modelB.updateForFair(fair)
 
         modelA.get('display_model').should.equal 'Booth'
-        modelA.get('location').should.equal '/show/gagosian-gallery-inez-and-vinoodh66'
+        modelA.get('location').should.contain '/show/gagosian-gallery-inez-and-vinoodh'
 
-        modelB.get('location').should.contain "/armory-show-2013/artist/"
+        modelB.get('location').should.contain "/armory-show-2013/artist/pablo"
