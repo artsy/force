@@ -25,9 +25,11 @@ module.exports = class RelatedArtists extends Backbone.View
 
     @setupFollowing() if @currentUser
 
-    setupFixedDimensionsThumbnails @$('.fixed-dimensions img')
-    @$el.imagesLoaded?().progress =>
+    _.delay =>
       setupFixedDimensionsThumbnails @$('.fixed-dimensions img')
+      @$el.imagesLoaded?().progress =>
+        setupFixedDimensionsThumbnails @$('.fixed-dimensions img')
+    , 100
 
   getArtistImages: (artists) ->
     for artist in artists
