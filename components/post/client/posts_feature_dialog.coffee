@@ -9,9 +9,9 @@ featurePostArtistTemplate  = -> require('../templates/actions_feature_post_artis
 module.exports = class PostsFeatureDialog extends Backbone.View
 
   events:
-    'click .feature-by-slug'   : 'featureBySlug'
-    'click a.post-feature'     : 'featurePostOnPage'
-    'click a.post-unfeature'   : 'unfeaturePostOnPage'
+    'click .feature-by-slug'        : 'featureBySlug'
+    'click a.post-dialog-feature'   : 'featurePostOnPage'
+    'click a.post-dialog-unfeature' : 'unfeaturePostOnPage'
 
   getFeatureUrl: (modelName, modelId) ->
     "#{sd.ARTSY_URL}/api/v1/post/#{@model.get('id')}/#{modelName}/#{modelId}/feature"
@@ -21,7 +21,7 @@ module.exports = class PostsFeatureDialog extends Backbone.View
     @$error = @$('.slug-container .error')
 
   show: ->
-    if ! @$postsDialog.is(':visible')
+    unless @$postsDialog.is(':visible')
       @loadPosts()
     @$postsDialog.toggleClass 'on'
 
@@ -96,9 +96,9 @@ module.exports = class PostsFeatureDialog extends Backbone.View
     model.fetch
       url: @getFeatureUrl(modelName, modelId)
       success: =>
-        @$(selector).addClass('post-unfeature')
+        @$(selector).addClass('post-dialog-unfeature')
       error: (xhr) =>
-        @$(selector).addClass('post-feature')
+        @$(selector).addClass('post-dialog-feature')
 
   featurePostOnPage: (event) ->
     modelName = $(event.target).attr('data-model_name')
@@ -109,6 +109,8 @@ module.exports = class PostsFeatureDialog extends Backbone.View
     model.save
       success: =>
         @loadPosts()
+      error: =>
+        @loadPosts()
 
   unfeaturePostOnPage: (event) ->
     modelName = $(event.target).attr('data-model_name')
@@ -118,4 +120,6 @@ module.exports = class PostsFeatureDialog extends Backbone.View
     model.destroy
       url: @getFeatureUrl(modelName, modelId)
       success: =>
+        @loadPosts()
+      error: =>
         @loadPosts()

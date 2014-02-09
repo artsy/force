@@ -11,7 +11,7 @@ mixin artist-header(artist, title)
         a( href="/artist/#{artist.id}")= artist.get('name')
       else
         = artist.get('name')
-      if artist.get('published_artworks_count') != 0
+      if artist.get('published_artworks_count') > 0
         nav.artist-share
           +share(title + artist.get('name') + ' on Artsy', artist.imageUrl('large'))
 
