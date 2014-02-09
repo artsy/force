@@ -70,7 +70,7 @@ module.exports = class PostAdmin extends Backbone.View
     @model.repost?() ? @model.unrepost(@myRepost)
 
   renderFeaturedBy: =>
-    @$('.featured_by').html featuredByTemplate(post: @model)
+    @$('.featured-by').html featuredByTemplate(post: @model)
 
   setMyRepost: ->
     @myRepost = @reposts?.detect (repost) ->
