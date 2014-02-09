@@ -9,18 +9,16 @@ module.exports = class FairInfo extends Backbone.View
 
   initialize: (options) ->
     @fair = options.fair
-    @render()
-
-  render: ->
-    @$el.html infoTemplate(fair: @fair)
-
-    if @fair.get('location')
-      @displayMap()
+    location = @fair.location()
+    if @fair.location()
+      @displayMap location
     @targetBlankLinks()
 
-  displayMap: ->
-    src = @fair.location().mapImageSrc(@mapWidth, @mapHeight)
+  displayMap: (location) ->
+    src = location.mapImageSrc(@mapWidth, @mapHeight)
     @$('img.map').attr('src': src) if src
+    @$('.fair-map-link').attr
+      'href' : location.googleMapsLink()
 
   targetBlankLinks: ->
     @$('a').attr target: "_blank"

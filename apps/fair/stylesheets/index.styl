@@ -1,6 +1,7 @@
 @import '../../../components/stylus_lib'
 
-#fair-page
+.fair-page-content
+  margin-bottom 100px
 
 .fair-page-header
   margin-top 100px
@@ -100,3 +101,22 @@
 
   .fair-info-content
     width 500px
+
+.fair-search-results
+  border-top: 1px solid light-gray-border-color
+  margin-top: 33px
+
+.artsy-search-results
+  .artsy-search-result
+    position relative
+    .search-result-artsy-link
+      position: absolute
+      right: 42px
+      top: 41px
+      font-size: 20px
+      pointer-events: none
+    &:hover
+      color white
+
+.search-query
+  margin-top 50px

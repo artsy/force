@@ -1,0 +1,12 @@
+a.search-result( href=result.get('location') )
+  .search-result-thumbnail
+    .search-result-thumbnail-fallback( class=result.humanClass() )
+      img(
+        src= result.imageUrl(),
+        width=70, height=70,
+        alt= result.get('display'),
+        onerror='this.style.display="none";'
+      )
+  .search-result-info
+    .search-result-display!= result.highlightedDisplay(term)
+    .search-result-kind= result.get('display_model')

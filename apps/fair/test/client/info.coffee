@@ -6,7 +6,7 @@ sinon             = require 'sinon'
 { fabricate }     = require 'antigravity'
 Fair              = require '../../../../models/fair.coffee'
 Profile           = require '../../../../models/profile.coffee'
-FairInfo          = benv.requireWithJadeify resolve(__dirname, '../../client/info.coffee'), ['infoTemplate']
+FairInfo          = require '../../client/info.coffee'
 
 describe 'FairInfoView', ->
 
@@ -29,7 +29,7 @@ describe 'FairInfoView', ->
       fair    : @fair
       profile : @profile
     }, =>
-      $('body').html '<div id="fair"></div>'
+      $('body').html '<div id="fair"><a class="fair-map-link"></a><img class="map" /></div>'
       @view = new FairInfo { el: $('#fair'), model: @profile, fair: @fair }
       done()
 
@@ -38,8 +38,10 @@ describe 'FairInfoView', ->
     beforeEach ->
       @view.initialize({ el: $('body'), fair: @fair })
 
-    it 'doesnt render anything if there are no results', ->
+    it 'adds map links and image src', ->
       html = @view.$el.html()
       html.should.not.include 'undefined'
       html.should.not.include '#{'
       html.should.include 'maps.google'
+      @view.$('.fair-map-link').attr('href').should.equal @fair.location().googleMapsLink()
+      @view.$('img.map').attr('src').should.equal @fair.location().mapImageSrc(300, 165)

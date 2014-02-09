@@ -15,4 +15,5 @@ module.exports = class Fair extends Backbone.Model
     "/#{@get('id')}"
 
   location: ->
-    new PartnerLocation @get('location')
+    if @get('location')
+      new PartnerLocation @get('location')

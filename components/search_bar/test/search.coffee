@@ -13,6 +13,10 @@ describe 'Search', ->
       search = new Search mode: 'profiles'
       search._url().should.include '/api/v1/match/profiles?visible_to_public=true'
 
+    it 'takes a fair_id', ->
+      search = new Search mode: 'profiles', fairId: 'fair-id'
+      search._url().should.include '/api/v1/match/profiles?visible_to_public=true&fair_id=fair-id'
+
   describe '#_parse', ->
     it 'casts items as SearchResults', ->
       search = new Search

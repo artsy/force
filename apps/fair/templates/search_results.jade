@@ -1,0 +1,51 @@
+.fair-search-results
+  if fairResults.length > 0
+    .search-query
+      if term
+        | Search results for
+        em
+          | &ldquo;
+          span#search-term= term
+          | &rdquo; 
+        | at 
+        = fair.get('name')
+  
+  .search-results
+    if fairResults.length > 0
+      for result in fairResults
+        include ../../search/search_result
+    else
+      .garamond-header-center
+        | Sorry, no results for 
+        em
+          | &ldquo;
+          span#search-term= term
+          | &rdquo; 
+        | at 
+        = fair.get('name')
+
+.artsy-search-results
+  if results.length > 0
+    .search-query
+      if term
+        | Search results for
+        em
+          | &ldquo;
+          span#search-term= term
+          | &rdquo; 
+        | on Artsy
+  
+  .search-results
+    if results.length > 0
+      for result in results
+        .artsy-search-result
+          include ../../search/search_result
+          .search-result-artsy-link Visit On Artsy
+    else
+      .garamond-header-center
+        | Sorry, no results for 
+        em
+          | &ldquo;
+          span#search-term= term
+          | &rdquo; 
+        | on Artsy
