@@ -19,7 +19,6 @@ fairRoutes = [
   '/:id/browse/artists'
   '/:id/browse/artists/*params'
 
-  '/:id/browse/show/:id'
   '/:id/browse/shows'
   '/:id/browse/shows/*params'
 

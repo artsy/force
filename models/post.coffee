@@ -17,6 +17,10 @@ module.exports = class Post extends Backbone.Model
   href: -> "/post/#{@get('id')}"
   profile: -> new Profile @get('profile')
 
+  onPostPage: (location)->
+    location ?= window?.location?.pathname
+    location == @href()
+
   metaImage: ->
     if @has 'image_url' and @get 'image_versions' and @hasImage 'large'
       @imageUrl 'large'

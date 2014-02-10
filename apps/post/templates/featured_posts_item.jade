@@ -7,7 +7,7 @@
         include ./attachment
     .featured-post-text
       if post.get('title')
-        .featured-post-title
+        h2.featured-post-title
           a( href=post.href() )!= post.get('title')
       if post.has('profile')
         include ./../../../components/profile_badge/template
