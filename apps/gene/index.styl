@@ -52,10 +52,24 @@
 #gene-filter-all-artists
   margin-right 20px
 
-#gene-filter-artwork-list-spinner
+#gene-artwork-list-spinner
   position relative
-  .loading-spinner
-    margin 100px 0
+  padding 150px 0
 
 #gene-artists
   display none
+
+#gene-artwork-list-no-results
+  padding 150px 0
+  display none
+
+#gene-artwork-list-container
+  margin-bottom 150px
+  &[data-state='no-results']
+    #gene-artwork-list-no-results
+      display block
+    #gene-artwork-list, #gene-artwork-list-spinner
+      display none
+  &[data-state='finished-paging']
+    #gene-artwork-list-spinner
+      display none

@@ -8,7 +8,7 @@ Artworks = require '../../../collections/artworks.coffee'
 FilterArtworksNav = require '../../../components/filter/artworks_nav/view.coffee'
 { ARTSY_URL } = require('sharify').data
 mediator = require '../../../components/filter/mediator.coffee'
-artworktemTemplate = -> require('../../../components/artwork_item/template.jade') arguments...
+ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 
 module.exports = class GeneFilter extends Backbone.View
 
@@ -18,36 +18,34 @@ module.exports = class GeneFilter extends Backbone.View
     @params = {}
     @filterNav = new FilterArtworksNav el: $ '#gene-filter-artworks-nav'
     @artworks.url = "#{ARTSY_URL}/api/v1/search/filtered/gene/#{@model.get 'id'}"
+    @columnsView = new ArtworkColumnsView
+      el: @$ '#gene-artwork-list'
+      collection: @artworks
+      totalWidth: @$('#gene-artwork-list').width()
+      artworkSize: 'large'
+      numberOfColumns: Math.round @$('#gene-artwork-list').width() / 300
+      gutterWidth: 40
     @artworks.on 'sync', @render
-    @artworks.on 'request', @showSpinner
     @artworks.fetch()
     @bindMediatorEvents()
     @$el.infiniteScroll @nextPage
 
   bindMediatorEvents: ->
     mediator.on 'filter:price', (range) =>
-      @reset { data: 'price_range': range }
-
-  showSpinner: =>
-    @$('#gene-filter-artwork-list-spinner').show()
+      @reset { 'price_range': range }
 
   render: =>
-    @$('#gene-filter-artwork-list-spinner').hide()
-    @$('#gene-filter-artwork-list').show().html(
-      if @artworks.length
-        @artworks.map((artwork) ->
-          artworktemTemplate artwork: artwork, artworkSize: 'large'
-        ).join ''
-      else
-        '<em class="filter-artwork-columns-no-works">
-          No Artworks are available within your selection.
-        </em>'
-    )
+    @$('#gene-artwork-list').attr 'data-state', switch @artworks.length
+      when 0 then 'no-results'
+      when @lastArtworksLength then 'finished-paging'
+      else ''
+    @columnsView.render() unless @lastArtworksLength is @artworks.length
+    @lastArtworksLength = @artworks.length
 
   nextPage: =>
     @params.page = @params.page + 1 or 2
     @artworks.fetch(data: @params, remove: false)
 
   reset: (@params) ->
-    @$('#gene-filter-artwork-list').hide()
+    @$('#gene-artwork-list').hide()
     @artworks.fetch(data: @params)

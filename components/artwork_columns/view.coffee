@@ -17,6 +17,7 @@ module.exports = class ArtworkColumns extends Backbone.View
   isOrdered       : false
   totalWidth      : 1120
   gutterWidth     : 80
+  artworkSize     : 'tall'
 
   events:
     'click .artwork-columns-see-more': 'onSeeMoreClick'
@@ -49,7 +50,7 @@ module.exports = class ArtworkColumns extends Backbone.View
     @currentUser?.initializeDefaultArtworkCollection()
     @artworkCollection = @currentUser?.defaultArtworkCollection()
 
-  render: ->
+  render: =>
     # Render columns and set some styles according to view params
     @$el
       .html artworkColumns
@@ -133,7 +134,7 @@ module.exports = class ArtworkColumns extends Backbone.View
       displayMoreInfo     : @displayMoreInfo
       displayAuctionPrice : displayAuctionPrice
       estimate            : estimate
-      artworkSize         : 'tall'
+      artworkSize         : @artworkSize
     $renderedArtwork = $(renderedArtwork)
     @$(".artwork-column:eq(#{column})").append $renderedArtwork
     $renderedArtwork
