@@ -1,1 +1,94 @@
-@import './artworks_nav'
+@import '../stylus_lib'
+
+tab-height = 46px
+dark-border-color = #333
+color-transition-duration = 0.2s
+tab-padding = 17px 20px 10px 20px
+
+.filter-nav
+  display inline-block
+
+.filter-nav-active-text
+  display none
+  overflow ellipsis
+  max-width 150px
+
+.filter-button
+  transition color color-transition-duration
+  &:hover, &:focus, &:active, &.is-active
+    color highlight-color
+
+.filter-button, .filter-dropdown
+  display inline-block
+  border 1px solid light-gray-border-color
+  avant-garde()
+  font-size 13px
+  padding tab-padding
+  background transparent
+  cursor pointer
+  display inline-block
+  vertical-align middle
+  margin-top -4px
+  + .filter-button, + .filter-dropdown
+    border-left 0
+  &.is-active
+    .filter-nav-active-text
+      display block
+    .filter-nav-main-text
+      font-size: 9px
+      text-align: left
+      position: absolute
+      margin-top: -16px
+      color black
+
+.filter-dropdown
+  position relative
+  padding-right 35px
+  &.is-active
+    color highlight-color
+  &:hover
+    background black
+    color white
+    nav
+      display block
+    .filter-nav-main-text
+      color white
+  nav
+    z-index 2
+    background black
+    position absolute
+    top (tab-height - 1)
+    left 0
+    width 280px
+    display none
+    border-top 1px solid dark-border-color
+  a
+    text-align left
+    color white
+    garamond()
+    font-size default-garamond-font-size
+    text-transform none
+    display block
+    border-bottom 1px solid dark-border-color
+    padding tab-padding
+    transition background-color color-transition-duration
+    position relative
+    .icon-check
+      content "\e627"
+      font-size 16px
+      position absolute
+      right 10px
+      bottom 7px
+      display none
+    &.is-active .icon-check
+      display block
+    &:hover, &:active, &:focus
+      background-color #262626
+      border-color @background-color
+
+  .icon-triangle-down
+    font-size 8px
+    display block
+    position absolute
+    top 11px
+    right 17px

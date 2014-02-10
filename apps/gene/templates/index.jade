@@ -8,18 +8,13 @@ append locals
   assetPackage = 'gene'
 
 block body
-  header#gene-header
-    h1.avant-garde-header-center= gene.get('name')
-    .avant-garde-button-white.follow-button
-    #gene-share-buttons
-      +share(gene.get('name') + ' on Artsy', gene.imageUrl())
-  #gene-description
-    #gene-description-inner!= gene.mdToHtml('description')
-  unless gene.isSubjectMatter()
-    #gene-tabs.garamond-tablist
-      a.garamond-tab.is-active Artists
-      span.garamond-tab-separator
-      a.garamond-tab Filter All #{gene.get('name')}
-    #gene-artists
-      .loading-spinner
-  #gene-filter
+  .main-layout-container
+    header#gene-header
+      h1.avant-garde-header-center= gene.get('name')
+      .avant-garde-button-white.follow-button
+      #gene-share-buttons
+        +share(gene.get('name') + ' on Artsy', gene.imageUrl())
+    #gene-description
+      #gene-description-inner!= gene.mdToHtml('description')
+    #gene-filter
+      include filter

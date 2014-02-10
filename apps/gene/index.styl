@@ -35,3 +35,49 @@
   position relative
   min-height 400px
   margin-bottom 100px
+
+#gene-filter
+  position relative
+  min-height 300px
+
+#gene-filter-nav
+  margin 40px 0
+  padding-top 20px
+  text-align center
+  border-top 1px solid light-gray-border-color
+  label
+    margin-right 10px
+    display inline-block
+
+#gene-filter-all-artists
+  margin-right 20px
+
+#gene-artwork-list-spinner
+  position relative
+  padding 150px 0
+
+#gene-artwork-list-no-results
+  padding 150px 0
+  display none
+
+#gene-artwork-list-no-results
+  text-align center
+  font-style italic
+
+#gene-artwork-list-container
+  margin-bottom 150px
+  display none
+  &[data-state='no-results']
+    #gene-artwork-list-no-results
+      display block
+    #gene-artwork-list, #gene-artwork-list-spinner
+      display none
+  &[data-state='finished-paging']
+    #gene-artwork-list-spinner
+      display none
+
+#gene-filter[data-state='artworks']
+  #gene-artwork-list-container
+    display block
+  #gene-artists
+    display none

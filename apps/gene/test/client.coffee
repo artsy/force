@@ -22,6 +22,9 @@ describe 'GeneView', ->
 
   beforeEach ->
     { GeneView } = mod = benv.require resolve __dirname, '../client/index.coffee'
+    mod.__set__ 'GeneFilter', class @GeneFilter
+      initialize: ->
+      reset: sinon.stub()
     mod.__set__ 'mediator', @mediator = { trigger: sinon.stub() }
     mod.__set__ 'ArtistFillwidthList', class @ArtistFillwidthList
       fetchAndRender: sinon.stub()
@@ -34,13 +37,16 @@ describe 'GeneView', ->
   describe '#initialize', ->
 
     it 'sets up a share view', ->
-      @view.shareView.$el.attr('id').should.equal 'gene-share-buttons'
+      @view.shareButtons.$el.attr('id').should.equal 'gene-share-buttons'
 
     it 'does not setup artists if the gene is a subject matter gene', ->
-      @view.setupArtistFillwidth = sinon.stub()
+      @view.renderArtistFillwidth = sinon.stub()
       @view.model.set type: { properties: [{ value: 'Subject Matter' }] }
       @view.initialize {}
-      @view.setupArtistFillwidth.called.should.not.be.ok
+      @view.renderArtistFillwidth.called.should.not.be.ok
+
+    it 'inits a follow button view', ->
+      @view.followButton.model.get('id').should.equal @view.model.get('id')
 
   describe '#setupArtistFillwidth', ->
 
@@ -49,7 +55,64 @@ describe 'GeneView', ->
       Backbone.sync.args[0][2].success [fabricate 'artist', name: 'Andy Foobar']
       @ArtistFillwidthList::fetchAndRender.called.should.be.ok
 
-  describe '#setupFollowButton', ->
+describe 'GeneFilter', ->
 
-    it 'inits a follow button view', ->
-      @view.setupFollowButton().model.get('id').should.equal @view.model.get('id')
+  before (done) ->
+    benv.setup =>
+      benv.expose { $: benv.require 'jquery' }
+      benv.render resolve(__dirname, '../templates/index.jade'), {
+        sd: {}
+        gene: new Gene fabricate 'gene'
+      }
+      Backbone.$ = $
+      done()
+
+  after ->
+    benv.teardown()
+
+
+  beforeEach ->
+    GeneFilter = benv.require resolve(__dirname, '../client/filter.coffee')
+    GeneFilter.__set__ 'ArtworkColumnsView', class @ArtworkColumnsView
+      render: sinon.stub()
+    GeneFilter.__set__ 'FilterArtworksNav', class @FilterArtworksNav
+      render: sinon.stub()
+    $.fn.infiniteScroll = sinon.stub()
+    sinon.stub Backbone, 'sync'
+    @view = new GeneFilter
+      el: $('body')
+      model: new Gene fabricate 'gene'
+
+  afterEach ->
+    Backbone.sync.restore()
+
+  describe '#render', ->
+
+    it 'renders the columns view', ->
+      @view.render()
+      @ArtworkColumnsView::render.called.should.be.ok
+
+  describe '#nextPage', ->
+
+    it 'fetches the next page of artworks', ->
+      @view.$el.data 'state', 'artworks'
+      @view.nextPage()
+      Backbone.sync.args[0][1].url.should.include '/filtered/gene'
+      Backbone.sync.args[0][2].data.page.should.equal @view.params.page
+
+  describe '#reset', ->
+
+    it 'sets the state to artwork mode', ->
+      @view.reset()
+      @view.$el.data('state').should.equal 'artworks'
+
+    it 'fetches the filtered artworks', ->
+      @view.reset { dimension: 24 }
+      Backbone.sync.args[0][2].data.dimension.should.equal 24
+
+  describe '#toggleArtistMode', ->
+
+    it 'switches back to artist mode', ->
+      @view.$el.attr 'data-state', 'artworks'
+      @view.toggleArtistMode()
+      @view.$el.attr('data-state').should.equal ''
