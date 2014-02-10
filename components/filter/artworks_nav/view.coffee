@@ -12,15 +12,28 @@ module.exports = class FilterArtworksNav extends Backbone.View
   render: ->
     @$el.html template mediums: @filterOptions?.medium
 
+  toggleActive: (el) ->
+    @$('.is-active').removeClass 'is-active'
+    $(el).addClass 'is-active'
+
   events:
     'click .filter-artworks-nav-allworks': 'allWorks'
     'click .filter-artworks-nav-price a': 'filterPrice'
+    'click .filter-artworks-nav-medium a': 'filterMedium'
+    'click .filter-artworks-nav-size a': 'filterSize'
 
   allWorks: ->
+    @toggleActive @$('.filter-artworks-nav-allworks')
     mediator.trigger 'filter:allworks'
 
   filterPrice: (e) ->
+    @toggleActive @$('.filter-artworks-nav-price')
     mediator.trigger 'filter:price', $(e.target).data 'range'
 
   filterMedium: (e) ->
+    @toggleActive @$('.filter-artworks-nav-medium')
     mediator.trigger 'filter:medium', $(e.target).data 'medium'
+
+  filterSize: (e) ->
+    @toggleActive @$('.filter-artworks-nav-size')
+    mediator.trigger 'filter:size', $(e.target).data 'size'
