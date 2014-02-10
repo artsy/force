@@ -29,7 +29,7 @@ getTemplateForProfileType = (profile) ->
 @posts = (req, res, next) ->
   fetchProfile req, res, next, (profile) ->
     return fairPosts(req, res, next) if profile.isFairOranizer()
-    if profile.get('posts_count') > 0 or profile.get('reposts_count') > 0
+    if profile.hasPosts()
       res.render getTemplateForProfileType(profile),
         profile : profile
     else
