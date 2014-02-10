@@ -4,7 +4,6 @@ sd            = require('sharify').data
 Artworks      = require '../collections/artworks.coffee'
 { Markdown }  = require 'artsy-backbone-mixins'
 { Image }     = require 'artsy-backbone-mixins'
-Post          = require './post.coffee'
 { smartTruncate }     = require '../components/util/string.coffee'
 { SECURE_IMAGES_URL } = require('sharify').data
 
@@ -30,7 +29,7 @@ module.exports = class Artist extends Backbone.Model
     @relatedArtists.url = "#{sd.ARTSY_URL}/api/v1/related/layer/main/artists"
     @relatedContemporary = new Backbone.Collection [], model: Artist
     @relatedContemporary.url = "#{sd.ARTSY_URL}/api/v1/related/layer/contemporary/artists"
-    @relatedPosts = new Backbone.Collection [], model: Post
+    @relatedPosts = new Backbone.Collection [], model: require('./post.coffee')
     @relatedPosts.url = "#{sd.ARTSY_URL}/api/v1/related/posts"
 
   fetchRelatedArtists: (type, options = {}) ->
