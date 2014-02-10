@@ -141,9 +141,14 @@ module.exports = class Feature extends Backbone.Model
           return options.error(err) if err
           options.success _.sortBy(finalHashes, (hash) -> hash.set.get 'index')
         sets.each (set, i) ->
-          setItems = new Backbone.Collection []
+          if set.get('item_type') is 'FeaturedLink'
+            setItems = new FeaturedLinks []
+            method = 'fetchUntilEnd'
+          else
+            setItems = new Backbone.Collection []
+            method = 'fetch'
           setItems.url = "#{sd.ARTSY_URL}/api/v1/set/#{set.get 'id'}/items"
-          setItems.fetch
+          setItems[method]
             success: (items) ->
               finalHashes.push {
                 set  : set.set index: i
