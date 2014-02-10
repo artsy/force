@@ -24,7 +24,7 @@ module.exports = class Gene extends Backbone.Model
     @relatedArtists       = new Backbone.Collection [], model: Artist
     @relatedArtists.url   = "#{sd.ARTSY_URL}/api/v1/gene/#{@id}/artists"
     @trendingArtists      = new Backbone.Collection [], model: Artist
-    @trendingArtists.url  = "#{sd.ARTSY_URL}/api/v1/artists/trending?gene=#{@get('name')}"
+    @trendingArtists.url  = "#{sd.ARTSY_URL}/api/v1/artists/trending?gene=#{@id}"
 
   fetchArtists: (type, options={}) ->
     @["#{type}Artists"].fetch(options)
