@@ -59,3 +59,9 @@ describe 'Fair routes', ->
       _.last(Backbone.sync.args)[2].success fabricate 'fair'
       _.last(Backbone.sync.args)[0].should.equal 'read'
       _.last(Backbone.sync.args)[2].data.term.should.equal 'foobar'
+
+    it 'redirects without query', ->
+      req = { params: { id: 'some-fair' }, query: { } }
+      res = { render: sinon.stub(), redirect: sinon.stub(), locals: { sd: {} } }
+      routes.search req, res
+      res.redirect.args[0][0].should.equal '/some-fair'

@@ -61,6 +61,7 @@ fetchFair = (req, res, next, success) ->
 
 @search = (req, res, next) ->
   term    = req.query.q
+  res.redirect("/#{req.params.id}") unless term
   fetchFair req, res, next, (fair, profile) ->
     fairSearch  = new Search
     fairSearch.fetch
