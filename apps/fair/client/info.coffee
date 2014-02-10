@@ -1,6 +1,7 @@
 Backbone          = require 'backbone'
 sd                = require('sharify').data
 infoTemplate      = -> require('../templates/info.jade') arguments...
+analytics         = require '../../../lib/analytics.coffee'
 
 module.exports = class FairInfo extends Backbone.View
 
@@ -13,6 +14,10 @@ module.exports = class FairInfo extends Backbone.View
     if @fair.location()
       @displayMap location
     @targetBlankLinks()
+    @trackFairVisit()
+
+  trackFairVisit: ->
+    analytics.track.funnel "Viewed fair page #{@fair.get('name')}"
 
   displayMap: (location) ->
     src = location.mapImageSrc(@mapWidth, @mapHeight)

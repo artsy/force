@@ -3,6 +3,8 @@ Backbone       = require 'backbone'
 sd             = require('sharify').data
 FeedItems      = require('../../../components/feed/collections/feed_items.coffee')
 PoplockitFeed  = require('../../../components/feed/client/poplockit_feed.coffee')
+CurrentUser    = require '../../../models/current_user.coffee'
+mediator       = require '../../../lib/mediator.coffee'
 
 module.exports = class PostsView extends Backbone.View
 
@@ -36,6 +38,14 @@ module.exports = class PostsView extends Backbone.View
         @$('.feed')
           .html('empty')
           .removeClass('is-loading')
+
+  events:
+    'click .add-to-post' : 'showPostSignupDialog'
+
+  showPostSignupDialog: ->
+    unless CurrentUser.orNull()
+      mediator.trigger 'open:auth', { mode: 'register', copy: 'Sign up to post on Artsy.net' }
+      return false
 
 module.exports.init = ->
   new PostsView
