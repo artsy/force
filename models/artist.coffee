@@ -14,7 +14,7 @@ module.exports = class Artist extends Backbone.Model
   _.extend @prototype, Image(SECURE_IMAGES_URL)
 
   sortCriteriaForArtworks:
-    ''               : 'Relevancy'
+    ''               : 'Relevance'
     '-published_at'  : 'Recently Added'
 
   validSort: (sort) ->
