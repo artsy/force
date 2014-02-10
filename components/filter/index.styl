@@ -54,9 +54,20 @@ tab-padding = 13px 20px 10px 20px
     border-bottom 1px solid dark-border-color
     padding tab-padding
     transition background-color color-transition-duration
+    position relative
+    .icon-check
+      content "\e627"
+      font-size 16px
+      position absolute
+      right 10px
+      bottom 7px
+      display none
+    &.is-active .icon-check
+      display block
     &:hover, &:active, &:focus
       background-color #262626
       border-color @background-color
+
   .icon-triangle-down
     font-size 8px
     display block

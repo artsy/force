@@ -35,7 +35,7 @@ module.exports = class GeneFilter extends Backbone.View
       @reset { 'price_range': range }
 
   render: =>
-    @$('#gene-artwork-list').attr 'data-state', switch @artworks.length
+    @$('#gene-artwork-list-container').attr 'data-state', switch @artworks.length
       when 0 then 'no-results'
       when @lastArtworksLength then 'finished-paging'
       else ''
@@ -47,5 +47,5 @@ module.exports = class GeneFilter extends Backbone.View
     @artworks.fetch(data: @params, remove: false)
 
   reset: (@params) ->
-    @$('#gene-artwork-list').hide()
+    @$('#gene-artwork-list').html ''
     @artworks.fetch(data: @params)

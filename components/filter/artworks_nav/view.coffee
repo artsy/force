@@ -21,6 +21,7 @@ module.exports = class FilterArtworksNav extends Backbone.View
     'click .filter-artworks-nav-price a': 'filterPrice'
     'click .filter-artworks-nav-medium a': 'filterMedium'
     'click .filter-artworks-nav-size a': 'filterSize'
+    'click .filter-dropdown a': 'checkDropdownItem'
 
   allWorks: ->
     @toggleActive @$('.filter-artworks-nav-allworks')
@@ -37,3 +38,6 @@ module.exports = class FilterArtworksNav extends Backbone.View
   filterSize: (e) ->
     @toggleActive @$('.filter-artworks-nav-size')
     mediator.trigger 'filter:size', $(e.target).data 'size'
+
+  checkDropdownItem: (e) ->
+    @$(e.target).addClass 'is-active'
