@@ -54,3 +54,65 @@ describe 'GeneView', ->
       @view.setupArtistFillwidth()
       Backbone.sync.args[0][2].success [fabricate 'artist', name: 'Andy Foobar']
       @ArtistFillwidthList::fetchAndRender.called.should.be.ok
+
+describe 'GeneFilter', ->
+
+  before (done) ->
+    benv.setup =>
+      benv.expose { $: benv.require 'jquery' }
+      benv.render resolve(__dirname, '../templates/index.jade'), {
+        sd: {}
+        gene: new Gene fabricate 'gene'
+      }
+      Backbone.$ = $
+      done()
+
+  after ->
+    benv.teardown()
+
+
+  beforeEach ->
+    GeneFilter = benv.require resolve(__dirname, '../client/filter.coffee')
+    GeneFilter.__set__ 'ArtworkColumnsView', class @ArtworkColumnsView
+      render: sinon.stub()
+    GeneFilter.__set__ 'FilterArtworksNav', class @FilterArtworksNav
+      render: sinon.stub()
+    $.fn.infiniteScroll = sinon.stub()
+    sinon.stub Backbone, 'sync'
+    @view = new GeneFilter
+      el: $('body')
+      model: new Gene fabricate 'gene'
+
+  afterEach ->
+    Backbone.sync.restore()
+
+  describe '#render', ->
+
+    it 'renders the columns view', ->
+      @view.render()
+      @ArtworkColumnsView::render.called.should.be.ok
+
+  describe '#nextPage', ->
+
+    it 'fetches the next page of artworks', ->
+      @view.$el.data 'state', 'artworks'
+      @view.nextPage()
+      Backbone.sync.args[0][1].url.should.include '/filtered/gene'
+      Backbone.sync.args[0][2].data.page.should.equal @view.params.page
+
+  describe '#reset', ->
+
+    it 'sets the state to artwork mode', ->
+      @view.reset()
+      @view.$el.data('state').should.equal 'artworks'
+
+    it 'fetches the filtered artworks', ->
+      @view.reset { dimension: 24 }
+      Backbone.sync.args[0][2].data.dimension.should.equal 24
+
+  describe '#toggleArtistMode', ->
+
+    it 'switches back to artist mode', ->
+      @view.$el.attr 'data-state', 'artworks'
+      @view.toggleArtistMode()
+      @view.$el.attr('data-state').should.equal ''

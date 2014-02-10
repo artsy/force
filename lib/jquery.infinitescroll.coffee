@@ -1,7 +1,9 @@
 #
 # Will trigger the 'infiniteScroll' event on window when the user
 # reaches the bottom of the page and there are no pending ajax requests.
-# Includes convenience Zepto plugin function, simply use `$.infiniteScroll ->
+# Includes convenience plugin function, simply use `$.infiniteScroll ->
+#
+# TODO: Open source this module.
 #
 
 $.fn.infiniteScroll = (callback) ->

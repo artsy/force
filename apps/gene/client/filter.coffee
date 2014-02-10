@@ -9,11 +9,18 @@ ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 module.exports = class GeneFilter extends Backbone.View
 
   initialize: ->
+    @params = {}
     @$window = $(window)
     @artworks = new Artworks
-    @params = {}
-    @filterNav = new FilterArtworksNav el: $ '#gene-filter-artworks-nav'
     @artworks.url = "#{ARTSY_URL}/api/v1/search/filtered/gene/#{@model.get 'id'}"
+    @filterNav = new FilterArtworksNav el: $ '#gene-filter-artworks-nav'
+    @columnsView = new ArtworkColumnsView
+      el: @$ '#gene-artwork-list'
+      collection: @artworks
+      totalWidth: @$el.width()
+      artworkSize: 'large'
+      numberOfColumns: Math.round @$el.width() / 300
+      gutterWidth: 40
     @artworks.on 'sync', @render
     mediator.on 'filter', @reset
     @$el.infiniteScroll @nextPage
@@ -35,13 +42,6 @@ module.exports = class GeneFilter extends Backbone.View
     @$el.attr 'data-state', 'artworks'
     @$('#gene-filter-all-artists').removeClass 'is-active'
     @$('#gene-artwork-list').html ''
-    @columnsView ?= new ArtworkColumnsView
-      el: @$ '#gene-artwork-list'
-      collection: @artworks
-      totalWidth: @$('#gene-artwork-list').width()
-      artworkSize: 'large'
-      numberOfColumns: Math.round @$('#gene-artwork-list').width() / 300
-      gutterWidth: 40
     @artworks.fetch(data: @params)
 
   events:
