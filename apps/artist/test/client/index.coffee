@@ -98,15 +98,15 @@ describe 'ArtistView', ->
       @view.sortBy.should.equal '-published_at'
       @view.$el.find('a.bordered-pulldown-toggle').html().should.include 'Recently Added'
 
-    it 'passes the correct sort option into setupArtworks when sorting by Relevancy', ->
+    it 'passes the correct sort option into setupArtworks when sorting by Relevance', ->
       $fixture = $ """
         <div class="bordered-pulldown-options">
-          <a data-sort>Relevancy<a>
+          <a data-sort>Relevance<a>
         </div>
       """
       @view.onSortChange({ currentTarget: $fixture.find('a')})
       @view.sortBy.should.equal ''
-      @view.$el.find('a.bordered-pulldown-toggle').html().should.include 'Relevancy'
+      @view.$el.find('a.bordered-pulldown-toggle').html().should.include 'Relevance'
 
   describe '#setupRelatedArtists', ->
 
