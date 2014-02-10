@@ -18,7 +18,13 @@ module.exports.GeneView = class GeneView extends Backbone.View
       model: @model
     @shareButtons = new ShareView
       el: @$('#gene-share-buttons')
+    @filter = new GeneFilter
+      el: @$('#gene-filter')
+      model: @model
     @setupArtistFillwidth()
+    if @model.isSubjectMatter()
+      @filter.reset()
+      @$('.filter-artworks-nav-allworks').addClass('is-active')
 
   setupArtistFillwidth: ->
     if @user and not @model.isSubjectMatter()
@@ -38,8 +44,5 @@ module.exports.init = ->
   gene = new Gene GENE
   new GeneView
     user: CurrentUser.orNull()
-    el: $ 'body'
-    model: gene
-  new GeneFilter
     el: $ 'body'
     model: gene

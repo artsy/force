@@ -22,6 +22,9 @@ describe 'GeneView', ->
 
   beforeEach ->
     { GeneView } = mod = benv.require resolve __dirname, '../client/index.coffee'
+    mod.__set__ 'GeneFilter', class @GeneFilter
+      initialize: ->
+      reset: sinon.stub()
     mod.__set__ 'mediator', @mediator = { trigger: sinon.stub() }
     mod.__set__ 'ArtistFillwidthList', class @ArtistFillwidthList
       fetchAndRender: sinon.stub()
@@ -34,13 +37,16 @@ describe 'GeneView', ->
   describe '#initialize', ->
 
     it 'sets up a share view', ->
-      @view.shareView.$el.attr('id').should.equal 'gene-share-buttons'
+      @view.shareButtons.$el.attr('id').should.equal 'gene-share-buttons'
 
     it 'does not setup artists if the gene is a subject matter gene', ->
-      @view.setupArtistFillwidth = sinon.stub()
+      @view.renderArtistFillwidth = sinon.stub()
       @view.model.set type: { properties: [{ value: 'Subject Matter' }] }
       @view.initialize {}
-      @view.setupArtistFillwidth.called.should.not.be.ok
+      @view.renderArtistFillwidth.called.should.not.be.ok
+
+    it 'inits a follow button view', ->
+      @view.followButton.model.get('id').should.equal @view.model.get('id')
 
   describe '#setupArtistFillwidth', ->
 
@@ -48,8 +54,3 @@ describe 'GeneView', ->
       @view.setupArtistFillwidth()
       Backbone.sync.args[0][2].success [fabricate 'artist', name: 'Andy Foobar']
       @ArtistFillwidthList::fetchAndRender.called.should.be.ok
-
-  describe '#setupFollowButton', ->
-
-    it 'inits a follow button view', ->
-      @view.setupFollowButton().model.get('id').should.equal @view.model.get('id')

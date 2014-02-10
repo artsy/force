@@ -27,11 +27,12 @@ module.exports = class GeneFilter extends Backbone.View
     @lastArtworksLength = @artworks.length
 
   nextPage: =>
+    return unless @$el.data('state') is 'artworks'
     @params.page = @params.page + 1 or 2
     @artworks.fetch(data: @params, remove: false)
 
-  reset: (@params) =>
-    @$('#gene-filter').attr 'data-state', 'artworks'
+  reset: (@params = {}) =>
+    @$el.attr 'data-state', 'artworks'
     @$('#gene-filter-all-artists').removeClass 'is-active'
     @$('#gene-artwork-list').html ''
     @columnsView ?= new ArtworkColumnsView
@@ -47,6 +48,6 @@ module.exports = class GeneFilter extends Backbone.View
     'click #gene-filter-all-artists': 'toggleArtistMode'
 
   toggleArtistMode: ->
-    @$('#gene-filter').attr 'data-state', ''
+    @$el.attr 'data-state', ''
     @$('#gene-filter-all-artists').addClass 'is-active'
     @$('#gene-filter-artworks-nav .is-active').removeClass 'is-active'
