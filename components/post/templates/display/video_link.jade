@@ -1,7 +1,9 @@
-figure.video-link( style="width=" + attachment.maxWidthForWidth(imageWidth) + "px; height=" + attachment.maxHeightForWidth(imageWidth) + "px;", data-attachment=attachment.id )
+- videoWidth = attachment.maxWidthForWidth(imageWidth)
+- videoHeight = attachment.maxHeightForWidth(imageWidth)
+figure.video-link( style="width: #{videoWidth}px", data-attachment=attachment.id )
   .post-film
     .placeholder
-      img( src=attachment.imageSrc(), height=attachment.maxHeightForWidth(imageWidth), width=attachment.maxWidthForWidth(imageWidth), nopin="nopin" )
+      img( src=attachment.imageSrc(), height=videoHeight, width=videoWidth, nopin="nopin" )
       .play-button
         .play-button-arrow
     .video
