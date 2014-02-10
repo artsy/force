@@ -1,0 +1,25 @@
+.related-posts
+  h3.avant-garde-header-center
+    | #{posts.length + remaining} Featured #{(posts.length === 1 ? 'Post' : 'Posts')} About This #{model.constructor.name}
+
+  ul
+    for post in posts
+      - var profile = post.profile()
+
+      li.related-post
+        a.related-post-content(
+          href="/post/#{post.id}"
+        )
+          if post.get('title')
+            .rpc-title!= post.get('title')
+          if post.get('summary')
+            .rpc-body!= post.get('summary')
+
+        unless profile.isNew()
+          .related-post-profile
+            include ../../../components/profile_badge/template
+
+  footer
+    if remaining > 0
+      a.related-posts-show-all
+        | Show All Featured Posts (#{remaining})
