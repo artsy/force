@@ -249,8 +249,8 @@ list = new ArtworkColumns el: $('#browse-filter-list'), collection: artworks
 # When clicking "Price > Under $500" on the `artworksNav` view it will trigger
 # this mediator event. We hook into that to re-fetch the artworks collection
 # filtered by `?price_range` causing the columns view to re-render.
-mediator.on 'filter:price', (range) ->
-  artworks.fetch(data: { price_range: range })
+mediator.on 'filter', (params) ->
+  artworks.fetch(data: params)
 ````
 
 ### Filter Artworks Nav
@@ -275,5 +275,4 @@ mediator = require '../../components/filter/mediator.coffee'
 # When clicking any of the filters this event will trigger with the params you
 # will likely pass to the API like { price_range: '-1:1000' }
 mediator.on 'filter', (params) ->
-
 ````

@@ -1,7 +1,3 @@
-#
-# TODO: Refactor the fetch/reset things more into the model layer.
-#
-
 _ = require 'underscore'
 Backbone = require 'backbone'
 Artworks = require '../../../collections/artworks.coffee'
@@ -26,13 +22,9 @@ module.exports = class GeneFilter extends Backbone.View
       numberOfColumns: Math.round @$('#gene-artwork-list').width() / 300
       gutterWidth: 40
     @artworks.on 'sync', @render
+    mediator.on 'filter', @reset
     @artworks.fetch()
-    @bindMediatorEvents()
     @$el.infiniteScroll @nextPage
-
-  bindMediatorEvents: ->
-    mediator.on 'filter', (params) =>
-      @reset params
 
   render: =>
     @$('#gene-artwork-list-container').attr 'data-state', switch @artworks.length
@@ -46,6 +38,6 @@ module.exports = class GeneFilter extends Backbone.View
     @params.page = @params.page + 1 or 2
     @artworks.fetch(data: @params, remove: false)
 
-  reset: (@params) ->
+  reset: (@params) =>
     @$('#gene-artwork-list').html ''
     @artworks.fetch(data: @params)
