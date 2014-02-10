@@ -25,6 +25,8 @@ module.exports = class PartnerShow extends Backbone.Model
     else
       "#{sd.ARTSY_URL}/api/v1/show/#{@get('id')}"
 
+  clientUrl: -> "/show/#{@get('id')}"
+
   metaImage: ->
     if @has 'image_url' and @get 'image_versions' and @hasImage 'large'
       @imageUrl 'large'
@@ -41,6 +43,34 @@ module.exports = class PartnerShow extends Backbone.Model
       @location()?.singleLine() || ''
       @runningDates() || ''
     ]).join ' | '
+
+  #
+  # Get the poster image url of the show (e.g. used in the shows tab in 
+  # partner profile.)
+  #
+  # If no available images, it will fetch one for you and trigger a
+  # `fetch:posterImageUrl` event on success with the image url.
+  posterImageUrl: (featured=false) ->
+    # try the image of the show
+    size = if featured then 'featured' else 'large'
+    return @imageUrl size if @hasImage(size)
+
+    # if not, try the image of its first artwork, if we already have some
+    size = 'larger' if featured
+    if @artworks?.length > 0
+      return @artworks.first().defaultImage().imageUrl size
+
+    # if not, fetch some artworks and use one of their images
+    @artworks = new Artworks []
+    options =
+      data    : { size: 10, published: true }
+      url     : "#{@url()}/artworks"
+      cache   : true
+      success : =>
+        imageUrl = @artworks.first().defaultImage().imageUrl size
+        @trigger "fetch:posterImageUrl", imageUrl
+    @artworks.fetch options
+    false
 
   title: ->
     @get 'name'
@@ -137,6 +167,11 @@ module.exports = class PartnerShow extends Backbone.Model
     return @get('name') if @get('name')?.length > 0
     @formatArtists @maxDisplayedArtists
 
+  formatLeadHeading: ->
+    if @running() then return 'Current Show'
+    if @upcoming() then return 'Upcoming Show'
+    if @closed() then return 'Past Show'
+
   updatedAt: -> moment(@get('updated_at')).fromNow()
 
   fairLocationDisplay: ->
@@ -147,3 +182,10 @@ module.exports = class PartnerShow extends Backbone.Model
 
   carouselDisplay: -> if @get('images_count') > 0 then "block" else "none"
   artworksDisplay: -> if @get('eligible_artworks_count') > 0 then "block" else "none"
+
+  upcoming: -> @get('status') is 'upcoming'
+  running: -> @get('status') is 'running'
+  closed: -> @get('status') is 'closed'
+  renderable: -> @get('eligible_artworks_count') > 0 || @get('images_count') > 3
+  featurable: -> @renderable()
+  linkable: -> @renderable()
