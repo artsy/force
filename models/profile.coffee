@@ -44,7 +44,7 @@ module.exports = class Profile extends Backbone.Model
       reduceFunction = (result, name) ->
         return result unless name[0] and /\w/.test name[0]
         result + name[0]
-      iconInitials = _.reduce(@displayName().split(' '), reduceFunction, '')[0..1]
+      iconInitials = _.reduce(@displayName()?.split(' '), reduceFunction, '')[0..1]
     iconInitials
 
   getFormattedWebsite: ->

@@ -10,7 +10,8 @@ module.exports = class Search extends Backbone.Collection
   url: "#{sd.ARTSY_URL}/api/v1/match?visible_to_public=true"
 
   parse: (response, options) ->
-    sd.ARTSY_XAPP_TOKEN = options.res.req._headers['x-xapp-token']
+    if options.res?.req
+      sd.ARTSY_XAPP_TOKEN = options.res.req._headers['x-xapp-token']
     response
 
   updateLocationsForFair: (fair) ->
