@@ -31,6 +31,11 @@ module.exports = class Artist extends Backbone.Model
     @relatedContemporary.url = "#{sd.ARTSY_URL}/api/v1/related/layer/contemporary/artists"
     @relatedPosts = new Backbone.Collection [], model: require('./post.coffee')
     @relatedPosts.url = "#{sd.ARTSY_URL}/api/v1/related/posts"
+    @artworks = new Artworks
+    @artworks.url = "#{@url()}/artworks"
+
+  fetchArtworks: (options) ->
+    @artworks.fetch options
 
   fetchRelatedArtists: (type, options = {}) ->
     @["related#{type}"].fetch _.extend
@@ -40,11 +45,6 @@ module.exports = class Artist extends Backbone.Model
         'artist[]': @get 'id'
         'exclude_artists_without_artworks': true
     , options
-
-  fetchArtworks: (options) ->
-    col = new Artworks
-    col.url = "#{@url()}/artworks"
-    col.fetch options
 
   fetchPosterArtwork: (options) ->
     @fetchArtworks
