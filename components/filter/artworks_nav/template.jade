@@ -1,6 +1,8 @@
 nav.filter-nav
   a.filter-button.filter-artworks-nav-allworks All Works
-  .filter-dropdown.filter-artworks-nav-price Price
+  .filter-dropdown.filter-artworks-nav-price
+    .filter-nav-main-text Price
+    .filter-nav-active-text
     .icon-triangle-down
     nav
       a( data-range='-1:1000' ) Under $1,000
@@ -16,13 +18,17 @@ nav.filter-nav
       a( data-range='-1:1000000000000' ) All for Sale
         span.icon-check
   if mediums
-    .filter-dropdown.filter-artworks-nav-medium Medium
+    .filter-dropdown.filter-artworks-nav-medium
+      .filter-nav-main-text Medium
+      .filter-nav-active-text
       .icon-triangle-down
       for name, slug in mediums
         nav
           a( data-medium=slug ) name
             span.icon-check
-  .filter-dropdown.filter-artworks-nav-size Size
+  .filter-dropdown.filter-artworks-nav-size
+    .filter-nav-main-text Size
+    .filter-nav-active-text
     .icon-triangle-down
     nav
       a( data-size='24' ) Small

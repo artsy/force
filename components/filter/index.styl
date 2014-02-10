@@ -3,10 +3,15 @@
 tab-height = 46px
 dark-border-color = #333
 color-transition-duration = 0.2s
-tab-padding = 13px 20px 10px 20px
+tab-padding = 17px 20px 10px 20px
 
 .filter-nav
   display inline-block
+
+.filter-nav-active-text
+  display none
+  overflow ellipsis
+  max-width 150px
 
 .filter-button
   transition color color-transition-duration
@@ -22,8 +27,19 @@ tab-padding = 13px 20px 10px 20px
   background transparent
   cursor pointer
   display inline-block
+  vertical-align middle
+  margin-top -4px
   + .filter-button, + .filter-dropdown
     border-left 0
+  &.is-active
+    .filter-nav-active-text
+      display block
+    .filter-nav-main-text
+      font-size: 9px
+      text-align: left
+      position: absolute
+      margin-top: -16px
+      color black
 
 .filter-dropdown
   position relative
@@ -35,6 +51,8 @@ tab-padding = 13px 20px 10px 20px
     color white
     nav
       display block
+    .filter-nav-main-text
+      color white
   nav
     z-index 2
     background black
@@ -72,5 +90,5 @@ tab-padding = 13px 20px 10px 20px
     font-size 8px
     display block
     position absolute
-    top 7px
+    top 11px
     right 17px

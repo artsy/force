@@ -31,8 +31,8 @@ module.exports = class GeneFilter extends Backbone.View
     @$el.infiniteScroll @nextPage
 
   bindMediatorEvents: ->
-    mediator.on 'filter:price', (range) =>
-      @reset { 'price_range': range }
+    mediator.on 'filter', (params) =>
+      @reset params
 
   render: =>
     @$('#gene-artwork-list-container').attr 'data-state', switch @artworks.length

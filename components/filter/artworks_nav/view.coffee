@@ -14,7 +14,7 @@ module.exports = class FilterArtworksNav extends Backbone.View
 
   toggleActive: (el) ->
     @$('.is-active').removeClass 'is-active'
-    $(el).addClass 'is-active'
+    $(el).addClass('is-active')
 
   events:
     'click .filter-artworks-nav-allworks': 'allWorks'
@@ -25,19 +25,23 @@ module.exports = class FilterArtworksNav extends Backbone.View
 
   allWorks: ->
     @toggleActive @$('.filter-artworks-nav-allworks')
-    mediator.trigger 'filter:allworks'
+    mediator.trigger 'filter', {}
 
   filterPrice: (e) ->
     @toggleActive @$('.filter-artworks-nav-price')
-    mediator.trigger 'filter:price', $(e.target).data 'range'
+    mediator.trigger 'filter', { price_range: $(e.target).data 'range' }
 
   filterMedium: (e) ->
     @toggleActive @$('.filter-artworks-nav-medium')
-    mediator.trigger 'filter:medium', $(e.target).data 'medium'
+    mediator.trigger 'filter', { medium: $(e.target).data 'medium' }
 
   filterSize: (e) ->
     @toggleActive @$('.filter-artworks-nav-size')
-    mediator.trigger 'filter:size', $(e.target).data 'size'
+    mediator.trigger 'filter', { dimension: $(e.target).data 'size' }
 
   checkDropdownItem: (e) ->
-    @$(e.target).addClass 'is-active'
+    $(e.target)
+      .addClass('is-active')
+      .closest('.filter-dropdown')
+      .children('.filter-nav-active-text')
+      .text $(e.target).text()
