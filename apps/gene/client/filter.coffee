@@ -14,16 +14,8 @@ module.exports = class GeneFilter extends Backbone.View
     @params = {}
     @filterNav = new FilterArtworksNav el: $ '#gene-filter-artworks-nav'
     @artworks.url = "#{ARTSY_URL}/api/v1/search/filtered/gene/#{@model.get 'id'}"
-    @columnsView = new ArtworkColumnsView
-      el: @$ '#gene-artwork-list'
-      collection: @artworks
-      totalWidth: @$('#gene-artwork-list').width()
-      artworkSize: 'large'
-      numberOfColumns: Math.round @$('#gene-artwork-list').width() / 300
-      gutterWidth: 40
     @artworks.on 'sync', @render
     mediator.on 'filter', @reset
-    @artworks.fetch()
     @$el.infiniteScroll @nextPage
 
   render: =>
@@ -39,5 +31,22 @@ module.exports = class GeneFilter extends Backbone.View
     @artworks.fetch(data: @params, remove: false)
 
   reset: (@params) =>
+    @$('#gene-filter').attr 'data-state', 'artworks'
+    @$('#gene-filter-all-artists').removeClass 'is-active'
     @$('#gene-artwork-list').html ''
+    @columnsView ?= new ArtworkColumnsView
+      el: @$ '#gene-artwork-list'
+      collection: @artworks
+      totalWidth: @$('#gene-artwork-list').width()
+      artworkSize: 'large'
+      numberOfColumns: Math.round @$('#gene-artwork-list').width() / 300
+      gutterWidth: 40
     @artworks.fetch(data: @params)
+
+  events:
+    'click #gene-filter-all-artists': 'toggleArtistMode'
+
+  toggleArtistMode: ->
+    @$('#gene-filter').attr 'data-state', ''
+    @$('#gene-filter-all-artists').addClass 'is-active'
+    @$('#gene-filter-artworks-nav .is-active').removeClass 'is-active'

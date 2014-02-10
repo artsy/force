@@ -16,18 +16,5 @@ block body
         +share(gene.get('name') + ' on Artsy', gene.imageUrl())
     #gene-description
       #gene-description-inner!= gene.mdToHtml('description')
-    #gene-filter-nav
-      unless gene.isSubjectMatter()
-        label By Artists:&nbsp;
-        a#gene-filter-all-artists.filter-button.is-active All Artists
-        label By Work:&nbsp;
-      span#gene-filter-artworks-nav
-        include ../../../components/filter/artworks_nav/template.jade
-    unless gene.isSubjectMatter()
-      #gene-artists
-        .loading-spinner
-    #gene-artwork-list-container
-      #gene-artwork-list
-      #gene-artwork-list-spinner
-        .loading-spinner
-      #gene-artwork-list-no-results No artworks are available within your selection.
+    #gene-filter
+      include filter
