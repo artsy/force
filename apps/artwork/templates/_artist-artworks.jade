@@ -1,0 +1,14 @@
+.artwork-artist-artworks
+  for artwork in artworks.models
+    a.artwork-artist-artwork(
+      href="/artwork/#{artwork.id}"
+    )
+      img(
+        src     = artwork.defaultImageUrl('small')
+        alt     = artwork.get('title')
+        title   = artwork.get('title')
+      )
+      .overlay-container
+        .overlay-button-save(
+          data-id= artwork.id
+        )
