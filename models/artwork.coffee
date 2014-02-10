@@ -15,6 +15,17 @@ module.exports = class Artwork extends Backbone.Model
   urlRoot: ->
     "#{sd.ARTSY_URL}/api/v1/artwork"
 
+  initialize: ->
+    # Defer Post model require to prevent circular dependency
+    @relatedPosts = new Backbone.Collection [], model: require('./post.coffee')
+    @relatedPosts.url = "#{sd.ARTSY_URL}/api/v1/related/posts"
+
+  fetchRelatedPosts: (options = {}) ->
+    @relatedPosts.fetch _.extend
+      remove: false
+      data: _.extend (options.data ? {}), 'artwork[]': @id
+    , options
+
   parse: (response, options) ->
     @editions   = new Backbone.Collection response?.edition_sets, model: Edition
     @images     = new Backbone.Collection response?.images, model: AdditionalImage, comparator: 'position'

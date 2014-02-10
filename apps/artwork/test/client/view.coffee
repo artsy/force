@@ -24,6 +24,7 @@ describe 'ArtworkView', ->
 
   beforeEach (done) ->
     @artist = new Artist(fabricate 'artist')
+    sinon.stub @artist.artworks, 'fetch'
 
     # Interestingly: jQuery "Every attempt is made to convert the string to a
     # JavaScript value (this includes booleans, numbers, objects, arrays, and null)"
@@ -38,12 +39,16 @@ describe 'ArtworkView', ->
       artist: @artist
       artwork: @artwork
     }, =>
-      @ArtworkView = rewire '../../client/view'
+      @ArtworkView = benv.requireWithJadeify(
+        (resolve __dirname, '../../client/view'),
+        ['artistArtworksTemplate']
+      )
       @ArtworkView.__set__ 'ShareView', (@shareViewStub = sinon.stub())
       done()
 
   afterEach ->
     Backbone.sync.restore()
+    @artist.artworks.fetch.restore()
 
   describe 'user logged in', ->
     beforeEach ->
@@ -57,6 +62,29 @@ describe 'ArtworkView', ->
 
       it 'has a following collection if the user is logged in', ->
         _.isUndefined(@view.following).should.not.be.ok
+
+    describe '#setupCurrentUser', ->
+      it 'initializes the current user, saved artwork collection, and following collection', ->
+        _.isUndefined(@view.currentUser).should.not.be.ok
+        _.isUndefined(@view.saved).should.not.be.ok
+        _.isUndefined(@view.following).should.not.be.ok
+
+    describe '#setupArtistArtworks', ->
+      it 'fetches a sample of the artwork artist\'s works', ->
+        @artist.artworks.fetch.callCount.should.equal 1
+        @artist.artworks.fetch.args[0][0].data.should.include size: 5, published: true
+
+    describe '#renderArtistArtworks', ->
+      it 'renders the artist\'s artworks', ->
+        @artist.artworks.add([fabricate 'artwork'])
+        @artist.artworks.trigger 'sync'
+
+        @artist.artworks.pluck('id').should.not.include @artwork.id
+
+        $el = @view.$('#artwork-artist-artworks-container')
+        $el.hasClass('is-loaded')
+
+        $el.html().should.include "data-id=\"#{@artist.artworks.first().id}\""
 
     describe '#openShare', ->
       it 'opens the share view when the share button is clicked', ->
@@ -79,14 +107,11 @@ describe 'ArtworkView', ->
         @$imageLink.data('href', 'foobar')
         @$imageLink.click()
 
-      it 'changes the primary image src', ->
         @view.$('#the-artwork-image').attr('src').
           should.equal 'foobar'
 
-      it 'changes the activeImage on the artwork model', ->
         @view.artwork.activeImage().id.should.equal @$imageLink.data('id')
 
-      it 'sets the class of the clicked link to is-active', ->
         @$imageLink.hasClass('is-active').should.be.ok
 
     describe '#setupFollowButton', ->

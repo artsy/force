@@ -7,6 +7,7 @@ Profile         = require '../../../models/profile.coffee'
 ContactView     = require './contact.coffee'
 CollectionView  = require './collection.coffee'
 ShowsView       = require './shows.coffee'
+PostsView       = require './posts.coffee'
 tablistTemplate = -> require('../templates/tablist.jade') arguments...
 
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
@@ -15,6 +16,7 @@ sectionToView =
   contact     : ContactView
   collection  : CollectionView
   shows       : ShowsView
+  posts       : PostsView
 
 module.exports.PartnerView = class PartnerView extends Backbone.View
 
@@ -73,7 +75,7 @@ module.exports.PartnerView = class PartnerView extends Backbone.View
       collection: => @partner.get('published_not_for_sale_artworks_count') > 0
       contact:    => true
       about:      => true
-      posts:      => @partner.get('has_full_profile') and @profile.hasPosts()
+      posts:      => @profile.hasPosts()
       shop:       => @partner.get('published_for_sale_artworks_count') > 0
 
     _.filter sections, (s) -> criteria[s]?()
