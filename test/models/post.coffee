@@ -122,5 +122,5 @@ describe 'Post', ->
 
     it 'true if on post page', ->
       post = new Post(fabricate('post'))
-      post.onPostPage("/post/#{post.get('id')}").should.equal true
-      post.onPostPage("/post/foo").should.equal false
+      post.onPostPage("/post/#{post.get('id')}").should.be.ok
+      post.onPostPage("/post/foo").should.not.be.ok
