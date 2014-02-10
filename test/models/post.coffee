@@ -117,3 +117,10 @@ describe 'Post', ->
     it 'doesnt error', ->
       post = new Post(fabricate('post'))
       _.isUndefined(post.featuredPostsThumbnail()).should.be.ok
+
+  describe '#onPostPage', ->
+
+    it 'true if on post page', ->
+      post = new Post(fabricate('post'))
+      post.onPostPage("/post/#{post.get('id')}").should.equal true
+      post.onPostPage("/post/foo").should.equal false
