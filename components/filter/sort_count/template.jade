@@ -1,0 +1,9 @@
+include ../../bordered_pulldown/mixin
+
+.filter-sort-count
+  h4.filter-sort-count-count= counts || 'Showing ... Works'
+  .filter-sort-count-pulldown
+    +bordered-pulldown((pulldownVal || 'Recently Added'), 'Sort by:')
+      a( data-sort='-date_added' ) Recently Added
+      a( data-sort='-date_created' ) Artwork Year (desc.)
+      a( data-sort='date_created' ) Artwork Year (asc.)
