@@ -39,11 +39,11 @@ module.exports = class FeedView extends Backbone.View
       @render @initialFeedItems
 
     throttledInfiniteScroll = _.throttle (=> @infiniteScroll()), 250
-    @$window.on 'scroll', throttledInfiniteScroll
+    @$window.on 'scroll.feed', throttledInfiniteScroll
 
     if @onResize
       throttledOnResize = _.throttle (=> @onResize()), 250
-      @$window.on 'resize', throttledOnResize
+      @$window.on 'resize.feed', throttledOnResize
 
   storeOptions: (options) ->
     @feedItems             = options.feedItems
@@ -56,6 +56,7 @@ module.exports = class FeedView extends Backbone.View
     @widthOffset           = options.widthOffset or 0
     @sortOrder             = options.sortOrder
     @limitPostBodyHeight   = options.limitPostBodyHeight
+    @additionalParams      = options.additionalParams
 
   render: (items) =>
     @latestItems = items
@@ -124,7 +125,7 @@ module.exports = class FeedView extends Backbone.View
       new FeedItemPost params
 
   handleFetchedItems: (items) ->
-    return @handleDoneFetching() unless items.length > 0
+    return @handleDoneFetching?() unless items.length > 0
     @latestItems = items
     @removeItemsFromTop() if @removeItemsFromTop
     @$feedItems.append @getFeedItemHtml(items)
@@ -161,3 +162,7 @@ module.exports = class FeedView extends Backbone.View
     @currentUser = CurrentUser.orNull()
     @currentUser?.initializeDefaultArtworkCollection()
     @artworkCollection = @currentUser?.defaultArtworkCollection()
+
+  destroy: ->
+    @$el.html ''
+    @$window.off '.feed'

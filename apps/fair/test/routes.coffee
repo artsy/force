@@ -66,22 +66,13 @@ describe 'Fair routes', ->
       routes.search req, res
       res.redirect.args[0][0].should.equal '/some-fair'
 
-  describe '#exhibitors', ->
+  describe '#browse', ->
 
     it 'renders index', ->
-      routes.exhibitors @req, @res
+      routes.browse @req, @res
       _.last(Backbone.sync.args)[2].success fabricate 'fair_profile'
       _.last(Backbone.sync.args)[2].success fabricate 'fair'
       _.last(Backbone.sync.args)[2].success []
-      @res.render.args[0][0].should.equal 'templates/index'
-      @res.render.args[0][1].profile.isFairOranizer()
-
-  describe '#artists', ->
-
-    it 'renders index', ->
-      routes.artists @req, @res
-      _.last(Backbone.sync.args)[2].success fabricate 'fair_profile'
-      _.last(Backbone.sync.args)[2].success fabricate 'fair'
       _.last(Backbone.sync.args)[2].success []
       @res.render.args[0][0].should.equal 'templates/index'
       @res.render.args[0][1].profile.isFairOranizer()
