@@ -41,17 +41,25 @@ module.exports.FeatureView = class FeatureView extends Backbone.View
       @artworkCollection.addRepoArtworks artworks
       @artworkCollection.syncSavedArtworks()
 
-
   getArtworksOrderedByArtist: (collection) ->
     collection.comparator = (model) -> model.get('artist')?.sortable_id
     collection.sort()
     collection.models
 
+  uniqueArtworksByArtist: (artworks) ->
+    artists = {}
+    artworks.filter (artwork) ->
+      return false if artists[artwork.get('artist').id]
+      artists[artwork.get('artist').id] = true
+      true
+
   renderArtistList: (artworks) ->
     artworks = @getArtworksOrderedByArtist artworks
+    artworks = @uniqueArtworksByArtist artworks
 
     n = Math.floor artworks.length/2
     n = 1 if n < 1
+
     lists = _.groupBy(artworks, (a, b) -> Math.floor(b/n))
     artworkGroups = _.toArray(lists)
 
@@ -61,7 +69,6 @@ module.exports.FeatureView = class FeatureView extends Backbone.View
 
     @$('.artwork-column:last-of-type').prepend artistsTemplate { artworkGroups: artworkGroups }
     @$('.artwork-column:first-child').parent().css 'visibiliy', 'visible'
-
 
 module.exports.init = ->
 

@@ -10,7 +10,7 @@ module.exports = class SaleArtworkView extends Backbone.View
   analyticsSaveMessage: "Added artwork to collection, via sale"
 
   events:
-    "click .artwork-item-buy": "acquire"
+    "click .artwork-item-buy" : "acquire"
     # TODO: Add auction bid handling here
     #"click .artwork-item-bid": "bid"
 
@@ -24,7 +24,6 @@ module.exports = class SaleArtworkView extends Backbone.View
     saveView.analyticsSaveMessage   = @analyticsSaveMessage
 
   acquire: (event) =>
-    console.log 'here'
     # redirect to artwork page if artwork has multiple editions
     if @model.get('edition_sets_count') > 1
       return window.location.href = @model.href()
