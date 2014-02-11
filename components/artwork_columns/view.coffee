@@ -15,8 +15,8 @@ module.exports = class ArtworkColumns extends Backbone.View
   maxArtworkHeight: 400
   currentColumn   : 0
   isOrdered       : false
-  totalWidth      : 1120
   gutterWidth     : 80
+  artworkSize     : 'tall'
 
   events:
     'click .artwork-columns-see-more': 'onSeeMoreClick'
@@ -30,7 +30,7 @@ module.exports = class ArtworkColumns extends Backbone.View
     unless @collectionLength
       @collectionLength = @collection.length
 
-    @columnWidth = Math.floor((@totalWidth - ((@numberOfColumns - 1) * @gutterWidth)) / @numberOfColumns)
+    @columnWidth = @_columnWidth()
 
     @seeMore = (@seeMore and @collectionLength > @initialItemCount)
     @numberOfColumns ||= 3
@@ -44,12 +44,28 @@ module.exports = class ArtworkColumns extends Backbone.View
     @setUserSavedArtworks()
     @render()
 
+    unless @totalWidth
+      $(window).on 'resize', _.debounce @sizeColumns, 100
+
+  _columnWidth: ->
+    width = @totalWidth or @$el.width()
+    Math.floor((width - ((@numberOfColumns - 1) * @gutterWidth)) / @numberOfColumns)
+
+  sizeColumns: =>
+    margin = Math.floor(@gutterWidth / 2)
+    (@$columns ?= @$el.find('.artwork-column')).css
+      marginLeft: "#{margin}px"
+      marginRight: "#{margin}px"
+      width: "#{@_columnWidth()}px"
+    @$columns.filter(':first-child').css marginLeft: 0
+    @$columns.filter(':last-child').css marginRight: 0
+
   setUserSavedArtworks: ->
     @currentUser = CurrentUser.orNull()
     @currentUser?.initializeDefaultArtworkCollection()
     @artworkCollection = @currentUser?.defaultArtworkCollection()
 
-  render: ->
+  render: =>
     # Render columns and set some styles according to view params
     @$el
       .html artworkColumns
@@ -57,16 +73,7 @@ module.exports = class ArtworkColumns extends Backbone.View
         buttonLabel    : @buttonLabel()
         seeMore        : @seeMore
 
-    # Set some styles according to view params
-    @$el
-      .css('width', "#{@totalWidth}px")
-      .find('.artwork-column').css
-        'margin-left': "#{Math.floor(@gutterWidth / 2)}px"
-        'margin-right': "#{Math.floor(@gutterWidth / 2)}px"
-        width: "#{@columnWidth}px"
-
-    @$el.find('.artwork-column:first-child').css('margin-left', '0')
-    @$el.find('.artwork-column:last-child').css('margin-right', '0')
+    @sizeColumns()
 
     @appendArtworks @collection.models
 
@@ -133,7 +140,7 @@ module.exports = class ArtworkColumns extends Backbone.View
       displayMoreInfo     : @displayMoreInfo
       displayAuctionPrice : displayAuctionPrice
       estimate            : estimate
-      artworkSize         : 'tall'
+      artworkSize         : @artworkSize
     $renderedArtwork = $(renderedArtwork)
     @$(".artwork-column:eq(#{column})").append $renderedArtwork
     $renderedArtwork

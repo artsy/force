@@ -42,14 +42,13 @@ module.exports.FeedItemView = class FeedItemView extends Backbone.View
 
   setupArtworkSaveControls: (artworks=@model.artworks().models)->
     listItems =
-      for artwork, index in artworks
-        if artwork and index
-          overlay = @$(".artwork-item[data-artwork='#{artwork.get('id')}']").find('.overlay-container')
-          if overlay.length
-            new SaveControls
-              el               : overlay
-              model            : artwork
-              artworkCollection: @artworkCollection
+      for artwork in artworks
+        overlay = @$(".artwork-item[data-artwork='#{artwork.get('id')}']").find('.overlay-container')
+        if overlay.length
+          new SaveControls
+            el               : overlay
+            model            : artwork
+            artworkCollection: @artworkCollection
 
     if @artworkCollection
       @artworkCollection.addRepoArtworks @model.artworks()

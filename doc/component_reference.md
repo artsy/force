@@ -223,6 +223,22 @@ new ArtistFillwidthList(
 
 `fetchAndRender` will fetch every artist's artworks and the individual list items will re-render as they sync.
 
+## Bordered Pulldown
+
+An Artsy styled drop down menu. This component comes with a jade mixin you can use via:
+
+![](images/bordered_pulldown.png)
+
+````jade
+include ../../bordered_pulldown/mixin
+
++bordered-pulldown('Recently Added', 'Sort By')
+  a( data-sort='date_created' ) Recently Added
+  a( data-sort='-date_created' ) Artwork Year
+````
+
+Or if you need finer control feel free to just use the CSS classes that are in it's index.styl.
+
 ## Filter
 
 A library of components used in the multi-faceted fitler UIs across the site. E.g. in /browse and /gene/:id or /fair.
@@ -249,8 +265,8 @@ list = new ArtworkColumns el: $('#browse-filter-list'), collection: artworks
 # When clicking "Price > Under $500" on the `artworksNav` view it will trigger
 # this mediator event. We hook into that to re-fetch the artworks collection
 # filtered by `?price_range` causing the columns view to re-render.
-mediator.on 'filter:price', (range) ->
-  artworks.fetch(data: { price_range: range })
+mediator.on 'filter', (params) ->
+  artworks.fetch(data: params)
 ````
 
 ### Filter Artworks Nav
@@ -272,15 +288,36 @@ This view will trigger events on the filter mediator when clicking on menu items
 ````coffeescript
 mediator = require '../../components/filter/mediator.coffee'
 
-# When clicking the "All works button"
-mediator.on 'filter:allworks', ->
+# When clicking any of the filters this event will trigger with the params you
+# will likely pass to the API like { price_range: '-1:1000' }
+mediator.on 'filter', (params) ->
+````
 
-# When clicking a price menu item. (range) is the value that can be passed into the `price_range` query param e.g. "5000:10000".
-mediator.on 'filter:price', (range) ->
+### Filter Sort Count
 
-# When clicking a medium menu item. (medium) is the value that can be passed into the `medium` query param e.g. "sculpture".
-mediator.on 'filter:medium', (medium) ->
+A common subheader in the filtering UIs. This includes a sorting pulldown on the right which comes with the default "Recently Added", "Artwork Year Asc/Desc" sort values.
 
-# When clicking a medium size item. (size) is the value taht can be passed into the `dimension` query param e.g. "48".
-mediator.on 'filter:size', (dimension) ->
+![](images/filter_sort_count.png)
+
+````coffeescript
+new FilterSortCount(el: $ '#gene-filter-subheader')
+````
+
+This view will trigger events on the filter mediator when clicking the sort drop down.
+
+````coffeescript
+mediator = require '../../components/filter/mediator.coffee'
+
+# When clicking on the sort menu this event will trigger with the params you
+# will likely pass to the API like { sort: "-date_added" }
+mediator.on 'filter', (params) ->
+````
+
+This view will listen to events on the filter mediator to update it's count on the left.
+
+````coffeescript
+mediator = require '../../components/filter/mediator.coffee'
+
+artworks = #...
+mediator.trigger 'counts', "Showing #{artworks.counts} Works"
 ````

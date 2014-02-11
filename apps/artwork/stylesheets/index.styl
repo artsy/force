@@ -194,19 +194,25 @@ artwork-detail-item-height  = 36px
     margin 10px 0
     font-size 15px
 
-.artwork-artist
-.artwork-featured-posts
-  width 50%
+.ari-left
+.ari-right
   padding 0 10px
   text-align center
 
-.artwork-artist
+.ari-left
+  width 60%
   float left
+  padding-right 5%
+  transition opacity 0.5s
+  &[data-state='pending']
+    opacity 0
 
-.artwork-featured-posts
+.ari-right
+  width 40%
   float right
 
 .artwork-artist-blurb
+.artwork-blurb
   margin 20px 0
   font-size 17px
   line-height 1.5
@@ -218,3 +224,28 @@ artwork-detail-item-height  = 36px
   avant-garde()
   font-size 13px
   text-decoration none
+
+#artwork-artist-artworks-container
+  opacity 0
+  transition opacity 1s
+  &.is-loaded
+    opacity 1
+
+.artwork-artist-artworks
+  margin 20px 0
+
+.artwork-artist-artwork
+  position relative
+  display inline-block
+  max-width 50%
+  margin 5px 10px
+  overflow hidden
+  > img
+    height 125px
+  &:hover
+    .overlay-button-save
+      opacity 1
+  .overlay-button-save
+    opacity 0
+    &[data-state='saved']
+      opacity 1

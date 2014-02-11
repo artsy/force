@@ -27,15 +27,9 @@ block body
             | &mdash;Page #{auctionLots.state.currentPage} of #{auctionLots.state.totalPages}
 
       .auction-lots-sort
-        span Order:
-        .bordered-pulldown
-          a.bordered-pulldown-toggle
-            = auctionLots.sortCriteria[auctionLots.sortBy]
-            .bordered-pulldown-toggle-caret
-              span.caret
-          .bordered-pulldown-options
-            a( href="?sort=#{auctionLots.sortBy}" )
-              = auctionLots.sortCriteria[auctionLots.sortBy]
+
+          +bordered-pulldown(auctionLots.sortCriteria[auctionLots.sortBy], 'Order')
+            a( data-sort=sortBy )= auctionLots.sortCriteria[auctionLots.sortBy]
             - for k, v in auctionLots.sortCriteria
               - if (!(!user && k === 'Sale' || v === auctionLots.sortBy))
                 a( href="?sort=#{v}" )= k

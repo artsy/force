@@ -48,16 +48,27 @@ block body
         include ./_detail
 
     section.artwork-related-information
-      .artwork-artist
-        if artist.get('blurb')
-          h3.avant-garde-header-center
-            | About #{artist.get('name')}
-          .artwork-artist-blurb
-            != artist.mdToHtml('blurb')
-          a.artwork-artist-blurb-link.faux-underline-hover-large(
-            href="/artist/#{artist.id}"
-          ) Go to #{artist.get('name')}
+      .ari-left
+        .artwork-artist( data-state=(artist.get('blurb') ? '' : 'pending' ) )
+            h3.avant-garde-header-center
+              | About #{artist.get('name')}
 
-      .artwork-featured-posts
-        h3.avant-garde-header-center
-          | Featured Posts About This Artwork
+            #artwork-artist-artworks-container
+              //- Rendered client-side
+
+            if artist.get('blurb')
+              .artwork-artist-blurb
+                != artist.mdToHtml('blurb')
+
+            a.artwork-artist-blurb-link.faux-underline-hover-large(
+              href="/artist/#{artist.id}"
+            ) Go to #{artist.get('name')}
+
+      .ari-right
+        if artwork.get('blurb')
+          h3.avant-garde-header-center
+            | About This Artwork
+          .artwork-blurb
+            != artwork.mdToHtml('blurb')
+
+        #artwork-artist-related-posts-container

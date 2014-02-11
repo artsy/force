@@ -4,7 +4,6 @@ sd            = require('sharify').data
 Artworks      = require '../collections/artworks.coffee'
 { Markdown }  = require 'artsy-backbone-mixins'
 { Image }     = require 'artsy-backbone-mixins'
-Post          = require './post.coffee'
 { smartTruncate }     = require '../components/util/string.coffee'
 { SECURE_IMAGES_URL } = require('sharify').data
 
@@ -24,14 +23,20 @@ module.exports = class Artist extends Backbone.Model
 
   clientUrl: -> "/artist/#{@get('id')}"
   href: -> "/artist/#{@get('id')}"
+  displayName: -> @get("name")
 
   initialize: ->
     @relatedArtists = new Backbone.Collection [], model: Artist
     @relatedArtists.url = "#{sd.ARTSY_URL}/api/v1/related/layer/main/artists"
     @relatedContemporary = new Backbone.Collection [], model: Artist
     @relatedContemporary.url = "#{sd.ARTSY_URL}/api/v1/related/layer/contemporary/artists"
-    @relatedPosts = new Backbone.Collection [], model: Post
+    @relatedPosts = new Backbone.Collection [], model: require('./post.coffee')
     @relatedPosts.url = "#{sd.ARTSY_URL}/api/v1/related/posts"
+    @artworks = new Artworks
+    @artworks.url = "#{@url()}/artworks"
+
+  fetchArtworks: (options) ->
+    @artworks.fetch options
 
   fetchRelatedArtists: (type, options = {}) ->
     @["related#{type}"].fetch _.extend
@@ -41,11 +46,6 @@ module.exports = class Artist extends Backbone.Model
         'artist[]': @get 'id'
         'exclude_artists_without_artworks': true
     , options
-
-  fetchArtworks: (options) ->
-    col = new Artworks
-    col.url = "#{@url()}/artworks"
-    col.fetch options
 
   fetchPosterArtwork: (options) ->
     @fetchArtworks

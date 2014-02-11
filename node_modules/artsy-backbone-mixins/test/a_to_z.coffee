@@ -58,3 +58,13 @@ describe 'A to Z mixin', ->
       collection = new AToZCollection([], { model: NoHrefModel })
       collection.add m
       (()-> collection.groupByAlphaWithColumns()).should.throw()
+
+    it 'handles link to page', ->
+      m0 = new AToZCollectionModel({ sortable_id: "1", name: "Twenty1", artworks_count: 1 })
+      m1 = new AToZCollectionModel({ sortable_id: "2", name: "Twenty2", artworks_count: 0 })
+      m2 = new AToZCollectionModel({ sortable_id: "3", name: "Twenty3" })
+      collection = new AToZCollection([ m0, m1, m2 ])
+      grouped = collection.groupByAlphaWithColumns(1)[0].columns[0]
+      grouped[0].linkToPage.should.be.ok
+      grouped[1].linkToPage.should.not.be.ok
+      grouped[2].linkToPage.should.be.ok

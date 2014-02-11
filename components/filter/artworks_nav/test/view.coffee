@@ -25,6 +25,7 @@ describe 'FilterArtworksNav', ->
     @view.render()
     @view.$el.html().should.include 'Finger Painting'
 
-  it 'triggers filter:price events', ->
+  it 'triggers filter events', ->
     @view.filterPrice target: $ "<div data-range='-1:1000'></div>"
-    @mediator.trigger.args[0][0].should.equal 'filter:price'
+    @mediator.trigger.args[0][0].should.equal 'filter'
+    @mediator.trigger.args[0][1].price_range.should.equal '-1:1000'

@@ -86,3 +86,20 @@ fetchFair = (req, res, next, success) ->
               results     : search.models
           error: res.backboneError
       error: res.backboneError
+
+@browse = (req, res, next) ->
+  fetchFair req, res, next, (fair, profile) ->
+    res.locals.sd.SECTION = 'browse'
+    # TODO: Parallelize these fetches
+    fair.fetchExhibitors
+      success: (exhibitorsAToZGroup, galleries) ->
+        fair.fetchArtists
+          success: (artistsAToZGroup, artists) ->
+            res.render 'templates/index',
+              exhibitorsAToZGroup : exhibitorsAToZGroup
+              artistsAToZGroup    : artistsAToZGroup
+              profile   : profile
+              fair      : fair
+              artists   : artists
+          error: res.backboneError
+      error: res.backboneError
