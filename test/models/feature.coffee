@@ -59,6 +59,11 @@ describe 'Feature', ->
       ])
       _.last(Backbone.sync.args)[2].success([])
 
+      xdescribe 'fetching a sale', ->
+
+        it 'proxies the display_artist_list attribute', ->
+
+
   describe '#shareTitle', ->
 
     it 'returns the name, a link, and truncates to a tweet', ->

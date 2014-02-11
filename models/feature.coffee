@@ -89,8 +89,8 @@ module.exports = class Feature extends Backbone.Model
             when 'FeaturedLink'
               set.set
                 data : new FeaturedLinks items.map (link) -> link.toJSON()
-                type : 'featured links'
                 index: set.get('key')
+                type : 'featured links'
               finalItems.push set
               callback()
 
@@ -103,9 +103,10 @@ module.exports = class Feature extends Backbone.Model
               sale.fetchArtworks
                 success: _.bind ((set, saleArtworks) =>
                   set.set
-                    type : if sale.get('is_auction') then 'auction artworks' else 'sale artworks'
-                    data : Artworks.fromSale(saleArtworks)
-                    index: set.get('key')
+                    data                : Artworks.fromSale(saleArtworks)
+                    display_artist_list: sale.get 'display_artist_list'
+                    index               : set.get('key')
+                    type                : if sale.get('is_auction') then 'auction artworks' else 'sale artworks'
                   finalItems.push set
                   callback()
                 ), @, set

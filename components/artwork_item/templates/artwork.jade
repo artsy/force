@@ -1,6 +1,6 @@
 - artworkSize = artworkSize || 'medium'
 - imageWidth = imageWidth || false
-- showBlurb = showBlurb || false
+- displayPurchase = displayPurchase || false
 figure.artwork-item( data-artwork=artwork.get('id') )
   .artwork-item-image-container
     a.artwork-item-image-link(href=artwork.href())
@@ -29,7 +29,12 @@ figure.artwork-item( data-artwork=artwork.get('id') )
       p.artwork-item-sale-price!= artwork.saleMessage()
 
     if artwork.has('saleArtwork')
-      if artwork.has('blurb')
+      if artwork.has('blurb') && artwork.get('blurb')
         .artwork-item-blurb!= artwork.mdToHtml('blurb')
-      .artwork-item-more-info.avant-garde-button-black( data-id=artwork.get('id') ) More Info
+      a.artwork-item-more-info.avant-garde-button-black( href=artwork.href() ) More Info
 
+    if artwork.get('acquireable') && displayPurchase
+      a.artwork-item-buy.avant-garde-button-black( href=artwork.href(), data-id=artwork.get('id') ) Buy
+
+    if artwork.get('sold')
+      .artwork-item-sold Sold

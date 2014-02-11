@@ -1,6 +1,6 @@
 Backbone  = require 'backbone'
-mediator  = require '../../lib/mediator.coffee'
-track     = require('../../lib/analytics.coffee').track
+mediator  = require '../../../lib/mediator.coffee'
+track     = require('../../../lib/analytics.coffee').track
 
 module.exports = class SaveControls extends Backbone.View
   analyticsRemoveMessage: "Removed artwork from collection, via result rows"

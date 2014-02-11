@@ -1,7 +1,7 @@
 benv          = require 'benv'
 sinon         = require 'sinon'
 Backbone      = require 'backbone'
-SaveControls  = require '../save_controls'
+SaveControls  = require '../views/save_controls'
 mediator      = require '../../../lib/mediator'
 { resolve }   = require 'path'
 
@@ -18,7 +18,7 @@ describe 'SaveControls', ->
       benv.setup =>
         benv.expose { $: benv.require 'jquery' }
         Backbone.$ = $
-        benv.render resolve(__dirname, '../overlay_controls.jade'), {}, =>
+        benv.render resolve(__dirname, '../templates/overlay_controls.jade'), {}, =>
           @view = new SaveControls { artworkCollection: null, model: model, el: $('.overlay-container') }
           done()
 
@@ -37,7 +37,7 @@ describe 'SaveControls', ->
         benv.setup =>
           benv.expose { $: benv.require 'jquery' }
           Backbone.$ = $
-          benv.render resolve(__dirname, '../overlay_controls.jade'), {}, =>
+          benv.render resolve(__dirname, '../templates/overlay_controls.jade'), {}, =>
             @view = new SaveControls { artworkCollection: artworkCollection, model: model, el: $('.overlay-container') }
             done()
 
