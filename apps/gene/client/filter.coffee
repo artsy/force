@@ -5,6 +5,7 @@ Artworks = require '../../../collections/artworks.coffee'
 mediator = require '../../../components/filter/mediator.coffee'
 FilterArtworksNav = require '../../../components/filter/artworks_nav/view.coffee'
 FilterSortCount = require '../../../components/filter/sort_count/view.coffee'
+FilterFixedHeader = require '../../../components/filter/fixed_header/view.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 
 module.exports = class GeneFilter extends Backbone.View
@@ -14,8 +15,9 @@ module.exports = class GeneFilter extends Backbone.View
     @$window = $(window)
     @artworks = new Artworks
     @artworks.url = "#{ARTSY_URL}/api/v1/search/filtered/gene/#{@model.get 'id'}"
-    @filterNav = new FilterArtworksNav el: $ '#gene-filter-artworks-nav'
+    @filterArtworksNav = new FilterArtworksNav el: $ '#gene-filter-artworks-nav'
     @sortCount = new FilterSortCount el: $ '#gene-filter-sort-count'
+    @filterFixedHeader = new FilterFixedHeader el: $ '#gene-filter-nav'
     @columnsView = new ArtworkColumnsView
       el: @$ '#gene-artwork-list'
       collection: @artworks
@@ -45,8 +47,12 @@ module.exports = class GeneFilter extends Backbone.View
     @$('#gene-filter-all-artists').removeClass 'is-active'
     @$('#gene-artwork-list').html ''
     @artworks.fetch(data: @params)
-    @model.fetchFilterSuggest @params, success: (m, res) ->
+    @renderCounts()
+
+  renderCounts: ->
+    @model.fetchFilterSuggest @params, success: (m, res) =>
       mediator.trigger 'counts', "Showing #{res.total} Works"
+      @$('#gene-filter-nav-left-num').html " &mdash; #{res.total} Works"
 
   events:
     'click #gene-filter-all-artists': 'toggleArtistMode'
