@@ -298,3 +298,26 @@ mediator.on 'filter', (params) ->
 A common subheader in the filtering UIs. This includes a sorting pulldown on the right which comes with the default "Recently Added", "Artwork Year Asc/Desc" sort values.
 
 ![](images/filter_sort_count.png)
+
+````coffeescript
+new FilterSortCount(el: $ '#gene-filter-subheader')
+````
+
+This view will trigger events on the filter mediator when clicking the sort drop down.
+
+````coffeescript
+mediator = require '../../components/filter/mediator.coffee'
+
+# When clicking on the sort menu this event will trigger with the params you
+# will likely pass to the API like { sort: "-date_added" }
+mediator.on 'filter', (params) ->
+````
+
+This view will listen to events on the filter mediator to update it's count on the left.
+
+````coffeescript
+mediator = require '../../components/filter/mediator.coffee'
+
+artworks = #...
+mediator.trigger 'counts', "Showing #{artworks.counts} Works"
+````
