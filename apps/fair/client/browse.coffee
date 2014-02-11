@@ -24,7 +24,7 @@ module.exports = class BrowseRouter extends Backbone.Router
       el        : $('.browse-section.artist')
       fair      : @fair
       model     : @model
-      artistId : artistId
+      artistId  : artistId
 
   booths: (id, params={})->
     $('.browse-section').hide()

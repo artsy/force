@@ -22,7 +22,8 @@ module.exports = class ArtistsView extends Backbone.View
     artist.fetch
       success: =>
         @$('h1').text @headerText(artist)
-        @$el.show()
+        unless sd.NODE_ENV == 'test'
+          @$el.show()
 
         additionalParams =
           artworks  : true        # only shows that have artworks

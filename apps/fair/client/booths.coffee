@@ -23,7 +23,8 @@ module.exports = class BoothsView extends Backbone.View
     { @filter, @fair, @profile } = options
 
     @$('h1').text @headerText()
-    @$el.show()
+    unless sd.NODE_ENV == 'test'
+      @$el.show()
     @fetchFeedItems()
 
   fetchFeedItems: ->
