@@ -1,11 +1,12 @@
-_                 = require 'underscore'
-sd                = require('sharify').data
-Backbone          = require 'backbone'
-ShareView         = require './share.coffee'
-Transition        = require '../../../components/mixins/transition.coffee'
-CurrentUser       = require '../../../models/current_user.coffee'
-SaveButton        = require '../../../components/save_button/view.coffee'
-RelatedPostsView  = require '../../../components/related_posts/view.coffee'
+_                     = require 'underscore'
+sd                    = require('sharify').data
+Backbone              = require 'backbone'
+ShareView             = require './share.coffee'
+Transition            = require '../../../components/mixins/transition.coffee'
+CurrentUser           = require '../../../models/current_user.coffee'
+SaveButton            = require '../../../components/save_button/view.coffee'
+RelatedPostsView      = require '../../../components/related_posts/view.coffee'
+RelatedArtworksView   = require './related-artworks.coffee'
 
 Artworks = require '../../../collections/artworks.coffee'
 artistArtworksTemplate = -> require('../templates/_artist-artworks.jade') arguments...
@@ -26,6 +27,7 @@ module.exports = class ArtworkView extends Backbone.View
     @setupCurrentUser()
     @setupArtistArtworks()
     @setupFollowButton()
+    @setupRelatedArtworks()
 
     # Setup the primary save button
     @setupSaveButton @$('.circle-icon-button-save'), @artwork
@@ -38,13 +40,14 @@ module.exports = class ArtworkView extends Backbone.View
     @following  = new Following(null, kind: 'artist') if @currentUser?
 
   setupArtistArtworks: ->
+    return unless @artist.get('artworks_count') > 1
     @listenTo @artist.artworks, 'sync', @renderArtistArtworks
     @artist.artworks.fetch data: size: 5, published: true
 
   renderArtistArtworks: ->
-    @$('.artwork-artist').attr 'data-state', 'complete'
-    # Remove the current artwork if it is present
+    # Ensure the current artwork is not in the collection
     @artist.artworks.remove @artwork
+    @$('.artwork-artist').attr 'data-state', 'complete'
     @$('#artwork-artist-artworks-container').
       addClass('is-loaded').
       html(artistArtworksTemplate artworks: @artist.artworks)
@@ -57,10 +60,11 @@ module.exports = class ArtworkView extends Backbone.View
         @setupSaveButton @$(".overlay-button-save[data-id='#{artwork.id}']"), artwork
       @syncSavedArtworks artworks
 
+  # @param {Object or Array or Backbone.Collection}
   syncSavedArtworks: (artworks) ->
     return unless @saved
     @__saved__ ?= new Backbone.Collection
-    @__saved__.add artworks.models
+    @__saved__.add artworks?.models or artworks
     @saved.addRepoArtworks @__saved__
     @saved.syncSavedArtworks()
 
@@ -69,6 +73,11 @@ module.exports = class ArtworkView extends Backbone.View
       el: @$('#artwork-artist-related-posts-container')
       numToShow: 2
       model: @artwork
+
+  setupRelatedArtworks: ->
+    new RelatedArtworksView
+      model: @artwork
+      el: @$('#artwork-related-artworks-section')
 
   route: (route) ->
     # Initial server rendered route is 'show'
