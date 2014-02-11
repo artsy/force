@@ -75,7 +75,7 @@ describe 'GeneFilter', ->
   beforeEach ->
     GeneFilter = benv.require resolve(__dirname, '../client/filter.coffee')
     GeneFilter.__set__ 'ArtworkColumnsView', class @ArtworkColumnsView
-      render: sinon.stub()
+      appendArtworks: sinon.stub()
     GeneFilter.__set__ 'FilterArtworksNav', class @FilterArtworksNav
       render: sinon.stub()
     GeneFilter.__set__ 'FilterSortCount', class @FilterSortCount
@@ -97,7 +97,7 @@ describe 'GeneFilter', ->
 
     it 'renders the columns view', ->
       @view.render()
-      @ArtworkColumnsView::render.called.should.be.ok
+      @ArtworkColumnsView::appendArtworks.called.should.be.ok
 
   describe '#nextPage', ->
 

@@ -25,10 +25,11 @@ module.exports = class GeneFilter extends Backbone.View
     @$el.infiniteScroll @nextPage
 
   render: (c, res) =>
-    @$('#gene-artwork-list-container').attr 'data-state', switch @artworks.length
-      when 0 then 'no-results'
-      when @lastArtworksLength then 'finished-paging'
+    @$('#gene-artwork-list-container').attr 'data-state',
+      if @artworks.length is 0 then 'no-results'
+      else if res.length < @pageSize then 'finished-paging'
       else ''
+    @newColumnsView() unless @columnsView?
     @columnsView.appendArtworks(new Artworks(res).models)
 
   nextPage: =>
