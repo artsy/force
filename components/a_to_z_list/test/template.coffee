@@ -29,8 +29,8 @@ describe 'A to Z List Template', ->
     @m2 = new AToZCollectionModel({ sortable_id: "2014", name: "2014" })
     @m3 = new AToZCollectionModel({ sortable_id: "twenty-fourteen", name: "Twenty Fourteen" })
     @m4 = new AToZCollectionModel({ sortable_id: "fifteen-plus-twenty", name: "Fifteen + Twenty" })
-    @m5 = new AToZCollectionModel({ sortable_id: "two-times", name: "Two Times" })
-    @m6 = new AToZCollectionModel({ sortable_id: "tim", name: "Tim" })
+    @m5 = new AToZCollectionModel({ sortable_id: "two-times", name: "Two Times", artworks_count: 0 })
+    @m6 = new AToZCollectionModel({ sortable_id: "tim", name: "Tim", artworks_count: 1 })
     @collection = new AToZCollection([ @m1, @m2, @m3, @m4, @m5, @m6 ])
 
   describe 'template', ->
@@ -39,6 +39,10 @@ describe 'A to Z List Template', ->
       html = render('template')({ aToZGroup: @collection.groupByAlphaWithColumns(3) })
       $ = cheerio.load html
       $('.a-to-z-row').length.should.equal 3
+
+      # only link to 5 due to the 0 artworks count on @m5
+      $('.a-to-z-row a').length.should.equal 5
+
       $('.a-to-z-row-letter').eq(0).text().should.equal '0-9'
       $('.a-to-z-row').eq(0).html().should.include @m2.displayName()
 
@@ -47,6 +51,7 @@ describe 'A to Z List Template', ->
 
       $('.a-to-z-row-letter').eq(2).text().should.equal 'T'
       $('.a-to-z-row').eq(2).html().should.include @m6.displayName()
+
 
       # three rows with the specified three cols each
       $('.a-to-z-row .a-to-z-column').length.should.equal 9

@@ -2,7 +2,9 @@ sd        = require('sharify').data
 _         = require 'underscore'
 Backbone  = require 'backbone'
 { Image, Markdown } = require 'artsy-backbone-mixins'
-PartnerLocation = require './partner_location.coffee'
+PartnerLocation     = require './partner_location.coffee'
+Partners            = require '../collections/partners.coffee'
+Artists             = require '../collections/artists.coffee'
 
 module.exports = class Fair extends Backbone.Model
 
@@ -17,3 +19,25 @@ module.exports = class Fair extends Backbone.Model
   location: ->
     if @get('location')
       new PartnerLocation @get('location')
+
+  fetchExhibitors: (options) ->
+    galleries = new Partners()
+    galleries.fetchUntilEnd
+      url: "#{@url()}/partners"
+      cache: true
+      success: ->
+        aToZGroup = galleries.groupByAlphaWithColumns 3
+        options?.success aToZGroup, galleries
+      error: ->
+        options?.error()
+
+  fetchArtists: (options) ->
+    artists = new Artists([], { models: [] })
+    artists.fetchUntilEnd
+      url: "#{@url()}/artists"
+      cache: true
+      success: ->
+        aToZGroup = artists.groupByAlphaWithColumns 3
+        options?.success aToZGroup, artists
+      error: ->
+        options?.error()

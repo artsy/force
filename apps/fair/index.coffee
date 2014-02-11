@@ -17,13 +17,11 @@ fairRoutes = [
 
   '/:id/browse/artist/:id'
   '/:id/browse/artists'
-  '/:id/browse/artists/*params'
 
   '/:id/browse/shows'
   '/:id/browse/shows/*params'
 
   '/:id/browse/exhibitors'
-  '/:id/browse/exhibitors/*params'
 
   '/:id/browse/filter'
   '/:id/browse/filter/*params'
@@ -33,3 +31,6 @@ app.get '/:id/info', routes.info
 app.get '/:id/for-you', routes.forYou
 app.get '/:id/overview', routes.overview
 app.get '/:id/search', routes.search
+
+app.get '/:id/browse/exhibitors', routes.exhibitors
+app.get '/:id/browse/artists', routes.artists
