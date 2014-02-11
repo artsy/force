@@ -23,6 +23,7 @@ module.exports = class Artist extends Backbone.Model
 
   clientUrl: -> "/artist/#{@get('id')}"
   href: -> "/artist/#{@get('id')}"
+  displayName: -> @get("name")
 
   initialize: ->
     @relatedArtists = new Backbone.Collection [], model: Artist

@@ -86,3 +86,27 @@ fetchFair = (req, res, next, success) ->
               results     : search.models
           error: res.backboneError
       error: res.backboneError
+
+@exhibitors = (req, res, next) ->
+  fetchFair req, res, next, (fair, profile) ->
+    res.locals.sd.SECTION = 'browse'
+    fair.fetchExhibitors
+      success: (aToZGroup, galleries) ->
+        res.render 'templates/index',
+          exhibitorsAToZGroup : aToZGroup
+          profile   : profile
+          fair      : fair
+          galleries : galleries
+      error: res.backboneError
+
+@artists = (req, res, next) ->
+  fetchFair req, res, next, (fair, profile) ->
+    res.locals.sd.SECTION = 'browse'
+    fair.fetchArtists
+      success: (aToZGroup, artists) ->
+        res.render 'templates/index',
+          artistsAToZGroup : aToZGroup
+          profile   : profile
+          fair      : fair
+          artists   : artists
+      error: res.backboneError

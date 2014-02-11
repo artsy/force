@@ -5,4 +5,7 @@ for row in aToZGroup
       ul.a-to-z-column
         for item in column
           li.a-to-z-item
-            a( href = item.href )= item.name
+            if item.linkToPage
+              a( href = item.href )= item.name
+            else
+              = item.name

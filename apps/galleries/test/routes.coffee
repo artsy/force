@@ -15,6 +15,6 @@ describe 'Galleries routes', ->
     beforeEach ->
       routes.index @req, @res
 
-    it 'renders the partners page', ->
+    it 'renders the galleries page', ->
       Backbone.sync.args[0][2].success []
       @res.render.args[0][0].should.equal 'template'

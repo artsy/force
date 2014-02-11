@@ -57,7 +57,8 @@ module.exports =
       models = itemsByLetter[letter]
       items = _.map(models,
         (model) ->
-          { href: model.href(), name: model.displayName() }
+          linkToPage = if model.has('artworks_count') then model.get('artworks_count') > 0 else true
+          { href: model.href(), name: model.displayName(), linkToPage: linkToPage }
       )
       {
         letter: letter
