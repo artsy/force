@@ -1,12 +1,13 @@
 - artworkSize = artworkSize || 'tall'
 - setHeight = setHeight || false
+- displayPurchase = displayPurchase || false
 if artworkColumns
   for column in artworkColumns
     .artwork-column
       for artwork in column
         if setHeight
           - artworkSize = artwork.defaultImage().imageSizeForHeight(setHeight)
-        include ../artwork_item/template
+        include ../artwork_item/templates/artwork
 
 if numberOfColumns
   - for (var i = 0; i < numberOfColumns; i++)
