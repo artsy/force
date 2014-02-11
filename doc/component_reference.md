@@ -332,4 +332,5 @@ A view that turns an element into a fixed header by wrapping it in a `.filter-fi
 new FilterFixedHeader(el: $ '#gene-filter-header')
 ````
 
-Use the `.filter-fixed-header-left` class in your template to get the meta information on the left hand side such as gene name or number of works.
+* Use the `.filter-fixed-header-left` class in your template to get the meta information on the left hand side such as gene name or number of works.
+* This component will listen for `filter` events on the mediator and smoothly scroll the window back to the top of the filter header. When it's finished animating it will trigger "scroll:header" on the filter mediator.

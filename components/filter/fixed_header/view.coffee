@@ -1,14 +1,21 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
+mediator = require '../mediator.coffee'
 JumpView = require '../../jump/view.coffee'
 
 module.exports = class FilterFixedHeader extends Backbone.View
 
   initialize: (options) ->
+    @$mainHeader = $('#main-layout-header')
+    @document = document.documentElement
     @$window = $ window
     @$window.on 'scroll', @popLock
     @wrap()
     @setupJump()
+    mediator.on 'filter', @scrollToTop
+
+  scrollToTop: =>
+    @document.scrollTop = @$el.offset().top - @$mainHeader.height()
 
   setupJump: ->
     @jump = new JumpView threshold: @$window.height()
