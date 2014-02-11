@@ -1,0 +1,23 @@
+@import '../../stylus_lib'
+
+.filter-fixed-header-container
+  clearfix()
+
+.filter-fixed-header
+  > *:not(.jump-to-top)
+    position fixed
+    top 0
+    left 0
+    width 100%
+    z-index 2
+    background white
+    margin 0
+    padding 0
+  .filter-fixed-header-left
+    display block
+
+.filter-fixed-header-left
+  position absolute
+  top 26px
+  left @top
+  display none

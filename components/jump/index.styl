@@ -11,7 +11,7 @@
   vertical-align middle
   // background-image is set in embedded.styl
   border 3px solid transparent
-  transition top 0.25s, opacity 0.25s
+  transition top 0.25s, opacity 0.25s, bottom 0.25s
   // Prevent repaints
   force-hardware-acceleration()
 
@@ -24,3 +24,10 @@
     border-color transparent !important
     cursor default
     pointer-events none
+
+  &.jump-from-bottom
+    bottom 20px
+    top auto
+    z-index 2
+    &[data-state='hidden']
+      bottom -100px
