@@ -49,7 +49,9 @@ block body
 
     section.artwork-related-information
       .ari-left
-        .artwork-artist( data-state=(artist.get('blurb') ? '' : 'pending' ) )
+        //- Only render the container if we have a blurb or some artworks to display
+        if (artist.get('artworks_count') > 1) || (artist.get('blurb'))
+          .artwork-artist( data-state=(artist.get('blurb') ? '' : 'pending' ) )
             h3.avant-garde-header-center
               | About #{artist.get('name')}
 
@@ -72,3 +74,11 @@ block body
             != artwork.mdToHtml('blurb')
 
         #artwork-artist-related-posts-container
+          //- Rendered client-side
+
+    section#artwork-related-artworks-section.artwork-related-artworks
+      h2.avant-garde-header-center
+        | Related Artworks
+
+      #artwork-related-artworks-container.artwork-columns
+        //- Rendered client-side
