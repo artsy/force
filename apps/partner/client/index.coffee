@@ -8,6 +8,7 @@ ContactView     = require './contact.coffee'
 CollectionView  = require './collection.coffee'
 ShowsView       = require './shows.coffee'
 PostsView       = require './posts.coffee'
+ArtistsView     = require './artists.coffee'
 tablistTemplate = -> require('../templates/tablist.jade') arguments...
 
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
@@ -17,6 +18,7 @@ sectionToView =
   collection  : CollectionView
   shows       : ShowsView
   posts       : PostsView
+  artists     : ArtistsView
 
 module.exports.PartnerView = class PartnerView extends Backbone.View
 

@@ -67,6 +67,15 @@ getTemplateForProfileType = (profile) ->
     else
       res.redirect profile.href()
 
+@artists = (req, res, next) ->
+  fetchProfile req, res, next, (profile) ->
+    if profile.isGallery()
+      res.locals.sd.SECTION = 'artists'
+      res.locals.sd.ARTIST_ID = req.params.artistId
+      res.render getTemplateForProfileType(profile),
+        profile : profile
+    else
+      res.redirect profile.href()
 
 #
 # Institution only routes
