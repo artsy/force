@@ -1,4 +1,7 @@
 #gene-filter-nav
+  .filter-fixed-header-left
+    != gene.get('name')
+    em#gene-filter-nav-left-num
   unless gene.isSubjectMatter()
     label By Artists:&nbsp;
     a#gene-filter-all-artists.filter-button.is-active All Artists

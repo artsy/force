@@ -321,3 +321,15 @@ mediator = require '../../components/filter/mediator.coffee'
 artworks = #...
 mediator.trigger 'counts', "Showing #{artworks.counts} Works"
 ````
+
+### Filter Fixed Header
+
+A view that turns an element into a fixed header by wrapping it in a `.filter-fixed-header-container` element that pop-locks by toggling the class `.filter-fixed-header` on the container. You can use this class to adjust your header CSS by scoping under it e.g. `.filter-fixed-header #gene-filter-nav`. This also adds a "jump" component which lets the user scroll back to the top of the page.
+
+![](images/filter_fixed_header.png)
+
+````coffeescript
+new FilterFixedHeader(el: $ '#gene-filter-header')
+````
+
+Use the `.filter-fixed-header-left` class in your template to get the meta information on the left hand side such as gene name or number of works.
