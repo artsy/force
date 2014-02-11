@@ -1,11 +1,12 @@
-_                 = require 'underscore'
-sd                = require('sharify').data
-Backbone          = require 'backbone'
-ShareView         = require './share.coffee'
-Transition        = require '../../../components/mixins/transition.coffee'
-CurrentUser       = require '../../../models/current_user.coffee'
-SaveButton        = require '../../../components/save_button/view.coffee'
-RelatedPostsView  = require '../../../components/related_posts/view.coffee'
+_                     = require 'underscore'
+sd                    = require('sharify').data
+Backbone              = require 'backbone'
+ShareView             = require './share.coffee'
+Transition            = require '../../../components/mixins/transition.coffee'
+CurrentUser           = require '../../../models/current_user.coffee'
+SaveButton            = require '../../../components/save_button/view.coffee'
+RelatedPostsView      = require '../../../components/related_posts/view.coffee'
+RelatedArtworksView   = require './related-artworks.coffee'
 
 Artworks = require '../../../collections/artworks.coffee'
 artistArtworksTemplate = -> require('../templates/_artist-artworks.jade') arguments...
@@ -26,6 +27,7 @@ module.exports = class ArtworkView extends Backbone.View
     @setupCurrentUser()
     @setupArtistArtworks()
     @setupFollowButton()
+    @setupRelatedArtworks()
 
     # Setup the primary save button
     @setupSaveButton @$('.circle-icon-button-save'), @artwork
@@ -71,6 +73,11 @@ module.exports = class ArtworkView extends Backbone.View
       el: @$('#artwork-artist-related-posts-container')
       numToShow: 2
       model: @artwork
+
+  setupRelatedArtworks: ->
+    new RelatedArtworksView
+      model: @artwork
+      el: @$('#artwork-related-artworks-section')
 
   route: (route) ->
     # Initial server rendered route is 'show'
