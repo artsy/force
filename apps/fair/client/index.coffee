@@ -8,14 +8,18 @@ FairPostsView     = require './posts.coffee'
 FairSearchView    = require './search.coffee'
 FairBrowseRouter  = require './browse.coffee'
 analytics         = require '../../../lib/analytics.coffee'
+FavoritesView     = require('../../favorites_follows/client/favorites.coffee').FavoritesView
+FollowsView       = require('../../favorites_follows/client/follows.coffee').FollowsView
 
 module.exports.FairView = class FairView extends Backbone.View
 
   sectionHash:
-    info   : FairInfoView
-    posts  : FairPostsView
-    search : FairSearchView
-    browse : FairBrowseRouter
+    info      : FairInfoView
+    posts     : FairPostsView
+    search    : FairSearchView
+    browse    : FairBrowseRouter
+    favorites : FavoritesView
+    follows   : FollowsView
 
   initialize: (options) ->
     @fair = options.fair
@@ -26,6 +30,14 @@ module.exports.FairView = class FairView extends Backbone.View
         model: @model
         fair : @fair
         el   : @$('.fair-page-content')
+
+      if options.currentSection == 'follows' or options.currentSection == 'favorites'
+        @fixFavoritesFollowingTabs @model
+
+  # Kinda hacky
+  fixFavoritesFollowingTabs: (profile) ->
+    @$('.follows-tabs.garamond-tablist a').each ->
+      $(@).attr href: "#{profile.href()}#{$(@).attr('href')}"
 
   setupSearch: (profile, fair) ->
     @searchBarView ||= new SearchBarView

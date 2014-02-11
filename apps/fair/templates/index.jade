@@ -16,3 +16,11 @@ block body
         include ./info
       else if sd.SECTION == 'browse'
         include ./browse
+      else if sd.SECTION == 'forYou'
+        include ./for_you
+      else if sd.SECTION == 'favorites'
+        .favorites-container.main-layout-container
+          include ./../../favorites_follows/templates/favorites_content
+      else if sd.SECTION == 'follows'
+        .following-container.main-layout-container
+          include ./../../favorites_follows/templates/follows_content

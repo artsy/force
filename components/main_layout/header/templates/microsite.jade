@@ -8,7 +8,10 @@ header#main-layout-header.force-position-absolute
 
     #microsite-header-right
       if user
-        a.header-text( href='/favorites' ) Favorites
+        if profile
+          a.header-text( href="#{profile.href()}/favorites" ) Favorites
+        else
+          a.header-text( href="/favorites" ) Favorites
         .header-spacer |
         if user.get('name')
           a.header-text( href="/" + user.get('default_profile_id') )= user.get('name')
