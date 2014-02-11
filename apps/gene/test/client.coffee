@@ -74,7 +74,7 @@ describe 'GeneFilter', ->
 
   beforeEach ->
     GeneFilter = benv.require resolve(__dirname, '../client/filter.coffee')
-    GeneFilter.__set__ 'ArtworkColumnsView', class @ArtworkColumnsView
+    GeneFilter.__set__ 'ArtworkColumnsView', class @ArtworkColumnsView extends Backbone.View
       appendArtworks: sinon.stub()
     GeneFilter.__set__ 'FilterArtworksNav', class @FilterArtworksNav
       render: sinon.stub()
@@ -133,3 +133,11 @@ describe 'GeneFilter', ->
   describe '#renderCounts', ->
 
     it 'renders the counts in the header', ->
+
+  describe '#newColumnsView', ->
+
+    it 're-adds the column view to reset the feed', ->
+      @view.newColumnsView()
+      @view.columnsView.collection.reset [fabricate('artwork'), fabricate('artwork')]
+      @view.newColumnsView()
+      @view.columnsView.collection.length.should.equal 0
