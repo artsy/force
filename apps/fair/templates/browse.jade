@@ -17,5 +17,13 @@ mixin exhibitors-a-to-z
       include ../../../components/a_to_z_list/template
  
 .browse-sections.main-layout-container
-  +artists-a-to-z
-  +exhibitors-a-to-z
+  .browse-section.artists-a-to-z
+    +artists-a-to-z
+  .browse-section.exhibitors-a-to-z
+    +exhibitors-a-to-z
+  .browse-section.booths
+    h1.large-garamond-header
+    .feed
+  .browse-section.artist
+    h1.large-garamond-header
+    .feed
