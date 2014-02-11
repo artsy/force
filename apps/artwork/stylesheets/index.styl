@@ -186,31 +186,23 @@ artwork-detail-item-height  = 36px
       content 'Following artist'
 
 // Below the fold
-.artwork-related-information
-  clearfix()
-  margin 20px 0
-  padding 20px 0
-  border-top 1px solid light-gray-border-color
-  h3
-    margin 10px 0
-    font-size 15px
-
 .ari-left
 .ari-right
   padding 0 10px
   text-align center
-
 .ari-left
   width 60%
   float left
   padding-right 5%
-  transition opacity 0.5s
-  &[data-state='pending']
-    opacity 0
-
 .ari-right
   width 40%
   float right
+
+// Bio and related works
+.artwork-artist
+  transition opacity 0.5s
+  &[data-state='pending']
+    opacity 0
 
 .artwork-artist-blurb
 .artwork-blurb

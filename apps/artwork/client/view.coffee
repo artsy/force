@@ -38,13 +38,14 @@ module.exports = class ArtworkView extends Backbone.View
     @following  = new Following(null, kind: 'artist') if @currentUser?
 
   setupArtistArtworks: ->
+    return unless @artist.get('artworks_count') > 1
     @listenTo @artist.artworks, 'sync', @renderArtistArtworks
     @artist.artworks.fetch data: size: 5, published: true
 
   renderArtistArtworks: ->
-    @$('.artwork-artist').attr 'data-state', 'complete'
-    # Remove the current artwork if it is present
+    # Ensure the current artwork is not in the collection
     @artist.artworks.remove @artwork
+    @$('.artwork-artist').attr 'data-state', 'complete'
     @$('#artwork-artist-artworks-container').
       addClass('is-loaded').
       html(artistArtworksTemplate artworks: @artist.artworks)
