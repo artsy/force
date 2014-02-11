@@ -58,10 +58,11 @@ module.exports = class ArtworkView extends Backbone.View
         @setupSaveButton @$(".overlay-button-save[data-id='#{artwork.id}']"), artwork
       @syncSavedArtworks artworks
 
+  # @param {Object or Array or Backbone.Collection}
   syncSavedArtworks: (artworks) ->
     return unless @saved
     @__saved__ ?= new Backbone.Collection
-    @__saved__.add artworks.models
+    @__saved__.add artworks?.models or artworks
     @saved.addRepoArtworks @__saved__
     @saved.syncSavedArtworks()
 
