@@ -223,6 +223,22 @@ new ArtistFillwidthList(
 
 `fetchAndRender` will fetch every artist's artworks and the individual list items will re-render as they sync.
 
+## Bordered Pulldown
+
+An Artsy styled drop down menu. This component comes with a jade mixin you can use via:
+
+![](images/bordered_pulldown.png)
+
+````jade
+include ../../bordered_pulldown/mixin
+
++bordered-pulldown('Recently Added', 'Sort By')
+  a( data-sort='date_created' ) Recently Added
+  a( data-sort='-date_created' ) Artwork Year
+````
+
+Or if you need finer control feel free to just use the CSS classes that are in it's index.styl.
+
 ## Filter
 
 A library of components used in the multi-faceted fitler UIs across the site. E.g. in /browse and /gene/:id or /fair.
@@ -276,3 +292,9 @@ mediator = require '../../components/filter/mediator.coffee'
 # will likely pass to the API like { price_range: '-1:1000' }
 mediator.on 'filter', (params) ->
 ````
+
+### Filter Sort Count
+
+A common subheader in the filtering UIs. This includes a sorting pulldown on the right which comes with the default "Recently Added", "Artwork Year Asc/Desc" sort values.
+
+![](images/filter_sort_count.png)

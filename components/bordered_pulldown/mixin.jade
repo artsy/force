@@ -1,5 +1,6 @@
 mixin bordered-pulldown(defaultVal, label)
-  span= (label || 'Order')
+  if label
+    span.bordered-pulldown-label= label
   .bordered-pulldown
     a.bordered-pulldown-toggle
       = defaultVal

@@ -1,6 +1,6 @@
 include ../../../components/bordered_pulldown/mixin
 
-+bordered-pulldown(artist.sortCriteriaForArtworks[sortBy])
++bordered-pulldown(artist.sortCriteriaForArtworks[sortBy], 'Order')
   a( data-sort=sortBy )= artist.sortCriteriaForArtworks[sortBy]
     - for k, v in artist.sortCriteriaForArtworks
       - if (v != sortBy)

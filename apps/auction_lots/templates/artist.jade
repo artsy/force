@@ -28,7 +28,7 @@ block body
 
       .auction-lots-sort
 
-          +bordered-pulldown(auctionLots.sortCriteria[auctionLots.sortBy])
+          +bordered-pulldown(auctionLots.sortCriteria[auctionLots.sortBy], 'Order')
             a( data-sort=sortBy )= auctionLots.sortCriteria[auctionLots.sortBy]
             - for k, v in auctionLots.sortCriteria
               - if (!(!user && k === 'Sale' || v === auctionLots.sortBy))
