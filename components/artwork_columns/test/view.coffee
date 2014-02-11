@@ -107,6 +107,7 @@ describe 'ArtworkColumns', ->
         @view = new ArtworkColumnsView
           el:         $('body')
           collection: @artworks
+          totalWidth: 1120
         $('.artwork-column:eq(0) .artwork-item').should.have.lengthOf 4
         $('.artwork-column:eq(1) .artwork-item').should.have.lengthOf 2
         $('.artwork-column:eq(2) .artwork-item').should.have.lengthOf 2
