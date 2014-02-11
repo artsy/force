@@ -40,5 +40,5 @@ module.exports = class Gene extends Backbone.Model
   fetchFilterSuggest: (params, options) ->
     new Backbone.Model().fetch _.extend
       data: params
-      url: "#{sd.ARTSY_URL}/api/v1/search/filtered/gene/pop-art/suggest"
+      url: "#{sd.ARTSY_URL}/api/v1/search/filtered/gene/#{@get 'id'}/suggest"
     , options
