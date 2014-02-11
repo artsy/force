@@ -37,7 +37,7 @@ module.exports.FairView = class FairView extends Backbone.View
   # Kinda hacky
   fixFavoritesFollowingTabs: (profile) ->
     @$('.follows-tabs.garamond-tablist a').each ->
-      $(@).attr href: "/#{profile.get('id')}#{$(@).attr('href')}"
+      $(@).attr href: "#{profile.href()}#{$(@).attr('href')}"
 
   setupSearch: (profile, fair) ->
     @searchBarView ||= new SearchBarView

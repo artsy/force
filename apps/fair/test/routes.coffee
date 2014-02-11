@@ -3,6 +3,7 @@ _ = require 'underscore'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 routes = require '../routes'
+CurrentUser = require '../../../models/current_user.coffee'
 
 describe 'Fair routes', ->
 
@@ -25,7 +26,7 @@ describe 'Fair routes', ->
 
   describe '#overview', ->
 
-    it 'renders the posts template', ->
+    it 'renders the overview template', ->
       routes.overview @req, @res
       _.last(Backbone.sync.args)[2].success fabricate 'fair_profile'
       _.last(Backbone.sync.args)[2].success fabricate 'fair'
@@ -34,7 +35,7 @@ describe 'Fair routes', ->
 
   describe '#foryou', ->
 
-    it 'renders the posts template', ->
+    it 'renders the foryou template', ->
       routes.forYou @req, @res
       _.last(Backbone.sync.args)[2].success fabricate 'fair_profile'
       _.last(Backbone.sync.args)[2].success fabricate 'fair'
@@ -48,6 +49,35 @@ describe 'Fair routes', ->
       _.last(Backbone.sync.args)[2].success fabricate 'fair_profile'
       _.last(Backbone.sync.args)[2].success fabricate 'fair'
       @res.render.args[0][0].should.equal '../fair/templates/index'
+      @res.render.args[0][1].profile.isFairOranizer()
+
+  describe '#favorites', ->
+
+    it 'redirects to the homepage without a user', ->
+      routes.favorites @req, @res
+      @res.redirect.args[0][0].should.equal '/some-fair'
+
+    it 'renders the favorites template', ->
+      @req.user = new CurrentUser fabricate 'user'
+      routes.favorites @req, @res
+      _.last(Backbone.sync.args)[2].success fabricate 'fair_profile'
+      _.last(Backbone.sync.args)[2].success fabricate 'fair'
+      @res.render.args[0][0].should.equal 'templates/index'
+      @res.render.args[0][1].profile.isFairOranizer()
+
+  describe '#follows', ->
+
+    it 'redirects to the homepage without a user', ->
+      routes.follows @req, @res
+      @res.redirect.args[0][0].should.equal '/some-fair'
+
+    it 'renders the follows template', ->
+      @req.user = new CurrentUser fabricate 'user'
+      @req.params.type = 'artists'
+      routes.follows @req, @res
+      _.last(Backbone.sync.args)[2].success fabricate 'fair_profile'
+      _.last(Backbone.sync.args)[2].success fabricate 'fair'
+      @res.render.args[0][0].should.equal 'templates/index'
       @res.render.args[0][1].profile.isFairOranizer()
 
   describe '#search', ->
