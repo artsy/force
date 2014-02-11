@@ -33,8 +33,8 @@ figure.artwork-item( data-artwork=artwork.get('id') )
         .artwork-item-blurb!= artwork.mdToHtml('blurb')
       a.artwork-item-more-info.avant-garde-button-black( href=artwork.href() ) More Info
 
-    if artwork.get('acquireable') && displayPurchase
-      a.artwork-item-buy.avant-garde-button-black( href=artwork.href(), data-id=artwork.get('id') ) Buy
-
-    if artwork.get('sold')
-      .artwork-item-sold Sold
+    if displayPurchase
+      if artwork.get('acquireable')
+        a.artwork-item-buy.avant-garde-button-black( href=artwork.href(), data-id=artwork.get('id') ) Buy
+      if artwork.get('sold')
+        .artwork-item-sold Sold
