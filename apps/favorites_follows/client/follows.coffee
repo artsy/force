@@ -21,7 +21,8 @@ module.exports.FollowsView = class FollowsView extends Backbone.View
 
   initialize: (options={}) ->
     { @pageSize, @nextPage } = _.defaults options, @defaults
-    @followItems  = @collection # More readable alias
+    @followItems = if options.collection then options.collection else new Following(null, kind: sd.KIND)
+
     @setupCurrentUser()
     @loadNextPage()
 
@@ -115,6 +116,5 @@ module.exports.FollowsView = class FollowsView extends Backbone.View
 
 module.exports.init = ->
   new FollowsView
-    collection: new Following null, kind: sd.KIND
     el: $('body')
     pageSize: 10

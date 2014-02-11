@@ -103,3 +103,29 @@ fetchFair = (req, res, next, success) ->
               artists   : artists
           error: res.backboneError
       error: res.backboneError
+
+@favorites = (req, res, next) ->
+  return res.redirect("/#{req.params.id}") unless req.user
+
+  fetchFair req, res, next, (fair, profile) ->
+    res.locals.sd.SECTION = 'favorites'
+    res.render 'templates/index',
+      profile : profile
+      fair    : fair
+      profileId: req.user.get('default_profile_id')
+
+@follows = (req, res, next) ->
+  return res.redirect("/#{req.params.id}") unless req.user
+
+  if (route = req.params.type) in ['artists', 'genes']
+    routeToKind = artists: 'artist', genes: 'gene'
+    res.locals.sd.KIND = routeToKind[route] or 'artist'
+    fetchFair req, res, next, (fair, profile) ->
+      res.locals.sd.SECTION = 'follows'
+      res.render 'templates/index',
+        profile : profile
+        fair    : fair
+        profileId: req.user.get('default_profile_id')
+        type: route
+  else
+    next()

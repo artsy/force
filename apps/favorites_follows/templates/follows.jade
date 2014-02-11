@@ -1,5 +1,4 @@
 extends ../../../components/main_layout/templates/index
-include ./header
 
 block head
   include meta
@@ -8,13 +7,6 @@ append locals
   assetPackage = 'follows'
 
 block body
-  #follows
+  #follows.following-container
     .main-layout-container
-      header.follows-header
-        h1.avant-garde-header-center Favorites &amp; Follows
-        +follows-tab-nav
-      main
-        section.follows(id=type)
-          .loading-spinner
-        section.follows-empty-hint
-        section.suggested-genes
+      include ./follows_content
