@@ -129,3 +129,7 @@ describe 'GeneFilter', ->
       @view.$el.attr 'data-state', 'artworks'
       @view.toggleArtistMode()
       @view.$el.attr('data-state').should.equal ''
+
+  describe '#renderCounts', ->
+
+    it 'renders the counts in the header', ->
