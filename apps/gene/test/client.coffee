@@ -1,3 +1,4 @@
+_ = require 'underscore'
 benv = require 'benv'
 Backbone = require 'backbone'
 sinon = require 'sinon'
@@ -77,6 +78,12 @@ describe 'GeneFilter', ->
       render: sinon.stub()
     GeneFilter.__set__ 'FilterArtworksNav', class @FilterArtworksNav
       render: sinon.stub()
+    GeneFilter.__set__ 'FilterSortCount', class @FilterSortCount
+      render: sinon.stub()
+    GeneFilter.__set__ 'mediator', @mediator = {
+      on: sinon.stub(),
+      trigger: sinon.stub()
+    }
     $.fn.infiniteScroll = sinon.stub()
     sinon.stub Backbone, 'sync'
     @view = new GeneFilter
@@ -109,6 +116,12 @@ describe 'GeneFilter', ->
     it 'fetches the filtered artworks', ->
       @view.reset { dimension: 24 }
       Backbone.sync.args[0][2].data.dimension.should.equal 24
+
+    it 'fetches the filter suggest and triggers a counts update', ->
+      @view.reset()
+      _.last(Backbone.sync.args)[2].success { total: 1022 }
+      @mediator.trigger.args[0][0].should.equal 'counts'
+      @mediator.trigger.args[0][1].should.equal 'Showing 1022 Works'
 
   describe '#toggleArtistMode', ->
 
