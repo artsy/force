@@ -15,9 +15,10 @@ module.exports = class PartnerArtistsView extends Backbone.View
     artistsListColumnSize: 6
     nextPage: 1
     pageSize: 6
+    artistId: undefined
 
   initialize: (options={}) ->
-    { @profile, @partner, @artistsListColumnSize, @nextPage, @pageSize } =
+    { @profile, @partner, @artistsListColumnSize, @nextPage, @pageSize, @artistId } =
       _.defaults options, @defaults
     @collection ?= new PartnerArtists()
     @initializeArtists()
@@ -32,14 +33,23 @@ module.exports = class PartnerArtistsView extends Backbone.View
       cache: true
       success: =>
         @renderArtistsList()
-        if @collection.length > @pageSize
-          $(window).on 'scroll.partner_artists', _.throttle(@infiniteScroll, 150)
-        @renderNextPageOfArtists()
+        if @artistId?
+          @renderArtist()
+        else
+          if @collection.length > @pageSize
+            $(window).on 'scroll.partner_artists', _.throttle(@infiniteScroll, 150)
+          @renderNextPageOfArtists()
 
   renderArtistsList: ->
     @$el.find('#artists-list').html(
       $( artistsListTemplate groups: @groupPartnerArtists(@collection) )
     )
+
+  renderArtist: ->
+    new ArtistView
+      model: new Artist id: @artistId
+      el: $('<div></div>').appendTo @$('#artists-details')
+      scroll: true
 
   renderNextPageOfArtists: ->
     end = @pageSize * @nextPage; start = end - @pageSize
@@ -59,22 +69,27 @@ module.exports = class PartnerArtistsView extends Backbone.View
 
   groupPartnerArtists: (pas) ->
     h = Math.ceil pas.length / @artistsListColumnSize
-    groups = pas.groupBy (pa) -> pa.get('represented_by') or false
 
-    bigger  = label: "represented artists", list: groups.true or []
-    smaller = label: "works available by", list: groups.false or []
+    bigger  = label: "represented artists", list: pas.filter (pa) -> pa.get('represented_by')
+    smaller = label: "works available by", list: pas.filter (pa) ->
+      not pa.get('represented_by') and pa.get('published_artworks_count') > 0
+
     if bigger.list.length < smaller.list.length
       temp = bigger; bigger = smaller; smaller = temp
     if smaller.list.length is 0
       bigger.label = "artists"
  
-    smallerCols = Math.ceil(smaller.list.length / h)
-    biggerCols = @artistsListColumnSize - smallerCols
+    # Heuristics. Favor smaller column
+    smaller.numOfCols = Math.ceil smaller.list.length / h
+    bigger.numOfCols  = @artistsListColumnSize - smaller.numOfCols
 
-    smaller.cols = _.values _.groupBy smaller.list, (pa, i) -> i % smallerCols
-    bigger.cols = _.values _.groupBy bigger.list, (pa, i) -> i % biggerCols
+    # Split an array into columns
+    for g in [bigger, smaller]
+      g.cols = []; step = Math.ceil g.list.length / g.numOfCols
+      for i in [0..g.list.length] by step
+        g.cols.push g.list.slice i, i + step
     
-    _.reduce [bigger, smaller], ((m, g) -> m.push(g) if g.cols.length > 0; m), []
+    _.filter [bigger, smaller], (g) -> g.cols.length > 0
 
   renderLoading: ->
     unless @$loadingSpinner?

@@ -50,6 +50,7 @@ module.exports.PartnerView = class PartnerView extends Backbone.View
       el: @$('.partner-content')
       profile: @profile
       partner: @partner
+      artistId: sd.ARTIST_ID
     )
 
   initFollowButton: ->

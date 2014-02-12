@@ -10,7 +10,11 @@ template       = -> require('../templates/artists_artist.jade') arguments...
 
 module.exports = class PartnerArtistsArtistView extends Backbone.View
 
+  defaults:
+    scroll: false
+
   initialize: (options={}) ->
+    { @scroll } = _.defaults options, @defaults
     @listenTo @model, "sync", @render
     @render()
     @fetchArtist()
@@ -26,6 +30,12 @@ module.exports = class PartnerArtistsArtistView extends Backbone.View
     else
       @$el.html $( template artist: @model )
       @isRendered = true
+
+    @scrollToMe() if @scroll
+
+  scrollToMe: ->
+    $('html, body').animate
+      scrollTop: @$el.position().top - 100
 
   fetchArtist: ->
     @model.fetch cache: true
