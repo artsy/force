@@ -1,0 +1,14 @@
+extends ../../../components/main_layout/templates/microsite
+
+block head
+  include ../../profile/templates/meta
+
+append locals
+  assetPackage = 'fair'
+
+block body
+  #fair-page
+    header.fair-page-header.main-layout-container
+      include ./header_navigation
+    .fair-page-content
+      include ./browse
