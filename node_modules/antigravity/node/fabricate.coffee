@@ -725,4 +725,18 @@ module.exports = fabricate = (type, extObj = {}) ->
       fax: ''
       publicly_viewable: true
 
+    when 'partner_artist'
+      id: _.uniqueId()
+      image_versions: ["four_thirds", "four_thirds_retina", "square"]
+      image_url: "/foo/bar/:version.jpg"
+      represented_by: true
+      published_artworks_count: 7
+      artist: fabricate 'artist',
+        public: true
+        published_artworks_count: 57
+        forsale_artworks_count: 40
+        artworks_count: 122
+        blurb: undefined
+      partner: fabricate 'partner'
+
   , extObj
