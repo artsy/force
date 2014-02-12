@@ -94,15 +94,15 @@ module.exports = class DeepZoomView extends Backbone.View
     @viewer.viewport.zoomTo parseFloat(e.currentTarget.value)
 
   # Close by just returning to the base artwork route
-  # The router will call #_close on this view
+  # The router will call #remove on this view
   return: ->
     Backbone.history.navigate "/artwork/#{@artwork.id}", true
 
   # Invoked by the router
-  _close: ->
+  remove: ->
     @viewer?.close()
 
     Transition.fade @$el,
       duration: 500
       out: =>
-        @remove()
+        DeepZoomView.__super__.remove.apply(this, arguments)

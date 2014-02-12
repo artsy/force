@@ -1,6 +1,7 @@
-Backbone      = require 'backbone'
-ArtworkView   = require './view.coffee'
-DeepZoomView  = require './deep-zoom.coffee'
+Backbone        = require 'backbone'
+ArtworkView     = require './view.coffee'
+DeepZoomView    = require './deep-zoom.coffee'
+ViewInRoomView  = require './view-in-room.coffee'
 
 module.exports = class ArtworkRouter extends Backbone.Router
   routes:
@@ -11,26 +12,28 @@ module.exports = class ArtworkRouter extends Backbone.Router
 
   initialize: (options) ->
     { @artwork, @artist } = options
-
-    @view = new ArtworkView el: (@$page = $('#artwork-page')), artwork: @artwork, artist: @artist
+    @baseView = new ArtworkView el: $('#artwork-page'), artwork: @artwork, artist: @artist
 
   show: ->
     @_teardown()
-    @view.route 'show'
+    @baseView.route 'show'
 
   zoom: ->
-    @view.route 'zoom'
-
-    @deepZoomView = new DeepZoomView $container: $('#artwork-deep-zoom-container'), artwork: @artwork
-    @deepZoomView.render()
+    @_teardown()
+    @baseView.route 'zoom'
+    @view = new DeepZoomView $container: $('#artwork-deep-zoom-container'), artwork: @artwork
+    @view.render()
 
   moreInfo: ->
     @_teardown()
     return unless @artwork.hasMoreInfo()
-    @view.route 'more-info'
+    @baseView.route 'more-info'
 
   viewInRoom: ->
-    @view.route 'view-in-room'
+    @_teardown()
+    @baseView.route 'view-in-room'
+    @view = new ViewInRoomView $container: $('#artwork-view-in-room-container'), $img: $('#the-artwork-image'), artwork: @artwork
+    @view.render()
 
   _teardown: ->
-    @deepZoomView?._close()
+    @view?.remove()

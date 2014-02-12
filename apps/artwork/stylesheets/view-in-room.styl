@@ -1,0 +1,57 @@
+room-width    = 6578px
+room-height   = 1368px
+wall-color    = #dfdbd8
+wall-height   = 43.5%
+
+#artwork-page[data-route-pending='view-in-room']
+#artwork-page[data-route='view-in-room']
+  // Fix position in place
+  .artwork-detail
+    position absolute
+    z-index 1
+    right 0
+
+  // Toggle button
+  .artwork-view-in-room-link
+    display none
+  .artwork-exit-view-in-room-link
+    display block
+
+.artwork-view-in-room
+  position fixed
+  top 0
+  right 0
+  bottom 0
+  left 0
+  z-index 1
+  &[data-state='in']
+    .vir-room
+      opacity 1
+    #vir-artwork
+      box-shadow 0 2px 5px rgba(0,0,0,0.5)
+
+.vir-room
+  position absolute
+  width room-width
+  height room-height
+  top 50%
+  left 50%
+  margin-top -(room-height / 2)
+  margin-left -(room-width / 2)
+  background wall-color url('/images/room.jpg') bottom center no-repeat
+  transition opacity 0.5s
+  opacity 0
+
+#vir-placeholder
+#vir-artwork
+  position fixed
+  z-index 2
+
+#vir-placeholder
+  left 50%
+  visibility hidden
+
+#vir-artwork
+  transition all 0.75s
+  &.is-notransition
+    transition none
