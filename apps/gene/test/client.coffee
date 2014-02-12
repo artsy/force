@@ -74,17 +74,14 @@ describe 'GeneFilter', ->
 
   beforeEach ->
     GeneFilter = benv.require resolve(__dirname, '../client/filter.coffee')
-    GeneFilter.__set__ 'ArtworkColumnsView', class @ArtworkColumnsView extends Backbone.View
-      appendArtworks: sinon.stub()
     GeneFilter.__set__ 'FilterArtworksNav', class @FilterArtworksNav
       render: sinon.stub()
-    GeneFilter.__set__ 'FilterSortCount', class @FilterSortCount
+    GeneFilter.__set__ 'FilterArtworksView', class @FilterSortCount
       render: sinon.stub()
     GeneFilter.__set__ 'mediator', @mediator = {
       on: sinon.stub(),
       trigger: sinon.stub()
     }
-    $.fn.infiniteScroll = sinon.stub()
     sinon.stub Backbone, 'sync'
     @view = new GeneFilter
       el: $('body')
@@ -93,51 +90,27 @@ describe 'GeneFilter', ->
   afterEach ->
     Backbone.sync.restore()
 
-  describe '#render', ->
-
-    it 'renders the columns view', ->
-      @view.render()
-      @ArtworkColumnsView::appendArtworks.called.should.be.ok
-
-  describe '#nextPage', ->
-
-    it 'fetches the next page of artworks', ->
-      @view.$el.data 'state', 'artworks'
-      @view.nextPage()
-      Backbone.sync.args[0][1].url.should.include '/filtered/gene'
-      Backbone.sync.args[0][2].data.page.should.equal @view.params.page
-
-  describe '#reset', ->
+  describe '#artworksMode', ->
 
     it 'sets the state to artwork mode', ->
-      @view.reset()
+      @view.artworksMode()
       @view.$el.data('state').should.equal 'artworks'
 
-    it 'fetches the filtered artworks', ->
-      @view.reset { dimension: 24 }
-      Backbone.sync.args[0][2].data.dimension.should.equal 24
+  describe '#renderCounts', ->
 
     it 'fetches the filter suggest and triggers a counts update', ->
-      @view.reset()
+      @view.renderCounts()
       _.last(Backbone.sync.args)[2].success { total: 1022 }
       @mediator.trigger.args[0][0].should.equal 'counts'
       @mediator.trigger.args[0][1].should.equal 'Showing 1022 Works'
 
-  describe '#toggleArtistMode', ->
+  describe '#artistMode', ->
 
     it 'switches back to artist mode', ->
       @view.$el.attr 'data-state', 'artworks'
-      @view.toggleArtistMode()
+      @view.artistMode()
       @view.$el.attr('data-state').should.equal ''
 
   describe '#renderCounts', ->
 
     it 'renders the counts in the header', ->
-
-  describe '#newColumnsView', ->
-
-    it 're-adds the column view to reset the feed', ->
-      @view.newColumnsView()
-      @view.columnsView.collection.reset [fabricate('artwork'), fabricate('artwork')]
-      @view.newColumnsView()
-      @view.columnsView.collection.length.should.equal 0

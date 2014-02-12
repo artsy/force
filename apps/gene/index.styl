@@ -49,9 +49,6 @@
     margin-right 10px
     display inline-block
 
-#gene-filter-sort-count
-  margin-bottom 30px
-
 .filter-fixed-header #gene-filter-nav
   margin 0
   padding 15px 0
@@ -61,33 +58,11 @@
 #gene-filter-all-artists
   margin-right 20px
 
-#gene-artwork-list-spinner
-  position relative
-  padding 150px 0
-
-#gene-artwork-list-no-results
-  padding 150px 0
+#gene-artworks-container
   display none
-
-#gene-artwork-list-no-results
-  text-align center
-  font-style italic
-
-#gene-artwork-list-container
-  margin-bottom 150px
-  display none
-  min-height 800px
-  &[data-state='no-results']
-    #gene-artwork-list-no-results
-      display block
-    #gene-artwork-list, #gene-artwork-list-spinner
-      display none
-  &[data-state='finished-paging']
-    #gene-artwork-list-spinner
-      display none
 
 #gene-filter[data-state='artworks']
-  #gene-artwork-list-container
+  #gene-artworks-container
     display block
   #gene-artists
     display none

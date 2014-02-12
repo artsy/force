@@ -22,9 +22,6 @@ module.exports.GeneView = class GeneView extends Backbone.View
       el: @$('#gene-filter')
       model: @model
     @setupArtistFillwidth()
-    if @model.isSubjectMatter()
-      @filter.reset()
-      @$('.filter-artworks-nav-allworks').addClass('is-active')
 
   setupArtistFillwidth: ->
     if @user and not @model.isSubjectMatter()
