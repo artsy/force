@@ -5,6 +5,7 @@ CurrentUser    = require '../../../models/current_user.coffee'
 Artist         = require '../../../models/artist.coffee'
 Artworks       = require '../../../collections/artworks.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
+BlurbView      = require '../../artist/client/blurb.coffee'
 template       = -> require('../templates/artists_artist.jade') arguments...
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 
@@ -26,7 +27,13 @@ module.exports = class PartnerArtistsArtistView extends Backbone.View
       @$('.partner-artist-brief').html(
         "#{@model.get('nationality')}, #{@model.get('years')}"
       )
-      @$('.partner-artist-blurb').html @model.get('blurb')
+      $blurb = @$('.partner-artist-blurb')
+      $blurb.html @model.mdToHtml('blurb')
+      if $blurb.length > 0
+        new BlurbView
+          el: @$('.partner-artist-blurb')
+          updateOnResize: true
+          lineCount: 4
     else
       @$el.html $( template artist: @model )
       @isRendered = true
