@@ -3,6 +3,7 @@
 @import './share'
 @import './deep-zoom'
 @import './circle-buttons'
+@import './view-in-room'
 
 artwork-detail-width        = 220px
 artwork-detail-item-height  = 36px
@@ -102,8 +103,7 @@ artwork-detail-item-height  = 36px
   width 100%
   border-top 1px dotted
   border-bottom 1px dotted
-  border-color light-gray-border-color
-  border-color rgba(0,0,0,.125)
+  border-color light-gray-transparent-border-color
   margin 10px 0
   line-height artwork-detail-item-height
 .artwork-meta-price-label
@@ -140,8 +140,7 @@ artwork-detail-item-height  = 36px
   font-size 13px
   line-height 1.5
   border-bottom 1px dotted
-  border-color light-gray-border-color
-  border-color rgba(0,0,0,.125)
+  border-color light-gray-transparent-border-color
   &:first-child
     border-top 1px dotted
 .aes-edition-size
@@ -153,6 +152,8 @@ artwork-detail-item-height  = 36px
 
 .artwork-actions-list
   margin-top 20px
+  border-top 1px dotted
+  border-color light-gray-transparent-border-color
   > a
     display block
     position relative
@@ -161,8 +162,7 @@ artwork-detail-item-height  = 36px
     text-decoration none
     transition all 0.125s
     border-bottom 1px dotted
-    border-color light-gray-border-color
-    border-color rgba(0,0,0,.125)
+    border-color light-gray-transparent-border-color
     &.is-hidden
       display none
     > i
@@ -174,11 +174,6 @@ artwork-detail-item-height  = 36px
       margin-left 0.5em
       // Tone down superscript a bit
       vertical-align 4px
-
-    &:first-child
-      border-top 1px dotted
-      border-color light-gray-border-color
-      border-color rgba(0,0,0,.125)
     &:hover
       background-color highlight-color
       border-color @background-color
@@ -234,6 +229,9 @@ artwork-detail-item-height  = 36px
     opacity 1
 .artwork-artist-artworks
   margin 20px 0
+  // Image height + margin
+  height 135px
+  overflow hidden
 .artwork-artist-artwork
   position relative
   display inline-block
