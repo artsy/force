@@ -1,6 +1,7 @@
 #
 # FairOrganizer routes
 #
+_       = require 'underscore'
 Profile = require '../../models/profile'
 Fair    = require '../../models/fair'
 Search  = require '../../collections/search'
@@ -27,6 +28,42 @@ fetchFair = (req, res, next, success) ->
         success(fair, profile)
       error: -> next()
 
+fetchFairData = (fair, profile, res, options) ->
+  data =
+    fair    : fair
+    profile : profile
+
+  success = _.after 4, ->
+    options.success data
+
+  fair.fetchPrimarySets
+    cache: true
+    success: (primarySets) ->
+      data.primarySets = primarySets
+      success()
+    error: res.backboneError
+
+  fair.fetchSections
+    cache: true
+    success: (sections) ->
+      data.sections = sections
+      success()
+    error: res.backboneError
+
+  fair.fetchExhibitors
+    cache: true
+    success: (exhibitorsAToZGroup, galleries) ->
+      data.exhibitorsAToZGroup = exhibitorsAToZGroup
+      success()
+    error: res.backboneError
+
+  fair.fetchArtists
+    cache: true
+    success: (artistsAToZGroup, artists) ->
+      data.artistsAToZGroup = artistsAToZGroup
+      success()
+    error: res.backboneError
+
 #
 # Routes
 @info = (req, res, next) ->
@@ -37,20 +74,27 @@ fetchFair = (req, res, next, success) ->
       fair    : fair
 
 # Called from profile/routes
-@overview = (req, res, next) ->
-  fetchFair req, res, next, (fair, profile) ->
-    res.locals.sd.SECTION = 'overview'
-    res.render '../fair/templates/index',
-      profile : profile
-      fair    : fair
-
-# Called from profile/routes
 @fairPosts = (req, res, next) ->
   fetchFair req, res, next, (fair, profile) ->
     res.locals.sd.SECTION = 'posts'
     res.render '../fair/templates/index',
       profile : profile
       fair    : fair
+
+# Called from profile/routes
+@overview = (req, res, next) ->
+  fetchFair req, res, next, (fair, profile) ->
+    fetchFairData fair, profile, res,
+      success: (data) ->
+        res.locals.sd.SECTION = 'browse'
+        res.render '../fair/templates/overview', data
+
+@browse = (req, res, next) ->
+  fetchFair req, res, next, (fair, profile) ->
+    fetchFairData fair, profile, res,
+      success: (data) ->
+        res.locals.sd.SECTION = 'browse'
+        res.render 'templates/index', data
 
 @forYou = (req, res, next) ->
   fetchFair req, res, next, (fair, profile) ->
@@ -64,6 +108,16 @@ fetchFair = (req, res, next, success) ->
   res.redirect("/#{req.params.id}") unless term
   fetchFair req, res, next, (fair, profile) ->
     fairSearch  = new Search
+    search  = new Search
+    success = _.after 2, ->
+      res.locals.sd.SECTION = 'search'
+      res.render 'templates/index',
+        profile     : profile
+        fair        : fair
+        term        : term
+        fairResults : fairSearch.models
+        results     : search.models
+
     fairSearch.fetch
       data:
         term: term
@@ -71,37 +125,15 @@ fetchFair = (req, res, next, success) ->
       cache: true
       success: ->
         fairSearch.updateLocationsForFair(fair)
-        search  = new Search
-        search.fetch
-          data:
-            term: term
-          cache: true
-          success: ->
-            res.locals.sd.SECTION = 'search'
-            res.render 'templates/index',
-              profile     : profile
-              fair        : fair
-              term        : term
-              fairResults : fairSearch.models
-              results     : search.models
-          error: res.backboneError
+        success()
       error: res.backboneError
 
-@browse = (req, res, next) ->
-  fetchFair req, res, next, (fair, profile) ->
-    res.locals.sd.SECTION = 'browse'
-    # TODO: Parallelize these fetches
-    fair.fetchExhibitors
-      success: (exhibitorsAToZGroup, galleries) ->
-        fair.fetchArtists
-          success: (artistsAToZGroup, artists) ->
-            res.render 'templates/index',
-              exhibitorsAToZGroup : exhibitorsAToZGroup
-              artistsAToZGroup    : artistsAToZGroup
-              profile   : profile
-              fair      : fair
-              artists   : artists
-          error: res.backboneError
+    search.fetch
+      data:
+        term: term
+      cache: true
+      success: ->
+        success()
       error: res.backboneError
 
 @favorites = (req, res, next) ->

@@ -5,6 +5,7 @@ Backbone  = require 'backbone'
 PartnerLocation     = require './partner_location.coffee'
 Partners            = require '../collections/partners.coffee'
 Artists             = require '../collections/artists.coffee'
+OrderedSets         = require '../collections/ordered_sets.coffee'
 
 module.exports = class Fair extends Backbone.Model
 
@@ -41,3 +42,23 @@ module.exports = class Fair extends Backbone.Model
         options?.success aToZGroup, artists
       error: ->
         options?.error()
+
+  fetchSections: (options) ->
+    if @get('sections')?.length
+      options?.success? @get('sections')
+    else
+      sections = new Backbone.Collection
+      sections.fetch
+        cache: true
+        url: "#{@url()}/sections"
+        success: (sections) =>
+          @set 'sections', sections
+          options?.success? sections
+
+  setKeys: ['primaryLinks', 'exploreLinks', 'curatorLinks', 'postLinks']
+  fetchPrimarySets: (options) ->
+    orderedSets = new OrderedSets
+    orderedSets.fetchItemsByOwner('Fair', @get('id'), options.cache).then (deferred) =>
+      orderedSets.each (set) =>
+        @set "#{set.get('key')}Links", set
+      options.success orderedSets
