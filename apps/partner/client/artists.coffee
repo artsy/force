@@ -5,17 +5,20 @@ CurrentUser    = require '../../../models/current_user.coffee'
 Partner        = require '../../../models/partner.coffee'
 Artist         = require '../../../models/artist.coffee'
 PartnerArtists = require '../../../collections/partner_artists.coffee'
+ArtistView     = require './artists_artist.coffee'
 artistsListTemplate    = -> require('../templates/artists_list.jade') arguments...
-artistsDetailsTemplate = -> require('../templates/artists_details.jade') arguments...
 template       = -> require('../templates/artists.jade') arguments...
 
 module.exports = class PartnerArtistsView extends Backbone.View
 
   defaults:
     artistsListColumnSize: 6
+    nextPage: 1
+    pageSize: 6
 
   initialize: (options={}) ->
-    { @profile, @partner, @artistsListColumnSize } = _.defaults options, @defaults
+    { @profile, @partner, @artistsListColumnSize, @nextPage, @pageSize } =
+      _.defaults options, @defaults
     @collection ?= new PartnerArtists()
     @initializeArtists()
     @render()
@@ -27,12 +30,32 @@ module.exports = class PartnerArtistsView extends Backbone.View
     @collection.url = "#{@partner.url()}/partner_artists"
     @collection.fetchUntilEnd
       cache: true
-      success: => @renderArtistsList()
+      success: =>
+        @renderArtistsList()
+        if @collection.length > @pageSize
+          $(window).on 'scroll.partner_artists', _.throttle(@infiniteScroll, 150)
+        @renderNextPageOfArtists()
 
   renderArtistsList: ->
     @$el.find('#artists-list').html(
       $( artistsListTemplate groups: @groupPartnerArtists(@collection) )
     )
+
+  renderNextPageOfArtists: ->
+    end = @pageSize * @nextPage; start = end - @pageSize
+    for pa in @collection.models.slice start, end
+      new ArtistView
+        model: new Artist pa.get('artist')
+        el: $('<div></div>').appendTo @$('#artists-details')
+
+    ++@nextPage
+    if end >= @collection.length
+      $(window).off '.partner_artists'
+
+  infiniteScroll: =>
+    fold = $(window).height() + $(window).scrollTop()
+    $lastItem = @$('#artists-details .partner-artist:last')
+    @renderNextPageOfArtists() unless fold < $lastItem.offset()?.top + $lastItem.height()
 
   groupPartnerArtists: (pas) ->
     h = Math.ceil pas.length / @artistsListColumnSize
