@@ -4,4 +4,4 @@ Backbone        = require 'backbone'
 
 module.exports = class PartnerArtist extends Backbone.Model
 
-  #url: "#{ARTSY_URL}/api/v1/partner/#{@get('partner').id}/partner_artists"
+  href: -> "/#{@get('partner').id}/artist/#{@get('artist').id}"

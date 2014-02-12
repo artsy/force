@@ -1,7 +1,9 @@
-each group in groups
-  section( class="artists-group artists-group-#{group.cols.length}-columns" )
-    h2= group.label
-    each col in group.cols
-      ul.artists-column
-        each pa in col
-          li= pa.get('artist').name
+.artists-groups-container
+  each group in groups
+    nav( class="artists-group artists-group-#{group.cols.length}-columns" )
+      h2.avant-garde-header-center.artists-group-label= group.label
+      .artists-columns-container
+        each col in group.cols
+          ul.artists-column
+            each pa in col
+              li: a( href=pa.href() )= pa.get('artist').name
