@@ -1,0 +1,9 @@
+.partner-artist
+  .partner-artist-info
+    h2.partner-artist-name= artist.get('name')
+    h3.partner-artist-brief= [ artist.get('nationality'), artist.get('years') ].join(", ")
+    button.avant-garde-button-white.follow-button.is-small
+    p.partner-artist-blurb
+
+  .partner-artist-artworks
+    .loading-spinner
