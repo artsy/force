@@ -13,7 +13,7 @@ module.exports.GeneView = class GeneView extends Backbone.View
   initialize: (options) ->
     { @user } = options
     @followButton = new FollowButton
-      el: $('#gene-artists')
+      el: $('.follow-button')
       following: if @user then new Following(null, kind: 'gene') else null
       model: @model
     @shareButtons = new ShareView

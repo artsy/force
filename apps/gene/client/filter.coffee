@@ -10,6 +10,8 @@ ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 
 module.exports = class GeneFilter extends Backbone.View
 
+  pageSize: 10
+
   initialize: ->
     @params = {}
     @$window = $(window)
@@ -18,24 +20,17 @@ module.exports = class GeneFilter extends Backbone.View
     @filterArtworksNav = new FilterArtworksNav el: $ '#gene-filter-artworks-nav'
     @sortCount = new FilterSortCount el: $ '#gene-filter-sort-count'
     @filterFixedHeader = new FilterFixedHeader el: $ '#gene-filter-nav'
-    @columnsView = new ArtworkColumnsView
-      el: @$ '#gene-artwork-list'
-      collection: @artworks
-      totalWidth: @$el.width()
-      artworkSize: 'large'
-      numberOfColumns: Math.round @$el.width() / 300
-      gutterWidth: 40
     @artworks.on 'sync', @render
     mediator.on 'filter', @reset
     @$el.infiniteScroll @nextPage
 
-  render: =>
-    @$('#gene-artwork-list-container').attr 'data-state', switch @artworks.length
-      when 0 then 'no-results'
-      when @lastArtworksLength then 'finished-paging'
+  render: (c, res) =>
+    @$('#gene-artwork-list-container').attr 'data-state',
+      if @artworks.length is 0 then 'no-results'
+      else if res.length < @pageSize then 'finished-paging'
       else ''
-    @columnsView.render() unless @lastArtworksLength is @artworks.length
-    @lastArtworksLength = @artworks.length
+    @newColumnsView() unless @columnsView?
+    @columnsView.appendArtworks(new Artworks(res).models)
 
   nextPage: =>
     return unless @$el.data('state') is 'artworks'
@@ -47,7 +42,19 @@ module.exports = class GeneFilter extends Backbone.View
     @$('#gene-filter-all-artists').removeClass 'is-active'
     @$('#gene-artwork-list').html ''
     @artworks.fetch(data: @params)
+    @newColumnsView()
     @renderCounts()
+
+  newColumnsView: ->
+    @$('#gene-artwork-list').html ''
+    @columnsView?.remove()
+    @$('#gene-artwork-list').html $el = $("<div></div>")
+    @columnsView = new ArtworkColumnsView
+      el: $el
+      collection: new Artworks
+      artworkSize: 'large'
+      numberOfColumns: Math.round $el.width() / 300
+      gutterWidth: 40
 
   renderCounts: ->
     @model.fetchFilterSuggest @params, success: (m, res) =>
