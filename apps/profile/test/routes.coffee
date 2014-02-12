@@ -99,5 +99,9 @@ describe 'Fair routes', ->
       _.last(Backbone.sync.args)[2].success fabricate 'fair_profile'
       _.last(Backbone.sync.args)[2].success fabricate 'fair_profile'
       _.last(Backbone.sync.args)[2].success fabricate 'fair'
-      @res.render.args[0][0].should.equal '../fair/templates/index'
+      _.last(Backbone.sync.args)[2].success []
+      _.last(Backbone.sync.args)[2].success []
+      _.last(Backbone.sync.args)[2].success []
+      _.last(Backbone.sync.args)[2].success []
+      @res.render.args[0][0].should.equal '../fair/templates/overview'
       @res.render.args[0][1].profile.isFairOranizer()
