@@ -112,3 +112,23 @@ describe 'Artwork Item template', ->
       $ = cheerio.load render('artwork')({ artwork: @artwork })
       $('.artwork-item-blurb').should.have.lengthOf 1
       $('.artwork-item-blurb').text().should.equal @artwork.get 'blurb'
+
+  describe 'buy button', ->
+
+    it 'renders a buy button if the work is acquirable and purchase is allowed', ->
+      @artwork = new Artwork fabricate 'artwork', { acquireable: true }
+      $ = cheerio.load render('artwork')({ artwork: @artwork })
+      $('.artwork-item-buy').should.have.lengthOf 0
+
+      $ = cheerio.load render('artwork')({ artwork: @artwork, displayPurchase: true })
+      $('.artwork-item-buy').should.have.lengthOf 1
+
+  describe 'sold', ->
+
+    it 'renders a sold message if the work is sold and purchase is allowed', ->
+      @artwork = new Artwork fabricate 'artwork', { sold: true }
+      $ = cheerio.load render('artwork')({ artwork: @artwork })
+      $('.artwork-item-sold').should.have.lengthOf 0
+
+      $ = cheerio.load render('artwork')({ artwork: @artwork, displayPurchase: true })
+      $('.artwork-item-sold').should.have.lengthOf 1
