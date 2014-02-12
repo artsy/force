@@ -30,7 +30,11 @@ describe 'Fair routes', ->
       routes.overview @req, @res
       _.last(Backbone.sync.args)[2].success fabricate 'fair_profile'
       _.last(Backbone.sync.args)[2].success fabricate 'fair'
-      @res.render.args[0][0].should.equal '../fair/templates/index'
+      _.last(Backbone.sync.args)[2].success []
+      _.last(Backbone.sync.args)[2].success []
+      _.last(Backbone.sync.args)[2].success []
+      _.last(Backbone.sync.args)[2].success []
+      @res.render.args[0][0].should.equal '../fair/templates/overview'
       @res.render.args[0][1].profile.isFairOranizer()
 
   describe '#foryou', ->
@@ -102,6 +106,8 @@ describe 'Fair routes', ->
       routes.browse @req, @res
       _.last(Backbone.sync.args)[2].success fabricate 'fair_profile'
       _.last(Backbone.sync.args)[2].success fabricate 'fair'
+      _.last(Backbone.sync.args)[2].success []
+      _.last(Backbone.sync.args)[2].success []
       _.last(Backbone.sync.args)[2].success []
       _.last(Backbone.sync.args)[2].success []
       @res.render.args[0][0].should.equal 'templates/index'

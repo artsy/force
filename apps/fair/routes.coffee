@@ -87,7 +87,7 @@ fetchFairData = (fair, profile, res, options) ->
     fetchFairData fair, profile, res,
       success: (data) ->
         res.locals.sd.SECTION = 'browse'
-        res.render 'templates/overview', data
+        res.render '../fair/templates/overview', data
 
 @browse = (req, res, next) ->
   fetchFair req, res, next, (fair, profile) ->
