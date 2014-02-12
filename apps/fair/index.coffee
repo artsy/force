@@ -14,6 +14,7 @@ app.get '/:id/for-you', routes.forYou
 app.get '/:id/overview', routes.overview
 app.get '/:id/search', routes.search
 app.get '/:id/browse', routes.browse
+app.get '/:id/browse/*', routes.browse
 
 app.get '/:id/following/:type', routes.follows
 app.get '/:id/favorites', routes.favorites

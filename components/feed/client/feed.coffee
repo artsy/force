@@ -23,7 +23,7 @@ module.exports = class FeedView extends Backbone.View
 
   initialize: (options) ->
     throw 'Requires options' unless options
-    throw 'Requires options.feedItems' unless options.feedItems?.length
+    throw 'Requires options.feedItems' unless options.feedItems?
 
     @$window = $(window)
     @windowHeight = @$window.innerHeight()

@@ -15,7 +15,7 @@ module.exports = class BrowseRouter extends Backbone.Router
 
   initialize: (options) ->
     { @model, @fair } = options
-
+    $('.garamond-tab.is-inactive:first').removeClass('is-inactive').addClass('is-active')
     Backbone.history.start pushState: true
 
   artist: (id, artistId)->
