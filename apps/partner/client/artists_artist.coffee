@@ -12,40 +12,37 @@ template       = -> require('../templates/artists_artist.jade') arguments...
 module.exports = class PartnerArtistsArtistView extends Backbone.View
 
   defaults:
-    scroll: false
+    scroll: false # scroll to the top of the view
 
   initialize: (options={}) ->
     { @scroll } = _.defaults options, @defaults
+    @initializeElement()
     @listenTo @model, "sync", @render
-    @render()
     @fetchArtist()
     @fetchArtworks()
-    @initFollowButton()
+    @initializeFollowButton()
+
+  # Self initialize the element with the template at the beginning
+  # Hide it for now until we have info we need, e.g. blurb, nationality
+  initializeElement: ->
+    # Couldn't just .hide() it, since we need its `height` for other components.
+    (@$el.html $( template artist: @model )).css "visibility", "hidden"
 
   render: ->
-    if @isRendered
-      @$('.partner-artist-brief').html(
-        "#{@model.get('nationality')}, #{@model.get('years')}"
-      )
-      $blurb = @$('.partner-artist-blurb')
-      $blurb.html @model.mdToHtml('blurb')
-      if $blurb.length > 0
-        new BlurbView
-          el: @$('.partner-artist-blurb')
-          updateOnResize: true
-          lineCount: 4
-    else
-      @$el.html $( template artist: @model )
-      @isRendered = true
+    brief = (_.compact [@model.get('nationality'), @model.get('years')]).join(", ")
+    @$('.partner-artist-brief').html brief
+    @$('.partner-artist-name').html @model.get('name')
+    @$('.partner-artist-blurb').html @model.mdToHtml('blurb')
 
+    @initializeBlurb()
+
+    @$el.css "visibility", "visible"
     @scrollToMe() if @scroll
 
   scrollToMe: ->
-    $('html, body').animate
-      scrollTop: @$el.position().top - 100
+    $('html').animate scrollTop: @$el.offset().top - 100
 
-  fetchArtist: ->
-    @model.fetch cache: true
+  fetchArtist: -> @model.fetch cache: true
 
   fetchArtworks: ->
     artworks = new Artworks()
@@ -55,14 +52,21 @@ module.exports = class PartnerArtistsArtistView extends Backbone.View
         new ArtworkColumnsView
           el: @$('.partner-artist-artworks')
           collection: artworks
-          seeMore: true
+          numberOfColumns: 4
+          gutterWidth: 60
 
-  initFollowButton: ->
+  initializeBlurb: ->
+    $blurb = @$('.partner-artist-blurb')
+    if $blurb.length > 0
+      new BlurbView el: $blurb, updateOnResize: true, lineCount: 4
+
+  initializeFollowButton: ->
+    $button = @$('.follow-button')
     following = new Following null, kind: 'artist' if sd.CURRENT_USER?
     new FollowButton
-      analyticsFollowMessage: 'Followed artist from /:id/artists'
-      analyticsUnfollowMessage: 'Unfollowed artist from /:id/artists'
-      following: following
-      model: @model
-      el: @$('.follow-button')
+      analyticsFollowMessage   : 'Followed artist from /:id/artists'
+      analyticsUnfollowMessage : 'Unfollowed artist from /:id/artists'
+      following : following
+      model     : @model
+      el        : $button
     following?.syncFollows [@model.get('id')]

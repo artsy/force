@@ -14,7 +14,7 @@ module.exports = class PartnerArtistsView extends Backbone.View
   defaults:
     artistsListColumnSize: 6
     nextPage: 1
-    pageSize: 6
+    pageSize: 3
     artistId: undefined
 
   initialize: (options={}) ->
@@ -32,35 +32,36 @@ module.exports = class PartnerArtistsView extends Backbone.View
     @collection.fetchUntilEnd
       cache: true
       success: =>
+        @displayables = @collection.filter (pa) ->
+          pa.get('published_artworks_count') > 0
         @renderArtistsList()
-        if @artistId?
-          @renderArtist()
+        if @artistId? then @renderArtist()
         else
-          if @collection.length > @pageSize
+          if @displayables.length > @pageSize
             $(window).on 'scroll.partner_artists', _.throttle(@infiniteScroll, 150)
           @renderNextPageOfArtists()
 
   renderArtistsList: ->
     @$el.find('#artists-list').html(
-      $( artistsListTemplate groups: @groupPartnerArtists(@collection) )
+      $( artistsListTemplate groups: @groupPartnerArtists(@displayables) )
     )
 
-  renderArtist: ->
+  appendArtist: (artist, scroll=false) ->
     new ArtistView
-      model: new Artist id: @artistId
-      el: $('<div></div>').appendTo @$('#artists-details')
-      scroll: true
+      model: artist
+      scroll: scroll
+      el: $('<div>').appendTo @$('#artists-details')
+
+  renderArtist: ->
+    @appendArtist (new Artist id: @artistId), true
 
   renderNextPageOfArtists: ->
     end = @pageSize * @nextPage; start = end - @pageSize
-    for pa in @collection.models.slice start, end
-      new ArtistView
-        model: new Artist pa.get('artist')
-        el: $('<div></div>').appendTo @$('#artists-details')
+    for pa in @displayables.slice start, end
+      @appendArtist new Artist pa.get('artist')
 
     ++@nextPage
-    if end >= @collection.length
-      $(window).off '.partner_artists'
+    if end >= @displayables.length then $(window).off '.partner_artists'
 
   infiniteScroll: =>
     fold = $(window).height() + $(window).scrollTop()
@@ -70,26 +71,25 @@ module.exports = class PartnerArtistsView extends Backbone.View
   groupPartnerArtists: (pas) ->
     h = Math.ceil pas.length / @artistsListColumnSize
 
-    bigger  = label: "represented artists", list: pas.filter (pa) -> pa.get('represented_by')
-    smaller = label: "works available by", list: pas.filter (pa) ->
-      not pa.get('represented_by') and pa.get('published_artworks_count') > 0
+    groups = _.groupBy pas, (pa) -> pa.get 'represented_by'
+    bigger  = label: "represented artists", list: groups.true or []
+    smaller = label: "works available by", list: groups.false or []
 
     if bigger.list.length < smaller.list.length
       temp = bigger; bigger = smaller; smaller = temp
     if smaller.list.length is 0
       bigger.label = "artists"
  
-    # Heuristics. Favor smaller column
     smaller.numOfCols = Math.ceil smaller.list.length / h
     bigger.numOfCols  = @artistsListColumnSize - smaller.numOfCols
 
-    # Split an array into columns
+    # Split arrays into columns
     for g in [bigger, smaller]
       g.cols = []; step = Math.ceil g.list.length / g.numOfCols
-      for i in [0..g.list.length] by step
+      for pa, i in g.list by step
         g.cols.push g.list.slice i, i + step
     
-    _.filter [bigger, smaller], (g) -> g.cols.length > 0
+    _.filter [bigger, smaller], (g) -> g.list.length > 0
 
   renderLoading: ->
     unless @$loadingSpinner?
