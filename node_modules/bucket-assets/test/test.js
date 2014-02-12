@@ -64,7 +64,7 @@ describe('bucketAssets', function() {
       putFileStub.args[1][2]['Cache-Control'].should.equal('max-age=315360000, public');
   });
 
-  it('sends gzipped files with Content-Encoding and the underyling Content-Type', function() {
+  it('sends gzipped files under gz or cgz with Content-Encoding and the underyling Content-Type', function() {
     bucketAssets({
       dir: __dirname + '/assets',
       secret: 'foobar',
@@ -73,6 +73,8 @@ describe('bucketAssets', function() {
     });
     putFileStub.args[2][2]['Content-Type'].should.equal('application/javascript');
     putFileStub.args[2][2]['Content-Encoding'].should.equal('gzip');
+    putFileStub.args[3][2]['Content-Type'].should.equal('application/javascript');
+    putFileStub.args[3][2]['Content-Encoding'].should.equal('gzip');
   });
 
 });

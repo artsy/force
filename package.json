@@ -53,7 +53,7 @@
     "nib": "*",
     "superagent": "*",
     "cheerio": "*",
-    "bucket-assets": "*",
+    "bucket-assets": "git://github.com/artsy/bucket-assets.git",
     "rewire": "*",
     "typeahead.js": "git://github.com/zamiang/typeahead.js.git#gravity",
     "jquery": "2.1.0",
