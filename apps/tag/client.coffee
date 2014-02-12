@@ -7,7 +7,7 @@ FilterArtworksNav = require '../../components/filter/artworks_nav/view.coffee'
 FilterFixedHeader = require '../../components/filter/fixed_header/view.coffee'
 FilterArtworksView = require '../../components/filter/artworks/view.coffee'
 
-module.exports = class TagView extends Backbone.View
+module.exports.TagView = class TagView extends Backbone.View
 
   initialize: ->
     new FilterFixedHeader
