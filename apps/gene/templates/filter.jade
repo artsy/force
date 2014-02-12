@@ -11,10 +11,5 @@
 unless gene.isSubjectMatter()
   #gene-artists
     .loading-spinner
-#gene-artwork-list-container
-  #gene-filter-sort-count
-    include ../../../components/filter/sort_count/template
-  #gene-artwork-list
-  #gene-artwork-list-spinner
-    .loading-spinner
-  #gene-artwork-list-no-results No artworks are available within your selection.
+#gene-artworks-container
+  include ../../../components/filter/artworks/template
