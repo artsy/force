@@ -40,12 +40,15 @@ assets:
 		$(BIN)/browserify $(file).coffee -t jadeify -t caching-coffeeify > public/$(file).js; \
 		$(BIN)/uglifyjs public/$(file).js > public/$(file).min.js; \
 		gzip -f public/$(file).min.js; \
+		mv public/$(file).min.js.gz public/$(file).min.js.cgz; \
 	)
 	$(BIN)/stylus assets -o public/assets --inline --include public/
 	$(foreach file, $(shell find assets -name '*.styl' | cut -d '.' -f 1), \
 		$(BIN)/sqwish public/$(file).css -o public/$(file).min.css; \
 		gzip -f public/$(file).min.css; \
+		mv public/$(file).min.css.gz public/$(file).min.css.cgz; \
 	)
+
 
 # Generate unminified assets for testing and development.
 assets-fast:
