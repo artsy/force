@@ -29,8 +29,8 @@ errorHandler = require "../components/error_handler"
 
 # Setup sharify constants & require dependencies that use sharify data
 sharify.data =
-  JS_EXT: (if "production" is NODE_ENV then ".min.js.gz" else ".js")
-  CSS_EXT: (if "production" is NODE_ENV then ".min.css.gz" else ".css")
+  JS_EXT: (if "production" is NODE_ENV then ".min.js.cgz" else ".js")
+  CSS_EXT: (if "production" is NODE_ENV then ".min.css.cgz" else ".css")
   ASSET_PATH: ASSET_PATH
   APP_URL: APP_URL
   ARTSY_URL: ARTSY_URL
