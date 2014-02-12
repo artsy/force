@@ -8,7 +8,7 @@ Fair          = require '../../../../models/fair.coffee'
 Profile       = require '../../../../models/profile.coffee'
 FeedItem      = require '../../../../components/feed/models/feed_item.coffee'
 
-describe 'FeedView', ->
+describe 'BoothsView', ->
 
   before (done) ->
     benv.setup =>
