@@ -1,0 +1,26 @@
+header#modal-contact-header.modal-contact-header
+
+if user
+  section.modal-contact-from
+    | From: #{user.get('name')}
+    span.mcf-email (#{user.get('email')})
+
+form.modal-contact-form
+  if user
+    input( type='hidden', name='user_name', value=user.get('name') )
+    input( type='hidden', name='user_email', value=user.get('email') )
+  else
+    label( name='name' ) Your name
+      input.bordered-input.is-block( type='text', name='user_name', autofocus=!isTouchDevice )
+    label( name='email' ) Your email
+      input.bordered-input.is-block( type='email', name='user_email' )
+  textarea.bordered-input.is-block(
+    placeholder=placeholder
+    name='message'
+    required
+    autofocus=(!isTouchDevice && user)
+  )
+
+  a#contact-submit.avant-garde-button-black.is-block(
+    href='#', data-state='ok'
+  ) Send

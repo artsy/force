@@ -4,14 +4,14 @@ sinon     = require 'sinon'
 Backbone  = require 'backbone'
 rewire    = require 'rewire'
 
-describe 'FeedbackView', ->
+describe 'ContactView', ->
   before (done) ->
     benv.setup =>
-      benv.expose { $: benv.require 'jquery' }
+      benv.expose $: benv.require 'jquery'
       Backbone.$ = $
-      @FeedbackView = rewire '../view'
-      sinon.stub @FeedbackView.prototype, 'open'
-      sinon.stub @FeedbackView.prototype, 'updatePosition'
+      @ContactView = rewire '../view'
+      sinon.stub @ContactView.prototype, 'open'
+      sinon.stub @ContactView.prototype, 'updatePosition'
       done()
 
   after ->
@@ -19,15 +19,15 @@ describe 'FeedbackView', ->
 
   describe 'User not logged in', ->
     beforeEach ->
-      @view = new @FeedbackView
+      @view = new @ContactView
 
     it 'should pass a null user', ->
       _.isNull(@view.templateData.user).should.be.ok
 
   describe 'User logged in', ->
     beforeEach ->
-      @FeedbackView.__set__ 'CurrentUser', { orNull: -> true }
-      @view = new @FeedbackView
+      @ContactView.__set__ 'CurrentUser', { orNull: -> true }
+      @view = new @ContactView
 
     it 'should pass a user', ->
       @view.templateData.user.should.be.ok
