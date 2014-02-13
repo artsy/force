@@ -22,7 +22,7 @@ module.exports.TagView = class TagView extends Backbone.View
 
   renderCounts: (params) =>
     @model.fetchFilterSuggest params, success: (m, res) =>
-      mediator.trigger 'counts', "Showing #{res.total} Works"
+      mediator.trigger 'counts', res
       @$('#tag-filter-nav-left-num').html " &mdash; #{res.total} Works"
 
 module.exports.init = ->

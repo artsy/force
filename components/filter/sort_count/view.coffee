@@ -9,7 +9,7 @@ module.exports = class FilterSortCount extends Backbone.View
     _.extend @, options
     @locals ?= {}
     mediator.on 'counts', (counts) =>
-      @locals.counts = counts
+      @locals.total = counts.total
       @render()
     @render()
 

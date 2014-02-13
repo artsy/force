@@ -15,7 +15,8 @@ module.exports = class FilterFixedHeader extends Backbone.View
     mediator.on 'filter', @scrollToTop
 
   scrollToTop: =>
-    @document.scrollTop = @$el.offset().top - @$mainHeader.height()
+    return unless @$window.scrollTop() > @$el.offset().top
+    @document.scrollTop = @$el.offset().top + @$el.height() - (@$mainHeader.height() / 2)
 
   setupJump: ->
     @jump = new JumpView threshold: @$window.height()

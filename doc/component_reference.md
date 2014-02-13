@@ -275,9 +275,18 @@ The set of filter menus for artworks including the "All Works" button and "Price
 
 ![](images/filter_artwork_nav.png)
 
+Include the template
+
+````jade
+#gene-artworks-container
+  include ../../../components/filter/artworks_nav/template
+````
+
+Then add the view
+
 ````coffeescript
 new FilterArtworksNav
-  el: $ '#browse-filter-header'
+  el: $ '#tag-filter-artworks-nav'
   # Pass in filter options (e.g. /api/v1/search/filtered/fair/armory-show-2013/options)
   # to render the dynamic parts.
   filterOptions:

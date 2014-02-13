@@ -102,7 +102,7 @@ describe 'GeneFilter', ->
       @view.renderCounts()
       _.last(Backbone.sync.args)[2].success { total: 1022 }
       @mediator.trigger.args[0][0].should.equal 'counts'
-      @mediator.trigger.args[0][1].should.equal 'Showing 1022 Works'
+      @mediator.trigger.args[0][1].total.should.equal 1022
 
   describe '#artistMode', ->
 

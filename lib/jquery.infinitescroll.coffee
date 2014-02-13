@@ -12,7 +12,8 @@ $.fn.infiniteScroll = (callback) ->
 
 onScroll = module.exports = =>
   return unless $.active is 0
-  offset = $(window).height() / 2
+  offset = $(window).height() * 0.7
   viewPortBottom = $(window).scrollTop() + $(window).height()
   reachedBottom = viewPortBottom >= $(document).height() - offset
-  $(window).trigger 'infiniteScroll' if reachedBottom
+  return unless reachedBottom
+  $(window).trigger 'infiniteScroll'

@@ -23,3 +23,17 @@ describe 'FilterFixedHeader', ->
     spy = sinon.spy $.fn, 'height'
     @view.wrap()
     spy.called.should.be.ok
+
+  it 'scrolls back up if the user has scrolled past the header', ->
+    @view.document = { scrollTop: 0 }
+    @view.$window.scrollTop = -> 300
+    @view.$el.offset = -> top: 200
+    @view.scrollToTop()
+    @view.document.scrollTop.should.be.above 0
+
+  it 'doenst scroll back up if the user hasnt scrolled past the header', ->
+    @view.document = { scrollTop: 0 }
+    @view.$window.scrollTop = -> 200
+    @view.$el.offset = -> top: 300
+    @view.scrollToTop()
+    @view.document.scrollTop.should.not.be.above 0

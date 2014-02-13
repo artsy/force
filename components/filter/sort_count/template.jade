@@ -1,7 +1,7 @@
 include ../../bordered_pulldown/mixin
 
 .filter-sort-count
-  h4.filter-sort-count-count= counts || 'Showing ... Works'
+  h4.filter-sort-count-count Showing #{total || '...'} Works
   .filter-sort-count-pulldown
     +bordered-pulldown((pulldownVal || 'Recently Added'), 'Sort by:')
       a( data-sort='-date_added' ) Recently Added
