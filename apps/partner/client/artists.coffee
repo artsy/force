@@ -33,6 +33,8 @@ module.exports = class PartnerArtistsView extends Backbone.View
       cache: true
       success: =>
         @displayables = @collection.filter (pa) ->
+          # Display represented artists or non- ones with published artworks
+          pa.get('represented_by') or
           pa.get('published_artworks_count') > 0
         @renderArtistsList()
         if @artistId? then @renderArtist()
@@ -46,19 +48,20 @@ module.exports = class PartnerArtistsView extends Backbone.View
       $( artistsListTemplate groups: @groupPartnerArtists(@displayables) )
     )
 
-  appendArtist: (artist, scroll=false) ->
+  appendArtist: (partnerArtist, scroll=false) ->
     new ArtistView
-      model: artist
+      model: partnerArtist
       scroll: scroll
       el: $('<div>').appendTo @$('#artists-details')
 
   renderArtist: ->
-    @appendArtist (new Artist id: @artistId), true
+    pa = _.find @displayables, (pa) => pa.get('artist').id is @artistId
+    @appendArtist pa, true if pa?
 
   renderNextPageOfArtists: ->
     end = @pageSize * @nextPage; start = end - @pageSize
     for pa in @displayables.slice start, end
-      @appendArtist new Artist pa.get('artist')
+      @appendArtist pa if pa.get('published_artworks_count') > 0
 
     ++@nextPage
     if end >= @displayables.length then $(window).off '.partner_artists'

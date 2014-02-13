@@ -1,16 +1,17 @@
-#artists
+#partner-artists
+  column-gutter = 50px
   .artists-group, .artists-column
     display inline-block
     vertical-align top
 
   .artists-group
-    .artists-column
-      padding-left 50px
+    .artists-column, .artists-group-label
+      padding-left column-gutter
     &:first-child
       border-right 1px solid #ccc
-      .artists-column
+      .artists-column, .artists-group-label
         padding-left 0
-        padding-right 50px
+        padding-right column-gutter
 
   // Generating artists column styles
   for i in 1 2 3 4 5 6
@@ -28,13 +29,14 @@
 
   .artists-group-label
     font-size 14px
+    height 45px
 
   .artists-groups-container
     margin-bottom 50px
     border-bottom 1px solid #ccc
 
   .artists-columns-container
-    margin 30px 0
+    margin 20px 0 30px 0
   .artists-column
     > li
       margin-bottom 10px
@@ -45,7 +47,8 @@
       margin-bottom 10px
       &:hover
         text-decoration underline
-    
+    .artist-name
+      color #666
 
   .partner-artist-info, .partner-artist-artworks
     margin-bottom 50px

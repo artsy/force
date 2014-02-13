@@ -6,4 +6,7 @@
         each col in group.cols
           ul.artists-column
             each pa in col
-              li: a( href=pa.href() )= pa.get('artist').name
+              if pa.get('published_artworks_count') > 0
+                li: a( href=pa.href() )= pa.get('artist').name
+              else
+                li: span.artist-name= pa.get('artist').name

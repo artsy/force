@@ -3,6 +3,7 @@ sd             = require('sharify').data
 Backbone       = require 'backbone'
 CurrentUser    = require '../../../models/current_user.coffee'
 Artist         = require '../../../models/artist.coffee'
+Partner        = require '../../../models/partner.coffee'
 Artworks       = require '../../../collections/artworks.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 BlurbView      = require '../../artist/client/blurb.coffee'
@@ -16,8 +17,10 @@ module.exports = class PartnerArtistsArtistView extends Backbone.View
 
   initialize: (options={}) ->
     { @scroll } = _.defaults options, @defaults
+    @artist = new Artist @model.get('artist')
+    @partner = new Partner @model.get('partner')
     @initializeElement()
-    @listenTo @model, "sync", @render
+    @listenTo @artist, "sync", @render
     @fetchArtist()
     @fetchArtworks()
     @initializeFollowButton()
@@ -26,13 +29,13 @@ module.exports = class PartnerArtistsArtistView extends Backbone.View
   # Hide it for now until we have info we need, e.g. blurb, nationality
   initializeElement: ->
     # Couldn't just .hide() it, since we need its `height` for other components.
-    (@$el.html $( template artist: @model )).css "visibility", "hidden"
+    (@$el.html $( template artist: @artist )).css "visibility", "hidden"
 
   render: ->
-    brief = (_.compact [@model.get('nationality'), @model.get('years')]).join(", ")
+    brief = (_.compact [@artist.get('nationality'), @artist.get('years')]).join(", ")
     @$('.partner-artist-brief').html brief
-    @$('.partner-artist-name').html @model.get('name')
-    @$('.partner-artist-blurb').html @model.mdToHtml('blurb')
+    @$('.partner-artist-name').html @artist.get('name')
+    @$('.partner-artist-blurb').html @artist.mdToHtml('blurb')
 
     @initializeBlurb()
 
@@ -42,11 +45,11 @@ module.exports = class PartnerArtistsArtistView extends Backbone.View
   scrollToMe: ->
     $('html').animate scrollTop: @$el.offset().top - 100
 
-  fetchArtist: -> @model.fetch cache: true
+  fetchArtist: -> @artist.fetch cache: true
 
   fetchArtworks: ->
     artworks = new Artworks()
-    artworks.url = "#{@model.url()}/artworks"
+    artworks.url = "#{@partner.url()}/artist/#{@artist.get('id')}/artworks"
     artworks.fetch
       success: =>
         new ArtworkColumnsView
@@ -67,6 +70,6 @@ module.exports = class PartnerArtistsArtistView extends Backbone.View
       analyticsFollowMessage   : 'Followed artist from /:id/artists'
       analyticsUnfollowMessage : 'Unfollowed artist from /:id/artists'
       following : following
-      model     : @model
+      model     : @artist
       el        : $button
-    following?.syncFollows [@model.get('id')]
+    following?.syncFollows [@artist.get('id')]
