@@ -2,9 +2,9 @@
 # FairOrganizer routes
 #
 _       = require 'underscore'
-Profile = require '../../models/profile'
-Fair    = require '../../models/fair'
-Search  = require '../../collections/search'
+Profile = require '../../models/profile.coffee'
+Fair    = require '../../models/fair.coffee'
+Search  = require '../../collections/search.coffee'
 
 #
 # Helpers for fetching the Fair
@@ -161,3 +161,12 @@ fetchFairData = (fair, profile, res, options) ->
         type: route
   else
     next()
+
+# Fetches show for partner and redirects to the show permalink
+@showRedirect = (req, res, next) ->
+  fetchProfile req, res, next, (profile) ->
+    fair = new Fair id: profile.get('owner').default_fair_id
+    fair.fetchShowForPartner req.params.partner_id,
+      success: (show) ->
+        res.redirect "/show/#{show.id}"
+      error: res.backboneError

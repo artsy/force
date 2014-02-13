@@ -73,4 +73,4 @@ describe 'SearchResult', ->
         modelA.get('display_model').should.equal 'Booth'
         modelA.get('location').should.contain '/show/gagosian-gallery-inez-and-vinoodh'
 
-        modelB.get('location').should.contain "/armory-show-2013/artist/pablo"
+        modelB.get('location').should.contain "/the-armory-show/browse/artist/pablo"
