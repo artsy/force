@@ -112,3 +112,15 @@ describe 'Fair routes', ->
       _.last(Backbone.sync.args)[2].success []
       @res.render.args[0][0].should.equal 'templates/index'
       @res.render.args[0][1].profile.isFairOranizer()
+
+  describe '#showRedirect', ->
+
+    it 'redirects to show page', ->
+      show = fabricate('show')
+      routes.showRedirect @req, @res
+      _.last(Backbone.sync.args)[2].success fabricate 'fair_profile'
+      _.last(Backbone.sync.args)[2].success [
+        results: [show]
+        next: 'foo'
+      ]
+      @res.redirect.args[0][0].should.include '/show/gagosian-gallery-inez-and-vinood'

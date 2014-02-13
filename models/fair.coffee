@@ -3,8 +3,8 @@ _         = require 'underscore'
 Backbone  = require 'backbone'
 { Image, Markdown } = require 'artsy-backbone-mixins'
 PartnerLocation     = require './partner_location.coffee'
-Profiles            = require '../collections/profiles.coffee'
 OrderedSets         = require '../collections/ordered_sets.coffee'
+Profiles            = require '../collections/profiles.coffee'
 
 module.exports = class Fair extends Backbone.Model
 
@@ -36,7 +36,7 @@ module.exports = class Fair extends Backbone.Model
     artists.fetchUntilEnd
       url: "#{@url()}/artists"
       cache: true
-      success: =>
+      success: ->
         aToZGroup = artists.groupByAlphaWithColumns 3
         options?.success aToZGroup, artists
       error: ->
@@ -73,7 +73,6 @@ module.exports = class Fair extends Backbone.Model
 
   fetchShowForPartner: (partnerId, options) ->
     shows = new Backbone.Collection
-      parse: (response) ->response.results
     shows.url = "#{@url()}/shows"
     shows.fetch
       data:
