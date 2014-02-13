@@ -17,15 +17,16 @@ module.exports = class ModalView extends Backbone.View
     'click .modal-close': 'close'
     'click .modal-dialog': '_intercept'
 
-  initialize: (options={}) ->
+  initialize: (options = {}) ->
     { @width } = _.defaults options, { width: '400px' }
 
-    @templateData ||= {}
+    @templateData ?= {}
 
     @resize = _.debounce @updatePosition, 100
 
-    $(window).on 'keyup', @escape
-    $(window).on 'resize', @resize
+    @$window = $(window)
+    @$window.on 'keyup', @escape
+    @$window.on 'resize', @resize
 
     mediator.on 'modal:close', @close, this
     mediator.on 'modal:opened', @updatePosition, this
@@ -42,8 +43,8 @@ module.exports = class ModalView extends Backbone.View
 
   updatePosition: =>
     @$dialog.css
-      top:  (($(window).height() - @$dialog.height()) / 2) + 'px'
-      left: (($(window).width() - @$dialog.width()) / 2) + 'px'
+      top:  ((@$window.height() - @$dialog.height()) / 2) + 'px'
+      left: ((@$window.width() - @$dialog.width()) / 2) + 'px'
 
   # Fade out body,
   # re-render the (presumably changed) template,
@@ -54,7 +55,7 @@ module.exports = class ModalView extends Backbone.View
       in:   => @updatePosition()
 
   setWidth: (width) ->
-    @$dialog.css { width: width || @width }
+    @$dialog.css { width: width or @width }
 
   setup: ->
     # Render outer
@@ -91,8 +92,8 @@ module.exports = class ModalView extends Backbone.View
     this
 
   close: ->
-    $(window).off 'keyup', @escape
-    $(window).off 'resize', @resize
+    @$window.off 'keyup', @escape
+    @$window.off 'resize', @resize
 
     mediator.off null, null, this
 
