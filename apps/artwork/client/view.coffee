@@ -51,6 +51,7 @@ module.exports = class ArtworkView extends Backbone.View
   renderArtistArtworks: ->
     # Ensure the current artwork is not in the collection
     @artist.artworks.remove @artwork
+    return unless @artist.artworks.length
     @$('.artwork-artist').attr 'data-state', 'complete'
     @$('#artwork-artist-artworks-container').
       addClass('is-loaded').
