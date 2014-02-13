@@ -7,6 +7,8 @@ CurrentUser           = require '../../../models/current_user.coffee'
 SaveButton            = require '../../../components/save_button/view.coffee'
 RelatedPostsView      = require '../../../components/related_posts/view.coffee'
 RelatedArtworksView   = require './related-artworks.coffee'
+ContactPartnerView    = require '../../../components/contact/contact_partner.coffee'
+InquiryView           = require '../../../components/contact/inquiry.coffee'
 
 Artworks = require '../../../collections/artworks.coffee'
 artistArtworksTemplate = -> require('../templates/_artist-artworks.jade') arguments...
@@ -19,6 +21,8 @@ module.exports = class ArtworkView extends Backbone.View
     'click .circle-icon-button-share'     : 'openShare'
     'click .circle-icon-button-save'      : 'saveArtwork'
     'click .artwork-additional-image'     : 'changeImage'
+    'click .artwork-contact-button'       : 'contactPartner'
+    'click .artwork-inquiry-button'       : 'inquire'
 
   initialize: (options) ->
     { @artwork, @artist } = options
@@ -113,6 +117,14 @@ module.exports = class ArtworkView extends Backbone.View
       el: $el
       saved: @saved
       model: artwork
+
+  contactPartner: (e) ->
+    e.preventDefault()
+    new ContactPartnerView artwork: @artwork, partner: @artwork.get('partner')
+
+  inquire: (e) ->
+    e.preventDefault()
+    new InquiryView artwork: @artwork
 
   changeImage: (e) ->
     e.preventDefault()
