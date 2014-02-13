@@ -12,15 +12,17 @@ module.exports = class ModalView extends Backbone.View
   template: ->
     'Requires a template'
 
+  templateData: {}
+
   events: ->
     'click .modal-backdrop': 'close'
     'click .modal-close': 'close'
     'click .modal-dialog': '_intercept'
 
   initialize: (options = {}) ->
-    { @width } = _.defaults options, { width: '400px' }
+    { @width } = _.defaults options, width: '400px'
 
-    @templateData ?= {}
+    _.extend @templateData, autofocus: @autofocus()
 
     @resize = _.debounce @updatePosition, 100
 
@@ -45,6 +47,9 @@ module.exports = class ModalView extends Backbone.View
     @$dialog.css
       top:  ((@$window.height() - @$dialog.height()) / 2) + 'px'
       left: ((@$window.width() - @$dialog.width()) / 2) + 'px'
+
+  autofocus: ->
+    if isTouchDevice() then undefined else true
 
   isLoading: ->
     @$el.addClass 'is-loading'
@@ -76,10 +81,6 @@ module.exports = class ModalView extends Backbone.View
     @$body.html @template(@templateData)
     @$dialog = @$('.modal-dialog')
     @setWidth()
-
-    # Add autofocus on non-touch devices
-    unless isTouchDevice()
-      @$el.find(":input:first").attr autofocus: true
 
     # Display
     $(@container).html @$el
