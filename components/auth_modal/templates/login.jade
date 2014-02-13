@@ -20,7 +20,7 @@
       form.auth-login-email.auth-form( action='/force/users/sign_in' )
         .auth-errors
         input.bordered-input.is-block(
-          name='email', type='email', placeholder='Email', required
+          name='email', type='email', placeholder='Email', required, autofocus= autofocus
         )
         input.bordered-input.is-block(
           name='password', type='password', placeholder='Password', autocomplete='on', required
