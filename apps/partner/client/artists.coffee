@@ -48,19 +48,20 @@ module.exports = class PartnerArtistsView extends Backbone.View
       $( artistsListTemplate groups: @groupPartnerArtists(@displayables) )
     )
 
-  appendArtist: (artist, scroll=false) ->
+  appendArtist: (partnerArtist, scroll=false) ->
     new ArtistView
-      model: artist
+      model: partnerArtist
       scroll: scroll
       el: $('<div>').appendTo @$('#artists-details')
 
   renderArtist: ->
-    @appendArtist (new Artist id: @artistId), true
+    pa = _.find @displayables, (pa) => pa.get('artist').id is @artistId
+    if pa? then @appendArtist pa, true
 
   renderNextPageOfArtists: ->
     end = @pageSize * @nextPage; start = end - @pageSize
     for pa in @displayables.slice start, end
-      @appendArtist new Artist pa.get('artist')
+      @appendArtist pa
 
     ++@nextPage
     if end >= @displayables.length then $(window).off '.partner_artists'
