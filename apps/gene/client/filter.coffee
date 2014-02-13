@@ -9,9 +9,11 @@ FilterArtworksView = require '../../../components/filter/artworks/view.coffee'
 module.exports = class GeneFilter extends Backbone.View
 
   initialize: ->
-    @filterArtworksNav = new FilterArtworksNav el: $ '#gene-filter-artworks-nav'
-    @filterFixedHeader = new FilterFixedHeader el: $ '#gene-filter-nav'
-    @filterArtworksView = new FilterArtworksView
+    new FilterArtworksNav
+      el: $ '#gene-filter-artworks-nav'
+    new FilterFixedHeader
+      el: $ '#gene-filter-nav'
+    new FilterArtworksView
       el: $ '#gene-artworks-container'
       url: "#{ARTSY_URL}/api/v1/search/filtered/gene/#{@model.get 'id'}"
     mediator.on 'filter', @renderCounts
@@ -24,7 +26,7 @@ module.exports = class GeneFilter extends Backbone.View
 
   renderCounts: (params) =>
     @model.fetchFilterSuggest params, success: (m, res) =>
-      mediator.trigger 'counts', "Showing #{res.total} Works"
+      mediator.trigger 'counts', res
       @$('#gene-filter-nav-left-num').html " &mdash; #{res.total} Works"
 
   events:

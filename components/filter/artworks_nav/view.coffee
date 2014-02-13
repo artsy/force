@@ -1,20 +1,22 @@
 Backbone = require 'backbone'
-template = -> require('./template.jade') arguments...
 mediator = require '../mediator.coffee'
 
 module.exports = class FilterArtworksNav extends Backbone.View
 
   initialize: (opts) ->
     { @filterOptions } = opts
-    @render()
+    mediator.on 'counts', @renderCounts
     @
-
-  render: ->
-    @$el.html template mediums: @filterOptions?.medium
 
   toggleActive: (el) ->
     @$('.is-active').removeClass 'is-active'
     $(el).addClass('is-active')
+
+  renderCounts: (counts) =>
+    for range, val of counts.price_range
+      @$("a[data-range='#{range}'] .filter-dropdown-count").html '(' + val + ')'
+    for size, val of counts.dimension
+      @$("a[data-size='#{size}'] .filter-dropdown-count").html '(' + val + ')'
 
   events:
     'click .filter-artworks-nav-allworks': 'allWorks'
@@ -40,8 +42,8 @@ module.exports = class FilterArtworksNav extends Backbone.View
     mediator.trigger 'filter', { dimension: $(e.target).data 'size' }
 
   checkDropdownItem: (e) ->
-    $(e.target)
+    $(e.currentTarget)
       .addClass('is-active')
       .closest('.filter-dropdown')
       .children('.filter-nav-active-text')
-      .text $(e.target).text()
+      .text $(e.currentTarget).find('.filter-dropdown-text').text()
