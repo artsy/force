@@ -140,7 +140,7 @@ describe 'PartnerShowsView', ->
 
     describe '#renderNextPageOfArtists', ->
 
-      it 'displays the pages of artists', ->
+      it 'displays the pages of artists who have published artworks until the end', ->
         @view.renderNextPageOfArtists()
         @view.nextPage.should.equal 2
         @ArtistView.callCount.should.equal 5
@@ -149,4 +149,4 @@ describe 'PartnerShowsView', ->
         @ArtistView.callCount.should.equal 10
         @view.renderNextPageOfArtists()
         @view.nextPage.should.equal 4
-        @ArtistView.callCount.should.equal 12
+        @ArtistView.callCount.should.equal 11
