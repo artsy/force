@@ -33,6 +33,8 @@ module.exports = class PartnerArtistsView extends Backbone.View
       cache: true
       success: =>
         @displayables = @collection.filter (pa) ->
+          # Display represented artists or non- ones with published artworks
+          pa.get('represented_by') or
           pa.get('published_artworks_count') > 0
         @renderArtistsList()
         if @artistId? then @renderArtist()
