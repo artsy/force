@@ -46,6 +46,16 @@ module.exports = class ModalView extends Backbone.View
       top:  ((@$window.height() - @$dialog.height()) / 2) + 'px'
       left: ((@$window.width() - @$dialog.width()) / 2) + 'px'
 
+  isLoading: ->
+    @$el.addClass 'is-loading'
+    @$dialog.hide().addClass 'is-notransition'
+
+  isLoaded: ->
+    @$el.removeClass 'is-loading'
+    @$dialog.show()
+    _.defer =>
+      @$dialog.removeClass 'is-notransition'
+
   # Fade out body,
   # re-render the (presumably changed) template,
   # then fade back in and re-center
