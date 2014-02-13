@@ -56,12 +56,12 @@ module.exports = class PartnerArtistsView extends Backbone.View
 
   renderArtist: ->
     pa = _.find @displayables, (pa) => pa.get('artist').id is @artistId
-    if pa? then @appendArtist pa, true
+    @appendArtist pa, true if pa?
 
   renderNextPageOfArtists: ->
     end = @pageSize * @nextPage; start = end - @pageSize
     for pa in @displayables.slice start, end
-      @appendArtist pa
+      @appendArtist pa if pa.get('published_artworks_count') > 0
 
     ++@nextPage
     if end >= @displayables.length then $(window).off '.partner_artists'
