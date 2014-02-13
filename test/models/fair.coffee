@@ -12,4 +12,4 @@ describe 'Fair', ->
   describe '#href', ->
 
     it "returns the client link to this fair", ->
-      @fair.href().should.equal "/#{@fair.get('id')}"
+      @fair.href().should.equal "/#{@fair.get('organizer').profile_id}"

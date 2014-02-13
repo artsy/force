@@ -63,4 +63,4 @@ module.exports = class SearchResult extends Backbone.Model
     if @get('display_model') == 'Show'
       @set display_model: 'Booth'
     else
-      @set location: "#{fair.href()}#{@get('location')}"
+      @set location: "#{fair.href()}/browse#{@get('location')}"

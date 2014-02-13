@@ -13,6 +13,7 @@ app.get '/:id/info', routes.info
 app.get '/:id/for-you', routes.forYou
 app.get '/:id/overview', routes.overview
 app.get '/:id/search', routes.search
+app.get '/:id/browse/show/:partner_id', routes.showRedirect
 app.get '/:id/browse', routes.browse
 app.get '/:id/browse/*', routes.browse
 

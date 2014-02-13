@@ -3,8 +3,7 @@ _         = require 'underscore'
 Backbone  = require 'backbone'
 { Image, Markdown } = require 'artsy-backbone-mixins'
 PartnerLocation     = require './partner_location.coffee'
-Partners            = require '../collections/partners.coffee'
-Artists             = require '../collections/artists.coffee'
+Profiles            = require '../collections/profiles.coffee'
 OrderedSets         = require '../collections/ordered_sets.coffee'
 
 module.exports = class Fair extends Backbone.Model
@@ -15,14 +14,14 @@ module.exports = class Fair extends Backbone.Model
   urlRoot: -> "#{sd.ARTSY_URL}/api/v1/fair"
 
   href: ->
-    "/#{@get('id')}"
+    "/#{@get('organizer')?.profile_id}"
 
   location: ->
     if @get('location')
       new PartnerLocation @get('location')
 
   fetchExhibitors: (options) ->
-    galleries = new Partners()
+    galleries = new @aToZCollection('show')
     galleries.fetchUntilEnd
       url: "#{@url()}/partners"
       cache: true
@@ -33,11 +32,11 @@ module.exports = class Fair extends Backbone.Model
         options?.error()
 
   fetchArtists: (options) ->
-    artists = new Artists([], { models: [] })
+    artists = new @aToZCollection('artist')
     artists.fetchUntilEnd
       url: "#{@url()}/artists"
       cache: true
-      success: ->
+      success: =>
         aToZGroup = artists.groupByAlphaWithColumns 3
         options?.success aToZGroup, artists
       error: ->
@@ -62,3 +61,26 @@ module.exports = class Fair extends Backbone.Model
       orderedSets.each (set) =>
         @set "#{set.get('key')}Links", set
       options.success orderedSets
+
+  # Custom A-to-Z-collection for fair urls
+  aToZCollection: (namespace) =>
+    href = @href()
+    class FairSearchResult extends Backbone.Model
+      href: -> "#{href}/browse/#{namespace}/#{@get('id')}"
+      displayName: -> @get('name')
+    new class FairSearchResults extends Profiles
+      model: FairSearchResult
+
+  fetchShowForPartner: (partnerId, options) ->
+    shows = new Backbone.Collection
+      parse: (response) ->response.results
+    shows.url = "#{@url()}/shows"
+    shows.fetch
+      data:
+        partner: partnerId
+      success: (shows) ->
+        if shows.models?[0]?.get('results')?[0]
+          options.success shows.models[0].get('results')[0]
+        else
+          options.error
+      error: options.error
