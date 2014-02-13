@@ -8,6 +8,7 @@ SaveButton            = require '../../../components/save_button/view.coffee'
 RelatedPostsView      = require '../../../components/related_posts/view.coffee'
 RelatedArtworksView   = require './related-artworks.coffee'
 ContactPartnerView    = require '../../../components/contact/contact_partner.coffee'
+InquiryView           = require '../../../components/contact/inquiry.coffee'
 
 Artworks = require '../../../collections/artworks.coffee'
 artistArtworksTemplate = -> require('../templates/_artist-artworks.jade') arguments...
@@ -123,6 +124,7 @@ module.exports = class ArtworkView extends Backbone.View
 
   inquire: (e) ->
     e.preventDefault()
+    new InquiryView artwork: @artwork
 
   changeImage: (e) ->
     e.preventDefault()

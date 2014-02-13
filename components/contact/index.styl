@@ -1,7 +1,7 @@
 @import '../stylus_lib'
 
 .modal-contact-header
-  margin 20px
+  margin 20px 60px 20px 20px
   h1
     avant-garde()
     font-size 15px
@@ -26,6 +26,7 @@
     margin 20px 0
     height 175px
 
+// Large message after success
 .modal-contact-success-message
   .modal-dialog
     padding 20px
@@ -33,3 +34,17 @@
     text-align center
     background-color transparent
     color white
+
+// Only displayed on inquiries
+.inquiry-profile-header
+  display table
+.iph-icon
+.iph-body
+  display table-cell
+  vertical-align middle
+.iph-icon
+  width 90px
+  > img
+    max-width 100%
+.iph-body
+  padding-left 20px

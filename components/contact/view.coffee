@@ -1,11 +1,10 @@
-_                   = require 'underscore'
-sd                  = require('sharify').data
-Backbone            = require 'backbone'
-ModalView           = require '../modal/view.coffee'
-mediator            = require '../../lib/mediator.coffee'
-Form                = require '../mixins/form.coffee'
-CurrentUser         = require '../../models/current_user.coffee'
-{ isTouchDevice }   = require '../util/device.coffee'
+_             = require 'underscore'
+sd            = require('sharify').data
+Backbone      = require 'backbone'
+ModalView     = require '../modal/view.coffee'
+mediator      = require '../../lib/mediator.coffee'
+Form          = require '../mixins/form.coffee'
+CurrentUser   = require '../../models/current_user.coffee'
 
 template        = -> require('./templates/index.jade') arguments...
 headerTemplate  = -> require('./templates/header.jade') arguments...
@@ -17,7 +16,6 @@ module.exports = class ContactView extends ModalView
 
   template: template
   headerTemplate: headerTemplate
-  templateData: {}
 
   defaults: ->
     width: '800px'
@@ -25,21 +23,20 @@ module.exports = class ContactView extends ModalView
     placeholder: 'Your message'
     url: "#{sd.ARTSY_URL}/api/v1/feedback"
 
+  events: -> _.extend super,
+    'submit form'           : 'submit'
+    'click #contact-submit' : 'submit'
+
   initialize: (options = {}) ->
     @options = _.defaults options, @defaults()
     _.extend @templateData,
       user: CurrentUser.orNull()
-      isTouchDevice: isTouchDevice()
       placeholder: @options.placeholder
 
     @model      = new Backbone.Model
     @model.url  = @options.url
 
     super @options
-
-  events: -> _.extend super,
-    'submit form'           : 'submit'
-    'click #contact-submit' : 'submit'
 
   postRender: ->
     @$('#modal-contact-header').html @headerTemplate(@templateData)
