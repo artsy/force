@@ -51,21 +51,22 @@ block body
     section.artwork-related-information
       .ari-left
         //- Only render the container if we have a blurb or some artworks to display
-        if (artist.get('artworks_count') > 1) || (artist.get('blurb'))
-          .artwork-artist( data-state=(artist.get('blurb') ? '' : 'pending' ) )
-            h3.avant-garde-header-center
-              | About #{artist.get('name')}
-
-            #artwork-artist-artworks-container
-              //- Rendered client-side
-
-            if artist.get('blurb')
-              .artwork-artist-blurb
-                != artist.mdToHtml('blurb')
-
-            a.artwork-artist-blurb-link.faux-underline-hover-large(
-              href="/artist/#{artist.id}"
-            ) Go to #{artist.get('name')}
+        if artist
+          if (artist.get('artworks_count') > 1) || (artist.get('blurb'))
+            .artwork-artist( data-state=(artist.get('blurb') ? '' : 'pending' ) )
+              h3.avant-garde-header-center
+                | About #{artist.get('name')}
+  
+              #artwork-artist-artworks-container
+                //- Rendered client-side
+  
+              if artist.get('blurb')
+                .artwork-artist-blurb
+                  != artist.mdToHtml('blurb')
+  
+              a.artwork-artist-blurb-link.faux-underline-hover-large(
+                href="/artist/#{artist.id}"
+              ) Go to #{artist.get('name')}
 
       .ari-right
         if artwork.get('blurb')

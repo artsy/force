@@ -1,7 +1,8 @@
 .artwork-meta
   //- Primary artwork metadata
-  h2.artwork-detail-artist
-    a( href= "/artist/#{artist.id}" )= artist.get('name')
+  if artist
+    h2.artwork-detail-artist
+      a( href= "/artist/#{artist.id}" )= artist.get('name')
 
   if artwork.get('title')
     h1.artwork-detail-title
