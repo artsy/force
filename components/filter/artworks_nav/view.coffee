@@ -32,16 +32,22 @@ module.exports = class FilterArtworksNav extends Backbone.View
     'click .filter-dropdown a': 'checkDropdownItem'
 
   allWorks: ->
-    @params.clear()
+    @params.clear().trigger('change')
 
   filterPrice: (e) ->
-    @params.set { price_range: $(e.currentTarget).data 'range' }
+    val = $(e.currentTarget).data 'range'
+    return @params.unset 'price_range' if val is ''
+    @params.set { price_range: val }
 
   filterMedium: (e) ->
-    @params.set { medium: $(e.currentTarget).data 'medium' }
+    val = $(e.currentTarget).data 'medium'
+    return @params.unset 'medium' if val is ''
+    @params.set { medium: val }
 
   filterSize: (e) ->
-    @params.set { dimension: $(e.currentTarget).data 'size' }
+    val = $(e.currentTarget).data 'size'
+    return @params.unset 'dimension' if val is ''
+    @params.set { dimension: val }
 
   checkDropdownItem: (e) ->
     $(e.currentTarget)

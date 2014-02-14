@@ -25,11 +25,6 @@ module.exports = class FilterArtworksView extends Backbone.View
     @counts.url = @countsUrl
     @params = new Backbone.Model
 
-    # Whenever the filter params are changed be sure to sync the artworks and counts.
-    @params.on 'change', (options) =>
-      @artworks.fetch data: @params.toJSON(), remove: options.remove
-      @counts.fetch data: @params.toJSON()
-
     # Add child views passing in necessary models/collections
     new FilterSortCount
       el: @$('.filter-artworks-sort-count')
@@ -43,10 +38,11 @@ module.exports = class FilterArtworksView extends Backbone.View
       el: @$('.filter-fixed-header-nav')
       params: @params
 
-    # Listen to events on various models/collections
+    # Hook up events on the artworks, params, and counts
     @artworks.on 'sync', @render
-    @params.on 'change', @reset
     @counts.on 'sync', @renderCounts
+    @params.on 'change:price_range change:dimension change:medium', @reset
+    @params.on 'change:page', => @artworks.fetch data: @params.toJSON(), remove: false
     @$el.infiniteScroll @nextPage
 
   render: (c, res) =>
@@ -62,9 +58,11 @@ module.exports = class FilterArtworksView extends Backbone.View
 
   nextPage: =>
     return unless @$el.is ':visible'
-    @params.set { page: (@params.get('page') + 1) or 2 }, { remove: false }
+    @params.set { page: (@params.get('page') + 1) or 2
 
   reset: =>
+    @params.set page: 1
+    @counts.fetch data: @params.toJSON()
     @$('.filter-artworks-list').html ''
     _.defer @newColumnsView
 
