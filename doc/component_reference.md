@@ -346,21 +346,30 @@ new FilterFixedHeader(el: $ '#gene-filter-header')
 
 ### Filter Artworks
 
-A view that glues together the artwork columns and the filter sort count components using the filter meidator. This component is used in the gene, tag, and browse pages.
+A view that glues together a bunch of filter components and the artwork columns components to create a common filtering UI used in gene, tag, and browse pages.
 
 ![](images/filter_artworks.png)
 
-Include the template
+First build up your html using the classes shown below to indicate where the view will render it's pieces.
 
 ````jade
-#gene-artworks-container
-  include ../../../components/filter/artworks/template
+#tag-filter
+  .filter-fixed-header-nav
+    | Showing
+    em.filter-artworks-num
+    | Works
+    //- Add artwork filter buttons
+    include ../../filter/artworks_nav
+    //- You might append more controls in the header here
+  .filter-artworks-list
+  //- Here's where the columns of artworks with sort/count widgets render
 ````
 
 Then add the view
 
 ````coffeescript
 @filterArtworksView = new FilterArtworksView
-  el: $ '#gene-artworks-container'
-  url: "#{ARTSY_URL}/api/v1/search/filtered/gene/#{@model.get 'id'}"
+  el: $ '#tag-filter'
+  artworksUrl: '/api/v1/search/filtered/tag/' + tag.get('id')
+  paramsUrl: '/api/v1/search/filtered/tag/suggest'
 ````

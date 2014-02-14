@@ -1,15 +1,18 @@
-#gene-filter-nav
-  .filter-fixed-header-left
-    != gene.get('name')
-    em#gene-filter-nav-left-num
+#gene-filter
+  #gene-filter-nav.filter-fixed-header-nav
+    .filter-fixed-header-left
+      != gene.get('name')
+      | &nbsp;&mdash;&nbsp;
+      em
+        span.filter-artworks-num
+        | &nbsp;Works
+    unless gene.isSubjectMatter()
+      label By Artists:&nbsp;
+      a#gene-filter-all-artists.filter-button.is-active All Artists
+      label By Work:&nbsp;
+    span#gene-filter-artworks-nav
+      include ../../../components/filter/artworks_nav/template.jade
   unless gene.isSubjectMatter()
-    label By Artists:&nbsp;
-    a#gene-filter-all-artists.filter-button.is-active All Artists
-    label By Work:&nbsp;
-  span#gene-filter-artworks-nav
-    include ../../../components/filter/artworks_nav/template.jade
-unless gene.isSubjectMatter()
-  #gene-artists
-    .loading-spinner
-#gene-artworks-container
-  include ../../../components/filter/artworks/template
+    #gene-artists
+      .loading-spinner
+  include ../../../components/filter/artworks/template.jade

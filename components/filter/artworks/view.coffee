@@ -4,8 +4,8 @@ Artworks = require '../../../collections/artworks.coffee'
 mediator = require '../mediator.coffee'
 FilterSortCount = require '../sort_count/view.coffee'
 ArtworkColumnsView = require '../../artwork_columns/view.coffee'
-template = -> require('./template.jade') arguments...
-
+FilterArtworksNav = require '../artworks_nav/view.coffee'
+FilterFixedHeader = require '../fixed_header/view.coffee'
 COLUMN_WIDTH = 300
 
 module.exports = class FilterArtworksView extends Backbone.View
@@ -13,17 +13,29 @@ module.exports = class FilterArtworksView extends Backbone.View
   pageSize: 10
 
   initialize: (options) ->
+    _.extend @, options
     @params = {}
     @$window = $(window)
     @artworks = new Artworks
-    @artworks.url = options.url
-    @sortCount = new FilterSortCount el: $('.filter-sort-count')
+    @artworks.url = @artworksUrl
+    new FilterSortCount
+      el: @$('.filter-artworks-sort-count')
+    new FilterFixedHeader
+      el: @$('.filter-fixed-header-nav')
+    new FilterArtworksNav
+      el: @$('.filter-artworks-nav')
     @artworks.on 'sync', @render
     mediator.on 'filter', @reset
+    mediator.on 'filter', @renderCounts
     @$el.infiniteScroll @nextPage
 
+  renderCounts: (params) =>
+    $.ajax(url: @paramsUrl, data: params).then (res) =>
+      mediator.trigger 'counts', res
+      @$('.filter-artworks-num').html res.total
+
   render: (c, res) =>
-    @$('.filter-artworks-list-container').attr 'data-state',
+    @$('.filter-artworks').attr 'data-state',
       if @artworks.length is 0 then 'no-results'
       else if res.length < @pageSize then 'finished-paging'
       else ''
