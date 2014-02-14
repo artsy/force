@@ -42,17 +42,17 @@ describe 'FilterArtworksView', ->
 
   describe '#reset', ->
 
-    it 'fetches the filtered artworks', ->
-      @view.reset { dimension: 24 }
-      Backbone.sync.args[0][2].data.dimension.should.equal 24
-
+    it 'triggers the next page fetching the filtered artworks', ->
+      @view.params.on 'change:page', spy = sinon.spy()
+      @view.reset()
+      spy.called.should.be.ok
 
   describe '#nextPage', ->
 
     it 'fetches the next page of artworks', ->
+      @view.params.set page: 1
       @view.nextPage()
-      Backbone.sync.args[0][1].url.should.include '/filtered/gene'
-      Backbone.sync.args[0][2].data.page.should.equal @view.params.page
+      @view.params.get('page').should.equal 2
 
   describe '#render', ->
 

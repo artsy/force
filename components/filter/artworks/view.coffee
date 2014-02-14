@@ -58,7 +58,6 @@ module.exports = class FilterArtworksView extends Backbone.View
     @$('.filter-artworks-num').html @counts.get('total')
 
   nextPage: =>
-    console.log @$el.is(':hidden'), @$('.filter-artworks').attr('data-state')
     return if @$el.is(':hidden') or @$('.filter-artworks').attr('data-state') is 'finished-paging'
     @params.set page: (@params.get('page') + 1) or 1
 

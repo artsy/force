@@ -15,7 +15,10 @@ describe 'FilterSortCount', ->
         trigger: sinon.stub()
         on: sinon.stub()
       }
-      @view = new FilterSortCount el: $ "<div></div>"
+      @view = new FilterSortCount
+        el: $ "<div></div>"
+        counts: new Backbone.Model
+        params: new Backbone.Model
       done()
 
   afterEach ->
@@ -26,7 +29,6 @@ describe 'FilterSortCount', ->
     @view.render()
     @view.$el.html().should.include '1001'
 
-  it 'triggers a filter even for sorting', ->
+  it 'updates the params to sort', ->
     @view.sort target: $ "<div data-sort='-foo'></div>"
-    @mediator.trigger.args[0][0].should.equal 'filter'
-    @mediator.trigger.args[0][1].sort.should.equal '-foo'
+    @view.params.get('sort').should.equal '-foo'
