@@ -24,12 +24,15 @@
 
   //- Edition Sets
   if artwork.isMultipleEditions()
-    .artwork-edition-sets
+    form.artwork-edition-sets
       for edition in artwork.editions.models
         .artwork-edition-set
-          .aes-imperial!= edition.dimensions({ metric: 'in', format: 'superscript' })
-          .aes-metric= edition.dimensions({ metric: 'cm', format: 'decimal' })
-          .aes-edition-size= edition.get('editions')
+          if artwork.isEditionAcquireable(edition)
+            .aes-radio-button: input( type='radio', value= edition.id, name='edition' )
+          .aes-details
+            .aes-imperial!= edition.dimensions({ metric: 'in', format: 'superscript' })
+            .aes-metric= edition.dimensions({ metric: 'cm', format: 'decimal' })
+            .aes-edition-size= edition.get('editions')
           .aes-price= edition.priceDisplay()
 
   //- Partner link

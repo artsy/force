@@ -124,6 +124,11 @@ module.exports = class Artwork extends Backbone.Model
   isUnavailableButInquireable: ->
     not @get('forsale') and @get('inquireable') and not @get('sold')
 
+  isEditionAcquireable: (edition) ->
+    edition.get('forsale') and
+    edition.get('acquireable') and
+    @get('acquireable')
+
   # Assuming there is something *vaguely* numeric here
   # this will return true
   #
