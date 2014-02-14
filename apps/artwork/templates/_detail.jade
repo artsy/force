@@ -1,18 +1,19 @@
 .artwork-meta
   //- Primary artwork metadata
-  if artist
-    h2.artwork-detail-artist
-      a( href= "/artist/#{artist.id}" )= artist.get('name')
-
-  if artwork.get('title')
-    h1.artwork-detail-title
-      = artwork.get('title')
-      if artwork.get('date')
-        | , #{artwork.get('date')}
+  h1
+    if artist
+      .artwork-detail-artist
+        a( href= "/artist/#{artist.id}" )= artist.get('name')
+    if artwork.get('title')
+      .artwork-detail-title
+        = artwork.get('title')
+        if artwork.get('date')
+          | , #{artwork.get('date')}
   .artwork-detail-medium= artwork.get('medium')
-  .artwork-detail-dimensions
-    .amd-imperial!= artwork.dimensions({ metric: 'in', format: 'superscript' })
-    .amd-metric= artwork.dimensions({ metric: 'cm', format: 'decimal' })
+  unless artwork.isMultipleEditions()
+    .artwork-detail-dimensions
+      .amd-imperial!= artwork.dimensions({ metric: 'in', format: 'superscript' })
+      .amd-metric= artwork.dimensions({ metric: 'cm', format: 'decimal' })
   if artwork.editionStatus()
     .artwork-edition-status
       = artwork.editionStatus()
