@@ -92,9 +92,10 @@ module.exports = class Fair extends Backbone.Model
     filteredSearchOptions.url = "#{sd.ARTSY_URL}/api/v1/search/filtered/fair/#{@get('id')}/suggest"
     filteredSearchOptions.fetch options
 
-  itemsToColumns: (items, numberOfColumns) ->
+  itemsToColumns: (items, numberOfColumns=2) ->
     maxRows = Math.floor(items.length / numberOfColumns)
-    items[(i * maxRows + i)..((i + 1) * maxRows + i)] for i in [0...numberOfColumns]
+    for i in [0...numberOfColumns]
+      items[(i * maxRows)...((i + 1) * maxRows)]
 
   filteredSearchColumns: (filterdSearchOptions, numberOfColumns=2, key='related_gene', namespace='category') ->
     href = @href()
