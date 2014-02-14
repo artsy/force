@@ -1,6 +1,6 @@
-sd        = require('sharify').data
-_         = require 'underscore'
-Backbone  = require 'backbone'
+sd                  = require('sharify').data
+_                   = require 'underscore'
+Backbone            = require 'backbone'
 { Image, Markdown } = require 'artsy-backbone-mixins'
 PartnerLocation     = require './partner_location.coffee'
 OrderedSets         = require '../collections/ordered_sets.coffee'
@@ -15,6 +15,9 @@ module.exports = class Fair extends Backbone.Model
 
   href: ->
     "/#{@get('organizer')?.profile_id}"
+
+  hasImage: (version = 'wide') ->
+    version in (@get('image_versions') || [])
 
   location: ->
     if @get('location')
@@ -83,3 +86,21 @@ module.exports = class Fair extends Backbone.Model
         else
           options.error
       error: options.error
+
+  fetchFilteredSearchOptions: (options) ->
+    filteredSearchOptions = new Backbone.Model
+    filteredSearchOptions.url = "#{sd.ARTSY_URL}/api/v1/search/filtered/fair/#{@get('id')}/suggest"
+    filteredSearchOptions.fetch options
+
+  itemsToColumns: (items, numberOfColumns) ->
+    maxRows = Math.floor(items.length / numberOfColumns)
+    items[(i * maxRows + i)..((i + 1) * maxRows + i)] for i in [0...numberOfColumns]
+
+  filteredSearchColumns: (filterdSearchOptions, numberOfColumns=2, key='related_gene', namespace='category') ->
+    href = @href()
+    items = for item in _.keys(filterdSearchOptions.get(key))
+      {
+        name: item.replace('1', '').split('-').join(' ')
+        href: "#{href}/browse/#{namespace}/#{item}"
+      }
+    @itemsToColumns items, numberOfColumns
