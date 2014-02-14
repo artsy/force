@@ -58,10 +58,10 @@ module.exports = class FilterArtworksView extends Backbone.View
 
   nextPage: =>
     return unless @$el.is ':visible'
-    @params.set { page: (@params.get('page') + 1) or 2
+    @params.set page: (@params.get('page') + 1) or 2
 
   reset: =>
-    @params.set page: 1
+    @params.set(page: 1, silent: true).trigger('change:page')
     @counts.fetch data: @params.toJSON()
     @$('.filter-artworks-list').html ''
     _.defer @newColumnsView
