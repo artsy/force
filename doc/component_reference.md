@@ -336,27 +336,6 @@ new FilterFixedHeader(el: $ '#gene-filter-header')
 
 * Use the `.filter-fixed-header-left` class in your template to get the meta information on the left hand side such as gene name or number of works.
 
-### Filter Artworks
-
-A view that glues together the artwork columns and the filter sort count components using the filter meidator. This component is used in the gene, tag, and browse pages.
-
-![](images/filter_artworks.png)
-
-Include the template
-
-````jade
-#gene-artworks-container
-  include ../../../components/filter/artworks/template
-````
-
-Then add the view
-
-````coffeescript
-@filterArtworksView = new FilterArtworksView
-  el: $ '#gene-artworks-container'
-  url: "#{ARTSY_URL}/api/v1/search/filtered/gene/#{@model.get 'id'}"
-````
-
 ### Contact View
 
 ```coffeescript
@@ -391,4 +370,3 @@ The view's `submit` method can be intercepted to add more data to the model:
     super
 
 ```
->>>>>>> 002cdc578a6cb7489ba98a54138a17835dbe3b14
