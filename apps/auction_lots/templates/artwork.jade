@@ -16,8 +16,9 @@ block body
       h1.avant-garde-header-center
         | Auction Results for
         a( href="/artist/#{artwork.get('artist').id}")  #{artwork.get('artist').name},&nbsp;
-        a( href="/artwork/#{artwork.id}" ) #{artwork.get('title')}&nbsp;
-        | (#{artwork.get('date')})
+        a( href="/artwork/#{artwork.id}" ) #{artwork.get('title')}
+        if artwork.get('date')
+          | &nbsp;(#{artwork.get('date')})
 
     .auction-lots-beta-alert.garamond-alert-info
       em Note:&nbsp;
