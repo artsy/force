@@ -8,12 +8,16 @@ Artist    = require '../../models/artist'
     error   : res.backboneError
     success : (model, response, options) ->
       res.locals.sd.ARTWORK = response
-      artist = new Artist artwork.get('artist')
-      artist.fetch
-        cache   : true
-        error   : res.backboneError
-        success : (model, response, options) ->
-          res.locals.sd.ARTIST = response
-          res.render 'index',
-            artwork: artwork
-            artist : artist
+      if artwork.get('artist')
+        artist = new Artist artwork.get('artist')
+        artist.fetch
+          cache   : true
+          error   : res.backboneError
+          success : (model, response, options) ->
+            res.locals.sd.ARTIST = response
+            res.render 'index',
+              artwork: artwork
+              artist : artist
+      else
+        res.render 'index',
+          artwork: artwork

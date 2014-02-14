@@ -44,7 +44,7 @@ module.exports = class ArtworkView extends Backbone.View
     @following  = new Following(null, kind: 'artist') if @currentUser?
 
   setupArtistArtworks: ->
-    return unless @artist.get('artworks_count') > 1
+    return unless @artist?.get('artworks_count') > 1
     @listenTo @artist.artworks, 'sync', @renderArtistArtworks
     @artist.artworks.fetch data: size: 5, published: true
 
