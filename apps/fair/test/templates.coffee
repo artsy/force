@@ -161,3 +161,37 @@ describe 'Fair', ->
       $('.fair-exhibitors-list').length.should.equal 1
       $('.fair-exhibitors-list a').length.should.equal 1
       $('.fair-exhibitors-list .a-to-z-item').length.should.equal 2
+
+  describe 'overview', ->
+    before ->
+      fair = new Fair (fabricate 'fair', about: 'about the fair', image_versions: ['wide'], image_url: "foo/wide.jpg")
+      profile = new Profile (fabricate 'fair_profile')
+
+      filteredSearchOptions = new Backbone.Model {
+        related_gene:
+          'abstract-painting': 388
+          'art-since-2000': 1717
+          'black-and-white-photography': 99
+          'contemporary-color-fields': 38
+          'contemporary-conceptualism': 439
+          'contemporary-photography': 310
+          'contemporary-pop': 78
+          'pop-art': 55
+          'the-fantastic': 183
+          'women-artists': 600
+      }
+
+      filteredSearchColumns = fair.filteredSearchColumns filteredSearchOptions
+      @template = render('overview')
+        sd:
+          ARTSY_URL : 'http://localhost:5000'
+          ASSET_PATH: 'http://localhost:5000'
+        fair: fair
+        profile: profile
+        filteredSearchColumns: filteredSearchColumns
+
+    it 'renders without errors', ->
+      $ = cheerio.load @template
+      $('.fair-search-options-column').length.should.equal 2
+      $('.fair-search-options-column a').length.should.equal 10
+      $('.feature-image').length.should.equal 1
