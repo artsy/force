@@ -25,10 +25,16 @@
   //- Edition Sets
   if artwork.isMultipleEditions()
     form.artwork-edition-sets
-      for edition in artwork.editions.models
-        .artwork-edition-set
+      for edition, i in artwork.editions.models
+        label.artwork-edition-set
           if artwork.isEditionAcquireable(edition)
-            .aes-radio-button: input( type='radio', value= edition.id, name='edition' )
+            .aes-radio
+              input.aes-radio-button(
+                type      = 'radio'
+                value     = edition.id
+                name      = 'edition'
+                checked   = i === 0 ? true : undefined
+              )
           .aes-details
             .aes-imperial!= edition.dimensions({ metric: 'in', format: 'superscript' })
             .aes-metric= edition.dimensions({ metric: 'cm', format: 'decimal' })
@@ -61,7 +67,8 @@
 
   //- Buy # todo
   if artwork.get('acquireable')
-    a.avant-garde-button-black Buy
+    a.avant-garde-button-black.artwork-buy-button
+      | Buy
 
   //- Contact a specialist
   if artwork.get('inquireable')
