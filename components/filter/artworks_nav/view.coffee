@@ -1,22 +1,21 @@
+_ = require 'underscore'
 Backbone = require 'backbone'
-mediator = require '../mediator.coffee'
 
 module.exports = class FilterArtworksNav extends Backbone.View
 
-  initialize: (opts) ->
-    { @filterOptions } = opts
-    mediator.on 'counts', @renderCounts
-    @
+  initialize: (options) ->
+    _.extend @, options
+    @counts.on 'sync', @renderCounts
+
+  renderCounts: =>
+    for range, val of @counts.get('price_range')
+      @$("a[data-range='#{range}'] .filter-dropdown-count").html '(' + val + ')'
+    for size, val of @counts.get('dimension')
+      @$("a[data-size='#{size}'] .filter-dropdown-count").html '(' + val + ')'
 
   toggleActive: (el) ->
     @$('.is-active').removeClass 'is-active'
     $(el).addClass('is-active')
-
-  renderCounts: (counts) =>
-    for range, val of counts.price_range
-      @$("a[data-range='#{range}'] .filter-dropdown-count").html '(' + val + ')'
-    for size, val of counts.dimension
-      @$("a[data-size='#{size}'] .filter-dropdown-count").html '(' + val + ')'
 
   events:
     'click .filter-artworks-nav-allworks': 'allWorks'
@@ -27,19 +26,19 @@ module.exports = class FilterArtworksNav extends Backbone.View
 
   allWorks: ->
     @toggleActive @$('.filter-artworks-nav-allworks')
-    mediator.trigger 'filter', {}
+    @params.clear()
 
   filterPrice: (e) ->
     @toggleActive @$('.filter-artworks-nav-price')
-    mediator.trigger 'filter', { price_range: $(e.target).data 'range' }
+    @params.set { price_range: $(e.target).data 'range' }
 
   filterMedium: (e) ->
     @toggleActive @$('.filter-artworks-nav-medium')
-    mediator.trigger 'filter', { medium: $(e.target).data 'medium' }
+    @params.set { medium: $(e.target).data 'medium' }
 
   filterSize: (e) ->
     @toggleActive @$('.filter-artworks-nav-size')
-    mediator.trigger 'filter', { dimension: $(e.target).data 'size' }
+    @params.set { dimension: $(e.target).data 'size' }
 
   checkDropdownItem: (e) ->
     $(e.currentTarget)

@@ -1,7 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 Artworks = require '../../../collections/artworks.coffee'
-mediator = require '../mediator.coffee'
 FilterSortCount = require '../sort_count/view.coffee'
 ArtworkColumnsView = require '../../artwork_columns/view.coffee'
 FilterArtworksNav = require '../artworks_nav/view.coffee'
@@ -14,25 +13,41 @@ module.exports = class FilterArtworksView extends Backbone.View
 
   initialize: (options) ->
     _.extend @, options
-    @params = {}
     @$window = $(window)
+
+    # Set up artworks, a params model that stores the state of the filter
+    # query params, and a counts model that syncs to the
+    # /api/v1/search/filtered/:model/:id/suggest API to update numbers like "Showing X Works".
+    # The various sub-views will hook into these model/collection events to update themselves.
     @artworks = new Artworks
     @artworks.url = @artworksUrl
+    @counts = new Backbone.Model
+    @counts.url = @countsUrl
+    @params = new Backbone.Model
+
+    # Whenever the filter params are changed be sure to sync the artworks and counts.
+    @params.on 'change', (options) =>
+      @artworks.fetch data: @params.toJSON(), remove: options.remove
+      @counts.fetch data: @params.toJSON()
+
+    # Add child views passing in necessary models/collections
     new FilterSortCount
       el: @$('.filter-artworks-sort-count')
-    new FilterFixedHeader
-      el: @$('.filter-fixed-header-nav')
+      counts: @counts
+      params: @params
     new FilterArtworksNav
       el: @$('.filter-artworks-nav')
-    @artworks.on 'sync', @render
-    mediator.on 'filter', @reset
-    mediator.on 'filter', @renderCounts
-    @$el.infiniteScroll @nextPage
+      counts: @counts
+      params: @params
+    new FilterFixedHeader
+      el: @$('.filter-fixed-header-nav')
+      params: @params
 
-  renderCounts: (params) =>
-    $.ajax(url: @paramsUrl, data: params).then (res) =>
-      mediator.trigger 'counts', res
-      @$('.filter-artworks-num').html res.total
+    # Listen to events on various models/collections
+    @artworks.on 'sync', @render
+    @params.on 'change', @reset
+    @counts.on 'sync', @renderCounts
+    @$el.infiniteScroll @nextPage
 
   render: (c, res) =>
     @$('.filter-artworks').attr 'data-state',
@@ -42,14 +57,15 @@ module.exports = class FilterArtworksView extends Backbone.View
     @newColumnsView() unless @columnsView?
     @columnsView.appendArtworks(new Artworks(res).models)
 
+  renderCounts: =>
+    @$('.filter-artworks-num').html @counts.get('total')
+
   nextPage: =>
     return unless @$el.is ':visible'
-    @params.page = @params.page + 1 or 2
-    @artworks.fetch(data: @params, remove: false)
+    @params.set { page: (@params.get('page') + 1) or 2 }, { remove: false }
 
-  reset: (@params = {}) =>
+  reset: =>
     @$('.filter-artworks-list').html ''
-    @artworks.fetch(data: @params)
     _.defer @newColumnsView
 
   newColumnsView: =>
