@@ -61,10 +61,9 @@ module.exports = class PartnerOverviewView extends Backbone.View
   renderShows: (featured, shows) ->
     @ensurePosterImages featured.concat shows
     @$('.partner-overview-shows').html showsTemplate
+      partner: @partner
       featured: featured[0]
       current: shows
-      upcoming: []
-      past: []
 
   ensurePosterImages: (shows) ->
     _.each shows, (show) =>
@@ -96,7 +95,7 @@ module.exports = class PartnerOverviewView extends Backbone.View
         @renderArtists groups
 
   renderArtists: (groups) ->
-    @$('.partner-overview-artists').html artistsGridTemplate groups: groups
+    @$('.partner-overview-artists').html artistsGridTemplate groups: groups, partner: @partner
 
   initializePosts: -> return
 

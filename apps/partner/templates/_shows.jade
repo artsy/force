@@ -23,17 +23,22 @@ mixin showsGallery(shows, isFeatured)
     section.partner-shows-section.featured
       +showsGallery([featured], true)
 
-  if current.length > 0
+  if current && current.length > 0
     section.partner-shows-section.current
       h2.avant-garde-header-center.partner-shows-section-heading Current Shows
       +showsGallery(current, false)
 
-  if upcoming.length > 0
+  if upcoming && upcoming.length > 0
     section.partner-shows-section.upcoming
       h2.avant-garde-header-center.partner-shows-section-heading Upcoming Shows
       +showsGallery(upcoming, false)
 
-  if past.length > 0
+  if past && past.length > 0
     section.partner-shows-section.past
       h2.avant-garde-header-center.partner-shows-section-heading Past Shows
       +showsGallery(past, false)
+
+  .partner-shows-see-all.avant-garde-header-center
+    a.faux-underline-hover(
+      href="#{partner.url()}/artists"
+    ) See all shows
