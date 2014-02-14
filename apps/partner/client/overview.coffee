@@ -19,7 +19,6 @@ module.exports = class PartnerOverviewView extends Backbone.View
     { @profile, @partner, @numberOfShows, @numberOfFeatured } = _.defaults options, @defaults
     @initializeShows()
     @initializeArtists()
-    @initializePosts()
     @render()
 
   render: ->
@@ -30,7 +29,7 @@ module.exports = class PartnerOverviewView extends Backbone.View
     @fetchAndOrganizeShows()
 
   #
-  # Recursively fetch 1 featured show (if needed) and enough shows to display.
+  # Recursively fetch enough featured/other shows to display.
   #
   fetchAndOrganizeShows: (featured=[], shows=[], page=1, size=30) ->
     partnerShows = new PartnerShows()
@@ -38,9 +37,9 @@ module.exports = class PartnerOverviewView extends Backbone.View
     partnerShows.fetch
       data: { sort: "-featured,-end_at", page: page, size: size }
       success: =>
-        if (need = @numberOfFeatured - featured.length) > 0
+        if @numberOfFeatured - featured.length > 0
           f = partnerShows.featured()
-          featured = featured.concat [f].slice(0, need)
+          featured.push f
 
         exclude = if @isRenderFull then [f] else []
 
@@ -48,6 +47,7 @@ module.exports = class PartnerOverviewView extends Backbone.View
           current   = partnerShows.current(exclude).models
           upcoming  = partnerShows.upcoming(exclude).models
           past      = partnerShows.past(exclude).models
+          # order of getting shows: current -> upcoming -> past
           shows = shows.concat (current.concat upcoming, past).slice(0, need)
 
         if (shows.length >= @numberOfShows and
@@ -74,13 +74,16 @@ module.exports = class PartnerOverviewView extends Backbone.View
     @$(".partner-show[data-show-id='#{show.get('id')}'] .partner-show-cover-image").css
       "background-image": "url(#{imageUrl})"
 
+  #
+  # Fetch all partner artists at once and group them.
+  #
   initializeArtists: ->
     partnerArtists = new PartnerArtists()
     partnerArtists.url = "#{@partner.url()}/partner_artists"
     partnerArtists.fetchUntilEnd
       cache: true
       success: =>
-        # Display represented artists or non- ones who has published artworks
+        # Display represented artists or non- ones who have published artworks
         displayables = partnerArtists.filter (pa) ->
           pa.get('represented_by') or
           pa.get('published_artworks_count') > 0
@@ -95,13 +98,6 @@ module.exports = class PartnerOverviewView extends Backbone.View
         @renderArtists groups
 
   renderArtists: (groups) ->
-    @$('.partner-overview-artists').html artistsGridTemplate groups: groups, partner: @partner
-
-  initializePosts: -> return
-
-  renderLoading: ->
-    unless @$loadingSpinner?
-      @$el.after( @$loadingSpinner = $('<div class="loading-spinner"></div>') )
-    @$loadingSpinner.show()
-
-  hideLoading: -> @$loadingSpinner.hide()
+    @$('.partner-overview-artists').html artistsGridTemplate
+      partner: @partner
+      groups: groups

@@ -1,22 +1,25 @@
 .partner-shows
   .partner-shows-section
-    margin-bottom 80px
-    h2
-      margin-bottom 20px
+    margin-bottom 50px
     a
       text-decoration none
+
+    .partner-shows-section-heading
+      margin-bottom 50px
 
     .partner-show
       box-sizing content-box
       display inline-block
       vertical-align top
       width 30%
-      margin 0
-      padding 2.5%
+      margin 0 0 5% 0
+      padding 0 2.5%
       &:nth-child(3n+1)
         padding-left 0
       &:nth-child(3n)
         padding-right 0
+      &:nth-last-child(-n+3)
+        margin-bottom 0
 
     .partner-show-cover-image
       background-size cover
@@ -24,6 +27,8 @@
       padding-bottom 70%
       margin-bottom 10px
       position relative
+      img
+        display none
 
     .partner-show-overlay
       position absolute
@@ -56,15 +61,18 @@
     .partner-show-time
       font-size 18px
 
+  // Special treatment for the featured section
   .partner-shows-section.featured
     .partner-show
       width 100%
       padding 0
+      margin 0
 
     .partner-show-cover-image
       padding-bottom 45%
       float right
       width 66.66%
+      margin-bottom 0
     
     .partner-show-caption
       float right
