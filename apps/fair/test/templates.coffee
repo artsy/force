@@ -194,4 +194,5 @@ describe 'Fair', ->
       $ = cheerio.load @template
       $('.fair-search-options-column').length.should.equal 2
       $('.fair-search-options-column a').length.should.equal 10
+      $('.fair-search-options-column').text().should.include 'contemporary pop'
       $('.feature-image').length.should.equal 1
