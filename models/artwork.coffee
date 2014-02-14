@@ -6,6 +6,8 @@ AdditionalImage   = require './additional_image.coffee'
 
 { Image, Dimensions, Markdown } = require 'artsy-backbone-mixins'
 
+_.mixin(require 'underscore.string')
+
 module.exports = class Artwork extends Backbone.Model
 
   _.extend @prototype, Image(sd.SECURE_IMAGES_URL)
@@ -69,6 +71,9 @@ module.exports = class Artwork extends Backbone.Model
   # return {Boolean}
   isDownloadable: ->
     @defaultImage().get('downloadable')
+
+  downloadableFilename: ->
+    _.slugify @toOneLine()
 
   # Are there comparable artworks;
   # such that we can display a link to auction results

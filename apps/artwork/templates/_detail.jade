@@ -111,7 +111,7 @@
         | Auction Results
         sup Beta
     if artwork.isDownloadable()
-      a( href=artwork.defaultImageUrl('larger'), target='_blank', download)
+      a( href=artwork.defaultImageUrl('larger'), target='_blank', download=artwork.downloadableFilename())
         i.icon-download
         | Download Image
 
