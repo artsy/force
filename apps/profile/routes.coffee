@@ -58,6 +58,15 @@ getTemplateForProfileType = (profile) ->
 #
 # Gallery only routes
 #
+@overview = (req, res, next) ->
+  fetchProfile req, res, next, (profile) ->
+    if profile.isGallery()
+      res.locals.sd.SECTION = 'overview'
+      res.render getTemplateForProfileType(profile),
+        profile : profile
+    else
+      res.redirect profile.href()
+
 @contact = (req, res, next) ->
   fetchProfile req, res, next, (profile) ->
     if profile.isGallery()
