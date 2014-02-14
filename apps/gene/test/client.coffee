@@ -74,14 +74,8 @@ describe 'GeneFilter', ->
 
   beforeEach ->
     GeneFilter = benv.require resolve(__dirname, '../client/filter.coffee')
-    GeneFilter.__set__ 'FilterArtworksNav', class @FilterArtworksNav
-      render: sinon.stub()
     GeneFilter.__set__ 'FilterArtworksView', class @FilterSortCount
       render: sinon.stub()
-    GeneFilter.__set__ 'mediator', @mediator = {
-      on: sinon.stub(),
-      trigger: sinon.stub()
-    }
     sinon.stub Backbone, 'sync'
     @view = new GeneFilter
       el: $('body')
@@ -96,21 +90,9 @@ describe 'GeneFilter', ->
       @view.artworksMode()
       @view.$el.data('state').should.equal 'artworks'
 
-  describe '#renderCounts', ->
-
-    it 'fetches the filter suggest and triggers a counts update', ->
-      @view.renderCounts()
-      _.last(Backbone.sync.args)[2].success { total: 1022 }
-      @mediator.trigger.args[0][0].should.equal 'counts'
-      @mediator.trigger.args[0][1].total.should.equal 1022
-
   describe '#artistMode', ->
 
     it 'switches back to artist mode', ->
       @view.$el.attr 'data-state', 'artworks'
       @view.artistMode()
       @view.$el.attr('data-state').should.equal ''
-
-  describe '#renderCounts', ->
-
-    it 'renders the counts in the header', ->
