@@ -45,7 +45,7 @@ module.exports = class PartnerShow extends Backbone.Model
     ]).join ' | '
 
   #
-  # Get the poster image url of the show (e.g. used in the shows tab in 
+  # Get the poster image url of the show (e.g. used in the shows tab in
   # partner profile.)
   #
   # If no available images, it will fetch one for you and trigger a

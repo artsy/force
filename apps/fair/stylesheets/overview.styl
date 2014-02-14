@@ -1,21 +1,27 @@
+browse-container-width = 663px
+browse-container-height = 442px
+overview-container-height = (browse-container-height / 2)
+small-section-height = (browse-container-height / 2)
+left-column-width = 200px
+
 .feature-image
   position absolute
   top 0px
   left 0px
   width 100%
-  height 500px
+  height 600px
 
 .fair-sections-container
   max-width feed-max-width
   margin: 0px auto
   position relative
-  padding-left 200px
+  padding-left left-column-width
   margin-top 70px
   .fair-sections-small-heading
     font-size 22px
     margin-bottom 16px
   .sections-left, .sections-right
-    width: 45%
+    width: 50%
     display inline-block
     vertical-align top
   .sections-left
@@ -52,16 +58,101 @@
        padding 0px 5px
 
 .fair-overview-top
-  min-height 500px
+  min-height browse-container-height
   position relative
   max-width feed-max-width
+  line-height: 151%
   margin 25px auto 0px
   .fair-overview-top-left
-    width 200px
+    width left-column-width
     position absolute
     left 0px
+    top 0px
+  .fair-overview-right
+    position absolute
+    left left-column-width
     top 0px
   .large-profile-image
     height 150px
     width 150px
     background light-gray-border-color
+  .fair-name
+    margin-top: 23px
+
+.overview-heading
+  color white
+  avant-garde()
+
+.fair-overview-browse
+  height browse-container-height
+  width browse-container-width
+  position relative
+  display block
+  .fair-overview-browse-image
+    background light-gray-border-color
+    position absolute
+    top 0px
+    left 0px
+    height: browse-container-height
+    width: browse-container-width
+    background-color #000
+    &:hover
+      > .img
+        opacity 0.5
+  .fair-overview-browse-heading
+    bottom 20px
+    left 27px
+    position absolute
+
+.fair-overview-below-top-container
+  position: relative
+  max-width: feed-max-width
+  min-width feed-max-width
+  margin 0px auto
+  .fair-overview-below-top
+    margin-left left-column-width
+
+.large-section
+  width: 100%
+  display inline-block
+  height overview-container-height
+  .large-section-heading
+    avant-garde()
+    font-size 13px
+    margin-top 60px
+  .large-section-subheading
+    margin-top 10px
+    font-size 28px
+    line-height: 142%
+    width: 80%
+
+.container-left, .container-right
+  width: 50%
+  display inline-block
+  vertical-align top
+.container-right
+  text-align right
+
+.small-section
+  width: 50%
+  display inline-block
+  height: small-section-height
+  width: small-section-height
+  position relative
+  vertical-align top
+  background-color #000
+  &:hover
+    img
+      opacity 0.5
+  img
+    opacity 1
+    transition opacity 0.3s
+    height: 100%
+    width 100%
+  .section-heading
+    color white
+    avant-garde()
+    font-size 13px
+    position absolute
+    bottom 10px 
+    left 20px

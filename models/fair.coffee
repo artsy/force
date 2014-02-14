@@ -5,6 +5,7 @@ Backbone            = require 'backbone'
 PartnerLocation     = require './partner_location.coffee'
 OrderedSets         = require '../collections/ordered_sets.coffee'
 Profiles            = require '../collections/profiles.coffee'
+DateHelpers         = require '../components/util/date_helpers.coffee'
 
 module.exports = class Fair extends Backbone.Model
 
@@ -22,6 +23,15 @@ module.exports = class Fair extends Backbone.Model
   location: ->
     if @get('location')
       new PartnerLocation @get('location')
+
+  formatLocation: ->
+    @location()?.get('city')
+
+  formatDates: ->
+    DateHelpers.timespanInWords @get('start_at'), @get('end_at')
+
+  formatStartTime: ->
+    moment(@get('start_at')).fromNow()
 
   fetchExhibitors: (options) ->
     galleries = new @aToZCollection('show')
@@ -105,3 +115,5 @@ module.exports = class Fair extends Backbone.Model
         href: "#{href}/browse/#{namespace}/#{item}"
       }
     @itemsToColumns items, numberOfColumns
+
+  getItemsForKey: (key) ->
