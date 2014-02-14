@@ -7,8 +7,8 @@ append locals
   assetPackage = 'fair'
 
 block body
-  if fair.hasImage() && fair.imageUrl()
-    .feature-image( style="background-image: url(#{fair.imageUrl('wide')})" )
+  if coverImage && coverImage.imageUrl('medium')
+    .feature-image( style="background-image: url(#{profile.coverImage().imageUrl('medium')})" )
   #fair-page
     header.fair-page-header.main-layout-container
       include ./header_navigation

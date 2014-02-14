@@ -11,13 +11,13 @@
   
   .fair-overview-right
     a.fair-overview-browse( href=profile.href() + "/browse" )
-      .fair-overview-browse-image
+      img.fair-overview-browse-image(src=fair.imageUrl('wide') ))
       .fair-overview-browse-heading.overview-heading Browse all exhibitors
        
 .fair-overview-below-top-container
   .fair-overview-below-top
     .container-left
-      .large-section
+      a.large-section( href=profile.href() + "/for_you" )
         if user
           .large-section-heading Works for You
           .large-section-subheading Artist names

@@ -30,8 +30,9 @@ fetchFair = (req, res, next, success) ->
 
 fetchFairData = (fair, profile, res, options) ->
   data =
-    fair    : fair
-    profile : profile
+    fair      : fair
+    profile   : profile
+    coverImage: profile.coverImage()
 
   success = _.after 5, ->
     options.success data

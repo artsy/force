@@ -115,5 +115,3 @@ module.exports = class Fair extends Backbone.Model
         href: "#{href}/browse/#{namespace}/#{item}"
       }
     @itemsToColumns items, numberOfColumns
-
-  getItemsForKey: (key) ->
