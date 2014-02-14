@@ -57,16 +57,16 @@ artwork-detail-item-height  = 36px
 .artwork-additional-image
   display inline-block
   height 45px
-  padding 3px
   margin 5px
+  border 3px solid transparent
   vertical-align middle
-  transition background-color 0.125s
+  transition border-color 0.125s
   > img
     display inline-block
     height 100%
   &.is-active
   &[data-state='active']
-    background-color highlight-color
+    border-color highlight-color
 
 .artwork-image-actions
   padding 10px
