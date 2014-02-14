@@ -56,9 +56,9 @@ block body
           td= artwork.get('date')
           td.auction-lot-medium= artwork.get('medium')
           td
-            != artwork.dimensions({ format: 'superscript' })
+            != artwork.dimensions({ metric: 'in', format: 'superscript' })
             br
-            != artwork.dimensions({ format: 'decimal' })
+            != artwork.dimensions({ metric: 'cm', format: 'decimal' })
           td
           td
           td
