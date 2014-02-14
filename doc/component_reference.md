@@ -245,108 +245,11 @@ A library of components used in the multi-faceted fitler UIs across the site. E.
 
 ![](images/filter_overview.png)
 
-Filter isn't a full-blown component itself. It is instead a library of smaller common filter components that talk to the filter mediator. It's up to you to use the filter mediator and it's sub-components to build the appropriate UI for the app.
-
-For instance a simple UI like the browse page filter uses the filter/artworks_nav component in conjunction with the /artwork_columns component to create a filterable list view of all artworks accross the site. An example of gluing this together might look like:
-
-````coffeescript
-mediator = require '../../components/filter/mediator.coffee'
-FilterArtworksNav = require '../../components/filter/common_menus/view.coffee'
-ArtworkColumns = require '../../components/artwork_columns/view.coffee'
-
-# Set up a collection of site-wide artworks
-artworks = new Artworks
-artworks.url = '/api/v1/search/filtered/main'
-
-# Instantiate the filter and list views involved
-artworksNav = new FilterArtworksNav el: $('#browse-filter-header')
-list = new ArtworkColumns el: $('#browse-filter-list'), collection: artworks
-
-# When clicking "Price > Under $500" on the `artworksNav` view it will trigger
-# this mediator event. We hook into that to re-fetch the artworks collection
-# filtered by `?price_range` causing the columns view to re-render.
-mediator.on 'filter', (params) ->
-  artworks.fetch(data: params)
-````
-
-### Filter Artworks Nav
-
-The set of filter menus for artworks including the "All Works" button and "Price", "Medium", and "Size" dropdowns.
-
-![](images/filter_artwork_nav.png)
-
-Include the template
-
-````jade
-#gene-artworks-container
-  include ../../../components/filter/artworks_nav/template
-````
-
-Then add the view
-
-````coffeescript
-new FilterArtworksNav
-  el: $ '#tag-filter-artworks-nav'
-  # Pass in filter options (e.g. /api/v1/search/filtered/fair/armory-show-2013/options)
-  # to render the dynamic parts.
-  filterOptions:
-````
-
-This view will trigger events on the filter mediator when clicking on menu items.
-
-````coffeescript
-mediator = require '../../components/filter/mediator.coffee'
-
-# When clicking any of the filters this event will trigger with the params you
-# will likely pass to the API like { price_range: '-1:1000' }
-mediator.on 'filter', (params) ->
-````
-
-### Filter Sort Count
-
-A common subheader in the filtering UIs. This includes a sorting pulldown on the right which comes with the default "Recently Added", "Artwork Year Asc/Desc" sort values.
-
-![](images/filter_sort_count.png)
-
-````coffeescript
-new FilterSortCount(el: $ '#gene-filter-subheader')
-````
-
-This view will trigger events on the filter mediator when clicking the sort drop down.
-
-````coffeescript
-mediator = require '../../components/filter/mediator.coffee'
-
-# When clicking on the sort menu this event will trigger with the params you
-# will likely pass to the API like { sort: "-date_added" }
-mediator.on 'filter', (params) ->
-````
-
-This view will listen to events on the filter mediator to update it's count on the left.
-
-````coffeescript
-mediator = require '../../components/filter/mediator.coffee'
-
-artworks = #...
-mediator.trigger 'counts', "Showing #{artworks.counts} Works"
-````
-
-### Filter Fixed Header
-
-A view that turns an element into a fixed header by wrapping it in a `.filter-fixed-header-container` element that pop-locks by toggling the class `.filter-fixed-header` on the container. You can use this class to adjust your header CSS by scoping under it e.g. `.filter-fixed-header #gene-filter-nav`. This also adds a "jump" component which lets the user scroll back to the top of the page.
-
-![](images/filter_fixed_header.png)
-
-````coffeescript
-new FilterFixedHeader(el: $ '#gene-filter-header')
-````
-
-* Use the `.filter-fixed-header-left` class in your template to get the meta information on the left hand side such as gene name or number of works.
-* This component will listen for `filter` events on the mediator and smoothly scroll the window back to the top of the filter header.
+Currently the easiest way to use filter is to build on top of the FilterArtworks component detailed below. However if more control is needed you can use the smaller filter components listed below that to compose your own filter UI.
 
 ### Filter Artworks
 
-A view that glues together a bunch of filter components and the artwork columns components to create a common filtering UI used in gene, tag, and browse pages.
+A view that glues together a bunch of filter components and the artwork columns component to create a common filtering UI promonently used in gene, tag, and browse pages.
 
 ![](images/filter_artworks.png)
 
@@ -373,3 +276,63 @@ Then add the view
   artworksUrl: '/api/v1/search/filtered/tag/' + tag.get('id')
   paramsUrl: '/api/v1/search/filtered/tag/suggest'
 ````
+
+#### Building on top of it
+
+It's recommended to extend this UI you build a parent view that uses this view as a child to build on top of it. If you find you need to add more to this view please consider composing your own filter UI out of the smaller components below.
+
+#### How It Works
+
+A filter UI generally consists of three things keeping state: 1. The filter query params passed to the endpoint being filtered on (e.g. /api/v1/search/filtered/tag/:id for tag artworks) 2. The counts being returned from a separate endpoint (e.g. /api/v1/search/filtered/tag/:id/suggest for tag artworks) 3. The collection of actual domain objects (e.g. an Artworks collection). This view creates these pieces for you as `@filterArtworksView.params`, `@filterArtworksView.counts`, and `@filterArtworksView.artworks` and passes them along to the sub components listed below. The sub components then listen to events on these state-keeping pieces and update their UI as needed.
+
+### Filter Artworks Nav
+
+The set of filter menus for artworks including the "All Works" button and "Price", "Medium", and "Size" dropdowns.
+
+![](images/filter_artwork_nav.png)
+
+Include the template
+
+````jade
+#gene-artworks-container
+  include ../../../components/filter/artworks_nav/template
+````
+
+Then add the view passing in the counts and params
+
+````coffeescript
+new FilterArtworksNav
+  el: $ '#tag-filter-artworks-nav'
+  params: #...
+  counts: #...
+````
+
+Clicking nav items will set properties on the params e.g. clicking "Under $1000" will do `@params.set price_range: "-1:1000"`
+
+### Filter Sort Count
+
+A common subheader in the filtering UIs. This includes a sorting pulldown on the right which comes with the default "Recently Added", "Artwork Year Asc/Desc" sort values.
+
+![](images/filter_sort_count.png)
+
+````coffeescript
+new FilterSortCount
+  el: $ '#gene-filter-subheader'
+  params: #...
+  counts: #...
+````
+
+Selecting a drop down item will set properties on the params e.g. clicking "Recently Added" will do `@params.set sort: '-created_at'
+
+### Filter Fixed Header
+
+A view that turns an element into a fixed header by wrapping it in a `.filter-fixed-header-container` element that pop-locks by toggling the class `.filter-fixed-header` on the container. You can use this class to adjust your header CSS by scoping under it e.g. `.filter-fixed-header #gene-filter-nav`. This also adds a "jump" component which lets the user scroll back to the top of the page.
+
+![](images/filter_fixed_header.png)
+
+````coffeescript
+new FilterFixedHeader(el: $ '#gene-filter-header')
+````
+
+* Use the `.filter-fixed-header-left` class in your template to get the meta information on the left hand side such as gene name or number of works.
+* This component will listen for `filter` events on the mediator and smoothly scroll the window back to the top of the filter header.

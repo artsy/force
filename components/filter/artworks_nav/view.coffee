@@ -16,7 +16,7 @@ module.exports = class FilterArtworksNav extends Backbone.View
 
   renderActive: =>
     @$('.is-active').removeClass('is-active')
-    if @params.keys().length is 0 or _.isEqual(@params.keys(), ['page'])
+    if _.intersection(['price_range', 'dimension', 'medium'], @params.keys()).length is 0
       @$('.filter-artworks-nav-allworks').addClass('is-active')
     else
       @$("a[data-range='#{@params.get('price_range')}']")

@@ -6,11 +6,11 @@ FilterArtworksView = require '../../components/filter/artworks/view.coffee'
 module.exports.TagView = class TagView extends Backbone.View
 
   initialize: ->
-    new FilterArtworksView
+    @filterView = new FilterArtworksView
       el: $ '#tag-filter'
       artworksUrl: "#{ARTSY_URL}/api/v1/search/filtered/tag/#{@model.get 'id'}"
       countsUrl: "#{ARTSY_URL}/api/v1/search/filtered/tag/#{@model.get 'id'}/suggest"
-    @$('.filter-artworks-nav-allworks').click()
+    @filterView.reset()
 
 module.exports.init = ->
   new TagView

@@ -41,11 +41,12 @@ module.exports = class FilterArtworksView extends Backbone.View
     # Hook up events on the artworks, params, and counts
     @artworks.on 'sync', @render
     @counts.on 'sync', @renderCounts
-    @params.on 'change:price_range change:dimension change:medium', @reset
-    @params.on 'change:page', => @artworks.fetch data: @params.toJSON(), remove: false
+    @params.on 'change:price_range change:dimension change:medium change:sort', @reset
+    @params.on 'change:page', =>
+      @artworks.fetch { data: @params.toJSON(), remove: false, size: @pageSize }
     @$el.infiniteScroll @nextPage
 
-  render: (c, res) =>
+  render: (col, res) =>
     @$('.filter-artworks').attr 'data-state',
       if @artworks.length is 0 then 'no-results'
       else if res.length < @pageSize then 'finished-paging'
@@ -57,11 +58,12 @@ module.exports = class FilterArtworksView extends Backbone.View
     @$('.filter-artworks-num').html @counts.get('total')
 
   nextPage: =>
-    return unless @$el.is ':visible'
-    @params.set page: (@params.get('page') + 1) or 2
+    console.log @$el.is(':hidden'), @$('.filter-artworks').attr('data-state')
+    return if @$el.is(':hidden') or @$('.filter-artworks').attr('data-state') is 'finished-paging'
+    @params.set page: (@params.get('page') + 1) or 1
 
   reset: =>
-    @params.set(page: 1, silent: true).trigger('change:page')
+    @params.set({ page: 1 }, { silent: true }).trigger('change:page')
     @counts.fetch data: @params.toJSON()
     @$('.filter-artworks-list').html ''
     _.defer @newColumnsView

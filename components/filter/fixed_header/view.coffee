@@ -10,7 +10,7 @@ module.exports = class FilterFixedHeader extends Backbone.View
     @document = document.documentElement
     @$window = $ window
     @$window.on 'scroll', @popLock
-    @params.on 'change', @scrollToTop
+    @params.on 'change:price_range change:dimension change:medium change:sort', @scrollToTop
     @wrap()
     @setupJump()
 
