@@ -4,7 +4,8 @@ Backbone      = require 'backbone'
 CurrentUser   = require '../../../models/current_user.coffee'
 Partner       = require '../../../models/partner.coffee'
 PartnerShows  = require '../../../collections/partner_shows.coffee'
-template      = -> require('../templates/shows.jade') arguments...
+template      = -> require('../templates/overview.jade') arguments...
+showsTemplate = -> require('../templates/_shows.jade') arguments...
 
 module.exports = class PartnerOverviewView extends Backbone.View
 
@@ -20,7 +21,7 @@ module.exports = class PartnerOverviewView extends Backbone.View
     @render()
 
   render: ->
-    return
+    @$el.html template()
 
   initializeShows: ->
     @isRenderFull = @partner.get 'has_full_profile'
@@ -57,12 +58,11 @@ module.exports = class PartnerOverviewView extends Backbone.View
 
   renderShows: (featured, shows) ->
     @ensurePosterImages featured.concat shows
-    @$el.html $( template(
+    @$('.partner-overview-shows').html showsTemplate
       featured: featured[0]
       current: shows
       upcoming: []
       past: []
-    ))
 
   ensurePosterImages: (shows) ->
     _.each shows, (show) =>
