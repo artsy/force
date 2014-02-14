@@ -2,6 +2,7 @@ Backbone        = require 'backbone'
 ArtworkView     = require './view.coffee'
 DeepZoomView    = require './deep-zoom.coffee'
 ViewInRoomView  = require './view-in-room.coffee'
+analytics       = require '../../../lib/analytics.coffee'
 
 module.exports = class ArtworkRouter extends Backbone.Router
   routes:
@@ -20,6 +21,7 @@ module.exports = class ArtworkRouter extends Backbone.Router
 
   zoom: ->
     @_teardown()
+    analytics.track.click 'Clicked to zoom in on artwork'
     @baseView.route 'zoom'
     @view = new DeepZoomView $container: $('#artwork-deep-zoom-container'), artwork: @artwork
     @view.render()
@@ -27,10 +29,12 @@ module.exports = class ArtworkRouter extends Backbone.Router
   moreInfo: ->
     @_teardown()
     return unless @artwork.hasMoreInfo()
+    analytics.track.click "Viewed 'More Info'"
     @baseView.route 'more-info'
 
   viewInRoom: ->
     @_teardown()
+    analytics.track.click "Entered 'View In Room'"
     @baseView.route 'view-in-room'
     @view = new ViewInRoomView $container: $('#artwork-view-in-room-container'), $img: $('#the-artwork-image'), artwork: @artwork
     @view.render()

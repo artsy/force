@@ -9,6 +9,7 @@ RelatedPostsView      = require '../../../components/related_posts/view.coffee'
 RelatedArtworksView   = require './related-artworks.coffee'
 ContactPartnerView    = require '../../../components/contact/contact_partner.coffee'
 InquiryView           = require '../../../components/contact/inquiry.coffee'
+analytics             = require '../../../lib/analytics.coffee'
 
 Artworks = require '../../../collections/artworks.coffee'
 artistArtworksTemplate = -> require('../templates/_artist-artworks.jade') arguments...
@@ -17,12 +18,14 @@ artistArtworksTemplate = -> require('../templates/_artist-artworks.jade') argume
 
 module.exports = class ArtworkView extends Backbone.View
   events:
-    'click a[data-client]'                : 'intercept'
-    'click .circle-icon-button-share'     : 'openShare'
-    'click .circle-icon-button-save'      : 'saveArtwork'
-    'click .artwork-additional-image'     : 'changeImage'
-    'click .artwork-contact-button'       : 'contactPartner'
-    'click .artwork-inquiry-button'       : 'inquire'
+    'click a[data-client]'                  : 'intercept'
+    'click .circle-icon-button-share'       : 'openShare'
+    'click .circle-icon-button-save'        : 'saveArtwork'
+    'click .artwork-additional-image'       : 'changeImage'
+    'click .artwork-contact-button'         : 'contactPartner'
+    'click .artwork-inquiry-button'         : 'inquire'
+    'click .artwork-download-button'        : 'trackDownload'
+    'click .artwork-auction-results-button' : 'trackComparable'
 
   initialize: (options) ->
     { @artwork, @artist } = options
@@ -101,10 +104,13 @@ module.exports = class ArtworkView extends Backbone.View
 
   openShare: (e) ->
     e.preventDefault()
+    analytics.track.click 'Viewed sharing_is_caring form'
     new ShareView width: '350px', artwork: @artwork
 
   setupFollowButton: ->
     @followButton = new FollowButton
+      analyticsFollowMessage: 'Followed artist, via artwork info'
+      analyticsUnfollowMessage: 'Unfollowed artist, via artwork info'
       el: @$('.artwork-artist-follow-button')
       following: @following
       model: @artist
@@ -138,3 +144,9 @@ module.exports = class ArtworkView extends Backbone.View
       attr('src', $target.data 'href')
 
     @artwork.setActiveImage($target.data 'id')
+
+  trackDownload: ->
+    analytics.track.click 'Downloaded lo-res image'
+
+  trackComparable: ->
+    analytics.track.click "Viewed 'Comparables'"
