@@ -54,7 +54,7 @@ block body
         if artist
           if (artist.get('artworks_count') > 1) || (artist.get('blurb'))
             .artwork-artist( data-state=(artist.get('blurb') ? '' : 'pending' ) )
-              h3.avant-garde-header-center
+              h2.avant-garde-header-center
                 | About #{artist.get('name')}
 
               #artwork-artist-artworks-container
@@ -70,7 +70,7 @@ block body
 
       .ari-right
         if artwork.get('blurb')
-          h3.avant-garde-header-center
+          h2.avant-garde-header-center
             | About This Artwork
           .artwork-blurb
             != artwork.mdToHtml('blurb')
