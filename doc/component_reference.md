@@ -364,3 +364,38 @@ Then add the view
   el: $ '#gene-artworks-container'
   url: "#{ARTSY_URL}/api/v1/search/filtered/gene/#{@model.get 'id'}"
 ````
+
+### Contact View
+
+```coffeescript
+ContactView = require '../../components/contact/view.coffee'
+new ContactView(width: '600px', url: "#{sd.ARTSY_URL}/api/v1/feedback")
+```
+The base `ContactView` is configurable by passing in the following options: `width` (modal width, String value in px), `successMessage` (large copy that is displayed after a successful message is sent), `placeholder` (Main textarea placeholder), `url` (API endpoint that data is posted to).
+
+More useful is to extend the `ContactView` when configuration is more complex. The template for the header is a method that can be replaced with your own template function:
+
+```coffeescript
+_ = require 'underscore'
+sd = require('sharify').data
+ContactView   = require './view.coffee'
+headerTemplate  = -> require('./templates/feedback_header.jade') arguments...
+
+module.exports = class FeedbackView extends ContactView
+  headerTemplate: headerTemplate
+  defaults: -> _.extend super,
+    placeholder: 'Leave your comments'
+    url: "#{sd.ARTSY_URL}/api/v1/feedback"
+```
+
+The view's `submit` method can be intercepted to add more data to the model:
+
+```coffeescript
+  submit: ->
+    @model.set
+      artwork: @artwork.id
+      contact_gallery: true
+      session_id: SESSION_ID
+    super
+
+```
