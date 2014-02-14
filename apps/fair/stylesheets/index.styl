@@ -1,4 +1,15 @@
 @import '../../../components/stylus_lib'
+@import 'search'
+@import 'overview'
+
+.main-layout-container
+  margin 0px auto
+
+.body-transparent-header
+  .fair-page-header
+    margin-top 50px
+    #fair-search-container
+      margin-left 200px
 
 .fair-page-content
   margin-bottom 100px
@@ -26,48 +37,6 @@
     position absolute
     top 37px
     right 0px
-
-// Auto-complete
-#fair-search-container
-  position relative
-  // Fix for Firefox
-  line-height 0
-  &.is-loading
-    #fair-search-spinner
-      display block
-
-  .twitter-typeahead
-    display block
-    width 100%
-    height 100%
-  .tt-hint
-    display none
-  .tt-dropdown-menu
-    width 100%
-    background-color #fff
-    border 2px solid light-gray-border-color
-    border-top none
-  .tt-suggestion
-    border-bottom 1px solid light-gray-border-color
-    &:last-child
-      border-bottom none
-    &:hover,
-    &.tt-is-under-cursor
-      background-color #000
-      *
-        color #fff
-
-#fair-search-spinner
-  display none
-  position absolute
-  top 0
-  right 0
-  width 50px
-  height 100%
-
-.fair-search-results-container
-  max-width feed-max-width
-  margin: 0px auto
 
 #page-markdown-content.fair-info-section
   padding-top: 46px
@@ -107,38 +76,15 @@
     width 500px
 
 .browse-sections
+  margin: 0px auto
   margin-top: 80px
   max-width feed-max-width
   .browse-section
     display none
+
 .a-to-z-container
   border-top: 1px solid light-gray-border-color
   margin-top: 33px
-
-//
-// Search
-.search-results
-  .garamond-header-center
-    margin-top 50px
-    margin-bottom: 120px
-.fair-search-results
-  border-top: 1px solid light-gray-border-color
-  margin-top: 33px
-
-.artsy-search-results
-  .artsy-search-result
-    position relative
-    .search-result-artsy-link
-      position: absolute
-      right: 42px
-      top: 41px
-      font-size: 20px
-      pointer-events: none
-    &:hover
-      color white
-
-.search-query
-  margin-top 50px
 
 .foryou-section
   max-width feed-max-width

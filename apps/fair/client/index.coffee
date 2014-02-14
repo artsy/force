@@ -8,6 +8,7 @@ FairPostsView     = require './posts.coffee'
 FairSearchView    = require './search.coffee'
 ForYouView        = require './for_you.coffee'
 FairBrowseRouter  = require './browse.coffee'
+OverviewView      = require './overview.coffee'
 analytics         = require '../../../lib/analytics.coffee'
 FavoritesView     = require('../../favorites_follows/client/favorites.coffee').FavoritesView
 FollowsView       = require('../../favorites_follows/client/follows.coffee').FollowsView
@@ -22,6 +23,7 @@ module.exports.FairView = class FairView extends Backbone.View
     favorites : FavoritesView
     follows   : FollowsView
     forYou    : ForYouView
+    overview  : OverviewView
 
   initialize: (options) ->
     @fair = options.fair

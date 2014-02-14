@@ -1,17 +1,19 @@
 Backbone      = require 'backbone'
 BoothsView    = require './booths.coffee'
 ArtistView    = require './artist.coffee'
+ArtworksView  = require './artworks.coffee'
 
 module.exports = class BrowseRouter extends Backbone.Router
 
   routes:
-    ':id/browse/artists'           : 'artists'
-    ':id/browse/artist/:artist_id' : 'artist'
-    ':id/browse/booths'            : 'booths'
-    ':id/browse/booths/section/:section' : 'boothsSection'
-    ':id/browse/booths/region/:region'   : 'boothsRegion'
-    ':id/browse/exhibitors'        : 'exhibitors'
-    ':id/browse'                   : 'browse'
+    ':id/browse/artists'                   : 'artists'
+    ':id/browse/artist/:artist_id'         : 'artist'
+    ':id/browse/booths'                    : 'booths'
+    ':id/browse/booths/region/:region'     : 'boothsRegion'
+    ':id/browse/booths/section/:section'   : 'boothsSection'
+    ':id/browse/category/:category'        : 'category'
+    ':id/browse/exhibitors'                : 'exhibitors'
+    ':id/browse'                           : 'browse'
 
   initialize: (options) ->
     { @model, @fair } = options
@@ -34,6 +36,17 @@ module.exports = class BrowseRouter extends Backbone.Router
       fair    : @fair
       model   : @model
       filter  : params
+
+  artworks: (id, params={})->
+    $('.browse-section').hide()
+    @artist = new ArtworksView
+      el      : $('.browse-section.artworks')
+      fair    : @fair
+      model   : @model
+      filter  : params
+
+  category: (id, category)->
+    @artworks id, category: category
 
   boothsSection: (id, section)->
     @booths id, section: section

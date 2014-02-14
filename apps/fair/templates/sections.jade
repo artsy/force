@@ -1,0 +1,23 @@
+.fair-sections-container
+  .sections-left
+    .fair-sections-small-heading
+      | Browse 
+      != fair.get('name')
+    .fair-search-options
+      for column in filteredSearchColumns
+        .fair-search-options-column
+          for item in column
+            a( href=item.href )= item.name
+    .a-to-z-section-links
+      a( href=fair.href() + '/browse/artists') Artists A-Z
+      .fair-spacer |
+      a( href=fair.href() + '/browse/exhibitors') Exhibitors A-Z
+  .sections-right
+    .mobile-section-heading
+      | Going to the fair?
+      br
+      i Download Artsy for iPhone
+      br
+      | -- Your personal guide to the
+      br
+      != fair.get('name')

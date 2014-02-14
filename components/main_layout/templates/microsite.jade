@@ -1,7 +1,7 @@
 //- Override any locals with `append locals`
 block locals
   assetPackage = 'all'
-  bodyClass = (sd.HIDE_HEADER ? 'body-header-fixed' : '')
+  bodyClass = (sd.BODY_CLASS || '')
 
 doctype html
 html( data-useragent=userAgent )
@@ -10,7 +10,7 @@ html( data-useragent=userAgent )
     include head
     link( type='text/css', rel='stylesheet', href=(sd.ASSET_PATH + 'main_layout' + sd.CSS_EXT) )
     link( type='text/css', rel='stylesheet', href=(sd.ASSET_PATH + assetPackage + sd.CSS_EXT) )
-  body( class=bodyClass )
+  body( class=bodyClass + ' body-header-fixed' )
     include ../../modal/template
     include ../header/templates/microsite
     #main-layout-container

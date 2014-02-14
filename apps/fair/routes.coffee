@@ -33,8 +33,16 @@ fetchFairData = (fair, profile, res, options) ->
     fair    : fair
     profile : profile
 
-  success = _.after 4, ->
+  success = _.after 5, ->
     options.success data
+
+  fair.fetchFilteredSearchOptions
+    cache: true
+    success: (filteredSearchOptions) ->
+      data.filteredSearchOptions = filteredSearchOptions
+      data.filteredSearchColumns = fair.filteredSearchColumns(filteredSearchOptions, 2, 'related_gene', 'category')
+      success()
+    error: res.backboneError
 
   fair.fetchPrimarySets
     cache: true
@@ -86,7 +94,9 @@ fetchFairData = (fair, profile, res, options) ->
   fetchFair req, res, next, (fair, profile) ->
     fetchFairData fair, profile, res,
       success: (data) ->
-        res.locals.sd.SECTION = 'browse'
+        res.locals.sd.SECTION = 'overview'
+        # TODO: Dependent on attribute of fair
+        res.locals.sd.BODY_CLASS = 'body-transparent-header'
         res.render '../fair/templates/overview', data
 
 @browse = (req, res, next) ->
