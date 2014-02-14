@@ -104,6 +104,11 @@ left-column-width = 200px
       > .img
         opacity 0.5
   .fair-overview-browse-heading
+    bottom 45px
+    left 27px
+    position absolute
+  .fair-overview-browse-subheading
+    color white
     bottom 20px
     left 27px
     position absolute
@@ -159,5 +164,112 @@ left-column-width = 200px
     avant-garde()
     font-size 13px
     position absolute
-    bottom 10px 
+    bottom 10px
     left 20px
+
+
+.fair-overview-curator
+
+  .small-section
+    width 25%
+    height auto
+    text-align center
+    color black
+    background-color white
+    border-right 1px solid light-gray-border-color
+    text-decoration none
+    &:last-child
+      border-right 0px solid light-gray-border-color
+    img
+      width: 80px
+      margin: 0px auto
+    .section-heading
+      position relative
+      color black
+      bottom auto
+      left auto
+      margin-top 16px
+
+.fair-overview-post-container
+  margin-top 30px
+  border-top 1px solid light-gray-border-color
+  .posts-left-side, .posts-right-side
+    display inline-block
+    width 50%
+    vertical-align top
+
+  .posts-left-side
+    width: 48%
+    margin-right: 2%
+
+  .large-post
+    position relative
+    color white
+    text-decoration none
+    display block
+    background-color #000
+    &:hover
+      img
+        opacity 0.5
+
+    .section-heading
+      bottom 50px
+      left 20px
+      position absolute
+      font-size 22px
+      width 100%
+    .section-subheading
+      bottom 20px
+      left 20px
+      position absolute
+
+  .section-subheading
+    avant-garde()
+    font-size 13px
+
+  .small-post
+    text-decoration none
+    margin-bottom 10px
+    display block
+    img
+      display inline-block
+      width 150px
+    .post-text
+      display inline-block
+      vertical-align top
+      padding-left 20px
+      border-bottom 1px solid light-gray-border-color
+      height 128px
+      width: 392px
+      .section-heading
+        font-size: 22px
+        margin-top: 24px
+      .section-subheading
+        margin-top 3px
+    &:last-child
+      .post-text
+        border-bottom 0px solid light-gray-border-color
+  img
+    width 100%
+    opacity 1
+    transition opacity 0.3s
+
+.fair-overview-curator
+  border-bottom 1px solid light-gray-border-color
+  .overview-posts-link
+    avant-garde()
+    margin-top: 40px
+    margin-bottom: 50px
+    text-decoration none
+    display inline-block
+    font-size 13px
+
+.overview-section-heading
+  font-size: 30px
+  margin-top: 35px
+  margin-bottom: 35px
+
+.overview-section-heading-small
+  font-size 22px
+  margin-bottom: 23px
+  margin-top: 25px

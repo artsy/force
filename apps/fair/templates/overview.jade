@@ -7,12 +7,11 @@ append locals
   assetPackage = 'fair'
 
 block body
-  if coverImage && coverImage.imageUrl('medium')
-    .feature-image( style="background-image: url(#{profile.coverImage().imageUrl('medium')})" )
+  if coverImage && coverImage.imageUrl('wide')
+    .feature-image( style="background-image: url(#{profile.coverImage().imageUrl('wide')})" )
   #fair-page
     header.fair-page-header.main-layout-container
       include ./header_navigation
     include ./overview_top
     .fair-page-content.main-layout-container
-      include ./sections
       include ./browse

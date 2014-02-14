@@ -1,6 +1,6 @@
 .fair-overview-top
   .fair-overview-top-left
-    .large-profile-image
+    img.large-profile-image( src=profile.icon().imageUrl('square') )
     .fair-name!= fair.get('name')
     .fair-location!= fair.formatLocation()
     .fair-dates!= fair.formatDates()
@@ -8,12 +8,14 @@
       .profile-bio!= profile.mdToHtml('bio') + ' '
     .fair-countdown-container
       .fair-countdown-label Fair opens in:
-  
   .fair-overview-right
     a.fair-overview-browse( href=profile.href() + "/browse" )
-      img.fair-overview-browse-image(src=fair.imageUrl('wide') ))
+      img.fair-overview-browse-image(src=fair.imageUrl('large_rectangle') ))
       .fair-overview-browse-heading.overview-heading Browse all exhibitors
-       
+      .fair-overview-browse-subheading
+        != exhibitorsCount + " "
+        | Exhibitors, Updated Daily
+
 .fair-overview-below-top-container
   .fair-overview-below-top
     .container-left
@@ -36,3 +38,60 @@
           a.small-section( href=item.get('href') )
             img( src=item.imageUrl('large_square') )
             .section-heading= item.get('title')
+
+.fair-sections-container
+  .sections-left
+    .fair-sections-small-heading
+      | Browse 
+      != fair.get('name')
+    .fair-search-options
+      for column in filteredSearchColumns
+        .fair-search-options-column
+          for item in column
+            a( href=item.href )= item.name
+    .a-to-z-section-links
+      a( href=fair.href() + '/browse/artists') Artists A-Z
+      .fair-spacer |
+      a( href=fair.href() + '/browse/exhibitors') Exhibitors A-Z
+  .sections-right
+    .mobile-section-heading
+      | Going to the fair?
+      br
+      i Download Artsy for iPhone
+      br
+      | -- Your personal guide to the
+      br
+      != fair.get('name')
+
+if primarySets.where({ key: 'editorial' })
+  .fair-overview-post-container
+    .overview-section-heading Read Highlights from the Fair
+    .posts-left-side
+      for set in primarySets.where({ key: 'editorial' })
+        for item in set.get('items').models.slice(0,1)
+          a.large-post( href=item.get('href') )
+            img( src=item.imageUrl('large_rectangle') )
+            .section-heading= item.get('title')
+            if item.get('subtitle')
+              .section-subheading= item.get('subtitle')
+    .posts-right-side
+      for set in primarySets.where({ key: 'editorial' })
+        for item in set.get('items').models.slice(1, 4)
+          a.small-post( href=item.get('href') )
+            img( src=item.imageUrl('small_rectangle') )
+            .post-text
+              .section-heading= item.get('title')
+              if item.get('subtitle')
+                .section-subheading= item.get('subtitle')
+
+if primarySets.where({ key: 'curator' })
+  .fair-overview-curator
+    .overview-section-heading-small Art world insiders share their selections
+    for set in primarySets.where({ key: 'curator' })
+      for item in set.get('items').models.slice(0, 4)
+        a.small-section( href=item.get('href') )
+          img( src=item.imageUrl('small_square') )
+          .section-heading= item.get('title')
+          if item.get('subtitle')
+            .section-subheading= item.get('subtitle')
+    a.overview-posts-link( href=profile.href() + "/posts") See All Posts
