@@ -4,8 +4,10 @@ Backbone      = require 'backbone'
 CurrentUser   = require '../../../models/current_user.coffee'
 Partner       = require '../../../models/partner.coffee'
 PartnerShows  = require '../../../collections/partner_shows.coffee'
+PartnerArtists = require '../../../collections/partner_artists.coffee'
 template      = -> require('../templates/overview.jade') arguments...
 showsTemplate = -> require('../templates/_shows.jade') arguments...
+artistsGridTemplate = -> require('../templates/_artists_grid.jade') arguments...
 
 module.exports = class PartnerOverviewView extends Backbone.View
 
@@ -73,7 +75,28 @@ module.exports = class PartnerOverviewView extends Backbone.View
     @$(".partner-show[data-show-id='#{show.get('id')}'] .partner-show-cover-image").css
       "background-image": "url(#{imageUrl})"
 
-  initializeArtists: -> return
+  initializeArtists: ->
+    partnerArtists = new PartnerArtists()
+    partnerArtists.url = "#{@partner.url()}/partner_artists"
+    partnerArtists.fetchUntilEnd
+      cache: true
+      success: =>
+        # Display represented artists or non- ones who has published artworks
+        displayables = partnerArtists.filter (pa) ->
+          pa.get('represented_by') or
+          pa.get('published_artworks_count') > 0
+
+        groups = _.groupBy displayables, (pa) -> pa.get 'represented_by'
+        represented = label: "represented artists", list: groups.true or []
+        nonrepresented = label: "works available by", list: groups.false or []
+
+        groups = _.filter [represented, nonrepresented], (g) -> g.list.length > 0
+        groups[0].label = "artists" if groups.length is 1
+
+        @renderArtists groups
+
+  renderArtists: (groups) ->
+    @$('.partner-overview-artists').html artistsGridTemplate groups: groups
 
   initializePosts: -> return
 

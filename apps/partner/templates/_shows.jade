@@ -25,15 +25,15 @@ mixin showsGallery(shows, isFeatured)
 
   if current.length > 0
     section.partner-shows-section.current
-      h2.avant-garde-header-center Current Shows
+      h2.avant-garde-header-center.partner-shows-section-heading Current Shows
       +showsGallery(current, false)
 
   if upcoming.length > 0
     section.partner-shows-section.upcoming
-      h2.avant-garde-header-center Upcoming Shows
+      h2.avant-garde-header-center.partner-shows-section-heading Upcoming Shows
       +showsGallery(upcoming, false)
 
   if past.length > 0
     section.partner-shows-section.past
-      h2.avant-garde-header-center Past Shows
+      h2.avant-garde-header-center.partner-shows-section-heading Past Shows
       +showsGallery(past, false)

@@ -1,3 +1,48 @@
 #partner-overview
+  .partner-shows
+    .partner-shows-section.featured
+      padding-bottom 40px
+      margin-bottom 40px
+      border-bottom 1px solid #ccc
+    .partner-shows-section-heading
+      display none
+    
   .partner-overview-section
     min-height 500px
+    margin-bottom 40px
+    border-bottom 1px solid #ccc
+
+  .artists-grid
+    .artists-grid-section
+      margin-bottom 80px
+    .artists-group-label
+      font-size 18px
+      margin-bottom 20px
+    .partner-artist
+      display inline-block
+      vertical-align top
+      width 22%
+      box-sizing content-box
+      padding 1.5% 2%
+      margin 0
+      &:nth-child(4n+1)
+        padding-left 0
+      &:nth-child(4n)
+        padding-right 0
+      img
+        width 100%
+      a
+        text-decoration none
+    .partner-artist-cover-image
+      position relative
+      margin-bottom 10px
+    .partner-artist-overlay
+      position absolute
+      top 0
+      bottom 0
+      width 100%
+      background-color black
+      opacity 0
+      transition opacity 0.3s ease-in-out
+      &:hover
+        opacity 0.4
