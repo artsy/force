@@ -30,7 +30,7 @@
           .aes-imperial!= edition.dimensions({ metric: 'in', format: 'superscript' })
           .aes-metric= edition.dimensions({ metric: 'cm', format: 'decimal' })
           .aes-edition-size= edition.get('editions')
-          .aes-price= edition.get('price')
+          .aes-price= edition.priceDisplay()
 
   //- Partner link
   .artwork-meta-partner
