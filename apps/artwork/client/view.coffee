@@ -7,6 +7,9 @@ CurrentUser           = require '../../../models/current_user.coffee'
 SaveButton            = require '../../../components/save_button/view.coffee'
 RelatedPostsView      = require '../../../components/related_posts/view.coffee'
 RelatedArtworksView   = require './related-artworks.coffee'
+ContactPartnerView    = require '../../../components/contact/contact_partner.coffee'
+InquiryView           = require '../../../components/contact/inquiry.coffee'
+analytics             = require '../../../lib/analytics.coffee'
 
 Artworks = require '../../../collections/artworks.coffee'
 artistArtworksTemplate = -> require('../templates/_artist-artworks.jade') arguments...
@@ -15,10 +18,14 @@ artistArtworksTemplate = -> require('../templates/_artist-artworks.jade') argume
 
 module.exports = class ArtworkView extends Backbone.View
   events:
-    'click a[data-client]'                : 'intercept'
-    'click .circle-icon-button-share'     : 'openShare'
-    'click .circle-icon-button-save'      : 'saveArtwork'
-    'click .artwork-additional-image'     : 'changeImage'
+    'click a[data-client]'                  : 'intercept'
+    'click .circle-icon-button-share'       : 'openShare'
+    'click .circle-icon-button-save'        : 'saveArtwork'
+    'click .artwork-additional-image'       : 'changeImage'
+    'click .artwork-contact-button'         : 'contactPartner'
+    'click .artwork-inquiry-button'         : 'inquire'
+    'click .artwork-download-button'        : 'trackDownload'
+    'click .artwork-auction-results-button' : 'trackComparable'
 
   initialize: (options) ->
     { @artwork, @artist } = options
@@ -40,13 +47,14 @@ module.exports = class ArtworkView extends Backbone.View
     @following  = new Following(null, kind: 'artist') if @currentUser?
 
   setupArtistArtworks: ->
-    return unless @artist.get('artworks_count') > 1
+    return unless @artist?.get('artworks_count') > 1
     @listenTo @artist.artworks, 'sync', @renderArtistArtworks
     @artist.artworks.fetch data: size: 5, published: true
 
   renderArtistArtworks: ->
     # Ensure the current artwork is not in the collection
     @artist.artworks.remove @artwork
+    return unless @artist.artworks.length
     @$('.artwork-artist').attr 'data-state', 'complete'
     @$('#artwork-artist-artworks-container').
       addClass('is-loaded').
@@ -96,10 +104,13 @@ module.exports = class ArtworkView extends Backbone.View
 
   openShare: (e) ->
     e.preventDefault()
+    analytics.track.click 'Viewed sharing_is_caring form'
     new ShareView width: '350px', artwork: @artwork
 
   setupFollowButton: ->
     @followButton = new FollowButton
+      analyticsFollowMessage: 'Followed artist, via artwork info'
+      analyticsUnfollowMessage: 'Unfollowed artist, via artwork info'
       el: @$('.artwork-artist-follow-button')
       following: @following
       model: @artist
@@ -114,6 +125,14 @@ module.exports = class ArtworkView extends Backbone.View
       saved: @saved
       model: artwork
 
+  contactPartner: (e) ->
+    e.preventDefault()
+    new ContactPartnerView artwork: @artwork, partner: @artwork.get('partner')
+
+  inquire: (e) ->
+    e.preventDefault()
+    new InquiryView artwork: @artwork
+
   changeImage: (e) ->
     e.preventDefault()
 
@@ -125,3 +144,9 @@ module.exports = class ArtworkView extends Backbone.View
       attr('src', $target.data 'href')
 
     @artwork.setActiveImage($target.data 'id')
+
+  trackDownload: ->
+    analytics.track.click 'Downloaded lo-res image'
+
+  trackComparable: ->
+    analytics.track.click "Viewed 'Comparables'"

@@ -1,0 +1,50 @@
+@import '../stylus_lib'
+
+.modal-contact-header
+  margin 20px 60px 20px 20px
+  h1
+    avant-garde()
+    font-size 15px
+
+.modal-contact-from
+  margin 20px 0
+  padding 15px 20px
+  border-top 1px solid light-gray-border-color
+  border-bottom @border-top
+  > span
+    margin 0 5px
+    color light-gray-text-color
+
+.modal-contact-form
+  margin 20px
+  label
+    display block
+    margin-top 10px
+    avant-garde()
+    font-size 13px
+  textarea
+    margin 20px 0
+    height 175px
+
+// Large message after success
+.modal-contact-success-message
+  .modal-dialog
+    padding 20px
+    font-size 36px
+    text-align center
+    background-color transparent
+    color white
+
+// Only displayed on inquiries
+.inquiry-profile-header
+  display table
+.iph-icon
+.iph-body
+  display table-cell
+  vertical-align middle
+.iph-icon
+  width 90px
+  > img
+    max-width 100%
+.iph-body
+  padding-left 20px

@@ -1,6 +1,9 @@
-_         = require 'underscore'
-Backbone  = require 'backbone'
-Post      = require '../../models/post.coffee'
+_           = require 'underscore'
+sd          = require('sharify').data
+Backbone    = require 'backbone'
+Post        = require '../../models/post.coffee'
+mediator    = require '../../lib/mediator.coffee'
+analytics   = require '../../lib/analytics.coffee'
 
 template      = -> require('./templates/index.jade') arguments...
 noneTemplate  = -> require('./templates/none.jade') arguments...
@@ -35,6 +38,9 @@ module.exports = class RelatedPostsView extends Backbone.View
     @numToShow = @model.relatedPosts.length
     @render()
 
-  # TODO: Update this after we add the post dialog
-  addPost: ->
-    window.location = '/post'
+  addPost: (e) ->
+    unless sd.CURRENT_USER?
+      e.preventDefault()
+      mediator.trigger 'open:auth', mode: 'register', copy: 'Sign up to post on Artsy.net'
+    else
+      analytics.track.click "Added #{@model.constructor.name.toLowerCase()} to post, via #{@model.constructor.name.toLowerCase()} info"

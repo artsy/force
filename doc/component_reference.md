@@ -335,4 +335,64 @@ new FilterFixedHeader(el: $ '#gene-filter-header')
 ````
 
 * Use the `.filter-fixed-header-left` class in your template to get the meta information on the left hand side such as gene name or number of works.
+<<<<<<< HEAD
 * This component will listen for `filter` events on the mediator and smoothly scroll the window back to the top of the filter header.
+=======
+* This component will listen for `filter` events on the mediator and smoothly scroll the window back to the top of the filter header.
+
+### Filter Artworks
+
+A view that glues together the artwork columns and the filter sort count components using the filter meidator. This component is used in the gene, tag, and browse pages.
+
+![](images/filter_artworks.png)
+
+Include the template
+
+````jade
+#gene-artworks-container
+  include ../../../components/filter/artworks/template
+````
+
+Then add the view
+
+````coffeescript
+@filterArtworksView = new FilterArtworksView
+  el: $ '#gene-artworks-container'
+  url: "#{ARTSY_URL}/api/v1/search/filtered/gene/#{@model.get 'id'}"
+````
+
+### Contact View
+
+```coffeescript
+ContactView = require '../../components/contact/view.coffee'
+new ContactView(width: '600px', url: "#{sd.ARTSY_URL}/api/v1/feedback")
+```
+The base `ContactView` is configurable by passing in the following options: `width` (modal width, String value in px), `successMessage` (large copy that is displayed after a successful message is sent), `placeholder` (Main textarea placeholder), `url` (API endpoint that data is posted to).
+
+More useful is to extend the `ContactView` when configuration is more complex. The template for the header is a method that can be replaced with your own template function:
+
+```coffeescript
+_ = require 'underscore'
+sd = require('sharify').data
+ContactView   = require './view.coffee'
+headerTemplate  = -> require('./templates/feedback_header.jade') arguments...
+
+module.exports = class FeedbackView extends ContactView
+  headerTemplate: headerTemplate
+  defaults: -> _.extend super,
+    placeholder: 'Leave your comments'
+    url: "#{sd.ARTSY_URL}/api/v1/feedback"
+```
+
+The view's `submit` method can be intercepted to add more data to the model:
+
+```coffeescript
+  submit: ->
+    @model.set
+      artwork: @artwork.id
+      contact_gallery: true
+      session_id: SESSION_ID
+    super
+
+```
+>>>>>>> 002cdc578a6cb7489ba98a54138a17835dbe3b14

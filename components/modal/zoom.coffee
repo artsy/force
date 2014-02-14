@@ -4,7 +4,8 @@ ModalView   = require './view.coffee'
 module.exports = class ZoomView extends ModalView
   className: 'zoom-modal'
 
-  template: -> @$img[0]
+  template: ->
+    @$img[0]
 
   initialize: (options) ->
     { @imgSrc } = options
@@ -19,15 +20,6 @@ module.exports = class ZoomView extends ModalView
   postRender: ->
     @isLoading()
     @$img.on 'load', =>
-      @setWidth("#{@img.width}px")
+      @setWidth "#{@img.width}px"
       @updatePosition()
-      @isDoneLoading()
-
-  isLoading: ->
-    @$el.addClass 'is-loading'
-    @$dialog.addClass('is-notransition').hide()
-
-  isDoneLoading: ->
-    @$el.removeClass 'is-loading'
-    @$dialog.show()
-    _.defer => @$dialog.removeClass 'is-notransition'
+      @isLoaded()

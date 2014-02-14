@@ -1,6 +1,6 @@
 _             = require 'underscore'
 Backbone      = require 'backbone'
-FeedbackView  = require '../../feedback/view.coffee'
+FeedbackView  = require '../../contact/feedback.coffee'
 mediator      = require '../../../lib/mediator.coffee'
 
 module.exports = class FooterView extends Backbone.View
@@ -15,4 +15,4 @@ module.exports = class FooterView extends Backbone.View
     mediator.trigger 'open:feedback'
 
   openFeedback: ->
-    new FeedbackView(width: '500px')
+    new FeedbackView
