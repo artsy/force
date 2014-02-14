@@ -110,12 +110,16 @@
         span
           //- Text label is handled in the CSS
     if artwork.isComparable()
-      a( href="/artwork/#{artwork.id}/auction-results" )
+      a.artwork-auction-results-button(
+        href="/artwork/#{artwork.id}/auction-results"
+      )
         i.icon-auction
         | Auction Results
         sup Beta
     if artwork.isDownloadable()
-      a( href=artwork.defaultImageUrl('larger'), target='_blank', download=artwork.downloadableFilename())
+      a.artwork-download-button(
+        href= artwork.defaultImageUrl('larger'), target='_blank', download= artwork.downloadableFilename()
+      )
         i.icon-download
         | Download Image
 
