@@ -1,18 +1,19 @@
 .artwork-meta
   //- Primary artwork metadata
-  if artist
-    h2.artwork-detail-artist
-      a( href= "/artist/#{artist.id}" )= artist.get('name')
-
-  if artwork.get('title')
-    h1.artwork-detail-title
-      = artwork.get('title')
-      if artwork.get('date')
-        | , #{artwork.get('date')}
-  .artwork-detail-medium= artwork.get('medium')
-  .artwork-detail-dimensions
-    .amd-imperial!= artwork.dimensions({ metric: 'in', format: 'superscript' })
-    .amd-metric= artwork.dimensions({ metric: 'cm', format: 'decimal' })
+  h1
+    if artist
+      .artwork-detail-artist
+        a( href= "/artist/#{artist.id}" )= artist.get('name')
+    if artwork.get('title')
+      .artwork-detail-title
+        = artwork.get('title')
+        if artwork.get('date')
+          | , #{artwork.get('date')}
+  h2.artwork-detail-medium= artwork.get('medium')
+  unless artwork.isMultipleEditions()
+    .artwork-detail-dimensions
+      .amd-imperial!= artwork.dimensions({ metric: 'in', format: 'superscript' })
+      .amd-metric= artwork.dimensions({ metric: 'cm', format: 'decimal' })
   if artwork.editionStatus()
     .artwork-edition-status
       = artwork.editionStatus()
@@ -23,13 +24,16 @@
 
   //- Edition Sets
   if artwork.isMultipleEditions()
-    .artwork-edition-sets
+    form.artwork-edition-sets
       for edition in artwork.editions.models
         .artwork-edition-set
-          .aes-imperial!= edition.dimensions({ metric: 'in', format: 'superscript' })
-          .aes-metric= edition.dimensions({ metric: 'cm', format: 'decimal' })
-          .aes-edition-size= edition.get('editions')
-          .aes-price= edition.get('price')
+          if artwork.isEditionAcquireable(edition)
+            .aes-radio-button: input( type='radio', value= edition.id, name='edition' )
+          .aes-details
+            .aes-imperial!= edition.dimensions({ metric: 'in', format: 'superscript' })
+            .aes-metric= edition.dimensions({ metric: 'cm', format: 'decimal' })
+            .aes-edition-size= edition.get('editions')
+          .aes-price= edition.priceDisplay()
 
   //- Partner link
   .artwork-meta-partner
@@ -100,17 +104,18 @@
       )
         i.icon-info
         | Exit More Info
-    a.artwork-artist-follow-button
-      i.icon-follow
-      span
-        //- Text label is handled in the CSS
+    if artist
+      a.artwork-artist-follow-button
+        i.icon-follow
+        span
+          //- Text label is handled in the CSS
     if artwork.isComparable()
       a( href="/artwork/#{artwork.id}/auction-results" )
         i.icon-auction
         | Auction Results
         sup Beta
     if artwork.isDownloadable()
-      a( href=artwork.defaultImageUrl('larger'), target='_blank', download)
+      a( href=artwork.defaultImageUrl('larger'), target='_blank', download=artwork.downloadableFilename())
         i.icon-download
         | Download Image
 

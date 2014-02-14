@@ -6,6 +6,8 @@ AdditionalImage   = require './additional_image.coffee'
 
 { Image, Dimensions, Markdown } = require 'artsy-backbone-mixins'
 
+_.mixin(require 'underscore.string')
+
 module.exports = class Artwork extends Backbone.Model
 
   _.extend @prototype, Image(sd.SECURE_IMAGES_URL)
@@ -70,6 +72,9 @@ module.exports = class Artwork extends Backbone.Model
   isDownloadable: ->
     @defaultImage().get('downloadable')
 
+  downloadableFilename: ->
+    _.slugify @toOneLine()
+
   # Are there comparable artworks;
   # such that we can display a link to auction results
   #
@@ -118,6 +123,11 @@ module.exports = class Artwork extends Backbone.Model
   # return {Boolean}
   isUnavailableButInquireable: ->
     not @get('forsale') and @get('inquireable') and not @get('sold')
+
+  isEditionAcquireable: (edition) ->
+    edition.get('forsale') and
+    edition.get('acquireable') and
+    @get('acquireable')
 
   # Assuming there is something *vaguely* numeric here
   # this will return true

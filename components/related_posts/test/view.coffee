@@ -80,3 +80,15 @@ describe 'RelatedPostsView', ->
         ]
         @view.$el.html().should.include '2 Featured Posts About This Artist'
 
+    describe '#addPost', ->
+      beforeEach ->
+        @e = preventDefault: sinon.stub()
+      it 'should pass through if user exists', ->
+        RelatedPostsView.__set__ 'sd', CURRENT_USER: 'existy'
+        @view.addPost @e
+        @e.preventDefault.called.should.not.be.ok
+      it 'should intercept if user is *not* logged in', ->
+        RelatedPostsView.__set__ 'sd', CURRENT_USER: null
+        @view.addPost @e
+        @e.preventDefault.called.should.be.ok
+
