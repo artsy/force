@@ -26,72 +26,17 @@
         else
           .large-section-heading Personalize Your Experience
           .large-section-subheading Sign up for Artsy to save works, follow artists and exhibitors.
-      for set in primarySets.where({ key: 'explore' })
-        for item in set.get('items').models.slice(0,2)
-          a.small-section( href=item.get('href') )
-            img( src=item.imageUrl('large_square') )
-            .section-heading= item.get('title')
-  
-    .container-right
-      for set in primarySets.where({ key: 'primary' })
-        for item in set.get('items').models
-          a.small-section( href=item.get('href') )
-            img( src=item.imageUrl('large_square') )
-            .section-heading= item.get('title')
-
-.fair-sections-container
-  .sections-left
-    .fair-sections-small-heading
-      | Browse 
-      != fair.get('name')
-    .fair-search-options
-      for column in filteredSearchColumns
-        .fair-search-options-column
-          for item in column
-            a( href=item.href )= item.name
-    .a-to-z-section-links
-      a( href=fair.href() + '/browse/artists') Artists A-Z
-      .fair-spacer |
-      a( href=fair.href() + '/browse/exhibitors') Exhibitors A-Z
-  .sections-right
-    .mobile-section-heading
-      | Going to the fair?
-      br
-      i Download Artsy for iPhone
-      br
-      | -- Your personal guide to the
-      br
-      != fair.get('name')
-
-if primarySets.where({ key: 'editorial' })
-  .fair-overview-post-container
-    .overview-section-heading Read Highlights from the Fair
-    .posts-left-side
-      for set in primarySets.where({ key: 'editorial' })
-        for item in set.get('items').models.slice(0,1)
-          a.large-post( href=item.get('href') )
-            img( src=item.imageUrl('large_rectangle') )
-            .section-heading= item.get('title')
-            if item.get('subtitle')
-              .section-subheading= item.get('subtitle')
-    .posts-right-side
-      for set in primarySets.where({ key: 'editorial' })
-        for item in set.get('items').models.slice(1, 4)
-          a.small-post( href=item.get('href') )
-            img( src=item.imageUrl('small_rectangle') )
-            .post-text
+      if primarySets.where({ key: 'explore' })
+        for set in primarySets.where({ key: 'explore' })
+          for item in set.get('items').models.slice(0,2)
+            a.small-section( href=item.get('href') )
+              img( src=item.imageUrl('large_square') )
               .section-heading= item.get('title')
-              if item.get('subtitle')
-                .section-subheading= item.get('subtitle')
-
-if primarySets.where({ key: 'curator' })
-  .fair-overview-curator
-    .overview-section-heading-small Art world insiders share their selections
-    for set in primarySets.where({ key: 'curator' })
-      for item in set.get('items').models.slice(0, 4)
-        a.small-section( href=item.get('href') )
-          img( src=item.imageUrl('small_square') )
-          .section-heading= item.get('title')
-          if item.get('subtitle')
-            .section-subheading= item.get('subtitle')
-    a.overview-posts-link( href=profile.href() + "/posts") See All Posts
+  
+    if primarySets.where({ key: 'primary' })
+      .container-right
+        for set in primarySets.where({ key: 'primary' })
+          for item in set.get('items').models
+            a.small-section( href=item.get('href') )
+              img( src=item.imageUrl('large_square') )
+              .section-heading= item.get('title')

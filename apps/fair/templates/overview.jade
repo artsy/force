@@ -12,6 +12,10 @@ block body
   #fair-page
     header.fair-page-header.main-layout-container
       include ./header_navigation
-    include ./overview_top
+    if primarySets
+      include ./overview_top
+    include ./sections
+    if primarySets
+      include ./overview_bottom
     .fair-page-content.main-layout-container
       include ./browse
