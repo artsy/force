@@ -1,6 +1,8 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-template = -> require('./template.jade') arguments...
+template = -> require('./templates/main.jade') arguments...
+listTemplate = -> require('./templates/list.jade') arguments...
+Artists = require '../../collections/artists.coffee'
 FillwidthView = require '../fillwidth_row/view.coffee'
 { Following, FollowButton } = require '../follow_button/index.coffee'
 
@@ -8,17 +10,24 @@ module.exports = class ArtistFillwidthList extends Backbone.View
 
   initialize: (options) ->
     { @user } = options
+    @page = 1
     @following = new Following(null, kind: 'artist') if @user
     @
 
-  fetchAndRender: ->
+  fetchAndRender: =>
     @$el.html template artists: @collection.models
     @collection.each @renderArtist
 
+  appendPage: (col, res) =>
+    @$('.avant-garde-button-text').removeClass('is-loading')
+    @collection.add artists = new Artists(res)
+    @$('.artist-fillwidth-list').append listTemplate artists: artists.models
+    artists.each @renderArtist
+
   renderArtist: (artist, i) =>
     artist.fetchArtworks data: { size: 10 }, success: (artworks) =>
-      $row = @$(".artist-fillwidth-list-item:eq(#{i})")
-
+      $row = @$(".artist-fillwidth-list-item[data-id=\"#{artist.get('id')}\"]")
+      return $row.hide() if artworks.length is 0
       # Add fillwidth view
       fillwidthView = new FillwidthView
         artworkCollection: @user?.defaultArtworkCollection()
@@ -38,3 +47,13 @@ module.exports = class ArtistFillwidthList extends Backbone.View
       _.defer ->
         fillwidthView.hideFirstRow()
         fillwidthView.removeHiddenItems()
+
+  events:
+    'click .artist-fillwidth-list-see-more': 'nextPage'
+
+  nextPage: ->
+    @$('.avant-garde-button-text').addClass('is-loading')
+    @collection.fetch
+      remove: false
+      data: { page: @page = @page + 1 }
+      success: @appendPage

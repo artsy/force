@@ -6,7 +6,7 @@ module.exports = class FilterFixedHeader extends Backbone.View
 
   initialize: (options) ->
     _.extend @, options
-    @$mainHeader = $('#main-layout-header')
+    @mainHeaderHeight = $('#main-layout-header').height()
     @document = document.documentElement
     @$window = $ window
     @$window.on 'scroll', @popLock
@@ -16,7 +16,7 @@ module.exports = class FilterFixedHeader extends Backbone.View
 
   scrollToTop: =>
     return unless @$window.scrollTop() > @$el.offset().top
-    @document.scrollTop = @$el.offset().top + @$el.height() - (@$mainHeader.height() / 2)
+    @document.scrollTop = @$el.offset().top + 60 - @mainHeaderHeight
 
   setupJump: ->
     @jump = new JumpView threshold: @$window.height()
