@@ -76,22 +76,21 @@ module.exports = class Feature extends Backbone.Model
         finalItems = []
         callback = _.after allItemsLen, ->
           return options.error(err) if err
-          options.success(finalItems)
+          options.success( finalItems.sort (a, b) -> a.get('key')[0] > b.get('key')[0] )
 
-        for { set, items } in setItems
+        for { orderedSet, items } in setItems
 
-          if not items.length or not set.get 'display_on_desktop'
+          if not items.length or not orderedSet.get 'display_on_desktop'
             callback()
             continue
 
-          switch set.get('item_type')
+          switch orderedSet.get('item_type')
 
             when 'FeaturedLink'
-              set.set
+              orderedSet.set
                 data : new FeaturedLinks items.map (link) -> link.toJSON()
-                index: set.get('key')
                 type : 'featured links'
-              finalItems.push set
+              finalItems.push orderedSet
               callback()
 
             when 'Sale'
@@ -101,15 +100,14 @@ module.exports = class Feature extends Backbone.Model
 
               @set sale: (sale = new Sale items.first().toJSON())
               sale.fetchArtworks
-                success: _.bind ((set, saleArtworks) =>
-                  set.set
+                success: _.bind ((orderedSet, saleArtworks) =>
+                  orderedSet.set
                     data                : Artworks.fromSale(saleArtworks)
-                    display_artist_list: sale.get 'display_artist_list'
-                    index               : set.get('key')
+                    display_artist_list : sale.get 'display_artist_list'
                     type                : if sale.get('is_auction') then 'auction artworks' else 'sale artworks'
-                  finalItems.push set
+                  finalItems.push orderedSet
                   callback()
-                ), @, set
+                ), @, orderedSet
                 error: (e) -> err = e; callback()
 
             else
@@ -133,29 +131,40 @@ module.exports = class Feature extends Backbone.Model
     sets.url = "#{sd.ARTSY_URL}/api/v1/sets"
     sets.fetch
       data:
-        sort      : 'key'
         owner_type: 'Feature'
         owner_id  : @get 'id'
-      success: (sets) ->
+      success: (sets) =>
         err = null
-        callback = _.after sets.length, ->
+        success = _.after sets.length, ->
           return options.error(err) if err
-          options.success _.sortBy(finalHashes, (hash) -> hash.set.get 'index')
-        sets.each (set, i) ->
-          if set.get('item_type') is 'FeaturedLink'
-            setItems = new FeaturedLinks []
-            method = 'fetchUntilEnd'
-          else
-            setItems = new Backbone.Collection []
-            method = 'fetch'
-          setItems.url = "#{sd.ARTSY_URL}/api/v1/set/#{set.get 'id'}/items"
-          setItems[method]
-            success: (items) ->
-              finalHashes.push {
-                set  : set.set index: i
-                items: switch set.get 'item_type'
-                  when 'FeaturedLink' then new FeaturedLinks(items.toJSON())
-                  else items
-              }
-              callback()
-            errors: (m, e) -> errs.push(e); callback()
+          options.success finalHashes
+
+        error = (e) ->
+          err = e
+          success()
+
+        for orderedSet in sets.models
+          @fetchSet orderedSet, sets, finalHashes, success, error
+
+  fetchSet: (orderedSet, orderedSets, finalHashes, success, error) ->
+    itemType = orderedSet.get('item_type')
+    id = orderedSet.get('id')
+
+    if itemType is 'FeaturedLink'
+      setItems = new FeaturedLinks []
+      method = 'fetchUntilEnd'
+    else
+      setItems = new Backbone.Collection []
+      method = 'fetch'
+    setItems.url = "#{sd.ARTSY_URL}/api/v1/set/#{id}/items"
+    setItems.id = id
+    setItems[method]
+      success: (items) ->
+        set = orderedSets.get(items.id)
+        items = if itemType is 'FeaturedLink' then new FeaturedLinks(items.toJSON()) else items
+        finalHashes.push {
+          orderedSet : set
+          items      : items
+        }
+        success()
+      error: (m, e) -> error(e)

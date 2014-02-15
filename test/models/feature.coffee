@@ -27,7 +27,8 @@ describe 'Feature', ->
         sets[0].get('name').should.equal 'Explore this bidness'
         sets[0].get('data').first().get('title').should.equal 'Featured link for this awesome page'
         done()
-      _.last(Backbone.sync.args)[2].success([fabricate 'set', name: 'Explore this bidness'])
+
+      _.last(Backbone.sync.args)[2].success([fabricate 'set', name: 'Explore this bidness', id: 'abc'])
       _.last(Backbone.sync.args)[2].success([
         fabricate 'featured_link', title: 'Featured link for this awesome page'
       ])
@@ -36,11 +37,15 @@ describe 'Feature', ->
     it 'fetches until end for sets whose items are featured links', (done) ->
       @feature.fetchSets success: (sets) ->
         sets[0].get('type').should.equal 'featured links'
-        sets[0].get('name').should.equal 'Explore this bidness'
+        sets[0].get('name').should.equal 'Explore this bidness top'
         sets[0].get('data').first().get('title').should.equal 'Featured link for this awesome page'
         sets[0].get('data').should.have.lengthOf 12
         done()
-      _.last(Backbone.sync.args)[2].success([fabricate 'set', name: 'Explore this bidness'])
+
+      _.last(Backbone.sync.args)[2].success([
+        fabricate('set', name: 'Explore this bidness top', key: '0hello', id: 'def')
+      ])
+
       _.last(Backbone.sync.args)[2].success([
         fabricate 'featured_link', title: 'Featured link for this awesome page'
         fabricate 'featured_link', title: 'Featured link for this awesome page'
