@@ -22,6 +22,8 @@ module.exports.FeatureView = class FeatureView extends Backbone.View
   initializeSaleArtworks: (sets) ->
     # hide it until we add the artist list (should be fast)
     @$('.artwork-column:first-child').parent().css 'visibiliy', 'hidden'
+    @$('.artwork-column:first').addClass 'first'
+    @$('.artwork-column:last').addClass 'last'
     for set in sets
       if set.get('type') in ['sale artworks', 'sale auction', 'auction artworks']
         artworks = set.get 'data'
