@@ -95,4 +95,4 @@ describe 'GeneFilter', ->
     it 'switches back to artist mode', ->
       @view.$el.attr 'data-state', 'artworks'
       @view.artistMode()
-      @view.$el.attr('data-state').should.equal ''
+      @view.$el.attr('data-state').should.equal 'artists'

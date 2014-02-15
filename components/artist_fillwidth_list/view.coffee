@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-template = -> require('./templates/main.jade') arguments...
+mainTemplate = -> require('./templates/main.jade') arguments...
 listTemplate = -> require('./templates/list.jade') arguments...
 Artists = require '../../collections/artists.coffee'
 FillwidthView = require '../fillwidth_row/view.coffee'
@@ -15,7 +15,7 @@ module.exports = class ArtistFillwidthList extends Backbone.View
     @
 
   fetchAndRender: =>
-    @$el.html template artists: @collection.models
+    @$el.html mainTemplate artists: @collection.models
     @collection.each @renderArtist
 
   appendPage: (col, res) =>
