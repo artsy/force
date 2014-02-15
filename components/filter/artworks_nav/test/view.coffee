@@ -34,3 +34,8 @@ describe 'FilterArtworksNav', ->
     @view.renderCounts()
     @view.$el.html().should.include '51'
     @view.$el.html().should.include '38'
+
+  it 'defauls to selecting the all selctions', ->
+    @view.counts.clear()
+    @view.renderCounts()
+    @view.$('.filter-artworks-nav-price .is-active').text().should.equal "All Works"

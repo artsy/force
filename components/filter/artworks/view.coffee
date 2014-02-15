@@ -37,6 +37,7 @@ module.exports = class FilterArtworksView extends Backbone.View
     new FilterFixedHeader
       el: @$('.filter-fixed-header-nav')
       params: @params
+      scrollToEl: @$('.filter-artworks-sort-count')
 
     # Hook up events on the artworks, params, and counts
     @artworks.on 'sync', @render
@@ -58,7 +59,8 @@ module.exports = class FilterArtworksView extends Backbone.View
     @$('.filter-artworks-num').html @counts.get('total')
 
   nextPage: =>
-    return if @$el.is(':hidden') or @$('.filter-artworks').attr('data-state') is 'finished-paging'
+    return if @$('.filter-artworks').is(':hidden') or
+              @$('.filter-artworks').attr('data-state') is 'finished-paging'
     @params.set page: (@params.get('page') + 1) or 1
 
   reset: =>

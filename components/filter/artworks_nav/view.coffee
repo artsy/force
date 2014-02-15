@@ -7,6 +7,7 @@ module.exports = class FilterArtworksNav extends Backbone.View
     _.extend @, options
     @counts.on 'sync', @renderCounts
     @params.on 'change', @renderActive
+    @renderActive()
 
   renderCounts: =>
     for range, val of @counts.get('price_range')
@@ -18,11 +19,16 @@ module.exports = class FilterArtworksNav extends Backbone.View
     @$('.is-active').removeClass('is-active')
     if _.intersection(['price_range', 'dimension', 'medium'], @params.keys()).length is 0
       @$('.filter-artworks-nav-allworks').addClass('is-active')
-    else
-      @$("a[data-range='#{@params.get('price_range')}']")
-        .addClass('is-active').closest('.filter-dropdown').addClass('is-active')
-      @$("a[data-size='#{@params.get('dimension')}']")
-        .addClass('is-active').closest('.filter-dropdown').addClass('is-active')
+    for attr, param of {
+      'range': 'price_range'
+      'size': 'dimension'
+      'medium': 'medium'
+    }
+      if @params.get(param)
+        @$("a[data-#{attr}='#{@params.get(param)}']")
+          .addClass('is-active').closest('.filter-dropdown').addClass('is-active')
+      else
+        @$("a[data-#{attr}]").first().addClass('is-active')
 
   events:
     'click .filter-artworks-nav-allworks': 'allWorks'

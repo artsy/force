@@ -331,7 +331,8 @@ A view that turns an element into a fixed header by wrapping it in a `.filter-fi
 ![](images/filter_fixed_header.png)
 
 ````coffeescript
-new FilterFixedHeader(el: $ '#gene-filter-header')
+new FilterFixedHeader
+  el: $ '#gene-filter-header'
 ````
 
 * Use the `.filter-fixed-header-left` class in your template to get the meta information on the left hand side such as gene name or number of works.

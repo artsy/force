@@ -6,7 +6,7 @@ CurrentUser = require '../../../models/current_user'
 Artist = require '../../../models/artist'
 { fabricate } = require 'antigravity'
 { resolve } = require 'path'
-ArtistFillwidthList = benv.requireWithJadeify resolve(__dirname, '../view.coffee'), ['template']
+ArtistFillwidthList = benv.requireWithJadeify resolve(__dirname, '../view.coffee'), ['mainTemplate', 'listTemplate']
 
 ArtistFillwidthList.__set__ 'FillwidthView', class FillwidthView
   render: sinon.stub()
@@ -55,3 +55,16 @@ describe 'ArtistFillwidthList', ->
       @view.renderArtist new Artist fabricate 'artist'
       _.last(Backbone.sync.args)[2].success [fabricate 'artwork']
       FillwidthView::render.called.should.be.ok
+
+  describe '#appendPage', ->
+
+    it 'adds a list of artists', ->
+      @view.appendPage [], [fabricate 'artist', name: 'Andy Foobazio']
+      @view.$el.html().should.include 'Andy Foobazio'
+
+  describe '#nextPage', ->
+
+    it 'fetches the next page of artists', ->
+      @view.page = 1
+      @view.nextPage()
+      _.last(Backbone.sync.args)[2].data.page.should.equal 2

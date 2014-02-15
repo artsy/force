@@ -16,5 +16,5 @@ block body
         +share(gene.get('name') + ' on Artsy', gene.imageUrl())
     #gene-description
       #gene-description-inner!= gene.mdToHtml('description')
-    #gene-filter( data-state=gene.isSubjectMatter() ? 'artworks' : '' )
+    #gene-filter( data-state=gene.isSubjectMatter() ? 'artworks' : 'artists' )
       include filter
