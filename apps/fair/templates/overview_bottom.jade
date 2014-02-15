@@ -1,0 +1,32 @@
+if primarySets.where({ key: 'editorial' })
+  .fair-overview-post-container
+    .overview-section-heading Read Highlights from the Fair
+    .posts-left-side
+      for set in primarySets.where({ key: 'editorial' })
+        for item in set.get('items').models.slice(0,1)
+          a.large-post( href=item.get('href') )
+            img( src=item.imageUrl('large_rectangle') )
+            .section-heading= item.get('title')
+            if item.get('subtitle')
+              .section-subheading= item.get('subtitle')
+    .posts-right-side
+      for set in primarySets.where({ key: 'editorial' })
+        for item in set.get('items').models.slice(1, 4)
+          a.small-post( href=item.get('href') )
+            img( src=item.imageUrl('small_rectangle') )
+            .post-text
+              .section-heading= item.get('title')
+              if item.get('subtitle')
+                .section-subheading= item.get('subtitle')
+
+if primarySets.where({ key: 'curator' })
+  .fair-overview-curator
+    .overview-section-heading-small Art world insiders share their selections
+    for set in primarySets.where({ key: 'curator' })
+      for item in set.get('items').models.slice(0, 4)
+        a.small-section( href=item.get('href') )
+          img( src=item.imageUrl('small_square') )
+          .section-heading= item.get('title')
+          if item.get('subtitle')
+            .section-subheading= item.get('subtitle')
+    a.overview-posts-link( href=profile.href() + "/posts") See All Posts

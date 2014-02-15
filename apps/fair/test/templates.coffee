@@ -8,9 +8,14 @@ Backbone        = require 'backbone'
 { fabricate }   = require 'antigravity'
 Fair            = require '../../../models/fair'
 Profile         = require '../../../models/profile'
+CoverImage      = require '../../../models/cover_image'
 SearchResult    = require '../../../models/search_result'
 Artists         = require '../../../collections/artists'
 Partners        = require '../../../collections/partners'
+Item            = require '../../../models/item'
+Items           = require '../../../collections/items'
+OrderedSet      = require '../../../models/ordered_set'
+OrderedSets     = require '../../../collections/ordered_sets'
 cheerio         = require 'cheerio'
 
 render = (templateName) ->
@@ -164,8 +169,54 @@ describe 'Fair', ->
 
   describe 'overview', ->
     before ->
-      fair = new Fair (fabricate 'fair', about: 'about the fair', image_versions: ['wide'], image_url: "foo/wide.jpg")
+      fair = new Fair (fabricate 'fair', about: 'about the fair')
+      coverImage = new CoverImage(image_versions: ['wide'], image_url: "foo/wide.jpg")
       profile = new Profile (fabricate 'fair_profile')
+      primarySets = new OrderedSets()
+
+      # Explore ordered set
+      editorial = new OrderedSet fabricate('set', {
+        key: "editorial"
+        item_type: "FeaturedLink"
+      })
+      editorialItems = new Items(null, 'editorial-foo')
+      editorialItems.add new Item( fabricate 'featured_link', { title: 'Chinese Art' } )
+      editorialItems.add new Item( fabricate 'featured_link', { title: 'Moar Chinese Art' } )
+      editorial.set items: editorialItems
+      primarySets.add editorial
+
+      # Explore ordered set
+      explore = new OrderedSet fabricate('set', {
+        key: "explore"
+        item_type: "FeaturedLink"
+      })
+      exploreItems = new Items(null, 'explore-foo')
+      exploreItems.add new Item( fabricate 'featured_link', { title: 'Explore Art' } )
+      exploreItems.add new Item( fabricate 'featured_link', { title: 'Moar Explore Art' } )
+      explore.set items: exploreItems
+      primarySets.add explore
+
+      # Primary ordered set
+      primary = new OrderedSet fabricate('set', {
+        key: "primary"
+        item_type: "FeaturedLink"
+      })
+      primaryItems = new Items(null, 'primary-foo')
+      primaryItems.add new Item( fabricate 'featured_link', { title: 'Primary Art' } )
+      primaryItems.add new Item( fabricate 'featured_link', { title: 'Moar Primary Art' } )
+      primary.set items: primaryItems
+      primarySets.add primary
+
+      # Curator ordered set
+      curator = new OrderedSet fabricate('set', {
+        key: "curator"
+        item_type: "FeaturedLink"
+      })
+      curatorItems = new Items(null, 'curator-foo')
+      curatorItems.add new Item( fabricate 'featured_link', { title: 'Curator Art' } )
+      curatorItems.add new Item( fabricate 'featured_link', { title: 'Moar Curator Art' } )
+      curator.set items: curatorItems
+      primarySets.add curator
 
       filteredSearchOptions = new Backbone.Model {
         related_gene:
@@ -189,6 +240,8 @@ describe 'Fair', ->
         fair: fair
         profile: profile
         filteredSearchColumns: filteredSearchColumns
+        coverImage: coverImage
+        primarySets: primarySets
 
     it 'renders without errors', ->
       $ = cheerio.load @template
@@ -196,3 +249,9 @@ describe 'Fair', ->
       $('.fair-search-options-column a').length.should.equal 10
       $('.fair-search-options-column').text().should.include 'contemporary pop'
       $('.feature-image').length.should.equal 1
+
+      $('.container-right .small-section').length.should.equal 2
+      $('.container-left .small-section').length.should.equal 2
+      $('.fair-overview-curator .small-section').length.should.equal 2
+      $('.fair-overview-post-container .large-post').length.should.equal 1
+      $('.fair-overview-post-container .small-post').length.should.equal 1
