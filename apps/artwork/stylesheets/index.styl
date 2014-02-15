@@ -4,6 +4,7 @@
 @import './deep-zoom'
 @import './circle-buttons'
 @import './view-in-room'
+@import './layered-search'
 
 artwork-detail-width        = 220px
 artwork-detail-item-height  = 36px
@@ -256,12 +257,5 @@ artwork-detail-item-height  = 36px
     &[data-state='saved']
       opacity 1
 
-#artwork-related-artworks-container
+#artwork-layered-search-container
   margin 20px auto
-
-.artwork-related-artworks
-  display none
-  opacity 0
-  transition opacity 0.5s
-  &[data-state='fade-in']
-    opacity 1
