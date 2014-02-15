@@ -35,6 +35,8 @@ describe 'PartnerView', ->
         @profile = new Profile fabricate 'partner_profile'
         @tablistTemplate = sinon.stub()
         mod.__set__ 'tablistTemplate', @tablistTemplate
+        mod.__set__ 'sectionToView', {}
+
         @view = new PartnerView
           model: @profile
           el: $ 'body'
