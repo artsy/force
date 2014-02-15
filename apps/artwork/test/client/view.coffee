@@ -29,9 +29,11 @@ describe 'ArtworkView', ->
     # Interestingly: jQuery "Every attempt is made to convert the string to a
     # JavaScript value (this includes booleans, numbers, objects, arrays, and null)"
     # and we're using numeric-looking strings for fabricated artwork image IDs.
-    _.each (artworkJson = fabricate('artwork')).images, (image) ->
+    edition_sets = _.times(2, -> fabricate('edition_set', forsale: true, acquireable: true))
+    artwork = fabricate('artwork', edition_sets: edition_sets, acquireable: true)
+    _.each (artwork).images, (image) ->
       image.id = _.uniqueId('stringy')
-    @artwork = new Artwork(artworkJson, parse: true)
+    @artwork = new Artwork(artwork, parse: true)
 
     sinon.stub Backbone, 'sync'
     benv.render resolve(__dirname, '../../templates/index.jade'), {
@@ -44,6 +46,7 @@ describe 'ArtworkView', ->
         ['artistArtworksTemplate']
       )
       @ArtworkView.__set__ 'ShareView', (@shareViewStub = sinon.stub())
+      @ArtworkView.__set__ 'acquireArtwork', (@acquireArtworkStub = sinon.stub())
       done()
 
   afterEach ->
@@ -119,6 +122,27 @@ describe 'ArtworkView', ->
         syncFollowsSpy = sinon.spy @view.following, 'syncFollows'
         @view.setupFollowButton()
         syncFollowsSpy.args[0][0].should.include @artist.id
+
+    describe '#selectEdition', ->
+      it 'sets a private value on the view that is otherwise undefined', ->
+        _.isUndefined(@view.__selectedEdition__).should.be.ok
+        @view.$('.aes-radio-button').last().trigger('change')
+        @view.__selectedEdition__.should.equal @artwork.editions.last().id
+
+    describe '#selectedEdition', ->
+      it 'should default to the first edition id', ->
+        @view.selectedEdition().should.equal @artwork.editions.first().id
+      it 'should favor the __selectedEdition__ if it has changed', ->
+        @view.selectEdition(currentTarget: value: @artwork.editions.last().id)
+        @view.selectedEdition().should.equal @artwork.editions.last().id
+
+    describe '#buy', ->
+      it 'should pass in the correct arguments when the buy button is clicked', ->
+        ($target = @view.$('.artwork-buy-button')).click()
+        @acquireArtworkStub.called.should.be.ok
+        @acquireArtworkStub.args[0][0].should.equal @artwork
+        @acquireArtworkStub.args[0][1].text().should.equal $target.text()
+        @acquireArtworkStub.args[0][2].should.equal @view.selectedEdition()
 
   describe 'user logged out', ->
     beforeEach ->

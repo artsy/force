@@ -13,7 +13,9 @@ describe 'FilterFixedHeader', ->
       Backbone.$ = $
       FilterFixedHeader.__set__ 'JumpView', class @JumpView extends Backbone.View
         initialize: ->
-      @view = new FilterFixedHeader el: $ "<div></div>"
+      @view = new FilterFixedHeader
+        el: $ "<div></div>"
+        params: new Backbone.Model
       done()
 
   afterEach ->

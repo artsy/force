@@ -24,14 +24,8 @@ describe 'TagView', ->
 
   beforeEach ->
     { TagView } = mod = benv.require resolve(__dirname, '../client.coffee')
-    mod.__set__ 'FilterArtworksNav', class @FilterArtworksNav
-      render: sinon.stub()
-    mod.__set__ 'FilterArtworksView', class @FilterSortCount
-      render: sinon.stub()
-    mod.__set__ 'mediator', @mediator = {
-      on: sinon.stub(),
-      trigger: sinon.stub()
-    }
+    mod.__set__ 'FilterArtworksView', class @FilterArtworksView
+      reset: sinon.stub()
     sinon.stub Backbone, 'sync'
     @view = new TagView
       el: $('body')
@@ -40,10 +34,7 @@ describe 'TagView', ->
   afterEach ->
     Backbone.sync.restore()
 
-  describe '#renderCounts', ->
+  describe '#initialize', ->
 
-    it 'fetches the filter suggest and triggers a counts update', ->
-      @view.renderCounts()
-      _.last(Backbone.sync.args)[2].success { total: 1022 }
-      @mediator.trigger.args[0][0].should.equal 'counts'
-      @mediator.trigger.args[0][1].total.should.equal 1022
+    it 'starts the filter artworks view', ->
+      @FilterArtworksView::reset.called.should.be.ok
