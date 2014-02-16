@@ -28,6 +28,7 @@ describe 'ForYouView', ->
   after ->
     benv.teardown()
     Backbone.sync.restore()
+    sd.CURRENT_USER = undefined
 
   describe '#initialize', ->
 
