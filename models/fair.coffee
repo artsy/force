@@ -6,11 +6,13 @@ PartnerLocation     = require './partner_location.coffee'
 OrderedSets         = require '../collections/ordered_sets.coffee'
 Profiles            = require '../collections/profiles.coffee'
 DateHelpers         = require '../components/util/date_helpers.coffee'
+Clock               = require './mixins/clock.coffee'
 
 module.exports = class Fair extends Backbone.Model
 
   _.extend @prototype, Image(sd.SECURE_IMAGES_URL)
   _.extend @prototype, Markdown
+  _.extend @prototype, Clock
 
   urlRoot: -> "#{sd.ARTSY_URL}/api/v1/fair"
 
