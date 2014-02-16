@@ -6,8 +6,7 @@
     .fair-dates!= fair.formatDates()
     if profile.get('bio')
       .profile-bio!= profile.mdToHtml('bio') + ' '
-    .fair-countdown-container
-      .fair-countdown-label Fair opens in:
+    include ../../../components/auction_clock/template
   .fair-overview-right
     a.fair-overview-browse( href=profile.href() + "/browse" )
       img.fair-overview-browse-image(src=fair.imageUrl('large_rectangle') ))

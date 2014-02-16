@@ -1,6 +1,7 @@
 _              = require 'underscore'
 Backbone       = require 'backbone'
 sd             = require('sharify').data
+Clock          = require '../../../components/auction_clock/view.coffee'
 FeedItems      = require '../../../components/feed/collections/feed_items.coffee'
 FeedView       = require '../../../components/feed/client/feed.coffee'
 
@@ -9,6 +10,7 @@ module.exports = class Overview extends Backbone.View
   initialize: (options) ->
     @fair = options.fair
     @fetchBooths()
+    @renderClock()
 
   fetchBooths: ->
     url = "#{@fair.url()}/shows"
@@ -25,3 +27,10 @@ module.exports = class Overview extends Backbone.View
             feedItems        : items
             additionalParams : additionalParams
           @$('.browse-sections .browse-section.booths').show()
+
+  renderClock: ->
+    @clock = new Clock
+      modelName: "Fair"
+      model: @fair
+      el: $('#fair-page .auction-clock')
+    @clock.start()
