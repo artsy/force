@@ -5,6 +5,7 @@ sinon           = require 'sinon'
 { resolve }     = require 'path'
 { fabricate }   = require 'antigravity'
 
+CurrentUser       = require '../../../models/current_user'
 Post              = require '../../../models/post'
 Artist            = require '../../../models/artist'
 RelatedPostsView  = benv.requireWithJadeify resolve(__dirname, '../view.coffee'), ['template', 'noneTemplate']
@@ -83,12 +84,22 @@ describe 'RelatedPostsView', ->
     describe '#addPost', ->
       beforeEach ->
         @e = preventDefault: sinon.stub()
+        sinon.stub location, 'reload'
+
+      afterEach ->
+        location.reload.restore()
+
       it 'should pass through if user exists', ->
-        RelatedPostsView.__set__ 'sd', CURRENT_USER: 'existy'
-        @view.addPost @e
-        @e.preventDefault.called.should.not.be.ok
-      it 'should intercept if user is *not* logged in', ->
-        RelatedPostsView.__set__ 'sd', CURRENT_USER: null
+        @view.currentUser = new CurrentUser fabricate('user', id: 'current-user-id')
         @view.addPost @e
         @e.preventDefault.called.should.be.ok
+        _.last(Backbone.sync.args)[2].success { results: [
+          fabricate 'post', id: 'cats-rule-dogs-drool-literally', title: 'Cats rule, and dogs drool'
+        ]}
+        _.last(Backbone.sync.args)[2].success([])
+        location.href.should.contain '/post'
 
+      it 'should intercept if user is *not* logged in', ->
+        RelatedPostsView.currentUser = false
+        @view.addPost @e
+        @e.preventDefault.called.should.be.ok
