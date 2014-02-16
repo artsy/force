@@ -2,6 +2,7 @@ _           = require 'underscore'
 sd          = require('sharify').data
 Backbone    = require 'backbone'
 Post        = require '../../models/post.coffee'
+CurrentUser = require '../../models/current_user.coffee'
 mediator    = require '../../lib/mediator.coffee'
 analytics   = require '../../lib/analytics.coffee'
 
@@ -38,9 +39,23 @@ module.exports = class RelatedPostsView extends Backbone.View
     @numToShow = @model.relatedPosts.length
     @render()
 
-  addPost: (e) ->
-    unless sd.CURRENT_USER?
+  addPost: (e) =>
+    @currentUser ||= CurrentUser.orNull()
+    unless @currentUser
       e.preventDefault()
       mediator.trigger 'open:auth', mode: 'register', copy: 'Sign up to post on Artsy.net'
     else
+      e.preventDefault()
       analytics.track.click "Added #{@model.constructor.name.toLowerCase()} to post, via #{@model.constructor.name.toLowerCase()} info"
+      @addToPost (-> location.href = "/post" )
+
+  addToPost: (success) ->
+    @currentUser ||= CurrentUser.orNull()
+    @currentUser.unpublishedPost
+      success: (post) =>
+        post.isNew = -> true
+        post.url = "#{post.url()}/#{post.get('id')}/artwork/#{@model.get('id')}"
+        post.save null,
+          success: success
+          error: success
+      error: success
