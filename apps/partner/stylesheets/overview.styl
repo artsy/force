@@ -1,0 +1,60 @@
+#partner-overview
+
+  // Override .partner-shows styles
+  .partner-shows
+    .partner-shows-section.featured
+      border-bottom 1px solid #ccc
+      padding-bottom 50px
+    .partner-shows-section-heading
+      display none
+    
+  .partner-overview-section
+    min-height 500px
+    margin-bottom 50px
+    border-bottom 1px solid #ccc
+    &:last-child
+      border none
+
+  // Artists grid styles
+  .artists-grid
+    .artists-grid-section
+      margin-bottom 50px
+    .artists-group-label
+      font-size 18px
+      margin-bottom 20px
+    .partner-artist
+      display inline-block
+      vertical-align top
+      width 22%
+      box-sizing content-box
+      margin 0 0 3% 0
+      padding 0 2%
+      &:nth-child(4n+1)
+        padding-left 0
+      &:nth-child(4n)
+        padding-right 0
+      &:nth-last-child(-n+4)
+        margin-bottom 0
+      img
+        width 100%
+      a
+        text-decoration none
+    .partner-artist-cover-image
+      position relative
+      margin-bottom 10px
+    .partner-artist-overlay
+      position absolute
+      top 0
+      bottom 0
+      width 100%
+      background-color black
+      opacity 0
+      transition opacity 0.3s ease-in-out
+      &:hover
+        opacity 0.4
+    .partner-artists-see-all
+      a
+        font-size 13px
+        &:hover:before
+          border-bottom-width 2px
+          margin-top 0.6em

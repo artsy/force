@@ -15,6 +15,7 @@ module.exports = class PartnerShowsView extends Backbone.View
 
   render: ->
     @$el.html $( template(
+      partner: @partner
       featured: @featured
       current: @current.models
       upcoming: @upcoming.models
