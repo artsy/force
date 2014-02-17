@@ -8,12 +8,16 @@ describe 'FeaturedLink', ->
 
   beforeEach ->
     @featuredLink = new FeaturedLink fabricate 'featured_link',
-      image_versions: ['original', 'large_rectangle', 'medium_rectangle']
+      image_versions: ['large_rectangle', 'medium_rectangle']
 
   it 'mixes in Markdown methods', ->
     @featuredLink.mdToHtml.should.be.a.Function
 
   xdescribe '#fetchItems', ->
+
+  describe '#initialize', ->
+    it 'adds original to the image versions', ->
+      _.contains(@featuredLink.get('image_versions'), 'original').should.be.true
 
   describe '#layoutStyle', ->
     it 'returns a descriptor for the required layout', ->

@@ -7,6 +7,7 @@ Backbone      = require 'backbone'
 { fabricate } = require 'antigravity'
 FeaturedSet   = require '../../../../models/featured_set.coffee'
 FeaturedLink  = require '../../../../models/featured_link.coffee'
+FeaturedLinks = require '../../../../collections/featured_links.coffee'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../../templates/#{templateName}.jade"
@@ -30,7 +31,7 @@ describe 'Featured Links', ->
       item_type : "FeaturedLink"
       type      : "featured links"
       owner_type: "Feature"
-      data      : new Backbone.Collection [ fabricate 'featured_link' ], { model: FeaturedLink }
+      data      : new FeaturedLinks [ fabricate 'featured_link' ]
 
   describe 'template', ->
 
@@ -47,7 +48,7 @@ describe 'Featured Links', ->
       html = render('sets')({ sets : [ @set ] })
       $ = cheerio.load html
       $('.feature-set-item').should.have.lengthOf 1
-      $('.feature-set-item a').should.have.lengthOf 2
+      $('.feature-set-item a').should.have.lengthOf 3
 
     it 'adds an image when the model has one', ->
       @set.get('data').first().set 'image_versions', ['original', 'large_rectangle', 'medium_rectangle']

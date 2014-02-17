@@ -11,6 +11,11 @@ module.exports = class FeaturedLink extends Backbone.Model
   _.extend @prototype, Markdown
   _.extend @prototype, LayoutSyle
 
+  initialize: ->
+    # Add the original to the image versions array
+    if _.isArray(@get('image_versions')) and not @hasImage('original')
+      @get('image_versions').push 'original'
+
   fetchItems: (cache=false) ->
     items = new Items null, { id: @id }
     items.fetch(cache: cache).then => @set { items: items }
