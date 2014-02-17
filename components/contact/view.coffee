@@ -5,6 +5,7 @@ ModalView     = require '../modal/view.coffee'
 mediator      = require '../../lib/mediator.coffee'
 Form          = require '../mixins/form.coffee'
 CurrentUser   = require '../../models/current_user.coffee'
+analytics     = require('../../lib/analytics.coffee')
 
 template        = -> require('./templates/index.jade') arguments...
 headerTemplate  = -> require('./templates/header.jade') arguments...
@@ -41,6 +42,9 @@ module.exports = class ContactView extends ModalView
     super @options
 
   postRender: ->
+    @renderTemplates()
+
+  renderTemplates: ->
     @$('#modal-contact-header').html @headerTemplate(@templateData)
     @$('#modal-contact-form').html @formTemplate(@templateData)
 
@@ -69,9 +73,13 @@ module.exports = class ContactView extends ModalView
 
       @$submit.attr 'data-state', 'loading'
 
-      @model.save @serializeForm(@$form),
+      formData = @serializeForm(@$form)
+
+      @model.save formData,
         success: @success
         error: (model, xhr, options) =>
           @$errors.text @errorMessage(xhr)
           @$submit.attr 'data-state', 'error'
           @updatePosition()
+
+      analytics.track.funnel 'Contact form submitted', formData

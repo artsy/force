@@ -6,10 +6,12 @@ ContactView       = require './view.coffee'
 Representatives   = require './collections/representatives.coffee'
 analytics         = require('../../lib/analytics.coffee')
 
-headerTemplate = -> require('./templates/inquiry_header.jade') arguments...
+headerTemplate  = -> require('./templates/inquiry_header.jade') arguments...
+formTemplate    = -> require('./templates/form.jade') arguments...
 
 module.exports = class InquiryView extends ContactView
-  headerTemplate: headerTemplate
+  headerTemplate: -> headerTemplate.apply this, arguments
+  formTemplate: -> formTemplate.apply this, arguments
 
   defaults: -> _.extend super,
     url: "#{ARTSY_URL}/api/v1/me/artwork_inquiry_request"
@@ -19,9 +21,8 @@ module.exports = class InquiryView extends ContactView
 
     @representatives = new Representatives
     @representatives.fetch().then =>
-      @templateData['representative'] = @representatives.first()
-      @$('#modal-contact-header').html @headerTemplate(@templateData)
-      @$('#modal-contact-form').html @formTemplate(@templateData)
+      @templateData.representative = @representatives.first()
+      @renderTemplates()
       @updatePosition()
       @isLoaded()
       # Ensure autofocus

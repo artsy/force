@@ -9,7 +9,7 @@ rewire          = require 'rewire'
 analytics = require '../../../lib/analytics'
 analytics.track.funnel = sinon.stub()
 
-describe 'ContactPartnerView', ->
+describe 'Inquiry', ->
   before (done) ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'
@@ -24,20 +24,28 @@ describe 'ContactPartnerView', ->
     @artwork  = new Backbone.Model fabricate 'artwork'
     @partner  = fabricate 'partner'
     benv.render resolve(__dirname, '../templates/index.jade'), {}, =>
-      ContactPartnerView = benv.requireWithJadeify(resolve(__dirname, '../contact_partner'), ['formTemplate', 'headerTemplate'])
-      ContactPartnerView.__set__ 'analytics', analytics
-      sinon.stub ContactPartnerView.prototype, 'open'
-      sinon.stub ContactPartnerView.prototype, 'updatePosition'
-      @view = new ContactPartnerView artwork: @artwork, partner: @partner, el: $('body')
+      Inquiry = benv.requireWithJadeify(resolve(__dirname, '../inquiry'), ['formTemplate', 'headerTemplate'])
+      Inquiry.__set__ 'analytics', analytics
+      sinon.stub Inquiry.prototype, 'open'
+      sinon.stub Inquiry.prototype, 'updatePosition'
+      @view = new Inquiry artwork: @artwork, partner: @partner, el: $('body')
+      @view.templateData.representative = new Backbone.Model name: 'Foo Bar'
+      @view.templateData.representative.iconImageUrl = sinon.stub()
+      @view.renderTemplates()
       done()
 
   afterEach ->
     Backbone.sync.restore()
 
+  describe '#renderTemplates', ->
+    it 'has the correct header', ->
+      html = @view.$el.html()
+      html.should.include 'Foo Bar, an Artsy Specialist, is available to answer your questions and help you collect through Artsy'
+      html.should.include 'img alt="Foo Bar" width="90" height="90"'
+
   describe '#submit', ->
     describe 'Logged out', ->
       beforeEach ->
-        @view.postRender()
         @view.$('input[name="name"]').val('Foo Bar')
         @view.$('input[name="email"]').val('foo@bar.com')
         @view.$('textarea[name="message"]').val('My message')
@@ -58,7 +66,7 @@ describe 'ContactPartnerView', ->
         attributes.email.should.equal 'foo@bar.com'
         attributes.message.should.equal 'My message'
         attributes.artwork.should.equal @view.artwork.id
-        attributes.contact_gallery.should.be.ok # Should contact gallery
+        attributes.contact_gallery.should.not.be.ok # Should not contact gallery
 
       it 'tracks the correct event', ->
         events = _.last(analytics.track.funnel.args, 2)
@@ -68,7 +76,7 @@ describe 'ContactPartnerView', ->
     describe 'Logged in', ->
       beforeEach ->
         @view.templateData.user = (@user = new Backbone.Model fabricate 'user')
-        @view.postRender()
+        @view.renderTemplates()
         @view.$('textarea[name="message"]').val('My message')
         @view.$('form').submit()
 
@@ -78,4 +86,4 @@ describe 'ContactPartnerView', ->
         attributes.email.should.equal @user.get('email')
         attributes.message.should.equal 'My message'
         attributes.artwork.should.equal @view.artwork.id
-        attributes.contact_gallery.should.be.ok # Should contact gallery
+        attributes.contact_gallery.should.not.be.ok # Should not contact gallery
