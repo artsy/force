@@ -42,7 +42,7 @@ describe 'GeneView', ->
 
     it 'does not setup artists if the gene is a subject matter gene', ->
       @view.renderArtistFillwidth = sinon.stub()
-      @view.model.set type: { properties: [{ value: 'Subject Matter' }] }
+      @view.model.set type: { name: 'Technique' }
       @view.initialize {}
       @view.renderArtistFillwidth.called.should.not.be.ok
 
