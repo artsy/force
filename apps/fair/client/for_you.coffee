@@ -23,7 +23,7 @@ module.exports = class ForYouView extends Backbone.View
 
     @fetchFollowingArtists()
     @fetchFollowingExhibitors()
-    @fetchBooths()
+    # todo init follow buttons
 
   fetchFollowingArtists: ->
     url = "#{sd.ARTSY_URL}/api/v1/me/follow/artists"
@@ -33,8 +33,16 @@ module.exports = class ForYouView extends Backbone.View
       url: url
       data: data
       success: =>
-        for artist in followingArtists.models
-          @fetchAndAppendArtistArtworks artist.get('artist').id
+        if followingArtists.models
+          for artist in followingArtists.models
+            @fetchAndAppendArtistArtworks artist.get('artist').id
+        else
+          @$('.foryou-section.artists').remove()
+          @showHideBlankState()
+
+  showHideBlankState: ->
+    if @$('.foryou-section.artists').length < 1 and @$('.foryou-section.partners').length < 1
+      @$('.blank-state').show()
 
   # Fetches partner shows and appends artworks in those shows
   # - Assumes we get back all artworks in the show
@@ -70,14 +78,18 @@ module.exports = class ForYouView extends Backbone.View
       url: url
       data: data
       success: =>
-        feedItems = new FeedItems()
-        feedItems.doneFetching = true
-        feed = new FeedView
-          el               : @$('.foryou-section.partners .feed')
-          feedItems        : feedItems
+        if followingExhibitors.length
+          feedItems = new FeedItems()
+          feedItems.doneFetching = true
+          feed = new FeedView
+            el               : @$('.foryou-section.partners .feed')
+            feedItems        : feedItems
 
-        for exhibitor in followingExhibitors.models
-          @fetchAndAppendBooth exhibitor.get('profile'), feed
+          for exhibitor in followingExhibitors.models
+            @fetchAndAppendBooth exhibitor.get('profile'), feed
+        else
+          @$('.foryou-section.partners').remove()
+          @showHideBlankState()
 
   fetchAndAppendBooth: (profile, feed) ->
     return unless profile.owner?.id
@@ -89,18 +101,3 @@ module.exports = class ForYouView extends Backbone.View
         _.extend(additionalParams, size: 3)
       success: (items) =>
         feed.handleFetchedItems items.models
-
-  fetchBooths: ->
-    url = "#{@fair.url()}/shows"
-    additionalParams = artworks: true, sortOrder: @sortOrder
-    new FeedItems().fetch
-      url: url
-      data:
-        _.extend(additionalParams, size: 3)
-      success: (items) =>
-        if items.models.length > 0
-          items.urlRoot = url
-          new FeedView
-            el               : @$('.foryou-section.booths .feed')
-            feedItems        : items
-            additionalParams : additionalParams

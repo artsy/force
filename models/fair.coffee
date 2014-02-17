@@ -36,7 +36,7 @@ module.exports = class Fair extends Backbone.Model
     moment(@get('start_at')).fromNow()
 
   fetchExhibitors: (options) ->
-    galleries = new @aToZCollection('show')
+    galleries = new @aToZCollection('show', 'partner')
     galleries.fetchUntilEnd
       url: "#{@url()}/partners"
       cache: true
@@ -81,8 +81,11 @@ module.exports = class Fair extends Backbone.Model
   aToZCollection: (namespace) =>
     href = @href()
     class FairSearchResult extends Backbone.Model
-      href: -> "#{href}/browse/#{namespace}/#{@get('id')}"
+      href: ->
+        console.log @attributes
+        "#{href}/browse/#{namespace}/#{@get('id')}"
       displayName: -> @get('name')
+
     new class FairSearchResults extends Profiles
       model: FairSearchResult
 

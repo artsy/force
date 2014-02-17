@@ -1,0 +1,10 @@
+for row in exhibitorsAToZGroup
+  .a-to-z-row
+    for column in row.columns
+      ul.a-to-z-column
+        for item in column
+          li.a-to-z-item
+            if item.linkToPage
+              a( href = item.href )= item.name
+            else
+              = item.name
