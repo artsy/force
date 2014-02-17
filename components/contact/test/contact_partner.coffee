@@ -20,7 +20,7 @@ describe 'ContactPartnerView', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    @artwork = fabricate 'artwork'
+    @artwork = new Backbone.Model fabricate 'artwork'
     @partner = fabricate 'partner'
     @view = new @ContactPartnerView artwork: @artwork, partner: @partner
 
