@@ -10,6 +10,7 @@ module.exports = class ArtistFillwidthList extends Backbone.View
 
   initialize: (options) ->
     { @user } = options
+    @$document = $(document)
     @user?.initializeDefaultArtworkCollection()
     @page = 1
     @following = new Following(null, kind: 'artist') if @user
@@ -52,7 +53,7 @@ module.exports = class ArtistFillwidthList extends Backbone.View
         fillwidthView.removeHiddenItems()
 
   syncFollowsOnAjaxStop: ->
-    $(document).one 'ajaxStop', =>
+    @$document.one 'ajaxStop', =>
       @following?.syncFollows @collection.pluck('id')
 
   events:
