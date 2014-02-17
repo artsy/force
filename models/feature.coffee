@@ -88,7 +88,7 @@ module.exports = class Feature extends Backbone.Model
 
             when 'FeaturedLink'
               orderedSet.set
-                data : new FeaturedLinks items.map (link) -> link.toJSON()
+                data : items
                 type : 'featured links'
               finalItems.push orderedSet
               callback()
