@@ -23,6 +23,8 @@ getTemplateForProfileType = (profile) ->
 @index = (req, res, next) ->
   fetchProfile req, res, next, (profile) ->
     return overview(req, res, next) if profile.isFairOranizer()
+    res.locals.sd.SECTION = 'overview' if profile.isGallery()
+    res.locals.sd.SECTION = 'shows' if profile.isInstitution()
     res.render getTemplateForProfileType(profile),
       profile : profile
 
@@ -30,6 +32,7 @@ getTemplateForProfileType = (profile) ->
   fetchProfile req, res, next, (profile) ->
     return fairPosts(req, res, next) if profile.isFairOranizer()
     if profile.hasPosts()
+      res.locals.sd.SECTION = 'posts' if profile.isPartner()
       res.render getTemplateForProfileType(profile),
         profile : profile
     else

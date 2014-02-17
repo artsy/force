@@ -43,8 +43,10 @@ module.exports.PartnerView = class PartnerView extends Backbone.View
       cache: true
       success: =>
         sections = @getDisplaySections @getSections()
-        @$('.partner-nav').html(
-          $( tablistTemplate profile: @profile, sections: sections, sd: sd )
+        @$('.partner-nav').html( tablistTemplate
+          profile: @profile
+          sections: sections
+          currentSection: @currentSection
         )
 
   initContent: ->
