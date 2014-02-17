@@ -10,6 +10,7 @@ describe 'BorderedPulldown', ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
+      $.fn.hidehover = sinon.stub()
       BorderedPulldown = require '../view'
       @view = new BorderedPulldown el: $ "<div></div>"
       done()
