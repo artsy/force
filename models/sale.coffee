@@ -3,12 +3,16 @@ sd        = require('sharify').data
 moment    = require 'moment'
 Backbone  = require 'backbone'
 { Fetch } = require 'artsy-backbone-mixins'
+Clock     = require './mixins/clock.coffee'
 
 module.exports = class Sale extends Backbone.Model
+
+  _.extend @prototype, Clock
 
   fetchArtworks: (options) ->
     _.extend Backbone.Collection.prototype, Fetch(sd.ARTSY_URL)
     saleArtworks = new Backbone.Collection []
+    saleArtworks.comparator = (saleArtwork) -> saleArtwork.get('position')
     saleArtworks.url = "#{sd.ARTSY_URL}/api/v1/sale/#{@get 'id'}/sale_artworks"
     saleArtworks.fetchUntilEnd options
 

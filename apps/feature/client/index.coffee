@@ -17,13 +17,19 @@ module.exports.FeatureView = class FeatureView extends Backbone.View
         @$('.feature-content').append setsTemplate { sets: sets }
         # If we have artworks, we have a sale or auction.
         if @$('.artwork-column').length > 0
-          # hide it until we add the artist list (should be fast)
-          @$('.artwork-column:first-child').parent().css 'visibiliy', 'hidden'
-          set = _.find sets, (set) -> set.get('type') is ('sale artworks' or 'sale auction')
-          artworks = set.get 'data'
-          @setupSaleArtworks artworks
-          if (set and set.get('display_artist_list'))
-            @renderArtistList artworks
+          @initializeSaleArtworks sets
+
+  initializeSaleArtworks: (sets) ->
+    # hide it until we add the artist list (should be fast)
+    @$('.artwork-column:first-child').parent().css 'visibiliy', 'hidden'
+    @$('.artwork-column:first').addClass 'first'
+    @$('.artwork-column:last').addClass 'last'
+    for set in sets
+      if set.get('type') in ['sale artworks', 'sale auction', 'auction artworks']
+        artworks = set.get 'data'
+        @setupSaleArtworks artworks
+        if (set and set.get('display_artist_list'))
+          @renderArtistList artworks
 
   setupCurrentUser: ->
     @currentUser = CurrentUser.orNull()

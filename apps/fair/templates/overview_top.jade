@@ -1,5 +1,41 @@
 .fair-overview-top
   .fair-overview-top-left
-    .large-profile-image
-    != fair.get('name')
-    != fair.location().get('name')
+    img.large-profile-image( src=profile.icon().imageUrl('square') )
+    .fair-name!= fair.get('name')
+    .fair-location!= fair.formatLocation()
+    .fair-dates!= fair.formatDates()
+    if profile.get('bio')
+      .profile-bio!= profile.mdToHtml('bio') + ' '
+    include ../../../components/auction_clock/template
+  .fair-overview-right
+    a.fair-overview-browse( href=profile.href() + "/browse" )
+      img.fair-overview-browse-image(src=fair.imageUrl('large_rectangle') ))
+      .fair-overview-browse-heading.overview-heading Browse all exhibitors
+      .fair-overview-browse-subheading
+        != exhibitorsCount + " "
+        | Exhibitors, Updated Daily
+
+.fair-overview-below-top-container
+  .fair-overview-below-top
+    .container-left
+      a.large-section( href=profile.href() + "/for-you" )
+        if user
+          .large-section-heading Works for You
+          .large-section-subheading See works by artists you follow at the fair
+        else
+          .large-section-heading Personalize Your Experience
+          .large-section-subheading Sign up for Artsy to save works, follow artists and exhibitors.
+      if primarySets.where({ key: 'explore' })
+        for set in primarySets.where({ key: 'explore' })
+          for item in set.get('items').models.slice(0,2)
+            a.small-section( href=item.get('href') )
+              img( src=item.imageUrl('large_square') )
+              .section-heading= item.get('title')
+  
+    if primarySets.where({ key: 'primary' })
+      .container-right
+        for set in primarySets.where({ key: 'primary' })
+          for item in set.get('items').models
+            a.small-section( href=item.get('href') )
+              img( src=item.imageUrl('large_square') )
+              .section-heading= item.get('title')

@@ -20,6 +20,7 @@ module.exports = class InquiryView extends ContactView
     @representatives.fetch().then =>
       @templateData['representative'] = @representatives.first()
       @$('#modal-contact-header').html @headerTemplate(@templateData)
+      @$('#modal-contact-form').html @formTemplate(@templateData)
       @updatePosition()
       @isLoaded()
       # Ensure autofocus

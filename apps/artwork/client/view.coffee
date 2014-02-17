@@ -6,10 +6,11 @@ Transition            = require '../../../components/mixins/transition.coffee'
 CurrentUser           = require '../../../models/current_user.coffee'
 SaveButton            = require '../../../components/save_button/view.coffee'
 RelatedPostsView      = require '../../../components/related_posts/view.coffee'
-RelatedArtworksView   = require './related-artworks.coffee'
+LayeredSearchView     = require('./layered-search.coffee').LayeredSearchView
 ContactPartnerView    = require '../../../components/contact/contact_partner.coffee'
 InquiryView           = require '../../../components/contact/inquiry.coffee'
 analytics             = require '../../../lib/analytics.coffee'
+acquireArtwork        = require('../../../components/acquire/view.coffee').acquireArtwork
 
 Artworks = require '../../../collections/artworks.coffee'
 artistArtworksTemplate = -> require('../templates/_artist-artworks.jade') arguments...
@@ -26,6 +27,8 @@ module.exports = class ArtworkView extends Backbone.View
     'click .artwork-inquiry-button'         : 'inquire'
     'click .artwork-download-button'        : 'trackDownload'
     'click .artwork-auction-results-button' : 'trackComparable'
+    'change .aes-radio-button'              : 'selectEdition'
+    'click .artwork-buy-button'             : 'buy'
 
   initialize: (options) ->
     { @artwork, @artist } = options
@@ -83,9 +86,9 @@ module.exports = class ArtworkView extends Backbone.View
       model: @artwork
 
   setupRelatedArtworks: ->
-    new RelatedArtworksView
-      model: @artwork
-      el: @$('#artwork-related-artworks-section')
+    new LayeredSearchView
+      artwork: @artwork
+      el: @$('#artwork-layered-search-section')
 
   route: (route) ->
     # Initial server rendered route is 'show'
@@ -150,3 +153,14 @@ module.exports = class ArtworkView extends Backbone.View
 
   trackComparable: ->
     analytics.track.click "Viewed 'Comparables'"
+
+  selectEdition: (e) ->
+    @__selectedEdition__ = e.currentTarget.value
+
+  selectedEdition: ->
+    @__selectedEdition__ or
+    @artwork.editions.first()?.id
+
+  buy: (e) ->
+    ($target = $(e.currentTarget)).addClass 'is-loading'
+    acquireArtwork @artwork, $target, @selectedEdition()

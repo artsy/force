@@ -1,0 +1,20 @@
+.artists-grid
+  each group in groups
+    section.artists-grid-section
+      h2.avant-garde-header-center.artists-group-label= group.label
+      .partner-artists-conatiner
+        each pa in group.list
+          if pa.get('published_artworks_count') > 0
+            figure.partner-artist( data-artist-id=pa.get('artist').id )
+              a( href=pa.href() )
+                .partner-artist-cover-image
+                  img( src="#{pa.imageUrl('four_thirds')}" ) 
+                  .partner-artist-overlay
+                figurecaption.partner-artist-caption
+                  h5.partner-artist-name= pa.get('artist').name
+
+  section.artists-grid-section
+    .partner-artists-see-all.avant-garde-header-center
+      a.faux-underline-hover(
+        href="#{partner.url()}/artists"
+      ) Go to artists

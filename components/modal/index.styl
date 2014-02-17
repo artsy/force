@@ -5,6 +5,7 @@ body.is-modal
   overflow hidden
 
 #modal
+  z-index 3
   &[data-state='open'], &.is-open
     > .modal-backdrop
       opacity 1
@@ -18,13 +19,15 @@ body.is-modal
       content ''
       spinner(20px, 5px, #fff)
 
+#modal
 .modal-backdrop
   position fixed
   top 0
   right 0
   bottom 0
   left 0
-  z-index 3
+
+.modal-backdrop
   background-color rgba(0, 0, 0, 0.5)
   opacity 0
   transition opacity 0.25s

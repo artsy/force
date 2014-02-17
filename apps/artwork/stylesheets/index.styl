@@ -4,6 +4,7 @@
 @import './deep-zoom'
 @import './circle-buttons'
 @import './view-in-room'
+@import './layered-search'
 
 artwork-detail-width        = 220px
 artwork-detail-item-height  = 36px
@@ -136,6 +137,7 @@ artwork-detail-item-height  = 36px
 .artwork-edition-sets
   margin 10px 0
 .artwork-edition-set
+  display block
   position relative
   padding 5px 0
   font-size 13px
@@ -145,10 +147,10 @@ artwork-detail-item-height  = 36px
   clearfix()
   &:first-child
     border-top 1px dotted
-.aes-radio-button
+.aes-radio
 .aes-details
   float left
-.aes-radio-button
+.aes-radio
   margin-right 10px
 .aes-edition-size
   color dark-gray-text-color
@@ -255,12 +257,5 @@ artwork-detail-item-height  = 36px
     &[data-state='saved']
       opacity 1
 
-#artwork-related-artworks-container
+#artwork-layered-search-container
   margin 20px auto
-
-.artwork-related-artworks
-  display none
-  opacity 0
-  transition opacity 0.5s
-  &[data-state='fade-in']
-    opacity 1

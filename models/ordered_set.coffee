@@ -2,8 +2,11 @@ _         = require 'underscore'
 Q         = require 'q'
 Backbone  = require 'backbone'
 Items     = require '../collections/items.coffee'
+LayoutSyle = require './mixins/layout_style.coffee'
 
 module.exports = class OrderedSet extends Backbone.Model
+  _.extend @prototype, LayoutSyle
+
   fetchItems: (cache=false) ->
     deferred  = Q.defer()
     items     = new Items null, { id: @id, item_type: @get('item_type') }

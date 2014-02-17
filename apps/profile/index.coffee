@@ -25,6 +25,7 @@ vanityRoutes = [
 
 app.get '/:id', routes.index
 app.get '/:id/favorites', routes.favorites
+app.get '/:id/overview', routes.overview
 app.get '/:id/posts', routes.posts
 app.get '/:id/contact', routes.contact
 app.get '/:id/about', routes.about

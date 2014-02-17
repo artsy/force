@@ -30,10 +30,11 @@ module.exports.FairView = class FairView extends Backbone.View
     @setupSearch @model, @fair
 
     if @sectionHash[options.currentSection]
+      el = if options.currentSection == 'overview' then @$el else @$('.fair-page-content')
       new @sectionHash[options.currentSection]
         model: @model
         fair : @fair
-        el   : @$('.fair-page-content')
+        el   : el
 
       if options.currentSection == 'follows' or options.currentSection == 'favorites'
         @fixFavoritesFollowingTabs @model
