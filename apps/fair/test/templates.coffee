@@ -126,7 +126,6 @@ describe 'Fair', ->
            location: '/show/oriol-galeria-dart-oriol-galeria-dart-at-the-armory-show-2013',
            is_human: false
         ]
-
         fair = new Fair (fabricate 'fair', about: 'about the fair')
         profile = new Profile (fabricate 'fair_profile')
         fairResults[0].updateForFair fair
@@ -255,3 +254,22 @@ describe 'Fair', ->
       $('.fair-overview-curator .small-section').length.should.equal 2
       $('.fair-overview-post-container .large-post').length.should.equal 1
       $('.fair-overview-post-container .small-post').length.should.equal 1
+
+  describe 'exhibitors columns', ->
+    before ->
+      m1 = fabricate('partner', artworks_count: 1)
+      m2 = fabricate('partner', artworks_count: 0)
+
+      fair = new Fair (fabricate 'fair', about: 'about the fair')
+      profile = new Profile (fabricate 'fair_profile')
+
+      exhibitorsAToZGroup = new fair.aToZCollection('partner')
+      exhibitorsAToZGroup.add([ m1, m2 ])
+
+      @template = render('exhibitors_columns')
+        exhibitorsColumns : exhibitorsAToZGroup.groupByColumns(3)
+
+    it 'renders without errors', ->
+      $ = cheerio.load @template
+      $('.exhibitors-column').length.should.equal 3
+      $('.exhibitor-name').length.should.equal 2

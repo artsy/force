@@ -4,12 +4,15 @@ sd             = require('sharify').data
 FeedItems      = require '../../../components/feed/collections/feed_items.coffee'
 FeedView       = require '../../../components/feed/client/feed.coffee'
 Artist         = require '../../../models/artist.coffee'
+Profile        = require '../../../models/profile.coffee'
 Profiles       = require '../../../collections/profiles.coffee'
 Artworks       = require '../../../collections/artworks.coffee'
 Artists        = require '../../../collections/artists.coffee'
+FollowProfiles = require '../../../collections/follow_profiles.coffee'
 CurrentUser    = require '../../../models/current_user.coffee'
 FeedItems      = require '../../../components/feed/collections/feed_items.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
+FollowProfileButton = require '../../partners/client/follow_profiles_button.coffee'
 
 module.exports = class ForYouView extends Backbone.View
 
@@ -23,7 +26,27 @@ module.exports = class ForYouView extends Backbone.View
 
     @fetchFollowingArtists()
     @fetchFollowingExhibitors()
-    # todo init follow buttons
+    if @$('.exhibitors-column-container').length
+      # Delay this since it is below the fold. Don't want it to slow down other requests.
+      _.delay =>
+        @initializeFollowButtons()
+      , 1000
+
+  initializeFollowButtons: ->
+    @followProfiles = if CurrentUser.orNull() then new FollowProfiles [] else null
+    ids = []
+    @$('.exhibitors-column-container .follow-button').each (index, item) =>
+      id = $(item).attr('data-id')
+      model = new Profile(id: id)
+      @initFollowButton model, item
+      ids.push id
+    @followProfiles?.syncFollows ids
+
+  initFollowButton: (profile, el) ->
+    new FollowProfileButton
+      el         : el
+      model      : profile
+      collection : @followProfiles
 
   fetchFollowingArtists: ->
     url = "#{sd.ARTSY_URL}/api/v1/me/follow/artists"
@@ -33,7 +56,7 @@ module.exports = class ForYouView extends Backbone.View
       url: url
       data: data
       success: =>
-        if followingArtists.models
+        if followingArtists.length
           for artist in followingArtists.models
             @fetchAndAppendArtistArtworks artist.get('artist').id
         else

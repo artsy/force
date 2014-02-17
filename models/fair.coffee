@@ -90,11 +90,12 @@ module.exports = class Fair extends Backbone.Model
         url
     new class FairSearchResults extends Profiles
       model: FairSearchResult
-      groupByColumns: (columns=3) ->
+      # comparator: (model) -> model.get('sortable_id')
+      groupByColumns: (columnCount=3) ->
         itemsPerColumn = Math.ceil(@length/3)
         columns = []
-        for n in [0..columns]
-          columns.push @models[n*itemsPerColumn..(n+1)*itemsPerColumn]
+        for n in [0...columnCount]
+          columns.push @models[n*itemsPerColumn..(n+1)*itemsPerColumn - 1]
         columns
 
   fetchShowForPartner: (partnerId, options) ->

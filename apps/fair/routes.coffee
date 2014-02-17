@@ -61,9 +61,9 @@ fetchFairData = (fair, profile, res, options) ->
 
   fair.fetchExhibitors
     cache: true
-    success: (aToZGroup, exhibitorsColumns, galleries) ->
+    success: (exhibitorsAToZGroup, exhibitorsColumns, galleries) ->
       data.exhibitorsCount = galleries.length
-      data.exhibitorsAToZGroup = galleries.groupByAlphaWithColumn 3
+      data.exhibitorsAToZGroup = exhibitorsAToZGroup
       data.exhibitorsColumns = exhibitorsColumns
       success()
     error: res.backboneError
