@@ -4,6 +4,7 @@ Backbone  = require 'backbone'
 
 ContactView       = require './view.coffee'
 Representatives   = require './collections/representatives.coffee'
+analytics         = require('../../lib/analytics.coffee')
 
 headerTemplate = -> require('./templates/inquiry_header.jade') arguments...
 
@@ -32,6 +33,8 @@ module.exports = class InquiryView extends ContactView
     @isLoading()
 
   submit: ->
+    analytics.track.funnel 'Sent artwork inquiry', label: analytics.modelToLabel(@artwork)
+
     @model.set
       artwork: @artwork.id
       contact_gallery: false
