@@ -8,7 +8,7 @@
             figure.partner-artist( data-artist-id=pa.get('artist').id )
               a( href=pa.href() )
                 .partner-artist-cover-image
-                  img( src="#{pa.imageUrl('four_thirds')}" ) 
+                  img( src="#{pa.imageUrl('four_thirds')}", alt=pa.get('artist').name ) 
                   .partner-artist-overlay
                 figurecaption.partner-artist-caption
                   h5.partner-artist-name= pa.get('artist').name
