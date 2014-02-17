@@ -45,8 +45,8 @@ module.exports = class ModalView extends Backbone.View
 
   updatePosition: =>
     @$dialog.css
-      top:  ((@$window.height() - @$dialog.height()) / 2) + 'px'
-      left: ((@$window.width() - @$dialog.width()) / 2) + 'px'
+      top:  ((@$el.height() - @$dialog.height()) / 2) + 'px'
+      left: ((@$el.width() - @$dialog.width()) / 2) + 'px'
 
   autofocus: ->
     if isTouchDevice() then undefined else true
