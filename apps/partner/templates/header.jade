@@ -1,7 +1,11 @@
 header.partner-header
   .partner-info-container
-    a.partner-icon( href="#" )
-      include ../../../components/profile_badge/profile_icon
+    a.profile-badge.partner-icon( href=profile.href() )
+      .profile-badge-icon
+        if profile.has('icon')
+          img( src=profile.iconImageUrl(), alt=profile.displayName() )
+        else
+          .profile-badge-initials= profile.defaultIconInitials()
     .partner-info
       h1.partner-name= profile.displayName()
       p.partner-bio= profile.get('bio')
