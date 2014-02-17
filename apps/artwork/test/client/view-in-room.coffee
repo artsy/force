@@ -67,14 +67,14 @@ describe 'ViewInRoomView', ->
       it 'returns a non-zero value to scale the room by', ->
         @view.$room.width 2000
         @view.$room.height 1000
-        @view.$window.width = -> 640
-        @view.$window.height = -> 480
+        @view.$el.width = -> 640
+        @view.$el.height = -> 480
         @view.roomScalingFactor().should.equal 0.48
       it 'returns a non-zero value to scale the room by', ->
         @view.$room.width 2000
         @view.$room.height 1000
-        @view.$window.width = -> 480
-        @view.$window.height = -> 640
+        @view.$el.width = -> 480
+        @view.$el.height = -> 640
         @view.roomScalingFactor().should.equal 0.64
 
     describe '#artworkScalingFactor', ->
