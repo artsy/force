@@ -6,10 +6,11 @@
 - }
 
 nav.partner-tabs.garamond-tablist
-  each section, index in sections
-    if index > 0
-      span.garamond-tab-separator
-    a.garamond-tab(
-      href="/#{id}/#{section}",
-      class=(section == currentSection ? 'is-active' : 'is-inactive')
-    )= transform(section)
+  if sections.length > 1
+    each section, index in sections
+      if index > 0
+        span.garamond-tab-separator
+      a.garamond-tab(
+        href="/#{id}/#{section}",
+        class=(section == currentSection ? 'is-active' : 'is-inactive')
+      )= transform(section)
