@@ -48,7 +48,7 @@ module.exports = class Overview extends Backbone.View
       url: url
       data: data
       success: =>
-        artistNames = @formatArtists followingArtists, 5
+        artistNames = @formatArtists followingArtists, 2
         if artistNames
           @$('.container-left .large-section-subheading').text "Works by #{artistNames}"
 

@@ -4,12 +4,15 @@ sd             = require('sharify').data
 FeedItems      = require '../../../components/feed/collections/feed_items.coffee'
 FeedView       = require '../../../components/feed/client/feed.coffee'
 Artist         = require '../../../models/artist.coffee'
+Profile        = require '../../../models/profile.coffee'
 Profiles       = require '../../../collections/profiles.coffee'
 Artworks       = require '../../../collections/artworks.coffee'
 Artists        = require '../../../collections/artists.coffee'
+FollowProfiles = require '../../../collections/follow_profiles.coffee'
 CurrentUser    = require '../../../models/current_user.coffee'
 FeedItems      = require '../../../components/feed/collections/feed_items.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
+FollowProfileButton = require '../../partners/client/follow_profiles_button.coffee'
 
 module.exports = class ForYouView extends Backbone.View
 
@@ -23,7 +26,27 @@ module.exports = class ForYouView extends Backbone.View
 
     @fetchFollowingArtists()
     @fetchFollowingExhibitors()
-    @fetchBooths()
+    if @$('.exhibitors-column-container').length
+      # Delay this since it is below the fold. Don't want it to slow down other requests.
+      _.delay =>
+        @initializeFollowButtons()
+      , 1000
+
+  initializeFollowButtons: ->
+    @followProfiles = if CurrentUser.orNull() then new FollowProfiles [] else null
+    ids = []
+    @$('.exhibitors-column-container .follow-button').each (index, item) =>
+      id = $(item).attr('data-id')
+      model = new Profile(id: id)
+      @initFollowButton model, item
+      ids.push id
+    @followProfiles?.syncFollows ids
+
+  initFollowButton: (profile, el) ->
+    new FollowProfileButton
+      el         : el
+      model      : profile
+      collection : @followProfiles
 
   fetchFollowingArtists: ->
     url = "#{sd.ARTSY_URL}/api/v1/me/follow/artists"
@@ -33,8 +56,16 @@ module.exports = class ForYouView extends Backbone.View
       url: url
       data: data
       success: =>
-        for artist in followingArtists.models
-          @fetchAndAppendArtistArtworks artist.get('artist').id
+        if followingArtists.length
+          for artist in followingArtists.models
+            @fetchAndAppendArtistArtworks artist.get('artist').id
+        else
+          @$('.foryou-section.artists').remove()
+          @showHideBlankState()
+
+  showHideBlankState: ->
+    if @$('.foryou-section.artists').length < 1 and @$('.foryou-section.partners').length < 1
+      @$('.blank-state').show()
 
   # Fetches partner shows and appends artworks in those shows
   # - Assumes we get back all artworks in the show
@@ -70,14 +101,18 @@ module.exports = class ForYouView extends Backbone.View
       url: url
       data: data
       success: =>
-        feedItems = new FeedItems()
-        feedItems.doneFetching = true
-        feed = new FeedView
-          el               : @$('.foryou-section.partners .feed')
-          feedItems        : feedItems
+        if followingExhibitors.length
+          feedItems = new FeedItems()
+          feedItems.doneFetching = true
+          feed = new FeedView
+            el               : @$('.foryou-section.partners .feed')
+            feedItems        : feedItems
 
-        for exhibitor in followingExhibitors.models
-          @fetchAndAppendBooth exhibitor.get('profile'), feed
+          for exhibitor in followingExhibitors.models
+            @fetchAndAppendBooth exhibitor.get('profile'), feed
+        else
+          @$('.foryou-section.partners').remove()
+          @showHideBlankState()
 
   fetchAndAppendBooth: (profile, feed) ->
     return unless profile.owner?.id
@@ -89,18 +124,3 @@ module.exports = class ForYouView extends Backbone.View
         _.extend(additionalParams, size: 3)
       success: (items) =>
         feed.handleFetchedItems items.models
-
-  fetchBooths: ->
-    url = "#{@fair.url()}/shows"
-    additionalParams = artworks: true, sortOrder: @sortOrder
-    new FeedItems().fetch
-      url: url
-      data:
-        _.extend(additionalParams, size: 3)
-      success: (items) =>
-        if items.models.length > 0
-          items.urlRoot = url
-          new FeedView
-            el               : @$('.foryou-section.booths .feed')
-            feedItems        : items
-            additionalParams : additionalParams

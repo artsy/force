@@ -50,11 +50,10 @@ describe 'ForYouView', ->
         el: $("""<div>
             <div class='foryou-section artists'><div class='artworks'></div></div>
             <div class='foryou-section partners'><div class='feed'></div></div>
-            <div class='foryou-section booths'><div class='feed'></div></div>
+            <div class='foryou-section booths'></div>
             </div>""")
         fair: @fair
         model: @model
-        filter: {}
 
       partnerShow = fabricate('show',
         _type: "PartnerShow",
@@ -65,11 +64,10 @@ describe 'ForYouView', ->
 
       Backbone.sync.args[0][2].success [{artist: fabricate('artist')}]
       Backbone.sync.args[1][2].success [{profile: fabricate 'profile'}]
-      Backbone.sync.args[2][2].success [partnerShow]
+      Backbone.sync.args[2][2].success []
       Backbone.sync.args[3][2].success []
-      Backbone.sync.args[4][2].success []
+      Backbone.sync.args[4][2].success [partnerShow]
       Backbone.sync.args[5][2].success [partnerShow]
-      Backbone.sync.args[6][2].success [partnerShow]
 
       @ArtworkColumnsView.render.should.calledOnce
       artworks = _.last(@ArtworkColumnsView.appendArtworks.args)[0]
@@ -79,12 +77,8 @@ describe 'ForYouView', ->
       view.$el.html().should.not.include "\#{"
       view.$el.html().should.not.include "NaN"
 
+      view.$('.foryou-section.artists').length.should.equal 1
       view.$('.foryou-section.partners .feed-item').length.should.equal 1
       view.$('.foryou-section.partners .feed-item-top-section .heading').text().should.include feedItem.toChildModel().formatFeedItemHeading()
       view.$('.foryou-section.partners .feed-item-top-section .timeframe').text().should.include feedItem.get('location').city
       view.$('.foryou-section.partners .artwork-item').text().should.include feedItem.get('artworks')[0].title
-
-      view.$('.foryou-section.booths .feed-item').length.should.equal 1
-      view.$('.foryou-section.booths .feed-item-top-section .heading').text().should.include feedItem.toChildModel().formatFeedItemHeading()
-      view.$('.foryou-section.booths .feed-item-top-section .timeframe').text().should.include feedItem.get('location').city
-      view.$('.foryou-section.booths .artwork-item').text().should.include feedItem.get('artworks')[0].title

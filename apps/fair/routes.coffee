@@ -61,9 +61,10 @@ fetchFairData = (fair, profile, res, options) ->
 
   fair.fetchExhibitors
     cache: true
-    success: (exhibitorsAToZGroup, galleries) ->
+    success: (exhibitorsAToZGroup, exhibitorsColumns, galleries) ->
       data.exhibitorsCount = galleries.length
       data.exhibitorsAToZGroup = exhibitorsAToZGroup
+      data.exhibitorsColumns = exhibitorsColumns
       success()
     error: res.backboneError
 
@@ -110,10 +111,10 @@ fetchFairData = (fair, profile, res, options) ->
 
 @forYou = (req, res, next) ->
   fetchFair req, res, next, (fair, profile) ->
-    res.locals.sd.SECTION = 'forYou'
-    res.render 'templates/index',
-      profile : profile
-      fair    : fair
+    fetchFairData fair, profile, res,
+      success: (data) ->
+        res.locals.sd.SECTION = 'forYou'
+        res.render 'templates/index', data
 
 @search = (req, res, next) ->
   term    = req.query.q

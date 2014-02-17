@@ -36,13 +36,14 @@ module.exports = class Fair extends Backbone.Model
     moment(@get('start_at')).fromNow()
 
   fetchExhibitors: (options) ->
-    galleries = new @aToZCollection('show')
+    galleries = new @aToZCollection('show', 'partner')
     galleries.fetchUntilEnd
       url: "#{@url()}/partners"
       cache: true
       success: ->
+        exhibitorsColumns = galleries.groupByColumns 3
         aToZGroup = galleries.groupByAlphaWithColumns 3
-        options?.success aToZGroup, galleries
+        options?.success aToZGroup, exhibitorsColumns, galleries
       error: ->
         options?.error()
 
@@ -83,8 +84,19 @@ module.exports = class Fair extends Backbone.Model
     class FairSearchResult extends Backbone.Model
       href: -> "#{href}/browse/#{namespace}/#{@get('id')}"
       displayName: -> @get('name')
+      imageUrl: ->
+        url = "#{sd.ARTSY_URL}/api/v1/profile/#{@get('default_profile_id')}/image"
+        url = url + "?xapp_token=#{sd.ARTSY_XAPP_TOKEN}" if sd.ARTSY_XAPP_TOKEN?
+        url
     new class FairSearchResults extends Profiles
       model: FairSearchResult
+      # comparator: (model) -> model.get('sortable_id')
+      groupByColumns: (columnCount=3) ->
+        itemsPerColumn = Math.ceil(@length/3)
+        columns = []
+        for n in [0...columnCount]
+          columns.push @models[n*itemsPerColumn..(n+1)*itemsPerColumn - 1]
+        columns
 
   fetchShowForPartner: (partnerId, options) ->
     shows = new Backbone.Collection
