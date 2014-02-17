@@ -48,7 +48,8 @@ setupJquery = ->
   require 'jquery.fillwidth'
   require 'jquery.dotdotdot'
   require 'jquery.poplockit'
-  require '../../lib/jquery.infinitescroll.coffee'
+  require '../../lib/jquery/infinitescroll.coffee'
+  require '../../lib/jquery/hidehover.coffee'
   $.ajaxSettings.headers =
     'X-XAPP-TOKEN'  : sd.ARTSY_XAPP_TOKEN
     'X-ACCESS-TOKEN': sd.CURRENT_USER?.accessToken

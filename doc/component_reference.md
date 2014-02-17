@@ -225,7 +225,9 @@ new ArtistFillwidthList(
 
 ## Bordered Pulldown
 
-An Artsy styled drop down menu. This component comes with a jade mixin you can use via:
+An Artsy styled drop down menu. This component comes with two parts
+
+Include the jade mixin:
 
 ![](images/bordered_pulldown.png)
 
@@ -237,7 +239,13 @@ include ../../bordered_pulldown/mixin
   a( data-sort='-date_created' ) Artwork Year
 ````
 
-Or if you need finer control feel free to just use the CSS classes that are in it's index.styl.
+Add the view:
+
+````coffeescript
+new BorderedPulldown el: $('.bordered-pulldown')
+````
+
+If you need finer control feel free to build your own html and just use the CSS classes. If you're doing server-side sorting the Backbone view isn't necessary.
 
 ## Filter
 
