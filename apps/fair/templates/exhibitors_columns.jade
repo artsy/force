@@ -1,10 +1,10 @@
-for row in exhibitorsAToZGroup
-  .a-to-z-row
-    for column in row.columns
-      ul.a-to-z-column
-        for item in column
-          li.a-to-z-item
-            if item.linkToPage
-              a( href = item.href )= item.name
-            else
-              = item.name
+for column in exhibitorsColumns
+  ul.exhibitors-column
+    for item in column
+      li.exhibitor-item( data-id=item.get('default_profile_id') )
+        img( src=item.imageUrl() )
+        if item.get('default_profile_public')
+          a.exhibitor-name( href = item.get('default_profile_id') )= item.get('name')
+        else
+          .exhibitor-name= item.get('name')
+          button.avant-garde-button-white.follow-button.is-small
