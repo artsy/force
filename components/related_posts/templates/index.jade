@@ -19,7 +19,14 @@
           .related-post-profile
             include ../../../components/profile_badge/template
 
-  footer
+  footer.related-posts-actions( class=(remaining > 0 ? 'is-hasremaining' : '') )
     if remaining > 0
-      a.related-posts-show-all
-        | Show All Featured Posts (#{remaining})
+      .related-posts-actions
+        a.related-posts-show-all
+          | Show All Featured Posts (#{remaining})
+
+    a.related-posts-add-button.avant-garde-button-white(
+      href='/post'
+    )
+      i.icon-write
+      | Add Post
