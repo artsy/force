@@ -25,8 +25,9 @@ describe 'FilterSortCount', ->
     benv.teardown()
 
   it 'renders the counts', ->
-    @view.locals = total: 1001
-    @view.render()
+    @view.counts = new Backbone.Model total: 1001
+    @view.$el = $ "<div><div class='filter-sort-count-total'></div></div>"
+    @view.renderTotal()
     @view.$el.html().should.include '1001'
 
   it 'updates the params to sort', ->
