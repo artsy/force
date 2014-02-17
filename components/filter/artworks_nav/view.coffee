@@ -36,6 +36,7 @@ module.exports = class FilterArtworksNav extends Backbone.View
     'click .filter-artworks-nav-medium a': 'filterMedium'
     'click .filter-artworks-nav-size a': 'filterSize'
     'click .filter-dropdown a': 'checkDropdownItem'
+    'click .filter-dropdown': 'toggleMenuIpad'
 
   allWorks: ->
     @params.clear().trigger('change')
@@ -60,4 +61,9 @@ module.exports = class FilterArtworksNav extends Backbone.View
       .addClass('is-active')
       .closest('.filter-dropdown')
       .children('.filter-nav-active-text')
-      .text $(e.currentTarget).find('.filter-dropdown-text').text()
+      .text($(e.currentTarget).find('.filter-dropdown-text').text())
+    $(e.currentTarget).parent().hidehover()
+
+  toggleMenuIpad: (e) ->
+    $(e.currentTarget).toggleClass('is-hover') if navigator.userAgent.match('iPad')
+    false

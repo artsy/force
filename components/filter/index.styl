@@ -50,13 +50,6 @@ tab-padding = 17px 20px 10px 20px
   padding-right 35px
   &.is-active
     color highlight-color
-  &:hover
-    background black
-    color white
-    nav
-      display block
-    .filter-nav-main-text
-      color white
   nav
     z-index 2
     background black
@@ -95,6 +88,15 @@ tab-padding = 17px 20px 10px 20px
     position absolute
     top 11px
     right 17px
+
+html:not([data-useragent*="iPad"]) .filter-dropdown:hover
+.filter-dropdown.is-hover
+  background black
+  color white
+  nav
+    display block
+  .filter-nav-main-text
+    color white
 
 .filter-dropdown-count
   margin-left 10px

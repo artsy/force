@@ -106,7 +106,6 @@ describe 'ArtistView', ->
       """
       @view.onSortChange({ currentTarget: $fixture.find('a')})
       @view.sortBy.should.equal ''
-      @view.$el.find('a.bordered-pulldown-toggle').html().should.include 'Relevance'
 
   describe '#setupRelatedArtists', ->
 

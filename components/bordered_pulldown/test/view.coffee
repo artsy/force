@@ -19,7 +19,9 @@ describe 'BorderedPulldown', ->
 
   it 'moves the pulldown up when selecting some items', ->
     sinon.spy $.fn, 'css'
-    @view.optionHeight = 100
+    sinon.stub $.fn, 'outerHeight'
+    $.fn.outerHeight.returns 100
     $fixture = $("<div><b></b><b id='a'></b><b></b></div>")
     @view.select currentTarget: $fixture.find('#a')
     $.fn.css.args[0][0]['margin-top'].should.equal -100
+    $.fn.outerHeight.restore()
