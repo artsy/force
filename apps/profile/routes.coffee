@@ -95,7 +95,7 @@ getTemplateForProfileType = (profile) ->
 @about = (req, res, next) ->
   fetchProfile req, res, next, (profile) ->
     if profile.isInstitution()
-      res.locals.sd.SECTION = 'contact'
+      res.locals.sd.SECTION = 'about'
       res.render getTemplateForProfileType(profile),
         profile : profile
     else

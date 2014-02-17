@@ -72,6 +72,9 @@ module.exports.PartnerView = class PartnerView extends Backbone.View
       following: @following
       model: @model
 
+  #
+  # Get an ordered list of sections available to a gallery or institution.
+  #
   getSections: ->
     # The order in the array will be used for presentation
     gallery     = ['overview', 'shows', 'artists', 'posts', 'contact']
@@ -81,6 +84,10 @@ module.exports.PartnerView = class PartnerView extends Backbone.View
     else if @profile.isInstitution() then institution
     else []
 
+  #
+  # Filter and return displayable sections of a gallery or institution.
+  # 
+  # @param {Object} sections An array of sections to be filtered.
   getDisplayableSections: (sections) ->
     criteria =
       overview:   => true
