@@ -11,6 +11,7 @@ ContactPartnerView    = require '../../../components/contact/contact_partner.cof
 InquiryView           = require '../../../components/contact/inquiry.coffee'
 analytics             = require '../../../lib/analytics.coffee'
 acquireArtwork        = require('../../../components/acquire/view.coffee').acquireArtwork
+FeatureNavigationView = require './feature-navigation.coffee'
 
 Artworks = require '../../../collections/artworks.coffee'
 artistArtworksTemplate = -> require('../templates/_artist-artworks.jade') arguments...
@@ -38,6 +39,7 @@ module.exports = class ArtworkView extends Backbone.View
     @setupArtistArtworks()
     @setupFollowButton()
     @setupRelatedArtworks()
+    @setupFeatureNavigation()
 
     # Setup the primary save button
     @setupSaveButton @$('.circle-icon-button-save'), @artwork
@@ -89,6 +91,11 @@ module.exports = class ArtworkView extends Backbone.View
     new LayeredSearchView
       artwork: @artwork
       el: @$('#artwork-layered-search-section')
+
+  setupFeatureNavigation: ->
+    new FeatureNavigationView
+      artwork: @artwork
+      el: @$('#artwork-feature-navigation')
 
   route: (route) ->
     # Initial server rendered route is 'show'
