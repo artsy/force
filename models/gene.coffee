@@ -5,6 +5,11 @@ Artworks  = require '../collections/artworks.coffee'
 { Image, Markdown } = require 'artsy-backbone-mixins'
 Artist    = require '../models/artist.coffee'
 
+SUBJECT_MATTER_MATCHES = [
+  "content", "medium", "concrete contemporary",
+  "abstract contemporary", "concept", "technique", "appearance genes"
+]
+
 module.exports = class Gene extends Backbone.Model
 
   _.extend @prototype, Image(sd.SECURE_IMAGES_URL)
@@ -35,7 +40,7 @@ module.exports = class Gene extends Backbone.Model
     artworks.fetch options
 
   isSubjectMatter: ->
-    "Subject Matter" in _.pluck @get('type').properties, 'value'
+    @get('type')?.name?.match new RegExp SUBJECT_MATTER_MATCHES.join('|'), 'i'
 
   fetchFilterSuggest: (params, options) ->
     new Backbone.Model().fetch _.extend

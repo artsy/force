@@ -10,6 +10,8 @@ module.exports = class ArtistFillwidthList extends Backbone.View
 
   initialize: (options) ->
     { @user } = options
+    @$document = $(document)
+    @user?.initializeDefaultArtworkCollection()
     @page = 1
     @following = new Following(null, kind: 'artist') if @user
     @
@@ -17,17 +19,20 @@ module.exports = class ArtistFillwidthList extends Backbone.View
   fetchAndRender: =>
     @$el.html mainTemplate artists: @collection.models
     @collection.each @renderArtist
+    @syncFollowsOnAjaxStop()
 
   appendPage: (col, res) =>
     @$('.avant-garde-button-text').removeClass('is-loading')
     @collection.add artists = new Artists(res)
     @$('.artist-fillwidth-list').append listTemplate artists: artists.models
     artists.each @renderArtist
+    @syncFollowsOnAjaxStop()
 
   renderArtist: (artist, i) =>
     artist.fetchArtworks data: { size: 10 }, success: (artworks) =>
       $row = @$(".artist-fillwidth-list-item[data-id=\"#{artist.get('id')}\"]")
       return $row.hide() if artworks.length is 0
+
       # Add fillwidth view
       fillwidthView = new FillwidthView
         artworkCollection: @user?.defaultArtworkCollection()
@@ -41,12 +46,15 @@ module.exports = class ArtistFillwidthList extends Backbone.View
         el: $row.find('.avant-garde-button-white')
         following: @following
         model: artist
-      @following?.syncFollows @collection.pluck('id')
 
       # After rendering the row do some fillwidth things unique to this layout
       _.defer ->
         fillwidthView.hideFirstRow()
         fillwidthView.removeHiddenItems()
+
+  syncFollowsOnAjaxStop: ->
+    @$document.one 'ajaxStop', =>
+      @following?.syncFollows @collection.pluck('id')
 
   events:
     'click .artist-fillwidth-list-see-more': 'nextPage'

@@ -15,9 +15,9 @@ describe "Gene", ->
 
   describe '#isSubjectMatter', ->
 
-    it 'returns true if there is a Subject Matter property', ->
-      @gene.set type: { properties: [{ value: 'Subject Matter' }] }
-      @gene.isSubjectMatter()
+    it 'checks against the gene type name', ->
+      @gene.set type: { name: 'D3 - Photography/Film Technique' }
+      @gene.isSubjectMatter().should.be.ok
 
   describe '#fetchFilterSuggest', ->
 
