@@ -7,7 +7,6 @@ AcquireArtwork          = require('../../acquire/view.coffee').acquireArtwork
 analytics               = require('../../../lib/analytics.coffee')
 SaveControls            = require '../../artwork_item/views/save_controls.coffee'
 artworkColumns          = -> require('../../artwork_columns/template.jade') arguments...
-ShareView               = require '../../share/view.coffee'
 
 module.exports.FeedItemView = class FeedItemView extends Backbone.View
 
@@ -55,7 +54,8 @@ module.exports.FeedItemView = class FeedItemView extends Backbone.View
       @artworkCollection.syncSavedArtworks()
 
   setupShareButtons: ->
-    new ShareView el: @$('.feed-item-share-section')
+    el = if @$('.feed-item-share-section').length > 0 then @$('.feed-item-share-section') else @$('.post-actions')
+    new ShareView el: el
 
   purchase: (event) =>
     $target = $(event.target)
