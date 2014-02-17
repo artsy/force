@@ -13,6 +13,7 @@ FollowArtistCollection  = require '../../../models/follow_artist_collection.coff
 FollowButton            = require './follow_button.coffee'
 ShareView               = require '../../../components/share/view.coffee'
 AuctionLots             = require '../../../collections/auction_lots.coffee'
+BorderedPulldown        = require '../../../components/bordered_pulldown/view.coffee'
 artistSort              = -> require('../templates/sort.jade') arguments...
 
 module.exports.ArtistView = class ArtistView extends Backbone.View
@@ -58,22 +59,15 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
       el: @$('.artist-info-section .artist-related-genes')
 
   setupArtworks: ->
-    @availableArtworks = new Artworks
-    @availableArtworks.url = @model.url() + '/artworks'
-    @institutionArtworks = new Artworks
-    @institutionArtworks.url = @model.url() + '/artworks'
-
-    $availableWorks = @$('#artist-available-works')
-    $institutionalWorks = @$('#artist-institution-works')
+    new BorderedPulldown el: $('.bordered-pulldown')
 
     # Available Works
-    if @sortBy != ''
-      opts = { 'filter[]': 'for_sale', 'sort': @sortBy }
-    else
-      opts = { 'filter[]': 'for_sale' }
+    $availableWorks = @$('#artist-available-works')
+    @availableArtworks = new Artworks
+    @availableArtworks.url = @model.url() + '/artworks'
     new FillwidthView(
       artworkCollection: @artworkCollection
-      fetchOptions: opts
+      fetchOptions: { 'filter[]': 'for_sale', 'sort': @sortBy or undefined }
       collection: @availableArtworks
       seeMore: true
       empty: (-> @$el.parent().remove() )
@@ -81,13 +75,12 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     ).nextPage(false, 10)
 
     # Works at Museums/Institutions
-    if @sortBy != ''
-      opts = { 'filter[]': 'not_for_sale', 'sort': @sortBy }
-    else
-      opts = { 'filter[]': 'not_for_sale' }
+    $institutionalWorks = @$('#artist-institution-works')
+    @institutionArtworks = new Artworks
+    @institutionArtworks.url = @model.url() + '/artworks'
     new FillwidthView(
       artworkCollection: @artworkCollection
-      fetchOptions: opts
+      fetchOptions: { 'filter[]': 'not_for_sale', 'sort': @sortBy or undefined }
       collection: @institutionArtworks
       seeMore: true
       empty: (-> @$el.parent().remove() )
@@ -124,16 +117,8 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     'click .artist-works-sort a'        : 'onSortChange'
 
   onSortChange: (e) ->
-    sort = $(e.currentTarget).data('sort')
-    sort ||= ''
-    @sortBy = sort
+    @sortBy = $(e.currentTarget).data('sort')
     @setupArtworks()
-    @renderSortSelect() # Optimistically toggle the pseudo select dropdown
-
-  renderSortSelect: ->
-    @$('.artist-works-sort').html(
-      artistSort artist: @model, sortBy: @sortBy
-    )
 
   nextRelatedArtistsPage: (e) ->
     type = if _.isString(e) then e else $(e).data 'type'
