@@ -5,9 +5,11 @@ ModalView     = require '../modal/view.coffee'
 mediator      = require '../../lib/mediator.coffee'
 Form          = require '../mixins/form.coffee'
 CurrentUser   = require '../../models/current_user.coffee'
+analytics     = require('../../lib/analytics.coffee')
 
 template        = -> require('./templates/index.jade') arguments...
 headerTemplate  = -> require('./templates/header.jade') arguments...
+formTemplate    = -> require('./templates/form.jade') arguments...
 
 module.exports = class ContactView extends ModalView
   _.extend @prototype, Form
@@ -16,6 +18,7 @@ module.exports = class ContactView extends ModalView
 
   template: template
   headerTemplate: headerTemplate
+  formTemplate: formTemplate
 
   defaults: ->
     width: '800px'
@@ -39,7 +42,11 @@ module.exports = class ContactView extends ModalView
     super @options
 
   postRender: ->
+    @renderTemplates()
+
+  renderTemplates: ->
     @$('#modal-contact-header').html @headerTemplate(@templateData)
+    @$('#modal-contact-form').html @formTemplate(@templateData)
 
   success: =>
     @$dialog.attr 'data-state', 'fade-out'
@@ -59,11 +66,20 @@ module.exports = class ContactView extends ModalView
 
   submit: (e) ->
     e.preventDefault()
-    @$form ?= @$('form')
-    if @validateForm @$form
-      @$submit ?= @$('#contact-submit')
+
+    if @validateForm (@$form ?= @$('form'))
+      @$submit    ?= @$('#contact-submit')
+      @$errors    ?= @$('#modal-contact-errors')
+
       @$submit.attr 'data-state', 'loading'
-      @model.save @serializeForm(@$form),
+
+      formData = @serializeForm(@$form)
+
+      @model.save formData,
         success: @success
-        error: =>
+        error: (model, xhr, options) =>
+          @$errors.text @errorMessage(xhr)
           @$submit.attr 'data-state', 'error'
+          @updatePosition()
+
+      analytics.track.funnel 'Contact form submitted', formData

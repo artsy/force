@@ -10,7 +10,7 @@ describe 'FilterSortCount', ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
-      FilterSortCount = benv.requireWithJadeify resolve(__dirname, '../view'), ['template']
+      FilterSortCount = benv.require resolve(__dirname, '../view')
       FilterSortCount.__set__ 'mediator', @mediator = {
         trigger: sinon.stub()
         on: sinon.stub()
@@ -25,8 +25,9 @@ describe 'FilterSortCount', ->
     benv.teardown()
 
   it 'renders the counts', ->
-    @view.locals = total: 1001
-    @view.render()
+    @view.counts = new Backbone.Model total: 1001
+    @view.$el = $ "<div><div class='filter-sort-count-total'></div></div>"
+    @view.renderTotal()
     @view.$el.html().should.include '1001'
 
   it 'updates the params to sort', ->

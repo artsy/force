@@ -11,6 +11,9 @@ module.exports = class ShareView extends ModalView
 
   className: 'artwork-share-modal'
 
+  events: -> _.extend super,
+    'click input': 'selectAll'
+
   initialize: (options) ->
     { @artwork } = options
 
@@ -20,6 +23,9 @@ module.exports = class ShareView extends ModalView
       description: encodeURIComponent @artwork.toAltText()
 
     super
+
+  selectAll: (e) ->
+    $(e.currentTarget).select()
 
   postRender: ->
     @shareButtonsView = new ShareButtonsView el: @$('.artwork-share-menu-buttons')

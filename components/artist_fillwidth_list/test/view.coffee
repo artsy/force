@@ -68,3 +68,12 @@ describe 'ArtistFillwidthList', ->
       @view.page = 1
       @view.nextPage()
       _.last(Backbone.sync.args)[2].data.page.should.equal 2
+
+  describe '#syncFollowsOnAjaxStop', ->
+
+    it 'syncs follows after ajax stop', ->
+      @view.following = { syncFollows: sinon.stub() }
+      @view.$document = $ "<div>"
+      @view.syncFollowsOnAjaxStop()
+      @view.$document.trigger 'ajaxStop'
+      @view.following.syncFollows.called.should.be.ok
