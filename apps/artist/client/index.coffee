@@ -7,7 +7,7 @@ FillwidthView           = require '../../../components/fillwidth_row/view.coffee
 ArtistFillwidthList     = require '../../../components/artist_fillwidth_list/view.coffee'
 BlurbView               = require './blurb.coffee'
 RelatedPostsView        = require '../../../components/related_posts/view.coffee'
-RelatedGenesView        = require './genes.coffee'
+RelatedGenesView        = require '../../../components/related_genes/view.coffee'
 CurrentUser             = require '../../../models/current_user.coffee'
 FollowArtistCollection  = require '../../../models/follow_artist_collection.coffee'
 FollowButton            = require './follow_button.coffee'
@@ -55,7 +55,8 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
   setupRelatedGenes: ->
     new RelatedGenesView
       model: @model
-      el: @$('.artist-info-section .artist-related-genes')
+      modelName: 'artist'
+      el: @$('.artist-info-section .related-genes')
 
   setupArtworks: ->
     @availableArtworks = new Artworks
