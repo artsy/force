@@ -19,5 +19,6 @@ block body
         #gene-description-inner!= gene.mdToHtml('description')
     #gene-info-right
       .related-genes
+        .loading-spinner
     #gene-filter( data-state=gene.isSubjectMatter() ? 'artworks' : 'artists' )
       include filter

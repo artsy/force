@@ -14,6 +14,7 @@ module.exports = class GeneFilter extends Backbone.View
       el: $ '#gene-filter'
       artworksUrl: "#{ARTSY_URL}/api/v1/search/filtered/gene/#{@model.get 'id'}"
       countsUrl: "#{ARTSY_URL}/api/v1/search/filtered/gene/#{@model.get 'id'}/suggest"
+    @filterView.params.on 'change', @artworksMode
     @filterView.reset() if @model.isSubjectMatter()
 
   events:
