@@ -16,6 +16,7 @@ tablistTemplate = -> require('../templates/tablist.jade') arguments...
 
 sectionToView =
   contact     : ContactView
+  about       : ContactView
   collection  : CollectionView
   shows       : ShowsView
   posts       : PostsView
@@ -25,11 +26,10 @@ sectionToView =
 module.exports.PartnerView = class PartnerView extends Backbone.View
 
   defaults:
-    sections: []
     currentSection: 'overview'
 
   initialize: (options={}) ->
-    { @sections, @currentSection } = _.defaults options, @defaults
+    { @currentSection } = _.defaults options, @defaults
     @profile = @model # alias
     @partner = new Partner @profile.get('owner')
     @initTabs()
@@ -42,9 +42,18 @@ module.exports.PartnerView = class PartnerView extends Backbone.View
     @partner?.fetch
       cache: true
       success: =>
-        sections = @getDisplaySections @getSections()
-        @$('.partner-nav').html(
-          $( tablistTemplate profile: @profile, sections: sections, sd: sd )
+        sections = @getDisplayableSections @getSections()
+
+        # If the partner doesn't have its default tab displayable,
+        # e.g. `Overview` for galleries or `Shows` for institutions,
+        # we display the first tab content of displayable tabs.
+        if not _.contains sections, @currentSection
+          @currentSection = sections?[0]; @initContent()
+
+        @$('.partner-nav').html( tablistTemplate
+          profile: @profile
+          sections: sections
+          currentSection: @currentSection
         )
 
   initContent: ->
@@ -63,6 +72,9 @@ module.exports.PartnerView = class PartnerView extends Backbone.View
       following: @following
       model: @model
 
+  #
+  # Get an ordered list of sections available to a gallery or institution.
+  #
   getSections: ->
     # The order in the array will be used for presentation
     gallery     = ['overview', 'shows', 'artists', 'posts', 'contact']
@@ -72,7 +84,11 @@ module.exports.PartnerView = class PartnerView extends Backbone.View
     else if @profile.isInstitution() then institution
     else []
 
-  getDisplaySections: (sections) ->
+  #
+  # Filter and return displayable sections of a gallery or institution.
+  # 
+  # @param {Object} sections An array of sections to be filtered.
+  getDisplayableSections: (sections) ->
     criteria =
       overview:   => true
       shows:      => @partner.get('displayable_shows_count') > 0

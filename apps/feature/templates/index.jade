@@ -18,4 +18,6 @@ block body
         +share(feature.shareTitle())
       h1.feature-title!= feature.get('name')
 
-      .feature-description!= feature.mdToHtml('description')
+      if feature.get('description')
+        .feature-description
+          != feature.mdToHtml('description')

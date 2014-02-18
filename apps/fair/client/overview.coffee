@@ -59,7 +59,7 @@ module.exports = class Overview extends Backbone.View
 
     if artists?.length < 2
       "#{artists.join(', ')}"
-    if artists?.length <= max
+    else if artists?.length <= max
       "#{artists[0..(artists.length - 2)].join(', ')} and #{artists[artists?.length - 1]}"
     else
       "#{artists[0..(max-1)].join(', ')} and #{artists[(max-1)..].length - 1} more"

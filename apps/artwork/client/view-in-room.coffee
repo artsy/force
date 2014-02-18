@@ -41,13 +41,16 @@ module.exports = class ViewInRoom extends Backbone.View
   injectImage: ->
     @$placeholder.add(@$artwork).attr('src', @$img.attr 'src')
     # Position exactly where original image was
-    @$artwork.css @$img[0].getBoundingClientRect()
+    @$artwork.css @getRect(@$img)
+
+  getRect: ($el) ->
+    _.pick($el[0].getBoundingClientRect(), 'height', 'width', 'top', 'right', 'bottom', 'left')
 
   transitionIn: ->
     @$el.attr 'data-state', 'in'
     @$img.css visibility: 'hidden'
     @$artwork.
-      css(@$placeholder[0].getBoundingClientRect()).
+      css(@getRect(@$placeholder)).
       one($.support.transition.end, =>
         @$artwork.addClass('is-notransition')
       ).emulateTransitionEnd(750)
@@ -56,7 +59,7 @@ module.exports = class ViewInRoom extends Backbone.View
     @$el.attr 'data-state', 'out'
     @$artwork.
       removeClass('is-notransition').
-      css @$img[0].getBoundingClientRect()
+      css @getRect(@$img)
 
   scalePlaceholder: ->
     @$placeholder.css
@@ -69,7 +72,7 @@ module.exports = class ViewInRoom extends Backbone.View
     @$room.css transform: "scale(#{@roomScalingFactor()})"
 
   scaleArtwork: ->
-    @$artwork.css @$placeholder[0].getBoundingClientRect()
+    @$artwork.css @getRect(@$placeholder)
 
   # Called on the throttled window resize event
   scale: =>
@@ -79,9 +82,9 @@ module.exports = class ViewInRoom extends Backbone.View
 
   roomScalingFactor: ->
     roomRatio       = @$room.width() / @$room.height()
-    viewportRatio   = @$window.width() / @$window.height()
+    viewportRatio   = @$el.width() / @$el.height()
     direction       = if viewportRatio > roomRatio then 'width' else 'height'
-    factor          = @$window[direction]() / @$room[direction]()
+    factor          = @$el[direction]() / @$room[direction]()
     Math.ceil(factor * 100) / 100
 
   artworkScalingFactor: ->

@@ -186,6 +186,6 @@ module.exports = class PartnerShow extends Backbone.Model
   upcoming: -> @get('status') is 'upcoming'
   running: -> @get('status') is 'running'
   closed: -> @get('status') is 'closed'
-  renderable: -> @get('eligible_artworks_count') > 0 || @get('images_count') > 3
+  renderable: -> @get('eligible_artworks_count') > 0 || @get('images_count') > 2
   featurable: -> @renderable()
   linkable: -> @renderable()

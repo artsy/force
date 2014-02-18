@@ -46,6 +46,21 @@ artwork-detail-item-height  = 36px
   @media screen and (max-width: 1024px)
     margin-right 0
     padding-left 20px
+    #artwork-feature-navigation
+      opacity 0 !important
+
+#artwork-feature-navigation
+  position absolute
+  top 0
+  left 0
+  width 200px
+  text-align left
+  opacity 0
+  transition opacity 0.5s
+  a
+    text-decoration none
+  &:not(:empty)
+    opacity 1
 
 #the-artwork-image
   display inline-block

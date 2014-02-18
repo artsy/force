@@ -1,22 +1,16 @@
-include ../../../components/util/activator
+- var id = profile.get('id');
 
-- var id = profile.get('id')
 - function transform(section) {
 -   var map = { collection: 'works' };
 -   return map[section] || section;
-- };
-
-- function tabHref(section) {
--   var href = ["", id, section].join("/")
--   if (section == 'artists' && sd.ARTIST_ID)
--     href = ["", id, "artist", sd.ARTIST_ID].join("/")
--   return href
 - }
 
 nav.partner-tabs.garamond-tablist
-  each section, index in sections
-    if index > 0
-      span.garamond-tab-separator
-    a.garamond-tab(
-      href="/#{id}/#{section}", class=activeClass(tabHref(section))
-    )= transform(section)
+  if sections.length > 1
+    each section, index in sections
+      if index > 0
+        span.garamond-tab-separator
+      a.garamond-tab(
+        href="/#{id}/#{section}",
+        class=(section == currentSection ? 'is-active' : 'is-inactive')
+      )= transform(section)

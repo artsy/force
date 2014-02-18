@@ -46,10 +46,10 @@ describe 'PartnerView', ->
     afterEach ->
       Backbone.sync.restore()
 
-    describe '#getDisplaySections', ->
+    describe '#getDisplayableSections', ->
 
       it 'filters and gets the sections needed in the tabs', ->
-        sections = @view.getDisplaySections @view.getSections()
+        sections = @view.getDisplayableSections @view.getSections()
         sections.should.eql ['shows', 'posts', 'about']
 
     describe '#initTabs', ->
