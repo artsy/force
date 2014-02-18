@@ -15,24 +15,23 @@ module.exports = class FilterArtworksNav extends Backbone.View
         @$("a[data-attr='#{attr}'][data-val='#{val}'] .filter-dropdown-count").html '(' + count + ')'
 
   renderActive: =>
+    attrs = ['price_range', 'dimension', 'medium']
     @$('.is-active').removeClass('is-active')
-    if _.intersection(['price_range', 'dimension', 'medium'], @params.keys()).length is 0
+    if _.intersection(attrs, @params.keys()).length is 0
       @$('.filter-artworks-nav-allworks').addClass('is-active')
-    for attr, param of {
-      'range': 'price_range'
-      'size': 'dimension'
-      'medium': 'medium'
-    }
-      if @params.get(param)
-        @$("a[data-#{attr}='#{@params.get(param)}']")
-          .addClass('is-active').closest('.filter-dropdown').addClass('is-active')
-      else
-        @$("a[data-#{attr}]").first().addClass('is-active')
+    else
+      for attr in attrs
+        return unless $a = @$("a[data-attr='#{attr}'][data-val='#{@params.get(attr)}']")
+        $a.addClass('is-active')
+          .closest('.filter-dropdown')
+          .addClass('is-active')
+          .children('.filter-nav-active-text')
+          .text $a.children('.filter-dropdown-text').text()
 
   events:
     'click .filter-artworks-nav-allworks': 'allWorks'
     'click a[data-attr]': 'filterAttr'
-    'click .filter-dropdown a': 'checkDropdownItem'
+    'click .filter-dropdown a': 'hideMenu'
     'click .filter-dropdown': 'toggleMenuIpad'
 
   allWorks: ->
@@ -44,12 +43,7 @@ module.exports = class FilterArtworksNav extends Backbone.View
     return @params.unset attr if val is ''
     @params.set attr, val
 
-  checkDropdownItem: (e) ->
-    $(e.currentTarget)
-      .addClass('is-active')
-      .closest('.filter-dropdown')
-      .children('.filter-nav-active-text')
-      .text($(e.currentTarget).find('.filter-dropdown-text').text())
+  hideMenu: (e) ->
     $(e.currentTarget).parent().hidehover()
 
   toggleMenuIpad: (e) ->
