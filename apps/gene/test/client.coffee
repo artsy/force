@@ -76,6 +76,7 @@ describe 'GeneFilter', ->
     GeneFilter = benv.require resolve(__dirname, '../client/filter.coffee')
     GeneFilter.__set__ 'FilterArtworksView', class @FilterSortCount
       render: sinon.stub()
+      params: new Backbone.Model
     sinon.stub Backbone, 'sync'
     @view = new GeneFilter
       el: $('body')
@@ -96,3 +97,11 @@ describe 'GeneFilter', ->
       @view.$el.attr 'data-state', 'artworks'
       @view.artistMode()
       @view.$el.attr('data-state').should.equal 'artists'
+
+  describe '#initialize', ->
+
+    it 'switches to artwork mode when the artwork filter params change', ->
+      sinon.stub @view, 'artworksMode'
+      @view.initialize()
+      @view.filterView.params.trigger 'change'
+      @view.artworksMode.called.should.be.ok
