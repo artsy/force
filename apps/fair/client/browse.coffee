@@ -1,12 +1,12 @@
-_ = require 'underscore'
-Backbone = require 'backbone'
-BoothsView = require './booths.coffee'
-ArtistView = require './artist.coffee'
-ArtworksView = require './artworks.coffee'
-qs = require 'querystring'
+_             = require 'underscore'
+Backbone      = require 'backbone'
+BoothsView    = require './booths.coffee'
+ArtistView    = require './artist.coffee'
+ArtworksView  = require './artworks.coffee'
+qs            = require 'querystring'
 FilterArtworksView = require '../../../components/filter/artworks/view.coffee'
 FeedView = require '../../../components/feed/client/feed.coffee'
-{ ARTSY_URL } = require('sharify').data
+{ ARTSY_URL, SECTION } = require('sharify').data
 fairSectionsTemplate = -> require('../templates/fair_sections.jade') arguments...
 
 class FilterHeader extends Backbone.View
@@ -24,9 +24,9 @@ class FilterHeader extends Backbone.View
     @$('.is-active').removeClass("is-active")
 
   events:
-    'click #fair-filter-all-exhibitors': 'allExhibitors'
-    'click #fair-filter-all-artists': 'allArtists'
-    'click #fair-filter-sections nav a': 'boothsSection'
+    'click #fair-filter-all-exhibitors' : 'allExhibitors'
+    'click #fair-filter-all-artists'    : 'allArtists'
+    'click #fair-filter-sections nav a' : 'boothsSection'
 
   allExhibitors: ->
     @router.navigate "#{@profile.get 'id'}/browse/booths", trigger: true
@@ -56,7 +56,7 @@ module.exports = class BrowseRouter extends Backbone.Router
 
   initialize: (options) ->
     _.extend @, options
-    $('.garamond-tab:first').removeClass('is-inactive').addClass('is-active')
+    $('.garamond-tab:first').removeClass('is-inactive').addClass('is-active') if SECTION is 'browse'
     @filterArtworks = new FilterArtworksView
       el: $ '.fair-page-content'
       artworksUrl : "#{ARTSY_URL}/api/v1/search/filtered/fair/#{@fair.get 'id'}"

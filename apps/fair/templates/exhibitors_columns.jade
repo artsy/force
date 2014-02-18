@@ -5,15 +5,9 @@ if exhibitorsColumns
         for item in column
           .exhibitor-item
             span.mlsb-suggestion-thumbnail
-              if item.get('default_profile_public')
-                a( href="/" + item.get('default_profile_id') )
-                  span.mlsb-suggestion-fallback
-                    img( src=item.imageUrl(), onerror="this.style.display='none';" )
-              else
+              a( href=item.href() )
                 span.mlsb-suggestion-fallback
                   img( src=item.imageUrl(), onerror="this.style.display='none';" )
+            a.exhibitor-name( href=item.href() )= item.get('name')
             if item.get('default_profile_public')
-              a.exhibitor-name( href="/" + item.get('default_profile_id') )= item.get('name')
               button.avant-garde-button-white.follow-button.is-small( data-id=item.get('default_profile_id') )
-            else
-              .exhibitor-name= item.get('name')

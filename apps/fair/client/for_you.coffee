@@ -24,8 +24,12 @@ module.exports = class ForYouView extends Backbone.View
     @collection ?= new Artworks()
     @initializeArtworkColumns()
 
-    @fetchFollowingArtists()
-    @fetchFollowingExhibitors()
+    if sd.CURRENT_USER?
+      @fetchFollowingArtists()
+      @fetchFollowingExhibitors()
+    else
+      @showHideBlankState()
+
     if @$('.exhibitors-column-container').length
       # Delay this since it is below the fold. Don't want it to slow down other requests.
       _.delay =>
