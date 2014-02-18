@@ -1,6 +1,6 @@
 mixin showFigureContent(show, isFeatured)
   .partner-show-cover-image( style="background-image: url(#{show.posterImageUrl(isFeatured)})" )
-    img( src="#{show.posterImageUrl(isFeatured)}")
+    img( src="#{show.posterImageUrl(isFeatured)}", alt=show.formatFeedItemHeading() )
     .partner-show-overlay
   figurecaption.partner-show-caption
     h5.avant-garde-header-center.partner-show-heading= show.formatLeadHeading()
@@ -42,5 +42,5 @@ mixin showsGallery(shows, isFeatured)
   section.partner-shows-section
     .partner-shows-see-all.avant-garde-header-center
       a.faux-underline-hover(
-        href="#{partner.url()}/artists"
+        href="#{partner.href()}/shows"
       ) See all shows
