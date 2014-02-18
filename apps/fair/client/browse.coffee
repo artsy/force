@@ -45,7 +45,7 @@ module.exports = class BrowseRouter extends Backbone.Router
 
   routes:
     ':id/browse/artists'                   : 'artists'
-    ':id/browse/artworks'                  : 'artworks'
+    ':id/browse/artworks*'                 : 'artworks'
     ':id/browse/artist/:artist_id'         : 'artist'
     ':id/browse/booths'                    : 'booths'
     ':id/browse/booths/region/:region'     : 'boothsRegion'
@@ -75,8 +75,8 @@ module.exports = class BrowseRouter extends Backbone.Router
       $('.browse-section').hide()
       (callback or @[name])? arguments...
 
-  navigateArtworkParams: (m, params) =>
-    @navigate "#{@profile.get 'id'}/browse/artworks?" + qs.stringify(params), trigger: true
+  navigateArtworkParams: (params) =>
+    @navigate "#{@profile.get 'id'}/browse/artworks?" + qs.stringify(params.toJSON()), trigger: true
 
   artist: (id, artistId)=>
     @artistView ?= new ArtistView
@@ -98,12 +98,14 @@ module.exports = class BrowseRouter extends Backbone.Router
     @boothsView?.$('.feed').hide()
     $(document).one 'ajaxStop', => @boothsView.$('.feed').show()
 
-  artworks: (id, params={})=>
+  artworks: (id) =>
+    params = qs.parse(location.search.replace(/^\?/, ''))
     @artworksView ?= new ArtworksView
       el: $('.browse-section.artworks')
       fair: @fair
       filter: params
     @artworksView.$el.show()
+    @filterArtworks.params.set params
 
   category: (id, category)=>
     @artworks id, category: category
