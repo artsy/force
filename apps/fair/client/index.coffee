@@ -26,6 +26,7 @@ module.exports.FairView = class FairView extends Backbone.View
     overview  : OverviewView
 
   initialize: (options) ->
+    return if options.currentSection is 'browse'
     @fair = options.fair
     @setupSearch @model, @fair
     if @sectionHash[options.currentSection]

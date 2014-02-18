@@ -38,7 +38,8 @@ class FilterHeader extends Backbone.View
 
   boothsSection: (e) ->
     @router.navigate "#{@profile.get 'id'}/browse/booths/section/#{$(e.currentTarget).data 'val'}", trigger: true
-    @$('#fair-filter-all-exhibitors').addClass("is-active")
+    @$('#fair-filter-sections .filter-dropdown')
+      .addClass("is-active").find('.filter-nav-active-text').text $(e.currentTarget).text()
 
 module.exports = class BrowseRouter extends Backbone.Router
 
@@ -70,7 +71,6 @@ module.exports = class BrowseRouter extends Backbone.Router
 
   route: (route, name, callback) =>
     Backbone.Router::route.call @, route, name, =>
-      @filterHeader.removeActive()
       $('.browse-section').hide()
       (callback or @[name])? arguments...
 
