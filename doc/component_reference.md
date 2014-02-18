@@ -10,6 +10,12 @@ If a separate doc is required, add it to the component's directory as a
 - [Profile Badge](#profile-badge)
 - [Suggested Genes](#suggested-genes)
 - [Follow Button](#follow-button)
+- [Artist Fillwidth List](#artist-fillwidth-list)
+- [Bordered Pulldown](#bordered-pulldown)
+- [Filter](#filter)
+- [Contact View](#contact-view)
+- [Related Genes](#related-genes)
+
 
 
 ## Artwork Columns
@@ -378,4 +384,21 @@ The view's `submit` method can be intercepted to add more data to the model:
       session_id: SESSION_ID
     super
 
+```
+
+### Related Genes
+
+This is a view designed to show a comma separated list of related genes. The base options / CSS are to show up to 10 items, each linked to their gene page, in Artsy purple. The logic for deriving the related genes for a given model can go in here- currently related genes for Artists and Genes are supported. Add a reference to the component in your app's asset package and override CSS as needed.
+
+
+![](images/related_genes.png)
+
+Example usage:
+
+```coffeescript
+  setupRelatedGenes: ->
+    new RelatedGenesView
+      model: @model
+      modelName: 'artist'
+      el: @$('.artist-info-section .related-genes')
 ```
