@@ -96,7 +96,7 @@ module.exports = class ArtworkView extends Backbone.View
     new BelowTheFoldView
       saved: @saved
       artwork: @artwork
-      $el: @$('#artwork-below-the-fold-section')
+      el: @$('#artwork-below-the-fold-section')
 
   route: (route) ->
     # Initial server rendered route is 'show'
