@@ -5,6 +5,7 @@ Clock          = require '../../../components/auction_clock/view.coffee'
 FeedItems      = require '../../../components/feed/collections/feed_items.coffee'
 FeedView       = require '../../../components/feed/client/feed.coffee'
 Artists        = require '../../../collections/artists.coffee'
+mediator       = require '../../../lib/mediator.coffee'
 
 module.exports = class Overview extends Backbone.View
 
@@ -13,6 +14,10 @@ module.exports = class Overview extends Backbone.View
     @renderClock()
     if sd.CURRENT_USER?
       @renderWorksForYou()
+    else
+      @$('.container-left .large-section').on 'click', ->
+        mediator.trigger 'open:auth', { mode: 'register', copy: 'Sign up to follow artists and exhibitors' }
+        false
     _.defer =>
       @fetchBooths()
 
