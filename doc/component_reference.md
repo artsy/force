@@ -356,6 +356,18 @@ new FilterFixedHeader
 
 * Use the `.filter-fixed-header-left` class in your template to get the meta information on the left hand side such as gene name or number of works.
 
+### Filter Dropdown
+
+When building up your own filtering UI you may need to use buttons and dropdowns. To do so please use the filter components classes and jade mixin.
+
+````jade
+.filter-fixed-header-nav
+  .filter-button.is-active All Exhibitors
+  +filter-dropdown('Sector', 'sector', { '...': '...' })
+  include ../../../components/filter/artworks_nav/template
+  .filter-button All Artists
+````
+
 ### Contact View
 
 ```coffeescript
