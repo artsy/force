@@ -17,6 +17,7 @@ describe 'ForYouView', ->
       sd.ASSET_PATH = 'assets/'
       sd.CURRENT_PATH = ""
       sd.NODE_ENV = "test"
+      sd.CURRENT_USER = true
       benv.expose { $: benv.require 'jquery' }
       sinon.stub Backbone, 'sync'
       Backbone.$  = $
