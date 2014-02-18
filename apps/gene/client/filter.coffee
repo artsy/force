@@ -14,8 +14,7 @@ module.exports = class GeneFilter extends Backbone.View
       el: $ '#gene-filter'
       artworksUrl: "#{ARTSY_URL}/api/v1/search/filtered/gene/#{@model.get 'id'}"
       countsUrl: "#{ARTSY_URL}/api/v1/search/filtered/gene/#{@model.get 'id'}/suggest"
-    @filterView.params.on 'change', @artworksMode
-    @filterView.reset() if @model.isSubjectMatter()
+    @artworksMode() if @model.isSubjectMatter()
 
   events:
     'click #gene-filter-all-artists': 'artistMode'
@@ -24,14 +23,13 @@ module.exports = class GeneFilter extends Backbone.View
   artistMode: ->
     @$body.removeClass 'body-infinite-scroll'
     @$el.attr 'data-state', 'artists'
-    @$('#gene-filter-all-artists').addClass 'is-active'
     @$('#gene-filter-artworks-nav .is-active').removeClass 'is-active'
     return unless @$window.scrollTop() > @$el.offset().top
     _.defer => @document.scrollTop = @$('#gene-artists').offset().top - @mainHeaderHeight - 50
 
   artworksMode: =>
+    @filterView.reset()
     @$body.addClass 'body-infinite-scroll'
     @$el.attr 'data-state', 'artworks'
-    @$('#gene-filter-all-artists').removeClass 'is-active'
     return unless @$window.scrollTop() > @$el.offset().top
     _.defer => @document.scrollTop = @$('#gene-artworks').offset().top - @mainHeaderHeight - 50
