@@ -38,13 +38,11 @@
     margin-left 0
     margin-right 0
     width calc(33.33%)
-    &.first
     &:first-child
       margin-right -1px
       border-left 0px solid white
       .artwork-item
         padding-left 0
-    &.last
     &:last-child
       margin-left -1px
       border-right none
@@ -56,8 +54,9 @@
       padding 0 30px 30px 30px
       &:last-child
         border-bottom none
-      img
-        height 400px
       .artwork-item-image-link
         display block
         width 100%
+        text-align center
+      img
+        max-height 400px
