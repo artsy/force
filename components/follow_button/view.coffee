@@ -6,6 +6,7 @@ analytics   = require '../../lib/analytics.coffee'
 module.exports = class FollowButton extends Backbone.View
   events:
     'click': 'toggle'
+    'touchstart': () -> @$el.removeClass "no-touch"
 
   initialize: (options) ->
     return unless options.following
@@ -17,6 +18,8 @@ module.exports = class FollowButton extends Backbone.View
 
     @analyticsFollowMessage     = options.analyticsFollowMessage or @defaultAnalyticsMessage('Followed')
     @analyticsUnfollowMessage   = options.analyticsUnfollowMessage or @defaultAnalyticsMessage('Unfollowed')
+
+    @$el.addClass "no-touch"
 
     @change()
 
