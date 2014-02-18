@@ -64,6 +64,6 @@ module.exports.init = ->
     fair : fair
     el   : $('#fair-page')
     currentSection: sd.SECTION
-  window.router = new FairBrowseRouter
+  new FairBrowseRouter
     fair    : fair
     profile : profile

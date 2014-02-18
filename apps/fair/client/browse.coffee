@@ -54,7 +54,7 @@ module.exports = class BrowseRouter extends Backbone.Router
     ':id/browse'                           : 'browse'
 
   initialize: (options) ->
-    { @fair, @profile } = options
+    _.extend @, options
     $('.garamond-tab:first').removeClass('is-inactive').addClass('is-active')
     @filterArtworks = new FilterArtworksView
       el: $ '.fair-page-content'
@@ -65,7 +65,7 @@ module.exports = class BrowseRouter extends Backbone.Router
       fair: @fair
       profile: @profile
       router: @
-    @filterArtworks.params.on 'change', @navigateArtworkParams, @
+    @filterArtworks.params.on 'change', @navigateArtworkParams
     Backbone.history.start pushState: true
 
   route: (route, name, callback) =>
