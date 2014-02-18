@@ -6,14 +6,13 @@ Transition            = require '../../../components/mixins/transition.coffee'
 CurrentUser           = require '../../../models/current_user.coffee'
 SaveButton            = require '../../../components/save_button/view.coffee'
 RelatedPostsView      = require '../../../components/related_posts/view.coffee'
-LayeredSearchView     = require('./layered-search.coffee').LayeredSearchView
 ContactPartnerView    = require '../../../components/contact/contact_partner.coffee'
 InquiryView           = require '../../../components/contact/inquiry.coffee'
 analytics             = require '../../../lib/analytics.coffee'
 acquireArtwork        = require('../../../components/acquire/view.coffee').acquireArtwork
 FeatureNavigationView = require './feature-navigation.coffee'
+BelowTheFoldView      = require './below-the-fold.coffee'
 
-Artworks = require '../../../collections/artworks.coffee'
 artistArtworksTemplate = -> require('../templates/_artist-artworks.jade') arguments...
 
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
@@ -38,7 +37,8 @@ module.exports = class ArtworkView extends Backbone.View
     @setupCurrentUser()
     @setupArtistArtworks()
     @setupFollowButton()
-    @setupRelatedArtworks()
+
+    @setupBelowTheFold()
     @setupFeatureNavigation()
 
     # Setup the primary save button
@@ -87,15 +87,16 @@ module.exports = class ArtworkView extends Backbone.View
       numToShow: 2
       model: @artwork
 
-  setupRelatedArtworks: ->
-    new LayeredSearchView
-      artwork: @artwork
-      el: @$('#artwork-layered-search-section')
-
   setupFeatureNavigation: ->
     new FeatureNavigationView
       artwork: @artwork
       el: @$('#artwork-feature-navigation')
+
+  setupBelowTheFold: ->
+    new BelowTheFoldView
+      saved: @saved
+      artwork: @artwork
+      $el: @$('#artwork-below-the-fold-section')
 
   route: (route) ->
     # Initial server rendered route is 'show'
