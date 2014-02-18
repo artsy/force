@@ -19,6 +19,6 @@ module.exports = class FeatureNavigationView extends Backbone.View
       error: => @remove()
 
   render: ->
-    @remove() unless @features.length
+    return @remove() unless @features.length
     @$el.html template(feature: @features.first())
     this
