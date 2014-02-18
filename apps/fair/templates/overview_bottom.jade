@@ -1,6 +1,6 @@
 if primarySets.where({ key: 'editorial' }).length
   .fair-overview-post-container
-    .overview-section-heading Read Highlights from the Fair
+    h2.overview-section-heading Read Highlights from the Fair
     .posts-left-side
       for set in primarySets.where({ key: 'editorial' })
         for item in set.get('items').models.slice(0,1)
@@ -21,7 +21,7 @@ if primarySets.where({ key: 'editorial' }).length
 
 if primarySets.where({ key: 'curator' }).length
   .fair-overview-curator
-    .overview-section-heading-small Art world insiders share their selections
+    h2.overview-section-heading-small Art world insiders share their selections
     .curator-picks-container
       for set in primarySets.where({ key: 'curator' })
         for item in set.get('items').models.slice(0, 4)

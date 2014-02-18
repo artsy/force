@@ -7,6 +7,7 @@ module.exports = class BrowseRouter extends Backbone.Router
 
   routes:
     ':id/browse/artists'                   : 'artists'
+    ':id/browse/artworks'                  : 'artworks'
     ':id/browse/artist/:artist_id'         : 'artist'
     ':id/browse/booths'                    : 'booths'
     ':id/browse/booths/region/:region'     : 'boothsRegion'

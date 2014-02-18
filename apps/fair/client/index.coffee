@@ -12,6 +12,7 @@ OverviewView      = require './overview.coffee'
 analytics         = require '../../../lib/analytics.coffee'
 FavoritesView     = require('../../favorites_follows/client/favorites.coffee').FavoritesView
 FollowsView       = require('../../favorites_follows/client/follows.coffee').FollowsView
+FairFilterView    = require './filter.coffee'
 
 module.exports.FairView = class FairView extends Backbone.View
 
@@ -28,7 +29,6 @@ module.exports.FairView = class FairView extends Backbone.View
   initialize: (options) ->
     @fair = options.fair
     @setupSearch @model, @fair
-
     if @sectionHash[options.currentSection]
       el = if options.currentSection == 'overview' then @$el else @$('.fair-page-content')
       new @sectionHash[options.currentSection]
@@ -58,8 +58,12 @@ module.exports.FairView = class FairView extends Backbone.View
       window.location = model.get('location')
 
 module.exports.init = ->
+  fair = new Fair sd.FAIR
   new FairView
     model: new Profile sd.PROFILE
-    fair : new Fair sd.FAIR
+    fair : fair
     el   : $('#fair-page')
     currentSection: sd.SECTION
+  window.view = new FairFilterView
+    model: fair
+    el: $ '#fair-page'
