@@ -20,23 +20,23 @@ class FilterHeader extends Backbone.View
     sections.each (section) -> hash[section.get 'section'] = section.get('section')
     @$('#fair-filter-sections').html fairSectionsTemplate(sections: hash)
 
+  removeActive: ->
+    @$('.is-active').removeClass("is-active")
+
   events:
     'click #fair-filter-all-exhibitors': 'allExhibitors'
     'click #fair-filter-all-artists': 'allArtists'
     'click #fair-filter-sections nav a': 'boothsSection'
 
   allExhibitors: ->
-    @$('.is-active').removeClass("is-active")
     @router.navigate "#{@profile.get 'id'}/browse/booths", trigger: true
     @$('#fair-filter-all-exhibitors').addClass("is-active")
 
   allArtists: ->
-    @$('.is-active').removeClass("is-active")
     @router.navigate "#{@profile.get 'id'}/browse/artists", trigger: true
     @$('#fair-filter-all-artists').addClass("is-active")
 
   boothsSection: (e) ->
-    @$('.is-active').removeClass("is-active")
     @router.navigate "#{@profile.get 'id'}/browse/booths/section/#{$(e.currentTarget).data 'val'}", trigger: true
     @$('#fair-filter-all-exhibitors').addClass("is-active")
 
@@ -70,6 +70,7 @@ module.exports = class BrowseRouter extends Backbone.Router
 
   route: (route, name, callback) =>
     Backbone.Router::route.call @, route, name, =>
+      @filterHeader.removeActive()
       $('.browse-section').hide()
       (callback or @[name])? arguments...
 
@@ -91,8 +92,10 @@ module.exports = class BrowseRouter extends Backbone.Router
       profile: @profile
     @boothsView.filter = params
     @boothsView.fetchFeedItems()
-    @boothsView?.$el.hide()
-    $(document).one 'ajaxStop', => @boothsView.$el.show()
+    @boothsView.renderHeader()
+    @boothsView.$el.show()
+    @boothsView?.$('.feed').hide()
+    $(document).one 'ajaxStop', => @boothsView.$('.feed').show()
 
   artworks: (id, params={})=>
     @artworksView ?= new ArtworksView
