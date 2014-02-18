@@ -43,9 +43,11 @@ describe 'FilterArtworksView', ->
   describe '#reset', ->
 
     it 'triggers the next page fetching the filtered artworks', ->
-      @view.params.on 'change:page', spy = sinon.spy()
+      spy = sinon.spy()
+      @view.params.on 'change:page', spy
+      @view.params.on 'change', spy
       @view.reset()
-      spy.called.should.be.ok
+      spy.callCount.should.equal 2
 
   describe '#nextPage', ->
 

@@ -340,7 +340,12 @@ Selecting a drop down item will set properties on the params e.g. clicking "Rece
 
 ### Filter Fixed Header
 
-A view that turns an element into a fixed header by wrapping it in a `.filter-fixed-header-container` element that pop-locks by toggling the class `.filter-fixed-header` on the container. You can use this class to adjust your header CSS by scoping under it e.g. `.filter-fixed-header #gene-filter-nav`. This also adds a "jump" component which lets the user scroll back to the top of the page.
+A view that turns an element into a fixed header by wrapping it in a `.filter-fixed-header-container` element that pop-locks by toggling the class `.filter-fixed-header` on the container. You can use this class to adjust your header CSS by scoping under it e.g. `.filter-fixed-header #gene-filter-nav`.
+
+Other responsibilites include:
+
+* Adding a "jump" component which lets the user scroll back to the top of the page.
+* Toggling the active buttons. (Clicking on a `.filter-buton` or `.filter-dropdown a` will turn off `.is-active` on other `.filter-button` or `.filter-dropdown` classes.)
 
 ![](images/filter_fixed_header.png)
 
@@ -350,6 +355,18 @@ new FilterFixedHeader
 ````
 
 * Use the `.filter-fixed-header-left` class in your template to get the meta information on the left hand side such as gene name or number of works.
+
+### Filter Dropdowns & Buttons
+
+When building up your own filtering UI you may need to use buttons and dropdowns. To do so please use the filter components classes and jade mixin. The active states of these will be managed by the "Filter Fixed Header" component.
+
+````jade
+.filter-fixed-header-nav
+  .filter-button.is-active All Exhibitors
+  +filter-dropdown('Sector', 'sector', { '...': '...' })
+  include ../../../components/filter/artworks_nav/template
+  .filter-button All Artists
+````
 
 ### Contact View
 
