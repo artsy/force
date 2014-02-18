@@ -1,12 +1,13 @@
-mediator = require '../../../lib/mediator.coffee'
-Backbone = require 'backbone'
-Gene = require '../../../models/gene.coffee'
-CurrentUser = require '../../../models/current_user.coffee'
-ArtistFillwidthList = require '../../../components/artist_fillwidth_list/view.coffee'
-{ GENE, CURRENT_USER } = require('sharify').data
+mediator                    = require '../../../lib/mediator.coffee'
+Backbone                    = require 'backbone'
+Gene                        = require '../../../models/gene.coffee'
+CurrentUser                 = require '../../../models/current_user.coffee'
+ArtistFillwidthList         = require '../../../components/artist_fillwidth_list/view.coffee'
+{ GENE, CURRENT_USER }      = require('sharify').data
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
-ShareView = require '../../../components/share/view.coffee'
-GeneFilter = require './filter.coffee'
+ShareView                   = require '../../../components/share/view.coffee'
+GeneFilter                  = require './filter.coffee'
+RelatedGenesView            = require '../../../components/related_genes/view.coffee'
 
 module.exports.GeneView = class GeneView extends Backbone.View
 
@@ -22,6 +23,13 @@ module.exports.GeneView = class GeneView extends Backbone.View
       el: @$('#gene-filter')
       model: @model
     @setupArtistFillwidth()
+    @setupRelatedGenes()
+
+  setupRelatedGenes: ->
+    new RelatedGenesView
+      el: @$('.main-layout-container .related-genes')
+      model: @model
+      modelName: 'gene'
 
   setupArtistFillwidth: ->
     if @user and not @model.isSubjectMatter()
