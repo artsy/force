@@ -71,6 +71,7 @@ module.exports = class BrowseRouter extends Backbone.Router
 
   route: (route, name, callback) =>
     Backbone.Router::route.call @, route, name, =>
+      @filterHeader.removeActive()
       $('.browse-section').hide()
       (callback or @[name])? arguments...
 
