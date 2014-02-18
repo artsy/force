@@ -12,7 +12,6 @@ OverviewView      = require './overview.coffee'
 analytics         = require '../../../lib/analytics.coffee'
 FavoritesView     = require('../../favorites_follows/client/favorites.coffee').FavoritesView
 FollowsView       = require('../../favorites_follows/client/follows.coffee').FollowsView
-FairFilterView    = require './filter.coffee'
 
 module.exports.FairView = class FairView extends Backbone.View
 
@@ -59,11 +58,12 @@ module.exports.FairView = class FairView extends Backbone.View
 
 module.exports.init = ->
   fair = new Fair sd.FAIR
+  profile = new Profile sd.PROFILE
   new FairView
-    model: new Profile sd.PROFILE
+    model: profile
     fair : fair
     el   : $('#fair-page')
     currentSection: sd.SECTION
-  window.view = new FairFilterView
-    model: fair
-    el: $ '#fair-page'
+  window.router = new FairBrowseRouter
+    fair    : fair
+    profile : profile

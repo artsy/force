@@ -4,7 +4,7 @@ mixin artists-a-to-z
   - aToZGroup = artistsAToZGroup
   if aToZGroup
     h1.large-garamond-header
-      | Artists at
+      | Artists at&nbsp;
       = fair.get('name')
     section.fair-artists-list.a-to-z-container
       include ../../../components/a_to_z_list/template
@@ -13,7 +13,7 @@ mixin exhibitors-a-to-z
   - aToZGroup = exhibitorsAToZGroup
   if aToZGroup
     h1.large-garamond-header
-      | Exhibitors at
+      | Exhibitors at&nbsp;
       = fair.get('name')
     section.fair-exhibitors-list.a-to-z-container
       include ../../../components/a_to_z_list/template
@@ -21,12 +21,13 @@ mixin exhibitors-a-to-z
 #fair-filter
   .filter-fixed-header-nav
     label By Exhibitor:
-    .filter-button.is-active All Exhibitors
-    +filter-dropdown('Sector', 'sector', { '...': '...' })
+    #fair-filter-all-exhibitors.filter-button.is-active All Exhibitors
+    span#fair-filter-sections
+      +filter-dropdown('Sector', 'sector', { '...': '...' })
     label By Work:
     include ../../../components/filter/artworks_nav/template
     label By Artists:
-    .filter-button.is-active All Artists
+    #fair-filter-all-artists.filter-button All Artists
 
 .browse-sections.main-layout-container
   .browse-section.artists-a-to-z
@@ -43,3 +44,5 @@ mixin exhibitors-a-to-z
   .browse-section.artist
     h1.large-garamond-header
     .feed
+#fair-browse-spinner
+  .loading-spinner

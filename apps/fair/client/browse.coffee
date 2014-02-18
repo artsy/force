@@ -1,7 +1,44 @@
-Backbone      = require 'backbone'
-BoothsView    = require './booths.coffee'
-ArtistView    = require './artist.coffee'
-ArtworksView  = require './artworks.coffee'
+_ = require 'underscore'
+Backbone = require 'backbone'
+BoothsView = require './booths.coffee'
+ArtistView = require './artist.coffee'
+ArtworksView = require './artworks.coffee'
+qs = require 'querystring'
+FilterArtworksView = require '../../../components/filter/artworks/view.coffee'
+FeedView = require '../../../components/feed/client/feed.coffee'
+{ ARTSY_URL } = require('sharify').data
+fairSectionsTemplate = -> require('../templates/fair_sections.jade') arguments...
+
+class FilterHeader extends Backbone.View
+
+  initialize: (options) ->
+    _.extend @, options
+    @fair.fetchSections success: @renderSections
+
+  renderSections: (sections) =>
+    hash = {}
+    sections.each (section) -> hash[section.get 'section'] = section.get('section')
+    @$('#fair-filter-sections').html fairSectionsTemplate(sections: hash)
+
+  events:
+    'click #fair-filter-all-exhibitors': 'allExhibitors'
+    'click #fair-filter-all-artists': 'allArtists'
+    'click #fair-filter-sections nav a': 'boothsSection'
+
+  allExhibitors: ->
+    @$('.is-active').removeClass("is-active")
+    @router.navigate "#{@profile.get 'id'}/browse/booths", trigger: true
+    @$('#fair-filter-all-exhibitors').addClass("is-active")
+
+  allArtists: ->
+    @$('.is-active').removeClass("is-active")
+    @router.navigate "#{@profile.get 'id'}/browse/artists", trigger: true
+    @$('#fair-filter-all-artists').addClass("is-active")
+
+  boothsSection: (e) ->
+    @$('.is-active').removeClass("is-active")
+    @router.navigate "#{@profile.get 'id'}/browse/booths/section/#{$(e.currentTarget).data 'val'}", trigger: true
+    @$('#fair-filter-all-exhibitors').addClass("is-active")
 
 module.exports = class BrowseRouter extends Backbone.Router
 
@@ -17,51 +54,69 @@ module.exports = class BrowseRouter extends Backbone.Router
     ':id/browse'                           : 'browse'
 
   initialize: (options) ->
-    { @model, @fair } = options
-
+    { @fair, @profile } = options
     $('.garamond-tab:first').removeClass('is-inactive').addClass('is-active')
+    @filterArtworks = new FilterArtworksView
+      el: $ '.fair-page-content'
+      artworksUrl : "#{ARTSY_URL}/api/v1/search/filtered/fair/#{@fair.get 'id'}"
+      countsUrl: "#{ARTSY_URL}/api/v1/search/filtered/fair/#{@fair.get 'id'}/suggest"
+    @filterHeader = new FilterHeader
+      el: '#fair-filter'
+      fair: @fair
+      profile: @profile
+      router: @
+    @filterArtworks.params.on 'change', @navigateArtworkParams, @
     Backbone.history.start pushState: true
 
-  artist: (id, artistId)->
-    $('.browse-section').hide()
-    @artist = new ArtistView
-      el        : $('.browse-section.artist')
-      fair      : @fair
-      model     : @model
-      artistId  : artistId
+  route: (route, name, callback) =>
+    Backbone.Router::route.call @, route, name, =>
+      $('.browse-section').hide()
+      (callback or @[name])? arguments...
 
-  booths: (id, params={})->
-    $('.browse-section').hide()
-    @artist = new BoothsView
-      el      : $('.browse-section.booths')
-      fair    : @fair
-      model   : @model
-      filter  : params
+  navigateArtworkParams: (m, params) =>
+    @navigate "#{@profile.get 'id'}/browse/artworks?" + qs.stringify(params), trigger: true
 
-  artworks: (id, params={})->
-    $('.browse-section').hide()
-    @artist = new ArtworksView
-      el      : $('.browse-section.artworks')
-      fair    : @fair
-      model   : @model
-      filter  : params
+  artist: (id, artistId)=>
+    @artistView ?= new ArtistView
+      el: $('.browse-section.artist')
+      fair: @fair
+      artistId: artistId
+    @artistView.$el.show()
 
-  category: (id, category)->
+  booths: (id, params={})=>
+    @boothsView ?= new BoothsView
+      el: $('.browse-section.booths')
+      fair: @fair
+      filter: params
+      profile: @profile
+    @boothsView.filter = params
+    @boothsView.fetchFeedItems()
+    @boothsView?.$el.hide()
+    $(document).one 'ajaxStop', => @boothsView.$el.show()
+
+  artworks: (id, params={})=>
+    @artworksView ?= new ArtworksView
+      el: $('.browse-section.artworks')
+      fair: @fair
+      filter: params
+    @artworksView.$el.show()
+
+  category: (id, category)=>
     @artworks id, category: category
 
-  boothsSection: (id, section)->
+  boothsSection: (id, section)=>
     @booths id, section: section
 
-  boothsRegion: (id, region)->
+  boothsRegion: (id, region)=>
     @booths id, partner_region: region
 
-  exhibitors: ->
+  exhibitors: =>
     $('.browse-section').hide()
     $('.exhibitors-a-to-z').show()
 
-  artists: ->
+  artists: =>
     $('.browse-section').hide()
     $('.artists-a-to-z').show()
 
-  browse: (id) ->
+  browse: (id) =>
     @navigate "#{id}/browse/booths", trigger: true
