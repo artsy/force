@@ -36,7 +36,7 @@ describe 'FilterArtworksNav', ->
     @view.$el.html().should.include '51'
     @view.$el.html().should.include '38'
 
-  it 'defauls to selecting the all selctions', ->
-    @view.counts.clear()
-    @view.renderCounts()
-    @view.$('.is-active').text().should.equal "All Works"
+  it 'highlights all works when the params arent specific', ->
+    @view.params.clear()
+    @view.highlightAllWorks()
+    @view.$('.filter-artworks-nav-allworks').hasClass('is-active').should.be.ok
