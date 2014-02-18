@@ -29,3 +29,35 @@
 .artwork-column-artist-list
   display inline-block
   vertical-align top
+
+// Sale variant
+.artwork-columns-sale
+  .artwork-column
+    border-right 1px solid dark-gray-border-color
+    border-left 1px solid dark-gray-border-color
+    margin-left 0
+    margin-right 0
+    width calc(33.33%)
+    &.first
+    &:first-child
+      margin-right -1px
+      border-left 0px solid white
+      .artwork-item
+        padding-left 0
+    &.last
+    &:last-child
+      margin-left -1px
+      border-right none
+      .artwork-item
+        padding-right 0
+
+    .artwork-item
+      border-bottom 1px solid dark-gray-border-color
+      padding 0 30px 30px 30px
+      &:last-child
+        border-bottom none
+      img
+        height 400px
+      .artwork-item-image-link
+        display block
+        width 100%
