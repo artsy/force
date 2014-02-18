@@ -20,10 +20,13 @@ mixin exhibitors-a-to-z
 
 #fair-filter
   .filter-fixed-header-nav
+    label By Exhibitor:
     .filter-button.is-active All Exhibitors
-    +filter-dropdown('Sector', { 'Foo': 'bar' })(data-attr='sector')
+    +filter-dropdown('Sector', 'sector', { '...': '...' })
+    label By Work:
     include ../../../components/filter/artworks_nav/template
-    //- By Artists:
+    label By Artists:
+    .filter-button.is-active All Artists
 
 .browse-sections.main-layout-container
   .browse-section.artists-a-to-z
