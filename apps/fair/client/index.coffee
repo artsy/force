@@ -26,9 +26,9 @@ module.exports.FairView = class FairView extends Backbone.View
     overview  : OverviewView
 
   initialize: (options) ->
+    return if options.currentSection is 'browse'
     @fair = options.fair
     @setupSearch @model, @fair
-
     if @sectionHash[options.currentSection]
       el = if options.currentSection == 'overview' then @$el else @$('.fair-page-content')
       new @sectionHash[options.currentSection]
@@ -58,8 +58,13 @@ module.exports.FairView = class FairView extends Backbone.View
       window.location = model.get('location')
 
 module.exports.init = ->
+  fair = new Fair sd.FAIR
+  profile = new Profile sd.PROFILE
   new FairView
-    model: new Profile sd.PROFILE
-    fair : new Fair sd.FAIR
+    model: profile
+    fair : fair
     el   : $('#fair-page')
     currentSection: sd.SECTION
+  new FairBrowseRouter
+    fair    : fair
+    profile : profile

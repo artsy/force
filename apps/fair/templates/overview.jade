@@ -9,7 +9,7 @@ append locals
 block body
   if coverImage && coverImage.hasImage('wide')
     .feature-image( style="background-image: url(#{profile.coverImage().imageUrl('wide')})" )
-  else 
+  else
     .feature-image
   #fair-page
     header.fair-page-header.main-layout-container
@@ -19,5 +19,6 @@ block body
     include ./sections
     if primarySets
       include ./overview_bottom
+    h2.overview-section-heading Browse the fair
     .fair-page-content.main-layout-container
       include ./browse

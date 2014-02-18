@@ -11,28 +11,25 @@ module.exports = class BoothsView extends Backbone.View
 
   sortOrder: "-updated_at"
 
-  headerText: ->
-    if @filter.section
-      "Exhibitors at #{@filter.section}"
-    else if @filter.partner_region
-      "Exhibitors from #{@filter.partner_region}"
-    else
-      'All Exhibitors'
-
   initialize: (options) ->
     { @filter, @fair, @profile } = options
-
-    @$('h1').text @headerText()
-    unless sd.NODE_ENV == 'test'
-      @$el.show()
+    @$el.show() unless sd.NODE_ENV == 'test'
+    @renderHeader()
     @fetchFeedItems()
+
+  renderHeader: ->
+    @$('h1').text if @filter.section
+                    "Exhibitors at #{@filter.section}"
+                  else if @filter.partner_region
+                    "Exhibitors from #{@filter.partner_region}"
+                  else
+                    'All Exhibitors'
 
   fetchFeedItems: ->
     url = @url()
     additionalParams = @filter
     additionalParams.artworks = true        # only shows that have artworks
     additionalParams.sortOrder = @sortOrder
-
     new FeedItems().fetch
       url: url
       data:

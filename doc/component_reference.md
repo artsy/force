@@ -279,10 +279,10 @@ First build up your html using the classes shown below to indicate where the vie
 Then add the view
 
 ````coffeescript
-@filterArtworksView = new FilterArtworksView
-  el: $ '#tag-filter'
-  artworksUrl: '/api/v1/search/filtered/tag/' + tag.get('id')
-  paramsUrl: '/api/v1/search/filtered/tag/suggest'
+@filterView = new FilterArtworksView
+  el: $ '#gene-filter'
+  artworksUrl: "#{ARTSY_URL}/api/v1/search/filtered/gene/#{@model.get 'id'}"
+  countsUrl: "#{ARTSY_URL}/api/v1/search/filtered/gene/#{@model.get 'id'}/suggest"
 ````
 
 #### Building on top of it

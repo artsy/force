@@ -10,10 +10,9 @@ module.exports = class FilterArtworksNav extends Backbone.View
     @renderActive()
 
   renderCounts: =>
-    for range, val of @counts.get('price_range')
-      @$("a[data-range='#{range}'] .filter-dropdown-count").html '(' + val + ')'
-    for size, val of @counts.get('dimension')
-      @$("a[data-size='#{size}'] .filter-dropdown-count").html '(' + val + ')'
+    for attr, counts of @counts.toJSON()
+      for val, count of counts
+        @$("a[data-attr='#{attr}'][data-val='#{val}'] .filter-dropdown-count").html '(' + count + ')'
 
   renderActive: =>
     @$('.is-active').removeClass('is-active')
@@ -32,29 +31,18 @@ module.exports = class FilterArtworksNav extends Backbone.View
 
   events:
     'click .filter-artworks-nav-allworks': 'allWorks'
-    'click .filter-artworks-nav-price a': 'filterPrice'
-    'click .filter-artworks-nav-medium a': 'filterMedium'
-    'click .filter-artworks-nav-size a': 'filterSize'
+    'click a[data-attr]': 'filterAttr'
     'click .filter-dropdown a': 'checkDropdownItem'
     'click .filter-dropdown': 'toggleMenuIpad'
 
   allWorks: ->
     @params.clear().trigger('change')
 
-  filterPrice: (e) ->
-    val = $(e.currentTarget).data 'range'
-    return @params.unset 'price_range' if val is ''
-    @params.set { price_range: val }
-
-  filterMedium: (e) ->
-    val = $(e.currentTarget).data 'medium'
-    return @params.unset 'medium' if val is ''
-    @params.set { medium: val }
-
-  filterSize: (e) ->
-    val = $(e.currentTarget).data 'size'
-    return @params.unset 'dimension' if val is ''
-    @params.set { dimension: val }
+  filterAttr: (e) ->
+    attr = $(e.currentTarget).data 'attr'
+    val = $(e.currentTarget).data 'val'
+    return @params.unset attr if val is ''
+    @params.set attr, val
 
   checkDropdownItem: (e) ->
     $(e.currentTarget)

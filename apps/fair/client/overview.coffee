@@ -10,7 +10,6 @@ module.exports = class Overview extends Backbone.View
 
   initialize: (options) ->
     @fair = options.fair
-
     @renderClock()
     if sd.CURRENT_USER?
       @renderWorksForYou()

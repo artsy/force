@@ -1,6 +1,7 @@
 _                       = require 'underscore'
 Backbone                = require 'backbone'
 sd                      = require('sharify').data
+FilterArtworksView      = require '../../../components/filter/artworks/view.coffee'
 
 module.exports = class ArtworksView extends Backbone.View
 

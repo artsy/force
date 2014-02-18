@@ -24,7 +24,7 @@ describe 'FilterArtworksNav', ->
     benv.teardown()
 
   it 'sets price', ->
-    @view.filterPrice currentTarget: $ "<div data-range='-1:1000'></div>"
+    @view.filterAttr currentTarget: $ "<div data-attr='price_range' data-val='-1:1000'></div>"
     @view.params.get('price_range').should.equal '-1:1000'
 
   it 'renders counts', ->
@@ -39,4 +39,4 @@ describe 'FilterArtworksNav', ->
   it 'defauls to selecting the all selctions', ->
     @view.counts.clear()
     @view.renderCounts()
-    @view.$('.filter-artworks-nav-price .is-active').text().should.equal "All Works"
+    @view.$('.is-active').text().should.equal "All Works"
