@@ -15,7 +15,7 @@ describe 'FeaturedPartnersView', ->
   before (done) ->
     sinon.stub _, 'defer'
     benv.setup =>
-      benv.expose { $: require 'jquery' }
+      benv.expose { $: require('jquery')(window) }
       Backbone.$ = $
       done()
 
