@@ -51,3 +51,4 @@ module.exports.init = ->
     user: CurrentUser.orNull()
     el: $ 'body'
     model: gene
+  Backbone.history.start pushState: true, root: "/gene/#{gene.id}"
