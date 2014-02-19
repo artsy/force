@@ -22,6 +22,7 @@ backboneCacheSync = require 'backbone-cache-sync'
 redirectMobile = require './middleware/redirect_mobile'
 proxyGravity = require './middleware/proxy_to_gravity'
 localsMiddleware = require './middleware/locals'
+micrositeMiddleware = require './middleware/microsite'
 helpersMiddleware = require './middleware/helpers'
 ensureSSL = require './middleware/ensure_ssl'
 errorHandler = require "../components/error_handler"
@@ -88,6 +89,7 @@ module.exports = (app) ->
 
   # General
   app.use localsMiddleware
+  app.use micrositeMiddleware
   app.use helpersMiddleware
   app.use express.favicon()
   app.use express.logger('dev')
