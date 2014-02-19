@@ -60,3 +60,9 @@ describe 'FilterFixedHeader', ->
     @view.$('.filter-dropdown').hasClass('is-active').should.be.ok
     @view.$('.filter-nav-active-text').text().should.include 'Under $1,000'
     @view.$('nav a').hasClass('is-active').should.be.ok
+
+  it 'highlights all works when the params arent specific', ->
+    @view.$el.html '<div class="filter-artworks-nav-allworks">'
+    @view.params.clear()
+    @view.highlightAllWorks()
+    @view.$('.filter-artworks-nav-allworks').hasClass('is-active').should.be.ok

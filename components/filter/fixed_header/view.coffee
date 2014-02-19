@@ -10,12 +10,16 @@ module.exports = class FilterFixedHeader extends Backbone.View
     @document = document.documentElement
     @$window = $ window
     @$window.on 'scroll', @popLock
-    @params.on 'change:price_range change:dimension change:medium change:sort', @scrollToTop
+    @params.on 'change', @scrollToTop
+    @params.on 'change', @clearActive
+    @params.on 'change', @highlightAllWorks
+    @params.on 'change', @renderActiveParams
     @wrap()
     @setupJump()
 
   scrollToTop: =>
     return unless @$window.scrollTop() > @$el.offset().top
+    return if @params.changedAttributes() and _.isEqual(_.keys(@params.changedAttributes()), ['page'])
     @document.scrollTop = @$el.offset().top + 60 - @mainHeaderHeight
 
   setupJump: ->
@@ -33,13 +37,12 @@ module.exports = class FilterFixedHeader extends Backbone.View
     else
       @$el.removeClass('filter-fixed-header')
 
-  events:
-    'click .filter-button, .filter-dropdown a': 'renderActive'
-
-  renderActive: (e) ->
+  clearActive: =>
     @$('.filter-button, .filter-dropdown a, .filter-dropdown').removeClass('is-active')
-    $(e.currentTarget).addClass('is-active')
-    @renderActiveParams()
+
+  highlightAllWorks: =>
+    return unless _.intersection(['price_range', 'dimension', 'medium'], @params.keys()).length is 0
+    @$('.filter-artworks-nav-allworks').addClass('is-active')
 
   renderActiveParams: =>
     for attr in @params.keys()
@@ -49,3 +52,9 @@ module.exports = class FilterFixedHeader extends Backbone.View
         .addClass('is-active')
         .children('.filter-nav-active-text')
         .text $a.children('.filter-dropdown-text').text()
+
+  events:
+    'click .filter-button, .filter-dropdown a': 'renderActive'
+
+  renderActive: (e) ->
+    _.defer -> $(e.currentTarget).addClass('is-active')

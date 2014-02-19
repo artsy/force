@@ -5,6 +5,7 @@ FilterSortCount = require '../sort_count/view.coffee'
 ArtworkColumnsView = require '../../artwork_columns/view.coffee'
 FilterArtworksNav = require '../artworks_nav/view.coffee'
 FilterFixedHeader = require '../fixed_header/view.coffee'
+FilterRouter = require '../router/index.coffee'
 COLUMN_WIDTH = 300
 
 module.exports = class FilterArtworksView extends Backbone.View
@@ -25,7 +26,7 @@ module.exports = class FilterArtworksView extends Backbone.View
     @counts.url = @countsUrl
     @params = new Backbone.Model
 
-    # Add child views passing in necessary models/collections
+    # Add child views/routers passing in necessary models/collections
     new FilterSortCount
       el: @$('.filter-artworks-sort-count')
       counts: @counts
@@ -38,11 +39,12 @@ module.exports = class FilterArtworksView extends Backbone.View
       el: @$('.filter-fixed-header-nav')
       params: @params
       scrollToEl: @$('.filter-artworks-sort-count')
+    @router = new FilterRouter params: @params
 
     # Hook up events on the artworks, params, and counts
     @artworks.on 'sync', @render
     @counts.on 'sync', @renderCounts
-    @params.on 'change:price_range change:dimension change:medium change:sort', @reset
+    @params.on 'change:price_range change:dimension change:medium change:sort reset', @reset
     @params.on 'change:page', =>
       @artworks.fetch { data: @params.toJSON(), remove: false, size: @pageSize }
     @$el.infiniteScroll @nextPage
@@ -61,7 +63,7 @@ module.exports = class FilterArtworksView extends Backbone.View
   nextPage: =>
     return if @$('.filter-artworks').is(':hidden') or
               @$('.filter-artworks').attr('data-state') is 'finished-paging'
-    @params.set page: (@params.get('page') + 1) or 1
+    @params.set page: @params.get('page') + 1
 
   reset: =>
     @params.set({ page: 1 }, { silent: true }).trigger('change change:page')

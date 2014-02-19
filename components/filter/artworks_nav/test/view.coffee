@@ -35,8 +35,3 @@ describe 'FilterArtworksNav', ->
     @view.renderCounts()
     @view.$el.html().should.include '51'
     @view.$el.html().should.include '38'
-
-  it 'highlights all works when the params arent specific', ->
-    @view.params.clear()
-    @view.highlightAllWorks()
-    @view.$('.filter-artworks-nav-allworks').hasClass('is-active').should.be.ok

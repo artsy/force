@@ -15,3 +15,4 @@ app.set 'views', __dirname + '/templates'
 app.set 'view engine', 'jade'
 
 app.get '/gene/:id', routes.index
+app.get '/gene/:id/*', routes.index
