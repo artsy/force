@@ -15,4 +15,5 @@ module.exports.TagView = class TagView extends Backbone.View
 module.exports.init = ->
   new TagView
     el: $ 'body'
-    model: new Tag TAG
+    model: tag = new Tag TAG
+  Backbone.history.start pushState: true, root: "/tag/#{tag.id}"
