@@ -21,6 +21,7 @@ module.exports = class Artwork extends Backbone.Model
     # Defer Post model require to prevent circular dependency
     @relatedPosts = new Backbone.Collection [], model: require('./post.coffee')
     @relatedPosts.url = "#{sd.ARTSY_URL}/api/v1/related/posts"
+    @setupRelatedCollections()
 
   fetchRelatedPosts: (options = {}) ->
     @relatedPosts.fetch _.extend
@@ -300,3 +301,20 @@ module.exports = class Artwork extends Backbone.Model
 
   showMoreInfo: ->
     not _.isFunction @saleMessage
+
+  # Sets up related collections and makes them available
+  # under an object so we can access/iterate over them later
+  #
+  # e.g. @relatedCollections['sales'] # => Backbone.Collection
+  setupRelatedCollections: ->
+    # ['sales', 'shows', 'fairs']
+    @relatedCollections = _.reduce ['sales'], (memo, aspect) =>
+      memo[aspect] = @[aspect] = new Backbone.Collection
+      @[aspect].url = "#{sd.ARTSY_URL}/api/v1/related/#{aspect}?artwork[]=#{@id}"
+      @[aspect].kind = _.capitalize aspect
+      memo
+    , {}
+
+  fetchRelatedCollections: (options = {}) ->
+    _.map @relatedCollections, (collection) ->
+      collection.fetch options
