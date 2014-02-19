@@ -33,7 +33,7 @@ module.exports = class FilterArtworksNav extends Backbone.View
     @params.set attr, val
 
   hideMenu: (e) ->
-    $(e.currentTarget).parent().hidehover()
+    $(e.currentTarget).parent().hidehover() unless navigator.userAgent.match('iPad')
 
   #
   # Force mouseout event of dropdowns to be triggered on mobile Safaris.
