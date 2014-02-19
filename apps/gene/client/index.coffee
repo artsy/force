@@ -17,6 +17,7 @@ module.exports.GeneView = class GeneView extends Backbone.View
       el: $('.follow-button')
       following: if @user then new Following(null, kind: 'gene') else null
       model: @model
+    @followButton.following?.syncFollows [@model.get('id')]
     @shareButtons = new ShareView
       el: @$('#gene-share-buttons')
     @filter = new GeneFilter
