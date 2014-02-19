@@ -30,10 +30,17 @@ module.exports.GeneView = class GeneView extends Backbone.View
       el: $ '#gene-filter'
       artworksUrl: "#{ARTSY_URL}/api/v1/search/filtered/gene/#{@model.get 'id'}"
       countsUrl: "#{ARTSY_URL}/api/v1/search/filtered/gene/#{@model.get 'id'}/suggest"
+    @setupMode()
+    @onFollowRoute()
+
+  setupMode: ->
     if @model.isSubjectMatter() or location.pathname.match('/artworks')
       @artworksMode()
     else
       @artistMode()
+
+  onFollowRoute: ->
+    @$('.follow-button').click() if location.pathname.match('/follow')
 
   setupArtistFillwidth: _.once ->
     if @user and not @model.isSubjectMatter()

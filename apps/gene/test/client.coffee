@@ -52,12 +52,17 @@ describe 'GeneView', ->
       @view.initialize {}
       @view.renderArtistFillwidth.called.should.not.be.ok
 
+  describe '#setupMode', ->
+
     it 'switches to artwork mode when gene is subject matter', ->
       sinon.stub @view, 'artworksMode'
       @view.model.isSubjectMatter = -> true
       @view.initialize {}
       @view.artworksMode.called.should.be.ok
 
+  describe '#onFollowRoute', ->
+
+    it 'follows the gene if coming from /follow'
   describe '#setupArtistFillwidth', ->
 
     it 'inits a artist fillwidth view', ->
