@@ -76,7 +76,7 @@ module.exports = class Feature extends Backbone.Model
         finalItems = []
         callback = _.after allItemsLen, ->
           return options.error(err) if err
-          options.success( finalItems.sort (a, b) -> a.get('key')[0] > b.get('key')[0] )
+          options.success finalItems.sort (a, b) -> a.get('key') - b.get('key')
 
         for { orderedSet, items } in setItems
 

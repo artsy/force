@@ -64,9 +64,11 @@ describe 'Feature', ->
       ])
       _.last(Backbone.sync.args)[2].success([])
 
-      xdescribe 'fetching a sale', ->
+    xit 'sorts sets by key', ->
 
-        it 'proxies the display_artist_list attribute', ->
+    xdescribe 'fetching a sale', ->
+
+      it 'proxies the display_artist_list attribute', ->
 
 
   describe '#shareTitle', ->
