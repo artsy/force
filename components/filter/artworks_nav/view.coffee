@@ -8,6 +8,7 @@ module.exports = class FilterArtworksNav extends Backbone.View
     @counts.on 'sync', @renderCounts
     @params.on 'change', @renderActive
     @renderActive()
+    @setupForceMouseOut()
 
   renderCounts: =>
     for attr, counts of @counts.toJSON()
@@ -49,3 +50,21 @@ module.exports = class FilterArtworksNav extends Backbone.View
   toggleMenuIpad: (e) ->
     $(e.currentTarget).toggleClass('is-hover') if navigator.userAgent.match('iPad')
     false
+
+  #
+  # Force mouseout event of dropdowns to be triggered on mobile Safaris.
+  #
+  # NOTE: The dropdown menu shows on hover. However, on iOS touch deveices 
+  # it's not trivial to "unhover" it, since the `mouseout` event won't
+  # be triggered until the user taps on another clickable item. 
+  # This makes the entire document (sort of, see NOTE2) clickable, 
+  # so when the `click` event bubbles up it will trigger the dropdown's 
+  # mouseout event and dismiss the menu.
+  #
+  # NOTE2: The click events will bubble up the DOM tree, but they simply
+  # never reach the body or the document on iOS. :(
+  # 
+  # https://developer.apple.com/library/safari/documentation/appleapplications/reference/safariwebcontent/HandlingEvents/HandlingEvents.html#//apple_ref/doc/uid/TP40006511-SW7
+  setupForceMouseOut: ->
+    # Heuristic to select the "document" without coupling with the outside world.
+    @$el.closest('body > div').attr "onclick", "void(0)"
