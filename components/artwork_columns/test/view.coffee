@@ -88,6 +88,7 @@ describe 'ArtworkColumns', ->
           el:         $('body')
           collection: @artworks
           isOrdered:  true
+          allowDuplicates: true
         $('.artwork-column:eq(0) .artwork-item').should.have.lengthOf 3
         $('.artwork-column:eq(1) .artwork-item').should.have.lengthOf 3
         $('.artwork-column:eq(2) .artwork-item').should.have.lengthOf 2
@@ -108,6 +109,7 @@ describe 'ArtworkColumns', ->
           el:         $('body')
           collection: @artworks
           totalWidth: 1120
+          allowDuplicates: true
         $('.artwork-column:eq(0) .artwork-item').should.have.lengthOf 4
         $('.artwork-column:eq(1) .artwork-item').should.have.lengthOf 2
         $('.artwork-column:eq(2) .artwork-item').should.have.lengthOf 2
@@ -125,3 +127,12 @@ describe 'ArtworkColumns', ->
         @view.appendArtworks [artwork]
         $('.artwork-column:eq(2) .artwork-item').should.have.lengthOf 4
         @view.shortestColumn.should.equal 2
+
+    it 'doesnt add duplicates', ->
+      @view = new ArtworkColumnsView
+        el:         $('body')
+        collection: @artworks
+        isOrdered:  true
+      @view.collection.reset [fabricate('artwork', id: 'bar'), fabricate('artwork', id: 'foo')]
+      @view.appendArtworks [new Artwork(fabricate('artwork', id: 'foo'))]
+      @view.collection.length.should.equal 2

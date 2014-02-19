@@ -63,7 +63,7 @@ module.exports = class FilterArtworksView extends Backbone.View
   nextPage: =>
     return if @$('.filter-artworks').is(':hidden') or
               @$('.filter-artworks').attr('data-state') is 'finished-paging'
-    @params.set page: (@params.get('page') + 1) or 1
+    @params.set page: @params.get('page') + 1
 
   reset: =>
     @params.set({ page: 1 }, { silent: true }).trigger('change change:page')

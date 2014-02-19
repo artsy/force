@@ -17,6 +17,7 @@ module.exports = class ArtworkColumns extends Backbone.View
   isOrdered       : false
   gutterWidth     : 80
   artworkSize     : 'tall'
+  allowDuplicates : false
 
   events:
     'click .artwork-columns-see-more': 'onSeeMoreClick'
@@ -83,6 +84,9 @@ module.exports = class ArtworkColumns extends Backbone.View
 
   # Render artworks to each column (shortest first)
   appendArtworks: (artworks) ->
+    unless @allowDuplicates
+      artworks = _.reject artworks, (a) => a.get('id') in @collection.pluck 'id'
+      @collection.add(artworks)
     for artwork in artworks
       $artwork = if @isOrdered then @addToNextColumn(artwork) else @addToShortestColumn(artwork)
       new SaveControls
