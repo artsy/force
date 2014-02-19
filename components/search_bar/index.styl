@@ -2,6 +2,7 @@
 
 logo-size                   = 52px
 suggestion-thumbnail-size   = 32px
+suggestion-height           = (suggestion-thumbnail-size + 20px)
 
 #main-layout-search-bar-container
   position relative
@@ -86,17 +87,18 @@ search-bar-input-placeholder()
   display block
   width 100%
   text-decoration none
-  overflow hidden
+  overflow ellipsis
 
 .mlsb-suggestion-thumbnail,
 .mlsb-suggestion-value
   display inline-block
   line-height suggestion-thumbnail-size
-  height (suggestion-thumbnail-size + 20px)
+  height suggestion-height
   vertical-align top
 
 .mlsb-suggestion-thumbnail
   padding 10px
+  width suggestion-height
 
 .mlsb-suggestion-fallback
   position relative
@@ -118,9 +120,8 @@ search-bar-input-placeholder()
     position absolute
 
 .mlsb-suggestion-value
+  width calc('100% - %s' % suggestion-height)
   padding 10px 10px 10px 0
-
-.mlsb-suggestion-display
   overflow ellipsis
 
 .mlsb-suggestion-kind
