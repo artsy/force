@@ -5,7 +5,7 @@ FilterSortCount = require '../sort_count/view.coffee'
 ArtworkColumnsView = require '../../artwork_columns/view.coffee'
 FilterArtworksNav = require '../artworks_nav/view.coffee'
 FilterFixedHeader = require '../fixed_header/view.coffee'
-FilterRouter = require '../router.coffee'
+FilterRouter = require '../router/index.coffee'
 COLUMN_WIDTH = 300
 
 module.exports = class FilterArtworksView extends Backbone.View
@@ -39,9 +39,7 @@ module.exports = class FilterArtworksView extends Backbone.View
       el: @$('.filter-fixed-header-nav')
       params: @params
       scrollToEl: @$('.filter-artworks-sort-count')
-    @router = new FilterRouter
-      urlRoot: @urlRoot
-      params: @params
+    @router = new FilterRouter params: @params
 
     # Hook up events on the artworks, params, and counts
     @artworks.on 'sync', @render

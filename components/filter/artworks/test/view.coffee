@@ -12,15 +12,12 @@ describe 'FilterArtworksView', ->
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       FilterArtworksView = benv.require resolve __dirname, '../view'
-      FilterArtworksView.__set__ 'mediator', @mediator = {
-        trigger: sinon.stub()
-        on: sinon.stub()
-      }
-      FilterArtworksView.__set__ 'FilterSortCount', class @FilterSortCount extends Backbone.View
-        initialize: ->
-      FilterArtworksView.__set__ 'ArtworkColumnsView', class @ArtworkColumnsView extends Backbone.View
-        initialize: ->
-        appendArtworks: sinon.stub()
+      for klass in ['ArtworkColumnsView', 'FilterSortCount', 'FilterFixedHeader', 'FilterRouter']
+        @[klass] = (opts) -> _.extend @, opts
+        sinon.spy @, klass
+        for method in ['appendArtworks', 'reset', 'remove']
+          @[klass].prototype[method] = sinon.stub()
+        FilterArtworksView.__set__ klass, @[klass]
       $.fn.infiniteScroll = sinon.stub()
       sinon.stub Backbone, 'sync'
       @view = new FilterArtworksView
@@ -31,6 +28,11 @@ describe 'FilterArtworksView', ->
   afterEach ->
     Backbone.sync.restore()
     benv.teardown()
+
+  describe '#initialize', ->
+
+    it 'creates a router', ->
+      @FilterRouter.args[0][0].params.should.equal @view.params
 
   describe '#newColumnsView', ->
 
