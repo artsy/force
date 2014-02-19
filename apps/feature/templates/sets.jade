@@ -5,7 +5,8 @@ mixin artworksTemplate(set)
   - artworkColumns = set.get('data').groupByColumnsInOrder()
   - setHeight = 400
   - displayPurchase = true
-  include ../../../components/artwork_columns/template
+  .artwork-columns-sale
+    include ../../../components/artwork_columns/template
 
 for set in sets
   section.feature-set

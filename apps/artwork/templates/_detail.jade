@@ -6,7 +6,7 @@
         a( href= "/artist/#{artist.id}" )= artist.get('name')
     if artwork.get('title')
       .artwork-detail-title
-        = artwork.get('title')
+        em= artwork.get('title')
         if artwork.get('date')
           | , #{artwork.get('date')}
   h2.artwork-detail-medium= artwork.get('medium')

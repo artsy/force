@@ -32,3 +32,20 @@ module.exports = class FilterFixedHeader extends Backbone.View
       @$el.addClass('filter-fixed-header')
     else
       @$el.removeClass('filter-fixed-header')
+
+  events:
+    'click .filter-button, .filter-dropdown a': 'renderActive'
+
+  renderActive: (e) ->
+    @$('.filter-button, .filter-dropdown a, .filter-dropdown').removeClass('is-active')
+    $(e.currentTarget).addClass('is-active')
+    @renderActiveParams()
+
+  renderActiveParams: =>
+    for attr in @params.keys()
+      continue unless ($a = @$("a[data-attr='#{attr}'][data-val='#{@params.get(attr)}']")).length
+      $a.addClass('is-active')
+        .closest('.filter-dropdown')
+        .addClass('is-active')
+        .children('.filter-nav-active-text')
+        .text $a.children('.filter-dropdown-text').text()

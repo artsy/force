@@ -77,6 +77,7 @@ describe 'GeneFilter', ->
     GeneFilter.__set__ 'FilterArtworksView', class @FilterSortCount
       render: sinon.stub()
       params: new Backbone.Model
+      reset: sinon.stub()
     sinon.stub Backbone, 'sync'
     @view = new GeneFilter
       el: $('body')
@@ -100,8 +101,8 @@ describe 'GeneFilter', ->
 
   describe '#initialize', ->
 
-    it 'switches to artwork mode when the artwork filter params change', ->
+    it 'switches to artwork mode when gene is subject matter', ->
       sinon.stub @view, 'artworksMode'
+      @view.model.isSubjectMatter = -> true
       @view.initialize()
-      @view.filterView.params.trigger 'change'
       @view.artworksMode.called.should.be.ok
