@@ -31,7 +31,7 @@ module.exports = class ArtistFillwidthList extends Backbone.View
   renderArtist: (artist, i) =>
     artist.fetchArtworks data: { size: 10 }, success: (artworks) =>
       $row = @$(".artist-fillwidth-list-item[data-id=\"#{artist.get('id')}\"]")
-      return $row.hide() if artworks.length is 0
+      return $row.remove() if artworks.length is 0
 
       # Add fillwidth view
       fillwidthView = new FillwidthView

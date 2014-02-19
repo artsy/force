@@ -19,7 +19,7 @@ module.exports = class FilterFixedHeader extends Backbone.View
 
   scrollToTop: =>
     return unless @$window.scrollTop() > @$el.offset().top
-    return if _.isEqual _.keys(@params.changedAttributes()), ['page']
+    return if @params.changedAttributes() and _.isEqual(_.keys(@params.changedAttributes()), ['page'])
     @document.scrollTop = @$el.offset().top + 60 - @mainHeaderHeight
 
   setupJump: ->
@@ -57,6 +57,4 @@ module.exports = class FilterFixedHeader extends Backbone.View
     'click .filter-button, .filter-dropdown a': 'renderActive'
 
   renderActive: (e) ->
-    return
-    $(e.currentTarget).addClass('is-active')
-    @renderActiveParams()
+    _.defer -> $(e.currentTarget).addClass('is-active')

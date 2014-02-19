@@ -39,14 +39,14 @@ module.exports = class FilterArtworksView extends Backbone.View
       el: @$('.filter-fixed-header-nav')
       params: @params
       scrollToEl: @$('.filter-artworks-sort-count')
-    new FilterRouter
+    @router = new FilterRouter
       urlRoot: @urlRoot
       params: @params
 
     # Hook up events on the artworks, params, and counts
     @artworks.on 'sync', @render
     @counts.on 'sync', @renderCounts
-    @params.on 'change:price_range change:dimension change:medium change:sort', @reset
+    @params.on 'change:price_range change:dimension change:medium change:sort reset', @reset
     @params.on 'change:page', =>
       @artworks.fetch { data: @params.toJSON(), remove: false, size: @pageSize }
     @$el.infiniteScroll @nextPage

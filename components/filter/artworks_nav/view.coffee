@@ -19,7 +19,7 @@ module.exports = class FilterArtworksNav extends Backbone.View
     'click .filter-dropdown': 'toggleMenuIpad'
 
   allWorks: ->
-    @params.clear()
+    @params.clear().trigger('reset')
 
   filterAttr: (e) ->
     attr = $(e.currentTarget).data 'attr'
