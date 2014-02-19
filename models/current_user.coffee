@@ -7,6 +7,7 @@ Artists           = require '../collections/artists.coffee'
 { ARTSY_URL, CURRENT_USER, SESSION_ID } = require('sharify').data
 Order = require './order.coffee'
 Genes = require '../collections/genes.coffee'
+{ readCookie } = require '../components/util/cookie.coffee'
 
 module.exports = class CurrentUser extends Backbone.Model
 
@@ -86,16 +87,19 @@ module.exports = class CurrentUser extends Backbone.Model
     @get('followGenes').fetchUntilEnd(_.extend { url: url, data: data }, options)
 
   unpublishedPost: (options) ->
-    posts = new Backbone.Collection
-    posts.fetch
-      url: "#{ARTSY_URL}/api/v1/profile/#{@get('default_profile_id')}/posts/unpublished"
-      success: (response) ->
-        post = response.models?[0]?.get('results')?[0]
-        if post
-          options.success(new Post(post))
-        else
-          options.error
-      error: options.error
+    if (postId = readCookie("current_post"))
+      options.success(new Post(id: postId))
+    else
+      posts = new Backbone.Collection
+      posts.fetch
+        url: "#{ARTSY_URL}/api/v1/profile/#{@get('default_profile_id')}/posts/unpublished"
+        success: (response) ->
+          post = response.models?[0]?.get('results')?[0]
+          if post
+            options.success(new Post(post))
+          else
+            options.error
+        error: options.error
 
   # Convenience for getting the bootstrapped user or returning null.
   # This should only be used on the client.

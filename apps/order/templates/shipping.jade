@@ -8,8 +8,6 @@ block body
   #order-page
     h2.garamond-header-center Purchase
     .order-page-content
-      .order-summary
-        include ./summary
       form.order-form( method="post" )
         header
           unless user
@@ -22,3 +20,5 @@ block body
         section.order-form-shipping-address
           include ./shipping_address
         button.order-form-button.avant-garde-button-black( type='submit') Continue to Checkout
+      .order-summary
+        include ./summary

@@ -1,5 +1,19 @@
 default-mobile-width = 400px
 
+@media screen and (max-device-width: 768px)
+  html, body
+    min-height 1024px
+    #order-page
+      .order-page-content
+        text-align center
+      .order-summary, .order-form
+        text-align left
+        position relative
+        display inline-block
+        vertical-align top
+      .order-summary
+        margin-left 50px
+
 @media screen and (max-device-width: 480px)
   html, body
     height: 100%

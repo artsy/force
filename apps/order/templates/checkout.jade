@@ -8,8 +8,6 @@ block body
     .checkout-form
       h2.garamond-header-center Checkout
       .order-page-content
-        .order-summary
-          include ./summary
         .order-form
           section.order-ship-to
             h2.order-page-sm-heading Ship To
@@ -60,5 +58,7 @@ block body
                 a( href=order.sellersTerms(), target='terms' )= "seller's additional terms"
               | .
           button.order-form-button.avant-garde-button-black( type='submit') Purchase
+        .order-summary
+          include ./summary
     .success-form.order.order-form-hidden
       include ./complete
