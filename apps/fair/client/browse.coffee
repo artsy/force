@@ -1,6 +1,6 @@
 _             = require 'underscore'
 Backbone      = require 'backbone'
-BoothsView    = require './booths.coffee'
+BoothsView    = require '../components/booths/view.coffee'
 ArtistView    = require './artist.coffee'
 qs            = require 'querystring'
 FilterArtworksView = require '../../../components/filter/artworks/view.coffee'
@@ -61,6 +61,14 @@ module.exports = class BrowseRouter extends Backbone.Router
       countsUrl: "#{ARTSY_URL}/api/v1/search/filtered/fair/#{@fair.get 'id'}/suggest"
       urlRoot: "#{@profile.id}/browse"
     @filterArtworks.params.on 'change', @artworks
+    @filterBooths = new BoothsView
+      el: $('.browse-section.booths')
+      fair: @fair
+      profile: @profile
+      router: @
+    @filterBooths.params.on 'change', =>
+      $('.browse-section').hide()
+      $('.browse-section.booths').show()
     @filterHeader = new FilterHeader
       el: '#fair-filter'
       fair: @fair
@@ -89,26 +97,14 @@ module.exports = class BrowseRouter extends Backbone.Router
       artistId: artistId
     @artistView.$el.show()
 
-  booths: (id, params={})=>
-    @boothsView ?= new BoothsView
-      el: $('.browse-section.booths')
-      fair: @fair
-      filter: params
-      profile: @profile
-      router: @
-    @boothsView.filter = params
-    @boothsView.sortOrder = qs.parse(location.search.replace(/^\?/, '')).sort
-    @boothsView.fetchFeedItems()
-    @boothsView.renderHeader()
-    @boothsView.$el.show()
-    @boothsView?.$('.feed').hide()
-    $(document).one 'ajaxStop', => @boothsView.$('.feed').show()
+  booths: =>
+    @filterBooths.params.trigger('change')
 
-  boothsSection: (id, section)=>
-    @booths id, section: section
+  boothsSection: (id, section) =>
+    @filterBooths.params.set section: section
 
-  boothsRegion: (id, region)=>
-    @booths id, partner_region: region
+  boothsRegion: (id, region) =>
+    @filterBooths.params.set section: region
 
   exhibitors: =>
     $('.browse-section').hide()

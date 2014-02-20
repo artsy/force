@@ -1,0 +1,6 @@
+include ../../../../components/filter/dropdown-mixin
+
+label By Exhibitor:
+#fair-filter-all-exhibitors.filter-button.is-active All Exhibitors
+span#fair-filter-sections
+  +filter-dropdown('Sector', 'sector', { '...': '...' })

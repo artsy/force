@@ -12,7 +12,7 @@ describe 'FilterRouter', ->
   afterEach ->
     benv.teardown()
 
-  describe '#navigateArtworkParams', ->
+  describe '#navigate', ->
 
     it 'reflects the filter params as query params in the url', ->
       @router.navigate = sinon.stub()
