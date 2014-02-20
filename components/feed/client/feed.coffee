@@ -134,14 +134,16 @@ module.exports = class FeedView extends Backbone.View
     @removeItemsFromTop() if @removeItemsFromTop
     @$feedItems.append @getFeedItemHtml(items)
     @lastItem = @$('.feed-item:last')
+    @handleDoneFetching()
 
   handleDoneFetching: ->
     ids = []
-    @$('.unrendered-feed-item .follow-button').each (index, item) =>
-      $(item).removeClass 'unrendered-feed-item'
-      id = $(item).attr('data-id')
+    @$('.unrendered-feed-item').each (index, item) =>
+      $feedItem = $(item).removeClass 'unrendered-feed-item'
+      $button = $feedItem.find('.follow-button')
+      id = $button.attr('data-id')
       model = new Profile(id: id)
-      @initFollowButton model, item
+      @initFollowButton model, $button
       ids.push id
     @followProfiles?.syncFollows ids
 

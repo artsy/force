@@ -7,13 +7,12 @@ AcquireArtwork          = require('../../acquire/view.coffee').acquireArtwork
 analytics               = require('../../../lib/analytics.coffee')
 SaveControls            = require '../../artwork_item/views/save_controls.coffee'
 artworkColumns          = -> require('../../artwork_columns/template.jade') arguments...
-ContactPartnerView      = require '../../contact/contact_partner.coffee'
 
 module.exports.FeedItemView = class FeedItemView extends Backbone.View
 
   events:
-    "click .purchase"        : "purchase"
-    'click .see-more'        : 'fetchMoreArtworks'
+    "click .purchase" : "purchase"
+    'click .see-more' : 'fetchMoreArtworks'
 
   artworksPage: 1
   artworksPageSize: 8
