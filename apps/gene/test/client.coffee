@@ -77,6 +77,11 @@ describe 'GeneView', ->
       @view.artistMode()
       @view.$('#gene-filter').attr('data-state').should.equal 'artists'
 
+    it 'navigates to the gene root', ->
+      @view.router.navigate = sinon.stub()
+      @view.artistMode()
+      @view.router.navigate.args[0][0].should.equal "/gene/#{@view.model.get 'id'}"
+
   describe '#artworksMode', ->
 
     it 'sets the state to artwork mode', ->
