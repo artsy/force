@@ -91,7 +91,9 @@ module.exports = class BrowseRouter extends Backbone.Router
       fair: @fair
       filter: params
       profile: @profile
+      router: @
     @boothsView.filter = params
+    @boothsView.sortOrder = qs.parse(location.search.replace(/^\?/, '')).sort
     @boothsView.fetchFeedItems()
     @boothsView.renderHeader()
     @boothsView.$el.show()

@@ -85,3 +85,7 @@ describe 'BoothsView', ->
       view.$('.feed-item-top-section .heading').text().should.include feedItem.toChildModel().formatFeedItemHeading()
       view.$('.feed-item-top-section .timeframe').text().should.include feedItem.get('location').city
       view.$('.artwork-item').text().should.include feedItem.get('artworks')[0].title
+
+  it 'renders the num of showing exhibitors'
+  it 'can be sorted'
+  it 'will switch the the a-z view'

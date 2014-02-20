@@ -2,7 +2,8 @@ _                       = require 'underscore'
 Backbone                = require 'backbone'
 sd                      = require('sharify').data
 FeedItems               = require '../../../components/feed/collections/feed_items.coffee'
-FeedView                = require('../../../components/feed/client/feed.coffee')
+FeedView                = require '../../../components/feed/client/feed.coffee'
+BorderedPulldown        = require '../../../components/bordered_pulldown/view.coffee'
 
 module.exports = class BoothsView extends Backbone.View
 
@@ -12,9 +13,11 @@ module.exports = class BoothsView extends Backbone.View
   sortOrder: "-updated_at"
 
   initialize: (options) ->
-    { @filter, @fair, @profile } = options
+    { @filter, @fair, @profile, @router } = options
+    new BorderedPulldown el: $('#fair-booths-sort .bordered-pulldown')
     @$el.show() unless sd.NODE_ENV == 'test'
     @renderHeader()
+    @renderExhibitorCount()
     @fetchFeedItems()
 
   renderHeader: ->
@@ -24,6 +27,10 @@ module.exports = class BoothsView extends Backbone.View
                     "Exhibitors from #{@filter.partner_region}"
                   else
                     'All Exhibitors'
+
+  renderExhibitorCount: ->
+    @fair.fetchExhibitors success: (az, c, galleries) =>
+      @$('#fair-booths-count').html galleries.length
 
   fetchFeedItems: ->
     url = @url()
@@ -44,3 +51,13 @@ module.exports = class BoothsView extends Backbone.View
 
   destroy: ->
     @feed?.destroy()
+
+  events:
+    'click #fair-booths-az-as-list': 'navigateToAZ'
+    'click #fair-booths-sort a': 'sort'
+
+  navigateToAZ: ->
+    @router.navigate "#{@profile.id}/browse/exhibitors", { trigger: true }
+
+  sort: (e) ->
+    @router.navigate "#{@profile.id}/browse/booths?sort=#{$(e.target).data 'sort'}", { trigger: true }
