@@ -34,6 +34,7 @@ module.exports = class PartnerCollectionView extends Backbone.View
       numberOfColumns: 4
       gutterWidth: 40
       totalWidth: @calcArtworkColumnsWidth()
+      allowDuplicates: true
 
   loadNextPage: =>
     @fetchNextPageArtworks
