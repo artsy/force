@@ -67,6 +67,7 @@ module.exports = class BrowseRouter extends Backbone.Router
       profile: @profile
       router: @
     @filterArtworks.params.on 'change', @navigateArtworkParams
+    @booths()
     Backbone.history.start pushState: true
 
   route: (route, name, callback) =>
