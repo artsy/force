@@ -1,5 +1,12 @@
 { parse, format } = require 'url'
 
+#
+# Checks for the presence of a microsite flag in the query string,
+# as well as query params for fair_id, fair_name, and profile_id,
+# then sets up the locals such that there are the needed skeleton
+# models for rendering the fair header and attaching a search view to it
+#
+
 module.exports = (req, res, next) ->
   microsite = res.locals.sd.MICROSITE =
     (qs = req.query).microsite? and qs.fair_id? and qs.fair_name? and qs.profile_id?
