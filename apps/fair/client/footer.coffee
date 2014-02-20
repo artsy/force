@@ -10,10 +10,10 @@ module.exports = class FairFooter extends Backbone.View
     @fair.fetchPrimarySets
       cache: false
       success: (primarySets) =>
-        exploreItems = primarySets.where({ key: 'explore' })?[0].get('items').models
-        primaryItems = primarySets.where({ key: 'primary' })?[0].get('items').models
-        curatorItems = primarySets.where({ key: 'curator' })?[0].get('items').models
-        editorialItems = primarySets.where({ key: 'editorial' })?[0].get('items').models
+        exploreItems = primarySets.where({ key: 'explore' })?[0]?.get('items').models
+        primaryItems = primarySets.where({ key: 'primary' })?[0]?.get('items').models
+        curatorItems = primarySets.where({ key: 'curator' })?[0]?.get('items').models
+        editorialItems = primarySets.where({ key: 'editorial' })?[0]?.get('items').models
 
         @$el.html footerTemplate(
           editorialItems : editorialItems

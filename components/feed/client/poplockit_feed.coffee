@@ -44,6 +44,7 @@ module.exports = class PoplockitFeed extends FeedView
       if @scrollTop > bottom
         @$htmlBody.scrollTop(@scrollTop - height)
 
+  # @override
   handleDoneFetching: (items) ->
     return unless @popLockItInitialized
 
