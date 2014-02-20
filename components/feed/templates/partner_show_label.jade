@@ -9,11 +9,9 @@ include ../../share/template
       a( href=feedItemChildModel.href() )!= feedItemChildModel.partnerName()
 
   if feedItemChildModel.get('fair')
-    .heading!= feedItemChildModel.fairName()
-    if feedItemChildModel.get('fair').start_at && feedItemChildModel.get('fair').end_at
-      .timeframe!= feedItemChildModel.fairRunningDates()
-      if feedItemChildModel.fairLocationDisplay()
-        .fair-location!= feedItemChildModel.fairLocationDisplay()
+    .heading.feed-item-fair-name!= feedItemChildModel.fairName()
+    if feedItemChildModel.fairLocationDisplay()
+      .fair-location!= feedItemChildModel.fairLocationDisplay()
 
   else
     .heading

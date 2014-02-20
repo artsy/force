@@ -73,7 +73,7 @@ describe 'Feed Templates', ->
         $ = cheerio.load @html
         $('.feed-item').length.should.equal 1
         $('.feed-item-top-section .heading').text().should.include @partnerShow.get('fair').name
-        $('.feed-item-top-section .timeframe').text().should.include @partnerShow.toChildModel().fairRunningDates()
+        $('.feed-item-top-section .fair-location').text().should.include 'New York – Booth 1234'
         $('.fair-location').html().should.include @partnerShow.get('fair_location').display
 
         @html.should.not.include "undefined"

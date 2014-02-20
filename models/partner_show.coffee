@@ -9,7 +9,6 @@ Partner         = require './partner.coffee'
 PartnerLocation = require './partner_location.coffee'
 DateHelpers     = require '../components/util/date_helpers.coffee'
 { Image }       = require 'artsy-backbone-mixins'
-moment          = require 'moment'
 
 module.exports = class PartnerShow extends Backbone.Model
 
@@ -83,21 +82,10 @@ module.exports = class PartnerShow extends Backbone.Model
     else
       "See \"#{@get('name')}\" on @artsy"
 
-  href: ->
-    if @has('fair') and @get('fair').organizer
-      "/#{@get('fair').organizer.profile_id}/browse/show/#{@get('partner').id}"
-    else
-      "/show/#{@get('id')}"
+  href: -> "/show/#{@get('id')}"
 
   runningDates: ->
     DateHelpers.timespanInWords @get('start_at'), @get('end_at')
-
-  fairRunningDates: ->
-    display = DateHelpers.timespanInWords @get('fair').start_at, @get('fair').end_at
-
-    if @get('fair_location') && @get('fair_location').display
-      display += ", #{@get('fair_location').display}"
-    display
 
   fetchInstallShots: (callbacks) ->
     throw "You must pass a success callback" unless callbacks?.success? and _.isFunction(callbacks.success)
@@ -172,13 +160,12 @@ module.exports = class PartnerShow extends Backbone.Model
     if @upcoming() then return 'Upcoming Show'
     if @closed() then return 'Past Show'
 
-  updatedAt: -> moment(@get('updated_at')).fromNow()
-
   fairLocationDisplay: ->
+    city = @formatCity()
+    if city
+      city = "<i>#{city}</i> &ndash; "
     display = @get('fair_location').display
-    if @get('updated_at') && moment().diff(moment(@get('updated_at')), 'days') <= @fairDisplayUpdatedDayLimit
-      display += "<span class='updated'>updated #{@updatedAt()}</span>"
-    display
+    _.compact([city, display]).join('')
 
   carouselDisplay: -> if @get('images_count') > 0 then "block" else "none"
   artworksDisplay: -> if @get('eligible_artworks_count') > 0 then "block" else "none"

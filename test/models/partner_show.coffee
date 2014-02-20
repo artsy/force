@@ -52,18 +52,6 @@ describe 'PartnerShow', ->
     it 'gives a formatted date span for the running dates', ->
       @partnerShow.runningDates().should.equal "Jul. 12th &#x2013; Aug. 23rd 2013"
 
-  describe '#fairRunningDates', ->
-
-    it 'includes fair location', ->
-      @partnerShow.set
-        fair:
-          start_at: @partnerShow.get('start_at')
-          end_at: @partnerShow.get('end_at')
-        fair_location:
-          display: 'Booth 1234'
-
-      @partnerShow.fairRunningDates().should.equal "Jul. 12th &#x2013; Aug. 23rd 2013, Booth 1234"
-
   describe '#shareTitle', ->
 
     it "includes fair location", ->
@@ -100,12 +88,4 @@ describe 'PartnerShow', ->
         fair_location:
           display: 'Booth 1234'
 
-      @partnerShow.fairLocationDisplay().should.equal "Booth 1234"
-
-    it "show updated at if the update at is recent", ->
-      @partnerShow.set
-        updated_at: new Date().valueOf()
-        fair_location:
-          display: 'Booth 1234'
-
-      @partnerShow.fairLocationDisplay().should.equal "Booth 1234<span class='updated'>updated a few seconds ago</span>"
+      @partnerShow.fairLocationDisplay().should.equal "<i>New York</i> &ndash; Booth 1234"
