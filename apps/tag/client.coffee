@@ -10,6 +10,7 @@ module.exports.TagView = class TagView extends Backbone.View
       el: $ '#tag-filter'
       artworksUrl: "#{ARTSY_URL}/api/v1/search/filtered/tag/#{@model.get 'id'}"
       countsUrl: "#{ARTSY_URL}/api/v1/search/filtered/tag/#{@model.get 'id'}/suggest"
+      urlRoot: "gene/#{@model.id}"
     @filterView.reset()
 
 module.exports.init = ->

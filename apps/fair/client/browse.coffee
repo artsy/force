@@ -61,6 +61,7 @@ module.exports = class BrowseRouter extends Backbone.Router
       el: $ '.fair-page-content'
       artworksUrl : "#{ARTSY_URL}/api/v1/search/filtered/fair/#{@fair.get 'id'}"
       countsUrl: "#{ARTSY_URL}/api/v1/search/filtered/fair/#{@fair.get 'id'}/suggest"
+      urlRoot: "#{@profile.id}/browse"
     @filterHeader = new FilterHeader
       el: '#fair-filter'
       fair: @fair
@@ -77,7 +78,7 @@ module.exports = class BrowseRouter extends Backbone.Router
       (callback or @[name])? arguments...
 
   navigateArtworkParams: (params) =>
-    @navigate "#{@profile.get 'id'}/browse/artworks?" + qs.stringify(params.toJSON()), trigger: true
+    @navigate "#{@profile.get 'id'}/browse/artworks?" + qs.stringify(@filterArtworks.params.toJSON()), trigger: true
 
   artist: (id, artistId)=>
     @artistView ?= new ArtistView
