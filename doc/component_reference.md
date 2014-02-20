@@ -274,7 +274,6 @@ First build up your html using the classes shown below to indicate where the vie
   .filter-fixed-header-nav
     | Showing
     em.filter-artworks-num
-    | Works
     //- Add artwork filter buttons
     include ../../filter/artworks_nav
     //- You might append more controls in the header here
