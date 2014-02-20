@@ -22,7 +22,7 @@ module.exports = class BoothsView extends Backbone.View
     @shows = new FeedItems()
     @shows.url = "#{@fair.url()}/shows"
 
-    # Hook into param changes to update view state
+    # Hook into param changes to update view/router state
     @params.on 'change', @fetchShows
     @params.on 'change', @renderHeader
     @params.on 'change:section', @navigateSection
@@ -31,18 +31,6 @@ module.exports = class BoothsView extends Backbone.View
 
   fetchShows: =>
     @shows.fetch data: @params.toJSON()
-
-  renderShows: (items) =>
-    return @$('.#fair-browse-spinner') unless items.models.length > 0
-    items.urlRoot = @shows.url
-    @feedView?.destroy()
-    @feedView?.remove()
-    @feedView = new FeedView
-      el: $el = $('<div>')
-      feedItems: items
-      additionalParams: @params.toJSON()
-    @$('.feed').html @feedView.$el
-    @$('#fair-browse-spinner').show()
 
   renderHeader: =>
     @$('h1').text if @params.get 'section'
