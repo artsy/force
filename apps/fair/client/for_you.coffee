@@ -16,7 +16,7 @@ FollowProfileButton = require '../../partners/client/follow_profiles_button.coff
 
 module.exports = class ForYouView extends Backbone.View
 
-  sortOrder: "-updated_at"
+  sortOrder: "-featured"
 
   initialize: (options) ->
     { @fair, @profile } = options
@@ -111,7 +111,6 @@ module.exports = class ForYouView extends Backbone.View
           feed = new FeedView
             el               : @$('.foryou-section.partners .feed')
             feedItems        : feedItems
-
           for exhibitor in followingExhibitors.models
             @fetchAndAppendBooth exhibitor.get('profile'), feed
         else
@@ -128,3 +127,13 @@ module.exports = class ForYouView extends Backbone.View
         _.extend(additionalParams, size: 3)
       success: (items) =>
         feed.handleFetchedItems items.models
+
+  fetchAndAppendShows: (feedItems) ->
+    url = "#{@fair.url()}/shows"
+    new FeedItems().fetch
+      url: url
+      data:
+        sortOrder: @sortOrder
+        size: 3
+      success: (items) =>
+        success items.models

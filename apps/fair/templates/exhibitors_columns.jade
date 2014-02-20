@@ -1,13 +1,11 @@
-if exhibitorsColumns
-  .exhibitors-column-container
-    for column in exhibitorsColumns
-      .exhibitors-column
-        for item in column
-          .exhibitor-item
-            span.mlsb-suggestion-thumbnail
-              a( href=item.href() )
-                span.mlsb-suggestion-fallback
-                  img( src=item.imageUrl(), onerror="this.style.display='none';" )
-            a.exhibitor-name( href=item.href() )= item.get('name')
-            if item.get('default_profile_public')
-              button.avant-garde-button-white.follow-button.is-small( data-id=item.get('default_profile_id') )
+for column in exhibitorsColumns
+  .exhibitors-column
+    for item in column
+      .exhibitor-item
+        span.mlsb-suggestion-thumbnail
+          a( href=item.href() )
+            span.mlsb-suggestion-fallback
+              img( src=item.imageUrl(), onerror="this.style.display='none';" )
+        a.exhibitor-name( href=item.href() )= item.get('name')
+        if item.get('default_profile_public')
+          button.avant-garde-button-white.follow-button.is-small( data-id=item.get('default_profile_id') )

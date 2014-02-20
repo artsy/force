@@ -39,11 +39,12 @@ mixin exhibitors-a-to-z
     h1.large-garamond-header
     #fair-booths-subheader
       | Showing&nbsp;
-      span#fair-booths-count ...
+      span#fair-booths-count= exhibitorsCount
       |  Exhibitors
       a#fair-booths-az-as-list.faux-underline Show as A-Z List
       #fair-booths-sort
         +bordered-pulldown('Relevancy', 'Sort By')
+          a( data-sort='-featured' ) Relevancy
           a( data-sort='-updated_at' ) Recently Updated
           a( data-sort='name' ) A-Z
           a( data-sort='-name' ) Z-A
