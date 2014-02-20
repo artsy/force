@@ -65,7 +65,7 @@ module.exports.LayeredSearchView = class LayeredSearchView extends Backbone.View
     @$layerButtons.attr 'data-state', 'inactive'
     $target.attr 'data-state', 'active'
 
-  renderLayer: (collection) ->
+  renderLayer: ->
     # Ideally we should be removing this view before re-rendering
     # which would require a small refactor to the ArtworkColumns component
     @artworkColumnsView = new ArtworkColumnsView
@@ -76,6 +76,7 @@ module.exports.LayeredSearchView = class LayeredSearchView extends Backbone.View
       maxArtworkHeight: 400
       isOrdered: false
       seeMore: false
+      allowDuplicates: true
 
   postRender: ->
     @$layeredSearchResults = @$('#layered-search-results')
