@@ -39,7 +39,9 @@ module.exports = class FilterArtworksView extends Backbone.View
       el: @$('.filter-fixed-header-nav')
       params: @params
       scrollToEl: @$('.filter-artworks-sort-count')
-    @router = new FilterRouter params: @params
+    @router = new FilterRouter
+      params: @params
+      urlRoot: @urlRoot
 
     # Hook up events on the artworks, params, and counts
     @artworks.on 'sync', @render

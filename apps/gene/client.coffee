@@ -30,6 +30,7 @@ module.exports.GeneView = class GeneView extends Backbone.View
       el: $ '#gene-filter'
       artworksUrl: "#{ARTSY_URL}/api/v1/search/filtered/gene/#{@model.get 'id'}"
       countsUrl: "#{ARTSY_URL}/api/v1/search/filtered/gene/#{@model.get 'id'}/suggest"
+      urlRoot: "gene/#{@model.id}"
     @setupMode()
     @onFollowRoute()
 
@@ -80,4 +81,4 @@ module.exports.init = ->
     user: CurrentUser.orNull()
     el: $ 'body'
     model: gene
-  Backbone.history.start pushState: true, root: "/gene/#{gene.id}"
+  Backbone.history.start pushState: true

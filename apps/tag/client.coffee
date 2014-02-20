@@ -10,10 +10,11 @@ module.exports.TagView = class TagView extends Backbone.View
       el: $ '#tag-filter'
       artworksUrl: "#{ARTSY_URL}/api/v1/search/filtered/tag/#{@model.get 'id'}"
       countsUrl: "#{ARTSY_URL}/api/v1/search/filtered/tag/#{@model.get 'id'}/suggest"
+      urlRoot: "gene/#{@model.id}"
     @filterView.reset()
 
 module.exports.init = ->
   new TagView
     el: $ 'body'
     model: tag = new Tag TAG
-  Backbone.history.start pushState: true, root: "/tag/#{tag.id}"
+  Backbone.history.start pushState: true
