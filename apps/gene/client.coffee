@@ -64,7 +64,7 @@ module.exports.GeneView = class GeneView extends Backbone.View
   artistMode: ->
     @$el.removeClass 'body-infinite-scroll'
     @$('#gene-filter').attr 'data-state', 'artists'
-    @router.navigate '/'
+    @router.navigate "/gene/#{@model.get 'id'}"
     @setupArtistFillwidth()
     return unless @$window.scrollTop() > @$('#gene-filter').offset().top
     _.defer => @document.scrollTop = @$('#gene-artists').offset().top - @$('#gene-filter-nav').height() - 45
