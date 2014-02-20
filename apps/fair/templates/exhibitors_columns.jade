@@ -1,11 +1,12 @@
-for column in exhibitorsColumns
+for column in columns
   .exhibitors-column
     for item in column
       .exhibitor-item
         span.mlsb-suggestion-thumbnail
-          a( href=item.href() )
+          a( href="/show/" + item.get('id') )
             span.mlsb-suggestion-fallback
-              img( src=item.imageUrl(), onerror="this.style.display='none';" )
-        a.exhibitor-name( href=item.href() )= item.get('name')
-        if item.get('default_profile_public')
-          button.avant-garde-button-white.follow-button.is-small( data-id=item.get('default_profile_id') )
+              if item.artworks().length > 0
+                img( src=item.artworks().models[0].defaultImageUrl('square') )
+        a.exhibitor-name( href="/show/" + item.get('id') )= item.get('partner').name
+        if item.get('partner').default_profile_public
+          button.avant-garde-button-white.follow-button.is-small( data-id=item.get('partner').default_profile_id )

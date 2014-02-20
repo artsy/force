@@ -13,6 +13,7 @@ CurrentUser    = require '../../../models/current_user.coffee'
 FeedItems      = require '../../../components/feed/collections/feed_items.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 FollowProfileButton = require '../../partners/client/follow_profiles_button.coffee'
+exhibitorsTemplate  = -> require('../templates/exhibitors_columns.jade') arguments...
 
 module.exports = class ForYouView extends Backbone.View
 
@@ -30,11 +31,7 @@ module.exports = class ForYouView extends Backbone.View
     else
       @showHideBlankState()
 
-    if @$('.exhibitors-column-container').length
-      # Delay this since it is below the fold. Don't want it to slow down other requests.
-      _.delay =>
-        @initializeFollowButtons()
-      , 1000
+    @fetchAndAppendShows()
 
   initializeFollowButtons: ->
     @followProfiles = if CurrentUser.orNull() then new FollowProfiles [] else null
@@ -130,10 +127,24 @@ module.exports = class ForYouView extends Backbone.View
 
   fetchAndAppendShows: (feedItems) ->
     url = "#{@fair.url()}/shows"
-    new FeedItems().fetch
-      url: url
-      data:
-        sortOrder: @sortOrder
-        size: 3
-      success: (items) =>
-        success items.models
+    feedItems = new FeedItems()
+    feedItems.urlRoot = "#{@fair.url()}/shows"
+    # We have to fetch sequentially since we use a cursor here
+    feedItems.fetchFeedItems
+      size: 3
+      sort: '-featured'
+      success: (items1) =>
+        feedItems.fetchFeedItems
+          success: (items2) =>
+            feedItems.fetchFeedItems
+              success: (items3) =>
+                feedItems.fetchFeedItems
+                  success: (items4) =>
+                    feedItems.fetchFeedItems
+                      success: (items5) =>
+                        @appendFeedItems _.zip(items1.models, items2.models, items3.models, items4.models, items5.models)
+
+  appendFeedItems: (columns) ->
+    @$('.exhibitors-column-container').html exhibitorsTemplate(columns: columns)
+    if @$('.exhibitors-column-container').length
+      @initializeFollowButtons()

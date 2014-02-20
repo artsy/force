@@ -27,6 +27,12 @@ module.exports = class FeedItems extends Backbone.Collection
     params.feed = @feedId if @feedId
     params.sort = options.sort if options?.sort
 
+    # Store the sort param for subsequent requests
+    if options?.sort
+      @sort = options.sort
+    if not params.sort and @sort
+      params.sort = @sort
+
     # filters out shows w/o artworks
     params.artworks = options.artworks if options?.artworks
 
