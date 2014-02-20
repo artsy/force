@@ -16,6 +16,7 @@ Item            = require '../../../models/item'
 Items           = require '../../../collections/items'
 OrderedSet      = require '../../../models/ordered_set'
 OrderedSets     = require '../../../collections/ordered_sets'
+FeedItem        = require '../../../components/feed/models/feed_item'
 cheerio         = require 'cheerio'
 
 render = (templateName) ->
@@ -257,19 +258,16 @@ describe 'Fair', ->
 
   describe 'exhibitors columns', ->
     before ->
-      m1 = fabricate('partner', artworks_count: 1)
-      m2 = fabricate('partner', artworks_count: 0)
-
-      fair = new Fair (fabricate 'fair', about: 'about the fair')
-      profile = new Profile (fabricate 'fair_profile')
-
-      exhibitorsAToZGroup = new fair.aToZCollection('partner')
-      exhibitorsAToZGroup.add([ m1, m2 ])
-
+      partnerShow = new FeedItem fabricate('show',
+        _type: "PartnerShow",
+        artists: [fabricate('artist')]
+        artworks: [fabricate('artwork')]
+      )
       @template = render('exhibitors_columns')
-        exhibitorsColumns : exhibitorsAToZGroup.groupByColumns(3)
+        columns : [[partnerShow, partnerShow], [partnerShow, partnerShow]]
 
     it 'renders without errors', ->
       $ = cheerio.load @template
-      $('.exhibitors-column').length.should.equal 3
-      $('.exhibitor-name').length.should.equal 2
+      $('.exhibitors-column').length.should.equal 2
+      $('.exhibitor-name').length.should.equal 4
+      $('.exhibitor-item img').length.should.equal 4

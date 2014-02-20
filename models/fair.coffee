@@ -41,9 +41,8 @@ module.exports = class Fair extends Backbone.Model
       url: "#{@url()}/partners"
       cache: true
       success: ->
-        exhibitorsColumns = galleries.groupByColumns 3
         aToZGroup = galleries.groupByAlphaWithColumns 3
-        options?.success aToZGroup, exhibitorsColumns, galleries
+        options?.success aToZGroup, galleries
       error: ->
         options?.error()
 
