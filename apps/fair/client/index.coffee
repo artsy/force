@@ -29,9 +29,9 @@ module.exports.FairView = class FairView extends Backbone.View
   footerRoutes: ['forYou', 'posts', 'search', 'info', 'favorites', 'follows']
 
   initialize: (options) ->
-    return if options.currentSection is 'browse'
     @fair = options.fair
     @setupSearch @model, @fair
+    return if options.currentSection is 'browse'
     if @sectionHash[options.currentSection]
       el = if options.currentSection == 'overview' then @$el else @$('.fair-page-content')
       new @sectionHash[options.currentSection]

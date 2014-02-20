@@ -10,7 +10,7 @@ module.exports = class BoothsView extends Backbone.View
   url: ->
     "#{@fair.url()}/shows"
 
-  sortOrder: "-updated_at"
+  sortOrder: "-featured"
 
   initialize: (options) ->
     { @filter, @fair, @profile, @router } = options
@@ -18,7 +18,6 @@ module.exports = class BoothsView extends Backbone.View
     @$el.show() unless sd.NODE_ENV == 'test'
     @renderHeader()
     @fetchFeedItems()
-    @renderExhibitorCount()
 
   renderHeader: ->
     @$('h1').text if @filter.section
@@ -27,10 +26,6 @@ module.exports = class BoothsView extends Backbone.View
                     "Exhibitors from #{@filter.partner_region}"
                   else
                     'All Exhibitors'
-
-  renderExhibitorCount: ->
-    @fair.fetchExhibitors success: (az, c, galleries) =>
-      @$('#fair-booths-count').html galleries.length
 
   fetchFeedItems: ->
     url = @url()
