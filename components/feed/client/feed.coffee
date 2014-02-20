@@ -5,10 +5,13 @@ sd                      = require('sharify').data
 analytics               = require('../../../lib/analytics.coffee')
 CurrentUser             = require '../../../models/current_user.coffee'
 FeedItems               = require '../collections/feed_items.coffee'
+Profile                 = require '../../../models/profile.coffee'
+FollowProfiles          = require '../../../collections/follow_profiles.coffee'
 FeedItem                = require '../models/feed_item.coffee'
 FeedItemView            = require('./feed_item.coffee').FeedItemView
 FeedItemPost            = require('../../post/client/feed_item_post.coffee').FeedItemPost
 feedItemsTemplate       = -> require('../templates/feed_items.jade') arguments...
+FollowProfileButton     = require '../../../apps/partners/client/follow_profiles_button.coffee'
 feedItemsContainerTemplate = -> require('../templates/feed_items_container.jade') arguments...
 
 module.exports = class FeedView extends Backbone.View
@@ -34,6 +37,7 @@ module.exports = class FeedView extends Backbone.View
     @initialFeedItems = @feedItems.removeFlagged()
     if @currentUser
       @currentUser.fetch success: =>
+        @followProfiles = new FollowProfiles
         @render @initialFeedItems
     else
       @render @initialFeedItems
@@ -130,7 +134,24 @@ module.exports = class FeedView extends Backbone.View
     @removeItemsFromTop() if @removeItemsFromTop
     @$feedItems.append @getFeedItemHtml(items)
     @lastItem = @$('.feed-item:last')
-    @handleDoneFetching() if @handleDoneFetching
+    @handleDoneFetching()
+
+  handleDoneFetching: ->
+    ids = []
+    @$('.unrendered-feed-item').each (index, item) =>
+      $feedItem = $(item).removeClass 'unrendered-feed-item'
+      $button = $feedItem.find('.follow-button')
+      id = $button.attr('data-id')
+      model = new Profile(id: id)
+      @initFollowButton model, $button
+      ids.push id
+    @followProfiles?.syncFollows ids
+
+  initFollowButton: (profile, el) ->
+    new FollowProfileButton
+      el         : el
+      model      : profile
+      collection : @followProfiles
 
   infiniteScroll: (scrollTop) ->
     @scrollTop = scrollTop || @$window.scrollTop()

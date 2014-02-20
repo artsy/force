@@ -3,6 +3,8 @@ include ../../share/template
 .feed-item-top-section
   .feed-item-share-section
     +share(feedItemChildModel.shareTitle(), undefined, feedItemChildModel.href())
+    if feedItemChildModel.get('partner') && feedItemChildModel.get('partner').default_profile_public
+      button.avant-garde-button-white.follow-button( data-id=feedItemChildModel.get('partner').default_profile_id, class=feedItemChildModel.partner().followButtonClass() )
 
   if feedItemChildModel.partnerName()
     .exhibitor
