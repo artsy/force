@@ -17,8 +17,8 @@ module.exports = class BoothsView extends Backbone.View
     new BorderedPulldown el: $('#fair-booths-sort .bordered-pulldown')
     @$el.show() unless sd.NODE_ENV == 'test'
     @renderHeader()
-    @renderExhibitorCount()
     @fetchFeedItems()
+    @renderExhibitorCount()
 
   renderHeader: ->
     @$('h1').text if @filter.section
