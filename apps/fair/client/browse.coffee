@@ -2,7 +2,6 @@ _             = require 'underscore'
 Backbone      = require 'backbone'
 BoothsView    = require './booths.coffee'
 ArtistView    = require './artist.coffee'
-ArtworksView  = require './artworks.coffee'
 qs            = require 'querystring'
 FilterArtworksView = require '../../../components/filter/artworks/view.coffee'
 FeedView = require '../../../components/feed/client/feed.coffee'
@@ -45,7 +44,6 @@ module.exports = class BrowseRouter extends Backbone.Router
 
   routes:
     ':id/browse/artists'                   : 'artists'
-    ':id/browse/artworks*'                 : 'artworks'
     ':id/browse/artist/:artist_id'         : 'artist'
     ':id/browse/booths'                    : 'booths'
     ':id/browse/booths/region/:region'     : 'boothsRegion'
@@ -62,23 +60,27 @@ module.exports = class BrowseRouter extends Backbone.Router
       artworksUrl : "#{ARTSY_URL}/api/v1/search/filtered/fair/#{@fair.get 'id'}"
       countsUrl: "#{ARTSY_URL}/api/v1/search/filtered/fair/#{@fair.get 'id'}/suggest"
       urlRoot: "#{@profile.id}/browse"
+    @filterArtworks.params.on 'change', @artworks
     @filterHeader = new FilterHeader
       el: '#fair-filter'
       fair: @fair
       profile: @profile
       router: @
-    @filterArtworks.params.on 'change', @navigateArtworkParams
     @booths()
     Backbone.history.start pushState: true
 
+  artworks: =>
+    $('.browse-section').hide()
+    $('.browse-section.artworks').show()
+    $('.browse-section.artworks h1').html if category? # what's category
+        "Artworks in #{category.split('-').join(' ')}"
+      else
+        'All Artworks'
+
   route: (route, name, callback) =>
     Backbone.Router::route.call @, route, name, =>
-      @filterHeader.removeActive()
       $('.browse-section').hide()
       (callback or @[name])? arguments...
-
-  navigateArtworkParams: (params) =>
-    @navigate "#{@profile.get 'id'}/browse/artworks?" + qs.stringify(@filterArtworks.params.toJSON()), trigger: true
 
   artist: (id, artistId)=>
     @artistView ?= new ArtistView
@@ -101,18 +103,6 @@ module.exports = class BrowseRouter extends Backbone.Router
     @boothsView.$el.show()
     @boothsView?.$('.feed').hide()
     $(document).one 'ajaxStop', => @boothsView.$('.feed').show()
-
-  artworks: (id) =>
-    params = qs.parse(location.search.replace(/^\?/, ''))
-    @artworksView ?= new ArtworksView
-      el: $('.browse-section.artworks')
-      fair: @fair
-      filter: params
-    @artworksView.$el.show()
-    @filterArtworks.params.set params
-
-  category: (id, category)=>
-    @artworks id, category: category
 
   boothsSection: (id, section)=>
     @booths id, section: section
