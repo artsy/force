@@ -1,4 +1,5 @@
 include ../../../components/filter/dropdown-mixin
+include ../../../components/bordered_pulldown/mixin
 
 mixin artists-a-to-z
   - aToZGroup = artistsAToZGroup
@@ -36,6 +37,16 @@ mixin exhibitors-a-to-z
     +exhibitors-a-to-z
   .browse-section.booths
     h1.large-garamond-header
+    #fair-booths-subheader
+      | Showing&nbsp;
+      span#fair-booths-count ...
+      |  Exhibitors
+      a#fair-booths-az-as-list.faux-underline Show as A-Z List
+      #fair-booths-sort
+        +bordered-pulldown('Relevancy', 'Sort By')
+          a( data-sort='-updated_at' ) Recently Updated
+          a( data-sort='name' ) A-Z
+          a( data-sort='-name' ) Z-A
     .feed
     #fair-browse-spinner
       .loading-spinner

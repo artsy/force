@@ -233,9 +233,9 @@ new ArtistFillwidthList(
 
 An Artsy styled drop down menu. This component comes with two parts
 
-Include the jade mixin:
-
 ![](images/bordered_pulldown.png)
+
+Include the jade mixin:
 
 ````jade
 include ../../bordered_pulldown/mixin

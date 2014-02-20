@@ -67,6 +67,7 @@ module.exports = class BrowseRouter extends Backbone.Router
       profile: @profile
       router: @
     @filterArtworks.params.on 'change', @navigateArtworkParams
+    @booths()
     Backbone.history.start pushState: true
 
   route: (route, name, callback) =>
@@ -91,7 +92,9 @@ module.exports = class BrowseRouter extends Backbone.Router
       fair: @fair
       filter: params
       profile: @profile
+      router: @
     @boothsView.filter = params
+    @boothsView.sortOrder = qs.parse(location.search.replace(/^\?/, '')).sort
     @boothsView.fetchFeedItems()
     @boothsView.renderHeader()
     @boothsView.$el.show()
