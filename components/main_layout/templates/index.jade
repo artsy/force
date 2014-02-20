@@ -10,15 +10,24 @@ html( data-useragent=userAgent )
     include head
     link( type='text/css', rel='stylesheet', href=(sd.ASSET_PATH + 'main_layout' + sd.CSS_EXT) )
     link( type='text/css', rel='stylesheet', href=(sd.ASSET_PATH + assetPackage + sd.CSS_EXT) )
+    if sd.MICROSITE
+      link( type='text/css', rel='stylesheet', href=(sd.ASSET_PATH + 'microsite' + sd.CSS_EXT) )
   body( class=bodyClass )
     include ../../modal/template
-    include ../header/templates/index
+    if sd.MICROSITE
+      include ../header/templates/microsite
+    else
+      include ../header/templates/index
     #main-layout-container
+      if sd.MICROSITE
+        include ../../../components/microsite/header
       block body
       .main-layout-footer-push
     #scripts
       include scripts
       script( src=(sd.ASSET_PATH + 'main_layout' + sd.JS_EXT) )
       script( src=(sd.ASSET_PATH + assetPackage + sd.JS_EXT) )
+      if sd.MICROSITE
+        script( src=(sd.ASSET_PATH + 'microsite' + sd.JS_EXT) )
       block scripts
     include ../footer/template

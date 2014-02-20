@@ -1,0 +1,9 @@
+include ../util/activator
+
+mixin micrositeHeader(profile, fair)
+  header.fair-page-header.main-layout-container
+    a.fair-logo( alt=fair.get('name'), href=profile.href() )
+      .profile-badge-icon( style="background-image: url(#{profile.get('image_url')})" )
+    include ../../apps/fair/templates/header_navigation
+
++micrositeHeader(micrositeProfile, micrositeFair)

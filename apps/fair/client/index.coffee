@@ -1,6 +1,6 @@
+_                 = require 'underscore'
 Backbone          = require 'backbone'
 sd                = require('sharify').data
-SearchBarView     = require '../../../components/search_bar/view.coffee'
 Profile           = require '../../../models/profile.coffee'
 Fair              = require '../../../models/fair.coffee'
 FairInfoView      = require './info.coffee'
@@ -10,11 +10,12 @@ ForYouView        = require './for_you.coffee'
 FairBrowseRouter  = require './browse.coffee'
 OverviewView      = require './overview.coffee'
 FairFooter        = require './footer.coffee'
-analytics         = require '../../../lib/analytics.coffee'
 FavoritesView     = require('../../favorites_follows/client/favorites.coffee').FavoritesView
 FollowsView       = require('../../favorites_follows/client/follows.coffee').FollowsView
+SearchBar         = require './mixins/search_bar.coffee'
 
 module.exports.FairView = class FairView extends Backbone.View
+  _.extend @prototype, SearchBar
 
   sectionHash:
     info      : FairInfoView
@@ -30,7 +31,7 @@ module.exports.FairView = class FairView extends Backbone.View
 
   initialize: (options) ->
     @fair = options.fair
-    @setupSearch @model, @fair
+    @setupSearch @model, @fair # via SearchBar mixin
     return if options.currentSection is 'browse'
     if @sectionHash[options.currentSection]
       el = if options.currentSection == 'overview' then @$el else @$('.fair-page-content')
@@ -53,19 +54,6 @@ module.exports.FairView = class FairView extends Backbone.View
     @$('.follows-tabs.garamond-tablist a').each ->
       $(@).attr href: "#{profile.href()}#{$(@).attr('href')}"
 
-  setupSearch: (profile, fair) ->
-    @searchBarView ||= new SearchBarView
-      el     : @$('#fair-search-container')
-      $input : @$('#fair-search-input')
-      fairId : @fair.get('id')
-    @searchBarView.on 'search:entered', (term) => window.location = "#{@model.href()}/search?q=#{term}"
-    @searchBarView.on 'search:selected', (e, model) ->
-      return false unless model
-      model.updateForFair fair
-      analytics.track.click "Selected item from fair search", { label: analytics.modelNameAndIdToLabel(model.get('display_model'), model.get('id')), query: @query }
-      @selected = true
-      window.location = model.get('location')
-
 module.exports.init = ->
   fair = new Fair sd.FAIR
   profile = new Profile sd.PROFILE
@@ -78,3 +66,22 @@ module.exports.init = ->
     new FairBrowseRouter
       fair    : fair
       profile : profile
+
+  # Checks to see if the href is an internal link to:
+  # an artwork, artist, show, or post
+  #
+  # return {Boolean}
+  isOutbound = (href) ->
+    pattern = /^\/((artwork\/.*$)|(artist\/.*$)|(show\/.*$)|(post\/.*$))/
+    href.match(pattern)?
+
+  # Global click handler
+  $('body').on 'click', 'a', ->
+    href = ($this = $(this)).attr 'href'
+    if isOutbound href
+      $this.attr 'href',
+        href +
+          '?microsite=1' +
+          "&profile_id=#{profile.id}" +
+          "&fair_id=#{fair.id}" +
+          "&fair_name=#{fair.get('name')}"
