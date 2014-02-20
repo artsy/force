@@ -58,6 +58,11 @@ describe 'FilterArtworksView', ->
       @view.nextPage()
       @view.params.get('page').should.equal 2
 
+    it 'defaults to page 1 and avoids NaNs', ->
+      @view.params.set page: NaN
+      @view.nextPage()
+      @view.params.get('page').should.equal 1
+
   describe '#render', ->
 
     it 'renders the columns view', ->

@@ -26,7 +26,7 @@ module.exports.GeneView = class GeneView extends Backbone.View
       el: @$('.main-layout-container .related-genes')
       model: @model
       modelName: 'gene'
-    { @router } = new FilterArtworksView
+    { @router, @params } = new FilterArtworksView
       el: $ '#gene-filter'
       artworksUrl: "#{ARTSY_URL}/api/v1/search/filtered/gene/#{@model.get 'id'}"
       countsUrl: "#{ARTSY_URL}/api/v1/search/filtered/gene/#{@model.get 'id'}/suggest"
@@ -36,6 +36,7 @@ module.exports.GeneView = class GeneView extends Backbone.View
 
   setupMode: ->
     if @model.isSubjectMatter() or location.pathname.match('/artworks')
+      @params.trigger('reset') if @model.isSubjectMatter()
       @artworksMode()
     else
       @artistMode()
