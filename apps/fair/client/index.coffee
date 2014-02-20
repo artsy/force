@@ -9,6 +9,7 @@ FairSearchView    = require './search.coffee'
 ForYouView        = require './for_you.coffee'
 FairBrowseRouter  = require './browse.coffee'
 OverviewView      = require './overview.coffee'
+FairFooter        = require './footer.coffee'
 analytics         = require '../../../lib/analytics.coffee'
 FavoritesView     = require('../../favorites_follows/client/favorites.coffee').FavoritesView
 FollowsView       = require('../../favorites_follows/client/follows.coffee').FollowsView
@@ -25,6 +26,8 @@ module.exports.FairView = class FairView extends Backbone.View
     forYou    : ForYouView
     overview  : OverviewView
 
+  footerRoutes: ['forYou', 'posts', 'search', 'info', 'favorites', 'follows']
+
   initialize: (options) ->
     return if options.currentSection is 'browse'
     @fair = options.fair
@@ -38,6 +41,12 @@ module.exports.FairView = class FairView extends Backbone.View
 
       if options.currentSection == 'follows' or options.currentSection == 'favorites'
         @fixFavoritesFollowingTabs @model
+
+      if options.currentSection in @footerRoutes
+        new FairFooter
+          el: @$('.fair-page-footer')
+          fair: @fair
+          model: @model
 
   # Kinda hacky
   fixFavoritesFollowingTabs: (profile) ->

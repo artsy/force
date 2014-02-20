@@ -70,13 +70,12 @@ module.exports = class Fair extends Backbone.Model
           @set 'sections', sections
           options?.success? sections
 
-  setKeys: ['primaryLinks', 'exploreLinks', 'curatorLinks', 'postLinks']
   fetchPrimarySets: (options) ->
     orderedSets = new OrderedSets
-    orderedSets.fetchItemsByOwner('Fair', @get('id'), options.cache).then (deferred) =>
-      orderedSets.each (set) =>
-        @set "#{set.get('key')}Links", set
-      options.success orderedSets
+    orderedSets
+      .fetchItemsByOwner('Fair', @get('id'), options.cache)
+      .done ->
+        options.success orderedSets
 
   # Custom A-to-Z-collection for fair urls
   aToZCollection: (namespace) =>
