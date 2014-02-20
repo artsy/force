@@ -132,7 +132,7 @@ module.exports = class ForYouView extends Backbone.View
     # We have to fetch sequentially since we use a cursor here
     feedItems.fetchFeedItems
       size: 3
-      sort: '-featured'
+      sort: @sortOrder
       success: (items1) =>
         feedItems.fetchFeedItems
           success: (items2) =>
