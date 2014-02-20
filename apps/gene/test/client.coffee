@@ -27,6 +27,7 @@ describe 'GeneView', ->
       @[klass] = sinon.stub()
       @[klass]::fetchAndRender = sinon.stub()
       @[klass]::router = { navigate: sinon.stub() }
+      @[klass]::params = new Backbone.Model
       @[klass]::el = $('<div>')
       mod.__set__ klass, @[klass]
     $.fn.infiniteScroll = sinon.stub()
@@ -59,6 +60,12 @@ describe 'GeneView', ->
       @view.model.isSubjectMatter = -> true
       @view.initialize {}
       @view.artworksMode.called.should.be.ok
+
+    it 'resets the filter params if its a subject matter gene', ->
+      @view.params.on 'reset', spy = sinon.spy()
+      @view.model.isSubjectMatter = -> true
+      @view.setupMode()
+      spy.called.should.be.ok
 
   describe '#onFollowRoute', ->
 
