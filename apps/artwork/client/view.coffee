@@ -151,7 +151,7 @@ module.exports = class ArtworkView extends Backbone.View
   # Handle links with the data-client attribute via pushState
   intercept: (e) ->
     e.preventDefault()
-    Backbone.history.navigate $(e.currentTarget).attr('href'), true
+    Backbone.history.navigate $(e.currentTarget).attr('href'), trigger: true, replace: true
 
   openShare: (e) ->
     e.preventDefault()
