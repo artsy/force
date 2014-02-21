@@ -13,20 +13,20 @@ Artwork = require '../../../../models/artwork'
 describe 'Layers, Layer', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    @artworkId  = 'foobar'
-    @layers     = new Layers artworkId: @artworkId
+    @artwork  = new Artwork fabricate 'artwork'
+    @layers   = new Layers artwork: @artwork
 
   afterEach ->
     Backbone.sync.restore()
 
   describe 'Layers', ->
-    it 'should have an artworkId', ->
-      @layers.artworkId.should.equal @artworkId
+    it 'should have an artwork', ->
+      @layers.artwork.should.equal @artwork
 
     it 'should fetch the correct URL', ->
       @layers.fetch()
       @layers.url.should.include 'api/v1/related/layers'
-      Backbone.sync.args[0][1].artworkId.should.equal @artworkId
+      Backbone.sync.args[0][1].artwork.id.should.equal @artwork.id
 
   describe 'Layer', ->
     beforeEach ->
@@ -36,14 +36,14 @@ describe 'Layers, Layer', ->
         type: 'main'
       @layers.reset layers
 
-    it 'should have a collection and subsequently an artworkId', ->
+    it 'should have a collection and subsequently an artwork_id', ->
       @layers.first().collection.length.should.be.ok
-      @layers.first().artworkId.should.equal @artworkId
+      @layers.first().get('artwork_id').should.equal @artwork.id
 
     it 'should have an artworks collection with the appropriate URL', ->
       layer = @layers.first()
       layer.artworks.url.
-        should.include "/api/v1/related/layer/#{layer.get('type')}/#{layer.id}/artworks?artwork[]=#{layer.artworkId}"
+        should.include "/api/v1/related/layer/#{layer.get('type')}/#{layer.id}/artworks?artwork[]=#{layer.get('artwork_id')}"
 
 describe 'LayeredSearchView', ->
   before (done) ->
@@ -57,8 +57,8 @@ describe 'LayeredSearchView', ->
 
   beforeEach (done) ->
     sinon.stub Backbone, 'sync'
-    @artwork = new Artwork fabricate 'artwork'
-    @view = new LayeredSearchView $el: $('<div></div>'), artwork: @artwork
+    @artwork  = new Artwork fabricate 'artwork'
+    @view     = new LayeredSearchView $el: $('<div></div>'), artwork: @artwork
     done()
 
   afterEach ->
@@ -66,9 +66,9 @@ describe 'LayeredSearchView', ->
 
   describe '#setupLayers', ->
     it 'has the artwork ID', ->
-      @view.layers.artworkId.should.equal @artwork.id
+      @view.layers.artwork.id.should.equal @artwork.id
     it 'fetches the layer based on the artwork ID', ->
-      Backbone.sync.args[0][1].artworkId.should.equal @artwork.id
+      Backbone.sync.args[0][1].artwork.id.should.equal @artwork.id
 
   describe 'rendered view', ->
     beforeEach ->
