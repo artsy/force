@@ -74,6 +74,10 @@ module.exports = class Fair extends Backbone.Model
     orderedSets
       .fetchItemsByOwner('Fair', @get('id'), options.cache)
       .done ->
+        for set in orderedSets.models
+          items = set.get('items').filter (item) ->
+            item.get('display_on_desktop')
+          set.get('items').reset items
         options.success orderedSets
 
   # Custom A-to-Z-collection for fair urls

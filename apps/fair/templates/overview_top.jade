@@ -31,11 +31,15 @@
             a.small-section( href=item.get('href') )
               img( src=item.imageUrl('large_square') )
               .section-heading= item.get('title')
-  
+
     if primarySets.where({ key: 'primary' })
       .container-right
         for set in primarySets.where({ key: 'primary' })
-          for item in set.get('items').models
+          for item in set.get('items').models.slice(0,3)
             a.small-section( href=item.get('href') )
               img( src=item.imageUrl('large_square') )
               .section-heading= item.get('title')
+          if set.get('items').models[3]
+            a.small-section.primary-section-top-right( href=set.get('items').models[3].get('href') )
+              img( src=set.get('items').models[3].imageUrl('large_square') )
+              .section-heading= set.get('items').models[3].get('title')
