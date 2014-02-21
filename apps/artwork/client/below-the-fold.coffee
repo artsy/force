@@ -12,15 +12,16 @@ module.exports = class BelowTheFold extends Backbone.View
 
     $.when.apply(null, @artwork.fetchRelatedCollections()).then =>
       # Find the first related collection that has any results
-      availableFeature = _.find @artwork.relatedCollections, (xs) -> xs.length
-      if availableFeature
-        @["setup#{availableFeature.kind}"]()
+      @availableFeature = _.find @artwork.relatedCollections, (xs) -> xs.length
+      if @availableFeature
+        @["setup#{@availableFeature.kind}"]()
       else
         # Always fallback to layered search if there are no features available
         @setupLayeredSearch()
 
-  setupLayeredSearch: ->
-    new LayeredSearchView el: @$el, artwork: @artwork
+  setupLayeredSearch: (options = {}) ->
+    { @fair } = options
+    new LayeredSearchView el: @$el, artwork: @artwork, fair: @fair
     @done()
 
   setupSales: ->
@@ -28,7 +29,8 @@ module.exports = class BelowTheFold extends Backbone.View
     @done()
 
   setupFairs: ->
-    throw 'I don\'t know how to do this yet!'
+    fair = @availableFeature.first()
+    @setupLayeredSearch fair: fair
 
   setupShows: ->
     throw 'I don\'t know how to do this yet!'
