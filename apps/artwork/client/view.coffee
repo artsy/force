@@ -56,7 +56,7 @@ module.exports = class ArtworkView extends Backbone.View
     $.when.apply(null, @artwork.fetchRelatedCollections()).then =>
       # Find the first related collection that has any results
       relatedCollections = _.filter @artwork.relatedCollections, (xs) -> xs.length
-      if relatedCollections
+      if relatedCollections.length
         for relatedCollection in relatedCollections
           # Trigger an event and pass on the first result
           @trigger "related:#{relatedCollection.kind}", relatedCollection.first()
