@@ -3,6 +3,10 @@
   #fair-search-spinner: .loading-spinner-small
 nav.fair-tabs.garamond-tablist
   a.garamond-tab(
+    href="#{profile.href()}/browse", class=activeClass("#{profile.href()}")
+  ) Home
+  span.garamond-tab-separator
+  a.garamond-tab(
     href="#{profile.href()}/browse", class=activeClass("#{profile.href()}/browse")
   ) Browse
   span.garamond-tab-separator
