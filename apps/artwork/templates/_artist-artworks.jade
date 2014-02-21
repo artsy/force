@@ -4,7 +4,7 @@
       href="/artwork/#{artwork.id}"
     )
       img(
-        src     = artwork.defaultImageUrl('small')
+        src     = artwork.defaultImageUrl(artwork.defaultImage().imageSizeForHeight(125))
         alt     = artwork.get('title')
         title   = artwork.get('title')
       )
