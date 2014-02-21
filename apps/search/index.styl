@@ -19,6 +19,8 @@
   transition all 0.125s
   &:last-child
     border-bottom 1px solid light-gray-border-color
+
+.search-result.published-search-result
   &:after
     display block
     position absolute
@@ -35,6 +37,12 @@
     &:after
     .search-result-kind
       color #fff
+
+.search-result.unpublished-search-result
+  color dark-gray-text-color
+  cursor default
+  .search-result-kind
+    color dark-gray-text-color
 
 .search-result-thumbnail
 .search-result-info

@@ -49,7 +49,8 @@ module.exports = class SearchResult extends Backbone.Model
 
   imageUrl: ->
     src = if @get('model') is 'artwork' then 'default_image.jpg' else 'image'
-    url = "#{sd.ARTSY_URL}/api/v1/#{@get('model')}/#{@id}/#{src}"
+    model = if @get('model') is 'partnershow' then 'partner_show' else @get('model')
+    url = "#{sd.ARTSY_URL}/api/v1/#{model}/#{@id}/#{src}"
     url = url + "?xapp_token=#{sd.ARTSY_XAPP_TOKEN}" if sd.ARTSY_XAPP_TOKEN?
     url
 
@@ -70,3 +71,9 @@ module.exports = class SearchResult extends Backbone.Model
       'published-search-result'
     else
       'unpublished-search-result'
+
+  href: ->
+    if @get('published')
+      @get('location')
+    else
+      '#'
