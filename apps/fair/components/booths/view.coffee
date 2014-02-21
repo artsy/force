@@ -82,9 +82,9 @@ module.exports = class BoothsView extends Backbone.View
     @router.navigate location.pathname + "?sort=#{@params.get 'sort'}"
 
   events:
-    'click #fair-booths-az-as-list': 'navigateToAZ'
-    'click #fair-booths-sort a': 'sort'
-    'click #fair-filter-all-exhibitors': 'allExhibitors'
+    'click #fair-booths-az-as-list'     : 'navigateToAZ'
+    'click #fair-booths-sort a'         : 'sort'
+    'click #fair-filter-all-exhibitors' : 'allExhibitors'
 
   navigateToAZ: ->
     @router.navigate "#{@profile.id}/browse/exhibitors", { trigger: true }

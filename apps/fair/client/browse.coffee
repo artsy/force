@@ -27,7 +27,6 @@ module.exports = class BrowseRouter extends Backbone.Router
     ':id/browse/booths'                    : 'booths'
     ':id/browse/booths/region/:region'     : 'boothsRegion'
     ':id/browse/booths/section/:section'   : 'boothsSection'
-    ':id/browse/category/:category'        : 'category'
     ':id/browse/exhibitors'                : 'exhibitors'
     ':id/browse'                           : 'browse'
 
@@ -55,14 +54,6 @@ module.exports = class BrowseRouter extends Backbone.Router
       router: @
     @booths()
     Backbone.history.start pushState: true
-
-  artworks: =>
-    $('.browse-section').hide()
-    $('.browse-section.artworks').show()
-    $('.browse-section.artworks h1').html if category? # what's category
-        "Artworks in #{category.split('-').join(' ')}"
-      else
-        'All Artworks'
 
   route: (route, name, callback) =>
     Backbone.Router::route.call @, route, name, =>

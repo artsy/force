@@ -41,7 +41,7 @@ fetchFairData = (fair, profile, res, options) ->
     cache: true
     success: (filteredSearchOptions) ->
       data.filteredSearchOptions = filteredSearchOptions
-      data.filteredSearchColumns = fair.filteredSearchColumns(filteredSearchOptions, 2, 'related_gene', 'category')
+      data.filteredSearchColumns = fair.filteredSearchColumns(filteredSearchOptions, 2, 'related_gene', 'artworks')
       success()
     error: res.backboneError
 
