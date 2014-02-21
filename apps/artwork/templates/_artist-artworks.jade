@@ -1,10 +1,11 @@
 .artwork-artist-artworks
   for artwork in artworks.models
+    - var artworkSize = artwork.defaultImage().imageSizeForHeight(125) || 'small'
     a.artwork-artist-artwork(
       href="/artwork/#{artwork.id}"
     )
       img(
-        src     = artwork.defaultImageUrl('small')
+        src     = artwork.defaultImageUrl(artworkSize)
         alt     = artwork.get('title')
         title   = artwork.get('title')
       )
