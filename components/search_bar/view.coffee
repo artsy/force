@@ -11,12 +11,13 @@ module.exports = class SearchBarView extends Backbone.View
     return unless @$el.length
 
     # Search takes a fair_id param specific to fairs. Doesn't work for other models
-    { @mode, @restrictType, @$input, @fairId } = options
+    { @mode, @restrictType, @$input, @fairId, @includePrivateResults } = options
 
     @search = new Search
       restrictType: @restrictType
       mode: @mode
       fairId: @fairId
+      includePrivateResults: @includePrivateResults
 
     @on 'search:start', @indicateLoading
     @on 'search:complete', @concealLoading
@@ -83,7 +84,7 @@ module.exports = class SearchBarView extends Backbone.View
           @query = @$input.val()
 
   selectResult: (e, model) ->
-    return false unless model
+    return false unless model and model.get('published')
     analytics.track.click "Selected item from search", { label: analytics.modelNameAndIdToLabel(model.get('display_model'), model.get('id')), query: @query }
     @selected = true
     window.location = model.get 'location'

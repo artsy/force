@@ -120,6 +120,7 @@ fetchFairData = (fair, profile, res, options) ->
   res.redirect("/#{req.params.id}") unless term
   fetchFair req, res, next, (fair, profile) ->
     fairSearch  = new Search
+    fairSearch.url = fairSearch.url.replace '?visible_to_public=true', ''
     search  = new Search
     success = _.after 2, ->
       res.locals.sd.SECTION = 'search'
@@ -135,7 +136,7 @@ fetchFairData = (fair, profile, res, options) ->
         term: term
         fair_id: fair.get('id')
       cache: true
-      success: ->
+      success: (results) ->
         fairSearch.updateLocationsForFair(fair)
         success()
       error: res.backboneError

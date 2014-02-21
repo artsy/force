@@ -5,13 +5,13 @@ SearchResult  = require '../../../models/search_result.coffee'
 
 module.exports = class Search extends Backbone.Collection
   initialize: (options={}) ->
-    { @mode, @restrictType, @fairId } = options
+    { @mode, @restrictType, @fairId, @includePrivateResults } = options
 
   _url: ->
     [
       "#{sd.ARTSY_URL}/api/v1/match/"
       (@mode || '')
-      '?visible_to_public=true'
+      (if @includePrivateResults then '?' else '?visible_to_public=true')
       (if @fairId then "&fair_id=#{@fairId}" else "")
     ].join('')
 
