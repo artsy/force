@@ -34,16 +34,15 @@ module.exports = class BoothsView extends Backbone.View
     @params.on 'change', @fetchShows
     @params.on 'change:section', @navigateSection
     @params.on 'change:sort', @navigateSort
-    @shows.on 'request', =>
-      @$('.browse-section.booths .feed').toggle()
-      @$('#fair-booths-spinner').toggle()
-    @shows.on 'sync', =>
-      @$('.browse-section.booths .feed').toggle()
-      @$('#fair-booths-spinner').toggle()
+    @shows.on 'request', @toggleSpinner
+    @shows.on 'sync', @toggleSpinner
     @shows.on 'sync', @renderShows
 
     # Render the navigation dropdown sections
     @fair.fetchSections success: @renderSections
+
+  toggleSpinner: =>
+    @$('.browse-section.booths .feed, #fair-booths-spinner').toggle()
 
   renderSections: (sections) =>
     hash = {}
@@ -74,7 +73,10 @@ module.exports = class BoothsView extends Backbone.View
     @$('#fair-browse-spinner').show()
 
   navigateSection: =>
-    @router.navigate "#{@profile.id}/browse/booths/section/#{@params.get 'section'}"
+    if @params.get 'section'
+      @router.navigate "#{@profile.id}/browse/booths/section/#{}"
+    else
+      @router.navigate "#{@profile.id}/browse/booths"
 
   navigateSort: =>
     @router.navigate location.pathname + "?sort=#{@params.get 'sort'}"
