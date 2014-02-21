@@ -34,14 +34,14 @@ module.exports.LayeredSearchView = class LayeredSearchView extends Backbone.View
     'click .layered-search-layer-button' : 'selectLayer'
 
   initialize: (options = {}) ->
-    { @artwork } = options
+    { @artwork, @fair } = options
     @setupLayers()
 
   setupLayers: ->
-    @layers = new Layers artworkId: @artwork.id
+    @layers = new Layers artwork: @artwork, fair: @fair
     @layers.fetch
       success:  => @render()
-      errro:    => @remove()
+      error:    => @remove()
 
   selectLayer: (e) ->
     id = ($target = $(e.currentTarget)).data 'id'
