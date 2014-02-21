@@ -17,9 +17,6 @@ module.exports = class BelowTheFold extends Backbone.View
   setupFair: (fair) ->
     @setupLayeredSearch fair: fair
 
-  setupShow: ->
-    throw 'I don\'t know how to do this yet!'
-
   setupLayeredSearch: (options = {}) ->
     new LayeredSearchView el: @$el, artwork: @artwork, fair: options.fair
     @fadeIn()
