@@ -153,7 +153,7 @@ fetchFairData = (fair, profile, res, options) ->
 
   fetchFair req, res, next, (fair, profile) ->
     res.locals.sd.SECTION = 'favorites'
-    res.render 'templates/index',
+    res.render 'templates/favorites',
       profile : profile
       fair    : fair
       profileId: req.user.get('default_profile_id')
@@ -166,7 +166,7 @@ fetchFairData = (fair, profile, res, options) ->
     res.locals.sd.KIND = routeToKind[route] or 'artist'
     fetchFair req, res, next, (fair, profile) ->
       res.locals.sd.SECTION = 'follows'
-      res.render 'templates/index',
+      res.render 'templates/favorites',
         profile : profile
         fair    : fair
         profileId: req.user.get('default_profile_id')
