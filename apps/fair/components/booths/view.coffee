@@ -35,11 +35,11 @@ module.exports = class BoothsView extends Backbone.View
     @params.on 'change:section', @navigateSection
     @params.on 'change:sort', @navigateSort
     @shows.on 'request', =>
-      @$('.browse-section.booths .feed').hide()
-      @$('#fair-booths-spinner').show()
+      @$('.browse-section.booths .feed').toggle()
+      @$('#fair-booths-spinner').toggle()
     @shows.on 'sync', =>
-      @$('.browse-section.booths .feed').show()
-      @$('#fair-booths-spinner').hide()
+      @$('.browse-section.booths .feed').toggle()
+      @$('#fair-booths-spinner').toggle()
     @shows.on 'sync', @renderShows
 
     # Render the navigation dropdown sections
