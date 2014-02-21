@@ -9,6 +9,7 @@ sinon           = require 'sinon'
   benv.requireWithJadeify resolve(__dirname, '../../client/layered-search'), ['template']
 
 Artwork = require '../../../../models/artwork'
+Fair    = require '../../../../models/fair'
 
 describe 'Layers, Layer', ->
   beforeEach ->
@@ -27,6 +28,38 @@ describe 'Layers, Layer', ->
       @layers.fetch()
       @layers.url.should.include 'api/v1/related/layers'
       Backbone.sync.args[0][1].artwork.id.should.equal @artwork.id
+
+    it 'should be correctly ordered', ->
+      @layers.reset [
+        { type: 'synthetic', id: 'for-sale' }
+        { type: 'gene', id: 'foobar' }
+        { type: 'synthetic', id: 'main' }
+        { type: 'gene', id: 'bazqux' }
+      ]
+      @layers.first().id.should.equal 'main'
+      @layers.last().id.should.equal 'for-sale'
+
+  describe 'with fair', ->
+    beforeEach ->
+      @fair      = new Fair fabricate 'fair'
+      @artwork   = new Artwork fabricate 'artwork'
+      @layers    = new Layers artwork: @artwork, fair: @fair
+      @layers.reset [
+        { type: 'synthetic', id: 'for-sale' }
+        { type: 'gene', id: 'foobar' }
+        { type: 'synthetic', id: 'main' }
+        { type: 'fair', id: @fair.id }
+        { type: 'gene', id: 'bazqux' }
+      ]
+
+    it 'should set up both relationships for the fair', ->
+      @layers.fair.id.should.equal @fair.id
+      @layers.artwork.id.should.equal @artwork.id
+
+    it 'should be correctly ordered', ->
+      @layers.first().id.should.equal @fair.id
+      @layers.at(1).id.should.equal 'main'
+      @layers.last().id.should.equal 'for-sale'
 
   describe 'Layer', ->
     beforeEach ->
@@ -55,49 +88,78 @@ describe 'LayeredSearchView', ->
   after ->
     benv.teardown()
 
-  beforeEach (done) ->
-    sinon.stub Backbone, 'sync'
-    @artwork  = new Artwork fabricate 'artwork'
-    @view     = new LayeredSearchView $el: $('<div></div>'), artwork: @artwork
-    done()
+  describe 'with an artwork', ->
+    beforeEach (done) ->
+      sinon.stub Backbone, 'sync'
+      @artwork  = new Artwork fabricate 'artwork'
+      @view     = new LayeredSearchView $el: $('<div></div>'), artwork: @artwork
+      done()
 
-  afterEach ->
-    Backbone.sync.restore()
+    afterEach ->
+      Backbone.sync.restore()
 
-  describe '#setupLayers', ->
-    it 'has the artwork ID', ->
-      @view.layers.artwork.id.should.equal @artwork.id
-    it 'fetches the layer based on the artwork ID', ->
-      Backbone.sync.args[0][1].artwork.id.should.equal @artwork.id
+    describe '#setupLayers', ->
+      it 'has the artwork ID', ->
+        @view.layers.artwork.id.should.equal @artwork.id
+      it 'fetches the layer based on the artwork ID', ->
+        Backbone.sync.args[0][1].artwork.id.should.equal @artwork.id
 
-  describe 'rendered view', ->
-    beforeEach ->
+    describe 'rendered view', ->
+      beforeEach ->
+        @artworks  = _.times 2, -> new Artwork fabricate 'artwork'
+        @layers    = _.times 2, -> id: _.uniqueId('layer'), name: _.uniqueId('name')
+        @view.layers.reset @layers
+        @view.render()
+
+      describe '#render', ->
+        it 'has buttons for each layer', ->
+          @view.$('.layered-search-layer-button').length.should.equal @layers.length
+
+      describe '#postRender', ->
+        it 'activates the first tab', ->
+          buttons = @view.$('.layered-search-layer-button')
+          buttons.first().data('state').should.equal 'active'
+          buttons.last().data('state').should.equal 'inactive'
+
+      describe '#selectLayer', ->
+        beforeEach ->
+          @$buttons = @view.$('.layered-search-layer-button')
+          @$target  = @$buttons.last()
+          @$target.click()
+        it 'should activate the correct layer', ->
+          id = @$target.data 'id'
+          @view.__activeLayer__.id.should.equal id
+          @view.activeLayer().id.should.equal id
+        it 'should activate the button and deactivate the others', ->
+          @$target.data('state').should.equal 'active'
+          @$buttons.not(@$target).data('state').should.equal 'inactive'
+        it 'should have a spinner', ->
+          @view.$layeredSearchResults.html().should.include 'loading-spinner'
+
+  describe 'with an artwork and a fair', ->
+    beforeEach (done) ->
+      sinon.stub Backbone, 'sync'
+      @artwork  = new Artwork fabricate 'artwork'
+      @fair     = new Fair fabricate 'fair'
+      @view     = new LayeredSearchView $el: $('<div></div>'), artwork: @artwork
+
       @artworks  = _.times 2, -> new Artwork fabricate 'artwork'
-      @layers    = _.times 2, -> id: _.uniqueId('layer'), name: _.uniqueId('layer')
+      @layers    = _.times 2, -> id: _.uniqueId('layer'), name: _.uniqueId('name')
+      @view.layers.fair = @fair
+      @layers.push id: _.uniqueId('layer'), type: 'fair'
       @view.layers.reset @layers
       @view.render()
 
-    describe '#render', ->
-      it 'has buttons for each layer', ->
-        @view.$('.layered-search-layer-button').length.should.equal @layers.length
+      done()
 
-    describe '#postRender', ->
-      it 'activates the first tab', ->
-        buttons = @view.$('.layered-search-layer-button')
-        buttons.first().data('state').should.equal 'active'
-        buttons.last().data('state').should.equal 'inactive'
+    afterEach ->
+      Backbone.sync.restore()
 
-    describe '#selectLayer', ->
-      beforeEach ->
-        @$buttons = @view.$('.layered-search-layer-button')
-        @$target  = @$buttons.last()
-        @$target.click()
-      it 'should activate the correct layer', ->
-        id = @$target.data 'id'
-        @view.__activeLayer__.id.should.equal id
-        @view.activeLayer().id.should.equal id
-      it 'should activate the button and deactivate the others', ->
-        @$target.data('state').should.equal 'active'
-        @$buttons.not(@$target).data('state').should.equal 'inactive'
-      it 'should have a spinner', ->
-        @view.$layeredSearchResults.html().should.include 'loading-spinner'
+    it 'should have the fair as the first tab', ->
+      @$buttons = @view.$('.layered-search-layer-button')
+      @$buttons.first().text().should.equal "Works from #{@fair.get('name')}"
+
+
+
+
+
