@@ -66,6 +66,40 @@ describe 'ArtworkView', ->
       it 'has a following collection if the user is logged in', ->
         _.isUndefined(@view.following).should.not.be.ok
 
+    describe '#setupRelatedLayers', ->
+      describe 'has no relations', ->
+        beforeEach ->
+          @artwork.fetchRelatedCollections            = sinon.stub()
+          @view.belowTheFoldView.setupLayeredSearch   = sinon.stub()
+
+        it 'sets up layered search by default', ->
+          @view.setupRelatedLayers()
+          @view.belowTheFoldView.setupLayeredSearch.called.should.be.ok
+
+      describe 'has relations', ->
+        beforeEach ->
+          @view.belowTheFoldView.setupFair            = sinon.stub()
+          @view.belowTheFoldView.setupSale            = sinon.stub()
+          @view.belowTheFoldView.setupLayeredSearch   = sinon.stub()
+          @view.setupFeatureNavigation                = sinon.stub()
+          @artwork.fetchRelatedCollections            = sinon.stub()
+          @artwork.relatedCollections = [
+            { kind: 'fairs', length: 1, first: -> 'i am a fair' }
+            { kind: 'sales', length: 1, first: -> 'i am a sale' }
+          ]
+
+        it 'sets up for the appropriate relations', ->
+          @view.setupRelatedLayers()
+          @view.belowTheFoldView.setupFair.called.should.be.ok
+          @view.belowTheFoldView.setupFair.args[0][0].should.equal 'i am a fair'
+          @view.setupFeatureNavigation.called.should.be.ok
+          @view.setupFeatureNavigation.args[0][0].model.should.equal 'i am a fair'
+          @view.setupFeatureNavigation.args[0][0].kind.should.equal 'fair'
+          @view.belowTheFoldView.setupSale.called.should.be.ok
+          @view.belowTheFoldView.setupSale.args[0][0].should.equal 'i am a sale'
+          @view.belowTheFoldView.setupSale.args[0][1].constructor.name.should.equal 'ArtworkCollection'
+
+
     describe '#setupCurrentUser', ->
       it 'initializes the current user, saved artwork collection, and following collection', ->
         _.isUndefined(@view.currentUser).should.not.be.ok

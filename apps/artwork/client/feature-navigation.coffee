@@ -1,24 +1,15 @@
-_               = require 'underscore'
-Backbone        = require 'backbone'
-{ ARTSY_URL }   = require('sharify').data
+Backbone = require 'backbone'
 
 template = -> require('../templates/feature-navigation.jade') arguments...
 
 module.exports = class FeatureNavigationView extends Backbone.View
   template: template
 
-  initialize: (options = {}) ->
-    { @artwork } = options
-    @setupFeatures()
+  initialize: (options) ->
+    { @model, @kind } = options
+    @render()
 
-  setupFeatures: ->
-    @features = new Backbone.Collection
-    @features.url = "#{ARTSY_URL}/api/v1/related/features?artwork[]=#{@artwork.id}"
-    @features.fetch
-      success: => @render()
-      error: => @remove()
-
+  # Handles Feature and Fair models
   render: ->
-    return @remove() unless @features.length
-    @$el.html template(feature: @features.first())
+    @$el.html template(model: @model, kind: @kind)
     this

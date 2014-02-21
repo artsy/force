@@ -37,13 +37,31 @@ module.exports = class ArtworkView extends Backbone.View
     @setupCurrentUser()
     @setupArtistArtworks()
     @setupFollowButton()
-
     @setupBelowTheFold()
-    @setupFeatureNavigation()
+    @setupMainSaveButton()
 
-    # Setup the primary save button
-    @setupSaveButton @$('.circle-icon-button-save'), @artwork
-    @syncSavedArtworks @artwork
+    # Handle all related content
+    @setupRelatedLayers()
+    @on 'related:features', (feature) ->
+      @setupFeatureNavigation model: feature, kind: 'feature'
+    @on 'related:fairs', (fair) ->
+      @belowTheFoldView.setupFair fair
+      @setupFeatureNavigation model: fair, kind: 'fair'
+    @on 'related:sales', (sale) ->
+      @belowTheFoldView.setupSale sale, @saved
+    @on 'related:none', ->
+      @belowTheFoldView.setupLayeredSearch()
+
+  setupRelatedLayers: ->
+    $.when.apply(null, @artwork.fetchRelatedCollections()).then =>
+      # Find the first related collection that has any results
+      relatedCollections = _.filter @artwork.relatedCollections, (xs) -> xs.length
+      if relatedCollections.length
+        for relatedCollection in relatedCollections
+          # Trigger an event and pass on the first result
+          @trigger "related:#{relatedCollection.kind}", relatedCollection.first()
+      else
+        @trigger 'related:none'
 
   setupCurrentUser: ->
     @currentUser = CurrentUser.orNull()
@@ -87,16 +105,38 @@ module.exports = class ArtworkView extends Backbone.View
       numToShow: 2
       model: @artwork
 
-  setupFeatureNavigation: ->
+  setupFeatureNavigation: (options) ->
     new FeatureNavigationView
+      model: options.model
+      kind: options.kind
       artwork: @artwork
       el: @$('#artwork-feature-navigation')
 
   setupBelowTheFold: ->
-    new BelowTheFoldView
-      saved: @saved
+    @belowTheFoldView = new BelowTheFoldView
       artwork: @artwork
       el: @$('#artwork-below-the-fold-section')
+
+  setupMainSaveButton: ->
+    @setupSaveButton @$('.circle-icon-button-save'), @artwork
+    @syncSavedArtworks @artwork
+
+  setupSaveButton: ($el, artwork, options = {}) ->
+    new SaveButton
+      analyticsSaveMessage: 'Added artwork to collection, via artwork info'
+      analyticsUnsaveMessage: 'Removed artwork from collection, via artwork info'
+      el: $el
+      saved: @saved
+      model: artwork
+
+  setupFollowButton: ->
+    @followButton = new FollowButton
+      analyticsFollowMessage: 'Followed artist, via artwork info'
+      analyticsUnfollowMessage: 'Unfollowed artist, via artwork info'
+      el: @$('.artwork-artist-follow-button')
+      following: @following
+      model: @artist
+    @following?.syncFollows [@artist.id]
 
   route: (route) ->
     # Initial server rendered route is 'show'
@@ -117,24 +157,6 @@ module.exports = class ArtworkView extends Backbone.View
     e.preventDefault()
     analytics.track.click 'Viewed sharing_is_caring form'
     new ShareView width: '350px', artwork: @artwork
-
-  setupFollowButton: ->
-    @followButton = new FollowButton
-      analyticsFollowMessage: 'Followed artist, via artwork info'
-      analyticsUnfollowMessage: 'Unfollowed artist, via artwork info'
-      el: @$('.artwork-artist-follow-button')
-      following: @following
-      model: @artist
-
-    @following?.syncFollows [@artist.id]
-
-  setupSaveButton: ($el, artwork, options = {}) ->
-    new SaveButton
-      analyticsSaveMessage: 'Added artwork to collection, via artwork info'
-      analyticsUnsaveMessage: 'Removed artwork from collection, via artwork info'
-      el: $el
-      saved: @saved
-      model: artwork
 
   contactPartner: (e) ->
     e.preventDefault()

@@ -19,30 +19,33 @@ describe 'BelowTheFoldView', ->
 
   beforeEach (done) ->
     sinon.stub Backbone, 'sync'
-    @setupLayeredSearchStub  = sinon.stub BelowTheFoldView::, 'setupLayeredSearch'
-    @setupSalesStub          = sinon.stub BelowTheFoldView::, 'setupSales'
+    @setupLayeredSearchSpy   = sinon.spy BelowTheFoldView::, 'setupLayeredSearch'
+    @setupSaleSpy            = sinon.spy BelowTheFoldView::, 'setupSale'
+    @setupFairSpy            = sinon.spy BelowTheFoldView::, 'setupFair'
 
     @$fixture   = $('<div></div>')
     @artwork    = new Artwork fabricate 'artwork'
+    @view       = new BelowTheFoldView $el: @$fixture, artwork: @artwork
     done()
 
   afterEach ->
-    @setupLayeredSearchStub.restore()
-    @setupSalesStub.restore()
+    @setupLayeredSearchSpy.restore()
+    @setupSaleSpy.restore()
+    @setupFairSpy.restore()
     Backbone.sync.restore()
 
   describe '#initialize', ->
-    it 'by default, sets up layered search', ->
-      @view = new BelowTheFoldView $el: @$fixture, artwork: @artwork
-      @setupLayeredSearchStub.called.should.be.ok
+    it 'has an artwork', ->
+      @view.artwork.id.should.equal @artwork.id
 
-    it 'should setup the sale if a sale is returned', ->
-      @artwork.relatedCollections = [{ length: 2, kind: 'Sales', fetch: sinon.stub() }]
-      @view = new BelowTheFoldView $el: @$fixture, artwork: @artwork
-      @setupSalesStub.called.should.be.ok
+  describe '#setupFair', ->
+    it 'delegates to #setupLayeredSearch and passes a fair', ->
+      @view.setupFair(fair = 'fair')
+      @setupLayeredSearchSpy.called.should.be.ok
+      @setupLayeredSearchSpy.args[0][0].fair.should.equal fair
 
-  describe '#done', ->
+  describe '#fadeIn', ->
     it 'fades in the el', ->
       @view = new BelowTheFoldView $el: @$fixture, artwork: @artwork
-      @view.done()
+      @view.fadeIn()
       @view.$el.data('state').should.equal 'fade-in'

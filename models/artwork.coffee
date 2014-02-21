@@ -6,8 +6,6 @@ AdditionalImage   = require './additional_image.coffee'
 
 { Image, Dimensions, Markdown } = require 'artsy-backbone-mixins'
 
-_.mixin(require 'underscore.string')
-
 module.exports = class Artwork extends Backbone.Model
 
   _.extend @prototype, Image(sd.SECURE_IMAGES_URL)
@@ -307,11 +305,11 @@ module.exports = class Artwork extends Backbone.Model
   #
   # e.g. @relatedCollections['sales'] # => Backbone.Collection
   setupRelatedCollections: ->
-    # ['sales', 'shows', 'fairs']
-    @relatedCollections = _.reduce ['sales', 'fairs'], (memo, aspect) =>
+    # ['sales', 'shows', 'fairs', 'features']
+    @relatedCollections = _.reduce ['sales', 'fairs', 'features'], (memo, aspect) =>
       memo[aspect] = @[aspect] = new Backbone.Collection
       @[aspect].url = "#{sd.ARTSY_URL}/api/v1/related/#{aspect}?artwork[]=#{@id}"
-      @[aspect].kind = _.capitalize aspect
+      @[aspect].kind = aspect
       memo
     , {}
 

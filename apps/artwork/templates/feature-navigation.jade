@@ -1,6 +1,8 @@
+- var href = (kind === 'feature' ? '/feature/' : '/') + model.id
+
 p
   | Part of&nbsp;
-  a( href="/feature/#{feature.id}" )!= feature.get('name')
+  a( href=href )!= model.get('name')
 
-a.avant-garde-jump-link( href="/feature/#{feature.id}" )
-  | Go to feature
+a.avant-garde-jump-link( href=href )
+  | Go to #{kind}
