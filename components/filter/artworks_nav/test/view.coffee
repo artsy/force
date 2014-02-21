@@ -23,10 +23,6 @@ describe 'FilterArtworksNav', ->
   afterEach ->
     benv.teardown()
 
-  it 'sets price', ->
-    @view.filterAttr currentTarget: $ "<div data-attr='price_range' data-val='-1:1000'></div>"
-    @view.params.get('price_range').should.equal '-1:1000'
-
   it 'renders counts', ->
     @view.counts.set {
       price_range: { "-1:1000": 51 }

@@ -18,7 +18,7 @@ module.exports = class BoothsView extends Backbone.View
     # Set up a @params model to maintain the query param state for the @shows collection
     # attched to /api/v1/fair/:id/shows
     @params = new Backbone.Model(artworks: true, size: 3)
-    @shows = new FeedItems()
+    @shows = new FeedItems
     @shows.url = "#{@fair.url()}/shows"
 
     # Add child view
