@@ -135,7 +135,7 @@ fetchFairData = (fair, profile, res, options) ->
         term: term
         fair_id: fair.get('id')
       cache: true
-      success: ->
+      success: (results) ->
         fairSearch.updateLocationsForFair(fair)
         success()
       error: res.backboneError
