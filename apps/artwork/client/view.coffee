@@ -121,6 +121,23 @@ module.exports = class ArtworkView extends Backbone.View
     @setupSaveButton @$('.circle-icon-button-save'), @artwork
     @syncSavedArtworks @artwork
 
+  setupSaveButton: ($el, artwork, options = {}) ->
+    new SaveButton
+      analyticsSaveMessage: 'Added artwork to collection, via artwork info'
+      analyticsUnsaveMessage: 'Removed artwork from collection, via artwork info'
+      el: $el
+      saved: @saved
+      model: artwork
+
+  setupFollowButton: ->
+    @followButton = new FollowButton
+      analyticsFollowMessage: 'Followed artist, via artwork info'
+      analyticsUnfollowMessage: 'Unfollowed artist, via artwork info'
+      el: @$('.artwork-artist-follow-button')
+      following: @following
+      model: @artist
+    @following?.syncFollows [@artist.id]
+
   route: (route) ->
     # Initial server rendered route is 'show'
     # No transition unless it's happening client-side
@@ -140,24 +157,6 @@ module.exports = class ArtworkView extends Backbone.View
     e.preventDefault()
     analytics.track.click 'Viewed sharing_is_caring form'
     new ShareView width: '350px', artwork: @artwork
-
-  setupFollowButton: ->
-    @followButton = new FollowButton
-      analyticsFollowMessage: 'Followed artist, via artwork info'
-      analyticsUnfollowMessage: 'Unfollowed artist, via artwork info'
-      el: @$('.artwork-artist-follow-button')
-      following: @following
-      model: @artist
-
-    @following?.syncFollows [@artist.id]
-
-  setupSaveButton: ($el, artwork, options = {}) ->
-    new SaveButton
-      analyticsSaveMessage: 'Added artwork to collection, via artwork info'
-      analyticsUnsaveMessage: 'Removed artwork from collection, via artwork info'
-      el: $el
-      saved: @saved
-      model: artwork
 
   contactPartner: (e) ->
     e.preventDefault()
