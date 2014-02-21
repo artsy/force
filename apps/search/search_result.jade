@@ -1,4 +1,4 @@
-a.search-result( href=result.get('location') )
+a.search-result( href=result.href(), class=result.publishedClass() )
   .search-result-thumbnail
     .search-result-thumbnail-fallback( class=result.humanClass() )
       img(
