@@ -44,7 +44,7 @@ describe 'BelowTheFoldView', ->
       @setupLayeredSearchSpy.called.should.be.ok
       @setupLayeredSearchSpy.args[0][0].fair.should.equal fair
 
-  describe '#done', ->
+  describe '#fadeIn', ->
     it 'fades in the el', ->
       @view = new BelowTheFoldView $el: @$fixture, artwork: @artwork
       @view.fadeIn()
