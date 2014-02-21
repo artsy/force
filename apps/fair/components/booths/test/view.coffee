@@ -73,6 +73,11 @@ describe 'BoothsView', ->
       @view.params.set section: 'FOCUS'
       @view.router.navigate.args[0][0].should.include 'browse/booths/section/FOCUS'
 
+    it 'naviates to /booths with no sections', ->
+      @view.params.unset 'section'
+      @view.navigateSection()
+      @view.router.navigate.args[0][0].should.match /// browse/booths$ ///
+
   describe '#navigateSort', ->
 
     it 'naviates based on sort', ->
