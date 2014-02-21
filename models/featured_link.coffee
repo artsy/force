@@ -18,7 +18,11 @@ module.exports = class FeaturedLink extends Backbone.Model
 
   fetchItems: (cache=false) ->
     items = new Items null, { id: @id }
-    items.fetch(cache: cache).then => @set { items: items }
+    items.fetch(
+      data:
+        display_on_desktop: true
+      cache: cache
+    ).then => @set { items: items }
 
   imageUrlForLayout: (collectionLength) ->
     @imageUrl @imageSizeForLayout collectionLength

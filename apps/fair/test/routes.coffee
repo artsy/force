@@ -72,7 +72,7 @@ describe 'Fair routes', ->
       routes.favorites @req, @res
       _.last(Backbone.sync.args)[2].success fabricate 'fair_profile'
       _.last(Backbone.sync.args)[2].success fabricate 'fair'
-      @res.render.args[0][0].should.equal 'templates/index'
+      @res.render.args[0][0].should.equal 'templates/favorites'
       @res.render.args[0][1].profile.isFairOranizer()
 
   describe '#follows', ->
@@ -87,7 +87,7 @@ describe 'Fair routes', ->
       routes.follows @req, @res
       _.last(Backbone.sync.args)[2].success fabricate 'fair_profile'
       _.last(Backbone.sync.args)[2].success fabricate 'fair'
-      @res.render.args[0][0].should.equal 'templates/index'
+      @res.render.args[0][0].should.equal 'templates/favorites'
       @res.render.args[0][1].profile.isFairOranizer()
 
   describe '#search', ->

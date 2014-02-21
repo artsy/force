@@ -5,7 +5,7 @@ SearchResult  = require '../../../models/search_result.coffee'
 
 module.exports = class Search extends Backbone.Collection
   initialize: (options={}) ->
-    { @mode, @restrictType, @fairId } = options
+    { @mode, @restrictType, @fairId, @includePrivateResults } = options
 
   _url: ->
     [

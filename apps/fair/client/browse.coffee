@@ -33,7 +33,7 @@ module.exports = class BrowseRouter extends Backbone.Router
 
   initialize: (options) ->
     _.extend @, options
-    $('.garamond-tab:first').removeClass('is-inactive').addClass('is-active') if SECTION is 'browse'
+    $('.garamond-tab:eq(1)').removeClass('is-inactive').addClass('is-active') if SECTION is 'browse'
     @filterArtworks = new FilterArtworksView
       el: $ '.fair-page-content'
       artworksUrl : "#{ARTSY_URL}/api/v1/search/filtered/fair/#{@fair.get 'id'}"

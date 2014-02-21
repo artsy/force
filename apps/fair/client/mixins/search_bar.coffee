@@ -12,7 +12,7 @@ module.exports =
       window.location = "#{@model.href()}/search?q=#{term}"
 
     @searchBarView.on 'search:selected', (e, model) ->
-      return false unless model
+      return false unless model and model.get('published')
       model.updateForFair fair
       analytics.track.click 'Selected item from fair search',
         label: analytics.modelNameAndIdToLabel model.get('display_model'), model.id
