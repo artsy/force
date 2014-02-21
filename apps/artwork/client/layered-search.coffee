@@ -12,20 +12,32 @@ module.exports.Layer = class Layer extends Backbone.Model
   _.extend @prototype, Markdown
 
   initialize: (options = {}) ->
-    @artworkId = @collection.artworkId
+    @set artwork_id: @collection.artwork.id
+    @set fair: @collection.fair if @get('type') is 'fair'
     @artworks = new Artworks
-    @artworks.url = "#{ARTSY_URL}/api/v1/related/layer/#{@get('type')}/#{@id}/artworks?artwork[]=#{@artworkId}"
+    @artworks.url = "#{ARTSY_URL}/api/v1/related/layer/#{@get('type')}/#{@id}/artworks?artwork[]=#{@get('artwork_id')}"
 
 module.exports.Layers = class Layers extends Backbone.Collection
   url: "#{ARTSY_URL}/api/v1/related/layers"
   model: Layer
 
   initialize: (options) ->
-    { @artworkId } = options
+    { @artwork, @fair } = options
 
   fetch: (options = {}) ->
-    _.extend options, data: 'artwork[]': @artworkId
+    _.extend options, data: 'artwork[]': @artwork.id
     Backbone.Collection::fetch.call this, options
+
+  # Ensure fairs are always first, followed by 'Most Similar',
+  # and that 'For Sale' is always last
+  sortMap: (type, id) ->
+    return  -1 if (type is 'fair')
+    return   0 if (type is 'synthetic') and (id is 'main')
+    return   @length if (type is 'synthetic') and (id is 'for-sale')
+    1
+
+  comparator: (model) ->
+    @sortMap model.get('type'), model.id
 
 module.exports.LayeredSearchView = class LayeredSearchView extends Backbone.View
   template: template
