@@ -74,7 +74,7 @@ module.exports = class BoothsView extends Backbone.View
 
   navigateSection: =>
     if @params.get 'section'
-      @router.navigate "#{@profile.id}/browse/booths/section/#{}"
+      @router.navigate "#{@profile.id}/browse/booths/section/#{@params.get 'section'}"
     else
       @router.navigate "#{@profile.id}/browse/booths"
 
