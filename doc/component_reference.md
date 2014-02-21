@@ -355,6 +355,22 @@ new FilterFixedHeader
 
 * Use the `.filter-fixed-header-left` class in your template to get the meta information on the left hand side such as gene name or number of works.
 
+### Filter Nav
+
+In the case where you want to build your own query params backed navigation (such as exhibitor filtering in fairs) you can use the FilterNav view to manage state.
+
+````coffeescript
+new FilterNav
+  el: @$('.filter-fixed-header-nav')
+  params: @params
+  # When @params doesn't contain these attributes highlight .filter-nav-all (e.g. "All Works")
+  highlightAllAttrs: ['price_range', 'dimension', 'medium']
+````
+
+`@params` is a Backbone model that stores filter query params like `related_genes=Painting`. This view will listen to changes on `@params` and update filter dropdown/button (see below) active states. It will also set attributes on `@params` which your list view UI can listen to and update. This is what the filter artworks component does so you can use that as reference.
+
+Use the `.filter-nav-all` class to indicate a button that represents "show all of the things" such as "All works" or "All Exhibitors.
+
 ### Filter Dropdowns & Buttons
 
 When building up your own filtering UI you may need to use buttons and dropdowns. To do so please use the filter components classes and jade mixin. The active states of these will be managed by the "Filter Fixed Header" component.

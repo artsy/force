@@ -1,6 +1,3 @@
-include ../../../components/filter/dropdown-mixin
-include ../../../components/bordered_pulldown/mixin
-
 mixin artists-a-to-z
   - aToZGroup = artistsAToZGroup
   if aToZGroup
@@ -21,10 +18,7 @@ mixin exhibitors-a-to-z
 
 #fair-filter
   .filter-fixed-header-nav
-    label By Exhibitor:
-    #fair-filter-all-exhibitors.filter-button.is-active All Exhibitors
-    span#fair-filter-sections
-      +filter-dropdown('Sector', 'sector', { '...': '...' })
+    include ../components/booths/nav
     label By Work:
     include ../../../components/filter/artworks_nav/template
     label By Artists:
@@ -36,25 +30,11 @@ mixin exhibitors-a-to-z
   .browse-section.exhibitors-a-to-z
     +exhibitors-a-to-z
   .browse-section.booths
-    h1.large-garamond-header
-    #fair-booths-subheader
-      | Showing&nbsp;
-      span#fair-booths-count= exhibitorsCount
-      |  Exhibitors
-      a#fair-booths-az-as-list.faux-underline Show as A-Z List
-      #fair-booths-sort
-        +bordered-pulldown('Relevance', 'Sort By')
-          a( data-sort='-featured' ) Relevance
-          a( data-sort='-updated_at' ) Recently Updated
-          a( data-sort='name' ) A-Z
-          a( data-sort='-name' ) Z-A
-    .feed
-    #fair-browse-spinner
-      .loading-spinner
+    include ../components/booths/section
   .browse-section.artworks
     h1.large-garamond-header
     .artworks
-      include ../../../components/filter/artworks/template.jade
+      include ../../../components/filter/artworks/template
   .browse-section.artist
     h1.large-garamond-header
     .feed

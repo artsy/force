@@ -6,6 +6,7 @@ ArtworkColumnsView = require '../../artwork_columns/view.coffee'
 FilterArtworksNav = require '../artworks_nav/view.coffee'
 FilterFixedHeader = require '../fixed_header/view.coffee'
 FilterRouter = require '../router/index.coffee'
+FilterNav = require '../nav/view.coffee'
 COLUMN_WIDTH = 300
 
 module.exports = class FilterArtworksView extends Backbone.View
@@ -35,6 +36,10 @@ module.exports = class FilterArtworksView extends Backbone.View
       el: @$('.filter-artworks-nav')
       counts: @counts
       params: @params
+    new FilterNav
+      el: @$('.filter-fixed-header-nav')
+      params: @params
+      highlightAllAttrs: ['price_range', 'dimension', 'medium']
     new FilterFixedHeader
       el: @$('.filter-fixed-header-nav')
       params: @params
