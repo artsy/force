@@ -48,7 +48,7 @@ module.exports = class SearchResult extends Backbone.Model
     text.replace new RegExp("(#{term})", 'ig'), '<span class="is-highlighted">$1</span>'
 
   imageUrl: ->
-    src = if @get('model') is 'artwork' then 'default_image.jpg' else 'image'
+    src = if @get('model') in ['artwork', 'partnershow'] then 'default_image.jpg' else 'image'
     model = if @get('model') is 'partnershow' then 'partner_show' else @get('model')
     url = "#{sd.ARTSY_URL}/api/v1/#{model}/#{@id}/#{src}"
     url = url + "?xapp_token=#{sd.ARTSY_XAPP_TOKEN}" if sd.ARTSY_XAPP_TOKEN?
