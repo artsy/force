@@ -6,39 +6,18 @@ qs            = require 'querystring'
 FilterArtworksView = require '../../../components/filter/artworks/view.coffee'
 FeedView = require '../../../components/feed/client/feed.coffee'
 { ARTSY_URL, SECTION } = require('sharify').data
-fairSectionsTemplate = -> require('../templates/fair_sections.jade') arguments...
 
 class FilterHeader extends Backbone.View
 
   initialize: (options) ->
     _.extend @, options
-    @fair.fetchSections success: @renderSections
-
-  renderSections: (sections) =>
-    hash = {}
-    sections.each (section) -> hash[section.get 'section'] = section.get('section')
-    @$('#fair-filter-sections').html fairSectionsTemplate(sections: hash)
-
-  removeActive: ->
-    @$('.is-active').removeClass("is-active")
 
   events:
-    'click #fair-filter-all-exhibitors' : 'allExhibitors'
     'click #fair-filter-all-artists'    : 'allArtists'
-    'click #fair-filter-sections nav a' : 'boothsSection'
-
-  allExhibitors: ->
-    @router.navigate "#{@profile.get 'id'}/browse/booths", trigger: true
-    @$('#fair-filter-all-exhibitors').addClass("is-active")
 
   allArtists: ->
     @router.navigate "#{@profile.get 'id'}/browse/artists", trigger: true
     @$('#fair-filter-all-artists').addClass("is-active")
-
-  boothsSection: (e) ->
-    @router.navigate "#{@profile.get 'id'}/browse/booths/section/#{$(e.currentTarget).data 'val'}", trigger: true
-    @$('#fair-filter-sections .filter-dropdown')
-      .addClass("is-active").find('.filter-nav-active-text').text $(e.currentTarget).text()
 
 module.exports = class BrowseRouter extends Backbone.Router
 
@@ -62,7 +41,7 @@ module.exports = class BrowseRouter extends Backbone.Router
       urlRoot: "#{@profile.id}/browse"
     @filterArtworks.params.on 'change', @artworks
     @filterBooths = new BoothsView
-      el: $('.browse-section.booths')
+      el: $ '.fair-page-content'
       fair: @fair
       profile: @profile
       router: @

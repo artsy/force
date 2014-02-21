@@ -6,14 +6,14 @@ module.exports = class FilterRouter extends Backbone.Router
 
   initialize: (options) ->
     _.extend @, options
-    @params.on 'change', @navigate
+    @params.on 'change', @navigateParams
     @setupRoutes()
 
   setupRoutes: ->
     @route "#{@urlRoot}/artworks", 'artworks'
     @route "#{@urlRoot}/artworks*", 'artworks'
 
-  navigate: =>
+  navigateParams: =>
     @navigate "#{@urlRoot}/artworks?" + qs.stringify(@params.toJSON())
 
   artworks: ->
