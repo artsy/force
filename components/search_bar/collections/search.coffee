@@ -11,7 +11,7 @@ module.exports = class Search extends Backbone.Collection
     [
       "#{sd.ARTSY_URL}/api/v1/match/"
       (@mode || '')
-      (if @includePrivateResults then '?' else '?visible_to_public=true')
+      '?visible_to_public=true'
       (if @fairId then "&fair_id=#{@fairId}" else "")
     ].join('')
 

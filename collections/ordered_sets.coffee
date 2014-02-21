@@ -31,6 +31,8 @@ class OrderedSets extends Backbone.Collection
       @fetch
         url: "#{sd.ARTSY_URL}/api/v1/sets?owner_type=#{ownerType}&owner_id=#{ownerId}&sort=key"
         cache: cache
+        data:
+          display_on_desktop: true
         success: =>
           @fetchSets(
             cache: cache

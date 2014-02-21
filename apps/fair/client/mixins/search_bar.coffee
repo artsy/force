@@ -7,7 +7,6 @@ module.exports =
       el     : @$('#fair-search-container')
       $input : @$('#fair-search-input')
       fairId : @fair.id
-      includePrivateResults: true
 
     @searchBarView.on 'search:entered', (term) =>
       window.location = "#{@model.href()}/search?q=#{term}"

@@ -17,7 +17,6 @@ module.exports = class SearchBarView extends Backbone.View
       restrictType: @restrictType
       mode: @mode
       fairId: @fairId
-      includePrivateResults: @includePrivateResults
 
     @on 'search:start', @indicateLoading
     @on 'search:complete', @concealLoading
