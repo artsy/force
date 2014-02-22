@@ -37,7 +37,7 @@ module.exports = class FilterArtworksView extends Backbone.View
       counts: @counts
       params: @params
     new FilterNav
-      el: @$('.filter-fixed-header-nav')
+      el: @$('.filter-artworks-nav')
       params: @params
       highlightAllAttrs: ['price_range', 'dimension', 'medium']
     new FilterFixedHeader

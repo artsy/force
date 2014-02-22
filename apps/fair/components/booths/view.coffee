@@ -25,7 +25,7 @@ module.exports = class BoothsView extends Backbone.View
     new BorderedPulldown
       el: @$('#fair-booths-sort .bordered-pulldown')
     new FilterNav
-      el: @$('.filter-fixed-header-nav')
+      el: @$('#fair-booths-filter-nav')
       params: @params
       highlightAllAttrs: ['section']
 
@@ -82,12 +82,8 @@ module.exports = class BoothsView extends Backbone.View
     @router.navigate location.pathname + "?sort=#{@params.get 'sort'}"
 
   events:
-    'click #fair-booths-az-as-list'     : 'navigateToAZ'
     'click #fair-booths-sort a'         : 'sort'
     'click #fair-filter-all-exhibitors' : 'allExhibitors'
-
-  navigateToAZ: ->
-    @router.navigate "#{@profile.id}/browse/exhibitors", { trigger: true }
 
   sort: (e) ->
     @params.set sort: $(e.target).data 'sort'

@@ -1,0 +1,40 @@
+mixin artists-a-to-z
+  - aToZGroup = artistsAToZGroup
+  if aToZGroup
+    h1.large-garamond-header
+      | Artists at&nbsp;
+      = fair.get('name')
+    section.fair-artists-list.a-to-z-container
+      include ../../../../components/a_to_z_list/template
+
+mixin exhibitors-a-to-z
+  - aToZGroup = exhibitorsAToZGroup
+  if aToZGroup
+    h1.large-garamond-header
+      | Exhibitors at&nbsp;
+      = fair.get('name')
+    section.fair-exhibitors-list.a-to-z-container
+      include ../../../../components/a_to_z_list/template
+
+#fair-browse
+  #fair-browse-header
+    .filter-fixed-header-nav
+      include ../booths/nav
+      label By Work:
+      include ../../../../components/filter/artworks_nav/template
+      label By Artists:
+      #fair-filter-all-artists.filter-button All Artists
+  .browse-sections.main-layout-container
+    .browse-section.artists-a-to-z
+      +artists-a-to-z
+    .browse-section.exhibitors-a-to-z
+      +exhibitors-a-to-z
+    .browse-section.booths
+      include ../booths/section
+    .browse-section.artworks
+      h1.large-garamond-header
+      .artworks
+        include ../../../../components/filter/artworks/template
+    .browse-section.artist
+      h1.large-garamond-header
+      .feed

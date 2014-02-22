@@ -1,4 +1,4 @@
-@import '../../../components/stylus_lib'
+@import '../../../../components/stylus_lib'
 
 .browse-sections
   margin: 0px auto
@@ -6,6 +6,10 @@
   max-width feed-max-width
   .browse-section
     display none
+
+for section in 'artists-a-to-z' 'exhibitors-a-to-z' 'booths' 'artworks' 'artist'
+  #fair-browse[data-section={section}] .browse-section.{section}
+    display block
 
 .browse-section h1
   margin 40px 0

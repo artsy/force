@@ -7,7 +7,8 @@ FairInfoView      = require './info.coffee'
 FairPostsView     = require './posts.coffee'
 FairSearchView    = require './search.coffee'
 ForYouView        = require './for_you.coffee'
-FairBrowseRouter  = require './browse.coffee'
+FairBrowseView    = require '../components/browse/view.coffee'
+FairBrowseRouter  = require '../components/browse/router.coffee'
 OverviewView      = require './overview.coffee'
 FairFooter        = require './footer.coffee'
 FavoritesView     = require('../../favorites_follows/client/favorites.coffee').FavoritesView
@@ -64,8 +65,10 @@ module.exports.init = ->
     currentSection: sd.SECTION
   if sd.SECTION in ['overview', 'browse']
     new FairBrowseRouter
-      fair    : fair
-      profile : profile
+      fair: fair
+      profile: profile
+
+  Backbone.history.start pushState: true
 
   # Checks to see if the href is an internal link to:
   # an artwork, artist, show, or post
