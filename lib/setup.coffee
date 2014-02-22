@@ -9,6 +9,7 @@
   CANONICAL_MOBILE_URL, IMAGES_URL_PREFIX, SECURE_IMAGES_URL, GOOGLE_ANALYTICS_ID, MIXPANEL_ID,
   COOKIE_DOMAIN, AUTO_GRAVITY_LOGIN, GOOGLE_MAPS_API_KEY, ADMIN_URL, CMS_URL } = config = require "../config"
 { parse, format } = require 'url'
+
 _ = require 'underscore'
 express = require "express"
 Backbone = require "backbone"
@@ -27,6 +28,9 @@ helpersMiddleware = require './middleware/helpers'
 ensureSSL = require './middleware/ensure_ssl'
 errorHandler = require "../components/error_handler"
 { notFoundError, loginError } = require('./middleware/errors')
+
+if REDIS_URL
+  _.extend require('artsy-backbone-mixins/config'), config
 
 # Setup sharify constants & require dependencies that use sharify data
 sharify.data =
@@ -57,6 +61,7 @@ module.exports = (app) ->
   Backbone.sync = require "backbone-super-sync"
   Backbone.sync.editRequest = (req) -> req.set('X-XAPP-TOKEN': artsyXappMiddlware.token)
   backboneCacheSync(Backbone.sync, REDIS_URL, DEFAULT_CACHE_TIME, NODE_ENV) if REDIS_URL
+
   require('./deferred_sync.coffee')(Backbone, require 'q')
 
   # Add up front middleware
