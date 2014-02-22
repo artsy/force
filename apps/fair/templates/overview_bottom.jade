@@ -30,4 +30,5 @@ if primarySets.where({ key: 'curator' }).length
             .section-heading= item.get('title')
             if item.get('subtitle')
               .section-subheading= item.get('subtitle')
-    a.overview-posts-link( href=profile.href() + "/posts") See All Posts
+    .overview-posts-link-container
+      a.overview-posts-link( href=profile.href() + "/posts") See All Posts
