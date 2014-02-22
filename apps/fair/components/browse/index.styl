@@ -14,16 +14,25 @@ for section in 'artists-a-to-z' 'exhibitors-a-to-z' 'booths' 'artworks' 'artist'
     display block
 
 .browse-section h1
-  margin 40px 0
+  margin 40px 0 15px
 
-#fair-filter-sections .filter-dropdown
-  border-left 0
+#fair-filter-sections
+  .filter-dropdown
+    border-left 0
+
+.browse-section .filter-artworks-sort-count, #fair-booths-subheader
+  padding-bottom 30px
+  border-bottom 1px solid light-gray-border-color
 
 #fair-browse-spacer
   height 60px
 
 .feed-item-fair-name
   display none
+
+.filter-fixed-header-nav
+  padding-bottom: 20px
+  border-bottom: 1px solid light-gray-border-color
 
 section.feed-items article.feed-item .feed-column .fair-location
   display block
