@@ -145,28 +145,6 @@ describe 'Fair', ->
       @$template.find('.fair-search-results .search-result').html().should.contain 'Booth'
       @$template.find('.fair-search-results .search-result').length.should.equal 1
 
-  describe 'a-to-z-lists', ->
-    before ->
-      m1 = fabricate('partner', artworks_count: 1)
-      m2 = fabricate('partner', artworks_count: 0)
-
-      exhibitorsAToZGroup = new Partners([ m1, m2 ])
-
-      fair = new Fair (fabricate 'fair', about: 'about the fair')
-      profile = new Profile (fabricate 'fair_profile')
-
-      @template = render('browse')
-        sd: {}
-        fair: fair
-        profile: profile
-        exhibitorsAToZGroup : exhibitorsAToZGroup.groupByAlphaWithColumns(3)
-
-    it 'renders without errors', ->
-      $ = cheerio.load @template
-      $('.fair-exhibitors-list').length.should.equal 1
-      $('.fair-exhibitors-list a').length.should.equal 1
-      $('.fair-exhibitors-list .a-to-z-item').length.should.equal 2
-
   describe 'overview', ->
     before ->
       fair = new Fair (fabricate 'fair', about: 'about the fair')
