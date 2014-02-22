@@ -6,6 +6,7 @@ module.exports = class PoplockitFeed extends FeedView
 
   maxItemsInDom: 20
   limitPostBodyHeight: true
+  feedItemClass: 'feed-item-post'
 
   afterLoadCont: ->
     @$el.popLockIt

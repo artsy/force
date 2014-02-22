@@ -22,6 +22,7 @@ module.exports = class FeedView extends Backbone.View
   minWidth: 950
   textColumnWidth: 404
   textColumnMargin: 80
+  feedItemClass: 'feed-item-partner-show'
   items: []
 
   initialize: (options) ->
@@ -73,6 +74,7 @@ module.exports = class FeedView extends Backbone.View
       headingSortOrder  : @headingSortOrder
       fixedWidth        : @fixedWidth
       imageWidth        : @imageWidth
+      feedItemClass     : @feedItemClass
       sd                : sd
     )
 
@@ -110,6 +112,7 @@ module.exports = class FeedView extends Backbone.View
       textColumnWidth   : @textColumnWidth
       sd                : sd
       currentUser       : @currentUser
+      feedItemClass     : @feedItemClass
     ))
     for $item, index in $html
       @initializeFeedItem $item, items[index]

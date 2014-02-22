@@ -6,6 +6,8 @@
   max-width feed-max-width
   .browse-section
     display none
+  .feed
+    margin-top 30px
 
 for section in 'artists-a-to-z' 'exhibitors-a-to-z' 'booths' 'artworks' 'artist'
   #fair-browse[data-section={section}] .browse-section.{section}
@@ -28,7 +30,7 @@ section.feed-items article.feed-item .feed-column .fair-location
 
 section.feed-items article.feed-item .feed-column .exhibitor
   avant-garde()
-  font-size: 16px
+  font-size: 15px
   a
     display: inline-block
     vertical-align: top
