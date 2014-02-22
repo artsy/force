@@ -33,7 +33,7 @@
     "backbone-pageable": "*",
     "moment": "*",
     "validator": "*",
-    "artsy-backbone-mixins": "git://github.com/zamiang/artsy-backbone-mixins.git#fetch"
+    "artsy-backbone-mixins": "git://github.com/artsy/artsy-backbone-mixins.git"
   },
   "devDependencies": {
     "browserify": "*",
