@@ -58,7 +58,7 @@ module.exports = class BoothsView extends Backbone.View
                   else if @params.get 'partner_region'
                     "Exhibitors from #{@params.get 'partner_region'}"
                   else
-                    'All Exhibitors'
+                    "All Exhibitors at #{@fair.get('name')}"
 
   renderShows: (items) =>
     return @$('.#fair-browse-spinner') unless items.models.length > 0
