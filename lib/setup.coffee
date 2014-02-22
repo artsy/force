@@ -10,7 +10,6 @@
   COOKIE_DOMAIN, AUTO_GRAVITY_LOGIN, GOOGLE_MAPS_API_KEY, ADMIN_URL, CMS_URL } = config = require "../config"
 { parse, format } = require 'url'
 
-
 _ = require 'underscore'
 express = require "express"
 Backbone = require "backbone"
@@ -30,7 +29,8 @@ ensureSSL = require './middleware/ensure_ssl'
 errorHandler = require "../components/error_handler"
 { notFoundError, loginError } = require('./middleware/errors')
 
-_.extend require('artsy-backbone-mixins/config'), config
+if REDIS_URL
+  _.extend require('artsy-backbone-mixins/config'), config
 
 # Setup sharify constants & require dependencies that use sharify data
 sharify.data =
