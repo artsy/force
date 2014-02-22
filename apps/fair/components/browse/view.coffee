@@ -2,7 +2,6 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 BoothsView = require '../booths/view.coffee'
 FilterArtworksView = require '../../../../components/filter/artworks/view.coffee'
-FilterArtworksView = require '../../../../components/filter/artworks/view.coffee'
 { ARTSY_URL, SECTION } = require('sharify').data
 
 module.exports = class FairBrowseView extends Backbone.View

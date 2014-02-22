@@ -1,6 +1,5 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-ArtistView = require '../../client/artist.coffee'
 qs = require 'querystring'
 FairBrowseView = require './view.coffee'
 
