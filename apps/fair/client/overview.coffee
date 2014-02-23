@@ -6,18 +6,24 @@ FeedItems      = require '../../../components/feed/collections/feed_items.coffee
 FeedView       = require '../../../components/feed/client/feed.coffee'
 Artists        = require '../../../collections/artists.coffee'
 mediator       = require '../../../lib/mediator.coffee'
+analytics      = require '../../../lib/analytics.coffee'
 
 module.exports = class Overview extends Backbone.View
+
+  events:
+    'click .container-left .large-section' : 'clickForYou'
 
   initialize: (options) ->
     @fair = options.fair
     @renderClock()
     if sd.CURRENT_USER?
       @renderWorksForYou()
-    else
-      @$('.container-left .large-section').on 'click', ->
-        mediator.trigger 'open:auth', { mode: 'register', copy: 'Sign up to follow artists and exhibitors' }
-        false
+
+  clickForYou: =>
+    analytics.track.click "Clicked for-you from fair overview"
+    unless sd.CURRENT_USER?
+      mediator.trigger 'open:auth', { mode: 'register', copy: 'Sign up to follow artists and exhibitors' }
+      false
 
   renderClock: ->
     @clock = new Clock
