@@ -5,7 +5,8 @@ mixin filter-dropdown(mainText, attr, values)
     .icon-arrow-down
     nav
       for val, label in values
-        a( data-attr=attr, data-val=val )
-          span.filter-dropdown-text= label
-          span.filter-dropdown-count
-          span.icon-check
+        if label && val
+          a( data-attr=attr, data-val=val )
+            span.filter-dropdown-text= label
+            span.filter-dropdown-count
+            span.icon-check
