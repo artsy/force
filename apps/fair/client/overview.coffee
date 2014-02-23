@@ -21,7 +21,7 @@ module.exports = class Overview extends Backbone.View
 
   clickForYou: =>
     analytics.track.click "Clicked for-you from fair overview"
-    if sd.CURRENT_USER?
+    unless sd.CURRENT_USER?
       mediator.trigger 'open:auth', { mode: 'register', copy: 'Sign up to follow artists and exhibitors' }
       false
 

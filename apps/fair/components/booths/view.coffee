@@ -66,9 +66,10 @@ module.exports = class BoothsView extends Backbone.View
     @feedView?.destroy()
     @feedView?.remove()
     @feedView = new FeedView
-     el: $el = $('<div>')
-     feedItems: items
-     additionalParams: @params.toJSON()
+      el: $el = $('<div>')
+      feedItems: items
+      additionalParams: @params.toJSON()
+    @feedView.feedName = 'Fair Feed'
     @$('.browse-section.booths .feed').html @feedView.$el
     @$('#fair-browse-spinner').show()
 

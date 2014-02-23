@@ -25,6 +25,7 @@ module.exports = class FeedView extends Backbone.View
   feedItemClass: 'feed-item-partner-show'
   analyticsFollowMessage: 'Followed partner profile from feed'
   analyticsUnfollowMessage: 'Unfollowed partner profile from feed'
+  feedName: 'Shows Feed'
   items: []
 
   initialize: (options) ->
@@ -170,6 +171,18 @@ module.exports = class FeedView extends Backbone.View
     top = if @lastItem.offset() then @lastItem.offset().top else 0
     if @scrollTop + 1500 > top
       @fetchMoreItems()
+
+    @trackScroll()
+
+  scrollPositionsTracked: {}
+  scrollInterval: 3000
+  lastScrollIntervalTracked: 0
+  trackScroll: ->
+    scrollPosition = @lastScrollIntervalTracked + @scrollInterval
+    if @scrollTop > scrollPosition and not @scrollPositionsTracked[scrollPosition]
+      @scrollPositionsTracked[scrollPosition] = true
+      @lastScrollIntervalTracked = scrollPosition
+      analytics.track.click "#{@feedName} scroll: #{scrollPosition}"
 
   getFixedWidth: ->
     windowWidth = @$window.innerWidth() || @minWidth
