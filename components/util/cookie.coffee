@@ -23,4 +23,4 @@ module.exports =
     result
 
   deleteCookie: (name) ->
-    @createCookie name, "", -1
+    module.exports.createCookie name, "", -1

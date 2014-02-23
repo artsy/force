@@ -12,6 +12,8 @@ FeedItemView            = require('./feed_item.coffee').FeedItemView
 FeedItemPost            = require('../../post/client/feed_item_post.coffee').FeedItemPost
 feedItemsTemplate       = -> require('../templates/feed_items.jade') arguments...
 FollowProfileButton     = require '../../../apps/partners/client/follow_profiles_button.coffee'
+imagesLoaded            = require '../../../lib/vendor/imagesloaded.js'
+{ readCookie, deleteCookie, createCookie } = require '../../util/cookie.coffee'
 feedItemsContainerTemplate = -> require('../templates/feed_items_container.jade') arguments...
 
 module.exports = class FeedView extends Backbone.View
@@ -49,6 +51,27 @@ module.exports = class FeedView extends Backbone.View
     if @onResize
       throttledOnResize = _.throttle (=> @onResize()), 250
       @$window.on 'resize.feed', throttledOnResize
+
+    @scrollToLastClickedLink()
+
+  scrollToLastClickedLink: =>
+    return false unless cursor = readCookie('clicked-feed-item-cursor')
+    href = readCookie 'clicked-feed-item-href'
+    @feedItems.lastCursor = cursor
+    $(document).one 'ajaxStop', =>
+      @$el.prepend """
+        <div class='feed-previous-button'>
+          <button class='avant-garde-button-text'>
+            Load previous items
+          </button>
+        </div>
+      """
+      $el = @$("a[href='#{href}']")
+      return unless $el.length
+      @$htmlBody.imagesLoaded => @$htmlBody.scrollTop $el.offset().top - 200
+    deleteCookie 'clicked-feed-item-cursor'
+    deleteCookie 'clicked-feed-item-href'
+    true
 
   storeOptions: (options) ->
     @feedItems             = options.feedItems
@@ -90,7 +113,7 @@ module.exports = class FeedView extends Backbone.View
   fetchMoreItems: =>
     @doneInitializingFeedItems = false
     @waiting = true
-    analytics.track.click "Paginating FeedItems"
+    analytics.track.click "Paginating FeedItems" 
     @feedItems.fetchFeedItems
       additionalParams: @additionalParams
       artworks: true
@@ -114,6 +137,7 @@ module.exports = class FeedView extends Backbone.View
       currentUser       : @currentUser
       feedItemClass     : @feedItemClass
     ))
+    $html.attr('data-cursor', @feedItems.lastCursor)
     for $item, index in $html
       @initializeFeedItem $item, items[index]
     $html
@@ -190,3 +214,19 @@ module.exports = class FeedView extends Backbone.View
   destroy: ->
     @$el.html ''
     @$window.off '.feed'
+
+  events:
+    'click a[href*="/"]': 'storeClickedLink'
+    'click .feed-previous-button': 'loadPrevious'
+
+  storeClickedLink: (e) ->
+    return unless cursor = $(e.currentTarget).closest('.feed-item').data('cursor')
+    createCookie 'clicked-feed-item-cursor', cursor
+    createCookie 'clicked-feed-item-href', $(e.currentTarget).attr('href')
+
+  loadPrevious: ->
+    @$(".feed-previous-button button").addClass('is-loading')
+    @feedItems.lastCursor = @feedItems.cursor = null
+    @$feedItems.children().remove()
+    @fetchMoreItems()
+    $(document).one 'ajaxStop', => @$(".feed-previous-button").remove()
