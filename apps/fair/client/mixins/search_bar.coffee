@@ -8,7 +8,11 @@ module.exports =
       $input : @$('#fair-search-input')
       fairId : @fair.id
 
+    @$('#fair-search-input').on 'focus', ->
+      analytics.track.click 'Focused on search input at fair'
+
     @searchBarView.on 'search:entered', (term) =>
+      analytics.track.click 'Hit enter on fair search'
       window.location = "#{@model.href()}/search?q=#{term}"
 
     @searchBarView.on 'search:selected', (e, model) ->
