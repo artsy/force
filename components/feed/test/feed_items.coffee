@@ -68,3 +68,15 @@ describe 'PartnerShow', ->
       @feedItems.removeFlagged()
       @feedItems.length.should.equal 2
       CurrentUser.orNull.restore()
+
+  describe '#scrollToLastClickedLink', ->
+
+    it 'if theres a cookie set will load that cursor and scroll to the item'
+
+  describe '#storeClickedLink', ->
+
+    it 'will store the clicked href and cursor in cookies'
+
+  describe '#loadPrevious', ->
+
+    it 'empties the cursore and starts from the begining'
