@@ -12,7 +12,6 @@ FeedItemView            = require('./feed_item.coffee').FeedItemView
 FeedItemPost            = require('../../post/client/feed_item_post.coffee').FeedItemPost
 feedItemsTemplate       = -> require('../templates/feed_items.jade') arguments...
 FollowProfileButton     = require '../../../apps/partners/client/follow_profiles_button.coffee'
-imagesLoaded            = require '../../../lib/vendor/imagesloaded.js'
 { readCookie, deleteCookie, createCookie } = require '../../util/cookie.coffee'
 feedItemsContainerTemplate = -> require('../templates/feed_items_container.jade') arguments...
 
@@ -56,6 +55,7 @@ module.exports = class FeedView extends Backbone.View
 
   scrollToLastClickedLink: =>
     return false unless cursor = readCookie('clicked-feed-item-cursor')
+    imagesLoaded = require '../../../lib/vendor/imagesloaded.js'
     href = readCookie 'clicked-feed-item-href'
     @feedItems.lastCursor = cursor
     $(document).one 'ajaxStop', =>

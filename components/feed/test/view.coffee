@@ -25,6 +25,7 @@ describe 'FeedView', ->
       )
       @feedItems = new FeedItems
       @feedItems.add @partnerShow
+      sinon.stub FeedView::, 'scrollToLastClickedLink'
       @view = new FeedView
         el: $("<div class='feed'></div>")
         feedItems: @feedItems
