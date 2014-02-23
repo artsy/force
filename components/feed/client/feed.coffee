@@ -2,7 +2,7 @@ _                       = require 'underscore'
 Backbone                = require 'backbone'
 Artworks                = require '../../../models/artwork.coffee'
 sd                      = require('sharify').data
-analytics               = require('../../../lib/analytics.coffee')
+analytics               = require '../../../lib/analytics.coffee'
 CurrentUser             = require '../../../models/current_user.coffee'
 FeedItems               = require '../collections/feed_items.coffee'
 Profile                 = require '../../../models/profile.coffee'
@@ -23,6 +23,8 @@ module.exports = class FeedView extends Backbone.View
   textColumnWidth: 404
   textColumnMargin: 80
   feedItemClass: 'feed-item-partner-show'
+  analyticsFollowMessage: 'Followed partner profile from feed'
+  analyticsUnfollowMessage: 'Unfollowed partner profile from feed'
   items: []
 
   initialize: (options) ->
@@ -155,6 +157,8 @@ module.exports = class FeedView extends Backbone.View
       el         : el
       model      : profile
       collection : @followProfiles
+      analyticsFollowMessage   : @analyticsFollowMessage
+      analyticsUnfollowMessage : @analyticsUnfollowMessage
 
   infiniteScroll: (scrollTop) ->
     @scrollTop = scrollTop || @$window.scrollTop()

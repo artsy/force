@@ -3,6 +3,7 @@ sd            = require('sharify').data
 Backbone      = require 'backbone'
 CurrentUser   = require '../models/current_user.coffee'
 FollowProfile = require '../models/follow_profile.coffee'
+analytics     = require '../lib/analytics.coffee'
 
 #
 # FollowProfiles
@@ -45,6 +46,7 @@ module.exports = class FollowProfiles extends Backbone.Collection
     @syncFollows _.rest(profileIds, @maxSyncSize)
 
   follow: (profileId, options={}) ->
+    analytics.track.click "Follow profile"
     error = options.error
     options.error = (model, response, options) =>
       @remove model
@@ -56,8 +58,9 @@ module.exports = class FollowProfiles extends Backbone.Collection
     @add followProfile
 
   unfollow: (profileId, options={}) ->
+    analytics.track.click "Unfollow profile"
     error = options.error
-    options.error = (model, repsponse, options) =>
+    options.error = (model, response, options) =>
       @add model
       error arguments if error
 

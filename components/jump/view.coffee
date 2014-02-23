@@ -1,6 +1,7 @@
 _         = require 'underscore'
 Backbone  = require 'backbone'
 mediator  = require '../../lib/mediator.coffee'
+analytics = require '../../lib/analytics.coffee'
 
 module.exports = class JumpView extends Backbone.View
   className: 'jump-to-top icon-chevron-up'
@@ -57,12 +58,11 @@ module.exports = class JumpView extends Backbone.View
   # Simultaneously scrolls to the top of the page
   # and hides the jump navigation
   scrollToTop: ->
+    analytics.track.click "Clicked filter scrollToTop"
     @shouldBe 'hidden'
     @scrollToPosition 0
 
   remove: ->
     $(window).off 'scroll', @toggler
-
     mediator.off null, null, this
-
     super

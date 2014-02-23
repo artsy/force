@@ -18,6 +18,8 @@ exhibitorsTemplate  = -> require('../templates/exhibitors_columns.jade') argumen
 module.exports = class ForYouView extends Backbone.View
 
   sortOrder: "-featured"
+  analyticsFollowMessage: 'Followed partner profile from for-you'
+  analyticsUnfollowMessage: 'Unfollowed partner profile from for-you'
 
   initialize: (options) ->
     { @fair, @profile } = options
@@ -48,6 +50,8 @@ module.exports = class ForYouView extends Backbone.View
       el         : el
       model      : profile
       collection : @followProfiles
+      analyticsFollowMessage   : @analyticsFollowMessage
+      analyticsUnfollowMessage : @analyticsUnfollowMessage
 
   fetchFollowingArtists: ->
     url = "#{sd.ARTSY_URL}/api/v1/me/follow/artists"
