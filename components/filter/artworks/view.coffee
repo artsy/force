@@ -59,7 +59,7 @@ module.exports = class FilterArtworksView extends Backbone.View
   render: (col, res) =>
     @$('.filter-artworks').attr 'data-state',
       if @artworks.length is 0 then 'no-results'
-      else if res.length < @pageSize then 'finished-paging'
+      else if res.length is 0 then 'finished-paging'
       else ''
     @newColumnsView() unless @columnsView?
     @columnsView.appendArtworks(new Artworks(res).models)

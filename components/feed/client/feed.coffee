@@ -117,7 +117,7 @@ module.exports = class FeedView extends Backbone.View
   fetchMoreItems: =>
     @doneInitializingFeedItems = false
     @waiting = true
-    analytics.track.click "Paginating FeedItems" 
+    analytics.track.click "Paginating FeedItems"
     @feedItems.fetchFeedItems
       additionalParams: @additionalParams
       artworks: true
@@ -239,9 +239,9 @@ module.exports = class FeedView extends Backbone.View
 
   storeClickedLink: (e) ->
     return unless cursor = $(e.currentTarget).closest('.feed-item').data('cursor')
-    createCookie 'clicked-feed-item-cursor', cursor
-    createCookie 'clicked-feed-item-href', $(e.currentTarget).attr('href')
-    createCookie 'clicked-feed-item-pathname', location.pathname
+    createCookie 'clicked-feed-item-cursor', cursor, 1
+    createCookie 'clicked-feed-item-href', $(e.currentTarget).attr('href'), 1
+    createCookie 'clicked-feed-item-pathname', location.pathname, 1
 
   loadPrevious: ->
     @$(".feed-previous-button button").addClass('is-loading')
