@@ -4,8 +4,12 @@ mixin filter-dropdown(mainText, attr, values)
     .filter-nav-active-text
     .icon-arrow-down
     nav
+      a( data-attr=attr, data-val='' )
+        span.filter-dropdown-text= "All " + mainText + 's'
+        span.filter-dropdown-count
+        span.icon-check
       for val, label in values
-        if label && val
+        if label
           a( data-attr=attr, data-val=val )
             span.filter-dropdown-text= label
             span.filter-dropdown-count
