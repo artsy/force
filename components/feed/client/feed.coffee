@@ -259,8 +259,11 @@ module.exports = class FeedView extends Backbone.View
     $(document).one 'ajaxStop', => @$(".feed-previous-button").remove()
 
   renderLoading: ->
-    if @$loadingSpinner.length is 0
-      @$el.append( @$loadingSpinner = $('<div class="loading-spinner"></div>') )
-    @$loadingSpinner.show()
+    if sd.NODE_ENV != 'test'
+      if @$loadingSpinner.length is 0
+        @$el.append( @$loadingSpinner = $('<div class="loading-spinner"></div>') )
+      @$loadingSpinner.show()
 
-  doneRenderLoading: -> @$loadingSpinner.hide()
+  doneRenderLoading: ->
+    if sd.NODE_ENV != 'test'
+      @$loadingSpinner.hide()
