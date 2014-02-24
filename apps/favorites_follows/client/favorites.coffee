@@ -26,9 +26,11 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
     @setupCurrentUser()
 
     @collection ?= new Artworks() # Maintain all saved artworks fetched so far
+    @listenTo @collection, "request", @renderLoading
+    @listenTo @collection, "sync", @doneRenderLoading
 
     @$favoriteArtworks = @$('.favorite-artworks')
-    @$loadingSpinner = @$('.loading-spinner')
+    @$loadingSpinner = @$('.favorite-artworks .loading-spinner')
     @initializeArtworkColumns()
     @loadNextPage()
     @setupStatus()
@@ -139,7 +141,10 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
       @showStatusDialog()
       e.stopPropagation()
 
-  renderLoading: -> @$loadingSpinner.show()
+  renderLoading: ->
+    unless @$loadingSpinner.length is 0
+      @$favoriteArtworks.append( @$loadingSpinner = $('<div class="loading-spinner"></div>') )
+    @$loadingSpinner.show()
   doneRenderLoading: -> @$loadingSpinner.hide()
 
 module.exports.init = ->
