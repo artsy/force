@@ -14,6 +14,7 @@ FairFooter        = require './footer.coffee'
 FavoritesView     = require('../../favorites_follows/client/favorites.coffee').FavoritesView
 FollowsView       = require('../../favorites_follows/client/follows.coffee').FollowsView
 SearchBar         = require './mixins/search_bar.coffee'
+iframePopover     = require '../../../components/iframe_popover/index.coffee'
 
 module.exports.FairView = class FairView extends Backbone.View
   _.extend @prototype, SearchBar
@@ -86,3 +87,6 @@ module.exports.init = ->
           "&profile_id=#{profile.id}" +
           "&fair_id=#{fair.id}" +
           "&fair_name=#{fair.get('name')}"
+
+  # Links in the feed keep your scroll position
+  iframePopover $('.feed')

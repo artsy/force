@@ -10,7 +10,6 @@ FollowProfiles          = require '../../../collections/follow_profiles.coffee'
 FeedItem                = require '../models/feed_item.coffee'
 FeedItemView            = require('./feed_item.coffee').FeedItemView
 FeedItemPost            = require('../../post/client/feed_item_post.coffee').FeedItemPost
-iframePopover           = require '../../iframe_popover/index.coffee'
 feedItemsTemplate       = -> require('../templates/feed_items.jade') arguments...
 FollowProfileButton     = require '../../../apps/partners/client/follow_profiles_button.coffee'
 feedItemsContainerTemplate = -> require('../templates/feed_items_container.jade') arguments...
@@ -85,7 +84,6 @@ module.exports = class FeedView extends Backbone.View
     )
 
     @$feedItems = @$('section.feed-items')
-    iframePopover @$feedItems
 
     @handleFetchedItems items
     @afterLoadCont() if @afterLoadCont
