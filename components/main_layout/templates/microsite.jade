@@ -10,7 +10,7 @@ html( data-useragent=userAgent )
     include head
     link( type='text/css', rel='stylesheet', href=(sd.ASSET_PATH + 'main_layout' + sd.CSS_EXT) )
     link( type='text/css', rel='stylesheet', href=(sd.ASSET_PATH + assetPackage + sd.CSS_EXT) )
-  body( class=bodyClass + ' body-header-fixed' )
+  body( class=bodyClass + ' body-header-fixed is-microsite' )
     include ../../modal/template
     include ../header/templates/microsite
     #main-layout-container

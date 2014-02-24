@@ -1,7 +1,7 @@
-_ = require 'underscore'
-Backbone = require 'backbone'
-qs = require 'querystring'
-FairBrowseView = require './view.coffee'
+_               = require 'underscore'
+Backbone        = require 'backbone'
+qs              = require 'querystring'
+FairBrowseView  = require './view.coffee'
 
 module.exports = class BrowseRouter extends Backbone.Router
 
@@ -23,6 +23,8 @@ module.exports = class BrowseRouter extends Backbone.Router
       fair: @fair
       profile: @profile
       router: @
+
+    Backbone.history.start pushState: true
 
   artist: (id, artistId) =>
     @boothParams.set artist: artistId

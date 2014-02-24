@@ -54,8 +54,6 @@ module.exports = class FeedView extends Backbone.View
       throttledOnResize = _.throttle (=> @onResize()), 250
       @$window.on 'resize.feed', throttledOnResize
 
-    @scrollToLastClickedLink()
-
   scrollToLastClickedLink: =>
     cursor = readCookie 'clicked-feed-item-cursor'
     href = readCookie 'clicked-feed-item-href'
@@ -65,17 +63,18 @@ module.exports = class FeedView extends Backbone.View
     deleteCookie 'clicked-feed-item-pathname'
     return unless cursor and location.pathname is pathname
     imagesLoaded = require '../../../lib/vendor/imagesloaded.js'
-    $(document).one 'ajaxStop', =>
-      $el = @$("a[href='#{href}']")
-      return unless $el.length
-      @$el.prepend """
-        <div class='feed-previous-button'>
-          <button class='avant-garde-button-text'>
-            Load previous items
-          </button>
-        </div>
-      """
-      @$htmlBody.imagesLoaded => @$htmlBody.scrollTop $el.offset().top - 200
+
+    $el = @$("a[href='#{href}']")
+    return unless $el.length
+    @$htmlBody.scrollTop $el.offset().top - 200
+    @$el.prepend """
+      <div class='feed-previous-button'>
+        <button class='avant-garde-button-text'>
+          Load previous items
+        </button>
+      </div>
+    """
+    @$htmlBody.imagesLoaded => @$htmlBody.scrollTop $el.offset().top - 200
 
   storeOptions: (options) ->
     @feedItems             = options.feedItems
@@ -218,7 +217,6 @@ module.exports = class FeedView extends Backbone.View
         @maxWidth
       else
         windowWidth
-
     windowWidth - @marginLeftRight
 
   getImageWidth: ->
