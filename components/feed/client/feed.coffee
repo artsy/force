@@ -66,7 +66,6 @@ module.exports = class FeedView extends Backbone.View
 
     $el = @$("a[href='#{href}']")
     return unless $el.length
-    @$htmlBody.scrollTop $el.offset().top - 200
     @$el.prepend """
       <div class='feed-previous-button'>
         <button class='avant-garde-button-text'>
@@ -74,7 +73,8 @@ module.exports = class FeedView extends Backbone.View
         </button>
       </div>
     """
-    @$htmlBody.imagesLoaded => @$htmlBody.scrollTop $el.offset().top - 200
+    @$htmlBody.imagesLoaded =>
+      @$htmlBody.scrollTop($el.offset().top - 200)
 
   storeOptions: (options) ->
     @feedItems             = options.feedItems
