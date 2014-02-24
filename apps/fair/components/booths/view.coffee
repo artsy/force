@@ -36,7 +36,8 @@ module.exports = class BoothsView extends Backbone.View
     # Hook into param changes to update view/router state
     @params.on 'change', @renderHeader
     @params.on 'change', @fetchShows
-    @params.on 'change:section', @navigateSection
+    @params.on 'change reset', @toggleBoothCount
+    @params.on 'change:section reset', @navigateSection
     @params.on 'change:sort', @navigateSort
     @shows.on 'request', @toggleSpinner
     @shows.on 'sync', @toggleSpinner
@@ -75,6 +76,9 @@ module.exports = class BoothsView extends Backbone.View
       afterLoadCont    : -> @scrollToLastClickedLink()
     @feedView.feedName = 'Fair Feed'
     @$('#fair-browse-spinner').show()
+
+  toggleBoothCount: =>
+    @$('#fair-booths-count-container')[if @params.get('section') then 'hide' else 'show']()
 
   navigateSection: =>
     if @params.get 'section'
