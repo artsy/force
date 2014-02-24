@@ -2,6 +2,7 @@
 Tag = require '../../models/tag.coffee'
 Backbone = require 'backbone'
 FilterArtworksView = require '../../components/filter/artworks/view.coffee'
+iframePopover = require '../../components/iframe_popover/index.coffee'
 
 module.exports.TagView = class TagView extends Backbone.View
 
@@ -18,3 +19,4 @@ module.exports.init = ->
     el: $ 'body'
     model: tag = new Tag TAG
   Backbone.history.start pushState: true
+  iframePopover $('#tag-filter')

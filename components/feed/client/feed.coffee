@@ -12,7 +12,6 @@ FeedItemView            = require('./feed_item.coffee').FeedItemView
 FeedItemPost            = require('../../post/client/feed_item_post.coffee').FeedItemPost
 feedItemsTemplate       = -> require('../templates/feed_items.jade') arguments...
 FollowProfileButton     = require '../../../apps/partners/client/follow_profiles_button.coffee'
-{ readCookie, deleteCookie, createCookie } = require '../../util/cookie.coffee'
 feedItemsContainerTemplate = -> require('../templates/feed_items_container.jade') arguments...
 
 module.exports = class FeedView extends Backbone.View
@@ -49,7 +48,6 @@ module.exports = class FeedView extends Backbone.View
 
     throttledInfiniteScroll = _.throttle (=> @infiniteScroll()), 250
     @$window.on 'scroll.feed', throttledInfiniteScroll
-    @$loadingSpinner = @$('.loading-spinner')
 
     if @onResize
       throttledOnResize = _.throttle (=> @onResize()), 250
@@ -86,6 +84,7 @@ module.exports = class FeedView extends Backbone.View
     )
 
     @$feedItems = @$('section.feed-items')
+    @$loadingSpinner = @$('.loading-spinner')
 
     @handleFetchedItems items
     @afterLoadCont() if @afterLoadCont
@@ -184,30 +183,6 @@ module.exports = class FeedView extends Backbone.View
         @destroy()
     @trackScroll()
 
-  scrollToLastClickedLink: =>
-    cursor = readCookie 'clicked-feed-item-cursor'
-    href = readCookie 'clicked-feed-item-href'
-    pathname = readCookie 'clicked-feed-item-pathname'
-    deleteCookie 'clicked-feed-item-cursor'
-    deleteCookie 'clicked-feed-item-href'
-    deleteCookie 'clicked-feed-item-pathname'
-    return unless cursor and location.pathname is pathname and @rendered
-    imagesLoaded = require '../../../lib/vendor/imagesloaded.js'
-
-    $el = @$("a[href='#{href}']")
-    return unless $el.length
-    @$el.prepend """
-      <div class='feed-previous-button'>
-        <button class='avant-garde-button-text'>
-          Load previous itemsxo
-        </button>
-      </div>
-    """
-    @$htmlBody.scrollTop($el.offset().top - 200)
-    @$htmlBody.imagesLoaded =>
-      _.defer =>
-        @$htmlBody.scrollTop($el.offset().top - 200)
-
   scrollPositionsTracked: {}
   scrollInterval: 3000
   lastScrollIntervalTracked: 0
@@ -241,29 +216,8 @@ module.exports = class FeedView extends Backbone.View
     @$el.html ''
     @$window.off '.feed'
 
-  events:
-    'click a[href*="/"]': 'storeClickedLink'
-    'click .feed-previous-button': 'loadPrevious'
-
-  storeClickedLink: (e) ->
-    return unless cursor = $(e.currentTarget).closest('.feed-item').data('cursor')
-    createCookie 'clicked-feed-item-cursor', cursor, 1
-    createCookie 'clicked-feed-item-href', $(e.currentTarget).attr('href'), 1
-    createCookie 'clicked-feed-item-pathname', location.pathname, 1
-
-  loadPrevious: ->
-    @$(".feed-previous-button button").addClass('is-loading')
-    @feedItems.lastCursor = @feedItems.cursor = null
-    @$feedItems.children().remove()
-    @fetchMoreItems()
-    $(document).one 'ajaxStop', => @$(".feed-previous-button").remove()
-
   renderLoading: ->
-    if sd.NODE_ENV != 'test'
-      if @$loadingSpinner.length is 0
-        @$el.append( @$loadingSpinner = $('<div class="loading-spinner"></div>') )
-      @$loadingSpinner.show()
+    @$loadingSpinner.show()
 
   doneRenderLoading: ->
-    if sd.NODE_ENV != 'test'
-      @$loadingSpinner.hide()
+    @$loadingSpinner.hide()

@@ -21,7 +21,6 @@ describe 'BoothsView', ->
           sinon.spy @, klass
           for method in ['appendArtworks', 'reset', 'remove']
             @[klass].prototype[method] = sinon.stub()
-          BoothsView.__set__ 'readCookie', -> 'foo'
           BoothsView.__set__ klass, @[klass]
         @fair = new Fair fabricate 'fair'
         @fair.url = -> 'fair/foo'
@@ -43,10 +42,6 @@ describe 'BoothsView', ->
     it 'creates a filter nav view', ->
       @view.initialize({})
       @FilterNav.called.should.be.ok
-
-    it 'sets the params cursor to the last clicked item', ->
-      @view.initialize()
-      @view.params.get('cursor').should.equal 'foo'
 
     it 'navigates when reseting params', ->
       @view.navigateSection = sinon.stub()
