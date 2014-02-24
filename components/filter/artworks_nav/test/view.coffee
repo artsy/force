@@ -31,3 +31,23 @@ describe 'FilterArtworksNav', ->
     @view.renderCounts()
     @view.$el.html().should.include '51'
     @view.$el.html().should.include '38'
+
+  it 'limits counts to the top 10', ->
+    @view.counts.clear()
+    @view.counts.set {
+      dimension:
+        "a": 11
+        "b": 21
+        "c": 31
+        "d": 41
+        "e": 51
+        "f": 61
+        "g": 71
+        "h": 81
+        "i": 91
+        "j": 101
+        "k": 115
+        "l": 121
+    }
+    @view.renderCounts()
+    @view.$el.html().should.not.include '11'
