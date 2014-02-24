@@ -9,5 +9,11 @@ module.exports = class FilterArtworksNav extends Backbone.View
 
   renderCounts: =>
     for attr, counts of @counts.toJSON()
+      continue unless _.isObject counts
+      minCount = _.values(counts).sort((a, b) -> b - a)[9]
       for val, count of counts
-        @$("a[data-attr='#{attr}'][data-val='#{val}'] .filter-dropdown-count").html '(' + count + ')'
+        if minCount and count and count < minCount
+          @$("a[data-attr='#{attr}'][data-val='#{val}']").hide()
+        else
+          @$("a[data-attr='#{attr}'][data-val='#{val}']").show()
+            .find(".filter-dropdown-count").html '(' + count + ')'

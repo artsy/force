@@ -2,6 +2,7 @@
 # FairOrganizer routes
 #
 _       = require 'underscore'
+_.mixin(require 'underscore.string')
 Profile = require '../../models/profile.coffee'
 Fair    = require '../../models/fair.coffee'
 Search  = require '../../collections/search.coffee'
@@ -40,6 +41,8 @@ fetchFairData = (fair, profile, res, options) ->
   fair.fetchFilteredSearchOptions
     cache: true
     success: (filteredSearchOptions) ->
+      res.locals.mediums = {}
+      res.locals.mediums[_.humanize label] = label for label, count of filteredSearchOptions.get('medium')
       data.filteredSearchOptions = filteredSearchOptions
       data.filteredSearchColumns = fair.filteredSearchColumns(filteredSearchOptions, 2, 'related_gene', 'artworks')
       success()

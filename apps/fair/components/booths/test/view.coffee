@@ -44,9 +44,15 @@ describe 'BoothsView', ->
       @view.initialize({})
       @FilterNav.called.should.be.ok
 
-    it 'sets the params cursor to the last clicked item', ->  
+    it 'sets the params cursor to the last clicked item', ->
       @view.initialize()
       @view.params.get('cursor').should.equal 'foo'
+
+    it 'navigates when reseting params', ->
+      @view.navigateSection = sinon.stub()
+      @view.initialize()
+      @view.params.trigger 'reset'
+      @view.navigateSection.called.should.be.ok
 
   describe '#renderSections', ->
 
@@ -72,6 +78,14 @@ describe 'BoothsView', ->
       @view.renderShows new Backbone.Collection [{}]
       @FeedView.calledWithNew().should.be.ok
 
+    it 'destroys but not removes the last feed view', ->
+      @feedView = new Backbone.View
+      @feedView.remove = sinon.stub()
+      @feedView.destroy = sinon.stub()
+      @view.renderShows new Backbone.Collection [{}]
+      @feedView.remove.called.should.not.be.ok
+      @feedView.destroy.called.should.not.be.ok
+
   describe '#navigateSection', ->
 
     it 'naviates based on section', ->
@@ -94,3 +108,9 @@ describe 'BoothsView', ->
     it 'sets sort params', ->
       @view.sort target: $ '<div data-sort="foo">'
       @view.params.get('sort').should.equal 'foo'
+
+  describe '#toggleBoothCount', ->
+
+    it 'hides the counts when in a section', ->
+      @view.params.set section: 'VISTA'
+      @view.$('#fair-booths-count-container').attr('style').should.include 'display: none'

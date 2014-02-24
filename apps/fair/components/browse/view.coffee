@@ -16,14 +16,16 @@ module.exports = class FairBrowseView extends Backbone.View
       countsUrl: "#{ARTSY_URL}/api/v1/search/filtered/fair/#{@fair.get 'id'}/suggest"
       urlRoot: "#{@profile.id}/browse"
     @artworkParams = @filterArtworksView.params
+    @counts = @filterArtworksView.counts
     @boothsView = new BoothsView
       el: $ '.fair-page-content'
       fair: @fair
       profile: @profile
       router: @router
     @boothParams = @boothsView.params
-    @boothParams.on 'change', @boothsSection
-    @artworkParams.on 'change', @artworksSection
+    @boothParams.on 'change reset', @boothsSection
+    @artworkParams.on 'change reset', @artworksSection
+    @counts.fetch()
     @highlightHome()
 
   boothsSection: =>

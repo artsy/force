@@ -36,7 +36,8 @@ module.exports = class BoothsView extends Backbone.View
     # Hook into param changes to update view/router state
     @params.on 'change', @renderHeader
     @params.on 'change', @fetchShows
-    @params.on 'change:section', @navigateSection
+    @params.on 'change reset', @toggleBoothCount
+    @params.on 'change:section reset', @navigateSection
     @params.on 'change:sort', @navigateSort
     @shows.on 'request', @toggleSpinner
     @shows.on 'sync', @toggleSpinner
@@ -58,24 +59,26 @@ module.exports = class BoothsView extends Backbone.View
 
   renderHeader: =>
     @$('.browse-section.booths h1').text if @params.get 'section'
-                    "Exhibitors at #{@params.get 'section'}"
-                  else if @params.get 'partner_region'
-                    "Exhibitors from #{@params.get 'partner_region'}"
-                  else
-                    "All Exhibitors at #{@fair.get('name')}"
+        "Exhibitors at #{@params.get 'section'}"
+      else if @params.get 'partner_region'
+        "Exhibitors from #{@params.get 'partner_region'}"
+      else
+        "All Exhibitors at #{@fair.get('name')}"
 
   renderShows: (items) =>
-    return @$('.#fair-browse-spinner') unless items.models.length > 0
+    return @$('.#fair-browse-spinner').hide() unless items.models.length > 0
     items.urlRoot = @shows.url
     @feedView?.destroy()
-    @feedView?.remove()
     @feedView = new FeedView
-      el               : @$('.browse-section.booths .feed')
-      feedItems        : items
-      additionalParams : _.omit @params.toJSON(), 'cursor'
+      el: @$('.browse-section.booths .feed')
+      feedItems: items
+      additionalParams: _.omit @params.toJSON(), 'cursor'
       afterLoadCont    : -> @scrollToLastClickedLink()
     @feedView.feedName = 'Fair Feed'
     @$('#fair-browse-spinner').show()
+
+  toggleBoothCount: =>
+    @$('#fair-booths-count-container')[if @params.get('section') then 'hide' else 'show']()
 
   navigateSection: =>
     if @params.get 'section'
