@@ -1,7 +1,7 @@
 .fair-overview-top
   .fair-overview-top-left
-    img.large-profile-image( src=profile.icon().imageUrl('square') )
-    .fair-name!= fair.get('name')
+    img.large-profile-image( alt=fair.get('name'), title=fair.get('name'), src=profile.icon().imageUrl('square') )
+    h1.fair-name!= fair.get('name')
     .fair-location!= fair.formatLocation()
     .fair-dates!= fair.formatDates()
     if profile.get('bio')
@@ -30,7 +30,7 @@
           for item in set.get('items').models.slice(0,2)
             a.small-section( href=item.get('href') )
               img( src=item.imageUrl('large_square') )
-              .section-heading= item.get('title')
+              h2.section-heading= item.get('title')
 
     if primarySets.where({ key: 'primary' })
       .container-right
@@ -38,8 +38,8 @@
           for item in set.get('items').models.slice(0,3)
             a.small-section( href=item.get('href') )
               img( src=item.imageUrl('large_square') )
-              .section-heading= item.get('title')
+              h2.section-heading= item.get('title')
           if set.get('items').models[3]
             a.small-section.primary-section-top-right( href=set.get('items').models[3].get('href') )
               img( src=set.get('items').models[3].imageUrl('large_square') )
-              .section-heading= set.get('items').models[3].get('title')
+              h2.section-heading= set.get('items').models[3].get('title')
