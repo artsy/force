@@ -58,11 +58,11 @@ module.exports = class BoothsView extends Backbone.View
 
   renderHeader: =>
     @$('.browse-section.booths h1').text if @params.get 'section'
-                    "Exhibitors at #{@params.get 'section'}"
-                  else if @params.get 'partner_region'
-                    "Exhibitors from #{@params.get 'partner_region'}"
-                  else
-                    "All Exhibitors at #{@fair.get('name')}"
+        "Exhibitors at #{@params.get 'section'}"
+      else if @params.get 'partner_region'
+        "Exhibitors from #{@params.get 'partner_region'}"
+      else
+        "All Exhibitors at #{@fair.get('name')}"
 
   renderShows: (items) =>
     return @$('.#fair-browse-spinner') unless items.models.length > 0
