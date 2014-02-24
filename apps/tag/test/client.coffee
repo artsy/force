@@ -25,6 +25,7 @@ describe 'TagView', ->
   beforeEach ->
     { TagView } = mod = benv.require resolve(__dirname, '../client.coffee')
     mod.__set__ 'FilterArtworksView', class @FilterArtworksView
+      constructor: (opts) -> _.extend @, opts
       reset: sinon.stub()
     sinon.stub Backbone, 'sync'
     @view = new TagView
@@ -38,3 +39,7 @@ describe 'TagView', ->
 
     it 'starts the filter artworks view', ->
       @FilterArtworksView::reset.called.should.be.ok
+
+    it 'passes in the tag urlRoot', ->
+      @view.initialize()
+      @view.filterView.urlRoot.should.match /// tag/.* ///
