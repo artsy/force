@@ -49,6 +49,7 @@ module.exports = class FeedView extends Backbone.View
 
     throttledInfiniteScroll = _.throttle (=> @infiniteScroll()), 250
     @$window.on 'scroll.feed', throttledInfiniteScroll
+    @$loadingSpinner = @$('.loading-spinner')
 
     if @onResize
       throttledOnResize = _.throttle (=> @onResize()), 250
@@ -97,12 +98,14 @@ module.exports = class FeedView extends Backbone.View
     @doneInitializingFeedItems = false
     @waiting = true
     analytics.track.click "Paginating FeedItems"
+    @renderLoading()
     @feedItems.fetchFeedItems
       additionalParams: @additionalParams
       artworks: true
       sort: @sortOrder
       cursor: @feedItems.cursor
       success: (items) =>
+        @doneRenderLoading()
         numberOfItemsFetched = items.length
         items.removeFlagged()
         @afterFetchCont?(items)
@@ -254,3 +257,10 @@ module.exports = class FeedView extends Backbone.View
     @$feedItems.children().remove()
     @fetchMoreItems()
     $(document).one 'ajaxStop', => @$(".feed-previous-button").remove()
+
+  renderLoading: ->
+    if @$loadingSpinner.length is 0
+      @$el.append( @$loadingSpinner = $('<div class="loading-spinner"></div>') )
+    @$loadingSpinner.show()
+
+  doneRenderLoading: -> @$loadingSpinner.hide()
