@@ -54,28 +54,6 @@ module.exports = class FeedView extends Backbone.View
       throttledOnResize = _.throttle (=> @onResize()), 250
       @$window.on 'resize.feed', throttledOnResize
 
-  scrollToLastClickedLink: =>
-    cursor = readCookie 'clicked-feed-item-cursor'
-    href = readCookie 'clicked-feed-item-href'
-    pathname = readCookie 'clicked-feed-item-pathname'
-    deleteCookie 'clicked-feed-item-cursor'
-    deleteCookie 'clicked-feed-item-href'
-    deleteCookie 'clicked-feed-item-pathname'
-    return unless cursor and location.pathname is pathname
-    imagesLoaded = require '../../../lib/vendor/imagesloaded.js'
-
-    $el = @$("a[href='#{href}']")
-    return unless $el.length
-    @$el.prepend """
-      <div class='feed-previous-button'>
-        <button class='avant-garde-button-text'>
-          Load previous items
-        </button>
-      </div>
-    """
-    @$htmlBody.imagesLoaded =>
-      @$htmlBody.scrollTop($el.offset().top - 200)
-
   storeOptions: (options) ->
     @feedItems             = options.feedItems
 
@@ -88,6 +66,8 @@ module.exports = class FeedView extends Backbone.View
     @sortOrder             = options.sortOrder
     @limitPostBodyHeight   = options.limitPostBodyHeight
     @additionalParams      = options.additionalParams
+    if options.afterLoadCont
+      @afterLoadCont       = options.afterLoadCont
 
   render: (items) =>
     @latestItems = items
@@ -199,8 +179,31 @@ module.exports = class FeedView extends Backbone.View
       else
         # Destroy the feed if it isn't visible (helps with fair filtering)
         @destroy()
-
     @trackScroll()
+
+  scrollToLastClickedLink: =>
+    cursor = readCookie 'clicked-feed-item-cursor'
+    href = readCookie 'clicked-feed-item-href'
+    pathname = readCookie 'clicked-feed-item-pathname'
+    deleteCookie 'clicked-feed-item-cursor'
+    deleteCookie 'clicked-feed-item-href'
+    deleteCookie 'clicked-feed-item-pathname'
+    return unless cursor and location.pathname is pathname and @rendered
+    imagesLoaded = require '../../../lib/vendor/imagesloaded.js'
+
+    $el = @$("a[href='#{href}']")
+    return unless $el.length
+    @$el.prepend """
+      <div class='feed-previous-button'>
+        <button class='avant-garde-button-text'>
+          Load previous itemsxo
+        </button>
+      </div>
+    """
+    @$htmlBody.scrollTop($el.offset().top - 200)
+    @$htmlBody.imagesLoaded =>
+      _.defer =>
+        @$htmlBody.scrollTop($el.offset().top - 200)
 
   scrollPositionsTracked: {}
   scrollInterval: 3000
