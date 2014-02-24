@@ -120,6 +120,23 @@ describe 'Fair routes', ->
       @res.render.args[0][0].should.equal 'templates/index'
       @res.render.args[0][1].profile.isFairOranizer()
 
+    it 'passes in the filter mediums', ->
+      routes.browse @req, @res
+      _.last(Backbone.sync.args)[2].success fabricate 'fair_profile'
+      _.last(Backbone.sync.args)[2].success fabricate 'fair'
+      _.last(Backbone.sync.args, 5)[0][2].success
+        total: 1289
+        related_gene:
+          "abstract-sculpture": 149
+        medium:
+          ceramic: 44
+        dimension:
+          12: 386
+        price_range:
+          "-1:1000000000000": 1227
+      @res.locals.mediums['Ceramic'].should.equal 'ceramic'
+
+
   describe '#showRedirect', ->
 
     it 'redirects to show page', ->
