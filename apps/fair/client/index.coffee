@@ -88,5 +88,5 @@ module.exports.init = ->
           "&fair_id=#{fair.id}" +
           "&fair_name=#{fair.get('name')}"
 
-  # Links in the feed keep your scroll position
-  iframePopover $('.feed')
+  # Links in the browse section keep your scroll position
+  iframePopover $('#fair-browse')
