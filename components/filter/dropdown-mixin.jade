@@ -9,7 +9,7 @@ mixin filter-dropdown(mainText, attr, values)
         span.filter-dropdown-count
         span.icon-check
       for val, label in values
-        if label
+        if label && val
           a( data-attr=attr, data-val=val )
             span.filter-dropdown-text= label
             span.filter-dropdown-count
