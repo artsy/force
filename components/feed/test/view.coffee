@@ -15,6 +15,7 @@ describe 'FeedView', ->
       sd.ARTSY_URL = 'localhost:3003'
       sd.ASSET_PATH = 'assets/'
       sd.CURRENT_PATH = ""
+      sd.NODE_ENV = 'test'
       benv.expose { $: benv.require 'jquery' }
       sinon.stub Backbone, 'sync'
       Backbone.$  = $
