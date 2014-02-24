@@ -5,5 +5,4 @@ link( rel='icon', type='image/png', href=(sd.ASSET_PATH + 'favicon.ico') )
 meta( name="msapplication-config" content=sd.ASSET_PATH + 'browserconfig.xml' )
 meta( name="viewport" content="user-scalable=0, width=device-width" )
 script.
-  // If we're in an iframe, let the iframe know what path we're at
-  window.parent.postMessage({ path: location.pathname + location.search }, location.origin);
+  parent.postMessage({ href: location.href }, location.origin);

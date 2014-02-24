@@ -11,24 +11,25 @@ module.exports = ($el) ->
     # We'll be stuck in the iframe until we navigate back to the location.pathname
     # (e.g via back button) at which point we'll remove the body class, hiding the iframe, and
     # leaving us at the place we scrolled to last.
-    router.route location.pathname.replace(/^\//, ''), hideIframe
-    router.route clickedHref.replace(/^\//, ''), showIframe
-    router.navigate clickedHref, trigger: true
-
-    # To keep our navigation up to date we'll have our router change whenever links inside
-    # the iframe are clicked (if it's an external) url we'll refresh the page and lose our place.
+    addIframe()
+    router.route location.pathname.replace(/^\//, ''), removeIframe
+    router.navigate clickedHref
 
   # Make sure history is started to use our internal router
   Backbone.history.start(pushState: true) unless Backbone.History.started
 
-showIframe = ->
+addIframe = ->
   $('#iframe-popover').html "<iframe src='#{clickedHref}'>"
   $('body').addClass('body-iframe-popover')
 
-hideIframe = ->
+removeIframe = ->
   $('#iframe-popover').html ''
   $('body').removeClass('body-iframe-popover')
 
+# To keep our router state from getting out of wack we'll do a full redirect after the first page
+# in the iframe. We trigger this parent event inside the main_layout/templates/head.jade to make
+# sure our route changes right away.
 addEventListener 'message', (e) ->
-  return if not e.data.path or e.data.path is location.path
-  router.navigate e.data.path
+  return if e.data.href is @location.href
+  $('body').remove()
+  @location = e.data.href
