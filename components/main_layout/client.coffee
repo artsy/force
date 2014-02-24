@@ -4,6 +4,7 @@ HeaderView  = require './header/view.coffee'
 FooterView  = require './footer/view.coffee'
 sd          = require('sharify').data
 analytics   = require '../../lib/analytics.coffee'
+iframePopover = require '../iframe_popover/index.coffee'
 
 module.exports = ->
   setupJquery()

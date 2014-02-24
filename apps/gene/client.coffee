@@ -1,13 +1,14 @@
-_                           = require 'underscore'
-Backbone                    = require 'backbone'
-Gene                        = require '../../models/gene.coffee'
-CurrentUser                 = require '../../models/current_user.coffee'
-ArtistFillwidthList         = require '../../components/artist_fillwidth_list/view.coffee'
+_ = require 'underscore'
+Backbone = require 'backbone'
+Gene = require '../../models/gene.coffee'
+CurrentUser = require '../../models/current_user.coffee'
+ArtistFillwidthList = require '../../components/artist_fillwidth_list/view.coffee'
 { Following, FollowButton } = require '../../components/follow_button/index.coffee'
-ShareView                   = require '../../components/share/view.coffee'
-RelatedGenesView            = require '../../components/related_genes/view.coffee'
-FilterArtworksView          = require '../../components/filter/artworks/view.coffee'
+ShareView = require '../../components/share/view.coffee'
+RelatedGenesView = require '../../components/related_genes/view.coffee'
+FilterArtworksView = require '../../components/filter/artworks/view.coffee'
 { GENE, CURRENT_USER, ARTSY_URL } = require('sharify').data
+iframePopover = require '../../components/iframe_popover/index.coffee'
 
 module.exports.GeneView = class GeneView extends Backbone.View
 
@@ -83,3 +84,4 @@ module.exports.init = ->
     el: $ 'body'
     model: gene
   Backbone.history.start pushState: true
+  iframePopover $('#gene-filter')

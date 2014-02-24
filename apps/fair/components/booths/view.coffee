@@ -6,7 +6,6 @@ FeedView                = require '../../../../components/feed/client/feed.coffe
 BorderedPulldown        = require '../../../../components/bordered_pulldown/view.coffee'
 qs                      = require 'querystring'
 FilterNav               = require '../../../../components/filter/nav/view.coffee'
-{ readCookie }          = require '../../../../components/util/cookie.coffee'
 navSectionsTemplate     = -> require('./nav_sections.jade') arguments...
 
 module.exports = class BoothsView extends Backbone.View
@@ -29,9 +28,6 @@ module.exports = class BoothsView extends Backbone.View
       el: @$('#fair-booths-filter-nav')
       params: @params
       highlightAllAttrs: ['section']
-
-    # Start the feed at the last clicked cursor
-    @params.set({ cursor: cursor }, silent: true) if cursor = readCookie('clicked-feed-item-cursor')
 
     # Hook into param changes to update view/router state
     @params.on 'change', @renderHeader
@@ -72,8 +68,7 @@ module.exports = class BoothsView extends Backbone.View
     @feedView = new FeedView
       el: @$('.browse-section.booths .feed')
       feedItems: items
-      additionalParams: _.omit @params.toJSON(), 'cursor'
-      afterLoadCont    : -> @scrollToLastClickedLink()
+      additionalParams: @params.toJSON()
     @feedView.feedName = 'Fair Feed'
     @$('#fair-browse-spinner').show()
 
