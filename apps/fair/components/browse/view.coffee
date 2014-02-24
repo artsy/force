@@ -23,8 +23,8 @@ module.exports = class FairBrowseView extends Backbone.View
       profile: @profile
       router: @router
     @boothParams = @boothsView.params
-    @boothParams.on 'change', @boothsSection
-    @artworkParams.on 'change', @artworksSection
+    @boothParams.on 'change reset', @boothsSection
+    @artworkParams.on 'change reset', @artworksSection
     @counts.fetch()
     @highlightHome()
 

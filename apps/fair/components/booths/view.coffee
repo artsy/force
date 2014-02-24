@@ -65,14 +65,13 @@ module.exports = class BoothsView extends Backbone.View
         "All Exhibitors at #{@fair.get('name')}"
 
   renderShows: (items) =>
-    return @$('.#fair-browse-spinner') unless items.models.length > 0
+    return @$('.#fair-browse-spinner').hide() unless items.models.length > 0
     items.urlRoot = @shows.url
     @feedView?.destroy()
-    @feedView?.remove()
     @feedView = new FeedView
-      el               : @$('.browse-section.booths .feed')
-      feedItems        : items
-      additionalParams : _.omit @params.toJSON(), 'cursor'
+      el: @$('.browse-section.booths .feed')
+      feedItems: items
+      additionalParams: _.omit @params.toJSON(), 'cursor'
       afterLoadCont    : -> @scrollToLastClickedLink()
     @feedView.feedName = 'Fair Feed'
     @$('#fair-browse-spinner').show()
