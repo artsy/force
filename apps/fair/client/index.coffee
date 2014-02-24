@@ -68,8 +68,6 @@ module.exports.init = ->
       fair: fair
       profile: profile
 
-  Backbone.history.start pushState: true
-
   # Checks to see if the href is an internal link to:
   # an artwork, artist, show, or post
   #
