@@ -84,7 +84,6 @@ module.exports = class FeedView extends Backbone.View
     )
 
     @$feedItems = @$('section.feed-items')
-    @$loadingSpinner = @$('.loading-spinner')
 
     @handleFetchedItems items
     @afterLoadCont() if @afterLoadCont
@@ -97,14 +96,12 @@ module.exports = class FeedView extends Backbone.View
     @doneInitializingFeedItems = false
     @waiting = true
     analytics.track.click "Paginating FeedItems"
-    @renderLoading()
     @feedItems.fetchFeedItems
       additionalParams: @additionalParams
       artworks: true
       sort: @sortOrder
       cursor: @feedItems.cursor
       success: (items) =>
-        @doneRenderLoading()
         numberOfItemsFetched = items.length
         items.removeFlagged()
         @afterFetchCont?(items)
@@ -215,9 +212,3 @@ module.exports = class FeedView extends Backbone.View
   destroy: =>
     @$el.html ''
     @$window.off '.feed'
-
-  renderLoading: ->
-    @$loadingSpinner.show()
-
-  doneRenderLoading: ->
-    @$loadingSpinner.hide()
