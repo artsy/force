@@ -18,6 +18,7 @@ describe 'FairBrowseView', ->
         for klass in ['BoothsView', 'FilterArtworksView']
           @[klass] = (opts) -> _.extend @, opts
           @[klass]::params = new Backbone.Model
+          @[klass]::counts = new Backbone.Model
           sinon.spy @, klass
           FairBrowseView.__set__ klass, @[klass]
         @fair = new Fair fabricate 'fair'
@@ -38,6 +39,15 @@ describe 'FairBrowseView', ->
     it 'sets up filter artwork and filter booths views', ->
       @FilterArtworksView.calledWithNew.should.be.ok
       @BoothsView.calledWithNew.should.be.ok
+
+    it 'binds section changes to reset', ->
+      @view.boothsSection = sinon.stub()
+      @view.artworksSection = sinon.stub()
+      @view.initialize()
+      @view.boothParams.trigger 'change reset'
+      @view.boothsSection.callCount.should.equal 2
+      @view.artworkParams.trigger 'change reset'
+      @view.artworksSection.callCount.should.equal 2
 
   describe '#boothsSection', ->
 
