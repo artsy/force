@@ -41,7 +41,7 @@ setupAnalytics = ->
 setupViews = ->
   unless $('body').hasClass 'is-microsite'
     new HeaderView el: $('#main-layout-header'), $window: $(window), $body: $('body')
-    new FooterView el: $('#main-layout-footer')
+  new FooterView el: $('#main-layout-footer')
 
 setupJquery = ->
   require '../../node_modules/typeahead.js/dist/typeahead.min.js'
