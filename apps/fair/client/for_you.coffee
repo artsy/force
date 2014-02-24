@@ -25,7 +25,6 @@ module.exports = class ForYouView extends Backbone.View
     { @fair, @profile } = options
     @currentUser = CurrentUser.orNull()
     @collection ?= new Artworks()
-    @initializeArtworkColumns()
 
     if sd.CURRENT_USER?
       @fetchFollowingArtists()
@@ -61,6 +60,7 @@ module.exports = class ForYouView extends Backbone.View
       url: url
       data: data
       success: =>
+        @initializeArtworkColumns()
         if followingArtists.length
           for artist in followingArtists.models
             @fetchAndAppendArtistArtworks artist.get('artist').id
@@ -109,8 +109,9 @@ module.exports = class ForYouView extends Backbone.View
         if followingExhibitors.length
           feedItems = new FeedItems()
           feedItems.doneFetching = true
+          @$('.foryou-section.partners .loading-spinner').remove()
           feed = new FeedView
-            el               : @$('.foryou-section.partners .feed')
+            el               : @$('.foryou-section.partners .feed').show()
             feedItems        : feedItems
           for exhibitor in followingExhibitors.models
             @fetchAndAppendBooth exhibitor.get('profile'), feed
