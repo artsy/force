@@ -192,11 +192,18 @@ module.exports = class FeedView extends Backbone.View
     return if @feedItems.doneFetching or @waiting
     return unless @lastItem?.length
 
+
     top = if @lastItem.offset() then @lastItem.offset().top else 0
     if @scrollTop + 1500 > top
-      @fetchMoreItems()
+      if @$el.is(':visible')
+        @fetchMoreItems()
+      else
+        # Destroy the feed if it isn't visible
+        # - helps with filtering
+        @destroy()
 
     @trackScroll()
+
 
   scrollPositionsTracked: {}
   scrollInterval: 3000
