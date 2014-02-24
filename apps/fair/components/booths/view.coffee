@@ -73,9 +73,9 @@ module.exports = class BoothsView extends Backbone.View
       el               : @$('.browse-section.booths .feed')
       feedItems        : items
       additionalParams : _.omit @params.toJSON(), 'cursor'
+      afterLoadCont    : -> @scrollToLastClickedLink()
     @feedView.feedName = 'Fair Feed'
     @$('#fair-browse-spinner').show()
-    @feedView.scrollToLastClickedLink()
 
   navigateSection: =>
     if @params.get 'section'
