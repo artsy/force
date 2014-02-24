@@ -192,18 +192,15 @@ module.exports = class FeedView extends Backbone.View
     return if @feedItems.doneFetching or @waiting
     return unless @lastItem?.length
 
-
     top = if @lastItem.offset() then @lastItem.offset().top else 0
     if @scrollTop + 1500 > top
       if @$el.is(':visible')
         @fetchMoreItems()
       else
-        # Destroy the feed if it isn't visible
-        # - helps with filtering
+        # Destroy the feed if it isn't visible (helps with fair filtering)
         @destroy()
 
     @trackScroll()
-
 
   scrollPositionsTracked: {}
   scrollInterval: 3000
@@ -234,7 +231,7 @@ module.exports = class FeedView extends Backbone.View
     @currentUser?.initializeDefaultArtworkCollection()
     @artworkCollection = @currentUser?.defaultArtworkCollection()
 
-  destroy: ->
+  destroy: =>
     @$el.html ''
     @$window.off '.feed'
 
