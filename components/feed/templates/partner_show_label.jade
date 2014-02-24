@@ -7,7 +7,7 @@ include ../../share/template
       button.avant-garde-button-white.follow-button( data-id=feedItemChildModel.get('partner').default_profile_id, class=feedItemChildModel.partner().followButtonClass() )
 
   if feedItemChildModel.partnerName()
-    .exhibitor
+    h2.exhibitor
       a( href=feedItemChildModel.href() )!= feedItemChildModel.partnerName()
 
   if feedItemChildModel.get('fair')
@@ -16,7 +16,7 @@ include ../../share/template
       .fair-location!= feedItemChildModel.fairLocationDisplay()
 
   else
-    .heading
+    h2.heading
       a( href=feedItemChildModel.href() )!= feedItemChildModel.formatFeedItemHeading()
 
     if feedItemChildModel.get('start_at') && feedItemChildModel.get('end_at')
