@@ -42,7 +42,6 @@ module.exports = class FeedItems extends Backbone.Collection
   fetchFeedItems: (options) =>
     return if @fetching or @doneFetching
     @fetching = true
-    @lastCursor = @cursor
     new FeedItems().fetch
       data: @getParams(options)
       url: @urlRoot
