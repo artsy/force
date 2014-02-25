@@ -18,11 +18,13 @@ module.exports = class Overview extends Backbone.View
     @renderClock()
     if sd.CURRENT_USER?
       @renderWorksForYou()
+    else if @fair.get('id') == 'the-armory-show-2014'
+      mediator.trigger 'open:auth', { mode: 'register', copy: "Sign up to view your VIP Preview of The Armory Show", redirectTo: location.pathname }
 
   clickForYou: =>
     analytics.track.click "Clicked for-you from fair overview"
     unless sd.CURRENT_USER?
-      mediator.trigger 'open:auth', { mode: 'register', copy: 'Sign up to follow artists and exhibitors' }
+      mediator.trigger 'open:auth', { mode: 'register', copy: 'Sign up to follow artists and exhibitors', redirectTo: location.pathname }
       false
 
   renderClock: ->

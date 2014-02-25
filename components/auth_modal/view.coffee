@@ -37,6 +37,8 @@ module.exports = class AuthModalView extends ModalView
 
   className: 'auth'
 
+  redirectTo: '/personalize'
+
   template: ->
     templates[@state.get('mode')] arguments...
 
@@ -46,6 +48,7 @@ module.exports = class AuthModalView extends ModalView
     'click #auth-submit': 'submit'
 
   initialize: (options) ->
+    @redirectTo = options.redirectTo if options.redirectTo
     @preInitialize options
     super
 
@@ -54,6 +57,7 @@ module.exports = class AuthModalView extends ModalView
     @templateData =
       copy: options.copy or 'Enter your name, email and password to join'
       pathname: location.pathname
+      redirectTo: @redirectTo
     @listenTo @state, 'change:mode', @reRender
     mediator.on 'auth:change:mode', @setMode, this
     mediator.on 'auth:error', @showError
@@ -70,11 +74,10 @@ module.exports = class AuthModalView extends ModalView
 
     if @validateForm()
       @$('button').attr 'data-state', 'loading'
-
       new models[@state.get('mode')]().save @serializeForm(),
         success: =>
           href = '/force/log_in_to_artsy'
-          href += '?redirect-to=/personalize' if @state.get('mode') is 'register'
+          href += "?redirect-to=#{@redirectTo}" if @state.get('mode') is 'register'
           location.href = href
         error: (model, xhr, options) =>
           @errorMessage(xhr) # Display error

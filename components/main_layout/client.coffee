@@ -40,8 +40,7 @@ setupAnalytics = ->
     analytics.trackPageview()
 
 setupViews = ->
-  unless $('body').hasClass 'is-microsite'
-    new HeaderView el: $('#main-layout-header'), $window: $(window), $body: $('body')
+  new HeaderView el: $('#main-layout-header'), $window: $(window), $body: $('body')
   new FooterView el: $('#main-layout-footer')
 
 setupJquery = ->
