@@ -58,6 +58,7 @@ module.exports = class PartnerArtistsArtistView extends Backbone.View
           numberOfColumns: 4
           gutterWidth: 60
           allowDuplicates: true
+          artworkSize: 'tall'
 
   initializeBlurb: ->
     $blurb = @$('.partner-artist-blurb')

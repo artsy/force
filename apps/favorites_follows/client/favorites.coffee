@@ -47,6 +47,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
       numberOfColumns: 4
       gutterWidth: 40
       totalWidth: width
+      artworkSize: 'tall'
       allowDuplicates: true
 
   setupCurrentUser: ->

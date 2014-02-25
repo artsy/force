@@ -89,6 +89,7 @@ module.exports.LayeredSearchView = class LayeredSearchView extends Backbone.View
       isOrdered: false
       seeMore: false
       allowDuplicates: true
+      artworkSize: 'tall'
 
   postRender: ->
     @$layeredSearchResults = @$('#layered-search-results')
