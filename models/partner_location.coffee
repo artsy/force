@@ -51,7 +51,7 @@ module.exports = class PartnerLocation extends Backbone.Model
       @displayAddress()
 
   googleMapsLink: ->
-    location = @get('raw')
+    location = @getMapsLocation()
     return unless location
     getMapLink location
 
