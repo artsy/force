@@ -116,7 +116,7 @@ describe 'BoothsView', ->
 
     it 'hides the counts when in a section', ->
       @view.params.set section: 'VISTA'
-      @view.$('#fair-booths-count-container').attr('style').should.include 'display: none'
+      @view.$('.fair-booths-count-container').attr('style').should.include 'display: none'
 
   describe '#fetchShows', ->
 

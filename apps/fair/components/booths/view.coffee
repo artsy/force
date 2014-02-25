@@ -51,7 +51,7 @@ module.exports = class BoothsView extends Backbone.View
     @shows.fetch data: _.extend @params.toJSON(), artworks: true
 
   renderHeader: =>
-    @$('h1').text(
+    @$('.browse-section.booths h1').text(
       if @params.get 'section'
         "Exhibitors at #{@params.get 'section'}"
       else if @params.get 'partner_region'
@@ -74,7 +74,7 @@ module.exports = class BoothsView extends Backbone.View
     @$('#fair-browse-spinner').show()
 
   toggleBoothCount: =>
-    @$('#fair-booths-count-container')[if @params.get('section') then 'hide' else 'show']()
+    @$('.fair-booths-count-container')[if @params.get('section') then 'hide' else 'show']()
 
   navigateSection: =>
     if @params.get 'section'

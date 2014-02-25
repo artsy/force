@@ -45,6 +45,7 @@ module.exports = class FairBrowseView extends Backbone.View
   events:
     'click #fair-filter-all-artists': 'artistsAZ'
     'click #fair-booths-az-as-list': 'exhibitorsAZ'
+    'click #fair-booths-as-grid': 'exhibitorsGrid'
 
   artistsAZ: ->
     @router.navigate "#{@profile.get 'id'}/browse/artists"
@@ -57,3 +58,6 @@ module.exports = class FairBrowseView extends Backbone.View
     @$('.filter-fixed-header-nav .is-active').removeClass('is-active')
     @$('#fair-filter-all-exhibitors').addClass('is-active')
     @$el.attr 'data-section', 'exhibitors-a-to-z'
+
+  exhibitorsGrid: ->
+    @boothParams.trigger 'reset'
