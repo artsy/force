@@ -117,3 +117,10 @@ describe 'BoothsView', ->
     it 'hides the counts when in a section', ->
       @view.params.set section: 'VISTA'
       @view.$('#fair-booths-count-container').attr('style').should.include 'display: none'
+
+  describe '#fetchShows', ->
+
+    it 'ensures there is always artworks: true regardless of params', ->
+      @view.params.set artworks: false
+      @view.fetchShows()
+      _.last(Backbone.sync.args)[2].data.artworks.should.equal true
