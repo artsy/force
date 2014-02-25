@@ -63,7 +63,7 @@ module.exports = class BoothsView extends Backbone.View
     )
 
   renderShows: (items) =>
-    return @$('.#fair-browse-spinner').hide() unless items.models.length > 0
+    return @$('#fair-browse-spinner').hide() unless items.models.length > 0
     items.urlRoot = @shows.url
     @feedView?.destroy()
     @feedView = new FeedView
