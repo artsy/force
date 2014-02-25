@@ -49,6 +49,9 @@ describe 'BoothsView', ->
       @view.params.trigger 'reset'
       @view.navigateSection.called.should.be.ok
 
+    it 'sets the default sort to -featured', ->
+      @view.params.get('sort').should.equal '-featured'
+
   describe '#renderSections', ->
 
     xit 'renders sections in the nav', ->
@@ -62,10 +65,15 @@ describe 'BoothsView', ->
 
   describe '#renderHeader', ->
 
-    xit 'renders the header', ->
+    it 'renders the header', ->
       @view.params.set section: 'FOCUS'
       @view.renderHeader()
       @view.$el.html().should.include 'Exhibitors at FOCUS'
+
+    it 'renders the artist state header', ->
+      @view.params.set artist: 'andy-foobar'
+      @view.renderHeader()
+      @view.$el.html().should.include 'Andy Foobar'
 
   describe '#renderShows', ->
 

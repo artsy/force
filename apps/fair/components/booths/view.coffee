@@ -51,7 +51,7 @@ module.exports = class BoothsView extends Backbone.View
     @shows.fetch data: @params.toJSON()
 
   renderHeader: =>
-    @$('.browse-section.booths h1').text(
+    @$('h1').text(
       if @params.get 'section'
         "Exhibitors at #{@params.get 'section'}"
       else if @params.get 'partner_region'
