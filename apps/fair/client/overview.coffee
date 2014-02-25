@@ -20,6 +20,8 @@ module.exports = class Overview extends Backbone.View
       @renderWorksForYou()
     else if @fair.get('id') == 'the-armory-show-2014'
       mediator.trigger 'open:auth', { mode: 'register', copy: "Sign up to view your VIP Preview of The Armory Show", redirectTo: location.pathname }
+      mediator.on 'modal:closed', =>
+        analytics.track.click "Closed Armory VIP preview popup"
 
   clickForYou: =>
     analytics.track.click "Clicked for-you from fair overview"
