@@ -30,6 +30,7 @@ removeIframe = ->
 # in the iframe. We trigger this parent event inside the main_layout/templates/head.jade to make
 # sure our route changes right away.
 addEventListener? 'message', (e) ->
+  return unless e.data.href
   return if e.data.href is @location.href
   $('body').remove()
   @location = e.data.href
