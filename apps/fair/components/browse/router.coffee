@@ -25,8 +25,6 @@ module.exports = class BrowseRouter extends Backbone.Router
       profile: @profile
       router: @
 
-    Backbone.history.start pushState: true
-
   artist: (id, artistId) =>
     @boothParams.set artist: artistId
 

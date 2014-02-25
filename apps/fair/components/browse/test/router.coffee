@@ -2,13 +2,14 @@ _ = require 'underscore'
 benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
+{ resolve } = require 'path'
 
 describe 'BrowseRouter', ->
 
   beforeEach ->
     benv.setup =>
       benv.expose { $: require('jquery')(window) }
-      FilterRouter = benv.require '../router.coffee'
+      FilterRouter = benv.require resolve(__dirname, '../router.coffee')
       FilterRouter.__set__ 'FairBrowseView', @FairBrowseView = sinon.stub()
       @router = new FilterRouter
         fair: new Backbone.Model
