@@ -41,7 +41,7 @@ module.exports = class FairBrowseView extends Backbone.View
   renderArtworksHeader: =>
     @$('#fair-browse-artworks-header').text(
       if @artworkParams.get 'related_gene'
-        geneName = _.titleize _.humanize @artworkParams.get('related_gene')
+        geneName = _.titleize _.humanize @artworkParams.get('related_gene').replace(/[0-9]/g, '')
       else
         ''
     )

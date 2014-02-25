@@ -83,3 +83,9 @@ describe 'FairBrowseView', ->
       @view.boothParams.on 'reset', spy = sinon.spy()
       @view.exhibitorsGrid()
       spy.called.should.be.ok
+
+  describe '#renderArtworksHeader', ->
+
+    it 'renders the gene name title and capitalized without numbers', ->
+      @view.artworkParams.set related_gene: 'contemporary-abstract-photography-1'
+      @view.$el.html().should.include 'Contemporary Abstract Photography'
