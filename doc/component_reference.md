@@ -378,7 +378,7 @@ When building up your own filtering UI you may need to use buttons and dropdowns
 ````jade
 .filter-fixed-header-nav
   .filter-button.is-active All Exhibitors
-  +filter-dropdown('Sector', 'sector', { '...': '...' })
+  +filter-dropdown('Section', 'Sections', 'sector', { '...': '...' })
   include ../../../components/filter/artworks_nav/template
   .filter-button All Artists
 ````

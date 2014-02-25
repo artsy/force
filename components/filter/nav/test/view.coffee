@@ -64,3 +64,10 @@ describe 'FilterNav', ->
     it 'sets price', ->
       @view.filterAttr currentTarget: $ "<div data-attr='price_range' data-val='-1:1000'></div>"
       @view.params.get('price_range').should.equal '-1:1000'
+
+  describe '#highlightDropdownAlls', ->
+
+    it 'makes the all nav active when there is no param set', ->
+      @view.params.clear()
+      @view.highlightDropdownAlls()
+      @view.$('.filter-dropdown nav a').first().hasClass('is-active').should.be.ok

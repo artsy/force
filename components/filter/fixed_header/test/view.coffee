@@ -27,11 +27,11 @@ describe 'FilterFixedHeader', ->
     spy.called.should.be.ok
 
   it 'scrolls back up if the user has scrolled past the header', ->
-    @view.document = { scrollTop: 0 }
+    @view.$bodyHtml.scrollTop = sinon.stub()
     @view.$window.scrollTop = -> 300
     @view.$el.offset = -> top: 200
     @view.scrollToTop()
-    @view.document.scrollTop.should.be.above 0
+    @view.$bodyHtml.scrollTop.args[0][0].should.be.above 0
 
   it 'doenst scroll back up if the user hasnt scrolled past the header', ->
     @view.document = { scrollTop: 0 }
