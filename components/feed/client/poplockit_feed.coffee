@@ -67,6 +67,9 @@ module.exports = class PoplockitFeed extends FeedView
   recomputeItemColumn: (index, columnIndex) =>
     @$el.popLockIt 'recomputeItemColumn', index, columnIndex
 
+  getImageWidth: ->
+    @fixedWidth - @textColumnWidth - @textColumnMargin
+
   recomputeItem: ($item) =>
     index = @$('article').index $item
     @$el.popLockIt 'recomputeItem', index

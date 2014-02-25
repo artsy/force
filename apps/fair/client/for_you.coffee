@@ -97,6 +97,7 @@ module.exports = class ForYouView extends Backbone.View
       numberOfColumns: 4
       gutterWidth: 40
       totalWidth: width
+      artworkSize: 'tall'
 
   fetchFollowingExhibitors: ->
     url = "#{sd.ARTSY_URL}/api/v1/me/follow/profiles"
