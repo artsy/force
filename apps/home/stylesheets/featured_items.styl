@@ -73,7 +73,8 @@ column-gap = 30px
   border-bottom @border-right
   width 25%
   vertical-align top
-  max-height 104px
+  height 102px
+  overflow hidden
   a
     text-decoration none
   &:first-child
@@ -84,8 +85,7 @@ column-gap = 30px
   img
     max-width 95px
     max-height @max-width
-    float left
-    margin-right 10px
+    position absolute
   h4
     font-size default-avant-garde-font-size
   h3
@@ -94,6 +94,7 @@ column-gap = 30px
 
 .home-top-feature-link-details
   avant-garde()
+  padding-left 105px
 
 
 // Featured artworks
