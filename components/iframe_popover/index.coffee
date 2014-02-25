@@ -2,24 +2,23 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 
 router = new Backbone.Router
-clickedHref = null
+href = null
 
 module.exports = ($el) ->
-  $el.on 'mouseover', 'a[href]', (e) ->
-    e.preventDefault()
-    _.defer => onClick $(this).attr('href')
-
+  $el.on 'click', 'a[href]', onClick
   # Make sure history is started to use our internal router
   Backbone.history.start(pushState: true) unless Backbone.History.started
 
-onClick = (href) ->
-  clickedHref = href
-  addIframe()
-  router.route location.pathname.replace(/^\//, ''), removeIframe
-  router.navigate clickedHref
+onClick = (e) ->
+  e.preventDefault()
+  href = $(this).attr('href')
+  _.defer =>
+    setIframe()
+    router.route location.pathname.replace(/^\//, ''), removeIframe
+    router.navigate href
 
-addIframe = ->
-  $('#iframe-popover').html "<iframe src='#{clickedHref}'>"
+setIframe = ->
+  $('#iframe-popover').html "<iframe src='#{href}'>"
   $('body').addClass('body-iframe-popover')
 
 removeIframe = ->

@@ -18,7 +18,7 @@ module.exports = class BoothsView extends Backbone.View
 
     # Set up a @params model to maintain the query param state for the @shows collection
     # attched to /api/v1/fair/:id/shows
-    @params = new Backbone.Model(artworks: true, size: 3)
+    @params = new Backbone.Model(artworks: true, size: 3, sort: '-featured')
     @shows = new FeedItems
     @shows.url = "#{@fair.url()}/shows"
 
@@ -36,7 +36,7 @@ module.exports = class BoothsView extends Backbone.View
     @params.on 'change reset', @toggleBoothCount
     @params.on 'change:section reset', @navigateSection
     @params.on 'change:sort', @navigateSort
-    @shows.on 'sync', @toggleSpinner
+    @shows.on 'request', => @$('.feed').html('')
     @shows.on 'sync', @renderShows
 
     # Render the navigation dropdown sections
