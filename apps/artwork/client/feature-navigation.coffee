@@ -15,7 +15,6 @@ module.exports = class FeatureNavigationView extends Backbone.View
       if @kind == 'feature'
         "/feature/#{@model.id}"
       else if @kind == 'fair'
-        console.log @model
         "/#{@model.get('organizer').profile_id}"
       else
         "/#{@model.id}"
