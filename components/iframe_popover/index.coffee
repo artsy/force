@@ -5,7 +5,7 @@ router = new Backbone.Router
 clickedHref = null
 
 module.exports = ($el) ->
-  $el.on 'click', 'a[href]', (e) ->
+  $el.on 'mouseover', 'a[href]', (e) ->
     e.preventDefault()
     _.defer => onClick $(this).attr('href')
 

@@ -1,12 +1,13 @@
-_                       = require 'underscore'
-Backbone                = require 'backbone'
-sd                      = require('sharify').data
-FeedItems               = require '../../../../components/feed/collections/feed_items.coffee'
-FeedView                = require '../../../../components/feed/client/feed.coffee'
-BorderedPulldown        = require '../../../../components/bordered_pulldown/view.coffee'
-qs                      = require 'querystring'
-FilterNav               = require '../../../../components/filter/nav/view.coffee'
-navSectionsTemplate     = -> require('./nav_sections.jade') arguments...
+_ = require 'underscore'
+_.mixin(require 'underscore.string')
+Backbone = require 'backbone'
+sd = require('sharify').data
+FeedItems = require '../../../../components/feed/collections/feed_items.coffee'
+FeedView = require '../../../../components/feed/client/feed.coffee'
+BorderedPulldown = require '../../../../components/bordered_pulldown/view.coffee'
+qs = require 'querystring'
+FilterNav = require '../../../../components/filter/nav/view.coffee'
+navSectionsTemplate = -> require('./nav_sections.jade') arguments...
 
 module.exports = class BoothsView extends Backbone.View
 
@@ -35,15 +36,11 @@ module.exports = class BoothsView extends Backbone.View
     @params.on 'change reset', @toggleBoothCount
     @params.on 'change:section reset', @navigateSection
     @params.on 'change:sort', @navigateSort
-    @shows.on 'request', @toggleSpinner
     @shows.on 'sync', @toggleSpinner
     @shows.on 'sync', @renderShows
 
     # Render the navigation dropdown sections
     @fair.fetchSections success: @renderSections
-
-  toggleSpinner: =>
-    @$('.browse-section.booths .feed, #fair-booths-spinner').toggle()
 
   renderSections: (sections) =>
     hash = {}
@@ -54,12 +51,16 @@ module.exports = class BoothsView extends Backbone.View
     @shows.fetch data: @params.toJSON()
 
   renderHeader: =>
-    @$('.browse-section.booths h1').text if @params.get 'section'
+    @$('.browse-section.booths h1').text(
+      if @params.get 'section'
         "Exhibitors at #{@params.get 'section'}"
       else if @params.get 'partner_region'
         "Exhibitors from #{@params.get 'partner_region'}"
+      else if @params.get 'artist'
+        "#{_.titleize _.humanize @params.get 'artist'} at #{@fair.get 'name'}"
       else
-        "All Exhibitors at #{@fair.get('name')}"
+        "All Exhibitors at #{@fair.get 'name'}"
+    )
 
   renderShows: (items) =>
     return @$('.#fair-browse-spinner').hide() unless items.models.length > 0
@@ -85,8 +86,8 @@ module.exports = class BoothsView extends Backbone.View
     @router.navigate location.pathname + "?sort=#{@params.get 'sort'}"
 
   events:
-    'click #fair-booths-sort a'         : 'sort'
-    'click #fair-filter-all-exhibitors' : 'allExhibitors'
+    'click #fair-booths-sort a': 'sort'
+    'click #fair-filter-all-exhibitors': 'allExhibitors'
 
   sort: (e) ->
     @params.set sort: $(e.target).data 'sort'

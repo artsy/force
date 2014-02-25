@@ -78,7 +78,7 @@ module.exports.init = ->
     href.match(pattern)?
 
   # Global click handler
-  $('body').on 'click', 'a', ->
+  $('body').on 'mouseover', 'a', ->
     href = ($this = $(this)).attr 'href'
     if href and isOutbound href
       $this.attr 'href',
