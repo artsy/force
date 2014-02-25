@@ -1,22 +1,21 @@
-_               = require 'underscore'
-Backbone        = require 'backbone'
-qs              = require 'querystring'
-FairBrowseView  = require './view.coffee'
+_ = require 'underscore'
+Backbone = require 'backbone'
+qs = require 'querystring'
+FairBrowseView = require './view.coffee'
 
 module.exports = class BrowseRouter extends Backbone.Router
 
   routes:
-    ':id'                                  : 'booths'
-    ':id/'                                 : 'booths'
-    ':id/overview'                         : 'booths'
-    ':id/browse/artists'                   : 'artists'
-    ':id/browse/artist/:artist_id'         : 'artist'
-    ':id/browse/booths'                    : 'booths'
-    ':id/browse/booths/region/:region'     : 'boothsRegion'
-    ':id/browse/booths/section/:section'   : 'boothsSection'
-    ':id/browse/category/:category'        : 'category'
-    ':id/browse/exhibitors'                : 'exhibitors'
-    ':id/browse'                           : 'browse'
+    ':id(/)': 'booths'
+    ':id/overview(/)': 'booths'
+    ':id/browse/artists(/)': 'artists'
+    ':id/browse/artist/:artist_id(/)': 'artist'
+    ':id/browse/booths(/)': 'booths'
+    ':id/browse/booths/region/:region(/)': 'boothsRegion'
+    ':id/browse/booths/section/:section(/)': 'boothsSection'
+    ':id/browse/category/:category(/)': 'category'
+    ':id/browse/exhibitors(/)': 'exhibitors'
+    ':id/browse(/)': 'browse'
 
   initialize: (options) ->
     _.extend @, options
