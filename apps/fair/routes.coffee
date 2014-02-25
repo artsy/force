@@ -42,7 +42,8 @@ fetchFairData = (fair, profile, res, options) ->
     cache: true
     success: (filteredSearchOptions) ->
       res.locals.mediums = {}
-      res.locals.mediums[_.humanize label] = label for label, count of filteredSearchOptions.get('medium')
+      for label, count of filteredSearchOptions.get('medium')
+        res.locals.mediums[_.titleize _.humanize label] = label
       data.filteredSearchOptions = filteredSearchOptions
       data.filteredSearchColumns = fair.filteredSearchColumns(filteredSearchOptions, 2, 'related_gene', 'artworks')
       success()

@@ -67,6 +67,7 @@ module.exports.init = ->
     new FairBrowseRouter
       fair: fair
       profile: profile
+    Backbone.history.start pushState: true
 
     # Links in the browse section keep your scroll position
     iframePopover = require '../../../components/iframe_popover/index.coffee'
