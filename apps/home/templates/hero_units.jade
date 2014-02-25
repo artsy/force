@@ -5,7 +5,7 @@ ul#home-hero-units
       style="background-image: url('#{heroUnit.get('background_image_url')}')"
     )
       a( href=heroUnit.get('link') )
-        .home-container
+        .main-layout-container.home-container
           h1!= heroUnit.get('heading')
           img.home-hero-unit-title(
             src=heroUnit.get('title_image_url'),

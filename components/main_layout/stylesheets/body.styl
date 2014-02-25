@@ -50,6 +50,13 @@ search-bar-input-placeholder-white()
     border-color rgba(0,0,0,0.1)
     *:not(.tt-suggestion):not(.tt-dropdown-menu)
       border-color rgba(0,0,0,0.1)
+html[data-useragent*="iPad"]
+  .body-transparent-header-white
+  .body-transparent-header
+    #main-layout-header
+      position relative
+      margin-bottom -main-header-height
+
 
 // Dark banners and backgrounds need the header it to be white text and outlines
 // for visiblity.
