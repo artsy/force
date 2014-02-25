@@ -11,8 +11,8 @@ module.exports = ($el) ->
 
 onClick = (e) ->
   e.preventDefault()
-  href = $(this).attr('href')
   _.defer =>
+    href = $(this).attr('href')
     setIframe()
     router.route location.pathname.replace(/^\//, ''), removeIframe
     router.navigate href

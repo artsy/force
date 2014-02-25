@@ -18,7 +18,7 @@ module.exports = class BoothsView extends Backbone.View
 
     # Set up a @params model to maintain the query param state for the @shows collection
     # attched to /api/v1/fair/:id/shows
-    @params = new Backbone.Model(artworks: true, size: 3, sort: '-featured')
+    @params = new Backbone.Model sort: '-featured'
     @shows = new FeedItems
     @shows.url = "#{@fair.url()}/shows"
 
@@ -48,7 +48,7 @@ module.exports = class BoothsView extends Backbone.View
     @$('#fair-filter-sections').html navSectionsTemplate(sections: hash)
 
   fetchShows: =>
-    @shows.fetch data: @params.toJSON()
+    @shows.fetch data: _.extend @params.toJSON(), artworks: true
 
   renderHeader: =>
     @$('h1').text(
