@@ -1,4 +1,5 @@
 _ = require 'underscore'
+_.mixin require 'underscore.string'
 Backbone = require 'backbone'
 BoothsView = require '../booths/view.coffee'
 FilterArtworksView = require '../../../../components/filter/artworks/view.coffee'
@@ -25,6 +26,7 @@ module.exports = class FairBrowseView extends Backbone.View
     @boothParams = @boothsView.params
     @boothParams.on 'change reset', @boothsSection
     @artworkParams.on 'change reset', @artworksSection
+    @artworkParams.on 'change reset', @renderArtworksHeader
     @counts.fetch()
     @highlightHome()
 
@@ -35,6 +37,14 @@ module.exports = class FairBrowseView extends Backbone.View
   artworksSection: =>
     @$('#fair-booths-filter-nav .is-active, #fair-filter-all-artists').removeClass('is-active')
     @$el.attr 'data-section', 'artworks'
+
+  renderArtworksHeader: =>
+    @$('#fair-browse-artworks-header').text(
+      if @artworkParams.get 'related_gene'
+        geneName = _.titleize _.humanize @artworkParams.get('related_gene')
+      else
+        ''
+    )
 
   highlightHome: ->
     return unless SECTION is 'browse'
