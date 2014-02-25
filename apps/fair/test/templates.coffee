@@ -40,6 +40,7 @@ describe 'Fair', ->
           CSS_EXT: '.css.gz'
           JS_EXT: '.js.gz'
           NODE_ENV: 'test'
+          CURRENT_PATH: '/cool-fair'
         fair = new Fair (fabricate 'fair')
         profile = new Profile (fabricate 'fair_profile')
         template = render('index')
@@ -67,6 +68,7 @@ describe 'Fair', ->
           JS_EXT: '.js.gz'
           NODE_ENV: 'test'
           SECTION: 'info'
+          CURRENT_PATH: '/cool-fair'
         fair = new Fair (fabricate 'fair', about: 'about the fair')
         profile = new Profile (fabricate 'fair_profile')
         template = render('index')
@@ -95,7 +97,7 @@ describe 'Fair', ->
           JS_EXT: '.js.gz'
           NODE_ENV: 'test'
           SECTION: 'search'
-
+          CURRENT_PATH: '/cool-fair'
         benv.expose { $: benv.require 'jquery' }
         results = [
            new SearchResult
@@ -215,6 +217,7 @@ describe 'Fair', ->
         sd:
           ARTSY_URL : 'http://localhost:5000'
           ASSET_PATH: 'http://localhost:5000'
+          CURRENT_PATH: '/cool-fair'
         fair: fair
         profile: profile
         filteredSearchColumns: filteredSearchColumns
