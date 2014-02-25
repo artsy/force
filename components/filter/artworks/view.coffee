@@ -84,6 +84,6 @@ module.exports = class FilterArtworksView extends Backbone.View
     @columnsView = new ArtworkColumnsView
       el: $el
       collection: new Artworks
-      artworkSize: 'large'
+      artworkSize: 'tall'
       numberOfColumns: Math.round $el.width() / COLUMN_WIDTH
       gutterWidth: 40

@@ -201,8 +201,7 @@ module.exports = class FeedView extends Backbone.View
         windowWidth
     windowWidth - @marginLeftRight
 
-  getImageWidth: ->
-    @fixedWidth - @textColumnWidth - @textColumnMargin
+  getImageWidth: -> 260
 
   setupCurrentUser: ->
     @currentUser = CurrentUser.orNull()
