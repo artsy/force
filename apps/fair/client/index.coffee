@@ -14,7 +14,6 @@ FairFooter        = require './footer.coffee'
 FavoritesView     = require('../../favorites_follows/client/favorites.coffee').FavoritesView
 FollowsView       = require('../../favorites_follows/client/follows.coffee').FollowsView
 SearchBar         = require './mixins/search_bar.coffee'
-iframePopover     = require '../../../components/iframe_popover/index.coffee'
 
 module.exports.FairView = class FairView extends Backbone.View
   _.extend @prototype, SearchBar
@@ -69,6 +68,10 @@ module.exports.init = ->
       fair: fair
       profile: profile
 
+    # Links in the browse section keep your scroll position
+    iframePopover = require '../../../components/iframe_popover/index.coffee'
+    iframePopover $('#fair-browse')
+
   # Checks to see if the href is an internal link to:
   # an artwork, artist, show, or post
   #
@@ -87,6 +90,3 @@ module.exports.init = ->
           "&profile_id=#{profile.id}" +
           "&fair_id=#{fair.id}" +
           "&fair_name=#{fair.get('name')}"
-
-  # Links in the browse section keep your scroll position
-  iframePopover $('#fair-browse')
