@@ -32,7 +32,8 @@ module.exports = class HeaderView extends Backbone.View
 
   checkRemoveWelcomeHeader: =>
     if sd.CURRENT_USER or (@$window.scrollTop() > @$welcomeHeader.height())
-      @removeWelcomeHeader()
+      unless $('body').hasClass 'is-microsite'
+        @removeWelcomeHeader()
 
   openAuth: (options) ->
     @modal = new AuthModalView _.extend({ width: '500px' }, options)
