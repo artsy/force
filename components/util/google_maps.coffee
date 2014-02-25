@@ -10,9 +10,10 @@ module.exports =
       sensor  : false
       style   : 'lightness:50|saturation:-100'
       zoom    : 16
-      key     : sd.GOOGLE_MAPS_API_KEY
       sensor  : false
     )
+    if sd.GOOGLE_MAPS_API_KEY
+      options.key = sd.GOOGLE_MAPS_API_KEY
     "https://maps.googleapis.com/maps/api/staticmap?#{$.param(options)}"
 
   getMapLink: (location) ->

@@ -44,13 +44,19 @@ module.exports = class PartnerLocation extends Backbone.Model
 
   displayName: -> if @has("display") then @get("display") else @get("name")
 
+  getMapsLocation: ->
+    if @get('coordinates')
+      "#{@get('coordinates').lat},#{@get('coordinates').lng}"
+    else
+      @displayAddress()
+
   googleMapsLink: ->
-    location = @displayAddress()
+    location = @getMapsLocation()
     return unless location
     getMapLink location
 
   mapImageSrc: (width, height) ->
-    location = @displayAddress()
+    location = @getMapsLocation()
     return unless location
 
     getMapImageSrc(
