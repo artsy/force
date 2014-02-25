@@ -76,3 +76,10 @@ describe 'FairBrowseView', ->
     xit 'navigates to the az url', ->
       @view.exhibitorsAZ()
       @router.args[0][0].should.include '/browse/exhibitors'
+
+  describe '#exhibitorsGrid', ->
+
+    it 'triggers param reset to show all exhibitors', ->
+      @view.boothParams.on 'reset', spy = sinon.spy()
+      @view.exhibitorsGrid()
+      spy.called.should.be.ok
