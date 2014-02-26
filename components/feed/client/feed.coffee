@@ -65,6 +65,8 @@ module.exports = class FeedView extends Backbone.View
     @sortOrder             = options.sortOrder
     @limitPostBodyHeight   = options.limitPostBodyHeight
     @additionalParams      = options.additionalParams
+    @hideSeeMoreButtons    = options.hideSeeMoreButtons
+
     if options.afterLoadCont
       @afterLoadCont       = options.afterLoadCont
 
@@ -80,6 +82,7 @@ module.exports = class FeedView extends Backbone.View
       fixedWidth        : @fixedWidth
       imageWidth        : @imageWidth
       feedItemClass     : @feedItemClass
+      hideSeeMoreButtons: @hideSeeMoreButtons
       sd                : sd
     )
 
@@ -118,6 +121,7 @@ module.exports = class FeedView extends Backbone.View
       sd                : sd
       currentUser       : @currentUser
       feedItemClass     : @feedItemClass
+      hideSeeMoreButtons: @hideSeeMoreButtons
     ))
     $html.attr('data-cursor', @feedItems.lastCursor)
     for $item, index in $html

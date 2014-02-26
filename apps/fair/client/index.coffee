@@ -82,9 +82,10 @@ module.exports.init = ->
     href.match(pattern)?
 
   # Global click handler
-  $('body').on 'click', 'a', ->
+  $('body').on 'click', 'a[href]', ->
     href = ($this = $(this)).attr 'href'
-    if href and isOutbound href
+    return
+    if href?.length > 0 and isOutbound href and href.indexOf('http') < 0
       $this.attr 'href',
         href +
           '?microsite=1' +
