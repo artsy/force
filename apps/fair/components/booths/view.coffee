@@ -3,7 +3,7 @@ _.mixin(require 'underscore.string')
 Backbone = require 'backbone'
 sd = require('sharify').data
 FeedItems = require '../../../../components/feed/collections/feed_items.coffee'
-FeedView = require '../../../../components/feed/client/feed.coffee'
+ShowsFeed = require '../../../../components/feed/client/shows_feed.coffee'
 BorderedPulldown = require '../../../../components/bordered_pulldown/view.coffee'
 qs = require 'querystring'
 FilterNav = require '../../../../components/filter/nav/view.coffee'
@@ -66,7 +66,7 @@ module.exports = class BoothsView extends Backbone.View
     return @$('#fair-browse-spinner').hide() unless items.models.length > 0
     items.urlRoot = @shows.url
     @feedView?.destroy()
-    @feedView = new FeedView
+    @feedView = new ShowsFeed
       el: @$('.browse-section.booths .feed')
       feedItems: items
       additionalParams: @params.toJSON()

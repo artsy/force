@@ -40,7 +40,9 @@ module.exports.PartnerShowView = class PartnerShowView extends Backbone.View
       success: (artworks) =>
         if artworks.length > 0
           @collection = artworks
-          @$showArtworks.html(artworkColumns artworkColumns: artworks.groupByColumnsInOrder(3))
+          @$showArtworks.html artworkColumns
+            artworkColumns: artworks.groupByColumnsInOrder(3)
+            artworkSize: 'large'
           @setupArtworkSaveControls()
         else
           @$showArtworks.remove()

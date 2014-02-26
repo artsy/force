@@ -1,3 +1,5 @@
+@import '../../components/stylus_lib'
+
 #main-layout-container
   margin-left 0
   margin-right 0
@@ -16,7 +18,7 @@
     float right
     margin-top 10px
     position absolute
-    right 40px
+    right -5px
     a
       text-decoration none
     .share-to-pinterest
@@ -24,16 +26,15 @@
 
   .show-artworks
     margin 0 auto 100px auto
-    max-width 1200px
 
   .artwork-column
-    margin 0 40px
-    width calc('33% - 80px')
-
-  .show-header-last
-    border-bottom 1px solid dark-gray-border-color
-    margin-bottom 50px
-    padding-bottom 50px
+    margin 0
+    padding 0 40px
+    width 33.33%
+    &:first-child
+      padding-left 0
+    &:last-child
+      padding-right 0
 
   .profile-badge
     float left
@@ -49,10 +50,15 @@
     float left
     max-width 218px
 
+.show-container
+  max-width 1200px
+
 .show-header
   margin 0 auto
   text-align center
   width calc('100% - 80px')
+  min-height 80px
+  position relative
 
 .show-heading-title
   garamond()
@@ -62,9 +68,20 @@
   padding 0 260px
   width 100%
 
-.show-subheading
-  garamond()
-  font-size 20px
-  line-height 1
-  margin-bottom 10px
-  padding 0 260px
+#show-left
+  position absolute
+  text-align left
+  margin-top -2px
+
+#show-back
+  &:hover, &:active
+    border-bottom 0
+  .icon-chevron-left
+    font-size 16px
+    font-weight bold
+    margin-right 5px
+    position relative
+    top 2px
+
+#show-left-info
+  margin-top 20px

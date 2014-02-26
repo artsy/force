@@ -12,7 +12,7 @@ FollowProfiles = require '../../../collections/follow_profiles.coffee'
 CurrentUser    = require '../../../models/current_user.coffee'
 FeedItems      = require '../../../components/feed/collections/feed_items.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
-FollowProfileButton = require '../../partners/client/follow_profiles_button.coffee'
+FollowProfileButton = require '../../../components/partner_buttons/follow_profile.coffee'
 exhibitorsTemplate  = -> require('../templates/exhibitors_columns.jade') arguments...
 
 module.exports = class ForYouView extends Backbone.View
