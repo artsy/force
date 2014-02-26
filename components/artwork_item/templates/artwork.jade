@@ -25,7 +25,7 @@ figure.artwork-item( data-artwork=artwork.get('id') )
         else
           != artwork.partnerName()
 
-    if artwork.get('forsale') && artwork.saleMessage()
+    if artwork.saleMessage()
       p.artwork-item-sale-price!= artwork.saleMessage()
 
     if artwork.has('saleArtwork')

@@ -289,7 +289,13 @@ module.exports = class Artwork extends Backbone.Model
 
   saleMessage: ->
     return undefined if @get('sale_message') is 'Contact For Price'
-    @get 'sale_message'
+    if @get('sale_message')?.indexOf('Sold') > - 1
+      _.compact([
+        "<span style='letter-spacing: 1px;'>SOLD</span>"
+        @get('price')
+      ]).join(' &ndash; ')
+    else
+      @get 'sale_message'
 
   salePrice: (isAuction = false) ->
     @saleMessage() if @saleMessage() and not isAuction
