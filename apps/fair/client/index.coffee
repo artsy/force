@@ -84,8 +84,7 @@ module.exports.init = ->
   # Global click handler
   $('body').on 'click', 'a[href]', ->
     href = ($this = $(this)).attr 'href'
-    return
-    if href?.length > 0 and isOutbound href and href.indexOf('http') < 0
+    if href and isOutbound href
       $this.attr 'href',
         href +
           '?microsite=1' +
