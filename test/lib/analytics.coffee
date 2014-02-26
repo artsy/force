@@ -103,6 +103,18 @@ describe 'analytics', ->
           done()
         , 1000
 
+    describe '#track', ->
+
+      it 'returns true if enabled', ->
+        rewiredAnalytics mixpanel: @mixpanelStub, ga: @gaStub, location: { pathname: 'foobar' }
+        rewiredAnalytics.getProperty = -> 'enabled'
+        rewiredAnalytics.abTest('foo').should.be.ok
+
+      it 'returns false if disabled', ->
+        rewiredAnalytics mixpanel: @mixpanelStub, ga: @gaStub, location: { pathname: 'foobar' }
+        rewiredAnalytics.getProperty = -> 'disabled'
+        rewiredAnalytics.abTest('foo').should.not.be.ok
+
   describe 'with a phantomjs useragent', ->
 
     before ->

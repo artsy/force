@@ -1,14 +1,7 @@
 .main-layout-container
   if sd.CURRENT_USER
     .foryou-section.blank-state Follow exhibitors and artists at the fair to personalize your “For You” section. We’ll let you know when new works and shows are added.
-    .foryou-section.artists
-      .large-garamond-header Works by Artists you follow
-      .artworks
-        .loading-spinner
-    .foryou-section.partners
-      .large-garamond-header Exhibitors you follow
-      .loading-spinner
-      .feed
+    include ./for_you_logged_in
   else
     .foryou-section.blank-state.blank-state-visible Follow exhibitors and artists at the fair to personalize your “For You” section. We’ll let you know when new works and shows are added.
   .foryou-section.booths

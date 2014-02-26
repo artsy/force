@@ -22,7 +22,7 @@ module.exports = class ForYouView extends Backbone.View
   analyticsUnfollowMessage: 'Unfollowed partner profile from for-you'
 
   initialize: (options) ->
-    { @fair, @profile } = options
+    { @fair, @profile, @onFetchFollowingArtists } = options
     @currentUser = CurrentUser.orNull()
     @collection ?= new Artworks()
 
@@ -64,6 +64,7 @@ module.exports = class ForYouView extends Backbone.View
         if followingArtists.length
           for artist in followingArtists.models
             @fetchAndAppendArtistArtworks artist.get('artist').id
+          @onFetchFollowingArtists?(followingArtists)
         else
           @$('.foryou-section.artists').remove()
           @showHideBlankState()
