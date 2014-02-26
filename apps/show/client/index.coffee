@@ -17,12 +17,12 @@ module.exports.PartnerShowView = class PartnerShowView extends Backbone.View
   initialize: (options) ->
     @shareView = new ShareView
       el        : @$('.show-share')
+    @setupCurrentUser()
     new PartnerShowButtons
       el: @$(".partner-buttons-show-buttons")
       model: @model
       followProfiles: @followProfiles
-    @followProfiles?.syncFollows [@model.get 'id']
-    @setupCurrentUser()
+    @followProfiles?.syncFollows [@model.get('partner').default_profile_id]
 
     @$showArtworks = @$('.show-artworks')
     @$carousel = @$('.carousel')
