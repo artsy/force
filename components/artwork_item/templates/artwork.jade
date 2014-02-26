@@ -44,5 +44,9 @@ figure.artwork-item( data-artwork=artwork.get('id') )
         a.artwork-item-buy.avant-garde-button-black.is-tiny(
           href=artwork.href(), data-id=artwork.get('id')
         ) Buy
+      else
+        a.artwork-item-contact-seller.avant-garde-button-black.is-tiny(
+          href=artwork.href(), data-id=artwork.get('id')
+        ) Contact Seller
       if artwork.get('sold')
         .artwork-item-sold Sold
