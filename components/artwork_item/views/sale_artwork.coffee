@@ -2,6 +2,7 @@ _                       = require 'underscore'
 sd                      = require('sharify').data
 Backbone                = require 'backbone'
 AcquireArtwork          = require('../../acquire/view.coffee').acquireArtwork
+ContactPartnerView      = require '../../contact/contact_partner.coffee'
 SaveControls            = require '../../artwork_item/views/save_controls.coffee'
 
 module.exports = class SaleArtworkView extends Backbone.View
@@ -10,7 +11,8 @@ module.exports = class SaleArtworkView extends Backbone.View
   analyticsSaveMessage: "Added artwork to collection, via sale"
 
   events:
-    "click .artwork-item-buy" : "acquire"
+    "click .artwork-item-buy"            : "acquire"
+    "click .artwork-item-contact-seller" : "contactSeller"
     # TODO: Add auction bid handling here
     #"click .artwork-item-bid": "bid"
 
@@ -22,6 +24,12 @@ module.exports = class SaleArtworkView extends Backbone.View
       model            : @model
     saveView.analyticsRemoveMessage = @analyticsRemoveMessage
     saveView.analyticsSaveMessage   = @analyticsSaveMessage
+
+  contactSeller: (event) =>
+    event.preventDefault()
+    new ContactPartnerView
+      artwork: @model
+      partner: @model.get('partner')
 
   acquire: (event) =>
     # redirect to artwork page if artwork has multiple editions
