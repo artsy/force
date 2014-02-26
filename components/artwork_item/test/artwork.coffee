@@ -75,12 +75,12 @@ describe 'Artwork Item template', ->
       $ = cheerio.load render('artwork')({ artwork: @artwork })
       $('.artwork-item-sale-price').text().should.equal @artwork.get 'sale_message'
 
-    it 'doesnt display a sale message unless work is for sale', ->
+    it 'displays a sale message if artwork is not for sale', ->
       @artwork.set
         sale_message: "$5,200"
         forsale: false
       $ = cheerio.load render('artwork')({ artwork: @artwork })
-      $('.artwork-item-sale-price').length.should.equal 0
+      $('.artwork-item-sale-price').length.should.equal 1
 
   describe 'nopin', ->
     beforeEach ->
