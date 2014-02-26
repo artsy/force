@@ -1,6 +1,5 @@
 span.partner-buttons-show-buttons( data-id=show.get('id') )
-  button.avant-garde-button-white.follow-button(
-    data-id=show.get('partner').id,
-    class=show.partner().followButtonClass()
-  )
-  button.avant-garde-button-white.partner-buttons-contact Contact Gallery
+  if show.get('partner') && show.get('partner').default_profile_public
+    button.avant-garde-button-white.follow-button( data-id=show.get('partner').id )
+      = ' ' + show.partner().typeName()
+  button.avant-garde-button-white.partner-buttons-contact Contact #{show.partner().typeName()}

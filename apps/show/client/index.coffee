@@ -1,22 +1,27 @@
-_               = require 'underscore'
-sd              = require('sharify').data
-Backbone        = require 'backbone'
-
-AdditionalImage = require '../../../models/additional_image.coffee'
-Artworks        = require '../../../collections/artworks.coffee'
-CarouselView    = require '../../../components/carousel/view.coffee'
-CurrentUser     = require '../../../models/current_user.coffee'
-SaveControls    = require '../../../components/artwork_item/views/save_controls.coffee'
-PartnerShow     = require '../../../models/partner_show.coffee'
-ShareView       = require '../../../components/share/view.coffee'
-
-artworkColumns  = -> require('../../../components/artwork_columns/template.jade') arguments...
+_                  = require 'underscore'
+sd                 = require('sharify').data
+Backbone           = require 'backbone'
+AdditionalImage    = require '../../../models/additional_image.coffee'
+Artworks           = require '../../../collections/artworks.coffee'
+CarouselView       = require '../../../components/carousel/view.coffee'
+CurrentUser        = require '../../../models/current_user.coffee'
+SaveControls       = require '../../../components/artwork_item/views/save_controls.coffee'
+PartnerShow        = require '../../../models/partner_show.coffee'
+ShareView          = require '../../../components/share/view.coffee'
+PartnerShowButtons = require '../../../components/partner_buttons/show_buttons.coffee'
+FollowProfiles     = require '../../../collections/follow_profiles.coffee'
+artworkColumns     = -> require('../../../components/artwork_columns/template.jade') arguments...
 
 module.exports.PartnerShowView = class PartnerShowView extends Backbone.View
 
   initialize: (options) ->
     @shareView = new ShareView
       el        : @$('.show-share')
+    new PartnerShowButtons
+      el: @$(".partner-buttons-show-buttons")
+      model: @model
+      followProfiles: @followProfiles
+    @followProfiles?.syncFollows [@model.get 'id']
     @setupCurrentUser()
 
     @$showArtworks = @$('.show-artworks')
@@ -52,6 +57,7 @@ module.exports.PartnerShowView = class PartnerShowView extends Backbone.View
     @currentUser = CurrentUser.orNull()
     @currentUser?.initializeDefaultArtworkCollection()
     @artworkCollection = @currentUser?.defaultArtworkCollection()
+    @followProfiles = new FollowProfiles if @currentUser
 
   setupArtworkSaveControls: ->
     listItems =

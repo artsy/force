@@ -50,5 +50,5 @@ module.exports = class Partner extends Backbone.Model
     return "" unless @has('website') && @get('website').length > 0
     @get('website').replace('http://', '').replace(/\/$/g, '')
 
-  followButtonClass: ->
-    if @get('type') is 'Gallery' then 'is-gallery' else 'is-institution'
+  typeName: ->
+    if @get('type') is 'Gallery' then 'Gallery' else 'Institution'

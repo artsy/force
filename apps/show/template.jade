@@ -15,6 +15,7 @@ mixin back(href, text)
 block body
   #show
     header.show-header.show-container
+
       #show-left
         case context
           when 'home'
@@ -49,6 +50,9 @@ block body
           em= fair.get('name')
       else
         h1.show-heading-title!= show.title()
+
+      #show-main-buttons
+        include ../../components/partner_buttons/show_buttons
 
     section.show-installation-shot-carousel.carousel( style="display: #{show.carouselDisplay()}")
       .loading-spinner
