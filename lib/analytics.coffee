@@ -11,7 +11,7 @@ createHash = require('crypto').createHash
 _.mixin(require 'underscore.string')
 
 module.exports = (options) =>
-  #return if module.exports.getUserAgent()?.indexOf?('PhantomJS') > -1
+  return if module.exports.getUserAgent()?.indexOf?('PhantomJS') > -1
   { @mixpanel, @ga, @location } = options
   @location ?= window?.location
   if sd.GOOGLE_ANALYTICS_ID
