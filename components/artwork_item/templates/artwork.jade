@@ -25,7 +25,7 @@ figure.artwork-item( data-artwork=artwork.get('id') )
         else
           != artwork.partnerName()
 
-    if artwork.get('forsale') && artwork.saleMessage()
+    if artwork.saleMessage()
       p.artwork-item-sale-price!= artwork.saleMessage()
 
     if artwork.has('saleArtwork')
@@ -44,5 +44,9 @@ figure.artwork-item( data-artwork=artwork.get('id') )
         a.artwork-item-buy.avant-garde-button-black.is-tiny(
           href=artwork.href(), data-id=artwork.get('id')
         ) Buy
-      if artwork.get('sold')
-        .artwork-item-sold Sold
+      else if artwork.get('sold')
+        .artwork-item-sold.avant-garde-button-black.is-tiny Sold
+      else
+        a.artwork-item-contact-seller.avant-garde-button-black.is-tiny(
+          href=artwork.href(), data-id=artwork.get('id')
+        ) Contact Seller

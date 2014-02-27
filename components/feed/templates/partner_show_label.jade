@@ -2,7 +2,7 @@ include ../../share/template
 
 .feed-item-top-section
   .feed-item-share-section
-    +share(feedItemChildModel.shareTitle(), undefined, feedItemChildModel.href())
+    +share(feedItemChildModel.shareTitle(), undefined, feedItemChildModel.canonicalUrl())
     show = feedItemChildModel
     include ../../partner_buttons/show_buttons
   if feedItemChildModel.partnerName()

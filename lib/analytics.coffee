@@ -12,9 +12,7 @@ _.mixin(require 'underscore.string')
 
 module.exports = (options) =>
   return if module.exports.getUserAgent()?.indexOf?('PhantomJS') > -1
-
   { @mixpanel, @ga, @location } = options
-
   @location ?= window?.location
   if sd.GOOGLE_ANALYTICS_ID
     @ga? 'create', sd.GOOGLE_ANALYTICS_ID, 'artsy.net'
@@ -96,3 +94,22 @@ module.exports.multi = (description, modelName, ids) ->
     )(@encodeMulti(chunk))
 
 module.exports.trackImpression = (modelName, ids) -> @multi('Impression', modelName, ids)
+
+module.exports.getProperty = (property) ->
+  mixpanel?.get_property property
+
+module.exports.setProperty = (hash) ->
+  mixpanel.register_once hash
+
+module.exports.abTest = (key) ->
+  property = module.exports.getProperty key
+  if property is 'enabled'
+    true
+  else if property is 'disabled'
+    false
+  else
+    enabledDisabled = if Math.floor(2 * Math.random()) > 0 then 'enabled' else 'disabled'
+    hash = {}
+    hash[key] = enabledDisabled
+    module.exports.setProperty hash
+    enabledDisabled == 'enabled'

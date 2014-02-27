@@ -25,7 +25,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
     { @pageSize, @nextPage } = _.defaults options or {}, @defaults
     @setupCurrentUser()
 
-    @collection ?= new Artworks() # Maintain all saved artworks fetched so far
+    @collection ?= new Artworks()
     @listenTo @collection, "request", @renderLoading
     @listenTo @collection, "sync", @doneRenderLoading
 
@@ -61,7 +61,9 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
     @savedArtworkCollection.fetch
       data: { user_id: @currentUser.get('id'), private: true }
       success: =>
-        @showStatusDialog() unless not @savedArtworkCollection.get('private')
+        @showStatusDialog() if @savedArtworkCollection.get('private')
+      error: =>
+        @renderStatus()
     mediator.on 'favorites:make:public', @makePublic, this
     # intercept click events before bubbling up to ShareView
     @$('[class^="share-to-"]').on 'click', @checkStatusBeforeSharing
@@ -86,6 +88,8 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
         else
           @artworkColumnsView.appendArtworks collection.models
           @nextPage = page + 1
+      error: =>
+        @doneRenderLoading(); @showEmptyHint()
 
   infiniteScroll: =>
     fold = $(window).height() + $(window).scrollTop()
@@ -130,15 +134,15 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
       width: '350px'
 
   renderStatus: () ->
-    status = @savedArtworkCollection.get('private')
-    @$('.favorites-privacy').html $( favoritesStatusTemplate private: status )
+    isPrivate = @savedArtworkCollection.get('private') ? true
+    @$('.favorites-privacy').html $( favoritesStatusTemplate private: isPrivate)
 
   # Check the favorites status and show the status dialog instead of
   # sharing window if it's private.
   checkStatusBeforeSharing: (e) =>
     e.preventDefault()
 
-    if @savedArtworkCollection.get('private')
+    if @savedArtworkCollection.get('private') ? true
       @showStatusDialog()
       e.stopPropagation()
 

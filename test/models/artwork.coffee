@@ -34,6 +34,16 @@ describe 'Artwork', ->
       @artwork.images.reset()
       @artwork.hasAdditionalImages().should.not.be.ok
 
+  describe '#saleMessage', ->
+    it 'formats sold sale message', ->
+      @artwork.save
+        sale_message: '$6,000 - Sold'
+        price: '$6,000'
+      @artwork.saleMessage().should.equal "<span style='letter-spacing: 1px;'>SOLD</span> &ndash; $6,000"
+      @artwork.save
+        sale_message: '$6,000'
+      @artwork.saleMessage().should.equal '$6,000'
+
   describe '#additionalImages', ->
     it 'returns an array of image objects sans the defaultImage', ->
       defaultImage      = @artwork.defaultImage()

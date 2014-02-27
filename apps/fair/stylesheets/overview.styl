@@ -211,6 +211,19 @@ left-column-width = 200px
     .section-subheading
       width: 90%
 
+.for-you-container
+  .foryou-section 
+    margin-top -1px
+    margin-bottom 20px
+    .artworks
+      margin-top: 10px
+      margin-bottom: 30px
+    .large-garamond-header
+      padding-top 30px
+      padding-bottom 20px
+      border-top 1px solid light-gray-border-color
+      border-bottom 0px solid
+
 .fair-overview-post-container
   margin-top 30px
   border-top 1px solid light-gray-border-color
@@ -253,6 +266,14 @@ left-column-width = 200px
     text-decoration none
     margin-bottom 10px
     display block
+    .small-post-img-container
+      height 115px
+      overflow hidden
+      display inline-block
+      background-color #000
+    &:hover
+      img
+        opacity 0.5
     img
       display inline-block
       width 150px
@@ -286,6 +307,9 @@ left-column-width = 200px
     avant-garde()
     text-decoration none
     font-size 13px
+  .section-heading, .section-subheading
+    margin-left auto
+    margin-right auto
 
 .overview-section-heading
   font-size: 30px

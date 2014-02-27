@@ -13,6 +13,9 @@ onClick = (e) ->
   e.preventDefault()
   _.defer =>
     href = $(this).attr('href')
+    return unless href?.length
+    # Don't iframe if it might be an offsite link
+    return if href.indexOf('http') > -1
     setIframe()
     router.route location.pathname.replace(/^\//, ''), removeIframe
     router.navigate href

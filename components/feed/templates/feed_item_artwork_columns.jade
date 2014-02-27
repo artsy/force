@@ -2,7 +2,7 @@
 - var artworkSize = 'tall'
 section.feed-large-artworks-columns
   include ../../artwork_columns/template.jade
-if feedItem.formatSeeMoreText
+if !hideSeeMoreButtons && feedItem.formatSeeMoreText
   .see-more
     != feedItem.formatSeeMoreText()
     .loading-spinner-small

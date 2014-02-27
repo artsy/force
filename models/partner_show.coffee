@@ -83,6 +83,7 @@ module.exports = class PartnerShow extends Backbone.Model
       "See \"#{@get('name')}\" on @artsy"
 
   href: -> "/show/#{@get('id')}"
+  canonicalUrl: -> sd.ARTSY_URL + @href()
 
   runningDates: ->
     DateHelpers.timespanInWords @get('start_at'), @get('end_at')

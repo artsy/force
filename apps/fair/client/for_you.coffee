@@ -11,6 +11,7 @@ Artists        = require '../../../collections/artists.coffee'
 FollowProfiles = require '../../../collections/follow_profiles.coffee'
 CurrentUser    = require '../../../models/current_user.coffee'
 FeedItems      = require '../../../components/feed/collections/feed_items.coffee'
+analytics      = require '../../../lib/analytics.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 FollowProfileButton = require '../../../components/partner_buttons/follow_profile.coffee'
 exhibitorsTemplate  = -> require('../templates/exhibitors_columns.jade') arguments...
@@ -22,7 +23,7 @@ module.exports = class ForYouView extends Backbone.View
   analyticsUnfollowMessage: 'Unfollowed partner profile from for-you'
 
   initialize: (options) ->
-    { @fair, @profile } = options
+    { @fair, @profile, @onFetchFollowingArtists } = options
     @currentUser = CurrentUser.orNull()
     @collection ?= new Artworks()
 
@@ -64,6 +65,7 @@ module.exports = class ForYouView extends Backbone.View
         if followingArtists.length
           for artist in followingArtists.models
             @fetchAndAppendArtistArtworks artist.get('artist').id
+          @onFetchFollowingArtists?(followingArtists)
         else
           @$('.foryou-section.artists').remove()
           @showHideBlankState()
@@ -129,6 +131,8 @@ module.exports = class ForYouView extends Backbone.View
       data:
         _.extend(additionalParams, size: 3)
       success: (items) =>
+        if items.models
+          analytics.track.click "Display following exhibitors at the fair"
         feed.handleFetchedItems items.models
 
   fetchAndAppendShows: (feedItems) ->

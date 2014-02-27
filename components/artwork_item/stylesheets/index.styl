@@ -37,15 +37,16 @@
   margin-top 1em
   text-align left
 
-a.artwork-item-buy
+a.artwork-item-buy, a.artwork-item-contact-seller
   color white
 
 .artwork-item-sold
-  avant-garde()
-  color red-text-color
-  font-style 13px
-  margin-left 10px
-  margin-top 7px
+  background-color dark-gray-text-color
+  color light-gray-border-color
+  cursor default
+  &:hover
+    color dark-gray-text-color
+    background-color light-gray-border-color
 
 .artwork-item
   .avant-garde-button-black
