@@ -61,12 +61,6 @@ describe 'ArtworkView', ->
       @view = new @ArtworkView el: $('#artwork-page'), artist: @artist, artwork: @artwork
 
     describe 'when an artwork changes', ->
-      it 'updates the detail panel accordingly', ->
-        $detail = @view.$('.artwork-detail')
-        $detail.find('.artwork-buy-button').length.should.be.ok
-        @view.artwork.set 'sale_message', 'SOLD'
-        $detail.find('.artwork-buy-button').length.should.not.be.ok
-
       it 'only renders if the artwork changes', ->
         @renderDetailSpy.called.should.not.be.ok
         @view.artwork.set 'sale_message', 'SOLD'
