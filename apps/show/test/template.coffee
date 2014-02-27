@@ -8,6 +8,7 @@ Backbone        = require 'backbone'
 PartnerShow     = require '../../../models/partner_show'
 Profile         = require '../../../models/profile'
 AdditionalImage = require '../../../models/additional_image'
+Fair            = require '../../../models/fair'
 Artwork         = require '../../../models/artwork'
 Artworks        = require '../../../collections/artworks'
 
@@ -38,6 +39,50 @@ describe 'Partner Show', ->
       })
 
     describe 'template', ->
+
+      it 'renders a container for install shots if the show has them', ->
+        @show.set 'images_count', 3
+        @html = render('template')({
+          fair    : @show.fair()
+          location: @show.location()
+          partner : @show.partner()
+          sd      : @sd
+          show    : @show
+          profile : @profile
+        })
+        $ = cheerio.load @html
+        $('.carousel').should.have.lengthOf 1
+
+      it 'renders back navigation', ->
+        @show.set fair: fabricate('fair')
+        @html = render('template')({
+          fair    : @show.fair()
+          location: @show.location()
+          partner : @show.partner()
+          sd      : @sd
+          show    : @show
+          profile : @profile
+          context : 'fair'
+        })
+        $ = cheerio.load @html
+        $('#show-left-info').should.have.lengthOf 1
+        $('#show-left-info').text().should.include @show.fair().get('name')
+
+      it 'renders back navigation without fair organizer', ->
+        @show.set fair: fabricate('fair')
+        @show.fair().set organizer: undefined
+        @html = render('template')({
+          fair    : @show.fair()
+          location: @show.location()
+          partner : @show.partner()
+          sd      : @sd
+          show    : @show
+          profile : @profile
+          context : 'fair'
+        })
+        $ = cheerio.load @html
+        $('#show-left-info').should.have.lengthOf 1
+        $('#show-left-info').text().should.include @show.fair().get('name')
 
       it 'renders a container for install shots if the show has them', ->
         @show.set 'images_count', 3

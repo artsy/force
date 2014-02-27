@@ -29,9 +29,9 @@ describe 'Show route', ->
       Backbone.sync.args[1][2].success(fabricate('profile'))
       @res.render.args[0][0].should.equal 'template'
 
-    it 'sets the context based on the referrer', ->
+    it 'sets the relatedContext based on the referrer', ->
       @req.get.returns 'http://artsy.net/artrio'
       Backbone.sync.args[0][2].success fabricate 'show', fair: {
         organizer: { profile_id: 'artrio' }
       }
-      @res.locals.context.should.equal 'fair'
+      @res.locals.relatedContext.should.equal 'fair'
