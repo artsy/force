@@ -132,8 +132,8 @@ scan 32684 count 1000 match *gene*
 Here are some keys that are in use for the current 'browse' and the about/job pages, which are nice to know how to clear on demand:
 
 - `$ del "https://artsy.net/api/v1/page/about"`
-- `$ del https://artsy.net/api/v1/set/51ba3bcb0abd8521b3000022/items{\"page\":1,\"size\":20}" # Featured Genes (browse)`
-- `$ del https://artsy.net/api/v1/set/51b8bfb99f2aab4c1d000001/items{\"page\":1,\"size\":20}" # Popular Categories (browse)`
-- `$ del https://artsy.net/api/v1/set/51ba3bcb0abd8521b3000021/items{\"page\":1,\"size\":20}" # Gene Categories (browse)`
+- `$ del https://artsy.net/api/v1/set/51ba3bcb0abd8521b3000022/items{\"display_on_desktop\":true,\"page\":1,\"size\":20}" # Featured Genes (browse)`
+- `$ del https://artsy.net/api/v1/set/51b8bfb99f2aab4c1d000001/items{\"display_on_desktop\":true,\"page\":1,\"size\":20}" # Popular Categories (browse)`
+- `$ del https://artsy.net/api/v1/set/51ba3bcb0abd8521b3000021/items{\"display_on_desktop\":true,\"page\":1,\"size\":20}" # Gene Categories (browse)`
 
 Note that query params are included in the cache key.
