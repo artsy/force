@@ -13,7 +13,8 @@ acquireArtwork        = require('../../../components/acquire/view.coffee').acqui
 FeatureNavigationView = require './feature-navigation.coffee'
 BelowTheFoldView      = require './below-the-fold.coffee'
 
-artistArtworksTemplate = -> require('../templates/_artist-artworks.jade') arguments...
+artistArtworksTemplate  = -> require('../templates/_artist-artworks.jade') arguments...
+detailTemplate          = -> require('../templates/_detail.jade') arguments...
 
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 
@@ -39,6 +40,8 @@ module.exports = class ArtworkView extends Backbone.View
     @setupFollowButton()
     @setupBelowTheFold()
     @setupMainSaveButton()
+
+    @reRenderDetail()
 
     # Handle all related content
     @setupRelatedLayers()
@@ -83,6 +86,12 @@ module.exports = class ArtworkView extends Backbone.View
       addClass('is-loaded').
       html(artistArtworksTemplate artworks: @artist.artworks)
     @setupArtistArtworkSaveButtons @artist.artworks
+
+  # Re-render incase the cache is inaccurate
+  reRenderDetail: ->
+    @artwork.fetch
+      success: =>
+        @$('.artwork-detail').html detailTemplate(artwork: @artwork, artist: @artist)
 
   setupArtistArtworkSaveButtons: (artworks) ->
     return unless artworks.length > 0
