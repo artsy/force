@@ -91,6 +91,7 @@ module.exports = class ArtworkView extends Backbone.View
 
   renderDetail: ->
     @$('.artwork-detail').html detailTemplate(artwork: @artwork, artist: @artist)
+    @followButton.setElement @$('.artwork-artist-follow-button')
 
   setupArtistArtworkSaveButtons: (artworks) ->
     return unless artworks.length > 0
