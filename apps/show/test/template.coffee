@@ -8,7 +8,6 @@ Backbone        = require 'backbone'
 PartnerShow     = require '../../../models/partner_show'
 Profile         = require '../../../models/profile'
 AdditionalImage = require '../../../models/additional_image'
-Fair            = require '../../../models/fair'
 Artwork         = require '../../../models/artwork'
 Artworks        = require '../../../collections/artworks'
 
