@@ -9,7 +9,6 @@ SaveControls       = require '../../../components/artwork_item/views/save_contro
 PartnerShow        = require '../../../models/partner_show.coffee'
 ShareView          = require '../../../components/share/view.coffee'
 PartnerShowButtons = require '../../../components/partner_buttons/show_buttons.coffee'
-FollowProfiles     = require '../../../collections/follow_profiles.coffee'
 artworkColumns     = -> require('../../../components/artwork_columns/template.jade') arguments...
 
 module.exports.PartnerShowView = class PartnerShowView extends Backbone.View
@@ -21,9 +20,6 @@ module.exports.PartnerShowView = class PartnerShowView extends Backbone.View
     new PartnerShowButtons
       el: @$(".partner-buttons-show-buttons")
       model: @model
-      followProfiles: @followProfiles
-    @followProfiles?.syncFollows [@model.get('partner').default_profile_id]
-
     @$showArtworks = @$('.show-artworks')
     @$carousel = @$('.carousel')
 
@@ -57,7 +53,6 @@ module.exports.PartnerShowView = class PartnerShowView extends Backbone.View
     @currentUser = CurrentUser.orNull()
     @currentUser?.initializeDefaultArtworkCollection()
     @artworkCollection = @currentUser?.defaultArtworkCollection()
-    @followProfiles = new FollowProfiles if @currentUser
 
   setupArtworkSaveControls: ->
     listItems =

@@ -15,8 +15,7 @@ If a separate doc is required, add it to the component's directory as a
 - [Filter](#filter)
 - [Contact View](#contact-view)
 - [Related Genes](#related-genes)
-
-
+- [Partner Buttons](#partner-buttons)
 
 ## Artwork Columns
 ![](images/artwork_columns.png)
@@ -383,7 +382,7 @@ When building up your own filtering UI you may need to use buttons and dropdowns
   .filter-button All Artists
 ````
 
-### Contact View
+## Contact View
 
 ```coffeescript
 ContactView = require '../../components/contact/view.coffee'
@@ -418,7 +417,7 @@ The view's `submit` method can be intercepted to add more data to the model:
 
 ```
 
-### Related Genes
+## Related Genes
 
 This is a view designed to show a comma separated list of related genes. The base options / CSS are to show up to 10 items, each linked to their gene page, in Artsy purple. The logic for deriving the related genes for a given model can go in here- currently related genes for Artists and Genes are supported. Add a reference to the component in your app's asset package and override CSS as needed.
 
@@ -435,7 +434,7 @@ Example usage:
       el: @$('.artist-info-section .related-genes')
 ```
 
-### Iframe Popover
+## Iframe Popover
 
 A utility that lets you keep your scroll position with some seriously unorthodox tricks.
 
@@ -449,3 +448,32 @@ iframePopover $('#fair-browse')
 The iframe popover will hijack clicks to `a[href]`s and render the next page in an iframe that sits on top of, and locks the scroll position of, the body behind it. It also hooks up a router to remove the iframe when going backwards and refreshes the page when going forwards. This creates the illusion of retaining your scroll position between pages.
 
 The main layout component is wired up to use the iframe popover so you should only need to require the `index.coffee` function and indicate which element you want to listen for `a[href]` clicks on.
+
+## Partner Buttons
+
+Buttons used for common actions among partners such as following them or contacting them for a show inquiry.
+
+![](images/partner_buttons.png)
+
+Use the `PartnerShowButtons` view and template to easily drop in the "Follow Gallery" and "Contact Gallery" buttons pictured above.
+
+````jade
+include ../../components/partner_buttons/show_buttons
+````
+
+````coffeescript
+new PartnerShowButtons
+  el: @$(".partner-buttons-show-buttons")
+  model: @show
+````
+
+By default this view will figure out state of the "Follow Gallery" button. However, if you have many following buttons on one page and you want to batch update them at one to reduce API requests, feel free to pass them in yourself and call `syncFollows` when you're ready.
+
+````coffeescript
+@followProfiles = @user and new FollowProfiles
+new PartnerShowButtons
+  el: @$(".partner-buttons-show-buttons")
+  model: @show
+  followProfiles: @followProfiles
+@followProfiles?.syncFollows [@show.get('partner').default_profile_id]
+````

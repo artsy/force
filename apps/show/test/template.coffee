@@ -66,6 +66,13 @@ describe 'Partner Show', ->
         $ = cheerio.load @html
         $('.show-heading-title').text().should.equal @show.title()
 
+      it 'renders show details', ->
+        $ = cheerio.load @html
+        $('#show-left').text().should.include @show.get('partner').name
+        $('#show-left').text().should.include @show.location().singleLine()
+        $('#show-left').html().should.include @show.runningDates()
+        $("#show-left a[href*='/show/#{@show.get('id')}']").should.have.lengthOf 0
+
       it 'renders a container for artwork columns', ->
         $ = cheerio.load @html
         $(".artworks-columns").should.have.lengthOf 1
@@ -118,6 +125,13 @@ describe 'Partner Show', ->
       it 'renders a show title', ->
         $ = cheerio.load @html
         $('.show-heading-title').text().should.equal @show.title()
+
+      it 'renders show details', ->
+        $ = cheerio.load @html
+        $('#show-left').text().should.include @show.get('partner').name
+        $('#show-left').text().should.include @show.location().singleLine()
+        $('#show-left').html().should.include @show.runningDates()
+        $("#show-left a[href*='/show/#{@show.get('id')}']").should.have.lengthOf 0
 
       it 'renders a container for artwork columns', ->
         $ = cheerio.load @html

@@ -56,7 +56,8 @@ module.exports.FeedItemView = class FeedItemView extends Backbone.View
 
   setupShareButtons: ->
     el = if @$('.feed-item-share-section').length > 0 then @$('.feed-item-share-section') else @$('.post-actions')
-    new ShareView el: el
+    new ShareView
+      el: el
 
   purchase: (event) =>
     $target = $(event.target)
