@@ -21,9 +21,9 @@ block body
           when 'home'
             +back('/', 'Homepage')
           when 'fair'
-            +back(fair.get('organizer').profile_id, fair.get('name'))
+            +back('/' + fair.get('organizer').profile_id, fair.get('name'))
           when 'partner'
-            +back(partner.get('default_profile_id'), partner.get('name'))
+            +back('/' + partner.get('default_profile_id'), partner.get('name'))
         #show-left-info
           strong
             a( href='/' + partner.get('default_profile_id') )= partner.get('name')

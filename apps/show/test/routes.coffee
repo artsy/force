@@ -5,7 +5,7 @@ Backbone = require 'backbone'
 
 describe 'Show route', ->
   beforeEach ->
-    @req = { params: {} }
+    @req = { params: {}, get: sinon.stub() }
     @res = { render: sinon.stub(), redirect: sinon.stub(), locals: { sd: {} } }
     sinon.stub Backbone, 'sync'
 
@@ -28,3 +28,10 @@ describe 'Show route', ->
       Backbone.sync.args[0][2].success(show)
       Backbone.sync.args[1][2].success(fabricate('profile'))
       @res.render.args[0][0].should.equal 'template'
+
+    it 'sets the context based on the referrer', ->
+      @req.get.returns 'http://artsy.net/artrio'
+      Backbone.sync.args[0][2].success fabricate 'show', fair: {
+        organizer: { profile_id: 'artrio' }
+      }
+      @res.locals.context.should.equal 'fair'

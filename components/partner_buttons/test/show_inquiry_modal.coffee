@@ -5,13 +5,13 @@ Backbone = require 'backbone'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
 
-describe 'ShowInquiryView', ->
+describe 'ShowInquiryModal', ->
 
   beforeEach (done) ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
-      ShowInquiryView = benv.require resolve __dirname, '../client/show_inquiry_view'
+      ShowInquiryView = benv.require resolve __dirname, '../show_inquiry_modal'
       @ContactView = ShowInquiryView.__get__ 'ContactView'
       @ContactView::submit = sinon.stub()
       ShowInquiryView::initialize = sinon.stub()

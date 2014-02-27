@@ -16,7 +16,7 @@ describe 'BoothsView', ->
       $.fn.hidehover = sinon.stub()
       benv.render resolve(__dirname, '../section.jade'), {}, =>
         BoothsView = benv.requireWithJadeify resolve(__dirname, '../view'), ['navSectionsTemplate']
-        for klass in ['FilterNav', 'BorderedPulldown', 'FeedView']
+        for klass in ['FilterNav', 'BorderedPulldown', 'ShowsFeed']
           @[klass] = (opts) -> _.extend @, opts
           sinon.spy @, klass
           for method in ['appendArtworks', 'reset', 'remove']
@@ -79,7 +79,7 @@ describe 'BoothsView', ->
 
     it 'adds a feed view', ->
       @view.renderShows new Backbone.Collection [{}]
-      @FeedView.calledWithNew().should.be.ok
+      @ShowsFeed.calledWithNew().should.be.ok
 
     it 'destroys but not removes the last feed view', ->
       @feedView = new Backbone.View
