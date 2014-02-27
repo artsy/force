@@ -19,17 +19,19 @@ module.exports = class Overview extends Backbone.View
     @fair = options.fair
     @renderClock()
     if sd.CURRENT_USER?
-      if analytics.abTest 'forYouAtFair'
-        analytics.track.click "Viewed fair overview with ForYou module"
-        @$('.for-you-container').html forYouTemplate()
-        new ForYouView
-          model: @model
-          fair : @fair
-          el   : @el
-          onFetchFollowingArtists: @onFetchFollowingArtists
-      else
-        analytics.track.click "Viewed fair overview without ForYou module"
-        @renderFollowedArtistList()
+      _.delay ->
+        if analytics.abTest 'forYouAtFair'
+          analytics.track.click "Viewed fair overview with ForYou module"
+          @$('.for-you-container').html forYouTemplate()
+          new ForYouView
+            model: @model
+            fair : @fair
+            el   : @el
+            onFetchFollowingArtists: @onFetchFollowingArtists
+        else
+          analytics.track.click "Viewed fair overview without ForYou module"
+          @renderFollowedArtistList()
+      , 1000
 
   clickForYou: =>
     analytics.track.click "Clicked for-you from fair overview"

@@ -99,7 +99,7 @@ module.exports.getProperty = (property) ->
   mixpanel?.get_property property
 
 module.exports.setProperty = (hash) ->
-  mixpanel?.register_once hash
+  mixpanel.push 'register_once', hash
 
 module.exports.abTest = (key) ->
   property = module.exports.getProperty key
