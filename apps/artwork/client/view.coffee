@@ -41,8 +41,6 @@ module.exports = class ArtworkView extends Backbone.View
     @setupBelowTheFold()
     @setupMainSaveButton()
 
-    @reRenderDetail()
-
     # Handle all related content
     @setupRelatedLayers()
     @on 'related:features', (feature) ->
@@ -54,6 +52,10 @@ module.exports = class ArtworkView extends Backbone.View
       @belowTheFoldView.setupSale sale, @saved
     @on 'related:none', ->
       @belowTheFoldView.setupLayeredSearch()
+
+    # Re-fetch and update based on changes
+    @artwork.on 'change', @renderDetail, this
+    @artwork.fetch()
 
   setupRelatedLayers: ->
     $.when.apply(null, @artwork.fetchRelatedCollections()).then =>
@@ -87,11 +89,8 @@ module.exports = class ArtworkView extends Backbone.View
       html(artistArtworksTemplate artworks: @artist.artworks)
     @setupArtistArtworkSaveButtons @artist.artworks
 
-  # Re-render incase the cache is inaccurate
-  reRenderDetail: ->
-    @artwork.fetch
-      success: =>
-        @$('.artwork-detail').html detailTemplate(artwork: @artwork, artist: @artist)
+  renderDetail: ->
+    @$('.artwork-detail').html detailTemplate(artwork: @artwork, artist: @artist)
 
   setupArtistArtworkSaveButtons: (artworks) ->
     return unless artworks.length > 0
