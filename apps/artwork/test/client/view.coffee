@@ -43,20 +43,34 @@ describe 'ArtworkView', ->
     }, =>
       @ArtworkView = benv.requireWithJadeify(
         (resolve __dirname, '../../client/view'),
-        ['artistArtworksTemplate']
+        ['artistArtworksTemplate', 'detailTemplate']
       )
       @ArtworkView.__set__ 'ShareView', (@shareViewStub = sinon.stub())
       @ArtworkView.__set__ 'acquireArtwork', (@acquireArtworkStub = sinon.stub())
+      @renderDetailSpy = sinon.spy @ArtworkView::, 'renderDetail'
       done()
 
   afterEach ->
     Backbone.sync.restore()
     @artist.artworks.fetch.restore()
+    @renderDetailSpy.restore()
 
   describe 'user logged in', ->
     beforeEach ->
       @ArtworkView.__set__ 'CurrentUser', { orNull: -> new CurrentUser(fabricate 'user') }
       @view = new @ArtworkView el: $('#artwork-page'), artist: @artist, artwork: @artwork
+
+    describe 'when an artwork changes', ->
+      it 'updates the detail panel accordingly', ->
+        $detail = @view.$('.artwork-detail')
+        $detail.find('.artwork-buy-button').length.should.be.ok
+        @view.artwork.set 'acquireable', false
+        $detail.find('.artwork-buy-button').length.should.not.be.ok
+
+      it 'only renders if the artwork changes', ->
+        @renderDetailSpy.called.should.not.be.ok
+        @view.artwork.set 'acquireable', false
+        @renderDetailSpy.called.should.be.ok
 
     describe '#initialize', ->
       it 'has an artist and an artwork', ->
