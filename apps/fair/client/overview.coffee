@@ -18,20 +18,14 @@ module.exports = class Overview extends Backbone.View
   initialize: (options) ->
     @fair = options.fair
     @renderClock()
-    if sd.CURRENT_USER? and sd.NODE_ENV != "test"
-      _.delay =>
-        if analytics.abTest 'forYouAtFair'
-          analytics.track.click "Viewed fair overview with ForYou module"
-          @$('.for-you-container').html forYouTemplate()
-          new ForYouView
-            model: @model
-            fair : @fair
-            el   : @el
-            onFetchFollowingArtists: @onFetchFollowingArtists
-        else
-          analytics.track.click "Viewed fair overview without ForYou module"
-          @renderFollowedArtistList()
-      , 1000
+    if sd.CURRENT_USER?
+      analytics.track.click "Showing fair overview with ForYou module"
+      @$('.for-you-container').html forYouTemplate()
+      new ForYouView
+        model: @model
+        fair : @fair
+        el   : @el
+        onFetchFollowingArtists: @onFetchFollowingArtists
 
   clickForYou: =>
     analytics.track.click "Clicked for-you from fair overview"
@@ -59,6 +53,7 @@ module.exports = class Overview extends Backbone.View
   onFetchFollowingArtists: (followingArtists) =>
     artistNames = @formatArtists followingArtists, 2
     if artistNames
+      analytics.track.click "Display following artists at the fair"
       @$('.container-left .large-section-subheading').text "Works by #{artistNames}"
 
   formatArtists: (followArtists, max=Infinity) ->

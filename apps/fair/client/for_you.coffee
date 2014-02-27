@@ -130,6 +130,8 @@ module.exports = class ForYouView extends Backbone.View
       data:
         _.extend(additionalParams, size: 3)
       success: (items) =>
+        if items.models
+          analytics.track.click "Display following exhibitors at the fair"
         feed.handleFetchedItems items.models
 
   fetchAndAppendShows: (feedItems) ->
