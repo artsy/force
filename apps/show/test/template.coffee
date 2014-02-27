@@ -84,19 +84,6 @@ describe 'Partner Show', ->
         $('#show-left-info').should.have.lengthOf 1
         $('#show-left-info').text().should.include @show.fair().get('name')
 
-      it 'renders a container for install shots if the show has them', ->
-        @show.set 'images_count', 3
-        @html = render('template')({
-          fair    : @show.fair()
-          location: @show.location()
-          partner : @show.partner()
-          sd      : @sd
-          show    : @show
-          profile : @profile
-        })
-        $ = cheerio.load @html
-        $('.carousel').should.have.lengthOf 1
-
       it 'renders the install shot carousel container if there are no install shots', ->
         $ = cheerio.load @html
         $('.carousel').should.have.lengthOf 1
