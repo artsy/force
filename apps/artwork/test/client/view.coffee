@@ -64,12 +64,12 @@ describe 'ArtworkView', ->
       it 'updates the detail panel accordingly', ->
         $detail = @view.$('.artwork-detail')
         $detail.find('.artwork-buy-button').length.should.be.ok
-        @view.artwork.set 'acquireable', false
+        @view.artwork.set 'sale_message', 'SOLD'
         $detail.find('.artwork-buy-button').length.should.not.be.ok
 
       it 'only renders if the artwork changes', ->
         @renderDetailSpy.called.should.not.be.ok
-        @view.artwork.set 'acquireable', false
+        @view.artwork.set 'sale_message', 'SOLD'
         @renderDetailSpy.called.should.be.ok
 
     describe '#initialize', ->
