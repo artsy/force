@@ -7,28 +7,55 @@ block head
 append locals
   assetPackage = 'show'
 
+mixin back(href, text)
+  a#show-back.avant-garde-button-text( href=href )
+    span.icon-chevron-left
+    | Back to #{text}
+
 block body
   #show
-    header.show-header
-      if profile
-        .profile-badge-small
-          include ../../components/profile_badge/template
+    header.show-header.show-container
+
+      #show-left
+        case context
+          when 'home'
+            +back('/', 'Homepage')
+          when 'fair'
+            +back('/' + fair.get('organizer').profile_id, fair.get('name'))
+          when 'partner'
+            +back('/' + partner.get('default_profile_id'), partner.get('name'))
+        #show-left-info
+          strong
+            a( href='/' + partner.get('default_profile_id') )= partner.get('name')
+          if show.has('fair')
+            |  at:
+            br
+            strong
+              a( href='/' + fair.get('organizer').profile_id )= fair.get('name')
+            br
+            != fair.formatDates()
+            br
+            = show.get('fair_location').display
+          else
+            br
+            != show.runningDates()
+            br
+            = location.singleLine()
+
       nav.show-share
         +share(show.shareTitle())
-      h1.show-heading-title!= show.title()
+      if show.has('fair')
+        h1.show-heading-title!= partner.get('name')
+          br
+          em= fair.get('name')
+      else
+        h1.show-heading-title!= show.title()
+
+      #show-main-buttons
+        include ../../components/partner_buttons/show_buttons
 
     section.show-installation-shot-carousel.carousel( style="display: #{show.carouselDisplay()}")
       .loading-spinner
 
-    header.show-header.show-header-last
-      h2.show-subheading
-        if partner.has('default_profile_id') && partner.get('default_profile_public')
-          a( href= partner.href() )!= partner.get('name')
-        else
-          != partner.get('name')
-      h2.show-subheading!= show.runningDates()
-      if location
-        h2.show-subheading!= location.singleLine()
-
-    section.show-artworks.artworks-columns( style="display: #{show.artworksDisplay()}" )
+    section.show-container.show-artworks.artworks-columns( style="display: #{show.artworksDisplay()}" )
       .loading-spinner

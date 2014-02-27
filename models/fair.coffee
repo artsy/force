@@ -7,6 +7,7 @@ OrderedSets         = require '../collections/ordered_sets.coffee'
 Profiles            = require '../collections/profiles.coffee'
 DateHelpers         = require '../components/util/date_helpers.coffee'
 Clock               = require './mixins/clock.coffee'
+moment              = require 'moment'
 
 module.exports = class Fair extends Backbone.Model
 
@@ -31,9 +32,6 @@ module.exports = class Fair extends Backbone.Model
 
   formatDates: ->
     DateHelpers.timespanInWords @get('start_at'), @get('end_at')
-
-  formatStartTime: ->
-    moment(@get('start_at')).fromNow()
 
   fetchExhibitors: (options) ->
     galleries = new @aToZCollection('show', 'partner')

@@ -1,10 +1,10 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-ContactView = require '../../contact/view.coffee'
-analytics = require '../../../lib/analytics.coffee'
+ContactView = require '../contact/view.coffee'
+analytics = require '../../lib/analytics.coffee'
 { SESSION_ID, ARTSY_URL } = require('sharify').data
 
-module.exports = class ShowInquiryView extends ContactView
+module.exports = class ShowInquiryModal extends ContactView
 
   headerTemplate: =>
     "<h1>New Message to #{@show.get('partner').name}</h1>"

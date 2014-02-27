@@ -1,16 +1,15 @@
-_               = require 'underscore'
-sd              = require('sharify').data
-Backbone        = require 'backbone'
-
-AdditionalImage = require '../../../models/additional_image.coffee'
-Artworks        = require '../../../collections/artworks.coffee'
-CarouselView    = require '../../../components/carousel/view.coffee'
-CurrentUser     = require '../../../models/current_user.coffee'
-SaveControls    = require '../../../components/artwork_item/views/save_controls.coffee'
-PartnerShow     = require '../../../models/partner_show.coffee'
-ShareView       = require '../../../components/share/view.coffee'
-
-artworkColumns  = -> require('../../../components/artwork_columns/template.jade') arguments...
+_                  = require 'underscore'
+sd                 = require('sharify').data
+Backbone           = require 'backbone'
+AdditionalImage    = require '../../../models/additional_image.coffee'
+Artworks           = require '../../../collections/artworks.coffee'
+CarouselView       = require '../../../components/carousel/view.coffee'
+CurrentUser        = require '../../../models/current_user.coffee'
+SaveControls       = require '../../../components/artwork_item/views/save_controls.coffee'
+PartnerShow        = require '../../../models/partner_show.coffee'
+ShareView          = require '../../../components/share/view.coffee'
+PartnerShowButtons = require '../../../components/partner_buttons/show_buttons.coffee'
+artworkColumns     = -> require('../../../components/artwork_columns/template.jade') arguments...
 
 module.exports.PartnerShowView = class PartnerShowView extends Backbone.View
 
@@ -18,7 +17,9 @@ module.exports.PartnerShowView = class PartnerShowView extends Backbone.View
     @shareView = new ShareView
       el        : @$('.show-share')
     @setupCurrentUser()
-
+    new PartnerShowButtons
+      el: @$(".partner-buttons-show-buttons")
+      model: @model
     @$showArtworks = @$('.show-artworks')
     @$carousel = @$('.carousel')
 
@@ -40,7 +41,9 @@ module.exports.PartnerShowView = class PartnerShowView extends Backbone.View
       success: (artworks) =>
         if artworks.length > 0
           @collection = artworks
-          @$showArtworks.html(artworkColumns artworkColumns: artworks.groupByColumnsInOrder(3))
+          @$showArtworks.html artworkColumns
+            artworkColumns: artworks.groupByColumnsInOrder(3)
+            artworkSize: 'large'
           @setupArtworkSaveControls()
         else
           @$showArtworks.remove()

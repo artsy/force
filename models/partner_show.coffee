@@ -131,15 +131,11 @@ module.exports = class PartnerShow extends Backbone.Model
     else
       null
 
-  partnerName: -> @get('partner')?.name
+  partnerName: ->
+    @get('partner')?.name
 
-  fair: ->
-    if @has 'partner'
-      new Partner @get 'partner'
-    else
-      null
-
-  fairName: -> @get('fair').name
+  fairName: ->
+    @get('fair').name
 
   formatArtists: (max=Infinity) ->
     return "" unless @has('artists')

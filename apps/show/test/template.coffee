@@ -56,11 +56,6 @@ describe 'Partner Show', ->
         $ = cheerio.load @html
         $('.carousel').should.have.lengthOf 1
 
-      it 'renders a small profile badge', ->
-        $ = cheerio.load @html
-        $('.profile-badge-small').should.have.lengthOf 1
-        $('.profile-badge-small').text().should.include @profile.displayName()
-
       it 'renders social sharing links', ->
         $ = cheerio.load @html
         $('.show-share').should.have.lengthOf 1
@@ -73,10 +68,10 @@ describe 'Partner Show', ->
 
       it 'renders show details', ->
         $ = cheerio.load @html
-        $('.show-header-last').text().should.include @show.get('partner').name
-        $('.show-header-last').text().should.include @show.location().singleLine()
-        $('.show-header-last').html().should.include @show.runningDates()
-        $(".show-header-last a[href*='/show/#{@show.get('id')}']").should.have.lengthOf 0
+        $('#show-left').text().should.include @show.get('partner').name
+        $('#show-left').text().should.include @show.location().singleLine()
+        $('#show-left').html().should.include @show.runningDates()
+        $("#show-left a[href*='/show/#{@show.get('id')}']").should.have.lengthOf 0
 
       it 'renders a container for artwork columns', ->
         $ = cheerio.load @html
@@ -133,10 +128,10 @@ describe 'Partner Show', ->
 
       it 'renders show details', ->
         $ = cheerio.load @html
-        $('.show-header-last').text().should.include @show.get('partner').name
-        $('.show-header-last').text().should.include @show.location().singleLine()
-        $('.show-header-last').html().should.include @show.runningDates()
-        $(".show-header-last a[href*='/show/#{@show.get('id')}']").should.have.lengthOf 0
+        $('#show-left').text().should.include @show.get('partner').name
+        $('#show-left').text().should.include @show.location().singleLine()
+        $('#show-left').html().should.include @show.runningDates()
+        $("#show-left a[href*='/show/#{@show.get('id')}']").should.have.lengthOf 0
 
       it 'renders a container for artwork columns', ->
         $ = cheerio.load @html

@@ -19,6 +19,7 @@ describe 'Partner Show View', ->
       Backbone.$ = $
       @PartnerShowView = benv.requireWithJadeify resolve(__dirname, '../client/index.coffee'), ['artworkColumns']
       @PartnerShowView.__set__ 'CarouselView', benv.requireWithJadeify resolve(__dirname, '../../../components/carousel/view.coffee'), ['carouselTemplate']
+      @PartnerShowView.__set__ 'PartnerShowButtons', @PartnerShowButtons = sinon.stub()
       done()
 
   after ->
@@ -65,3 +66,6 @@ describe 'Partner Show View', ->
       Backbone.sync.args[1][2].success []
 
       @view.$('.artwork-item').length.should.equal 6
+
+    it 'adds the partner shows view', ->
+      @PartnerShowButtons.calledWithNew.should.be.ok

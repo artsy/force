@@ -3,12 +3,8 @@ include ../../share/template
 .feed-item-top-section
   .feed-item-share-section
     +share(feedItemChildModel.shareTitle(), undefined, feedItemChildModel.canonicalUrl())
-    if feedItemChildModel.get('partner') && feedItemChildModel.get('partner').default_profile_public
-      button.avant-garde-button-white.follow-button(
-        data-id=feedItemChildModel.get('partner').default_profile_id,
-        class=feedItemChildModel.partner().followButtonClass()
-      )
-      button.avant-garde-button-white.feed-item-contact-gallery Contact Gallery
+    show = feedItemChildModel
+    include ../../partner_buttons/show_buttons
   if feedItemChildModel.partnerName()
     h2.exhibitor
       a( href=feedItemChildModel.href() )!= feedItemChildModel.partnerName()
