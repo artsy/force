@@ -32,7 +32,7 @@ describe 'ForYouView', ->
 
   describe '#initialize', ->
 
-    it "renders personalized artist list", ->
+    xit "renders personalized artist list", ->
       view = new OverviewView
         el: $("""<div>
             <div class='auction-clock'></div>
