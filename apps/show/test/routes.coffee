@@ -34,4 +34,4 @@ describe 'Show route', ->
       Backbone.sync.args[0][2].success fabricate 'show', fair: {
         organizer: { profile_id: 'artrio' }
       }
-      @res.locals.relatedContext.should.equal 'fair'
+      @res.locals.context.should.equal 'fair'
