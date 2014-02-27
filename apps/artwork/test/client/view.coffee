@@ -8,6 +8,8 @@ sinon           = require 'sinon'
 
 Artist        = require '../../../../models/artist'
 Artwork       = require '../../../../models/artwork'
+Fair          = require '../../../../models/fair'
+Sale          = require '../../../../models/sale'
 CurrentUser   = require '../../../../models/current_user'
 
 describe 'ArtworkView', ->
@@ -92,19 +94,19 @@ describe 'ArtworkView', ->
           @view.setupFeatureNavigation                = sinon.stub()
           @artwork.fetchRelatedCollections            = sinon.stub()
           @artwork.relatedCollections = [
-            { kind: 'fairs', length: 1, first: -> 'i am a fair' }
-            { kind: 'sales', length: 1, first: -> 'i am a sale' }
+            { kind: 'fairs', length: 1, first: -> new Fair(id: 'i am a fair') }
+            { kind: 'sales', length: 1, first: -> new Sale(id: 'i am a sale') }
           ]
 
         it 'sets up for the appropriate relations', ->
           @view.setupRelatedLayers()
           @view.belowTheFoldView.setupFair.called.should.be.ok
-          @view.belowTheFoldView.setupFair.args[0][0].should.equal 'i am a fair'
+          @view.belowTheFoldView.setupFair.args[0][0].get('id').should.equal 'i am a fair'
           @view.setupFeatureNavigation.called.should.be.ok
-          @view.setupFeatureNavigation.args[0][0].model.should.equal 'i am a fair'
+          @view.setupFeatureNavigation.args[0][0].model.get('id').should.equal 'i am a fair'
           @view.setupFeatureNavigation.args[0][0].kind.should.equal 'fair'
           @view.belowTheFoldView.setupSale.called.should.be.ok
-          @view.belowTheFoldView.setupSale.args[0][0].should.equal 'i am a sale'
+          @view.belowTheFoldView.setupSale.args[0][0].get('id').should.equal 'i am a sale'
           @view.belowTheFoldView.setupSale.args[0][1].constructor.name.should.equal 'ArtworkCollection'
 
 
