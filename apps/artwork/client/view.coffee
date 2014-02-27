@@ -53,8 +53,8 @@ module.exports = class ArtworkView extends Backbone.View
     @on 'related:none', ->
       @belowTheFoldView.setupLayeredSearch()
 
-    # Re-fetch and update based on changes
-    @artwork.on 'change', @renderDetail, this
+    # Re-fetch and update detail
+    @artwork.on "change:sale_message", @renderDetail, this
     @artwork.fetch()
 
   setupRelatedLayers: ->
@@ -90,8 +90,13 @@ module.exports = class ArtworkView extends Backbone.View
     @setupArtistArtworkSaveButtons @artist.artworks
 
   renderDetail: ->
-    @$('.artwork-detail').html detailTemplate(artwork: @artwork, artist: @artist)
+    @$('.artwork-detail').html detailTemplate
+      artwork:  @artwork
+      artist:   @artist
+      user:     @currentUser
+      sd:       require('sharify').data
     @followButton.setElement @$('.artwork-artist-follow-button')
+    @following?.syncFollows [@artist.id]
 
   setupArtistArtworkSaveButtons: (artworks) ->
     return unless artworks.length > 0
