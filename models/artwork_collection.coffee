@@ -82,8 +82,6 @@ module.exports = class ArtworkCollection extends Backbone.Model
     model.url = "#{@url()}/artwork/#{artworkId}?user_id=#{@get('userId')}"
     model.isNew = -> false
     model.destroy
-      data:
-        user_id: @get('userId')
       success: options?.success
       error: (error) =>
         unless sd.NODE_ENV == 'test'
