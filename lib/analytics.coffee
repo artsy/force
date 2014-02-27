@@ -102,6 +102,8 @@ module.exports.setProperty = (hash) ->
   mixpanel.push 'register_once', hash
 
 module.exports.abTest = (key) ->
+  return if typeof mixpanel is 'undefined'
+  return if Object.prototype.toString.call(mixpanel) == '[object Array]'
   property = module.exports.getProperty key
   if property is 'enabled'
     true
