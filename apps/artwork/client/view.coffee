@@ -48,6 +48,9 @@ module.exports = class ArtworkView extends Backbone.View
     @on 'related:fairs', (fair) ->
       @belowTheFoldView.setupFair fair
       @setupFeatureNavigation model: fair, kind: 'fair'
+
+      # Remove after ADAA is over on 03/09/2014
+      @handleAdaaAuctionResults fair
     @on 'related:sales', (sale) ->
       @belowTheFoldView.setupSale sale, @saved
     @on 'related:none', ->
@@ -56,6 +59,10 @@ module.exports = class ArtworkView extends Backbone.View
     # Re-fetch and update detail
     @artwork.on "change:sale_message", @renderDetail, this
     @artwork.fetch()
+
+  handleAdaaAuctionResults: (fair) ->
+    if fair.get('id') == 'adaa-the-art-show-2014'
+      $('.artwork-auction-results-button').remove()
 
   setupRelatedLayers: ->
     $.when.apply(null, @artwork.fetchRelatedCollections()).then =>
