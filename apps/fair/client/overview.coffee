@@ -19,7 +19,7 @@ module.exports = class Overview extends Backbone.View
     @fair = options.fair
     @renderClock()
     if sd.CURRENT_USER?
-      _.delay ->
+      _.delay =>
         if analytics.abTest 'forYouAtFair'
           analytics.track.click "Viewed fair overview with ForYou module"
           @$('.for-you-container').html forYouTemplate()
