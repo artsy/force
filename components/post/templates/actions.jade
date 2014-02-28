@@ -1,7 +1,8 @@
 include ../../share/template
 .see-post.icon-chevron-down
 .post-actions
-  +share(post.shareTitle(), null)
+  .share-actions
+    +share(post.shareTitle(), null)
   .post-modifier-actions
     if profile && profile.isCurrentProfile()
       a.post-edit Edit
