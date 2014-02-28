@@ -29,7 +29,7 @@
     "hiredis": "0.1.16",
     "redis": "0.10.0",
     "node-uuid": "*",
-    "artsy-passport": "*",
+    "artsy-passport": "git://github.com/artsy/artsy-passport.git",
     "backbone-pageable": "*",
     "moment": "*",
     "validator": "*",

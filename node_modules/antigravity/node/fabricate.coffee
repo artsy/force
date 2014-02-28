@@ -739,4 +739,23 @@ module.exports = fabricate = (type, extObj = {}) ->
         blurb: undefined
       partner: fabricate 'partner'
 
+    when 'fair_event_group'
+      fair: fabricate 'fair'
+      id: _.uniqueId()
+      name: 'The China Symposium'
+      description: "\nOrganized by Philip Tinari\nMarch 8-9, 2014\n\nFor the first time, The Armory Show will host a symposium in conjunction with its annual regional Focus initiative. Organized by Philip Tinari, Director of the Ullens Center for Contemporary Art, Beijing, this inaugural weekend-long forum comprises eight discussions that aim to elaborate and clarify the state of contemporary art in China today."
+      updated_at: "2014-02-24T16:34:25Z"
+
+    when 'fair_event'
+      id: _.uniqueId()
+      fair: fabricate 'fair'
+      fair_event_groups: [ fabricate('fair_event_group') ]
+      name: "Welcome"
+      description: "PARTICIPANTS: Noah Horowitz, Executive Director, The Armory Show\nPhilip Tinari, Director, Ullens Center for Contemporary Art (UCCA), Beijing\nAdrian Cheng, Founder and Chairman, K11 Art Foundation, Hong Kong\n"
+      extended_description: "This panel is organized in conjunction with The Armory Show – Modern exhibition, VENUS DRAWN OUT: 20th Century Works by Great Women Artists on Pier 92, and will feature a rare conversation amongst several of its participants.  The panelists will discuss their nuanced artistic practices, works of art on view at the fair, alongside broader topics such as the context of working as a female artist and the field of twentieth century Modern Art as a whole\n\nFeaturing panelists: Inka Essenhigh, Artist, New York; Lynn Gumpert, Director, Grey Art Gallery, New York University; Pat Steir, Artist, New York. Moderated by Susan Harris, New York-based Independent Curator and Writer."
+      venue: "T: The New York Times Style Magazine Media Lounge on Pier 94"
+      start_at: "2014-03-08T17:15:00+00:00"
+      end_at: "2014-03-08T17:30:00+00:00"
+      updated_at: "2014-02-24T16:34:25Z"
+
   , extObj
