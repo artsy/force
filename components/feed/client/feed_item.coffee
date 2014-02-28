@@ -55,7 +55,7 @@ module.exports.FeedItemView = class FeedItemView extends Backbone.View
       @artworkCollection.syncSavedArtworks()
 
   setupShareButtons: ->
-    el = if @$('.feed-item-share-section').length > 0 then @$('.feed-item-share-section') else @$('.post-actions')
+    el = if @$('.feed-item-share-section').length > 0 then @$('.feed-item-share-section') else @$('.post-actions .share-actions')
     new ShareView
       el: el
 
