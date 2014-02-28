@@ -78,7 +78,7 @@ module.exports = class PostsFeatureDialog extends Backbone.View
     return unless modelId && modelId.length > 0
 
     modelName = @$('input[name=post-feature-model-name]').val()
-    return unless slug && slug.length > 0
+    return unless modelName && modelName.length > 0
 
     model = new Backbone.Model()
     model.save
