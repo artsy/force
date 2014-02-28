@@ -14,7 +14,7 @@ module.exports = class PostsFeatureDialog extends Backbone.View
     'click a.post-dialog-unfeature' : 'unfeaturePostOnPage'
 
   getFeatureUrl: (modelName, modelId) ->
-    "#{sd.ARTSY_URL}/api/v1/post/#{@model.get('id')}/#{modelName}/#{modelId}/feature"
+    "#{sd.ARTSY_URL}/api/v1/post/#{@model.get('id')}/#{modelName.toLowerCase()}/#{modelId}/feature"
 
   initialize: ->
     @$postsDialog = @$('.posts-dialog')
@@ -68,10 +68,9 @@ module.exports = class PostsFeatureDialog extends Backbone.View
     ]).join(", ")
 
   featureBySlug: ->
-    $featureBySlugButton = @$('.slug-container a')
-    return false if $featureBySlugButton.hasClass('working')
-    $featureBySlugButton.addClass('working')
-
+    $featureBySlugButton = @$('.slug-container .feature-by-slug')
+    return false if $featureBySlugButton.hasClass('is-loading')
+    $featureBySlugButton.addClass('is-loading')
     @$error.text('')
 
     modelId = @$('input[name=post-feature-model-id]').val()
@@ -80,14 +79,14 @@ module.exports = class PostsFeatureDialog extends Backbone.View
     modelName = @$('input[name=post-feature-model-name]').val()
     return unless modelName && modelName.length > 0
 
-    model = new Backbone.Model()
-    model.save
-      url    : @getFeatureUrl(modelName, modelId)
+    model = new Backbone.Model
+    model.url = @getFeatureUrl(modelName, modelId)
+    model.save null,
       success: =>
-        @$error.text('')
-        $featureBySlugButton.removeClass('working')
-      error: (response) =>
-        $featureBySlugButton.removeClass('working')
+        alert("Post has been featured to #{sd.ARTSY_URL}/#{modelName.toLowerCase()}/#{modelId}")
+        $featureBySlugButton.removeClass('is-loading')
+      error: (model, response) =>
+        $featureBySlugButton.removeClass('is-loading')
         @displayFeatureBySlugError(response)
 
   updateFeatured: (modelId, modelName) =>
