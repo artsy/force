@@ -21,7 +21,8 @@ block body
           when 'home'
             +back('/', 'Homepage')
           when 'fair'
-            +back('/' + fair.get('organizer').profile_id, fair.get('name'))
+            if fair.get('organizer')
+              +back('/' + fair.get('organizer').profile_id, fair.get('name'))
           when 'partner'
             +back('/' + partner.get('default_profile_id'), partner.get('name'))
         #show-left-info
@@ -30,12 +31,14 @@ block body
           if show.has('fair')
             |  at:
             br
-            strong
-              a( href='/' + fair.get('organizer').profile_id )= fair.get('name')
-            br
+            if fair.get('organizer')
+              strong
+                a( href='/' + fair.get('organizer').profile_id )= fair.get('name')
+              br
             != fair.formatDates()
-            br
-            = show.get('fair_location').display
+            if show.get('fair_location')
+              br
+              = show.get('fair_location').display
           else
             br
             != show.runningDates()
