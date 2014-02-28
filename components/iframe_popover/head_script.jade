@@ -4,7 +4,7 @@ script.
       return
     }
     // Support IE10
-    if (window.MessageChannel) {
+    if (window.MessageChannel && navigator.userAgent.indexOf('MSIE') > -1) {
       var m = new MessageChannel();
       // Send one port of the channel to the iframe.
       parent.postMessage({ href: location.href }, "*", [m.port2]);
