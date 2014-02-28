@@ -25,6 +25,8 @@ module.exports = (artsyUrl) ->
     key = "fetch-until-end:#{JSON.stringify(options)}"
     success = =>
       page = 0
+      if options.data and options.data.page
+        page = options.data.page - 1
       opts = _.clone(options)
       fetchPage = =>
         @fetch _.extend opts,

@@ -75,10 +75,13 @@ module.exports = class AuthModalView extends ModalView
     if @validateForm()
       @$('button').attr 'data-state', 'loading'
       new models[@state.get('mode')]().save @serializeForm(),
-        success: =>
-          href = '/force/log_in_to_artsy'
-          href += "?redirect-to=#{@redirectTo}" if @state.get('mode') is 'register'
-          location.href = href
+        success: (model, res, options) =>
+          if res.error?
+            @showError _.capitalize res.error
+          else
+            href = '/force/log_in_to_artsy'
+            href += "?redirect-to=#{@redirectTo}" if @state.get('mode') is 'register'
+            location.href = href
         error: (model, xhr, options) =>
           @errorMessage(xhr) # Display error
 

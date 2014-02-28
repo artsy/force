@@ -117,6 +117,17 @@ artworks.fetchUntilEnd success: ->
   # Phew... I have all the artworks from Artsy
 ````
 
+It respects data params like page (if you fetch page 1 on the server and `fetchUntil` end on the client for example)
+````coffeescript
+# I already rendered page 1 from a `fetch`...
+artworks.fetchUntilEnd 
+  data:
+    page: 2
+    size: 20
+  success: ->
+    # I now have artwork 21 - the end
+````
+
 ### fetchSetItemsByKey(key, options)
 
 Fetches a set by key and populates the collection with the first result.

@@ -50,13 +50,20 @@ module.exports.app = app = express()
 initApp = ->
   app.use passport.initialize()
   app.use passport.session()
-  app.post opts.loginPath, passport.authenticate('local')
+  app.post opts.loginPath, localAuth
   app.post opts.signupPath, signup, passport.authenticate('local')
   app.get opts.twitterPath, socialAuth('twitter')
   app.get opts.facebookPath, socialAuth('facebook')
   app.get opts.twitterCallbackPath, socialAuth('twitter'), socialSignup('twitter')
   app.get opts.facebookCallbackPath, socialAuth('facebook'), socialSignup('facebook')
   app.use addLocals
+
+localAuth = (req, res, next) ->
+  passport.authenticate('local', (err, user, info) ->
+    return req.login(user, next) if user
+
+    res.authError = info; next()
+  )(req, res, next)
 
 socialAuth = (provider) ->
   (req, res, next) ->
@@ -168,19 +175,29 @@ accessTokenCallback = (done, params) ->
     # Create a user from the response, or throw any internal errors or error sent
     # from the API.
     err = (err?.toString() or res?.body.error_description or res?.body.error)
-    unless err?.match?('no account linked')
-      done(err, new opts.CurrentUser(accessToken: res?.body.access_token))
-      return
+
+    # Success
+    unless err?
+      return done(null, new opts.CurrentUser(accessToken: res?.body.access_token))
 
     # If there's no user linked to this account, create the user via the POST /user API.
     # Then pass on an empty user so our signup middleware can catch it, login, and move on.
-    params.xapp_token = artsyXappToken
-    request
-      .post(opts.SECURE_ARTSY_URL + '/api/v1/user')
-      .send(params)
-      .end (err, res) ->
-        err = (err or res?.body.error_description or res?.body.error)
-        done err or 'artsy-passport: created user from social'
+    if err?.match?('no account linked')
+      params.xapp_token = artsyXappToken
+      request
+        .post(opts.SECURE_ARTSY_URL + '/api/v1/user')
+        .send(params)
+        .end (err, res) ->
+          err = (err or res?.body.error_description or res?.body.error)
+          done err or 'artsy-passport: created user from social'
+
+    # Invalid email or password
+    else if err.match?('invalid email or password')
+      done null, false, err
+    
+    # Other errors
+    else
+      done err
 
 #
 # Serialize user by fetching and caching user data in the session.

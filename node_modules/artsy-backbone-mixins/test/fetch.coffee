@@ -1,7 +1,7 @@
 sinon = require 'sinon'
 _ = require 'underscore'
 Backbone = require 'backbone'
-Fetch = require '../lib/fetch'
+Fetch = require '../lib/fetch.coffee'
 
 class Collection extends Backbone.Collection
 
@@ -22,11 +22,21 @@ describe 'fetch until end mixin', ->
 
     it 'keeps fetching until the API returns no results', (done) ->
       @collection.fetchUntilEnd success: =>
-        @collection.length.should.equal 3
+        @collection.should.have.lengthOf 3
         done()
       Backbone.sync.args[0][2].success [{ foo: 'bar' }]
       Backbone.sync.args[0][2].success [{ foo: 'bar' }]
       Backbone.sync.args[0][2].success [{ foo: 'bar' }]
+      Backbone.sync.args[0][2].success []
+
+    it 'respects the starting page param passed in the options', (done) ->
+      @collection.fetchUntilEnd
+        data: { page: 5 }
+        success: =>
+          @collection.should.have.lengthOf 2
+          done()
+      Backbone.sync.args[0][2].data.page.should.equal 5
+      Backbone.sync.args[0][2].success [{ foo: 'bar1' }, {foo: 'bar2'}]
       Backbone.sync.args[0][2].success []
 
 describe 'fetch set items by key mixin', ->

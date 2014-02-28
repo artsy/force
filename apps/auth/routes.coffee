@@ -8,7 +8,7 @@ qs = require 'querystring'
   res.render 'template'
 
 @submitLogin = (req, res) ->
-  res.send { success: true, user: req.user?.toJSON() }
+  res.send { success: true, error: res.authError, user: req.user?.toJSON() }
 
 @loginToArtsy = (req, res) ->
   redirectTo = req.body['redirect-to'] or req.query['redirect-to'] or
