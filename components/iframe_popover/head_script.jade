@@ -1,2 +1,13 @@
 script.
-  parent.postMessage({ href: location.href }, location.origin);
+  // Support IE10
+  if (window.MessageChannel) {
+    // Create MessageChannel
+    var m = new MessageChannel();
+
+    // Send one port of the channel to the iframe.
+    parent.postMessage({ href: location.href }, location.origin, [m.port2]); 
+
+  } else {
+    //  MessageChannels aren't supported
+    parent.postMessage({ href: location.href }, location.origin);
+  }  
