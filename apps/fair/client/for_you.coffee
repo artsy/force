@@ -2,7 +2,7 @@ _              = require 'underscore'
 Backbone       = require 'backbone'
 sd             = require('sharify').data
 FeedItems      = require '../../../components/feed/collections/feed_items.coffee'
-FeedView       = require '../../../components/feed/client/feed.coffee'
+ShowsFeed      = require '../../../components/feed/client/shows_feed.coffee'
 Artist         = require '../../../models/artist.coffee'
 Profile        = require '../../../models/profile.coffee'
 Profiles       = require '../../../collections/profiles.coffee'
@@ -113,7 +113,7 @@ module.exports = class ForYouView extends Backbone.View
           feedItems = new FeedItems()
           feedItems.doneFetching = true
           @$('.foryou-section.partners .loading-spinner').remove()
-          feed = new FeedView
+          feed = new ShowsFeed
             el               : @$('.foryou-section.partners .feed').show()
             feedItems        : feedItems
           for exhibitor in followingExhibitors.models
