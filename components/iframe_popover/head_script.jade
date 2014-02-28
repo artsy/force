@@ -1,10 +1,14 @@
 script.
-  // Support IE10
-  if (window.MessageChannel) {
-    var m = new MessageChannel();
-    // Send one port of the channel to the iframe.
-    parent.postMessage({ href: location.href }, location.origin, [m.port2]); 
-
-  } else {
-    parent.postMessage({ href: location.href }, location.origin);
-  }  
+  (function() {
+    if (!parent || !parent.postMessage) {
+      return
+    }
+    // Support IE10
+    if (window.MessageChannel && navigator.userAgent.indexOf('MSIE') > -1) {
+      var m = new MessageChannel();
+      // Send one port of the channel to the iframe.
+      parent.postMessage({ href: location.href }, "*", [m.port2]);
+    } else {
+      parent.postMessage({ href: location.href }, location.origin);
+    }
+  })()
