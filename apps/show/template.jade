@@ -42,8 +42,9 @@ block body
           else
             br
             != show.runningDates()
-            br
-            = location.singleLine()
+            if location
+              br
+              = location.singleLine()
 
       nav.show-share
         +share(show.shareTitle())
