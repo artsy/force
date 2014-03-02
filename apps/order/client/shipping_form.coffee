@@ -20,7 +20,7 @@ module.exports.ShippingForm = class ShippingForm extends ErrorHandlingForm
     return if @$submit.hasClass('is-loading')
     @$submit.addClass 'is-loading'
 
-    analytics.track.funnel 'Order submit shipping', label: analytics.modelToLabel(@model)
+    analytics.track.funnel 'Order submit shipping', label: analytics.modelNameAndIdToLabel('artwork', @model.get('id'))
 
     if @validateForm()
       @model.update @orderAttrs(),

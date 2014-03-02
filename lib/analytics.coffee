@@ -60,10 +60,6 @@ module.exports.modelNameAndIdToLabel = (modelName, id) ->
   throw new Error('Requires modelName and id') unless modelName? and id?
   "#{_.capitalize(modelName)}:#{id}"
 
-module.exports.modelToLabel = (model) ->
-  throw new Error('Requires a backbone model') unless typeof model == 'object' and model?.constructor.name? and model?.get?('id')?
-  "#{_.capitalize(model.constructor.name)}:#{model.get('id')}"
-
 # Special multi-event
 #
 # GA imposes a 500 byte limit on event labels

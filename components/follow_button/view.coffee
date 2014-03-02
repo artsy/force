@@ -37,10 +37,10 @@ module.exports = class FollowButton extends Backbone.View
 
     if @following.isFollowing @model.id
       @following.unfollow @model.id
-      analytics.track.click @analyticsUnfollowMessage, label: analytics.modelToLabel(@model)
+      analytics.track.click @analyticsUnfollowMessage, label: analytics.modelNameAndIdToLabel('profile', @model.get('id'))
     else
       @following.follow @model.id, notes: (@notes or @analyticsFollowMessage)
-      analytics.track.click @analyticsFollowMessage, label: analytics.modelToLabel(@model)
+      analytics.track.click @analyticsFollowMessage, label: analytics.modelNameAndIdToLabel('profile', @model.get('id'))
       # Delay label change
       @$el.addClass 'is-clicked'
       setTimeout (=> @$el.removeClass 'is-clicked'), 1500

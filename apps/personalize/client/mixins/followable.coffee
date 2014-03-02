@@ -36,11 +36,11 @@ module.exports =
     @followed.unshift model.toJSON()
     @following.follow model.id, { notes: 'Followed from /personalize' }
 
-    analytics.track.click @analyticsFollowMessage, label: analytics.modelToLabel(model)
+    analytics.track.click @analyticsFollowMessage, label: analytics.modelNameAndIdToLabel(model.get('display_model'), @model.get('id'))
 
   unfollow: (e) ->
     id      = $(e.currentTarget).data 'id'
     model   = @followed.remove id
     @following.unfollow id
 
-    analytics.track.click @analyticsUnfollowMessage, label: "#{model.get('display_model')}:#{id}"
+    analytics.track.click @analyticsUnfollowMessage, label: analytics.modelNameAndIdToLabel(model.get('display_model'), @model.get('id'))
