@@ -40,7 +40,7 @@ module.exports.CheckoutForm = class CheckoutForm extends ShippingForm
         @model.save data,
           url: "#{@model.url()}/submit"
           success: =>
-            analytics.track.funnel 'Order submitted', label: analytics.modelToLabel(@model)
+            analytics.track.funnel 'Order submitted', label: analytics.modelNameAndIdToLabel('artwork', @model.get('id'))
             @success()
             @$el.addClass 'order-page-complete'
             @$('.checkout-form').hide()
@@ -48,7 +48,7 @@ module.exports.CheckoutForm = class CheckoutForm extends ShippingForm
             $('body').removeClass 'minimal-header'
             $('html, body').scrollTop(0)
           error: (xhr) => @showError xhr, "Order submission error"
-        analytics.track.funnel 'Order card validated', label: analytics.modelToLabel(@model)
+        analytics.track.funnel 'Order card validated', label: analytics.modelNameAndIdToLabel('artwork', @model.get('id'))
       when 400, 403 then @showError @errors.missingOrMalformed, "Order card missing or malformed"
       when 402 then @showError @errors.couldNotAuthorize, "Order card could not be authorized"
       when 404 then @showError @errors.other, "Order marketplace invalid"
@@ -78,7 +78,7 @@ module.exports.CheckoutForm = class CheckoutForm extends ShippingForm
     return if @$submit.hasClass('is-loading')
     @$submit.addClass 'is-loading'
 
-    analytics.track.funnel 'Order submit shipping', label: analytics.modelToLabel(@model)
+    analytics.track.funnel 'Order submit shipping', label: analytics.modelNameAndIdToLabel('artwork', @model.get('id'))
 
     if @validateForm()
       @tokenizeCard()

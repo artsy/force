@@ -34,10 +34,10 @@ module.exports = class SaveButton extends Backbone.View
 
     if @model.isSaved @saved
       @saved.unsaveArtwork @model.id
-      analytics.track.click @analyticsUnsaveMessage, label: analytics.modelToLabel(@model)
+      analytics.track.click @analyticsUnsaveMessage, label: analytics.modelNameAndIdToLabel('artwork', @model.get('id'))
     else
       @saved.saveArtwork @model.id, notes: (@notes or @analyticsSaveMessage)
-      analytics.track.click @analyticsSaveMessage, label: analytics.modelToLabel(@model)
+      analytics.track.click @analyticsSaveMessage, label: analytics.modelNameAndIdToLabel('artwork', @model.get('id'))
       # Delay label change
       @$el.addClass 'is-clicked'
       setTimeout (=> @$el.removeClass 'is-clicked'), 1500

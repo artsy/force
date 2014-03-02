@@ -45,15 +45,6 @@ describe 'analytics', ->
         analytics mixpanel: null, ga: null, location: { pathname: 'foobar' }
         analytics.trackPageview()
 
-    describe '#modelToLabel', ->
-
-      it 'requires a backbone model', ->
-        model = new Artwork(id: '123')
-        analytics.modelToLabel(model).should.equal 'Artwork:123'
-
-      it 'errors if a string is passed in', ->
-        (()-> analytics.modelToLabel('model')).should.throw()
-
     describe '#modelNameAndIdToLabel', ->
 
       it 'capitalizes modelname', ->
@@ -79,7 +70,7 @@ describe 'analytics', ->
 
       it 'sends tracking info to both ga and mixpanel', ->
         model = new Artwork(id: '123')
-        rewiredAnalytics.track.click 'Did something', { label: rewiredAnalytics.modelToLabel(model) }
+        rewiredAnalytics.track.click 'Did something', { label: rewiredAnalytics.modelNameAndIdToLabel('artwork', model.get('id')) }
 
         @gaStub.args[2][0].should.equal 'send'
         @gaStub.args[2][1].should.equal 'event'

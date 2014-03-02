@@ -9,7 +9,7 @@ module.exports =
     @acquiring = true
     currentUser = new CurrentUser()
 
-    analytics.track.funnel 'Order - item added', analytics.modelToLabel(artwork)
+    analytics.track.funnel 'Order - item added', analytics.modelNameAndIdToLabel('artwork', artwork.get('id'))
 
     currentUser.addToPendingOrder
       artworkId: artwork.get('id')

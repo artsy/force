@@ -21,7 +21,7 @@ module.exports = class ContactPartnerView extends ContactView
     super
 
   submit: ->
-    analytics.track.funnel 'Sent artwork inquiry', label: analytics.modelToLabel(@artwork)
+    analytics.track.funnel 'Sent artwork inquiry', label: analytics.modelNameAndIdToLabel('artwork', @artwork.get('id'))
 
     @model.set
       artwork: @artwork.id
