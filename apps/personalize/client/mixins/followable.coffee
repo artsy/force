@@ -36,11 +36,14 @@ module.exports =
     @followed.unshift model.toJSON()
     @following.follow model.id, { notes: 'Followed from /personalize' }
 
-    analytics.track.click @analyticsFollowMessage, label: analytics.modelNameAndIdToLabel(model.get('display_model'), model.id)
+    # Fallback in case model doesn't have display_model
+    displayModel = model.get('display_model') or 'displayModelUnknown'
+    analytics.track.click @analyticsFollowMessage, label: analytics.modelNameAndIdToLabel(displayModel, model.get('id'))
 
   unfollow: (e) ->
     id      = $(e.currentTarget).data 'id'
     model   = @followed.remove id
     @following.unfollow id
 
-    analytics.track.click @analyticsUnfollowMessage, label: analytics.modelNameAndIdToLabel(model.get('display_model'), id)
+    displayModel = model.get('display_model') or 'displayModelUnknown'
+    analytics.track.click @analyticsUnfollowMessage, label: analytics.modelNameAndIdToLabel(displayModel, model.get('id'))
