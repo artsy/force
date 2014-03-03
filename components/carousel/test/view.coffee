@@ -40,7 +40,7 @@ describe 'CarouselView', ->
     ]
     $('body').append $("<div class=\"carousel\"></div>")
     $('.carousel').append render('template')({ carouselFigures: @figures.models })
-    Carousel.setStops = sinon.stub()
+    Carousel::setStops = sinon.stub()
     @view = new Carousel { el: $('.carousel'), collection: @figures }
 
   describe '#setStops', ->
