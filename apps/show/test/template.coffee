@@ -2,6 +2,7 @@ _               = require 'underscore'
 jade            = require 'jade'
 path            = require 'path'
 fs              = require 'fs'
+sd              = require('sharify').data
 cheerio         = require 'cheerio'
 Backbone        = require 'backbone'
 { fabricate }   = require 'antigravity'
@@ -23,16 +24,13 @@ describe 'Partner Show', ->
   describe 'with a public profile', ->
 
     beforeEach ->
-      @sd =
-        ARTSY_URL : 'http://localhost:5000'
-        ASSET_PATH: 'http://localhost:5000'
       @show = new PartnerShow fabricate('show')
       @profile = new Profile fabricate 'partner_profile'
       @html = render('template')({
         fair    : @show.fair()
         location: @show.location()
         partner : @show.partner()
-        sd      : @sd
+        sd      : sd
         show    : @show
         profile : @profile
       })
@@ -45,7 +43,7 @@ describe 'Partner Show', ->
           fair    : @show.fair()
           location: @show.location()
           partner : @show.partner()
-          sd      : @sd
+          sd      : sd
           show    : @show
           profile : @profile
         })
@@ -58,7 +56,7 @@ describe 'Partner Show', ->
           fair    : @show.fair()
           location: @show.location()
           partner : @show.partner()
-          sd      : @sd
+          sd      : sd
           show    : @show
           profile : @profile
           context : 'fair'
@@ -74,7 +72,7 @@ describe 'Partner Show', ->
           fair    : @show.fair()
           location: @show.location()
           partner : @show.partner()
-          sd      : @sd
+          sd      : sd
           show    : @show
           profile : @profile
           context : 'fair'
@@ -111,7 +109,7 @@ describe 'Partner Show', ->
   describe 'with a private profile', ->
 
     beforeEach ->
-      @sd =
+      sd =
         ARTSY_URL : 'http://localhost:5000'
         ASSET_PATH: 'http://localhost:5000'
       @show = new PartnerShow fabricate('show')
@@ -120,7 +118,7 @@ describe 'Partner Show', ->
         fair    : @show.fair()
         location: @show.location()
         partner : @show.partner()
-        sd      : @sd
+        sd      : sd
         show    : @show
       })
 
@@ -132,7 +130,7 @@ describe 'Partner Show', ->
           fair    : @show.fair()
           location: @show.location()
           partner : @show.partner()
-          sd      : @sd
+          sd      : sd
           show    : @show
           profile : @profile
         })
