@@ -16,3 +16,7 @@ describe 'Helpers middleware', ->
   it 'handles generic stringy errors', ->
     @res.backboneError {}, { error: 'Foo Err' }
     @next.args[1][0].toString().should.include 'Foo Err'
+
+  it 'turns 403 errors into 404s', ->
+    @res.backboneError {}, { error: { status: 403 } }
+    @next.args[1][0].toString().should.include 'Not Found'
