@@ -2,6 +2,7 @@ _               = require 'underscore'
 benv            = require 'benv'
 fs              = require 'fs'
 jade            = require 'jade'
+sinon           = require 'sinon'
 path            = require 'path'
 { fabricate }   = require 'antigravity'
 { resolve }     = require 'path'
@@ -39,6 +40,7 @@ describe 'CarouselView', ->
     ]
     $('body').append $("<div class=\"carousel\"></div>")
     $('.carousel').append render('template')({ carouselFigures: @figures.models })
+    Carousel.setStops = sinon.stub()
     @view = new Carousel { el: $('.carousel'), collection: @figures }
 
   describe '#setStops', ->
