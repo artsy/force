@@ -7,6 +7,7 @@
 _          = require 'underscore'
 sd         = require('sharify').data
 createHash = require('crypto').createHash
+qs         = require('querystring')
 
 _.mixin(require 'underscore.string')
 
@@ -24,6 +25,14 @@ module.exports.getUserAgent = ->
 
 module.exports.trackPageview = =>
   @ga? 'send', 'pageview'
+
+# Delta tracking pixel
+module.exports.delta = (event, data, el) ->
+  data.name = event
+  data.method = 'import'
+  data.pixel = 1
+  url = 'https://' + sd.DELTA_HOST + '/?' + qs.stringify(data)
+  el.append '<img src="' + url + '" style="display:none;" />'
 
 # This basically just sets some defaults loosely based on the
 # Analytics wrapper class from Gravity

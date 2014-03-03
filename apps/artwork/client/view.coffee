@@ -48,9 +48,9 @@ module.exports = class ArtworkView extends Backbone.View
     @on 'related:fairs', (fair) ->
       @belowTheFoldView.setupFair fair
       @setupFeatureNavigation model: fair, kind: 'fair'
-
       # Remove after ADAA is over on 03/09/2014
       @handleAdaaAuctionResults fair
+      @deltaTrackPageView fair
     @on 'related:sales', (sale) ->
       @belowTheFoldView.setupSale sale, @saved
     @on 'related:none', ->
@@ -63,6 +63,17 @@ module.exports = class ArtworkView extends Backbone.View
   handleAdaaAuctionResults: (fair) ->
     if fair.get('id') == 'adaa-the-art-show-2014'
       $('.artwork-auction-results-button').remove()
+
+  deltaTrackPageView: (fair) ->
+    el = $('#scripts')
+    analytics.delta('fair_artist_view',
+                    fair: fair.get('_id'),
+                    id: @artist.get('_id'),
+                    el)
+    analytics.delta('fair_partner_view',
+                    fair: fair.get('_id'),
+                    id: @artwork.get('partner')._id,
+                    el)
 
   setupRelatedLayers: ->
     $.when.apply(null, @artwork.fetchRelatedCollections()).then =>

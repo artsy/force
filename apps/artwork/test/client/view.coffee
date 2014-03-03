@@ -93,6 +93,7 @@ describe 'ArtworkView', ->
           @view.belowTheFoldView.setupLayeredSearch   = sinon.stub()
           @view.setupFeatureNavigation                = sinon.stub()
           @artwork.fetchRelatedCollections            = sinon.stub()
+          @view.deltaTrackPageView                    = sinon.stub()
           @artwork.relatedCollections = [
             { kind: 'fairs', length: 1, first: -> new Fair(id: 'i am a fair') }
             { kind: 'sales', length: 1, first: -> new Sale(id: 'i am a sale') }
@@ -108,7 +109,8 @@ describe 'ArtworkView', ->
           @view.belowTheFoldView.setupSale.called.should.be.ok
           @view.belowTheFoldView.setupSale.args[0][0].get('id').should.equal 'i am a sale'
           @view.belowTheFoldView.setupSale.args[0][1].constructor.name.should.equal 'ArtworkCollection'
-
+          @view.deltaTrackPageView.called.should.be.ok
+          @view.deltaTrackPageView.args[0][0].get('id').should.equal 'i am a fair'
 
     describe '#setupCurrentUser', ->
       it 'initializes the current user, saved artwork collection, and following collection', ->
