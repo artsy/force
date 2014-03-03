@@ -20,6 +20,8 @@ describe 'Partner Show View', ->
       @PartnerShowView = benv.requireWithJadeify resolve(__dirname, '../client/index.coffee'), ['artworkColumns']
       @PartnerShowView.__set__ 'CarouselView', benv.requireWithJadeify resolve(__dirname, '../../../components/carousel/view.coffee'), ['carouselTemplate']
       @PartnerShowView.__set__ 'PartnerShowButtons', @PartnerShowButtons = sinon.stub()
+      carouselView = @PartnerShowView.__get__ 'CarouselView'
+      carouselView.setStops = sinon.stub()
       done()
 
   after ->
