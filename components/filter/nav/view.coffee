@@ -53,6 +53,15 @@ module.exports = class FilterNav extends Backbone.View
     'click .filter-dropdown a': 'hideMenu'
     'click .filter-button, .filter-dropdown a': 'renderActive'
     'click .filter-nav-all': 'all'
+    'mouseenter .filter-dropdown': 'adjustMenu'
+
+  adjustMenu: (e) ->
+    $dropdown = $(e.currentTarget)
+    $menu     = $dropdown.find('nav')
+    $world    = $(document)
+
+    if $dropdown.offset().left + $menu.width() > $world.width()
+      $menu.css left: 'auto', right: 0
 
   filterAttr: (e) ->
     attr = $(e.currentTarget).data 'attr'
