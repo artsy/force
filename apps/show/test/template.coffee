@@ -109,9 +109,6 @@ describe 'Partner Show', ->
   describe 'with a private profile', ->
 
     beforeEach ->
-      sd =
-        ARTSY_URL : 'http://localhost:5000'
-        ASSET_PATH: 'http://localhost:5000'
       @show = new PartnerShow fabricate('show')
       @show.partner().default_profile_public = false
       @html = render('template')({
