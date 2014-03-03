@@ -80,7 +80,8 @@ module.exports = class Carousel extends Backbone.View
   # viewport is large. Another iteration could determine length of the prefix and postfix
   # lists relative to the viewport or based on a param.
   setStops: ->
-    # This function breaks tests if it runs. It should always be stubbed
+    # This function breaks tests if it runs
+    return if sd.NODE_ENV == 'test'
 
     # Use a local widths array to help calculate the stored stop positions
     widths = []
