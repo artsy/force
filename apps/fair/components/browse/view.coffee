@@ -40,6 +40,8 @@ module.exports = class FairBrowseView extends Backbone.View
     @updatePageTitle(
       if @boothParams.get('section')
         "Exhibitors at #{@boothParams.get('section')}"
+      else if @boothParams.get('artist')
+        _.titleize _.humanize @boothParams.get('artist').replace(/[0-9]/g, '')
       else
         "Browse #{sd.EXHIBITORS_COUNT} Exhibitors"
     )
