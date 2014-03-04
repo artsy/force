@@ -6,6 +6,7 @@ module.exports = class PoplockitFeed extends FeedView
 
   maxItemsInDom: 20
   limitPostBodyHeight: true
+  displayPurchase: true
   feedItemClass: 'feed-item-post'
   feedName: 'Posts Feed'
 
