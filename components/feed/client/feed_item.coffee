@@ -6,14 +6,16 @@ ShareView               = require '../../share/view.coffee'
 AcquireArtwork          = require('../../acquire/view.coffee').acquireArtwork
 analytics               = require('../../../lib/analytics.coffee')
 SaveControls            = require '../../artwork_item/views/save_controls.coffee'
+ContactPartnerView      = require '../../contact/contact_partner.coffee'
 artworkColumns          = -> require('../../artwork_columns/template.jade') arguments...
+Artwork                 = require('../../../models/artwork.coffee')
 
 module.exports.FeedItemView = class FeedItemView extends Backbone.View
 
   events:
-    "click .purchase" : "purchase"
-    'click .see-more' : 'fetchMoreArtworks'
-    'click .feed-item-contact-gallery': 'contactGallery'
+    'click .see-more'                    : 'fetchMoreArtworks'
+    "click .artwork-item-buy"            : "acquire"
+    "click .artwork-item-contact-seller" : "contactSeller"
 
   artworksPage: 1
   artworksPageSize: 8
@@ -59,14 +61,24 @@ module.exports.FeedItemView = class FeedItemView extends Backbone.View
     new ShareView
       el: el
 
-  purchase: (event) =>
+  acquire: (event) ->
     $target = $(event.target)
     id = $target.attr('data-id')
     new Artwork(id: id).fetch
       success: (artwork) =>
         # redirect to artwork page if artwork has multiple editions
         if artwork.get('edition_sets_count') > 1
-          return App.router.navigate "/artwork/#{artwork.get('id')}", trigger: true
-
+          window.location.href = artwork.href()
         AcquireArtwork artwork, $target
+    false
+
+  contactSeller: (event) ->
+    event.preventDefault()
+    $target = $(event.target)
+    id = $target.attr('data-id')
+    new Artwork(id: id).fetch
+      success: (artwork) =>
+          new ContactPartnerView
+            artwork: artwork
+            partner: artwork.get('partner')
     false
