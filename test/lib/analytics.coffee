@@ -106,6 +106,17 @@ describe 'analytics', ->
         rewiredAnalytics.getProperty = -> 'disabled'
         rewiredAnalytics.abTest('foo').should.not.be.ok
 
+    describe '#delta', ->
+      it 'appends a tracker pixel', ->
+        sd.DELTA_HOST = 'testhost'
+        url = "https://" + sd.DELTA_HOST + "/?id=test_id&fair=test_fair&name=test_event&method=import&pixel=1"
+        el = {}
+        el.append = sinon.stub()
+        data = { id: 'test_id', fair: 'test_fair' }
+        analytics.delta('test_event', data, el)
+        el.append.called.should.be.ok
+        el.append.args[0][0].should.equal '<img src="' + url + '" style="display:none;" />'
+
   describe 'with a phantomjs useragent', ->
 
     before ->
