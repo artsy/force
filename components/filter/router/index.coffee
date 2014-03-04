@@ -14,8 +14,8 @@ module.exports = class FilterRouter extends Backbone.Router
     @route "#{@urlRoot}/artworks*", 'artworks'
 
   navigateParams: =>
-    @navigate "#{@urlRoot}/artworks?" + qs.stringify(_.omit @params.toJSON(), 'page')
+    @navigate "#{@urlRoot}/artworks?" + qs.stringify(_.omit @params.toJSON(), 'page', 'size')
 
   artworks: ->
     queryParams = qs.parse(location.search.replace(/^\?/, ''))
-    @params.set(_.extend queryParams, { page: 1 }).trigger('reset')
+    @params.set(_.extend queryParams, { page: 1, size: 10 }).trigger('reset')

@@ -25,7 +25,7 @@ module.exports = class FilterArtworksView extends Backbone.View
     @artworks.url = @artworksUrl
     @counts = new Backbone.Model
     @counts.url = @countsUrl
-    @params = new Backbone.Model
+    @params = new Backbone.Model size: @pageSize
 
     # Add child views/routers passing in necessary models/collections
     new FilterSortCount
@@ -53,7 +53,7 @@ module.exports = class FilterArtworksView extends Backbone.View
     @counts.on 'sync', @renderCounts
     @params.on 'change:price_range change:dimension change:medium change:sort reset', @reset
     @params.on 'change:page', =>
-      @artworks.fetch { data: @params.toJSON(), remove: false, size: @pageSize }
+      @artworks.fetch { data: @params.toJSON(), remove: false }
     @$el.infiniteScroll @nextPage
 
   render: (col, res) =>
@@ -73,7 +73,7 @@ module.exports = class FilterArtworksView extends Backbone.View
     @params.set page: (@params.get('page') + 1) or 1
 
   reset: =>
-    @params.set({ page: 1 }, { silent: true }).trigger('change change:page')
+    @params.set({ page: 1, size: @pageSize }, { silent: true }).trigger('change change:page')
     @counts.fetch data: @params.toJSON()
     @$('.filter-artworks-list').html ''
     _.defer @newColumnsView

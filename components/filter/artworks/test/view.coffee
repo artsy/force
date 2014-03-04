@@ -33,6 +33,7 @@ describe 'FilterArtworksView', ->
 
     it 'creates a router', ->
       @FilterRouter.args[0][0].params.should.equal @view.params
+      @view.params.get('size').should.equal 10
 
   describe '#newColumnsView', ->
 
@@ -49,6 +50,7 @@ describe 'FilterArtworksView', ->
       @view.params.on 'change:page', spy
       @view.params.on 'change', spy
       @view.reset()
+      @view.params.get('size').should.equal 10
       spy.callCount.should.equal 2
 
   describe '#nextPage', ->
@@ -57,6 +59,7 @@ describe 'FilterArtworksView', ->
       @view.params.set page: 1
       @view.nextPage()
       @view.params.get('page').should.equal 2
+      @view.params.get('size').should.equal 10
 
     it 'defaults to page 1 and avoids NaNs', ->
       @view.params.set page: NaN
