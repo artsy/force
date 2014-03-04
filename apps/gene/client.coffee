@@ -17,10 +17,12 @@ module.exports.GeneView = class GeneView extends Backbone.View
     @$window = $ window
     @document = document.documentElement
     @mainHeaderHeight = $('#main-layout-header').height()
+    following = if @user then new Following(null, kind: 'gene') else null
     new FollowButton
       el: $('.follow-button')
-      following: if @user then new Following(null, kind: 'gene') else null
+      following: following
       model: @model
+    following?.syncFollows [@model.get('id')]
     new ShareView
       el: @$('#gene-share-buttons')
     new RelatedGenesView
