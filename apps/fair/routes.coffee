@@ -66,6 +66,7 @@ fetchFairData = (fair, profile, res, options) ->
   fair.fetchExhibitors
     cache: true
     success: (exhibitorsAToZGroup, galleries) ->
+      res.locals.sd.EXHIBITORS_COUNT = galleries.length
       data.exhibitorsCount = galleries.length
       data.exhibitorsAToZGroup = exhibitorsAToZGroup
       success()
@@ -120,7 +121,7 @@ fetchFairData = (fair, profile, res, options) ->
         res.render 'templates/index', data
 
 @search = (req, res, next) ->
-  term    = req.query.q
+  term = req.query.q
   res.redirect("/#{req.params.id}") unless term
   fetchFair req, res, next, (fair, profile) ->
     fairSearch  = new Search

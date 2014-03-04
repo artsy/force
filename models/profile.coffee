@@ -68,14 +68,24 @@ module.exports = class Profile extends Backbone.Model
     follows = @get('follows_count')
     "#{_.numberFormat(follows)} Follower#{if follows is 1 then '' else 's'}"
 
-  metaTitle: ->
+  metaTitle: (tab) ->
     _.compact([
       (if @displayName() then "#{@displayName()}" else "Profile")
       (if @isGallery() then "Artists, Art for Sale, and Contact Info" else null)
-      (if @isPartner() and !@isGallery() then "Artists, Artworks, and Contact Info" else null)
-      (if @isFairOranizer() then "Fair Info, Artists, and Art for Sale" else null)
+      (if @isPartner() and !@isGallery() and !@isFairOranizer() then "Artists, Artworks, and Contact Info" else null)
+      (if @isFairOranizer() then @fairMetaTitle(tab) else null)
       "Artsy"
     ]).join(" | ")
+
+  fairMetaTitle: (tab) ->
+    if tab is 'info'
+      "Visitor Information"
+    else if tab is 'posts'
+       "Read Highlights from the Fair"
+    else if tab is 'forYou'
+      "Your Personal Fair Guide"
+    else
+      "Fair Info, Artists, and Art for Sale"
 
   metaDescription: ->
     if @get('bio')

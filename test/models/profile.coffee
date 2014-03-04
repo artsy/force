@@ -103,7 +103,10 @@ describe 'Profile', ->
 
     it 'correctly formats title for fairs', ->
       @profile.set owner_type: 'FairOrganizer'
-      @profile.metaTitle().should.equal 'J. Paul Getty Museum | Artists, Artworks, and Contact Info | Fair Info, Artists, and Art for Sale | Artsy'
+      @profile.metaTitle().should.equal 'J. Paul Getty Museum | Fair Info, Artists, and Art for Sale | Artsy'
+      @profile.metaTitle('info').should.equal 'J. Paul Getty Museum | Visitor Information | Artsy'
+      @profile.metaTitle('posts').should.equal 'J. Paul Getty Museum | Read Highlights from the Fair | Artsy'
+      @profile.metaTitle('forYou').should.equal 'J. Paul Getty Museum | Your Personal Fair Guide | Artsy'
 
   describe '#metaDescription', ->
 
