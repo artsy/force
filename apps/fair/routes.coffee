@@ -66,6 +66,7 @@ fetchFairData = (fair, profile, res, options) ->
   fair.fetchExhibitors
     cache: true
     success: (exhibitorsAToZGroup, galleries) ->
+      res.locals.sd.EXHIBITORS_COUNT = galleries.length
       data.exhibitorsCount = galleries.length
       data.exhibitorsAToZGroup = exhibitorsAToZGroup
       success()

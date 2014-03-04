@@ -1,4 +1,5 @@
 _ = require 'underscore'
+sd = require('sharify').data
 _.mixin require 'underscore.string'
 Backbone = require 'backbone'
 BoothsView = require '../booths/view.coffee'
@@ -25,10 +26,31 @@ module.exports = class FairBrowseView extends Backbone.View
       router: @router
     @boothParams = @boothsView.params
     @boothParams.on 'change reset', @boothsSection
+    @boothParams.on 'change reset', @updateBoothPageTitle
     @artworkParams.on 'change reset', @artworksSection
     @artworkParams.on 'change reset', @renderArtworksHeader
+    @artworkParams.on 'change reset', @updateFilterPageTitle
     @counts.fetch()
     @highlightHome()
+
+  updateFilterPageTitle: =>
+    @updatePageTitle "Browse #{@counts.get('total')} Artworks"
+
+  updateBoothPageTitle: =>
+    @updatePageTitle(
+      if @boothParams.get('section')
+        "Exhibitors at #{@boothParams.get('section')}"
+      else
+        "Browse #{sd.EXHIBITORS_COUNT} Exhibitors"
+    )
+
+  updatePageTitle: (context) ->
+    return unless SECTION is 'browse'
+    document.title = _.compact([
+      (if @profile.displayName() then "#{@profile.displayName()}" else "Profile")
+      context
+      "Artsy"
+    ]).join(" | ")
 
   boothsSection: =>
     @$('.filter-artworks-nav .is-active, #fair-filter-all-artists').removeClass('is-active')
@@ -63,12 +85,14 @@ module.exports = class FairBrowseView extends Backbone.View
     @$('.filter-fixed-header-nav .is-active').removeClass('is-active')
     @$('#fair-filter-all-artists').addClass('is-active')
     @$el.attr 'data-section', 'artists-a-to-z'
+    @updatePageTitle 'See A-Z List of All Artists'
 
   exhibitorsAZ: ->
     @router.navigate "#{@profile.get 'id'}/browse/exhibitors"
     @$('.filter-fixed-header-nav .is-active').removeClass('is-active')
     @$('#fair-filter-all-exhibitors').addClass('is-active')
     @$el.attr 'data-section', 'exhibitors-a-to-z'
+    @updatePageTitle 'See A-Z List of All Exhibitors'
 
   exhibitorsGrid: ->
     @boothParams.trigger 'reset'
