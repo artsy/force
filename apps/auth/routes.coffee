@@ -11,6 +11,8 @@ qs = require 'querystring'
   res.send { success: true, error: res.authError, user: req.user?.toJSON() }
 
 @loginToArtsy = (req, res) ->
+
+
   unless req.user
     return res.redirect "/log_in?error=wtf"
 
