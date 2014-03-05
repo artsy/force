@@ -19,16 +19,13 @@ module.exports = class HomeAuthRouter extends Backbone.Router
 
     if error
       msg = switch error
-        when 'already-signed-up'
-          "You've already signed up with your email address. " +
-          "Log in to link your Facebook account in your settings."
-        when 'facebook'
+        when 'already-signed-up', 'facebook'
           "You've already signed up with your email address. " +
           "Log in to link your Facebook account in your settings."
         when 'twitter'
           "You've already signed up with your email address. " +
           "Log in to link your Twitter account in your settings."
-        when 'account-not-found'
+        when 'account-not-found', 'no-user-access-token', 'no-user'
           "We couldn't find your account. Please sign up."
         else
           "Unknown error."

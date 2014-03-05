@@ -11,6 +11,9 @@ qs = require 'querystring'
   res.send { success: true, error: res.authError, user: req.user?.toJSON() }
 
 @loginToArtsy = (req, res) ->
+  unless req.user
+    return res.redirect '/log_in?error=no-user-access-token'
+
   redirectTo = req.body['redirect-to'] or req.query['redirect-to'] or
                parse(req.get('Referrer') or '').path or '/'
   request
@@ -49,6 +52,9 @@ qs = require 'querystring'
   res.redirect url
 
 @submitEmailForTwitter = (req, res, next) ->
+  unless req.user
+    return res.redirect '/log_in?error=no-user'
+
   req.user.save {
     email: req.query.email
     email_confirmation: req.query.email
