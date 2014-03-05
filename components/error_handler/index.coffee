@@ -38,7 +38,15 @@ errorHandler.javascriptError = (req, res, next) ->
 
 errorHandler.socialAuthError = (err, req, res, next) ->
   if err.toString().match('User Already Exists')
-    res.redirect '/log_in?error=already-signed-up'
+    # Error urls need to be compatible with Gravity
+    params =
+      if req.url?.indexOf('facebook') > -1
+        "?account_created_email=facebook"
+      else if req.url?.indexOf('twitter') > -1
+        "?account_created_email=twitter"
+      else
+        "?error=already-signed-up"
+    res.redirect "/log_in#{params}"
   else if err.toString().match('Failed to find request token in session')
     res.redirect '/log_in?error=account-not-found'
   else
