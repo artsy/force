@@ -176,6 +176,10 @@ accessTokenCallback = (done, params) ->
     # from the API.
     err = (err?.toString() or res?.body.error_description or res?.body.error)
 
+    # Error if we do not have an access token
+    if not err or not res?.body.access_token
+      err = "Unable to authenticate you"
+
     # Success
     unless err?
       return done(null, new opts.CurrentUser(accessToken: res?.body.access_token))
@@ -194,7 +198,7 @@ accessTokenCallback = (done, params) ->
     # Invalid email or password
     else if err.match?('invalid email or password')
       done null, false, err
-    
+
     # Other errors
     else
       done err
