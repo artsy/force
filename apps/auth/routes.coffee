@@ -11,11 +11,6 @@ qs = require 'querystring'
   res.send { success: true, error: res.authError, user: req.user?.toJSON() }
 
 @loginToArtsy = (req, res) ->
-
-
-  unless req.user
-    return res.redirect "/log_in?error=wtf"
-
   redirectTo = req.body['redirect-to'] or req.query['redirect-to'] or
                parse(req.get('Referrer') or '').path or '/'
   request
