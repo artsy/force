@@ -19,7 +19,7 @@ describe 'ShareView', ->
       """)
       done()
 
-  after benv.teardown
+  after -> benv.teardown()
 
   describe '#initialize', ->
     it '#', ->

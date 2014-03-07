@@ -30,7 +30,7 @@ describe 'HeaderView', ->
           $body: $('body')
         done()
 
-  after benv.teardown
+  after -> benv.teardown()
 
   it 'hides the welcome header on scroll', ->
     @$window.on.args[0][0].should.equal 'scroll.welcome-header'

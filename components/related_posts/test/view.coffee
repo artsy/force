@@ -97,7 +97,7 @@ describe 'RelatedPostsView', ->
           fabricate 'post', id: 'cats-rule-dogs-drool-literally', title: 'Cats rule, and dogs drool'
         ]}
         _.last(Backbone.sync.args)[2].success([])
-        location.href.should.contain '/post'
+        location.href.should.containEql '/post'
 
       it 'should intercept if user is *not* logged in', ->
         RelatedPostsView.currentUser = false

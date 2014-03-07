@@ -17,7 +17,7 @@ describe 'FairHeaderView', ->
       $.fn.typeahead  = sinon.stub()
       done()
 
-  after benv.teardown
+  after -> benv.teardown()
 
   beforeEach (done) ->
     @fair     = new Fair fabricate 'fair'

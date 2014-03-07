@@ -30,4 +30,4 @@ describe 'Profile', ->
 
     it 'renders profile header', ->
       $ = cheerio.load @html
-      $('#profile').html().should.contain 'Craig Spaeth'
+      $('#profile').html().should.containEql 'Craig Spaeth'

@@ -1,7 +1,7 @@
 mixin share(description, media, url)
-  url           = url || encodeURIComponent(sd.ARTSY_URL + sd.CURRENT_PATH)
-  description   = description || ''
-  media         = media || ''
+  - url           = url || encodeURIComponent(sd.ARTSY_URL + sd.CURRENT_PATH)
+  - description   = description || ''
+  - media         = media || ''
 
   a.share-to-facebook.black-tooltip(
     data-message='Post to Facebook',

@@ -6,7 +6,6 @@ Example (With jQuery!)
 ----------------------
 
         /* Before you run this, run:
-              git submodule update --init
               (cd deps/jquery; rake)
         */
         var  HTML5 = require('html5'),

@@ -56,4 +56,19 @@ test('Test string as parameters', function(t) {
   t.equal( request.uri, 'http://localhost:8081/api/foo', 'Url should be correct');
   t.end();
 
-})
+});
+
+test('Test withCredentials param', function(t) {
+  var url = '/api/foo';
+
+  var request = http.request({ url: url, withCredentials: false }, noop);
+  t.equal( request.xhr.withCredentials, false, 'xhr.withCredentials should be false');
+
+  var request = http.request({ url: url, withCredentials: true }, noop);
+  t.equal( request.xhr.withCredentials, true, 'xhr.withCredentials should be true');
+
+  var request = http.request({ url: url }, noop);
+  t.equal( request.xhr.withCredentials, true, 'xhr.withCredentials should be true');
+
+  t.end();
+});

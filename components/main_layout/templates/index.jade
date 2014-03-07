@@ -1,8 +1,8 @@
 //- Override any locals with `append locals`
 block locals
-  assetPackage = 'all'
-  bodyClass = (sd.HIDE_HEADER ? 'body-header-fixed' : '')
-  bodyClass = bodyClass + (sd.MICROSITE ? ' is-microsite' : '')
+  - assetPackage = 'all'
+  - bodyClass = (sd.HIDE_HEADER ? 'body-header-fixed' : '')
+  - bodyClass = bodyClass + (sd.MICROSITE ? ' is-microsite' : '')
 
 doctype html
 html( data-useragent=userAgent )

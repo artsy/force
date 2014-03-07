@@ -13,6 +13,7 @@ describe 'Meta tags', ->
         ARTSY_URL : "http://localhost:5000"
       @file = "#{process.cwd()}/apps/feature/templates/meta.jade"
       @feature = new Feature fabricate('feature')
+      @feature.href = -> ''
       @html = jade.render fs.readFileSync(@file).toString(),
         sd     : @sd
         feature: @feature

@@ -103,13 +103,13 @@ describe 'FollowProfiles', ->
 
         rest = _.rest profileIds, 10
         for n in _.rest(profileIds, 10)
-          @followProfiles.syncFollows.getCall(1).args[0].should.contain n
+          @followProfiles.syncFollows.getCall(1).args[0].should.containEql n
         Backbone.sync.args[1][2].data.profiles.should.have.lengthOf 10
         Backbone.sync.args[1][2].success []
 
         rest = _.rest profileIds, 20
         for n in _.rest(profileIds, 20)
-          @followProfiles.syncFollows.getCall(2).args[0].should.contain n
+          @followProfiles.syncFollows.getCall(2).args[0].should.containEql n
         Backbone.sync.args[2][2].data.profiles.should.have.lengthOf 2
         Backbone.sync.args[2][2].success []
 

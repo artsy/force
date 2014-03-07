@@ -18,8 +18,6 @@ sharify = require "sharify"
 path = require "path"
 artsyPassport = require 'artsy-passport'
 artsyXappMiddlware = require 'artsy-xapp-middleware'
-httpProxy = require 'http-proxy'
-proxy = new httpProxy.RoutingProxy()
 backboneCacheSync = require 'backbone-cache-sync'
 redirectMobile = require './middleware/redirect_mobile'
 proxyGravity = require './middleware/proxy_to_gravity'
@@ -29,6 +27,7 @@ helpersMiddleware = require './middleware/helpers'
 ensureSSL = require './middleware/ensure_ssl'
 errorHandler = require "../components/error_handler"
 { notFoundError, loginError } = require('./middleware/errors')
+
 
 if REDIS_URL
   _.extend require('artsy-backbone-mixins/config'), config

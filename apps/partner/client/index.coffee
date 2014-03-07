@@ -86,7 +86,7 @@ module.exports.PartnerView = class PartnerView extends Backbone.View
 
   #
   # Filter and return displayable sections of a gallery or institution.
-  # 
+  #
   # @param {Object} sections An array of sections to be filtered.
   getDisplayableSections: (sections) ->
     criteria =

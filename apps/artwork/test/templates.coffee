@@ -19,7 +19,7 @@ render = (templateName) ->
 
 describe 'Artwork', ->
   describe 'index template', ->
-    after benv.teardown
+    after -> benv.teardown()
 
     before (done) ->
       benv.setup =>
@@ -41,12 +41,12 @@ describe 'Artwork', ->
         artwork: @artwork
         artist: @artist
       @$template = $(template)
-      @$template.html().should.contain @artwork.get('title')
-      @$template.html().should.contain @artist.get('name')
+      @$template.html().should.containEql @artwork.get('title')
+      @$template.html().should.containEql @artist.get('name')
 
     it 'renders without errors', ->
       template = render('index')
         sd: @sd
         artwork: @artwork
       @$template = $(template)
-      @$template.html().should.contain @artwork.get('title')
+      @$template.html().should.containEql @artwork.get('title')

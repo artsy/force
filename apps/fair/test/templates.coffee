@@ -28,7 +28,7 @@ render = (templateName) ->
 
 describe 'Fair', ->
   describe 'index page', ->
-    after benv.teardown
+    after -> benv.teardown()
 
     before (done) ->
       benv.setup =>
@@ -51,11 +51,11 @@ describe 'Fair', ->
         done()
 
     it 'renders without errors', ->
-      @$template.html().should.not.contain 'undefined'
-      @$template.html().should.contain 'Back to Artsy.net'
+      @$template.html().should.not.containEql 'undefined'
+      @$template.html().should.containEql 'Back to Artsy.net'
 
   describe 'info page', ->
-    after benv.teardown
+    after -> benv.teardown()
 
     before (done) ->
       benv.setup =>
@@ -79,13 +79,13 @@ describe 'Fair', ->
         done()
 
     it 'renders without errors', ->
-      @$template.html().should.not.contain 'undefined'
-      @$template.html().should.contain 'Back to Artsy.net'
+      @$template.html().should.not.containEql 'undefined'
+      @$template.html().should.containEql 'Back to Artsy.net'
       @$template.find('.fair-map-link').length.should.equal 1
-      @$template.find('.fair-info-content').html().should.contain 'about the fair'
+      @$template.find('.fair-info-content').html().should.containEql 'about the fair'
 
   describe 'search page', ->
-    after benv.teardown
+    after -> benv.teardown()
 
     before (done) ->
       benv.setup =>
@@ -142,9 +142,9 @@ describe 'Fair', ->
         done()
 
     it 'renders without errors', ->
-      @$template.html().should.contain 'Back to Artsy.net'
+      @$template.html().should.containEql 'Back to Artsy.net'
       @$template.find('.artsy-search-results .search-result').length.should.equal 1
-      @$template.find('.fair-search-results .search-result').html().should.contain 'Booth'
+      @$template.find('.fair-search-results .search-result').html().should.containEql 'Booth'
       @$template.find('.fair-search-results .search-result').length.should.equal 1
 
   describe 'overview', ->

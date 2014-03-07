@@ -21,15 +21,8 @@ describe 'SuggestedGenesView', ->
     benv.teardown()
 
   beforeEach (done) ->
-
     sinon.stub Backbone, 'sync'
-    geneSets = new OrderedSets()
-    geneSets.add {id: '123'}
-    @OrderedSets = sinon.stub()
-    @OrderedSets.fetch = sinon.stub()
-    @OrderedSets.fetch.yieldsTo "success", geneSets
-    @OrderedSets.returns @OrderedSets
-    mod.__set__ 'OrderedSets', @OrderedSets
+    mod.__set__ 'OrderedSets', Backbone.Collection
     @view = new SuggestedGenesView
       el: $('body')
       numberOfItems: 2
@@ -41,6 +34,7 @@ describe 'SuggestedGenesView', ->
   describe '#render', ->
 
     it 'calls suggested genes api to get suggested genes', ->
+      _.last(Backbone.sync.args)[2].success { id: '123' }
       _.last(Backbone.sync.args)[2].url.should.include '/api/v1/set/123/items'
 
     it 'renders the exact number of genes', ->

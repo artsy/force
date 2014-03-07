@@ -22,6 +22,13 @@ module.exports = function(method, model, options) {
     req.query(data);
   }
 
+  // Add common Backbone options like `headers`
+  if (options.headers) {
+    for(key in options.headers)
+    req.set(key, options.headers[key]);
+  }
+
+  // End the request using Backbone callbacks
   req.end(function(res) {
     if (res.ok && options.success) {
       options.res = res;
@@ -29,6 +36,7 @@ module.exports = function(method, model, options) {
     } else if (!res.ok && options.error) {
       options.error(res);
     }
+    if (options.complete) options.complete(res);
   });
 
   model.trigger('request', model, req, options);

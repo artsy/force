@@ -21,7 +21,7 @@ render = (templateName) ->
 
 describe 'Artists', ->
   describe 'index page', ->
-    after benv.teardown
+    after -> benv.teardown()
 
     before (done) ->
       benv.setup =>

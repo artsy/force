@@ -33,4 +33,4 @@ describe 'AcquireArtwork Component', ->
         id: 'order-id'
         token: 'order-token'
 
-      location.href.should.contain '/order/order-id/resume?token=order-token'
+      location.href.should.containEql '/order/order-id/resume?token=order-token'

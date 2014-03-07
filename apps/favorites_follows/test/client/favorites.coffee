@@ -6,6 +6,7 @@ Artworks      = require '../../../../collections/artworks.coffee'
 _             = require 'underscore'
 { resolve }   = require 'path'
 { fabricate } = require 'antigravity'
+{ stubChildClasses } = require '../../../../test/helpers/stubs'
 
 describe 'FavoritesView', ->
 
@@ -30,18 +31,9 @@ describe 'FavoritesView', ->
         )
         artworks = new Artworks()
         sinon.stub artworks, "fetch", (options) -> options.success?([], [])
-
-        @SuggestedGenesView = sinon.stub()
-        @SuggestedGenesView.render = sinon.stub()
-        @SuggestedGenesView.returns @SuggestedGenesView
-
-        @ArtworkColumnsView = sinon.stub()
-        @ArtworkColumnsView.render = sinon.stub()
-        @ArtworkColumnsView.appendArtworks = sinon.stub()
-        @ArtworkColumnsView.returns @ArtworkColumnsView
-
-        mod.__set__ 'ArtworkColumnsView', @ArtworkColumnsView
-        mod.__set__ 'SuggestedGenesView', @SuggestedGenesView
+        stubChildClasses mod, @,
+          ['SuggestedGenesView', 'ArtworkColumnsView']
+          ['render', 'appendArtworks']
         mod.__set__ 'CurrentUser',
           orNull: -> _.extend fabricate 'user',
             initializeDefaultArtworkCollection: -> return
@@ -60,7 +52,7 @@ describe 'FavoritesView', ->
         @view.$el.html().should.include 'Add works to your favorites'
 
       it 'shows suggested genes genes', ->
-        @SuggestedGenesView.render.should.calledOnce
+        @SuggestedGenesView::render.calledOnce.should.be.ok
 
   describe 'with favorites items', ->
 
@@ -88,21 +80,13 @@ describe 'FavoritesView', ->
           end = start + options.data.size
           dest = new Artworks(@src[start...end])
           options.success?(dest, null, options)
-
+        stubChildClasses mod, @,
+          ['FavoritesStatusModal', 'ArtworkColumnsView']
+          ['render', 'appendArtworks']
         mod.__set__ 'CurrentUser',
           orNull: -> _.extend fabricate 'user',
             initializeDefaultArtworkCollection: sinon.stub()
             defaultArtworkCollection: sinon.stub()
-
-        @ArtworkColumnsView = sinon.stub()
-        @ArtworkColumnsView.render = sinon.stub()
-        @ArtworkColumnsView.appendArtworks = sinon.stub()
-        @ArtworkColumnsView.returns @ArtworkColumnsView
-        mod.__set__ 'ArtworkColumnsView', @ArtworkColumnsView
-        mod.__set__ 'SaveControls', sinon.stub()
-        @FavoritesStatusModal = sinon.stub()
-        @FavoritesStatusModal.returns @FavoritesStatusModal
-        mod.__set__ 'FavoritesStatusModal', @FavoritesStatusModal
         @view = new FavoritesView
           el: $ 'body'
           collection: artworks
@@ -121,27 +105,27 @@ describe 'FavoritesView', ->
     describe '#loadNextPage', ->
 
       it 'calls ArtworkColumnsView to render the first page', ->
-        @ArtworkColumnsView.render.should.calledOnce
+        @ArtworkColumnsView::render.should.calledOnce
         @view.nextPage.should.equal 2
 
       it 'uses ArtworkColumns to render the next pages individually until the end', ->
         @view.loadNextPage()
         @view.nextPage.should.equal 3
-        artworks = _.last(@ArtworkColumnsView.appendArtworks.args)[0]
+        artworks = _.last(@ArtworkColumnsView::appendArtworks.args)[0]
         artworks.should.have.lengthOf 2
 
         artworks[0].get('artwork').id.should.equal 'artwork3'
         artworks[1].get('artwork').id.should.equal 'artwork4'
         @view.loadNextPage()
         @view.nextPage.should.equal 4
-        artworks = _.last(@ArtworkColumnsView.appendArtworks.args)[0]
+        artworks = _.last(@ArtworkColumnsView::appendArtworks.args)[0]
         artworks.should.have.lengthOf 2
 
         artworks[0].get('artwork').id.should.equal 'artwork5'
         artworks[1].get('artwork').id.should.equal 'artwork6'
         @view.loadNextPage()
         @view.nextPage.should.equal 5
-        artworks = _.last(@ArtworkColumnsView.appendArtworks.args)[0]
+        artworks = _.last(@ArtworkColumnsView::appendArtworks.args)[0]
         artworks.should.have.lengthOf 1
 
         artworks[0].get('artwork').id.should.equal 'artwork7'
@@ -153,7 +137,7 @@ describe 'FavoritesView', ->
         @view.nextPage.should.equal 5
 
         # 7 works, page size 2, 4 calls to get all
-        @ArtworkColumnsView.appendArtworks.callCount.should.equal 4
+        @ArtworkColumnsView::appendArtworks.callCount.should.equal 4
 
       it 'passes sort=-position when fetching saved artworks', ->
         _.last(@fetchStub.args)[0].data.sort.should.equal '-position'
@@ -200,21 +184,13 @@ describe 'FavoritesView', ->
             works.push work unless _.isUndefined work
           dest = new Artworks works
           options.success?(dest, null, options)
-
+        stubChildClasses mod, @,
+          ['SaveControls', 'ArtworkColumnsView', 'FavoritesStatusModal']
+          ['render', 'appendArtworks']
         mod.__set__ 'CurrentUser',
           orNull: -> _.extend fabricate 'user',
             initializeDefaultArtworkCollection: sinon.stub()
             defaultArtworkCollection: sinon.stub()
-
-        @ArtworkColumnsView = sinon.stub()
-        @ArtworkColumnsView.render = sinon.stub()
-        @ArtworkColumnsView.appendArtworks = sinon.stub()
-        @ArtworkColumnsView.returns @ArtworkColumnsView
-        mod.__set__ 'ArtworkColumnsView', @ArtworkColumnsView
-        mod.__set__ 'SaveControls', sinon.stub()
-        @FavoritesStatusModal = sinon.stub()
-        @FavoritesStatusModal.returns @FavoritesStatusModal
-        mod.__set__ 'FavoritesStatusModal', @FavoritesStatusModal
         @view = new FavoritesView
           el: $ 'body'
           collection: artworks
@@ -229,7 +205,7 @@ describe 'FavoritesView', ->
       it 'keeps fetching even if the API does not respond with a full page', ->
         # fetches page 1 on init...
         @view.nextPage.should.equal 2
-        artworks = _.last(@ArtworkColumnsView.appendArtworks.args)[0]
+        artworks = _.last(@ArtworkColumnsView::appendArtworks.args)[0]
         artworks.should.have.lengthOf 3
         artworks[0].get('artwork').id.should.equal 'artwork1'
         artworks[1].get('artwork').id.should.equal 'artwork2'
@@ -237,7 +213,7 @@ describe 'FavoritesView', ->
 
         # on page 2, the response is not a full page
         @view.loadNextPage()
-        artworks = _.last(@ArtworkColumnsView.appendArtworks.args)[0]
+        artworks = _.last(@ArtworkColumnsView::appendArtworks.args)[0]
         artworks.should.have.lengthOf 2
         artworks[0].get('artwork').id.should.equal 'artwork4'
         artworks[1].get('artwork').id.should.equal 'artwork5'
@@ -245,7 +221,7 @@ describe 'FavoritesView', ->
 
         # only two left in the whole set
         @view.loadNextPage()
-        artworks = _.last(@ArtworkColumnsView.appendArtworks.args)[0]
+        artworks = _.last(@ArtworkColumnsView::appendArtworks.args)[0]
         artworks.should.have.lengthOf 2
         artworks[0].get('artwork').id.should.equal 'artwork6'
         artworks[1].get('artwork').id.should.equal 'artwork7'
@@ -258,4 +234,4 @@ describe 'FavoritesView', ->
         @view.nextPage.should.equal 4
 
         # 7 works, page size 3, then 2, then 3, 3 calls to get all
-        @ArtworkColumnsView.appendArtworks.callCount.should.equal 3
+        @ArtworkColumnsView::appendArtworks.callCount.should.equal 3

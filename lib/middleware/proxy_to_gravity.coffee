@@ -5,10 +5,10 @@
 #
 
 { ARTSY_URL } = require '../../config'
-http      = require 'http'
+http = require 'http'
 httpProxy = require 'http-proxy'
-proxy     = new httpProxy.RoutingProxy()
-url       = require 'url'
+proxy = httpProxy.createProxyServer()
+url = require 'url'
 
 module.exports = exports = (req, res, next) ->
   urlObj = url.parse(ARTSY_URL + req.url)
@@ -21,9 +21,8 @@ module.exports = exports = (req, res, next) ->
   # proxy the req to it. Otherwise, pass it.
   pingReq = http.get options, (pingRes) ->
     if pingRes.statusCode < 400
-      proxy.proxyRequest req, res,
-        host: url.parse(ARTSY_URL).hostname
-        port: url.parse(ARTSY_URL).port or 80
+      proxy.web req, res,
+        target: ARTSY_URL
     else
       next()
 

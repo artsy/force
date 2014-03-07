@@ -71,6 +71,6 @@ describe 'SearchResult', ->
         modelB.updateForFair(fair)
 
         modelA.get('display_model').should.equal 'Booth'
-        modelA.get('location').should.contain '/show/gagosian-gallery-inez-and-vinoodh'
+        modelA.get('location').should.containEql '/show/gagosian-gallery-inez-and-vinoodh'
 
-        modelB.get('location').should.contain "/the-armory-show/browse/artist/pablo"
+        modelB.get('location').should.containEql "/the-armory-show/browse/artist/pablo"

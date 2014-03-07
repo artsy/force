@@ -20,6 +20,9 @@ app.get('/headers', function(req, res) {
   res.set({ 'X-Foo-Bar': 'baz' });
   res.send({ foo: 'headers' });
 });
+app.get('/passheaders', function(req, res) {
+  res.send(req.headers);
+});
 
 describe('Backbone Super Sync', function() {
 
@@ -65,6 +68,7 @@ describe('Backbone Super Sync', function() {
     });
 
     it('preferences the options url', function(done) {
+      model.url = 'http://localhost:5000/custom/url'
       model.fetch({
         url: 'http://localhost:5000/custom/url',
         success: function() {
@@ -91,6 +95,27 @@ describe('Backbone Super Sync', function() {
         url: 'http://localhost:5000/headers',
         success: function(model, res, options) {
           options.res.headers['x-foo-bar'].should.equal('baz');
+          done();
+        }
+      });
+    });
+
+    it('can pass in the headers', function(done) {
+      model.url = 'http://localhost:5000/passheaders'
+      model.fetch({
+        headers: { "X-Foo": "Bar" },
+        success: function(m, res) {
+          res['x-foo'].should.equal('Bar');
+          done();
+        }
+      });
+    });
+
+    it("accepts the `complete` option", function(done) {
+      model.url = 'http://localhost:5000/err'
+      model.fetch({
+        complete: function(res) {
+          res.body.message.should.equal("Not Found");
           done();
         }
       });

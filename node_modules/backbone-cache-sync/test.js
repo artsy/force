@@ -45,6 +45,19 @@ describe('cacheSync', function() {
         }));
         expire['/moo/baz'].should.equal(3600);
     });
+    it('accepts a custom cacheTime', function() {
+        this.model.fetch({
+            cache     : true,
+            cacheTime : 100
+        });
+        _.last(this.originalSync.args)[2].success({
+            foo: 'bar'
+        });
+        cache['/moo/baz'].should.equal(JSON.stringify({
+            foo: 'bar'
+        }));
+        expire['/moo/baz'].should.equal(100);
+    });
     it('will pull from the cache next time', function() {
         cache['/moo/baz'] = JSON.stringify({
             moo: 'bam'

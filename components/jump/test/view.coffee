@@ -13,7 +13,7 @@ describe 'JumpView', ->
       @view = new JumpView
       done()
 
-  afterEach benv.teardown
+  afterEach -> benv.teardown()
 
   describe '#initialize', ->
     it 'should have some defaults', ->

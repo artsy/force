@@ -17,7 +17,7 @@ describe 'FooterView', ->
         @view = new FooterView el: $('#main-layout-footer')
         done()
 
-  afterEach benv.teardown
+  afterEach -> benv.teardown()
 
   it 'knows what year it is', ->
     now = (new Date).getFullYear()

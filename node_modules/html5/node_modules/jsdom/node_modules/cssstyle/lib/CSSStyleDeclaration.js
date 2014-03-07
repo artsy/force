@@ -3,10 +3,11 @@
  * https://github.com/NV/CSSOM
  ********************************************************************/
 "use strict";
-/*jslint es5: true*/
 var CSSOM = require('cssom');
 var fs = require('fs');
 var path = require('path');
+
+var camelToDashed = require('./parsers').camelToDashed;
 
 /**
  * @constructor
@@ -101,6 +102,7 @@ CSSStyleDeclaration.prototype = {
 
     getPropertyCSSValue: function () {
         //FIXME
+        return;
     },
 
     /**
@@ -110,10 +112,12 @@ CSSStyleDeclaration.prototype = {
      */
     getPropertyShorthand: function () {
         //FIXME
+        return;
     },
 
     isPropertyImplicit: function () {
         //FIXME
+        return;
     },
 
     /**
@@ -190,9 +194,14 @@ Object.defineProperties(CSSStyleDeclaration.prototype, {
  */
 var property_files = fs.readdirSync(__dirname + '/properties');
 property_files.forEach(function (property) {
+    var dashed;
+    var definition;
     if (property.substr(-3) === '.js') {
         property = path.basename(property, '.js');
-        Object.defineProperty(CSSStyleDeclaration.prototype, property, require('./properties/' + property).definition);
+        dashed = camelToDashed(property);
+        definition = require('./properties/' + property).definition;
+        Object.defineProperty(CSSStyleDeclaration.prototype, property, definition);
+        Object.defineProperty(CSSStyleDeclaration.prototype, dashed, definition);
     }
 });
 

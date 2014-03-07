@@ -27,5 +27,5 @@ describe 'Shows', ->
 
     it 'renders shows header', ->
       $ = cheerio.load @html
-      $('#shows-page').html().should.contain 'Shows'
-      $('#shows-page').html().should.not.contain 'undefined'
+      $('#shows-page').html().should.containEql 'Shows'
+      $('#shows-page').html().should.not.containEql 'undefined'

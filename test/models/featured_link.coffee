@@ -35,10 +35,10 @@ describe 'FeaturedLink', ->
 
   describe '#imageUrlForLayout', ->
     it 'returns the image url for the size required by the layout', ->
-      @featuredLink.imageUrlForLayout(1).should.contain 'original'
-      @featuredLink.imageUrlForLayout(2).should.contain 'large_rectangle'
-      @featuredLink.imageUrlForLayout(3).should.contain 'large_rectangle'
-      @featuredLink.imageUrlForLayout(4).should.contain 'medium_rectangle'
+      @featuredLink.imageUrlForLayout(1).should.containEql 'original'
+      @featuredLink.imageUrlForLayout(2).should.containEql 'large_rectangle'
+      @featuredLink.imageUrlForLayout(3).should.containEql 'large_rectangle'
+      @featuredLink.imageUrlForLayout(4).should.containEql 'medium_rectangle'
 
   describe '#hasImageForLayout', ->
     it 'check for an image that matches the needed layout', ->
