@@ -4,9 +4,6 @@ CurrentUser = require '../../models/current_user.coffee'
 { parse } = require 'url'
 qs = require 'querystring'
 
-@index = (req, res) ->
-  res.render 'template'
-
 @submitLogin = (req, res) ->
   res.send { success: true, error: res.authError, user: req.user?.toJSON() }
 
@@ -29,6 +26,9 @@ qs = require 'querystring'
   res.redirect "#{SECURE_ARTSY_URL}/users/sign_out?" +
                "redirect_uri=#{APP_URL + (parse(req.get('Referrer') or '').path or '')}"
 
+@resetPassword = (req, res) ->
+  res.render 'templates/reset_password'
+
 @loginWithTrustToken = (req, res) ->
   request.post(SECURE_ARTSY_URL + '/oauth2/access_token').send(
     grant_type    : 'trust_token'
@@ -44,7 +44,7 @@ qs = require 'querystring'
   )
 
 @twitterLastStep = (req, res) ->
-  res.render 'twitter_email'
+  res.render 'templates/twitter_email'
 
 @submitTwitterLastStep = (req, res) ->
   redirectTo = qs.parse(parse(req.get 'referrer').query)['redirect-to']

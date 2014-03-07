@@ -1,6 +1,6 @@
-HeroUnits = require '../../collections/hero_units'
+_             = require 'underscore'
+HeroUnits     = require '../../collections/hero_units'
 FeaturedLinks = require '../../collections/featured_links.coffee'
-_ = require 'underscore'
 
 @index = (req, res) ->
   heroUnits = new HeroUnits
@@ -17,3 +17,6 @@ _ = require 'underscore'
     cache: true
     success: render
     error: res.backboneError
+
+@redirectToSignup = (req, res) ->
+  res.redirect "/sign_up"

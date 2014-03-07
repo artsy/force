@@ -9,11 +9,17 @@ describe 'Auth routes', ->
     @req = { params: {}, logout: sinon.stub(), user: new Backbone.Model(), body: {}, query: {}, get: -> }
     @res = { render: sinon.stub(), locals: { sd: {} }, send: sinon.stub(), redirect: sinon.stub() }
 
-  describe '#index', ->
+  describe '#resetPassword', ->
 
     it 'renders the homepage', ->
-      routes.index @req, @res
-      @res.render.args[0][0].should.equal 'template'
+      routes.resetPassword @req, @res
+      @res.render.args[0][0].should.equal 'templates/reset_password'
+
+  describe '#twitterLastStep', ->
+
+    it 'renders the homepage', ->
+      routes.twitterLastStep @req, @res
+      @res.render.args[0][0].should.equal 'templates/twitter_email'
 
   describe '#submitLogin', ->
 
