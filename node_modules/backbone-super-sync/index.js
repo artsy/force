@@ -1,4 +1,5 @@
-var request = require('superagent');
+var request = require('superagent'),
+    Q = require('q');
 
 METHOD_MAP = {
   'create': 'post',
@@ -11,6 +12,7 @@ module.exports = function(method, model, options) {
   var url = options.url || (typeof model.url == 'function' ? model.url() : model.url);
   var data = options.data || (method === 'create' || method === 'update' ? model.toJSON() : {});
   var req = request[METHOD_MAP[method]](url);
+  var deferred = Q.defer();
 
   // Allow intercepting of the request object to inject sync-wide things like an oAuth token.
   module.exports.editRequest(req, method, model, options);
@@ -28,18 +30,22 @@ module.exports = function(method, model, options) {
     req.set(key, options.headers[key]);
   }
 
-  // End the request using Backbone callbacks
+  // End the request using Backbone callbacks and a Q promise
   req.end(function(res) {
-    if (res.ok && options.success) {
+    if (res.ok) {
       options.res = res;
-      options.success(res.body, res);
-    } else if (!res.ok && options.error) {
-      options.error(res);
+      deferred.resolve(model);
+      if (options.success) options.success(res.body, res);
+    } else if (!res.ok) {
+      deferred.reject(res);
+      if (options.error) options.error(res);
     }
     if (options.complete) options.complete(res);
   });
 
+  // Trigger request and return our Q promise
   model.trigger('request', model, req, options);
+  return deferred.promise;
 };
 
 module.exports.editRequest = function(req) {}

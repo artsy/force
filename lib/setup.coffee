@@ -63,8 +63,6 @@ module.exports = (app) ->
   Backbone.sync.editRequest = (req) -> req.set('X-XAPP-TOKEN': artsyXappMiddlware.token)
   backboneCacheSync(Backbone.sync, REDIS_URL, DEFAULT_CACHE_TIME, NODE_ENV) if REDIS_URL
 
-  require('./deferred_sync.coffee')(Backbone, require 'q')
-
   # Add up front middleware
   app.use sharify
   app.use redirectMobile
