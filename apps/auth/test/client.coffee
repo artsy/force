@@ -3,40 +3,50 @@ benv        = require 'benv'
 rewire      = require 'rewire'
 Backbone    = require 'backbone'
 sinon       = require 'sinon'
-mediator    = require '../../../lib/mediator.coffee'
+sd          = require('sharify').data
+PasswordResetView = require('../client/reset_password').PasswordResetView
+
 { resolve } = require 'path'
 
-describe 'AuthModalRouter', ->
+describe 'AuthClient', ->
   before (done) ->
     benv.setup =>
-      benv.expose { $: benv.require 'jquery' }
+      sd.ARTSY_URL = 'localhost:3003'
+      benv.expose $: benv.require 'jquery'
       Backbone.$ = $
       done()
 
   after ->
     benv.teardown()
 
-  beforeEach (done) ->
-    benv.render resolve(__dirname, './template.jade'), { sd: {} }, =>
-      { AuthModalRouter, @init } = mod = rewire '../client'
-      mod.__set__ 'AuthModalView', Backbone.View
-      @router = new AuthModalRouter
-      done()
+  describe 'PasswordResetView', ->
 
-  describe '#initialize', ->
-    it 'triggers the root path when the modal is closed', ->
-      navigateSpy = sinon.spy @router, 'navigate'
-      mediator.trigger 'modal:closed'
-      navigateSpy.args[0][0].should.equal '/'
+    beforeEach (done) ->
+      benv.render resolve(__dirname, '../templates/reset_password.jade'), { sd: {} }, =>
+        @view = new PasswordResetView el: $('#reset-password-form')
+        done()
 
-  describe '#openAuth', ->
-    it 'opens a modal', ->
-      Backbone.history.fragment = 'log_in'
-      @router.openAuth()
-      @router.modal.$el.length.should.be.ok
+    describe '#initialize', ->
 
-    it 'does not open a modal if there is already a listener that can take care of it', ->
-      mediator.on 'open:auth', -> #
-      Backbone.history.fragment = 'log_in'
-      @router.openAuth()
-      _.isUndefined(@router.modal).should.be.ok
+      it 'creates a new model that saves to the reset password endpoint', ->
+        @view.model.url.should.include '/api/v1/users/reset_password'
+
+      it 'toggles the loading button on request and error', ->
+        @view.$('#reset-password-form button').addClass('is-loading')
+        @view.model.trigger 'error'
+        @view.$('#reset-password-form button.is-loading').length.should.equal 0
+
+    describe "#save", ->
+
+      xit 'serializes the form and resets the password', ->
+        @view.$('[name=password]').val 'foobarbaz'
+        @view.$('[name=password_confirmation]').val 'foobarbaz'
+        @view.save preventDefault: ->
+        Backbone.sync.args[0][1].password.should.equal 'foobarbaz'
+
+      xit 'renders any errors', ->
+        @view.$('[name=password]').val 'foobarbaz'
+        @view.$('[name=password_confirmation]').val 'foobarbaz'
+        @view.save preventDefault: ->
+        Backbone.sync.args[0][2].error({}, responseText: '{ "error":"FAIL WHALE"}')
+        @view.$el.html().should.include 'FAIL WHALE'
