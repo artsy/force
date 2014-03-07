@@ -10,6 +10,9 @@
         if artwork.get('date')
           | , #{artwork.get('date')}
   h2.artwork-detail-medium= artwork.get('medium')
+  if artwork.get('manufacturer')
+    .artwork-detail-manufacturer
+      = artwork.get('manufacturer')
   unless artwork.isMultipleEditions()
     .artwork-detail-dimensions
       .amd-imperial!= artwork.dimensions({ metric: 'in', format: 'superscript' })
