@@ -53,7 +53,7 @@ See [this blog post](http://artsy.github.io/blog/2013/06/14/writing-headless-bac
 
 ### benv.setup(callback)
 
-Exposes a stubbed browser API into the node.js global namespace so the current process can act like a browser environment. 
+Exposes a stubbed browser API into the node.js global namespace so the current process can act like a browser environment.
 
 ### benv.expose(globals)
 
@@ -69,9 +69,11 @@ benv.expose({
 })
 ```
 
-### benv.teardown()
+### benv.teardown(clearDOM = true)
 
-Cleans up the globals exposed by `setup` so other tests can run without being harmed.
+Clean up the globals exposed by `setup` and `expose` so other tests can run without being harmed.
+
+Use `benv.teardown(false)` to keep around references to `window`, `document`, and other DOM globals. Useful for libraries that cache references to DOM globals and don't work so nicely when trying to clear globals and re-require these libs.
 
 ### benv.require(filename, globalVarName)
 
@@ -90,8 +92,8 @@ Renders the html in a body tag of a template. Pass in the template's filename al
 e.g.
 
 ````javascript
-benv.render('./views/artwork.jade', { 
-  artwork: new Artwork({ title: 'Andy Warhol, Flowers' }) 
+benv.render('./views/artwork.jade', {
+  artwork: new Artwork({ title: 'Andy Warhol, Flowers' })
 }, function() {
   $('body').html().should.include('Andy Warhol, Flowers');
 });
@@ -101,7 +103,7 @@ Currently only supports [.jade](https://github.com/visionmedia/jade) templates, 
 
 ### benv.requireWithJadeify(filename, varNames)
 
-For those using [jadeify](https://github.com/OliverJAsh/node-jadeify2) when requiring client-side code that uses jadeify it will throw an error because `require('template.jade')` isn't valid node code. 
+For those using [jadeify](https://github.com/OliverJAsh/node-jadeify2) when requiring client-side code that uses jadeify it will throw an error because `require('template.jade')` isn't valid node code.
 
 If you defer your jade requires to run time e.g. `var artworkTemplate = function() { require('foo.jade').apply(this, arguments); }` and use `benv.requireWithJadeify('../client/artwork.js', ['artworkTemplate'])` you can avoid this error and test the jadeified templates in node again.
 

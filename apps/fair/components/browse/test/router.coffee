@@ -8,7 +8,7 @@ describe 'BrowseRouter', ->
 
   beforeEach ->
     benv.setup =>
-      benv.expose { $: require('jquery')(window) }
+      benv.expose { $: require('jquery') }
       FilterRouter = benv.require resolve(__dirname, '../router.coffee')
       FilterRouter.__set__ 'FairBrowseView', @FairBrowseView = sinon.stub()
       @router = new FilterRouter

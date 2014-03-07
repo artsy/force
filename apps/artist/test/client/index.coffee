@@ -7,6 +7,7 @@ Artist        = require '../../../../models/artist'
 _             = require 'underscore'
 { resolve }   = require 'path'
 { fabricate } = require 'antigravity'
+{ stubChildClasses } = require '../../../../test/helpers/stubs'
 
 describe 'ArtistView', ->
 
@@ -31,15 +32,9 @@ describe 'ArtistView', ->
       { ArtistView, @init } = mod = benv.requireWithJadeify(
         (resolve __dirname, '../../client/index'), ['artistSort']
       )
-      @FillwidthView = sinon.stub()
-      @FillwidthView.nextPage = sinon.stub()
-      @FillwidthView.render = sinon.stub()
-      @FillwidthView.returns @FillwidthView
-      mod.__set__ 'FillwidthView', @FillwidthView
-      mod.__set__ 'BlurbView', @blurbStub = sinon.stub()
-      mod.__set__ 'RelatedPostsView', @relatedPostStub = sinon.stub()
-      mod.__set__ 'RelatedGenesView', @genesStub = sinon.stub()
-      mod.__set__ 'ArtistFillwidthList', @artistFillwidthView = sinon.stub()
+      stubChildClasses mod, @,
+        ['FillwidthView', 'BlurbView', 'RelatedPostsView', 'RelatedGenesView', 'ArtistFillwidthList']
+        ['nextPage', 'render']
       @view = new ArtistView
         el     : $ 'body'
         model  : new Artist fabricate 'artist'
@@ -69,12 +64,12 @@ describe 'ArtistView', ->
       """
       @view.$el.html fixture
       @view.setupBlurb()
-      viewBlurbOpts = @blurbStub.args[0][0]
+      viewBlurbOpts = @BlurbView.args[0][0]
       viewBlurbOpts.updateOnResize.should.equal true
       viewBlurbOpts.lineCount.should.equal 6
 
     it 'sets up the related genes view properly', ->
-      viewGeneOpts = @genesStub.args[0][0]
+      viewGeneOpts = @RelatedGenesView.args[0][0]
       viewGeneOpts.model.should.equal @view.model
 
     it 'sets up related artists', ->
@@ -82,7 +77,7 @@ describe 'ArtistView', ->
       @view.relatedContemporaryPage.should.equal 2
 
     it 'sets up related posts', ->
-      viewRelatedPostOpts = @relatedPostStub.args[0][0]
+      viewRelatedPostOpts = @RelatedPostsView.args[0][0]
       viewRelatedPostOpts.numToShow.should.equal 2
       viewRelatedPostOpts.model.should.equal @view.model
 

@@ -27,5 +27,5 @@ describe 'Posts', ->
 
     it 'renders posts header', ->
       $ = cheerio.load @html
-      $('#posts-page').html().should.contain 'Posts'
-      $('#posts-page').html().should.not.contain 'undefined'
+      $('#posts-page').html().should.containEql 'Posts'
+      $('#posts-page').html().should.not.containEql 'undefined'

@@ -3,4 +3,4 @@
   each gene, idx in genes
     a( data-id = gene.get('id'), href = '/gene/' + gene.get('id') )!= gene.get('name')
     if idx != genes.length - 1
-      ,&nbsp;
+      | ,&nbsp;

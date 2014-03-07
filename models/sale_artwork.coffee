@@ -1,6 +1,5 @@
 _               = require 'underscore'
 accounting      = require 'accounting'
-inflection      = require 'inflection'
 sd              = require('sharify').data
 Backbone        = require 'backbone'
 { Markdown }    = require 'artsy-backbone-mixins'
@@ -38,7 +37,7 @@ module.exports = class SaleArtwork extends Backbone.Model
     else if @get('bidder_positions_count') == 1
       "1 bid"
     else
-      "#{@get('bidder_positions_count')} #{inflection.pluralize('bid')}"
+      "#{@get('bidder_positions_count')} bids"
 
   formatBidsAndReserve: ->
     bid = @bidCount()

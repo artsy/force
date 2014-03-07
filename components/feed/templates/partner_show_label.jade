@@ -3,7 +3,7 @@ include ../../share/template
 .feed-item-top-section
   .feed-item-share-section
     +share(feedItemChildModel.shareTitle(), undefined, feedItemChildModel.canonicalUrl())
-    show = feedItemChildModel
+    - show = feedItemChildModel
     include ../../partner_buttons/show_buttons
   if feedItemChildModel.partnerName()
     h2.exhibitor

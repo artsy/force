@@ -4,9 +4,9 @@ block head
   include meta
 
 append locals
-  assetPackage = 'home'
-  bodyClass = bodyClass + ' body-no-margins body-header-fixed body-transparent-header'
-  bodyClass = bodyClass + (heroUnits.length && heroUnits[0].get('menu_color_class') == 'black' ? '-white' : '')
+  - assetPackage = 'home'
+  - bodyClass = bodyClass + ' body-no-margins body-header-fixed body-transparent-header'
+  - bodyClass = bodyClass + (heroUnits.length && heroUnits[0].get('menu_color_class') == 'black' ? '-white' : '')
 
 block body
   include hero_units

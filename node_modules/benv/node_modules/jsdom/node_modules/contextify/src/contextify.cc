@@ -1,5 +1,6 @@
 #include "node.h"
 #include "node_version.h"
+#include "nan.h"
 #include <string>
 using namespace v8;
 using namespace node;
@@ -9,7 +10,7 @@ using namespace node;
 static Persistent<FunctionTemplate> dataWrapperTmpl;
 static Persistent<Function>         dataWrapperCtor;
 
-class ContextifyContext : ObjectWrap {
+class ContextifyContext : public ObjectWrap {
 public:
     Persistent<Context> context;
     Persistent<Object>  sandbox;
@@ -18,8 +19,8 @@ public:
     static Persistent<FunctionTemplate> jsTmpl;
 
     ContextifyContext(Local<Object> sbox) {
-        HandleScope scope;
-        sandbox = Persistent<Object>::New(sbox);
+        NanScope();
+        NanAssignPersistent(Object, sandbox, sbox);
     }
 
     ~ContextifyContext() {
@@ -37,31 +38,27 @@ public:
     // set in ObjectWrap::Wrap.
     inline void Wrap(Handle<Object> handle) {
         ObjectWrap::Wrap(handle);
-        context     = createV8Context();
-        proxyGlobal = Persistent<Object>::New(context->Global());
+        Local<Context> lcontext = createV8Context();
+        NanAssignPersistent(Context, context, lcontext);
+        NanAssignPersistent(Object, proxyGlobal, lcontext->Global());
     }
-    
+
     // This is an object that just keeps an internal pointer to this
     // ContextifyContext.  It's passed to the NamedPropertyHandler.  If we
     // pass the main JavaScript context object we're embedded in, then the
     // NamedPropertyHandler will store a reference to it forever and keep it
     // from getting gc'd.
     Local<Object> createDataWrapper () {
-        HandleScope scope;
-        Local<Object> wrapper = dataWrapperCtor->NewInstance();
-#if NODE_MAJOR_VERSION > 0 || (NODE_MINOR_VERSION == 9 && (NODE_PATCH_VERSION >= 6 && NODE_PATCH_VERSION <= 10)) || NODE_MINOR_VERSION >= 11
-        wrapper->SetAlignedPointerInInternalField(0, this);
-#else
-        wrapper->SetPointerInInternalField(0, this);
-#endif
+        NanScope();
+        Local<Object> wrapper = NanPersistentToLocal(dataWrapperCtor)->NewInstance();
+        NanSetInternalFieldPointer(wrapper, 0, this);
         return scope.Close(wrapper);
     }
 
-    Persistent<Context> createV8Context() {
-        HandleScope scope;
+    inline Local<Context> createV8Context() {
         Local<FunctionTemplate> ftmpl = FunctionTemplate::New();
         ftmpl->SetHiddenPrototype(true);
-        ftmpl->SetClassName(sandbox->GetConstructorName());
+        ftmpl->SetClassName(NanPersistentToLocal(sandbox)->GetConstructorName());
         Local<ObjectTemplate> otmpl = ftmpl->InstanceTemplate();
         otmpl->SetNamedPropertyHandler(GlobalPropertyGetter,
                                        GlobalPropertySetter,
@@ -71,82 +68,93 @@ public:
                                        createDataWrapper());
         otmpl->SetAccessCheckCallbacks(GlobalPropertyNamedAccessCheck,
                                        GlobalPropertyIndexedAccessCheck);
-        return Context::New(NULL, otmpl);
+        return NanNewContextHandle(NULL, otmpl);
     }
 
     static void Init(Handle<Object> target) {
-        HandleScope scope;
-        dataWrapperTmpl = Persistent<FunctionTemplate>::New(FunctionTemplate::New());
-        dataWrapperTmpl->InstanceTemplate()->SetInternalFieldCount(1);
-        dataWrapperCtor = Persistent<Function>::New(dataWrapperTmpl->GetFunction());
+        NanScope();
+        Local<FunctionTemplate> tmpl = NanNewLocal<FunctionTemplate>(FunctionTemplate::New());
+        tmpl->InstanceTemplate()->SetInternalFieldCount(1);
+        NanAssignPersistent(FunctionTemplate, dataWrapperTmpl, tmpl);
+        NanAssignPersistent(Function, dataWrapperCtor, tmpl->GetFunction());
 
-        jsTmpl = Persistent<FunctionTemplate>::New(FunctionTemplate::New(New));
-        jsTmpl->InstanceTemplate()->SetInternalFieldCount(1);
-        jsTmpl->SetClassName(String::NewSymbol("ContextifyContext"));
+        Local<FunctionTemplate> ljsTmpl = NanNewLocal<FunctionTemplate>(FunctionTemplate::New(New));
+        ljsTmpl->InstanceTemplate()->SetInternalFieldCount(1);
+        ljsTmpl->SetClassName(String::NewSymbol("ContextifyContext"));
+        NODE_SET_PROTOTYPE_METHOD(ljsTmpl, "run",       ContextifyContext::Run);
+        NODE_SET_PROTOTYPE_METHOD(ljsTmpl, "getGlobal", ContextifyContext::GetGlobal);
 
-        NODE_SET_PROTOTYPE_METHOD(jsTmpl, "run",       ContextifyContext::Run);
-        NODE_SET_PROTOTYPE_METHOD(jsTmpl, "getGlobal", ContextifyContext::GetGlobal);
-
-        target->Set(String::NewSymbol("ContextifyContext"), jsTmpl->GetFunction());
+        NanAssignPersistent(FunctionTemplate, jsTmpl, ljsTmpl);
+        target->Set(String::NewSymbol("ContextifyContext"), ljsTmpl->GetFunction());
     }
 
-    // args[0] = the sandbox object
-    static Handle<Value> New(const Arguments& args) {
-        HandleScope scope;
+    static NAN_METHOD(New) {
+        NanScope();
+
         if (args.Length() < 1) {
             Local<String> msg = String::New("Wrong number of arguments passed to ContextifyContext constructor");
-            return ThrowException(Exception::Error(msg));
+            NanReturnValue(ThrowException(Exception::Error(msg)));
         }
+
         if (!args[0]->IsObject()) {
             Local<String> msg = String::New("Argument to ContextifyContext constructor must be an object.");
-            return ThrowException(Exception::Error(msg));
+            NanReturnValue(ThrowException(Exception::Error(msg)));
         }
+
         ContextifyContext* ctx = new ContextifyContext(args[0]->ToObject());
         ctx->Wrap(args.This());
-        return args.This();
+        NanReturnValue(args.This());
     }
 
-    static Handle<Value> Run(const Arguments& args) {
-        HandleScope scope;
+    static NAN_METHOD(Run) {
+        NanScope();
         if (args.Length() == 0) {
             Local<String> msg = String::New("Must supply at least 1 argument to run");
-            return ThrowException(Exception::Error(msg));
+            NanReturnValue(ThrowException(Exception::Error(msg)));
         }
         if (!args[0]->IsString()) {
             Local<String> msg = String::New("First argument to run must be a String.");
-            return ThrowException(Exception::Error(msg));
+            NanReturnValue(ThrowException(Exception::Error(msg)));
         }
         ContextifyContext* ctx = ObjectWrap::Unwrap<ContextifyContext>(args.This());
-        Persistent<Context> context = ctx->context;
-        context->Enter();
+        Persistent<Context> context;
+        Local<Context> lcontext = NanPersistentToLocal(ctx->context);
+        NanAssignPersistent(Context, context, lcontext);
+        lcontext->Enter();
         Local<String> code = args[0]->ToString();
+
         TryCatch trycatch;
         Handle<Script> script;
+
         if (args.Length() > 1 && args[1]->IsString()) {
             script = Script::Compile(code, args[1]->ToString());
         } else {
             script = Script::Compile(code);
         }
+
         if (script.IsEmpty()) {
-          context->Exit();
-          return trycatch.ReThrow();
+          lcontext->Exit();
+          NanReturnValue(trycatch.ReThrow());
         }
+
         Handle<Value> result = script->Run();
-        context->Exit();
+        lcontext->Exit();
+
         if (result.IsEmpty()) {
-            return trycatch.ReThrow();
+            NanReturnValue(trycatch.ReThrow());
         }
-        return scope.Close(result);
+
+        NanReturnValue(result);
     }
 
     static bool InstanceOf(Handle<Value> value) {
-      return !value.IsEmpty() && jsTmpl->HasInstance(value);
+      return NanHasInstance(jsTmpl, value);
     }
 
-    static Handle<Value> GetGlobal(const Arguments& args) {
-        HandleScope scope;
+    static NAN_METHOD(GetGlobal) {
+        NanScope();
         ContextifyContext* ctx = ObjectWrap::Unwrap<ContextifyContext>(args.This());
-        return ctx->proxyGlobal;
+        NanReturnValue(ctx->proxyGlobal);
     }
 
     static bool GlobalPropertyNamedAccessCheck(Local<Object> host,
@@ -163,136 +171,131 @@ public:
         return true;
     }
 
-    static Handle<Value> GlobalPropertyGetter (Local<String> property,
-                                               const AccessorInfo &accessInfo) {
-        HandleScope scope;
-        Local<Object> data = accessInfo.Data()->ToObject();
+    static NAN_PROPERTY_GETTER(GlobalPropertyGetter) {
+        NanScope();
+        Local<Object> data = args.Data()->ToObject();
         ContextifyContext* ctx = ObjectWrap::Unwrap<ContextifyContext>(data);
-        Local<Value> rv = ctx->sandbox->GetRealNamedProperty(property);
+        Local<Value> rv = NanPersistentToLocal(ctx->sandbox)->GetRealNamedProperty(property);
         if (rv.IsEmpty()) {
-            rv = ctx->proxyGlobal->GetRealNamedProperty(property);
+            rv = NanPersistentToLocal(ctx->proxyGlobal)->GetRealNamedProperty(property);
         }
-        return scope.Close(rv);
+        NanReturnValue(rv);
     }
 
-    static Handle<Value> GlobalPropertySetter (Local<String> property,
-                                               Local<Value> value,
-                                               const AccessorInfo &accessInfo) {
-        HandleScope scope;
-        Local<Object> data = accessInfo.Data()->ToObject();
+    static NAN_PROPERTY_SETTER(GlobalPropertySetter) {
+        NanScope();
+        Local<Object> data = args.Data()->ToObject();
         ContextifyContext* ctx = ObjectWrap::Unwrap<ContextifyContext>(data);
-        ctx->sandbox->Set(property, value);
-        return scope.Close(value);
+        NanPersistentToLocal(ctx->sandbox)->Set(property, value);
+        NanReturnValue(value);
     }
 
-    static Handle<Integer> GlobalPropertyQuery(Local<String> property,
-                                               const AccessorInfo &accessInfo) {
-        HandleScope scope;
-        Local<Object> data = accessInfo.Data()->ToObject();
+    static NAN_PROPERTY_QUERY(GlobalPropertyQuery) {
+        NanScope();
+        Local<Object> data = args.Data()->ToObject();
         ContextifyContext* ctx = ObjectWrap::Unwrap<ContextifyContext>(data);
-        if (!ctx->sandbox->GetRealNamedProperty(property).IsEmpty() ||
-            !ctx->proxyGlobal->GetRealNamedProperty(property).IsEmpty()) {
-            return scope.Close(Integer::New(None));
-        }
-        return scope.Close(Handle<Integer>());
+        if (!NanPersistentToLocal(ctx->sandbox)->GetRealNamedProperty(property).IsEmpty() ||
+            !NanPersistentToLocal(ctx->proxyGlobal)->GetRealNamedProperty(property).IsEmpty()) {
+            NanReturnValue(Integer::New(None));
+         } else {
+            NanReturnValue(Handle<Integer>());
+         }
     }
 
-    static Handle<Boolean> GlobalPropertyDeleter(Local<String> property,
-                                                 const AccessorInfo &accessInfo) {
-        HandleScope scope;
-        Local<Object> data = accessInfo.Data()->ToObject();
+    static NAN_PROPERTY_DELETER(GlobalPropertyDeleter) {
+        NanScope();
+        Local<Object> data = args.Data()->ToObject();
         ContextifyContext* ctx = ObjectWrap::Unwrap<ContextifyContext>(data);
-        bool success = ctx->sandbox->Delete(property);
-        if (!success) {
-            success = ctx->proxyGlobal->Delete(property);
-        }
-        return scope.Close(Boolean::New(success));
+        bool success = NanPersistentToLocal(ctx->sandbox)->Delete(property);
+        NanReturnValue(Boolean::New(success));
     }
 
-    static Handle<Array> GlobalPropertyEnumerator(const AccessorInfo &accessInfo) {
-        HandleScope scope;
-        Local<Object> data = accessInfo.Data()->ToObject();
+    static NAN_PROPERTY_ENUMERATOR(GlobalPropertyEnumerator) {
+        NanScope();
+        Local<Object> data = args.Data()->ToObject();
         ContextifyContext* ctx = ObjectWrap::Unwrap<ContextifyContext>(data);
-        return scope.Close(ctx->sandbox->GetPropertyNames());
+        NanReturnValue(NanPersistentToLocal(ctx->sandbox)->GetPropertyNames());
     }
 };
 
-class ContextifyScript : ObjectWrap {
+class ContextifyScript : public ObjectWrap {
 public:
     static Persistent<FunctionTemplate> scriptTmpl;
     Persistent<Script> script;
 
     static void Init(Handle<Object> target) {
-        HandleScope scope;
-        scriptTmpl = Persistent<FunctionTemplate>::New(FunctionTemplate::New(New));
-        scriptTmpl->InstanceTemplate()->SetInternalFieldCount(1);
-        scriptTmpl->SetClassName(String::NewSymbol("ContextifyScript"));
+        NanScope();
+        Local<FunctionTemplate> lscriptTmpl = NanNewLocal<FunctionTemplate>(FunctionTemplate::New(New));
+        lscriptTmpl->InstanceTemplate()->SetInternalFieldCount(1);
+        lscriptTmpl->SetClassName(String::NewSymbol("ContextifyScript"));
 
-        NODE_SET_PROTOTYPE_METHOD(scriptTmpl, "runInContext", RunInContext);
+        NODE_SET_PROTOTYPE_METHOD(lscriptTmpl, "runInContext", RunInContext);
 
+        NanAssignPersistent(FunctionTemplate, scriptTmpl, lscriptTmpl);
         target->Set(String::NewSymbol("ContextifyScript"),
-                    scriptTmpl->GetFunction());
+                    lscriptTmpl->GetFunction());
     }
+    static NAN_METHOD(New) {
+        NanScope();
+        ContextifyScript *contextify_script = new ContextifyScript();
+        contextify_script->Wrap(args.Holder());
 
-    static Handle<Value> New(const Arguments& args) {
-      HandleScope scope;
+        if (args.Length() < 1) {
+          NanReturnValue(ThrowException(Exception::TypeError(
+            String::New("needs at least 'code' argument."))));
+        }
 
-      ContextifyScript *contextify_script = new ContextifyScript();
-      contextify_script->Wrap(args.Holder());
-
-      if (args.Length() < 1) {
-        return ThrowException(Exception::TypeError(
-              String::New("needs at least 'code' argument.")));
-      }
-
-      Local<String> code = args[0]->ToString();
-      Local<String> filename = args.Length() > 1
+        Local<String> code = args[0]->ToString();
+        Local<String> filename = args.Length() > 1
                                ? args[1]->ToString()
                                : String::New("ContextifyScript.<anonymous>");
 
-      Handle<Context> context = Context::GetCurrent();
-      Context::Scope context_scope(context);
+        Handle<Context> context = Context::GetCurrent();
+        Context::Scope context_scope(context);
 
-      // Catch errors
-      TryCatch trycatch;
+        // Catch errors
+        TryCatch trycatch;
 
-      Handle<Script> v8_script = Script::New(code, filename);
+        Handle<Script> v8_script = Script::New(code, filename);
 
-      if (v8_script.IsEmpty()) {
-        return trycatch.ReThrow();
-      }
+        if (v8_script.IsEmpty()) {
+          NanReturnValue(trycatch.ReThrow());
+        }
 
-      contextify_script->script = Persistent<Script>::New(v8_script);
+        NanAssignPersistent(Script, contextify_script->script, v8_script);
 
-      return args.This();
+        NanReturnValue(args.This());
     }
 
-    static Handle<Value> RunInContext(const Arguments& args) {
-        HandleScope scope;
+    static NAN_METHOD(RunInContext) {
+        NanScope();
         if (args.Length() == 0) {
             Local<String> msg = String::New("Must supply at least 1 argument to runInContext");
-            return ThrowException(Exception::Error(msg));
+            NanReturnValue(ThrowException(Exception::Error(msg)));
         }
         if (!ContextifyContext::InstanceOf(args[0]->ToObject())) {
             Local<String> msg = String::New("First argument must be a ContextifyContext.");
-            return ThrowException(Exception::TypeError(msg));
+            NanReturnValue(ThrowException(Exception::TypeError(msg)));
         }
+
         ContextifyContext* ctx = ObjectWrap::Unwrap<ContextifyContext>(args[0]->ToObject());
-        Persistent<Context> context = ctx->context;
-        context->Enter();
+        Local<Context> lcontext = NanPersistentToLocal(ctx->context);
+        Persistent<Context> context;
+        NanAssignPersistent(Context, context, lcontext);
+        lcontext->Enter();
         ContextifyScript* wrapped_script = ObjectWrap::Unwrap<ContextifyScript>(args.This());
-        Handle<Script> script = wrapped_script->script;
+        Handle<Script> script = NanPersistentToLocal(wrapped_script->script);
         TryCatch trycatch;
         if (script.IsEmpty()) {
-          context->Exit();
-          return trycatch.ReThrow();
+          lcontext->Exit();
+          NanReturnValue(trycatch.ReThrow());
         }
         Handle<Value> result = script->Run();
-        context->Exit();
+        lcontext->Exit();
         if (result.IsEmpty()) {
-            return trycatch.ReThrow();
+            NanReturnValue(trycatch.ReThrow());
         }
-        return scope.Close(result);
+        NanReturnValue(result);
     }
 
     ~ContextifyScript() {

@@ -12,7 +12,7 @@
 "use strict";
 
 (function (sinon) {
-    var commonJSModule = typeof module == "object" && typeof require == "function";
+    var commonJSModule = typeof module !== 'undefined' && module.exports;
 
     if (!sinon && commonJSModule) {
         sinon = require("../sinon");
@@ -65,8 +65,10 @@
     }
 
     matcher.or = function (m2) {
-        if (!isMatcher(m2)) {
+        if (!arguments.length) {
             throw new TypeError("Matcher expected");
+        } else if (!isMatcher(m2)) {
+            m2 = match(m2);
         }
         var m1 = this;
         var or = sinon.create(matcher);
@@ -78,8 +80,10 @@
     };
 
     matcher.and = function (m2) {
-        if (!isMatcher(m2)) {
+        if (!arguments.length) {
             throw new TypeError("Matcher expected");
+        } else if (!isMatcher(m2)) {
+            m2 = match(m2);
         }
         var m1 = this;
         var and = sinon.create(matcher);

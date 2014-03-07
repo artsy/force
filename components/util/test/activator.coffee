@@ -13,7 +13,7 @@ render = (templateName) ->
 
 describe 'Activator', ->
 
-  after benv.teardown
+  after -> benv.teardown()
 
   describe '/foo/bar', ->
     before (done) ->

@@ -1,5 +1,5 @@
 mixin list-item(show)
-  imgUrl = show.imageUrl(i < 2 ? 'featured' : 'large')
+  - imgUrl = show.imageUrl(i < 2 ? 'featured' : 'large')
   li.home-featured-show
     a( href=show.href() )
       .home-featured-cover-img(

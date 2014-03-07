@@ -9,7 +9,7 @@ describe 'Layout init code', ->
 
   beforeEach (done) ->
     benv.setup =>
-      benv.expose { $: require('jquery')(window) }
+      benv.expose { $: require('jquery') }
       sinon.stub $, 'ajax'
       { @syncAuth } = require '../client'
       done()

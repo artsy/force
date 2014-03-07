@@ -48,3 +48,17 @@ test('string from mixed write encodings', function (t) {
   u8[0] = 111; u8[1] = 103; u8[2] = 115;
   strings.end(u8)
 })
+
+test('string from buffers with multibyte characters', function (t) {
+  t.plan(2)
+  var strings = concat({ encoding: 'string' }, function(out) {
+    t.equal(typeof out, 'string')
+    t.equal(out, '☃☃☃☃☃☃☃☃')
+  })
+  var snowman = new Buffer('☃')
+  for (var i = 0; i < 8; i++) {
+    strings.write(snowman.slice(0, 1))
+    strings.write(snowman.slice(1))    
+  }
+  strings.end()
+})

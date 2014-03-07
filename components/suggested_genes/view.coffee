@@ -6,7 +6,7 @@ OrderedSets    = require '../../collections/ordered_sets.coffee'
 template       = -> require('./template.jade') arguments...
 
 module.exports = class SuggestedGenesView extends Backbone.View
-  
+
   defaults:
     numberOfItems: 5
     isShuffle: true

@@ -36,7 +36,7 @@ describe 'Post Templates', ->
 
       it 'renders post header', ->
         $ = cheerio.load @html
-        $('#post').html().should.contain 'Craig Spaeth'
+        $('#post').html().should.containEql 'Craig Spaeth'
 
   describe 'Related Artists', ->
 
@@ -62,8 +62,8 @@ describe 'Post Templates', ->
 
       xit 'renders post header', ->
         $ = cheerio.load @html
-        $('.related-artists-container').html().should.contain 'Artists Mentioned In Post'
-        $('.related-artists-container').html().should.contain 'Andy Warhol'
+        $('.related-artists-container').html().should.containEql 'Artists Mentioned In Post'
+        $('.related-artists-container').html().should.containEql 'Andy Warhol'
         $('.post-page-feature-item img').length.should.equal 1
 
   describe 'Featured Posts', ->
@@ -92,6 +92,6 @@ describe 'Post Templates', ->
 
       xit 'renders post header', ->
         $ = cheerio.load @html
-        $('.featured-posts-container').html().should.contain 'Featured Posts'
+        $('.featured-posts-container').html().should.containEql 'Featured Posts'
         $('.featured-post-item').length.should.equal 3
         $('.featured-post-item .fixed-post-image').length.should.equal 3

@@ -16,7 +16,7 @@ describe 'ArtworkCollection', ->
     benv.setup =>
       done()
 
-  after benv.teardown
+  after -> benv.teardown()
 
   beforeEach ->
     sinon.stub Backbone, 'sync'

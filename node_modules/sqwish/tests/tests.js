@@ -26,6 +26,13 @@ sink('basic mode', function (test, ok) {
     ok(actual == expected, 'IE long hexes are kept that way')
   })
 
+  test('IE 6-digit hex is kept as 6-digit hex', 1, function () {
+    var input = "body { filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#F2F2F2', endColorstr='#FFFFFF'); }"
+      , expected = "body{filter:progid:DXImageTransform.Microsoft.gradient(gradientType=0,startColorstr='#F2F2F2',endColorstr='#FFFFFF')}"
+      , actual = sqwish.minify(input)
+    ok(actual == expected, 'IE 6-digit hexes are kept that way')
+  })
+
   test('longhand values to shorthand values', 1, function () {
     var input = 'p { margin: 0px 1px 0px 1px }'
       , expected = 'p{margin:0 1px}'

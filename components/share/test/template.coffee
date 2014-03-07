@@ -23,7 +23,7 @@ describe 'Share template', ->
       }
       done()
 
-  after benv.teardown
+  after -> benv.teardown()
 
   beforeEach -> @$template = $(render('test')()).find('#case-1')
   afterEach  -> @$template.remove()

@@ -14,13 +14,15 @@
  */
 "use strict";
 
-if (typeof sinon == "undefined") {
-    this.sinon = {};
-}
-sinon.xhr = { XMLHttpRequest: this.XMLHttpRequest };
-
 // wrapper for global
 (function(global) {
+    if (typeof sinon === "undefined") {
+        global.sinon = {};
+    }
+
+    var supportsProgress = typeof ProgressEvent !== "undefined";
+    var supportsCustomEvent = typeof CustomEvent !== "undefined";
+    sinon.xhr = { XMLHttpRequest: global.XMLHttpRequest };
     var xhr = sinon.xhr;
     xhr.GlobalXMLHttpRequest = global.XMLHttpRequest;
     xhr.GlobalActiveXObject = global.ActiveXObject;
@@ -28,6 +30,7 @@ sinon.xhr = { XMLHttpRequest: this.XMLHttpRequest };
     xhr.supportsXHR = typeof xhr.GlobalXMLHttpRequest != "undefined";
     xhr.workingXHR = xhr.supportsXHR ? xhr.GlobalXMLHttpRequest : xhr.supportsActiveX
                                      ? function() { return new xhr.GlobalActiveXObject("MSXML2.XMLHTTP.3.0") } : false;
+    xhr.supportsCORS = 'withCredentials' in (new sinon.xhr.GlobalXMLHttpRequest());
 
     /*jsl:ignore*/
     var unsafeHeaders = {
@@ -58,6 +61,11 @@ sinon.xhr = { XMLHttpRequest: this.XMLHttpRequest };
         this.requestBody = null;
         this.status = 0;
         this.statusText = "";
+        this.upload = new UploadProgress();
+        if (sinon.xhr.supportsCORS) {
+            this.withCredentials = false;
+        }
+
 
         var xhr = this;
         var events = ["loadstart", "load", "abort", "loadend"];
@@ -67,7 +75,7 @@ sinon.xhr = { XMLHttpRequest: this.XMLHttpRequest };
                 var listener = xhr["on" + eventName];
 
                 if (listener && typeof listener == "function") {
-                    listener(event);
+                    listener.call(this, event);
                 }
             });
         }
@@ -80,6 +88,41 @@ sinon.xhr = { XMLHttpRequest: this.XMLHttpRequest };
             FakeXMLHttpRequest.onCreate(this);
         }
     }
+
+    // An upload object is created for each
+    // FakeXMLHttpRequest and allows upload
+    // events to be simulated using uploadProgress
+    // and uploadError.
+    function UploadProgress() {
+        this.eventListeners = {
+            "progress": [],
+            "load": [],
+            "abort": [],
+            "error": []
+        }
+    }
+
+    UploadProgress.prototype.addEventListener = function(event, listener) {
+        this.eventListeners[event].push(listener);
+    };
+
+    UploadProgress.prototype.removeEventListener = function(event, listener) {
+        var listeners = this.eventListeners[event] || [];
+
+        for (var i = 0, l = listeners.length; i < l; ++i) {
+            if (listeners[i] == listener) {
+                return listeners.splice(i, 1);
+            }
+        }
+    };
+
+    UploadProgress.prototype.dispatchEvent = function(event) {
+        var listeners = this.eventListeners[event.type] || [];
+
+        for (var i = 0, listener; (listener = listeners[i]) != null; i++) {
+            listener(event);
+        }
+    };
 
     function verifyState(xhr) {
         if (xhr.readyState !== FakeXMLHttpRequest.OPENED) {
@@ -102,7 +145,7 @@ sinon.xhr = { XMLHttpRequest: this.XMLHttpRequest };
     function some(collection, callback) {
         for (var index = 0; index < collection.length; index++) {
             if(callback(collection[index]) === true) return true;
-        };
+        }
         return false;
     }
     // largest arity in XHR is 5 - XHR#open
@@ -114,7 +157,7 @@ sinon.xhr = { XMLHttpRequest: this.XMLHttpRequest };
         case 3: return obj[method](args[0],args[1],args[2]);
         case 4: return obj[method](args[0],args[1],args[2],args[3]);
         case 5: return obj[method](args[0],args[1],args[2],args[3],args[4]);
-        };
+        }
     };
 
     FakeXMLHttpRequest.filters = [];
@@ -153,7 +196,7 @@ sinon.xhr = { XMLHttpRequest: this.XMLHttpRequest };
             if(xhr.readyState === FakeXMLHttpRequest.DONE) {
                 copyAttrs(["responseXML"]);
             }
-            if(fakeXhr.onreadystatechange) fakeXhr.onreadystatechange.call(fakeXhr);
+            if(fakeXhr.onreadystatechange) fakeXhr.onreadystatechange.call(fakeXhr, { target: fakeXhr });
         };
         if(xhr.addEventListener) {
           for(var event in fakeXhr.eventListeners) {
@@ -170,6 +213,12 @@ sinon.xhr = { XMLHttpRequest: this.XMLHttpRequest };
         apply(xhr,"open",xhrArgs);
     };
     FakeXMLHttpRequest.useFilters = false;
+
+    function verifyRequestOpened(xhr) {
+        if (xhr.readyState != FakeXMLHttpRequest.OPENED) {
+            throw new Error("INVALID_STATE_ERR - " + xhr.readyState);
+        }
+    }
 
     function verifyRequestSent(xhr) {
         if (xhr.readyState == FakeXMLHttpRequest.DONE) {
@@ -234,6 +283,10 @@ sinon.xhr = { XMLHttpRequest: this.XMLHttpRequest };
                 case FakeXMLHttpRequest.DONE:
                     this.dispatchEvent(new sinon.Event("load", false, false, this));
                     this.dispatchEvent(new sinon.Event("loadend", false, false, this));
+                    this.upload.dispatchEvent(new sinon.Event("load", false, false, this));
+                    if (supportsProgress) {
+                        this.upload.dispatchEvent(new sinon.ProgressEvent('progress', {loaded: 100, total: 100}));
+                    }
                     break;
             }
         },
@@ -254,6 +307,7 @@ sinon.xhr = { XMLHttpRequest: this.XMLHttpRequest };
 
         // Helps testing
         setResponseHeaders: function setResponseHeaders(headers) {
+            verifyRequestOpened(this);
             this.responseHeaders = {};
 
             for (var header in headers) {
@@ -309,6 +363,9 @@ sinon.xhr = { XMLHttpRequest: this.XMLHttpRequest };
             this.readyState = sinon.FakeXMLHttpRequest.UNSENT;
 
             this.dispatchEvent(new sinon.Event("abort", false, false, this));
+
+            this.upload.dispatchEvent(new sinon.Event("abort", false, false, this));
+
             if (typeof this.onerror === "function") {
                 this.onerror();
             }
@@ -388,14 +445,22 @@ sinon.xhr = { XMLHttpRequest: this.XMLHttpRequest };
         },
 
         respond: function respond(status, headers, body) {
-            this.setResponseHeaders(headers || {});
             this.status = typeof status == "number" ? status : 200;
             this.statusText = FakeXMLHttpRequest.statusCodes[this.status];
+            this.setResponseHeaders(headers || {});
             this.setResponseBody(body || "");
-            if (typeof this.onload === "function"){
-                this.onload();
-            }
+        },
 
+        uploadProgress: function uploadProgress(progressEventRaw) {
+            if (supportsProgress) {
+                this.upload.dispatchEvent(new sinon.ProgressEvent("progress", progressEventRaw));
+            }
+        },
+
+        uploadError: function uploadError(error) {
+            if (supportsCustomEvent) {
+                this.upload.dispatchEvent(new sinon.CustomEvent("error", {"detail": error}));
+            }
         }
     });
 
@@ -502,8 +567,9 @@ sinon.xhr = { XMLHttpRequest: this.XMLHttpRequest };
     };
 
     sinon.FakeXMLHttpRequest = FakeXMLHttpRequest;
-})(this);
 
-if (typeof module == "object" && typeof require == "function") {
+})(typeof global === "object" ? global : this);
+
+if (typeof module !== 'undefined' && module.exports) {
     module.exports = sinon;
 }

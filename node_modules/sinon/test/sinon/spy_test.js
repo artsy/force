@@ -4,7 +4,7 @@
  * @author Christian Johansen (christian@cjohansen.no)
  * @license BSD
  *
- * Copyright (c) 2010-2012 Christian Johansen
+ * Copyright (c) 2010-2014 Christian Johansen
  */
 "use strict";
 
@@ -662,6 +662,28 @@ if (typeof require === "function" && typeof module === "object") {
                 var result = new object.MyThing;
 
                 assert(object.MyThing.calledWithNew());
+            },
+
+            "spied native function": {
+                "requiresSupportFor": {
+                    "applyableNatives": function () {
+                        try {
+                            console.log.apply({}, []);
+                            return true;
+                        } catch (e) {
+                            return false;
+                        }
+                    }
+                },
+
+                "is false when called on spied native function": function () {
+                    var log = { info: console.log };
+                    sinon.spy(log, "info");
+
+                    log.info("test");
+
+                    assert.isFalse(log.info.calledWithNew());
+                }
             }
         },
 
@@ -976,9 +998,9 @@ if (typeof require === "function" && typeof module === "object") {
                 this.spyWithTypeError = sinon.spy.create(function () {
                     throw new TypeError();
                 });
-                
+
                 this.spyWithStringError = sinon.spy.create(function() {
-                	throw "error";
+                    throw "error";
                 });
             },
 
@@ -1031,21 +1053,21 @@ if (typeof require === "function" && typeof module === "object") {
 
                 assert.isFalse(this.spy.threw("Error"));
             },
-            
+
             "returns true if string matches": function () {
-            	try {
-            		this.spyWithStringError();
-            	} catch (e) {}
-            	
-            	assert(this.spyWithStringError.threw("error"));
+                try {
+                    this.spyWithStringError();
+                } catch (e) {}
+
+                assert(this.spyWithStringError.threw("error"));
             },
-            
+
             "returns false if strings do not match": function() {
-            	try {
-            		this.spyWithStringError();
-            	} catch (e) {}
-            	
-            	assert.isFalse(this.spyWithStringError.threw("not the error"));
+                try {
+                    this.spyWithStringError();
+                } catch (e) {}
+
+                assert.isFalse(this.spyWithStringError.threw("not the error"));
             }
         },
 
@@ -1324,6 +1346,36 @@ if (typeof require === "function" && typeof module === "object") {
                 refute.defined(spy.returnValues[0]);
             },
 
+            "contains the created object for spied constructors": function () {
+                var spy = sinon.spy.create(function() { });
+
+                var result = new spy();
+
+                assert.equals(spy.returnValues[0], result);
+            },
+
+            "contains the return value for spied constructors that explicitly return objects": function () {
+                var spy = sinon.spy.create(function() {
+                    return { isExplicitlyCreatedValue: true };
+                });
+
+                var result = new spy();
+
+                assert.isTrue(result.isExplicitlyCreatedValue);
+                assert.equals(spy.returnValues[0], result);
+            },
+
+            "contains the created object for spied constructors that explicitly return primitive values": function () {
+                var spy = sinon.spy.create(function() {
+                    return 10;
+                });
+
+                var result = new spy();
+
+                refute.equals(result, 10);
+                assert.equals(spy.returnValues[0], result);
+            },
+
             "stacks up return values": function () {
                 var calls = 0;
 
@@ -1455,6 +1507,16 @@ if (typeof require === "function" && typeof module === "object") {
                 var call0 = spy.getCall(0);
                 assert.equals(spy.firstCall.callId, call0.callId);
                 assert.same(spy.firstCall.spy, call0.spy);
+            },
+
+            "is tracked even if exceptions are thrown": function () {
+                var spy = sinon.spy(function () { throw "an exception"; });
+
+                try {
+                    spy();
+                } catch (e) { }
+
+                refute.isNull(spy.firstCall);
             }
 
         },
@@ -1575,6 +1637,24 @@ if (typeof require === "function" && typeof module === "object") {
                 var call4 = spy.getCall(4);
                 assert.equals(spy.lastCall.callId, call4.callId);
                 assert.same(spy.lastCall.spy, call4.spy);
+            }
+        },
+
+        "getCalls": {
+            "returns an empty Array by default": function () {
+                var spy = sinon.spy();
+
+                assert.isArray(spy.getCalls());
+                assert.equals(spy.getCalls().length, 0);
+            },
+
+            "is analogous to using getCall(n)": function () {
+                var spy = sinon.spy();
+
+                spy();
+                spy();
+
+                assert.equals(spy.getCalls(), [ spy.getCall(0), spy.getCall(1) ]);
             }
         },
 
@@ -1914,7 +1994,7 @@ if (typeof require === "function" && typeof module === "object") {
                 }
             },
 
-        "passs additional arguments": function () {
+            "pass additional arguments": function () {
                 var spy = sinon.spy();
                 var callback = sinon.spy();
                 var array = [];

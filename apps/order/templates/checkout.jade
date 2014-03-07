@@ -1,7 +1,7 @@
 extends ../../../components/main_layout/templates/minimal_header
 
 append locals
-  assetPackage = 'order'
+  - assetPackage = 'order'
 
 block body
   #order-page
@@ -19,8 +19,8 @@ block body
               if order.shippingNote()
                 = order.shippingNote()
               else
-                | After your order is processed, an Artsy specialist will connect 
-                |  you with the seller to arrange shipping. Payment for shipping and 
+                | After your order is processed, an Artsy specialist will connect
+                |  you with the seller to arrange shipping. Payment for shipping and
                 | applicable taxes will be collected at that time.
           section.order-form-credit-card-section
             h2.order-page-sm-heading Payment Method
@@ -54,7 +54,7 @@ block body
               | I agree to the&nbsp;
               a( href='/conditions-of-sale', target='terms' ) Conditions of Sale
               if order.sellersTerms()
-                |  and 
+                |  and&nbsp;
                 a( href=order.sellersTerms(), target='terms' )= "seller's additional terms"
               | .
           button.order-form-button.avant-garde-button-black( type='submit') Purchase
