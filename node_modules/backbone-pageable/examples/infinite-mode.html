@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <title>backbone-pageable infinite mode demo</title>
+
+    <link rel="stylesheet" href="css/bootstrap.css" />
+    <link rel="stylesheet" href="css/bootstrap-theme.css" />
+    <link rel="stylesheet" href="css/backgrid.css" />
+    <link rel="stylesheet" href="css/extensions/paginator/backgrid-paginator.css" />
+    <link rel="stylesheet" href="css/extensions/text-cell/backgrid-text-cell.css" />
+
+  </head>
+  <body>
+    <div id="main">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 alert alert-info">
+            Feel free to peek into the source of this page and play with the code in your browser&apos;s console.
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div id="grid"></div>
+            <div id="paginator"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/jquery.js"></script>
+    <script src="js/underscore.js"></script>
+    <script src="js/backbone.js"></script>
+    <script src="../lib/backbone-pageable.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/backgrid.js"></script>
+    <script src="js/extensions/paginator/backgrid-paginator.js"></script>
+    <script src="js/extensions/text-cell/backgrid-text-cell.js"></script>
+    <script>
+      var columns = [{
+        name: "number",
+        cell: Backgrid.IntegerCell.extend({ orderSeparator: '' }),
+        editable: false,
+        sortable: false
+      }, {
+        name: "title",
+        cell: "string",
+        sortable: false
+      }, {
+        name: "body",
+        cell: "text",
+        sortable: false
+      }, {
+        name: "updated_at",
+        cell: "datetime",
+        editable: false,
+        sortable: false
+      }, {
+        name: "closed_at",
+        cell: "datetime",
+        editable: false,
+        sortable: false
+      }];
+
+      var Issue = Backbone.Model.extend({});
+
+      // Works exactly like Backbone.Collection.
+      var Issues = Backbone.PageableCollection.extend({
+        model: Issue,
+
+        // Enable infinite paging
+        mode: "infinite",
+
+        url: "https://api.github.com/repos/jashkenas/backbone/issues?state=closed",
+
+        // Initial pagination states
+        state: {
+          pageSize: 15,
+          sortKey: "updated",
+          order: 1
+        },
+
+        // You can remap the query parameters from `state` keys from
+        // the default to those your server supports
+        queryParams: {
+          totalPages: null,
+          totalRecords: null,
+          sortKey: "sort"
+        }
+      });
+
+      var issues = new Issues();
+
+      var grid = new Backgrid.Grid({
+        columns: columns,
+        collection: issues
+      });
+
+      // make a new for infinite paging
+      var paginator = new Backgrid.Extension.Paginator({
+        renderIndexedPageHandles: false,
+        collection: issues,
+        controls: {
+          rewind: null,
+          fastForward: null
+        }
+      });
+
+      $("#grid").append(grid.render().$el);
+      $("#paginator").append(paginator.render().$el);
+
+      issues.fetch();
+    </script>
+  </body>
+</html>

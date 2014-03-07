@@ -12,7 +12,10 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 
-var cookies = require('./lib/cookies')
+var Cookie = require('cookie-jar')
+  , CookieJar = Cookie.Jar
+  , cookieJar = new CookieJar
+
   , copy = require('./lib/copy')
   , Request = require('./request')
   ;
@@ -89,18 +92,10 @@ request.defaults = function (options, requester) {
   return de
 }
 
-function requester(params) {
-  if(typeof params.options._requester === 'function') {
-    return params.options._requester
-  } else {
-    return request
-  }
-}
-
 request.forever = function (agentOptions, optionsArg) {
   var options = {}
   if (optionsArg) {
-    for (var option in optionsArg) {
+    for (option in optionsArg) {
       options[option] = optionsArg[option]
     }
   }
@@ -113,17 +108,17 @@ request.get = request
 request.post = function (uri, options, callback) {
   var params = initParams(uri, options, callback)
   params.options.method = 'POST'
-  return requester(params)(params.uri || null, params.options, params.callback)
+  return request(params.uri || null, params.options, params.callback)
 }
 request.put = function (uri, options, callback) {
   var params = initParams(uri, options, callback)
   params.options.method = 'PUT'
-  return requester(params)(params.uri || null, params.options, params.callback)
+  return request(params.uri || null, params.options, params.callback)
 }
 request.patch = function (uri, options, callback) {
   var params = initParams(uri, options, callback)
   params.options.method = 'PATCH'
-  return requester(params)(params.uri || null, params.options, params.callback)
+  return request(params.uri || null, params.options, params.callback)
 }
 request.head = function (uri, options, callback) {
   var params = initParams(uri, options, callback)
@@ -134,17 +129,21 @@ request.head = function (uri, options, callback) {
       params.options.multipart) {
     throw new Error("HTTP HEAD requests MUST NOT include a request body.")
   }
-
-  return requester(params)(params.uri || null, params.options, params.callback)
+  return request(params.uri || null, params.options, params.callback)
 }
 request.del = function (uri, options, callback) {
   var params = initParams(uri, options, callback)
   params.options.method = 'DELETE'
-  return requester(params)(params.uri || null, params.options, params.callback)
+  if(typeof params.options._requester === 'function') {
+    request = params.options._requester
+  }
+  return request(params.uri || null, params.options, params.callback)
 }
 request.jar = function () {
-  return cookies.jar();
+  return new CookieJar
 }
 request.cookie = function (str) {
-  return cookies.parse(str);
+  if (str && str.uri) str = str.uri
+  if (typeof str !== 'string') throw new Error("The cookie function only accepts STRING as param")
+  return new Cookie(str)
 }

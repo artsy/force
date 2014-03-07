@@ -1,5 +1,3 @@
-var util = require('util')
-
 module.exports =
 function debug () {
   if (/\brequest\b/.test(process.env.NODE_DEBUG))

@@ -1,0 +1,13 @@
+.DS_Store
+*~
+# Sublime
+*.sublime-project
+*.sublime-workspace
+
+# Emacs
+*#
+.#*
+
+node_modules
+_SpecRunner.html
+npm-debug.log

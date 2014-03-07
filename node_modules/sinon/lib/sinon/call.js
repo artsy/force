@@ -17,7 +17,7 @@
 "use strict";
 
 (function (sinon) {
-    var commonJSModule = typeof module !== 'undefined' && module.exports;
+    var commonJSModule = typeof module == "object" && typeof require == "function";
     if (!sinon && commonJSModule) {
         sinon = require("../sinon");
     }
@@ -90,8 +90,8 @@
             return this.exception === error || this.exception.name === error;
         },
 
-        calledWithNew: function calledWithNew() {
-            return this.proxy.prototype && this.thisValue instanceof this.proxy;
+        calledWithNew: function calledWithNew(thisValue) {
+            return this.thisValue instanceof this.proxy;
         },
 
         calledBefore: function (other) {
@@ -191,7 +191,7 @@
         proxyCall.callId = id;
 
         return proxyCall;
-    }
+    };
     createSpyCall.toString = callProto.toString; // used by mocks
 
     if (commonJSModule) {

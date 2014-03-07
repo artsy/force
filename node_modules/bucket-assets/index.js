@@ -19,13 +19,13 @@ module.exports = function(options) {
     var uploadFile = function(filename) {
 
       // Generate headers
-      var contentType = contentTypeMap[path.extname(filename.replace('.gz', ''))];
+      var contentType = contentTypeMap[path.extname(filename.replace('.gz', '').replace('.cgz', ''))];
       var headers = {
         'Cache-Control': 'max-age=315360000, public',
         'Content-Type': contentType,
         'x-amz-acl': 'public-read'
       }
-      if(filename.match(/\.gz$/)) headers['Content-Encoding'] = 'gzip';
+      if(filename.match(/\.gz$/) || filename.match(/\.cgz$/)) headers['Content-Encoding'] = 'gzip';
 
       // Upload file to s3
       var s3Path = '/assets/' + commitHash.trim() + '/' + path.relative(options.dir, filename);

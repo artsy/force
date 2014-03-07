@@ -1,4 +1,4 @@
-var esprima = require('esprima-six');
+var esprima = require('esprima');
 
 module.exports = function (src, file) {
     if (typeof src !== 'string') src = String(src);

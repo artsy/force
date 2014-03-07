@@ -10,10 +10,6 @@ via [npm (node package manager)](http://github.com/isaacs/npm)
 
     $ npm install sinon
 
-via [NuGet (package manager for Microsoft development platform)](https://www.nuget.org/packages/SinonJS)
-
-    Install-Package SinonJS
-
 or install via git by cloning the repository and including sinon.js
 in your project, as you would any other third party library.
 
@@ -54,12 +50,9 @@ Node installed, and install Sinon's dependencies:
 ### In the browser
 
 Open `test/sinon.html` in a browser. To test against a built distribution, first
-make sure you have a build (requires [Ruby][ruby] and [Juicer][juicer]):
+make sure you have a build (requires Ruby and Juicer):
 
     $ ./build
-
-[ruby]: https://www.ruby-lang.org/en/
-[juicer]: http://rubygems.org/gems/juicer
 
 Then open `test/sinon-dist.html` in a browser.
 
