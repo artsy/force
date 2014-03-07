@@ -601,14 +601,9 @@ buster.testCase("sinon.match", {
             assert.exception(function () {
                 sinon.match.instanceOf(Error).or();
             }, "TypeError");
-        },
-
-        "will coerce argument to matcher": function () {
-            var abcOrDef = sinon.match("abc").or("def");
-
-            assert(sinon.match.isMatcher(abcOrDef));
-            assert.equals(abcOrDef.toString(),
-                          "match(\"abc\").or(match(\"def\"))");
+            assert.exception(function () {
+                sinon.match.same({}).or({});
+            }, "TypeError");
         },
 
         "returns true if either matcher matches": function () {
@@ -619,18 +614,11 @@ buster.testCase("sinon.match", {
         },
 
         "returns false if neither matcher matches": function () {
-            var numberOrAbc = sinon.match.number.or("abc");
+            var numberOrString = sinon.match.number.or(sinon.match.string);
 
-            assert.isFalse(numberOrAbc.test(/.+/));
-            assert.isFalse(numberOrAbc.test(new Date()));
-            assert.isFalse(numberOrAbc.test({}));
-        },
-
-        "can be used with undefined": function () {
-            var numberOrUndef = sinon.match.number.or(undefined);
-
-            assert(numberOrUndef.test(123));
-            assert(numberOrUndef.test(undefined));
+            assert.isFalse(numberOrString.test(/.+/));
+            assert.isFalse(numberOrString.test(new Date()));
+            assert.isFalse(numberOrString.test({}));
         }
     },
 
@@ -646,18 +634,13 @@ buster.testCase("sinon.match", {
             assert.exception(function () {
                 sinon.match.instanceOf(Error).and();
             }, "TypeError");
-        },
-
-        "will coerce to matcher": function () {
-            var abcOrObj = sinon.match("abc").or({a:1});
-
-            assert(sinon.match.isMatcher(abcOrObj));
-            assert.equals(abcOrObj.toString(),
-                          "match(\"abc\").or(match(a: 1))");
+            assert.exception(function () {
+                sinon.match.same({}).and({});
+            }, "TypeError");
         },
 
         "returns true if both matchers match": function () {
-            var fooAndBar = sinon.match.has("foo").and({ bar: "bar" });
+            var fooAndBar = sinon.match.has("foo").and(sinon.match.has("bar"));
 
             assert(fooAndBar.test({ foo: "foo", bar: "bar" }));
         },
@@ -667,13 +650,6 @@ buster.testCase("sinon.match", {
 
             assert.isFalse(fooAndBar.test({ foo: "foo" }));
             assert.isFalse(fooAndBar.test({ bar: "bar" }));
-        },
-
-        "can be used with undefined": function () {
-            var falsyAndUndefined = sinon.match.falsy.and(undefined);
-
-            assert.isFalse(falsyAndUndefined.test(false));
-            assert(falsyAndUndefined.test(undefined));
         }
     }
 });
