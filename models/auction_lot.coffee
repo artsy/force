@@ -15,5 +15,6 @@ module.exports = class AuctionLot extends Backbone.Model
   estimateText: (string) ->
     string.replace /\ -\ /, '&nbsp;&ndash;<br>'
 
+  # Overwrite #imageUrl because we need to replace thumbnail
   imageUrl: (version) ->
-    @get('image_url').replace 'thumbnail', version
+    @sslUrl @get('image_url').replace 'thumbnail', version
