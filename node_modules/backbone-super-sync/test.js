@@ -120,6 +120,19 @@ describe('Backbone Super Sync', function() {
         }
       });
     });
+
+    it('can use promises', function(done) {
+      model.fetch().then(function() {
+        done()
+      });
+    });
+
+    it('can error from promises', function (done) {
+      model.url = 'http://localhost:5000/err'
+      model.fetch().then(function() {}, function() {
+        done()
+      });
+    })
   });
 
   context('POST requests', function() {
