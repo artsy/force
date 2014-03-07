@@ -2,6 +2,7 @@ _               = require 'underscore'
 Backbone        = require 'backbone'
 { ARTSY_URL }   = require('sharify').data
 { Markdown }    = require 'artsy-backbone-mixins'
+analytics       = require '../../../lib/analytics.coffee'
 
 Artworks            = require '../../../collections/artworks.coffee'
 ArtworkColumnsView  = require '../../../components/artwork_columns/view.coffee'
@@ -16,6 +17,10 @@ module.exports.Layer = class Layer extends Backbone.Model
     @set fair: @collection.fair if @get('type') is 'fair'
     @artworks = new Artworks
     @artworks.url = "#{ARTSY_URL}/api/v1/related/layer/#{@get('type')}/#{@id}/artworks?artwork[]=#{@get('artwork_id')}"
+
+  label: ->
+    return @id if (@get('type') is 'synthetic') and (@id is 'for-sale')
+    @get 'type'
 
 module.exports.Layers = class Layers extends Backbone.Collection
   url: "#{ARTSY_URL}/api/v1/related/layers"
@@ -55,12 +60,20 @@ module.exports.LayeredSearchView = class LayeredSearchView extends Backbone.View
       success:  => @render()
       error:    => @remove()
 
+  # Activate the clicked layer or
+  # activate the first layer if called without a click event
   selectLayer: (e) ->
-    id = ($target = $(e.currentTarget)).data 'id'
+    id = if e
+      ($target = $(e.currentTarget)).data 'id'
+    else
+      ($target = @$layerButtons.first()).data 'id'
+
     @__activeLayer__ = @layers.get id
     @activateLayerButton $target
     @$layeredSearchResults.html '<div class="loading-spinner"></div>'
     @fetchAndRenderActiveLayer()
+
+    analytics.track.click "Switched to related artworks: #{@__activeLayer__.label()}" if e
 
   fetchAndRenderActiveLayer: ->
     if @activeLayer().artworks.length
@@ -92,10 +105,9 @@ module.exports.LayeredSearchView = class LayeredSearchView extends Backbone.View
       artworkSize: 'tall'
 
   postRender: ->
-    @$layeredSearchResults = @$('#layered-search-results')
-    # Activate the first tab
-    (@$layerButtons ?= @$('.layered-search-layer-button')).
-      first().click()
+    @$layeredSearchResults  = @$('#layered-search-results')
+    @$layerButtons          = @$('.layered-search-layer-button')
+    @selectLayer() # Activate the first tab
 
   render: ->
     # If only one layer is returned it will be "For sale"
