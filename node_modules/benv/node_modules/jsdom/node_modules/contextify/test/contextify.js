@@ -387,6 +387,31 @@ exports['test global'] = {
             sandbox.dispose();
         }, Error);
         test.done();
+    },
+
+    'test context delete global' : function (test) {
+        var sandbox = Contextify({});
+        sandbox.global = sandbox.getGlobal();
+        sandbox.run('delete global.global;');
+        test.ok(!sandbox.global);
+        sandbox.dispose();
+        test.done();
+    },
+
+    'test context delete unwritable global' : function (test) {
+        var sandbox = Contextify({});
+        Object.defineProperty(sandbox, 'global', {
+          enumerable: false,
+          configurable: false,
+          writable: false,
+          value: sandbox.getGlobal()
+        });
+
+        sandbox.run('delete global.global;');
+        test.ok(sandbox.global);
+        test.ok(sandbox.global.global);
+        sandbox.dispose();
+        test.done();
     }
 };
 

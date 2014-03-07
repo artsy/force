@@ -66,7 +66,7 @@ describe 'Layers, Layer', ->
       layers = _.times 2, ->
         id: _.uniqueId 'layer'
         name: _.uniqueId 'layer'
-        type: 'main'
+        type: 'synthetic'
       @layers.reset layers
 
     it 'should have a collection and subsequently an artwork_id', ->
@@ -77,6 +77,13 @@ describe 'Layers, Layer', ->
       layer = @layers.first()
       layer.artworks.url.
         should.include "/api/v1/related/layer/#{layer.get('type')}/#{layer.id}/artworks?artwork[]=#{layer.get('artwork_id')}"
+
+    it 'should have the appropriate label', ->
+      @layers.add(type: 'synthetic', id: 'main').label().should.equal 'synthetic'
+      @layers.add(type: 'synthetic', id: 'for-sale').label().should.equal 'for-sale'
+      @layers.add(type: 'gene', id: 'foobarable').label().should.equal 'gene'
+      @layers.add(type: 'fair', id: 'the-armory-show').label().should.equal 'fair'
+      @layers.add(type: 'tag', id: 'boring').label().should.equal 'tag'
 
 describe 'LayeredSearchView', ->
   before (done) ->
@@ -158,8 +165,3 @@ describe 'LayeredSearchView', ->
     it 'should have the fair as the first tab', ->
       @$buttons = @view.$('.layered-search-layer-button')
       @$buttons.first().text().should.equal "Works from #{@fair.get('name')}"
-
-
-
-
-

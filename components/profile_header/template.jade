@@ -16,9 +16,9 @@ header.profile-header
           if profile.get('location')
             span.location!= profile.get('location')
             if profile.get('website')
-              &nbsp;&#8211;&nbsp;
+              | &nbsp;&#8211;&nbsp;
           if profile.get('website')
             a.website( href=profile.get('website'), target="_blank" )!= profile.getFormattedWebsite()
-  
+
       if ! profile.isMe()
         .follow-button.avant-garde-button-white

@@ -42,6 +42,14 @@ describe '#javascriptError', ->
 
 describe '#socialAuthError', ->
 
-  it 'redirects to a login error from facebook', ->
+  it 'redirects to a login error', ->
     errorHandler.socialAuthError "User Already Exists", {}, @res = { redirect: sinon.stub() }
     @res.redirect.args[0][0].should.equal '/log_in?error=already-signed-up'
+
+  it 'uses gravity style error messages if coming from facebook', ->
+    errorHandler.socialAuthError "User Already Exists", { url: 'facebook' }, @res = { redirect: sinon.stub() }
+    @res.redirect.args[0][0].should.equal '/log_in?account_created_email=facebook'
+
+  it 'uses gravity style error messages if coming from tiwtter', ->
+    errorHandler.socialAuthError "User Already Exists", { url: 'twitter' }, @res = { redirect: sinon.stub() }
+    @res.redirect.args[0][0].should.equal '/log_in?account_created_email=twitter'

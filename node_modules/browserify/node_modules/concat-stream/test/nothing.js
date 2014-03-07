@@ -7,3 +7,11 @@ test('no callback stream', function (t) {
   stream.end(' cats')
   t.end()
 })
+
+test('no encoding set, no data', function (t) {
+  var stream = concat(function(data) {
+    t.deepEqual(data, [])
+    t.end()
+  })
+  stream.end()
+})

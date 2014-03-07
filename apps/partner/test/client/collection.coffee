@@ -7,6 +7,7 @@ Profile       = require '../../../../models/profile.coffee'
 _             = require 'underscore'
 { resolve }   = require 'path'
 { fabricate } = require 'antigravity'
+{ stubChildClasses } = require '../../../../test/helpers/stubs'
 
 describe 'PartnerCollectionView', ->
 
@@ -53,10 +54,9 @@ describe 'PartnerCollectionView', ->
 
         @profile = new Profile fabricate 'partner_profile'
         @partner = new Partner @profile.get 'owner'
-        @ArtworkColumnsView = sinon.stub()
-        @ArtworkColumnsView.appendArtworks = sinon.stub()
-        @ArtworkColumnsView.returns @ArtworkColumnsView
-        mod.__set__ 'ArtworkColumnsView', @ArtworkColumnsView
+        stubChildClasses mod, @,
+          ['ArtworkColumnsView']
+          ['appendArtworks', 'render']
         @view = new PartnerCollectionView
           profile: @profile
           partner: @partner
@@ -71,13 +71,13 @@ describe 'PartnerCollectionView', ->
     describe '#loadNextPage', ->
 
       it 'calls ArtworkColumnsView to render the first page', ->
-        @ArtworkColumnsView.appendArtworks.calledOnce.should.be.true
+        @ArtworkColumnsView::appendArtworks.calledOnce.should.be.true
         @view.nextPage.should.equal 2
 
       it 'uses ArtworkColumns to render the next pages individually until the end', ->
         # fetches page 1 on init...
         @view.nextPage.should.equal 2
-        artworks = _.last(@ArtworkColumnsView.appendArtworks.args)[0]
+        artworks = _.last(@ArtworkColumnsView::appendArtworks.args)[0]
         artworks.should.have.lengthOf 3
         artworks[0].get('artwork').id.should.equal 'artwork1'
         artworks[1].get('artwork').id.should.equal 'artwork2'
@@ -85,7 +85,7 @@ describe 'PartnerCollectionView', ->
 
         # on page 2, the response is not a full page
         @view.loadNextPage()
-        artworks = _.last(@ArtworkColumnsView.appendArtworks.args)[0]
+        artworks = _.last(@ArtworkColumnsView::appendArtworks.args)[0]
         artworks.should.have.lengthOf 2
         artworks[0].get('artwork').id.should.equal 'artwork4'
         artworks[1].get('artwork').id.should.equal 'artwork5'
@@ -93,7 +93,7 @@ describe 'PartnerCollectionView', ->
 
         # only two left in the whole set
         @view.loadNextPage()
-        artworks = _.last(@ArtworkColumnsView.appendArtworks.args)[0]
+        artworks = _.last(@ArtworkColumnsView::appendArtworks.args)[0]
         artworks.should.have.lengthOf 2
         artworks[0].get('artwork').id.should.equal 'artwork6'
         artworks[1].get('artwork').id.should.equal 'artwork7'
@@ -106,4 +106,4 @@ describe 'PartnerCollectionView', ->
         @view.nextPage.should.equal 4
 
         # 7 works, page size 3, then 2, then 3, 3 calls to get all
-        @ArtworkColumnsView.appendArtworks.callCount.should.equal 3
+        @ArtworkColumnsView::appendArtworks.callCount.should.equal 3

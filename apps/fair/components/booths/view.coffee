@@ -63,7 +63,7 @@ module.exports = class BoothsView extends Backbone.View
     )
 
   renderShows: (items) =>
-    return @$('#fair-browse-spinner').hide() unless items.models.length > 0
+    return @$('#fair-booths-spinner').hide() unless items.models.length > 0
     items.urlRoot = @shows.url
     @feedView?.destroy()
     @feedView = new ShowsFeed
@@ -72,7 +72,7 @@ module.exports = class BoothsView extends Backbone.View
       additionalParams: @params.toJSON()
       hideSeeMoreButtons: (if @params.get('artist') then true else false)
     @feedView.feedName = 'Fair Feed'
-    @$('#fair-browse-spinner').show()
+    @$('#fair-booths-spinner').hide()
 
   toggleBoothCount: =>
     @$('.fair-booths-count-container')[if @params.get('section') then 'hide' else 'show']()

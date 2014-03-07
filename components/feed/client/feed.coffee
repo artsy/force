@@ -83,6 +83,7 @@ module.exports = class FeedView extends Backbone.View
       imageWidth        : @imageWidth
       feedItemClass     : @feedItemClass
       hideSeeMoreButtons: @hideSeeMoreButtons
+      displayPurchase   : @displayPurchase
       sd                : sd
     )
 
@@ -122,6 +123,7 @@ module.exports = class FeedView extends Backbone.View
       currentUser       : @currentUser
       feedItemClass     : @feedItemClass
       hideSeeMoreButtons: @hideSeeMoreButtons
+      displayPurchase   : @displayPurchase
     ))
     $html.attr('data-cursor', @feedItems.lastCursor)
     for $item, index in $html
