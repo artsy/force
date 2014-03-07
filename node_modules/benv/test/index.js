@@ -34,6 +34,15 @@ describe('benv.teardown', function() {
       done();
     });
   });
+
+  it('doesnt have to remove DOM globals', function(done) {
+    benv.setup(function(){
+      should.exist(navigator);
+      benv.teardown(false);
+      (typeof navigator).should.not.equal('undefined');
+      done();
+    });
+  });
 });
 
 describe('benv.require', function() {

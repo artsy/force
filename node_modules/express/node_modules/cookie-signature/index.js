@@ -1,4 +1,3 @@
-
 /**
  * Module dependencies.
  */
@@ -37,6 +36,8 @@ exports.sign = function(val, secret){
 exports.unsign = function(val, secret){
   if ('string' != typeof val) throw new TypeError('cookie required');
   if ('string' != typeof secret) throw new TypeError('secret required');
-  var str = val.slice(0, val.lastIndexOf('.'));
-  return exports.sign(str, secret) == val ? str : false;
+  var str = val.slice(0, val.lastIndexOf('.'))
+    , mac = exports.sign(str, secret);
+  
+  return exports.sign(mac, secret) == exports.sign(val, secret) ? str : false;
 };

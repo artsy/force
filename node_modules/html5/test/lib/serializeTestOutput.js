@@ -1,64 +1,71 @@
-var HTML5 = require('../../lib/html5');
-var dom = HTML5.DOM;
-var walker = HTML5.TreeWalker;
+var elementNamespaces = {
+	"http://www.w3.org/2000/svg": 'svg',
+	"http://www.w3.org/1998/Math/MathML": 'math'
+};
+
+var attributeNamespaces = {
+	"http://www.w3.org/1999/xlink": 'xlink',
+	"http://www.w3.org/XML/1998/namespace": 'xml',
+	"http://www.w3.org/2000/xmlns/": 'xmlns'
+};
 
 exports.serializeTestOutput = function(doc) {
-	var s = '';
+	var lines = [];
 	var indent = '';
-	new walker(doc, function(token) {
-		switch(token.type) {
-		case 'StartTag':
-			var n = '';
-			if(token.namespace) {
-				n = token.namespace + ' ';
-			}
-			s += indent + '<' + n + token.name.toLowerCase() + ">\n";
-			indent += '  ';
-			var a = []
-			for(var i = 0; i < token.data.length; i++) {
-				a.push(token.data.item(i))
-			}
-			a = a.sort(function(a1, a2) { 
-				if( a1.nodeName < a2.nodeName) return -1
-				if( a1.nodeName > a2.nodeName) return 1;
-				if( a1.nodeName == a2.nodeName) return 0;
-			});
-			for(var i = 0; i < a.length; i++) {
-				s += indent + (a[i].namespace ? a[i].namespace + ':' : '') + a[i].nodeName + '="' + a[i].nodeValue + '"\n'
-			}
-			break;
-		case 'EmptyTag':
-			s += indent + '<' + token.name.toLowerCase() + '>\n';
-			var a = []
-			for(var i = 0; i < token.data.length; i++) {
-				a.push(token.data.item(i))
-			}
-			a = a.sort(function(a1, a2) { 
-				if( a1.nodeName < a2.nodeName) return -1
-				if( a1.nodeName > a2.nodeName) return 1;
-				if( a1.nodeName == a2.nodeName) return 0;
-			});
-			for(var i = 0; i < a.length; i++) {
-				s += indent + '  ' + (a[i].namespace ? a[i].namespace + ':' : '') + a[i].nodeName + '="' + a[i].nodeValue + '"\n'
-			}
-			break;
-		case 'EndTag':
-			indent = indent.slice(2);
-			break;
-		case 'Characters':
-			s += indent + '"' + token.data + '"\n';
-			break;
-		case 'Comment':
-			s += indent + '<!-- ' + token.data + ' -->\n';
-			break;
-		case 'Doctype':
-			s += indent + '<!DOCTYPE ' + token.name;
-			if (token.publicId || token.systemId) {
-				s += ' "' + token.publicId + '" "' + token.systemId + '"';
-			}
-			s += '>\n';
-			break;
+
+	function walk(node) {
+		switch (node.nodeType) {
+			case node.DOCUMENT_FRAGMENT_NODE:
+			case node.DOCUMENT_NODE:
+				for (var child = 0; child < node.childNodes.length; child++) {
+					walk(node.childNodes[child]);
+				}
+				break;
+			case node.ELEMENT_NODE:
+				var elementNsDecorator = '';
+				if (node.namespaceURI in elementNamespaces) {
+					elementNsDecorator = elementNamespaces[node.namespaceURI] + ' ';
+				}
+				lines.push(indent + '<' + elementNsDecorator + node.localName + ">");
+				indent += '  ';
+				var attrs = [];
+				for (var i = 0; i < node.attributes.length; i++) {
+					attrs.push(node.attributes.item(i));
+				}
+				attrs = attrs.sort(function(a1, a2) {
+					if ( a1.nodeName < a2.nodeName) return -1;
+					if ( a1.nodeName > a2.nodeName) return 1;
+					if ( a1.nodeName == a2.nodeName) return 0;
+				});
+				for (var i = 0; i < attrs.length; i++) {
+					var attrNsDecorator = '';
+					if (attrs[i].namespaceURI in attributeNamespaces) {
+						attrNsDecorator = attributeNamespaces[attrs[i].namespaceURI] + ' ';
+					}
+					lines.push(indent + attrNsDecorator + attrs[i].localName + '="' + attrs[i].nodeValue + '"');
+				}
+				for (var child = 0; child < node.childNodes.length; child++) {
+					walk(node.childNodes[child]);
+				}
+				indent = indent.slice(2);
+				break;
+			case node.TEXT_NODE:
+				lines.push(indent + '"' + node.nodeValue + '"');
+				break;
+			case node.COMMENT_NODE:
+				lines.push(indent + '<!-- ' + node.nodeValue + ' -->');
+				break;
+			case node.DOCUMENT_TYPE_NODE:
+				var ids = '';
+				if (node.publicId || node.systemId) {
+					ids = ' "' + node.publicId + '" "' + node.systemId + '"';
+				}
+				lines.push(indent + '<!DOCTYPE ' + node.nodeName + ids + '>');
+				break;
 		}
-	});
-	return s;
-}
+	}
+
+	walk(doc);
+
+	return lines.join('\n');
+};

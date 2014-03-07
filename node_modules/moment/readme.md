@@ -28,8 +28,41 @@ Develop [![Build Status](https://travis-ci.org/moment/moment.png?branch=develop)
 
 Master [![Build Status](https://travis-ci.org/moment/moment.png?branch=master)](https://travis-ci.org/moment/moment)
 
+For developers
+==============
+
+You need [node](http://nodejs.org/), use [nvm](https://github.com/creationix/nvm) or [nenv](https://github.com/ryuone/nenv) to install it.
+
+Then, in your shell
+
+```bash
+git clone https://github.com/moment/moment.git
+cd moment
+npm install -g grunt-cli
+npm install
+git checkout develop  # all patches against develop branch, please!
+grunt                 # this runs tests and jshint
+```
+
 Changelog
 =========
+
+### 2.5.1
+
+* languages
+  * [#1392](https://github.com/moment/moment/issues/1392) Armenian (hy-am)
+
+* bugfixes
+  * [#1429](https://github.com/moment/moment/issues/1429) fixes [#1423](https://github.com/moment/moment/issues/1423) weird chrome-32 bug with js object creation
+  * [#1421](https://github.com/moment/moment/issues/1421) remove html entities from Welsh
+  * [#1418](https://github.com/moment/moment/issues/1418) fixes [#1401](https://github.com/moment/moment/issues/1401) improved non-padded tokens in strict matching
+  * [#1417](https://github.com/moment/moment/issues/1417) fixes [#1404](https://github.com/moment/moment/issues/1404) handle buggy moment object created by property cloning
+  * [#1398](https://github.com/moment/moment/issues/1398) fixes [#1397](https://github.com/moment/moment/issues/1397) fix Arabic-like week number parsing
+  * [#1396](https://github.com/moment/moment/issues/1396) add leftZeroFill(4) to GGGG and gggg formats
+  * [#1373](https://github.com/moment/moment/issues/1373) use lowercase for months and days in Catalan
+
+* testing
+  * [#1374](https://github.com/moment/moment/issues/1374) run tests on multiple browser/os combos via SauceLabs and Travis
 
 ### 2.5.0 [See changelog](https://gist.github.com/ichernev/8104451)
 
@@ -66,7 +99,7 @@ Changelog
 
 ### 2.3.1
 
-Removed a trailing comma [1169] and fixed a bug with `months`, `weekdays` getters [1171].
+Removed a trailing comma [1169] and fixed a bug with `months`, `weekdays` getters [#1171](https://github.com/moment/moment/issues/1171).
 
 ### 2.3.0 [See changelog](https://gist.github.com/ichernev/6864354)
 

@@ -73,7 +73,7 @@ app.get('artwork/:id', function(req, res, next) {
   new Artwork({ id: req.params.id }).fetch({
     success: function(artwork) {
       res.locals.sharify.data.ARTWORK_JSON = artwork.toJSON();
-      next();
+      res.render('artwork');
     }
   });
 });

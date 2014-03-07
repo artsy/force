@@ -1,3 +1,9 @@
+/*!
+ * Should
+ * Copyright(c) 2010-2014 TJ Holowaychuk <tj@vision-media.ca>
+ * MIT Licensed
+ */
+
 /**
  * Check if given obj just a primitive type wrapper
  * @param {Object} obj
@@ -6,7 +12,7 @@
  */
 exports.isWrapperType = function(obj) {
     return isNumber(obj) || isString(obj) || isBoolean(obj);
-}
+};
 
 /**
  * Merge object b with object a.
@@ -97,3 +103,17 @@ function isError(e) {
   return isObject(e) && objectToString(e) === '[object Error]';
 }
 exports.isError = isError;
+
+exports.inspect = require('util').inspect;
+
+exports.AssertionError = require('assert').AssertionError;
+
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+
+exports.forOwn = function(obj, f, context) {
+  for(var prop in obj) {
+    if(hasOwnProperty.call(obj, prop)) {
+      f.call(context, obj[prop], prop);
+    }
+  }
+};

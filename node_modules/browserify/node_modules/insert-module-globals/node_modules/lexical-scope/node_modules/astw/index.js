@@ -1,4 +1,4 @@
-var parse = require('esprima').parse;
+var parse = require('esprima-six').parse;
 
 module.exports = function (src) {
     var ast = typeof src === 'string' ? parse(src) : src;

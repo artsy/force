@@ -7,10 +7,17 @@ var bpack = require('browser-pack');
 var mdeps = require('module-deps');
 
 test('insert globals', function (t) {
-    t.plan(2);
+    var expected = [ 'global' ];
+    t.plan(2 + expected.length);
     
     var files = [ __dirname + '/global/main.js' ];
-    var deps = mdeps(files, { transform: inserter });
+    var deps = mdeps(files, { transform: function (file) {
+        var tr = inserter(file)
+        tr.on('global', function (name) {
+            t.equal(name, expected.shift());
+        });
+        return tr;
+    } });
     var pack = bpack({ raw: true });
     
     deps.pipe(pack);

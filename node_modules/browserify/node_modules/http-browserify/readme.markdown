@@ -66,6 +66,16 @@ req.setHeader(key, value)
 
 Set an http header.
 
+req.getHeader(key)
+-------------------------
+
+Get an http header.
+
+req.removeHeader(key)
+-------------------------
+
+Remove an http header.
+
 req.write(data)
 ---------------
 

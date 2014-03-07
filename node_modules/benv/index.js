@@ -44,11 +44,13 @@ module.exports.expose = function(_globals) {
 // Deletes the stubbed browser API, benv.globals, and cleans things up so other
 // tests can run without being harmed.
 
-module.exports.teardown = function() {
-  delete global.window;
-  domGlobals.forEach(function(varName) {
-    delete global[varName];
-  });
+module.exports.teardown = function(clearDOM) {
+  if (clearDOM !== false) {
+    delete global.window;
+    domGlobals.forEach(function(varName) {
+      delete global[varName];
+    });
+  }
   for(var key in globals) {
     delete global[key];
   }
