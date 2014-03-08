@@ -63,8 +63,9 @@
 .artwork-actions
   //- Large contact button
   if artwork.isContactable()
-    a.avant-garde-button-black.artwork-contact-button
-      = artwork.contactLabel()
+    a.avant-garde-button-black.artwork-contact-button(
+      href="/artwork/#{artwork.id}/contact-gallery", data-client
+    )!= artwork.contactLabel()
 
   //- Auction # todo
 
@@ -79,8 +80,9 @@
       //- Inquiry microcopy
       if artwork.inquiryMicroCopy()
         small.small-caps= artwork.inquiryMicroCopy()
-      a.avant-garde-button-underlined.artwork-inquiry-button
-        | Contact Artsy Specialist
+      a.avant-garde-button-underlined.artwork-inquiry-button(
+        href="/artwork/#{artwork.id}/inquire", data-client
+      ) Contact Artsy Specialist
 
   nav.artwork-actions-list
     if artwork.get('website')
