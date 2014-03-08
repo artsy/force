@@ -1,8 +1,9 @@
-var Backbone, client, redis, _;
+var Backbone, client, redis, _, Q;
 Backbone = require('backbone');
 _ = require('underscore');
 redis = require("redis");
 client = null;
+Q = require('q');
 
 /**
  * An implementation of Backbone.sync that takes the `cache: true` option. This will store the
@@ -25,6 +26,8 @@ module.exports = function(originalSync, redisUrl, defaultCacheTime, nodeEnv, cli
     }
 
     return Backbone.sync = function(method, model, options) {
+        var deferred = Q.defer();
+
         if (!(options && options.cache)) {
             return originalSync(method, model, options);
         }
@@ -39,19 +42,22 @@ module.exports = function(originalSync, redisUrl, defaultCacheTime, nodeEnv, cli
         }
 
         // Check if there is any cached JSON in Redis
-        return client.get(key, function(err, cachedJSON) {
-            // Return the cached JSON or if stored or make a normal request and store it for later
+        client.get(key, function(err, cachedJSON) {
+
+            // Return the cached JSON or if stored -- make a normal request and store it for later
             if (cachedJSON) {
-                if (options && options.success) {
-                    options.success(JSON.parse(cachedJSON))
-                }
+                var jsonObj = JSON.parse(cachedJSON);
+                if (options && options.success) options.success(jsonObj);
+                deferred.resolve(jsonObj);
             } else {
                 model.once('sync', function(m, res) {
                     client.set(key, JSON.stringify(res));
                     return client.expire(key, cacheTime);
                 });
-                return originalSync(method, model, options);
+                var dfd = originalSync(method, model, options);
+                if (dfd && dfd.then) dfd.then(deferred.resolve, deferred.reject);
             }
         });
+        return deferred.promise;
     };
 };
