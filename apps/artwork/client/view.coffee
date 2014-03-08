@@ -6,8 +6,6 @@ Transition            = require '../../../components/mixins/transition.coffee'
 CurrentUser           = require '../../../models/current_user.coffee'
 SaveButton            = require '../../../components/save_button/view.coffee'
 RelatedPostsView      = require '../../../components/related_posts/view.coffee'
-ContactPartnerView    = require '../../../components/contact/contact_partner.coffee'
-InquiryView           = require '../../../components/contact/inquiry.coffee'
 analytics             = require '../../../lib/analytics.coffee'
 acquireArtwork        = require('../../../components/acquire/view.coffee').acquireArtwork
 FeatureNavigationView = require './feature-navigation.coffee'
@@ -24,8 +22,6 @@ module.exports = class ArtworkView extends Backbone.View
     'click .circle-icon-button-share'       : 'openShare'
     'click .circle-icon-button-save'        : 'saveArtwork'
     'click .artwork-additional-image'       : 'changeImage'
-    'click .artwork-contact-button'         : 'contactPartner'
-    'click .artwork-inquiry-button'         : 'inquire'
     'click .artwork-download-button'        : 'trackDownload'
     'click .artwork-auction-results-button' : 'trackComparable'
     'change .aes-radio-button'              : 'selectEdition'
@@ -189,14 +185,6 @@ module.exports = class ArtworkView extends Backbone.View
     e.preventDefault()
     analytics.track.click 'Viewed sharing_is_caring form'
     new ShareView width: '350px', artwork: @artwork
-
-  contactPartner: (e) ->
-    e.preventDefault()
-    new ContactPartnerView artwork: @artwork, partner: @artwork.get('partner')
-
-  inquire: (e) ->
-    e.preventDefault()
-    new InquiryView artwork: @artwork
 
   changeImage: (e) ->
     e.preventDefault()
