@@ -22,7 +22,6 @@ module.exports = class ArtworkView extends Backbone.View
     'click .circle-icon-button-share'       : 'openShare'
     'click .circle-icon-button-save'        : 'saveArtwork'
     'click .artwork-additional-image'       : 'changeImage'
-    'click .artwork-inquiry-button'         : 'inquire'
     'click .artwork-download-button'        : 'trackDownload'
     'click .artwork-auction-results-button' : 'trackComparable'
     'change .aes-radio-button'              : 'selectEdition'
