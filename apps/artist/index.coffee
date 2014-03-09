@@ -11,3 +11,4 @@ app.set 'view engine', 'jade'
 
 app.get '/artist/:id', routes.index
 app.get '/artist/:id/follow', routes.follow
+app.get '/artist/:id/*', routes.index
