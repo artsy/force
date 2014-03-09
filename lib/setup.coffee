@@ -115,10 +115,11 @@ module.exports = (app) ->
   # Mount apps
   app.use require "../apps/home"
   app.use require "../apps/about"
+  # Neds to be above artwork and artist routes to support the /type/:id/* routes
+  app.use require "../apps/auction_lots"
   app.use require "../apps/artist"
   app.use require "../apps/artists"
   app.use require "../apps/artwork"
-  app.use require "../apps/auction_lots"
   app.use require "../apps/auth"
   app.use require "../apps/browse"
   app.use require "../apps/feature"
