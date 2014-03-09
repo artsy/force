@@ -11,11 +11,12 @@ InquiryView           = require '../../../components/contact/inquiry.coffee'
 module.exports = class ArtworkRouter extends Backbone.Router
   routes:
     'artwork/:id'                 : 'show'
-    'artwork/:id/zoom'            : 'zoom'
-    'artwork/:id/more-info'       : 'moreInfo'
-    'artwork/:id/view-in-room'    : 'viewInRoom'
+    'artwork/:id/ask_specialist'  : 'inquire'
     'artwork/:id/contact-gallery' : 'contactPartner'
     'artwork/:id/inquire'         : 'inquire'
+    'artwork/:id/more-info'       : 'moreInfo'
+    'artwork/:id/view-in-room'    : 'viewInRoom'
+    'artwork/:id/zoom'            : 'zoom'
 
   initialize: (options) ->
     { @artwork, @artist } = options
