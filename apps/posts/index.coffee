@@ -11,5 +11,4 @@ app.set 'view engine', 'jade'
 
 app.get '/posts', routes.index
 app.get '/posts/featured', routes.featured
-app.get '/posts/personalized', routes.personalized
 app.get '/posts/all', routes.all

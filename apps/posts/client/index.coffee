@@ -14,8 +14,6 @@ module.exports = class PostsView extends Backbone.View
         "#{sd.ARTSY_URL}/api/v1/posts/featured/feed"
       when 'all'
         "#{sd.ARTSY_URL}/api/v1/posts/feed"
-      else
-        "#{sd.ARTSY_URL}/api/v1/me/feed"
 
   initialize: (options) ->
     throw "requires options.tab" unless options.tab
