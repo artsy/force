@@ -8,9 +8,15 @@ module.exports = class ViewInRoom extends Backbone.View
   bodyClasses: 'body-transparent-header is-modal'
 
   roomWidth: 6578
-  benchRatio: 6.5
+  benchRatio: 5.5
+
+  # Should be visually at about 57" from interstitial
   eyeLevel: ->
-    0.122 * @roomWidth
+    0.132 * @roomWidth
+
+  # Should be visually at about 12" from interstitial
+  groundLevel: ->
+    0.095 * @roomWidth
 
   initialize: (options) ->
     { @$container, @$img, @artwork } = options
@@ -25,13 +31,16 @@ module.exports = class ViewInRoom extends Backbone.View
     @$container.html @$el
 
   render: ->
+    imagesLoaded = require '../../../lib/vendor/imagesloaded.js'
+
     @adjustViewport()
     @_render()
     @cacheSelectors()
     @injectImage()
-    @scaleRoom()
-    @scalePlaceholder()
-    @transitionIn()
+    @$room.imagesLoaded().always =>
+      @scaleRoom()
+      @scalePlaceholder()
+      @transitionIn()
 
   cacheSelectors: ->
     @$artwork       = @$('#vir-artwork')
@@ -49,11 +58,14 @@ module.exports = class ViewInRoom extends Backbone.View
   transitionIn: ->
     @$el.attr 'data-state', 'in'
     @$img.css visibility: 'hidden'
-    @$artwork.addClass 'is-transition'
     @$artwork.
+      addClass('is-transition').
       css(@getRect(@$placeholder)).
       one($.support.transition.end, =>
         @$artwork.addClass('is-notransition')
+        if @artworkScalingFactor() > 1
+          @$artwork.attr 'src',
+            @artwork.defaultImage().imageUrlFor(@$artwork.width(), @$artwork.height())
       ).emulateTransitionEnd(750)
 
   transitionOut: ->
@@ -63,11 +75,20 @@ module.exports = class ViewInRoom extends Backbone.View
       css @getRect(@$img)
 
   scalePlaceholder: ->
-    @$placeholder.css
-      bottom: "#{@eyeLevel()}px"
-      marginBottom: -(@$placeholder.height() / 3)
+    [significantDimension] = @getArtworkDimensions()
+
+    options = if significantDimension > 100
+      bottom: "#{@groundLevel()}px"
       marginLeft: -(@$placeholder.width() / 2)
       transform: "scale(#{@artworkScalingFactor()})"
+      transformOrigin: "50% #{@$placeholder.height()}px 0"
+    else
+      bottom: "#{@eyeLevel()}px"
+      marginBottom: -(@$placeholder.height() / 2)
+      marginLeft: -(@$placeholder.width() / 2)
+      transform: "scale(#{@artworkScalingFactor()})"
+
+    @$placeholder.css options
 
   scaleRoom: ->
     @$room.css transform: "scale(#{@roomScalingFactor()})"

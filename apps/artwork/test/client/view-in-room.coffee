@@ -1,5 +1,4 @@
 _               = require 'underscore'
-# rewire          = require 'rewire'
 benv            = require 'benv'
 Backbone        = require 'backbone'
 sinon           = require 'sinon'
@@ -81,4 +80,20 @@ describe 'ViewInRoomView', ->
       it 'returns a non-zero factor to scale the artwork by', ->
         @view.$placeholder.width(200)
         @view.getArtworkDimensions = -> [20, 20]
-        @view.artworkScalingFactor().should.equal 0.65
+        @view.artworkScalingFactor().should.equal 0.55
+
+    describe '#scalePlaceholder', ->
+      it 'scales the placeholder and sets it at eye level if the significant dimension is less than 100', ->
+        @view.$placeholder.css = sinon.stub()
+        @view.scalePlaceholder()
+        args = @view.$placeholder.css.args[0][0]
+        _.keys(args).should.eql ['bottom', 'marginBottom', 'marginLeft', 'transform']
+        args.bottom.should.equal "#{@view.eyeLevel()}px"
+
+      it 'scales the placeholder and sets it at ground level if the significant dimension is greater than 100', ->
+        @view.$placeholder.css = sinon.stub()
+        @view.artwork.dimensions = -> '101 x 20 x 30in'
+        @view.scalePlaceholder()
+        args = @view.$placeholder.css.args[0][0]
+        _.keys(args).should.eql ['bottom', 'marginLeft', 'transform', 'transformOrigin']
+        args.bottom.should.equal "#{@view.groundLevel()}px"
