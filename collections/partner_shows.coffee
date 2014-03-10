@@ -36,15 +36,15 @@ module.exports = class PartnerShows extends Backbone.Collection
     return featured if featured?
 
     # Next in line is the first current show that ends closest to now
-    featurables = @current().filter (show) -> show.featurable()
+    featurables = @current().filter (show) -> show.renderable()
     featurables = _.sortBy featurables, (show) -> moment(show.get('end_at')).unix()
     return featurables[0] if featurables.length > 0
 
     # Then the first upcoming show by start date
-    featurables = @upcoming().filter (show) -> show.featurable()
+    featurables = @upcoming().filter (show) -> show.renderable()
     featurables = _.sortBy featurables, (show) -> moment(show.get('start_at')).unix()
     return featurables[0] if featurables.length > 0
 
     # Finally, we'll take a past show ordered by the default
-    featurables = @past().filter (show) -> show.featurable()
+    featurables = @past().filter (show) -> show.renderable()
     return featurables[0] if featurables.length > 0
