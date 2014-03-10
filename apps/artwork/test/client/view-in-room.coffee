@@ -6,7 +6,6 @@ sinon           = require 'sinon'
 { fabricate }   = require 'antigravity'
 
 ViewInRoomView  = benv.requireWithJadeify resolve(__dirname, '../../client/view-in-room'), ['template']
-ViewInRoomView.__set__ 'imagesLoaded', sinon.stub()
 Artwork         = require '../../../../models/artwork'
 
 describe 'ViewInRoomView', ->
