@@ -44,7 +44,10 @@ bumper-width = 40px
   position relative
   margin 40px 0
   &[data-transitions=false]
-    *
+    .afc-track
+    .afc-artist-information
+    .afc-prev
+    .afc-next
       transition none
       opacity 1 !important
   // Bumper visible states
@@ -117,9 +120,13 @@ bumper-width = 40px
   > a
     display block
     width 100%
-    background-color light-gray-background-color
+    background-color black
     > img
       width 100%
+      transition opacity 0.3s
+      prevent-content-shift()
+    &:hover > img
+      opacity 0.5
 
 .afc-artist-information
   display table
