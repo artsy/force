@@ -173,8 +173,14 @@ bumper-width = 40px
     display block
     width 100%
     background-color black
+    overflow hidden
     > img
-      max-width 100%
+      // Q: Why 101%?
+      // A: The hack to prevent content from shifting on hover
+      // ensures that sub-pixel widths are rounded. Since the background
+      // color is black that means that at certain browser widths some of the
+      // columns will have an extra pixel. So we intentionally overflow to prevent that.
+      width 101%
       transition opacity 0.3s
       prevent-content-shift()
     &:hover > img
