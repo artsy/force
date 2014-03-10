@@ -1,5 +1,4 @@
 _               = require 'underscore'
-# rewire          = require 'rewire'
 benv            = require 'benv'
 Backbone        = require 'backbone'
 sinon           = require 'sinon'
@@ -7,6 +6,7 @@ sinon           = require 'sinon'
 { fabricate }   = require 'antigravity'
 
 ViewInRoomView  = benv.requireWithJadeify resolve(__dirname, '../../client/view-in-room'), ['template']
+ViewInRoomView.__set__ 'imagesLoaded', sinon.stub()
 Artwork         = require '../../../../models/artwork'
 
 describe 'ViewInRoomView', ->
@@ -81,4 +81,4 @@ describe 'ViewInRoomView', ->
       it 'returns a non-zero factor to scale the artwork by', ->
         @view.$placeholder.width(200)
         @view.getArtworkDimensions = -> [20, 20]
-        @view.artworkScalingFactor().should.equal 0.65
+        @view.artworkScalingFactor().should.equal 0.55

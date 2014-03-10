@@ -1,6 +1,5 @@
-_             = require 'underscore'
-Backbone      = require 'backbone'
-imagesLoaded  = require '../../../lib/vendor/imagesloaded.js'
+_         = require 'underscore'
+Backbone  = require 'backbone'
 
 template = -> require('../templates/view-in-room.jade') arguments...
 
@@ -32,6 +31,8 @@ module.exports = class ViewInRoom extends Backbone.View
     @$container.html @$el
 
   render: ->
+    imagesLoaded = require '../../../lib/vendor/imagesloaded.js'
+
     @adjustViewport()
     @_render()
     @cacheSelectors()
