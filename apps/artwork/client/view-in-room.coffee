@@ -77,7 +77,7 @@ module.exports = class ViewInRoom extends Backbone.View
       bottom: "#{@groundLevel()}px"
       marginLeft: -(@$placeholder.width() / 2)
       transform: "scale(#{@artworkScalingFactor()})"
-      transformOriginY: @$placeholder.height()
+      transformOrigin: "50% #{@$placeholder.height()}px 0"
     else
       bottom: "#{@eyeLevel()}px"
       marginBottom: -(@$placeholder.height() / 2)
