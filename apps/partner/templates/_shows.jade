@@ -13,7 +13,7 @@ mixin showsGallery(shows, isFeatured)
   .partner-shows-container
     each show in shows
       figure.partner-show( data-show-id=show.get('id') )
-        if show.linkable()
+        if show.renderable()
           a( href=show.clientUrl() )
             +showFigureContent(show, isFeatured)
         else
