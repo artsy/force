@@ -14,11 +14,14 @@
   display inline-block
   position relative
   background-color #000
-  width calc('50% - 10px')
-  margin 0 5px
+  width calc('50% - 5px')
   &:hover
     > .bfg-image
       opacity 0.5
+  &:first-child
+    margin-right 5px
+  &:last-child
+    margin-left 5px
 
 .bfg-image
   transition opacity 0.3s
