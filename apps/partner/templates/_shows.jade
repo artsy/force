@@ -14,7 +14,7 @@ mixin showsGallery(shows, isFeatured)
     each show in shows
       figure.partner-show( data-show-id=show.get('id') )
         if show.renderable()
-          a( href=show.clientUrl() )
+          a( href=show.href() )
             +showFigureContent(show, isFeatured)
         else
           +showFigureContent(show, isFeatured)

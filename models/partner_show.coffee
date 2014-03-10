@@ -24,7 +24,7 @@ module.exports = class PartnerShow extends Backbone.Model
     else
       "#{sd.ARTSY_URL}/api/v1/show/#{@get('id')}"
 
-  clientUrl: -> "/show/#{@get('id')}"
+  href: -> "/show/#{@get('id')}"
 
   metaImage: ->
     if @has 'image_url' and @get 'image_versions' and @hasImage 'large'
