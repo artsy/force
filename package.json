@@ -24,7 +24,6 @@
     "newrelic": "*",
     "underscore.string": "*",
     "q": "*",
-    "hiredis": "*",
     "node-uuid": "*",
     "backbone-pageable": "*",
     "moment": "*",
