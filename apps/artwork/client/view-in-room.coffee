@@ -10,9 +10,11 @@ module.exports = class ViewInRoom extends Backbone.View
   roomWidth: 6578
   benchRatio: 5.5
 
+  # Should be visually at about 57" from interstitial
   eyeLevel: ->
     0.132 * @roomWidth
 
+  # Should be visually at about 12" from interstitial
   groundLevel: ->
     0.095 * @roomWidth
 
