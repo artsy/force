@@ -75,9 +75,9 @@ module.exports = class ViewInRoom extends Backbone.View
       css @getRect(@$img)
 
   scalePlaceholder: ->
-    [height, width] = @getArtworkDimensions()
+    [significantDimension] = @getArtworkDimensions()
 
-    options = if height > 100
+    options = if significantDimension > 100
       bottom: "#{@groundLevel()}px"
       marginLeft: -(@$placeholder.width() / 2)
       transform: "scale(#{@artworkScalingFactor()})"
