@@ -21,8 +21,6 @@ block body
     if user
       .garamond-tablist
         a.garamond-tab( href="/posts/featured", data-tab='featured', class=activeClass('/posts/featured') ) Featured By Artsy
-        span &nbsp;&nbsp;&#8260;&nbsp;&nbsp;
-        a.garamond-tab( href="/posts/personalized", data-tab='personalized', class=activeClass('/posts/personalized') ) Following
         if user.get('type') == 'Admin'
           span &nbsp;&nbsp;&#8260;&nbsp;&nbsp;
           a.garamond-tab( href="/posts/all",  data-tab='all', class=activeClass('/posts/all') ) All Posts
