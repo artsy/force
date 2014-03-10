@@ -37,7 +37,7 @@ block body
                         = link.get('subtitle')
                       .afc-artist-works-count
                         if artist.get('forsale_artworks_count') > 1
-                          | #{artist.get('forsale_artworks_count')} Works available
+                          | #{artist.get('forsale_artworks_count')} works available
                         else if artist.get('forsale_artworks_count') === 1
                           | 1 Work available
                         //- If no available works and some published works

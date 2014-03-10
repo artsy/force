@@ -2,7 +2,7 @@
 @import '../../components/pagination'
 
 #artists-page
-  padding 40px 80px
+  padding 40px 60px
   h1
     margin 40px 0
     font-size large-avant-garde-font-size
@@ -44,7 +44,10 @@ bumper-width = 40px
   position relative
   margin 40px 0
   &[data-transitions=false]
-    *
+    .afc-track
+    .afc-artist-information
+    .afc-prev
+    .afc-next
       transition none
       opacity 1 !important
   // Bumper visible states
@@ -63,7 +66,7 @@ bumper-width = 40px
 
 .afc-track
   white-space nowrap
-  transition all 0.25s
+  transition all 0.333s
   &[data-state='transitioning']
     .afc-artist-information
       opacity 0
@@ -117,9 +120,13 @@ bumper-width = 40px
   > a
     display block
     width 100%
-    background-color light-gray-background-color
+    background-color black
     > img
       width 100%
+      transition opacity 0.3s
+      prevent-content-shift()
+    &:hover > img
+      opacity 0.5
 
 .afc-artist-information
   display table
@@ -173,8 +180,14 @@ bumper-width = 40px
     display block
     width 100%
     background-color black
+    overflow hidden
     > img
-      max-width 100%
+      // Q: Why 101%?
+      // A: The hack to prevent content from shifting on hover
+      // ensures that sub-pixel widths are rounded. Since the background
+      // color is black that means that at certain browser widths some of the
+      // columns will have an extra pixel. So we intentionally overflow to prevent that.
+      width 101%
       transition opacity 0.3s
       prevent-content-shift()
     &:hover > img
