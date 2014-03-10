@@ -28,10 +28,6 @@ ensureSSL = require './middleware/ensure_ssl'
 errorHandler = require "../components/error_handler"
 { notFoundError, loginError } = require('./middleware/errors')
 
-
-if REDIS_URL
-  _.extend require('artsy-backbone-mixins/config'), config
-
 # Setup sharify constants & require dependencies that use sharify data
 sharify.data =
   JS_EXT: (if ("production" is NODE_ENV or "staging" is NODE_ENV) then ".min.js.cgz" else ".js")
