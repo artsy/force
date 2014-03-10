@@ -8,9 +8,13 @@ module.exports = class ViewInRoom extends Backbone.View
   bodyClasses: 'body-transparent-header is-modal'
 
   roomWidth: 6578
-  benchRatio: 6.5
+  benchRatio: 5.5
+
   eyeLevel: ->
-    0.122 * @roomWidth
+    0.132 * @roomWidth
+
+  groundLevel: ->
+    0.095 * @roomWidth
 
   initialize: (options) ->
     { @$container, @$img, @artwork } = options
@@ -63,11 +67,20 @@ module.exports = class ViewInRoom extends Backbone.View
       css @getRect(@$img)
 
   scalePlaceholder: ->
-    @$placeholder.css
-      bottom: "#{@eyeLevel()}px"
-      marginBottom: -(@$placeholder.height() / 3)
+    [height, width] = @getArtworkDimensions()
+
+    options = if height > 100
+      bottom: "#{@groundLevel()}px"
       marginLeft: -(@$placeholder.width() / 2)
       transform: "scale(#{@artworkScalingFactor()})"
+      transformOriginY: @$placeholder.height()
+    else
+      bottom: "#{@eyeLevel()}px"
+      marginBottom: -(@$placeholder.height() / 2)
+      marginLeft: -(@$placeholder.width() / 2)
+      transform: "scale(#{@artworkScalingFactor()})"
+
+    @$placeholder.css options
 
   scaleRoom: ->
     @$room.css transform: "scale(#{@roomScalingFactor()})"
