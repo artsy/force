@@ -161,14 +161,12 @@ OAuth2Strategy.prototype.authenticate = function(req, options) {
         return this.fail({ message: 'Invalid authorization request state.' }, 403);
       }
     }
-    
-    // NOTE: The module oauth (0.9.5), which is a dependency, automatically adds
-    //       a 'type=web_server' parameter to the percent-encoded data sent in
-    //       the body of the access token request.  This appears to be an
-    //       artifact from an earlier draft of OAuth 2.0 (draft 22, as of the
-    //       time of this writing).  This parameter is not necessary, but its
-    //       presence does not appear to cause any issues.
-    this._oauth2.getOAuthAccessToken(code, { grant_type: 'authorization_code', redirect_uri: callbackURL },
+
+    var params = this.tokenParams(options);
+    params.grant_type = 'authorization_code';
+    params.redirect_uri = callbackURL;
+
+    this._oauth2.getOAuthAccessToken(code, params,
       function(err, accessToken, refreshToken, params) {
         if (err) { return self.error(self._createOAuthError('Failed to obtain access token', err)); }
         
@@ -204,12 +202,6 @@ OAuth2Strategy.prototype.authenticate = function(req, options) {
       }
     );
   } else {
-    // NOTE: The module oauth (0.9.5), which is a dependency, automatically adds
-    //       a 'type=web_server' parameter to the query portion of the URL.
-    //       This appears to be an artifact from an earlier draft of OAuth 2.0
-    //       (draft 22, as of the time of this writing).  This parameter is not
-    //       necessary, but its presence does not appear to cause any issues.
-    
     var params = this.authorizationParams(options);
     params.response_type = 'code';
     params.redirect_uri = callbackURL;
@@ -266,6 +258,22 @@ OAuth2Strategy.prototype.userProfile = function(accessToken, done) {
  * @api protected
  */
 OAuth2Strategy.prototype.authorizationParams = function(options) {
+  return {};
+};
+
+/**
+ * Return extra parameters to be included in the token request.
+ *
+ * Some OAuth 2.0 providers allow additional, non-standard parameters to be
+ * included when requesting an access token.  Since these parameters are not
+ * standardized by the OAuth 2.0 specification, OAuth 2.0-based authentication
+ * strategies can overrride this function in order to populate these parameters
+ * as required by the provider.
+ *
+ * @return {Object}
+ * @api protected
+ */
+OAuth2Strategy.prototype.tokenParams = function(options) {
   return {};
 };
 
