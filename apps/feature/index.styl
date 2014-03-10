@@ -77,6 +77,7 @@
   display inline-block
   margin 0 0 14px 0
   position relative
+  overflow hidden
   &:hover
     .feature-set-item-image
       opacity 0.5
@@ -84,7 +85,8 @@
 .feature-set-item-image
   opacity 1
   transition opacity, 0.3s
-  width 100%
+  width 101%
+  prevent-content-shift()
 
 .feature-set-item-artist-list
   border-bottom 1px solid dark-gray-border-color
@@ -121,7 +123,7 @@
 .feature-set-item-half
   margin 0 1.5%
   width 47%
-  .feature-set-item-caption 
+  .feature-set-item-caption
     > *
       margin-left auto
       margin-right auto
