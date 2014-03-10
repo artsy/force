@@ -120,7 +120,7 @@ artworks.fetchUntilEnd success: ->
 It respects data params like page (if you fetch page 1 on the server and `fetchUntil` end on the client for example)
 ````coffeescript
 # I already rendered page 1 from a `fetch`...
-artworks.fetchUntilEnd 
+artworks.fetchUntilEnd
   data:
     page: 2
     size: 20
