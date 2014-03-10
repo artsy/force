@@ -57,7 +57,7 @@ module.exports.CarouselView = class CarouselView extends Backbone.View
       css('marginLeft', "-#{@positions[@active]}px").
       one($.support.transition.end, =>
         @$track.attr 'data-state', 'transitioned'
-      ).emulateTransitionEnd 250
+      ).emulateTransitionEnd 333
 
   next: (e) ->
     e?.preventDefault()
