@@ -57,11 +57,14 @@ module.exports = class ViewInRoom extends Backbone.View
   transitionIn: ->
     @$el.attr 'data-state', 'in'
     @$img.css visibility: 'hidden'
-    @$artwork.addClass 'is-transition'
     @$artwork.
+      addClass('is-transition').
       css(@getRect(@$placeholder)).
       one($.support.transition.end, =>
         @$artwork.addClass('is-notransition')
+        if @artworkScalingFactor() > 1
+          @$artwork.attr 'src',
+            @artwork.defaultImage().imageUrlFor(@$artwork.width(), @$artwork.height())
       ).emulateTransitionEnd(750)
 
   transitionOut: ->
