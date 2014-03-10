@@ -1,5 +1,6 @@
-_         = require 'underscore'
-Backbone  = require 'backbone'
+_             = require 'underscore'
+Backbone      = require 'backbone'
+imagesLoaded  = require '../../../lib/vendor/imagesloaded.js'
 
 template = -> require('../templates/view-in-room.jade') arguments...
 
@@ -35,9 +36,10 @@ module.exports = class ViewInRoom extends Backbone.View
     @_render()
     @cacheSelectors()
     @injectImage()
-    @scaleRoom()
-    @scalePlaceholder()
-    @transitionIn()
+    @$room.imagesLoaded().always =>
+      @scaleRoom()
+      @scalePlaceholder()
+      @transitionIn()
 
   cacheSelectors: ->
     @$artwork       = @$('#vir-artwork')
