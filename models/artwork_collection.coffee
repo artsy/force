@@ -64,7 +64,7 @@ module.exports = class ArtworkCollection extends Backbone.Model
       error: (error) =>
         unless sd.NODE_ENV == 'test'
           @_unsave artwork, options
-        options?.error? error
+        options?.error?.apply this, arguments
     false
 
   _save: (artwork, options) ->
