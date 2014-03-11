@@ -9,11 +9,11 @@ module.exports = (SECURE_IMAGES_URL) ->
 
   deepZoomJson: ->
     if @canDeepZoom()
-      tilesUrl = @get('tile_base_url').
-        # Ensure that tilesUrl has a trailing slash
-        replace(/\/?$/, '/')
+      # Ensure that tilesUrl has a trailing slash
+      tilesUrl = @get('tile_base_url').replace /\/?$/, '/'
+      # Serve under SSL if we can
       if SECURE_IMAGES_URL
-        tilesUrl = tilesUrl.replace(new RegExp('http://static\\d.artsy.net'), SECURE_IMAGES_URL)
+        tilesUrl = tilesUrl.replace /http:\/\/([^\/]+)/, SECURE_IMAGES_URL
       {
         Image:
           xmlns: 'http://schemas.microsoft.com/deepzoom/2008'
