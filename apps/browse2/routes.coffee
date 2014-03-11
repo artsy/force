@@ -3,10 +3,9 @@ _ = require 'underscore'
 OrderedSets = require '../../collections/ordered_sets.coffee'
 
 @index = (req, res) ->
-  [featuredGenes, popularCategories, geneCategories] = requests = [
+  [featuredGenes, popularCategories] = requests = [
     new OrderedSets(key: 'browse:featured-genes'),
-    new OrderedSets(key: 'browse:popular-categories'),
-    new OrderedSets(key: 'browse:gene-categories')
+    new OrderedSets(key: 'browse:popular-categories')
   ]
   Q.allSettled(_.map(requests, (xs) -> xs.fetchAll(cache: true))).
     then ->
