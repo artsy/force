@@ -33,6 +33,8 @@ module.exports = class FollowButton extends Backbone.View
     @$el.attr 'data-state', state
 
   toggle: (e) ->
+    @trigger 'click'
+
     unless @following
       mediator.trigger 'open:auth', { mode: 'register', copy: "Sign up to follow #{@modelName}s" }
       return false
