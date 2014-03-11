@@ -118,6 +118,7 @@ module.exports = (app) ->
   app.use require "../apps/artwork"
   app.use require "../apps/auth"
   app.use require "../apps/browse"
+  app.use require "../apps/browse2"
   app.use require "../apps/feature"
   app.use require "../apps/galleries"
   app.use require "../apps/tag"

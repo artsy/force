@@ -1,0 +1,44 @@
+extends ../../../components/main_layout/templates/index
+
+block head
+  include meta
+
+append locals
+  - assetPackage = 'browse2'
+
+block body
+  #browse-page.main-layout-container
+
+    if featuredGenes && featuredGenes.at(0)
+      section#browse-page-featured-genes
+        - featuredGene = featuredGenes.at(0)
+        .browse-featured-gene-set
+          if featuredGene.get('items').models
+            for gene in featuredGene.get('items').models
+              a.browse-featured-gene( href=gene.get('href') )
+                img.bfg-image( src=gene.imageUrl('large_rectangle') )
+                .bfg-title= gene.get('title')
+    section#browse-page-see-all.icon-chevron-right
+      a.avant-garde-button-text( href='/browse/all' ) Browse All Categories
+
+    if popularCategories && popularCategories.at(0).get('items')
+      section#browse-page-categories
+        .browse-popular-categories
+          .bpc-column.bpc-dynamic
+            h1.large-garamond-header Browse by Popular Categories
+            for categorySet in popularCategories.at(0).get('items').models
+              .bpc-subcolumn
+                h3= categorySet.get('name')
+                for category in categorySet.get('items').models
+                  a.highlight-link( href=category.get('href') )
+                    = category.get('title')
+
+    h1#browse-filter-header.large-garamond-header Browse Works
+    #browse-filter
+      .filter-fixed-header-nav
+        .filter-fixed-header-left
+          em.filter-artworks-num
+          | &nbsp;Works
+        include ../../../components/filter/artworks_nav/template
+      #browse-artworks
+        include ../../../components/filter/artworks/template
