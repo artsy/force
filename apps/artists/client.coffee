@@ -100,6 +100,7 @@ module.exports.ArtistsView = class ArtistsView extends Backbone.View
         following: @following
         notes: message
         model: new Artist id: id
+        modelName: 'artist'
         el: $el
       id
 
