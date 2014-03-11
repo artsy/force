@@ -23,7 +23,7 @@ describe 'RelatedPostsView', ->
   beforeEach (done) ->
     sinon.stub Backbone, 'sync'
     artist  = new Artist fabricate 'artist'
-    @view   = new RelatedPostsView { el: $('<fixture></fixture>'), model: artist, numToShow: 2 }
+    @view   = new RelatedPostsView { el: $('<fixture></fixture>'), model: artist, numToShow: 2, modelName: 'Artist' }
     done()
 
   afterEach ->

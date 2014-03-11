@@ -205,6 +205,7 @@ new FollowButton
    el: $('.my-follow-button')
    following: following
    model: myModel
+   modelName: 'artwork'
 
 following.syncFollows myIds
 ```

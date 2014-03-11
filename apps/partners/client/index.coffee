@@ -19,6 +19,7 @@ module.exports.FeaturedPartnersView = class FeaturedPartnersView extends Backbon
         analyticsUnfollowMessage: 'Unfollowed partner profile from /partners'
         el: @$(".featured-partner-profile[data-profile-id='#{profile.get('id')}'] .follow-button")
         following: @following
+        modelName: 'Partner'
         model: profile
 
 module.exports.init = ->

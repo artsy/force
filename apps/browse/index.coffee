@@ -10,3 +10,4 @@ app.set 'views', __dirname
 app.set 'view engine', 'jade'
 
 app.get '/browse', routes.index
+app.get '/browse/*', routes.index

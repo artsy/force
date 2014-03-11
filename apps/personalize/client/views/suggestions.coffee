@@ -12,6 +12,9 @@ suggestedTemplate   = -> require('../../templates/suggested_profiles.jade') argu
 module.exports = class SuggestionsView extends StepView
   _.extend @prototype, Followable
 
+  followKind: 'default'
+  kind: 'default'
+
   events:
     'click .personalize-skip'             : 'advance'
     'click .personalize-suggestions-more' : 'loadNextPage'
@@ -60,6 +63,7 @@ module.exports = class SuggestionsView extends StepView
       notes:                    'Followed from /personalize'
       following:                @following
       model:                    model
+      modelName:                @kind
       el:                       el
 
   rows: (n) ->

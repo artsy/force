@@ -73,5 +73,6 @@ module.exports = class PartnerArtistsArtistView extends Backbone.View
       analyticsUnfollowMessage : 'Unfollowed artist from /:id/artists'
       following : following
       model     : @artist
+      modelName : 'artist'
       el        : $button
     following?.syncFollows [@artist.get('id')]

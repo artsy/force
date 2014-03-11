@@ -10,4 +10,5 @@ module.exports =
     textArray.join(" ") + (if text.length > limit then "..." else "")
 
   underscore: (text) ->
+    return unless text
     text.toLowerCase().replace(/[\s]+/g, '_')

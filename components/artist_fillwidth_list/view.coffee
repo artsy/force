@@ -46,6 +46,7 @@ module.exports = class ArtistFillwidthList extends Backbone.View
         el: $row.find('.avant-garde-button-white')
         following: @following
         model: artist
+        modelName: 'artist'
 
       # After rendering the row do some fillwidth things unique to this layout
       _.defer ->

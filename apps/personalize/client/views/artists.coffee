@@ -42,6 +42,7 @@ module.exports = class ArtistsView extends StepView
       analyticsUnfollowMessage: 'Unfollowed artist from personalize artist suggestions'
       analyticsFollowMessage:   'Followed artist from personalize artist suggestions'
       notes:                    'Followed from /personalize'
+      modelName:                'artist'
       followArtistCollection:   @following
       model:                    model
       el:                       el
