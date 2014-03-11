@@ -28,4 +28,3 @@ Genes = require '../../collections/genes.coffee'
           res.render 'categories',
             geneCategories: geneCategories
             aToZGroup: aToZGroup
-            partnerCount: genes.length
