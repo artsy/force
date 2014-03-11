@@ -45,6 +45,7 @@ module.exports = class RelatedArtists extends Backbone.View
         analyticsFollowMessage: message
         following: following
         model: new Artist id: id
+        modelName: 'artist'
         el: $el
       id
 

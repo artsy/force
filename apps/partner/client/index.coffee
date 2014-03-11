@@ -70,6 +70,7 @@ module.exports.PartnerView = class PartnerView extends Backbone.View
       analyticsUnfollowMessage: 'Unfollowed partner profile from /partner'
       el: @$(".partner-actions .follow-button")
       following: @following
+      modelName: 'partner'
       model: @model
 
   #

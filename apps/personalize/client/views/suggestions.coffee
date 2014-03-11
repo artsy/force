@@ -60,6 +60,7 @@ module.exports = class SuggestionsView extends StepView
       notes:                    'Followed from /personalize'
       following:                @following
       model:                    model
+      modelName:                @kind
       el:                       el
 
   rows: (n) ->

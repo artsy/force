@@ -21,6 +21,7 @@ module.exports.GeneView = class GeneView extends Backbone.View
     new FollowButton
       el: $('.follow-button')
       following: following
+      modelName: 'gene'
       model: @model
     following?.syncFollows [@model.get('id')]
     new ShareView

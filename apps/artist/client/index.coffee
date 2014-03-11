@@ -37,6 +37,7 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
       @followArtistCollection = new FollowArtistCollection
     new FollowButton
       followArtistCollection: @followArtistCollection
+      modelName: 'artist'
       model: @model
       el: @$('button#artist-follow-button')
 
@@ -93,6 +94,7 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
       el: @$('.artist-info-right .artist-related-posts')
       numToShow: 2
       model: @model
+      modelName: 'artist'
 
   setupRelatedArtists: ->
     @relatedArtistsPage = 1
