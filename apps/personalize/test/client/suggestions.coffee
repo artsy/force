@@ -31,7 +31,7 @@ describe 'SuggestionsView', ->
   beforeEach ->
     @state  = new PersonalizeState
     @user   = new CurrentUser fabricate 'user'
-    @view   = new TestView(state: @state, user: @user)
+    @view   = new TestView(state: @state, user: @user, followKind: 'artist')
 
     # Setup suggestions
     @view.$suggestions = $('<div id="personalize-suggestions"></div>')
