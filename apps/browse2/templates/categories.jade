@@ -23,9 +23,9 @@ block body
               a.browse-gene-category( href=gene.get('href') )
                 img.bgc-image( src=gene.imageUrl('medium_rectangle') )
                 .bgc-title= gene.get('title')
-            a.avant-garde-jump-link( href='/browse/category/' + _.slugify(categorySet.get('name')) )
-              | All #{categorySet.get('name')}
-              i.icon-chevron-small-right
+            //- a.avant-garde-jump-link( href='/browse/category/' + _.slugify(categorySet.get('name')) )
+            //-   | All #{categorySet.get('name')}
+            //-   i.icon-chevron-small-right
 
     //- Gene A-Z List
     h1#browse-az-header.avant-garde-header-center.browse-header-large All Categories A-Z
