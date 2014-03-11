@@ -44,6 +44,11 @@ module.exports = class ArtworkRouter extends Backbone.Router
     @_teardown()
     analytics.track.click "Entered 'View In Room'"
     @baseView.route 'view-in-room'
+
+    # Ensure we only view the default image in the room
+    if @artwork.activeImage().id isnt @artwork.defaultImage().id
+      $('.artwork-additional-image').first().click()
+
     @view = new ViewInRoomView $container: $('#artwork-view-in-room-container'), $img: $('#the-artwork-image'), artwork: @artwork
     @view.render()
 
