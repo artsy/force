@@ -13,6 +13,7 @@ module.exports = class ArtworkRouter extends Backbone.Router
     'artwork/:id'                 : 'show'
     'artwork/:id/ask_specialist'  : 'inquire'
     'artwork/:id/contact-gallery' : 'contactPartner'
+    'artwork/:id/contact_gallery' : 'contactPartner'
     'artwork/:id/inquire'         : 'inquire'
     'artwork/:id/more-info'       : 'moreInfo'
     'artwork/:id/view-in-room'    : 'viewInRoom'
