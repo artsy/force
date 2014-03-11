@@ -9,9 +9,9 @@ module.exports = class FollowButton extends Backbone.View
     'touchstart': () -> @$el.removeClass "no-touch"
 
   initialize: (options) ->
-    return unless options.following
-
     { @following, @notes, @modelName } = options
+
+    return unless @following
 
     throw new Error('Requires @modelName') unless @modelName
 
