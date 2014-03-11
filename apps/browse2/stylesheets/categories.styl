@@ -1,0 +1,59 @@
+@import '../../../components/stylus_lib'
+
+.bfg-title
+  position absolute
+  right 20px
+  bottom 15px
+  left 20px
+  avant-garde()
+  color #fff
+  font-size 13px
+  text-align left
+  text-shadow 0 0 5px rgba(0,0,0,.125)
+
+.bfg-image
+  transition opacity 0.3s
+  vertical-align bottom
+  width 100%
+  prevent-content-shift()
+
+.browse-gene-category-set
+  margin-top 40px
+  clearfix()
+  .avant-garde-jump-link
+    font-size default-avant-garde-font-size
+    text-align right
+    margin 5px 0 20px 0
+    display block
+
+.browse-gene-category
+  position relative
+  display inline-block
+  width calc('20% - 10px')
+  margin 0 5px 10px 5px
+  background-color #000
+  &:hover
+    > .bgc-image
+      opacity 0.5
+
+.bgc-image
+  @extends .bfg-image
+
+.bgc-title
+  @extends .bfg-title
+
+#browse-header h2
+  margin 20px 0 70px 0
+
+.browse-header-large
+  padding-top 80px
+  font-size large-avant-garde-font-size
+
+#browse-az-header
+  margin-bottom 40px
+
+.a-to-z-row:first-child
+  border-top: 1px solid #CCC
+
+.all-genes-list
+  margin-bottom 100px
