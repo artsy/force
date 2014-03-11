@@ -9,4 +9,4 @@ module.exports = class AdditionalImage extends Backbone.Model
 
   _.extend @prototype, Image(SECURE_IMAGES_URL)
   _.extend @prototype, ImageSizes
-  _.extend @prototype, DeepZoom
+  _.extend @prototype, DeepZoom(SECURE_IMAGES_URL)

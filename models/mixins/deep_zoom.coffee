@@ -1,4 +1,4 @@
-module.exports =
+module.exports = (SECURE_IMAGES_URL) ->
   canDeepZoom: ->
     @get('tile_base_url')? and
     @get('tile_size')? and
@@ -9,8 +9,11 @@ module.exports =
 
   deepZoomJson: ->
     if @canDeepZoom()
-      # Ensure that tilesUrl has a trailing slash
-      tilesUrl = @get('tile_base_url').replace(/\/?$/, '/')
+      tilesUrl = @get('tile_base_url').
+        # Ensure that tilesUrl has a trailing slash
+        replace(/\/?$/, '/')
+      if SECURE_IMAGES_URL
+        tilesUrl = tilesUrl.replace(new RegExp('http://static\\d.artsy.net'), SECURE_IMAGES_URL)
       {
         Image:
           xmlns: 'http://schemas.microsoft.com/deepzoom/2008'
