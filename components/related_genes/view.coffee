@@ -11,7 +11,7 @@ module.exports = class RelatedGenesView extends Backbone.View
     { @model, @modelName } = options
     # Artist's related genes uses the related search API
     if @modelName is 'artist'
-      @title = 'Related Genes'
+      @title = 'Related Categories'
       @fetchThenRenderRelatedGenes()
     # Gene's related genes are _actually_ suggested genes from filter search
     else if @modelName is 'gene'

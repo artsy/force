@@ -101,4 +101,4 @@ describe 'RelatedGenesView', ->
         @view.$el.html().should.include "<a data-id=\"catitudeness\" href=\"/gene/catitudeness\">Catitudeness</a>"
         @view.$el.html().should.include "<a data-id=\"bittyness\" href=\"/gene/bittyness\">Bittyness</a>"
         @view.$el.find('a').length.should.equal 2
-        @view.$el.html().should.include 'Related Genes'
+        @view.$el.html().should.include 'Related Categories'
