@@ -3,6 +3,7 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 sd = require('sharify').data
 mediator = require '../../../lib/mediator'
+{ readCookie } = require '../../../components/util/cookie'
 
 describe 'AuthModalView', ->
 
@@ -74,3 +75,10 @@ describe 'AuthModalView', ->
       Backbone.sync.args[0][1].url.should.include 'users/invitation/accept'
       Backbone.sync.args[0][2].success {}
       location.href.should.include '/awesome-fair'
+
+    it 'sets a cookie named destination with whatever the passed in destination is', ->
+      @view.destination = '/artist/some-guy/follow'
+      @view.state.set mode: 'register'
+      @view.submit { preventDefault: -> }
+      Backbone.sync.args[0][2].success {}
+      readCookie('destination').should.equal @view.destination
