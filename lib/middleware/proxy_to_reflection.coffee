@@ -1,5 +1,5 @@
 #
-# When Google requests __escaped_fragement__ proxy to Reflection
+# When Google requests _escaped_fragement_ proxy to Reflection
 # https://github.com/artsy/reflection
 #
 
