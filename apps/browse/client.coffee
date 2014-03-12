@@ -11,6 +11,7 @@ module.exports.index = ->
     urlRoot: "browse"
   Backbone.history.start pushState: true
   iframePopover $('#browse-filter')
+  params.trigger 'reset'
 
 module.exports.categories = ->
   $('#browse-header .avant-garde-button-text').click ->
