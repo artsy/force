@@ -10,7 +10,7 @@ describe 'AboutRouter', ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
-      { @init } = mod = rewire '../client.coffee'
+      { @index } = mod = rewire '../client.coffee'
       stubChildClasses mod, @,
         ['FilterArtworksView']
         []
