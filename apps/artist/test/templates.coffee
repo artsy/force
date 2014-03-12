@@ -60,7 +60,7 @@ describe 'Artist header', ->
     it 'displays a link to the auction results', ->
       @artist.get('published_artworks_count').should.be.above 0
       @artist.get('auction_lots_count').should.be.above 0
-      @template.should.include 'artist-auction-results-link'
+      @template.should.include "/artist/#{@artist.id}/auction-results"
 
   describe 'artist with no auction results', ->
     beforeEach ->
