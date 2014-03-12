@@ -1,4 +1,5 @@
 _ = require 'underscore'
+_.mixin require 'underscore.string'
 Backbone = require 'backbone'
 Artworks = require '../../../collections/artworks.coffee'
 FilterSortCount = require '../sort_count/view.coffee'
@@ -65,7 +66,7 @@ module.exports = class FilterArtworksView extends Backbone.View
     @columnsView.appendArtworks(new Artworks(res).models)
 
   renderCounts: =>
-    @$('.filter-artworks-num').html @counts.get('total')
+    @$('.filter-artworks-num').html _.toNumber @counts.get('total')
 
   nextPage: =>
     return if @$('.filter-artworks').is(':hidden') or
