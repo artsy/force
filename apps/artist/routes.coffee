@@ -8,9 +8,12 @@ Following   = require '../../components/follow_button/collection'
   new Artist(id: req.params.id).fetch
     cache  : true
     success: (artist) ->
-      res.locals.sd.ARTIST = artist.toJSON()
-      res.locals.sd.sortBy = sort
-      res.render 'index', artist: artist, sortBy: sort
+      if artist.href() == req.originalUrl
+        res.locals.sd.ARTIST = artist.toJSON()
+        res.locals.sd.sortBy = sort
+        res.render 'index', artist: artist, sortBy: sort
+      else
+        res.redirect artist.href()
     error: res.backboneError
 
 @follow = (req, res) ->

@@ -9,7 +9,7 @@ describe 'User profile routes', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    @req = { params: { id: 'user' } }
+    @req = { params: { id: 'user' }, originalUrl: "/alessandra" }
     @res = { render: sinon.stub(), redirect: sinon.stub(), locals: { sd: { ARTSY_URL: 'http://localhost:5000'} } }
 
   afterEach ->
@@ -23,6 +23,12 @@ describe 'User profile routes', ->
       @res.render.args[0][0].should.equal 'templates'
       @res.render.args[0][1].profile.get('id').should.equal 'alessandra'
 
+    it 'redirects to the correct profile url', ->
+      @req.originalUrl = '/wrong-profile'
+      routes.index @req, @res
+      _.last(Backbone.sync.args)[2].success fabricate 'profile'
+      @res.redirect.args[0][0].should.equal '/alessandra'
+
   describe '#contact', ->
 
     it 'redirects to profile when requesting a partner profile tab', ->
@@ -34,7 +40,7 @@ describe 'Partner routes', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    @req = { params: { id: 'some-gallery' } }
+    @req = { params: { id: 'getty' }, originalUrl: "/getty"  }
     @res = { render: sinon.stub(), redirect: sinon.stub(), locals: { sd: { ARTSY_URL: 'http://localhost:5000'} } }
 
   afterEach ->
@@ -77,23 +83,23 @@ describe 'Partner routes', ->
 
     it 'redirects to profile page without user', ->
       routes.follow @req, @res
-      @res.redirect.args[0][0].should.equal '/some-gallery'
+      @res.redirect.args[0][0].should.equal '/getty'
 
     it 'follows a profile and redirects to the profile', ->
       @res.redirect = sinon.stub()
       @req.user = new CurrentUser fabricate 'user'
       routes.follow @req, @res
       Backbone.sync.args[0][1].url().should.include '/api/v1/me/follow/profile'
-      Backbone.sync.args[0][1].get('profile_id').should.equal 'some-gallery'
+      Backbone.sync.args[0][1].get('profile_id').should.equal 'getty'
       Backbone.sync.args[0][2].success()
-      @res.redirect.args[0][0].should.equal '/some-gallery'
+      @res.redirect.args[0][0].should.equal '/getty'
 
 
 describe 'Fair routes', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    @req = { params: { id: 'some-fair' } }
+    @req = { params: { id: 'the-armory-show' }, originalUrl: '/the-armory-show' }
     @res = { render: sinon.stub(), redirect: sinon.stub(), locals: { sd: { ARTSY_URL: 'http://localhost:5000'} } }
 
   afterEach ->

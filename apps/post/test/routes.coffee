@@ -10,7 +10,7 @@ describe 'Post routes', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    @req = { params: { id: 'foo' } }
+    @req = { params: { id: 'foo' }, originalUrl: '/post/post-id' }
     @res = { render: sinon.stub(), redirect: sinon.stub(), locals: { sd: { ARTSY_URL: 'http://localhost:5000'} } }
 
   afterEach ->
@@ -30,3 +30,10 @@ describe 'Post routes', ->
       _.last(Backbone.sync.args)[2].success fabricate('profile')
       @res.render.args[0][0].should.equal 'templates/index'
       @res.render.args[0][1].post.get('id').should.equal 'post-id'
+
+    it 'redirects to the correct post url', ->
+      @req.originalUrl = '/post/fail-post'
+      routes.index @req, @res
+      _.last(Backbone.sync.args)[2].success fabricate('post', id: 'post-id')
+      _.last(Backbone.sync.args)[2].success fabricate('profile')
+      @res.redirect.args[0][0].should.equal '/post/post-id'
