@@ -1,7 +1,7 @@
 extends ../../../components/main_layout/templates/index
 
 block head
-  include artwork-meta
+  include ./meta/artwork
 
 append locals
   - assetPackage = 'auction_lots'
@@ -15,7 +15,7 @@ block body
     header.auction-lots-header
       h1.avant-garde-header-center
         | Auction Results for
-        a( href="/artist/#{artwork.get('artist').id}")  #{artwork.get('artist').name},&nbsp;
+        a( href="/artist/#{artist.id}")  #{artist.get('name')},&nbsp;
         a( href="/artwork/#{artwork.id}" ) #{artwork.get('title')}
         if artwork.get('date')
           | &nbsp;(#{artwork.get('date')})
@@ -51,7 +51,7 @@ block body
               .auction-lot-title
                 a( href="/artwork/#{artwork.id}" )
                   em= artwork.get('title')
-                a.auction-lot-details-link(
+                a.auction-lot-goto-link(
                   href="/artwork/#{artwork.id}"
                 ) Go to work
           td= artwork.get('date')

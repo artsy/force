@@ -1,5 +1,5 @@
 #
-# Auction results for artists
+# Auction results
 #
 
 express   = require 'express'
@@ -10,4 +10,5 @@ app.set 'views', __dirname + '/templates'
 app.set 'view engine', 'jade'
 
 app.get '/artist/:id/auction-results', routes.artist
+app.get '/artist/:artist_id/auction-result/:id', routes.detail
 app.get '/artwork/:id/auction-results', routes.artwork

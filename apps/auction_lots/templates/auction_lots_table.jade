@@ -9,35 +9,36 @@ thead
     th Estimate
     th Sale Price
 tbody
-  - for lot in auctionLots.models
-    tr.auction-lot( id="auction-lot-#{lot.id}" )
+  for lot in auctionLots.models
+    tr.auction-lot( id= "auction-lot-#{lot.id}" )
       td
         .auction-lot-title-container
-          - if (lot.get('image_url') != '/assets/shared/missing_image.png')
-            a.auction-lot-image-zoom(
-              href=lot.imageUrl('original')
+          if lot.hasImage()
+            a.auction-lot-details-imagelink(
+              href= "/artist/#{artist.id}/auction-result/#{lot.id}"
+              data-client
             )
-              img.auction-lot-image( src!= lot.imageUrl('thumbnail'), alt= lot.get('title') )
-          - else
+              img.auction-lot-image( src= lot.imageUrl('thumbnail'), alt= lot.get('title') )
+          else
             .auction-lot-image-placeholder
           .auction-lot-title
             em= lot.get('title')
-            - if (lot.get('external_url'))
-              a.auction-lot-details-link(
-                href=lot.get('external_url'), target='_blank'
-              ) See details
+            a.auction-lot-details-link(
+              href= "/artist/#{artist.id}/auction-result/#{lot.id}"
+              data-client
+            ) See details
       td= lot.get('dates_text')
       td.auction-lot-medium= lot.get('medium_text')
       td
-        != lot.dimensions({ format: 'superscript' })
+        != lot.dimensions({ metric: 'in', format: 'superscript' })
         br
-        != lot.dimensions({ format: 'decimal' })
+        != lot.dimensions({ metric: 'cm', format: 'decimal' })
       td.auction-lot-organization= lot.get('organization')
       td= lot.get('auction_dates_text')
-      td!= lot.get('estimate_text')
+      td!= lot.formattedEstimateText()
       td
-        - if (user)
+        if (user)
           = lot.get('price_realized_text')
-        - else
-          a.auction-lot-sale-signup
+        else
+          a.auction-lot-sale-signup( href='/sign_up' )
             | Sign up to see sale price

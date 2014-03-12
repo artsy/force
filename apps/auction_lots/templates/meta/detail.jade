@@ -1,0 +1,17 @@
+title= lot.toPageTitle(artist)
+meta( property='og:title', content=lot.toPageTitle(artist) )
+meta( name='description', content=lot.toPageDescription() )
+meta( property='og:description', content=lot.toPageDescription() )
+link( rel='canonical', href=(sd.ARTSY_URL + '/artist/' + artist.id + '/auction-result/' + lot.id) )
+meta( property='og:url', content=(sd.ARTSY_URL + '/artwork/' + lot.id + '/auction-result/' + lot.id) )
+if lot.hasImage()
+  meta( property='twitter:card', content='summary_large_image' )
+  meta( property='og:image', content=lot.imageUrl('original') )
+else
+  meta( property='twitter:card', content='summary' )
+if artist
+  meta( property=(sd.FACEBOOK_APP_NAMESPACE + ':artist'), content=artist.get('name') )
+if lot.get('dimensions')
+  meta( property=(sd.FACEBOOK_APP_NAMESPACE + ':dimensions'), content=lot.dimensions({ metric: 'in' }) )
+if lot.get('dates_text')
+  meta( property=(sd.FACEBOOK_APP_NAMESPACE + ':date'), content=lot.get('dates_text') )
