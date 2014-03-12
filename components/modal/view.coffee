@@ -15,9 +15,12 @@ module.exports = class ModalView extends Backbone.View
   templateData: {}
 
   events: ->
-    'click .modal-backdrop': 'close'
-    'click .modal-close': 'close'
-    'click .modal-dialog': '_intercept'
+    'click.handler .modal-backdrop' : 'close'
+    'click.handler .modal-close'    : 'close'
+
+    'click.internal .modal-dialog'   : '__intercept__'
+    'click.internal .modal-close'    : '__announceCloseButtonClick__'
+    'click.internal .modal-backdrop' : '__announceBackdropClick__'
 
   initialize: (options = {}) ->
     { @width } = _.defaults options, width: '400px'
@@ -35,8 +38,14 @@ module.exports = class ModalView extends Backbone.View
 
     @open()
 
-  _intercept: (e) ->
+  __intercept__: (e) ->
     e.stopPropagation()
+
+  __announceCloseButtonClick__: ->
+    @trigger 'click:close'
+
+  __announceBackdropClick__: ->
+    @trigger 'click:backdrop'
 
   escape: (e) ->
     return unless e.which is 27

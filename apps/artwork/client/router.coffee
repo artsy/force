@@ -54,11 +54,13 @@ module.exports = class ArtworkRouter extends Backbone.Router
 
   contactPartner: ->
     @_teardown()
+    analytics.track.click "Clicked 'Contact Gallery'"
     new ContactPartnerView artwork: @artwork, partner: @artwork.get('partner')
     mediator.on 'modal:closed', => Backbone.history.navigate(@artwork.href(), trigger: true, replace: true)
 
   inquire: ->
     @_teardown()
+    analytics.track.click "Clicked 'Contact Artsy Specialist'"
     new InquiryView artwork: @artwork
     mediator.on 'modal:closed', => Backbone.history.navigate(@artwork.href(), trigger: true, replace: true)
 

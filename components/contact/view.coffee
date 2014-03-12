@@ -27,8 +27,9 @@ module.exports = class ContactView extends ModalView
     url: "#{sd.ARTSY_URL}/api/v1/feedback"
 
   events: -> _.extend super,
-    'submit form'           : 'submit'
-    'click #contact-submit' : 'submit'
+    'submit form'                : 'submit'
+    'click #contact-submit'      : 'submit'
+    'mouseenter #contact-submit' : 'logHover'
 
   initialize: (options = {}) ->
     @options = _.defaults options, @defaults()
@@ -39,7 +40,15 @@ module.exports = class ContactView extends ModalView
     @model      = new Backbone.Model
     @model.url  = @options.url
 
+    @on 'click:close', ->
+      analytics.track.click "Closed the inquiry form via the '×' button"
+    @on 'click:backdrop', ->
+      analytics.track.click "Closed the inquiry form by clicking the modal window backdrop"
+
     super @options
+
+  logHover: ->
+    analytics.track.hover "Hovered over contact form 'Send' button"
 
   postRender: ->
     @renderTemplates()
