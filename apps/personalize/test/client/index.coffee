@@ -6,6 +6,8 @@ rewire          = require 'rewire'
 { resolve }     = require 'path'
 { fabricate }   = require 'antigravity'
 
+{ readCookie, createCookie } = require '../../../../components/util/cookie.coffee'
+
 describe 'PersonalizeRouter', ->
   beforeEach (done) ->
     benv.setup =>
@@ -39,6 +41,15 @@ describe 'PersonalizeRouter', ->
       @router.navigate.args[0][0].should.equal "/personalize/#{@router.state.get('current_step')}"
       @router.navigate.args[0][1].trigger.should.be.ok
 
+  describe '#redirectLocation', ->
+    it 'returns the root path if there is no destination cookie set', ->
+      @router.redirectLocation().should.equal '/'
+
+    it 'returns the value of the destination cookie if it is present, and clears it', ->
+      createCookie 'destination', (destination = '/foo/bar'), 1
+      @router.redirectLocation().should.equal destination
+      readCookie('destination').should.equal ''
+
   describe '#done', ->
     it 'sets the $el state to loading, saves the user, redirects', ->
       @router.user      = { save: sinon.stub().yieldsTo('complete') }
@@ -50,4 +61,4 @@ describe 'PersonalizeRouter', ->
 
       @router.user.save.called.should.be.ok
 
-      window.location.should.equal @router.redirectLocation
+      window.location.should.equal @router.redirectLocation()

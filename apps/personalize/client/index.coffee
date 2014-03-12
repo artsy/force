@@ -5,6 +5,8 @@ CurrentUser       = require '../../../models/current_user.coffee'
 Transition        = require '../../../components/mixins/transition.coffee'
 track             = require('../../../lib/analytics.coffee').track
 
+{ readCookie, deleteCookie } = require '../../../components/util/cookie.coffee'
+
 views =
   CollectView:      require './views/collect.coffee'
   LocationView:     require './views/location.coffee'
@@ -16,8 +18,6 @@ views =
 _.mixin(require 'underscore.string')
 
 module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Router
-  redirectLocation: '/'
-
   routes:
     'personalize/:step': 'step'
 
@@ -44,13 +44,21 @@ module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Rout
   next: ->
     @navigate "/personalize/#{@state.get('current_step')}", trigger: true
 
+  # Check the cookie for a possible post-sign up destination;
+  # ensure the cookie is cleared; return a location to redirect to
+  #
+  # @return {String} destination or root path
+  redirectLocation: ->
+    destination = readCookie 'destination'
+    deleteCookie 'destination' if destination
+    destination or '/'
+
   done: ->
     track.funnel 'Finished personalize', { label: "User:#{@user.id}" }
 
     @$el.attr 'data-state', 'loading'
-    @user.save null,
-      complete: =>
-        window.location = @redirectLocation
+    @user.save null, complete: =>
+      window.location = @redirectLocation()
 
 module.exports.init = ->
   $ ->
