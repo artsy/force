@@ -28,7 +28,10 @@ module.exports = class SaveControls extends Backbone.View
 
   save: (e) ->
     unless @artworkCollection
-      mediator.trigger 'open:auth', { mode: 'register', copy: 'Sign up to save artworks' }
+      mediator.trigger 'open:auth',
+        mode: 'register'
+        copy: 'Sign up to save artworks'
+        destination: "#{@model.href()}/save"
       return false
 
     if @model.isSaved @artworkCollection
