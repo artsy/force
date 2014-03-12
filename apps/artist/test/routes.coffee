@@ -46,10 +46,11 @@ describe 'Artist routes', ->
       routes.follow @req, @res
       @res.redirect.args[0][0].should.equal '/artist/foo'
 
-    it 'follows an artist and renders the artist template', ->
+    it 'follows an artist and redirects to the artist page', ->
+      @res.redirect = sinon.stub()
       @req.user = new CurrentUser fabricate 'user'
       routes.follow @req, @res
-      _.last(Backbone.sync.args)[2].success fabricate 'artist', id: 'andy-foobar'
-      Backbone.sync.args[1][1].url.should.include "/api/v1/me/follow/artist?artist_id=foo"
-      _.last(Backbone.sync.args)[2].success()
-      @res.locals.sd.ARTIST.id.should.equal 'andy-foobar'
+      Backbone.sync.args[0][1].url().should.include '/api/v1/me/follow/artist'
+      Backbone.sync.args[0][1].get('artist_id').should.equal 'foo'
+      Backbone.sync.args[0][2].success()
+      @res.redirect.args[0][0].should.equal '/artist/foo'

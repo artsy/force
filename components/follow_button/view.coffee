@@ -36,7 +36,11 @@ module.exports = class FollowButton extends Backbone.View
     @trigger 'click'
 
     unless @following
-      mediator.trigger 'open:auth', { mode: 'register', copy: "Sign up to follow #{@modelName}s" }
+      mediator.trigger 'open:auth',
+        mode: 'register'
+        copy: "Sign up to follow #{@modelName}s"
+        destination: "#{@model.href()}/follow"
+
       return false
 
     if @following.isFollowing @model.id

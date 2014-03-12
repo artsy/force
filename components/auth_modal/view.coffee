@@ -1,10 +1,11 @@
-_                  = require 'underscore'
-Backbone           = require 'backbone'
-ModalView          = require '../modal/view.coffee'
-Form               = require '../mixins/form.coffee'
-mediator           = require '../../lib/mediator.coffee'
-{ parse }          = require 'url'
-{ ARTSY_URL }      = require('sharify').data
+_                 = require 'underscore'
+Backbone          = require 'backbone'
+ModalView         = require '../modal/view.coffee'
+Form              = require '../mixins/form.coffee'
+mediator          = require '../../lib/mediator.coffee'
+{ parse }         = require 'url'
+{ ARTSY_URL }     = require('sharify').data
+{ createCookie }  = require '../util/cookie.coffee'
 
 templates =
   signup:   -> require('./templates/signup.jade') arguments...
@@ -48,6 +49,7 @@ module.exports = class AuthModalView extends ModalView
     'click #auth-submit': 'submit'
 
   initialize: (options) ->
+    { @destination } = options
     @redirectTo = options.redirectTo if options.redirectTo
     @preInitialize options
     super
@@ -79,6 +81,7 @@ module.exports = class AuthModalView extends ModalView
           if res.error?
             @showError _.capitalize res.error
           else
+            createCookie 'destination', @destination, 1 if @destination
             href = '/force/log_in_to_artsy'
             href += "?redirect-to=#{@redirectTo}" if @state.get('mode') is 'register'
             location.href = href

@@ -33,3 +33,4 @@ app.get '/:id/collection', routes.collection
 app.get '/:id/shows', routes.shows
 app.get '/:id/artists', routes.artists
 app.get '/:id/artist/:artistId', routes.artists
+app.get '/:id/follow', routes.follow
