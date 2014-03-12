@@ -14,8 +14,8 @@ module.exports = class Carousel extends Backbone.View
     'click .carousel-arrow-left'                  : 'leftArrowClick'
     'click .carousel-post-decoys .carousel-figure': 'rightArrowClick'
     'click .carousel-arrow-right'                 : 'rightArrowClick'
-    'touchstart .carousel-figures-clip'            : 'swipeStart'
-    'touchend .carousel-figures-clip'              : 'swipeEnd'
+    'touchstart .carousel-figures-clip'           : 'swipeStart'
+    'touchend .carousel-figures-clip'             : 'swipeEnd'
 
   active: 0
   centerIndex: 0
@@ -41,69 +41,6 @@ module.exports = class Carousel extends Backbone.View
     @noTransitions = $('html').hasClass('no-csstransitions')
     @height = options.height
     @render()
-
-  swipeStart: (e) ->
-    e.preventDefault()
-
-    props = {}
-    _.each ['-webkit-', '-moz-', '-o-', '-ms-', ''], (value) =>
-      props[value + "transition-duration"] = '0s'
-    @$track.css props
-
-    trackOriginX = @$track.offset().left
-    pointerOriginX = e.originalEvent.touches[0]?.pageX or e.pageX
-    $('.carousel-figures-clip').on("touchmove", _.throttle((e) =>
-      @isDragging = true
-      pointerX = e.originalEvent.touches[0]?.pageX or e.pageX
-      left = trackOriginX + pointerX - pointerOriginX
-      @$track.css left: left + 'px'
-
-      # Prevent touchmove from bubbling up and triggering vertical
-      # scrolling of the entire page.
-      e.stopPropagation()
-    , 10) )
-
-  swipeEnd: (e) ->
-    wasDragging = @isDragging
-    @isDragging = false
-    $('.carousel-figures-clip').unbind("touchmove")
-    return unless wasDragging # was clicking
-    
-    left = @$track.offset().left
-
-    if (overflow = @stopPositions[0] - left) < 0
-      left = @firstDecoyPosition - overflow
-      @shiftCarousel(left, false)
-
-    else if (overflow = _.last(@stopPositions) - left) > 0
-      left = @lastDecoyPosition - overflow
-      @shiftCarousel(left, false)
-
-    _.defer =>
-      { closest, index } = @searchClosest(@stopPositions, left)
-      @setActive index
-      @shiftCarousel()
-
-  # This assumes the array is desc sorted
-  # e.g. [-1, -2, -4, -5]
-  searchClosest: (array, target, leftIndex = 0, rightIndex = array.length - 1) ->
-    if leftIndex >= rightIndex # Check adjacent values to get the closest
-      index = beginIndex = Math.max(leftIndex - 1, 0)
-      candidates = array.slice(beginIndex, rightIndex + 2)
-      min = Math.abs(target - candidates[0])
-      for v, i in candidates
-        if (temp = Math.abs(target - v)) < min
-          min = temp; index = beginIndex + i
-
-      return { closest: array[index], index: index }
-
-    midIndex = Math.floor((leftIndex + rightIndex) / 2)
-    if target > array[midIndex]
-      return @searchClosest(array, target, leftIndex, midIndex - 1)
-    else if target < array[midIndex]
-      return @searchClosest(array, target, midIndex + 1, rightIndex)
-    else
-      return { closest: array[midIndex], index: midIndex }
 
   render: ->
     figures = @collection.models
@@ -277,3 +214,72 @@ module.exports = class Carousel extends Backbone.View
 
   leftArrowClick: (event) -> @shiftLeft(); return false
   rightArrowClick: (event) -> @shiftRight(); return false
+
+  swipeStart: (e) ->
+    e.preventDefault()
+
+    # Remove transition delay while swiping
+    props = {}
+    _.each ['-webkit-', '-moz-', '-o-', '-ms-', ''], (value) =>
+      props[value + "transition-duration"] = '0s'
+    @$track.css props
+
+    # Follow me while moving!
+    @isSwiping = @isDoneSwiping = false
+    trackOriginX = @$track.offset().left
+    pointerOriginX = e.originalEvent.touches[0]?.pageX or e.pageX
+    $('.carousel-figures-clip').on( "touchmove", _.throttle((e) =>
+      # Prevent throttled event handler from triggering after `touchend`
+      return if @isDoneSwiping
+
+      @isSwiping = true
+      pointerX = e.originalEvent.touches[0]?.pageX or e.pageX
+      left = trackOriginX + pointerX - pointerOriginX
+      @$track.css left: left + 'px'
+
+      # Prevent touchmove event from bubbling up and triggering
+      # vertical scrolling of the entire page.
+      e.stopPropagation()
+    , 30) )
+
+  swipeEnd: (e) ->
+    wasSwiping = @isSwiping; @isSwiping = false; @isDoneSwiping = true
+    $('.carousel-figures-clip').unbind("touchmove")
+    return unless wasSwiping # was tapping
+    
+    left = @$track.offset().left
+
+    # If swiping to the left of the first item...
+    if (overflow = @stopPositions[0] - left) < 0 # can use a more accurate breakpoint
+      left = @firstDecoyPosition - overflow
+      @shiftCarousel(left, false)
+
+    # If swiping to the right of the last item...
+    else if (overflow = _.last(@stopPositions) - left) > 0 # can use a more accurate breakpoint
+      left = @lastDecoyPosition - overflow
+      @shiftCarousel(left, false)
+
+    # Scroll to the closest stop position
+    _.defer =>
+      @setActive @searchClosest(@stopPositions, left)
+      @shiftCarousel()
+
+  # Search for the closest stop position to a given target.
+  # This assumes the array is desc sorted, e.g. [-1, -2, -4, -5]
+  searchClosest: (array, target, leftIndex = 0, rightIndex = array.length - 1) ->
+    if leftIndex >= rightIndex # Check adjacent items to get the closest
+      if leftIndex > 0 and target > array[leftIndex] and
+         array[leftIndex - 1] - target < target - array[leftIndex]
+        return leftIndex - 1
+      if rightIndex < array.length - 1 and target < array[leftIndex] and
+         target - array[leftIndex + 1] < array[leftIndex] - target
+        return leftIndex + 1
+      return leftIndex
+
+    midIndex = Math.floor((leftIndex + rightIndex) / 2)
+    if target > array[midIndex]
+      return @searchClosest(array, target, leftIndex, midIndex - 1)
+    else if target < array[midIndex]
+      return @searchClosest(array, target, midIndex + 1, rightIndex)
+    else
+      return midIndex
