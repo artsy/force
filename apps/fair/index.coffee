@@ -19,3 +19,6 @@ app.get '/:id/browse/*', routes.browse
 
 app.get '/:id/following/:type', routes.follows
 app.get '/:id/favorites', routes.favorites
+
+# Handle microgravity urls that get crawled by google
+app.get '/:id/programming', routes.overview
