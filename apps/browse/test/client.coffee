@@ -11,8 +11,9 @@ describe 'AboutRouter', ->
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       { @index } = mod = rewire '../client.coffee'
+      sinon.stub Backbone.history, 'start'
       stubChildClasses mod, @,
-        ['FilterArtworksView']
+        ['FilterArtworksView', 'iframePopover']
         []
       @FilterArtworksView::params = new Backbone.Model
       done()

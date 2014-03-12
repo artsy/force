@@ -1,3 +1,5 @@
+Backbone = require 'backbone'
+iframePopover = require '../../components/iframe_popover/index.coffee'
 FilterArtworksView = require '../../components/filter/artworks/view.coffee'
 { ARTSY_URL } = require('sharify').data
 
@@ -6,7 +8,9 @@ module.exports.index = ->
     el: $ '#browse-filter'
     artworksUrl: "#{ARTSY_URL}/api/v1/search/filtered/main"
     countsUrl: "#{ARTSY_URL}/api/v1/search/filtered/main/suggest"
-    mediums: { foo: 'bar' }
+    urlRoot: "browse"
+  Backbone.history.start pushState: true
+  iframePopover $('#browse-filter')
   params.trigger 'reset'
 
 module.exports.categories = ->
