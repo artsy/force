@@ -20,7 +20,7 @@ describe 'FeaturedSet', ->
       data      : new Backbone.Collection [ fabricate 'featured_link' ], { model: FeaturedLink }
 
   it 'mixes in Markdown methods', ->
-    @set.mdToHtml.should.be.a.Function
+    @set.mdToHtml.should.be.an.instanceof Function
 
   describe '#models', ->
     it "provides access to an array of models", ->

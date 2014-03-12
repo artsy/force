@@ -9,7 +9,8 @@ describe 'Browse routes', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    Backbone.sync.returns @deferred = { then: sinon.stub() }
+    @deferred = Q.defer()
+    Backbone.sync.returns @deferred.promise
     @req = { }
     @res = { render: sinon.stub(), redirect: sinon.stub() }
 
@@ -31,4 +32,5 @@ describe 'Browse routes', ->
 
     xit 'renders the browse page', ->
       routes.index @req, @res
-      @res.render.args[0][0].should.equal 'index'
+      @deferred.resolve()
+      @res.render.called.should.be.ok
