@@ -19,3 +19,5 @@ app.get '/conditions-of-sale', routes.vanityUrl('conditions-of-sale')
 app.get '/auction-info', routes.vanityUrl('auction-info')
 
 app.get '/job/:id', routes.index
+# Handle urls like /job/devops-engineer/about
+app.get '/job/:id/*', routes.index
