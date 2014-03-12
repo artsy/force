@@ -1,11 +1,12 @@
 #
 # FairOrganizer routes
 #
-_       = require 'underscore'
+_ = require 'underscore'
 _.mixin(require 'underscore.string')
 Profile = require '../../models/profile.coffee'
-Fair    = require '../../models/fair.coffee'
-Search  = require '../../collections/search.coffee'
+Fair = require '../../models/fair.coffee'
+Search = require '../../collections/search.coffee'
+FilterSuggest = require '../../models/filter_suggest.coffee'
 
 #
 # Helpers for fetching the Fair
@@ -38,12 +39,11 @@ fetchFairData = (fair, profile, res, options) ->
   success = _.after 5, ->
     options.success data
 
-  fair.fetchFilteredSearchOptions
+  filterSuggest = new FilterSuggest(id: 'fair/' + fair.get 'id')
+  filterSuggest.fetch
     cache: true
     success: (filteredSearchOptions) ->
-      res.locals.mediums = {}
-      for label, count of filteredSearchOptions.get('medium')
-        res.locals.mediums[_.titleize _.humanize label] = label
+      res.locals.mediums = filterSuggest.mediumsHash()
       data.filteredSearchOptions = filteredSearchOptions
       data.filteredSearchColumns = fair.filteredSearchColumns(filteredSearchOptions, 2, 'related_gene', 'artworks')
       success()
