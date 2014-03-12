@@ -8,20 +8,23 @@ Backbone  = require 'backbone'
     cache   : true
     error   : res.backboneError
     success : (model, response, options) ->
-      res.locals.sd.ARTWORK = response
-      if artwork.get('artist')
-        artist = new Artist artwork.get('artist')
-        artist.fetch
-          cache   : true
-          error   : res.backboneError
-          success : (model, response, options) ->
-            res.locals.sd.ARTIST = response
-            res.render 'index',
-              artwork: artwork
-              artist : artist
+      if artwork.href() == req.originalUrl
+        res.locals.sd.ARTWORK = response
+        if artwork.get('artist')
+          artist = new Artist artwork.get('artist')
+          artist.fetch
+            cache   : true
+            error   : res.backboneError
+            success : (model, response, options) ->
+              res.locals.sd.ARTIST = response
+              res.render 'index',
+                artwork: artwork
+                artist : artist
+        else
+          res.render 'index',
+            artwork: artwork
       else
-        res.render 'index',
-          artwork: artwork
+        res.redirect artwork.href()
 
 @save = (req, res) ->
   return res.redirect "/artwork/#{req.params.id}" unless req.user

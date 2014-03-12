@@ -15,13 +15,16 @@ render = (res, post, profile) ->
   new Post(id: req.params.id).fetch
     error  : res.backboneError
     success: (post) ->
-      if post.get('profile')?.id
-        profile = new Profile { id: post.get('profile').id }
-        profile.fetch
-          cache: true
-          error: ->
-            render res, post
-          success: (profile) ->
-            render res, post, profile
+      if post.href() == req.originalUrl
+        if post.get('profile')?.id
+          profile = new Profile { id: post.get('profile').id }
+          profile.fetch
+            cache: true
+            error: ->
+              render res, post
+            success: (profile) ->
+              render res, post, profile
+        else
+          render res, post
       else
-        render res, post
+        res.redirect post.href()

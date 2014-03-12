@@ -24,11 +24,14 @@ getTemplateForProfileType = (profile) ->
 
 @index = (req, res, next) ->
   fetchProfile req, res, next, (profile) ->
-    return overview(req, res, next) if profile.isFairOranizer()
-    res.locals.sd.SECTION = 'overview' if profile.isGallery()
-    res.locals.sd.SECTION = 'shows' if profile.isInstitution()
-    res.render getTemplateForProfileType(profile),
-      profile : profile
+    if profile.href() != req.originalUrl
+      res.redirect profile.href()
+    else
+      return overview(req, res, next) if profile.isFairOranizer()
+      res.locals.sd.SECTION = 'overview' if profile.isGallery()
+      res.locals.sd.SECTION = 'shows' if profile.isInstitution()
+      res.render getTemplateForProfileType(profile),
+        profile : profile
 
 @posts = (req, res, next) ->
   fetchProfile req, res, next, (profile) ->
