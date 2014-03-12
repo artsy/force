@@ -752,6 +752,49 @@
           "resolved": "git://github.com/craigspaeth/showdown.git#4d04b7855d5ed327ebbe5a917c9e9607a4188f77"
         }
       }
+    },
+    "konami-js": {
+      "version": "0.0.2",
+      "from": "konami-js@*",
+      "resolved": "https://registry.npmjs.org/konami-js/-/konami-js-0.0.2.tgz",
+      "dependencies": {
+        "konami-touch": {
+          "version": "0.0.3",
+          "from": "konami-touch@^0.0.3",
+          "resolved": "https://registry.npmjs.org/konami-touch/-/konami-touch-0.0.3.tgz",
+          "dependencies": {
+            "math-js": {
+              "version": "0.0.4",
+              "from": "math-js@^0.0.4",
+              "resolved": "https://registry.npmjs.org/math-js/-/math-js-0.0.4.tgz"
+            },
+            "gestures": {
+              "version": "0.0.2",
+              "from": "gestures@^0.0.2",
+              "resolved": "https://registry.npmjs.org/gestures/-/gestures-0.0.2.tgz",
+              "dependencies": {
+                "interact-js": {
+                  "version": "0.4.6",
+                  "from": "interact-js@^0.4.6",
+                  "resolved": "https://registry.npmjs.org/interact-js/-/interact-js-0.4.6.tgz"
+                }
+              }
+            }
+          }
+        },
+        "konami-keyboard": {
+          "version": "0.0.1",
+          "from": "konami-keyboard@^0.0.1",
+          "resolved": "https://registry.npmjs.org/konami-keyboard/-/konami-keyboard-0.0.1.tgz",
+          "dependencies": {
+            "keyboard-code": {
+              "version": "0.0.2",
+              "from": "keyboard-code@0.0.2",
+              "resolved": "https://registry.npmjs.org/keyboard-code/-/keyboard-code-0.0.2.tgz"
+            }
+          }
+        }
+      }
     }
   }
 }
