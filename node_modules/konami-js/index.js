@@ -1,0 +1,11 @@
+var KonamiKeyboard = require('konami-keyboard'),
+    KonamiTouch = require('konami-touch');
+
+function Konami(success){
+    new KonamiKeyboard(success || function(){});
+    new KonamiTouch(success || function(){});
+}
+
+Konami.prototype.constructor = Konami;
+
+module.exports = Konami;
