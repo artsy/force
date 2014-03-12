@@ -5,4 +5,4 @@ Shortcut = require '../../models/shortcut'
     cache  : true
     success: (shortcut) ->
       res.redirect shortcut.get('long')
-    error: res.backboneError
+    error: -> next()

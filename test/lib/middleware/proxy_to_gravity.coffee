@@ -4,7 +4,7 @@ express = require 'express'
 
 child = null
 gravity = express()
-gravity.get '/user/onlysupportedongravity', (req, res) -> res.send 'I can handle it!'
+gravity.get '/api/v1/me', (req, res) -> res.send { name: 'Craig' }
 gravity.get '/userdontknowwhatitis', (req, res) -> res.send 404
 startServer = (callback) ->
   envVars =
@@ -28,13 +28,7 @@ describe 'Setup', ->
     @server.close()
     closeServer()
 
-  it 'proxies unhandled requests to Gravity if they are supported', (done) ->
-    request.get('http://localhost:5000/user/onlysupportedongravity').end (res) ->
-      res.text.should.equal 'I can handle it!'
-      done()
-
-  it 'passes unsupported routes on Gravity to my own error handler', (done) ->
-    request.get('http://localhost:5000/user/dontknowwhatitis').end (res) ->
-      res.text.should.include 'The page you were looking for doesn\'t exist.'
-      res.statusCode.should.equal 404
+  it 'proxies certain requests to Gravity if they are supported', (done) ->
+    request.get('http://localhost:5000/api/v1/me').end (res) ->
+      res.body.name.should.equal 'Craig'
       done()
