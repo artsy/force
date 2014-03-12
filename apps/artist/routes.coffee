@@ -1,5 +1,6 @@
-Artist                 = require '../../models/artist'
-FollowArtistCollection = require '../../models/follow_artist_collection'
+Backbone    = require 'backbone'
+Artist      = require '../../models/artist'
+Following   = require '../../components/follow_button/collection'
 
 @index = (req, res) ->
   sort = req.query.sort
@@ -13,14 +14,11 @@ FollowArtistCollection = require '../../models/follow_artist_collection'
     error: res.backboneError
 
 @follow = (req, res) ->
-  return res.redirect("/artist/#{req.params.id}") unless req.user
-  new Artist(id: req.params.id).fetch
-    cache  : true
-    success: (artist) ->
-      res.locals.sd.ARTIST = artist.toJSON()
-      followArtistCollection = new FollowArtistCollection
-      followArtistCollection.follow req.params.id,
-        success: ->
-          res.render 'index', artist: artist, sortBy: ''
-        error: res.backboneError
-    error: res.backboneError
+  return res.redirect "/artist/#{req.params.id}" unless req.user
+  token = req.user.get 'accessToken'
+  Backbone.sync.editRequest = (req) -> req.set 'X-ACCESS-TOKEN' : token
+  following = new Following null, kind: 'artist'
+  following.follow req.params.id,
+    error   : res.backboneError
+    success : ->
+      res.redirect "/artist/#{req.params.id}"
