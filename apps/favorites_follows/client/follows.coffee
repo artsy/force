@@ -108,6 +108,7 @@ module.exports.FollowsView = class FollowsView extends Backbone.View
       view.render()
       new FollowButton
         following: @followItems
+        modelName: 'artist'
         model: followItem
         el: $followButton
       _.defer ->

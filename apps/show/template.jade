@@ -8,8 +8,8 @@ append locals
   - assetPackage = 'show'
 
 mixin back(href, text)
-  a#show-back.avant-garde-button-text( href=href )
-    span.icon-chevron-left
+  a.contextual-return-link( href=href )
+    i.icon-chevron-small-left
     | Back to #{text}
 
 block body

@@ -94,7 +94,6 @@ module.exports = class PartnerShow extends Backbone.Model
     options =
       data   : { default: false }
       url    : "#{sd.ARTSY_URL}/api/v1/partner_show/#{@get('id')}/images"
-      cache  : true
     _.extend options, callbacks
     @installShots.fetch options
 
@@ -104,7 +103,6 @@ module.exports = class PartnerShow extends Backbone.Model
     options =
       data   : { size: 10, published: true }
       url    : "#{@url()}/artworks"
-      cache  : true
     _.extend options, callbacks
     @artworks.fetchUntilEnd options
 

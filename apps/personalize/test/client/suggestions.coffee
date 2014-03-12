@@ -9,10 +9,13 @@ Profile           = require '../../../../models/profile'
 { fabricate }     = require 'antigravity'
 { resolve }       = require 'path'
 SuggestionsView   = benv.requireWithJadeify resolve(__dirname, '../../client/views/suggestions'), ['suggestedTemplate']
+Followable        = require '../../client/mixins/followable'
 
 module.exports = class TestView extends SuggestionsView
+  _.extend @prototype, Followable
+
   template: ->
-    '<div id="personalize-suggestions-container"></div>'
+    '<div id="personalize-suggestions-container"><div class="personalize-skip">Skip</div></div>'
 
   key:          'personalize:suggested-galleries'
   restrictType: 'PartnerGallery'
@@ -31,7 +34,7 @@ describe 'SuggestionsView', ->
   beforeEach ->
     @state  = new PersonalizeState
     @user   = new CurrentUser fabricate 'user'
-    @view   = new TestView(state: @state, user: @user)
+    @view   = new TestView(state: @state, user: @user, followKind: 'artist')
 
     # Setup suggestions
     @view.$suggestions = $('<div id="personalize-suggestions"></div>')
@@ -105,6 +108,14 @@ describe 'SuggestionsView', ->
         @view.followButtonViews[model.id].constructor.name
       views.length.should.equal @view.suggestions.length
       _.uniq(views)[0].should.equal 'FollowButton'
+
+    it 'sets up a listener for setting the skip label', ->
+      @view.suggestedSets.trigger 'sync:complete'
+      @view._labelSet?.should.not.be.ok
+      @view.$('.personalize-skip').text().should.equal 'Skip'
+      @view.$suggestions.find('.follow-button').first().click()
+      @view._labelSet.should.be.ok
+      @view.$('.personalize-skip').text().should.equal 'Next'
 
   describe '#render', ->
     it 'renders the template', ->

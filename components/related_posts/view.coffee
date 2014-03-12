@@ -15,9 +15,10 @@ module.exports = class RelatedPostsView extends Backbone.View
     'click .related-posts-add-button' : 'addPost'
 
   initialize: (options) ->
-    { @model, @numToShow } = options
+    { @model, @numToShow, @modelName } = options
 
     throw 'Model must implement #fetchRelatedPosts' unless _.isFunction(@model.fetchRelatedPosts)
+    throw new Error('Requires @modelName') unless @modelName
 
     @model.fetchRelatedPosts()
     @listenTo @model.relatedPosts, 'sync', @render
@@ -28,8 +29,9 @@ module.exports = class RelatedPostsView extends Backbone.View
         model: @model
         posts: @model.relatedPosts.first @numToShow
         remaining: Math.max((@model.relatedPosts.length - @numToShow), 0)
+        modelName: @modelName
     else
-      @$el.html noneTemplate(model: @model)
+      @$el.html noneTemplate(model: @model, modelName: @modelName)
 
     _.defer =>
       @$('.related-posts').addClass 'is-complete'
@@ -46,7 +48,7 @@ module.exports = class RelatedPostsView extends Backbone.View
       mediator.trigger 'open:auth', mode: 'register', copy: 'Sign up to post on Artsy.net'
     else
       e.preventDefault()
-      analytics.track.click "Added #{@model.constructor.name.toLowerCase()} to post, via #{@model.constructor.name.toLowerCase()} info"
+      analytics.track.click "Added #{@modelName.toLowerCase()} to post, via #{@modelName.toLowerCase()} info"
       @addToPost (-> location.href = "/post" )
 
   addToPost: (success) ->

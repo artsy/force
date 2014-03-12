@@ -52,3 +52,10 @@ describe 'Profile Header template', ->
       $ = cheerio.load render('template')({ profile: @profile })
       $('.profile-badge-icon').should.have.lengthOf 0
       $('.profile-badge-initials').text().should.equal @profile.defaultIconInitials()
+
+  describe 'with no profile', ->
+
+    it 'doesnt error witout a profile', ->
+      $ = cheerio.load render('template')()
+      $('.profile-badge-icon').should.have.lengthOf 0
+      $('header.profile-header').should.have.lengthOf 1

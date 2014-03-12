@@ -9,9 +9,11 @@ module.exports = class FollowButton extends Backbone.View
     'touchstart': () -> @$el.removeClass "no-touch"
 
   initialize: (options) ->
-    return unless options.following
+    { @following, @notes, @modelName } = options
 
-    { @following, @notes } = options
+    return unless @following
+
+    throw new Error('Requires @modelName') unless @modelName
 
     @listenTo @following, "add:#{@model.id}", @change
     @listenTo @following, "remove:#{@model.id}", @change
@@ -24,15 +26,17 @@ module.exports = class FollowButton extends Backbone.View
     @change()
 
   defaultAnalyticsMessage: (action) ->
-    "#{action} #{@model.constructor.name.toLowerCase()} from #{window?.location.pathname}"
+    "#{action} #{@modelName} from #{window?.location.pathname}"
 
   change: ->
     state = if @following.isFollowing(@model.id) then 'following' else 'follow'
     @$el.attr 'data-state', state
 
   toggle: (e) ->
+    @trigger 'click'
+
     unless @following
-      mediator.trigger 'open:auth', { mode: 'register', copy: "Sign up to follow #{@model.constructor.name.toLowerCase()}s" }
+      mediator.trigger 'open:auth', { mode: 'register', copy: "Sign up to follow #{@modelName}s" }
       return false
 
     if @following.isFollowing @model.id

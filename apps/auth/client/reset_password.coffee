@@ -26,6 +26,7 @@ module.exports.PasswordResetView = class PasswordResetView extends Backbone.View
         attrs += "&reset_password_token=#{token}"
 
     @model.url = "#{@model.url}?#{attrs}"
+    @model.isNew = -> false
     @model.save {},
       success: ->
         window.location = '/'

@@ -132,6 +132,7 @@ module.exports = class ArtworkView extends Backbone.View
       el: @$('#artwork-artist-related-posts-container')
       numToShow: 2
       model: @artwork
+      modelName: 'artwork'
 
   setupFeatureNavigation: (options) ->
     new FeatureNavigationView
@@ -163,6 +164,7 @@ module.exports = class ArtworkView extends Backbone.View
       analyticsUnfollowMessage: 'Unfollowed artist, via artwork info'
       el: @$('.artwork-artist-follow-button')
       following: @following
+      modelName: 'artist'
       model: @artist
     @following?.syncFollows [@artist.id]
 
