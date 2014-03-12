@@ -9,12 +9,12 @@ BlurbView               = require './blurb.coffee'
 RelatedPostsView        = require '../../../components/related_posts/view.coffee'
 RelatedGenesView        = require '../../../components/related_genes/view.coffee'
 CurrentUser             = require '../../../models/current_user.coffee'
-FollowArtistCollection  = require '../../../models/follow_artist_collection.coffee'
-FollowButton            = require './follow_button.coffee'
 ShareView               = require '../../../components/share/view.coffee'
 AuctionLots             = require '../../../collections/auction_lots.coffee'
 BorderedPulldown        = require '../../../components/bordered_pulldown/view.coffee'
 artistSort              = -> require('../templates/sort.jade') arguments...
+
+{ Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 
 module.exports.ArtistView = class ArtistView extends Backbone.View
 
@@ -34,12 +34,15 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
 
   setupFollowButton: ->
     if @currentUser
-      @followArtistCollection = new FollowArtistCollection
+      @following = new Following null, kind: 'artist'
     new FollowButton
-      followArtistCollection: @followArtistCollection
+      analyticsFollowMessage: 'Followed artist, via artist header'
+      analyticsUnfollowMessage: 'Unfollowed artist, via artist header'
+      el: @$('#artist-follow-button')
+      following: @following
       modelName: 'artist'
       model: @model
-      el: @$('button#artist-follow-button')
+    @following?.syncFollows [@model.id]
 
   setupCurrentUser: ->
     @currentUser = CurrentUser.orNull()
