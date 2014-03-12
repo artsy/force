@@ -10,4 +10,4 @@ app.set 'views', __dirname + '/templates'
 app.set 'view engine', 'jade'
 
 app.get '/browse2', routes.index
-app.get '/browse/categories', routes.categories
+app.get '/categories', routes.categories

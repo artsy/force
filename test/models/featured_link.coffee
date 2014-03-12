@@ -11,7 +11,7 @@ describe 'FeaturedLink', ->
       image_versions: ['large_rectangle', 'medium_rectangle']
 
   it 'mixes in Markdown methods', ->
-    @featuredLink.mdToHtml.should.be.a.Function
+    @featuredLink.mdToHtml.should.be.an.instanceof Function
 
   xdescribe '#fetchItems', ->
 

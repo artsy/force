@@ -18,7 +18,7 @@ block body
               a.browse-featured-gene( href=gene.get('href') )
                 img.bfg-image( src=gene.imageUrl('large_rectangle') )
                 .bfg-title= gene.get('title')
-    a#browse-page-see-all.avant-garde-jump-link( href='/browse/categories' ) Browse All Categories
+    a#browse-page-see-all.avant-garde-jump-link( href='/categories' ) Browse All Categories
       i.icon-chevron-small-right
 
     if popularCategories && popularCategories.at(0).get('items')

@@ -28,7 +28,7 @@ describe 'FilterSortCount', ->
     @view.counts = new Backbone.Model total: 1001
     @view.$el = $ "<div><div class='filter-sort-count-total'></div></div>"
     @view.renderTotal()
-    @view.$el.html().should.include '1001'
+    @view.$el.html().should.include '1,001'
 
   it 'updates the params to sort', ->
     @view.sort target: $ "<div data-sort='-foo'></div>"

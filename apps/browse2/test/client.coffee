@@ -10,7 +10,7 @@ describe 'AboutRouter', ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
-      { @init } = mod = rewire '../client.coffee'
+      { @index } = mod = rewire '../client.coffee'
       stubChildClasses mod, @,
         ['FilterArtworksView']
         []
@@ -20,10 +20,10 @@ describe 'AboutRouter', ->
   afterEach ->
     benv.teardown()
 
-  describe '#init', ->
+  describe '#index', ->
 
     it 'creates a filter artworks view initializing it by triggering reset', ->
       @FilterArtworksView::params.on 'reset', spy = sinon.spy()
-      @init()
+      @index()
       @FilterArtworksView.args[0][0].artworksUrl.should.include 'filtered/main'
       spy.called.should.be.ok

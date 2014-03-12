@@ -1,4 +1,5 @@
 _ = require 'underscore'
+_.mixin(require 'underscore.string')
 Backbone = require 'backbone'
 BorderedPulldown = require '../../bordered_pulldown/view.coffee'
 
@@ -10,7 +11,7 @@ module.exports = class FilterSortCount extends Backbone.View
     new BorderedPulldown el: @$('.bordered-pulldown')
 
   renderTotal: =>
-    @$('.filter-sort-count-total').text @counts.get('total') + ' ' +
+    @$('.filter-sort-count-total').text _.numberFormat(@counts.get 'total') + ' ' +
       if @counts.get('total') is 1 then 'Work' else 'Works'
 
   events:

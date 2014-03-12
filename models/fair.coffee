@@ -111,11 +111,6 @@ module.exports = class Fair extends Backbone.Model
           options.error
       error: options.error
 
-  fetchFilteredSearchOptions: (options) ->
-    filteredSearchOptions = new Backbone.Model
-    filteredSearchOptions.url = "#{sd.ARTSY_URL}/api/v1/search/filtered/fair/#{@get('id')}/suggest"
-    filteredSearchOptions.fetch options
-
   itemsToColumns: (items, numberOfColumns=2) ->
     maxRows = Math.floor(items.length / numberOfColumns)
     for i in [0...numberOfColumns]
