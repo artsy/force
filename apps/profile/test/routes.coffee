@@ -3,6 +3,7 @@ _ = require 'underscore'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 routes = require '../routes'
+CurrentUser = require '../../../models/current_user.coffee'
 
 describe 'User profile routes', ->
 
@@ -71,6 +72,22 @@ describe 'Partner routes', ->
       routes.favorites @req, @res
       _.last(Backbone.sync.args)[2].success fabricate 'partner_profile'
       @res.redirect.args[0][0].should.equal '/getty'
+
+  describe '#follow', ->
+
+    it 'redirects to profile page without user', ->
+      routes.follow @req, @res
+      @res.redirect.args[0][0].should.equal '/some-gallery'
+
+    it 'follows a profile and redirects to the profile', ->
+      @res.redirect = sinon.stub()
+      @req.user = new CurrentUser fabricate 'user'
+      routes.follow @req, @res
+      Backbone.sync.args[0][1].url().should.include '/api/v1/me/follow/profile'
+      Backbone.sync.args[0][1].get('profile_id').should.equal 'some-gallery'
+      Backbone.sync.args[0][2].success()
+      @res.redirect.args[0][0].should.equal '/some-gallery'
+
 
 describe 'Fair routes', ->
 

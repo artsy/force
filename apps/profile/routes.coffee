@@ -1,4 +1,6 @@
-Profile = require '../../models/profile'
+Backbone    = require 'backbone'
+Profile     = require '../../models/profile'
+Following   = require '../../components/follow_button/collection'
 
 { overview, fairPosts } = require '../fair/routes'
 
@@ -45,6 +47,16 @@ getTemplateForProfileType = (profile) ->
         profile : profile
     else
       res.redirect profile.href()
+
+@follow = (req, res) ->
+  return res.redirect "/#{req.params.id}" unless req.user
+  token = req.user.get 'accessToken'
+  Backbone.sync.editRequest = (req) -> req.set 'X-ACCESS-TOKEN' : token
+  following = new Following null, kind: 'profile'
+  following.follow req.params.id,
+    error   : res.backboneError
+    success : ->
+      res.redirect "/#{req.params.id}"
 
 #
 # Gallery and Intitution routes
