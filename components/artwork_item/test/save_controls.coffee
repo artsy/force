@@ -7,6 +7,7 @@ mediator      = require '../../../lib/mediator'
 
 model           = new Backbone.Model(id: 'artwork')
 model.isSaved   = sinon.stub()
+model.href      = -> '/foo/bar'
 
 artworkCollection                 = new Backbone.Collection
 artworkCollection.unsaveArtwork   = sinon.stub()
