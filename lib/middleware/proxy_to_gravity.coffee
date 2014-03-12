@@ -4,30 +4,13 @@
 # If not, simply pass it to the next middleware
 #
 
-{ ARTSY_URL } = require '../../config'
-http = require 'http'
+{ ARTSY_URL, REFLECTION_URL } = require '../../config'
 httpProxy = require 'http-proxy'
 proxy = httpProxy.createProxyServer()
-url = require 'url'
+express = require 'express'
 
-module.exports = exports = (req, res, next) ->
-  urlObj = url.parse(ARTSY_URL + req.url)
-  options =
-    host: urlObj.hostname
-    path: urlObj.path
-    port: urlObj.port or 80
+app = module.exports = express()
 
-  # Ping Gravity first, if the url is supported,
-  # proxy the req to it. Otherwise, pass it.
-  pingReq = http.get options, (pingRes) ->
-    if pingRes.statusCode < 400
-      proxy.web req, res,
-        target: ARTSY_URL
-    else
-      next()
-
-  # On errors or timeout, simply pass it.
-  pingReq.on 'error', (e) ->
-    next()
-  pingReq.setTimeout 2000, ->
-    pingReq.abort() # abort () emits an Error
+for route in ['/post', '/oauth2*', '/api/*']
+  app.all route, (req, res) ->
+    proxy.web req, res, { target: ARTSY_URL }

@@ -21,6 +21,7 @@ artsyXappMiddlware = require 'artsy-xapp-middleware'
 backboneCacheSync = require 'backbone-cache-sync'
 redirectMobile = require './middleware/redirect_mobile'
 proxyGravity = require './middleware/proxy_to_gravity'
+proxyReflection = require './middleware/proxy_to_reflection'
 localsMiddleware = require './middleware/locals'
 micrositeMiddleware = require './middleware/microsite'
 helpersMiddleware = require './middleware/helpers'
@@ -107,6 +108,10 @@ module.exports = (app) ->
   # Test
   if "test" is NODE_ENV
     app.use "/__api", require("../test/helpers/integration.coffee").api
+
+  # Proxy Google requests to Reflection
+  # TODO: Figure out why S3 is redirecting our proxy to http://aws.amazon.com/s3/
+  # app.use proxyReflection
 
   # Mount apps
   app.use require "../apps/home"
