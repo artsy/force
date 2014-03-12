@@ -1,7 +1,13 @@
-@import '../../components/stylus_lib'
+@import '../../../components/stylus_lib'
+@import './categories'
 
 #browse-page
   padding-top 40px
+
+#browse-page-see-all
+  margin 10px 0
+  text-align right
+  font-size default-avant-garde-font-size
 
 // Featured gene section
 .browse-featured-gene-set
@@ -19,37 +25,6 @@
     margin-right 5px
   &:last-child
     margin-left 5px
-
-.bfg-image
-  transition opacity 0.3s
-  vertical-align bottom
-  width 100%
-  prevent-content-shift()
-
-.bfg-title
-  position absolute
-  right 20px
-  bottom 15px
-  left 20px
-  avant-garde()
-  color #fff
-  font-size 13px
-  text-align left
-  text-shadow 0 0 5px rgba(0,0,0,.125)
-
-#browse-page-see-all
-  text-align right
-  position relative
-  padding-right 20px
-  &:hover::before
-    opacity 1
-  &::before
-    position absolute
-    right 0
-    font-size 12px
-    top 9px
-    font-weight bold
-    opacity 0.5
 
 // Popular categories section
 column-width = 25%

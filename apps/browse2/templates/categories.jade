@@ -1,0 +1,33 @@
+extends ../../../components/main_layout/templates/index
+
+block head
+  include meta
+
+append locals
+  - assetPackage = 'browse2'
+
+block body
+  .main-layout-container
+    header#browse-header
+      h1.avant-garde-header-center.browse-header-large Browse Categories
+      h2.garamond-header-center Learn more about the&nbsp;
+        a.faux-underline( href="/theartgenomeproject" ) The Art Genome Project
+
+    //- Featured Link Rows
+    if geneCategories && geneCategories.at(0)
+      section#browse-page-gene-categories
+        for categorySet in geneCategories.at(0).get('items').models
+          h1.large-garamond-header= categorySet.get('name')
+          .browse-gene-category-set
+            for gene in categorySet.get('items').models
+              a.browse-gene-category( href=gene.get('href') )
+                img.bgc-image( src=gene.imageUrl('medium_rectangle') )
+                .bgc-title= gene.get('title')
+            //- a.avant-garde-jump-link( href='/browse/category/' + _.slugify(categorySet.get('name')) )
+            //-   | All #{categorySet.get('name')}
+            //-   i.icon-chevron-small-right
+
+    //- Gene A-Z List
+    h1#browse-az-header.avant-garde-header-center.browse-header-large All Categories A-Z
+    section.all-genes-list
+      include ../../../components/a_to_z_list/template
