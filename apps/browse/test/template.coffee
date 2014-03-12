@@ -10,7 +10,7 @@ Items           = require '../../../collections/items'
 OrderedSets     = require '../../../collections/ordered_sets'
 
 render = ->
-  filename = path.resolve __dirname, "../template.jade"
+  filename = path.resolve __dirname, "../templates/index.jade"
   jade.compile(
     fs.readFileSync(filename),
     { filename: filename }
@@ -52,22 +52,6 @@ describe 'Browse', ->
       popularCategoriesOrderedSetItems.add new Item( fabricate 'featured_link', { title: 'Color Fields' } )
       popularCategoriesOrderedSet.set items: popularCategoriesOrderedSetItems
 
-      # geneCategories
-      geneCategories.add new OrderedSet( fabricate('set'), {
-        key: "browse:gene-categories"
-        name: "Gene Categories"
-        item_type: "OrderedSet"
-      })
-      geneCategoriesOrderedSet = new OrderedSet( fabricate 'set', { name: 'Gene Category'} )
-      geneCategoriesItems = new Items null, 'gene-categories-set'
-      geneCategoriesItems.add geneCategoriesOrderedSet
-      geneCategories.at(0).set items: geneCategoriesItems
-
-      geneCategoriesOrderedSetItems = new Items null, 'gene-categories-ordered-set-items'
-      geneCategoriesOrderedSetItems.add new Item( fabricate 'featured_link', { title: 'Poliltical Art' } )
-      geneCategoriesOrderedSetItems.add new Item( fabricate 'featured_link', { title: 'Cubism' } )
-      geneCategoriesOrderedSet.set items: geneCategoriesOrderedSetItems
-
       @template = render()(
         sd: {}
         featuredGenes: featuredGenes
@@ -87,12 +71,6 @@ describe 'Browse', ->
       @template.should.include 'Chinese Art'
       @template.should.include 'Color Fields'
 
-      # geneCategories
-      @template.should.include 'browse-gene-category-set'
-      @template.should.include 'Gene Category'
-      @template.should.include 'Poliltical Art'
-      @template.should.include 'Cubism'
-
   describe 'with no ordered sets', ->
     beforeEach ->
       @template = render()(
@@ -100,4 +78,4 @@ describe 'Browse', ->
       )
 
     it "should not error", ->
-      @template.should.include 'See All Genes on Artsy'
+      @template.should.include 'Browse Works'
