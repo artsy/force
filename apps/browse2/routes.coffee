@@ -1,18 +1,24 @@
 Q = require 'q'
 _ = require 'underscore'
+_.mixin require 'underscore.string'
 OrderedSets = require '../../collections/ordered_sets.coffee'
 Genes = require '../../collections/genes.coffee'
+FilterSuggest = require '../../models/filter_suggest.coffee'
 { ARTSY_URL } = require('sharify').data
 
 @index = (req, res) ->
-  [featuredGenes, popularCategories] = requests = [
-    new OrderedSets(key: 'browse:featured-genes'),
-    new OrderedSets(key: 'browse:popular-categories')
-  ]
-  Q.allSettled(_.map(requests, (xs) -> xs.fetchAll(cache: true))).then ->
+  featuredGenes = new OrderedSets(key: 'browse:featured-genes')
+  popularCategories = new OrderedSets(key: 'browse:popular-categories')
+  filterSuggest = new FilterSuggest(id: 'main')
+  Q.allSettled([
+    featuredGenes.fetchAll(cache: true)
+    popularCategories.fetchAll(cache: true)
+    filterSuggest.fetch(cache: true)
+  ]).then ->
     res.render 'index',
       featuredGenes: featuredGenes
       popularCategories: popularCategories
+      mediums: filterSuggest.mediumsHash()
 
 @categories = (req, res) ->
   geneCategories = new OrderedSets(key: 'browse:gene-categories')

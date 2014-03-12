@@ -1,4 +1,5 @@
 _ = require 'underscore'
+_.mixin require 'underscore.string'
 Backbone = require 'backbone'
 
 module.exports = class FilterArtworksNav extends Backbone.View
@@ -16,4 +17,4 @@ module.exports = class FilterArtworksNav extends Backbone.View
           @$("a[data-attr='#{attr}'][data-val='#{val}']").hide()
         else
           @$("a[data-attr='#{attr}'][data-val='#{val}']").show()
-            .find(".filter-dropdown-count").html '(' + count + ')'
+            .find(".filter-dropdown-count").html '(' + _.numberFormat(count) + ')'
