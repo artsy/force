@@ -9,8 +9,8 @@ Artwork         = require '../../../models/artwork.coffee'
 describe 'Artwork routes', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    @req = { params: { id: 'foo' }, query: { sort: '-published_at' }, originalUrl: '/artwork/andy-foobar' }
-    @res = { render: sinon.stub(), redirect: sinon.stub(), locals: { sd: { ARTSY_URL: 'http://localhost:5000'} } }
+    @req = { params: { id: 'foo' }, query: { sort: '-published_at' } }
+    @res = { render: sinon.stub(), redirect: sinon.stub(), locals: { sd: { ARTSY_URL: 'http://localhost:5000', CURRENT_PATH: '/artwork/andy-foobar' } } }
 
   afterEach ->
     Backbone.sync.restore()
@@ -31,7 +31,7 @@ describe 'Artwork routes', ->
       @res.render.args[0][0].should.equal 'index'
 
     it 'redirects to the correct artwork url', ->
-      @req.originalUrl = '/artwork/andy-foobar-wrong'
+      @res.locals.sd.CURRENT_PATH = '/artwork/andy-foobar-wrong'
       routes.index @req, @res
       _.last(Backbone.sync.args)[2].success fabricate 'artwork', id: 'andy-foobar'
       _.last(Backbone.sync.args)[2].success fabricate 'artist', id: 'andy-foobar-artist'

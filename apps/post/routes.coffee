@@ -15,7 +15,7 @@ render = (res, post, profile) ->
   new Post(id: req.params.id).fetch
     error  : res.backboneError
     success: (post) ->
-      if post.href() == req.originalUrl
+      if post.href() == res.locals.sd.CURRENT_PATH
         if post.get('profile')?.id
           profile = new Profile { id: post.get('profile').id }
           profile.fetch
