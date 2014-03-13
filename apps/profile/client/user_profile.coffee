@@ -1,38 +1,38 @@
-_                       = require 'underscore'
-Backbone                = require 'backbone'
-sd                      = require('sharify').data
-User                    = require '../../../models/user.coffee'
-CurrentUser             = require '../../../models/current_user.coffee'
-FollowProfileButton     = require '../../../components/partner_buttons/follow_profile.coffee'
-FollowProfiles          = require '../../../collections/follow_profiles.coffee'
-FeedItems               = require '../../../components/feed/collections/feed_items.coffee'
-PoplockitFeed           = require('../../../components/feed/client/poplockit_feed.coffee')
-tabsTemplate            = -> require('../templates/tabs.jade') arguments...
+_ = require 'underscore'
+Backbone = require 'backbone'
+User = require '../../../models/user.coffee'
+CurrentUser = require '../../../models/current_user.coffee'
+FollowProfileButton = require '../../../components/partner_buttons/follow_profile.coffee'
+FollowProfiles = require '../../../collections/follow_profiles.coffee'
+FeedItems = require '../../../components/feed/collections/feed_items.coffee'
+PoplockitFeed = require('../../../components/feed/client/poplockit_feed.coffee')
+tabsTemplate = -> require('../templates/tabs.jade') arguments...
 
 module.exports = class UserProfileView extends Backbone.View
 
   initialize: (options) ->
     @followProfiles = if CurrentUser.orNull() then new FollowProfiles [] else null
-    @initFollowButton @model
+    new FollowProfileButton
+      el: @$(".profile-header .follow-button")
+      model: @model
+      collection: @followProfiles
     @followProfiles?.syncFollows [@model.get('id')]
-    @render()
+    @fetchUserCollection()
+    # @model.fetchFavorites success: (@favorites) => @render()
+    # @model.fetchPosts success: (@posts) => @render()
+    # @render()
+
+  render: _.after 2, ->
+    console.log @favorites, @posts
 
   # Scenarios:
   # - posts no favorites
   # - favorites no posts
   # - posts and favorites
   # - no posts no favorites
-  render: ->
+  _render: ->
     @fetchUserCollection()
     @fetchUserPosts()
-
-  initFollowButton: (profile) ->
-    new FollowProfileButton
-      el         : @$(".profile-header .follow-button")
-      model      : profile
-      collection : @followProfiles
-
-  getOwner: -> @model.get('owner')
 
   fetchUserCollection: ->
     owner = new User(@model.get('owner'))
@@ -40,6 +40,7 @@ module.exports = class UserProfileView extends Backbone.View
       success: =>
         owner.initializeDefaultArtworkCollection
           success: =>
+            console.log owner.defaultArtworkCollection().toJSON()
             if owner.defaultArtworkCollection().displayable()
               @hasCollection = true
               @renderTabs()

@@ -4,6 +4,8 @@ Backbone      = require 'backbone'
 CoverImage    = require './cover_image.coffee'
 Icon          = require './icon.coffee'
 { Markdown }  = require 'artsy-backbone-mixins'
+User          = require './user.coffee'
+FeedItems     = require '../components/feed/collections/feed_items.coffee'
 
 _.mixin(require 'underscore.string')
 
@@ -98,3 +100,26 @@ module.exports = class Profile extends Backbone.Model
 
   hasPosts: ->
     @get('posts_count') > 0 or @get('reposts_count') > 0
+
+  fetchFavorites: (options) ->
+    owner = new User @get 'owner'
+    owner.fetch
+      error: options.error
+      success: =>
+        owner.initializeDefaultArtworkCollection
+          error: options.error
+          success: =>
+            if owner.defaultArtworkCollection().displayable()
+              options.success owner.defaultArtworkCollection()
+            else
+              options.success null
+
+  fetchPosts: (options) ->
+    success = options.success
+    url = "#{sd.ARTSY_URL}/api/v1/profile/#{@get 'id'}/posts"
+    new FeedItems().fetch _.extend options,
+      url: url
+      data: { size: 3 }
+      success: (items) =>
+        items.urlRoot = url if items.length
+        success items
