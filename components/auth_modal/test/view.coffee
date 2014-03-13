@@ -82,3 +82,9 @@ describe 'AuthModalView', ->
       @view.submit { preventDefault: -> }
       Backbone.sync.args[0][2].success {}
       readCookie('destination').should.equal @view.destination
+
+    it 'creates a singned_in cookie', ->
+      @view.state.set mode: 'login'
+      @view.submit { preventDefault: -> }
+      Backbone.sync.args[0][2].success {}
+      readCookie('signed_in').should.equal 'true'

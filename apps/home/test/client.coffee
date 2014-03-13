@@ -4,6 +4,7 @@ Backbone        = require 'backbone'
 sinon           = require 'sinon'
 HeroUnits       = require '../../../collections/hero_units'
 FeaturedLinks   = require '../../../collections/featured_links'
+CurrentUser     = require '../../../models/current_user'
 { resolve }     = require 'path'
 { fabricate }   = require 'antigravity'
 
@@ -76,9 +77,9 @@ describe 'Homepage init code', ->
           fabricate 'featured_link'
         ]).models
         sd: {}
-      }
-      Backbone.$ = $
-      done()
+      }, ->
+        Backbone.$ = $
+        done()
 
   after ->
     benv.teardown()
@@ -92,13 +93,43 @@ describe 'Homepage init code', ->
       'featuredArtistsTemplate'
     ]
     @mod.__set__ 'HeroUnitView', ->
+    sinon.stub Backbone.history, 'start'
     sinon.stub _, 'defer'
     sinon.stub Backbone, 'sync'
     @init()
 
   afterEach ->
     Backbone.sync.restore()
+    Backbone.history.start.restore()
     _.defer.restore()
+
+  context 'with a user', ->
+
+    beforeEach (done) ->
+      user = new CurrentUser(fabricate 'user', lab_features: ["Suggested Artworks"])
+      CurrentUser = @mod.__get__ 'CurrentUser'
+      sinon.stub(CurrentUser, 'orNull').returns user
+      benv.render resolve(__dirname, '../templates/index.jade'), {
+          heroUnits: new HeroUnits([
+            fabricate 'site_hero_unit'
+            fabricate 'site_hero_unit'
+            fabricate 'site_hero_unit'
+          ]).models
+          featuredLinks: new FeaturedLinks([
+            fabricate 'featured_link'
+          ]).models
+          user: user
+          sd: {}
+        }, =>
+          @init()
+          done()
+
+    afterEach ->
+      CurrentUser.orNull.restore()
+
+    it 'renders suggested artworks', ->
+      _.last(Backbone.sync.args)[2].success [fabricate 'artwork', title: 'Foobaz']
+      $('body').html().should.include "Foobaz"
 
   it 'renders featured artworks', ->
     Backbone.sync.args[0][2].success [fabricate 'set']

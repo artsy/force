@@ -20,3 +20,6 @@ FeaturedLinks = require '../../collections/featured_links.coffee'
 
 @redirectToSignup = (req, res) ->
   res.redirect "/sign_up"
+
+@redirectLoggedInHome = (req, res, next) ->
+  if req.user? then res.redirect '/' else next()

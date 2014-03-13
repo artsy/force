@@ -43,3 +43,9 @@ describe 'CurrentUser', ->
       @user.initializeDefaultArtworkCollection()
       @user.removeArtwork('masterpiece', null)
       Backbone.sync.args[1][0].should.equal 'delete'
+
+  describe '#fetchSuggestedHomepageArtworks', ->
+
+    it 'fetches homepages artworks', ->
+      @user.fetchSuggestedHomepageArtworks({})
+      Backbone.sync.args[0][2].url.should.include 'suggested/artworks/homepage'
