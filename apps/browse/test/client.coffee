@@ -19,6 +19,7 @@ describe 'AboutRouter', ->
       done()
 
   afterEach ->
+    Backbone.history.start.restore()
     benv.teardown()
 
   describe '#index', ->

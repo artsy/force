@@ -20,6 +20,6 @@ describe 'Home template', ->
       heroUnits: []
       sd: {}
       featuredLinks: []
-      user: new CurrentUser(lab_features: ['Suggested Artworkss'])
+      user: new CurrentUser(lab_features: ['Suggested Artworks'])
     )
       .should.include 'home-suggested-artworks'
