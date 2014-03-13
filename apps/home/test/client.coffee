@@ -107,7 +107,8 @@ describe 'Homepage init code', ->
 
     beforeEach (done) ->
       user = new CurrentUser(fabricate 'user', lab_features: ["Suggested Artworks"])
-      (@mod.__get__ 'CurrentUser').orNull = -> user
+      CurrentUser = @mod.__get__ 'CurrentUser'
+      sinon.stub(CurrentUser, 'orNull').returns user
       benv.render resolve(__dirname, '../templates/index.jade'), {
           heroUnits: new HeroUnits([
             fabricate 'site_hero_unit'
@@ -122,6 +123,9 @@ describe 'Homepage init code', ->
         }, =>
           @init()
           done()
+
+    afterEach ->
+      CurrentUser.orNull.restore()
 
     it 'renders suggested artworks', ->
       _.last(Backbone.sync.args)[2].success [fabricate 'artwork', title: 'Foobaz']
