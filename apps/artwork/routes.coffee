@@ -8,7 +8,7 @@ Backbone  = require 'backbone'
     cache   : true
     error   : res.backboneError
     success : (model, response, options) ->
-      if artwork.href() == res.locals.sd.CURRENT_PATH
+      if res.locals.sd.CURRENT_PATH.indexOf(artwork.href()) > -1
         res.locals.sd.ARTWORK = response
         if artwork.get('artist')
           artist = new Artist artwork.get('artist')
