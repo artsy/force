@@ -16,3 +16,7 @@ describe 'locals middleware', ->
   it 'adds the user agent', ->
     middleware req = { url: 'localhost:3000', get: -> 'foobar' }, res = { locals: { sd: { ASSET_PATH: '' } } }, ->
     res.locals.userAgent.should.equal 'foobar'
+
+  it 'current_path does not include query params', ->
+    middleware req = { url: 'localhost:3000/foo?bar=baz', get: -> 'foobar' }, res = { locals: { sd: { ASSET_PATH: '' } } }, ->
+    res.locals.sd.CURRENT_PATH.should.equal '/foo'
