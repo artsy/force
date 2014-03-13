@@ -9,8 +9,8 @@ describe 'User profile routes', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    @req = { params: { id: 'user' }, originalUrl: "/alessandra" }
-    @res = { render: sinon.stub(), redirect: sinon.stub(), locals: { sd: { ARTSY_URL: 'http://localhost:5000'} } }
+    @req = { params: { id: 'user' } }
+    @res = { render: sinon.stub(), redirect: sinon.stub(), locals: { sd: { ARTSY_URL: 'http://localhost:5000', CURRENT_PATH: "/alessandra" } } }
 
   afterEach ->
     Backbone.sync.restore()
@@ -24,7 +24,7 @@ describe 'User profile routes', ->
       @res.render.args[0][1].profile.get('id').should.equal 'alessandra'
 
     it 'redirects to the correct profile url', ->
-      @req.originalUrl = '/wrong-profile'
+      @res.locals.sd.CURRENT_PATH = '/wrong-profile'
       routes.index @req, @res
       _.last(Backbone.sync.args)[2].success fabricate 'profile'
       @res.redirect.args[0][0].should.equal '/alessandra'
@@ -40,8 +40,8 @@ describe 'Partner routes', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    @req = { params: { id: 'getty' }, originalUrl: "/getty"  }
-    @res = { render: sinon.stub(), redirect: sinon.stub(), locals: { sd: { ARTSY_URL: 'http://localhost:5000'} } }
+    @req = { params: { id: 'getty' } }
+    @res = { render: sinon.stub(), redirect: sinon.stub(), locals: { sd: { ARTSY_URL: 'http://localhost:5000', CURRENT_PATH: "/getty" } } }
 
   afterEach ->
     Backbone.sync.restore()
@@ -99,8 +99,8 @@ describe 'Fair routes', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    @req = { params: { id: 'the-armory-show' }, originalUrl: '/the-armory-show' }
-    @res = { render: sinon.stub(), redirect: sinon.stub(), locals: { sd: { ARTSY_URL: 'http://localhost:5000'} } }
+    @req = { params: { id: 'the-armory-show' }, '/the-armory-show' }
+    @res = { render: sinon.stub(), redirect: sinon.stub(), locals: { sd: { ARTSY_URL: 'http://localhost:5000', CURRENT_PATH: '/the-armory-show' } } }
 
   afterEach ->
     Backbone.sync.restore()

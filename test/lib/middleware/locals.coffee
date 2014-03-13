@@ -5,14 +5,14 @@ middleware = require '../../../lib/middleware/locals'
 describe 'locals middleware', ->
 
   it 'adds a session id', ->
-    middleware req = { session: {}, get: (->)}, res = { locals: { sd: { ASSET_PATH: '' } } }, ->
+    middleware req = { url: 'localhost:3000', session: {}, get: (->)}, res = { locals: { sd: { ASSET_PATH: '' } } }, ->
     req.session.id.length.should.be.above 0
     res.locals.sd.SESSION_ID.should.equal req.session.id
 
   it 'sets the hide header flag', ->
-    middleware req = { cookies: { 'hide-force-header': true }, session: {}, get: (->)}, res = { locals: { sd: { ASSET_PATH: '' } } }, ->
+    middleware req = { url: 'localhost:3000', cookies: { 'hide-force-header': true }, session: {}, get: (->)}, res = { locals: { sd: { ASSET_PATH: '' } } }, ->
     res.locals.sd.HIDE_HEADER.should.be.ok
 
   it 'adds the user agent', ->
-    middleware req = { get: -> 'foobar' }, res = { locals: { sd: { ASSET_PATH: '' } } }, ->
+    middleware req = { url: 'localhost:3000', get: -> 'foobar' }, res = { locals: { sd: { ASSET_PATH: '' } } }, ->
     res.locals.userAgent.should.equal 'foobar'
