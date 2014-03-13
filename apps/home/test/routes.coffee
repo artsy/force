@@ -29,3 +29,10 @@ describe 'Home routes', ->
     it 'redirects to signup', ->
       routes.redirectToSignup @req, @res
       @res.redirect.args[0][0].should.equal '/sign_up'
+
+  describe '#redirectLoggedInHome', ->
+
+    it 'redirects logged in users home', ->
+      @req.user = {}
+      routes.redirectLoggedInHome @req, @res
+      @res.redirect.args[0][0].should.equal '/'

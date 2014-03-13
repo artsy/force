@@ -102,7 +102,7 @@ module.exports = class CurrentUser extends Backbone.Model
             options.error
         error: options.error
 
-  fetchSuggestedHomepageArtworks: (options) ->
+  fetchSuggestedHomepageArtworks: (options = {}) ->
     new Artworks().fetch _.extend options,
       url: "#{ARTSY_URL}/api/v1/me/suggested/artworks/homepage"
 
