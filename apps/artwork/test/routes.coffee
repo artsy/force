@@ -30,8 +30,26 @@ describe 'Artwork routes', ->
       @res.locals.sd.ARTWORK.id.should.equal 'andy-foobar'
       @res.render.args[0][0].should.equal 'index'
 
+    it 'works with client side routes', ->
+      @res.locals.sd.CURRENT_PATH = '/artwork/andy-foobar/inquire'
+      @req.params.tab = 'inquire'
+      routes.index @req, @res
+      _.last(Backbone.sync.args)[2].success fabricate 'artwork', id: 'andy-foobar'
+      _.last(Backbone.sync.args)[2].success fabricate 'artist', id: 'andy-foobar-artist'
+      @res.locals.sd.ARTWORK.id.should.equal 'andy-foobar'
+      @res.locals.sd.ARTIST.id.should.equal 'andy-foobar-artist'
+      @res.render.args[0][0].should.equal 'index'
+
     it 'redirects to the correct artwork url', ->
       @res.locals.sd.CURRENT_PATH = '/artwork/andy-foobar-wrong'
+      routes.index @req, @res
+      _.last(Backbone.sync.args)[2].success fabricate 'artwork', id: 'andy-foobar'
+      _.last(Backbone.sync.args)[2].success fabricate 'artist', id: 'andy-foobar-artist'
+      @res.redirect.args[0][0].should.equal '/artwork/andy-foobar'
+
+    it 'redirects to the correct artwork page for client side routes fetched with a changed slug', ->
+      @res.locals.sd.CURRENT_PATH = '/artwork/andy-foobar-wrong/inquire'
+      @req.params.tab = 'inquire'
       routes.index @req, @res
       _.last(Backbone.sync.args)[2].success fabricate 'artwork', id: 'andy-foobar'
       _.last(Backbone.sync.args)[2].success fabricate 'artist', id: 'andy-foobar-artist'
