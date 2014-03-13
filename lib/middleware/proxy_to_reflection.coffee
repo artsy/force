@@ -4,9 +4,8 @@
 #
 
 { REFLECTION_URL } = require '../../config'
-httpProxy = require 'http-proxy'
-proxy = httpProxy.createProxyServer()
+request = require 'superagent'
 
 module.exports = (req, res, next) ->
   return next() unless req.query._escaped_fragment_?
-  proxy.web req, res, { target: REFLECTION_URL + req.url }
+  request.get(REFLECTION_URL + res.locals.sd.CURRENT_PATH).end((resp) -> res.send(resp.text))
