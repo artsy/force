@@ -4,6 +4,7 @@ ArtworkCollection = require './artwork_collection.coffee'
 Post              = require '../models/post.coffee'
 Genes             = require '../collections/genes.coffee'
 Artists           = require '../collections/artists.coffee'
+Artworks          = require '../collections/artworks.coffee'
 { ARTSY_URL, CURRENT_USER, SESSION_ID } = require('sharify').data
 Order = require './order.coffee'
 Genes = require '../collections/genes.coffee'
@@ -100,6 +101,10 @@ module.exports = class CurrentUser extends Backbone.Model
           else
             options.error
         error: options.error
+
+  fetchSuggestedHomepageArtworks: (options) ->
+    new Artworks().fetch _.extend options,
+      url: "#{ARTSY_URL}/api/v1/me/suggested/artworks/homepage"
 
   # Convenience for getting the bootstrapped user or returning null.
   # This should only be used on the client.
