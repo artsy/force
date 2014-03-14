@@ -5,10 +5,12 @@ should        = require 'should'
 Backbone      = require 'backbone'
 Partner       = require '../../models/partner'
 Profile       = require '../../models/profile'
+sinon         = require 'sinon'
 
 describe 'Profile', ->
 
   beforeEach ->
+    sinon.stub Backbone, 'sync'
     @profile = new Profile(fabricate('partner_profile',
       owner:
         type: "Museum"
@@ -24,6 +26,9 @@ describe 'Profile', ->
         y: 0
         width: 140
     ))
+
+  afterEach ->
+    Backbone.sync.restore()
 
   describe '#iconImageUrl', ->
 
@@ -116,3 +121,17 @@ describe 'Profile', ->
 
       @profile.set('bio', undefined)
       @profile.metaDescription().should.equal 'J. Paul Getty Museum on Artsy'
+
+  describe '#fetchFavorites', ->
+
+    it 'fetches the saved-artwork collection based on the owner', ->
+      @profile.get('owner').id = 'foobar'
+      @profile.fetchFavorites({})
+      Backbone.sync.args[0][1].url.should.include 'saved-artwork/artworks'
+
+    it 'returns feed items with a set url', (done) ->
+      @profile.get('owner').id = 'foobar'
+      @profile.fetchFavorites success: (items) ->
+        items.url.should.include 'saved-artwork/artworks'
+        done()
+      Backbone.sync.args[0][2].success [{ id: 'bar' }]
