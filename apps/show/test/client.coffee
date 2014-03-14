@@ -15,7 +15,6 @@ describe 'Partner Show View', ->
       sd.ARTSY_URL = 'localhost:3003'
       sd.ASSET_PATH = 'assets/'
       benv.expose { $: benv.require 'jquery' }
-      sinon.stub Backbone, 'sync'
       Backbone.$ = $
       @PartnerShowView = benv.requireWithJadeify resolve(__dirname, '../client/index.coffee'), ['artworkColumns']
       @PartnerShowView.__set__ 'CarouselView', benv.requireWithJadeify resolve(__dirname, '../../../components/carousel/view.coffee'), ['carouselTemplate']
@@ -26,9 +25,9 @@ describe 'Partner Show View', ->
 
   after ->
     benv.teardown()
-    Backbone.sync.restore()
 
   beforeEach ->
+    sinon.stub Backbone, 'sync'
     @show = new PartnerShow fabricate 'show', { images_count: 6, eligible_artworks_count: 6 }
     @profile = new Profile fabricate 'partner_profile'
     @installShots = [
@@ -55,19 +54,39 @@ describe 'Partner Show View', ->
         </div>")
       model: @show
 
+  afterEach ->
+    Backbone.sync.restore()
+
+
   describe '#initialize', ->
+
+    it 'always fetches install shots and artworks', ->
+      # Fetches install shots
+      Backbone.sync.args[0][2].url.should.equal "#{sd.ARTSY_URL}/api/v1/partner_show/#{@show.get('id')}/images"
+      # Don't fetch the cover that represents the show
+      Backbone.sync.args[0][2].data.default.should.be.false
+      # Fetches artworks
+      Backbone.sync.args[1][2].url.should.equal "#{@show.url()}/artworks"
 
     it 'renders install shots and artwork columns', ->
       @view.model.should.equal @show
 
       Backbone.sync.args[0][2].success @installShots
-      # 3x the number of install shots
+      Backbone.sync.args[0][2].success []
+      # 3x of the 6 install shots for the decoy lists in front and back
       @view.$('.carousel-figure').length.should.equal 18
 
       Backbone.sync.args[1][2].success @artworks
       Backbone.sync.args[1][2].success []
 
       @view.$('.artwork-item').length.should.equal 6
+
+    it 'removes carousel and artwork column containers if none are returned', ->
+      Backbone.sync.args[0][2].success []
+      @view.$('.carousel-figure').should.have.lengthOf 0
+
+      Backbone.sync.args[1][2].success []
+      @view.$('.artwork-item').should.have.lengthOf 0
 
     it 'adds the partner shows view', ->
       @PartnerShowButtons.calledWithNew.should.be.ok

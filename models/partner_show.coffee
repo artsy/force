@@ -9,6 +9,7 @@ Partner         = require './partner.coffee'
 PartnerLocation = require './partner_location.coffee'
 DateHelpers     = require '../components/util/date_helpers.coffee'
 { Image }       = require 'artsy-backbone-mixins'
+fetchUntilEnd   = require('artsy-backbone-mixins').Fetch().fetchUntilEnd
 
 module.exports = class PartnerShow extends Backbone.Model
 
@@ -95,7 +96,7 @@ module.exports = class PartnerShow extends Backbone.Model
       data   : { default: false }
       url    : "#{sd.ARTSY_URL}/api/v1/partner_show/#{@get('id')}/images"
     _.extend options, callbacks
-    @installShots.fetch options
+    fetchUntilEnd.call @installShots, options
 
   fetchArtworks: (callbacks) ->
     throw "You must pass a success callback" unless callbacks?.success? and _.isFunction(callbacks.success)
@@ -161,9 +162,6 @@ module.exports = class PartnerShow extends Backbone.Model
       city = "<i>#{city}</i> &ndash; "
     display = @get('fair_location').display
     _.compact([city, display]).join('')
-
-  carouselDisplay: -> if @get('images_count') > 0 then "block" else "none"
-  artworksDisplay: -> if @get('eligible_artworks_count') > 0 then "block" else "none"
 
   upcoming: -> @get('status') is 'upcoming'
   running: -> @get('status') is 'running'
