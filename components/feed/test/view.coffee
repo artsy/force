@@ -68,7 +68,6 @@ describe 'FeedView', ->
         next: "1390262261:52d09ba39c18db698900091a"
         results: [partnerShow, post]
 
-      sinon.stub @view.trackArtworkImpressions
       @view.fetchMoreItems()
 
       Backbone.sync.args[0][2].success response
