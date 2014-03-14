@@ -2,7 +2,7 @@
 -   var exceptions, currentPath;
 -   exceptions    = ['/about'];
 -   path          = path.replace(/\/$/, ''); // Strip trailing slash
--   currentPath   = sd.CURRENT_PATH.split('?').shift().replace(/\/$/, ''); // Strip trailing slash and query string
+-   currentPath   = sd.CURRENT_PATH.replace(/\/$/, ''); // Strip trailing slash
 -   if (exceptions.indexOf(path) != -1) {
 -     return currentPath.indexOf(path) != -1;
 -   } else {

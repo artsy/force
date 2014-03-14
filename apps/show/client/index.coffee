@@ -30,12 +30,10 @@ module.exports.PartnerShowView = class PartnerShowView extends Backbone.View
             el        : @$carousel
             collection: installShots
             height    : 400
-          # We hide the carousel if images_count is < 1
-          # but need to show it again if the count was inaccurate
-          @$carousel.css(display: 'block')
         else
           @$carousel.remove()
-      error: => @$carousel.remove()
+      error: =>
+        @$carousel.remove()
 
     @model.fetchArtworks
       success: (artworks) =>

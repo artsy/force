@@ -24,7 +24,7 @@ getTemplateForProfileType = (profile) ->
 
 @index = (req, res, next) ->
   fetchProfile req, res, next, (profile) ->
-    if profile.href() != req.originalUrl
+    if profile.href() != res.locals.sd.CURRENT_PATH
       res.redirect profile.href()
     else
       return overview(req, res, next) if profile.isFairOranizer()

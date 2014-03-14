@@ -18,9 +18,19 @@ module.exports.Layer = class Layer extends Backbone.Model
     @artworks = new Artworks
     @artworks.url = "#{ARTSY_URL}/api/v1/related/layer/#{@get('type')}/#{@id}/artworks?artwork[]=#{@get('artwork_id')}"
 
+  forSale: ->
+    (@get('type') is 'synthetic') and (@id is 'for-sale')
+
   label: ->
-    return @id if (@get('type') is 'synthetic') and (@id is 'for-sale')
-    @get 'type'
+    if @forSale() then @id else @get('type')
+
+  text: ->
+    text = if @forSale() then 'all for sale works' else "“#{@get('name')}”"
+    "Go to #{text}"
+
+  href: ->
+    return '/browse/artworks?price_range=-1%3A1000000000000' if @forSale()
+    return "/gene/#{@id}" if @get('type') is 'gene'
 
 module.exports.Layers = class Layers extends Backbone.Collection
   url: "#{ARTSY_URL}/api/v1/related/layers"
@@ -76,6 +86,8 @@ module.exports.LayeredSearchView = class LayeredSearchView extends Backbone.View
     analytics.track.click "Switched to related artworks: #{@__activeLayer__.label()}" if e
 
   fetchAndRenderActiveLayer: ->
+    @$layerGeneButton.attr 'data-state', 'inactive'
+
     if @activeLayer().artworks.length
       # Already fetched
       @renderLayer()
@@ -91,11 +103,21 @@ module.exports.LayeredSearchView = class LayeredSearchView extends Backbone.View
     $target.attr 'data-state', 'active'
 
   renderLayer: ->
+    layer = @activeLayer()
+
+    @$layerGeneButton.
+      text(layer.text()).
+      attr
+        href: layer.href()
+        'data-id': layer.id
+        'data-type': layer.get 'type'
+        'data-state': 'active'
+
     # Ideally we should be removing this view before re-rendering
     # which would require a small refactor to the ArtworkColumns component
     @artworkColumnsView = new ArtworkColumnsView
       el: @$layeredSearchResults
-      collection: @activeLayer().artworks
+      collection: layer.artworks
       numberOfColumns: 4
       gutterWidth: 40
       maxArtworkHeight: 400
@@ -105,7 +127,8 @@ module.exports.LayeredSearchView = class LayeredSearchView extends Backbone.View
       artworkSize: 'tall'
 
   postRender: ->
-    @$layeredSearchResults  = @$('#layered-search-results')
+    @$layeredSearchResults  = @$('#layered-search-results-container')
+    @$layerGeneButton       = @$('#layered-search-layer-gene-button')
     @$layerButtons          = @$('.layered-search-layer-button')
     @selectLayer() # Activate the first tab
 

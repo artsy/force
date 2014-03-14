@@ -8,7 +8,12 @@ Backbone  = require 'backbone'
     cache   : true
     error   : res.backboneError
     success : (model, response, options) ->
-      if artwork.href() == req.originalUrl
+      # Remove the current artwork tab from the path to more easily test against artwork.href()
+      artworkPath = res.locals.sd.CURRENT_PATH
+      if req.params?.tab
+        artworkPath = artworkPath.replace("/#{req.params.tab}", '')
+
+      if artworkPath == artwork.href()
         res.locals.sd.ARTWORK = response
         if artwork.get('artist')
           artist = new Artist artwork.get('artist')

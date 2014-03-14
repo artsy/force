@@ -37,8 +37,7 @@ describe 'Partner Show', ->
 
     describe 'template', ->
 
-      it 'renders a container for install shots if the show has them', ->
-        @show.set 'images_count', 3
+      it 'always renders a container for install shots with a spinner while fetching', ->
         @html = render('template')({
           fair    : @show.fair()
           location: @show.location()
@@ -81,10 +80,6 @@ describe 'Partner Show', ->
         $('#show-left-info').should.have.lengthOf 1
         $('#show-left-info').text().should.include @show.fair().get('name')
 
-      it 'renders the install shot carousel container if there are no install shots', ->
-        $ = cheerio.load @html
-        $('.carousel').should.have.lengthOf 1
-
       it 'renders social sharing links', ->
         $ = cheerio.load @html
         $('.show-share').should.have.lengthOf 1
@@ -121,20 +116,7 @@ describe 'Partner Show', ->
 
     describe 'template', ->
 
-      it 'renders a container for install shots if the show has them', ->
-        @show.set 'images_count', 3
-        @html = render('template')({
-          fair    : @show.fair()
-          location: @show.location()
-          partner : @show.partner()
-          sd      : sd
-          show    : @show
-          profile : @profile
-        })
-        $ = cheerio.load @html
-        $('.carousel').should.have.lengthOf 1
-
-      it 'renders the install shot carousel container if there are no install shots', ->
+      it 'renders a conainer for install shots', ->
         $ = cheerio.load @html
         $('.carousel').should.have.lengthOf 1
 

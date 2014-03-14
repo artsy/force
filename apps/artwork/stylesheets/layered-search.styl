@@ -11,3 +11,13 @@
 #layered-search-results
   position relative
   min-height 400px
+
+#layered-search-layer-gene-button-container
+  margin 20px 0
+  text-align center
+#layered-search-layer-gene-button
+  &[data-type='gene']
+  &[data-type='synthetic'][data-id='for-sale']
+    display inline-block
+  &, &[data-state='inactive']
+    display none

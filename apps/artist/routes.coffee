@@ -8,7 +8,7 @@ Following   = require '../../components/follow_button/collection'
   new Artist(id: req.params.id).fetch
     cache  : true
     success: (artist) ->
-      if artist.href() == req.originalUrl
+      if artist.href() == res.locals.sd.CURRENT_PATH
         res.locals.sd.ARTIST = artist.toJSON()
         res.locals.sd.sortBy = sort
         res.render 'index', artist: artist, sortBy: sort

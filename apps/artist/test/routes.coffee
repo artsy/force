@@ -10,8 +10,8 @@ describe 'Artist routes', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    @req = { params: { id: 'foo' }, query: { sort: '-published_at' }, originalUrl: '/artist/andy-foobar' }
-    @res = { render: sinon.stub(), redirect: sinon.stub(), locals: { sd: { ARTSY_URL: 'http://localhost:5000'} } }
+    @req = { params: { id: 'foo' }, query: { sort: '-published_at' } }
+    @res = { render: sinon.stub(), redirect: sinon.stub(), locals: { sd: { ARTSY_URL: 'http://localhost:5000', CURRENT_PATH: '/artist/andy-foobar'} } }
 
   afterEach ->
     Backbone.sync.restore()
@@ -41,7 +41,7 @@ describe 'Artist routes', ->
       @res.locals.sd.sortBy.should.equal ''
 
     it 'redirects to canonical url', ->
-      @req.originalUrl = '/artist/bar'
+      @res.locals.sd.CURRENT_PATH = '/artist/bar'
       routes.index @req, @res
       _.last(Backbone.sync.args)[2].success fabricate 'artist', id: 'andy-foobar'
       @res.redirect.args[0][0].should.equal '/artist/andy-foobar'

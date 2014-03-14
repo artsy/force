@@ -8,7 +8,7 @@ describe 'Posts route', ->
 
   beforeEach ->
     @req = { params: {} }
-    @res = { render: sinon.stub(), redirect: sinon.stub(), locals: { sd: {} } }
+    @res = { render: sinon.stub(), redirect: sinon.stub(), locals: { sd: { CURRENT_PATH: '/posts' } } }
 
   describe '#index', ->
 
