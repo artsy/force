@@ -135,3 +135,10 @@ describe 'Profile', ->
         items.url.should.include 'saved-artwork/artworks'
         done()
       Backbone.sync.args[0][2].success [{ id: 'bar' }]
+
+  describe '#fetchPosts', ->
+
+    it 'fetches posts', ->
+      @profile.set id: 'moobar'
+      @profile.fetchPosts({})
+      Backbone.sync.args[0][2].url.should.include 'profile/moobar/posts'
