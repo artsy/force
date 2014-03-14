@@ -6,16 +6,16 @@
     border-bottom 0
   #profile-feed, #profile-favorites
     display none
-  &[data-state=posts-]
+  &[data-state=posts]
     #profile-feed
       display block
-  &[data-state=-favorites]
+  &[data-state=favorites]
     #profile-favorites
       display block
-  &[data-state=posts-favorites]
+  &[data-state=postsfavorites]
     #profile-feed
       display block
-  &[data-state='-']
+  &[data-state='']
     #profile-feed-none
       display block
   &[data-state]
@@ -44,13 +44,13 @@
   border-bottom 1px solid light-gray-border-color
   .garamond-tablist
     opacity 0
-  &[data-state=posts-], &[data-state='-'], &[data-state=-favorites]
+  &[data-state=posts], &[data-state=''], &[data-state=favorites]
     .garamond-tablist
       display none
-  &[data-state=-favorites]
+  &[data-state=favorites]
     #profile-favorites-header
       display block
-  &[data-state=posts-favorites]
+  &[data-state=postsfavorites]
     .garamond-tablist
       opacity 1
 

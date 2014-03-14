@@ -27,6 +27,17 @@ module.exports = class UserProfileView extends Backbone.View
     @renderPosts()
     @renderFavorites()
 
+  renderState: ->
+    args = [
+      'data-state'
+      [
+        if @posts?.length then 'posts' else ''
+        if @favorites?.length then 'favorites' else ''
+      ].join('')
+    ]
+    @$('#profile-tabs').attr args...
+    @$el.attr args...
+
   renderPosts: ->
     return unless @posts?.length
     new PoplockitFeed
@@ -43,14 +54,3 @@ module.exports = class UserProfileView extends Backbone.View
       numberOfColumns: Math.round @$el.width() / COLUMN_WIDTH
       gutterWidth: 40
     @columnsView.appendArtworks @favorites.models
-
-  renderState: ->
-    args = [
-      'data-state'
-      [
-        if @posts?.length then 'posts' else ''
-        if @favorites?.length then 'favorites' else ''
-      ].join('-')
-    ]
-    @$('#profile-tabs').attr args...
-    @$el.attr args...
