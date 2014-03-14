@@ -98,8 +98,6 @@ module.exports.multi = (description, modelName, ids) ->
       , (500 * index) + 1)
     )(@encodeMulti(chunk))
 
-module.exports.trackImpression = (modelName, ids) -> @multi('Impression', modelName, ids)
-
 module.exports.getProperty = (property) ->
   mixpanel?.get_property property
 
