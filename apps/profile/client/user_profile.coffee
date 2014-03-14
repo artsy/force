@@ -29,23 +29,13 @@ module.exports = class UserProfileView extends Backbone.View
     @renderFavorites()
 
   renderState: ->
-    @$('#profile-tabs').attr(
-      'data-state'
+    @$el.attr('data-has',
       [
         if @posts?.length then 'posts' else ''
         if @favorites?.length then 'favorites' else ''
       ].join('')
     )
-    if CURRENT_PATH is "/#{@model.get 'id'}/posts" or
-       CURRENT_PATH is "/#{@model.get('id')}" and @posts?.length
-        @$el.attr 'data-state', 'posts'
-        @$('#profile-tabs a[href*=posts]').addClass 'is-active'
-    else if CURRENT_PATH is "/#{@model.get 'id'}/favorites" or
-            CURRENT_PATH is "/#{@model.get('id')}" and @favorites?.length
-      @$el.attr 'data-state', 'favorites'
-      @$('#profile-tabs a[href*=favorites]').addClass 'is-active'
-    else
-      @$el.attr 'data-state', ''
+    @$el.attr 'data-path', CURRENT_PATH
 
   renderPosts: ->
     return unless @posts?.length

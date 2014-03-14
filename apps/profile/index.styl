@@ -4,23 +4,47 @@
   margin-top 50px
   .profile-header
     border-bottom 0
-  #profile-feed, #profile-favorites
-    display none
-  &[data-state=posts]
-    #profile-feed
+
+  // Hide/Show things depending on what combination of favorites/posts the user has
+  &[data-has=posts], &[data-has=''], &[data-has=favorites]
+    .garamond-tablist
+      display none
+  &[data-has=favorites]
+    #profile-favorites-header
       display block
-  &[data-state=favorites]
-    #profile-favorites
-      display block
-  &[data-state=postsfavorites]
-    #profile-feed
-      display block
-  &[data-state='']
-    #profile-feed-none
-      display block
-  &[data-state]
+  &[data-has=postsfavorites]
+    .garamond-tablist
+      opacity 1
+
+  // Hide/Show things depending on what route we're in
+  &[data-path]
     #profile-spinner
       display none
+  &[data-path*=posts]
+    #profile-feed
+      display block
+    #profile-tabs a[href*=posts]
+      color highlight-color
+      border-bottom 1px solid highlight-underline-color
+  &[data-path*=favorites]
+    #profile-favorites
+      display block
+    #profile-tabs a[href*=favorites]
+      color highlight-color
+      border-bottom 1px solid highlight-underline-color
+  &:not([data-path*=posts]):not([data-path*=favorites])
+    &[data-has=favorites]
+      #profile-favorites, #profile-favorites-header
+        display block
+    &[data-has=posts]
+      #profile-feed
+        display block
+    &[data-has='']
+      #profile-feed-none
+        display block
+
+#profile-feed, #profile-feed-none, #profile-favorites, #profile-favorites-header
+  display none
 
 #profile-spinner
   position relative
@@ -31,7 +55,6 @@
   padding 30px 0
   font-style italic
   font-size 18px
-  display none
 
 #profile-favorites-header
   display none
@@ -44,15 +67,6 @@
   border-bottom 1px solid light-gray-border-color
   .garamond-tablist
     opacity 0
-  &[data-state=posts], &[data-state=''], &[data-state=favorites]
-    .garamond-tablist
-      display none
-  &[data-state=favorites]
-    #profile-favorites-header
-      display block
-  &[data-state=postsfavorites]
-    .garamond-tablist
-      opacity 1
 
 #profile-favorites
   padding layout-side-margin
