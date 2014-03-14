@@ -3,10 +3,8 @@ sd            = require('sharify').data
 Backbone      = require 'backbone'
 CoverImage    = require './cover_image.coffee'
 Icon          = require './icon.coffee'
+Artworks      = require '../collections/artworks.coffee'
 { Markdown }  = require 'artsy-backbone-mixins'
-User          = require './user.coffee'
-FeedItems     = require '../components/feed/collections/feed_items.coffee'
-
 _.mixin(require 'underscore.string')
 
 module.exports = class Profile extends Backbone.Model
@@ -102,24 +100,24 @@ module.exports = class Profile extends Backbone.Model
     @get('posts_count') > 0 or @get('reposts_count') > 0
 
   fetchFavorites: (options) ->
-    owner = new User @get 'owner'
-    owner.fetch
-      error: options.error
-      success: =>
-        owner.initializeDefaultArtworkCollection
-          error: options.error
-          success: =>
-            if owner.defaultArtworkCollection().displayable()
-              options.success owner.defaultArtworkCollection()
-            else
-              options.success null
+    @favorites ?= new Artworks
+    @favorites.url = "#{sd.ARTSY_URL}/api/v1/collection/saved-artwork/artworks"
+    @favorites.fetch _.extend options,
+      data: _.extend options.data ? {},
+        sort: '-position'
+        user_id: @get('owner').id
+        private: true
+    @favorites
 
   fetchPosts: (options) ->
+    # Avoid circular dependency by lazy-requiring
+    FeedItems = require '../components/feed/collections/feed_items.coffee'
     success = options.success
     url = "#{sd.ARTSY_URL}/api/v1/profile/#{@get 'id'}/posts"
     new FeedItems().fetch _.extend options,
       url: url
       data: { size: 3 }
-      success: (items) =>
+      error: options.error
+      success: (items) ->
         items.urlRoot = url if items.length
         success items
