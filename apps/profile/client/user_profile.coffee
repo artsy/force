@@ -52,4 +52,12 @@ module.exports = class UserProfileView extends Backbone.View
       artworkSize: 'tall'
       numberOfColumns: Math.round @$el.width() / COLUMN_WIDTH
       gutterWidth: 40
+    @favorites.on 'sync', (c, res) =>
+      @columnsView.appendArtworks new Artworks(res).models
+    @$el.infiniteScroll =>
+      @favorites.params.page++
+      @favorites.fetch(data: @favorites.params).then (res) =>
+        return unless res.length is 0
+        @$('#profile-favorites-spinner').hide()
+        @$el.off 'infiniteScroll'
     @columnsView.appendArtworks @favorites.models

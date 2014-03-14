@@ -27,14 +27,14 @@
       color highlight-color
       border-bottom 1px solid highlight-underline-color
   &[data-path*=favorites]
-    #profile-favorites
+    #profile-favorites, #profile-favorites-spinner
       display block
     #profile-tabs a[href*=favorites]
       color highlight-color
       border-bottom 1px solid highlight-underline-color
   &:not([data-path*=posts]):not([data-path*=favorites])
     &[data-has=favorites]
-      #profile-favorites, #profile-favorites-header
+      #profile-favorites, #profile-favorites-header, #profile-favorites-spinner
         display block
     &[data-has=posts]
       #profile-feed
@@ -43,10 +43,11 @@
       #profile-feed-none
         display block
 
-#profile-feed, #profile-feed-none, #profile-favorites, #profile-favorites-header
+#profile-feed, #profile-feed-none, #profile-favorites, #profile-favorites-header,
+#profile-favorites-spinner
   display none
 
-#profile-spinner
+#profile-spinner, #profile-favorites-spinner
   position relative
   padding 200px
 

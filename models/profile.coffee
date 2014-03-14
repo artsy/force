@@ -100,14 +100,15 @@ module.exports = class Profile extends Backbone.Model
     @get('posts_count') > 0 or @get('reposts_count') > 0
 
   fetchFavorites: (options) ->
-    @favorites ?= new Artworks
-    @favorites.url = "#{sd.ARTSY_URL}/api/v1/collection/saved-artwork/artworks"
-    @favorites.fetch _.extend options,
-      data: _.extend options.data ? {},
-        sort: '-position'
-        user_id: @get('owner').id
-        private: true
-    @favorites
+    favorites = new Artworks
+    favorites.url = "#{sd.ARTSY_URL}/api/v1/collection/saved-artwork/artworks"
+    favorites.params = _.extend {
+      sort: '-position'
+      user_id: @get('owner').id
+      private: true
+      page: 1
+    }, options.data
+    favorites.fetch _.extend options, data: favorites.params
 
   fetchPosts: (options) ->
     # Avoid circular dependency by lazy-requiring
