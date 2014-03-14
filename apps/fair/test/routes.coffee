@@ -65,6 +65,8 @@ describe 'Fair routes', ->
 
     it 'redirects to the homepage without a user', ->
       routes.favorites @req, @res
+      _.last(Backbone.sync.args)[2].success fabricate 'fair_profile'
+      _.last(Backbone.sync.args)[2].success fabricate 'fair'
       @res.redirect.args[0][0].should.equal '/some-fair'
 
     it 'renders the favorites template', ->
