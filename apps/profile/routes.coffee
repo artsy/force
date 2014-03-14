@@ -44,6 +44,7 @@ getTemplateForProfileType = (profile) ->
       res.redirect profile.href()
 
 @favorites = (req, res, next) ->
+  console.log 'FAV'
   fetchProfile req, res, next, (profile) ->
     if profile.isUser()
       res.render getTemplateForProfileType(profile),

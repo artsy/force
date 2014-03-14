@@ -12,7 +12,7 @@ block body
     include ../../../components/profile_header/template
     header#profile-tabs
       .garamond-tablist
-        a.garamond-tab.is-active( href="/#{profile.get('id')}/posts" ) Posts
+        a.garamond-tab( href="/#{profile.get('id')}/posts" ) Posts
         span.garamond-tab-separator
         a.garamond-tab( href="/#{profile.get('id')}/favorites" ) Favorites
       #profile-favorites-header.garamond-header-center Favorites

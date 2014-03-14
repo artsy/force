@@ -7,6 +7,7 @@ FeedItems = require '../../../components/feed/collections/feed_items.coffee'
 PoplockitFeed = require('../../../components/feed/client/poplockit_feed.coffee')
 ArtworkColumnsView = require('../../../components/artwork_columns/view.coffee')
 Artworks = require '../../../collections/artworks.coffee'
+{ CURRENT_PATH } = require('sharify').data
 
 COLUMN_WIDTH = 300
 
@@ -28,15 +29,23 @@ module.exports = class UserProfileView extends Backbone.View
     @renderFavorites()
 
   renderState: ->
-    args = [
+    @$('#profile-tabs').attr(
       'data-state'
       [
         if @posts?.length then 'posts' else ''
         if @favorites?.length then 'favorites' else ''
       ].join('')
-    ]
-    @$('#profile-tabs').attr args...
-    @$el.attr args...
+    )
+    if CURRENT_PATH is "/#{@model.get 'id'}/posts" or
+       CURRENT_PATH is "/#{@model.get('id')}" and @posts?.length
+        @$el.attr 'data-state', 'posts'
+        @$('#profile-tabs a[href*=posts]').addClass 'is-active'
+    else if CURRENT_PATH is "/#{@model.get 'id'}/favorites" or
+            CURRENT_PATH is "/#{@model.get('id')}" and @favorites?.length
+      @$el.attr 'data-state', 'favorites'
+      @$('#profile-tabs a[href*=favorites]').addClass 'is-active'
+    else
+      @$el.attr 'data-state', ''
 
   renderPosts: ->
     return unless @posts?.length
