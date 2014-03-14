@@ -1,6 +1,5 @@
 _                       = require 'underscore'
 Backbone                = require 'backbone'
-Artworks                = require '../../../models/artwork.coffee'
 sd                      = require('sharify').data
 analytics               = require('../../../lib/analytics.coffee')
 ShareView               = require '../../share/view.coffee'

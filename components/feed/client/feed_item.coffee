@@ -9,6 +9,7 @@ SaveControls            = require '../../artwork_item/views/save_controls.coffee
 ContactPartnerView      = require '../../contact/contact_partner.coffee'
 artworkColumns          = -> require('../../artwork_columns/template.jade') arguments...
 Artwork                 = require('../../../models/artwork.coffee')
+trackArtworkImpressions = require("../../analytics/impression_tracking.coffee").trackArtworkImpressions
 
 module.exports.FeedItemView = class FeedItemView extends Backbone.View
 
@@ -27,6 +28,7 @@ module.exports.FeedItemView = class FeedItemView extends Backbone.View
     _.defer =>
       @setupArtworkSaveControls()
       @setupShareButtons()
+      @setupArtworkImpressionTracking()
 
   moreArtworksClick: (event) =>
     analytics.track.click "Clicked show all artworks on feed item"
@@ -42,7 +44,10 @@ module.exports.FeedItemView = class FeedItemView extends Backbone.View
         @setupArtworkSaveControls artworks
     false
 
-  setupArtworkSaveControls: (artworks=@model.artworks().models)->
+  setupArtworkImpressionTracking: (artworks=@model.artworks().models) ->
+    trackArtworkImpressions artworks, @$el
+
+  setupArtworkSaveControls: (artworks=@model.artworks().models) ->
     listItems =
       for artwork in artworks
         overlay = @$(".artwork-item[data-artwork='#{artwork.get('id')}']").find('.overlay-container')

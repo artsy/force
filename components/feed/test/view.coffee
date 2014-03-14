@@ -6,6 +6,7 @@ FeedView      = benv.requireWithJadeify resolve(__dirname, '../client/feed.coffe
 sd            = require('sharify').data
 FeedItem      = require '../models/feed_item'
 FeedItems     = require '../collections/feed_items'
+analytics     = require '../../../lib/analytics'
 { fabricate } = require 'antigravity'
 
 describe 'FeedView', ->
@@ -16,8 +17,14 @@ describe 'FeedView', ->
       sd.ASSET_PATH = 'assets/'
       sd.CURRENT_PATH = ""
       sd.NODE_ENV = 'test'
+      sd.GOOGLE_ANALYTICS_ID = 'goog that analytics'
+
       benv.expose { $: benv.require 'jquery' }
       sinon.stub Backbone, 'sync'
+
+      @gaStub = sinon.stub()
+      analytics ga: @gaStub, location: { pathname: 'foobar' }
+
       Backbone.$  = $
       @partnerShow = new FeedItem fabricate('show',
         _type: "PartnerShow",

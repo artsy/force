@@ -3,7 +3,7 @@ Backbone       = require 'backbone'
 template       = -> require('./template.jade') arguments...
 SaveControls   = require('../artwork_item/views/save_controls.coffee')
 sd             = require('sharify').data
-trackListItems = require("../analytics/impression_tracking.coffee").trackListItems
+trackArtworkImpressions = require("../analytics/impression_tracking.coffee").trackArtworkImpressions
 
 module.exports = class FillwidthView extends Backbone.View
 
@@ -39,7 +39,7 @@ module.exports = class FillwidthView extends Backbone.View
           model: artwork
           el: $($list[index]).find('.overlay-container')
 
-    trackListItems listItems, $list
+    trackArtworkImpressions artworks.models, $list
     @syncSavedArtworks(artworks) if @artworkCollection
 
   syncSavedArtworks: (artworks) ->
