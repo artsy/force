@@ -11,6 +11,11 @@ express = require 'express'
 
 app = module.exports = express()
 
-for route in ['/post', '/oauth2*', '/api/*', '/robots.txt', '/humans.txt', '/sitemap*', "/user/delete", "/user/edit", "/profile/edit"]
+ROUTES = [
+  '/post', '/oauth2*', '/api/*', '/robots.txt', '/sitemap*',
+  "/user/delete", "/user/edit", "/profile/edit"
+]
+
+for route in ROUTES
   app.all route, (req, res) ->
     proxy.web req, res, { target: ARTSY_URL }
