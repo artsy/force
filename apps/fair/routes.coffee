@@ -7,6 +7,8 @@ Profile = require '../../models/profile.coffee'
 Fair = require '../../models/fair.coffee'
 Search = require '../../collections/search.coffee'
 FilterSuggest = require '../../models/filter_suggest.coffee'
+OrderedSets = require '../collections/ordered_sets.coffee'
+cache = require '../../lib/cache'
 
 #
 # Helpers for fetching the Fair
@@ -98,13 +100,39 @@ fetchFairData = (fair, profile, res, options) ->
 
 # Called from profile/routes
 @overview = (req, res, next) ->
-  fetchFair req, res, next, (fair, profile) ->
-    fetchFairData fair, profile, res,
-      success: (data) ->
-        res.locals.sd.SECTION = 'overview'
-        # TODO: Dependent on attribute of fair
-        res.locals.sd.BODY_CLASS = 'body-transparent-header'
-        res.render '../fair/templates/overview', data
+  key = "fair:#{req.params.id}"
+
+  render = (data) ->
+    res.locals.sd.SECTION = 'overview'
+    # TODO: Dependent on attribute of fair
+    res.locals.sd.BODY_CLASS = 'body-transparent-header'
+    res.render '../fair/templates/overview', data
+
+  cache.client.get key, (err, json) ->
+    return next err if err
+    if json
+      data = JSON.parse json
+      render {
+        fair: new Fair(data.fair)
+        profile: new Profile(data.fair)
+        filteredSearchOptions: new FilterSuggest(data.filterSuggest)
+        sections: new Backbone.Collection(data.sections)
+        primarySets: new OrderedSets
+      }
+    else
+      # TODO: Replace this profile fetch for a more generic solution:
+      # https://www.pivotaltracker.com/story/show/67567624
+      new Profile(id: req.params.id).fetch
+        error: res.backboneError
+        success: (profile) ->
+          return next() unless profile.isFairOranizer()
+
+          # After the above TODO we should be able to just call req.profile.get('owner')
+          new Fair(id: profile.get('owner').default_fair_id).fetchOverviewData
+            error: res.backboneError
+            success: (data) ->
+              render data
+              cache.setHashToJSON key, data
 
 @browse = (req, res, next) ->
   fetchFair req, res, next, (fair, profile) ->
