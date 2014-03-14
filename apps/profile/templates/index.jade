@@ -5,9 +5,21 @@ block head
 
 append locals
   - assetPackage = 'profile'
+  - bodyClass = bodyClass + ' body-no-margins'
 
 block body
   #profile
     include ../../../components/profile_header/template
-    .profile-tabs-container
-    .feed
+    header#profile-tabs
+      .garamond-tablist
+        a.garamond-tab( href="/#{profile.get('id')}/posts" ) Posts
+        span.garamond-tab-separator
+        a.garamond-tab( href="/#{profile.get('id')}/favorites" ) Favorites
+      #profile-favorites-header.garamond-header-center Favorites
+    #profile-spinner
+      .loading-spinner
+    #profile-feed.feed
+    #profile-favorites.main-layout-container
+    #profile-favorites-spinner
+      .loading-spinner
+    #profile-feed-none #{profile.get('owner').name} has no posts.

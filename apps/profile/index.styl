@@ -1,2 +1,73 @@
+@import '../../components/stylus_lib'
+
 #profile
   margin-top 50px
+  .profile-header
+    border-bottom 0
+
+  // Hide/Show things depending on what combination of favorites/posts the user has
+  &[data-has=posts], &[data-has=''], &[data-has=favorites]
+    .garamond-tablist
+      display none
+  &[data-has=favorites]
+    #profile-favorites-header
+      display block
+  &[data-has=postsfavorites]
+    .garamond-tablist
+      opacity 1
+
+  // Hide/Show things depending on what route we're in
+  &[data-path]
+    #profile-spinner
+      display none
+  &[data-path*=posts]
+    #profile-feed
+      display block
+    #profile-tabs a[href*=posts]
+      color highlight-color
+      border-bottom 1px solid highlight-underline-color
+  &[data-path*=favorites]
+    #profile-favorites, #profile-favorites-spinner
+      display block
+    #profile-tabs a[href*=favorites]
+      color highlight-color
+      border-bottom 1px solid highlight-underline-color
+  &:not([data-path*=posts]):not([data-path*=favorites])
+    &[data-has=favorites]
+      #profile-favorites, #profile-favorites-header, #profile-favorites-spinner
+        display block
+    &[data-has=posts]
+      #profile-feed
+        display block
+    &[data-has='']
+      #profile-feed-none
+        display block
+
+#profile-feed, #profile-feed-none, #profile-favorites, #profile-favorites-header,
+#profile-favorites-spinner
+  display none
+
+#profile-spinner, #profile-favorites-spinner
+  position relative
+  padding 200px
+
+#profile-feed-none
+  text-align center
+  padding 30px 0
+  font-style italic
+  font-size 18px
+
+#profile-favorites-header
+  display none
+  font-size 28px
+
+#profile-tabs
+  text-align center
+  font-size 18px
+  padding-bottom 20px
+  border-bottom 1px solid light-gray-border-color
+  .garamond-tablist
+    opacity 0
+
+#profile-favorites
+  padding layout-side-margin
