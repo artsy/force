@@ -78,12 +78,24 @@ describe 'Layers, Layer', ->
       layer.artworks.url.
         should.include "/api/v1/related/layer/#{layer.get('type')}/#{layer.id}/artworks?artwork[]=#{layer.get('artwork_id')}"
 
-    it 'should have the appropriate label', ->
-      @layers.add(type: 'synthetic', id: 'main').label().should.equal 'synthetic'
-      @layers.add(type: 'synthetic', id: 'for-sale').label().should.equal 'for-sale'
-      @layers.add(type: 'gene', id: 'foobarable').label().should.equal 'gene'
-      @layers.add(type: 'fair', id: 'the-armory-show').label().should.equal 'fair'
-      @layers.add(type: 'tag', id: 'boring').label().should.equal 'tag'
+    describe '#label', ->
+      it 'should have the appropriate label', ->
+        @layers.add(type: 'synthetic', id: 'main').label().should.equal 'synthetic'
+        @layers.add(type: 'synthetic', id: 'for-sale').label().should.equal 'for-sale'
+        @layers.add(type: 'gene', id: 'foobarable').label().should.equal 'gene'
+        @layers.add(type: 'fair', id: 'the-armory-show').label().should.equal 'fair'
+        @layers.add(type: 'tag', id: 'boring').label().should.equal 'tag'
+
+    describe '#text', ->
+      it 'has the appropriate link text', ->
+        @layers.add(type: 'synthetic', id: 'for-sale').text().should.equal 'Go to all for sale works'
+        @layers.add(type: 'gene', name: 'Foo Bar').text().should.equal 'Go to “Foo Bar”'
+
+    describe '#href', ->
+      it 'has the appropriate href', ->
+        @layers.add(type: 'synthetic', id: 'for-sale').href().should.equal '/browse/artworks?price_range=-1%3A1000000000000'
+        @layers.add(type: 'gene', id: 'cool').href().should.equal '/gene/cool'
+        _.isUndefined(@layers.add(type: 'synthetic', id: 'main').href()).should.be.ok
 
 describe 'LayeredSearchView', ->
   before (done) ->
