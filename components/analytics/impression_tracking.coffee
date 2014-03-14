@@ -16,6 +16,5 @@ module.exports.trackArtworkImpressions = (artworks, $container) ->
     if ($window.scrollTop() + ($window.height() or 0)) >= top
       $window.off(".#{eventId}")
       viewedArtworkIds = _.compact(_.map(artworks, (artwork) -> artwork.get('id') ))
-      console.log viewedArtworkIds
       analytics.trackImpression 'Artwork', viewedArtworkIds
   , 500)

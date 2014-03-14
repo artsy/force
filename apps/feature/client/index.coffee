@@ -7,6 +7,7 @@ SaleArtworkView = require '../../../components/artwork_item/views/sale_artwork.c
 artworkColumns  = -> require('../../../components/artwork_columns/template.jade') arguments...
 setsTemplate    = -> require('../templates/sets.jade') arguments...
 artistsTemplate = -> require('../templates/artists.jade') arguments...
+trackArtworkImpressions = require("../../../components/analytics/impression_tracking.coffee").trackArtworkImpressions
 
 module.exports.FeatureView = class FeatureView extends Backbone.View
 
@@ -26,6 +27,11 @@ module.exports.FeatureView = class FeatureView extends Backbone.View
         @setupSaleArtworks artworks
         if (set and set.get('display_artist_list'))
           @renderArtistList artworks
+
+        @setupArtworkImpressionTracking artworks.models
+
+  setupArtworkImpressionTracking: (artworks) ->
+    trackArtworkImpressions artworks, @$el
 
   setupCurrentUser: ->
     @currentUser = CurrentUser.orNull()
