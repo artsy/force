@@ -5,9 +5,11 @@ Backbone        = require 'backbone'
 Artworks            = require '../../../collections/artworks.coffee'
 ArtworkColumnsView  = require '../../../components/artwork_columns/view.coffee'
 SaleArtworkView     = require '../../../components/artwork_item/views/sale_artwork.coffee'
+trackArtworkImpressions = require("../../../components/analytics/impression_tracking.coffee").trackArtworkImpressions
 
 template                = -> require('../templates/sale.jade') arguments...
 artworkColumnsTemplate  = -> require('../../../components/artwork_columns/template.jade') arguments...
+
 
 module.exports = class SaleView extends Backbone.View
   initialize: (options) ->
@@ -20,8 +22,12 @@ module.exports = class SaleView extends Backbone.View
         @artworks = Artworks.fromSale @saleArtworks
         @render()
         @setupSaleArtworkViews()
+        @setupArtworkImpressionTracking @artworks.models
       error: =>
         @remove()
+
+  setupArtworkImpressionTracking: (artworks) ->
+    trackArtworkImpressions artworks, @$el
 
   setupSaleArtworkViews: ->
     @saleArtworkViews = @artworks.map (artwork) =>

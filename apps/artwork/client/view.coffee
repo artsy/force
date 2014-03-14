@@ -10,6 +10,7 @@ analytics             = require '../../../lib/analytics.coffee'
 acquireArtwork        = require('../../../components/acquire/view.coffee').acquireArtwork
 FeatureNavigationView = require './feature-navigation.coffee'
 BelowTheFoldView      = require './below-the-fold.coffee'
+trackArtworkImpressions = require("../../../components/analytics/impression_tracking.coffee").trackArtworkImpressions
 
 artistArtworksTemplate  = -> require('../templates/_artist-artworks.jade') arguments...
 detailTemplate          = -> require('../templates/_detail.jade') arguments...
@@ -101,7 +102,10 @@ module.exports = class ArtworkView extends Backbone.View
     @$('#artwork-artist-artworks-container').
       addClass('is-loaded').
       html(artistArtworksTemplate artworks: @artist.artworks)
+
     @setupArtistArtworkSaveButtons @artist.artworks
+
+    trackArtworkImpressions @artist.artworks.models, @$('#artwork-artist-artworks-container')
 
   renderDetail: ->
     @$('.artwork-detail').html detailTemplate
