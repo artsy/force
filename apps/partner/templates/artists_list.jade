@@ -1,12 +1,13 @@
-.artists-groups-container
-  each group in groups
-    nav( class="artists-group artists-group-#{group.cols.length}-columns" )
-      h2.avant-garde-header-center.artists-group-label= group.label
-      .artists-columns-container
-        each col in group.cols
-          ul.artists-column
-            each pa in col
-              if pa.get('published_artworks_count') > 0
-                li: a( href=pa.href() )= pa.get('artist').name
-              else
-                li: span.artist-name= pa.get('artist').name
+.partner-artists-list
+  .artists-groups-container
+    each group in groups
+      nav( class="artists-group artists-group-#{group.cols.length}-columns" )
+        h2.avant-garde-header-center.artists-group-label= group.label
+        .artists-columns-container
+          each col in group.cols
+            ul.artists-column
+              each pa in col
+                if pa.get('published_artworks_count') > 0
+                  li: a( href=pa.href() )= pa.get('artist').name
+                else
+                  li: span.artist-name= pa.get('artist').name
