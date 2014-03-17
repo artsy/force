@@ -5,8 +5,8 @@ CurrentUser   = require '../../../models/current_user.coffee'
 Partner       = require '../../../models/partner.coffee'
 PartnerShows  = require '../../../collections/partner_shows.coffee'
 PartnerArtists = require '../../../collections/partner_artists.coffee'
+PartnerShowsGrid = require './shows_grid.coffee'
 template      = -> require('../templates/overview.jade') arguments...
-showsTemplate = -> require('../templates/_shows.jade') arguments...
 artistsGridTemplate = -> require('../templates/_artists_grid.jade') arguments...
 
 module.exports = class PartnerOverviewView extends Backbone.View
@@ -17,62 +17,17 @@ module.exports = class PartnerOverviewView extends Backbone.View
 
   initialize: (options={}) ->
     { @profile, @partner, @numberOfShows, @numberOfFeatured } = _.defaults options, @defaults
+    @$el.html template()
     @initializeShows()
     @initializeArtists()
-    @render()
-
-  render: ->
-    @$el.html template()
 
   initializeShows: ->
-    @isRenderFull = @partner.get 'has_full_profile'
-    @fetchAndOrganizeShows()
-
-  #
-  # Recursively fetch enough featured/other shows to display.
-  #
-  fetchAndOrganizeShows: (featured=[], shows=[], page=1, size=30) ->
-    partnerShows = new PartnerShows()
-    partnerShows.url = "#{@partner.url()}/shows"
-    partnerShows.fetch
-      data: { sort: "-featured,-end_at", page: page, size: size }
-      success: =>
-        if @numberOfFeatured - featured.length > 0
-          f = partnerShows.featured()
-          featured.push f
-
-        exclude = if @isRenderFull then [f] else []
-
-        if (need = @numberOfShows - shows.length) > 0
-          current   = partnerShows.current(exclude).models
-          upcoming  = partnerShows.upcoming(exclude).models
-          past      = partnerShows.past(exclude).models
-          # order of getting shows: current -> upcoming -> past
-          shows = shows.concat (current.concat upcoming, past).slice(0, need)
-
-        if (shows.length >= @numberOfShows and
-           featured.length >= @numberOfFeatured) or
-           partnerShows.length is 0
-
-          return @renderShows featured, shows
-
-        return @fetchAndOrganizeShows featured, shows, ++page
-
-  renderShows: (featured, shows) ->
-    @ensurePosterImages featured.concat shows
-    @$('.partner-overview-shows').html showsTemplate
+    new PartnerShowsGrid
+      el: @$('.partner-overview-shows')
       partner: @partner
-      featured: featured[0]
-      current: shows
-
-  ensurePosterImages: (shows) ->
-    _.each shows, (show) =>
-      @listenTo show, "fetch:posterImageUrl", (url) =>
-        @renderShowPosterImage(show, url)
-
-  renderShowPosterImage: (show, imageUrl) ->
-    @$(".partner-show[data-show-id='#{show.get('id')}'] .partner-show-cover-image").css
-      "background-image": "url(#{imageUrl})"
+      numberOfFeatured: @numberOfFeatured
+      isCombined: true
+      numberOfShows: @numberOfShows
 
   #
   # Fetch all partner artists at once and group them.
