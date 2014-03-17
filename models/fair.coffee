@@ -58,16 +58,10 @@ module.exports = class Fair extends Backbone.Model
         options?.error()
 
   fetchSections: (options) ->
-    if @get('sections')?.length
-      options?.success? @get('sections')
-    else
-      sections = new Backbone.Collection
-      sections.fetch
-        cache: true
-        url: "#{@url()}/sections"
-        success: (sections) =>
-          @set 'sections', sections
-          options?.success? sections
+    sections = new Backbone.Collection
+    sections.fetch _.extend options,
+      cache: true
+      url: "#{@url()}/sections"
 
   fetchPrimarySets: (options) ->
     orderedSets = new OrderedSets
@@ -106,11 +100,11 @@ module.exports = class Fair extends Backbone.Model
     shows.fetch
       data:
         partner: partnerId
-      success: (shows) ->
+      success: (shows) =>
         if shows.models?[0]?.get('results')?[0]
           options.success shows.models[0].get('results')[0]
         else
-          options.error
+          options.error()
       error: options.error
 
   itemsToColumns: (items, numberOfColumns=2) ->

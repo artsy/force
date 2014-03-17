@@ -17,7 +17,7 @@ else if NODE_ENV isnt "test"
   client = redis.createClient(red.port, red.hostname)
   client.auth red.auth.split(":")[1]
 
-# Alias client methods
+# Export the redis client
 @client = client
 
 # Iterates through a hash and calls JSON.stringify on each value. This is useful
@@ -26,8 +26,31 @@ else if NODE_ENV isnt "test"
 # @param {String} key Redis key
 # @param {Object} hash
 
-@setHashToJSON = (key, hash) ->
+@setHash = (key, hash) ->
   serialized = {}
   serialized[k] = JSON.stringify(v) for k, v of hash
-  console.log 'setting', key, _.keys(hash).length
   client.set key, JSON.stringify hash
+
+# Retrieves a serialized hash from `setHashToJSON` and deserializes it into models and
+# collections. Pass in a hash of key: Model/Colllection class pairs to indicate what each
+# key gets deserialized into.
+#
+# e.g.
+# { fair: require('../../models/fair'), artworks: require('../../collections/artworks') }
+#
+# @param {String} key Redis key to GET
+# @param {Object} hash key: Model/Collection pairs
+# @param {Function} callack Calls back with (err, deserializedHash)
+
+@getHash = (key, hash, callback) ->
+  client.get key, (err, json) ->
+    return callback(err) if err
+    if json
+      data = JSON.parse json
+      deserialized = {}
+      for key, json of data
+        klass = hash[key]
+        deserialized[key] = if klass? then new klass(json) else json
+      callback null, deserialized
+    else
+      callback()
