@@ -18,7 +18,7 @@ module.exports = class PartnerShowsGridView extends Backbone.View
     numberOfShows     : Infinity  # number of combined shows needed
 
   initialize: (options={}) ->
-    { @partner, @numberOfFeatured, @numberOfShows, @isCombined} = _.defaults options, @defaults
+    { @partner, @numberOfFeatured, @numberOfShows, @isCombined } = _.defaults options, @defaults
     @initializeShows()
     
   renderShows: (featured=[], current=[], upcoming=[], past=[]) ->
@@ -72,5 +72,3 @@ module.exports = class PartnerShowsGridView extends Backbone.View
   renderShowPosterImage: (show, imageUrl) ->
     @$(".partner-show[data-show-id='#{show.get('id')}'] .partner-show-cover-image").css
       "background-image": "url(#{imageUrl})"
-
-
