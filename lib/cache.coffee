@@ -5,17 +5,15 @@
 #
 
 _ = require 'underscore'
-{ NODE_ENV, DEFAULT_CACHE_TIME, REDIS_URL } = require '../config'
+{ NODE_ENV, DEFAULT_CACHE_TIME, REDIS_URL, DEFAULT_CACHE_TIME } = require '../config'
 redis = require 'redis'
 client = null
 
 # Setup redis client
-if NODE_ENV is "development"
-  client = redis.createClient()
-else if NODE_ENV isnt "test"
-  red = require("url").parse(REDIS_URL or "")
+if NODE_ENV isnt "test" and REDIS_URL
+  red = require("url").parse(REDIS_URL)
   client = redis.createClient(red.port, red.hostname)
-  client.auth red.auth.split(":")[1]
+  client.auth(red.auth.split(":")[1]) if red.auth
 
 # Export the redis client
 @client = client
@@ -27,9 +25,11 @@ else if NODE_ENV isnt "test"
 # @param {Object} hash
 
 @setHash = (key, hash) ->
+  return unless client?
   serialized = {}
   serialized[k] = JSON.stringify(v) for k, v of hash
   client.set key, JSON.stringify hash
+  client.expire key, DEFAULT_CACHE_TIME
 
 # Retrieves a serialized hash from `setHashToJSON` and deserializes it into models and
 # collections. Pass in a hash of key: Model/Colllection class pairs to indicate what each
@@ -43,6 +43,7 @@ else if NODE_ENV isnt "test"
 # @param {Function} callack Calls back with (err, deserializedHash)
 
 @getHash = (key, hash, callback) ->
+  return callback null, null unless client?
   client.get key, (err, json) ->
     return callback(err) if err
     if json
