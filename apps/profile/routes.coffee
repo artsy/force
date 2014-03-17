@@ -7,15 +7,14 @@ fetchProfile = (req, res, next, success) ->
   profile.fetch
     cache: true
     success: (profile) ->
-      return next() unless profile and (profile.isUser() or profile.isPartner() or profile.isFairOranizer())
+      return next() if profile?.isFairOranizer()
+      return next() unless profile and (profile.isUser() or profile.isPartner())
       res.locals.sd.PROFILE = profile.toJSON()
       success(profile)
     error: -> next()
 
 getTemplateForProfileType = (profile) ->
-  if profile.isFairOranizer()
-    "../fair/templates"
-  else if profile.isPartner()
+  if profile.isPartner()
     "../partner/templates"
   else
     "templates"
@@ -25,7 +24,6 @@ getTemplateForProfileType = (profile) ->
     if profile.href() != res.locals.sd.CURRENT_PATH
       res.redirect profile.href()
     else
-      return next() if profile.isFairOranizer()
       res.locals.sd.SECTION = 'overview' if profile.isGallery()
       res.locals.sd.SECTION = 'shows' if profile.isInstitution()
       res.render getTemplateForProfileType(profile),
@@ -33,7 +31,6 @@ getTemplateForProfileType = (profile) ->
 
 @posts = (req, res, next) ->
   fetchProfile req, res, next, (profile) ->
-    return next() if profile.isFairOranizer()
     if profile.hasPosts()
       res.locals.sd.SECTION = 'posts' if profile.isPartner()
       res.render getTemplateForProfileType(profile),
