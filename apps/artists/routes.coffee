@@ -57,9 +57,8 @@ parseGenes = (collection) ->
   letter        = req.params.letter.replace('artists-starting-with-', '')
   artists       = new ArtistsByLetter([], { letter: letter, state: { currentPage: currentPage } })
 
-  artists.fetch(cache: true).then ->
+  artists.fetch().then ->
     res.render 'letter',
       artists:      artists
       letterRange:  artists.range
-      letter:       letter
-
+      letter:       _.capitalize(letter)
