@@ -113,3 +113,9 @@ module.exports = class AuthModalView extends ModalView
   showError: (msg) =>
     @$('button').attr 'data-state', 'error'
     @$('.auth-errors').text msg
+
+  remove: ->
+    mediator.off 'auth:change:mode'
+    mediator.off 'auth:error'
+    mediator.off 'modal:closed'
+    super
