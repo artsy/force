@@ -4,42 +4,10 @@ ModalView         = require '../modal/view.coffee'
 Form              = require '../mixins/form.coffee'
 mediator          = require '../../lib/mediator.coffee'
 { parse }         = require 'url'
-{ ARTSY_URL }     = require('sharify').data
 { createCookie }  = require '../util/cookie.coffee'
 analytics         = require '../../lib/analytics.coffee'
 
-templates =
-  signup:   -> require('./templates/signup.jade') arguments...
-  login:    -> require('./templates/login.jade') arguments...
-  register: -> require('./templates/register.jade') arguments...
-  forgot:   -> require('./templates/forgot.jade') arguments...
-  reset:    -> require('./templates/reset.jade') arguments...
-
-class Login extends Backbone.Model
-  url: "/force/users/sign_in"
-
-class Signup extends Backbone.Model
-  url: "/force/users/invitation/accept"
-
-class Forgot extends Backbone.Model
-  url: "#{ARTSY_URL}/api/v1/users/send_reset_password_instructions"
-
-  save: (data, options) ->
-    options.success = ->
-      mediator.trigger 'auth:change:mode', 'reset'
-    super
-
-models =
-  login: Login
-  forgot: Forgot
-  register: Signup
-
-stateEventMap =
-  signup: 'Viewed sign up options'
-  login: 'Viewed login form'
-  register: 'Viewed register form'
-  forgot: 'Viewed forgot password form'
-  reset: 'Completed password reset'
+{ templateMap, modelMap, stateEventMap } = require './maps.coffee'
 
 module.exports = class AuthModalView extends ModalView
   _.extend @prototype, Form
@@ -49,12 +17,12 @@ module.exports = class AuthModalView extends ModalView
   redirectTo: '/personalize'
 
   template: ->
-    templates[@state.get('mode')] arguments...
+    templateMap[@state.get 'mode'] arguments...
 
   events: -> _.extend super,
-    'click .auth-toggle': 'toggleMode'
-    'submit form'       : 'submit'
-    'click #auth-submit': 'submit'
+    'click .auth-toggle' : 'toggleMode'
+    'submit form'        : 'submit'
+    'click #auth-submit' : 'submit'
 
   initialize: (options) ->
     { @destination } = options
@@ -85,7 +53,7 @@ module.exports = class AuthModalView extends ModalView
     analytics.track.funnel stateEventMap[@state.get 'mode']
 
   logClose: =>
-    analytics.track.funnel "Closed auth modal on #{@state.get 'mode'} mode"
+    analytics.track.funnel 'Closed auth modal', mode: @state.get('mode')
 
   toggleMode: (e) ->
     e.preventDefault()
@@ -96,9 +64,9 @@ module.exports = class AuthModalView extends ModalView
 
     if @validateForm()
       @$('button').attr 'data-state', 'loading'
-      new models[@state.get('mode')]().save @serializeForm(),
+      new modelMap[@state.get 'mode']().save @serializeForm(),
         success: @onSubmitSuccess
-        error: (m, xhr) => @errorMessage(xhr)
+        error: (m, xhr) => @errorMessage xhr
 
   onSubmitSuccess: (model, res, options) =>
     if res.error?
