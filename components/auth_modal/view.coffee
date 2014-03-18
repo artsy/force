@@ -6,6 +6,7 @@ mediator          = require '../../lib/mediator.coffee'
 { parse }         = require 'url'
 { ARTSY_URL }     = require('sharify').data
 { createCookie }  = require '../util/cookie.coffee'
+analytics         = require '../../lib/analytics.coffee'
 
 templates =
   signup:   -> require('./templates/signup.jade') arguments...
@@ -32,6 +33,13 @@ models =
   login: Login
   forgot: Forgot
   register: Signup
+
+stateEventMap =
+  signup: 'Viewed sign up options'
+  login: 'Viewed login form'
+  register: 'Viewed register form'
+  forgot: 'Viewed forgot password form'
+  reset: 'Completed password reset'
 
 module.exports = class AuthModalView extends ModalView
   _.extend @prototype, Form
@@ -60,12 +68,24 @@ module.exports = class AuthModalView extends ModalView
       copy: options.copy or 'Enter your name, email and password to join'
       pathname: location.pathname
       redirectTo: @redirectTo
+
     @listenTo @state, 'change:mode', @reRender
+    @listenTo @state, 'change:mode', @logState
+
     mediator.on 'auth:change:mode', @setMode, this
     mediator.on 'auth:error', @showError
+    mediator.on 'modal:closed', @logClose
+
+    @logState()
 
   setMode: (mode) ->
     @state.set 'mode', mode
+
+  logState: ->
+    analytics.track.funnel stateEventMap[@state.get 'mode']
+
+  logClose: =>
+    analytics.track.funnel "Closed auth modal on #{@state.get 'mode'} mode"
 
   toggleMode: (e) ->
     e.preventDefault()
