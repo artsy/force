@@ -36,14 +36,18 @@ if NODE_ENV isnt "test" and REDIS_URL
 # key gets deserialized into.
 #
 # e.g.
-# { fair: require('../../models/fair'), artworks: require('../../collections/artworks') }
+#
+# cache.getHash 'fair:' + id, {
+#   fair: require('../../models/fair')
+#   artworks: require('../../collections/artworks')
+# }, ->
 #
 # @param {String} key Redis key to GET
 # @param {Object} hash key: Model/Collection pairs
 # @param {Function} callack Calls back with (err, deserializedHash)
 
 @getHash = (key, hash, callback) ->
-  return callback null, null unless client?
+  return callback() unless client?
   client.get key, (err, json) ->
     return callback(err) if err
     if json

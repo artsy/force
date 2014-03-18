@@ -100,7 +100,7 @@ module.exports = class Fair extends Backbone.Model
     shows.fetch
       data:
         partner: partnerId
-      success: (shows) =>
+      success: (shows) ->
         if shows.models?[0]?.get('results')?[0]
           options.success shows.models[0].get('results')[0]
         else
