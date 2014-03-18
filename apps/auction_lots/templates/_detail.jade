@@ -1,0 +1,48 @@
+if lot.hasImage()
+  a.ard-image.auction-lot-image-zoom( href= lot.imageUrl('original') )
+    img( src= lot.imageUrl('original'), alt= lot.get('title') )
+
+.ard-metadata
+  dl
+    dt: h3 Title
+    dd: em!= lot.get('title')
+    dt: h3 Creation Date
+    dd= lot.get('dates_text') || '–'
+    dt: h3 Medium
+    dd= lot.get('medium_text') || '–'
+    dt: h3 Size
+    dd
+      if lot.get('dimensions')
+        != lot.dimensions({ metric: 'in', format: 'superscript' })
+        br
+        != lot.dimensions({ metric: 'cm', format: 'decimal' })
+      else
+        | &ndash;
+
+  dl
+    dt: h3 Auction House
+    dd= lot.get('organization') || '–'
+    dt: h3 Auction Date
+    dd= lot.get('auction_dates_text') || '–'
+    dt: h3 Estimate
+    dd!= lot.get('estimate_text') || '–'
+    dt: h3 Sale
+    dd
+      if (user)
+        = lot.get('price_realized_text') || '–'
+      else
+        a.auction-lot-sale-signup( href='/sign_up' )
+          | Sign up to see sale price
+
+  if lot.get('description')
+    .ard-description
+      h2 Description
+      p= lot.get('description')
+
+  if lot.get('external_url')
+    .ard-external
+      a.faux-underline( href= lot.get('external_url'), target='_blank' )
+        - function extractDomain(url) { return url.match(/:\/\/(.[^/]+)/)[1].replace('www.', ''); }
+        | Visit the lot on #{extractDomain(lot.get('external_url'))}
+      .ard-external-disclaimer
+        em (NOTE: Auction houses occasionally remove older lots from their websites)

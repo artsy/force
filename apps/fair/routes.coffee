@@ -154,9 +154,9 @@ fetchFairData = (fair, profile, res, options) ->
       error: res.backboneError
 
 @favorites = (req, res, next) ->
-  return res.redirect("/#{req.params.id}") unless req.user
-
   fetchFair req, res, next, (fair, profile) ->
+    return next() unless profile.isFairOranizer()
+    return res.redirect("/#{req.params.id}") unless req.user
     res.locals.sd.SECTION = 'favorites'
     res.render 'templates/favorites',
       profile : profile

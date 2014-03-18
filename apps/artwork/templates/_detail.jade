@@ -46,7 +46,10 @@
 
   //- Partner link
   .artwork-meta-partner
-    a( href= artwork.partnerLink() )
+    if artwork.partnerLink()
+      a( href= artwork.partnerLink() )
+        = artwork.partnerName()
+    else
       = artwork.partnerName()
 
   //- Price/sale message

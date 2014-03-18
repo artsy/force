@@ -22,7 +22,7 @@ describe 'ImpressionTracking', ->
   describe "Tracking", ->
 
     it "should fire tracking events", (done) ->
-      impressionTracking.trackListItems [{model: new Artwork(id: 'warhol')}], {offset: -> {top: 0}}
+      impressionTracking.trackArtworkImpressions [new Artwork(id: 'warhol')], { length: 1, offset: -> { top: 0 } }
       $(window).trigger 'scroll'
       setTimeout =>
         @gaStub.args[1][0].should.equal 'send'

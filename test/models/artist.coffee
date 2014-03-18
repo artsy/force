@@ -38,3 +38,16 @@ describe 'Artist', ->
       _(_.keys(@artist.sortCriteriaForArtworks)).each (key) =>
         @artist.validSort(key).should.be.ok
       @artist.validSort('random').should.not.be.ok
+
+  describe '#displayAvailableWorks', ->
+    it 'returns a string describing the number of available and reference works', ->
+      @artist.set published_artworks_count: 2, forsale_artworks_count: 1
+      @artist.displayAvailableWorks().should.equal '1 available work & 1 reference work'
+      @artist.set published_artworks_count: 4, forsale_artworks_count: 2
+      @artist.displayAvailableWorks().should.equal '2 available works & 2 reference works'
+      @artist.set published_artworks_count: 400, forsale_artworks_count: 125
+      @artist.displayAvailableWorks().should.equal '125 available works & 275 reference works'
+      @artist.set published_artworks_count: 2, forsale_artworks_count: 0
+      @artist.displayAvailableWorks().should.equal '2 reference works'
+      @artist.set published_artworks_count: 2, forsale_artworks_count: 2
+      @artist.displayAvailableWorks().should.equal '2 available works'

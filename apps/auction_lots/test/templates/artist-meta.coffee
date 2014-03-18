@@ -1,12 +1,12 @@
 fs            = require 'fs'
 jade          = require 'jade'
-Artist        = require '../../../models/artist'
+Artist        = require '../../../../models/artist'
 { fabricate } = require 'antigravity'
 
 describe 'Meta tags', ->
 
   before ->
-    @file = "#{process.cwd()}/apps/auction_lots/templates/artist-meta.jade"
+    @file = "#{process.cwd()}/apps/auction_lots/templates/meta/artist.jade"
     @sd =
       ARTSY_URL: 'http://localhost:5000'
       CANONICAL_MOBILE_URL: 'http://m.localhost:5000'

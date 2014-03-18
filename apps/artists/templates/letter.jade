@@ -3,7 +3,8 @@ include ../../../components/util/activator
 include ../../../components/pagination/paginator
 
 block head
-  include meta
+  include letter_meta
+  +paginateHead(artists.state.currentPage, artists.state.totalPages, sd.ARTSY_URL + sd.CURRENT_PATH + "?")
 
 append locals
   - assetPackage = 'artists'

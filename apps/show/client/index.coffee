@@ -10,6 +10,7 @@ PartnerShow        = require '../../../models/partner_show.coffee'
 ShareView          = require '../../../components/share/view.coffee'
 PartnerShowButtons = require '../../../components/partner_buttons/show_buttons.coffee'
 artworkColumns     = -> require('../../../components/artwork_columns/template.jade') arguments...
+trackArtworkImpressions = require("../../../components/analytics/impression_tracking.coffee").trackArtworkImpressions
 
 module.exports.PartnerShowView = class PartnerShowView extends Backbone.View
 
@@ -43,6 +44,7 @@ module.exports.PartnerShowView = class PartnerShowView extends Backbone.View
             artworkColumns: artworks.groupByColumnsInOrder(3)
             artworkSize: 'large'
           @setupArtworkSaveControls()
+          @setupArtworkImpressionTracking()
         else
           @$showArtworks.remove()
       error: => @$showArtworks.remove()
@@ -51,6 +53,9 @@ module.exports.PartnerShowView = class PartnerShowView extends Backbone.View
     @currentUser = CurrentUser.orNull()
     @currentUser?.initializeDefaultArtworkCollection()
     @artworkCollection = @currentUser?.defaultArtworkCollection()
+
+  setupArtworkImpressionTracking: (artworks=@collection.models) ->
+    trackArtworkImpressions artworks, @$showArtworks
 
   setupArtworkSaveControls: ->
     listItems =

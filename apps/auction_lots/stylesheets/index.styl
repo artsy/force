@@ -1,6 +1,7 @@
-@import '../../components/stylus_lib'
-@import '../../components/pagination'
-@import '../artist/stylesheets/header'
+@import '../../../components/stylus_lib'
+@import '../../../components/pagination'
+@import '../../artist/stylesheets/header'
+@import './detail'
 
 .auction-lots-header
   @extends .artist-header
@@ -36,6 +37,10 @@
     border-top 1px solid light-gray-border-color
   a
     text-decoration none
+  tbody tr
+    transition background-color 0.125s
+    &:hover
+      background light-gray-background-color
 
 div.auction-lots-interstital
   display table
@@ -78,6 +83,7 @@ div.auction-lots-interstital
 
 .auction-lot-sale-signup
 .auction-lot-details-link
+.auction-lot-goto-link
   avant-garde()
   text-decoration none
   font-size 11px
@@ -85,6 +91,7 @@ div.auction-lots-interstital
   white-space nowrap
 
 .auction-lot-details-link
+.auction-lot-goto-link
   display block
   margin-top 10px
 

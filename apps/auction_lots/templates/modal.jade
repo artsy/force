@@ -1,0 +1,8 @@
+header.auction-result-detail-header
+  h1( data-id= lot.id )
+    | #{artist.get('name')},&nbsp;
+    em= lot.get('title')
+    | &nbsp;&mdash; Auction Result
+
+section.auction-result-detail
+  include ./_detail

@@ -5,6 +5,7 @@ CurrentUser     = require '../../models/current_user.coffee'
 SaveControls    = require '../artwork_item/views/save_controls.coffee'
 artworkColumns  = -> require('./template.jade') arguments...
 artworkItem     = -> require('../artwork_item/templates/artwork.jade') arguments...
+trackArtworkImpressions = require("../analytics/impression_tracking.coffee").trackArtworkImpressions
 
 module.exports = class ArtworkColumns extends Backbone.View
 
@@ -87,6 +88,9 @@ module.exports = class ArtworkColumns extends Backbone.View
     unless @allowDuplicates
       artworks = _.reject artworks, (a) => a.get('id') in @collection.pluck 'id'
       @collection.add(artworks)
+
+    return unless artworks?.length
+
     for artwork in artworks
       $artwork = if @isOrdered then @addToNextColumn(artwork) else @addToShortestColumn(artwork)
       new SaveControls
@@ -96,6 +100,8 @@ module.exports = class ArtworkColumns extends Backbone.View
     if @artworkCollection
       @artworkCollection.addRepoArtworks @collection
       @artworkCollection.syncSavedArtworks()
+
+    trackArtworkImpressions artworks, @$el
 
   buttonLabel: ->
     num = @collectionLength - @initialItemCount

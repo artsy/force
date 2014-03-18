@@ -84,3 +84,16 @@ module.exports = class Artist extends Backbone.Model
 
   isFollowed: (followArtistCollection) ->
     followArtistCollection && followArtistCollection.isFollowed(@)
+
+  # Returns a string in the form of 'N available works & N reference works'
+  #
+  # @return {String}
+  displayAvailableWorks: ->
+    work    = (n) -> if n > 1 then 'works' else 'work'
+    string  = (n, kind) -> "#{n} #{kind} #{work(n)}" if n
+
+    _.compact([
+      string(@get('forsale_artworks_count'), 'available')
+      string((@get('published_artworks_count') - @get('forsale_artworks_count')), 'reference')
+    ]).join ' & '
+
