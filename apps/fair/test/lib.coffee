@@ -16,7 +16,10 @@ describe 'fairDataMiddleware', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
     sinon.stub Fair.prototype, 'fetchOverviewData'
+    sinon.stub Fair.prototype, 'fetchPrimarySets'
     @success = =>
+      _.last(Backbone.sync.args)[2].success fabricate 'profile', owner_type: 'FairOrganizer'
+      Fair::fetchPrimarySets.args[0][0].success()
       Fair::fetchOverviewData.args[0][0].success(
         fair:                  new Fair(fabricate 'fair', id: 'the-foo-show')
         profile:               new Profile(fabricate 'profile', id: 'thefooshow')
@@ -24,7 +27,6 @@ describe 'fairDataMiddleware', ->
         filteredSearchOptions: new FilterSuggest({ "design": 4002, "drawing": 3772 })
         filteredSearchColumns: []
         sections:              new Backbone.Collection
-        primarySets:           new OrderedSets([fabricate 'set'])
         galleries:             new Backbone.Collection([fabricate 'partner'])
         exhibitorsCount:       1
         exhibitorsAToZGroup:   []
@@ -40,15 +42,15 @@ describe 'fairDataMiddleware', ->
   afterEach ->
     Backbone.sync.restore()
     Fair::fetchOverviewData.restore()
+    Fair::fetchPrimarySets.restore()
 
   it 'fetches the fair data', ->
     fairDataMiddleware @req, @res, @next
-    _.last(Backbone.sync.args)[2].success fabricate 'profile', owner_type: 'FairOrganizer'
+    @success()
     Fair::fetchOverviewData.called.should.be.ok
 
   it 'sets a bunch of locals', ->
     fairDataMiddleware @req, @res, @next
-    _.last(Backbone.sync.args)[2].success fabricate 'profile', owner_type: 'FairOrganizer'
     @success()
     @res.locals.fair.get('id').should.equal 'the-foo-show'
     @res.locals.sd.EXHIBITORS_COUNT.should.equal 1
