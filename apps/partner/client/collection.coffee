@@ -11,9 +11,10 @@ module.exports = class PartnerCollectionView extends Backbone.View
   defaults:
     pageSize: 16 # 4 by 4
     nextPage: 1
+    isForSale: true
 
   initialize: (options={}) ->
-    { @pageSize, @nextPage, @profile, @partner } = _.defaults options, @defaults
+    { @pageSize, @nextPage, @profile, @partner, @isForSale } = _.defaults options, @defaults
 
     @collection ?= new Artworks() # Maintain each page of artworks fetched
     @listenTo @collection, "request", @renderLoading
@@ -70,7 +71,8 @@ module.exports = class PartnerCollectionView extends Backbone.View
       page: @nextPage
       size: @pageSize
       published: true
-      not_for_sale: true
+      not_for_sale: true unless @isForSale
+      for_sale: true if @isForSale
     @collection.fetch
       url: url
       data: data

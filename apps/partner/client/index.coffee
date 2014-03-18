@@ -18,6 +18,7 @@ sectionToView =
   contact     : ContactView
   about       : ContactView
   collection  : CollectionView
+  shop        : CollectionView
   shows       : ShowsView
   posts       : PostsView
   artists     : ArtistsView
@@ -57,12 +58,16 @@ module.exports.PartnerView = class PartnerView extends Backbone.View
         )
 
   initContent: ->
-    new sectionToView[@currentSection]?(
+    extraParams =
+      collection  : { isForSale : false        }
+      shop        : { isForSale : true         }
+      artists     : { artistId  : sd.ARTIST_ID }
+
+    new sectionToView[@currentSection]?( _.extend(
       el: @$('.partner-content')
       profile: @profile
       partner: @partner
-      artistId: sd.ARTIST_ID
-    )
+    , extraParams[@currentSection]))
 
   initFollowButton: ->
     @followButtons = new FollowButton
