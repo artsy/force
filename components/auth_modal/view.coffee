@@ -73,7 +73,7 @@ module.exports = class AuthModalView extends ModalView
       @showError _.capitalize res.error
     else
       createCookie 'destination', @destination, 1 if @destination
-      createCookie 'signed_in', true if @state.get('mode') is 'login'
+      createCookie 'signed_in', true, 7 if @state.get('mode') is 'login'
       href = '/force/log_in_to_artsy'
       href += "?redirect-to=#{@redirectTo}" if @state.get('mode') is 'register'
       location.href = href
