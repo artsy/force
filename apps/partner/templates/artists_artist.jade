@@ -1,7 +1,7 @@
 .partner-artist
   .partner-artist-info
     .partner-artist-info-left
-      h2.partner-artist-name= artist.get('name')
+      h2: a.partner-artist-name( href="/artist/#{artist.get('id')}" )= artist.get('id')
       h3.partner-artist-brief= [ artist.get('nationality'), artist.get('years') ].join(", ")
       button.avant-garde-button-white.follow-button.is-small
     .partner-artist-info-right
