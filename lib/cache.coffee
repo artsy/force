@@ -31,7 +31,7 @@ if NODE_ENV isnt "test" and REDIS_URL
   client.set key, JSON.stringify hash
   client.expire key, DEFAULT_CACHE_TIME
 
-# Retrieves a serialized hash from `setHashToJSON` and deserializes it into models and
+# Retrieves a serialized hash from `setHash` and deserializes it into models and
 # collections. Pass in a hash of key: Model/Colllection class pairs to indicate what each
 # key gets deserialized into.
 #
