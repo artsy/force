@@ -42,7 +42,6 @@ describe 'Fair', ->
       urls[0].should.match /// api/v1/fair/.* ///
       urls[1].should.match /// api/v1/profile ///
       urls[2].should.match /// api/v1/search/filtered/fair/.*/suggest ///
-      urls[3].should.match /// api/v1/sets ///
-      urls[4].should.match /// api/v1/fair/.*/sections ///
-      urls[5].should.match /// api/v1/fair/.*/partners ///
-      urls[6].should.match /// api/v1/fair/.*/artists ///
+      urls[3].should.match /// api/v1/fair/.*/sections ///
+      urls[4].should.match /// api/v1/fair/.*/partners ///
+      urls[5].should.match /// api/v1/fair/.*/artists ///
