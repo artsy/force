@@ -24,3 +24,5 @@ app.get '/:id/following/:type', fairDataMiddleware, routes.follows
 app.get '/:id/favorites', fairDataMiddleware, routes.favorites
 # Handle microgravity urls that get crawled by google
 app.get '/:id/programming', fairDataMiddleware, routes.overview
+# Cache busting route
+app.get '/fair/bust_cache/:id', routes.bustCache

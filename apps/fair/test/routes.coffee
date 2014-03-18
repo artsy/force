@@ -2,7 +2,8 @@
 _ = require 'underscore'
 sinon = require 'sinon'
 Backbone = require 'backbone'
-routes = require '../routes'
+rewire = require 'rewire'
+routes = rewire '../routes'
 CurrentUser = require '../../../models/current_user.coffee'
 Fair = require '../../../models/fair.coffee'
 
@@ -103,3 +104,26 @@ describe 'Fair routes', ->
         next: 'foo'
       ]
       @res.redirect.args[0][0].should.include '/show/gagosian-gallery-inez-and-vinood'
+
+  describe 'cache busting', ->
+
+    beforeEach ->
+      routes.__set__ 'client', @client = { del: sinon.stub() }
+
+    describe '#bustCache', ->
+
+      beforeEach ->
+        @req = { params: { id: 'cat-fair' } }
+        @res = { redirect: sinon.stub() }
+
+      it 'deletes the fair key in redis when navigated to by an admin user', ->
+        @req.user = new CurrentUser fabricate 'user', type: 'Admin'
+        routes.bustCache @req, @res, ->
+        @client.del.args[0][0].should.equal 'fair:cat-fair'
+        @res.redirect.args[0][0].should.equal '/cat-fair'
+
+      it 'does nothing when not an admin user', ->
+        routes.bustCache @req, @res, (next = sinon.stub())
+        @client.del.called.should.not.be.ok
+        @res.redirect.called.should.not.be.ok
+        next.called.should.be.ok
