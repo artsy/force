@@ -12,13 +12,11 @@ module.exports = (req, res, next) ->
   # TODO: Replace this profile fetch for a more generic solution:
   # https://www.pivotaltracker.com/story/show/67567624
   new Profile(id: req.params.id).fetch
-    cache: true
     error: res.backboneError
     success: (profile) ->
       return next() unless profile.isFairOranizer()
       fair = new Fair id: profile.get('owner').default_fair_id
       fair.fetchPrimarySets
-        cache: true
         error: res.backboneError
         success: (primarySets) =>
           res.locals.primarySets = primarySets
