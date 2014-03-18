@@ -11,6 +11,11 @@ bordered-input-placeholder--focus()
 bordered-input-placeholder--autofocus-focus()
   opacity 1
 
+.avant-garde-form-label
+  avant-garde()
+  display block
+  font-size 12px
+
 .bordered-input
   margin 0
   padding 10px
@@ -63,3 +68,127 @@ textarea.bordered-input
   resize none
   padding 10px
   appearance none
+
+// On / Off Toggle Sliders
+.artsy-toggle
+  avant-garde()
+  background-color white
+  border 2px solid light-placeholder-color
+  border-radius 15px
+  color light-placeholder-color
+  cursor pointer
+  display inline-block
+  line-height 1.15
+  text-decoration none
+  transition 'color, border-color' 0.5s
+  width 56px
+
+  &::after
+    content attr(data-state)
+    display inline
+    font-size 12px
+    font-weight bold
+    height 20px
+    letter-spacing -1px
+    vertical-align middle
+    width 20px
+
+  .artsy-toggle-dot
+    display inline
+    font-size 30px
+    float left
+    line-height 50%
+    margin-top 1px
+    &::after
+      content "\25CF"
+
+  &:focus, &:hover
+    & + .artsy-toggle-label
+      color highlight-color
+
+  &[data-state='on']
+    background-color highlight-color
+    border-color highlight-color
+    .artsy-toggle-dot
+      color white
+      float right
+    &::after
+      color white
+      content attr(data-state)
+      margin-left 7px
+
+.artsy-toggle-separator
+.artsy-toggle-label
+  display inline-block
+  margin-left 10px
+
+.artsy-toggle-separator
+  &::after
+    content '\2026'
+
+
+// Help Tooltips
+// help tooltips
+.artsy-help-tip
+  background-color transparent
+  cursor help
+  display inline
+  font-family sans-serif
+  font-size 10px
+  height 14px
+  margin-left 5px
+  margin-top -2px
+  max-width 620px
+  position absolute
+  width 14px
+  text-align center
+  transition background-color 0
+  &::before
+    background-color dark-gray-text-color
+    border-radius 7px
+    color white
+    content '?'
+    display inline-block
+    font-size 12px
+    font-weight bold
+    height 14px
+    line-height 1
+    padding-top 1px
+    vertical-align middle
+    width 14px
+  &:hover
+    background-color black
+    height auto
+    padding-top 25px
+    padding-left 7px
+    margin-top -5px
+    margin-left -5px
+    transition background-color 0.5s
+    z-index 4
+    width auto
+    &::before
+      left 10px
+      position absolute
+      top 8px
+    .artsy-help-tip-body
+      color white
+      display block
+      transition color 0.5s
+  .artsy-help-tip-body
+    color transparent
+    display none
+    float left
+    font-size 16px
+    line-height 24px
+    margin-top -25px
+    margin-left -5px
+    padding 32px
+    p
+      garamond()
+      margin-bottom 0.25em
+      text-align left
+    a
+      color white
+      text-decoration underline
+      &:hover
+        text-decoration none
