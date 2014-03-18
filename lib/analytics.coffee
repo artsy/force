@@ -58,6 +58,9 @@ module.exports.track =
           page: window?.location.pathname
           noninteraction: true
 
+        if sd.CURRENT_USER?.id
+          options.user_id = sd.CURRENT_USER.id
+
         mixpanel.track? description, options
 
       # Send google analytics event
