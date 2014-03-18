@@ -43,7 +43,7 @@ module.exports = class PartnerArtistsArtistView extends Backbone.View
     @scrollToMe() if @scroll
 
   scrollToMe: ->
-    $('html body').animate scrollTop: @$el.offset().top - 100
+    $('html, body').animate scrollTop: @$el.offset().top - 100
 
   fetchArtist: -> @artist.fetch cache: true
 

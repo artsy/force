@@ -119,3 +119,12 @@ getTemplateForProfileType = (profile) ->
         profile : profile
     else
       res.redirect profile.href()
+
+@shop = (req, res, next) ->
+  fetchProfile req, res, next, (profile) ->
+    if profile.isInstitution()
+      res.locals.sd.SECTION = 'shop'
+      res.render getTemplateForProfileType(profile),
+        profile : profile
+    else
+      res.redirect profile.href()
