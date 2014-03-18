@@ -5,6 +5,7 @@ Fair = require '../../models/fair.coffee'
 Search = require '../../collections/search.coffee'
 FilterSuggest = require '../../models/filter_suggest.coffee'
 cache = require '../../lib/cache'
+client = cache.client
 
 @overview = (req, res, next) ->
   # TODO: Dependent on attribute of fair
@@ -78,3 +79,13 @@ cache = require '../../lib/cache'
   fair.fetchShowForPartner req.params.partner_id,
     error: res.backboneError
     success: (show) -> res.redirect "/show/#{show.id}"
+
+# Busts cache for this fair, admin-only
+@bustCache = (req, res, next) ->
+  return next() unless req.user?.get('type') is 'Admin'
+  fairId = req.params.id
+  if client
+    client.del("fair:#{fairId}")
+    res.redirect "/#{fairId}"
+  else
+    res.redirect "/#{fairId}"
