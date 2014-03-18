@@ -138,8 +138,8 @@ module.exports = (app) ->
   app.use require "../apps/posts"
   app.use require "../apps/favorites_follows"
   # The partner routes are handled in the profile router
-  app.use require "../apps/fair"
   app.use require "../apps/profile"
+  app.use require "../apps/fair"
   # Shortcuts are prioritezed last
   app.use require "../apps/shortcuts"
 
