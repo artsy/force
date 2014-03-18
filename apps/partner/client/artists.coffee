@@ -6,7 +6,7 @@ Partner        = require '../../../models/partner.coffee'
 Artist         = require '../../../models/artist.coffee'
 PartnerArtists = require '../../../collections/partner_artists.coffee'
 ArtistView     = require './artists_artist.coffee'
-artistsListTemplate    = -> require('../templates/artists_list.jade') arguments...
+ArtistsListView = require './artists_list.coffee'
 template       = -> require('../templates/artists.jade') arguments...
 
 module.exports = class PartnerArtistsView extends Backbone.View
@@ -44,9 +44,9 @@ module.exports = class PartnerArtistsView extends Backbone.View
           @renderNextPageOfArtists()
 
   renderArtistsList: ->
-    @$el.find('#artists-list').html(
-      $( artistsListTemplate groups: @groupPartnerArtists(@displayables) )
-    )
+    new ArtistsListView
+      collection: @displayables
+      el: @$('#artists-list')
 
   appendArtist: (partnerArtist, scroll=false) ->
     new ArtistView
@@ -70,29 +70,6 @@ module.exports = class PartnerArtistsView extends Backbone.View
     fold = $(window).height() + $(window).scrollTop()
     $lastItem = @$('#artists-details .partner-artist:last')
     @renderNextPageOfArtists() unless fold < $lastItem.offset()?.top + $lastItem.height()
-
-  groupPartnerArtists: (pas) ->
-    h = Math.ceil pas.length / @artistsListColumnSize
-
-    groups = _.groupBy pas, (pa) -> pa.get 'represented_by'
-    bigger  = label: "represented artists", list: groups.true or []
-    smaller = label: "works available by", list: groups.false or []
-
-    if bigger.list.length < smaller.list.length
-      temp = bigger; bigger = smaller; smaller = temp
-    if smaller.list.length is 0
-      bigger.label = "artists"
- 
-    smaller.numOfCols = Math.ceil smaller.list.length / h
-    bigger.numOfCols  = @artistsListColumnSize - smaller.numOfCols
-
-    # Split arrays into columns
-    for g in [bigger, smaller]
-      g.cols = []; step = Math.ceil g.list.length / g.numOfCols
-      for pa, i in g.list by step
-        g.cols.push g.list.slice i, i + step
-    
-    _.filter [bigger, smaller], (g) -> g.list.length > 0
 
   renderLoading: ->
     unless @$loadingSpinner?

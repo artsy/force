@@ -20,80 +20,6 @@ describe 'PartnerShowsView', ->
   after ->
     benv.teardown()
 
-  describe 'when initializing shows', ->
-
-    beforeEach (done) ->
-      sinon.stub Backbone, 'sync'
-      benv.render resolve(__dirname, '../../templates/index.jade'), {
-        profile: new Profile fabricate 'partner_profile'
-        sd: { PROFILE: fabricate 'partner_profile' }
-      }, =>
-        PartnerArtistsView = mod = benv.requireWithJadeify(
-          (resolve __dirname, '../../client/artists'), ['artistsListTemplate', 'template']
-        )
-        @profile = new Profile fabricate 'partner_profile'
-        @partner = new Partner @profile.get 'owner'
-        @partnerArtists = new PartnerArtists()
-        @view = new PartnerArtistsView
-          profile: @profile
-          partner: @partner
-          collection: @partnerArtists
-          artistsListColumnSize: 4
-          el: $ 'body'
-        done()
-
-    afterEach ->
-      Backbone.sync.restore()
-
-    describe '#groupPartnerArtists', ->
-
-      it 'groups partner artists into represented and nonrepresented groups', ->
-        pas = new PartnerArtists [
-          # 7 represented artists
-          # 4 non-represented artists with published_artworks_count > 0
-          fabricate('partner_artist', represented_by: false),
-          fabricate('partner_artist'),
-          fabricate('partner_artist'),
-          fabricate('partner_artist', represented_by: false),
-          fabricate('partner_artist', represented_by: false),
-          fabricate('partner_artist'),
-          fabricate('partner_artist'),
-          fabricate('partner_artist'),
-          fabricate('partner_artist'),
-          fabricate('partner_artist'),
-          fabricate('partner_artist', represented_by: false)
-        ]
-        groups = @view.groupPartnerArtists pas.models
-        groups.should.have.lengthOf 2
-        groups[1].label.should.equal "works available by"
-        groups[1].cols.should.have.lengthOf 2
-        groups[1].cols[0].should.have.lengthOf 2
-        groups[1].cols[1].should.have.lengthOf 2
-        groups[0].label.should.equal "represented artists"
-        groups[0].cols.should.have.lengthOf 2
-        groups[0].cols[0].should.have.lengthOf 4
-        groups[0].cols[1].should.have.lengthOf 3
-
-      it 'groups partner artists into one single group if no valid non-represented artists', ->
-        pas = new PartnerArtists [
-          # 7 represented artists
-          fabricate('partner_artist'),
-          fabricate('partner_artist'),
-          fabricate('partner_artist'),
-          fabricate('partner_artist'),
-          fabricate('partner_artist'),
-          fabricate('partner_artist'),
-          fabricate('partner_artist')
-        ]
-        groups = @view.groupPartnerArtists pas.models
-        groups.should.have.lengthOf 1
-        groups[0].label.should.equal "artists"
-        groups[0].cols.should.have.lengthOf 4
-        groups[0].cols[0].should.have.lengthOf 2
-        groups[0].cols[1].should.have.lengthOf 2
-        groups[0].cols[2].should.have.lengthOf 2
-        groups[0].cols[3].should.have.lengthOf 1
-
   describe 'when displaying artists', ->
 
     beforeEach (done) ->
@@ -104,7 +30,7 @@ describe 'PartnerShowsView', ->
         sd: { PROFILE: fabricate 'partner_profile' }
       }, =>
         PartnerArtistsView = mod = benv.requireWithJadeify(
-          (resolve __dirname, '../../client/artists'), ['artistsListTemplate', 'template']
+          (resolve __dirname, '../../client/artists'), ['template']
         )
         @profile = new Profile fabricate 'partner_profile'
         @partner = new Partner @profile.get 'owner'
