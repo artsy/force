@@ -53,6 +53,7 @@ if NODE_ENV isnt "test" and REDIS_URL
     if json
       data = JSON.parse json
       deserialized = {}
+      console.log data.primarySets
       for key, json of data
         klass = hash[key]
         deserialized[key] = if klass? then new klass(json) else json

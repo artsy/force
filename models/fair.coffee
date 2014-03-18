@@ -133,7 +133,6 @@ module.exports = class Fair extends Backbone.Model
   #     filteredSearchOptions: this.filterSuggest
   #     filteredSearchColumns: fair.filteredSearchColumns
   #     sections: fair.fetchSections
-  #     primarySets: fair.fetchPrimarySets
   #     galleries: fair.fetchExhibitors
   #     exhibitorsCount: this.galleries.length
   #     exhibitorsAToZGroup: fair.fetchExhibitors
@@ -152,14 +151,13 @@ module.exports = class Fair extends Backbone.Model
           fair: this
           profile: new Profile id: @get('organizer').profile_id
           filterSuggest: new FilterSuggest id: "fair/#{@get 'id'}"
-          primarySets: null
           sections: null
           exhibitorsAToZGroup: null
           artistsAToZGroup: null
           galleries: null
 
         # Setup parallel callback
-        after = _.after 6, =>
+        after = _.after 5, =>
           options.success _.extend data,
             coverImage: data.profile.coverImage()
             filteredSearchOptions: data.filterSuggest
@@ -170,7 +168,6 @@ module.exports = class Fair extends Backbone.Model
         # Fetch all of the above things in parallel
         data.profile.fetch(error: options.error, success: after)
         data.filterSuggest.fetch(error: options.error, success: after)
-        @fetchPrimarySets(error: options.error, success: (x) => data.primarySets = x; after())
         @fetchSections(error: options.error, success: (x) => data.sections = x; after())
         @fetchExhibitors error: options.error, success: (x, y) =>
           data.exhibitorsAToZGroup = x
