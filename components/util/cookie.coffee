@@ -3,15 +3,14 @@
 # http://www.quirksmode.org/js/cookies.html
 
 module.exports =
-
-  createCookie: (name, value, days = 7) ->
-    if days
+  createCookie: (name, value, days) ->
+    v = if days
       date = new Date()
-      date.setTime(date.getTime()+(days*24*60*60*1000))
-      expires = "; expires="+date.toGMTString()
-    else
-      expires = ""
-    document.cookie = "#{name}=#{value + expires}; path=/"
+      date.setTime(date.getTime() + (days*24*60*60*1000))
+      "#{value}; expires=#{date.toGMTString()}"
+    else # If days are undefined then set a session cookie
+      value
+    document.cookie = "#{name}=#{v}; path=/"
 
   readCookie: (name) ->
     nameEQ = "#{name}="
