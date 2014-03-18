@@ -28,6 +28,7 @@ module.exports = class SaveControls extends Backbone.View
 
   save: (e) ->
     unless @artworkCollection
+      track.funnel 'Triggered sign up form via save button'
       mediator.trigger 'open:auth',
         mode: 'register'
         copy: 'Sign up to save artworks'
