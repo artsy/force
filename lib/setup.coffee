@@ -27,6 +27,7 @@ micrositeMiddleware = require './middleware/microsite'
 helpersMiddleware = require './middleware/helpers'
 ensureSSL = require './middleware/ensure_ssl'
 errorHandler = require "../components/error_handler"
+{ fairBustCache } = require('./middleware/cache_busting')
 { notFoundError, loginError } = require('./middleware/errors')
 
 # Setup sharify constants & require dependencies that use sharify data
@@ -146,6 +147,9 @@ module.exports = (app) ->
   # Route to ping for system up
   app.get '/system/up', (req, res) ->
     res.send 200, { nodejs: true }
+
+  # Routes to bust caches
+  app.get '/bust_cache/fair/:id', fairBustCache
 
   # More general middleware
   app.use express.static(path.resolve __dirname, "../public")
