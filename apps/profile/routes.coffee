@@ -29,6 +29,11 @@ getTemplateForProfileType = (profile) ->
       res.render getTemplateForProfileType(profile),
         profile : profile
 
+@partner = (req, res, next) ->
+  fetchProfile req, res, next, (profile) ->
+    res.render getTemplateForProfileType(profile),
+        profile : profile
+
 @posts = (req, res, next) ->
   fetchProfile req, res, next, (profile) ->
     if profile.hasPosts()
