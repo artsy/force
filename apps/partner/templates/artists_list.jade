@@ -8,6 +8,6 @@
             ul.artists-column
               each pa in col
                 if pa.get('published_artworks_count') > 0
-                  li: a( href=pa.href() )= pa.get('artist').name
+                  li( data-artist-id=pa.get('artist').id ): a( href=pa.href() )= pa.get('artist').name
                 else
-                  li: span.artist-name= pa.get('artist').name
+                  li( data-artist-id=pa.get('artist').id ): span.artist-name= pa.get('artist').name
