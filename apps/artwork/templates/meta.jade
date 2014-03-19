@@ -7,7 +7,10 @@ link( rel="alternate", media=sd.MOBILE_MEDIA_QUERY, href=(sd.CANONICAL_MOBILE_UR
 link( rel="canonical", href=(sd.ARTSY_URL + "/artwork/" + artwork.get('id')) )
 meta( property="og:url", content=(sd.ARTSY_URL + "/artwork/" + artwork.get('id')) )
 meta( property="og:type", content=(sd.FACEBOOK_APP_NAMESPACE + ":artwork" ) )
-meta( name="fragment", content="!" )
+
+unless tab
+  meta( name="fragment", content="!" )
+
 if artwork.defaultImage().hasImage('large')
   meta( property="twitter:card", content="summary_large_image" )
   meta( property="og:image", content=artwork.defaultImageUrl('large'))
