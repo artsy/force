@@ -56,7 +56,9 @@ describe 'PartnerOverviewView', ->
         @profile = new Profile fabricate 'partner_profile'
         @partner = new Partner @profile.get 'owner'
         @template = sinon.stub()
+        @artistsGridTemplate = sinon.stub()
         mod.__set__ 'template', @template
+        mod.__set__ 'artistsGridTemplate', @artistsGridTemplate
         @view = new PartnerOverviewView
           profile: @profile
           partner: @partner
@@ -67,17 +69,17 @@ describe 'PartnerOverviewView', ->
     afterEach ->
       Backbone.sync.restore()
 
-    describe '#fetchAndOrganizeShows', ->
+    describe '#renderArtistsGrid', ->
 
-      it 'fetches all the partner artists and renders them', ->
+      it 'fetches all the partner artists and renders them in grid', ->
         @partnerArtists.fetchUntilEnd = (options) =>
           @partnerArtists.add @pas
           options.success?()
-        @view.renderArtists = sinon.stub()
         @view.initializeArtists()
-        @view.renderArtists.calledOnce.should.be.ok
-        @view.renderArtists.args[0][0].should.have.lengthOf 2
-        @view.renderArtists.args[0][0][0].label.should.equal 'represented artists'
-        @view.renderArtists.args[0][0][0].list.should.have.lengthOf 7
-        @view.renderArtists.args[0][0][1].label.should.equal 'works available by'
-        @view.renderArtists.args[0][0][1].list.should.have.lengthOf 4
+        @artistsGridTemplate.calledOnce.should.be.ok
+        @artistsGridTemplate.args[0][0].partner.get('name').should.equal @partner.get('name')
+        @artistsGridTemplate.args[0][0].groups.should.have.lengthOf 2
+        @artistsGridTemplate.args[0][0].groups[0].label.should.equal 'represented artists'
+        @artistsGridTemplate.args[0][0].groups[0].list.should.have.lengthOf 7
+        @artistsGridTemplate.args[0][0].groups[1].label.should.equal 'works available by'
+        @artistsGridTemplate.args[0][0].groups[1].list.should.have.lengthOf 4

@@ -3,23 +3,34 @@ sd            = require('sharify').data
 Backbone      = require 'backbone'
 CurrentUser   = require '../../../models/current_user.coffee'
 Partner       = require '../../../models/partner.coffee'
-PartnerShows  = require '../../../collections/partner_shows.coffee'
-PartnerArtists = require '../../../collections/partner_artists.coffee'
+PartnerArtists   = require '../../../collections/partner_artists.coffee'
 PartnerShowsGrid = require './shows_grid.coffee'
+PartnerLocations = require '../../../collections/partner_locations.coffee'
+ArtistsListView  = require './artists_list.coffee'
 template      = -> require('../templates/overview.jade') arguments...
 artistsGridTemplate = -> require('../templates/_artists_grid.jade') arguments...
 
 module.exports = class PartnerOverviewView extends Backbone.View
 
   defaults:
+    isPartner         : true
+
+  partnerDefaults:
     numberOfFeatured  : 1 # number of featured shows needed
     numberOfShows     : 6 # number of other shows needed
 
+  nonPartnerDefaults:
+    numberOfFeatured  : 0
+    numberOfShows     : 6
+
   initialize: (options={}) ->
-    { @profile, @partner, @numberOfShows, @numberOfFeatured } = _.defaults options, @defaults
-    @$el.html template()
+    { @profile, @partner, @isPartner } = _.defaults options, @defaults
+    { @numberOfFeatured, @numberOfShows } =
+      _.defaults options, if @isPartner then @partnerDefaults else @nonPartnerDefaults
+    @$el.html template partner: @partner, isPartner: @isPartner
     @initializeShows()
     @initializeArtists()
+    @initializeLocations()
 
   initializeShows: ->
     new PartnerShowsGrid
@@ -28,10 +39,9 @@ module.exports = class PartnerOverviewView extends Backbone.View
       numberOfFeatured: @numberOfFeatured
       isCombined: true
       numberOfShows: @numberOfShows
+      heading: if @isPartner then '' else 'Shows & Fair Booths'
+      seeAll: if @isPartner then true else false
 
-  #
-  # Fetch all partner artists at once and group them.
-  #
   initializeArtists: ->
     partnerArtists = new PartnerArtists()
     partnerArtists.url = "#{@partner.url()}/partner_artists"
@@ -43,16 +53,36 @@ module.exports = class PartnerOverviewView extends Backbone.View
           pa.get('represented_by') or
           pa.get('published_artworks_count') > 0
 
-        groups = _.groupBy displayables, (pa) -> pa.get 'represented_by'
-        represented = label: "represented artists", list: groups.true or []
-        nonrepresented = label: "works available by", list: groups.false or []
+        if @isPartner
+          @renderArtistsGrid displayables
+        else
+          @renderArtistsList displayables
 
-        groups = _.filter [represented, nonrepresented], (g) -> g.list.length > 0
-        groups[0].label = "artists" if groups.length is 1
+  renderArtistsGrid: (artists) ->
+    groups = _.groupBy artists, (pa) -> pa.get 'represented_by'
+    represented = label: "represented artists", list: groups.true or []
+    nonrepresented = label: "works available by", list: groups.false or []
 
-        @renderArtists groups
+    groups = _.filter [represented, nonrepresented], (g) -> g.list.length > 0
+    groups[0].label = "artists" if groups.length is 1
 
-  renderArtists: (groups) ->
     @$('.partner-overview-artists').html artistsGridTemplate
       partner: @partner
       groups: groups
+
+  renderArtistsList: (artists) ->
+    new ArtistsListView
+      collection: artists
+      el: @$('.partner-overview-artists')
+
+  initializeLocations: ->
+    return @$('.partner-overview-locations').hide() if @isPartner
+
+    locations = new PartnerLocations()
+    locations.url = "#{@partner.url()}/locations"
+    locations.fetchUntilEnd success: =>
+      locationsArray = []
+      _.each locations.groupBy('city'), (ls, c) ->
+        _.each ls, (l) ->
+          locationsArray.push "<li>#{l.toHtml()}</li>"
+      @$('.locations').html locationsArray.join('')
