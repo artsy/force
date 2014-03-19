@@ -25,6 +25,7 @@ Backbone  = require 'backbone'
               res.render 'index',
                 artwork: artwork
                 artist : artist
+                tab    : req.params.tab
         else
           res.render 'index',
             artwork: artwork

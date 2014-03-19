@@ -8,8 +8,7 @@ link( rel="canonical", href=(sd.ARTSY_URL + "/artwork/" + artwork.get('id')) )
 meta( property="og:url", content=(sd.ARTSY_URL + "/artwork/" + artwork.get('id')) )
 meta( property="og:type", content=(sd.FACEBOOK_APP_NAMESPACE + ":artwork" ) )
 
-//- Only render the fragment tag if the current path is of the form /artwork/:id
-if /\/artwork\/[^\/?]+([\/]|)$/.test(sd.CURRENT_PATH)
+unless tab
   meta( name="fragment", content="!" )
 
 if artwork.defaultImage().hasImage('large')
