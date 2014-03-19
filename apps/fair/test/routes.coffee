@@ -2,15 +2,22 @@
 _ = require 'underscore'
 sinon = require 'sinon'
 Backbone = require 'backbone'
-routes = require '../routes'
+rewire = require 'rewire'
+routes = rewire '../routes'
 CurrentUser = require '../../../models/current_user.coffee'
+Fair = require '../../../models/fair.coffee'
 
 describe 'Fair routes', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
     @req = { params: { id: 'some-fair' } }
-    @res = { render: sinon.stub(), redirect: sinon.stub(), locals: { sd: { ARTSY_URL: 'http://localhost:5000'} } }
+    @res =
+      render: sinon.stub()
+      redirect: sinon.stub()
+      locals:
+        sd: { ARTSY_URL: 'http://localhost:5000'}
+        fair: new Fair(fabricate 'fair')
 
   afterEach ->
     Backbone.sync.restore()
@@ -19,63 +26,40 @@ describe 'Fair routes', ->
 
     it 'renders the info template', ->
       routes.info @req, @res
-      _.last(Backbone.sync.args)[2].success fabricate 'fair_profile'
-      _.last(Backbone.sync.args)[2].success fabricate 'fair'
-      @res.render.args[0][0].should.equal 'templates/index'
-      @res.render.args[0][1].profile.isFairOranizer()
+      @res.locals.sd.SECTION.should.equal 'info'
+      @res.render.args[0][0].should.equal 'index'
 
   describe '#overview', ->
 
     it 'renders the overview template', ->
       routes.overview @req, @res
-      _.last(Backbone.sync.args)[2].success fabricate 'fair_profile'
-      _.last(Backbone.sync.args)[2].success fabricate 'fair'
-      _.last(Backbone.sync.args)[2].success []
-      _.last(Backbone.sync.args)[2].success []
-      _.last(Backbone.sync.args)[2].success []
-      _.last(Backbone.sync.args)[2].success []
-      _.last(Backbone.sync.args)[2].success []
-      @res.render.args[0][0].should.equal '../fair/templates/overview'
-      @res.render.args[0][1].profile.isFairOranizer()
+      @res.locals.sd.SECTION.should.equal 'overview'
+      @res.render.args[0][0].should.equal 'overview'
 
   describe '#foryou', ->
 
     it 'renders the foryou template', ->
       routes.forYou @req, @res
-      _.last(Backbone.sync.args)[2].success fabricate 'fair_profile'
-      _.last(Backbone.sync.args)[2].success fabricate 'fair'
-      _.last(Backbone.sync.args)[2].success []
-      _.last(Backbone.sync.args)[2].success []
-      _.last(Backbone.sync.args)[2].success []
-      _.last(Backbone.sync.args)[2].success []
-      _.last(Backbone.sync.args)[2].success []
-      @res.render.args[0][0].should.equal 'templates/index'
-      @res.render.args[0][1].profile.isFairOranizer()
+      @res.locals.sd.SECTION.should.equal 'forYou'
+      @res.render.args[0][0].should.equal 'index'
 
   describe '#fairPosts', ->
 
     it 'renders the posts template', ->
       routes.fairPosts @req, @res
-      _.last(Backbone.sync.args)[2].success fabricate 'fair_profile'
-      _.last(Backbone.sync.args)[2].success fabricate 'fair'
-      @res.render.args[0][0].should.equal '../fair/templates/index'
-      @res.render.args[0][1].profile.isFairOranizer()
+      @res.locals.sd.SECTION.should.equal 'posts'
+      @res.render.args[0][0].should.equal 'index'
 
   describe '#favorites', ->
 
     it 'redirects to the homepage without a user', ->
       routes.favorites @req, @res
-      _.last(Backbone.sync.args)[2].success fabricate 'fair_profile'
-      _.last(Backbone.sync.args)[2].success fabricate 'fair'
       @res.redirect.args[0][0].should.equal '/some-fair'
 
     it 'renders the favorites template', ->
       @req.user = new CurrentUser fabricate 'user'
       routes.favorites @req, @res
-      _.last(Backbone.sync.args)[2].success fabricate 'fair_profile'
-      _.last(Backbone.sync.args)[2].success fabricate 'fair'
-      @res.render.args[0][0].should.equal 'templates/favorites'
-      @res.render.args[0][1].profile.isFairOranizer()
+      @res.render.args[0][0].should.equal 'favorites'
 
   describe '#follows', ->
 
@@ -87,18 +71,13 @@ describe 'Fair routes', ->
       @req.user = new CurrentUser fabricate 'user'
       @req.params.type = 'artists'
       routes.follows @req, @res
-      _.last(Backbone.sync.args)[2].success fabricate 'fair_profile'
-      _.last(Backbone.sync.args)[2].success fabricate 'fair'
-      @res.render.args[0][0].should.equal 'templates/favorites'
-      @res.render.args[0][1].profile.isFairOranizer()
+      @res.render.args[0][0].should.equal 'favorites'
 
   describe '#search', ->
 
     it 'searches', ->
       req = { params: { id: 'some-fair' }, query: { q: 'foobar' } }
       routes.search req, @res
-      _.last(Backbone.sync.args)[2].success fabricate 'fair_profile'
-      _.last(Backbone.sync.args)[2].success fabricate 'fair'
       _.last(Backbone.sync.args)[0].should.equal 'read'
       _.last(Backbone.sync.args)[2].data.term.should.equal 'foobar'
 
@@ -112,31 +91,7 @@ describe 'Fair routes', ->
 
     it 'renders index', ->
       routes.browse @req, @res
-      _.last(Backbone.sync.args)[2].success fabricate 'fair_profile'
-      _.last(Backbone.sync.args)[2].success fabricate 'fair'
-      _.last(Backbone.sync.args)[2].success []
-      _.last(Backbone.sync.args)[2].success []
-      _.last(Backbone.sync.args)[2].success []
-      _.last(Backbone.sync.args)[2].success []
-      _.last(Backbone.sync.args)[2].success []
-      @res.render.args[0][0].should.equal 'templates/index'
-      @res.render.args[0][1].profile.isFairOranizer()
-
-    it 'passes in the filter mediums', ->
-      routes.browse @req, @res
-      _.last(Backbone.sync.args)[2].success fabricate 'fair_profile'
-      _.last(Backbone.sync.args)[2].success fabricate 'fair'
-      _.last(Backbone.sync.args, 5)[0][2].success
-        total: 1289
-        related_gene:
-          "abstract-sculpture": 149
-        medium:
-          ceramic: 44
-        dimension:
-          12: 386
-        price_range:
-          "-1:1000000000000": 1227
-      @res.locals.mediums['Ceramic'].should.equal 'ceramic'
+      @res.render.args[0][0].should.equal 'index'
 
 
   describe '#showRedirect', ->
@@ -144,9 +99,31 @@ describe 'Fair routes', ->
     it 'redirects to show page', ->
       show = fabricate('show')
       routes.showRedirect @req, @res
-      _.last(Backbone.sync.args)[2].success fabricate 'fair_profile'
       _.last(Backbone.sync.args)[2].success [
         results: [show]
         next: 'foo'
       ]
       @res.redirect.args[0][0].should.include '/show/gagosian-gallery-inez-and-vinood'
+
+  describe 'cache busting', ->
+
+    beforeEach ->
+      routes.__set__ 'client', @client = { del: sinon.stub() }
+
+    describe '#bustCache', ->
+
+      beforeEach ->
+        @req = { params: { id: 'cat-fair' } }
+        @res = { redirect: sinon.stub() }
+
+      it 'deletes the fair key in redis when navigated to by an admin user', ->
+        @req.user = new CurrentUser fabricate 'user', type: 'Admin'
+        routes.bustCache @req, @res, ->
+        @client.del.args[0][0].should.equal 'fair:cat-fair'
+        @res.redirect.args[0][0].should.equal '/cat-fair'
+
+      it 'does nothing when not an admin user', ->
+        routes.bustCache @req, @res, (next = sinon.stub())
+        @client.del.called.should.not.be.ok
+        @res.redirect.called.should.not.be.ok
+        next.called.should.be.ok

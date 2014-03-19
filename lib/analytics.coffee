@@ -55,8 +55,12 @@ module.exports.track =
         options.category  = categories[kind] || categories.other
 
         _.defaults options,
+          queryString: window?.location.search
           page: window?.location.pathname
           noninteraction: true
+
+        if sd.CURRENT_USER?.id
+          options.user_id = sd.CURRENT_USER.id
 
         mixpanel.track? description, options
 

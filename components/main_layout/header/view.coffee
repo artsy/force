@@ -6,8 +6,12 @@ mediator            = require '../../../lib/mediator.coffee'
 sd                  = require('sharify').data
 { isTouchDevice }   = require '../../util/device.coffee'
 { createCookie }    = require '../../util/cookie.coffee'
+analytics           = require '../../../lib/analytics.coffee'
 
 module.exports = class HeaderView extends Backbone.View
+  events:
+    'click .mlh-login': 'login'
+    'click .mlh-signup': 'signup'
 
   initialize: (options) ->
     { @$window, @$body } = options
@@ -47,14 +51,12 @@ module.exports = class HeaderView extends Backbone.View
 
     createCookie 'hide-force-header', true, 365
 
-  events:
-    'click .mlh-login': 'login'
-    'click .mlh-signup': 'signup'
-
   signup: (e) ->
     e.preventDefault()
+    analytics.track.funnel 'Clicked sign up via the header'
     mediator.trigger 'open:auth', { mode: 'signup' }
 
   login: (e) ->
     e.preventDefault()
+    analytics.track.funnel 'Clicked login via the header'
     mediator.trigger 'open:auth', { mode: 'login' }

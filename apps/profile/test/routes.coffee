@@ -93,39 +93,3 @@ describe 'Partner routes', ->
       Backbone.sync.args[0][1].get('profile_id').should.equal 'getty'
       Backbone.sync.args[0][2].success()
       @res.redirect.args[0][0].should.equal '/getty'
-
-
-describe 'Fair routes', ->
-
-  beforeEach ->
-    sinon.stub Backbone, 'sync'
-    @req = { params: { id: 'the-armory-show' }, '/the-armory-show' }
-    @res = { render: sinon.stub(), redirect: sinon.stub(), locals: { sd: { ARTSY_URL: 'http://localhost:5000', CURRENT_PATH: '/the-armory-show' } } }
-
-  afterEach ->
-    Backbone.sync.restore()
-
-  describe '#index', ->
-
-    it 'renders the index template', ->
-      routes.index @req, @res
-      _.last(Backbone.sync.args)[2].success fabricate 'fair_profile'
-      _.last(Backbone.sync.args)[2].success fabricate 'fair_profile'
-      _.last(Backbone.sync.args)[2].success fabricate 'fair'
-      _.last(Backbone.sync.args)[2].success []
-      _.last(Backbone.sync.args)[2].success []
-      _.last(Backbone.sync.args)[2].success []
-      _.last(Backbone.sync.args)[2].success []
-      _.last(Backbone.sync.args)[2].success []
-      @res.render.args[0][0].should.equal '../fair/templates/overview'
-      @res.render.args[0][1].profile.isFairOranizer()
-
-  describe '#posts', ->
-
-    it 'renders the posts template', ->
-      routes.posts @req, @res
-      _.last(Backbone.sync.args)[2].success fabricate 'fair_profile'
-      _.last(Backbone.sync.args)[2].success fabricate 'fair_profile'
-      _.last(Backbone.sync.args)[2].success fabricate 'fair'
-      @res.render.args[0][0].should.equal '../fair/templates/index'
-      @res.render.args[0][1].profile.isFairOranizer()

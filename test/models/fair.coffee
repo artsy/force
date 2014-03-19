@@ -7,8 +7,12 @@ Fair          = require '../../models/fair'
 
 describe 'Fair', ->
 
-  before ->
+  beforeEach ->
+    sinon.stub Backbone, 'sync'
     @fair = new Fair fabricate('fair')
+
+  afterEach ->
+    Backbone.sync.restore()
 
   describe '#href', ->
 
@@ -16,12 +20,6 @@ describe 'Fair', ->
       @fair.href().should.equal "/#{@fair.get('organizer').profile_id}"
 
   describe '#fetchShowForPartner', ->
-
-    beforeEach ->
-      sinon.stub Backbone, 'sync'
-
-    afterEach ->
-      Backbone.sync.restore()
 
     it 'handles api resposne', (done) ->
       show = fabricate('show')
@@ -34,3 +32,16 @@ describe 'Fair', ->
         results: [show]
         next: 'foo'
       ]
+
+  describe '#fetchOverviewData', ->
+
+    it 'fetches a ton of data in parallel for the fair page', ->
+      @fair.fetchOverviewData({})
+      _.last(Backbone.sync.args)[2].success new Backbone.Model fabricate 'profile'
+      urls = (_.result(call[1], 'url') or call[2].url for call in Backbone.sync.args)
+      urls[0].should.match /// api/v1/fair/.* ///
+      urls[1].should.match /// api/v1/profile ///
+      urls[2].should.match /// api/v1/search/filtered/fair/.*/suggest ///
+      urls[3].should.match /// api/v1/fair/.*/sections ///
+      urls[4].should.match /// api/v1/fair/.*/partners ///
+      urls[5].should.match /// api/v1/fair/.*/artists ///
