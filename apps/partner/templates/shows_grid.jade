@@ -20,6 +20,10 @@ mixin showsGallery(shows, isFeatured)
           +showFigureContent(show, isFeatured)
 
 .partner-shows
+
+  if heading
+    h2.avant-garde-header-center.partner-shows-heading= heading
+
   if featured
     section.partner-shows-section.featured
       +showsGallery([featured], true)
@@ -39,8 +43,9 @@ mixin showsGallery(shows, isFeatured)
       h2.avant-garde-header-center.partner-shows-section-heading Past Shows
       +showsGallery(past, false)
 
-  section.partner-shows-section
-    .partner-shows-see-all.avant-garde-header-center
-      a.faux-underline-hover(
-        href="#{partner.href()}/shows"
-      ) See all shows
+  if seeAll
+    section.partner-shows-section
+      .partner-shows-see-all.avant-garde-header-center
+        a.faux-underline-hover(
+          href="#{partner.href()}/shows"
+        ) See all shows

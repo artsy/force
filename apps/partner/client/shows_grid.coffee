@@ -16,15 +16,19 @@ module.exports = class PartnerShowsGridView extends Backbone.View
     numberOfFeatured  : 1         # number of featured shows needed
     isCombined        : false     # if combining current, upcoming and past shows
     numberOfShows     : Infinity  # number of combined shows needed
+    heading           : ''
+    seeAll            : true
 
   initialize: (options={}) ->
-    { @partner, @numberOfFeatured, @numberOfShows, @isCombined } = _.defaults options, @defaults
+    { @partner, @numberOfFeatured, @numberOfShows, @isCombined, @heading, @seeAll } = _.defaults options, @defaults
     @initializeShows()
     
   renderShows: (featured=[], current=[], upcoming=[], past=[]) ->
     @ensurePosterImages featured.concat current, upcoming, past
     @$el.html template
       partner: @partner
+      heading: @heading
+      seeAll: @seeAll
       featured: featured[0]
       current: current
       upcoming: upcoming
