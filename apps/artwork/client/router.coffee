@@ -23,25 +23,26 @@ module.exports = class ArtworkRouter extends Backbone.Router
     { @artwork, @artist } = options
     @baseView = new ArtworkView el: $('#artwork-page'), artwork: @artwork, artist: @artist
 
+  # Called prior to any of the routing callbacks
+  execute: ->
+    @view?.remove()
+    super
+
   show: ->
-    @_teardown()
     @baseView.route 'show'
 
   zoom: ->
-    @_teardown()
     analytics.track.click 'Clicked to zoom in on artwork'
     @baseView.route 'zoom'
     @view = new DeepZoomView $container: $('#artwork-deep-zoom-container'), artwork: @artwork
     @view.render()
 
   moreInfo: ->
-    @_teardown()
     return unless @artwork.hasMoreInfo()
     analytics.track.click "Viewed 'More Info'"
     @baseView.route 'more-info'
 
   viewInRoom: ->
-    @_teardown()
     analytics.track.click "Entered 'View In Room'"
     @baseView.route 'view-in-room'
 
@@ -53,16 +54,11 @@ module.exports = class ArtworkRouter extends Backbone.Router
     @view.render()
 
   contactPartner: ->
-    @_teardown()
     analytics.track.click "Clicked 'Contact Gallery'"
     new ContactPartnerView artwork: @artwork, partner: @artwork.get('partner')
     mediator.on 'modal:closed', => Backbone.history.navigate(@artwork.href(), trigger: true, replace: true)
 
   inquire: ->
-    @_teardown()
     analytics.track.click "Clicked 'Contact Artsy Specialist'"
     new InquiryView artwork: @artwork
     mediator.on 'modal:closed', => Backbone.history.navigate(@artwork.href(), trigger: true, replace: true)
-
-  _teardown: ->
-    @view?.remove()
