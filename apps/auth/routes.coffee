@@ -4,6 +4,9 @@ CurrentUser = require '../../models/current_user.coffee'
 { parse } = require 'url'
 qs = require 'querystring'
 
+getRedirectTo = (req) ->
+  req.body['redirect-to'] or req.query['redirect-to'] or req.query['redirect_uri'] or parse(req.get('Referrer') or '').path or '/'
+
 @submitLogin = (req, res) ->
   res.send { success: true, error: res.authError, user: req.user?.toJSON() }
 
@@ -11,8 +14,8 @@ qs = require 'querystring'
   unless req.user
     return res.redirect '/log_in?error=no-user-access-token'
 
-  redirectTo = req.body['redirect-to'] or req.query['redirect-to'] or
-               parse(req.get('Referrer') or '').path or '/'
+  redirectTo = getRedirectTo(req)
+
   request
     .post("#{SECURE_ARTSY_URL}/api/v1/me/trust_token")
     .send(access_token: req.user.get 'accessToken')
@@ -40,7 +43,7 @@ qs = require 'querystring'
       # Delete all connect cookies - we have some under artsy.net and others under .artsy.net.
       res.clearCookie 'connect.sess'
       req.login new CurrentUser(accessToken: response?.body.access_token), ->
-        res.redirect req.query['redirect-to'] or req.get('Referrer') or '/'
+        res.redirect getRedirectTo(req)
   )
 
 @twitterLastStep = (req, res) ->
