@@ -82,7 +82,7 @@ module.exports = class PartnerOverviewView extends Backbone.View
     locations.url = "#{@partner.url()}/locations"
     locations.fetchUntilEnd success: =>
       locationsArray = []
-      _.each locations.groupBy('city'), (ls, c) =>
-        _.each ls, (l) =>
-          locationsArray.push '<li>' + l.toHtml() + '</li>'
+      _.each locations.groupBy('city'), (ls, c) ->
+        _.each ls, (l) ->
+          locationsArray.push "<li>#{l.toHtml()}</li>"
       @$('.locations').html locationsArray.join('')
