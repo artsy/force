@@ -67,7 +67,7 @@
   //- Large contact button
   if artwork.isContactable()
     a.avant-garde-button-black.artwork-contact-button(
-      href="/artwork/#{artwork.id}/contact-gallery", data-client
+      href="/artwork/#{artwork.id}/contact-gallery", data-client, rel='nofollow'
     )!= artwork.contactLabel()
 
   //- Auction # todo
@@ -84,7 +84,7 @@
       if artwork.inquiryMicroCopy()
         small.small-caps= artwork.inquiryMicroCopy()
       a.avant-garde-button-underlined.artwork-inquiry-button(
-        href="/artwork/#{artwork.id}/inquire", data-client
+        href="/artwork/#{artwork.id}/inquire", data-client, rel='nofollow'
       ) Contact Artsy Specialist
 
   nav.artwork-actions-list
@@ -95,27 +95,27 @@
     if artwork.isHangable()
       //- Initial state:
       a.artwork-view-in-room-link(
-        href="/artwork/#{artwork.id}/view-in-room", data-client
+        href="/artwork/#{artwork.id}/view-in-room", data-client, rel='nofollow'
       )
         i.icon-view-in-room
         | View in Room
 
       //- Toggled state:
       a.artwork-exit-view-in-room-link.is-hidden(
-        href="/artwork/#{artwork.id}", data-client
+        href="/artwork/#{artwork.id}", data-client, rel='nofollow'
       )
         i.icon-artwork
         | Artwork View
     if artwork.hasMoreInfo()
       //- Initial state:
       a.artwork-more-info-link(
-        href="/artwork/#{artwork.id}/more-info", data-client
+        href="/artwork/#{artwork.id}/more-info", data-client, rel='nofollow'
       )
         i.icon-info
         | More Info
       //- Toggled state:
       a.artwork-exit-more-info-link.is-hidden(
-        href="/artwork/#{artwork.id}", data-client
+        href="/artwork/#{artwork.id}", data-client, rel='nofollow'
       )
         i.icon-info
         | Exit More Info
