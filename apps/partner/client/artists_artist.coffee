@@ -16,7 +16,7 @@ module.exports = class PartnerArtistsArtistView extends Backbone.View
     scroll: false # scroll to the top of the view
 
   initialize: (options={}) ->
-    { @scroll } = _.defaults options, @defaults
+    { @scroll, @noArtworks } = _.defaults options, @defaults
     @artist = new Artist @model.get('artist')
     @partner = new Partner @model.get('partner')
     @initializeElement()
@@ -52,6 +52,8 @@ module.exports = class PartnerArtistsArtistView extends Backbone.View
     artworks.url = "#{@partner.url()}/artist/#{@artist.get('id')}/artworks"
     artworks.fetch
       success: =>
+        return @noArtworks?() if artworks.length is 0
+
         new ArtworkColumnsView
           el: @$('.partner-artist-artworks')
           collection: artworks

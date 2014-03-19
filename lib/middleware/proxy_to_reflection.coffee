@@ -3,9 +3,13 @@
 # https://github.com/artsy/reflection
 #
 
-{ REFLECTION_URL } = require '../../config'
-request = require 'superagent'
+request             = require 'superagent'
+{ parse }           = require 'url'
+{ REFLECTION_URL }  = require '../../config'
 
 module.exports = (req, res, next) ->
-  return next() unless req.query._escaped_fragment_?
-  request.get(REFLECTION_URL + res.locals.sd.CURRENT_PATH).end((resp) -> res.send(resp.text))
+  if req.query._escaped_fragment_?
+    request.get(REFLECTION_URL + parse(req.url).pathname).end (resp) ->
+      res.send(resp.text)
+  else
+    next()

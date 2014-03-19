@@ -16,19 +16,40 @@ module.exports = class PartnerShowsGridView extends Backbone.View
     numberOfFeatured  : 1         # number of featured shows needed
     isCombined        : false     # if combining current, upcoming and past shows
     numberOfShows     : Infinity  # number of combined shows needed
+    heading           : ''
+    seeAll            : true
 
   initialize: (options={}) ->
-    { @partner, @numberOfFeatured, @numberOfShows, @isCombined } = _.defaults options, @defaults
+    { @partner, @numberOfFeatured, @numberOfShows, @isCombined, @heading, @seeAll } = _.defaults options, @defaults
     @initializeShows()
     
   renderShows: (featured=[], current=[], upcoming=[], past=[]) ->
     @ensurePosterImages featured.concat current, upcoming, past
     @$el.html template
       partner: @partner
+      heading: @heading
+      seeAll: @seeAll
       featured: featured[0]
       current: current
       upcoming: upcoming
       past: past
+
+    $name = @$('.partner-shows-section.featured .partner-show-name')
+    return unless $name.length > 0
+
+    # Truncate with ellipsis for long titles (usually lots of artist names)
+    $name.dotdotdot({ height: 250 }) if $name.height() > 250
+
+    # Some featured names are long with no spaces... step down the font size
+    # Break the word if the size is going to be too small to look like a title
+    _.defer ->
+      $name.css('visibility', 'hidden')
+      min = 24
+      while $name[0].scrollWidth > $name.width()
+        size = Math.max(min, parseInt($name.css('font-size')) - 2)
+        $name.css('font-size', "#{size}px")
+        if size is min then $name.css('word-wrap', 'break-word'); break
+      $name.css('visibility', 'visible')
 
   #
   # Recursively fetch enough featured/other shows to display.
