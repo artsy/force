@@ -62,6 +62,7 @@ module.exports = (app) ->
 
   # Add up front middleware
   app.use sharify
+  app.use proxyGravity
   app.use redirectMobile
   app.use ensureSSL
 
@@ -115,7 +116,6 @@ module.exports = (app) ->
 
   # Proxy routes
   app.use proxyReflection
-  app.use proxyGravity
 
   # Mount apps
   app.use require "../apps/home"
