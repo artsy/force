@@ -25,7 +25,7 @@ errorHandler.pageNotFound = (req, res, next) ->
 
 # Error-handling middleware
 errorHandler.internalError = (err, req, res, next) ->
-  detail = if REVEAL_ERRORS then err.message else null
+  detail = if REVEAL_ERRORS then err.message or err.text or err.toString() else null
   res.send res.statusCode, renderTemplate
     code: res.statusCode
     error: err
