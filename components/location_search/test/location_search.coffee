@@ -28,6 +28,10 @@ describe 'Location Search', ->
   it 'should render the template', ->
     @view.render().$el.html().should.include 'Enter your city'
 
+  it 'should render with a current value', ->
+    value = "New York, NY, United States"
+    @view.render(value).$el.html().should.include value
+
   it 'attach a listener', ->
     spy = sinon.spy @view, 'attach'
     @view.render()

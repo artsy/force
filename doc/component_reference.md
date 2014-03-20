@@ -16,6 +16,7 @@ If a separate doc is required, add it to the component's directory as a
 - [Contact View](#contact-view)
 - [Related Genes](#related-genes)
 - [Partner Buttons](#partner-buttons)
+- [Location Search](#location-search)
 
 ## Artwork Columns
 ![](images/artwork_columns.png)
@@ -478,3 +479,17 @@ new PartnerShowButtons
   followProfiles: @followProfiles
 @followProfiles?.syncFollows [@show.get('partner').default_profile_id]
 ````
+
+## Location Search
+
+An autocomplete input that leverages the google maps api to get a geo coded location from a user that types in a city. 
+![](images/search_location.png)
+
+You need to add a reference to the google api script in the head block of your page template:
+
+```jade
+block head
+  script( src='https://maps.googleapis.com/maps/api/js?libraries=places&sensor=true' )
+```
+
+Check out usage in `apps/personalize`

@@ -11,8 +11,8 @@ module.exports = class LocationSearchView extends Backbone.View
     google.maps.event.addListener @autocomplete, 'place_changed', =>
       @announce @autocomplete.getPlace()
 
-  render: ->
-    @$el.html template(isTouchDevice: isTouchDevice())
+  render: (value = null) ->
+    @$el.html template(isTouchDevice: isTouchDevice(), value: value )
     @postRender()
     this
 
