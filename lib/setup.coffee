@@ -113,7 +113,7 @@ module.exports = (app) ->
       user = new CurrentUser require('antigravity').fabricate('user', accessToken: 'footoken')
       req.login user, next
 
-  # Proxy Google requests to Reflection
+  # Proxy routes
   app.use proxyReflection
   app.use proxyGravity
 
