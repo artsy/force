@@ -46,10 +46,10 @@ module.exports = class PartnerCollectionView extends Backbone.View
         page = options?.data?.page or @nextPage # fetched page
 
         if page is 1
-          $(window).on 'scroll.favorites', _.throttle(@infiniteScroll, 150)
+          $(window).on 'scroll.collection.partner', _.throttle(@infiniteScroll, 150)
 
         if collection.length < 1
-          $(window).off('.favorites')
+          $(window).off('scroll.collection')
 
         else
           @artworkColumnsView.appendArtworks collection.models

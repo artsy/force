@@ -28,8 +28,8 @@ describe 'PartnerView', ->
         profile: new Profile fabricate 'partner_profile'
         sd: { PROFILE: fabricate 'partner_profile' }
       }, =>
-        { PartnerView, @init } = mod = benv.requireWithJadeify(
-          (resolve __dirname, '../../client/index'), ['tablistTemplate']
+        PartnerView = mod = benv.requireWithJadeify(
+          (resolve __dirname, '../../client/view'), ['tablistTemplate']
         )
 
         @profile = new Profile fabricate 'partner_profile'
@@ -52,10 +52,10 @@ describe 'PartnerView', ->
         sections = @view.getDisplayableSections @view.getSections()
         sections.should.eql ['shows', 'posts', 'about']
 
-    describe '#initTabs', ->
+    describe '#initializeTablist', ->
 
       it 'renders correct tabs', ->
         sinon.stub @view.partner, "fetch", (options) -> options?.success?()
-        @view.initTabs()
+        @view.initializeTablist()
         _.last(@tablistTemplate.args)[0].profile.get('id').should.equal @profile.get('id')
         _.last(@tablistTemplate.args)[0].sections.should.eql ['shows', 'posts', 'about']

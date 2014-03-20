@@ -29,13 +29,6 @@ describe 'User profile routes', ->
       _.last(Backbone.sync.args)[2].success fabricate 'profile'
       @res.redirect.args[0][0].should.equal '/alessandra'
 
-  describe '#contact', ->
-
-    it 'redirects to profile when requesting a partner profile tab', ->
-      routes.contact @req, @res
-      _.last(Backbone.sync.args)[2].success fabricate 'profile'
-      @res.redirect.args[0][0].should.equal '/alessandra'
-
 describe 'Partner routes', ->
 
   beforeEach ->
@@ -54,21 +47,11 @@ describe 'Partner routes', ->
       @res.render.args[0][0].should.equal '../partner/templates'
       @res.render.args[0][1].profile.isPartner()
 
-  describe '#about', ->
+  describe '#partner', ->
 
-    it 'renders the contact template', ->
-      routes.about @req, @res
+    it 'renders the index template', ->
+      routes.partner @req, @res
       _.last(Backbone.sync.args)[2].success fabricate 'partner_profile'
-      @res.render.args[0][0].should.equal '../partner/templates'
-      @res.render.args[0][1].profile.isPartner()
-
-  describe '#contact', ->
-
-    it 'renders the contact template', ->
-      routes.contact @req, @res
-      gallery = fabricate 'partner_profile'
-      gallery.owner_type = 'PartnerGallery'
-      _.last(Backbone.sync.args)[2].success gallery
       @res.render.args[0][0].should.equal '../partner/templates'
       @res.render.args[0][1].profile.isPartner()
 

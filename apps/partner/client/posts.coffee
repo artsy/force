@@ -10,25 +10,20 @@ module.exports = class PartnerPostsView extends Backbone.View
   initialize: (options={}) ->
     { @profile, @partner } = options
     @feedItems = new FeedItems()
-    @listenTo @feedItems, "request", @renderLoading
-    @listenTo @feedItems, "sync", @doneLoading
+    @render()
     @initializePosts()
+
+  render: ->
+    template = '<div id="partner-posts"><div class="loading-spinner"></div></div>'
+    $(template).appendTo @$el.empty()
 
   initializePosts: ->
     url = "#{ARTSY_URL}/api/v1/profile/#{@profile.get('id')}/posts"
     @feedItems.fetch
       url: url
       success: (items) =>
-        @hideLoading()
         items.urlRoot = url
         new PoplockitFeed
           limitPostBodyHeight : true
           feedItems           : items
-          el                  : $('<div id="partner-posts"></div>').appendTo @$el
-
-  renderLoading: ->
-    unless @$loadingSpinner?
-      @$el.after( @$loadingSpinner = $('<div class="loading-spinner"></div>') )
-    @$loadingSpinner.show()
-
-  hideLoading: -> @$loadingSpinner.hide()
+          el                  : @$('#partner-posts')

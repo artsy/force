@@ -20,28 +20,33 @@ module.exports = class PartnerArtistsView extends Backbone.View
   initialize: (options={}) ->
     { @profile, @partner, @artistsListColumnSize, @nextPage, @pageSize, @artistId } =
       _.defaults options, @defaults
-    @collection ?= new PartnerArtists()
-    @initializeArtists()
+    @cache = options.cache; artists = @cache?.artists
+    @collection = if artists? then artists else new PartnerArtists()
+    @fetchAllArtists()
     @render()
 
   render: ->
-    @$el.html $( template() )
+    @$el.html template(); return if @collection.length is 0
 
-  initializeArtists: ->
+    @displayables = @collection.filter (pa) ->
+      # Display represented artists or non- ones with published artworks
+      pa.get('represented_by') or
+      pa.get('published_artworks_count') > 0
+
+    @renderArtistsList()
+    if @artistId? then @renderArtist()
+    else
+      if @displayables.length > @pageSize
+        $(window).on 'scroll.artists.partner', _.throttle(@infiniteScroll, 150)
+      @renderNextPageOfArtists()
+
+  cacheArtists: -> @cache.artists = @collection
+
+  fetchAllArtists: ->
+    return unless @collection.length is 0
+
     @collection.url = "#{@partner.url()}/partner_artists"
-    @collection.fetchUntilEnd
-      cache: true
-      success: =>
-        @displayables = @collection.filter (pa) ->
-          # Display represented artists or non- ones with published artworks
-          pa.get('represented_by') or
-          pa.get('published_artworks_count') > 0
-        @renderArtistsList()
-        if @artistId? then @renderArtist()
-        else
-          if @displayables.length > @pageSize
-            $(window).on 'scroll.partner_artists', _.throttle(@infiniteScroll, 150)
-          @renderNextPageOfArtists()
+    @collection.fetchUntilEnd cache: true, success: => @cacheArtists(); @render()
 
   renderArtistsList: ->
     new ArtistsListView
@@ -68,16 +73,9 @@ module.exports = class PartnerArtistsView extends Backbone.View
       @appendArtist pa if pa.get('published_artworks_count') > 0
 
     ++@nextPage
-    if end >= @displayables.length then $(window).off '.partner_artists'
+    if end >= @displayables.length then $(window).off 'scroll.artists'
 
   infiniteScroll: =>
     fold = $(window).height() + $(window).scrollTop()
     $lastItem = @$('#artists-details .partner-artist:last')
     @renderNextPageOfArtists() unless fold < $lastItem.offset()?.top + $lastItem.height()
-
-  renderLoading: ->
-    unless @$loadingSpinner?
-      @$el.after( @$loadingSpinner = $('<div class="loading-spinner"></div>') )
-    @$loadingSpinner.show()
-
-  hideLoading: -> @$loadingSpinner.hide()

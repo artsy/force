@@ -24,15 +24,12 @@ getTemplateForProfileType = (profile) ->
     if profile.href() != res.locals.sd.CURRENT_PATH
       res.redirect profile.href()
     else
-      res.locals.sd.SECTION = 'overview' if profile.isGallery()
-      res.locals.sd.SECTION = 'shows' if profile.isInstitution()
       res.render getTemplateForProfileType(profile),
         profile : profile
 
 @posts = (req, res, next) ->
   fetchProfile req, res, next, (profile) ->
     if profile.hasPosts()
-      res.locals.sd.SECTION = 'posts' if profile.isPartner()
       res.render getTemplateForProfileType(profile),
         profile : profile
     else
@@ -57,74 +54,10 @@ getTemplateForProfileType = (profile) ->
       res.redirect "/#{req.params.id}"
 
 #
-# Gallery and Intitution routes
+# partner specific routes, including /overview, /shows, /artists,
+#   /artist/:artistId, /collection, /contact, /about, /shop
 #
-@shows = (req, res, next) ->
+@partner = (req, res, next) ->
   fetchProfile req, res, next, (profile) ->
-    if profile.isPartner()
-      res.locals.sd.SECTION = 'shows'
-      res.render getTemplateForProfileType(profile),
+    res.render getTemplateForProfileType(profile),
         profile : profile
-    else
-      res.redirect profile.href()
-
-#
-# Gallery only routes
-#
-@overview = (req, res, next) ->
-  fetchProfile req, res, next, (profile) ->
-    if profile.isGallery()
-      res.locals.sd.SECTION = 'overview'
-      res.render getTemplateForProfileType(profile),
-        profile : profile
-    else
-      res.redirect profile.href()
-
-@contact = (req, res, next) ->
-  fetchProfile req, res, next, (profile) ->
-    if profile.isGallery()
-      res.locals.sd.SECTION = 'contact'
-      res.render getTemplateForProfileType(profile),
-        profile : profile
-    else
-      res.redirect profile.href()
-
-@artists = (req, res, next) ->
-  fetchProfile req, res, next, (profile) ->
-    if profile.isGallery()
-      res.locals.sd.SECTION = 'artists'
-      res.locals.sd.ARTIST_ID = req.params.artistId
-      res.render getTemplateForProfileType(profile),
-        profile : profile
-    else
-      res.redirect profile.href()
-
-#
-# Institution only routes
-#
-@about = (req, res, next) ->
-  fetchProfile req, res, next, (profile) ->
-    if profile.isInstitution()
-      res.locals.sd.SECTION = 'about'
-      res.render getTemplateForProfileType(profile),
-        profile : profile
-    else
-      res.redirect profile.href()
-
-@collection = (req, res, next) ->
-  fetchProfile req, res, next, (profile) ->
-    if profile.isInstitution()
-      res.locals.sd.SECTION = 'collection'
-      res.render getTemplateForProfileType(profile),
-        profile : profile
-    else
-      res.redirect profile.href()
-
-@shop = (req, res, next) ->
-  fetchProfile req, res, next, (profile) ->
-    if profile.isInstitution()
-      res.locals.sd.SECTION = 'shop'
-      res.render getTemplateForProfileType(profile),
-        profile : profile
-    else
-      res.redirect profile.href()

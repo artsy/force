@@ -25,13 +25,13 @@ vanityRoutes = [
 
 app.get '/:id', routes.index
 app.get '/:id/favorites', routes.favorites
-app.get '/:id/overview', routes.overview
+app.get '/:id/overview', routes.partner
 app.get '/:id/posts', routes.posts
-app.get '/:id/contact', routes.contact
-app.get '/:id/about', routes.about
-app.get '/:id/collection', routes.collection
-app.get '/:id/shop', routes.shop
-app.get '/:id/shows', routes.shows
-app.get '/:id/artists', routes.artists
-app.get '/:id/artist/:artistId', routes.artists
+app.get '/:id/contact', routes.partner
+app.get '/:id/about', routes.partner
+app.get '/:id/collection', routes.partner
+app.get '/:id/shop', routes.partner
+app.get '/:id/shows', routes.partner
+app.get '/:id/artists', routes.partner
+app.get '/:id/artist/:artistId', routes.partner
 app.get '/:id/follow', routes.follow
