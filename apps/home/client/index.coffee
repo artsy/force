@@ -44,6 +44,6 @@ module.exports.init = ->
 
   # Open the signup modal for logged out users, or the login modal if the user has
   # signed in before.
-  return if user?
+  return if user? or location.search.match('no-auth-modal')
   _.defer -> mediator.trigger 'open:auth',
     mode: if readCookie('signed_in') is 'true' then 'login' else 'signup'
