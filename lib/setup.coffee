@@ -82,6 +82,10 @@ module.exports = (app) ->
       )
       next()
 
+  # Body parser has to be after proxy middleware for 
+  # node-http-proxy to work with POST/PUT/DELETE)
+  app.all '/api*', proxyGravity.api
+
   # Setup Artsy XAPP & Passport middleware for authentication along with the
   # body/cookie parsing middleware needed for that.
   app.use artsyXappMiddlware(
@@ -89,6 +93,7 @@ module.exports = (app) ->
     clientId: ARTSY_ID
     clientSecret: ARTSY_SECRET
   ) unless app.get('env') is 'test'
+  app.use express.bodyParser()
   app.use express.cookieParser()
   app.use express.cookieSession
     secret: SESSION_SECRET
@@ -107,14 +112,12 @@ module.exports = (app) ->
 
   # Proxy / redirect requests before they even have to deal with Force routing
   # (This must be after the auth middleware to be able to proxy auth routes)
-  app.use proxyGravity
+  app.use proxyGravity.app
   app.use redirectMobile
   app.use proxyReflection
   app.use ensureSSL
 
-  # General helpers and express middleware (body parser has to be after proxy
-  # middleware for node-http-proxy to work with POST/PUT/DELETE)
-  app.use express.bodyParser()
+  # General helpers and express middleware
   app.use localsMiddleware
   app.use micrositeMiddleware
   app.use helpersMiddleware

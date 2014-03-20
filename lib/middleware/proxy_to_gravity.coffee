@@ -9,10 +9,10 @@ httpProxy = require 'http-proxy'
 proxy = httpProxy.createProxyServer()
 express = require 'express'
 
-app = module.exports = express()
+app = module.exports.app = express()
 
 ROUTES = [
-  '/oauth2*', '/api/*', '/robots.txt', '/humans.txt', '/sitemap*'
+  '/oauth2*', '/robots.txt', '/humans.txt', '/sitemap*'
 ]
 AUTH_ROUTES = [
   '/post', "/users/sign_in", "/users/sign_out", "/user/delete", "/user/edit", "/profile/edit"
@@ -25,3 +25,6 @@ for route in AUTH_ROUTES
     return next() unless req.user
     req.headers['X-ACCESS-TOKEN'] = req.user.get('accessToken')
     proxy.web req, res, { target: ARTSY_URL }
+
+module.exports.api = (req, res) ->
+  proxy.web req, res, { target: ARTSY_URL }
