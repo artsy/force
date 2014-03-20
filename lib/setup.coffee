@@ -60,10 +60,36 @@ module.exports = (app) ->
   Backbone.sync.editRequest = (req) -> req.set('X-XAPP-TOKEN': artsyXappMiddlware.token)
   backboneCacheSync(Backbone.sync, REDIS_URL, DEFAULT_CACHE_TIME, NODE_ENV) if REDIS_URL
 
-  # Add up front middleware
+  # Inject sharify data before anything
   app.use sharify
 
-  # Setup Artsy XAPP & Passport middleware
+  # Development / Test only middlewares that compile assets, mount antigravity, and
+  # allow a back door to log in for tests.
+  if "development" is NODE_ENV
+    app.use express.errorHandler()
+    app.use require("stylus").middleware
+      src: path.resolve(__dirname, "../")
+      dest: path.resolve(__dirname, "../public")
+    app.use require("browserify-dev-middleware")
+      src: path.resolve(__dirname, "../")
+      transforms: [require("jadeify"), require('caching-coffeeify')]
+  if "test" is NODE_ENV
+    app.use "/__api", require("../test/helpers/integration.coffee").api
+    app.use (req, res, next) ->
+      return next() unless req.query['test-login']
+      req.user = new CurrentUser(
+        require('antigravity').fabricate('user', accessToken: 'footoken')
+      )
+      next()
+
+  # Proxy / redirect requests before they even have to deal with Force routing
+  app.use proxyGravity
+  app.use redirectMobile
+  app.use proxyReflection
+  app.use ensureSSL
+
+  # Setup Artsy XAPP & Passport middleware for authentication along with the
+  # body/cookie parsing middleware needed for that.
   app.use artsyXappMiddlware(
     artsyUrl: ARTSY_URL
     clientId: ARTSY_ID
@@ -86,36 +112,12 @@ module.exports = (app) ->
     twitterSignupPath: '/force/users/auth/twitter/email'
   app.use errorHandler.socialAuthError
 
-  # General
+  # General helpers and express middleware
   app.use localsMiddleware
   app.use micrositeMiddleware
   app.use helpersMiddleware
   app.use express.favicon()
   app.use express.logger('dev')
-
-  # Development
-  if "development" is NODE_ENV
-    app.use express.errorHandler()
-    app.use require("stylus").middleware
-      src: path.resolve(__dirname, "../")
-      dest: path.resolve(__dirname, "../public")
-    app.use require("browserify-dev-middleware")
-      src: path.resolve(__dirname, "../")
-      transforms: [require("jadeify"), require('caching-coffeeify')]
-
-  # Test
-  if "test" is NODE_ENV
-    app.use "/__api", require("../test/helpers/integration.coffee").api
-    app.use (req, res, next) ->
-      return next() unless req.query['test-login']
-      user = new CurrentUser require('antigravity').fabricate('user', accessToken: 'footoken')
-      req.login user, next
-
-  # Proxy / redirect
-  app.use proxyGravity
-  app.use redirectMobile
-  app.use ensureSSL
-  app.use proxyReflection
 
   # Mount apps
   app.use require "../apps/home"
@@ -152,10 +154,11 @@ module.exports = (app) ->
   app.get '/system/up', (req, res) ->
     res.send 200, { nodejs: true }
 
-  # More general middleware
+  # Static asset middleware
   app.use express.static(path.resolve __dirname, "../public")
 
-  # 404 and error handling middleware
+  # Finally 404 and error handling middleware when the request wasn't handeled
+  # successfully by anything above.
   app.use errorHandler.pageNotFound
   app.use '/force/users/sign_in', loginError
   app.post '/force/javascripterr', errorHandler.javascriptError
