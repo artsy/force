@@ -2,7 +2,6 @@ if user.get('name')
   a( href="/" + user.get('default_profile_id') )= user.get('name')
 else
   a account
-a( href="/invite" ) Invite Friends
 a( href="/profile/edit" ) Edit Profile
 a( href="/user/edit" ) Settings
 if user.isAdmin()

@@ -62,8 +62,6 @@ module.exports = (app) ->
 
   # Add up front middleware
   app.use sharify
-  app.use redirectMobile
-  app.use ensureSSL
 
   # Setup Artsy XAPP & Passport middleware
   app.use artsyXappMiddlware(
@@ -113,9 +111,11 @@ module.exports = (app) ->
       user = new CurrentUser require('antigravity').fabricate('user', accessToken: 'footoken')
       req.login user, next
 
-  # Proxy routes
-  app.use proxyReflection
+  # Proxy / redirect
   app.use proxyGravity
+  app.use redirectMobile
+  app.use ensureSSL
+  app.use proxyReflection
 
   # Mount apps
   app.use require "../apps/home"
