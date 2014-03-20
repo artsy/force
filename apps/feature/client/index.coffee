@@ -15,7 +15,7 @@ module.exports.FeatureView = class FeatureView extends Backbone.View
     @model.fetchSets
       success: (sets) =>
         @sets = sets
-        @$('.feature-content').append setsTemplate { sets: sets }
+        @$('#feature-sets-container').html setsTemplate(sets: sets)
         # If we have artworks, we have a sale or auction.
         if @$('.artwork-column').length > 0
           @initializeSaleArtworks sets
