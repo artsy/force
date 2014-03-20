@@ -24,12 +24,10 @@ describe 'HeroUnitView', ->
         ]).models
         sd: {}
       }
-      sinon.stub _, 'defer'
       Backbone.$ = $
       done()
 
   after ->
-    _.defer.restore()
     benv.teardown()
 
   beforeEach ->
@@ -94,14 +92,12 @@ describe 'Homepage init code', ->
     ]
     @mod.__set__ 'HeroUnitView', ->
     sinon.stub Backbone.history, 'start'
-    sinon.stub _, 'defer'
     sinon.stub Backbone, 'sync'
     @init()
 
   afterEach ->
     Backbone.sync.restore()
     Backbone.history.start.restore()
-    _.defer.restore()
 
   context 'with a user', ->
 
@@ -156,8 +152,15 @@ describe 'Homepage init code', ->
   it 'opens the signup modal', ->
     mediator = @mod.__get__ 'mediator'
     mediator.on 'open:auth', spy = sinon.spy()
-    _.last(_.defer.args)[0]()
+    @init()
     spy.args[0][0].mode.should.equal 'signup'
+
+  it 'does not open the signup modal if passed a query param', ->
+    mediator = @mod.__get__ 'mediator'
+    mediator.on 'open:auth', spy = sinon.spy()
+    location.search = '?no-auth-modal=true'
+    @init()
+    spy.called.should.not.be.ok
 
 describe 'HomeAuthRouter', ->
 
