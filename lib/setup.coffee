@@ -108,9 +108,14 @@ module.exports = (app) ->
   # Test
   if "test" is NODE_ENV
     app.use "/__api", require("../test/helpers/integration.coffee").api
+    app.use (req, res, next) ->
+      return next() unless req.query['test-login']
+      user = new CurrentUser require('antigravity').fabricate('user', accessToken: 'footoken')
+      req.login user, next
 
   # Proxy Google requests to Reflection
   app.use proxyReflection
+  app.use proxyGravity
 
   # Mount apps
   app.use require "../apps/home"
@@ -149,9 +154,6 @@ module.exports = (app) ->
 
   # More general middleware
   app.use express.static(path.resolve __dirname, "../public")
-
-  # Try to proxy unsupported route to Gravity before showing errors
-  app.use proxyGravity
 
   # 404 and error handling middleware
   app.use errorHandler.pageNotFound

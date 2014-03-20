@@ -4,10 +4,16 @@ express = require 'express'
 
 child = null
 gravity = express()
-gravity.get '/api/v1/me', (req, res) -> res.send { name: 'Craig' }
-gravity.get '/userdontknowwhatitis', (req, res) -> res.send 404
+gravity.get '/api/v1/me', (req, res) ->
+  res.send { name: 'Craig' }
+gravity.get '/userdontknowwhatitis', (req, res) ->
+  res.send 404
+gravity.get '/post', (req, res) ->
+  res.send { token: req.get('x-access-token') }
 startServer = (callback) ->
   envVars =
+    NODE_ENV: 'test'
+    SECURE_ARTSY_URL: "http://localhost:5001"
     ARTSY_URL: "http://localhost:5001"
     APP_URL: "http://localhost:5000"
     PORT: 5000
@@ -31,4 +37,9 @@ describe 'Setup', ->
   it 'proxies certain requests to Gravity if they are supported', (done) ->
     request.get('http://localhost:5000/api/v1/me').end (res) ->
       res.body.name.should.equal 'Craig'
+      done()
+
+  it 'proxies authed routes', (done) ->
+    request.get('http://localhost:5000/post?test-login=true').end (res) ->
+      res.body.token.should.equal 'footoken'
       done()
