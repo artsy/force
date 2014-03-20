@@ -38,6 +38,7 @@ module.exports = class PartnerView extends Backbone.View
     @profile = @model # alias
     @partner = new Partner @profile.get('owner')
     @listenTo @partner, 'sync', @initializeTablist
+    @initializeCache()
     @initializePartner()
     @initializeFollows()
 
@@ -46,16 +47,23 @@ module.exports = class PartnerView extends Backbone.View
 
     $(window).off '.partner' # reset events under .partner namespace
     new sectionToView[@currentSection]?( _.extend(
-      el: @$('.partner-content')
-      profile: @profile
-      partner: @partner
+      el      : @$('.partner-content')
+      profile : @profile
+      partner : @partner
+      cache   : @cache[@currentSection]
     , extraParams))
 
   intercept: (e) ->
     e.preventDefault()
 
-    url = $(e.currentTarget).attr('href')
-    Backbone.history.navigate url, trigger: true
+    Backbone.history.navigate $(e.currentTarget).attr('href'), trigger: true
+
+  #
+  # cache is a dictionary of section_name: data pair. We simply pass the data
+  # to the view of each section and each view can manage the data as necessary.
+  #
+  initializeCache: ->
+    @cache = {}; _.each sectionToView, (v, k) => @cache[k] = {}
 
   initializePartner: -> @partner.fetch cache: true
 
