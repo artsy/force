@@ -25,7 +25,7 @@ module.exports = class PartnerArtistsView extends Backbone.View
     @render()
 
   render: ->
-    @$el.html $( template() )
+    @$el.html template()
 
   initializeArtists: ->
     @collection.url = "#{@partner.url()}/partner_artists"
@@ -40,7 +40,7 @@ module.exports = class PartnerArtistsView extends Backbone.View
         if @artistId? then @renderArtist()
         else
           if @displayables.length > @pageSize
-            $(window).on 'scroll.partner_artists', _.throttle(@infiniteScroll, 150)
+            $(window).on 'scroll.artists.partner', _.throttle(@infiniteScroll, 150)
           @renderNextPageOfArtists()
 
   renderArtistsList: ->
@@ -68,7 +68,7 @@ module.exports = class PartnerArtistsView extends Backbone.View
       @appendArtist pa if pa.get('published_artworks_count') > 0
 
     ++@nextPage
-    if end >= @displayables.length then $(window).off '.partner_artists'
+    if end >= @displayables.length then $(window).off 'scroll.artists'
 
   infiniteScroll: =>
     fold = $(window).height() + $(window).scrollTop()

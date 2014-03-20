@@ -17,5 +17,4 @@ module.exports = class PartnerContactView extends Backbone.View
 
   render: ->
     return @fetchLocations() unless @locations
-    @$el.html $( template profile: @profile, partner: @partner, locationGroups: @locations.groupBy('city'))
-    @
+    @$el.html template profile: @profile, partner: @partner, locationGroups: @locations.groupBy('city')

@@ -27,7 +27,8 @@ sectionToView =
 module.exports = class PartnerView extends Backbone.View
 
   events:
-    'click .partner-tabs > a' : 'intercept'
+    'click .partner-tabs > a'       : 'intercept'
+    'click .partner-artists-list a' : 'intercept'
 
   defaults:
     currentSection: 'overview'
@@ -36,18 +37,14 @@ module.exports = class PartnerView extends Backbone.View
     { @currentSection } = _.defaults options, @defaults
     @profile = @model # alias
     @partner = new Partner @profile.get('owner')
-    @listenTo @partner, 'sync', @initializeSections
+    @listenTo @partner, 'sync', @initializeTablist
     @initializePartner()
     @initializeFollows()
 
-  route: (section, extraParams={}) ->
-    @currentSection = section
+  renderSection: (section, extraParams={}) ->
+    @highlightTab (@currentSection = section)
 
-    # highlight the current tab
-    @$(".partner-tabs a[data-section]").removeClass('is-active').addClass('is-inactive')
-    @$(".partner-tabs a[data-section='#{@currentSection}']").addClass('is-active')
-
-    console.log @currentSection
+    $(window).off '.partner' # reset events under .partner namespace
     new sectionToView[@currentSection]?( _.extend(
       el: @$('.partner-content')
       profile: @profile
@@ -58,19 +55,26 @@ module.exports = class PartnerView extends Backbone.View
     e.preventDefault()
 
     url = $(e.currentTarget).attr('href')
-    Backbone.history.navigate url, trigger: true, replace: true
+    Backbone.history.navigate url, trigger: true
 
   initializePartner: -> @partner.fetch cache: true
 
-  initializeSections: ->
+  initializeTablist: ->
     @sections = @getDisplayableSections @getSections()
+
+    # If we don't have the @currentSection set yet here,
+    # it is safe to use the default overview section to render the tablis.
+    # After we route to a section, we will highlight the current tab.
+    #
+    # Here we just need to make sure we set up correct tablist.
 
     # If the partner doesn't have its default tab displayable,
     # e.g. `Overview` for galleries or `Shows` for institutions,
     # we display the first tab content of displayable tabs.
     unless _.contains @sections, @currentSection
-      @route (@currentSection = @sections?[0])
+      @renderSection (@currentSection = @sections?[0])
 
+    # render tablist
     @$('.partner-nav').html( tablistTemplate
       profile: @profile
       sections: @sections
@@ -89,6 +93,12 @@ module.exports = class PartnerView extends Backbone.View
       analyticsUnfollowMessage: 'Unfollowed partner profile from /partner'
 
     @following?.syncFollows [@profile.get('id')]
+
+  highlightTab: (section) ->
+    $tabs = @$('.partner-tabs a[data-section]')
+
+    $tabs.removeClass('is-active').addClass('is-inactive')
+    $tabs.filter("[data-section='#{section}']").addClass('is-active')
 
   #
   # Get an ordered list of sections available to a gallery or institution.
