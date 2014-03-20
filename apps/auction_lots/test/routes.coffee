@@ -1,8 +1,9 @@
-_ = require 'underscore'
-sinon     = require 'sinon'
-Backbone  = require 'backbone'
-rewire    = require 'rewire'
-routes    = rewire '../routes'
+_               = require 'underscore'
+sinon           = require 'sinon'
+Backbone        = require 'backbone'
+rewire          = require 'rewire'
+routes          = rewire '../routes'
+{ fabricate }   = require 'antigravity'
 
 Q = require 'q'
 totalCount = sinon.stub()
@@ -53,3 +54,46 @@ describe 'Auction results routes', ->
       Backbone.sync.args.length.should.equal 2
       Backbone.sync.args[0][1].url().should.include '/api/v1/artwork/andy-foobar-artwork'
       Backbone.sync.args[1][1].url().should.include '/api/v1/artwork/andy-foobar-artwork/comparable_sales'
+
+
+  describe 'no results', ->
+    beforeEach ->
+      @req = params: { id: 'foo-bar' }, query: {}
+      @res = locals: { sd: {} }, render: @renderStub = sinon.stub(), redirect: @redirectStub = sinon.stub()
+
+    describe '#artist', ->
+      it 'redirects', ->
+        routes.artist @req, @res
+        Backbone.sync.args[0][2].success {}
+        Backbone.sync.args[1][2].success null
+        @renderStub.called.should.not.be.ok
+        @redirectStub.called.should.be.ok
+
+    describe '#artwork', ->
+      it 'redirects', ->
+        routes.artwork @req, @res
+        Backbone.sync.args[0][2].success {}
+        Backbone.sync.args[1][2].success null
+        @renderStub.called.should.not.be.ok
+        @redirectStub.called.should.be.ok
+
+  describe 'has results', ->
+    beforeEach ->
+      @req = params: { id: 'foo-bar' }, query: {}
+      @res = locals: { sd: {} }, render: @renderStub = sinon.stub(), redirect: @redirectStub = sinon.stub()
+
+    describe '#artist', ->
+      it 'renders', ->
+        routes.artist @req, @res
+        Backbone.sync.args[0][2].success {}
+        Backbone.sync.args[1][2].success {}
+        @renderStub.called.should.be.ok
+        @redirectStub.called.should.not.be.ok
+
+    describe '#artwork', ->
+      it 'renders', ->
+        routes.artwork @req, @res
+        Backbone.sync.args[0][2].success {}
+        Backbone.sync.args[1][2].success {}
+        @renderStub.called.should.be.ok
+        @redirectStub.called.should.not.be.ok
