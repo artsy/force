@@ -70,19 +70,13 @@ module.exports = class PartnerView extends Backbone.View
   initializeTablist: ->
     @sections = @getDisplayableSections @getSections()
 
-    # If we don't have the @currentSection set yet here,
-    # it is safe to use the default overview section to render the tablis.
-    # After we route to a section, we will highlight the current tab.
-    #
-    # Here we just need to make sure we set up correct tablist.
-
     # If the partner doesn't have its default tab displayable,
-    # e.g. `Overview` for galleries or `Shows` for institutions,
+    # e.g. /overview for galleries or /shows for institutions,
     # we display the first tab content of displayable tabs.
     unless _.contains @sections, @currentSection
       @renderSection (@currentSection = @sections?[0])
 
-    # render tablist
+    # Render tablist
     @$('.partner-nav').html( tablistTemplate
       profile: @profile
       sections: @sections
