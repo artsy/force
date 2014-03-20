@@ -37,6 +37,9 @@ describe 'PartnerShowsView', ->
         @ArtistView = sinon.stub()
         @ArtistView.returns @ArtistView
         mod.__set__ 'ArtistView', @ArtistView
+        @ArtistsListView = sinon.stub()
+        @ArtistsListView.returns @ArtistsListView
+        mod.__set__ 'ArtistsListView', @ArtistsListView
         @partnerArtists = new PartnerArtists [
           fabricate('partner_artist', represented_by: false),
           fabricate('partner_artist'),
@@ -51,14 +54,14 @@ describe 'PartnerShowsView', ->
           fabricate('partner_artist', represented_by: false, published_artworks_count: 0),
           fabricate('partner_artist', represented_by: false)
         ]
+        @partnerArtists.fetchUntilEnd = sinon.stub()
         @view = new PartnerArtistsView
           profile: @profile
           partner: @partner
-          collection: @partnerArtists
+          cache: { artists: @partnerArtists }
           artistsListColumnSize: 4
           pageSize: 5
           el: $ 'body'
-        @view.displayables = @partnerArtists.models
         done()
 
     afterEach ->
@@ -67,7 +70,6 @@ describe 'PartnerShowsView', ->
     describe '#renderNextPageOfArtists', ->
 
       it 'displays the pages of artists who have published artworks until the end', ->
-        @view.renderNextPageOfArtists()
         @view.nextPage.should.equal 2
         @ArtistView.callCount.should.equal 5
         @view.renderNextPageOfArtists()
@@ -76,3 +78,8 @@ describe 'PartnerShowsView', ->
         @view.renderNextPageOfArtists()
         @view.nextPage.should.equal 4
         @ArtistView.callCount.should.equal 11
+
+    describe '#fetchAllArtists', ->
+
+      it 'uses the cached partner artists instead of fetching again', ->
+        @partnerArtists.fetchUntilEnd.called.should.not.be.ok
