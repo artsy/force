@@ -66,9 +66,12 @@ randomPage  = (total, pageSize) ->
   artist        = new Artist id: req.params.id
   auctionLots   = new AuctionLots [], id: req.params.id, sortBy: sort, state: currentPage: currentPage
   render        = _.after 2, ->
-    res.render 'artist',
-      auctionLots : auctionLots
-      artist      : artist
+    if auctionLots.length
+      res.render 'artist',
+        auctionLots : auctionLots
+        artist      : artist
+    else
+      res.redirect artist.href()
 
   artist.fetch
     cache   : true
@@ -88,10 +91,13 @@ randomPage  = (total, pageSize) ->
   artist        = null
   auctionLots   = new ComparableSales [], id: req.params.id
   render        = _.after 2, ->
-    res.render 'artwork',
-      artwork     : artwork
-      artist      : artist
-      auctionLots : auctionLots
+    if auctionLots.length
+      res.render 'artwork',
+        artwork     : artwork
+        artist      : artist
+        auctionLots : auctionLots
+    else
+      res.redirect artwork.href()
 
   artwork.fetch
     cache   : true
