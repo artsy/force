@@ -31,7 +31,9 @@ module.exports.init = ->
 
   # Render all of the featured sections
   new Artworks().fetchSetItemsByKey 'homepage:featured-artworks', success: (artworks) ->
-    $('#home-featured-artworks').html featuredArtworksTemplate(artworks: artworks.models[0..3])
+    $('#home-featured-artworks').html featuredArtworksTemplate
+      artworks: artworks.models[0..3]
+      showBlurbs: true
   new PartnerShows().fetchSetItemsByKey 'homepage:featured-shows', success: (shows) ->
     $('#home-featured-shows').html featuredShowsTemplate(shows: shows.models[0..9])
   new FeaturedLinks().fetchSetItemsByKey 'homepage:featured-links', success: (links) ->
