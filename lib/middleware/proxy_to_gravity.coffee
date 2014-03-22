@@ -12,7 +12,7 @@ express = require 'express'
 app = module.exports.app = express()
 
 ROUTES = [
-  '/oauth2*', '/robots.txt', '/humans.txt', '/sitemap*', "/auction-registration/*", '/assets/*.js'
+  '/oauth2*', '/robots.txt', '/humans.txt', '/sitemap*', "/auction-registration/*", '/assets/common-e1*.js'
 ]
 AUTH_ROUTES = [
   '/post', "/users/sign_in", "/users/sign_out", "/user/delete", "/user/edit", "/profile/edit"
