@@ -17,11 +17,11 @@ s:
 
 # Start the server pointing to staging
 ss:
-	ARTSY_URL=http://staging.artsy.net SECURE_ARTSY_URL=https://staging.artsy.net $(BIN)/coffee index.coffee
+	ARTSY_URL=http://stagingapi.artsy.net SECURE_ARTSY_URL=https://stagingapi.artsy.net $(BIN)/coffee index.coffee
 
 # Start the server pointing to production
 sp:
-	ARTSY_URL=http://artsy.net SECURE_ARTSY_URL=https://artsy.net $(BIN)/coffee index.coffee
+	ARTSY_URL=http://api.artsy.net SECURE_ARTSY_URL=https://api.artsy.net $(BIN)/coffee index.coffee
 
 # Run all of the project-level tests, followed by app-level tests
 test: assets-fast
