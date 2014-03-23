@@ -11,6 +11,7 @@ acquireArtwork        = require('../../../components/acquire/view.coffee').acqui
 FeatureNavigationView = require './feature-navigation.coffee'
 BelowTheFoldView      = require './below-the-fold.coffee'
 trackArtworkImpressions = require("../../../components/analytics/impression_tracking.coffee").trackArtworkImpressions
+MonocleView           = require './monocles.coffee'
 
 artistArtworksTemplate  = -> require('../templates/_artist-artworks.jade') arguments...
 detailTemplate          = -> require('../templates/_detail.jade') arguments...
@@ -53,6 +54,8 @@ module.exports = class ArtworkView extends Backbone.View
     @on 'related:none', ->
       @belowTheFoldView.setupLayeredSearch()
 
+    if @currentUser?.hasLabFeature('Monocles')
+      @setupMonocleView()
     # Re-fetch and update detail
     @artwork.on "change:sale_message", @renderDetail, this
     @artwork.fetch()
@@ -171,6 +174,14 @@ module.exports = class ArtworkView extends Backbone.View
       modelName: 'artist'
       model: @artist
     @following?.syncFollows [@artist.id]
+
+  setupMonocleView: ->
+    @$('.artwork-image').append("<div class='monocle-zoom'></div>")
+    url = @artwork.url() + '/image/' + @artwork.defaultImage().get('id') + '/larger.jpg'
+    @$('.monocle-zoom').css('background-image', "url(#{url})")
+    new MonocleView
+      artwork: @artwork
+      el: @$('.artwork-image')
 
   route: (route) ->
     # Initial server rendered route is 'show'
