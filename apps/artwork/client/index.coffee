@@ -1,11 +1,12 @@
 require '../../../lib/vendor/openseadragon.js'
 
-sd              = require('sharify').data
-Backbone        = require 'backbone'
-Artist          = require '../../../models/artist.coffee'
-Artwork         = require '../../../models/artwork.coffee'
-ArtworkRouter   = require './router.coffee'
-asciiEasterEgg  = require './ascii_easter_egg.coffee'
+sd                = require('sharify').data
+Backbone          = require 'backbone'
+Artist            = require '../../../models/artist.coffee'
+Artwork           = require '../../../models/artwork.coffee'
+ArtworkRouter     = require './router.coffee'
+asciiEasterEgg    = require './ascii_easter_egg.coffee'
+skrillexEasterEgg = require './skrillex_easter_egg.coffee'
 
 module.exports.init = ->
   artist    = new Artist sd.ARTIST
@@ -15,3 +16,4 @@ module.exports.init = ->
   Backbone.history.start pushState: true
 
   asciiEasterEgg(artwork)
+  skrillexEasterEgg(artwork) if $('#skrillex').length > 0
