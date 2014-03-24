@@ -15,7 +15,7 @@ describe '/user', ->
   afterEach ->
     Backbone.sync.restore()
 
-  describe '#edit', ->
+  xdescribe '#edit', ->
 
     it 'redirects to the home page without a current user', ->
       routes.edit @req, @res
