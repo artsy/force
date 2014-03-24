@@ -23,6 +23,7 @@ describe 'Feed Templates', ->
 
     describe 'with artists and artworks', ->
       beforeEach ->
+        sd.APP_URL = 'localhost:3004'
         sd.ARTSY_URL = 'localhost:3003'
         sd.ASSET_PATH = 'assets/'
         @partnerShow = new FeedItem fabricate('show',
@@ -49,6 +50,7 @@ describe 'Feed Templates', ->
 
     describe 'in an art fair', ->
       beforeEach ->
+        sd.APP_URL = 'localhost:3004'
         sd.ARTSY_URL = 'localhost:3003'
         sd.ASSET_PATH = 'assets/'
         fairLocation =
@@ -81,6 +83,7 @@ describe 'Feed Templates', ->
 
     describe 'no artists and artworks', ->
       beforeEach ->
+        sd.APP_URL = 'localhost:3004'
         sd.ARTSY_URL = 'localhost:3003'
         @partnerShow = new FeedItem fabricate('show',
           _type: "PartnerShow",
@@ -105,6 +108,7 @@ describe 'Feed Templates', ->
 
   describe 'Post Feed Item', ->
     beforeEach ->
+      sd.APP_URL = 'localhost:3004'
       sd.ARTSY_URL = 'localhost:3003'
       sd.CURRENT_PATH = '/post/id'
       @post = new FeedItem fabricate('post',

@@ -13,6 +13,7 @@ describe 'FeedView', ->
 
   before (done) ->
     benv.setup =>
+      sd.APP_URL = 'localhost:3004'
       sd.ARTSY_URL = 'localhost:3003'
       sd.ASSET_PATH = 'assets/'
       sd.CURRENT_PATH = ""
