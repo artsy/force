@@ -15,7 +15,7 @@ module.exports = class Post extends Backbone.Model
 
   urlRoot: "#{sd.ARTSY_URL}/api/v1/post"
   href: -> "/post/#{@get('id')}"
-  canonicalUrl: -> sd.ARTSY_URL + @href()
+  canonicalUrl: -> sd.APP_URL + @href()
   profile: -> new Profile @get('profile')
 
   onPostPage: (location)->

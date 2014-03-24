@@ -1,1 +1,1 @@
-Sitemap: http://artsy.net/sitemap.xml
+Sitemap: https://artsy.net/sitemap.xml

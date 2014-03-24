@@ -11,7 +11,7 @@ describe 'Artist routes', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
     @req = { params: { id: 'foo' }, query: { sort: '-published_at' } }
-    @res = { render: sinon.stub(), redirect: sinon.stub(), locals: { sd: { ARTSY_URL: 'http://localhost:5000', CURRENT_PATH: '/artist/andy-foobar'} } }
+    @res = { render: sinon.stub(), redirect: sinon.stub(), locals: { sd: { APP_URL: 'http://localhost:5000', CURRENT_PATH: '/artist/andy-foobar'} } }
 
   afterEach ->
     Backbone.sync.restore()

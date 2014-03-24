@@ -35,6 +35,7 @@ describe 'Fair', ->
         benv.expose { $: benv.require 'jquery' }
         sd =
           CANONICAL_MOBILE_URL : 'http://localhost:5000'
+          APP_URL : 'http://localhost:5000'
           ARTSY_URL : 'http://localhost:5000'
           ASSET_PATH: 'http://localhost:5000'
           CSS_EXT: '.css.gz'
@@ -62,7 +63,7 @@ describe 'Fair', ->
         benv.expose { $: benv.require 'jquery' }
         sd =
           CANONICAL_MOBILE_URL : 'http://localhost:5000'
-          ARTSY_URL : 'http://localhost:5000'
+          APP_URL : 'http://localhost:5000'
           ASSET_PATH: 'http://localhost:5000'
           CSS_EXT: '.css.gz'
           JS_EXT: '.js.gz'
@@ -91,7 +92,7 @@ describe 'Fair', ->
       benv.setup =>
         sd =
           CANONICAL_MOBILE_URL : 'http://localhost:5000'
-          ARTSY_URL : 'http://localhost:5000'
+          APP_URL : 'http://localhost:5000'
           ASSET_PATH: 'http://localhost:5000'
           CSS_EXT: '.css.gz'
           JS_EXT: '.js.gz'
@@ -215,7 +216,7 @@ describe 'Fair', ->
       filteredSearchColumns = fair.filteredSearchColumns filteredSearchOptions
       @template = render('overview')
         sd:
-          ARTSY_URL : 'http://localhost:5000'
+          APP_URL : 'http://localhost:5000'
           ASSET_PATH: 'http://localhost:5000'
           CURRENT_PATH: '/cool-fair'
         fair: fair

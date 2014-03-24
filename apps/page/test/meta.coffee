@@ -12,7 +12,7 @@ describe 'Meta tags', ->
       @sd =
         CANONICAL_MOBILE_URL : 'http://m.localhost:5000'
         MOBILE_MEDIA_QUERY   : 'mobile-media-query'
-        ARTSY_URL          : 'http://localhost:5000'
+        APP_URL              : 'http://localhost:5000'
       @html = jade.render fs.readFileSync(@file).toString(),
         sd : @sd
 
@@ -30,7 +30,7 @@ describe 'Meta tags', ->
       @sd =
         CANONICAL_MOBILE_URL : 'http://m.localhost:5000'
         MOBILE_MEDIA_QUERY   : 'mobile-media-query'
-        ARTSY_URL          : 'http://localhost:5000'
+        APP_URL              : 'http://localhost:5000'
       @html = jade.render fs.readFileSync(@file).toString(),
         sd : @sd
 
@@ -48,7 +48,7 @@ describe 'Meta tags', ->
       @sd =
         CANONICAL_MOBILE_URL : 'http://m.localhost:5000'
         MOBILE_MEDIA_QUERY   : 'mobile-media-query'
-        ARTSY_URL          : 'http://localhost:5000'
+        APP_URL              : 'http://localhost:5000'
       @html = jade.render fs.readFileSync(@file).toString(),
         sd : @sd
 

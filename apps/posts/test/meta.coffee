@@ -7,10 +7,10 @@ describe 'Meta tags', ->
   before ->
     @sd =
       ASSET_PATH: "http://localhost:5000"
-      ARTSY_URL: "http://localhost:5000"
+      APP_URL: "http://localhost:5000"
     @file = "#{process.cwd()}/apps/posts/meta.jade"
     @html = jade.render fs.readFileSync(@file).toString(),
-      sd  : @sd
+      sd: @sd
 
   it 'includes canonical url, twitter card, og tags, and title', ->
     @html.should.include "<meta property=\"twitter:card\" content=\"summary"
