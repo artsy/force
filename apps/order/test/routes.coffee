@@ -29,7 +29,7 @@ describe 'Order routes', ->
 
       it 'redirects to the order page', ->
         Backbone.sync.args[0][2].success()
-        @res.redirect.args[0][0].should.equal '/order'
+        @res.redirect.args[0][0].should.equal '/order?stop_microgravity_redirect=true'
 
     describe 'logged in', ->
 
@@ -45,7 +45,7 @@ describe 'Order routes', ->
 
       it 'redirects to the order page', ->
         Backbone.sync.args[0][2].success()
-        @res.redirect.args[0][0].should.equal '/order'
+        @res.redirect.args[0][0].should.equal '/order?stop_microgravity_redirect=true'
 
   describe '#shipping', ->
 
