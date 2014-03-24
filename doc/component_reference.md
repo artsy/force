@@ -480,7 +480,6 @@ new PartnerShowButtons
 @followProfiles?.syncFollows [@show.get('partner').default_profile_id]
 ````
 
-<<<<<<< Updated upstream
 ## Location Search
 
 An autocomplete input that leverages the google maps api to get a geo coded location from a user that types in a city. 
