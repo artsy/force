@@ -177,8 +177,7 @@ module.exports = class ArtworkView extends Backbone.View
 
   setupMonocleView: ->
     @$('.artwork-image').append("<div class='monocle-zoom'></div>")
-    url = @artwork.url() + '/image/' + @artwork.defaultImage().get('id') + '/larger.jpg'
-    @$('.monocle-zoom').css('background-image', "url(#{url})")
+    @$('.monocle-zoom').css('background-image', "url(#{@artwork.defaultImage().imageUrl('larger')})")
     new MonocleView
       artwork: @artwork
       el: @$('.artwork-image')
