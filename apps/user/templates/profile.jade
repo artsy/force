@@ -1,0 +1,26 @@
+form.settings-form.settings-profile-form( class=editProfileIsActive, method="post", action="#{sd.ARTSY_URL}/profile", accept-charset="UTF-8" )
+
+  label.avant-garde-form-label( for="profile-handle" ) Username
+  input#profile-handle.bordered-input( type="text", value=profile.get('id'), size="30", maxlength="20", name="handle")
+
+  label.avant-garde-form-label( for="profile-bio" ) Bio
+  textarea#profile-bio.bordered-input( name="bio" )!= profile.get('bio')
+
+  label.avant-garde-form-label( for="profile-location" ) Location
+  input#profile-location.bordered-input( type="text", value=profile.get('location'), size="30", name="location" )
+
+  label.avant-garde-form-label( for="profile-website" ) Website
+  input#profile-website.bordered-input( type="url", value=profile.get('website'), size="30", name="website", placeholder="http://mysite.com" )
+
+  label.settings-group-label.avant-garde-form-label Privacy
+  .input-group
+    a.artsy-toggle.profile-is-public( data-state='off', href="" )
+      .artsy-toggle-dot
+    .artsy-toggle-label Enable My Public Profile
+
+  .input-group
+    a.artsy-toggle.profile-favorites( data-state='off', href="" )
+      .artsy-toggle-dot
+    .artsy-toggle-label Enable Public Favorites
+
+  input#profile-edit-submit.avant-garde-button-black.settings-submit.is-block( type="submit", value="Save Changes" )

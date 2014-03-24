@@ -80,7 +80,7 @@ textarea.bordered-input
   display inline-block
   line-height 1.15
   text-decoration none
-  transition 'color, border-color' 0.5s
+  transition 'color, border-color' 0.2s
   width 56px
 
   &::after
@@ -90,32 +90,36 @@ textarea.bordered-input
     font-weight bold
     height 20px
     letter-spacing -1px
+    margin-left 0
+    transition margin-left 0.2s
     vertical-align middle
     width 20px
 
   .artsy-toggle-dot
     display inline
     font-size 30px
-    float left
+    left 0
     line-height 50%
-    margin-top 1px
+    position relative
+    top -1px
+    transition left 0.2s
+    vertical-align middle
     &::after
       content "\25CF"
-
-  &:focus, &:hover
-    & + .artsy-toggle-label
-      color highlight-color
+    &:focus, &:hover
+      & + .artsy-toggle-label
+        color highlight-color
 
   &[data-state='on']
     background-color highlight-color
     border-color highlight-color
     .artsy-toggle-dot
       color white
-      float right
+      left 33px
     &::after
       color white
       content attr(data-state)
-      margin-left 7px
+      margin-left -10px
 
 .artsy-toggle-separator
 .artsy-toggle-label
@@ -128,7 +132,6 @@ textarea.bordered-input
 
 
 // Help Tooltips
-// help tooltips
 .artsy-help-tip
   background-color transparent
   cursor help
