@@ -16,4 +16,4 @@ module.exports.init = ->
   Backbone.history.start pushState: true
 
   asciiEasterEgg(artwork)
-  skrillexEasterEgg(artwork) if $('#skrillex').length > 0
+  skrillexEasterEgg(artwork)

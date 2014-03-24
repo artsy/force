@@ -11,11 +11,7 @@ Backbone  = require 'backbone'
       # Remove the current artwork tab from the path to more easily test against artwork.href()
       artworkPath = res.locals.sd.CURRENT_PATH
       if req.params?.tab
-        if req.params.tab is 'skrillex'
-          skrillexMode = true
-          artworkPath = artwork.href()
-        else
-          artworkPath = artworkPath.replace("/#{req.params.tab}", '')
+        artworkPath = artworkPath.replace("/#{req.params.tab}", '')
 
       if artworkPath == artwork.href()
         res.locals.sd.ARTWORK = response
@@ -30,11 +26,9 @@ Backbone  = require 'backbone'
                 artwork: artwork
                 artist : artist
                 tab    : req.params.tab
-                skrillexMode: skrillexMode
         else
           res.render 'index',
             artwork: artwork
-            skrillexMode: skrillexMode
       else
         res.redirect artwork.href()
 
