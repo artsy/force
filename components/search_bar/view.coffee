@@ -80,6 +80,7 @@ module.exports = class SearchBarView extends Backbone.View
         complete: (xhr) =>
           @trigger 'search:complete', xhr
           mediator.trigger 'search:doge' if @$input.val() is 'doge'
+          mediator.trigger 'search:skrillex' if @$input.val() is 'skrillex'
           @query = @$input.val()
 
   selectResult: (e, model) ->
