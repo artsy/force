@@ -25,7 +25,8 @@ module.exports = class PartnerShowsGridView extends Backbone.View
     @initializeShows()
     
   renderShows: (featured=[], current=[], upcoming=[], past=[]) ->
-    return @$el.hide() if _.union(featured, current, upcoming, upcoming).length is 0
+    numberOfAllShows = _.reduce(arguments, ( (m, n) -> m + n.length ), 0)
+    return @$el.hide() if numberOfAllShows is 0
 
     @ensurePosterImages featured.concat current, upcoming, past
     @$el.html template
@@ -36,6 +37,9 @@ module.exports = class PartnerShowsGridView extends Backbone.View
       current: current
       upcoming: upcoming
       past: past
+
+    if numberOfAllShows == featured.length # lonely featured show
+      @$('.partner-shows-section.featured').addClass('lonely')
 
     $name = @$('.partner-shows-section.featured .partner-show-name')
     return unless $name.length > 0
