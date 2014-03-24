@@ -1,6 +1,6 @@
 Backbone    = require 'backbone'
 Artist      = require '../../models/artist'
-Following   = require '../../components/follow_button/collection'
+
 
 @index = (req, res) ->
   sort = req.query.sort
@@ -18,10 +18,7 @@ Following   = require '../../components/follow_button/collection'
 
 @follow = (req, res) ->
   return res.redirect "/artist/#{req.params.id}" unless req.user
-  token = req.user.get 'accessToken'
-  Backbone.sync.editRequest = (req) -> req.set 'X-ACCESS-TOKEN' : token
-  following = new Following null, kind: 'artist'
-  following.follow req.params.id,
-    error   : res.backboneError
-    success : ->
+  req.user.followArtist req.params.id,
+    error: res.backboneError
+    success: ->
       res.redirect "/artist/#{req.params.id}"
