@@ -1,3 +1,4 @@
+_           = require 'underscore'
 Backbone    = require 'backbone'
 sinon       = require 'sinon'
 CurrentUser = require '../../models/current_user'
@@ -49,3 +50,14 @@ describe 'CurrentUser', ->
     it 'fetches homepages artworks', ->
       @user.fetchSuggestedHomepageArtworks({})
       Backbone.sync.args[0][2].url.should.include 'suggested/artworks/homepage'
+
+  describe '#followArtist', ->
+
+    it 'follows an artist', ->
+      @user.followArtist 'andy-foobar', {}
+      _.last(Backbone.sync.args)[1].url().should.include 'me/follow/artist'
+
+    it 'injects the access token', ->
+      @user.set accessToken: 'xfoobar'
+      @user.followArtist 'andy-foobar', {}
+      _.last(Backbone.sync.args)[2].access_token.should.equal 'xfoobar'

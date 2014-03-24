@@ -111,8 +111,6 @@ module.exports = class CurrentUser extends Backbone.Model
     new Following(null, kind: 'artist').follow id, _.extend options,
       access_token: @get 'accessToken'
 
-  saveArtwork: (id, options) ->
-
   # Convenience for getting the bootstrapped user or returning null.
   # This should only be used on the client.
   @orNull: ->
