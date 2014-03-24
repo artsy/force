@@ -48,3 +48,28 @@ describe 'Home routes', ->
       @req.user = {}
       routes.redirectLoggedInHome @req, @res
       @res.redirect.args[0][0].should.equal '/awesome-fair'
+
+describe '#unsubscribe', ->
+  
+  beforeEach ->
+    sinon.stub Backbone, 'sync'
+
+  afterEach ->
+    Backbone.sync.restore()
+
+  it 'posts to the unsubscribe API and redirects to the homepage when no type specified', ->
+    routes.unsubscribe { query: { authentication_token: 'bitty' } }, render: renderStub = sinon.stub()
+    Backbone.sync.args[0][2].url.should.include '/api/v1/me/unsubscribe'
+    Backbone.sync.args[0][2].data.authentication_token.should.equal 'bitty'
+    Backbone.sync.args[0][2].success {}
+    renderStub.args[0][0].should.equal 'unsubscribe'
+
+  it 'posts to the unsubscribe API and redirects to the homepage with an email type', ->
+    routes.unsubscribe { query: { authentication_token: 'bitty', type: 'personalized_email' } }, render: renderStub = sinon.stub()
+    Backbone.sync.args[0][2].url.should.include '/api/v1/me/unsubscribe'
+    Backbone.sync.args[0][2].data.authentication_token.should.equal 'bitty'
+    Backbone.sync.args[0][2].data.type.should.equal 'personalized_email'
+    Backbone.sync.args[0][2].success { name: 'Matt' }
+    renderStub.args[0][0].should.equal 'unsubscribe'
+    renderStub.args[0][1].type.should.equal 'personalized emails.'
+    renderStub.args[0][1].name.should.equal 'Matt'
