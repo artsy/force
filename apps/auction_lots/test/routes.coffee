@@ -19,8 +19,9 @@ describe 'Auction results routes', ->
 
   describe '#detail', ->
     beforeEach ->
-      @req = params: artist_id: 'andy-foobar', id: 'a-lot'
-      @res = locals: artsyXappToken: 'token'
+      @req  = params: artist_id: 'andy-foobar', id: 'a-lot'
+      @res  = status: sinon.stub(), render: sinon.stub(), locals: artsyXappToken: 'token', sd: {}
+      @next = sinon.stub()
 
     it 'makes the appropriate requests', (done) ->
       routes.detail @req, @res
@@ -31,6 +32,28 @@ describe 'Auction results routes', ->
         Backbone.sync.args[2][1].url().should.include '/api/v1/artist/andy-foobar/auction_lots?' # some random page
         Backbone.sync.args[2][1].url().should.include '&size=3&sort=date,-auction_date&total_count=1'
         Backbone.sync.args[3][1].url.should.include '/api/v1/artist/andy-foobar/artworks'
+        done()
+
+    it '404s if the wrong artist is requested', (done) ->
+      routes.detail @req, @res, @next
+      _.defer =>
+        # Successful
+        Backbone.sync.args[0][1].set artist_id: 'andy-foobar'
+        Backbone.sync.args[1][1].set _id: 'andy-foobar'
+        Backbone.sync.args[0][2].success()
+        Backbone.sync.args[1][2].success()
+        Backbone.sync.args[2][2].success()
+        Backbone.sync.args[3][2].success()
+        @res.render.calledOnce.should.be.ok
+
+        # Fail
+        Backbone.sync.args[0][1].set artist_id: 'andy-foobar'
+        Backbone.sync.args[1][1].set _id: 'mary-foobar'
+        Backbone.sync.args[0][2].success()
+        @res.render.calledTwice.should.not.be.ok
+        @res.status.args[0][0].should.equal 404
+        @next.args[0][0].message.should.equal 'Not Found'
+
         done()
 
   describe '#artist', ->
