@@ -53,19 +53,20 @@ module.exports = class PartnerArtistsView extends Backbone.View
       collection: @displayables
       el: @$('#artists-list')
 
-  appendArtist: (partnerArtist, scroll=false) ->
+  appendArtist: (partnerArtist, scroll=false, allArtworks=false) ->
     a = partnerArtist.get('artist')
     $artistInList = @$(".partner-artists-list li[data-artist-id='#{a.id}'] > a")
     new ArtistView
       model: partnerArtist
       scroll: scroll
+      allArtworks: allArtworks
       noArtworks: ->
         @$el.remove(); $artistInList.replaceWith "<span class='artist-name'>#{a.name}</span>"
       el: $('<div>').appendTo @$('#artists-details')
 
   renderArtist: ->
     pa = _.find @displayables, (pa) => pa.get('artist').id is @artistId
-    @appendArtist pa, true if pa?
+    @appendArtist pa, true, true if pa?
 
   renderNextPageOfArtists: ->
     end = @pageSize * @nextPage; start = end - @pageSize
