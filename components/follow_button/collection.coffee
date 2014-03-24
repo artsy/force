@@ -68,7 +68,7 @@ module.exports = class Following extends Backbone.Collection
       success?(model, response, options)
     follow = new Follow null, kind: @kind
 
-    data = { notes: options?.notes }
+    data = { notes: options?.notes, access_token: options?.access_token }
     data["#{@kind}_id"] = id
 
     follow.save data, options

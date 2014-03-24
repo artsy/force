@@ -1,14 +1,15 @@
-_                 = require 'underscore'
-Backbone          = require 'backbone'
+_ = require 'underscore'
+Backbone = require 'backbone'
 ArtworkCollection = require './artwork_collection.coffee'
-Post              = require '../models/post.coffee'
-Genes             = require '../collections/genes.coffee'
-Artists           = require '../collections/artists.coffee'
-Artworks          = require '../collections/artworks.coffee'
+Post = require '../models/post.coffee'
+Genes = require '../collections/genes.coffee'
+Artists = require '../collections/artists.coffee'
+Artworks = require '../collections/artworks.coffee'
 { ARTSY_URL, CURRENT_USER, SESSION_ID } = require('sharify').data
 Order = require './order.coffee'
 Genes = require '../collections/genes.coffee'
 { readCookie } = require '../components/util/cookie.coffee'
+Following = require '../components/follow_button/collection.coffee'
 
 module.exports = class CurrentUser extends Backbone.Model
 
@@ -105,6 +106,12 @@ module.exports = class CurrentUser extends Backbone.Model
   fetchSuggestedHomepageArtworks: (options = {}) ->
     new Artworks().fetch _.extend options,
       url: "#{ARTSY_URL}/api/v1/me/suggested/artworks/homepage"
+
+  followArtist: (id, options) ->
+    new Following(null, kind: 'artist').follow id, _.extend options,
+      access_token: @get 'accessToken'
+
+  saveArtwork: (id, options) ->
 
   # Convenience for getting the bootstrapped user or returning null.
   # This should only be used on the client.

@@ -34,10 +34,9 @@ Backbone  = require 'backbone'
 
 @save = (req, res) ->
   return res.redirect "/artwork/#{req.params.id}" unless req.user
-  token = req.user.get 'accessToken'
-  Backbone.sync.editRequest = (req) -> req.set 'X-ACCESS-TOKEN' : token
   req.user.initializeDefaultArtworkCollection()
   req.user.defaultArtworkCollection().saveArtwork req.params.id,
-    error   : res.backboneError
-    success : ->
+    data: { access_token: req.user.get('accessToken') }
+    error: res.backboneError
+    success: ->
       res.redirect "/artwork/#{req.params.id}"

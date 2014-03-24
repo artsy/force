@@ -149,7 +149,12 @@ module.exports = (app) ->
   app.use require "../apps/post"
   app.use require "../apps/posts"
   app.use require "../apps/favorites_follows"
+  # Static asset middleware above the profile routing b/c currently
+  # it's picking up /robots.txt routes and we need to refactor this.
+  app.use express.static(path.resolve __dirname, "../public")
   # The partner routes are handled in the profile router
+  # TODO: This is an anti-pattern, we should be passing the profile
+  #       to the partner app to handle.
   app.use require "../apps/profile"
   app.use require "../apps/fair"
   # Shortcuts are prioritezed last
@@ -158,9 +163,6 @@ module.exports = (app) ->
   # Route to ping for system up
   app.get '/system/up', (req, res) ->
     res.send 200, { nodejs: true }
-
-  # Static asset middleware
-  app.use express.static(path.resolve __dirname, "../public")
 
   # Finally 404 and error handling middleware when the request wasn't handeled
   # successfully by anything above.
