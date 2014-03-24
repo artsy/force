@@ -1,3 +1,4 @@
+_                   = require 'underscore'
 StepView            = require './step.coffee'
 LocationSearchView  = require '../../../../components/location_search/index.coffee'
 GeoFormatter        = require 'geoformatter'
@@ -6,6 +7,15 @@ template            = -> require('../../templates/location.jade') arguments...
 module.exports = class LocationView extends StepView
   events:
     'click a': 'advance'
+
+  # @return {String} used as the suggested search text that
+  # pre-populates the location search field
+  locationDisplay: ->
+    _.compact([
+      @user.get('location')?.city
+      @user.get('location')?.state_code
+      @user.get('location')?.country
+    ]).join ', '
 
   update: (location) ->
     @geo = new GeoFormatter(location)
@@ -30,5 +40,5 @@ module.exports = class LocationView extends StepView
 
   postRender: ->
     @locationSearchView = new LocationSearchView el: @$('#personalize-location-search')
-    @locationSearchView.render()
+    @locationSearchView.render @locationDisplay()
     @listenTo @locationSearchView, 'location:update', @update
