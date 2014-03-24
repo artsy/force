@@ -17,7 +17,7 @@ describe 'Share template', ->
       benv.expose {
         $: benv.require 'jquery'
         sd: {
-          ARTSY_URL: 'http://artsy.net'
+          APP_URL: 'http://artsy.net'
           CURRENT_PATH: '/artist/andy-warhol'
         }
       }
