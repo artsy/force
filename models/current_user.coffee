@@ -1,10 +1,11 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 ArtworkCollection = require './artwork_collection.coffee'
-Post = require '../models/post.coffee'
-Genes = require '../collections/genes.coffee'
-Artists = require '../collections/artists.coffee'
-Artworks = require '../collections/artworks.coffee'
+Location          = require './location.coffee'
+Post              = require './post.coffee'
+Genes             = require '../collections/genes.coffee'
+Artists           = require '../collections/artists.coffee'
+Artworks          = require '../collections/artworks.coffee'
 { ARTSY_URL, CURRENT_USER, SESSION_ID } = require('sharify').data
 Order = require './order.coffee'
 Genes = require '../collections/genes.coffee'
@@ -115,3 +116,6 @@ module.exports = class CurrentUser extends Backbone.Model
   # This should only be used on the client.
   @orNull: ->
     if CURRENT_USER then new @(CURRENT_USER) else null
+
+  location: ->
+    new Location @get 'location' if @get 'location'

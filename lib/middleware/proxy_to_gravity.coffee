@@ -15,7 +15,7 @@ ROUTES = [
   '/oauth2*', '/sitemap*', "/auction-registration/*", '/assets/common-e1*.js', '/unsubscribe*'
 ]
 AUTH_ROUTES = [
-  '/post', "/users/sign_in", "/users/sign_out", "/user/delete", "/user/edit", "/profile/edit", "/users/auth/facebook", "/users/auth/twitter"
+  '/post', "/users/sign_in", "/users/sign_out", "/users/auth/facebook", "/users/auth/twitter", "/user/delete", "/profile/edit", "/user/edit"
 ]
 for route in ROUTES
   app.all route, (req, res) ->

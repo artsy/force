@@ -1,0 +1,87 @@
+@import '../../components/stylus_lib'
+
+#settings
+  margin-left 0
+  margin-right 0
+
+  .avant-garde-header-center
+    font-size 24px
+    padding 50px 0 30px
+
+  .garamond-tablist
+    margin 0 auto 30px auto
+    text-align center
+    width auto
+
+  .bordered-input
+    margin-bottom 7px
+    width 100%
+
+  #user-location
+  #profile-website 
+    margin-bottom 20px
+
+  .profile-badge
+    margin 0px auto 30px
+    .profile-badge-icon
+      background-position center center
+      height 140px
+
+.settings-group-label
+  margin-bottom 10px
+
+.settings-confirm-email
+  margin-bottom 1em
+
+.settings-forms
+  margin 0 auto 30px
+  width 380px
+
+.settings-submit
+  margin-top 20px
+
+.settings-form-error
+  color bad-red-color
+  position absolute
+  margin-left 390px
+  max-width 250px
+  margin-top -35px
+  opacity 1
+  transition opacity 0.2s
+  &:empty
+    opacity 0
+  &.settings-form-message
+    color black
+
+.settings-form
+  display none
+  margin-bottom 40px
+  &.is-active
+    display block
+  textarea
+    height 100px
+
+  .input-group
+    clear both
+    margin-bottom 10px
+
+  .settings-toggle-twitter
+    margin-bottom 20px
+
+.settings-email-support
+.settings-password-support
+  display none
+
+.settings-delete-account-link
+  font-size 13px
+  margin-bottom 50px
+  text-align right
+  text-transform uppercase
+  a
+    &::before
+      height 1.5em
+    &:hover, &:focus
+      color bad-red-color
+      line-height 1em
+      &::before
+        border-color bad-red-color

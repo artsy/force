@@ -1,0 +1,91 @@
+mixin locationSearch(value)
+  include ../../../components/location_search/template
+
+form.settings-form.settings-account-form( class=editAccountIsActive, method="post", action="#{sd.ARTSY_URL}/users/edit", accept-charset="UTF-8" )
+  label.avant-garde-form-label( for: "user-name" ) Full Name
+  input#user-name.bordered-input( type="text", value=user.get('name') || "", name="name" )
+  .settings-form-error( data-attr='name' )
+
+  label.avant-garde-form-label( for="user-email" ) Email
+  input#user-email.bordered-input( type="email", value=user.get('email'), name="email" )
+  .settings-form-error( data-attr='email' )
+
+  .settings-email-support
+    label.avant-garde-form-label( for="user-email-confirmation" ) Repeat New Email
+    input#user-email-confirmation.bordered-input( type="email", value='', name="email_confirmation" )
+    .settings-form-error( data-attr='email_confirmation' )
+
+  // TODO: wire up changed email confirmation
+    if !user.get('is_confirmed')
+      .settings-confirm-email
+        | Please verify your email.&nbsp;
+        if !user.get('confirmation_instructions_sent')
+          | <a class="settings-confirm-email-link" href="#">Click here</a>
+          | to receive a confirmation.
+        if user.get('confirmation_instructions_sent')
+          | (Contact <a href="mailto:support@artsy.net">support@artsy.net</a> 
+          | if you haven't received a confirmation email.)
+
+  label.avant-garde-form-label( for="user-new-password" ) New Password
+  input#user-new-password.bordered-input( type="password", name="new_password", placeholder="(Leave blank to keep password unchanged)" )
+  .settings-form-error.settings-form-message( data-attr='new_password' )
+
+  .settings-password-support
+    label.avant-garde-form-label( for="user-password-confirmation" ) Repeat New Password
+    input#user-password-confirmation.bordered-input( type="password", name="password_confirmation" )
+    .settings-form-error( data-attr='password_confirmation' )
+
+    label.avant-garde-form-label( for="user-current-password" ) Current Password
+    input#user-current-password.bordered-input( type="password", name="current_password" )
+    .settings-form-error( data-attr='current_password' )
+
+  label.avant-garde-form-label( for="user-phone" ) Phone Number
+  input#user-phone.bordered-input( type="tel", value=user.get('phone') || '', name="phone" )
+  .settings-form-error( data-attr='phone' )
+
+  label.avant-garde-form-label( for="user-location" ) Location
+  #user-location
+    +locationSearch(user.location().cityStateCountry())
+
+  // TODO: Need to wire these up
+    label.settings-group-label.avant-garde-form-label Sharing
+    .input-group.settings-toggle-fb
+      a#user-link-facebook.artsy-toggle.account-link-fb( data-state=user.onOffFacebook(), href="" )
+        .artsy-toggle-dot
+      .artsy-toggle-label 
+        | Link my Facebook account
+        .artsy-help-tip
+          .artsy-help-tip-body
+            p Having your account linked will enable quick sharing on Facebook. In the future, it will help us find your friends on Artsy.
+            p <strong> We don't share anything on Facebook without your permission.</strong>
+    .input-group.settings-toggle-twitter
+      a#user-link-twitter.artsy-toggle.account-link-twitter( data-state=user.onOffTwitter(), href="" )
+        .artsy-toggle-dot
+      .artsy-toggle-label 
+        | Link my Twitter account
+        .artsy-help-tip
+          .artsy-help-tip-body
+            p Having your account linked will enable quick sharing on Twitter. In the future, it will help us find your contacts on Artsy.
+            p <strong>We don't share anything on Twitter without your permission.</strong>
+
+  label.settings-group-label.avant-garde-form-label Email Me&hellip;
+
+  .input-group
+    a#user-weekly-email.artsy-toggle.account-link-fb( 
+      data-state=user.toOnOff("receive_weekly_email")
+      data-attr="receive_weekly_email"
+      href="" )
+      .artsy-toggle-dot
+    .artsy-toggle-label &hellip;weekly featured content from Artsy
+
+  .input-group
+    a#user-personalized-email.artsy-toggle.account-link-twitter( data-state=user.toOnOff('receive_personalized_email'), href="" )
+      .artsy-toggle-dot
+    .artsy-toggle-label &hellip;weekly personalized email 
+
+  .input-group
+    a#user-follows-email.artsy-toggle.account-link-twitter( data-state=user.toOnOff('receive_follow_users_email'), href="" )
+      .artsy-toggle-dot
+    .artsy-toggle-label &hellip;when I have new followers
+
+  input#user-edit-submit.avant-garde-button-black.settings-submit.is-block( type="submit", value="Save Changes" )
