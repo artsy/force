@@ -48,3 +48,23 @@ describe 'Home routes', ->
       @req.user = {}
       routes.redirectLoggedInHome @req, @res
       @res.redirect.args[0][0].should.equal '/awesome-fair'
+
+describe '#unsubscribe', ->
+  
+  beforeEach ->
+    sinon.stub Backbone, 'sync'
+
+  afterEach ->
+    Backbone.sync.restore()
+
+  it 'posts to the unsubscribe API and redirects to the homepage when no type specified', ->
+    routes.unsubscribe { query: { authentication_token: 'bitty' } }, redirect: redirectStub = sinon.stub()
+    Backbone.sync.args[0][1].url.should.include '/api/v1/me/unsubscribe?authentication_token=bitty'
+    Backbone.sync.args[0][2].success { success: true }
+    redirectStub.args[0][0].should.equal '/'
+
+  it 'posts to the unsubscribe API and redirects to the homepage with an email type', ->
+    routes.unsubscribe { query: { authentication_token: 'bitty', type: 'personalized_email' } }, redirect: redirectStub = sinon.stub()
+    Backbone.sync.args[0][1].url.should.include '/api/v1/me/unsubscribe?authentication_token=bitty&type=personalized_email'
+    Backbone.sync.args[0][2].success { success: true }
+    redirectStub.args[0][0].should.equal '/'

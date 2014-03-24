@@ -1,7 +1,9 @@
 _             = require 'underscore'
 HeroUnits     = require '../../collections/hero_units'
 FeaturedLinks = require '../../collections/featured_links.coffee'
-{ parse } = require 'url'
+{ parse }     = require 'url'
+Backbone      = require 'backbone'
+sd            = require('sharify').data
 
 getRedirectTo = (req) ->
   req.body['redirect-to'] or req.query['redirect-to'] or req.query['redirect_uri'] or parse(req.get('Referrer') or '').path or '/'
@@ -27,3 +29,15 @@ getRedirectTo = (req) ->
 
 @redirectLoggedInHome = (req, res, next) ->
   if req.user? then res.redirect getRedirectTo(req) else next()
+
+@unsubscribe = (req, res, next) ->
+  auth_token = req.query.authentication_token
+  url = "#{sd.ARTSY_URL}/api/v1/me/unsubscribe?authentication_token=#{auth_token}"
+  type = req.query.type
+  url += "&type=#{type}" if type
+  model = new Backbone.Model()
+  model.url = url
+  model.save {},
+    success: ->
+      res.redirect '/'
+    error: res.backboneError
