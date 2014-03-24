@@ -10,6 +10,7 @@ template       = -> require('../templates/shows_grid.jade') arguments...
 # upcoming, and past) in a grid layout.
 # Used in overview and shows tab of partner galleries, overview tab
 # of nonpartner galleries, and shows tab of institutions.
+# Will hide itself if there is no shows.
 module.exports = class PartnerShowsGridView extends Backbone.View
 
   defaults:
@@ -24,6 +25,9 @@ module.exports = class PartnerShowsGridView extends Backbone.View
     @initializeShows()
     
   renderShows: (featured=[], current=[], upcoming=[], past=[]) ->
+    numberOfAllShows = _.reduce(arguments, ( (m, n) -> m + n.length ), 0)
+    return @$el.hide() if numberOfAllShows is 0
+
     @ensurePosterImages featured.concat current, upcoming, past
     @$el.html template
       partner: @partner
@@ -33,6 +37,9 @@ module.exports = class PartnerShowsGridView extends Backbone.View
       current: current
       upcoming: upcoming
       past: past
+
+    if numberOfAllShows == featured.length # lonely featured show
+      @$('.partner-shows-section.featured').addClass('lonely')
 
     $name = @$('.partner-shows-section.featured .partner-show-name')
     return unless $name.length > 0
@@ -62,7 +69,7 @@ module.exports = class PartnerShowsGridView extends Backbone.View
       success: =>
         if @numberOfFeatured - featured.length > 0
           f = partnerShows.featured()
-          featured.push f
+          featured.push f if f? # only add it if it's really something
 
         exclude = if f then [f] else []
 
