@@ -127,6 +127,7 @@ module.exports = (app) ->
   # Mount apps
   app.use require "../apps/home"
   app.use require "../apps/about"
+  app.use require "../apps/user"
   # Neds to be above artwork and artist routes to support the /type/:id/* routes
   app.use require "../apps/auction_lots"
   app.use require "../apps/artist"
