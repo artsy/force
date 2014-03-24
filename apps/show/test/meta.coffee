@@ -17,6 +17,6 @@ describe 'Meta tags', ->
 
     it 'includes canonical url, twitter card, og tags, and title', ->
       @html.should.include "<meta property=\"twitter:card\" content=\"summary"
-      @html.should.include "<link rel=\"canonical\" href=\"#{sd.ARTSY_URL}#{@show.href()}"
-      @html.should.include "<meta property=\"og:url\" content=\"#{sd.ARTSY_URL}#{@show.href()}"
+      @html.should.include "<link rel=\"canonical\" href=\"#{sd.APP_URL}#{@show.href()}"
+      @html.should.include "<meta property=\"og:url\" content=\"#{sd.APP_URL}#{@show.href()}"
       @html.should.include "<meta property=\"og:title\" content=\"#{@show.metaTitle()} | Artsy"

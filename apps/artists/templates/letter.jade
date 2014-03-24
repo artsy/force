@@ -4,7 +4,7 @@ include ../../../components/pagination/paginator
 
 block head
   include letter_meta
-  +paginateHead(artists.state.currentPage, artists.state.totalPages, sd.ARTSY_URL + sd.CURRENT_PATH + "?")
+  +paginateHead(artists.state.currentPage, artists.state.totalPages, sd.APP_URL + sd.CURRENT_PATH + "?")
 
 append locals
   - assetPackage = 'artists'

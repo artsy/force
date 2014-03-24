@@ -54,7 +54,8 @@ describe 'Artists', ->
           sd:
             CANONICAL_MOBILE_URL : 'http://localhost:5000'
             ARTSY_URL : 'http://localhost:5000'
-            ASSET_PATH: 'http://localhost:5000'
+            APP_URL : 'http://localhost:5000'
+            ASSET_PATH: 'http://localhost:5000/'
             CSS_EXT: '.css.gz'
             JS_EXT: '.js.gz'
             NODE_ENV: 'test'
@@ -109,7 +110,7 @@ describe 'Artists', ->
         template = render('letter')(
           sd:
             CANONICAL_MOBILE_URL : 'http://localhost:5000'
-            ARTSY_URL : 'http://localhost:5000'
+            APP_URL : 'http://localhost:5000'
             ASSET_PATH: 'http://localhost:5000'
             CSS_EXT: '.css.gz'
             JS_EXT: '.js.gz'

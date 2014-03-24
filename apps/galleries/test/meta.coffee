@@ -8,7 +8,7 @@ describe 'Meta tags', ->
     before ->
       @file = "#{process.cwd()}/apps/galleries/meta.jade"
       @sd =
-        ARTSY_URL : 'http://localhost:5000'
+        APP_URL : 'http://localhost:5000'
         ASSET_PATH: 'http://localhost:5000'
       @html = jade.render fs.readFileSync(@file).toString(),
         sd : @sd
