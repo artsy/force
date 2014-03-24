@@ -1,11 +1,13 @@
 GeoFormatter = require 'geoformatter'
+Backbone = require 'backbone'
 
 module.exports =
   geoIp: (cb) ->
-    $.ajax
-      headers: [] # Remove the X-ACCESS-TOKEN header
+    new Backbone.Model().fetch
       url: 'http://freegeoip.net/json/'
-      success: cb
+      headers: null
+      success: (model, response, options) ->
+        cb response
 
   fallback: (cb) ->
     @geoIp (response) =>
@@ -18,15 +20,16 @@ module.exports =
       if (status is google.maps.GeocoderStatus.OK) and results[0]
         cb new GeoFormatter results[0]
 
-  locate: (cb) ->
-    if navigator.geolocation
+  locate: (options) ->
+    if navigator.geolocation and (options.accuracy is 'high')
       navigator.geolocation.getCurrentPosition (position) =>
-        @reverseGeocode position.coords.latitude, position.coords.longitude, cb
+        @reverseGeocode position.coords.latitude, position.coords.longitude, options.success
       , => # If the user denies location access
-        @fallback cb
+        @fallback options.success
     else
       # If the user's browser doesn't support geolocation
-      @fallback cb
+      # or we don't care about accuracy
+      @fallback options.success
 
   geoToUser: (geo) ->
     city        : geo.getCity()

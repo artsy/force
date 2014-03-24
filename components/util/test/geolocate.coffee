@@ -1,6 +1,7 @@
 _           = require 'underscore'
 benv        = require 'benv'
 sinon       = require 'sinon'
+Backbone    = require 'backbone'
 Geolocate   = require '../geolocate'
 
 describe 'Geolocate', ->
@@ -17,20 +18,18 @@ describe 'Geolocate', ->
     benv.teardown()
 
   beforeEach ->
-    @coords = latitude:  3.141, longitude: -3.141
-    sinon.stub($, 'ajax').yieldsTo('success', @coords)
+    sinon.stub Backbone, 'sync'
 
   afterEach ->
-    $.ajax.restore()
+    Backbone.sync.restore()
 
   describe '#locate', ->
-    it 'falls back to calling out to an external GeoIP service', ->
-      Geolocate.locate(->)
-      $.ajax.args[0][0].url.should.equal 'http://freegeoip.net/json/'
-      google.maps.LatLng.args[0][0].should.equal @coords.latitude
-      google.maps.LatLng.args[0][1].should.equal @coords.longitude
+    it 'calls out to an external IP geolocation service when low accuracy is requested', ->
+      Geolocate.locate(accuracy: 'low')
+      Backbone.sync.args[0][2].url.should.equal 'http://freegeoip.net/json/'
+      _.isNull(Backbone.sync.args[0][2].headers).should.be.ok
 
-    it 'calls out to getCurrentPosition', ->
+    it 'uses the browser geolocation API when high accuracy is requested', ->
       benv.expose navigator: geolocation: getCurrentPosition: sinon.stub()
-      Geolocate.locate(->)
+      Geolocate.locate(accuracy: 'high')
       navigator.geolocation.getCurrentPosition.called.should.be.ok
