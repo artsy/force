@@ -10,17 +10,21 @@ totalCount  = require '../../components/pagination/total_count'
 randomPage  = (total, pageSize) ->
   Math.floor(Math.random() * (total / pageSize)) + 1
 
-@detail = (req, res) ->
+@detail = (req, res, next) ->
   lot           = new AuctionLot id: req.params.id
   artist        = new Artist id: req.params.artist_id
   artworks      = new Artworks
   auctionLots   = new AuctionLots [], id: req.params.artist_id, state: currentPage: 1, pageSize: 3
   render        = _.after 4, ->
-    res.render 'detail',
-      lot         : lot
-      artist      : artist
-      auctionLots : auctionLots
-      artworks    : artworks
+    if lot.get('artist_id') is artist.get('_id')
+      res.render 'detail',
+        lot         : lot
+        artist      : artist
+        auctionLots : auctionLots
+        artworks    : artworks
+    else
+      res.status 404
+      next new Error('Not Found')
 
   lot.fetch
     cache   : true

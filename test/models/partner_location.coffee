@@ -52,6 +52,13 @@ describe 'PartnerLocation', ->
       @partnerLocation.set { city: 'Beverly Hills', state: '' }
       @partnerLocation.cityState().should.equal @partnerLocation.get('city')
 
+  describe '#cityStateCountry', ->
+
+    it 'ignores blank values', ->
+      @partnerLocation.cityStateCountry().should.equal "#{@partnerLocation.get('city')}, #{@partnerLocation.get('state')}"
+      @partnerLocation.set { country: 'United States' }
+      @partnerLocation.cityStateCountry().should.equal "#{@partnerLocation.get('city')}, #{@partnerLocation.get('state')}, #{ @partnerLocation.get('country')}"
+
   describe '#cityStatePostalCode', ->
 
     it 'returns a string for city, state, and postal code omitting missing values', ->

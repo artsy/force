@@ -46,11 +46,11 @@ getTemplateForProfileType = (profile) ->
 @follow = (req, res) ->
   return res.redirect "/#{req.params.id}" unless req.user
   token = req.user.get 'accessToken'
-  Backbone.sync.editRequest = (req) -> req.set 'X-ACCESS-TOKEN' : token
   following = new Following null, kind: 'profile'
   following.follow req.params.id,
-    error   : res.backboneError
-    success : ->
+    access_token: req.user.get('accessToken')
+    error: res.backboneError
+    success: ->
       res.redirect "/#{req.params.id}"
 
 #
