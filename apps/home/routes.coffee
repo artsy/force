@@ -1,6 +1,10 @@
 _             = require 'underscore'
 HeroUnits     = require '../../collections/hero_units'
 FeaturedLinks = require '../../collections/featured_links.coffee'
+{ parse } = require 'url'
+
+getRedirectTo = (req) ->
+  req.body['redirect-to'] or req.query['redirect-to'] or req.query['redirect_uri'] or parse(req.get('Referrer') or '').path or '/'
 
 @index = (req, res) ->
   heroUnits = new HeroUnits
@@ -22,4 +26,4 @@ FeaturedLinks = require '../../collections/featured_links.coffee'
   res.redirect "/sign_up"
 
 @redirectLoggedInHome = (req, res, next) ->
-  if req.user? then res.redirect '/' else next()
+  if req.user? then res.redirect getRedirectTo(req) else next()
