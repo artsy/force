@@ -31,5 +31,5 @@ fetchPendingOrder = (req, res, options) ->
     token: token
     session_id: req.session?.id
     accessToken: req.user?.get('accessToken')
-    success: -> res.redirect '/order'
+    success: -> res.redirect '/order?stop_microgravity_redirect=true'
     error: -> res.redirect '/'
