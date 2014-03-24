@@ -1,0 +1,18 @@
+extends ../../../components/main_layout/templates/index
+
+block head
+  include meta
+
+append locals
+  - assetPackage = 'home'
+  - bodyClass = bodyClass + ' body-no-margins body-header-fixed body-transparent-header'
+
+block body
+  #home-layout-container
+    .main-layout-container
+      #home-unsubscribe
+        = name + ' has been unsubscribed from '
+        if type
+          = type
+        else
+          = ' all emails.'
