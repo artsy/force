@@ -1,10 +1,10 @@
 extends ../../../components/main_layout/templates/index
 
 block head
-  include meta
+  include ../../../components/main_layout/templates/profile_meta
 
 append locals
-  - assetPackage = 'profile'
+  - assetPackage = 'user_profile'
   - bodyClass = bodyClass + ' body-no-margins'
 
 block body
