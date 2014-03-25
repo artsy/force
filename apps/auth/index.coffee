@@ -20,12 +20,12 @@ app.post signupPath, routes.submitLogin
 app.get twitterCallbackPath, routes.loginToArtsy, routes.submitEmailForTwitter
 app.get facebookCallbackPath, routes.loginToArtsy
 
-app.post '/force/users/sign_in_trust_token', routes.loginWithTrustToken
+app.post '/users/sign_in_trust_token', routes.loginWithTrustToken
 app.get '/force/log_in_to_artsy', routes.loginToArtsy
 
 # Log out
-app.get '/force/users/sign_out', routes.logout
+app.get '/users/sign_out', routes.logout
 
 # Twitter "One last Step" UI to enter email and login
-app.get '/force/users/auth/twitter/email', routes.twitterLastStep
-app.post '/force/users/auth/twitter/email', routes.submitTwitterLastStep
+app.get '/users/auth/twitter/email', routes.twitterLastStep
+app.post '/users/auth/twitter/email', routes.submitTwitterLastStep

@@ -98,16 +98,9 @@ module.exports = (app) ->
   app.use express.cookieSession
     secret: SESSION_SECRET
     cookie: { domain: COOKIE_DOMAIN }
-    key   : 'force.sess'
+    key: 'force.sess'
   app.use artsyPassport _.extend config,
     CurrentUser: CurrentUser
-    facebookPath: '/force/users/auth/facebook'
-    twitterPath: '/force/users/auth/twitter'
-    loginPath: '/force/users/sign_in'
-    signupPath: '/force/users/invitation/accept'
-    twitterCallbackPath: '/force/users/auth/twitter/callback'
-    facebookCallbackPath: '/force/users/auth/facebook/callback'
-    twitterSignupPath: '/force/users/auth/twitter/email'
   app.use errorHandler.socialAuthError
 
   # Proxy / redirect requests before they even have to deal with Force routing
@@ -170,6 +163,6 @@ module.exports = (app) ->
   # Finally 404 and error handling middleware when the request wasn't handeled
   # successfully by anything above.
   app.use errorHandler.pageNotFound
-  app.use '/force/users/sign_in', loginError
+  app.use '/users/sign_in', loginError
   app.post '/force/javascripterr', errorHandler.javascriptError
   app.use errorHandler.internalError

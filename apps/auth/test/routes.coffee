@@ -61,7 +61,7 @@ describe 'Auth routes', ->
     it 'redirects to twitter login passing through the email and redirect-to', ->
       routes.submitTwitterLastStep @req, @res
       @res.redirect.args[0][0].should.equal(
-        '/force/users/auth/twitter?email=foo@bar.com&redirect-to=/personalize'
+        '/users/auth/twitter?email=foo@bar.com&redirect-to=/personalize'
       )
 
   describe '#submitEmailForTwitter', ->

@@ -21,5 +21,5 @@ describe 'Layout init code', ->
     @syncAuth()
     $.ajax.args[0][0].url.should.include 'api/v1/me'
     $.ajax.args[0][0].error()
-    window.location.should.equal '/force/users/sign_out'
+    window.location.should.equal '/users/sign_out'
     sd.CURRENT_USER = null

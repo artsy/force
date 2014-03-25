@@ -51,7 +51,7 @@ getRedirectTo = (req) ->
 
 @submitTwitterLastStep = (req, res) ->
   redirectTo = qs.parse(parse(req.get 'referrer').query)['redirect-to']
-  url = "/force/users/auth/twitter?email=#{req.body.email}&redirect-to=#{redirectTo}"
+  url = "/users/auth/twitter?email=#{req.body.email}&redirect-to=#{redirectTo}"
   res.redirect url
 
 @submitEmailForTwitter = (req, res, next) ->
