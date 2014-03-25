@@ -64,6 +64,12 @@ module.exports.init = ->
   $ ->
     user = CurrentUser.orNull()
     return unless user
-    user.geoLocate()
+
+    user.geoLocate
+      accuracy: 'low'
+      success: (geo) =>
+        if _.isEmpty user.get('location')?.coordinates
+          user.setGeo geo
+
     router = new PersonalizeRouter(user: user)
     Backbone.history.start pushState: true

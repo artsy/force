@@ -146,12 +146,8 @@ module.exports = class CurrentUser extends Backbone.Model
       success: options?.success
       error: options?.error
 
-  geoLocate: ->
-    geoLocate.locate
-      accuracy: 'low'
-      success: (geo) =>
-        if _.isEmpty @get('location')?.display
-          @setGeo geo
+  geoLocate: (options) ->
+    geoLocate.locate options
 
   setGeo: (geo) ->
     @set location:
