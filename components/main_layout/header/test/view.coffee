@@ -1,3 +1,4 @@
+_         = require 'underscore'
 rewire    = require 'rewire'
 benv      = require 'benv'
 Backbone  = require 'backbone'
@@ -66,3 +67,29 @@ describe 'HeaderView', ->
       spy.args[0][0].should.equal 'open:auth'
       spy.args[0][1].mode.should.equal 'signup'
       mediator.trigger.restore()
+
+  describe 'with flash message', ->
+    before (done) ->
+      benv.render resolve(__dirname, '../templates/index.jade'),
+        flash: 'Goodbye world.'
+      , =>
+        $.support.transition = { end: 'transitionend' }
+        $.fn.emulateTransitionEnd = -> @trigger $.support.transition.end
+        @view = new HeaderView
+          el: $('#main-layout-header')
+          $window: @$window =
+            on: sinon.stub()
+            off: sinon.stub()
+            scrollTop: -> 55
+          $body: $('body')
+        done()
+
+    it 'has a flash message that can be removed', ->
+      $('#main-layout-flash').text().should.equal 'Goodbye world.'
+
+    it 'removes the flash message when clicked', (done) ->
+      $('#main-layout-flash').on 'transitionend', ->
+        _.defer =>
+          $('#main-layout-flash').length.should.not.be.ok
+          done()
+      $('#main-layout-flash').click()

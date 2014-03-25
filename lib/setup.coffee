@@ -28,6 +28,8 @@ helpersMiddleware = require './middleware/helpers'
 ensureSSL = require './middleware/ensure_ssl'
 errorHandler = require "../components/error_handler"
 { notFoundError, loginError } = require('./middleware/errors')
+flash = require 'connect-flash'
+flashMiddleware = require './middleware/flash'
 
 # Setup sharify constants & require dependencies that use sharify data
 sharify.data =
@@ -111,6 +113,8 @@ module.exports = (app) ->
   app.use ensureSSL
 
   # General helpers and express middleware
+  app.use flash()
+  app.use flashMiddleware
   app.use localsMiddleware
   app.use micrositeMiddleware
   app.use helpersMiddleware
@@ -131,6 +135,7 @@ module.exports = (app) ->
   app.use require "../apps/auth"
   app.use require "../apps/browse"
   app.use require "../apps/feature"
+  app.use require "../apps/flash"
   app.use require "../apps/galleries"
   app.use require "../apps/tag"
   app.use require "../apps/gene"
