@@ -7,3 +7,25 @@
   @extends .garamond-alert
   background-color info-yellow-background-color
   border-color info-yellow-border-color
+
+.fullscreen-flash-message
+  position fixed
+  top 0
+  right 0
+  bottom 0
+  left 0
+  background-color rgba(black, 0.75)
+  z-index 99
+  avant-garde()
+  color white
+  transition opacity 0.5s
+  text-align center
+  font-size 18px
+  cursor pointer
+  > span
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+  &.is-fade-out
+    opacity 0
