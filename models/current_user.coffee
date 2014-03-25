@@ -151,9 +151,8 @@ module.exports = class CurrentUser extends Backbone.Model
 
   setGeo: (geo) ->
     @set location:
-      city        : geo.getCity()
-      state       : geo.getState()
-      state_code  : geo.getStateCode()
-      postal_code : geo.getPostalCode()
-      country     : geo.getCountry()
-      coordinates : geo.getCoordinates()
+      city        : geo.getCity() or ''
+      state       : geo.getState() or ''
+      state_code  : geo.getStateCode() or ''
+      postal_code : geo.getPostalCode() or ''
+      coordinates : geo.getCoordinates() or ''
