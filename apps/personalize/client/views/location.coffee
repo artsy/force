@@ -1,3 +1,4 @@
+_                   = require 'underscore'
 StepView            = require './step.coffee'
 LocationSearchView  = require '../../../../components/location_search/index.coffee'
 GeoFormatter        = require 'geoformatter'
@@ -9,14 +10,7 @@ module.exports = class LocationView extends StepView
 
   update: (location) ->
     @geo = new GeoFormatter(location)
-    @user.set
-      location:
-        city:         @geo.getCity()
-        state:        @geo.getState()
-        state_code:   @geo.getStateCode()
-        postal_code:  @geo.getPostalCode()
-        country:      @geo.getCountry()
-        coordinates:  @geo.getCoordinates()
+    @user.setGeo @geo
     @advance()
 
   remove: ->
@@ -30,5 +24,5 @@ module.exports = class LocationView extends StepView
 
   postRender: ->
     @locationSearchView = new LocationSearchView el: @$('#personalize-location-search')
-    @locationSearchView.render()
+    @locationSearchView.render @user.location()?.cityStateCountry()
     @listenTo @locationSearchView, 'location:update', @update

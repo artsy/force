@@ -11,6 +11,7 @@ Order = require './order.coffee'
 Genes = require '../collections/genes.coffee'
 { readCookie } = require '../components/util/cookie.coffee'
 Following = require '../components/follow_button/collection.coffee'
+geoLocate = require '../components/util/geolocate.coffee'
 
 module.exports = class CurrentUser extends Backbone.Model
 
@@ -144,3 +145,15 @@ module.exports = class CurrentUser extends Backbone.Model
       url: "#{ARTSY_URL}/api/v1/bidder"
       success: options?.success
       error: options?.error
+
+  geoLocate: (options) ->
+    geoLocate.locate options
+
+  setGeo: (geo) ->
+    @set location:
+      city        : geo.getCity() or ''
+      state       : geo.getState() or ''
+      state_code  : geo.getStateCode() or ''
+      postal_code : geo.getPostalCode() or ''
+      coordinates : geo.getCoordinates() or null
+      country     : geo.getCountry() or ''
