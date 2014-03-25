@@ -25,6 +25,8 @@ module.exports = class HeaderView extends Backbone.View
     @searchBarView.on 'search:entered', (term) -> window.location = "/search?q=#{term}"
     @searchBarView.on 'search:selected', @searchBarView.selectResult
 
+    @removeFlash()
+
     if isTouchDevice()
       @removeWelcomeHeader()
     else unless sd.HIDE_HEADER # Already hidden
@@ -50,6 +52,17 @@ module.exports = class HeaderView extends Backbone.View
       @$window.scrollTop(0)
 
     createCookie 'hide-force-header', true, 365
+
+  removeFlash: ->
+    remove = ->
+      $flash.
+        addClass('is-fade-out').
+        one($.support.transition.end, => $flash.remove()).
+        emulateTransitionEnd 500
+
+    if ($flash = $('#main-layout-flash')).length
+      _.delay remove, 2000
+      $flash.one 'click', remove
 
   signup: (e) ->
     e.preventDefault()
