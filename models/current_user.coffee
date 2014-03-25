@@ -156,3 +156,4 @@ module.exports = class CurrentUser extends Backbone.Model
       state_code  : geo.getStateCode() or ''
       postal_code : geo.getPostalCode() or ''
       coordinates : geo.getCoordinates() or ''
+      country     : geo.getCountry() or ''
