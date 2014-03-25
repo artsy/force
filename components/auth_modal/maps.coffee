@@ -3,10 +3,10 @@ Backbone        = require 'backbone'
 { ARTSY_URL }   = require('sharify').data
 
 class Login extends Backbone.Model
-  url: "/force/users/sign_in"
+  url: "/users/sign_in"
 
 class Signup extends Backbone.Model
-  url: "/force/users/invitation/accept"
+  url: "/users/invitation/accept"
 
 class Forgot extends Backbone.Model
   url: "#{ARTSY_URL}/api/v1/users/send_reset_password_instructions"

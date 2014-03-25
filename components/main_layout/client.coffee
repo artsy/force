@@ -24,7 +24,7 @@ syncAuth = module.exports.syncAuth = ->
       success: (response) ->
         $.ajax
           type: "POST"
-          url: "/force/users/sign_in_trust_token?" +
+          url: "/users/sign_in_trust_token?" +
                "token=#{response.trust_token}&redirect-to=#{window.location.pathname}"
           success: (response) ->
             window.location.reload()
@@ -32,7 +32,7 @@ syncAuth = module.exports.syncAuth = ->
   if sd.CURRENT_USER
     $.ajax
       url: "#{sd.ARTSY_URL}/api/v1/me"
-      error: -> window.location = '/force/users/sign_out'
+      error: -> window.location = '/users/sign_out'
 
 setupAnalytics = ->
   # Initialize analytics & track page view if we included mixpanel
