@@ -8,15 +8,6 @@ module.exports = class LocationView extends StepView
   events:
     'click a': 'advance'
 
-  # @return {String} used as the suggested search text that
-  # pre-populates the location search field
-  locationDisplay: ->
-    _.compact([
-      @user.get('location')?.city
-      @user.get('location')?.state_code
-      @user.get('location')?.country
-    ]).join ', '
-
   update: (location) ->
     @geo = new GeoFormatter(location)
     @user.setGeo @geo
@@ -33,5 +24,5 @@ module.exports = class LocationView extends StepView
 
   postRender: ->
     @locationSearchView = new LocationSearchView el: @$('#personalize-location-search')
-    @locationSearchView.render @locationDisplay()
+    @locationSearchView.render @user.location().cityStateCountry()
     @listenTo @locationSearchView, 'location:update', @update
