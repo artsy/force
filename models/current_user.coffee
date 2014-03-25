@@ -121,14 +121,14 @@ module.exports = class CurrentUser extends Backbone.Model
     new Location @get 'location' if @get 'location'
 
   fetchCreditCards: (options) ->
-    new Backbone.Model(null).fetch
+    new Backbone.Collection().fetch
       url: "#{@url()}/credit_cards"
       data:
         access_token: @get('accessToken')
       success: options?.success
 
   checkRegisteredForAuction: (options) ->
-    new Backbone.Model(null).fetch
+    new Backbone.Collection().fetch
       url: "#{ARTSY_URL}/api/v1/me/bidders"
       data:
         access_token: @get('accessToken')
@@ -138,9 +138,9 @@ module.exports = class CurrentUser extends Backbone.Model
       error: options?.error
 
   createBidder: (options) ->
-    model = new Backbone.Model(null, url: "#{ARTSY_URL}/api/v1/bidder")
-    model.isSaved = -> false
-    model.save
+    model = new Backbone.Model()
+    model.save null,
+      url: "#{ARTSY_URL}/api/v1/bidder"
       data:
         access_token: @get('accessToken')
         sale_id: options.saleId
