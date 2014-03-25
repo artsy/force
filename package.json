@@ -32,7 +32,8 @@
     "artsy-passport": "git://github.com/artsy/artsy-passport.git",
     "artsy-backbone-mixins": "git://github.com/artsy/artsy-backbone-mixins.git",
     "konami-js": "*",
-    "redis": "*"
+    "redis": "*",
+    "connect-flash": "*"
   },
   "devDependencies": {
     "browserify": "*",
