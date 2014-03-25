@@ -82,7 +82,7 @@ module.exports = (app) ->
       )
       next()
 
-  # Body parser has to be after proxy middleware for 
+  # Body parser has to be after proxy middleware for
   # node-http-proxy to work with POST/PUT/DELETE)
   app.all '/api*', proxyGravity.api
 
@@ -125,6 +125,8 @@ module.exports = (app) ->
   app.use express.logger('dev')
 
   # Mount apps
+  app.use require "../apps/auction"
+
   app.use require "../apps/home"
   app.use require "../apps/about"
   app.use require "../apps/user"

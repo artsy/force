@@ -1,8 +1,9 @@
 - var scope='billing_address'
 - var showName=false
 - var address = order.get('shipping_address')
-.order-form-checkbox
+- var telephone = order.get('telephone')
+.credit-card-form-checkbox
   input( name='copy_shipping', type='checkbox', checked=true ) 
   | Billing address is same as shipping address
-.order-form-hidden
+.credit-card-form-hidden
   include ./address

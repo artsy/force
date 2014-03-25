@@ -8,7 +8,7 @@ block body
     .checkout-form
       h2.garamond-header-center Checkout
       .order-page-content
-        .order-form
+        .order-form.credit-card-form
           section.order-ship-to
             h2.order-page-sm-heading Ship To
             .order-form-text-address
@@ -23,15 +23,9 @@ block body
                 |  you with the seller to arrange shipping. Payment for shipping and
                 | applicable taxes will be collected at that time.
           section.order-form-credit-card-section
-            h2.order-page-sm-heading Payment Method
-            .order-form-cc-brands
-              .visa.icon( data-brand='VISA' )
-              .mastercard.icon( data-brand='Mastercard' )
-              .amex.icon( data-brand='American Express' )
-              .discover.icon( data-brand='Discover Card' )
-            include ./credit_card
+            include ../../../components/credit_card/templates/payment_method
           section.order-form-billing-address
-            include ./billing_address
+            include ../../../components/credit_card/templates/billing_address
           section.order-summary-section
             h2.order-page-sm-heading Order Summary
             include ./small_artwork

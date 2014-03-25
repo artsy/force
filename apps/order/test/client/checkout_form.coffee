@@ -4,7 +4,7 @@ Backbone      = require 'backbone'
 sinon         = require 'sinon'
 _             = require 'underscore'
 Order         = require '../../../../models/order'
-CheckoutForm  = require('../../client/checkout_form').CheckoutForm
+CheckoutForm  = require('../../client/checkout_form')
 { resolve }   = require 'path'
 { fabricate } = require 'antigravity'
 

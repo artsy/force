@@ -1,23 +1,23 @@
-Backbone     = require 'backbone'
-analytics    = require '../../../lib/analytics.coffee'
-Marketplace  = require '../../../models/marketplace.coffee'
-sd           = require('sharify').data
-ShippingForm = require('./shipping_form.coffee')
+sd                 = require('sharify').data
+Backbone           = require 'backbone'
+analytics          = require '../../../lib/analytics.coffee'
+Marketplace        = require '../../../models/marketplace.coffee'
+CurrentUser        = require '../../../models/current_user.coffee'
+ErrorHandlingForm  = require('../../../components/credit_card/client/error_handling_form.coffee')
+
 { SESSION_ID } = require('sharify').data
 
-module.exports = class CheckoutForm extends ShippingForm
+module.exports = class RegistrationForm extends ErrorHandlingForm
 
   balanced: false
 
   events:
-    'click .order-form-button'         : 'onSubmit'
-    'click .order-form-checkbox input' : 'toggleShippingAddress'
+    'click .registration-form-content .avant-garde-button' : 'onSubmit'
 
-  toggleShippingAddress: =>
-    if @$('.order-form-checkbox input').is(':checked')
-      @$('.order-form-hidden').hide()
-    else
-      @$('.order-form-hidden').show()
+  initialize: (options) ->
+    @currentUser = CurrentUser.orNull()
+    @$submit = @$('.registration-form-content .avant-garde-button')
+    @setUpFields()
 
   setUpFields: ->
     @fields =
@@ -29,7 +29,6 @@ module.exports = class CheckoutForm extends ShippingForm
       billing_city: { el: @$('input.city'), validator: @isPresent, label: 'city' }
       billing_state: { el: @$('input.region'), validator: @isState, label: 'state' }
       billing_zip: { el: @$('input.postal-code'), validator: @isZip }
-      conditions: { el: @$('.order-form-conditions input'), validator: @isChecked, message: 'Conditions must be accepted' }
     @internationalizeFields()
 
   cardCallback: (response) =>
@@ -37,22 +36,19 @@ module.exports = class CheckoutForm extends ShippingForm
       when 201  # success
         data = @model.getSessionData(SESSION_ID)
         data.credit_card_uri = response.data.uri
-        @model.save data,
-          url: "#{@model.url()}/submit"
+
+        @currentUser.createBidder
+          saleId: @model.get('id')
           success: =>
-            analytics.track.funnel 'Order submitted', label: analytics.modelNameAndIdToLabel('artwork', @model.get('id'))
-            @success()
-            @$el.addClass 'order-page-complete'
-            @$('.checkout-form').hide()
-            @$('.success-form').show()
-            $('body').removeClass 'minimal-header'
-            $('html, body').scrollTop(0)
-          error: (xhr) => @showError xhr, "Order submission error"
-        analytics.track.funnel 'Order card validated', label: analytics.modelNameAndIdToLabel('artwork', @model.get('id'))
-      when 400, 403 then @showError @errors.missingOrMalformed, "Order card missing or malformed"
-      when 402 then @showError @errors.couldNotAuthorize, "Order card could not be authorized"
-      when 404 then @showError @errors.other, "Order marketplace invalid"
-      else @showError @errors.other, "Order card - other error"
+            analytics.track.funnel 'Registration submitted'
+            window.location = @model.registrationSuccessUrl()
+          error: (xhr) => @showError xhr, "Registration submission error"
+
+        analytics.track.funnel 'Registration card validated'
+      when 400, 403 then @showError @errors.missingOrMalformed, "Registration card missing or malformed"
+      when 402 then @showError @errors.couldNotAuthorize, "Registration card could not be authorized"
+      when 404 then @showError @errors.other, "Registration marketplace invalid"
+      else @showError @errors.other, "Registration card - other error"
 
   cardData: ->
     name: @fields['name on card'].el.val()
@@ -78,7 +74,7 @@ module.exports = class CheckoutForm extends ShippingForm
     return if @$submit.hasClass('is-loading')
     @$submit.addClass 'is-loading'
 
-    analytics.track.funnel 'Order submit shipping', label: analytics.modelNameAndIdToLabel('artwork', @model.get('id'))
+    analytics.track.funnel 'Registration submit billing address'
 
     if @validateForm()
       @tokenizeCard()

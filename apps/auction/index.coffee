@@ -1,5 +1,5 @@
 #
-# /feature
+# Auction related routes
 #
 
 express = require 'express'
@@ -9,5 +9,5 @@ app = module.exports = express()
 app.set 'views', __dirname
 app.set 'view engine', 'jade'
 
-app.get '/feature/:id', routes.index
-app.get '/feature/:id/:tab', routes.index
+app.get '/auction-registration/:id', routes.auctionRegistration
+# app.get '/feature/:id/bid/:artwork', routes.bid

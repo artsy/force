@@ -1,0 +1,12 @@
+- var name = (typeof order.get('card_name')) !== 'undefined' ? order.get('card_name') : ''
+- var number = (typeof order.get('card_number')) !== 'undefined' ? order.get('card_number') : ''
+- var security_code = (typeof order.get('card_security_code')) !== 'undefined' ? order.get('card_security_code') : ''
+- var monthRange = order.getMonthRange()
+- var yearRange = order.getYearRange()
+h2.order-page-sm-heading Payment Method
+.credit-card-form-cc-brands
+  .visa.icon( data-brand='VISA' )
+  .mastercard.icon( data-brand='Mastercard' )
+  .amex.icon( data-brand='American Express' )
+  .discover.icon( data-brand='Discover Card' )
+include ./credit_card
