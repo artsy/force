@@ -4,7 +4,7 @@ isCreditCard = require('validator').isCreditCard
 isEmail      = require('validator').isEmail
 analytics    = require('../../../lib/analytics.coffee')
 
-module.exports.ErrorHandlingForm = class ErrorHandlingForm extends Backbone.View
+module.exports = class ErrorHandlingForm extends Backbone.View
 
   fields: {}
   errors:
@@ -44,3 +44,12 @@ module.exports.ErrorHandlingForm = class ErrorHandlingForm extends Backbone.View
       message = @errors.other
     @$submit.removeClass('is-loading').before "<div class='error'>#{message}</div>"
     analytics.track.error(description) if description?
+
+  internationalizeFields: ->
+    @$('select.country').change =>
+      if @$('select.country').val() == 'USA'
+        @$el.removeClass('not-usa')
+        @$('.postal-code label').text 'Zip Code'
+      else
+        @$el.addClass('not-usa')
+        @$('.postal-code label').text 'Postal Code'

@@ -8,12 +8,18 @@ mediator        = require '../../../lib/mediator.coffee'
 ContactPartnerView    = require '../../../components/contact/contact_partner.coffee'
 InquiryView           = require '../../../components/contact/inquiry.coffee'
 
+ConfirmBidModal          = require '../../../components/credit_card/client/confirm_bid.coffee'
+ConfirmRegistrationModal = require '../../../components/credit_card/client/confirm_registration.coffee'
+
 module.exports = class ArtworkRouter extends Backbone.Router
+
   routes:
     'artwork/:id'                 : 'show'
     'artwork/:id/ask_specialist'  : 'inquire'
     'artwork/:id/contact-gallery' : 'contactPartner'
     'artwork/:id/contact_gallery' : 'contactPartner'
+    'artwork/:id/confirm-bid'     : 'confirmBid'
+    'artwork/:id/confirm-registration': 'confirmRegistration'
     'artwork/:id/inquire'         : 'inquire'
     'artwork/:id/more-info'       : 'moreInfo'
     'artwork/:id/view-in-room'    : 'viewInRoom'
@@ -63,4 +69,14 @@ module.exports = class ArtworkRouter extends Backbone.Router
   inquire: ->
     analytics.track.click "Clicked 'Contact Artsy Specialist'"
     new InquiryView artwork: @artwork
+    mediator.on 'modal:closed', => Backbone.history.navigate(@artwork.href(), trigger: true, replace: true)
+
+  confirmBid: ->
+    analytics.track.click "Showed 'Confirm bid on artwork page'"
+    new ConfirmBidModal artwork: @artwork
+    mediator.on 'modal:closed', => Backbone.history.navigate(@artwork.href(), trigger: true, replace: true)
+
+  confirmRegistration: ->
+    analytics.track.click "Showed 'Confirm registration on artwork page'"
+    new ConfirmRegistrationModal artwork: @artwork
     mediator.on 'modal:closed', => Backbone.history.navigate(@artwork.href(), trigger: true, replace: true)

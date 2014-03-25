@@ -13,6 +13,9 @@ emailTypes =
   'personalized_email': "personalized emails."
   'follow_users_email': "user follow emails."
 
+getRedirectTo = (req) ->
+  req.body['redirect-to'] or req.query['redirect-to'] or req.query['redirect_uri'] or parse(req.get('Referrer') or '').path or '/'
+
 @index = (req, res) ->
   heroUnits = new HeroUnits
   featuredLinks = new FeaturedLinks

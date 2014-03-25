@@ -5,5 +5,6 @@ Feature = require '../../models/feature.coffee'
     error  : res.backboneError
     success: (feature) ->
       res.locals.sd.FEATURE = feature
+      res.locals.sd.TAB = req.params.tab
       res.render 'templates/index',
         feature: feature

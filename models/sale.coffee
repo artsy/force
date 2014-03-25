@@ -9,6 +9,11 @@ module.exports = class Sale extends Backbone.Model
 
   _.extend @prototype, Clock
 
+  urlRoot: "#{sd.ARTSY_URL}/api/v1/sale"
+
+  href: -> "/feature/#{@get('id')}"
+  registrationSuccessUrl: -> "#{@href()}/confirm-registration"
+
   fetchArtworks: (options) ->
     _.extend Backbone.Collection.prototype, Fetch(sd.ARTSY_URL)
     saleArtworks = new Backbone.Collection []
@@ -38,3 +43,9 @@ module.exports = class Sale extends Backbone.Model
 
   registerUrl: (redirectUrl) ->
     "/auction-registration/#{@get 'id'}?redirect_uri=#{redirectUrl}"
+
+  isRegisterable: ->
+    @isAuction() && _.include(['preview','open'], @get('auction_state'))
+
+  isAuction: ->
+    @get('is_auction')

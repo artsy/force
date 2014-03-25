@@ -1,0 +1,14 @@
+extends ../../../components/main_layout/templates/minimal_header
+
+append locals
+  - assetPackage = 'auction'
+
+block body
+  #auction-registration-page
+    .bid-registration-form.credit-card-form
+      .bid-registration-form-header
+        h2.avant-garde-header-center Register to bid on Artsy
+        h3 Enter your credit card details to verify your identity
+        p.note NOTE: Your card will not be charged unless you are the winning bidder and you choose to pay by credit card.
+      .bid-registration-form-contents
+        include ./registration-form

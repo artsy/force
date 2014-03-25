@@ -119,3 +119,30 @@ module.exports = class CurrentUser extends Backbone.Model
 
   location: ->
     new Location @get 'location' if @get 'location'
+
+  fetchCreditCards: (options) ->
+    new Backbone.Model(null).fetch
+      url: "#{@url()}/credit_cards"
+      data:
+        access_token: @get('accessToken')
+      success: options?.success
+
+  checkRegisteredForAuction: (options) ->
+    new Backbone.Model(null).fetch
+      url: "#{ARTSY_URL}/api/v1/me/bidders"
+      data:
+        access_token: @get('accessToken')
+        sale_id: options.saleId
+      success: (response) ->
+        options?.success response.length > 0
+      error: options?.error
+
+  createBidder: (options) ->
+    model = new Backbone.Model(null, url: "#{ARTSY_URL}/api/v1/bidder")
+    model.isSaved = -> false
+    model.save
+      data:
+        access_token: @get('accessToken')
+        sale_id: options.saleId
+      success: options?.success
+      error: options?.error

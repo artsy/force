@@ -4,7 +4,7 @@ Backbone      = require 'backbone'
 sinon         = require 'sinon'
 _             = require 'underscore'
 Order         = require '../../../../models/order'
-ShippingForm  = require('../../client/shipping_form').ShippingForm
+ShippingForm  = require('../../client/shipping_form')
 { resolve }   = require 'path'
 { fabricate } = require 'antigravity'
 
