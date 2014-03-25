@@ -15,7 +15,7 @@ ROUTES = [
   '/oauth2*', '/sitemap*'
 ]
 AUTH_ROUTES = [
-  '/post', "/profile/edit", "/user/edit"
+  '/post', "/profile/edit", "/user/edit", "/user/delete"
 ]
 for route in ROUTES
   app.all route, (req, res) ->
