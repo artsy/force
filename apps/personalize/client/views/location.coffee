@@ -24,5 +24,5 @@ module.exports = class LocationView extends StepView
 
   postRender: ->
     @locationSearchView = new LocationSearchView el: @$('#personalize-location-search')
-    @locationSearchView.render @user.location().cityStateCountry()
+    @locationSearchView.render @user.location()?.cityStateCountry()
     @listenTo @locationSearchView, 'location:update', @update
