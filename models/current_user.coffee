@@ -138,11 +138,9 @@ module.exports = class CurrentUser extends Backbone.Model
       error: options?.error
 
   createBidder: (options) ->
-    model = new Backbone.Model()
+    # For posts and puts, add access_token to model attributes, for gets it goes in the data
+    model = new Backbone.Model(sale_id: options.saleId, access_token: @get('accessToken'))
     model.save null,
       url: "#{ARTSY_URL}/api/v1/bidder"
-      data:
-        access_token: @get('accessToken')
-        sale_id: options.saleId
       success: options?.success
       error: options?.error

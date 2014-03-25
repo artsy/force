@@ -14,7 +14,7 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
   events:
     'click .registration-form-content .avant-garde-button' : 'onSubmit'
 
-  initialize: (options) ->
+  initialize: ->
     @currentUser = CurrentUser.orNull()
     @$submit = @$('.registration-form-content .avant-garde-button')
     @setUpFields()
