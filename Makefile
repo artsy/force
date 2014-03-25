@@ -24,7 +24,7 @@ sp:
 	ARTSY_URL=http://api.artsy.net SECURE_ARTSY_URL=https://api.artsy.net $(BIN)/coffee index.coffee
 
 # Run all of the project-level tests, followed by app-level tests
-test: assets-fast
+test:  #assets-fast
 	$(BIN)/mocha $(shell find test -name '*.coffee' -not -path 'test/helpers/*')
 	$(BIN)/mocha $(shell find components/*/test -name '*.coffee' -not -path 'test/helpers/*')
 	$(BIN)/mocha $(shell find components/**/*/test -name '*.coffee' -not -path 'test/helpers/*')
