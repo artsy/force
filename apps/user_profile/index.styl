@@ -20,13 +20,15 @@
   &[data-path]
     #profile-spinner
       display none
-  &[data-path*=posts]
+  &[data-path*=posts], &:not([data-path*=favorites])[data-has*=posts]
     #profile-feed
-      display block
+        display block
     #profile-tabs a[href*=posts]
       color highlight-color
       border-bottom 1px solid highlight-underline-color
   &[data-path*=favorites]
+    #profile-feed
+      display none
     #profile-favorites, #profile-favorites-spinner
       display block
     #profile-tabs a[href*=favorites]

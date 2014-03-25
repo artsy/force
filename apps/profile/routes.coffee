@@ -1,63 +1,17 @@
-Backbone    = require 'backbone'
-Profile     = require '../../models/profile'
-Following   = require '../../components/follow_button/collection'
+Profile = require '../../models/profile'
+Following = require '../../components/follow_button/collection.coffee'
 
-fetchProfile = (req, res, next, success) ->
-  profile = new Profile { id: req.params.id }
-  profile.fetch
-    cache: true
-    success: (profile) ->
-      return next() if profile?.isFairOranizer()
-      return next() unless profile and (profile.isUser() or profile.isPartner())
-      res.locals.sd.PROFILE = profile.toJSON()
-      success(profile)
-    error: -> next()
-
-getTemplateForProfileType = (profile) ->
-  if profile.isPartner()
-    "../partner/templates"
-  else
-    "templates"
-
-@index = (req, res, next) ->
-  fetchProfile req, res, next, (profile) ->
-    if profile.href() != res.locals.sd.CURRENT_PATH
-      res.redirect profile.href()
-    else
-      res.render getTemplateForProfileType(profile),
-        profile : profile
-
-@posts = (req, res, next) ->
-  fetchProfile req, res, next, (profile) ->
-    if profile.hasPosts()
-      res.render getTemplateForProfileType(profile),
-        profile : profile
-    else
-      res.redirect profile.href()
-
-@favorites = (req, res, next) ->
-  fetchProfile req, res, next, (profile) ->
-    if profile.isUser()
-      res.render getTemplateForProfileType(profile),
-        profile : profile
-    else
-      res.redirect profile.href()
 
 @follow = (req, res) ->
   return res.redirect "/#{req.params.id}" unless req.user
-  token = req.user.get 'accessToken'
-  following = new Following null, kind: 'profile'
-  following.follow req.params.id,
+  new Following(null, kind: 'profile').follow req.params.id,
     access_token: req.user.get('accessToken')
     error: res.backboneError
-    success: ->
-      res.redirect "/#{req.params.id}"
+    success: -> res.redirect "/#{req.params.id}"
 
-#
-# partner specific routes, including /overview, /shows, /artists,
-#   /artist/:artistId, /collection, /contact, /about, /shop
-#
-@partner = (req, res, next) ->
-  fetchProfile req, res, next, (profile) ->
-    res.render getTemplateForProfileType(profile),
-        profile : profile
+@setProfile = (req, res, next) ->
+  new Profile(id: req.params.id).fetch
+    success: (profile) ->
+      res.locals.profile = profile
+      res.locals.sd.PROFILE = profile.toJSON()
+    complete: -> next()

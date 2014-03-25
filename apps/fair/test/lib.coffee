@@ -18,7 +18,6 @@ describe 'fairDataMiddleware', ->
     sinon.stub Fair.prototype, 'fetchOverviewData'
     sinon.stub Fair.prototype, 'fetchPrimarySets'
     @success = =>
-      _.last(Backbone.sync.args)[2].success fabricate 'profile', owner_type: 'FairOrganizer'
       Fair::fetchPrimarySets.args[0][0].success()
       Fair::fetchOverviewData.args[0][0].success(
         fair:                  new Fair(fabricate 'fair', id: 'the-foo-show')
@@ -36,7 +35,7 @@ describe 'fairDataMiddleware', ->
     @cache = fairDataMiddleware.__get__ 'cache'
     @cache.setHash = sinon.stub()
     @req = { params: { id: 'the-foo-show' } }
-    @res = { locals: { sd: {}, } }
+    @res = { locals: { sd: {}, profile: new Profile(fabricate('profile', owner_type: 'FairOrganizer')) } }
     @next = sinon.stub()
 
   afterEach ->
@@ -59,13 +58,11 @@ describe 'fairDataMiddleware', ->
 
   it 'caches the data in a special key', ->
     fairDataMiddleware @req, @res, @next
-    _.last(Backbone.sync.args)[2].success fabricate 'profile', owner_type: 'FairOrganizer'
     @success()
     @cache.setHash.args[0][0].should.equal 'fair:the-foo-show'
 
   it 'caches the big blob of data', ->
     fairDataMiddleware @req, @res, @next
-    _.last(Backbone.sync.args)[2].success fabricate 'profile', owner_type: 'FairOrganizer'
     @success()
     (@cache.setHash.args[0][1].fair?).should.be.ok
     (@cache.setHash.args[0][1].profile?).should.be.ok
