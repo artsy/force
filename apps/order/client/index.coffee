@@ -1,8 +1,8 @@
 _            = require 'underscore'
 Backbone     = require 'backbone'
 Order        = require '../../../models/order.coffee'
-ShippingForm = require('./shipping_form.coffee').ShippingForm
-CheckoutForm = require('./checkout_form.coffee').CheckoutForm
+ShippingForm = require('./shipping_form.coffee')
+CheckoutForm = require('./checkout_form.coffee')
 sd           = require('sharify').data
 
 module.exports.OrderRouter = class OrderRouter extends Backbone.Router

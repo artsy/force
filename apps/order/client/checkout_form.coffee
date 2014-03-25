@@ -2,10 +2,10 @@ Backbone     = require 'backbone'
 analytics    = require '../../../lib/analytics.coffee'
 Marketplace  = require '../../../models/marketplace.coffee'
 sd           = require('sharify').data
-ShippingForm = require('./shipping_form.coffee').ShippingForm
+ShippingForm = require('./shipping_form.coffee')
 { SESSION_ID } = require('sharify').data
 
-module.exports.CheckoutForm = class CheckoutForm extends ShippingForm
+module.exports = class CheckoutForm extends ShippingForm
 
   balanced: false
 

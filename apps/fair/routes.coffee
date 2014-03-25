@@ -8,6 +8,8 @@ cache = require '../../lib/cache'
 client = cache.client
 
 @overview = (req, res, next) ->
+  return next() unless res.locals.profile?.isFairOranizer()
+
   # TODO: Dependent on attribute of fair
   res.locals.sd.BODY_CLASS = 'body-transparent-header'
   res.locals.sd.SECTION = 'overview'

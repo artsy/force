@@ -14,15 +14,18 @@ module.exports = class PartnerArtistsArtistView extends Backbone.View
 
   defaults:
     scroll: false # scroll to the top of the view
+    allArtworks: false # infinite scrolling to show all artworks
+    pageSize: 10
+    nextPage: 1
 
   initialize: (options={}) ->
-    { @scroll, @noArtworks } = _.defaults options, @defaults
+    { @scroll, @noArtworks, @pageSize, @nextPage, @allArtworks } = _.defaults options, @defaults
     @artist = new Artist @model.get('artist')
     @partner = new Partner @model.get('partner')
     @initializeElement()
     @listenTo @artist, "sync", @render
     @fetchArtist()
-    @fetchArtworks()
+    @fetchNextPageArtworks()
     @initializeFollowButton()
 
   # Self initialize the element with the template at the beginning
@@ -47,20 +50,39 @@ module.exports = class PartnerArtistsArtistView extends Backbone.View
 
   fetchArtist: -> @artist.fetch cache: true
 
-  fetchArtworks: ->
+  fetchNextPageArtworks: ->
+    return if @isFetching
+    @isFetching = true
+
     artworks = new Artworks()
     artworks.url = "#{@partner.url()}/artist/#{@artist.get('id')}/artworks"
     artworks.fetch
+      data: { page: @nextPage, size: @pageSize }
       success: =>
-        return @noArtworks?() if artworks.length is 0
+        @isFetching = false
+        return @noArtworks?() if @nextPage is 1 and artworks.length is 0
 
-        new ArtworkColumnsView
-          el: @$('.partner-artist-artworks')
-          collection: artworks
-          numberOfColumns: 4
-          gutterWidth: 60
-          allowDuplicates: true
-          artworkSize: 'tall'
+        if @nextPage is 1 and @allArtworks
+          $(window).on 'scroll.artist.partner', _.throttle(@infiniteScroll, 150)
+
+        if artworks.length is 0
+          $(window).off 'scroll.artist'
+        else
+          @artworkColumns.appendArtworks artworks.models if @artworkColumns?
+          @artworkColumns ?= new ArtworkColumnsView
+            el: @$('.partner-artist-artworks')
+            collection: artworks
+            numberOfColumns: 4
+            gutterWidth: 60
+            allowDuplicates: true
+            artworkSize: 'tall'
+
+          ++@nextPage
+
+  infiniteScroll: =>
+    fold = $(window).height() + $(window).scrollTop()
+    $lastItem = @$('.partner-artist-artworks')
+    @fetchNextPageArtworks() unless fold < $lastItem.offset()?.top + $lastItem.height()
 
   initializeBlurb: ->
     $blurb = @$('.partner-artist-blurb')

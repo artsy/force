@@ -27,15 +27,28 @@ describe 'PartnerArtistsArtistView', ->
         PartnerArtistsArtistView.__set__ 'Artworks', @Artworks
 
         # stub the ArtworkColumnsView
+        @artworkColumnsView = { appendArtworks: sinon.stub() }
         @ArtworkColumnsView = sinon.stub()
+        @ArtworkColumnsView.returns @artworkColumnsView
         PartnerArtistsArtistView.__set__ 'ArtworkColumnsView', @ArtworkColumnsView
 
         @partnerArtist = new PartnerArtist fabricate('partner_artist')
+
+        # artworks
+        @artistArtworks = [
+          { artwork: fabricate 'artwork', id: 'artwork1' },
+          { artwork: fabricate 'artwork', id: 'artwork2' },
+          { artwork: fabricate 'artwork', id: 'artwork3' },
+          { artwork: fabricate 'artwork', id: 'artwork4' },
+          { artwork: fabricate 'artwork', id: 'artwork5' },
+          { artwork: fabricate 'artwork', id: 'artwork6' },
+          { artwork: fabricate 'artwork', id: 'artwork7' }
+        ]
         done()
 
   afterEach -> benv.teardown()
 
-  describe '#fetchArtworks', ->
+  describe '#fetchNextPageArtworks', ->
 
     it 'renders the artwork column and not calls the noArtworks callback if there are artworks', ->
       sinon.stub @artworks, 'fetch', (options) =>
@@ -61,3 +74,41 @@ describe 'PartnerArtistsArtistView', ->
         noArtworks: noArtworks
 
       noArtworks.calledOnce.should.be.ok
+
+    it 'renders all artworks of the artist with infinite scrolling', ->
+
+      sinon.stub @artworks, 'fetch', (options) =>
+        start = (options.data.page - 1) * options.data.size
+        end = start + options.data.size
+        @artworks.reset()
+        @artworks.add @artistArtworks[start...end]
+        options.success?()
+
+      view = new PartnerArtistsArtistView
+        model: @partnerArtist
+        el: $ 'body'
+        pageSize: 2
+        allArtworks: true
+
+      @ArtworkColumnsView.calledOnce.should.be.ok
+      view.nextPage.should.equal 2
+
+      view.fetchNextPageArtworks()
+      view.nextPage.should.equal 3
+      artworks = _.last(@artworkColumnsView.appendArtworks.args)[0]
+      artworks.length.should.equal 2
+      artworks[0].get('artwork').id.should.equal 'artwork3'
+      artworks[1].get('artwork').id.should.equal 'artwork4'
+
+      view.fetchNextPageArtworks()
+      view.nextPage.should.equal 4
+      artworks = _.last(@artworkColumnsView.appendArtworks.args)[0]
+      artworks.length.should.equal 2
+      artworks[0].get('artwork').id.should.equal 'artwork5'
+      artworks[1].get('artwork').id.should.equal 'artwork6'
+
+      view.fetchNextPageArtworks()
+      view.nextPage.should.equal 5
+      artworks = _.last(@artworkColumnsView.appendArtworks.args)[0]
+      artworks.length.should.equal 1
+      artworks[0].get('artwork').id.should.equal 'artwork7'

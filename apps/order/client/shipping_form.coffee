@@ -2,10 +2,10 @@ _                       = require 'underscore'
 Backbone                = require 'backbone'
 CurrentUser             = require '../../../models/current_user.coffee'
 sd                      = require('sharify').data
-ErrorHandlingForm       = require('./form_base.coffee').ErrorHandlingForm
+ErrorHandlingForm       = require('../../../components/credit_card/client/error_handling_form.coffee')
 analytics               = require('../../../lib/analytics.coffee')
 
-module.exports.ShippingForm = class ShippingForm extends ErrorHandlingForm
+module.exports = class ShippingForm extends ErrorHandlingForm
 
   events:
     'click .order-form-button' : 'onSubmit'
@@ -29,15 +29,6 @@ module.exports.ShippingForm = class ShippingForm extends ErrorHandlingForm
     else
       @showError 'Please review the error(s) above and try again.'
     false
-
-  internationalizeFields: ->
-    @$('select.country').change =>
-      if @$('select.country').val() == 'USA'
-        @$el.removeClass('not-usa')
-        @$('.postal-code label').text 'Zip Code'
-      else
-        @$el.addClass('not-usa')
-        @$('.postal-code label').text 'Postal Code'
 
   orderAttrs: ->
     attrs =

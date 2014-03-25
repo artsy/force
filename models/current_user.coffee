@@ -11,6 +11,7 @@ Order = require './order.coffee'
 Genes = require '../collections/genes.coffee'
 { readCookie } = require '../components/util/cookie.coffee'
 Following = require '../components/follow_button/collection.coffee'
+geoLocate = require '../components/util/geolocate.coffee'
 
 module.exports = class CurrentUser extends Backbone.Model
 
@@ -119,3 +120,40 @@ module.exports = class CurrentUser extends Backbone.Model
 
   location: ->
     new Location @get 'location' if @get 'location'
+
+  fetchCreditCards: (options) ->
+    new Backbone.Collection().fetch
+      url: "#{@url()}/credit_cards"
+      data:
+        access_token: @get('accessToken')
+      success: options?.success
+
+  checkRegisteredForAuction: (options) ->
+    new Backbone.Collection().fetch
+      url: "#{ARTSY_URL}/api/v1/me/bidders"
+      data:
+        access_token: @get('accessToken')
+        sale_id: options.saleId
+      success: (response) ->
+        options?.success response.length > 0
+      error: options?.error
+
+  createBidder: (options) ->
+    # For posts and puts, add access_token to model attributes, for gets it goes in the data
+    model = new Backbone.Model(sale_id: options.saleId, access_token: @get('accessToken'))
+    model.save null,
+      url: "#{ARTSY_URL}/api/v1/bidder"
+      success: options?.success
+      error: options?.error
+
+  geoLocate: (options) ->
+    geoLocate.locate options
+
+  setGeo: (geo) ->
+    @set location:
+      city        : geo.getCity() or ''
+      state       : geo.getState() or ''
+      state_code  : geo.getStateCode() or ''
+      postal_code : geo.getPostalCode() or ''
+      coordinates : geo.getCoordinates() or null
+      country     : geo.getCountry() or ''

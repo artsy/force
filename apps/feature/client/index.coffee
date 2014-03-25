@@ -7,11 +7,37 @@ SaleArtworkView = require '../../../components/artwork_item/views/sale_artwork.c
 artworkColumns  = -> require('../../../components/artwork_columns/template.jade') arguments...
 setsTemplate    = -> require('../templates/sets.jade') arguments...
 artistsTemplate = -> require('../templates/artists.jade') arguments...
+analytics       = require("../../../lib/analytics.coffee")
+mediator        = require '../../../lib/mediator.coffee'
 trackArtworkImpressions = require("../../../components/analytics/impression_tracking.coffee").trackArtworkImpressions
+
+ConfirmBidModal          = require '../../../components/credit_card/client/confirm_bid.coffee'
+ConfirmRegistrationModal = require '../../../components/credit_card/client/confirm_registration.coffee'
+
+module.exports = class FeatureRouter extends Backbone.Router
+
+  routes:
+    'feature/:id/confirm-bid'         : 'confirmBid'
+    'feature/:id/confirm-registration': 'confirmRegistration'
+
+  initialize: (options) ->
+    @feature = options.feature
+
+  confirmBid: ->
+    new ConfirmBidModal feature: @feature
+    mediator.on 'modal:closed', => Backbone.history.navigate(@feature.href(), trigger: true, replace: true)
+    analytics.track.click "Showed 'Confirm bid' on feature page"
+
+  confirmRegistration: ->
+    new ConfirmRegistrationModal feature: @feature
+    mediator.on 'modal:closed', => Backbone.history.navigate(@feature.href(), trigger: true, replace: true)
+    analytics.track.click "Showed 'Confirm registration' on feature page"
+
 
 module.exports.FeatureView = class FeatureView extends Backbone.View
 
   initialize: (options) ->
+    @handleTab(options.tab) if options.tab
     @model.fetchSets
       success: (sets) =>
         @sets = sets
@@ -78,8 +104,12 @@ module.exports.FeatureView = class FeatureView extends Backbone.View
     @$('.artwork-column:last-of-type').prepend artistsTemplate { artworkGroups: artworkGroups }
     @$('.artwork-column').parent().css 'visibility', 'visible'
 
-module.exports.init = ->
+  handleTab: (tab) ->
+    new FeatureRouter feature: @model
+    Backbone.history.start pushState: true
 
+module.exports.init = ->
   new FeatureView
     el   : $('#feature')
     model: new Feature sd.FEATURE
+    tab  : sd.TAB

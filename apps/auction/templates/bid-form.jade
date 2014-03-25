@@ -1,0 +1,30 @@
+extends ../../../components/main_layout/templates/minimal_header
+
+append locals
+  - assetPackage = 'auction'
+
+block body
+  #auction-registration-page
+    .auction-bid-form-container
+      h2.avant-garde-header-center Confirm Your Bid
+      .auction-bid-form-form
+        include ../../../components/credit_card/templates/artwork-info
+        include ./artwork-bid-status
+        .bordered-bid-form-group
+          .bid-group-label Your Max. Bid:
+          .bid-group-content
+            .bid-input-container
+              label.bid-dollar-sign $
+              input.max-bid( type='text', name='bid', autocomplete='off', value=maxBid )
+            .bid-input-help-text!= "Enter " + saleArtwork.formatMinimumNextBid() + " or higher"
+            a.bidding-question How does bidding work?
+          .auction-bid-errors
+        - if registered
+          .form-bottom
+            .auction-registered-container
+              button.avant-garde-button.is-block Confirm Bid
+        - else
+          p NOTE: Your credit card information may be used to verify your identity. Your card will not be charged unless you are the winning bidder and you choose to pay by credit card.
+          .form-bottom
+            .auction-register-container
+              button.avant-garde-button.is-block Confirm Bid
