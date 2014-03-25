@@ -30,11 +30,3 @@ module.exports =
       # If the user's browser doesn't support geolocation
       # or we don't care about accuracy
       @fallback options.success
-
-  geoToUser: (geo) ->
-    city        : geo.getCity()
-    state       : geo.getState()
-    state_code  : geo.getStateCode()
-    postal_code : geo.getPostalCode()
-    country     : geo.getCountry()
-    coordinates : geo.getCoordinates()

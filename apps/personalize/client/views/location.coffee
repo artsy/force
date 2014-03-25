@@ -19,14 +19,7 @@ module.exports = class LocationView extends StepView
 
   update: (location) ->
     @geo = new GeoFormatter(location)
-    @user.set
-      location:
-        city:         @geo.getCity()
-        state:        @geo.getState()
-        state_code:   @geo.getStateCode()
-        postal_code:  @geo.getPostalCode()
-        country:      @geo.getCountry()
-        coordinates:  @geo.getCoordinates()
+    @user.setGeo @geo
     @advance()
 
   remove: ->

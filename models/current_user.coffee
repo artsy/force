@@ -151,4 +151,13 @@ module.exports = class CurrentUser extends Backbone.Model
       accuracy: 'low'
       success: (geo) =>
         if _.isEmpty @get('location')?.display
-          @set location: geoLocate.geoToUser(geo)
+          @setGeo geo
+
+  setGeo: (geo) ->
+    @set location:
+      city        : geo.getCity()
+      state       : geo.getState()
+      state_code  : geo.getStateCode()
+      postal_code : geo.getPostalCode()
+      country     : geo.getCountry()
+      coordinates : geo.getCoordinates()
