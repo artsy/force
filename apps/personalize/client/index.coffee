@@ -57,7 +57,11 @@ module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Rout
     track.funnel 'Finished personalize', { label: "User:#{@user.id}" }
 
     @$el.attr 'data-state', 'loading'
-    @user.save null, complete: =>
+
+    $.when.apply(null, [
+      @user.save()
+      $.post('/flash', message: 'Thank you for personalizing your profile')
+    ]).always =>
       window.location = @redirectLocation()
 
 module.exports.init = ->

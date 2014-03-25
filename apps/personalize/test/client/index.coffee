@@ -52,7 +52,7 @@ describe 'PersonalizeRouter', ->
 
   describe '#done', ->
     it 'sets the $el state to loading, saves the user, redirects', ->
-      @router.user      = { save: sinon.stub().yieldsTo('complete') }
+      @router.user      = save: sinon.stub()
       @router.$el.attr  = sinon.stub()
       @router.state.trigger 'done'
 
