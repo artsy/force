@@ -6,11 +6,12 @@ Artwork = require '../../models/artwork.coffee'
 
 registerOrRender = (sale, req, res, next) ->
   req.user.fetchCreditCards
-    success: (creditCards, status, xhr) =>
+    error  : res.backboneError
+    success: (creditCards) ->
       if creditCards.length > 0
         req.user.createBidder
           success: ->
-            return res.redirect @sale.registrationSuccessUrl()
+            return res.redirect sale.registrationSuccessUrl()
           error  : res.backboneError
       else
         order = new Order()

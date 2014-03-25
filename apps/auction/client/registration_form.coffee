@@ -34,14 +34,11 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
   cardCallback: (response) =>
     switch response.status
       when 201  # success
-        data = @model.getSessionData(SESSION_ID)
-        data.credit_card_uri = response.data.uri
-
         @currentUser.createBidder
           saleId: @model.get('id')
           success: =>
-            analytics.track.funnel 'Registration submitted'
             window.location = @model.registrationSuccessUrl()
+            analytics.track.funnel 'Registration submitted'
           error: (xhr) => @showError xhr, "Registration submission error"
 
         analytics.track.funnel 'Registration card validated'
