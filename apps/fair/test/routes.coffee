@@ -6,6 +6,7 @@ rewire = require 'rewire'
 routes = rewire '../routes'
 CurrentUser = require '../../../models/current_user.coffee'
 Fair = require '../../../models/fair.coffee'
+Profile = require '../../../models/profile.coffee'
 
 describe 'Fair routes', ->
 
@@ -18,6 +19,7 @@ describe 'Fair routes', ->
       locals:
         sd: { ARTSY_URL: 'http://localhost:5000'}
         fair: new Fair(fabricate 'fair')
+        profile: new Profile(fabricate 'fair_profile')
 
   afterEach ->
     Backbone.sync.restore()

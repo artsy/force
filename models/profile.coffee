@@ -54,7 +54,7 @@ module.exports = class Profile extends Backbone.Model
   isUser:        -> _.contains @USER_OWNER_TYPES, @get('owner_type')
   isInstitution: -> _.contains @INSTITUTION_OWNER_TYPES, @get('owner_type')
   isGallery:     -> _.contains @GALLERY_OWNER_TYPES, @get('owner_type')
-  isPartner:     -> ! _.contains ['User', 'Admin'], @get('owner_type')
+  isPartner:     -> @isGallery() or @isInstitution()
   isFairOranizer: -> @get('owner_type') == 'FairOrganizer'
 
   isMe: ->
