@@ -4,13 +4,12 @@ Profile  = require '../../models/profile.coffee'
 
 @refresh = (req, res) ->
   return res.redirect("/") unless req.user
-  user = new UserEdit req.user.attributes
-  user.fetch
+  req.user.fetch
     error  : res.backboneError
     success: ->
-      req.login user, (error) ->
-        res.backboneError
-      res.json user.attributes
+      req.login req.user, (error) ->
+        next(error)
+      res.json req.user.attributes
 
 @settings = (req, res) ->
   return res.redirect("/") unless req.user
