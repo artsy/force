@@ -6,7 +6,7 @@
         each pa in group.list
           if pa.get('published_artworks_count') > 0
             figure.partner-artist( data-artist-id=pa.get('artist').id )
-              a( href=pa.href() )
+              a.partner-route-link( href=pa.href() )
                 .partner-artist-cover-image
                   img( src="#{pa.imageUrl('four_thirds')}", alt=pa.get('artist').name ) 
                   .partner-artist-overlay
@@ -15,6 +15,6 @@
 
   section.artists-grid-section
     .partner-artists-see-all.avant-garde-header-center
-      a.faux-underline-hover(
+      a.faux-underline-hover.partner-route-link(
         href="#{partner.href()}/artists"
       ) Go to artists

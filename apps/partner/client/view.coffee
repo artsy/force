@@ -27,8 +27,8 @@ sectionToView =
 module.exports = class PartnerView extends Backbone.View
 
   events:
-    'click .partner-tabs > a'       : 'intercept'
-    'click .partner-artists-list a' : 'intercept'
+    # Links want to use router should have partner-route-link class
+    'click .partner-route-link' : 'intercept'
 
   defaults:
     currentSection: 'overview'
