@@ -18,7 +18,11 @@ detailTemplate          = -> require('../templates/_detail.jade') arguments...
 
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 
+Auction = require './mixins/auction.coffee'
+
 module.exports = class ArtworkView extends Backbone.View
+  _.extend @prototype, Auction
+
   events:
     'click a[data-client]'                  : 'intercept'
     'click .circle-icon-button-share'       : 'openShare'
@@ -51,6 +55,7 @@ module.exports = class ArtworkView extends Backbone.View
       @deltaTrackPageView fair
     @on 'related:sales', (sale) ->
       @belowTheFoldView.setupSale sale, @saved
+      @setupAuction sale if sale.get 'is_auction'
     @on 'related:none', ->
       @belowTheFoldView.setupLayeredSearch()
 

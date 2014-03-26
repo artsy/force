@@ -22,14 +22,16 @@ module.exports = class Sale extends Backbone.Model
     saleArtworks.fetchUntilEnd options
 
   calculateOffsetTimes: (options = {}) ->
-    new Backbone.Model(null, url: "#{sd.ARTSY_URL}/api/v1/system/time").fetch
-      success: (response) =>
-        offset = moment().diff(response.get('time'))
-        @set('offsetStartAtMoment', moment(@get 'start_at').add(offset))
-        @set('offsetEndAtMoment', moment(@get 'end_at').add(offset))
-        @updateState()
-        options.success() if options?.success?
-      error: options?.error
+    new Backbone.Model().
+      fetch
+        url: "#{sd.ARTSY_URL}/api/v1/system/time"
+        success: (model) =>
+          offset = moment().diff(model.get('time'))
+          @set('offsetStartAtMoment', moment(@get 'start_at').add(offset))
+          @set('offsetEndAtMoment', moment(@get 'end_at').add(offset))
+          @updateState()
+          options.success() if options?.success?
+        error: options?.error
 
   updateState: ->
     @set('auctionState', (
