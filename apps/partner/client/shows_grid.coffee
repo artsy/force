@@ -98,5 +98,6 @@ module.exports = class PartnerShowsGridView extends Backbone.View
         @renderShowPosterImage(show, url)
 
   renderShowPosterImage: (show, imageUrl) ->
-    @$(".partner-show[data-show-id='#{show.get('id')}'] .partner-show-cover-image").css
-      "background-image": "url(#{imageUrl})"
+    $coverImage = @$(".partner-show[data-show-id='#{show.get('id')}'] .partner-show-cover-image")
+    $coverImage.css "background-image": "url(#{imageUrl})"
+    $coverImage.find("> img").attr src: imageUrl
