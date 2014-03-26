@@ -3,6 +3,8 @@ accounting      = require 'accounting'
 sd              = require('sharify').data
 Backbone        = require 'backbone'
 { Markdown }    = require 'artsy-backbone-mixins'
+Artwork         = require './artwork.coffee'
+Sale            = require './sale.coffee'
 
 _.mixin(require 'underscore.string')
 
@@ -19,6 +21,15 @@ module.exports = class SaleArtwork extends Backbone.Model
     no_reserve: undefined
     reserve_met: 'Reserve met'
     reserve_not_met: 'Reserve not met'
+
+  artwork: -> new Artwork(@get('artwork'))
+  sale: -> new Sale(@get('sale'))
+
+  formatBid: (bid) ->
+    if bid
+      accounting.formatMoney(bid / 100)
+    else
+      @minBid()
 
   currentBid: ->
     accounting.formatMoney(

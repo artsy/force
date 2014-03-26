@@ -10,4 +10,4 @@ app.set 'views', __dirname
 app.set 'view engine', 'jade'
 
 app.get '/auction-registration/:id', routes.auctionRegistration
-# app.get '/feature/:id/bid/:artwork', routes.bid
+app.get '/feature/:id/bid/:artwork', routes.bid

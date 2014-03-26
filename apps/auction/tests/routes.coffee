@@ -72,3 +72,63 @@ describe '#auctionRegistration', ->
 
       @res.status.args[0][0].should.equal 404
       @next.args[0][0].message.should.equal 'Not Found'
+
+describe '#bid', ->
+
+  beforeEach ->
+    sinon.stub Backbone, 'sync'
+    @req = { params: { id: 'awesome-sale', artwork: 'artwork-id' } }
+    @res =
+      status  : sinon.stub()
+      render  : sinon.stub()
+      redirect: sinon.stub()
+      locals  :
+        sd:
+          ASSET_PATH: "http://localhost:5000"
+          ARTSY_URL : 'http://localhost:5000'
+    @next = sinon.stub()
+
+  afterEach ->
+    Backbone.sync.restore()
+
+  it 'redirects to login without user', ->
+    routes.bid @req, @res
+    @res.redirect.args[0][0].should.equal "/log_in?redirect_uri=/feature/awesome-sale/bid/artwork-id"
+
+  describe 'with current user', ->
+
+    beforeEach ->
+      @req.user = new CurrentUser()
+
+    it 'renders with isRegistered: true if is registered', ->
+      routes.bid @req, @res, @next
+      Backbone.sync.args[0][2].success fabricate 'sale', name: 'Awesome Sale', is_auction: true, auction_state: 'open'
+      Backbone.sync.args[1][2].success fabricate 'sale_artwork'
+      Backbone.sync.args[2][2].success [{foo: 'bar'}]
+
+      @res.render.args[0][0].should.equal 'templates/bid-form'
+      @res.render.args[0][1].isRegistered.should.be.ok
+
+
+    it 'renders with isRegistered: true if is not registered', ->
+      routes.bid @req, @res, @next
+      Backbone.sync.args[0][2].success fabricate 'sale', name: 'Awesome Sale', is_auction: true, auction_state: 'open'
+      Backbone.sync.args[1][2].success fabricate 'sale_artwork'
+      Backbone.sync.args[2][2].success []
+
+      @res.render.args[0][0].should.equal 'templates/bid-form'
+      @res.render.args[0][1].isRegistered.should.not.be.ok
+
+    it '404 if sale is not auction', ->
+      routes.bid @req, @res, @next
+      Backbone.sync.args[0][2].success fabricate 'sale', name: 'Awesome Sale', is_auction: false
+
+      @res.status.args[0][0].should.equal 404
+      @next.args[0][0].message.should.equal 'Not Found'
+
+    it '404 if sale not active', ->
+      routes.bid @req, @res, @next
+      Backbone.sync.args[0][2].success fabricate 'sale', name: 'Awesome Sale', is_auction: true, auction_state: 'closed'
+
+      @res.status.args[0][0].should.equal 404
+      @next.args[0][0].message.should.equal 'Not Found'

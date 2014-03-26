@@ -51,3 +51,6 @@ module.exports = class Sale extends Backbone.Model
 
   isAuction: ->
     @get('is_auction')
+
+  isBidable: ->
+    @isAuction() && _.include(['open'], @get('auction_state'))
