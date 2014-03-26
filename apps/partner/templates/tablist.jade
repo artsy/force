@@ -10,7 +10,7 @@ nav.partner-tabs.garamond-tablist
     each section, index in sections
       if index > 0
         span.garamond-tab-separator
-      a.garamond-tab(
+      a.garamond-tab.partner-route-link(
         href="/#{id}/#{section}",
         class=(section == currentSection ? 'is-active' : 'is-inactive'),
         data-section=section
