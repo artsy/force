@@ -28,7 +28,7 @@ block body
               .avant-garde-header-center About #{artist.get('name')}
               .blurb
                 != artist.mdToHtml('blurb')
-            .related-genes
+          .related-genes
           if artist.get('auction_lots_count') > 0
             a.avant-garde-jump-link( href="/artist/#{artist.id}/auction-results" )
               | Auction results
