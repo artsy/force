@@ -6,16 +6,16 @@ Post              = require './post.coffee'
 Genes             = require '../collections/genes.coffee'
 Artists           = require '../collections/artists.coffee'
 Artworks          = require '../collections/artworks.coffee'
-{ ARTSY_URL, CURRENT_USER, SESSION_ID } = require('sharify').data
-Order = require './order.coffee'
-Genes = require '../collections/genes.coffee'
-{ readCookie } = require '../components/util/cookie.coffee'
-Following = require '../components/follow_button/collection.coffee'
-geoLocate = require '../components/util/geolocate.coffee'
+sd                = require('sharify').data
+Order             = require './order.coffee'
+Genes             = require '../collections/genes.coffee'
+{ readCookie }    = require '../components/util/cookie.coffee'
+Following         = require '../components/follow_button/collection.coffee'
+geoLocate         = require '../components/util/geolocate.coffee'
 
 module.exports = class CurrentUser extends Backbone.Model
 
-  url: -> "#{ARTSY_URL}/api/v1/me"
+  url: -> "#{sd.ARTSY_URL}/api/v1/me"
 
   defaults:
     followArtists       : null
@@ -55,16 +55,19 @@ module.exports = class CurrentUser extends Backbone.Model
     @defaultArtworkCollection().unsaveArtwork(artworkId, options)
 
   addToPendingOrder: (options) =>
-    model = new Backbone.Model
+    data =
       edition_set_id : options.editionSetId
       artwork_id     : options.artworkId
       replace_order  : true
       quantity       : options.quantity
+    unless @get('accessToken')
+      data.session_id = sd.SESSION_ID
 
+    model = new Backbone.Model data
     model.save null,
+      url    : "#{@url()}/order/pending/items"
       success: options.success
       error  : options.error
-      url    : "#{@url()}/order/pending/items"
 
   isAdmin: ->
     (@get('type') is 'Admin') and ! @get('is_slumming')
@@ -96,7 +99,7 @@ module.exports = class CurrentUser extends Backbone.Model
     else
       posts = new Backbone.Collection
       posts.fetch
-        url: "#{ARTSY_URL}/api/v1/profile/#{@get('default_profile_id')}/posts/unpublished"
+        url: "#{sd.ARTSY_URL}/api/v1/profile/#{@get('default_profile_id')}/posts/unpublished"
         success: (response) ->
           post = response.models?[0]?.get('results')?[0]
           if post
@@ -107,7 +110,7 @@ module.exports = class CurrentUser extends Backbone.Model
 
   fetchSuggestedHomepageArtworks: (options = {}) ->
     new Artworks().fetch _.extend options,
-      url: "#{ARTSY_URL}/api/v1/me/suggested/artworks/homepage"
+      url: "#{sd.ARTSY_URL}/api/v1/me/suggested/artworks/homepage"
 
   followArtist: (id, options) ->
     new Following(null, kind: 'artist').follow id, _.extend options,
@@ -116,7 +119,7 @@ module.exports = class CurrentUser extends Backbone.Model
   # Convenience for getting the bootstrapped user or returning null.
   # This should only be used on the client.
   @orNull: ->
-    if CURRENT_USER then new @(CURRENT_USER) else null
+    if sd.CURRENT_USER then new @(sd.CURRENT_USER) else null
 
   location: ->
     new Location @get 'location' if @get 'location'
@@ -130,7 +133,7 @@ module.exports = class CurrentUser extends Backbone.Model
 
   checkRegisteredForAuction: (options) ->
     new Backbone.Collection().fetch
-      url: "#{ARTSY_URL}/api/v1/me/bidders"
+      url: "#{sd.ARTSY_URL}/api/v1/me/bidders"
       data:
         access_token: @get('accessToken')
         sale_id: options.saleId
@@ -142,7 +145,7 @@ module.exports = class CurrentUser extends Backbone.Model
     # For posts and puts, add access_token to model attributes, for gets it goes in the data
     model = new Backbone.Model(sale_id: options.saleId, access_token: @get('accessToken'))
     model.save null,
-      url: "#{ARTSY_URL}/api/v1/bidder"
+      url: "#{sd.ARTSY_URL}/api/v1/bidder"
       success: options?.success
       error: options?.error
 
