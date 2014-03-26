@@ -10,19 +10,59 @@ describe '/user', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
     @req = { }
-    @res = { render: sinon.stub(), redirect: sinon.stub(), locals: { sd: { ARTSY_URL: 'http://localhost:5000'} } }
+    @res =
+      json    : sinon.stub()
+      render  : sinon.stub()
+      redirect: sinon.stub()
+      locals  : { sd: { ARTSY_URL: 'http://localhost:5000'} }
 
   afterEach ->
     Backbone.sync.restore()
 
-  xdescribe '#edit', ->
+  describe '#refresh', ->
 
     it 'redirects to the home page without a current user', ->
-      routes.edit @req, @res
+      routes.refresh @req, @res
       @res.redirect.args[0][0].should.equal '/'
 
-    xit "fetches the current user and the user's profile", ->
+    describe 'with a logged in user', ->
 
-    xit 'determines which model to edit first (profile or user)', ->
+      beforeEach ->
+        @req =
+          user : new CurrentUser fabricate 'user'
+          login: sinon.stub()
+        routes.refresh @req, @res
+        Backbone.sync.args[0][2].success @req.user
+
+      it 'calls req.login to refresh the session', ->
+        @req.login.calledOnce.should.be.true
+
+      it 'returns the current user as JSON', ->
+        @res.json.calledOnce.should.be.true
+        @res.json.args[0][0].attributes.should.equal @req.user.attributes
+
+  describe '#settings', ->
+
+    it 'redirects to the home page without a current user', ->
+      routes.settings @req, @res
+      @res.redirect.args[0][0].should.equal '/'
+
+    describe 'with a logged in user', ->
+
+      beforeEach ->
+        @req = { user : new CurrentUser fabricate 'user' }
+        routes.settings @req, @res
+
+      it "fetches the current user and the user's profile", ->
+        Backbone.sync.args[0][2].success @req.user
+        Backbone.sync.args[2][1].attributes.id.should.equal @req.user.get 'default_profile_id'
+        _.keys(Backbone.sync.args[2][2].data)[0].should.equal 'access_token'
+
+      it "fetches the current user's authentications", ->
+        Backbone.sync.args[0][2].success @req.user
+        _.keys(Backbone.sync.args[1][2].data)[0].should.equal 'access_token'
+        Backbone.sync.args[1][2].url.should.include 'me/authentications'
+
+      xit 'determines which model to edit first (profile or user)', ->
 
   xdescribe '#delete', ->
