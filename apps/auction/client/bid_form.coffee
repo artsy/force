@@ -21,10 +21,14 @@ module.exports = class BidForm extends ErrorHandlingForm
     if options.submitImmediately
       @placeBid()
 
-  getBid: =>
+  getBidAmount: =>
     val = @$('input.max-bid').val()
     if val
-      val.split('.')[0].replace(',','') + "_00"
+      # Format the input amount
+      # - '.' is for removing cents
+      # - '_' is also for removing cents
+      # - adding _00 on the end adds cents
+      val.split('.')[0].split('_')[0].replace(',','') + "_00"
 
   placeBid: =>
     @timesPolledForBidPlacement = 0
@@ -32,7 +36,7 @@ module.exports = class BidForm extends ErrorHandlingForm
     bidderPosition = new BidderPosition
       sale_id              : @model.get('id')
       artwork_id           : @saleArtwork.get('artwork').id
-      max_bid_amount_cents : @getBid()
+      max_bid_amount_cents : @getBidAmount()
     bidderPosition.save null,
       success   : =>
         @pollForBidPlacement(@model.get('minimum_next_bid_cents'))
