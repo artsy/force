@@ -4,13 +4,12 @@ block head
   include meta
 
 append locals
-  - assetPackage = 'home'
-  - bodyClass = bodyClass + ' body-no-margins body-header-fixed body-transparent-header'
+  - assetPackage = 'search'
 
 block body
-  #home-layout-container
-    .main-layout-container
-      #home-unsubscribe
+  #main-layout-container
+    #error-handler
+      h1
         = name + ' has been unsubscribed from '
         if type
           = type
