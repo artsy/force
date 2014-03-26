@@ -70,9 +70,12 @@
       href="/artwork/#{artwork.id}/contact-gallery", data-client, rel='nofollow'
     )!= artwork.contactLabel()
 
-  //- Auction # todo
+  //- Auction
+  #artwork-auction-clock
+    //- Rendered client-side
+    include ../../../components/auction_clock/template
 
-  //- Buy # todo
+  //- Buy
   if artwork.get('acquireable')
     a.avant-garde-button-black.artwork-buy-button
       | Buy
