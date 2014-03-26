@@ -14,7 +14,8 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
   events:
     'click .registration-form-content .avant-garde-button' : 'onSubmit'
 
-  initialize: ->
+  initialize: (options) ->
+    @success = options.success
     @currentUser = CurrentUser.orNull()
     @$submit = @$('.registration-form-content .avant-garde-button')
     @setUpFields()
@@ -37,7 +38,7 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
         @currentUser.createBidder
           saleId: @model.get('id')
           success: =>
-            window.location = @model.registrationSuccessUrl()
+            @success()
             analytics.track.funnel 'Registration submitted'
           error: (xhr) => @showError xhr, "Registration submission error"
 

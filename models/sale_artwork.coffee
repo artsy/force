@@ -25,12 +25,6 @@ module.exports = class SaleArtwork extends Backbone.Model
   artwork: -> new Artwork(@get('artwork'))
   sale: -> new Sale(@get('sale'))
 
-  formatBid: (bid) ->
-    if bid
-      accounting.formatMoney(bid / 100)
-    else
-      @minBid()
-
   currentBid: ->
     accounting.formatMoney(
       (@get('highest_bid_amount_cents') or @get('opening_bid_cents')) / 100, '$', 0
