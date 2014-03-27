@@ -44,7 +44,7 @@ module.exports = class ContactPartnerView extends ContactView
       label: analytics.modelNameAndIdToLabel('artwork', @artwork.get('id'))
     @model.set
       artwork: @artwork.id
-      contact_gallery: false
+      contact_gallery: true
       session_id: SESSION_ID
     super
 

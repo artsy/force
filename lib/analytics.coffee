@@ -102,20 +102,20 @@ module.exports.multi = (description, modelName, ids) ->
       , (500 * index) + 1)
     )(@encodeMulti(chunk))
 
-module.exports.getProperty = (property) ->
-  mixpanel?.get_property property
+module.exports.getProperty = (property) =>
+  mixpanel.get_property property
 
-module.exports.setProperty = (hash) ->
+module.exports.setProperty = (hash) =>
   mixpanel.register_once hash
 
-module.exports.abTest = (key) ->
+module.exports.abTest = (key, percentToNew = 0.5) ->
   property = module.exports.getProperty key
   if property is 'enabled'
     true
   else if property is 'disabled'
     false
   else
-    enabledDisabled = if Math.floor(2 * Math.random()) > 0 then 'enabled' else 'disabled'
+    enabledDisabled = if Math.random() < percentToNew then 'enabled' else 'disabled'
     hash = {}
     hash[key] = enabledDisabled
     module.exports.setProperty hash

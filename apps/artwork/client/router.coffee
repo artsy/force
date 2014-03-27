@@ -5,13 +5,6 @@ ViewInRoomView  = require './view-in-room.coffee'
 analytics       = require '../../../lib/analytics.coffee'
 mediator        = require '../../../lib/mediator.coffee'
 
-if false
-  ContactPartnerView = require "../../../components/contact/contact_partner.coffee"
-  InquiryView = require "../../../components/contact/inquiry.coffee"
-else
-  ContactPartnerView = require "../../../components/contact2/contact_partner.coffee"
-  InquiryView = require "../../../components/contact2/inquiry.coffee"
-
 ConfirmBidModal          = require '../../../components/credit_card/client/confirm_bid.coffee'
 ConfirmRegistrationModal = require '../../../components/credit_card/client/confirm_registration.coffee'
 
@@ -32,6 +25,13 @@ module.exports = class ArtworkRouter extends Backbone.Router
   initialize: (options) ->
     { @artwork, @artist } = options
     @baseView = new ArtworkView el: $('#artwork-page'), artwork: @artwork, artist: @artist
+
+    if analytics.abTest 'ab:inquiry', 0.8
+      @ContactPartnerView = require "../../../components/contact/contact_partner.coffee"
+      @InquiryView = require "../../../components/contact/inquiry.coffee"
+    else
+      @ContactPartnerView = require "../../../components/contact2/contact_partner.coffee"
+      @InquiryView = require "../../../components/contact2/inquiry.coffee"
 
   # Called prior to any of the routing callbacks
   execute: ->
@@ -67,12 +67,12 @@ module.exports = class ArtworkRouter extends Backbone.Router
 
   contactPartner: ->
     analytics.track.click "Clicked 'Contact Gallery'"
-    new ContactPartnerView artwork: @artwork, partner: @artwork.get('partner')
+    new @ContactPartnerView artwork: @artwork, partner: @artwork.get('partner')
     mediator.on 'modal:closed', => Backbone.history.navigate(@artwork.href(), trigger: true, replace: true)
 
   inquire: ->
     analytics.track.click "Clicked 'Contact Artsy Specialist'"
-    new InquiryView artwork: @artwork
+    new @InquiryView artwork: @artwork
     mediator.on 'modal:closed', => Backbone.history.navigate(@artwork.href(), trigger: true, replace: true)
 
   confirmBid: ->
