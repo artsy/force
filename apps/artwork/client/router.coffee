@@ -27,11 +27,11 @@ module.exports = class ArtworkRouter extends Backbone.Router
     @baseView = new ArtworkView el: $('#artwork-page'), artwork: @artwork, artist: @artist
 
     if analytics.abTest 'ab:inquiry', 0.8
-      @ContactPartnerView = require "../../../components/contact/contact_partner.coffee"
-      @InquiryView = require "../../../components/contact/inquiry.coffee"
-    else
       @ContactPartnerView = require "../../../components/contact2/contact_partner.coffee"
       @InquiryView = require "../../../components/contact2/inquiry.coffee"
+    else
+      @ContactPartnerView = require "../../../components/contact/contact_partner.coffee"
+      @InquiryView = require "../../../components/contact/inquiry.coffee"
 
   # Called prior to any of the routing callbacks
   execute: ->

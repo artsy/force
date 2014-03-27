@@ -108,6 +108,13 @@ module.exports.getProperty = (property) =>
 module.exports.setProperty = (hash) =>
   mixpanel.register_once hash
 
+# Conduct an A/B test by using this helper to determine what path to take.
+# Returns true if the user is in the new feature, returns false if the user
+# is testing the old feature.
+#
+# @param {String} key Mixpanel key
+# @param {Number} percentToNew How many users do you want to direct to the new feature?
+
 module.exports.abTest = (key, percentToNew = 0.5) ->
   property = module.exports.getProperty key
   if property is 'enabled'
@@ -115,7 +122,7 @@ module.exports.abTest = (key, percentToNew = 0.5) ->
   else if property is 'disabled'
     false
   else
-    enabledDisabled = if Math.random() < percentToNew then 'enabled' else 'disabled'
+    enabledDisabled = if rand < percentToNew then 'enabled' else 'disabled'
     hash = {}
     hash[key] = enabledDisabled
     module.exports.setProperty hash
