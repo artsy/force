@@ -2,7 +2,7 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 Profile = require '../../models/profile.coffee'
 FollowProfileButton = require './follow_profile.coffee'
-ShowInquiryModal = require './show_inquiry_modal.coffee'
+ShowInquiryModal = require '../contact/show_inquiry_modal.coffee'
 CurrentUser = require '../../models/current_user.coffee'
 FollowProfiles = require '../../collections/follow_profiles.coffee'
 
