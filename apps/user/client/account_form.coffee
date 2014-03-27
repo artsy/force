@@ -2,14 +2,16 @@ _                   = require 'underscore'
 _.str               = require 'underscore.string'
 sd                  = require('sharify').data
 Backbone            = require 'backbone'
-GeoFormatter        = require 'geoformatter'
-LocationSearchView  = require '../../../components/location_search/index.coffee'
 PasswordEdit        = require '../../../models/password_edit.coffee'
+ErrorHelpers        = require './error_handling.coffee'
 
 module.exports = class AccountForm extends Backbone.View
 
+  _.extend @prototype, ErrorHelpers
+
   initialize: (options) ->
     throw 'This view requires a UserEdit model' unless @model and @model.errorMessages
+    { @profileEdit } = options
 
     # Reference to frequently accessed DOM elements
     @$name = @$ '#user-name'
@@ -22,21 +24,17 @@ module.exports = class AccountForm extends Backbone.View
     @$passwordConfirmation = @$ '#user-password-confirmation'
     @$newPasswordMessage = @$ ".settings-form-error[data-attr='new_password']"
     @$phone = @$ '#user-phone'
-    @$submitButton = @$ '#user-phone'
+    @$submitButton = @$ '#user-edit-submit'
 
     # Password Edit model
     @passwordEdit = new PasswordEdit()
 
-    # Location Search
-    @locationSearchView = new LocationSearchView el: @$('#user-location')
-    @locationSearchView.postRender()
-    @listenTo @locationSearchView, 'location:update', @onLocationUpdate
-
     # Model events
     @listenTo @model, 'invalid', @renderErrors
     @listenTo @model, 'request', @renderPending
-    @listenTo @model, 'sync', @renderSuccess
+    @listenTo @model, 'sync', @onSyncSuccess
     @listenTo @model, 'error', @parseErrors
+    @listenTo @profileEdit, 'change:id', @updateDefaultProfileId
     @listenTo @passwordEdit, 'error', @parseErrors
     @listenTo @passwordEdit, 'invalid', @renderErrors
     @
@@ -56,8 +54,14 @@ module.exports = class AccountForm extends Backbone.View
   renderPending: (model, xhr, options) ->
     @$submitButton.addClass 'is-loading'
 
-  renderSuccess: (model, resp, options) ->
+  onSyncSuccess: (model, resp, options) ->
     @$submitButton.removeClass 'is-loading'
+    @model.refresh()
+
+  updateDefaultProfileId: (model, resp, options) ->
+    @model.set
+      default_profile_id: model.get '_id'
+    @onSyncSuccess()
 
   events:
     'blur #user-name'                 : 'onNameBlur'
@@ -150,20 +154,6 @@ module.exports = class AccountForm extends Backbone.View
       values.current_password = @$currentPassword.val()
       @passwordEdit.save values, trigger: true
 
-  #
-  # Location
-  #
-  onLocationUpdate: (location) ->
-    geo = new GeoFormatter location
-    @model.set
-      location:
-        city:        geo.getCity()
-        state:       geo.getState()
-        state_code:  geo.getStateCode()
-        postal_code: geo.getPostalCode()
-        country:     geo.getCountry()
-        coordinates: geo.getCoordinates()
-
   onSubmit: ->
     @clearErrors()
     values = {}
@@ -174,7 +164,6 @@ module.exports = class AccountForm extends Backbone.View
     values.receive_weekly_email       = @$('#user-weekly-email').is "[data-state='on']"
     values.receive_personalized_email = @$('#user-personalized-email').is "[data-state='on']"
     values.receive_follow_users_email = @$('#user-follows-email').is "[data-state='on']"
-    values.location = @model.get 'location'
     @submitPassword()
     @model.save values, trigger: true
     false

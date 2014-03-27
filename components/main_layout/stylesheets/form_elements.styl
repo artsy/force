@@ -82,6 +82,9 @@ textarea.bordered-input
   text-decoration none
   transition 'color, border-color' 0.2s
   width 56px
+  &:focus, &:hover
+    & + .artsy-toggle-label
+      color highlight-color
 
   &::after
     content attr(data-state)
@@ -106,9 +109,6 @@ textarea.bordered-input
     vertical-align middle
     &::after
       content "\25CF"
-    &:focus, &:hover
-      & + .artsy-toggle-label
-        color highlight-color
 
   &[data-state='on']
     background-color highlight-color
@@ -129,6 +129,10 @@ textarea.bordered-input
 .artsy-toggle-separator
   &::after
     content '\2026'
+
+.artsy-toggle-label:hover
+  color highlight-color
+  cursor pointer
 
 
 // Help Tooltips

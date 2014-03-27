@@ -1,6 +1,3 @@
-mixin locationSearch(value)
-  include ../../../components/location_search/template
-
 form.settings-form.settings-account-form( class=editAccountIsActive, method="post", action="#{sd.ARTSY_URL}/users/edit", accept-charset="UTF-8" )
   label.avant-garde-form-label( for: "user-name" ) Full Name
   input#user-name.bordered-input( type="text", value=user.get('name') || "", name="name" )
@@ -14,17 +11,6 @@ form.settings-form.settings-account-form( class=editAccountIsActive, method="pos
     label.avant-garde-form-label( for="user-email-confirmation" ) Repeat New Email
     input#user-email-confirmation.bordered-input( type="email", value='', name="email_confirmation" )
     .settings-form-error( data-attr='email_confirmation' )
-
-  // TODO: wire up changed email confirmation
-    if !user.get('is_confirmed')
-      .settings-confirm-email
-        | Please verify your email.&nbsp;
-        if !user.get('confirmation_instructions_sent')
-          | <a class="settings-confirm-email-link" href="#">Click here</a>
-          | to receive a confirmation.
-        if user.get('confirmation_instructions_sent')
-          | (Contact <a href="mailto:support@artsy.net">support@artsy.net</a> 
-          | if you haven't received a confirmation email.)
 
   label.avant-garde-form-label( for="user-new-password" ) New Password
   input#user-new-password.bordered-input( type="password", name="new_password", placeholder="(Leave blank to keep password unchanged)" )
@@ -42,10 +28,6 @@ form.settings-form.settings-account-form( class=editAccountIsActive, method="pos
   label.avant-garde-form-label( for="user-phone" ) Phone Number
   input#user-phone.bordered-input( type="tel", value=user.get('phone') || '', name="phone" )
   .settings-form-error( data-attr='phone' )
-
-  label.avant-garde-form-label( for="user-location" ) Location
-  #user-location
-    +locationSearch(user.location().cityStateCountry())
 
   // TODO: Need to wire these up
     label.settings-group-label.avant-garde-form-label Sharing

@@ -64,14 +64,3 @@ module.exports = class Location extends Backbone.Model
       "#{@get('coordinates').lat},#{@get('coordinates').lng}"
     else
       @displayAddress()
-
-  setFromGoogleResult: (result) ->
-    loc = new GeoFormatter(result)
-    @reset(
-      city: loc.getCity() || ''
-      state: loc.getState() || ''
-      state_code: loc.getStateCode() || ''
-      postal_code: loc.getPostalCode() || ''
-      country: loc.getCountry() || ''
-      coordinates: loc.getCoordinates() || null
-    )
