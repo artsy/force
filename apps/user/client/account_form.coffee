@@ -2,7 +2,7 @@ _                   = require 'underscore'
 _.str               = require 'underscore.string'
 sd                  = require('sharify').data
 Backbone            = require 'backbone'
-PasswordEdit        = require '../../../models/password_edit.coffee'
+PasswordEdit        = require '../models/password_edit.coffee'
 ErrorHelpers        = require './error_handling.coffee'
 
 module.exports = class AccountForm extends Backbone.View
@@ -34,7 +34,6 @@ module.exports = class AccountForm extends Backbone.View
     @listenTo @model, 'request', @renderPending
     @listenTo @model, 'sync', @onSyncSuccess
     @listenTo @model, 'error', @parseErrors
-    @listenTo @profileEdit, 'change:id', @updateDefaultProfileId
     @listenTo @passwordEdit, 'error', @parseErrors
     @listenTo @passwordEdit, 'invalid', @renderErrors
     @
@@ -56,12 +55,6 @@ module.exports = class AccountForm extends Backbone.View
 
   onSyncSuccess: (model, resp, options) ->
     @$submitButton.removeClass 'is-loading'
-    @model.refresh()
-
-  updateDefaultProfileId: (model, resp, options) ->
-    @model.set
-      default_profile_id: model.get '_id'
-    @onSyncSuccess()
 
   events:
     'blur #user-name'                 : 'onNameBlur'

@@ -2,7 +2,6 @@ _            = require 'underscore'
 _.str        = require 'underscore.string'
 sd           = require('sharify').data
 Backbone     = require 'backbone'
-CurrentUser  = require '../../../models/current_user.coffee'
 ErrorHelpers = require './error_handling.coffee'
 
 module.exports = class ProfileForm extends Backbone.View

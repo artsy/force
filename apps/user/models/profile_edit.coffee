@@ -1,12 +1,20 @@
 _           = require 'underscore'
 _.str       = require 'underscore.string'
 Backbone    = require 'backbone'
-CurrentUser = require './current_user.coffee'
+CurrentUser = require '../../../models/current_user.coffee'
 { ARTSY_URL, CURRENT_USER, SESSION_ID } = require('sharify').data
 
+#
+# ProfileEdit
+#
+# Extends CurrentUser to get the automatic sync xapp token insertion.
+# Handles client validation for profile updates and on/off methods for
+# artsy toggle controls.
+#
 module.exports = class ProfileEdit extends CurrentUser
 
-  # Note: the parent url needs to be overridden, defining urlRoot isn't enough
+  # Note: Because of the CurrentUser inheritance, this must be overridden,
+  # setting idAttribute to _id and defining urlRoot won't do the job.
   url: ->
     "#{ARTSY_URL}/api/v1/profile/#{@get('_id')}"
 
