@@ -75,9 +75,9 @@ module.exports = class Sale extends Backbone.Model
   # return {Object}
   bidButtonState: (user) ->
     @__bidButtonState__ ?=
-      if @isPreview() and !user.get('registered_to_bid')
+      if @isPreview() and !user?.get('registered_to_bid')
         ['Register to bid', true]
-      else if @isPreview() and user.get('registered_to_bid')
+      else if @isPreview() and user?.get('registered_to_bid')
         ['Registered to bid', false, 'is-success is-disabled']
       else if @isOpen()
         ['Bid', true]
