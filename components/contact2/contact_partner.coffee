@@ -33,7 +33,7 @@ module.exports = class ContactPartnerView extends ContactView
       @renderLocation()
       @updatePosition()
       @isLoaded()
-      if @user then @focusTextarea() else @$('[name="name"]').focus()
+      if @user then @focusTextareaAfterCopy() else @$('[name="name"]').focus()
     super
 
   renderLocation: =>
@@ -52,3 +52,6 @@ module.exports = class ContactPartnerView extends ContactView
 
   postRender: =>
     @isLoading()
+
+  events: -> _.extend super,
+    'click.handler .modal-backdrop': undefined
