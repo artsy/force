@@ -68,8 +68,9 @@ module.exports.FeatureView = class FeatureView extends Backbone.View
         @initializeAuction @model
 
   initializeAuction: (sale) ->
-    sale = new Sale(id: @model.get('id')).fetch
+    new Sale(id: @model.get('id')).fetch
       success: (sale) =>
+        @sale = sale
         if sale.get('is_auction')
           if @currentUser
             @currentUser.checkRegisteredForAuction
@@ -149,7 +150,7 @@ module.exports.FeatureView = class FeatureView extends Backbone.View
 
   triggerLoginPopup: =>
     unless @currentUser
-      mediator.trigger 'open:auth', { mode: 'register', copy: 'Sign up to bid on artworks' }
+      mediator.trigger 'open:auth', { mode: 'register', copy: 'Sign up to bid on artworks', redirectTo: @sale.registerUrl() }
       false
 
 module.exports.init = ->
