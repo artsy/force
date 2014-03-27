@@ -50,6 +50,10 @@
     outline none
     background-color light-gray-background-hover-color
 
+  &[data-state='success'], &.is-success
+    background-color green-background-color
+    color #fff
+
   &[data-state='error'], &.is-error
     &, &:focus
       background-color bad-red-color
@@ -78,6 +82,13 @@
   &.is-tiny
     font-size 11px
     padding 6px 12px 5px
+
+  // Not completely fleshed out
+  &.is-disabled, &.is-disabled:hover
+    cursor default
+    &[data-state='success'], &.is-success
+      background-color green-background-color
+      color light-green-text-color
 
 // Variants
 .avant-garde-button-black
