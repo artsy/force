@@ -7,9 +7,16 @@ SaleArtworkView = require '../../../components/artwork_item/views/sale_artwork.c
 artworkColumns  = -> require('../../../components/artwork_columns/template.jade') arguments...
 setsTemplate    = -> require('../templates/sets.jade') arguments...
 artistsTemplate = -> require('../templates/artists.jade') arguments...
+auctionInfoTemplate = -> require('../templates/auction_info.jade') arguments...
 analytics       = require("../../../lib/analytics.coffee")
 mediator        = require '../../../lib/mediator.coffee'
 trackArtworkImpressions = require("../../../components/analytics/impression_tracking.coffee").trackArtworkImpressions
+
+mediator          = require '../../../lib/mediator.coffee'
+
+AuctionClockView  = require '../../../components/auction_clock/view.coffee'
+Sale              = require '../../../models/sale.coffee'
+CurrentUser       = require '../../../models/current_user.coffee'
 
 ConfirmBidModal          = require '../../../components/credit_card/client/confirm_bid.coffee'
 ConfirmRegistrationModal = require '../../../components/credit_card/client/confirm_registration.coffee'
@@ -22,6 +29,7 @@ module.exports = class FeatureRouter extends Backbone.Router
 
   initialize: (options) ->
     @feature = options.feature
+    @currentUser = CurrentUser.orNull()
 
   confirmBid: ->
     new ConfirmBidModal feature: @feature
@@ -44,9 +52,9 @@ module.exports.FeatureView = class FeatureView extends Backbone.View
         @$('#feature-sets-container').html setsTemplate(sets: sets)
         # If we have artworks, we have a sale or auction.
         if @$('.artwork-column').length > 0
-          @initializeSaleArtworks sets
+          @initializeSale sets
 
-  initializeSaleArtworks: (sets) ->
+  initializeSale: (sets) ->
     for set in sets
       if set.get('type') in ['sale artworks', 'sale auction', 'auction artworks']
         artworks = set.get 'data'
@@ -55,6 +63,34 @@ module.exports.FeatureView = class FeatureView extends Backbone.View
           @renderArtistList artworks
 
         @setupArtworkImpressionTracking artworks.models
+
+      if set.get('type') is 'auction artworks'
+        @initializeAuction @model
+
+  initializeAuction: (sale) ->
+    sale = new Sale(id: @model.get('id')).fetch
+      success: (sale) =>
+        if sale.get('is_auction')
+          if @currentUser
+            @currentUser.checkRegisteredForAuction
+              success: (isRegistered) =>
+                @renderAuctionInfo sale, isRegistered
+          else
+            @renderAuctionInfo sale, false
+
+  renderAuctionInfo: (sale, registered) ->
+    @$('.feature-auction-info').show().html auctionInfoTemplate(
+      sale: sale
+      registered: registered
+    )
+    @setupAuctionClock sale
+
+  setupAuctionClock: (sale) ->
+    @clock = new AuctionClockView
+      modelName : 'Auction'
+      model     : sale
+      el        : @$('.auction-info-countdown')
+    @clock.start()
 
   setupArtworkImpressionTracking: (artworks) ->
     trackArtworkImpressions artworks, @$el
@@ -107,6 +143,14 @@ module.exports.FeatureView = class FeatureView extends Backbone.View
   handleTab: (tab) ->
     new FeatureRouter feature: @model
     Backbone.history.start pushState: true
+
+  events:
+    "click .auction-info-register-button .avant-garde-button" : 'triggerLoginPopup'
+
+  triggerLoginPopup: =>
+    unless @currentUser
+      mediator.trigger 'open:auth', { mode: 'register', copy: 'Sign up to bid on artworks' }
+      false
 
 module.exports.init = ->
   new FeatureView
