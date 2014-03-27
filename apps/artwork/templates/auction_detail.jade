@@ -26,8 +26,9 @@ form.artwork-bid-form( action="/feature/#{auction.id}/bid/#{saleArtwork.id}" )
       | Enter #{saleArtwork.minBid()} or higher
 
   button.avant-garde-button-black.abf-button(
-    type    = 'submit'
-    class   = auction.bidButtonState(user).classes
+    type      = 'submit'
+    class     = auction.bidButtonState(user).classes
+    disabled  = !auction.bidButtonState(user).enabled
   )
     = auction.bidButtonState(user).label
 
