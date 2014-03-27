@@ -63,7 +63,6 @@ registerOrRender = (sale, req, res, next) ->
   new Sale(id: req.params.id).fetch
     error  : res.backboneError
     success: (sale) ->
-      res.locals.sd.SALE = sale
       unless sale.isBidable()
         res.status 404
         next new Error('Not Found')
@@ -75,17 +74,19 @@ registerOrRender = (sale, req, res, next) ->
         saleArtwork.fetch
           error  : res.backboneError
           success: (saleArtwork) ->
-            res.locals.sd.SALE_ARTWORK = saleArtwork
             order = new Order()
             req.user.checkRegisteredForAuction
               saleId : sale.get('id')
               error  : res.backboneError
               success: (isRegistered) ->
+                res.locals.sd.SALE = sale
+                res.locals.sd.SALE_ARTWORK = saleArtwork
+                res.locals.sd.REGISTERED = isRegistered
                 res.render 'templates/bid-form',
                   sale: sale
                   artwork: saleArtwork.artwork()
                   saleArtwork: saleArtwork
                   isRegistered: isRegistered
-                  maxBid: saleArtwork.formatBid(req.params.bid)
+                  maxBid: req.params.bid || ""
                   monthRange: order.getMonthRange()
                   yearRange: order.getYearRange()

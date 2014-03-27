@@ -19,10 +19,9 @@ block body
             .bid-input-help-text!= "Enter " + saleArtwork.minBid() + " or higher"
             a.bidding-question How does bidding work?
           .auction-bid-errors
-        if registered
-          .form-bottom
-            .auction-registered-container
-              button.avant-garde-button.is-block Confirm Bid
+        if isRegistered
+          .registration-form-content
+            .avant-garde-button.is-block Confirm Bid
         else
           p NOTE: Your credit card information may be used to verify your identity. Your card will not be charged unless you are the winning bidder and you choose to pay by credit card.
           .form-bottom
