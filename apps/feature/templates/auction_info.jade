@@ -1,0 +1,9 @@
+.auction-info-header.avant-garde-header Exclusively on Artsy
+.auction-info-countdown
+  include ../../../components/auction_clock/template
+.auction-info-register-button
+  if sale.isPreviewState()
+    if registered
+      .avant-garde-button You're Registered to Bid
+    else
+      a.avant-garde-button( href=sale.registerUrl() ) Register to bid

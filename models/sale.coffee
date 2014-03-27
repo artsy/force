@@ -43,8 +43,14 @@ module.exports = class Sale extends Backbone.Model
     ))
 
   registerUrl: (redirectUrl) ->
-    "/auction-registration/#{@id}?redirect_uri=#{redirectUrl}"
+    url = "/auction-registration/#{@id}"
+    if redirectUrl
+      url += "?redirect_uri=#{redirectUrl}"
+    url
 
+  # auction_state helpers are used serverside of if updateState hasn't been run
+
+  # auctionState used after updateState is run
   isRegisterable: ->
     @isAuction() and _.include(['preview', 'open'], @get('auction_state'))
 
@@ -52,7 +58,10 @@ module.exports = class Sale extends Backbone.Model
     @get('is_auction')
 
   isBidable: ->
-    @isAuction() and _.include(['open'], @get('auction_state'))
+    @isAuction() && _.include(['open'], @get('auction_state'))
+
+  isPreviewState: ->
+    @isAuction() and _.include(['preview'], @get('auction_state'))
 
   isOpen: ->
     @get('auctionState') is 'open'
