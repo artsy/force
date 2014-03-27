@@ -6,7 +6,6 @@ Backbone  = require 'backbone'
 Clock     = require './mixins/clock.coffee'
 
 module.exports = class Sale extends Backbone.Model
-
   _.extend @prototype, Clock
 
   urlRoot: "#{sd.ARTSY_URL}/api/v1/sale"
@@ -44,13 +43,39 @@ module.exports = class Sale extends Backbone.Model
     ))
 
   registerUrl: (redirectUrl) ->
-    "/auction-registration/#{@get 'id'}?redirect_uri=#{redirectUrl}"
+    "/auction-registration/#{@id}?redirect_uri=#{redirectUrl}"
 
   isRegisterable: ->
-    @isAuction() && _.include(['preview','open'], @get('auction_state'))
+    @isAuction() and _.include(['preview', 'open'], @get('auction_state'))
 
   isAuction: ->
     @get('is_auction')
 
   isBidable: ->
-    @isAuction() && _.include(['open'], @get('auction_state'))
+    @isAuction() and _.include(['open'], @get('auction_state'))
+
+  isActive: ->
+    @get('auctionState') is 'open' or
+    @get('auction_state') is 'open'
+
+  isStarted: ->
+    Date.parse(@get 'start_at') < Date.now()
+
+  isEnded: ->
+    Date.parse(@get 'end_at') < Date.now()
+
+  # return {Object}
+  bidButtonState: (user) ->
+    @__bidButtonState__ ?=
+      if !@isStarted() and !@isEnded() and !user.get('registered_to_bid')
+        ['Register to bid', true]
+      else if !@isStarted() and !@isEnded() and user.get('registered_to_bid')
+        ['Registered to bid', false, 'is-success is-disabled']
+      else if @isStarted() and !@isEnded()
+        ['Bid', true]
+      else if @isEnded()
+        ['Bidding closed', false, 'is-disabled']
+
+    label   : @__bidButtonState__[0]
+    enabled : @__bidButtonState__[1]
+    classes : @__bidButtonState__[2]
