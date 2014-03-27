@@ -12,17 +12,17 @@ form.contact2-form
     input( type='hidden', name='name', value=user.get('name') )
     input( type='hidden', name='email', value=user.get('email') )
   else
-    label( name='user_name' ) Your name
-      input.bordered-input.is-block(
-        type='text'
-        name='user_name'
-        autofocus= autofocus
-      )
-    label( name='user_email' ) Your email
-      input.bordered-input.is-block(
-        type='email'
-        name='user_email'
-      )
+    input.bordered-input.is-block(
+      type='text'
+      name='user_name'
+      autofocus= autofocus
+      placeholder= 'Your name'
+    )
+    input.bordered-input.is-block(
+      type='email'
+      name='user_email'
+      placeholder= 'Your email address'
+    )
 
   a#contact2-submit.avant-garde-button-black.is-block(
     href='#'
