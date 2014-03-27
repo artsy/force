@@ -84,7 +84,7 @@
     padding 6px 12px 5px
 
   // Not completely fleshed out
-  &.is-disabled, &.is-disabled:hover
+  &[disabled], &.is-disabled, &.is-disabled:hover
     cursor default
     &[data-state='success'], &.is-success
       background-color green-background-color
@@ -98,6 +98,8 @@
   color #fff
   &:focus, &:hover, &.is-hover
     background-color highlight-color
+  &[disabled], &.is-disabled, &.is-disabled:hover
+    background-color dark-gray-text-color
 
 .avant-garde-button-white
   @extends .avant-garde-button

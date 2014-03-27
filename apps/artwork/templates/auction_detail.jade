@@ -5,9 +5,8 @@ if auction.isOpen()
     )
       if (position = bidderPositions.isHighestBidder())
         | You are currently the highest bidder for this lot with a bid at #{position.currentBid()}
-      if (position = bidderPositions.isOutbid())
+      else if (position = bidderPositions.isOutbid())
         | Your max bid of #{position.maxBid()} has been outbid.
-
 
   .artwork-bid-status
     .abs-label
@@ -27,8 +26,9 @@ form.artwork-bid-form( action="/feature/#{auction.id}/bid/#{saleArtwork.id}" )
       | Enter #{saleArtwork.minBid()} or higher
 
   button.avant-garde-button-black.abf-button(
-    type    = 'submit'
-    class   = auction.bidButtonState(user).classes
+    type      = 'submit'
+    class     = auction.bidButtonState(user).classes
+    disabled  = !auction.bidButtonState(user).enabled
   )
     = auction.bidButtonState(user).label
 

@@ -11,7 +11,6 @@ module.exports =
 
     @$('.artwork-detail').addClass 'is-auction'
 
-    @setupAuctionClock()
     @setupAuctionDetailView()
 
   setupAuctionClock: ->
@@ -19,8 +18,8 @@ module.exports =
       modelName : 'Auction'
       model     : @auction
       el        : @$auctionClock = @$('#artwork-auction-clock')
-    @clock.start()
     @$auctionClock.addClass 'is-fade-in'
+    @clock.start()
 
   setupSaleArtwork: ->
     @saleArtwork = new SaleArtwork
@@ -31,6 +30,7 @@ module.exports =
 
   setupAuctionDetailView: ->
     $.when.apply(null, _.compact([
+      @setupAuctionClock()
       @setupAuctionUser()
       @setupSaleArtwork()
       @setupBidderPositions()

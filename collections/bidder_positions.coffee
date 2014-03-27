@@ -7,24 +7,25 @@ module.exports = class BidderPositions extends Backbone.Collection
   url: ->
     "/api/v1/me/bidder_positions?sale_id=#{@sale.id}&artwork_id=#{@saleArtwork.id}"
 
-  initialize: (models, options) ->
+  initialize: (models, options = {}) ->
     { @saleArtwork, @sale } = options
     super
 
   isHighestBidder: ->
-    highestBidId = @saleArtwork.get('highest_bid')?.id
+    highestBidId = @saleArtwork?.get('highest_bid')?.id
     return unless highestBidId
     @find (bidderPosition) ->
       bidderPosition.get('highest_bid')?.id is highestBidId
 
   isOutbid: ->
-    if @length > 0 and not @isHighestBidder()
-      @mostRecent()
+    @mostRecent() if @length > 0 and not @isHighestBidder()
 
   mostRecent: ->
     @max (bidderPosition) ->
       Date.parse(bidderPosition.get 'created_at')
 
   classes: ->
-    return 'is-highest' if @isHighestBidder()
-    return 'is-outbid'  if @isOutbid()
+    if @isHighestBidder()
+      'is-highest'
+    else if @isOutbid()
+      'is-outbid'
