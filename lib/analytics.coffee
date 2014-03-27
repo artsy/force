@@ -113,7 +113,7 @@ module.exports.setProperty = (hash) =>
 # is testing the old feature.
 #
 # @param {String} key Mixpanel key
-# @param {Number} percentToNew How many users do you want to direct to the new feature?
+# @param {Number} percentToNew What percent of users do you want to direct to the new feature?
 
 module.exports.abTest = (key, percentToNew = 0.5) ->
   property = module.exports.getProperty key
