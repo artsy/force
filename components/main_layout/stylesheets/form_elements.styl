@@ -48,6 +48,19 @@ bordered-input-placeholder--autofocus-focus()
     display block
     width 100%
 
+.typed-bordered-input
+  position relative
+  > span
+    position absolute
+    display block
+    top 50%
+    left 15px
+    transform translateY(-50%)
+    color light-gray-text-color
+    pointer-events none
+  > .bordered-input
+    padding-left 30px
+
 .bordered-select
   garamond()
   font-size 16px

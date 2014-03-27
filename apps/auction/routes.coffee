@@ -87,6 +87,6 @@ registerOrRender = (sale, req, res, next) ->
                   artwork: saleArtwork.artwork()
                   saleArtwork: saleArtwork
                   isRegistered: isRegistered
-                  maxBid: req.params.bid || ""
+                  maxBid: req.query.bid or ''
                   monthRange: order.getMonthRange()
                   yearRange: order.getYearRange()

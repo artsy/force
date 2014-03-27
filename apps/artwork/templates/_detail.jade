@@ -63,17 +63,20 @@
       .artwork-meta-price
         = artwork.artworkPageSaleMessage()
 
+  //- Auction
+  #auction-detail
+    //- Rendered client-side
+
+  #artwork-auction-clock
+    //- Rendered client-side
+    include ../../../components/auction_clock/template
+
 .artwork-actions
   //- Large contact button
   if artwork.isContactable()
     a.avant-garde-button-black.artwork-contact-button(
       href="/artwork/#{artwork.id}/contact-gallery", data-client, rel='nofollow'
     )!= artwork.contactLabel()
-
-  //- Auction
-  #artwork-auction-clock
-    //- Rendered client-side
-    include ../../../components/auction_clock/template
 
   //- Buy
   if artwork.get('acquireable')
