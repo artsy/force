@@ -48,8 +48,8 @@ module.exports = class Sale extends Backbone.Model
       url += "?redirect_uri=#{redirectUrl}"
     url
 
+  # NOTE
   # auction_state helpers are used serverside of if updateState hasn't been run
-
   # auctionState used after updateState is run
   isRegisterable: ->
     @isAuction() and _.include(['preview', 'open'], @get('auction_state'))
@@ -58,7 +58,7 @@ module.exports = class Sale extends Backbone.Model
     @get('is_auction')
 
   isBidable: ->
-    @isAuction() && _.include(['open'], @get('auction_state'))
+    @isAuction() and _.include(['open'], @get('auction_state'))
 
   isPreviewState: ->
     @isAuction() and _.include(['preview'], @get('auction_state'))
