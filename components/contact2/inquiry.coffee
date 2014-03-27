@@ -30,7 +30,7 @@ module.exports = class InquiryView extends ContactView
       @renderTemplates()
       @updatePosition()
       @isLoaded()
-      @focusTextarea()
+      @focusTextareaAfterCopy()
     super
 
   postRender: ->

@@ -93,7 +93,7 @@ module.exports = class ContactView extends ModalView
 
       analytics.track.funnel 'Contact form submitted', formData
 
-  focusTextarea: =>
+  focusTextareaAfterCopy: =>
     return unless @autofocus()
     val = @$('textarea').val()
     @$('textarea').focus().val('').val(val)
