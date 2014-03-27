@@ -5,17 +5,19 @@ analytics = require('../../lib/analytics.coffee')
 Partner = require '../../models/partner.coffee'
 CurrentUser = require '../../models/current_user.coffee'
 { SESSION_ID, ARTSY_URL } = require('sharify').data
+formTemplate = -> require('./templates/inquiry_form.jade') arguments...
+headerTemplate = -> require('./templates/inquiry_partner_header.jade') arguments...
 
 module.exports = class ContactPartnerView extends ContactView
 
   headerTemplate: (locals) =>
-    require('./templates/inquiry_partner_header.jade') _.extend locals,
+    headerTemplate _.extend locals,
       artwork: @artwork
       partner: @partner
       user: @user
 
   formTemplate: (locals) =>
-    require('./templates/inquiry_form.jade') _.extend locals,
+    formTemplate _.extend locals,
       artwork: @artwork
       user: @user
       contactGallery: true
@@ -26,7 +28,7 @@ module.exports = class ContactPartnerView extends ContactView
   initialize: (options) ->
     @artwork = options.artwork
     @partner = new Partner options.partner
-    @partner.locations().fetch().then =>
+    @partner.locations().fetch complete: =>
       @renderTemplates()
       @renderLocation()
       @updatePosition()

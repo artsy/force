@@ -2,6 +2,7 @@ _               = require 'underscore'
 benv            = require 'benv'
 sinon           = require 'sinon'
 Backbone        = require 'backbone'
+Artwork         = require '../../../models/artwork'
 rewire          = require 'rewire'
 { fabricate }   = require 'antigravity'
 { resolve }     = require 'path'
@@ -21,14 +22,17 @@ describe 'ContactPartnerView', ->
 
   beforeEach (done) ->
     sinon.stub Backbone, 'sync'
-    @artwork  = new Backbone.Model fabricate 'artwork'
-    @partner  = fabricate 'partner'
+    @artwork  = new Artwork fabricate 'artwork'
+    @partner  = fabricate 'partner', locations: null
     benv.render resolve(__dirname, '../templates/index.jade'), {}, =>
       ContactPartnerView = benv.requireWithJadeify(resolve(__dirname, '../contact_partner'), ['formTemplate', 'headerTemplate'])
       ContactPartnerView.__set__ 'analytics', analytics
+      sinon.stub ContactPartnerView.prototype, 'isLoading'
+      sinon.stub ContactPartnerView.prototype, 'isLoaded'
       sinon.stub ContactPartnerView.prototype, 'open'
       sinon.stub ContactPartnerView.prototype, 'updatePosition'
       @view = new ContactPartnerView artwork: @artwork, partner: @partner, el: $('body')
+      _.last(Backbone.sync.args)[2].complete [fabricate('location')]
       done()
 
   afterEach ->
@@ -67,8 +71,8 @@ describe 'ContactPartnerView', ->
 
     describe 'Logged in', ->
       beforeEach ->
-        @view.templateData.user = (@user = new Backbone.Model fabricate 'user')
-        @view.postRender()
+        @view.user = (@user = new Backbone.Model fabricate 'user')
+        @view.$el.html @view.formTemplate @view.templateData
         @view.$('textarea[name="message"]').val('My message')
         @view.$('form').submit()
 

@@ -5,6 +5,7 @@ Backbone        = require 'backbone'
 rewire          = require 'rewire'
 { fabricate }   = require 'antigravity'
 { resolve }     = require 'path'
+Artwork         = require '../../../models/artwork'
 
 analytics = require '../../../lib/analytics'
 analytics.track.funnel = sinon.stub()
@@ -21,7 +22,7 @@ describe 'Inquiry', ->
 
   beforeEach (done) ->
     sinon.stub Backbone, 'sync'
-    @artwork  = new Backbone.Model fabricate 'artwork'
+    @artwork  = new Artwork fabricate 'artwork'
     @partner  = fabricate 'partner'
     benv.render resolve(__dirname, '../templates/index.jade'), {}, =>
       Inquiry = benv.requireWithJadeify(resolve(__dirname, '../inquiry'), ['formTemplate', 'headerTemplate'])
@@ -29,8 +30,8 @@ describe 'Inquiry', ->
       sinon.stub Inquiry.prototype, 'open'
       sinon.stub Inquiry.prototype, 'updatePosition'
       @view = new Inquiry artwork: @artwork, partner: @partner, el: $('body')
-      @view.templateData.representative = new Backbone.Model name: 'Foo Bar'
-      @view.templateData.representative.iconImageUrl = sinon.stub()
+      @view.representatives = new Backbone.Collection [name: 'Foo Bar']
+      @view.representatives.first().iconImageUrl = ->
       @view.renderTemplates()
       done()
 
@@ -40,8 +41,8 @@ describe 'Inquiry', ->
   describe '#renderTemplates', ->
     it 'has the correct header', ->
       html = @view.$el.html()
-      html.should.include 'Foo Bar, an Artsy Specialist, is available to answer your questions and help you collect through Artsy'
-      html.should.include 'img alt="Foo Bar" width="90" height="90"'
+      html.should.include 'Foo Bar, an Artsy Specialist, is available'
+      html.should.include 'img alt="Foo Bar"'
 
   describe '#submit', ->
     describe 'Logged out', ->
@@ -75,8 +76,8 @@ describe 'Inquiry', ->
 
     describe 'Logged in', ->
       beforeEach ->
-        @view.templateData.user = (@user = new Backbone.Model fabricate 'user')
-        @view.renderTemplates()
+        @view.user = (@user = new Backbone.Model fabricate 'user')
+        @view.$el.html @view.formTemplate @view.templateData
         @view.$('textarea[name="message"]').val('My message')
         @view.$('form').submit()
 

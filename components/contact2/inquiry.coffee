@@ -4,16 +4,18 @@ ContactView = require './view.coffee'
 Representatives = require './collections/representatives.coffee'
 analytics = require('../../lib/analytics.coffee')
 { SESSION_ID, ARTSY_URL } = require('sharify').data
+formTemplate = -> require('./templates/inquiry_form.jade') arguments...
+headerTemplate = -> require('./templates/inquiry_header.jade') arguments...
 
 module.exports = class InquiryView extends ContactView
 
   headerTemplate: (locals) ->
-    require('./templates/inquiry_header.jade') _.extend locals,
+    headerTemplate _.extend locals,
       representative: @representatives.first()
       user: @user
 
   formTemplate: (locals) ->
-    require('./templates/inquiry_form.jade') _.extend locals,
+    formTemplate _.extend locals,
       artwork: @artwork
       user: @user
       contactGallery: false
