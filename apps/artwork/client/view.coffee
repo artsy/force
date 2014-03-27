@@ -50,8 +50,6 @@ module.exports = class ArtworkView extends Backbone.View
     @on 'related:fairs', (fair) ->
       @belowTheFoldView.setupFair fair
       @setupFeatureNavigation model: fair, kind: 'fair'
-      # Remove after ADAA is over on 03/09/2014
-      @handleAdaaAuctionResults fair
       @deltaTrackPageView fair
     @on 'related:sales', (sale) ->
       @belowTheFoldView.setupSale sale, @saved
@@ -64,10 +62,6 @@ module.exports = class ArtworkView extends Backbone.View
     # Re-fetch and update detail
     @artwork.on "change:sale_message", @renderDetail, this
     @artwork.fetch()
-
-  handleAdaaAuctionResults: (fair) ->
-    if fair.get('id') == 'adaa-the-art-show-2014'
-      $('.artwork-auction-results-button').remove()
 
   deltaTrackPageView: (fair) ->
     el = $('#scripts')
@@ -117,10 +111,11 @@ module.exports = class ArtworkView extends Backbone.View
 
   renderDetail: ->
     @$('.artwork-detail').html detailTemplate
-      artwork:  @artwork
-      artist:   @artist
-      user:     @currentUser
-      sd:       require('sharify').data
+      sd          : require('sharify').data
+      artwork     : @artwork
+      artist      : @artist
+      user        : @currentUser
+
     @followButton.setElement @$('.artwork-artist-follow-button')
     @following?.syncFollows [@artist.id]
 

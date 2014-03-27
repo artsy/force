@@ -1,0 +1,39 @@
+if auction.isOpen()
+  if bidderPositions
+    .artwork-bidder-position-status(
+      class=bidderPositions.classes()
+    )
+      if (position = bidderPositions.isHighestBidder())
+        | You are currently the highest bidder for this lot with a bid at #{position.currentBid()}
+      if (position = bidderPositions.isOutbid())
+        | Your max bid of #{position.maxBid()} has been outbid.
+
+
+  .artwork-bid-status
+    .abs-label
+      .abs-bid= saleArtwork.bidLabel()
+      .abs-count (#{saleArtwork.bidCount()}, #{saleArtwork.reserveLabel()})
+    .abs-amount= saleArtwork.currentBid()
+
+form.artwork-bid-form( action="/feature/#{auction.id}/bid/#{saleArtwork.id}" )
+  if auction.isOpen() && user
+    .abf-validation-error
+      | Your bid needs to be at least #{saleArtwork.minBid()}
+    label( for='bid' ) Your Max. bid:
+    .typed-bordered-input
+      span $
+      input.bordered-input( name='bid', autocomplete='off', required )
+    .abf-min-next
+      | Enter #{saleArtwork.minBid()} or higher
+
+  button.avant-garde-button-black.abf-button(
+    type    = 'submit'
+    class   = auction.bidButtonState(user).classes
+  )
+    = auction.bidButtonState(user).label
+
+  .abf-help
+    a( href="artwork/#{saleArtwork.id}/ask_specialist", data-client )
+      | How does bidding work
+      br
+      | Ask an artsy specialist

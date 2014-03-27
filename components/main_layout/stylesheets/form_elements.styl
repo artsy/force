@@ -48,6 +48,19 @@ bordered-input-placeholder--autofocus-focus()
     display block
     width 100%
 
+.typed-bordered-input
+  position relative
+  > span
+    position absolute
+    display block
+    top 50%
+    left 15px
+    transform translateY(-50%)
+    color light-gray-text-color
+    pointer-events none
+  > .bordered-input
+    padding-left 30px
+
 .bi-type-activated-placeholder
   position absolute
   margin-top -43px
@@ -91,6 +104,9 @@ textarea.bordered-input
   text-decoration none
   transition 'color, border-color' 0.2s
   width 56px
+  &:focus, &:hover
+    & + .artsy-toggle-label
+      color highlight-color
 
   &::after
     content attr(data-state)
@@ -115,9 +131,6 @@ textarea.bordered-input
     vertical-align middle
     &::after
       content "\25CF"
-    &:focus, &:hover
-      & + .artsy-toggle-label
-        color highlight-color
 
   &[data-state='on']
     background-color highlight-color
@@ -138,6 +151,10 @@ textarea.bordered-input
 .artsy-toggle-separator
   &::after
     content '\2026'
+
+.artsy-toggle-label:hover
+  color highlight-color
+  cursor pointer
 
 
 // Help Tooltips

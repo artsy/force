@@ -6,7 +6,6 @@ Backbone  = require 'backbone'
 Clock     = require './mixins/clock.coffee'
 
 module.exports = class Sale extends Backbone.Model
-
   _.extend @prototype, Clock
 
   urlRoot: "#{sd.ARTSY_URL}/api/v1/sale"
@@ -44,10 +43,47 @@ module.exports = class Sale extends Backbone.Model
     ))
 
   registerUrl: (redirectUrl) ->
-    "/auction-registration/#{@get 'id'}?redirect_uri=#{redirectUrl}"
+    url = "/auction-registration/#{@id}"
+    if redirectUrl
+      url += "?redirect_uri=#{redirectUrl}"
+    url
 
+  # NOTE
+  # auction_state helpers are used serverside of if updateState hasn't been run
+  # auctionState used after updateState is run
   isRegisterable: ->
-    @isAuction() && _.include(['preview','open'], @get('auction_state'))
+    @isAuction() and _.include(['preview', 'open'], @get('auction_state'))
 
   isAuction: ->
     @get('is_auction')
+
+  isBidable: ->
+    @isAuction() and _.include(['open'], @get('auction_state'))
+
+  isPreviewState: ->
+    @isAuction() and _.include(['preview'], @get('auction_state'))
+
+  isOpen: ->
+    @get('auctionState') is 'open'
+
+  isPreview: ->
+    @get('auctionState') is 'preview'
+
+  isClosed: ->
+    @get('auctionState') is 'closed'
+
+  # return {Object}
+  bidButtonState: (user) ->
+    @__bidButtonState__ ?=
+      if @isPreview() and !user.get('registered_to_bid')
+        ['Register to bid', true]
+      else if @isPreview() and user.get('registered_to_bid')
+        ['Registered to bid', false, 'is-success is-disabled']
+      else if @isOpen()
+        ['Bid', true]
+      else if @isClosed()
+        ['Bidding closed', false, 'is-disabled']
+
+    label   : @__bidButtonState__[0]
+    enabled : @__bidButtonState__[1]
+    classes : @__bidButtonState__[2]

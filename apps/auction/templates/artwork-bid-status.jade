@@ -1,14 +1,6 @@
-- if saleArtwork.get('highest-bid-amount-cents')
-  .bordered-bid-form-group.current-bid
-    .bid-group-label Current Bid:
-    .bid-group-content
-      .bid-group-value!= saleArtwork.formatHighestBid()
-      - if saleArtwork.formatBidsAndReserve()
-        .bidder-positions-count!= saleArtwork.formatBidsAndReserve()
-- else
-  .bordered-bid-form-group.opening-bid
-    .bid-group-label Starting Bid:
-    .bid-group-content
-      .bid-group-value!= saleArtwork.formatOpeningBid()
-      - if saleArtwork.formatBidsAndReserve()
-        .bidder-positions-count!= saleArtwork.formatBidsAndReserve()
+.bordered-bid-form-group.current-bid
+  .bid-group-label Current Bid:
+  .bid-group-content
+    .bid-group-value!= saleArtwork.currentBid()
+    if saleArtwork.formatBidsAndReserve()
+      .bidder-positions-count!= saleArtwork.formatBidsAndReserve()

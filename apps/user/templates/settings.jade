@@ -13,11 +13,10 @@ block body
     .profile-icon-container.profile-badge
       include ../../../components/profile_badge/profile_icon
 
-    // TODO: Open this up when the profile settings form is complete
-      .garamond-tablist
-        a.garamond-tab.settings-account-tab( href="/user/edit", class=editAccountIsActive ) Account
-        span.garamond-tab-separator
-        a.garamond-tab.settings-profile-tab( href="/profile/edit", class=editProfileIsActive ) Profile
+    .garamond-tablist
+      a.garamond-tab.settings-account-tab( href="/user/edit", class=editAccountIsActive ) Account
+      span.garamond-tab-separator
+      a.garamond-tab.settings-profile-tab( href="/profile/edit", class=editProfileIsActive ) Profile
 
     .settings-forms
       include account.jade

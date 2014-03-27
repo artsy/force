@@ -14,6 +14,7 @@ module.exports = class Artwork extends Backbone.Model
 
   urlRoot: ->
     "#{sd.ARTSY_URL}/api/v1/artwork"
+  bidSuccessUrl: -> "#{@href()}/confirm-bid"
 
   initialize: ->
     # Defer Post model require to prevent circular dependency

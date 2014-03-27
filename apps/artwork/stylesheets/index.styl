@@ -93,6 +93,24 @@ artwork-detail-item-height  = 36px
   margin-bottom 20px
   padding-left 20px
   font-size 17px
+  // Buttons are narrower
+  // and always block
+  .avant-garde-button-black
+    display block
+    width 100%
+    padding 13px 30px 10px
+    &[data-state='loading'], &.is-loading
+      &::before
+        width 20px
+        height 5px
+
+  // Auction state
+  &.is-auction
+    // Hide some elements
+    .artwork-meta-price
+    .artwork-inquiry
+    .artwork-contact-button
+      display none
 
 .artwork-detail-artist
   avant-garde()
@@ -137,17 +155,82 @@ artwork-detail-item-height  = 36px
 
 .artwork-actions
   margin-top 20px
-  .avant-garde-button-black
+
+// Auction
+.artwork-bidder-position-status
+  margin 20px 0
+  padding 10px 0
+  border-top 2px solid
+  border-bottom 2px solid
+  font-size 15px
+  &.is-highest
+    color highlight-color
+  &.is-outbid
+    color bad-red-color
+
+.artwork-bid-status
+  display table
+  width 100%
+  margin 10px 0
+  padding 10px 0
+  border-top 1px dotted
+  border-bottom 1px dotted
+  border-color light-gray-transparent-border-color
+.abs-label
+.abs-amount
+  display table-cell
+  vertical-align middle
+.abs-bid
+.abs-count
+  font-size 14px
+  line-height 1.3
+.abs-bid
+  font-weight bold
+.abs-count
+  color light-gray-text-color
+.abs-amount
+  avant-garde()
+  font-size 20px
+  padding-left 20px
+
+.artwork-bid-form
+  margin 20px 0
+  label
     display block
-    padding 13px 30px 10px
+    margin 5px 0
+  input
+    width 100%
+.abf-min-next
+  margin 5px 0
+  color light-gray-text-color
+.abf-button
+  margin 10px 0
+.abf-validation-error
+  display none
+  margin 20px 0
+  padding 10px 0
+  border-top 2px solid
+  border-bottom 2px solid
+  color bad-red-color
+  font-size 15px
+.abf-help
+  margin 10px 0
+  > a
+    color light-gray-text-color
+    font-size 15px
+    font-style italic
 
 #artwork-auction-clock
   margin 20px 0
+
+#auction-detail
+#artwork-auction-clock
   opacity 0
   transition opacity 1s
   &.is-fade-in
     opacity 1
 
+// Inquiry
 .artwork-inquiry
   margin 20px 0
   text-align center
