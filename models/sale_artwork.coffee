@@ -37,9 +37,9 @@ module.exports = class SaleArtwork extends Backbone.Model
     if @get('highest_bid_amount_cents') then 'Current Bid' else 'Starting Bid'
 
   bidCount: ->
-    return '' unless @has('bidder_positions_count')
-    count  = "#{@get('bidder_positions_count')} bid"
-    count += if @get('bidder_positions_count') is 1 then '' else 's'
+    n = @get('bidder_positions_count') or 0
+    count  = "#{n} bid"
+    count += if n is 1 then '' else 's'
     count
 
   reserveLabel: ->
