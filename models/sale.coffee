@@ -54,26 +54,25 @@ module.exports = class Sale extends Backbone.Model
   isBidable: ->
     @isAuction() and _.include(['open'], @get('auction_state'))
 
-  isActive: ->
-    @get('auctionState') is 'open' or
-    @get('auction_state') is 'open'
+  isOpen: ->
+    @get('auctionState') is 'open'
 
-  isStarted: ->
-    Date.parse(@get 'start_at') < Date.now()
+  isPreview: ->
+    @get('auctionState') is 'preview'
 
-  isEnded: ->
-    Date.parse(@get 'end_at') < Date.now()
+  isClosed: ->
+    @get('auctionState') is 'closed'
 
   # return {Object}
   bidButtonState: (user) ->
     @__bidButtonState__ ?=
-      if !@isStarted() and !@isEnded() and !user.get('registered_to_bid')
+      if @isPreview() and !user.get('registered_to_bid')
         ['Register to bid', true]
-      else if !@isStarted() and !@isEnded() and user.get('registered_to_bid')
+      else if @isPreview() and user.get('registered_to_bid')
         ['Registered to bid', false, 'is-success is-disabled']
-      else if @isStarted() and !@isEnded()
+      else if @isOpen()
         ['Bid', true]
-      else if @isEnded()
+      else if @isClosed()
         ['Bidding closed', false, 'is-disabled']
 
     label   : @__bidButtonState__[0]

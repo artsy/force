@@ -1,4 +1,4 @@
-if auction.isActive()
+if auction.isOpen()
   if bidderPositions
     .artwork-bidder-position-status(
       class=bidderPositions.classes()
@@ -16,7 +16,7 @@ if auction.isActive()
     .abs-amount= saleArtwork.currentBid()
 
 form.artwork-bid-form( action="/feature/#{auction.id}/bid/#{saleArtwork.id}" )
-  if auction.isActive() && user
+  if auction.isOpen() && user
     .abf-validation-error
       | Your bid needs to be at least #{saleArtwork.minBid()}
     label( for='bid' ) Your Max. bid:
