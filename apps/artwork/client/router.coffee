@@ -5,8 +5,12 @@ ViewInRoomView  = require './view-in-room.coffee'
 analytics       = require '../../../lib/analytics.coffee'
 mediator        = require '../../../lib/mediator.coffee'
 
-ContactPartnerView    = require '../../../components/contact/contact_partner.coffee'
-InquiryView           = require '../../../components/contact/inquiry.coffee'
+if false
+  ContactPartnerView = require "../../../components/contact/contact_partner.coffee"
+  InquiryView = require "../../../components/contact/inquiry.coffee"
+else
+  ContactPartnerView = require "../../../components/contact2/contact_partner.coffee"
+  InquiryView = require "../../../components/contact2/inquiry.coffee"
 
 ConfirmBidModal          = require '../../../components/credit_card/client/confirm_bid.coffee'
 ConfirmRegistrationModal = require '../../../components/credit_card/client/confirm_registration.coffee'

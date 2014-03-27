@@ -1,0 +1,66 @@
+@import '../stylus_lib'
+
+modal-padding = 30px
+
+.contact2-header
+  margin modal-padding modal-padding 20px modal-padding
+  h1
+    garamond()
+    font-size 22px
+
+#contact2-errors
+  color bad-red-color
+  text-align center
+
+.contact2-form
+  margin 0 modal-padding modal-padding modal-padding
+  border-bottom @border-top
+  > span
+    margin 0 5px
+    color light-gray-text-color
+  input
+    margin-bottom 10px
+  textarea
+    margin 15px 0
+    height 150px
+
+#contact2-errors
+  margin-bottom 10px
+
+#contact2-submit
+  margin-top 10px
+  padding 12px 0
+
+// Large message after success
+.contact2-success-message
+  .modal-dialog
+    padding 20px
+    font-size 36px
+    text-align center
+    background-color transparent
+    color white
+
+// Only displayed on inquiries
+.contact2-iph
+  display table
+
+.contact2-iph-icon
+.contact2-iph-body
+  display table-cell
+  vertical-align middle
+
+.contact2-iph-icon img
+  height 60px
+
+.contact2-artwork-details
+  clearfix()
+  img
+    height 45px
+    float left
+    margin-right 15px
+
+.mcf-email
+  color #aaa
+
+.contact2-from
+  margin-bottom 10px
