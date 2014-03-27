@@ -122,7 +122,7 @@ module.exports.abTest = (key, percentToNew = 0.5) ->
   else if property is 'disabled'
     false
   else
-    enabledDisabled = if rand < percentToNew then 'enabled' else 'disabled'
+    enabledDisabled = if Math.random() < percentToNew then 'enabled' else 'disabled'
     hash = {}
     hash[key] = enabledDisabled
     module.exports.setProperty hash
