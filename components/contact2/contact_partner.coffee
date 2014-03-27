@@ -52,3 +52,6 @@ module.exports = class ContactPartnerView extends ContactView
 
   postRender: =>
     @isLoading()
+
+  events: -> _.extend super,
+    'click.handler .modal-backdrop': undefined

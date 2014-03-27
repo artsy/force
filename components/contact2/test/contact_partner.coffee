@@ -83,3 +83,21 @@ describe 'ContactPartnerView', ->
         attributes.message.should.equal 'My message'
         attributes.artwork.should.equal @view.artwork.id
         attributes.contact_gallery.should.be.ok # Should contact gallery
+
+  describe '#events', ->
+
+    it 'disables click on backdrop', ->
+      (@view.events()['click.handler .modal-backdrop']?).should.not.be.ok
+
+
+  describe 'template', ->
+
+    it 'does render pricing if work can display price', ->
+      @view.artwork.isPriceDisplayable = -> true
+      @view.$el.html @view.formTemplate @view.templateData
+      @view.$el.html().should.include 'and pricing'
+
+    it 'doesnt render pricing if work cant display price', ->
+      @view.artwork.isPriceDisplayable = -> false
+      @view.$el.html @view.formTemplate @view.templateData
+      @view.$el.html().should.not.include 'and pricing'

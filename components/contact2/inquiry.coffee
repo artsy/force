@@ -44,3 +44,6 @@ module.exports = class InquiryView extends ContactView
       contact_gallery: false
       session_id: SESSION_ID
     super
+
+  events: -> _.extend super,
+    'click.handler .modal-backdrop': undefined

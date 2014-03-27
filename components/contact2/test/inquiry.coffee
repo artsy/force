@@ -88,3 +88,8 @@ describe 'Inquiry', ->
         attributes.message.should.equal 'My message'
         attributes.artwork.should.equal @view.artwork.id
         attributes.contact_gallery.should.not.be.ok # Should not contact gallery
+
+  describe '#events', ->
+
+    it 'disables click on backdrop', ->
+      (@view.events()['click.handler .modal-backdrop']?).should.not.be.ok
