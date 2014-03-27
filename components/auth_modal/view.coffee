@@ -78,9 +78,10 @@ module.exports = class AuthModalView extends ModalView
         createCookie 'signed_in', true, 7
         analytics.track.funnel 'Successfully logged in'
 
-      href  = '/force/log_in_to_artsy'
-      href += "?redirect-to=#{@redirectTo}" if @state.get('mode') is 'register'
-      location.href = href
+      if @state.get('mode') is 'register'
+        location.href = @redirectTo
+      else
+        location.reload()
 
   showError: (msg) =>
     @$('button').attr 'data-state', 'error'

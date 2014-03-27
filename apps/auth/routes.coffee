@@ -10,20 +10,6 @@ getRedirectTo = (req) ->
 @submitLogin = (req, res) ->
   res.send { success: true, error: res.authError, user: req.user?.toJSON() }
 
-@loginToArtsy = (req, res) ->
-  unless req.user
-    return res.redirect '/log_in?error=no-user-access-token'
-
-  redirectTo = getRedirectTo(req)
-
-  request
-    .post("#{SECURE_ARTSY_URL}/api/v1/me/trust_token")
-    .send(access_token: req.user.get 'accessToken')
-    .end (trustRes) ->
-      res.redirect "#{SECURE_ARTSY_URL}/users/sign_in?" +
-                   "trust_token=#{trustRes.body.trust_token}&" +
-                   "redirect_uri=#{APP_URL + redirectTo}"
-
 @logout = (req, res) ->
   req.logout()
   res.redirect "#{SECURE_ARTSY_URL}/users/sign_out?" +
@@ -67,3 +53,6 @@ getRedirectTo = (req) ->
       return next() if e.text.match 'Error from MailChimp API'
       res.backboneError arguments...
   }
+
+@submitFacebook = (req, res, next) ->
+  res.redirect getRedirectTo(req)
