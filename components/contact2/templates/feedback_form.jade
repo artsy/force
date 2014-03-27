@@ -1,7 +1,7 @@
 form.contact2-form
   textarea.bordered-input.is-block(
     name='message'
-    autofocus= autofocus && (user !== null)
+    autofocus= autofocus
     required
   )
   .bi-type-activated-placeholder( style='margin-top: -153px' )= placeholder
@@ -23,7 +23,6 @@ form.contact2-form
       name='user_email'
       placeholder= 'Your email address'
     )
-
   a#contact2-submit.avant-garde-button-black.is-block(
     href='#'
     data-state='ok'

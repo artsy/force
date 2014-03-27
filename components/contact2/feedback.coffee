@@ -24,7 +24,6 @@ module.exports = class FeedbackView extends ContactView
       @renderTemplates()
       @updatePosition()
       @isLoaded()
-      @focusTextarea()
     super
 
   postRender: ->
