@@ -92,12 +92,12 @@ describe 'ContactPartnerView', ->
 
   describe 'template', ->
 
-    it 'does render pricing if work can display price', ->
-      @view.artwork.isPriceDisplayable = -> true
+    it 'does render pricing if work cant display price', ->
+      @view.artwork.isPriceDisplayable = -> false
       @view.$el.html @view.formTemplate @view.templateData
       @view.$el.html().should.include 'and pricing'
 
-    it 'doesnt render pricing if work cant display price', ->
-      @view.artwork.isPriceDisplayable = -> false
+    it 'doesnt render pricing question if work can display price', ->
+      @view.artwork.isPriceDisplayable = -> true
       @view.$el.html @view.formTemplate @view.templateData
       @view.$el.html().should.not.include 'and pricing'

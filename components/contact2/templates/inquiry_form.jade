@@ -10,7 +10,7 @@ form.contact2-form
       if contactGallery
         | Hello, I'm interested in this work by #{artwork.get('artist').name}.
         | Please confirm availability
-        if artwork.isPriceDisplayable()
+        unless artwork.isPriceDisplayable()
           |  and pricing
         |  of this work.
         | &nbsp;
