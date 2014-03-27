@@ -8,6 +8,7 @@ module.exports = class BidderPosition extends Backbone.Model
     "#{sd.ARTSY_URL}/api/v1/me/bidder_position"
 
   currentBid: ->
+    return unless @has('highest_bid')
     accounting.formatMoney(
       @get('highest_bid').amount_cents / 100, '$', 0
     )
