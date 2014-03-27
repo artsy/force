@@ -2,9 +2,9 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 Profile = require '../../models/profile.coffee'
 FollowProfileButton = require './follow_profile.coffee'
-ShowInquiryModal = require '../contact/show_inquiry_modal.coffee'
 CurrentUser = require '../../models/current_user.coffee'
 FollowProfiles = require '../../collections/follow_profiles.coffee'
+analytics = require '../../lib/analytics.coffee'
 
 module.exports = class PartnerShowButtons extends Backbone.View
 
@@ -27,4 +27,10 @@ module.exports = class PartnerShowButtons extends Backbone.View
     'click .partner-buttons-contact': 'contactGallery'
 
   contactGallery: ->
+    if analytics.abTest 'ab:inquiry', 0.8
+      console.log '2!'
+      ShowInquiryModal = require '../contact2/show_inquiry_modal.coffee'
+    else
+      console.log '1!'
+      ShowInquiryModal = require '../contact/show_inquiry_modal.coffee'
     new ShowInquiryModal show: @model
