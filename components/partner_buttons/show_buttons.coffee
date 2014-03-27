@@ -28,9 +28,7 @@ module.exports = class PartnerShowButtons extends Backbone.View
 
   contactGallery: ->
     if analytics.abTest 'ab:inquiry', 0.8
-      console.log '2!'
       ShowInquiryModal = require '../contact2/show_inquiry_modal.coffee'
     else
-      console.log '1!'
       ShowInquiryModal = require '../contact/show_inquiry_modal.coffee'
     new ShowInquiryModal show: @model
