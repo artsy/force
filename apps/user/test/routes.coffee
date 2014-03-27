@@ -37,9 +37,6 @@ describe '/user', ->
       it 'calls req.login to refresh the session', ->
         @req.login.calledOnce.should.be.true
 
-      it 'returns the current user as JSON', ->
-        @res.json.calledOnce.should.be.true
-        @res.json.args[0][0].attributes.should.equal @req.user.attributes
 
   describe '#settings', ->
 

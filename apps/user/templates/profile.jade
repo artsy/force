@@ -1,25 +1,33 @@
+mixin locationSearch(value)
+  include ../../../components/location_search/template
+
 form.settings-form.settings-profile-form( class=editProfileIsActive, method="post", action="#{sd.ARTSY_URL}/profile", accept-charset="UTF-8" )
 
-  label.avant-garde-form-label( for="profile-handle" ) Username
-  input#profile-handle.bordered-input( type="text", value=profile.get('id'), size="30", maxlength="20", name="handle")
+  label.avant-garde-form-label( for="profile-id" ) Username
+  input#profile-id.bordered-input( type="text", value=profile.get('id'), size="30", maxlength="20", name="id")
+  .settings-form-error( data-attr='handle' )
 
   label.avant-garde-form-label( for="profile-bio" ) Bio
   textarea#profile-bio.bordered-input( name="bio" )!= profile.get('bio')
+  .settings-form-error( data-attr='bio' )
 
   label.avant-garde-form-label( for="profile-location" ) Location
-  input#profile-location.bordered-input( type="text", value=profile.get('location'), size="30", name="location" )
+  #profile-location
+    //- The user location contains the object and the profile will set the display string of that object
+    +locationSearch(user.location().cityStateCountry())
 
   label.avant-garde-form-label( for="profile-website" ) Website
   input#profile-website.bordered-input( type="url", value=profile.get('website'), size="30", name="website", placeholder="http://mysite.com" )
+  .settings-form-error( data-attr='website' )
 
-  label.settings-group-label.avant-garde-form-label Privacy
+  label.settings-group-leader.settings-group-label.avant-garde-form-label Privacy
   .input-group
-    a.artsy-toggle.profile-is-public( data-state='off', href="" )
+    a#profile-public.artsy-toggle.profile-is-public( data-state='off', href="" )
       .artsy-toggle-dot
     .artsy-toggle-label Enable My Public Profile
 
   .input-group
-    a.artsy-toggle.profile-favorites( data-state='off', href="" )
+    a#profile-favorites.artsy-toggle.profile-favorites( data-state='off', href="" )
       .artsy-toggle-dot
     .artsy-toggle-label Enable Public Favorites
 

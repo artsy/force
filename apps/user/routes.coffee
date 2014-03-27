@@ -8,8 +8,10 @@ Profile  = require '../../models/profile.coffee'
     error  : res.backboneError
     success: ->
       req.login req.user, (error) ->
-        next(error)
-      res.json req.user.attributes
+        if (error)
+          next error
+        else
+          res.json req.user.attributes
 
 @settings = (req, res) ->
   return res.redirect("/") unless req.user
@@ -18,7 +20,7 @@ Profile  = require '../../models/profile.coffee'
   editAccountIsActive = if _.contains(req.url, '/user') then 'is-active' else null
   editProfileIsActive = if _.contains(req.url, '/profile') then 'is-active' else null
   activeForm = if _.contains(req.url, '/user') then "settings-account-active" else "settings-profile-active"
-  profile = new Profile { id: req.user.get('default_profile_id') }
+  profile = new Profile()
 
   render = _.after 2, ->
     res.locals.sd.PROFILE = profile
@@ -40,6 +42,8 @@ Profile  = require '../../models/profile.coffee'
           access_token: user.get 'accessToken'
         success: render
         error: res.backboneError
+
+      profile.set 'id', req.user.get 'default_profile_id'
       profile.fetch
         data:
           access_token: user.get 'accessToken'
