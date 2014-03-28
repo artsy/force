@@ -33,7 +33,8 @@ form.artwork-bid-form( action="/feature/#{auction.id}/bid/#{saleArtwork.id}" )
     = auction.bidButtonState(user).label
 
   .abf-help
-    a( href="artwork/#{saleArtwork.id}/ask_specialist", data-client )
+    a.abf-help-link( href='#' )
       | How does bidding work
-      br
+    br
+    a( href="artwork/#{saleArtwork.id}/ask_specialist", data-client )
       | Ask an artsy specialist
