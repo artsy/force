@@ -1,5 +1,5 @@
 _        = require 'underscore'
-UserEdit = require '../../models/user_edit.coffee'
+UserEdit = require './models/user_edit.coffee'
 Profile  = require '../../models/profile.coffee'
 
 @refresh = (req, res) ->

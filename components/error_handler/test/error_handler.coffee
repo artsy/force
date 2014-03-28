@@ -31,15 +31,6 @@ describe '#pageNotFound', ->
     spy.args[0][0].should.equal 404
     spy.args[0][1].should.include "The page you were looking for doesn't exist"
 
-describe '#javascriptError', ->
-
-  it 'sends a 500 error reported from a javascript error', (done) ->
-    errorHandler.javascriptError {
-      body: { stack: 'Yay for stack traces in global error handlers now!' }
-    }, {}, (err) ->
-      err.toString().should.include 'Yay for stack traces'
-      done()
-
 describe '#socialAuthError', ->
 
   it 'redirects to a login error', ->

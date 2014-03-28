@@ -2,7 +2,7 @@ _                   = require 'underscore'
 _.str               = require 'underscore.string'
 sd                  = require('sharify').data
 Backbone            = require 'backbone'
-PasswordEdit        = require '../../../models/password_edit.coffee'
+PasswordEdit        = require '../models/password_edit.coffee'
 ErrorHelpers        = require './error_handling.coffee'
 
 module.exports = class AccountForm extends Backbone.View
@@ -11,7 +11,7 @@ module.exports = class AccountForm extends Backbone.View
 
   initialize: (options) ->
     throw 'This view requires a UserEdit model' unless @model and @model.errorMessages
-    { @profileEdit } = options
+    { @profileEdit, @$successMessage } = options
 
     # Reference to frequently accessed DOM elements
     @$name = @$ '#user-name'
@@ -32,9 +32,8 @@ module.exports = class AccountForm extends Backbone.View
     # Model events
     @listenTo @model, 'invalid', @renderErrors
     @listenTo @model, 'request', @renderPending
-    @listenTo @model, 'sync', @onSyncSuccess
+    @listenTo @model, 'sync', @renderSuccess
     @listenTo @model, 'error', @parseErrors
-    @listenTo @profileEdit, 'change:id', @updateDefaultProfileId
     @listenTo @passwordEdit, 'error', @parseErrors
     @listenTo @passwordEdit, 'invalid', @renderErrors
     @
@@ -51,17 +50,11 @@ module.exports = class AccountForm extends Backbone.View
       error = error[0] if _.isArray error
       @$(".settings-form-error[data-attr='#{key}']").text error
 
-  renderPending: (model, xhr, options) ->
+  renderPending: (model, xhr, options) =>
     @$submitButton.addClass 'is-loading'
 
-  onSyncSuccess: (model, resp, options) ->
+  renderSuccess: (model, resp, options) =>
     @$submitButton.removeClass 'is-loading'
-    @model.refresh()
-
-  updateDefaultProfileId: (model, resp, options) ->
-    @model.set
-      default_profile_id: model.get '_id'
-    @onSyncSuccess()
 
   events:
     'blur #user-name'                 : 'onNameBlur'

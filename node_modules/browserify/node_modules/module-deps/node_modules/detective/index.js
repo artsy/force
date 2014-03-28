@@ -1,4 +1,4 @@
-var esprima = require('esprima-six');
+var esprima = require('esprima-fb');
 var escodegen = require('escodegen');
 
 var traverse = function (node, cb) {

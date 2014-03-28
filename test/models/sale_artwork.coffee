@@ -51,9 +51,9 @@ describe 'SaleArtwork', ->
       @saleArtwork.set highest_bid_amount_cents: 100
       @saleArtwork.bidCount().should.equal '6 bids'
 
-    it 'returns a blank string if attribute not present', ->
+    it 'returns a 0 bids string if attribute not present', ->
       @saleArtwork.unset 'bidder_positions_count'
-      @saleArtwork.bidCount().should.equal ''
+      @saleArtwork.bidCount().should.equal '0 bids'
 
     # Pending this until someone tells me why it shouldn't be
     # it 'returns a blank string if highest_bid_amount_cents null', ->

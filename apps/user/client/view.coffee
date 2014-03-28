@@ -5,15 +5,16 @@ Backbone           = require 'backbone'
 GeoFormatter       = require 'geoformatter'
 LocationSearchView = require '../../../components/location_search/index.coffee'
 Profile            = require '../../../models/profile.coffee'
-ProfileEdit        = require '../../../models/profile_edit.coffee'
+ProfileEdit        = require '../models/profile_edit.coffee'
 ProfileForm        = require './profile_form.coffee'
-UserEdit           = require '../../../models/user_edit.coffee'
+UserEdit           = require '../models/user_edit.coffee'
 
 module.exports.UserSettingsView = class UserSettingsView extends Backbone.View
 
   initialize: (options) ->
     @profileEdit = new ProfileEdit sd.PROFILE
     @$toggleEls = @$ '.garamond-tab, .settings-form'
+    @$successMessage = @$ '.settings-success-message'
 
     window.currentUser = @model
 
@@ -31,6 +32,15 @@ module.exports.UserSettingsView = class UserSettingsView extends Backbone.View
     @locationSearchView = new LocationSearchView el: @$('#profile-location')
     @locationSearchView.postRender()
     @listenTo @locationSearchView, 'location:update', @onLocationUpdate
+
+    # On successful posts of either form, show the success message
+    @listenTo @model, 'sync', @renderSuccess
+    @listenTo @profileEdit, 'sync', @renderSuccess
+
+
+  renderSuccess: ->
+    @$successMessage.addClass 'is-active'
+    _.delay (=> @$successMessage.removeClass('is-active')), 3000
 
   #
   # Location

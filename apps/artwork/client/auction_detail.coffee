@@ -1,28 +1,46 @@
-_           = require 'underscore'
-Backbone    = require 'backbone'
-accounting  = require 'accounting'
-template    = -> require('../templates/auction_detail.jade') arguments...
+_               = require 'underscore'
+Backbone        = require 'backbone'
+accounting      = require 'accounting'
+ModalPageView   = require '../../../components/modal/page.coffee'
+mediator        = require '../../../lib/mediator.coffee'
+
+template = -> require('../templates/auction_detail.jade') arguments...
 
 module.exports = class AuctionDetailView extends Backbone.View
   template: template
 
   events:
-    'submit form' : 'submit'
+    'submit form'          : 'submit'
+    'click .abf-help-link' : 'displayHelp'
 
   initialize: (options) ->
     { @user, @auction, @saleArtwork, @bidderPositions } = options
 
   submit: (e) ->
-    return unless @user
     e.preventDefault()
-    @$('button').attr 'data-state', 'loading'
-    if (val = @validate @$('input').val())
-      window.location = "#{@$('form').attr('action')}?bid=#{val}"
+
+    val = @validate @$('input').val()
+
+    destination  = @$('form').attr('action')
+    destination += "?bid=#{val}" if val
+
+    unless @user
+      mediator.trigger 'open:auth',
+        mode        : 'register'
+        copy        : 'Sign up to bid'
+        destination : destination
+      return false
     else
-      @displayValidationError()
+      @$('button').attr 'data-state', 'loading'
+      if val
+        window.location = destination
+      else
+        @displayValidationError()
 
   displayValidationError: ->
-    (@$error ?= @$('.abf-validation-error')).show()
+    # I'm not using `$.fn.show` because of https://github.com/tmpvar/jsdom/issues/709
+    # will change later
+    @$('.abf-validation-error').css('display', 'block')
     @$('button').attr 'data-state', 'error'
 
   # Check to see if the form value is greater or equal to the minimum next bid
@@ -32,6 +50,12 @@ module.exports = class AuctionDetailView extends Backbone.View
   validate: (val) ->
     if (val = accounting.unformat val) >= @saleArtwork.get('minimum_next_bid_cents') / 100
       val
+
+  displayHelp: (e) ->
+    e.preventDefault()
+    new ModalPageView
+      width  : '700px'
+      pageId : 'auction-info'
 
   render: ->
     @$el.html(template
