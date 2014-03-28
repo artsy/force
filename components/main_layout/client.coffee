@@ -12,7 +12,6 @@ module.exports = ->
   setupJquery()
   syncAuth()
   setupViews()
-  setupAnalytics()
 
 syncAuth = module.exports.syncAuth = ->
   # Log in to Force if you're logged in to Gravity
@@ -36,17 +35,17 @@ syncAuth = module.exports.syncAuth = ->
 setupAnalytics = ->
   # Initialize analytics & track page view if we included mixpanel
   # (not included in test environment).
-  unless typeof mixpanel is 'undefined'
-    analytics(mixpanel: mixpanel, ga: ga)
-    analytics.trackPageview()
+  return if not mixpanel? or mixpanel is 'undefined'
+  analytics(mixpanel: mixpanel, ga: ga)
+  analytics.trackPageview()
 
-    # Log a visit once per session
-    unless readCookie('active_session')?
-      createCookie 'active_session', true
-      analytics.track.funnel if sd.CURRENT_USER
-        'Visited logged in'
-      else
-        'Visited logged out'
+  # Log a visit once per session
+  unless readCookie('active_session')?
+    createCookie 'active_session', true
+    analytics.track.funnel if sd.CURRENT_USER
+      'Visited logged in'
+    else
+      'Visited logged out'
 
 setupViews = ->
   new HeaderView el: $('#main-layout-header'), $window: $(window), $body: $('body')
@@ -63,3 +62,6 @@ setupJquery = ->
   $.ajaxSettings.headers =
     'X-XAPP-TOKEN'  : sd.ARTSY_XAPP_TOKEN
     'X-ACCESS-TOKEN': sd.CURRENT_USER?.accessToken
+
+
+setupAnalytics()

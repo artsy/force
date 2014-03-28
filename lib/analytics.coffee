@@ -127,3 +127,6 @@ module.exports.abTest = (key, percentToNew = 0.5) ->
     hash[key] = enabledDisabled
     module.exports.setProperty hash
     enabledDisabled == 'enabled'
+
+module.exports.load = (cb) ->
+  if mixpanel.__loaded then cb() else mixpanel.set_config loaded: cb
