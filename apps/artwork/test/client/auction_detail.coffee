@@ -142,4 +142,4 @@ describe 'AuctionDetailView', ->
       @triggerSpy.args[0][0].should.equal 'open:auth'
       @triggerSpy.args[0][1].mode.should.equal 'register'
       @triggerSpy.args[0][1].copy.should.equal 'Sign up to bid'
-      @triggerSpy.args[0][1].destination.should.equal "/feature/#{@auction.id}/bid/#{@saleArtwork.id}"
+      @triggerSpy.args[0][1].destination.should.equal @saleArtwork.artwork().href()
