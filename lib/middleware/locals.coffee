@@ -6,11 +6,13 @@ uuid = require 'node-uuid'
 { parse, format } = require 'url'
 _ = require 'underscore'
 _.mixin require 'underscore.string'
+newrelic = require 'newrelic'
 
 module.exports = (req, res, next) ->
 
-  # Allow underscore and underscore string to be used in templates
+  # Attach libraries to locals
   res.locals._ = _
+  res.locals.newrelic = newrelic
 
   # Pass the user agent into locals for data-useragent device detection
   res.locals.userAgent = req.get('user-agent')

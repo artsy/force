@@ -5,7 +5,8 @@ link( rel='icon', type='image/png', href=(sd.ASSET_PATH + 'favicon.ico') )
 meta( name="msapplication-config" content=sd.ASSET_PATH + 'browserconfig.xml' )
 meta( name="viewport" content="user-scalable=0, width=device-width" )
 include ../../iframe_popover/head_script
-
+if sd.NODE_ENV != 'test' && newrelic
+  != newrelic.getBrowserTimingHeader()
 //- Mixpanel wants to include it's script in the head b/c it async downloads
 //- and injects it into the body. Hopefully this stops race conditions b/t
 //- DOM load and mixpanel init.
