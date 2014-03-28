@@ -31,8 +31,12 @@ module.exports = class PartnerArtistsListView extends Backbone.View
 
     # Split arrays into columns
     for g in [bigger, smaller]
-      g.cols = []; step = Math.ceil g.list.length / g.numOfCols
-      for pa, i in g.list by step
-        g.cols.push g.list.slice i, i + step
-    
+      quot  = Math.floor g.list.length / g.numOfCols
+      remd  = g.list.length % g.numOfCols
+      steps = _.map(_.range(g.numOfCols), (i) -> if i >= remd then quot else quot + 1)
+
+      g.cols = []; i = 0
+      for step in steps
+        g.cols.push g.list.slice(i, i + step); i += step
+
     _.filter [bigger, smaller], (g) -> g.list.length > 0
