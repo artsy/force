@@ -10,7 +10,6 @@ iframePopover   = require '../iframe_popover/index.coffee'
 
 module.exports = ->
   setupJquery()
-  addGlobalErrorHandler()
   syncAuth()
   setupViews()
   setupAnalytics()
