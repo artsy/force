@@ -2,6 +2,7 @@ _               = require 'underscore'
 Backbone        = require 'backbone'
 accounting      = require 'accounting'
 ModalPageView   = require '../../../components/modal/page.coffee'
+mediator        = require '../../../lib/mediator.coffee'
 
 template = -> require('../templates/auction_detail.jade') arguments...
 
@@ -16,13 +17,25 @@ module.exports = class AuctionDetailView extends Backbone.View
     { @user, @auction, @saleArtwork, @bidderPositions } = options
 
   submit: (e) ->
-    return unless @user
     e.preventDefault()
-    @$('button').attr 'data-state', 'loading'
-    if (val = @validate @$('input').val())
-      window.location = "#{@$('form').attr('action')}?bid=#{val}"
+
+    val = @validate @$('input').val()
+
+    destination  = @$('form').attr('action')
+    destination += "?bid=#{val}" if val
+
+    unless @user
+      mediator.trigger 'open:auth',
+        mode        : 'register'
+        copy        : 'Sign up to bid'
+        destination : destination
+      return false
     else
-      @displayValidationError()
+      @$('button').attr 'data-state', 'loading'
+      if val
+        window.location = destination
+      else
+        @displayValidationError()
 
   displayValidationError: ->
     # I'm not using `$.fn.show` because of https://github.com/tmpvar/jsdom/issues/709

@@ -23,6 +23,8 @@ describe 'AuctionDetailView', ->
   beforeEach (done) ->
     sinon.stub Backbone, 'sync'
     AuctionDetailView = benv.requireWithJadeify resolve(__dirname, '../../client/auction_detail'), ['template']
+    @triggerSpy = sinon.stub()
+    AuctionDetailView.__set__ 'mediator', trigger: @triggerSpy
 
     @saleArtwork  = new SaleArtwork fabricate 'sale_artwork', minimum_next_bid_cents: 500000, reserve_status: 'no_reserve'
     @auction      = new Sale fabricate 'sale'
@@ -125,3 +127,19 @@ describe 'AuctionDetailView', ->
       @view.$('form').submit()
       @view.$('.abf-validation-error').css('display').should.equal 'block'
       @view.$('button').data('state').should.equal 'error'
+
+  describe '#submit', ->
+    it 'submits the form', ->
+      location = window.location
+      @view.$('input').val('5000')
+      @view.$('form').submit()
+      window.location.should.equal "/feature/#{@auction.id}/bid/#{@saleArtwork.id}?bid=5000"
+      window.location = location
+
+    it 'triggers sign up if not logged in', ->
+      @view.user = undefined
+      @view.$('form').submit()
+      @triggerSpy.args[0][0].should.equal 'open:auth'
+      @triggerSpy.args[0][1].mode.should.equal 'register'
+      @triggerSpy.args[0][1].copy.should.equal 'Sign up to bid'
+      @triggerSpy.args[0][1].destination.should.equal "/feature/#{@auction.id}/bid/#{@saleArtwork.id}"
