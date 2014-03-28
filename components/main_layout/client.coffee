@@ -64,18 +64,3 @@ setupJquery = ->
   $.ajaxSettings.headers =
     'X-XAPP-TOKEN'  : sd.ARTSY_XAPP_TOKEN
     'X-ACCESS-TOKEN': sd.CURRENT_USER?.accessToken
-
-# Add global error handler that sends javascript errors to an
-# endpoint for New Relic to track.
-addGlobalErrorHandler = ->
-  window.onerror = (msg, url, lineno, linecol, err) ->
-    $.ajax
-      url: '/force/javascripterr'
-      type: 'POST'
-      data:
-        msg: msg
-        fileurl: url
-        lineno: lineno
-        linecol: linecol
-        stack: err?.stack
-        href: location.href

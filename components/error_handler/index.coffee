@@ -32,10 +32,6 @@ errorHandler.internalError = (err, req, res, next) ->
     sd: res.locals?.sd or {}
     detail: detail
 
-errorHandler.javascriptError = (req, res, next) ->
-  console?.log(req.body) # Logs client-side errors to stdout for debugging purpose
-  next new Error(JSON.stringify req.body)
-
 errorHandler.socialAuthError = (err, req, res, next) ->
   if err.toString().match('User Already Exists')
     # Error urls need to be compatible with Gravity

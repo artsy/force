@@ -169,5 +169,4 @@ module.exports = (app) ->
   # successfully by anything above.
   app.use errorHandler.pageNotFound
   app.use '/users/sign_in', loginError
-  app.post '/force/javascripterr', errorHandler.javascriptError
   app.use errorHandler.internalError
