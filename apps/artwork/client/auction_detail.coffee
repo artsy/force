@@ -1,13 +1,16 @@
-_           = require 'underscore'
-Backbone    = require 'backbone'
-accounting  = require 'accounting'
-template    = -> require('../templates/auction_detail.jade') arguments...
+_               = require 'underscore'
+Backbone        = require 'backbone'
+accounting      = require 'accounting'
+ModalPageView   = require '../../../components/modal/page.coffee'
+
+template = -> require('../templates/auction_detail.jade') arguments...
 
 module.exports = class AuctionDetailView extends Backbone.View
   template: template
 
   events:
-    'submit form' : 'submit'
+    'submit form'          : 'submit'
+    'click .abf-help-link' : 'displayHelp'
 
   initialize: (options) ->
     { @user, @auction, @saleArtwork, @bidderPositions } = options
@@ -34,6 +37,12 @@ module.exports = class AuctionDetailView extends Backbone.View
   validate: (val) ->
     if (val = accounting.unformat val) >= @saleArtwork.get('minimum_next_bid_cents') / 100
       val
+
+  displayHelp: (e) ->
+    e.preventDefault()
+    new ModalPageView
+      width  : '700px'
+      pageId : 'auction-info'
 
   render: ->
     @$el.html(template
