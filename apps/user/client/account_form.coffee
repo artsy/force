@@ -11,7 +11,7 @@ module.exports = class AccountForm extends Backbone.View
 
   initialize: (options) ->
     throw 'This view requires a UserEdit model' unless @model and @model.errorMessages
-    { @profileEdit } = options
+    { @profileEdit, @$successMessage } = options
 
     # Reference to frequently accessed DOM elements
     @$name = @$ '#user-name'
@@ -32,7 +32,7 @@ module.exports = class AccountForm extends Backbone.View
     # Model events
     @listenTo @model, 'invalid', @renderErrors
     @listenTo @model, 'request', @renderPending
-    @listenTo @model, 'sync', @onSyncSuccess
+    @listenTo @model, 'sync', @renderSuccess
     @listenTo @model, 'error', @parseErrors
     @listenTo @passwordEdit, 'error', @parseErrors
     @listenTo @passwordEdit, 'invalid', @renderErrors
@@ -50,10 +50,10 @@ module.exports = class AccountForm extends Backbone.View
       error = error[0] if _.isArray error
       @$(".settings-form-error[data-attr='#{key}']").text error
 
-  renderPending: (model, xhr, options) ->
+  renderPending: (model, xhr, options) =>
     @$submitButton.addClass 'is-loading'
 
-  onSyncSuccess: (model, resp, options) ->
+  renderSuccess: (model, resp, options) =>
     @$submitButton.removeClass 'is-loading'
 
   events:

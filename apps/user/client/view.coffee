@@ -14,6 +14,7 @@ module.exports.UserSettingsView = class UserSettingsView extends Backbone.View
   initialize: (options) ->
     @profileEdit = new ProfileEdit sd.PROFILE
     @$toggleEls = @$ '.garamond-tab, .settings-form'
+    @$successMessage = @$ '.settings-success-message'
 
     window.currentUser = @model
 
@@ -31,6 +32,15 @@ module.exports.UserSettingsView = class UserSettingsView extends Backbone.View
     @locationSearchView = new LocationSearchView el: @$('#profile-location')
     @locationSearchView.postRender()
     @listenTo @locationSearchView, 'location:update', @onLocationUpdate
+
+    # On successful posts of either form, show the success message
+    @listenTo @model, 'sync', @renderSuccess
+    @listenTo @profileEdit, 'sync', @renderSuccess
+
+
+  renderSuccess: ->
+    @$successMessage.addClass 'is-active'
+    _.delay (=> @$successMessage.removeClass('is-active')), 3000
 
   #
   # Location
