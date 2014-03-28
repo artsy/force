@@ -5,9 +5,9 @@ Backbone           = require 'backbone'
 GeoFormatter       = require 'geoformatter'
 LocationSearchView = require '../../../components/location_search/index.coffee'
 Profile            = require '../../../models/profile.coffee'
-ProfileEdit        = require '../../../models/profile_edit.coffee'
+ProfileEdit        = require '../models/profile_edit.coffee'
 ProfileForm        = require './profile_form.coffee'
-UserEdit           = require '../../../models/user_edit.coffee'
+UserEdit           = require '../models/user_edit.coffee'
 
 module.exports.UserSettingsView = class UserSettingsView extends Backbone.View
 
