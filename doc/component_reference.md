@@ -17,6 +17,7 @@ If a separate doc is required, add it to the component's directory as a
 - [Related Genes](#related-genes)
 - [Partner Buttons](#partner-buttons)
 - [Location Search](#location-search)
+- [Page Modal](#page-modal)
 
 ## Artwork Columns
 ![](images/artwork_columns.png)
@@ -493,3 +494,22 @@ block head
 ```
 
 Check out usage in `apps/personalize`
+
+## Page Modal
+
+Fetches and displays a page of markdown content in a modal window
+
+```stylus
+@import '../apps/page'
+```
+
+```coffeescript
+ModalPageView = require '../../../components/modal/page.coffee'
+
+# ...
+
+# Pass a width and a pageId
+new ModalPageView
+  width  : '700px'
+  pageId : 'auction-info'
+```
