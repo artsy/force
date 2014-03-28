@@ -10,7 +10,7 @@ NW.Dom.shortcuts = (function() {
     // add left context if missing
     if (reLeftContext.test(selector)) {
       if (from.nodeType == 9) {
-        selector = '* ' + selector; 
+        selector = '* ' + selector;
       } else if (/html|body/i.test(from.nodeName)) {
         selector = from.nodeName + ' ' + selector;
       } else if (alt) {
@@ -19,7 +19,7 @@ NW.Dom.shortcuts = (function() {
         selector = '#' + from.id + ' ' + selector;
       } else {
         ++nextID;
-        selector = '#' + (from.id = 'NW' + nextID) + ' ' + selector; 
+        selector = '#' + (from.id = 'NW' + nextID) + ' ' + selector;
         //NW.Dom.emit('Unable to resolve a context for the shortcut selector "' + selector + '"');
       }
     }

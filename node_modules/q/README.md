@@ -5,6 +5,13 @@
          align="right" alt="Promises/A+ logo" />
 </a>
 
+*This is Q version 1, from the `v1` branch in Git. This documentation applies to
+the latest of both the version 1 and version 0.9 release trains. These releases
+are stable. There will be no further releases of 0.9 after 0.9.7 which is nearly
+equivalent to version 1.0.0. All further releases of `q@~1.0` will be backward
+compatible. The version 2 release train introduces significant but
+backward-incompatible changes and is experimental at this time.*
+
 If a function cannot return a value or throw an exception without
 blocking, it can return a promise instead.  A promise is an object
 that represents the return value or the thrown exception that the
@@ -804,10 +811,10 @@ to many users, you should probably keep it off. But in development, go for it!
 
 You can view the results of the Q test suite [in your browser][tests]!
 
-[tests]: https://rawgithub.com/kriskowal/q/master/spec/q-spec.html
+[tests]: https://rawgithub.com/kriskowal/q/v1/spec/q-spec.html
 
 ## License
 
-Copyright 2009–2013 Kristopher Michael Kowal
+Copyright 2009–2014 Kristopher Michael Kowal
 MIT License (enclosed)
 
