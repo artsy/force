@@ -13,12 +13,10 @@ _.mixin(require 'underscore.string')
 
 module.exports = (options) =>
   return if module.exports.getUserAgent()?.indexOf?('PhantomJS') > -1
-  { @mixpanel, @ga, @location } = options
+  { @ga, @location } = options
   @location ?= window?.location
   if sd.GOOGLE_ANALYTICS_ID
     @ga? 'create', sd.GOOGLE_ANALYTICS_ID, 'artsy.net'
-  if sd.MIXPANEL_ID
-    @mixpanel?.init sd.MIXPANEL_ID
 
 module.exports.getUserAgent = ->
   window?.navigator?.userAgent
