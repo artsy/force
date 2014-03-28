@@ -24,6 +24,8 @@ module.exports = class DeepZoomView extends Backbone.View
     @zoomTo           = _.throttle @_zoomTo, 50
     @detectActivity   = _.throttle @_detectActivity, 500
 
+    (@$window = $(window)).on 'keyup', @escape
+
   _detectActivity: (e) ->
     @$el.attr 'data-focus', 'active'
     clearTimeout @activityTimer
@@ -93,6 +95,10 @@ module.exports = class DeepZoomView extends Backbone.View
   _zoomTo: (e) ->
     @viewer.viewport.zoomTo parseFloat(e.currentTarget.value)
 
+  escape: (e) =>
+    return unless e.which is 27
+    @return()
+
   # Close by just returning to the base artwork route
   # The router will call #remove on this view
   return: ->
@@ -105,4 +111,5 @@ module.exports = class DeepZoomView extends Backbone.View
     Transition.fade @$el,
       duration: 500
       out: =>
+        @$window.off 'keyup', @escape
         DeepZoomView.__super__.remove.apply(this, arguments)
