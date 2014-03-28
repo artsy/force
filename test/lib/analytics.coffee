@@ -27,9 +27,6 @@ describe 'analytics', ->
 
     describe 'initialize function', ->
 
-      it 'initializes mixpanel with the MIXPANEL_ID', ->
-        @mixpanelStub.init.args[0][0].should.equal 'mix that panel'
-
       it 'inits ga with the GOOGLE_ANALYTICS_ID', ->
         @gaStub.args[0][0].should.equal 'create'
         @gaStub.args[0][1].should.equal 'goog that analytics'
