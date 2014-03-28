@@ -38,7 +38,9 @@ module.exports = class AuctionDetailView extends Backbone.View
 
   displayHelp: (e) ->
     e.preventDefault()
-    new ModalPageView pageId: 'auction-info'
+    new ModalPageView
+      width  : '700px'
+      pageId : 'auction-info'
 
   render: ->
     @$el.html(template

@@ -11,7 +11,7 @@ module.exports = class ModalPageView extends ModalView
 
   initialize: (options) ->
     { @pageId } = options
-    options.width = '800px'
+
     @page = new Page id: @pageId
     @page.fetch
       success: (model, response, options) =>
@@ -19,6 +19,7 @@ module.exports = class ModalPageView extends ModalView
         @$('.modal-body').html @template(@templateData)
         @updatePosition()
         @isLoaded()
+
     super
 
   postRender: ->
