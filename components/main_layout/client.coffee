@@ -77,5 +77,5 @@ addGlobalErrorHandler = ->
         fileurl: url
         lineno: lineno
         linecol: linecol
-        stack: err.stack
+        stack: err?.stack
         href: location.href
