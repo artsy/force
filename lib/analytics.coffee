@@ -83,8 +83,7 @@ module.exports.encodeMulti = (ids) ->
   (_.map ids, (id) -> createHash('md5').update(id).digest('hex').substr(0, 8)).join("-")
 
 module.exports.trackMulti = (description, data) =>
-  # Send google analytics event
-  @ga? 'send', 'event', categories['multi'], description, data
+  ga? 'send', 'event', categories['multi'], description, data
 
 module.exports.multi = (description, modelName, ids) ->
   return unless ids?.length > 0
