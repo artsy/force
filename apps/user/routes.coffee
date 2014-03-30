@@ -1,6 +1,7 @@
-_        = require 'underscore'
-UserEdit = require './models/user_edit.coffee'
-Profile  = require '../../models/profile.coffee'
+_           = require 'underscore'
+UserEdit    = require './models/user_edit.coffee'
+ProfileEdit = require './models/profile_edit.coffee'
+Profile     = require '../../models/profile.coffee'
 
 @refresh = (req, res) ->
   return res.redirect("/") unless req.user
@@ -28,6 +29,7 @@ Profile  = require '../../models/profile.coffee'
     res.render './templates/settings.jade',
       user               : user
       profile            : profile
+      profileEdit        : new ProfileEdit profile.attributes
       editAccountIsActive: editAccountIsActive
       editProfileIsActive: editProfileIsActive
 

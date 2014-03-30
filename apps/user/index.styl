@@ -26,18 +26,30 @@
       background-position center center
       height 140px
 
+  textarea
+    visibility hidden
+
+  // These elements jump around the page if they are not hidden initially
+  &.is-loaded
+    textarea
+      visibility visible
+    .settings-success-message
+      display block
+
+
 .settings-success-message
   avant-garde()
   color highlight-color
+  display none
   opacity 0
   left 50%
   margin-left -145px
-  margin-top -50px
+  margin-top -60px
   position absolute
   text-align center
   transition opacity, margin-top 0.5s, 0.2s
   &.is-active
-    margin-top -10px 
+    margin-top -20px
     opacity 1
 
 .settings-group-label

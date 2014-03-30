@@ -41,6 +41,16 @@ module.exports = class UserEdit extends CurrentUser
   refresh: ->
     @fetch url: '/user/refresh'
 
+  updateFavorites: (isPrivate) ->
+    favorites = @defaultArtworkCollection()
+    $.ajax favorites.url(),
+      data:
+        access_token: @get 'accessToken'
+        id: favorites.get 'id'
+        private: isPrivate
+        user_id: @get 'id'
+      method: 'put'
+
   fetchAuthentications: (options = {}) ->
     passThrough = options.success if options.success?
     new Backbone.Collection().fetch _.extend options,

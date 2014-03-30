@@ -46,7 +46,12 @@ module.exports = class ProfileForm extends Backbone.View
     'click .artsy-toggle'       : 'onToggle'
     'click .artsy-toggle-label' : 'onToggle'
     'click #profile-edit-submit': 'onSubmit'
+    'click #profile-favorites'  : 'onTogglePublicFavorites'
+    'click #profile-public'     : 'onTogglePublicProfile'
     'form'                      : 'onSubmit'
+    # Handle toggle label clicks too
+    'click #profile-favorites + .artsy-toggle-label': 'onTogglePublicFavorites'
+    'click #profile-public + .artsy-toggle-label'   : 'onTogglePublicFavorites'
 
   #
   # Id
@@ -64,6 +69,7 @@ module.exports = class ProfileForm extends Backbone.View
 
   # TODO: compontent
   onToggle: (event) ->
+    event.preventDefault()
     $target = $(event.target)
     if $target.is '.artsy-toggle-label'
       $toggle = $target.prev()
@@ -74,7 +80,20 @@ module.exports = class ProfileForm extends Backbone.View
       $toggle.attr 'data-state', 'off'
     else
       $toggle.attr 'data-state', 'on'
-    false
+
+  onTogglePublicProfile: (event) ->
+    enabled = @$profileIsPublic.is "[data-state='on']"
+    # When making a profile private, make public favorites collections private
+    unless enabled and @$profileFavorites.is "[data-state='on']"
+      @userEdit.updateFavorites true
+      @$profileFavorites.attr 'data-state', 'off'
+
+  onTogglePublicFavorites: (event) ->
+    enabled = @$profileFavorites.is "[data-state='on']"
+    @userEdit.updateFavorites enabled
+    if enabled and @$profileIsPublic.is "[data-state='off']"
+      @$profileIsPublic.attr 'data-state', 'on'
+      @onSubmit()
 
   onSubmit: ->
     @clearErrors()
