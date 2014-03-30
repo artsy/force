@@ -37,8 +37,11 @@ module.exports.UserSettingsView = class UserSettingsView extends Backbone.View
     @listenTo @model, 'sync', @renderSuccess
     @listenTo @profileEdit, 'sync', @renderSuccess
 
+    @$el.addClass 'is-loaded'
+
 
   renderSuccess: ->
+    $('html,body').animate scrollTop: 0
     @$successMessage.addClass 'is-active'
     _.delay (=> @$successMessage.removeClass('is-active')), 3000
 
