@@ -8,4 +8,4 @@ module.exports = class PartnerArtist extends Backbone.Model
 
   _.extend @prototype, Image(SECURE_IMAGES_URL)
 
-  href: -> "/#{@get('partner').id}/artist/#{@get('artist').id}"
+  href: -> "/#{@get('partner').default_profile_id}/artist/#{@get('artist').id}"
