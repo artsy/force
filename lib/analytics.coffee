@@ -124,3 +124,15 @@ module.exports.abTest = (key, percentToNew = 0.5) ->
     hash[key] = enabledDisabled
     module.exports.setProperty hash
     enabledDisabled == 'enabled'
+
+# Calls back when mixpanel has loaded. Useful for pages that do testing on
+# load. Such as AB testing the way a certain page looks.
+
+module.exports.load = (callback) ->
+  called = false
+  cb = ->
+    return if called
+    called = true
+    callback()
+  if mixpanel.__loaded then cb() else mixpanel.set_config(loaded: cb)
+  setTimeout cb, 5000 # Ensure we callback whether mixpanel is working or not
