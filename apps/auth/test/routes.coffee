@@ -34,24 +34,6 @@ describe 'Auth routes', ->
       @req.logout.called.should.be.ok
       @res.redirect.args[0][0].should.include '/users/sign_out?redirect_uri=http://localhost:3004'
 
-  describe '#loginToArtsy', ->
-
-    it 'single signs in to Artsy', ->
-      request = routes.__get__ 'request'
-      request.post = -> send: -> end: (callback) -> callback {
-        body: {
-          trust_token: 'foobar'
-        }
-      }
-      @req.get = -> 'ref'
-      routes.loginToArtsy @req, @res
-      @res.redirect.args[0][0].should.include '/users/sign_in?trust_token=foobar'
-
-    it 'follows a redirec to query param', ->
-      @req.query['redirect-to'] = 'personalize/collect'
-      routes.loginToArtsy @req, @res
-      @res.redirect.args[0][0].should.include 'personalize/collect'
-
   describe '#submitTwitterLastStep', ->
 
     beforeEach ->

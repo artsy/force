@@ -54,19 +54,13 @@ describe 'AuthModalView', ->
     afterEach ->
       location.reload.restore()
 
-    it 'directs to logging into Gravity after a successful login', ->
-      @view.state.set mode: 'login'
-      @view.submit { preventDefault: -> }
-      Backbone.sync.args[0][1].url.should.include 'users/sign_in'
-      Backbone.sync.args[0][2].success {}
-      location.href.should.include 'log_in_to_artsy'
-
     it 'submits to signup when in that mode', ->
+      @view.redirectTo = 'foobarbaz'
       @view.state.set mode: 'register'
       @view.submit { preventDefault: -> }
       Backbone.sync.args[0][1].url.should.include 'users/invitation/accept'
       Backbone.sync.args[0][2].success {}
-      location.href.should.include 'log_in_to_artsy'
+      location.href.should.include 'foobarbaz'
 
     it 'submits to signup with custom redirect url', ->
       @view.redirectTo = '/awesome-fair'
