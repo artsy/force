@@ -1,10 +1,10 @@
 _               = require 'underscore'
 sd              = require('sharify').data
 Artworks        = require '../collections/artworks.coffee'
-AdditionalImage = require './additional_image.coffee'
 Backbone        = require 'backbone'
 Fair            = require './fair.coffee'
 FairLocation    = require './fair_location.coffee'
+InstallShot     = require './install_shot.coffee'
 Partner         = require './partner.coffee'
 PartnerLocation = require './partner_location.coffee'
 DateHelpers     = require '../components/util/date_helpers.coffee'
@@ -91,7 +91,7 @@ module.exports = class PartnerShow extends Backbone.Model
 
   fetchInstallShots: (callbacks) ->
     throw "You must pass a success callback" unless callbacks?.success? and _.isFunction(callbacks.success)
-    @installShots = new Backbone.Collection [], { model: AdditionalImage }
+    @installShots = new Backbone.Collection [], { model: InstallShot }
     options =
       data   : { default: false }
       url    : "#{sd.ARTSY_URL}/api/v1/partner_show/#{@get('id')}/images"
