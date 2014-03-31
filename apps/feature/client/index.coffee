@@ -65,10 +65,10 @@ module.exports.FeatureView = class FeatureView extends Backbone.View
         @setupArtworkImpressionTracking artworks.models
 
       if set.get('type') is 'auction artworks'
-        @initializeAuction @model
+        @initializeAuction @model.get('sale')
 
   initializeAuction: (sale) ->
-    new Sale(id: @model.get('id')).fetch
+    new Sale(id: sale.get('id')).fetch
       success: (sale) =>
         @sale = sale
         if sale.get('is_auction')
