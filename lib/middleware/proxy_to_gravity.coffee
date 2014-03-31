@@ -14,9 +14,7 @@ app = module.exports.app = express()
 ROUTES = [
   '/oauth2*', '/sitemap*'
 ]
-AUTH_ROUTES = [
-  '/post', "/user/delete"
-]
+AUTH_ROUTES = [ '/post' ]
 for route in ROUTES
   app.all route, (req, res) ->
     proxy.web req, res, { target: ARTSY_URL }

@@ -51,3 +51,9 @@ Profile     = require '../../models/profile.coffee'
           access_token: user.get 'accessToken'
         success: render
         error: res.backboneError
+
+@delete = (req, res) ->
+  return res.redirect("/") unless req.user and not req.user.isAdmin()
+  res.locals.sd.USER = req.user
+  res.render './templates/delete.jade',
+    user: req.user
