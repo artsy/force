@@ -97,6 +97,7 @@
 .settings-password-support
   display none
 
+.settings-cancel-delete-account-link
 .settings-delete-account-link
   font-size 13px
   margin-bottom 50px
@@ -105,8 +106,51 @@
   a
     &::before
       height 1.5em
+.settings-delete-account-link
+  a
     &:hover, &:focus
       color bad-red-color
-      line-height 1em
       &::before
         border-color bad-red-color
+
+// Delete User
+.settings-user-delete-success
+.settings-user-delete-error
+  display none
+  margin-bottom 50px
+  text-align center
+
+.settings-user-delete-error
+  p
+    margin-bottom 20px
+    &:first-child
+      color bad-red-color
+
+#settings #user-delete-explanation
+  height 150px
+  visibility visible
+
+#user-delete-confirm
+  display inline-block
+  margin-top 4px
+  vertical-align top
+  width auto
+
+#user-delete-submit
+  margin-bottom 50px
+
+label[for="user-delete-confirm"]
+  garamond()
+  color bad-red-color
+  cursor pointer
+  display inline-block
+  margin-bottom 20px
+  margin-left 20px
+  width 90%
+
+.settings-cancel-delete-account-link
+  a
+    &:hover, &:focus
+      color highlight-color
+      &::before
+        border-color highlight-color

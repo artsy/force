@@ -62,4 +62,24 @@ describe '/user', ->
 
       xit 'determines which model to edit first (profile or user)', ->
 
-  xdescribe '#delete', ->
+
+  describe '#delete', ->
+
+    it 'redirects to the home page without a current user', ->
+      routes.delete @req, @res
+      @res.redirect.args[0][0].should.equal '/'
+
+    describe 'with a logged in user', ->
+
+      it 'renders the account delete form', ->
+        @req = { user : new CurrentUser fabricate 'user' }
+        routes.delete @req, @res
+        @res.render.args[0][0].should.include 'delete'
+        @res.render.args[0][1].user.should.equal @req.user
+
+    describe 'with a logged in admin', ->
+
+      it 'redirects to the home page - the "me" API does not delete admins', ->
+        @req = { user : new CurrentUser fabricate 'user', type: 'Admin' }
+        routes.delete @req, @res
+        @res.redirect.args[0][0].should.equal '/'

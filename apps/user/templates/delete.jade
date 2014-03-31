@@ -1,0 +1,30 @@
+extends ../../../components/main_layout/templates/index.jade
+
+append locals
+  - assetPackage = 'user_delete'
+
+block body
+  #settings.settings-user-delete.main-layout-container
+    h1.avant-garde-header-center Delete My Account
+
+    .settings-forms
+      form#settings-user-delete-form( method="post", action="#{sd.ARTSY_URL}/users/delete", accept-charset="UTF-8" )
+
+        input#user-delete-confirm( type="checkbox", name="user_delete_confirm" )
+        label( for="user-delete-confirm" ) I understand that this will permanently delete my account and cannot be undone.
+
+        label.avant-garde-form-label( for="user-delete-explanation" ) Please Tell Us Why
+        textarea#user-delete-explanation.bordered-input( name="user_delete_explanation" )
+
+        button#user-delete-submit.avant-garde-button-black.settings-submit.is-block( disabled='disabled' ) Delete My Account
+
+      .settings-cancel-delete-account-link
+        a.faux-underline( href="/user/edit" ) Cancel
+
+    .settings-user-delete-success
+      | Your account has been deleted, click <a href='/users/sign_out'>here to continue</a>.
+
+    .settings-user-delete-error
+      p An error prevented us from deleting your account through this form.
+      p Please <a href="javascript:window.location.reload()">reload the page and try again</a>.
+      p If the probelm persists, contact <a href="mailto:support@artsy.net">support@artsy.net</a>.
