@@ -1,7 +1,6 @@
 _                  = require 'underscore'
 sd                 = require('sharify').data
 Backbone           = require 'backbone'
-AdditionalImage    = require '../../../models/additional_image.coffee'
 Artworks           = require '../../../collections/artworks.coffee'
 CarouselView       = require '../../../components/carousel/view.coffee'
 CurrentUser        = require '../../../models/current_user.coffee'
@@ -30,7 +29,7 @@ module.exports.PartnerShowView = class PartnerShowView extends Backbone.View
           @carouselView = new CarouselView
             el        : @$carousel
             collection: installShots
-            height    : 400
+            height    : 480
         else
           @$carousel.remove()
       error: =>
