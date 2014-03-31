@@ -10,5 +10,7 @@ if sd.NODE_ENV != 'test' && newrelic
 //- Mixpanel wants to include it's script in the head b/c it async downloads
 //- and injects it into the body. Hopefully this stops race conditions b/t
 //- DOM load and mixpanel init.
-if sd.NODE_ENV != 'test'
+if sd.NODE_ENV != 'test' && sd.MIXPANEL_ID
   include ./mixpanel.html
+  script.
+    mixpanel.init("#{sd.MIXPANEL_ID}")

@@ -68,16 +68,27 @@ module.exports = class AccountForm extends Backbone.View
     'blur #user-password-confirmation': 'onPasswordSupportBlur'
     'blur #user-current-password'     : 'onPasswordSupportBlur'
     'click #user-edit-submit'         : 'onSubmit'
+    'click #user-link-facebook'       : 'toggleFacebookLinked'
+    'click #user-link-twitter'        : 'toggleTwitterLinked'
+    'change .publish_to_facebook'     : 'togglePublishToFacebook'
     'form'                            : 'onSubmit'
+    # Add specific toggle handlers to trigger on label click
+    'click #user-link-facebook + artsy-toggle-label': 'toggleFacebookLinked'
+    'click #user-link-twitter + artsy-toggle-label' : 'toggleTwitterLinked'
 
   # TODO: compontent
   onToggle: (event) ->
-    $toggle = $(event.target).closest 'a.artsy-toggle'
+    event.preventDefault()
+    $target = $(event.target)
+    if $target.is '.artsy-toggle-label'
+      $toggle = $target.prev()
+    else
+      $toggle = $target.closest 'a.artsy-toggle'
+
     if $toggle.is "[data-state='on']"
       $toggle.attr 'data-state', 'off'
     else
       $toggle.attr 'data-state', 'on'
-    false
 
   #
   # Name
@@ -146,6 +157,33 @@ module.exports = class AccountForm extends Backbone.View
       values.password_confirmation = @$passwordConfirmation.val()
       values.current_password = @$currentPassword.val()
       @passwordEdit.save values, trigger: true
+
+  #
+  # Social Toggles
+  #
+  toggleFacebookLinked: ->
+    if @model.hasLabFeature('Facebook Timeline Integration') && @model.isLinkedTo('facebook')
+      @model.set({publish_to_facebook: false}, {silent: true})  # update model to match server-side setting propagation
+      @$('.publish_to_facebook').hide()
+    @toggleLinked('facebook')
+
+  toggleTwitterLinked: -> @toggleLinked('twitter')
+
+  toggleLinked: (provider) ->
+    if @model.isLinkedTo(provider)
+      @model.unlinkAccount provider,
+        error: (model, response) =>
+          response.suppressAppMessages = true
+          @displayErrors(response)
+    else
+      authUrl = "/users/auth/#{provider}"
+      authUrl += "?scope=publish_actions" if @model.hasLabFeature('Facebook Timeline Integration')
+      window.location = authUrl
+
+  togglePublishToFacebook: ->
+    publish = !@model.get('publish_to_facebook')
+    @model.set({ publish_to_facebook: publish }, { silent: true })
+    @saveSettings()
 
   onSubmit: ->
     @clearErrors()
