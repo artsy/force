@@ -1,3 +1,3 @@
-require '../components/main_layout/client.coffee'
+require('backbone').$  = $
 require('../lib/analytics.coffee').load ->
   $ require('../apps/artwork/client/index.coffee').init
