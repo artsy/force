@@ -6,6 +6,7 @@ sinon           = require 'sinon'
 
 Artworks  = require '../../../../collections/artworks'
 Artwork   = require '../../../../models/artwork'
+Sale      = require '../../../../models/sale'
 
 describe 'SaleView', ->
   before (done) ->
@@ -18,21 +19,21 @@ describe 'SaleView', ->
     benv.teardown()
 
   beforeEach (done) ->
-    sinon.stub(Backbone, 'sync').yieldsTo('success')
-    SaleView    = benv.requireWithJadeify resolve(__dirname, '../../client/sale'), ['template', 'artworkColumnsTemplate']
-    @$fixture   = $('<div></div>')
-    @artwork    = new Artwork fabricate 'artwork'
-    @artwork.sales.add fabricate 'sale'
-    @view = new SaleView el: @$fixture, sale: @artwork.sales.first(), saved: {}
+    sinon.stub(Backbone, 'sync')
+    SaleView = benv.requireWithJadeify resolve(__dirname, '../../client/sale'), ['template', 'artworkColumnsTemplate']
+
+    @artwork  = new Artwork fabricate 'artwork'
+    @sale     = new Sale(fabricate 'sale')
+
+    @sale.fetchArtworks = sinon.stub().yieldsTo 'success', new Backbone.Collection
+
+    @view = new SaleView el: $('<div></div>'), sale: @sale, saved: {}
     done()
 
   afterEach ->
     Backbone.sync.restore()
 
   describe '#initialize', ->
-    it 'sets up the saleArtworks collection with the correct URL and fetches it', ->
-      Backbone.sync.args[0][0].should.equal 'read'
-      Backbone.sync.args[0][1].url.should.include '/api/v1/sale/whtney-art-party/sale_artworks'
     it 'sets up artworks on success', ->
       @view.artworks.constructor.name.should.equal 'Artworks'
 

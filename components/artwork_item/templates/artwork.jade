@@ -2,7 +2,7 @@
 - imageWidth = imageWidth || false
 - displayPurchase = displayPurchase || false
 - showBlurbs = showBlurbs || false
-- isAuction = (set && set.get('type') === 'auction artworks') || false
+- isAuction = isAuction || (set && set.get('type') === 'auction artworks') || false
 
 figure.artwork-item( data-artwork=artwork.get('id') )
   .artwork-item-image-container

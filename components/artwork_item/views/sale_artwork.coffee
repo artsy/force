@@ -51,7 +51,7 @@ module.exports = class SaleArtworkView extends Backbone.View
       mediator.trigger 'open:auth',
         mode        : 'register'
         copy        : 'Sign up to bid'
-        destination : @model.href()
+        redirectTo  : @sale.redirectUrl @model
 
   setBidButtonState: ->
     $button   = @$('.artwork-item-bid')
