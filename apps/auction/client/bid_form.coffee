@@ -37,14 +37,18 @@ module.exports = class BidForm extends ErrorHandlingForm
   placeBid: =>
     @timesPolledForBidPlacement = 0
     @$submit.addClass('is-loading')
-    bidderPosition = new BidderPosition
-      sale_id              : @model.get('id')
-      artwork_id           : @saleArtwork.get('artwork').id
-      max_bid_amount_cents : @getBidAmount()
-    bidderPosition.save null,
-      success   : =>
-        @pollForBidPlacement(@model.get('minimum_next_bid_cents'))
-      error     : @showError
+    @clearErrors()
+    if @getBidAmount() >= @saleArtwork.get('minimum_next_bid_cents')
+      bidderPosition = new BidderPosition
+        sale_id              : @model.get('id')
+        artwork_id           : @saleArtwork.get('artwork').id
+        max_bid_amount_cents : @getBidAmount()
+      bidderPosition.save null,
+        success   : =>
+          @pollForBidPlacement(@model.get('minimum_next_bid_cents'))
+        error     : @showError
+    else
+      @showError "Your bid must be higher than #{@saleArtwork.minBid()}"
 
   pollForBidPlacement: (minimumBidAmountInCents) ->
     @saleArtwork.fetch
