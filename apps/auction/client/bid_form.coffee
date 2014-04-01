@@ -5,8 +5,8 @@ analytics          = require '../../../lib/analytics.coffee'
 ModalPageView      = require '../../../components/modal/page.coffee'
 BidderPosition     = require '../../../models/bidder_position.coffee'
 ErrorHandlingForm  = require('../../../components/credit_card/client/error_handling_form.coffee')
-
-{ SESSION_ID } = require('sharify').data
+{ unformat }       = require 'accounting'
+{ SESSION_ID }     = require('sharify').data
 
 module.exports = class BidForm extends ErrorHandlingForm
 
@@ -32,11 +32,7 @@ module.exports = class BidForm extends ErrorHandlingForm
   getBidAmount: =>
     val = @$('input.max-bid').val()
     if val
-      # Format the input amount
-      # - '.' is for removing cents
-      # - '_' is also for removing cents
-      # - adding _00 on the end adds cents
-      val.split('.')[0].split('_')[0].replace(',','') + "_00"
+      unformat(val) * 100
 
   placeBid: =>
     @timesPolledForBidPlacement = 0
