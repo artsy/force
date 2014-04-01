@@ -31,16 +31,21 @@ module.exports = class FeatureRouter extends Backbone.Router
     @feature = options.feature
     @currentUser = CurrentUser.orNull()
 
+  fetchUser: (success) =>
+    @currentUser.fetch
+      success: success
+
   confirmBid: ->
-    new ConfirmBidModal feature: @feature
-    mediator.on 'modal:closed', => Backbone.history.navigate(@feature.href(), trigger: true, replace: true)
-    analytics.track.click "Showed 'Confirm bid' on feature page"
+    @fetchUser =>
+      new ConfirmBidModal feature: @feature, paddleNumber: @currentUser.get('paddle_number')
+      mediator.on 'modal:closed', => Backbone.history.navigate(@feature.href(), trigger: true, replace: true)
+      analytics.track.click "Showed 'Confirm bid' on feature page"
 
   confirmRegistration: ->
-    new ConfirmRegistrationModal feature: @feature
-    mediator.on 'modal:closed', => Backbone.history.navigate(@feature.href(), trigger: true, replace: true)
-    analytics.track.click "Showed 'Confirm registration' on feature page"
-
+    @fetchUser =>
+      new ConfirmRegistrationModal feature: @feature, paddleNumber: @currentUser.get('paddle_number')
+      mediator.on 'modal:closed', => Backbone.history.navigate(@feature.href(), trigger: true, replace: true)
+      analytics.track.click "Showed 'Confirm registration' on feature page"
 
 module.exports.FeatureView = class FeatureView extends Backbone.View
 

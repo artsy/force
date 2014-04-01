@@ -4,6 +4,7 @@ DeepZoomView    = require './deep-zoom.coffee'
 ViewInRoomView  = require './view-in-room.coffee'
 analytics       = require '../../../lib/analytics.coffee'
 mediator        = require '../../../lib/mediator.coffee'
+CurrentUser     = require '../../../models/current_user.coffee'
 
 ConfirmBidModal          = require '../../../components/credit_card/client/confirm_bid.coffee'
 ConfirmRegistrationModal = require '../../../components/credit_card/client/confirm_registration.coffee'
@@ -75,12 +76,19 @@ module.exports = class ArtworkRouter extends Backbone.Router
     new @InquiryView artwork: @artwork
     mediator.on 'modal:closed', => Backbone.history.navigate(@artwork.href(), trigger: true, replace: true)
 
+  fetchUser: (success) =>
+    @currentUser = CurrentUser.orNull()
+    @currentUser.fetch
+      success: success
+
   confirmBid: ->
-    analytics.track.click "Showed 'Confirm bid on artwork page'"
-    new ConfirmBidModal artwork: @artwork
-    mediator.on 'modal:closed', => Backbone.history.navigate(@artwork.href(), trigger: true, replace: true)
+    @fetchUser =>
+      new ConfirmBidModal artwork: @artwork, paddleNumber: @currentUser.get('paddle_number')
+      mediator.on 'modal:closed', => Backbone.history.navigate(@artwork.href(), trigger: true, replace: true)
+      analytics.track.click "Showed 'Confirm bid on artwork page'"
 
   confirmRegistration: ->
-    analytics.track.click "Showed 'Confirm registration on artwork page'"
-    new ConfirmRegistrationModal artwork: @artwork
-    mediator.on 'modal:closed', => Backbone.history.navigate(@artwork.href(), trigger: true, replace: true)
+    @fetchUser =>
+      new ConfirmRegistrationModal artwork: @artwork, paddleNumber: @currentUser.get('paddle_number')
+      mediator.on 'modal:closed', => Backbone.history.navigate(@artwork.href(), trigger: true, replace: true)
+      analytics.track.click "Showed 'Confirm registration on artwork page'"
