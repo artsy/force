@@ -6,6 +6,7 @@ sinon           = require 'sinon'
 
 Artworks  = require '../../../../collections/artworks'
 Artwork   = require '../../../../models/artwork'
+Sale      = require '../../../../models/sale'
 
 describe 'SaleView', ->
   before (done) ->
@@ -22,7 +23,7 @@ describe 'SaleView', ->
     SaleView    = benv.requireWithJadeify resolve(__dirname, '../../client/sale'), ['template', 'artworkColumnsTemplate']
     @$fixture   = $('<div></div>')
     @artwork    = new Artwork fabricate 'artwork'
-    @artwork.sales.add fabricate 'sale'
+    @artwork.sales.add new Sale(fabricate 'sale')
     @view = new SaleView el: @$fixture, sale: @artwork.sales.first(), saved: {}
     done()
 

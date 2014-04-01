@@ -107,8 +107,8 @@ describe 'ArtworkView', ->
           @view.setupFeatureNavigation.args[0][0].model.get('id').should.equal 'i am a fair'
           @view.setupFeatureNavigation.args[0][0].kind.should.equal 'fair'
           @view.belowTheFoldView.setupSale.called.should.be.ok
-          @view.belowTheFoldView.setupSale.args[0][0].get('id').should.equal 'i am a sale'
-          @view.belowTheFoldView.setupSale.args[0][1].constructor.name.should.equal 'ArtworkCollection'
+          @view.belowTheFoldView.setupSale.args[0][0].sale.get('id').should.equal 'i am a sale'
+          @view.belowTheFoldView.setupSale.args[0][0].saved.constructor.name.should.equal 'ArtworkCollection'
           @view.deltaTrackPageView.called.should.be.ok
           @view.deltaTrackPageView.args[0][0].get('id').should.equal 'i am a fair'
 

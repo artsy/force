@@ -1,17 +1,18 @@
-_                     = require 'underscore'
-sd                    = require('sharify').data
-Backbone              = require 'backbone'
-ShareView             = require './share.coffee'
-Transition            = require '../../../components/mixins/transition.coffee'
-CurrentUser           = require '../../../models/current_user.coffee'
-SaveButton            = require '../../../components/save_button/view.coffee'
-RelatedPostsView      = require '../../../components/related_posts/view.coffee'
-analytics             = require '../../../lib/analytics.coffee'
-acquireArtwork        = require('../../../components/acquire/view.coffee').acquireArtwork
-FeatureNavigationView = require './feature-navigation.coffee'
-BelowTheFoldView      = require './below-the-fold.coffee'
-trackArtworkImpressions = require("../../../components/analytics/impression_tracking.coffee").trackArtworkImpressions
-MonocleView           = require './monocles.coffee'
+_                         = require 'underscore'
+sd                        = require('sharify').data
+Backbone                  = require 'backbone'
+ShareView                 = require './share.coffee'
+Transition                = require '../../../components/mixins/transition.coffee'
+CurrentUser               = require '../../../models/current_user.coffee'
+SaveButton                = require '../../../components/save_button/view.coffee'
+RelatedPostsView          = require '../../../components/related_posts/view.coffee'
+analytics                 = require '../../../lib/analytics.coffee'
+acquireArtwork            = require('../../../components/acquire/view.coffee').acquireArtwork
+FeatureNavigationView     = require './feature-navigation.coffee'
+BelowTheFoldView          = require './below-the-fold.coffee'
+trackArtworkImpressions   = require("../../../components/analytics/impression_tracking.coffee").trackArtworkImpressions
+MonocleView               = require './monocles.coffee'
+Sale                      = require '../../../models/sale.coffee'
 
 artistArtworksTemplate  = -> require('../templates/_artist-artworks.jade') arguments...
 detailTemplate          = -> require('../templates/_detail.jade') arguments...
@@ -52,8 +53,12 @@ module.exports = class ArtworkView extends Backbone.View
       @setupFeatureNavigation model: fair, kind: 'fair'
       @deltaTrackPageView fair
     @on 'related:sales', (sale) ->
-      @belowTheFoldView.setupSale sale, @saved
-      @setupAuction sale if sale.get 'is_auction'
+      @sale = new Sale sale.toJSON()
+      @belowTheFoldView.setupSale
+        sale        : @sale
+        saved       : @saved
+        currentUser : @currentUser
+      @setupAuction @sale if @sale.isAuction()
     @on 'related:none', ->
       @belowTheFoldView.setupLayeredSearch()
 
