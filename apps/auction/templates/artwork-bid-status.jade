@@ -1,5 +1,5 @@
 .bordered-bid-form-group.current-bid
-  .bid-group-label Current Bid:
+  .bid-group-label!= saleArwork.bidLabel() + ":"
   .bid-group-content
     .bid-group-value!= saleArtwork.currentBid()
     if saleArtwork.formatBidsAndReserve()
