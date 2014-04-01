@@ -1,3 +1,7 @@
+if saleArtwork.estimate()
+  .artwork-auction-estimate
+    = saleArtwork.estimate()
+
 if auction.isOpen()
   if bidderPositions && bidderPositions.length
     .artwork-bidder-position-status(

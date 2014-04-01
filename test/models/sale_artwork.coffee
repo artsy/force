@@ -39,6 +39,15 @@ describe 'SaleArtwork', ->
       @saleArtwork.set minimum_next_bid_cents: 1000
       @saleArtwork.minBid().should.equal '$10.00'
 
+  describe '#estimate', ->
+
+    it 'formats the estimate', ->
+      @saleArtwork.unset 'low_estimate_cents'
+      @saleArtwork.unset 'high_estimate_cents'
+      _.isUndefined(@saleArtwork.estimate()).should.be.ok
+      @saleArtwork.set high_estimate_cents: 20000, low_estimate_cents: 30000
+      @saleArtwork.estimate().should.equal 'Estimate: $200–$300'
+
   describe '#bidCount', ->
 
     it 'returns bid count in singular form if 1', ->

@@ -33,6 +33,12 @@ module.exports = class SaleArtwork extends Backbone.Model
   minBid: ->
     accounting.formatMoney @get('minimum_next_bid_cents') / 100
 
+  estimate: ->
+    if @has('low_estimate_cents') and @has('high_estimate_cents')
+      high  = accounting.formatMoney @get('high_estimate_cents') / 100, '$', 0
+      low   = accounting.formatMoney @get('low_estimate_cents') / 100, '$', 0
+      "Estimate: #{high}–#{low}"
+
   bidLabel: ->
     if @get('highest_bid_amount_cents') then 'Current Bid' else 'Starting Bid'
 
