@@ -48,6 +48,9 @@ module.exports = class Sale extends Backbone.Model
       url += "?redirect_uri=#{redirectUrl}"
     url
 
+  bidUrl: (artwork) ->
+    "/feature/#{@id}/bid/#{artwork.id}"
+
   # NOTE
   # auction_state helpers are used serverside of if updateState hasn't been run
   # auctionState used after updateState is run
@@ -72,18 +75,15 @@ module.exports = class Sale extends Backbone.Model
   isClosed: ->
     @get('auctionState') is 'closed'
 
-  # return {Object}
-  bidButtonState: (user) ->
+  # @param {CurrentUser, Artwork (optional)}
+  # @return {Object}
+  bidButtonState: (user, artwork) ->
     @__bidButtonState__ ?=
       if @isPreview() and !user?.get('registered_to_bid')
-        ['Register to bid', true]
+        label: 'Register to bid', enabled: true, classes: undefined, href: @registerUrl()
       else if @isPreview() and user?.get('registered_to_bid')
-        ['Registered to bid', false, 'is-success is-disabled']
+        label: 'Registered to bid', enabled: false, classes: 'is-success is-disabled', href: undefined
       else if @isOpen()
-        ['Bid', true]
+        label: 'Bid', enabled: true, classes: undefined, href: (@bidUrl(artwork) if artwork)
       else if @isClosed()
-        ['Bidding closed', false, 'is-disabled']
-
-    label   : @__bidButtonState__[0]
-    enabled : @__bidButtonState__[1]
-    classes : @__bidButtonState__[2]
+        label: 'Bidding closed', enabled: false, classes: 'is-disabled', href: undefined

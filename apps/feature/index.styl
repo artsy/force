@@ -17,41 +17,62 @@
   height 300px
   margin 0
   width 100%
+  @media screen and (max-height: 768px)
+    height (@height / 2)
 
 .feature-content
-  margin-bottom 125px
+  position relative
+  padding 50px 0 125px
 
 #feature-sets-container
   position relative
   min-height 200px
 
 .feature-title
+  width 75%
+  margin 0 auto 25px
   garamond()
-  display inline-block
   font-size 41px
   line-height 1.25
-  margin 50px 0 24px
   text-align center
-  width 100%
 
 .feature-share
-  float right
-  margin-top 35px
   position absolute
-  right 50px
+  top 35px
+  right 0
   .share-to-pinterest
     display none
 
 .feature-description
+  width 100%
+  margin 50px 0
+  padding 20px 0
+  text-align center
   border-bottom 1px solid dark-gray-border-color
   border-top @border-bottom
-  font-size 24px
-  margin-bottom 50px
-  padding 24px 100px 17px
-  text-align center
-  width 100%
+  display table
+
+#feature-description-register-container
+#feature-auction-info-countdown-container
+.feature-description-text
+  display table-cell
+  vertical-align middle
+  &:empty
+    display none
+
+#feature-description-register-container
+#feature-auction-info-countdown-container
+  width 250px
+.feature-description-text
+  font-size 20px
+  padding 0 50px
   p
     line-height 1.33
+
+.auction-info-header
+  text-transform uppercase
+  letter-spacing 1px
+  font-size 15px
 
 .feature-set
   border-bottom 1px solid dark-gray-border-color
@@ -164,17 +185,3 @@
       color dark-gray-text-color
     &:empty
       display none
-
-.feature-auction-info
-  display none
-  margin-bottom: 35px
-  > div
-    width 33.3%
-    display inline-block
-    vertical-align top
-
-  .auction-info-register-button
-    text-align right
-
-  .avant-garde-header
-    margin-top 20px

@@ -1,0 +1,9 @@
+.auction-info-register-button
+  if sale.isPreviewState()
+    if registered
+      .avant-garde-button-black( disabled ) You're Registered to Bid
+    else
+      a.avant-garde-button-black( href=sale.registerUrl() ) Register to bid
+  else
+    .auction-info-header
+      | Exclusively on Artsy

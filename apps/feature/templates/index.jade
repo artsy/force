@@ -18,10 +18,17 @@ block body
         +share(feature.shareTitle())
       h1.feature-title!= feature.get('name')
 
-      .feature-auction-info
-
+      //- Requires auctions to have descriptions
+      //- which I assume they do. But this needs to be revisited.
       if feature.get('description')
         .feature-description
-          != feature.mdToHtml('description')
+          #feature-description-register-container
+            //- Rendered client-side
+
+          .feature-description-text
+            != feature.mdToHtml('description')
+
+          #feature-auction-info-countdown-container
+            //- Rendered client-side
 
       #feature-sets-container: .loading-spinner
