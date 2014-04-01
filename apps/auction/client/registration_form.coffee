@@ -26,6 +26,7 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
       'card number': { el: @$('input[name=card_number]'), validator: @isCardNumber }
       expiration: { el: @$('.card-expiration select'), validator: @isPresent }
       'security code': { el: @$('input[name=card_security_code]'), validator: @isPresent }
+      telephone: { el: @$('input.telephone'), validator: @isPresent }
       billing_street: { el: @$('input.street'), validator: @isPresent, label: 'street' }
       billing_city: { el: @$('input.city'), validator: @isPresent, label: 'city' }
       billing_state: { el: @$('input.region'), validator: @isState, label: 'state' }
@@ -68,6 +69,10 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
       error: =>
         @showError @errors.other, "Error fetching the balanced marketplace"
 
+  savePhoneNumber: ->
+    if @fields.telephone.el.val()?.length > 0
+      @currentUser.set(phone: @fields.telephone.el.val()).save()
+
   onSubmit: =>
     return if @$submit.hasClass('is-loading')
     @$submit.addClass 'is-loading'
@@ -76,6 +81,7 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
 
     if @validateForm()
       @tokenizeCard()
+      @savePhoneNumber()
     else
       @showError 'Please review the error(s) above and try again.'
     false
