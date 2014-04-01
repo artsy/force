@@ -1,6 +1,8 @@
 - artworkSize = artworkSize || 'tall'
 - setHeight = setHeight || false
 - displayPurchase = displayPurchase || false
+- isAuction = isAuction || false
+
 if artworkColumns
   for column in artworkColumns
     .artwork-column
@@ -12,6 +14,6 @@ if artworkColumns
 if numberOfColumns
   - for (var i = 0; i < numberOfColumns; i++)
     .artwork-column
-    
+
 if seeMore
   button.avant-garde-button-text.artwork-columns-see-more= buttonLabel

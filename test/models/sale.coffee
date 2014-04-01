@@ -27,6 +27,15 @@ describe 'Sale', ->
     it 'points to the secure auction registration page'
     it 'points to the signup page when not logged in'
 
+  describe '#redirectUrl', ->
+
+    it 'redirects to the bid page if the sale is bidable and it has an artwork and fallback to the feature page', ->
+      @sale.set(is_auction: true, auction_state: 'open')
+      @sale.redirectUrl(id: 'my-artwork-id').should.equal '/feature/whtney-art-party/bid/my-artwork-id'
+      @sale.redirectUrl().should.equal '/feature/whtney-art-party'
+      @sale.set(auction_state: 'preview')
+      @sale.redirectUrl(id: 'my-artwork-id').should.equal '/feature/whtney-art-party'
+
   describe '#calculateOffsetTimes', ->
     describe 'client time preview', ->
 

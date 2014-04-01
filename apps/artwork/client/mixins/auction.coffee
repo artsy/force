@@ -1,13 +1,12 @@
 _                   = require 'underscore'
-Auction             = require '../../../../models/sale.coffee'
 AuctionClockView    = require '../../../../components/auction_clock/view.coffee'
 BidderPositions     = require '../../../../collections/bidder_positions.coffee'
 SaleArtwork         = require '../../../../models/sale_artwork.coffee'
 AuctionDetailView   = require '../auction_detail.coffee'
 
 module.exports =
-  setupAuction: (model) ->
-    @auction = new Auction model.toJSON()
+  setupAuction: (sale) ->
+    @auction = @sale
 
     @$('.artwork-detail').addClass 'is-auction'
 
