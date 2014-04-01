@@ -22,7 +22,7 @@ module.exports = class AuctionDetailView extends Backbone.View
       mediator.trigger 'open:auth',
         mode        : 'register'
         copy        : 'Sign up to bid'
-        destination : @saleArtwork.artwork().href()
+        redirectTo  : @auction.redirectUrl @saleArtwork.artwork()
       return false
     else
       @$('button').attr 'data-state', 'loading'
