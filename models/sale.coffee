@@ -51,6 +51,12 @@ module.exports = class Sale extends Backbone.Model
   bidUrl: (artwork) ->
     "/feature/#{@id}/bid/#{artwork.id}"
 
+  redirectUrl: (artwork) ->
+    if @isBidable() and artwork?
+      @bidUrl artwork
+    else
+      @href()
+
   # NOTE
   # auction_state helpers are used serverside of if updateState hasn't been run
   # auctionState used after updateState is run
