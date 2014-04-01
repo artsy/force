@@ -1,6 +1,5 @@
 @import '../../../components/stylus_lib'
 @import '../../../components/credit_card/stylesheets'
-@import '../../../components/stylus_lib'
 
 #main-layout-footer
   display none
@@ -24,3 +23,28 @@
   .registration-form-section
    .register
      margin-top 10px
+
+  .bid-input-container
+    position relative
+    .bid-dollar-sign
+      position absolute
+      top: 13px
+      left: 15px
+      font-size: 15px
+    .max-bid
+      padding-left 30px
+  .bid-input-help-text
+    color: light-gray-text-color
+    margin-top 3px
+    margin-bottom 5px
+
+  .current-bid
+    margin-top 10px
+    margin-bottom 10px
+    .bid-group-label, .bid-group-content
+      display inline-block
+    .bid-group-content
+      margin-left 4px
+
+  .bidding-question
+    margin-bottom 10px

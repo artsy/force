@@ -2,6 +2,7 @@ _                  = require 'underscore'
 Backbone           = require 'backbone'
 sd                 = require('sharify').data
 analytics          = require '../../../lib/analytics.coffee'
+ModalPageView      = require '../../../components/modal/page.coffee'
 BidderPosition     = require '../../../models/bidder_position.coffee'
 ErrorHandlingForm  = require('../../../components/credit_card/client/error_handling_form.coffee')
 
@@ -14,6 +15,13 @@ module.exports = class BidForm extends ErrorHandlingForm
 
   events:
     'click .registration-form-content .avant-garde-button' : 'placeBid'
+    'click .bidding-question' : 'showBiddingDialog'
+
+  showBiddingDialog: (e) ->
+    e.preventDefault()
+    new ModalPageView
+      width  : '700px'
+      pageId : 'auction-info'
 
   initialize: (options) ->
     @saleArtwork = options.saleArtwork
