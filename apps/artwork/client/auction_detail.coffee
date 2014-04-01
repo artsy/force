@@ -18,22 +18,16 @@ module.exports = class AuctionDetailView extends Backbone.View
 
   submit: (e) ->
     e.preventDefault()
-
-    val = @validate @$('input').val()
-
-    destination  = @$('form').attr('action')
-    destination += "?bid=#{val}" if val
-
     unless @user
       mediator.trigger 'open:auth',
         mode        : 'register'
         copy        : 'Sign up to bid'
-        destination : destination
+        destination : @saleArtwork.artwork().href()
       return false
     else
       @$('button').attr 'data-state', 'loading'
-      if val
-        window.location = destination
+      if (val = @validate @$('input').val())
+        window.location = "#{@$('form').attr('action')}?bid=#{val}"
       else
         @displayValidationError()
 
