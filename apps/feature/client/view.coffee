@@ -34,21 +34,23 @@ module.exports = class FeatureView extends Backbone.View
     for set in sets
       if set.get('type') is 'auction artworks'
         @sale = new Sale @model.get('sale').toJSON()
-        @initializeAuction @sale
+        @initializeAuction @sale, set
+      else if set.get('type') in ['sale artworks', 'sale auction']
+        @setupArtworks(set)
 
-      if set.get('type') in ['sale artworks', 'sale auction', 'auction artworks']
-        artworks = set.get 'data'
-        @setupSaleArtworks artworks, @sale
-        if (set and set.get('display_artist_list'))
-          @renderArtistList artworks
+  setupArtworks: (set) ->
+    artworks = set.get 'data'
+    @setupSaleArtworks artworks, @sale
+    if (set and set.get 'display_artist_list')
+      @renderArtistList artworks
+    @setupArtworkImpressionTracking artworks.models
 
-        @setupArtworkImpressionTracking artworks.models
-
-  initializeAuction: (sale) ->
+  initializeAuction: (sale, set) ->
     $.when.apply(null, _.compact([
       @setupAuctionUser()
       sale.fetch()
     ])).then =>
+      @setupArtworks set
       @renderAuctionInfo sale
 
   renderAuctionInfo: (sale) ->
@@ -80,8 +82,9 @@ module.exports = class FeatureView extends Backbone.View
         @currentUser.set 'registered_to_bid', isRegistered
 
   setupSaleArtworks: (artworks, sale) ->
-    artworks.each (artwork) ->
+    artworks.each (artwork) =>
       new SaleArtworkView
+        currentUser       : @currentUser
         artworkCollection : @artworkCollection
         el                : @$(".artwork-item[data-artwork='#{artwork.id}']")
         model             : artwork

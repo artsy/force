@@ -5,7 +5,6 @@ AcquireArtwork      = require('../../acquire/view.coffee').acquireArtwork
 ContactPartnerView  = require '../../contact/contact_partner.coffee'
 SaveControls        = require '../../artwork_item/views/save_controls.coffee'
 mediator            = require '../../../lib/mediator.coffee'
-CurrentUser         = require '../../../models/current_user.coffee'
 
 module.exports = class SaleArtworkView extends Backbone.View
   analyticsRemoveMessage : 'Removed artwork from collection, via sale'
@@ -17,9 +16,7 @@ module.exports = class SaleArtworkView extends Backbone.View
     'click .artwork-item-bid'            : 'bid'
 
   initialize: (options = {}) ->
-    { @sale, @artworkCollection } = options
-
-    @user = CurrentUser.orNull()
+    { @currentUser, @sale, @artworkCollection } = options
 
     saveView = new SaveControls
       artworkCollection : @artworkCollection
@@ -49,7 +46,7 @@ module.exports = class SaleArtworkView extends Backbone.View
     AcquireArtwork @model, $(e.target)
 
   bid: (e) ->
-    unless @user
+    unless @currentUser
       e.preventDefault()
       mediator.trigger 'open:auth',
         mode        : 'register'
@@ -58,7 +55,8 @@ module.exports = class SaleArtworkView extends Backbone.View
 
   setBidButtonState: ->
     $button   = @$('.artwork-item-bid')
-    state     = @sale.bidButtonState @user
-    $button.text(state.label).attr
-      class    : state.classes
-      disabled : !state.enabled
+    state     = @sale.bidButtonState @currentUser, @model
+    $button.
+      text(state.label).
+      addClass(state.classes).
+      attr href: state.href, disabled: !state.enabled
