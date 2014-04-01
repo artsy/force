@@ -78,8 +78,9 @@ module.exports = class ArtworkRouter extends Backbone.Router
 
   fetchUser: (success) =>
     @currentUser = CurrentUser.orNull()
-    @currentUser.fetch
-      success: success
+    if @currentUser
+      @currentUser.fetch
+        success: success
 
   confirmBid: ->
     @fetchUser =>
