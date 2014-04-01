@@ -78,12 +78,11 @@ module.exports = class Sale extends Backbone.Model
   # @param {CurrentUser, Artwork (optional)}
   # @return {Object}
   bidButtonState: (user, artwork) ->
-    @__bidButtonState__ ?=
-      if @isPreview() and !user?.get('registered_to_bid')
-        label: 'Register to bid', enabled: true, classes: undefined, href: @registerUrl()
-      else if @isPreview() and user?.get('registered_to_bid')
-        label: 'Registered to bid', enabled: false, classes: 'is-success is-disabled', href: undefined
-      else if @isOpen()
-        label: 'Bid', enabled: true, classes: undefined, href: (@bidUrl(artwork) if artwork)
-      else if @isClosed()
-        label: 'Bidding closed', enabled: false, classes: 'is-disabled', href: undefined
+    if @isPreview() and !user?.get('registered_to_bid')
+      label: 'Register to bid', enabled: true, classes: undefined, href: @registerUrl()
+    else if @isPreview() and user?.get('registered_to_bid')
+      label: 'Registered to bid', enabled: false, classes: 'is-success is-disabled', href: undefined
+    else if @isOpen()
+      label: 'Bid', enabled: true, classes: undefined, href: (@bidUrl(artwork) if artwork)
+    else if @isClosed()
+      label: 'Bidding closed', enabled: false, classes: 'is-disabled', href: undefined
