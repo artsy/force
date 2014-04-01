@@ -11,7 +11,7 @@ module.exports = class BelowTheFold extends Backbone.View
     { @artwork } = options
 
   setupSale: (options = {}) ->
-    new SaleView _.extend el: @$el, options
+    new SaleView _.extend el: @$el, artwork: @artwork, options
     @fadeIn()
 
   setupFair: (fair) ->

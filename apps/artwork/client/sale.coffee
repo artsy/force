@@ -12,13 +12,12 @@ artworkColumnsTemplate  = -> require('../../../components/artwork_columns/templa
 
 module.exports = class SaleView extends Backbone.View
   initialize: (options) ->
-    { @currentUser, @saved, @sale } = options
+    { @artwork, @currentUser, @saved, @sale } = options
 
-    @saleArtworks      = new Backbone.Collection
-    @saleArtworks.url  = "#{ARTSY_URL}/api/v1/sale/#{@sale.id}/sale_artworks"
-    @saleArtworks.fetch
-      success: =>
-        @artworks = Artworks.fromSale @saleArtworks
+    @sale.fetchArtworks
+      success: (collection, response, options) =>
+        collection.remove @artwork
+        @artworks = Artworks.fromSale collection
         @render()
         @setupSaleArtworkViews()
         @setupArtworkImpressionTracking @artworks.models
