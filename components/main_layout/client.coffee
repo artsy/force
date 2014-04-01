@@ -43,5 +43,4 @@ setupJquery = ->
     'X-XAPP-TOKEN'  : sd.ARTSY_XAPP_TOKEN
     'X-ACCESS-TOKEN': sd.CURRENT_USER?.accessToken
 
-
 setupAnalytics()

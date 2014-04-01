@@ -25,7 +25,7 @@ module.exports = class BidForm extends ErrorHandlingForm
 
   initialize: (options) ->
     @saleArtwork = options.saleArtwork
-    @$submitButton = @$('.registration-form-content .avant-garde-button')
+    @$submit = @$('.registration-form-content .avant-garde-button')
     if options.submitImmediately
       @placeBid()
 
@@ -36,7 +36,7 @@ module.exports = class BidForm extends ErrorHandlingForm
 
   placeBid: =>
     @timesPolledForBidPlacement = 0
-    @$submitButton.addClass('is-loading')
+    @$submit.addClass('is-loading')
     bidderPosition = new BidderPosition
       sale_id              : @model.get('id')
       artwork_id           : @saleArtwork.get('artwork').id
@@ -62,4 +62,4 @@ module.exports = class BidForm extends ErrorHandlingForm
 
   showErrors: (errors) =>
     @$('.errors').show().html errors.join('<br />')
-    @$('.submit').removeClass 'is-loading'
+    @$submit.removeClass 'is-loading'
