@@ -35,3 +35,7 @@ module.exports =
     login    : Login
     forgot   : Forgot
     register : Signup
+
+  successEventMap:
+    login    : 'Successfully logged in'
+    register : 'Created account'
