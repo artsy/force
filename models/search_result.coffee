@@ -67,10 +67,11 @@ module.exports = class SearchResult extends Backbone.Model
       @set location: "#{fair.href()}/browse#{@get('location')}"
 
   publishedClass: ->
-    if @get('published')
-      'published-search-result'
-    else
-      'unpublished-search-result'
+    if @has 'published'
+      if @get 'published'
+        'published-search-result'
+      else
+        'unpublished-search-result'
 
   href: ->
     if @get('published')
