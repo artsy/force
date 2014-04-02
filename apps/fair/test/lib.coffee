@@ -35,7 +35,7 @@ describe 'fairDataMiddleware', ->
     @cache = fairDataMiddleware.__get__ 'cache'
     @cache.setHash = sinon.stub()
     @req = { params: { id: 'the-foo-show' } }
-    @res = { locals: { sd: {}, profile: new Profile(fabricate('profile', owner_type: 'FairOrganizer')) } }
+    @res = { locals: { sd: {}, profile: new Profile(fabricate('fair_profile')) } }
     @next = sinon.stub()
 
   afterEach ->
