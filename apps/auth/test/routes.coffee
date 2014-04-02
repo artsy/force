@@ -8,6 +8,7 @@ describe 'Auth routes', ->
   beforeEach ->
     @req = { params: {}, logout: sinon.stub(), user: new Backbone.Model(), body: {}, query: {}, get: -> }
     @res = { render: sinon.stub(), locals: { sd: {} }, send: sinon.stub(), redirect: sinon.stub() }
+    @next = sinon.stub()
 
   describe '#resetPassword', ->
 
@@ -30,9 +31,8 @@ describe 'Auth routes', ->
   describe '#logout', ->
 
     it 'logs out and redirects home', ->
-      routes.logout @req, @res
+      routes.logout @req, @res, @next
       @req.logout.called.should.be.ok
-      @res.redirect.args[0][0].should.include '/users/sign_out?redirect_uri=http://localhost:3004'
 
   describe '#submitTwitterLastStep', ->
 

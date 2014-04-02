@@ -41,6 +41,9 @@ module.exports = class CurrentUser extends Backbone.Model
     if method in ['create', 'update']
       # If persisting to the server overwrite attrs
       options.attrs = _.omit(@toJSON(), 'accessToken')
+      options.attrs.access_token = @get 'accessToken'
+      options.data ?= {}
+      options.data.access_token = @get 'accessToken'
     else
       # Otherwise overwrite data
       _.defaults(options, { data: { access_token: @get('accessToken') } })

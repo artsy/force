@@ -1,4 +1,5 @@
-helpers = require('../../../lib/middleware/helpers')
+rewire = require 'rewire'
+helpers = rewire '../../../lib/middleware/helpers'
 sinon = require 'sinon'
 
 describe 'Helpers middleware', ->
@@ -18,5 +19,6 @@ describe 'Helpers middleware', ->
     @next.args[1][0].toString().should.include 'Foo Err'
 
   it 'turns 403 errors into 404s', ->
+    helpers.__set__ 'NODE_ENV', 'production'
     @res.backboneError {}, { error: { status: 403 } }
     @next.args[1][0].toString().should.include 'Not Found'

@@ -17,13 +17,12 @@ app.get '/reset_password', routes.resetPassword
 # Auth submission handlers
 app.post loginPath, routes.submitLogin
 app.post signupPath, routes.submitLogin
-app.get twitterCallbackPath, routes.submitEmailForTwitter
-app.get facebookCallbackPath, routes.submitFacebook
-
-app.post '/users/sign_in_trust_token', routes.loginWithTrustToken
+app.get twitterCallbackPath, routes.submitEmailForTwitter, routes.redirectBack
+app.get facebookCallbackPath, routes.redirectBack
+app.post '/users/sign_in_trust_token', routes.loginWithTrustToken, routes.redirectBack
 
 # Log out
-app.get '/users/sign_out', routes.logout
+app.get '/users/sign_out', routes.logout, routes.redirectBack
 
 # Twitter "One last Step" UI to enter email and login
 app.get '/users/auth/twitter/email', routes.twitterLastStep

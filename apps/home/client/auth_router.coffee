@@ -28,7 +28,7 @@ module.exports = class HomeAuthRouter extends Backbone.Router
         when 'account-not-found', 'no-user-access-token', 'no-user'
           "We couldn't find your account. Please sign up."
         else
-          "Unknown error."
+          "Uknown Error: " + error
       mediator.trigger 'open:auth', mode: 'login'
       mediator.trigger 'auth:error', msg
       # Sometimes the previous trigger gets overridden so we trigger again

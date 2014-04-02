@@ -46,4 +46,4 @@ errorHandler.socialAuthError = (err, req, res, next) ->
   else if err.toString().match('Failed to find request token in session')
     res.redirect '/log_in?error=account-not-found'
   else
-    next()
+    res.redirect '/log_in?error=' + err.toString()
