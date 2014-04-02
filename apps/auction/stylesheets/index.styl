@@ -5,11 +5,16 @@
   display none
 #auction-registration-page
   margin-bottom: 100px
-  margin-top: 100px
+  margin-top: 0px
+  h2.garamond-header-center
+    margin-bottom 35px
+
   .registration-form-header
-    border-top 1px solid light-gray-border-color
     padding-top 10px
     padding-bottom 10px
+    text-transform uppercase
+    letter-spacing 2px
+    font-size 14px
 
   .avant-garde-header-center
     font-size: 24px
@@ -20,23 +25,29 @@
     margin-top: 9px
     margin-bottom: 18px
 
-  .registration-form-section
-   .register
-     margin-top 10px
+  .registration-form-section.register
+    margin-top 10px
+    margin-bottom 10px
 
   .bid-input-container
     position relative
     .bid-dollar-sign
+      garamond()
       position absolute
-      top: 13px
-      left: 15px
-      font-size: 15px
+      top: 12px
+      left: 13px
+      font-size: 21px
+      color light-gray-text-color
     .max-bid
       padding-left 30px
   .bid-input-help-text
     color: light-gray-text-color
-    margin-top 3px
-    margin-bottom 5px
+    margin-top 8px
+    margin-bottom 0px
+
+  .bid-section-header
+    font-size 21px
+    margin-top 30px
 
   .current-bid
     margin-top 10px
@@ -46,5 +57,46 @@
     .bid-group-content
       margin-left 4px
 
-  .bidding-question
+  .bidding-question, .note
     margin-bottom 10px
+    color: light-gray-text-color
+    font-style italic
+
+  .bidding-question
+    text-decoration underline
+
+  .small-artwork-container
+    border-top 1px solid light-gray-border-color
+    border-bottom 1px solid light-gray-border-color
+    padding 16px 0px
+    img
+      max-width 40px
+    .artist
+      avant-garde()
+      font-size 13px
+
+  .bidder-positions-count
+    color light-gray-text-color
+
+  .user-bid-input-container
+    .bid-group-label
+      font-weight bold
+      display inline-block
+      width 134px
+      vertical-align top
+    .bid-group-content
+      display inline-block
+      width 200px
+      vertical-align top
+    .bid-group-value
+      font-size: 21px
+      margin-bottom: 6px
+
+  .bordered-bid-form-group.max-bid
+    .bid-group-label
+      margin-top 12px
+
+  .bordered-bid-form-group.current-bid, .bordered-bid-form-group.max-bid
+    border-bottom 1px solid light-gray-border-color
+    padding-top: 5px
+    padding-bottom: 12px

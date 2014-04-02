@@ -14,7 +14,7 @@ module.exports = class BidForm extends ErrorHandlingForm
   maxTimesPolledForBidPlacement: 8
 
   events:
-    'click .registration-form-content .avant-garde-button' : 'placeBid'
+    'click .registration-form-content .avant-garde-button-black' : 'placeBid'
     'click .bidding-question' : 'showBiddingDialog'
 
   showBiddingDialog: (e) ->
@@ -25,7 +25,7 @@ module.exports = class BidForm extends ErrorHandlingForm
 
   initialize: (options) ->
     @saleArtwork = options.saleArtwork
-    @$submit = @$('.registration-form-content .avant-garde-button')
+    @$submit = @$('.registration-form-content .avant-garde-button-black')
     if options.submitImmediately
       @placeBid()
 

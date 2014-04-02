@@ -13,13 +13,13 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
   balanced: false
 
   events:
-    'click .registration-form-content .avant-garde-button' : 'onSubmit'
+    'click .registration-form-content .avant-garde-button-black' : 'onSubmit'
     'click .bidding-question' : 'showBiddingDialog'
 
   initialize: (options) ->
     @success = options.success
     @currentUser = CurrentUser.orNull()
-    @$submit = @$('.registration-form-content .avant-garde-button')
+    @$submit = @$('.registration-form-content .avant-garde-button-black')
     @setUpFields()
 
   showBiddingDialog: (e) ->
