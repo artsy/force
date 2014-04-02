@@ -4,6 +4,7 @@ analytics          = require '../../../lib/analytics.coffee'
 Marketplace        = require '../../../models/marketplace.coffee'
 CurrentUser        = require '../../../models/current_user.coffee'
 ErrorHandlingForm  = require('../../../components/credit_card/client/error_handling_form.coffee')
+ModalPageView      = require '../../../components/modal/page.coffee'
 
 { SESSION_ID } = require('sharify').data
 
@@ -13,12 +14,19 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
 
   events:
     'click .registration-form-content .avant-garde-button' : 'onSubmit'
+    'click .bidding-question' : 'showBiddingDialog'
 
   initialize: (options) ->
     @success = options.success
     @currentUser = CurrentUser.orNull()
     @$submit = @$('.registration-form-content .avant-garde-button')
     @setUpFields()
+
+  showBiddingDialog: (e) ->
+    e.preventDefault()
+    new ModalPageView
+      width  : '700px'
+      pageId : 'auction-info'
 
   setUpFields: ->
     @fields =
