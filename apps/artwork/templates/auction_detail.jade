@@ -1,4 +1,4 @@
-if saleArtwork.estimate()
+if saleArtwork.estimate() && !auction.isClosed()
   .artwork-auction-estimate
     = saleArtwork.estimate()
 
@@ -13,10 +13,9 @@ if auction.isOpen()
         | Your max bid of #{position.maxBid()} has been outbid.
 
   .artwork-bid-status
-    .abs-label
-      .abs-bid= saleArtwork.bidLabel()
-      .abs-count (#{saleArtwork.bidCount()}, #{saleArtwork.reserveLabel()})
+    .abs-bid #{saleArtwork.bidLabel()}:
     .abs-amount= saleArtwork.currentBid()
+    .abs-count (#{saleArtwork.bidCount()}, #{saleArtwork.reserveLabel()})
 
 form.artwork-bid-form( action="/feature/#{auction.id}/bid/#{saleArtwork.id}" )
   if auction.isOpen() && user
