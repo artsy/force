@@ -45,8 +45,8 @@ describe 'AuctionDetailView', ->
 
   describe '#render', ->
     it 'displays the correct min price', ->
-      @view.$('.abf-validation-error').text().should.equal 'Your bid needs to be at least $5,000.00'
-      @view.$('.abf-min-next').text().should.equal 'Enter $5,000.00 or higher'
+      @view.$('.abf-validation-error').text().should.equal 'Your bid needs to be at least $5,000'
+      @view.$('.abf-min-next').text().should.equal 'Enter $5,000 or higher'
 
     it 'displays a description of the bid status', ->
       @view.$('.abs-count').text().should.equal '(0 bids, No reserve)'
