@@ -85,3 +85,13 @@ iconfont-styling()
   font-size 32px
   -webkit-font-smoothing antialiased
   -moz-osx-font-smoothing grayscale
+
+// Takes a color and returns the RGBA equivalent
+//
+// transparify(light-grey-text-color, black)
+// => rgba(0,0,0,0.4)
+transparify(color, basecolor)
+  if dark(basecolor)
+    rgba(basecolor, unit(lightness(invert(color)), '') * 0.01)
+  else
+    rgba(basecolor, unit(lightness(color), '') * 0.01)
