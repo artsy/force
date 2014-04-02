@@ -7,11 +7,12 @@ sd                  = require('sharify').data
 { isTouchDevice }   = require '../../util/device.coffee'
 { createCookie }    = require '../../util/cookie.coffee'
 analytics           = require '../../../lib/analytics.coffee'
+FlashMessage        = require '../../flash/index.coffee'
 
 module.exports = class HeaderView extends Backbone.View
   events:
-    'click .mlh-login': 'login'
-    'click .mlh-signup': 'signup'
+    'click .mlh-login'  : 'login'
+    'click .mlh-signup' : 'signup'
 
   initialize: (options) ->
     { @$window, @$body } = options
@@ -19,13 +20,11 @@ module.exports = class HeaderView extends Backbone.View
     @$welcomeHeader = @$('#main-layout-welcome-header')
 
     @searchBarView = new SearchBarView
-      el: @$('#main-layout-search-bar-container')
-      $input: @$('#main-layout-search-bar-input')
+      el     : @$('#main-layout-search-bar-container')
+      $input : @$('#main-layout-search-bar-input')
 
     @searchBarView.on 'search:entered', (term) -> window.location = "/search?q=#{term}"
     @searchBarView.on 'search:selected', @searchBarView.selectResult
-
-    @removeFlash()
 
     if isTouchDevice()
       @removeWelcomeHeader()
@@ -35,6 +34,7 @@ module.exports = class HeaderView extends Backbone.View
     mediator.on 'open:auth', @openAuth, this
 
     @checkRemoveWelcomeHeader()
+    @checkForFlash()
 
   checkRemoveWelcomeHeader: =>
     if sd.CURRENT_USER or (@$window.scrollTop() > @$welcomeHeader.height())
@@ -53,23 +53,16 @@ module.exports = class HeaderView extends Backbone.View
 
     createCookie 'hide-force-header', true, 365
 
-  removeFlash: ->
-    remove = ->
-      $flash.
-        addClass('is-fade-out').
-        one($.support.transition.end, => $flash.remove()).
-        emulateTransitionEnd 500
-
-    if ($flash = $('#main-layout-flash')).length
-      _.delay remove, 2000
-      $flash.one 'click', remove
-
   signup: (e) ->
     e.preventDefault()
     analytics.track.funnel 'Clicked sign up via the header'
-    mediator.trigger 'open:auth', { mode: 'signup' }
+    mediator.trigger 'open:auth', mode: 'signup'
 
   login: (e) ->
     e.preventDefault()
     analytics.track.funnel 'Clicked login via the header'
-    mediator.trigger 'open:auth', { mode: 'login' }
+    mediator.trigger 'open:auth', mode: 'login'
+
+  checkForFlash: ->
+    if sd.FLASH
+      new FlashMessage message: sd.FLASH

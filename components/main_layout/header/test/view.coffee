@@ -10,6 +10,7 @@ HeaderView.__set__ 'SearchBarView', Backbone.View
 HeaderView.__set__ 'AuthModalView', sinon.stub()
 HeaderView.__set__ 'readCookie', sinon.stub()
 HeaderView.__set__ 'createCookie', sinon.stub()
+HeaderView.__set__ 'FlashMessage', sinon.stub()
 
 { resolve } = require 'path'
 
@@ -70,11 +71,11 @@ describe 'HeaderView', ->
 
   describe 'with flash message', ->
     before (done) ->
-      benv.render resolve(__dirname, '../templates/index.jade'),
-        flash: 'Goodbye world.'
-      , =>
+      benv.render resolve(__dirname, '../templates/index.jade'), {}, =>
         $.support.transition = { end: 'transitionend' }
         $.fn.emulateTransitionEnd = -> @trigger $.support.transition.end
+        HeaderView.__set__ 'sd', FLASH: 'Goodbye world.'
+        @triggerSpy = sinon.spy mediator, 'trigger'
         @view = new HeaderView
           el: $('#main-layout-header')
           $window: @$window =
@@ -84,12 +85,5 @@ describe 'HeaderView', ->
           $body: $('body')
         done()
 
-    it 'has a flash message that can be removed', ->
-      $('#main-layout-flash').text().should.equal 'Goodbye world.'
-
-    it 'removes the flash message when clicked', (done) ->
-      $('#main-layout-flash').on 'transitionend', ->
-        _.defer =>
-          $('#main-layout-flash').length.should.not.be.ok
-          done()
-      $('#main-layout-flash').click()
+    it 'checks for flash messages initializes the flash message', ->
+      HeaderView.__get__('FlashMessage').args[0][0].message.should.equal 'Goodbye world.'

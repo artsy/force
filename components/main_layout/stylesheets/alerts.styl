@@ -22,10 +22,13 @@
   text-align center
   font-size 18px
   cursor pointer
+  opacity 0
   > span
     position absolute
     top 50%
     left 50%
     transform translate(-50%, -50%)
-  &.is-fade-out
+  &[data-state='closed']
     opacity 0
+  &[data-state='open']
+    opacity 1
