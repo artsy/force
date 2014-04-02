@@ -17,7 +17,7 @@ auctionCountdownTemplate        = -> require('../templates/auction_countdown.jad
 
 module.exports = class FeatureView extends Backbone.View
   events:
-    'click .auction-info-register-button .avant-garde-button' : 'triggerLoginPopup'
+    'click .auction-info-register-button .avant-garde-button-black' : 'triggerLoginPopup'
 
   initialize: (options) ->
     @handleTab options.tab if options.tab
