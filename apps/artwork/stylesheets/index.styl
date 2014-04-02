@@ -139,7 +139,7 @@ artwork-detail-item-height  = 36px
   width 100%
   border-top 1px dotted
   border-bottom 1px dotted
-  border-color light-gray-transparent-border-color
+  border-color transparify(light-gray-border-color, black)
   margin 10px 0
   line-height artwork-detail-item-height
 .artwork-meta-price-label
@@ -176,11 +176,11 @@ artwork-detail-item-height  = 36px
   padding 10px 0
   border-top 1px dotted
   border-bottom 1px dotted
-  border-color light-gray-transparent-border-color
+  border-color transparify(light-gray-border-color, black)
 .abs-bid
   font-weight bold
 .abs-count
-  color light-gray-text-color
+  color transparify(light-gray-text-color, black)
 .abs-amount
   avant-garde()
   font-size 24px
@@ -193,9 +193,10 @@ artwork-detail-item-height  = 36px
     margin 5px 0
   input
     width 100%
+    border-color transparify(light-gray-border-color, black)
 .abf-min-next
   margin 5px 0
-  color light-gray-text-color
+  color transparify(light-gray-text-color, black)
 .abf-button
   margin 10px 0
 .abf-validation-error
@@ -209,12 +210,14 @@ artwork-detail-item-height  = 36px
 .abf-help
   margin 10px 0
   > a
-    color light-gray-text-color
+    color transparify(light-gray-text-color, black)
     font-size 15px
     font-style italic
 
 #artwork-auction-clock
   margin 20px 0
+  .auction-clock-value > li > small
+    color transparify(#aaa, black)
 
 #auction-detail
 #artwork-auction-clock
@@ -242,7 +245,7 @@ artwork-detail-item-height  = 36px
   font-size 13px
   line-height 1.5
   border-bottom 1px dotted
-  border-color light-gray-transparent-border-color
+  border-color transparify(light-gray-border-color, black)
   clearfix()
   &:first-child
     border-top 1px dotted
@@ -261,7 +264,7 @@ artwork-detail-item-height  = 36px
 .artwork-actions-list
   margin-top 20px
   border-top 1px dotted
-  border-color light-gray-transparent-border-color
+  border-color transparify(light-gray-border-color, black)
   > a
     display block
     position relative
@@ -270,7 +273,7 @@ artwork-detail-item-height  = 36px
     text-decoration none
     transition all 0.125s
     border-bottom 1px dotted
-    border-color light-gray-transparent-border-color
+    border-color transparify(light-gray-border-color, black)
     &.is-hidden
       display none
     > i
@@ -374,4 +377,3 @@ artwork-detail-item-height  = 36px
   background-repeat no-repeat
   background-color white
   box-shadow 0 10px 24px rgba(0,0,0,0.12)
-
