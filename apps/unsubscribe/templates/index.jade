@@ -1,0 +1,20 @@
+extends ../../../components/main_layout/templates/index
+
+block head
+
+append locals
+  - assetPackage = 'unsubscribe'
+
+block body
+  #main-layout-container
+    #error-handler
+      h1
+        | Unsubscribe me from the following: 
+      each emailDisplay, emailType in emailTypes
+        .unsubscribe-email
+          label #{emailDisplay}
+            input( name="#{emailType}", type='checkbox' )
+      .unsubscribe-check-all
+        label Select All
+          input( name='selectAll', type='checkbox' )
+      button.submit Submit Preferences
