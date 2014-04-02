@@ -10,7 +10,7 @@ Fair = require '../../../models/fair'
 
 module.exports = (req, res, next) ->
   profile = res.locals.profile
-  return next() unless profile?.isFairOranizer() and profile.get('owner').default_fair_id
+  return next() unless profile?.isFairOranizer() and profile?.get('owner').default_fair_id
   fair = new Fair id: profile.get('owner').default_fair_id
   fair.fetchPrimarySets
     error: res.backboneError
