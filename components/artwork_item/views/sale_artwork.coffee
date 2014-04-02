@@ -28,9 +28,9 @@ module.exports = class SaleArtworkView extends Backbone.View
 
     if @sale
       if @sale.has 'auctionState'
-        @setBidButtonState()
+        @setupAuctionState()
       else
-        @listenTo @sale, 'change:auctionState', @setBidButtonState
+        @listenTo @sale, 'change:auctionState', @setupAuctionState
 
   contactSeller: (e) ->
     e.preventDefault()
@@ -53,7 +53,11 @@ module.exports = class SaleArtworkView extends Backbone.View
         copy        : 'Sign up to bid'
         redirectTo  : @sale.redirectUrl @model
 
-  setBidButtonState: ->
+  setupAuctionState: ->
+    # Possibly hide the bid status
+    @$('.artwork-item-auction-bid-status').hide() if @sale.isClosed()
+
+    # Set button state
     $button   = @$('.artwork-item-bid')
     state     = @sale.bidButtonState @currentUser, @model
     $button.
