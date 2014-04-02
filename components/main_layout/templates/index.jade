@@ -15,6 +15,7 @@ html( data-useragent=userAgent )
       link( type='text/css', rel='stylesheet', href=(sd.ASSET_PATH + 'microsite' + sd.CSS_EXT) )
   body( class=bodyClass )
     include ../../modal/template
+    include ../../flash/template
     if sd.MICROSITE
       include ../header/templates/microsite
     else
