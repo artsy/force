@@ -35,10 +35,10 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
       expiration: { el: @$('.card-expiration select'), validator: @isPresent }
       'security code': { el: @$('input[name=card_security_code]'), validator: @isPresent }
       telephone: { el: @$('input.telephone'), validator: @isPresent }
-      billing_street: { el: @$('input.street'), validator: @isPresent, label: 'street' }
-      billing_city: { el: @$('input.city'), validator: @isPresent, label: 'city' }
-      billing_state: { el: @$('input.region'), validator: @isState, label: 'state' }
-      billing_zip: { el: @$('input.postal-code'), validator: @isZip }
+      street: { el: @$('input.street'), validator: @isPresent, label: 'street' }
+      city: { el: @$('input.city'), validator: @isPresent, label: 'city' }
+      state: { el: @$('input.region'), validator: @isState, label: 'state' }
+      zip: { el: @$('input.postal-code'), validator: @isZip }
     @internationalizeFields()
 
   cardCallback: (response) =>
@@ -63,8 +63,8 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
     expiration_month: @fields.expiration.el.first().val()
     expiration_year: @fields.expiration.el.last().val()
     security_code: @fields['security code'].el.val()
-    street_address: @fields.billing_street.el.val()
-    postal_code: @fields.billing_zip.el.val()
+    street_address: @fields.street.el.val()
+    postal_code: @fields.zip.el.val()
     country: @$("select[name='billing_address[country]']").val()
 
   tokenizeCard: =>

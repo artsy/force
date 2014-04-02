@@ -31,7 +31,7 @@ module.exports = class SaleArtwork extends Backbone.Model
     )
 
   minBid: ->
-    accounting.formatMoney @get('minimum_next_bid_cents') / 100
+    accounting.formatMoney @get('minimum_next_bid_cents') / 100, '$', 0
 
   estimate: ->
     if @has('low_estimate_cents') or @has('high_estimate_cents')
