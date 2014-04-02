@@ -5,7 +5,7 @@ template = -> require('../templates/view-in-room.jade') arguments...
 
 module.exports = class ViewInRoom extends Backbone.View
   className: 'artwork-view-in-room'
-  bodyClasses: 'body-transparent-header is-modal'
+  bodyClasses: 'body-transparent-header'
 
   roomWidth: 6578
   benchRatio: 5.5
@@ -134,6 +134,7 @@ module.exports = class ViewInRoom extends Backbone.View
   remove: ->
     @$window.off 'resize.view-in-room'
     @transitionOut().one $.support.transition.end, =>
+      $('.artwork-container').attr style: null # Remove hard-coded height
       @$body.removeClass @bodyClasses
       @$img.css visibility: 'visible'
       ViewInRoom.__super__.remove.apply(this, arguments)

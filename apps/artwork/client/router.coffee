@@ -57,6 +57,10 @@ module.exports = class ArtworkRouter extends Backbone.Router
 
   viewInRoom: ->
     analytics.track.click "Entered 'View In Room'"
+
+    # The container will collapse so prop up with the original height
+    ($ac = $('.artwork-container')).height($ac.height())
+
     @baseView.route 'view-in-room'
 
     # Ensure we only view the default image in the room
