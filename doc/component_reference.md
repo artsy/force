@@ -18,6 +18,7 @@ If a separate doc is required, add it to the component's directory as a
 - [Partner Buttons](#partner-buttons)
 - [Location Search](#location-search)
 - [Page Modal](#page-modal)
+- [Flash Message](#flash-message)
 
 ## Artwork Columns
 ![](images/artwork_columns.png)
@@ -512,4 +513,29 @@ ModalPageView = require '../../../components/modal/page.coffee'
 new ModalPageView
   width  : '700px'
   pageId : 'auction-info'
+```
+
+## Flash Message
+
+![](images/flash.png)
+
+### Client-side usage:
+
+```coffeescript
+FlashMessage = require '../../../components/flash/index.coffee'
+
+# ...
+
+new FlashMessage message: 'Listen to me!'
+```
+
+or to display flash message on the next full pageload:
+
+```coffeescript
+$.post('/flash', message: 'Thank you for personalizing your profile')
+```
+
+### Server-side usage:
+```coffeescript
+req.flash 'info', 'Hello world.'
 ```
