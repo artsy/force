@@ -37,7 +37,7 @@ describe 'SaleArtwork', ->
 
     it 'formats the minimum bid', ->
       @saleArtwork.set minimum_next_bid_cents: 1000
-      @saleArtwork.minBid().should.equal '$10.00'
+      @saleArtwork.minBid().should.equal '$10'
 
   describe '#estimate', ->
 
