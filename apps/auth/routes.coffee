@@ -38,9 +38,6 @@ qs = require 'querystring'
 @submitEmailForTwitter = (req, res, next) ->
   return res.redirect '/log_in?error=no-user' unless req.user
   return next() unless req.query.email?
-  console.log 'updating user',
-    email: req.query.email
-    email_confirmation: req.query.email
   req.user.save {
     email: req.query.email
     email_confirmation: req.query.email
