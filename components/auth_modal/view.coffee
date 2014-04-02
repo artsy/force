@@ -7,7 +7,7 @@ mediator          = require '../../lib/mediator.coffee'
 { createCookie }  = require '../util/cookie.coffee'
 analytics         = require '../../lib/analytics.coffee'
 
-{ templateMap, modelMap, stateEventMap } = require './maps.coffee'
+{ templateMap, modelMap, stateEventMap, successEventMap } = require './maps.coffee'
 
 module.exports = class AuthModalView extends ModalView
   _.extend @prototype, Form
@@ -74,9 +74,11 @@ module.exports = class AuthModalView extends ModalView
     else
       createCookie 'destination', @destination, 1 if @destination
 
+      successEvent = successEventMap[@state.get 'mode']
+      analytics.track.funnel successEvent if successEvent
+
       if @state.get('mode') is 'login'
         createCookie 'signed_in', true, 7
-        analytics.track.funnel 'Successfully logged in'
 
       if @state.get('mode') is 'register'
         location.href = @redirectTo
