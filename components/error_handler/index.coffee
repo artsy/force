@@ -45,5 +45,7 @@ errorHandler.socialAuthError = (err, req, res, next) ->
     res.redirect "/log_in#{params}"
   else if err.toString().match('Failed to find request token in session')
     res.redirect '/log_in?error=account-not-found'
+  else if err.toString().match('twitter denied')
+    res.redirect '/log_in?error=twitter-denied'
   else
     res.redirect '/log_in?error=' + err.toString()
