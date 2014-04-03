@@ -71,7 +71,7 @@ module.exports = class ArtworkView extends Backbone.View
     @artwork.fetch()
 
   setupZigZag: ->
-    if ($inquiryButton = @$('.artwork-inquiry a')).length
+    if ($inquiryButton = @$('.artwork-contact-button, .artwork-inquiry-button').first()).length
       new ZigZagBanner
         persist : true
         name    : 'inquiry'
