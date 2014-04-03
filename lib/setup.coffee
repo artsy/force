@@ -151,6 +151,7 @@ module.exports = (app) ->
   app.use require "../apps/post"
   app.use require "../apps/posts"
   app.use require "../apps/favorites_follows"
+  app.use require "../apps/unsubscribe"
   # Profile middleware and apps that use profiles
   app.use require "../apps/profile"
   app.use require "../apps/user_profile"

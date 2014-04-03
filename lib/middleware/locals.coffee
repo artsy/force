@@ -6,7 +6,8 @@ uuid = require 'node-uuid'
 { parse, format } = require 'url'
 _ = require 'underscore'
 _.mixin require 'underscore.string'
-newrelic = require 'newrelic'
+{ NODE_ENV } = require '../../config'
+newrelic = require 'newrelic' unless _.contains(['development', 'test'], NODE_ENV)
 
 module.exports = (req, res, next) ->
 
