@@ -43,7 +43,7 @@ module.exports = class ZigZagBanner extends Backbone.View
 
   verticallyCenter: ->
     existingMargin  = parseInt(@$el.css 'marginTop')
-    offset          = @$target.height() / 2
+    offset          = @$target.outerHeight() / 2
     newMargin       = offset + existingMargin
 
     @$el.css marginTop: newMargin
@@ -51,7 +51,6 @@ module.exports = class ZigZagBanner extends Backbone.View
   transitionIn: ->
     @render()
     _.defer =>
-      @$el.addClass 'is-in'
       @$one.addClass 'is-in'
       _.delay =>
         @$two.addClass 'is-in'
