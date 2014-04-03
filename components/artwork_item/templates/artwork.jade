@@ -35,6 +35,8 @@ figure.artwork-item( data-artwork=artwork.get('id') )
       - var saleArtwork = artwork.get('saleArtwork')
       .artwork-item-auction-bid-status
         | #{saleArtwork.bidLabel()}: #{saleArtwork.currentBid()}
+        if saleArtwork.get('bidder_positions_count') >= 1
+          | &nbsp;(#{saleArtwork.bidCount()})
 
     if artwork.has('saleArtwork') || showBlurbs
       - var saleArtwork = artwork.get('saleArtwork')
