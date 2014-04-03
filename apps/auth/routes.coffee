@@ -49,8 +49,15 @@ qs = require 'querystring'
   }
 
 @redirectBack = (req, res, next) ->
-  url = req.param('redirect-to') or
+  url = req.query['redirect-to'] or
+        req.body['redirect-to'] or
         req.param('redirect_uri') or
         parse(req.get('Referrer') or '').path or
         '/'
+  console.log url, 'REDIRECT BACK', [
+    req.param('redirect-to')
+    req.param('redirect_uri')
+    parse(req.get('Referrer') or '').path
+    '/'
+  ]
   res.redirect url

@@ -26,6 +26,7 @@ module.exports = class AuthModalView extends ModalView
 
   initialize: (options) ->
     { @destination } = options
+    console.log options
     @redirectTo = options.redirectTo if options.redirectTo
     @preInitialize options
     super
