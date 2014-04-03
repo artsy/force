@@ -13,6 +13,7 @@ BelowTheFoldView          = require './below-the-fold.coffee'
 trackArtworkImpressions   = require("../../../components/analytics/impression_tracking.coffee").trackArtworkImpressions
 MonocleView               = require './monocles.coffee'
 Sale                      = require '../../../models/sale.coffee'
+ZigZagBanner              = require '../../../components/zig_zag_banner/index.coffee'
 
 artistArtworksTemplate  = -> require('../templates/_artist-artworks.jade') arguments...
 detailTemplate          = -> require('../templates/_detail.jade') arguments...
@@ -37,6 +38,7 @@ module.exports = class ArtworkView extends Backbone.View
   initialize: (options) ->
     { @artwork, @artist } = options
 
+    @setupZigZag()
     @setupRelatedPosts()
     @setupCurrentUser()
     @setupArtistArtworks()
@@ -67,6 +69,14 @@ module.exports = class ArtworkView extends Backbone.View
     # Re-fetch and update detail
     @artwork.on "change:sale_message", @renderDetail, this
     @artwork.fetch()
+
+  setupZigZag: ->
+    if ($inquiryButton = @$('.artwork-inquiry a')).length
+      new ZigZagBanner
+        persist : true
+        name    : 'inquiry'
+        message : 'Interested in this work?<br>Request more info here'
+        $target : $inquiryButton
 
   deltaTrackPageView: (fair) ->
     el = $('#scripts')
