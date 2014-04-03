@@ -3,6 +3,7 @@ sd                = require('sharify').data
 Backbone          = require 'backbone'
 Edition           = require './edition.coffee'
 AdditionalImage   = require './additional_image.coffee'
+AdditionalImages  = require '../collections/additional_images.coffee'
 
 { Image, Dimensions, Markdown } = require 'artsy-backbone-mixins'
 
@@ -30,7 +31,7 @@ module.exports = class Artwork extends Backbone.Model
 
   parse: (response, options) ->
     @editions   = new Backbone.Collection response?.edition_sets, model: Edition
-    @images     = new Backbone.Collection response?.images, model: AdditionalImage, comparator: 'position'
+    @images     = new AdditionalImages response?.images
 
     @setDefaultImage()
 
@@ -42,9 +43,12 @@ module.exports = class Artwork extends Backbone.Model
     @images?.sort silent: true
 
   defaultImage: ->
-    @images?.findWhere(is_default: true) or
-    @images?.first() or
-    new AdditionalImage(@get('images')?[0])
+    # Create an images collection if one doesn't already exist (example: artworks in a post)
+    unless @images
+      @images = new AdditionalImages @get('images')
+
+    # Blank additionalImage is to handle works without images
+    @images?.findWhere(is_default: true) or @images?.first() or new AdditionalImage()
 
   hasAdditionalImages: ->
     @images?.length > 1
