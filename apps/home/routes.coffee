@@ -46,3 +46,6 @@ getRedirectTo = (req) ->
     success: (obj) ->
       res.render 'unsubscribe', type: emailTypes[type], name: obj.get('name')
     error: res.backboneError
+
+@unsupportedBrowser = (req, res, next) ->
+  res.render 'unsupported_browser'
