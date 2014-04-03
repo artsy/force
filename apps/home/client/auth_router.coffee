@@ -27,6 +27,8 @@ module.exports = class HomeAuthRouter extends Backbone.Router
           "Log in to link your Twitter account in your settings."
         when 'account-not-found', 'no-user-access-token', 'no-user'
           "We couldn't find your account. Please sign up."
+        when 'twitter-denied'
+          "Canceled Twitter log in."
         else
           "Uknown Error: " + error
       mediator.trigger 'open:auth', mode: 'login'
