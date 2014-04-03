@@ -188,6 +188,11 @@ describe 'Artwork', ->
       @artwork.images.reset()
       @artwork.defaultImageUrl().should.equal @artwork.missingImageUrl()
 
+  describe '#defaultImage', ->
+    it 'works if artwork.images is null but has images', ->
+      @artwork.images = null
+      @artwork.defaultImage().get('id').should.equal @artwork.get('images')[1].id
+
   describe '#titleAndYear', ->
     it 'returns empty string without title or year', ->
       @artwork.set title: false, date: false
