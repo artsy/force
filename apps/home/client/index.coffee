@@ -19,7 +19,6 @@ user = null
 module.exports.init = ->
 
   user = CurrentUser.orNull()
-
   # Set up the hero unit view
   new HeroUnitView
     el: $('body')
