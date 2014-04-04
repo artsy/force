@@ -32,3 +32,6 @@ getRedirectTo = (req) ->
 
 @redirectLoggedInHome = (req, res, next) ->
   if req.user? then res.redirect getRedirectTo(req) else next()
+
+@unsupportedBrowser = (req, res, next) ->
+  res.render 'unsupported_browser'

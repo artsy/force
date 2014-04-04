@@ -27,6 +27,7 @@ micrositeMiddleware = require './middleware/microsite'
 helpersMiddleware = require './middleware/helpers'
 ensureSSL = require './middleware/ensure_ssl'
 errorHandler = require "../components/error_handler"
+supportedBrowserCheck = require "./middleware/supported_browser"
 { notFoundError, loginError } = require('./middleware/errors')
 flash = require 'connect-flash'
 flashMiddleware = require './middleware/flash'
@@ -121,6 +122,7 @@ module.exports = (app) ->
   app.use helpersMiddleware
   app.use express.favicon()
   app.use express.logger('dev')
+  app.use supportedBrowserCheck
 
   # Mount apps
   app.use require "../apps/auction"

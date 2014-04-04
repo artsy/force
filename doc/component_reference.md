@@ -539,3 +539,21 @@ $.post('/flash', message: 'Thank you for personalizing your profile')
 ```coffeescript
 req.flash 'info', 'Hello world.'
 ```
+
+## Zig-Zag Banner
+
+![](images/zig_zag.png)
+
+Add `@import '../components/zig_zag_banner'` to the relevant asset package and:
+
+```coffeescript
+ZigZagBanner = require '../../../components/zig_zag_banner/index.coffee'
+
+# ...
+
+new ZigZagBanner
+  persist : true # Creates a cookie that persists for a year (defaults to true)
+  name    : 'inquiry' # Used in naming the cookie (so that multiple banners can exist)
+  message : 'Interested in this work? Request more info here'
+  $target : $inquiryButton # Gets vertically centered to the left of this DOM node
+```
