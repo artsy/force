@@ -83,3 +83,68 @@ describe 'PartnerOverviewView', ->
         @artistsGridTemplate.args[0][0].groups[0].list.should.have.lengthOf 7
         @artistsGridTemplate.args[0][0].groups[1].label.should.equal 'works available by'
         @artistsGridTemplate.args[0][0].groups[1].list.should.have.lengthOf 4
+
+  describe 'when initializing partner or nonpartner overview', ->
+
+    beforeEach (done) ->
+      sinon.stub Backbone, 'sync'
+      benv.render resolve(__dirname, '../../templates/index.jade'), {
+        profile: new Profile fabricate 'partner_profile'
+        sd: { PROFILE: fabricate 'partner_profile' }
+      }, =>
+        @PartnerOverviewView = mod = benv.requireWithJadeify(
+          (resolve __dirname, '../../client/overview'), ['template', 'artistsGridTemplate']
+        )
+
+        @partnerArtists = new PartnerArtists()
+        @partnerArtists.fetchUntilEnd = (options) => options?.success?()
+        @PartnerArtistsCollection = sinon.stub()
+        @PartnerArtistsCollection.returns @partnerArtists
+        mod.__set__ 'PartnerArtists', @PartnerArtistsCollection
+
+        @profile = new Profile fabricate 'partner_profile'
+        @partner = new Partner @profile.get 'owner'
+        @template = sinon.stub()
+        @artistsGridTemplate = sinon.stub()
+        @partnerShowsGrid = sinon.stub()
+        @partnerLocations = sinon.stub()
+        @partnerLocations.returns { fetchUntilEnd: -> }
+        @artistsListView = sinon.stub()
+        mod.__set__ 'template', @template
+        mod.__set__ 'artistsGridTemplate', @artistsGridTemplate
+        mod.__set__ 'PartnerShowsGrid', @partnerShowsGrid
+        mod.__set__ 'PartnerLocations', @partnerLocations
+        mod.__set__ 'ArtistsListView', @artistsListView
+        done()
+
+    afterEach ->
+      Backbone.sync.restore()
+
+    describe '#initialize', ->
+
+      it 'renders correct sections for partner galleries', ->
+        @view = new @PartnerOverviewView
+          profile: @profile
+          partner: @partner
+          numberOfShows: 6
+          el: $ 'body'
+
+        _.last(@template.args)[0].isPartner.should.be.ok
+        @artistsGridTemplate.calledOnce.should.be.ok
+        @partnerShowsGrid.calledOnce.should.be.ok
+        @partnerLocations.called.should.not.be.ok
+        @artistsListView.called.should.not.be.ok
+
+      it 'renders correct sections for nonpartner galleries', ->
+        @partner.set('claimed', false)
+        @view = new @PartnerOverviewView
+          profile: @profile
+          partner: @partner
+          numberOfShows: 6
+          el: $ 'body'
+
+        _.last(@template.args)[0].isPartner.should.not.be.ok
+        @artistsGridTemplate.calledOnce.should.not.be.ok
+        @partnerShowsGrid.calledOnce.should.be.ok
+        @partnerLocations.called.should.be.ok
+        @artistsListView.called.should.be.ok

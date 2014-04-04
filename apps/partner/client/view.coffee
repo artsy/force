@@ -37,21 +37,27 @@ module.exports = class PartnerView extends Backbone.View
     { @currentSection } = _.defaults options, @defaults
     @profile = @model # alias
     @partner = new Partner @profile.get('owner')
-    @listenTo @partner, 'sync', @initializeTablist
+    @listenTo @partner, 'sync', @initializeTablistAndContent
     @initializeCache()
     @initializePartner()
     @initializeFollows()
 
   renderSection: (section, extraParams={}) ->
+    _.extend (@sectionViewParams = {}), extraParams
     @highlightTab (@currentSection = section)
-
     $(window).off '.partner' # reset events under .partner namespace
+
+    # For tabs requiring the partner to be fetched (currently only the
+    # overview), delay the content initialization after @partner is synced.
+    # Otherwise, we can just go ahead and render the content.
+    return unless @isPartnerFetched or @currentSection isnt 'overview'
+
     new sectionToView[@currentSection]?( _.extend(
       el      : @$('.partner-content')
       profile : @profile
       partner : @partner
       cache   : @cache[@currentSection]
-    , extraParams))
+    , @sectionViewParams))
 
   intercept: (e) ->
     e.preventDefault()
@@ -67,14 +73,9 @@ module.exports = class PartnerView extends Backbone.View
 
   initializePartner: -> @partner.fetch cache: true
 
-  initializeTablist: ->
+  initializeTablistAndContent: ->
+    @isPartnerFetched = true
     @sections = @getDisplayableSections @getSections()
-
-    # If the partner doesn't have its default tab displayable,
-    # e.g. /overview for galleries or /shows for institutions,
-    # we display the first tab content of displayable tabs.
-    unless _.contains @sections, @currentSection
-      @renderSection (@currentSection = @sections?[0])
 
     # Render tablist
     @$('.partner-nav').html( tablistTemplate
@@ -82,6 +83,15 @@ module.exports = class PartnerView extends Backbone.View
       sections: @sections
       currentSection: @currentSection
     )
+
+    # Only render content for centain tabs
+    if @currentSection is 'overview'
+      @renderSection @currentSection, @sectionViewParams
+
+    # If the the tab isn't displayable, display the first tab content
+    # of displayable tabs.
+    unless _.contains @sections, @currentSection
+      @renderSection (@currentSection = @sections?[0]), @sectionViewParams
 
   initializeFollows: ->
     @following = new Following(null, kind: 'profile') if sd.CURRENT_USER?
@@ -109,8 +119,10 @@ module.exports = class PartnerView extends Backbone.View
     # The order in the array will be used for presentation
     gallery     = ['overview', 'shows', 'artists', 'posts', 'contact']
     institution = ['shows', 'collection', 'posts', 'shop', 'about']
+    nonPartnerGallery = ['overview']
 
-    if @profile.isGallery() then gallery
+    if @profile.isGallery()
+      if @partner.get('claimed') then gallery else nonPartnerGallery
     else if @profile.isInstitution() then institution
     else []
 
