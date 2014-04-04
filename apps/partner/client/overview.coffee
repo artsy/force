@@ -72,6 +72,7 @@ module.exports = class PartnerOverviewView extends Backbone.View
     new ArtistsListView
       collection: artists
       el: @$('.partner-overview-artists')
+      linkToPartnerArtist: @isPartner
 
   initializeLocations: ->
     return @$('.partner-overview-locations').hide() if @isPartner
