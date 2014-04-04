@@ -30,11 +30,14 @@ module.exports = class Artwork extends Backbone.Model
 
   parse: (response, options) ->
     @editions   = new Backbone.Collection response?.edition_sets, model: Edition
-    @images     = new Backbone.Collection response?.images, model: AdditionalImage, comparator: 'position'
+    @setImagesCollection response?.images
 
     @setDefaultImage()
 
     response
+
+  setImagesCollection: (images) ->
+    @images = new Backbone.Collection images, model: AdditionalImage, comparator: 'position'
 
   # Ensure the default image is the first image
   setDefaultImage: ->
@@ -42,9 +45,12 @@ module.exports = class Artwork extends Backbone.Model
     @images?.sort silent: true
 
   defaultImage: ->
-    @images?.findWhere(is_default: true) or
-    @images?.first() or
-    new AdditionalImage(@get('images')?[0])
+    # Create an images collection if one doesn't already exist (example: artworks in a post)
+    if @get('images') and not @images
+      @setImagesCollection @get('images')
+
+    # Blank additionalImage is to handle works without images
+    @images?.findWhere(is_default: true) or @images?.first() or new AdditionalImage()
 
   hasAdditionalImages: ->
     @images?.length > 1
