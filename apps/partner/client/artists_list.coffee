@@ -5,14 +5,17 @@ template       = -> require('../templates/artists_list.jade') arguments...
 module.exports = class PartnerArtistsListView extends Backbone.View
 
   defaults:
+    linkToPartnerArtist: true # link to partner artist or artist page
     numberOfColumns: 6
 
   initialize: (options={}) ->
-    { @numberOfColumns } = _.defaults options, @defaults
+    { @numberOfColumns, @linkToPartnerArtist } = _.defaults options, @defaults
     @render()
     
   render: ->
-    @$el.html template groups: @groupArtists(@collection)
+    @$el.html template
+      groups: @groupArtists(@collection)
+      linkToPartnerArtist: @linkToPartnerArtist
 
   groupArtists: (pas) ->
     h = Math.ceil pas.length / @numberOfColumns
