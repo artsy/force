@@ -13,33 +13,33 @@ block body
     .artist-works-section
       h3 For Sale
       #artist-available-works
+        //- Rendered client-side
         .loading-spinner
 
     .artist-works-section
       h3 Museums and Other
       #artist-institution-works
+        //- Rendered client-side
         .loading-spinner
 
-    .artist-info-section
-      .main-layout-container
-        .artist-info-left
-          if artist.get('blurb')
-            .artist-blurb
-              .avant-garde-header-center About #{artist.get('name')}
-              .blurb
-                != artist.mdToHtml('blurb')
-          .related-genes
-          if artist.get('auction_lots_count') > 0
-            a.avant-garde-jump-link( href="/artist/#{artist.id}/auction-results" )
-              | Auction results
-              i.icon-chevron-small-right
-        .artist-info-right
-          .artist-related-posts
+    .artist-related-posts.artist-info-section
+      //- Rendered client-side
+
+    if artist.get('auction_lots_count')
+      .artist-auction-results-section.artist-info-section
+        h2.avant-garde-header-center
+          | Recent Auction Results for #{artist.get('name')}
+        .artist-auction-results
+          //- Rendered client-side
+        a.avant-garde-button-text( href="/artist/#{artist.id}/auction-results" )
+          | See all auction results for #{artist.get('name')}
 
     .artist-related-section
       h3.avant-garde-header-center Related Artists
       #artist-related-artists.main-layout-container
+        //- Rendered client-side
 
     .artist-related-section
       h3.avant-garde-header-center Related Contemporary
       #artist-related-contemporary.main-layout-container
+        //- Rendered client-side

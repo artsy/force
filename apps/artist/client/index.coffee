@@ -1,33 +1,41 @@
-_                       = require 'underscore'
-Backbone                = require 'backbone'
-Artworks                = require '../../../collections/artworks.coffee'
-Artist                  = require '../../../models/artist.coffee'
-sd                      = require('sharify').data
-FillwidthView           = require '../../../components/fillwidth_row/view.coffee'
-ArtistFillwidthList     = require '../../../components/artist_fillwidth_list/view.coffee'
-BlurbView               = require '../../../components/blurb/view.coffee'
-RelatedPostsView        = require '../../../components/related_posts/view.coffee'
-RelatedGenesView        = require '../../../components/related_genes/view.coffee'
-CurrentUser             = require '../../../models/current_user.coffee'
-ShareView               = require '../../../components/share/view.coffee'
-AuctionLots             = require '../../../collections/auction_lots.coffee'
-BorderedPulldown        = require '../../../components/bordered_pulldown/view.coffee'
-artistSort              = -> require('../templates/sort.jade') arguments...
+_                             = require 'underscore'
+Backbone                      = require 'backbone'
+Artworks                      = require '../../../collections/artworks.coffee'
+Artist                        = require '../../../models/artist.coffee'
+sd                            = require('sharify').data
+FillwidthView                 = require '../../../components/fillwidth_row/view.coffee'
+ArtistFillwidthList           = require '../../../components/artist_fillwidth_list/view.coffee'
+BlurbView                     = require '../../../components/blurb/view.coffee'
+RelatedPostsView              = require '../../../components/related_posts/view.coffee'
+RelatedGenesView              = require '../../../components/related_genes/view.coffee'
+CurrentUser                   = require '../../../models/current_user.coffee'
+ShareView                     = require '../../../components/share/view.coffee'
+BorderedPulldown              = require '../../../components/bordered_pulldown/view.coffee'
+RelatedAuctionResultsView     = require '../../../components/related_auction_results/view.coffee'
+{ Following, FollowButton }   = require '../../../components/follow_button/index.coffee'
 
-{ Following, FollowButton } = require '../../../components/follow_button/index.coffee'
+artistSort = -> require('../templates/sort.jade') arguments...
 
 module.exports.ArtistView = class ArtistView extends Backbone.View
+  events:
+    'click .artist-related-see-more' : 'nextRelatedPage'
+    'click .artist-works-sort a'     : 'onSortChange'
 
   initialize: (options) ->
-    @sortBy = options.sortBy
+    { @sortBy } = options
+
     @setupCurrentUser()
     @setupFollowButton()
     @setupArtworks()
     @setupRelatedArtists()
-    @setupBlurb()
     @setupRelatedPosts()
-    @setupRelatedGenes()
     @setupShareButtons()
+    @setupAuctionResults()
+    @setupHeader()
+
+  setupHeader: ->
+    @setupBlurb()
+    @setupRelatedGenes()
 
   setupShareButtons: ->
     new ShareView el: @$('.artist-share')
@@ -50,18 +58,18 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     @artworkCollection = @currentUser?.defaultArtworkCollection()
 
   setupBlurb: ->
-    $blurbEl = @$('.artist-info-section .artist-blurb .blurb')
-    if $blurbEl.length > 0
+    if ($blurb = @$('.blurb')).length
       new BlurbView
-        el: $blurbEl
-        updateOnResize: true
-        lineCount: 6
+        updateOnResize : true
+        lineCount      : 3
+        el             : $blurb
+      $blurb.css maxHeight: 'none'
 
   setupRelatedGenes: ->
     new RelatedGenesView
-      model: @model
-      modelName: 'artist'
-      el: @$('.artist-info-section .related-genes')
+      modelName : 'artist'
+      model     : @model
+      el        : @$('.artist-related-genes')
 
   setupArtworks: ->
     new BorderedPulldown el: $('.bordered-pulldown')
@@ -94,10 +102,18 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
 
   setupRelatedPosts: ->
     new RelatedPostsView
-      el: @$('.artist-info-right .artist-related-posts')
-      numToShow: 2
-      model: @model
-      modelName: 'artist'
+      el         : @$('.artist-related-posts')
+      numToShow  : 5
+      model      : @model
+      modelName  : 'artist'
+      mode       : 'grid'
+      canBeEmpty : false
+
+  setupAuctionResults: ->
+    new RelatedAuctionResultsView
+      el       : @$('.artist-auction-results')
+      amount   : 4
+      artistId : @model.id
 
   setupRelatedArtists: ->
     @relatedArtistsPage = 1
@@ -117,10 +133,6 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
       ).fetchAndRender()
     else
       $artistContainer.parent().remove()
-
-  events:
-    'click .artist-related-see-more'    : 'nextRelatedPage'
-    'click .artist-works-sort a'        : 'onSortChange'
 
   onSortChange: (e) ->
     @sortBy = $(e.currentTarget).data('sort')
