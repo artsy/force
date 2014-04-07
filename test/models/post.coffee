@@ -51,15 +51,18 @@ describe 'Post', ->
       post.defaultImage().get('is_default').should.equal image.is_default
 
     it 'returns the first image if there is no artwork', ->
-      image =
-        type: 'PostImage'
-      post = new Post(attachments: [image])
+      image   = type: 'PostImage'
+      post    = new Post(attachments: [image])
+      post.defaultImage().get('type').should.equal 'PostImage'
 
-      post.defaultImage().should.equal image
+    # I see no reason why this should be the case?
+    # it 'returns object if there are no attachments', ->
+    #   post = new Post(attachments: [])
+    #   post.defaultImage().should.be.type('object')
 
-    it 'returns object if there are no attachments', ->
+    it 'returns undefined if there are no attachments', ->
       post = new Post(attachments: [])
-      post.defaultImage().should.be.type('object')
+      _.isUndefined(post.defaultImage()).should.be.ok
 
   describe '#relatedArtists', ->
 
