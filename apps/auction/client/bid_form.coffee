@@ -28,6 +28,9 @@ module.exports = class BidForm extends ErrorHandlingForm
     @$submit = @$('.registration-form-content .avant-garde-button-black')
     if options.submitImmediately
       @placeBid()
+    else
+      # This field already has autofocus but for some reason doesn't autofocus
+      @$('input.max-bid').focus()
 
   getBidAmount: =>
     val = @$('input.max-bid').val()
