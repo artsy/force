@@ -12,7 +12,7 @@ if lot.hasImage()
     dd= lot.get('medium_text') || '–'
     dt: h3 Size
     dd
-      if lot.get('dimensions')
+      if lot.hasDimensions()
         != lot.dimensions({ metric: 'in', format: 'superscript' })
         br
         != lot.dimensions({ metric: 'cm', format: 'decimal' })

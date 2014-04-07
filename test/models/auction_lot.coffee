@@ -27,3 +27,15 @@ describe 'AuctionLot', ->
       @lot.toPageTitle().should.equal 'MADONNA PAINTING | Auction Result from Lempertz | Artsy'
       @lot.set artist_name: 'Foo Bar'
       @lot.toPageTitle(artist).should.equal 'MADONNA PAINTING, by Foo Bar | Auction Result from Lempertz | Artsy'
+
+  describe '#hasDimensions', ->
+    it 'returns true if there is any dimension attributes present', ->
+      @lot.hasDimensions().should.be.ok
+      @lot.unset 'dimensions'
+      @lot.hasDimensions().should.not.be.ok
+      @lot.set 'dimensions', 'foobar'
+      @lot.hasDimensions().should.not.be.ok
+      @lot.set 'dimensions', in: 'foo'
+      @lot.hasDimensions().should.be.ok
+      @lot.set 'dimensions', cm: 'foo'
+      @lot.hasDimensions().should.be.ok
