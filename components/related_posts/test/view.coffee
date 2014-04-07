@@ -8,7 +8,9 @@ sinon           = require 'sinon'
 CurrentUser       = require '../../../models/current_user'
 Post              = require '../../../models/post'
 Artist            = require '../../../models/artist'
-RelatedPostsView  = benv.requireWithJadeify resolve(__dirname, '../view.coffee'), ['template', 'noneTemplate']
+
+RelatedPostsView  =
+  benv.requireWithJadeify resolve(__dirname, '../view.coffee'), ['templates.empty', 'templates.grid', 'templates.list']
 
 describe 'RelatedPostsView', ->
   before (done) ->
@@ -71,7 +73,7 @@ describe 'RelatedPostsView', ->
         Backbone.sync.args[0][2].success [
           fabricate 'post', id: 'cats-rule-dogs-drool-literally', title: 'Cats rule, and dogs drool'
         ]
-        @view.$el.html().should.include '1 Featured Post About This Artist'
+        @view.$el.html().should.include '1 Post About Pablo Picasso'
 
     describe 'has 2 results', ->
       it 'properly pluralizes the headline', ->
@@ -79,7 +81,7 @@ describe 'RelatedPostsView', ->
           fabricate 'post', id: 'cats-rule-dogs-drool-literally', title: 'Cats rule, and dogs drool'
           fabricate 'post', id: 'bitty-the-queen', title: 'Bitty is the best cat'
         ]
-        @view.$el.html().should.include '2 Featured Posts About This Artist'
+        @view.$el.html().should.include '2 Posts About Pablo Picasso'
 
     describe '#addPost', ->
       beforeEach ->
