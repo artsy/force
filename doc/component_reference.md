@@ -19,6 +19,7 @@ If a separate doc is required, add it to the component's directory as a
 - [Location Search](#location-search)
 - [Page Modal](#page-modal)
 - [Flash Message](#flash-message)
+- [Blurb](#blurb)
 
 ## Artwork Columns
 ![](images/artwork_columns.png)
@@ -557,3 +558,22 @@ new ZigZagBanner
   message : 'Interested in this work? Request more info here'
   $target : $inquiryButton # Gets vertically centered to the left of this DOM node
 ```
+
+## Blurb
+![](images/blurb.png)
+
+Blurb view using [jQuery dotdotdot](https://github.com/BeSite/jQuery.dotdotdot).
+
+Example
+```coffeescript
+BlurbView      = require '../../../components/blurb/view.coffee'
+
+new BlurbView
+  el: @$('.artist-blurb')
+  updateOnResize: true
+  lineCount: 4
+```
+
+##### Uses:
+- artist
+- partner profile (artist tab)
