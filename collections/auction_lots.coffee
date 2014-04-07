@@ -22,3 +22,7 @@ module.exports = class AuctionLots extends PageableCollection
   parseState: (resp, queryParams, state, options) ->
     if options.res
       { totalRecords: parseInt(options.res.headers['x-total-count']) }
+
+  resultsWithImages: ->
+    @filter (auctionLot) ->
+      auctionLot.hasImage()
