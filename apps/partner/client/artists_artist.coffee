@@ -6,7 +6,7 @@ Artist         = require '../../../models/artist.coffee'
 Partner        = require '../../../models/partner.coffee'
 Artworks       = require '../../../collections/artworks.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
-BlurbView      = require '../../artist/client/blurb.coffee'
+BlurbView      = require '../../../components/blurb/view.coffee'
 template       = -> require('../templates/artists_artist.jade') arguments...
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 
