@@ -13,6 +13,7 @@ module.exports = class PartnerArtistsListView extends Backbone.View
     @render()
     
   render: ->
+    return @$el.hide() if @collection.length is 0
     @$el.html template
       groups: @groupArtists(@collection)
       linkToPartnerArtist: @linkToPartnerArtist

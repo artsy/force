@@ -75,11 +75,11 @@ module.exports = class PartnerOverviewView extends Backbone.View
       linkToPartnerArtist: @isPartner
 
   initializeLocations: ->
-    return @$('.partner-overview-locations').hide() if @isPartner
-
     locations = new PartnerLocations()
     locations.url = "#{@partner.url()}/locations"
     locations.fetchUntilEnd success: =>
+      return @$('.partner-overview-locations').hide() if locations.length is 0
+
       locationsArray = []
       _.each locations.groupBy('city'), (ls, c) ->
         _.each ls, (l) ->
