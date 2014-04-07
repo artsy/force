@@ -10,27 +10,49 @@
   a
     text-decoration none
 
-.artist-header-empty > p
-  margin 40px 0
+.artist-header-empty
+  margin 20px 0
 
 .artist-header-actions
-  display table
-  width 100%
-  min-height 50px
+  clearfix()
+  margin 20px 0
 .aha-cell
-  display table-cell
-  text-align center
-  vertical-align middle
-  width 33.3%
-  &:first-child
-    text-align left
+  float left
+  text-align left
+  font-size 17px
+  line-height 26px
   &:last-child
-    text-align right
+    width 40%
+  &:first-child
+    width 60%
+    padding-right 20px
+  h2
+    margin 5px 0
+    avant-garde()
+    font-size default-avant-garde-font-size
 
-.artist-share > a
-  display inline-block
-  text-decoration none
-  font-size 16px
-  font-weight normal
-  garamond()
-  text-transform none
+.artist-blurb > .blurb
+  // Removed when dotdotdot initializes
+  max-height (26px * 3)
+
+.artist-works-sort
+  text-align right
+  *
+    text-align left
+  &:hover > .bordered-pulldown-options
+    display block
+    border-color dark-gray-border-color
+  .bordered-pulldown
+    width 170px
+
+.artist-share
+  position absolute
+  right 0
+  top 42px
+  > a
+    display inline-block
+    text-decoration none
+    font-size 16px
+    font-weight normal
+    garamond()
+    text-transform none

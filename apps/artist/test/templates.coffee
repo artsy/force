@@ -37,18 +37,6 @@ describe 'Artist header', ->
       @artist.get('published_artworks_count').should.equal 0
       @template.should.include "There are no #{@artist.get('name')} works on Artsy yet."
 
-  describe 'Auction results page for artist with some artworks', ->
-    beforeEach ->
-      @artist     = new Artist fabricate 'artist', { published_artworks_count: 0 }
-      @template   = render('index')(
-        sd: { CURRENT_PATH: "/artist/#{@artist.id}/auction-results" }
-        artist: @artist
-      )
-
-    it 'should *not* display the no works message if there is 0 artworks and we are not on the overview page', ->
-      @artist.get('published_artworks_count').should.equal 0
-      @template.should.not.include "There are no #{@artist.get('name')} works on Artsy yet."
-
   describe 'artist with auction results', ->
     beforeEach ->
       @artist     = new Artist fabricate 'artist', { published_artworks_count: 1, auction_lots_count: 1 }
