@@ -23,7 +23,7 @@ describe 'GeneView', ->
 
   beforeEach ->
     { GeneView } = mod = benv.require resolve __dirname, '../client.coffee'
-    for klass in ['ArtistFillwidthList', 'FilterArtworksView', 'FollowButton', 'ShareView', 'RelatedGenesView']
+    for klass in ['ArtistFillwidthList', 'FilterArtworksView', 'FollowButton', 'ShareView', 'RelatedGenesView', 'BlurbView']
       @[klass] = sinon.stub()
       @[klass]::fetchAndRender = sinon.stub()
       @[klass]::router = { navigate: sinon.stub() }
@@ -43,6 +43,9 @@ describe 'GeneView', ->
 
     it 'sets up a share view', ->
       @ShareView.calledWithNew().should.be.ok
+
+    it 'sets up a blurb view', ->
+      @BlurbView.calledWithNew().should.be.ok
 
     it 'inits a follow button view', ->
       @FollowButton.calledWithNew().should.be.ok

@@ -6,35 +6,51 @@ CurrentUser = require '../../models/current_user.coffee'
 mediator    = require '../../lib/mediator.coffee'
 analytics   = require '../../lib/analytics.coffee'
 
-template      = -> require('./templates/index.jade') arguments...
-noneTemplate  = -> require('./templates/none.jade') arguments...
+templates =
+  empty : -> require('./templates/empty.jade') arguments...
+  list  : -> require('./templates/list.jade') arguments...
+  grid  : -> require('./templates/grid.jade') arguments...
 
 module.exports = class RelatedPostsView extends Backbone.View
   events:
     'click .related-posts-show-all'   : 'showAll'
     'click .related-posts-add-button' : 'addPost'
 
-  initialize: (options) ->
-    { @model, @numToShow, @modelName } = options
+  initialize: (options = {}) ->
+    { @model, @numToShow, @modelName, @mode, @canBeEmpty } = _.defaults(options, mode: 'list', canBeEmpty: true)
 
-    throw 'Model must implement #fetchRelatedPosts' unless _.isFunction(@model.fetchRelatedPosts)
+    throw new Error('Model must implement #fetchRelatedPosts') unless _.isFunction @model.fetchRelatedPosts
     throw new Error('Requires @modelName') unless @modelName
 
     @model.fetchRelatedPosts()
     @listenTo @model.relatedPosts, 'sync', @render
 
   render: ->
-    if @model.relatedPosts.length > 0
-      @$el.html template
-        model: @model
-        posts: @model.relatedPosts.first @numToShow
-        remaining: Math.max((@model.relatedPosts.length - @numToShow), 0)
-        modelName: @modelName
+    templateData =
+      model      : @model
+      modelName  : @modelName
+      mode       : @mode
+      entityName : @entityName()
+
+    if @model.relatedPosts.length
+      @$el.html templates[@mode] _.extend templateData,
+        posts      : @model.relatedPosts.first @numToShow
+        remaining  : Math.max (@model.relatedPosts.length - @numToShow), 0
     else
-      @$el.html noneTemplate(model: @model, modelName: @modelName)
+      if @canBeEmpty
+        @$el.html templates.empty templateData
+      else
+        @remove()
 
     _.defer =>
-      @$('.related-posts').addClass 'is-complete'
+      if not @__rendered__
+        @$('.related-posts').addClass 'is-fade-in'
+        @__rendered__ = true
+      else
+        @$('.related-posts').addClass 'is-rendered'
+
+  entityName: ->
+    @model.get('name') or "this #{@modelName}"
 
   showAll: (e) ->
     e.preventDefault()
@@ -42,7 +58,8 @@ module.exports = class RelatedPostsView extends Backbone.View
     @render()
 
   addPost: (e) =>
-    @currentUser ||= CurrentUser.orNull()
+    @currentUser ?= CurrentUser.orNull()
+
     unless @currentUser
       e.preventDefault()
       mediator.trigger 'open:auth', mode: 'register', copy: 'Sign up to post on Artsy.net'
@@ -52,12 +69,12 @@ module.exports = class RelatedPostsView extends Backbone.View
       @addToPost (-> location.href = "/post" )
 
   addToPost: (success) ->
-    @currentUser ||= CurrentUser.orNull()
+    @currentUser ?= CurrentUser.orNull()
     @currentUser.unpublishedPost
       success: (post) =>
         post.isNew = -> true
-        post.url = "#{post.url()}/#{post.get('id')}/artwork/#{@model.get('id')}"
+        post.url = "#{post.url()}/#{post.id}/artwork/#{@model.id}"
         post.save null,
-          success: success
-          error: success
+          success : success
+          error   : success
       error: success

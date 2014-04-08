@@ -38,4 +38,6 @@ module.exports = class RelatedGenesView extends Backbone.View
         @render _.first collection.models, 10
 
   render: (relatedGenes) =>
-    @$el.html genesTemplate(genes: relatedGenes, title: @title)
+    @$el.
+      html(genesTemplate(genes: relatedGenes, title: @title)).
+      addClass('is-fade-in')

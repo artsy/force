@@ -26,7 +26,7 @@ describe 'ArtistView', ->
     sinon.stub Backbone, 'sync'
     benv.render resolve(__dirname, '../../templates/index.jade'), {
       sd     : {}
-      artist : new Artist(fabricate('artist'))
+      artist : new Artist(fabricate('artist', published_artworks_count: 1))
       sortBy : '-published_at'
     }, =>
       { ArtistView, @init } = mod = benv.requireWithJadeify(
@@ -37,7 +37,7 @@ describe 'ArtistView', ->
         ['nextPage', 'render']
       @view = new ArtistView
         el     : $ 'body'
-        model  : new Artist fabricate 'artist'
+        model  : new Artist fabricate 'artist', published_artworks_count: 1
         sortBy : '-published_at'
       done()
 
@@ -66,7 +66,7 @@ describe 'ArtistView', ->
       @view.setupBlurb()
       viewBlurbOpts = @BlurbView.args[0][0]
       viewBlurbOpts.updateOnResize.should.equal true
-      viewBlurbOpts.lineCount.should.equal 6
+      viewBlurbOpts.lineCount.should.equal 3
 
     it 'sets up the related genes view properly', ->
       viewGeneOpts = @RelatedGenesView.args[0][0]
@@ -78,7 +78,7 @@ describe 'ArtistView', ->
 
     it 'sets up related posts', ->
       viewRelatedPostOpts = @RelatedPostsView.args[0][0]
-      viewRelatedPostOpts.numToShow.should.equal 2
+      viewRelatedPostOpts.numToShow.should.equal 5
       viewRelatedPostOpts.model.should.equal @view.model
 
   describe 'sorting', ->
@@ -91,7 +91,7 @@ describe 'ArtistView', ->
       """
       @view.onSortChange({ currentTarget: $fixture.find('a')})
       @view.sortBy.should.equal '-published_at'
-      @view.$el.find('a.bordered-pulldown-toggle').html().should.include 'Recently Added'
+      @view.$el.find('.bordered-pulldown-toggle').html().should.include 'Recently Added'
 
     it 'passes the correct sort option into setupArtworks when sorting by Relevance', ->
       $fixture = $ """

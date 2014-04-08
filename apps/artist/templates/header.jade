@@ -1,17 +1,11 @@
 include ../../../components/share/template
 
-mixin artist-header(artist, title)
-  - var title = title || ''
-  - function onOverview() { return (sd.CURRENT_PATH === '/artist/' + artist.id); }              
-
+mixin artist-header(artist)
   header.artist-header
     h1.avant-garde-header-center
-      if title
-        = title
-        a( href="/artist/#{artist.id}")= artist.get('name')
-      else
-        = artist.get('name')
-      if artist.get('published_artworks_count') > 0
+      = artist.get('name')
+
+      if artist.get('published_artworks_count')
         nav.artist-share
           +share(title + artist.get('name') + ' on Artsy', artist.imageUrl('large'))
 
@@ -20,17 +14,20 @@ mixin artist-header(artist, title)
 
     if artist.get('published_artworks_count') === 0
       .artist-header-empty
-        if onOverview()
-          p
-            | There are no #{artist.get('name')} works on Artsy yet.
-            br
-            | Follow the artist to get alerts when works are added.
-          button#artist-follow-button.avant-garde-button-white.follow-button
-    else
-      .artist-header-actions
-        .aha-cell
-          | &nbsp;
-        .aha-cell
-          button#artist-follow-button.avant-garde-button-white.follow-button
-        .artist-works-sort
-          include ../templates/sort
+        | There are no #{artist.get('name')} works on Artsy yet.
+        br
+        | Follow the artist to get alerts when works are added.
+
+    button#artist-follow-button.avant-garde-button-white.follow-button
+
+    .bisected-header
+      if artist.get('blurb')
+        .bisected-header-cell
+          .artist-blurb
+            h2 Biography
+            .blurb!= artist.mdToHtml('blurb')
+
+      .bisected-header-cell: .artist-related-genes.related-genes
+
+    if artist.get('published_artworks_count')
+      .artist-works-sort: include ../templates/sort

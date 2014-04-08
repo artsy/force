@@ -1,0 +1,16 @@
+.related-auction-results
+  for lot in auctionResults
+    a.related-auction-result( href= "/artist/#{artistId}/auction-result/#{lot.id}" )
+      .rar-details
+        if lot.hasImage()
+          figure.rar-thumbnail
+            img( src= lot.imageUrl('original'), alt= lot.get('title') )
+        .rar-metadata
+          em.rar-title #{lot.get('title')} #{lot.get('dates_text') ? '(' + lot.get('dates_text') + ')' : ''}
+          .rar-medium= lot.get('medium_text')
+          if lot.hasDimensions()
+            .rar-dimensions-imperial!= lot.dimensions({ metric: 'in', format: 'superscript' })
+            .rar-dimensions-metric!= lot.dimensions({ metric: 'cm', format: 'decimal' })
+          .rar-organization= lot.get('organization')
+          .rar-auction-date= lot.get('auction_dates_text')
+          .rar-estimate!= lot.get('estimate_text')

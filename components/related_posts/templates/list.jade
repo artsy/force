@@ -1,6 +1,6 @@
-.related-posts
+.related-posts.is-list
   h3.avant-garde-header-center
-    | #{posts.length + remaining} Featured #{(posts.length === 1 ? 'Post' : 'Posts')} About This #{modelName}
+    | #{posts.length + remaining} #{(posts.length === 1 ? 'Post' : 'Posts')} About #{entityName}
 
   ul
     for post in posts
@@ -21,12 +21,5 @@
 
   footer.related-posts-actions( class=(remaining > 0 ? 'is-hasremaining' : '') )
     if remaining > 0
-      .related-posts-actions
-        a.related-posts-show-all
-          | Show All Featured Posts (#{remaining})
-
-    a.related-posts-add-button.avant-garde-button-white(
-      href='/post'
-    )
-      i.icon-write
-      | Add Post
+      a.related-posts-show-all
+        | Show All Featured Posts (#{remaining})

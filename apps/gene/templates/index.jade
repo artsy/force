@@ -14,11 +14,13 @@ block body
       .avant-garde-button-white.follow-button
       #gene-share-buttons
         +share(gene.get('name') + ' on Artsy', gene.imageUrl())
-    #gene-info-left
-      #gene-description
-        #gene-description-inner!= gene.mdToHtml('description')
-    #gene-info-right
-      .related-genes
-        .loading-spinner
+
+    .bisected-header
+      if gene.get('description')
+        .bisected-header-cell.gene-blurb
+          h2 About
+          .blurb!= gene.mdToHtml('description')
+      .bisected-header-cell: .related-genes
+
     #gene-filter( data-state=gene.isSubjectMatter() ? 'artworks' : 'artists' )
       include filter

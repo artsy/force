@@ -1,0 +1,39 @@
+@import '../stylus_lib'
+
+rar-height = 175px
+
+.related-auction-results
+  text-align center
+  height rar-height
+  overflow hidden
+
+.related-auction-result
+  display inline-block
+  height rar-height
+  margin 0 10px
+  vertical-align top
+  &:hover .rar-thumbnail > img
+    opacity 0.5
+
+.rar-thumbnail
+.rar-metadata
+  float left
+  text-align left
+
+.rar-thumbnail
+  margin 0
+  display block
+  background black
+  max-width 300px
+  overflow hidden
+  img
+    height rar-height
+    transition opacity 0.5s
+    prevent-content-shift()
+
+.rar-metadata
+  padding-left 20px
+  max-width 250px
+  > *
+    display block
+    overflow ellipsis

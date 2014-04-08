@@ -1,15 +1,15 @@
-_                 = require 'underscore'
-Backbone          = require 'backbone'
-sd                = require('sharify').data
-Profile           = require('./profile.coffee')
-Artwork           = require('./artwork.coffee')
-Artists           = require('../collections/artists.coffee')
-Artworks          = require('../collections/artworks.coffee')
-Attachments       = require('../components/post/collections/post_attachments.coffee')
-Reposts           = require('../components/post/collections/reposts.coffee')
-moment            = require 'moment'
-
-{ smartTruncate } = require '../components/util/string.coffee'
+_                   = require 'underscore'
+Backbone            = require 'backbone'
+sd                  = require('sharify').data
+moment              = require 'moment'
+Profile             = require './profile.coffee'
+Artwork             = require './artwork.coffee'
+Artists             = require '../collections/artists.coffee'
+Artworks            = require '../collections/artworks.coffee'
+AdditionalImage     = require '../models/additional_image.coffee'
+Attachments         = require '../components/post/collections/post_attachments.coffee'
+Reposts             = require '../components/post/collections/reposts.coffee'
+{ smartTruncate }   = require '../components/util/string.coffee'
 
 module.exports = class Post extends Backbone.Model
 
@@ -67,7 +67,7 @@ module.exports = class Post extends Backbone.Model
     ]).join(" | ")
 
   defaultImage: ->
-    _.first(@artworks().models)?.defaultImage() or _.first(@images()) or {}
+    _.first(@artworks().models)?.defaultImage() or @images().first()
 
   artworks: ->
     new Artworks(@get('attachments')
@@ -85,9 +85,9 @@ module.exports = class Post extends Backbone.Model
   hasArworks: -> @artworks()?.length > 0
 
   images: ->
-    _.filter(@get('attachments'), (attachment) ->
-      attachment.type == "PostImage"
-    )
+    images = _.filter @get('attachments'), (attachment) ->
+      attachment.type is 'PostImage'
+    new Backbone.Collection images, model: AdditionalImage
 
   postedAt: ->
     moment(@get('last_promoted_at')).fromNow()
