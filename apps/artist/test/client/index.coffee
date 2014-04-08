@@ -66,7 +66,7 @@ describe 'ArtistView', ->
       @view.setupBlurb()
       viewBlurbOpts = @BlurbView.args[0][0]
       viewBlurbOpts.updateOnResize.should.equal true
-      viewBlurbOpts.lineCount.should.equal 3
+      viewBlurbOpts.lineCount.should.equal 5
 
     it 'sets up the related genes view properly', ->
       viewGeneOpts = @RelatedGenesView.args[0][0]
