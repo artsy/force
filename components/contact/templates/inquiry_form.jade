@@ -1,5 +1,5 @@
-form.contact2-form
-  .contact2-artwork-details
+form.contact-form
+  .contact-artwork-details
     img( src=artwork.defaultImageUrl() )
     p= artwork.get('artist').name
     p!= artwork.titleAndYear()
@@ -17,7 +17,7 @@ form.contact2-form
       | &nbsp;
   .bi-type-activated-placeholder( style='margin-top: -153px' ) Your message to Artsy
   if user
-    section.contact2-from
+    section.contact-from
       | From: #{user.get('name')}
       span.mcf-email  (#{user.get('email')})
     input( type='hidden', name='name', value=user.get('name') )
@@ -35,7 +35,7 @@ form.contact2-form
       placeholder= 'Your email address'
       required
     )
-  a#contact2-submit.avant-garde-button-black.is-block(
+  a#contact-submit.avant-garde-button-black.is-block(
     href='#'
     data-state='ok'
   )
