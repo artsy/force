@@ -17,9 +17,9 @@ block body
 
     .bisected-header
       if gene.get('description')
-        .bisected-header-cell
+        .bisected-header-cell.gene-blurb
           h2 About
-          != gene.mdToHtml('description')
+          .blurb!= gene.mdToHtml('description')
       .bisected-header-cell: .related-genes
 
     #gene-filter( data-state=gene.isSubjectMatter() ? 'artworks' : 'artists' )
