@@ -8,8 +8,6 @@ CurrentUser   = require '../../models/current_user.coffee'
 analytics     = require('../../lib/analytics.coffee')
 
 template        = -> require('./templates/index.jade') arguments...
-headerTemplate  = -> require('./templates/header.jade') arguments...
-formTemplate    = -> require('./templates/form.jade') arguments...
 
 module.exports = class ContactView extends ModalView
   _.extend @prototype, Form
@@ -17,11 +15,11 @@ module.exports = class ContactView extends ModalView
   className: 'contact'
 
   template: template
-  headerTemplate: headerTemplate
-  formTemplate: formTemplate
+  headerTemplate: -> 'Comments'
+  formTemplate: -> 'Override `formTemplate` to fill in this form'
 
   defaults: ->
-    width: '800px'
+    width: '470px'
     successMessage: 'Thank you. Your message has been sent.'
     placeholder: 'Your message'
     url: "#{sd.ARTSY_URL}/api/v1/feedback"
@@ -34,9 +32,10 @@ module.exports = class ContactView extends ModalView
   initialize: (options = {}) ->
     @options = _.defaults options, @defaults()
     _.extend @templateData,
-      user: CurrentUser.orNull()
+      user: @user
       placeholder: @options.placeholder
 
+    @user       = CurrentUser.orNull()
     @model      = new Backbone.Model
     @model.url  = @options.url
 
@@ -54,16 +53,17 @@ module.exports = class ContactView extends ModalView
     @renderTemplates()
 
   renderTemplates: ->
-    @$('#modal-contact-header').html @headerTemplate(@templateData)
-    @$('#modal-contact-form').html @formTemplate(@templateData)
+    @$('#contact-header').html @headerTemplate(@templateData)
+    @$('#contact-form').html @formTemplate(@templateData)
 
   success: =>
     @$dialog.attr 'data-state', 'fade-out'
     _.delay =>
-      @$el.addClass 'modal-contact-success-message'
+      @$el.addClass 'contact-success-message'
       @$dialog.
         addClass('is-notransition').
-        html @options.successMessage
+        html(@options.successMessage).
+        width 'auto'
       @updatePosition()
       _.defer =>
         @$dialog.
@@ -78,7 +78,7 @@ module.exports = class ContactView extends ModalView
 
     if @validateForm (@$form ?= @$('form'))
       @$submit    ?= @$('#contact-submit')
-      @$errors    ?= @$('#modal-contact-errors')
+      @$errors    ?= @$('#contact-errors')
 
       @$submit.attr 'data-state', 'loading'
 
@@ -92,3 +92,8 @@ module.exports = class ContactView extends ModalView
           @updatePosition()
 
       analytics.track.funnel 'Contact form submitted', formData
+
+  focusTextareaAfterCopy: =>
+    return unless @autofocus()
+    val = @$('textarea').val()
+    @$('textarea').focus().val('').val(val)

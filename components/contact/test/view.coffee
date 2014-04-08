@@ -22,7 +22,7 @@ describe 'ContactView', ->
       @view = new @ContactView
 
     it 'should pass a null user', ->
-      _.isNull(@view.templateData.user).should.be.ok
+      _.isNull(@view.user).should.be.ok
 
   describe 'User logged in', ->
     beforeEach ->
@@ -30,11 +30,11 @@ describe 'ContactView', ->
       @view = new @ContactView
 
     it 'should pass a user', ->
-      @view.templateData.user.should.be.ok
+      @view.user.should.be.ok
 
     describe '#initialize', ->
       it 'has sensible defaults which get set as the view options', ->
-        @view.options.width.should.equal '800px'
+        @view.options.width.should.equal '470px'
         @view.options.placeholder.should.equal 'Your message'
         @view.options.url.should.include 'api/v1/feedback'
 
