@@ -22,5 +22,5 @@ include ../../share/template
       .timeframe
         != feedItemChildModel.runningDates()
         if feedItemChildModel.formatCity()
-          | ,
+          = ', '
           != feedItemChildModel.formatCity()
