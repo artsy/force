@@ -32,9 +32,7 @@ module.exports = class AuctionDetailView extends Backbone.View
         @displayValidationError()
 
   displayValidationError: ->
-    # I'm not using `$.fn.show` because of https://github.com/tmpvar/jsdom/issues/709
-    # will change later
-    @$('.abf-validation-error').css('display', 'block')
+    @$('.abf-validation-error').show()
     @$('button').attr 'data-state', 'error'
 
   # Check to see if the form value is greater or equal to the minimum next bid
