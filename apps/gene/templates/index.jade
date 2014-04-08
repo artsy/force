@@ -15,13 +15,12 @@ block body
       #gene-share-buttons
         +share(gene.get('name') + ' on Artsy', gene.imageUrl())
 
-    .gene-info
+    .bisected-header
       if gene.get('description')
-        .gi-cell
+        .bisected-header-cell
           h2 About
           != gene.mdToHtml('description')
-      .gi-cell
-        .related-genes
+      .bisected-header-cell: .related-genes
 
     #gene-filter( data-state=gene.isSubjectMatter() ? 'artworks' : 'artists' )
       include filter

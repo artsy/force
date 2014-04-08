@@ -20,14 +20,14 @@ mixin artist-header(artist)
 
     button#artist-follow-button.avant-garde-button-white.follow-button
 
-    .artist-header-actions
+    .bisected-header
       if artist.get('blurb')
-        .aha-cell
+        .bisected-header-cell
           .artist-blurb
             h2 Biography
             .blurb!= artist.mdToHtml('blurb')
 
-      .aha-cell: .artist-related-genes.related-genes
+      .bisected-header-cell: .artist-related-genes.related-genes
 
     if artist.get('published_artworks_count')
       .artist-works-sort: include ../templates/sort
