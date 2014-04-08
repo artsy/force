@@ -42,7 +42,7 @@ module.exports.GeneView = class GeneView extends Backbone.View
 
   setupBlurb: ->
     if ($blurb = @$('.blurb')).length
-      new BlurbView el: $blurb, lineCount: 3, updateOnResize: true
+      new BlurbView el: $blurb, lineCount: 5, updateOnResize: true
       $blurb.css maxHeight: 'none'
 
   setupMode: ->

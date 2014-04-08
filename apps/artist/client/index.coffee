@@ -61,7 +61,7 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     if ($blurb = @$('.blurb')).length
       new BlurbView
         updateOnResize : true
-        lineCount      : 3
+        lineCount      : 5
         el             : $blurb
       $blurb.css maxHeight: 'none'
 
