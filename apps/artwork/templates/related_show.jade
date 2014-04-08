@@ -1,0 +1,20 @@
+h2.avant-garde-header-center Other works in show
+
+.ars-metadata
+  a.ars-partner-name.faux-underline(
+    href="/#{show.get('partner').default_profile_id}"
+  )= show.get('partner').name
+  br
+  a.ars-show-name( href=show.href() )= show.get('name')
+
+  if show.get('start_at') && show.get('end_at')
+    .ars-timeframe
+      != show.runningDates()
+      if show.formatCity()
+        = ', '
+        != show.formatCity()
+
+  .ars-buttons: include ../../../components/partner_buttons/show_buttons
+
+#artwork-related-show-artworks
+  //- Rendered client-side
