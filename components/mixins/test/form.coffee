@@ -1,7 +1,8 @@
 _               = require 'underscore'
 benv            = require 'benv'
-Form            = require '../form.coffee'
 Backbone        = require 'backbone'
+sinon           = require 'sinon'
+Form            = require '../form.coffee'
 errorResponses  = require './error_responses'
 
 class FormView extends Backbone.View
@@ -43,10 +44,12 @@ describe 'Form', ->
       @view.serializeForm().should.include values
 
   describe '#validateForm', ->
-    it 'should check all required fields and set their state to error if they are empty', ->
+    # Note: https://github.com/tmpvar/jsdom/issues/544
+    it 'should set a class on the form and call the #checkValidity on the form', ->
+      @view.$('form')[0].checkValidity = sinon.stub()
       @view.validateForm()
-      @view.$('form').find(':input[required]').each ->
-        $(this).data('state').should.equal 'error'
+      @view.$('form').hasClass('is-validated').should.be.ok
+      @view.$('form')[0].checkValidity.called.should.be.ok
 
   describe '#errorMessage', ->
     _.each errorResponses, (responseObj) ->
