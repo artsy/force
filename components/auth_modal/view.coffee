@@ -60,13 +60,17 @@ module.exports = class AuthModalView extends ModalView
     @state.set 'mode', $(e.target).data('mode')
 
   submit: (e) ->
+    return unless @validateForm()
+
     e.preventDefault()
 
-    if @validateForm()
-      @$('button').attr 'data-state', 'loading'
-      new modelMap[@state.get 'mode']().save @serializeForm(),
-        success: @onSubmitSuccess
-        error: (m, xhr) => @errorMessage xhr
+    @$('button').attr 'data-state', 'loading'
+
+    new modelMap[@state.get 'mode']().save @serializeForm(),
+      success: @onSubmitSuccess
+      error: (model, xhr) =>
+        message = @errorMessage xhr
+        @showError message
 
   onSubmitSuccess: (model, res, options) =>
     if res.error?
