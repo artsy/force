@@ -1,6 +1,6 @@
 # Artsy Passport
 
-Wires up the common auth handlers for Artsy's [ezel](http://ezeljs.com)-based apps using [passport](http://passportjs.org/). Used internally at Artsy to DRY up authentication code.
+Wires up the common auth handlers for Artsy's [Ezel](http://ezeljs.com)-based apps using [passport](http://passportjs.org/). Used internally at Artsy to DRY up authentication code.
 
 ## Setup
 
@@ -41,9 +41,8 @@ app.use artsyPassport
   # (optional) After signing up with a provider Artsy Passport will redirect to the
   # login url. Override this to intecerpt with your own path such as a UI to prompt
   # for an email address to replace the Twitter temporary email. Just make sure that
-  # UI will then redirect to `twitterPath` to log in via twitter.
-  twitterSignupPath: this.twitterPath
-  facebookSignupPath: this.facebookPath
+  # Path for a "One last step" UI that lets Artsy store the user's email after twitter signup.
+  twitterLastStepPath: '/users/auth/twitter/email'
 ````
 
 The keys are cased so it's convenient to pass in a configuration hash. A minimal setup could look like this:
@@ -53,7 +52,9 @@ app.use artsyPassport _.extend config,
   CurrentUser: CurrentUser
 ````
 
-#### Create login and signup forms pointing to your paths.
+**Note:** CurrentUser must be a Backbone model with typical `get` and `toJSON` methods.
+
+#### Create a login form pointing to your paths.
 
 ````jade
 h1 Login
@@ -66,6 +67,10 @@ form( action='/users/sign_in', method='POST' )
   input( name='password' )
   button( type='submit' ) Signup
 
+
+#### And maybe a signup form...
+
+````jade
 h1 Signup
 a( href='/users/auth/facebook?sign_up=true' ) Signup via Facebook
 a( href='/users/auth/twitter?sign_up=true' ) Signup via Twitter
@@ -77,11 +82,20 @@ form( action='/users/invitation/accept', method='POST' )
   button( type='submit' ) Signup
 ````
 
+#### Finally there's this weird "one last step" UI for twitter to store emails after signup.
+
+````jade
+h1 Just one more step
+form( method='post', action='/users/auth/twitter/email' )
+  input.bordered-input( name='email' )
+  button( type='submit' ) Join Artsy
+````
+
 #### Handle login and signup callbacks.
 
 ````coffeescript
 { loginPath, signupPath, twitterCallbackPath,
-  facebookCallbackPath } = artsyPassport.options
+  twitterLastStepPath, facebookCallbackPath } = artsyPassport.options
 
 app.post loginPath, (req, res) ->
   res.redirect '/'
@@ -89,6 +103,8 @@ app.post signupPath, (req, res) ->
   res.redirect '/personalize'
 app.get twitterCallbackPath, (req, res) ->
   if req.query.sign_up then res.redirect('/personalize') else res.redirect('/')
+app.get twitterLastStepPath, (req, res) ->
+  res.render 'twitter_last_step'
 app.get facebookCallbackPath, (req, res) ->
   if req.query.sign_up then res.redirect('/personalize') else res.redirect('/')
 ````

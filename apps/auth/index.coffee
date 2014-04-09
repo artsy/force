@@ -6,7 +6,7 @@
 express = require 'express'
 routes = require './routes'
 { loginPath, signupPath, twitterCallbackPath,
-  facebookCallbackPath } = require('artsy-passport').options
+  twitterLastStepPath, facebookCallbackPath } = require('artsy-passport').options
 
 app = module.exports = express()
 app.set 'views', __dirname
@@ -17,7 +17,7 @@ app.get '/reset_password', routes.resetPassword
 # Auth submission handlers
 app.post loginPath, routes.submitLogin
 app.post signupPath, routes.submitLogin
-app.get twitterCallbackPath, routes.submitEmailForTwitter, routes.redirectBack
+app.get twitterCallbackPath, routes.redirectBack
 app.get facebookCallbackPath, routes.redirectBack
 app.post '/users/sign_in_trust_token', routes.loginWithTrustToken, routes.redirectBack
 
@@ -25,5 +25,4 @@ app.post '/users/sign_in_trust_token', routes.loginWithTrustToken, routes.redire
 app.get '/users/sign_out', routes.logout, routes.redirectBack
 
 # Twitter "One last Step" UI to enter email and login
-app.get '/users/auth/twitter/email', routes.twitterLastStep
-app.post '/users/auth/twitter/email', routes.submitTwitterLastStep
+app.get twitterLastStepPath, routes.twitterLastStep
