@@ -26,20 +26,22 @@ module.exports =
   # @param {$Object} $form
   # @returns {Boolean}
   validateForm: ($form) ->
-    $form ||= @$('form')
-    values = _.map $form.find(':input[required]'), (el) ->
-      $el   = $(el)
-      val   = $el.val()
-      $el.attr 'data-state', (if _.isEmpty val then 'error' else 'ok')
-      val
-    not _.some values, (val) -> _.isEmpty val
+    $form ?= @$('form')
+    $form.addClass 'is-validated'
+    if $form[0].checkValidity
+      $form[0].checkValidity()
+    else # Let the server handle it
+      true
 
   # Attempt to normalize the error response and pull out a message
   #
   # @param {Object} xhr
   # @returns {String}
   errorMessage: (xhr) ->
-    parsed = $.parseJSON(xhr.responseText)
+    try
+      parsed = $.parseJSON(xhr.responseText)
+    catch e
+      parsed = text: 'There was an error'
 
     # Pull out the appropriate string
     message = if _.has(parsed, 'text')

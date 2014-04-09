@@ -4,6 +4,8 @@ FeaturedLinks = require '../../collections/featured_links.coffee'
 { parse }     = require 'url'
 Backbone      = require 'backbone'
 sd            = require('sharify').data
+cache         = require '../../lib/cache'
+client        = cache.client
 
 getRedirectTo = (req) ->
   req.body['redirect-to'] or req.query['redirect-to'] or req.query['redirect_uri'] or parse(req.get('Referrer') or '').path or '/'
@@ -29,3 +31,12 @@ getRedirectTo = (req) ->
 
 @redirectLoggedInHome = (req, res, next) ->
   if req.user? then res.redirect getRedirectTo(req) else next()
+
+@bustHeroCache = (req, res, next) ->
+  return next() unless req.user?.get('type') is 'Admin'
+  heros = new HeroUnits
+  if client
+    client.del(heros.url)
+    res.redirect '/'
+  else
+    res.redirect '/'

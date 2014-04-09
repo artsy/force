@@ -17,7 +17,7 @@ block body
             .bid-group-content
               .bid-input-container
                 label.bid-dollar-sign $
-                input.max-bid.bordered-input( type='number', name='bid', autocomplete='off', value=maxBid )
+                input.max-bid.bordered-input( type='number', name='bid', autocomplete='off', autofocus='true', value=maxBid )
               .bid-input-help-text!= "Enter " + saleArtwork.minBid() + " or higher"
               a.bidding-question How does bidding work?
           .auction-bid-errors

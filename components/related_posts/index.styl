@@ -4,44 +4,98 @@
 .related-posts
   opacity 0
   transition opacity 0.5s
-  &.is-complete
+  &.is-fade-in
+  &.is-rendered
     opacity 1
+  &.is-rendered
+    transition none
 
-.related-post
-  display table
-  width 100%
-  text-align left
-  border-top 1px solid light-gray-border-color
-  transition background-color 0.125s
-  a
-    text-decoration none
-  &:hover
-    background-color faint-gray-background-hover-color
-    .rpc-title
-      color highlight-color
-  .rpc-title
-    font-size 18px
-.related-post-content
-.related-post-profile
-  display table-cell
-  padding 10px
-.related-post-content
-  vertical-align top
-  font-size default-avant-garde-font-size
-.related-post-profile
-  text-align center
-  vertical-align middle
-  width 150px
-  .profile-badge-icon
-    display inline-block
-    width 72px
-    height 72px
-  .profile-badge-name
-    font-size 10px
+  // Grid layout
+  &.is-grid
     text-align center
+    .related-post
+      display inline-block
+      width calc('20% - 10px')
+      margin 0 5px 20px 5px
+      vertical-align top
+      &:hover .rpc-thumbnail
+        opacity 0.5
+      figure
+        height 175px
+        margin 0 0 10px 0
+        overflow hidden
+        background-color black
+        prevent-content-shift()
+    .related-post-content
+      text-decoration none
+    .rpc-thumbnail
+      width 100%
+      height 100%
+      background-size cover
+      background-position center center
+      transition opacity 0.5s
+    .rpc-title
+      font-size 18px
+    .rpc-author
+      margin-top 5px
+      avant-garde()
+      font-size 11px
+      line-height 1.3
+
+    @media screen and (max-width: 1024px)
+      .related-post
+        width calc('25% - 10px')
+        figure
+          height 150px
+
+    // Empty
+    .related-posts-no-posts
+      max-width 75%
+      margin auto
+
+  // List layout
+  &.is-list
+    .related-post
+      display table
+      width 100%
+      text-align left
+      border-top 1px solid light-gray-border-color
+      transition background-color 0.125s
+      a
+        text-decoration none
+      &:hover
+        background-color faint-gray-background-hover-color
+        .rpc-title
+          color highlight-color
+    .rpc-title
+      font-size 18px
+    .related-post-content
+    .related-post-profile
+      display table-cell
+      padding 10px
+    .related-post-content
+      vertical-align top
+      font-size default-avant-garde-font-size
+    .related-post-profile
+      text-align center
+      vertical-align middle
+      width 150px
+      .profile-badge-icon
+        display inline-block
+        width 72px
+        height 72px
+      .profile-badge-name
+        font-size 10px
+        text-align center
+
+    .related-posts-show-all
+      float right
+    .related-posts-actions
+      margin 20px 0
+      &.is-hasremaining > .related-posts-add-button
+        float left
 
 .related-posts-show-all
-  float right
   avant-garde()
   font-size 12px
   text-decoration none
@@ -55,11 +109,6 @@
     font-size 18px
     line-height 150%
     margin-bottom 20px
-
-.related-posts-actions
-  margin 20px 0
-  &.is-hasremaining > .related-posts-add-button
-    float left
 
 // Accomodate icon
 .related-posts-add-button

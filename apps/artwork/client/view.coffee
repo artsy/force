@@ -14,13 +14,13 @@ trackArtworkImpressions   = require("../../../components/analytics/impression_tr
 MonocleView               = require './monocles.coffee'
 Sale                      = require '../../../models/sale.coffee'
 ZigZagBanner              = require '../../../components/zig_zag_banner/index.coffee'
+Auction                   = require './mixins/auction.coffee'
+RelatedShowView           = require './related_show.coffee'
 
 artistArtworksTemplate  = -> require('../templates/_artist-artworks.jade') arguments...
 detailTemplate          = -> require('../templates/_detail.jade') arguments...
 
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
-
-Auction = require './mixins/auction.coffee'
 
 module.exports = class ArtworkView extends Backbone.View
   _.extend @prototype, Auction
@@ -55,12 +55,17 @@ module.exports = class ArtworkView extends Backbone.View
       @setupFeatureNavigation model: fair, kind: 'fair'
       @deltaTrackPageView fair
     @on 'related:sales', (sale) ->
-      @sale = new Sale sale.toJSON()
+      @sale = new Sale sale.attributes
       @belowTheFoldView.setupSale
         sale        : @sale
         saved       : @saved
         currentUser : @currentUser
       @setupAuction @sale if @sale.isAuction()
+    @on 'related:shows', (show) ->
+      new RelatedShowView
+        el      : @$('#artwork-related-show-section')
+        model   : show
+        artwork : @artwork
     @on 'related:none', ->
       @belowTheFoldView.setupLayeredSearch()
 

@@ -1,0 +1,8 @@
+h2.name= partner.displayName()
+if profile.isGallery() && partner.has('email')
+  .purchase
+    p Are you interested in purchasing works from #{partner.displayName()}?
+    a.email-gallery( href=partner.getMailTo() ) Contact gallery via email.
+if partner.has('website')
+  .contact-website
+    a.partner-website( href=partner.get('website'), target='_blank' )= partner.getSimpleWebsite()

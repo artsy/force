@@ -2,7 +2,10 @@
 
 .related-genes
   position relative
-  min-height 100px
+  opacity 0
+  transition opacity 0.5s
+  &.is-fade-in
+    opacity 1
   a
     color #6a0bc1
     text-decoration none

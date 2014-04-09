@@ -3,8 +3,8 @@
     section.partner-overview-section.partner-overview-messages
       p.message-title #{partner.get('name')} has not yet created a full Artsy profile
       p.message-content Do you represent #{partner.get('name')}?&nbsp;
-        a( href="mailto:partners@artsy.net" ) Contact Artsy
-        | &nbsp;to become a partner and create a full profile
+        a( target='_blank', href="https://artsy.wufoo.com/forms/artsy-partnership-request-form/" ) Contact Artsy
+        | &nbsp;to become a partner and create a full profile.
 
   section.partner-overview-section.partner-overview-shows
     .loading-spinner
@@ -12,7 +12,8 @@
   section.partner-overview-section.partner-overview-artists
     .loading-spinner
 
-  section.partner-overview-section.partner-overview-locations
-    h2.avant-garde-header-center Locations
-    ul.locations
-      .loading-spinner
+  unless isPartner
+    section.partner-overview-section.partner-overview-locations
+      h2.avant-garde-header-center Locations
+      ul.locations
+        .loading-spinner

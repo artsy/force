@@ -2,6 +2,7 @@ _ = require 'underscore'
 benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
+Partner = require '../../../models/partner'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
 
@@ -17,6 +18,8 @@ describe 'ShowInquiryModal', ->
       sinon.stub @ShowInquiryView::, 'initialize'
       @view = new @ShowInquiryView
       @view.show = new Backbone.Model fabricate 'show'
+      @view.partner = new Partner fabricate 'partner',
+        locations: new Backbone.Collection [fabricate 'location']
       @view.model = new Backbone.Model
       @view.model.url = ''
       done()
@@ -35,3 +38,10 @@ describe 'ShowInquiryModal', ->
       @view.model.toJSON().inquireable_type.should.equal 'partner_show'
       @view.model.toJSON().contact_gallery.should.equal true
       @ContactView::submit.called.should.be.ok
+
+  describe '#renderLocation', ->
+
+    it 'renders the partners locations', ->
+      @view.$el.html "<div class='contact-location'></div>"
+      @view.renderLocation()
+      @view.$el.html().should.include 'New York'

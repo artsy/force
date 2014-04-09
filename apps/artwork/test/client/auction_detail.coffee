@@ -122,10 +122,10 @@ describe 'AuctionDetailView', ->
 
   describe '#displayValidationError', ->
     it 'displays the error when an invalid value is input and submitted', ->
-      @view.$('.abf-validation-error').css('display', 'none')
+      @view.$('.abf-validation-error').hide()
       @view.$('input').val('499')
       @view.$('form').submit()
-      @view.$('.abf-validation-error').css('display').should.equal 'block'
+      @view.$('.abf-validation-error').is(':visible').should.be.ok
       @view.$('button').data('state').should.equal 'error'
 
   describe '#submit', ->

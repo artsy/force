@@ -10,6 +10,8 @@ module.exports = ($el) ->
   Backbone.history.start(pushState: true) unless Backbone.History.started
 
 onClick = (e) ->
+  return if e.metaKey or e.ctrlKey
+
   e.preventDefault()
   _.defer =>
     href = $(this).attr('href')

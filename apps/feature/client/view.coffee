@@ -47,7 +47,7 @@ module.exports = class FeatureView extends Backbone.View
 
   initializeAuction: (sale, set) ->
     $.when.apply(null, _.compact([
-      @setupAuctionUser()
+      @setupAuctionUser sale
       sale.fetch()
     ])).then =>
       @setupArtworks set
@@ -75,9 +75,10 @@ module.exports = class FeatureView extends Backbone.View
     @currentUser?.initializeDefaultArtworkCollection()
     @artworkCollection = @currentUser?.defaultArtworkCollection()
 
-  setupAuctionUser: ->
+  setupAuctionUser: (sale) ->
     return unless @currentUser
     @currentUser.checkRegisteredForAuction
+      saleId: sale.get('id')
       success: (isRegistered) =>
         @currentUser.set 'registered_to_bid', isRegistered
 

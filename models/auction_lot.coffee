@@ -25,6 +25,10 @@ module.exports = class AuctionLot extends Backbone.Model
   hasImage: ->
     @get('image_url') isnt '/assets/shared/missing_image.png'
 
+  # @return {Boolean}
+  hasDimensions: ->
+    (@get('dimensions')?.in or @get('dimensions')?.cm)?
+
   # Format: "[Artwork Title], by [Artist Name] | Auction Result from [Auction house name] | Artsy"
   # (Often auction lots have an artist_name but it is commonly missing, so the artist is explicitly passed in)
   #

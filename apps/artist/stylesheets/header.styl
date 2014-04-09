@@ -10,27 +10,31 @@
   a
     text-decoration none
 
-.artist-header-empty > p
-  margin 40px 0
+.artist-header-empty
+  margin 20px 0
 
-.artist-header-actions
-  display table
-  width 100%
-  min-height 50px
-.aha-cell
-  display table-cell
-  text-align center
-  vertical-align middle
-  width 33.3%
-  &:first-child
+.artist-blurb > .blurb
+  // Removed when dotdotdot initializes
+  max-height (26px * 5)
+
+.artist-works-sort
+  text-align right
+  *
     text-align left
-  &:last-child
-    text-align right
+  &:hover > .bordered-pulldown-options
+    display block
+    border-color dark-gray-border-color
+  .bordered-pulldown
+    width 170px
 
-.artist-share > a
-  display inline-block
-  text-decoration none
-  font-size 16px
-  font-weight normal
-  garamond()
-  text-transform none
+.artist-share
+  position absolute
+  right 0
+  top 42px
+  > a
+    display inline-block
+    text-decoration none
+    font-size 16px
+    font-weight normal
+    garamond()
+    text-transform none

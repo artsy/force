@@ -6,25 +6,22 @@
   position relative
   h1
     font-size large-avant-garde-font-size
+    margin 10px 0
   .follow-button
     display inline-block
-    margin-top 40px
+    margin 10px 0
+
+.gene-blurb > .blurb
+  // Removed when dotdotdot initializes
+  max-height (26px * 5)
 
 #gene-share-buttons
   float right
   position absolute
-  bottom 0
+  top 42px
   right 0
   .icon-pinterest
     display none
-
-#gene-description
-  margin-top 40px
-
-#gene-description-inner
-  max-width 850px
-  margin auto
-  margin-top 20px
 
 #gene-tabs
   text-align center
@@ -64,19 +61,3 @@
     .filter-button, .filter-dropdown
       &.is-active
         color black
-
-#gene-info-left
-  width 60%
-  display inline-block
-  vertical-align top
-
-#gene-info-right
-  width 40%
-  display inline-block
-  margin-top 40px
-  padding-left 5%
-  position relative
-  .avant-garde-header-center
-    text-align left
-  .loading-spinner
-    display block

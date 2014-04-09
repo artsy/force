@@ -9,7 +9,8 @@ module.exports = class HeroUnitView extends Backbone.View
     @$heroUnits = @$('#home-hero-units')
     @setBodyClass()
     @setInterval()
-    @$window .on 'scroll', _.throttle @setBodyClass, 100
+    @$window.on 'scroll', _.throttle @setBodyClass, 100
+    @$window.on 'keyup', (e) => @onKeyUp(e) 
 
   setInterval: ->
     clearInterval @interval
@@ -45,6 +46,14 @@ module.exports = class HeroUnitView extends Backbone.View
     'click #home-hero-units-left-arrow': 'onLeftArrow'
     'click #home-hero-units-right-arrow': 'onRightArrow'
     'click #home-hero-unit-dots li': 'onDot'
+
+  onKeyUp: (e) ->
+    switch e.keyCode
+      when 37
+        @onLeftArrow()
+      when 39
+        @onRightArrow()
+    false
 
   onLeftArrow: ->
     @setInterval()

@@ -9,6 +9,7 @@ RelatedGenesView = require '../../components/related_genes/view.coffee'
 FilterArtworksView = require '../../components/filter/artworks/view.coffee'
 { GENE, CURRENT_USER, ARTSY_URL } = require('sharify').data
 iframePopover = require '../../components/iframe_popover/index.coffee'
+BlurbView = require '../../components/blurb/view.coffee'
 
 module.exports.GeneView = class GeneView extends Backbone.View
 
@@ -37,6 +38,12 @@ module.exports.GeneView = class GeneView extends Backbone.View
       urlRoot: "gene/#{@model.id}"
     @setupMode()
     @onFollowRoute()
+    @setupBlurb()
+
+  setupBlurb: ->
+    if ($blurb = @$('.blurb')).length
+      new BlurbView el: $blurb, lineCount: 5, updateOnResize: true
+      $blurb.css maxHeight: 'none'
 
   setupMode: ->
     if @model.isSubjectMatter() or location.pathname.match('/artworks')

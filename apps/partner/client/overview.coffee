@@ -12,9 +12,6 @@ artistsGridTemplate = -> require('../templates/_artists_grid.jade') arguments...
 
 module.exports = class PartnerOverviewView extends Backbone.View
 
-  defaults:
-    isPartner         : true
-
   partnerDefaults:
     numberOfFeatured  : 1 # number of featured shows needed
     numberOfShows     : 6 # number of other shows needed
@@ -24,7 +21,8 @@ module.exports = class PartnerOverviewView extends Backbone.View
     numberOfShows     : 6
 
   initialize: (options={}) ->
-    { @profile, @partner, @isPartner } = _.defaults options, @defaults
+    { @profile, @partner } = _.defaults options, @defaults
+    @isPartner = @partner.get('claimed') isnt false
     { @numberOfFeatured, @numberOfShows } =
       _.defaults options, if @isPartner then @partnerDefaults else @nonPartnerDefaults
     @$el.html template partner: @partner, isPartner: @isPartner
@@ -74,6 +72,7 @@ module.exports = class PartnerOverviewView extends Backbone.View
     new ArtistsListView
       collection: artists
       el: @$('.partner-overview-artists')
+      linkToPartnerArtist: @isPartner
 
   initializeLocations: ->
     return @$('.partner-overview-locations').hide() if @isPartner
@@ -81,6 +80,8 @@ module.exports = class PartnerOverviewView extends Backbone.View
     locations = new PartnerLocations()
     locations.url = "#{@partner.url()}/locations"
     locations.fetchUntilEnd success: =>
+      return @$('.partner-overview-locations').hide() if locations.length is 0
+
       locationsArray = []
       _.each locations.groupBy('city'), (ls, c) ->
         _.each ls, (l) ->
