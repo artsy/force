@@ -8,9 +8,6 @@ sd            = require('sharify').data
 getRedirectTo = (req) ->
   req.body['redirect-to'] or req.query['redirect-to'] or req.query['redirect_uri'] or parse(req.get('Referrer') or '').path or '/'
 
-getRedirectTo = (req) ->
-  req.body['redirect-to'] or req.query['redirect-to'] or req.query['redirect_uri'] or parse(req.get('Referrer') or '').path or '/'
-
 @index = (req, res) ->
   heroUnits = new HeroUnits
   featuredLinks = new FeaturedLinks
@@ -32,6 +29,3 @@ getRedirectTo = (req) ->
 
 @redirectLoggedInHome = (req, res, next) ->
   if req.user? then res.redirect getRedirectTo(req) else next()
-
-@unsupportedBrowser = (req, res, next) ->
-  res.render 'unsupported_browser'

@@ -27,7 +27,7 @@ micrositeMiddleware = require './middleware/microsite'
 helpersMiddleware = require './middleware/helpers'
 ensureSSL = require './middleware/ensure_ssl'
 errorHandler = require "../components/error_handler"
-supportedBrowserCheck = require "./middleware/supported_browser"
+unsupportedBrowserCheck = require "./middleware/unsupported_browser"
 { notFoundError, loginError } = require('./middleware/errors')
 flash = require 'connect-flash'
 flashMiddleware = require './middleware/flash'
@@ -122,7 +122,7 @@ module.exports = (app) ->
   app.use helpersMiddleware
   app.use express.favicon()
   app.use express.logger('dev')
-  app.use supportedBrowserCheck
+  app.use unsupportedBrowserCheck
 
   # Mount apps
   app.use require "../apps/auction"
@@ -154,6 +154,7 @@ module.exports = (app) ->
   app.use require "../apps/posts"
   app.use require "../apps/favorites_follows"
   app.use require "../apps/unsubscribe"
+  app.use require "../apps/unsupported_browser"
   # Profile middleware and apps that use profiles
   app.use require "../apps/profile"
   app.use require "../apps/user_profile"
