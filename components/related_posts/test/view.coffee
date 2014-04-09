@@ -53,6 +53,7 @@ describe 'RelatedPostsView', ->
         @view.$el.html().should.include '<a href="/post/bitty-the-queen" class="related-post-content">'
         @view.$el.find('li').length.should.equal 2
         @view.$el.find('a.related-posts-show-all').length.should.equal 0
+        @view.$el.html().should.include 'Add Post'
 
       it 'correctly allows you to click see more', ->
         Backbone.sync.args[0][2].success [
@@ -127,6 +128,7 @@ describe 'RelatedPostsView', ->
       @view.$el.html().should.include 'is-grid'
       @view.$el.html().should.include 'figure'
       @view.$el.html().should.include '<div class="rpc-author">By Craig Spaeth</div>'
+      @view.$el.html().should.not.include 'Add Post'
 
     it 'removes itself if empty', ->
       @view = new RelatedPostsView
