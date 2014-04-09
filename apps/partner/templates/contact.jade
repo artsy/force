@@ -1,18 +1,5 @@
 #partner-contact
   .partner-contact-info
-    h2.name= partner.displayName()
-    if profile.isGallery() && partner.has('email')
-      .purchase
-        p Are you interested in purchasing works from #{partner.displayName()}?
-        a.email-gallery( href=partner.getMailTo() ) Contact gallery via email.
-    if partner.has('website')
-      .contact-website
-        a.partner-website( href=partner.get('website'), target='_blank' )= partner.getSimpleWebsite()
-
+    include ./contact_info
   .partner-locations
-    each locations, city in locationGroups
-      each location in locations
-        .location
-          a( href=location.googleMapsLink(), target="_blank" )
-            img.map( src=location.mapImageSrc(740, 230) )
-          p.location-details!= location.toHtml()
+    .loading-spinner
