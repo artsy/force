@@ -81,7 +81,7 @@ describe 'Followable', ->
       @view.state.almostDone().should.not.be.ok
       @view.setSkipLabel()
       $button.text().should.equal 'Next'
-      @view._labelSet.should.be.ok
+      @view.__labelSet__.should.be.ok
       @view.state.setStep(_.last(@view.state.get('steps')))
       @view.state.almostDone().should.be.ok
       @view.setSkipLabel()

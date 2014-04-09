@@ -111,10 +111,10 @@ describe 'SuggestionsView', ->
 
     it 'sets up a listener for setting the skip label', ->
       @view.suggestedSets.trigger 'sync:complete'
-      @view._labelSet?.should.not.be.ok
+      @view.__labelSet__?.should.not.be.ok
       @view.$('.personalize-skip').text().should.equal 'Skip'
       @view.$suggestions.find('.follow-button').first().click()
-      @view._labelSet.should.be.ok
+      @view.__labelSet__.should.be.ok
       @view.$('.personalize-skip').text().should.equal 'Next'
 
   describe '#render', ->
