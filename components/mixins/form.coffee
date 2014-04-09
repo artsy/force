@@ -38,7 +38,10 @@ module.exports =
   # @param {Object} xhr
   # @returns {String}
   errorMessage: (xhr) ->
-    parsed = $.parseJSON(xhr.responseText)
+    try
+      parsed = $.parseJSON(xhr.responseText)
+    catch e
+      parsed = text: 'There was an error'
 
     # Pull out the appropriate string
     message = if _.has(parsed, 'text')
