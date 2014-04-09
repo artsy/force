@@ -40,7 +40,7 @@ bordered-input-placeholder--autofocus-focus()
   &[autofocus]:focus
     placeholder(bordered-input-placeholder--autofocus-focus)
 
-  &[data-state=error],
+  &[data-state=error]
   &.is-error
     border-color bad-red-color
 
@@ -156,7 +156,6 @@ textarea.bordered-input
   color highlight-color
   cursor pointer
 
-
 // Help Tooltips
 .artsy-help-tip
   background-color transparent
@@ -221,3 +220,8 @@ textarea.bordered-input
       text-decoration underline
       &:hover
         text-decoration none
+
+form.is-validated
+  .bordered-input
+    &:invalid
+      @extends .bordered-input.is-error

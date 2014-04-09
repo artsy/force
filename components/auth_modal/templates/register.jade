@@ -14,7 +14,13 @@
             name='email', type='email', placeholder='Email', required
           )
           input.bordered-input.is-block(
-            name='password', type='password', placeholder='Password', autocomplete='on', required
+            name          = 'password'
+            type          = 'password'
+            placeholder   = 'Password'
+            autocomplete  = 'on'
+            pattern       = '.{6,}'
+            title         = '6 characters minimum'
+            required
           )
           button#auth-submit.avant-garde-button-black.is-block Join Artsy
 
