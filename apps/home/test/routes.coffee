@@ -2,7 +2,10 @@
 _ = require 'underscore'
 sinon = require 'sinon'
 Backbone = require 'backbone'
-routes = require '../routes'
+rewire = require 'rewire'
+routes = rewire '../routes'
+CurrentUser = require '../../../models/current_user.coffee'
+HeroUnits = require '../../../collections/hero_units'
 
 describe 'Home routes', ->
 
@@ -48,3 +51,26 @@ describe 'Home routes', ->
       @req.user = {}
       routes.redirectLoggedInHome @req, @res
       @res.redirect.args[0][0].should.equal '/awesome-fair'
+
+  describe 'cache busting', ->
+
+    beforeEach ->
+      routes.__set__ 'client', @client = { del: sinon.stub() }
+
+    describe '#bustCache', ->
+
+      beforeEach ->
+        @req = { }
+        @res = { redirect: sinon.stub() }
+
+      it 'deletes the hero unit key in redis when navigated to by an admin user', ->
+        @req.user = new CurrentUser fabricate 'user', type: 'Admin'
+        routes.bustHeroCache @req, @res, ->
+        @client.del.args[0][0].should.include '/api/v1/site_hero_units?enabled=true'
+        @res.redirect.args[0][0].should.equal '/'
+
+      it 'does nothing when not an admin user', ->
+        routes.bustHeroCache @req, @res, (next = sinon.stub())
+        @client.del.called.should.not.be.ok
+        @res.redirect.called.should.not.be.ok
+        next.called.should.be.ok
