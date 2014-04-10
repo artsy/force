@@ -20,19 +20,23 @@ block body
         | Auction results for&nbsp;
         a( href="/artist/#{artist.id}")= artist.get('name')
 
+    .auction-lots-beta-alert.garamond-alert-info
+      em Note:&nbsp;
+      | Auction results are an experimental feature with limited data. Have feedback?&nbsp;
+      a.auction-lots-feedback-link.faux-underline Let us know.
+
     .auction-lots-interstital
       .auction-lots-page-total
           | #{auctionLots.state.totalRecords} Results
-          - if (auctionLots.state.totalPages > 1)
+          if (auctionLots.state.totalPages > 1)
             | &mdash;Page #{auctionLots.state.currentPage} of #{auctionLots.state.totalPages}
 
       .auction-lots-sort
-
-          +bordered-pulldown(auctionLots.sortCriteria[auctionLots.sortBy], 'Order')
-            a( data-sort=sortBy )= auctionLots.sortCriteria[auctionLots.sortBy]
-            - for k, v in auctionLots.sortCriteria
-              - if (!(!user && k === 'Sale' || v === auctionLots.sortBy))
-                a( href="?sort=#{v}" )= k
+        +bordered-pulldown(auctionLots.sortCriteria[auctionLots.sortBy], 'Order')
+          a( data-sort=sortBy )= auctionLots.sortCriteria[auctionLots.sortBy]
+          for k, v in auctionLots.sortCriteria
+            if (!(!user && k === 'Sale' || v === auctionLots.sortBy))
+              a( href="?sort=#{v}" )= k
 
     table.auction-lots-table
       include ./auction_lots_table
