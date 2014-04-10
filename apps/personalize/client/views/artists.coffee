@@ -1,14 +1,11 @@
-_                   = require 'underscore'
-sd                  = require('sharify').data
-Backbone            = require 'backbone'
-StepView            = require './step.coffee'
-Artist              = require '../../../../models/artist.coffee'
-Followable          = require '../mixins/followable.coffee'
-FollowCollection    = require '../../../../models/follow_artist_collection.coffee'
-FollowButton        = require '../../../artist/client/follow_button.coffee'
-{ isTouchDevice }   = require '../../../../components/util/device.coffee'
-
-
+_                             = require 'underscore'
+sd                            = require('sharify').data
+Backbone                      = require 'backbone'
+StepView                      = require './step.coffee'
+Artist                        = require '../../../../models/artist.coffee'
+Followable                    = require '../mixins/followable.coffee'
+{ isTouchDevice }             = require '../../../../components/util/device.coffee'
+{ FollowButton, Following }   = require '../../../../components/follow_button/index.coffee'
 
 template                  = -> require('../../templates/artists.jade') arguments...
 suggestedArtistsTemplate  = -> require('../../templates/suggested_artists.jade') arguments...
@@ -26,7 +23,7 @@ module.exports = class ArtistsView extends StepView
   initialize: (options) ->
     super
 
-    @following    = new FollowCollection
+    @following    = new Following null, kind: 'artist'
     @suggestions  = new Backbone.Collection
 
     @followed = new Backbone.Collection [], model: Artist
@@ -44,9 +41,9 @@ module.exports = class ArtistsView extends StepView
       analyticsUnfollowMessage : 'Unfollowed artist from personalize artist suggestions'
       analyticsFollowMessage   : 'Followed artist from personalize artist suggestions'
       notes                    : 'Followed from /personalize'
-      modelName                : 'artist'
-      followArtistCollection   : @following
+      following                : @following
       model                    : model
+      modelName                : 'artist'
       el                       : el
 
   createSuggestionSet: (artist) ->
@@ -80,8 +77,8 @@ module.exports = class ArtistsView extends StepView
         $button = @$suggestions.
           find(".personalize-suggestions-set[data-id='#{suggestionSet.id}']").
           find(".follow-button[data-id='#{artist.id}']")
-
         @setupFollowButton "#{suggestionSet.id}_#{artist.id}", artist, $button
+      @following.syncFollows suggestionSet.get('suggestions').pluck 'id'
 
   render: ->
     @$el.html template(state: @state, isTouchDevice: isTouchDevice())
