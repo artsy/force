@@ -27,7 +27,7 @@ module.exports = class RelatedAuctionResultsView extends Backbone.View
     mediator.trigger 'open:auth', mode: 'register', copy: 'Sign up to see full auction records — for free'
 
   fetchAndRender: ->
-    @auctionResults = new AuctionResults [], id: @artistId
+    @auctionResults = new AuctionResults [], id: @artistId, sortBy: '-price_realized_dollar,-auction_date'
     @listenTo @auctionResults, 'sync', @render
     @auctionResults.setPageSize @amount # Fetches
 
