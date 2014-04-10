@@ -50,11 +50,9 @@ describe 'Followable', ->
       @artist = new Artist fabricate 'artist'
 
     it 'sets the skip label (once)', ->
-      skipSpy = sinon.spy @view, 'setSkipLabel'
-      @view.follow({}, @artist)
-      skipSpy.called.should.be.ok
-      @view.follow({}, @artist)
-      skipSpy.callCount.should.equal 1
+      @view.__labelSet__?.should.be.false
+      @view.follow {}, @artist
+      @view.__labelSet__?.should.be.true
 
     it 'follows the artist', ->
       @view.follow($.Event('click'), @artist)
@@ -82,6 +80,7 @@ describe 'Followable', ->
       @view.setSkipLabel()
       $button.text().should.equal 'Next'
       @view.__labelSet__.should.be.ok
+      @view.__labelSet__ = null
       @view.state.setStep(_.last(@view.state.get('steps')))
       @view.state.almostDone().should.be.ok
       @view.setSkipLabel()

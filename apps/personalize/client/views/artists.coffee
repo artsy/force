@@ -4,6 +4,7 @@ Backbone                      = require 'backbone'
 StepView                      = require './step.coffee'
 Artist                        = require '../../../../models/artist.coffee'
 Followable                    = require '../mixins/followable.coffee'
+GeneArtists                   = require '../mixins/gene_artists.coffee'
 { isTouchDevice }             = require '../../../../components/util/device.coffee'
 { FollowButton, Following }   = require '../../../../components/follow_button/index.coffee'
 
@@ -12,6 +13,7 @@ suggestedArtistsTemplate  = -> require('../../templates/suggested_artists.jade')
 
 module.exports = class ArtistsView extends StepView
   _.extend @prototype, Followable
+  _.extend @prototype, GeneArtists
 
   analyticsUnfollowMessage : 'Unfollowed artist from personalize artist search'
   analyticsFollowMessage   : 'Followed artist from personalize artist search'
@@ -23,11 +25,12 @@ module.exports = class ArtistsView extends StepView
   initialize: (options) ->
     super
 
-    @following    = new Following null, kind: 'artist'
+    @following    = new Following [], kind: 'artist'
     @suggestions  = new Backbone.Collection
+    @followed     = new Backbone.Collection [], model: Artist
 
-    @followed = new Backbone.Collection [], model: Artist
     @initializeFollowable()
+    @initializeGeneArtists()
 
     @listenTo @followed, 'add', @fetchRelatedArtists
     @listenTo @followed, 'remove', @disposeSuggestionSet
@@ -49,14 +52,14 @@ module.exports = class ArtistsView extends StepView
   createSuggestionSet: (artist) ->
     new Backbone.Model
       id          : artist.id
-      name        : artist.get 'name'
+      name        : "Artists related to #{artist.get 'name'}"
       suggestions : artist.relatedArtists
 
   fetchRelatedArtists: (artist) ->
     artist.fetchRelatedArtists 'Artists',
       success: (model, response) =>
         if response.length > 0 # If there are any suggestions
-          @suggestions.add @createSuggestionSet artist
+          @suggestions.unshift @createSuggestionSet artist
 
   # Removes the corresponding suggestionSet and disposes of
   # its FollowButton views
@@ -70,14 +73,16 @@ module.exports = class ArtistsView extends StepView
   renderSuggestions: ->
     (@$suggestions ?= @$('#personalize-suggestions')).
       html suggestedArtistsTemplate suggestions: @suggestions.models
+    @setupFollowButtons()
 
-    # Attach FollowButton views
+  setupFollowButtons: ->
     @suggestions.each (suggestionSet) =>
       suggestionSet.get('suggestions').each (artist) =>
         $button = @$suggestions.
           find(".personalize-suggestions-set[data-id='#{suggestionSet.id}']").
           find(".follow-button[data-id='#{artist.id}']")
-        @setupFollowButton "#{suggestionSet.id}_#{artist.id}", artist, $button
+        button = @setupFollowButton "#{suggestionSet.id}_#{artist.id}", artist, $button
+        @listenTo button, 'click', => @setSkipLabel()
       @following.syncFollows suggestionSet.get('suggestions').pluck 'id'
 
   render: ->

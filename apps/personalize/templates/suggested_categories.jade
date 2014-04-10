@@ -1,7 +1,7 @@
 for category in categories.models
   .personalize-category
     if category.get('image_versions')
-      img( src=category.get('image_url').replace(':version', 'original') )
+      img( src=category.get('image_url').replace(':version', 'original'), width='600', height='200' )
     h3= category.get('title')
     aside= category.get('subtitle')
     a.avant-garde-button-white.follow-button(
