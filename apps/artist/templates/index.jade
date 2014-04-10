@@ -28,7 +28,7 @@ block body
     if artist.get('auction_lots_count')
       .artist-auction-results-section.artist-info-section
         h2.avant-garde-header-center
-          | Recent Auction Results for #{artist.get('name')}
+          | Notable Auction Results for #{artist.get('name')}
         .artist-auction-results
           //- Rendered client-side
         a.avant-garde-button-text( href="/artist/#{artist.id}/auction-results" )
