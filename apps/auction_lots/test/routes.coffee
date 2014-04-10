@@ -30,7 +30,7 @@ describe 'Auction results routes', ->
         Backbone.sync.args[0][1].url().should.include '/api/v1/auction_lot/a-lot'
         Backbone.sync.args[1][1].url().should.include '/api/v1/artist/andy-foobar'
         Backbone.sync.args[2][1].url().should.include '/api/v1/artist/andy-foobar/auction_lots?' # some random page
-        Backbone.sync.args[2][1].url().should.include '&size=3&sort=date,-auction_date&total_count=1'
+        Backbone.sync.args[2][1].url().should.include '&size=3&sort=-price_realized_dollar,-auction_date&total_count=1'
         Backbone.sync.args[3][1].url.should.include '/api/v1/artist/andy-foobar/artworks'
         done()
 
