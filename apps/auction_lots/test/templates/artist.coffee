@@ -65,9 +65,6 @@ describe 'Artist auction lots template', ->
     it 'Displays the sign up link instead of the sale price in the sale column', ->
       @template.should.include 'Sign up to see sale price'
 
-    it 'Should not have a link to sort by sale price', ->
-      @template.should.not.include '<a href="?sort=-price_realized_dollar,-auction_date">Sale</a>'
-
   describe 'Logged in', ->
     beforeEach ->
       @artist       = new Artist fabricate 'artist'
@@ -82,6 +79,3 @@ describe 'Artist auction lots template', ->
 
     it 'Does not display the sign up call to action', ->
       @template.should.not.include '<a class="auction-lot-sale-signup">Sign up to see sale price</a>'
-
-    it 'Has a link to sort by sale price', ->
-      @template.should.include '<a href="?sort=-price_realized_dollar,-auction_date">Sale Price</a>'
