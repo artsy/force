@@ -104,7 +104,6 @@ module.exports = (app) ->
     key: 'force.sess'
   app.use artsyPassport _.extend config,
     CurrentUser: CurrentUser
-    twitterSignupPath: '/users/auth/twitter/email'
   app.use errorHandler.socialAuthError
 
   # Proxy / redirect requests before they even have to deal with Force routing

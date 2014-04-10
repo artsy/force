@@ -536,7 +536,7 @@
     "artsy-passport": {
       "version": "0.1.4",
       "from": "artsy-passport@git://github.com/artsy/artsy-passport.git",
-      "resolved": "git://github.com/artsy/artsy-passport.git#bc0aaaddd82e62325a8f960e00cc4b676e229cf5",
+      "resolved": "git://github.com/artsy/artsy-passport.git#a984ee800b2c059cff318decc398cba600c66ef2",
       "dependencies": {
         "passport": {
           "version": "0.2.0",
@@ -623,7 +623,6 @@
         "express": {
           "version": "3.4.7",
           "from": "express@3.4.7",
-          "resolved": "https://registry.npmjs.org/express/-/express-3.4.7.tgz",
           "dependencies": {
             "connect": {
               "version": "2.12.0",
@@ -694,7 +693,6 @@
             "commander": {
               "version": "1.3.2",
               "from": "commander@1.3.2",
-              "resolved": "https://registry.npmjs.org/commander/-/commander-1.3.2.tgz",
               "dependencies": {
                 "keypress": {
                   "version": "0.1.0",
@@ -742,8 +740,7 @@
             },
             "merge-descriptors": {
               "version": "0.0.1",
-              "from": "merge-descriptors@0.0.1",
-              "resolved": "https://registry.npmjs.org/merge-descriptors/-/merge-descriptors-0.0.1.tgz"
+              "from": "merge-descriptors@0.0.1"
             },
             "debug": {
               "version": "0.8.0",

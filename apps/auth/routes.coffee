@@ -30,24 +30,6 @@ qs = require 'querystring'
 @twitterLastStep = (req, res) ->
   res.render 'templates/twitter_email'
 
-@submitTwitterLastStep = (req, res) ->
-  redirectTo = qs.parse(parse(req.get 'referrer').query)['redirect-to']
-  url = "/users/auth/twitter?email=#{req.body.email}&redirect-to=#{redirectTo}"
-  res.redirect url
-
-@submitEmailForTwitter = (req, res, next) ->
-  return res.redirect '/log_in?error=no-user' unless req.user
-  return next() unless req.query.email?
-  req.user.save {
-    email: req.query.email
-    email_confirmation: req.query.email
-  }, {
-    success: (m, r) -> next()
-    error: (m, e) ->
-      return next() if e.text.match 'Error from MailChimp API'
-      res.backboneError arguments...
-  }
-
 @redirectBack = (req, res, next) ->
   url = req.body['redirect-to'] or
         req.query['redirect-to'] or

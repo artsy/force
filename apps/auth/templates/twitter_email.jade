@@ -8,6 +8,6 @@ html
     #auth-twitter-email.auth-style-form
       #auth-artsy-logo.icon-logotype
       h1 Just one more step
-      form( method='post', action='/users/auth/twitter/email' )
+      form( method='post', action='/users/auth/twitter/email?redirect-to=/personalize' )
         input.bordered-input( type='email', placeholder='Email', autofocus=true, name='email' )
         button.avant-garde-button-black Join Artsy

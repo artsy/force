@@ -27,6 +27,7 @@ opts =
   signupPath: '/users/invitation/accept'
   twitterCallbackPath: '/users/auth/twitter/callback'
   facebookCallbackPath: '/users/auth/facebook/callback'
+  twitterLastStepPath: '/users/auth/twitter/email'
   userKeys: ['id', 'type', 'name', 'email', 'phone', 'lab_features', 'default_profile_id', 'has_partner_access']
   twitterSignupTempEmail: (token) ->
     hash = crypto.createHash('sha1').update(token).digest('hex').substr(0, 12)
@@ -56,6 +57,8 @@ initApp = ->
   app.get opts.facebookPath, socialAuth('facebook')
   app.get opts.twitterCallbackPath, socialAuth('twitter'), socialSignup('twitter')
   app.get opts.facebookCallbackPath, socialAuth('facebook'), socialSignup('facebook')
+  app.get opts.twitterLastStepPath, loginBeforeTwitterLastStep
+  app.post opts.twitterLastStepPath, submitTwitterLastStep
   app.use addLocals
 
 localAuth = (req, res, next) ->
@@ -79,14 +82,15 @@ socialAuth = (provider) ->
 # attempt to redirect back to login and strip out the expired Facebook/Twitter credentials.
 socialSignup = (provider) ->
   (err, req, res, next) ->
-    return next(err) unless err is 'artsy-passport: created user from social'
+    return next(err) unless err.message is 'artsy-passport: created user from social'
 
     # Redirect to a social login url stripping out the Facebook/Twitter credentials
     # (code, oauth_token, etc). This will be seemless for Facebook, but since Twitter has a
     # ask for permision UI it will mean asking permission twice. It's not apparent yet why
     # we can't re-use the credentials... without stripping them we get errors from FB & Twitter.
     querystring = qs.stringify _.omit(req.query, 'code', 'oauth_token', 'oauth_verifier')
-    url = (opts["#{provider}SignupPath"] or opts["#{provider}Path"]) + '?' + querystring
+    url = (if provider is 'twitter' then opts.twitterLastStepPath else opts.facebookPath) +
+          '?' + querystring
     res.redirect url
 
 signup = (req, res, next) ->
@@ -110,6 +114,24 @@ addLocals = (req, res, next) ->
     res.locals.user = req.user
     res.locals.sd?.CURRENT_USER = req.user.toJSON()
   next()
+
+loginBeforeTwitterLastStep = (req, res, next) ->
+  passport.authenticate('twitter',
+    callbackURL: "#{opts.APP_URL}#{opts.twitterLastStepPath}"
+  )(req, res, next)
+
+submitTwitterLastStep = (req, res, next) ->
+  return next "No user" unless req.user
+  return next() unless req.param('email')?
+  request.put("#{opts.SECURE_ARTSY_URL}/api/v1/me").send(
+    email: req.param('email')
+    email_confirmation: req.param('email')
+    access_token: req.user.get('accessToken')
+  ).end (r) ->
+    err = r.error or r.body?.error_description or r.body?.error
+    err = null if r.text.match 'Error from MailChimp API'
+    return next err if err
+    res.redirect req.param('redirect-to')
 
 #
 # Setup passport.
@@ -171,7 +193,7 @@ twitterCallback = (token, tokenSecret, profile, done) ->
   )
 
 accessTokenCallback = (done, params) ->
-  return (err, res) ->
+  return (e, res) ->
 
     # Catch the various forms of error Artsy could encounter
     err = null
@@ -180,13 +202,14 @@ accessTokenCallback = (done, params) ->
       err ?= JSON.parse(res.text).error
     err ?= "Artsy returned a generic #{res.status}" if res.status > 400
     err ?= "Artsy returned no access token and no error" unless res.body.access_token?
+    err ?= e
 
     # If there are no errors create the user from the access token
     unless err
       return done(null, new opts.CurrentUser(accessToken: res.body.access_token))
 
     # If there's no user linked to this account, create the user via the POST /user API.
-    # Then pass on an empty user so our signup middleware can catch it, login, and move on.
+    # Then pass a custom error so our signup middleware can catch it, login, and move on.
     if err?.match?('no account linked')
       params.xapp_token = artsyXappToken
       request
@@ -194,7 +217,7 @@ accessTokenCallback = (done, params) ->
         .send(params)
         .end (err, res) ->
           err = (err or res?.body.error_description or res?.body.error)
-          done err or 'artsy-passport: created user from social'
+          done err or { message: 'artsy-passport: created user from social', user: res.body }
 
     # Invalid email or password
     else if err.match?('invalid email or password')
@@ -202,6 +225,7 @@ accessTokenCallback = (done, params) ->
 
     # Other errors
     else
+      console.warn "Error requesting an access token from Artsy: " + res.text
       done err
 
 #
