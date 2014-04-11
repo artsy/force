@@ -38,12 +38,9 @@ module.exports = class CurrentUser extends Backbone.Model
 
   # Add the access token to fetches and saves
   sync: (method, model, options={}) ->
-    if method in ['create', 'update']
+    if method in ['create', 'update', 'patch']
       # If persisting to the server overwrite attrs
       options.attrs = _.omit(@toJSON(), 'accessToken')
-      options.attrs.access_token = @get 'accessToken'
-      options.data ?= {}
-      options.data.access_token = @get 'accessToken'
     else
       # Otherwise overwrite data
       _.defaults(options, { data: { access_token: @get('accessToken') } })

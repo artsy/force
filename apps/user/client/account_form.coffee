@@ -11,7 +11,7 @@ module.exports = class AccountForm extends Backbone.View
 
   initialize: (options) ->
     throw 'This view requires a UserEdit model' unless @model and @model.errorMessages
-    { @profileEdit, @$successMessage } = options
+    { @profileEdit } = options
 
     # Reference to frequently accessed DOM elements
     @$name = @$ '#user-name'
@@ -190,11 +190,13 @@ module.exports = class AccountForm extends Backbone.View
     values = {}
     values.name  = @$name.val()
     values.email = @$email.val()
-    values.email_confirmation = @$emailConfirmation.val()
+    if @$emailConfirmation.val()
+      values.email_confirmation = @$emailConfirmation.val()
     values.phone = @$phone.val()
     values.receive_weekly_email       = @$('#user-weekly-email').is "[data-state='on']"
     values.receive_personalized_email = @$('#user-personalized-email').is "[data-state='on']"
     values.receive_follow_users_email = @$('#user-follows-email').is "[data-state='on']"
+
     @submitPassword()
     @model.save values, trigger: true
     false
