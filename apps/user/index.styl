@@ -1,5 +1,9 @@
 @import '../../components/stylus_lib'
 
+#main-layout-container
+  margin-left 0
+  margin-right 0 
+
 #settings
   margin-left 0
   margin-right 0
@@ -42,12 +46,11 @@
   color highlight-color
   display none
   opacity 0
-  left 50%
-  margin-left -145px
   margin-top -60px
   position absolute
   text-align center
   transition opacity, margin-top 0.5s, 0.2s
+  width 100%
   &.is-active
     margin-top -20px
     opacity 1

@@ -11,7 +11,7 @@ module.exports = class AccountForm extends Backbone.View
 
   initialize: (options) ->
     throw 'This view requires a UserEdit model' unless @model and @model.errorMessages
-    { @profileEdit, @$successMessage } = options
+    { @profileEdit } = options
 
     # Reference to frequently accessed DOM elements
     @$name = @$ '#user-name'
