@@ -2,7 +2,13 @@ _         = require 'underscore'
 Backbone  = require 'backbone'
 { parse } = require("url")
 
-module.exports = (artsyUrl) ->
+ARTSY_URL = ''
+
+module.exports = (a) ->
+  ARTSY_URL = a
+  module.exports.methods
+
+module.exports.methods =
 
   # For paginated routes, this will recursively fetch until the end of the set.
   #
@@ -27,12 +33,12 @@ module.exports = (artsyUrl) ->
 
   fetchSetItemsByKey: (key, options = {}) ->
     new Backbone.Collection(null).fetch
-      url: "#{artsyUrl}/api/v1/sets?key=#{key}"
+      url: "#{ARTSY_URL}/api/v1/sets?key=#{key}"
       cache: options.cache
       success: (sets) =>
         return options.success(@) unless sets.length
         new Backbone.Collection(null).fetch
-          url: "#{artsyUrl}/api/v1/set/#{sets.first().get 'id'}/items"
+          url: "#{ARTSY_URL}/api/v1/set/#{sets.first().get 'id'}/items"
           cache: options.cache
           success: (col) =>
             @reset col.toJSON()

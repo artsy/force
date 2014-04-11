@@ -9,7 +9,7 @@ Partner         = require './partner.coffee'
 PartnerLocation = require './partner_location.coffee'
 DateHelpers     = require '../components/util/date_helpers.coffee'
 { Image }       = require 'artsy-backbone-mixins'
-fetchUntilEnd   = require('artsy-backbone-mixins').Fetch().fetchUntilEnd
+fetchUntilEnd   = require('artsy-backbone-mixins').Fetch(sd.ARTSY_URL).fetchUntilEnd
 
 module.exports = class PartnerShow extends Backbone.Model
 
