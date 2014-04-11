@@ -7,6 +7,7 @@ Backbone        = require 'backbone'
 { fabricate }   = require 'antigravity'
 Search          = require '../../../collections/search'
 SearchResult    = require '../../../models/search_result'
+sinon           = require 'sinon'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../#{templateName}.jade"
@@ -33,6 +34,7 @@ describe 'Search results template', ->
         sd: {}
         results: @search.models
         term: 'foobar'
+        fill: sinon.stub()
       )
 
     it 'displays a message to the user that nothing can be found', ->
@@ -52,6 +54,7 @@ describe 'Search results template', ->
         sd: {}
         results: @search.models
         term: 'skull'
+        fill: sinon.stub()
       )
 
       @$template = $(template)

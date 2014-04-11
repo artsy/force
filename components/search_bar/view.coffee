@@ -5,6 +5,7 @@ Search        = require './collections/search.coffee'
 itemTemplate  = -> require('./templates/item.jade') arguments...
 mediator      = require '../../lib/mediator.coffee'
 analytics     = require '../../lib/analytics.coffee'
+{ fill }      = require '../../lib/resizer.coffee'
 
 module.exports = class SearchBarView extends Backbone.View
   initialize: (options) ->
@@ -54,7 +55,7 @@ module.exports = class SearchBarView extends Backbone.View
   _engine:
     compile: ->
       render: (item) ->
-        itemTemplate item: item
+        itemTemplate item: item, fill: fill
 
   setupTypeahead: ->
     _.each ['opened', 'closed', 'selected'], (action) =>
