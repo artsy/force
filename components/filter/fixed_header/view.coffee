@@ -10,6 +10,7 @@ module.exports = class FilterFixedHeader extends Backbone.View
     @$window = $ window
     @mainHeaderHeight = $('#main-layout-header').height()
     @$window.on 'scroll', @popLock
+    @$window.on 'resize', _.throttle(@squeeze, 100)
     @params.on 'change', @scrollToTop
     @wrap()
     @setupJump()
@@ -30,6 +31,14 @@ module.exports = class FilterFixedHeader extends Backbone.View
 
   popLock: =>
     if @$window.scrollTop() > @$el.offset().top
-      @$el.addClass('filter-fixed-header')
+      @$el.addClass('filter-fixed-header'); @squeeze()
     else
       @$el.removeClass('filter-fixed-header')
+
+  squeeze: =>
+    $squeezee = @$('.filter-fixed-header-left')
+    $squeezer = @$('.filter-fixed-header-nav').children().not($squeezee)
+    left = $squeezee.offset().left + $squeezee.width()
+    right = _.min( _.map($squeezer, (e) -> $(e).offset().left) )
+    $squeezee.css(visibility: "hidden") if left > right
+    $squeezee.css(visibility: "visible") if right > left
