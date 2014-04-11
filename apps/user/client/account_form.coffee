@@ -39,7 +39,7 @@ module.exports = class AccountForm extends Backbone.View
     @
 
   parseErrors: (model, resp, options) ->
-    @renderErrors model, resp.responseJSON?.detail
+    @renderErrors model, resp.responseJSON?.detail or resp.responseJSON?.error
 
   clearErrors: ->
     @$('.settings-form-error')
@@ -156,8 +156,7 @@ module.exports = class AccountForm extends Backbone.View
       values.new_password = @$newPassword.val()
       values.password_confirmation = @$passwordConfirmation.val()
       values.current_password = @$currentPassword.val()
-      @passwordEdit.set(values).save null, trigger: true
-      console.log values, @passwordEdit.toJSON(), @passwordEdit.url()
+      @passwordEdit.save values, trigger: true
 
   #
   # Social Toggles
@@ -173,9 +172,10 @@ module.exports = class AccountForm extends Backbone.View
   toggleLinked: (provider) ->
     if @model.isLinkedTo(provider)
       @model.unlinkAccount provider,
-        error: (model, response) =>
-          response.suppressAppMessages = true
-          @renderErrors model, [response]
+        error: (m, res) =>
+          @$(".settings-form-error[data-attr='new_password']")
+            .removeClass('settings-form-message').text res.responseJSON.error
+          @$("#user-link-#{provider}").attr 'data-state', 'on'
     else
       authUrl = "/users/auth/#{provider}"
       authUrl += "?scope=publish_actions" if @model.hasLabFeature('Facebook Timeline Integration')
@@ -198,7 +198,6 @@ module.exports = class AccountForm extends Backbone.View
     values.receive_personalized_email = @$('#user-personalized-email').is "[data-state='on']"
     values.receive_follow_users_email = @$('#user-follows-email').is "[data-state='on']"
 
-    console.log 'submit password'
     @submitPassword()
     @model.save values, trigger: true
     false

@@ -11,7 +11,7 @@ CurrentUser = require '../../../models/current_user.coffee'
 # Inherits from CurrentUser to provide the unique API url for changing a password
 # and specific password related client validation.
 #
-module.exports = class PasswordEdit extends Backbone.Model
+module.exports = class PasswordEdit extends CurrentUser
 
   defaults:
     id: 1
@@ -23,7 +23,6 @@ module.exports = class PasswordEdit extends Backbone.Model
     new_password_min        : "Minimum 6 characters."
     new_password_same       : "Your new password must be different."
     password_confirmation   : "Passwords don't match up. Please try again."
-    #current_password_blank  : "Please enter your current password."
 
   validate: (attrs, options) ->
     errors = {}
@@ -34,8 +33,6 @@ module.exports = class PasswordEdit extends Backbone.Model
       errors.new_password = @errorMessages.new_password_same
     if attrs.password_confirmation and attrs.password_confirmation isnt attrs.new_password
       errors.password_confirmation = @errorMessages.password_confirmation
-    # if attrs.new_password and attrs.password_confirmation is attrs.new_password and _.isEmpty(attrs.current_password)
-    #   errors.current_password = @errorMessages.current_password_blank
 
     # Only return errors validation failed
     return errors unless _.isEmpty errors
