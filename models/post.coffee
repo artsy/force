@@ -67,7 +67,16 @@ module.exports = class Post extends Backbone.Model
     ]).join(" | ")
 
   defaultImage: ->
-    _.first(@artworks().models)?.defaultImage() or @images().first()
+    _.first(@artworks().models)?.defaultImage() or
+    @images().first() or
+    @attachmentImage()
+
+  attachmentImage: ->
+    if @attachments().length
+      src = _.first(@attachments()).imageSrc()
+      if src
+        imageUrlFor : -> src
+        imageUrl    : -> src
 
   artworks: ->
     new Artworks(@get('attachments')
