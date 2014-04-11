@@ -6,9 +6,11 @@ body.is-modal
 
 #modal
   z-index 3
+  transition opacity 0.25s
+  opacity 0
   &[data-state='open'], &.is-open
+    opacity 1
     > .modal-backdrop
-      opacity 1
       > .modal-dialog
         // Avoid transitioning the initial open
         transition all 0.25s, width 0
@@ -42,8 +44,6 @@ body.is-modal
 
 .modal-backdrop
   background-color rgba(0, 0, 0, 0.5)
-  opacity 0
-  transition opacity 0.25s
 
 .modal-dialog
   position fixed
@@ -64,6 +64,7 @@ body.is-modal
   transition opacity 0.25s
   opacity 0.15
   font-size 50px
+  prevent-content-shift()
   &:hover
     opacity 1
 
