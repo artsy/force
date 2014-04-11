@@ -13,7 +13,7 @@ featuredArtworksTemplate = -> require('../templates/featured_artworks.jade') arg
 featuredShowsTemplate = -> require('../templates/featured_shows.jade') arguments...
 featuredPostsTemplate = -> require('../templates/featured_posts.jade') arguments...
 featuredArtistsTemplate = -> require('../templates/featured_artists.jade') arguments...
-{ readCookie } = require '../../../components/util/cookie.coffee'
+{ readCookie, createCookie } = require '../../../components/util/cookie.coffee'
 user = null
 
 module.exports.init = ->
@@ -44,7 +44,11 @@ module.exports.init = ->
       $('#home-suggested-artworks').html featuredArtworksTemplate(artworks: artworks.models[0..3])
 
   # Open the signup modal for logged out users, or the login modal if the user has
-  # signed in before.
-  return if user? or location.search.match('no-auth-modal')
+  # signed in before, or if they have already dismissed it this session
+  return if user? or location.search.match('no-auth-modal') or readCookie('dismissed_auth_modal')
+
   mediator.trigger 'open:auth',
     mode: if readCookie('signed_in') is 'true' then 'login' else 'signup'
+
+  mediator.on 'modal:closed', ->
+    createCookie 'dismissed_auth_modal', true
