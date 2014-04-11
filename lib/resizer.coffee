@@ -20,3 +20,11 @@ module.exports =
       "#{baseUrl}/crop?key=#{EMBEDLY_KEY}&url=#{url}&width=#{width}&height=#{height}&quality=#{options.quality}"
     else
       url
+
+  fill: (url, width, height, options = {}) ->
+    if USE_RESIZE_PROXY
+      url = encodeURIComponent url
+      _.defaults options, quality: 95, color: 'fff'
+      "#{baseUrl}/fill?key=#{EMBEDLY_KEY}&url=#{url}&width=#{width}&height=#{height}&quality=#{options.quality}&color=#{options.color}"
+    else
+      url

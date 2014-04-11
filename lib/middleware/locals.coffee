@@ -8,7 +8,7 @@ _ = require 'underscore'
 _.mixin require 'underscore.string'
 { NODE_ENV } = require '../../config'
 newrelic = require 'newrelic' unless _.contains(['development', 'test'], NODE_ENV)
-{ resize, crop } = require '../../lib/resizer'
+{ fill, resize, crop } = require '../../lib/resizer'
 
 module.exports = (req, res, next) ->
 
@@ -17,6 +17,7 @@ module.exports = (req, res, next) ->
   res.locals.newrelic = newrelic
   res.locals.resize = resize
   res.locals.crop = crop
+  res.locals.fill = fill
 
   # Pass the user agent into locals for data-useragent device detection
   res.locals.userAgent = req.get('user-agent')
