@@ -51,7 +51,7 @@ module.exports = class ProfileForm extends Backbone.View
     'form'                      : 'onSubmit'
     # Handle toggle label clicks too
     'click #profile-favorites + .artsy-toggle-label': 'onTogglePublicFavorites'
-    'click #profile-public + .artsy-toggle-label'   : 'onTogglePublicFavorites'
+    'click #profile-public + .artsy-toggle-label'   : 'onTogglePublicProfile'
 
   #
   # Id
@@ -87,13 +87,14 @@ module.exports = class ProfileForm extends Backbone.View
     unless enabled and @$profileFavorites.is "[data-state='on']"
       @userEdit.updateFavorites true
       @$profileFavorites.attr 'data-state', 'off'
+    @onSubmit()
 
   onTogglePublicFavorites: (event) ->
     enabled = @$profileFavorites.is "[data-state='on']"
     @userEdit.updateFavorites enabled
     if enabled and @$profileIsPublic.is "[data-state='off']"
       @$profileIsPublic.attr 'data-state', 'on'
-      @onSubmit()
+    @onSubmit()
 
   onSubmit: ->
     @clearErrors()
