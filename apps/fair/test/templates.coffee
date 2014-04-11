@@ -18,6 +18,7 @@ OrderedSet      = require '../../../models/ordered_set'
 OrderedSets     = require '../../../collections/ordered_sets'
 FeedItem        = require '../../../components/feed/models/feed_item'
 cheerio         = require 'cheerio'
+sinon           = require 'sinon'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../templates/#{templateName}.jade"
@@ -139,6 +140,7 @@ describe 'Fair', ->
           profile: profile
           results: results
           fairResults: fairResults
+          fill: sinon.stub()
         @$template = $(template)
         done()
 
