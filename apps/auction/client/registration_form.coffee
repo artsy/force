@@ -44,12 +44,18 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
   cardCallback: (response) =>
     switch response.status
       when 201  # success
-        @currentUser.createBidder
-          saleId: @model.get('id')
+        card      = new Backbone.Model
+        card.url  = "#{sd.ARTSY_URL}/api/v1/me/credit_cards?uri=#{response.data.uri}"
+        card.save null,
           success: =>
-            @success()
-            analytics.track.funnel 'Registration submitted'
-          error: (xhr) => @showError xhr, "Registration submission error"
+            @currentUser.createBidder
+              saleId: @model.get('id')
+              success: =>
+                @success()
+                analytics.track.funnel 'Registration submitted'
+              error: (xhr) => @showError xhr, "Registration submission error"
+          error: =>
+            @showError @errors.other, "Error adding your credit card"
 
         analytics.track.funnel 'Registration card validated'
       when 400, 403 then @showError @errors.missingOrMalformed, "Registration card missing or malformed"
