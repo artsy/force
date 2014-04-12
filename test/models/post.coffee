@@ -55,10 +55,11 @@ describe 'Post', ->
       post    = new Post(attachments: [image])
       post.defaultImage().get('type').should.equal 'PostImage'
 
-    # I see no reason why this should be the case?
-    # it 'returns object if there are no attachments', ->
-    #   post = new Post(attachments: [])
-    #   post.defaultImage().should.be.type('object')
+    it 'returns the first image if there is no PostImage or artwork', ->
+      link = type: 'PostLink', url: 'existy', oembed_json: type: 'photo'
+      post = new Post(attachments: [link])
+      post.defaultImage().imageUrlFor().should.equal 'existy'
+      post.defaultImage().imageUrl().should.equal 'existy'
 
     it 'returns undefined if there are no attachments', ->
       post = new Post(attachments: [])
