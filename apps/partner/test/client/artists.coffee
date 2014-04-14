@@ -9,7 +9,7 @@ _             = require 'underscore'
 { resolve }   = require 'path'
 { fabricate } = require 'antigravity'
 
-describe 'PartnerShowsView', ->
+describe 'PartnerArtistsView', ->
 
   before (done) ->
     benv.setup =>
@@ -28,6 +28,7 @@ describe 'PartnerShowsView', ->
       benv.render resolve(__dirname, '../../templates/index.jade'), {
         profile: new Profile fabricate 'partner_profile'
         sd: { PROFILE: fabricate 'partner_profile' }
+        params: {}
       }, =>
         PartnerArtistsView = mod = benv.requireWithJadeify(
           (resolve __dirname, '../../client/artists'), ['template']

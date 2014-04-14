@@ -10,4 +10,4 @@ for route in ['/:id', '/:id/overview', '/:id/contact', '/:id/about', '/:id/colle
               '/:id/shop', '/:id/shows', '/:id/artists', '/:id/artist/:artistId', '/:id/posts']
   app.get route, (req, res, next) ->
     return next() unless res.locals.profile?.isPartner()
-    res.render 'index'
+    res.render 'index', params: req.params

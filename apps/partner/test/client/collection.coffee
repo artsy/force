@@ -27,6 +27,7 @@ describe 'PartnerCollectionView', ->
       benv.render resolve(__dirname, '../../templates/index.jade'), {
         profile: new Profile fabricate 'partner_profile'
         sd: { PROFILE: fabricate 'partner_profile' }
+        params: {}
       }, =>
         PartnerCollectionView = mod = benv.requireWithJadeify(
           (resolve __dirname, '../../client/collection'), []

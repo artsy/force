@@ -27,6 +27,7 @@ describe 'PartnerOverviewView', ->
       benv.render resolve(__dirname, '../../templates/index.jade'), {
         profile: new Profile fabricate 'partner_profile'
         sd: { PROFILE: fabricate 'partner_profile' }
+        params: {}
       }, =>
         PartnerOverviewView = mod = benv.requireWithJadeify(
           (resolve __dirname, '../../client/overview'), ['template', 'artistsGridTemplate']
@@ -91,6 +92,7 @@ describe 'PartnerOverviewView', ->
       benv.render resolve(__dirname, '../../templates/index.jade'), {
         profile: new Profile fabricate 'partner_profile'
         sd: { PROFILE: fabricate 'partner_profile' }
+        params: {}
       }, =>
         @PartnerOverviewView = mod = benv.requireWithJadeify(
           (resolve __dirname, '../../client/overview'), ['template', 'artistsGridTemplate']
