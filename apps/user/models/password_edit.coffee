@@ -17,7 +17,7 @@ module.exports = class PasswordEdit extends CurrentUser
     id: 1
 
   url: ->
-    "#{ARTSY_URL}/api/v1/me/password"
+    "#{super}/password"
 
   errorMessages:
     new_password_min        : "Minimum 6 characters."
