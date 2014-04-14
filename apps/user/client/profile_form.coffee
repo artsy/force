@@ -93,7 +93,7 @@ module.exports = class ProfileForm extends Backbone.View
 
   onTogglePublicFavorites: (event) ->
     enabled = @$profileFavorites.is "[data-state='on']"
-    @userEdit.updateFavorites enabled
+    @userEdit.updateFavorites not enabled
     if enabled and @$profileIsPublic.is "[data-state='off']"
       @$profileIsPublic.attr 'data-state', 'on'
     @onSubmit()
