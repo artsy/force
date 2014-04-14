@@ -71,6 +71,11 @@ module.exports = class Post extends Backbone.Model
     @images().first() or
     @attachmentImage()
 
+  # This takes care of attachments that don't implement
+  # the usual images interface (i.e. post videos or post links).
+  # They *do* often have a single imageSrc, so this returns the
+  # usual methods on a bare object so they can be called normally
+  # (Useful for post thumbnails)
   attachmentImage: ->
     if @attachments().length
       src = _.first(@attachments()).imageSrc()
