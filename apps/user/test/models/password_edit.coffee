@@ -33,7 +33,7 @@ describe 'PasswordEdit', ->
       @values.password_confirmation = '654321'
       @passwordEdit.validate(@values).password_confirmation.should.equal @passwordEdit.errorMessages.password_confirmation
       @values.password_confirmation = '123456'
-      _.isUndefined(@passwordEdit.validate(@values).password_confirmation).should.be.true
+      _.isUndefined(@passwordEdit.validate(@values)).should.be.true
 
     it "ensures the new isn't the old", ->
       @values =
