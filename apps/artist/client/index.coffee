@@ -71,6 +71,10 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
       model     : @model
       el        : @$('.artist-related-genes')
 
+  pendRemovalOfEmptyNotice: (collection) ->
+    @listenTo collection, 'sync', (collection) =>
+      @$('.artist-header-empty').remove() if collection.length
+
   setupArtworks: ->
     new BorderedPulldown el: $('.bordered-pulldown')
 
@@ -78,6 +82,7 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     $availableWorks = @$('#artist-available-works')
     @availableArtworks = new Artworks
     @availableArtworks.url = @model.url() + '/artworks'
+    @pendRemovalOfEmptyNotice @availableArtworks
     new FillwidthView(
       artworkCollection: @artworkCollection
       fetchOptions: { 'filter[]': 'for_sale', 'sort': @sortBy or undefined }
@@ -91,6 +96,7 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     $institutionalWorks = @$('#artist-institution-works')
     @institutionArtworks = new Artworks
     @institutionArtworks.url = @model.url() + '/artworks'
+    @pendRemovalOfEmptyNotice @institutionArtworks
     new FillwidthView(
       artworkCollection: @artworkCollection
       fetchOptions: { 'filter[]': 'not_for_sale', 'sort': @sortBy or undefined }
