@@ -24,7 +24,9 @@ module.exports = class ProfileForm extends Backbone.View
     # Set toggles
     @userEdit.initializeDefaultArtworkCollection
       success: (collection) =>
+        # Only show the toggle group if the user has a collection to modify
         @$profileFavorites.attr 'data-state', @model.onOffFavorites(collection)
+        @$('.settings-enable-public-favorites').show()
     @$profileIsPublic.attr 'data-state', @model.onOffPublic()
 
     @listenTo @model, 'invalid', @renderErrors
