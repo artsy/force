@@ -26,6 +26,8 @@ module.exports = class Overview extends Backbone.View
         fair : @fair
         el   : @el
         onFetchFollowingArtists: @onFetchFollowingArtists
+    else if @fair.get('display_vip')
+      mediator.trigger 'open:auth', { mode: 'register', copy: "Create an account or log in to activate your VIP preview for #{@fair.get('name')}", redirectTo: location.pathname }
 
   clickForYou: =>
     analytics.track.click "Clicked for-you from fair overview"
