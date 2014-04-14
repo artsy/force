@@ -27,6 +27,8 @@ module.exports = class ProfileForm extends Backbone.View
         # Only show the toggle group if the user has a collection to modify
         @$profileFavorites.attr 'data-state', @model.onOffFavorites(collection)
         @$('.settings-enable-public-favorites').show()
+      error: =>
+        @$('.settings-enable-public-favorites').remove()
     @$profileIsPublic.attr 'data-state', @model.onOffPublic()
 
     @listenTo @model, 'invalid', @renderErrors
@@ -94,9 +96,10 @@ module.exports = class ProfileForm extends Backbone.View
   onTogglePublicFavorites: (event) ->
     enabled = @$profileFavorites.is "[data-state='on']"
     @userEdit.updateFavorites not enabled
+    # Update the profile public flag and submit if the profile is private
     if enabled and @$profileIsPublic.is "[data-state='off']"
       @$profileIsPublic.attr 'data-state', 'on'
-    @onSubmit()
+      @onSubmit()
 
   onSubmit: ->
     @clearErrors()
