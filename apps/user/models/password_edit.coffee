@@ -13,6 +13,9 @@ CurrentUser = require '../../../models/current_user.coffee'
 #
 module.exports = class PasswordEdit extends CurrentUser
 
+  defaults:
+    id: 1
+
   url: ->
     "#{super}/password"
 
@@ -20,7 +23,6 @@ module.exports = class PasswordEdit extends CurrentUser
     new_password_min        : "Minimum 6 characters."
     new_password_same       : "Your new password must be different."
     password_confirmation   : "Passwords don't match up. Please try again."
-    current_password_blank  : "Please enter your current password."
 
   validate: (attrs, options) ->
     errors = {}
@@ -31,8 +33,6 @@ module.exports = class PasswordEdit extends CurrentUser
       errors.new_password = @errorMessages.new_password_same
     if attrs.password_confirmation and attrs.password_confirmation isnt attrs.new_password
       errors.password_confirmation = @errorMessages.password_confirmation
-    if attrs.new_password and attrs.password_confirmation is attrs.new_password and _.isEmpty(attrs.current_password)
-      errors.current_password = @errorMessages.current_password_blank
 
     # Only return errors validation failed
     return errors unless _.isEmpty errors

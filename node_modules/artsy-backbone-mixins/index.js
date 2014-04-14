@@ -3,5 +3,6 @@ module.exports = {
   Dimensions: require("./lib/dimensions"),
   Fetch: require("./lib/fetch"),
   AToZ: require("./lib/a_to_z"),
-  Image: require("./lib/image")
+  Image: require("./lib/image"),
+  CurrentUser: require("./lib/current_user")
 }

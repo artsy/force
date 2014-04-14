@@ -33,7 +33,7 @@ describe 'PasswordEdit', ->
       @values.password_confirmation = '654321'
       @passwordEdit.validate(@values).password_confirmation.should.equal @passwordEdit.errorMessages.password_confirmation
       @values.password_confirmation = '123456'
-      _.isUndefined(@passwordEdit.validate(@values).password_confirmation).should.be.true
+      _.isUndefined(@passwordEdit.validate(@values)).should.be.true
 
     it "ensures the new isn't the old", ->
       @values =
@@ -43,9 +43,3 @@ describe 'PasswordEdit', ->
       @passwordEdit.validate(@values).new_password.should.equal @passwordEdit.errorMessages.new_password_same
       @values.current_password = '654321'
       _.isUndefined(@passwordEdit.validate(@values)).should.be.true
-
-    it 'requires the user input their existing password before submission', ->
-      @values =
-        new_password: 'password'
-        password_confirmation: 'password'
-      @passwordEdit.validate(@values).current_password.should.equal @passwordEdit.errorMessages.current_password_blank

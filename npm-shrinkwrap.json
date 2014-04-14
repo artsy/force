@@ -536,7 +536,7 @@
     "artsy-passport": {
       "version": "0.1.4",
       "from": "artsy-passport@git://github.com/artsy/artsy-passport.git",
-      "resolved": "git://github.com/artsy/artsy-passport.git#a984ee800b2c059cff318decc398cba600c66ef2",
+      "resolved": "git://github.com/artsy/artsy-passport.git#73482915b64bc847dea94ef20b1455ae51d813ea",
       "dependencies": {
         "passport": {
           "version": "0.2.0",
@@ -753,7 +753,7 @@
     "artsy-backbone-mixins": {
       "version": "0.0.15",
       "from": "artsy-backbone-mixins@git://github.com/artsy/artsy-backbone-mixins.git",
-      "resolved": "git://github.com/artsy/artsy-backbone-mixins.git#7ee463a2f284c4f381247d4f01114fe981f9ad97",
+      "resolved": "git://github.com/artsy/artsy-backbone-mixins.git#09587287a29a030e3d3a2153528b245e1d670c7d",
       "dependencies": {
         "showdown": {
           "version": "0.3.1",
@@ -813,6 +813,16 @@
       "version": "0.1.1",
       "from": "connect-flash@*",
       "resolved": "http://registry.npmjs.org/connect-flash/-/connect-flash-0.1.1.tgz"
+    },
+    "ua-parser": {
+      "version": "0.3.3",
+      "from": "ua-parser@",
+      "dependencies": {
+        "yamlparser": {
+          "version": "0.0.2",
+          "from": "yamlparser@>=0.0.2"
+        }
+      }
     }
   }
 }

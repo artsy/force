@@ -12,8 +12,11 @@ Genes             = require '../collections/genes.coffee'
 { readCookie }    = require '../components/util/cookie.coffee'
 Following         = require '../components/follow_button/collection.coffee'
 geoLocate         = require '../components/util/geolocate.coffee'
+ABM               = require 'artsy-backbone-mixins'
 
 module.exports = class CurrentUser extends Backbone.Model
+
+  _.extend @prototype, ABM.CurrentUser(sd.ARTSY_URL)
 
   url: -> "#{sd.ARTSY_URL}/api/v1/me"
 
@@ -35,16 +38,6 @@ module.exports = class CurrentUser extends Backbone.Model
             "before accessing the default artwork collection."
       return
     @get('artworkCollections')[0]
-
-  # Add the access token to fetches and saves
-  sync: (method, model, options={}) ->
-    if method in ['create', 'update', 'patch']
-      # If persisting to the server overwrite attrs
-      options.attrs = _.omit(@toJSON(), 'accessToken')
-    else
-      # Otherwise overwrite data
-      _.defaults(options, { data: { access_token: @get('accessToken') } })
-    super
 
   # Saves the artwork to the user's saved-artwork collection. API creates colletion if user's first save.
   saveArtwork: (artworkId, options = {}) =>

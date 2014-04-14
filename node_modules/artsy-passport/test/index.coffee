@@ -135,3 +135,24 @@ describe 'Artsy Passport methods', ->
     it 'redirects to log in', ->
       @socialSignup('twitter')('artsy-passport: created user from social', @req, @res, @next)
       @res.redirect.args[0][0].should.include '/users/auth/twitter'
+
+  describe '#submitTwitterLastStep', ->
+
+    before ->
+      opts = @artsyPassport.__get__ 'opts'
+      @submitTwitterLastStep = @artsyPassport.__get__ 'submitTwitterLastStep'
+      @request = @artsyPassport.__get__ 'request'
+      @req = { query: {}, user: { get: -> 'access-foo-token' } }
+      @res = { redirect: sinon.stub() }
+      @next = sinon.stub()
+
+    it 'creates a user', (done) ->
+      @request.put = (url) ->
+        url.should.include 'api/v1/me'
+        send: (data) ->
+          data.email.should.equal 'foo@bar.com'
+          data.email_confirmation.should.equal 'foo@bar.com'
+          done()
+          end: ->
+      @req.param = -> 'foo@bar.com'
+      @submitTwitterLastStep @req, @res, @next

@@ -122,7 +122,7 @@ loginBeforeTwitterLastStep = (req, res, next) ->
 
 submitTwitterLastStep = (req, res, next) ->
   return next "No user" unless req.user
-  return next() unless req.param('email')?
+  return next "No email provided" unless req.param('email')?
   request.put("#{opts.SECURE_ARTSY_URL}/api/v1/me").send(
     email: req.param('email')
     email_confirmation: req.param('email')
@@ -131,7 +131,14 @@ submitTwitterLastStep = (req, res, next) ->
     err = r.error or r.body?.error_description or r.body?.error
     err = null if r.text.match 'Error from MailChimp API'
     return next err if err
-    res.redirect req.param('redirect-to')
+    # To work around an API caching bug we send another empty PUT
+    request.put("#{opts.SECURE_ARTSY_URL}/api/v1/me").send(
+      access_token: req.user.get('accessToken')
+    ).end ->
+      err = r.error or r.body?.error_description or r.body?.error
+      err = null if r.text.match 'Error from MailChimp API'
+      return next err if err
+      res.redirect req.param('redirect-to')
 
 #
 # Setup passport.
@@ -144,11 +151,13 @@ initPassport = ->
     clientID: opts.FACEBOOK_ID
     clientSecret: opts.FACEBOOK_SECRET
     callbackURL: "#{opts.APP_URL}#{opts.facebookCallbackPath}"
+    passReqToCallback: true
   , facebookCallback
   passport.use new TwitterStrategy
     consumerKey: opts.TWITTER_KEY
     consumerSecret: opts.TWITTER_SECRET
     callbackURL: "#{opts.APP_URL}#{opts.twitterCallbackPath}"
+    passReqToCallback: true
   , twitterCallback
 
 #
@@ -163,34 +172,49 @@ artsyCallback = (username, password, done) ->
     password: password
   ).end accessTokenCallback(done)
 
-facebookCallback = (accessToken, refreshToken, profile, done) ->
-  request.get("#{opts.SECURE_ARTSY_URL}/oauth2/access_token").query(
-    client_id: opts.ARTSY_ID
-    client_secret: opts.ARTSY_SECRET
-    grant_type: 'oauth_token'
-    oauth_token: accessToken
-    oauth_provider: 'facebook'
-  ).end accessTokenCallback(done,
-    oauth_token: accessToken
-    provider: 'facebook'
-    name: profile?.displayName
-  )
+facebookCallback = (req, accessToken, refreshToken, profile, done) ->
+  if req.user
+    request.post("#{opts.SECURE_ARTSY_URL}/api/v1/me/authentications/facebook").query(
+      oauth_token: accessToken
+      access_token: req.user.get 'accessToken'
+    ).end (res) ->
+      done res.error, req.user
+  else
+    request.get("#{opts.SECURE_ARTSY_URL}/oauth2/access_token").query(
+      client_id: opts.ARTSY_ID
+      client_secret: opts.ARTSY_SECRET
+      grant_type: 'oauth_token'
+      oauth_token: accessToken
+      oauth_provider: 'facebook'
+    ).end accessTokenCallback(done,
+      oauth_token: accessToken
+      provider: 'facebook'
+      name: profile?.displayName
+    )
 
-twitterCallback = (token, tokenSecret, profile, done) ->
-  request.get("#{opts.SECURE_ARTSY_URL}/oauth2/access_token").query(
-    client_id: opts.ARTSY_ID
-    client_secret: opts.ARTSY_SECRET
-    grant_type: 'oauth_token'
-    oauth_token: token
-    oauth_token_secret: tokenSecret
-    oauth_provider: 'twitter'
-  ).end accessTokenCallback(done,
-    oauth_token: token
-    oauth_token_secret: tokenSecret
-    provider: 'twitter'
-    email: opts.twitterSignupTempEmail(token, tokenSecret, profile)
-    name: profile?.displayName
-  )
+twitterCallback = (req, token, tokenSecret, profile, done) ->
+  if req.user
+    request.post("#{opts.SECURE_ARTSY_URL}/api/v1/me/authentications/twitter").query(
+      oauth_token: token
+      oauth_token_secret: tokenSecret
+      access_token: req.user.get 'accessToken'
+    ).end (res) ->
+      done res.error, req.user
+  else
+    request.get("#{opts.SECURE_ARTSY_URL}/oauth2/access_token").query(
+      client_id: opts.ARTSY_ID
+      client_secret: opts.ARTSY_SECRET
+      grant_type: 'oauth_token'
+      oauth_token: token
+      oauth_token_secret: tokenSecret
+      oauth_provider: 'twitter'
+    ).end accessTokenCallback(done,
+      oauth_token: token
+      oauth_token_secret: tokenSecret
+      provider: 'twitter'
+      email: opts.twitterSignupTempEmail(token, tokenSecret, profile)
+      name: profile?.displayName
+    )
 
 accessTokenCallback = (done, params) ->
   return (e, res) ->
