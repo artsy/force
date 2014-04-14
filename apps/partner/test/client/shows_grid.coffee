@@ -17,7 +17,10 @@ describe 'PartnerShowsGridView', ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
-      benv.render resolve(__dirname, '../../templates/shows_grid.jade'), { partner: { href: -> } }, =>
+      benv.render resolve(__dirname, '../../templates/shows_grid.jade'), {
+        partner: { href: -> }
+        params: {}
+      }, =>
 
         # fabricated shows groundtruth
         # gallery     => featured: 0, current: 3, upcoming: 2, past: 5 (total: 10)
