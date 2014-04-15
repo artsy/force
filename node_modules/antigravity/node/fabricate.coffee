@@ -65,8 +65,8 @@ module.exports = fabricate = (type, extObj = {}) ->
       provenance: 'Pwned by the big LG'
       literature: 'Featured in Wired'
       dimensions:
-        in: '10 x 20 x 30in'
-        cm: '100 x 200 x 40cm'
+        in: '10 × 20 × 30in'
+        cm: '100 × 200 × 40cm'
       metric: 'in'
       display: 'Skull by Andy Warhol'
       collecting_institution: 'MOMA'
@@ -110,8 +110,8 @@ module.exports = fabricate = (type, extObj = {}) ->
       id: '34f4wawe' + _.uniqueId()
       editions: '1,2,3 of 10'
       dimensions:
-        in: '10 x 20 x 30in'
-        cm: '100 x 200 x 40cm'
+        in: '10 × 20 × 30in'
+        cm: '100 × 200 × 40cm'
       metric: 'in'
 
     when 'partner'
