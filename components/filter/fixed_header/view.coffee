@@ -38,6 +38,7 @@ module.exports = class FilterFixedHeader extends Backbone.View
   squeeze: =>
     $squeezee = @$('.filter-fixed-header-left')
     $squeezer = @$('.filter-fixed-header-nav').children().not($squeezee)
+    return unless $squeezer.length and $squeezee.length
     left = $squeezee.offset().left + $squeezee.width()
     right = _.min( _.map($squeezer, (e) -> $(e).offset().left) )
     $squeezee.css(visibility: "hidden") if left > right

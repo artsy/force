@@ -39,3 +39,10 @@ describe 'FilterFixedHeader', ->
     @view.$el.offset = -> top: 300
     @view.scrollToTop()
     @view.document.scrollTop.should.not.be.above 0
+
+  describe '#squeeze', ->
+
+    it 'doesnt choke if the filter UI is missing a left portion', ->
+      @view.squeeze()
+
+    it 'toggles the visiblity of the left info when the screen is smaller'
