@@ -122,10 +122,7 @@ module.exports = class ViewInRoom extends Backbone.View
 
   # @return {Array} height, width
   getArtworkDimensions: ->
-    @__dimensions__ ?= _.map(@artwork.
-      dimensions(metric: 'in', format: 'decimal').
-      replace('in', '').
-      split(' × '), parseFloat)
+    @__dimensions__ ?= @artwork.normalizedDimensions()
 
   adjustViewport: ->
     $('html, body').scrollTop 0
