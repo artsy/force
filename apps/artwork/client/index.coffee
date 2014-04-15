@@ -1,10 +1,8 @@
-require '../../../lib/vendor/openseadragon.js'
-
-sd                = require('sharify').data
-Backbone          = require 'backbone'
-Artist            = require '../../../models/artist.coffee'
-Artwork           = require '../../../models/artwork.coffee'
-ArtworkRouter     = require './router.coffee'
+sd              = require('sharify').data
+Backbone        = require 'backbone'
+Artist          = require '../../../models/artist.coffee'
+Artwork         = require '../../../models/artwork.coffee'
+ArtworkRouter   = require './router.coffee'
 
 module.exports.init = ->
   artist    = new Artist sd.ARTIST
