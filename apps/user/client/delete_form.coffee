@@ -20,7 +20,7 @@ module.exports = class UserDeleteForm extends Backbone.View
 
   events:
     'click #user-delete-confirm': 'onConfirmToggle'
-    'click #user-delete-submit'   : 'onSubmit'
+    'click #user-delete-submit' : 'onSubmit'
     'form'                      : 'onFormSubmit'
 
   onConfirmToggle: ->
@@ -37,10 +37,13 @@ module.exports = class UserDeleteForm extends Backbone.View
   onSubmit: ->
     return false unless @$confirm.is ':checked'
     @$submitButton.addClass 'is-loading'
-    @model.destroy
+    $.ajax
+      method: 'delete'
       data:
-        explanation: @$explanation.val()
-        url: '/user/delete'
+        access_token: @model.get 'accessToken'
+        explanation : @$explanation.val()
+        url         : '/user/delete' # This is added to the feedback form
+      url: @model.url()
       success: =>
         @$successMessage.show()
         $('#main-layout-header').remove()
