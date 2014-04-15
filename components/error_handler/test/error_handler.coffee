@@ -47,3 +47,7 @@ describe '#socialAuthError', ->
   it 'uses gravity style error messages if coming from tiwtter', ->
     errorHandler.socialAuthError "User Already Exists", { url: 'twitter' }, @res = { redirect: sinon.stub() }
     @res.redirect.args[0][0].should.equal '/log_in?account_created_email=twitter'
+
+  it 'directs social linking errors to the user edit page', ->
+    errorHandler.socialAuthError "Another Account Already Linked: Twitter", { url: 'twitter' }, @res = { redirect: sinon.stub() }
+    @res.redirect.args[0][0].should.equal '/user/edit?error=twitter-already-linked'
