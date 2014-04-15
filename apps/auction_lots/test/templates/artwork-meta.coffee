@@ -24,7 +24,7 @@ describe 'Meta tags', ->
       @html.should.include "<meta property=\"twitter:card\" content=\"summary"
       @html.should.include "<link rel=\"canonical\" href=\"http://localhost:5000/artwork/#{@artwork.get('id')}"
       @html.should.include "<meta property=\"og:url\" content=\"http://localhost:5000/artwork/#{@artwork.get('id')}"
-      @html.should.include "<meta property=\"og:description\" content=\"Related auction results for From Gagosian Gallery, Andy Warhol, Skull (1999), Watercolor on Paper, 10 x 20 x 30in"
+      @html.should.include "<meta property=\"og:description\" content=\"Related auction results for From Gagosian Gallery, Andy Warhol, Skull (1999), Watercolor on Paper, 10 × 20 × 30in"
       @html.should.include "<meta property=\"og:title\" content=\"Andy Warhol, Skull (1999) | Related Auction Results | Artsy"
 
   describe 'with an image', ->
