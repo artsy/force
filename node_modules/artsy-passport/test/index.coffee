@@ -156,3 +156,23 @@ describe 'Artsy Passport methods', ->
           end: ->
       @req.param = -> 'foo@bar.com'
       @submitTwitterLastStep @req, @res, @next
+
+  describe '#afterLocalAuth', ->
+
+    beforeEach ->
+      opts = @artsyPassport.__get__ 'opts'
+      @afterLocalAuth = @artsyPassport.__get__ 'afterLocalAuth'
+      @req = { query: {}, user: { get: -> 'access-foo-token' } }
+      @res = { send: sinon.stub() }
+      @next = sinon.stub()
+
+    it 'throws a 403 if there is an auth error', ->
+      @res.authError = 'foobar'
+      @afterLocalAuth @req, @res
+      @res.send.args[0][0].should.equal 403
+
+    it 'returns json success for ajax calls', ->
+      @req.accepts = -> true
+      @req.user = { toJSON: -> }
+      @afterLocalAuth @req, @res
+      @res.send.args[0][0].success.should.be.ok

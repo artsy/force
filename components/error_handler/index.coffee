@@ -44,6 +44,7 @@ errorHandler.internalError = (err, req, res, next) ->
   res.send res.statusCode, renderTemplate(data)
 
 errorHandler.socialAuthError = (err, req, res, next) ->
+  console.log err.toString()
   if err.toString().match('User Already Exists')
     # Error urls need to be compatible with Gravity
     params =
@@ -58,5 +59,12 @@ errorHandler.socialAuthError = (err, req, res, next) ->
     res.redirect '/log_in?error=account-not-found'
   else if err.toString().match('twitter denied')
     res.redirect '/log_in?error=twitter-denied'
+  else if err.toString().match("Another Account Already Linked") and
+          err.toString().match("twitter")
+    console.log 'ALREADY LINKED TWITTER'
+    res.redirect '/user/edit?error=twitter-already-linked'
+  else if err.toString().match("Another Account Already Linked") and
+          err.toString().match("facebook")
+    res.redirect '/user/edit?error=twitter-already-facebook'
   else
     res.redirect '/log_in?error=' + err.toString()
