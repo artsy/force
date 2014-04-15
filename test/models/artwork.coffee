@@ -99,6 +99,26 @@ describe 'Artwork', ->
       @artwork.set 'edition_sets', [0, 0]
       @artwork.isMultipleEditions().should.be.ok
 
+    it 'normalizes dimensions', ->
+      @artwork.set dimensions: in: '10 × 200 × 30in'
+      @artwork.normalizedDimensions().should.eql [10, 200, 30]
+      @artwork.set dimensions: in: '10 × 200 × 30'
+      @artwork.normalizedDimensions().should.eql [10, 200, 30]
+      @artwork.set dimensions: in: '101 × 20in'
+      @artwork.normalizedDimensions().should.eql [101, 20]
+      @artwork.set dimensions: in: '601in'
+      @artwork.normalizedDimensions().should.eql [601]
+
+    it 'might be too big (more than 600 inches on a side)', ->
+      @artwork.set dimensions: in: '10 × 20in'
+      @artwork.tooBig().should.be.false
+      @artwork.set dimensions: in: '600 × 600in'
+      @artwork.tooBig().should.be.false
+      @artwork.set dimensions: in: '600.5 × 600in'
+      @artwork.tooBig().should.be.true
+      @artwork.set dimensions: in: '600 × 601in'
+      @artwork.tooBig().should.be.true
+
     it 'can be hung', ->
       @artwork.set { depth: undefined, height: 1, width: '1' }
       @artwork.set 'category', 'Design'
@@ -106,6 +126,11 @@ describe 'Artwork', ->
       @artwork.set 'category', 'Painting'
       @artwork.isHangable().should.be.ok
       @artwork.set 'depth', 1
+      @artwork.isHangable().should.not.be.ok
+      @artwork.unset 'depth'
+      @artwork.set dimensions: in: '600 × 20in'
+      @artwork.isHangable().should.be.ok
+      @artwork.set dimensions: in: '601 × 20in'
       @artwork.isHangable().should.not.be.ok
 
     it 'can be contacted', ->
