@@ -73,8 +73,8 @@ module.exports = class AccountForm extends Backbone.View
     'change .publish_to_facebook'     : 'togglePublishToFacebook'
     'form'                            : 'onSubmit'
     # Add specific toggle handlers to trigger on label click
-    'click #user-link-facebook + artsy-toggle-label': 'toggleFacebookLinked'
-    'click #user-link-twitter + artsy-toggle-label' : 'toggleTwitterLinked'
+    'click #user-link-facebook + .artsy-toggle-label': 'toggleFacebookLinked'
+    'click #user-link-twitter + .artsy-toggle-label' : 'toggleTwitterLinked'
 
   # TODO: compontent
   onToggle: (event) ->
