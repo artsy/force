@@ -20,6 +20,9 @@ describe '#internalError', ->
     errorHandler.internalError new Error("Some blah error"), {}, { statusCode: 404, send: spy = sinon.spy() }
     spy.args[0][0].should.equal 404
 
+  it 'renders sharify data', ->
+    errorHandler.internalError new Error("Some blah error"), {}, { statusCode: 404, send: spy = sinon.spy(), locals: sharify: script: script = sinon.stub() }
+    script.called.should.be.ok
 
 describe '#pageNotFound', ->
 
