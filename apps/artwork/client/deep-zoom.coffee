@@ -1,6 +1,7 @@
 _           = require 'underscore'
 Backbone    = require 'backbone'
 Transition  = require '../../../components/mixins/transition.coffee'
+getScript   = require '../../../lib/get_script.coffee'
 
 template = -> require('../templates/deep-zoom.jade') arguments...
 
@@ -41,24 +42,25 @@ module.exports = class DeepZoomView extends Backbone.View
 
     @$container.html @$el
 
-    @viewer = OpenSeadragon
-      id: @id
-      debugMode: false
-      showNavigationControl: false
-      immediateRender: false
-      blendTime: 0.0
-      animationTime: 1.5
-      springStiffness: 15.0
-      maxZoomPixelRatio: 1.0
-      minZoomImageRatio: 0.9
-      zoomPerClick: @zoomPerClick
-      zoomPerScroll: 1.1
-      constrainDuringPan: true
-      visibilityRatio: 1
-      tileSources: image.deepZoomJson()
-      error: @return
+    getScript 'openseadragon', =>
+      @viewer = OpenSeadragon
+        id                    : @id
+        debugMode             : false
+        showNavigationControl : false
+        immediateRender       : false
+        blendTime             : 0.0
+        animationTime         : 1.5
+        springStiffness       : 15.0
+        maxZoomPixelRatio     : 1.0
+        minZoomImageRatio     : 0.9
+        zoomPerClick          : @zoomPerClick
+        zoomPerScroll         : 1.1
+        constrainDuringPan    : true
+        visibilityRatio       : 1
+        tileSources           : image.deepZoomJson()
+        error                 : @return
 
-    @postRender()
+      @postRender()
 
     this
 

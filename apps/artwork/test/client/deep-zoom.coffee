@@ -44,6 +44,7 @@ describe 'DeepZoomView', ->
     sinon.stub Backbone, 'sync'
     benv.render resolve(__dirname, '../../templates/deep-zoom.jade'), {}, =>
       DeepZoomView = benv.requireWithJadeify resolve(__dirname, '../../client/deep-zoom'), ['template']
+      DeepZoomView.__set__ 'getScript', (x, cb) -> cb()
 
       @view = new DeepZoomView $container: $('body'), artwork: @artwork
       done()
