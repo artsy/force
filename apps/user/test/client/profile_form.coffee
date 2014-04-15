@@ -78,8 +78,14 @@ describe 'ProfileForm', ->
       @profileForm.$('#profile-favorites').click()
       $.ajax.callCount.should.equal 1
       @profileForm.$('#profile-favorites').attr('data-state').should.equal 'on'
+
+    it 'requires a public profile by setting it public', ->
+      @profileForm.$('#profile-favorites').click()
+      @profileForm.$('#profile-favorites').attr('data-state').should.equal 'on'
       @profileForm.$('#profile-public').attr('data-state').should.equal 'on'
 
-    xit 'requires a public profile by setting it public', ->
-
-    xit 'toggles public favorites if the profile is made private', ->
+    it 'toggles public favorites if the profile is made private', ->
+      @profileForm.$('#profile-favorites').click()
+      @profileForm.$('#profile-public').click()
+      @profileForm.$('#profile-favorites').attr('data-state').should.equal 'off'
+      @profileForm.$('#profile-public').attr('data-state').should.equal 'off'
