@@ -105,6 +105,18 @@ module.exports = class Artwork extends Backbone.Model
   isMultipleEditions: ->
     @get('edition_sets')?.length > 1
 
+  # Outputs the [height, width, depth || height, width || diameter] in decimal/inches
+  #
+  # return {Array}
+  normalizedDimensions: ->
+    _.map @dimensions(metric: 'in', format: 'decimal').replace('in', '').split(' × '), parseFloat
+
+  # Is any side larger than 600 inches?
+  #
+  # return {Boolean}
+  tooBig: ->
+    _.any @normalizedDimensions(), (x) -> x > 600
+
   # Is the work two-dimensional and can be
   # used in conjunction with 'View in Room'?
   #
@@ -112,7 +124,7 @@ module.exports = class Artwork extends Backbone.Model
   isHangable: ->
     return false if @get('category')?.match /sculpture|installation|design/i
     return false if @hasDimension('depth')
-    return true  if @hasDimension('width') and @hasDimension('height') # and @dimensions(metric: 'in', format: 'decimal') < 600 # todo
+    return true  if @hasDimension('width') and @hasDimension('height') and not @tooBig()
     return true  if @hasDimension('diameter')
 
     false
