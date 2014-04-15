@@ -1,6 +1,7 @@
-fs = require 'fs'
-jade = require 'jade'
-{ REVEAL_ERRORS } = require '../../config'
+_                   = require 'underscore'
+fs                  = require 'fs'
+jade                = require 'jade'
+{ REVEAL_ERRORS }   = require '../../config'
 
 renderTemplate = jade.compile(
   fs.readFileSync(__dirname + '/template.jade')
@@ -13,7 +14,13 @@ errorHandler = module.exports = exports = {}
 # use()d, we assume 404, as nothing else responded.
 errorHandler.pageNotFound = (req, res, next) ->
   if req.accepts 'html' # respond with html page
-    res.send 404, renderTemplate { code: 404, error: "Not Found", sd: res.locals?.sd or {} }
+    data = _.extend
+      code  : 404
+      error : 'Not Found'
+      sd    : {}
+    , res.locals
+
+    res.send 404, renderTemplate(data)
     return
 
   if req.accepts 'json' # respond with json
@@ -26,11 +33,15 @@ errorHandler.pageNotFound = (req, res, next) ->
 # Error-handling middleware
 errorHandler.internalError = (err, req, res, next) ->
   detail = if REVEAL_ERRORS then err.message or err.text or err.toString() else null
-  res.send res.statusCode, renderTemplate
-    code: res.statusCode
-    error: err
-    sd: res.locals?.sd or {}
-    detail: detail
+
+  data = _.extend
+    code   : res.statusCode
+    error  : err
+    detail : detail
+    sd     : {}
+  , res.locals
+
+  res.send res.statusCode, renderTemplate(data)
 
 errorHandler.socialAuthError = (err, req, res, next) ->
   if err.toString().match('User Already Exists')
