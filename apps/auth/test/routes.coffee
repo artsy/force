@@ -22,12 +22,6 @@ describe 'Auth routes', ->
       routes.twitterLastStep @req, @res
       @res.render.args[0][0].should.equal 'templates/twitter_email'
 
-  describe '#submitLogin', ->
-
-    it 'sends success', ->
-      routes.submitLogin @req, @res
-      @res.send.args[0][0].success.should.equal true
-
   describe '#logout', ->
 
     it 'logs out and redirects home', ->
