@@ -23,6 +23,8 @@ module.exports.getUserAgent = ->
 
 module.exports.trackPageview = =>
   @ga? 'send', 'pageview'
+  mixpanel.track? 'Viewed page', { path: location.pathname }
+
 
 # Delta tracking pixel
 module.exports.delta = (event, data, el) ->
