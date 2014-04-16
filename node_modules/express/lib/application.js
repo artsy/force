@@ -2,15 +2,15 @@
  * Module dependencies.
  */
 
-var connect = require('connect')
-  , Router = require('./router')
-  , methods = require('methods')
-  , middleware = require('./middleware')
-  , debug = require('debug')('express:application')
-  , locals = require('./utils').locals
-  , View = require('./view')
-  , utils = connect.utils
-  , http = require('http');
+var mixin = require('utils-merge');
+var escapeHtml = require('escape-html');
+var Router = require('./router');
+var methods = require('methods');
+var middleware = require('./middleware/init');
+var query = require('./middleware/query');
+var debug = require('debug')('express:application');
+var View = require('./view');
+var http = require('http');
 
 /**
  * Application prototype.
@@ -45,13 +45,11 @@ app.defaultConfiguration = function(){
   // default settings
   this.enable('x-powered-by');
   this.enable('etag');
-  this.set('env', process.env.NODE_ENV || 'development');
+  var env = process.env.NODE_ENV || 'development';
+  this.set('env', env);
   this.set('subdomain offset', 2);
-  debug('booting in %s mode', this.get('env'));
 
-  // implicit middleware
-  this.use(connect.query());
-  this.use(middleware.init(this));
+  debug('booting in %s mode', env);
 
   // inherit protos
   this.on('mount', function(parent){
@@ -61,18 +59,11 @@ app.defaultConfiguration = function(){
     this.settings.__proto__ = parent.settings;
   });
 
-  // router
-  this._router = new Router(this);
-  this.routes = this._router.map;
-  this.__defineGetter__('router', function(){
-    this._usedRouter = true;
-    this._router.caseSensitive = this.enabled('case sensitive routing');
-    this._router.strict = this.enabled('strict routing');
-    return this._router.middleware;
-  });
-
   // setup locals
-  this.locals = locals(this);
+  this.locals = Object.create(null);
+
+  // top-most app is mounted at /
+  this.mountpath = '/';
 
   // default locals
   this.locals.settings = this.settings;
@@ -82,18 +73,94 @@ app.defaultConfiguration = function(){
   this.set('views', process.cwd() + '/views');
   this.set('jsonp callback name', 'callback');
 
-  this.configure('development', function(){
-    this.set('json spaces', 2);
-  });
-
-  this.configure('production', function(){
+  if (env === 'production') {
     this.enable('view cache');
+  }
+
+  Object.defineProperty(this, 'router', {
+    get: function() {
+      throw new Error('\'app.router\' is deprecated!\nPlease see the 3.x to 4.x migration guide for details on how to update your app.');
+    }
   });
 };
 
 /**
- * Proxy `connect#use()` to apply settings to
- * mounted applications.
+ * lazily adds the base router if it has not yet been added.
+ *
+ * We cannot add the base router in the defaultConfiguration because
+ * it reads app settings which might be set after that has run.
+ *
+ * @api private
+ */
+app.lazyrouter = function() {
+  if (!this._router) {
+    this._router = new Router({
+      caseSensitive: this.enabled('case sensitive routing'),
+      strict: this.enabled('strict routing')
+    });
+
+    this._router.use(query());
+    this._router.use(middleware.init(this));
+  }
+};
+
+/**
+ * Dispatch a req, res pair into the application. Starts pipeline processing.
+ *
+ * If no _done_ callback is provided, then default error handlers will respond
+ * in the event of an error bubbling through the stack.
+ *
+ * @api private
+ */
+
+app.handle = function(req, res, done) {
+  var env = this.get('env');
+
+  this._router.handle(req, res, function(err) {
+    if (done) {
+      return done(err);
+    }
+
+    // unhandled error
+    if (err) {
+      // default to 500
+      if (res.statusCode < 400) res.statusCode = 500;
+      debug('default %s', res.statusCode);
+
+      // respect err.status
+      if (err.status) res.statusCode = err.status;
+
+      // production gets a basic error message
+      var msg = 'production' == env
+        ? http.STATUS_CODES[res.statusCode]
+        : err.stack || err.toString();
+      msg = escapeHtml(msg);
+
+      // log to stderr in a non-test env
+      if ('test' != env) console.error(err.stack || err.toString());
+      if (res.headersSent) return req.socket.destroy();
+      res.setHeader('Content-Type', 'text/html');
+      res.setHeader('Content-Length', Buffer.byteLength(msg));
+      if ('HEAD' == req.method) return res.end();
+      res.end(msg);
+      return;
+    }
+
+    // 404
+    debug('default 404');
+    res.statusCode = 404;
+    res.setHeader('Content-Type', 'text/html');
+    if ('HEAD' == req.method) return res.end();
+    res.end('Cannot ' + escapeHtml(req.method) + ' ' + escapeHtml(req.originalUrl) + '\n');
+  });
+};
+
+/**
+ * Proxy `Router#use()` to add middleware to the app router.
+ * See Router#use() documentation for details.
+ *
+ * If the _fn_ parameter is an express app, then it will be
+ * mounted at the _route_ specified.
  *
  * @param {String|Function|Server} route
  * @param {Function|Server} fn
@@ -102,20 +169,21 @@ app.defaultConfiguration = function(){
  */
 
 app.use = function(route, fn){
-  var app;
+  var mount_app;
 
   // default route to '/'
   if ('string' != typeof route) fn = route, route = '/';
 
   // express app
-  if (fn.handle && fn.set) app = fn;
+  if (fn.handle && fn.set) mount_app = fn;
 
   // restore .app property on req and res
-  if (app) {
-    app.route = route;
+  if (mount_app) {
+    debug('.use app under %s', route);
+    mount_app.mountpath = route;
     fn = function(req, res, next) {
       var orig = req.app;
-      app.handle(req, res, function(err){
+      mount_app.handle(req, res, function(err) {
         req.__proto__ = orig.request;
         res.__proto__ = orig.response;
         next(err);
@@ -123,15 +191,31 @@ app.use = function(route, fn){
     };
   }
 
-  connect.proto.use.call(this, route, fn);
+  this.lazyrouter();
+  this._router.use(route, fn);
 
   // mounted an app
-  if (app) {
-    app.parent = this;
-    app.emit('mount', this);
+  if (mount_app) {
+    mount_app.parent = this;
+    mount_app.emit('mount', this);
   }
 
   return this;
+};
+
+/**
+ * Proxy to the app `Router#route()`
+ * Returns a new `Route` instance for the _path_.
+ *
+ * Routes are isolated middleware stacks for specific paths.
+ * See the Route api docs for details.
+ *
+ * @api public
+ */
+
+app.route = function(path){
+  this.lazyrouter();
+  return this._router.route(path);
 };
 
 /**
@@ -176,30 +260,10 @@ app.engine = function(ext, fn){
 };
 
 /**
- * Map the given param placeholder `name`(s) to the given callback(s).
+ * Proxy to `Router#param()` with one added api feature. The _name_ parameter
+ * can be an array of names.
  *
- * Parameter mapping is used to provide pre-conditions to routes
- * which use normalized placeholders. For example a _:user_id_ parameter
- * could automatically load a user's information from the database without
- * any additional code,
- *
- * The callback uses the same signature as middleware, the only difference
- * being that the value of the placeholder is passed, in this case the _id_
- * of the user. Once the `next()` function is invoked, just like middleware
- * it will continue on to execute the route, or subsequent parameter functions.
- *
- *      app.param('user_id', function(req, res, next, id){
- *        User.find(id, function(err, user){
- *          if (err) {
- *            next(err);
- *          } else if (user) {
- *            req.user = user;
- *            next();
- *          } else {
- *            next(new Error('failed to load user'));
- *          }
- *        });
- *      });
+ * See the Router#param() docs for more details.
  *
  * @param {String|Array} name
  * @param {Function} fn
@@ -208,27 +272,17 @@ app.engine = function(ext, fn){
  */
 
 app.param = function(name, fn){
-  var self = this
-    , fns = [].slice.call(arguments, 1);
+  var self = this;
+  self.lazyrouter();
 
-  // array
   if (Array.isArray(name)) {
-    name.forEach(function(name){
-      fns.forEach(function(fn){
-        self.param(name, fn);
-      });
+    name.forEach(function(key) {
+      self.param(key, fn);
     });
-  // param logic
-  } else if ('function' == typeof name) {
-    this._router.param(name);
-  // single
-  } else {
-    if (':' == name[0]) name = name.substr(1);
-    fns.forEach(function(fn){
-      self._router.param(name, fn);
-    });
+    return this;
   }
 
+  self._router.param(name, fn);
   return this;
 };
 
@@ -242,7 +296,7 @@ app.param = function(name, fn){
  * Mounted servers inherit their parent server's settings.
  *
  * @param {String} setting
- * @param {String} val
+ * @param {*} [val]
  * @return {Server} for chaining
  * @api public
  */
@@ -272,7 +326,7 @@ app.set = function(setting, val){
 
 app.path = function(){
   return this.parent
-    ? this.parent.path() + this.route
+    ? this.parent.path() + this.mountpath
     : '';
 };
 
@@ -339,60 +393,6 @@ app.disable = function(setting){
 };
 
 /**
- * Configure callback for zero or more envs,
- * when no `env` is specified that callback will
- * be invoked for all environments. Any combination
- * can be used multiple times, in any order desired.
- *
- * Examples:
- *
- *    app.configure(function(){
- *      // executed for all envs
- *    });
- *
- *    app.configure('stage', function(){
- *      // executed staging env
- *    });
- *
- *    app.configure('stage', 'production', function(){
- *      // executed for stage and production
- *    });
- *
- * Note:
- *
- *  These callbacks are invoked immediately, and
- *  are effectively sugar for the following:
- *
- *     var env = process.env.NODE_ENV || 'development';
- *
- *      switch (env) {
- *        case 'development':
- *          ...
- *          break;
- *        case 'stage':
- *          ...
- *          break;
- *        case 'production':
- *          ...
- *          break;
- *      }
- *
- * @param {String} env...
- * @param {Function} fn
- * @return {app} for chaining
- * @api public
- */
-
-app.configure = function(env, fn){
-  var envs = 'all'
-    , args = [].slice.call(arguments);
-  fn = args.pop();
-  if (args.length) envs = args;
-  if ('all' == envs || ~envs.indexOf(this.settings.env)) fn.call(this);
-  return this;
-};
-
-/**
  * Delegate `.VERB(...)` calls to `router.VERB(...)`.
  */
 
@@ -400,16 +400,10 @@ methods.forEach(function(method){
   app[method] = function(path){
     if ('get' == method && 1 == arguments.length) return this.set(path);
 
-    // deprecated
-    if (Array.isArray(path)) {
-      console.trace('passing an array to app.VERB() is deprecated and will be removed in 4.0');
-    }
+    this.lazyrouter();
 
-    // if no router attached yet, attach the router
-    if (!this._usedRouter) this.use(this.router);
-
-    // setup route
-    this._router[method].apply(this._router, arguments);
+    var route = this._router.route(path);
+    route[method].apply(route, [].slice.call(arguments, 1));
     return this;
   };
 });
@@ -425,10 +419,14 @@ methods.forEach(function(method){
  */
 
 app.all = function(path){
-  var args = arguments;
+  this.lazyrouter();
+
+  var route = this._router.route(path);
+  var args = [].slice.call(arguments, 1);
   methods.forEach(function(method){
-    app[method].apply(this, args);
-  }, this);
+    route[method].apply(route, args);
+  });
+
   return this;
 };
 
@@ -454,10 +452,10 @@ app.del = app.delete;
  */
 
 app.render = function(name, options, fn){
-  var opts = {}
-    , cache = this.cache
-    , engines = this.engines
-    , view;
+  var opts = {};
+  var cache = this.cache;
+  var engines = this.engines;
+  var view;
 
   // support callback function as second arg
   if ('function' == typeof options) {
@@ -465,13 +463,13 @@ app.render = function(name, options, fn){
   }
 
   // merge app.locals
-  utils.merge(opts, this.locals);
+  mixin(opts, this.locals);
 
   // merge options._locals
-  if (options._locals) utils.merge(opts, options._locals);
+  if (options._locals) mixin(opts, options._locals);
 
   // merge options
-  utils.merge(opts, options);
+  mixin(opts, options);
 
   // set .cache unless explicitly provided
   opts.cache = null == opts.cache

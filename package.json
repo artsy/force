@@ -34,7 +34,12 @@
     "konami-js": "*",
     "redis": "*",
     "connect-flash": "*",
-    "ua-parser": "*"
+    "ua-parser": "*",
+    "body-parser": "*",
+    "cookie-parser": "*",
+    "express-session": "*",
+    "static-favicon": "*",
+    "morgan": "*"
   },
   "devDependencies": {
     "browserify": "*",

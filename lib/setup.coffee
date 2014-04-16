@@ -31,6 +31,11 @@ unsupportedBrowserCheck = require "./middleware/unsupported_browser"
 { notFoundError, loginError } = require('./middleware/errors')
 flash = require 'connect-flash'
 flashMiddleware = require './middleware/flash'
+bodyParser = require 'body-parser'
+cookieParser = require 'cookie-parser'
+session = require 'express-session'
+favicon = require 'static-favicon'
+logger = require 'morgan'
 
 # Setup sharify constants & require dependencies that use sharify data
 sharify.data =
@@ -69,7 +74,6 @@ module.exports = (app) ->
   # Development / Test only middlewares that compile assets, mount antigravity, and
   # allow a back door to log in for tests.
   if "development" is NODE_ENV
-    app.use express.errorHandler()
     app.use require("stylus").middleware
       src: path.resolve(__dirname, "../")
       dest: path.resolve(__dirname, "../public")
@@ -96,9 +100,9 @@ module.exports = (app) ->
     clientId: ARTSY_ID
     clientSecret: ARTSY_SECRET
   ) unless app.get('env') is 'test'
-  app.use express.bodyParser()
-  app.use express.cookieParser()
-  app.use express.cookieSession
+  app.use bodyParser()
+  app.use cookieParser()
+  app.use session
     secret: SESSION_SECRET
     cookie: { domain: COOKIE_DOMAIN }
     key: 'force.sess'
@@ -119,8 +123,8 @@ module.exports = (app) ->
   app.use localsMiddleware
   app.use micrositeMiddleware
   app.use helpersMiddleware
-  app.use express.favicon()
-  app.use express.logger('dev')
+  app.use favicon(path.resolve __dirname, '../pubic/images/favicon.ico')
+  app.use logger('dev')
   app.use unsupportedBrowserCheck
 
   # Mount apps

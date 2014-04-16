@@ -1,15 +1,13 @@
-
 /**
  * Module dependencies.
  */
 
-var http = require('http')
-  , utils = require('./utils')
-  , connect = require('connect')
-  , fresh = require('fresh')
-  , parseRange = require('range-parser')
-  , parse = connect.utils.parseUrl
-  , mime = connect.mime;
+var accepts = require('accepts');
+var typeis = require('type-is');
+var http = require('http');
+var fresh = require('fresh');
+var parseRange = require('range-parser');
+var parse = require('parseurl');
 
 /**
  * Request prototype.
@@ -56,6 +54,8 @@ req.header = function(name){
 };
 
 /**
+ * To do: update docs.
+ *
  * Check if the given `type(s)` is acceptable, returning
  * the best match when true, otherwise `undefined`, in which
  * case you should respond with 406 "Not Acceptable".
@@ -99,9 +99,9 @@ req.header = function(name){
  * @api public
  */
 
-req.accepts = function(type){
-  var args = arguments.length > 1 ? [].slice.apply(arguments) : type;
-  return utils.accepts(args, this.get('Accept'));
+req.accepts = function(){
+  var accept = accepts(this);
+  return accept.types.apply(accept, arguments);
 };
 
 /**
@@ -112,11 +112,15 @@ req.accepts = function(type){
  * @api public
  */
 
-req.acceptsEncoding = function(encoding){
-  return !! ~this.acceptedEncodings.indexOf(encoding);
+req.acceptsEncoding = // backwards compatibility
+req.acceptsEncodings = function(){
+  var accept = accepts(this);
+  return accept.encodings.apply(accept, arguments);
 };
 
 /**
+ * To do: update docs.
+ *
  * Check if the given `charset` is acceptable,
  * otherwise you should respond with 406 "Not Acceptable".
  *
@@ -125,14 +129,15 @@ req.acceptsEncoding = function(encoding){
  * @api public
  */
 
-req.acceptsCharset = function(charset){
-  var accepted = this.acceptedCharsets;
-  return accepted.length
-    ? !! ~accepted.indexOf(charset)
-    : true;
+req.acceptsCharset = // backwards compatibility
+req.acceptsCharsets = function(){
+  var accept = accepts(this);
+  return accept.charsets.apply(accept, arguments);
 };
 
 /**
+ * To do: update docs.
+ *
  * Check if the given `lang` is acceptable,
  * otherwise you should respond with 406 "Not Acceptable".
  *
@@ -141,11 +146,10 @@ req.acceptsCharset = function(charset){
  * @api public
  */
 
-req.acceptsLanguage = function(lang){
-  var accepted = this.acceptedLanguages;
-  return accepted.length
-    ? !! ~accepted.indexOf(lang)
-    : true;
+req.acceptsLanguage = // backwards compatibility
+req.acceptsLanguages = function(){
+  var accept = accepts(this);
+  return accept.languages.apply(accept, arguments);
 };
 
 /**
@@ -175,98 +179,6 @@ req.range = function(size){
 };
 
 /**
- * Return an array of encodings.
- *
- * Examples:
- *
- *     ['gzip', 'deflate']
- *
- * @return {Array}
- * @api public
- */
-
-req.__defineGetter__('acceptedEncodings', function(){
-  var accept = this.get('Accept-Encoding');
-  return accept
-    ? accept.trim().split(/ *, */)
-    : [];
-});
-
-/**
- * Return an array of Accepted media types
- * ordered from highest quality to lowest.
- *
- * Examples:
- *
- *     [ { value: 'application/json',
- *         quality: 1,
- *         type: 'application',
- *         subtype: 'json' },
- *       { value: 'text/html',
- *         quality: 0.5,
- *         type: 'text',
- *         subtype: 'html' } ]
- *
- * @return {Array}
- * @api public
- */
-
-req.__defineGetter__('accepted', function(){
-  var accept = this.get('Accept');
-  return accept
-    ? utils.parseAccept(accept)
-    : [];
-});
-
-/**
- * Return an array of Accepted languages
- * ordered from highest quality to lowest.
- *
- * Examples:
- *
- *     Accept-Language: en;q=.5, en-us
- *     ['en-us', 'en']
- *
- * @return {Array}
- * @api public
- */
-
-req.__defineGetter__('acceptedLanguages', function(){
-  var accept = this.get('Accept-Language');
-  return accept
-    ? utils
-      .parseParams(accept)
-      .map(function(obj){
-        return obj.value;
-      })
-    : [];
-});
-
-/**
- * Return an array of Accepted charsets
- * ordered from highest quality to lowest.
- *
- * Examples:
- *
- *     Accept-Charset: iso-8859-5;q=.2, unicode-1-1;q=0.8
- *     ['unicode-1-1', 'iso-8859-5']
- *
- * @return {Array}
- * @api public
- */
-
-req.__defineGetter__('acceptedCharsets', function(){
-  var accept = this.get('Accept-Charset');
-  return accept
-    ? utils
-      .parseParams(accept)
-      .map(function(obj){
-        return obj.value;
-      })
-    : [];
-});
-
-/**
  * Return the value of param `name` when present or `defaultValue`.
  *
  *  - Checks route placeholders, ex: _/user/:id_
@@ -275,7 +187,7 @@ req.__defineGetter__('acceptedCharsets', function(){
  *
  * To utilize request bodies, `req.body`
  * should be an object. This can be done by using
- * the `connect.bodyParser()` middleware.
+ * the `bodyParser()` middleware.
  *
  * @param {String} name
  * @param {Mixed} [defaultValue]
@@ -319,19 +231,9 @@ req.param = function(name, defaultValue){
  * @api public
  */
 
-req.is = function(type){
-  var ct = this.get('Content-Type');
-  if (!ct) return false;
-  ct = ct.split(';')[0];
-  if (!~type.indexOf('/')) type = mime.lookup(type);
-  if (~type.indexOf('*')) {
-    type = type.split('/');
-    ct = ct.split('/');
-    if ('*' == type[0] && type[1] == ct[1]) return true;
-    if ('*' == type[1] && type[0] == ct[0]) return true;
-    return false;
-  }
-  return !! ~ct.indexOf(type);
+req.is = function(types){
+  if (!Array.isArray(types)) types = [].slice.call(arguments);
+  return typeis(this, types);
 };
 
 /**
@@ -398,36 +300,6 @@ req.__defineGetter__('ips', function(){
   return trustProxy && val
     ? val.split(/ *, */)
     : [];
-});
-
-/**
- * Return basic auth credentials.
- *
- * Examples:
- *
- *    // http://tobi:hello@example.com
- *    req.auth
- *    // => { username: 'tobi', password: 'hello' }
- *
- * @return {Object} or undefined
- * @api public
- */
-
-req.__defineGetter__('auth', function(){
-  // missing
-  var auth = this.get('Authorization');
-  if (!auth) return;
-
-  // malformed
-  var parts = auth.split(' ');
-  if ('basic' != parts[0].toLowerCase()) return;
-  if (!parts[1]) return;
-  auth = parts[1];
-
-  // credentials
-  auth = new Buffer(auth, 'base64').toString().match(/^([^:]*):(.*)$/);
-  if (!auth) return;
-  return { username: auth[1], password: auth[2] };
 });
 
 /**

@@ -2,48 +2,74 @@
  * Module dependencies.
  */
 
-var Route = require('./route')
-  , utils = require('../utils')
-  , methods = require('methods')
-  , debug = require('debug')('express:router')
-  , parse = require('connect').utils.parseUrl;
-
-/**
- * Expose `Router` constructor.
- */
-
-exports = module.exports = Router;
+var Route = require('./route');
+var Layer = require('./layer');
+var methods = require('methods');
+var debug = require('debug')('express:router');
+var parseUrl = require('parseurl');
 
 /**
  * Initialize a new `Router` with the given `options`.
  *
  * @param {Object} options
- * @api private
- */
-
-function Router(options) {
-  options = options || {};
-  var self = this;
-  this.map = {};
-  this.params = {};
-  this._params = [];
-  this.caseSensitive = options.caseSensitive;
-  this.strict = options.strict;
-  this.middleware = function router(req, res, next){
-    self._dispatch(req, res, next);
-  };
-}
-
-/**
- * Register a param callback `fn` for the given `name`.
- *
- * @param {String|Function} name
- * @param {Function} fn
- * @return {Router} for chaining
+ * @return {Router} which is an callable function
  * @api public
  */
 
-Router.prototype.param = function(name, fn){
+var proto = module.exports = function(options) {
+  options = options || {};
+
+  function router(req, res, next) {
+    router.handle(req, res, next);
+  }
+
+  // mixin Router class functions
+  router.__proto__ = proto;
+
+  router.params = {};
+  router._params = [];
+  router.caseSensitive = options.caseSensitive;
+  router.strict = options.strict;
+  router.stack = [];
+
+  return router;
+};
+
+/**
+ * Map the given param placeholder `name`(s) to the given callback.
+ *
+ * Parameter mapping is used to provide pre-conditions to routes
+ * which use normalized placeholders. For example a _:user_id_ parameter
+ * could automatically load a user's information from the database without
+ * any additional code,
+ *
+ * The callback uses the same signature as middleware, the only difference
+ * being that the value of the placeholder is passed, in this case the _id_
+ * of the user. Once the `next()` function is invoked, just like middleware
+ * it will continue on to execute the route, or subsequent parameter functions.
+ *
+ * Just like in middleware, you must either respond to the request or call next
+ * to avoid stalling the request.
+ *
+ *  app.param('user_id', function(req, res, next, id){
+ *    User.find(id, function(err, user){
+ *      if (err) {
+ *        return next(err);
+ *      } else if (!user) {
+ *        return next(new Error('failed to load user'));
+ *      }
+ *      req.user = user;
+ *      next();
+ *    });
+ *  });
+ *
+ * @param {String} name
+ * @param {Function} fn
+ * @return {app} for chaining
+ * @api public
+ */
+
+proto.param = function(name, fn){
   // param logic
   if ('function' == typeof name) {
     this._params.push(name);
@@ -51,9 +77,13 @@ Router.prototype.param = function(name, fn){
   }
 
   // apply param functions
-  var params = this._params
-    , len = params.length
-    , ret;
+  var params = this._params;
+  var len = params.length;
+  var ret;
+
+  if (name[0] === ':') {
+    name = name.substr(1);
+  }
 
   for (var i = 0; i < len; ++i) {
     if (ret = params[i](name, fn)) {
@@ -72,250 +102,282 @@ Router.prototype.param = function(name, fn){
 };
 
 /**
- * Route dispatcher aka the route "middleware".
+ * Dispatch a req, res into the router.
  *
- * @param {IncomingMessage} req
- * @param {ServerResponse} res
- * @param {Function} next
  * @api private
  */
 
-Router.prototype._dispatch = function(req, res, next){
-  var params = this.params
-    , self = this;
+proto.handle = function(req, res, done) {
+  var self = this;
 
-  debug('dispatching %s %s (%s)', req.method, req.url, req.originalUrl);
+  debug('dispatching %s %s', req.method, req.url);
 
-  // route dispatch
-  (function pass(i, err){
-    var paramCallbacks
-      , paramIndex = 0
-      , paramVal
-      , route
-      , keys
-      , key;
+  var method = req.method.toLowerCase();
 
-    // match next route
-    function nextRoute(err) {
-      pass(req._route_index + 1, err);
-    }
+  var search = 1 + req.url.indexOf('?');
+  var pathlength = search ? search - 1 : req.url.length;
+  var fqdn = 1 + req.url.substr(0, pathlength).indexOf('://');
+  var protohost = fqdn ? req.url.substr(0, req.url.indexOf('/', 2 + fqdn)) : '';
+  var idx = 0;
+  var removed = '';
+  var slashAdded = false;
 
-    // match route
-    req.route = route = self.matchRequest(req, i);
+  // store options for OPTIONS request
+  // only used if OPTIONS request
+  var options = [];
 
-    // implied OPTIONS
-    if (!route && 'OPTIONS' == req.method) return self._options(req, res, next);
+  // middleware and routes
+  var stack = self.stack;
 
-    // no route
-    if (!route) return next(err);
-    debug('matched %s %s', route.method, route.path);
+  // for options requests, respond with a default if nothing else responds
+  if (method === 'options') {
+    var old = done;
+    done = function(err) {
+      if (err || options.length === 0) return old(err);
 
-    // we have a route
-    // start at param 0
-    req.params = route.params;
-    keys = route.keys;
-    i = 0;
-
-    // param callbacks
-    function param(err) {
-      paramIndex = 0;
-      key = keys[i++];
-      paramVal = key && req.params[key.name];
-      paramCallbacks = key && params[key.name];
-
-      try {
-        if ('route' == err) {
-          nextRoute();
-        } else if (err) {
-          i = 0;
-          callbacks(err);
-        } else if (paramCallbacks && undefined !== paramVal) {
-          paramCallback();
-        } else if (key) {
-          param();
-        } else {
-          i = 0;
-          callbacks();
-        }
-      } catch (err) {
-        param(err);
-      }
+      var body = options.join(',');
+      return res.set('Allow', body).send(body);
     };
+  }
 
-    param(err);
-
-    // single param callbacks
-    function paramCallback(err) {
-      var fn = paramCallbacks[paramIndex++];
-      if (err || !fn) return param(err);
-      fn(req, res, paramCallback, paramVal, key.name);
+  (function next(err) {
+    if (err === 'route') {
+      err = undefined;
     }
 
-    // invoke route callbacks
-    function callbacks(err) {
-      var fn = route.callbacks[i++];
-      try {
-        if ('route' == err) {
-          nextRoute();
-        } else if (err && fn) {
-          if (fn.length < 4) return callbacks(err);
-          fn(err, req, res, callbacks);
-        } else if (fn) {
-          if (fn.length < 4) return fn(req, res, callbacks);
-          callbacks();
-        } else {
-          nextRoute(err);
+    var layer = stack[idx++];
+    if (!layer) {
+      return done(err);
+    }
+
+    if (slashAdded) {
+      req.url = req.url.substr(1);
+      slashAdded = false;
+    }
+
+    req.url = protohost + removed + req.url.substr(protohost.length);
+    req.originalUrl = req.originalUrl || req.url;
+    removed = '';
+
+    try {
+      var path = parseUrl(req).pathname;
+      if (undefined == path) path = '/';
+
+      if (!layer.match(path)) return next(err);
+
+      // route object and not middleware
+      var route = layer.route;
+
+      // if final route, then we support options
+      if (route) {
+        // we don't run any routes with error first
+        if (err) {
+          return next(err);
         }
-      } catch (err) {
-        callbacks(err);
+
+        req.route = route;
+
+        // we can now dispatch to the route
+        if (method === 'options' && !route.methods['options']) {
+          options.push.apply(options, route._options());
+        }
       }
+
+      req.params = layer.params;
+
+      // this should be done for the layer
+      return self.process_params(layer, req, res, function(err) {
+        if (err) {
+          return next(err);
+        }
+
+        if (route) {
+          return layer.handle(req, res, next);
+        }
+
+        trim_prefix();
+      });
+
+      function trim_prefix() {
+        var c = path[layer.path.length];
+        if (c && '/' != c && '.' != c) return next(err);
+
+        // Trim off the part of the url that matches the route
+        // middleware (.use stuff) needs to have the path stripped
+        debug('trim prefix (%s) from url %s', removed, req.url);
+        removed = layer.path;
+        req.url = protohost + req.url.substr(protohost.length + removed.length);
+
+        // Ensure leading slash
+        if (!fqdn && '/' != req.url[0]) {
+          req.url = '/' + req.url;
+          slashAdded = true;
+        }
+
+        debug('%s %s : %s', layer.handle.name || 'anonymous', layer.path, req.originalUrl);
+        var arity = layer.handle.length;
+        if (err) {
+          if (arity === 4) {
+            layer.handle(err, req, res, next);
+          } else {
+            next(err);
+          }
+        } else if (arity < 4) {
+          layer.handle(req, res, next);
+        } else {
+          next(err);
+        }
+      }
+    } catch (err) {
+      next(err);
     }
-  })(0);
+  })();
 };
 
 /**
- * Respond to __OPTIONS__ method.
+ * Process any parameters for the route.
  *
- * @param {IncomingMessage} req
- * @param {ServerResponse} res
  * @api private
  */
 
-Router.prototype._options = function(req, res, next){
-  var path = parse(req).pathname
-    , body = this._optionsFor(path).join(',');
-  if (!body) return next();
-  res.set('Allow', body).send(body);
-};
+proto.process_params = function(route, req, res, done) {
+  var params = this.params;
 
-/**
- * Return an array of HTTP verbs or "options" for `path`.
- *
- * @param {String} path
- * @return {Array}
- * @api private
- */
+  // captured parameters from the route, keys and values
+  var keys = route.keys;
 
-Router.prototype._optionsFor = function(path){
-  var self = this;
-  return methods.filter(function(method){
-    var routes = self.map[method];
-    if (!routes || 'options' == method) return;
-    for (var i = 0, len = routes.length; i < len; ++i) {
-      if (routes[i].match(path)) return true;
-    }
-  }).map(function(method){
-    return method.toUpperCase();
-  });
-};
-
-/**
- * Attempt to match a route for `req`
- * with optional starting index of `i`
- * defaulting to 0.
- *
- * @param {IncomingMessage} req
- * @param {Number} i
- * @return {Route}
- * @api private
- */
-
-Router.prototype.matchRequest = function(req, i, head){
-  var method = req.method.toLowerCase()
-    , url = parse(req)
-    , path = url.pathname
-    , routes = this.map
-    , i = i || 0
-    , route;
-
-  // HEAD support
-  if (!head && 'head' == method) {
-    route = this.matchRequest(req, i, true);
-    if (route) return route;
-     method = 'get';
+  // fast track
+  if (!keys || keys.length === 0) {
+    return done();
   }
 
-  // routes for this method
-  if (routes = routes[method]) {
+  var i = 0;
+  var paramIndex = 0;
+  var key;
+  var paramVal;
+  var paramCallbacks;
 
-    // matching routes
-    for (var len = routes.length; i < len; ++i) {
-      route = routes[i];
-      if (route.match(path)) {
-        req._route_index = i;
-        return route;
-      }
+  // process params in order
+  // param callbacks can be async
+  function param(err) {
+    if (err) {
+      return done(err);
     }
+
+    if (i >= keys.length ) {
+      return done();
+    }
+
+    paramIndex = 0;
+    key = keys[i++];
+    paramVal = key && req.params[key.name];
+    paramCallbacks = key && params[key.name];
+
+    try {
+      if (paramCallbacks && undefined !== paramVal) {
+        return paramCallback();
+      } else if (key) {
+        return param();
+      }
+    } catch (err) {
+      return done(err);
+    }
+
+    done();
   }
+
+  // single param callbacks
+  function paramCallback(err) {
+    var fn = paramCallbacks[paramIndex++];
+    if (err || !fn) return param(err);
+    fn(req, res, paramCallback, paramVal, key.name);
+  }
+
+  param();
 };
 
 /**
- * Attempt to match a route for `method`
- * and `url` with optional starting
- * index of `i` defaulting to 0.
+ * Use the given middleware function, with optional path, defaulting to "/".
  *
- * @param {String} method
- * @param {String} url
- * @param {Number} i
- * @return {Route}
- * @api private
+ * Use (like `.all`) will run for any http METHOD, but it will not add
+ * handlers for those methods so OPTIONS requests will not consider `.use`
+ * functions even if they could respond.
+ *
+ * The other difference is that _route_ path is stripped and not visible
+ * to the handler function. The main effect of this feature is that mounted
+ * handlers can operate without any code changes regardless of the "prefix"
+ * pathname.
+ *
+ * @param {String|Function} route
+ * @param {Function} fn
+ * @return {app} for chaining
+ * @api public
  */
 
-Router.prototype.match = function(method, url, i, head){
-  var req = { method: method, url: url };
-  return  this.matchRequest(req, i, head);
-};
+proto.use = function(route, fn){
+  // default route to '/'
+  if ('string' != typeof route) {
+    fn = route;
+    route = '/';
+  }
 
-/**
- * Route `method`, `path`, and one or more callbacks.
- *
- * @param {String} method
- * @param {String} path
- * @param {Function} callback...
- * @return {Router} for chaining
- * @api private
- */
-
-Router.prototype.route = function(method, path, callbacks){
-  var method = method.toLowerCase()
-    , callbacks = utils.flatten([].slice.call(arguments, 2));
-
-  // ensure path was given
-  if (!path) throw new Error('Router#' + method + '() requires a path');
-
-  // ensure all callbacks are functions
-  callbacks.forEach(function(fn){
-    if ('function' == typeof fn) return;
+  if (typeof fn !== 'function') {
     var type = {}.toString.call(fn);
-    var msg = '.' + method + '() requires callback functions but got a ' + type;
+    var msg = 'Router.use() requires callback functions but got a ' + type;
     throw new Error(msg);
-  });
+  }
 
-  // create the route
-  debug('defined %s %s', method, path);
-  var route = new Route(method, path, callbacks, {
+  // strip trailing slash
+  if ('/' == route[route.length - 1]) {
+    route = route.slice(0, -1);
+  }
+
+  var layer = new Layer(route, {
     sensitive: this.caseSensitive,
-    strict: this.strict
-  });
+    strict: this.strict,
+    end: false
+  }, fn);
 
-  // add it
-  (this.map[method] = this.map[method] || []).push(route);
+  // add the middleware
+  debug('use %s %s', route || '/', fn.name || 'anonymous');
+
+  this.stack.push(layer);
   return this;
 };
 
-Router.prototype.all = function(path) {
-  var self = this;
-  var args = [].slice.call(arguments);
-  methods.forEach(function(method){
-      self.route.apply(self, [method].concat(args));
-  });
-  return this;
+/**
+ * Create a new Route for the given path.
+ *
+ * Each route contains a separate middleware stack and VERB handlers.
+ *
+ * See the Route api documentation for details on adding handlers
+ * and middleware to routes.
+ *
+ * @param {String} path
+ * @return {Route}
+ * @api public
+ */
+
+proto.route = function(path){
+  var route = new Route(path);
+
+  var layer = new Layer(path, {
+    sensitive: this.caseSensitive,
+    strict: this.strict,
+    end: true
+  }, route.dispatch.bind(route));
+
+  layer.route = route;
+
+  this.stack.push(layer);
+  return route;
 };
 
-methods.forEach(function(method){
-  Router.prototype[method] = function(path){
-    var args = [method].concat([].slice.call(arguments));
-    this.route.apply(this, args);
+// create Router#VERB functions
+methods.concat('all').forEach(function(method){
+  proto[method] = function(path){
+    var route = this.route(path)
+    route[method].apply(route, [].slice.call(arguments, 1));
     return this;
   };
 });
