@@ -536,7 +536,7 @@
     "artsy-passport": {
       "version": "0.1.4",
       "from": "artsy-passport@git://github.com/artsy/artsy-passport.git",
-      "resolved": "git://github.com/artsy/artsy-passport.git#73482915b64bc847dea94ef20b1455ae51d813ea",
+      "resolved": "git://github.com/artsy/artsy-passport.git#654ca633e88f4cd9932fed47a7e19c7f6d96757b",
       "dependencies": {
         "passport": {
           "version": "0.2.0",

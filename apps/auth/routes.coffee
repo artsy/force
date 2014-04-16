@@ -4,9 +4,6 @@ CurrentUser = require '../../models/current_user.coffee'
 { parse } = require 'url'
 qs = require 'querystring'
 
-@submitLogin = (req, res) ->
-  res.send { success: true, error: res.authError, user: req.user?.toJSON() }
-
 @logout = (req, res, next) ->
   req.logout()
   next()
