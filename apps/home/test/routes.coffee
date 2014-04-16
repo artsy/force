@@ -52,6 +52,12 @@ describe 'Home routes', ->
       routes.redirectLoggedInHome @req, @res
       @res.redirect.args[0][0].should.equal '/awesome-fair'
 
+    it 'redirects logged in users to home if they log in from /log_in', ->
+      @req.url = '/log_in'
+      @req.user = {}
+      routes.redirectLoggedInHome @req, @res
+      @res.redirect.args[0][0].should.equal '/'
+
   describe 'cache busting', ->
 
     beforeEach ->

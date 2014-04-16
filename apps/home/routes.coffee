@@ -30,6 +30,7 @@ getRedirectTo = (req) ->
   res.redirect "/sign_up"
 
 @redirectLoggedInHome = (req, res, next) ->
+  req.query['redirect-to'] = '/' if parse(req.url or '').pathname is '/log_in'
   if req.user? then res.redirect getRedirectTo(req) else next()
 
 @bustHeroCache = (req, res, next) ->
