@@ -47,6 +47,7 @@ describe 'ArtworkView', ->
         (resolve __dirname, '../../client/view'),
         ['artistArtworksTemplate', 'detailTemplate']
       )
+      @ArtworkView.__set__ 'analytics', { abTest: sinon.stub(), delta: sinon.stub(), track: { click: sinon.stub() } }
       @ArtworkView.__set__ 'ShareView', (@shareViewStub = sinon.stub())
       @ArtworkView.__set__ 'acquireArtwork', (@acquireArtworkStub = sinon.stub())
       @renderDetailSpy = sinon.spy @ArtworkView::, 'renderDetail'

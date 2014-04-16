@@ -38,6 +38,7 @@ module.exports = class ArtworkView extends Backbone.View
   initialize: (options) ->
     { @artwork, @artist } = options
 
+    @abTestEmbeddedInquiryForm()
     @setupZigZag()
     @setupRelatedPosts()
     @setupCurrentUser()
@@ -74,6 +75,13 @@ module.exports = class ArtworkView extends Backbone.View
     # Re-fetch and update detail
     @artwork.on "change:sale_message", @renderDetail, this
     @artwork.fetch()
+
+  abTestEmbeddedInquiryForm: ->
+    @$('#artwork-detail-contact').show()
+    @$('#artwork-detail-spinner').remove()
+    return unless analytics.abTest 'ab:inquiry:embedded', 0.2
+    ContactView = require '../components/contact/view.coffee'
+    new ContactView el: @$('#artwork-detail-contact'), model: @artwork
 
   setupZigZag: ->
     if ($inquiryButton = @$('.artwork-contact-button, .artwork-inquiry-button').first()).length
