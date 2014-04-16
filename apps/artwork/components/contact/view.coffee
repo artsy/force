@@ -30,12 +30,13 @@ module.exports = class ContactView extends Backbone.View
         message: @$('textarea').val()
         name: @user?.get('name') or @$('[name=name]').val()
         session_id: if @user then undefined else SESSION_ID
-      # complete: =>
-      #   @$('button').removeClass 'is-loading'
+      complete: =>
+        @$('button').removeClass 'is-loading'
       success: =>
         new FlashMessage message: 'Thank you. Your message has been sent.'
       error: (xhr) =>
-        @$('#artwork-contact-form-errors').html JSON.parse(xhr.responseText).error
+        res = JSON.parse(xhr.responseText)
+        @$('#artwork-contact-form-errors').html res.error or res.message or res.toString()
 
   focusTextareaAfterCopy: =>
     val = @$('textarea').val()

@@ -79,7 +79,7 @@ module.exports = class ArtworkView extends Backbone.View
   abTestEmbeddedInquiryForm: ->
     @$('#artwork-detail-contact').show()
     @$('#artwork-detail-spinner').remove()
-    # return unless analytics.abTest 'ab:inquiry:embedded', 0.2
+    return unless analytics.abTest 'ab:inquiry:embedded', 0.2
     ContactView = require '../components/contact/view.coffee'
     new ContactView el: @$('#artwork-detail-contact'), model: @artwork
 
