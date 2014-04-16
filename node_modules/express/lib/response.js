@@ -2,21 +2,20 @@
  * Module dependencies.
  */
 
-var http = require('http')
-  , path = require('path')
-  , connect = require('connect')
-  , utils = connect.utils
-  , sign = require('cookie-signature').sign
-  , normalizeType = require('./utils').normalizeType
-  , normalizeTypes = require('./utils').normalizeTypes
-  , etag = require('./utils').etag
-  , statusCodes = http.STATUS_CODES
-  , cookie = require('cookie')
-  , send = require('send')
-  , mime = connect.mime
-  , resolve = require('url').resolve
-  , basename = path.basename
-  , extname = path.extname;
+var http = require('http');
+var path = require('path');
+var mixin = require('utils-merge');
+var escapeHtml = require('escape-html');
+var sign = require('cookie-signature').sign;
+var normalizeType = require('./utils').normalizeType;
+var normalizeTypes = require('./utils').normalizeTypes;
+var etag = require('./utils').etag;
+var statusCodes = http.STATUS_CODES;
+var cookie = require('cookie');
+var send = require('send');
+var basename = path.basename;
+var extname = path.extname;
+var mime = send.mime;
 
 /**
  * Response prototype.
@@ -107,10 +106,7 @@ res.send = function(body){
       break;
     // string defaulting to html
     case 'string':
-      if (!this.get('Content-Type')) {
-        this.charset = this.charset || 'utf-8';
-        this.type('html');
-      }
+      if (!this.get('Content-Type')) this.type('html');
       break;
     case 'boolean':
     case 'object':
@@ -190,7 +186,6 @@ res.json = function(obj){
   var body = JSON.stringify(obj, replacer, spaces);
 
   // content-type
-  this.charset = this.charset || 'utf-8';
   this.get('Content-Type') || this.set('Content-Type', 'application/json');
 
   return this.send(body);
@@ -234,7 +229,6 @@ res.jsonp = function(obj){
   var callback = this.req.query[app.get('jsonp callback name')];
 
   // content-type
-  this.charset = this.charset || 'utf-8';
   this.set('Content-Type', 'application/json');
 
   // jsonp
@@ -289,11 +283,12 @@ res.jsonp = function(obj){
  */
 
 res.sendfile = function(path, options, fn){
-  var self = this
-    , req = self.req
-    , next = this.req.next
-    , options = options || {}
-    , done;
+  options = options || {};
+  var self = this;
+  var req = self.req;
+  var next = this.req.next;
+  var done;
+
 
   // support function as second arg
   if ('function' == typeof options) {
@@ -311,13 +306,13 @@ res.sendfile = function(path, options, fn){
 
     // clean up
     cleanup();
-    if (!self.headerSent) self.removeHeader('Content-Disposition');
+    if (!self.headersSent) self.removeHeader('Content-Disposition');
 
     // callback available
     if (fn) return fn(err);
 
     // list in limbo if there's no callback
-    if (self.headerSent) return;
+    if (self.headersSent) return;
 
     // delegate
     next(err);
@@ -352,7 +347,7 @@ res.sendfile = function(path, options, fn){
  * Optionally providing an alternate attachment `filename`,
  * and optional callback `fn(err)`. The callback is invoked
  * when the data transfer is complete, or when an error has
- * ocurred. Be sure to check `res.headerSent` if you plan to respond.
+ * ocurred. Be sure to check `res.headersSent` if you plan to respond.
  *
  * This method uses `res.sendfile()`.
  *
@@ -456,8 +451,8 @@ res.type = function(type){
  */
 
 res.format = function(obj){
-  var req = this.req
-    , next = req.next;
+  var req = this.req;
+  var next = req.next;
 
   var fn = obj.default;
   if (fn) delete obj.default;
@@ -468,10 +463,7 @@ res.format = function(obj){
   this.vary("Accept");
 
   if (key) {
-    var type = normalizeType(key).value;
-    var charset = mime.charsets.lookup(type);
-    if (charset) type += '; charset=' + charset;
-    this.set('Content-Type', type);
+    this.set('Content-Type', normalizeType(key).value);
     obj[key](req, this, next);
   } else if (fn) {
     fn();
@@ -524,6 +516,11 @@ res.header = function(field, val){
   if (2 == arguments.length) {
     if (Array.isArray(val)) val = val.map(String);
     else val = String(val);
+    field = field.toLowerCase();
+    if ('content-type' == field && !/;\s*charset\s*=/.test(val)) {
+      var charset = mime.charsets.lookup(val.split(';')[0]);
+      if (charset) val += '; charset=' + charset.toLowerCase();
+    }
     this.setHeader(field, val);
   } else {
     for (var key in field) {
@@ -557,7 +554,7 @@ res.get = function(field){
 res.clearCookie = function(name, options){
   var opts = { expires: new Date(1), path: '/' };
   return this.cookie(name, '', options
-    ? utils.merge(opts, options)
+    ? mixin(opts, options)
     : opts);
 };
 
@@ -585,10 +582,10 @@ res.clearCookie = function(name, options){
  */
 
 res.cookie = function(name, val, options){
-  options = utils.merge({}, options);
+  options = mixin({}, options);
   var secret = this.req.secret;
   var signed = options.signed;
-  if (signed && !secret) throw new Error('connect.cookieParser("secret") required for signed cookies');
+  if (signed && !secret) throw new Error('cookieParser("secret") required for signed cookies');
   if ('number' == typeof val) val = val.toString();
   if ('object' == typeof val) val = 'j:' + JSON.stringify(val);
   if (signed) val = 's:' + sign(val, secret);
@@ -597,7 +594,18 @@ res.cookie = function(name, val, options){
     options.maxAge /= 1000;
   }
   if (null == options.path) options.path = '/';
-  this.set('Set-Cookie', cookie.serialize(name, String(val), options));
+  var headerVal = cookie.serialize(name, String(val), options);
+
+  // supports multiple 'res.cookie' calls by getting previous value
+  var prev = this.get('Set-Cookie');
+  if (prev) {
+    if (Array.isArray(prev)) {
+      headerVal = prev.concat(headerVal);
+    } else {
+      headerVal = [prev, headerVal];
+    }
+  }
+  this.set('Set-Cookie', headerVal);
   return this;
 };
 
@@ -612,46 +620,17 @@ res.cookie = function(name, val, options){
  *
  *    res.location('/foo/bar').;
  *    res.location('http://example.com');
- *    res.location('../login'); // /blog/post/1 -> /blog/login
- *
- * Mounting:
- *
- *   When an application is mounted and `res.location()`
- *   is given a path that does _not_ lead with "/" it becomes
- *   relative to the mount-point. For example if the application
- *   is mounted at "/blog", the following would become "/blog/login".
- *
- *      res.location('login');
- *
- *   While the leading slash would result in a location of "/login":
- *
- *      res.location('/login');
+ *    res.location('../login');
  *
  * @param {String} url
  * @api public
  */
 
 res.location = function(url){
-  var app = this.app
-    , req = this.req
-    , path;
+  var req = this.req;
 
   // "back" is an alias for the referrer
   if ('back' == url) url = req.get('Referrer') || '/';
-
-  // relative
-  if (!~url.indexOf('://') && 0 != url.indexOf('//')) {
-    // relative to path
-    if ('.' == url[0]) {
-      path = req.originalUrl.split('?')[0];
-      path = path + ('/' == path[path.length - 1] ? '' : '/');
-      url = resolve(path, url);
-      // relative to mount-point
-    } else if ('/' != url[0]) {
-      path = app.path();
-      url = path + '/' + url;
-    }
-  }
 
   // Respond
   this.set('Location', url);
@@ -680,9 +659,9 @@ res.location = function(url){
  */
 
 res.redirect = function(url){
-  var head = 'HEAD' == this.req.method
-    , status = 302
-    , body;
+  var head = 'HEAD' == this.req.method;
+  var status = 302;
+  var body;
 
   // allow status / url
   if (2 == arguments.length) {
@@ -705,7 +684,7 @@ res.redirect = function(url){
     },
 
     html: function(){
-      var u = utils.escape(url);
+      var u = escapeHtml(url);
       body = '<p>' + statusCodes[status] + '. Redirecting to <a href="' + u + '">' + u + '</a></p>';
     },
 
@@ -775,10 +754,10 @@ res.vary = function(field){
  */
 
 res.render = function(view, options, fn){
-  var self = this
-    , options = options || {}
-    , req = this.req
-    , app = req.app;
+  options = options || {};
+  var self = this;
+  var req = this.req;
+  var app = req.app;
 
   // support callback function as second arg
   if ('function' == typeof options) {

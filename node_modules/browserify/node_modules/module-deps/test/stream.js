@@ -27,9 +27,9 @@ test('infer path from fs-like streams', function (t) {
     t.plan(2);
     var path = 'foo-path'
     var stream = through();
-
+    
     stream.path = path
-
+    
     var p = parser(stream);
     p.on('error', t.fail.bind(t));
     p.on('data', function(result) {

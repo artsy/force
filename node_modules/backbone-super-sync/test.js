@@ -165,4 +165,26 @@ describe('Backbone Super Sync', function() {
       });
     });
   });
+
+  context('PATCH requests', function() {
+    it('adds the content-length header', function(done) {
+      model.save({ foo: 'bar' }, {
+        patch: true,
+        success: function() {
+          lastRequest.headers['content-length'].should.equal('13');
+          done();
+        }
+      });
+    });
+
+    it('adds the body data', function(done) {
+      model.save({ foo: 'bar' }, {
+        patch: true,
+        success: function() {
+          lastRequest.body.foo.should.equal('bar');
+          done();
+        }
+      });
+    });
+  });
 });

@@ -2,7 +2,7 @@
 
   Fast, unopinionated, minimalist web framework for [node](http://nodejs.org).
 
-  [![Build Status](https://secure.travis-ci.org/visionmedia/express.png)](http://travis-ci.org/visionmedia/express) [![Gittip](http://img.shields.io/gittip/visionmedia.png)](https://www.gittip.com/visionmedia/)
+  [![Build Status](https://secure.travis-ci.org/visionmedia/express.svg)](https://travis-ci.org/visionmedia/express) [![Gittip](https://img.shields.io/gittip/visionmedia.svg)](https://www.gittip.com/visionmedia/)
 
 ```js
 var express = require('express');
@@ -15,17 +15,24 @@ app.get('/', function(req, res){
 app.listen(3000);
 ```
 
+  Note that Express v4 release candidates have been released. 
+  Please try it out, but not in production, and report any issues you may find here or to the appropriate repositories.
+  Be sure to read [Migrating from 3.x to 4.x](https://github.com/visionmedia/express/wiki/Migrating-from-3.x-to-4.x) as well as [New features in 4.x](https://github.com/visionmedia/express/wiki/New-features-in-4.x).
+
 ## Installation
 
-    $ npm install -g express
+    $ npm install express
 
 ## Quick Start
 
- The quickest way to get started with express is to utilize the executable `express(1)` to generate an application as shown below:
+ The quickest way to get started with express is to utilize the executable [`express(1)`](http://github.com/expressjs/generator) to generate an application as shown below:
+ 
+ Install the executable. The executable's major version will match Express's:
+ 
+    $ npm install -g express-generator@3
 
  Create the app:
 
-    $ npm install -g express
     $ express /tmp/foo && cd /tmp/foo
 
  Install dependencies:
@@ -34,11 +41,10 @@ app.listen(3000);
 
  Start the server:
 
-    $ node app
+    $ npm start
 
 ## Features
 
-  * Built on [Connect](http://github.com/senchalabs/connect)
   * Robust routing
   * HTTP helpers (redirection, caching, etc)
   * View system supporting 14+ template engines
@@ -54,9 +60,7 @@ app.listen(3000);
   it a great solution for single page applications, web sites, hybrids, or public
   HTTP APIs.
 
-  Built on Connect, you can use _only_ what you need, and nothing more. Applications
-  can be as big or as small as you like, even a single file. Express does
-  not force you to use any specific ORM or template engine. With support for over
+  Express does not force you to use any specific ORM or template engine. With support for over
   14 template engines via [Consolidate.js](http://github.com/visionmedia/consolidate.js),
   you can quickly craft your perfect framework.
 
@@ -65,7 +69,7 @@ app.listen(3000);
   * [Website and Documentation](http://expressjs.com/) stored at [visionmedia/expressjs.com](https://github.com/visionmedia/expressjs.com)
   * Join #express on freenode
   * [Google Group](http://groups.google.com/group/express-js) for discussion
-  * Follow [tjholowaychuk](http://twitter.com/tjholowaychuk) on twitter for updates
+  * Follow [tjholowaychuk](http://twitter.com/tjholowaychuk) and [defunctzombie](https://twitter.com/defunctzombie) on twitter for updates
   * Visit the [Wiki](http://github.com/visionmedia/express/wiki)
   * [Русскоязычная документация](http://jsman.ru/express/)
   * Run express examples [online](https://runnable.com/express)
@@ -102,25 +106,4 @@ Then run the tests:
 
 ## License
 
-(The MIT License)
-
-Copyright (c) 2009-2012 TJ Holowaychuk &lt;tj@vision-media.ca&gt;
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-'Software'), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+MIT
