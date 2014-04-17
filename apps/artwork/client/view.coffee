@@ -47,6 +47,9 @@ module.exports = class ArtworkView extends Backbone.View
     @setupBelowTheFold()
     @setupMainSaveButton()
 
+    # Track pageview
+    analytics.track.impression 'Artwork page', { id: @artwork.id }
+
     # Handle all related content
     @setupRelatedLayers()
     @on 'related:features', (feature) ->
