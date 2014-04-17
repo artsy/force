@@ -7,7 +7,10 @@ if artwork.isContactable()
       input.bordered-input( placeholder='Your full name' autofocus='autofocus' name='name' )
       input.bordered-input( placeholder='Your email address' name='email' )
     textarea.bordered-input( rows=5 )
-      | Hello, I'm interested in this work by #{artwork.get('artist').name}. Please confirm availability and pricing of this work.&nbsp;
+      | Hello, I'm interested in this work
+      if artwork.get('artist')
+        | &nbsp;by #{artwork.get('artist').name}
+      |. Please confirm availability and pricing of this work.&nbsp;
     if user
       p From: #{user.get('name')}
     #artwork-contact-form-errors
