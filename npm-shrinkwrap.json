@@ -78,7 +78,7 @@
         },
         "utils-merge": {
           "version": "1.0.0",
-          "from": "utils-merge@1.x.x"
+          "from": "utils-merge@1.0.0"
         },
         "escape-html": {
           "version": "1.0.1",
@@ -114,8 +114,7 @@
         },
         "path-to-regexp": {
           "version": "0.1.2",
-          "from": "path-to-regexp@0.1.2",
-          "resolved": "https://registry.npmjs.org/path-to-regexp/-/path-to-regexp-0.1.2.tgz"
+          "from": "path-to-regexp@0.1.2"
         },
         "debug": {
           "version": "0.8.0",
@@ -561,7 +560,6 @@
                     "readable-stream": {
                       "version": "1.1.13-1",
                       "from": "readable-stream@~1.1.9",
-                      "resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-1.1.13-1.tgz",
                       "dependencies": {
                         "core-util-is": {
                           "version": "1.0.1",
