@@ -37,7 +37,7 @@
     "ua-parser": "*",
     "body-parser": "*",
     "cookie-parser": "*",
-    "express-session": "*",
+    "cookie-session": "*",
     "static-favicon": "*",
     "morgan": "*"
   },

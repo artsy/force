@@ -33,7 +33,7 @@ flash = require 'connect-flash'
 flashMiddleware = require './middleware/flash'
 bodyParser = require 'body-parser'
 cookieParser = require 'cookie-parser'
-session = require 'express-session'
+session = require 'cookie-session'
 favicon = require 'static-favicon'
 logger = require 'morgan'
 
@@ -105,8 +105,6 @@ module.exports = (app) ->
   app.use session
     secret: SESSION_SECRET
     domain: COOKIE_DOMAIN
-    maxage: (1000 * 60 * 60 * 24 * 365) # 1 Year
-    secureProxy: true
     key: 'force.sess'
   app.use artsyPassport _.extend config,
     CurrentUser: CurrentUser

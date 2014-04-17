@@ -757,33 +757,26 @@
         }
       }
     },
-    "express-session": {
-      "version": "1.0.2",
-      "from": "express-session@*",
+    "cookie-session": {
+      "version": "1.0.1",
+      "from": "cookie-session@*",
+      "resolved": "https://registry.npmjs.org/cookie-session/-/cookie-session-1.0.1.tgz",
       "dependencies": {
-        "utils-merge": {
-          "version": "1.0.0",
-          "from": "utils-merge@1.0.0"
-        },
-        "cookie": {
-          "version": "0.1.0",
-          "from": "cookie@0.1.0"
-        },
-        "cookie-signature": {
-          "version": "1.0.3",
-          "from": "cookie-signature@1.0.3"
-        },
-        "uid2": {
-          "version": "0.0.3",
-          "from": "uid2@0.0.3"
-        },
-        "buffer-crc32": {
-          "version": "0.2.1",
-          "from": "buffer-crc32@0.2.1"
+        "cookies": {
+          "version": "0.4.0",
+          "from": "cookies@~0.4.0",
+          "resolved": "https://registry.npmjs.org/cookies/-/cookies-0.4.0.tgz",
+          "dependencies": {
+            "keygrip": {
+              "version": "1.0.0",
+              "from": "keygrip@~1.0.0",
+              "resolved": "https://registry.npmjs.org/keygrip/-/keygrip-1.0.0.tgz"
+            }
+          }
         },
         "debug": {
-          "version": "0.7.4",
-          "from": "debug@0.7.4"
+          "version": "0.8.0",
+          "from": "debug@>= 0.7.3 < 1"
         }
       }
     },
