@@ -105,6 +105,8 @@ module.exports = (app) ->
   app.use session
     secret: SESSION_SECRET
     domain: COOKIE_DOMAIN
+    maxage: (1000 * 60 * 60 * 24 * 365) # 1 Year
+    secureProxy: true
     key: 'force.sess'
   app.use artsyPassport _.extend config,
     CurrentUser: CurrentUser
