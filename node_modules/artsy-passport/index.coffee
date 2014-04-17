@@ -71,9 +71,9 @@ localAuth = (req, res, next) ->
 afterLocalAuth = (req, res ,next) ->
   if res.authError
     res.send 403, { success: false, error: res.authError }
-  else if req.accepts('application/json') and req.user?
+  else if req.xhr and req.user?
     res.send { success: true, user: req.user.toJSON() }
-  else if req.accepts('application/json') and not req.user?
+  else if req.xhr and not req.user?
     res.send { success: false, error: "Missing user." }
   else
     next()

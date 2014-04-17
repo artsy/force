@@ -104,7 +104,7 @@ module.exports = (app) ->
   app.use cookieParser()
   app.use session
     secret: SESSION_SECRET
-    cookie: { domain: COOKIE_DOMAIN }
+    domain: COOKIE_DOMAIN
     key: 'force.sess'
   app.use artsyPassport _.extend config,
     CurrentUser: CurrentUser
