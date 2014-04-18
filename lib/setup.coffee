@@ -8,7 +8,7 @@
   FACEBOOK_APP_NAMESPACE, MOBILE_MEDIA_QUERY, MOBILE_URL, APP_URL, REDIS_URL, DEFAULT_CACHE_TIME,
   CANONICAL_MOBILE_URL, IMAGES_URL_PREFIX, SECURE_IMAGES_URL, GOOGLE_ANALYTICS_ID, MIXPANEL_ID,
   COOKIE_DOMAIN, AUTO_GRAVITY_LOGIN, GOOGLE_MAPS_API_KEY, ADMIN_URL, CMS_URL,
-  DELTA_HOST } = config = require "../config"
+  DELTA_HOST, ENABLE_AB_TEST } = config = require "../config"
 { parse, format } = require 'url'
 
 _ = require 'underscore'
@@ -59,6 +59,7 @@ sharify.data =
   ADMIN_URL: ADMIN_URL
   CMS_URL: CMS_URL
   DELTA_HOST: DELTA_HOST
+  ENABLE_AB_TEST: ENABLE_AB_TEST
 CurrentUser = require '../models/current_user'
 
 module.exports = (app) ->

@@ -98,11 +98,18 @@ describe 'analytics', ->
       it 'returns true if enabled', ->
         rewiredAnalytics mixpanel: @mixpanelStub, ga: @gaStub, location: { pathname: 'foobar' }
         rewiredAnalytics.getProperty = -> 'enabled'
+        rewiredAnalytics.__set__ 'sd', { ENABLE_AB_TEST: true }
         rewiredAnalytics.abTest('foo').should.be.ok
 
       it 'returns false if disabled', ->
         rewiredAnalytics mixpanel: @mixpanelStub, ga: @gaStub, location: { pathname: 'foobar' }
         rewiredAnalytics.getProperty = -> 'disabled'
+        rewiredAnalytics.__set__ 'sd', { ENABLE_AB_TEST: true }
+        rewiredAnalytics.abTest('foo').should.not.be.ok
+
+      it 'returns false if ab test is not enabled', ->
+        rewiredAnalytics mixpanel: @mixpanelStub, ga: @gaStub, location: { pathname: 'foobar' }
+        rewiredAnalytics.__set__ 'sd', { ENABLE_AB_TEST: false }
         rewiredAnalytics.abTest('foo').should.not.be.ok
 
     describe '#delta', ->

@@ -113,6 +113,8 @@ module.exports.setProperty = (hash) =>
 # @param {Number} percentToNew What percent of users do you want to direct to the new feature?
 
 module.exports.abTest = (key, percentToNew = 0.5) ->
+  return false unless sd.ENABLE_AB_TEST
+
   property = module.exports.getProperty key
   if property is 'enabled'
     true
