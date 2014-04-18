@@ -14,14 +14,14 @@ if artwork.isContactable()
     .artwork-contact-button
       button.avant-garde-button-black Request Info
 
+//- Buy
+if artwork.get('acquireable')
+  a.avant-garde-button-black.artwork-buy-button.artwork-contact-buy-button
+    | Buy
+
 //- Contact a specialist link
 if artwork.get('inquireable')
   p Questions? We are here to help.
   .artwork-inquiry-button
     a( href="/artwork/#{artwork.id}/inquire" data-client rel='nofollow' )
       | Ask an Artsy Specialist
-
-//- Buy
-if artwork.get('acquireable')
-  a.avant-garde-button-black.artwork-buy-button
-    | Buy
