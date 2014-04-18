@@ -22,6 +22,7 @@ backboneCacheSync = require 'backbone-cache-sync'
 redirectMobile = require './middleware/redirect_mobile'
 proxyGravity = require './middleware/proxy_to_gravity'
 proxyReflection = require './middleware/proxy_to_reflection'
+proxySitemaps = require './middleware/proxy_sitemaps'
 localsMiddleware = require './middleware/locals'
 micrositeMiddleware = require './middleware/microsite'
 helpersMiddleware = require './middleware/helpers'
@@ -113,6 +114,7 @@ module.exports = (app) ->
   # Proxy / redirect requests before they even have to deal with Force routing
   # (This must be after the auth middleware to be able to proxy auth routes)
   app.use proxyGravity.app
+  app.use proxySitemaps.app
   app.use redirectMobile
   app.use proxyReflection
   app.use ensureSSL
@@ -173,7 +175,7 @@ module.exports = (app) ->
   # Static files middleware
   app.use express.static(path.resolve __dirname, "../public")
 
-  # Finally 404 and error handling middleware when the request wasn't handeled
+  # Finally 404 and error handling middleware when the request wasn't handled
   # successfully by anything above.
   app.use errorHandler.pageNotFound
   app.use '/users/sign_in', loginError
