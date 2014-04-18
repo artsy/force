@@ -11,9 +11,7 @@ express = require 'express'
 
 app = module.exports.app = express()
 
-ROUTES = [
-  '/oauth2*', '/sitemap*'
-]
+ROUTES = [ '/oauth2*' ]
 AUTH_ROUTES = [ '/post' ]
 for route in ROUTES
   app.all route, (req, res) ->
