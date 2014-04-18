@@ -109,21 +109,14 @@ function Agent(options) {
           self.removeSocket(socket, options);
           freeSockets.push(socket);
 
-          // Avoid duplicate timeout events by removing timeout listeners set
-          // on socket by previous requests. node does not do this normally
-          // because it assumes sockets are too short-lived for it to matter.
-          // It becomes a problem when sockets are being reused. Fixed sometime
-          // around Node 0.10.0.
-          //
-          // See https://github.com/joyent/node/commit/451ff1540
-          if (self.keepAliveTimeoutMsecs &&
-              socket._events &&
-              Array.isArray(socket._events.timeout)) {
-            socket.removeAllListeners('timeout');
-            // Restore the socket's setTimeout() that was remove as collateral
-            // damage.
-            socket.setTimeout(self.keepAliveTimeoutMsecs, socket._reapTimeout);
+          // set timeout on idle sockets
+          if (options.keepAliveTimeoutMsecs !== undefined) {
+            socket._yakaa_timeout = setTimeout(function () {
+              self.emit('yakaa_destroy');
+              socket.destroySoon();
+            }, options.keepAliveTimeoutMsecs);
           }
+
         }
       } else {
         self.removeSocket(socket, options);
@@ -183,6 +176,12 @@ Agent.prototype.addRequest = function(req, options) {
     var socket = this.freeSockets[name].shift();
     debug('have free socket');
 
+    // mark socket as non-idle so it doesn't get destroyed mid-request
+    if (socket._yakaa_timeout) {
+      clearTimeout(socket._yakaa_timeout);
+      delete socket._yakaa_timeout;
+    }
+
     // don't leak
     if (!this.freeSockets[name].length)
       delete this.freeSockets[name];
@@ -235,15 +234,6 @@ Agent.prototype.createSocket = function(req, options) {
   this.sockets[name].push(s);
   debug('sockets', name, this.sockets[name].length);
 
-  if (options.keepAliveTimeoutMsecs) {
-    s._reapTimeout = function () {
-      debug('_reapTimeout, socket destroy()');
-      s.destroy();
-      self.removeSocket(s, options);
-    };
-    s.setTimeout(options.keepAliveTimeoutMsecs, s._reapTimeout);
-  }
-
   function onFree() {
     self.emit('free', s, options);
   }
@@ -276,6 +266,8 @@ Agent.prototype.removeSocket = function(s, options) {
   var name = this.getName(options);
   debug('removeSocket', name, 'destroyed:', s.destroyed);
   var sets = [this.sockets];
+
+  this.emit('yakaa_remove', s);
 
   // If the socket was destroyed, remove it from the free buffers too.
   if (s.destroyed)

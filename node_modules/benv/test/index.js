@@ -1,10 +1,6 @@
 var benv = require('../');
 var should = require('should');
 
-afterEach(function() {
-  benv.teardown();
-});
-
 describe('benv.setup', function() {
 
   it('exposes browser globals', function(done) {
@@ -43,6 +39,34 @@ describe('benv.teardown', function() {
       done();
     });
   });
+});
+
+describe('benv.teardown retaining the document', function() {
+
+  beforeEach(function(done) {
+    benv.setup(function(){
+      benv.expose({
+        $: require('./libs/jquery.js')
+      });
+      done();
+    });
+  });
+
+  afterEach(function() {
+    benv.teardown(false);
+  });
+
+  it('add html to the body', function(done) {
+    $('body').html('You guys do great work');
+    document.getElementsByTagName('body')[0].innerHTML.should.equal($('body').html());
+    done();
+  });
+
+  it('previous document still intact', function(done) {
+    document.getElementsByTagName('body')[0].innerHTML.should.equal($('body').html());
+    done();
+  });
+
 });
 
 describe('benv.require', function() {

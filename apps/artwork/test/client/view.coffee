@@ -47,6 +47,7 @@ describe 'ArtworkView', ->
         (resolve __dirname, '../../client/view'),
         ['artistArtworksTemplate', 'detailTemplate']
       )
+      @ArtworkView.__set__ 'analytics', { abTest: sinon.stub(), delta: sinon.stub(), track: { click: sinon.stub() } }
       @ArtworkView.__set__ 'ShareView', (@shareViewStub = sinon.stub())
       @ArtworkView.__set__ 'acquireArtwork', (@acquireArtworkStub = sinon.stub())
       @renderDetailSpy = sinon.spy @ArtworkView::, 'renderDetail'
@@ -60,6 +61,7 @@ describe 'ArtworkView', ->
   describe 'user logged in', ->
     beforeEach ->
       @ArtworkView.__set__ 'CurrentUser', { orNull: -> new CurrentUser(fabricate 'user') }
+      @ArtworkView.__set__ 'analytics', { track: { impression: (->), click: (->) } , abTest: -> }
       @view = new @ArtworkView el: $('#artwork-page'), artist: @artist, artwork: @artwork
 
     describe 'when an artwork changes', ->
@@ -193,6 +195,7 @@ describe 'ArtworkView', ->
   describe 'user logged out', ->
     beforeEach ->
       @ArtworkView.__set__ 'CurrentUser', { orNull: -> null }
+      @ArtworkView.__set__ 'analytics', { track: { impression: (->), click: (->) } , abTest: -> }
       @view = new @ArtworkView el: $('#artwork-page'), artist: @artist, artwork: @artwork
 
     describe '#initialize', ->

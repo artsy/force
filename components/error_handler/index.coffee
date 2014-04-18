@@ -58,5 +58,9 @@ errorHandler.socialAuthError = (err, req, res, next) ->
     res.redirect '/log_in?error=account-not-found'
   else if err.toString().match('twitter denied')
     res.redirect '/log_in?error=twitter-denied'
+  else if err.toString().match("Another Account Already Linked: Twitter")
+    res.redirect '/user/edit?error=twitter-already-linked'
+  else if err.toString().match("Another Account Already Linked: Facebook")
+    res.redirect '/user/edit?error=facebook-already-linked'
   else
     res.redirect '/log_in?error=' + err.toString()

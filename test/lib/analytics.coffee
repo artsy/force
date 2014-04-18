@@ -70,13 +70,26 @@ describe 'analytics', ->
         rewiredAnalytics.track.click 'Did something', { label: rewiredAnalytics.modelNameAndIdToLabel('artwork', model.get('id')) }
 
         @gaStub.args[2][0].should.equal 'send'
-        @gaStub.args[2][1].should.equal 'event'
-        @gaStub.args[2][2].should.equal 'UI Interactions'
-        @gaStub.args[2][3].should.equal 'Did something'
-        @gaStub.args[2][4].should.equal 'Artwork:123'
+        @gaStub.args[2][1].hitType.should.equal 'event'
+        @gaStub.args[2][1].eventCategory.should.equal 'UI Interactions'
+        @gaStub.args[2][1].eventAction.should.equal 'Did something'
+        @gaStub.args[2][1].nonInteraction.should.equal 0
 
         @mixpanelStub.track.args[0][0].should.equal 'Did something'
         @mixpanelStub.track.args[0][1].label.should.equal 'Artwork:123'
+
+      it 'sends funnel tracking info to both ga and mixpanel', ->
+        model = new Artwork(id: '123')
+        rewiredAnalytics.track.funnel 'Did something', { label: 'cool label' }
+
+        @gaStub.args[2][0].should.equal 'send'
+        @gaStub.args[2][1].hitType.should.equal 'event'
+        @gaStub.args[2][1].eventCategory.should.equal 'Funnel Progressions'
+        @gaStub.args[2][1].eventAction.should.equal 'Did something'
+        @gaStub.args[2][1].nonInteraction.should.equal 1
+
+        @mixpanelStub.track.args[0][0].should.equal 'Did something'
+        @mixpanelStub.track.args[0][1].label.should.equal 'cool label'
 
     describe '#multi', ->
 
@@ -98,11 +111,18 @@ describe 'analytics', ->
       it 'returns true if enabled', ->
         rewiredAnalytics mixpanel: @mixpanelStub, ga: @gaStub, location: { pathname: 'foobar' }
         rewiredAnalytics.getProperty = -> 'enabled'
+        rewiredAnalytics.__set__ 'sd', { ENABLE_AB_TEST: true }
         rewiredAnalytics.abTest('foo').should.be.ok
 
       it 'returns false if disabled', ->
         rewiredAnalytics mixpanel: @mixpanelStub, ga: @gaStub, location: { pathname: 'foobar' }
         rewiredAnalytics.getProperty = -> 'disabled'
+        rewiredAnalytics.__set__ 'sd', { ENABLE_AB_TEST: true }
+        rewiredAnalytics.abTest('foo').should.not.be.ok
+
+      it 'returns false if ab test is not enabled', ->
+        rewiredAnalytics mixpanel: @mixpanelStub, ga: @gaStub, location: { pathname: 'foobar' }
+        rewiredAnalytics.__set__ 'sd', { ENABLE_AB_TEST: false }
         rewiredAnalytics.abTest('foo').should.not.be.ok
 
     describe '#delta', ->

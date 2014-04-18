@@ -8,7 +8,7 @@
   FACEBOOK_APP_NAMESPACE, MOBILE_MEDIA_QUERY, MOBILE_URL, APP_URL, REDIS_URL, DEFAULT_CACHE_TIME,
   CANONICAL_MOBILE_URL, IMAGES_URL_PREFIX, SECURE_IMAGES_URL, GOOGLE_ANALYTICS_ID, MIXPANEL_ID,
   COOKIE_DOMAIN, AUTO_GRAVITY_LOGIN, GOOGLE_MAPS_API_KEY, ADMIN_URL, CMS_URL,
-  DELTA_HOST } = config = require "../config"
+  DELTA_HOST, ENABLE_AB_TEST } = config = require "../config"
 { parse, format } = require 'url'
 
 _ = require 'underscore'
@@ -22,6 +22,7 @@ backboneCacheSync = require 'backbone-cache-sync'
 redirectMobile = require './middleware/redirect_mobile'
 proxyGravity = require './middleware/proxy_to_gravity'
 proxyReflection = require './middleware/proxy_to_reflection'
+proxySitemaps = require './middleware/proxy_sitemaps'
 localsMiddleware = require './middleware/locals'
 micrositeMiddleware = require './middleware/microsite'
 helpersMiddleware = require './middleware/helpers'
@@ -31,6 +32,11 @@ unsupportedBrowserCheck = require "./middleware/unsupported_browser"
 { notFoundError, loginError } = require('./middleware/errors')
 flash = require 'connect-flash'
 flashMiddleware = require './middleware/flash'
+bodyParser = require 'body-parser'
+cookieParser = require 'cookie-parser'
+session = require 'cookie-session'
+favicon = require 'static-favicon'
+logger = require 'morgan'
 
 # Setup sharify constants & require dependencies that use sharify data
 sharify.data =
@@ -53,6 +59,7 @@ sharify.data =
   ADMIN_URL: ADMIN_URL
   CMS_URL: CMS_URL
   DELTA_HOST: DELTA_HOST
+  ENABLE_AB_TEST: ENABLE_AB_TEST
 CurrentUser = require '../models/current_user'
 
 module.exports = (app) ->
@@ -69,7 +76,6 @@ module.exports = (app) ->
   # Development / Test only middlewares that compile assets, mount antigravity, and
   # allow a back door to log in for tests.
   if "development" is NODE_ENV
-    app.use express.errorHandler()
     app.use require("stylus").middleware
       src: path.resolve(__dirname, "../")
       dest: path.resolve(__dirname, "../public")
@@ -96,11 +102,11 @@ module.exports = (app) ->
     clientId: ARTSY_ID
     clientSecret: ARTSY_SECRET
   ) unless app.get('env') is 'test'
-  app.use express.bodyParser()
-  app.use express.cookieParser()
-  app.use express.cookieSession
+  app.use bodyParser()
+  app.use cookieParser()
+  app.use session
     secret: SESSION_SECRET
-    cookie: { domain: COOKIE_DOMAIN }
+    domain: COOKIE_DOMAIN
     key: 'force.sess'
   app.use artsyPassport _.extend config,
     CurrentUser: CurrentUser
@@ -109,6 +115,7 @@ module.exports = (app) ->
   # Proxy / redirect requests before they even have to deal with Force routing
   # (This must be after the auth middleware to be able to proxy auth routes)
   app.use proxyGravity.app
+  app.use proxySitemaps.app
   app.use redirectMobile
   app.use proxyReflection
   app.use ensureSSL
@@ -119,8 +126,8 @@ module.exports = (app) ->
   app.use localsMiddleware
   app.use micrositeMiddleware
   app.use helpersMiddleware
-  app.use express.favicon()
-  app.use express.logger('dev')
+  app.use favicon(path.resolve __dirname, '../pubic/images/favicon.ico')
+  app.use logger('dev')
   app.use unsupportedBrowserCheck
 
   # Mount apps
@@ -169,7 +176,7 @@ module.exports = (app) ->
   # Static files middleware
   app.use express.static(path.resolve __dirname, "../public")
 
-  # Finally 404 and error handling middleware when the request wasn't handeled
+  # Finally 404 and error handling middleware when the request wasn't handled
   # successfully by anything above.
   app.use errorHandler.pageNotFound
   app.use '/users/sign_in', loginError

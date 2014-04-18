@@ -45,7 +45,7 @@ ConcatStream.prototype.inferEncoding = function (buff) {
   var firstBuffer = buff || this.body[0]
   if (!firstBuffer) return 'buffer'
   if (Buffer.isBuffer(firstBuffer)) return 'buffer'
-  if (firstBuffer instanceof Uint8Array) return 'uint8array'
+  if (typeof Uint8Array !== 'undefined' && firstBuffer instanceof Uint8Array) return 'uint8array'
   if (Array.isArray(firstBuffer)) return 'array'
   if (typeof firstBuffer === 'string') return 'string'
   if (Object.prototype.toString.call(firstBuffer) === "[object Object]") return 'object'

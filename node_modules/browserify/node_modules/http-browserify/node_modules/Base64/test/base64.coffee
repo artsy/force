@@ -1,6 +1,6 @@
 assert = require 'assert'
 
-{btoa, atob} = require '../base64'
+{btoa, atob} = require '..'
 
 
 describe 'Base64.js', ->

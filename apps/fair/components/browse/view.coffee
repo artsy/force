@@ -101,7 +101,9 @@ module.exports = class FairBrowseView extends Backbone.View
 
   # Safari does not re-render when a data attribute on an element has changed so we manually trigger a reflow
   triggerReflow: =>
+    top = $(window).scrollTop()
     @$el.css display: 'none'
     # no need to store this anywhere, the reference is enough to trigger a reflow
     @$el.offset().height
     @$el.css display: 'block'
+    $(window).scrollTop top

@@ -5,7 +5,8 @@ METHOD_MAP = {
   'create': 'post',
   'update': 'put',
   'delete': 'del',
-  'read': 'get'
+  'read': 'get',
+  'patch': 'patch'
 };
 
 module.exports = function(method, model, options) {

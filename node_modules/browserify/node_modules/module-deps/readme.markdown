@@ -88,6 +88,9 @@ this for large dependencies like jquery or threejs which take forever to parse.
 * opts.packageCache - an object mapping filenames to their parent package.json
 contents for browser fields, main entries, and transforms
 
+* opts.paths - array of global paths to search. Defaults to splitting on `':'`
+in `process.env.NODE_PATH`
+
 # events
 
 ## d.on('transform', function (tr, file) {})

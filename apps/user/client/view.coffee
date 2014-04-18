@@ -48,6 +48,17 @@ module.exports.UserSettingsView = class UserSettingsView extends Backbone.View
 
     @$el.addClass 'is-loaded'
 
+    # Render generic errors like when FB/Twitter OAuth has a problem.
+    @renderGenericErrors()
+
+  renderGenericErrors: ->
+    support = " Please contact <a href='mailto:support@artsymail.com'>support@artsymail.com</a> for help."
+    @$('#settings-generic-error').html (
+      if location.search.match 'twitter-already-linked'
+        "Twitter account already linked to another Artsy user." + support
+      else if location.search.match 'facebook-already-linked'
+        "Facebook account already linked to another Artsy user." + support
+    )
 
   renderSuccess: ->
     $('html,body').animate scrollTop: 0

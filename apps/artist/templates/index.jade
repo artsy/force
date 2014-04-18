@@ -35,11 +35,14 @@ block body
           | See all auction results for #{artist.get('name')}
 
     .artist-related-section
+      #artist-related-shows.related-shows
+        //- Rendered client-side
+
       h3.avant-garde-header-center Related Artists
-      #artist-related-artists.main-layout-container
+      #artist-related-artists
         //- Rendered client-side
 
     .artist-related-section
       h3.avant-garde-header-center Related Contemporary
-      #artist-related-contemporary.main-layout-container
+      #artist-related-contemporary
         //- Rendered client-side
