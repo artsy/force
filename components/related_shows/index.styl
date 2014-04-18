@@ -1,0 +1,67 @@
+@import '../components/stylus_lib'
+
+hoverable-image()
+  background-color black
+  img
+    width 100%
+    transition opacity 0.5s
+    &:hover
+      opacity 0.5
+
+.related-shows
+  display none
+  opacity 0
+  transition opacity 0.5s
+  text-align center
+  &.is-fade-in
+    opacity 1
+
+// Large featured show
+.related-show-featured
+  display table
+  width 100%
+  margin 20px 0
+  a
+    text-decoration none
+.rsf-image
+.rsf-metadata
+  display table-cell
+  vertical-align middle
+  text-align center
+.rsf-image
+  width 55%
+  hoverable-image()
+.rsf-metadata
+  width 45%
+  padding 20px
+.rsf-partner-name
+  margin 0
+  font-size 13px
+.rsf-name
+  font-size 36px
+  line-height 1.2
+  margin 20px 0
+
+// Small thumbnailed shows
+.related-show
+  display inline-block
+  width calc('25% - 20px')
+  margin 0 10px 20px 10px
+  vertical-align top
+  a
+    text-decoration none
+.rsr-image
+  hoverable-image()
+  display block
+  margin-bottom 20px
+.rsr-name
+  font-style italic
+  font-size 24px
+  overflow ellipsis
+  margin 5px 0
+.rsr-partner-name
+  font-size 13px
+  overflow ellipsis
+.rsr-timeframe
+  font-size 18px
+  overflow ellipsis
