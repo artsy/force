@@ -13,6 +13,7 @@ ShareView                     = require '../../../components/share/view.coffee'
 BorderedPulldown              = require '../../../components/bordered_pulldown/view.coffee'
 RelatedAuctionResultsView     = require '../../../components/related_auction_results/view.coffee'
 { Following, FollowButton }   = require '../../../components/follow_button/index.coffee'
+RelatedShowsView              = require '../../../components/related_shows/view.coffee'
 
 artistSort = -> require('../templates/sort.jade') arguments...
 
@@ -28,6 +29,7 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     @setupFollowButton()
     @setupArtworks()
     @setupRelatedArtists()
+    @setupRelatedShows()
     @setupRelatedPosts()
     @setupShareButtons()
     @setupAuctionResults()
@@ -64,6 +66,12 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
         lineCount      : 5
         el             : $blurb
       $blurb.css maxHeight: 'none'
+
+  setupRelatedShows: ->
+    new RelatedShowsView
+      collection : @model.relatedShows
+      model      : @model
+      el         : @$('#artist-related-shows')
 
   setupRelatedGenes: ->
     new RelatedGenesView
