@@ -48,14 +48,13 @@ module.exports.track =
   _.reduce(Object.keys(categories), (memo, kind) ->
     memo[kind] = (description, options={}) ->
 
-      # Send mixpanel event
+      # Format and Send mixpanel event
       unless typeof mixpanel is 'undefined'
         options.category  = categories[kind] || categories.other
 
         _.defaults options,
           queryString: window?.location.search
           page: window?.location.pathname
-          noninteraction: true
 
         if sd.CURRENT_USER?.id
           options.user_id = sd.CURRENT_USER.id
@@ -63,7 +62,13 @@ module.exports.track =
         mixpanel.track? description, options
 
       # Send google analytics event
-      ga? 'send', 'event', options.category, description, options.label
+      ga? 'send', {
+        hitType: 'event'
+        eventCategory: options.category
+        eventAction: description
+        eventLabel: options.label
+        nonInteraction: (if options.category == 'Funnel Progressions' then 1 else 0)
+      }
     memo
   , {})
 
