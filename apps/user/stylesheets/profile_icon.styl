@@ -1,0 +1,110 @@
+.settings-profile-icon-upload
+  margin 10px auto 40px
+  position relative
+  text-align center
+  width 200px
+  &:hover
+    .spiu-delete, .spiu-upload
+      transform rotate(0deg)
+    .spiu-delete
+      left 0
+    .spiu-file-input
+      display inline-block
+    .spiu-upload, .spiu-file-input
+      left 125px
+    .spiu-upload, .spiu-delete
+      opacity 1
+    
+  .profile-badge
+    background-color white
+    border-radius 70px // Clip to a circle in case we're waiting for image processing
+    display inline-block
+    position relative
+    vertical-align top
+    width 140px
+    z-index 1
+
+    .profile-badge-icon
+      background-position center center
+      border-radius 70px // Clip to a circle in case we're waiting for image processing
+      height 140px
+
+.spiu-error-message
+  color bad-red-color
+  margin-left -100px
+  opacity 0
+  position absolute
+  top 130px
+  transition opacity 0.2s, top 0.5s ease-in
+  width 400px
+  &.is-active
+    top 150px
+    opacity 1
+
+.spiu-progress-indicator
+  background-color highlight-color
+  bottom -5px
+  height 5px
+  position absolute
+  transition wdith 0.25s linear
+  width 0
+
+.spiu-controls
+  bottom 0
+  display inline-block
+  height 25px
+  left 25px
+  position absolute
+  text-align left
+  width 150px
+  button
+    margin-top 0
+
+.spiu-action
+  background-color dark-gray-color
+  border none
+  cursor pointer
+  height 25px
+  border-radius 13px
+  left 60px
+  opacity 0
+  padding 0
+  position absolute
+  transition background-color 0.25s, opacity 0.25s ease-in-out, left 0.35s ease-in-out, transform 0.35s ease-in-out
+  width 25px
+  z-index 0
+  &::before
+    color white
+    position relative
+
+.spiu-upload
+  transform rotate(-180deg)
+  &::before
+    font-size 75%
+    top -7px
+  &:hover, &.is-hover
+    background-color highlight-color
+
+.spiu-file-input
+  display none
+  opacity 0 !important
+  overflow hidden
+  position absolute
+  z-index 1
+
+.spiu-delete
+  transform rotate(-180deg)
+  display none
+  &::before
+    font-size 50%
+    top -10px
+  &:hover
+    background-color bad-red-color
+
+.has-image
+  .spiu-delete
+    display inline-block
+
+// Trying to force a pointer cursor on the webkit file upload inputs
+::-webkit-file-upload-button
+  cursor pointer

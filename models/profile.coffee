@@ -21,7 +21,7 @@ module.exports = class Profile extends Backbone.Model
   urlRoot: "#{sd.ARTSY_URL}/api/v1/profile"
 
   icon: ->
-    new Icon @get('icon'), profileId: @get('id')
+    new Icon _.extend(@get('icon') || {}, profileId: @get('id'))
 
   iconImageUrl: ->
     @icon().imageUrl @get('default_icon_version')
