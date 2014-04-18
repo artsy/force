@@ -48,10 +48,16 @@ describe 'Profile Header template', ->
   describe 'with no icon', ->
 
     it 'displays initials for partner profiles', ->
+      @profile = new Profile fabricate 'partner_profile'
       delete @profile.attributes.icon
       $ = cheerio.load render('template')({ profile: @profile })
       $('.profile-badge-icon').should.have.lengthOf 0
       $('.profile-badge-initials').text().should.equal @profile.defaultIconInitials()
+
+    it 'displays a default profile icon for users', ->
+      delete @profile.attributes.icon
+      $ = cheerio.load render('template')({ profile: @profile })
+      $('.profile-badge-icon').css('background-image').should.include @profile.iconImageUrl()
 
   describe 'with no profile', ->
 

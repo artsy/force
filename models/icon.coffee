@@ -7,7 +7,32 @@ Icon     = require './icon.coffee'
 module.exports = class Icon extends Backbone.Model
   _.extend @prototype, Image(sd.SECURE_IMAGES_URL)
 
-  urlRoot: "#{sd.ARTSY_URL}/api/v1/#{@profileId}/icon"
+  @DefaultUserIconUrl: "/images/user_profile.png"
 
-  imageUrl: ->
-    Image(sd.SECURE_IMAGES_URL).imageUrl.apply(@, arguments).replace('.jpg', '.png')
+  # Uplaod validation constraints
+  maxFileSize    : 3000000 # 3MB
+  acceptFileTypes: /(\.|\/)(gif|jpe?g|png|tiff)$/i
+
+  url: ->
+    "#{sd.ARTSY_URL}/api/v1/profile/#{@get 'profileId' }/icon"
+
+  # Override the imageUrl for icon unique situations
+  # For users:
+  #   - render a default icon if there is none instead of "missing_image"
+  #   - display an unprocessed original version if the image is waiting on a delayed job
+  imageUrl: (version) ->
+    if @hasImage version
+      @sslUrl @get('image_url').replace(':version', version)
+    else if @has('image_filename') and _.isNull(@get('versions'))
+      @sslUrl @get('image_url').replace ':version', 'original'
+    else
+      Icon.DefaultUserIconUrl
+
+  # Validates a client uploaded file before posting it
+  # See https://github.com/blueimp/jQuery-File-Upload
+  validate: (attrs, options) ->
+    return unless attrs.file
+    unless @acceptFileTypes.test(attrs.file.type)
+      return 'Please upload a png, jpeg, gif, or tiff.'
+    unless attrs.file.size <= @maxFileSize
+      return 'Please upload an image smaller than 3 MB.'

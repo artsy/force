@@ -3,20 +3,29 @@ sd                 = require('sharify').data
 AccountForm        = require './account_form.coffee'
 Backbone           = require 'backbone'
 GeoFormatter       = require 'geoformatter'
+Icon               = require '../../../models/icon.coffee'
 LocationSearchView = require '../../../components/location_search/index.coffee'
 Profile            = require '../../../models/profile.coffee'
 ProfileEdit        = require '../models/profile_edit.coffee'
 ProfileForm        = require './profile_form.coffee'
+ProfileIconUplaod  = require './profile_icon_upload.coffee'
 UserEdit           = require '../models/user_edit.coffee'
 
 module.exports.UserSettingsView = class UserSettingsView extends Backbone.View
 
   initialize: (options) ->
+    @profile     = new Profile sd.PROFILE
     @profileEdit = new ProfileEdit sd.PROFILE
     @$toggleEls = @$ '.garamond-tab, .settings-form'
     @$successMessage = @$ '.settings-success-message'
 
     window.currentUser = @model
+
+    @profileIconUpload = new ProfileIconUplaod
+      el         : @$ '.settings-profile-icon-upload'
+      model      : @profile.icon()
+      profile    : @profile
+      accessToken: @model.get 'accessToken'
 
     @accountForm = new AccountForm
       el         : @$ '.settings-account-form'

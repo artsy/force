@@ -1,4 +1,5 @@
-@import '../../components/stylus_lib'
+@import '../../../components/stylus_lib'
+@import './profile_icon'
 
 #main-layout-container
   margin-left 0
@@ -23,12 +24,6 @@
 
   .settings-group-leader
     margin-top 20px
-
-  .profile-badge
-    margin 0px auto 30px
-    .profile-badge-icon
-      background-position center center
-      height 140px
 
   textarea
     visibility hidden
@@ -58,7 +53,7 @@
   margin-top -60px
   position absolute
   text-align center
-  transition opacity, margin-top 0.5s, 0.2s
+  transition opacity 0.2s, margin-top 0.5s
   width 100%
   &.is-active
     margin-top -20px
