@@ -73,8 +73,7 @@ describe 'Featured Sets', ->
   describe "sale artworks", ->
 
     it 'renders sale artworks in an artwork column component', ->
-      @set.set 'type', 'sale artworks'
-      @set.set 'data', Artworks.fromSale([new SaleArtwork(fabricate('sale_artwork')), new SaleArtwork(fabricate('sale_artwork'))])
+      @set.set 'type', 'artworks'
       @html = render('sets')({ sets : [ @set ] })
       $ = cheerio.load render('sets')({ sets: [ @set ] })
-      $('.feature-set .artwork-column').should.have.lengthOf 3
+      $('#feature-artworks').should.have.lengthOf 1

@@ -73,9 +73,9 @@ module.exports = class Feature extends Backbone.Model
         # that need even further data fetched such as a sale's artworks.
         allItemsLen = _.flatten(_.pluck(setItems, 'item')).length
         err = null
-        callback = _.after allItemsLen, ->
+        callback = _.after allItemsLen, =>
           return options.error(err) if err
-          options.success? sets
+          options.success? sets or @setsFromSetItems(setItems)
 
         for { orderedSet, items } in setItems
           if not items.length or not orderedSet.get 'display_on_desktop'
@@ -107,11 +107,14 @@ module.exports = class Feature extends Backbone.Model
             else
               callback()
 
-        sets = _.pluck(setItems, 'orderedSet').sort (a, b) ->
-          parseInt(a.get 'key') - parseInt(b.get 'key')
-
+        sets = @setsFromSetItems setItems
         options.setsSuccess? sets
+
       error: options.error
+
+  setsFromSetItems: (setItems) ->
+    _.pluck(setItems, 'orderedSet').sort (a, b) ->
+      parseInt(a.get 'key') - parseInt(b.get 'key')
 
   # Fetches all sets and their items for the mixed-in model. Returns an array of hashes containing
   # the set data and the items from the set.
