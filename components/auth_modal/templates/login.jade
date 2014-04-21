@@ -5,12 +5,12 @@
         p.small-caps Log in to Artsy
         nav.auth-options
           a.auth-login-facebook.avant-garde-button-black(
-            href='/users/auth/facebook?redirect-to=' + pathname
+            href='/users/auth/facebook?redirect-to=' + pathname, rel='nofollow'
           )
             i.icon-facebook
             | Log in using Facebook
           a.auth-login-twitter.avant-garde-button-black(
-            href='/users/auth/twitter?redirect-to=' + pathname
+            href='/users/auth/twitter?redirect-to=' + pathname, rel='nofollow'
           )
             i.icon-twitter
             | Log in using Twitter
@@ -33,6 +33,6 @@
               name='remember_me', type='checkbox', value='1', checked
             )
             | &nbsp;Remember me
-          a.faux-underline.auth-toggle( href='/forgot', data-mode='forgot' ) Forgot Password?
+          a.faux-underline.auth-toggle( href='/forgot', data-mode='forgot', rel='nofollow' ) Forgot Password?
 
     include ./_login_footer.jade
