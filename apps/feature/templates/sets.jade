@@ -1,25 +1,16 @@
 include ./featured_links
 include ./videos
 
-mixin artworksTemplate(set)
-  - artworkColumns = set.get('data').groupByColumnsInOrder()
-  - setHeight = 400
-  - displayPurchase = true
-  .artwork-columns-sale
-    include ../../../components/artwork_columns/template
-
 for set in sets
   section.feature-set
-    if set.has('name')
+    if set.get('name')
       h2.feature-set-title!= set.mdToHtml('name')
-    if set.has('description')
+    if set.get('description')
       h3.feature-set-description!= set.mdToHtml('description')
     case set.get('type')
-      when 'auction artworks'
-        +artworksTemplate(set)
+      when 'artworks'
+        #feature-artworks.artwork-columns-sale
       when 'featured links'
         +featuredLinks(set.models())
-      when 'sale artworks'
-        +artworksTemplate(set)
       when 'video'
         +videosTemplate(set.models())

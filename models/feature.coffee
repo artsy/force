@@ -73,47 +73,47 @@ module.exports = class Feature extends Backbone.Model
         # that need even further data fetched such as a sale's artworks.
         allItemsLen = _.flatten(_.pluck(setItems, 'item')).length
         err = null
-        finalItems = []
-        callback = _.after allItemsLen, ->
+        callback = _.after allItemsLen, =>
           return options.error(err) if err
-          options.success finalItems.sort (a, b) -> parseInt(a.get('key')) - parseInt(b.get('key'))
+          options.success? sets or @setsFromSetItems(setItems)
 
         for { orderedSet, items } in setItems
-
           if not items.length or not orderedSet.get 'display_on_desktop'
             callback()
             continue
 
           switch orderedSet.get('item_type')
-
             when 'FeaturedLink'
-              orderedSet.set
-                data : items
-                type : 'featured links'
-              finalItems.push orderedSet
+              orderedSet.set data: items, type: 'featured links'
               callback()
 
             when 'Sale'
               # We're going to assume we wouldn't stack multiple sales next to each other
               # because that would be silly. So we'll just use the first item.
               # Set it on the feature for convenience.
+              orderedSet.set type: 'artworks'
 
               @set sale: (sale = new Sale items.first().toJSON())
               sale.fetchArtworks
-                success: _.bind ((orderedSet, saleArtworks) =>
+                each    : options.artworkPageSuccess
+                success : _.bind ((orderedSet, saleArtworks) =>
                   orderedSet.set
                     data                : Artworks.fromSale(saleArtworks)
                     display_artist_list : sale.get 'display_artist_list'
-                    type                : if sale.get('is_auction') then 'auction artworks' else 'sale artworks'
-                  finalItems.push orderedSet
+                  options.artworksSuccess? orderedSet
                   callback()
                 ), @, orderedSet
                 error: (e) -> err = e; callback()
-
             else
               callback()
 
+        sets = @setsFromSetItems setItems
+        options.setsSuccess? sets
+
       error: options.error
+
+  setsFromSetItems: (setItems) ->
+    _.sortBy _.pluck(setItems, 'orderedSet'), (set) -> set.get 'key'
 
   # Fetches all sets and their items for the mixed-in model. Returns an array of hashes containing
   # the set data and the items from the set.

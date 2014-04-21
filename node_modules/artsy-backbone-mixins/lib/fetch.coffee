@@ -22,6 +22,7 @@ module.exports.methods =
         data: _.extend (opts.data ? {}), page: page += 1
         remove: false
         success: (col, res) =>
+          options.each? col, res
           if res.length is 0 then options.success?(@) else fetchPage()
         error: options.error
     fetchPage()

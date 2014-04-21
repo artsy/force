@@ -29,22 +29,45 @@ describe 'Feature', ->
         done()
 
       _.last(Backbone.sync.args)[2].success([fabricate 'set', name: 'Explore this bidness', id: 'abc'])
-      _.last(Backbone.sync.args)[2].success([
-        fabricate 'featured_link', title: 'Featured link for this awesome page'
-      ])
+      _.last(Backbone.sync.args)[2].success([fabricate 'featured_link', title: 'Featured link for this awesome page'])
+      _.last(Backbone.sync.args)[2].success([])
+
+    it 'callsback when the sets are fetched', (done) ->
+      @feature.fetchSets setsSuccess: (sets) ->
+        sets[0].get('type').should.equal 'featured links'
+        sets[0].get('name').should.equal 'Explore this bidness'
+        sets[0].get('data').first().get('title').should.equal 'Featured link for this awesome page'
+        done()
+
+      _.last(Backbone.sync.args)[2].success([fabricate 'set', name: 'Explore this bidness', id: 'abc'])
+      _.last(Backbone.sync.args)[2].success([fabricate 'featured_link', title: 'Featured link for this awesome page'])
+      _.last(Backbone.sync.args)[2].success([])
+
+    it 'callsback when the artworks are fetched page and success', (done) ->
+      successStub = sinon.stub()
+      sale = fabricate 'sale'
+
+      @feature.fetchSets
+        artworkPageSuccess: successStub
+        artworksSuccess: (saleFeaturedSet) =>
+          successStub.called.should.be.ok
+          saleFeaturedSet.get('type').should.equal 'artworks'
+          @feature.get('sale').id.should.equal sale.id
+          done()
+
+      _.last(Backbone.sync.args)[2].success([fabricate 'set', name: 'Explore this bidness', id: 'abc', item_type: 'Sale'])
+      _.last(Backbone.sync.args)[2].success([sale])
       _.last(Backbone.sync.args)[2].success([])
 
     it 'fetches until end for sets whose items are featured links', (done) ->
       @feature.fetchSets success: (sets) ->
-        sets[0].get('type').should.equal 'featured links'
-        sets[0].get('name').should.equal 'Explore this bidness top'
-        sets[0].get('data').first().get('title').should.equal 'Featured link for this awesome page'
-        sets[0].get('data').should.have.lengthOf 12
-        done()
+          sets[0].get('type').should.equal 'featured links'
+          sets[0].get('name').should.equal 'Explore this bidness top'
+          sets[0].get('data').first().get('title').should.equal 'Featured link for this awesome page'
+          sets[0].get('data').should.have.lengthOf 12
+          done()
 
-      _.last(Backbone.sync.args)[2].success([
-        fabricate('set', name: 'Explore this bidness top', key: '0hello', id: 'def')
-      ])
+      _.last(Backbone.sync.args)[2].success([fabricate('set', name: 'Explore this bidness top', key: '0hello', id: 'def') ])
 
       _.last(Backbone.sync.args)[2].success([
         fabricate 'featured_link', title: 'Featured link for this awesome page'

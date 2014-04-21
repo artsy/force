@@ -8,6 +8,8 @@ AuctionClockView          = require '../../../components/auction_clock/view.coff
 trackArtworkImpressions   = require('../../../components/analytics/impression_tracking.coffee').trackArtworkImpressions
 Sale                      = require '../../../models/sale.coffee'
 CurrentUser               = require '../../../models/current_user.coffee'
+ArtworkColumnsView        = require '../../../components/artwork_columns/view.coffee'
+Artworks                  = require '../../../collections/artworks.coffee'
 
 artworkColumns                  = -> require('../../../components/artwork_columns/template.jade') arguments...
 setsTemplate                    = -> require('../templates/sets.jade') arguments...
@@ -21,28 +23,46 @@ module.exports = class FeatureView extends Backbone.View
 
   initialize: (options) ->
     @handleTab options.tab if options.tab
+
     @setupCurrentUser()
-    @model.fetchSets
-      success: (sets) =>
+
+    @feature = @model
+
+    # Make the sale available as soon as possible
+    @feature.on 'change:sale', => @sale = @feature.get 'sale'
+
+    @feature.fetchSets
+      setsSuccess: (sets) =>
         @sets = sets
-        @$('#feature-sets-container').html setsTemplate(sets: sets)
-        # If we have artworks, we have a sale or auction.
-        if @$('.artwork-column').length > 0
-          @initializeSale sets
+        @$('#feature-sets-container').html setsTemplate(sets: @sets)
+        @initializeSale @sets
+      artworkPageSuccess: (fullCollection, newSaleArtworks) =>
+        @appendArtworks newSaleArtworks
+      artworksSuccess: (saleFeaturedSet) =>
+        @setupArtworks saleFeaturedSet
+
+  appendArtworks: (artworks) ->
+    @artworkColumns ?= new ArtworkColumnsView
+      el              : @$('#feature-artworks')
+      collection      : new Artworks
+      displayPurchase : true
+      setHeight       : 400
+      gutterWidth     : 0
+      showBlurbs      : true
+      isAuction       : @sale.isAuction()
+
+    artworks = Artworks.fromSale(new Backbone.Collection artworks)
+    @artworkColumns.appendArtworks artworks.models
+    @setupSaleArtworks artworks, @sale
 
   initializeSale: (sets) ->
-    for set in sets
-      if set.get('type') is 'auction artworks'
-        @sale = new Sale @model.get('sale').toJSON()
-        @initializeAuction @sale, set
-      else if set.get('type') in ['sale artworks', 'sale auction']
-        @setupArtworks(set)
+    saleSets = _.filter sets, (set) -> set.get('item_type') is 'Sale'
+    for set in saleSets
+      @initializeAuction @sale, set if @sale.isAuction()
 
   setupArtworks: (set) ->
     artworks = set.get 'data'
-    @setupSaleArtworks artworks, @sale
-    if (set and set.get 'display_artist_list')
-      @renderArtistList artworks
+    @renderArtistList artworks if set and set.get('display_artist_list')
     @setupArtworkImpressionTracking artworks.models
 
   initializeAuction: (sale, set) ->
@@ -50,7 +70,6 @@ module.exports = class FeatureView extends Backbone.View
       @setupAuctionUser sale
       sale.fetch()
     ])).then =>
-      @setupArtworks set
       @renderAuctionInfo sale
 
   renderAuctionInfo: (sale) ->
@@ -124,7 +143,7 @@ module.exports = class FeatureView extends Backbone.View
     @$('.artwork-column').parent().css 'visibility', 'visible'
 
   handleTab: (tab) ->
-    new FeatureRouter feature: @model
+    new FeatureRouter feature: @feature
     Backbone.history.start pushState: true
 
   triggerLoginPopup: =>
