@@ -5,7 +5,7 @@ Icon          = require '../../models/icon'
 Profile       = require '../../models/profile'
 { fabricate } = require 'antigravity'
 
-describe 'Artist', ->
+describe 'Icon', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
@@ -45,7 +45,7 @@ describe 'Artist', ->
   describe '#imageUrl', ->
 
     it 'does the usual version swap if the image is processed and happy', ->
-      @icon.imageUrl('circle').should.equal @icon.get('image_url').replace(':version','circle')
+      @icon.imageUrl('circle').should.equal @icon.get('image_url').replace(':version','circle').replace('jpg', 'png')
 
     it 'returns the original if the image has not had versions processed', ->
       @icon.set 'versions', null
