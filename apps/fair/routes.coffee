@@ -8,30 +8,34 @@ cache = require '../../lib/cache'
 client = cache.client
 
 @overview = (req, res, next) ->
-  return next() unless res.locals.profile?.isFairOranizer() and res.locals.sd.FAIR
-
+  return next() unless res.locals.sd.FAIR
   # TODO: Dependent on attribute of fair
   res.locals.sd.BODY_CLASS = 'body-transparent-header'
   res.locals.sd.SECTION = 'overview'
   res.render 'overview'
 
 @info = (req, res, next) ->
+  return next() unless res.locals.sd.FAIR
   res.locals.sd.SECTION = 'info'
   res.render 'index'
 
 @fairPosts = (req, res, next) ->
+  return next() unless res.locals.sd.FAIR
   res.locals.sd.SECTION = 'posts'
   res.render 'index'
 
 @browse = (req, res, next) ->
+  return next() unless res.locals.sd.FAIR
   res.locals.sd.SECTION = 'browse'
   res.render 'index'
 
 @forYou = (req, res, next) ->
+  return next() unless res.locals.sd.FAIR
   res.locals.sd.SECTION = 'forYou'
   res.render 'index'
 
 @search = (req, res, next) ->
+  return next() unless res.locals.sd.FAIR
   return res.redirect("/#{req.params.id}") unless term = req.query.q
   fair = res.locals.fair
   fairSearch  = new Search
@@ -59,11 +63,13 @@ client = cache.client
     error: res.backboneError
 
 @favorites = (req, res, next) ->
+  return next() unless res.locals.sd.FAIR
   return res.redirect("/#{req.params.id}") unless req.user
   res.locals.sd.SECTION = 'favorites'
   res.render 'favorites', profileId: req.user.get('default_profile_id')
 
 @follows = (req, res, next) ->
+  return next() unless res.locals.sd.FAIR
   return res.redirect("/#{req.params.id}") unless req.user
   if (route = req.params.type) in ['artists', 'genes']
     routeToKind = artists: 'artist', genes: 'gene'
@@ -77,6 +83,7 @@ client = cache.client
 
 # Fetches show for partner and redirects to the show permalink
 @showRedirect = (req, res, next) ->
+  return next() unless res.locals.sd.FAIR
   fair = res.locals.fair
   fair.fetchShowForPartner req.params.partner_id,
     error: res.backboneError
