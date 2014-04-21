@@ -113,8 +113,7 @@ module.exports = class Feature extends Backbone.Model
       error: options.error
 
   setsFromSetItems: (setItems) ->
-    _.pluck(setItems, 'orderedSet').sort (a, b) ->
-      parseInt(a.get 'key') - parseInt(b.get 'key')
+    _.sortBy _.pluck(setItems, 'orderedSet'), (set) -> set.get 'key'
 
   # Fetches all sets and their items for the mixed-in model. Returns an array of hashes containing
   # the set data and the items from the set.
