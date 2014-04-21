@@ -22,7 +22,7 @@ block body
         .ara-header-cell
           h2: a( href= artist.href() ) #{artist.get('name')} on Artsy
         .ara-header-cell
-          a#ara-follow-button.avant-garde-button-white.follow-button
+          a#ara-follow-button.avant-garde-button-white.follow-button( href="#", rel='nofollow' )
         .ara-header-cell
           aside Follow #{artist.get('name')} to get updates about new shows and works
 
