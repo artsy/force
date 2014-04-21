@@ -39,6 +39,15 @@ describe 'fetch until end mixin', ->
       Backbone.sync.args[0][2].success [{ foo: 'bar1' }, {foo: 'bar2'}]
       Backbone.sync.args[0][2].success []
 
+    it 'runs the each callback on every page fetch', ->
+      eachStub = sinon.stub()
+      @collection.fetchUntilEnd each: eachStub
+      Backbone.sync.args[0][2].success [{ foo: 'bar' }]
+      Backbone.sync.args[0][2].success [{ foo: 'bar' }]
+      Backbone.sync.args[0][2].success [{ foo: 'bar' }]
+      Backbone.sync.args[0][2].success []
+      eachStub.callCount.should.equal 4
+
 describe 'fetch set items by key mixin', ->
 
   beforeEach ->
