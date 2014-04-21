@@ -24,6 +24,31 @@ describe 'Fair routes', ->
   afterEach ->
     Backbone.sync.restore()
 
+  describe '#all', ->
+    it 'next is called without a fair', ->
+      @res.locals.sd.FAIR = undefined
+
+      routes.info @req, @res, (next = sinon.stub())
+      next.called.should.be.ok
+
+      routes.overview @req, @res, (next = sinon.stub())
+      next.called.should.be.ok
+
+      routes.forYou @req, @res, (next = sinon.stub())
+      next.called.should.be.ok
+
+      routes.fairPosts @req, @res, (next = sinon.stub())
+      next.called.should.be.ok
+
+      routes.favorites @req, @res, (next = sinon.stub())
+      next.called.should.be.ok
+
+      routes.follows @req, @res, (next = sinon.stub())
+      next.called.should.be.ok
+
+      routes.browse @req, @res, (next = sinon.stub())
+      next.called.should.be.ok
+
   describe '#info', ->
 
     it 'renders the info template', ->
@@ -85,9 +110,8 @@ describe 'Fair routes', ->
 
     it 'redirects without query', ->
       req = { params: { id: 'some-fair' }, query: { } }
-      res = { render: sinon.stub(), redirect: sinon.stub(), locals: { sd: {} } }
-      routes.search req, res
-      res.redirect.args[0][0].should.equal '/some-fair'
+      routes.search req, @res
+      @res.redirect.args[0][0].should.equal '/some-fair'
 
   describe '#browse', ->
 
