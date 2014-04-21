@@ -22,9 +22,9 @@ module.exports = class Icon extends Backbone.Model
   #   - display an unprocessed original version if the image is waiting on a delayed job
   imageUrl: (version) ->
     if @hasImage version
-      @sslUrl @get('image_url').replace(':version', version)
+      @sslUrl @get('image_url').replace(':version', version).replace('.jpg', '.png')
     else if @has('image_filename') and _.isNull(@get('versions'))
-      @sslUrl @get('image_url').replace ':version', 'original'
+      @sslUrl @get('image_url').replace(':version', 'original')
     else
       Icon.DefaultUserIconUrl
 
