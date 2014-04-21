@@ -11,7 +11,7 @@ module.exports = class ConfirmRegistration extends ModalView
   template: template
 
   defaults: ->
-    width: '800px'
+    width: '510px'
     artwork: null
     paddleNumber: null
 
