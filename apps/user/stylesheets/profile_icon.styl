@@ -105,6 +105,16 @@
   .spiu-delete
     display inline-block
 
+.loading-spinner
+  display none
+.is-loading
+  .loading-spinner
+    display block
+  .profile-badge-icon
+    opacity 0
+  .spiu-delete, .spiu-upload, .spiu-file-input
+    display none
+
 // Trying to force a pointer cursor on the webkit file upload inputs
 ::-webkit-file-upload-button
   cursor pointer
