@@ -92,11 +92,15 @@ describe 'Layers, Layer', ->
         @layers.add(type: 'gene', name: 'Foo Bar').text().should.equal 'Go to “Foo Bar”'
 
     describe '#href', ->
-      it 'has the appropriate href', ->
+      it 'synthetic has the appropriate href', ->
         @layers.add(type: 'synthetic', id: 'for-sale').href().should.equal '/browse/artworks?price_range=-1%3A1000000000000'
-        @layers.add(type: 'gene', id: 'cool').href().should.equal '/gene/cool'
-        @layers.add(type: 'tag', id: 'cool').href().should.equal '/tag/cool'
         _.isUndefined(@layers.add(type: 'synthetic', id: 'main').href()).should.be.ok
+
+      it 'tag has the appropriate href', ->
+        @layers.add(type: 'tag', id: 'cool').href().should.equal '/tag/cool'
+
+      it 'gene has the appropriate href', ->
+        @layers.add(type: 'gene', id: 'cool').href().should.equal '/gene/cool'
 
 describe 'LayeredSearchView', ->
   before (done) ->
