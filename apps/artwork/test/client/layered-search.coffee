@@ -95,6 +95,7 @@ describe 'Layers, Layer', ->
       it 'has the appropriate href', ->
         @layers.add(type: 'synthetic', id: 'for-sale').href().should.equal '/browse/artworks?price_range=-1%3A1000000000000'
         @layers.add(type: 'gene', id: 'cool').href().should.equal '/gene/cool'
+        @layers.add(type: 'tag', id: 'cool').href().should.equal '/tag/cool'
         _.isUndefined(@layers.add(type: 'synthetic', id: 'main').href()).should.be.ok
 
 describe 'LayeredSearchView', ->
