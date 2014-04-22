@@ -9,10 +9,15 @@ Fair                = require '../../../models/fair'
 Profile             = require '../../../models/profile'
 { FairHeaderView }  = require '../index'
 
+Bloodhound = -> ttAdapter: sinon.stub(), initialize: sinon.stub()
+Bloodhound.tokenizers = obj: whitespace: sinon.stub()
+
 describe 'FairHeaderView', ->
   before (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
+      benv.expose
+        $: benv.require 'jquery'
+        Bloodhound: Bloodhound
       Backbone.$      = $
       $.fn.typeahead  = sinon.stub()
       done()

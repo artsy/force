@@ -32,7 +32,7 @@ setupViews = ->
   new FooterView el: $('#main-layout-footer')
 
 setupJquery = ->
-  require '../../node_modules/typeahead.js/dist/typeahead.min.js'
+  require '../../node_modules/typeahead.js/dist/typeahead.bundle.min.js'
   require 'jquery.transition'
   require 'jquery.fillwidth'
   require 'jquery.dotdotdot'
