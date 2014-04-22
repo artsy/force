@@ -34,6 +34,14 @@ module.exports = class ProfileIconUpload extends Backbone.View
       .addClass 'is-active'
     _.delay (=> @$errorMessage.removeClass('is-active')), 3000
 
+  renderUploadedImage: ->
+    @$el.addClass 'is-loading'
+    @$progressIndicator.hide().css 'width', 0
+    $("<img src=\"#{@profile.iconImageUrl()}\" />").on 'load', =>
+      @$el.removeClass 'is-loading'
+      @$profileIcon.css 'background-image', "url(#{@profile.iconImageUrl()})"
+      @$el.addClass 'has-image'
+
   #
   # Events
   #
@@ -81,9 +89,7 @@ module.exports = class ProfileIconUpload extends Backbone.View
   onUploadComplete: (e, data) =>
     data.result.profileId = @profile.get 'id'
     @profile.set 'icon', data.result
-    @$progressIndicator.hide().css 'width', 0
-    @$profileIcon.css 'background-image', "url(#{@profile.iconImageUrl()})"
-    @$el.addClass 'has-image'
+    @renderUploadedImage()
 
   onProgressUpdate: (e, data) =>
     @$progressIndicator.show() unless @$progressIndicator.is(':visible')
