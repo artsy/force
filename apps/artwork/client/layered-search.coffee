@@ -29,7 +29,6 @@ module.exports.Layer = class Layer extends Backbone.Model
     "Go to #{text}"
 
   href: ->
-    console.log @get('type')
     return '/browse/artworks?price_range=-1%3A1000000000000' if @forSale()
     return "/gene/#{@id}" if @get('type') is 'gene'
     return "/tag/#{@id}" if @get('type') is 'tag'
