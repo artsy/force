@@ -31,6 +31,7 @@ module.exports.Layer = class Layer extends Backbone.Model
   href: ->
     return '/browse/artworks?price_range=-1%3A1000000000000' if @forSale()
     return "/gene/#{@id}" if @get('type') is 'gene'
+    return "/tag/#{@id}" if @get('type') is 'tag'
 
 module.exports.Layers = class Layers extends Backbone.Collection
   url: "#{ARTSY_URL}/api/v1/related/layers"
