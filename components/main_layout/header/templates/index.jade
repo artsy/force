@@ -19,10 +19,10 @@ header#main-layout-header
         a.header-post-button.icon-write( href='/post', class=activeClass('/post') )
       a( href='/browse', class=activeClass('/browse') ) Browse
       a( href='/artists', class=activeClass('/artists') ) Artists
-      a( href='/partners', class=activeClass('/partners') ) partners
       a( href='/posts', class=activeClass('/posts') ) Posts
       if user
         a( href='/favorites', class=activeClass('/favorites') ) Favorites
+      a( href='/feature/artsy-education', class=activeClass('/feature/artsy-education') ) Education
       a( href='/about', class=activeClass('/about') ) About
       if user
         if user.get('name')
