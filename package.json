@@ -61,7 +61,7 @@
     "antigravity": "git+ssh://git@github.com:artsy/antigravity.git",
     "bucket-assets": "git://github.com/artsy/bucket-assets.git",
     "rewire": "*",
-    "typeahead.js": "git://github.com/zamiang/typeahead.js.git#gravity",
+    "typeahead.js": "git://github.com/twitter/typeahead.js.git",
     "jquery": "2.1.0",
     "jquery.transition": "git://github.com/dzucconi/jquery.transition.git",
     "jquery.fillwidth": "*",
