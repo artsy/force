@@ -72,6 +72,10 @@ module.exports = class PartnerShow extends Backbone.Model
     @artworks.fetch options
     false
 
+  thumbImageUrl: ->
+    return @imageUrl('general') if @hasImage('general')
+    return @imageUrl('medium_rectangle') if @hasImage('medium_rectangle')
+
   title: ->
     @get 'name'
 
