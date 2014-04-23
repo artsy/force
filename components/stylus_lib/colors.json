@@ -1,0 +1,21 @@
+{
+  "light-gray-border-color"           : "#e5e5e5",
+  "dark-gray-border-color"            : "#cccccc",
+  "dark-gray-text-color"              : "#666666",
+  "light-gray-text-color"             : "#999999",
+  "light-gray-background-color"       : "#efefef",
+  "light-gray-background-hover-color" : "#dbdbdb",
+  "faint-gray-background-hover-color" : "#eeeeee",
+  "placeholder-color"                 : "#999999",
+  "light-placeholder-color"           : "#d9d9d9",
+  "highlight-color"                   : "#6a0bc1",
+  "highlight-underline-color"         : "#b179d4",
+  "highlighter-background-color"      : "#f9f8d8",
+  "bad-red-color"                     : "#cc3333",
+  "red-text-color"                    : "#c73030",
+  "bad-red-background-color"          : "#f4acb2",
+  "info-yellow-background-color"      : "#ffffd7",
+  "info-yellow-border-color"          : "#ccc8a2",
+  "green-background-color"            : "#4f8200",
+  "light-green-text-color"            : "#b0d766"
+}
