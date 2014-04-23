@@ -8,7 +8,7 @@ for suggestionSet in suggestions
         img.personalize-suggestion-thumbnail(
           src= artist.imageUrl('square')
           alt= artist.get('name')
-          onerror='this.style.display="none";'
+          onerror='this.src="/images/missing_image.png";'
         )
         .personalize-suggestion-name
           = artist.get('name')
