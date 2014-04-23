@@ -1,5 +1,5 @@
 if user.get('name')
-  a( href="/" + user.get('default_profile_id') )= user.get('name')
+  a.user-nav-profile-link( href="/" + user.get('default_profile_id') )= user.get('name')
 else
   a account
 a( href="/user/edit" ) Settings

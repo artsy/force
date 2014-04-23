@@ -13,6 +13,7 @@ module.exports = class HeaderView extends Backbone.View
   events:
     'click .mlh-login'  : 'login'
     'click .mlh-signup' : 'signup'
+    'click .main-layout-header-user-nav' : 'showProfilePrivateDialog'
 
   initialize: (options) ->
     { @$window, @$body } = options
@@ -40,6 +41,9 @@ module.exports = class HeaderView extends Backbone.View
     if sd.CURRENT_USER or (@$window.scrollTop() > @$welcomeHeader.height())
       unless $('body').hasClass 'is-microsite'
         @removeWelcomeHeader()
+
+  showProfilePrivateDialog: =>
+    console.log sd.CURRENT_USER
 
   openAuth: (options) ->
     @modal = new AuthModalView _.extend({ width: '500px' }, options)
