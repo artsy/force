@@ -188,7 +188,8 @@ facebookCallback = (req, accessToken, refreshToken, profile, done) ->
       oauth_token: accessToken
       access_token: req.user.get 'accessToken'
     ).end (res) ->
-      done (if res.error then res.body.error + ': Facebook' else ''), req.user
+      err = res.body.error or res.body.message + ': Facebook' if res.error
+      done err, req.user
   else
     request.get("#{opts.SECURE_ARTSY_URL}/oauth2/access_token").query(
       client_id: opts.ARTSY_ID
@@ -209,7 +210,8 @@ twitterCallback = (req, token, tokenSecret, profile, done) ->
       oauth_token_secret: tokenSecret
       access_token: req.user.get 'accessToken'
     ).end (res) ->
-      done (if res.error then res.body.error + ': Twitter' else ''), req.user
+      err = res.body.error or res.body.message + ': Twitter' if res.error
+      done err, req.user
   else
     request.get("#{opts.SECURE_ARTSY_URL}/oauth2/access_token").query(
       client_id: opts.ARTSY_ID
