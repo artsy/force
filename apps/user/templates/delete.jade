@@ -8,7 +8,7 @@ block body
     h1.avant-garde-header-center Delete My Account
 
     .settings-forms
-      form#settings-user-delete-form( method="post", action="#{sd.ARTSY_URL}/users/delete", accept-charset="UTF-8" )
+      form#settings-user-delete-form( method="post", action="#{sd.APP_URL}/users/delete", accept-charset="UTF-8" )
 
         input#user-delete-confirm( type="checkbox", name="user_delete_confirm" )
         label( for="user-delete-confirm" ) I understand that this will permanently delete my account and cannot be undone.

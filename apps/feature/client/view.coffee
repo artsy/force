@@ -10,6 +10,7 @@ Sale                      = require '../../../models/sale.coffee'
 CurrentUser               = require '../../../models/current_user.coffee'
 ArtworkColumnsView        = require '../../../components/artwork_columns/view.coffee'
 Artworks                  = require '../../../collections/artworks.coffee'
+ShareView                 = require '../../../components/share/view.coffee'
 
 artworkColumns                  = -> require('../../../components/artwork_columns/template.jade') arguments...
 setsTemplate                    = -> require('../templates/sets.jade') arguments...
@@ -40,6 +41,8 @@ module.exports = class FeatureView extends Backbone.View
         @appendArtworks newSaleArtworks
       artworksSuccess: (saleFeaturedSet) =>
         @setupArtworks saleFeaturedSet
+
+    @setupShareButtons()
 
   appendArtworks: (artworks) ->
     @artworkColumns ?= new ArtworkColumnsView
@@ -112,6 +115,8 @@ module.exports = class FeatureView extends Backbone.View
     if @artworkCollection
       @artworkCollection.addRepoArtworks artworks
       @artworkCollection.syncSavedArtworks()
+
+  setupShareButtons: -> new ShareView el: @$('.feature-share')
 
   getArtworksOrderedByArtist: (collection) ->
     collection.comparator = (model) -> model.get('artist')?.sortable_id

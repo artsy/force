@@ -1,4 +1,5 @@
 _ = require 'underscore'
+sd = require('sharify').data
 Backbone = require 'backbone'
 CurrentUser = require '../../../models/current_user.coffee'
 FollowProfileButton = require '../../../components/partner_buttons/follow_profile.coffee'
@@ -15,13 +16,19 @@ module.exports = class UserProfileView extends Backbone.View
 
   initialize: (options) ->
     @followProfiles = if CurrentUser.orNull() then new FollowProfiles [] else null
-    new FollowProfileButton
-      el: @$(".profile-header .follow-button")
-      model: @model
-      collection: @followProfiles
+    @handleFollowButton()
     @followProfiles?.syncFollows [@model.get('id')]
     @model.fetchFavorites success: ((@favorites) =>), complete: => @render()
     @model.fetchPosts success: ((@posts) =>), complete: => @render()
+
+  handleFollowButton: ->
+    if sd.CURRENT_USER?.default_profile_id == @model.get('id')
+      @$(".profile-header .follow-button").remove()
+    else
+      new FollowProfileButton
+        el: @$(".profile-header .follow-button")
+        model: @model
+        collection: @followProfiles
 
   render: _.after 2, ->
     @renderState()
