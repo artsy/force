@@ -8,12 +8,14 @@ sd                  = require('sharify').data
 { createCookie }    = require '../../util/cookie.coffee'
 analytics           = require '../../../lib/analytics.coffee'
 FlashMessage        = require '../../flash/index.coffee'
+ProfileStatusModal  = require '../../profile_status_modal/view.coffee'
+Profile             = require '../../../models/profile.coffee'
 
 module.exports = class HeaderView extends Backbone.View
   events:
     'click .mlh-login'  : 'login'
     'click .mlh-signup' : 'signup'
-    'click .main-layout-header-user-nav' : 'showProfilePrivateDialog'
+    'click .user-nav-profile-link' : 'showProfilePrivateDialog'
 
   initialize: (options) ->
     { @$window, @$body } = options
@@ -43,7 +45,22 @@ module.exports = class HeaderView extends Backbone.View
         @removeWelcomeHeader()
 
   showProfilePrivateDialog: =>
-    console.log sd.CURRENT_USER
+    new Profile(id: sd.CURRENT_USER.default_profile_id).fetch
+      success: (profile) =>
+        if profile.get('private')
+          new ProfileStatusModal
+            width: '350px'
+          mediator.on 'profile:make:public', @makePublic, @
+          false
+        else
+          window.location = profile.href()
+    false
+
+  makePublic: ->
+    new Profile(id: sd.CURRENT_USER.default_profile_id).save { private: false },
+      success: (profile) ->
+        window.location = profile.href()
+    false
 
   openAuth: (options) ->
     @modal = new AuthModalView _.extend({ width: '500px' }, options)
