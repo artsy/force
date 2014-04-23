@@ -108,7 +108,7 @@ module.exports = class DeepZoomView extends Backbone.View
 
   # Invoked by the router
   remove: ->
-    @viewer?.close()
+    @viewer?.destroy()
 
     Transition.fade @$el,
       duration: 500
