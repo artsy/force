@@ -1,13 +1,5 @@
 @import '../components/stylus_lib'
 
-hoverable-image()
-  background-color black
-  img
-    width 100%
-    transition opacity 0.5s
-    &:hover
-      opacity 0.5
-
 .related-shows
   display none
   opacity 0
@@ -29,10 +21,14 @@ hoverable-image()
   vertical-align middle
   text-align center
 .rsf-image
-  width 55%
-  hoverable-image()
+  background-color black
+  img
+    width 100%
+    transition opacity 0.5s
+    prevent-content-shift()
+    &:hover
+      opacity 0.5
 .rsf-metadata
-  width 45%
   padding 20px
 .rsf-partner-name
   margin 0
@@ -45,15 +41,33 @@ hoverable-image()
 // Small thumbnailed shows
 .related-show
   display inline-block
-  width calc('25% - 20px')
-  margin 0 10px 20px 10px
+  width 25%
+  margin 0 0 20px 0
+  padding 0 10px
   vertical-align top
   a
     text-decoration none
 .rsr-image
-  hoverable-image()
   display block
+  position relative
   margin-bottom 20px
+  padding-bottom 70%
+  background-size cover
+  background-position center center
+  &:after
+    display block
+    content ''
+    position absolute
+    top 0
+    right 0
+    bottom 0
+    left 0
+    background-color black
+    opacity 0
+    transition opacity 0.5s
+  &:hover:after
+    opacity 0.5
+
 .rsr-name
   font-style italic
   font-size 24px
