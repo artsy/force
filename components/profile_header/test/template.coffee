@@ -35,7 +35,6 @@ describe 'Profile Header template', ->
       $ = cheerio.load render('template')({ profile: @profile })
       $('.profile-badge-name').text().should.equal @profile.displayName()
       $('.profile-followers').text().should.equal @profile.formatFollowText()
-      $('.follow-button').length.should.equal 0
       $('.edit-profile').length.should.equal 1
 
   describe 'with an icon', ->
