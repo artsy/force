@@ -8,10 +8,15 @@ fabricate     = require('antigravity').fabricate
 SearchResult    = require '../../../models/search_result'
 SearchBarView   = require '../view'
 
+Bloodhound = -> ttAdapter: sinon.stub(), initialize: sinon.stub()
+Bloodhound.tokenizers = obj: whitespace: sinon.stub()
+
 describe 'SearchBarView', ->
   beforeEach (done) ->
     benv.setup =>
-      benv.expose { $: benv.require 'jquery' }
+      benv.expose
+        $: benv.require 'jquery'
+        Bloodhound: Bloodhound
       Backbone.$ = $
 
       benv.render resolve(__dirname, '../template.jade'), {}, =>
@@ -25,8 +30,8 @@ describe 'SearchBarView', ->
         @$input.typeahead   = sinon.stub()
 
         @view = new SearchBarView
-          el:     $('#main-layout-search-bar-container')
-          $input: @$input
+          el     : $('#main-layout-search-bar-container')
+          $input : @$input
         done()
 
   afterEach ->
@@ -55,8 +60,10 @@ describe 'SearchBarView', ->
         @view.off 'search:selected'
 
       it 'sets up typeahead', ->
-        _.isUndefined(@$input.typeahead.args[0][0].name).should.not.be.ok
-        @$input.typeahead.args[0][0].should.include { template: 'custom', limit: 10 }
+        @$input.typeahead.args[0][1].name.should.be.an.instanceOf String
+        @$input.typeahead.args[0][1].templates.suggestion.should.be.an.instanceOf Function
+        @$input.typeahead.args[0][1].template.should.equal 'custom'
+        @$input.typeahead.args[0][1].displayKey.should.equal 'value'
 
   describe '#selectResult', ->
     it 'takes a search result model and sets window.location to the models location', ->

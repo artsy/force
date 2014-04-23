@@ -1,11 +1,12 @@
-_             = require 'underscore'
-Backbone      = require 'backbone'
-sd            = require('sharify').data
-Search        = require './collections/search.coffee'
-itemTemplate  = -> require('./templates/item.jade') arguments...
-mediator      = require '../../lib/mediator.coffee'
-analytics     = require '../../lib/analytics.coffee'
-{ fill }      = require '../../lib/resizer.coffee'
+_           = require 'underscore'
+Backbone    = require 'backbone'
+sd          = require('sharify').data
+Search      = require './collections/search.coffee'
+mediator    = require '../../lib/mediator.coffee'
+analytics   = require '../../lib/analytics.coffee'
+{ fill }    = require '../../lib/resizer.coffee'
+
+itemTemplate = -> require('./templates/item.jade') arguments...
 
 module.exports = class SearchBarView extends Backbone.View
   initialize: (options) ->
@@ -15,14 +16,14 @@ module.exports = class SearchBarView extends Backbone.View
     { @mode, @restrictType, @$input, @fairId, @includePrivateResults } = options
 
     @search = new Search
-      restrictType: @restrictType
-      mode: @mode
-      fairId: @fairId
+      restrictType : @restrictType
+      mode         : @mode
+      fairId       : @fairId
 
-    @on 'search:start', @indicateLoading
+    @on 'search:start',    @indicateLoading
     @on 'search:complete', @concealLoading
-    @on 'search:opened', @displaySuggestions
-    @on 'search:closed', @hideSuggestions
+    @on 'search:opened',   @displaySuggestions
+    @on 'search:closed',   @hideSuggestions
 
     @setupTypeahead()
 
@@ -52,41 +53,55 @@ module.exports = class SearchBarView extends Backbone.View
   hideSuggestions: ->
     @$el.removeClass 'is-open'
 
-  _engine:
-    compile: ->
-      render: (item) ->
-        itemTemplate item: item, fill: fill
+  suggestionTemplate: (item) =>
+    itemTemplate fill: fill, item: item
+
+  announceQuery: (query) ->
+    mediator.trigger 'search:doge'     if query is 'doge'
+    mediator.trigger 'search:skrillex' if query is 'skrillex'
+
+  trackSearchResults: (results) ->
+    string = "Searched from header, with #{if results?.length then 'results' else 'no results'}"
+    analytics.track.funnel string, query: @$input.val()
+
+  setupBloodHound: ->
+    @hound = new Bloodhound
+      limit          : 10
+      datumTokenizer : Bloodhound.tokenizers.obj.whitespace 'value'
+      queryTokenizer : Bloodhound.tokenizers.whitespace
+      remote:
+        url    : "#{@search._url()}&term=%QUERY"
+        filter : (results) =>
+          @trackSearchResults results
+          @search._parse results
+        ajax   :
+          beforeSend: (xhr) =>
+            xhr.setRequestHeader 'X-XAPP-TOKEN', sd.ARTSY_XAPP_TOKEN
+            @trigger 'search:start', xhr
+          complete: (xhr) =>
+            @query = @$input.val()
+            @trigger 'search:complete', xhr
+            @announceQuery @query
+    @hound.initialize()
+    @hound
 
   setupTypeahead: ->
     _.each ['opened', 'closed', 'selected'], (action) =>
       @$input.on "typeahead:#{action}", (args...) =>
         @trigger "search:#{action}", args...
 
-    @$input.typeahead
-      template: 'custom'
-      name: _.uniqueId('search')
-      limit: 10
-      engine: @_engine
-      remote:
-        url: "#{@search._url()}&term=%QUERY"
-        filter: (items) =>
-          if items?.length
-            analytics.track.funnel "Searched from header, with results", { query: @$input.val() }
-          else
-            analytics.track.funnel "Searched from header, with no results", { query: @$input.val() }
-          @search._parse(items)
-        beforeSend: (xhr) =>
-          xhr.setRequestHeader 'X-XAPP-TOKEN', sd.ARTSY_XAPP_TOKEN
-          @trigger 'search:start', xhr
-        complete: (xhr) =>
-          @trigger 'search:complete', xhr
-          mediator.trigger 'search:doge' if @$input.val() is 'doge'
-          mediator.trigger 'search:skrillex' if @$input.val() is 'skrillex'
-          @query = @$input.val()
+    @$input.typeahead null,
+      template   : 'custom'
+      templates  : suggestion: @suggestionTemplate
+      displayKey : 'value'
+      name       : _.uniqueId 'search'
+      source     : @setupBloodHound().ttAdapter()
 
   selectResult: (e, model) ->
     return false unless model and model.get('published')
-    analytics.track.click "Selected item from search", { label: analytics.modelNameAndIdToLabel(model.get('display_model'), model.get('id')), query: @query }
+    analytics.track.click 'Selected item from search',
+      query : @query
+      label : analytics.modelNameAndIdToLabel model.get('display_model'), model.id
     @selected = true
     window.location = model.get 'location'
 
