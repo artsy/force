@@ -14,9 +14,14 @@ hero-units-height = 470px
   z-index 1
   width 100%
   background white
-  margin-top hero-units-height
+  position relative
+  top hero-units-height
   margin-bottom -106px
   padding-bottom 100px
+
+html[data-useragent*="iPad"]
+  #home-foreground
+    top hero-units-height - 70
 
 #home-hero-units
   height hero-units-height
@@ -24,7 +29,7 @@ hero-units-height = 470px
   top 0
   width 100%
   background black
-  z-index -1
+  z-index 1
   position fixed
 
 #home-unsubscribe
