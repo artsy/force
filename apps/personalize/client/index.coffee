@@ -8,12 +8,13 @@ track             = require('../../../lib/analytics.coffee').track
 { readCookie, deleteCookie } = require '../../../components/util/cookie.coffee'
 
 views =
-  CollectView:      require './views/collect.coffee'
-  LocationView:     require './views/location.coffee'
-  ArtistsView:      require './views/artists.coffee'
-  GalleriesView:    require './views/galleries.coffee'
-  InstitutionsView: require './views/institutions.coffee'
-  PriceRangeView:   require './views/price_range.coffee'
+  CollectView      : require './views/collect.coffee'
+  LocationView     : require './views/location.coffee'
+  ArtistsView      : require './views/artists.coffee'
+  GalleriesView    : require './views/galleries.coffee'
+  InstitutionsView : require './views/institutions.coffee'
+  PriceRangeView   : require './views/price_range.coffee'
+  CategoriesView   : require './views/categories.coffee'
 
 _.mixin(require 'underscore.string')
 

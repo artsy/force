@@ -1,0 +1,13 @@
+for category in categories.models
+  .personalize-category
+    if category.get('image_versions')
+      img( src=category.get('image_url').replace(':version', 'original') )
+    h3= category.get('title')
+    aside= category.get('subtitle')
+    a.avant-garde-button-white.follow-button(
+      data-id= category.get('gene_id')
+    )
+
+#personalize-category-anything-else
+  h2 Anything else?
+  textarea.bordered-input.is-block( rows='5' )
