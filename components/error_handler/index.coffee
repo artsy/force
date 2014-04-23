@@ -44,7 +44,6 @@ errorHandler.internalError = (err, req, res, next) ->
   res.send res.statusCode, renderTemplate(data)
 
 errorHandler.socialAuthError = (err, req, res, next) ->
-  console.log 'ERRR', err.toString()
   if err.toString().match('User Already Exists')
     # Error urls need to be compatible with Gravity
     params =
