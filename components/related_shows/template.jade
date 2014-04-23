@@ -18,8 +18,10 @@ if relatedShows.length
   .related-shows-rest
     for show in relatedShows
       .related-show
-        a.rsr-image( href=show.href() )
-          img( src= show.imageUrl('general') )
+        a.rsr-image(
+          href=show.href()
+          style="background-image: url(#{show.thumbImageUrl()})"
+        )
         .rsr-metadata
           if show.get('partner').name !== show.get('name')
             h4.rsr-partner-name.avant-garde-header-center
