@@ -33,10 +33,6 @@ module.exports = class PartnerArtistsView extends Backbone.View
       pa.get('represented_by') or
       pa.get('published_artworks_count') > 0
 
-    # TODO use sort from api once the data was cleaned
-    @displayables = _.sortBy @displayables, (pa) ->
-      pa.get('artist')?.sortable_id or ''
-
     @renderArtistsList()
     if @artistId? then @renderArtist()
     else
