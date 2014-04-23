@@ -8,6 +8,10 @@
     background-position center center
     background-repeat no-repeat
     background-size contain
+    // Add a border radius if we're using the original or default image for a user profile
+    &.is-user
+      &[style*='original.jpg'], &[style*='user_profile.png']
+        border-radius 70px
 
   .profile-badge-initials
     avant-garde()
@@ -23,6 +27,10 @@
   .profile-badge-icon, .profile-badge-initials
     height 32px
     width 32px
+  // Add a border radius if we're using the original or default image for a user profile
+  .profile-badge-icon.is-user
+    &[style*='original.jpg'], &[style*='user_profile.png']
+      border-radius 16px
 
   .profile-badge-initials
     font-size default-avant-garde-font-size

@@ -1,4 +1,4 @@
 if profile.isPartner() && !profile.has('icon')
   .profile-badge-initials= profile.defaultIconInitials()
 else
-  .profile-badge-icon( style="background-image: url(#{profile.iconImageUrl()})" )
+  .profile-badge-icon( class=profile.isUserClass(), style="background-image: url(#{profile.iconImageUrl()})" )
