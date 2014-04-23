@@ -26,7 +26,7 @@ managed by an ordered set.
 
 If `true`, the partner profile will show up in search.
 
-![](images/unclaimed_partner.png)
+![](images/partner_search.png)
 
 ### `partner.profile.private`
 
