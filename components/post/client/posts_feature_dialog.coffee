@@ -83,7 +83,7 @@ module.exports = class PostsFeatureDialog extends Backbone.View
     model.url = @getFeatureUrl(modelName, modelId)
     model.save null,
       success: =>
-        alert("Post has been featured to #{sd.ARTSY_URL}/#{modelName.toLowerCase()}/#{modelId}")
+        alert("Post has been featured to #{sd.APP_URL}/#{modelName.toLowerCase()}/#{modelId}")
         $featureBySlugButton.removeClass('is-loading')
       error: (model, response) =>
         $featureBySlugButton.removeClass('is-loading')
