@@ -40,6 +40,8 @@ describe 'RelatedAuctionResultsView', ->
       @view.$('.rar-title').first().text().should.equal 'MADONNA PAINTING (1985)'
 
     it 'does not have the price for logged out users', ->
+      @view.user = null
+      @view.render()
       @view.$('.rar-price').length.should.equal 0
 
     it 'has the price if you are logged in', ->
