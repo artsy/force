@@ -25,7 +25,7 @@ if primarySets.where({ key: 'curator' }).length
     h2.overview-section-heading-small Art world insiders share their selections
     .curator-picks-container
       for set in primarySets.where({ key: 'curator' })
-        for item in set.get('items').models.slice(0, 4)
+        for item in set.get('items').models
           a.small-section( href=item.get('href'), class=set.layoutStyle(set.get('items').length) )
             img( src=item.imageUrl('small_square') )
             h2.section-heading= item.get('title')

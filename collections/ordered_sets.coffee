@@ -10,6 +10,9 @@ class OrderedSets extends Backbone.Collection
 
   model: (attrs, options) ->
     switch attrs?.item_type
+      # TODO
+      # This is incorrect, an ordered sets collection should always be a collection of ordered sets -- not 'featured links'
+      # An individual ordered set may have a collection of featured links.
       when 'FeaturedLink' then new FeaturedLink attrs, options
       else
         new OrderedSet attrs, options
