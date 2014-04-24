@@ -1,0 +1,66 @@
+@import '../../components/stylus_lib'
+
+#style-guide
+  margin 40px auto
+  max-width 960px
+
+  pre
+    monospace()
+    padding 10px
+    background-color light-gray-background-color
+    font-size 13px
+    line-height 1.45
+
+.sg-description
+  p
+    margin 20px 0
+    font-size 18px
+  pre
+    margin 20px 0
+
+.sg-components
+  margin 80px 0
+  padding-top 20px
+  border-top 2px solid dark-gray-border-color
+  &:first-child
+    margin-top 0
+  > h2
+    margin 20px 0
+    garamond()
+    font-size 24px
+  > h3
+    avant-garde()
+    text-align center
+    font-size 15px
+
+.sg-component
+  margin 40px 0
+  border 1px solid light-gray-border-color
+  h3
+    avant-garde()
+    font-size 13px
+    padding 20px
+    border-bottom 1px solid light-gray-border-color
+
+.sg-component-rendered
+  padding 20px
+  text-align center
+  *
+    text-align left
+  // Buttons
+  > a
+    margin 0 10px
+
+.sg-color-swatch
+  vertical-align top
+  display inline-block
+  width 25%
+  height 150px
+  text-align left
+  avant-garde()
+  font-size 13px
+  padding 10px
+  color rgba(black, 0.75)
+  transition color 0.25s
+  &:hover
+    color white

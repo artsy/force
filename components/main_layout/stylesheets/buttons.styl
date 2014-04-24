@@ -46,22 +46,24 @@
   avant-garde()
   transition background-color 0.25s, color 0.25s
   text-decoration none
-  &:focus, &:hover, &.is-hover
+  &:focus, &:hover
     outline none
     background-color light-gray-background-hover-color
-
+  // States
   &[data-state='success'], &.is-success
     background-color green-background-color
     color #fff
-
+    &:hover
+      background-color darken(green-background-color, 25%)
   &[data-state='error'], &.is-error
     &, &:focus
       background-color bad-red-color
       color #fff
-
+      &:hover
+        background-color darken(bad-red-color, 25%)
   &[data-state='loading'], &.is-loading
     background-color highlight-color
-    color transparent
+    color transparent !important
     // Note:
     // Giving the loading state to input[type='submit']
     // or input[type='button'] will *not* display a spinner.
@@ -71,48 +73,74 @@
       content ''
       spinner(25px, 6px, #fff)
 
+  &[disabled], &.is-disabled, &.is-disabled
+    &, &:hover
+      background-color light-gray-background-color
+      cursor default
+      color rgba(black, 0.5)
+      &[data-state='success'], &.is-success
+        background-color green-background-color
+        color light-green-text-color
+      &[data-state='error'], &.is-error
+        background-color bad-red-color
+        color bad-red-background-color
+
+  // Structural variants
   &.is-block
     width 100%
     text-align center
-
   &.is-small
     font-size 11px
     padding 10px 20px
-
+    &[data-state='loading'], &.is-loading
+      &::before
+        spinner(16px, 4px, #fff)
   &.is-tiny
     font-size 11px
     padding 6px 12px 5px
+    &[data-state='loading'], &.is-loading
+      &::before
+        spinner(12px, 3px, #fff)
 
-  // Not completely fleshed out
-  &[disabled], &.is-disabled, &.is-disabled:hover
-    cursor default
-    &[data-state='success'], &.is-success
-      background-color green-background-color
-      color light-green-text-color
-
-// Variants
+// Stylistic variants
 .avant-garde-button-black
   @extends .avant-garde-button
   text-align center
   background-color black
   color #fff
-  &:focus, &:hover, &.is-hover
+  &:focus, &:hover
     background-color highlight-color
-  &[disabled], &.is-disabled, &.is-disabled:hover
-    background-color dark-gray-text-color
+  &[disabled], &.is-disabled
+    &, &:hover
+      background-color dark-gray-text-color
 
 .avant-garde-button-white
   @extends .avant-garde-button
-  background white
+  background-color transparent
   border 1px solid light-gray-border-color
   &:focus, &:hover, &:active
     color highlight-color
-    background white
+    background-color transparent
+  &[data-state='success'], &.is-success
+    background-color transparent
+    color green-background-color
+    &:hover
+      background-color transparent
+      color highlight-color
+  &[data-state='error'], &.is-error
+    &, &:focus
+      background-color transparent
+      color bad-red-color
+      &:hover
+        background-color transparent
+        color highlight-color
   &[data-state='loading'], &.is-loading
     background-color white
-    color transparent
     &::before
       background-color highlight-color
+  &[disabled], &.is-disabled
+    &, &:hover
+      background-color transparent
 
 .avant-garde-button-text
   @extends .avant-garde-button

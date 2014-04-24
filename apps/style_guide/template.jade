@@ -1,0 +1,107 @@
+extends ../../components/main_layout/templates/blank
+
+append locals
+  - assetPackage = 'style_guide'
+
+block body
+  #style-guide
+    i#main-layout-welcome-logo.icon-logotype
+
+    section.sg-components
+      h2 Colors
+      .sg-color-swatches
+        for hex, name in colors
+          .sg-color-swatch( style="background-color: #{hex};" )
+            = name
+            br
+            = hex
+
+    section.sg-components
+      h2 Components
+
+      h3 Buttons
+      .sg-description
+        p
+          | Click any button to enact its loading state.
+          | Button classes all have states that can be enabled using classes or a data-state value:
+          pre: code
+            | //- Loading:
+            | .avant-garde-button.is-loading
+            | .avant-garde-button( data-state='loading' )
+          pre: code
+            | //- Success:
+            | .avant-garde-button.is-success
+            | .avant-garde-button( data-state='success' )
+          pre: code
+            | //- Error:
+            | .avant-garde-button.is-error
+            | .avant-garde-button( data-state='error' )
+          pre: code
+            | //- Buttons can also be disabled by using the standard disabled attribute
+            | .avant-garde-button( disabled )
+            | .avant-garde-button.is-disabled
+
+      article.sg-component
+        h3 Default Button
+        .sg-component-rendered
+            a.avant-garde-button Button
+            a.avant-garde-button.is-success Button
+            a.avant-garde-button.is-error Button
+            br
+            a.avant-garde-button( disabled ) Button
+            a.avant-garde-button.is-success( disabled ) Button
+            a.avant-garde-button.is-error( disabled ) Button
+        pre: code .avant-garde-button Button
+
+      article.sg-component
+        h3 Ghost Button
+        .sg-component-rendered
+          a.avant-garde-button-white Button
+          a.avant-garde-button-white.is-success Button
+          a.avant-garde-button-white.is-error Button
+          a.avant-garde-button-white( disabled ) Button
+        pre: code .avant-garde-button-white Button
+
+      article.sg-component
+        h3 Inverted Button
+        .sg-component-rendered
+          a.avant-garde-button-black Button
+          a.avant-garde-button-black( disabled ) Button
+        pre: code .avant-garde-button-black Button
+
+      article.sg-component
+        h3 Structural Variants
+        .sg-component-rendered
+          a.avant-garde-button.is-block(
+            style='margin: 20px 0;'
+          ) Block Button
+          a.avant-garde-button Default Button
+          a.avant-garde-button.is-small Small Button
+          a.avant-garde-button.is-tiny Tiny Button
+        pre: code
+          | .avant-garde-button.is-block Block Button
+          | .avant-garde-button Default Button
+          | .avant-garde-button.is-small Smalll Button
+          | .avant-garde-button.is-tiny Tiny Button
+
+      article.sg-component
+        h3 Text Buttons
+        .sg-component-rendered
+          a.avant-garde-button-text Text Button
+          a.avant-garde-button-underlined Underlined Button
+        pre: code
+          | a.avant-garde-button-text Text Button
+          | a.avant-garde-button-underlined Underlined Button
+
+      article.sg-component
+        h3 Stacked Button Menu
+        .sg-component-rendered
+          .stacked-button-menu
+            a.avant-garde-button-black Log in using Twitter
+            a.avant-garde-button-black Log in using Facebook
+            a.avant-garde-button-black Log in using MeowMeowBeenz
+        pre: code
+          | .stacked-button-menu
+          |   a.avant-garde-button-black Log in using Twitter
+          |   a.avant-garde-button-black Log in using Facebook
+          |   a.avant-garde-button-black Log in using MeowMeowBeenz

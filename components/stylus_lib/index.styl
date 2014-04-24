@@ -7,39 +7,24 @@
 
 @import '../../node_modules/nib'
 
-default-avant-garde-font-size         = 14px
-default-garamond-font-size            = 16px
-large-avant-garde-font-size           = 24px
-light-gray-border-color               = #e5e5e5
-light-gray-transparent-border-color   = rgba(0,0,0,.125)
-dark-gray-border-color                = #ccc
-dark-gray-text-color                  = #666
-light-gray-text-color                 = #999
-light-gray-background-color           = #efefef
-light-gray-background-hover-color     = #dbdbdb
-faint-gray-background-hover-color     = #eee
-highlight-color                       = #6a0bc1
-highlight-underline-color             = #b179d4
-highlighter-background-color          = #f9f8d8
-placeholder-color                     = #999
-light-placeholder-color               = #d9d9d9
-bad-red-color                         = #cc3333
-bad-red-background-color              = #f4acb2
-red-text-color                        = #c73030
-info-yellow-background-color          = #ffffd7
-info-yellow-border-color              = #ccc8a2
-green-background-color                = #4f8200
-light-green-text-color                = #b0d766
-content-margin-top                    = 10px
-home-logo-size                        = 52px
-body-min-width                        = 950px
-default-max-page-width                = 1400px
-main-header-height                    = 53px
-welcome-header-height                 = 85px
-layout-side-margin                    = 55px
-golden-ratio-small-percent            = 38%
-feed-max-width                        = 1084px
+// Widths
+default-avant-garde-font-size   = 14px
+default-garamond-font-size      = 16px
+large-avant-garde-font-size     = 24px
+content-margin-top              = 10px
+home-logo-size                  = 52px
+body-min-width                  = 950px
+default-max-page-width          = 1400px
+main-header-height              = 53px
+welcome-header-height           = 85px
+layout-side-margin              = 55px
+golden-ratio-small-percent      = 38%
+feed-max-width                  = 1084px
 
+// Colors
+json('colors.json')
+
+// Typography
 avant-garde()
   font-family 'AvantGardeGothicITCW01D 731075', 'AvantGardeGothicITCW01Dm', 'Helvetica', 'sans-serif'
   font-smoothing antialiased
@@ -49,6 +34,11 @@ garamond()
   font-family 'adobe-garamond-pro', 'AGaramondPro-Regular', 'Times New Roman', 'Times', 'serif'
   font-smoothing antialiased
 
+monospace()
+  font-family 'Menlo', 'Monaco', 'Andale Mono', 'lucida console', 'Courier New', 'monospace'
+  font-smoothing antialiased
+
+// Utilities
 force-hardware-acceleration()
   transform translate3d(0, 0, 0)
 
