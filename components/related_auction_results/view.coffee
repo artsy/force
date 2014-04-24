@@ -36,5 +36,8 @@ module.exports = class RelatedAuctionResultsView extends Backbone.View
     results = _.first @auctionResults.resultsWithImages(), 2
 
     @$el.
-      html(template auctionResults: results, artistId: @artistId).
-      addClass 'is-fade-in'
+      html(template
+        user           : @user
+        auctionResults : results
+        artistId       : @artistId
+      ).addClass 'is-fade-in'

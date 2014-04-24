@@ -21,7 +21,6 @@ describe 'RelatedAuctionResultsView', ->
     sinon.stub Backbone, 'sync'
     RelatedAuctionResultsView.__set__ 'mediator', { trigger: @triggerStub = sinon.stub() }
     @view = new RelatedAuctionResultsView
-      el       : $('<div></div>')
       amount   : 4
       artistId : 'foo-bar'
     Backbone.sync.args[0][2].success [
@@ -39,6 +38,14 @@ describe 'RelatedAuctionResultsView', ->
       @view.$('.related-auction-result').length.should.equal 2
       @view.$('.rar-thumbnail img').attr('src').should.equal 'http://static1.artsy.net/auction_lots/51d041844c91c616610005a0/original.jpg'
       @view.$('.rar-title').first().text().should.equal 'MADONNA PAINTING (1985)'
+
+    it 'does not have the price for logged out users', ->
+      @view.$('.rar-price').length.should.equal 0
+
+    it 'has the price if you are logged in', ->
+      @view.user = 'existy'
+      @view.render()
+      @view.$('.rar-price').length.should.equal 2
 
   describe '#clickResult', ->
     it 'triggers a modal for logged out users', ->
