@@ -1,16 +1,21 @@
-_             = require 'underscore'
-{ fabricate } = require 'antigravity'
-sd            = require('sharify').data
-should        = require 'should'
-Backbone      = require 'backbone'
-PartnerShow   = require '../../models/partner_show'
-PartnerLocation = require '../../models/partner_location'
-FairLocation    = require '../../models/partner_location'
+_                 = require 'underscore'
+{ fabricate }     = require 'antigravity'
+sd                = require('sharify').data
+should            = require 'should'
+Backbone          = require 'backbone'
+PartnerShow       = require '../../models/partner_show'
+PartnerLocation   = require '../../models/partner_location'
+FairLocation      = require '../../models/partner_location'
+sinon             = require 'sinon'
 
 describe 'PartnerShow', ->
 
   beforeEach ->
+    sinon.stub Backbone, 'sync'
     @partnerShow = new PartnerShow fabricate('show')
+
+  afterEach ->
+    Backbone.sync.restore()
 
   describe '#url', ->
 
@@ -89,3 +94,25 @@ describe 'PartnerShow', ->
           display: 'Booth 1234'
 
       @partnerShow.fairLocationDisplay().should.equal "<i>New York</i> &ndash; Booth 1234"
+
+  describe '#posterImageUrl', ->
+    it 'returns an image', ->
+      @partnerShow.posterImageUrl().should.include 'partner_show_images/51f6a51d275b24a787000c36/1/large.jpg'
+
+    it 'returns a featured image', ->
+      @partnerShow.posterImageUrl(true).should.include '/partner_show_images/51f6a51d275b24a787000c36/1/featured.jpg'
+
+    it 'returns larger if featured or large is unavailable', (done) ->
+      @partnerShow.on 'fetch:posterImageUrl', (url) ->
+        url.should.include 'additional_images/4e7cb83e1c80dd00010038e2/1/large.jpg'
+        done()
+
+      @partnerShow.unset 'image_versions'
+      @partnerShow.posterImageUrl()
+      Backbone.sync.args[0][2].url.should.include "/api/v1/partner/#{@partnerShow.get('partner').id}/show/#{@partnerShow.id}/artworks"
+      Backbone.sync.args[0][2].success [fabricate 'artwork']
+
+    it 'returns empty when there really is no image', ->
+      @partnerShow.unset 'image_versions'
+      @partnerShow.posterImageUrl()
+      Backbone.sync.args[0][2].success []
