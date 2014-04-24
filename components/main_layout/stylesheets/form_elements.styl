@@ -50,6 +50,11 @@ bordered-input-placeholder--autofocus-focus()
 
 .typed-bordered-input
   position relative
+  display inline-block
+  &.is-block
+    &, & > .bordered-input
+      display block
+      width 100%
   > span
     position absolute
     display block
