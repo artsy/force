@@ -62,5 +62,7 @@ errorHandler.socialAuthError = (err, req, res, next) ->
     res.redirect '/user/edit?error=twitter-already-linked'
   else if err.toString().match("Another Account Already Linked: Facebook")
     res.redirect '/user/edit?error=facebook-already-linked'
+  else if err.toString().match "Could not authenticate you"
+    res.redirect '/user/edit?error=could-not-auth'
   else
     res.redirect '/log_in?error=' + err.toString()

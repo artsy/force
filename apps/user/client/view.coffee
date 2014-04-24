@@ -58,6 +58,8 @@ module.exports.UserSettingsView = class UserSettingsView extends Backbone.View
         "Twitter account already linked to another Artsy user." + support
       else if location.search.match 'facebook-already-linked'
         "Facebook account already linked to another Artsy user." + support
+      else if location.search.match 'could-not-auth'
+        "\"Could not authenticate you\" error from our API." + support
     )
 
   renderSuccess: ->
