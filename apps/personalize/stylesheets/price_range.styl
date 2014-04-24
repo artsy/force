@@ -4,7 +4,7 @@
     aside
       text-align center
       margin 40px 0
-      color dark-gray-text-color
+      color gray-darker-color
       font-size 16px
 
 // 3d toggle button
@@ -37,16 +37,16 @@
   backface-visibility hidden
   z-index 2
   cursor pointer
-  border 2px solid light-gray-border-color
+  border 2px solid gray-lighter-color
   border-radius (@width / 2)
   transition border-color 0.25s
   &:hover
-    border-color highlight-color
+    border-color purple-color
   &.is-front
     position absolute
     z-index 1
   &.is-back
     transform rotateX(-180deg)
-    background-color highlight-color
-    border-color highlight-color
+    background-color purple-color
+    border-color purple-color
     color white

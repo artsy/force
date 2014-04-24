@@ -45,7 +45,7 @@ three-height  = 72px
   right one-arrow-size
   width (one-width - one-arrow-size)
   height one-height
-  background-color highlight-color
+  background-color purple-color
   // Hack to anti-alias the arrow-head in Firefox
   -moz-transform scale(.9999)
   &:after
@@ -58,7 +58,7 @@ three-height  = 72px
     border solid transparent
     border-top-width (one-height / 2)
     border-bottom-width (one-height / 2)
-    border-left one-arrow-size solid highlight-color
+    border-left one-arrow-size solid purple-color
 
 .zzb-two
   position absolute
@@ -70,7 +70,7 @@ three-height  = 72px
     display block
     position absolute
     content ''
-    background-color darken(highlight-color, 65%)
+    background-color darken(purple-color, 65%)
     height two-height
     width three-width
     transform rotate(27deg)
@@ -81,7 +81,7 @@ three-height  = 72px
   height three-height
   bottom 0
   right (banner-box-width - three-width)
-  background-color highlight-color
+  background-color purple-color
   &.is-in
     width three-width
 
@@ -107,9 +107,9 @@ three-height  = 72px
   transform translateY(-50%)
   padding 7px 10px
   background-color white
-  color highlight-color
+  color purple-color
   font-size 26px
-  border 3px solid highlight-color
+  border 3px solid purple-color
   cursor pointer
   &:hover
     border-color white

@@ -11,7 +11,7 @@
   text-align center
   line-height @height
   vertical-align middle
-  border 2px solid light-gray-border-color
+  border 2px solid gray-lighter-color
   border-radius (@width / 2)
   opacity 1
   transition opacity 0.125s
@@ -30,7 +30,7 @@
     right -5px
     left -5px
   &:hover
-    background-color dark-gray-text-color
+    background-color gray-darker-color
     border-color @background-color
     color white
     &:after
@@ -43,20 +43,20 @@
   &:after
     content 'Favorite'
   &[data-state='saved']
-    background-color highlight-color
+    background-color purple-color
     border-color @background-color
     &:before
       color white
     &:after
       content 'Saved'
-      color highlight-color
+      color purple-color
     &:hover
-      background-color dark-gray-text-color
+      background-color gray-darker-color
       border-color @background-color
       &:after
         color @background-color
       &.is-clicked
-        background-color highlight-color
+        background-color purple-color
         border-color @background-color
         &:after
           color @background-color

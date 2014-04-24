@@ -12,7 +12,7 @@
   height @width
   cursor pointer
   color white
-  background-color dark-gray-text-color
+  background-color gray-darker-color
   background-color rgba(0, 0, 0, 0.4)
   text-align center
   font-size 16px
@@ -24,13 +24,13 @@
     background-color black
   &[data-state='saved']
     opacity 1
-    background-color highlight-color
+    background-color purple-color
     &:hover
-      background-color bad-red-color
+      background-color red-color
       &:before
         content '\e621'
       &.is-clicked
-        background-color highlight-color
+        background-color purple-color
 
 .overlay-button-save
   @extends .overlay-button

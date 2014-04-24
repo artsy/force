@@ -7,7 +7,7 @@ suggestion-height           = (suggestion-thumbnail-size + 20px)
 #main-layout-search-bar-container
   position relative
   width calc('100% - %s' % logo-size)
-  border-left 1px solid light-gray-border-color
+  border-left 1px solid gray-lighter-color
 
   &.is-open
     #main-layout-search-bar-suggested
@@ -34,8 +34,8 @@ suggestion-height           = (suggestion-thumbnail-size + 20px)
   line-height logo-size
   opacity 0
   background-color #fff
-  border 1px solid light-gray-border-color
-  background-color light-gray-background-color
+  border 1px solid gray-lighter-color
+  background-color gray-lightest-color
   overflow ellipsis
 
 #main-layout-search-bar-spinner
@@ -70,10 +70,10 @@ search-bar-input-placeholder()
     width calc('100% + 2px')
     margin-left -1px
     background-color #fff
-    border 1px solid light-gray-border-color
+    border 1px solid gray-lighter-color
 
   .tt-suggestion
-    border-bottom 1px solid light-gray-border-color
+    border-bottom 1px solid gray-lighter-color
     &:last-child
       border-bottom none
     &:hover
@@ -106,7 +106,7 @@ search-bar-input-placeholder()
   display block
   width suggestion-thumbnail-size
   height suggestion-thumbnail-size
-  background-color light-gray-background-color
+  background-color gray-lightest-color
   // Display person icon
   &::before
     display block
@@ -128,4 +128,4 @@ search-bar-input-placeholder()
 .mlsb-suggestion-kind
   margin-left 10px
   font-style italic
-  color dark-gray-text-color
+  color gray-darker-color

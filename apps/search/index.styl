@@ -1,7 +1,7 @@
 @import '../../components/stylus_lib'
 
 .is-highlighted
-  background-color highlighter-background-color
+  background-color yellow-light-color
   color #000
 
 #search-page
@@ -14,11 +14,11 @@
   display table
   position relative
   width 100%
-  border-top 1px solid light-gray-border-color
+  border-top 1px solid gray-lighter-color
   text-decoration none
   transition all 0.125s
   &:last-child
-    border-bottom 1px solid light-gray-border-color
+    border-bottom 1px solid gray-lighter-color
 
 .search-result.published-search-result
   &:after
@@ -30,7 +30,7 @@
     margin-top -(@height / 2)
     iconfont-styling()
     content '\e61c'
-    color dark-gray-border-color
+    color gray-color
   &:hover
     background-color #000
     &
@@ -39,10 +39,10 @@
       color #fff
 
 .search-result.unpublished-search-result
-  color dark-gray-text-color
+  color gray-darker-color
   cursor default
   .search-result-kind
-    color dark-gray-text-color
+    color gray-darker-color
 
 .search-result-thumbnail
 .search-result-info
@@ -56,7 +56,7 @@
   position relative
   width 70px
   height @width
-  background-color light-gray-background-color
+  background-color gray-lightest-color
   &.is-human::before
     display block
     position absolute
@@ -80,4 +80,4 @@
 .search-result-kind
   padding-top 10px
   line-height 1
-  color dark-gray-text-color
+  color gray-darker-color

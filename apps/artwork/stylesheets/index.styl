@@ -16,7 +16,7 @@ artwork-detail-item-height  = 36px
     clearfix()
     margin 20px 0
     padding 20px 0
-    border-top 1px solid light-gray-border-color
+    border-top 1px solid gray-lighter-color
     h2
     h3
       margin 10px 0
@@ -83,7 +83,7 @@ artwork-detail-item-height  = 36px
     height 100%
   &.is-active
   &[data-state='active']
-    border-color highlight-color
+    border-color purple-color
 
 .artwork-image-actions
   padding 10px
@@ -140,7 +140,7 @@ artwork-detail-item-height  = 36px
   width 100%
   border-top 1px dotted
   border-bottom 1px dotted
-  border-color transparify(light-gray-border-color, black)
+  border-color transparify(gray-lighter-color, black)
   margin 10px 0
   line-height artwork-detail-item-height
 .artwork-meta-price-label
@@ -152,7 +152,7 @@ artwork-detail-item-height  = 36px
   &.is-sold
     avant-garde()
     font-size 15px
-    color bad-red-color
+    color red-color
 
 .artwork-actions
   margin-top 20px
@@ -168,20 +168,20 @@ artwork-detail-item-height  = 36px
   border-bottom 2px solid
   font-size 17px
   &.is-highest
-    color highlight-color
+    color purple-color
   &.is-outbid
-    color bad-red-color
+    color red-color
 
 .artwork-bid-status
   margin 10px 0
   padding 10px 0
   border-top 1px dotted
   border-bottom 1px dotted
-  border-color transparify(light-gray-border-color, black)
+  border-color transparify(gray-lighter-color, black)
 .abs-bid
   font-weight bold
 .abs-count
-  color transparify(light-gray-text-color, black)
+  color transparify(gray-dark-color, black)
 .abs-amount
   avant-garde()
   font-size 24px
@@ -194,10 +194,10 @@ artwork-detail-item-height  = 36px
     margin 5px 0
   input
     width 100%
-    border-color transparify(light-gray-border-color, black)
+    border-color transparify(gray-lighter-color, black)
 .abf-min-next
   margin 5px 0
-  color transparify(light-gray-text-color, black)
+  color transparify(gray-dark-color, black)
 .abf-button
   margin 10px 0
 .abf-validation-error
@@ -206,12 +206,12 @@ artwork-detail-item-height  = 36px
   padding 10px 0
   border-top 2px solid
   border-bottom 2px solid
-  color bad-red-color
+  color red-color
   font-size 15px
 .abf-help
   margin 10px 0
   > a
-    color transparify(light-gray-text-color, black)
+    color transparify(gray-dark-color, black)
     font-size 15px
     font-style italic
 
@@ -235,7 +235,7 @@ artwork-detail-item-height  = 36px
     font-size 11px
     line-height 1.2
     letter-spacing 0
-    color dark-gray-text-color
+    color gray-darker-color
 
 .artwork-edition-sets
   margin 10px 0
@@ -246,7 +246,7 @@ artwork-detail-item-height  = 36px
   font-size 13px
   line-height 1.5
   border-bottom 1px dotted
-  border-color transparify(light-gray-border-color, black)
+  border-color transparify(gray-lighter-color, black)
   clearfix()
   &:first-child
     border-top 1px dotted
@@ -256,7 +256,7 @@ artwork-detail-item-height  = 36px
 .aes-radio
   margin-right 10px
 .aes-edition-size
-  color dark-gray-text-color
+  color gray-darker-color
 .aes-price
   position absolute
   top 5px
@@ -265,7 +265,7 @@ artwork-detail-item-height  = 36px
 .artwork-actions-list
   margin-top 20px
   border-top 1px dotted
-  border-color transparify(light-gray-border-color, black)
+  border-color transparify(gray-lighter-color, black)
   > a
     display block
     position relative
@@ -274,7 +274,7 @@ artwork-detail-item-height  = 36px
     text-decoration none
     transition all 0.125s
     border-bottom 1px dotted
-    border-color transparify(light-gray-border-color, black)
+    border-color transparify(gray-lighter-color, black)
     &.is-hidden
       display none
     > i
@@ -287,7 +287,7 @@ artwork-detail-item-height  = 36px
       // Tone down superscript a bit
       vertical-align 4px
     &:hover
-      background-color highlight-color
+      background-color purple-color
       border-color @background-color
       color white
       transition none
@@ -297,7 +297,7 @@ artwork-detail-item-height  = 36px
   > span:before
     content 'Follow artist'
   &[data-state='following']
-    color highlight-color
+    color purple-color
     > span:before
       content 'Following artist'
 
