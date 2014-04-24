@@ -5,6 +5,8 @@ template = -> require('./template.jade') arguments...
 FlashMessage = require '../../../../components/flash/index.coffee'
 analytics = require '../../../../lib/analytics.coffee'
 
+{ readCookie } = require '../../../../components/util/cookie.coffee'
+
 module.exports = class ContactView extends Backbone.View
 
   initialize: ->
@@ -33,7 +35,15 @@ module.exports = class ContactView extends Backbone.View
       message: @$('textarea').val()
       name: @user?.get('name') or @$('[name=name]').val()
       session_id: if @user then undefined else SESSION_ID
+      referring_url  : readCookie('force-referrer')
+      landing_url    : readCookie('force-session-start')
+      inquiry_url    : window.location.pathname
+
     analytics.track.funnel 'Contact form submitted', data
+
+    analytics.track.funnel 'Sent artwork inquiry',
+      label : analytics.modelNameAndIdToLabel('artwork', @model.get('id'))
+
     $.ajax
       url: "/api/v1/me/artwork_inquiry_request"
       type: "POST"

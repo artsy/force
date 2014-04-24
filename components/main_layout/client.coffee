@@ -1,5 +1,6 @@
 Backbone        = require 'backbone'
 Backbone.$      = $
+_               = require 'underscore'
 HeaderView      = require './header/view.coffee'
 FooterView      = require './footer/view.coffee'
 sd              = require('sharify').data
@@ -11,6 +12,7 @@ iframePopover   = require '../iframe_popover/index.coffee'
 module.exports = ->
   setupJquery()
   setupViews()
+  setupReferrerTracking()
 
 setupAnalytics = ->
   # Initialize analytics & track page view if we included mixpanel
@@ -26,6 +28,11 @@ setupAnalytics = ->
       'Visited logged in'
     else
       'Visited logged out'
+
+setupReferrerTracking = ->
+  if document?.referrer?.indexOf and document.referrer.indexOf(sd.APP_URL) < 0 and readCookie('force-referrer') != document.referrer
+    createCookie 'force-referrer', document.referrer
+    createCookie 'force-session-start', window.location.pathname
 
 setupViews = ->
   new HeaderView el: $('#main-layout-header'), $window: $(window), $body: $('body')
