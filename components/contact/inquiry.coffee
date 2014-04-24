@@ -7,6 +7,8 @@ analytics = require('../../lib/analytics.coffee')
 formTemplate = -> require('./templates/inquiry_form.jade') arguments...
 headerTemplate = -> require('./templates/inquiry_header.jade') arguments...
 
+{ readCookie } = require '../util/cookie.coffee'
+
 module.exports = class InquiryView extends ContactView
 
   headerTemplate: (locals) ->
@@ -38,11 +40,16 @@ module.exports = class InquiryView extends ContactView
 
   submit: ->
     analytics.track.funnel 'Sent artwork inquiry',
-      label: analytics.modelNameAndIdToLabel('artwork', @artwork.get('id'))
+      label : analytics.modelNameAndIdToLabel('artwork', @artwork.get('id'))
+
     @model.set
-      artwork: @artwork.id
+      artwork        : @artwork.id
       contact_gallery: false
-      session_id: SESSION_ID
+      session_id     : SESSION_ID
+      referring_url  : readCookie('force-referrer')
+      landing_url    : readCookie('force-session-start')
+      inquiry_url    : window.location.pathname
+
     super
 
   events: -> _.extend super,
