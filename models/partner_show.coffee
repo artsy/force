@@ -57,7 +57,7 @@ module.exports = class PartnerShow extends Backbone.Model
 
     # if not, try the image of its first artwork, if we already have some
     size = 'larger' if featured
-    if @artworks?.length > 0
+    if @artworks?.length
       return @artworks.first().defaultImage().imageUrl size
 
     # if not, fetch some artworks and use one of their images
@@ -67,8 +67,9 @@ module.exports = class PartnerShow extends Backbone.Model
       url     : "#{@url()}/artworks"
       cache   : true
       success : =>
-        imageUrl = @artworks.first().defaultImage().imageUrl size
-        @trigger "fetch:posterImageUrl", imageUrl
+        if @artworks?.length
+          imageUrl = @artworks.first().defaultImage().imageUrl size
+          @trigger "fetch:posterImageUrl", imageUrl
     @artworks.fetch options
     false
 
