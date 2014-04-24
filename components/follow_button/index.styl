@@ -3,13 +3,13 @@
     content 'Follow'
 
   &[data-state='following'], &.is-following
-    color highlight-color
+    color purple-color
     &:before
       content 'Following'
   &.no-touch[data-state='following'],
   &.no-touch.is-following
     &:hover
-      color bad-red-color
+      color red-color
       &:before
         content 'Unfollow'
       &.is-clicked:before

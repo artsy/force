@@ -1,0 +1,47 @@
+h3 Forms
+
+article.sg-component
+  h3 Default Input
+  .sg-component-rendered
+    input.bordered-input.sg-display( placeholder='First Name' )
+    input.bordered-input.sg-display.is-error( placeholder='First Name' )
+    input.bordered-input.sg-display( placeholder='First Name', disabled )
+  pre: code input.bordered-input( placeholder='First Name' )
+
+article.sg-component
+  h3 Default Textarea
+  .sg-component-rendered
+    textarea.bordered-input.sg-display( placeholder='Your Message' )
+    textarea.bordered-input.sg-display.is-error( placeholder='Your Message' )
+    textarea.bordered-input.sg-display( placeholder='Your Message', disabled )
+  pre: code textarea.bordered-input( placeholder='Your Message' )
+
+
+article.sg-component
+  h3 Structural Variants
+  .sg-component-rendered
+    input.bordered-input.is-block.sg-display( placeholder='First Name' )
+    textarea.bordered-input.is-block.sg-display( placeholder='Your Message' )
+  pre: code
+    | input.bordered-input.is-block( placeholder='First Name' )
+    | textarea.bordered-input.is-block( placeholder='Your Message' )
+
+article.sg-component
+  h3 Typed Input
+  .sg-component-rendered
+    .typed-bordered-input.sg-display
+      span $
+      input.bordered-input.sg-d( placeholder='Amount' )
+  pre: code
+    | .typed-bordered-input
+    |   span $
+    |   input.bordered-input( placeholder='Amount' )
+
+article.sg-component
+  h3 Toggle Switches
+  .sg-component-rendered
+    a.artsy-toggle.sg-display( data-state='on' ): .artsy-toggle-dot
+    a.artsy-toggle.sg-display( data-state='off' ): .artsy-toggle-dot
+  pre: code
+    | a.artsy-toggle( data-state='on' ): .artsy-toggle-dot
+    | a.artsy-toggle( data-state='off' ): .artsy-toggle-dot

@@ -4,7 +4,7 @@
 bordered-input-placeholder()
   garamond()
   font-size default-garamond-font-size
-  color placeholder-color
+  color gray-dark-color
   transition opacity 0.5s
 bordered-input-placeholder--focus()
   opacity 0
@@ -19,7 +19,7 @@ bordered-input-placeholder--autofocus-focus()
 .bordered-input
   margin 0
   padding 10px
-  border 2px solid light-gray-border-color
+  border 2px solid gray-lighter-color
   border-radius 0
   box-shadow none
   garamond()
@@ -28,13 +28,13 @@ bordered-input-placeholder--autofocus-focus()
   transition border-color 0.25s
   placeholder(bordered-input-placeholder)
   &:focus, &:active
-    border-color highlight-color
+    border-color purple-color
     outline none
     transition border-color 0.5s
     placeholder(bordered-input-placeholder--focus)
 
   &:disabled
-    border dotted 2px light-gray-border-color
+    border dotted 2px gray-lighter-color
 
   // Autofocused inputs should retain placeholders
   &[autofocus]:focus
@@ -42,7 +42,7 @@ bordered-input-placeholder--autofocus-focus()
 
   &[data-state=error]
   &.is-error
-    border-color bad-red-color
+    border-color red-color
 
   &.is-block
     display block
@@ -50,13 +50,18 @@ bordered-input-placeholder--autofocus-focus()
 
 .typed-bordered-input
   position relative
+  display inline-block
+  &.is-block
+    &, & > .bordered-input
+      display block
+      width 100%
   > span
     position absolute
     display block
     top 50%
     left 15px
     transform translateY(-50%)
-    color light-gray-text-color
+    color gray-dark-color
     pointer-events none
   > .bordered-input
     padding-left 30px
@@ -75,7 +80,7 @@ bordered-input-placeholder--autofocus-focus()
   font-size 16px
   width 100%
   padding 10px
-  border 2px solid light-gray-border-color
+  border 2px solid gray-lighter-color
   border-radius 0px
   box-shadow none
   appearance none
@@ -95,9 +100,9 @@ textarea.bordered-input
 .artsy-toggle
   avant-garde()
   background-color white
-  border 2px solid light-placeholder-color
+  border 2px solid gray-light-color
   border-radius 15px
-  color light-placeholder-color
+  color gray-color
   cursor pointer
   display inline-block
   line-height 17px
@@ -106,7 +111,7 @@ textarea.bordered-input
   width 56px
   &:focus, &:hover
     & + .artsy-toggle-label
-      color highlight-color
+      color purple-color
 
   &::after
     content attr(data-state)
@@ -131,8 +136,8 @@ textarea.bordered-input
       content "\25CF"
 
   &[data-state='on']
-    background-color highlight-color
-    border-color highlight-color
+    background-color purple-color
+    border-color purple-color
     .artsy-toggle-dot
       color white
       left 33px
@@ -151,7 +156,7 @@ textarea.bordered-input
     content '\2026'
 
 .artsy-toggle-label:hover
-  color highlight-color
+  color purple-color
   cursor pointer
 
 // Help Tooltips
@@ -170,7 +175,7 @@ textarea.bordered-input
   text-align center
   transition background-color 0
   &::before
-    background-color dark-gray-text-color
+    background-color gray-darker-color
     border-radius 7px
     color white
     content '?'

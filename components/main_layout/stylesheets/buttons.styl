@@ -7,7 +7,7 @@
   text-decoration none
   transition color 0.25s
   &:hover
-    color highlight-color
+    color purple-color
 
 .play-button
   background-color: #000
@@ -21,7 +21,7 @@
   position: absolute
   transition background-color 0.3s
   &:hover
-    background-color: highlight-color
+    background-color: purple-color
   .play-button-arrow
     width: 0
     height: 0
@@ -42,27 +42,27 @@
   line-height 1
   cursor pointer
   border none
-  background-color light-gray-background-color
+  background-color gray-lightest-color
   avant-garde()
   transition background-color 0.25s, color 0.25s
   text-decoration none
   &:focus, &:hover
     outline none
-    background-color light-gray-background-hover-color
+    background-color gray-light-color
   // States
   &[data-state='success'], &.is-success
-    background-color green-background-color
+    background-color green-color
     color #fff
     &:hover
-      background-color darken(green-background-color, 25%)
+      background-color darken(green-color, 25%)
   &[data-state='error'], &.is-error
     &, &:focus
-      background-color bad-red-color
+      background-color red-color
       color #fff
       &:hover
-        background-color darken(bad-red-color, 25%)
+        background-color darken(red-color, 25%)
   &[data-state='loading'], &.is-loading
-    background-color highlight-color
+    background-color purple-color
     color transparent !important
     // Note:
     // Giving the loading state to input[type='submit']
@@ -75,15 +75,15 @@
 
   &[disabled], &.is-disabled, &.is-disabled
     &, &:hover
-      background-color light-gray-background-color
+      background-color gray-lightest-color
       cursor default
       color rgba(black, 0.5)
       &[data-state='success'], &.is-success
-        background-color green-background-color
-        color light-green-text-color
+        background-color green-color
+        color green-light-color
       &[data-state='error'], &.is-error
-        background-color bad-red-color
-        color bad-red-background-color
+        background-color red-color
+        color red-light-color
 
   // Structural variants
   &.is-block
@@ -109,35 +109,35 @@
   background-color black
   color #fff
   &:focus, &:hover
-    background-color highlight-color
+    background-color purple-color
   &[disabled], &.is-disabled
     &, &:hover
-      background-color dark-gray-text-color
+      background-color gray-darker-color
 
 .avant-garde-button-white
   @extends .avant-garde-button
   background-color transparent
-  border 1px solid light-gray-border-color
+  border 1px solid gray-lighter-color
   &:focus, &:hover, &:active
-    color highlight-color
+    color purple-color
     background-color transparent
   &[data-state='success'], &.is-success
     background-color transparent
-    color green-background-color
+    color green-color
     &:hover
       background-color transparent
-      color highlight-color
+      color purple-color
   &[data-state='error'], &.is-error
     &, &:focus
       background-color transparent
-      color bad-red-color
+      color red-color
       &:hover
         background-color transparent
-        color highlight-color
+        color purple-color
   &[data-state='loading'], &.is-loading
     background-color white
     &::before
-      background-color highlight-color
+      background-color purple-color
   &[disabled], &.is-disabled
     &, &:hover
       background-color transparent
