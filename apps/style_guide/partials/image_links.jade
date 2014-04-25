@@ -1,0 +1,31 @@
+h3 Image Links
+.sg-description
+  p
+    | Utility classes for displaying linked thumbnails that fade to 50% opacity, backed by the color black.
+    | Includes two helper classes
+    code .is-four-three
+    | and
+    code .is-three-two
+    | for cropping arbitrarily sized images to the ratios 4/3 and 3/2, repsectively.
+    | Cropped images can be sized with percentages and the width/height ratio will remain consistent as the browser window is resized.
+
+
+article.sg-component
+  h3 Hoverable Image Links
+  .sg-component-rendered
+    a.hoverable-image-link.sg-display( style='width: 33%; ')
+      img( src='https://d1ycxz9plii3tb.cloudfront.net/additional_images/528df90d275b246f6900096d/large.jpg' )
+
+    a.hoverable-image-link.sg-display( style='width: 25%; ')
+      .hoverable-image.is-four-three( style='background-image: url(https://d1ycxz9plii3tb.cloudfront.net/additional_images/50324ffa2b117f0002000551/large.jpg);' )
+    a.hoverable-image-link.sg-display( style='width: 25%; ')
+      .hoverable-image.is-three-two( style='background-image: url(https://d1ycxz9plii3tb.cloudfront.net/additional_images/50324ffa2b117f0002000551/large.jpg);' )
+
+  pre: code
+    | a.hoverable-image-link: img( src='...' )
+  pre: code
+    | a.hoverable-image-link
+    |   .hoverable-image.is-four-three( style='background-image: url(...);' )
+  pre: code
+    | a.hoverable-image-link
+    |   .hoverable-image.is-three-two( style='background-image: url(...);' )

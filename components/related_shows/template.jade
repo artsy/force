@@ -1,22 +1,24 @@
 h3.avant-garde-header-center
   | Shows including #{artist.get('name')}
 
-.related-show-featured
-  a.rsf-image( href=featuredShow.href() )
-    img( src= featuredShow.posterImageUrl() )
-  .rsf-metadata
-    if featuredShow.get('partner').name !== featuredShow.get('name')
-      h4.rsf-partner-name.avant-garde-header-center
-        a( href="/#{featuredShow.get('partner').default_profile_id}" )
-          = featuredShow.get('partner').name
-    a( href=featuredShow.href() )
-      h4.rsf-name= featuredShow.get('name')
-      if featuredShow.get('start_at') && featuredShow.get('end_at')
-        .rsf-timeframe!= featuredShow.runningDates()
+if shows.length === 1
+  - show = shows.first()
+  .related-show-featured
+    a.rsf-image( href=show.href() )
+      img( src= show.posterImageUrl() )
+    .rsf-metadata
+      if show.get('partner').name !== show.get('name')
+        h4.rsf-partner-name.avant-garde-header-center
+          a( href="/#{show.get('partner').default_profile_id}" )
+            = show.get('partner').name
+      a( href=show.href() )
+        h4.rsf-name= show.get('name')
+        if show.get('start_at') && show.get('end_at')
+          .rsf-timeframe!= show.runningDates()
 
-if relatedShows.length
+if shows.length > 1
   .related-shows-rest
-    for show in relatedShows
+    for show in shows.models
       .related-show
         a.rsr-image(
           href=show.href()
@@ -25,7 +27,7 @@ if relatedShows.length
         .rsr-metadata
           if show.get('partner').name !== show.get('name')
             h4.rsr-partner-name.avant-garde-header-center
-              a( href="/#{featuredShow.get('partner').default_profile_id}" )
+              a( href="/#{show.get('partner').default_profile_id}" )
                 = show.get('partner').name
           a( href=show.href() )
             h4.rsr-name= show.get('name')

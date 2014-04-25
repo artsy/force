@@ -40,6 +40,7 @@ module.exports = class BidForm extends ErrorHandlingForm
     @timesPolledForBidPlacement = 0
     @$submit.addClass('is-loading')
     @clearErrors()
+
     if @getBidAmount() >= @saleArtwork.get('minimum_next_bid_cents')
       bidderPosition = new BidderPosition
         sale_id              : @model.get('id')
@@ -65,7 +66,3 @@ module.exports = class BidForm extends ErrorHandlingForm
 
   showSuccessfulBidMessage: =>
     window.location = @saleArtwork.artwork().bidSuccessUrl()
-
-  showErrors: (errors) =>
-    @$('.errors').show().html errors.join('<br />')
-    @$submit.removeClass 'is-loading'

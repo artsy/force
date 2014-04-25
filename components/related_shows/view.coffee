@@ -17,9 +17,8 @@ module.exports = class RelatedShowsView extends Backbone.View
         @$el.
           addClass('is-fade-in').
           html template
-            artist       : @model
-            featuredShow : @collection.first()
-            relatedShows : @collection.rest()
+            artist : @model
+            shows  : @collection
       this
     else
       @remove()
