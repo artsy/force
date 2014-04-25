@@ -46,3 +46,24 @@
     transition color 0.25s
   &:hover > .icon-chevron-small-right
     color black
+
+// Hoverable images
+.hoverable-image-link
+  display inline-block
+  background-color black
+  &:hover > .hoverable-image
+  &:hover > img
+    opacity 0.5
+.hoverable-image-link > img
+.hoverable-image
+  max-width 100%
+  transition opacity 0.5s
+  &.is-three-two
+  &.is-four-three
+    line-height 0
+    background-size cover
+    background-position center center
+  &.is-three-two
+    padding-bottom 66.67%
+  &.is-four-three
+    padding-bottom 75%
