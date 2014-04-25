@@ -55,7 +55,7 @@ module.exports.track =
         _.defaults options,
           queryString: window?.location.search
           page: window?.location.pathname
-          referrer: document.referrer
+          referrer: document?.referrer
           collector_level: sd.CURRENT_USER?.collector_level
           user_id: sd.CURRENT_USER?.id
 
