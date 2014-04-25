@@ -7,11 +7,16 @@ block body
   #style-guide
     i#main-layout-welcome-logo.icon-logotype
 
+    section.sg-components.sg-grid
+      h2 Layout
+
+      include ./partials/grid
+
     section.sg-components
       h2 Colors
-      .sg-color-swatches
+      .grid-2-up.sg-color-swatches
         for hex, name in colors
-          .sg-color-swatch( style="background-color: #{hex};" )
+          .grid-item.sg-color-swatch( style="background-color: #{hex};" )
             = name
             br
             = hex

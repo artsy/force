@@ -2,14 +2,27 @@
 
 #style-guide
   margin 40px auto
-  max-width 960px
-
+  max-width 75%
   pre
+  code
     monospace()
-    padding 10px
     background-color gray-lightest-color
     font-size 13px
     line-height 1.45
+  pre
+    padding 10px
+  code
+    margin 0 0.5em
+
+.sg-grid
+  .grid-item
+    background-color gray-lightest-color
+    min-height 100px
+    line-height @min-height
+    text-align center
+    transition background-color 0.25s
+    &:hover
+      background-color gray-lighter-color
 
 .sg-description
   p
@@ -55,8 +68,6 @@
 
 .sg-color-swatch
   vertical-align top
-  display inline-block
-  width 25%
   height 150px
   text-align left
   avant-garde()
