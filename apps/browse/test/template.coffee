@@ -1,6 +1,7 @@
 jade            = require 'jade'
 path            = require 'path'
 fs              = require 'fs'
+cheerio         = require 'cheerio'
 Backbone        = require 'backbone'
 { fabricate }   = require 'antigravity'
 OrderedSet      = require '../../../models/ordered_set'
@@ -59,7 +60,7 @@ describe 'Browse', ->
         geneCategories: geneCategories
       )
 
-    it "should include all three genes and images", ->
+    it "includes all three genes and images", ->
       # featuredGenes
       @template.should.include 'browse-featured-gene'
       @template.should.include 'Featured Gene 1'
@@ -71,11 +72,24 @@ describe 'Browse', ->
       @template.should.include 'Chinese Art'
       @template.should.include 'Color Fields'
 
+    it 'includes partners (static list for now)', ->
+      $ = cheerio.load @template
+      @template.should.include 'Browse Partners'
+      $(".bpc-partners a[href='/galleries']").text().should.equal "Galleries A-Z"
+      $(".bpc-partners a[href='/institutions']").text().should.equal "Institutions A-Z"
+      $(".bpc-partners a[href='/sfmoma']").text().should.equal "SFMOMA"
+      $(".bpc-partners a[href='/britishmuseum']").text().should.equal "The British Museum"
+      $(".bpc-partners a[href='/gagosian-gallery']").text().should.equal "Gagosian Gallery"
+      $(".bpc-partners a[href='/pace-gallery']").text().should.equal "Pace Gallery"
+      $(".bpc-partners a[href='/white-cube']").text().should.equal "White Cube"
+      $(".bpc-partners a[href='/acquavella-galleries']").text().should.equal "Acquavella Galleries"
+      $(".bpc-partners a[href='/partners']").text().should.equal "See All"
+
   describe 'with no ordered sets', ->
     beforeEach ->
       @template = render()(
         sd: {}
       )
 
-    it "should not error", ->
+    it "does not error", ->
       @template.should.include 'Browse Works'
