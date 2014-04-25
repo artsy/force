@@ -118,3 +118,17 @@ describe 'SaleArtwork', ->
       @saleArtwork.set highest_bid_amount_cents: 200
       _.last(Backone.sync.args)[2].success()
       setInterval.restore()
+
+  describe '#cleanBidAmount', ->
+
+    it 'correctly cleans up and cleans bid amount', ->
+      # Handles prices with cents
+      @saleArtwork.cleanBidAmount('123.00').should.equal 12300
+      # Handles prices w/ cents > 0
+      @saleArtwork.cleanBidAmount('123.45').should.equal 12300
+      # Handles commas
+      @saleArtwork.cleanBidAmount('1,023.45').should.equal 102300
+      # Handles dollar signs
+      @saleArtwork.cleanBidAmount('$1,023.45').should.equal 102300
+      # Handles numbers
+      @saleArtwork.cleanBidAmount(1000).should.equal 100000

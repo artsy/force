@@ -114,11 +114,11 @@ describe 'AuctionDetailView', ->
       _.isUndefined(@view.validate '499.00').should.be.ok
       _.isUndefined(@view.validate '4,999.00').should.be.ok
 
-      @view.validate(5000).should.equal 5000
-      @view.validate('5000').should.equal 5000
-      @view.validate('5000.00').should.equal 5000
-      @view.validate('5,000.00').should.equal 5000
-      @view.validate('500,000').should.equal 500000
+      @view.validate(5000).should.equal 500000
+      @view.validate('5000').should.equal 500000
+      @view.validate('5000.00').should.equal 500000
+      @view.validate('5,000.00').should.equal 500000
+      @view.validate('500,000').should.equal 50000000
 
   describe '#displayValidationError', ->
     it 'displays the error when an invalid value is input and submitted', ->
@@ -133,7 +133,7 @@ describe 'AuctionDetailView', ->
       location = window.location
       @view.$('input').val('5000')
       @view.$('form').submit()
-      window.location.should.equal "/feature/#{@auction.id}/bid/#{@saleArtwork.id}?bid=5000"
+      window.location.should.equal "/feature/#{@auction.id}/bid/#{@saleArtwork.id}?bid=500000"
       window.location = location
 
     it 'triggers sign up if not logged in', ->
