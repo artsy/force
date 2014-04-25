@@ -40,7 +40,6 @@ module.exports = class BidForm extends ErrorHandlingForm
     @timesPolledForBidPlacement = 0
     @$submit.addClass('is-loading')
     @clearErrors()
-    console.log @getBidAmount(), @saleArtwork.get('minimum_next_bid_cents')
     if @getBidAmount(@$('input.max-bid').val()) >= @saleArtwork.get('minimum_next_bid_cents')
       bidderPosition = new BidderPosition
         sale_id              : @model.get('id')
