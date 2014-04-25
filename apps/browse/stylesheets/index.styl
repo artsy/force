@@ -49,15 +49,23 @@ column-width = 25%
   margin-right 20px
   width calc('33.3% - 20px')
   border-right 1px solid gray-lighter-color
-  &:last-child
-    border-right 0
   > h3
-    margin-bottom 30px
+    margin-bottom 15px
     avant-garde()
     font-size 13px
 
 .bpc-dynamic
-  width 100%
+  width calc('75% + 20px')
+
+.bpc-partners
+  width calc('25% - 20px')
+  > h3
+    margin-top 20px
+    avant-garde()
+    font-size 13px
+
+.highlight-link
+  overflow ellipsis
 
 // Browse filter
 #browse-filter-header
