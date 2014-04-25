@@ -59,4 +59,5 @@ describe 'RelatedShowsView', ->
       _.defer done
 
     it 'renders correctly', ->
-      @view.$('.related-show').length.should.equal 2
+      @view.$('.related-show-featured').length.should.equal 0
+      @view.$('.related-show').length.should.equal 3
