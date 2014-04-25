@@ -33,5 +33,4 @@ qs = require 'querystring'
         req.param('redirect_uri') or
         parse(req.get('Referrer') or '').path or
         '/'
-  console.log url
   res.redirect url
