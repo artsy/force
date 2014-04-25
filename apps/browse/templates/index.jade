@@ -32,6 +32,18 @@ block body
                 for category in categorySet.get('items').models
                   a.highlight-link( href=category.get('href') )
                     = category.get('title')
+          .bpc-column.bpc-partners
+            h1.large-garamond-header Browse Partners
+            a.highlight-link( href='/galleries') Galleries A-Z
+            a.highlight-link( href='/institutions') Institutions A-Z
+            h3 Featured
+            a.highlight-link( href='/sfmoma' ) SFMOMA
+            a.highlight-link( href='/britishmuseum' ) The British Museum
+            a.highlight-link( href='/gagosian-gallery' ) Gagosian Gallery
+            a.highlight-link( href='/pace-gallery' ) Pace Gallery
+            a.highlight-link( href='/white-cube' ) White Cube
+            a.highlight-link( href='/acquavella-galleries' ) Acquavella Galleries
+            a.highlight-link( href='/partners' ) See All
 
     h1#browse-filter-header.large-garamond-header Browse Works
     #browse-filter
