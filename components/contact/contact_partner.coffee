@@ -5,6 +5,7 @@ analytics = require('../../lib/analytics.coffee')
 Partner = require '../../models/partner.coffee'
 CurrentUser = require '../../models/current_user.coffee'
 { SESSION_ID, ARTSY_URL } = require('sharify').data
+{ readCookie } = require '../util/cookie.coffee'
 formTemplate = -> require('./templates/inquiry_form.jade') arguments...
 headerTemplate = -> require('./templates/inquiry_partner_header.jade') arguments...
 
@@ -45,9 +46,13 @@ module.exports = class ContactPartnerView extends ContactView
     analytics.track.funnel 'Sent artwork inquiry',
       label: analytics.modelNameAndIdToLabel('artwork', @artwork.get('id'))
     @model.set
-      artwork: @artwork.id
+      artwork        : @artwork.id
       contact_gallery: true
-      session_id: SESSION_ID
+      session_id     : SESSION_ID
+      referring_url  : readCookie('force-referrer')
+      landing_url    : readCookie('force-session-start')
+      inquiry_url    : window.location.pathname
+
     super
 
   postRender: =>
