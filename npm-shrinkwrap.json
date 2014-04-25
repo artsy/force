@@ -433,7 +433,7 @@
     "artsy-passport": {
       "version": "0.1.4",
       "from": "artsy-passport@git://github.com/artsy/artsy-passport.git",
-      "resolved": "git://github.com/artsy/artsy-passport.git#e7a6f46cd1393292cb077d439e3011b20ff6d26f",
+      "resolved": "git://github.com/artsy/artsy-passport.git#fe91de39bb118ef3a2dc00aaafc9a5815cc7ad63",
       "dependencies": {
         "passport": {
           "version": "0.2.0",
@@ -520,10 +520,12 @@
         "express": {
           "version": "3.4.7",
           "from": "express@3.4.7",
+          "resolved": "https://registry.npmjs.org/express/-/express-3.4.7.tgz",
           "dependencies": {
             "connect": {
               "version": "2.12.0",
               "from": "connect@2.12.0",
+              "resolved": "https://registry.npmjs.org/connect/-/connect-2.12.0.tgz",
               "dependencies": {
                 "batch": {
                   "version": "0.5.0",
@@ -543,7 +545,8 @@
                 },
                 "uid2": {
                   "version": "0.0.3",
-                  "from": "uid2@0.0.3"
+                  "from": "uid2@0.0.3",
+                  "resolved": "https://registry.npmjs.org/uid2/-/uid2-0.0.3.tgz"
                 },
                 "raw-body": {
                   "version": "1.1.2",
@@ -590,6 +593,7 @@
             "commander": {
               "version": "1.3.2",
               "from": "commander@1.3.2",
+              "resolved": "https://registry.npmjs.org/commander/-/commander-1.3.2.tgz",
               "dependencies": {
                 "keypress": {
                   "version": "0.1.0",
@@ -603,7 +607,8 @@
             },
             "mkdirp": {
               "version": "0.3.5",
-              "from": "mkdirp@0.3.5"
+              "from": "mkdirp@0.3.5",
+              "resolved": "https://registry.npmjs.org/mkdirp/-/mkdirp-0.3.5.tgz"
             },
             "cookie": {
               "version": "0.1.0",
@@ -615,7 +620,8 @@
             },
             "fresh": {
               "version": "0.2.0",
-              "from": "fresh@0.2.0"
+              "from": "fresh@0.2.0",
+              "resolved": "https://registry.npmjs.org/fresh/-/fresh-0.2.0.tgz"
             },
             "methods": {
               "version": "0.1.0",
@@ -633,11 +639,13 @@
             },
             "cookie-signature": {
               "version": "1.0.1",
-              "from": "cookie-signature@1.0.1"
+              "from": "cookie-signature@1.0.1",
+              "resolved": "https://registry.npmjs.org/cookie-signature/-/cookie-signature-1.0.1.tgz"
             },
             "merge-descriptors": {
               "version": "0.0.1",
-              "from": "merge-descriptors@0.0.1"
+              "from": "merge-descriptors@0.0.1",
+              "resolved": "https://registry.npmjs.org/merge-descriptors/-/merge-descriptors-0.0.1.tgz"
             },
             "debug": {
               "version": "0.8.0",
