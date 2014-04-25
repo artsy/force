@@ -77,7 +77,7 @@ describe '#bid', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    @req = { params: { id: 'awesome-sale', artwork: 'artwork-id' } }
+    @req = { params: { id: 'awesome-sale', artwork: 'artwork-id' }, query: { bid: '50000'} }
     @res =
       status  : sinon.stub()
       render  : sinon.stub()
@@ -108,7 +108,7 @@ describe '#bid', ->
 
       @res.render.args[0][0].should.equal 'templates/bid-form'
       @res.render.args[0][1].isRegistered.should.be.ok
-
+      @res.render.args[0][1].maxBid.should.equal 500
 
     it 'renders with isRegistered: true if is not registered', ->
       routes.bid @req, @res, @next

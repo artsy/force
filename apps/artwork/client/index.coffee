@@ -13,5 +13,5 @@ module.exports.init = ->
 
   # Reflection doesn't like easter eggs :(
   return if navigator.userAgent.match('PhantomJS')
-  require('./ascii_easter_egg.coffee')(artwork)
-  require('./skrillex_easter_egg.coffee')(artwork)
+  require('./ascii-easter-egg.coffee')(artwork)
+  require('./skrillex-easter-egg.coffee')(artwork)

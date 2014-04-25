@@ -1,6 +1,5 @@
 _               = require 'underscore'
 Backbone        = require 'backbone'
-accounting      = require 'accounting'
 ModalPageView   = require '../../../components/modal/page.coffee'
 mediator        = require '../../../lib/mediator.coffee'
 
@@ -40,7 +39,7 @@ module.exports = class AuctionDetailView extends Backbone.View
   #
   # @return {Integer or undefined}
   validate: (val) ->
-    if (val = accounting.unformat val) >= @saleArtwork.get('minimum_next_bid_cents') / 100
+    if (val = @saleArtwork.cleanBidAmount(val)) >= @saleArtwork.get('minimum_next_bid_cents')
       val
 
   displayHelp: (e) ->
@@ -56,4 +55,4 @@ module.exports = class AuctionDetailView extends Backbone.View
       saleArtwork     : @saleArtwork
       bidderPositions : @bidderPositions
     ).addClass 'is-fade-in'
-    this
+    @

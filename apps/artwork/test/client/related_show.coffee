@@ -21,7 +21,7 @@ describe 'RelatedShowView', ->
   beforeEach (done) ->
     sinon.stub Backbone, 'sync'
 
-    RelatedShowView = benv.requireWithJadeify resolve(__dirname, '../../client/related_show'), ['template']
+    RelatedShowView = benv.requireWithJadeify resolve(__dirname, '../../client/related-show'), ['template']
     RelatedShowView.__set__ 'ArtworkColumnsView', Backbone.View
 
     @artwork  = new Artwork fabricate 'artwork'

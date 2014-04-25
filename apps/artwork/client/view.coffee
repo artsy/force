@@ -15,7 +15,7 @@ MonocleView               = require './monocles.coffee'
 Sale                      = require '../../../models/sale.coffee'
 ZigZagBanner              = require '../../../components/zig_zag_banner/index.coffee'
 Auction                   = require './mixins/auction.coffee'
-RelatedShowView           = require './related_show.coffee'
+RelatedShowView           = require './related-show.coffee'
 
 artistArtworksTemplate  = -> require('../templates/_artist-artworks.jade') arguments...
 detailTemplate          = -> require('../templates/_detail.jade') arguments...

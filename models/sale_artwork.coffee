@@ -1,5 +1,5 @@
 _               = require 'underscore'
-accounting      = require 'accounting'
+{ formatMoney } = require 'accounting'
 sd              = require('sharify').data
 Backbone        = require 'backbone'
 { Markdown }    = require 'artsy-backbone-mixins'
@@ -26,18 +26,24 @@ module.exports = class SaleArtwork extends Backbone.Model
   sale: -> new Sale(@get('sale'))
 
   currentBid: ->
-    accounting.formatMoney(
+    formatMoney(
       (@get('highest_bid_amount_cents') or @get('opening_bid_cents')) / 100, '$', 0
     )
 
   minBid: ->
-    accounting.formatMoney @get('minimum_next_bid_cents') / 100, '$', 0
+    formatMoney @get('minimum_next_bid_cents') / 100, '$', 0
 
   estimate: ->
     if @has('low_estimate_cents') or @has('high_estimate_cents')
-      high  = accounting.formatMoney(@get('high_estimate_cents') / 100, '$', 0) if @has 'high_estimate_cents'
-      low   = accounting.formatMoney(@get('low_estimate_cents') / 100, '$', 0)  if @has 'low_estimate_cents'
+      high  = formatMoney(@get('high_estimate_cents') / 100, '$', 0) if @has 'high_estimate_cents'
+      low   = formatMoney(@get('low_estimate_cents') / 100, '$', 0)  if @has 'low_estimate_cents'
       "Estimate: #{_.compact([high, low]).join '–'}"
+
+  # Changes bidAmount to a number in cents
+  cleanBidAmount: (bidAmount)->
+    if bidAmount
+      bidAmount = String(bidAmount).split('.')[0]
+      Number(bidAmount.replace(',', '').replace('.00', '').replace('.', '').replace('$', '')) * 100
 
   bidLabel: ->
     if @get('highest_bid_amount_cents') then 'Current Bid' else 'Starting Bid'
