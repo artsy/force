@@ -4,6 +4,7 @@ sd                  = require('sharify').data
 Backbone            = require 'backbone'
 PasswordEdit        = require '../models/password_edit.coffee'
 ErrorHelpers        = require './error_handling.coffee'
+qs                  = require 'querystring'
 
 module.exports = class AccountForm extends Backbone.View
 
@@ -178,7 +179,10 @@ module.exports = class AccountForm extends Backbone.View
           @$("#user-link-#{provider}").attr 'data-state', 'on'
     else
       authUrl = "/users/auth/#{provider}"
-      authUrl += "?scope=publish_actions" if @model.hasLabFeature('Facebook Timeline Integration')
+      params = {}
+      params.scope = "publish_actions" if @model.hasLabFeature('Facebook Timeline Integration')
+      params['redirect-to'] = location.href
+      authUrl += '?' + qs.stringify(params)
       window.location = authUrl
 
   togglePublishToFacebook: ->

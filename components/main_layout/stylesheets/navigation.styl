@@ -51,13 +51,21 @@
 .hoverable-image-link
   display inline-block
   background-color black
+  overflow hidden
   &:hover > .hoverable-image
   &:hover > img
     opacity 0.5
+
 .hoverable-image-link > img
 .hoverable-image
-  max-width 100%
-  transition opacity 0.5s
+  // Q: Why 101%?
+  // A: The hack to prevent content from shifting on hover
+  // ensures that sub-pixel widths are rounded. Since the background
+  // color is black that means that at certain browser widths some of the
+  // columns will have an extra pixel. So we intentionally overflow to prevent that.
+  width 101%
+  transition opacity 0.33s
+  prevent-content-shift()
   &.is-three-two
   &.is-four-three
     line-height 0

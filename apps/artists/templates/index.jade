@@ -26,7 +26,7 @@ block body
             if link.hasImage('large_rectangle')
               .afc-artist
                 - var artist = link.get('artist');
-                a( href= link.get('href') )
+                a.hoverable-image-link( href= link.get('href') )
                   img( src= link.imageUrl('large_rectangle'), alt= link.get('title'), title= link.get('title') )
                 .afc-artist-information
                   .afc-artist-information-left
@@ -54,10 +54,10 @@ block body
             a.avant-garde-jump-link( href="/gene/#{gene.id}" )
               = gene.get('name')
               i.icon-chevron-small-right
-          .afg-featured-artists
+          .grid-4-up
             for artist in gene.trendingArtists
-              .afg-artist
-                a( href="/artist/#{artist.id}" )
+              .afg-artist.grid-item
+                a.hoverable-image-link( href="/artist/#{artist.id}" )
                   img( src=artist.imageUrl('four_thirds'), alt= artist.get('name'), title= artist.get('name') )
                 .afg-artist-information
                   h2.afg-artist-name
