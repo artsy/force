@@ -38,7 +38,7 @@ setupKioskMode = ->
         window.location = "/users/sign_out?redirect_uri=#{sd.APP_URL}#{sd.KIOSK_PAGE}"
       else
         window.location = sd.KIOSK_PAGE
-    , (5 * 60 * 1000)
+    , (6 * 60 * 1000)
 
 setupReferrerTracking = ->
   if document?.referrer?.indexOf and document.referrer.indexOf(sd.APP_URL) < 0 and readCookie('force-referrer') != document.referrer
