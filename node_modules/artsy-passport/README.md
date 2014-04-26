@@ -34,7 +34,7 @@ app.use artsyPassport
   twitterCallbackPath: '/users/auth/twitter/callback' # After twitter auth callback url
   facebookCallbackPath: '/users/auth/facebook/callback' # After facebook auth callback url
   # The user data to cache in the session
-  userKeys: ['id', 'type', 'name', 'email', 'phone', 'lab_features', 'default_profile_id']
+  userKeys: ['id', 'type', 'name', 'email', 'phone', 'lab_features', 'default_profile_id', 'collector_level']
   CurrentUser: # Backbone Model class to serialize the user into e.g. `CurrentUser`
   # Temporary generated email for twitter signup.
   twitterSignupTempEmail: (token, secret, profile) -> 'md5hash@artsy.net'

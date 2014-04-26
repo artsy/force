@@ -55,9 +55,9 @@ module.exports.track =
         _.defaults options,
           queryString: window?.location.search
           page: window?.location.pathname
-
-        if sd.CURRENT_USER?.id
-          options.user_id = sd.CURRENT_USER.id
+          referrer: document?.referrer
+          collector_level: sd.CURRENT_USER?.collector_level
+          user_id: sd.CURRENT_USER?.id
 
         mixpanel.track? description, options
 

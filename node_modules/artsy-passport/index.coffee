@@ -28,7 +28,8 @@ opts =
   twitterCallbackPath: '/users/auth/twitter/callback'
   facebookCallbackPath: '/users/auth/facebook/callback'
   twitterLastStepPath: '/users/auth/twitter/email'
-  userKeys: ['id', 'type', 'name', 'email', 'phone', 'lab_features', 'default_profile_id', 'has_partner_access']
+  userKeys: ['id', 'type', 'name', 'email', 'phone', 'lab_features',
+             'default_profile_id', 'has_partner_access', 'collector_level']
   twitterSignupTempEmail: (token) ->
     hash = crypto.createHash('sha1').update(token).digest('hex').substr(0, 12)
     "uknown-#{hash}@#{parse(opts.SECURE_ARTSY_URL).hostname}"
