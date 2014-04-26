@@ -2,3 +2,9 @@ h2.avant-garde-header-center You placed a bid
 h3 
   | Your bidder number is&nbsp;
   != paddleNumber
+if kioskMode
+  br
+  br
+  h2.avant-garde-header-center Done Bidding?
+  a.avant-garde-button-black( href=signOutUrl ) Sign Out
+  .avant-garde-button-black.bid-close-button Continue Bidding

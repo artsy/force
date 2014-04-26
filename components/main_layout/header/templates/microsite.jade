@@ -4,12 +4,15 @@ header#main-layout-header.force-position-absolute
   nav
     #main-layout-header-left
       a#main-layout-header-home-logo.icon-logo( href='/' )
-      a.header-text( href='/' ) Back to Artsy.net
+      unless sd.KIOSK_MODE
+        a.header-text( href='/' ) Back to Artsy.net
 
     #microsite-header-right
       if user
         if profile
           a.header-text( href="#{profile.href()}/favorites" ) Favorites
+        else if sd.KIOSK_MODE
+          a.header-text( href="/users/sign_out" ) Sign Out
         else
           a.header-text( href="/favorites" ) Favorites
         .header-spacer |
