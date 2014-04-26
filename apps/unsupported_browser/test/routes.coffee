@@ -34,7 +34,7 @@ describe 'Unsupported Browser', ->
       routes.continueAnyway @req, @res
       today = new Date()
       expireDate = new Date @res.cookie.args[0][2].expires
-      expireDate.getDay().should.equal today.getDay() + 1
+      expireDate.getDate().should.equal today.getDate() + 1
       expireDate.getMonth().should.equal today.getMonth()
       expireDate.getYear().should.equal today.getYear()
 
