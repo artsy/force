@@ -2,12 +2,11 @@ include ../../../components/share/template
 
 mixin artist-header(artist)
   header.artist-header
-    h1.avant-garde-header-center
-      = artist.get('name')
+    h1.avant-garde-header-center= artist.get('name')
 
-      if artist.get('published_artworks_count')
-        nav.artist-share
-          +share(title + artist.get('name') + ' on Artsy', artist.imageUrl('large'))
+    if artist.get('published_artworks_count')
+      nav.artist-share
+        +share(title + artist.get('name') + ' on Artsy', artist.imageUrl('large'))
 
     if (artist.get('nationality') && artist.get('years'))
       h2 #{artist.get('nationality')}, #{artist.get('years')}
