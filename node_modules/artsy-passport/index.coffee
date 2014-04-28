@@ -142,14 +142,17 @@ submitTwitterLastStep = (req, res, next) ->
     err = r.error or r.body?.error_description or r.body?.error
     err = null if r.text.match 'Error from MailChimp API'
     return next err if err
-    # To work around an API caching bug we send another empty PUT
+    # To work around an API caching bug we send another empty PUT and
+    # update the current user.
     request.put("#{opts.SECURE_ARTSY_URL}/api/v1/me").send(
       access_token: req.user.get('accessToken')
-    ).end ->
+    ).end (r2) ->
       err = r.error or r.body?.error_description or r.body?.error
       err = null if r.text.match 'Error from MailChimp API'
       return next err if err
-      res.redirect req.param('redirect-to')
+      req.login req.user.set(r2.body), (err) ->
+        return next err if err
+        res.redirect req.param('redirect-to')
 
 #
 # Setup passport.

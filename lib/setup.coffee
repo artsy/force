@@ -40,8 +40,8 @@ logger = require 'morgan'
 
 # Setup sharify constants & require dependencies that use sharify data
 sharify.data =
-  JS_EXT: (if ("production" is NODE_ENV or "staging" is NODE_ENV) then ".min.js.cgz" else ".js")
-  CSS_EXT: (if ("production" is NODE_ENV or "staging" is NODE_ENV) then ".min.css.cgz" else ".css")
+  JS_EXT: (if ("production" is NODE_ENV or "staging" is NODE_ENV) then ".min.js" else ".js")
+  CSS_EXT: (if ("production" is NODE_ENV or "staging" is NODE_ENV) then ".min.css" else ".css")
   ASSET_PATH: ASSET_PATH
   APP_URL: APP_URL
   ARTSY_URL: ARTSY_URL

@@ -157,6 +157,8 @@ describe 'Artsy Passport methods', ->
       @req.param = -> 'foo@bar.com'
       @submitTwitterLastStep @req, @res, @next
 
+    it 'logs in the JSON from the PUT call'
+
   describe '#afterLocalAuth', ->
 
     beforeEach ->
