@@ -24,9 +24,9 @@ describe 'AuctionLot', ->
   describe '#toPageTitle', ->
     it 'returns a string usable for the page title', ->
       artist = new Backbone.Model name: 'Foo Bar'
-      @lot.toPageTitle().should.equal 'MADONNA PAINTING | Auction Result from Lempertz | Artsy'
+      @lot.toPageTitle().should.equal 'Auction Result for \"MADONNA PAINTING\" (1985) | Lempertz, May 23, 2012 | Artsy'
       @lot.set artist_name: 'Foo Bar'
-      @lot.toPageTitle(artist).should.equal 'MADONNA PAINTING, by Foo Bar | Auction Result from Lempertz | Artsy'
+      @lot.toPageTitle(artist).should.equal 'Auction Result for \"MADONNA PAINTING\" (1985) by Foo Bar | Lempertz, May 23, 2012 | Artsy'
 
   describe '#hasDimensions', ->
     it 'returns true if there is any dimension attributes present', ->
