@@ -12,6 +12,7 @@ ProfileStatusModal  = require '../../profile_status_modal/view.coffee'
 Profile             = require '../../../models/profile.coffee'
 
 module.exports = class HeaderView extends Backbone.View
+
   events:
     'click .mlh-login'  : 'login'
     'click .mlh-signup' : 'signup'
@@ -44,7 +45,7 @@ module.exports = class HeaderView extends Backbone.View
       unless $('body').hasClass 'is-microsite'
         @removeWelcomeHeader()
 
-  showProfilePrivateDialog: =>
+  showProfilePrivateDialog: (event) =>
     new Profile(id: sd.CURRENT_USER.default_profile_id).fetch
       success: (profile) =>
         if profile.get('private')
@@ -54,6 +55,9 @@ module.exports = class HeaderView extends Backbone.View
           false
         else
           window.location = profile.href()
+
+    trackingText = if $(event.target).hasClass('is-profile-text') then 'Profile' else 'Username'
+    analytics.track.click "Clicked user dropdown link with text: #{trackingText}"
     false
 
   makePublic: ->
