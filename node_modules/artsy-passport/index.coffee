@@ -32,7 +32,7 @@ opts =
              'default_profile_id', 'has_partner_access', 'collector_level']
   twitterSignupTempEmail: (token) ->
     hash = crypto.createHash('sha1').update(token).digest('hex').substr(0, 12)
-    "uknown-#{hash}@#{parse(opts.SECURE_ARTSY_URL).hostname}"
+    "#{hash}@artsy.tmp"
 
 #
 # Main function that overrides/injects any options, sets up passport, sets up an app to
