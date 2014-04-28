@@ -37,7 +37,7 @@ app.use artsyPassport
   userKeys: ['id', 'type', 'name', 'email', 'phone', 'lab_features', 'default_profile_id', 'collector_level']
   CurrentUser: # Backbone Model class to serialize the user into e.g. `CurrentUser`
   # Temporary generated email for twitter signup.
-  twitterSignupTempEmail: (token, secret, profile) -> 'md5hash@artsy.net'
+  twitterSignupTempEmail: (token, secret, profile) -> 'md5hash@artsy.tmp'
   # Path for a "One last step" UI that lets Artsy store the user's email after 
   # twitter signup.
   twitterLastStepPath: '/users/auth/twitter/email'
