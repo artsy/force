@@ -18,7 +18,7 @@ block body
     if geneCategories && geneCategories.at(0)
       section#browse-page-gene-categories
         for categorySet in geneCategories.at(0).get('items').models
-          h1.large-garamond-header= categorySet.get('name')
+          .large-garamond-header= categorySet.get('name')
           .browse-gene-category-set
             for gene in categorySet.get('items').models
               a.browse-gene-category( href=gene.get('href') )
@@ -29,6 +29,6 @@ block body
             //-   i.icon-chevron-small-right
 
     //- Gene A-Z List
-    h1#browse-az-header.avant-garde-header-center.browse-header-large All Categories A-Z
+    #browse-az-header.avant-garde-header-center.browse-header-large All Categories A-Z
     section.all-genes-list
       include ../../../components/a_to_z_list/template

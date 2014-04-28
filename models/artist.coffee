@@ -67,7 +67,7 @@ module.exports = class Artist extends Backbone.Model
     , options
 
   toPageTitle: ->
-    "#{if @get('name') then @htmlToText('name') else 'Unnamed Artist'} | Artist Bio and Art for Sale | Artsy"
+    "#{if @get('name') then @htmlToText('name') else 'Unnamed Artist'} | Artist Biography, Artwork for Sale | Artsy"
 
   toPageDescription: (length=200) ->
     # artists are usually displayed: Name (Nationality, Born-Died)
@@ -98,4 +98,3 @@ module.exports = class Artist extends Backbone.Model
       string(@get('forsale_artworks_count'), 'available')
       string((@get('published_artworks_count') - @get('forsale_artworks_count')), 'reference')
     ]).join ' & '
-

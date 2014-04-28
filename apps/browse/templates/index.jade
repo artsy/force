@@ -25,7 +25,7 @@ block body
       section#browse-page-categories
         .browse-popular-categories
           .bpc-column.bpc-dynamic
-            h1.large-garamond-header Browse by Popular Categories
+            .large-garamond-header Browse by Popular Categories
             for categorySet in popularCategories.at(0).get('items').models
               .bpc-subcolumn
                 h3= categorySet.get('name')
@@ -33,7 +33,7 @@ block body
                   a.highlight-link( href=category.get('href') )
                     = category.get('title')
           .bpc-column.bpc-partners
-            h1.large-garamond-header Browse Partners
+            .large-garamond-header Browse Partners
             a.highlight-link( href='/galleries') Galleries A-Z
             a.highlight-link( href='/institutions') Institutions A-Z
             h3 Featured
@@ -45,7 +45,7 @@ block body
             a.highlight-link( href='/acquavella-galleries' ) Acquavella Galleries
             a.highlight-link( href='/partners' ) See All
 
-    h1#browse-filter-header.large-garamond-header Browse Works
+    #browse-filter-header.large-garamond-header Browse Works
     #browse-filter
       .filter-fixed-header-nav
         .filter-fixed-header-left

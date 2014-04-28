@@ -26,7 +26,7 @@ describe 'Meta tags', ->
       @html.should.include "<link rel=\"canonical\" href=\"http://localhost:5000/artist/pablo-picasso"
       @html.should.include "<meta property=\"og:url\" content=\"http://localhost:5000/artist/pablo-picasso"
       @html.should.include "<meta property=\"og:description\" content=\"Pablo Picasso (1900-2000). This is Pablo Picasso"
-      @html.should.include "<meta property=\"og:title\" content=\"Pablo Picasso | Artist Bio and Art for Sale | Artsy"
+      @html.should.include "<meta property=\"og:title\" content=\"Pablo Picasso | Artist Biography, Artwork for Sale | Artsy"
 
   describe 'artist with name no blurb, nationality, or years', ->
 
@@ -42,7 +42,7 @@ describe 'Meta tags', ->
 
     it 'renders correctly', ->
       @html.should.include "<meta property=\"og:description\" content=\"Pablo Picasso"
-      @html.should.include "<meta property=\"og:title\" content=\"Pablo Picasso | Artist Bio and Art for Sale | Artsy"
+      @html.should.include "<meta property=\"og:title\" content=\"Pablo Picasso | Artist Biography, Artwork for Sale | Artsy"
 
   describe 'with an image', ->
 
