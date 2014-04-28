@@ -37,3 +37,6 @@ FilterSuggest = require '../../models/filter_suggest.coffee'
 
 @redirectToCategories = (req, res) ->
   res.redirect '/categories'
+
+@redirectToBrowse = (req, res) ->
+  res.redirect '/browse'

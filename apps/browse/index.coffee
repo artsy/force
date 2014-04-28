@@ -13,3 +13,4 @@ app.get '/browse', routes.index
 app.get '/browse*', routes.index
 app.get '/categories', routes.categories
 app.get '/genes', routes.redirectToCategories
+app.get '/filter/artworks', routes.redirectToBrowse
