@@ -18,9 +18,9 @@ module.exports = class Artworks extends Backbone.Collection
 
   fillwidthDimensions: (maxHeight) ->
     imageWidths = @map (artwork) ->
-      return null unless image = artwork.get('images')[0]
-      width = Math.round maxHeight * image.aspect_ratio
-      height = if width < maxHeight then maxHeight else width / image.aspect_ratio
+      return null unless image = artwork.defaultImage()
+      width = Math.round maxHeight * image.get('aspect_ratio')
+      height = if width < maxHeight then maxHeight else width / image.get('aspect_ratio')
       { width: width, height: height }
     _.without imageWidths, null
 
