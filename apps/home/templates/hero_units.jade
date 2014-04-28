@@ -6,7 +6,7 @@ ul#home-hero-units
     )
       a( href=heroUnit.get('link') )
         .main-layout-container.home-container
-          h1!= heroUnit.get('heading')
+          .home-hero-unit-header!= heroUnit.get('heading')
           img.home-hero-unit-title(
             src=heroUnit.titleImageUrl(),
             alt=heroUnit.get('name')
