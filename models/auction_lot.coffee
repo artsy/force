@@ -29,16 +29,19 @@ module.exports = class AuctionLot extends Backbone.Model
   hasDimensions: ->
     (@get('dimensions')?.in or @get('dimensions')?.cm)?
 
-  # Format: "[Artwork Title], by [Artist Name] | Auction Result from [Auction house name] | Artsy"
+  # Format: Auction Result for "Title" (Year) by Artist | Auction House, Auction Date | Artsy
   # (Often auction lots have an artist_name but it is commonly missing, so the artist is explicitly passed in)
   #
   # @return {String}
   toPageTitle: (artist) ->
-    titleAndName  = @get('title') or 'Untitled'
-    titleAndName += ", by #{artist?.get('name')}" if artist?.get('name')
+    titleAndName  = "\"#{@get('title') or 'Untitled'}\""
+    titleAndName += " (#{@get('dates_text')})" if @get('dates_text')
+    titleAndName += " by #{artist?.get('name')}" if artist?.get('name')
+    organizationAndDate = @get('organization')
+    organizationAndDate += ", #{@get('auction_dates_text')}" if @get('auction_dates_text')
     _.compact([
-      titleAndName
-      ("Auction Result from #{@get('organization')}" if @get('organization'))
+      "Auction Result for #{titleAndName}"
+      organizationAndDate
       'Artsy'
     ]).join ' | '
 
