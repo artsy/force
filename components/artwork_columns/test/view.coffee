@@ -63,6 +63,38 @@ describe 'ArtworkColumns', ->
         _.isNull(@view.currentUser).should.be.true
         _.isUndefined(@view.artworkCollection).should.be.true
 
+  describe '#rebalance', ->
+
+    beforeEach ->
+      # Create a short left column
+      dims = [
+        { original_width: 900, original_height: 200, aspect_ratio: 4.5 } # col 1, 200
+        { original_width: 900, original_height: 900, aspect_ratio: 1 } # col 2, 900
+        { original_width: 200, original_height: 900, aspect_ratio: 0.222 } # col 3, 900
+        { original_width: 1000, original_height: 200, aspect_ratio: 5 } # col 1, 400
+        { original_width: 1100, original_height: 900, aspect_ratio: 1.222 } # col 1, 1300
+        { original_width: 600, original_height: 900, aspect_ratio: 0.667 } # col 2, 1800
+        { original_width: 600, original_height: 900, aspect_ratio: 0.6667 } # col 3, 1800
+        { original_width: 700, original_height: 200, aspect_ratio: 3.5 } # col 1, 1500
+      ]
+      @artworks.each (artwork, index) ->
+        _.extend artwork.get('images')[0], dims[index]
+      $('body').empty()
+      @view = new ArtworkColumnsView
+        el:         $('body')
+        collection: @artworks
+        isOrdered:  true
+        allowDuplicates: true
+
+      it 'removes artworks from the last column and redistributes to the shortest column', ->
+        $('.artwork-column:eq(0) .artwork-item').should.have.lengthOf 3
+        $('.artwork-column:eq(1) .artwork-item').should.have.lengthOf 3
+        $('.artwork-column:eq(2) .artwork-item').should.have.lengthOf 2
+        @view.rebalance(800, 2)
+        $('.artwork-column:eq(0) .artwork-item').should.have.lengthOf 4
+        $('.artwork-column:eq(1) .artwork-item').should.have.lengthOf 3
+        $('.artwork-column:eq(2) .artwork-item').should.have.lengthOf 1
+
   describe '#appendArtworks', ->
 
     beforeEach ->

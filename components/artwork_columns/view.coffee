@@ -40,7 +40,7 @@ module.exports = class ArtworkColumns extends Backbone.View
     @indices = [0...@numberOfColumns]
     @columns = []
     for index in @indices
-      @columns[index] = { height: 0, artworkCount: 0 }
+      @columns[index] = { height: 0, artworkCount: 0, artworkHeights: [] }
     @shortestColumn = 0
 
     @setUserSavedArtworks()
@@ -119,7 +119,9 @@ module.exports = class ArtworkColumns extends Backbone.View
     img = artwork.defaultImage()
     height = img.maxHeightForWidth @columnWidth, @maxArtworkHeight
     $artwork = @appendFigure artwork, @shortestColumn, notes
-    @columns[@shortestColumn].height += height
+    fullArtworkItemHeight = height + parseInt($artwork.find('.artwork-item-caption').css('height').replace('px', ''))
+    @columns[@shortestColumn].height += fullArtworkItemHeight
+    @columns[@shortestColumn].artworkHeights.unshift fullArtworkItemHeight
     @columns[@shortestColumn].artworkCount += 1
     @shortestColumn = _.reduce @indices, @reduceColumns, @shortestColumn, @
     $artwork
@@ -158,3 +160,31 @@ module.exports = class ArtworkColumns extends Backbone.View
   onSeeMoreClick: =>
     @$el.find(".artwork-item:not(:visible)").fadeIn('fast')
     @$el.find(".artwork-columns-see-more").hide()
+
+  columnHeight: (index) ->
+    parseInt(@$(".artwork-column:eq(#{index})").css('height').replace('px',''))
+
+  rebalance: (newHeight, index) ->
+    return if @isOrdered
+    # Figure out how many artworks need to be removed from the modified column
+    total = 0
+    idx = 0
+    for height in @columns[index].artworkHeights
+      total += height
+      idx += 1
+      break if total > newHeight
+
+    # Pop off the artworks that need to be removed
+    $lastElements = @$(".artwork-column:eq(#{index})").find('.artwork-item').slice(-idx)
+    removedArtworks = []
+    for elem in $lastElements
+      id = $(elem).attr('data-artwork')
+      removedArtworks.push @collection.get(id)
+      @$("figure[data-artwork='#{id}']").remove()
+
+    # Recalc column height
+    @columns[index].height = @columnHeight(index)
+
+    # Readd artworks to shortest columns
+    for artwork in removedArtworks
+      @addToShortestColumn(artwork)
