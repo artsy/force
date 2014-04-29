@@ -6,6 +6,14 @@ gap = 20px
   display inline-block
   vertical-align top
   margin gap gap 0 gap
+  // Grids are almost always used in
+  // conjunction with hoverable-image-links
+  //
+  // So set some sane defaults when it is nested
+  .hoverable-image-link
+    display block
+    width 100%
+    margin-bottom 10px
 
 for n in 2..4
   .grid-{n}-up
@@ -15,6 +23,8 @@ for n in 2..4
       &:nth-child(1n)
         margin-left 0
       &:nth-child({n}n)
+        margin-right 0
+      &:last-child
         margin-right 0
     &.is-flush .grid-item
       width (100 / n)%
