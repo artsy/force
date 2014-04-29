@@ -26,9 +26,10 @@ block body
             h2.home-featured-header New for you on Artsy
             ul#home-suggested-artworks.home-four-items.home-featured-list
               .loading-spinner
-          h2.home-featured-header Featured Artworks for Sale
-          ul#home-featured-artworks.home-four-items.home-featured-list
-            .loading-spinner
+          else
+            h2.home-featured-header Featured Artworks for Sale
+            ul#home-featured-artworks.home-four-items.home-featured-list
+              .loading-spinner
           a.home-browse-all.avant-garde-button-text(
             href='/browse/artworks?price_range=-1%3A1000000000000'
           ) Browse all for sale artworks

@@ -23,6 +23,7 @@ module.exports = class CurrentUser extends Backbone.Model
   defaults:
     followArtists       : null
     followGenes         : null
+    testGroups          : null
 
   href: -> "/#{@get('default_profile_id')}"
 
@@ -67,6 +68,25 @@ module.exports = class CurrentUser extends Backbone.Model
 
   hasLabFeature: (featureName) ->
     _.contains @get('lab_features'), featureName
+
+  fetchTestGroups: (options) ->
+    url = "#{@url()}/test_groups"
+    data = access_token: @get('accessToken')
+    @set testGroups: new Backbone.Model()
+    @get('testGroups').fetch(_.extend { url: url, data: data }, options)
+
+  # @param String test
+  # @return Object | null
+  getTestGroup: (test) ->
+    unless @get('testGroups').fetched
+      @fetchTestGroups({})
+    @get('testGroups').find((group) -> group.get('test') == test)
+
+  getSuggestionsTestGroup: ->
+    @getTestGroup('ab:home:suggestions')
+
+  hasSuggestions: ->
+    @getSuggestionsTestGroup() == 'a'
 
   # Retreive a list of artists the user is following
   #

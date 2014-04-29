@@ -124,10 +124,8 @@ describe 'Homepage init code', ->
       CurrentUser.orNull.restore()
 
     it 'renders suggested artworks', ->
-      _.last(Backbone.sync.args)[2].success [fabricate('artwork',
-        title: 'Foobaz'
-        blurb: 'foobar'
-      )]
+      Backbone.sync.args[0][2].success [fabricate 'set']
+      _.last(Backbone.sync.args)[2].success [fabricate('artwork', title: 'Foobaz')]
       $('body').html().should.include "Foobaz"
 
   it 'renders featured artworks', ->
