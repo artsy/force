@@ -2,14 +2,14 @@
   h3.avant-garde-header-center
     | #{posts.length + remaining} #{(posts.length === 1 ? 'Post' : 'Posts')} About #{entityName}
 
-  ul
+  .grid-4-up
     for post in posts
       - var profile = post.profile()
-      li.related-post
+      .grid-item
         a.related-post-content( href="/post/#{post.id}" )
-          figure
+          .hoverable-image-link
             if post.defaultImage()
-              .rpc-thumbnail( style="background-image: url(#{post.defaultImage().imageUrlFor(300, 200)})" )
+              .hoverable-image.is-three-two( style="background-image: url(#{post.defaultImage().imageUrlFor(300, 300)})" )
 
           if post.get('title')
             .rpc-title!= post.get('title')

@@ -93,7 +93,7 @@ describe 'ArtistView', ->
 
       it 'sets up related posts', ->
         viewRelatedPostOpts = @RelatedPostsView.args[0][0]
-        viewRelatedPostOpts.numToShow.should.equal 5
+        viewRelatedPostOpts.numToShow.should.equal 4
         viewRelatedPostOpts.model.should.equal @view.model
 
     describe 'sorting', ->

@@ -117,7 +117,7 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
   setupRelatedPosts: ->
     new RelatedPostsView
       el         : @$('.artist-related-posts')
-      numToShow  : 5
+      numToShow  : 4
       model      : @model
       modelName  : 'artist'
       mode       : 'grid'
