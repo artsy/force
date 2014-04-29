@@ -126,7 +126,7 @@ describe 'RelatedPostsView', ->
         fabricate 'post', id: 'bitty-the-queen', title: 'Bitty is the best cat'
       ]
       @view.$el.html().should.include 'is-grid'
-      @view.$el.html().should.include 'figure'
+      @view.$el.html().should.include 'grid-4-up'
       @view.$el.html().should.include '<div class="rpc-author">By Craig Spaeth</div>'
       @view.$el.html().should.not.include 'Add Post'
 

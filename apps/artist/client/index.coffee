@@ -32,7 +32,6 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     @setupRelatedShows()
     @setupRelatedPosts()
     @setupShareButtons()
-    @setupAuctionResults()
     @setupHeader()
 
   setupHeader: ->
@@ -117,17 +116,11 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
   setupRelatedPosts: ->
     new RelatedPostsView
       el         : @$('.artist-related-posts')
-      numToShow  : 5
+      numToShow  : 4
       model      : @model
       modelName  : 'artist'
       mode       : 'grid'
       canBeEmpty : false
-
-  setupAuctionResults: ->
-    new RelatedAuctionResultsView
-      el       : @$('.artist-auction-results')
-      amount   : 4
-      artistId : @model.id
 
   setupRelatedArtists: ->
     @relatedArtistsPage = 1
