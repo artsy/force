@@ -91,13 +91,20 @@ html.wf-loading
   visibility hidden
 
 #main-layout-container
-  margin: (content-margin-top + main-header-height + welcome-header-height) layout-side-margin auto
+  margin-top (content-margin-top + main-header-height + welcome-header-height)
   // To stick footer at the bottom of the page
   min-height: 100%
   height: auto !important
   height: 100%
   // Footer height + top margin
   margin-bottom: -106px
+
+.responsive-layout-container
+  margin 0px 55px
+  @media screen and (min-width: 1440px)
+    margin 0px 150px
+  @media screen and (min-width: 1660px)
+    margin 0px 200px
 
 .is-kioskmode #main-layout-container
   margin-top 66px
