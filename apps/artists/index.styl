@@ -114,6 +114,8 @@ bumper-width = 40px
     border-right 1px solid gray-color
   &:nth-child(even)
     padding-left 20px
+  .hoverable-image-link
+    display block
 
 .afc-artist-information
   display table
@@ -155,8 +157,10 @@ bumper-width = 40px
     margin 20px 0
 
 .afg-artist
-  > a
-    display block
+  > .hoverable-image-link
+    margin-bottom 20px
+    @media screen and (max-width: 1024px)
+      margin-bottom 10px
 
 .afg-artist-name
   @extends .afc-artist-name
@@ -167,11 +171,10 @@ bumper-width = 40px
 
 .afg-artist-information
   position relative
-  padding 20px 0
   text-transform capitalize
   > .follow-button
     position absolute
-    top 20px
+    top 0
     right 0
 
 // Letter page
