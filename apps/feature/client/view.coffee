@@ -144,8 +144,12 @@ module.exports = class FeatureView extends Backbone.View
     if artworkGroups.length > 2
       artworkGroups[0].push artworkGroups.pop(2)[0]
 
-    @$('.artwork-column:last-of-type').prepend artistsTemplate { artworkGroups: artworkGroups }
+    $lastColumn = @$('.artwork-column:last-of-type')
+    $lastColumn.prepend artistsTemplate { artworkGroups: artworkGroups }
     @$('.artwork-column').parent().css 'visibility', 'visible'
+
+    # Rebalance columns now that the artist list has been added
+    @artworkColumns.rebalance(@$('.feature-set-item-artist-list').css('height').replace('px',''), $lastColumn.index())
 
   handleTab: (tab) ->
     new FeatureRouter feature: @feature
