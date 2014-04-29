@@ -4,8 +4,8 @@ h3.avant-garde-header-center
 if shows.length === 1
   - show = shows.first()
   .related-show-featured
-    a.rsf-image( href=show.href() )
-      img( src= show.posterImageUrl() )
+    a.rsf-image.hoverable-image-link( href=show.href() )
+      img.hoverable-image( src= show.posterImageUrl() )
     .rsf-metadata
       if show.get('partner').name !== show.get('name')
         h4.rsf-partner-name.avant-garde-header-center
@@ -17,13 +17,11 @@ if shows.length === 1
           .rsf-timeframe!= show.runningDates()
 
 if shows.length > 1
-  .related-shows-rest
+  .related-shows-rest.grid-4-up
     for show in shows.models
-      .related-show
-        a.rsr-image(
-          href=show.href()
-          style="background-image: url(#{show.thumbImageUrl()})"
-        )
+      .related-show.grid-item
+        a.hoverable-image-link( href=show.href() )
+          .hoverable-image.is-three-two( style="background-image: url(#{show.thumbImageUrl()})")
         .rsr-metadata
           if show.get('partner').name !== show.get('name')
             h4.rsr-partner-name.avant-garde-header-center

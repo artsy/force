@@ -20,14 +20,6 @@
   display table-cell
   vertical-align middle
   text-align center
-.rsf-image
-  background-color black
-  img
-    width 100%
-    transition opacity 0.5s
-    prevent-content-shift()
-    &:hover
-      opacity 0.5
 .rsf-metadata
   padding 20px
 .rsf-partner-name
@@ -39,34 +31,11 @@
   margin 20px 0
 
 // Small thumbnailed shows
-.related-show
-  display inline-block
-  width 25%
-  margin 0 0 20px 0
-  padding 0 10px
-  vertical-align top
-  a
-    text-decoration none
-.rsr-image
-  display block
-  position relative
-  margin-bottom 20px
-  padding-bottom 70%
-  background-size cover
-  background-position center center
-  &:after
-    display block
-    content ''
-    position absolute
-    top 0
-    right 0
-    bottom 0
-    left 0
-    background-color black
-    opacity 0
-    transition opacity 0.5s
-  &:hover:after
-    opacity 0.5
+.related-shows-rest
+  margin 20px 0
+
+.related-show a
+  text-decoration none
 
 .rsr-name
   font-style italic
