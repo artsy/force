@@ -21,7 +21,7 @@ if shows.length > 1
     for show in shows.models
       .related-show.grid-item
         a.hoverable-image-link( href=show.href() )
-          .hoverable-image.is-three-two( style="background-image: url(#{show.thumbImageUrl()})")
+          .hoverable-image.is-four-three( style="background-image: url(#{show.thumbImageUrl()})")
         .rsr-metadata
           if show.get('partner').name !== show.get('name')
             h4.rsr-partner-name.avant-garde-header-center
