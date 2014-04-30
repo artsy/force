@@ -13,15 +13,15 @@ MIN_FILE_SIZE = 1000
 
 # Start the server
 s:
-	$(BIN)/coffee index.coffee
+	$(BIN)/forever -m 1000 $(BIN)/coffee index.coffee
 
 # Start the server pointing to staging
 ss:
-	ARTSY_URL=http://stagingapi.artsy.net SECURE_ARTSY_URL=https://stagingapi.artsy.net $(BIN)/coffee index.coffee
+	ARTSY_URL=http://stagingapi.artsy.net SECURE_ARTSY_URL=https://stagingapi.artsy.net make s
 
 # Start the server pointing to production
 sp:
-	ARTSY_URL=http://api.artsy.net SECURE_ARTSY_URL=https://api.artsy.net $(BIN)/coffee index.coffee
+	ARTSY_URL=http://api.artsy.net SECURE_ARTSY_URL=https://api.artsy.net $(BIN)/coffee make s
 
 # Run all of the project-level tests, followed by app-level tests
 test: assets-fast

@@ -39,7 +39,8 @@
     "cookie-parser": "*",
     "cookie-session": "*",
     "static-favicon": "*",
-    "morgan": "*"
+    "morgan": "*",
+    "forever": "*"
   },
   "devDependencies": {
     "browserify": "*",
