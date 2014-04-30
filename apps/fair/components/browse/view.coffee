@@ -41,7 +41,7 @@ module.exports = class FairBrowseView extends Backbone.View
       if @boothParams.get('section')
         "Exhibitors at #{@boothParams.get('section')}"
       else if @boothParams.get('artist')
-        _.titleize _.humanize @boothParams.get('artist').replace(/[0-9]/g, '')
+        _.titleize _.humanize _.rtrim @boothParams.get('artist'), /[0-9]/
       else
         "Browse #{sd.EXHIBITORS_COUNT} Exhibitors"
     )
@@ -65,7 +65,7 @@ module.exports = class FairBrowseView extends Backbone.View
   renderArtworksHeader: =>
     @$('#fair-browse-artworks-header').text(
       if @artworkParams.get 'related_gene'
-        geneName = _.titleize _.humanize @artworkParams.get('related_gene').replace(/[0-9]/g, '')
+        geneName = _.titleize _.humanize _.rtrim @artworkParams.get('related_gene'), /[0-9]/
       else
         ''
     )
