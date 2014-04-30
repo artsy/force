@@ -33,7 +33,7 @@ describe 'Unsupported Browser', ->
 
     it 'sets the cookie to expire one day from now', ->
       routes.continueAnyway @req, @res
-      today = moment()
+      today = new Date()
       expireDate = new Date @res.cookie.args[0][2].expires
       moment(expireDate).diff(today, 'days').should.equal 1
 
