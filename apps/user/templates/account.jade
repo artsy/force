@@ -1,5 +1,5 @@
 form.settings-form.settings-account-form( class=editAccountIsActive, method="post", action="#{sd.ARTSY_URL}/users/edit", accept-charset="UTF-8" )
-  label.avant-garde-form-label( for: "user-name" ) Full Name
+  label.avant-garde-form-label( for="user-name" ) Full Name
   input#user-name.bordered-input( type="text", value=user.get('name') || "", name="name" )
   .settings-form-error( data-attr='name' )
 
@@ -28,6 +28,10 @@ form.settings-form.settings-account-form( class=editAccountIsActive, method="pos
   label.avant-garde-form-label( for="user-phone" ) Phone Number
   input#user-phone.bordered-input( type="tel", value=user.get('phone') || '', name="phone" )
   .settings-form-error( data-attr='phone' )
+
+  label.avant-garde-form-label( for="user-id" ) Profession
+  input#user-profession.bordered-input( type="text", value=user.get('profession'), name="profession")
+  .settings-form-error( data-attr='profession' )
 
   label.settings-group-leader.settings-group-label.avant-garde-form-label Sharing
   .input-group.settings-toggle-fb
