@@ -33,8 +33,9 @@ describe 'Unsupported Browser', ->
 
     it 'sets the cookie to expire one day from now', ->
       routes.continueAnyway @req, @res
+      today = moment()
       expireDate = new Date @res.cookie.args[0][2].expires
-      moment(expireDate).diff(moment().add('days', 1), 'seconds').should.equal 0
+      moment(expireDate).diff(today, 'days').should.equal 1
 
     it 'redirects to the root if no forward url is passed', ->
       routes.continueAnyway @req, @res
