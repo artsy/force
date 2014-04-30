@@ -15,7 +15,7 @@ if auction.isOpen()
   .artwork-bid-status
     .abs-bid #{saleArtwork.bidLabel()}:
     .abs-amount= saleArtwork.currentBid()
-    .abs-count (#{saleArtwork.bidCount()}, #{saleArtwork.reserveLabel()})
+    .abs-count= saleArtwork.formatBidsAndReserve()
 
 form.artwork-bid-form( action="/feature/#{auction.id}/bid/#{saleArtwork.id}" )
   if auction.isOpen() && user

@@ -18,7 +18,7 @@ module.exports = class SaleArtwork extends Backbone.Model
     "#{sd.ARTSY_URL}/api/v1/sale/#{@get('sale').id}/sale_artwork/#{@get('artwork').id}"
 
   reserveFormat:
-    no_reserve      : 'No reserve'
+    no_reserve      : null
     reserve_met     : 'Reserve met'
     reserve_not_met : 'Reserve not met'
 
