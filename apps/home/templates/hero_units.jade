@@ -5,16 +5,17 @@ ul#home-hero-units
       style="background-image: url('#{heroUnit.backgroundImageUrl()}')"
     )
       a( href=heroUnit.get('link') )
-        .home-container.responsive-layout-container.main-layout-container
-          .home-hero-unit-header!= heroUnit.get('heading')
-          img.home-hero-unit-title(
-            src=heroUnit.titleImageUrl(),
-            alt=heroUnit.get('name')
-          )
-          h2!= heroUnit.mdToHtml('description')
-          .avant-garde-button(
-            href=heroUnit.get('link'),
-            onMouseOver="this.style.color='##{heroUnit.get('link_color_hover_hex') || '000'}'",
-            onMouseOut="this.style.color=null"
-          )= heroUnit.get('link_text')
-          .home-hero-unit-credit= heroUnit.get('credit_line')
+        .home-container.responsive-layout-container
+          .main-layout-container
+            .home-hero-unit-header!= heroUnit.get('heading')
+            img.home-hero-unit-title(
+              src=heroUnit.titleImageUrl(),
+              alt=heroUnit.get('name')
+            )
+            h2!= heroUnit.mdToHtml('description')
+            .avant-garde-button(
+              href=heroUnit.get('link'),
+              onMouseOver="this.style.color='##{heroUnit.get('link_color_hover_hex') || '000'}'",
+              onMouseOut="this.style.color=null"
+            )= heroUnit.get('link_text')
+            .home-hero-unit-credit= heroUnit.get('credit_line')
