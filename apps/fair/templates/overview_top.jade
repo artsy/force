@@ -9,7 +9,7 @@
     include ../../../components/auction_clock/template
   .fair-overview-right
     a.fair-overview-browse( href=profile.href() + "/browse" )
-      img.fair-overview-browse-image(src=fair.imageUrl('large_rectangle') )
+      .fair-overview-browse-image( style="background-image: url(" + fair.imageUrl('large_rectangle') + ")" )
       .fair-overview-browse-heading.overview-heading Browse all exhibitors
       .fair-overview-browse-subheading
         != exhibitorsCount + " "
