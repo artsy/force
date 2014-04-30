@@ -86,6 +86,8 @@ describe 'FairBrowseView', ->
 
   describe '#renderArtworksHeader', ->
 
-    it 'renders the gene name title and capitalized without numbers', ->
+    it 'renders the gene name title and capitalized without trailing numbers', ->
       @view.artworkParams.set related_gene: 'contemporary-abstract-photography-1'
       @view.$el.html().should.include 'Contemporary Abstract Photography'
+      @view.artworkParams.set related_gene: '20th-century-design'
+      @view.$el.html().should.include '20th Century Design'
