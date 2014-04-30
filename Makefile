@@ -21,7 +21,7 @@ ss:
 
 # Start the server pointing to production
 sp:
-	ARTSY_URL=http://api.artsy.net SECURE_ARTSY_URL=https://api.artsy.net $(BIN)/coffee make s
+	ARTSY_URL=http://api.artsy.net SECURE_ARTSY_URL=https://api.artsy.net make s
 
 # Run all of the project-level tests, followed by app-level tests
 test: assets-fast
