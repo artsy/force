@@ -1,5 +1,5 @@
 form.settings-form.settings-account-form( class=editAccountIsActive, method="post", action="#{sd.ARTSY_URL}/users/edit", accept-charset="UTF-8" )
-  label.avant-garde-form-label( for: "user-name" ) Full Name
+  label.avant-garde-form-label( for="user-name" ) Full Name
   input#user-name.bordered-input( type="text", value=user.get('name') || "", name="name" )
   .settings-form-error( data-attr='name' )
 
