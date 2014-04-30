@@ -1,3 +1,5 @@
+@import '../../../components/stylus_lib'
+
 //
 // Search
 // Auto-complete
@@ -29,6 +31,12 @@
       background-color #000
       *
         color #fff
+
+search-bar-input-placeholder()
+  color transparify(gray-dark-color, black)
+
+#fair-search-input
+  placeholder(search-bar-input-placeholder)
 
 #fair-search-spinner
   display none
