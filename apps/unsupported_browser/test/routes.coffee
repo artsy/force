@@ -4,6 +4,7 @@ Backbone  = require 'backbone'
 rewire    = require 'rewire'
 routes    = rewire '../routes.coffee'
 sinon     = require 'sinon'
+moment    = require 'moment'
 
 #
 # Tests routes and the rendered template
@@ -34,9 +35,7 @@ describe 'Unsupported Browser', ->
       routes.continueAnyway @req, @res
       today = new Date()
       expireDate = new Date @res.cookie.args[0][2].expires
-      expireDate.getDate().should.equal today.getDate() + 1
-      expireDate.getMonth().should.equal today.getMonth()
-      expireDate.getYear().should.equal today.getYear()
+      moment(expireDate).diff(today, 'days').should.equal 1
 
     it 'redirects to the root if no forward url is passed', ->
       routes.continueAnyway @req, @res
