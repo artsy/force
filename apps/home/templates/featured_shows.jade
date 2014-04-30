@@ -5,7 +5,6 @@ mixin list-item(show)
       .home-featured-cover-img(
         style="background-image: url(" + imgUrl + ")",
       )
-        img( src=imgUrl, alt=show.get('name') )
       h6!= show.runningDates()
       h4= show.partnerName()
       h5= show.get('name')
