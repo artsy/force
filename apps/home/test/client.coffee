@@ -103,6 +103,7 @@ describe 'Homepage init code', ->
 
     beforeEach (done) ->
       user = new CurrentUser(fabricate 'user', lab_features: ["Suggested Artworks"])
+      sinon.stub(user, 'hasSuggestions').returns true
       CurrentUser = @mod.__get__ 'CurrentUser'
       sinon.stub(CurrentUser, 'orNull').returns user
       benv.render resolve(__dirname, '../templates/index.jade'), {
@@ -114,6 +115,7 @@ describe 'Homepage init code', ->
           featuredLinks: new FeaturedLinks([
             fabricate 'featured_link'
           ]).models
+
           user: user
           sd: {}
         }, =>
@@ -124,8 +126,7 @@ describe 'Homepage init code', ->
       CurrentUser.orNull.restore()
 
     it 'renders suggested artworks', ->
-      Backbone.sync.args[0][2].success [fabricate 'set']
-      _.last(Backbone.sync.args)[2].success [fabricate('artwork', title: 'Foobaz')]
+      Backbone.sync.args[4][2].success [fabricate('artwork', title: 'Foobaz')]
       $('body').html().should.include "Foobaz"
 
   it 'renders featured artworks', ->

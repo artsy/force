@@ -15,7 +15,6 @@ featuredShowsTemplate = -> require('../templates/featured_shows.jade') arguments
 featuredPostsTemplate = -> require('../templates/featured_posts.jade') arguments...
 featuredArtistsTemplate = -> require('../templates/featured_artists.jade') arguments...
 { readCookie, createCookie } = require '../../../components/util/cookie.coffee'
-user = null
 
 module.exports.HomeView = class HomeView extends Backbone.View
 
@@ -24,17 +23,14 @@ module.exports.HomeView = class HomeView extends Backbone.View
     'click #home-featured-artworks'       : 'onClickFeaturedArtwork'
 
   onClickFeaturedArtwork: ->
-    group = @user.getSuggestionsTestGroup() || 'main'
-    e = "Clicked homepage featured artwork (#{group})"
-    analytics.track.click e
+    analytics.track.click "Clicked homepage featured artwork"
 
   onClickSuggestedArtwork: ->
-    group = @user.getSuggestionsTestGroup() || 'main'
-    e = "Clicked homepage suggested artwork (#{group})"
-    analytics.track.click e
+    analytics.track.click "Clicked homepage suggested artwork"
 
   initialize: (options) ->
     @user = CurrentUser.orNull()
+    analytics.setupTestGroups()
 
     # Set up the hero unit view
     new HeroUnitView
@@ -54,7 +50,7 @@ module.exports.HomeView = class HomeView extends Backbone.View
     @setupModal()
 
   renderArtworks: ->
-    if @user and (('Suggested Artworks' in @user.get('lab_features')) || @user.hasSuggestions())
+    if @user and @user.hasSuggestions()
       @renderSuggestedArtworks()
     else
       @renderFeaturedArtworks()
@@ -74,8 +70,6 @@ module.exports.HomeView = class HomeView extends Backbone.View
   renderSuggestedArtworks: ->
     self = this
     @user.fetchSuggestedHomepageArtworks success: (artworks) ->
-      console.log('sugg artworks in')
-      console.log(artworks.models.length)
       if artworks.models.length
         $('#home-suggested-artworks').html featuredArtworksTemplate(artworks: artworks.models[0..3])
       else

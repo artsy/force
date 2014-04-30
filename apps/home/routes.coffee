@@ -1,6 +1,7 @@
 _             = require 'underscore'
 HeroUnits     = require '../../collections/hero_units'
 FeaturedLinks = require '../../collections/featured_links.coffee'
+TestGroups    = require '../../collections/test_groups.coffee'
 { parse }     = require 'url'
 Backbone      = require 'backbone'
 sd            = require('sharify').data
@@ -13,7 +14,13 @@ getRedirectTo = (req) ->
 @index = (req, res) ->
   heroUnits = new HeroUnits
   featuredLinks = new FeaturedLinks
-  render = _.after 2, ->
+  testGroups = new TestGroups
+  n = if req.user? then 3 else 2
+
+  render = _.after n, ->
+    if req.user?
+      req.user.setupTestGroups(testGroups.models)
+      res.locals.sharify.data.SUGGESTIONS_TEST_GROUP = req.user.getSuggestionsTestGroup()
     res.render 'index',
       heroUnits: heroUnits.models
       featuredLinks: featuredLinks.models
@@ -25,6 +32,13 @@ getRedirectTo = (req) ->
     cache: true
     success: render
     error: res.backboneError
+  if req.user?
+    data = access_token: req.user.get('accessToken')
+    testGroups.fetch
+      data: data
+      cache: true
+      success: render
+      error: res.backboneError
 
 @redirectToSignup = (req, res) ->
   res.redirect "/sign_up"

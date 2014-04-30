@@ -22,7 +22,7 @@ block body
         #home-body
           ul#home-top-featured-links
             include featured_links
-          if user && user.get('lab_features').indexOf('Suggested Artworks') >= 0
+          if user && user.hasSuggestions()
             h2.home-featured-header New for you on Artsy
             ul#home-suggested-artworks.home-four-items.home-featured-list
               .loading-spinner

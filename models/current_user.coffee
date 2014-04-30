@@ -6,6 +6,7 @@ Post              = require './post.coffee'
 Genes             = require '../collections/genes.coffee'
 Artists           = require '../collections/artists.coffee'
 Artworks          = require '../collections/artworks.coffee'
+TestGroups        = require '../collections/test_groups.coffee'
 sd                = require('sharify').data
 Order             = require './order.coffee'
 Genes             = require '../collections/genes.coffee'
@@ -69,24 +70,32 @@ module.exports = class CurrentUser extends Backbone.Model
   hasLabFeature: (featureName) ->
     _.contains @get('lab_features'), featureName
 
-  fetchTestGroups: (options) ->
-    url = "#{@url()}/test_groups"
-    data = access_token: @get('accessToken')
-    @set testGroups: new Backbone.Model()
-    @get('testGroups').fetch(_.extend { url: url, data: data }, options)
-
-  # @param String test
-  # @return Object | null
+  # Get the name of the test group for this user
+  # for a given test.
+  #
+  # @return String | undefined
   getTestGroup: (test) ->
-    unless @get('testGroups').fetched
-      @fetchTestGroups({})
-    @get('testGroups').find((group) -> group.get('test') == test)
+    unless @get('testGroups')
+      throw Error 'must initialize test groups before look ups.'
+
+    group = _.find @get('testGroups'), (group) => group.get('test') is test
+    (group and group.get('name') or undefined)
+
+  setupTestGroups: (testGroups) ->
+    @set testGroups: testGroups
+    sd.SUGGESTIONS_TEST_GROUP = @getSuggestionsTestGroup()
 
   getSuggestionsTestGroup: ->
-    @getTestGroup('ab:home:suggestions')
+    @getTestGroup(sd.SUGGESTIONS_AB_TEST)
 
+  # Is this user part of the AB test group that
+  # receives suggestions on the homepage.
+  #
+  # @return Bool
   hasSuggestions: ->
-    @getSuggestionsTestGroup() == 'a'
+    return true if 'Suggested Artworks' in @get('lab_features')
+    return false unless sd.ENABLE_AB_TEST
+    sd.SUGGESTIONS_TEST_GROUP == 'a'
 
   # Retreive a list of artists the user is following
   #

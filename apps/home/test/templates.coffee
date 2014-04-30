@@ -18,7 +18,7 @@ describe 'Home template', ->
   it 'renders suggested artworks with a user', ->
     render()(
       heroUnits: []
-      sd: {}
+      sd: { ENABLE_AB_TEST: true }
       featuredLinks: []
       user: new CurrentUser(lab_features: ['Suggested Artworks'])
     )
