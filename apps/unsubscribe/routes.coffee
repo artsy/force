@@ -5,6 +5,7 @@ emailTypes =
   'weekly_email': "Weekly Newsletters"
   'personalized_email': "Personalized Emails"
   'follow_users_email': "User Follow Emails"
+  'offer_emails': "Offer Emails"
 
 @unsubscribe = (req, res, next) ->
   auth_token = req.query.authentication_token

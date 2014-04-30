@@ -201,6 +201,7 @@ module.exports = class AccountForm extends Backbone.View
     values.receive_weekly_email       = @$('#user-weekly-email').is "[data-state='on']"
     values.receive_personalized_email = @$('#user-personalized-email').is "[data-state='on']"
     values.receive_follow_users_email = @$('#user-follows-email').is "[data-state='on']"
+    values.receive_offer_emails       = @$('#user-offer-emails').is "[data-state='on']"
 
     @submitPassword()
     @model.save values, trigger: true

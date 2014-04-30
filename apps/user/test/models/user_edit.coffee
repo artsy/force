@@ -79,9 +79,10 @@ describe 'UserEdit', ->
   describe '#toOnOff', ->
 
     it 'translates a boolean attribute to on or off', ->
-      @userEdit.set { weekly_email: false, follow_email: true }
+      @userEdit.set { weekly_email: false, follow_email: true, offer_emails: false }
       @userEdit.toOnOff('weekly_email').should.equal 'off'
       @userEdit.toOnOff('follow_email').should.equal 'on'
+      @userEdit.toOnOff('offer_emails').should.equal 'off'
 
   describe '#onOffFacebook', ->
 
