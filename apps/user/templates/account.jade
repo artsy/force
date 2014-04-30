@@ -29,6 +29,10 @@ form.settings-form.settings-account-form( class=editAccountIsActive, method="pos
   input#user-phone.bordered-input( type="tel", value=user.get('phone') || '', name="phone" )
   .settings-form-error( data-attr='phone' )
 
+  label.avant-garde-form-label( for="user-id" ) Profession
+  input#user-profession.bordered-input( type="text", value=user.get('profession'), name="profession")
+  .settings-form-error( data-attr='profession' )
+
   label.settings-group-leader.settings-group-label.avant-garde-form-label Sharing
   .input-group.settings-toggle-fb
     a#user-link-facebook.artsy-toggle.account-link-fb( data-state=user.onOffFacebook(), href="" )

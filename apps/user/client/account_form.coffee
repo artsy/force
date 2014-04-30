@@ -25,6 +25,7 @@ module.exports = class AccountForm extends Backbone.View
     @$passwordConfirmation = @$ '#user-password-confirmation'
     @$newPasswordMessage = @$ ".settings-form-error[data-attr='new_password']"
     @$phone = @$ '#user-phone'
+    @$profession = @$ '#user-profession'
     @$submitButton = @$ '#user-edit-submit'
 
     # Password Edit model
@@ -198,6 +199,7 @@ module.exports = class AccountForm extends Backbone.View
     if @$emailConfirmation.val()
       values.email_confirmation = @$emailConfirmation.val()
     values.phone = @$phone.val()
+    values.profession = @$profession.val()
     values.receive_weekly_email       = @$('#user-weekly-email').is "[data-state='on']"
     values.receive_personalized_email = @$('#user-personalized-email').is "[data-state='on']"
     values.receive_follow_users_email = @$('#user-follows-email').is "[data-state='on']"
