@@ -23,10 +23,11 @@ describe 'Unsubscribe View', ->
       sinon.stub Backbone, 'sync'
       benv.render resolve(__dirname, '../templates/index.jade'), {
         sd: {}
-        emailTypes: 
+        emailTypes:
           'weekly_email': "Weekly Newsletters"
           'personalized_email': "Personalized Emails"
           'follow_users_email': "User Follow Emails"
+          'offer_emails': "Offer Emails"
       }, =>
         UnsubscribeView.__set__ 'sd', { UNSUB_AUTH_TOKEN: 'cat' }
         @view = new UnsubscribeView
@@ -37,7 +38,7 @@ describe 'Unsubscribe View', ->
     Backbone.sync.restore()
 
   it 'renders checkboxes for each email type, including a select all', ->
-    _([ 'weekly_email', 'personalized_email', 'follow_users_email', ]).each (type) =>
+    _([ 'weekly_email', 'personalized_email', 'follow_users_email', 'offer_emails', ]).each (type) =>
       @view.$el.find("input[name='#{type}']").length.should.equal 1
     @view.$el.find("input[name='selectAll']").length.should.equal 1
 
