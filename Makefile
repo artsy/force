@@ -13,7 +13,7 @@ MIN_FILE_SIZE = 1000
 
 # Start the server
 s:
-	$(BIN)/forever -m 1000 $(BIN)/coffee index.coffee
+	$(BIN)/forever $(BIN)/coffee index.coffee
 
 # Start the server pointing to staging
 ss:
