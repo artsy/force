@@ -59,7 +59,6 @@ module.exports = class SaleArtwork extends Backbone.Model
 
   formatBidsAndReserve: ->
     bid = if (@get('bidder_positions_count') is 0) then '' else @bidCount()
-
     reserve = @reserveLabel() unless @get('reserve_status') is 'no_reserve'
     reserve = "This work has a reserve" if reserve? and not bid
     bidAndReserve = _.compact([bid, reserve]).join(', ')
