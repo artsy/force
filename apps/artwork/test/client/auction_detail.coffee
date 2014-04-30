@@ -49,7 +49,7 @@ describe 'AuctionDetailView', ->
       @view.$('.abf-min-next').text().should.equal 'Enter $5,000 or higher'
 
     it 'displays a description of the bid status', ->
-      @view.$('.abs-count').text().should.equal '(0 bids, No reserve)'
+      @view.$('.abs-count').text().should.equal '(0 bids)'
 
     it 'does not display what it does not have', ->
       @view.$('.artwork-bidder-position-status').length.should.not.be.ok
