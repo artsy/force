@@ -23,21 +23,19 @@ grav.get '/api/artwork/foo', (req, res) ->
 
 describe 'API cache middleware', ->
 
-  before (done) ->
-    done = _.after 2, done
-    @gravServer = grav.listen "5003", done
-    @server = app.listen "5002", done
-
-  after ->
-    @server.close()
-    @gravServer.close()
-
-  beforeEach ->
+  beforeEach (done) ->
     apiCache.__set__ 'cache', @cache = {
       set: sinon.stub()
       get: sinon.stub()
     }
     apiCache.__set__ 'ARTSY_URL', 'http://localhost:5003'
+    done = _.after 2, done
+    @gravServer = grav.listen "5003", done
+    @server = app.listen "5002", done
+
+  afterEach ->
+    @server.close()
+    @gravServer.close()
 
   it 'overrides the ARTSY_URL to use the locals', (done) ->
     request.get('http://localhost:5002/locals').end (res) ->
@@ -53,8 +51,8 @@ describe 'API cache middleware', ->
       res.body.title.should.equal 'Foo at the bar'
       done()
 
-  it 'pulls from the cache', ->
-    @cache.get.callsArgWith 1, null, { title: 'Bar at the baz' }
-    request.get('http://localhost:5002/api/artwork/foo').end (res) =>
-        res.body.title.should.equal 'Bar at the baz'
-        done()
+  it 'pulls from the cache', (done) ->
+    @cache.get.callsArgWith 1, null, JSON.stringify { title: 'Bar at the baz' }
+    request.get('http://localhost:5002/api/artwork/foo').end (res) ->
+      res.body.title.should.equal 'Bar at the baz'
+      done()
