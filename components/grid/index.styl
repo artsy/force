@@ -17,7 +17,6 @@ fixed-item-width = 250px
     margin-bottom 10px
 
 .grid-n-up
-  text-align center
   margin-bottom -(gap)
   > .grid-item
     width fixed-item-width
@@ -31,7 +30,6 @@ fixed-item-width = 250px
 
 for n in 2..4
   .grid-{n}-up
-    text-align center
     > .grid-item
       &:nth-child(-n+{n})
         margin-top 0
