@@ -21,6 +21,7 @@ setupAnalytics = ->
   return if not mixpanel? or mixpanel is 'undefined'
   analytics(mixpanel: mixpanel, ga: ga)
   analytics.trackPageview()
+  analytics.registerCurrentUser(sd.CURRENT_USER)
 
   # Log a visit once per session
   unless readCookie('active_session')?
