@@ -66,6 +66,11 @@ module.exports = class AuthModalView extends ModalView
 
     @$('button').attr 'data-state', 'loading'
 
+    # We're logging the event here prior to submission
+    # to increase it's chance of being logged
+    successEvent = successEventMap[@state.get 'mode']
+    analytics.track.funnel successEvent if successEvent
+
     new modelMap[@state.get 'mode']().save @serializeForm(),
       success: @onSubmitSuccess
       error: (model, xhr) =>
@@ -77,9 +82,6 @@ module.exports = class AuthModalView extends ModalView
       @showError _.capitalize res.error
     else
       createCookie 'destination', @destination, 1 if @destination
-
-      successEvent = successEventMap[@state.get 'mode']
-      analytics.track.funnel successEvent if successEvent
 
       if @state.get('mode') is 'login'
         createCookie 'signed_in', true, 7
