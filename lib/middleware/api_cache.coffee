@@ -1,6 +1,6 @@
 #
-# Expirmental middleware that proxies and caches certain API routes specified
-# in the CLIENT_CACHE_ROUTES config var.
+# Expirmental middleware that proxies and caches certain API routes on the
+# client-side specified in the CLIENT_CACHE_ROUTES config var.
 #
 
 _ = require 'underscore'
@@ -22,7 +22,6 @@ cacheRoute = (req, res, next) ->
   url = ARTSY_URL + req.url
   key = 'client-api-cache:' + url
   cache.get key, (err, json) ->
-    console.log "HIT" if json
     return res.send(JSON.parse json) if json
     request.get(url)
       .set('X-XAPP-TOKEN': req.header 'X-XAPP-TOKEN')
