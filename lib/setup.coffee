@@ -37,6 +37,7 @@ cookieParser = require 'cookie-parser'
 session = require 'cookie-session'
 favicon = require 'static-favicon'
 logger = require 'morgan'
+apiCache = require './middleware/api_cache'
 
 # Setup sharify constants & require dependencies that use sharify data
 sharify.data =
@@ -95,6 +96,7 @@ module.exports = (app) ->
 
   # Body parser has to be after proxy middleware for
   # node-http-proxy to work with POST/PUT/DELETE)
+  app.use apiCache if apiCache?
   app.all '/api*', proxyGravity.api
 
   # Setup Artsy XAPP & Passport middleware for authentication along with the
@@ -135,7 +137,6 @@ module.exports = (app) ->
 
   # Mount apps
   app.use require "../apps/auction"
-
   app.use require "../apps/home"
   app.use require "../apps/about"
   app.use require "../apps/user"
