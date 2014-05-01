@@ -21,7 +21,7 @@ module.exports = (options) =>
     if sd.CURRENT_USER?.id
       googleAnalyticsParams.userId = sd.CURRENT_USER?.id
 
-    @ga? 'create', sd.GOOGLE_ANALYTICS_ID, 'artsy.net'
+    @ga? 'create', sd.GOOGLE_ANALYTICS_ID, googleAnalyticsParams
 
 module.exports.getUserAgent = ->
   window?.navigator?.userAgent
