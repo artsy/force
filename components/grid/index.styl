@@ -1,6 +1,7 @@
 @import '../../components/stylus_lib'
 
 gap = 20px
+fixed-item-width = 250px
 
 .grid-item
   display inline-block
@@ -15,8 +16,22 @@ gap = 20px
     width 100%
     margin-bottom 10px
 
+.grid-n-up
+  text-align center
+  margin-bottom -(gap)
+  > .grid-item
+    width fixed-item-width
+    margin 0 (gap / 2) gap (gap / 2)
+  &.is-flush .grid-item
+    width fixed-item-width
+    margin 0 !important
+  @media screen and (max-width: 1024px)
+    > .grid-item
+      margin 0 (gap / 4) (gap / 2) (gap / 4)
+
 for n in 2..4
   .grid-{n}-up
+    text-align center
     > .grid-item
       &:nth-child(-n+{n})
         margin-top 0
