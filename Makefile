@@ -15,6 +15,10 @@ MIN_FILE_SIZE = 1000
 s:
 	$(BIN)/coffee index.coffee
 
+# Start the server using forever
+sf:
+	$(BIN)/forever $(BIN)/coffee index.coffee
+
 # Start the server pointing to staging
 ss:
 	ARTSY_URL=http://stagingapi.artsy.net SECURE_ARTSY_URL=https://stagingapi.artsy.net $(BIN)/coffee index.coffee

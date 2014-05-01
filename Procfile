@@ -1,1 +1,1 @@
-web: make s
+web: make sf
