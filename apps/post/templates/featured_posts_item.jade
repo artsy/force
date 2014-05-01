@@ -1,13 +1,16 @@
-- attachment = post.get('featured_posts_thumbnail')
-- profile = post.profile()
-.featured-post-item.post-page-feature-item( data-id=post.get('id') )
-  .featured-post-content
-    .featured-post-attachment
-      if attachment
-        include ./attachment
-    .featured-post-text
-      if post.get('title')
-        h2.featured-post-title
-          a( href=post.href() )!= post.get('title')
-      if post.has('profile')
-        include ./../../../components/profile_badge/template
+- attachment  = post.get('featured_posts_thumbnail')
+- profile     = post.profile()
+
+if attachment && (attachment.get('type') === 'PostArtwork')
+  - url = attachment.artwork().defaultImage().imageUrlFor(249, 167)
+else
+  - url = attachment.imageUrlFor(249, 167)
+
+.grid-item.post-featured-post-item( data-id=post.id )
+  if attachment
+    a.hoverable-image-link( href=post.href(), data-attachment=attachment.id )
+      .hoverable-image.is-three-two( style="background-image: url(#{url});" )
+  if post.get('title')
+    h2.pfpi-title: a( href=post.href() )!= post.get('title')
+  if post.has('profile')
+    a.pfpi-author( href=profile.href() )= profile.displayName()
