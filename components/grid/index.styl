@@ -51,6 +51,7 @@ for n in 2..4
 .grid-2-up
   offset = 10px
   > .grid-item
+    width 48%
     width calc('50% - %s' % offset)
   @media screen and (max-width: 1024px)
     > .grid-item
@@ -60,6 +61,7 @@ for n in 2..4
 .grid-3-up
   offset = 14px
   > .grid-item
+    width 32%
     width calc('33.33% - %s' % offset)
   @media screen and (max-width: 1024px)
     > .grid-item
@@ -69,8 +71,10 @@ for n in 2..4
 .grid-4-up
   offset = 15px
   > .grid-item
+    width 23%
     width calc('25% - %s' % offset)
   @media screen and (max-width: 1024px)
     > .grid-item
       offset = offset / 2
+      width 23%
       width calc('25% - %s' % offset)
