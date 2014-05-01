@@ -20,8 +20,9 @@ describe 'analytics', ->
       sd.GOOGLE_ANALYTICS_ID = 'goog that analytics'
       @mixpanelStub = {}
       @mixpanelStub.track = sinon.stub()
-
+      @mixpanelStub.register = sinon.stub()
       @mixpanelStub.init = sinon.stub()
+
       @gaStub = sinon.stub()
       analytics mixpanel: @mixpanelStub, ga: @gaStub, location: { pathname: 'foobar' }
 
@@ -58,53 +59,91 @@ describe 'analytics', ->
       it "encodes one id into hex value", ->
         analytics.encodeMulti(['andy']).should.equal 'da41bcef'
 
-    describe '#track', ->
+    context 'with rewiredAnalytics', ->
 
       beforeEach ->
         rewiredAnalytics mixpanel: @mixpanelStub, ga: @gaStub, location: { pathname: 'foobar' }
         rewiredAnalytics.__set__ 'ga', @gaStub
         rewiredAnalytics.__set__ 'mixpanel', @mixpanelStub
 
-      it 'sends tracking info to both ga and mixpanel', ->
-        model = new Artwork(id: '123')
-        rewiredAnalytics.track.click 'Did something', { label: rewiredAnalytics.modelNameAndIdToLabel('artwork', model.get('id')) }
+      describe '#track', ->
 
-        @gaStub.args[2][0].should.equal 'send'
-        @gaStub.args[2][1].hitType.should.equal 'event'
-        @gaStub.args[2][1].eventCategory.should.equal 'UI Interactions'
-        @gaStub.args[2][1].eventAction.should.equal 'Did something'
-        @gaStub.args[2][1].nonInteraction.should.equal 0
+        it 'Does not track admins', ->
+          model = new Artwork(id: '123')
+          sd.CURRENT_USER = { type: 'Admin' }
+          rewiredAnalytics.track.click 'Did something', { label: rewiredAnalytics.modelNameAndIdToLabel('artwork', model.get('id')) }
+          @gaStub.args.length.should.equal 2
 
-        @mixpanelStub.track.args[0][0].should.equal 'Did something'
-        @mixpanelStub.track.args[0][1].label.should.equal 'Artwork:123'
+        it 'Tracks normal users', ->
+          model = new Artwork(id: '123')
+          sd.CURRENT_USER = { type: 'User' }
+          rewiredAnalytics.track.click 'Did something', { label: rewiredAnalytics.modelNameAndIdToLabel('artwork', model.get('id')) }
+          @gaStub.args.length.should.equal 3
 
-      it 'sends funnel tracking info to both ga and mixpanel', ->
-        model = new Artwork(id: '123')
-        rewiredAnalytics.track.funnel 'Did something', { label: 'cool label' }
+        it 'Tracks logged out users', ->
+          model = new Artwork(id: '123')
+          sd.CURRENT_USER = null
+          rewiredAnalytics.track.click 'Did something', { label: rewiredAnalytics.modelNameAndIdToLabel('artwork', model.get('id')) }
+          @gaStub.args.length.should.equal 3
 
-        @gaStub.args[2][0].should.equal 'send'
-        @gaStub.args[2][1].hitType.should.equal 'event'
-        @gaStub.args[2][1].eventCategory.should.equal 'Funnel Progressions'
-        @gaStub.args[2][1].eventAction.should.equal 'Did something'
-        @gaStub.args[2][1].nonInteraction.should.equal 1
+        it 'sends tracking info to both ga and mixpanel', ->
+          model = new Artwork(id: '123')
+          rewiredAnalytics.track.click 'Did something', { label: rewiredAnalytics.modelNameAndIdToLabel('artwork', model.get('id')) }
 
-        @mixpanelStub.track.args[0][0].should.equal 'Did something'
-        @mixpanelStub.track.args[0][1].label.should.equal 'cool label'
+          @gaStub.args[2][0].should.equal 'send'
+          @gaStub.args[2][1].hitType.should.equal 'event'
+          @gaStub.args[2][1].eventCategory.should.equal 'UI Interactions'
+          @gaStub.args[2][1].eventAction.should.equal 'Did something'
+          @gaStub.args[2][1].nonInteraction.should.equal 0
 
-    describe '#multi', ->
+          @mixpanelStub.track.args[0][0].should.equal 'Did something'
+          @mixpanelStub.track.args[0][1].label.should.equal 'Artwork:123'
 
-      # Marked as pending.
-      # TODO: Unpendify and figure out a way for multi to access analytics.ga rather than the global 'ga'
-      xit 'sets the object ID to the concatenation of shortened MD5 hashes', (done) ->
-        analytics.multi "Did something", "Artwork", [ "thug-slug", "pug-slug" ]
-        setTimeout =>
-          @gaStub.args[1][0].should.equal 'send'
-          @gaStub.args[1][1].should.equal 'event'
-          @gaStub.args[1][2].should.equal 'Multi-object Events'
-          @gaStub.args[1][3].should.equal 'Did something'
-          @gaStub.args[1][4].should.equal 'Artwork:cb7a5c6f-ab197545'
-          done()
-        , 1000
+        it 'sends funnel tracking info to both ga and mixpanel', ->
+          model = new Artwork(id: '123')
+          rewiredAnalytics.track.funnel 'Did something', { label: 'cool label' }
+
+          @gaStub.args[2][0].should.equal 'send'
+          @gaStub.args[2][1].hitType.should.equal 'event'
+          @gaStub.args[2][1].eventCategory.should.equal 'Funnel Progressions'
+          @gaStub.args[2][1].eventAction.should.equal 'Did something'
+          @gaStub.args[2][1].nonInteraction.should.equal 1
+
+          @mixpanelStub.track.args[0][0].should.equal 'Did something'
+          @mixpanelStub.track.args[0][1].label.should.equal 'cool label'
+
+      describe '#registerCurrentUser', ->
+
+        it 'Does not track admins', ->
+          sd.CURRENT_USER = { type: 'Admin' }
+          rewiredAnalytics.registerCurrentUser()
+          @mixpanelStub.register.args.length.should.equal 0
+
+        it 'Tracks normal users', ->
+          sd.CURRENT_USER = { type: 'User' }
+          rewiredAnalytics.registerCurrentUser()
+          @mixpanelStub.register.args.length.should.equal 1
+          @mixpanelStub.register.args[0][0]['User Type'].should.equal 'Logged In'
+
+        it 'Tracks logged out users', ->
+          sd.CURRENT_USER = null
+          rewiredAnalytics.registerCurrentUser()
+          @mixpanelStub.register.args.length.should.equal 1
+          @mixpanelStub.register.args[0][0]['User Type'].should.equal 'Logged Out'
+
+
+      describe '#multi', ->
+
+        it 'sets the object ID to the concatenation of shortened MD5 hashes', (done) ->
+          rewiredAnalytics.multi "Did something", "Artwork", [ "thug-slug", "pug-slug" ]
+          setTimeout =>
+            @gaStub.args[2][0].should.equal 'send'
+            @gaStub.args[2][1].should.equal 'event'
+            @gaStub.args[2][2].should.equal 'Multi-object Events'
+            @gaStub.args[2][3].should.equal 'Did something'
+            @gaStub.args[2][4].should.equal 'Artwork:cb7a5c6f-ab197545'
+            done()
+          , 1000
 
     describe '#track', ->
 

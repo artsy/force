@@ -16,12 +16,20 @@ module.exports = (options) =>
   { @ga, @location } = options
   @location ?= window?.location
   if sd.GOOGLE_ANALYTICS_ID
-    @ga? 'create', sd.GOOGLE_ANALYTICS_ID, 'artsy.net'
+    googleAnalyticsParams = cookieDomain: 'artsy.net'
+
+    if sd.CURRENT_USER?.id
+      googleAnalyticsParams.userId = sd.CURRENT_USER?.id
+
+    @ga? 'create', sd.GOOGLE_ANALYTICS_ID, googleAnalyticsParams
 
 module.exports.getUserAgent = ->
   window?.navigator?.userAgent
 
 module.exports.trackPageview = =>
+  # Don't send pageviews for admins
+  return if sd.CURRENT_USER?.type == 'Admin'
+
   @ga? 'send', 'pageview'
 
 # Delta tracking pixel
@@ -31,6 +39,15 @@ module.exports.delta = (event, data, el) ->
   data.pixel = 1
   url = 'https://' + sd.DELTA_HOST + '/?' + qs.stringify(data)
   el.append '<img src="' + url + '" style="display:none;" />'
+
+module.exports.registerCurrentUser = ->
+  # Don't track admins
+  return if sd.CURRENT_USER?.type == 'Admin'
+
+  userType = if sd.CURRENT_USER then "Logged In" else "Logged Out"
+
+  ga?('set', 'dimension1', userType)
+  mixpanel?.register "User Type": userType
 
 # This basically just sets some defaults loosely based on the
 # Analytics wrapper class from Gravity
@@ -47,6 +64,9 @@ categories =
 module.exports.track =
   _.reduce(Object.keys(categories), (memo, kind) ->
     memo[kind] = (description, options={}) ->
+
+      # Don't track admins
+      return if sd.CURRENT_USER?.type == 'Admin'
 
       # Format and Send mixpanel event
       unless typeof mixpanel is 'undefined'
@@ -134,7 +154,6 @@ module.exports.abTest = (key, percentToNew = 0.5) ->
 
 # Calls back when mixpanel has loaded. Useful for pages that do testing on
 # load. Such as AB testing the way a certain page looks.
-
 module.exports.load = (callback) ->
   called = false
   cb = ->
