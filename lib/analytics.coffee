@@ -40,7 +40,7 @@ module.exports.delta = (event, data, el) ->
   url = 'https://' + sd.DELTA_HOST + '/?' + qs.stringify(data)
   el.append '<img src="' + url + '" style="display:none;" />'
 
-module.exports.registerCurrentUser = (user) ->
+module.exports.registerCurrentUser = ->
   # Don't track admins
   return if sd.CURRENT_USER?.type == 'Admin'
 
