@@ -16,23 +16,33 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
 
   defaults:
     pageSize: 10
-    nextPage: 1 # page number of the next page to render
 
   events:
     'click .make-public'  : 'makePublic'
 
   initialize: (options) ->
-    { @pageSize, @nextPage } = _.defaults options or {}, @defaults
+    { @pageSize } = _.defaults options or {}, @defaults
     @setupCurrentUser()
 
     @collection ?= new Artworks()
     @listenTo @collection, "request", @renderLoading
     @listenTo @collection, "sync", @doneRenderLoading
+    @listenTo @collection, "sync", @render
+
+    @params = new Backbone.Model
+      size: @pageSize
+      sort: "-position"
+      private: true
+      user_id: @currentUser.get('id')
+    @params.on 'change:page', =>
+      @collection.fetch
+        url: "#{sd.ARTSY_URL}/api/v1/collection/saved-artwork/artworks"
+        data: @params.toJSON()
 
     @$favoriteArtworks = @$('.favorite-artworks')
     @$loadingSpinner = @$('.favorite-artworks .loading-spinner')
     @initializeArtworkColumns()
-    @loadNextPage()
+    @loadNextPage(); @$el.infiniteScroll @loadNextPage
     @setupStatus()
     @setupShareButton()
 
@@ -71,52 +81,19 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
   setupShareButton: ->
     new ShareView el: @$('.favorites-share')
 
-  loadNextPage: ->
-    @fetchNextPageSavedArtworks
-      success: (collection, response, options) =>
-        @isFetching = false
-        @doneRenderLoading()
+  render: (col, res) =>
+    @$favoriteArtworks.attr 'data-state',
+      if      col.length is 0 and @params.get('page') is 1 then 'no-results'
+      else if col.length is 0 then 'finished-paging'
+      else ''
+    @artworkColumnsView.appendArtworks col.models if col.length > 0
+    @showEmptyHint() if @$favoriteArtworks.attr('data-state') is 'no-results'
 
-        page = options?.data?.page or @nextPage # fetched page
-
-        if page is 1
-          $(window).on 'scroll.favorites', _.throttle(@infiniteScroll, 150)
-          @showEmptyHint() unless collection.length > 0
-
-        if collection.length is 0
-          $(window).off('.favorites')
-        else
-          @artworkColumnsView.appendArtworks collection.models
-          @nextPage = page + 1
-      error: =>
-        @doneRenderLoading(); @showEmptyHint()
-
-  infiniteScroll: =>
-    fold = $(window).height() + $(window).scrollTop()
-    @loadNextPage() unless fold < @$favoriteArtworks.offset()?.top + @$favoriteArtworks.height()
-
-  #
-  # Fetch the next page of saved artworks and (blindly) append them to @collection
-  #
-  # @param {Object} options Provide `success` and `error` callbacks similar to Backbone's fetch
-  fetchNextPageSavedArtworks: (options) ->
-    return if @isFetching
-    @isFetching = true
-
-    url = "#{sd.ARTSY_URL}/api/v1/collection/saved-artwork/artworks"
-    data =
-      user_id: @currentUser.get('id')
-      page: @nextPage
-      size: @pageSize
-      sort: "-position"
-      private: true
-    @collection.fetch
-      url: url
-      data: data
-      remove: true
-      merge: false
-      success: options?.success
-      error: options?.error
+  # $.fn.infiniteScroll callback
+  loadNextPage: =>
+    return if @$favoriteArtworks.attr('data-state') is 'no-results' or
+              @$favoriteArtworks.attr('data-state') is 'finished-paging'
+    @params.set page: (@params.get('page') + 1) or 1
 
   showEmptyHint: ->
     @$('.follows-empty-hint').html $( hintTemplate type: 'artworks' )
