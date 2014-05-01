@@ -1,12 +1,9 @@
 _                       = require 'underscore'
 Backbone                = require 'backbone'
 relatedArtistsTemplate  = -> require('../templates/related_artists.jade') arguments...
-imagesLoaded            = require '../../../lib/vendor/imagesloaded.js'
 Artist                  = require '../../../models/artist.coffee'
 
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
-
-setupFixedDimensionsThumbnails = require '../../../components/util/fixed_dimensions_thumbnail.coffee'
 
 module.exports = class RelatedArtists extends Backbone.View
 
@@ -24,12 +21,6 @@ module.exports = class RelatedArtists extends Backbone.View
     @$el.html relatedArtistsTemplate( artists: @artists, currentUser: @currentUser )
 
     @setupFollowing() if @currentUser
-
-    _.delay =>
-      setupFixedDimensionsThumbnails @$('.fixed-dimensions img')
-      @$el.imagesLoaded?().progress =>
-        setupFixedDimensionsThumbnails @$('.fixed-dimensions img')
-    , 100
 
   getArtistImages: (artists) ->
     for artist in artists
