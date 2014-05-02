@@ -18,6 +18,8 @@
     color red-color
     a
       color red-color
+  select
+    width 100%
   .order-input-section
     margin-bottom 12px
     &.region, &.city, &.postal-code, &.card-name, &.card-expiration, &.card-number, &.card-security-code
@@ -39,14 +41,17 @@
     &.card-expiration
       width: 48%
       .month, .year
+        position relative
+        height 75px
         display inline-block
         vertical-align top
+        width 47%
       .month
-        width: 32%
         margin-right: 6%
-      .year
-        width: 62%
-
+      .error
+        position absolute
+        bottom 0px
+        left 0px
   .order-form-button
     width: 100%
   .order-form-checkbox
