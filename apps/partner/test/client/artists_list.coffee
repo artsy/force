@@ -11,18 +11,18 @@ PartnerArtistsListView = rewire '../../client/artists_list'
 
 describe 'PartnerArtistsListView', ->
 
-  beforeEach (done) ->
-    benv.setup =>
-      benv.expose { $: benv.require 'jquery' }
-      Backbone.$ = $
-      benv.render resolve(__dirname, '../../templates/artists_list.jade'), { groups: {} }, =>
-        @template = sinon.stub()
-        PartnerArtistsListView.__set__ 'template', @template
-        done()
-
-  afterEach -> benv.teardown()
-
   describe '#groupPartnerArtists', ->
+
+    beforeEach (done) ->
+      benv.setup =>
+        benv.expose { $: benv.require 'jquery' }
+        Backbone.$ = $
+        benv.render resolve(__dirname, '../../templates/artists_list.jade'), { groups: {} }, =>
+          @template = sinon.stub()
+          PartnerArtistsListView.__set__ 'template', @template
+          done()
+
+    afterEach -> benv.teardown()
 
     it 'groups partner artists into represented and nonrepresented groups', ->
       pas = new PartnerArtists [
@@ -125,3 +125,54 @@ describe 'PartnerArtistsListView', ->
       groups[0].label.should.equal "artists"
       groups[0].cols.should.have.lengthOf 1
       groups[0].cols[0].should.have.lengthOf 6
+
+  describe '#render', ->
+
+    beforeEach (done) ->
+      benv.setup =>
+        benv.expose { $: benv.require 'jquery' }
+        Backbone.$ = $
+        benv.render resolve(__dirname, '../../templates/artists_list.jade'), { groups: {} }, =>
+          @PartnerArtistsListView = mod =
+            benv.requireWithJadeify resolve(__dirname, '../../client/artists_list'), ['template']
+          @partner = fabricate('partner', default_profile_id: 'taipei-fine-art-museum')
+          @pas = new PartnerArtists [
+            fabricate('partner_artist', partner: @partner),
+            fabricate('partner_artist', partner: @partner, published_artworks_count: 0),
+            fabricate('partner_artist', partner: @partner)
+          ]
+          done()
+
+    afterEach -> benv.teardown()
+
+    describe 'for partner galleries', ->
+
+      beforeEach (done) ->
+        @view = new @PartnerArtistsListView
+          el: $ 'body'
+          collection: @pas.models
+        done()
+
+      it 'links artists to partner artist page if they have published artworks with this partner', ->
+        @view.$('.artists-column > li > a').length.should.equal 2
+        _.each @view.$('.artists-column > li > a'), (a) =>
+          $(a).attr('href').should.startWith "/#{@partner.default_profile_id}/artist/"
+
+      it 'disables artists links if they do not have published artworks with this partner', ->
+        @view.$('.artists-column > li > span').length.should.equal 1
+        _.each @view.$('.artists-column > li > span'), (span) =>
+          $(span).hasClass 'artist-name'
+
+    describe 'for non-partner galleries', ->
+
+      beforeEach (done) ->
+        @view = new @PartnerArtistsListView
+          el: $ 'body'
+          collection: @pas.models
+          linkToPartnerArtist: false
+        done()
+
+      it 'links artists to their artists pages', ->
+        @view.$('.artists-column > li > a').length.should.equal 3
+        _.each @view.$('.artists-column > li > a'), (a) =>
+          $(a).attr('href').should.startWith "/artist/"
