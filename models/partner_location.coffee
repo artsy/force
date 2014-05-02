@@ -11,7 +11,11 @@ module.exports = class PartnerLocation extends Location
   googleMapsLink: ->
     location = @getMapsLocation()
     return unless location
-    getMapLink location
+    options =
+      q: location
+    unless @has('coordinates')
+      options.hnear = location
+    getMapLink options
 
   mapImageSrc: (width, height) ->
     location = @getMapsLocation()

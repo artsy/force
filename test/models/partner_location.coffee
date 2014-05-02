@@ -1,9 +1,21 @@
 _               = require 'underscore'
+sd              = require('sharify').data
+benv            = require 'benv'
 should          = require 'should'
 Backbone        = require 'backbone'
 PartnerLocation = require '../../models/partner_location'
 
 describe 'PartnerLocation', ->
+
+  before (done) ->
+    benv.setup =>
+      benv.expose { $: benv.require 'jquery' }
+      sd.GOOGLE_MAPS_API_KEY = 'GOOGLE-MAPS-API-KEY'
+      done()
+
+  after ->
+    benv.teardown()
+
 
   beforeEach ->
     @partnerLocation = new PartnerLocation
@@ -19,7 +31,6 @@ describe 'PartnerLocation', ->
       name: 'Partner Location'
       city: 'City'
       address: 'Address'
-
 
   describe '#singleLine', ->
 
@@ -82,3 +93,12 @@ describe 'PartnerLocation', ->
     it "Correctly formats as html", ->
       @partnerLocation.toHtml().should.equal 'Address<br/>City, State 00000<br/>Tel: 555-555-5555'
       @partnerLocationMissingInfo.toHtml().should.equal 'Address<br/>City'
+
+  describe '#googleMapsLink', ->
+
+    it "returns q and hnear params for an address only location", ->
+      @partnerLocation.googleMapsLink().should.equal 'https://maps.google.com/maps?q=Address%2C+City%2C+State+00000&hnear=Address%2C+City%2C+State+00000'
+
+    it "returns only a q param for locations with coordinates", ->
+      @partnerLocation.set 'coordinates', { lng: -74.0093178, lat: 40.2163901 }
+      @partnerLocation.googleMapsLink().should.equal 'https://maps.google.com/maps?q=40.2163901%2C-74.0093178'
