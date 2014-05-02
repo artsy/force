@@ -5,11 +5,13 @@
 .card-expiration.order-input-section
   label( for='card_expiration' ) Expiration
   .month
-    select.bordered-select( name='card_expiration_month', autocomplete="cc-exp-month" )
+    select( name='card_expiration_month', autocomplete="cc-exp-month" )
+      option( value='' ) Month
       each month in monthRange
         option( value=month )!= month
   .year
-    select.bordered-select( name='card_expiration_year', autocomplete="cc-exp-year" )
+    select( name='card_expiration_year', autocomplete="cc-exp-year" )
+      option( value='' ) Year
       each year in yearRange
         option( value=year )!= year
 

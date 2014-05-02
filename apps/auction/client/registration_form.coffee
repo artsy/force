@@ -32,10 +32,11 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
     @fields =
       'name on card': { el: @$('input[name=card_name]'), validator: @isPresent }
       'card number': { el: @$('input[name=card_number]'), validator: @isCardNumber }
-      expiration: { el: @$('.card-expiration select'), validator: @isPresent }
       'security code': { el: @$('input[name=card_security_code]'), validator: @isPresent }
       telephone: { el: @$('input.telephone'), validator: @isPresent }
-      street: { el: @$('input.street'), validator: @isPresent, label: 'street' }
+      month: { el: @$('.card-expiration .month select'), validator: @isPresent }
+      year: { el: @$('.card-expiration .year select'), validator: @isPresent }
+      street: { el: @$('input.street'), validator: @isPresent, label: 'address' }
       city: { el: @$('input.city'), validator: @isPresent, label: 'city' }
       state: { el: @$('input.region'), validator: @isState, label: 'state' }
       zip: { el: @$('input.postal-code'), validator: @isZip }
@@ -66,8 +67,8 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
   cardData: ->
     name: @fields['name on card'].el.val()
     card_number: @fields['card number'].el.val()
-    expiration_month: @fields.expiration.el.first().val()
-    expiration_year: @fields.expiration.el.last().val()
+    expiration_month: @fields.month.el.first().val()
+    expiration_year: @fields.year.el.last().val()
     security_code: @fields['security code'].el.val()
     street_address: @fields.street.el.val()
     postal_code: @fields.zip.el.val()
