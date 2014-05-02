@@ -1,5 +1,3 @@
-- var linkToPA = linkToPartnerArtist !== false
-
 .partner-artists-list
   .artists-groups-container
     each group in groups
@@ -9,10 +7,9 @@
           each col in group.cols
             ul.artists-column
               each pa in col
-                if pa.get('published_artworks_count') > 0
-                  if linkToPA
-                    li( data-artist-id=pa.get('artist').id ): a.partner-route-link( href=pa.href() )= pa.get('artist').name
-                  else
-                    li( data-artist-id=pa.get('artist').id ): a( href="/artist/#{pa.get('artist').id}" )= pa.get('artist').name
+                if linkToPartnerArtist && pa.get('published_artworks_count') > 0
+                  li( data-artist-id=pa.get('artist').id ): a.partner-route-link( href=pa.href() )= pa.get('artist').name
+                else if !linkToPartnerArtist
+                  li( data-artist-id=pa.get('artist').id ): a( href="/artist/#{pa.get('artist').id}" )= pa.get('artist').name
                 else
                   li( data-artist-id=pa.get('artist').id ): span.artist-name= pa.get('artist').name
