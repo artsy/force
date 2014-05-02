@@ -35,7 +35,7 @@ describe 'Unsupported Browser', ->
       routes.continueAnyway @req, @res
       today       = new Date()
       expireDate  = new Date @res.cookie.args[0][2].expires
-      moment(expireDate).diff(today, 'days', true).should.be.approximately(1, 0.1)
+      moment(expireDate).diff(today, 'days', true).should.be.approximately(1, 0.0001)
 
     it 'redirects to the root if no forward url is passed', ->
       routes.continueAnyway @req, @res
