@@ -61,7 +61,7 @@ describe 'CheckoutForm', ->
 
     it 'shows errors for empty fields', ->
       @view.onSubmit()
-      @view.$('.error').text().should.equal 'Invalid name on cardInvalid card numberInvalid security codeInvalid streetInvalid cityInvalid stateInvalid billing_zipConditions must be acceptedPlease review the error(s) above and try again.'
+      @view.$('.error').text().should.equal 'Invalid name on cardInvalid monthInvalid yearInvalid card numberInvalid security codeInvalid streetInvalid cityInvalid stateInvalid billing_zipConditions must be acceptedPlease review the error(s) above and try again.'
 
     it 'runs success callback', ->
       @view.fields['name on card'].el.val 'Name McName'
@@ -71,7 +71,8 @@ describe 'CheckoutForm', ->
       @view.fields.billing_city.el.val 'Cool city'
       @view.fields.billing_state.el.val 'NY'
       @view.fields.billing_zip.el.val '11238'
-      @view.fields.expiration.el.first().val '12'
+      @view.fields.month.el.val '12'
+      @view.fields.year.el.val '2015'
       @view.fields.conditions.el.prop('checked', true)
       @view.balanced.should.not.be.ok
 

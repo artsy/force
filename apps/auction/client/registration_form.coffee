@@ -67,8 +67,8 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
   cardData: ->
     name: @fields['name on card'].el.val()
     card_number: @fields['card number'].el.val()
-    expiration_month: @fields.expiration.el.first().val()
-    expiration_year: @fields.expiration.el.last().val()
+    expiration_month: @fields.month.el.first().val()
+    expiration_year: @fields.year.el.last().val()
     security_code: @fields['security code'].el.val()
     street_address: @fields.street.el.val()
     postal_code: @fields.zip.el.val()
