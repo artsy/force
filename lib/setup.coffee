@@ -8,7 +8,7 @@
   FACEBOOK_APP_NAMESPACE, MOBILE_MEDIA_QUERY, MOBILE_URL, APP_URL, REDIS_URL, DEFAULT_CACHE_TIME,
   CANONICAL_MOBILE_URL, IMAGES_URL_PREFIX, SECURE_IMAGES_URL, GOOGLE_ANALYTICS_ID, MIXPANEL_ID,
   COOKIE_DOMAIN, AUTO_GRAVITY_LOGIN, GOOGLE_MAPS_API_KEY, ADMIN_URL, CMS_URL,
-  DELTA_HOST, ENABLE_AB_TEST, KIOSK_MODE, KIOSK_PAGE } = config = require "../config"
+  DELTA_HOST, ENABLE_AB_TEST, KIOSK_MODE, KIOSK_PAGE, SESSION_COOKIE_KEY } = config = require "../config"
 { parse, format } = require 'url'
 
 _ = require 'underscore'
@@ -109,7 +109,7 @@ module.exports = (app) ->
   app.use session
     secret: SESSION_SECRET
     domain: COOKIE_DOMAIN
-    key   : 'force.sess'
+    key   : SESSION_COOKIE_KEY
     maxage: SESSION_COOKIE_MAX_AGE
   app.use artsyPassport _.extend config,
     CurrentUser: CurrentUser
