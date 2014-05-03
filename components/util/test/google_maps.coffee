@@ -29,4 +29,7 @@ describe "PartnerLocation", ->
   describe '#googleMapsLink', ->
 
     it 'returns a formatted google maps url', ->
-      getMapLink(@location).should.equal 'https://maps.google.com/maps?q=Address%2C+City%2C+State+00000&hnear=Address%2C+City%2C+State+00000'
+      options =
+        q: @location
+        hnear: @location
+      getMapLink(options).should.equal 'https://maps.google.com/maps?q=Address%2C+City%2C+State+00000&hnear=Address%2C+City%2C+State+00000'
