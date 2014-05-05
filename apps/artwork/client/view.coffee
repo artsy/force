@@ -39,7 +39,6 @@ module.exports = class ArtworkView extends Backbone.View
     { @artwork, @artist } = options
 
     @abTestEmbeddedInquiryForm()
-    @setupZigZag()
     @setupRelatedPosts()
     @setupCurrentUser()
     @setupArtistArtworks()
@@ -73,6 +72,8 @@ module.exports = class ArtworkView extends Backbone.View
         artwork : @artwork
     @on 'related:none', ->
       @belowTheFoldView.setupLayeredSearch()
+    @on 'related:not_auction', ->
+      @setupZigZag()
 
     if @currentUser?.hasLabFeature('Monocles')
       @setupMonocleView()
@@ -122,6 +123,14 @@ module.exports = class ArtworkView extends Backbone.View
           @trigger "related:#{relatedCollection.kind}", relatedCollection.first()
       else
         @trigger 'related:none'
+
+      unless @hasAnyAuctions relatedCollections
+        @trigger 'related:not_auction'
+
+  hasAnyAuctions: (relatedCollections) ->
+    return false unless relatedCollections.length
+    saleCollection = _.find(relatedCollections, (xs) -> xs.kind is 'sales')
+    _.some(saleCollection.pluck 'is_auction')
 
   setupCurrentUser: ->
     @currentUser = CurrentUser.orNull()
