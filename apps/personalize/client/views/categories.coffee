@@ -1,3 +1,5 @@
+_                             = require 'underscore'
+Q                             = require 'q'
 StepView                      = require './step.coffee'
 track                         = require('../../../../lib/analytics.coffee').track
 OrderedSets                   = require '../../../../collections/ordered_sets.coffee'
@@ -5,11 +7,17 @@ Gene                          = require '../../../../models/gene.coffee'
 { setSkipLabel }              = require '../mixins/followable.coffee'
 { FollowButton, Following }   = require '../../../../components/follow_button/index.coffee'
 
-template                      = -> require('../../templates/categories.jade') arguments...
-suggestedCategoriesTemplate   = -> require('../../templates/suggested_categories.jade') arguments...
+template = -> require('../../templates/categories.jade') arguments...
+suggestionTemplates =
+  featured  : -> require('../../templates/featured_category.jade') arguments...
+  secondary : -> require('../../templates/secondary_category.jade') arguments...
 
 module.exports = class CategoriesView extends StepView
-  key: 'personalize:suggested-categories'
+  keys:
+    featured  : 'personalize:featured-suggested-categories'
+    secondary : 'personalize:secondary-suggested-categories'
+
+  setSkipLabel: setSkipLabel
 
   events:
     'click .personalize-skip' : 'advance'
@@ -17,47 +25,51 @@ module.exports = class CategoriesView extends StepView
   initialize: (options) ->
     super
 
-    @following    = new Following null, kind: 'gene'
-    @categories   = new OrderedSets key: @key
+    @following = new Following null, kind: 'gene'
 
-    @listenTo @categories, 'sync:complete', @setupCategories
+    @categories =
+      featured  : new OrderedSets key: @keys.featured
+      secondary : new OrderedSets key: @keys.secondary
 
-    @categories.fetchAll()
+    Q.allSettled(_.map @categories, (set) -> set.fetchAll()).then => @bootstrap()
 
-  setSkipLabel: setSkipLabel
+  bootstrap: ->
+    @$('#personalize-categories').html _.map(@categories, @setupCategories, this)
+    @$('#personalize-category-anything-else').show()
+    @setupFollowButtons()
+    (@$textarea = @$('textarea')).one 'input', (e) => @setSkipLabel()
 
   setupFollowButton: (model, el) ->
     key = model.id
     @followButtonViews ?= {}
     @followButtonViews[key].remove() if @followButtonViews[key]?
     @followButtonViews[key] = new FollowButton
-      analyticsUnfollowMessage : ""
-      analyticsFollowMessage   : ""
-      following                : @following
-      model                    : model
+      analyticsUnfollowMessage : 'Unfollowed gene from personalize gene suggestions'
+      analyticsFollowMessage   : 'Unfollowed gene from personalize gene suggestions'
       modelName                : 'Gene'
+      model                    : model
       el                       : el
+      following                : @following
 
   setupFollowButtons: ->
-    @categories.each (category) =>
-      model   = new Gene id: category.get 'gene_id'
-      el      = @$(".follow-button[data-id=#{category.get('gene_id')}]")
-      button  = @setupFollowButton model, el
+    _.each @categories, (categories, key) =>
+      @following.syncFollows categories.pluck('gene_id')
+      categories.each (category) =>
+        model   = new Gene id: category.get 'gene_id'
+        el      = @$(".follow-button[data-id=#{category.get('gene_id')}]")
+        button  = @setupFollowButton model, el
+        @listenTo button, 'click', @setSkipLabel, this
 
-      @listenTo button, 'click', => @setSkipLabel()
-
-    @following.syncFollows @categories.pluck('gene_id')
-
-  setupCategories: ->
-    @categories = @categories.findWhere(key: @key).get 'items'
-    @categories.each (category) -> # Set gene_id based on the slugs
+  setupCategories: (categories, key) ->
+    @categories[key] = categories.findWhere(key: @keys[key]).get('items')
+    @categories[key].each (category) -> # Set gene_id based on the slugs
       category.set('gene_id', category.get('href').replace '/gene/', '')
-    @renderCategories()
+    @renderCategories @categories[key], key
 
-  renderCategories: ->
-    @$('#personalize-categories').html suggestedCategoriesTemplate(categories: @categories)
-    @setupFollowButtons()
-    (@$textarea = @$('textarea')).one 'input', (e) => @setSkipLabel()
+  renderCategories: (categories, key) ->
+    categories.map((category) ->
+      suggestionTemplates[key] category: category
+    ).join ''
 
   advance: ->
     @user.set notes: @$textarea.val() if @$textarea
