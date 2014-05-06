@@ -185,11 +185,10 @@ module.exports = class ArtworkColumns extends Backbone.View
 
     # Pop off the artworks that need to be removed
     $lastElements = @$(".artwork-column:eq(#{index})").find('.artwork-item').slice(-idx)
-    removedArtworks = []
-    for elem in $lastElements
+
+    removedArtworks = _.map $lastElements, (elem) =>
       id = $(elem).attr('data-artwork')
-      removedArtworks.push @collection.get(id)
-      @$("figure[data-artwork='#{id}']").remove()
+      @$("figure[data-artwork='#{id}']").detach()
 
     # Recalc column height
     @columns[index].height = @columnHeight(index)
