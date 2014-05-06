@@ -69,7 +69,7 @@ module.exports.HomeView = class HomeView extends Backbone.View
   renderSuggestedArtworks: ->
     @user.fetchSuggestedHomepageArtworks success: (artworks) =>
       if artworks.models.length
-        this.setFeaturedArtworksHeader('New for You on Artsy')
+        this.setFeaturedArtworksHeader('New for you on Artsy')
         $('#home-featured-artworks').html featuredArtworksTemplate(artworks: artworks.models[0..3])
       else
         this.renderFeaturedArtworks()
