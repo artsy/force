@@ -26,8 +26,8 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
 
     @collection ?= new Artworks()
     @listenTo @collection, "request", @renderLoading
-    @listenTo @collection, "sync", @doneRenderLoading
-    @listenTo @collection, "sync", @render
+    @listenTo @collection, "sync error", @doneRenderLoading
+    @listenTo @collection, "sync error", @render
 
     @params = new Backbone.Model
       size: @pageSize
