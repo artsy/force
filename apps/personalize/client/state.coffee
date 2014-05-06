@@ -13,7 +13,6 @@ module.exports = class PersonalizeState extends Backbone.Model
       casual    : ['collect', 'location', 'galleries', 'institutions', 'categories', 'artists']
       collector : ['collect', 'location', 'categories', 'price_range', 'artists', 'galleries', 'institutions']
 
-
   initialize: ->
     super
     @listenTo this, 'transition:next', @next
