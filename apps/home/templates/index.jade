@@ -22,12 +22,7 @@ block body
         #home-body
           ul#home-top-featured-links
             include featured_links
-          if user && user.hasSuggestions()
-            h2.home-featured-header New for you on Artsy
-            ul#home-suggested-artworks.home-four-items.home-featured-list
-              .loading-spinner
-          else
-            h2.home-featured-header Featured Artworks for Sale
+            h2.home-featured-header
             ul#home-featured-artworks.home-four-items.home-featured-list
               .loading-spinner
           a.home-browse-all.avant-garde-button-text(

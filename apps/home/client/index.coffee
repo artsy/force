@@ -19,18 +19,13 @@ featuredArtistsTemplate = -> require('../templates/featured_artists.jade') argum
 module.exports.HomeView = class HomeView extends Backbone.View
 
   events:
-    'click #home-suggested-artworks'      : 'onClickSuggestedArtwork'
     'click #home-featured-artworks'       : 'onClickFeaturedArtwork'
 
   onClickFeaturedArtwork: ->
-    analytics.track.click "Clicked homepage featured artwork"
-
-  onClickSuggestedArtwork: ->
-    analytics.track.click "Clicked homepage suggested artwork"
+    analytics.track.click "Clicked homepage artwork"
 
   initialize: (options) ->
     @user = CurrentUser.orNull()
-    analytics.setupTestGroups()
 
     # Set up the hero unit view
     new HeroUnitView
@@ -67,19 +62,22 @@ module.exports.HomeView = class HomeView extends Backbone.View
     new PartnerShows().fetchSetItemsByKey 'homepage:featured-shows', success: (shows) ->
       $('#home-featured-shows').html featuredShowsTemplate(shows: shows.models[0..9])
 
-  renderSuggestedArtworks: ->
-    self = this
-    @user.fetchSuggestedHomepageArtworks success: (artworks) ->
-      if artworks.models.length
-        $('#home-suggested-artworks').html featuredArtworksTemplate(artworks: artworks.models[0..3])
-      else
-        # fall back to featured content if no suggestions.
-        analytics.track.click "No suggestions available"
-        self.renderFeaturedArtworks('#home-suggested-artworks')
+  setFeaturedArtworksHeader: (text) ->
+    return $("#home-top-featured-links h2.home-featured-header").text(text)
 
-  renderFeaturedArtworks: (el) ->
-    el = el or '#home-featured-artworks'
-    new Artworks().fetchSetItemsByKey 'homepage:featured-artworks', success: (artworks) ->
+  # falls back to featured content if no suggestions for this user.
+  renderSuggestedArtworks: ->
+    @user.fetchSuggestedHomepageArtworks success: (artworks) =>
+      if artworks.models.length
+        this.setFeaturedArtworksHeader('New for You on Artsy')
+        $('#home-featured-artworks').html featuredArtworksTemplate(artworks: artworks.models[0..3])
+      else
+        this.renderFeaturedArtworks()
+
+  renderFeaturedArtworks: ->
+    el = '#home-featured-artworks'
+    new Artworks().fetchSetItemsByKey 'homepage:featured-artworks', success: (artworks) =>
+      this.setFeaturedArtworksHeader('Featured Artworks for Sale')
       $(el).html featuredArtworksTemplate
         artworks: artworks.models[0..3]
         showBlurbs: true
@@ -96,5 +94,4 @@ module.exports.HomeView = class HomeView extends Backbone.View
       createCookie 'dismissed_auth_modal', true
 
 module.exports.init = ->
-  $ ->
     new HomeView el: $('body')
