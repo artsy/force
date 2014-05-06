@@ -116,9 +116,18 @@ module.exports = class ArtworkColumns extends Backbone.View
 
   addToShortestColumn: (artwork, notes) ->
     return unless @columns?.length > 0
-    img = artwork.defaultImage()
-    height = img.maxHeightForWidth @columnWidth, @maxArtworkHeight
-    $artwork = @appendFigure artwork, @shortestColumn, notes
+
+    # If artwork is a jQuery node then assume it is already rendered and
+    # just append it to the shortest column
+    if artwork instanceof $
+      $artwork = artwork
+      @$(".artwork-column:eq(#{@shortestColumn})").append $artwork
+      height = $artwork.find('img').height()
+    else
+      img       = artwork.defaultImage()
+      height    = img.maxHeightForWidth @columnWidth, @maxArtworkHeight
+      $artwork  = @appendFigure artwork, @shortestColumn, notes
+
     fullArtworkItemHeight = height + parseInt($artwork.find('.artwork-item-caption').css('height').replace('px', ''))
     @columns[@shortestColumn].height += fullArtworkItemHeight
     @columns[@shortestColumn].artworkHeights.unshift fullArtworkItemHeight
