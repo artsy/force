@@ -116,9 +116,18 @@ module.exports = class ArtworkColumns extends Backbone.View
 
   addToShortestColumn: (artwork, notes) ->
     return unless @columns?.length > 0
-    img = artwork.defaultImage()
-    height = img.maxHeightForWidth @columnWidth, @maxArtworkHeight
-    $artwork = @appendFigure artwork, @shortestColumn, notes
+
+    # If artwork is a jQuery node then assume it is already rendered and
+    # just append it to the shortest column
+    if artwork instanceof $
+      $artwork = artwork
+      @$(".artwork-column:eq(#{@shortestColumn})").append $artwork
+      height = $artwork.find('img').height()
+    else
+      img       = artwork.defaultImage()
+      height    = img.maxHeightForWidth @columnWidth, @maxArtworkHeight
+      $artwork  = @appendFigure artwork, @shortestColumn, notes
+
     fullArtworkItemHeight = height + parseInt($artwork.find('.artwork-item-caption').css('height').replace('px', ''))
     @columns[@shortestColumn].height += fullArtworkItemHeight
     @columns[@shortestColumn].artworkHeights.unshift fullArtworkItemHeight
@@ -176,11 +185,10 @@ module.exports = class ArtworkColumns extends Backbone.View
 
     # Pop off the artworks that need to be removed
     $lastElements = @$(".artwork-column:eq(#{index})").find('.artwork-item').slice(-idx)
-    removedArtworks = []
-    for elem in $lastElements
+
+    removedArtworks = _.map $lastElements, (elem) =>
       id = $(elem).attr('data-artwork')
-      removedArtworks.push @collection.get(id)
-      @$("figure[data-artwork='#{id}']").remove()
+      @$("figure[data-artwork='#{id}']").detach()
 
     # Recalc column height
     @columns[index].height = @columnHeight(index)
