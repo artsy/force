@@ -7,15 +7,7 @@ OrderedSet    = require '../models/ordered_set.coffee'
 
 class OrderedSets extends Backbone.Collection
   url: "#{sd.ARTSY_URL}/api/v1/sets"
-
-  model: (attrs, options) ->
-    switch attrs?.item_type
-      # TODO
-      # This is incorrect, an ordered sets collection should always be a collection of ordered sets -- not 'featured links'
-      # An individual ordered set may have a collection of featured links.
-      when 'FeaturedLink' then new FeaturedLink attrs, options
-      else
-        new OrderedSet attrs, options
+  model: OrderedSet
 
   initialize: (models, options) ->
     { @meta } = options
@@ -28,8 +20,10 @@ class OrderedSets extends Backbone.Collection
     _.defaults options, { data: qs }
     Backbone.Collection::fetch.call this, options
 
+  # This could simply be replaced with:
+  # new OrderedSets(owner_type: 'your_owner_type', owner_id: 'your_owner_id', sort: 'key')
   fetchItemsByOwner: (ownerType, ownerId, cache=false) ->
-    deferred  = Q.defer()
+    dfd  = Q.defer()
     promises  = [
       @fetch
         url: "#{sd.ARTSY_URL}/api/v1/sets?owner_type=#{ownerType}&owner_id=#{ownerId}&sort=key"
@@ -39,21 +33,27 @@ class OrderedSets extends Backbone.Collection
         success: =>
           @fetchSets(
             cache: cache
-          ).then deferred.resolve
+          ).then dfd.resolve
     ]
-    deferred.promise
+    dfd.promise
 
-  fetchSets: (options={}) ->
-    deferred  = Q.defer()
-    promises  = @map (model) -> model.fetchItems options?.cache
-    Q.allSettled(promises).then -> deferred.resolve.apply this, arguments
-    deferred.promise
+  fetchSets: (options = {}) ->
+    dfd = Q.defer()
+    Q.allSettled(@map (model) ->
+      model.fetchItems options?.cache
+    ).then dfd.resolve
+    dfd.promise
 
-  fetchAll: (options={}) ->
-    @fetch(options).then => @fetchSets(options).then => @trigger 'sync:complete'
+  fetchAll: (options = {}) ->
+    dfd = Q.defer()
+    @fetch(options).then =>
+      @fetchSets(options).then =>
+        @trigger 'sync:complete'
+        dfd.resolve()
+    dfd.promise
 
 class OrderedSetMeta extends Backbone.Model
-  defaults: { public: true }
+  defaults: public: true
 
 module.exports = class _OrderedSets
   constructor: (options) ->

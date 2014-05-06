@@ -7,20 +7,20 @@ PageableCollection  = require 'backbone-pageable'
 # Collection of Items for an OrderedSet
 module.exports = class Items extends PageableCollection
   mode: 'infinite'
-  queryParams:
-    currentPage:  'page'
-    pageSize:     'size'
+  queryParams: currentPage: 'page', pageSize: 'size'
+  state: pageSize: 20
 
-  state:
-    pageSize: 20
+  url: =>
+    "#{sd.ARTSY_URL}/api/v1/set/#{@id}/items"
 
   parseLinks: -> { next: -> } # Appease Backbone Pageable
 
-  url: => "#{sd.ARTSY_URL}/api/v1/set/#{@id}/items"
-
   model: (attrs, options) =>
     # Add types as needed:
-    switch (attrs.item_type || @item_type)
+    switch (@item_type or attrs.item_type)
+      when 'OrderedSet'
+        OrderedSet = require '../models/ordered_set.coffee'
+        new OrderedSet attrs, options
       when 'FeaturedLink'
         FeaturedLink = require '../models/featured_link.coffee'
         new FeaturedLink attrs, options
