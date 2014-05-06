@@ -13,6 +13,7 @@ getRedirectTo = (req) ->
 @index = (req, res) ->
   heroUnits = new HeroUnits
   featuredLinks = new FeaturedLinks
+
   render = _.after 2, ->
     res.render 'index',
       heroUnits: heroUnits.models

@@ -7,6 +7,7 @@ Genes             = require '../collections/genes.coffee'
 Artists           = require '../collections/artists.coffee'
 Artworks          = require '../collections/artworks.coffee'
 sd                = require('sharify').data
+analytics         = require '../lib/analytics.coffee'
 Order             = require './order.coffee'
 Genes             = require '../collections/genes.coffee'
 { readCookie }    = require '../components/util/cookie.coffee'
@@ -67,6 +68,15 @@ module.exports = class CurrentUser extends Backbone.Model
 
   hasLabFeature: (featureName) ->
     _.contains @get('lab_features'), featureName
+
+  # Is this user part of the AB test group that
+  # receives suggestions on the homepage.
+  #
+  # @return Bool
+  hasSuggestions: ->
+    return true if 'Suggested Artworks' in @get('lab_features')
+    return false unless sd.ENABLE_AB_TEST
+    analytics.abTest(sd.SUGGESTIONS_AB_TEST, 0.2)
 
   # Retreive a list of artists the user is following
   #
