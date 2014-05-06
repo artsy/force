@@ -5,13 +5,13 @@ _.mixin(require 'underscore.string')
 
 module.exports = class PersonalizeState extends Backbone.Model
   defaults:
+    levels        : ['Yes, I buy art', 'Interested in starting', 'Just looking and learning']
+    track         : 'collector'
+    current_step  : 'collect'
+    current_level : 2 # Interested in starting
     _steps:
-      casual: ['collect', 'location', 'galleries', 'institutions', 'artists']
-      collector: ['collect', 'location', 'artists', 'galleries', 'institutions', 'price_range']
-    levels: ['Yes, I buy art', 'Interested in starting', 'Just looking and learning']
-    track: 'collector'
-    current_step: 'collect'
-    current_level: 2 # Interested in starting
+      casual    : ['collect', 'location', 'galleries', 'institutions', 'categories', 'artists']
+      collector : ['collect', 'location', 'categories', 'price_range', 'artists', 'galleries', 'institutions']
 
   initialize: ->
     super

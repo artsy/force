@@ -35,11 +35,6 @@ describe 'PriceRangeView', ->
       @$target.click()
       @view.user.get('price_range').should.equal '-1:500'
 
-    it 'triggers done on the state object', (done) ->
-      @view.state.on 'done', done
-      @$target.click()
-      @view.state.off 'done'
-
   describe '#render', ->
     it 'renders the view', ->
       html = @view.$el.html()

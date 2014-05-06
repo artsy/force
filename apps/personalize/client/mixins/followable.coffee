@@ -6,19 +6,19 @@ followedTemplate  = -> require('../../templates/followed.jade') arguments...
 # Common functionality between views with auto-complete/following
 module.exports =
   initializeFollowable: ->
-    @followed ||= new Backbone.Collection
+    @followed ?= new Backbone.Collection
 
     @listenTo @followed, 'add', @renderFollowed
     @listenTo @followed, 'remove', @renderFollowed
 
     throw 'Followable requires a @following collection' unless @following?
 
-  setupSearch: (options={}) ->
+  setupSearch: (options = {}) ->
     @searchBarView = new SearchBarView
-      mode:         options.mode
-      restrictType: options.restrictType
-      el:           @$('#personalize-search-container')
-      $input:       (@$searchInput ||= @$('#personalize-search'))
+      mode         : options.mode
+      restrictType : options.restrictType
+      el           : @$('#personalize-search-container')
+      $input       : @$searchInput ?= @$('#personalize-search')
 
     @listenTo @searchBarView, 'search:selected', @follow
 
@@ -26,12 +26,13 @@ module.exports =
     @$('#personalize-followed').html followedTemplate(models: @followed.models)
 
   setSkipLabel: ->
+    return if @__labelSet__
     label = if @state.almostDone() then 'Done' else 'Next'
     @$('.personalize-skip').text label
-    @_labelSet = true
+    @__labelSet__ = true
 
   follow: (e, model) ->
-    @setSkipLabel() unless @_labelSet?
+    @setSkipLabel()
     @$searchInput.val '' # Clear input
     @followed.unshift model.toJSON()
     @following.follow model.id, { notes: 'Followed from /personalize' }
