@@ -10,7 +10,7 @@ ErrorHandlingForm  = require('../../../components/credit_card/client/error_handl
 module.exports = class BidForm extends ErrorHandlingForm
 
   timesPolledForBidPlacement: 0
-  maxTimesPolledForBidPlacement: 8
+  maxTimesPolledForBidPlacement: 6
 
   events:
     'click .registration-form-content .avant-garde-button-black' : 'placeBid'
@@ -48,7 +48,9 @@ module.exports = class BidForm extends ErrorHandlingForm
         max_bid_amount_cents : @getBidAmount()
       bidderPosition.save null,
         success   : =>
-          @pollForBidPlacement(@model.get('minimum_next_bid_cents'))
+          _.delay =>
+            @pollForBidPlacement(@saleArtwork.get('minimum_next_bid_cents'))
+          , 1000
         error     : @showError
     else
       @showError "Your bid must be higher than #{@saleArtwork.minBid()}"
@@ -59,10 +61,10 @@ module.exports = class BidForm extends ErrorHandlingForm
         if @saleArtwork.get('highest_bid_amount_cents') >= minimumBidAmountInCents or @timesPolledForBidPlacement > @maxTimesPolledForBidPlacement
           @showSuccessfulBidMessage()
         else
+          @timesPolledForBidPlacement = @timesPolledForBidPlacement + 1
           _.delay =>
             @pollForBidPlacement minimumBidAmountInCents
           , 1000
-        @timesPolledForBidPlacement = @timesPolledForBidPlacement + 1
 
   showSuccessfulBidMessage: =>
     window.location = @saleArtwork.artwork().bidSuccessUrl()
