@@ -12,7 +12,7 @@ describe 'Shortcut routes', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
     @req = { params: { short: 'Shortcut' } }
-    @res = { render: sinon.stub(), redirect: sinon.stub(), locals: { sd: { ARTSY_URL: 'http://localhost:5000'} } }
+    @res = { render: sinon.stub(), redirect: sinon.stub(), locals: { sd: { API_URL: 'http://localhost:5000'} } }
 
   afterEach ->
     Backbone.sync.restore()

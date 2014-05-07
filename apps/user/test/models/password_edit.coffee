@@ -7,7 +7,7 @@ fabricate   = require('antigravity').fabricate
 describe 'PasswordEdit', ->
 
   beforeEach ->
-    require('sharify').data.ARTSY_URL = 'http://localhost:5000'
+    require('sharify').data.API_URL = 'http://localhost:5000'
     @passwordEdit = new PasswordEdit fabricate 'user'
     @user = new CurrentUser fabricate 'user'
 

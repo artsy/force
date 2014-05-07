@@ -8,7 +8,7 @@ module.exports = class FeedItems extends Backbone.Collection
 
   model: FeedItem
 
-  urlRoot: "#{sd.ARTSY_URL}/api/v1/me/feed"
+  urlRoot: "#{sd.API_URL}/api/v1/me/feed"
 
   pageSize: 3
   nextPage: 1

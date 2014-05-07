@@ -1,4 +1,4 @@
-{ ARTSY_URL, TAG } = require('sharify').data
+{ API_URL, TAG } = require('sharify').data
 Tag = require '../../models/tag.coffee'
 Backbone = require 'backbone'
 FilterArtworksView = require '../../components/filter/artworks/view.coffee'
@@ -9,8 +9,8 @@ module.exports.TagView = class TagView extends Backbone.View
   initialize: ->
     @filterView = new FilterArtworksView
       el: $ '#tag-filter'
-      artworksUrl: "#{ARTSY_URL}/api/v1/search/filtered/tag/#{@model.get 'id'}"
-      countsUrl: "#{ARTSY_URL}/api/v1/search/filtered/tag/#{@model.get 'id'}/suggest"
+      artworksUrl: "#{API_URL}/api/v1/search/filtered/tag/#{@model.get 'id'}"
+      countsUrl: "#{API_URL}/api/v1/search/filtered/tag/#{@model.get 'id'}/suggest"
       urlRoot: "tag/#{@model.id}"
     @filterView.reset()
 

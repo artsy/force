@@ -9,7 +9,7 @@ describe 'Meta tags', ->
     @file = "#{process.cwd()}/apps/auction_lots/templates/meta/artist.jade"
     @sd =
       APP_URL: 'http://localhost:5000'
-      ARTSY_URL: 'http://localhost:5000'
+      API_URL: 'http://localhost:5000'
       CANONICAL_MOBILE_URL: 'http://m.localhost:5000'
       MOBILE_MEDIA_QUERY: 'mobile-media-query'
 

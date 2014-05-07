@@ -6,7 +6,7 @@ FeaturedLink  = require '../models/featured_link.coffee'
 OrderedSet    = require '../models/ordered_set.coffee'
 
 class OrderedSets extends Backbone.Collection
-  url: "#{sd.ARTSY_URL}/api/v1/sets"
+  url: "#{sd.API_URL}/api/v1/sets"
   model: OrderedSet
 
   initialize: (models, options) ->
@@ -26,7 +26,7 @@ class OrderedSets extends Backbone.Collection
     dfd  = Q.defer()
     promises  = [
       @fetch
-        url: "#{sd.ARTSY_URL}/api/v1/sets?owner_type=#{ownerType}&owner_id=#{ownerId}&sort=key"
+        url: "#{sd.API_URL}/api/v1/sets?owner_type=#{ownerType}&owner_id=#{ownerId}&sort=key"
         cache: cache
         data:
           display_on_desktop: true

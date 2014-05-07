@@ -6,6 +6,6 @@ FeaturedLink = require '../models/featured_link.coffee'
 
 module.exports = class FeaturedLinks extends Backbone.Collection
 
-  _.extend @prototype, Fetch(sd.ARTSY_URL)
+  _.extend @prototype, Fetch(sd.API_URL)
 
   model: FeaturedLink

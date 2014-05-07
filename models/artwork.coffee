@@ -13,13 +13,13 @@ module.exports = class Artwork extends Backbone.Model
   _.extend @prototype, Markdown
 
   urlRoot: ->
-    "#{sd.ARTSY_URL}/api/v1/artwork"
+    "#{sd.API_URL}/api/v1/artwork"
   bidSuccessUrl: -> "#{@href()}/confirm-bid"
 
   initialize: ->
     # Defer Post model require to prevent circular dependency
     @relatedPosts = new Backbone.Collection [], model: require('./post.coffee')
-    @relatedPosts.url = "#{sd.ARTSY_URL}/api/v1/related/posts"
+    @relatedPosts.url = "#{sd.API_URL}/api/v1/related/posts"
     @setupRelatedCollections()
 
   fetchRelatedPosts: (options = {}) ->
@@ -332,7 +332,7 @@ module.exports = class Artwork extends Backbone.Model
   setupRelatedCollections: ->
     @relatedCollections = _.reduce ['sales', 'fairs', 'features', 'shows'], (memo, aspect) =>
       memo[aspect] = @[aspect] = new Backbone.Collection
-      @[aspect].url = "#{sd.ARTSY_URL}/api/v1/related/#{aspect}?artwork[]=#{@id}"
+      @[aspect].url = "#{sd.API_URL}/api/v1/related/#{aspect}?artwork[]=#{@id}"
       @[aspect].kind = aspect
       memo
     , {}

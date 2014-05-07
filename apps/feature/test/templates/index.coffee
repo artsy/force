@@ -18,7 +18,7 @@ describe 'Partner Show', ->
 
   beforeEach ->
     @sd =
-      ARTSY_URL : 'http://localhost:5000'
+      API_URL : 'http://localhost:5000'
       ASSET_PATH: 'http://localhost:5000'
     @feature = new Feature fabricate('feature', { image_versions: ['wide'] })
     @html = render('index')({

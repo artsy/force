@@ -2,19 +2,19 @@ _         = require 'underscore'
 sd        = require('sharify').data
 Backbone  = require 'backbone'
 Follow    = require './model.coffee'
-{ ARTSY_URL } = require('sharify').data
+{ API_URL } = require('sharify').data
 { Fetch } = require 'artsy-backbone-mixins'
 
 module.exports = class Following extends Backbone.Collection
 
-  _.extend @prototype, Fetch(ARTSY_URL)
+  _.extend @prototype, Fetch(API_URL)
 
   kind: 'artist'
 
   maxSyncSize: 10
 
   url: ->
-    "#{sd.ARTSY_URL}/api/v1/me/follow/#{@kind}s"
+    "#{sd.API_URL}/api/v1/me/follow/#{@kind}s"
 
   model: Follow
 

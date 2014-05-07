@@ -14,7 +14,7 @@ describe '/user', ->
       json    : sinon.stub()
       render  : sinon.stub()
       redirect: sinon.stub()
-      locals  : { sd: { ARTSY_URL: 'http://localhost:5000'} }
+      locals  : { sd: { API_URL: 'http://localhost:5000'} }
 
   afterEach ->
     Backbone.sync.restore()

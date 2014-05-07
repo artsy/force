@@ -4,7 +4,7 @@ _.mixin require 'underscore.string'
 Backbone = require 'backbone'
 BoothsView = require '../booths/view.coffee'
 FilterArtworksView = require '../../../../components/filter/artworks/view.coffee'
-{ ARTSY_URL, SECTION } = require('sharify').data
+{ API_URL, SECTION } = require('sharify').data
 
 module.exports = class FairBrowseView extends Backbone.View
 
@@ -14,8 +14,8 @@ module.exports = class FairBrowseView extends Backbone.View
     _.extend @, options
     @filterArtworksView = new FilterArtworksView
       el: $ '.fair-page-content'
-      artworksUrl : "#{ARTSY_URL}/api/v1/search/filtered/fair/#{@fair.get 'id'}"
-      countsUrl: "#{ARTSY_URL}/api/v1/search/filtered/fair/#{@fair.get 'id'}/suggest"
+      artworksUrl : "#{API_URL}/api/v1/search/filtered/fair/#{@fair.get 'id'}"
+      countsUrl: "#{API_URL}/api/v1/search/filtered/fair/#{@fair.get 'id'}/suggest"
       urlRoot: "#{@profile.id}/browse"
     @artworkParams = @filterArtworksView.params
     @counts = @filterArtworksView.counts

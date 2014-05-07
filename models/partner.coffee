@@ -4,7 +4,7 @@ Icon      = require './icon.coffee'
 
 module.exports = class Partner extends Backbone.Model
 
-  urlRoot: "#{sd.ARTSY_URL}/api/v1/partner"
+  urlRoot: "#{sd.API_URL}/api/v1/partner"
 
   icon: ->
     new Icon @get('icon'), profileId: @get('id')

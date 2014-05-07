@@ -12,7 +12,7 @@ Profiles      = require '../../collections/profiles'
     currentLength = profiles.length
     options =
       data   : { size: 20 }
-      url    : "#{sd.ARTSY_URL}/api/v1/set/#{institutions.get('id')}/items"
+      url    : "#{sd.API_URL}/api/v1/set/#{institutions.get('id')}/items"
       cache  : true
       success: ->
         aToZGroup = profiles.groupByAlphaWithColumns 3

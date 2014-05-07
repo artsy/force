@@ -46,7 +46,7 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
     switch response.status
       when 201  # success
         card      = new Backbone.Model
-        card.url  = "#{sd.ARTSY_URL}/api/v1/me/credit_cards"
+        card.url  = "#{sd.API_URL}/api/v1/me/credit_cards"
         card.save token: response.data.uri,
           success: =>
             @currentUser.createBidder

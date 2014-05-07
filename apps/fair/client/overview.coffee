@@ -43,7 +43,7 @@ module.exports = class Overview extends Backbone.View
     @clock.start()
 
   renderFollowedArtistList: ->
-    url = "#{sd.ARTSY_URL}/api/v1/me/follow/artists"
+    url = "#{sd.API_URL}/api/v1/me/follow/artists"
     data = fair_id: @fair.get('id')
     followingArtists = new Artists()
     followingArtists.fetchUntilEnd

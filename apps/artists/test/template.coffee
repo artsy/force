@@ -53,7 +53,7 @@ describe 'Artists', ->
         template = render('index')(
           sd:
             CANONICAL_MOBILE_URL : 'http://localhost:5000'
-            ARTSY_URL : 'http://localhost:5000'
+            API_URL : 'http://localhost:5000'
             APP_URL : 'http://localhost:5000'
             ASSET_PATH: 'http://localhost:5000/'
             CSS_EXT: '.css.gz'

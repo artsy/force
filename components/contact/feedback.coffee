@@ -16,7 +16,7 @@ module.exports = class FeedbackView extends ContactView
 
   defaults: -> _.extend super,
     placeholder: 'Leave your comments'
-    url: "#{sd.ARTSY_URL}/api/v1/feedback"
+    url: "#{sd.API_URL}/api/v1/feedback"
 
   initialize: ->
     @representatives = new Representatives

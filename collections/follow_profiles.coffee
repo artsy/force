@@ -13,7 +13,7 @@ module.exports = class FollowProfiles extends Backbone.Collection
 
   maxSyncSize: 10
 
-  url: "#{sd.ARTSY_URL}/api/v1/me/follow/profiles"
+  url: "#{sd.API_URL}/api/v1/me/follow/profiles"
 
   model: FollowProfile
 

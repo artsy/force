@@ -1,6 +1,6 @@
 request = require 'superagent'
 CurrentUser = require '../../models/current_user.coffee'
-{ SECURE_ARTSY_URL, ARTSY_ID, ARTSY_SECRET, APP_URL } = require('../../config')
+{ API_URL, ARTSY_ID, ARTSY_SECRET, APP_URL } = require('../../config')
 { parse } = require 'url'
 qs = require 'querystring'
 
@@ -12,7 +12,7 @@ qs = require 'querystring'
   res.render 'templates/reset_password'
 
 @loginWithTrustToken = (req, res, next) ->
-  request.post(SECURE_ARTSY_URL + '/oauth2/access_token').send(
+  request.post(API_URL + '/oauth2/access_token').send(
     grant_type    : 'trust_token'
     client_id     : ARTSY_ID
     client_secret : ARTSY_SECRET

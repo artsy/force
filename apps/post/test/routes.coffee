@@ -11,7 +11,7 @@ describe 'Post routes', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
     @req = { params: { id: 'foo' } }
-    @res = { render: sinon.stub(), redirect: sinon.stub(), locals: { sd: { ARTSY_URL: 'http://localhost:5000', CURRENT_PATH: '/post/post-id' } } }
+    @res = { render: sinon.stub(), redirect: sinon.stub(), locals: { sd: { API_URL: 'http://localhost:5000', CURRENT_PATH: '/post/post-id' } } }
 
   afterEach ->
     Backbone.sync.restore()

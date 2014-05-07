@@ -4,7 +4,7 @@ sd            = require('sharify').data
 module.exports = class PostLink extends Backbone.Model
 
   url: ->
-    "#{sd.ARTSY_URL}/api/v1/post/#{@get('post').id}/link/#{@get('id') || ''}"
+    "#{sd.API_URL}/api/v1/post/#{@get('post').id}/link/#{@get('id') || ''}"
 
   hasEmbed: ->
     return false unless @isVideo() || @isRich()

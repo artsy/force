@@ -7,7 +7,7 @@ sinon       = require 'sinon'
 describe 'UserEdit', ->
 
   beforeEach ->
-    require('sharify').data.ARTSY_URL = 'http://localhost:5000'
+    require('sharify').data.API_URL = 'http://localhost:5000'
     @userEdit = new UserEdit fabricate 'user'
     @authentications = [
       { id: '1', uid: '123456789', provider: 'twitter' },

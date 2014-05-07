@@ -17,7 +17,7 @@ module.exports = class Fair extends Backbone.Model
   _.extend @prototype, Markdown
   _.extend @prototype, Clock
 
-  urlRoot: -> "#{sd.ARTSY_URL}/api/v1/fair"
+  urlRoot: -> "#{sd.API_URL}/api/v1/fair"
 
   href: ->
     "/#{@get('organizer')?.profile_id}"
@@ -81,7 +81,7 @@ module.exports = class Fair extends Backbone.Model
       href: -> "#{href}/browse/#{namespace}/#{@get('id')}"
       displayName: -> @get('name')
       imageUrl: ->
-        url = "#{sd.ARTSY_URL}/api/v1/profile/#{@get('default_profile_id')}/image"
+        url = "#{sd.API_URL}/api/v1/profile/#{@get('default_profile_id')}/image"
         url = url + "?xapp_token=#{sd.ARTSY_XAPP_TOKEN}" if sd.ARTSY_XAPP_TOKEN?
         url
     new class FairSearchResults extends Profiles

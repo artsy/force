@@ -3,11 +3,11 @@ Backbone        = require 'backbone'
 Artwork         = require './artwork.coffee'
 Partner         = require './partner.coffee'
 PartnerLocation = require './partner_location.coffee'
-{ ARTSY_URL, SESSION_ID } = require('sharify').data
+{ API_URL, SESSION_ID } = require('sharify').data
 
 module.exports = class Order extends Backbone.Model
 
-  urlRoot: -> "#{ARTSY_URL}/api/v1/me/order"
+  urlRoot: -> "#{API_URL}/api/v1/me/order"
 
   submit: (options = {}) ->
     model = new Backbone.Model

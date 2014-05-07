@@ -6,7 +6,7 @@ FeedItems               = require('../../../components/feed/collections/feed_ite
 
 module.exports.ShowsView = class ShowsView extends Backbone.View
 
-  urlRoot: -> "#{sd.ARTSY_URL}/api/v1/shows/feed"
+  urlRoot: -> "#{sd.API_URL}/api/v1/shows/feed"
 
   initialize: (options) ->
     new FeedItems().fetch

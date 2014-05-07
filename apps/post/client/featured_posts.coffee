@@ -7,7 +7,7 @@ featuredPostsTemplate   = -> require('../templates/featured_posts.jade') argumen
 module.exports = class FeaturedPosts extends Backbone.View
 
   feedType: 'posts'
-  feedUrl: "#{sd.ARTSY_URL}/api/v1/posts/featured/feed"
+  feedUrl: "#{sd.API_URL}/api/v1/posts/featured/feed"
 
   initialize: (options) ->
     @pageSize = options.pageSize

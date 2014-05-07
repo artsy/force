@@ -5,7 +5,7 @@ accounting  = require 'accounting'
 
 module.exports = class BidderPosition extends Backbone.Model
   url: ->
-    "#{sd.ARTSY_URL}/api/v1/me/bidder_position"
+    "#{sd.API_URL}/api/v1/me/bidder_position"
 
   currentBid: ->
     return unless @has('highest_bid')

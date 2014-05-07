@@ -50,7 +50,7 @@ module.exports = class SearchResult extends Backbone.Model
   imageUrl: ->
     src = if @get('model') in ['artwork', 'partnershow'] then 'default_image.jpg' else 'image'
     model = if @get('model') is 'partnershow' then 'partner_show' else @get('model')
-    url = "#{sd.ARTSY_URL}/api/v1/#{model}/#{@id}/#{src}"
+    url = "#{sd.API_URL}/api/v1/#{model}/#{@id}/#{src}"
     url = url + "?xapp_token=#{sd.ARTSY_XAPP_TOKEN}" if sd.ARTSY_XAPP_TOKEN?
     url
 

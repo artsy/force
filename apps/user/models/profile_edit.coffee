@@ -2,7 +2,7 @@ _           = require 'underscore'
 _.str       = require 'underscore.string'
 Backbone    = require 'backbone'
 CurrentUser = require '../../../models/current_user.coffee'
-{ ARTSY_URL, CURRENT_USER, SESSION_ID } = require('sharify').data
+{ API_URL, CURRENT_USER, SESSION_ID } = require('sharify').data
 
 #
 # ProfileEdit
@@ -16,7 +16,7 @@ module.exports = class ProfileEdit extends CurrentUser
   # Note: Because of the CurrentUser inheritance, this must be overridden,
   # setting idAttribute to _id and defining urlRoot won't do the job.
   url: ->
-    "#{ARTSY_URL}/api/v1/profile/#{@get('_id')}"
+    "#{API_URL}/api/v1/profile/#{@get('_id')}"
 
   errorMessages:
     id_min    : "is too short (minimum 3 characters)"

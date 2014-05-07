@@ -18,7 +18,7 @@ module.exports = class Profile extends Backbone.Model
     'PartnerFoundation', 'PartnerPublicDomain', 'PartnerImageArchive', 'PartnerNonProfit'
   ]
 
-  urlRoot: "#{sd.ARTSY_URL}/api/v1/profile"
+  urlRoot: "#{sd.API_URL}/api/v1/profile"
 
   icon: ->
     new Icon _.extend(@get('icon') || {}, profileId: @get('id'))
@@ -107,7 +107,7 @@ module.exports = class Profile extends Backbone.Model
 
   fetchFavorites: (options) ->
     favorites = new Artworks
-    favorites.url = "#{sd.ARTSY_URL}/api/v1/collection/saved-artwork/artworks"
+    favorites.url = "#{sd.API_URL}/api/v1/collection/saved-artwork/artworks"
     favorites.params = _.extend {
       sort: '-position'
       user_id: @get('owner').id
@@ -120,7 +120,7 @@ module.exports = class Profile extends Backbone.Model
     # Avoid circular dependency by lazy-requiring
     FeedItems = require '../components/feed/collections/feed_items.coffee'
     success = options.success
-    url = "#{sd.ARTSY_URL}/api/v1/profile/#{@get 'id'}/posts"
+    url = "#{sd.API_URL}/api/v1/profile/#{@get 'id'}/posts"
     new FeedItems().fetch _.extend options,
       url: url
       data: { size: 3 }

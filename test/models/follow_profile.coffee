@@ -10,15 +10,15 @@ describe 'FollowProfile', ->
 
   before ->
     @sd =
-      ARTSY_URL : 'http://localhost:5000'
+      API_URL : 'http://localhost:5000'
       ASSET_PATH: 'http://localhost:5000'
 
   describe '#url', ->
 
     it 'returns a URL with an id if the model has one', ->
       @followProfile = new FollowProfile id: '111', profile: fabricate('profile')
-      @followProfile.url().should.equal "#{sd.ARTSY_URL}/api/v1/me/follow/profile/#{@followProfile.get('id')}"
+      @followProfile.url().should.equal "#{sd.API_URL}/api/v1/me/follow/profile/#{@followProfile.get('id')}"
 
     it 'returns a URL with no id for new models', ->
       @followProfile = new FollowProfile()
-      @followProfile.url().should.equal "#{sd.ARTSY_URL}/api/v1/me/follow/profile"
+      @followProfile.url().should.equal "#{sd.API_URL}/api/v1/me/follow/profile"
