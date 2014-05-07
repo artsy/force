@@ -43,24 +43,23 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
     @internationalizeFields()
 
   cardCallback: (response) =>
-    switch response.status
-      when 201  # success
-        card      = new Backbone.Model
-        card.url  = "#{sd.API_URL}/api/v1/me/credit_cards"
-        card.save token: response.data.uri,
-          success: =>
-            @currentUser.createBidder
-              saleId: @model.get('id')
-              success: =>
-                @success()
-                analytics.track.funnel 'Registration submitted'
-              error: (xhr) =>
-                @showError "Registration submission error", xhr
-          error: =>
-            @showError "Error adding your credit card", response
-        analytics.track.funnel 'Registration card validated'
-      else
-        @showError "Registration card - other error", response
+    if response.status == 201
+      card      = new Backbone.Model
+      card.url  = "#{sd.API_URL}/api/v1/me/credit_cards"
+      card.save token: response.data.uri,
+        success: =>
+          @currentUser.createBidder
+            saleId: @model.get('id')
+            success: =>
+              @success()
+              analytics.track.funnel 'Registration submitted'
+            error: (xhr) =>
+              @showError "Registration submission error", xhr
+        error: =>
+          @showError "Error adding your credit card", response
+      analytics.track.funnel 'Registration card validated'
+    else
+      @showError "Registration card - other error", response
 
   cardData: ->
     name: @fields['name on card'].el.val()
