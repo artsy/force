@@ -7,7 +7,7 @@ module.exports = class Search extends Backbone.Collection
 
   model: SearchResult
 
-  url: "#{sd.ARTSY_URL}/api/v1/match?visible_to_public=true"
+  url: "#{sd.API_URL}/api/v1/match?visible_to_public=true"
 
   parse: (response, options) ->
     if options.res?.req

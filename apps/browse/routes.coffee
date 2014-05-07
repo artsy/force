@@ -4,7 +4,7 @@ _.mixin require 'underscore.string'
 OrderedSets = require '../../collections/ordered_sets.coffee'
 Genes = require '../../collections/genes.coffee'
 FilterSuggest = require '../../models/filter_suggest.coffee'
-{ ARTSY_URL } = require('sharify').data
+{ API_URL } = require('sharify').data
 
 @index = (req, res) ->
   featuredGenes = new OrderedSets(key: 'browse:featured-genes')
@@ -27,7 +27,7 @@ FilterSuggest = require '../../models/filter_suggest.coffee'
     success: ->
       new Genes().fetchUntilEnd
         data: { size: 100, published: true, sort: "name" }
-        url: "#{ARTSY_URL}/api/v1/genes"
+        url: "#{API_URL}/api/v1/genes"
         cache: true
         success: (genes) ->
           aToZGroup = genes.groupByAlphaWithColumns 3

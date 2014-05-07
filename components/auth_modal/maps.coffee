@@ -1,6 +1,6 @@
 mediator        = require '../../lib/mediator.coffee'
 Backbone        = require 'backbone'
-{ ARTSY_URL }   = require('sharify').data
+{ API_URL }   = require('sharify').data
 
 class Login extends Backbone.Model
   url: "/users/sign_in"
@@ -9,7 +9,7 @@ class Signup extends Backbone.Model
   url: "/users/invitation/accept"
 
 class Forgot extends Backbone.Model
-  url: "#{ARTSY_URL}/api/v1/users/send_reset_password_instructions"
+  url: "#{API_URL}/api/v1/users/send_reset_password_instructions"
 
   save: (data, options) ->
     options.success = ->

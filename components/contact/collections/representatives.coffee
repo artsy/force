@@ -1,12 +1,12 @@
 Backbone        = require 'backbone'
-{ ARTSY_URL }   = require('sharify').data
+{ API_URL }   = require('sharify').data
 
 Profile = require '../../../models/profile.coffee'
 class Representative extends Profile
   idAttribute: 'default_profile_id'
 
 module.exports = class Representatives extends Backbone.Collection
-  url: "#{ARTSY_URL}/api/v1/admins/available_representatives"
+  url: "#{API_URL}/api/v1/admins/available_representatives"
   model: Representative
 
   fetch: ->

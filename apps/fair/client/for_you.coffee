@@ -54,7 +54,7 @@ module.exports = class ForYouView extends Backbone.View
       analyticsUnfollowMessage : @analyticsUnfollowMessage
 
   fetchFollowingArtists: ->
-    url = "#{sd.ARTSY_URL}/api/v1/me/follow/artists"
+    url = "#{sd.API_URL}/api/v1/me/follow/artists"
     data = fair_id: @fair.get('id')
     followingArtists = new Artists()
     followingArtists.fetchUntilEnd
@@ -102,7 +102,7 @@ module.exports = class ForYouView extends Backbone.View
       artworkSize: 'tall'
 
   fetchFollowingExhibitors: ->
-    url = "#{sd.ARTSY_URL}/api/v1/me/follow/profiles"
+    url = "#{sd.API_URL}/api/v1/me/follow/profiles"
     data = fair_id: @fair.get('id')
     followingExhibitors = new Profiles()
     followingExhibitors.fetchUntilEnd

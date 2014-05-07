@@ -9,7 +9,7 @@ module.exports = class Search extends Backbone.Collection
 
   _url: ->
     [
-      "#{sd.ARTSY_URL}/api/v1/match/"
+      "#{sd.API_URL}/api/v1/match/"
       (@mode || '')
       '?visible_to_public=true'
       (if @fairId then "&fair_id=#{@fairId}" else "")

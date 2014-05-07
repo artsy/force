@@ -25,7 +25,7 @@ module.exports = class Feature extends Backbone.Model
   _.extend @prototype, Image(sd.SECURE_IMAGES_URL)
   _.extend @prototype, Markdown
 
-  urlRoot: -> "#{sd.ARTSY_URL}/api/v1/feature"
+  urlRoot: -> "#{sd.API_URL}/api/v1/feature"
 
   hasImage: (version = 'wide') ->
     version in (@get('image_versions') || [])
@@ -128,7 +128,7 @@ module.exports = class Feature extends Backbone.Model
   fetchSetsAndItems: (options) ->
     finalHashes = []
     sets = new Backbone.Collection [], { model: FeaturedSet }
-    sets.url = "#{sd.ARTSY_URL}/api/v1/sets"
+    sets.url = "#{sd.API_URL}/api/v1/sets"
     sets.fetch
       data:
         owner_type: 'Feature'
@@ -156,7 +156,7 @@ module.exports = class Feature extends Backbone.Model
     else
       setItems = new Backbone.Collection []
       method = 'fetch'
-    setItems.url = "#{sd.ARTSY_URL}/api/v1/set/#{id}/items"
+    setItems.url = "#{sd.API_URL}/api/v1/set/#{id}/items"
     setItems.id = id
     setItems[method]
       success: (items) ->

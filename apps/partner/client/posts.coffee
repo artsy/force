@@ -3,7 +3,7 @@ Backbone      = require 'backbone'
 CurrentUser   = require '../../../models/current_user.coffee'
 FeedItems     = require '../../../components/feed/collections/feed_items.coffee'
 PoplockitFeed = require '../../../components/feed/client/poplockit_feed.coffee'
-{ ARTSY_URL } = require('sharify').data
+{ API_URL } = require('sharify').data
 
 module.exports = class PartnerPostsView extends Backbone.View
 
@@ -18,7 +18,7 @@ module.exports = class PartnerPostsView extends Backbone.View
     $(template).appendTo @$el.empty()
 
   initializePosts: ->
-    url = "#{ARTSY_URL}/api/v1/profile/#{@profile.get('id')}/posts"
+    url = "#{API_URL}/api/v1/profile/#{@profile.get('id')}/posts"
     @feedItems.fetch
       url: url
       success: (items) =>

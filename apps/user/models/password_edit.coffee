@@ -3,7 +3,7 @@ _.str       = require 'underscore.string'
 Backbone    = require 'backbone'
 CurrentUser = require '../../../models/current_user.coffee'
 
-{ ARTSY_URL, CURRENT_USER, SESSION_ID } = require('sharify').data
+{ API_URL, CURRENT_USER, SESSION_ID } = require('sharify').data
 
 #
 # PasswordEdit

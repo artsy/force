@@ -6,7 +6,7 @@ fabricate   = require('antigravity').fabricate
 describe 'ProfileEdit', ->
 
   beforeEach ->
-    require('sharify').data.ARTSY_URL = 'http://localhost:5000'
+    require('sharify').data.API_URL = 'http://localhost:5000'
     @profileEdit = new ProfileEdit fabricate 'profile', { _id: "1234567890987654321" }
 
   describe '#url', ->

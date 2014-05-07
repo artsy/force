@@ -21,7 +21,7 @@ module.exports = class RelatedGenesView extends Backbone.View
   fetchThenRenderRelatedFilterGenes: ->
     genes = new Genes
     model = new Backbone.Model
-    model.url = "#{sd.ARTSY_URL}/api/v1/search/filtered/#{@modelName}/#{@model.id}/options"
+    model.url = "#{sd.API_URL}/api/v1/search/filtered/#{@modelName}/#{@model.id}/options"
     model.fetch
       success: (categories) =>
         geneMap = categories.get('related_genes')
@@ -31,7 +31,7 @@ module.exports = class RelatedGenesView extends Backbone.View
 
   fetchThenRenderRelatedGenes: ->
     genes = new Genes
-    genes.url = "#{sd.ARTSY_URL}/api/v1/related/genes?#{@modelName}[]=#{@model.id}"
+    genes.url = "#{sd.API_URL}/api/v1/related/genes?#{@modelName}[]=#{@model.id}"
     genes.fetch
       success: (collection) =>
         return unless collection.length > 0

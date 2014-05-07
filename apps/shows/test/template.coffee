@@ -17,7 +17,7 @@ describe 'Shows', ->
 
   beforeEach ->
     @sd =
-      ARTSY_URL : 'http://localhost:5000'
+      API_URL : 'http://localhost:5000'
       ASSET_PATH: 'http://localhost:5000'
     @html = render('template')({
       sd: @sd

@@ -13,8 +13,8 @@ gravity.get '/post', (req, res) ->
 startServer = (callback) ->
   envVars =
     NODE_ENV: 'test'
-    SECURE_ARTSY_URL: "http://localhost:5001"
-    ARTSY_URL: "http://localhost:5001"
+    API_URL: "http://localhost:5001"
+    API_URL: "http://localhost:5001"
     APP_URL: "http://localhost:5000"
     PORT: 5000
   envVars[k] = val for k, val of process.env when not envVars[k]?

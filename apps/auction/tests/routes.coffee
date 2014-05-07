@@ -17,7 +17,7 @@ describe '#auctionRegistration', ->
       locals  :
         sd:
           ASSET_PATH: "http://localhost:5000"
-          ARTSY_URL : 'http://localhost:5000'
+          API_URL : 'http://localhost:5000'
     @next = sinon.stub()
 
   afterEach ->
@@ -85,7 +85,7 @@ describe '#bid', ->
       locals  :
         sd:
           ASSET_PATH: "http://localhost:5000"
-          ARTSY_URL : 'http://localhost:5000'
+          API_URL : 'http://localhost:5000'
     @next = sinon.stub()
 
   afterEach ->

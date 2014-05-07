@@ -5,7 +5,7 @@ sd       = require('sharify').data
 module.exports =
   calculateOffsetTimes: (options = {}) ->
     model = new Backbone.Model()
-    model.url = "#{sd.ARTSY_URL}/api/v1/system/time"
+    model.url = "#{sd.API_URL}/api/v1/system/time"
     model.fetch
       success: (response) =>
         offset = moment().diff(response.get('time'))

@@ -11,7 +11,7 @@ module.exports = class Items extends PageableCollection
   state: pageSize: 20
 
   url: =>
-    "#{sd.ARTSY_URL}/api/v1/set/#{@id}/items"
+    "#{sd.API_URL}/api/v1/set/#{@id}/items"
 
   parseLinks: -> { next: -> } # Appease Backbone Pageable
 

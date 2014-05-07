@@ -19,7 +19,7 @@ module.exports = class Artist extends Backbone.Model
   validSort: (sort) ->
     _.contains(_.keys(@sortCriteriaForArtworks), sort)
 
-  urlRoot: -> "#{sd.ARTSY_URL}/api/v1/artist"
+  urlRoot: -> "#{sd.API_URL}/api/v1/artist"
 
   clientUrl: -> "/artist/#{@get('id')}"
   href: -> "/artist/#{@get('id')}"
@@ -27,13 +27,13 @@ module.exports = class Artist extends Backbone.Model
 
   initialize: ->
     @relatedArtists = new Backbone.Collection [], model: Artist
-    @relatedArtists.url = "#{sd.ARTSY_URL}/api/v1/related/layer/main/artists"
+    @relatedArtists.url = "#{sd.API_URL}/api/v1/related/layer/main/artists"
     @relatedContemporary = new Backbone.Collection [], model: Artist
-    @relatedContemporary.url = "#{sd.ARTSY_URL}/api/v1/related/layer/contemporary/artists"
+    @relatedContemporary.url = "#{sd.API_URL}/api/v1/related/layer/contemporary/artists"
     @relatedPosts = new Backbone.Collection [], model: require('./post.coffee')
-    @relatedPosts.url = "#{sd.ARTSY_URL}/api/v1/related/posts"
+    @relatedPosts.url = "#{sd.API_URL}/api/v1/related/posts"
     @relatedShows = new Backbone.Collection [], model: require('./partner_show.coffee')
-    @relatedShows.url = "#{sd.ARTSY_URL}/api/v1/related/shows?artist[]=#{@id}"
+    @relatedShows.url = "#{sd.API_URL}/api/v1/related/shows?artist[]=#{@id}"
     @artworks = new Artworks
     @artworks.url = "#{@url()}/artworks"
 

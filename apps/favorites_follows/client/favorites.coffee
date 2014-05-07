@@ -36,7 +36,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
       user_id: @currentUser.get('id')
     @params.on 'change:page', =>
       @collection.fetch
-        url: "#{sd.ARTSY_URL}/api/v1/collection/saved-artwork/artworks"
+        url: "#{sd.API_URL}/api/v1/collection/saved-artwork/artworks"
         data: @params.toJSON()
 
     @$favoriteArtworks = @$('.favorite-artworks')
@@ -67,7 +67,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
   setupStatus: ->
     @savedArtworkCollection = new Backbone.Model()
     @listenTo @savedArtworkCollection, 'change:private', @renderStatus
-    @savedArtworkCollection.url = "#{sd.ARTSY_URL}/api/v1/collection/saved-artwork"
+    @savedArtworkCollection.url = "#{sd.API_URL}/api/v1/collection/saved-artwork"
     @savedArtworkCollection.fetch
       data: { user_id: @currentUser.get('id'), private: true }
       success: =>

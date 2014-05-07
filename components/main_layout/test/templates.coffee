@@ -23,7 +23,7 @@ describe 'Meta tags', ->
     before ->
       @sd =
         ASSET_PATH: "http://localhost:5000"
-        ARTSY_URL: "http://localhost:5000"
+        API_URL: "http://localhost:5000"
         CURRENT_PATH: '/cool-profile/info'
       @file = resolve __dirname, "../templates/profile_meta.jade"
       @profile = new Profile fabricate('profile')

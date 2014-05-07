@@ -15,7 +15,7 @@ module.exports = class SaleArtwork extends Backbone.Model
   _.extend @prototype, Markdown
 
   url: ->
-    "#{sd.ARTSY_URL}/api/v1/sale/#{@get('sale').id}/sale_artwork/#{@get('artwork').id}"
+    "#{sd.API_URL}/api/v1/sale/#{@get('sale').id}/sale_artwork/#{@get('artwork').id}"
 
   reserveFormat:
     no_reserve      : null

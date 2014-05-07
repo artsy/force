@@ -5,7 +5,7 @@ PageableCollection  = require 'backbone-pageable'
 
 module.exports = class ArtistsByLetter extends PageableCollection
   url: ->
-    "#{sd.ARTSY_URL}/api/v1/artists/#{@letter}?total_count=1"
+    "#{sd.API_URL}/api/v1/artists/#{@letter}?total_count=1"
 
   model: Artist
 

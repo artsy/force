@@ -4,7 +4,7 @@
 # If not, simply pass it to the next middleware
 #
 
-{ ARTSY_URL } = require '../../config'
+{ API_URL } = require '../../config'
 httpProxy = require 'http-proxy'
 proxy = httpProxy.createProxyServer()
 express = require 'express'
@@ -15,12 +15,12 @@ ROUTES = [ '/oauth2*' ]
 AUTH_ROUTES = [ '/post' ]
 for route in ROUTES
   app.all route, (req, res) ->
-    proxy.web req, res, { target: ARTSY_URL }
+    proxy.web req, res, { target: API_URL }
 for route in AUTH_ROUTES
   app.all route, (req, res, next) ->
     return next() unless req.user
     req.headers['X-ACCESS-TOKEN'] = req.user.get('accessToken')
-    proxy.web req, res, { target: ARTSY_URL }
+    proxy.web req, res, { target: API_URL }
 
 module.exports.api = (req, res) ->
-  proxy.web req, res, { target: ARTSY_URL }
+  proxy.web req, res, { target: API_URL }

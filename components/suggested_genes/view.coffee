@@ -36,7 +36,7 @@ module.exports = class SuggestedGenesView extends Backbone.View
     (new OrderedSets key: 'favorites:suggested-genes').fetch
       success: (geneSets) =>
         @fetchRandomGenes options unless (setId = geneSets.first()?.get 'id')
-        url = "#{sd.ARTSY_URL}/api/v1/set/#{setId}/items"
+        url = "#{sd.API_URL}/api/v1/set/#{setId}/items"
         data = size: @numberOfItems * 2
         @collection.fetch(_.extend { url: url, data: data }, options)
 

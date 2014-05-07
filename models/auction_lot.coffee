@@ -3,10 +3,10 @@ Backbone        = require 'backbone'
 { Image }       = require 'artsy-backbone-mixins'
 { Dimensions }  = require 'artsy-backbone-mixins'
 
-{ ARTSY_URL, SECURE_IMAGES_URL } = require('sharify').data
+{ API_URL, SECURE_IMAGES_URL } = require('sharify').data
 
 module.exports = class AuctionLot extends Backbone.Model
-  urlRoot: "#{ARTSY_URL}/api/v1/auction_lot"
+  urlRoot: "#{API_URL}/api/v1/auction_lot"
 
   _.extend @prototype, Dimensions
   _.extend @prototype, Image(SECURE_IMAGES_URL)

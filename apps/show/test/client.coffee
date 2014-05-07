@@ -12,7 +12,7 @@ describe 'Partner Show View', ->
 
   before (done) ->
     benv.setup =>
-      sd.ARTSY_URL = 'localhost:3003'
+      sd.API_URL = 'localhost:3003'
       sd.ASSET_PATH = 'assets/'
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
@@ -62,7 +62,7 @@ describe 'Partner Show View', ->
 
     it 'always fetches install shots and artworks', ->
       # Fetches install shots
-      Backbone.sync.args[0][2].url.should.equal "#{sd.ARTSY_URL}/api/v1/partner_show/#{@show.get('id')}/images"
+      Backbone.sync.args[0][2].url.should.equal "#{sd.API_URL}/api/v1/partner_show/#{@show.get('id')}/images"
       # Don't fetch the cover that represents the show
       Backbone.sync.args[0][2].data.default.should.be.false
       # Fetches artworks

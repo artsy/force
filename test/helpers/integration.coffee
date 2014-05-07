@@ -19,7 +19,7 @@ express = require "express"
   return callback() if @child?
   envVars =
     NODE_ENV: "test"
-    ARTSY_URL: "http://localhost:5000/__api"
+    API_URL: "http://localhost:5000/__api"
     APP_URL: 'http://localhost:5000'
     PORT: 5000
   envVars[k] = val for k, val of process.env when not envVars[k]?

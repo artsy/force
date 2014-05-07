@@ -22,7 +22,7 @@ module.exports = class ContactView extends ModalView
     width: '470px'
     successMessage: 'Thank you. Your message has been sent.'
     placeholder: 'Your message'
-    url: "#{sd.ARTSY_URL}/api/v1/feedback"
+    url: "#{sd.API_URL}/api/v1/feedback"
 
   events: -> _.extend super,
     'submit form'                : 'submit'

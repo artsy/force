@@ -6,4 +6,4 @@ Backbone     = require 'backbone'
 module.exports = class Page extends Backbone.Model
   _.extend @prototype, Markdown
 
-  urlRoot: "#{sd.ARTSY_URL}/api/v1/page"
+  urlRoot: "#{sd.API_URL}/api/v1/page"

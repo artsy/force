@@ -13,7 +13,7 @@ Reposts             = require '../components/post/collections/reposts.coffee'
 
 module.exports = class Post extends Backbone.Model
 
-  urlRoot: "#{sd.ARTSY_URL}/api/v1/post"
+  urlRoot: "#{sd.API_URL}/api/v1/post"
   href: -> "/post/#{@get('id')}"
   canonicalUrl: -> sd.APP_URL + @href()
   profile: -> new Profile @get('profile')
@@ -161,7 +161,7 @@ module.exports = class Post extends Backbone.Model
 
   repost: (options) ->
     model = new Backbone.Model()
-    model.url = "#{sd.ARTSY_URL}/api/v1/repost"
+    model.url = "#{sd.API_URL}/api/v1/repost"
     model.save
       post_id: @get('id')
       success: (data, status, xhr) =>
@@ -171,7 +171,7 @@ module.exports = class Post extends Backbone.Model
 
   unrepost: (repost, options) ->
     model = new Backbone.Model id: @get('id')
-    model.url = "#{sd.ARTSY_URL}/api/v1/repost"
+    model.url = "#{sd.API_URL}/api/v1/repost"
     model.destroy
       data:
         post_id: @get('id')
