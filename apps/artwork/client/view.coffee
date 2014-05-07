@@ -16,9 +16,12 @@ Sale                      = require '../../../models/sale.coffee'
 ZigZagBanner              = require '../../../components/zig_zag_banner/index.coffee'
 Auction                   = require './mixins/auction.coffee'
 RelatedShowView           = require './related-show.coffee'
+qs                        = require 'querystring'
+{ parse }                 = require 'url'
 
-artistArtworksTemplate  = -> require('../templates/_artist-artworks.jade') arguments...
-detailTemplate          = -> require('../templates/_detail.jade') arguments...
+artistArtworksTemplate      = -> require('../templates/_artist-artworks.jade') arguments...
+detailTemplate              = -> require('../templates/_detail.jade') arguments...
+auctionPlaceholderTemplate  = -> require('../templates/auction_placeholder.jade') arguments...
 
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 
@@ -38,6 +41,7 @@ module.exports = class ArtworkView extends Backbone.View
   initialize: (options) ->
     { @artwork, @artist } = options
 
+    @checkQueryStringForAuction()
     @abTestEmbeddedInquiryForm()
     @setupRelatedPosts()
     @setupCurrentUser()
@@ -81,9 +85,24 @@ module.exports = class ArtworkView extends Backbone.View
     @artwork.on "change:sale_message", @renderDetail, this
     @artwork.fetch()
 
-  abTestEmbeddedInquiryForm: ->
-    @$('#artwork-detail-contact').show()
+  checkQueryStringForAuction: ->
+    { auction_id } = qs.parse(parse(window.location.search).query)
+    @renderAuctionPlaceholder auction_id if auction_id
+
+  renderAuctionPlaceholder: (auction_id) ->
+    @suppressInquiry = true
+    @$('.artwork-detail').addClass 'is-auction'
     @$('#artwork-detail-spinner').remove()
+    @$('#auction-detail').html(
+      auctionPlaceholderTemplate
+        auction_id : auction_id
+        artwork_id : @artwork.id
+    ).addClass 'is-fade-in'
+
+  abTestEmbeddedInquiryForm: ->
+    return if @suppressInquiry
+    @$('#artwork-detail-spinner').remove()
+    @$('#artwork-detail-contact').show()
     return unless analytics.abTest 'ab:inquiry:embedded', 0.2
     ContactView = require '../components/contact/view.coffee'
     new ContactView el: @$('#artwork-detail-contact'), model: @artwork

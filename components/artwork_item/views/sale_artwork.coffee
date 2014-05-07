@@ -26,11 +26,16 @@ module.exports = class SaleArtworkView extends Backbone.View
     saveView.analyticsRemoveMessage   = @analyticsRemoveMessage
     saveView.analyticsSaveMessage     = @analyticsSaveMessage
 
-    if @sale
+    if @sale?.isAuction()
       if @sale.has 'auctionState'
         @setupAuctionState()
       else
         @listenTo @sale, 'change:auctionState', @setupAuctionState
+
+  # Appends ?auction_id=<auction_id> to all artwork links
+  appendAuctionId: ->
+    @$("a[href*=#{@model.id}]").each (i, a) =>
+      ($this = $(a)).attr href: "#{$this.attr 'href'}?auction_id=#{@sale.id}"
 
   contactSeller: (e) ->
     e.preventDefault()
@@ -54,6 +59,8 @@ module.exports = class SaleArtworkView extends Backbone.View
         redirectTo  : @sale.redirectUrl @model
 
   setupAuctionState: ->
+    @appendAuctionId() if @sale.isOpen()
+
     # Possibly hide the bid status
     @$('.artwork-item-auction-bid-status').hide() if @sale.isClosed()
 

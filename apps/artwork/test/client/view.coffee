@@ -45,7 +45,7 @@ describe 'ArtworkView', ->
     }, =>
       @ArtworkView = benv.requireWithJadeify(
         (resolve __dirname, '../../client/view'),
-        ['artistArtworksTemplate', 'detailTemplate']
+        ['artistArtworksTemplate', 'detailTemplate', 'auctionPlaceholderTemplate']
       )
       @ArtworkView.__set__ 'analytics', { abTest: sinon.stub(), delta: sinon.stub(), track: { click: sinon.stub() } }
       @ArtworkView.__set__ 'ShareView', (@shareViewStub = sinon.stub())
@@ -63,6 +63,15 @@ describe 'ArtworkView', ->
       @ArtworkView.__set__ 'CurrentUser', { orNull: -> new CurrentUser(fabricate 'user') }
       @ArtworkView.__set__ 'analytics', { track: { impression: (->), click: (->) } , abTest: -> }
       @view = new @ArtworkView el: $('#artwork-page'), artist: @artist, artwork: @artwork
+
+    describe '#checkQueryStringForAuction', ->
+      it 'renders the auction placeholder when an auction_id is in the query string', ->
+        @view.$el.html().should.not.include 'Bid'
+        window.location.search = '?auction_id=my-sale-id'
+        @view.checkQueryStringForAuction()
+        html = @view.$el.html()
+        html.should.include 'my-sale-id'
+        html.should.include 'Bid'
 
     describe 'when an artwork changes', ->
       it 'only renders if the artwork changes', ->
