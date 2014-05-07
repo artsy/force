@@ -53,7 +53,7 @@ module.exports = class ErrorHandlingForm extends Backbone.View
       message = @errors.other
 
     # Display balanced errors
-    message += " #{response.additional}" if response.additional
+    message += " #{response.error.additional}" if response?.error?.additional
 
     @$submit.removeClass('is-loading').before "<div class='error'>#{message}</div>"
     analytics.track.error(description) if description?
