@@ -1,60 +1,43 @@
-benv            = require 'benv'
-sinon           = require 'sinon'
-Backbone        = require 'backbone'
-SaleArtworkView = require '../views/sale_artwork'
-mediator        = require '../../../lib/mediator'
-{ fabricate }   = require 'antigravity'
-{ resolve }     = require 'path'
-
-model           = new Backbone.Model(id: 'artwork')
-model.isSaved   = sinon.stub()
-
-artworkCollection               = new Backbone.Collection
-artworkCollection.unsaveArtwork = sinon.stub()
-artworkCollection.saveArtwork   = sinon.stub()
+_                 = require 'underscore'
+benv              = require 'benv'
+sinon             = require 'sinon'
+Backbone          = require 'backbone'
+{ fabricate }     = require 'antigravity'
+{ resolve }       = require 'path'
+SaleArtworkView   = require '../views/sale_artwork'
+Artwork           = require '../../../models/artwork'
+Sale              = require '../../../models/sale'
+CurrentUser       = require '../../../models/current_user'
 
 describe 'SaleArtworks', ->
-  xdescribe '#save', ->
-    beforeEach (done) ->
-      benv.setup =>
-        benv.expose { $: benv.require 'jquery' }
-        Backbone.$ = $
-        benv.render resolve(__dirname, '../templates/artwork.jade'), { displayPurchase: true }, =>
-          @view = new SalArtworkView
-            el: $('.overlay-container')
-            model: fabricate('artwork', { acquireable: true, sale_artwork: fabricate('sale_artwork') })
-          done()
+  beforeEach (done) ->
+    benv.setup =>
+      benv.expose $: benv.require 'jquery'
+      Backbone.$ = $
 
-    afterEach ->
-      benv.teardown()
+      @artwork  = new Artwork fabricate 'artwork', acquireable: true, sale_artwork: fabricate('sale_artwork')
+      @sale     = new Sale fabricate 'sale', is_auction: true
 
-    it 'sets up the save controls', ->
-      sinon.spy mediator, 'trigger'
-      @view.$('.overlay-button-save').click()
-      mediator.trigger.args[0][0].should.equal 'open:auth'
-      mediator.trigger.args[0][1].mode.should.equal 'register'
-      mediator.trigger.restore()
+      benv.render resolve(__dirname, '../templates/artwork.jade'), { artwork: @artwork, displayPurchase: true }, =>
+        @view = new SaleArtworkView
+          el    : $('body')
+          model : @artwork
+        done()
 
-    it 'has a working buy button', ->
+  afterEach ->
+    benv.teardown()
 
-    describe 'logged in behavior', ->
-      beforeEach (done) ->
-        benv.setup =>
-          benv.expose { $: benv.require 'jquery' }
-          Backbone.$ = $
-          benv.render resolve(__dirname, '../templates/artwork.jade'), { displayPurchase: true }, =>
-            @view = new SalArtworkView
-              el: $('.overlay-container')
-              model: fabricate('artwork', { acquireable: true, sale_artwork: fabricate('sale_artwork') })
-            done()
+  describe '#appendAuctionId', ->
+    it 'appends auction id to all the links to the artwork', ->
+      @view.sale = @sale
+      @view.appendAuctionId()
+      artworkLinks = _.map @view.$('a'), (a) -> $(a).attr('href')
+      artworkLinks.should.match(new RegExp("auction_id=#{@sale.id}"))
 
-      afterEach ->
-        benv.teardown()
+  xit 'should alter the template to reflect the state of the auction'
 
-      it 'sets up save controls', ->
-        @view.model.isSaved = -> false
-        @view.$button.click()
-        @view.model.isSaved = -> true
+  xit 'should set up the save controls'
 
-      it 'sets up a working buy button', ->
+  xit 'should have a working buy button'
 
+  xit 'should have a working contact seller button'
