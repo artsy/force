@@ -128,8 +128,9 @@ module.exports = class ArtworkView extends Backbone.View
         @trigger 'related:not_auction'
 
   hasAnyAuctions: (relatedCollections) ->
-    return false unless relatedCollections.length
+    return false unless relatedCollections?.length
     saleCollection = _.find(relatedCollections, (xs) -> xs.kind is 'sales')
+    return false unless saleCollection?.length
     _.some(saleCollection.pluck 'is_auction')
 
   setupCurrentUser: ->
