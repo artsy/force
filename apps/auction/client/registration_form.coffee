@@ -54,15 +54,13 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
               success: =>
                 @success()
                 analytics.track.funnel 'Registration submitted'
-              error: (xhr) => @showError xhr, "Registration submission error"
+              error: (xhr) =>
+                @showError "Registration submission error", xhr
           error: =>
-            @showError @errors.other, "Error adding your credit card"
-
+            @showError "Error adding your credit card", response
         analytics.track.funnel 'Registration card validated'
-      when 400, 403 then @showError @errors.missingOrMalformed, "Registration card missing or malformed"
-      when 402 then @showError @errors.couldNotAuthorize, "Registration card could not be authorized"
-      when 404 then @showError @errors.other, "Registration marketplace invalid"
-      else @showError @errors.other, "Registration card - other error"
+      else
+        @showError "Registration card - other error", response
 
   cardData: ->
     name: @fields['name on card'].el.val()
@@ -81,8 +79,8 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
         @balanced ||= require('../../../lib/vendor/balanced.js')
         @balanced.init marketplace.get('uri')
         @balanced.card.create @cardData(), @cardCallback
-      error: =>
-        @showError @errors.other, "Error fetching the balanced marketplace"
+      error: (xhr) =>
+        @showError "Error fetching the balanced marketplace", xhr
 
   savePhoneNumber: ->
     if @fields.telephone.el.val()?.length > 0

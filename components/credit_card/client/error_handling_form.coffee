@@ -34,14 +34,27 @@ module.exports = class ErrorHandlingForm extends Backbone.View
       val.el.last().after "<div class='error'>#{errors[key]}</div>"
     _.isEmpty(errors)
 
-  showError: (response, description) =>
-    if (typeof response) == 'string'
-      message = response
-    else if response.responseText?
+  showError: (description, response={}) =>
+    if response.responseText?
       errorJson = JSON.parse response.responseText
       message = if errorJson.type == 'payment_error' then @errors.paymentError else @errors.other
+    else if response.status == 400 or response.status == 403
+      message = @errors.missingOrMalformed
+      description = "Registration card missing or malformed"
+    else if response.status == 402
+      message = @errors.couldNotAuthorize
+      description = "Registration card could not be authorized"
+    else if response.status == 404
+      message = "Registration marketplace invalid"
+      description = message
+    else if typeof(description) == 'string'
+      message = description
     else
       message = @errors.other
+
+    # Display balanced errors
+    message += " #{response.additional}" if response.additional
+
     @$submit.removeClass('is-loading').before "<div class='error'>#{message}</div>"
     analytics.track.error(description) if description?
 
