@@ -290,8 +290,8 @@ Then add the view
 ````coffeescript
 @filterView = new FilterArtworksView
   el: $ '#gene-filter'
-  artworksUrl: "#{ARTSY_URL}/api/v1/search/filtered/gene/#{@model.get 'id'}"
-  countsUrl: "#{ARTSY_URL}/api/v1/search/filtered/gene/#{@model.get 'id'}/suggest"
+  artworksUrl: "#{API_URL}/api/v1/search/filtered/gene/#{@model.get 'id'}"
+  countsUrl: "#{API_URL}/api/v1/search/filtered/gene/#{@model.get 'id'}/suggest"
 ````
 
 #### Building on top of it
@@ -391,7 +391,7 @@ When building up your own filtering UI you may need to use buttons and dropdowns
 
 ```coffeescript
 ContactView = require '../../components/contact/view.coffee'
-new ContactView(width: '600px', url: "#{sd.ARTSY_URL}/api/v1/feedback")
+new ContactView(width: '600px', url: "#{sd.API_URL}/api/v1/feedback")
 ```
 The base `ContactView` is configurable by passing in the following options: `width` (modal width, String value in px), `successMessage` (large copy that is displayed after a successful message is sent), `placeholder` (Main textarea placeholder), `url` (API endpoint that data is posted to).
 
@@ -407,7 +407,7 @@ module.exports = class FeedbackView extends ContactView
   headerTemplate: headerTemplate
   defaults: -> _.extend super,
     placeholder: 'Leave your comments'
-    url: "#{sd.ARTSY_URL}/api/v1/feedback"
+    url: "#{sd.API_URL}/api/v1/feedback"
 ```
 
 The view's `submit` method can be intercepted to add more data to the model:
