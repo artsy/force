@@ -16,7 +16,9 @@ module.exports =
     @genes = new Genes collection.pluck('gene')
     $.when.apply(null, @genes.map (gene) =>
       gene.trendingArtists.fetch
-        data: size: 5
+        data:
+          size        : 5
+          price_range : @user.get 'price_range'
     ).then =>
       @renderGeneSuggestions()
 
