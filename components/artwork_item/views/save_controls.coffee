@@ -42,9 +42,10 @@ module.exports = class SaveControls extends Backbone.View
     else
       track.click @analyticsSaveMessage, @model
       @artworkCollection.saveArtwork @model.id,
+        success: => @$button.attr 'data-state', 'saved'
         error: => @$button.attr 'data-state', 'unsaved'
+      @$button.attr 'data-state', 'loading'
 
       # Delay transition to red background color
-      @$button.addClass 'is-clicked'
       setTimeout (=> @$button.removeClass 'is-clicked'), 1500
     false

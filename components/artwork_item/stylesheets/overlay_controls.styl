@@ -1,7 +1,17 @@
+@import '../../stylus_lib'
+
+grow-duration = 0.5s
+menu-delay = 1s
+
 .overlay-container
   position absolute
-  right 5px
-  bottom 5px
+  left calc('100% - 40px')
+  top 5px
+  .loading-spinner-small-white
+    width 16px
+    left calc('50% - (%s / 2)' % @width)
+    display none
+    top 18px
 
 // Extend this class and add content
 // to its before pseudo element to use
@@ -19,18 +29,79 @@
   line-height @height
   border-radius (@width / 2)
   opacity 1
-  transition opacity 0.125s
-  &:hover
+  transition all grow-duration
+  &::before
+    left 16px
+    top -3px
+  &:active
     background-color black
+  &[data-state='loading']
+    background-color purple-color
+    opacity 1
+    &::before
+      opacity 0
+    + .loading-spinner-small-white
+      display block
   &[data-state='saved']
     opacity 1
     background-color purple-color
-    &:hover
-      background-color red-color
-      &:before
-        content '\e621'
-      &.is-clicked
-        background-color purple-color
+    border-radius 0
+    width 82px
+    height 33px
+    avant-garde()
+    font-size default-avant-garde-font-size
+    position relative
+    z-index 4
+    &:before
+      transition opacity (grow-duration / 2) linear (grow-duration / 2)
+      content 'Saved!'
+      position absolute
+    ~ .overlay-dropdown
+      display block
+      left 5px
+      opacity 1
+      transition opacity 0.5s linear menu-delay, left 0.5s linear menu-delay
+
+.overlay-dropdown
+  background-color black
+  position absolute
+  z-index 2
+  width 250px
+  top 28px
+  left 0px
+  opacity 0
+  .overlay-item
+    display block
+    border-bottom 1px solid gray-darker-color
+    padding 12px 15px
+    color white
+  .overlay-item:first-child
+    avant-garde()
+    font-size default-avant-garde-font-size - 1px
+  .overlay-item:last-child
+    border-bottom 0
+    padding-bottom 16px
+    &::after
+      content '.'
+      color transparent
+      border-bottom 1px dotted #ccc
+      position absolute
+      width 180px
+      left 16px
+      bottom 14px
+  .overlay-item-add
+    background-color gray-darker-color
+    color white
+    border 0
+    padding 0
+    height 25px
+    width @height
+    font-weight bold
+    avant-garde()
+    font-size 16px
+    float right
+    padding 0 0 2px 2px
+    position relative
 
 .overlay-button-save
   @extends .overlay-button
@@ -43,5 +114,5 @@
       opacity 1
   .overlay-button-save
     opacity 0
-    &[data-state='saved']
+    &[data-state='saved'], &[data-state='loading']
       opacity 1
