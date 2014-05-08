@@ -42,7 +42,10 @@ setupKioskMode = ->
     , (6 * 60 * 1000)
 
 setupReferrerTracking = ->
-  if document?.referrer?.indexOf and document.referrer.indexOf(sd.APP_URL) < 0 and readCookie('force-referrer') != document.referrer
+  # Live, document.referrer always exists, but let's check
+  # 'document?.referrer?.indexOf' just in case we're in a
+  # test that stubs document
+  if document?.referrer?.indexOf and document.referrer.indexOf(sd.APP_URL) < 0
     createCookie 'force-referrer', document.referrer
     createCookie 'force-session-start', window.location.pathname
 
