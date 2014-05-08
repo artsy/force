@@ -1,27 +1,27 @@
-benv = require 'benv'
-sinon = require 'sinon'
-Backbone = require 'backbone'
-sd = require('sharify').data
-mediator = require '../../../lib/mediator'
+benv      = require 'benv'
+sinon     = require 'sinon'
+Backbone  = require 'backbone'
+sd        = require('sharify').data
+mediator  = require '../../../lib/mediator'
+rewire    = require 'rewire'
 
 describe 'FavoritesStatusModalView', ->
-
   before (done) ->
     benv.setup =>
-      benv.expose { $: benv.require 'jquery' }
+      benv.expose $: benv.require 'jquery'
       Backbone.$ = $
       $('body').html $ "<div id='fixture'></div>"
-      @FavoritesStatusModalView = require '../view'
-      sinon.stub @FavoritesStatusModalView.prototype, 'initialize'
+      @FavoritesStatusModalView = rewire '../view'
+      @FavoritesStatusModalView.__set__ 'readCookie', (@cookie = sinon.stub())
+      sinon.stub @FavoritesStatusModalView::, 'initialize'
       done()
 
   after ->
     benv.teardown()
 
   describe '#makePublic', ->
-
     beforeEach ->
-      @close = sinon.stub @FavoritesStatusModalView.prototype, 'close'
+      @close = sinon.stub @FavoritesStatusModalView::, 'close'
       @view = new @FavoritesStatusModalView el: $('#fixture')
       @trigger = sinon.stub mediator, 'trigger'
 
@@ -37,3 +37,13 @@ describe 'FavoritesStatusModalView', ->
     it 'closes the modal after canceling', ->
       @view.cancel()
       @close.calledOnce.should.be.ok
+
+    describe 'cookie behavior', ->
+      beforeEach ->
+        @cookie.returns true
+        sinon.stub @FavoritesStatusModalView::, 'remove'
+        @FavoritesStatusModalView::initialize.restore()
+
+      it 'if cancelled then the modal should not present itself again', ->
+        @view = new @FavoritesStatusModalView el: $('#fixture')
+        @FavoritesStatusModalView::remove.called.should.be.true
