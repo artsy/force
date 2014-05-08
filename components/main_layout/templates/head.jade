@@ -2,8 +2,9 @@ link( rel='apple-touch-icon', href=(sd.ASSET_PATH + 'icon-57.png') )
 link( rel='apple-touch-icon', sizes='72x72', href=(sd.ASSET_PATH + 'icon-72.png') )
 link( rel='apple-touch-icon', sizes='114x114', href=(sd.ASSET_PATH + 'icon-114.png') )
 link( rel='icon', type='image/png', href=(sd.ASSET_PATH + 'favicon.ico') )
-meta( name="msapplication-config" content=sd.ASSET_PATH + 'browserconfig.xml' )
-meta( name="viewport" content="user-scalable=0, width=device-width" )
+link( rel='search', type='application/opensearchdescription+xml', href=(sd.ASSET_PATH + 'opensearch.xml'), title='Artsy' )
+meta( name='msapplication-config', content=(sd.ASSET_PATH + 'browserconfig.xml') )
+meta( name='viewport', content='user-scalable=0, width=device-width' )
 include ../../iframe_popover/head_script
 if sd.NODE_ENV != 'test' && sd.NODE_ENV != 'development' && newrelic
   != newrelic.getBrowserTimingHeader()
