@@ -15,7 +15,6 @@ unless _.isArray(CLIENT_CACHE_ROUTES) and CLIENT_CACHE_ROUTES.length > 0
 app = module.exports = express()
 
 overrideAPIUrl = (req, res, next) ->
-  console.log 'OVER'
   res.locals.sd.API_URL = ''
   next()
 
@@ -32,5 +31,4 @@ cacheRoute = (req, res, next) ->
         res.send r.body
 
 app.use overrideAPIUrl
-console.log 'mount', (route for route in CLIENT_CACHE_ROUTES)
 app.get(CLIENT_CACHE_ROUTES, cacheRoute) for route in CLIENT_CACHE_ROUTES
