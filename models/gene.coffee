@@ -15,7 +15,7 @@ module.exports = class Gene extends Backbone.Model
   _.extend @prototype, Image(sd.SECURE_IMAGES_URL)
   _.extend @prototype, Markdown
 
-  urlRoot: "#{sd.ARTSY_URL}/api/v1/gene"
+  urlRoot: "#{sd.API_URL}/api/v1/gene"
 
   clientUrl: -> "/gene/#{@get('id')}"
 
@@ -27,9 +27,9 @@ module.exports = class Gene extends Backbone.Model
 
   initialize: ->
     @relatedArtists       = new Backbone.Collection [], model: Artist
-    @relatedArtists.url   = "#{sd.ARTSY_URL}/api/v1/gene/#{@id}/artists"
+    @relatedArtists.url   = "#{sd.API_URL}/api/v1/gene/#{@id}/artists"
     @trendingArtists      = new Backbone.Collection [], model: Artist
-    @trendingArtists.url  = "#{sd.ARTSY_URL}/api/v1/artists/trending?gene=#{@id}"
+    @trendingArtists.url  = "#{sd.API_URL}/api/v1/artists/trending?gene=#{@id}"
 
   fetchArtists: (type, options={}) ->
     @["#{type}Artists"].fetch(options)
@@ -45,5 +45,5 @@ module.exports = class Gene extends Backbone.Model
   fetchFilterSuggest: (params, options) ->
     new Backbone.Model().fetch _.extend
       data: params
-      url: "#{sd.ARTSY_URL}/api/v1/search/filtered/gene/#{@get 'id'}/suggest"
+      url: "#{sd.API_URL}/api/v1/search/filtered/gene/#{@get 'id'}/suggest"
     , options

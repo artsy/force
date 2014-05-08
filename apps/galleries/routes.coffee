@@ -12,7 +12,7 @@ Partners = require '../../collections/partners'
       type: "PartnerGallery"
       sort: "sortable_id"
       has_full_profile: true
-    url: "#{sd.ARTSY_URL}/api/v1/partners"
+    url: "#{sd.API_URL}/api/v1/partners"
     cache: true
     success: ->
       aToZGroup = galleries.groupByAlphaWithColumns 3

@@ -35,22 +35,12 @@ parseGenes = (collection) ->
   featuredGenes.fetchAll(cache: true).then ->
     genesSet  = featuredGenes.findWhere item_type: 'Gene'
     genes     = genesSet.get 'items'
-    requests  = genes.map (gene) ->
-      # Set up a promise that gets resolved when the randomly selected
-      # artists are fetched
-      dfd = Q.defer()
+    Q.allSettled(genes.map (gene) ->
       gene.fetchArtists 'trending',
-        cache: true
-        error: dfd.resolve
-        success: ->
+        cache   : true
+        success : ->
           gene.trendingArtists = parseGenes gene.trendingArtists
-          # Fetch full attributes for the 4 randomly selected artists
-          Q.allSettled(gene.trendingArtists.map (artist) ->
-            artist.fetch cache: true
-          ).then dfd.resolve
-      dfd.promise
-
-    Q.allSettled(requests).then render
+    ).then render
 
 @letter = (req, res) ->
   currentPage   = parseInt(req.query.page) or 1

@@ -1,6 +1,6 @@
 _               = require 'underscore'
 Backbone        = require 'backbone'
-{ ARTSY_URL }   = require('sharify').data
+{ API_URL }   = require('sharify').data
 { Markdown }    = require 'artsy-backbone-mixins'
 analytics       = require '../../../lib/analytics.coffee'
 
@@ -16,7 +16,7 @@ module.exports.Layer = class Layer extends Backbone.Model
     @set artwork_id: @collection.artwork.id
     @set fair: @collection.fair if @get('type') is 'fair'
     @artworks = new Artworks
-    @artworks.url = "#{ARTSY_URL}/api/v1/related/layer/#{@get('type')}/#{@id}/artworks?artwork[]=#{@get('artwork_id')}"
+    @artworks.url = "#{API_URL}/api/v1/related/layer/#{@get('type')}/#{@id}/artworks?artwork[]=#{@get('artwork_id')}"
 
   forSale: ->
     (@get('type') is 'synthetic') and (@id is 'for-sale')
@@ -34,7 +34,7 @@ module.exports.Layer = class Layer extends Backbone.Model
     return "/tag/#{@id}" if @get('type') is 'tag'
 
 module.exports.Layers = class Layers extends Backbone.Collection
-  url: "#{ARTSY_URL}/api/v1/related/layers"
+  url: "#{API_URL}/api/v1/related/layers"
   model: Layer
 
   initialize: (options) ->

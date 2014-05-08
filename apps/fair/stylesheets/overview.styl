@@ -13,6 +13,12 @@ left-column-width = 200px
   min-width feed-max-width
   background linear-gradient(to bottom, #ffffff 0%, #e4e4e4 100%)
   background-size: cover
+  @media screen and (max-width: 1024px)
+    min-width 1124px
+
+#main-layout-header.microsite-header
+  @media screen and (max-width: 1024px)
+    width 1124px
 
 #main-layout-header
   min-width feed-max-width
@@ -97,6 +103,7 @@ left-column-width = 200px
   width browse-container-width
   position relative
   display block
+  text-decoration none
   .fair-overview-browse-image
     background gray-lighter-color
     position absolute
@@ -158,6 +165,7 @@ left-column-width = 200px
   position relative
   vertical-align top
   background-color #000
+  text-decoration none
   &:hover
     img
       opacity 0.5

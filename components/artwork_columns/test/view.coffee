@@ -15,7 +15,9 @@ describe 'ArtworkColumns', ->
 
   before (done) ->
     benv.setup =>
-      benv.expose { $: benv.require 'jquery' }
+      benv.expose
+        $: benv.require 'jquery'
+        jQuery: benv.require 'jquery'
       Backbone.$ = $
       done()
 
@@ -135,31 +137,64 @@ describe 'ArtworkColumns', ->
         $('.artwork-column:eq(1) .artwork-item').should.have.lengthOf 4
 
     describe 'when columns are not ordered', ->
-
-      # Pendify this spec. It seems to create sometime of infinite recursion error
-      xit 'adds artworks to the shortest column', ->
+      it 'adds artworks to the shortest column', ->
         @view = new ArtworkColumnsView
-          el:         $('body')
+          el: $('body')
           collection: @artworks
           totalWidth: 1120
           allowDuplicates: true
-        $('.artwork-column:eq(0) .artwork-item').should.have.lengthOf 4
-        $('.artwork-column:eq(1) .artwork-item').should.have.lengthOf 2
-        $('.artwork-column:eq(2) .artwork-item').should.have.lengthOf 2
+        @view.$('.artwork-column:eq(0) .artwork-item').should.have.lengthOf 3
+        @view.$('.artwork-column:eq(1) .artwork-item').should.have.lengthOf 3
+        @view.$('.artwork-column:eq(2) .artwork-item').should.have.lengthOf 2
         @view.shortestColumn.should.equal 2
 
         # Add a work to verify it goes to the shortest column
         artwork = new Artwork fabricate 'artwork'
         _.extend artwork.get('images')[0], { original_width: 700, original_height: 200, aspect_ratio: 3.5 }
         @view.appendArtworks [artwork]
-        $('.artwork-column:eq(2) .artwork-item').should.have.lengthOf 3
+        @view.$('.artwork-column:eq(2) .artwork-item').should.have.lengthOf 3
         @view.shortestColumn.should.equal 2
 
         artwork = new Artwork fabricate 'artwork'
         _.extend artwork.get('images')[0], { original_width: 700, original_height: 200, aspect_ratio: 3.5 }
         @view.appendArtworks [artwork]
-        $('.artwork-column:eq(2) .artwork-item').should.have.lengthOf 4
-        @view.shortestColumn.should.equal 2
+        @view.$('.artwork-column:eq(2) .artwork-item').should.have.lengthOf 4
+        @view.shortestColumn.should.equal 0
+
+      describe '#addToShortestColumn', ->
+        beforeEach ->
+          @view = new ArtworkColumnsView
+            el: $('body')
+            collection: @artworks
+            totalWidth: 1120
+            allowDuplicates: true
+
+          sinon.stub($.fn, 'height').returns 160
+
+        afterEach ->
+          $.fn.height.restore()
+
+        it 'can accept normal Artwork models', ->
+          artwork = new Artwork fabricate 'artwork'
+          _.extend artwork.get('images')[0], original_width: 700, original_height: 160, aspect_ratio: 3.5
+          @view.shortestColumn.should.equal 2
+          @view.addToShortestColumn artwork
+          @view.shortestColumn.should.equal 2
+          @view.addToShortestColumn artwork
+          @view.shortestColumn.should.equal 0
+          @view.addToShortestColumn artwork
+          @view.shortestColumn.should.equal 1
+
+        it 'can accept jQuery objects directly', ->
+          $column   = @view.$(".artwork-column:eq(#{@view.shortestColumn})")
+          $artwork  = $column.find('.artwork-item').last().clone()
+          @view.shortestColumn.should.equal 2
+          @view.addToShortestColumn $artwork
+          @view.shortestColumn.should.equal 2
+          @view.addToShortestColumn $artwork
+          @view.shortestColumn.should.equal 0
+          @view.addToShortestColumn $artwork
+          @view.shortestColumn.should.equal 1
 
     it 'doesnt add duplicates', ->
       @view = new ArtworkColumnsView

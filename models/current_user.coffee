@@ -7,6 +7,7 @@ Genes             = require '../collections/genes.coffee'
 Artists           = require '../collections/artists.coffee'
 Artworks          = require '../collections/artworks.coffee'
 sd                = require('sharify').data
+analytics         = require '../lib/analytics.coffee'
 Order             = require './order.coffee'
 Genes             = require '../collections/genes.coffee'
 { readCookie }    = require '../components/util/cookie.coffee'
@@ -16,9 +17,9 @@ ABM               = require 'artsy-backbone-mixins'
 
 module.exports = class CurrentUser extends Backbone.Model
 
-  _.extend @prototype, ABM.CurrentUser(sd.ARTSY_URL)
+  _.extend @prototype, ABM.CurrentUser(sd.API_URL)
 
-  url: -> "#{sd.ARTSY_URL}/api/v1/me"
+  url: -> "#{sd.API_URL}/api/v1/me"
 
   defaults:
     followArtists       : null
@@ -68,6 +69,15 @@ module.exports = class CurrentUser extends Backbone.Model
   hasLabFeature: (featureName) ->
     _.contains @get('lab_features'), featureName
 
+  # Is this user part of the AB test group that
+  # receives suggestions on the homepage.
+  #
+  # @return Bool
+  hasSuggestions: ->
+    return true if 'Suggested Artworks' in @get('lab_features')
+    return false unless sd.ENABLE_AB_TEST
+    analytics.abTest(sd.SUGGESTIONS_AB_TEST, 0.2)
+
   # Retreive a list of artists the user is following
   #
   # @param {Object} options Provide `success` and `error` callbacks similar to Backbone's fetch
@@ -92,7 +102,7 @@ module.exports = class CurrentUser extends Backbone.Model
     else
       posts = new Backbone.Collection
       posts.fetch
-        url: "#{sd.ARTSY_URL}/api/v1/profile/#{@get('default_profile_id')}/posts/unpublished"
+        url: "#{sd.API_URL}/api/v1/profile/#{@get('default_profile_id')}/posts/unpublished"
         success: (response) ->
           post = response.models?[0]?.get('results')?[0]
           if post
@@ -103,7 +113,7 @@ module.exports = class CurrentUser extends Backbone.Model
 
   fetchSuggestedHomepageArtworks: (options = {}) ->
     new Artworks().fetch _.extend options,
-      url: "#{sd.ARTSY_URL}/api/v1/me/suggested/artworks/homepage"
+      url: "#{sd.API_URL}/api/v1/me/suggested/artworks/homepage"
 
   followArtist: (id, options) ->
     new Following(null, kind: 'artist').follow id, _.extend options,
@@ -126,7 +136,7 @@ module.exports = class CurrentUser extends Backbone.Model
 
   checkRegisteredForAuction: (options) ->
     new Backbone.Collection().fetch
-      url: "#{sd.ARTSY_URL}/api/v1/me/bidders"
+      url: "#{sd.API_URL}/api/v1/me/bidders"
       data:
         access_token: @get('accessToken')
         sale_id: options.saleId
@@ -138,7 +148,7 @@ module.exports = class CurrentUser extends Backbone.Model
     # For posts and puts, add access_token to model attributes, for gets it goes in the data
     model = new Backbone.Model(sale_id: options.saleId, access_token: @get('accessToken'))
     model.save null,
-      url: "#{sd.ARTSY_URL}/api/v1/bidder"
+      url: "#{sd.API_URL}/api/v1/bidder"
       success: options?.success
       error: options?.error
 

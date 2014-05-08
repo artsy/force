@@ -26,7 +26,7 @@ describe 'Artwork', ->
         benv.expose { $: benv.require 'jquery' }
         @sd =
           CANONICAL_MOBILE_URL : 'http://localhost:5000'
-          ARTSY_URL : 'http://localhost:5000'
+          API_URL : 'http://localhost:5000'
           ASSET_PATH: 'http://localhost:5000'
           CSS_EXT: '.css.gz'
           JS_EXT: '.js.gz'

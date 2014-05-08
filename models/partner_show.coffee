@@ -9,7 +9,7 @@ Partner         = require './partner.coffee'
 PartnerLocation = require './partner_location.coffee'
 DateHelpers     = require '../components/util/date_helpers.coffee'
 { Image }       = require 'artsy-backbone-mixins'
-fetchUntilEnd   = require('artsy-backbone-mixins').Fetch(sd.ARTSY_URL).fetchUntilEnd
+fetchUntilEnd   = require('artsy-backbone-mixins').Fetch(sd.API_URL).fetchUntilEnd
 
 module.exports = class PartnerShow extends Backbone.Model
 
@@ -21,9 +21,9 @@ module.exports = class PartnerShow extends Backbone.Model
 
   url: ->
     if @has('partner')
-      "#{sd.ARTSY_URL}/api/v1/partner/#{@get('partner').id}/show/#{@get('id')}"
+      "#{sd.API_URL}/api/v1/partner/#{@get('partner').id}/show/#{@get('id')}"
     else
-      "#{sd.ARTSY_URL}/api/v1/show/#{@get('id')}"
+      "#{sd.API_URL}/api/v1/show/#{@get('id')}"
 
   href: -> "/show/#{@get('id')}"
 
@@ -99,7 +99,7 @@ module.exports = class PartnerShow extends Backbone.Model
     @installShots = new Backbone.Collection [], { model: InstallShot }
     options =
       data   : { default: false }
-      url    : "#{sd.ARTSY_URL}/api/v1/partner_show/#{@get('id')}/images"
+      url    : "#{sd.API_URL}/api/v1/partner_show/#{@get('id')}/images"
     _.extend options, callbacks
     fetchUntilEnd.call @installShots, options
 

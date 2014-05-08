@@ -11,6 +11,59 @@ describe 'state', ->
   it 'has the appropriate set of steps for the appropriate track', ->
     @state.get('steps').should.equal @state.get('_steps')[@state.get('track')]
 
+  describe 'can be driven through all the state transitions depending on the user level', ->
+    it 'works for a user that buys art (level 3)', (done) ->
+      @state.on 'done', -> done()
+      @state.setLevel 3
+      @state.get('current_step').should.equal 'collect'
+      @state.next()
+      @state.get('current_step').should.equal 'location'
+      @state.next()
+      @state.get('current_step').should.equal 'categories'
+      @state.next()
+      @state.get('current_step').should.equal 'price_range'
+      @state.next()
+      @state.get('current_step').should.equal 'artists'
+      @state.next()
+      @state.get('current_step').should.equal 'galleries'
+      @state.next()
+      @state.get('current_step').should.equal 'institutions'
+      @state.next() # Done
+
+    it 'works for a user that is interested in starting to buy art (level 2)', (done) ->
+      @state.on 'done', -> done()
+      @state.setLevel 2
+      @state.get('current_step').should.equal 'collect'
+      @state.next()
+      @state.get('current_step').should.equal 'location'
+      @state.next()
+      @state.get('current_step').should.equal 'categories'
+      @state.next()
+      @state.get('current_step').should.equal 'price_range'
+      @state.next()
+      @state.get('current_step').should.equal 'artists'
+      @state.next()
+      @state.get('current_step').should.equal 'galleries'
+      @state.next()
+      @state.get('current_step').should.equal 'institutions'
+      @state.next() # Done
+
+    it 'works for a user that is just looking and learning (level 1)', (done) ->
+      @state.on 'done', -> done()
+      @state.setLevel 1
+      @state.get('current_step').should.equal 'collect'
+      @state.next()
+      @state.get('current_step').should.equal 'location'
+      @state.next()
+      @state.get('current_step').should.equal 'galleries'
+      @state.next()
+      @state.get('current_step').should.equal 'institutions'
+      @state.next()
+      @state.get('current_step').should.equal 'categories'
+      @state.next()
+      @state.get('current_step').should.equal 'artists'
+      @state.next() # Done
+
   describe '#setStep', ->
     it 'sets the current_step', ->
       next_step = 'location'

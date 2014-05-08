@@ -3,7 +3,7 @@ Backbone = require 'backbone'
 ContactView = require './view.coffee'
 Representatives = require './collections/representatives.coffee'
 analytics = require('../../lib/analytics.coffee')
-{ SESSION_ID, ARTSY_URL } = require('sharify').data
+{ SESSION_ID, API_URL } = require('sharify').data
 formTemplate = -> require('./templates/inquiry_form.jade') arguments...
 headerTemplate = -> require('./templates/inquiry_header.jade') arguments...
 
@@ -23,7 +23,7 @@ module.exports = class InquiryView extends ContactView
       contactGallery: false
 
   defaults: -> _.extend super,
-    url: "#{ARTSY_URL}/api/v1/me/artwork_inquiry_request"
+    url: "#{API_URL}/api/v1/me/artwork_inquiry_request"
 
   initialize: (options) ->
     { @artwork } = options

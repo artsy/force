@@ -1,5 +1,8 @@
 extends ../../components/main_layout/templates/index
 
+block head
+  include meta
+
 append locals
   - assetPackage = 'search'
 
@@ -8,7 +11,7 @@ block body
     if referrer
       .search-query-referrer
         | The page you requested
-        em &nbsp;&lt;#{sd.ARTSY_URL}#{referrer}&gt;&nbsp;
+        em &nbsp;&lt;#{sd.APP_URL}#{referrer}&gt;&nbsp;
         | does not exist
 
     .search-query

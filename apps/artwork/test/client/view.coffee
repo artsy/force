@@ -45,7 +45,7 @@ describe 'ArtworkView', ->
     }, =>
       @ArtworkView = benv.requireWithJadeify(
         (resolve __dirname, '../../client/view'),
-        ['artistArtworksTemplate', 'detailTemplate']
+        ['artistArtworksTemplate', 'detailTemplate', 'auctionPlaceholderTemplate']
       )
       @ArtworkView.__set__ 'analytics', { abTest: sinon.stub(), delta: sinon.stub(), track: { click: sinon.stub() } }
       @ArtworkView.__set__ 'ShareView', (@shareViewStub = sinon.stub())
@@ -63,6 +63,15 @@ describe 'ArtworkView', ->
       @ArtworkView.__set__ 'CurrentUser', { orNull: -> new CurrentUser(fabricate 'user') }
       @ArtworkView.__set__ 'analytics', { track: { impression: (->), click: (->) } , abTest: -> }
       @view = new @ArtworkView el: $('#artwork-page'), artist: @artist, artwork: @artwork
+
+    describe '#checkQueryStringForAuction', ->
+      it 'renders the auction placeholder when an auction_id is in the query string', ->
+        @view.$el.html().should.not.include 'Bid'
+        window.location.search = '?auction_id=my-sale-id'
+        @view.checkQueryStringForAuction()
+        html = @view.$el.html()
+        html.should.include 'my-sale-id'
+        html.should.include 'Bid'
 
     describe 'when an artwork changes', ->
       it 'only renders if the artwork changes', ->
@@ -96,10 +105,13 @@ describe 'ArtworkView', ->
           @view.setupFeatureNavigation                = sinon.stub()
           @artwork.fetchRelatedCollections            = sinon.stub()
           @view.deltaTrackPageView                    = sinon.stub()
-          @artwork.relatedCollections = [
-            { kind: 'fairs', length: 1, first: -> new Fair(id: 'i am a fair') }
-            { kind: 'sales', length: 1, first: -> new Sale(id: 'i am a sale') }
-          ]
+
+          fairs       = new Backbone.Collection [new Fair(id: 'i am a fair')]
+          fairs.kind  = 'fairs'
+          sales       = new Backbone.Collection [new Sale(id: 'i am a sale')]
+          sales.kind  = 'sales'
+
+          @artwork.relatedCollections = [sales, fairs]
 
         it 'sets up for the appropriate relations', ->
           @view.setupRelatedLayers()
@@ -113,6 +125,32 @@ describe 'ArtworkView', ->
           @view.belowTheFoldView.setupSale.args[0][0].saved.constructor.name.should.equal 'ArtworkCollection'
           @view.deltaTrackPageView.called.should.be.ok
           @view.deltaTrackPageView.args[0][0].get('id').should.equal 'i am a fair'
+
+        describe 'zig zag', ->
+          beforeEach ->
+            @sales       = new Backbone.Collection [new Sale id: 'i am a sale']
+            @sales.kind  = 'sales'
+            @artwork.relatedCollections = [@sales]
+            @view.setupZigZag             = sinon.stub()
+            @view.setupAuctionDetailView  = sinon.stub()
+
+          describe '#hasAnyAuctions', ->
+            it 'returns true or false if there is auction or not', ->
+              @view.hasAnyAuctions(@artwork.relatedCollections).should.be.false
+              @sales.first().set 'is_auction', true
+              @view.hasAnyAuctions(@artwork.relatedCollections).should.be.true
+              @sales.first().set 'is_auction', false
+              @view.hasAnyAuctions(@artwork.relatedCollections).should.be.false
+
+          it 'displays if there is no auction', ->
+            @sales.first().set 'is_auction', false
+            @view.setupRelatedLayers()
+            @view.setupZigZag.called.should.be.true
+
+          it 'does not display if there is an auction', ->
+            @sales.first().set 'is_auction', true
+            @view.setupRelatedLayers()
+            @view.setupZigZag.called.should.be.false
 
     describe '#setupCurrentUser', ->
       it 'initializes the current user, saved artwork collection, and following collection', ->

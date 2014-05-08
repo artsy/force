@@ -14,7 +14,7 @@ module.exports = class PostsFeatureDialog extends Backbone.View
     'click a.post-dialog-unfeature' : 'unfeaturePostOnPage'
 
   getFeatureUrl: (modelName, modelId) ->
-    "#{sd.ARTSY_URL}/api/v1/post/#{@model.get('id')}/#{modelName.toLowerCase()}/#{modelId}/feature"
+    "#{sd.API_URL}/api/v1/post/#{@model.get('id')}/#{modelName.toLowerCase()}/#{modelId}/feature"
 
   initialize: ->
     @$postsDialog = @$('.posts-dialog')

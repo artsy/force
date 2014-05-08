@@ -1,7 +1,0 @@
-if attachment.get('type') == "PostArtwork"
-  - url = attachment.artwork().defaultImage().imageUrlFor(249, 167)
-else
-  - url = attachment.imageUrlFor(249, 167)
-figure.fixed-post-image.fixed-dimensions( data-attachment=attachment.get('id') )
-  a( href=post.href() )
-    img( src=url )

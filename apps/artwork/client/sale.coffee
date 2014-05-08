@@ -1,6 +1,6 @@
 _               = require 'underscore'
 Backbone        = require 'backbone'
-{ ARTSY_URL }   = require('sharify').data
+{ API_URL }   = require('sharify').data
 
 Artworks                  = require '../../../collections/artworks.coffee'
 ArtworkColumnsView        = require '../../../components/artwork_columns/view.coffee'

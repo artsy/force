@@ -14,7 +14,7 @@ module.exports = class Icon extends Backbone.Model
   acceptFileTypes: /(\.|\/)(gif|jpe?g|png|tiff)$/i
 
   url: ->
-    "#{sd.ARTSY_URL}/api/v1/profile/#{@get 'profileId' }/icon"
+    "#{sd.API_URL}/api/v1/profile/#{@get 'profileId' }/icon"
 
   # Override the imageUrl for icon unique situations
   # For users:

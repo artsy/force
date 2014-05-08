@@ -1,6 +1,7 @@
 @import '../../components/stylus_lib'
 
 gap = 20px
+fixed-item-width = 250px
 
 .grid-item
   display inline-block
@@ -14,6 +15,18 @@ gap = 20px
     display block
     width 100%
     margin-bottom 10px
+
+.grid-n-up
+  margin-bottom -(gap)
+  > .grid-item
+    width fixed-item-width
+    margin 0 (gap / 2) gap (gap / 2)
+  &.is-flush .grid-item
+    width fixed-item-width
+    margin 0 !important
+  @media screen and (max-width: 1024px)
+    > .grid-item
+      margin 0 (gap / 4) (gap / 2) (gap / 4)
 
 for n in 2..4
   .grid-{n}-up
@@ -36,6 +49,7 @@ for n in 2..4
 .grid-2-up
   offset = 10px
   > .grid-item
+    width 48%
     width calc('50% - %s' % offset)
   @media screen and (max-width: 1024px)
     > .grid-item
@@ -45,6 +59,7 @@ for n in 2..4
 .grid-3-up
   offset = 14px
   > .grid-item
+    width 32%
     width calc('33.33% - %s' % offset)
   @media screen and (max-width: 1024px)
     > .grid-item
@@ -54,8 +69,10 @@ for n in 2..4
 .grid-4-up
   offset = 15px
   > .grid-item
+    width 23%
     width calc('25% - %s' % offset)
   @media screen and (max-width: 1024px)
     > .grid-item
       offset = offset / 2
+      width 23%
       width calc('25% - %s' % offset)

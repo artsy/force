@@ -8,7 +8,7 @@ If we need to support IE8 then we can't rely on CORs for cross-origin ajax reque
 
 ### Proxy solution
 
-If we have to proxy the proper solution is to probably use relative paths like /api/v1 and edit the server-side sync to prepend the ARTSY_URL.
+If we have to proxy the proper solution is to probably use relative paths like /api/v1 and edit the server-side sync to prepend the API_URL.
 
 ## Sharing Code
 

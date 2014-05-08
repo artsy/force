@@ -29,7 +29,6 @@ module.exports = class SuggestionsView extends StepView
     @suggestedSets.fetchAll()
 
     @listenTo @suggestedSets, 'sync:complete', @setupSuggestions
-    @listenTo @suggestedSets, 'sync:complete', @autoFollow
 
     @initializeFollowable()
 
@@ -44,7 +43,7 @@ module.exports = class SuggestionsView extends StepView
 
   render: ->
     @$el.html @template(state: @state, isTouchDevice: isTouchDevice())
-    @setupSearch { mode: 'profiles', restrictType: @restrictType }
+    @setupSearch mode: 'profiles', restrictType: @restrictType
     this
 
   setupSuggestions: ->
@@ -55,23 +54,23 @@ module.exports = class SuggestionsView extends StepView
 
   setupFollowButton: (model, el) ->
     key = model.id
-    @followButtonViews ||= {}
+    @followButtonViews ?= {}
     @followButtonViews[key].remove() if @followButtonViews[key]?
     @followButtonViews[key] = new FollowButton
       analyticsUnfollowMessage: "Unfollowed #{@kind} from personalize #{@kind} suggestions"
-      analyticsFollowMessage:   "Followed #{@kind} from personalize #{@kind} suggestions"
-      notes:                    'Followed from /personalize'
-      following:                @following
-      model:                    model
-      modelName:                @kind
-      el:                       el
+      analyticsFollowMessage  : "Followed #{@kind} from personalize #{@kind} suggestions"
+      notes                   : 'Followed from /personalize'
+      following               : @following
+      model                   : model
+      modelName               : @kind
+      el                      : el
 
   rows: (n) ->
     _.compact @suggestions.map (model, i) =>
       @suggestions.slice(i, i + n) if i % n is 0
 
   renderSuggestions: ->
-    (@$suggestions ||= @$('#personalize-suggestions')).
+    (@$suggestions ?= @$('#personalize-suggestions')).
       append suggestedTemplate(rows: @rows(4))
 
     @following.syncFollows @suggestions.pluck('id')
@@ -81,8 +80,7 @@ module.exports = class SuggestionsView extends StepView
     # Attach FollowButton views
     @suggestions.each (model) =>
       button = @setupFollowButton model, @$suggestions.find(".follow-button[data-id='#{model.id}']")
-      @listenTo button, 'click', =>
-        @setSkipLabel() unless @_labelSet?
+      @listenTo button, 'click', => @setSkipLabel()
 
   fetchAndRenderLocations: ->
     @suggestions.each (profile) =>

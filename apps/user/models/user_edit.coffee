@@ -2,7 +2,7 @@ _            = require 'underscore'
 _.str        = require 'underscore.string'
 Backbone     = require 'backbone'
 CurrentUser  = require '../../../models/current_user.coffee'
-{ ARTSY_URL, CURRENT_USER, SESSION_ID } = require('sharify').data
+{ API_URL, CURRENT_USER, SESSION_ID } = require('sharify').data
 
 #
 # UserEdit
@@ -53,7 +53,7 @@ module.exports = class UserEdit extends CurrentUser
   fetchAuthentications: (options = {}) ->
     passThrough = options.success if options.success?
     new Backbone.Collection().fetch _.extend options,
-      url    : "#{ARTSY_URL}/api/v1/me/authentications"
+      url    : "#{API_URL}/api/v1/me/authentications"
       success: (collection) =>
         @set 'authentications', collection.toJSON()
         passThrough?()

@@ -5,6 +5,6 @@ sd          = require('sharify').data
 
 module.exports = class Reposts extends Backbone.Collection
 
-  url: -> "#{sd.ARTSY_URL}/api/v1/reposts"
+  url: -> "#{sd.API_URL}/api/v1/reposts"
 
   model: Repost

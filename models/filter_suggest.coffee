@@ -1,11 +1,11 @@
 _ = require 'underscore'
 _.mixin require 'underscore.string'
 Backbone = require 'backbone'
-{ ARTSY_URL } = require('sharify').data
+{ API_URL } = require('sharify').data
 
 module.exports = class FilterSuggest extends Backbone.Model
 
-  url: -> "#{ARTSY_URL}/api/v1/search/filtered/#{@get 'id'}/suggest"
+  url: -> "#{API_URL}/api/v1/search/filtered/#{@get 'id'}/suggest"
 
   mediumsHash: (options) ->
     mediums = {}

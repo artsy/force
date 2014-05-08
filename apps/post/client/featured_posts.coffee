@@ -2,15 +2,12 @@ _                       = require 'underscore'
 sd                      = require('sharify').data
 Backbone                = require 'backbone'
 FeedItems               = require '../../../components/feed/collections/feed_items.coffee'
-imagesLoaded            = require '../../../lib/vendor/imagesloaded.js'
 featuredPostsTemplate   = -> require('../templates/featured_posts.jade') arguments...
-
-setupFixedDimensionsThumbnails = require '../../../components/util/fixed_dimensions_thumbnail.coffee'
 
 module.exports = class FeaturedPosts extends Backbone.View
 
   feedType: 'posts'
-  feedUrl: "#{sd.ARTSY_URL}/api/v1/posts/featured/feed"
+  feedUrl: "#{sd.API_URL}/api/v1/posts/featured/feed"
 
   initialize: (options) ->
     @pageSize = options.pageSize
@@ -31,9 +28,3 @@ module.exports = class FeaturedPosts extends Backbone.View
   render: (posts) ->
     return @remove() if posts.length is 0
     @$el.html featuredPostsTemplate( posts: posts[...@pageSize] )
-
-    _.delay =>
-      setupFixedDimensionsThumbnails @$('.fixed-dimensions img')
-      @$el.imagesLoaded?().progress =>
-        setupFixedDimensionsThumbnails @$('.fixed-dimensions img')
-    , 100

@@ -7,7 +7,7 @@ ArtistFillwidthList = require '../../components/artist_fillwidth_list/view.coffe
 ShareView = require '../../components/share/view.coffee'
 RelatedGenesView = require '../../components/related_genes/view.coffee'
 FilterArtworksView = require '../../components/filter/artworks/view.coffee'
-{ GENE, CURRENT_USER, ARTSY_URL } = require('sharify').data
+{ GENE, CURRENT_USER, API_URL } = require('sharify').data
 iframePopover = require '../../components/iframe_popover/index.coffee'
 BlurbView = require '../../components/blurb/view.coffee'
 
@@ -33,8 +33,8 @@ module.exports.GeneView = class GeneView extends Backbone.View
       modelName: 'gene'
     { @router, @params } = new FilterArtworksView
       el: $ '#gene-filter'
-      artworksUrl: "#{ARTSY_URL}/api/v1/search/filtered/gene/#{@model.get 'id'}"
-      countsUrl: "#{ARTSY_URL}/api/v1/search/filtered/gene/#{@model.get 'id'}/suggest"
+      artworksUrl: "#{API_URL}/api/v1/search/filtered/gene/#{@model.get 'id'}"
+      countsUrl: "#{API_URL}/api/v1/search/filtered/gene/#{@model.get 'id'}/suggest"
       urlRoot: "gene/#{@model.id}"
     @setupMode()
     @onFollowRoute()

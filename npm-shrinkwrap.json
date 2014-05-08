@@ -362,16 +362,17 @@
       "from": "underscore@*"
     },
     "newrelic": {
-      "version": "1.5.0",
+      "version": "1.5.3",
       "from": "newrelic@*",
+      "resolved": "http://registry.npmjs.org/newrelic/-/newrelic-1.5.3.tgz",
       "dependencies": {
         "bunyan": {
           "version": "0.14.6",
           "from": "bunyan@0.14.6"
         },
         "continuation-local-storage": {
-          "version": "2.6.2",
-          "from": "continuation-local-storage@2.6.2",
+          "version": "3.0.0",
+          "from": "continuation-local-storage@^3.0.0",
           "dependencies": {
             "emitter-listener": {
               "version": "1.0.1",
@@ -520,7 +521,6 @@
         "express": {
           "version": "3.4.7",
           "from": "express@3.4.7",
-          "resolved": "https://registry.npmjs.org/express/-/express-3.4.7.tgz",
           "dependencies": {
             "connect": {
               "version": "2.12.0",

@@ -4,7 +4,7 @@ ContactView = require './view.coffee'
 analytics = require('../../lib/analytics.coffee')
 Partner = require '../../models/partner.coffee'
 CurrentUser = require '../../models/current_user.coffee'
-{ SESSION_ID, ARTSY_URL } = require('sharify').data
+{ SESSION_ID, API_URL } = require('sharify').data
 { readCookie } = require '../util/cookie.coffee'
 formTemplate = -> require('./templates/inquiry_form.jade') arguments...
 headerTemplate = -> require('./templates/inquiry_partner_header.jade') arguments...
@@ -24,7 +24,7 @@ module.exports = class ContactPartnerView extends ContactView
       contactGallery: true
 
   defaults: -> _.extend super,
-    url: "#{ARTSY_URL}/api/v1/me/artwork_inquiry_request"
+    url: "#{API_URL}/api/v1/me/artwork_inquiry_request"
 
   initialize: (options) ->
     @artwork = options.artwork

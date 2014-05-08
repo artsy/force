@@ -4,4 +4,4 @@ Backbone = require 'backbone'
 module.exports = class FollowProfile extends Backbone.Model
 
   urlRoot: ->
-    "#{sd.ARTSY_URL}/api/v1/me/follow/profile"
+    "#{sd.API_URL}/api/v1/me/follow/profile"

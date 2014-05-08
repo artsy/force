@@ -4,11 +4,12 @@
 # populating sharify data
 #
 
-{ ARTSY_URL, NODE_ENV, ARTSY_ID, ARTSY_SECRET, SESSION_SECRET, SESSION_COOKIE_MAX_AGE, PORT, ASSET_PATH,
+{ API_URL, NODE_ENV, ARTSY_ID, ARTSY_SECRET, SESSION_SECRET, SESSION_COOKIE_MAX_AGE, PORT, ASSET_PATH,
   FACEBOOK_APP_NAMESPACE, MOBILE_MEDIA_QUERY, MOBILE_URL, APP_URL, REDIS_URL, DEFAULT_CACHE_TIME,
   CANONICAL_MOBILE_URL, IMAGES_URL_PREFIX, SECURE_IMAGES_URL, GOOGLE_ANALYTICS_ID, MIXPANEL_ID,
   COOKIE_DOMAIN, AUTO_GRAVITY_LOGIN, GOOGLE_MAPS_API_KEY, ADMIN_URL, CMS_URL,
-  DELTA_HOST, ENABLE_AB_TEST, KIOSK_MODE, KIOSK_PAGE } = config = require "../config"
+  DELTA_HOST, ENABLE_AB_TEST, KIOSK_MODE, KIOSK_PAGE, SUGGESTIONS_AB_TEST, SESSION_COOKIE_KEY } = config = require "../config"
+
 { parse, format } = require 'url'
 
 _ = require 'underscore'
@@ -45,7 +46,7 @@ sharify.data =
   CSS_EXT: (if ("production" is NODE_ENV or "staging" is NODE_ENV) then ".min.css.cgz" else ".css")
   ASSET_PATH: ASSET_PATH
   APP_URL: APP_URL
-  ARTSY_URL: ARTSY_URL
+  API_URL: API_URL
   NODE_ENV: NODE_ENV
   MOBILE_MEDIA_QUERY: MOBILE_MEDIA_QUERY
   CANONICAL_MOBILE_URL: CANONICAL_MOBILE_URL
@@ -63,6 +64,7 @@ sharify.data =
   ENABLE_AB_TEST: ENABLE_AB_TEST
   KIOSK_PAGE: KIOSK_PAGE
   KIOSK_MODE: KIOSK_MODE
+  SUGGESTIONS_AB_TEST: SUGGESTIONS_AB_TEST
 CurrentUser = require '../models/current_user'
 
 module.exports = (app) ->
@@ -102,7 +104,7 @@ module.exports = (app) ->
   # Setup Artsy XAPP & Passport middleware for authentication along with the
   # body/cookie parsing middleware needed for that.
   app.use artsyXappMiddlware(
-    artsyUrl: ARTSY_URL
+    artsyUrl: API_URL
     clientId: ARTSY_ID
     clientSecret: ARTSY_SECRET
   ) unless app.get('env') is 'test'
@@ -111,7 +113,7 @@ module.exports = (app) ->
   app.use session
     secret: SESSION_SECRET
     domain: COOKIE_DOMAIN
-    key   : 'force.sess'
+    key   : SESSION_COOKIE_KEY
     maxage: SESSION_COOKIE_MAX_AGE
   app.use artsyPassport _.extend config,
     CurrentUser: CurrentUser

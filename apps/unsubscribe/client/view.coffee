@@ -21,7 +21,7 @@ module.exports = class UnsubscribeView extends Backbone.View
     for input in @$("input[name!='selectAll']:checked")
       types.push $(input).attr('name')
     new Backbone.Model().save { authentication_token: sd.UNSUB_AUTH_TOKEN, type: types },
-      url: "#{sd.ARTSY_URL}/api/v1/me/unsubscribe"
+      url: "#{sd.API_URL}/api/v1/me/unsubscribe"
       success: =>
         @$('#error-handler').append "<div class='unsubscribe-message'>You've been unsubscribed.</div>"
       error: =>

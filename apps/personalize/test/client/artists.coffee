@@ -9,12 +9,6 @@ Artist            = require '../../../../models/artist.coffee'
 { resolve }       = require 'path'
 ArtistsView       = benv.requireWithJadeify resolve(__dirname, '../../client/views/artists'), ['template', 'suggestedArtistsTemplate']
 
-mockSuggestionSet = (model) ->
-  new Backbone.Model
-    id:           model.id
-    name:         model.name
-    suggestions:  new Backbone.Collection new Artist(fabricate 'artist')
-
 describe 'ArtistsView', ->
   before (done) ->
     benv.setup =>
@@ -53,28 +47,51 @@ describe 'ArtistsView', ->
       @view.fetchRelatedArtists artist
       artist.fetchRelatedArtists.called.should.be.ok
       @view.suggestions.at(0).id.should.equal artist.id
-      @view.suggestions.at(0).get('name').should.equal artist.get('name')
+      @view.suggestions.at(0).get('name').should.equal "Artists related to #{artist.get('name')}"
 
   describe '#disposeSuggestionSet', ->
     it 'disposes of the suggestionSet that corresponds with an artist', ->
-      model = fabricate 'artist'
+      artist = new Artist(fabricate 'artist')
+      artist.relatedArtists = new Backbone.Collection artist
       _.isUndefined(@view.followButtonViews).should.be.ok
-      @view.suggestions.add mockSuggestionSet(model)
+      @view.suggestions.add @view.createSuggestionSet(artist)
       suggestionSet   = @view.suggestions.at(0)
       suggested       = suggestionSet.get('suggestions').at(0)
       key             = "#{suggestionSet.id}_#{suggested.id}"
       _.isUndefined(@view.followButtonViews[key]).should.not.be.ok
-      @view.disposeSuggestionSet model
+      @view.disposeSuggestionSet artist
       _.isNull(@view.followButtonViews[key]).should.be.ok
 
   describe '#renderSuggestions', ->
     it 'renders related artists based on following', ->
-      model = fabricate 'artist'
-      @view.suggestions.add mockSuggestionSet(model)
+      artist = new Artist(fabricate 'artist')
+      artist.relatedArtists = new Backbone.Collection artist
+      @view.suggestions.add @view.createSuggestionSet(artist)
       @view.renderSuggestions()
-      @view.$el.html().should.include "Artists related to #{@view.suggestions.at(0).get('name')}"
+      @view.$el.html().should.include @view.suggestions.at(0).get('name')
       @view.$('.personalize-suggestion-name').text().should.equal @view.suggestions.at(0).get('suggestions').at(0).get('name')
 
   describe '#render', ->
     it 'renders the template', ->
       @view.$el.html().should.include 'Follow artists you are interested in'
+
+  describe 'GeneArtists', ->
+    describe '#initializeGeneArtists', ->
+      it 'fetches your followed genes', ->
+        Backbone.sync.args[0][0].should.equal 'read'
+        Backbone.sync.args[0][1].kind.should.equal 'gene'
+        Backbone.sync.args[0][1].url().should.include 'api/v1/me/follow/genes'
+
+    describe '#setupGenes', ->
+      it 'sets up the genes and fetches the trending artists for each', ->
+        followGene = id: _.uniqueId('gene'), gene: fabricate 'gene'
+        Backbone.sync.args[0][2].success([followGene])
+        @view.genes.length.should.equal 1
+        Backbone.sync.args[1][1].url.should.include "api/v1/artists/trending?gene=#{followGene.gene.id}"
+
+    describe '#renderGeneSuggestions', ->
+      it 'creates a suggestionSet and calls out to #renderSuggestions', ->
+        followGene = id: _.uniqueId('gene'), gene: fabricate 'gene'
+        Backbone.sync.args[0][2].success([followGene])
+        @view.renderGeneSuggestions()
+        @view.$el.html().should.include 'Suggested for you in Pop Art'

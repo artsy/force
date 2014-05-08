@@ -9,7 +9,7 @@ describe 'Partner', ->
 
   before ->
     @sd =
-      ARTSY_URL : 'http://localhost:5000'
+      API_URL : 'http://localhost:5000'
       ASSET_PATH: 'http://localhost:5000'
     @partner = new Partner(fabricate('partner',
       type: "Gallery"

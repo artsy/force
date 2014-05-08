@@ -4,7 +4,7 @@ Backbone  = require 'backbone'
 
 module.exports = class Follow extends Backbone.Model
   urlRoot: ->
-    "#{sd.ARTSY_URL}/api/v1/me/follow/#{@kind}"
+    "#{sd.API_URL}/api/v1/me/follow/#{@kind}"
 
   initialize: (attributes, options = {}) ->
     { @kind } = _.defaults(options, kind: @kind)

@@ -14,6 +14,7 @@ describe 'FavoritesView', ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
+      $.fn.infiniteScroll = sinon.stub()
       done()
 
   after ->
@@ -29,8 +30,6 @@ describe 'FavoritesView', ->
         { FavoritesView, @init } = mod = benv.requireWithJadeify(
           (resolve __dirname, '../../client/favorites'), ['hintTemplate']
         )
-        artworks = new Artworks()
-        sinon.stub artworks, "fetch", (options) -> options.success?([], [])
         stubChildClasses mod, @,
           ['SuggestedGenesView', 'ArtworkColumnsView']
           ['render', 'appendArtworks']
@@ -40,13 +39,16 @@ describe 'FavoritesView', ->
             defaultArtworkCollection: -> return
         @view = new FavoritesView
           el: $ 'body'
-          collection: artworks
         done()
 
     afterEach ->
       Backbone.sync.restore()
 
     describe '#showEmptyHint', ->
+
+      beforeEach (done) ->
+        Backbone.sync.args[0][2].success []
+        done()
 
       it 'shows hint for adding favorite artworks', ->
         @view.$el.html().should.include 'Add works to your favorites'
@@ -79,7 +81,7 @@ describe 'FavoritesView', ->
           start = (options.data.page - 1) * options.data.size
           end = start + options.data.size
           dest = new Artworks(@src[start...end])
-          options.success?(dest, null, options)
+          artworks.trigger('sync', dest)
         stubChildClasses mod, @,
           ['FavoritesStatusModal', 'ArtworkColumnsView']
           ['render', 'appendArtworks']
@@ -104,37 +106,42 @@ describe 'FavoritesView', ->
 
     describe '#loadNextPage', ->
 
-      it 'calls ArtworkColumnsView to render the first page', ->
-        @ArtworkColumnsView::render.should.calledOnce
-        @view.nextPage.should.equal 2
-
       it 'uses ArtworkColumns to render the next pages individually until the end', ->
-        @view.loadNextPage()
-        @view.nextPage.should.equal 3
+        # page 1
+        @ArtworkColumnsView.calledOnce.should.be.ok
+        @view.params.get('page').should.equal 1
         artworks = _.last(@ArtworkColumnsView::appendArtworks.args)[0]
         artworks.should.have.lengthOf 2
+        artworks[0].get('artwork').id.should.equal 'artwork1'
+        artworks[1].get('artwork').id.should.equal 'artwork2'
 
+        # page 2
+        @view.loadNextPage()
+        @view.params.get('page').should.equal 2
+        artworks = _.last(@ArtworkColumnsView::appendArtworks.args)[0]
+        artworks.should.have.lengthOf 2
         artworks[0].get('artwork').id.should.equal 'artwork3'
         artworks[1].get('artwork').id.should.equal 'artwork4'
+
+        # page 3
         @view.loadNextPage()
-        @view.nextPage.should.equal 4
+        @view.params.get('page').should.equal 3
         artworks = _.last(@ArtworkColumnsView::appendArtworks.args)[0]
         artworks.should.have.lengthOf 2
-
         artworks[0].get('artwork').id.should.equal 'artwork5'
         artworks[1].get('artwork').id.should.equal 'artwork6'
+
+        # page 4
         @view.loadNextPage()
-        @view.nextPage.should.equal 5
+        @view.params.get('page').should.equal 4
         artworks = _.last(@ArtworkColumnsView::appendArtworks.args)[0]
         artworks.should.have.lengthOf 1
-
         artworks[0].get('artwork').id.should.equal 'artwork7'
-        @view.loadNextPage()
-        @view.nextPage.should.equal 5
 
         @view.loadNextPage()
         @view.loadNextPage()
-        @view.nextPage.should.equal 5
+        @view.loadNextPage()
+        @view.params.get('page').should.equal 5
 
         # 7 works, page size 2, 4 calls to get all
         @ArtworkColumnsView::appendArtworks.callCount.should.equal 4
@@ -183,7 +190,7 @@ describe 'FavoritesView', ->
             work = @src.shift()
             works.push work unless _.isUndefined work
           dest = new Artworks works
-          options.success?(dest, null, options)
+          artworks.trigger('sync', dest)
         stubChildClasses mod, @,
           ['SaveControls', 'ArtworkColumnsView', 'FavoritesStatusModal']
           ['render', 'appendArtworks']
@@ -204,7 +211,7 @@ describe 'FavoritesView', ->
 
       it 'keeps fetching even if the API does not respond with a full page', ->
         # fetches page 1 on init...
-        @view.nextPage.should.equal 2
+        @view.params.get('page').should.equal 1
         artworks = _.last(@ArtworkColumnsView::appendArtworks.args)[0]
         artworks.should.have.lengthOf 3
         artworks[0].get('artwork').id.should.equal 'artwork1'
@@ -217,7 +224,7 @@ describe 'FavoritesView', ->
         artworks.should.have.lengthOf 2
         artworks[0].get('artwork').id.should.equal 'artwork4'
         artworks[1].get('artwork').id.should.equal 'artwork5'
-        @view.nextPage.should.equal 3
+        @view.params.get('page').should.equal 2
 
         # only two left in the whole set
         @view.loadNextPage()
@@ -225,13 +232,13 @@ describe 'FavoritesView', ->
         artworks.should.have.lengthOf 2
         artworks[0].get('artwork').id.should.equal 'artwork6'
         artworks[1].get('artwork').id.should.equal 'artwork7'
-        @view.nextPage.should.equal 4
+        @view.params.get('page').should.equal 3
 
         @view.loadNextPage()
-        @view.nextPage.should.equal 4
+        @view.params.get('page').should.equal 4
         @view.loadNextPage()
         @view.loadNextPage()
-        @view.nextPage.should.equal 4
+        @view.params.get('page').should.equal 4
 
         # 7 works, page size 3, then 2, then 3, 3 calls to get all
         @ArtworkColumnsView::appendArtworks.callCount.should.equal 3

@@ -5,63 +5,40 @@
 #post
   margin-top 50px
   .loading-spinner
-    margin-top: 200px
-
+    margin-top 200px
   .post-page-feature-item
-    margin: 30px 16px 0
-    vertical-align: top
-    display: inline-block
+    margin 30px 16px 0
+    vertical-align top
+    display inline-block
     width 250px
-    text-align: center
+    text-align center
 
-  .fixed-dimensions
-    overflow hidden
-    position: relative
-    width: 249px
-    height: 167px
-    margin: 0px
-    background-color: #000
-    a
-      display block
-      height 100%
-      width 100%
-    img
-      position absolute
-      opacity 1
-    &:hover
-      img
-        transition opacity 0.25s
-        opacity 0.6
+.post-page-section
+  border-top 1px solid gray-lighter-color
+  margin 30px 0
+  a
+    text-decoration none
+  &:last-child
+    margin-bottom (@margin * 2)
+  .featured-posts-container
+  .related-artists-container
+    max-width default-max-page-width + 200
+    margin 0 auto
+    text-align center
+    > h2
+      margin 20px 0
+      font-size 17px
 
-  .post-page-section
-    border-top 1px solid gray-lighter-color
-    margin-bottom: 60px
-    .related-artists-banner-items, .feed-items
-      text-align: center
-      max-width: 1420px
-      margin: 0px auto
-    .avant-garde-header-center
-      font-size: 18px
-      margin-top: 30px
-    .related-artists-item
-      .avant-garde-header-center
-        margin-top: 15px
-        a
-          text-decoration: none
-          font-size: 14px
-      .follow-button
-        margin-top: 10px
-    .featured-post-item
-      .profile-badge-name
-        font-size: 11px
-        margin-top: 10px
-        text-align: center
-      .profile-badge-initials, .profile-badge-icon
-        display none
-
-  .featured-post-title
-    margin-top: 18px
-    font-size: 18px
-    line-height: 20px
-    a
-      text-decoration none
+.prai-name
+  margin 20px 0 10px 0
+  avant-garde()
+  font-size 15px
+.pfpi-title
+  font-size 18px
+.pfpi-author
+  display block
+  margin 10px auto 0
+  avant-garde()
+  font-size 11px
+  max-width 80%
+  overflow ellipsis

@@ -12,7 +12,7 @@ module.exports = class Video extends Backbone.Model
 
   defaultSize: 'large_rectangle'
 
-  urlRoot: -> "#{sd.ARTSY_URL}/api/v1/video"
+  urlRoot: -> "#{sd.API_URL}/api/v1/video"
 
   posterUrl: (size = @defaultSize) ->
     @imageUrl size if @hasImage size

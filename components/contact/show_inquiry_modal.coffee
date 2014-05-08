@@ -3,7 +3,7 @@ Backbone = require 'backbone'
 ContactView = require './view.coffee'
 analytics = require '../../lib/analytics.coffee'
 Partner = require '../../models/partner.coffee'
-{ SESSION_ID, ARTSY_URL } = require('sharify').data
+{ SESSION_ID, API_URL } = require('sharify').data
 formTemplate = -> require('./templates/inquiry_show_form.jade') arguments...
 headerTemplate = -> require('./templates/inquiry_partner_header.jade') arguments...
 
@@ -20,7 +20,7 @@ module.exports = class ShowInquiryModal extends ContactView
       user: @user
 
   defaults: -> _.extend super,
-    url: "#{ARTSY_URL}/api/v1/me/inquiry_request"
+    url: "#{API_URL}/api/v1/me/inquiry_request"
 
   initialize: (options) ->
     { @show } = options

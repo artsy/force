@@ -4,9 +4,10 @@ Backbone = require 'backbone'
 module.exports =
   geoIp: (cb) ->
     new Backbone.Model().fetch
-      url: 'http://freegeoip.net/json/'
-      headers: null
-      success: (model, response, options) ->
+      headers  : null
+      url      : 'http://freegeoip.net/json/'
+      dataType : 'jsonp'
+      success  : (model, response, options) ->
         cb response
 
   fallback: (cb) ->

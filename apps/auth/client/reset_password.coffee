@@ -7,7 +7,7 @@ module.exports.PasswordResetView = class PasswordResetView extends Backbone.View
 
   initialize: ->
     @model = new Backbone.Model()
-    @model.url = "#{sd.ARTSY_URL}/api/v1/users/reset_password"
+    @model.url = "#{sd.API_URL}/api/v1/users/reset_password"
     @model.on 'request', =>
       @$('button').addClass('is-loading')
     @model.on 'error', =>

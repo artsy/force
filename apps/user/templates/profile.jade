@@ -1,7 +1,7 @@
 mixin locationSearch(value)
   include ../../../components/location_search/template
 
-form.settings-form.settings-profile-form( class=editProfileIsActive, method="post", action="#{sd.ARTSY_URL}/profile", accept-charset="UTF-8" )
+form.settings-form.settings-profile-form( class=editProfileIsActive, method="post", action="#{sd.APP_URL}/profile", accept-charset="UTF-8" )
 
   label.avant-garde-form-label( for="profile-id" ) Username
   input#profile-id.bordered-input( type="text", value=profile.get('id'), size="30", maxlength="20", name="id")

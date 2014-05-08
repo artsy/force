@@ -4,27 +4,13 @@ Backbone        = require 'backbone'
 OrderedSets     = rewire '../../collections/ordered_sets.coffee'
 { fabricate }   = require 'antigravity'
 
-fetchSpy = sinon.spy()
-
-class FeaturedLink extends Backbone.Model
-  fetchItems: fetchSpy
-
-OrderedSets.__set__ 'FeaturedLink', FeaturedLink
-
 describe 'OrderedSets', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    @orderedSets = new OrderedSets { key: 'browse:featured-genes' }
+    @orderedSets = new OrderedSets key: 'browse:featured-genes'
 
   afterEach ->
     Backbone.sync.restore()
-
-  describe '#model', ->
-    it 'handles OrderedSets and FeaturedLinks', ->
-      @orderedSets.add {}
-      @orderedSets.add [fabricate 'featured_link']
-      @orderedSets.at(0).constructor.name.should.equal 'OrderedSet'
-      @orderedSets.at(1).constructor.name.should.equal 'FeaturedLink'
 
   describe '#fetch', ->
     it 'sends the appropriate data as a query string', ->
@@ -32,13 +18,25 @@ describe 'OrderedSets', ->
       Backbone.sync.args[0][2].data.should.include 'key=browse:featured-genes'
 
   describe '#fetchSets', ->
-    it 'should fetch fetchItems for every model in the collection', ->
-      @orderedSets.add [fabricate 'featured_link']
-      @orderedSets.add [fabricate 'featured_link']
+    beforeEach ->
+      @fetchSpy = sinon.stub()
+      @orderedSets.model::fetchItems = @fetchSpy
+      @orderedSets.add [fabricate 'ordered_set']
+      @orderedSets.add [fabricate 'ordered_set']
+    it 'should call #fetchItems for set in the collection', ->
       @orderedSets.fetchSets()
-      fetchSpy.calledTwice.should.be.ok
+      @fetchSpy.calledTwice.should.be.ok
+    it 'should return a promise', ->
+      @orderedSets.fetchSets().constructor.name.should.equal 'Promise'
+    it 'should be thennable', (done) ->
+      @orderedSets.fetchSets().then -> done()
 
   describe '#fetchAll', ->
-    it 'fetches everything all the way down'
-
-    it 'listens to sync:complete'
+    beforeEach ->
+      @orderedSets.fetch = sinon.stub().returns then: (cb) -> cb()
+      @orderedSets.model::fetchItems = sinon.stub()
+    it 'triggers sync:complete when it is done', (done) ->
+      @orderedSets.on 'sync:complete', done
+      @orderedSets.fetchAll()
+    it 'should be thennable', (done) ->
+      @orderedSets.fetchAll().then -> done()

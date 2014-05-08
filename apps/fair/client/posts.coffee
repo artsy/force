@@ -11,7 +11,7 @@ module.exports = class FairPosts extends Backbone.View
     @fetchPosts()
 
   fetchPosts: ->
-    url = "#{sd.ARTSY_URL}/api/v1/profile/#{@model.get('id')}/posts"
+    url = "#{sd.API_URL}/api/v1/profile/#{@model.get('id')}/posts"
     new FeedItems().fetch
       url: url
       data:

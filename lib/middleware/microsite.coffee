@@ -20,7 +20,7 @@ module.exports = (req, res, next) ->
       name: qs.fair_name
       organizer: profile_id: qs.profile_id
 
-    image_url   = "#{res.locals.sd.ARTSY_URL}/api/v1/profile/#{qs.profile_id}/image"
+    image_url   = "#{res.locals.sd.API_URL}/api/v1/profile/#{qs.profile_id}/image"
     image_url   = image_url + "?xapp_token=#{res.locals.sd.ARTSY_XAPP_TOKEN}" if res.locals.sd.ARTSY_XAPP_TOKEN?
 
     profile = res.locals.micrositeProfile = new Profile id: qs.profile_id, image_url: image_url

@@ -11,7 +11,7 @@ PasswordResetView = require('../client/reset_password').PasswordResetView
 describe 'AuthClient', ->
   before (done) ->
     benv.setup =>
-      sd.ARTSY_URL = 'localhost:3003'
+      sd.API_URL = 'localhost:3003'
       benv.expose $: benv.require 'jquery'
       Backbone.$ = $
       done()

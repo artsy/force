@@ -2,12 +2,12 @@ _             = require 'underscore'
 Artwork       = require '../models/artwork.coffee'
 Backbone      = require 'backbone'
 SaleArtwork   = require '../models/sale_artwork.coffee'
-{ ARTSY_URL } = require('sharify').data
+{ API_URL } = require('sharify').data
 { Fetch }     = require 'artsy-backbone-mixins'
 
 module.exports = class Artworks extends Backbone.Collection
 
-  _.extend @prototype, Fetch(ARTSY_URL)
+  _.extend @prototype, Fetch(API_URL)
 
   model: Artwork
 

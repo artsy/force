@@ -17,7 +17,7 @@ describe 'Fair routes', ->
       render: sinon.stub()
       redirect: sinon.stub()
       locals:
-        sd: { ARTSY_URL: 'http://localhost:5000', FAIR: new Fair(fabricate 'fair')}
+        sd: { API_URL: 'http://localhost:5000', FAIR: new Fair(fabricate 'fair')}
         fair: new Fair(fabricate 'fair')
         profile: new Profile(fabricate 'fair_profile')
 

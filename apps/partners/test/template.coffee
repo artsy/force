@@ -21,7 +21,7 @@ describe 'Partners', ->
 
   before ->
     @sd =
-      ARTSY_URL : 'http://localhost:5000'
+      API_URL : 'http://localhost:5000'
       ASSET_PATH: 'http://localhost:5000'
     @profiles = new Profiles [
       fabricate('featured_partners_profiles',

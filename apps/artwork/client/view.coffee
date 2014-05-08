@@ -16,9 +16,12 @@ Sale                      = require '../../../models/sale.coffee'
 ZigZagBanner              = require '../../../components/zig_zag_banner/index.coffee'
 Auction                   = require './mixins/auction.coffee'
 RelatedShowView           = require './related-show.coffee'
+qs                        = require 'querystring'
+{ parse }                 = require 'url'
 
-artistArtworksTemplate  = -> require('../templates/_artist-artworks.jade') arguments...
-detailTemplate          = -> require('../templates/_detail.jade') arguments...
+artistArtworksTemplate      = -> require('../templates/_artist-artworks.jade') arguments...
+detailTemplate              = -> require('../templates/_detail.jade') arguments...
+auctionPlaceholderTemplate  = -> require('../templates/auction_placeholder.jade') arguments...
 
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 
@@ -38,14 +41,15 @@ module.exports = class ArtworkView extends Backbone.View
   initialize: (options) ->
     { @artwork, @artist } = options
 
+    @checkQueryStringForAuction()
     @abTestEmbeddedInquiryForm()
-    @setupZigZag()
     @setupRelatedPosts()
     @setupCurrentUser()
     @setupArtistArtworks()
     @setupFollowButton()
     @setupBelowTheFold()
     @setupMainSaveButton()
+    @setupArtworkOverview()
 
     # Track pageview
     analytics.track.impression 'Artwork page', { id: @artwork.id }
@@ -72,6 +76,8 @@ module.exports = class ArtworkView extends Backbone.View
         artwork : @artwork
     @on 'related:none', ->
       @belowTheFoldView.setupLayeredSearch()
+    @on 'related:not_auction', ->
+      @setupZigZag()
 
     if @currentUser?.hasLabFeature('Monocles')
       @setupMonocleView()
@@ -79,12 +85,33 @@ module.exports = class ArtworkView extends Backbone.View
     @artwork.on "change:sale_message", @renderDetail, this
     @artwork.fetch()
 
-  abTestEmbeddedInquiryForm: ->
-    @$('#artwork-detail-contact').show()
+  checkQueryStringForAuction: ->
+    { auction_id } = qs.parse(parse(window.location.search).query)
+    @renderAuctionPlaceholder auction_id if auction_id
+
+  renderAuctionPlaceholder: (auction_id) ->
+    @suppressInquiry = true
+    @$('.artwork-detail').addClass 'is-auction'
     @$('#artwork-detail-spinner').remove()
+    @$('#auction-detail').html(
+      auctionPlaceholderTemplate
+        auction_id : auction_id
+        artwork_id : @artwork.id
+    ).addClass 'is-fade-in'
+
+  abTestEmbeddedInquiryForm: ->
+    return if @suppressInquiry
+    @$('#artwork-detail-spinner').remove()
+    @$('#artwork-detail-contact').show()
     return unless analytics.abTest 'ab:inquiry:embedded', 0.2
     ContactView = require '../components/contact/view.coffee'
     new ContactView el: @$('#artwork-detail-contact'), model: @artwork
+
+  # Currently, Safari 5 is the only browser we support that doesn't support CSS `Calc`
+  # This is a hack to give the artwork-container a sane max-width using JS as a substitute
+  setupArtworkOverview: ->
+    if navigator?.userAgent.search("Safari") >= 0 and navigator?.userAgent.search("Chrome") < 0
+      @$('.artwork-overview').css 'max-width': @$('.artwork-container').width() - 250
 
   setupZigZag: ->
     if ($inquiryButton = @$('.artwork-contact-button, .artwork-inquiry-button').first()).length
@@ -115,6 +142,15 @@ module.exports = class ArtworkView extends Backbone.View
           @trigger "related:#{relatedCollection.kind}", relatedCollection.first()
       else
         @trigger 'related:none'
+
+      unless @hasAnyAuctions relatedCollections
+        @trigger 'related:not_auction'
+
+  hasAnyAuctions: (relatedCollections) ->
+    return false unless relatedCollections?.length
+    saleCollection = _.find(relatedCollections, (xs) -> xs.kind is 'sales')
+    return false unless saleCollection?.length
+    _.some(saleCollection.pluck 'is_auction')
 
   setupCurrentUser: ->
     @currentUser = CurrentUser.orNull()

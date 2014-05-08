@@ -1,10 +1,12 @@
 include ../../../util/activator
 
-header#main-layout-header.force-position-absolute
+header#main-layout-header.force-position-absolute.microsite-header
   nav
     #main-layout-header-left
-      a#main-layout-header-home-logo.icon-logo( href='/' )
-      unless sd.KIOSK_MODE
+      if sd.KIOSK_MODE && sd.KIOSK_PAGE
+        a#main-layout-header-home-logo.icon-logo( href=sd.KIOSK_PAGE )
+      else
+        a#main-layout-header-home-logo.icon-logo( href='/' )
         a.header-text( href='/' ) Back to Artsy.net
 
     #microsite-header-right

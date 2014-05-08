@@ -9,7 +9,7 @@ SaleArtworks  = require '../collections/sale_artworks.coffee'
 module.exports = class Sale extends Backbone.Model
   _.extend @prototype, Clock
 
-  urlRoot: "#{sd.ARTSY_URL}/api/v1/sale"
+  urlRoot: "#{sd.API_URL}/api/v1/sale"
 
   href: -> "/feature/#{@get('id')}"
   registrationSuccessUrl: -> "#{@href()}/confirm-registration"
@@ -21,7 +21,7 @@ module.exports = class Sale extends Backbone.Model
   calculateOffsetTimes: (options = {}) ->
     new Backbone.Model().
       fetch
-        url: "#{sd.ARTSY_URL}/api/v1/system/time"
+        url: "#{sd.API_URL}/api/v1/system/time"
         success: (model) =>
           offset = moment().diff(model.get('time'))
           @set('offsetStartAtMoment', moment(@get 'start_at').add(offset))
