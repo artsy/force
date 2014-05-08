@@ -5,7 +5,7 @@
 
 _ = require 'underscore'
 express = require 'express'
-{ CLIENT_CACHE_ROUTES, ARTSY_URL } = require '../../config'
+{ CLIENT_CACHE_ROUTES, API_URL } = require '../../config'
 cache = require '../cache'
 request = require 'superagent'
 
@@ -15,11 +15,11 @@ unless _.isArray(CLIENT_CACHE_ROUTES) and CLIENT_CACHE_ROUTES.length > 0
 app = module.exports = express()
 
 overrideAPIUrl = (req, res, next) ->
-  res.locals.sd.ARTSY_URL = ''
+  res.locals.sd.API_URL = ''
   next()
 
 cacheRoute = (req, res, next) ->
-  url = ARTSY_URL + req.url
+  url = API_URL + req.url
   key = 'client-api-cache:' + url
   cache.get key, (err, json) ->
     return res.send(JSON.parse json) if json
