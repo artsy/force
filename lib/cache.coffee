@@ -18,6 +18,24 @@ if NODE_ENV isnt "test" and REDIS_URL
 # Export the redis client
 @client = client
 
+# Convenience for setting a value in the cache with an expiry.
+#
+# @param {String} key
+# @param {String} val
+# @param {Number} expiresIn Defaults to 30 mins
+@set = (key, val, expiresIn = 1800) ->
+  return unless client?
+  client.set key, val
+  client.expire key, expiresIn
+
+# Safe alias of get
+#
+# @param {String} key
+# @param {Function} callback
+@get = (key, callback) ->
+  return callback() unless client?
+  client.get key, callback
+
 # Iterates through a hash and calls JSON.stringify on each value. This is useful
 # when storing a big hash of models/collections to be deserialized later (e.g. on the fair page).
 #
