@@ -9,7 +9,7 @@ SaveControls            = require '../../../components/artwork_item/views/save_c
 ArtworkColumnsView      = require '../../../components/artwork_columns/view.coffee'
 SuggestedGenesView      = require '../../../components/suggested_genes/view.coffee'
 ShareView               = require '../../../components/share/view.coffee'
-FavoritesStatusModal    = require '../../../components/favorites_status_modal/view.coffee'
+PublishModal            = require '../../../components/publish_modal/view.coffee'
 mediator                = require '../../../lib/mediator.coffee'
 
 module.exports.FavoritesView = class FavoritesView extends Backbone.View
@@ -106,9 +106,12 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
     @savedArtworkCollection.set(private: false).save user_id: @currentUser.get('id')
 
   showStatusDialog: ->
-    new FavoritesStatusModal
-      top: @$('.favorites-actions').offset().top + 'px'
-      width: '350px'
+    new PublishModal
+      persist      : true
+      width        : '350px'
+      name         : 'favorites_publish_prompt'
+      publishEvent : 'favorites:make:public'
+      message      : 'Your favorites need to be public to share. Make them public now?'
 
   renderStatus: () ->
     isPrivate = @savedArtworkCollection.get('private') ? true

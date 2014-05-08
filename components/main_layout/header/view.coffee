@@ -8,7 +8,7 @@ sd                  = require('sharify').data
 { createCookie }    = require '../../util/cookie.coffee'
 analytics           = require '../../../lib/analytics.coffee'
 FlashMessage        = require '../../flash/index.coffee'
-ProfileStatusModal  = require '../../profile_status_modal/view.coffee'
+PublishModal        = require '../../publish_modal/view.coffee'
 Profile             = require '../../../models/profile.coffee'
 
 module.exports = class HeaderView extends Backbone.View
@@ -49,8 +49,12 @@ module.exports = class HeaderView extends Backbone.View
     new Profile(id: sd.CURRENT_USER.default_profile_id).fetch
       success: (profile) =>
         if profile.get('private')
-          new ProfileStatusModal
-            width: '350px'
+          new PublishModal
+            persist      : false
+            width        : '350px'
+            name         : 'profile_publish_prompt'
+            publishEvent : 'profile:make:public'
+            message      : 'Make your profile public to share.'
           mediator.on 'profile:make:public', @makePublic, @
           false
         else

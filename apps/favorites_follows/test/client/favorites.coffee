@@ -83,7 +83,7 @@ describe 'FavoritesView', ->
           dest = new Artworks(@src[start...end])
           artworks.trigger('sync', dest)
         stubChildClasses mod, @,
-          ['FavoritesStatusModal', 'ArtworkColumnsView']
+          ['PublishModal', 'ArtworkColumnsView']
           ['render', 'appendArtworks']
         mod.__set__ 'CurrentUser',
           orNull: -> _.extend fabricate 'user',
@@ -160,7 +160,7 @@ describe 'FavoritesView', ->
       it 'does not show the status dialog when trying to share if the favorites is public', ->
         @view.savedArtworkCollection.set private: false
         @view.$el.find('.share-to-facebook').trigger 'click'
-        @FavoritesStatusModal.called.should.not.be.ok
+        @PublishModal.called.should.not.be.ok
 
   describe 'with favorites items and variable responses', ->
 
@@ -192,7 +192,7 @@ describe 'FavoritesView', ->
           dest = new Artworks works
           artworks.trigger('sync', dest)
         stubChildClasses mod, @,
-          ['SaveControls', 'ArtworkColumnsView', 'FavoritesStatusModal']
+          ['SaveControls', 'ArtworkColumnsView', 'PublishModal']
           ['render', 'appendArtworks']
         mod.__set__ 'CurrentUser',
           orNull: -> _.extend fabricate 'user',
