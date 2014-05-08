@@ -65,4 +65,4 @@ errorHandler.socialAuthError = (err, req, res, next) ->
   else if err.toString().match "Could not authenticate you"
     res.redirect '/user/edit?error=could-not-auth'
   else
-    res.redirect '/log_in?error=' + err.toString()
+    next err
