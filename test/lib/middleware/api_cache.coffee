@@ -9,7 +9,7 @@ apiCache = rewire '../../../lib/middleware/api_cache'
 
 app = express()
 app.use (req, res, next) ->
-  res.locals.sd = { ARTSY_URL: 'api.artsy.net' }
+  res.locals.sd = { API_URL: 'api.artsy.net' }
   next()
 app.use apiCache
 app.get '/locals', (req, res) ->
@@ -28,7 +28,7 @@ describe 'API cache middleware', ->
       set: sinon.stub()
       get: sinon.stub()
     }
-    apiCache.__set__ 'ARTSY_URL', 'http://localhost:5003'
+    apiCache.__set__ 'API_URL', 'http://localhost:5003'
     done = _.after 2, done
     @gravServer = grav.listen "5003", done
     @server = app.listen "5002", done
@@ -37,9 +37,9 @@ describe 'API cache middleware', ->
     @server.close()
     @gravServer.close()
 
-  it 'overrides the ARTSY_URL to use the locals', (done) ->
+  it 'overrides the API_URL to use the locals', (done) ->
     request.get('http://localhost:5002/locals').end (res) ->
-      res.body.sd.ARTSY_URL.should.equal ''
+      res.body.sd.API_URL.should.equal ''
       done()
 
   it 'caches a white listed request to the api', (done) ->
