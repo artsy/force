@@ -37,7 +37,7 @@ module.exports = class ContactView extends Backbone.View
       session_id: if @user then undefined else SESSION_ID
       referring_url  : readCookie('force-referrer')
       landing_url    : readCookie('force-session-start')
-      inquiry_url    : window.location.pathname
+      inquiry_url    : window.location.href
 
     analytics.track.funnel 'Contact form submitted', data
 

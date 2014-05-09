@@ -47,7 +47,7 @@ setupReferrerTracking = ->
   # test that stubs document
   if document?.referrer?.indexOf and document.referrer.indexOf(sd.APP_URL) < 0
     createCookie 'force-referrer', document.referrer
-    createCookie 'force-session-start', window.location.pathname
+    createCookie 'force-session-start', window.location.href
 
 setupViews = ->
   new HeaderView el: $('#main-layout-header'), $window: $(window), $body: $('body')
