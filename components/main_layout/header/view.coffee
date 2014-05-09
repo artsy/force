@@ -46,6 +46,9 @@ module.exports = class HeaderView extends Backbone.View
         @removeWelcomeHeader()
 
   showProfilePrivateDialog: (event) =>
+    # Displaying the dialog on tap causes confusion on touch devices
+    return if isTouchDevice()
+
     new Profile(id: sd.CURRENT_USER.default_profile_id).fetch
       success: (profile) =>
         if profile.get('private')
