@@ -40,12 +40,12 @@ module.exports = class ErrorHandlingForm extends Backbone.View
       message = if errorJson.type == 'payment_error' then @errors.paymentError else @errors.other
     else if response.status == 400 or response.status == 403
       message = @errors.missingOrMalformed
-      description = "Registration card missing or malformed"
+      description = "Registration card missing or malformed."
     else if response.status == 402
       message = @errors.couldNotAuthorize
-      description = "Registration card could not be authorized"
+      description = "Registration card could not be authorized."
     else if response.status == 404
-      message = "Registration marketplace invalid"
+      message = "Registration marketplace invalid."
       description = message
     else if typeof(description) == 'string'
       message = description
