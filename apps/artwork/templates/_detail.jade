@@ -2,10 +2,10 @@
   //- Primary artwork metadata
   h1
     if artist
-      .artwork-detail-artist
+      span.artwork-detail-artist
         a( href= "/artist/#{artist.id}" )= artist.get('name')
     if artwork.get('title')
-      .artwork-detail-title
+      span.artwork-detail-title
         em= artwork.get('title')
         if artwork.get('date')
           | , #{artwork.get('date')}
