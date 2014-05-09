@@ -51,7 +51,7 @@ module.exports = class ContactPartnerView extends ContactView
       session_id     : SESSION_ID
       referring_url  : readCookie('force-referrer')
       landing_url    : readCookie('force-session-start')
-      inquiry_url    : window.location.pathname
+      inquiry_url    : window.location.href
 
     super
 
