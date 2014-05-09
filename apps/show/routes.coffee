@@ -30,6 +30,10 @@ setReferringContext = (req, res, show) ->
     cache  : true
     error  : res.backboneError
     success: (show) =>
+      # Redirect to canonical url
+      if show.href() != req.originalUrl
+        return res.redirect show.href()
+
       setReferringContext(req, res, show)
       if show.partner().isLinkable()
         profile = new Profile { id: show.get('partner').default_profile_id }

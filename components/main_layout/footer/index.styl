@@ -3,8 +3,8 @@ logo-size = 30px
 #main-layout-footer
   padding 18px
   background #000
-  margin-top 40px
   clearfix()
+  margin-top -60px
   a, span
     display inline-block
     margin 0 7px
@@ -41,6 +41,10 @@ logo-size = 30px
   height @width
   background-size @width
   margin-left 20px
+
+@media screen and (min-width: 768px)
+  .mlf-social
+    display none
 
 .mlf-links
   // Visual vertical center
