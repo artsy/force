@@ -43,26 +43,23 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
     @internationalizeFields()
 
   cardCallback: (response) =>
-    switch response.status
-      when 201  # success
-        card      = new Backbone.Model
-        card.url  = "#{sd.API_URL}/api/v1/me/credit_cards"
-        card.save token: response.data.uri,
-          success: =>
-            @currentUser.createBidder
-              saleId: @model.get('id')
-              success: =>
-                @success()
-                analytics.track.funnel 'Registration submitted'
-              error: (xhr) => @showError xhr, "Registration submission error"
-          error: =>
-            @showError @errors.other, "Error adding your credit card"
-
-        analytics.track.funnel 'Registration card validated'
-      when 400, 403 then @showError @errors.missingOrMalformed, "Registration card missing or malformed"
-      when 402 then @showError @errors.couldNotAuthorize, "Registration card could not be authorized"
-      when 404 then @showError @errors.other, "Registration marketplace invalid"
-      else @showError @errors.other, "Registration card - other error"
+    if response.status == 201
+      card      = new Backbone.Model
+      card.url  = "#{sd.API_URL}/api/v1/me/credit_cards"
+      card.save token: response.data.uri,
+        success: =>
+          @currentUser.createBidder
+            saleId: @model.get('id')
+            success: =>
+              @success()
+              analytics.track.funnel 'Registration submitted'
+            error: (xhr) =>
+              @showError "Registration submission error", xhr
+        error: =>
+          @showError "Error adding your credit card", response
+      analytics.track.funnel 'Registration card validated'
+    else
+      @showError "Registration card - other error", response
 
   cardData: ->
     name: @fields['name on card'].el.val()
@@ -81,8 +78,8 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
         @balanced ||= require('../../../lib/vendor/balanced.js')
         @balanced.init marketplace.get('uri')
         @balanced.card.create @cardData(), @cardCallback
-      error: =>
-        @showError @errors.other, "Error fetching the balanced marketplace"
+      error: (xhr) =>
+        @showError "Error fetching the balanced marketplace", xhr
 
   savePhoneNumber: ->
     if @fields.telephone.el.val()?.length > 0

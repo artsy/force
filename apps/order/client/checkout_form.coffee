@@ -34,8 +34,7 @@ module.exports = class CheckoutForm extends ShippingForm
     @internationalizeFields()
 
   cardCallback: (response) =>
-    switch response.status
-      when 201  # success
+    if response.status == 201  # success
         data = @model.getSessionData(SESSION_ID)
         data.credit_card_uri = response.data.uri
         @model.save data,
@@ -50,10 +49,8 @@ module.exports = class CheckoutForm extends ShippingForm
             $('html, body').scrollTop(0)
           error: (xhr) => @showError xhr, "Order submission error"
         analytics.track.funnel 'Order card validated', label: analytics.modelNameAndIdToLabel('artwork', @model.get('id'))
-      when 400, 403 then @showError @errors.missingOrMalformed, "Order card missing or malformed"
-      when 402 then @showError @errors.couldNotAuthorize, "Order card could not be authorized"
-      when 404 then @showError @errors.other, "Order marketplace invalid"
-      else @showError @errors.other, "Order card - other error"
+    else
+      @showError "Your bid must be higher than #{@saleArtwork.minBid()}", response
 
   cardData: ->
     name: @fields['name on card'].el.val()
