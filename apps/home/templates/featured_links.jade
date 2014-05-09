@@ -1,7 +1,7 @@
 for link in featuredLinks
   li.home-top-feature-link
     a( href=link.get('href') )
-      img( src=link.imageUrl('small_rectangle') )
+      img( src=link.imageUrl('small_rectangle'), alt=link.get('title') )
       .home-top-feature-link-details
         h3= link.get('title')
         h4= link.get('subtitle')
