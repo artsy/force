@@ -65,6 +65,13 @@ describe 'CategoriesView', ->
       @view.$('.follow-button').first().click()
       @view.$('.personalize-skip').text().should.equal 'Next'
 
+  describe '#followCategory', ->
+    it 'should toggle the category follow no matter where in the category a click happens', ->
+      $button   = @view.$('.follow-button').first()
+      $parent   = $button.closest('.personalize-category')
+      $parent.click()
+      @view.$('.personalize-skip').text().should.equal 'Next'
+
   describe '#renderCategories', ->
     beforeEach ->
       @html = @view.$el.html()
