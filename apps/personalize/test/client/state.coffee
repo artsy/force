@@ -17,13 +17,13 @@ describe 'state', ->
       @state.setLevel 3
       @state.get('current_step').should.equal 'collect'
       @state.next()
-      @state.get('current_step').should.equal 'location'
-      @state.next()
       @state.get('current_step').should.equal 'categories'
       @state.next()
       @state.get('current_step').should.equal 'price_range'
       @state.next()
       @state.get('current_step').should.equal 'artists'
+      @state.next()
+      @state.get('current_step').should.equal 'location'
       @state.next()
       @state.get('current_step').should.equal 'galleries'
       @state.next()
@@ -35,13 +35,13 @@ describe 'state', ->
       @state.setLevel 2
       @state.get('current_step').should.equal 'collect'
       @state.next()
-      @state.get('current_step').should.equal 'location'
-      @state.next()
       @state.get('current_step').should.equal 'categories'
       @state.next()
       @state.get('current_step').should.equal 'price_range'
       @state.next()
       @state.get('current_step').should.equal 'artists'
+      @state.next()
+      @state.get('current_step').should.equal 'location'
       @state.next()
       @state.get('current_step').should.equal 'galleries'
       @state.next()

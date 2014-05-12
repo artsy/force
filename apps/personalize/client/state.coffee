@@ -11,7 +11,7 @@ module.exports = class PersonalizeState extends Backbone.Model
     current_level : 2 # Interested in starting
     _steps:
       casual    : ['collect', 'location', 'galleries', 'institutions', 'categories', 'artists']
-      collector : ['collect', 'location', 'categories', 'price_range', 'artists', 'galleries', 'institutions']
+      collector : ['collect', 'categories', 'price_range', 'artists', 'location', 'galleries', 'institutions']
 
   initialize: ->
     super
