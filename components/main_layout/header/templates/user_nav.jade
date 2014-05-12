@@ -1,8 +1,8 @@
 if user.get('name')
-  a.user-nav-profile-link( href="/" + user.get('default_profile_id') )= user.get('name')
+  a.user-nav-no-link( href="#" )= user.get('name')
   a.user-nav-profile-link.is-profile-text( href="/" + user.get('default_profile_id') ) Profile
 else
-  a account
+  a.user-nav-no-link( href="#" ) account
 a( href="/user/edit" ) Settings
 if user.isAdmin()
   a( href=sd.ADMIN_URL ) Admin

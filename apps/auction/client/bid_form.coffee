@@ -4,7 +4,7 @@ sd                 = require('sharify').data
 analytics          = require '../../../lib/analytics.coffee'
 ModalPageView      = require '../../../components/modal/page.coffee'
 BidderPosition     = require '../../../models/bidder_position.coffee'
-ErrorHandlingForm  = require('../../../components/credit_card/client/error_handling_form.coffee')
+ErrorHandlingForm  = require '../../../components/credit_card/client/error_handling_form.coffee'
 { SESSION_ID }     = require('sharify').data
 
 module.exports = class BidForm extends ErrorHandlingForm
@@ -47,11 +47,12 @@ module.exports = class BidForm extends ErrorHandlingForm
         artwork_id           : @saleArtwork.get('artwork').id
         max_bid_amount_cents : @getBidAmount()
       bidderPosition.save null,
-        success   : =>
+        success: =>
           _.delay =>
             @pollForBidPlacement(@saleArtwork.get('minimum_next_bid_cents'))
           , 1000
-        error     : @showError
+        error: (xhr) =>
+          @showError 'Error placing your bid', xhr
     else
       @showError "Your bid must be higher than #{@saleArtwork.minBid()}"
 

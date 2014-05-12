@@ -5,7 +5,7 @@
 
 _ = require 'underscore'
 express = require 'express'
-{ CLIENT_CACHE_ROUTES, API_URL } = require '../../config'
+{ CLIENT_CACHE_ROUTES, CLIENT_CACHE_TIME, API_URL } = require '../../config'
 cache = require '../cache'
 request = require 'superagent'
 
@@ -27,7 +27,7 @@ cacheRoute = (req, res, next) ->
       .set('X-XAPP-TOKEN': req.header 'X-XAPP-TOKEN')
       .end (r) ->
         return next r.error if r.error
-        cache.set key, r.text
+        cache.set key, r.text, CLIENT_CACHE_TIME
         res.send r.body
 
 app.use overrideAPIUrl

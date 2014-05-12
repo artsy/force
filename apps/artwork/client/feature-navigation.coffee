@@ -12,7 +12,7 @@ module.exports = class FeatureNavigationView extends Backbone.View
     href =
       if @kind == 'feature'
         "/feature/#{@model.id}"
-      else if @kind == 'fair'
+      else if @kind == 'fair' and @model.get('organizer')
         "/#{@model.get('organizer').profile_id}"
       else
         "/#{@model.id}"

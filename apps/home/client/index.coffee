@@ -63,7 +63,7 @@ module.exports.HomeView = class HomeView extends Backbone.View
       $('#home-featured-shows').html featuredShowsTemplate(shows: shows.models[0..9])
 
   setFeaturedArtworksHeader: (text) ->
-    return $("#home-top-featured-links h2.home-featured-header").text(text)
+    return $(".home-featured-header.top-featured-header").text(text)
 
   # falls back to featured content if no suggestions for this user.
   renderSuggestedArtworks: ->

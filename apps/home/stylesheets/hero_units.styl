@@ -26,13 +26,11 @@ fade-duration = 0.2s
     position absolute
     top 0
     left 0
-  h1, h2
-    display block
   .home-hero-unit-header
     text-transform uppercase
     letter-spacing 1px
     font-size 21px
-  h2
+  .subheading
     font-size 27px
     line-height 1.3em
   img
@@ -50,12 +48,13 @@ fade-duration = 0.2s
     padding 10px 20px
     border 3px solid black
     background transparent
+    display inline-block
     &:hover, &:focus, &:active
       background black
 
 .home-hero-unit-center
   text-align center
-  h1, h2, img
+  img, .subheading
     margin-left auto
     margin-right auto
 
@@ -63,7 +62,7 @@ fade-duration = 0.2s
   text-align right
 
 .home-hero-unit-black
-  h1, h2, .home-hero-unit-header
+  .subheading, .home-hero-unit-header
     color white
   .avant-garde-button
     border-color white
