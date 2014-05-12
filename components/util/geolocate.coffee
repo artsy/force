@@ -5,7 +5,7 @@ module.exports =
   geoIp: (cb) ->
     new Backbone.Model().fetch
       headers  : null
-      url      : 'http://freegeoip.net/json/'
+      url      : 'https://freegeoip.net/json/'
       dataType : 'jsonp'
       success  : (model, response, options) ->
         cb response
