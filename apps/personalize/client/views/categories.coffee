@@ -20,7 +20,9 @@ module.exports = class CategoriesView extends StepView
   setSkipLabel: setSkipLabel
 
   events:
-    'click .personalize-skip' : 'advance'
+    'click .personalize-skip'               : 'advance'
+    'click .personalize-category'           : 'followCategory'
+    'click .personalize-secondary-category' : 'followCategory'
 
   initialize: (options) ->
     super
@@ -38,6 +40,9 @@ module.exports = class CategoriesView extends StepView
     @$('#personalize-category-anything-else').show()
     @setupFollowButtons()
     (@$textarea = @$('textarea')).one 'input', (e) => @setSkipLabel()
+
+  followCategory: (e) ->
+    $(e.currentTarget).find('.follow-button').click()
 
   setupFollowButton: (model, el) ->
     key = model.id
