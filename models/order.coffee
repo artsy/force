@@ -46,9 +46,9 @@ module.exports = class Order extends Backbone.Model
     address = @get('shipping_address')
     _.compact([
       address?.name
-      @get('telephone')
       address?.street
       @formatShippingLocal()
+      address?.country
     ]).join('<br />')
 
   getMonthRange: -> [1..12]
