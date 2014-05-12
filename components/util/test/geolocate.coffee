@@ -26,7 +26,7 @@ describe 'Geolocate', ->
   describe '#locate', ->
     it 'calls out to an external IP geolocation service when low accuracy is requested', ->
       Geolocate.locate(accuracy: 'low')
-      Backbone.sync.args[0][2].url.should.equal 'http://freegeoip.net/json/'
+      Backbone.sync.args[0][2].url.should.equal 'https://freegeoip.net/json/'
       _.isNull(Backbone.sync.args[0][2].headers).should.be.ok
 
     it 'uses the browser geolocation API when high accuracy is requested', ->
