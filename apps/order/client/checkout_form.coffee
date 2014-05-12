@@ -11,13 +11,13 @@ module.exports = class CheckoutForm extends ShippingForm
 
   events:
     'click .order-form-button'         : 'onSubmit'
-    'click .order-form-checkbox input' : 'toggleShippingAddress'
+    'click .credit-card-form-checkbox input' : 'toggleShippingAddress'
 
   toggleShippingAddress: =>
-    if @$('.order-form-checkbox input').is(':checked')
-      @$('.order-form-hidden').hide()
+    if @$('.credit-card-form-checkbox input').is(':checked')
+      @$('.credit-card-form-hidden').hide()
     else
-      @$('.order-form-hidden').show()
+      @$('.credit-card-form-hidden').show()
 
   setUpFields: ->
     @fields =

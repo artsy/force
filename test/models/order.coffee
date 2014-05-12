@@ -60,7 +60,7 @@ describe "Order", ->
 
     it "formatted shipping info", ->
       @order.set shippingInfo
-      @order.formatShippingAddress().should.equal 'Artsy<br />8675309<br />401 Broadway<br />New York, NY 10012'
+      @order.formatShippingAddress().should.equal 'Artsy<br />401 Broadway<br />New York, NY 10012'
 
   describe '#fetchPendingOrder', ->
 
