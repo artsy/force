@@ -1,0 +1,27 @@
+.related-posts.is-extended
+  h3.avant-garde-header-center
+    | #{posts.length + remaining} #{(posts.length === 1 ? 'Post' : 'Posts')} About #{entityName}
+
+  for post in posts
+    - var profile = post.profile()
+
+    .related-post-extended
+      .rpe-content
+        a.rpe-image.hoverable-image-link( href="/post/#{post.id}" )
+          if post.defaultImage()
+            .hoverable-image.is-four-three( style="background-image: url(#{post.defaultImage().imageUrlFor(300, 300)})" )
+        .rpe-blurb
+          a.rpe-author( href="/#{profile.get('owner').default_profile_id}" )
+            | By #{profile.get('owner').name}
+          a( href="/post/#{post.id}" )
+            if post.get('title')
+              h3.rpe-title!= post.get('title')
+            if post.get('body')
+              .rpe-summary
+                != post.extendedSummary()
+                span.rpe-go Go to post
+
+  footer.related-posts-actions( class=(remaining > 0 ? 'is-hasremaining' : '') )
+    if remaining > 0
+      a.related-posts-show-all
+        | Show All Featured Posts (#{remaining})

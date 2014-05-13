@@ -10,7 +10,7 @@ Post              = require '../../../models/post'
 Artist            = require '../../../models/artist'
 
 RelatedPostsView  =
-  benv.requireWithJadeify resolve(__dirname, '../view.coffee'), ['templates.empty', 'templates.grid', 'templates.list']
+  benv.requireWithJadeify resolve(__dirname, '../view.coffee'), ['templates.empty', 'templates.grid', 'templates.list', 'templates.extended']
 
 describe 'RelatedPostsView', ->
   before (done) ->
@@ -136,3 +136,14 @@ describe 'RelatedPostsView', ->
       @view.remove = sinon.stub()
       Backbone.sync.args[0][2].success []
       @view.remove.called.should.be.ok
+
+    it 'can render extended previews', ->
+      @view = new RelatedPostsView
+        el: $('<fixture></fixture>'), model: @artist, numToShow: 2, modelName: 'Artist', mode: 'extended'
+      Backbone.sync.args[0][2].success [
+        fabricate 'post', id: 'cats-rule-dogs-drool-literally', title: 'Cats rule, and dogs drool'
+        fabricate 'post', id: 'bitty-the-queen', title: 'Bitty is the best cat'
+      ]
+      @view.$el.html().should.include 'is-extended'
+      @view.$el.html().should.include 'By Craig Spaeth'
+      @view.$el.html().should.not.include 'Add Post'
