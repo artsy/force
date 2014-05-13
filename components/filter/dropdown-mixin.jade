@@ -1,16 +1,20 @@
-mixin filter-dropdown(mainText, plural, attr, values)
+mixin filter-dropdown(mainText, plural, attr, values, hrefRoot)
   .filter-dropdown
     .filter-nav-main-text= mainText
     .filter-nav-active-text
     .icon-arrow-down
     nav
-      a.is-active( data-attr=attr, data-val='' )
+      a.is-active( data-attr=attr, data-val='', href='' )
         span.filter-dropdown-text= "All " + plural
         span.filter-dropdown-count
         span.icon-check
       for val, label in values
         if label && val
-          a( data-attr=attr, data-val=val )
+          a(
+            data-attr=attr
+            data-val=val
+            href="#{hrefRoot ? hrefRoot  : 'artworks'}?#{attr}=#{val}"
+          )
             span.filter-dropdown-text= label
             span.filter-dropdown-count
             span.icon-check

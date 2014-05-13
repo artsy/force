@@ -71,7 +71,7 @@ module.exports.init = ->
 
     # Links in the browse section keep your scroll position
     iframePopover = require '../../../components/iframe_popover/index.coffee'
-    iframePopover $('#fair-browse')
+    iframePopover $('#fair-browse .feed')
 
   # Checks to see if the href is an internal link to:
   # an artwork, artist, show, or post

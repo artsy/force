@@ -17,7 +17,9 @@ mixin exhibitors-a-to-z
       | Showing&nbsp;
       span.fair-booths-count= exhibitorsCount
       |  Exhibitors
-    a#fair-booths-as-grid.faux-underline Show as Grid View
+    a#fair-booths-as-grid.faux-underline(
+      href=fair.href().replace(/^\//, '') + '/browse/booths'
+    ) Show as Grid View
     section.fair-exhibitors-list.a-to-z-container
       include ../../../../components/a_to_z_list/template
 
@@ -26,9 +28,12 @@ mixin exhibitors-a-to-z
     .filter-fixed-header-nav
       include ../booths/nav
       label By Work:
+      - filterRoot = fair.href().replace(/^\//, '') + '/browse/artworks'
       include ../../../../components/filter/artworks_nav/template
       label By Artists:
-      #fair-filter-all-artists.filter-button All Artists
+      a#fair-filter-all-artists.filter-button(
+        href=fair.href().replace(/^\//, '') + '/browse/artists'
+      ) All Artists
   .browse-sections.main-layout-container
     .browse-section.artists-a-to-z
       +artists-a-to-z

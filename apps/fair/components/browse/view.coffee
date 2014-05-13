@@ -82,12 +82,13 @@ module.exports = class FairBrowseView extends Backbone.View
     'click #fair-booths-as-grid'     : 'exhibitorsGrid'
     'click'                          : 'triggerReflow'
 
-  artistsAZ: ->
+  artistsAZ: (e) ->
     @router.navigate "#{@profile.get 'id'}/browse/artists"
     @$('.filter-fixed-header-nav .is-active').removeClass('is-active')
     @$('#fair-filter-all-artists').addClass('is-active')
     @$el.attr 'data-section', 'artists-a-to-z'
     @updatePageTitle 'See A-Z List of All Artists'
+    false
 
   exhibitorsAZ: ->
     @router.navigate "#{@profile.get 'id'}/browse/exhibitors"
@@ -95,9 +96,11 @@ module.exports = class FairBrowseView extends Backbone.View
     @$('#fair-filter-all-exhibitors').addClass('is-active')
     @$el.attr 'data-section', 'exhibitors-a-to-z'
     @updatePageTitle 'See A-Z List of All Exhibitors'
+    false
 
   exhibitorsGrid: ->
     @boothParams.trigger 'reset'
+    false
 
   # Safari does not re-render when a data attribute on an element has changed so we manually trigger a reflow
   triggerReflow: =>

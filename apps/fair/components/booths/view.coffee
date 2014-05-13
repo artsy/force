@@ -45,7 +45,9 @@ module.exports = class BoothsView extends Backbone.View
   renderSections: (sections) =>
     hash = {}
     sections.each (section) -> hash[section.get 'section'] = section.get('section')
-    @$('#fair-filter-sections').html navSectionsTemplate(sections: hash)
+    @$('#fair-filter-sections').html navSectionsTemplate
+      sections: hash
+      filterRoot: "#{@fair.href().replace(/^\//, '')}/browse/booths"
 
   fetchShows: =>
     @shows.fetch data: _.extend @params.toJSON(), artworks: true

@@ -1,6 +1,6 @@
 @import '../../stylus_lib'
 
-grow-duration = 0.5s
+grow-duration = 0.3s
 menu-delay = 1s
 
 .overlay-container
@@ -24,7 +24,7 @@ menu-delay = 1s
   color white
   background-color gray-darker-color
   background-color rgba(0, 0, 0, 0.4)
-  text-align center
+  text-align left
   font-size 16px
   line-height @height
   border-radius (@width / 2)
@@ -32,52 +32,58 @@ menu-delay = 1s
   transition all grow-duration
   &::before
     left 16px
-    top -3px
+    margin-left 12px
+  &::after
+    content 'Saved!'
+    avant-garde()
+    font-size default-avant-garde-font-size
+    margin-left 10px
+    position relative
+    top -1px
+    opacity 0
   &:active
     background-color black
   &[data-state='loading']
     background-color purple-color
     opacity 1
     &::before
-      opacity 0
-    + .loading-spinner-small-white
-      display block
+      opacity 0.5
   &[data-state='saved']
     opacity 1
     background-color purple-color
-    border-radius 0
-    width 82px
-    height 33px
-    avant-garde()
-    font-size default-avant-garde-font-size
+    width 108px
     position relative
     z-index 4
-    &:before
-      transition opacity (grow-duration / 2) linear (grow-duration / 2)
-      content 'Saved!'
-      position absolute
-    ~ .overlay-dropdown
-      display block
-      left 5px
+    &::after
       opacity 1
-      transition opacity 0.5s linear menu-delay, left 0.5s linear menu-delay
+      transition opacity (grow-duration / 2) linear (grow-duration / 2)
+    ~ .overlay-dropdown
+      max-height 200px
+      z-index 2
+      transition max-height 0.3s ease-out menu-delay
+      .overlay-item
+        top 0
+        transition top 0.3s ease-out menu-delay
 
 .overlay-dropdown
-  background-color black
   position absolute
-  z-index 2
+  z-index -1
   width 250px
-  top 28px
-  left 0px
-  opacity 0
+  top 26px
+  left 40px
+  max-height 0px
+  overflow hidden
   .overlay-item
     display block
     border-bottom 1px solid gray-darker-color
     padding 12px 15px
     color white
+    position relative
+    background-color black
   .overlay-item:first-child
     avant-garde()
     font-size default-avant-garde-font-size - 1px
+    padding-top 20px
   .overlay-item:last-child
     border-bottom 0
     padding-bottom 16px
@@ -102,6 +108,11 @@ menu-delay = 1s
     float right
     padding 0 0 2px 2px
     position relative
+
+for i in 1 2 3 4 5 6 7 8 9 10
+  .overlay-item:nth-child({i}n)
+    top (-40px * (i - 1))
+    z-index (10 - (i - 1))
 
 .overlay-button-save
   @extends .overlay-button
