@@ -3,10 +3,10 @@ benv            = require 'benv'
 Backbone        = require 'backbone'
 sinon           = require 'sinon'
 rewire          = require 'rewire'
+Cookies         = require 'cookies-js'
 { resolve }     = require 'path'
 { fabricate }   = require 'antigravity'
 
-{ readCookie, createCookie } = require '../../../../components/util/cookie.coffee'
 
 describe 'PersonalizeRouter', ->
   beforeEach (done) ->
@@ -46,9 +46,9 @@ describe 'PersonalizeRouter', ->
       @router.redirectLocation().should.equal '/'
 
     it 'returns the value of the destination cookie if it is present, and clears it', ->
-      createCookie 'destination', (destination = '/foo/bar'), 1
+      Cookis.get 'destination', (destination = '/foo/bar'), 1
       @router.redirectLocation().should.equal destination
-      readCookie('destination').should.equal ''
+      Cookies.get('destination').should.equal ''
 
   describe '#done', ->
     it 'sets the $el state to loading, saves the user, redirects', ->

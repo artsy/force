@@ -1,11 +1,11 @@
 _                   = require 'underscore'
 Backbone            = require 'backbone'
+Cookies             = require 'cookies-js'
 SearchBarView       = require '../../search_bar/view.coffee'
 AuthModalView       = require '../../auth_modal/view.coffee'
 mediator            = require '../../../lib/mediator.coffee'
 sd                  = require('sharify').data
 { isTouchDevice }   = require '../../util/device.coffee'
-{ createCookie }    = require '../../util/cookie.coffee'
 analytics           = require '../../../lib/analytics.coffee'
 FlashMessage        = require '../../flash/index.coffee'
 PublishModal        = require '../../publish_modal/view.coffee'
@@ -83,7 +83,9 @@ module.exports = class HeaderView extends Backbone.View
     unless isTouchDevice()
       @$window.scrollTop(0)
 
-    createCookie 'hide-force-header', true, 365
+    oneYearFromNow = new Date()
+    oneYearFromNow.setYear oneYearFromNow.getFullYear + 1
+    Cookies.set 'hide-force-header', true, oneYearFromNow.valueOf()
 
   signup: (e) ->
     e.preventDefault()

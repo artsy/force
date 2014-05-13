@@ -4,8 +4,7 @@ template = -> require('./template.jade') arguments...
 { SESSION_ID } = require('sharify').data
 FlashMessage = require '../../../../components/flash/index.coffee'
 analytics = require '../../../../lib/analytics.coffee'
-
-{ readCookie } = require '../../../../components/util/cookie.coffee'
+Cookies = require 'cookies-js'
 
 module.exports = class ContactView extends Backbone.View
 
@@ -35,8 +34,8 @@ module.exports = class ContactView extends Backbone.View
       message: @$('textarea').val()
       name: @user?.get('name') or @$('[name=name]').val()
       session_id: if @user then undefined else SESSION_ID
-      referring_url  : readCookie('force-referrer')
-      landing_url    : readCookie('force-session-start')
+      referring_url  : Cookies.get('force-referrer')
+      landing_url    : Cookies.get('force-session-start')
       inquiry_url    : window.location.href
 
     analytics.track.funnel 'Contact form submitted', data

@@ -1,13 +1,12 @@
 Backbone        = require 'backbone'
 Backbone.$      = $
 _               = require 'underscore'
+Cookies         = require 'cookies-js'
 HeaderView      = require './header/view.coffee'
 FooterView      = require './footer/view.coffee'
 sd              = require('sharify').data
 analytics       = require '../../lib/analytics.coffee'
 iframePopover   = require '../iframe_popover/index.coffee'
-
-{ readCookie, createCookie } = require '../util/cookie.coffee'
 
 module.exports = ->
   setupJquery()
@@ -24,8 +23,8 @@ setupAnalytics = ->
   analytics.registerCurrentUser()
 
   # Log a visit once per session
-  unless readCookie('active_session')?
-    createCookie 'active_session', true
+  unless Cookies.get('active_session')?
+    Cookies.set 'active_session', true
     analytics.track.funnel if sd.CURRENT_USER
       'Visited logged in'
     else
@@ -46,8 +45,8 @@ setupReferrerTracking = ->
   # 'document?.referrer?.indexOf' just in case we're in a
   # test that stubs document
   if document?.referrer?.indexOf and document.referrer.indexOf(sd.APP_URL) < 0
-    createCookie 'force-referrer', document.referrer
-    createCookie 'force-session-start', window.location.href
+    Cookies.set 'force-referrer', document.referrer
+    Cookies.set 'force-session-start', window.location.href
 
 setupViews = ->
   new HeaderView el: $('#main-layout-header'), $window: $(window), $body: $('body')

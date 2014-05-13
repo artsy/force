@@ -2,8 +2,7 @@ _           = require 'underscore'
 ModalView   = require '../modal/view.coffee'
 mediator    = require '../../lib/mediator.coffee'
 template    = -> require('./template.jade') arguments...
-
-{ readCookie, createCookie } = require '../util/cookie.coffee'
+Cookies     = require 'cookies-js'
 
 module.exports = class PublishModal extends ModalView
   className: 'publish-modal'
@@ -20,7 +19,7 @@ module.exports = class PublishModal extends ModalView
     unless @name and @publishEvent and @message
       throw new Error('You must pass a name, publishEvent, and message')
 
-    if @persist and readCookie(@name)?
+    if @persist and Cookies.get(@name)?
       # Has already seen this... ignore
       return @remove()
 
@@ -30,7 +29,9 @@ module.exports = class PublishModal extends ModalView
 
   seen: ->
     # Will see this once until cookie expires
-    createCookie @name, true, 365
+    oneYearFromNow = new Date()
+    oneYearFromNow.setYear oneYearFromNow.getFullYear + 1
+    Cookies.set @name, true, oneYearFromNow.valueOf()
 
   makePublic: (e) ->
     e.preventDefault()
