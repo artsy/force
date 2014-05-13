@@ -1,17 +1,7 @@
-@import '../../stylus_lib'
-
-grow-duration = 0.3s
-menu-delay = 1s
-
 .overlay-container
   position absolute
-  left calc('100% - 40px')
-  top 5px
-  .loading-spinner-small-white
-    width 16px
-    left calc('50% - (%s / 2)' % @width)
-    display none
-    top 18px
+  right 5px
+  bottom 5px
 
 // Extend this class and add content
 // to its before pseudo element to use
@@ -24,95 +14,23 @@ menu-delay = 1s
   color white
   background-color gray-darker-color
   background-color rgba(0, 0, 0, 0.4)
-  text-align left
+  text-align center
   font-size 16px
   line-height @height
   border-radius (@width / 2)
   opacity 1
-  transition all grow-duration
-  &::before
-    left 16px
-    margin-left 12px
-  &::after
-    content 'Saved!'
-    avant-garde()
-    font-size default-avant-garde-font-size
-    margin-left 10px
-    position relative
-    top -1px
-    opacity 0
-  &:active
+  transition opacity 0.125s
+  &:hover
     background-color black
-  &[data-state='loading']
-    background-color purple-color
-    opacity 1
-    &::before
-      opacity 0.5
   &[data-state='saved']
     opacity 1
     background-color purple-color
-    width 108px
-    position relative
-    z-index 4
-    &::after
-      opacity 1
-      transition opacity (grow-duration / 2) linear (grow-duration / 2)
-    ~ .overlay-dropdown
-      max-height 200px
-      z-index 2
-      transition max-height 0.3s ease-out menu-delay
-      .overlay-item
-        top 0
-        transition top 0.3s ease-out menu-delay
-
-.overlay-dropdown
-  position absolute
-  z-index -1
-  width 250px
-  top 26px
-  left 40px
-  max-height 0px
-  overflow hidden
-  .overlay-item
-    display block
-    border-bottom 1px solid gray-darker-color
-    padding 12px 15px
-    color white
-    position relative
-    background-color black
-  .overlay-item:first-child
-    avant-garde()
-    font-size default-avant-garde-font-size - 1px
-    padding-top 20px
-  .overlay-item:last-child
-    border-bottom 0
-    padding-bottom 16px
-    &::after
-      content '.'
-      color transparent
-      border-bottom 1px dotted #ccc
-      position absolute
-      width 180px
-      left 16px
-      bottom 14px
-  .overlay-item-add
-    background-color gray-darker-color
-    color white
-    border 0
-    padding 0
-    height 25px
-    width @height
-    font-weight bold
-    avant-garde()
-    font-size 16px
-    float right
-    padding 0 0 2px 2px
-    position relative
-
-for i in 1 2 3 4 5 6 7 8 9 10
-  .overlay-item:nth-child({i}n)
-    top (-40px * (i - 1))
-    z-index (10 - (i - 1))
+    &:hover
+      background-color red-color
+      &:before
+        content '\e621'
+      &.is-clicked
+        background-color purple-color
 
 .overlay-button-save
   @extends .overlay-button
@@ -125,5 +43,5 @@ for i in 1 2 3 4 5 6 7 8 9 10
       opacity 1
   .overlay-button-save
     opacity 0
-    &[data-state='saved'], &[data-state='loading']
+    &[data-state='saved']
       opacity 1

@@ -4,6 +4,7 @@ sinon             = require 'sinon'
 Backbone          = require 'backbone'
 { fabricate }     = require 'antigravity'
 { resolve }       = require 'path'
+SaleArtworkView   = require '../views/sale_artwork'
 Artwork           = require '../../../models/artwork'
 Sale              = require '../../../models/sale'
 CurrentUser       = require '../../../models/current_user'
@@ -18,7 +19,6 @@ describe 'SaleArtworks', ->
       @sale     = new Sale fabricate 'sale', is_auction: true
 
       benv.render resolve(__dirname, '../templates/artwork.jade'), { artwork: @artwork, displayPurchase: true }, =>
-        SaleArtworkView = benv.require resolve(__dirname, '../views/sale_artwork.coffee')
         @view = new SaleArtworkView
           el    : $('body')
           model : @artwork
