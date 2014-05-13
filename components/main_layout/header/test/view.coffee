@@ -8,8 +8,6 @@ mediator  = require '../../../../lib/mediator.coffee'
 HeaderView = rewire '../view'
 HeaderView.__set__ 'SearchBarView', Backbone.View
 HeaderView.__set__ 'AuthModalView', sinon.stub()
-# HeaderView.__set__ 'readCookie', sinon.stub()
-# HeaderView.__set__ 'createCookie', sinon.stub()
 HeaderView.__set__ 'FlashMessage', sinon.stub()
 
 { resolve } = require 'path'
