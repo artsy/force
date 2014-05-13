@@ -75,7 +75,7 @@ module.exports = class SuggestionsView extends StepView
 
     @following.syncFollows @suggestions.pluck('id')
 
-    @fetchAndRenderLocations()
+    @locationRequests = @fetchAndRenderLocations()
 
     # Attach FollowButton views
     @suggestions.each (model) =>
@@ -83,13 +83,20 @@ module.exports = class SuggestionsView extends StepView
       @listenTo button, 'click', => @setSkipLabel()
 
   fetchAndRenderLocations: ->
-    @suggestions.each (profile) =>
+    @suggestions.map (profile) =>
       partner = new Partner(profile.get 'owner')
       partner.locations().fetch
         success: =>
           @$suggestions.
             find(".personalize-suggestion-location[data-id='#{partner.id}']").
             html partner.displayLocations(@user.get('location')?.city)
+
+  abortLocationRequests: ->
+    _.each @locationRequests, (xhr) -> xhr.abort()
+
+  advance: ->
+    @abortLocationRequests()
+    super
 
   remove: ->
     @searchBarView.remove()

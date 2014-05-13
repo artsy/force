@@ -46,7 +46,7 @@ describe 'PersonalizeRouter', ->
 
     it 'returns the value of the destination cookie if it is present, and clears it', ->
       Cookies = require 'cookies-js'
-      Cookies.set 'destination', (destination = '/foo/bar'), 1000
+      Cookies.set 'destination', (destination = '/foo/bar'), expires: 1000
       @router.redirectLocation().should.equal destination
       (Cookies.get('destination')).should.equal 'undefined'
 
