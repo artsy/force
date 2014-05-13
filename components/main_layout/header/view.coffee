@@ -83,9 +83,7 @@ module.exports = class HeaderView extends Backbone.View
     unless isTouchDevice()
       @$window.scrollTop(0)
 
-    oneYearFromNow = new Date()
-    oneYearFromNow.setYear oneYearFromNow.getFullYear() + 1
-    Cookies.set 'hide-force-header', true, expires: oneYearFromNow
+    Cookies.set 'hide-force-header', true, expires: 60 * 24 * 365
 
   signup: (e) ->
     e.preventDefault()

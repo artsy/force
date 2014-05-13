@@ -29,9 +29,7 @@ module.exports = class PublishModal extends ModalView
 
   seen: ->
     # Will see this once until cookie expires
-    oneYearFromNow = new Date()
-    oneYearFromNow.setYear oneYearFromNow.getFullYear + 1
-    Cookies.set @name, true, expires: oneYearFromNow
+    Cookies.set @name, true, expires: 60 * 24 * 365
 
   makePublic: (e) ->
     e.preventDefault()

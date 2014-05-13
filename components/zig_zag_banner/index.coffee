@@ -25,9 +25,7 @@ module.exports = class ZigZagBanner extends Backbone.View
         return @remove()
       else
         # Will see this once until cookie expires
-        oneYearFromNow = new Date()
-        oneYearFromNow.setYear oneYearFromNow.getFullYear + 1
-        Cookies.set "zig_zag_#{@name}", true, expires: oneYearFromNow
+        Cookies.set "zig_zag_#{@name}", true, expires: 60 * 24 * 365
 
     @transitionIn()
 
