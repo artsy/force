@@ -57,6 +57,7 @@
     "uglify-js": "*",
     "caching-coffeeify": "*",
     "nib": "*",
+    "cookies-js": "*",
     "superagent": "*",
     "cheerio": "*",
     "antigravity": "git+ssh://git@github.com:artsy/antigravity.git",

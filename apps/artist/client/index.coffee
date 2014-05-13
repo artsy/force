@@ -114,12 +114,17 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     ).nextPage(false, 10)
 
   setupRelatedPosts: ->
+    # Set mode to 'extended' for artists with last names in the range A-J
+    # Can remove this at a later, unspecified date
+    letter  = @model.get('last')?[0]?.toLowerCase()
+    mode    = if ('abcdefghij'.indexOf(letter) > 0) then 'extended' else 'grid'
+
     new RelatedPostsView
       el         : @$('.artist-related-posts')
       numToShow  : 4
       model      : @model
       modelName  : 'artist'
-      mode       : 'grid'
+      mode       : mode
       canBeEmpty : false
 
   setupRelatedArtists: ->

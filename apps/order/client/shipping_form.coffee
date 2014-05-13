@@ -4,6 +4,7 @@ CurrentUser             = require '../../../models/current_user.coffee'
 sd                      = require('sharify').data
 ErrorHandlingForm       = require('../../../components/credit_card/client/error_handling_form.coffee')
 analytics               = require('../../../lib/analytics.coffee')
+{ isTouchDevice }       = require '../../../components/util/device.coffee'
 
 module.exports = class ShippingForm extends ErrorHandlingForm
 
@@ -15,6 +16,9 @@ module.exports = class ShippingForm extends ErrorHandlingForm
     @success = options.success
     @$submit = @$('.order-form-button')
     @setUpFields()
+
+    unless isTouchDevice()
+      @$('input:first').focus()
 
   onSubmit: =>
     return if @$submit.hasClass('is-loading')

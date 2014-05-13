@@ -1,13 +1,13 @@
-_ = require 'underscore'
-Backbone = require 'backbone'
-ContactView = require './view.coffee'
-Representatives = require './collections/representatives.coffee'
-analytics = require('../../lib/analytics.coffee')
-{ SESSION_ID, API_URL } = require('sharify').data
-formTemplate = -> require('./templates/inquiry_form.jade') arguments...
-headerTemplate = -> require('./templates/inquiry_header.jade') arguments...
+_                = require 'underscore'
+Backbone         = require 'backbone'
+Cookies          = require 'cookies-js'
+ContactView      = require './view.coffee'
+Representatives  = require './collections/representatives.coffee'
+analytics        = require('../../lib/analytics.coffee')
+formTemplate     = -> require('./templates/inquiry_form.jade') arguments...
+headerTemplate   = -> require('./templates/inquiry_header.jade') arguments...
 
-{ readCookie } = require '../util/cookie.coffee'
+{ SESSION_ID, API_URL } = require('sharify').data
 
 module.exports = class InquiryView extends ContactView
 
@@ -46,8 +46,8 @@ module.exports = class InquiryView extends ContactView
       artwork        : @artwork.id
       contact_gallery: false
       session_id     : SESSION_ID
-      referring_url  : readCookie('force-referrer')
-      landing_url    : readCookie('force-session-start')
+      referring_url  : Cookies.get('force-referrer')
+      landing_url    : Cookies.get('force-session-start')
       inquiry_url    : window.location.href
 
     super

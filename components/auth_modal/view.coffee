@@ -4,7 +4,7 @@ ModalView         = require '../modal/view.coffee'
 Form              = require '../mixins/form.coffee'
 mediator          = require '../../lib/mediator.coffee'
 { parse }         = require 'url'
-{ createCookie }  = require '../util/cookie.coffee'
+Cookies           = require 'cookies-js'
 analytics         = require '../../lib/analytics.coffee'
 
 { templateMap, modelMap, stateEventMap, successEventMap } = require './maps.coffee'
@@ -81,10 +81,10 @@ module.exports = class AuthModalView extends ModalView
     if res.error?
       @showError _.capitalize res.error
     else
-      createCookie 'destination', @destination, 1 if @destination
+      Cookies.set 'destination', @destination, 1 if @destination
 
       if @state.get('mode') is 'login'
-        createCookie 'signed_in', true, 7
+        Cookies.set 'signed_in', true, 7
 
       if @state.get('mode') is 'register'
         location.href = @redirectTo

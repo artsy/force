@@ -4,8 +4,7 @@ PersonalizeState  = require './state.coffee'
 CurrentUser       = require '../../../models/current_user.coffee'
 Transition        = require '../../../components/mixins/transition.coffee'
 track             = require('../../../lib/analytics.coffee').track
-
-{ readCookie, deleteCookie } = require '../../../components/util/cookie.coffee'
+Cookies           = require 'cookies-js'
 
 views =
   CollectView      : require './views/collect.coffee'
@@ -50,8 +49,8 @@ module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Rout
   #
   # @return {String} destination or root path
   redirectLocation: ->
-    destination = readCookie 'destination'
-    deleteCookie 'destination' if destination
+    destination = Cookies.get 'destination'
+    Cookies.expire 'destination' if destination
     destination or '/'
 
   done: ->

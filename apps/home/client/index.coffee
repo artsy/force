@@ -14,7 +14,7 @@ featuredArtworksTemplate = -> require('../templates/featured_artworks.jade') arg
 featuredShowsTemplate = -> require('../templates/featured_shows.jade') arguments...
 featuredPostsTemplate = -> require('../templates/featured_posts.jade') arguments...
 featuredArtistsTemplate = -> require('../templates/featured_artists.jade') arguments...
-{ readCookie, createCookie } = require '../../../components/util/cookie.coffee'
+Cookies = require 'cookies-js'
 
 module.exports.HomeView = class HomeView extends Backbone.View
 
@@ -85,13 +85,13 @@ module.exports.HomeView = class HomeView extends Backbone.View
   # Open the signup modal for logged out users, or the login modal if the user has
   # signed in before, or if they have already dismissed it this session
   setupModal: ->
-    return if @user? or location.search.match('no-auth-modal') or readCookie('dismissed_auth_modal')
+    return if @user? or location.search.match('no-auth-modal') or Cookies.get('dismissed_auth_modal')
 
     mediator.trigger 'open:auth',
-      mode: if readCookie('signed_in') is 'true' then 'login' else 'signup'
+      mode: if Cookies.get('signed_in') is 'true' then 'login' else 'signup'
 
     mediator.on 'modal:closed', ->
-      createCookie 'dismissed_auth_modal', true
+      Cookies.set 'dismissed_auth_modal', true
 
 module.exports.init = ->
     new HomeView el: $('body')

@@ -1,15 +1,17 @@
 _           = require 'underscore'
 sd          = require('sharify').data
 Backbone    = require 'backbone'
+Cookies     = require 'cookies-js'
 Post        = require '../../models/post.coffee'
 CurrentUser = require '../../models/current_user.coffee'
 mediator    = require '../../lib/mediator.coffee'
 analytics   = require '../../lib/analytics.coffee'
 
 templates =
-  empty : -> require('./templates/empty.jade') arguments...
-  list  : -> require('./templates/list.jade') arguments...
-  grid  : -> require('./templates/grid.jade') arguments...
+  empty    : -> require('./templates/empty.jade') arguments...
+  list     : -> require('./templates/list.jade') arguments...
+  grid     : -> require('./templates/grid.jade') arguments...
+  extended : -> require('./templates/extended.jade') arguments...
 
 module.exports = class RelatedPostsView extends Backbone.View
   events:
@@ -68,9 +70,24 @@ module.exports = class RelatedPostsView extends Backbone.View
       analytics.track.click "Added #{@modelName.toLowerCase()} to post, via #{@modelName.toLowerCase()} info"
       @addToPost (-> location.href = "/post" )
 
+  unpublishedPost: (options) ->
+    if (postId = Cookies.get("current_post"))
+      options.success(new Post(id: postId))
+    else
+      posts = new Backbone.Collection
+      posts.fetch
+        url: "#{sd.API_URL}/api/v1/profile/#{@currentUser.get('default_profile_id')}/posts/unpublished"
+        success: (response) ->
+          post = response.models?[0]?.get('results')?[0]
+          if post
+            options.success(new Post(post))
+          else
+            options.error
+        error: options.error
+
   addToPost: (success) ->
     @currentUser ?= CurrentUser.orNull()
-    @currentUser.unpublishedPost
+    @unpublishedPost
       success: (post) =>
         post.isNew = -> true
         post.url = "#{post.url()}/#{post.id}/artwork/#{@model.id}"

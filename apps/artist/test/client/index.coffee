@@ -14,12 +14,12 @@ setupView = (artistOptions = {}, done) ->
   benv.render resolve(__dirname, '../../templates/index.jade'), {
     sd: {}, artist: @artist, sortBy: '-published_at'
   }, =>
-    { ArtistView, @init } = mod =
+    { @ArtistView, @init } = mod =
       benv.requireWithJadeify resolve(__dirname, '../../client/index'), ['artistSort']
     stubChildClasses mod, this,
       ['FillwidthView', 'BlurbView', 'RelatedPostsView', 'RelatedGenesView', 'ArtistFillwidthList']
       ['nextPage', 'render']
-    @view = new ArtistView el: $('body'), model: @artist
+    @view = new @ArtistView el: $('body'), model: @artist
     done()
 
 describe 'ArtistView', ->
@@ -91,10 +91,16 @@ describe 'ArtistView', ->
         @view.relatedArtistsPage.should.equal 2
         @view.relatedContemporaryPage.should.equal 2
 
-      it 'sets up related posts', ->
-        viewRelatedPostOpts = @RelatedPostsView.args[0][0]
-        viewRelatedPostOpts.numToShow.should.equal 4
-        viewRelatedPostOpts.model.should.equal @view.model
+      describe 'related posts', ->
+        it 'sets up related posts', ->
+          viewRelatedPostOpts = @RelatedPostsView.args[0][0]
+          viewRelatedPostOpts.numToShow.should.equal 4
+          viewRelatedPostOpts.model.should.equal @view.model
+          viewRelatedPostOpts.mode.should.equal 'grid'
+
+        it 'sets up extended related posts for artists in the range A-J', ->
+          @view = new @ArtistView el: $('body'), model: new Artist(fabricate 'artist', last: 'Jarule')
+          @RelatedPostsView.args[1][0].mode.should.equal 'extended'
 
     describe 'sorting', ->
       it 'passes the correct sort option into setupArtworks when sorting by Recently Added, and updates the picker', ->

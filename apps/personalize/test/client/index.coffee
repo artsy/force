@@ -6,7 +6,6 @@ rewire          = require 'rewire'
 { resolve }     = require 'path'
 { fabricate }   = require 'antigravity'
 
-{ readCookie, createCookie } = require '../../../../components/util/cookie.coffee'
 
 describe 'PersonalizeRouter', ->
   beforeEach (done) ->
@@ -46,9 +45,10 @@ describe 'PersonalizeRouter', ->
       @router.redirectLocation().should.equal '/'
 
     it 'returns the value of the destination cookie if it is present, and clears it', ->
-      createCookie 'destination', (destination = '/foo/bar'), 1
+      Cookies = require 'cookies-js'
+      Cookies.set 'destination', (destination = '/foo/bar'), 1000
       @router.redirectLocation().should.equal destination
-      readCookie('destination').should.equal ''
+      (Cookies.get('destination')).should.equal 'undefined'
 
   describe '#done', ->
     it 'sets the $el state to loading, saves the user, redirects', ->

@@ -10,7 +10,6 @@ sd                = require('sharify').data
 analytics         = require '../lib/analytics.coffee'
 Order             = require './order.coffee'
 Genes             = require '../collections/genes.coffee'
-{ readCookie }    = require '../components/util/cookie.coffee'
 Following         = require '../components/follow_button/collection.coffee'
 geoLocate         = require '../components/util/geolocate.coffee'
 ABM               = require 'artsy-backbone-mixins'
@@ -95,21 +94,6 @@ module.exports = class CurrentUser extends Backbone.Model
     data = access_token: @get('accessToken')
     @set followGenes: new Genes()
     @get('followGenes').fetchUntilEnd(_.extend { url: url, data: data }, options)
-
-  unpublishedPost: (options) ->
-    if (postId = readCookie("current_post"))
-      options.success(new Post(id: postId))
-    else
-      posts = new Backbone.Collection
-      posts.fetch
-        url: "#{sd.API_URL}/api/v1/profile/#{@get('default_profile_id')}/posts/unpublished"
-        success: (response) ->
-          post = response.models?[0]?.get('results')?[0]
-          if post
-            options.success(new Post(post))
-          else
-            options.error
-        error: options.error
 
   fetchSuggestedHomepageArtworks: (options = {}) ->
     new Artworks().fetch _.extend options,

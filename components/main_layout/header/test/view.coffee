@@ -5,13 +5,6 @@ Backbone  = require 'backbone'
 sinon     = require 'sinon'
 mediator  = require '../../../../lib/mediator.coffee'
 
-HeaderView = rewire '../view'
-HeaderView.__set__ 'SearchBarView', Backbone.View
-HeaderView.__set__ 'AuthModalView', sinon.stub()
-HeaderView.__set__ 'readCookie', sinon.stub()
-HeaderView.__set__ 'createCookie', sinon.stub()
-HeaderView.__set__ 'FlashMessage', sinon.stub()
-
 { resolve } = require 'path'
 
 describe 'HeaderView', ->
@@ -23,7 +16,11 @@ describe 'HeaderView', ->
         sd: { HIDE_HEADER: false }
       Backbone.$ = $
       benv.render resolve(__dirname, '../templates/index.jade'), {}, =>
-        @view = new HeaderView
+        @HeaderView = rewire '../view'
+        @HeaderView.__set__ 'SearchBarView', Backbone.View
+        @HeaderView.__set__ 'AuthModalView', sinon.stub()
+        @HeaderView.__set__ 'FlashMessage', sinon.stub()
+        @view = new @HeaderView
           el: $('#main-layout-header')
           $window: @$window =
             on: sinon.stub()
@@ -51,7 +48,7 @@ describe 'HeaderView', ->
   describe '#openAuth', ->
     it 'opens with custom copy', ->
       @view.openAuth copy: 'Sign up to foo bar'
-      HeaderView.__get__('AuthModalView').args[0][0].copy.should.include 'Sign up to foo bar'
+      @HeaderView.__get__('AuthModalView').args[0][0].copy.should.include 'Sign up to foo bar'
 
   describe '#login', ->
     it 'triggers the mediator', ->
@@ -74,9 +71,13 @@ describe 'HeaderView', ->
       benv.render resolve(__dirname, '../templates/index.jade'), {}, =>
         $.support.transition = { end: 'transitionend' }
         $.fn.emulateTransitionEnd = -> @trigger $.support.transition.end
-        HeaderView.__set__ 'sd', FLASH: 'Goodbye world.'
+        @HeaderView = rewire '../view'
+        @HeaderView.__set__ 'SearchBarView', Backbone.View
+        @HeaderView.__set__ 'AuthModalView', sinon.stub()
+        @HeaderView.__set__ 'FlashMessage', sinon.stub()
+        @HeaderView.__set__ 'sd', FLASH: 'Goodbye world.'
         @triggerSpy = sinon.spy mediator, 'trigger'
-        @view = new HeaderView
+        @view = new @HeaderView
           el: $('#main-layout-header')
           $window: @$window =
             on: sinon.stub()
@@ -86,4 +87,4 @@ describe 'HeaderView', ->
         done()
 
     it 'checks for flash messages initializes the flash message', ->
-      HeaderView.__get__('FlashMessage').args[0][0].message.should.equal 'Goodbye world.'
+      @HeaderView.__get__('FlashMessage').args[0][0].message.should.equal 'Goodbye world.'

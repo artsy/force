@@ -1,8 +1,7 @@
 _         = require 'underscore'
 Backbone  = require 'backbone'
 template  = -> require('./template.jade') arguments...
-
-{ readCookie, createCookie } = require '../util/cookie.coffee'
+Cookies   = require 'cookies-js'
 
 module.exports = class ZigZagBanner extends Backbone.View
   className: 'zig-zag-banner'
@@ -21,12 +20,14 @@ module.exports = class ZigZagBanner extends Backbone.View
       throw new Error('You must pass a name, $target, and message')
 
     if @persist
-      if readCookie("zig_zag_#{@name}")?
+      if Cookies.get("zig_zag_#{@name}")?
         # Has already seen this... ignore
         return @remove()
       else
         # Will see this once until cookie expires
-        createCookie "zig_zag_#{@name}", true, 365
+        oneYearFromNow = new Date()
+        oneYearFromNow.setYear oneYearFromNow.getFullYear + 1
+        Cookies.set "zig_zag_#{@name}", true, oneYearFromNow.valueOf()
 
     @transitionIn()
 

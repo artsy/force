@@ -63,6 +63,8 @@ module.exports = class ErrorHandlingForm extends Backbone.View
       if @$('select.country').val() == 'USA'
         @$el.removeClass('not-usa')
         @$('.postal-code label').text 'Zip Code'
+        @$('.region label').text 'City'
       else
         @$el.addClass('not-usa')
         @$('.postal-code label').text 'Postal Code'
+        @$('.region label').text 'Region'

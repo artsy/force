@@ -7,7 +7,6 @@ FeedItem        = require '../../../components/feed/models/feed_item.coffee'
 FeedItems       = require '../../../components/feed/collections/feed_items.coffee'
 { fabricate }   = require 'antigravity'
 { resolve }     = require 'path'
-PostsView       = benv.requireWithJadeify(resolve(__dirname, '../client/index.coffee'), [])
 
 describe 'Posts', ->
 
@@ -19,8 +18,9 @@ describe 'Posts', ->
       sinon.stub Backbone, 'sync'
       Backbone.$ = $
 
-      PostsView.__set__ 'PoplockitFeed', benv.requireWithJadeify resolve(__dirname, '../../../components/feed/client/poplockit_feed.coffee'), []
-      popLockIt = PostsView.__get__ 'PoplockitFeed'
+      @PostsView = benv.requireWithJadeify(resolve(__dirname, '../client/index.coffee'), [])
+      @PostsView.__set__ 'PoplockitFeed', benv.requireWithJadeify resolve(__dirname, '../../../components/feed/client/poplockit_feed.coffee'), []
+      popLockIt = @PostsView.__get__ 'PoplockitFeed'
       popLockIt.__set__ 'FeedView', benv.requireWithJadeify resolve(__dirname, '../../../components/feed/client/feed.coffee'), ['feedItemsTemplate', 'feedItemsContainerTemplate']
       done()
 
@@ -30,7 +30,7 @@ describe 'Posts', ->
 
   beforeEach ->
     @post = new FeedItem fabricate('post', _type: 'Post')
-    @view = new PostsView
+    @view = new @PostsView
       el: $("<div id='posts-page'>
         <div class='feed'></div>
         </div>")

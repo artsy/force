@@ -2,7 +2,6 @@ benv          = require 'benv'
 Backbone      = require 'backbone'
 sinon         = require 'sinon'
 { resolve }   = require 'path'
-FeedView      = benv.requireWithJadeify resolve(__dirname, '../client/feed.coffee'), ['feedItemsTemplate', 'feedItemsContainerTemplate']
 sd            = require('sharify').data
 FeedItem      = require '../models/feed_item'
 FeedItems     = require '../collections/feed_items'
@@ -34,6 +33,7 @@ describe 'FeedView', ->
       )
       @feedItems = new FeedItems
       @feedItems.add @partnerShow
+      FeedView = benv.requireWithJadeify resolve(__dirname, '../client/feed.coffee'), ['feedItemsTemplate', 'feedItemsContainerTemplate']
       @view = new FeedView
         el: $("<div class='feed'></div>")
         feedItems: @feedItems

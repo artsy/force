@@ -5,7 +5,6 @@ sinon         = require 'sinon'
 Artwork       = require '../../../../models/artwork.coffee'
 Artworks      = require '../../../../collections/artworks.coffee'
 Feature       = require '../../../../models/feature.coffee'
-FeatureView   = require '../../client/index.coffee'
 { resolve }   = require 'path'
 { fabricate } = require 'antigravity'
 
@@ -15,6 +14,7 @@ describe 'FeatureView', ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
+      @FeatureView   = require '../../client/index.coffee'
       done()
 
   after ->
@@ -47,7 +47,7 @@ describe 'FeatureView', ->
         @featureTemplate = sinon.stub()
         mod.__set__ 'setsTemplate', @setsTemplate
         mod.__set__ 'artistsTemplate', @artistsTemplate
-        @view = new FeatureView
+        @view = new @FeatureView
           model: @profile
           el: $ 'body'
         @view.partner.set 'displayable_shows_count', 1

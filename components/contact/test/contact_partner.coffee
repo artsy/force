@@ -27,6 +27,7 @@ describe 'ContactPartnerView', ->
     benv.render resolve(__dirname, '../templates/index.jade'), {}, =>
       ContactPartnerView = benv.requireWithJadeify(resolve(__dirname, '../contact_partner'), ['formTemplate', 'headerTemplate'])
       ContactPartnerView.__set__ 'analytics', analytics
+      ContactPartnerView.__set__ 'Cookies', { set: (->), get: (->) }
       sinon.stub ContactPartnerView.prototype, 'isLoading'
       sinon.stub ContactPartnerView.prototype, 'isLoaded'
       sinon.stub ContactPartnerView.prototype, 'open'
