@@ -11,6 +11,8 @@ Attachments         = require '../components/post/collections/post_attachments.c
 Reposts             = require '../components/post/collections/reposts.coffee'
 { smartTruncate }   = require '../components/util/string.coffee'
 
+_.mixin require 'underscore.string'
+
 module.exports = class Post extends Backbone.Model
 
   urlRoot: "#{sd.API_URL}/api/v1/post"
@@ -18,7 +20,23 @@ module.exports = class Post extends Backbone.Model
   canonicalUrl: -> sd.APP_URL + @href()
   profile: -> new Profile @get('profile')
 
-  onPostPage: (location)->
+  # Use the first paragraph.
+  # If first paragraph is less than 210 chars,
+  # continue pulling in second paragraph.
+  # Cut text with ellipsis at 385 chars.
+  extendedSummary: ->
+    paragraphMin  = 210
+    maxLimit      = 385
+
+    firstParagraph = _.stripTags _.first(@get('body').split '</p>')
+    summary = if firstParagraph.length < paragraphMin
+      _.stripTags(@get 'body')
+    else
+      firstParagraph
+
+    _.prune summary, maxLimit, '&hellip;'
+
+  onPostPage: (location) ->
     location ?= window?.location?.pathname
     location == @href()
 
