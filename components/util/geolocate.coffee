@@ -27,11 +27,12 @@ module.exports =
       @reverseGeocode response.latitude, response.longitude, cb
 
   reverseGeocode: (latitude, longitude, cb) ->
-    new google.maps.Geocoder().geocode
-      latLng: new google.maps.LatLng latitude, longitude
-    , (results, status) ->
-      if (status is google.maps.GeocoderStatus.OK) and results[0]
-        cb new GeoFormatter results[0]
+    @loadGoogleMaps =>
+      new google.maps.Geocoder().geocode
+        latLng: new google.maps.LatLng latitude, longitude
+      , (results, status) ->
+        if (status is google.maps.GeocoderStatus.OK) and results[0]
+          cb new GeoFormatter results[0]
 
   locate: (options) ->
     if navigator.geolocation and (options.accuracy is 'high')

@@ -1,7 +1,8 @@
-_         = require 'underscore'
-Backbone  = require 'backbone'
-template  = -> require('./template.jade') arguments...
-{ isTouchDevice } = require '../util/device.coffee'
+_                   = require 'underscore'
+Backbone            = require 'backbone'
+geo                 = require '../util/geolocate.coffee'
+{ isTouchDevice }   = require '../util/device.coffee'
+template            = -> require('./template.jade') arguments...
 
 module.exports = class LocationSearchView extends Backbone.View
   announce: (location) ->
@@ -17,8 +18,9 @@ module.exports = class LocationSearchView extends Backbone.View
     this
 
   postRender: ->
-    @autocomplete = new google.maps.places.Autocomplete @$('input')[0], { types: ['(cities)'] }
-    @attach()
+    geo.loadGoogleMaps =>
+      @autocomplete = new google.maps.places.Autocomplete @$('input')[0], { types: ['(cities)'] }
+      @attach()
 
   teardown: ->
     @autocomplete = null

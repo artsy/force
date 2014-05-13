@@ -3,22 +3,18 @@ sinon         = require 'sinon'
 Backbone      = require 'backbone'
 { resolve }   = require 'path'
 
+
 describe 'Location Search', ->
   beforeEach (done) ->
     benv.setup =>
-      benv.expose { $: benv.require 'jquery' }
-      Backbone.$  = $
+      benv.expose $: benv.require 'jquery'
+      Backbone.$ = $
       LocationSearchView = benv.requireWithJadeify(resolve(__dirname, '../index'), ['template'])
-      LocationSearchView.__set__ 'google', {
-        maps: {
-          event: {
-            addListener: sinon.stub()
-          },
-          places: {
-            Autocomplete: sinon.stub()
-          }
-        }
-      }
+      LocationSearchView.__set__ 'geo', loadGoogleMaps: (cb) -> cb()
+      LocationSearchView.__set__ 'google', maps:
+        event  : addListener: sinon.stub()
+        places : Autocomplete: sinon.stub()
+
       @view = new LocationSearchView
       done()
 
