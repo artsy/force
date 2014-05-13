@@ -46,9 +46,9 @@ describe 'PersonalizeRouter', ->
 
     it 'returns the value of the destination cookie if it is present, and clears it', ->
       Cookies = require 'cookies-js'
-      Cookies.get 'destination', (destination = '/foo/bar'), 1
+      Cookies.set 'destination', (destination = '/foo/bar'), 1000
       @router.redirectLocation().should.equal destination
-      Cookies.get('destination').should.equal ''
+      (Cookies.get('destination')).should.equal 'undefined'
 
   describe '#done', ->
     it 'sets the $el state to loading, saves the user, redirects', ->
