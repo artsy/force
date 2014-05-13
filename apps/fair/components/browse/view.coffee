@@ -82,7 +82,7 @@ module.exports = class FairBrowseView extends Backbone.View
     'click #fair-booths-as-grid'     : 'exhibitorsGrid'
     'click'                          : 'triggerReflow'
 
-  artistsAZ: (e) ->
+  artistsAZ: ->
     @router.navigate "#{@profile.get 'id'}/browse/artists"
     @$('.filter-fixed-header-nav .is-active').removeClass('is-active')
     @$('#fair-filter-all-artists').addClass('is-active')

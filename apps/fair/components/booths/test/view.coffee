@@ -9,12 +9,13 @@ Fair = require '../../../../../models/fair'
 describe 'BoothsView', ->
 
   beforeEach (done) ->
+    @fair = new Fair fabricate 'fair'
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       sinon.stub Backbone, 'sync'
       $.fn.hidehover = sinon.stub()
-      benv.render resolve(__dirname, '../section.jade'), {}, =>
+      benv.render resolve(__dirname, '../section.jade'), { fair: @fair }, =>
         BoothsView = benv.requireWithJadeify resolve(__dirname, '../view'), ['navSectionsTemplate']
         for klass in ['FilterNav', 'BorderedPulldown', 'ShowsFeed']
           @[klass] = (opts) -> _.extend @, opts
@@ -22,7 +23,6 @@ describe 'BoothsView', ->
           for method in ['appendArtworks', 'reset', 'remove']
             @[klass].prototype[method] = sinon.stub()
           BoothsView.__set__ klass, @[klass]
-        @fair = new Fair fabricate 'fair'
         @fair.url = -> 'fair/foo'
         @view = new BoothsView
           el: $('body')
