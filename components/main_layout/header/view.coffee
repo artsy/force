@@ -85,7 +85,7 @@ module.exports = class HeaderView extends Backbone.View
 
     oneYearFromNow = new Date()
     oneYearFromNow.setYear oneYearFromNow.getFullYear + 1
-    Cookies.set 'hide-force-header', true, oneYearFromNow.valueOf()
+    Cookies.set 'hide-force-header', true, expires: oneYearFromNow
 
   signup: (e) ->
     e.preventDefault()

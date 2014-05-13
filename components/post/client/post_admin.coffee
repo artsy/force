@@ -34,7 +34,7 @@ module.exports = class PostAdmin extends Backbone.View
   editPostClick: (event) =>
     oneDayFromNow = new Date()
     oneDayFromNow.setDate oneDayFromNow.getDate + 1
-    Cookies.set 'current_post', @model.get('id'), oneDayFromNow.valueOf()
+    Cookies.set 'current_post', @model.get('id'), expires: oneDayFromNow
     window.location = "/post"
     false
 
