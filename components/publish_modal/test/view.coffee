@@ -10,8 +10,8 @@ describe 'PublishModal', ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'
       Backbone.$ = $
-      @PublishModal = rewire '../view'
-      @PublishModal.__set__ 'readCookie', (@cookie = sinon.stub())
+      @PublishModal = benv.require '../view.coffee'
+      @PublishModal.__set__ 'Cookies', { get: @cookie = sinon.stub(), set: -> }
       sinon.stub @PublishModal::, 'initialize'
       done()
 
