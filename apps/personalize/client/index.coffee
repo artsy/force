@@ -49,7 +49,7 @@ module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Rout
   #
   # @return {String} destination or root path
   redirectLocation: ->
-    destination = readCookie 'destination'
+    destination = Cookies.get 'destination'
     Cookies.expire 'destination' if destination
     destination or '/'
 

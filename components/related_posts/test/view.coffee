@@ -137,7 +137,7 @@ describe 'RelatedPostsView', ->
       @view.remove.called.should.be.ok
 
     it 'can render extended previews', ->
-      @view = new RelatedPostsView
+      @view = new @RelatedPostsView
         el: $('<fixture></fixture>'), model: @artist, numToShow: 2, modelName: 'Artist', mode: 'extended'
       Backbone.sync.args[0][2].success [
         fabricate 'post', id: 'cats-rule-dogs-drool-literally', title: 'Cats rule, and dogs drool'

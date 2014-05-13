@@ -3,14 +3,13 @@ Backbone        = require 'backbone'
 sinon           = require 'sinon'
 { resolve }     = require 'path'
 { fabricate }   = require 'antigravity'
-
 Artwork           = require '../../../../models/artwork'
-BelowTheFoldView  = require '../../client/below-the-fold'
 
 describe 'BelowTheFoldView', ->
   before (done) ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'
+      @BelowTheFoldView  = require '../../client/below-the-fold'
       Backbone.$ = $
       done()
 
@@ -19,13 +18,13 @@ describe 'BelowTheFoldView', ->
 
   beforeEach (done) ->
     sinon.stub Backbone, 'sync'
-    @setupLayeredSearchSpy   = sinon.spy BelowTheFoldView::, 'setupLayeredSearch'
-    @setupSaleSpy            = sinon.spy BelowTheFoldView::, 'setupSale'
-    @setupFairSpy            = sinon.spy BelowTheFoldView::, 'setupFair'
+    @setupLayeredSearchSpy   = sinon.spy @BelowTheFoldView::, 'setupLayeredSearch'
+    @setupSaleSpy            = sinon.spy @BelowTheFoldView::, 'setupSale'
+    @setupFairSpy            = sinon.spy @BelowTheFoldView::, 'setupFair'
 
     @$fixture   = $('<div></div>')
     @artwork    = new Artwork fabricate 'artwork'
-    @view       = new BelowTheFoldView $el: @$fixture, artwork: @artwork
+    @view       = new @BelowTheFoldView $el: @$fixture, artwork: @artwork
     done()
 
   afterEach ->
@@ -46,6 +45,6 @@ describe 'BelowTheFoldView', ->
 
   describe '#fadeIn', ->
     it 'fades in the el', ->
-      @view = new BelowTheFoldView $el: @$fixture, artwork: @artwork
+      @view = new @BelowTheFoldView $el: @$fixture, artwork: @artwork
       @view.fadeIn()
       @view.$el.data('state').should.equal 'fade-in'

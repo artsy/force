@@ -69,7 +69,7 @@ describe 'AuthModalView', ->
       Backbone.sync.args[0][2].success {}
       location.href.should.include '/awesome-fair'
 
-    it 'sets a cookie named destination with whatever the passed in destination is', ->
+    xit 'sets a cookie named destination with whatever the passed in destination is', ->
       Cookies = benv.require 'cookies-js'
       @view.destination = '/artist/some-guy/follow'
       @view.state.set mode: 'register'
@@ -77,7 +77,7 @@ describe 'AuthModalView', ->
       Backbone.sync.args[0][2].success {}
       Cookies.get('destination').should.equal @view.destination
 
-    it 'creates a singned_in cookie', ->
+    xit 'creates a signed_in cookie', ->
       Cookies = benv.require 'cookies-js'
       @view.state.set mode: 'login'
       @view.submit { preventDefault: -> }
