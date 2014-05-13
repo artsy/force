@@ -82,7 +82,7 @@ module.exports = class AuthModalView extends ModalView
       @showError _.capitalize res.error
     else
       oneDayFromNow = new Date()
-      oneDayFromNow.setDate(sevenDaysFromNow.getDate() + 1)
+      oneDayFromNow.setDate(oneDayFromNow.getDate() + 1)
       Cookies.set('destination', @destination, expires: oneDayFromNow) if @destination
 
       if @state.get('mode') is 'login'
