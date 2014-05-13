@@ -117,6 +117,8 @@ module.exports = (app) ->
     maxage: SESSION_COOKIE_MAX_AGE
   app.use artsyPassport _.extend config,
     CurrentUser: CurrentUser
+    SECURE_ARTSY_URL: API_URL
+
   app.use errorHandler.socialAuthError
 
   # Proxy / redirect requests before they even have to deal with Force routing

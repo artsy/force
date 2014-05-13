@@ -6,7 +6,6 @@ sinon         = require 'sinon'
 moment        = require 'moment'
 { resolve }   = require 'path'
 { fabricate } = require 'antigravity'
-OverviewView = require '../../client/overview.coffee'
 Fair          = require '../../../../models/fair.coffee'
 
 describe 'ForYouView', ->
@@ -20,6 +19,7 @@ describe 'ForYouView', ->
       sd.NODE_ENV = "test"
       benv.expose { $: benv.require 'jquery' }
       sinon.stub Backbone, 'sync'
+      @OverviewView = require '../../client/overview.coffee'
       Backbone.$  = $
 
       @fair = new Fair fabricate 'fair'
@@ -33,7 +33,7 @@ describe 'ForYouView', ->
   describe '#initialize', ->
 
     xit "renders personalized artist list", ->
-      view = new OverviewView
+      view = new @OverviewView
         el: $("""<div>
             <div class='auction-clock'></div>
             <div class='container-left'><div class='large-section-subheading'></div></div>

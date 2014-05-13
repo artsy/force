@@ -9,14 +9,13 @@ CurrentUser       = require '../../../models/current_user'
 Post              = require '../../../models/post'
 Artist            = require '../../../models/artist'
 
-RelatedPostsView  =
-  benv.requireWithJadeify resolve(__dirname, '../view.coffee'), ['templates.empty', 'templates.grid', 'templates.list', 'templates.extended']
-
 describe 'RelatedPostsView', ->
   before (done) ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
+      @RelatedPostsView  =
+        benv.requireWithJadeify resolve(__dirname, '../view.coffee'), ['templates.empty', 'templates.grid', 'templates.list', 'templates.extended']
       done()
 
   after ->
@@ -26,7 +25,7 @@ describe 'RelatedPostsView', ->
     beforeEach (done) ->
       sinon.stub Backbone, 'sync'
       artist  = new Artist fabricate 'artist'
-      @view   = new RelatedPostsView { el: $('<fixture></fixture>'), model: artist, numToShow: 2, modelName: 'Artist' }
+      @view   = new @RelatedPostsView { el: $('<fixture></fixture>'), model: artist, numToShow: 2, modelName: 'Artist' }
       done()
 
     afterEach ->
@@ -105,7 +104,7 @@ describe 'RelatedPostsView', ->
           location.href.should.containEql '/post'
 
         it 'should intercept if user is *not* logged in', ->
-          RelatedPostsView.currentUser = false
+          @RelatedPostsView.currentUser = false
           @view.addPost @e
           @e.preventDefault.called.should.be.ok
 
@@ -119,7 +118,7 @@ describe 'RelatedPostsView', ->
       Backbone.sync.restore()
 
     it 'can render a grid', ->
-      @view = new RelatedPostsView
+      @view = new @RelatedPostsView
         el: $('<fixture></fixture>'), model: @artist, numToShow: 2, modelName: 'Artist', mode: 'grid'
       Backbone.sync.args[0][2].success [
         fabricate 'post', id: 'cats-rule-dogs-drool-literally', title: 'Cats rule, and dogs drool'
@@ -131,14 +130,14 @@ describe 'RelatedPostsView', ->
       @view.$el.html().should.not.include 'Add Post'
 
     it 'removes itself if empty', ->
-      @view = new RelatedPostsView
+      @view = new @RelatedPostsView
         el: $('<fixture></fixture>'), model: @artist, numToShow: 2, modelName: 'Artist', canBeEmpty: false
       @view.remove = sinon.stub()
       Backbone.sync.args[0][2].success []
       @view.remove.called.should.be.ok
 
     it 'can render extended previews', ->
-      @view = new RelatedPostsView
+      @view = new @RelatedPostsView
         el: $('<fixture></fixture>'), model: @artist, numToShow: 2, modelName: 'Artist', mode: 'extended'
       Backbone.sync.args[0][2].success [
         fabricate 'post', id: 'cats-rule-dogs-drool-literally', title: 'Cats rule, and dogs drool'
