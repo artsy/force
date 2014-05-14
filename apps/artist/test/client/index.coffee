@@ -99,10 +99,12 @@ describe 'ArtistView', ->
           viewRelatedPostOpts.mode.should.equal 'grid'
 
         it 'sets up extended related posts for artists in the range A-J', ->
-          view = new @ArtistView el: $('body'), model: new Artist(fabricate 'artist', last: 'Artschwager')
+          new @ArtistView el: $('body'), model: new Artist(fabricate 'artist', id: 'a-z')
           _.last(@RelatedPostsView.args)[0].mode.should.equal 'extended'
-          view = new @ArtistView el: $('body'), model: new Artist(fabricate 'artist', last: 'Jarule')
+          new @ArtistView el: $('body'), model: new Artist(fabricate 'artist', id: 'j-z')
           _.last(@RelatedPostsView.args)[0].mode.should.equal 'extended'
+          new @ArtistView el: $('body'), model: new Artist(fabricate 'artist', id: 'k-z')
+          _.last(@RelatedPostsView.args)[0].mode.should.equal 'grid'
 
     describe 'sorting', ->
       it 'passes the correct sort option into setupArtworks when sorting by Recently Added, and updates the picker', ->
