@@ -7,7 +7,7 @@
 { API_URL, NODE_ENV, ARTSY_ID, ARTSY_SECRET, SESSION_SECRET, SESSION_COOKIE_MAX_AGE, PORT, ASSET_PATH,
   FACEBOOK_APP_NAMESPACE, MOBILE_MEDIA_QUERY, MOBILE_URL, APP_URL, REDIS_URL, DEFAULT_CACHE_TIME,
   CANONICAL_MOBILE_URL, IMAGES_URL_PREFIX, SECURE_IMAGES_URL, GOOGLE_ANALYTICS_ID, MIXPANEL_ID,
-  COOKIE_DOMAIN, AUTO_GRAVITY_LOGIN, GOOGLE_MAPS_API_KEY, ADMIN_URL, CMS_URL,
+  COOKIE_DOMAIN, AUTO_GRAVITY_LOGIN, GOOGLE_MAPS_API_KEY, ADMIN_URL, CMS_URL, MAX_SOCKETS,
   DELTA_HOST, ENABLE_AB_TEST, KIOSK_MODE, KIOSK_PAGE, SUGGESTIONS_AB_TEST, SESSION_COOKIE_KEY } = config = require "../config"
 
 { parse, format } = require 'url'
@@ -16,6 +16,7 @@ _ = require 'underscore'
 express = require "express"
 Backbone = require "backbone"
 sharify = require "sharify"
+http = require 'http'
 path = require "path"
 artsyPassport = require 'artsy-passport'
 artsyXappMiddlware = require 'artsy-xapp-middleware'
@@ -68,6 +69,13 @@ sharify.data =
 CurrentUser = require '../models/current_user'
 
 module.exports = (app) ->
+
+  # Increase max sockets. The goal of this is to improve app -> api
+  # performance but the downside is it limits client connection reuse with keep-alive
+  if typeof MAX_SOCKETS == 'number' and MAX_SOCKETS > 0
+    http.globalAgent.maxSockets = MAX_SOCKETS
+  else
+    http.globalAgent.maxSockets = Number.MAX_VALUE
 
   # Override Backbone to use server-side sync, inject the XAPP token,
   # add redis caching, and augment sync with Q promises.
@@ -135,26 +143,23 @@ module.exports = (app) ->
   app.use localsMiddleware
   app.use micrositeMiddleware
   app.use helpersMiddleware
-  app.use favicon(path.resolve __dirname, '../pubic/images/favicon.ico')
   app.use logger('dev')
   app.use unsupportedBrowserCheck
 
   # Mount apps
-  app.use require "../apps/auction"
   app.use require "../apps/home"
-  app.use require "../apps/about"
-  app.use require "../apps/user"
+
   # Needs to be above artwork and artist routes to support the /type/:id/* routes
   app.use require "../apps/auction_lots"
+  app.use require "../apps/auction"
   app.use require "../apps/artist"
   app.use require "../apps/artists"
   app.use require "../apps/artwork"
-  app.use require "../apps/auth"
+  app.use require "../apps/about"
   app.use require "../apps/browse"
   app.use require "../apps/feature"
   app.use require "../apps/flash"
   app.use require "../apps/galleries"
-  app.use require "../apps/tag"
   app.use require "../apps/gene"
   app.use require "../apps/institutions"
   app.use require "../apps/order"
@@ -164,7 +169,7 @@ module.exports = (app) ->
   app.use require "../apps/search"
   app.use require "../apps/show"
   app.use require "../apps/shows"
-  app.use require "../apps/style_guide"
+  app.use require "../apps/tag"
   app.use require "../apps/post"
   app.use require "../apps/posts"
   app.use require "../apps/favorites_follows"
@@ -175,6 +180,9 @@ module.exports = (app) ->
   app.use require "../apps/user_profile"
   app.use require "../apps/partner"
   app.use require "../apps/fair"
+  app.use require "../apps/user"
+  app.use require "../apps/style_guide"
+  app.use require "../apps/auth"
   # Shortcuts are prioritized last
   app.use require "../apps/shortcuts"
 
@@ -183,6 +191,7 @@ module.exports = (app) ->
     res.send 200, { nodejs: true }
 
   # Static files middleware
+  app.use favicon(path.resolve __dirname, '../pubic/images/favicon.ico')
   app.use express.static(path.resolve __dirname, "../public")
 
   # Finally 404 and error handling middleware when the request wasn't handled
