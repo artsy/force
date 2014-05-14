@@ -174,14 +174,24 @@
   @extends .avant-garde-button-text
   border-color black
 
+.stacked-form
 .stacked-button-menu
   max-width 100%
-  margin 10px auto
+  margin 0 auto
   > a
+  > button
+  > input
+  > textarea
+  > .stacked-form-cell
     display block
     width 100%
     margin 10px auto
-    > i
-      line-height 0
-      margin-right 10px
-      vertical-align middle
+    &:first-child
+      margin-top 0
+    &:last-child
+      margin-bottom 0
+  > a > i
+  > button > i
+    line-height 0
+    margin-right 10px
+    vertical-align middle
