@@ -12,8 +12,8 @@ block body
       .favorites-container.main-layout-container
         if sd.SECTION == 'favorites'
           .favorites-container.main-layout-container
-            include ./../../favorites_follows/templates/favorites_content
+            include ../../../components/favorites/templates/favorites_content
         else if sd.SECTION == 'follows'
           .following-container.main-layout-container
-            include ./../../favorites_follows/templates/follows_content
+            include ../../../components/favorites/templates/follows_content
     .fair-page-footer

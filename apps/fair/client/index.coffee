@@ -1,19 +1,19 @@
 _                 = require 'underscore'
 Backbone          = require 'backbone'
 sd                = require('sharify').data
-Profile           = require '../../../models/profile.coffee'
-Fair              = require '../../../models/fair.coffee'
 FairInfoView      = require './info.coffee'
 FairPostsView     = require './posts.coffee'
 FairSearchView    = require './search.coffee'
 ForYouView        = require './for_you.coffee'
-FairBrowseView    = require '../components/browse/view.coffee'
-FairBrowseRouter  = require '../components/browse/router.coffee'
 OverviewView      = require './overview.coffee'
 FairFooter        = require './footer.coffee'
-FavoritesView     = require('../../favorites_follows/client/favorites.coffee').FavoritesView
-FollowsView       = require('../../favorites_follows/client/follows.coffee').FollowsView
 SearchBar         = require './mixins/search_bar.coffee'
+FairBrowseView    = require '../components/browse/view.coffee'
+FairBrowseRouter  = require '../components/browse/router.coffee'
+Profile           = require '../../../models/profile.coffee'
+Fair              = require '../../../models/fair.coffee'
+{ FavoritesView } = require '../../../components/favorites/client/favorites.coffee'
+{ FollowsView }   = require '../../../components/favorites/client/follows.coffee'
 
 module.exports.FairView = class FairView extends Backbone.View
   _.extend @prototype, SearchBar
