@@ -38,6 +38,7 @@ bordered-input-placeholder--autofocus-focus()
 
   // Autofocused inputs should retain placeholders
   &[autofocus]:focus
+  &.is-persistplaceholder:focus
     placeholder(bordered-input-placeholder--autofocus-focus)
 
   &[data-state=error]
