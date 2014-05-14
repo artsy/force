@@ -9,11 +9,12 @@ Fair = require '../../../../../models/fair'
 describe 'FairBrowseView', ->
 
   beforeEach (done) ->
+    @fair = new Fair fabricate 'fair'
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       sinon.stub Backbone, 'sync'
-      benv.render resolve(__dirname, '../template.jade'), {}, =>
+      benv.render resolve(__dirname, '../template.jade'), { fair: @fair }, =>
         FairBrowseView = benv.require resolve(__dirname, '../view')
         for klass in ['BoothsView', 'FilterArtworksView']
           @[klass] = (opts) -> _.extend @, opts
@@ -21,7 +22,6 @@ describe 'FairBrowseView', ->
           @[klass]::counts = new Backbone.Model
           sinon.spy @, klass
           FairBrowseView.__set__ klass, @[klass]
-        @fair = new Fair fabricate 'fair'
         @fair.url = -> 'fair/foo'
         @view = new FairBrowseView
           el: $('body')

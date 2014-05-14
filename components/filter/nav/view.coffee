@@ -66,8 +66,11 @@ module.exports = class FilterNav extends Backbone.View
   filterAttr: (e) ->
     attr = $(e.currentTarget).data 'attr'
     val = $(e.currentTarget).data 'val'
-    return @params.unset attr if val is ''
-    @params.set attr, val
+    if val is ''
+      @params.unset attr
+    else
+      @params.set attr, val
+    false
 
   hideMenu: (e) ->
     $(e.currentTarget).parent().hidehover() unless navigator.userAgent.match('iPad')
