@@ -26,7 +26,6 @@ proxyReflection = require './middleware/proxy_to_reflection'
 proxySitemaps = require './middleware/proxy_sitemaps'
 localsMiddleware = require './middleware/locals'
 micrositeMiddleware = require './middleware/microsite'
-httpCacheMiddleware = require './middleware/http_cache'
 helpersMiddleware = require './middleware/helpers'
 ensureSSL = require './middleware/ensure_ssl'
 errorHandler = require "../components/error_handler"
@@ -127,8 +126,6 @@ module.exports = (app) ->
   app.use redirectMobile
   app.use proxyReflection
   app.use ensureSSL
-
-  app.use httpCacheMiddleware
 
   # General helpers and express middleware
   app.use flash()
