@@ -8,18 +8,29 @@ body.is-modal
   z-index 3
   transition opacity 0.25s
   opacity 0
+  // Default is a simple fade in
   &[data-state='open'], &.is-open
     opacity 1
-    > .modal-backdrop
-      > .modal-dialog
+    > .modal-backdrop > .modal-dialog
+      // Avoid transitioning the initial open
+      transition all 0.25s, width 0
+  // Slide modal dialog in
+  &.is-slide-in
+    > .modal-backdrop > .modal-dialog
+      transform translateY(100px)
+      transition transform 0.4s
+    &[data-state='open'], &.is-open
+      opacity 1
+      > .modal-backdrop > .modal-dialog
+        transform translateY(0)
         // Avoid transitioning the initial open
-        transition all 0.25s, width 0
+        transition all 0.25s, width 0, transform 0.4s
 
   &.is-loading
     > .modal-backdrop::before
       display block
       content ''
-      spinner(20px, 5px, #fff)
+      spinner(20px, 5px, white)
 
   &.confirm
     .modal-body
@@ -49,12 +60,15 @@ body.is-modal
   left 0
 
 .modal-backdrop
-  background-color rgba(0, 0, 0, 0.5)
+  background-color rgba(black, 0.5)
+
+#modal.has-nobackdrop > .modal-backdrop
+  background-color transparent
 
 .modal-dialog
   position fixed
   overflow-y auto
-  background-color #fff
+  background-color white
   max-width 90%
   max-height 90%
   prevent-content-shift()
