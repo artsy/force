@@ -24,6 +24,10 @@ sectionToView =
   artists     : ArtistsView
   overview    : OverviewView
 
+sectionViewParams =
+  collection  : { isForSale: false }
+  shop        : { isForSale: true }
+
 module.exports = class PartnerView extends Backbone.View
 
   events:
@@ -43,7 +47,7 @@ module.exports = class PartnerView extends Backbone.View
     @initializeFollows()
 
   renderSection: (section, extraParams={}) ->
-    _.extend (@sectionViewParams = {}), extraParams
+    _.extend (@sectionViewParams = sectionViewParams[section] or {}), extraParams
     @highlightTab (@currentSection = section)
     $(window).off '.partner' # reset events under .partner namespace
 
