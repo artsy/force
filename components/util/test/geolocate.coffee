@@ -33,3 +33,31 @@ describe 'Geolocate', ->
       benv.expose navigator: geolocation: getCurrentPosition: sinon.stub()
       Geolocate.locate(accuracy: 'high')
       navigator.geolocation.getCurrentPosition.called.should.be.ok
+
+  describe '#loadGoogleMaps', ->
+    beforeEach ->
+      @gs = $.getScript
+
+    afterEach ->
+      $.getScript = @gs
+
+    it 'loads the Google Maps places library and runs the callback', (done) ->
+      $.getScript = (url) ->
+        url.should.equal 'https://maps.googleapis.com/maps/api/js?libraries=places&sensor=true&callback=googleMapsCallback'
+        window.googleMapsCallback()
+      _.isUndefined(window.googleMapsCallback).should.be.true
+      Geolocate.loadGoogleMaps ->
+        _.isFunction(window.googleMapsCallback).should.be.true
+        done()
+
+    it 'only calls $.getScript once', ->
+      Geolocate.googleMapsLoaded = false
+      getScriptStub = sinon.stub()
+      $.getScript = ->
+        getScriptStub()
+        window.googleMapsCallback()
+      Geolocate.loadGoogleMaps(->)
+      Geolocate.loadGoogleMaps(->)
+      Geolocate.loadGoogleMaps(->)
+      getScriptStub.callCount.should.equal 1
+      Geolocate.googleMapsLoaded.should.be.true

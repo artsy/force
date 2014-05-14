@@ -485,15 +485,8 @@ new PartnerShowButtons
 
 ## Location Search
 
-An autocomplete input that leverages the google maps api to get a geo coded location from a user that types in a city. 
+An autocomplete input that leverages the Google Maps API to get a geocoded location from a user that types in a city. 
 ![](images/search_location.png)
-
-You need to add a reference to the google api script in the head block of your page template:
-
-```jade
-block head
-  script( src='https://maps.googleapis.com/maps/api/js?libraries=places&sensor=true' )
-```
 
 Check out usage in `apps/personalize`
 

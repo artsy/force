@@ -1,7 +1,19 @@
-GeoFormatter = require 'geoformatter'
-Backbone = require 'backbone'
+GeoFormatter  = require 'geoformatter'
+Backbone      = require 'backbone'
 
 module.exports =
+  googleMapsAPI: 'https://maps.googleapis.com/maps/api/js?libraries=places&sensor=true'
+
+  loadGoogleMaps: (cb) ->
+    return cb() if @googleMapsLoaded
+
+    window.googleMapsCallback = =>
+      @googleMapsLoaded = true
+      cb()
+      window.googleMapsCallback = undefined
+
+    $.getScript @googleMapsAPI + '&callback=googleMapsCallback'
+
   geoIp: (cb) ->
     new Backbone.Model().fetch
       headers  : null
@@ -15,11 +27,12 @@ module.exports =
       @reverseGeocode response.latitude, response.longitude, cb
 
   reverseGeocode: (latitude, longitude, cb) ->
-    new google.maps.Geocoder().geocode
-      latLng: new google.maps.LatLng latitude, longitude
-    , (results, status) ->
-      if (status is google.maps.GeocoderStatus.OK) and results[0]
-        cb new GeoFormatter results[0]
+    @loadGoogleMaps =>
+      new google.maps.Geocoder().geocode
+        latLng: new google.maps.LatLng latitude, longitude
+      , (results, status) ->
+        if (status is google.maps.GeocoderStatus.OK) and results[0]
+          cb new GeoFormatter results[0]
 
   locate: (options) ->
     if navigator.geolocation and (options.accuracy is 'high')
