@@ -13,7 +13,11 @@ mixin filter-dropdown(mainText, plural, attr, values, hrefRoot)
           a(
             data-attr=attr
             data-val=val
-            href="#{hrefRoot ? hrefRoot  : 'artworks'}?#{attr}=#{val}"
+            href=(
+              hrefRoot && hrefRoot.match('booths') ?
+              "#{hrefRoot}/#{attr}/#{val}" :
+              "#{hrefRoot ? hrefRoot : sd.CURRENT_PATH + '/artworks'}?#{attr}=#{val}"
+            )
           )
             span.filter-dropdown-text= label
             span.filter-dropdown-count

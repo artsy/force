@@ -38,6 +38,10 @@ module.exports.data = {};
 var bootstrapOnClient = module.exports.bootstrapOnClient = function() {
   if (typeof window != 'undefined' && window.__sharifyData) {
     module.exports.data = window.__sharifyData;
+    // Conveniently expose globals so client-side templates can access
+    // the `sd` and `sharify.data` just like the server.
+    if (!window.sharify) window.sharify = module.exports;
+    if (!window.sd) window.sd = window.__sharifyData;
   }
 };
 bootstrapOnClient();
