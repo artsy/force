@@ -178,3 +178,17 @@ describe 'Artsy Passport methods', ->
       @req.user = { toJSON: -> }
       @afterLocalAuth @req, @res
       @res.send.args[0][0].success.should.be.ok
+
+  describe '#headerLogin', ->
+
+    beforeEach ->
+      opts = @artsyPassport.__get__ 'opts'
+      opts.CurrentUser = Backbone.Model
+      @headerLogin = @artsyPassport.__get__ 'headerLogin'
+      @req = { query: {}, get: (-> 'access-foo-token'), login: sinon.stub() }
+      @res = { send: sinon.stub() }
+      @next = sinon.stub()
+
+    it 'logs in a user if they pass their access token as a header', ->
+      @headerLogin @req, @res, @next
+      @req.login.args[0][0].get('accessToken').should.equal 'access-foo-token'

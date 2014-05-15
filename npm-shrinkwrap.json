@@ -231,7 +231,7 @@
       }
     },
     "sharify": {
-      "version": "0.1.3",
+      "version": "0.1.4",
       "from": "sharify@*"
     },
     "backbone": {
@@ -434,7 +434,7 @@
     "artsy-passport": {
       "version": "0.1.4",
       "from": "artsy-passport@git://github.com/artsy/artsy-passport.git",
-      "resolved": "git://github.com/artsy/artsy-passport.git#99d2aa3ca1962f80b9a4923018e57c2ae5c60ed0",
+      "resolved": "git://github.com/artsy/artsy-passport.git#af1178822a0a230ec29b4d617273b82a146a7e7f",
       "dependencies": {
         "passport": {
           "version": "0.2.0",
@@ -521,6 +521,7 @@
         "express": {
           "version": "3.4.7",
           "from": "express@3.4.7",
+          "resolved": "https://registry.npmjs.org/express/-/express-3.4.7.tgz",
           "dependencies": {
             "connect": {
               "version": "2.12.0",
@@ -557,6 +558,7 @@
                 "multiparty": {
                   "version": "2.2.0",
                   "from": "multiparty@2.2.0",
+                  "resolved": "https://registry.npmjs.org/multiparty/-/multiparty-2.2.0.tgz",
                   "dependencies": {
                     "readable-stream": {
                       "version": "1.1.13-1",
@@ -608,7 +610,8 @@
             },
             "cookie": {
               "version": "0.1.0",
-              "from": "cookie@0.1.0"
+              "from": "cookie@0.1.0",
+              "resolved": "https://registry.npmjs.org/cookie/-/cookie-0.1.0.tgz"
             },
             "buffer-crc32": {
               "version": "0.2.1",

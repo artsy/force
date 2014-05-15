@@ -65,8 +65,16 @@ describe('sharify', function() {
     it('loads __sharifyData', function() {
       global.window = { __sharifyData: { moo: 'bam' } };
       var sharify = require('./');
-      sharify.bootstrapOnClient()
+      sharify.bootstrapOnClient();
       sharify.data.moo.should.equal('bam');
+    });
+
+    it('exposes sd and sharify.data globals for client/server template reuse', function() {
+      global.window = { __sharifyData: { moo: 'bam' } };
+      var sharify = require('./');
+      sharify.bootstrapOnClient();
+      window.sharify.data.moo.should.equal('bam');
+      window.sd.moo.should.equal('bam');
     });
   });
 });

@@ -8,7 +8,7 @@ include ../../../../components/bordered_pulldown/mixin
       span.fair-booths-count= exhibitorsCount
       |  Exhibitors
     a#fair-booths-az-as-list.faux-underline(
-      href=fair.href().replace(/^\//, '') + '/browse/exhibitors'
+      href="#{fair.href()}/browse/exhibitors"
     ) Show as A-Z List
     #fair-booths-sort
       +bordered-pulldown('Relevance', 'Sort By')
