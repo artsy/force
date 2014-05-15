@@ -1,0 +1,22 @@
+// Circle control for Share and Save buttons.
+.circle-control-container
+  display inline-block
+  width 53px
+  height @width
+  border-size 2px
+  border @border-size solid gray-color
+  border-radius (@width / 2)
+  text-align center
+  line-height @width - @border-size * 2
+  vertical-align top
+  cursor pointer
+  [class^="icon-"]
+    line-height inherit
+  &:hover
+    background-color gray-darker-color
+    border-color gray-darker-color
+    color white
+  &[data-state="active"]
+    background-color purple-color
+    border-color purple-color
+    color white

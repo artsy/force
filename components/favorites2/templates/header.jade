@@ -1,0 +1,13 @@
+mixin follows-tab-nav
+  nav.follows-tabs.garamond-tablist
+    a.garamond-tab(
+      href="/favorites", class=activeClass('/favorites')
+    ) Works
+    span.garamond-tab-separator
+    a.garamond-tab(
+      href="/following/artists", class=activeClass('/following/artists')
+    ) Artists
+    span.garamond-tab-separator
+    a.garamond-tab(
+      href="/following/genes", class=activeClass('/following/genes')
+    ) Categories

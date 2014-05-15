@@ -60,6 +60,7 @@ initApp = ->
   app.get opts.facebookCallbackPath, socialAuth('facebook'), socialSignup('facebook')
   app.get opts.twitterLastStepPath, loginBeforeTwitterLastStep
   app.post opts.twitterLastStepPath, submitTwitterLastStep
+  app.use headerLogin
   app.use addLocals
 
 localAuth = (req, res, next) ->
@@ -153,6 +154,12 @@ submitTwitterLastStep = (req, res, next) ->
       req.login req.user.set(r2.body), (err) ->
         return next err if err
         res.redirect req.param('redirect-to')
+
+headerLogin = (req, res, next) ->
+  if token = req.get('X-Access-Token') or req.query.access_token
+    req.login new opts.CurrentUser(accessToken: token), next
+  else
+    next()
 
 #
 # Setup passport.
