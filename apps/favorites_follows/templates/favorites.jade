@@ -10,7 +10,7 @@ append locals
 block body
   #favorites.favorites-container
     .main-layout-container
-      if user.get('lab_features').indexOf('CMS Batch Upload') != -1
+      if user.get('lab_features').indexOf('Set Management') != -1
         include ../../../components/favorites2/templates/favorites_content
       else
         include ../../../components/favorites/templates/favorites_content
