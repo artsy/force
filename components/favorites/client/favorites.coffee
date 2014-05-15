@@ -130,7 +130,6 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
     unless @$loadingSpinner.length is 0
       @$favoriteArtworks.append( @$loadingSpinner = $('<div class="loading-spinner"></div>') )
     @$loadingSpinner.show()
-  doneRenderLoading: -> @$loadingSpinner.hide()
 
-module.exports.init = ->
-  new FavoritesView el: $('#favorites')
+  doneRenderLoading: ->
+    @$loadingSpinner.hide()
