@@ -2,6 +2,7 @@ _                       = require 'underscore'
 Backbone                = require 'backbone'
 sd                      = require('sharify').data
 CurrentUser             = require '../../../models/current_user.coffee'
+Artwork                 = require '../../../models/artwork.coffee'
 Artworks                = require '../../../collections/artworks.coffee'
 hintTemplate            = -> require('../templates/empty_hint.jade') arguments...
 favoritesStatusTemplate = -> require('../templates/favorites_status.jade') arguments...
@@ -11,6 +12,41 @@ SuggestedGenesView      = require '../../../components/suggested_genes/view.coff
 ShareView               = require '../../../components/share/view.coffee'
 PublishModal            = require '../../../components/publish_modal/view.coffee'
 mediator                = require '../../../lib/mediator.coffee'
+
+module.exports.UserFavorites = class UserFavorites extends Artworks
+
+  model: Artwork
+
+  initialize: (models, options) ->
+    { @user } = options
+    @page = 0
+
+  fetchCollections: (options) =>
+    new Backbone.Collection().fetch
+      url: "#{sd.API_URL}/api/v1/collections"
+      data: user_id: @user.get 'id'
+      success: (@collections) =>
+        options.success?()
+
+  fetchNextPage: =>
+    @page++
+    nextPageArtworks = new Artworks
+    done = _.after @collections.length, =>
+      @set nextPageArtworks, remove: false
+      @trigger 'nextPage', nextPageArtworks
+      @trigger 'end' if nextPageArtworks.length is 0
+    @collections.each (collection) =>
+      new Artworks().fetch
+        url: "#{sd.API_URL}/api/v1/collection/#{collection.get 'id'}/artworks"
+        data:
+          size: 10
+          sort: "-position"
+          private: true
+          user_id: @user.get('id')
+          page: @page
+        complete: done
+        success: (artworks) =>
+          nextPageArtworks.add artworks.models
 
 module.exports.FavoritesView = class FavoritesView extends Backbone.View
 
@@ -22,47 +58,27 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
 
   initialize: (options) ->
     { @pageSize } = _.defaults options or {}, @defaults
-    @setupCurrentUser()
-
-    @collection ?= new Artworks()
-    @listenTo @collection, "request", @renderLoading
-    @listenTo @collection, "sync error", @doneRenderLoading
-    @listenTo @collection, "sync error", @render
-
-    @params = new Backbone.Model
-      size: @pageSize
-      sort: "-position"
-      private: true
-      user_id: @currentUser.get('id')
-    @params.on 'change:page', =>
-      @collection.fetch
-        url: "#{sd.API_URL}/api/v1/collection/saved-artwork/artworks"
-        data: @params.toJSON()
-
     @$favoriteArtworks = @$('.favorite-artworks')
-    @$loadingSpinner = @$('.favorite-artworks .loading-spinner')
+    @$window = $(window)
+    @currentUser = CurrentUser.orNull()
+    @currentUser?.initializeDefaultArtworkCollection()
+
+    # Setup and all favorites collection and listen to events for infinite scroll
+    @favorites = new UserFavorites [], user: @currentUser
+    @favorites.on 'nextPage', @onNextPage
+    @favorites.on 'end', @onEnd
+    @$el.infiniteScroll @favorites.fetchNextPage
+
+    # Setup initial render
     @initializeArtworkColumns()
-    @loadNextPage(); @$el.infiniteScroll @loadNextPage
+    @favorites.fetchCollections success: => @favorites.fetchNextPage()
     @setupStatus()
     @setupShareButton()
 
-  initializeArtworkColumns: ->
-    minWidth = 850
-    maxWidth = 1120
-    containerWidth = @$favoriteArtworks.width()
-    width = Math.max(minWidth, Math.min(containerWidth, maxWidth))
-    @artworkColumnsView = new ArtworkColumnsView
-      el: @$favoriteArtworks
-      collection: @collection
-      numberOfColumns: 4
-      gutterWidth: 40
-      totalWidth: width
-      artworkSize: 'tall'
-      allowDuplicates: true
-
-  setupCurrentUser: ->
-    @currentUser = CurrentUser.orNull()
-    @currentUser?.initializeDefaultArtworkCollection()
+  #
+  # Methods for the initial "Would you like to make favorites public?" dialog
+  # and "Favorite works are Public" toggle
+  #
 
   setupStatus: ->
     @savedArtworkCollection = new Backbone.Model()
@@ -78,32 +94,17 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
     # intercept click events before bubbling up to ShareView
     @$('[class^="share-to-"]').on 'click', @checkStatusBeforeSharing
 
-  setupShareButton: ->
-    new ShareView el: @$('.favorites-share')
+  # Check the favorites status and show the status dialog instead of
+  # sharing window if it's private.
+  checkStatusBeforeSharing: (e) =>
+    e.preventDefault()
+    if @savedArtworkCollection.get('private') ? true
+      @showStatusDialog()
+      e.stopPropagation()
 
-  render: (col, res) =>
-    @$favoriteArtworks.attr 'data-state',
-      if      col.length is 0 and @params.get('page') is 1 then 'no-results'
-      else if col.length is 0 then 'finished-paging'
-      else ''
-    @artworkColumnsView.appendArtworks col.models if col.length > 0
-    @showEmptyHint() if @$favoriteArtworks.attr('data-state') is 'no-results'
-
-  # $.fn.infiniteScroll callback
-  loadNextPage: =>
-    return if @$favoriteArtworks.attr('data-state') is 'no-results' or
-              @$favoriteArtworks.attr('data-state') is 'finished-paging'
-    @params.set page: (@params.get('page') + 1) or 1
-
-  showEmptyHint: ->
-    @$('.follows-empty-hint').html $( hintTemplate type: 'artworks' )
-    (new SuggestedGenesView
-      el: @$('.suggested-genes')
-      user: @currentUser
-    ).render()
-
-  makePublic: ->
-    @savedArtworkCollection.set(private: false).save user_id: @currentUser.get('id')
+  renderStatus: () ->
+    isPrivate = @savedArtworkCollection.get('private') ? true
+    @$('.favorites-privacy').html $( favoritesStatusTemplate private: isPrivate)
 
   showStatusDialog: ->
     new PublishModal
@@ -113,23 +114,44 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
       publishEvent : 'favorites:make:public'
       message      : 'Your favorites need to be public to share. Make them public now?'
 
-  renderStatus: () ->
-    isPrivate = @savedArtworkCollection.get('private') ? true
-    @$('.favorites-privacy').html $( favoritesStatusTemplate private: isPrivate)
+  makePublic: ->
+    @savedArtworkCollection.set(private: false).save user_id: @currentUser.get('id')
 
-  # Check the favorites status and show the status dialog instead of
-  # sharing window if it's private.
-  checkStatusBeforeSharing: (e) =>
-    e.preventDefault()
+  #
+  # Initial rendering methods
+  #
 
-    if @savedArtworkCollection.get('private') ? true
-      @showStatusDialog()
-      e.stopPropagation()
+  showEmptyHint: ->
+    @$('.follows-empty-hint').html $( hintTemplate type: 'artworks' )
+    (new SuggestedGenesView
+      el: @$('.suggested-genes')
+      user: @currentUser
+    ).render()
 
-  renderLoading: ->
-    unless @$loadingSpinner.length is 0
-      @$favoriteArtworks.append( @$loadingSpinner = $('<div class="loading-spinner"></div>') )
-    @$loadingSpinner.show()
+  initializeArtworkColumns: ->
+    minWidth = 850
+    maxWidth = 1120
+    containerWidth = @$favoriteArtworks.width()
+    width = Math.max(minWidth, Math.min(containerWidth, maxWidth))
+    @artworkColumnsView = new ArtworkColumnsView
+      el: @$favoriteArtworks
+      collection: @favorites
+      numberOfColumns: 4
+      gutterWidth: 40
+      totalWidth: width
+      artworkSize: 'tall'
+      allowDuplicates: true
 
-  doneRenderLoading: ->
-    @$loadingSpinner.hide()
+  setupShareButton: ->
+    new ShareView el: @$('.favorites-share')
+
+  #
+  # Infinite scroll methods
+  #
+
+  onNextPage: (col) =>
+    @artworkColumnsView.appendArtworks col.models
+
+  onEnd: =>
+    @$('.favorite-artworks-spinner').hide()
+    @$window.off 'infiniteScroll'
