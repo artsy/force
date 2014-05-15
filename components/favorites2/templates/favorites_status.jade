@@ -1,0 +1,7 @@
+.favorites-status
+  if private
+    p Favorite works are Private &ndash; 
+      a.make-public Make Public
+  else
+    p Favorite works are Public &ndash; 
+      a.make-private( href="/profile/edit" ) Edit Profile Settings

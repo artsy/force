@@ -1,0 +1,11 @@
+.follows-empty
+  case type
+    when "artists"
+      p.hint Follow artists to get notified about new shows and works
+    when "genes"
+      p.hint Follow categories to improve your recommendations
+    when "artworks"
+      p.hint
+        | Add works to your favorites by clicking 
+        span.circle-control-container: i.icon-heart
+        |  on artworks

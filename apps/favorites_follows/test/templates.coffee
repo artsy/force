@@ -1,6 +1,7 @@
 jade            = require 'jade'
 path            = require 'path'
 fs              = require 'fs'
+CurrentUser     = require '../../../models/current_user'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../templates/#{templateName}.jade"
@@ -14,6 +15,7 @@ describe 'Favorites and follows tab', ->
     beforeEach ->
       @template = render('follows')(
         sd: { type: 'artists', CURRENT_PATH: '/following/artists' }
+        user: new CurrentUser({ lab_features: [] })
       )
 
     it 'should contain three tabs for favorite artworks and followings', ->
@@ -32,6 +34,7 @@ describe 'Favorites and follows tab', ->
     beforeEach ->
       @template = render('follows')(
         sd: { type: 'genes', CURRENT_PATH: '/following/genes' }
+        user: new CurrentUser({ lab_features: [] })
       )
 
     it 'should contain three tabs for favorite artworks and followings', ->
@@ -50,6 +53,7 @@ describe 'Favorites and follows tab', ->
     beforeEach ->
       @template = render('favorites')(
         sd: { CURRENT_PATH: '/favorites' }
+        user: new CurrentUser({ lab_features: [] })
       )
 
     it 'should contain three tabs for favorite artworks and followings', ->
