@@ -15,7 +15,7 @@ mixin filter-dropdown(mainText, plural, attr, values, hrefRoot)
             data-val=val
             href=(
               hrefRoot && hrefRoot.match('booths') ?
-              "#{hrefRoot ? hrefRoot : sd.CURRENT_PATH + '/artworks'}/#{attr}/#{val}" :
+              "#{hrefRoot}/#{attr}/#{val}" :
               "#{hrefRoot ? hrefRoot : sd.CURRENT_PATH + '/artworks'}?#{attr}=#{val}"
             )
           )

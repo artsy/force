@@ -37,7 +37,7 @@ describe 'FairHeaderView', ->
       html = @$template.html()
       html.should.include '<a alt="Armory Show 2013" href="/the-armory-show" class="fair-logo">'
       html.should.include 'fair-search-input'
-      html.should.include '<a href="/the-armory-show/browse" class="garamond-tab">Browse</a>'
+      html.should.include '<a href="/the-armory-show/browse/booths" class="garamond-tab">Browse</a>'
       html.should.include '<a href="/the-armory-show/info" class="garamond-tab">Info</a>'
 
   describe '#initialize', ->

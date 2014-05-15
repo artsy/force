@@ -28,7 +28,7 @@ sp:
 	API_URL=http://api.artsy.net $(BIN)/coffee index.coffee
 
 # Run all of the project-level tests, followed by app-level tests
-test: assets-fast
+test:
 	$(BIN)/mocha $(shell find test -name '*.coffee' -not -path 'test/helpers/*')
 	$(BIN)/mocha $(shell find components/*/test -name '*.coffee' -not -path 'test/helpers/*')
 	$(BIN)/mocha $(shell find components/**/*/test -name '*.coffee' -not -path 'test/helpers/*')

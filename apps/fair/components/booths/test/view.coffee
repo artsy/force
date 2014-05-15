@@ -15,7 +15,7 @@ describe 'BoothsView', ->
       Backbone.$ = $
       sinon.stub Backbone, 'sync'
       $.fn.hidehover = sinon.stub()
-      benv.render resolve(__dirname, '../section.jade'), { fair: @fair }, =>
+      benv.render resolve(__dirname, '../section.jade'), { fair: @fair, sd: {} }, =>
         BoothsView = benv.requireWithJadeify resolve(__dirname, '../view'), ['navSectionsTemplate']
         for klass in ['FilterNav', 'BorderedPulldown', 'ShowsFeed']
           @[klass] = (opts) -> _.extend @, opts

@@ -14,7 +14,7 @@ describe 'FairBrowseView', ->
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       sinon.stub Backbone, 'sync'
-      benv.render resolve(__dirname, '../template.jade'), { fair: @fair }, =>
+      benv.render resolve(__dirname, '../template.jade'), { fair: @fair, sd: {} }, =>
         FairBrowseView = benv.require resolve(__dirname, '../view')
         for klass in ['BoothsView', 'FilterArtworksView']
           @[klass] = (opts) -> _.extend @, opts
