@@ -114,8 +114,3 @@ module.exports.FollowsView = class FollowsView extends Backbone.View
       _.defer ->
         view.hideFirstRow()
         view.removeHiddenItems()
-
-module.exports.init = ->
-  new FollowsView
-    el: $('body')
-    pageSize: 10
