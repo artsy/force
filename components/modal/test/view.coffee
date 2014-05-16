@@ -12,8 +12,8 @@ describe 'ModalView', ->
       benv.expose { $: benv.require 'jquery' }
 
       Backbone.$                  = $
-      $.support.transition        = { end: '' }
-      $.fn.emulateTransitionEnd   = -> sinon.stub()
+      $.support.transition        = end: 'transitionend'
+      $.fn.emulateTransitionEnd   = -> @trigger $.support.transition.end
 
       benv.render resolve(__dirname, '../template.jade'), {}, =>
         @closeSpy     = sinon.spy ModalView.prototype, 'close'
@@ -56,6 +56,22 @@ describe 'ModalView', ->
       it 'disables scrolling on the document body', ->
         $('body').hasClass('is-modal').should.be.ok
 
+      it 'sets the default classes', ->
+        classes = @view.$el.attr('class')
+        classes.should.include 'is-fade-in'
+        classes.should.include 'has-backdrop'
+
+      it 'should be able to accept backdrop and transition options', ->
+        modal = new ModalView($container: $('#modal-container'), backdrop: false)
+        classes = modal.$el.attr('class')
+        classes.should.include 'is-fade-in'
+        classes.should.include 'has-nobackdrop'
+
+        modal = new ModalView($container: $('#modal-container'), backdrop: false, transition: 'slide')
+        classes = modal.$el.attr('class')
+        classes.should.include 'is-slide-in'
+        classes.should.include 'has-nobackdrop'
+
     it 'triggers \'modal:opened\' on the mediator', ->
       @mediatorSpy.args[0][0].should.equal 'modal:opened'
 
@@ -63,6 +79,13 @@ describe 'ModalView', ->
     it 'should set the $el state', ->
       @view.close()
       @view.$el.data('state').should.equal 'closed'
+
+    it 'should accept a callback', (done) ->
+      @view.close done
+
+    it 'should ignore arguments that arent functions', (done) ->
+      @view.close 'ignoreme'
+      done()
 
   describe 'interaction', ->
     it 'removes itself when the close button is clicked', ->

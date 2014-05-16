@@ -25,7 +25,7 @@ module.exports = class ModalView extends Backbone.View
     'click.internal .modal-backdrop' : '__announceBackdropClick__'
 
   initialize: (options = {}) ->
-    { @width } = _.defaults options, width: '400px'
+    { @width, @transition, @backdrop } = _.defaults options, width: '400px', transition: 'fade', backdrop: true
 
     _.extend @templateData, autofocus: @autofocus()
 
@@ -79,15 +79,22 @@ module.exports = class ModalView extends Backbone.View
   # then fade back in and re-center
   reRender: ->
     Transition.fade @$body,
-      out:  => @$body.html @template(@templateData)
-      in:   => @updatePosition()
+      out: =>
+        @$body.html @template(@templateData)
+        @trigger 'rerendered'
+      in: =>
+        @updatePosition()
 
   setWidth: (width) ->
     @$dialog.css { width: width or @width }
 
   setup: ->
-    # Render outer
-    @$el.html modalTemplate()
+    backdropClass = if @backdrop then 'has-backdrop' else 'has-nobackdrop'
+
+    @$el.
+      addClass("is-#{@transition}-in #{backdropClass}").
+      # Render outer
+      html modalTemplate()
 
     # Render inner
     @$body = @$('.modal-body')
@@ -115,7 +122,7 @@ module.exports = class ModalView extends Backbone.View
 
     this
 
-  close: ->
+  close: (cb) ->
     @$window.off 'keyup', @escape
     @$window.off 'resize', @resize
 
@@ -130,4 +137,6 @@ module.exports = class ModalView extends Backbone.View
         mediator.trigger 'modal:closed'
 
         @remove()
+
+        cb() if _.isFunction cb
       ).emulateTransitionEnd 250
