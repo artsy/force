@@ -1,0 +1,35 @@
+cover-width = 230px
+
+.favorites2-collections
+  position relative
+  min-height 250px
+  margin-top 54px
+
+.favorites2-collection
+  display inline-block
+  margin 0 50px 0 20px
+
+.favorites2-cover
+  width cover-width
+  height cover-width
+  position relative
+  li
+    background-size cover
+    background-position center center
+    width cover-width
+    height cover-width
+    position absolute
+
+for i in 1 2 3
+  .favorites2-cover li:nth-child({i})
+    top (i - 1) * -10px
+    left (i - 1) * -10px
+    z-index 3 - i
+
+.favorites2-collection-title
+  avant-garde()
+  margin-top 15px
+  font-size 15px
+
+.favorites2-collection-num-works
+  font-size 17px

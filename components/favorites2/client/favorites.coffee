@@ -9,9 +9,9 @@ SuggestedGenesView = require '../../../components/suggested_genes/view.coffee'
 ShareView = require '../../../components/share/view.coffee'
 mediator = require '../../../lib/mediator.coffee'
 hintTemplate = -> require('../templates/empty_hint.jade') arguments...
+collectionsTemplate = -> require('../templates/collections.jade') arguments...
 
-COLUMNS_MIN_WIDTH = 850
-COLUMNS_MAX_WIDTH = 1120
+PAGE_SIZE = 10
 
 module.exports.Favorites = class Favorites extends Artworks
 
@@ -26,6 +26,9 @@ module.exports.Favorites = class Favorites extends Artworks
       url: "#{sd.API_URL}/api/v1/collections"
       data: user_id: @user.get 'id'
       success: (@collections) =>
+        @collections.each (col) ->
+          col.artworks = new Artworks
+          col.artworks.url = "#{sd.API_URL}/api/v1/collection/#{col.get 'id'}/artworks"
         options?.success?()
 
   fetchNextPage: (options) =>
@@ -37,33 +40,29 @@ module.exports.Favorites = class Favorites extends Artworks
       @trigger 'end' if nextPageArtworks.length is 0
       options?.success?()
     @collections.each (collection) =>
-      new Artworks().fetch
-        url: "#{sd.API_URL}/api/v1/collection/#{collection.get 'id'}/artworks"
+      collection.artworks.fetch
         data:
-          size: 10
+          size: PAGE_SIZE
           sort: "-position"
           private: true
           user_id: @user.get('id')
           page: @page
+        remove: false
         complete: done
-        success: (artworks) =>
-          nextPageArtworks.add artworks.models
+        success: (a, res) => nextPageArtworks.add res
 
 module.exports.FavoritesView = class FavoritesView extends Backbone.View
 
   initialize: (options) ->
     @user = CurrentUser.orNull()
     @favorites = new Favorites [], user: @user
-    @shareView = new ShareView el: @$('.favorites-share')
+    @shareView = new ShareView el: @$('.favorites2-share')
     @artworkColumnsView = new ArtworkColumnsView
-      el: @$('.favorite-artworks')
+      el: @$('.favorites2-artworks-list')
       collection: @favorites
       numberOfColumns: 4
       gutterWidth: 40
-      totalWidth: Math.max(
-        COLUMNS_MIN_WIDTH,
-        Math.min(@$('.favorite-artworks').width(), COLUMNS_MAX_WIDTH)
-      )
+      totalWidth: @$('.favorites2-artworks-list').width()
       artworkSize: 'tall'
       allowDuplicates: true
     @favorites.on 'nextPage', @appendArtworks
@@ -76,9 +75,10 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
       return @showEmptyHint() if @favorites.collections.length is 0
       @favorites.fetchNextPage success: =>
         return @showEmptyHint() if @favorites.length is 0
+        @renderCollections()
 
   showEmptyHint: ->
-    @$('.follows-empty-hint').html hintTemplate type: 'artworks'
+    @$('.favorites2-follows-empty-hint').html hintTemplate type: 'artworks'
     new SuggestedGenesView(
       el: @$('.suggested-genes')
       user: @user
@@ -89,5 +89,8 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
     @artworkColumnsView.appendArtworks col.models
 
   endInfiniteScroll: =>
-    @$('.favorite-artworks-spinner').hide()
+    @$('.favorites2-artworks-spinner').hide()
     $(window).off 'infiniteScroll'
+
+  renderCollections: =>
+    @$('.favorites2-collections').html collectionsTemplate collections: @favorites.collections.models

@@ -1,5 +1,7 @@
-for collection in collections
-  .favorites-collection
-    ul.favorites-collection-works
-    h3= collection.get('name')
-    h2 100 Works
+for collection, i in collections
+  .favorites2-collection
+    ul.favorites2-cover
+      for artwork in collection.artworks.first(3)
+        li( style="background-image: url(#{artwork.defaultImageUrl('tall')})")
+    .favorites2-collection-title!= collection.get('name')
+    .favorites2-collection-num-works 100 works
