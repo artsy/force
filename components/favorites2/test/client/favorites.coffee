@@ -23,7 +23,8 @@ describe 'FavoritesView', ->
         )
         mod.__set__ 'mediator', @mediator = trigger: sinon.stub(), on: sinon.stub()
         CurrentUser = mod.__get__ 'CurrentUser'
-        CurrentUser.orNull = -> new CurrentUser fabricate 'user'
+        sinon.stub CurrentUser, 'orNull'
+        CurrentUser.orNull.returns new CurrentUser fabricate 'user'
         stubChildClasses mod, this,
           ['ArtworkColumnsView', 'SuggestedGenesView', 'ShareView']
           ['appendArtworks', 'render']
@@ -31,6 +32,7 @@ describe 'FavoritesView', ->
         done()
 
   afterEach ->
+    CurrentUser.orNull.restore()
     benv.teardown()
     Backbone.sync.restore()
 
