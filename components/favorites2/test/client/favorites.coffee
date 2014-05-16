@@ -3,9 +3,9 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 CurrentUser = require '../../../../models/current_user'
+{ stubChildClasses } = require '../../../../test/helpers/stubs'
 { fabricate } = require 'antigravity'
 { resolve } = require 'path'
-{ stubChildClasses } = require '../../../../test/helpers/stubs'
 
 describe 'FavoritesView', ->
 
@@ -19,7 +19,7 @@ describe 'FavoritesView', ->
       benv.render resolve(__dirname, '../fixtures/favorites.jade'), { sd: {} }, =>
         { FavoritesView } = mod = benv.requireWithJadeify(
           resolve(__dirname, '../../client/favorites')
-          ['hintTemplate']
+          ['hintTemplate', 'collectionsTemplate']
         )
         mod.__set__ 'mediator', @mediator = trigger: sinon.stub(), on: sinon.stub()
         CurrentUser = mod.__get__ 'CurrentUser'
@@ -73,6 +73,18 @@ describe 'FavoritesView', ->
       @view.artworkColumnsView.appendArtworks.args[0][0][0].get('foo').should.equal 'bar'
 
 
+  describe '#renderCollections', ->
+
+    it 'renders the collections', ->
+      @view.$el.html "<div class='favorites2-collections'></div>"
+      @view.favorites.collections = new Backbone.Collection(
+        { id: 'bathroom-warhols', name: 'Warhols for my bathroom.'}
+      )
+      @view.favorites.collections.first().artworks = new Backbone.Collection
+      @view.renderCollections()
+      @view.$el.html().should.include 'Warhols for my bathroom.'
+
+
 describe 'Favorites', ->
 
   beforeEach ->
@@ -92,15 +104,32 @@ describe 'Favorites', ->
       Backbone.sync.args[0][2].success [{ id: 'saved-artwork' }]
       @favorites.collections.first().get('id').should.equal 'saved-artwork'
 
+    it 'sets up artworks on the collection to store the updates', ->
+      @favorites.fetchCollections()
+      Backbone.sync.args[0][2].success [{ id: 'saved-artwork' }]
+      @favorites.collections.first().artworks.length.should.equal 0
+
   describe '#fetchNextPage', ->
 
-    it 'fetches each collections artworks in parallel and triggers a nextPage with that set', (done) ->
+    beforeEach ->
       @favorites.collections = new Backbone.Collection [{ id: 'saved-artwork' }, { id: 'bathroom-warhols' }]
+      @favorites.collections.at(0).artworks = new Backbone.Collection
+      @favorites.collections.at(1).artworks = new Backbone.Collection
+      @resolve = ->
+        for args, i in _.last(Backbone.sync.args, 2)
+          args[2].success [{ id: 'foo' + i }]
+          args[2].complete []
+
+    it 'fetches each collections artworks in parallel and triggers a nextPage with that set', (done) ->
       @favorites.fetchNextPage()
       @favorites.on 'nextPage', (artworks) ->
         artworks.at(0).get('id').should.equal 'foo0'
         artworks.at(1).get('id').should.equal 'foo1'
         done()
-      for args, i in _.last(Backbone.sync.args, 2)
-        args[2].success [{ id: 'foo' + i }]
-        args[2].complete []
+      @resolve()
+
+    it 'updates the collections on the sets', ->
+      @favorites.fetchNextPage()
+      @resolve()
+      @favorites.collections.first().artworks.first().get('id').should.equal 'foo0'
+

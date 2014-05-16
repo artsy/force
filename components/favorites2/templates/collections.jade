@@ -2,6 +2,6 @@ for collection, i in collections
   .favorites2-collection
     ul.favorites2-cover
       for artwork in collection.artworks.first(3)
-        li( style="background-image: url(#{artwork.defaultImageUrl()})")
+        li( style="background-image: url(#{artwork.defaultImageUrl('tall')})")
     .favorites2-collection-title!= collection.get('name')
     .favorites2-collection-num-works 100 works
