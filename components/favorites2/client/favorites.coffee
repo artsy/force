@@ -10,6 +10,9 @@ ShareView = require '../../../components/share/view.coffee'
 mediator = require '../../../lib/mediator.coffee'
 hintTemplate = -> require('../templates/empty_hint.jade') arguments...
 
+COLUMNS_MIN_WIDTH = 850
+COLUMNS_MAX_WIDTH = 1120
+
 module.exports.Favorites = class Favorites extends Artworks
 
   model: Artwork
@@ -23,7 +26,7 @@ module.exports.Favorites = class Favorites extends Artworks
       url: "#{sd.API_URL}/api/v1/collections"
       data: user_id: @user.get 'id'
       success: (@collections) =>
-        options.success?()
+        options?.success?()
 
   fetchNextPage: (options) =>
     @page++
@@ -32,7 +35,7 @@ module.exports.Favorites = class Favorites extends Artworks
       @set nextPageArtworks.models, remove: false
       @trigger 'nextPage', nextPageArtworks
       @trigger 'end' if nextPageArtworks.length is 0
-      options.success?()
+      options?.success?()
     @collections.each (collection) =>
       new Artworks().fetch
         url: "#{sd.API_URL}/api/v1/collection/#{collection.get 'id'}/artworks"
@@ -57,7 +60,10 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
       collection: @favorites
       numberOfColumns: 4
       gutterWidth: 40
-      totalWidth: Math.max(850, Math.min(@$('.favorite-artworks').width(), 1120))
+      totalWidth: Math.max(
+        COLUMNS_MIN_WIDTH,
+        Math.min(@$('.favorite-artworks').width(), COLUMNS_MAX_WIDTH)
+      )
       artworkSize: 'tall'
       allowDuplicates: true
     @favorites.on 'nextPage', @appendArtworks
