@@ -1,7 +1,15 @@
 for collection, i in collections
   .favorites2-collection
     ul.favorites2-cover
-      for artwork in collection.artworks.first(3)
-        li( style="background-image: url(#{artwork.defaultImageUrl('tall')})")
+      if collection.artworks.length == 0
+        li.favorites2-empty-cover
+      else
+        for artwork in collection.artworks.first(3)
+          li( style="background-image: url(#{artwork.defaultImageUrl('tall')})")
     .favorites2-collection-title!= collection.get('name')
-    .favorites2-collection-num-works 100 works
+    //- .favorites2-collection-num-works 100 works
+button.favorites2-new-collection
+  .favorites2-new-collection-icon
+    include ../images/new-collection.svg
+  br
+  | Create New Set

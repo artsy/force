@@ -39,7 +39,7 @@ module.exports = class ArtworkCollection extends Backbone.Model
   pendingRequests: []
   completedRequests: []
 
-  url: -> "#{sd.API_URL}/api/v1/collection/#{@get('id')}"
+  urlRoot: -> "#{sd.API_URL}/api/v1/collection"
 
   defaults:
     id: 'saved-artwork'

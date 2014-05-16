@@ -1,4 +1,7 @@
+@import '../../stylus_lib'
+
 cover-width = 230px
+cover-offset = 10px
 
 .favorites2-collections
   position relative
@@ -8,6 +11,7 @@ cover-width = 230px
 .favorites2-collection
   display inline-block
   margin 0 50px 0 20px
+  cursor pointer
 
 .favorites2-cover
   width cover-width
@@ -19,12 +23,16 @@ cover-width = 230px
     width cover-width
     height cover-width
     position absolute
+    transition margin 0.3s
 
 for i in 1 2 3
   .favorites2-cover li:nth-child({i})
-    top (i - 1) * -10px
-    left (i - 1) * -10px
-    z-index 3 - i
+    top (-((i - 1) * cover-offset))
+    left (-((i - 1) * cover-offset))
+    z-index 0 - i
+  .favorites2-collection:hover .favorites2-cover li:nth-child({i}):not(:first-child)
+    margin-left (-((cover-offset / 2) * i))
+    margin-top (-((cover-offset / 2) * i))
 
 .favorites2-collection-title
   avant-garde()
@@ -33,3 +41,61 @@ for i in 1 2 3
 
 .favorites2-collection-num-works
   font-size 17px
+
+.favorites2-new-collection, .favorites2-new-collection::before
+  avant-garde()
+  width cover-width
+  height cover-width
+  border 1px solid gray-light-color
+  background white
+  color gray-color
+  font-size 12px
+  vertical-align top
+  padding 0
+  margin 0
+  position relative
+  cursor pointer
+  margin-left 20px
+
+.favorites2-new-collection-icon
+  width 74px
+  height 80px
+  display inline-block
+  margin-bottom 30px
+
+.favorites2-new-collection, .favorites2-new-collection-icon *, .favorites2-new-collection::before
+  transition border-color 0.3s, fill 0.3s, color 0.3s
+
+.favorites2-new-collection:hover
+  border-color purple-color
+  color purple-color
+  &::before
+    border-color purple-color
+  .favorites2-new-collection-icon
+    path, polygon
+      fill purple-color
+
+.favorites2-new-collection::before
+  content '.'
+  position absolute
+  color transparent
+  width cover-width
+  height cover-width
+  top (cover-offset * -1)
+  left (cover-offset * -1)
+  display block
+  z-index -1
+  margin-left 0
+
+.favorites2-edit-modal
+  padding default-modal-padding
+  input
+    width 100%
+    display block
+    margin-bottom 50px
+
+.favorites2-edit-modal-submit
+  float right
+
+.favorites2-empty-cover
+  background #eee

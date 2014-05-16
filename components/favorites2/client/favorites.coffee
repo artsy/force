@@ -1,17 +1,21 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
+EditCollectionModal =  require './edit_collection_modal.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 Artwork = require '../../../models/artwork.coffee'
 Artworks = require '../../../collections/artworks.coffee'
-ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
-SuggestedGenesView = require '../../../components/suggested_genes/view.coffee'
-ShareView = require '../../../components/share/view.coffee'
+ArtworkCollection = require '../../../models/artwork_collection.coffee'
+ArtworkColumnsView = require '../../artwork_columns/view.coffee'
+SuggestedGenesView = require '../../suggested_genes/view.coffee'
+ShareView = require '../../share/view.coffee'
 mediator = require '../../../lib/mediator.coffee'
 hintTemplate = -> require('../templates/empty_hint.jade') arguments...
 collectionsTemplate = -> require('../templates/collections.jade') arguments...
 
 PAGE_SIZE = 10
+
+module.exports.Collection = class
 
 module.exports.Favorites = class Favorites extends Artworks
 
@@ -20,16 +24,11 @@ module.exports.Favorites = class Favorites extends Artworks
   initialize: (models, options) ->
     { @user } = options
     @page = 0
-
-  fetchCollections: (options) =>
-    new Backbone.Collection().fetch
-      url: "#{sd.API_URL}/api/v1/collections"
-      data: user_id: @user.get 'id'
-      success: (@collections) =>
-        @collections.each (col) ->
-          col.artworks = new Artworks
-          col.artworks.url = "#{sd.API_URL}/api/v1/collection/#{col.get 'id'}/artworks"
-        options?.success?()
+    @collections = new Backbone.Collection
+    @collections.url = "#{sd.API_URL}/api/v1/collections?user_id=" + @user.get 'id'
+    @collections.on 'add', (col) =>
+      col.artworks = new Artworks
+      col.artworks.url = "#{sd.API_URL}/api/v1/collection/#{col.get 'id'}/artworks"
 
   fetchNextPage: (options) =>
     @page++
@@ -67,11 +66,12 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
       allowDuplicates: true
     @favorites.on 'nextPage', @appendArtworks
     @favorites.on 'end', @endInfiniteScroll
+    @favorites.collections.on 'add', => _.defer @renderCollections
     @$el.infiniteScroll @favorites.fetchNextPage
     @setup()
 
   setup: ->
-    @favorites.fetchCollections success: =>
+    @favorites.collections.fetch success: =>
       return @showEmptyHint() if @favorites.collections.length is 0
       @favorites.fetchNextPage success: =>
         return @showEmptyHint() if @favorites.length is 0
@@ -94,3 +94,11 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
 
   renderCollections: =>
     @$('.favorites2-collections').html collectionsTemplate collections: @favorites.collections.models
+
+  events:
+    'click .favorites2-new-collection': 'openNewModal'
+
+  openNewModal: ->
+    collection = new ArtworkCollection userId: @user.get('id'), id: null, user_id: @user.get('id')
+    new EditCollectionModal width: 500, collection: collection
+    collection.on 'request', => @favorites.collections.add collection
