@@ -2,40 +2,48 @@
 @import './empty_hint'
 @import './follows_item'
 @import './header'
+@import './collections'
 
-.favorites-container
-  .favorite-artworks
-    margin 0 auto
+.favorites2-artworks
+  margin 0 auto
+  position relative
+  text-align center
+  .loading-spinner
+    display none
     position relative
+    margin 150px 0
+  h1
+    padding 60px 0 26px 0
+    margin-bottom 60px
+    font-size 32px
+    text-align left
+    border-bottom 1px solid gray-light-color
+
+.favorites2-actions
+  position relative
+  margin 10px auto
+  max-width 1120px
+  a
+    text-decoration none
+  .favorites2-share
     text-align center
-    .loading-spinner
-      display none
-      position relative
-      margin 150px 0
-  .favorites-actions
-    position relative
-    margin 10px auto
-    max-width 1120px
+  .favorites2-privacy
+    position absolute
+    right 0
+    top 0
+    line-height 37px
     a
-      text-decoration none
-    .favorites-share
-      text-align center
-    .favorites-privacy
-      position absolute
-      right 0
-      top 0
-      line-height 37px
-      a
-        border-bottom 1px solid #777
+      border-bottom 1px solid #777
 
-  .artwork-item
+.favorites2-artworks-list .artwork-item
+  .overlay-button-save
+    &[data-state='saved']
+      opacity 0
+  &:hover
     .overlay-button-save
-      &[data-state='saved']
-        opacity 0
-    &:hover
-      .overlay-button-save
-        opacity 1
+      opacity 1
 
-.favorite-artworks-spinner
+.favorites2-artworks-spinner
   margin 100px 0
   position relative
+  display block !important

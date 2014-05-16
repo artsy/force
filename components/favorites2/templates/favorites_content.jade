@@ -1,11 +1,14 @@
 include ./header
-header.follows-header
+header.favorites2-follows-header
   h1.avant-garde-header-center Favorites &amp; Follows
   +follows-tab-nav
   include favorites_action
 main
-  section.favorite-artworks
-  .favorite-artworks-spinner
+  section.favorites2-collections
     .loading-spinner
-  section.follows-empty-hint
+  section.favorites2-artworks
+    h1 Saved Works
+    .favorites2-artworks-list
+    .favorites2-artworks-spinner.loading-spinner
+  section.favorites2-follows-empty-hint
   section.suggested-genes

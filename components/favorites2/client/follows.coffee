@@ -73,11 +73,11 @@ module.exports.FollowsView = class FollowsView extends Backbone.View
 
   infiniteScroll: =>
     fold = $(window).height() + $(window).scrollTop()
-    $lastItem = @$('.follows > .follows-item:last')
+    $lastItem = @$('.follows > .favorites2-follows-item:last')
     @loadNextPage() unless fold < $lastItem.offset()?.top + $lastItem.height()
 
   showEmptyHint: () ->
-    @$('.follows-empty-hint').html $( hintTemplate type: sd.KIND+'s' )
+    @$('.favorites2-follows-empty-hint').html $( hintTemplate type: sd.KIND+'s' )
     (new SuggestedGenesView
       el: @$('.suggested-genes')
       user: @currentUser
