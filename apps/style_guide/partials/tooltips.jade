@@ -1,0 +1,42 @@
+h3 Tooltips
+
+article.sg-component
+  h3 Tooltips
+  .sg-component-rendered
+    a.black-tooltip( data-message='Post to Facebook' ): i.icon-facebook
+    a.black-tooltip( data-message='Share on Twitter' ): i.icon-twitter
+    a.black-tooltip( data-message='Pin It on Pinterest' ): i.icon-pinterest
+  pre: code
+    | a.black-tooltip( data-message='Post to Facebook' ): i.icon-facebook
+    | a.black-tooltip( data-message='Share on Twitter' ): i.icon-twitter
+    | a.black-tooltip( data-message='Pin It on Pinterest' ): i.icon-pinterest
+
+article.sg-component
+  h3 Help Tooltip
+  .sg-component-rendered
+    p
+      | Can be displayed
+      span.help-tooltip( data-message='Works in which the idea, planning, and production process are more important than the result. The term gained currency in the 1960s as a result of Sol LeWitt’s 1967 article "Paragraphs on Conceptual Art" in Artforum.' )
+      | inline with content.
+    hr
+    p
+      | They can also be anchored to the top-right
+      span.help-tooltip(
+        data-message  = 'Works in which the idea, planning, and production process are more important than the result. The term gained currency in the 1960s as a result of Sol LeWitt’s 1967 article "Paragraphs on Conceptual Art" in Artforum.'
+        data-anchor   = 'top-right'
+      )
+      | The bottom-left
+      span.help-tooltip(
+        data-message  = 'Works in which the idea, planning, and production process are more important than the result. The term gained currency in the 1960s as a result of Sol LeWitt’s 1967 article "Paragraphs on Conceptual Art" in Artforum.'
+        data-anchor   = 'bottom-left'
+      )
+      | Or the bottom-right
+      span.help-tooltip(
+        data-message  = 'Works in which the idea, planning, and production process are more important than the result. The term gained currency in the 1960s as a result of Sol LeWitt’s 1967 article "Paragraphs on Conceptual Art" in Artforum.'
+        data-anchor   = 'bottom-right'
+      )
+  pre: code
+    | span.help-tooltip( data-message='Works in which the idea, planning [...]' )
+    | span.help-tooltip( data-message='Works in which the idea, planning [...]', data-anchor='top-right' )
+    | span.help-tooltip( data-message='Works in which the idea, planning [...]', data-anchor='bottom-left' )
+    | span.help-tooltip( data-message='Works in which the idea, planning [...]', data-anchor='bottom-right' )
