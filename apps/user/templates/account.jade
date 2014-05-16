@@ -39,19 +39,13 @@ form.settings-form.settings-account-form( class=editAccountIsActive, method="pos
       .artsy-toggle-dot
     .artsy-toggle-label
       | Link my Facebook account
-      .artsy-help-tip
-        .artsy-help-tip-body
-          p Having your account linked will enable quick sharing on Facebook. In the future, it will help us find your friends on Artsy.
-          p <strong> We don't share anything on Facebook without your permission.</strong>
+      .help-tooltip( data-message="Having your account linked will enable quick sharing on Facebook. In the future, it will help us find your friends on Artsy. We don't share anything on Facebook without your permission." )
   .input-group.settings-toggle-twitter
     a#user-link-twitter.artsy-toggle.account-link-twitter( data-state=user.onOffTwitter(), href="" )
       .artsy-toggle-dot
     .artsy-toggle-label
       | Link my Twitter account
-      .artsy-help-tip
-        .artsy-help-tip-body
-          p Having your account linked will enable quick sharing on Twitter. In the future, it will help us find your contacts on Artsy.
-          p <strong>We don't share anything on Twitter without your permission.</strong>
+      .help-tooltip( data-message="Having your account linked will enable quick sharing on Twitter. In the future, it will help us find your contacts on Artsy. We don't share anything on Twitter without your permission." )
 
   label.settings-group-leader.settings-group-label.avant-garde-form-label Email Me&hellip;
 
