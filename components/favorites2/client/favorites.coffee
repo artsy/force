@@ -69,11 +69,13 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
       totalWidth: @$('.favorites2-artworks-list').width()
       artworkSize: 'tall'
       allowDuplicates: true
+    @setup()
+
+  bindEvents: ->
     @favorites.on 'nextPage', @appendArtworks
     @favorites.on 'end', @endInfiniteScroll
     @favorites.collections.on 'add remove change:name', => _.defer @renderCollections
     @$el.infiniteScroll @favorites.fetchNextPage
-    @setup()
 
   setup: ->
     @favorites.collections.fetch success: =>
@@ -81,6 +83,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
       @favorites.fetchNextPage success: =>
         return @showEmptyHint() if @favorites.length is 0
         @renderCollections()
+        @bindEvents()
 
   showEmptyHint: ->
     @$('.favorites2-follows-empty-hint').html hintTemplate type: 'artworks'
@@ -107,7 +110,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
   openNewModal: ->
     collection = new ArtworkCollection userId: @user.get('id'), id: null, user_id: @user.get('id')
     new EditCollectionModal width: 500, collection: collection
-    collection.on 'request', => @favorites.collections.add collection
+    collection.once 'request', => @favorites.collections.add collection
 
   openEditModal: (e) ->
     collection = @favorites.collections.at($(e.currentTarget).parent().index())

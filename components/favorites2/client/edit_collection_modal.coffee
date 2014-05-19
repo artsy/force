@@ -12,6 +12,9 @@ module.exports = class EditCollectionModal extends ModalView
   initialize: ({ @collection }) ->
     super
 
+  postRender: ->
+    @$('input').focus()
+
   events: -> _.extend super,
     'click .favorites2-edit-modal-cancel': 'close'
     'click .favorites2-edit-modal-submit': 'submit'
@@ -20,9 +23,6 @@ module.exports = class EditCollectionModal extends ModalView
   submit: ->
     @collection.save { name: @$('input').val() }
     @close()
-
-  postRender: ->
-    @$('input').focus()
 
   delete: ->
     return unless confirm "Are you sure you want to delete #{@collection.get 'name'}?"

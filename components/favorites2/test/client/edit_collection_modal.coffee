@@ -13,27 +13,42 @@ describe 'FavoritesView', ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
-      $.fn.hidehover = sinon.stub()
-      $.fn.infiniteScroll  = sinon.stub()
       sinon.stub Backbone, 'sync'
       benv.render resolve(__dirname, '../fixtures/favorites.jade'), { sd: {} }, =>
-        { EditCollectionModal } = mod = benv.requireWithJadeify(
-          resolve(__dirname, '../../client/favorites')
+        EditCollectionModal = benv.requireWithJadeify(
+          resolve(__dirname, '../../client/edit_collection_modal')
           ['newTemplate', 'editTemplate']
         )
-        mod.__set__ 'mediator', @mediator = trigger: sinon.stub(), on: sinon.stub()
-        CurrentUser = mod.__get__ 'CurrentUser'
-        sinon.stub CurrentUser, 'orNull'
-        CurrentUser.orNull.returns new CurrentUser fabricate 'user'
-        stubChildClasses mod, this,
-          ['ArtworkColumnsView', 'SuggestedGenesView', 'ShareView']
-          ['appendArtworks', 'render']
-        @view = new FavoritesView el: $('body')
+        EditCollectionModal::initialize = sinon.stub()
+        EditCollectionModal::close = sinon.stub()
+        @view = new EditCollectionModal
+          el: $('body')
+          collection: new Backbone.Model id: 'saved-artwork'
         done()
 
   afterEach ->
-    CurrentUser.orNull.restore()
     benv.teardown()
     Backbone.sync.restore()
 
   describe '#initialize', ->
+
+    it 'adds the collection', ->
+      @view.collection.get('id').should.equal 'saved-artwork'
+
+  describe '#submit', ->
+
+    it 'saves the collection and closes the modal', ->
+      @view.collection.save = sinon.stub()
+      @view.$('input').val 'FooBarBaz'
+      @view.submit()
+      @view.collection.save.called.should.be.ok
+      @view.close.called.should.be.ok
+
+  describe '#delete', ->
+
+    it 'destroys the collection', ->
+      global.confirm = -> true
+      @view.collection.destroy = sinon.stub()
+      @view.delete()
+      @view.collection.destroy.called.should.be.ok
+      delete global.confirm
