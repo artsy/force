@@ -1,9 +1,9 @@
-.save-controls2-container
+.save-controls-two-btn-container
   position absolute
   right 5px
   top 5px
 
-.save-controls2-container .overlay-button, .save-controls2-add-to-collection
+.save-controls-two-btn-container .overlay-button, .save-controls-two-btn-add-to-collection
   width 40px
   height @width
   background-color rgba(0, 0, 0, 0.4)
@@ -14,7 +14,7 @@
   &:hover
     background-color black
 
-.save-controls2-container .overlay-button
+.save-controls-two-btn-container .overlay-button
   iconfont-styling()
   display inline-block
   cursor pointer
@@ -32,21 +32,21 @@
       &.is-clicked
         background-color purple-color
 
-.save-controls2-container .overlay-button-save
+.save-controls-two-btn-container .overlay-button-save
   @extends .overlay-button
   &:before
     content '\e622'
 
 .artwork-item
   &:hover
-    .save-controls2-container .overlay-button-save, .save-controls2-add-to-collection
+    .save-controls-two-btn-container .overlay-button-save, .save-controls-two-btn-add-to-collection
       display inline-block
-  .save-controls2-container .overlay-button-save, .save-controls2-add-to-collection
+  .save-controls-two-btn-container .overlay-button-save, .save-controls-two-btn-add-to-collection
     display none
     &[data-state='saved']
       display inline-block
 
-.save-controls2-add-to-collection
+.save-controls-two-btn-add-to-collection
   margin-left 5px
   svg
     width 18px
@@ -54,16 +54,16 @@
     display inline-block
     margin-top 11px
 
-.save-controls2-modal
+.save-controls-two-btn-modal
   padding default-modal-padding
   clearfix()
 
-.save-controls2-modal-done
+.save-controls-two-btn-modal-done
   float right
   margin-top 10px
   padding 16px 40px 14px 40px
 
-.save-controls2-modal-new-collection
+.save-controls-two-btn-modal-new-collection
   position relative
   margin-bottom 10px
   button
@@ -85,7 +85,7 @@
       background-color purple-color
       color white
 
-.save-controls2-modal-collections
+.save-controls-two-btn-modal-collections
   margin 15px 0
   li
     padding 10px 12px

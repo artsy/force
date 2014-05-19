@@ -22,24 +22,24 @@ module.exports = class SaveControlsModal extends ModalView
     @isLoading()
 
   events: -> _.extend super,
-    'submit .save-controls2-modal-new-collection': 'newCollection'
-    'click .save-controls2-modal-collections li': 'toggleSelected'
-    'click .save-controls2-modal-done': 'done'
+    'submit .save-controls-two-btn-modal-new-collection': 'newCollection'
+    'click .save-controls-two-btn-modal-collections li': 'toggleSelected'
+    'click .save-controls-two-btn-modal-done': 'done'
 
   newCollection: (e) ->
     e.preventDefault()
     collection = new ArtworkCollection
-      name: @$('.save-controls2-modal-new-collection input').val()
+      name: @$('.save-controls-two-btn-modal-new-collection input').val()
       user_id: @user.get('id')
     @collections.add collection
     collection.save()
     false
 
   toggleSelected: (e) ->
-    @$('.save-controls2-modal-collections li').removeClass 'is-selected'
+    @$('.save-controls-two-btn-modal-collections li').removeClass 'is-selected'
     $(e.currentTarget).addClass('is-selected')
 
   done: ->
-    col = @collections.at @$('.save-controls2-modal-collections li.is-selected').index()
+    col = @collections.at @$('.save-controls-two-btn-modal-collections li.is-selected').index()
     col.saveArtwork @model.get('id')
     @close()

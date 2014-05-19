@@ -44,7 +44,7 @@ module.exports = class SaveControls extends Backbone.View
 
   events:
     'click .overlay-button-save': 'save'
-    'click .save-controls2-add-to-collection': 'openCollectionModal'
+    'click .save-controls-two-btn-add-to-collection': 'openCollectionModal'
 
   openCollectionModal: ->
     new SaveControlsModal width: 500, model: @model
