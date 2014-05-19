@@ -12,6 +12,9 @@ cover-offset = 10px
   display inline-block
   margin 0 50px 0 20px
   cursor pointer
+  position relative
+  &:hover .favorites2-edit
+    opacity 1
 
 .favorites2-cover
   width cover-width
@@ -99,3 +102,38 @@ for i in 1 2 3
 
 .favorites2-empty-cover
   background #eee
+
+.favorites2-edit
+  background rgba(50,50,50,0.7)
+  position absolute
+  avant-garde()
+  padding 10px 15px
+  border 0
+  font-size 12px
+  color white
+  margin-top -43px
+  right 10px
+  opacity 0
+  transition opacity 0.3s, background-color 0.3s
+  cursor pointer
+  &:hover
+    background black
+
+.favorites2-edit-modal-delete
+  border 0
+  margin-right 50px
+  color gray-dark-color
+  padding 0
+  margin-right 72px
+  svg
+    width 15px
+    height @width
+    margin-right 4px
+    position relative
+    top 1px
+    *
+      transition fill 0.3s
+  &:hover
+    color red-color
+    svg *
+      fill red-color

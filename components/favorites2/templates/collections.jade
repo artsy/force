@@ -6,6 +6,7 @@ for collection, i in collections
       else
         for artwork in collection.artworks.first(3)
           li( style="background-image: url(#{artwork.defaultImageUrl('tall')})")
+    button.favorites2-edit Edit
     .favorites2-collection-title!= collection.get('name')
     //- .favorites2-collection-num-works 100 works
 button.favorites2-new-collection

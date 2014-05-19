@@ -15,7 +15,16 @@ collectionsTemplate = -> require('../templates/collections.jade') arguments...
 
 PAGE_SIZE = 10
 
-module.exports.Collection = class
+module.exports.ArtworkCollections = class ArtworkCollections extends Backbone.Collection
+
+  url: ->
+    "#{sd.API_URL}/api/v1/collections?user_id=" + @user.get 'id'
+
+  initialize: (models, { @user }) ->
+    @on 'add', (col) =>
+      col.artworks = new Artworks
+      col.artworks.url = "#{sd.API_URL}/api/v1/collection/#{col.get 'id'}/artworks"
+      col.url = => "#{sd.API_URL}/api/v1/collection/#{col.get 'id'}?user_id=#{@user.get('id')}"
 
 module.exports.Favorites = class Favorites extends Artworks
 
@@ -24,11 +33,7 @@ module.exports.Favorites = class Favorites extends Artworks
   initialize: (models, options) ->
     { @user } = options
     @page = 0
-    @collections = new Backbone.Collection
-    @collections.url = "#{sd.API_URL}/api/v1/collections?user_id=" + @user.get 'id'
-    @collections.on 'add', (col) =>
-      col.artworks = new Artworks
-      col.artworks.url = "#{sd.API_URL}/api/v1/collection/#{col.get 'id'}/artworks"
+    @collections = new ArtworkCollections [], user: @user
 
   fetchNextPage: (options) =>
     @page++
@@ -66,7 +71,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
       allowDuplicates: true
     @favorites.on 'nextPage', @appendArtworks
     @favorites.on 'end', @endInfiniteScroll
-    @favorites.collections.on 'add', => _.defer @renderCollections
+    @favorites.collections.on 'add remove change:name', => _.defer @renderCollections
     @$el.infiniteScroll @favorites.fetchNextPage
     @setup()
 
@@ -97,8 +102,13 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
 
   events:
     'click .favorites2-new-collection': 'openNewModal'
+    'click .favorites2-edit': 'openEditModal'
 
   openNewModal: ->
     collection = new ArtworkCollection userId: @user.get('id'), id: null, user_id: @user.get('id')
     new EditCollectionModal width: 500, collection: collection
     collection.on 'request', => @favorites.collections.add collection
+
+  openEditModal: (e) ->
+    collection = @favorites.collections.at($(e.currentTarget).parent().index())
+    new EditCollectionModal width: 500, collection: collection
