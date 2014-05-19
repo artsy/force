@@ -1,25 +1,30 @@
+_             = require 'underscore'
+sd            = require('sharify').data
 benv          = require 'benv'
 sinon         = require 'sinon'
 Backbone      = require 'backbone'
-sd            = require('sharify').data
 mediator      = require '../../../lib/mediator'
 CurrentUser   = require '../../../models/current_user'
+rewire        = require 'rewire'
 
 describe 'AuthModalView', ->
   before (done) ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'
       Backbone.$ = $
-      $('body').html $ "<div id='fixture'></div>"
-      @AuthModalView = require '../view'
-      sinon.stub @AuthModalView.prototype, 'initialize'
+      @AuthModalView = rewire '../view'
+      @AuthModalView.__set__ 'Cookies',
+        set: sinon.stub()
+        get: sinon.stub()
+      sinon.stub @AuthModalView::, 'initialize'
+
       done()
 
   after ->
     benv.teardown()
 
   beforeEach ->
-    @view = new @AuthModalView el: $('#fixture')
+    @view = new @AuthModalView
     sinon.stub Backbone, 'sync'
 
   afterEach ->
@@ -36,11 +41,11 @@ describe 'AuthModalView', ->
       @view.templateData.redirectTo.should.include '/awesome-fair'
 
     it 'passes the pathname to the template', ->
-      _location = global.location
-      global.location = pathname: 'foobarbaz'
+      _location = @AuthModalView.__get__ 'location'
+      @AuthModalView.__set__ 'location', pathname: 'foobarbaz'
       @view.preInitialize {}
       @view.templateData.pathname.should.equal 'foobarbaz'
-      global.location = _location
+      @AuthModalView.__set__ 'location', _location
 
   describe '#submit', ->
     beforeEach ->
@@ -70,16 +75,14 @@ describe 'AuthModalView', ->
       location.href.should.include '/awesome-fair'
 
     it 'sets a cookie named destination with whatever the passed in destination is', ->
-      Cookies = benv.require 'cookies-js'
       @view.destination = '/artist/some-guy/follow'
       @view.state.set mode: 'register'
       @view.submit $.Event('click')
       Backbone.sync.args[0][2].success {}
-      Cookies.get('destination').should.equal @view.destination
+      _.last(@AuthModalView.__get__('Cookies').set.args)[1].should.equal @view.destination
 
     it 'creates a signed_in cookie', ->
-      Cookies = benv.require 'cookies-js'
       @view.state.set mode: 'login'
       @view.submit $.Event('click')
       Backbone.sync.args[0][2].success {}
-      Cookies.get('signed_in').should.equal 'true'
+      _.last(@AuthModalView.__get__('Cookies').set.args)[1].should.be.true
