@@ -49,9 +49,9 @@ describe 'CurrentUser', ->
       _.last(Backbone.sync.args)[1].url().should.include 'me/follow/artist'
 
     it 'injects the access token', ->
-      # @user.set accessToken: 'xfoobar'
-      # @user.followArtist 'andy-foobar', {}
-      # _.last(Backbone.sync.args)[2].access_token.should.equal 'xfoobar'
+      @user.set accessToken: 'xfoobar'
+      @user.followArtist 'andy-foobar', {}
+      _.last(Backbone.sync.args)[2].access_token.should.equal 'xfoobar'
 
   describe '#addToPendingOrder', ->
     it 'includes session_id if user does not have access_token', ->
