@@ -67,6 +67,6 @@ module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Rout
 module.exports.init = ->
   user = CurrentUser.orNull()
   return unless user
-  user.detectLocation()
+  user.approximateLocation()
   router = new PersonalizeRouter(user: user)
   Backbone.history.start pushState: true

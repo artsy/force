@@ -11,12 +11,13 @@ analytics           = require '../lib/analytics.coffee'
 Order               = require './order.coffee'
 Genes               = require '../collections/genes.coffee'
 Following           = require '../components/follow_button/collection.coffee'
-geoLocate           = require '../components/util/geolocate.coffee'
 ABM                 = require 'artsy-backbone-mixins'
 mediator            = require '../lib/mediator.coffee'
+Geo                 = require './mixins/geo.coffee'
 
 module.exports = class CurrentUser extends Backbone.Model
   _.extend @prototype, ABM.CurrentUser(sd.API_URL)
+  _.extend @prototype, Geo
 
   url: ->
     "#{sd.API_URL}/api/v1/me"
@@ -166,19 +167,3 @@ module.exports = class CurrentUser extends Backbone.Model
       url: "#{sd.API_URL}/api/v1/bidder"
       success: options?.success
       error: options?.error
-
-  detectLocation: ->
-    geoLocate.locate
-      accuracy: 'low'
-      success: (geo) =>
-        if _.isEmpty @get('location')?.coordinates
-          @setGeo geo
-
-  setGeo: (geo) ->
-    @set location:
-      city        : geo.getCity() or ''
-      state       : geo.getState() or ''
-      state_code  : geo.getStateCode() or ''
-      postal_code : geo.getPostalCode() or ''
-      coordinates : geo.getCoordinates() or null
-      country     : geo.getCountry() or ''
