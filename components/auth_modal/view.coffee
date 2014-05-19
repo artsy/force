@@ -1,13 +1,14 @@
-_                 = require 'underscore'
-Backbone          = require 'backbone'
-ModalView         = require '../modal/view.coffee'
-Form              = require '../mixins/form.coffee'
-mediator          = require '../../lib/mediator.coffee'
-{ parse }         = require 'url'
-Cookies           = require 'cookies-js'
-analytics         = require '../../lib/analytics.coffee'
+_               = require 'underscore'
+Backbone        = require 'backbone'
+Cookies         = require 'cookies-js'
+{ parse }       = require 'url'
+ModalView       = require '../modal/view.coffee'
+Form            = require '../mixins/form.coffee'
+mediator        = require '../../lib/mediator.coffee'
+analytics       = require '../../lib/analytics.coffee'
+LoggedOutUser   = require '../../models/logged_out_user.coffee'
 
-{ templateMap, modelMap, stateEventMap, successEventMap } = require './maps.coffee'
+{ templateMap, stateEventMap, successEventMap } = require './maps.coffee'
 
 module.exports = class AuthModalView extends ModalView
   _.extend @prototype, Form
@@ -30,12 +31,14 @@ module.exports = class AuthModalView extends ModalView
     @preInitialize options
     super
 
-  preInitialize: (options) ->
-    @state = new Backbone.Model(mode: options.mode)
+  preInitialize: (options = {}) ->
+    @user   = new LoggedOutUser
+    @state  = new Backbone.Model(mode: options.mode)
+
     @templateData =
-      copy: options.copy or 'Enter your name, email and password to join'
-      pathname: location.pathname
-      redirectTo: @redirectTo
+      copy       : options.copy or 'Enter your name, email and password to join'
+      pathname   : location.pathname
+      redirectTo : @redirectTo
 
     @listenTo @state, 'change:mode', @reRender
     @listenTo @state, 'change:mode', @logState
@@ -71,25 +74,27 @@ module.exports = class AuthModalView extends ModalView
     successEvent = successEventMap[@state.get 'mode']
     analytics.track.funnel successEvent if successEvent
 
-    new modelMap[@state.get 'mode']().save @serializeForm(),
-      success: @onSubmitSuccess
-      error: (model, xhr) =>
-        message = @errorMessage xhr
+    @user.set (data = @serializeForm())
+    @user[@state.get 'mode']
+      success : @onSubmitSuccess
+      error   : (model, response, options) =>
+        message = @errorMessage response
         @showError message
 
-  onSubmitSuccess: (model, res, options) =>
-    if res.error?
-      @showError _.capitalize res.error
+  onSubmitSuccess: (model, response, options) =>
+    if response.error?
+      @showError _.capitalize response.error
     else
       Cookies.set('destination', @destination, expires: 60 * 24) if @destination
 
-      if @state.get('mode') is 'login'
-        Cookies.set('signed_in', true, expires: 60 * 24 * 7)
-
-      if @state.get('mode') is 'register'
-        location.href = @redirectTo
-      else
-        location.reload()
+      switch @state.get('mode')
+        when 'login'
+          Cookies.set('signed_in', true, expires: 60 * 24 * 7)
+          location.reload()
+        when 'register'
+          location.href = @redirectTo
+        when 'forgot'
+          mediator.trigger 'auth:change:mode', 'reset'
 
   showError: (msg) =>
     @$('button').attr 'data-state', 'error'

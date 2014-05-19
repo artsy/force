@@ -2,9 +2,9 @@ _           = require 'underscore'
 benv        = require 'benv'
 sinon       = require 'sinon'
 Backbone    = require 'backbone'
-Geolocate   = require '../geolocate'
+Geo         = require '../index'
 
-describe 'Geolocate', ->
+describe 'Geo', ->
   before (done) ->
     benv.setup =>
       benv.expose
@@ -25,13 +25,13 @@ describe 'Geolocate', ->
 
   describe '#locate', ->
     it 'calls out to an external IP geolocation service when low accuracy is requested', ->
-      Geolocate.locate(accuracy: 'low')
+      Geo.locate(accuracy: 'low')
       Backbone.sync.args[0][2].url.should.equal 'https://freegeoip.net/json/'
       _.isNull(Backbone.sync.args[0][2].headers).should.be.ok
 
     it 'uses the browser geolocation API when high accuracy is requested', ->
       benv.expose navigator: geolocation: getCurrentPosition: sinon.stub()
-      Geolocate.locate(accuracy: 'high')
+      Geo.locate(accuracy: 'high')
       navigator.geolocation.getCurrentPosition.called.should.be.ok
 
   describe '#loadGoogleMaps', ->
@@ -46,18 +46,18 @@ describe 'Geolocate', ->
         url.should.equal 'https://maps.googleapis.com/maps/api/js?libraries=places&sensor=true&callback=googleMapsCallback'
         window.googleMapsCallback()
       _.isUndefined(window.googleMapsCallback).should.be.true
-      Geolocate.loadGoogleMaps ->
+      Geo.loadGoogleMaps ->
         _.isFunction(window.googleMapsCallback).should.be.true
         done()
 
     it 'only calls $.getScript once', ->
-      Geolocate.googleMapsLoaded = false
+      Geo.googleMapsLoaded = false
       getScriptStub = sinon.stub()
       $.getScript = ->
         getScriptStub()
         window.googleMapsCallback()
-      Geolocate.loadGoogleMaps(->)
-      Geolocate.loadGoogleMaps(->)
-      Geolocate.loadGoogleMaps(->)
+      Geo.loadGoogleMaps(->)
+      Geo.loadGoogleMaps(->)
+      Geo.loadGoogleMaps(->)
       getScriptStub.callCount.should.equal 1
-      Geolocate.googleMapsLoaded.should.be.true
+      Geo.googleMapsLoaded.should.be.true

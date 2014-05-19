@@ -1,6 +1,6 @@
 _                   = require 'underscore'
 Backbone            = require 'backbone'
-geo                 = require '../util/geolocate.coffee'
+geo                 = require '../geo/index.coffee'
 { isTouchDevice }   = require '../util/device.coffee'
 
 template = -> require('./template.jade') arguments...
