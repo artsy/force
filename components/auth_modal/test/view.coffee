@@ -1,11 +1,11 @@
-_             = require 'underscore'
-sd            = require('sharify').data
-benv          = require 'benv'
-sinon         = require 'sinon'
-Backbone      = require 'backbone'
-mediator      = require '../../../lib/mediator'
-CurrentUser   = require '../../../models/current_user'
-rewire        = require 'rewire'
+_               = require 'underscore'
+sd              = require('sharify').data
+benv            = require 'benv'
+sinon           = require 'sinon'
+Backbone        = require 'backbone'
+mediator        = require '../../../lib/mediator'
+LoggedOutUser   = require '../../../models/logged_out_user'
+rewire          = require 'rewire'
 
 describe 'AuthModalView', ->
   before (done) ->
@@ -53,7 +53,7 @@ describe 'AuthModalView', ->
       @view.validateForm = -> true
 
       @view.state   = new Backbone.Model
-      @view.user    = CurrentUser.orNew()
+      @view.user    = new LoggedOutUser
 
     afterEach ->
       location.reload.restore()

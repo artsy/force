@@ -1,16 +1,18 @@
-Backbone  = require 'backbone'
-sinon     = require 'sinon'
-rewire    = require 'rewire'
-
-LoggedOutUser = rewire '../../models/logged_out_user'
-LoggedOutUser.__set__ 'location', reload: (reloadStub = sinon.stub())
+Backbone        = require 'backbone'
+sinon           = require 'sinon'
+benv            = require 'benv'
+LoggedOutUser   = require '../../models/logged_out_user'
 
 describe 'LoggedOutUser', ->
-  beforeEach ->
-    sinon.stub(Backbone, 'sync').yieldsTo('success')
+  beforeEach (done) ->
+    benv.setup =>
+      sinon.stub(Backbone, 'sync').yieldsTo('success')
+      benv.expose location: reload: (@reloadStub = sinon.stub())
+      done()
 
   afterEach ->
     Backbone.sync.restore()
+    benv.teardown()
 
   describe '#login', ->
     it 'logs the user in', ->
@@ -19,6 +21,7 @@ describe 'LoggedOutUser', ->
       Backbone.sync.args[0][0].should.equal 'create'
       Backbone.sync.args[0][2].url.should.equal '/users/sign_in'
       Backbone.sync.args[0][1].attributes.should.eql email: 'foo@bar.com', password: 'foobar'
+      @reloadStub.called.should.be.ok
     it 'accepts options and overwrites the default success', (done) ->
       user = new LoggedOutUser(email: 'foo@bar.com', name: 'Foo Bar')
       user.login(success: -> done())
@@ -30,7 +33,7 @@ describe 'LoggedOutUser', ->
       Backbone.sync.args[0][0].should.equal 'create'
       Backbone.sync.args[0][2].url.should.equal '/users/invitation/accept'
       Backbone.sync.args[0][1].attributes.should.eql name: 'Foo Bar', email: 'foo@bar.com', password: 'foobar'
-      reloadStub.called.should.be.ok
+      @reloadStub.called.should.be.ok
     it 'accepts options and overwrites the default success', (done) ->
       user = new LoggedOutUser(email: 'foo@bar.com', name: 'Foo Bar', 'foobar')
       user.signup(success: -> done())
