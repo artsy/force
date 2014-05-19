@@ -1,27 +1,27 @@
-.overlay-container
+.save-controls2-container
   position absolute
   right 5px
-  bottom 5px
+  top 5px
 
-// Extend this class and add content
-// to its before pseudo element to use
-.overlay-button
-  iconfont-styling()
-  display inline-block
+.save-controls2-container .overlay-button, .save-controls2-add-to-collection
   width 40px
   height @width
+  background-color rgba(0, 0, 0, 0.4)
+  border-radius (@width / 2)
+  line-height @height
+  text-align center
+  display inline-block
+  &:hover
+    background-color black
+
+.save-controls2-container .overlay-button
+  iconfont-styling()
+  display inline-block
   cursor pointer
   color white
   background-color gray-darker-color
-  background-color rgba(0, 0, 0, 0.4)
-  text-align center
   font-size 16px
-  line-height @height
-  border-radius (@width / 2)
   opacity 1
-  transition opacity 0.125s
-  &:hover
-    background-color black
   &[data-state='saved']
     opacity 1
     background-color purple-color
@@ -32,16 +32,73 @@
       &.is-clicked
         background-color purple-color
 
-.overlay-button-save
+.save-controls2-container .overlay-button-save
   @extends .overlay-button
   &:before
     content '\e622'
 
 .artwork-item
   &:hover
-    .overlay-button-save
-      opacity 1
-  .overlay-button-save
-    opacity 0
+    .save-controls2-container .overlay-button-save, .save-controls2-add-to-collection
+      display inline-block
+  .save-controls2-container .overlay-button-save, .save-controls2-add-to-collection
+    display none
     &[data-state='saved']
-      opacity 1
+      display inline-block
+
+.save-controls2-add-to-collection
+  margin-left 5px
+  svg
+    width 18px
+    height 18px
+    display inline-block
+    margin-top 11px
+
+.save-controls2-modal
+  padding default-modal-padding
+  clearfix()
+
+.save-controls2-modal-done
+  float right
+  margin-top 10px
+  padding 16px 40px 14px 40px
+
+.save-controls2-modal-new-collection
+  position relative
+  margin-bottom 10px
+  button
+    background white
+    border 0
+    border-left 2px solid gray-lighter-color
+    padding 5px 12px 4px 12px
+    font-size 14px
+    position absolute
+    right 2px
+    top 2px
+    color gray-color
+    transition border-color 0.3s, background-color 0.3s, color 0.3s
+    cursor pointer
+  input
+    width 100%
+    &:focus + button
+      border-color purple-color
+      background-color purple-color
+      color white
+
+.save-controls2-modal-collections
+  margin 15px 0
+  li
+    padding 10px 12px
+    position relative
+    cursor pointer
+    &:hover
+      background gray-lightest-color
+    &.is-selected
+      .icon-check
+        display inline-block
+    .icon-check
+      font-size 13px
+      position absolute
+      right 14px
+      top 4px
+      display none

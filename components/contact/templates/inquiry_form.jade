@@ -1,8 +1,5 @@
 form.contact-form
-  .contact-artwork-details
-    img( src=artwork.defaultImageUrl() )
-    p= artwork.get('artist').name
-    p!= artwork.titleAndYear()
+  include ./artwork_details
   textarea.bordered-input.is-block(
     name='message'
     required

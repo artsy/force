@@ -3,7 +3,7 @@ sd                  = require('sharify').data
 Backbone            = require 'backbone'
 AcquireArtwork      = require('../../acquire/view.coffee').acquireArtwork
 ContactPartnerView  = require '../../contact/contact_partner.coffee'
-SaveControls        = require '../../artwork_item/save_controls/view.coffee'
+SaveControls        = require '../../artwork_item/save_controls.coffee'
 mediator            = require '../../../lib/mediator.coffee'
 
 module.exports = class SaleArtworkView extends Backbone.View

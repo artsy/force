@@ -41,7 +41,7 @@ collection's `groupByColumnsInOrder` method. This returns the models ready to go
 Artworks        = require '../../../collections/artworks.coffee'
 Backbone        = require 'backbone'
 CurrentUser     = require '../../../models/current_user.coffee'
-SaveControls    = require '../../../components/artwork_item/save_controls/view.coffee'
+SaveControls    = require '../../../components/artwork_item/save_controls.coffee'
 artworkColumnsTemplate  = -> require('../../../components/artwork_columns/template.jade') arguments...
 
 # When the view has artworks to render

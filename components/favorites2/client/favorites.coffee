@@ -5,7 +5,7 @@ EditCollectionModal =  require './edit_collection_modal.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 Artwork = require '../../../models/artwork.coffee'
 Artworks = require '../../../collections/artworks.coffee'
-ArtworkCollection = require '../../../models/artwork_collection.coffee'
+{ ArtworkCollection } = ArtworkCollections = require '../../../collections/artwork_collections.coffee'
 ArtworkColumnsView = require '../../artwork_columns/view.coffee'
 SuggestedGenesView = require '../../suggested_genes/view.coffee'
 ShareView = require '../../share/view.coffee'
@@ -14,17 +14,6 @@ hintTemplate = -> require('../templates/empty_hint.jade') arguments...
 collectionsTemplate = -> require('../templates/collections.jade') arguments...
 
 PAGE_SIZE = 10
-
-module.exports.ArtworkCollections = class ArtworkCollections extends Backbone.Collection
-
-  url: ->
-    "#{sd.API_URL}/api/v1/collections?user_id=" + @user.get 'id'
-
-  initialize: (models, { @user }) ->
-    @on 'add', (col) =>
-      col.artworks = new Artworks
-      col.artworks.url = "#{sd.API_URL}/api/v1/collection/#{col.get 'id'}/artworks"
-      col.url = => "#{sd.API_URL}/api/v1/collection/#{col.get 'id'}?user_id=#{@user.get('id')}"
 
 module.exports.Favorites = class Favorites extends Artworks
 
@@ -108,7 +97,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
     'click .favorites2-edit': 'openEditModal'
 
   openNewModal: ->
-    collection = new ArtworkCollection userId: @user.get('id'), id: null, user_id: @user.get('id')
+    collection = new ArtworkCollection user_id: @user.get('id')
     new EditCollectionModal width: 500, collection: collection
     collection.once 'request', => @favorites.collections.add collection
 
