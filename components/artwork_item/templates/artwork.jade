@@ -11,7 +11,7 @@ figure.artwork-item( data-artwork=artwork.get('id') )
         include ./fixed_width_image
       else
         include ./variable_width_image
-      if sd && sd.CURRENT_USER.lab_features.indexOf("Set Management") != -1
+      if sd && sd.CURRENT_USER && sd.CURRENT_USER.lab_features && sd.CURRENT_USER.lab_features.indexOf("Set Management") != -1
         include ../save_controls_two_btn/templates/controls
       else
         include ../save_controls/template
