@@ -2,8 +2,12 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 Artworks = require './artworks.coffee'
 { API_URL } = require('sharify').data
+qs = require 'querystring'
 
 class ArtworkCollection extends Backbone.Model
+
+  defaults:
+    private: false
 
   url: ->
     if @isNew()
@@ -21,7 +25,11 @@ class ArtworkCollection extends Backbone.Model
 module.exports = class ArtworkCollections extends Backbone.Collection
 
   url: ->
-    "#{API_URL}/api/v1/collections?user_id=" + @user.get 'id'
+    "#{API_URL}/api/v1/collections?" + qs.stringify(
+      private: true
+      bustCache: Math.random()
+      user_id: @user.get 'id'
+    )
 
   model: ArtworkCollection
 

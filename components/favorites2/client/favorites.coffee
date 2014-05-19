@@ -68,11 +68,11 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
 
   setup: ->
     @favorites.collections.fetch success: =>
-      return @showEmptyHint() if @favorites.collections.length is 0
-      @favorites.fetchNextPage success: =>
-        return @showEmptyHint() if @favorites.length is 0
-        @renderCollections()
-        @bindEvents()
+        return @showEmptyHint() if @favorites.collections.length is 0
+        @favorites.fetchNextPage success: =>
+          return @showEmptyHint() if @favorites.length is 0
+          @renderCollections()
+          @bindEvents()
 
   showEmptyHint: ->
     @$('.favorites2-follows-empty-hint').html hintTemplate type: 'artworks'
