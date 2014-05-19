@@ -11,7 +11,7 @@ figure.artwork-item( data-artwork=artwork.get('id') )
         include ./fixed_width_image
       else
         include ./variable_width_image
-      include ./overlay_controls
+      include ../save_controls/template
   figcaption.artwork-item-caption
     if artwork.has('artist')
       p.artwork-item-artist.artwork-item-overflow
