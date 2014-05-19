@@ -110,36 +110,6 @@ module.exports = class CurrentUser extends Backbone.Model
   @orNull: ->
     if sd.CURRENT_USER then new @(sd.CURRENT_USER) else null
 
-  @orNew: (attrs) ->
-    new @(_.extend (sd.CURRENT_USER or {}), attrs)
-
-  @loggedIn: ->
-    sd.CURRENT_USER?
-
-  loggedIn: ->
-    sd.CURRENT_USER?
-
-  login: (options = {}) ->
-    settings = _.defaults options,
-      url     : '/users/sign_in'
-      success : -> location.reload()
-    new Backbone.Model().save (@pick 'email', 'password'), settings
-
-  signup: (options = {}) ->
-    return if @loggedIn()
-    settings = _.defaults options,
-      url     : '/users/invitation/accept'
-      success : -> location.reload()
-    new Backbone.Model().save (@pick 'name', 'email', 'password'), settings
-
-  # Alias #signup
-  register: @::signup
-
-  forgot: (options = {}) ->
-    settings = _.defaults options,
-      url : "#{sd.API_URL}/api/v1/users/send_reset_password_instructions"
-    new Backbone.Model().save (@pick 'email'), settings
-
   location: ->
     new Location @get 'location' if @get 'location'
 

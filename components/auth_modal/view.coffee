@@ -1,12 +1,12 @@
-_             = require 'underscore'
-Backbone      = require 'backbone'
-Cookies       = require 'cookies-js'
-{ parse }     = require 'url'
-ModalView     = require '../modal/view.coffee'
-Form          = require '../mixins/form.coffee'
-mediator      = require '../../lib/mediator.coffee'
-analytics     = require '../../lib/analytics.coffee'
-CurrentUser   = require '../../models/current_user.coffee'
+_               = require 'underscore'
+Backbone        = require 'backbone'
+Cookies         = require 'cookies-js'
+{ parse }       = require 'url'
+ModalView       = require '../modal/view.coffee'
+Form            = require '../mixins/form.coffee'
+mediator        = require '../../lib/mediator.coffee'
+analytics       = require '../../lib/analytics.coffee'
+LoggedOutUser   = require '../../models/logged_out_user.coffee'
 
 { templateMap, stateEventMap, successEventMap } = require './maps.coffee'
 
@@ -32,7 +32,7 @@ module.exports = class AuthModalView extends ModalView
     super
 
   preInitialize: (options = {}) ->
-    @user   = CurrentUser.orNew()
+    @user   = new LoggedOutUser
     @state  = new Backbone.Model(mode: options.mode)
 
     @templateData =
