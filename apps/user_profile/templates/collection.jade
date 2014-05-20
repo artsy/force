@@ -10,7 +10,7 @@ block body
   #user-profile-collection
     header
       a.contextual-return-link(
-        href=(user && user.get('id') == profile.get('id') ?
+        href=(user && user.get('id') == profile.get('owner').id ?
               '/favorites' :
               '/' + profile.get('id') + '/favorites')
       )
