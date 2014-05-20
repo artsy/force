@@ -1,0 +1,153 @@
+grow-time = 0.5s
+menu-delay = 1.3s
+max-items = 20
+
+.save-controls-drop-down-container
+  position absolute
+  right 5px
+  top 5px
+  z-index 2
+
+.save-controls-drop-down-container .overlay-button-save
+  iconfont-styling()
+  width 40px
+  height @width
+  background-color rgba(0, 0, 0, 0.4)
+  border-radius (@width / 2)
+  line-height @height
+  text-align center
+  display inline-block
+  cursor pointer
+  color white
+  font-size 16px
+  opacity 1
+  transition width grow-time
+  position relative
+  z-index max-items + 2
+  &:hover
+    background-color black
+  &:before
+    content '\e622'
+  &:after
+    opacity 0
+    transition opacity 0.2s linear grow-time
+
+.save-controls-drop-down-container
+  &[data-state='saved']
+    .overlay-button-save
+      opacity 1
+      background-color purple-color
+      width auto
+      display inline-block !important
+      padding 0 12px
+      width 95px
+      &:after
+        content 'Saved'
+        avant-garde()
+        font-size default-avant-garde-font-size
+        padding-left 6px
+        position relative
+        bottom 1px
+        opacity 1
+    .save-controls-drop-down-menu
+      display block
+      opacity 1
+      max-height 800px
+      z-index 1
+      transition-delay menu-delay
+      ul li
+        top 0
+        transition-delay menu-delay
+  &[data-state='saving']
+    .overlay-button-save
+      opacity 1
+      display inline-block !important
+      background-color purple-color
+      &:before
+        opacity 0.4
+  &[data-state='saved-close']
+    .overlay-button-save
+      opacity 1
+      background-color purple-color
+      display inline-block !important
+
+.artwork-item
+  &:hover
+    .save-controls-drop-down-container .overlay-button-save
+      display inline-block
+  .save-controls-drop-down-container .overlay-button-save
+    display none
+    &[data-state='saved']
+      display inline-block
+
+.save-controls-drop-down-menu
+  color white
+  position absolute
+  width 250px
+  left 32px
+  margin-top -10px
+  transition opacity 0.3s
+  z-index -1
+  max-height 0
+  overflow hidden
+  transition max-height 2s
+  opacity 0
+  h4, li
+    padding 13px 20px
+    border-bottom 1px solid gray-darkest-color
+    background black
+    position relative
+    &:last-child
+      border-bottom 0
+  h4
+    avant-garde()
+    font-size default-avant-garde-font-size
+    padding-top 20px
+    z-index max-items + 1
+  ul li
+    transition top 0.3s linear
+    overflow ellipsis
+  .save-controls-drop-down-new
+    position relative
+    input
+      background transparent
+      padding 0
+      margin 0
+      garamond()
+      font-size default-garamond-font-size
+      border 0
+      border-bottom 1px dotted gray-darker-color
+      margin-top 3px
+      width 180px
+      color white
+      &::-webkit-input-placeholder
+        color white !important
+      &::-moz-input-placeholder
+        color white !important
+    .icon-plus-small
+      position absolute
+      background gray-darker-color
+      color white
+      padding 0px 6px
+      font-size 13px
+      border 0
+      right 13px
+      bottom @right
+      line-height 27px
+      cursor pointer
+  .icon-check
+    font-size 13px
+    position absolute
+    right 18px
+    bottom 7px
+    display none
+  li.is-active .icon-check
+    display block
+
+for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20
+  .save-controls-drop-down-menu ul li:nth-child({i})
+    top -(i * 36)px
+    z-index (max-items - i)
+
+.artwork-item-image-link
+  overflow visible !important
