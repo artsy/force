@@ -96,11 +96,7 @@ module.exports = class ModalView extends Backbone.View
       # Render outer
       html modalTemplate()
 
-    # Render inner
-    @$body = @$('.modal-body')
-    @$body.html @template(@templateData)
-    @$dialog = @$('.modal-dialog')
-    @setWidth()
+    @renderInner()
 
     # Display
     $(@container).html @$el
@@ -112,6 +108,12 @@ module.exports = class ModalView extends Backbone.View
 
     # Fade in
     _.defer => @$el.attr 'data-state', 'open'
+
+  renderInner: =>
+    @$body = @$('.modal-body')
+    @$body.html @template(@templateData)
+    @$dialog = @$('.modal-dialog')
+    @setWidth()
 
   postRender: -> #
 

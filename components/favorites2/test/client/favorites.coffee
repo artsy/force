@@ -119,22 +119,3 @@ describe 'Favorites', ->
       @favorites.fetchNextPage()
       @resolve()
       @favorites.collections.first().artworks.first().get('id').should.equal 'foo0'
-
-
-describe 'ArtworkCollections', ->
-
-  beforeEach ->
-    sinon.stub Backbone, 'sync'
-    @user = new CurrentUser fabricate 'user'
-    { ArtworkCollections } = require '../../client/favorites'
-    @collections = new ArtworkCollections [], user: @user
-
-  afterEach ->
-    Backbone.sync.restore()
-
-  describe '#initialize', ->
-
-    it 'sets the artworks and url when adding a collection', ->
-      @collections.add { id: 'saved-artwork' }
-      @collections.first().url().should.include '/api/v1/collection/saved-artwork?user_id=' + @user.id
-      @collections.first().artworks.url.should.include '/api/v1/collection/saved-artwork/artworks'
