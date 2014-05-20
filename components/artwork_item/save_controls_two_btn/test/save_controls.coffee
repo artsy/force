@@ -6,14 +6,14 @@ CurrentUser = require '../../../../models/current_user'
 { fabricate } = require 'antigravity'
 { resolve } = require 'path'
 
-describe 'FavoritesView', ->
+describe 'SaveControls', ->
 
   beforeEach (done) ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       sinon.stub Backbone, 'sync'
-      benv.render resolve(__dirname, '../fixtures/favorites.jade'), { sd: {} }, =>
+      benv.render resolve(__dirname, '../templates/controls.jade'), { sd: {} }, =>
         # ...
         done()
 
