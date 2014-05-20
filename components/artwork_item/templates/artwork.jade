@@ -13,7 +13,9 @@ figure.artwork-item( data-artwork=artwork.get('id') )
         include ./variable_width_image
       if sd && sd.CURRENT_USER && sd.CURRENT_USER.lab_features && sd.CURRENT_USER.lab_features.indexOf("Set Management") != -1
         //- TODO Replace with proper A/B/C test logic
-        if false
+        if true
+          include ../save_controls_drop_down/templates/controls
+        else if false
           include ../save_controls_two_btn/templates/controls
         else
           include ../save_controls_one_btn/templates/controls
