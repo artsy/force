@@ -15,12 +15,19 @@ class ArtworkCollection extends Backbone.Model
     else
       "#{API_URL}/api/v1/collection/#{@get 'id'}?user_id=#{@userId()}"
 
+  initialize: ->
+    @initArtworks()
+
   userId: ->
     @get('user_id') or @collection.user.get('id')
 
   saveArtwork: (artworkId, options = {}) ->
     new Backbone.Model().save {}, _.extend options,
       url: "#{API_URL}/api/v1/collection/#{@get 'id'}/artwork/#{artworkId}?user_id=#{@userId()}"
+
+  initArtworks: ->
+    @artworks = new Artworks
+    @artworks.url = "#{API_URL}/api/v1/collection/#{@get 'id'}/artworks?user_id=#{@userId()}"
 
 module.exports = class ArtworkCollections extends Backbone.Collection
 
@@ -34,8 +41,6 @@ module.exports = class ArtworkCollections extends Backbone.Collection
   model: ArtworkCollection
 
   initialize: (models, { @user }) ->
-    @on 'add', (col) =>
-      col.artworks = new Artworks
-      col.artworks.url = "#{API_URL}/api/v1/collection/#{col.get 'id'}/artworks"
+    @on 'add', (col) => col.initArtworks()
 
 module.exports.ArtworkCollection = ArtworkCollection

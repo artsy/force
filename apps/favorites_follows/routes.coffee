@@ -1,6 +1,5 @@
 @follows = (req, res, next) ->
   return res.redirect("/") unless req.user
-
   if (route = req.params.type) in ['artists', 'genes']
     routeToKind = artists: 'artist', genes: 'gene'
     res.locals.sd.KIND = routeToKind[route] or 'artist'

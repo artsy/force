@@ -87,7 +87,9 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
     $(window).off 'infiniteScroll'
 
   renderCollections: =>
-    @$('.favorites2-collections').html collectionsTemplate collections: @favorites.collections.models
+    @$('.favorites2-collections').html collectionsTemplate
+      collections: @favorites.collections.models
+      user: @user
 
   events:
     'click .favorites2-new-collection': 'openNewModal'
