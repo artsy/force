@@ -1,7 +1,10 @@
-form.contact-form
-  include ./artwork_details
-  textarea.bordered-input.is-block(
-    name='message'
+form.contact-form.stacked-form
+  .stacked-form-cell
+    include ./artwork_details
+  textarea.bordered-input.is-persistplaceholder(
+    name          = 'message'
+    placeholder   = 'Your message to Artsy'
+    rows          = '7'
     required
   )
     if contactGallery
@@ -10,30 +13,26 @@ form.contact-form
       unless artwork.isPriceDisplayable()
         |  and pricing
       |  of this work.
-      | &nbsp;
-      | &nbsp;
-  .bi-type-activated-placeholder( style='margin-top: -153px' ) Your message to Artsy
-  if user
-    section.contact-from
+      = '\n\n'
+  if user && user.id
+    //- Logged in
+    .stacked-form-cell
       | From: #{user.get('name')}
       span.mcf-email  (#{user.get('email')})
     input( type='hidden', name='name', value=user.get('name') )
     input( type='hidden', name='email', value=user.get('email') )
   else
-    input.bordered-input.is-block(
-      type='text'
-      name='name'
+    input.bordered-input.is-persistplaceholder(
+      type          = 'text'
+      name          = 'name'
+      placeholder   = 'Your full name'
       required
     )
-    .bi-type-activated-placeholder Your full name
-    input.bordered-input.is-block(
-      type='email'
-      name='email'
-      placeholder= 'Your email address'
+    input.bordered-input(
+      type          = 'email'
+      name          = 'email'
+      placeholder   = 'Your email address'
       required
     )
-  a#contact-submit.avant-garde-button-black.is-block(
-    href='#'
-    data-state='ok'
-  )
+  button#contact-submit.avant-garde-button-black( href='#', data-state='ok' )
     | Send
