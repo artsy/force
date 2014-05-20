@@ -12,11 +12,10 @@ Genes               = require '../collections/genes.coffee'
 Following           = require '../components/follow_button/collection.coffee'
 ABM                 = require 'artsy-backbone-mixins'
 mediator            = require '../lib/mediator.coffee'
-Geo                 = require './mixins/geo.coffee'
+User                = require './user.coffee'
 
-module.exports = class CurrentUser extends Backbone.Model
+module.exports = class CurrentUser extends User
   _.extend @prototype, ABM.CurrentUser(sd.API_URL)
-  _.extend @prototype, Geo
 
   url: ->
     "#{sd.API_URL}/api/v1/me"
