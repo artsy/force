@@ -57,8 +57,8 @@ describe 'RelatedGenesView', ->
           'Bittyness' : 'bittyness'
         }
         _.last(Backbone.sync.args)[2].success {related_genes: genes}
-        @view.$el.html().should.include "<a data-id=\"catitudeness\" href=\"/gene/catitudeness\">Catitudeness</a>"
-        @view.$el.html().should.include "<a data-id=\"bittyness\" href=\"/gene/bittyness\">Bittyness</a>"
+        @view.$el.html().should.include "<a href=\"/gene/catitudeness\">Catitudeness</a>"
+        @view.$el.html().should.include "<a href=\"/gene/bittyness\">Bittyness</a>"
         @view.$el.find('a').length.should.equal 2
         @view.$el.html().should.include 'Related Categories'
 
@@ -98,7 +98,7 @@ describe 'RelatedGenesView', ->
           fabricate 'gene', id: 'catitudeness', name: 'Catitudeness'
           fabricate 'gene', id: 'bittyness', name: 'Bittyness'
         ]
-        @view.$el.html().should.include "<a data-id=\"catitudeness\" href=\"/gene/catitudeness\">Catitudeness</a>"
-        @view.$el.html().should.include "<a data-id=\"bittyness\" href=\"/gene/bittyness\">Bittyness</a>"
+        @view.$el.html().should.include "<a href=\"/gene/catitudeness\">Catitudeness</a>"
+        @view.$el.html().should.include "<a href=\"/gene/bittyness\">Bittyness</a>"
         @view.$el.find('a').length.should.equal 2
         @view.$el.html().should.include 'Related Categories'

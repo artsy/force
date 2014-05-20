@@ -20,7 +20,9 @@ block body
         .bisected-header-cell.gene-blurb
           h2 About
           .blurb!= gene.mdToHtml('description')
-      .bisected-header-cell: .related-genes
+      .bisected-header-cell
+        .related-genes
+        .related-artists
 
     #gene-filter( data-state=gene.isSubjectMatter() ? 'artworks' : 'artists' )
       include filter
