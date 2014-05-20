@@ -22,7 +22,7 @@ describe 'GeneView', ->
     benv.teardown()
 
   beforeEach ->
-    { GeneView } = mod = benv.require resolve __dirname, '../client.coffee'
+    { GeneView } = mod = benv.requireWithJadeify resolve(__dirname, '../client.coffee'), ['RelatedArtistsTemplate']
     for klass in ['ArtistFillwidthList', 'FilterArtworksView', 'FollowButton', 'ShareView', 'RelatedGenesView', 'BlurbView']
       @[klass] = sinon.stub()
       @[klass]::fetchAndRender = sinon.stub()
