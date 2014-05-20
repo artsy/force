@@ -40,7 +40,6 @@ module.exports.Favorites = class Favorites extends Artworks
           private: true
           user_id: @user.get('id')
           page: @page
-          bushCache: Math.random()
         remove: false
         complete: done
         success: (a, res) => nextPageArtworks.add res

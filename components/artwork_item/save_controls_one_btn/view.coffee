@@ -24,7 +24,7 @@ module.exports = class SaveControls extends Backbone.View
     'click .overlay-button-save': 'openCollectionModal'
 
   openCollectionModal: ->
-    return if @showSignupModal()
+    return false if @showSignupModal()
     new SaveControlsModal width: 500, model: @model
     false
 
