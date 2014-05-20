@@ -21,6 +21,11 @@ module.exports = class SaveControls extends Backbone.View
       </li>"
     ).join ''
 
+  closeOnClickOff: (e) =>
+    return if $(e.target).closest('.save-controls-drop-down-container').length
+    @$el.attr 'data-state', 'saved-close'
+    $(document).off 'click.save-controls-' + @cid
+
   events:
     'click .overlay-button-save': 'openCollectionModal'
     'click .save-controls-drop-down-menu ul li:not(.save-controls-drop-down-new)': 'addToCollection'
@@ -39,7 +44,9 @@ module.exports = class SaveControls extends Backbone.View
   openCollectionModal: ->
     return @showSignupModal() unless @user
     @$el.attr 'data-state', 'saving'
-    @collections.fetch success: => @$el.attr 'data-state', 'saved'
+    @collections.fetch success: =>
+      $(document).on 'click.save-controls-' + @cid, @closeOnClickOff
+      @$el.attr 'data-state', 'saved'
     false
 
   addToCollection: (e) ->
