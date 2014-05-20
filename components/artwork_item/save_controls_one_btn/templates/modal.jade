@@ -1,13 +1,13 @@
-.save-controls-two-btn-modal
+.save-controls-one-btn-modal
   h1.modal-h1 Save work to a Collection
   hr
   include ../../../contact/templates/artwork_details
-  ul.save-controls-two-btn-modal-collections
+  ul.save-controls-one-btn-modal-collections
     for collection, i in collections
       li( class=(collection.get('id') == 'saved-artwork' ? 'is-selected' : '' ) )
         = collection.get('name')
         span.icon-check
-  form.save-controls-two-btn-modal-new-collection
+  form.save-controls-one-btn-modal-new-collection
     input.bordered-input( placeholder="Create New Collection" )
     button.icon-plus-small
-  button.avant-garde-button-black.save-controls-two-btn-modal-done Done
+  button.avant-garde-button-black.save-controls-one-btn-modal-done Done

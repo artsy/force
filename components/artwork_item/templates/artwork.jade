@@ -12,7 +12,11 @@ figure.artwork-item( data-artwork=artwork.get('id') )
       else
         include ./variable_width_image
       if sd && sd.CURRENT_USER && sd.CURRENT_USER.lab_features && sd.CURRENT_USER.lab_features.indexOf("Set Management") != -1
-        include ../save_controls_two_btn/templates/controls
+        //- TODO Replace with proper A/B/C test logic
+        if false
+          include ../save_controls_two_btn/templates/controls
+        else
+          include ../save_controls_one_btn/templates/controls
       else
         include ../save_controls/template
   figcaption.artwork-item-caption
