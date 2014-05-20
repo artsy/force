@@ -1,7 +1,11 @@
-_     = require 'underscore'
-geo   = require '../../components/geo/index.coffee'
+_         = require 'underscore'
+geo       = require '../../components/geo/index.coffee'
+Location  = require '../location.coffee'
 
 module.exports =
+  location: ->
+    new Location @get 'location' if @get 'location'
+
   approximateLocation: ->
     geo.locate
       accuracy : 'low'

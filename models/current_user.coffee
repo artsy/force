@@ -1,7 +1,6 @@
 _                   = require 'underscore'
 Backbone            = require 'backbone'
 ArtworkCollection   = require './artwork_collection.coffee'
-Location            = require './location.coffee'
 Post                = require './post.coffee'
 Genes               = require '../collections/genes.coffee'
 Artists             = require '../collections/artists.coffee'
@@ -109,9 +108,6 @@ module.exports = class CurrentUser extends Backbone.Model
   # This should only be used on the client.
   @orNull: ->
     if sd.CURRENT_USER then new @(sd.CURRENT_USER) else null
-
-  location: ->
-    new Location @get 'location' if @get 'location'
 
   fetchCreditCards: (options) ->
     new Backbone.Collection().fetch
