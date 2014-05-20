@@ -1,5 +1,5 @@
 for collection, i in collections
-  .favorites2-collection
+  a.favorites2-collection( href="/#{user.get('default_profile_id')}/collection/#{collection.get('id')}" )
     ul.favorites2-cover
       if collection.artworks.length == 0
         li.favorites2-empty-cover

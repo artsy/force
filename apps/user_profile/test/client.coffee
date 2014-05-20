@@ -6,6 +6,7 @@ Profile = require '../../../models/profile'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
 { stubChildClasses } = require '../../../test/helpers/stubs'
+{ ArtworkCollection } = ArtworkCollections = require '../../../collections/artwork_collections.coffee'
 
 describe 'UserProfileView', ->
 
@@ -59,3 +60,40 @@ describe 'UserProfileView', ->
       @view.favorites = new Backbone.Collection [{}]
       @view.renderFavorites()
       @ArtworkColumnsView.calledWithNew.should.be.ok
+
+describe 'CollectionView', ->
+
+  beforeEach (done) ->
+    benv.setup =>
+      benv.expose { $: benv.require 'jquery' }
+      Backbone.$ = $
+      $.fn.infiniteScroll = sinon.stub()
+      sinon.stub Backbone, 'sync'
+      benv.render resolve(__dirname, '../templates/collection.jade'), {
+        profile: profile = new Profile(fabricate 'profile')
+        collection: new Backbone.Model(name: 'saved-artwork')
+        sd: {}
+      }, =>
+        { CollectionView } = mod = benv.require resolve(__dirname, '../client/collection')
+        stubChildClasses mod, @, ['ArtworkColumnsView'], ['appendArtworks']
+        @view = new CollectionView
+          el: $('#profile')
+          artworkCollection: new ArtworkCollection id: 'saved-artwork', user_id: 'craig'
+        done()
+
+  afterEach ->
+    Backbone.sync.restore()
+    benv.teardown()
+
+  describe '#initialize', ->
+
+    it 'sets a columns view', ->
+      (@view.columnsView?).should.be.ok
+
+  describe '#nextPage', ->
+
+    it 'adds a page to the columns view', ->
+      @view.columnsView.appendArtworks = sinon.stub()
+      @view.nextPage()
+      Backbone.sync.args[0][2].success [fabricate 'artwork', title: 'Andy Foobar at the Park']
+      _.last(@view.columnsView.appendArtworks.args)[0][0].get('title').should.equal 'Andy Foobar at the Park'

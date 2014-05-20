@@ -1,0 +1,22 @@
+extends ../../../components/main_layout/templates/index
+
+block head
+  include ../../../components/main_layout/templates/profile_meta
+
+append locals
+  - assetPackage = 'user_profile'
+
+block body
+  #user-profile-collection
+    header
+      a.contextual-return-link(
+        href=(user && user.get('id') == profile.get('owner').id ?
+              '/favorites' :
+              '/' + profile.get('id') + '/favorites')
+      )
+        i.icon-chevron-small-left
+        | Back to works
+      h1.garamond-header-center!= collection.get('name')
+    #user-profile-collection-artworks.main-layout-container
+    #user-profile-collection-artworks-spinner
+      .loading-spinner
