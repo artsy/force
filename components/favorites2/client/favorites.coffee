@@ -40,6 +40,7 @@ module.exports.Favorites = class Favorites extends Artworks
           private: true
           user_id: @user.get('id')
           page: @page
+          bushCache: Math.random()
         remove: false
         complete: done
         success: (a, res) => nextPageArtworks.add res
@@ -58,13 +59,11 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
       totalWidth: @$('.favorites2-artworks-list').width()
       artworkSize: 'tall'
       allowDuplicates: true
-    @setup()
-
-  bindEvents: ->
     @favorites.on 'nextPage', @appendArtworks
     @favorites.on 'end', @endInfiniteScroll
     @favorites.collections.on 'add remove change:name', => _.defer @renderCollections
     @$el.infiniteScroll @favorites.fetchNextPage
+    @setup()
 
   setup: ->
     @favorites.collections.fetch success: =>
@@ -72,7 +71,6 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
         @favorites.fetchNextPage success: =>
           return @showEmptyHint() if @favorites.length is 0
           @renderCollections()
-          @bindEvents()
 
   showEmptyHint: ->
     @$('.favorites2-follows-empty-hint').html hintTemplate type: 'artworks'
@@ -86,7 +84,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
     @artworkColumnsView.appendArtworks col.models
 
   endInfiniteScroll: =>
-    @$('.favorites2-artworks-spinner').hide()
+    @$('.favorites2-artworks-spinner').css opacity: 0
     $(window).off 'infiniteScroll'
 
   renderCollections: =>
