@@ -1,0 +1,31 @@
+@import '../stylus_lib'
+@import '../location_search'
+
+#modal.after-inquiry
+  .modal-close
+    display none
+  &[data-mode='login']
+  &[data-mode='signup']
+    .modal-close
+      display block
+  .modal-body
+    padding 40px
+    text-align center
+  .auth-errors
+    text-align center
+  h1, h2
+    margin 10px 0
+  h1
+    font-size 22px
+    line-height 1.25
+  h2
+    avant-garde()
+    font-size 13px
+    line-height 1
+  aside
+    margin 20px 0
+  .stacked-form
+    margin 20px 0
+  .stacked-form-cell
+    > label
+      text-align left
