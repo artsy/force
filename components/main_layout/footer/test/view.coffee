@@ -1,18 +1,16 @@
-rewire      = require 'rewire'
-benv        = require 'benv'
-Backbone    = require 'backbone'
-sinon       = require 'sinon'
-{ resolve } = require 'path'
-
-FooterView  = rewire '../view'
-FooterView.__set__ 'FeedbackView', Backbone.View
+rewire        = require 'rewire'
+benv          = require 'benv'
+Backbone      = require 'backbone'
+sinon         = require 'sinon'
+{ resolve }   = require 'path'
 
 describe 'FooterView', ->
-
   beforeEach (done) ->
     benv.setup =>
-      benv.expose { $: benv.require 'jquery' }
+      benv.expose $: benv.require 'jquery'
       Backbone.$ = $
+      FooterView = rewire '../view'
+      FooterView.__set__ 'FeedbackView', Backbone.View
       benv.render resolve(__dirname, '../template.jade'), {}, =>
         @view = new FooterView el: $('#main-layout-footer')
         done()

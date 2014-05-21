@@ -29,6 +29,7 @@ describe 'Inquiry', ->
       Inquiry.__set__ 'analytics', analytics
       sinon.stub Inquiry.prototype, 'open'
       sinon.stub Inquiry.prototype, 'updatePosition'
+      sinon.stub(Inquiry.prototype, 'displayAfterInquiryFlow').returns false
       @view = new Inquiry artwork: @artwork, partner: @partner, el: $('body')
       @view.representatives = new Backbone.Collection [name: 'Foo Bar']
       @view.representatives.first().iconImageUrl = ->
