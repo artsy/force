@@ -82,7 +82,8 @@ module.exports = class ArtworkView extends Backbone.View
     if @currentUser?.hasLabFeature('Monocles')
       @setupMonocleView()
     # Re-fetch and update detail
-    @artwork.on "change:sale_message", @renderDetail, this
+    @artwork.on "change:sale_message", @renderDetail, @
+    @artwork.on "change:ecommerce", @renderDetail, @
     @artwork.fetch()
 
   checkQueryStringForAuction: ->
