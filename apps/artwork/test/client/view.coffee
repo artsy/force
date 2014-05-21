@@ -74,9 +74,14 @@ describe 'ArtworkView', ->
         html.should.include 'Bid'
 
     describe 'when an artwork changes', ->
-      it 'only renders if the artwork changes', ->
+      it 'only renders if the artwork sale_message changes', ->
         @renderDetailSpy.called.should.not.be.ok
         @view.artwork.set 'sale_message', 'SOLD'
+        @renderDetailSpy.called.should.be.ok
+
+      it 'only renders if the artwork ecommerce changes', ->
+        @renderDetailSpy.called.should.not.be.ok
+        @view.artwork.set 'ecommerce', true
         @renderDetailSpy.called.should.be.ok
 
     describe '#initialize', ->
