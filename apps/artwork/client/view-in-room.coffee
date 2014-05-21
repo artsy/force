@@ -53,14 +53,23 @@ module.exports = class ViewInRoom extends Backbone.View
     @$artwork.css @getRect(@$img)
 
   getRect: ($el) ->
-    _.pick($el[0].getBoundingClientRect(), 'height', 'width', 'top', 'right', 'bottom', 'left')
+    _.pick($el[0].getBoundingClientRect(), 'height', 'width', 'top', 'left')
 
   transitionIn: ->
     @$el.attr 'data-state', 'in'
     @$img.css visibility: 'hidden'
+
+    artworkTransformCSS = @getRect(@$placeholder)
+
+    # We need to manually compute in IE < 11
+    if navigator.userAgent.match('MSIE')
+      for key in ['top', 'height', 'width']
+        artworkTransformCSS[key] = Math.abs(artworkTransformCSS[key] * @roomScalingFactor())
+      artworkTransformCSS['left'] = Math.floor( ($(window).innerWidth() - artworkTransformCSS['width']) / 2)
+
     @$artwork.
       addClass('is-transition').
-      css(@getRect(@$placeholder)).
+      css(artworkTransformCSS).
       one($.support.transition.end, =>
         @$artwork.addClass('is-notransition')
         if @artworkScalingFactor() > 1
@@ -107,7 +116,7 @@ module.exports = class ViewInRoom extends Backbone.View
     viewportRatio   = @$el.width() / @$el.height()
     direction       = if viewportRatio > roomRatio then 'width' else 'height'
     factor          = @$el[direction]() / @$room[direction]()
-    Math.ceil(factor * 100) / 100
+    Math.round(factor * 100) / 100
 
   artworkScalingFactor: ->
     @__artworkFactor__ ?= if @artwork.hasDimension('diameter') and not @artwork.hasDimension('width')
@@ -118,7 +127,8 @@ module.exports = class ViewInRoom extends Backbone.View
       Math.round(width * @benchRatio)
     else
       1
-    @__artworkFactor__ / @$placeholder.width()
+    scailing = @__artworkFactor__ / @$placeholder.width()
+    Math.round(scailing * 100)/100
 
   # @return {Array} height, width
   getArtworkDimensions: ->
@@ -134,4 +144,4 @@ module.exports = class ViewInRoom extends Backbone.View
       $('.artwork-container').attr style: null # Remove hard-coded height
       @$body.removeClass @bodyClasses
       @$img.css visibility: 'visible'
-      ViewInRoom.__super__.remove.apply(this, arguments)
+      ViewInRoom.__super__.remove.apply(@, arguments)
