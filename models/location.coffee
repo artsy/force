@@ -1,5 +1,6 @@
 _                              = require 'underscore'
 Backbone                       = require 'backbone'
+{ compactObject } = require './mixins/compact_object.coffee'
 
 module.exports = class Location extends Backbone.Model
 
@@ -64,3 +65,18 @@ module.exports = class Location extends Backbone.Model
       "#{@get('coordinates').lat},#{@get('coordinates').lng}"
     else
       @displayAddress()
+
+  toJSONLD: ->
+    address = [@get('address') || '', @get('address_2') || ''].join('')
+    compactObject {
+      "@type": "Place"
+      name: @get('name')
+      address: compactObject {
+        "@type": "PostalAddress"
+        streetAddress : address
+        addressLocality: @get('city')
+        addressRegion: @get('state')
+        postalCode: @get('postal_code')
+        addressCountry: if @get('country')?.length > 0 then @get('country')
+      }
+    }

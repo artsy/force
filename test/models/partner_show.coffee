@@ -27,6 +27,29 @@ describe 'PartnerShow', ->
       partnerShow = new PartnerShow id: 'slug-for-show'
       partnerShow.url().should.equal "#{sd.API_URL}/api/v1/show/#{partnerShow.get('id')}"
 
+  describe '#toJSONLD', ->
+
+    it 'returns valid json', ->
+      artist = fabricate 'artist'
+      @partnerShow.set artists: [artist]
+      json = @partnerShow.toJSONLD()
+      json['@context'].should.equal 'http://schema.org'
+      json['@type'].should.equal 'Event'
+      json.name.should.equal 'Inez & Vinoodh'
+      json.location.name.should.equal 'Gagosian Gallery'
+      json.location.address.should.eql
+        '@type': 'PostalAddress'
+        streetAddress: '529 W 20th St.2nd Floor'
+        addressLocality: 'New York'
+        addressRegion: 'NY'
+        postalCode: '10011'
+      json.performer[0].should.eql {
+        "@type": "Person"
+        image: "/images/missing_image.png"
+        name: "Pablo Picasso"
+        sameAs: "undefined/artist/#{artist.id}"
+      }
+
   describe '#metaTitle', ->
 
     it 'creates a title defensively handling empty or missing values', ->
