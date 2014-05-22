@@ -16,6 +16,7 @@ describe 'ContactView', ->
       sinon.stub Backbone, 'sync'
       ContactView = benv.requireWithJadeify resolve(__dirname, '../view'), ['template']
       @view = new ContactView el: $('body'), model: artwork
+      @view.eligibleForAfterInquiryFlow = false
       done()
 
   afterEach ->

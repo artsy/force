@@ -15,6 +15,8 @@ module.exports = class ContactView extends Backbone.View
   _.extend @prototype, Form
   _.extend @prototype, AfterInquiry
 
+  eligibleForAfterInquiryFlow: true
+
   events:
     'submit #artwork-contact-form' : 'submit'
     'mouseover button'             : 'hoveredSubmit'
