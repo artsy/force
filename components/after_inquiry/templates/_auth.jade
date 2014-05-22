@@ -1,7 +1,6 @@
 p: i.icon-logotype
 
-h1 Save this information for future inquiries
-h2 Enter a password to #{action} your account
+h1 Enter a password to create an account and send your inquiry.
 
 .auth-errors
   //- Error message placeholder
@@ -17,4 +16,4 @@ form.stacked-form#after-inquiry-auth-form
     required
   )
   button#auth-submit.avant-garde-button-black
-    | #{action} your account now
+    != buttonLabel
