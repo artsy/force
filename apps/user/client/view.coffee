@@ -75,15 +75,8 @@ module.exports.UserSettingsView = class UserSettingsView extends Backbone.View
   # profile will set a display string for that object.
   #
   onLocationUpdate: (location) ->
-    geo = new GeoFormatter location
-    @model.save
-      location:
-        city:        geo.getCity()
-        state:       geo.getState()
-        state_code:  geo.getStateCode()
-        postal_code: geo.getPostalCode()
-        country:     geo.getCountry()
-        coordinates: geo.getCoordinates()
+    @model.setLocation location
+    @model.save()
     @profileEdit.save
       location: @model.location().cityStateCountry()
 
