@@ -85,12 +85,15 @@ module.exports = class AuthModalView extends ModalView
     if response.error?
       @showError _.capitalize response.error
     else
-      Cookies.set('destination', @destination, expires: 60 * 24) if @destination
+      Cookies.set('destination', @destination, expires: 60 * 60 * 24) if @destination
 
       switch @state.get('mode')
         when 'login'
-          Cookies.set('signed_in', true, expires: 60 * 24 * 7)
-          location.reload()
+          Cookies.set('signed_in', true, expires: 60 * 60 * 24 * 7)
+          if @redirectTo and @redirectTo != '/personalize'
+            location.href = @redirectTo
+          else
+            location.reload()
         when 'register'
           location.href = @redirectTo
         when 'forgot'
