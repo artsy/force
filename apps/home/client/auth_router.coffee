@@ -12,6 +12,7 @@ module.exports = class HomeAuthRouter extends Backbone.Router
 
   login: ->
     error = qs.parse(location.search.replace /^\?/, '').error
+    redirectTo = qs.parse(location.search.replace /^\?/, '').redirect_uri or qs.parse(location.search.replace /^\?/, '')['redirect-to']
 
     # Handle gravity style account created errors
     unless error
@@ -38,7 +39,9 @@ module.exports = class HomeAuthRouter extends Backbone.Router
         mediator.trigger 'open:auth', mode: 'login'
         mediator.trigger 'auth:error', msg
     else
-      mediator.trigger 'open:auth', mode: 'login'
+      mediator.trigger 'open:auth',
+        mode: 'login'
+        redirectTo: redirectTo
 
   signup: ->
     mediator.trigger 'open:auth', mode: 'register'

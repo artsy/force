@@ -35,7 +35,7 @@ module.exports = class HeaderView extends Backbone.View
     else unless sd.HIDE_HEADER # Already hidden
       @$window.on 'scroll.welcome-header', @checkRemoveWelcomeHeader
 
-    mediator.on 'open:auth', @openAuth, this
+    mediator.on 'open:auth', @openAuth, @
 
     @checkRemoveWelcomeHeader()
     @checkForFlash()
