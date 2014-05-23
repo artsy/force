@@ -27,9 +27,10 @@ describe 'AfterInquiryMixin', ->
       _.extend @prototype, AfterInquiryMixin
       eligibleForAfterInquiryFlow: true
 
-    @view         = new View
-    @inquiry      = new Backbone.Model
-    @inquiry.url  = '/api/v1/me/artwork_inquiry_request'
+    @view           = new View
+    @inquiry        = new Backbone.Model
+    @inquiry.url    = '/api/v1/me/artwork_inquiry_request'
+    @view.inquiry   = @inquiry
 
   afterEach ->
     Backbone.sync.restore()
@@ -85,3 +86,32 @@ describe 'AfterInquiryMixin', ->
         Backbone.sync.called.should.be.false
         mediator.trigger 'inquiry:send'
         Backbone.sync.called.should.be.true
+
+  describe '#send', ->
+    it 'should send the inquiry', ->
+      @view.send()
+      Backbone.sync.called.should.be.true
+      Backbone.sync.args[0][0].should.equal 'create'
+      Backbone.sync.args[0][1].url.should.equal '/api/v1/me/artwork_inquiry_request'
+
+    it 'should inject the X-ACCESS-TOKEN if need be', ->
+      @view.user = new LoggedOutUser accessToken: 'secret'
+      @view.send()
+      xhr = setRequestHeader: sinon.stub()
+      Backbone.sync.args[0][2].beforeSend(xhr)
+      xhr.setRequestHeader.args[0][0].should.equal 'X-ACCESS-TOKEN'
+      xhr.setRequestHeader.args[0][1].should.equal 'secret'
+
+    describe 'with callbacks', ->
+      beforeEach ->
+        Backbone.sync.restore()
+
+      it 'should include the success callback', (done) ->
+        sinon.stub(Backbone, 'sync').yieldsTo 'success'
+        @view.inquiryOptions = success: -> done()
+        @view.send()
+
+      it 'should include the error callback', (done) ->
+        sinon.stub(Backbone, 'sync').yieldsTo 'error'
+        @view.inquiryOptions = error: -> done()
+        @view.send()

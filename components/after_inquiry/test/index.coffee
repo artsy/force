@@ -1,10 +1,12 @@
 _               = require 'underscore'
 benv            = require 'benv'
 sinon           = require 'sinon'
+rewire          = require 'rewire'
 Backbone        = require 'backbone'
 mediator        = require '../../../lib/mediator'
-AfterInquiry    = require '../index'
 LoggedOutUser   = require '../../../models/logged_out_user'
+AfterInquiry    = rewire '../index'
+AfterInquiry.__set__ 'Questionnaire', Backbone.View
 
 describe 'AfterInquiry', ->
   before (done) ->
@@ -19,17 +21,21 @@ describe 'AfterInquiry', ->
     benv.teardown()
 
   beforeEach ->
-    sinon.stub _, 'delay'
+    sinon.stub _, 'delay', (cb) -> cb()
     sinon.stub Backbone, 'sync'
 
     @user     = new LoggedOutUser
     @inquiry  = new Backbone.Model name: 'Foo Bar', email: 'foo@bar.com'
     @flow     = new AfterInquiry user: @user, inquiry: @inquiry
 
+    sinon.stub @flow.flash, 'close'
+
   afterEach ->
     _.delay.restore()
     Backbone.sync.restore()
+    @flow.flash.close.restore()
     @flow.remove()
+    mediator.off null, null, this
 
   describe '#constructor', ->
     describe 'logged out', ->
@@ -42,37 +48,50 @@ describe 'AfterInquiry', ->
       describe '#setupUser', ->
         it 'assumes we already have name/email and performs a fetch for extra attributes (job/profession)', ->
           @user.set id: 'foobar'
-          new AfterInquiry user: @user, inquiry: @inquiry
+          flow = new AfterInquiry user: @user, inquiry: @inquiry
           Backbone.sync.called.should.be.true
           Backbone.sync.args[0][1].url().should.include '/api/v1/me'
+          flow.remove()
 
     it 'initializes a new flash message', ->
       @flow.flash.$el.text().should.equal 'Thank you. Your inquiry is sending…'
 
     it 'responds to the inquiry success event by updating the flash message accordingly', ->
-      mediator.trigger 'inquiry:success'
+      @inquiry.trigger 'sync'
       @flow.flash.$el.text().should.equal 'Your inquiry has been sent.'
 
     it 'responds to the inquiry error event by updating the flash message accordingly', ->
-      mediator.trigger 'inquiry:error'
+      @inquiry.trigger 'error'
       @flow.flash.$el.text().should.equal 'There was a problem with sending your inquiry'
 
     describe 'if the questionnaire modal is closed', ->
-      it 'will close the flash message', ->
-        closeStub = sinon.stub()
-        @flow.flash.close = -> closeStub()
-        closeStub.called.should.be.false
-        mediator.trigger 'modal:closed'
-        closeStub.called.should.be.true
+      describe 'inquiry send was not yet requested', ->
+        beforeEach ->
+          @flow.inquiryRequest = undefined
 
-      it 'trigger the inquiry:send event', (done) ->
-        mediator.on 'inquiry:send', done, this
-        mediator.trigger 'modal:closed'
-        mediator.off 'inquiry:send', null, this
+        it 'will trigger an inquiry send', (done) ->
+          mediator.on 'inquiry:send', done, this
+          mediator.trigger 'modal:closed'
 
-      it 'only triggers the inquiry:send if an inquiry has not already been sent', ->
-        callStub = sinon.stub()
-        mediator.on 'inquiry:send', callStub
-        @inquiry.trigger 'request'
-        mediator.trigger 'modal:closed'
-        callStub.called.should.be.false
+      describe 'inquiry send was requested', ->
+        beforeEach ->
+          @inquiry.trigger 'request'
+
+        describe 'and it was not yet sent', ->
+          it 'attaches a handler for the inquiry:success event and removes on its execution', ->
+            mediator.trigger 'modal:closed'
+            @flow.flash.close.called.should.be.false
+            @inquiry.trigger 'sync'
+            @flow.flash.close.called.should.be.true
+
+        describe 'and it was sent successfully', ->
+          beforeEach ->
+            @inquiry.trigger 'sync'
+
+          it 'should tear everything down when the modal is closed', ->
+            @flow.flash.close.called.should.be.false
+            previousNumberOfEvents = _.flatten(_.values(mediator._events)).length
+            mediator.trigger 'modal:closed'
+            @flow.flash.close.called.should.be.true
+            currentNumberOfEvents = _.flatten(_.values(mediator._events)).length
+            (previousNumberOfEvents > currentNumberOfEvents).should.be.true

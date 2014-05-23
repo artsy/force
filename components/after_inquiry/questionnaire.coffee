@@ -5,12 +5,19 @@ LocationSearchView  = require '../location_search/index.coffee'
 GeoFormatter        = require 'geoformatter'
 Form                = require '../mixins/form.coffee'
 mediator            = require '../../lib/mediator.coffee'
+analytics           = require '../../lib/analytics.coffee'
 
 templateMap =
   initial       : -> require('./templates/initial.jade') arguments...
   questionnaire : -> require('./templates/questionnaire.jade') arguments...
   signup        : -> require('./templates/signup.jade') arguments...
   login         : -> require('./templates/login.jade') arguments...
+
+stateEventMap =
+  initial       : 'Viewed after inquiry initial step'
+  questionnaire : 'Viewed after inquiry questionnaire step'
+  signup        : 'Viewed after inquiry auth form'
+  login         : 'Viewed after inquiry auth form'
 
 module.exports = class Questionnaire extends ModalView
   _.extend @prototype, Form
@@ -29,20 +36,23 @@ module.exports = class Questionnaire extends ModalView
     'click #after-inquiry-auth-submit'          : 'auth'
 
   initialize: (options) ->
-    { @user } = options
+    { @user, @inquiry } = options
 
     @user.approximateLocation()
-
-    @state = new Backbone.Model mode: 'initial'
-
     @templateData = user: @user
 
+    @state = new Backbone.Model mode: (if @user.id then 'initial' else 'signup')
     @listenTo @state, 'change:mode', @reRender
+    @listenTo @state, 'change:mode', @logState
+
+    @logState()
 
     super
 
   advance: (e) ->
-    @user.set collector_level: parseInt($(e.currentTarget).data 'value')
+    collectorLevel = parseInt($(e.currentTarget).data 'value')
+    @user.set collector_level: collectorLevel
+    analytics.track.funnel "Set collector level to #{collectorLevel} during after inquiry flow"
     @state.set mode: 'questionnaire'
 
   # Done with the questionnaire:
@@ -59,30 +69,14 @@ module.exports = class Questionnaire extends ModalView
     @user.set @serializeForm()
     @$('button').attr 'data-state', 'loading'
 
-    # Logged in
-    if @user.id
-      mediator.trigger 'inquiry:send'
-      # If the user is logged in then just save the data and close the modal
-      @user.save null, success: =>
-        @$el.attr 'data-state', 'closed'
-        # Wait for a moment before closing completely
-        _.delay (=> @close()), 1000
+    mediator.trigger 'inquiry:send'
+
+    @user.save null,
+      error   : => @close()
+      success : =>
+        @user.refresh()
         # And we're done...
-    # Logged out
-    else
-      mediator.trigger 'inquiry:send'
-      mediator.on 'inquiry:error', =>
-        @$el.attr 'data-state', 'closed'
-        _.delay (=> @close()), 1000
-        # And we're done...
-      , this
-      mediator.on 'inquiry:success', =>
-        @$el.attr 'data-state', 'closed'
-        # Wait for modal to close before re-rendering
-        _.delay (=> @state.set mode: 'signup'), 800
-        # Wait for re-render before re-opening
-        _.delay (=> @$el.attr 'data-state', 'open'), 1600
-      , this
+        @close()
 
   auth: (e) ->
     return unless @validateForm()
@@ -93,27 +87,27 @@ module.exports = class Questionnaire extends ModalView
 
     @user.set @serializeForm()
     # Signup or login
-    @user[@state.get 'mode']
-      success : @authSuccess
-      error   : @authError
+    @user[@state.get 'mode'] success: @authSuccess, error: @authError
 
   authError: (model, response, options) =>
     @$('button').attr 'data-state', 'error'
     @$('.auth-errors').text(@errorMessage response)
+    analytics.track.funnel "Unsuccessful #{@state.get('mode')} during after inquiry flow"
 
   authSuccess: (model, response, options) =>
     attrs = _.omit model.get('user'), @user.keys()...
     @user.set attrs
     @user.unset 'password'
-    # We have to save because you cannot
-    # login or signup with extra attributes
-    @user.save null, success: =>
-      @user.refresh success: -> location.reload()
-      # And we're done...
+    @inquiry.unset 'session_id'
+    @state.set mode: 'initial'
+    analytics.track.funnel "Successful #{@state.get('mode')} during after inquiry flow"
 
   toggleMode: (e) ->
     e.preventDefault()
     @state.set 'mode', $(e.target).data('mode')
+
+  logState: ->
+    analytics.track.funnel stateEventMap[@state.get 'mode']
 
   reRender: ->
     @$el.attr 'data-mode', (mode = @state.get 'mode')
