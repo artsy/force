@@ -15,7 +15,7 @@ Profile     = require '../../models/profile.coffee'
           res.json req.user.attributes
 
 @settings = (req, res) ->
-  return res.redirect("/") unless req.user
+  return res.redirect("/log_in?redirect_uri=#{req.url}") unless req.user
 
   user = new UserEdit req.user.attributes
   editAccountIsActive = if _.contains(req.url, '/user') then 'is-active' else null
