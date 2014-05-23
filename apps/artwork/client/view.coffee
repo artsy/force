@@ -114,13 +114,17 @@ module.exports = class ArtworkView extends Backbone.View
     if navigator?.userAgent.search("Safari") >= 0 and navigator?.userAgent.search("Chrome") < 0
       @$('.artwork-overview').css 'max-width': @$('.artwork-container').width() - 250
 
+  displayZigZag: ->
+    (@$inquiryButton = @$('.artwork-contact-button, .artwork-inquiry-button').first())
+    @$inquiryButton.length and not @artwork.get('acquireable')
+
   setupZigZag: ->
-    if ($inquiryButton = @$('.artwork-contact-button, .artwork-inquiry-button').first()).length
+    if @displayZigZag()
       new ZigZagBanner
         persist : true
         name    : 'inquiry'
         message : 'Interested in this work?<br>Request more info here'
-        $target : $inquiryButton
+        $target : @$inquiryButton
 
   deltaTrackPageView: (fair) ->
     el = $('#scripts')
