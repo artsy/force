@@ -116,8 +116,6 @@ module.exports = class Artist extends Backbone.Model
       name: @displayName()
       url: "#{sd.APP_URL}#{@href()}"
       gender: @get('gender')
-      nationality: @get('nationality')
-      hometown: @get('hometown')
       birthDate: @get('birthday')
       deathDate: @get('deathday')
       additionalType: 'Artist'

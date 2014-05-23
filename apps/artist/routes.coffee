@@ -1,6 +1,6 @@
 Backbone    = require 'backbone'
 Artist      = require '../../models/artist'
-
+{ stringifyJSONForWeb } = require '../../components/util/json.coffee'
 
 @index = (req, res) ->
   sort = req.query.sort
@@ -11,7 +11,10 @@ Artist      = require '../../models/artist'
       if artist.href() == res.locals.sd.CURRENT_PATH
         res.locals.sd.ARTIST = artist.toJSON()
         res.locals.sd.sortBy = sort
-        res.render 'index', artist: artist, sortBy: sort
+        res.render 'index',
+          artist : artist
+          sortBy : sort
+          jsonLD : stringifyJSONForWeb(artist.toJSONLD())
       else
         res.redirect artist.href()
     error: res.backboneError
