@@ -6,6 +6,7 @@ Artworks      = require '../collections/artworks.coffee'
 { Image }     = require 'artsy-backbone-mixins'
 { smartTruncate }     = require '../components/util/string.coffee'
 { SECURE_IMAGES_URL } = require('sharify').data
+{ compactObject } = require './mixins/compact_object.coffee'
 
 module.exports = class Artist extends Backbone.Model
 
@@ -98,3 +99,26 @@ module.exports = class Artist extends Backbone.Model
       string(@get('forsale_artworks_count'), 'available')
       string((@get('published_artworks_count') - @get('forsale_artworks_count')), 'reference')
     ]).join ' & '
+
+  toJSONLDShort: ->
+    compactObject {
+      "@type" : "Person"
+      image   : @imageUrl('large')
+      name    : @displayName()
+      sameAs  : "#{sd.APP_URL}#{@href()}"
+    }
+
+  toJSONLD: ->
+    compactObject {
+      "@context" : "http://schema.org"
+      "@type" : "Person"
+      image: @imageUrl('large')
+      name: @displayName()
+      url: "#{sd.APP_URL}#{@href()}"
+      gender: @get('gender')
+      nationality: @get('nationality')
+      hometown: @get('hometown')
+      birthDate: @get('birthday')
+      deathDate: @get('deathday')
+      additionalType: 'Artist'
+    }

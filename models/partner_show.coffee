@@ -6,9 +6,11 @@ Fair            = require './fair.coffee'
 FairLocation    = require './fair_location.coffee'
 InstallShot     = require './install_shot.coffee'
 Partner         = require './partner.coffee'
+Artists         = require '../collections/artists.coffee'
 PartnerLocation = require './partner_location.coffee'
 DateHelpers     = require '../components/util/date_helpers.coffee'
 { Image }       = require 'artsy-backbone-mixins'
+{ compactObject } = require './mixins/compact_object.coffee'
 fetchUntilEnd   = require('artsy-backbone-mixins').Fetch(sd.API_URL).fetchUntilEnd
 
 module.exports = class PartnerShow extends Backbone.Model
@@ -149,6 +151,8 @@ module.exports = class PartnerShow extends Backbone.Model
     else
       "#{artists[0..(max-1)].join(', ')} and #{artists[(max-1)..].length - 1} more"
 
+  artists: -> new Artists(@get('artists'))
+
   formatCity: =>
     @get('location')?.city
 
@@ -172,3 +176,19 @@ module.exports = class PartnerShow extends Backbone.Model
   running: -> @get('status') is 'running'
   closed: -> @get('status') is 'closed'
   renderable: -> @get('eligible_artworks_count') > 0 || @get('images_count') > 2
+
+  toJSONLD: ->
+    if @get('location')
+      @get('location').name = @partnerName()
+
+    compactObject {
+      "@context" : "http://schema.org"
+      "@type" : "Event"
+      name : @get('name')
+      image: @metaImage()?.imageUrl()
+      url: "#{sd.APP_URL}#{@href()}"
+      startDate: new Date(@get('start_at')).toISOString()
+      endDate: new Date(@get('end_at')).toISOString()
+      location: @location()?.toJSONLD()
+      performer: artist.toJSONLDShort() for artist in @artists().models
+    }

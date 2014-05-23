@@ -51,3 +51,19 @@ describe 'Artist', ->
       @artist.displayAvailableWorks().should.equal '2 reference works'
       @artist.set published_artworks_count: 2, forsale_artworks_count: 2
       @artist.displayAvailableWorks().should.equal '2 available works'
+
+  describe '#toJSONLD', ->
+
+    it 'returns valid json', ->
+      json = @artist.toJSONLD()
+      json['@context'].should.equal 'http://schema.org'
+      json['@type'].should.equal 'Person'
+      json.name.should.equal 'Pablo Picasso'
+
+  describe '#toJSONLDShort', ->
+
+    it 'returns valid json', ->
+      json = @artist.toJSONLDShort()
+      json['@type'].should.equal 'Person'
+      json.name.should.equal 'Pablo Picasso'
+      json.sameAs.should.include 'artist/pablo-picasso'
