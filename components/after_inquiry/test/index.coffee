@@ -54,15 +54,15 @@ describe 'AfterInquiry', ->
           flow.remove()
 
     it 'initializes a new flash message', ->
-      @flow.flash.$el.text().should.equal 'Thank you. Your inquiry is sending…'
+      @flow.flash.message.should.equal 'Thank you. Your inquiry is sending&hellip;'
 
     it 'responds to the inquiry success event by updating the flash message accordingly', ->
       @inquiry.trigger 'sync'
-      @flow.flash.$el.text().should.equal 'Your inquiry has been sent.'
+      @flow.flash.message.should.equal 'Thank you. Your inquiry has been sent.'
 
     it 'responds to the inquiry error event by updating the flash message accordingly', ->
       @inquiry.trigger 'error'
-      @flow.flash.$el.text().should.equal 'There was a problem with sending your inquiry'
+      @flow.flash.message.should.equal 'There was a problem with sending your inquiry'
 
     describe 'if the questionnaire modal is closed', ->
       describe 'inquiry send was not yet requested', ->
