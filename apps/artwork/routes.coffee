@@ -1,6 +1,7 @@
 Artwork   = require '../../models/artwork'
 Artist    = require '../../models/artist'
 Backbone  = require 'backbone'
+{ stringifyJSONForWeb } = require '../../components/util/json.coffee'
 
 @index = (req, res) ->
   artwork = new Artwork id: req.params.id
@@ -26,9 +27,11 @@ Backbone  = require 'backbone'
                 artwork: artwork
                 artist : artist
                 tab    : req.params.tab
+                jsonLD : stringifyJSONForWeb(artwork.toJSONLD())
         else
           res.render 'index',
             artwork: artwork
+            jsonLD : stringifyJSONForWeb(artwork.toJSONLD())
       else
         res.redirect artwork.href()
 

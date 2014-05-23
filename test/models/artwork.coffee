@@ -328,3 +328,11 @@ describe 'Artwork', ->
       new Artwork(title: "title", dimensions: { cm: "20 cm diameter" }, metric: 'cm').toAuctionResultsPageDescription().should.equal "Related auction results for title, 20 cm diameter"
       new Artwork(title: "title", dimensions: { cm: "20 cm diameter" }, metric: 'cm', medium: "Awesomeness").toAuctionResultsPageDescription().should.equal "Related auction results for title, Awesomeness, 20 cm diameter"
       new Artwork(title: "title", dimensions: { cm: "20 cm diameter" }, metric: 'cm', medium: "Awesomeness", artist: { name: "first last" }).toAuctionResultsPageDescription().should.equal "Related auction results for first last, title, Awesomeness, 20 cm diameter"
+
+  describe '#toJSONLD', ->
+
+    it 'returns valid json', ->
+      json = @artwork.toJSONLD()
+      json['@context'].should.equal 'http://schema.org'
+      json['@type'].should.equal 'CreativeWork'
+      json.name.should.equal 'Skull'

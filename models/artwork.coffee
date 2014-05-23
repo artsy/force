@@ -3,6 +3,8 @@ sd                = require('sharify').data
 Backbone          = require 'backbone'
 Edition           = require './edition.coffee'
 AdditionalImage   = require './additional_image.coffee'
+Artist            = require './artist.coffee'
+{ compactObject } = require './mixins/compact_object.coffee'
 
 { Image, Dimensions, Markdown } = require 'artsy-backbone-mixins'
 
@@ -340,3 +342,15 @@ module.exports = class Artwork extends Backbone.Model
   fetchRelatedCollections: (options = {}) ->
     _.map @relatedCollections, (collection) ->
       collection.fetch options
+
+  artist: -> new Artist(@get('artist'))
+
+  toJSONLD: ->
+    compactObject {
+      "@context" : "http://schema.org"
+      "@type" : "CreativeWork"
+      image: @imageUrl('large')
+      name: @getTitle()
+      url: "#{sd.APP_URL}#{@href()}"
+      creator: compactObject(@artist()?.toJSONLDShort())
+    }
