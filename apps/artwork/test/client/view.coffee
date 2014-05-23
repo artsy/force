@@ -244,3 +244,12 @@ describe 'ArtworkView', ->
     describe '#initialize', ->
       it 'does not have a following collection if the user is not logged in', ->
         _.isUndefined(@view.following).should.be.ok
+
+    describe '#displayZigZag', ->
+      beforeEach ->
+        @view.$el.append $('<div class="artwork-inquiry-button"></div>')
+      it 'should display as long as the work is not acquireable', ->
+        @view.artwork.set 'acquireable', false
+        @view.displayZigZag().should.be.true
+        @view.artwork.set 'acquireable', true
+        @view.displayZigZag().should.be.false
