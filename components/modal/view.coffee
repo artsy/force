@@ -13,6 +13,8 @@ module.exports = class ModalView extends Backbone.View
 
   template: ->
     'Requires a template'
+  modalTemplate: ->
+    modalTemplate()
 
   templateData: {}
 
@@ -94,7 +96,7 @@ module.exports = class ModalView extends Backbone.View
     @$el.
       addClass("is-#{@transition}-in #{backdropClass}").
       # Render outer
-      html modalTemplate()
+      html @modalTemplate()
 
     @renderInner()
 

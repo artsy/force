@@ -43,6 +43,15 @@ describe 'FlashMessage', ->
       $('.fullscreen-flash-message').length.should.equal 1
       $('.fullscreen-flash-message').text().should.equal 'Goodbye world.'
 
+    it 'takes over the el of an existing flash message and updates the message if a flash is already on screen', (done) ->
+      @flash.$container.text().should.equal 'Goodbye world.'
+      anotherFlash = new FlashMessage message: 'Hello world.'
+      sinon.spy anotherFlash, 'update'
+      _.defer =>
+        anotherFlash.update.called.should.be.true
+        @flash.$container.text().should.equal 'Hello world.'
+        done()
+
   describe '#close', ->
     beforeEach ->
       @flash = new FlashMessage message: 'Goodbye world.'

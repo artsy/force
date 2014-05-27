@@ -1,59 +1,70 @@
-Backbone = require 'backbone'
-CurrentUser = require '../../../../models/current_user.coffee'
+_             = require 'underscore'
+Backbone      = require 'backbone'
+Cookies       = require 'cookies-js'
+analytics     = require '../../../../lib/analytics.coffee'
+CurrentUser   = require '../../../../models/current_user.coffee'
+FlashMessage  = require '../../../../components/flash/index.coffee'
+Form          = require '../../../../components/mixins/form.coffee'
+AfterInquiry  = require '../../../../components/after_inquiry/mixin.coffee'
+
+{ SESSION_ID, API_URL }  = require('sharify').data
+
 template = -> require('./template.jade') arguments...
-{ SESSION_ID } = require('sharify').data
-FlashMessage = require '../../../../components/flash/index.coffee'
-analytics = require '../../../../lib/analytics.coffee'
-Cookies = require 'cookies-js'
 
 module.exports = class ContactView extends Backbone.View
+  _.extend @prototype, Form
+  _.extend @prototype, AfterInquiry
+
+  eligibleForAfterInquiryFlow: true
+
+  events:
+    'submit #artwork-contact-form' : 'submit'
+    'mouseover button'             : 'hoveredSubmit'
 
   initialize: ->
     @user = CurrentUser.orNull()
+
+    @inquiry      = new Backbone.Model
+    @inquiry.url  = "#{API_URL}/api/v1/me/artwork_inquiry_request"
+
     @render()
 
   render: ->
     @$el.html template artwork: @model, user: @user
+
+    @$submit    = @$('button')
+    @$textarea  = @$('textarea')
+
     @focusTextarea() if @user
 
   focusTextarea: =>
-    val = @$('textarea').val()
-    @$('textarea').focus().val('').val(val)
-
-  events:
-    'submit #artwork-contact-form': 'submit'
-    'mouseover button': 'hoveredSubmit'
+    val = @$textarea.val()
+    @$textarea.focus().val('').val val
 
   submit: (e) ->
     e.preventDefault()
-    @$('button').addClass 'is-loading'
-    data =
-      artwork: @model.get('id')
-      contact_gallery: true
-      email: @user?.get('email') or @$('[name=email]').val()
-      message: @$('textarea').val()
-      name: @user?.get('name') or @$('[name=name]').val()
-      session_id: if @user then undefined else SESSION_ID
-      referring_url  : Cookies.get('force-referrer')
-      landing_url    : Cookies.get('force-session-start')
-      inquiry_url    : window.location.href
 
-    analytics.track.funnel 'Contact form submitted', data
+    @$submit.attr 'data-state', 'loading'
 
-    analytics.track.funnel 'Sent artwork inquiry',
-      label : analytics.modelNameAndIdToLabel('artwork', @model.get('id'))
+    @inquiry.set _.extend @serializeForm(),
+      artwork         : @model.id
+      contact_gallery : true
+      session_id      : if @user then undefined else SESSION_ID
+      referring_url   : Cookies.get('force-referrer')
+      landing_url     : Cookies.get('force-session-start')
+      inquiry_url     : window.location.href
 
-    $.ajax
-      url: "/api/v1/me/artwork_inquiry_request"
-      type: "POST"
-      data: data
-      complete: =>
-        @$('button').removeClass 'is-loading'
+    @maybeSend @inquiry,
       success: =>
         new FlashMessage message: 'Thank you. Your message has been sent.'
-      error: (xhr) =>
-        res = JSON.parse(xhr.responseText)
-        @$('#artwork-contact-form-errors').html res.error or res.message or res.toString()
+        @$submit.attr('data-state', '').blur()
+      error: (model, response, options) =>
+        @$('#artwork-contact-form-errors').html @errorMessage(response)
+        @$submit.attr 'data-state', 'error'
+
+    analytics.track.funnel 'Contact form submitted', @inquiry.attributes
+    analytics.track.funnel 'Sent artwork inquiry',
+      label: analytics.modelNameAndIdToLabel('artwork', @model.id)
 
   hoveredSubmit: ->
     analytics.track.hover "Hovered over contact form 'Send' button"

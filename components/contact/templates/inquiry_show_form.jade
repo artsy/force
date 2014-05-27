@@ -1,35 +1,36 @@
-form.contact-form
-  .contact-show-details
+form.contact-form.stacked-form
+  .contact-show-details.stacked-form-cell
     img( src=show.imageUrl() )
     p= show.get('name')
     p!= show.runningDates()
-  textarea.bordered-input.is-block(
-      name='message'
+
+  textarea.bordered-input.is-persistplaceholder(
+      placeholder   = 'Your message to the gallery'
+      name          = 'message'
+      autofocus     = autofocus
+      rows          = '7'
       required
-      autofocus= autofocus
     )
-  .bi-type-activated-placeholder( style='margin-top: -153px' ) Your message to the gallery
-  if user
-    section.contact-from
+  if user && user.id
+    //- Logged in
+    .stacked-form-cell
       | From: #{user.get('name')}
       span.mcf-email  (#{user.get('email')})
     input( type='hidden', name='name', value=user.get('name') )
     input( type='hidden', name='email', value=user.get('email') )
   else
-    input.bordered-input.is-block(
-      type='text'
-      name='name'
+    //- Logged out
+    input.bordered-input.is-persistplaceholder(
+      placeholder   = 'Your full name'
+      type          = 'text'
+      name          = 'name'
       required
     )
-    .bi-type-activated-placeholder Your full name
-    input.bordered-input.is-block(
-      type='email'
-      name='email'
-      placeholder= 'Your email address'
+    input.bordered-input(
+      type          = 'email'
+      name          = 'email'
+      placeholder   = 'Your email address'
       required
     )
-  a#contact-submit.avant-garde-button-black.is-block(
-    href='#'
-    data-state='ok'
-  )
+  button#contact-submit.avant-garde-button-black( href='#', data-state='ok' )
     | Send

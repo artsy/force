@@ -28,11 +28,16 @@ module.exports = class FlashMessage extends Backbone.View
     @startRemoveTimer() if @autoclose
 
   setup: ->
-    @$el.html @template()
-    $(@container).html @$el
+    if (@$container = $(@container)).is ':empty'
+      @$el.html @template()
+      @$container.html @$el
+      _.defer => @$el.attr 'data-state', 'open'
 
-    _.defer =>
-      @$el.attr 'data-state', 'open'
+    # If there already is a flash message on screen
+    # Take over its el then update the message
+    else
+      @setElement(@$container.children())
+      _.defer => @update @message
 
   startRemoveTimer: ->
     @__removeTimer__ = _.delay @close, @visibleDuration

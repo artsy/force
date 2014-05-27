@@ -1,10 +1,11 @@
 _         = require 'underscore'
 sd        = require('sharify').data
 Backbone  = require 'backbone'
-Geo       = require './mixins/geo.coffee'
+User      = require './user.coffee'
 
-module.exports = class LoggedOutUser extends Backbone.Model
-  _.extend @prototype, Geo
+module.exports = class LoggedOutUser extends User
+  url: ->
+    "#{sd.API_URL}/api/v1/me"
 
   login: (options = {}) ->
     settings = _.defaults options,
@@ -25,3 +26,11 @@ module.exports = class LoggedOutUser extends Backbone.Model
     settings = _.defaults options,
       url : "#{sd.API_URL}/api/v1/users/send_reset_password_instructions"
     new Backbone.Model().save (@pick 'email'), settings
+
+  # Since this model gets initialized in a logged out state,
+  # to persist any changes to it we have to manually inject
+  # the access token after a login takes place
+  save: (attributes, options = {}) ->
+    options.beforeSend = (xhr) =>
+      xhr.setRequestHeader('X-ACCESS-TOKEN', @get 'accessToken')
+    Backbone.Model::save.call this, attributes, options

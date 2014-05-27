@@ -1,0 +1,19 @@
+p: i.icon-logotype
+
+h1 Enter a password to create an account and send your inquiry.
+
+.auth-errors
+  //- Error message placeholder
+
+form.stacked-form#after-inquiry-auth-form
+  input.bordered-input(
+    name          = 'password'
+    type          = 'password'
+    placeholder   = 'Password'
+    autocomplete  = 'on'
+    pattern       = '.{6,}'
+    title         = '6 characters minimum'
+    required
+  )
+  button#auth-submit.avant-garde-button-black
+    != buttonLabel
