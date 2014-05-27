@@ -7,10 +7,12 @@ module.exports =
   loadGoogleMaps: (cb) ->
     return cb() if @googleMapsLoaded
 
+    @googleMapsLoading = (dfd = $.Deferred()).promise()
+
     window.googleMapsCallback = =>
+      dfd.resolve()
       @googleMapsLoaded = true
-      cb()
-      window.googleMapsCallback = undefined
+      @googleMapsLoading.then cb
 
     $.getScript @googleMapsAPI + '&callback=googleMapsCallback'
 
