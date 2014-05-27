@@ -22,21 +22,24 @@ module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Rout
     'personalize/:step': 'step'
 
   initialize: (options) ->
-    { @user }   = options
-    @state      = new PersonalizeState
-    @$el        = $('#personalize-page')
+    { @user } = options
+
+    @state  = new PersonalizeState user: @user
+    @$el    = $('#personalize-page')
 
     @listenTo @state, 'transition:next', @next
     @listenTo @state, 'done', @done
 
-    track.funnel 'Landed on personalize page', { label: "User:#{@user.id}" }
+    track.funnel 'Landed on personalize page', label: "User:#{@user.id}"
+
+    _.defer => @next()
 
   step: (step) ->
     Transition.fade @$el, out: =>
       @view?.remove()
       @state.setStep step
 
-      track.funnel "Starting Personalize #{@state.currentStepLabel()}", { label: "User:#{@user.id}" }
+      track.funnel "Starting Personalize #{@state.currentStepLabel()}", label: "User:#{@user.id}"
 
       @view = new views["#{_.classify(step)}View"] state: @state, user: @user
       @$el.html @view.render().$el
@@ -54,7 +57,7 @@ module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Rout
     destination or '/'
 
   done: ->
-    track.funnel 'Finished personalize', { label: "User:#{@user.id}" }
+    track.funnel 'Finished personalize', label: "User:#{@user.id}"
 
     @$el.attr 'data-state', 'loading'
 
@@ -68,5 +71,5 @@ module.exports.init = ->
   user = CurrentUser.orNull()
   return unless user
   user.approximateLocation()
-  router = new PersonalizeRouter(user: user)
+  new PersonalizeRouter user: user
   Backbone.history.start pushState: true

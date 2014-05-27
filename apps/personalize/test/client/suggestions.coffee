@@ -32,8 +32,8 @@ describe 'SuggestionsView', ->
     benv.teardown()
 
   beforeEach ->
-    @state  = new PersonalizeState
     @user   = new CurrentUser fabricate 'user'
+    @state  = new PersonalizeState user: @user
     @view   = new TestView(state: @state, user: @user, followKind: 'artist')
 
     # Setup suggestions

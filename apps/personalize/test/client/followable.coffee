@@ -34,8 +34,8 @@ describe 'Followable', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
 
-    @state  = new PersonalizeState
     @user   = new CurrentUser fabricate 'user'
+    @state  = new PersonalizeState user: @user
     @view   = new TestView(state: @state, user: @user)
 
     @view.render()

@@ -21,8 +21,8 @@ describe 'PriceRangeView', ->
     benv.teardown()
 
   beforeEach ->
-    @state  = new PersonalizeState
     @user   = new CurrentUser fabricate 'user'
+    @state  = new PersonalizeState user: @user
     @view   = new @PriceRangeView(state: @state, user: @user)
     @view.state.setStep('price_range')
     @view.render()

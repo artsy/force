@@ -19,8 +19,8 @@ describe 'CollectView', ->
     benv.teardown()
 
   beforeEach ->
-    @state  = new PersonalizeState
     @user   = new CurrentUser fabricate 'user'
+    @state  = new PersonalizeState user: @user
     @view   = new @CollectView(state: @state, user: @user)
     @view.render()
 

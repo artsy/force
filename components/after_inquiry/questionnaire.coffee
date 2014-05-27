@@ -99,8 +99,8 @@ module.exports = class Questionnaire extends ModalView
     @user.set attrs
     @user.unset 'password'
     @inquiry.unset 'session_id'
-    @state.set mode: 'initial'
     analytics.track.funnel "Successful #{@state.get('mode')} during after inquiry flow"
+    @state.set mode: 'initial'
 
   toggleMode: (e) ->
     e.preventDefault()
