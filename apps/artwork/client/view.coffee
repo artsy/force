@@ -86,6 +86,12 @@ module.exports = class ArtworkView extends Backbone.View
     @artwork.on "change:ecommerce", @renderDetail, @
     @artwork.fetch()
 
+    @preventRightClick()
+
+  preventRightClick: ->
+    (@$artworkImage ?= @$('#the-artwork-image')).on 'contextmenu', (event) ->
+      event.preventDefault()
+
   checkQueryStringForAuction: ->
     { auction_id } = qs.parse(parse(window.location.search).query)
     @renderAuctionPlaceholder auction_id if auction_id
