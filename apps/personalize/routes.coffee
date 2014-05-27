@@ -1,8 +1,5 @@
 _ = require 'underscore'
 
-@initial = (req, res) ->
-  res.redirect '/personalize/collect'
-
 @index = (req, res) ->
   if req.user
     req.user.fetch
