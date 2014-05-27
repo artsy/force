@@ -10,7 +10,7 @@ module.exports.index = ->
     countsUrl: "#{API_URL}/api/v1/search/filtered/main/suggest"
     urlRoot: "browse"
   Backbone.history.start pushState: true
-  iframePopover $('#browse-filter')
+  iframePopover $('#browse-filter .filter-artworks')
   params.trigger 'reset'
 
 module.exports.categories = ->
