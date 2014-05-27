@@ -26,8 +26,8 @@ describe 'CategoriesView', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
 
-    @state      = new PersonalizeState
     @user       = new CurrentUser fabricate 'user'
+    @state      = new PersonalizeState user: @user
     @view       = new CategoriesView state: @state, user: @user
     @geneLinkA  = new FeaturedLink fabricate 'featured_link', href: '/gene/a', title: 'A', image_url: 'a/:version'
     @geneLinkB  = new FeaturedLink fabricate 'featured_link', href: '/gene/b', title: 'B', image_url: 'b/:version'

@@ -3,6 +3,7 @@ Backbone          = require 'backbone'
 sinon             = require 'sinon'
 StepView          = require '../../client/views/step'
 PersonalizeState  = require '../../client/state'
+CurrentUser       = require '../../../../models/current_user'
 
 describe 'StepView', ->
   before (done) ->
@@ -15,8 +16,9 @@ describe 'StepView', ->
     benv.teardown()
 
   beforeEach ->
-    @state = new PersonalizeState
-    @view = new StepView(state: @state, user: true)
+    @user   = new CurrentUser
+    @state  = new PersonalizeState user: @user
+    @view   = new StepView state: @state, user: @user
 
   describe '#initialize', ->
     it 'has a user', ->

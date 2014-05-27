@@ -5,7 +5,7 @@ sinon           = require 'sinon'
 rewire          = require 'rewire'
 { resolve }     = require 'path'
 { fabricate }   = require 'antigravity'
-
+CurrentUser     = require '../../../../models/current_user.coffee'
 
 describe 'PersonalizeRouter', ->
   beforeEach (done) ->
@@ -16,7 +16,7 @@ describe 'PersonalizeRouter', ->
       mod.__set__ 'Transition', { fade: (@fadeStub = sinon.stub()) }
       mod.__set__ 'views', { LocationView: => { render: => { $el: 'location' } } }
       sinon.spy @PersonalizeRouter.prototype, 'navigate'
-      @router = new @PersonalizeRouter user: fabricate 'user'
+      @router = new @PersonalizeRouter user: new CurrentUser
       done()
 
   afterEach ->
