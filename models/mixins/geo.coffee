@@ -11,8 +11,15 @@ module.exports =
     geo.locate
       accuracy : 'low'
       success  : (geoFormatted) =>
-        if _.isEmpty @get('location')?.coordinates
+        unless @hasLocation()
           @setGeo geoFormatted
+
+  # Gravity runs a delayed job after user saves that geolocates
+  # the last_sign_in_ip. So, for now, this is the most accurate way to
+  # ascertain whether or not we have a usable location as this is the string
+  # that would be displayed as the value in the location input
+  hasLocation: ->
+    not _.isEmpty(@location()?.cityStateCountry())
 
   setLocation: (obj) ->
     # Google will return an object with nothing but a name property if it
