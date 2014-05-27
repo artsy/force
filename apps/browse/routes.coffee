@@ -19,6 +19,8 @@ FilterSuggest = require '../../models/filter_suggest.coffee'
       featuredGenes: featuredGenes
       popularCategories: popularCategories
       mediums: filterSuggest.mediumsHash()
+      showBrowseCategories: true
+      filterRoot: '/browse/artworks'
 
 @categories = (req, res) ->
   geneCategories = new OrderedSets(key: 'browse:gene-categories')
@@ -34,6 +36,11 @@ FilterSuggest = require '../../models/filter_suggest.coffee'
           res.render 'categories',
             geneCategories: geneCategories
             aToZGroup: aToZGroup
+
+@filter = (req, res) ->
+  res.render 'index',
+    showBrowseCategories: false
+    filterRoot: '/browse/artworks'
 
 @redirectToCategories = (req, res) ->
   res.redirect '/categories'
