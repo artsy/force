@@ -83,7 +83,7 @@ module.exports = class HeaderView extends Backbone.View
     unless isTouchDevice()
       @$window.scrollTop(0)
 
-    Cookies.set 'hide-force-header', true, expires: 60 * 24 * 365
+    Cookies.set 'hide-force-header', true, expires: 60 * 60 * 24 * 365
 
   signup: (e) ->
     e.preventDefault()
