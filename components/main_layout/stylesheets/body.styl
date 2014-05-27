@@ -37,8 +37,14 @@ search-bar-input-placeholder-white()
 
 // Some elements need to break out of the standard side and top margins to fill
 // the full viewport.
-.body-no-margins #main-layout-container
-  margin 0
+.body-no-margins
+  #main-layout-container
+    margin-top (welcome-header-height + main-header-height)
+    margin-left 0
+    margin-right 0
+  &.body-header-fixed
+    #main-layout-container
+      margin-top main-header-height
 
 // View in room and home page hero units will sit underneath a transparent
 // header.
