@@ -37,8 +37,8 @@ describe 'PersonalizeRouter', ->
   describe '#next', ->
     it 'triggers the route on the state transition', ->
       @router.state.trigger 'transition:next'
-      @router.navigate.args[0][0].should.equal "/personalize/#{@router.state.get('current_step')}"
-      @router.navigate.args[0][1].trigger.should.be.ok
+      _.last(@router.navigate.args)[0].should.equal "/personalize/#{@router.state.get('current_step')}"
+      _.last(@router.navigate.args)[1].trigger.should.be.ok
 
   describe '#redirectLocation', ->
     it 'returns the root path if there is no destination cookie set', ->
