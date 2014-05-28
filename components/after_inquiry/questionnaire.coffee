@@ -28,12 +28,15 @@ module.exports = class Questionnaire extends ModalView
     templateMap[@state.get 'mode'] arguments...
 
   events: -> _.extend super,
+    # Prevents clicks on the backdrop from closing the contact form
+    'click.handler .modal-backdrop'             : undefined
     'click a[data-mode]'                        : 'toggleMode'
     'click .after-inquiry-initial-submit'       : 'advance'
     'submit #after-inquiry-questionnaire-form'  : 'done'
     'click #after-inquiry-questionnaire-submit' : 'done'
     'submit #after-inquiry-auth-form'           : 'auth'
     'click #after-inquiry-auth-submit'          : 'auth'
+    'click #auth-skip'                          : 'skipAndSend'
 
   initialize: (options) ->
     { @user, @inquiry } = options
@@ -48,6 +51,12 @@ module.exports = class Questionnaire extends ModalView
     @logState()
 
     super
+
+  skipAndSend: (e) ->
+    e.preventDefault()
+    mediator.trigger 'inquiry:send'
+    analytics.track.funnel 'Skipped after inquiry flow'
+    @close()
 
   advance: (e) ->
     collectorLevel = parseInt($(e.currentTarget).data 'value')

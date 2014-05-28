@@ -54,7 +54,7 @@ module.exports = class ContactView extends Backbone.View
       landing_url     : Cookies.get('force-session-start')
       inquiry_url     : window.location.href
 
-    @inquiry.save null,
+    @maybeSend @inquiry,
       success: =>
         new FlashMessage message: 'Thank you. Your message has been sent.'
         @$submit.attr('data-state', '').blur()

@@ -24,6 +24,9 @@ module.exports = class AfterInquiry
 
     @flash = new FlashMessage message: @messagePending, autoclose: false
 
+    (@$window = $(window)).bind 'beforeunload', ->
+      'Your inquiry has not been sent yet.'
+
     mediator.once 'modal:closed', =>
       # Send the inquiry if the modal gets closed without
       # the inquiry request taking place
@@ -76,5 +79,6 @@ module.exports = class AfterInquiry
   remove: =>
     @flash.close()
     @stopListening()
+    @$window.off 'beforeunload'
     mediator.off null, null, this
     mediator.off 'inquiry:send' # originates in the mixin

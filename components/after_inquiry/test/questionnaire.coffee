@@ -90,6 +90,15 @@ describe 'Questionnaire', ->
           _.last(Backbone.sync.args)[0].should.equal 'create'
           _.last(Backbone.sync.args)[2].url.should.equal '/users/sign_in'
 
+      describe 'either mode', ->
+        beforeEach ->
+          @view.state.set mode: 'signup'
+
+        it 'allows the user to skip this whole thing, sending the inquiry and closing the modal', (done) ->
+          mediator.on 'inquiry:send', done, this
+          @view.$('#auth-skip').click()
+          @view.close.called.should.be.true
+
     describe '#authError', ->
       beforeEach ->
         @view.state.set mode: 'signup'

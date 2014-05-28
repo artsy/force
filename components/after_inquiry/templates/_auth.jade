@@ -1,6 +1,6 @@
 p: i.icon-logotype
 
-h1 Enter a password to create an account and send your inquiry.
+h1 Enter a password to #{action} account and save your information
 
 .auth-errors
   //- Error message placeholder
@@ -13,7 +13,9 @@ form.stacked-form#after-inquiry-auth-form
     autocomplete  = 'on'
     pattern       = '.{6,}'
     title         = '6 characters minimum'
+    autofocus     = autofocus
     required
   )
   button#auth-submit.avant-garde-button-black
     != buttonLabel
+  a#auth-skip.avant-garde-button-white No thanks

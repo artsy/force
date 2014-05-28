@@ -64,6 +64,9 @@ describe 'AfterInquiry', ->
       @inquiry.trigger 'error'
       @flow.flash.message.should.equal 'There was a problem with sending your inquiry'
 
+    it 'attaches a beforeunload handler to window', ->
+      $._data($(window)[0], 'events').should.have.keys 'beforeunload'
+
     describe 'if the questionnaire modal is closed', ->
       describe 'inquiry send was not yet requested', ->
         beforeEach ->
