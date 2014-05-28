@@ -78,6 +78,8 @@ module.exports = class Questionnaire extends ModalView
         # And we're done...
         @close()
 
+    analytics.track.funnel 'Submitted questionnaire during after inquiry flow'
+
   auth: (e) ->
     return unless @validateForm()
 
