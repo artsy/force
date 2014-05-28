@@ -76,7 +76,7 @@ module.exports = class ContactView extends ModalView
       # Set the data but don't persist it yet
       @model.set @serializeForm(@$form)
 
-      @model.save null,
+      @maybeSend @model,
         success: =>
           @close =>
             new FlashMessage message: @options.successMessage
