@@ -34,7 +34,6 @@ module.exports = class PartnerCollectionView extends Backbone.View
       collection: @collection
       numberOfColumns: 4
       gutterWidth: 40
-      totalWidth: @calcArtworkColumnsWidth()
       artworkSize: 'tall'
       allowDuplicates: true
 
@@ -78,13 +77,6 @@ module.exports = class PartnerCollectionView extends Backbone.View
       data: data
       success: options?.success
       error: options?.error
-
-  calcArtworkColumnsWidth: ->
-    minWidth = 850
-    maxWidth = 1120
-    containerWidth = @$el.width()
-
-    Math.max(minWidth, Math.min(containerWidth, maxWidth))
 
   renderLoading: ->
     unless @$loadingSpinner?
