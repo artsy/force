@@ -206,5 +206,9 @@ module.exports = class AccountForm extends Backbone.View
     values.receive_offer_emails       = @$('#user-offer-emails').is "[data-state='on']"
 
     @submitPassword()
-    @model.save values, trigger: true
+    @model.save values,
+      trigger : true
+      success : =>
+        @model.refresh()
+
     false
