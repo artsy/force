@@ -5,8 +5,6 @@ rewire          = require 'rewire'
 Backbone        = require 'backbone'
 mediator        = require '../../../lib/mediator'
 LoggedOutUser   = require '../../../models/logged_out_user'
-AfterInquiry    = rewire '../index'
-AfterInquiry.__set__ 'Questionnaire', Backbone.View
 
 describe 'AfterInquiry', ->
   before (done) ->
@@ -15,6 +13,11 @@ describe 'AfterInquiry', ->
       Backbone.$ = $
       $.support.transition = end: 'transitionend'
       $.fn.emulateTransitionEnd = -> @trigger $.support.transition.end
+
+      @Cookies = require 'cookies-js'
+      @AfterInquiry = rewire '../index'
+      @AfterInquiry.__set__ 'Questionnaire', Backbone.View
+
       done()
 
   after ->
@@ -23,16 +26,18 @@ describe 'AfterInquiry', ->
   beforeEach ->
     sinon.stub _, 'delay', (cb) -> cb()
     sinon.stub Backbone, 'sync'
+    sinon.stub($, 'ajax').yieldsTo 'success'
 
     @user     = new LoggedOutUser
     @inquiry  = new Backbone.Model name: 'Foo Bar', email: 'foo@bar.com'
-    @flow     = new AfterInquiry user: @user, inquiry: @inquiry
+    @flow     = new @AfterInquiry user: @user, inquiry: @inquiry
 
     sinon.stub @flow.flash, 'close'
 
   afterEach ->
     _.delay.restore()
     Backbone.sync.restore()
+    $.ajax.restore()
     @flow.flash.close.restore()
     @flow.remove()
     mediator.off null, null, this
@@ -48,7 +53,7 @@ describe 'AfterInquiry', ->
       describe '#setupUser', ->
         it 'assumes we already have name/email and performs a fetch for extra attributes (job/profession)', ->
           @user.set id: 'foobar'
-          flow = new AfterInquiry user: @user, inquiry: @inquiry
+          flow = new @AfterInquiry user: @user, inquiry: @inquiry
           Backbone.sync.called.should.be.true
           Backbone.sync.args[0][1].url().should.include '/api/v1/me'
           flow.remove()
@@ -80,21 +85,51 @@ describe 'AfterInquiry', ->
         beforeEach ->
           @inquiry.trigger 'request'
 
-        describe 'and it was not yet sent', ->
-          it 'attaches a handler for the inquiry:success event and removes on its execution', ->
-            mediator.trigger 'modal:closed'
-            @flow.flash.close.called.should.be.false
-            @inquiry.trigger 'sync'
-            @flow.flash.close.called.should.be.true
-
-        describe 'and it was sent successfully', ->
+        describe 'logged out', ->
           beforeEach ->
-            @inquiry.trigger 'sync'
+            @user.needsOnboarding = true
 
-          it 'should tear everything down when the modal is closed', ->
-            @flow.flash.close.called.should.be.false
-            previousNumberOfEvents = _.flatten(_.values(mediator._events)).length
-            mediator.trigger 'modal:closed'
-            @flow.flash.close.called.should.be.true
-            currentNumberOfEvents = _.flatten(_.values(mediator._events)).length
-            (previousNumberOfEvents > currentNumberOfEvents).should.be.true
+          describe 'and it was not yet sent', ->
+            it 'attaches a handler for the inquiry:success event that, when executed, POSTs a flash message, and sends the user to onboarding', ->
+              mediator.trigger 'modal:closed'
+              @inquiry.trigger 'sync'
+              $.ajax.args[0][0].url.should.equal '/flash'
+              $.ajax.args[0][0].type.should.equal 'post'
+              $.ajax.args[0][0].data.message.
+                should.equal 'Thanks for creating your account Foo Bar.<br>Take 60 seconds to personalize your experience'
+              window.location.should.equal '/personalize'
+
+          describe 'and it was sent successfully', ->
+            beforeEach ->
+              @inquiry.trigger 'sync'
+
+            it 'sets a destination cookie', ->
+              (@Cookies.get('destination')?).should.be.true
+
+            it 'POST a flash message and send the user to onboarding', ->
+              mediator.trigger 'modal:closed'
+              $.ajax.args[0][0].url.should.equal '/flash'
+              $.ajax.args[0][0].type.should.equal 'post'
+              $.ajax.args[0][0].data.message.
+                should.equal 'Thanks for creating your account Foo Bar.<br>Take 60 seconds to personalize your experience'
+              window.location.should.equal '/personalize'
+
+        describe 'logged in', ->
+          describe 'and it was not yet sent', ->
+            it 'attaches a handler for the inquiry:success event and removes on its execution', ->
+              mediator.trigger 'modal:closed'
+              @flow.flash.close.called.should.be.false
+              @inquiry.trigger 'sync'
+              @flow.flash.close.called.should.be.true
+
+          describe 'and it was sent successfully', ->
+            beforeEach ->
+              @inquiry.trigger 'sync'
+
+            it 'should tear everything down when the modal is closed', ->
+              @flow.flash.close.called.should.be.false
+              previousNumberOfEvents = _.flatten(_.values(mediator._events)).length
+              mediator.trigger 'modal:closed'
+              @flow.flash.close.called.should.be.true
+              currentNumberOfEvents = _.flatten(_.values(mediator._events)).length
+              (previousNumberOfEvents > currentNumberOfEvents).should.be.true
