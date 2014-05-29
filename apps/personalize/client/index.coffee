@@ -37,7 +37,7 @@ module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Rout
   step: (step) ->
     Transition.fade @$el, out: =>
       @view?.remove()
-      @state.setStep step
+      @state.set 'current_step', step
 
       track.funnel "Starting Personalize #{@state.currentStepLabel()}", label: "User:#{@user.id}"
 
