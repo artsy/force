@@ -23,24 +23,25 @@ attributeMap =
 module.exports = class PersonalizeState extends Backbone.Model
   defaults:
     levels        : ['Yes, I buy art', 'Interested in starting', 'Just looking and learning']
-    track         : 'collector'
     current_step  : 'collect'
     current_level : 2 # Interested in starting
     __steps__:
-      casual    : ['collect', 'location', 'galleries', 'institutions', 'categories', 'artists']
-      collector : ['collect', 'categories', 'price_range', 'artists', 'location', 'galleries', 'institutions']
+      '3' : ['collect', 'price_range', 'artists', 'location', 'galleries', 'institutions']
+      '2' : ['collect', 'categories', 'price_range', 'artists', 'location', 'galleries', 'institutions']
+      '1' : ['collect', 'location', 'galleries', 'institutions', 'categories', 'artists']
 
   initialize: (options = {}) ->
     { @user } = options
 
     @listenTo this, 'transition:next', @next
 
-    @setStep @steps()[0] # Figure out the first step and set it
+    # Figure out the first step and set it
+    @set 'current_step', @steps()[0]
 
     super
 
   get: (attr) ->
-    return @get('__steps__')[@get('track')] if attr is 'steps'
+    return @get('__steps__')[@get('current_level')] if attr is 'steps'
     super
 
   # Steps that are complete at initialization
@@ -52,16 +53,6 @@ module.exports = class PersonalizeState extends Backbone.Model
 
   steps: ->
     _.without [@get 'steps'].concat(@completedSteps())...
-
-  setStep: (step) ->
-    @set 'current_step', step
-
-  setLevel: (level) ->
-    @set 'track', @chooseTrack level
-    @set 'current_level', level
-
-  chooseTrack: (level) ->
-    if level is 1 then 'casual' else 'collector'
 
   currentStepIndex: ->
     _.indexOf @steps(), @get('current_step')
