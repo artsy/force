@@ -42,7 +42,6 @@ module.exports = class ProfileForm extends Backbone.View
     @$submitButton.addClass 'is-loading'
 
   renderSuccess: (model, resp, options) ->
-    @userEdit.refresh()
     @$submitButton.removeClass 'is-loading'
 
   events:
@@ -119,6 +118,9 @@ module.exports = class ProfileForm extends Backbone.View
     values.website = website
 
     @model.save values,
-      trigger: true
-      wait   : true
+      trigger : true
+      wait    : true
+      success : =>
+        @userEdit.refresh()
+
     false

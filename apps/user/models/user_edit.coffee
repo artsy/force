@@ -35,11 +35,6 @@ module.exports = class UserEdit extends CurrentUser
     # Only return errors validation failed
     return errors unless _.isEmpty errors
 
-  # This refreshes the user data in the session so that saved data
-  # will stay in sync on reloads
-  refresh: ->
-    @fetch url: '/user/refresh'
-
   updateFavorites: (isPrivate) ->
     favorites = @defaultArtworkCollection()
     $.ajax favorites.url(),
