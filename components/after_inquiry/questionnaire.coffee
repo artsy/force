@@ -109,6 +109,7 @@ module.exports = class Questionnaire extends ModalView
     attrs = _.omit model.get('user'), @user.keys()...
     @user.set attrs
     @user.unset 'password'
+    @user.needsOnboarding = (@state.get('mode') is 'signup')
     @inquiry.unset 'session_id'
     analytics.track.funnel "Successful #{@state.get('mode')} during after inquiry flow"
     @state.set mode: 'initial'

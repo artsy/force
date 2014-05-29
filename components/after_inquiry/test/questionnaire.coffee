@@ -126,8 +126,19 @@ describe 'Questionnaire', ->
       it 'unsets the session_id because now it will be sent with an actual user', ->
         @view.inquiry.has('session_id').should.be.false
 
+      it 'sets needsOnboarding if mode is signup', ->
+        @view.user.needsOnboarding.should.be.true
+
       it 'sets the mode to initial', ->
         @view.state.get('mode').should.equal 'initial'
+
+      describe 'mode is login', ->
+        beforeEach ->
+          @view.state.set mode: 'login'
+          @view.authSuccess new Backbone.Model
+
+        it 'does not set needsOnboarding on the user', ->
+          @view.user.needsOnboarding.should.be.false
 
     describe '#toggleMode', ->
       it 'should be able to set the mode to an arbitrary value based on a links data-mode', ->
