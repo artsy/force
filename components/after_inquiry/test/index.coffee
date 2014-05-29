@@ -102,12 +102,15 @@ describe 'AfterInquiry', ->
           describe 'and it was sent successfully', ->
             beforeEach ->
               @inquiry.trigger 'sync'
+              mediator.trigger 'modal:closed'
+
+            it 'unbinds the beforeunload handler', ->
+              _.isUndefined($._data($(window)[0], 'events')).should.be.ok
 
             it 'sets a destination cookie', ->
               (@Cookies.get('destination')?).should.be.true
 
             it 'POST a flash message and send the user to onboarding', ->
-              mediator.trigger 'modal:closed'
               $.ajax.args[0][0].url.should.equal '/flash'
               $.ajax.args[0][0].type.should.equal 'post'
               $.ajax.args[0][0].data.message.

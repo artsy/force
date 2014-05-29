@@ -51,6 +51,7 @@ module.exports = class AfterInquiry
 
   maybeOnboard: =>
     if @user.needsOnboarding
+      @$window.off 'beforeunload'
       Cookies.set('destination', window.location.pathname, expires: 60 * 60 * 24)
       message = "Thanks for creating your account #{@user.get 'name'}.<br>Take 60 seconds to personalize your experience"
       $.post '/flash', message: message, ->
