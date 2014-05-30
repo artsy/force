@@ -19,6 +19,7 @@ module.exports = class ContactView extends Backbone.View
 
   events:
     'submit #artwork-contact-form' : 'submit'
+    'click button'                 : 'submit'
     'mouseover button'             : 'hoveredSubmit'
 
   initialize: ->
@@ -44,6 +45,9 @@ module.exports = class ContactView extends Backbone.View
   submit: (e) ->
     e.preventDefault()
 
+    return unless @validateForm()
+    return if @formIsSubmitting()
+
     @$submit.attr 'data-state', 'loading'
 
     @inquiry.set _.extend @serializeForm(),
@@ -59,6 +63,7 @@ module.exports = class ContactView extends Backbone.View
         new FlashMessage message: 'Thank you. Your message has been sent.'
         @$submit.attr('data-state', '').blur()
       error: (model, response, options) =>
+        @reenableForm()
         @$('#artwork-contact-form-errors').html @errorMessage(response)
         @$submit.attr 'data-state', 'error'
 
