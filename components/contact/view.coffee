@@ -67,25 +67,28 @@ module.exports = class ContactView extends ModalView
   submit: (e) ->
     e.preventDefault()
 
-    if @validateForm (@$form ?= @$('form'))
-      @$submit ?= @$('#contact-submit')
-      @$errors ?= @$('#contact-errors')
+    return unless @validateForm()
+    return if @formIsSubmitting()
 
-      @$submit.attr 'data-state', 'loading'
+    @$submit ?= @$('#contact-submit')
+    @$errors ?= @$('#contact-errors')
 
-      # Set the data but don't persist it yet
-      @model.set @serializeForm(@$form)
+    @$submit.attr 'data-state', 'loading'
 
-      @maybeSend @model,
-        success: =>
-          @close =>
-            new FlashMessage message: @options.successMessage
-        error: (model, xhr, options) =>
-          @$errors.text @errorMessage(xhr)
-          @$submit.attr 'data-state', 'error'
-          @updatePosition()
+    # Set the data but don't persist it yet
+    @model.set @serializeForm()
 
-      analytics.track.funnel 'Contact form submitted', @model.attributes
+    @maybeSend @model,
+      success: =>
+        @close =>
+          new FlashMessage message: @options.successMessage
+      error: (model, xhr, options) =>
+        @reenableForm()
+        @$errors.text @errorMessage(xhr)
+        @$submit.attr 'data-state', 'error'
+        @updatePosition()
+
+    analytics.track.funnel 'Contact form submitted', @model.attributes
 
   focusTextareaAfterCopy: =>
     return unless @autofocus()

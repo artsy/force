@@ -64,6 +64,7 @@ module.exports = class AuthModalView extends ModalView
 
   submit: (e) ->
     return unless @validateForm()
+    return if @formIsSubmitting()
 
     e.preventDefault()
 
@@ -78,10 +79,13 @@ module.exports = class AuthModalView extends ModalView
     @user[@state.get 'mode']
       success : @onSubmitSuccess
       error   : (model, response, options) =>
+        @reenableForm()
         message = @errorMessage response
         @showError message
 
   onSubmitSuccess: (model, response, options) =>
+    @reenableForm()
+
     if response.error?
       @showError _.capitalize response.error
     else
