@@ -62,16 +62,17 @@
       &:hover
         background-color darken(red-color, 25%)
   &[data-state='loading'], &.is-loading
-    background-color purple-color
-    color transparent !important
-    // Note:
-    // Giving the loading state to input[type='submit']
-    // or input[type='button'] will *not* display a spinner.
-    // These elements don't support psuedo-elements.
-    &::before
-      display block
-      content ''
-      spinner(25px, 6px, #fff)
+    &, &[disabled], &[disabled]:hover
+      background-color purple-color
+      color transparent !important
+      // Note:
+      // Giving the loading state to input[type='submit']
+      // or input[type='button'] will *not* display a spinner.
+      // These elements don't support psuedo-elements.
+      &::before
+        display block
+        content ''
+        spinner(25px, 6px, #fff)
 
   &[disabled], &.is-disabled, &.is-disabled
     &, &:hover
