@@ -71,6 +71,8 @@ module.exports = class ContactView extends Backbone.View
     analytics.track.funnel 'Contact form submitted', @inquiry.attributes
     analytics.track.funnel 'Sent artwork inquiry',
       label: analytics.modelNameAndIdToLabel('artwork', @model.id)
+    changed = if @inquiry.get('message') is defaultMessage(@model) then 'Did not change' else 'Changed'
+    analytics.track.funnel "#{changed} default message"
 
   hoveredSubmit: ->
     analytics.track.hover "Hovered over contact form 'Send' button"

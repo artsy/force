@@ -66,5 +66,8 @@ module.exports = class ContactPartnerView extends ContactView
 
     super
 
+    changed = if @model.get('message') is defaultMessage(@artwork) then 'Did not change' else 'Changed'
+    analytics.track.funnel "#{changed} default message"
+
   postRender: =>
     @isLoading()
