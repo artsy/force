@@ -8,6 +8,9 @@ errorResponses  = require './error_responses'
 class FormView extends Backbone.View
   _.extend @prototype, Form
 
+  events:
+    'submit form' : 'submit'
+
   template: ->
     """
       <form>
@@ -17,6 +20,11 @@ class FormView extends Backbone.View
         <button>Submit</button>
       </form>
     """
+
+  submitStub: -> # Stubbed in beforeEach hook
+  submit: ->
+    return if @formIsSubmitting()
+    @submitStub()
 
   render: ->
     @$el.html @template()
@@ -28,9 +36,11 @@ describe 'Form', ->
       benv.expose $: benv.require 'jquery'
       Backbone.$ = $
       @view = new FormView().render()
+      sinon.stub FormView::, 'submitStub'
       done()
 
   afterEach ->
+    @view.submitStub.restore()
     benv.teardown()
 
   describe '#formIsSubmitting', ->
@@ -43,6 +53,14 @@ describe 'Form', ->
     it 'disables the button', ->
       @view.formIsSubmitting()
       @view.$('button').prop('disabled').should.be.true
+
+    it 'should work with an actual form submission', ->
+      @view.submitStub.called.should.be.false
+      @view.$('form').submit()
+      @view.submitStub.called.should.be.true
+      @view.$('form').submit()
+      @view.$('form').submit()
+      @view.submitStub.callCount.should.equal 1
 
   describe '#reenableForm', ->
     it 'reenables the form', ->
@@ -68,6 +86,13 @@ describe 'Form', ->
       @view.$('form').find('input[name=email]').val values['email']
       @view.$('form').find('textarea[name=comment]').val values['comment']
       @view.serializeForm().should.include values
+
+    it 'should work with an actual form submission', ->
+      @view.$('form').submit()
+      @view.reenableForm()
+      @view.$('form').submit()
+      @view.$('form').submit()
+      @view.submitStub.callCount.should.equal 2
 
   describe '#validateForm', ->
     # Note: https://github.com/tmpvar/jsdom/issues/544
