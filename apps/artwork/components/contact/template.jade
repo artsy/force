@@ -10,7 +10,7 @@ if artwork.isContactable()
     else
       //- Logged out
       input.bordered-input( placeholder='Your full name', name='name', required )
-      input.bordered-input( placeholder='Your email address', name='email', required )
+      input.bordered-input( placeholder='Your email address', name='email', type='email', required )
     textarea.bordered-input( rows='5', name='message', required )
       | Hello, I'm interested in this work
       if artwork.get('artist')
