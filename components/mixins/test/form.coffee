@@ -14,6 +14,7 @@ class FormView extends Backbone.View
         <input name='name'>
         <input name='email' required>
         <textarea name='comment' required></textarea>
+        <button>Submit</button>
       </form>
     """
 
@@ -24,13 +25,38 @@ class FormView extends Backbone.View
 describe 'Form', ->
   beforeEach (done) ->
     benv.setup =>
-      benv.expose { $: benv.require 'jquery' }
+      benv.expose $: benv.require 'jquery'
       Backbone.$ = $
       @view = new FormView().render()
       done()
 
   afterEach ->
     benv.teardown()
+
+  describe '#formIsSubmitting', ->
+    it 'returns false the first time it is called, true every time after', ->
+      @view.formIsSubmitting().should.be.false
+      @view.formIsSubmitting().should.be.true
+      @view.formIsSubmitting().should.be.true
+      @view.formIsSubmitting().should.be.true
+
+    it 'disables the button', ->
+      @view.formIsSubmitting()
+      @view.$('button').prop('disabled').should.be.true
+
+  describe '#reenableForm', ->
+    it 'reenables the form', ->
+      @view.formIsSubmitting().should.be.false
+      @view.formIsSubmitting().should.be.true
+      @view.reenableForm()
+      @view.formIsSubmitting().should.be.false
+      @view.formIsSubmitting().should.be.true
+
+    it 'removes the disabled attr from the button', ->
+      @view.formIsSubmitting()
+      @view.$('button').prop('disabled').should.be.true
+      @view.reenableForm()
+      @view.$('button').prop('disabled').should.be.false
 
   describe '#serializeForm', ->
     it 'should return all named inputs as keys regardless of values', ->
