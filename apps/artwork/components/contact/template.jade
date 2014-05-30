@@ -13,6 +13,7 @@ if artwork.isContactable()
       input.bordered-input( placeholder='Your email address', name='email', type='email', required )
     textarea.bordered-input( rows='5', name='message', required )
       = defaultMessage
+      = " "
     if user
       p From: #{user.get('name')}
     #artwork-contact-form-errors
