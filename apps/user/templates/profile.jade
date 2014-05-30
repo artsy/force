@@ -26,13 +26,13 @@ form.settings-form.settings-profile-form( class=editProfileIsActive, method="pos
       .artsy-toggle-dot
     .artsy-toggle-label
       | Enable My Public Profile
-      .help-tooltip( data-message="This allows others to view your full name, username, bio, location, website, and posts. Your public Artsy User URL will be: artsy.net/[your username]." )
+      .help-tooltip( data-message="This allows others to view your full name, username, bio, location, website, and posts. Your public Artsy User URL will be: artsy.net/#{profile.id}." )
 
   .input-group.settings-enable-public-favorites
     a#profile-favorites.artsy-toggle.profile-favorites( data-state='off', href="" )
       .artsy-toggle-dot
     .artsy-toggle-label
       | Enable Public Favorites
-      .help-tooltip( data-message="This allows others to view your Favorites. This also enables your public profile. Your public Artsy User URL will be: artsy.net/[your username]." )
+      .help-tooltip( data-message="This allows others to view your Favorites. This also enables your public profile. Your public Artsy User URL will be: artsy.net/#{profile.id}." )
 
   button#profile-edit-submit.avant-garde-button-black.settings-submit.is-block Save Changes
