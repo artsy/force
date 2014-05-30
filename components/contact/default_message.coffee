@@ -1,4 +1,6 @@
-module.exports = (model) ->
-  message = "Hello, I’m interested in this work"
-  message += " by #{model.get('artist').name}" if model.get('artist')
-  message += ". Please confirm availability and pricing of this work."
+module.exports = (artwork) ->
+  message = 'Hello, I’m interested in this work'
+  message += " by #{artwork.get('artist').name}" if artwork.get('artist')
+  message += ". Please confirm availability "
+  message += 'and pricing ' unless artwork.isPriceDisplayable()
+  message += 'of this work.'
