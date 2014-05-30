@@ -8,12 +8,7 @@ form.contact-form.stacked-form
     required
   )
     if contactGallery
-      | Hello, I'm interested in this work by #{artwork.get('artist').name}.
-      | Please confirm availability
-      unless artwork.isPriceDisplayable()
-        |  and pricing
-      |  of this work.
-      = '\n\n'
+      = defaultMessage
   if user && user.id
     //- Logged in
     .stacked-form-cell
