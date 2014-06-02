@@ -5,10 +5,12 @@ analytics       = require('../../lib/analytics.coffee')
 Partner         = require '../../models/partner.coffee'
 CurrentUser     = require '../../models/current_user.coffee'
 Cookies         = require 'cookies-js'
-formTemplate    = -> require('./templates/inquiry_form.jade') arguments...
-headerTemplate  = -> require('./templates/inquiry_partner_header.jade') arguments...
+defaultMessage  = require './default_message.coffee'
 
 { SESSION_ID, API_URL } = require('sharify').data
+
+formTemplate    = -> require('./templates/inquiry_form.jade') arguments...
+headerTemplate  = -> require('./templates/inquiry_partner_header.jade') arguments...
 
 module.exports = class ContactPartnerView extends ContactView
   eligibleForAfterInquiryFlow: true
@@ -29,6 +31,7 @@ module.exports = class ContactPartnerView extends ContactView
       artwork        : @artwork
       user           : @user
       contactGallery : true
+      defaultMessage : defaultMessage(@artwork)
 
   defaults: -> _.extend super,
     url            : "#{API_URL}/api/v1/me/artwork_inquiry_request"
@@ -62,6 +65,9 @@ module.exports = class ContactPartnerView extends ContactView
       inquiry_url     : window.location.href
 
     super
+
+    changed = if @model.get('message') is defaultMessage(@artwork) then 'Did not change' else 'Changed'
+    analytics.track.funnel "#{changed} default message"
 
   postRender: =>
     @isLoading()

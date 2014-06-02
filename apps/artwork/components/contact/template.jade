@@ -12,11 +12,8 @@ if artwork.isContactable()
       input.bordered-input( placeholder='Your full name', name='name', required )
       input.bordered-input( placeholder='Your email address', name='email', type='email', required )
     textarea.bordered-input( rows='5', name='message', required )
-      | Hello, I'm interested in this work
-      if artwork.get('artist')
-        |  by #{artwork.get('artist').name}
-      |. Please confirm availability and pricing of this work.
-      = ' '
+      = defaultMessage
+      = " "
     if user
       p From: #{user.get('name')}
     #artwork-contact-form-errors

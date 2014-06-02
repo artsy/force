@@ -1,11 +1,12 @@
-_             = require 'underscore'
-Backbone      = require 'backbone'
-Cookies       = require 'cookies-js'
-analytics     = require '../../../../lib/analytics.coffee'
-CurrentUser   = require '../../../../models/current_user.coffee'
-FlashMessage  = require '../../../../components/flash/index.coffee'
-Form          = require '../../../../components/mixins/form.coffee'
-AfterInquiry  = require '../../../../components/after_inquiry/mixin.coffee'
+_               = require 'underscore'
+Backbone        = require 'backbone'
+Cookies         = require 'cookies-js'
+analytics       = require '../../../../lib/analytics.coffee'
+CurrentUser     = require '../../../../models/current_user.coffee'
+FlashMessage    = require '../../../../components/flash/index.coffee'
+Form            = require '../../../../components/mixins/form.coffee'
+AfterInquiry    = require '../../../../components/after_inquiry/mixin.coffee'
+defaultMessage  = require '../../../../components/contact/default_message.coffee'
 
 { SESSION_ID, API_URL }  = require('sharify').data
 
@@ -31,7 +32,7 @@ module.exports = class ContactView extends Backbone.View
     @render()
 
   render: ->
-    @$el.html template artwork: @model, user: @user
+    @$el.html template artwork: @model, user: @user, defaultMessage: defaultMessage(@model)
 
     @$submit    = @$('button')
     @$textarea  = @$('textarea')
@@ -70,6 +71,8 @@ module.exports = class ContactView extends Backbone.View
     analytics.track.funnel 'Contact form submitted', @inquiry.attributes
     analytics.track.funnel 'Sent artwork inquiry',
       label: analytics.modelNameAndIdToLabel('artwork', @model.id)
+    changed = if @inquiry.get('message') is defaultMessage(@model) then 'Did not change' else 'Changed'
+    analytics.track.funnel "#{changed} default message"
 
   hoveredSubmit: ->
     analytics.track.hover "Hovered over contact form 'Send' button"
