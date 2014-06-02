@@ -169,6 +169,7 @@ describe 'analytics', ->
       beforeEach ->
         rewiredAnalytics.__set__ 'sd', { ENABLE_AB_TEST: true }
         rewiredAnalytics.__set__ 'mixpanel', @mixpanelStub
+        rewiredAnalytics.getProperty = -> null
         @_ = rewiredAnalytics.__get__ '_'
         sinon.stub @_, 'random'
 
