@@ -306,21 +306,29 @@ artwork-detail-item-height  = 36px
 // Below the fold
 .ari-left
 .ari-right
-  padding 0 10px
   text-align center
+  display inline-block
+  vertical-align top
 .ari-left
   width 60%
-  float left
-  padding-right 5%
+  padding-right 50px
+  margin-right: 50px
+  border-right 1px solid gray-lighter-color
+  height 100%
 .ari-right
-  width 40%
-  float right
+  width 35%
+.ari-container
+  width: 90%
+  text-align center
+  margin 0px auto
 
 // Bio and related works
 .artwork-artist
   transition opacity 0.5s
   &[data-state='pending']
     opacity 0
+  .avant-garde-header-center a
+    text-decoration none
 
 .artwork-artist-blurb
 .artwork-blurb
@@ -336,38 +344,13 @@ artwork-detail-item-height  = 36px
   font-size 13px
   text-decoration none
 
-#artwork-artist-artworks-container
-  opacity 0
-  transition opacity 1s
-  &.is-loaded
-    opacity 1
-.artwork-artist-artworks
-  margin 20px 0
-  // Image height + margin
-  height 135px
-  overflow hidden
-.artwork-artist-artwork
-  position relative
-  display inline-block
-  max-width 50%
-  margin 5px 10px
-  overflow hidden
-  > img
-    height 125px
-  &:hover
-    .overlay-button-save
-      opacity 1
-  .overlay-button-save
-    opacity 0
-    &[data-state='saved']
-      opacity 1
-
-#artwork-related-show-section
+#artwork-related-show-section, #artist-artworks-section
   display none
   opacity 0
   transition opacity 1s
   &.is-fade-in
     opacity 1
+
 .ars-metadata
   position relative
   margin 20px 0

@@ -18,8 +18,8 @@ Auction                   = require './mixins/auction.coffee'
 RelatedShowView           = require './related-show.coffee'
 qs                        = require 'querystring'
 { parse }                 = require 'url'
+ArtworkColumnsView        = require '../../../components/artwork_columns/view.coffee'
 
-artistArtworksTemplate      = -> require('../templates/_artist-artworks.jade') arguments...
 detailTemplate              = -> require('../templates/_detail.jade') arguments...
 auctionPlaceholderTemplate  = -> require('../templates/auction_placeholder.jade') arguments...
 
@@ -178,12 +178,11 @@ module.exports = class ArtworkView extends Backbone.View
     # Ensure the current artwork is not in the collection
     @artist.artworks.remove @artwork
     return unless @artist.artworks.length
-    @$('.artwork-artist').attr 'data-state', 'complete'
-    @$('#artwork-artist-artworks-container').
-      addClass('is-loaded').
-      html(artistArtworksTemplate artworks: @artist.artworks)
+    @$('#artist-artworks-section').addClass('is-fade-in').show()
 
-    @setupArtistArtworkSaveButtons @artist.artworks
+    new ArtworkColumnsView
+      el: @$('#artist-artworks-section .artworks-list')
+      collection: @artist.artworks
 
     trackArtworkImpressions @artist.artworks.models, @$('#artwork-artist-artworks-container')
 

@@ -1,12 +1,13 @@
 .layered-search-layers
   margin 20px 0
-  text-align center
   overflow ellipsis
 .layered-search-layer-button
   margin 0 10px
   transition color 0.125s
   &[data-state='active']
     color purple-color
+  &:first-child
+    margin-left: 0px
 
 #layered-search-results
   position relative

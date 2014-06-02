@@ -45,39 +45,61 @@ block body
         .artwork-image-actions
           a.circle-icon-button-share
           a.circle-icon-button-save
+          if artwork.isHangable()
+            //- Initial state:
+            a.circle-icon-button-view-in-room(
+              href="/artwork/#{artwork.id}/view-in-room", data-client, rel='nofollow'
+            )
+              i.icon-view-in-room View in Room
+
+            //- Toggled state:
+            a.circle-icon-button-exit-view-in-room.is-hidden(
+              href="/artwork/#{artwork.id}", data-client, rel='nofollow'
+            )
+              i.icon-artwork Artwork View
 
       aside.artwork-detail
         include ./_detail
 
     section.artwork-related-information
-      .ari-left
-        //- Only render the container if we have a blurb or some artworks to display
-        if artist
-          if (artist.get('artworks_count') > 1) || (artist.get('blurb'))
-            .artwork-artist( data-state=(artist.get('blurb') ? '' : 'pending' ) )
-              h2.avant-garde-header-center
-                | About #{artist.get('name')}
-
-              #artwork-artist-artworks-container
-                //- Rendered client-side
-
-              if artist.get('blurb')
-                .artwork-artist-blurb
-                  != artist.mdToHtml('blurb')
-
-              a.artwork-artist-blurb-link.faux-underline-hover-large(
-                href="/artist/#{artist.id}"
-              ) Go to #{artist.get('name')}
-
-      .ari-right
-        if artwork.get('blurb')
-          h2.avant-garde-header-center
-            | About This Artwork
-          .artwork-blurb
-            != artwork.mdToHtml('blurb')
-
-        #artwork-artist-related-posts-container
+      .ari-container
+        .ari-left
+          //- Only render the container if we have a blurb or some artworks to display
+          if artist
+            if artist.get('blurb')
+              .artwork-artist( data-state=(artist.get('blurb') ? '' : 'pending' ) )
+                h2.avant-garde-header-center
+                  | About&nbsp;
+                  a( href=artist.href() )= artist.get('name')
+  
+                if artist.get('blurb')
+                  .artwork-artist-blurb
+                    != artist.mdToHtml('blurb')
+  
+          if artwork.get('blurb')
+            h2.avant-garde-header-center
+              | About This Artwork
+            .artwork-blurb
+              != artwork.mdToHtml('blurb')
+  
+          if artwork.hasMoreInfo()
+            include ./_more-info
+  
+          if artwork.isComparable()
+            a.artwork-auction-results-button(
+              href="/artwork/#{artwork.id}/auction-results"
+            ) See related auction results
+  
+        .ari-right
+          #artwork-artist-related-posts-container
           //- Rendered client-side
+
+    if artist
+      section#artist-artworks-section
+        h2.avant-garde-header
+          | More Works by&nbsp;
+          a( href=artist.href() )= artist.get('name')
+        .artworks-list
 
     section#artwork-related-show-section
       //- Rendered client-side
