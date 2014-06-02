@@ -48,7 +48,7 @@ module.exports = class FillwidthView extends Backbone.View
 
   handleSeeMore: ->
     if @page is 2
-      @hideFirstRow()
+      @hideThirdRow()
 
     if @collection.models.length < @fetched and @$('.fillwidth-row-uninitialized:hidden').length < 1
       @hideSeeMore()
@@ -56,11 +56,26 @@ module.exports = class FillwidthView extends Backbone.View
   hideSeeMore: ->
     @$('.fillwidth-see-more').hide()
 
-  hideFirstRow: =>
-    firstItem = @$('ul li').first()
+  hideSecondRow: =>
+    firstItem = @$('li').first()
     firstItemTop = firstItem.offset().top if firstItem.length
-    @$('ul li').each ->
-      $(@).hide() if $(@).offset().top > firstItemTop
+    @$('li').each ->
+      $item = $(@)
+      $item.hide() if $item.offset().top > firstItemTop
+
+  hideThirdRow: =>
+    firstItem = @$('li').first()
+    firstRowTop = firstItem.offset().top if firstItem.length
+    secondRowTop = -1
+
+    @$('li').each ->
+      $item = $(@)
+      itemOffsetTop = $item.offset().top
+
+      if secondRowTop > 0
+        $(@).hide() if itemOffsetTop > secondRowTop
+      else if secondRowTop < 0 and itemOffsetTop > firstRowTop
+        secondRowTop = itemOffsetTop
 
   events:
     'click .fillwidth-see-more': 'nextPage'
@@ -73,4 +88,4 @@ module.exports = class FillwidthView extends Backbone.View
 
   # Remove items that are not shown to reduce DOM footprint
   removeHiddenItems: ->
-    @$('ul li:hidden').remove()
+    @$('li:hidden').remove()

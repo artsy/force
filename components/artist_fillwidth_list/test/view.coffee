@@ -10,7 +10,7 @@ ArtistFillwidthList = benv.requireWithJadeify resolve(__dirname, '../view.coffee
 
 ArtistFillwidthList.__set__ 'FillwidthView', class FillwidthView
   render: sinon.stub()
-  hideFirstRow: sinon.stub()
+  hideSecondRow: sinon.stub()
   removeHiddenItems: sinon.stub()
 
 describe 'ArtistFillwidthList', ->
