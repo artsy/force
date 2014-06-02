@@ -34,7 +34,7 @@ module.exports = class AuctionResultsView extends Backbone.View
       seeMore: false
       el: $('#ara-artworks')
     @artworksView.render()
-    @artworksView.hideFirstRow()
+    @artworksView.hideSecondRow()
 
   setupFollowButton: ->
     if @user
