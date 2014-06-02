@@ -52,6 +52,10 @@ describe 'BoothsView', ->
     it 'sets the default sort to -featured', ->
       @view.params.get('sort').should.equal '-featured'
 
+    it 'renders valid html', ->
+      @view.$el.html().should.not.include 'undefined'
+      @view.$el.html().should.include '/the-armory-show/browse/exhibitors'
+
   describe '#renderSections', ->
 
     xit 'renders sections in the nav', ->
