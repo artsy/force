@@ -1,27 +1,47 @@
-suggestion-row-width = 850px
-
 #personalize-suggestions-container
-  width suggestion-row-width
-  margin 90px auto
+  margin 90px 120px
   text-align center
   prevent-content-shift()
   > .personalize-suggestions-more-container
     display none
   &[data-state='loaded']
-    > .personalize-suggestions-more-container
-      display block
     .loading-spinner
       display none
+  &[data-state='loading']
+    opacity 0.5
+    .loading-spinner
+      display block
+  > aside
+    width 50%
+    margin 20px auto
+    text-align center
+    font-size 18px
+    > a
+      white-space nowrap
+      color gray-dark-color
+      &:before
+        border-bottom-color gray-color
 
 #personalize-suggestions
   position relative
   text-align center
   min-height 200px
+  .grid-item
+    margin-bottom 20px
+  // Fallback to showing icons
+  .hoverable-image.is-fallback
+    width 100%
+    background-color white
+    background-repeat no-repeat
+    background-size 50%
+    border 1px solid gray-lighter-color
 
-.personalize-suggestions-more-container
-  padding-top 20px
-  text-align center
-  border-top 1px solid gray-lighter-color
+#personalize-suggestions-unfollow-all
+  display block
+  position absolute
+  font-size 16px
+  top 0
+  right 0
 
 .personalize-suggestions-set
   margin 20px auto
@@ -52,17 +72,11 @@ suggestion-row-width = 850px
 .personalize-suggestion
   display inline-block
   position relative
-  &.is-profile
-    width (suggestion-row-width / 4)
-    margin 0 0 30px
-    > .personalize-suggestion-thumbnail
-      width 177px
-      height 117px
   &.is-artist
-    width (suggestion-row-width / 5)
+    width 20%
     margin 0 0 30px 0
     > .personalize-suggestion-thumbnail
-      width 120px
+      width 90%
       height @width
 
 .personalize-suggestion-thumbnail

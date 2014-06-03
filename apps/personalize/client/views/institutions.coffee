@@ -5,7 +5,6 @@ module.exports = class InstitutionsView extends SuggestionsView
 
   followKind:               'profile'
   kind:                     'institution'
-  key:                      'personalize:suggested-institutions'
   restrictType:             'PartnerMuseum'
   analyticsUnfollowMessage: 'Unfollowed institutions from personalize institutions search'
   analyticsFollowMessage:   'Followed institutions from personalize institutions search'

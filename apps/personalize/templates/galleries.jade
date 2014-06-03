@@ -1,22 +1,5 @@
-a.avant-garde-button-white.personalize-skip Skip
+- headerKind  = 'galleries'
+- kind        = 'galleries'
+- placeholder = 'Type your favorite gallery name'
 
-header.personalize-header
-  h2= state.stepDisplay()
-  h1 Follow galleries on Artsy
-  aside Receive notifications on upcoming shows and fairs
-
-section.personalize-step( data-step='galleries' )
-  #personalize-search-container
-    input#personalize-search.bordered-input.is-block(
-      type='text', placeholder!='Type your favorite gallery name', autofocus=!isTouchDevice
-    )
-    #personalize-search-spinner: .loading-spinner-small
-
-  #personalize-followed
-
-#personalize-suggestions-container
-  #personalize-suggestions: .loading-spinner
-
-  .personalize-suggestions-more-container
-    a.avant-garde-button-white.personalize-suggestions-more
-      | Show more galleries
+include ./suggestions.jade

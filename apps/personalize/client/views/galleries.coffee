@@ -1,11 +1,13 @@
 SuggestionsView = require './suggestions.coffee'
 
-module.exports = class GalleriesView extends SuggestionsView
-  template: -> require('../../templates/galleries.jade') arguments...
+template = -> require('../../templates/galleries.jade') arguments...
 
-  followKind:               'profile'
-  kind:                     'gallery'
-  key:                      'personalize:suggested-galleries'
-  restrictType:             'PartnerGallery'
-  analyticsUnfollowMessage: 'Unfollowed gallery from personalize gallery search'
-  analyticsFollowMessage:   'Followed gallery from personalize gallery search'
+module.exports = class GalleriesView extends SuggestionsView
+  template: ->
+    template arguments...
+
+  kind                     : 'gallery'
+  followKind               : 'profile'
+  restrictType             : 'PartnerGallery'
+  analyticsFollowMessage   : 'Followed gallery from personalize gallery search'
+  analyticsUnfollowMessage : 'Unfollowed gallery from personalize gallery search'

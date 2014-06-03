@@ -1,81 +1,107 @@
-_                   = require 'underscore'
-Backbone            = require 'backbone'
-StepView            = require './step.coffee'
-Followable          = require '../mixins/followable.coffee'
-OrderedSets         = require '../../../../collections/ordered_sets.coffee'
-Partner             = require '../../../../models/partner.coffee'
-{ isTouchDevice }   = require '../../../../components/util/device.coffee'
-suggestedTemplate   = -> require('../../templates/suggested_profiles.jade') arguments...
+_                             = require 'underscore'
+sd                            = require('sharify').data
+Backbone                      = require 'backbone'
+StepView                      = require './step.coffee'
+mediator                      = require '../../../../lib/mediator.coffee'
+Followable                    = require '../mixins/followable.coffee'
+OrderedSets                   = require '../../../../collections/ordered_sets.coffee'
+Partner                       = require '../../../../models/partner.coffee'
+Profiles                      = require '../../../../collections/profiles.coffee'
+LocationModalView             = require '../../components/location_modal/index.coffee'
+{ FollowButton, Following }   = require '../../../../components/follow_button/index.coffee'
 
-{ FollowButton, Following } = require '../../../../components/follow_button/index.coffee'
+suggestedTemplate = -> require('../../templates/suggested_profiles.jade') arguments...
 
 module.exports = class SuggestionsView extends StepView
   _.extend @prototype, Followable
 
-  followKind: 'default'
-  kind: 'default'
+  suggestedTemplate: ->
+    suggestedTemplate arguments...
+
+  kind       : 'default'
+  followKind : 'default'
 
   events:
-    'click .personalize-skip'             : 'advance'
-    'click .personalize-suggestions-more' : 'loadNextPage'
-    'click .pfa-remove'                   : 'unfollow'
+    'click .personalize-skip'                     : 'advance'
+    'click .pfa-remove'                           : 'unfollow'
+    'click .grid-item'                            : 'followSuggestion'
+    'click #personalize-suggestions-location'     : 'changeLocation'
+    'click #personalize-suggestions-unfollow-all' : 'unfollowSuggestions'
 
-  initialize: (options) ->
+  initialize: (options = {}) ->
     super
 
-    @following      = new Following null, kind: @followKind
-    @suggestedSets  = new OrderedSets(key: @key)
+    @following = new Following null, kind: @followKind
 
-    @suggestedSets.fetchAll()
+    @suggestions      = new Profiles
+    @suggestions.url  = "#{sd.API_URL}/api/v1/me/suggested/profiles"
 
-    @listenTo @suggestedSets, 'sync:complete', @setupSuggestions
+    @ensureLocation()
 
+    @setup()
+
+  # Delegates to the follow button
+  followSuggestion: (e) ->
+    $(e.currentTarget).find('.follow-button').click()
+
+  ensureLocation: ->
+    unless @user.hasLocation()
+      @user.approximateLocation success: @renderLocation
+
+  renderLocation: =>
+    @$('#personalize-suggestions-location').text @user.location().singleWord()
+
+  unfollowSuggestions: (e) ->
+    e.preventDefault()
+    @following.unfollowAll @suggestions.pluck('id')
+
+  setup: ->
+    @suggestions.fetch
+      success: =>
+        @following.followAll @suggestions.pluck('id')
+        @following.unfollowAll(@existingSuggestions) if @existingSuggestions?
+        @renderSuggestions()
     @initializeFollowable()
 
-  loadNextPage: (e) ->
-    e.preventDefault()
-    ($target = $(e.currentTarget)).attr 'data-state', 'loading'
-    @suggestions.getNextPage().then (response) ->
-      if response.length
-        $target.attr 'data-state', 'loaded'
-      else
-        $target.hide()
-
   render: ->
-    @$el.html @template(state: @state, isTouchDevice: isTouchDevice())
+    @$el.html @template(user: @user, state: @state, autofocus: @autofocus())
     @setupSearch mode: 'profiles', restrictType: @restrictType
     this
 
-  setupSuggestions: ->
-    @$('#personalize-suggestions-container').attr 'data-state', 'loaded'
-    @suggestions = @suggestedSets.findWhere(key: @key).get('items')
-    @listenTo @suggestions, 'sync', @renderSuggestions
-    @renderSuggestions()
+  changeLocation: (e) ->
+    e.preventDefault()
+
+    @existingSuggestions = @suggestions.pluck('id')
+    @listenToOnce @user, 'sync', ->
+      @$container.attr 'data-state', 'loading'
+      @renderLocation()
+      @setup()
+
+    new LocationModalView width: '500px', user: @user
 
   setupFollowButton: (model, el) ->
     key = model.id
     @followButtonViews ?= {}
     @followButtonViews[key].remove() if @followButtonViews[key]?
     @followButtonViews[key] = new FollowButton
-      analyticsUnfollowMessage: "Unfollowed #{@kind} from personalize #{@kind} suggestions"
-      analyticsFollowMessage  : "Followed #{@kind} from personalize #{@kind} suggestions"
-      notes                   : 'Followed from /personalize'
-      following               : @following
-      model                   : model
-      modelName               : @kind
-      el                      : el
-
-  rows: (n) ->
-    _.compact @suggestions.map (model, i) =>
-      @suggestions.slice(i, i + n) if i % n is 0
+      analyticsUnfollowMessage : "Unfollowed #{@kind} from personalize #{@kind} suggestions"
+      analyticsFollowMessage   : "Followed #{@kind} from personalize #{@kind} suggestions"
+      notes                    : 'Followed from /personalize'
+      following                : @following
+      model                    : model
+      modelName                : @kind
+      el                       : el
 
   renderSuggestions: ->
-    (@$suggestions ?= @$('#personalize-suggestions')).
-      append suggestedTemplate(rows: @rows(4))
+    (@$container ?= @$('#personalize-suggestions-container')).
+      attr 'data-state', 'loaded'
 
-    @following.syncFollows @suggestions.pluck('id')
+    (@$suggestions ?= @$('#personalize-suggestions')).
+      html @suggestedTemplate(suggestions: @suggestions)
 
     @locationRequests = @fetchAndRenderLocations()
+
+    @fallbackImages()
 
     # Attach FollowButton views
     @suggestions.each (model) =>
@@ -91,6 +117,15 @@ module.exports = class SuggestionsView extends StepView
             find(".personalize-suggestion-location[data-id='#{partner.id}']").
             html partner.displayLocations(@user.get('location')?.city)
 
+  fallbackImages: ->
+    @suggestions.map (profile) ->
+      unless profile.coverImage().has 'image_versions'
+        # Filter out the user_profile default image
+        unless /user_profile.png/.test (imageUrl = profile.iconImageUrl())
+          $(".hoverable-image-link[data-id='#{profile.id}'] .hoverable-image").
+            addClass('is-fallback').
+            css(backgroundImage: "url(#{imageUrl})")
+
   abortLocationRequests: ->
     _.each @locationRequests, (xhr) -> xhr.abort()
 
@@ -100,6 +135,6 @@ module.exports = class SuggestionsView extends StepView
 
   remove: ->
     @searchBarView.remove()
-    if @suggestions? then @suggestions.fullCollection.map (model) =>
+    if @suggestions? then @suggestions.map (model) =>
       @followButtonViews[model.id].remove()
     super
