@@ -82,8 +82,15 @@ module.exports = class ArtworkView extends Backbone.View
     if @currentUser?.hasLabFeature('Monocles')
       @setupMonocleView()
     # Re-fetch and update detail
-    @artwork.on "change:sale_message", @renderDetail, this
+    @artwork.on "change:sale_message", @renderDetail, @
+    @artwork.on "change:ecommerce", @renderDetail, @
     @artwork.fetch()
+
+    @preventRightClick()
+
+  preventRightClick: ->
+    (@$artworkImage ?= @$('#the-artwork-image')).on 'contextmenu', (event) ->
+      event.preventDefault()
 
   checkQueryStringForAuction: ->
     { auction_id } = qs.parse(parse(window.location.search).query)
@@ -113,13 +120,17 @@ module.exports = class ArtworkView extends Backbone.View
     if navigator?.userAgent.search("Safari") >= 0 and navigator?.userAgent.search("Chrome") < 0
       @$('.artwork-overview').css 'max-width': @$('.artwork-container').width() - 250
 
+  displayZigZag: ->
+    (@$inquiryButton = @$('.artwork-contact-button, .artwork-inquiry-button').first())
+    @$inquiryButton.length and not @artwork.get('acquireable')
+
   setupZigZag: ->
-    if ($inquiryButton = @$('.artwork-contact-button, .artwork-inquiry-button').first()).length
+    if @displayZigZag()
       new ZigZagBanner
         persist : true
         name    : 'inquiry'
         message : 'Interested in this work?<br>Request more info here'
-        $target : $inquiryButton
+        $target : @$inquiryButton
 
   deltaTrackPageView: (fair) ->
     el = $('#scripts')

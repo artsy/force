@@ -1,15 +1,13 @@
-sd                = require('sharify').data
-Backbone          = require 'backbone'
-ArtworkCollection = require './artwork_collection.coffee'
+_         = require 'underscore'
+Backbone  = require 'backbone'
+Geo       = require './mixins/geo.coffee'
 
+# Base User model for shared functionality between
+# CurrentUser and LoggedOutUser
 module.exports = class User extends Backbone.Model
+  _.extend @prototype, Geo
 
-  urlRoot: "#{sd.API_URL}/api/v1/user"
-
-  # Should only be run after the user has been fetched and has an id
-  initializeDefaultArtworkCollection: (options) ->
-    unless @get('artworkCollections')?.length > 0
-      @set artworkCollections: [new ArtworkCollection(userId: @get('id'))]
-    @defaultArtworkCollection().fetch(options) unless @defaultArtworkCollection.fetched
-
-  defaultArtworkCollection: -> @get('artworkCollections')[0]
+  # This refreshes the user data in the session so that saved data
+  # will stay in sync on reloads
+  refresh: (options = {}) ->
+    @fetch _.extend(url: '/user/refresh', options)

@@ -11,7 +11,7 @@ describe 'FilterArtworksNav', ->
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       $.fn.hidehover = sinon.stub()
-      benv.render resolve(__dirname, '../template.jade'), { sd: {} }, =>
+      benv.render resolve(__dirname, '../template.jade'), { sd: {}, filterRoot: '/browse/artworks' }, =>
         FilterArtworksNav = benv.require resolve(__dirname, '../view')
         FilterArtworksNav.__set__ 'mediator', @mediator = trigger: sinon.stub(), on: sinon.stub()
         @view = new FilterArtworksNav
@@ -51,3 +51,6 @@ describe 'FilterArtworksNav', ->
     }
     @view.renderCounts()
     @view.$el.html().should.not.include '11'
+
+  it 'renders without errors', ->
+    @view.$el.html().should.not.include 'undefined'

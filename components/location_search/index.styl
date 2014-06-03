@@ -14,12 +14,18 @@ faux-bordered-input()
     transition box-shadow 0.25s
     box-shadow inset 0 0 0 2px purple-color
 
+.google-maps-places-input
+  faux-bordered-input()
+
 .pac-container
   position relative
   box-shadow none
   border 2px solid purple-color
   border-top 0
   border-radius 0
+  // Google will do weird things to the z-index for the results dropdown
+  // While kind of lame, this ensures we can stick it in a modal
+  z-index zindex-modal
   // Google logo
   &:after
     default-garamond-font-size

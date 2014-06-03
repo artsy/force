@@ -50,7 +50,7 @@ module.exports = class ArtistFillwidthList extends Backbone.View
 
       # After rendering the row do some fillwidth things unique to this layout
       _.defer ->
-        fillwidthView.hideFirstRow()
+        fillwidthView.hideSecondRow()
         fillwidthView.removeHiddenItems()
 
   syncFollowsOnAjaxStop: ->

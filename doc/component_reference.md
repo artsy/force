@@ -20,6 +20,7 @@ If a separate doc is required, add it to the component's directory as a
 - [Page Modal](#page-modal)
 - [Flash Message](#flash-message)
 - [Blurb](#blurb)
+- [Form Mixin](#form-mixin)
 
 ## Artwork Columns
 ![](images/artwork_columns.png)
@@ -570,3 +571,33 @@ new BlurbView
 ##### Uses:
 - artist
 - partner profile (artist tab)
+
+## Form Mixin
+
+``` coffeescript
+Form = require '../../components/mixins/form.coffee'
+
+class FormView extends Backbone.View
+  _.extend @prototype, Form
+
+  events:
+    'click button' : 'submit'
+
+  submit: (e) ->
+    e.preventDefault()
+
+    return unless @validateForm()
+    return if @formIsSubmitting()
+
+    @model.save @serializeForm(),
+      success: (model, response, options) =>
+        @reenableForm()
+        # ...
+      error: (model, response, options) =>
+        @reenableForm()
+        $('#my-error-div').html @errorMessage(response)
+        # ...
+
+```
+
+You will want to have an actual `<button>` element in the form for handling submission. (The default `type` attribute is `submit` so this will trigger the form submission event.) `validateForm` will only apply the `is-validated` class to the form when there's a submit button due to click events firing before form submission events (*I think*).

@@ -10,6 +10,7 @@ FilterArtworksView = require '../../components/filter/artworks/view.coffee'
 { GENE, CURRENT_USER, API_URL } = require('sharify').data
 iframePopover = require '../../components/iframe_popover/index.coffee'
 BlurbView = require '../../components/blurb/view.coffee'
+RelatedArtistsTemplate = -> require('./templates/related_artists.jade') arguments...
 
 module.exports.GeneView = class GeneView extends Backbone.View
 
@@ -39,11 +40,14 @@ module.exports.GeneView = class GeneView extends Backbone.View
     @setupMode()
     @onFollowRoute()
     @setupBlurb()
+    @fetchRelatedArtists()
 
   setupBlurb: ->
     if ($blurb = @$('.blurb')).length
-      new BlurbView el: $blurb, lineCount: 5, updateOnResize: true
+      new BlurbView el: $blurb, lineCount: 7, updateOnResize: true
       $blurb.css maxHeight: 'none'
+    @on 'relatedArtistsFetched', =>
+      @$('.related-artists').html(RelatedArtistsTemplate(artists: @relatedArtists.models[...10])).addClass 'is-fade-in'
 
   setupMode: ->
     if @model.isSubjectMatter() or location.pathname.match('/artworks')
@@ -56,22 +60,28 @@ module.exports.GeneView = class GeneView extends Backbone.View
     @$('.follow-button').click() if location.pathname.match('/follow')
 
   setupArtistFillwidth: _.once ->
-    if @user and not @model.isSubjectMatter()
-      @user.initializeDefaultArtworkCollection().always @renderArtistFillwidth
-    else if not @model.isSubjectMatter()
-      @renderArtistFillwidth()
+    @on 'relatedArtistsFetched', =>
+      if @user and not @model.isSubjectMatter()
+        @user.initializeDefaultArtworkCollection().always @renderArtistFillwidth
+      else if not @model.isSubjectMatter()
+        @renderArtistFillwidth()
+
+  fetchRelatedArtists: ->
+    data = { exclude_artists_without_artworks: true }
+    @model.fetchArtists 'related', data: data, success: (artists) =>
+      @relatedArtists = artists
+      @trigger 'relatedArtistsFetched'
 
   renderArtistFillwidth: =>
-    @model.fetchArtists 'related', success: (artists) =>
-      new ArtistFillwidthList(
-        collection: artists
-        el: $('#gene-artists')
-        user: @user
-      ).fetchAndRender()
+    new ArtistFillwidthList(
+      collection: @relatedArtists
+      el: $('#gene-artists')
+      user: @user
+    ).fetchAndRender()
 
   events:
-    'click #gene-filter-all-artists': 'artistMode'
-    'click #gene-filter-artworks-nav': 'artworksMode'
+    'click #gene-filter-all-artists'  : 'artistMode'
+    'click #gene-filter-artworks-nav' : 'artworksMode'
 
   artistMode: ->
     @$el.removeClass 'body-infinite-scroll'

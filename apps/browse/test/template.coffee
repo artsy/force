@@ -18,6 +18,22 @@ render = ->
   )
 
 describe 'Browse', ->
+  describe 'with no browse categories', ->
+    beforeEach ->
+      @template = render()(
+        sd: {}
+        showBrowseCategories: true
+      )
+
+    it "includes not include genes three genes and images", ->
+      # featuredGenes
+      @template.should.not.include 'browse-featured-gene'
+
+      # popularCategories
+      @template.should.not.include 'browse-popular-categories'
+
+      @template.should.include 'browse-filter'
+
   describe 'with all 3 ordered sets', ->
     beforeEach ->
       [featuredGenes, popularCategories, geneCategories] = [
@@ -58,6 +74,7 @@ describe 'Browse', ->
         featuredGenes: featuredGenes
         popularCategories: popularCategories
         geneCategories: geneCategories
+        showBrowseCategories: true
       )
 
     it "includes all three genes and images", ->

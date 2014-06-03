@@ -1,28 +1,28 @@
-_ = require 'underscore'
-Backbone = require 'backbone'
-ArtworkCollection = require './artwork_collection.coffee'
-Location          = require './location.coffee'
-Post              = require './post.coffee'
-Genes             = require '../collections/genes.coffee'
-Artists           = require '../collections/artists.coffee'
-Artworks          = require '../collections/artworks.coffee'
-sd                = require('sharify').data
-analytics         = require '../lib/analytics.coffee'
-Order             = require './order.coffee'
-Genes             = require '../collections/genes.coffee'
-Following         = require '../components/follow_button/collection.coffee'
-geoLocate         = require '../components/util/geolocate.coffee'
-ABM               = require 'artsy-backbone-mixins'
+_                   = require 'underscore'
+Backbone            = require 'backbone'
+ArtworkCollection   = require './artwork_collection.coffee'
+Post                = require './post.coffee'
+Genes               = require '../collections/genes.coffee'
+Artists             = require '../collections/artists.coffee'
+Artworks            = require '../collections/artworks.coffee'
+sd                  = require('sharify').data
+analytics           = require '../lib/analytics.coffee'
+Order               = require './order.coffee'
+Genes               = require '../collections/genes.coffee'
+Following           = require '../components/follow_button/collection.coffee'
+ABM                 = require 'artsy-backbone-mixins'
+mediator            = require '../lib/mediator.coffee'
+User                = require './user.coffee'
 
-module.exports = class CurrentUser extends Backbone.Model
-
+module.exports = class CurrentUser extends User
   _.extend @prototype, ABM.CurrentUser(sd.API_URL)
 
-  url: -> "#{sd.API_URL}/api/v1/me"
+  url: ->
+    "#{sd.API_URL}/api/v1/me"
 
   defaults:
-    followArtists       : null
-    followGenes         : null
+    followArtists : null
+    followGenes   : null
 
   href: -> "/#{@get('default_profile_id')}"
 
@@ -108,9 +108,6 @@ module.exports = class CurrentUser extends Backbone.Model
   @orNull: ->
     if sd.CURRENT_USER then new @(sd.CURRENT_USER) else null
 
-  location: ->
-    new Location @get 'location' if @get 'location'
-
   fetchCreditCards: (options) ->
     new Backbone.Collection().fetch
       url: "#{@url()}/credit_cards"
@@ -135,15 +132,3 @@ module.exports = class CurrentUser extends Backbone.Model
       url: "#{sd.API_URL}/api/v1/bidder"
       success: options?.success
       error: options?.error
-
-  geoLocate: (options) ->
-    geoLocate.locate options
-
-  setGeo: (geo) ->
-    @set location:
-      city        : geo.getCity() or ''
-      state       : geo.getState() or ''
-      state_code  : geo.getStateCode() or ''
-      postal_code : geo.getPostalCode() or ''
-      coordinates : geo.getCoordinates() or null
-      country     : geo.getCountry() or ''

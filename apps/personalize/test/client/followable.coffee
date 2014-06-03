@@ -34,8 +34,8 @@ describe 'Followable', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
 
-    @state  = new PersonalizeState
     @user   = new CurrentUser fabricate 'user'
+    @state  = new PersonalizeState user: @user
     @view   = new TestView(state: @state, user: @user)
 
     @view.render()
@@ -81,7 +81,7 @@ describe 'Followable', ->
       $button.text().should.equal 'Next'
       @view.__labelSet__.should.be.ok
       @view.__labelSet__ = null
-      @view.state.setStep(_.last(@view.state.get('steps')))
+      @view.state.set current_step: _.last(@view.state.get 'steps')
       @view.state.almostDone().should.be.ok
       @view.setSkipLabel()
       $button.text().should.equal 'Done'

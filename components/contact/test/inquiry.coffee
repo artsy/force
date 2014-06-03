@@ -7,9 +7,6 @@ rewire          = require 'rewire'
 { resolve }     = require 'path'
 Artwork         = require '../../../models/artwork'
 
-analytics = require '../../../lib/analytics'
-analytics.track.funnel = sinon.stub()
-
 describe 'Inquiry', ->
   before (done) ->
     benv.setup =>
@@ -26,9 +23,11 @@ describe 'Inquiry', ->
     @partner  = fabricate 'partner'
     benv.render resolve(__dirname, '../templates/index.jade'), {}, =>
       Inquiry = benv.requireWithJadeify(resolve(__dirname, '../inquiry'), ['formTemplate', 'headerTemplate'])
-      Inquiry.__set__ 'analytics', analytics
+      @analytics = Inquiry.__get__('analytics')
+      sinon.stub @analytics.track, 'funnel'
       sinon.stub Inquiry.prototype, 'open'
       sinon.stub Inquiry.prototype, 'updatePosition'
+      sinon.stub(Inquiry.prototype, 'displayAfterInquiryFlow').returns false
       @view = new Inquiry artwork: @artwork, partner: @partner, el: $('body')
       @view.representatives = new Backbone.Collection [name: 'Foo Bar']
       @view.representatives.first().iconImageUrl = ->
@@ -36,6 +35,7 @@ describe 'Inquiry', ->
       done()
 
   afterEach ->
+    @analytics.track.funnel.restore()
     Backbone.sync.restore()
 
   describe '#renderTemplates', ->
@@ -70,7 +70,7 @@ describe 'Inquiry', ->
         attributes.contact_gallery.should.not.be.ok # Should not contact gallery
 
       it 'tracks the correct event', ->
-        events = _.last(analytics.track.funnel.args, 2)
+        events = _.last(@analytics.track.funnel.args, 2)
         events[0][0].should.equal 'Sent artwork inquiry'
         events[1][0].should.equal 'Contact form submitted'
 
@@ -90,6 +90,5 @@ describe 'Inquiry', ->
         attributes.contact_gallery.should.not.be.ok # Should not contact gallery
 
   describe '#events', ->
-
     it 'disables click on backdrop', ->
       (@view.events()['click.handler .modal-backdrop']?).should.not.be.ok

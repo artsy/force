@@ -9,13 +9,32 @@ en =
     'Email not found': 'Sorry, we couldn&rsquo;t find an account with that email.'
 
 module.exports =
+  # Returns false the first time it is called,
+  # true everytime thereafter, until `@submitting`
+  # becomes undefined (#reenableForm)
+  #
+  # Example: `return if @formIsSubmitting()`
+  #
+  # @returns {Boolean}
+  formIsSubmitting: ($button) ->
+    return @submitting if @submitting?
+    @submitting = true
+    @$__button__ ?= $button or @$('button')
+    @$__button__.prop 'disabled', true
+    false
+
+  reenableForm: ($button) ->
+    @submitting = undefined
+    @$__button__ ?= $button or @$('button')
+    @$__button__.prop 'disabled', false
+
   # Serializes the form object
   #
   # @param {$Object} $form
   # @returns {Object}
   serializeForm: ($form) ->
-    $form ||= @$('form')
-    _.reduce($form.serializeArray(), (memo, input) ->
+    @$__form__ ?= $form or @$('form')
+    _.reduce(@$__form__.serializeArray(), (memo, input) ->
       memo[input.name] = _.trim input.value
       memo
     , {})
@@ -26,10 +45,10 @@ module.exports =
   # @param {$Object} $form
   # @returns {Boolean}
   validateForm: ($form) ->
-    $form ?= @$('form')
-    $form.addClass 'is-validated'
-    if $form[0].checkValidity
-      $form[0].checkValidity()
+    @$__form__ ?= $form or @$('form')
+    @$__form__.addClass 'is-validated'
+    if @$__form__[0].checkValidity
+      @$__form__[0].checkValidity()
     else # Let the server handle it
       true
 

@@ -5,7 +5,7 @@ sinon           = require 'sinon'
 rewire          = require 'rewire'
 { resolve }     = require 'path'
 { fabricate }   = require 'antigravity'
-
+CurrentUser     = require '../../../../models/current_user.coffee'
 
 describe 'PersonalizeRouter', ->
   beforeEach (done) ->
@@ -16,7 +16,7 @@ describe 'PersonalizeRouter', ->
       mod.__set__ 'Transition', { fade: (@fadeStub = sinon.stub()) }
       mod.__set__ 'views', { LocationView: => { render: => { $el: 'location' } } }
       sinon.spy @PersonalizeRouter.prototype, 'navigate'
-      @router = new @PersonalizeRouter user: fabricate 'user'
+      @router = new @PersonalizeRouter user: new CurrentUser
       done()
 
   afterEach ->
@@ -37,8 +37,8 @@ describe 'PersonalizeRouter', ->
   describe '#next', ->
     it 'triggers the route on the state transition', ->
       @router.state.trigger 'transition:next'
-      @router.navigate.args[0][0].should.equal "/personalize/#{@router.state.get('current_step')}"
-      @router.navigate.args[0][1].trigger.should.be.ok
+      _.last(@router.navigate.args)[0].should.equal "/personalize/#{@router.state.get('current_step')}"
+      _.last(@router.navigate.args)[1].trigger.should.be.ok
 
   describe '#redirectLocation', ->
     it 'returns the root path if there is no destination cookie set', ->

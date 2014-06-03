@@ -9,7 +9,7 @@ describe '/user', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    @req = { }
+    @req = { url: '/user/edit' }
     @res =
       json    : sinon.stub()
       render  : sinon.stub()
@@ -42,7 +42,7 @@ describe '/user', ->
 
     it 'redirects to the home page without a current user', ->
       routes.settings @req, @res
-      @res.redirect.args[0][0].should.equal '/'
+      @res.redirect.args[0][0].should.equal '/log_in?redirect_uri=/user/edit'
 
     describe 'with a logged in user', ->
 

@@ -62,16 +62,17 @@
       &:hover
         background-color darken(red-color, 25%)
   &[data-state='loading'], &.is-loading
-    background-color purple-color
-    color transparent !important
-    // Note:
-    // Giving the loading state to input[type='submit']
-    // or input[type='button'] will *not* display a spinner.
-    // These elements don't support psuedo-elements.
-    &::before
-      display block
-      content ''
-      spinner(25px, 6px, #fff)
+    &, &[disabled], &[disabled]:hover
+      background-color purple-color
+      color transparent !important
+      // Note:
+      // Giving the loading state to input[type='submit']
+      // or input[type='button'] will *not* display a spinner.
+      // These elements don't support psuedo-elements.
+      &::before
+        display block
+        content ''
+        spinner(25px, 6px, #fff)
 
   &[disabled], &.is-disabled, &.is-disabled
     &, &:hover
@@ -108,7 +109,7 @@
   text-align center
   background-color black
   color #fff
-  border 1px solid black
+  border 1px solid transparent
   &:focus, &:hover
     background-color purple-color
   &[disabled], &.is-disabled
@@ -175,14 +176,24 @@
   @extends .avant-garde-button-text
   border-color black
 
+.stacked-form
 .stacked-button-menu
   max-width 100%
-  margin 10px auto
+  margin 0 auto
   > a
+  > button
+  > input
+  > textarea
+  > .stacked-form-cell
     display block
     width 100%
     margin 10px auto
-    > i
-      line-height 0
-      margin-right 10px
-      vertical-align middle
+    &:first-child
+      margin-top 0
+    &:last-child
+      margin-bottom 0
+  > a > i
+  > button > i
+    line-height 0
+    margin-right 10px
+    vertical-align middle

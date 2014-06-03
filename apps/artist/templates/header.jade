@@ -6,7 +6,7 @@ mixin artist-header(artist)
 
     if artist.get('published_artworks_count')
       nav.artist-share
-        +share(title + artist.get('name') + ' on Artsy', artist.imageUrl('large'))
+        +share(artist.get('name') + ' on Artsy', artist.imageUrl('large'))
 
     if (artist.get('nationality') && artist.get('years'))
       h2 #{artist.get('nationality')}, #{artist.get('years')}

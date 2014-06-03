@@ -1,0 +1,32 @@
+h1 #{user.get('collector_level') === 3 ? "Great." : "OK."} Final Step:
+aside
+  | You will only be asked these questions once (but can update them in your profile for future gallery introductions).
+  .help-tooltip(
+    data-message='This information will be shared with the gallery to improve your inquiry experience. You can control what information is shared with galleries you contact in your settings.'
+    data-anchor='top-right'
+  )
+
+form.stacked-form#after-inquiry-questionnaire-form
+  .stacked-form-cell
+    label.avant-garde-form-label( for='name' ) Full Name
+    input.bordered-input.is-block(
+      placeholder= 'Your full name'
+      value= user.get('name')
+      name= 'name'
+      required
+    )
+
+  .stacked-form-cell
+    label.avant-garde-form-label Primary Location
+    #after-inquiry-collector-location
+      //- Rendered client-side
+
+  .stacked-form-cell
+    label.avant-garde-form-label( for='profession' ) Profession
+    input.bordered-input.is-block(
+      placeholder!='There&rsquo;s nothing here, yet'
+      value=user.get('profession')
+      name='profession'
+    )
+
+  button.avant-garde-button-black#after-inquiry-questionnaire-submit Done

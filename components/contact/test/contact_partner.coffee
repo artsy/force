@@ -7,9 +7,6 @@ rewire          = require 'rewire'
 { fabricate }   = require 'antigravity'
 { resolve }     = require 'path'
 
-analytics = require '../../../lib/analytics'
-analytics.track.funnel = sinon.stub()
-
 describe 'ContactPartnerView', ->
   before (done) ->
     benv.setup =>
@@ -26,17 +23,20 @@ describe 'ContactPartnerView', ->
     @partner  = fabricate 'partner', locations: null
     benv.render resolve(__dirname, '../templates/index.jade'), {}, =>
       ContactPartnerView = benv.requireWithJadeify(resolve(__dirname, '../contact_partner'), ['formTemplate', 'headerTemplate'])
-      ContactPartnerView.__set__ 'analytics', analytics
+      @analytics = ContactPartnerView.__get__('analytics')
+      sinon.stub @analytics.track, 'funnel'
       ContactPartnerView.__set__ 'Cookies', { set: (->), get: (->) }
       sinon.stub ContactPartnerView.prototype, 'isLoading'
       sinon.stub ContactPartnerView.prototype, 'isLoaded'
       sinon.stub ContactPartnerView.prototype, 'open'
       sinon.stub ContactPartnerView.prototype, 'updatePosition'
+      sinon.stub(ContactPartnerView.prototype, 'displayAfterInquiryFlow').returns false
       @view = new ContactPartnerView artwork: @artwork, partner: @partner, el: $('body')
       _.last(Backbone.sync.args)[2].complete [fabricate('location')]
       done()
 
   afterEach ->
+    @analytics.track.funnel.restore()
     Backbone.sync.restore()
 
   describe '#submit', ->
@@ -66,7 +66,7 @@ describe 'ContactPartnerView', ->
         attributes.contact_gallery.should.be.ok # Should contact gallery
 
       it 'tracks the correct event', ->
-        events = _.last(analytics.track.funnel.args, 2)
+        events = _.last(@analytics.track.funnel.args, 3)
         events[0][0].should.equal 'Sent artwork inquiry'
         events[1][0].should.equal 'Contact form submitted'
 
@@ -90,9 +90,7 @@ describe 'ContactPartnerView', ->
     it 'disables click on backdrop', ->
       (@view.events()['click.handler .modal-backdrop']?).should.not.be.ok
 
-
   describe 'template', ->
-
     it 'does render pricing if work cant display price', ->
       @view.artwork.isPriceDisplayable = -> false
       @view.$el.html @view.formTemplate @view.templateData

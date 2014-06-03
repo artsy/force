@@ -3,14 +3,17 @@ if artwork.isContactable()
   form#artwork-contact-form
     h2.avant-garde-header Contact Gallery
     h3= artwork.get('partner').name
-    unless user
-      input.bordered-input( placeholder='Your full name' autofocus='autofocus' name='name' )
-      input.bordered-input( placeholder='Your email address' name='email' )
-    textarea.bordered-input( rows=5 )
-      | Hello, I'm interested in this work
-      if artwork.get('artist')
-        | &nbsp;by #{artwork.get('artist').name}
-      |. Please confirm availability and pricing of this work.&nbsp;
+    if user
+      //- Logged in
+      input( type='hidden', name='name', value=user.get('name') )
+      input( type='hidden', name='email', value=user.get('email') )
+    else
+      //- Logged out
+      input.bordered-input( placeholder='Your full name', name='name', required )
+      input.bordered-input( placeholder='Your email address', name='email', type='email', required )
+    textarea.bordered-input( rows='5', name='message', required )
+      = defaultMessage
+      = " "
     if user
       p From: #{user.get('name')}
     #artwork-contact-form-errors
@@ -26,5 +29,5 @@ if artwork.get('acquireable')
 if artwork.get('inquireable')
   p Questions? We are here to help.
   .artwork-inquiry-button
-    a( href="/artwork/#{artwork.id}/inquire" data-client rel='nofollow' )
+    a( href="/artwork/#{artwork.id}/inquire", rel='nofollow', data-client )
       | Ask an Artsy Specialist

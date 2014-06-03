@@ -1,5 +1,6 @@
 PartnerShow     = require '../../models/partner_show'
 Profile         = require '../../models/profile'
+{ stringifyJSONForWeb } = require '../../components/util/json.coffee'
 { parse }       = require 'url'
 
 render = (res, show, profile=null) ->
@@ -10,6 +11,7 @@ render = (res, show, profile=null) ->
     partner : show.partner()
     show    : show
     profile : profile
+    jsonLD  : stringifyJSONForWeb(show.toJSONLD())
 
 setReferringContext = (req, res, show) ->
   return unless req.get 'referrer'

@@ -9,5 +9,4 @@ app = module.exports = express()
 app.set 'views', __dirname
 app.set 'view engine', 'jade'
 
-app.get '/personalize', routes.initial
-app.get '/personalize/*', routes.index
+app.get '/personalize*', routes.index

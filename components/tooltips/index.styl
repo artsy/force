@@ -32,3 +32,86 @@
     padding 8px 10px
     margin-left -(@width / 2)
     text-align center
+
+.help-tooltip
+  display inline-block
+  position relative
+  cursor help
+  margin 0 0.5em
+  width 14px
+  height @width
+  // Visually center with Garamond
+  margin-bottom -2px
+  &:before
+  &:after
+    display block
+    top 0
+    left 0
+    position absolute
+  &:before
+    content '?'
+    z-index 2
+    width 14px
+    height @width
+    border-radius 50%
+    // Vertically centers in FF by adding 1
+    // Chrome remains centered as well
+    line-height (@width + 1)
+    text-align center
+    vertical-align middle
+    font-family sans-serif
+    font-size 12px
+    font-weight bold
+    color white
+    background-color gray-darker-color
+  &:after
+    visibility hidden
+    content attr(data-message)
+    text-align left
+    z-index 1
+    margin -10px 0 0 -10px
+    width 350px
+    color white
+    background-color black
+    padding 30px
+    opacity 0
+    line-height 1.3
+    prevent-content-shift()
+  &:hover
+    &:before
+      z-index 4
+    &:after
+      opacity 1
+      z-index 3
+      transition opacity 0.125s
+      transition-delay 0.0625s
+      visibility visible
+  // Variants
+  //
+  // Todo: Add sizes and more anchor
+  // &[data-anchor='top-left']
+  // top-left is default
+  &[data-anchor='top-right']
+    &:before
+    &:after
+      top 0
+      left inherit
+      right 0
+    &:after
+      margin -10px -10px 0 0
+  &[data-anchor='bottom-left']
+    &:before
+    &:after
+      top inherit
+      bottom 0
+    &:after
+      margin 0 0 -10px -10px
+  &[data-anchor='bottom-right']
+    &:before
+    &:after
+      top inherit
+      left inherit
+      right 0
+      bottom 0
+    &:after
+      margin 0 -10px -10px 0

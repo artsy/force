@@ -9,41 +9,43 @@ append locals
 block body
   #browse-page.main-layout-container
 
-    if featuredGenes && featuredGenes.at(0)
-      section#browse-page-featured-genes
-        - featuredGene = featuredGenes.at(0)
-        .browse-featured-gene-set
-          if featuredGene.get('items').models
-            for gene in featuredGene.get('items').models
-              a.browse-featured-gene( href=gene.get('href') )
-                img.bfg-image( src=gene.imageUrl('large_rectangle') )
-                .bfg-title= gene.get('title')
-    a#browse-page-see-all.avant-garde-jump-link( href='/categories' ) Browse All Categories
-      i.icon-chevron-small-right
+    if showBrowseCategories
+      if featuredGenes && featuredGenes.at(0)
+        section#browse-page-featured-genes
+          - featuredGene = featuredGenes.at(0)
+          .browse-featured-gene-set
+            if featuredGene.get('items').models
+              for gene in featuredGene.get('items').models
+                a.browse-featured-gene( href=gene.get('href') )
+                  img.bfg-image( src=gene.imageUrl('large_rectangle') )
+                  .bfg-title= gene.get('title')
 
-    if popularCategories && popularCategories.at(0).get('items')
-      section#browse-page-categories
-        .browse-popular-categories
-          .bpc-column.bpc-dynamic
-            .large-garamond-header Browse by Popular Categories
-            for categorySet in popularCategories.at(0).get('items').models
-              .bpc-subcolumn
-                h3= categorySet.get('name')
-                for category in categorySet.get('items').models
-                  a.highlight-link( href=category.get('href') )
-                    = category.get('title')
-          .bpc-column.bpc-partners
-            .large-garamond-header Browse Partners
-            a.highlight-link( href='/galleries') Galleries A-Z
-            a.highlight-link( href='/institutions') Institutions A-Z
-            h3 Featured
-            a.highlight-link( href='/sfmoma' ) SFMOMA
-            a.highlight-link( href='/britishmuseum' ) The British Museum
-            a.highlight-link( href='/gagosian-gallery' ) Gagosian Gallery
-            a.highlight-link( href='/pace-gallery' ) Pace Gallery
-            a.highlight-link( href='/white-cube' ) White Cube
-            a.highlight-link( href='/acquavella-galleries' ) Acquavella Galleries
-            a.highlight-link( href='/partners' ) See All
+      a#browse-page-see-all.avant-garde-jump-link( href='/categories' ) Browse All Categories
+        i.icon-chevron-small-right
+
+      if popularCategories && popularCategories.at(0).get('items')
+        section#browse-page-categories
+          .browse-popular-categories
+            .bpc-column.bpc-dynamic
+              .large-garamond-header Browse by Popular Categories
+              for categorySet in popularCategories.at(0).get('items').models
+                .bpc-subcolumn
+                  h3= categorySet.get('name')
+                  for category in categorySet.get('items').models
+                    a.highlight-link( href=category.get('href') )
+                      = category.get('title')
+            .bpc-column.bpc-partners
+              .large-garamond-header Browse Partners
+              a.highlight-link( href='/galleries') Galleries A-Z
+              a.highlight-link( href='/institutions') Institutions A-Z
+              h3 Featured
+              a.highlight-link( href='/sfmoma' ) SFMOMA
+              a.highlight-link( href='/britishmuseum' ) The British Museum
+              a.highlight-link( href='/gagosian-gallery' ) Gagosian Gallery
+              a.highlight-link( href='/pace-gallery' ) Pace Gallery
+              a.highlight-link( href='/white-cube' ) White Cube
+              a.highlight-link( href='/acquavella-galleries' ) Acquavella Galleries
+              a.highlight-link( href='/partners' ) See All
 
     #browse-filter-header.large-garamond-header Browse Works
     #browse-filter

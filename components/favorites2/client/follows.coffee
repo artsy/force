@@ -105,6 +105,7 @@ module.exports.FollowsView = class FollowsView extends Backbone.View
         collection: artworks
         empty: (-> @$el.parent().remove() )
         el: $artworks
+        seeMore: false
       view.render()
       new FollowButton
         following: @followItems
@@ -112,5 +113,5 @@ module.exports.FollowsView = class FollowsView extends Backbone.View
         model: followItem
         el: $followButton
       _.defer ->
-        view.hideFirstRow()
+        view.hideSecondRow()
         view.removeHiddenItems()

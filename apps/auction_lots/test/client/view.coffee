@@ -37,7 +37,7 @@ describe 'Auction results client-side code', ->
 
       AuctionResultsView.__set__ 'ZoomView', @zoomStub = sinon.stub()
       AuctionResultsView.__set__ 'FillwidthView', Backbone.View
-      AuctionResultsView.__get__('FillwidthView')::hideFirstRow = (@hideFirstRowStub = sinon.stub())
+      AuctionResultsView.__get__('FillwidthView')::hideSecondRow = (@hideSecondRowStub = sinon.stub())
       AuctionResultsView.__set__ 'mediator', (@mediatorStub = trigger: sinon.stub())
       done()
 
