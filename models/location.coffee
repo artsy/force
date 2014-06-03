@@ -51,6 +51,10 @@ module.exports = class Location extends Backbone.Model
       ]).join(' ')
     ]).join(', ')
 
+  singleWord: ->
+    @get 'city' or
+    @get 'country'
+
   toHtml: ->
     telephone = "Tel: #{@get('phone')}" if @get('phone')
     _.compact(_.flatten([@lines(), telephone])).join '<br/>'
