@@ -22,7 +22,7 @@ module.exports = class SaveControls extends Backbone.View
     ).join ''
 
   closeOnClickOff: (e) =>
-    return if $(e.currentTarget).closest('.save-controls-drop-down-container')?.attr('data-state') is 'saved'
+    return if $(e.target).closest('.save-controls-drop-down-menu').length
     @$el.attr 'data-state', 'saved-close'
     $(document).off 'click.save-controls-' + @cid
 
