@@ -77,6 +77,7 @@ block body
           if artwork.hasMoreInfo()
             include ./_more-info
   
+          br
           if artwork.isComparable()
             a.artwork-auction-results-button.avant-garde-header-small( href="/artwork/#{artwork.id}/auction-results" ) See related auction results
 
@@ -92,6 +93,7 @@ block body
         h2.avant-garde-header
           | More Works by&nbsp;
           a( href=artist.href() )= artist.get('name')
+         
         .artworks-list
 
     section#artwork-below-the-fold-section

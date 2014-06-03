@@ -13,8 +13,6 @@ module.exports = class AddToPostButton extends Backbone.View
     'click .related-posts-add-button' : 'addPost'
 
   addPost: (e) =>
-    console.log '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
-
     @currentUser ?= CurrentUser.orNull()
 
     unless @currentUser
