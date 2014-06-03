@@ -28,6 +28,7 @@ describe 'AfterInquiryMixin', ->
       eligibleForAfterInquiryFlow: true
 
     @view           = new View
+    @view.user      = new CurrentUser id: 'existy'
     @inquiry        = new Backbone.Model
     @inquiry.url    = '/api/v1/me/artwork_inquiry_request'
     @view.inquiry   = @inquiry
@@ -65,6 +66,7 @@ describe 'AfterInquiryMixin', ->
         @view.maybeSend @inquiry, error: -> done()
 
     it 'should initialize a LoggedOutUser if the user is logged out', ->
+      @view.user = undefined
       @view.eligibleForAfterInquiryFlow = false
       @view.maybeSend @inquiry
       @view.user.should.be.an.instanceOf LoggedOutUser
@@ -86,6 +88,19 @@ describe 'AfterInquiryMixin', ->
         Backbone.sync.called.should.be.false
         mediator.trigger 'inquiry:send'
         Backbone.sync.called.should.be.true
+
+    describe '#displayAfterInquiryFlow', ->
+      beforeEach ->
+        @AfterInquiryMixin.__set__ 'hasSeen', sinon.stub().returns false
+        @view.eligibleForAfterInquiryFlow = true
+
+      it 'returns false for logged out users', ->
+        @view.user = new LoggedOutUser
+        @view.displayAfterInquiryFlow().should.be.false
+
+      it 'returns true for logged in users', ->
+        @view.user = new CurrentUser id: 'existy'
+        @view.displayAfterInquiryFlow().should.be.true
 
   describe '#send', ->
     it 'should send the inquiry', ->
