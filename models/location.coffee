@@ -1,9 +1,8 @@
-_                              = require 'underscore'
-Backbone                       = require 'backbone'
-{ compactObject } = require './mixins/compact_object.coffee'
+_                   = require 'underscore'
+Backbone            = require 'backbone'
+{ compactObject }   = require './mixins/compact_object.coffee'
 
 module.exports = class Location extends Backbone.Model
-
   defaults: ->
     raw: ''
     address: ''
@@ -18,37 +17,37 @@ module.exports = class Location extends Backbone.Model
 
   lines: ->
     _.compact([
-      @get 'address' || ''
-      @get 'address_2' || ''
-      @cityStatePostalCode() || ''
-      @get 'country' || ''
+      @get 'address' or ''
+      @get 'address_2' or ''
+      @cityStatePostalCode() or ''
+      @get 'country' or ''
     ])
 
   cityState: ->
     _.compact([
-      @get 'city' || ''
-      @get 'state' || ''
+      @get 'city' or ''
+      @get 'state' or ''
     ]).join(', ')
 
   cityStateCountry: ->
     _.compact([
-      @get 'city' || ''
-      @get 'state' || ''
-      @get 'country' || ''
+      @get 'city' or ''
+      @get 'state' or ''
+      @get 'country' or ''
     ]).join(', ')
 
   cityStatePostalCode: ->
     _.compact([
-      @cityState() || ''
-      @get('postal_code') || ''
+      @cityState() or ''
+      @get('postal_code') or ''
     ]).join(' ')
 
   singleLine: ->
     _.compact([
-      @get 'city' || ''
+      @get 'city' or ''
       _.compact([
-        @get 'address' || ''
-        @get 'address_2' || ''
+        @get 'address' or ''
+        @get 'address_2' or ''
       ]).join(' ')
     ]).join(', ')
 
@@ -56,9 +55,11 @@ module.exports = class Location extends Backbone.Model
     telephone = "Tel: #{@get('phone')}" if @get('phone')
     _.compact(_.flatten([@lines(), telephone])).join '<br/>'
 
-  displayAddress: -> if @lines() then @lines().join(", ") else ""
+  displayAddress: ->
+    if @lines() then @lines().join(", ") else ""
 
-  displayName: -> if @has("display") then @get("display") else @get("name")
+  displayName: ->
+    if @has("display") then @get("display") else @get("name")
 
   getMapsLocation: ->
     if @get('coordinates')
@@ -67,7 +68,7 @@ module.exports = class Location extends Backbone.Model
       @displayAddress()
 
   toJSONLD: ->
-    address = [@get('address') || '', @get('address_2') || ''].join('')
+    address = [@get('address') or '', @get('address_2') or ''].join('')
     compactObject {
       "@type": "Place"
       name: @get('name')
