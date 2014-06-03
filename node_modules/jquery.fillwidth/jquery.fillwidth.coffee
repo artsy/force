@@ -217,7 +217,8 @@ methods =
       margin: 0
     $el.css @settings.initStyling if @settings.initStyling?
     $el.find('> li').css
-      'float': 'left'
+      'display': 'inline-block'
+      'vertical-align': 'top'
       'margin-left': 0
     $el.find('img').css
       'max-width': '100%'

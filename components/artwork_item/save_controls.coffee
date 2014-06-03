@@ -10,7 +10,7 @@ if 'Set Management' in user.get('lab_features')
     'drop down': 1 / 3
     'two button': 1 / 3
     'one button': 1 / 3
-  sharify.data.SAVE_CONTROLS_SPLIT_TEST = 'drop down'# splitTestPath
+  sharify.data.SAVE_CONTROLS_SPLIT_TEST = null #splitTestPath
 
 module.exports = switch splitTestPath
   when 'drop down' then require './save_controls_drop_down/view.coffee'

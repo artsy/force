@@ -366,7 +366,8 @@
         $el.css(this.settings.initStyling);
       }
       $el.find('> li').css({
-        'float': 'left',
+        'display': 'inline-block',
+        'vertical-align': 'top',
         'margin-left': 0
       });
       $el.find('img').css({
