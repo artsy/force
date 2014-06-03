@@ -46,4 +46,13 @@ module.exports = class AuctionLot extends Backbone.Model
     ]).join ' | '
 
   toPageDescription: ->
-    'Find auction estimate and sale price, and research more auction results from top auction houses.'
+    artworkInfo = _.compact([
+      @get('medium_text')
+      @dimensions({ metric: 'in', format: 'decimal' })
+    ]).join(', ')
+
+    _.compact([
+      artworkInfo
+      "Estimate #{@get('estimate_text')} from #{@get('organization')} on #{@get('auction_dates_text')}"
+      "Find auction estimate and sale price, and research more auction results from top auction houses."
+    ]).join('. ')
