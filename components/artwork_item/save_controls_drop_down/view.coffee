@@ -13,25 +13,30 @@ module.exports = class SaveControls extends Backbone.View
     @collections.on 'add', @renderCollections
 
   renderCollections: =>
-    @$('.save-controls-drop-down-menu li:not(.save-controls-drop-down-new)').remove()
-    @$('.save-controls-drop-down-menu ul').prepend @collections.map((collection) ->
-      "<li class='#{if collection.get('id') is 'saved-artwork' then 'is-active' else ''}'>
+    @$('.save-controls-drop-down-menu-item:not(.save-controls-drop-down-new)').remove()
+    @$('.save-controls-drop-down-menu nav').prepend @collections.map((collection) ->
+      "<div class='save-controls-drop-down-menu-item #{if collection.get('id') is 'saved-artwork' then 'is-active' else ''}'>
         #{collection.get('name')}
         <span class='icon-check'></span>
-      </li>"
+      </div>"
     ).join ''
 
   closeOnClickOff: (e) =>
-    return if $(e.target).closest('.save-controls-drop-down-container').length
+    return if $(e.currentTarget).closest('.save-controls-drop-down-container')?.attr('data-state') is 'saved'
     @$el.attr 'data-state', 'saved-close'
     $(document).off 'click.save-controls-' + @cid
 
+  addToCollection: (col) ->
+    col.saveArtwork @model.get('id')
+    @$('.save-controls-drop-down-menu-item').removeClass 'is-active'
+    @$(".save-controls-drop-down-menu-item:eq(#{@collections.indexOf col})").addClass 'is-active'
+
   events:
     'click .overlay-button-save': 'openCollectionModal'
-    'click .save-controls-drop-down-menu ul li:not(.save-controls-drop-down-new)': 'addToCollection'
-    'submit .save-controls-drop-down-new form': 'newCollection'
-    'focus .save-controls-drop-down-new form': (e) -> e.preventDefault()
+    'click .save-controls-drop-down-menu-item:not(.save-controls-drop-down-new)': 'onClickItem'
+    'click form button': 'newCollection'
     'click .save-controls-drop-down-new input': (e) -> e.preventDefault()
+    'click': (e) -> e.preventDefault()
 
   showSignupModal: ->
     track.funnel 'Triggered sign up form via save button'
@@ -45,21 +50,21 @@ module.exports = class SaveControls extends Backbone.View
     return @showSignupModal() unless @user
     @$el.attr 'data-state', 'saving'
     @collections.fetch success: =>
-      $(document).on 'click.save-controls-' + @cid, @closeOnClickOff
+      $(document).on 'click', @closeOnClickOff
       @$el.attr 'data-state', 'saved'
-    false
 
-  addToCollection: (e) ->
-    col = @collections.at $(e.currentTarget).index()
-    col.saveArtwork @model.get('id')
-    @$el.attr 'data-state', 'saved-close'
+  onClickItem: (e) ->
+    e.preventDefault()
+    @addToCollection @collections.at $(e.currentTarget).index()
     false
 
   newCollection: (e) ->
-    e.preventDefault()
     collection = new ArtworkCollection
       name: @$('.save-controls-drop-down-new input').val()
       user_id: @user.get('id')
-    @collections.add collection
-    collection.save()
+    @$('.save-controls-drop-down-new').addClass 'is-loading'
+    collection.save null, complete: =>
+      @collections.add collection
+      @$('.save-controls-drop-down-new').removeClass 'is-loading'
+      @addToCollection collection
     false

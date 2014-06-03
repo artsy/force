@@ -18,6 +18,10 @@
         imageDimensions.push({ width: randWidth, height: height });
         kittens += "<li>"
                 + "<img src='http://placekitten.com/" + randWidth + "/" + height + "'>"
+                + "<br><ul>"
+                +   "<li>Inner List</li>"
+                +   "<li>Item 2</li>"
+                + "</ul>"
                 + "</li>";
       }
       kittens += "</ul>";
@@ -26,7 +30,7 @@
       //
       // Apply fillwidth passing in the widths stored above to avoid initial flickering.
       //
-      $('ul').fillwidth({ imageDimensions: imageDimensions });
+      $('body > ul').fillwidth({ imageDimensions: imageDimensions });
     });
   </script>
   <style>
@@ -36,6 +40,9 @@
     img {
       height: 200px;
       background: #eee;
+    }
+    li > ul {
+      display: inline;
     }
   </style>
 </head>
