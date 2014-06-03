@@ -3,7 +3,7 @@
   display inline-block
   position relative
   width 58px
-  margin 0 5px 20px
+  margin 0 16px
   height @width
   cursor pointer
   color black
@@ -22,13 +22,15 @@
     avant-garde()
     position absolute
     top 100%
-    font-size 13px
+    font-size 11px
     line-height 2.5
     text-align center
     // Account for a small
     // amount of overflow
     right -5px
-    left -5px
+    left -18px
+    margin-top 5px
+    width 90px
   &:hover
     background-color gray-darker-color
     border-color @background-color
@@ -67,3 +69,13 @@
     content '\e60c'
   &:after
     content 'Share'
+
+.circle-icon-button-frame
+  @extends .circle-icon-button
+  padding-left: 2px
+  padding-top: 0px
+  line-height: 1.68
+  &:before
+    content '\e60e'
+  &:after
+    content 'View In Room'

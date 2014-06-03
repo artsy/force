@@ -5,7 +5,7 @@ template = -> require('../templates/view-in-room.jade') arguments...
 
 module.exports = class ViewInRoom extends Backbone.View
   className: 'artwork-view-in-room'
-  bodyClasses: 'body-transparent-header'
+  bodyClasses: 'body-hide-header'
 
   roomWidth: 6578
   benchRatio: 5.5
@@ -27,7 +27,7 @@ module.exports = class ViewInRoom extends Backbone.View
     @$window.on 'resize.view-in-room', _.throttle(@scale, 100)
 
   _render: ->
-    @$el.html template()
+    @$el.html template(artwork: @artwork)
     @$container.html @$el
 
   render: ->

@@ -5,7 +5,8 @@ ShareView                 = require './share.coffee'
 Transition                = require '../../../components/mixins/transition.coffee'
 CurrentUser               = require '../../../models/current_user.coffee'
 SaveButton                = require '../../../components/save_button/view.coffee'
-RelatedPostsView          = require '../../../components/related_posts/view.coffee'
+RelatedPostsView          = require './related-posts.coffee'
+AddToPostButton           = require '../../../components/related_posts/add_to_post_button.coffee'
 analytics                 = require '../../../lib/analytics.coffee'
 acquireArtwork            = require('../../../components/acquire/view.coffee').acquireArtwork
 FeatureNavigationView     = require './feature-navigation.coffee'
@@ -44,6 +45,7 @@ module.exports = class ArtworkView extends Backbone.View
     @checkQueryStringForAuction()
     @abTestEmbeddedInquiryForm()
     @setupRelatedPosts()
+    @setupPostButton()
     @setupCurrentUser()
     @setupArtistArtworks()
     @setupFollowButton()
@@ -172,17 +174,26 @@ module.exports = class ArtworkView extends Backbone.View
   setupArtistArtworks: ->
     return unless @artist?.get('artworks_count') > 1
     @listenTo @artist.artworks, 'sync', @renderArtistArtworks
-    @artist.artworks.fetch data: size: 5, published: true
+    @artist.artworks.fetch
+      published: true
 
   renderArtistArtworks: ->
     # Ensure the current artwork is not in the collection
     @artist.artworks.remove @artwork
+
     return unless @artist.artworks.length
     @$('#artist-artworks-section').addClass('is-fade-in').show()
 
     new ArtworkColumnsView
-      el: @$('#artist-artworks-section .artworks-list')
-      collection: @artist.artworks
+      el             : @$('#artist-artworks-section .artworks-list')
+      collection     : @artist.artworks
+      allowDuplicates: true
+      numberOfColumns  : 4
+      gutterWidth      : 40
+      maxArtworkHeight : 400
+      isOrdered        : false
+      seeMore          : false
+      artworkSize      : 'tall'
 
     trackArtworkImpressions @artist.artworks.models, @$('#artwork-artist-artworks-container')
 
@@ -211,12 +222,14 @@ module.exports = class ArtworkView extends Backbone.View
     @saved.addRepoArtworks @__saved__
     @saved.syncSavedArtworks()
 
+  setupPostButton: ->
+    new AddToPostButton
+      el: @$('.ari-left')
+
   setupRelatedPosts: ->
     new RelatedPostsView
       el: @$('#artwork-artist-related-posts-container')
-      numToShow: 2
-      model: @artwork
-      modelName: 'artwork'
+      artwork: @artwork
 
   setupFeatureNavigation: (options) ->
     new FeatureNavigationView
