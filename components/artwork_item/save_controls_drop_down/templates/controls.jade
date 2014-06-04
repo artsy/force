@@ -1,9 +1,14 @@
 .overlay-container.save-controls-drop-down-container
   .overlay-button-save
+    .overlay-button-save-heart-transparent
+      include ../images/heart.svg
+    .overlay-button-save-heart
+      include ../images/heart.svg
   .save-controls-drop-down-menu
     h4 Add to Set?
-    ul
-      li.save-controls-drop-down-new
+    nav
+      .save-controls-drop-down-new.save-controls-drop-down-menu-item
         form
           input( placeholder='New Collection' )
-          button.icon-plus-small
+          button.icon-plus-small( type='submit' )
+        .loading-spinner-white

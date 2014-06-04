@@ -2,6 +2,7 @@
 
 cover-width = 230px
 cover-offset = 10px
+cover-margin = 0 50px 50px 20px
 
 .favorites2-collections
   position relative
@@ -10,7 +11,7 @@ cover-offset = 10px
 
 .favorites2-collection
   display inline-block
-  margin 0 50px 50px 20px
+  margin cover-margin
   cursor pointer
   position relative
   text-decoration none
@@ -28,6 +29,7 @@ cover-offset = 10px
     height cover-width
     position absolute
     transition margin 0.3s
+    border 1px solid gray-lighter-color
 
 for i in 1 2 3
   .favorites2-cover li:nth-child({i})
@@ -59,7 +61,8 @@ for i in 1 2 3
   margin 0
   position relative
   cursor pointer
-  margin-left 20px
+  margin cover-margin
+  margin-left 10px
 
 .favorites2-new-collection-icon
   width 74px
@@ -138,3 +141,15 @@ for i in 1 2 3
     color red-color
     svg *
       fill red-color
+
+.favorites2-edit-modal-delete-container
+  display none
+  h1, h2
+    text-align center
+  h1
+    font-size 26px
+    margin 62px 0 10px 0
+  h2
+    margin-bottom 60px
+  .avant-garde-button-black
+    float right

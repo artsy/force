@@ -7,6 +7,8 @@
       li( class=(collection.get('id') == 'saved-artwork' ? 'is-selected' : '' ) )
         = collection.get('name')
         span.icon-check
+        span.icon-close
+        span.save-controls-removed removed
   form.save-controls-two-btn-modal-new-collection
     input.bordered-input( placeholder="Create New Collection" )
     button.icon-plus-small

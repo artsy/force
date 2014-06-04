@@ -1,5 +1,6 @@
 Backbone  = require 'backbone'
 track     = require('../../../../lib/analytics.coffee').track
+device    = require '../../../../components/util/device.coffee'
 
 module.exports = class StepView extends Backbone.View
   className: 'personalize-frame'
@@ -7,8 +8,10 @@ module.exports = class StepView extends Backbone.View
   initialize: (options) ->
     { @state, @user } = options
 
-  advance: (e) ->
-    track.funnel "Finishing Personalize #{@state.currentStepLabel()}", { label: "User:#{@user.id}" }
+  autofocus: ->
+    device.autofocus()
 
+  advance: (e) ->
     e?.preventDefault()
+    track.funnel "Finishing Personalize #{@state.currentStepLabel()}", label: "User:#{@user.id}"
     @state.trigger 'transition:next'

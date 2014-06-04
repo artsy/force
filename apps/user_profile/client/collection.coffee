@@ -4,7 +4,6 @@ Artworks = require '../../../collections/artworks.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 { ArtworkCollection } = ArtworkCollections = require '../../../collections/artwork_collections.coffee'
 { COLLECTION, PROFILE } = require('sharify').data
-COLUMN_WIDTH = 300
 
 module.exports.CollectionView = class CollectionView extends Backbone.View
 
@@ -14,8 +13,8 @@ module.exports.CollectionView = class CollectionView extends Backbone.View
     @columnsView = new ArtworkColumnsView
       el: @$('#user-profile-collection-artworks')
       collection: new Artworks
-      artworkSize: 'tall'
-      numberOfColumns: Math.round @$el.width() / COLUMN_WIDTH
+      artworkSize: 'larger'
+      numberOfColumns: 3
       gutterWidth: 40
     @$el.infiniteScroll @nextPage
     @nextPage()

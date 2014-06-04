@@ -15,7 +15,9 @@ module.exports = class SaveControlsModal extends ModalView
     @user = CurrentUser.orNull()
     @collections = new ArtworkCollections [], user: @user
     @collections.on 'add', @renderInner
-    @collections.fetch success: => @isLoaded()
+    @collections.fetch success: =>
+      @isLoaded()
+      @updatePosition()
     super
 
   postRender: ->
@@ -23,7 +25,8 @@ module.exports = class SaveControlsModal extends ModalView
 
   events: -> _.extend super,
     'submit .save-controls-one-btn-modal-new-collection': 'newCollection'
-    'click .save-controls-one-btn-modal-collections li': 'toggleSelected'
+    'click .save-controls-one-btn-modal-collections li:not(.is-selected)': 'toggleSelected'
+    'click .save-controls-one-btn-modal-collections li.is-selected': 'removeFromCollection'
     'click .save-controls-one-btn-modal-done': 'done'
 
   newCollection: (e) ->
@@ -33,11 +36,22 @@ module.exports = class SaveControlsModal extends ModalView
       user_id: @user.get('id')
     @collections.add collection
     collection.save()
+    @$('.save-controls-one-btn-modal-collections li:last-child').click()
     false
 
   toggleSelected: (e) ->
+    $target = $(e.currentTarget)
     @$('.save-controls-one-btn-modal-collections li').removeClass 'is-selected'
-    $(e.currentTarget).addClass('is-selected')
+    $target.addClass('is-selected is-init-click')
+    $target.one 'mouseout', -> $target.removeClass('is-init-click')
+
+  removeFromCollection: (e) ->
+    col = @collections.at $(e.currentTarget).index()
+    col.removeArtwork @model.get 'id'
+    $(e.currentTarget).removeClass 'is-selected'
+    $removed = $(e.currentTarget).find('.save-controls-removed')
+    $removed.show()
+    setTimeout (-> $removed.fadeOut 'fast'), 1000
 
   done: ->
     col = @collections.at @$('.save-controls-one-btn-modal-collections li.is-selected').index()
