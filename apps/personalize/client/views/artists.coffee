@@ -5,7 +5,6 @@ StepView                      = require './step.coffee'
 Artist                        = require '../../../../models/artist.coffee'
 Followable                    = require '../mixins/followable.coffee'
 GeneArtists                   = require '../mixins/gene_artists.coffee'
-{ isTouchDevice }             = require '../../../../components/util/device.coffee'
 { FollowButton, Following }   = require '../../../../components/follow_button/index.coffee'
 
 template                  = -> require('../../templates/artists.jade') arguments...
@@ -86,7 +85,7 @@ module.exports = class ArtistsView extends StepView
       @following.syncFollows suggestionSet.get('suggestions').pluck 'id'
 
   render: ->
-    @$el.html template(state: @state, isTouchDevice: isTouchDevice())
+    @$el.html template(state: @state, autofocus: @autofocus())
     @setupSearch mode: 'artists'
     this
 

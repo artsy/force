@@ -96,9 +96,29 @@
     &.is-selected
       .icon-check
         display inline-block
+      &:hover:not(.is-init-click)
+        .icon-close
+          display block
+        .icon-check
+          display none
     .icon-check
       font-size 13px
       position absolute
       right 14px
       top 4px
+      display none
+    .icon-close
+      font-size 13px
+      -webkit-text-stroke-width 2px
+      position absolute
+      right 14px
+      top 4px
+      color red-color
+      display none
+    .save-controls-removed
+      color red-color
+      font-size 13px
+      font-weight bold
+      font-style italic
+      float right
       display none

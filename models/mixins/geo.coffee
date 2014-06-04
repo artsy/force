@@ -7,12 +7,12 @@ module.exports =
   location: ->
     new Location @get 'location' if @get 'location'
 
-  approximateLocation: ->
+  approximateLocation: (options = {}) ->
     geo.locate
       accuracy : 'low'
-      success  : (geoFormatted) =>
-        unless @hasLocation()
-          @setGeo geoFormatted
+      success  : _.wrap options.success, (success, geoFormatted) =>
+        @setGeo(geoFormatted) unless @hasLocation()
+        success?()
 
   # Gravity runs a delayed job after user saves that geolocates
   # the last_sign_in_ip. So, for now, this is the most accurate way to

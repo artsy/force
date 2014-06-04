@@ -51,6 +51,15 @@ max-items = 20
   transition stroke-dashoffset 1s linear
 
 .save-controls-drop-down-container
+  &[data-state='saving']
+    .overlay-button-save
+      opacity 1
+      display inline-block !important
+      background-color purple-color
+      &:before
+        opacity 0.4
+    .overlay-button-save-heart path
+      stroke-dashoffset 4000px
   &[data-state='saved']
     right -25px
     .overlay-button-save
@@ -78,20 +87,18 @@ max-items = 20
       top 0
     .overlay-button-save-heart path
       transition-duration 0s
-  &[data-state='saving']
-    .overlay-button-save
-      opacity 1
-      display inline-block !important
-      background-color purple-color
-      &:before
-        opacity 0.4
-    .overlay-button-save-heart path
-      stroke-dashoffset 4000px
   &[data-state='saved-close']
     .overlay-button-save
       opacity 1
       background-color purple-color
       display inline-block !important
+    .save-controls-drop-down-menu-item
+      transition top 0.2s linear 0 !important
+    .save-controls-drop-down-menu
+      display block
+      opacity 1
+      z-index -1
+      transition max-height 0.3s 0 !important
 
 .artwork-item
   &:hover
@@ -114,6 +121,7 @@ max-items = 20
   overflow hidden
   opacity 0
   cursor default
+  text-align left
   h4, .save-controls-drop-down-menu-item
     padding 13px 20px
     border-bottom 1px solid gray-darkest-color
@@ -128,6 +136,7 @@ max-items = 20
     z-index max-items + 1
   .save-controls-drop-down-new
     position relative
+    transition background 0.3s
     &:hover
       background gray-darkest-color
     &.is-loading
@@ -136,6 +145,11 @@ max-items = 20
         display block
       form
         opacity 0
+    &.is-hover
+      background purple-color
+      .icon-plus-small
+        background gray-lighter-color
+        color black
     .loading-spinner-white
       display none
       margin 0
@@ -165,15 +179,36 @@ max-items = 20
       bottom @right
       line-height 27px
       cursor pointer
-
+      transition color 0.3s, background 0.3s
   .icon-check
     font-size 13px
     position absolute
     right 18px
     bottom 7px
     display none
-  .save-controls-drop-down-menu-item.is-active .icon-check
-    display block
+  .save-controls-drop-down-menu-item.is-active
+    .icon-check
+      display block
+    &:hover:not(.is-init-click)
+      .icon-close
+        display block
+      .icon-check
+        display none
+  .icon-close
+    font-size 14px
+    vendor('text-stroke-width', 2px)
+    color red-color
+    right 17px
+    position absolute
+    top 9px
+    display none
+  .save-controls-removed
+    color red-color
+    font-size 13px
+    font-weight bold
+    font-style italic
+    float right
+    display none
 
 .save-controls-drop-down-menu-item
   transition top 0.3s linear menu-delay

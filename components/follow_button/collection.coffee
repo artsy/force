@@ -1,12 +1,11 @@
-_         = require 'underscore'
-sd        = require('sharify').data
-Backbone  = require 'backbone'
-Follow    = require './model.coffee'
-{ API_URL } = require('sharify').data
-{ Fetch } = require 'artsy-backbone-mixins'
+_             = require 'underscore'
+sd            = require('sharify').data
+Backbone      = require 'backbone'
+{ API_URL }   = require('sharify').data
+{ Fetch }     = require 'artsy-backbone-mixins'
+Follow        = require './model.coffee'
 
 module.exports = class Following extends Backbone.Collection
-
   _.extend @prototype, Fetch(API_URL)
 
   kind: 'artist'
@@ -56,36 +55,51 @@ module.exports = class Following extends Backbone.Collection
   # Optimistically add the Follow to the Following collection
   # Augment error with inverse operation
   follow: (id, options = {}) ->
-    error = options.error
-    options.error = (model, response, options) =>
+    options.error = _.wrap options.error, (error, model, response, options) =>
       @remove model
-      error(model, response, options) if error
+      error?()
 
-    success = options.success
-    options.success = (model, response, options) =>
+    options.success = _.wrap options.success, (success, model, response, options) =>
       model.set kind: @kind
       @add model, merge: true
-      success?(model, response, options)
+      success?()
+
     follow = new Follow null, kind: @kind
 
-    data = { notes: options?.notes, access_token: options?.access_token }
+    data = _.pick options, 'notes', 'access_token'
     data["#{@kind}_id"] = id
 
-    follow.save data, options
     # Set a nested id so it can be found optimistically
     follow.set @kind, id: id
-
     @add follow
+    follow.save data, options
 
   # Optimistically remove the Follow from the Following collection
   # Augment error with inverse operation
   unfollow: (id, options = {}) ->
-    error = options.error
-    options.error = (model, repsponse, options) =>
+    options.error = _.wrap options.error, (error, model, repsponse, options) =>
       @add model
-      error(model, repsponse, options) if error
+      error?()
 
     follow = @findByModelId id
-    follow.destroy options
-
     @remove follow
+    follow?.destroy options
+
+  followAll: (ids, options = {}) ->
+    ids = [ids] unless _.isArray ids
+
+    options.success = _.wrap options.success, (success, model, response, options) =>
+      @set _.map response, (attributes) =>
+        new Follow attributes, kind: @kind
+      success?()
+
+    new Backbone.Model().save null,
+      _.extend options, url: @url(), data: $.param('profile_id[]': ids)
+
+  # There's no bulk unfollow endpoint yet
+  unfollowAll: (ids, options = {}) ->
+    ids = [ids] unless _.isArray ids
+    unfollows = _.map ids, (id) => @unfollow id
+    @remove unfollows # Optimistically remove
+    # This is only used on the client for now
+    $.when.apply(null, unfollows).then(options.success, options.error)

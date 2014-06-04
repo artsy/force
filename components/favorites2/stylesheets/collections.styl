@@ -2,6 +2,7 @@
 
 cover-width = 230px
 cover-offset = 10px
+cover-margin = 0 50px 50px 20px
 
 .favorites2-collections
   position relative
@@ -10,7 +11,7 @@ cover-offset = 10px
 
 .favorites2-collection
   display inline-block
-  margin 0 50px 50px 20px
+  margin cover-margin
   cursor pointer
   position relative
   text-decoration none
@@ -60,7 +61,8 @@ for i in 1 2 3
   margin 0
   position relative
   cursor pointer
-  margin-left 20px
+  margin cover-margin
+  margin-left 10px
 
 .favorites2-new-collection-icon
   width 74px
