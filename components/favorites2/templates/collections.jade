@@ -10,7 +10,7 @@ for collection, i in collections
         li.favorites2-empty-cover
       else
         for artwork in collection.artworks.first(3)
-          li( style="background-image: url(#{artwork.defaultImageUrl('tall')})")
+          li( style="background-image: url(#{artwork.defaultImageUrl('square')})")
     unless collection.get('id') == 'saved-artwork'
       button.favorites2-edit Edit
     .favorites2-collection-title!= collection.get('name')
