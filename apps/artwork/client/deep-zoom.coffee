@@ -62,7 +62,7 @@ module.exports = class DeepZoomView extends Backbone.View
 
       @postRender()
 
-    this
+    @
 
   postRender: ->
     @setupViewer()
@@ -104,7 +104,8 @@ module.exports = class DeepZoomView extends Backbone.View
   # Close by just returning to the base artwork route
   # The router will call #remove on this view
   return: ->
-    Backbone.history.navigate "/artwork/#{@artwork.id}", trigger: true, replace: true
+    Backbone.history.navigate @artwork.href(), trigger: true, replace: true
+    false
 
   # Invoked by the router
   remove: ->

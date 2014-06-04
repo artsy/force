@@ -1,0 +1,11 @@
+.related-posts.is-vertical
+  for post in posts
+    - var profile = post.profile()
+    a.related-post-content( href="/post/#{post.id}" )
+      if post.defaultImage()
+        .hoverable-image-link
+          .hoverable-image.is-four-three( style="background-image: url(#{post.defaultImage().imageUrlFor(300, 300)})" )
+      if profile.get('owner')
+        .rpc-author By #{profile.get('owner').name}
+       if post.get('title')
+        .rpc-title!= post.get('title')

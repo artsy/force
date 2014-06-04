@@ -1,6 +1,4 @@
-h2.avant-garde-header-center
-  | Related Artworks
-
+h2.avant-garde-header-center Related Artworks
 nav.layered-search-layers
   for layer in layers.models
     a.layered-search-layer-button.faux-underline-hover( data-id= layer.id )
@@ -8,7 +6,6 @@ nav.layered-search-layers
         | Works from #{layer.get('fair').get('name')}
       else
         != layer.get('name')
-
 #layered-search-results.artwork-columns
   #layered-search-results-container: .loading-spinner
   #layered-search-layer-gene-button-container

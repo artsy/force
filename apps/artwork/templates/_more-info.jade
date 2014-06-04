@@ -1,19 +1,30 @@
-if artwork.get('provenance')
-  h4 Provenance
-  != artwork.mdToHtml('provenance')
-
-if artwork.get('exhibition_history')
-  h4 Exhibition History
-  != artwork.mdToHtml('exhibition_history')
-
-if artwork.get('signature')
-  h4 Signature
-  != artwork.mdToHtml('signature')
-
-if artwork.get('additional_information')
-  h4 Additional Information
-  != artwork.mdToHtml('additional_information')
-
-if artwork.get('literature')
-  h4 Literature
-  != artwork.mdToHtml('literature')
+.artwork-more-info
+  if artwork.get('provenance')
+    .avant-garde-header-small
+      .arrow-toggle
+      | Provenance
+    .artwork-blurb.artwork-provenance.is-hidden!= artwork.mdToHtml('provenance')
+  
+  if artwork.get('exhibition_history')
+    .avant-garde-header-small
+      .arrow-toggle
+      | Exhibition History
+    .artwork-blurb.artwork-exhibition-history.is-hidden!= artwork.mdToHtml('exhibition_history')
+  
+  if artwork.get('signature')
+    .avant-garde-header-small
+      .arrow-toggle 
+      | Signature
+    .artwork-blurb.artwork-signature.is-hidden!= artwork.mdToHtml('signature')
+  
+  if artwork.get('additional_information')
+    .avant-garde-header-small
+      .arrow-toggle
+      | Additional Information
+    .artwork-blurb.artwork-additional-information.is-hidden!= artwork.mdToHtml('additional_information')
+  
+  if artwork.get('literature')
+    .avant-garde-header-small 
+      .arrow-toggle
+      | Literature
+    .artwork-blurb.artwork-literature.is-hidden!= artwork.mdToHtml('literature')

@@ -1,5 +1,4 @@
 @import '../../../components/stylus_lib'
-@import './more-info'
 @import './share'
 @import './deep-zoom'
 @import './circle-buttons'
@@ -19,8 +18,10 @@ artwork-detail-item-height  = 36px
     border-top 1px solid gray-lighter-color
     h2
     h3
-      margin 10px 0
+      margin 12px 0px 27px
       font-size 15px
+    h2 a
+      text-decoration none
 
 .artwork-container
   clearfix()
@@ -31,9 +32,6 @@ artwork-detail-item-height  = 36px
 .artwork-image-zoom
   cursor -moz-zoom-in
   cursor -webkit-zoom-in
-
-.artwork-more-info
-  display none
 
 .artwork-overview
   float left
@@ -49,6 +47,12 @@ artwork-detail-item-height  = 36px
     padding-left 20px
     #artwork-feature-navigation
       opacity 0 !important
+
+.artwork-auction-results-button
+  margin-right 24px
+
+.related-posts-add-button.avant-garde-header-small
+  padding-left 0px
 
 #artwork-feature-navigation
   position absolute
@@ -86,7 +90,7 @@ artwork-detail-item-height  = 36px
     border-color purple-color
 
 .artwork-image-actions
-  padding 10px
+  padding 20px 0px 40px
 
 .artwork-detail
   float right
@@ -306,21 +310,32 @@ artwork-detail-item-height  = 36px
 // Below the fold
 .ari-left
 .ari-right
-  padding 0 10px
-  text-align center
+  display inline-block
+  vertical-align top
+  text-align left
 .ari-left
-  width 60%
-  float left
-  padding-right 5%
+  width 65%
+  max-width 660px
+  height 100%
+  .posts-add-button
+    margin-left 10px
 .ari-right
-  width 40%
-  float right
+  width 30%
+  padding-left 50px
+  margin-left: 50px
+  border-left 1px solid gray-lighter-color
+.ari-container
+  width: 86%
+  text-align center
+  margin 0px auto
 
 // Bio and related works
 .artwork-artist
   transition opacity 0.5s
   &[data-state='pending']
     opacity 0
+  .avant-garde-header-center a
+    text-decoration none
 
 .artwork-artist-blurb
 .artwork-blurb
@@ -329,45 +344,25 @@ artwork-detail-item-height  = 36px
   line-height 1.5
   text-align left
 
-.artwork-artist-blurb-link
-  display inline-block
-  text-align center
-  avant-garde()
-  font-size 13px
-  text-decoration none
-
-#artwork-artist-artworks-container
-  opacity 0
-  transition opacity 1s
-  &.is-loaded
-    opacity 1
-.artwork-artist-artworks
-  margin 20px 0
-  // Image height + margin
-  height 135px
-  overflow hidden
-.artwork-artist-artwork
-  position relative
-  display inline-block
-  max-width 50%
-  margin 5px 10px
-  overflow hidden
-  > img
-    height 125px
-  &:hover
-    .overlay-button-save
-      opacity 1
-  .overlay-button-save
-    opacity 0
-    &[data-state='saved']
-      opacity 1
-
-#artwork-related-show-section
+#artwork-related-show-section, #artist-artworks-section
   display none
   opacity 0
   transition opacity 1s
   &.is-fade-in
     opacity 1
+
+#artist-artworks-section
+  .artworks-list
+    margin-top 20px
+  .artist-link-container
+    text-align center
+  .faux-underline-hover-large
+    display inline-block
+    text-align center
+    avant-garde()
+    font-size 13px
+    text-decoration none
+
 .ars-metadata
   position relative
   margin 20px 0
@@ -389,7 +384,8 @@ artwork-detail-item-height  = 36px
   &[data-state='fade-in']
     opacity 1
   h2
-    margin 20px 0 !important
+    a
+      text-decoration none
 
 .monocle-zoom
   width 256px
@@ -400,3 +396,30 @@ artwork-detail-item-height  = 36px
   background-repeat no-repeat
   background-color white
   box-shadow 0 10px 24px rgba(0,0,0,0.12)
+
+// TODO: Make a component if reused
+.arrow-toggle
+  width 0
+  height 0
+  border-top 4px solid transparent
+  border-bottom 4px solid transparent
+  border-left 8px solid black
+  display inline-block
+  transition transform .3s
+  margin-right 5px
+  &.active
+    transform rotate(90deg)
+
+.artwork-more-info
+  .avant-garde-header-small
+    cursor: pointer
+  .artwork-blurb
+    transition opacity .6s
+    opacity 1
+    height 100%
+    overflow hidden
+    margin 10px 0px
+    &.is-hidden
+      margin: 0px
+      opacity 0
+      height 0px

@@ -105,45 +105,6 @@
       a( href= artwork.get('website'), target='_blank' )
         i.icon-website
         | Visit Website
-    if artwork.isHangable()
-      //- Initial state:
-      a.artwork-view-in-room-link(
-        href="/artwork/#{artwork.id}/view-in-room", data-client, rel='nofollow'
-      )
-        i.icon-view-in-room
-        | View in Room
-
-      //- Toggled state:
-      a.artwork-exit-view-in-room-link.is-hidden(
-        href="/artwork/#{artwork.id}", data-client, rel='nofollow'
-      )
-        i.icon-artwork
-        | Artwork View
-    if artwork.hasMoreInfo()
-      //- Initial state:
-      a.artwork-more-info-link(
-        href="/artwork/#{artwork.id}/more-info", data-client, rel='nofollow'
-      )
-        i.icon-info
-        | More Info
-      //- Toggled state:
-      a.artwork-exit-more-info-link.is-hidden(
-        href="/artwork/#{artwork.id}", data-client, rel='nofollow'
-      )
-        i.icon-info
-        | Exit More Info
-    if artist
-      a.artwork-artist-follow-button
-        i.icon-follow
-        span
-          //- Text label is handled in the CSS
-    if artwork.isComparable()
-      a.artwork-auction-results-button(
-        href="/artwork/#{artwork.id}/auction-results"
-      )
-        i.icon-auction
-        | Auction Results
-        sup Beta
     if artwork.isDownloadable()
       a.artwork-download-button(
         href= artwork.defaultImageUrl('larger'), target='_blank', download= artwork.downloadableFilename()

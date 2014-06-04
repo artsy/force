@@ -39,6 +39,31 @@
       max-width 75%
       margin auto
 
+  // Vertical layout
+  &.is-vertical
+    height: 100%
+    .related-post-content
+      text-decoration none
+      display block
+    .hoverable-image-link
+      width: 100%
+      height: 100%
+    .rpc-thumbnail
+      width 100%
+      height 100%
+      background-size cover
+      background-position center center
+      transition opacity 0.5s
+    .rpc-title
+      font-size: 24px
+      line-height: 130%
+    .rpc-author
+      margin 10px 0px 5px
+      avant-garde()
+      font-size 11px
+      line-height 1.3
+      overflow ellipsis
+
   // List layout
   &.is-list
     .related-post

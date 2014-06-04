@@ -5,6 +5,7 @@ ShareView                 = require './share.coffee'
 Transition                = require '../../../components/mixins/transition.coffee'
 CurrentUser               = require '../../../models/current_user.coffee'
 SaveButton                = require '../../../components/save_button/view.coffee'
+AddToPostButton           = require '../../../components/related_posts/add_to_post_button.coffee'
 RelatedPostsView          = require '../../../components/related_posts/view.coffee'
 analytics                 = require '../../../lib/analytics.coffee'
 acquireArtwork            = require('../../../components/acquire/view.coffee').acquireArtwork
@@ -18,8 +19,8 @@ Auction                   = require './mixins/auction.coffee'
 RelatedShowView           = require './related-show.coffee'
 qs                        = require 'querystring'
 { parse }                 = require 'url'
+ArtworkColumnsView        = require '../../../components/artwork_columns/view.coffee'
 
-artistArtworksTemplate      = -> require('../templates/_artist-artworks.jade') arguments...
 detailTemplate              = -> require('../templates/_detail.jade') arguments...
 auctionPlaceholderTemplate  = -> require('../templates/auction_placeholder.jade') arguments...
 
@@ -37,6 +38,14 @@ module.exports = class ArtworkView extends Backbone.View
     'click .artwork-auction-results-button' : 'trackComparable'
     'change .aes-radio-button'              : 'selectEdition'
     'click .artwork-buy-button'             : 'buy'
+    'click .artwork-more-info .avant-garde-header-small' : 'toggleMoreInfo'
+
+  toggleMoreInfo: (event) ->
+    $target = $(event.target)
+    $target.find('.arrow-toggle').toggleClass('active')
+
+    $blurb = $target.next()
+    $blurb.toggleClass 'is-hidden'
 
   initialize: (options) ->
     { @artwork, @artist } = options
@@ -44,6 +53,7 @@ module.exports = class ArtworkView extends Backbone.View
     @checkQueryStringForAuction()
     @abTestEmbeddedInquiryForm()
     @setupRelatedPosts()
+    @setupPostButton()
     @setupCurrentUser()
     @setupArtistArtworks()
     @setupFollowButton()
@@ -172,18 +182,26 @@ module.exports = class ArtworkView extends Backbone.View
   setupArtistArtworks: ->
     return unless @artist?.get('artworks_count') > 1
     @listenTo @artist.artworks, 'sync', @renderArtistArtworks
-    @artist.artworks.fetch data: size: 5, published: true
+    @artist.artworks.fetch
+      published: true
 
   renderArtistArtworks: ->
     # Ensure the current artwork is not in the collection
     @artist.artworks.remove @artwork
-    return unless @artist.artworks.length
-    @$('.artwork-artist').attr 'data-state', 'complete'
-    @$('#artwork-artist-artworks-container').
-      addClass('is-loaded').
-      html(artistArtworksTemplate artworks: @artist.artworks)
 
-    @setupArtistArtworkSaveButtons @artist.artworks
+    return unless @artist.artworks.length
+    @$('#artist-artworks-section').addClass('is-fade-in').show()
+
+    new ArtworkColumnsView
+      el             : @$('#artist-artworks-section .artworks-list')
+      collection     : @artist.artworks
+      allowDuplicates: true
+      numberOfColumns  : 4
+      gutterWidth      : 40
+      maxArtworkHeight : 400
+      isOrdered        : false
+      seeMore          : false
+      artworkSize      : 'tall'
 
     trackArtworkImpressions @artist.artworks.models, @$('#artwork-artist-artworks-container')
 
@@ -212,12 +230,20 @@ module.exports = class ArtworkView extends Backbone.View
     @saved.addRepoArtworks @__saved__
     @saved.syncSavedArtworks()
 
+  setupPostButton: ->
+    new AddToPostButton
+      el: @$('.ari-left')
+      model: @artwork
+      modelName: 'artwork'
+
   setupRelatedPosts: ->
     new RelatedPostsView
       el: @$('#artwork-artist-related-posts-container')
-      numToShow: 2
       model: @artwork
       modelName: 'artwork'
+      mode: 'vertical'
+      numToShow: 2
+      canBeEmpty: false
 
   setupFeatureNavigation: (options) ->
     new FeatureNavigationView
