@@ -31,7 +31,9 @@ module.exports =
     mediator.on 'inquiry:send', (=> @send()), this
 
   displayAfterInquiryFlow: ->
-    not hasSeen('after-inquiry') and @eligibleForAfterInquiryFlow
+    @eligibleForAfterInquiryFlow and
+    @user.id? and # Enable only for logged in users for the time being
+    not hasSeen('after-inquiry')
 
   send: ->
     options = _.pick (@inquiryOptions or {}), 'success', 'error'
