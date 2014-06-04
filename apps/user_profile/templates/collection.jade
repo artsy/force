@@ -7,16 +7,18 @@ append locals
   - assetPackage = 'user_profile'
 
 block body
+  - isUser = user && user.get('id') == profile.get('owner').id
   #user-profile-collection
     header
       a.contextual-return-link(
-        href=(user && user.get('id') == profile.get('owner').id ?
-              '/favorites' :
-              '/' + profile.get('id') + '/favorites')
+        href=(isUser ? '/favorites' : '/' + profile.get('id') + '/favorites')
       )
         i.icon-chevron-small-left
         | Back to works
       h1.garamond-header-center!= collection.get('name')
+      nav#user-profile-right
+        if isUser
+          a#user-profile-right-edit Edit
     #user-profile-collection-artworks.main-layout-container
     #user-profile-collection-artworks-spinner
       .loading-spinner

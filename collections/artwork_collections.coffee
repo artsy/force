@@ -45,6 +45,9 @@ module.exports = class ArtworkCollections extends Backbone.Collection
 
   model: ArtworkCollection
 
+  comparator: (col) ->
+    if col.get('id') is 'saved-artwork' then 0 else 1
+
   initialize: (models, { @user }) ->
     @on 'add', (col) => col.initArtworks()
 

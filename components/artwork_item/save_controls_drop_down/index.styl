@@ -137,8 +137,6 @@ max-items = 20
   .save-controls-drop-down-new
     position relative
     transition background 0.3s
-    &:hover
-      background gray-darkest-color
     &.is-loading
       background purple-color
       .loading-spinner-white
@@ -214,6 +212,8 @@ max-items = 20
   transition top 0.3s linear menu-delay
   overflow ellipsis
   cursor pointer
+  &:hover
+    background gray-darkest-color
 
 for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20
   .save-controls-drop-down-menu-item:nth-child({i})

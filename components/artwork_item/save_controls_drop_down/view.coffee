@@ -15,12 +15,15 @@ module.exports = class SaveControls extends Backbone.View
   renderCollections: =>
     @$('.save-controls-drop-down-menu-item:not(.save-controls-drop-down-new)').remove()
     @$('.save-controls-drop-down-menu nav').prepend @collections.map((collection) ->
-      "<div class='save-controls-drop-down-menu-item #{if collection.get('id') is 'saved-artwork' then 'is-active' else ''}'>
+      """
+      <div class='save-controls-drop-down-menu-item' \
+           style='#{if collection.get('id') is 'saved-artwork' then 'display: none' else ''}'>
         #{collection.get('name')}
         <span class='icon-check'></span>
         <span class='icon-close'></span>
         <span class='save-controls-removed'>removed</span>
-      </div>"
+      </div>
+      """
     ).join ''
 
   closeOnClickOff: (e) =>
@@ -60,10 +63,10 @@ module.exports = class SaveControls extends Backbone.View
     return @showSignupModal() unless @user
     @$el.attr 'data-state', 'saving'
     @collections.fetch success: =>
-      @addToCollection @collections.first()
+      @$el.attr 'data-state', 'saved'
+      @addToCollection @collections.get('saved-artwork')
       $(document).on 'click', @closeOnClickOff
       $(window).one 'scroll', @rollup
-      @$el.attr 'data-state', 'saved'
       @rollupTimeout = setTimeout @rollup, 6000
 
   onAddToCollection: (e) ->

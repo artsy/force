@@ -95,13 +95,13 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
     'click .favorites2-new-collection': 'openNewModal'
     'click .favorites2-edit': 'openEditModal'
 
-  openNewModal: ->
+  openNewModal: (e) ->
+    e.preventDefault()
     collection = new ArtworkCollection user_id: @user.get('id')
     new EditCollectionModal width: 500, collection: collection
     collection.once 'request', => @favorites.collections.add collection
-    false
 
   openEditModal: (e) ->
-    collection = @favorites.collections.at($(e.currentTarget).parent().index())
+    e.preventDefault()
+    collection = @favorites.collections.at($(e.currentTarget).parent().index() - 1)
     new EditCollectionModal width: 500, collection: collection
-    false
