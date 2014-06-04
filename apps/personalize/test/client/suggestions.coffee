@@ -8,23 +8,18 @@ Items             = require '../../../../collections/items'
 Profile           = require '../../../../models/profile'
 { fabricate }     = require 'antigravity'
 { resolve }       = require 'path'
-SuggestionsView   = benv.requireWithJadeify resolve(__dirname, '../../client/views/suggestions'), ['suggestedTemplate']
 Followable        = require '../../client/mixins/followable'
 
-module.exports = class TestView extends SuggestionsView
-  _.extend @prototype, Followable
+SuggestionsView   = benv.requireWithJadeify resolve(__dirname, '../../client/views/suggestions'), ['suggestedTemplate']
+GalleriesView     = benv.requireWithJadeify resolve(__dirname, '../../client/views/galleries'), ['template']
 
-  template: ->
-    '<div id="personalize-suggestions-container"><div class="personalize-skip">Skip</div></div>'
-
-  key:          'personalize:suggested-galleries'
-  restrictType: 'PartnerGallery'
-
+# Hack for inherited compiled jade templates
+GalleriesView::suggestedTemplate = SuggestionsView::suggestedTemplate
 
 describe 'SuggestionsView', ->
   before (done) ->
     benv.setup =>
-      benv.expose { $: benv.require 'jquery' }
+      benv.expose $: benv.require 'jquery'
       Backbone.$ = $
       done()
 
@@ -32,91 +27,112 @@ describe 'SuggestionsView', ->
     benv.teardown()
 
   beforeEach ->
-    @user   = new CurrentUser fabricate 'user'
+    @user   = new CurrentUser fabricate 'user', location: city: 'New York'
     @state  = new PersonalizeState user: @user
-    @view   = new TestView(state: @state, user: @user, followKind: 'artist')
+    @view   = new GalleriesView(state: @state, user: @user, followKind: 'artist')
 
-    # Setup suggestions
-    @view.$suggestions = $('<div id="personalize-suggestions"></div>')
-    items   = _.times 4, ->
-      profile     = new Profile(fabricate 'profile')
-      profile.id  = _.uniqueId(profile.id)
-      profile
-
-    items = new Items items, { id: 'foobar', item_type: 'Profile' }
-    @view.suggestedSets.add new Backbone.Model { key: @view.key, items: items }
+    sinon.stub GalleriesView::, 'setupSearch'
+    profiles = _.times 4, -> fabricate('partner_profile', id: _.uniqueId 'profile_')
+    sinon.stub(Backbone, 'sync').yieldsTo('success', profiles)
 
     @view.render()
 
-  describe '#rows', ->
-    it 'slices suggestions into a multi-dimensional array, each of n length', ->
-      @view.suggestedSets.trigger 'sync:complete'
-      @view.suggestions.length
-      rows = @view.rows 2
-      rows.length.should.equal 2
-      rows[0].length.should.equal 2
-      rows[1].length.should.equal 2
+  afterEach ->
+    Backbone.sync.restore()
+    @view.setupSearch.restore()
 
-  describe '#setupSuggestions', ->
-    beforeEach ->
-      @view.suggestedSets.trigger 'sync:complete'
-      @renderSpy          = sinon.spy @view, 'renderSuggestions'
-      @_length            = @view.suggestions._events.sync.length
-      @view.$suggestions  = { append: sinon.stub(), find: sinon.stub() }
-      @view.setupSuggestions()
-
-    afterEach ->
-      @view.stopListening @view.suggestions, 'sync'
-      @view.renderSuggestions.restore()
-
-    it 'sets the data state of the container to loaded', ->
-      @view.$('#personalize-suggestions-container').data('state').should.equal 'loaded'
-
-    it 'assigns suggestions', ->
-      @view.suggestions.length.should.be.ok
-
-    it 'adds a listener for the sync event', ->
-      @view.suggestions._events.sync.length.should.equal @_length + 1
-
-    it 'renders the suggestions', ->
-      @renderSpy.called.should.be.ok
-
-  describe '#renderSuggestions', ->
-    it 'renders the suggestions', ->
-      @view.suggestedSets.trigger 'sync:complete'
-      @view.$suggestions.find('.personalize-suggestion-row').length.should.equal 1
-      @view.$suggestions.find('.personalize-suggestion.is-profile').length.should.equal 4
-      @view.suggestedSets.trigger 'sync:complete'
-      @view.$suggestions.find('.personalize-suggestion-row').length.should.equal 2
-      @view.$suggestions.find('.personalize-suggestion.is-profile').length.should.equal 8
-
-    it 'syncs the new ids with the following', ->
-      syncSpy = sinon.spy @view.following, 'syncFollows'
-      @view.suggestedSets.trigger 'sync:complete'
-      syncSpy.args[0][0].should.eql @view.suggestions.pluck('id')
-      @view.following.syncFollows.restore()
-
-    it 'should be able to find corresponding els', ->
-      @view.suggestedSets.trigger 'sync:complete'
-      lengths = @view.suggestions.map (model) =>
-        @view.$suggestions.find(".follow-button[data-id='#{model.id}']").length
-      _.each lengths, (length) -> length.should.be.ok
-
-    it 'creates corresponding FollowButton views', ->
-      @view.suggestedSets.trigger 'sync:complete'
-      views = @view.suggestions.map (model) =>
-        @view.followButtonViews[model.id].constructor.name
-      views.length.should.equal @view.suggestions.length
-      _.uniq(views)[0].should.equal 'FollowButton'
-
-    it 'sets up a listener for setting the skip label', ->
-      @view.suggestedSets.trigger 'sync:complete'
-      @view.__labelSet__?.should.not.be.ok
-      @view.$('.personalize-skip').text().should.equal 'Skip'
-      @view.$suggestions.find('.follow-button').first().click()
-      @view.__labelSet__.should.be.ok
-      @view.$('.personalize-skip').text().should.equal 'Next'
+  describe '#initialize', ->
+    it 'sets up following with the appropriate kind', ->
+      @view.following.kind.should.equal 'profile'
 
   describe '#render', ->
     it 'renders the template', ->
-      @view.$el.html().should.include @view.template()
+      html = @view.$el.html()
+      html.should.include 'Follow galleries on Artsy'
+      html.should.include 'Receive notifications on upcoming shows and fairs'
+      html.should.include 'Type your favorite gallery name'
+      html.should.include 'Below are galleries we think you’ll enjoy based on artists you follow and your location,'
+      html.should.include 'New York'
+
+  describe '#ensureLocation', ->
+    beforeEach ->
+      sinon.stub @view.user, 'approximateLocation'
+    afterEach ->
+      @view.user.approximateLocation.restore()
+
+    it 'ensures the user has a location', ->
+      @view.user.approximateLocation.called.should.be.false
+      @view.user.unset 'location'
+      @view.ensureLocation()
+      @view.user.approximateLocation.called.should.be.true
+      @view.user.set 'location', city: 'Susquehanna'
+      @view.user.approximateLocation.args[0][0].success()
+      @view.$el.html().should.include 'Susquehanna'
+
+  describe '#setup', ->
+    beforeEach ->
+      sinon.stub @view.following, 'followAll'
+      sinon.stub @view.following, 'unfollowAll'
+      @view.setup()
+
+    afterEach ->
+      @view.following.followAll.restore()
+      @view.following.unfollowAll.restore()
+
+    it 'fetches the suggestions', ->
+      Backbone.sync.args[0][0].should.equal 'read'
+      Backbone.sync.args[0][1].url.should.include '/api/v1/me/suggested/profiles'
+
+    describe '#renderSuggestions', ->
+      it 'renders the suggestions', ->
+        html = @view.$el.html()
+        html.should.include 'Gagosian Gallery'
+        html.should.include 'The J. Paul Getty Trust is a cultural and philanthropic institution'
+        @view.$('.grid-item').length.should.equal 4
+        @view.$('.follow-button').length.should.equal 4
+
+      it 'should be able to find corresponding els', ->
+        @view.suggestions.map (model) =>
+          @view.$suggestions.find(".follow-button[data-id='#{model.id}']").length.should.equal 1
+
+      it 'sets the data state of the container to loaded', ->
+        @view.$container.data('state').should.equal 'loaded'
+
+      it 'creates corresponding FollowButton views', ->
+        views = @view.suggestions.map (model) =>
+          @view.followButtonViews[model.id].constructor.name
+        views.length.should.equal @view.suggestions.length
+        _.uniq(views)[0].should.equal 'FollowButton'
+
+      it 'sets up a listener for setting the skip label', ->
+        @view.__labelSet__?.should.not.be.ok
+        @view.$('.personalize-skip').text().should.equal 'Skip'
+        @view.$suggestions.find('.follow-button').first().click()
+        @view.__labelSet__.should.be.ok
+        @view.$('.personalize-skip').text().should.equal 'Next'
+
+    describe '#unfollowAll', ->
+      it 'unfollows anything in the following collection', ->
+        @view.following.follow 'foo'
+        @view.following.follow 'bar'
+        @view.following.unfollowAll.called.should.be.false
+        @view.$('#personalize-suggestions-unfollow-all').click()
+        @view.following.unfollowAll.called.should.be.true
+        @view.following.unfollowAll.args[0][0].should.eql ['foo', 'bar']
+
+    describe '#remove', ->
+      it 'tears down the view when there are extra things to tear down', ->
+        @view.searchBarView       = remove: sinon.stub()
+        @view.locationRequests    = [abort: sinon.stub()]
+        @view.followButtonViews   = { view: remove: sinon.stub() }
+        @view.remove()
+        @view.searchBarView.remove.called.should.be.true
+        @view.locationRequests[0].abort.called.should.be.true
+        @view.followButtonViews.view.remove.called.should.be.true
+
+      it 'tears down the view when there are not extra things to tear down', (done) ->
+        @view.searchBarView       = undefined
+        @view.locationRequests    = []
+        @view.followButtonViews   = undefined
+        @view.remove()
+        done()

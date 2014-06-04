@@ -1,22 +1,8 @@
-a.avant-garde-button-white.personalize-skip Skip
+- headerKind        = 'museums & institutions'
+- kind              = 'museums'
+- placeholder       = 'Type your favorite museum name'
+- aside             = 'Receive notifications on upcoming shows'
+- displayLocation   = false
+- pageable          = true
 
-header.personalize-header
-  h2= state.stepDisplay()
-  h1 Follow museums &amp; institutions on Artsy
-  aside Receive notifications for upcoming shows
-
-section.personalize-step( data-step='institutions' )
-  #personalize-search-container
-    input#personalize-search.bordered-input.is-block(
-      type='text', placeholder!='Type your favorite museum name', autofocus=!isTouchDevice
-    )
-    #personalize-search-spinner: .loading-spinner-small
-
-  #personalize-followed
-
-#personalize-suggestions-container
-  #personalize-suggestions: .loading-spinner
-
-  .personalize-suggestions-more-container
-    a.avant-garde-button-white.personalize-suggestions-more
-      | Show more institutions
+include ./suggestions.jade

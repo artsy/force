@@ -73,6 +73,9 @@ describe 'Geo Mixin', ->
       @user.get('location').state.should.equal 'My state'
       @user.get('location').coordinates.should.eql [0, 0]
 
+    it 'accepts a success callback', (done) ->
+      @user.approximateLocation success: done
+
   describe '#setLocation', ->
     it 'should allow a user to set a location object that Google returns', ->
       @user.setLocation googleyAddress

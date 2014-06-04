@@ -23,8 +23,6 @@ describe 'state', ->
       @state.next()
       @state.get('current_step').should.equal 'artists'
       @state.next()
-      @state.get('current_step').should.equal 'location'
-      @state.next()
       @state.get('current_step').should.equal 'galleries'
       @state.next()
       @state.get('current_step').should.equal 'institutions'
@@ -41,8 +39,6 @@ describe 'state', ->
       @state.next()
       @state.get('current_step').should.equal 'artists'
       @state.next()
-      @state.get('current_step').should.equal 'location'
-      @state.next()
       @state.get('current_step').should.equal 'galleries'
       @state.next()
       @state.get('current_step').should.equal 'institutions'
@@ -52,8 +48,6 @@ describe 'state', ->
       @state.on 'done', -> done()
       @state.set current_level: 1
       @state.get('current_step').should.equal 'collect'
-      @state.next()
-      @state.get('current_step').should.equal 'location'
       @state.next()
       @state.get('current_step').should.equal 'galleries'
       @state.next()
@@ -81,20 +75,13 @@ describe 'state', ->
         @user.set price_range: 'existy'
         @state.completedSteps().should.eql ['price_range']
 
-      it 'handles a user who has set a location', ->
-        @user.hasLocation = -> true
-        @state.completedSteps().should.eql ['location']
-
       it 'handles some combination of completed steps', ->
         @user.set collector_level: 2
-        @user.hasLocation = -> true
-        @state.completedSteps().should.eql ['collect', 'location']
+        @state.completedSteps().should.eql ['collect']
 
     it 'memoizes the value so that it is unaffected by user state modifications', ->
       @state.completedSteps().should.be.empty
       @user.set collector_level: 2
-      @state.completedSteps().should.be.empty
-      @user.hasLocation = -> true
       @state.completedSteps().should.be.empty
 
   describe '#steps', ->
