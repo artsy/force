@@ -1,12 +1,21 @@
 CurrentUser = require '../../models/current_user.coffee'
-{ splitTest } = require '../../lib/analytics.coffee'
-sharify = require 'sharify'
 user = CurrentUser.orNull()
 
 return module.exports = require './save_controls/view.coffee' unless user
 
+{ splitTest } = require '../../lib/analytics.coffee'
+sharify = require 'sharify'
+Cookies = require 'cookies-js'
+
+window.setSaveControls = (path) ->
+  Cookies.set 'save-controls', path
+  location.reload()
+
+window.clearSaveControls = ->
+  Cookies.set 'save-controls', null
+
 if 'Set Management' in user.get('lab_features')
-  splitTestPath = splitTest 'ab:save:controls',
+  splitTestPath = Cookies.get('save-controls') or splitTest 'ab:save:controls',
     'drop down': 1 / 3
     'two button': 1 / 3
     'one button': 1 / 3
