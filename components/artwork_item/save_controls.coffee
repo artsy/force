@@ -1,10 +1,11 @@
 CurrentUser = require '../../models/current_user.coffee'
-{ splitTest } = require '../../lib/analytics.coffee'
-sharify = require 'sharify'
 user = CurrentUser.orNull()
-Cookies = require 'cookies-js'
 
 return module.exports = require './save_controls/view.coffee' unless user
+
+{ splitTest } = require '../../lib/analytics.coffee'
+sharify = require 'sharify'
+Cookies = require 'cookies-js'
 
 window.setSaveControls = (path) ->
   Cookies.set 'save-controls', path
