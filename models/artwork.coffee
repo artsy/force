@@ -326,6 +326,12 @@ module.exports = class Artwork extends Backbone.Model
   showMoreInfo: ->
     not _.isFunction @saleMessage
 
+  showActionsList: (user) ->
+    @get('website') or @isDownloadable() or (user and user.isAdmin())
+
+  hasLeftInfoSection: ->
+    @get('blurb') or @hasMoreInfo() or @isComparable()
+
   # Sets up related collections and makes them available
   # under an object so we can access/iterate over them later
   #

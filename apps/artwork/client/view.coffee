@@ -232,7 +232,7 @@ module.exports = class ArtworkView extends Backbone.View
 
   setupPostButton: ->
     new AddToPostButton
-      el: @$('.ari-left')
+      el: @$el
       model: @artwork
       modelName: 'artwork'
 
@@ -244,6 +244,9 @@ module.exports = class ArtworkView extends Backbone.View
       mode: 'vertical'
       numToShow: 2
       canBeEmpty: false
+
+    @$('.ari-right').css
+      'min-height': @$('.ari-left').height()
 
   setupFeatureNavigation: (options) ->
     new FeatureNavigationView
