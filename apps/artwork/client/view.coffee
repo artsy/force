@@ -74,12 +74,14 @@ module.exports = class ArtworkView extends Backbone.View
       @deltaTrackPageView fair
     @on 'related:sales', (sale) ->
       @sale = new Sale sale.attributes
+      @$('#artist-artworks-section').remove()
       @belowTheFoldView.setupSale
         sale        : @sale
         saved       : @saved
         currentUser : @currentUser
       @setupAuction @sale if @sale.isAuction()
     @on 'related:shows', (show) ->
+      @$('#artist-artworks-section').remove()
       new RelatedShowView
         el      : @$('#artwork-related-show-section')
         model   : show
@@ -232,11 +234,12 @@ module.exports = class ArtworkView extends Backbone.View
 
   setupPostButton: ->
     new AddToPostButton
-      el: @$('.ari-left')
+      el: @$el
       model: @artwork
       modelName: 'artwork'
 
   setupRelatedPosts: ->
+    @listenTo @artwork.relatedPosts, 'sync', @handlePosts
     new RelatedPostsView
       el: @$('#artwork-artist-related-posts-container')
       model: @artwork
@@ -244,6 +247,13 @@ module.exports = class ArtworkView extends Backbone.View
       mode: 'vertical'
       numToShow: 2
       canBeEmpty: false
+
+    @$('.ari-right').css
+      'min-height': @$('.ari-left').height()
+
+  handlePosts: =>
+    if @$('.ari-left').length < 1 and @artwork.relatedPosts.length < 1
+      @$('.artwork-related-information').remove()
 
   setupFeatureNavigation: (options) ->
     new FeatureNavigationView

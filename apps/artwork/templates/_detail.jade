@@ -100,23 +100,24 @@
           href="/artwork/#{artwork.id}/inquire", data-client, rel='nofollow'
         ) Contact Artsy Specialist
 
-  nav.artwork-actions-list
-    if artwork.get('website')
-      a( href= artwork.get('website'), target='_blank' )
-        i.icon-website
-        | Visit Website
-    if artwork.isDownloadable()
-      a.artwork-download-button(
-        href= artwork.defaultImageUrl('larger'), target='_blank', download= artwork.downloadableFilename()
-      )
-        i.icon-download
-        | Download Image
-
-    //- Administrative actions
-    if user && user.isAdmin()
-      a( href="#{sd.ADMIN_URL}/artworks/artwork/#{artwork.id}", target='_blank' )
-        i.icon-edit
-        | Edit
-      a( href="#{sd.ADMIN_URL}/genome/artwork/#{artwork.id}", target='_blank' )
-        i.icon-genome
+  if artwork.showActionsList(user)
+    nav.artwork-actions-list
+      if artwork.get('website')
+        a( href= artwork.get('website'), target='_blank' )
+          i.icon-website
+          | Visit Website
+      if artwork.isDownloadable()
+        a.artwork-download-button(
+          href= artwork.defaultImageUrl('larger'), target='_blank', download= artwork.downloadableFilename()
+        )
+          i.icon-download
+          | Download Image
+  
+      //- Administrative actions
+      if user && user.isAdmin()
+        a( href="#{sd.ADMIN_URL}/artworks/artwork/#{artwork.id}", target='_blank' )
+          i.icon-edit
+          | Edit
+        a( href="#{sd.ADMIN_URL}/genome/artwork/#{artwork.id}", target='_blank' )
+          i.icon-genome
         | Genome
