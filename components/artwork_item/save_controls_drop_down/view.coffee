@@ -52,6 +52,7 @@ module.exports = class SaveControls extends Backbone.View
     @collections.fetch success: =>
       $(document).on 'click', @closeOnClickOff
       @$el.attr 'data-state', 'saved'
+      @addToCollection @collections.first()
 
   onClickItem: (e) ->
     e.preventDefault()

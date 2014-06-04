@@ -7,6 +7,7 @@ max-items = 20
   right 5px
   top 5px
   z-index 1
+  transition right grow-time
 
 .save-controls-drop-down-container .overlay-button-save
   width 40px
@@ -51,6 +52,7 @@ max-items = 20
 
 .save-controls-drop-down-container
   &[data-state='saved']
+    right -25px
     .overlay-button-save
       opacity 1
       background-color purple-color
