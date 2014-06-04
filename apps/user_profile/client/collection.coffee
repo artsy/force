@@ -4,6 +4,7 @@ Artworks = require '../../../collections/artworks.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 { ArtworkCollection } = ArtworkCollections = require '../../../collections/artwork_collections.coffee'
 { COLLECTION, PROFILE } = require('sharify').data
+EditCollectionModal = require '../../../components/favorites2/client/edit_collection_modal.coffee'
 
 module.exports.CollectionView = class CollectionView extends Backbone.View
 
@@ -30,6 +31,13 @@ module.exports.CollectionView = class CollectionView extends Backbone.View
   endInfiniteScroll: =>
     @$('#user-profile-collection-artworks-spinner').hide()
     @$el.off 'infiniteScroll'
+
+  events:
+    'click #user-profile-right-edit': 'openEditModal'
+
+  openEditModal: (e) ->
+    new EditCollectionModal width: 500, collection: @artworkCollection
+    false
 
 module.exports.init = ->
   new CollectionView
