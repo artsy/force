@@ -52,6 +52,9 @@ module.exports = class SaveControls extends Backbone.View
     'click form button': 'newCollection'
     'click .save-controls-drop-down-new input': (e) -> e.preventDefault()
     'click': (e) -> e.preventDefault()
+    'focus .save-controls-drop-down-new input': -> clearTimeout @rollupTimeout
+    'mouseover .icon-plus-small': -> @$('.save-controls-drop-down-new').addClass 'is-hover'
+    'mouseout .icon-plus-small': -> @$('.save-controls-drop-down-new').removeClass 'is-hover'
 
   openCollectionModal: ->
     return @showSignupModal() unless @user
@@ -88,4 +91,5 @@ module.exports = class SaveControls extends Backbone.View
       @collections.add collection
       @$('.save-controls-drop-down-new').removeClass 'is-loading'
       @addToCollection collection
+    @$('form input').val ''
     false

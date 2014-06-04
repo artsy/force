@@ -136,6 +136,7 @@ max-items = 20
     z-index max-items + 1
   .save-controls-drop-down-new
     position relative
+    transition background 0.3s
     &:hover
       background gray-darkest-color
     &.is-loading
@@ -144,6 +145,11 @@ max-items = 20
         display block
       form
         opacity 0
+    &.is-hover
+      background purple-color
+      .icon-plus-small
+        background gray-lighter-color
+        color black
     .loading-spinner-white
       display none
       margin 0
@@ -173,6 +179,7 @@ max-items = 20
       bottom @right
       line-height 27px
       cursor pointer
+      transition color 0.3s, background 0.3s
   .icon-check
     font-size 13px
     position absolute
