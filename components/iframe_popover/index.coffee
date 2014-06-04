@@ -10,8 +10,7 @@ module.exports = ($el) ->
   Backbone.history.start(pushState: true) unless Backbone.History.started
 
 onClick = (e) ->
-  console.log $(e.target)
-  return false if $(e.target).hasClass 'overlay-button-save'
+  return false if $(e.target).closest('.save-controls-drop-down-container').length
   return if e.metaKey or e.ctrlKey
 
   e.preventDefault()

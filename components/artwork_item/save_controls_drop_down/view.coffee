@@ -18,6 +18,8 @@ module.exports = class SaveControls extends Backbone.View
       "<div class='save-controls-drop-down-menu-item #{if collection.get('id') is 'saved-artwork' then 'is-active' else ''}'>
         #{collection.get('name')}
         <span class='icon-check'></span>
+        <span class='icon-close'></span>
+        <span class='save-controls-removed'>removed</span>
       </div>"
     ).join ''
 
@@ -31,13 +33,6 @@ module.exports = class SaveControls extends Backbone.View
     @$('.save-controls-drop-down-menu-item').removeClass 'is-active'
     @$(".save-controls-drop-down-menu-item:eq(#{@collections.indexOf col})").addClass 'is-active'
 
-  events:
-    'click .overlay-button-save': 'openCollectionModal'
-    'click .save-controls-drop-down-menu-item:not(.save-controls-drop-down-new)': 'onClickItem'
-    'click form button': 'newCollection'
-    'click .save-controls-drop-down-new input': (e) -> e.preventDefault()
-    'click': (e) -> e.preventDefault()
-
   showSignupModal: ->
     track.funnel 'Triggered sign up form via save button'
     mediator.trigger 'open:auth',
@@ -46,18 +41,43 @@ module.exports = class SaveControls extends Backbone.View
       destination: "#{@model.href()}/save"
     false
 
+  rollup: =>
+    @$el.attr 'data-state', 'saved-close'
+    clearTimeout @rollupTimeout
+
+  events:
+    'click .overlay-button-save': 'openCollectionModal'
+    'click .save-controls-drop-down-menu-item:not(.save-controls-drop-down-new):not(.is-active)': 'onAddToCollection'
+    'click .save-controls-drop-down-menu-item.is-active': 'onRemoveFromCollection'
+    'click form button': 'newCollection'
+    'click .save-controls-drop-down-new input': (e) -> e.preventDefault()
+    'click': (e) -> e.preventDefault()
+
   openCollectionModal: ->
     return @showSignupModal() unless @user
     @$el.attr 'data-state', 'saving'
     @collections.fetch success: =>
-      $(document).on 'click', @closeOnClickOff
-      @$el.attr 'data-state', 'saved'
       @addToCollection @collections.first()
+      $(document).on 'click', @closeOnClickOff
+      $(window).one 'scroll', @rollup
+      @$el.attr 'data-state', 'saved'
+      @rollupTimeout = setTimeout @rollup, 6000
 
-  onClickItem: (e) ->
+  onAddToCollection: (e) ->
     e.preventDefault()
     @addToCollection @collections.at $(e.currentTarget).index()
+    $(e.currentTarget).addClass('is-init-click')
+    $(e.currentTarget).one 'mouseout', -> $(e.currentTarget).removeClass('is-init-click')
+    setTimeout @rollup, 300
     false
+
+  onRemoveFromCollection: (e) ->
+    col = @collections.at $(e.currentTarget).index()
+    col.removeArtwork @model.get 'id'
+    $(e.currentTarget).removeClass 'is-active'
+    $removed = $(e.currentTarget).find('.save-controls-removed')
+    $removed.show()
+    setTimeout (-> $removed.fadeOut 'fast'), 1000
 
   newCollection: (e) ->
     collection = new ArtworkCollection
