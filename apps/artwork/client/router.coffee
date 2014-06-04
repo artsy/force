@@ -20,7 +20,6 @@ module.exports = class ArtworkRouter extends Backbone.Router
     'artwork/:id/confirm-bid'     : 'confirmBid'
     'artwork/:id/confirm-registration': 'confirmRegistration'
     'artwork/:id/inquire'         : 'inquire'
-    'artwork/:id/more-info'       : 'moreInfo'
     'artwork/:id/view-in-room'    : 'viewInRoom'
     'artwork/:id/zoom'            : 'zoom'
 
@@ -43,11 +42,6 @@ module.exports = class ArtworkRouter extends Backbone.Router
     @baseView.route 'zoom'
     @view = new DeepZoomView $container: $('#artwork-deep-zoom-container'), artwork: @artwork
     @view.render()
-
-  moreInfo: ->
-    return unless @artwork.hasMoreInfo()
-    analytics.track.click "Viewed 'More Info'"
-    @baseView.route 'more-info'
 
   viewInRoom: ->
     analytics.track.click "Entered 'View In Room'"

@@ -39,25 +39,14 @@ block body
                   alt= "#{artwork.get('title')} (#{i + 1})"
                 )
 
-        .artwork-more-info
-          include ./_more-info
-
         .artwork-image-actions
-          a.circle-icon-button-share
           a.circle-icon-button-save
+          a.circle-icon-button-share
           if artwork.isHangable()
-            //- Initial state:
-            a.circle-icon-button-view-in-room(
+            a.circle-icon-button-frame(
               href="/artwork/#{artwork.id}/view-in-room", data-client, rel='nofollow'
             )
-              i.icon-view-in-room View in Room
-
-            //- Toggled state:
-            a.circle-icon-button-exit-view-in-room.is-hidden(
-              href="/artwork/#{artwork.id}", data-client, rel='nofollow'
-            )
-              i.icon-artwork Artwork View
-
+        
       aside.artwork-detail
         include ./_detail
 
@@ -85,24 +74,28 @@ block body
           if artwork.hasMoreInfo()
             include ./_more-info
   
+          br
           if artwork.isComparable()
-            a.artwork-auction-results-button(
-              href="/artwork/#{artwork.id}/auction-results"
-            ) See related auction results
-  
-        .ari-right
-          #artwork-artist-related-posts-container
-          //- Rendered client-side
+            a.artwork-auction-results-button.avant-garde-header-small( href="/artwork/#{artwork.id}/auction-results" ) See related auction results
 
-    if artist
-      section#artist-artworks-section
-        h2.avant-garde-header
-          | More Works by&nbsp;
-          a( href=artist.href() )= artist.get('name')
-        .artworks-list
+          a.related-posts-add-button.avant-garde-header-small Add Post
+        #artwork-artist-related-posts-container.ari-right
+          //- Rendered client-side
 
     section#artwork-related-show-section
       //- Rendered client-side
+
+    if artist
+      section#artist-artworks-section
+        h2.avant-garde-header-center
+          | More Works by&nbsp;
+          a( href=artist.href() )= artist.get('name')
+         
+        .artworks-list
+        .artist-link-container
+          a.faux-underline-hover-large(
+            href="/artist/#{artist.id}"
+           ) Go to #{artist.get('name')}
 
     section#artwork-below-the-fold-section
       //- Rendered client-side

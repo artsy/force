@@ -14,7 +14,7 @@ describe 'RelatedPostsView', ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
-      @RelatedPostsView  =
+      @RelatedPostsView =
         benv.requireWithJadeify resolve(__dirname, '../view.coffee'), ['templates.empty', 'templates.grid', 'templates.list', 'templates.extended']
       done()
 
@@ -94,8 +94,8 @@ describe 'RelatedPostsView', ->
           location.reload.restore()
 
         it 'should pass through if user exists', ->
-          @view.currentUser = new CurrentUser fabricate('user', id: 'current-user-id')
-          @view.addPost @e
+          @view.addToPostButton.currentUser = new CurrentUser fabricate('user', id: 'current-user-id')
+          @view.addToPostButton.addPost @e
           @e.preventDefault.called.should.be.ok
           _.last(Backbone.sync.args)[2].success { results: [
             fabricate 'post', id: 'cats-rule-dogs-drool-literally', title: 'Cats rule, and dogs drool'
@@ -105,7 +105,7 @@ describe 'RelatedPostsView', ->
 
         it 'should intercept if user is *not* logged in', ->
           @RelatedPostsView.currentUser = false
-          @view.addPost @e
+          @view.addToPostButton.addPost @e
           @e.preventDefault.called.should.be.ok
 
   describe 'non-default behavior', ->
