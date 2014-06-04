@@ -74,12 +74,14 @@ module.exports = class ArtworkView extends Backbone.View
       @deltaTrackPageView fair
     @on 'related:sales', (sale) ->
       @sale = new Sale sale.attributes
+      @$('#artist-artworks-section').remove()
       @belowTheFoldView.setupSale
         sale        : @sale
         saved       : @saved
         currentUser : @currentUser
       @setupAuction @sale if @sale.isAuction()
     @on 'related:shows', (show) ->
+      @$('#artist-artworks-section').remove()
       new RelatedShowView
         el      : @$('#artwork-related-show-section')
         model   : show
