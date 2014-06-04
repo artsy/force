@@ -5,6 +5,8 @@
   > .personalize-suggestions-more-container
     display none
   &[data-state='loaded']
+    > .personalize-suggestions-more-container
+      display block
     .loading-spinner
       display none
   &[data-state='loading']
@@ -28,13 +30,29 @@
   min-height 200px
   .grid-item
     margin-bottom 20px
-  // Fallback to showing icons
-  .hoverable-image.is-fallback
-    width 100%
-    background-color white
-    background-repeat no-repeat
-    background-size 50%
-    border 1px solid gray-lighter-color
+  .hoverable-image
+    // Fallback to showing icons
+    &.is-fallback
+      width 100%
+      background-color white
+      background-repeat no-repeat
+      background-size 50%
+      border 1px solid gray-lighter-color
+      z-index 1
+    &.is-missing
+      position relative
+      &:before
+        position absolute
+        content attr(data-initials)
+        color gray-dark-color
+        avant-garde()
+        font-size 27px
+        line-height 0
+        // 2% offset for Avant Garde baseline
+        top 52%
+        left 0
+        right 0
+        text-align center
 
 #personalize-suggestions-unfollow-all
   display block
@@ -106,3 +124,9 @@
   margin-bottom 10px
   color gray-darker-color
   overflow ellipsis
+
+.personalize-suggestions-more-container
+  margin-top 20px
+  padding-top 20px
+  text-align center
+  border-top 1px solid gray-lighter-color

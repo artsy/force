@@ -1,14 +1,12 @@
 _                             = require 'underscore'
-sd                            = require('sharify').data
 Backbone                      = require 'backbone'
 StepView                      = require './step.coffee'
 mediator                      = require '../../../../lib/mediator.coffee'
 Followable                    = require '../mixins/followable.coffee'
-OrderedSets                   = require '../../../../collections/ordered_sets.coffee'
 Partner                       = require '../../../../models/partner.coffee'
-Profiles                      = require '../../../../collections/profiles.coffee'
 LocationModalView             = require '../../components/location_modal/index.coffee'
 { FollowButton, Following }   = require '../../../../components/follow_button/index.coffee'
+analytics                     = require '../../../../lib/analytics.coffee'
 
 suggestedTemplate = -> require('../../templates/suggested_profiles.jade') arguments...
 
@@ -18,26 +16,24 @@ module.exports = class SuggestionsView extends StepView
   suggestedTemplate: ->
     suggestedTemplate arguments...
 
-  kind       : 'default'
-  followKind : 'default'
+  kind             : 'default'
+  followKind       : 'default'
+  locationRequests : []
 
   events:
     'click .personalize-skip'                     : 'advance'
     'click .pfa-remove'                           : 'unfollow'
     'click .grid-item'                            : 'followSuggestion'
+    'click .personalize-suggestions-more'         : 'loadNextPage'
     'click #personalize-suggestions-location'     : 'changeLocation'
-    'click #personalize-suggestions-unfollow-all' : 'unfollowSuggestions'
+    'click #personalize-suggestions-unfollow-all' : 'unfollowAll'
 
   initialize: (options = {}) ->
     super
 
     @following = new Following null, kind: @followKind
 
-    @suggestions      = new Profiles
-    @suggestions.url  = "#{sd.API_URL}/api/v1/me/suggested/profiles"
-
     @ensureLocation()
-
     @setup()
 
   # Delegates to the follow button
@@ -51,17 +47,15 @@ module.exports = class SuggestionsView extends StepView
   renderLocation: =>
     @$('#personalize-suggestions-location').text @user.location().singleWord()
 
-  unfollowSuggestions: (e) ->
+  unfollowAll: (e) ->
     e.preventDefault()
-    @following.unfollowAll @suggestions.pluck('id')
+    @following.unfollowAll @following.map (follow) ->
+      follow.get(follow.kind).id
+    analytics.track.click "Clicked 'Unfollow all' on personalize #{@kind} suggestions"
 
   setup: ->
-    @suggestions.fetch
-      success: =>
-        @following.followAll @suggestions.pluck('id')
-        @following.unfollowAll(@existingSuggestions) if @existingSuggestions?
-        @renderSuggestions()
     @initializeFollowable()
+    @fetchAndRenderSuggestions()
 
   render: ->
     @$el.html @template(user: @user, state: @state, autofocus: @autofocus())
@@ -78,6 +72,7 @@ module.exports = class SuggestionsView extends StepView
       @setup()
 
     new LocationModalView width: '500px', user: @user
+    analytics.track.click "Clicked to change location on personalize #{@kind} suggestions"
 
   setupFollowButton: (model, el) ->
     key = model.id
@@ -99,7 +94,10 @@ module.exports = class SuggestionsView extends StepView
     (@$suggestions ?= @$('#personalize-suggestions')).
       html @suggestedTemplate(suggestions: @suggestions)
 
-    @locationRequests = @fetchAndRenderLocations()
+    @postRenderSuggestions()
+
+  postRenderSuggestions: ->
+    @locationRequests = @locationRequests.concat @fetchAndRenderLocations()
 
     @fallbackImages()
 
@@ -121,20 +119,29 @@ module.exports = class SuggestionsView extends StepView
     @suggestions.map (profile) ->
       unless profile.coverImage().has 'image_versions'
         # Filter out the user_profile default image
+        # and replace with the gallery logo
         unless /user_profile.png/.test (imageUrl = profile.iconImageUrl())
-          $(".hoverable-image-link[data-id='#{profile.id}'] .hoverable-image").
+          return @$(".hoverable-image-link[data-id='#{profile.id}'] .hoverable-image").
             addClass('is-fallback').
             css(backgroundImage: "url(#{imageUrl})")
 
-  abortLocationRequests: ->
-    _.each @locationRequests, (xhr) -> xhr.abort()
+        # Still missing an image?
+        $image = @$(".hoverable-image-link[data-id='#{profile.id}'] .hoverable-image")
+        if /missing_image.png/.test $image.css('backgroundImage')
+          $image.addClass 'is-missing'
 
-  advance: ->
-    @abortLocationRequests()
-    super
+  loadNextPage: (e) ->
+    e.preventDefault()
+    ($target = $(e.currentTarget)).attr 'data-state', 'loading'
+    @suggestions.getNextPage().then (response) ->
+      if response.length
+        $target.attr 'data-state', 'loaded'
+      else
+        $target.hide()
+    analytics.track.click "Clicked for next page on personalize #{@kind} suggestions"
 
   remove: ->
-    @searchBarView.remove()
-    if @suggestions? then @suggestions.map (model) =>
-      @followButtonViews[model.id].remove()
+    @searchBarView?.remove()
+    _.each @locationRequests, (xhr) -> xhr.abort()
+    _.each @followButtonViews, (view) -> view.remove()
     super

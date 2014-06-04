@@ -3,7 +3,7 @@ a.avant-garde-button-white.personalize-skip Skip
 header.personalize-header
   h2= state.stepDisplay()
   h1 Follow #{headerKind} on Artsy
-  aside Receive notifications on upcoming shows and fairs
+  aside= aside
 
 section.personalize-step( data-step='#{kind}' )
   #personalize-search-container
@@ -16,12 +16,18 @@ section.personalize-step( data-step='#{kind}' )
 
 #personalize-suggestions-container
   aside
-    | Below are #{kind} we think you’ll enjoy based on artists you follow and your location,
-    = ' '
-    a#personalize-suggestions-location.faux-underline.small-caps
-      != user.location().singleWord() || '&hellip;'
+    if displayLocation
+      | Below are #{kind} we think you’ll enjoy based on artists you follow and your location,
+      = ' '
+      a#personalize-suggestions-location.faux-underline.small-caps
+        != user.location().singleWord() || '&hellip;'
 
-    a#personalize-suggestions-unfollow-all.faux-underline
-      | Unfollow all
+      a#personalize-suggestions-unfollow-all.faux-underline
+        | Unfollow all
 
-  #personalize-suggestions: .loading-spinner
+  #personalize-suggestions.grid-n-up: .loading-spinner
+
+  if pageable
+    .personalize-suggestions-more-container
+      a.avant-garde-button-white.personalize-suggestions-more
+        | Show more galleries

@@ -72,10 +72,12 @@ describe 'SuggestionsView', ->
   describe '#setup', ->
     beforeEach ->
       sinon.stub @view.following, 'followAll'
+      sinon.stub @view.following, 'unfollowAll'
       @view.setup()
 
     afterEach ->
       @view.following.followAll.restore()
+      @view.following.unfollowAll.restore()
 
     it 'fetches the suggestions', ->
       Backbone.sync.args[0][0].should.equal 'read'
@@ -108,3 +110,29 @@ describe 'SuggestionsView', ->
         @view.$suggestions.find('.follow-button').first().click()
         @view.__labelSet__.should.be.ok
         @view.$('.personalize-skip').text().should.equal 'Next'
+
+    describe '#unfollowAll', ->
+      it 'unfollows anything in the following collection', ->
+        @view.following.follow 'foo'
+        @view.following.follow 'bar'
+        @view.following.unfollowAll.called.should.be.false
+        @view.$('#personalize-suggestions-unfollow-all').click()
+        @view.following.unfollowAll.called.should.be.true
+        @view.following.unfollowAll.args[0][0].should.eql ['foo', 'bar']
+
+    describe '#remove', ->
+      it 'tears down the view when there are extra things to tear down', ->
+        @view.searchBarView       = remove: sinon.stub()
+        @view.locationRequests    = [abort: sinon.stub()]
+        @view.followButtonViews   = { view: remove: sinon.stub() }
+        @view.remove()
+        @view.searchBarView.remove.called.should.be.true
+        @view.locationRequests[0].abort.called.should.be.true
+        @view.followButtonViews.view.remove.called.should.be.true
+
+      it 'tears down the view when there are not extra things to tear down', (done) ->
+        @view.searchBarView       = undefined
+        @view.locationRequests    = []
+        @view.followButtonViews   = undefined
+        @view.remove()
+        done()

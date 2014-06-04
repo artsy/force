@@ -1,17 +1,19 @@
-.grid-4-up
-  for profile in suggestions.models
-    .grid-item.popover-parent
-      if profile.get('bio')
-        .popover
-          .personalize-popover-name= profile.get('owner').name
-          p= profile.get('bio')
-      a.hoverable-image-link( data-id=profile.id )
-        .hoverable-image.is-four-three( style="background-image: url(#{profile.coverImage().imageUrl('medium')})" )
-      .personalize-suggestion-name
-        = profile.get('owner').name
-      .personalize-suggestion-location( data-id= profile.get('owner').id )
-        | &hellip;
-      .personalize-suggestion-info
-        = profile.get('locations')
+for profile in suggestions.models
+  .grid-item.popover-parent
+    if profile.get('bio')
+      .popover
+        .personalize-popover-name= profile.get('owner').name
+        p= profile.get('bio')
+    a.hoverable-image-link( data-id=profile.id )
+      .hoverable-image.is-four-three(
+        data-initials= profile.defaultIconInitials()
+        style="background-image: url(#{profile.coverImage().imageUrl('medium')})"
+      )
+    .personalize-suggestion-name
+      = profile.get('owner').name
+    .personalize-suggestion-location( data-id= profile.get('owner').id )
+      | &hellip;
+    .personalize-suggestion-info
+      = profile.get('locations')
 
-      a.avant-garde-button-white.follow-button( data-id= profile.id )
+    a.avant-garde-button-white.follow-button( data-id= profile.id )
