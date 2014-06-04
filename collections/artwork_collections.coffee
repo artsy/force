@@ -16,6 +16,7 @@ class ArtworkCollection extends Backbone.Model
       "#{API_URL}/api/v1/collection/#{@get 'id'}?user_id=#{@userId()}"
 
   initialize: ->
+    @set name: 'My Favorite Works' if @get('id') is 'saved-artwork'
     @initArtworks()
 
   userId: ->
@@ -23,6 +24,10 @@ class ArtworkCollection extends Backbone.Model
 
   saveArtwork: (artworkId, options = {}) ->
     new Backbone.Model().save {}, _.extend options,
+      url: "#{API_URL}/api/v1/collection/#{@get 'id'}/artwork/#{artworkId}?user_id=#{@userId()}"
+
+  removeArtwork: (artworkId, options ={}) ->
+    new Backbone.Model(id: 1).destroy _.extend options,
       url: "#{API_URL}/api/v1/collection/#{@get 'id'}/artwork/#{artworkId}?user_id=#{@userId()}"
 
   initArtworks: ->
