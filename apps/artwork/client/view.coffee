@@ -233,6 +233,8 @@ module.exports = class ArtworkView extends Backbone.View
   setupPostButton: ->
     new AddToPostButton
       el: @$('.ari-left')
+      model: @artwork
+      modelName: 'artwork'
 
   setupRelatedPosts: ->
     new RelatedPostsView

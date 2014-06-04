@@ -12,6 +12,9 @@ module.exports = class AddToPostButton extends Backbone.View
   events:
     'click .related-posts-add-button' : 'addPost'
 
+  initialize: (options) ->
+    @modelName = options.modelName
+
   addPost: (e) =>
     @currentUser ?= CurrentUser.orNull()
 

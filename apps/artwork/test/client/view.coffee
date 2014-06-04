@@ -45,11 +45,17 @@ describe 'ArtworkView', ->
     }, =>
       @ArtworkView = benv.requireWithJadeify(
         (resolve __dirname, '../../client/view'),
-        ['artistArtworksTemplate', 'detailTemplate', 'auctionPlaceholderTemplate']
+        ['detailTemplate', 'auctionPlaceholderTemplate']
       )
       @ArtworkView.__set__ 'analytics', { abTest: sinon.stub(), delta: sinon.stub(), track: { click: sinon.stub() } }
       @ArtworkView.__set__ 'ShareView', (@shareViewStub = sinon.stub())
       @ArtworkView.__set__ 'acquireArtwork', (@acquireArtworkStub = sinon.stub())
+
+      @artworkColumnsView = { appendArtworks: sinon.stub() }
+      @ArtworkColumnsView = sinon.stub()
+      @ArtworkColumnsView.returns @artworkColumnsView
+      @ArtworkView.__set__ 'ArtworkColumnsView', @ArtworkColumnsView
+
       @renderDetailSpy = sinon.spy @ArtworkView::, 'renderDetail'
       done()
 
@@ -166,7 +172,6 @@ describe 'ArtworkView', ->
     describe '#setupArtistArtworks', ->
       it 'fetches a sample of the artwork artist\'s works', ->
         @artist.artworks.fetch.callCount.should.equal 1
-        @artist.artworks.fetch.args[0][0].data.should.include size: 5, published: true
 
     describe '#renderArtistArtworks', ->
       it 'renders the artist\'s artworks', ->
@@ -174,11 +179,6 @@ describe 'ArtworkView', ->
         @artist.artworks.trigger 'sync'
 
         @artist.artworks.pluck('id').should.not.include @artwork.id
-
-        $el = @view.$('#artwork-artist-artworks-container')
-        $el.hasClass('is-loaded')
-
-        $el.html().should.include "data-id=\"#{@artist.artworks.first().id}\""
 
     describe '#openShare', ->
       it 'opens the share view when the share button is clicked', ->

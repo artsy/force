@@ -92,6 +92,10 @@ block body
           a( href=artist.href() )= artist.get('name')
          
         .artworks-list
+        .artist-link-container
+          a.faux-underline-hover-large(
+            href="/artist/#{artist.id}"
+           ) Go to #{artist.get('name')}
 
     section#artwork-below-the-fold-section
       //- Rendered client-side

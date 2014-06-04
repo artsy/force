@@ -24,8 +24,10 @@ module.exports = class RelatedPostsView extends Backbone.View
     @model.fetchRelatedPosts()
     @listenTo @model.relatedPosts, 'sync', @render
 
-    new AddToPostButton
+    @addToPostButton = new AddToPostButton
       el: @el
+      modelName: @modelName
+      model: @model
 
   render: ->
     templateData =
