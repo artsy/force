@@ -10,6 +10,9 @@ module.exports = class ViewInRoom extends Backbone.View
   roomWidth: 6578
   benchRatio: 5.5
 
+  events:
+    'click .view-in-room-close' : 'return'
+
   # Should be visually at about 57" from interstitial
   eyeLevel: ->
     0.132 * @roomWidth
@@ -41,6 +44,10 @@ module.exports = class ViewInRoom extends Backbone.View
       @scaleRoom()
       @scalePlaceholder()
       @transitionIn()
+
+  return: ->
+    Backbone.history.navigate @artwork.href(), trigger: true, replace: true
+    false
 
   cacheSelectors: ->
     @$artwork       = @$('#vir-artwork')

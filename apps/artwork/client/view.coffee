@@ -5,8 +5,8 @@ ShareView                 = require './share.coffee'
 Transition                = require '../../../components/mixins/transition.coffee'
 CurrentUser               = require '../../../models/current_user.coffee'
 SaveButton                = require '../../../components/save_button/view.coffee'
-RelatedPostsView          = require './related-posts.coffee'
 AddToPostButton           = require '../../../components/related_posts/add_to_post_button.coffee'
+RelatedPostsView          = require '../../../components/related_posts/view.coffee'
 analytics                 = require '../../../lib/analytics.coffee'
 acquireArtwork            = require('../../../components/acquire/view.coffee').acquireArtwork
 FeatureNavigationView     = require './feature-navigation.coffee'
@@ -38,6 +38,14 @@ module.exports = class ArtworkView extends Backbone.View
     'click .artwork-auction-results-button' : 'trackComparable'
     'change .aes-radio-button'              : 'selectEdition'
     'click .artwork-buy-button'             : 'buy'
+    'click .artwork-more-info .avant-garde-header-small' : 'toggleMoreInfo'
+
+  toggleMoreInfo: (event) ->
+    $target = $(event.target)
+    $target.find('.arrow-toggle').toggleClass('active')
+
+    $blurb = $target.next()
+    $blurb.toggleClass 'is-hidden'
 
   initialize: (options) ->
     { @artwork, @artist } = options
@@ -229,7 +237,11 @@ module.exports = class ArtworkView extends Backbone.View
   setupRelatedPosts: ->
     new RelatedPostsView
       el: @$('#artwork-artist-related-posts-container')
-      artwork: @artwork
+      model: @artwork
+      modelName: 'artwork'
+      mode: 'vertical'
+      numToShow: 2
+      canBeEmpty: false
 
   setupFeatureNavigation: (options) ->
     new FeatureNavigationView

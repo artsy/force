@@ -39,9 +39,6 @@ block body
                   alt= "#{artwork.get('title')} (#{i + 1})"
                 )
 
-        .artwork-more-info
-          include ./_more-info
-
         .artwork-image-actions
           a.circle-icon-button-save
           a.circle-icon-button-share
@@ -90,7 +87,7 @@ block body
 
     if artist
       section#artist-artworks-section
-        h2.avant-garde-header
+        h2.avant-garde-header-center
           | More Works by&nbsp;
           a( href=artist.href() )= artist.get('name')
          

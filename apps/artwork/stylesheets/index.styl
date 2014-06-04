@@ -1,5 +1,4 @@
 @import '../../../components/stylus_lib'
-@import './more-info'
 @import './share'
 @import './deep-zoom'
 @import './circle-buttons'
@@ -19,7 +18,7 @@ artwork-detail-item-height  = 36px
     border-top 1px solid gray-lighter-color
     h2
     h3
-      margin 10px 0
+      margin 12px 0px 27px
       font-size 15px
     h2 a
       text-decoration none
@@ -33,9 +32,6 @@ artwork-detail-item-height  = 36px
 .artwork-image-zoom
   cursor -moz-zoom-in
   cursor -webkit-zoom-in
-
-.artwork-more-info
-  display none
 
 .artwork-overview
   float left
@@ -318,13 +314,13 @@ artwork-detail-item-height  = 36px
   vertical-align top
   text-align left
 .ari-left
-  width 60%
+  width 65%
   max-width 660px
   height 100%
   .posts-add-button
     margin-left 10px
 .ari-right
-  width 35%
+  width 30%
   padding-left 50px
   margin-left: 50px
   border-left 1px solid gray-lighter-color
@@ -387,7 +383,6 @@ artwork-detail-item-height  = 36px
   &[data-state='fade-in']
     opacity 1
   h2
-    margin 20px 0 !important
     a
       text-decoration none
 
@@ -400,3 +395,30 @@ artwork-detail-item-height  = 36px
   background-repeat no-repeat
   background-color white
   box-shadow 0 10px 24px rgba(0,0,0,0.12)
+
+// TODO: Make a component if reused
+.arrow-toggle
+  width 0
+  height 0
+  border-top 4px solid transparent
+  border-bottom 4px solid transparent
+  border-left 8px solid black
+  display inline-block
+  transition transform .3s
+  margin-right 5px
+  &.active
+    transform rotate(90deg)
+
+.artwork-more-info
+  .avant-garde-header-small
+    cursor: pointer
+  .artwork-blurb
+    transition opacity .6s
+    opacity 1
+    height 100%
+    overflow hidden
+    margin 10px 0px
+    &.is-hidden
+      margin: 0px
+      opacity 0
+      height 0px
