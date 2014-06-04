@@ -1,15 +1,15 @@
 grow-time = 0.5s
-menu-delay = 1.3s
+menu-delay = 0.7s
 max-items = 20
 
 .save-controls-drop-down-container
   position absolute
   right 5px
   top 5px
-  z-index 2
+  z-index 1
+  transition right grow-time
 
 .save-controls-drop-down-container .overlay-button-save
-  iconfont-styling()
   width 40px
   height @width
   background-color rgba(0, 0, 0, 0.4)
@@ -24,40 +24,60 @@ max-items = 20
   transition width grow-time
   position relative
   z-index max-items + 2
+  position relative
   &:hover
     background-color black
-  &:before
-    content '\e622'
-  &:after
+  &::before
+    display none
+  &::after
     opacity 0
-    transition opacity 0.2s linear grow-time
+
+.overlay-button-save-heart, .overlay-button-save-heart-transparent
+  svg
+    height 16px
+    width @height
+    position absolute
+    top 13px
+    left 12px
+  path
+    stroke white
+
+.overlay-button-save-heart-transparent
+  opacity 0.3
+
+.overlay-button-save-heart path
+  stroke-dashoffset 1500px
+  stroke-dasharray 4000px
+  transition stroke-dashoffset 1s linear
 
 .save-controls-drop-down-container
   &[data-state='saved']
+    right -25px
     .overlay-button-save
       opacity 1
       background-color purple-color
       width auto
       display inline-block !important
       padding 0 12px
-      width 95px
+      width 102px
       &:after
         content 'Saved'
         avant-garde()
         font-size default-avant-garde-font-size
-        padding-left 6px
+        padding-left 19px
         position relative
         bottom 1px
         opacity 1
+        transition opacity grow-time linear grow-time
     .save-controls-drop-down-menu
       display block
       opacity 1
       max-height 800px
       z-index 1
-      transition-delay menu-delay
-      ul li
-        top 0
-        transition-delay menu-delay
+    .save-controls-drop-down-menu-item
+      top 0
+    .overlay-button-save-heart path
+      transition-duration 0s
   &[data-state='saving']
     .overlay-button-save
       opacity 1
@@ -65,6 +85,8 @@ max-items = 20
       background-color purple-color
       &:before
         opacity 0.4
+    .overlay-button-save-heart path
+      stroke-dashoffset 4000px
   &[data-state='saved-close']
     .overlay-button-save
       opacity 1
@@ -86,13 +108,13 @@ max-items = 20
   width 250px
   left 32px
   margin-top -10px
-  transition opacity 0.3s
+  transition max-height 1.4s menu-delay
   z-index -1
   max-height 0
   overflow hidden
-  transition max-height 2s
   opacity 0
-  h4, li
+  cursor default
+  h4, .save-controls-drop-down-menu-item
     padding 13px 20px
     border-bottom 1px solid gray-darkest-color
     background black
@@ -104,11 +126,19 @@ max-items = 20
     font-size default-avant-garde-font-size
     padding-top 20px
     z-index max-items + 1
-  ul li
-    transition top 0.3s linear
-    overflow ellipsis
   .save-controls-drop-down-new
     position relative
+    &:hover
+      background gray-darkest-color
+    &.is-loading
+      background purple-color
+      .loading-spinner-white
+        display block
+      form
+        opacity 0
+    .loading-spinner-white
+      display none
+      margin 0
     input
       background transparent
       padding 0
@@ -135,18 +165,24 @@ max-items = 20
       bottom @right
       line-height 27px
       cursor pointer
+
   .icon-check
     font-size 13px
     position absolute
     right 18px
     bottom 7px
     display none
-  li.is-active .icon-check
+  .save-controls-drop-down-menu-item.is-active .icon-check
     display block
 
+.save-controls-drop-down-menu-item
+  transition top 0.3s linear menu-delay
+  overflow ellipsis
+  cursor pointer
+
 for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20
-  .save-controls-drop-down-menu ul li:nth-child({i})
-    top -(i * 36)px
+  .save-controls-drop-down-menu-item:nth-child({i})
+    top -(i * 46)px
     z-index (max-items - i)
 
 .artwork-item-image-link
