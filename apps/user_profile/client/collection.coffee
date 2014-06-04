@@ -16,7 +16,7 @@ module.exports.CollectionView = class CollectionView extends Backbone.View
       collection: new Artworks
       artworkSize: 'larger'
       numberOfColumns: 3
-      gutterWidth: 40
+      gutterWidth: 80
     @$el.infiniteScroll @nextPage
     @artworkCollection.on 'change:name', @renderName
     @nextPage()
