@@ -28,3 +28,9 @@ describe 'ArtworkCollections', ->
       @collections.first().saveArtwork 'foo-bar'
       Backbone.sync.args[0][2].url.should
         .include '/api/v1/collection/saved-artwork/artwork/foo-bar?user_id=' + @user.id
+
+  describe 'comparator', ->
+
+    it 'orders the saved-artwork first', ->
+      @collections.reset [{ id: 'foo' }, { id: 'bar' }, { id: 'saved-artwork'}, { id: 'baz' }]
+      @collections.first().get('id').should.equal 'saved-artwork'
