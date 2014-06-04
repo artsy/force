@@ -18,7 +18,11 @@ module.exports.CollectionView = class CollectionView extends Backbone.View
       numberOfColumns: 3
       gutterWidth: 40
     @$el.infiniteScroll @nextPage
+    @artworkCollection.on 'change:name', @renderName
     @nextPage()
+
+  renderName: =>
+    @$('h1').text @artworkCollection.get 'name'
 
   nextPage: =>
     @page++

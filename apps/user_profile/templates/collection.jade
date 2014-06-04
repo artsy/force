@@ -6,9 +6,8 @@ block head
 append locals
   - assetPackage = 'user_profile'
 
-- isUser = user && user.get('id') == profile.get('owner').id
-- console.log(user.get('id'), profile.get('owner').id)
 block body
+  - isUser = user && user.get('id') == profile.get('owner').id
   #user-profile-collection
     header
       a.contextual-return-link(
