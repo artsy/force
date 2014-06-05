@@ -1,6 +1,7 @@
 Artwork   = require '../../models/artwork'
 Artist    = require '../../models/artist'
 Backbone  = require 'backbone'
+defaultMessage = require '../../components/contact/default_message.coffee'
 { stringifyJSONForWeb } = require '../../components/util/json.coffee'
 
 @index = (req, res) ->
@@ -28,10 +29,12 @@ Backbone  = require 'backbone'
                 artist : artist
                 tab    : req.params.tab
                 jsonLD : stringifyJSONForWeb(artwork.toJSONLD())
+                defaultMessage: defaultMessage(artwork)
         else
           res.render 'index',
             artwork: artwork
             jsonLD : stringifyJSONForWeb(artwork.toJSONLD())
+            defaultMessage: defaultMessage(artwork)
       else
         res.redirect artwork.href()
 

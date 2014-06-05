@@ -45,12 +45,13 @@
           .aes-price= edition.priceDisplay()
 
   //- Partner link
-  .artwork-meta-partner
-    if artwork.partnerLink()
-      a( href= artwork.partnerLink() )
+  unless artwork.isContactable()
+    .artwork-meta-partner
+      if artwork.partnerLink()
+        a( href= artwork.partnerLink() )
+          = artwork.partnerName()
+      else
         = artwork.partnerName()
-    else
-      = artwork.partnerName()
 
   //- Price/sale message
   if artwork.isPriceDisplayable()
@@ -78,27 +79,7 @@
   #artwork-detail-spinner( style='height: 80px; position: relative' )
     .loading-spinner-small
   #artwork-detail-contact( style='display: none' )
-
-    //- Large contact button
-    if artwork.isContactable()
-      a.avant-garde-button-black.artwork-contact-button(
-        href="/artwork/#{artwork.id}/contact-gallery", data-client, rel='nofollow'
-      )!= artwork.contactLabel()
-
-    //- Buy
-    if artwork.get('acquireable')
-      a.avant-garde-button-black.artwork-buy-button
-        | Buy
-
-    //- Contact a specialist
-    if artwork.get('inquireable')
-      .artwork-inquiry
-        //- Inquiry microcopy
-        if artwork.inquiryMicroCopy()
-          small.small-caps= artwork.inquiryMicroCopy()
-        a.avant-garde-button-underlined.artwork-inquiry-button(
-          href="/artwork/#{artwork.id}/inquire", data-client, rel='nofollow'
-        ) Contact Artsy Specialist
+    include ../components/contact/template
 
   if artwork.showActionsList(user)
     nav.artwork-actions-list

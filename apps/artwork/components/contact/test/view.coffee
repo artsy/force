@@ -3,8 +3,17 @@ benv            = require 'benv'
 sinon           = require 'sinon'
 Backbone        = require 'backbone'
 Artwork         = require '../../../../../models/artwork'
+jade            = require 'jade'
+fs              = require 'fs'
 { fabricate }   = require 'antigravity'
 { resolve }     = require 'path'
+
+render = (templateName) ->
+  filename = resolve __dirname, "../#{templateName}.jade"
+  jade.compile(
+    fs.readFileSync(filename),
+    { filename: filename }
+  )
 
 describe 'ContactView', ->
   beforeEach (done) ->
@@ -14,7 +23,12 @@ describe 'ContactView', ->
       benv.expose $: benv.require 'jquery'
       Backbone.$ = $
       sinon.stub Backbone, 'sync'
-      ContactView = benv.requireWithJadeify resolve(__dirname, '../view'), ['template']
+      $('body').html render('template')(
+        artwork: artwork
+        defaultMessage: 'default message'
+        user: new Backbone.Model()
+      )
+      ContactView = benv.require resolve(__dirname, '../view')
       @view = new ContactView el: $('body'), model: artwork
       @view.eligibleForAfterInquiryFlow = false
       done()

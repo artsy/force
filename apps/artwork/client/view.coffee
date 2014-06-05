@@ -19,6 +19,7 @@ Auction                   = require './mixins/auction.coffee'
 RelatedShowView           = require './related-show.coffee'
 qs                        = require 'querystring'
 { parse }                 = require 'url'
+ContactView               = require '../components/contact/view.coffee'
 ArtworkColumnsView        = require '../../../components/artwork_columns/view.coffee'
 
 detailTemplate              = -> require('../templates/_detail.jade') arguments...
@@ -51,7 +52,7 @@ module.exports = class ArtworkView extends Backbone.View
     { @artwork, @artist } = options
 
     @checkQueryStringForAuction()
-    @abTestEmbeddedInquiryForm()
+    @setupEmbeddedInquiryForm()
     @setupRelatedPosts()
     @setupPostButton()
     @setupCurrentUser()
@@ -118,12 +119,10 @@ module.exports = class ArtworkView extends Backbone.View
         artwork_id : @artwork.id
     ).addClass 'is-fade-in'
 
-  abTestEmbeddedInquiryForm: ->
+  setupEmbeddedInquiryForm: ->
     return if @suppressInquiry
     @$('#artwork-detail-spinner').remove()
     @$('#artwork-detail-contact').show()
-    return unless analytics.abTest 'ab:inquiry:embedded', 0.2
-    ContactView = require '../components/contact/view.coffee'
     new ContactView el: @$('#artwork-detail-contact'), model: @artwork
 
   # Currently, Safari 5 is the only browser we support that doesn't support CSS `Calc`
