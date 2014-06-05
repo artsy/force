@@ -10,8 +10,6 @@ defaultMessage  = require '../../../../components/contact/default_message.coffee
 
 { SESSION_ID, API_URL }  = require('sharify').data
 
-template = -> require('./template.jade') arguments...
-
 module.exports = class ContactView extends Backbone.View
   _.extend @prototype, Form
   _.extend @prototype, AfterInquiry
@@ -32,8 +30,6 @@ module.exports = class ContactView extends Backbone.View
     @render()
 
   render: ->
-    @$el.html template artwork: @model, user: @user, defaultMessage: defaultMessage(@model)
-
     @$submit    = @$('button')
     @$textarea  = @$('textarea')
 

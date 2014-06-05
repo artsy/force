@@ -2,7 +2,11 @@
 if artwork.isContactable()
   form#artwork-contact-form
     h2.avant-garde-header Contact Gallery
-    h3= artwork.get('partner').name
+    if artwork.partnerLink()
+      a.partner-name.faux-underline( href= artwork.partnerLink() )
+        = artwork.partnerName()
+    else
+      .partner-name= artwork.partnerName()
     if user
       //- Logged in
       input( type='hidden', name='name', value=user.get('name') )
