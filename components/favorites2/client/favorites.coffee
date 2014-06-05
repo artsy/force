@@ -9,6 +9,7 @@ Artworks = require '../../../collections/artworks.coffee'
 ArtworkColumnsView = require '../../artwork_columns/view.coffee'
 SuggestedGenesView = require '../../suggested_genes/view.coffee'
 ShareView = require '../../share/view.coffee'
+ZigZagBanner = require '../../zig_zag_banner/index.coffee'
 mediator = require '../../../lib/mediator.coffee'
 hintTemplate = -> require('../templates/empty_hint.jade') arguments...
 collectionsTemplate = -> require('../templates/collections.jade') arguments...
@@ -70,6 +71,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
         @favorites.fetchNextPage success: =>
           return @showEmptyHint() if @favorites.length is 0
           @renderCollections()
+          @renderZigZagBanner()
 
   showEmptyHint: ->
     @$('.favorites2-follows-empty-hint').html hintTemplate type: 'artworks'
@@ -90,6 +92,14 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
     @$('.favorites2-collections').html collectionsTemplate
       collections: @favorites.collections.models
       user: @user
+
+  renderZigZagBanner: ->
+    new ZigZagBanner
+      persist: true
+      name: 'favorites-new-set'
+      message: 'Become an Artsy Curator. Create a new set.'
+      $target: @$('.favorites2-collections')
+    @$('.zig-zag-banner').addClass('zig-zag-backwards').css('margin-left': 250)
 
   events:
     'click .favorites2-new-collection': 'openNewModal'
