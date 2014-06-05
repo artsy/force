@@ -339,7 +339,7 @@ module.exports = class Artwork extends Backbone.Model
   setupRelatedCollections: ->
     @relatedCollections = _.reduce ['sales', 'fairs', 'features', 'shows'], (memo, aspect) =>
       memo[aspect] = @[aspect] = new Backbone.Collection
-      @[aspect].url = "#{sd.API_URL}/api/v1/related/#{aspect}?artwork[]=#{@id}"
+      @[aspect].url = "#{sd.API_URL}/api/v1/related/#{aspect}?artwork[]=#{@id}&active=true"
       @[aspect].kind = aspect
       memo
     , {}
