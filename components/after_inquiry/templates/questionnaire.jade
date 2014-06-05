@@ -1,4 +1,6 @@
-h1 #{user.get('collector_level') === 3 ? "Great." : "OK."} Final Step:
+- collector = user.get('collector_level') === 3
+
+h1 #{collector ? "Great." : "OK."} Final Step:
 aside
   | You will only be asked these questions once (but can update them in your profile for future gallery introductions).
   .help-tooltip(
@@ -19,14 +21,19 @@ form.stacked-form#after-inquiry-questionnaire-form
   .stacked-form-cell
     label.avant-garde-form-label Primary Location
     #after-inquiry-collector-location
-      //- Rendered client-side
+      //- Rendered separately
 
   .stacked-form-cell
-    label.avant-garde-form-label( for='profession' ) Profession
-    input.bordered-input.is-block(
-      placeholder!='There&rsquo;s nothing here, yet'
-      value=user.get('profession')
-      name='profession'
-    )
+    if collector
+      label.avant-garde-form-label( for='profession' ) Artists you collect
+      #after-inquiry-bookmark-artists
+      //- Rendered separately
+    else
+      label.avant-garde-form-label( for='profession' ) Profession
+      input.bordered-input.is-block(
+        placeholder!='There&rsquo;s nothing here, yet'
+        value=user.get('profession')
+        name='profession'
+      )
 
   button.avant-garde-button-black#after-inquiry-questionnaire-submit Done

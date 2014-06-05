@@ -29,6 +29,7 @@ describe 'Questionnaire', ->
     sinon.stub _, 'delay', (cb) -> cb()
     sinon.stub Backbone, 'sync'
     sinon.stub @Questionnaire::, 'attachLocationSearch'
+    sinon.stub @Questionnaire::, 'attachBookmarksView'
     sinon.stub @Questionnaire::, 'close'
     sinon.stub(@Questionnaire::, 'modalTemplate').returns('<div class="modal-body"></div>')
 
@@ -44,6 +45,7 @@ describe 'Questionnaire', ->
     _.delay.restore()
     Backbone.sync.restore()
     @view.attachLocationSearch.restore()
+    @view.attachBookmarksView.restore()
     @view.modalTemplate.restore()
     @view.close.restore()
     mediator.off null, null, this
