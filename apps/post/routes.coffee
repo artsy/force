@@ -10,6 +10,7 @@ render = (res, post, profile) ->
   res.render 'templates/index',
     post    : post
     profile : profile
+    JSONLD  : post.toJSONLD()
 
 @index = (req, res) ->
   new Post(id: req.params.id).fetch
