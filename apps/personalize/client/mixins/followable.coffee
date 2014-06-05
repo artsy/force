@@ -33,7 +33,7 @@ module.exports =
 
   follow: (e, model) ->
     @setSkipLabel()
-    @$searchInput.val '' # Clear input
+    @searchBarView?.clear()
     @followed.unshift model.toJSON()
     @following.follow model.id, { notes: 'Followed from /personalize' }
 

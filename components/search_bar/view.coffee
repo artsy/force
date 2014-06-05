@@ -97,6 +97,9 @@ module.exports = class SearchBarView extends Backbone.View
       name       : _.uniqueId 'search'
       source     : @setupBloodHound().ttAdapter()
 
+  clear: ->
+    @$input.typeahead 'val', ''
+
   selectResult: (e, model) ->
     return false unless model and model.get('published')
     analytics.track.click 'Selected item from search',
