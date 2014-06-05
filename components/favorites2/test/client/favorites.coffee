@@ -26,7 +26,7 @@ describe 'FavoritesView', ->
         sinon.stub CurrentUser, 'orNull'
         CurrentUser.orNull.returns new CurrentUser fabricate 'user'
         stubChildClasses mod, this,
-          ['ArtworkColumnsView', 'SuggestedGenesView', 'ShareView']
+          ['ArtworkColumnsView', 'SuggestedGenesView', 'ShareView', 'ZigZagBanner']
           ['appendArtworks', 'render']
         @view = new FavoritesView el: $('body')
         done()
@@ -83,6 +83,12 @@ describe 'FavoritesView', ->
       @view.favorites.collections.first().artworks = new Backbone.Collection
       @view.renderCollections()
       @view.$el.html().should.include 'Warhols for my bathroom.'
+
+  describe '#renderZigZagBanner', ->
+
+    it 'creates a new zig zag view', ->
+      @view.renderZigZagBanner()
+      @ZigZagBanner.args[0][0].message.should.include 'Create a new set'
 
 
 describe 'Favorites', ->

@@ -22,6 +22,11 @@ three-height  = 72px
   margin-left -(@width + 10)
   margin-top -(one-height / 2)
   pointer-events none
+  &.zig-zag-backwards
+    transform rotateY(180deg)
+    .zzb-message
+      width 170px
+      transform rotateY(180deg)
 
 .zzb-one
 .zzb-two

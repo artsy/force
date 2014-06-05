@@ -7,7 +7,7 @@ CurrentUser = require '../../../../models/current_user'
 { fabricate } = require 'antigravity'
 { resolve } = require 'path'
 
-describe 'FavoritesView', ->
+describe 'EditCollectionModal', ->
 
   beforeEach (done) ->
     benv.setup =>
