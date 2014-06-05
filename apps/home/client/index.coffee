@@ -41,8 +41,14 @@ module.exports.HomeView = class HomeView extends Backbone.View
     @renderFeaturedShows()
     @renderFeaturedPosts()
     @renderFeaturedArtists()
-
+    @setupFavoritesOnboardingModal()
     @setupModal()
+
+  setupFavoritesOnboardingModal: ->
+    return unless 'Set Management' in @user?.get('lab_features')
+    return if parseInt(Cookies.get 'favorites_onboarding_dismiss_count') >= 2
+    OnboardingModal = require '../../../components/favorites2/client/onboarding_modal.coffee'
+    new OnboardingModal width: 1000
 
   renderArtworks: ->
     if @user and @user.hasSuggestions()

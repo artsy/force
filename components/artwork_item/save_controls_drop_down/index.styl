@@ -85,6 +85,7 @@ max-items = 20
       z-index 1
     .save-controls-drop-down-menu-item
       top 0
+      transition top 0.2s linear menu-delay
     .overlay-button-save-heart path
       transition-duration 0s
   &[data-state='saved-close']
@@ -115,7 +116,7 @@ max-items = 20
   width 250px
   left 32px
   margin-top -10px
-  transition max-height 1.4s menu-delay
+  transition max-height 1s menu-delay
   z-index -1
   max-height 0
   overflow hidden
@@ -211,7 +212,6 @@ max-items = 20
     display none
 
 .save-controls-drop-down-menu-item
-  transition top 0.3s linear menu-delay
   overflow ellipsis
   cursor pointer
   &:hover
