@@ -10,6 +10,7 @@ AdditionalImage     = require '../models/additional_image.coffee'
 Attachments         = require '../components/post/collections/post_attachments.coffee'
 Reposts             = require '../components/post/collections/reposts.coffee'
 { smartTruncate }   = require '../components/util/string.coffee'
+{ compactObject }   = require './mixins/compact_object.coffee'
 
 _.mixin require 'underscore.string'
 
@@ -39,14 +40,6 @@ module.exports = class Post extends Backbone.Model
   onPostPage: (location) ->
     location ?= window?.location?.pathname
     location == @href()
-
-  metaImage: ->
-    if @has 'image_url' and @get 'image_versions' and @hasImage 'large'
-      @imageUrl 'large'
-    else if @artworks?.length > 0 and @artworks.first().hasImage 'large'
-      @artworks.first().imageUrl 'large'
-    else
-      null
 
   shareTitle: ->
     profile = @profile()
@@ -219,14 +212,17 @@ module.exports = class Post extends Backbone.Model
           callback?(artists)
 
   toJSONLD: ->
+    console.log @get('summary'), @get('title')
     compactObject {
       "@context" : "http://schema.org"
       "@type" : "Article"
-      image: @metaImage()
-      title: @metaTitle()
-      description: @metaDescription()
+      image: @get('shareable_image_url')
+      title: @titleOrBody(100)
+      description: smartTruncate(@get('summary'), 200)
+      datePublished: @get('last_promoted_at')
+      articleBody: _.stripTags(@get 'body')
       sourceOrganization:
         name: 'artsy'
         url: 'https://artsy.net'
-        logo: ''
+        logo: "#{sd.ASSET_PATH}og_image.jpg"
     }

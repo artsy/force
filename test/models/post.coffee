@@ -152,3 +152,12 @@ describe 'Post', ->
       post = new Post(fabricate('post'))
       post.onPostPage("/post/#{post.get('id')}").should.be.ok
       post.onPostPage("/post/foo").should.not.be.ok
+
+  describe '#toJSONLD', ->
+
+    it 'returns valid json', ->
+      post = new Post(fabricate('post', summary: 'summary'))
+      json = post.toJSONLD()
+      json['@context'].should.equal 'http://schema.org'
+      json['@type'].should.equal 'Article'
+      json.title.should.equal "summary"
