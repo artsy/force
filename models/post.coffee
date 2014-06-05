@@ -217,3 +217,16 @@ module.exports = class Post extends Backbone.Model
         success: (artists)  =>
           @set('feature_artists', artists)
           callback?(artists)
+
+  toJSONLD: ->
+    compactObject {
+      "@context" : "http://schema.org"
+      "@type" : "Article"
+      image: @metaImage()
+      title: @metaTitle()
+      description: @metaDescription()
+      sourceOrganization:
+        name: 'artsy'
+        url: 'https://artsy.net'
+        logo: ''
+    }
