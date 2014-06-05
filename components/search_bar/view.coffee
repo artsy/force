@@ -15,6 +15,9 @@ module.exports = class SearchBarView extends Backbone.View
     # Search takes a fair_id param specific to fairs. Doesn't work for other models
     { @mode, @restrictType, @$input, @fairId, @includePrivateResults } = options
 
+    @$input ?= @$('input')
+    throw new Error('Requires an input field') unless @$input?
+
     @search = new Search
       restrictType : @restrictType
       mode         : @mode
