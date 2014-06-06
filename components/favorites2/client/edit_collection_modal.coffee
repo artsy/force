@@ -17,13 +17,14 @@ module.exports = class EditCollectionModal extends ModalView
 
   events: -> _.extend super,
     'click .favorites2-edit-modal-cancel': 'close'
-    'click .favorites2-edit-modal-submit': 'submit'
+    'submit form': 'submit'
     'click .favorites2-edit-modal-delete, .favorites2-edit-modal-cancel-delete': 'toggleDelete'
     'click .favorites2-edit-modal-delete-confirm': 'delete'
 
   submit: ->
     @collection.save { name: @$('input').val() }
     @close()
+    false
 
   toggleDelete: ->
     @$('.favorites2-edit-modal-delete-container, .favorites2-edit-modal-init').toggle()

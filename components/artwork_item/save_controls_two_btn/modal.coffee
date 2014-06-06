@@ -57,5 +57,5 @@ module.exports = class SaveControlsModal extends ModalView
 
   done: ->
     col = @collections.at @$('.save-controls-two-btn-modal-collections li.is-selected').index()
-    col.saveArtwork @model.get('id')
+    col.saveArtwork @model
     @close()

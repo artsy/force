@@ -59,6 +59,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
       totalWidth: @$('.favorites2-artworks-list').width()
       artworkSize: 'tall'
       allowDuplicates: true
+    mediator.on 'create:artwork:collection', (col) => @favorites.collections.add col
     @favorites.on 'nextPage', @appendArtworks
     @favorites.on 'end', @endInfiniteScroll
     @favorites.collections.on 'add remove change:name', => _.defer @renderCollections
