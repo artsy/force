@@ -33,6 +33,11 @@ form.settings-form.settings-account-form( class=editAccountIsActive, method="pos
   input#user-profession.bordered-input( type="text", value=user.get('profession'), name="profession")
   .settings-form-error( data-attr='profession' )
 
+  .settings-bookmark-artists-container
+    label.avant-garde-form-label Artists you collect
+    #settings-bookmark-artists
+      //- Rendered client-side
+
   label.settings-group-leader.settings-group-label.avant-garde-form-label Sharing
   .input-group.settings-toggle-fb
     a#user-link-facebook.artsy-toggle.account-link-fb( data-state=user.onOffFacebook(), href="" )

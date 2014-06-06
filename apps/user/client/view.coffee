@@ -10,6 +10,7 @@ ProfileEdit        = require '../models/profile_edit.coffee'
 ProfileForm        = require './profile_form.coffee'
 ProfileIconUplaod  = require './profile_icon_upload.coffee'
 UserEdit           = require '../models/user_edit.coffee'
+BookmarksView      = require '../../../components/bookmarks/view.coffee'
 
 module.exports.UserSettingsView = class UserSettingsView extends Backbone.View
 
@@ -41,6 +42,9 @@ module.exports.UserSettingsView = class UserSettingsView extends Backbone.View
     @locationSearchView = new LocationSearchView el: @$('#profile-location')
     @locationSearchView.postRender()
     @listenTo @locationSearchView, 'location:update', @onLocationUpdate
+
+    # Artists you collect
+    @bookmarksView = new BookmarksView el: @$('#settings-bookmark-artists')
 
     # On successful posts of either form, show the success message
     @listenTo @model, 'sync', @renderSuccess
