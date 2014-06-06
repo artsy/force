@@ -329,6 +329,9 @@ module.exports = class Artwork extends Backbone.Model
   showActionsList: (user) ->
     @get('website') or @isDownloadable() or (user and user.isAdmin())
 
+  showAboutArtworkHeading: ->
+    @get('blurb') or @get('provenance') or @get('exhibition_history') or @get('signature') or @get('additional_information') or @get('literature')
+
   hasLeftInfoSection: ->
     @get('blurb') or @hasMoreInfo() or @isComparable()
 
