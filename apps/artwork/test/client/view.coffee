@@ -49,7 +49,7 @@ describe 'ArtworkView', ->
         ['detailTemplate', 'auctionPlaceholderTemplate']
       )
       @ArtworkView.__set__ 'analytics', { abTest: sinon.stub(), delta: sinon.stub(), track: { click: sinon.stub() } }
-      @ArtworkView.__set__ 'ShareView', (@shareViewStub = sinon.stub())
+      @ArtworkView.__set__ 'ShareModal', (@shareViewStub = sinon.stub())
       @ArtworkView.__set__ 'acquireArtwork', (@acquireArtworkStub = sinon.stub())
 
       stubChildClasses mod, @, ['BlurbView'], []
@@ -186,7 +186,7 @@ describe 'ArtworkView', ->
     describe '#openShare', ->
       it 'opens the share view when the share button is clicked', ->
         @view.$('.circle-icon-button-share').click()
-        @shareViewStub.args[0][0].artwork.id.should.equal @artwork.id
+        @shareViewStub.args[0][0].description.should.include @artwork.toAltText()
         @shareViewStub.args[0][0].width.should.equal '350px'
 
     describe '#route', ->

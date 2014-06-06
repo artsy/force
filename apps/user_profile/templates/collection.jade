@@ -16,9 +16,10 @@ block body
         i.icon-chevron-small-left
         | Back to works
       h1.garamond-header-center!= collection.get('name')
-      nav#user-profile-right
+      nav#user-profile-collection-right
         if isUser
-          a#user-profile-right-edit Edit
+          a#user-profile-collection-right-edit Edit
+          a#user-profile-collection-right-share Share
     #user-profile-collection-artworks.main-layout-container
     #user-profile-collection-artworks-spinner
       .loading-spinner

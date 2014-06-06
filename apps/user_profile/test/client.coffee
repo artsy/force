@@ -75,7 +75,7 @@ describe 'CollectionView', ->
         sd: {}
       }, =>
         { CollectionView } = mod = benv.require resolve(__dirname, '../client/collection')
-        stubChildClasses mod, @, ['ArtworkColumnsView'], ['appendArtworks']
+        stubChildClasses mod, @, ['ArtworkColumnsView', 'ShareModal'], ['appendArtworks']
         @view = new CollectionView
           el: $('#profile')
           artworkCollection: new ArtworkCollection id: 'saved-artwork', user_id: 'craig'
@@ -97,3 +97,10 @@ describe 'CollectionView', ->
       @view.nextPage()
       Backbone.sync.args[0][2].success [fabricate 'artwork', title: 'Andy Foobar at the Park']
       _.last(@view.columnsView.appendArtworks.args)[0][0].get('title').should.equal 'Andy Foobar at the Park'
+
+  describe '#openShareModal', ->
+
+    it 'opens a share modal for the collection', ->
+      @view.artworkCollection.set name: "Andy Foobar's Dulloroids"
+      @view.openShareModal()
+      @ShareModal.args[0][0].description.should.include "Andy Foobar's Dulloroids"

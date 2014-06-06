@@ -1,7 +1,7 @@
 _                         = require 'underscore'
 sd                        = require('sharify').data
 Backbone                  = require 'backbone'
-ShareView                 = require './share.coffee'
+ShareModal                = require '../../../components/share/modal.coffee'
 Transition                = require '../../../components/mixins/transition.coffee'
 CurrentUser               = require '../../../models/current_user.coffee'
 SaveButton                = require '../../../components/save_button/view.coffee'
@@ -321,7 +321,10 @@ module.exports = class ArtworkView extends Backbone.View
   openShare: (e) ->
     e.preventDefault()
     analytics.track.click 'Viewed sharing_is_caring form'
-    new ShareView width: '350px', artwork: @artwork
+    new ShareModal
+      width: '350px'
+      media: @artwork.defaultImageUrl('large')
+      description: @artwork.toAltText()
 
   changeImage: (e) ->
     e.preventDefault()
