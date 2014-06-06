@@ -11,5 +11,5 @@ app.set 'views', __dirname
 app.set 'view engine', 'jade'
 
 app.get '/:id', routes.setProfile
-app.get '/:id/*', routes.setProfile
+app.get '/:id/:tab*', routes.setProfile
 app.get '/:id/follow', routes.follow

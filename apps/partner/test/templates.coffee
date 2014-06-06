@@ -39,3 +39,26 @@ describe 'Partner header', ->
           id: 'pace-gallery'
       )
       @template.should.include '<link rel="canonical" href="http://localhost:3004/pace-gallery">'
+
+    it 'has meta fragment', ->
+      @template = render('index')(
+        profile: @profile
+        sd:
+          APP_URL: 'http://localhost:3004'
+          CURRENT_PATH: '/pace-gallery'
+        params:
+          id: 'pace-gallery'
+      )
+      @template.should.include '<meta name="fragment" content="!">'
+
+    it 'does not have meta fragment if tab is included', ->
+      @template = render('index')(
+        profile: @profile
+        tab: 'overview'
+        sd:
+          APP_URL: 'http://localhost:3004'
+          CURRENT_PATH: '/pace-gallery'
+        params:
+          id: 'pace-gallery'
+      )
+      @template.should.not.include '<meta name="fragment" content="!">'

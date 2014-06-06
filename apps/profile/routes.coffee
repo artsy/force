@@ -13,4 +13,5 @@ Following = require '../../components/follow_button/collection.coffee'
     success: (profile) ->
       res.locals.profile = profile
       res.locals.sd.PROFILE = profile.toJSON()
+      res.locals.tab = req.params.tab
     complete: -> next()
