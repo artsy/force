@@ -13,7 +13,8 @@ module.exports = class SearchBarView extends Backbone.View
     return unless @$el.length
 
     # Search takes a fair_id param specific to fairs. Doesn't work for other models
-    { @mode, @restrictType, @$input, @fairId, @includePrivateResults } = options
+    { @mode, @restrictType, @$input, @fairId, @includePrivateResults, @limit } =
+      _.defaults(options, limit: 10)
 
     @$input ?= @$('input')
     throw new Error('Requires an input field') unless @$input?
@@ -69,7 +70,7 @@ module.exports = class SearchBarView extends Backbone.View
 
   setupBloodHound: ->
     @hound = new Bloodhound
-      limit          : 10
+      limit          : @limit
       datumTokenizer : Bloodhound.tokenizers.obj.whitespace 'value'
       queryTokenizer : Bloodhound.tokenizers.whitespace
       remote:
