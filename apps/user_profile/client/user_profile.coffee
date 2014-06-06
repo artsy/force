@@ -5,8 +5,8 @@ CurrentUser = require '../../../models/current_user.coffee'
 FollowProfileButton = require '../../../components/partner_buttons/follow_profile.coffee'
 FollowProfiles = require '../../../collections/follow_profiles.coffee'
 FeedItems = require '../../../components/feed/collections/feed_items.coffee'
-PoplockitFeed = require('../../../components/feed/client/poplockit_feed.coffee')
-ArtworkColumnsView = require('../../../components/artwork_columns/view.coffee')
+PoplockitFeed = require '../../../components/feed/client/poplockit_feed.coffee'
+ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 Artworks = require '../../../collections/artworks.coffee'
 { CURRENT_PATH } = require('sharify').data
 

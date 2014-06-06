@@ -2,6 +2,8 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 Artworks = require '../../../collections/artworks.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
+ShareView = require '../../../components/share/view.coffee'
+ShareModal = require '../../../components/share/modal.coffee'
 { ArtworkCollection } = ArtworkCollections = require '../../../collections/artwork_collections.coffee'
 { COLLECTION, PROFILE } = require('sharify').data
 EditCollectionModal = require '../../../components/favorites2/client/edit_collection_modal.coffee'
@@ -37,10 +39,18 @@ module.exports.CollectionView = class CollectionView extends Backbone.View
     @$el.off 'infiniteScroll'
 
   events:
-    'click #user-profile-right-edit': 'openEditModal'
+    'click #user-profile-collection-right-edit': 'openEditModal'
+    'click #user-profile-collection-right-share': 'openShareModal'
 
   openEditModal: (e) ->
     new EditCollectionModal width: 500, collection: @artworkCollection
+    false
+
+  openShareModal: ->
+    new ShareModal
+      width: '350px'
+      media: @artworkCollection.artworks.first()?.defaultImageUrl('large')
+      description: @artworkCollection.get('name')
     false
 
 module.exports.init = ->
