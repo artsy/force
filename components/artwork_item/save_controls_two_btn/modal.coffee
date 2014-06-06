@@ -18,8 +18,8 @@ module.exports = class SaveControlsModal extends ModalView
     @collections = new ArtworkCollections [], user: @user
     @collections.on 'add', @renderInner
     @collections.fetch success: =>
-      @isLoaded()
       @updatePosition()
+      @isLoaded()
     super
 
   postRender: ->
