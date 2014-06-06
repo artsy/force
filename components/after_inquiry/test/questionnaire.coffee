@@ -171,7 +171,7 @@ describe 'Questionnaire', ->
           @view.attachLocationSearch.called.should.be.true
           @view.state.get('mode').should.equal 'questionnaire'
           html = @view.$el.html()
-          html.should.include 'Great. Final Step'
+          html.should.include 'Final Step'
 
       describe 'collector level 2', ->
         it 'should advance to the next state on click and have the correct copy', ->
@@ -179,7 +179,7 @@ describe 'Questionnaire', ->
           @view.attachLocationSearch.called.should.be.true
           @view.state.get('mode').should.equal 'questionnaire'
           html = @view.$el.html()
-          html.should.include 'OK. Final Step'
+          html.should.include 'Final Step'
 
     describe '#done', ->
       beforeEach ->
