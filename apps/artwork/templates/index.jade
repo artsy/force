@@ -54,7 +54,16 @@ block body
       .ari-container
         if artwork.hasLeftInfoSection()
           .ari-left
-            //- Only render the container if we have a blurb or some artworks to display
+            if artwork.showAboutArtworkHeading()
+              .about-artwork-section( class=(artist ? 'add-margin-bottom' : ''))
+                h2.avant-garde-header-center
+                  | About This Artwork
+                if artwork.get('blurb')
+                  .artwork-blurb
+                    != artwork.mdToHtml('blurb')
+                if artwork.hasMoreInfo()
+                  include ./_more-info
+
             if artist
               if artist.get('blurb')
                 .artwork-artist( data-state=(artist.get('blurb') ? '' : 'pending' ) )
@@ -66,16 +75,6 @@ block body
                     .artwork-artist-blurb
                       != artist.mdToHtml('blurb')
 
-            if artwork.get('blurb')
-              h2.avant-garde-header-center
-                | About This Artwork
-              .artwork-blurb
-                != artwork.mdToHtml('blurb')
-
-            if artwork.hasMoreInfo()
-              include ./_more-info
-
-            br
             if artwork.isComparable()
               a.artwork-auction-results-button.avant-garde-header-small( href="/artwork/#{artwork.id}/auction-results" ) See related auction results
         #artwork-artist-related-posts-container.ari-right( class=(artwork.hasLeftInfoSection() ? "" : "borderless") )
