@@ -41,7 +41,7 @@ bordered-input-placeholder--autofocus-focus()
   &.is-persistplaceholder:focus
     placeholder(bordered-input-placeholder--autofocus-focus)
 
-  &[data-state=error]
+  &[data-state='error']
   &.is-error
     border-color red-color
 
@@ -155,3 +155,53 @@ form.is-validated
   .bordered-input
     &:invalid
       @extends .bordered-input.is-error
+
+// Auto-complete
+.autocomplete-input-container
+  display inline-block
+  position relative
+  // Fix for Firefox
+  line-height 0
+  &[data-state='loading']
+  &.is-loading
+    > .autocomplete-loading-indicator
+      display block
+      > .loading-spinner-small
+        background-color purple-color
+  > .autocomplete-loading-indicator
+    display none
+    position absolute
+    top 0
+    right 0
+    width 50px
+    height 100%
+
+  &.is-block
+    display block
+    &
+    input
+      width 100%
+
+  // Dropdown
+  .twitter-typeahead
+    display block
+    width 100%
+    height 100%
+  .tt-hint
+    display none
+  .tt-dropdown-menu
+    width 100%
+    background-color #fff
+    border 2px solid purple-color
+    border-top none
+    text-align left
+    z-index zindex-modal
+  .tt-suggestion
+    border-bottom 1px solid gray-lighter-color
+    &:last-child
+      border-bottom none
+    &:hover
+    &.tt-cursor
+      background-color #000
+      *
+        color #fff

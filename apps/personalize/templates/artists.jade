@@ -6,11 +6,11 @@ header.personalize-header
   aside Get notified when new shows open or works are added
 
 section.personalize-step( data-step='artists' )
-  #personalize-search-container
-    input#personalize-search.bordered-input.is-block(
+  #personalize-search-container.autocomplete-input-container.is-block
+    input#personalize-search.bordered-input(
       type='text', placeholder!='Type your favorite artist&rsquo;s name', autofocus=autofocus
     )
-    #personalize-search-spinner: .loading-spinner-small
+    .autocomplete-loading-indicator: .loading-spinner-small
 
   #personalize-followed
 

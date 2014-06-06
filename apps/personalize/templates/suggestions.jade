@@ -6,11 +6,11 @@ header.personalize-header
   aside= aside
 
 section.personalize-step( data-step='#{kind}' )
-  #personalize-search-container
-    input#personalize-search.bordered-input.is-block(
+  #personalize-search-container.autocomplete-input-container.is-block
+    input#personalize-search.bordered-input(
       type='text', placeholder!='#{placeholder}', autofocus=autofocus
     )
-    #personalize-search-spinner: .loading-spinner-small
+    .autocomplete-loading-indicator: .loading-spinner-small
 
   #personalize-followed
 

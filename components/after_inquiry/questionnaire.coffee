@@ -6,6 +6,7 @@ GeoFormatter        = require 'geoformatter'
 Form                = require '../mixins/form.coffee'
 mediator            = require '../../lib/mediator.coffee'
 analytics           = require '../../lib/analytics.coffee'
+BookmarksView       = require '../bookmarks/view.coffee'
 
 templateMap =
   initial       : -> require('./templates/initial.jade') arguments...
@@ -126,9 +127,15 @@ module.exports = class Questionnaire extends ModalView
 
     if mode is 'questionnaire'
       @once 'rerendered', =>
+        @attachBookmarksView()
         @attachLocationSearch()
 
     super
+
+  attachBookmarksView: ->
+    @bookmarksView = new BookmarksView el: @$('#after-inquiry-bookmark-artists'), limit: 2
+    # Height changes on render so recenter the modal
+    @bookmarksView.on 'render:collection', @updatePosition
 
   attachLocationSearch: ->
     @locationSearchView = new LocationSearchView el: @$('#after-inquiry-collector-location'), autofocus: false
@@ -139,4 +146,5 @@ module.exports = class Questionnaire extends ModalView
   remove: ->
     mediator.off null, null, this
     @locationSearchView?.remove()
+    @bookmarksView?.remove()
     super

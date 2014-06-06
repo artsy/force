@@ -63,11 +63,11 @@ module.exports = class ArtistsView extends StepView
   # Removes the corresponding suggestionSet and disposes of
   # its FollowButton views
   disposeSuggestionSet: (model) ->
-    suggestionSet = @suggestions.remove model.id
-    _.each suggestionSet.get('suggestions').pluck('id'), (id) =>
-      key = "#{suggestionSet.id}_#{id}"
-      @followButtonViews[key].remove()
-      @followButtonViews[key] = null
+    if (suggestionSet = @suggestions.remove model.id)
+      _.each suggestionSet.get('suggestions').pluck('id'), (id) =>
+        key = "#{suggestionSet.id}_#{id}"
+        @followButtonViews[key].remove()
+        @followButtonViews[key] = null
 
   renderSuggestions: ->
     (@$suggestions ?= @$('#personalize-suggestions')).
