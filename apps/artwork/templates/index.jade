@@ -55,7 +55,7 @@ block body
         if artwork.hasLeftInfoSection()
           .ari-left
             if artwork.showAboutArtworkHeading()
-              .about-artwork-section( class=(artist ? 'add-margin-bottom' : ''))
+              .about-artwork-section( class=(artist && artist.get('blurb') ? 'add-margin-bottom' : ''))
                 h2.avant-garde-header-center
                   | About This Artwork
                 if artwork.get('blurb')
