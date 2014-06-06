@@ -13,6 +13,7 @@ FeatureNavigationView     = require './feature-navigation.coffee'
 BelowTheFoldView          = require './below-the-fold.coffee'
 trackArtworkImpressions   = require("../../../components/analytics/impression_tracking.coffee").trackArtworkImpressions
 MonocleView               = require './monocles.coffee'
+BlurbView                 = require '../../../components/blurb/view.coffee'
 Sale                      = require '../../../models/sale.coffee'
 ZigZagBanner              = require '../../../components/zig_zag_banner/index.coffee'
 Auction                   = require './mixins/auction.coffee'
@@ -246,6 +247,13 @@ module.exports = class ArtworkView extends Backbone.View
       mode: 'vertical'
       numToShow: 2
       canBeEmpty: false
+
+    if ($blurb = $('.artwork-additional-information')).length
+      new BlurbView
+        updateOnResize : true
+        lineCount      : 2
+        el             : $blurb
+      $blurb.css maxHeight: 'none'
 
     @$('.ari-right').css
       'min-height': @$('.ari-left').height()
