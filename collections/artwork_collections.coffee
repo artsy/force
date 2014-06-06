@@ -30,7 +30,7 @@ class ArtworkCollection extends Backbone.Model
   removeArtwork: (artwork, options ={}) ->
     @artworks.remove artwork
     new Backbone.Model(id: 1).destroy _.extend options,
-      url: "#{API_URL}/api/v1/collection/#{@get 'id'}/artwork/#{artworkId}?user_id=#{@userId()}"
+      url: "#{API_URL}/api/v1/collection/#{@get 'id'}/artwork/#{artwork.get 'id'}?user_id=#{@userId()}"
 
   initArtworks: ->
     @artworks ?= new Artworks

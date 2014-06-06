@@ -2,6 +2,7 @@ Backbone = require 'backbone'
 sinon = require 'sinon'
 CurrentUser = require '../../models/current_user'
 ArtworkCollections = require '../../collections/artwork_collections'
+Artwork = require '../../models/artwork'
 { fabricate } = require 'antigravity'
 
 describe 'ArtworkCollections', ->
@@ -25,9 +26,14 @@ describe 'ArtworkCollections', ->
 
     it 'saves the artwork to the collection', ->
       @collections.add { id: 'saved-artwork' }
-      @collections.first().saveArtwork 'foo-bar'
+      @collections.first().saveArtwork new Artwork id: 'foo-bar'
       Backbone.sync.args[0][2].url.should
         .include '/api/v1/collection/saved-artwork/artwork/foo-bar?user_id=' + @user.id
+
+    it 'adds the artwork to the collections artworks', ->
+      @collections.add { id: 'saved-artwork' }
+      @collections.first().saveArtwork new Artwork id: 'foo-bar'
+      @collections.first().artworks.first().get('id').should.equal 'foo-bar'
 
   describe 'comparator', ->
 
