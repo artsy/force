@@ -5,6 +5,7 @@ Backbone        = require 'backbone'
 sinon           = require 'sinon'
 { resolve }     = require 'path'
 { fabricate }   = require 'antigravity'
+{ stubChildClasses }  = require '../../../../test/helpers/stubs'
 
 Artist        = require '../../../../models/artist'
 Artwork       = require '../../../../models/artwork'
@@ -43,13 +44,15 @@ describe 'ArtworkView', ->
       artist: @artist
       artwork: @artwork
     }, =>
-      @ArtworkView = benv.requireWithJadeify(
+      @ArtworkView = mod = benv.requireWithJadeify(
         (resolve __dirname, '../../client/view'),
         ['detailTemplate', 'auctionPlaceholderTemplate']
       )
       @ArtworkView.__set__ 'analytics', { abTest: sinon.stub(), delta: sinon.stub(), track: { click: sinon.stub() } }
       @ArtworkView.__set__ 'ShareView', (@shareViewStub = sinon.stub())
       @ArtworkView.__set__ 'acquireArtwork', (@acquireArtworkStub = sinon.stub())
+
+      stubChildClasses mod, @, ['BlurbView'], []
 
       @artworkColumnsView = { appendArtworks: sinon.stub() }
       @ArtworkColumnsView = sinon.stub()
