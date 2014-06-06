@@ -32,7 +32,8 @@ module.exports = class SaveControls extends Backbone.View
     $(document).off 'click.save-controls-' + @cid
 
   addToCollection: (col) ->
-    col.saveArtwork @model.get('id')
+    col.saveArtwork @model
+    mediator.trigger 'create:artwork:collection', col
     @$('.save-controls-drop-down-menu-item').removeClass 'is-active'
     @$(".save-controls-drop-down-menu-item:eq(#{@collections.indexOf col})").addClass 'is-active'
 

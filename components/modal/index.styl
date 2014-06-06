@@ -13,7 +13,7 @@ body.is-modal
     opacity 1
     > .modal-backdrop > .modal-dialog
       // Avoid transitioning the initial open
-      transition all 0.25s, width 0
+      transition opacity 0.25s, width 0
   // Slide modal dialog in
   &.is-slide-in
     > .modal-backdrop > .modal-dialog
@@ -24,7 +24,7 @@ body.is-modal
       > .modal-backdrop > .modal-dialog
         transform translateY(0)
         // Avoid transitioning the initial open
-        transition all 0.25s, width 0, transform 0.4s
+        transition opacity 0.25s, width 0, transform 0.4s
 
   &.is-loading
     > .modal-backdrop::before
