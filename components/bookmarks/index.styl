@@ -1,18 +1,13 @@
 @import '../stylus_lib'
 
-.bookmark-artist
-  display table
-  width 100%
-  border-bottom 1px solid gray-lighter-color
-  &:last-child
-    border-bottom none
-.bookmark-artist-name
+#bookmark-artists-results
+  opacity 0
+  transition opacity 0.5s
+  &.is-fade-in
+    opacity 1
+
 .bookmark-artist-remove
-  display table-cell
-  padding 10px 0
-  vertical-align middle
-.bookmark-artist-remove
-  padding-left 10px 10px 10px 20px
+  padding 10px 10px 10px 20px
   cursor pointer
   text-align right
   iconfont-styling()
