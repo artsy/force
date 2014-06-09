@@ -1,9 +1,9 @@
-.personalize-followeds
+.results-list
   for model in models
-    .personalize-followed
-      span.pfa-name
+    .results-list-item
+      span.pfa-name.results-list-item-cell
         if model.get('owner')
           = model.get('owner').name
         else
           = model.get('name')
-      a.pfa-remove( data-id= model.id )
+      a.pfa-remove.results-list-item-cell( data-id= model.id )
