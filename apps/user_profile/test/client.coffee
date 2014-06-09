@@ -74,10 +74,10 @@ describe 'CollectionView', ->
         collection: new Backbone.Model(name: 'saved-artwork')
         sd: {}
       }, =>
-        { CollectionView } = mod = benv.require resolve(__dirname, '../client/collection')
+        { CollectionView } = mod = benv.requireWithJadeify resolve(__dirname, '../client/collection'), ['emptyTemplate']
         stubChildClasses mod, @, ['ArtworkColumnsView', 'ShareModal'], ['appendArtworks']
         @view = new CollectionView
-          el: $('#profile')
+          el: $('body')
           artworkCollection: new ArtworkCollection id: 'saved-artwork', user_id: 'craig'
         done()
 
@@ -104,3 +104,11 @@ describe 'CollectionView', ->
       @view.artworkCollection.set name: "Andy Foobar's Dulloroids"
       @view.openShareModal()
       @ShareModal.args[0][0].description.should.include "Andy Foobar's Dulloroids"
+
+  describe '#renderEmpty', ->
+
+    it 'renders an emtpy state', ->
+      @view.renderEmpty()
+      _.last(Backbone.sync.args)[2].success [fabricate 'set']
+      _.last(Backbone.sync.args)[2].success [fabricate 'featured_link', title: 'Design on Artsy']
+      @view.$el.html().should.include 'Design on Artsy'

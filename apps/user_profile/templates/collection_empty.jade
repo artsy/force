@@ -1,0 +1,11 @@
+h1#upc-empty-header
+  | You haven't saved any works to this collection yet.
+.large-garamond-header Featured on Artsy
+hr
+ul#upc-featured-sets
+  for link in featuredLinks
+    li
+      a( href=link.get('href') )
+        h3= link.get('title')
+        img( src=link.imageUrl('medium_rectangle'), alt=link.get('title') )
+        h4= link.get('subtitle')

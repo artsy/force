@@ -46,8 +46,8 @@ module.exports = class SaveControls extends Backbone.View
     false
 
   rollup: =>
-    @$el.attr 'data-state', 'saved-close'
-    clearTimeout @rollupTimeout
+    @$el.attr('data-state', 'saved-close') if @$el.attr('data-state') is 'saved'
+    @clearRollup()
 
   events:
     'click .overlay-button-save': 'openCollectionModal'
@@ -56,9 +56,18 @@ module.exports = class SaveControls extends Backbone.View
     'click form button': 'newCollection'
     'click .save-controls-drop-down-new input': (e) -> e.preventDefault()
     'click': (e) -> e.preventDefault()
-    'focus .save-controls-drop-down-new input': -> clearTimeout @rollupTimeout
     'mouseover .icon-plus-small': -> @$('.save-controls-drop-down-new').addClass 'is-hover'
     'mouseout .icon-plus-small': -> @$('.save-controls-drop-down-new').removeClass 'is-hover'
+    'mouseout': 'setRollup'
+    'mouseover': 'clearRollup'
+
+  setRollup: ->
+    @rollupTimeout = setTimeout @rollup, 4000
+    $(window).one 'scroll.view-' + @cid, @rollup
+
+  clearRollup: ->
+    clearTimeout @rollupTimeout
+    $(window).off 'scroll.view-' + @cid
 
   openCollectionModal: ->
     return @showSignupModal() unless @user
@@ -67,8 +76,6 @@ module.exports = class SaveControls extends Backbone.View
       @$el.attr 'data-state', 'saved'
       @addToCollection @collections.get('saved-artwork')
       $(document).on 'click', @closeOnClickOff
-      $(window).one 'scroll', @rollup
-      @rollupTimeout = setTimeout @rollup, 6000
 
   onAddToCollection: (e) ->
     e.preventDefault()
