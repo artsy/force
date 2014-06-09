@@ -4,7 +4,6 @@
 
 express = require 'express'
 routes = require './routes'
-{ parameterize } = require '../../components/util/string.coffee'
 
 app = module.exports = express()
 app.set 'views', __dirname + '/templates'
