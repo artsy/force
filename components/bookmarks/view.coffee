@@ -35,9 +35,7 @@ module.exports = class BookmarksView extends Backbone.View
       limit : @limit
 
     @listenTo @autocomplete, 'search:selected', @collect
-    @listenTo @bookmarks, 'sync', @renderCollection
-    @listenTo @bookmarks, 'add', @renderCollection
-    @listenTo @bookmarks, 'remove', @renderCollection
+    @listenTo @bookmarks, 'sync add remove', @renderCollection
 
     @autocomplete.$input.on 'keydown', @trapEnter
 
@@ -54,11 +52,13 @@ module.exports = class BookmarksView extends Backbone.View
       false
 
   collect: (e, model) ->
+    @trigger 'collect'
     @bookmarks.createFromArtist model
     @autocomplete.clear()
     @following.follow model.id
 
   uncollect: (e) ->
+    @trigger 'uncollect'
     id      = $(e.currentTarget).data 'id'
     model   = @bookmarks.findByArtistId id
     model.destroy()
