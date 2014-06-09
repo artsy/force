@@ -1,0 +1,49 @@
+extends ../../../components/main_layout/templates/index
+
+block head
+  include meta
+
+append locals
+  - assetPackage = 'location'
+
+block body
+  .main-layout-container
+    h1.garamond-header-center Galleries and Shows Near&nbsp;
+      em= name
+
+    if !fairs.isEmpty()
+      .list_section.fairs
+        h3.avant-garde-header-center Fairs
+        for fair in fairs.models
+          .fair
+            .fair_image
+              a.rsf-image.hoverable-image-link( href=fair.href() )
+                img.hoverable-image( src= fair.organizerProfileImage() )
+            .fair_meta
+              h4.name
+                a( href=fair.href() )= fair.get('name')
+              .summary= fair.get('summary')
+
+    if !shows.isEmpty()
+      .list_section.shows
+        - var header = "Shows"
+        include ../../../components/related_shows/template.jade
+        .see_more
+          a.avant-garde-button-text( href='/shows' ) See More Shows
+
+    if !profiles.isEmpty()
+      .list_section.featured-partners-grid.profiles
+        h3.avant-garde-header-center Galleries and Institutions
+
+        .profiles
+          for profile in profiles.models
+            - var partner = profile.get('owner')
+            figure.featured-partner-profile( data-profile-id=profile.get('id') )
+              a.featured-partner-profile-cover-link( href="/" + profile.get('id') )
+                img.profile-cover-image( src=profile.coverImage().imageUrl('medium') )
+              figcaption
+                h3.featured-partner-profile-name
+                  a( href="/" + profile.get('id') )= partner['name']
+                h4.featured-partner-profile-location= partner['type']
+          .see_more
+            a.avant-garde-button-text( href='/partners' ) See More Partners

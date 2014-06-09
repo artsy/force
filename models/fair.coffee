@@ -29,6 +29,14 @@ module.exports = class Fair extends Backbone.Model
     if @get('location')
       new PartnerLocation @get('location')
 
+  profileImage: (profile_id) ->
+    url = "#{sd.API_URL}/api/v1/profile/#{profile_id}/image"
+    url = "#{url}?xapp_token=#{sd.ARTSY_XAPP_TOKEN}" if sd.ARTSY_XAPP_TOKEN?
+    url
+
+  organizerProfileImage: ->
+    @profileImage(@get('organizer').profile_id) if @get('organizer')?.profile_id?
+
   formatLocation: ->
     @location()?.get('city')
 

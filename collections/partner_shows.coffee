@@ -12,6 +12,8 @@ module.exports = class PartnerShows extends Backbone.Collection
 
   model: PartnerShow
 
+  url: "#{sd.API_URL}/api/v1/shows"
+
   #
   # Get the running partner shows collection.
   #
