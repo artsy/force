@@ -205,3 +205,25 @@ form.is-validated
       background-color #000
       *
         color #fff
+
+// Result lists
+// (typically appended to from autocompletes)
+.results-list
+  margin 20px 0
+.results-list-item
+  display table
+  width 100%
+  border-bottom 1px solid gray-lighter-color
+  &:first-child
+    border-top @border-bottom
+.results-list-item-cell
+  display table-cell
+  vertical-align middle
+  // Account for Avant Garde baseline
+  padding 11px 0 9px 0
+  avant-garde()
+  font-size 13px
+  &:first-child
+    text-align left
+  &:last-child
+    text-align right
