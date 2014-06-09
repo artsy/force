@@ -1,7 +1,6 @@
 .follow-button
   &:before
     content 'Follow'
-
   &[data-state='following'], &.is-following
     color purple-color
     &:before
@@ -14,3 +13,30 @@
         content 'Unfollow'
       &.is-clicked:before
         content 'Following'
+
+.plus-follow-button
+  cursor pointer
+  display inline
+  &.is-following, &:hover
+    color: purple-color
+  .icon-follow-circle, .follow-button-text
+    display inline
+  .icon-follow-circle
+    font-size 15px
+    margin-right: 5px
+  .follow-button-text
+    &:before
+      content 'Follow'
+  &[data-state='following'], &.is-following
+    .follow-button-text
+      &:before
+        content 'Following'
+  &.no-touch[data-state='following'],
+  &.no-touch.is-following
+    &:hover
+      color red-color
+      .follow-button-text
+        &:before
+          content 'Unfollow'
+        &.is-clicked:before
+          content 'Following'
