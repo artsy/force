@@ -45,3 +45,24 @@ article.sg-component
   pre: code
     | a.artsy-toggle( data-state='on' ): .artsy-toggle-dot
     | a.artsy-toggle( data-state='off' ): .artsy-toggle-dot
+
+article.sg-component
+  h3 Results list
+  .sg-component-rendered
+    div( style='width: 50%; margin: auto;' )
+      input.bordered-input.is-block( placeholder='Search' )
+      .results-list
+        .results-list-item
+          .results-list-item-cell Liz Deschenes
+          .results-list-item-cell Following
+        .results-list-item
+          .results-list-item-cell Walead Beshty
+          .results-list-item-cell Following
+        .results-list-item
+          .results-list-item-cell Eileen Quinlan
+          .results-list-item-cell Following
+  pre: code
+    |  .results-list
+    |    .results-list-item
+    |      .results-list-item-cell Liz Deschenes
+    |      .results-list-item-cell Following

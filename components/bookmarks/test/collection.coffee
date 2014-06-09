@@ -22,7 +22,7 @@ describe 'Bookmarks', ->
       @bookmarks.length.should.equal 2
       @bookmarks.createFromArtist new Backbone.Model id: 'qux'
       @bookmarks.length.should.equal 3
-      bookmark = @bookmarks.last()
+      bookmark = @bookmarks.first()
       bookmark.get('artist').id.should.equal 'qux'
       bookmark.get('artist_id').should.equal 'qux'
       bookmark.get('bookmark_type').should.equal 'collecting'
