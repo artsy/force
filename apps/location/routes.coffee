@@ -26,7 +26,7 @@ querystring = require 'querystring'
 
   requests.push partners.fetch
     cache: true
-    data: { near: context.coords.toString(), has_full_profile: true, size: 20 }
+    data: { near: context.coords.toString(), has_full_profile: true, size: 20, sort: 'relative_size' }
     success: ->
       return render() if partners.isEmpty()
       profiles.url = "#{sd.API_URL}/api/v1/profiles"
