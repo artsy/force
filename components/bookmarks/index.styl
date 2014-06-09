@@ -1,19 +1,28 @@
 @import '../stylus_lib'
 
 .bookmark-artist
-  clearfix()
+  display table
+  width 100%
   border-bottom 1px solid gray-lighter-color
   &:last-child
     border-bottom none
-  &:hover
-    background-color gray-lightest-color
-    transition background-color 0.125s
 .bookmark-artist-name
 .bookmark-artist-remove
-  padding 10px
-.bookmark-artist-name
-  float left
+  display table-cell
+  padding 10px 0
+  vertical-align middle
 .bookmark-artist-remove
-  float right
-  padding-left 20px
+  padding-left 10px 10px 10px 20px
   cursor pointer
+  text-align right
+  iconfont-styling()
+  font-size 14px
+  line-height 14px
+  &:before
+    // .icon-check
+    content '\e627'
+  &:hover:before
+    color red-color
+    vendor('text-stroke-width', 1px)
+    // .icon-close
+    content '\e614'
