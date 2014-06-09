@@ -4,6 +4,7 @@ Backbone        = require 'backbone'
 SearchBarView   = require '../search_bar/view.coffee'
 Following       = require '../follow_button/collection.coffee'
 Bookmarks       = require './collection.coffee'
+analytics       = require '../../lib/analytics.coffee'
 
 template            = -> require('./templates/index.jade') arguments...
 bookmarksTemplate   = -> require('./templates/bookmarks.jade') arguments...
@@ -56,6 +57,7 @@ module.exports = class BookmarksView extends Backbone.View
     @bookmarks.createFromArtist model
     @autocomplete.clear()
     @following.follow model.id
+    analytics.track.other 'Added an artist to their collection'
 
   uncollect: (e) ->
     @trigger 'uncollect'
@@ -64,6 +66,7 @@ module.exports = class BookmarksView extends Backbone.View
     model.destroy()
     @autocomplete.$input.focus()
     @following.unfollow id
+    analytics.track.other 'Removed an artist from their collection'
 
   renderCollection: ->
     @trigger 'render:collection'
