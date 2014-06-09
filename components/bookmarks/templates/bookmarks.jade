@@ -1,4 +1,4 @@
 for bookmark in bookmarks.models
-  .bookmark-artist
-    .bookmark-artist-name= bookmark.get('artist').name
-    .bookmark-artist-remove( data-id= bookmark.get('artist').id )
+  .bookmark-artist.results-list-item
+    .bookmark-artist-name.results-list-item-cell= bookmark.get('artist').name
+    .bookmark-artist-remove.results-list-item-cell( data-id= bookmark.get('artist').id )
