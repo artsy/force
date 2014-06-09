@@ -127,7 +127,7 @@ module.exports = class Questionnaire extends ModalView
 
     if mode is 'questionnaire'
       @once 'rerendered', =>
-        @attachBookmarksView()
+        @attachBookmarksView() if @user.get('collector_level') is 3
         @attachLocationSearch()
 
     super
