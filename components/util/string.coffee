@@ -12,6 +12,3 @@ module.exports =
   underscore: (text) ->
     return unless text
     text.toLowerCase().replace(/[\s]+/g, '_')
-
-  parameterize: (text, sep = '-') ->
-    text.trim().toLowerCase().replace /[^a-z0-9\-_]+/, sep
