@@ -1,4 +1,5 @@
-@import '../../components/stylus_lib'
+@import '../../../components/stylus_lib'
+@import './collection.styl'
 
 #profile
   padding 40px 0
@@ -73,38 +74,3 @@
 
 #profile-favorites
   padding layout-side-margin
-
-#user-profile-collection
-  position relative
-  header
-    margin-top 120px
-  h1
-    font-size 36px
-  .contextual-return-link
-    position absolute
-    left 0
-
-#user-profile-collection-artworks
-  margin 100px 0
-  .artwork-item-image
-    max-height none
-    width 100%
-
-#user-profile-collection-artworks-spinner
-  position relative
-  padding 100px 0
-
-#user-profile-collection-right
-  float right
-  avant-garde()
-  position absolute
-  top 0
-  right 0
-  font-size default-avant-garde-font-size
-  a
-    padding 2px 10px 0 10px
-    border-right 2px solid gray-lighter-color
-    display inline-block
-    &:last-child
-      border-right 0
-      padding-right 0

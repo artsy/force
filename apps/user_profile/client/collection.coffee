@@ -7,6 +7,8 @@ ShareModal = require '../../../components/share/modal.coffee'
 { ArtworkCollection } = ArtworkCollections = require '../../../collections/artwork_collections.coffee'
 { COLLECTION, PROFILE } = require('sharify').data
 EditCollectionModal = require '../../../components/favorites2/client/edit_collection_modal.coffee'
+FeaturedLinks = require '../../../collections/featured_links.coffee'
+emptyTemplate = -> require('../templates/collection_empty.jade') arguments...
 
 module.exports.CollectionView = class CollectionView extends Backbone.View
 
@@ -21,7 +23,7 @@ module.exports.CollectionView = class CollectionView extends Backbone.View
       gutterWidth: 80
     @$el.infiniteScroll @nextPage
     @artworkCollection.on 'change:name', @renderName
-    @nextPage()
+    @nextPage()?.then (res) => @renderEmpty() if res.length is 0
 
   renderName: =>
     @$('h1').text @artworkCollection.get 'name'
@@ -33,6 +35,13 @@ module.exports.CollectionView = class CollectionView extends Backbone.View
       success: (col, res) =>
         return @endInfiniteScroll() if res.length is 0
         @columnsView.appendArtworks new Artworks(res).models
+
+  renderEmpty: ->
+    new FeaturedLinks().fetchSetItemsByKey 'homepage:featured-sections',
+      success: (featuredLinks) =>
+        @$('#user-profile-collection-artworks').html(
+          emptyTemplate featuredLinks: featuredLinks.models
+        )
 
   endInfiniteScroll: =>
     @$('#user-profile-collection-artworks-spinner').hide()
