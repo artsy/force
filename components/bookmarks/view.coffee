@@ -20,7 +20,7 @@ module.exports = class BookmarksView extends Backbone.View
   initialize: (options = {}) ->
     return unless sd.CURRENT_USER?
 
-    { @limit } = options
+    { @limit, @autofocus } = options
 
     @render()
 
@@ -71,7 +71,7 @@ module.exports = class BookmarksView extends Backbone.View
       .html @bookmarksTemplate(bookmarks: @bookmarks)
 
   render: ->
-    @$el.html @template()
+    @$el.html @template(autofocus: @autofocus)
     this
 
   remove: ->
