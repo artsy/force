@@ -29,7 +29,6 @@ module.exports.CollectionView = class CollectionView extends Backbone.View
 
   onRemove: (artwork) =>
     @artworks.remove artwork.get('id')
-    @$(".artwork-item[data-artwork=#{artwork.get('id')}]").remove()
     @renderEmpty() if @artworkCollection.artworks.length is 0
 
   renderName: =>

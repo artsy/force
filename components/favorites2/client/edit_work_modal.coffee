@@ -32,6 +32,7 @@ module.exports = class EditWorkModal extends ModalView
     @$('.favorites2-edit-modal-delete-container, .favorites2-edit-modal-init').toggle()
 
   delete: ->
+    console.log @artwork
     @collection.removeArtwork @artwork
     @close()
 

@@ -75,7 +75,7 @@ describe 'CollectionView', ->
         sd: {}
       }, =>
         { CollectionView } = mod = benv.requireWithJadeify resolve(__dirname, '../client/collection'), ['emptyTemplate']
-        stubChildClasses mod, @, ['ArtworkColumnsView', 'ShareModal'], ['appendArtworks']
+        stubChildClasses mod, @, ['ArtworkColumnsView', 'ShareModal', 'EditWorkModal'], ['appendArtworks']
         @view = new CollectionView
           el: $('body')
           artworkCollection: new ArtworkCollection id: 'saved-artwork', user_id: 'craig'
@@ -111,3 +111,16 @@ describe 'CollectionView', ->
       @view.renderEmpty()
       _.last(Backbone.sync.args)[2].success [fabricate 'featured_link', title: 'Design on Artsy']
       @view.$el.html().should.include 'Design on Artsy'
+
+  describe '#onRemove', ->
+
+    it 'removes the artwork', ->
+      @view.artworks.reset [fabricate('artwork'), fabricate('artwork')]
+      @view.onRemove @view.artworks.first()
+      @view.artworks.length.should.equal 1
+
+  describe '#openEditWorkModal', ->
+
+    it 'opens an edit work modal', ->
+      @view.openEditWorkModal(preventDefault: ->)
+      @EditWorkModal.args[0][0].width.should.equal 550
