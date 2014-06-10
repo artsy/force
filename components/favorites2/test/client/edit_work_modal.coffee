@@ -45,4 +45,6 @@ describe 'EditWorkModal', ->
       @view.delete $("<div data-id='cats'></div>")
       _.last(Backbone.sync.args)[2].url.should.include '/saved-artwork/artwork/skull'
 
-  describe '#moveTo'
+  describe '#moveTo', ->
+
+    it ''
