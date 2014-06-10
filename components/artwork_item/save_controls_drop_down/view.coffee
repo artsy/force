@@ -46,6 +46,7 @@ module.exports = class SaveControls extends Backbone.View
     false
 
   rollup: =>
+    return if @$('.save-controls-drop-down-new input').is(':focus')
     @$el.attr('data-state', 'saved-close') if @$el.attr('data-state') is 'saved'
     @clearRollup()
 

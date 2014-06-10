@@ -1,0 +1,25 @@
+.favorites2-edit-modal.favorites2-edit-work-modal
+  .favorites2-edit-modal-init
+    h1.modal-h1 Edit Work
+    hr
+    label.avant-garde-form-label Current Set:
+    .edit-work-modal-default-collection
+      = currentCollection.get('name')
+      .icon-check
+    br
+    label.avant-garde-form-label Move To:
+    ul.favorites2-edit-work-modal-move-to-list
+      for collection in otherCollections
+        li( data-id=collection.get('id') )= collection.get('name')
+    br
+    button.avant-garde-button-white.favorites2-edit-modal-delete
+      include ../images/delete.svg
+      | Delete
+    button.avant-garde-button-white.favorites2-edit-modal-cancel Cancel
+    button.avant-garde-button-black.favorites2-edit-modal-submit Save Changes
+  .favorites2-edit-modal-delete-container
+    header
+      h1 Are you sure you want to remove this work?
+      h2 This will also remove the work from any set it is in.
+    button.avant-garde-button-white.favorites2-edit-modal-cancel-delete Cancel
+    button.avant-garde-button-black.favorites2-edit-modal-delete-confirm Remove
