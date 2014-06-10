@@ -1,8 +1,9 @@
+- description = "Recent news and press highlights about Artsy"
 title Press | Artsy
 meta( property="og:title", content="Press | Artsy" )
-meta( name="description", content="Artsy is an easy new way to discover, learn about, and buy art you'll love, featuring fine art, design, and photography from the leading international galleries, museums, and private collections." )
-meta( name="og:description", content="Artsy is an easy new way to discover, learn about, and buy art you'll love, featuring fine art, design, and photography from the leading international galleries, museums, and private collections." )
-meta( property="twitter:description", content="Artsy is an easy new way to discover, learn about, and buy art you'll love, featuring fine art, design, and photography from the leading international galleries, museums, and private collections." )
+meta( name="description", content=description )
+meta( name="og:description", content=description )
+meta( property="twitter:description", content=description )
 link( rel="alternate", media=sd.MOBILE_MEDIA_QUERY, href=(sd.CANONICAL_MOBILE_URL + "/press") )
 link( rel="canonical", href=(sd.APP_URL + "/press") )
 meta( property="og:url", content=(sd.APP_URL + "/press") )

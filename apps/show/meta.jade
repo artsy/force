@@ -1,7 +1,7 @@
 //- TODO: Add image to twitter card / OG if the show has an image
-- description = "Artsy is an easy new way to discover, learn about, and buy art you'll love, featuring fine art, design, and photography from the leading international galleries, museums, and private collections."
-title!= show.metaTitle() + " | Artsy"
-meta( property="og:title", content!="#{show.metaTitle()} | Artsy" )
+- description = show.toPageDescription()
+title= show.toPageTitle()
+meta( property="og:title", content=show.toPageTitle())
 meta( name="description", content=description )
 meta( property="og:description", content=description )
 meta( property="twitter:description", content=description )

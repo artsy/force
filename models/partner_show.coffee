@@ -37,14 +37,18 @@ module.exports = class PartnerShow extends Backbone.Model
     else
       null
 
-  metaTitle: ->
+  toPageTitle: ->
     _.compact([
       @get 'name' || ''
       @get('partner')?.name || ''
       @get('fair')?.name || ''
       @location()?.singleLine() || ''
       @runningDates() || ''
+      "Artsy"
     ]).join ' | '
+
+  # past / current / upcomming show featuring works by {artists} on view at {gallery name} {location} {dates}
+  toPageDescription: ->
 
   #
   # Get the poster image url of the show (e.g. used in the shows tab in
@@ -143,6 +147,7 @@ module.exports = class PartnerShow extends Backbone.Model
   fairName: ->
     @get('fair').name
 
+  # Show json is different in the feed and includes an array of artist's short json
   formatArtists: (max=Infinity) ->
     return "" unless @has('artists')
     artists = @get('artists').map (artist) -> "<a href='/artist/#{artist.id}'>#{artist.name}</a>"
@@ -152,6 +157,16 @@ module.exports = class PartnerShow extends Backbone.Model
       "#{artists[0..(max-1)].join(', ')} and #{artists[(max-1)..].length - 1} more"
 
   artists: -> new Artists(@get('artists'))
+
+  fetchArtists: (options) ->
+    artists = new Artists()
+    artists.url = "#{@url()}/artists"
+    artists.fetch
+      cache: true
+      success: (artists) ->
+        @set artists: artists.models
+        options?.success artists
+      error: options?.error
 
   formatCity: =>
     @get('location')?.city
