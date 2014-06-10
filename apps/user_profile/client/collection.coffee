@@ -8,7 +8,7 @@ EditCollectionModal = require '../../../components/favorites2/client/edit_collec
 FeaturedLinks = require '../../../collections/featured_links.coffee'
 emptyTemplate = -> require('../templates/collection_empty.jade') arguments...
 { ArtworkCollection } = ArtworkCollections = require '../../../collections/artwork_collections.coffee'
-{ COLLECTION, PROFILE, API_URL, MEDIUM_SET_ID } = require('sharify').data
+{ COLLECTION, PROFILE, API_URL, EMPTY_COLLECTION_SET_ID } = require('sharify').data
 
 module.exports.CollectionView = class CollectionView extends Backbone.View
 
@@ -38,7 +38,7 @@ module.exports.CollectionView = class CollectionView extends Backbone.View
 
   renderEmpty: ->
     new FeaturedLinks().fetch
-      url: "#{API_URL}/api/v1/set/#{MEDIUM_SET_ID}/items"
+      url: "#{API_URL}/api/v1/set/#{EMPTY_COLLECTION_SET_ID}/items"
       success: (featuredLinks) =>
         @$('#user-profile-collection-artworks').html(
           emptyTemplate featuredLinks: _.sample(featuredLinks.models, 4)
