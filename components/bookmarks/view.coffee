@@ -21,7 +21,7 @@ module.exports = class BookmarksView extends Backbone.View
   initialize: (options = {}) ->
     return unless sd.CURRENT_USER?
 
-    { @limit, @autofocus } = options
+    { @limit, @autofocus, @$collection } = options
 
     @render()
 
@@ -70,7 +70,8 @@ module.exports = class BookmarksView extends Backbone.View
 
   renderCollection: ->
     @trigger 'render:collection'
-    (@$collection ?= @$('#bookmark-artists-results').addClass 'is-fade-in')
+    (@$collection ?= @$('#bookmark-artists-results'))
+      .addClass('is-fade-in')
       .html @bookmarksTemplate(bookmarks: @bookmarks)
 
   render: ->
