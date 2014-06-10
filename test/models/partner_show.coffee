@@ -50,17 +50,17 @@ describe 'PartnerShow', ->
         sameAs: "undefined/artist/#{artist.id}"
       }
 
-  describe '#metaTitle', ->
+  describe '#toPageTitle', ->
 
     it 'creates a title defensively handling empty or missing values', ->
-      @partnerShow.metaTitle().should.include "Inez & Vinoodh | Gagosian Gallery |"
-      @partnerShow.metaTitle().should.include @partnerShow.location().singleLine()
-      @partnerShow.metaTitle().should.include @partnerShow.runningDates()
+      @partnerShow.toPageTitle().should.include "Inez & Vinoodh | Gagosian Gallery |"
+      @partnerShow.toPageTitle().should.include @partnerShow.location().singleLine()
+      @partnerShow.toPageTitle().should.include @partnerShow.runningDates()
 
     it 'omits the artworks for sale bit if the partner is not a gallery', ->
       @partnerShow.attributes.partner.name = "White Cube"
       @partnerShow.attributes.partner.type = "Museum"
-      @partnerShow.metaTitle().should.not.include ", Artwork for Sale"
+      @partnerShow.toPageTitle().should.not.include ", Artwork for Sale"
 
   describe '#location', ->
 
