@@ -62,7 +62,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
     mediator.on 'create:artwork:collection', (col) => @favorites.collections.add col
     @favorites.on 'nextPage', @appendArtworks
     @favorites.on 'end', @endInfiniteScroll
-    @favorites.collections.on 'add remove change:name', => _.defer @renderCollections
+    @favorites.collections.on 'add remove change:name sync', => _.defer @renderCollections
     @$el.infiniteScroll @favorites.fetchNextPage
     @setup()
 

@@ -109,6 +109,5 @@ describe 'CollectionView', ->
 
     it 'renders an emtpy state', ->
       @view.renderEmpty()
-      _.last(Backbone.sync.args)[2].success [fabricate 'set']
       _.last(Backbone.sync.args)[2].success [fabricate 'featured_link', title: 'Design on Artsy']
       @view.$el.html().should.include 'Design on Artsy'

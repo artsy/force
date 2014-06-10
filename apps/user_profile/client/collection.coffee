@@ -4,11 +4,11 @@ Artworks = require '../../../collections/artworks.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 ShareView = require '../../../components/share/view.coffee'
 ShareModal = require '../../../components/share/modal.coffee'
-{ ArtworkCollection } = ArtworkCollections = require '../../../collections/artwork_collections.coffee'
-{ COLLECTION, PROFILE } = require('sharify').data
 EditCollectionModal = require '../../../components/favorites2/client/edit_collection_modal.coffee'
 FeaturedLinks = require '../../../collections/featured_links.coffee'
 emptyTemplate = -> require('../templates/collection_empty.jade') arguments...
+{ ArtworkCollection } = ArtworkCollections = require '../../../collections/artwork_collections.coffee'
+{ COLLECTION, PROFILE, API_URL, EMPTY_COLLECTION_SET_ID } = require('sharify').data
 
 module.exports.CollectionView = class CollectionView extends Backbone.View
 
@@ -37,10 +37,11 @@ module.exports.CollectionView = class CollectionView extends Backbone.View
         @columnsView.appendArtworks new Artworks(res).models
 
   renderEmpty: ->
-    new FeaturedLinks().fetchSetItemsByKey 'homepage:featured-sections',
+    new FeaturedLinks().fetch
+      url: "#{API_URL}/api/v1/set/#{EMPTY_COLLECTION_SET_ID}/items"
       success: (featuredLinks) =>
         @$('#user-profile-collection-artworks').html(
-          emptyTemplate featuredLinks: featuredLinks.models
+          emptyTemplate featuredLinks: _.sample(featuredLinks.models, 4)
         )
 
   endInfiniteScroll: =>
