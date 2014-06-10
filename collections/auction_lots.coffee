@@ -8,7 +8,7 @@ module.exports = class AuctionLots extends PageableCollection
   model: AuctionLot
 
   sortCriteria:
-    'date,-auction_date'                   : 'Most Recent'
+    '-auction_date'                        : 'Most Recent'
     '-high_estimate_dollar,-auction_date'  : 'Estimate'
     '-price_realized_dollar,-auction_date' : 'Sale Price'
 
