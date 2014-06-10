@@ -40,7 +40,7 @@ block body
             - var partner = profile.get('owner')
             figure.featured-partner-profile( data-profile-id=profile.get('id') )
               a.featured-partner-profile-cover-link( href="/" + profile.get('id') )
-                img.profile-cover-image( src=profile.coverImage().imageUrl('medium') )
+                img.profile-cover-image( src=profile.bestAvailableImage() )
               figcaption
                 h3.featured-partner-profile-name
                   a( href="/" + profile.get('id') )= partner['name']

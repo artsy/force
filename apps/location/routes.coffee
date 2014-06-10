@@ -32,7 +32,7 @@ querystring = require 'querystring'
       profiles.url = "#{sd.API_URL}/api/v1/profiles"
       profiles.fetch
         cache: true
-        data: querystring.stringify({'id[]': partners.pluck('default_profile_id')})
+        data: querystring.stringify({'id[]': _.compact(partners.pluck('default_profile_id'))})
         success: render
 
   requests.push fairs.fetch

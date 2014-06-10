@@ -31,6 +31,12 @@ module.exports = class Profile extends Backbone.Model
   coverImage: ->
     new CoverImage @get('cover_image'), profileId: @get('id')
 
+  bestAvailableImage: ->
+    if @has('cover_image')
+      @coverImage().imageUrl('medium')
+    else
+      @iconImageUrl()
+
   alphaSortKey: ->
     @displayName()
 
