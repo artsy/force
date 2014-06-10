@@ -29,29 +29,33 @@ module.exports = class ArtistFillwidthList extends Backbone.View
     @syncFollowsOnAjaxStop()
 
   renderArtist: (artist, i) =>
-    artist.fetchArtworks data: { size: 10 }, success: (artworks) =>
-      $row = @$(".artist-fillwidth-list-item[data-id=\"#{artist.get('id')}\"]")
-      return $row.remove() if artworks.length is 0
+    artist.fetchArtworks
+      data:
+        size: 10
+        published: true
+      success: (artworks) =>
+        $row = @$(".artist-fillwidth-list-item[data-id=\"#{artist.get('id')}\"]")
+        return $row.remove() if artworks.length is 0
 
-      # Add fillwidth view
-      fillwidthView = new FillwidthView
-        artworkCollection: @user?.defaultArtworkCollection()
-        doneFetching: true
-        collection: artworks
-        el: $row.find('.artist-fillwidth-list-artworks')
-      fillwidthView.render()
+        # Add fillwidth view
+        fillwidthView = new FillwidthView
+          artworkCollection: @user?.defaultArtworkCollection()
+          doneFetching: true
+          collection: artworks
+          el: $row.find('.artist-fillwidth-list-artworks')
+        fillwidthView.render()
 
-      # Add follow button
-      new FollowButton
-        el: $row.find('.avant-garde-button-white')
-        following: @following
-        model: artist
-        modelName: 'artist'
+        # Add follow button
+        new FollowButton
+          el: $row.find('.avant-garde-button-white')
+          following: @following
+          model: artist
+          modelName: 'artist'
 
-      # After rendering the row do some fillwidth things unique to this layout
-      _.defer ->
-        fillwidthView.hideSecondRow()
-        fillwidthView.removeHiddenItems()
+        # After rendering the row do some fillwidth things unique to this layout
+        _.defer ->
+          fillwidthView.hideSecondRow()
+          fillwidthView.removeHiddenItems()
 
   syncFollowsOnAjaxStop: ->
     @$document.one 'ajaxStop', =>

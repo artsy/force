@@ -41,7 +41,8 @@ module.exports = class Artist extends Backbone.Model
   fetchArtworks: (options={}) ->
     # Always include published=true
     # The api returns unpublised works for admins and gallery partners but we do not want to display them
-    options.published = true
+    options.data ||= {}
+    options.data.published = true
     @artworks.fetch options
 
   fetchRelatedArtists: (type, options = {}) ->

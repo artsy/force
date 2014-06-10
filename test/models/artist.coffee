@@ -28,9 +28,15 @@ describe 'Artist', ->
 
   describe '#fetchArtworks', ->
 
-    it 'fetches the artists artworks', ->
+    it 'fetches the artists artworks and adds published=true', ->
       @artist.fetchArtworks()
       _.last(Backbone.sync.args)[1].url.should.include "artist/#{@artist.get 'id'}/artworks"
+      _.last(Backbone.sync.args)[2].data.published.should == true
+
+    it 'fetches the artists artworks and adds published=true', ->
+      @artist.fetchArtworks({ success: sinon.stub() })
+      _.last(Backbone.sync.args)[1].url.should.include "artist/#{@artist.get 'id'}/artworks"
+      _.last(Backbone.sync.args)[2].data.published.should == true
 
   describe '#validSort', ->
 
