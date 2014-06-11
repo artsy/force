@@ -1,4 +1,4 @@
-@import '../../stylus_lib/index.styl'
+@import '../../stylus_lib'
 @import '../save_controls'
 @import '../save_controls_two_btn'
 @import '../save_controls_one_btn'
@@ -64,3 +64,21 @@
   .avant-garde-button-black
     margin-right 1em
     margin-top 1em
+
+.artwork-item-edit
+  width 40px
+  height @width
+  background-color rgba(0, 0, 0, 0.4)
+  border-radius (@width / 2)
+  cursor pointer
+  color white
+  font-size 36px
+  top 5px
+  left 5px
+  position absolute
+  text-align center
+  line-height 39px
+  text-decoration none
+  display none
+  &:hover
+    background black

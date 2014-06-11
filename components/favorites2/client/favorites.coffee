@@ -1,6 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
+EditWorkModal = require './edit_work_modal.coffee'
 EditCollectionModal =  require './edit_collection_modal.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 Artwork = require '../../../models/artwork.coffee'
@@ -43,7 +44,9 @@ module.exports.Favorites = class Favorites extends Artworks
           page: @page
         remove: false
         complete: done
-        success: (a, res) => nextPageArtworks.add res
+        success: (a, res) =>
+          artwork.collectionId = collection.get('id') for artwork in res
+          nextPageArtworks.add res
 
 module.exports.FavoritesView = class FavoritesView extends Backbone.View
 
@@ -105,6 +108,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
   events:
     'click .favorites2-new-collection': 'openNewModal'
     'click .favorites2-edit': 'openEditModal'
+    'click .artwork-item-edit': 'openEditWorkModal'
 
   openNewModal: (e) ->
     e.preventDefault()
@@ -116,3 +120,11 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
     e.preventDefault()
     collection = @favorites.collections.at($(e.currentTarget).parent().index() - 1)
     new EditCollectionModal width: 500, collection: collection
+
+  openEditWorkModal: (e) ->
+    e.preventDefault()
+    artwork = @favorites.get $(e.currentTarget).data 'id'
+    new EditWorkModal
+      width: 550
+      artwork: artwork
+      collection: @favorites.collections.get artwork.get('collectionId')
