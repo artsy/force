@@ -1,8 +1,8 @@
-title #{gene.get('name')} | Artsy
-meta( property="og:title", content="#{gene.get('name')} | Artsy" )
-meta( name="description", content="Artsy is an easy new way to discover, learn about, and buy art you'll love, featuring fine art, design, and photography from the leading international galleries, museums, and private collections." )
-meta( property="og:description", content="Artsy is an easy new way to discover, learn about, and buy art you'll love, featuring fine art, design, and photography from the leading international galleries, museums, and private collections." )
-meta( property="twitter:description", content="Artsy is an easy new way to discover, learn about, and buy art you'll love, featuring fine art, design, and photography from the leading international galleries, museums, and private collections." )
+title= gene.toPageTitle()
+meta( property="og:title", content=gene.toPageTitle() )
+meta( name="description", content=gene.toPageDescription() )
+meta( property="og:description", content=gene.toPageDescription() )
+meta( property="twitter:description", content=gene.toPageDescription() )
 link( rel="canonical", href=(sd.APP_URL + "/gene/#{gene.get('id')}") )
 meta( property="og:url", content=(sd.APP_URL + "/gene/#{gene.get('id')}") )
 meta( property="og:image", content="#{sd.ASSET_PATH}og_image.jpg" )

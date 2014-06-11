@@ -1,8 +1,8 @@
-title #{tag.get('name')} | Artsy
-meta( property="og:title", content="#{tag.get('name')} | Artsy" )
-meta( name="description", content="Artsy is an easy new way to discover, learn about, and buy art you'll love, featuring fine art, design, and photography from the leading international galleries, museums, and private collections." )
-meta( property="og:description", content="Artsy is an easy new way to discover, learn about, and buy art you'll love, featuring fine art, design, and photography from the leading international galleries, museums, and private collections." )
-meta( property="twitter:description", content="Artsy is an easy new way to discover, learn about, and buy art you'll love, featuring fine art, design, and photography from the leading international galleries, museums, and private collections." )
+title= tag.toPageTitle()
+meta( property="og:title", content=tag.toPageTitle() )
+meta( name="description", content=tag.toPageDescription() )
+meta( property="og:description", content=tag.toPageDescription() )
+meta( property="twitter:description", content=tag.toPageDescription() )
 link( rel="canonical", href=(sd.APP_URL + "/tag/#{tag.get('id')}") )
 meta( property="og:url", content=(sd.APP_URL + "/tag/#{tag.get('id')}") )
 meta( property="og:image", content="#{sd.ASSET_PATH}og_image.jpg" )

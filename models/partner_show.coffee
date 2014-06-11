@@ -37,14 +37,40 @@ module.exports = class PartnerShow extends Backbone.Model
     else
       null
 
-  metaTitle: ->
+  toPageTitle: ->
     _.compact([
       @get 'name' || ''
+      @get('partner')?.name || ''
+      "Artsy"
+    ]).join(' | ').replace('&#x2013;', '-')
+
+  # past / current / upcomming show featuring works by {artists} on view at {gallery name} {location} {dates}
+  toPageDescription: ->
+    artists = []
+    if @get('artists')
+      artists =
+        _.compact(for artist in @get('artists')
+          artist.name
+        )
+
+    if artists.length > 1
+      artistText = "featuring works by #{artists[0...(artists.length - 1)].join(', ')} and #{artists[artists.length - 1]}"
+    else if artists.length == 1
+      artistText = "featuring works by #{artists[0]}"
+
+    info = _.compact([
+      'at'
       @get('partner')?.name || ''
       @get('fair')?.name || ''
       @location()?.singleLine() || ''
       @runningDates() || ''
-    ]).join ' | '
+    ]).join(' ')
+
+    _.compact([
+      @formatLeadHeading()
+      artistText
+      info
+    ]).join(' ').replace('&#x2013;', '-')
 
   #
   # Get the poster image url of the show (e.g. used in the shows tab in
@@ -143,6 +169,7 @@ module.exports = class PartnerShow extends Backbone.Model
   fairName: ->
     @get('fair').name
 
+  # Show json is different in the feed and includes an array of artist's short json
   formatArtists: (max=Infinity) ->
     return "" unless @has('artists')
     artists = @get('artists').map (artist) -> "<a href='/artist/#{artist.id}'>#{artist.name}</a>"
@@ -161,9 +188,9 @@ module.exports = class PartnerShow extends Backbone.Model
     @formatArtists @maxDisplayedArtists
 
   formatLeadHeading: ->
-    if @running() then return 'Current Show'
-    if @upcoming() then return 'Upcoming Show'
-    if @closed() then return 'Past Show'
+    if @running() then return 'Current show'
+    if @upcoming() then return 'Upcoming show'
+    if @closed() then return 'Past show'
 
   fairLocationDisplay: ->
     city = @formatCity()

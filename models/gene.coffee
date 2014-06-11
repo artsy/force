@@ -25,6 +25,9 @@ module.exports = class Gene extends Backbone.Model
 
   alphaSortKey: -> @get('id')
 
+  toPageTitle: -> "#{@get('name')} | Artsy"
+  toPageDescription: -> @mdToHtmlToText('description')
+
   initialize: ->
     @relatedArtists       = new Backbone.Collection [], model: Artist
     @relatedArtists.url   = "#{sd.API_URL}/api/v1/gene/#{@id}/artists"
