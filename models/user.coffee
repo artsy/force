@@ -11,3 +11,6 @@ module.exports = class User extends Backbone.Model
   # will stay in sync on reloads
   refresh: (options = {}) ->
     @fetch _.extend(url: '/user/refresh', options)
+
+  isCollector: ->
+    @get('collector_level') >= 3
