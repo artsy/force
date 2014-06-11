@@ -45,14 +45,16 @@ module.exports = class PartnerShow extends Backbone.Model
       @location()?.singleLine() || ''
       @runningDates() || ''
       "Artsy"
-    ]).join(' | ')
+    ]).join(' | ').replace('&#x2013;', '-')
 
   # past / current / upcomming show featuring works by {artists} on view at {gallery name} {location} {dates}
   toPageDescription: ->
-    artists =
-      _.compact(for artist in @get('artists')
-        artist.name
-      )
+    artists = []
+    if @get('artists')
+      artists =
+        _.compact(for artist in @get('artists')
+          artist.name
+        )
 
     if artists.length > 1
       artistText = "featuring works by #{artists[0...(artists.length - 1)].join(', ')} and #{artists[artists.length - 1]}"
@@ -60,6 +62,7 @@ module.exports = class PartnerShow extends Backbone.Model
       artistText = "featuring works by #{artists[0]}"
 
     info = _.compact([
+      'at'
       @get('partner')?.name || ''
       @get('fair')?.name || ''
       @location()?.singleLine() || ''
@@ -70,7 +73,7 @@ module.exports = class PartnerShow extends Backbone.Model
       @formatLeadHeading()
       artistText
       info
-    ]).join(' ')
+    ]).join(' ').replace('&#x2013;', '-')
 
   #
   # Get the poster image url of the show (e.g. used in the shows tab in
