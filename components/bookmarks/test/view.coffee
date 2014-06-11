@@ -58,8 +58,10 @@ describe 'BookmarksView', ->
     it 'follows the artist', ->
       @view.following.length.should.equal 1
 
-    it 'fades in the result set', ->
-      @view.$collection.hasClass('is-fade-in').should.be.true
+    it 'fades in the result set', (done) ->
+      _.defer =>
+        @view.$collection.hasClass('is-fade-in').should.be.true
+        done()
 
   describe '#uncollect', ->
     beforeEach ->
