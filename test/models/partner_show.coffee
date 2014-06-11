@@ -54,8 +54,6 @@ describe 'PartnerShow', ->
 
     it 'creates a title defensively handling empty or missing values', ->
       @partnerShow.toPageTitle().should.include "Inez & Vinoodh | Gagosian Gallery |"
-      @partnerShow.toPageTitle().should.include @partnerShow.location().singleLine()
-      @partnerShow.toPageTitle().should.include @partnerShow.runningDates().replace('&#x2013;', '-')
 
     it 'omits the artworks for sale bit if the partner is not a gallery', ->
       @partnerShow.attributes.partner.name = "White Cube"

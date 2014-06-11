@@ -41,9 +41,6 @@ module.exports = class PartnerShow extends Backbone.Model
     _.compact([
       @get 'name' || ''
       @get('partner')?.name || ''
-      @get('fair')?.name || ''
-      @location()?.singleLine() || ''
-      @runningDates() || ''
       "Artsy"
     ]).join(' | ').replace('&#x2013;', '-')
 
