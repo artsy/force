@@ -5,6 +5,7 @@ StepView                      = require './step.coffee'
 Artist                        = require '../../../../models/artist.coffee'
 Followable                    = require '../mixins/followable.coffee'
 GeneArtists                   = require '../mixins/gene_artists.coffee'
+BookmarkedArtists             = require '../mixins/bookmarked_artists.coffee'
 { FollowButton, Following }   = require '../../../../components/follow_button/index.coffee'
 
 template                  = -> require('../../templates/artists.jade') arguments...
@@ -31,12 +32,18 @@ module.exports = class ArtistsView extends StepView
     @followed     = new Backbone.Collection [], model: Artist
 
     @initializeFollowable()
-    @initializeGeneArtists()
+    @initializeSuggestions()
 
     @listenTo @followed, 'add', @fetchRelatedArtists
     @listenTo @followed, 'remove', @disposeSuggestionSet
     @listenTo @suggestions, 'add', @renderSuggestions
     @listenTo @suggestions, 'remove', @renderSuggestions
+
+  initializeSuggestions: ->
+    if @user.isCollector()
+      @initializeBookmarkedArtists()
+    else
+      @initializeGeneArtists()
 
   setupFollowButton: (key, model, el) ->
     @followButtonViews ?= {}
