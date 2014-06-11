@@ -71,8 +71,9 @@ module.exports = class BookmarksView extends Backbone.View
   renderCollection: ->
     @trigger 'render:collection'
     (@$collection ?= @$('#bookmark-artists-results'))
-      .addClass('is-fade-in')
       .html @bookmarksTemplate(bookmarks: @bookmarks)
+    _.defer =>
+      @$collection.addClass('is-fade-in')
 
   render: ->
     @$el.html @template(autofocus: @autofocus)

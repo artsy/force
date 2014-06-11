@@ -5,6 +5,7 @@ StepView                      = require './step.coffee'
 Artist                        = require '../../../../models/artist.coffee'
 Followable                    = require '../mixins/followable.coffee'
 GeneArtists                   = require '../mixins/gene_artists.coffee'
+BookmarkedArtists             = require '../mixins/bookmarked_artists.coffee'
 { FollowButton, Following }   = require '../../../../components/follow_button/index.coffee'
 
 template                  = -> require('../../templates/artists.jade') arguments...
@@ -13,13 +14,15 @@ suggestedArtistsTemplate  = -> require('../../templates/suggested_artists.jade')
 module.exports = class ArtistsView extends StepView
   _.extend @prototype, Followable
   _.extend @prototype, GeneArtists
+  _.extend @prototype, BookmarkedArtists
 
   analyticsUnfollowMessage : 'Unfollowed artist from personalize artist search'
   analyticsFollowMessage   : 'Followed artist from personalize artist search'
 
   events:
-    'click .personalize-skip' : 'advance'
-    'click .pfa-remove'       : 'unfollow'
+    'click .personalize-skip'       : 'advance'
+    'click .pfa-remove'             : 'unfollow'
+    'click .personalize-suggestion' : 'followSuggestion'
 
   initialize: (options) ->
     super
@@ -29,12 +32,18 @@ module.exports = class ArtistsView extends StepView
     @followed     = new Backbone.Collection [], model: Artist
 
     @initializeFollowable()
-    @initializeGeneArtists()
+    @initializeSuggestions()
 
     @listenTo @followed, 'add', @fetchRelatedArtists
     @listenTo @followed, 'remove', @disposeSuggestionSet
     @listenTo @suggestions, 'add', @renderSuggestions
     @listenTo @suggestions, 'remove', @renderSuggestions
+
+  initializeSuggestions: ->
+    if @user.isCollector()
+      @initializeBookmarkedArtists()
+    else
+      @initializeGeneArtists()
 
   setupFollowButton: (key, model, el) ->
     @followButtonViews ?= {}
@@ -47,6 +56,10 @@ module.exports = class ArtistsView extends StepView
       model                    : model
       modelName                : 'artist'
       el                       : el
+
+  # Delegates to follow button
+  followSuggestion: (e) ->
+    $(e.currentTarget).find('.follow-button').click()
 
   createSuggestionSet: (artist) ->
     new Backbone.Model
@@ -85,7 +98,7 @@ module.exports = class ArtistsView extends StepView
       @following.syncFollows suggestionSet.get('suggestions').pluck 'id'
 
   render: ->
-    @$el.html template(state: @state, autofocus: @autofocus())
+    @$el.html template(user: @user, state: @state, autofocus: @autofocus())
     @setupSearch mode: 'artists'
     this
 
