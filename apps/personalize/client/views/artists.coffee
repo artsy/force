@@ -13,13 +13,15 @@ suggestedArtistsTemplate  = -> require('../../templates/suggested_artists.jade')
 module.exports = class ArtistsView extends StepView
   _.extend @prototype, Followable
   _.extend @prototype, GeneArtists
+  _.extend @prototype, BookmarkedArtists
 
   analyticsUnfollowMessage : 'Unfollowed artist from personalize artist search'
   analyticsFollowMessage   : 'Followed artist from personalize artist search'
 
   events:
-    'click .personalize-skip' : 'advance'
-    'click .pfa-remove'       : 'unfollow'
+    'click .personalize-skip'       : 'advance'
+    'click .pfa-remove'             : 'unfollow'
+    'click .personalize-suggestion' : 'followSuggestion'
 
   initialize: (options) ->
     super
@@ -47,6 +49,10 @@ module.exports = class ArtistsView extends StepView
       model                    : model
       modelName                : 'artist'
       el                       : el
+
+  # Delegates to follow button
+  followSuggestion: (e) ->
+    $(e.currentTarget).find('.follow-button').click()
 
   createSuggestionSet: (artist) ->
     new Backbone.Model
