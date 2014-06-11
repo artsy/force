@@ -26,21 +26,20 @@ block body
           when 'partner'
             +back('/' + partner.get('default_profile_id'), partner.get('name'))
         #show-left-info
-          strong
-            a( href='/' + partner.get('default_profile_id') )= partner.get('name')
+          a.partner-link( href='/' + partner.get('default_profile_id') )= partner.get('name')
+          .plus-follow-button
+            .icon-follow-circle
+            .follow-button-text          
+          br
           if show.has('fair')
-            |  at:
-            br
             if fair.get('organizer')
-              strong
-                a( href='/' + fair.get('organizer').profile_id )= fair.get('name')
+              a( href='/' + fair.get('organizer').profile_id )= fair.get('name')
               br
             != fair.formatDates()
             if show.get('fair_location')
               br
               = show.get('fair_location').display
           else
-            br
             != show.runningDates()
             if location
               br
