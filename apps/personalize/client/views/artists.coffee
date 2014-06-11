@@ -85,7 +85,7 @@ module.exports = class ArtistsView extends StepView
       @following.syncFollows suggestionSet.get('suggestions').pluck 'id'
 
   render: ->
-    @$el.html template(state: @state, autofocus: @autofocus())
+    @$el.html template(user: @user, state: @state, autofocus: @autofocus())
     @setupSearch mode: 'artists'
     this
 
