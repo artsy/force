@@ -15,67 +15,36 @@ mediator = require '../../../lib/mediator.coffee'
 hintTemplate = -> require('../templates/empty_hint.jade') arguments...
 collectionsTemplate = -> require('../templates/collections.jade') arguments...
 
-PAGE_SIZE = 10
-
-module.exports.Favorites = class Favorites extends Artworks
-
-  model: Artwork
-
-  initialize: (models, options) ->
-    { @user } = options
-    @page = 0
-    @collections = new ArtworkCollections [], user: @user
-
-  fetchNextPage: (options) =>
-    @page++
-    nextPageArtworks = new Artworks
-    done = _.after @collections.length, =>
-      @set nextPageArtworks.models, remove: false
-      @trigger 'nextPage', nextPageArtworks
-      @trigger 'end' if nextPageArtworks.length is 0
-      options?.success?()
-    @collections.each (collection) =>
-      collection.artworks.fetch
-        data:
-          size: PAGE_SIZE
-          sort: "-position"
-          private: true
-          user_id: @user.get('id')
-          page: @page
-        remove: false
-        complete: done
-        success: (a, res) =>
-          artwork.collectionId = collection.get('id') for artwork in res
-          nextPageArtworks.add res
-
 module.exports.FavoritesView = class FavoritesView extends Backbone.View
 
   initialize: (options) ->
     @user = CurrentUser.orNull()
-    @favorites = new Favorites [], user: @user
+    @collections = new ArtworkCollections [], user: @user
     @shareView = new ShareView el: @$('.favorites2-share')
     @artworkColumnsView = new ArtworkColumnsView
       el: @$('.favorites2-artworks-list')
-      collection: @favorites
+      collection: new Artworks
       numberOfColumns: 4
       gutterWidth: 40
       totalWidth: @$('.favorites2-artworks-list').width()
       artworkSize: 'tall'
       allowDuplicates: true
-    mediator.on 'create:artwork:collection', (col) => @favorites.collections.add col
-    @favorites.on 'nextPage', @appendArtworks
-    @favorites.on 'end', @endInfiniteScroll
-    @favorites.collections.on 'add remove change:name sync', => _.defer @renderCollections
-    @$el.infiniteScroll @favorites.fetchNextPage
+    mediator.on 'create:artwork:collection', (col) => @collections.add col
+    @collections.on 'add remove change:name sync', => _.defer @renderCollections
+    @collections.on 'next:artworks', (a) =>
+      @artworkColumnsView.appendArtworks a
+    @collections.on 'end:artworks', @endInfiniteScroll
+    @$el.infiniteScroll @collections.fetchNextArtworksPage
     @setup()
 
   setup: ->
-    @favorites.collections.fetch success: =>
-        return @showEmptyHint() if @favorites.collections.length is 0
-        @favorites.fetchNextPage success: =>
-          return @showEmptyHint() if @favorites.length is 0
-          @renderCollections()
-          @renderZigZagBanner()
+    @collections.fetch success: =>
+      return @showEmptyHint() if @collections.length is 0
+      @collections.fetchNextArtworksPage().once 'next:artworks', =>
+        total = @collections.reduce (m, col) -> m + col.artworks.length
+        return @showEmptyHint() if total is 0
+        @renderCollections()
+        @renderZigZagBanner()
 
   showEmptyHint: ->
     @$('.favorites2-follows-empty-hint').html hintTemplate type: 'artworks'
@@ -85,16 +54,13 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
     ).render()
     @endInfiniteScroll()
 
-  appendArtworks: (col) =>
-    @artworkColumnsView.appendArtworks col.models
-
   endInfiniteScroll: =>
     @$('.favorites2-artworks-spinner').css opacity: 0
     $(window).off 'infiniteScroll'
 
   renderCollections: =>
     @$('.favorites2-collections').html collectionsTemplate
-      collections: @favorites.collections.models
+      collections: @collections.models
       user: @user
 
   renderZigZagBanner: ->
@@ -114,17 +80,18 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
     e.preventDefault()
     collection = new ArtworkCollection user_id: @user.get('id')
     new EditCollectionModal width: 500, collection: collection
-    collection.once 'request', => @favorites.collections.add collection
+    collection.once 'request', => @collections.add collection
 
   openEditModal: (e) ->
     e.preventDefault()
-    collection = @favorites.collections.at($(e.currentTarget).parent().index() - 1)
+    collection = @collections.at($(e.currentTarget).parent().index() - 1)
     new EditCollectionModal width: 500, collection: collection
 
   openEditWorkModal: (e) ->
     e.preventDefault()
-    artwork = @favorites.get $(e.currentTarget).data 'id'
+    collection = @collections.get $(e.currentTarget).data 'collection-id'
+    artwork = collection.artworks.get $(e.currentTarget).data 'id'
     new EditWorkModal
       width: 550
+      collection: collection
       artwork: artwork
-      collection: @favorites.collections.get artwork.get('collectionId')

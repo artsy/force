@@ -27,7 +27,7 @@ module.exports = class SaveControlsModal extends ModalView
     'submit .save-controls-one-btn-modal-new-collection': 'newCollection'
     'click .save-controls-one-btn-modal-collections li:not(.is-selected)': 'toggleSelected'
     'click .save-controls-one-btn-modal-collections li.is-selected': 'removeFromCollection'
-    'click .save-controls-one-btn-modal-done': 'done'
+    'click .save-controls-one-btn-modal-done': 'close'
 
   newCollection: (e) ->
     e.preventDefault()
@@ -44,6 +44,8 @@ module.exports = class SaveControlsModal extends ModalView
     @$('.save-controls-one-btn-modal-collections li').removeClass 'is-selected'
     $target.addClass('is-selected is-init-click')
     $target.one 'mouseout', -> $target.removeClass('is-init-click')
+    col = @collections.at @$('li.is-selected').index() + 1
+    if col.isNew() then col.once('sync', => col.saveArtwork @model) else col.saveArtwork @model
 
   removeFromCollection: (e) ->
     col = @collections.at $(e.currentTarget).index()
@@ -52,8 +54,3 @@ module.exports = class SaveControlsModal extends ModalView
     $removed = $(e.currentTarget).find('.save-controls-removed')
     $removed.show()
     setTimeout (-> $removed.fadeOut 'fast'), 1000
-
-  done: ->
-    col = @collections.at @$('.save-controls-one-btn-modal-collections li.is-selected').index()
-    col.saveArtwork @model
-    @close()

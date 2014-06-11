@@ -53,4 +53,26 @@ module.exports = class ArtworkCollections extends Backbone.Collection
   initialize: (models, { @user }) ->
     @on 'add', (col) => col.initArtworks()
 
+  fetchNextArtworksPage: =>
+    @page ?= 0
+    @page++
+    artworks = []
+    complete = _.after @length, =>
+      artworks = _.flatten artworks
+      @trigger 'next:artworks', artworks
+      @trigger 'end:artworks' if artworks.length is 0
+    @each (collection) =>
+      collection.artworks.fetch
+        data:
+          sort: "-position"
+          private: true
+          user_id: @user.get('id')
+          page: @page
+        remove: false
+        complete: complete
+        success: (a, res) =>
+          artwork.collectionId = collection.get('id') for artwork in res
+          artworks.push new Artworks(res).models
+    this
+
 module.exports.ArtworkCollection = ArtworkCollection
