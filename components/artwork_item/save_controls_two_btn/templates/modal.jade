@@ -2,14 +2,5 @@
   h1.modal-h1 Save work to a Collection
   hr
   include ../../../contact/templates/artwork_details
-  ul.save-controls-two-btn-modal-collections
-    for collection, i in collections
-      li( class=(collection.get('id') == 'saved-artwork' ? 'is-selected' : '' ) )
-        = collection.get('name')
-        span.icon-check
-        span.icon-close
-        span.save-controls-removed removed
-  form.save-controls-two-btn-modal-new-collection
-    input.bordered-input( placeholder="Create New Collection" )
-    button.icon-plus-small
+  include ../../../favorites2/templates/collection_list
   button.avant-garde-button-black.save-controls-two-btn-modal-done Done

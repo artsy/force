@@ -3,21 +3,27 @@ Backbone = require 'backbone'
 { ArtworkCollection } = ArtworkCollections = require '../../../collections/artwork_collections.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 ModalView = require '../../modal/view.coffee'
+CollectionList = require '../../favorites2/client/collection_list.coffee'
 template = -> require('./templates/modal.jade') arguments...
 { API_URL } = require('sharify').data
 
 module.exports = class SaveControlsModal extends ModalView
 
   template: (locals) ->
-    template _.extend locals,
-      artwork: @model,
-      collections: @collections.reject (c) -> c.id is 'saved-artwork'
+    template _.extend locals, artwork: @model, collections: @collections.models
 
   initialize: ->
     @user = CurrentUser.orNull()
     @collections = new ArtworkCollections [], user: @user
-    @collections.on 'add', @renderInner
+    new CollectionList
+      el: @$el
+      collections: @collections
+      user: @user
+      collection: null
+      artwork: @model
+    @collections.on 'add remove', @renderInner
     @collections.fetch success: =>
+      @collections.remove @collections.get 'saved-artwork'
       @updatePosition()
       @isLoaded()
     super
@@ -26,33 +32,4 @@ module.exports = class SaveControlsModal extends ModalView
     @isLoading()
 
   events: -> _.extend super,
-    'submit .save-controls-two-btn-modal-new-collection': 'newCollection'
-    'click .save-controls-two-btn-modal-collections li': 'toggleSelected'
-    'click .save-controls-two-btn-modal-collections li.is-selected': 'removeFromCollection'
     'click .save-controls-two-btn-modal-done': 'close'
-
-  newCollection: (e) ->
-    e.preventDefault()
-    collection = new ArtworkCollection
-      name: @$('.save-controls-two-btn-modal-new-collection input').val()
-      user_id: @user.get('id')
-    @collections.add collection
-    collection.save()
-    @$('.save-controls-two-btn-modal-collections li:last-child').click()
-    false
-
-  toggleSelected: (e) ->
-    $target = $(e.currentTarget)
-    @$('.save-controls-two-btn-modal-collections li').removeClass 'is-selected'
-    $target.addClass('is-selected is-init-click')
-    $target.one 'mouseout', -> $target.removeClass('is-init-click')
-    col = @collections.at @$('li.is-selected').index() + 1
-    if col.isNew() then col.once('sync', => col.saveArtwork @model) else col.saveArtwork @model
-
-  removeFromCollection: (e) ->
-    col = @collections.at $(e.currentTarget).index()
-    col.removeArtwork @model.get 'id'
-    $(e.currentTarget).removeClass 'is-selected'
-    $removed = $(e.currentTarget).find('.save-controls-removed')
-    $removed.show()
-    setTimeout (-> $removed.fadeOut 'fast'), 1000
