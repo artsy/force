@@ -12,9 +12,12 @@ module.exports = class CollectionList extends Backbone.View
     'click .favorites2-collection-list li': 'moveTo'
 
   moveTo: (e) ->
-    @collection.removeArtwork @artwork
+    @collection?.removeArtwork @artwork
     col = @collections.at $(e.currentTarget).index()
     if col.isNew() then col.once('sync', => col.saveArtwork @artwork) else col.saveArtwork @artwork
+    @collection = col
+    @$('.favorites2-collection-list li').removeClass('is-active')
+    $(e.currentTarget).addClass('is-active')
 
   newCollection: ->
     collection = new ArtworkCollection

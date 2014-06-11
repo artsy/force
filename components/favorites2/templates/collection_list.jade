@@ -1,6 +1,8 @@
 ul.favorites2-collection-list
   for collection in collections
-    li( data-id=collection.get('id') )= collection.get('name')
+    li( data-id=collection.get('id') )
+      = collection.get('name')
+      .icon-check
 .favorites2-collection-list-create
   input.bordered-input( placeholder='Create New Set' )
   button.avant-garde-button-white Create
