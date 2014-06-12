@@ -13,7 +13,7 @@ module.exports = class PartnerShowButtons extends Backbone.View
     _.extend @, options
     @setupFollowProfiles()
     new FollowProfileButton
-      el: @$('.follow-button')
+      el: @$('.plus-follow-button')
       model: new Profile(id: @model.get('partner').default_profile_id)
       collection: @followProfiles
       analyticsFollowMessage: @analyticsFollowMessage
