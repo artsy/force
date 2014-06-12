@@ -38,6 +38,24 @@ article.sg-component
     |   input.bordered-input( placeholder='Amount' )
 
 article.sg-component
+  h3 Default Checkbox
+  .sg-component-rendered
+    .artsy-checkbox.sg-display
+      input( type='checkbox', id='my-attribute-1', checked )
+      label( for='my-attribute-1' )
+    .artsy-checkbox.sg-display
+      input( type='checkbox', id='my-attribute-2' )
+      label( for='my-attribute-2' )
+    .artsy-checkbox.sg-display
+      input( type='checkbox', id='my-attribute-3' )
+      label( for='my-attribute-3', data-label='Remember me' )
+
+  pre: code
+    | .artsy-checkbox
+    |   input( type='checkbox', id='my-attribute', checked )
+    |   label( for='my-attribute', data-label='Remember me' )
+
+article.sg-component
   h3 Toggle Switches
   .sg-component-rendered
     a.artsy-toggle.sg-display( data-state='on' ): .artsy-toggle-dot

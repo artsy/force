@@ -156,6 +156,52 @@ form.is-validated
     &:invalid
       @extends .bordered-input.is-error
 
+.artsy-checkbox
+  display inline-block
+  width 20px
+  height @width
+  position relative
+  background gray-lighter-color
+  user-select none
+  label
+    cursor pointer
+    position absolute
+    top 2px
+    right @top
+    bottom @top
+    left @top
+    background-color white
+    // Text label
+    &:before
+      display block
+      content attr(data-label)
+      white-space nowrap
+      margin-left 150%
+      line-height 20px
+      vertical-align middle
+      garamond()
+      font-size default-garamond-font-size
+    // Check
+    &:after
+      content ''
+      position absolute
+      top 3px
+      right 2px
+      bottom 6px
+      left 2px
+      border 2px solid black
+      border-top none
+      border-right none
+      opacity 0
+      transform rotate(-45deg) translateZ(0)
+      transition opacity 0.25s
+    &:hover::after
+      opacity 0.1
+  input[type='checkbox']
+    visibility hidden
+    &:checked + label:after
+      opacity 1
+
 // Auto-complete
 .autocomplete-input-container
   display inline-block
