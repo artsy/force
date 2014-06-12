@@ -18,13 +18,19 @@
   cursor pointer
   display inline-block
   min-width 86px
-  &.is-following, &:hover
+  &.is-following, &:hover, &[data-state='following']
     color: purple-color
   .icon-follow-circle, .follow-button-text
     display inline
   .icon-follow-circle
-    font-size 15px
-    margin-right: 5px
+    font-size: 32px
+    margin-right: 0
+    vertical-align: bottom
+    display: inline-block
+    line-height: 20px
+    height: 22px
+    margin-left: -9px
+    margin-right: -1px
   .follow-button-text
     &:before
       content 'Follow'

@@ -88,6 +88,7 @@ module.exports = class ArtworkView extends Backbone.View
         el      : @$('#artwork-related-show-section')
         model   : show
         artwork : @artwork
+        currentUser: @currentUser
     @on 'related:none', ->
       @belowTheFoldView.setupLayeredSearch()
     @on 'related:not_auction', ->

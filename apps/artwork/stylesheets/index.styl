@@ -298,15 +298,6 @@ artwork-detail-item-height  = 36px
       color white
       transition none
 
-// Follow button states
-.artwork-artist-follow-button
-  > span:before
-    content 'Follow artist'
-  &[data-state='following']
-    color purple-color
-    > span:before
-      content 'Following artist'
-
 // Below the fold
 .ari-left
 .ari-right
@@ -373,7 +364,8 @@ artwork-detail-item-height  = 36px
   position relative
   margin 20px 0
 .ars-partner-name
-  font-weight bold
+  avant-garde()
+  margin-right 5px
 .ars-show-name
   text-decoration none
 .ars-buttons
