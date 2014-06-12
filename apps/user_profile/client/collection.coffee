@@ -18,7 +18,6 @@ module.exports.CollectionView = class CollectionView extends Backbone.View
   initialize: (options) ->
     { @artworkCollection, @user, @profile } = options
     @page = 0
-    window.view = this
     @columnsView = new ArtworkColumnsView
       el: @$('#user-profile-collection-artworks')
       collection: @artworkCollection.artworks

@@ -83,6 +83,6 @@ describe 'FavoritesView', ->
       @view.renderZigZagBanner()
       @ZigZagBanner.args[0][0].message.should.include 'Create a new set'
 
-  describe '#initialize', ->
+  describe '#renderPrivacy', ->
 
-    it 'wires together adding a collection inline with the top UI via mediator'
+    it 'sets the link state depending on the collection'

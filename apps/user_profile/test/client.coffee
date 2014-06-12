@@ -121,9 +121,16 @@ describe 'CollectionView', ->
   describe '#onRemove', ->
 
     it 'removes the artwork', ->
-      @view.artworks.reset [fabricate('artwork'), fabricate('artwork')]
-      @view.onRemove @view.artworks.first()
-      @view.artworks.length.should.equal 1
+      @view.columnsView.render = sinon.stub()
+      @view.artworkCollection.artworks.reset [fabricate('artwork'), fabricate('artwork')]
+      @view.onRemove @view.artworkCollection.artworks.first()
+      @view.artworkCollection.artworks.length.should.equal 1
+
+    it 're-renders the column view', ->
+      @view.columnsView.render = sinon.stub()
+      @view.artworkCollection.artworks.reset [fabricate('artwork'), fabricate('artwork')]
+      @view.onRemove @view.artworkCollection.artworks.first()
+      @view.columnsView.render.called.should.be.ok
 
   describe '#openEditWorkModal', ->
 
