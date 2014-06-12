@@ -166,6 +166,10 @@ module.exports = class PartnerShow extends Backbone.Model
   partnerName: ->
     @get('partner')?.name
 
+  partnerHref: ->
+    if @get('partner')?.default_profile_public
+      "/#{@get('partner')?.default_profile_id}"
+
   fairName: ->
     @get('fair').name
 

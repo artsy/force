@@ -27,7 +27,6 @@ module.exports.FeedItemView = class FeedItemView extends Backbone.View
     @artworkCollection = options.artworkCollection
     _.defer =>
       @setupArtworkSaveControls()
-      @setupShareButtons()
       @setupArtworkImpressionTracking()
 
   moreArtworksClick: (event) =>
@@ -60,11 +59,6 @@ module.exports.FeedItemView = class FeedItemView extends Backbone.View
     if @artworkCollection
       @artworkCollection.addRepoArtworks @model.artworks()
       @artworkCollection.syncSavedArtworks()
-
-  setupShareButtons: ->
-    el = if @$('.feed-item-share-section').length > 0 then @$('.feed-item-share-section') else @$('.post-actions .post-share-actions')
-    new ShareView
-      el: el
 
   acquire: (event) ->
     $target = $(event.target)

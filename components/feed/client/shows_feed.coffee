@@ -10,7 +10,7 @@ module.exports = class ShowsFeed extends FeedView
       $feedItem = $(item).removeClass 'unrendered-feed-item'
       model = shows[index]
       new PartnerShowButtons
-        el: $feedItem.find(".partner-buttons-show-buttons")
+        el: $feedItem.find(".feed-item-top-section")
         model: model
         followProfiles: @followProfiles
         analyticsFollowMessage: @analyticsFollowMessage

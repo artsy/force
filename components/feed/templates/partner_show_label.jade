@@ -2,22 +2,25 @@ include ../../share/template
 
 .feed-item-top-section
   .feed-item-share-section
-    +share(feedItemChildModel.shareTitle(), undefined, feedItemChildModel.canonicalUrl())
     - show = feedItemChildModel
     include ../../partner_buttons/show_buttons
   if feedItemChildModel.partnerName()
-    h2.exhibitor
-      a( href=feedItemChildModel.href() )!= feedItemChildModel.partnerName()
+    if feedItemChildModel.partnerHref()
+      a.exhibitor.faux-underline-hover-large( href=feedItemChildModel.partnerHref() )!= feedItemChildModel.partnerName()
+    else
+      .exhibitor!= feedItemChildModel.partnerName()
+    .plus-follow-button
+      .icon-follow-circle
+      .follow-button-text
 
+  br
   if feedItemChildModel.get('fair')
-    .heading.feed-item-fair-name!= feedItemChildModel.fairName()
+    .feed-item-fair-name!= feedItemChildModel.fairName()
     if feedItemChildModel.fairLocationDisplay()
       .fair-location!= feedItemChildModel.fairLocationDisplay()
 
   else
-    h2.heading
-      a( href=feedItemChildModel.href() )!= feedItemChildModel.formatFeedItemHeading()
-
+    a.show-link.faux-underline-hover( href=feedItemChildModel.href() )!= feedItemChildModel.formatFeedItemHeading()
     if feedItemChildModel.get('start_at') && feedItemChildModel.get('end_at')
       .timeframe
         != feedItemChildModel.runningDates()
