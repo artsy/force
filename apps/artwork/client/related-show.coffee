@@ -19,7 +19,7 @@ module.exports = class RelatedShowView extends Backbone.View
         @setup collection
 
   setupFollowButton: ->
-    @following = new Following(null, kind: 'profile') if @currentUser?
+    @following = new Following(null, kind: 'profile')
     @following.syncFollows [@partner.get('default_profile_id')]
 
     @followButton = new FollowButton
@@ -36,7 +36,7 @@ module.exports = class RelatedShowView extends Backbone.View
     @render()
     @setupArtworks @collection
     @setupPartnerButtons()
-    @setupFollowButton() if @partner?.get('default_profile_id')
+    @setupFollowButton() if @currentUser? and @partner?.get('default_profile_id')
     @$el.addClass 'is-fade-in'
 
   render: ->
