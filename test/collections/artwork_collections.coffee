@@ -63,3 +63,11 @@ describe 'ArtworkCollections', ->
       Backbone.sync.args[1][2].success []
       Backbone.sync.args[1][2].complete()
 
+  describe '#public', ->
+
+    it 'checks wheter all collections are public/private'
+
+  describe '#togglePrivacy', ->
+
+    it 'toggles every collections privacy setting'
+

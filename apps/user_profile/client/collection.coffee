@@ -20,10 +20,11 @@ module.exports.CollectionView = class CollectionView extends Backbone.View
     @page = 0
     @columnsView = new ArtworkColumnsView
       el: @$('#user-profile-collection-artworks')
-      collection: @artworks = new Artworks
+      collection: @artworkCollection.artworks
       artworkSize: 'larger'
       numberOfColumns: 3
       gutterWidth: 80
+      allowDuplicates: true
     @$el.infiniteScroll @nextPage
     @artworkCollection.on 'change:name', @renderName
     @artworkCollection.artworks.on 'remove', @onRemove
@@ -37,8 +38,12 @@ module.exports.CollectionView = class CollectionView extends Backbone.View
     )
 
   onRemove: (artwork) =>
-    @artworks.remove artwork.get('id')
-    @renderEmpty() if @artworkCollection.artworks.length is 0
+    @artworkCollection.artworks.remove artwork.get('id')
+    if @artworkCollection.artworks.length is 0
+      @columnsView.remove()
+      @renderEmpty()
+    else
+      @columnsView.render()
 
   renderName: =>
     @$('h1').text @artworkCollection.get 'name'

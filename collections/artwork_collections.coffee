@@ -77,4 +77,13 @@ module.exports = class ArtworkCollections extends Backbone.Collection
           artworks.push new Artworks(res).models
     this
 
+  public: ->
+    not true in @pluck('private')
+
+  togglePrivacy: ->
+    if @public()
+      @each (col) -> col.save private: true
+    else
+      @each (col) -> col.save private: false
+
 module.exports.ArtworkCollection = ArtworkCollection
