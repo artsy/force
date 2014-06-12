@@ -1,7 +1,7 @@
 //- Contact Gallery form
 if artwork.isContactable()
   form#artwork-contact-form
-    h2.avant-garde-header Contact Gallery
+    h2.avant-garde-header= artwork.contactLabel()
     if artwork.partnerLink()
       a.partner-name.faux-underline( href= artwork.partnerLink() )
         = artwork.partnerName()
