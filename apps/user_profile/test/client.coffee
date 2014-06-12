@@ -79,6 +79,7 @@ describe 'CollectionView', ->
         @view = new CollectionView
           el: $('body')
           artworkCollection: new ArtworkCollection id: 'saved-artwork', user_id: 'craig'
+          user: new Backbone.Model accessToken: 'foobaz'
         done()
 
   afterEach ->
@@ -97,6 +98,11 @@ describe 'CollectionView', ->
       @view.nextPage()
       Backbone.sync.args[0][2].success [fabricate 'artwork', title: 'Andy Foobar at the Park']
       _.last(@view.columnsView.appendArtworks.args)[0][0].get('title').should.equal 'Andy Foobar at the Park'
+
+    it 'includes the access token', ->
+      @view.columnsView.appendArtworks = sinon.stub()
+      @view.nextPage()
+      Backbone.sync.args[0][2].data.access_token.should.include 'foobaz'
 
   describe '#openShareModal', ->
 

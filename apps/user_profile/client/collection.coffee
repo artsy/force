@@ -1,5 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
+CurrentUser = require '../../../models/current_user.coffee'
 Artworks = require '../../../collections/artworks.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 ShareView = require '../../../components/share/view.coffee'
@@ -14,7 +15,7 @@ emptyTemplate = -> require('../templates/collection_empty.jade') arguments...
 module.exports.CollectionView = class CollectionView extends Backbone.View
 
   initialize: (options) ->
-    { @artworkCollection } = options
+    { @artworkCollection, @user } = options
     @page = 0
     @columnsView = new ArtworkColumnsView
       el: @$('#user-profile-collection-artworks')
@@ -37,7 +38,7 @@ module.exports.CollectionView = class CollectionView extends Backbone.View
   nextPage: =>
     @page++
     @artworkCollection.artworks.fetch
-      data: page: @page
+      data: page: @page, access_token: @user?.get('accessToken'), private: true
       remove: false
       success: (col, res) =>
         return @endInfiniteScroll() if res.length is 0
@@ -80,6 +81,7 @@ module.exports.CollectionView = class CollectionView extends Backbone.View
 
 module.exports.init = ->
   new CollectionView
+    user: CurrentUser.orNull()
     artworkCollection: new ArtworkCollection(
       _.extend COLLECTION, user_id: PROFILE.owner.id
     )

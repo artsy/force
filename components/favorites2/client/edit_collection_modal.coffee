@@ -17,7 +17,8 @@ module.exports = class EditCollectionModal extends ModalView
 
   events: -> _.extend super,
     'click .favorites2-edit-modal-cancel': 'close'
-    'submit form': 'submit'
+    'click .favorites2-edit-modal-submit': 'submit'
+    'keyup input': (e) -> @submit() if e.which is 13 # Enter
     'click .favorites2-edit-modal-delete, .favorites2-edit-modal-cancel-delete': 'toggleDelete'
     'click .favorites2-edit-modal-delete-confirm': 'delete'
 

@@ -1,0 +1,46 @@
+@import '../../stylus_lib'
+
+.favorites2-collection-list li
+  transition background-color 0.3s
+  cursor pointer
+  padding 12px 14px
+  .icon-check
+    float right
+    font-size 14px
+    display none
+    margin-top -5px
+  &:hover
+    background gray-lightest-color
+  &.is-active
+    border 2px solid black
+    padding 10px 12px
+    .icon-check
+      display block
+
+.favorites2-collection-list-create
+  margin-top 15px
+  position relative
+  input
+    border-width 1px
+    transition width 0.3s linear 0.2s !important
+    z-index 2
+    width 100%
+    &:hover
+      border-color black
+    &:focus
+      width calc(100% \- 115px)
+      transition width 0.3s !important
+      + button
+        opacity 1
+        transition opacity 0.3s ease-out 0.1s
+  button
+    position absolute
+    top 0
+    right 0
+    padding 14px 0
+    width 100px
+    opacity 0
+    transition opacity 0.2s ease-in 0s
+    cursor pointer
+    &:hover
+      color purple-color
