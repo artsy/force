@@ -22,8 +22,6 @@ module.exports = class RelatedShowView extends Backbone.View
     @following = new Following(null, kind: 'profile') if @currentUser?
     @following.syncFollows [@partner.get('default_profile_id')]
 
-    console.log @$('.plus-follow-button')
-
     @followButton = new FollowButton
       analyticsFollowMessage: 'Followed partner, via show on artwork page'
       analyticsUnfollowMessage: 'Unfollowed partner, via show on artwork page'
