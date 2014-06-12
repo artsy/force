@@ -1,9 +1,13 @@
 h2.avant-garde-header-center Other works in show
 
 .ars-metadata
-  a.ars-partner-name.faux-underline(
+  a.ars-partner-name.faux-underline-hover-large(
     href="/#{show.get('partner').default_profile_id}"
   )= show.get('partner').name
+  .plus-follow-button
+    .icon-follow-circle
+    .follow-button-text
+
   br
   a.ars-show-name( href=show.href() )= show.get('name')
 

@@ -15,7 +15,7 @@ include ../../share/template
 
   br
   if feedItemChildModel.get('fair')
-    .feed-item-fair-name!= feedItemChildModel.fairName()
+    a.feed-item-fair-name.faux-underline-hover( href=feedItemChildModel.href() )!= feedItemChildModel.fairName()
     if feedItemChildModel.fairLocationDisplay()
       .fair-location!= feedItemChildModel.fairLocationDisplay()
 
