@@ -40,12 +40,17 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
   setup: ->
     @collections.fetch success: =>
       return @showEmptyHint() if @collections.length is 0
+      @renderPrivacy()
       @collections.fetchNextArtworksPage success: =>
         total = @collections.reduce (m, col) ->
           m.artworks?.length + col.artworks?.length
         return @showEmptyHint() if total is 0
         @renderCollections()
         @renderZigZagBanner()
+
+  renderPrivacy: ->
+    @$('.favorites2-privacy').attr 'data-state',
+        if @collections.public() then 'public' else 'private'
 
   showEmptyHint: ->
     @$('.favorites2-follows-empty-hint').html hintTemplate type: 'artworks'
@@ -76,6 +81,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
     'click .favorites2-new-collection': 'openNewModal'
     'click .favorites2-edit': 'openEditModal'
     'click .artwork-item-edit': 'openEditWorkModal'
+    'click .favorites2-privacy a': 'togglePrivacy'
 
   openNewModal: (e) ->
     e.preventDefault()
@@ -96,3 +102,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
       width: 550
       collection: collection
       artwork: artwork
+
+  togglePrivacy: ->
+    @collections.togglePrivacy()
+    @renderPrivacy()
