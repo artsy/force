@@ -15,12 +15,26 @@ cover-margin = 0 50px 50px 20px
   cursor pointer
   position relative
   text-decoration none
-  &:nth-child(4n+4)
-    margin-right 0
-  &:nth-child(5n+5)
-    margin-left 10px
   &:hover .favorites2-edit
     opacity 1
+
+@media screen and (min-width: 900px)
+  .favorites2-collection
+    &:nth-child(3n+3)
+      margin-right 0
+    &:nth-child(4n+4)
+      margin-left 10px
+      margin-right 50px
+
+@media screen and (min-width: 1250px)
+  .favorites2-collection
+    &:nth-child(3n+3)
+      margin-right 50px
+    &:nth-child(4n+4)
+      margin-right 0
+    &:nth-child(5n+5)
+      margin-left 10px
+      margin-right 50px
 
 .favorites2-cover
   width cover-width
