@@ -235,12 +235,11 @@ module.exports = class ArtworkView extends Backbone.View
 
   setupPostButton: ->
     new AddToPostButton
-      el: @$el
+      el: @$('.ari-container')
       model: @artwork
       modelName: 'artwork'
 
   setupRelatedPosts: ->
-    @listenTo @artwork.relatedPosts, 'sync', @handlePosts
     new RelatedPostsView
       el: @$('#artwork-artist-related-posts-container')
       model: @artwork
@@ -258,10 +257,6 @@ module.exports = class ArtworkView extends Backbone.View
 
     @$('.ari-right').css
       'min-height': @$('.ari-left').height()
-
-  handlePosts: =>
-    if @$('.ari-left').length < 1 and @artwork.relatedPosts.length < 1
-      @$('.artwork-related-information').remove()
 
   setupFeatureNavigation: (options) ->
     new FeatureNavigationView
