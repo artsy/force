@@ -9,9 +9,9 @@ module.exports = class CollectionList extends Backbone.View
   events:
     'click .favorites2-collection-list-create button': 'newCollection'
     'keyup .favorites2-collection-list-create input': (e) -> @newCollection() if e.which is 13
-    'click .favorites2-collection-list li': 'moveTo'
+    'click .favorites2-collection-list li': 'moveArtwork'
 
-  moveTo: (e) ->
+  moveArtwork: (e) ->
     @collection?.removeArtwork @artwork
     col = @collections.at $(e.currentTarget).index()
     if col.isNew() then col.once('sync', => col.saveArtwork @artwork) else col.saveArtwork @artwork

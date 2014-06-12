@@ -38,7 +38,7 @@ module.exports.CollectionView = class CollectionView extends Backbone.View
   nextPage: =>
     @page++
     @artworkCollection.artworks.fetch
-      data: page: @page, access_token: @user.get('accessToken'), private: true
+      data: page: @page, access_token: @user?.get('accessToken'), private: true
       remove: false
       success: (col, res) =>
         return @endInfiniteScroll() if res.length is 0

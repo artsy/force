@@ -1,3 +1,4 @@
+_ = require 'underscore'
 Backbone = require 'backbone'
 sinon = require 'sinon'
 CurrentUser = require '../../models/current_user'
@@ -40,3 +41,25 @@ describe 'ArtworkCollections', ->
     it 'orders the saved-artwork first', ->
       @collections.reset [{ id: 'foo' }, { id: 'bar' }, { id: 'saved-artwork'}, { id: 'baz' }]
       @collections.first().get('id').should.equal 'saved-artwork'
+
+  describe '#fetchNextArtworksPage', ->
+
+    it 'spawns out fetches for each collections artworks', (done) ->
+      @collections.reset [{ id: 'saved-artwork' }, { id: 'cat-portraits' }]
+      @collections.fetchNextArtworksPage success: (artworks) ->
+        _.pluck(artworks, 'id').join('').should.equal 'foobar'
+        done()
+      Backbone.sync.args[0][2].success [fabricate 'artwork', id: 'foo']
+      Backbone.sync.args[0][2].complete()
+      Backbone.sync.args[1][2].success [fabricate 'artwork', id: 'bar']
+      Backbone.sync.args[1][2].complete()
+
+    it 'triggers end event when theres no more pages', (done) ->
+      @collections.reset [{ id: 'saved-artwork' }, { id: 'cat-portraits' }]
+      @collections.on 'end:artworks', done
+      @collections.fetchNextArtworksPage()
+      Backbone.sync.args[0][2].success []
+      Backbone.sync.args[0][2].complete()
+      Backbone.sync.args[1][2].success []
+      Backbone.sync.args[1][2].complete()
+
