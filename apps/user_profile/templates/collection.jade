@@ -5,6 +5,7 @@ block head
 
 append locals
   - assetPackage = 'user_profile'
+  - bodyClass = bodyClass + ' user-profile-collection-body'
 
 block body
   - isUser = user && user.get('id') == profile.get('owner').id

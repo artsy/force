@@ -1,6 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 CurrentUser = require '../../../models/current_user.coffee'
+Profile = require '../../../models/profile.coffee'
 Artworks = require '../../../collections/artworks.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 ShareView = require '../../../components/share/view.coffee'
@@ -10,12 +11,12 @@ EditWorkModal = require '../../../components/favorites2/client/edit_work_modal.c
 FeaturedLinks = require '../../../collections/featured_links.coffee'
 emptyTemplate = -> require('../templates/collection_empty.jade') arguments...
 { ArtworkCollection } = ArtworkCollections = require '../../../collections/artwork_collections.coffee'
-{ COLLECTION, PROFILE, API_URL, EMPTY_COLLECTION_SET_ID } = require('sharify').data
+{ COLLECTION, PROFILE, API_URL, EMPTY_COLLECTION_SET_ID, USER } = require('sharify').data
 
 module.exports.CollectionView = class CollectionView extends Backbone.View
 
   initialize: (options) ->
-    { @artworkCollection, @user } = options
+    { @artworkCollection, @user, @profile } = options
     @page = 0
     @columnsView = new ArtworkColumnsView
       el: @$('#user-profile-collection-artworks')
@@ -26,7 +27,14 @@ module.exports.CollectionView = class CollectionView extends Backbone.View
     @$el.infiniteScroll @nextPage
     @artworkCollection.on 'change:name', @renderName
     @artworkCollection.artworks.on 'remove', @onRemove
+    @artworkCollection.on 'destroy', @redirectAfterDestroy
     @nextPage()?.then (res) => @renderEmpty() if res.length is 0
+
+  redirectAfterDestroy: =>
+    window.location = (
+      if @user.get('default_profile_id') is @profile.get('id') then '/favorites' \
+      else '/' + @user.get('default_profile_id') + '/favorites'
+    )
 
   onRemove: (artwork) =>
     @artworks.remove artwork.get('id')
@@ -81,6 +89,7 @@ module.exports.CollectionView = class CollectionView extends Backbone.View
 
 module.exports.init = ->
   new CollectionView
+    profile: new Profile PROFILE
     user: CurrentUser.orNull()
     artworkCollection: new ArtworkCollection(
       _.extend COLLECTION, user_id: PROFILE.owner.id
