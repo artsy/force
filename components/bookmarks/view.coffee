@@ -19,14 +19,12 @@ module.exports = class BookmarksView extends Backbone.View
     'click .bookmark-artist-remove' : 'uncollect'
 
   initialize: (options = {}) ->
-    return unless sd.CURRENT_USER?
-
-    { @limit, @autofocus, @$collection } = options
+    { @limit, @autofocus, @$collection, @persist } = _.defaults options, persist: true
 
     @render()
 
     @bookmarks = new Bookmarks
-    @bookmarks.fetch()
+    @bookmarks.fetch() if @persist
 
     @following = new Following null, kind: 'artist'
 
@@ -54,9 +52,10 @@ module.exports = class BookmarksView extends Backbone.View
 
   collect: (e, model) ->
     @trigger 'collect'
-    @bookmarks.createFromArtist model
+    send = "#{if @persist then 'create' else 'new'}FromArtist"
+    @bookmarks[send] model
     @autocomplete.clear()
-    @following.follow model.id
+    @following.follow model.id if @persist
     analytics.track.other 'Added an artist to their collection'
 
   uncollect: (e) ->
@@ -67,6 +66,9 @@ module.exports = class BookmarksView extends Backbone.View
     @autocomplete.$input.focus()
     @following.unfollow id
     analytics.track.other 'Removed an artist from their collection'
+
+  saveAll: ->
+    @bookmarks.invoke 'save'
 
   renderCollection: ->
     @trigger 'render:collection'
