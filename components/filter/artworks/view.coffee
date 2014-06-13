@@ -52,7 +52,8 @@ module.exports = class FilterArtworksView extends Backbone.View
     # Hook up events on the artworks, params, and counts
     @artworks.on 'sync', @render
     @counts.on 'sync', @renderCounts
-    @params.on 'change:price_range change:dimension change:medium change:sort reset', @reset
+    throttledReset = _.debounce @reset, 100
+    @params.on 'change:price_range change:dimension change:medium change:sort reset', throttledReset
     @params.on 'change:page', =>
       @artworks.fetch { data: @params.toJSON(), remove: false }
     @$el.infiniteScroll @nextPage
@@ -78,6 +79,27 @@ module.exports = class FilterArtworksView extends Backbone.View
     @counts.fetch data: @params.toJSON()
     @$('.filter-artworks-list').html ''
     _.defer @newColumnsView
+    @$('h2.filter-heading').text @paramsToHeading()
+
+  dimensionHash:
+    "24": 'Small'
+    "48": 'Medium'
+    "84": 'Large'
+
+  priceHash:
+    '-1:1000'            : 'Under $1,000'
+    '1000:5000'          : 'beweeen $1,000 & $5,000'
+    '5000:10000'         : 'between $5,000 & $10,000'
+    '10000:50000'        : 'between $10,000 & $50,000'
+    '50000:1000000000000': 'over $50,000'
+    '-1:1000000000000'   : 'for Sale'
+
+  paramsToHeading: ->
+    _.compact([
+      @dimensionHash[@params.get('dimension')]
+      "artworks"
+      @priceHash[@params.get('price_range')]
+    ]).join(' ')
 
   newColumnsView: =>
     @columnsView?.remove()
