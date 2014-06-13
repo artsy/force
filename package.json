@@ -40,7 +40,8 @@
     "cookie-session": "*",
     "static-favicon": "*",
     "morgan": "*",
-    "forever": "*"
+    "forever": "*",
+    "humanparser": "*"
   },
   "devDependencies": {
     "browserify": "*",
