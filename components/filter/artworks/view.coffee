@@ -68,7 +68,12 @@ module.exports = class FilterArtworksView extends Backbone.View
     @columnsView.appendArtworks(new Artworks(res).models)
 
   renderCounts: =>
-    @$('.filter-artworks-num').html _.numberFormat @counts.get('total')
+    countsFormat = _.numberFormat @counts.get('total')
+    @$('.filter-artworks-num').html countsFormat
+
+    # Update meta description
+    $('meta[name=description]').remove()
+    $('head').append("<meta name='description' content='Collect #{countsFormat} artworks. Purchase online or connect with over 1,500 top galleries.'>")
 
   nextPage: =>
     return if @$('.filter-artworks').is(':hidden') or
@@ -82,6 +87,7 @@ module.exports = class FilterArtworksView extends Backbone.View
     _.defer @newColumnsView
     if headingText = @paramsToHeading()
       @$('h1.filter-heading').text(headingText).show()
+      document.title = "#{headingText} | Artsy"
     else
       @$('h1.filter-heading').hide()
 
