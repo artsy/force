@@ -23,6 +23,13 @@ describe 'ArtworkCollections', ->
       @collections.first().url().should.include '/api/v1/collection/saved-artwork?user_id=' + @user.id
       @collections.first().artworks.url.should.include '/api/v1/collection/saved-artwork/artworks'
 
+    it 'triggers destroy:artwork when a collection artwork is destroyed', ->
+      @collections.on 'destroy:artwork', spy = sinon.spy()
+      @collections.add { id: 'saved-artwork' }
+      @collections.first().artworks.add fabricate 'artwork'
+      @collections.first().artworks.first().destroy()
+      spy.called.should.be.ok
+
   describe '#saveArtwork', ->
 
     it 'saves the artwork to the collection', ->
@@ -62,6 +69,12 @@ describe 'ArtworkCollections', ->
       Backbone.sync.args[0][2].complete()
       Backbone.sync.args[1][2].success []
       Backbone.sync.args[1][2].complete()
+
+  describe '#get', ->
+
+    it 'changes saved-artwork to My Favorite Works', ->
+      @collections.add { id: 'saved-artwork', name: "Saved Artwork" }
+      @collections.first().get('name').should.equal 'My Favorite Works'
 
   describe '#public', ->
 

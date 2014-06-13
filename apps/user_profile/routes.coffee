@@ -6,11 +6,10 @@
 
 @collection = (req, res) ->
   profile = res.locals.profile
-  collection = new ArtworkCollection(id: req.params.id, user_id: profile.get('owner').id)
-  collection.fetch
+  new ArtworkCollection(id: req.params.id, user_id: profile.get('owner').id).fetch
     data: private: true, access_token: req.user?.get('accessToken')
     error: res.backboneError
-    success: ->
+    success: (collection) ->
       res.locals.sd.COLLECTION = collection.toJSON()
       res.locals.sd.PROFILE = profile.toJSON()
       res.render 'collection',

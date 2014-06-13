@@ -37,7 +37,6 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
     @collections.on 'destroy:artwork', @onRemoveArtwork
     @$el.infiniteScroll @collections.fetchNextArtworksPage
     @setup()
-    window.view = this
 
   setup: ->
     @collections.fetch success: =>
