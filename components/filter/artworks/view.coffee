@@ -10,6 +10,8 @@ FilterRouter = require '../router/index.coffee'
 FilterNav = require '../nav/view.coffee'
 COLUMN_WIDTH = 300
 
+humanize = require('underscore.string').humanize
+
 module.exports = class FilterArtworksView extends Backbone.View
 
   pageSize: 10
@@ -78,6 +80,32 @@ module.exports = class FilterArtworksView extends Backbone.View
     @counts.fetch data: @params.toJSON()
     @$('.filter-artworks-list').html ''
     _.defer @newColumnsView
+    if headingText = @paramsToHeading()
+      @$('h1.filter-heading').text(headingText).show()
+    else
+      @$('h1.filter-heading').hide()
+
+  dimensionHash:
+    "24": 'Small'
+    "48": 'Medium'
+    "84": 'Large'
+
+  priceHash:
+    '-1:1000'            : 'Under $1,000'
+    '1000:5000'          : 'beweeen $1,000 & $5,000'
+    '5000:10000'         : 'between $5,000 & $10,000'
+    '10000:50000'        : 'between $10,000 & $50,000'
+    '50000:1000000000000': 'over $50,000'
+    '-1:1000000000000'   : 'for Sale'
+
+  paramsToHeading: ->
+    if @dimensionHash[@params.get('dimension')] or @priceHash[@params.get('price_range')] or @params.get('medium')
+      artworksText = if @params.get('medium') then humanize(@params.get('medium')) else "artworks"
+      _.compact([
+        @dimensionHash[@params.get('dimension')]
+        artworksText
+        @priceHash[@params.get('price_range')]
+      ]).join(' ')
 
   newColumnsView: =>
     @columnsView?.remove()
