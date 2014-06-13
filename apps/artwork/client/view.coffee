@@ -249,13 +249,6 @@ module.exports = class ArtworkView extends Backbone.View
       numToShow: 2
       canBeEmpty: false
 
-    if ($blurb = $('.artwork-additional-information')).length
-      new BlurbView
-        updateOnResize : true
-        lineCount      : 2
-        el             : $blurb
-      $blurb.css maxHeight: 'none'
-
     @$('.ari-right').css
       'min-height': @$('.ari-left').height()
 
