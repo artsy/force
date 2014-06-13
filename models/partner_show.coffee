@@ -39,24 +39,16 @@ module.exports = class PartnerShow extends Backbone.Model
 
   toPageTitle: ->
     _.compact([
-      @get 'name' || ''
+      @title()
       @get('partner')?.name || ''
       "Artsy"
     ]).join(' | ').replace('&#x2013;', '-')
 
   # past / current / upcomming show featuring works by {artists} on view at {gallery name} {location} {dates}
   toPageDescription: ->
-    artists = []
-    if @get('artists')
-      artists =
-        _.compact(for artist in @get('artists')
-          artist.name
-        )
-
-    if artists.length > 1
-      artistText = "featuring works by #{artists[0...(artists.length - 1)].join(', ')} and #{artists[artists.length - 1]}"
-    else if artists.length == 1
-      artistText = "featuring works by #{artists[0]}"
+    artistText = @formatArtistText()
+    if artistText
+      artistText = "featuring works by #{artistText}"
 
     info = _.compact([
       'at'
@@ -71,6 +63,19 @@ module.exports = class PartnerShow extends Backbone.Model
       artistText
       info
     ]).join(' ').replace('&#x2013;', '-')
+
+  formatArtistText: ->
+    artists = []
+    if @get('artists')
+      artists =
+        _.compact(for artist in @get('artists')
+          artist.name
+        )
+
+    if artists.length > 1
+      artistText = "#{artists[0...(artists.length - 1)].join(', ')} and #{artists[artists.length - 1]}"
+    else if artists.length == 1
+      artistText = "#{artists[0]}"
 
   #
   # Get the poster image url of the show (e.g. used in the shows tab in
@@ -106,7 +111,10 @@ module.exports = class PartnerShow extends Backbone.Model
     return @imageUrl('medium_rectangle') if @hasImage('medium_rectangle')
 
   title: ->
-    @get 'name'
+    if @get('name')?.length
+      @get 'name'
+    else
+      @formatArtistText()
 
   shareTitle: ->
     if @has('fair_location')
@@ -215,7 +223,7 @@ module.exports = class PartnerShow extends Backbone.Model
     compactObject {
       "@context" : "http://schema.org"
       "@type" : "Event"
-      name : @get('name')
+      name : @title()
       image: @metaImage()?.imageUrl()
       url: "#{sd.APP_URL}#{@href()}"
       startDate: new Date(@get('start_at')).toISOString()
