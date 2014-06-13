@@ -107,7 +107,7 @@ describe 'CollectionView', ->
   describe '#openShareModal', ->
 
     it 'opens a share modal for the collection', ->
-      @view.artworkCollection.set name: "Andy Foobar's Dulloroids"
+      @view.artworkCollection.set name: "Andy Foobar's Dulloroids", id: 'andy-foobar'
       @view.openShareModal()
       @ShareModal.args[0][0].description.should.include "Andy Foobar's Dulloroids"
 
