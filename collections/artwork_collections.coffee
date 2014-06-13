@@ -16,8 +16,11 @@ class ArtworkCollection extends Backbone.Model
       "#{API_URL}/api/v1/collection/#{@get 'id'}?user_id=#{@userId()}"
 
   initialize: ->
-    @set name: 'My Favorite Works' if @get('id') is 'saved-artwork'
     @initArtworks()
+
+  get: (attr) ->
+    return 'My Favorite Works' if attr is 'name' and @get('id') is 'saved-artwork'
+    super
 
   userId: ->
     @get('user_id') or @collection?.user.get('id')
@@ -52,7 +55,10 @@ module.exports = class ArtworkCollections extends Backbone.Collection
 
   initialize: (models, options) ->
     { @user } = options
-    @on 'add', (col) => col.initArtworks()
+    @on 'add', (col) =>
+      col.initArtworks()
+      col.artworks.on 'remove destroy', (artwork) =>
+        @trigger 'destroy:artwork', artwork, col
 
   fetchNextArtworksPage: (options = {}) =>
     @page ?= 0

@@ -34,8 +34,10 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
     @collections.on 'next:artworks', (a) =>
       @artworkColumnsView.appendArtworks a
     @collections.on 'end:artworks', @endInfiniteScroll
+    @collections.on 'destroy:artwork', @onRemoveArtwork
     @$el.infiniteScroll @collections.fetchNextArtworksPage
     @setup()
+    window.view = this
 
   setup: ->
     @collections.fetch success: =>
@@ -47,6 +49,11 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
         return @showEmptyHint() if total is 0
         @renderCollections()
         @renderZigZagBanner()
+
+  onRemoveArtwork: (artwork, col) =>
+    @$("[data-id='#{artwork.get 'id'}']" +
+       "[data-collection-id='#{col.get 'id'}']")
+      .closest('.artwork-item').remove()
 
   renderPrivacy: ->
     @$('.favorites2-privacy').attr 'data-state',
