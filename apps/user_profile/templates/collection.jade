@@ -18,9 +18,15 @@ block body
         | Back to works
       h1.garamond-header-center!= collection.get('name')
       nav#user-profile-collection-right
+        a#user_profile-collection-right-slideshow View Slideshow
         if isUser
           a#user-profile-collection-right-edit Edit
           a#user-profile-collection-right-share Share
     #user-profile-collection-artworks
     #user-profile-collection-artworks-spinner
       .loading-spinner
+  #user-profile-collection-slideshow
+    #upc-slideshow-left
+    #upc-slideshow-left
+    #upc-slideshow-close
+    ul
