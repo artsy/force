@@ -10,6 +10,8 @@ FilterRouter = require '../router/index.coffee'
 FilterNav = require '../nav/view.coffee'
 COLUMN_WIDTH = 300
 
+humanize = require('underscore.string').humanize
+
 module.exports = class FilterArtworksView extends Backbone.View
 
   pageSize: 10
@@ -52,8 +54,7 @@ module.exports = class FilterArtworksView extends Backbone.View
     # Hook up events on the artworks, params, and counts
     @artworks.on 'sync', @render
     @counts.on 'sync', @renderCounts
-    throttledReset = _.debounce @reset, 100
-    @params.on 'change:price_range change:dimension change:medium change:sort reset', throttledReset
+    @params.on 'change:price_range change:dimension change:medium change:sort reset', @reset
     @params.on 'change:page', =>
       @artworks.fetch { data: @params.toJSON(), remove: false }
     @$el.infiniteScroll @nextPage
@@ -79,7 +80,10 @@ module.exports = class FilterArtworksView extends Backbone.View
     @counts.fetch data: @params.toJSON()
     @$('.filter-artworks-list').html ''
     _.defer @newColumnsView
-    @$('h2.filter-heading').text @paramsToHeading()
+    if headingText = @paramsToHeading()
+      @$('h1.filter-heading').text(headingText).show()
+    else
+      @$('h1.filter-heading').hide()
 
   dimensionHash:
     "24": 'Small'
@@ -95,11 +99,13 @@ module.exports = class FilterArtworksView extends Backbone.View
     '-1:1000000000000'   : 'for Sale'
 
   paramsToHeading: ->
-    _.compact([
-      @dimensionHash[@params.get('dimension')]
-      "artworks"
-      @priceHash[@params.get('price_range')]
-    ]).join(' ')
+    if @dimensionHash[@params.get('dimension')] or @priceHash[@params.get('price_range')] or @params.get('medium')
+      artworksText = if @params.get('medium') then humanize(@params.get('medium')) else "artworks"
+      _.compact([
+        @dimensionHash[@params.get('dimension')]
+        artworksText
+        @priceHash[@params.get('price_range')]
+      ]).join(' ')
 
   newColumnsView: =>
     @columnsView?.remove()
