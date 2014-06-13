@@ -52,7 +52,7 @@ block body
 
     section.artwork-related-information
       .ari-container
-        if artwork.hasLeftInfoSection()
+        if artwork.hasLeftInfoSection(user)
           .ari-left
             if artwork.showAboutArtworkHeading()
               .about-artwork-section( class=(artist && artist.get('blurb') ? 'add-margin-bottom' : ''))

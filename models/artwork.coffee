@@ -332,8 +332,8 @@ module.exports = class Artwork extends Backbone.Model
   showAboutArtworkHeading: ->
     @get('blurb') or @get('provenance') or @get('exhibition_history') or @get('signature') or @get('additional_information') or @get('literature')
 
-  hasLeftInfoSection: ->
-    @get('blurb') or @hasMoreInfo() or @isComparable()
+  hasLeftInfoSection: (user) ->
+    user or @get('blurb') or @hasMoreInfo() or @isComparable()
 
   # Sets up related collections and makes them available
   # under an object so we can access/iterate over them later
