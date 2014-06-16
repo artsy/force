@@ -25,10 +25,15 @@ module.exports = class FlashMessage extends Backbone.View
 
   open: ->
     @setup()
-    @startRemoveTimer() if @autoclose
+
+    # Check for existing flash message and only
+    # start a timer if there isn't one on screen
+    # (and autoclose option is true)
+    if @autoclose and @empty()
+      @startTimer()
 
   setup: ->
-    if (@$container = $(@container)).is ':empty'
+    if @empty()
       @$el.html @template()
       @$container.html @$el
       _.defer => @$el.attr 'data-state', 'open'
@@ -36,11 +41,17 @@ module.exports = class FlashMessage extends Backbone.View
     # If there already is a flash message on screen
     # Take over its el then update the message
     else
-      @setElement(@$container.children())
+      @setElement @$container.children()
       _.defer => @update @message
 
-  startRemoveTimer: ->
+  startTimer: ->
     @__removeTimer__ = _.delay @close, @visibleDuration
+
+  stopTimer: ->
+    clearInterval @__removeTimer__
+
+  empty: ->
+    @__empty__ ?= (@$container = $(@container)).is ':empty'
 
   update: (message) ->
     @message = message
@@ -53,6 +64,5 @@ module.exports = class FlashMessage extends Backbone.View
       attr('data-state', 'closed').
       one($.support.transition.end, =>
         @remove()
-
-        clearInterval @__removeTimer__
+        @stopTimer()
       ).emulateTransitionEnd 500
