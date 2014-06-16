@@ -15,12 +15,26 @@ cover-margin = 0 50px 50px 20px
   cursor pointer
   position relative
   text-decoration none
-  &:nth-child(4n+4)
-    margin-right 0
-  &:nth-child(5n+5)
-    margin-left 10px
   &:hover .favorites2-edit
     opacity 1
+
+@media screen and (min-width: 900px)
+  .favorites2-collection
+    &:nth-child(3n+3)
+      margin-right 0
+    &:nth-child(4n+4)
+      margin-left 10px
+      margin-right 50px
+
+@media screen and (min-width: 1250px)
+  .favorites2-collection
+    &:nth-child(3n+3)
+      margin-right 50px
+    &:nth-child(4n+4)
+      margin-right 0
+    &:nth-child(5n+5)
+      margin-left 10px
+      margin-right 50px
 
 .favorites2-cover
   width cover-width
@@ -33,7 +47,15 @@ cover-margin = 0 50px 50px 20px
     height cover-width
     position absolute
     transition margin 0.3s
-    border 1px solid gray-lighter-color
+    &::after
+      content '.'
+      width 100%
+      height @width
+      border 1px solid rgba(0,0,0,0.1)
+      color transparent
+      position absolute
+      top 0
+      left 0
 
 for i in 1 2 3
   .favorites2-cover li:nth-child({i})
@@ -98,16 +120,6 @@ for i in 1 2 3
   z-index -1
   margin-left 0
 
-.favorites2-edit-modal
-  padding default-modal-padding
-  input
-    width 100%
-    display block
-    margin-bottom 50px
-
-.favorites2-edit-modal-submit
-  float right
-
 .favorites2-empty-cover
   background #eee
 
@@ -126,34 +138,3 @@ for i in 1 2 3
   cursor pointer
   &:hover
     background black
-
-.favorites2-edit-modal-delete
-  border 0
-  margin-right 50px
-  color gray-dark-color
-  padding 0
-  margin-right 72px
-  svg
-    width 15px
-    height @width
-    margin-right 4px
-    position relative
-    top 1px
-    *
-      transition fill 0.3s
-  &:hover
-    color red-color
-    svg *
-      fill red-color
-
-.favorites2-edit-modal-delete-container
-  display none
-  h1, h2
-    text-align center
-  h1
-    font-size 26px
-    margin 62px 0 10px 0
-  h2
-    margin-bottom 60px
-  .avant-garde-button-black
-    float right

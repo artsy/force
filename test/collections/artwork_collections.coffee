@@ -1,3 +1,4 @@
+_ = require 'underscore'
 Backbone = require 'backbone'
 sinon = require 'sinon'
 CurrentUser = require '../../models/current_user'
@@ -22,6 +23,13 @@ describe 'ArtworkCollections', ->
       @collections.first().url().should.include '/api/v1/collection/saved-artwork?user_id=' + @user.id
       @collections.first().artworks.url.should.include '/api/v1/collection/saved-artwork/artworks'
 
+    it 'triggers destroy:artwork when a collection artwork is destroyed', ->
+      @collections.on 'destroy:artwork', spy = sinon.spy()
+      @collections.add { id: 'saved-artwork' }
+      @collections.first().artworks.add fabricate 'artwork'
+      @collections.first().artworks.first().destroy()
+      spy.called.should.be.ok
+
   describe '#saveArtwork', ->
 
     it 'saves the artwork to the collection', ->
@@ -40,3 +48,39 @@ describe 'ArtworkCollections', ->
     it 'orders the saved-artwork first', ->
       @collections.reset [{ id: 'foo' }, { id: 'bar' }, { id: 'saved-artwork'}, { id: 'baz' }]
       @collections.first().get('id').should.equal 'saved-artwork'
+
+  describe '#fetchNextArtworksPage', ->
+
+    it 'spawns out fetches for each collections artworks', (done) ->
+      @collections.reset [{ id: 'saved-artwork' }, { id: 'cat-portraits' }]
+      @collections.fetchNextArtworksPage success: (artworks) ->
+        _.pluck(artworks, 'id').join('').should.equal 'foobar'
+        done()
+      Backbone.sync.args[0][2].success [fabricate 'artwork', id: 'foo']
+      Backbone.sync.args[0][2].complete()
+      Backbone.sync.args[1][2].success [fabricate 'artwork', id: 'bar']
+      Backbone.sync.args[1][2].complete()
+
+    it 'triggers end event when theres no more pages', (done) ->
+      @collections.reset [{ id: 'saved-artwork' }, { id: 'cat-portraits' }]
+      @collections.on 'end:artworks', done
+      @collections.fetchNextArtworksPage()
+      Backbone.sync.args[0][2].success []
+      Backbone.sync.args[0][2].complete()
+      Backbone.sync.args[1][2].success []
+      Backbone.sync.args[1][2].complete()
+
+  describe '#get', ->
+
+    it 'changes saved-artwork to My Favorite Works', ->
+      @collections.add { id: 'saved-artwork', name: "Saved Artwork" }
+      @collections.first().get('name').should.equal 'My Favorite Works'
+
+  describe '#public', ->
+
+    it 'checks wheter all collections are public/private'
+
+  describe '#togglePrivacy', ->
+
+    it 'toggles every collections privacy setting'
+

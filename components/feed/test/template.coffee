@@ -42,7 +42,7 @@ describe 'Feed Templates', ->
       it 'Renders a feed of partner shows', ->
         $ = cheerio.load @html
         $('.feed-item').length.should.equal 1
-        $('.feed-item-top-section .heading').text().should.include @partnerShow.toChildModel().formatFeedItemHeading()
+        $('.feed-item-top-section .show-link').text().should.include @partnerShow.toChildModel().formatFeedItemHeading()
         $('.feed-item-top-section .timeframe').html().should.include @partnerShow.toChildModel().runningDates()
         $('.feed-item-top-section .timeframe').text().should.include @partnerShow.get('location').city
         @html.should.not.include "undefined"
@@ -74,7 +74,7 @@ describe 'Feed Templates', ->
       it 'Shows fair info', ->
         $ = cheerio.load @html
         $('.feed-item').length.should.equal 1
-        $('.feed-item-top-section .heading').text().should.include @partnerShow.get('fair').name
+        $('.feed-item-top-section .feed-item-fair-name').text().should.include @partnerShow.get('fair').name
         $('.feed-item-top-section .fair-location').text().should.include 'New York – Booth 1234'
         $('.fair-location').html().should.include @partnerShow.get('fair_location').display
 
@@ -101,7 +101,7 @@ describe 'Feed Templates', ->
       it 'Renders a feed of partner shows', ->
         $ = cheerio.load @html
         $('.feed-item').length.should.equal 1
-        $('.feed-item-top-section .heading').text().should.include @partnerShow.toChildModel().formatFeedItemHeading()
+        $('.feed-item-top-section .show-link').text().should.include @partnerShow.toChildModel().formatFeedItemHeading()
         $('.feed-item-top-section .timeframe').html().should.include @partnerShow.toChildModel().runningDates()
         @html.should.not.include "undefined"
         @html.should.not.include "\#{"

@@ -12,9 +12,8 @@ ArtistsView       = benv.requireWithJadeify resolve(__dirname, '../../client/vie
 describe 'ArtistsView', ->
   before (done) ->
     benv.setup =>
-      benv.expose { $: benv.require 'jquery' }
+      benv.expose $: benv.require 'jquery'
       Backbone.$ = $
-      ArtistsView::setupSearch = sinon.stub
       done()
 
   after ->
@@ -22,14 +21,19 @@ describe 'ArtistsView', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
+    sinon.stub ArtistsView::, 'setupSearch'
+    sinon.spy ArtistsView::, 'initializeBookmarkedArtists'
 
-    @user   = new CurrentUser fabricate 'user'
-    @state  = new PersonalizeState user: @user
-    @view   = new ArtistsView(state: @state, user: @user)
+    @user = new CurrentUser fabricate 'user', collector_level: 2
+    @state = new PersonalizeState user: @user
+    @view = new ArtistsView state: @state, user: @user
+
     @view.render()
 
   afterEach ->
     Backbone.sync.restore()
+    @view.setupSearch.restore()
+    @view.initializeBookmarkedArtists.restore()
 
   describe '#setupFollowButton', ->
     it 'sets up a FollowButton view that can be accessed later', ->
@@ -72,8 +76,19 @@ describe 'ArtistsView', ->
       @view.$('.personalize-suggestion-name').text().should.equal @view.suggestions.at(0).get('suggestions').at(0).get('name')
 
   describe '#render', ->
-    it 'renders the template', ->
-      @view.$el.html().should.include 'Follow artists you are interested in'
+    describe 'collector_level 2', ->
+      it 'renders the template with the correct copy', ->
+        @view.$el.html().should.include 'Follow artists you are interested in'
+
+    describe 'collector_level 3', ->
+      beforeEach ->
+        @user.set 'collector_level', 3
+        @view.render()
+
+      it 'renders the template with the correct copy', ->
+        html = @view.$el.html()
+        html.should.include 'Follow artists to get alerts about new works for sale'
+        html.should.include 'Get alerts for new works from Artsy’s 2,000+ galleries, art fairs, and auctions'
 
   describe 'GeneArtists', ->
     describe '#initializeGeneArtists', ->
@@ -95,3 +110,21 @@ describe 'ArtistsView', ->
         Backbone.sync.args[0][2].success([followGene])
         @view.renderGeneSuggestions()
         @view.$el.html().should.include 'Suggested for you in Pop Art'
+
+  describe 'BookmarkArtists', ->
+    describe 'collector_level 2', ->
+      it 'does not initialize bookmark artists', ->
+        @user.set 'collector_level', 2
+        view = new ArtistsView state: @state, user: @user
+        view.initializeBookmarkedArtists.called.should.be.false
+
+    describe 'collector_level 3', ->
+      beforeEach ->
+        @user.set 'collector_level', 3
+        @view = new ArtistsView state: @state, user: @user
+
+      it 'is initializes the bookmark artists', ->
+        @view.initializeBookmarkedArtists.called.should.be.true
+
+      it 'fetches the bookmarks collection', ->
+        _.last(Backbone.sync.args)[1].url.should.include '/api/v1/me/bookmark/artists'

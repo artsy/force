@@ -20,7 +20,8 @@ describe 'Meta tags', ->
       @html.should.include "<meta property=\"twitter:card\" content=\"summary"
       @html.should.include "<link rel=\"canonical\" href=\"#{sd.APP_URL}#{@show.href()}"
       @html.should.include "<meta property=\"og:url\" content=\"#{sd.APP_URL}#{@show.href()}"
-      @html.should.include "<meta property=\"og:title\" content=\"#{@show.metaTitle()} | Artsy"
+      @html.should.include "<meta property=\"og:title\" content=\"#{@show.toPageTitle().replace('&', '&amp;')}"
+      @html.should.include "<meta property=\"og:description\" content=\"#{@show.toPageDescription()}"
 
     it 'defaults to the default og:image', ->
       @show = new PartnerShow fabricate('show')

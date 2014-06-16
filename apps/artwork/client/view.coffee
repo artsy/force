@@ -88,6 +88,7 @@ module.exports = class ArtworkView extends Backbone.View
         el      : @$('#artwork-related-show-section')
         model   : show
         artwork : @artwork
+        currentUser: @currentUser
     @on 'related:none', ->
       @belowTheFoldView.setupLayeredSearch()
     @on 'related:not_auction', ->
@@ -234,12 +235,12 @@ module.exports = class ArtworkView extends Backbone.View
 
   setupPostButton: ->
     new AddToPostButton
-      el: @$el
+      el: @$('.ari-container')
       model: @artwork
       modelName: 'artwork'
 
   setupRelatedPosts: ->
-    @listenTo @artwork.relatedPosts, 'sync', @handlePosts
+    @listenTo @artwork.relatedPosts, 'sync', @handlePosts, @
     new RelatedPostsView
       el: @$('#artwork-artist-related-posts-container')
       model: @artwork
@@ -248,17 +249,10 @@ module.exports = class ArtworkView extends Backbone.View
       numToShow: 2
       canBeEmpty: false
 
-    if ($blurb = $('.artwork-additional-information')).length
-      new BlurbView
-        updateOnResize : true
-        lineCount      : 2
-        el             : $blurb
-      $blurb.css maxHeight: 'none'
-
     @$('.ari-right').css
       'min-height': @$('.ari-left').height()
 
-  handlePosts: =>
+  handlePosts: ->
     if @$('.ari-left').length < 1 and @artwork.relatedPosts.length < 1
       @$('.artwork-related-information').remove()
 

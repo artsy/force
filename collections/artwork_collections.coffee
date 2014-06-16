@@ -16,11 +16,14 @@ class ArtworkCollection extends Backbone.Model
       "#{API_URL}/api/v1/collection/#{@get 'id'}?user_id=#{@userId()}"
 
   initialize: ->
-    @set name: 'My Favorite Works' if @get('id') is 'saved-artwork'
     @initArtworks()
 
+  get: (attr) ->
+    return 'My Favorite Works' if attr is 'name' and @get('id') is 'saved-artwork'
+    super
+
   userId: ->
-    @get('user_id') or @collection.user.get('id')
+    @get('user_id') or @collection?.user.get('id')
 
   saveArtwork: (artwork, options = {}) ->
     @artworks.add artwork
@@ -50,7 +53,43 @@ module.exports = class ArtworkCollections extends Backbone.Collection
   comparator: (col) ->
     if col.get('id') is 'saved-artwork' then 0 else 1
 
-  initialize: (models, { @user }) ->
-    @on 'add', (col) => col.initArtworks()
+  initialize: (models, options) ->
+    { @user } = options
+    @on 'add', (col) =>
+      col.initArtworks()
+      col.artworks.on 'remove destroy', (artwork) =>
+        @trigger 'destroy:artwork', artwork, col
+
+  fetchNextArtworksPage: (options = {}) =>
+    @page ?= 0
+    @page++
+    artworks = []
+    complete = _.after @length, =>
+      artworks = _.flatten artworks
+      options.success? artworks
+      @trigger 'next:artworks', artworks
+      @trigger 'end:artworks' if artworks.length is 0
+    @each (collection) =>
+      collection.artworks.fetch
+        data:
+          sort: "-position"
+          private: true
+          user_id: @user.get('id')
+          page: @page
+        remove: false
+        complete: complete
+        success: (a, res) =>
+          artwork.collectionId = collection.get('id') for artwork in res
+          artworks.push new Artworks(res).models
+    this
+
+  public: ->
+    not true in @pluck('private')
+
+  togglePrivacy: ->
+    if @public()
+      @each (col) -> col.save private: true
+    else
+      @each (col) -> col.save private: false
 
 module.exports.ArtworkCollection = ArtworkCollection

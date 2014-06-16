@@ -51,7 +51,7 @@ describe 'FeedView', ->
       @view.$el.html().should.not.include "NaN"
 
       @view.$('.feed-item').length.should.equal 1
-      @view.$('.feed-item-top-section .heading').text().should.include @partnerShow.toChildModel().formatFeedItemHeading()
+      @view.$('.feed-item-top-section .show-link').text().should.include @partnerShow.toChildModel().formatFeedItemHeading()
       @view.$('.feed-item-top-section .timeframe').text().should.include @partnerShow.get('location').city
       @view.$('.artwork-item').text().should.include @partnerShow.get('artworks')[0].title
 

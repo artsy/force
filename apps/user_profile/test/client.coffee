@@ -75,10 +75,11 @@ describe 'CollectionView', ->
         sd: {}
       }, =>
         { CollectionView } = mod = benv.requireWithJadeify resolve(__dirname, '../client/collection'), ['emptyTemplate']
-        stubChildClasses mod, @, ['ArtworkColumnsView', 'ShareModal'], ['appendArtworks']
+        stubChildClasses mod, @, ['ArtworkColumnsView', 'ShareModal', 'EditWorkModal'], ['appendArtworks']
         @view = new CollectionView
           el: $('body')
           artworkCollection: new ArtworkCollection id: 'saved-artwork', user_id: 'craig'
+          user: new Backbone.Model accessToken: 'foobaz'
         done()
 
   afterEach ->
@@ -98,10 +99,15 @@ describe 'CollectionView', ->
       Backbone.sync.args[0][2].success [fabricate 'artwork', title: 'Andy Foobar at the Park']
       _.last(@view.columnsView.appendArtworks.args)[0][0].get('title').should.equal 'Andy Foobar at the Park'
 
+    it 'includes the access token', ->
+      @view.columnsView.appendArtworks = sinon.stub()
+      @view.nextPage()
+      Backbone.sync.args[0][2].data.access_token.should.include 'foobaz'
+
   describe '#openShareModal', ->
 
     it 'opens a share modal for the collection', ->
-      @view.artworkCollection.set name: "Andy Foobar's Dulloroids"
+      @view.artworkCollection.set name: "Andy Foobar's Dulloroids", id: 'andy-foobar'
       @view.openShareModal()
       @ShareModal.args[0][0].description.should.include "Andy Foobar's Dulloroids"
 
@@ -109,6 +115,25 @@ describe 'CollectionView', ->
 
     it 'renders an emtpy state', ->
       @view.renderEmpty()
-      _.last(Backbone.sync.args)[2].success [fabricate 'set']
       _.last(Backbone.sync.args)[2].success [fabricate 'featured_link', title: 'Design on Artsy']
       @view.$el.html().should.include 'Design on Artsy'
+
+  describe '#onRemove', ->
+
+    it 'removes the artwork', ->
+      @view.columnsView.render = sinon.stub()
+      @view.artworkCollection.artworks.reset [fabricate('artwork'), fabricate('artwork')]
+      @view.onRemove @view.artworkCollection.artworks.first()
+      @view.artworkCollection.artworks.length.should.equal 1
+
+    it 're-renders the column view', ->
+      @view.columnsView.render = sinon.stub()
+      @view.artworkCollection.artworks.reset [fabricate('artwork'), fabricate('artwork')]
+      @view.onRemove @view.artworkCollection.artworks.first()
+      @view.columnsView.render.called.should.be.ok
+
+  describe '#openEditWorkModal', ->
+
+    it 'opens an edit work modal', ->
+      @view.openEditWorkModal(preventDefault: ->)
+      @EditWorkModal.args[0][0].width.should.equal 550

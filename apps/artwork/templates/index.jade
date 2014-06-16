@@ -52,7 +52,7 @@ block body
 
     section.artwork-related-information
       .ari-container
-        if artwork.hasLeftInfoSection()
+        if artwork.hasLeftInfoSection(user)
           .ari-left
             if artwork.showAboutArtworkHeading()
               .about-artwork-section( class=(artist && artist.get('blurb') ? 'add-margin-bottom' : ''))
@@ -77,6 +77,7 @@ block body
 
             if artwork.isComparable()
               a.artwork-auction-results-button.avant-garde-header-small( href="/artwork/#{artwork.id}/auction-results" ) See related auction results
+            a.related-posts-add-button.avant-garde-header-small Add Post
         #artwork-artist-related-posts-container.ari-right( class=(artwork.hasLeftInfoSection() ? "" : "borderless") )
           //- Rendered client-side
 
@@ -98,5 +99,4 @@ block body
     section#artwork-below-the-fold-section
       //- Rendered client-side
 
-    a.related-posts-add-button.avant-garde-header-small Add Post
   include ../../../components/main_layout/templates/json_ld

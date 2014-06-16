@@ -9,10 +9,12 @@
     left 0
 
 #user-profile-collection-artworks
-  margin 100px 0
+  margin 100px auto
   .artwork-item-image
     max-height none
     width 100%
+  .artwork-item:hover .artwork-item-edit
+    display block
 
 #user-profile-collection-artworks-spinner
   position relative
@@ -44,12 +46,21 @@
   h3, h4
     avant-garde()
   h3
-    color gray-dark-color
+    color white
     font-size 13px
-  h4
-    font-size 17px
+    bottom 15px
+    left 20px
+    position absolute
   a
-    text-decoration none
+    display block
+    background black
+    position relative
+    &:hover img
+      opacity 0.5
   img
     width 100%
-    margin 10px 0 15px 0
+    transition opacity 0.3s
+
+.user-profile-collection-body .favorites2-edit-modal-delete-container h2
+  height 0
+  opacity 0

@@ -84,7 +84,7 @@ module.exports = class ArtworkColumns extends Backbone.View
         @$el.find("figure[data-artwork='#{artwork.get('id')}']").hide()))
 
   # Render artworks to each column (shortest first)
-  appendArtworks: (artworks) ->
+  appendArtworks: (artworks) =>
     unless @allowDuplicates
       artworks = _.reject artworks, (a) => a.get('id') in @collection.pluck 'id'
       @collection.add(artworks)

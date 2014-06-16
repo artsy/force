@@ -49,6 +49,7 @@ artwork-detail-item-height  = 36px
 
 .artwork-auction-results-button
   margin-top 10px
+  margin-right 13px
 
 .related-posts-add-button.avant-garde-header-small
   padding-left 0px
@@ -118,7 +119,8 @@ artwork-detail-item-height  = 36px
 
 .artwork-detail-artist
   avant-garde()
-  display block
+  margin-right 5px
+  display: inline-block
   > a
     text-decoration none
     &:hover
@@ -297,15 +299,6 @@ artwork-detail-item-height  = 36px
       color white
       transition none
 
-// Follow button states
-.artwork-artist-follow-button
-  > span:before
-    content 'Follow artist'
-  &[data-state='following']
-    color purple-color
-    > span:before
-      content 'Following artist'
-
 // Below the fold
 .ari-left
 .ari-right
@@ -372,7 +365,8 @@ artwork-detail-item-height  = 36px
   position relative
   margin 20px 0
 .ars-partner-name
-  font-weight bold
+  avant-garde()
+  margin-right 5px
 .ars-show-name
   text-decoration none
 .ars-buttons
@@ -401,10 +395,6 @@ artwork-detail-item-height  = 36px
   background-repeat no-repeat
   background-color white
   box-shadow 0 10px 24px rgba(0,0,0,0.12)
-
-.artwork-more-info
-  .avant-garde-header-small
-    cursor: pointer
 
 .auction-clock-closed
   display none

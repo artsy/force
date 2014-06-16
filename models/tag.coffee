@@ -11,3 +11,6 @@ module.exports = class Tag extends Backbone.Model
       data: params
       url: "#{API_URL}/api/v1/search/filtered/tag/#{@get 'id'}/suggest"
     , options
+
+  toPageTitle: -> "#{@get('name')} | Artsy"
+  toPageDescription: -> "Artworks with the #{@get('name')} tag on Artsy"

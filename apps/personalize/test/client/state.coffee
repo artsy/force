@@ -19,6 +19,8 @@ describe 'state', ->
       @state.set current_level: 3
       @state.get('current_step').should.equal 'collect'
       @state.next()
+      @state.get('current_step').should.equal 'bookmarks'
+      @state.next()
       @state.get('current_step').should.equal 'price_range'
       @state.next()
       @state.get('current_step').should.equal 'artists'

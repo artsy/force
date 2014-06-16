@@ -38,9 +38,14 @@ FilterSuggest = require '../../models/filter_suggest.coffee'
             aToZGroup: aToZGroup
 
 @filter = (req, res) ->
-  res.render 'index',
-    showBrowseCategories: false
-    filterRoot: '/browse/artworks'
+  filterSuggest = new FilterSuggest(id: 'main')
+  filterSuggest.fetch
+    cache: true
+    success: ->
+      res.render 'index',
+        showBrowseCategories: false
+        filterRoot: '/browse/artworks'
+        mediums: filterSuggest.mediumsHash()
 
 @redirectToCategories = (req, res) ->
   res.redirect '/categories'

@@ -46,6 +46,7 @@ module.exports = class SaveControls extends Backbone.View
     false
 
   rollup: =>
+    return if @$('.save-controls-drop-down-new input').is(':focus')
     @$el.attr('data-state', 'saved-close') if @$el.attr('data-state') is 'saved'
     @clearRollup()
 
@@ -94,8 +95,9 @@ module.exports = class SaveControls extends Backbone.View
     setTimeout (-> $removed.fadeOut 'fast'), 1000
 
   newCollection: (e) ->
+    return unless val = @$('.save-controls-drop-down-new input').val()
     collection = new ArtworkCollection
-      name: @$('.save-controls-drop-down-new input').val()
+      name: val
       user_id: @user.get('id')
     @$('.save-controls-drop-down-new').addClass 'is-loading'
     collection.save null, complete: =>

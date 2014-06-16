@@ -11,6 +11,7 @@ figure.artwork-item( data-artwork=artwork.get('id') )
         include ./fixed_width_image
       else
         include ./variable_width_image
+      .artwork-item-edit.icon-edit( data-id=artwork.get('id') data-collection-id=artwork.get('collectionId') )
       if sd && sd.SAVE_CONTROLS_SPLIT_TEST
         case sd.SAVE_CONTROLS_SPLIT_TEST
           when 'drop down'

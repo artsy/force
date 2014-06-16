@@ -32,7 +32,7 @@ block body
             | &mdash;Page #{auctionLots.state.currentPage} of #{auctionLots.state.totalPages}
 
       .auction-lots-sort
-        +bordered-pulldown(auctionLots.sortCriteria[auctionLots.sortBy], 'Order')
+        +bordered-pulldown(auctionLots.sortCriteria[auctionLots.sortBy], 'Sort by:')
           a( data-sort=sortBy )= auctionLots.sortCriteria[auctionLots.sortBy]
           for k, v in auctionLots.sortCriteria
             if (!(!user && k === 'Sale' || v === auctionLots.sortBy))

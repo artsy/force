@@ -172,6 +172,8 @@ describe 'Questionnaire', ->
           @view.state.get('mode').should.equal 'questionnaire'
           html = @view.$el.html()
           html.should.include 'Final Step'
+          @view.$el.hasClass 'fade-in'
+          @view.attachBookmarksView.called.should.be.true
 
       describe 'collector level 2', ->
         it 'should advance to the next state on click and have the correct copy', ->
@@ -180,6 +182,8 @@ describe 'Questionnaire', ->
           @view.state.get('mode').should.equal 'questionnaire'
           html = @view.$el.html()
           html.should.include 'Final Step'
+          @view.$el.hasClass 'fade-in'
+          @view.attachBookmarksView.called.should.be.false
 
     describe '#done', ->
       beforeEach ->

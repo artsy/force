@@ -50,17 +50,28 @@ describe 'PartnerShow', ->
         sameAs: "undefined/artist/#{artist.id}"
       }
 
-  describe '#metaTitle', ->
+  describe '#toPageTitle', ->
 
     it 'creates a title defensively handling empty or missing values', ->
-      @partnerShow.metaTitle().should.include "Inez & Vinoodh | Gagosian Gallery |"
-      @partnerShow.metaTitle().should.include @partnerShow.location().singleLine()
-      @partnerShow.metaTitle().should.include @partnerShow.runningDates()
+      @partnerShow.toPageTitle().should.include "Inez & Vinoodh | Gagosian Gallery |"
 
     it 'omits the artworks for sale bit if the partner is not a gallery', ->
       @partnerShow.attributes.partner.name = "White Cube"
       @partnerShow.attributes.partner.type = "Museum"
-      @partnerShow.metaTitle().should.not.include ", Artwork for Sale"
+      @partnerShow.toPageTitle().should.not.include ", Artwork for Sale"
+
+  describe '#toPageDescription', ->
+
+    it 'correctly renders the meta description', ->
+      @partnerShow.toPageDescription().should.include 'Past show at Gagosian Gallery New York, 529 W 20th St. 2nd Floor'
+
+    it 'adds a single artist to the meta description', ->
+      @partnerShow.set 'artists', [fabricate('artist')]
+      @partnerShow.toPageDescription().should.include 'Past show featuring works by Pablo Picasso at Gagosian Gallery New York, 529 W 20th St. 2nd Floor'
+
+    it 'adds multiple artists to the meta description', ->
+      @partnerShow.set 'artists', [fabricate('artist'), fabricate('artist')]
+      @partnerShow.toPageDescription().should.include 'Past show featuring works by Pablo Picasso and Pablo Picasso at Gagosian Gallery New York, 529 W 20th St. 2nd Floor'
 
   describe '#location', ->
 

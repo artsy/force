@@ -32,7 +32,7 @@ module.exports = class PostAdmin extends Backbone.View
     @reposts.on 'all', @showOrHideRepostControls, @
 
   editPostClick: (event) =>
-    Cookies.set 'current_post', @model.get('id'), expires: 60 * 60 * 24
+    Cookies.set 'current_post', @model.get('id'), expires: 60 * 60 * 24 * 7
     window.location = "/post"
     false
 

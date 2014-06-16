@@ -27,6 +27,9 @@ ss:
 sp:
 	API_URL=http://api.artsy.net $(BIN)/coffee index.coffee
 
+spc:
+	REDIS_URL=http://localhost:6379 API_URL=http://api.artsy.net $(BIN)/coffee index.coffee
+
 # Run all of the project-level tests, followed by app-level tests
 test: assets-fast
 	$(BIN)/mocha $(shell find test -name '*.coffee' -not -path 'test/helpers/*')

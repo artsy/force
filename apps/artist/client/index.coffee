@@ -92,7 +92,7 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     @pendRemovalOfEmptyNotice @availableArtworks
     new FillwidthView(
       artworkCollection: @artworkCollection
-      fetchOptions: { 'filter[]': 'for_sale', 'sort': @sortBy or undefined }
+      fetchOptions: { 'filter[]': 'for_sale', sort: @sortBy or undefined, published: true }
       collection: @availableArtworks
       seeMore: true
       empty: (-> @$el.parent().remove() )
@@ -106,7 +106,7 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     @pendRemovalOfEmptyNotice @institutionArtworks
     new FillwidthView(
       artworkCollection: @artworkCollection
-      fetchOptions: { 'filter[]': 'not_for_sale', 'sort': @sortBy or undefined }
+      fetchOptions: { 'filter[]': 'not_for_sale', sort: @sortBy or undefined, published: true }
       collection: @institutionArtworks
       seeMore: true
       empty: (-> @$el.parent().remove() )

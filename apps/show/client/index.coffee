@@ -18,7 +18,7 @@ module.exports.PartnerShowView = class PartnerShowView extends Backbone.View
       el        : @$('.show-share')
     @setupCurrentUser()
     new PartnerShowButtons
-      el: @$(".partner-buttons-show-buttons")
+      el: @$(".show-header")
       model: @model
     @$showArtworks = @$('.show-artworks')
     @$carousel = @$('.carousel')

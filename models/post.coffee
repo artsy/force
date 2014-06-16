@@ -212,7 +212,6 @@ module.exports = class Post extends Backbone.Model
           callback?(artists)
 
   toJSONLD: ->
-    console.log @get('summary'), @get('title')
     compactObject {
       "@context" : "http://schema.org"
       "@type" : "Article"

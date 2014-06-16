@@ -4,6 +4,7 @@ Backbone        = require 'backbone'
 SearchBarView   = require '../search_bar/view.coffee'
 Following       = require '../follow_button/collection.coffee'
 Bookmarks       = require './collection.coffee'
+analytics       = require '../../lib/analytics.coffee'
 
 template            = -> require('./templates/index.jade') arguments...
 bookmarksTemplate   = -> require('./templates/bookmarks.jade') arguments...
@@ -20,7 +21,7 @@ module.exports = class BookmarksView extends Backbone.View
   initialize: (options = {}) ->
     return unless sd.CURRENT_USER?
 
-    { @limit } = options
+    { @limit, @autofocus, @$collection } = options
 
     @render()
 
@@ -35,9 +36,7 @@ module.exports = class BookmarksView extends Backbone.View
       limit : @limit
 
     @listenTo @autocomplete, 'search:selected', @collect
-    @listenTo @bookmarks, 'sync', @renderCollection
-    @listenTo @bookmarks, 'add', @renderCollection
-    @listenTo @bookmarks, 'remove', @renderCollection
+    @listenTo @bookmarks, 'sync add remove', @renderCollection
 
     @autocomplete.$input.on 'keydown', @trapEnter
 
@@ -54,24 +53,30 @@ module.exports = class BookmarksView extends Backbone.View
       false
 
   collect: (e, model) ->
+    @trigger 'collect'
     @bookmarks.createFromArtist model
     @autocomplete.clear()
     @following.follow model.id
+    analytics.track.other 'Added an artist to their collection'
 
   uncollect: (e) ->
+    @trigger 'uncollect'
     id      = $(e.currentTarget).data 'id'
     model   = @bookmarks.findByArtistId id
     model.destroy()
     @autocomplete.$input.focus()
     @following.unfollow id
+    analytics.track.other 'Removed an artist from their collection'
 
   renderCollection: ->
     @trigger 'render:collection'
     (@$collection ?= @$('#bookmark-artists-results'))
       .html @bookmarksTemplate(bookmarks: @bookmarks)
+    _.defer =>
+      @$collection.addClass('is-fade-in')
 
   render: ->
-    @$el.html @template()
+    @$el.html @template(autofocus: @autofocus)
     this
 
   remove: ->

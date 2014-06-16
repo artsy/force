@@ -127,13 +127,16 @@ module.exports = class Questionnaire extends ModalView
 
     if mode is 'questionnaire'
       @once 'rerendered', =>
-        @attachBookmarksView()
+        @attachBookmarksView() if @user.isCollector()
         @attachLocationSearch()
 
     super
 
   attachBookmarksView: ->
-    @bookmarksView = new BookmarksView el: @$('#after-inquiry-bookmark-artists'), limit: 2
+    @bookmarksView = new BookmarksView
+      el: @$('#after-inquiry-bookmark-artists')
+      $collection: @$('#after-inquiry-bookmark-artists-results')
+      limit: 2
     # Height changes on render so recenter the modal
     @bookmarksView.on 'render:collection', @updatePosition
 

@@ -8,7 +8,8 @@
   FACEBOOK_APP_NAMESPACE, MOBILE_MEDIA_QUERY, MOBILE_URL, APP_URL, REDIS_URL, DEFAULT_CACHE_TIME,
   CANONICAL_MOBILE_URL, IMAGES_URL_PREFIX, SECURE_IMAGES_URL, GOOGLE_ANALYTICS_ID, MIXPANEL_ID,
   COOKIE_DOMAIN, AUTO_GRAVITY_LOGIN, GOOGLE_MAPS_API_KEY, ADMIN_URL, CMS_URL, MAX_SOCKETS,
-  DELTA_HOST, ENABLE_AB_TEST, KIOSK_MODE, KIOSK_PAGE, SUGGESTIONS_AB_TEST, SESSION_COOKIE_KEY } = config = require "../config"
+  DELTA_HOST, ENABLE_AB_TEST, KIOSK_MODE, KIOSK_PAGE, SUGGESTIONS_AB_TEST, SESSION_COOKIE_KEY,
+  EMPTY_COLLECTION_SET_ID } = config = require "../config"
 
 { parse, format } = require 'url'
 
@@ -66,6 +67,7 @@ sharify.data =
   KIOSK_PAGE: KIOSK_PAGE
   KIOSK_MODE: KIOSK_MODE
   SUGGESTIONS_AB_TEST: SUGGESTIONS_AB_TEST
+  EMPTY_COLLECTION_SET_ID: EMPTY_COLLECTION_SET_ID
 CurrentUser = require '../models/current_user'
 
 module.exports = (app) ->
@@ -162,6 +164,7 @@ module.exports = (app) ->
   app.use require "../apps/galleries"
   app.use require "../apps/gene"
   app.use require "../apps/institutions"
+  app.use require "../apps/location"
   app.use require "../apps/order"
   app.use require "../apps/personalize"
   app.use require "../apps/page"

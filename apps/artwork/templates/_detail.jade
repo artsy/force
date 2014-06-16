@@ -4,6 +4,9 @@
     if artist
       span.artwork-detail-artist
         a( href= "/artist/#{artist.id}" )= artist.get('name')
+      .plus-follow-button.artwork-artist-follow-button
+        .icon-follow-circle
+        .follow-button-text
     if artwork.get('title')
       span.artwork-detail-title
         em= artwork.get('title')
