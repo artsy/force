@@ -40,9 +40,6 @@ module.exports = class Slideshow extends Backbone.View
     @$("#upc-slideshow-artworks figure:eq(#{index})").addClass('is-active')
     @resetInterval()
 
-  close: ->
-    @$('')
-
   events:
     'click #user-profile-collection-right-slideshow, #upc-slideshow-close': 'toggle'
     'click #upc-slideshow-right': -> @next 1
