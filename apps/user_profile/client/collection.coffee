@@ -9,6 +9,7 @@ ShareModal = require '../../../components/share/modal.coffee'
 EditCollectionModal = require '../../../components/favorites2/client/edit_collection_modal.coffee'
 EditWorkModal = require '../../../components/favorites2/client/edit_work_modal.coffee'
 FeaturedLinks = require '../../../collections/featured_links.coffee'
+Slideshow = require './slideshow.coffee'
 emptyTemplate = -> require('../templates/collection_empty.jade') arguments...
 { ArtworkCollection } = ArtworkCollections = require '../../../collections/artwork_collections.coffee'
 { COLLECTION, PROFILE, API_URL, EMPTY_COLLECTION_SET_ID, USER } = require('sharify').data
@@ -25,6 +26,9 @@ module.exports.CollectionView = class CollectionView extends Backbone.View
       numberOfColumns: 3
       gutterWidth: 80
       allowDuplicates: true
+    @slideshow = new Slideshow
+      el: @$el
+      artworks: @artworkCollection.artworks
     @$el.infiniteScroll @nextPage
     @artworkCollection.on 'change:name', @renderName
     @artworkCollection.artworks.on 'remove', @onRemove

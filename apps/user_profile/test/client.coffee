@@ -3,6 +3,7 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 Profile = require '../../../models/profile'
+Artworks = require '../../../collections/artworks'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
 { stubChildClasses } = require '../../../test/helpers/stubs'
@@ -137,3 +138,58 @@ describe 'CollectionView', ->
     it 'opens an edit work modal', ->
       @view.openEditWorkModal(preventDefault: ->)
       @EditWorkModal.args[0][0].width.should.equal 550
+
+describe 'Slideshow', ->
+
+  beforeEach (done) ->
+    benv.setup =>
+      benv.expose { $: benv.require 'jquery' }
+      Backbone.$ = $
+      $.fn.infiniteScroll = sinon.stub()
+      sinon.stub Backbone, 'sync'
+      benv.render resolve(__dirname, '../templates/collection.jade'), {
+        profile: profile = new Profile(fabricate 'profile')
+        collection: new Backbone.Model(name: 'saved-artwork')
+        sd: {}
+      }, =>
+        Slideshow = require '../client/slideshow'
+        @view = new Slideshow
+          el: $('body')
+          artworks: new Artworks [fabricate 'artwork']
+          user: new Backbone.Model accessToken: 'foobaz'
+        done()
+
+  afterEach ->
+    Backbone.sync.restore()
+    benv.teardown()
+
+  describe '#render', ->
+
+    it 'renders the artworks', ->
+      @view.artworks.reset [fabricate 'artwork', title: 'Foobars in the Pond']
+      @view.render()
+      @view.$el.html().should.include 'Foobars in the Pond'
+
+  describe '#next', ->
+
+    beforeEach ->
+      @view.artworks.reset (fabricate('artwork')  for i in [0..10])
+      @view.render()
+
+    it 'moves the next active artwork', ->
+      @view.next()
+      @view.$('.is-active').index().should.equal 0
+      @view.next()
+      @view.$('.is-active').index().should.equal 1
+
+  describe '#toggle', ->
+
+    beforeEach ->
+      @view.artworks.reset (fabricate('artwork')  for i in [0..10])
+      @view.render()
+
+    it 'resets the active artwork', ->
+      @view.next()
+      @view.next()
+      @view.toggle()
+      @view.$('.is-active').index().should.equal 0
