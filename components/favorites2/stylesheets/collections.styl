@@ -1,7 +1,6 @@
 @import '../../stylus_lib'
 
 cover-offset = 10px
-gutter-width = 60px
 
 .favorites-2-main
   max-width 1140px
@@ -21,21 +20,8 @@ gutter-width = 60px
   &:hover .favorites2-edit
     opacity 1
 
-.favorites2-cover-container
-  width 25%
-  display inline-block
-  vertical-align top
-  margin-bottom 50px
-  &:nth-child(1), &:nth-child(5n+5)
-    padding-right (gutter-width * .75)
-  &:nth-child(2), &:nth-child(6n+6)
-    padding-left (gutter-width * .25)
-    padding-right (gutter-width * .5)
-  &:nth-child(3), &:nth-child(7n+7)
-    padding-left (gutter-width * .5)
-    padding-right (gutter-width * .25)
-  &:nth-child(4), &:nth-child(8n+8)
-    padding-left (gutter-width * .75)
+.favorites2-covers-container
+  grid-4-up(60px)
 
 .favorites2-cover
   width 100%

@@ -93,3 +93,54 @@ transparify(color, basecolor)
     rgba(basecolor, unit(lightness(invert(color)), '') * 0.01)
   else
     rgba(basecolor, unit(lightness(color), '') * 0.01)
+
+// Grid mixins used in the grid component mostly, but elsewhere for custom gap sizes
+grid-n-up(n, gap)
+  > .grid-item
+    margin gap gap 0 gap
+    &:nth-child(-n+{n})
+      margin-top 0
+    &:nth-child(1n)
+      margin-left 0
+    &:nth-child({n}n)
+      margin-right 0
+    &:last-child
+      margin-right 0
+  &.is-flush .grid-item
+    width (100 / n)%
+    margin 0 !important
+  @media screen and (max-width: 1024px)
+    > .grid-item
+      margin (gap / 2) (gap / 2) 0 (gap / 2)
+
+grid-4-up(gap)
+  grid-n-up(4, gap)
+  offset = gap * 0.75
+  > .grid-item
+    width 23%
+    width calc('25% - %s' % offset)
+  @media screen and (max-width: 1024px)
+    > .grid-item
+      offset = offset / 2
+      width 23%
+      width calc('25% - %s' % offset)
+
+grid-3-up(offset, gap)
+  grid-n-up(3, gap)
+  > .grid-item
+    width 32%
+    width calc('33.33% - %s' % offset)
+  @media screen and (max-width: 1024px)
+    > .grid-item
+      offset = offset / 2
+      width calc('33.33% - %s' % offset)
+
+grid-2-up(offset, gap)
+  grid-n-up(2, gap)
+  > .grid-item
+    width 48%
+    width calc('50% - %s' % offset)
+  @media screen and (max-width: 1024px)
+    > .grid-item
+      offset = offset / 2
+      width calc('50% - %s' % offset)
