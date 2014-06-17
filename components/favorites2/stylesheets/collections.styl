@@ -1,8 +1,10 @@
 @import '../../stylus_lib'
 
-cover-width = 230px
 cover-offset = 10px
-cover-margin = 0 50px 50px 20px
+
+.favorites-2-main
+  max-width 1140px
+  margin auto
 
 .favorites2-collections
   position relative
@@ -11,40 +13,25 @@ cover-margin = 0 50px 50px 20px
 
 .favorites2-collection
   display inline-block
-  margin cover-margin
   cursor pointer
   position relative
   text-decoration none
+  width 100%
   &:hover .favorites2-edit
     opacity 1
 
-@media screen and (min-width: 900px)
-  .favorites2-collection
-    &:nth-child(3n+3)
-      margin-right 0
-    &:nth-child(4n+4)
-      margin-left 10px
-      margin-right 50px
-
-@media screen and (min-width: 1250px)
-  .favorites2-collection
-    &:nth-child(3n+3)
-      margin-right 50px
-    &:nth-child(4n+4)
-      margin-right 0
-    &:nth-child(5n+5)
-      margin-left 10px
-      margin-right 50px
+.favorites2-covers-container
+  grid-4-up(60px)
 
 .favorites2-cover
-  width cover-width
-  height cover-width
+  width 100%
+  padding-bottom 100%
   position relative
   li
     background-size 125%
     background-position center center
-    width cover-width
-    height cover-width
+    width 100%
+    padding-bottom 100%
     position absolute
     transition margin 0.3s
     &::after
@@ -76,8 +63,8 @@ for i in 1 2 3
 
 .favorites2-new-collection, .favorites2-new-collection::before
   avant-garde()
-  width cover-width
-  height cover-width
+  width 100%
+  padding-bottom 100%
   border 1px solid gray-lighter-color
   background white
   color gray-color
@@ -87,14 +74,21 @@ for i in 1 2 3
   margin 0
   position relative
   cursor pointer
-  margin cover-margin
-  margin-left 10px
+
+.favorites2-new-collection
+  width 100%
+  padding-bottom 100%
 
 .favorites2-new-collection-icon
-  width 74px
+  width 110px
   height 80px
-  display inline-block
-  margin-bottom 30px
+  position absolute
+  top 50%
+  margin-top -(@height / 2) - 20px
+  left 50%
+  margin-left -(@width / 2)
+  svg
+    margin-bottom 20px
 
 .favorites2-new-collection, .favorites2-new-collection-icon *, .favorites2-new-collection::before
   transition border-color 0.3s, fill 0.3s, color 0.3s
@@ -112,8 +106,8 @@ for i in 1 2 3
   content '.'
   position absolute
   color transparent
-  width cover-width
-  height cover-width
+  width 100%
+  height 100%
   top (cover-offset * -1)
   left (cover-offset * -1)
   display block

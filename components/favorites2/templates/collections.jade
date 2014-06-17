@@ -1,17 +1,20 @@
-button.favorites2-new-collection
-  .favorites2-new-collection-icon
-    include ../images/new-collection.svg
-  br
-  | Create New Set
-for collection, i in collections
-  a.favorites2-collection( href="/#{user.get('default_profile_id')}/collection/#{collection.get('id')}" )
-    ul.favorites2-cover
-      if collection.artworks.length == 0
-        li.favorites2-empty-cover
-      else
-        for artwork in collection.artworks.first(3)
-          li( style="background-image: url(#{artwork.defaultImageUrl('square')})")
-    unless collection.get('id') == 'saved-artwork'
-      button.favorites2-edit Edit
-    .favorites2-collection-title!= collection.get('name')
-    //- .favorites2-collection-num-works 100 works
+.favorites2-covers-container
+  .grid-item
+    button.favorites2-new-collection
+      .favorites2-new-collection-icon
+        include ../images/new-collection.svg
+        br
+        | Create New Set
+  for collection, i in collections
+    .grid-item
+      a.favorites2-collection( href="/#{user.get('default_profile_id')}/collection/#{collection.get('id')}" )
+        ul.favorites2-cover
+          if collection.artworks.length == 0
+            li.favorites2-empty-cover
+          else
+            for artwork in collection.artworks.first(3)
+              li( style="background-image: url(#{artwork.defaultImageUrl('square')})")
+        unless collection.get('id') == 'saved-artwork'
+          button.favorites2-edit Edit
+        .favorites2-collection-title!= collection.get('name')
+        //- .favorites2-collection-num-works 100 works
