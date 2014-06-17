@@ -36,7 +36,7 @@ class ArtworkCollection extends Backbone.Model
       url: "#{API_URL}/api/v1/collection/#{@get 'id'}/artwork/#{artwork.get 'id'}?user_id=#{@userId()}"
 
   initArtworks: ->
-    @artworks ?= new Artworks
+    @artworks ?= new Artworks [], artworkCollection: this
     @artworks.url = "#{API_URL}/api/v1/collection/#{@get 'id'}/artworks?user_id=#{@userId()}"
 
 module.exports = class ArtworkCollections extends Backbone.Collection
@@ -79,8 +79,7 @@ module.exports = class ArtworkCollections extends Backbone.Collection
         remove: false
         complete: complete
         success: (a, res) =>
-          artwork.collectionId = collection.get('id') for artwork in res
-          artworks.push new Artworks(res).models
+          artworks.push new Artworks(res, artworkCollection: collection).models
     this
 
   public: ->
