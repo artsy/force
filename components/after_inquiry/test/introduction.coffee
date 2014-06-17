@@ -52,12 +52,12 @@ describe 'Introduction', ->
 
     it 'displays the user location if they have one', ->
       @user.set 'location', city: 'New York'
-      @introduction.blurb().should.equal 'Damon Zucconi is based in New York has been an Artsy member since March 2012.'
+      @introduction.blurb().should.equal 'Damon Zucconi is based in New York and has been an Artsy member since March 2012.'
 
     it 'renders a grammatically correct sentence if the user is a collector and has a location', ->
       @user.set 'collector_level', 3
       @user.set 'location', city: 'New York'
-      @introduction.blurb().should.equal 'Damon Zucconi is a collector based in New York has been an Artsy member since March 2012.'
+      @introduction.blurb().should.equal 'Damon Zucconi is a collector based in New York and has been an Artsy member since March 2012.'
 
     it 'displays the user collection if they have any', ->
       @bookmarks.newFromArtist new Backbone.Model(fabricate 'artist', name: 'Foo Bar')

@@ -18,6 +18,7 @@ module.exports = class Introduction
       blurb.push 'is' if @location()?
     blurb.push "based in #{@location()}" if @location()?
     if @user.id # Logged in:
+      blurb.push 'and' if @location()?
       blurb.push "has been an Artsy member since #{moment(@user.get('created_at')).format('MMMM YYYY')}."
     else # Logged out:
       if @location()? or @user.isCollector()
