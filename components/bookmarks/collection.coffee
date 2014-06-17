@@ -19,7 +19,9 @@ module.exports = class Bookmarks extends Backbone.Collection
     @find (bookmark) ->
       bookmark.get('artist').id is id
 
-  createFromArtist: (artist) ->
+  newFromArtist: (artist) ->
     return if @findByArtistId(artist.id)?
-    model = @unshift artist_id: artist.id, artist: artist.attributes
-    model.save()
+    @unshift artist_id: artist.id, artist: artist.attributes
+
+  createFromArtist: (artist) ->
+    @newFromArtist(artist)?.save()

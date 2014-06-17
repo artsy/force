@@ -19,22 +19,22 @@ module.exports =
   formIsSubmitting: ($button) ->
     return @submitting if @submitting?
     @submitting = true
-    @$__button__ ?= $button or @$('button')
-    @$__button__.prop 'disabled', true
+    $button ?= @$('button')
+    $button.prop 'disabled', true
     false
 
   reenableForm: ($button) ->
     @submitting = undefined
-    @$__button__ ?= $button or @$('button')
-    @$__button__.prop 'disabled', false
+    $button ?= @$('button')
+    $button.prop 'disabled', false
 
   # Serializes the form object
   #
   # @param {$Object} $form
   # @returns {Object}
   serializeForm: ($form) ->
-    @$__form__ ?= $form or @$('form')
-    _.reduce(@$__form__.serializeArray(), (memo, input) ->
+    $form ?= @$('form')
+    _.reduce($form.serializeArray(), (memo, input) ->
       memo[input.name] = _.trim input.value
       memo
     , {})
@@ -45,10 +45,10 @@ module.exports =
   # @param {$Object} $form
   # @returns {Boolean}
   validateForm: ($form) ->
-    @$__form__ ?= $form or @$('form')
-    @$__form__.addClass 'is-validated'
-    if @$__form__[0].checkValidity
-      @$__form__[0].checkValidity()
+    $form ?= @$('form')
+    $form.addClass 'is-validated'
+    if $form[0].checkValidity
+      $form[0].checkValidity()
     else # Let the server handle it
       true
 

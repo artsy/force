@@ -1,11 +1,10 @@
-_               = require 'underscore'
-mediator        = require '../../lib/mediator.coffee'
-CurrentUser     = require '../../models/current_user.coffee'
-LoggedOutUser   = require '../../models/logged_out_user.coffee'
-FlashMessage    = require '../flash/index.coffee'
-AfterInquiry    = require '../after_inquiry/index.coffee'
-hasSeen         = require '../has_seen/index.coffee'
-analytics       = require '../../lib/analytics.coffee'
+_ = require 'underscore'
+mediator = require '../../lib/mediator.coffee'
+CurrentUser = require '../../models/current_user.coffee'
+LoggedOutUser = require '../../models/logged_out_user.coffee'
+AfterInquiry = require '../after_inquiry/index.coffee'
+hasSeen = require '../has_seen/index.coffee'
+analytics = require '../../lib/analytics.coffee'
 
 # Mixin that determines whether or not the After Inquiry flow should
 # be displayed and ultimately calls save on the inquiry
@@ -22,8 +21,8 @@ module.exports =
         @close => @initializeAfterInquiry()
       else
         @initializeAfterInquiry()
-    # Send the inquiry normally
-    else
+    else # Send the inquiry normally
+      @isModal = false # We want the original success callback to run
       @send()
 
   initializeAfterInquiry: ->
@@ -32,14 +31,10 @@ module.exports =
 
   displayAfterInquiryFlow: ->
     @eligibleForAfterInquiryFlow and
-    @user.id? and # Enable only for logged in users for the time being
     not hasSeen('after-inquiry')
 
   send: ->
-    options = _.pick (@inquiryOptions or {}), 'success', 'error'
-
-    if @user?.has 'accessToken'
-      options.beforeSend = (xhr) =>
-        xhr.setRequestHeader('X-ACCESS-TOKEN', @user.get 'accessToken')
-
-    @inquiry.save null, options
+    @inquiry.save null, _.pick (@inquiryOptions or {}),
+      # If we are in a modal then we can safely discard the success callback
+      # which would close the modal, as we've already closed the initial modal by now
+      (if @isModal then ['error'] else ['success', 'error'])...

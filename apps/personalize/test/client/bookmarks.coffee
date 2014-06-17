@@ -12,6 +12,7 @@ describe 'BookmarksView', ->
       benv.expose $: benv.require 'jquery'
       Backbone.$ = $
       @BookmarksView = benv.requireWithJadeify resolve(__dirname, '../../client/views/bookmarks'), ['template']
+      @BookmarksView.__set__ 'BookmarksSearchView', Backbone.View
       done()
 
   after ->

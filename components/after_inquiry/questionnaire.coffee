@@ -7,6 +7,7 @@ Form                = require '../mixins/form.coffee'
 mediator            = require '../../lib/mediator.coffee'
 analytics           = require '../../lib/analytics.coffee'
 BookmarksView       = require '../bookmarks/view.coffee'
+Introduction        = require './introduction.coffee'
 
 templateMap =
   initial       : -> require('./templates/initial.jade') arguments...
@@ -17,8 +18,8 @@ templateMap =
 stateEventMap =
   initial       : 'Viewed after inquiry initial step'
   questionnaire : 'Viewed after inquiry questionnaire step'
-  signup        : 'Viewed after inquiry auth form'
-  login         : 'Viewed after inquiry auth form'
+  signup        : 'Viewed after inquiry signup form'
+  login         : 'Viewed after inquiry login form'
 
 module.exports = class Questionnaire extends ModalView
   _.extend @prototype, Form
@@ -37,7 +38,7 @@ module.exports = class Questionnaire extends ModalView
     'click #after-inquiry-questionnaire-submit' : 'done'
     'submit #after-inquiry-auth-form'           : 'auth'
     'click #after-inquiry-auth-submit'          : 'auth'
-    'click #auth-skip'                          : 'skipAndSend'
+    'click #auth-skip'                          : 'skip'
 
   initialize: (options) ->
     { @user, @inquiry } = options
@@ -45,7 +46,7 @@ module.exports = class Questionnaire extends ModalView
     @user.approximateLocation()
     @templateData = user: @user
 
-    @state = new Backbone.Model mode: (if @user.id then 'initial' else 'signup')
+    @state = new Backbone.Model mode: 'initial'
     @listenTo @state, 'change:mode', @reRender
     @listenTo @state, 'change:mode', @logState
 
@@ -53,10 +54,9 @@ module.exports = class Questionnaire extends ModalView
 
     super
 
-  skipAndSend: (e) ->
+  skip: (e) ->
     e.preventDefault()
-    mediator.trigger 'inquiry:send'
-    analytics.track.funnel 'Skipped after inquiry flow'
+    analytics.track.funnel 'Declined authentication during after inquiry flow'
     @close()
 
   advance: (e) ->
@@ -79,14 +79,29 @@ module.exports = class Questionnaire extends ModalView
     @user.set @serializeForm()
     @$('button').attr 'data-state', 'loading'
 
+    unless @user.id?
+      @inquiry.set
+        introduction: new Introduction(@user, @bookmarksView?.bookmarks).blurb()
+
     mediator.trigger 'inquiry:send'
 
-    @user.save null,
-      error   : => @close()
-      success : =>
-        @user.refresh()
-        # And we're done...
-        @close()
+    # Logged in:
+    if @user.id?
+      @user.save null,
+        error: => @close()
+        success: =>
+          @user.refresh()
+          @close() # And we're done...
+    # Logged out:
+    else
+      @inquiry.on 'sync error', =>
+        @$el.attr 'data-state', 'closed'
+        period = 1600
+        # Wait for modal to close before re-rendering
+        _.delay (=> @state.set mode: 'signup'), (period / 2)
+        # Wait for re-render before re-opening
+        _.delay (=> @$el.attr 'data-state', 'open'), period
+      , this
 
     analytics.track.funnel 'Submitted questionnaire during after inquiry flow'
 
@@ -98,7 +113,6 @@ module.exports = class Questionnaire extends ModalView
     @$('button').attr 'data-state', 'loading'
 
     @user.set @serializeForm()
-    # Signup or login
     @user[@state.get 'mode'] success: @authSuccess, error: @authError
 
   authError: (model, response, options) =>
@@ -110,10 +124,17 @@ module.exports = class Questionnaire extends ModalView
     attrs = _.omit model.get('user'), @user.keys()...
     @user.set attrs
     @user.unset 'password'
-    @user.needsOnboarding = (@state.get('mode') is 'signup')
-    @inquiry.unset 'session_id'
+    @user.needsOnboarding = false # Disable onboarding for new users, for now
     analytics.track.funnel "Successful #{@state.get('mode')} during after inquiry flow"
-    @state.set mode: 'initial'
+    # Save the new attributes
+    @user.save null,
+      error: => @close()
+      success: =>
+        $.when.apply(null, _.compact([
+          @user.refresh()
+          @bookmarksView?.saveAll?()
+        ])).then =>
+          @close() # And we're done...
 
   toggleMode: (e) ->
     e.preventDefault()
@@ -137,6 +158,7 @@ module.exports = class Questionnaire extends ModalView
       el: @$('#after-inquiry-bookmark-artists')
       $collection: @$('#after-inquiry-bookmark-artists-results')
       limit: 2
+      persist: @user.id?
     # Height changes on render so recenter the modal
     @bookmarksView.on 'render:collection', @updatePosition
 
@@ -148,6 +170,7 @@ module.exports = class Questionnaire extends ModalView
 
   remove: ->
     mediator.off null, null, this
+    @inquiry.off null, null, this
     @locationSearchView?.remove()
     @bookmarksView?.remove()
     super
