@@ -20,6 +20,7 @@ module.exports = class CollectionList extends Backbone.View
     $(e.currentTarget).addClass('is-active')
 
   onKeyup: (e) ->
+    e.preventDefault()
     if @$('.favorites2-collection-list-create input').val().length > 0
       @$('.favorites2-collection-list-create button').attr('disabled', null)
     else
@@ -27,6 +28,7 @@ module.exports = class CollectionList extends Backbone.View
     @newCollection() if e.which is 13
 
   newCollection: (e) ->
+    e.preventDefault()
     return if @$('.favorites2-collection-list-create button').is(':disabled')
     collection = new ArtworkCollection
       name: @$('.favorites2-collection-list-create input').val()
@@ -34,4 +36,3 @@ module.exports = class CollectionList extends Backbone.View
     @collections.add collection
     collection.save()
     @$('.favorites2-collection-list li:last-child').click()
-    false

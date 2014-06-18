@@ -8,9 +8,9 @@ Artwork = require '../../../models/artwork.coffee'
 Artworks = require '../../../collections/artworks.coffee'
 { ArtworkCollection } = ArtworkCollections = require '../../../collections/artwork_collections.coffee'
 ArtworkColumnsView = require '../../artwork_columns/view.coffee'
-SuggestedGenesView = require '../../suggested_genes/view.coffee'
 ShareView = require '../../share/view.coffee'
 ZigZagBanner = require '../../zig_zag_banner/index.coffee'
+FavoritesEmptyStateView = require '../../../components/favorites2/client/empty_state.coffee'
 mediator = require '../../../lib/mediator.coffee'
 hintTemplate = -> require('../templates/empty_hint.jade') arguments...
 collectionsTemplate = -> require('../templates/collections.jade') arguments...
@@ -43,8 +43,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
       return @showEmptyHint() if @collections.length is 0
       @renderPrivacy()
       @collections.fetchNextArtworksPage success: =>
-        total = @collections.reduce (m, col) ->
-          m.artworks?.length + col.artworks?.length
+        total = _.reduce @collections.map((c) -> c.artworks.length), (m, num) -> m + num
         return @showEmptyHint() if total is 0
         @renderCollections()
         @renderZigZagBanner()
@@ -59,12 +58,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
         if @collections.public() then 'public' else 'private'
 
   showEmptyHint: ->
-    @$('.favorites2-follows-empty-hint').html hintTemplate type: 'artworks'
-    new SuggestedGenesView(
-      el: @$('.suggested-genes')
-      user: @user
-    ).render()
-    @endInfiniteScroll()
+    new FavoritesEmptyStateView el: @$('.favorites2-artworks-list')
 
   endInfiniteScroll: =>
     @$('.favorites2-artworks-spinner').css opacity: 0

@@ -8,11 +8,10 @@ ShareView = require '../../../components/share/view.coffee'
 ShareModal = require '../../../components/share/modal.coffee'
 EditCollectionModal = require '../../../components/favorites2/client/edit_collection_modal.coffee'
 EditWorkModal = require '../../../components/favorites2/client/edit_work_modal.coffee'
-FeaturedLinks = require '../../../collections/featured_links.coffee'
+FavoritesEmptyStateView = require '../../../components/favorites2/client/empty_state.coffee'
 Slideshow = require './slideshow.coffee'
-emptyTemplate = -> require('../templates/collection_empty.jade') arguments...
 { ArtworkCollection } = ArtworkCollections = require '../../../collections/artwork_collections.coffee'
-{ COLLECTION, PROFILE, API_URL, EMPTY_COLLECTION_SET_ID, USER } = require('sharify').data
+{ COLLECTION, PROFILE } = require('sharify').data
 
 module.exports.CollectionView = class CollectionView extends Backbone.View
 
@@ -49,6 +48,9 @@ module.exports.CollectionView = class CollectionView extends Backbone.View
     else
       @columnsView.render()
 
+  renderEmpty: ->
+    new FavoritesEmptyStateView el: @$('#user-profile-collection-artworks')
+
   renderName: =>
     @$('h1').text @artworkCollection.get 'name'
 
@@ -61,13 +63,7 @@ module.exports.CollectionView = class CollectionView extends Backbone.View
         return @endInfiniteScroll() if res.length is 0
         @columnsView.appendArtworks new Artworks(res, artworkCollection: @artworkCollection).models
 
-  renderEmpty: ->
-    new FeaturedLinks().fetch
-      url: "#{API_URL}/api/v1/set/#{EMPTY_COLLECTION_SET_ID}/items"
-      success: (featuredLinks) =>
-        @$('#user-profile-collection-artworks').html(
-          emptyTemplate featuredLinks: _.sample(featuredLinks.models, 4)
-        )
+
 
   endInfiniteScroll: =>
     @$('#user-profile-collection-artworks-spinner').hide()
