@@ -84,7 +84,6 @@ module.exports = class SaveControls extends Backbone.View
     $(e.currentTarget).addClass('is-init-click')
     $(e.currentTarget).one 'mouseout', -> $(e.currentTarget).removeClass('is-init-click')
     setTimeout @rollup, 300
-    false
 
   onRemoveFromCollection: (e) ->
     col = @collections.at $(e.currentTarget).index()
@@ -105,4 +104,3 @@ module.exports = class SaveControls extends Backbone.View
       @$('.save-controls-drop-down-new').removeClass 'is-loading'
       @addToCollection collection
     @$('form input').val ''
-    false

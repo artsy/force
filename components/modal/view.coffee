@@ -19,10 +19,8 @@ module.exports = class ModalView extends Backbone.View
   templateData: {}
 
   events: ->
-    'click.handler .modal-backdrop' : 'close'
+    'click.handler .modal-backdrop' : 'onClickBackdrop'
     'click.handler .modal-close'    : 'close'
-
-    'click.internal .modal-dialog'   : '__intercept__'
     'click.internal .modal-close'    : '__announceCloseButtonClick__'
     'click.internal .modal-backdrop' : '__announceBackdropClick__'
 
@@ -44,8 +42,8 @@ module.exports = class ModalView extends Backbone.View
 
     @open()
 
-  __intercept__: (e) ->
-    e.stopPropagation()
+  onClickBackdrop: (e) ->
+    @close() if $(e.target).hasClass('modal-backdrop')
 
   __announceCloseButtonClick__: ->
     @trigger 'click:close'
@@ -138,7 +136,7 @@ module.exports = class ModalView extends Backbone.View
         # Re-enable scrolling
         @scrollbar.reset()
 
-        mediator.trigger 'modal:closed'
+        mediator.trigger 'modal:closed', { view: this }
 
         @remove()
 

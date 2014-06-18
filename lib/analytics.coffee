@@ -65,6 +65,8 @@ module.exports.track =
   _.reduce(Object.keys(categories), (memo, kind) ->
     memo[kind] = (description, options={}) ->
 
+      alert description
+
       # Don't track admins
       return if sd.CURRENT_USER?.type == 'Admin'
 
@@ -78,6 +80,7 @@ module.exports.track =
           referrer: document?.referrer
           collector_level: sd.CURRENT_USER?.collector_level
           user_id: sd.CURRENT_USER?.id
+          lab_features: sd.CURRENT_USER?.lab_features
 
         mixpanel.track? description, options
 

@@ -28,7 +28,7 @@ module.exports = class CollectionList extends Backbone.View
     @newCollection() if e.which is 13
 
   newCollection: (e) ->
-    e.preventDefault()
+    e?.preventDefault()
     return if @$('.favorites2-collection-list-create button').is(':disabled')
     collection = new ArtworkCollection
       name: @$('.favorites2-collection-list-create input').val()
