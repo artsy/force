@@ -59,7 +59,7 @@ module.exports.CollectionView = class CollectionView extends Backbone.View
       remove: false
       success: (col, res) =>
         return @endInfiniteScroll() if res.length is 0
-        @columnsView.appendArtworks new Artworks(res).models
+        @columnsView.appendArtworks new Artworks(res, artworkCollection: @artworkCollection).models
 
   renderEmpty: ->
     new FeaturedLinks().fetch

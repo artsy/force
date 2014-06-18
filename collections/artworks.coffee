@@ -11,6 +11,9 @@ module.exports = class Artworks extends Backbone.Collection
 
   model: Artwork
 
+  initialize: (models, options = {}) ->
+    { @artworkCollection } = options
+
   # Maps each artwork's images into an array of image { width, height } hashes meant to be
   # passed into fillwidth.
   #

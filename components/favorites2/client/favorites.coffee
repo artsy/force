@@ -97,7 +97,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
 
   openEditModal: (e) ->
     e.preventDefault()
-    collection = @collections.at($(e.currentTarget).parent().index() - 1)
+    collection = @collections.get $(e.currentTarget).data('id')
     new EditCollectionModal width: 500, collection: collection
 
   openEditWorkModal: (e) ->

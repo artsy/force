@@ -8,7 +8,7 @@ module.exports = class CollectionList extends Backbone.View
 
   events:
     'click .favorites2-collection-list-create button': 'newCollection'
-    'keyup .favorites2-collection-list-create input': (e) -> @newCollection() if e.which is 13
+    'keyup .favorites2-collection-list-create input': 'onKeyup'
     'click .favorites2-collection-list li': 'moveArtwork'
 
   moveArtwork: (e) ->
@@ -19,7 +19,15 @@ module.exports = class CollectionList extends Backbone.View
     @$('.favorites2-collection-list li').removeClass('is-active')
     $(e.currentTarget).addClass('is-active')
 
-  newCollection: ->
+  onKeyup: (e) ->
+    if @$('.favorites2-collection-list-create input').val().length > 0
+      @$('.favorites2-collection-list-create button').attr('disabled', null)
+    else
+      @$('.favorites2-collection-list-create button').attr('disabled', 'disabled')
+    @newCollection() if e.which is 13
+
+  newCollection: (e) ->
+    return if @$('.favorites2-collection-list-create button').is(':disabled')
     collection = new ArtworkCollection
       name: @$('.favorites2-collection-list-create input').val()
       user_id: @user.get('id')

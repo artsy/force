@@ -17,7 +17,7 @@ module.exports = class Slideshow extends Backbone.View
     switch e.which
       when 39 then @next() # Right arrow
       when 37 then @next -1 # Left arrow
-      when 27 then @toggle() # ESC
+      when 27 then @toggle() if @$('#user-profile-collection-slideshow').is(':visible') # ESC
 
   render: =>
     @$("#upc-slideshow-artworks").html @artworks.map((artwork) ->
@@ -32,6 +32,7 @@ module.exports = class Slideshow extends Backbone.View
         </figure>
       """
     )
+    @$('#upc-slideshow-left, #upc-slideshow-right').remove() if @artworks.length is 1
 
   next: (dir = 1) ->
     index = @$('#upc-slideshow-artworks figure.is-active').index() + dir
