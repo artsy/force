@@ -65,8 +65,6 @@ module.exports.track =
   _.reduce(Object.keys(categories), (memo, kind) ->
     memo[kind] = (description, options={}) ->
 
-      alert description
-
       # Don't track admins
       return if sd.CURRENT_USER?.type == 'Admin'
 
