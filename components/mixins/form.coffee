@@ -80,7 +80,7 @@ module.exports =
         # provided they have name attributes
         @$("[name=#{k}]").attr 'data-state', 'error'
 
-        "#{_.capitalize(k)} #{v}"
+        "#{_.humanize(k)} #{v}"
       )
         .join('; ')
         # Multiple errors on a single param are
@@ -91,5 +91,6 @@ module.exports =
     if _.has(en.errors, message)
       en.errors[message]
     else
-      message
+      # Always return a string
+      message or ''
 
