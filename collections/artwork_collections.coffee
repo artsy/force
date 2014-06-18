@@ -76,6 +76,7 @@ module.exports = class ArtworkCollections extends Backbone.Collection
           private: true
           user_id: @user.get('id')
           page: @page
+          size: 50
         remove: false
         complete: complete
         success: (a, res) =>
