@@ -26,7 +26,7 @@ describe 'FavoritesView', ->
         sinon.stub CurrentUser, 'orNull'
         CurrentUser.orNull.returns new CurrentUser fabricate 'user'
         stubChildClasses mod, this,
-          ['ArtworkColumnsView', 'SuggestedGenesView', 'ShareView', 'ZigZagBanner']
+          ['ArtworkColumnsView', 'FavoritesEmptyStateView', 'ShareView', 'ZigZagBanner']
           ['appendArtworks', 'render']
         @view = new FavoritesView el: $('body')
         done()
@@ -60,11 +60,11 @@ describe 'FavoritesView', ->
 
   describe '#showEmptyHint', ->
 
-    it 'adds a SuggestedGenesView and removes infinite scroll', ->
+    it 'adds a FavoritesEmptyStateView and removes infinite scroll', ->
       sinon.stub @view, 'endInfiniteScroll'
       @view.showEmptyHint()
       @view.endInfiniteScroll.called.should.be.ok
-      @SuggestedGenesView.args[0][0].user.should.equal @view.user
+      @FavoritesEmptyStateView.called.should.be.ok
 
   describe '#renderCollections', ->
 

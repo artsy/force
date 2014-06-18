@@ -75,8 +75,8 @@ describe 'CollectionView', ->
         collection: new Backbone.Model(name: 'saved-artwork')
         sd: {}
       }, =>
-        { CollectionView } = mod = benv.requireWithJadeify resolve(__dirname, '../client/collection'), ['emptyTemplate']
-        stubChildClasses mod, @, ['ArtworkColumnsView', 'ShareModal', 'EditWorkModal'], ['appendArtworks']
+        { CollectionView } = mod = benv.require resolve __dirname, '../client/collection'
+        stubChildClasses mod, @, ['ArtworkColumnsView', 'ShareModal', 'EditWorkModal', 'FavoritesEmptyStateView'], ['appendArtworks']
         @view = new CollectionView
           el: $('body')
           artworkCollection: new ArtworkCollection id: 'saved-artwork', user_id: 'craig'
@@ -116,8 +116,7 @@ describe 'CollectionView', ->
 
     it 'renders an emtpy state', ->
       @view.renderEmpty()
-      _.last(Backbone.sync.args)[2].success [fabricate 'featured_link', title: 'Design on Artsy']
-      @view.$el.html().should.include 'Design on Artsy'
+      @FavoritesEmptyStateView.called.should.be.ok
 
   describe '#onRemove', ->
 
