@@ -13,6 +13,12 @@ describe 'Artworks', ->
   afterEach ->
     Backbone.sync.restore()
 
+  describe '#initialize', ->
+
+    it 'attaches to artwork collection its a part of if passed in', ->
+      as = new Artworks [{ id: 'foo' }], artworkCollection: 'foo'
+      as.first().collection.artworkCollection.should.equal 'foo'
+
   describe '#fillwidthDimensions', ->
 
     it 'maps the artworks into a dimensions array for fillwidth', ->

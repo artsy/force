@@ -75,7 +75,7 @@ module.exports = class SaveControls extends Backbone.View
     @$el.attr 'data-state', 'saving'
     @collections.fetch success: =>
       @$el.attr 'data-state', 'saved'
-      @addToCollection @collections.get('saved-artwork') or @collections.get('my-favorite-works')
+      @addToCollection @collections.get('saved-artwork')
       $(document).on 'click', @closeOnClickOff
 
   onAddToCollection: (e) ->

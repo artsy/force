@@ -46,8 +46,12 @@ describe 'CollectionList', ->
   describe '#newCollection', ->
 
     it 'creates a new collection and moved the artwork to it', ->
+      @view.$('button').attr('disabled', null)
       @view.$('.favorites2-collection-list-create input').val('Foo Bar')
       @view.newCollection()
       _.last(Backbone.sync.args)[0].should.equal 'create'
       _.last(Backbone.sync.args)[2].url.should
-        .include 'collection/cat-portraits/artwork/skull'
+
+    it 'does not create a collection if the button is disabled', ->
+      @view.newCollection()
+      Backbone.sync.called.should.not.be.ok
