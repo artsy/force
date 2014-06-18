@@ -59,6 +59,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
 
   showEmptyHint: ->
     new FavoritesEmptyStateView el: @$('.favorites2-artworks-list')
+    @endInfiniteScroll()
 
   endInfiniteScroll: =>
     @$('.favorites2-artworks-spinner').css opacity: 0
