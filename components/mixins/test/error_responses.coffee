@@ -6,5 +6,6 @@ module.exports =
     { error: """{"error":"User Already Exists"}""", message: 'User Already Exists' },
     { error: """{"error":"User Already Exists","text":"A user with this email has already signed up with Twitter.","providers":["Twitter"]}""", message: 'A user with this email has already signed up with Twitter.' }
     { error: """{"error":"User Already Exists","text":"A user with this email has already signed up with Facebook.","providers":["Facebook"]}""", message: 'A user with this email has already signed up with Facebook.' }
-    { error: '''{"error":{"message":"invalidemailorpassword","stack":""}}''', message: 'invalidemailorpassword' }
+    { error: """{"error":{"message":"invalidemailorpassword","stack":""}}""", message: 'invalidemailorpassword' }
+    { error: """{"type":"param_error","message":"Handle is too short (minimum is 3 characters),Handle can only have letters, numbers, '-', and '_'.","detail":{"handle":["is too short (minimum is 3 characters)","can only have letters, numbers, '-', and '_'"]}}""", message: "Handle is too short (minimum is 3 characters); can only have letters, numbers, '-', and '_'" }
   ]

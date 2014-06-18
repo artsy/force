@@ -1,6 +1,4 @@
-_         = require 'underscore'
-Backbone  = require 'backbone'
-
+_ = require 'underscore'
 _.mixin(require 'underscore.string')
 
 # Extract out into a site-wide language file (?)
@@ -23,7 +21,14 @@ module.exports =
     $button.prop 'disabled', true
     false
 
-  reenableForm: ($button) ->
+  resetFormState: ($form) ->
+    ($form ?= @$('form'))
+      .find('button, input, textarea')
+      .attr('data-state', null)
+
+  reenableForm: ($button, options = {}) ->
+    options = _.defaults options, reset: true
+    @resetFormState() if options.reset
     @submitting = undefined
     $button ?= @$('button')
     $button.prop 'disabled', false
@@ -73,13 +78,18 @@ module.exports =
       _.map(parsed.detail, (v, k) =>
         # For param_errors we can point out the problematic fields
         # provided they have name attributes
-        @$("input[name=#{k}]").attr 'data-state', 'error'
+        @$("[name=#{k}]").attr 'data-state', 'error'
 
         "#{_.capitalize(k)} #{v}"
-      ).join('; ')
+      )
+        .join('; ')
+        # Multiple errors on a single param are
+        # returned joined by commas without spaces
+        .replace(/(.),(.)/, '$1; $2')
 
     # Check for alternate copy mapping
     if _.has(en.errors, message)
       en.errors[message]
     else
       message
+
