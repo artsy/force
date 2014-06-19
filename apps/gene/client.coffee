@@ -37,6 +37,7 @@ module.exports.GeneView = class GeneView extends Backbone.View
       artworksUrl: "#{API_URL}/api/v1/search/filtered/gene/#{@model.get 'id'}"
       countsUrl: "#{API_URL}/api/v1/search/filtered/gene/#{@model.get 'id'}/suggest"
       urlRoot: "gene/#{@model.id}"
+      title: @model.get('name')
     @setupMode()
     @onFollowRoute()
     @setupBlurb()
