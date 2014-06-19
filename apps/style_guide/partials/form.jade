@@ -84,3 +84,16 @@ article.sg-component
     |    .results-list-item
     |      .results-list-item-cell Liz Deschenes
     |      .results-list-item-cell Following
+
+article.sg-component
+  h3 Stacked Form
+  .sg-component-rendered
+    form.stacked-form
+      input.bordered-input( placeholder='Name' )
+      input.bordered-input( placeholder='Email', type='email' )
+      a.avant-garde-button-black Submit
+  pre: code
+    | form.stacked-form
+    |   input.bordered-input( placeholder='Name' )
+    |   input.bordered-input( placeholder='Email', type='email' )
+    |   a.avant-garde-button-black Submit

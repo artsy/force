@@ -1,5 +1,41 @@
 @import '../../stylus_lib'
 
+.stacked-form
+  max-width 100%
+  margin 0 auto
+  > h2
+    margin 20px 0
+    padding-bottom 10px
+    garamond()
+    font-size 20px
+    border-bottom 1px solid gray-lighter-color
+  > a
+  > button
+    text-align center
+  > a
+  > button
+  > input
+  > textarea
+  .stacked-form-cell
+    display block
+    width 100%
+    margin 10px auto
+    &:first-child
+      margin-top 0
+    &:last-child
+      margin-bottom 0
+  > a > i
+  > button > i
+    line-height 0
+    margin-right 10px
+    vertical-align middle
+  > label
+    margin 20px 0 5px 0
+    &:first-child
+      margin-top 0
+  > label + input
+    margin-top 5px
+
 // Placeholder mixins
 bordered-input-placeholder()
   garamond()
@@ -15,6 +51,8 @@ bordered-input-placeholder--autofocus-focus()
   avant-garde()
   display block
   font-size 12px
+  & + input
+    margin-top 5px
 
 .bordered-input
   margin 0
@@ -187,7 +225,7 @@ form.is-validated
       position absolute
       top 3px
       right 2px
-      bottom 6px
+      bottom 7px
       left 2px
       border 2px solid black
       border-top none
