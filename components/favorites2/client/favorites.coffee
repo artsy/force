@@ -10,7 +10,8 @@ Artworks = require '../../../collections/artworks.coffee'
 ArtworkColumnsView = require '../../artwork_columns/view.coffee'
 ShareView = require '../../share/view.coffee'
 ZigZagBanner = require '../../zig_zag_banner/index.coffee'
-FavoritesEmptyStateView = require '../../../components/favorites2/client/empty_state.coffee'
+FavoritesEmptyStateView = require './empty_state.coffee'
+JumpView = require '../../jump/view.coffee'
 mediator = require '../../../lib/mediator.coffee'
 hintTemplate = -> require('../templates/empty_hint.jade') arguments...
 collectionsTemplate = -> require('../templates/collections.jade') arguments...
@@ -20,7 +21,8 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
   initialize: (options) ->
     @user = CurrentUser.orNull()
     @collections = new ArtworkCollections [], user: @user
-    @shareView = new ShareView el: @$('.favorites2-share')
+    @shareView = new ShareView
+      el: @$('.favorites2-share')
     @artworkColumnsView = new ArtworkColumnsView
       el: @$('.favorites2-artworks-list')
       collection: new Artworks
@@ -29,6 +31,8 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
       totalWidth: @$('.favorites2-artworks-list').width()
       artworkSize: 'tall'
       allowDuplicates: true
+    @jump = new JumpView threshold: $(window).height()
+    @$el.append @jump.$el.addClass 'jump-from-bottom'
     mediator.on 'create:artwork:collection', (col) => @collections.add col
     @collections.on 'add remove change:name sync', => _.defer @renderCollections
     @collections.on 'next:artworks', (a) =>
@@ -44,9 +48,9 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
       @renderPrivacy()
       @collections.fetchNextArtworksPage success: =>
         total = _.reduce @collections.map((c) -> c.artworks.length), (m, num) -> m + num
-        return @showEmptyHint() if total is 0
         @renderCollections()
-        @renderZigZagBanner()
+        @renderFirstZigZagBanner()
+        @showEmptyHint() if total is 0
 
   onRemoveArtwork: (artwork, col) =>
     @$("[data-id='#{artwork.get 'id'}']" +
@@ -60,6 +64,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
   showEmptyHint: ->
     new FavoritesEmptyStateView el: @$('.favorites2-artworks-list')
     @endInfiniteScroll()
+    @$('.favorites2-artworks-spinner').remove()
 
   endInfiniteScroll: =>
     @$('.favorites2-artworks-spinner').css opacity: 0
@@ -70,13 +75,20 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
       collections: @collections.models
       user: @user
 
-  renderZigZagBanner: ->
-    new ZigZagBanner
-      persist: true
+  renderFirstZigZagBanner: ->
+    @firstZigZagBanner = new ZigZagBanner
       name: 'favorites_new_set'
       message: 'Become an Artsy Curator. Create a new set.'
       $target: @$('.favorites2-new-collection')
-    @$('.zig-zag-banner').addClass('zig-zag-backwards').css('margin-left': 250)
+      backwards: true
+
+  renderSecondZigZagBanner: ->
+    @secondZigZagBanner = new ZigZagBanner
+      name: 'favorites_save_work'
+      message: 'Great, now save a work into your new set.'
+      $target: @$('.artwork-item').first()
+      backwards: true
+    @secondZigZagBanner.$el?.css marginTop: 0
 
   events:
     'click .favorites2-new-collection': 'openNewModal'
@@ -85,10 +97,13 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
     'click .favorites2-privacy a': 'togglePrivacy'
 
   openNewModal: (e) ->
-    e.preventDefault()
+    e?.preventDefault()
+    @firstZigZagBanner.close() if @firstZigZagBanner.$el.is(':visible')
     collection = new ArtworkCollection user_id: @user.get('id')
     new EditCollectionModal width: 500, collection: collection
-    collection.once 'request', => @collections.add collection
+    collection.once 'request', =>
+      @collections.add collection
+      @renderSecondZigZagBanner()
 
   openEditModal: (e) ->
     e.preventDefault()

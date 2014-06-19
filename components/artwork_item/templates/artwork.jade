@@ -81,4 +81,8 @@ figure.artwork-item( data-artwork=artwork.get('id') )
         )!= artwork.contactLabel()
 
     if artwork.collection && artwork.collection.artworkCollection
-      .artwork-item-collection-name= artwork.collection.artworkCollection.get('name')
+      a.artwork-item-collection-name(
+        href=(sd.CURRENT_USER.default_profile_id + '/collection/' +
+              artwork.collection.artworkCollection.get('id'))
+      )
+        = artwork.collection.artworkCollection.get('name')

@@ -6,9 +6,6 @@ qs = require 'querystring'
 
 class ArtworkCollection extends Backbone.Model
 
-  defaults:
-    private: false
-
   url: ->
     if @isNew()
       "#{API_URL}/api/v1/collection?user_id=#{@userId()}"

@@ -551,6 +551,7 @@ new ZigZagBanner
   name    : 'inquiry' # Used in naming the cookie (so that multiple banners can exist)
   message : 'Interested in this work? Request more info here'
   $target : $inquiryButton # Gets vertically centered to the left of this DOM node
+  backwards: false # Renders the banner from left to right
 ```
 
 ## Blurb
