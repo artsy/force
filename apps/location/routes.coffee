@@ -18,7 +18,7 @@ querystring = require 'querystring'
 
   render = _.after 2, ->
     res.render 'show',
-      title: "Galleries and Shows near #{context.name}"
+      title: "Galleries and Art Shows Near #{context.name}"
       name: context.name
       shows: shows
       profiles: profiles
@@ -29,10 +29,12 @@ querystring = require 'querystring'
     data: { near: context.coords.toString(), has_full_profile: true, size: 20, sort: 'relative_size' }
     success: ->
       return render() if partners.isEmpty()
+      @partnerProfileIds = _.compact(partners.pluck('default_profile_id'))
       profiles.url = "#{sd.API_URL}/api/v1/profiles"
+      profiles.comparator = (p) => @partnerProfileIds.indexOf(p.get('id'))
       profiles.fetch
         cache: true
-        data: querystring.stringify({'id[]': _.compact(partners.pluck('default_profile_id'))})
+        data: querystring.stringify({'id[]': @partnerProfileIds})
         success: render
 
   requests.push fairs.fetch

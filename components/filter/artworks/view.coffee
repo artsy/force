@@ -106,7 +106,12 @@ module.exports = class FilterArtworksView extends Backbone.View
 
   paramsToHeading: ->
     if @dimensionHash[@params.get('dimension')] or @priceHash[@params.get('price_range')] or @params.get('medium')
-      artworksText = if @params.get('medium') then humanize(@params.get('medium')) else "artworks"
+      artworksText = 'artworks'
+      if @params.get('medium')
+        artworksText = humanize(@params.get('medium'))
+      if @title
+        artworksText = @title
+
       _.compact([
         @dimensionHash[@params.get('dimension')]
         artworksText

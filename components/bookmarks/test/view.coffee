@@ -76,8 +76,7 @@ describe 'BookmarksView', ->
       @view.$('.bookmark-artist-remove').click()
       @view.$('.bookmark-artist-remove').length.should.equal 0
 
-    it 'destroys the bookmark on the server', ->
-      # For whatever reason, I'm not seeing a 'delete' in Backbone.sync...
+    it 'destroys the bookmark', ->
       sinon.spy @view.bookmarks.model::, 'destroy'
       @view.$('.bookmark-artist-remove').click()
       @view.bookmarks.model::destroy.called.should.be.true
@@ -97,3 +96,42 @@ describe 'BookmarksView', ->
       @view.autocomplete.$input.triggerHandler.callCount.should.equal 2
       @view.autocomplete.$input.triggerHandler.args[0][0].which.should.equal 40
       @view.autocomplete.$input.triggerHandler.args[1][0].which.should.equal 9
+
+  describe 'when persist is false', ->
+    beforeEach ->
+      Backbone.sync.restore()
+      sinon.stub Backbone, 'sync'
+      @view = new BookmarksView persist: false
+      sinon.spy @view.bookmarks, 'newFromArtist'
+      sinon.spy @view.bookmarks, 'createFromArtist'
+      sinon.spy @view.following, 'follow'
+
+    afterEach ->
+      @view.bookmarks.newFromArtist.restore()
+      @view.bookmarks.createFromArtist.restore()
+      @view.following.follow.restore()
+
+    it 'sets the persist option', ->
+      @view.persist.should.be.false
+
+    it 'does not fetch the bookmarks collection', ->
+      Backbone.sync.called.should.be.false
+
+    it 'does not persist the bookmark', ->
+      @view.autocomplete.trigger 'search:selected', $.Event('sup'), new Backbone.Model(id: 'foobar', name: 'Foo Bar')
+      @view.bookmarks.newFromArtist.called.should.be.true
+      @view.bookmarks.createFromArtist.called.should.be.false
+      Backbone.sync.called.should.be.false
+
+    it 'does not follow the artist', ->
+      @view.autocomplete.trigger 'search:selected', $.Event('sup'), new Backbone.Model(id: 'foobar', name: 'Foo Bar')
+      @view.following.follow.called.should.be.false
+
+    describe '#saveAll', ->
+      beforeEach ->
+      it 'saves all the bookmarks', ->
+        @view.autocomplete.trigger 'search:selected', $.Event('sup'), new Backbone.Model(id: 'foobar', name: 'Foo Bar')
+        @view.autocomplete.trigger 'search:selected', $.Event('sup'), new Backbone.Model(id: 'barbaz', name: 'Bar Baz')
+        @view.autocomplete.trigger 'search:selected', $.Event('sup'), new Backbone.Model(id: 'bazqux', name: 'Baz Qux')
+        @view.saveAll()
+        Backbone.sync.callCount.should.equal 3

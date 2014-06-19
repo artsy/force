@@ -19,3 +19,4 @@ module.exports = class FilterSortCount extends Backbone.View
 
   sort: (e) ->
     @params.set sort: $(e.target).data('sort')
+    false

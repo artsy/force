@@ -23,7 +23,7 @@ describe 'location page', ->
     beforeEach ->
       @fair = new Fair fabricate 'fair', { organizer: {profile_id: 'big-fair'}, name: 'Big Fair', summary: 'huge fair' }
       @template   = render('show')(
-        title: "Galleries and Shows near Tokyo"
+        title: "Galleries and Art Shows Near Tokyo"
         name: 'Tokyo'
         shows: new PartnerShows()
         profiles: new Profiles()
@@ -32,7 +32,8 @@ describe 'location page', ->
       )
 
     it 'should be titled with location name', ->
-      @template.should.include "Galleries and Shows near Tokyo"
+      @template.should.include "Galleries and Art Shows Near Tokyo"
+      @template.should.include "View galleries and art shows near Tokyo on Artsy."  # description
 
     it 'should list fairs', ->
       @template.should.include "Big Fair"
@@ -42,7 +43,7 @@ describe 'location page', ->
     beforeEach ->
       @show = new PartnerShow fabricate 'show', { name: 'Much Show', start_at: '2013-07-12', end_at: '2013-09-01' }
       @template   = render('show')(
-        title: "Galleries and Shows near Tokyo"
+        title: "Galleries and Art Shows Near Tokyo"
         name: 'Tokyo'
         shows: new PartnerShows([@show])
         profiles: new Profiles()
@@ -58,7 +59,7 @@ describe 'location page', ->
     beforeEach ->
       @profile = new Profile fabricate 'partner_profile', { partner: { name: 'Gagosian Gallery' } }
       @template   = render('show')(
-        title: "Galleries and Shows near Tokyo"
+        title: "Galleries and Art Shows Near Tokyo"
         name: 'Tokyo'
         shows: new PartnerShows()
         profiles: new Profiles([@profile])

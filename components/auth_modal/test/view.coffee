@@ -25,7 +25,7 @@ describe 'AuthModalView', ->
 
   beforeEach ->
     @view = new @AuthModalView
-    sinon.stub Backbone, 'sync'
+    sinon.stub(Backbone, 'sync').yieldsTo 'success', { user: { accessToken: 'secrets' } }
 
   afterEach ->
     Backbone.sync.restore()
@@ -63,7 +63,6 @@ describe 'AuthModalView', ->
       @view.state.set mode: 'register'
       @view.submit $.Event('click')
       Backbone.sync.args[0][2].url.should.equal '/users/invitation/accept'
-      Backbone.sync.args[0][2].success {}
       location.href.should.include 'foobarbaz'
 
     it 'submits to signup with custom redirect url', ->
@@ -71,18 +70,15 @@ describe 'AuthModalView', ->
       @view.state.set mode: 'register'
       @view.submit $.Event('click')
       Backbone.sync.args[0][2].url.should.include 'users/invitation/accept'
-      Backbone.sync.args[0][2].success {}
       location.href.should.include '/awesome-fair'
 
     it 'sets a cookie named destination with whatever the passed in destination is', ->
       @view.destination = '/artist/some-guy/follow'
       @view.state.set mode: 'register'
       @view.submit $.Event('click')
-      Backbone.sync.args[0][2].success {}
       _.last(@AuthModalView.__get__('Cookies').set.args)[1].should.equal @view.destination
 
     it 'creates a signed_in cookie', ->
       @view.state.set mode: 'login'
       @view.submit $.Event('click')
-      Backbone.sync.args[0][2].success {}
       _.last(@AuthModalView.__get__('Cookies').set.args)[1].should.be.true

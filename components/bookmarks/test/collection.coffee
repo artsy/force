@@ -17,6 +17,19 @@ describe 'Bookmarks', ->
     it 'can find a bookmark by the artist id', ->
       @bookmarks.findByArtistId('bar').id.should.equal 'foo'
 
+  describe '#newFromArtist', ->
+    it 'accepts an artist(-like) model and news up a bookmark from it', ->
+      @bookmarks.length.should.equal 2
+      @bookmarks.newFromArtist new Backbone.Model id: 'qux'
+      @bookmarks.length.should.equal 3
+      Backbone.sync.called.should.be.false
+
+    it 'rejects duplicate artists', ->
+      @bookmarks.newFromArtist new Backbone.Model id: 'qux'
+      @bookmarks.newFromArtist new Backbone.Model id: 'qux'
+      @bookmarks.length.should.equal 3
+      Backbone.sync.callCount.should.equal 0
+
   describe '#createFromArtist', ->
     it 'accepts an artist(-like) model and creates a bookmark from it', ->
       @bookmarks.length.should.equal 2

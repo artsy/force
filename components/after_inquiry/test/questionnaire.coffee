@@ -51,9 +51,22 @@ describe 'Questionnaire', ->
     mediator.off null, null, this
 
   describe 'logged out', ->
-    it 'has the initial state as signup', ->
+    it 'has the initial state as initial', ->
       @view = new @Questionnaire @viewOptions
-      @view.state.get('mode').should.equal 'signup'
+      @view.state.get('mode').should.equal 'initial'
+
+    describe '#done', ->
+      beforeEach ->
+        @view.state.set mode: 'questionnaire'
+        @view.$('button').click()
+
+      it 'attaches sync listeners to the inquiry', ->
+        _.keys(@view.inquiry._events).should.eql ['sync', 'error']
+
+      it 'changes the mode to signup and reopens the modal', ->
+        @view.inquiry.trigger 'sync'
+        @view.$el.attr('data-state').should.equal 'open'
+        @view.state.get('mode').should.equal 'signup'
 
     describe '#auth', ->
       describe 'signup mode', ->
@@ -96,8 +109,7 @@ describe 'Questionnaire', ->
         beforeEach ->
           @view.state.set mode: 'signup'
 
-        it 'allows the user to skip this whole thing, sending the inquiry and closing the modal', (done) ->
-          mediator.on 'inquiry:send', done, this
+        it 'allows the user to skip this whole thing, sending the inquiry and closing the modal', ->
           @view.$('#auth-skip').click()
           @view.close.called.should.be.true
 
@@ -125,14 +137,35 @@ describe 'Questionnaire', ->
       it 'unsets the user password so that it isnt sent to the server on subsequent saves (which would error)', ->
         @view.user.has('password').should.be.false
 
-      it 'unsets the session_id because now it will be sent with an actual user', ->
-        @view.inquiry.has('session_id').should.be.false
+      it 'always sets needsOnboarding to false (for now)', ->
+        @view.user.needsOnboarding.should.be.false
 
-      it 'sets needsOnboarding if mode is signup', ->
-        @view.user.needsOnboarding.should.be.true
+      it 'saves the user with the new attributes', ->
+        _.last(Backbone.sync.args)[0].should.equal 'update'
+        _.last(Backbone.sync.args)[1].attributes.name.should.equal 'Bar Baz'
 
-      it 'sets the mode to initial', ->
-        @view.state.get('mode').should.equal 'initial'
+      describe 'user update success', ->
+        beforeEach ->
+          model = _.last(Backbone.sync.args)[2]
+
+          Backbone.sync.restore()
+          @view.close.restore()
+
+          sinon.stub @Questionnaire::, 'close'
+          sinon.stub Backbone, 'sync'
+          @view.bookmarksView = saveAll: sinon.stub()
+
+          model.success()
+
+        it 'syncs the user', ->
+          Backbone.sync.called.should.be.true
+          Backbone.sync.args[0][1].url().should.include '/api/v1/me'
+
+        it 'saves all the bookmarks', ->
+          @view.bookmarksView.saveAll.called.should.be.true
+
+        it 'closes the modal', ->
+          @view.close.called.should.be.true
 
       describe 'mode is login', ->
         beforeEach ->

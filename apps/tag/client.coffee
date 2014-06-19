@@ -12,6 +12,7 @@ module.exports.TagView = class TagView extends Backbone.View
       artworksUrl: "#{API_URL}/api/v1/search/filtered/tag/#{@model.get 'id'}"
       countsUrl: "#{API_URL}/api/v1/search/filtered/tag/#{@model.get 'id'}/suggest"
       urlRoot: "tag/#{@model.id}"
+      title: "Artwork related to \"#{@model.get('name')}\""
     @filterView.reset()
 
 module.exports.init = ->

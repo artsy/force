@@ -65,6 +65,20 @@ describe 'AfterInquiryMixin', ->
         sinon.stub(Backbone, 'sync').yieldsTo 'error'
         @view.maybeSend @inquiry, error: -> done()
 
+      describe 'isModal', ->
+        beforeEach ->
+          # Will cause isModal to evaluate to true
+          @view.close = ->
+
+        it 'works for success', (done) ->
+          sinon.stub(Backbone, 'sync').yieldsTo 'success'
+          @view.maybeSend @inquiry, success: -> done()
+
+        it 'works for error', (done) ->
+          sinon.stub(Backbone, 'sync').yieldsTo 'error'
+          @view.maybeSend @inquiry, error: -> done()
+
+
     it 'should initialize a LoggedOutUser if the user is logged out', ->
       @view.user = undefined
       @view.eligibleForAfterInquiryFlow = false
@@ -89,33 +103,12 @@ describe 'AfterInquiryMixin', ->
         mediator.trigger 'inquiry:send'
         Backbone.sync.called.should.be.true
 
-    describe '#displayAfterInquiryFlow', ->
-      beforeEach ->
-        @AfterInquiryMixin.__set__ 'hasSeen', sinon.stub().returns false
-        @view.eligibleForAfterInquiryFlow = true
-
-      it 'returns false for logged out users', ->
-        @view.user = new LoggedOutUser
-        @view.displayAfterInquiryFlow().should.be.false
-
-      it 'returns true for logged in users', ->
-        @view.user = new CurrentUser id: 'existy'
-        @view.displayAfterInquiryFlow().should.be.true
-
   describe '#send', ->
     it 'should send the inquiry', ->
       @view.send()
       Backbone.sync.called.should.be.true
       Backbone.sync.args[0][0].should.equal 'create'
       Backbone.sync.args[0][1].url.should.equal '/api/v1/me/artwork_inquiry_request'
-
-    it 'should inject the X-ACCESS-TOKEN if need be', ->
-      @view.user = new LoggedOutUser accessToken: 'secret'
-      @view.send()
-      xhr = setRequestHeader: sinon.stub()
-      Backbone.sync.args[0][2].beforeSend(xhr)
-      xhr.setRequestHeader.args[0][0].should.equal 'X-ACCESS-TOKEN'
-      xhr.setRequestHeader.args[0][1].should.equal 'secret'
 
     describe 'with callbacks', ->
       beforeEach ->
@@ -130,3 +123,11 @@ describe 'AfterInquiryMixin', ->
         sinon.stub(Backbone, 'sync').yieldsTo 'error'
         @view.inquiryOptions = error: -> done()
         @view.send()
+
+      describe 'isModal', ->
+        it 'discards the success callback', ->
+          sinon.stub(Backbone, 'sync').yieldsTo 'success'
+          @view.inquiryOptions = success: sinon.stub()
+          @view.isModal = true
+          @view.send()
+          @view.inquiryOptions.success.called.should.be.false

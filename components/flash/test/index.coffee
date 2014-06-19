@@ -1,10 +1,9 @@
-_             = require 'underscore'
-Backbone      = require 'backbone'
-benv          = require 'benv'
-sinon         = require 'sinon'
-{ resolve }   = require 'path'
-FlashMessage  = require '../index'
-FlashMessage::startRemoveTimer = sinon.stub()
+_ = require 'underscore'
+Backbone = require 'backbone'
+benv = require 'benv'
+sinon = require 'sinon'
+{ resolve } = require 'path'
+FlashMessage = require '../index'
 
 describe 'FlashMessage', ->
   beforeEach (done) ->
@@ -13,31 +12,45 @@ describe 'FlashMessage', ->
       Backbone.$ = $
       $.support.transition = end: 'transitionend'
       $.fn.emulateTransitionEnd = -> @trigger $.support.transition.end
+      @startTimerStub = sinon.stub FlashMessage::, 'startTimer'
       benv.render resolve(__dirname, '../template.jade'), {}, =>
         done()
 
   afterEach ->
+    @startTimerStub.restore()
     benv.teardown()
 
   describe '#initialize', ->
     it 'requires a message option', ->
       (-> new FlashMessage).should.throw 'You must pass a message option'
+
     it 'accepts the message option', ->
       flash = new FlashMessage message: 'A caesura'
       flash.message.should.equal 'A caesura'
+
     describe 'accepts the autoclose option', ->
-      beforeEach ->
-        FlashMessage::startRemoveTimer = sinon.stub()
       it 'can autoclose', ->
         flash = new FlashMessage message: 'A caesura', autoclose: true
-        flash.startRemoveTimer.called.should.be.true
+        flash.startTimer.called.should.be.true
+
       it 'can autoclose', ->
         flash = new FlashMessage message: 'A caesura', autoclose: false
-        flash.startRemoveTimer.called.should.be.false
+        flash.startTimer.called.should.be.false
+
+  describe '#open', ->
+    it 'checks to see if the container is empty before starting the timer', ->
+      firstFlash = new FlashMessage message: 'Goodbye world.'
+      $('body').text().should.equal 'Goodbye world.'
+      @startTimerStub.restore()
+      @startTimerStub = sinon.stub FlashMessage::, 'startTimer'
+      secondFlash = new FlashMessage message: 'A caesura', autoclose: true
+      secondFlash.startTimer.called.should.be.false
+      $('body').text().should.equal 'Goodbye world.'
 
   describe '#setup', ->
     beforeEach ->
       @flash = new FlashMessage message: 'Goodbye world.'
+
     it 'renders the flash message', ->
       $('#main-layout-flash').length.should.equal 1
       $('.fullscreen-flash-message').length.should.equal 1
@@ -55,6 +68,7 @@ describe 'FlashMessage', ->
   describe '#close', ->
     beforeEach ->
       @flash = new FlashMessage message: 'Goodbye world.'
+
     it 'removes the flash message when clicked, leaving the container empty', (done) ->
       @flash.$el.on 'transitionend', =>
         _.defer ->
@@ -65,6 +79,7 @@ describe 'FlashMessage', ->
   describe '#update', ->
     beforeEach ->
       @flash = new FlashMessage message: 'Goodbye world.'
+
     it 'updates the message', ->
       $('.fullscreen-flash-message').text().should.equal 'Goodbye world.'
       @flash.update 'Hello world.'
