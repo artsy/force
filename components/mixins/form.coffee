@@ -37,12 +37,21 @@ module.exports =
   #
   # @param {$Object} $form
   # @returns {Object}
-  serializeForm: ($form) ->
+  serializeForm: ($form, $checkboxes) ->
     $form ?= @$('form')
-    _.reduce($form.serializeArray(), (memo, input) ->
+    $checkboxes ?= @$('input:checkbox')
+
+    booleans = _.reduce $checkboxes, (memo, checkbox) ->
+      memo[checkbox.name] = checkbox.checked
+      memo
+    , {}
+
+    form = _.reduce $form.serializeArray(), (memo, input) ->
       memo[input.name] = _.trim input.value
       memo
-    , {})
+    , {}
+
+    _.extend form, booleans
 
   # Checks for required fileds then sets the data-state to error
   # if they are empty
