@@ -22,6 +22,7 @@ qs                        = require 'querystring'
 { parse }                 = require 'url'
 ContactView               = require '../components/contact/view.coffee'
 ArtworkColumnsView        = require '../../../components/artwork_columns/view.coffee'
+Cookies                   = require 'cookies-js'
 
 detailTemplate              = -> require('../templates/_detail.jade') arguments...
 auctionPlaceholderTemplate  = -> require('../templates/auction_placeholder.jade') arguments...
@@ -272,12 +273,12 @@ module.exports = class ArtworkView extends Backbone.View
     @syncSavedArtworks @artwork
 
   setupSaveButton: ($el, artwork, options = {}) ->
-    if 'Set Management' in @currentUser.get('lab_features') and
-        analytics.getProperty('ab:save:controls') is 'one button'
+    if @currentUser? and 'Set Management' in @currentUser.get('lab_features') and
+       (Cookies.get('save-controls') or analytics.getProperty('ab:save:controls')) is 'one button'
       SaveControls = require '../../../components/artwork_item/save_controls.coffee'
       new SaveControls
         model: artwork
-        el: @$('.circle-icon-button-save')
+        el: @$('.artwork-image-actions')
     else
       new SaveButton
         analyticsSaveMessage: 'Added artwork to collection, via artwork info'

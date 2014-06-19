@@ -18,7 +18,7 @@ module.exports = class SaveControls extends Backbone.View
     true
 
   events:
-    'click .overlay-button-save': 'openCollectionModal'
+    'click .overlay-button-save, .circle-icon-button-save': 'openCollectionModal'
 
   openCollectionModal: (e) ->
     e?.preventDefault()

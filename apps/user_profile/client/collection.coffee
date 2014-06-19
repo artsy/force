@@ -31,10 +31,11 @@ module.exports.CollectionView = class CollectionView extends Backbone.View
     @$el.infiniteScroll @nextPage
     @artworkCollection.on 'change:name', @renderName
     @artworkCollection.artworks.on 'remove', @onRemove
-    @artworkCollection.on 'destroy', @redirectAfterDestroy
+    @artworkCollection.on 'destroy', => @artworkCollection.once 'sync', @redirectAfterDestroy
     @nextPage()?.then (res) => @renderEmpty() if res.length is 0
 
   redirectAfterDestroy: =>
+    return alert 'dead'
     window.location = (
       if @user.get('default_profile_id') is @profile.get('id') then '/favorites' \
       else '/' + @user.get('default_profile_id') + '/favorites'
