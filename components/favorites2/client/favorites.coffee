@@ -44,9 +44,9 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
       @renderPrivacy()
       @collections.fetchNextArtworksPage success: =>
         total = _.reduce @collections.map((c) -> c.artworks.length), (m, num) -> m + num
-        return @showEmptyHint() if total is 0
         @renderCollections()
-        @renderZigZagBanner()
+        @renderFirstZigZagBanner()
+        @showEmptyHint() if total is 0
 
   onRemoveArtwork: (artwork, col) =>
     @$("[data-id='#{artwork.get 'id'}']" +
@@ -60,6 +60,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
   showEmptyHint: ->
     new FavoritesEmptyStateView el: @$('.favorites2-artworks-list')
     @endInfiniteScroll()
+    @$('.favorites2-artworks-spinner').remove()
 
   endInfiniteScroll: =>
     @$('.favorites2-artworks-spinner').css opacity: 0
@@ -70,13 +71,20 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
       collections: @collections.models
       user: @user
 
-  renderZigZagBanner: ->
-    new ZigZagBanner
-      persist: true
+  renderFirstZigZagBanner: ->
+    @firstZigZagBanner = new ZigZagBanner
       name: 'favorites_new_set'
       message: 'Become an Artsy Curator. Create a new set.'
       $target: @$('.favorites2-new-collection')
-    @$('.zig-zag-banner').addClass('zig-zag-backwards').css('margin-left': 250)
+      backwards: true
+
+  renderSecondZigZagBanner: ->
+    @secondZigZagBanner = new ZigZagBanner
+      name: 'favorites_save_work'
+      message: 'Great, now save a work into your new set.'
+      $target: @$('.artwork-item').first()
+      backwards: true
+    @secondZigZagBanner.$el.css marginTop: 0
 
   events:
     'click .favorites2-new-collection': 'openNewModal'
@@ -85,10 +93,13 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
     'click .favorites2-privacy a': 'togglePrivacy'
 
   openNewModal: (e) ->
-    e.preventDefault()
+    e?.preventDefault()
+    @firstZigZagBanner?.close()
     collection = new ArtworkCollection user_id: @user.get('id')
     new EditCollectionModal width: 500, collection: collection
-    collection.once 'request', => @collections.add collection
+    collection.once 'request', =>
+      @collections.add collection
+      @renderSecondZigZagBanner()
 
   openEditModal: (e) ->
     e.preventDefault()

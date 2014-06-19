@@ -1,18 +1,15 @@
 Backbone = require 'backbone'
 mediator = require '../../../lib/mediator.coffee'
 SaveControlsModal = require './modal.coffee'
+CurrentUser = require '../../../models/current_user.coffee'
 { track } = require '../../../lib/analytics.coffee'
 
 module.exports = class SaveControls extends Backbone.View
 
   initialize: (options) ->
-    throw 'You must pass an el' unless @el?
-    throw 'You must pass a model' unless @model?
-    return unless options.artworkCollection
-    { @artworkCollection } = options
+    @user = CurrentUser.orNull()
 
   showSignupModal: ->
-    return false if @artworkCollection
     track.funnel 'Triggered sign up form via save button'
     mediator.trigger 'open:auth',
       mode: 'register'
@@ -23,8 +20,7 @@ module.exports = class SaveControls extends Backbone.View
   events:
     'click .overlay-button-save': 'openCollectionModal'
 
-  openCollectionModal: ->
-    return false if @showSignupModal()
+  openCollectionModal: (e) ->
+    e?.preventDefault()
+    return @showSignupModal() unless @user
     new SaveControlsModal width: 500, model: @model
-    false
-

@@ -34,7 +34,6 @@ module.exports = class ArtworkView extends Backbone.View
   events:
     'click a[data-client]'                  : 'intercept'
     'click .circle-icon-button-share'       : 'openShare'
-    'click .circle-icon-button-save'        : 'saveArtwork'
     'click .artwork-additional-image'       : 'changeImage'
     'click .artwork-download-button'        : 'trackDownload'
     'click .artwork-auction-results-button' : 'trackComparable'
@@ -273,12 +272,19 @@ module.exports = class ArtworkView extends Backbone.View
     @syncSavedArtworks @artwork
 
   setupSaveButton: ($el, artwork, options = {}) ->
-    new SaveButton
-      analyticsSaveMessage: 'Added artwork to collection, via artwork info'
-      analyticsUnsaveMessage: 'Removed artwork from collection, via artwork info'
-      el: $el
-      saved: @saved
-      model: artwork
+    if 'Set Management' in @currentUser.get('lab_features') and
+        analytics.getProperty('ab:save:controls') is 'one button'
+      SaveControls = require '../../../components/artwork_item/save_controls.coffee'
+      new SaveControls
+        model: artwork
+        el: @$('.circle-icon-button-save')
+    else
+      new SaveButton
+        analyticsSaveMessage: 'Added artwork to collection, via artwork info'
+        analyticsUnsaveMessage: 'Removed artwork from collection, via artwork info'
+        el: $el
+        saved: @saved
+        model: artwork
 
   setupFollowButton: ->
     @followButton = new FollowButton

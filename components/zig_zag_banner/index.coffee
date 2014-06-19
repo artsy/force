@@ -14,10 +14,13 @@ module.exports = class ZigZagBanner extends Backbone.View
   template: template
 
   initialize: (options = {}) ->
-    { @name, @$target, @message, @persist } = _.defaults(options, persist: true)
+    { @name, @$target, @message, @persist, @backwards } = _.defaults(options, persist: true)
 
     unless @name and @$target and @message
       throw new Error('You must pass a name, $target, and message')
+
+    if @backwards
+      @$el.addClass('zig-zag-backwards').css "margin-left": @$target.width()
 
     if @persist
       if Cookies.get("zig_zag_#{@name}")?
@@ -73,7 +76,7 @@ module.exports = class ZigZagBanner extends Backbone.View
     dfd.promise()
 
   close: (e) ->
-    e.preventDefault()
-    e.stopPropagation()
+    e?.preventDefault()
+    e?.stopPropagation()
     @transitionOut().then =>
       @remove()
