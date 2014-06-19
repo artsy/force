@@ -1,19 +1,16 @@
-_               = require 'underscore'
-rewire          = require 'rewire'
-benv            = require 'benv'
-Backbone        = require 'backbone'
-sinon           = require 'sinon'
-{ resolve }     = require 'path'
-{ fabricate }   = require 'antigravity'
-
-Artworks          = require '../../../../collections/artworks.coffee'
-ArtworkCollection = require '../../../../models/artwork_collection.coffee'
-Profile           = require '../../../../models/profile.coffee'
-ProfileEdit       = require '../../models/profile_edit.coffee'
-UserEdit          = require '../../models/user_edit.coffee'
+_ = require 'underscore'
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+{ resolve } = require 'path'
+{ fabricate } = require 'antigravity'
+Profile = require '../../../../models/profile.coffee'
+UserEdit = require '../../models/user_edit.coffee'
+ProfileForm = benv.requireWithJadeify((resolve __dirname, '../../client/profile_form.coffee'), ['template'])
+ProfileForm.__set__ 'LocationSearchView', Backbone.View
+ProfileForm.__set__ 'ProfileIconUplaod', Backbone.View
 
 describe 'ProfileForm', ->
-
   before (done) ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'
@@ -24,68 +21,48 @@ describe 'ProfileForm', ->
     benv.teardown()
 
   beforeEach (done) ->
-    @userEdit = new UserEdit fabricate 'user', location: fabricate 'location'
-    @favs = new ArtworkCollection
-      default : true
-      private : true
-      userId  : @userEdit.get 'id'
-    @favs.get('artworks').add fabricate('artwork'), { at: 0 }
-    @profile = new Profile fabricate 'profile'
-    @profileEdit = new ProfileEdit fabricate 'profile'
-    sinon.stub Backbone, 'sync'
-    benv.render resolve(__dirname, '../../templates/profile.jade'), {
-      sd: {}
-      profile: @profile
-      profileEdit: @profileEdit
-      user: @userEdit
-    }, =>
-      @ProfileForm = benv.requireWithJadeify(
-        (resolve __dirname, '../../client/profile_form.coffee'), []
-      )
-      done()
+    @userEdit = new UserEdit fabricate 'user', public_favorites: true
+    @userEdit.initializeDefaultArtworkCollection()
+    @profile = new Profile fabricate 'profile', private: false
+    @view = new ProfileForm profile: @profile, userEdit: @userEdit
+    @view.render()
 
+    sinon.stub Backbone, 'sync'
+    sinon.stub $, 'ajax'
+
+    done()
 
   afterEach ->
     Backbone.sync.restore()
+    $.ajax.restore()
 
-  describe 'user has no favorites collection or an error occurs retrieving it', ->
+  describe '#render', ->
+    it 'renders the view', ->
+      @view.$el.html().should.include 'Your Profile Information'
 
-    it 'does not reveal the enable public favorites toggle', ->
-      @profileForm = new @ProfileForm
-        el      : $('.settings-profile-form')
-        model   : @profileEdit
-        userEdit: @userEdit
-      @profileForm.$('.settings-enable-public-favorites').should.have.lengthOf 1
-      Backbone.sync.args[0][2].error()
-      @profileForm.$('.settings-enable-public-favorites').should.have.lengthOf 0
+  describe '#initialize', ->
+    it 'ensures the publish favorites checkbox is kept in sync with the user model', ->
+      @userEdit.set 'public_favorites', false
+      @view.$('#profile-favorites').prop('checked').should.be.false
+      @userEdit.set 'public_favorites', true
+      @view.$('#profile-favorites').prop('checked').should.be.true
 
-  describe 'enable public favorites', ->
-
+  describe 'toggleProfile', ->
     beforeEach ->
-      @profileForm = new @ProfileForm
-        el      : $('.settings-profile-form')
-        model   : @profileEdit
-        userEdit: @userEdit
-      Backbone.sync.args[0][2].success @favs.attributes
-      sinon.stub $, 'ajax'
+      Backbone.sync.restore()
+      sinon.stub(Backbone, 'sync').yieldsTo 'success'
+      @view.$('.settings-toggle-profile').click()
 
-    afterEach ->
-      $.ajax.restore()
+    it 'unpublishes the favorites', ->
+      $.ajax.called.should.be.true
+      @userEdit.get('public_favorites').should.be.false
 
-    it 'correctly toggles the state', ->
-      @favs.get('private').should.be.true
-      @profileForm.$('#profile-favorites').attr('data-state').should.equal 'off'
-      @profileForm.$('#profile-favorites').click()
-      $.ajax.callCount.should.equal 1
-      @profileForm.$('#profile-favorites').attr('data-state').should.equal 'on'
+    it 'disables the profile', ->
+      @profile.get('private').should.be.true
+      Backbone.sync.called.should.be.true
+      Backbone.sync.args[0][0].should.equal 'update'
+      Backbone.sync.args[0][1].attributes.private.should.be.true
+      Backbone.sync.args[0][1].url().should.include '/api/v1/profile/alessandra'
 
-    it 'requires a public profile by setting it public', ->
-      @profileForm.$('#profile-favorites').click()
-      @profileForm.$('#profile-favorites').attr('data-state').should.equal 'on'
-      @profileForm.$('#profile-public').attr('data-state').should.equal 'on'
-
-    it 'toggles public favorites if the profile is made private', ->
-      @profileForm.$('#profile-favorites').click()
-      @profileForm.$('#profile-public').click()
-      @profileForm.$('#profile-favorites').attr('data-state').should.equal 'off'
-      @profileForm.$('#profile-public').attr('data-state').should.equal 'off'
+    it 'renders the private template', ->
+      @view.$el.html().should.include 'Your profile is currently disabled'

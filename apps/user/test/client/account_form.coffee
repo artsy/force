@@ -5,41 +5,75 @@ Backbone = require 'backbone'
 sinon = require 'sinon'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
-ProfileEdit = require '../../models/profile_edit.coffee'
 UserEdit = require '../../models/user_edit.coffee'
-AccountForm = require '../../client/account_form.coffee'
-Profile = require '../../../../models/profile.coffee'
-CurrentUser = require '../../../../models/current_user.coffee'
+AccountForm = benv.requireWithJadeify resolve(__dirname, '../../client/account_form.coffee'), ['template']
 
 describe 'AccountForm', ->
-
   before (done) ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'
       Backbone.$ = $
-      @userEdit = new UserEdit fabricate 'user', location: fabricate 'location'
-      @profile = new Profile fabricate 'profile'
-      @profileEdit = new ProfileEdit fabricate 'profile'
-      benv.render resolve(__dirname, '../../templates/profile.jade'), {
-        sd: {}
-        profile: @profile
-        profileEdit: @profileEdit
-        user: @userEdit
-      }, =>
-        sinon.stub Backbone, 'sync'
-        @view =  new AccountForm
-          el: $ 'body'
-          model: @userEdit
-          profileEdit: @profileEdit
-        done()
+      done()
 
+  after ->
+    benv.teardown()
+
+  beforeEach (done) ->
+    sinon.stub Backbone, 'sync'
+
+    @userEdit = new UserEdit fabricate 'user', location: fabricate 'location'
+    @view = new AccountForm userEdit: @userEdit
+    @view.render()
+
+    done()
 
   afterEach ->
     Backbone.sync.restore()
-    benv.teardown()
 
-  it 'after linking redirects back to the user edit form', ->
-    global.location.href = 'user/edit'
-    @view.toggleLinked()
-    window.location.should.include 'redirect-to='
-    window.location.should.include 'user%2Fedit'
+  describe '#toggleService', ->
+    describe 'link', ->
+      beforeEach ->
+        global.location.href = 'user/edit'
+        @view.$('.settings-toggle-service[data-service="twitter"]').click()
+
+      it 'links the correct service', ->
+        window.location.should.include '/users/auth/twitter?'
+
+      describe '#toggleLinked', ->
+        it 'after linking redirects back to the user edit form', ->
+          window.location.should.include 'redirect-to='
+          window.location.should.include 'user%2Fedit'
+
+    describe 'unlink', ->
+      beforeEach ->
+        sinon.stub(UserEdit::, 'isLinkedTo').returns true
+        @view.$('.settings-toggle-service[data-service="twitter"]').click()
+
+      afterEach ->
+        @userEdit.isLinkedTo.restore()
+
+      it 'destroys the authentication', ->
+        Backbone.sync.args[0][0].should.equal 'delete'
+        Backbone.sync.args[0][1].url.should.include '/api/v1/me/authentications/twitter'
+
+      describe 'success', ->
+        beforeEach ->
+          Backbone.sync.restore()
+          sinon.stub(Backbone, 'sync').yieldsTo 'success'
+          (@$button = @view.$('.settings-toggle-service[data-service="twitter"]')).click()
+
+        it 'sets the correct button state', ->
+          @$button.data().should.eql service: 'twitter', connected: 'disconnected'
+
+      describe 'error', ->
+        beforeEach ->
+          Backbone.sync.restore()
+          sinon.stub(Backbone, 'sync').yieldsTo 'error', responseJSON: error: 'Something bad.'
+          (@$button = @view.$('.settings-toggle-service[data-service="twitter"]')).click()
+
+        it 'renders any errors', ->
+          @view.$('#settings-auth-errors').text().should.equal 'Something bad.'
+
+        it 'resets the button state', ->
+          _.isUndefined(@$button.attr('data-state')).should.be.true
+

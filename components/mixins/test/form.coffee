@@ -1,15 +1,15 @@
-_               = require 'underscore'
-benv            = require 'benv'
-Backbone        = require 'backbone'
-sinon           = require 'sinon'
-Form            = require '../form.coffee'
-errorResponses  = require './error_responses'
+_ = require 'underscore'
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+Form = require '../form.coffee'
+errorResponses = require './error_responses'
 
 class FormView extends Backbone.View
   _.extend @prototype, Form
 
   events:
-    'submit form' : 'submit'
+    'submit form': 'submit'
 
   template: ->
     """
@@ -17,6 +17,8 @@ class FormView extends Backbone.View
         <input name='name'>
         <input name='email' required>
         <textarea name='comment' required></textarea>
+        <input name='yes' type='checkbox' checked>
+        <input name='no' type='checkbox'>
         <button>Submit</button>
       </form>
     """
@@ -78,10 +80,10 @@ describe 'Form', ->
 
   describe '#serializeForm', ->
     it 'should return all named inputs as keys regardless of values', ->
-      @view.serializeForm().should.have.keys 'name', 'email', 'comment'
+      @view.serializeForm().should.have.keys 'name', 'email', 'comment', 'yes', 'no'
 
     it 'should return all values corresponding to keys', ->
-      values = { name: 'Foo Bar', email: 'foo@bar.com', comment: 'Baz Qux Whatever' }
+      values = { name: 'Foo Bar', email: 'foo@bar.com', comment: 'Baz Qux Whatever', yes: true, no: false }
       @view.$('form').find('input[name=name]').val values['name']
       @view.$('form').find('input[name=email]').val values['email']
       @view.$('form').find('textarea[name=comment]').val values['comment']

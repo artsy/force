@@ -1,126 +1,88 @@
-_            = require 'underscore'
-_.str        = require 'underscore.string'
-sd           = require('sharify').data
-Backbone     = require 'backbone'
-ErrorHelpers = require './error_handling.coffee'
+_ = require 'underscore'
+Backbone = require 'backbone'
+SubForm = require './sub_form.coffee'
+LocationSearchView = require '../../../components/location_search/index.coffee'
+ProfileIconUplaod = require './profile_icon_upload.coffee'
+template = -> require('../templates/profile.jade') arguments...
+
+class InformationForm extends SubForm
+  sanitizers:
+    bio: (bio) ->
+      # Replace # and _ in bios as we don't support <h1> and <em> in bios, only auto-linking.
+      bio.replace(/#/g, '&#35;').replace(/_/g, '&#95;')
+
+  sanitize: (data) ->
+    _.extend data, _.map @sanitizers, (v, k) -> data[k] = v data[k]
+
+  submit: (e) ->
+    if @preSubmit e
+      $.when.apply(null, [
+        @user.save()
+        @model.save @sanitize(@serializeForm())
+      ]).then @submitSuccess, (xhr) => @submitError.call this, null, xhr
+
+class AdvancedForm extends SubForm
+  submit: (e) ->
+    if @preSubmit e
+      @user.publishFavorites @$('input:checkbox').is(':checked'),
+        success: @submitSuccess, error: @submitError
 
 module.exports = class ProfileForm extends Backbone.View
-
-  _.extend @prototype, ErrorHelpers
-
-  initialize: (options) ->
-    throw 'This view requires a Profile model' unless @model
-    { @userEdit } = options
-
-    # Reference to frequently accessed DOM elements
-    @$id = @$ '#profile-id'
-    @$idMessage = @$ ".settings-form-error[data-attr='id']"
-    @$bio = @$ '#profile-bio'
-    @$website = @$ '#profile-website'
-    @$profileIsPublic = @$ '#profile-public'
-    @$profileFavorites = @$ '#profile-favorites'
-    @$submitButton = @$ '#profile-edit-submit'
-
-    # Set toggles
-    @userEdit.initializeDefaultArtworkCollection
-      success: (collection) =>
-        # Only show the toggle group if the user has a collection to modify
-        @$profileFavorites.attr 'data-state', @model.onOffFavorites(collection)
-        @$('.settings-enable-public-favorites').show()
-      error: =>
-        @$('.settings-enable-public-favorites').remove()
-    @$profileIsPublic.attr 'data-state', @model.onOffPublic()
-
-    @listenTo @model, 'invalid', @renderErrors
-    @listenTo @model, 'request', @renderPending
-    @listenTo @model, 'sync', @renderSuccess
-    @listenTo @model, 'error', @parseErrors
-
-    @
-
-  renderPending: (model, xhr, options) ->
-    @$submitButton.addClass 'is-loading'
-
-  renderSuccess: (model, resp, options) ->
-    @$submitButton.removeClass 'is-loading'
+  className: 'settings-profile-form'
 
   events:
-    'blur #profile-id'          : 'onIdBlur'
-    'click .artsy-toggle'       : 'onToggle'
-    'click .artsy-toggle-label' : 'onToggle'
-    'click #profile-edit-submit': 'onSubmit'
-    'click #profile-favorites'  : 'onTogglePublicFavorites'
-    'click #profile-public'     : 'onTogglePublicProfile'
-    'form'                      : 'onSubmit'
-    # Handle toggle label clicks too
-    'click #profile-favorites + .artsy-toggle-label': 'onTogglePublicFavorites'
-    'click #profile-public + .artsy-toggle-label'   : 'onTogglePublicProfile'
+    'click .settings-toggle-profile': 'toggleProfile'
+    'click .settings-checkbox-label': 'toggleCheckbox'
 
-  #
-  # Id
-  #
-  onIdBlur: (event) ->
-    # Restore if made blank
-    if _.clean(@$id.val()).length is 0
-      @$id.val @model.get 'id'
-    else
-      errors = @model.validate { id: @$id.val() }
-      if errors
-        @renderErrors @model, errors
-      else
-        @$idMessage.text ''
+  initialize: (options = {}) ->
+    { @profile, @userEdit } = options
 
-  # TODO: compontent
-  onToggle: (event) ->
-    event.preventDefault()
-    $target = $(event.target)
-    if $target.is '.artsy-toggle-label'
-      $toggle = $target.prev()
-    else
-      $toggle = $target.closest 'a.artsy-toggle'
+    # Ensure checkbox is checked since the intialization of this requires a fetch
+    # and it may not be set by the time the form renders
+    @listenTo @userEdit, 'change:public_favorites', =>
+      @$('#profile-favorites').prop 'checked', @userEdit.get('public_favorites')
 
-    if $toggle.is "[data-state='on']"
-      $toggle.attr 'data-state', 'off'
-    else
-      $toggle.attr 'data-state', 'on'
+  toggleCheckbox: (e) ->
+    $(e.currentTarget).siblings().find('label').click()
 
-  onTogglePublicProfile: (event) ->
-    enabled = @$profileIsPublic.is "[data-state='on']"
-    # When making a profile private, make public favorites collections private
-    unless enabled and @$profileFavorites.is "[data-state='on']"
-      @userEdit.updateFavorites true
-      @$profileFavorites.attr 'data-state', 'off'
-    @onSubmit()
+  toggleProfile: (e) ->
+    $(e.currentTarget).attr 'data-state', 'loading'
 
-  onTogglePublicFavorites: (event) ->
-    enabled = @$profileFavorites.is "[data-state='on']"
-    @userEdit.updateFavorites not enabled
-    # Update the profile public flag and submit if the profile is private
-    if enabled and @$profileIsPublic.is "[data-state='off']"
-      @$profileIsPublic.attr 'data-state', 'on'
-      @onSubmit()
+    @userEdit.publishFavorites false# if !@profile.get('private')
 
-  onSubmit: ->
-    @clearErrors()
-    values = {}
-    values.id = @$id.val()
-    values.handle = @$id.val()
-    values.private = not @$profileIsPublic.is "[data-state='on']"
+    @profile.save private: !@profile.get('private'),
+      success: => @render()
 
-    # Replace # and _ in bios. We don't support H1 and EM in bios, only auto-linking.
-    bio = @$bio.val()?.trim()?.replace(/#/g,'&#35;').replace(/_/g,'&#95;')
-    values.bio = bio
+  setupLocationSearch: ->
+    if @$('#settings-profile-location').length
+      @locationSearchView = new LocationSearchView el: @$('#settings-profile-location'), autofocus: false
+      @locationSearchView.render @userEdit.location()?.cityStateCountry()
+      @listenTo @locationSearchView, 'location:update', (location) =>
+        @userEdit.setLocation location
+        @profile.set location: @userEdit.location().cityStateCountry()
 
-    # Add http:// if the user did not...
-    website = @$website.val()?.trim()
-    if website and !/^https?:\/\//i.test(website)
-      website = "http://#{website}"
-    values.website = website
+  setupForms: ->
+    @informationForm = new InformationForm el: @$('#settings-profile-information'), model: @profile, user: @userEdit
+    @advancedForm = new AdvancedForm el: @$('#settings-profile-advanced'), model: @profile, user: @userEdit
 
-    @model.save values,
-      trigger : true
-      wait    : true
-      success : =>
-        @userEdit.refresh()
+  setupUploader: ->
+     @profileIconUpload = new ProfileIconUplaod
+      el: @$('.settings-profile-icon-upload')
+      model: @profile.icon()
+      profile: @profile
+      accessToken: @userEdit.get 'accessToken'
 
-    false
+  postRender: ->
+    @setupLocationSearch()
+    @setupForms()
+    @setupUploader()
+
+  render: ->
+    @$el.html template(user: @userEdit, profile: @profile)
+    @postRender()
+    this
+
+  remove: ->
+    @locationSearchView?.remove()
+    @informationForm.remove()
+    super

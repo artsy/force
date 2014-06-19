@@ -1,0 +1,33 @@
+include ../../../components/util/activator
+extends ../../../components/main_layout/templates/index.jade
+
+block head
+  title Settings | Artsy
+
+append locals
+  - assetPackage = 'user'
+
+block body
+  #settings
+    header.grouped-section
+      .gs-header: h1 Settings
+      .gs-body
+        .garamond-tablist
+          a.garamond-tab.settings-account-tab(
+            href="/user/edit"
+            class= activeClass("/user/edit")
+          ) Account Details
+          span.garamond-tab-separator
+          a.garamond-tab.settings-profile-tab(
+            href="/collector/edit"
+            class= activeClass("/collector/edit")
+          ) Collector Info
+          span.garamond-tab-separator
+          a.garamond-tab.settings-profile-tab(
+            href="/profile/edit"
+            class= activeClass("/profile/edit")
+          ) Public Profile
+        p#settings-description
+
+    #settings-forms
+      //- Rendered client-side

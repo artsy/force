@@ -1,105 +1,28 @@
-_                  = require 'underscore'
-sd                 = require('sharify').data
-AccountForm        = require './account_form.coffee'
-Backbone           = require 'backbone'
-GeoFormatter       = require 'geoformatter'
-Icon               = require '../../../models/icon.coffee'
-LocationSearchView = require '../../../components/location_search/index.coffee'
-Profile            = require '../../../models/profile.coffee'
-ProfileEdit        = require '../models/profile_edit.coffee'
-ProfileForm        = require './profile_form.coffee'
-ProfileIconUplaod  = require './profile_icon_upload.coffee'
-UserEdit           = require '../models/user_edit.coffee'
-BookmarksView      = require '../../../components/bookmarks/view.coffee'
+Backbone = require 'backbone'
 
-module.exports.UserSettingsView = class UserSettingsView extends Backbone.View
-
-  initialize: (options) ->
-    @profile     = new Profile sd.PROFILE
-    @profileEdit = new ProfileEdit sd.PROFILE
-    @$toggleEls = @$ '.garamond-tab, .settings-form'
-    @$successMessage = @$ '.settings-success-message'
-
-    window.currentUser = @model
-
-    @profileIconUpload = new ProfileIconUplaod
-      el         : @$ '.settings-profile-icon-upload'
-      model      : @profile.icon()
-      profile    : @profile
-      accessToken: @model.get 'accessToken'
-
-    @accountForm = new AccountForm
-      el         : @$ '.settings-account-form'
-      model      : @model
-      profileEdit: @profileEdit
-
-    @profileForm = new ProfileForm
-      el      : @$('.settings-profile-form')
-      model   : @profileEdit
-      userEdit: @model
-
-    # Location Search
-    @locationSearchView = new LocationSearchView el: @$('#profile-location')
-    @locationSearchView.postRender()
-    @listenTo @locationSearchView, 'location:update', @onLocationUpdate
-
-    # Artists you collect
-    @bookmarksView = new BookmarksView el: @$('#settings-bookmark-artists')
-
-    # On successful posts of either form, show the success message
-    @listenTo @model, 'sync', @renderSuccess
-    @listenTo @profileEdit, 'sync', @renderSuccess
-
-    @$el.addClass 'is-loaded'
-
-    # Render generic errors like when FB/Twitter OAuth has a problem.
-    @renderGenericErrors()
-
-  renderGenericErrors: ->
-    support = " Please contact <a href='mailto:support@artsymail.com'>support@artsymail.com</a> for help."
-    @$('#settings-generic-error').html (
-      if location.search.match 'twitter-already-linked'
-        "Twitter account already linked to another Artsy user." + support
-      else if location.search.match 'facebook-already-linked'
-        "Facebook account already linked to another Artsy user." + support
-      else if location.search.match 'could-not-auth'
-        "\"Could not authenticate you\" error from our API." + support
-    )
-
-  renderSuccess: ->
-    $('html,body').animate scrollTop: 0
-    @$successMessage.addClass 'is-active'
-    _.delay (=> @$successMessage.removeClass('is-active')), 3000
-
-  #
-  # Location
-  # This is located on the profile form since that is where it is
-  # publicly displayed, but we have a location object on the user
-  # The current user will set a location object and the profile
-  # profile will set a display string for that object.
-  #
-  onLocationUpdate: (location) ->
-    @model.setLocation location
-    @model.save()
-    @profileEdit.save
-      location: @model.location().cityStateCountry()
+module.exports = class UserSettingsView extends Backbone.View
+  descriptions:
+    'user/edit': 'This is your general account information on Artsy, all of which is private'
+    'collector/edit': 'When contacting galleries for artwork pricing and availability, Artsy will include a brief introduction based on your collector profile.'
+    'profile/edit': 'Everything here can be seen by anyone if your public profile is enabled. This allows others to view the artist you follow and the works you save.'
 
   events:
-    'click .garamond-tab'   : 'onTabClick'
-    'click .settings-submit': 'onSubmitButtonClick'
+    'click .garamond-tab': 'changeTab'
 
-  onTabClick: (event) ->
-    return false if $(event.target).is '.is-active'
-    @$toggleEls.toggleClass 'is-active'
-    @$('form.is-active input:first').focus().blur()
-    false
+  initialize: (options = {}) ->
+    { @profile, @userEdit } = options
 
-  onSubmitButtonClick: (event) ->
-    false
+  renderDescription: ->
+    @$('#settings-description').text @descriptions[Backbone.history.fragment]
 
+  deactivateTabs: ->
+    (@$tabs ?= @$('.garamond-tab')).removeClass 'is-active'
 
-module.exports.init = ->
+  activateCurrentTab: ->
+    @deactivateTabs()
+    @renderDescription()
+    @$("a[href='/#{Backbone.history.fragment}']").addClass 'is-active'
 
-  new UserSettingsView
-    el   : $('#settings')
-    model: new UserEdit sd.USER_EDIT
+  changeTab: (e) ->
+    e.preventDefault()
+    Backbone.history.navigate $(e.currentTarget).attr('href'), trigger: true

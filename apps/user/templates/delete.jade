@@ -4,27 +4,34 @@ append locals
   - assetPackage = 'user_delete'
 
 block body
-  #settings.settings-user-delete
-    h1.avant-garde-header-center Delete My Account
+  #settings
+    .grouped-section
+      .gs-header
+        h2 Delete My Account
+      .gs-body: .gs-constrain
+        #settings-collector-form
+          .settings-form-errors
+            //- Rendered client-side
 
-    .settings-forms
-      form#settings-user-delete-form( method="post", action="#{sd.APP_URL}/users/delete", accept-charset="UTF-8" )
+          form.stacked-form
+            #user-delete-confirm.settings-split
+              .ss-left.settings-checkbox-label I understand that this will permanently delete my account and cannot be undone.
+              .ss-right: .artsy-checkbox
+                input(
+                  type='checkbox'
+                  id='user_delete_confirm'
+                  name='user_delete_confirm'
+                )
+                label( for='user_delete_confirm' )
 
-        input#user-delete-confirm( type="checkbox", name="user_delete_confirm" )
-        label( for="user-delete-confirm" ) I understand that this will permanently delete my account and cannot be undone.
+            hr
 
-        label.avant-garde-form-label( for="user-delete-explanation" ) Please Tell Us Why
-        textarea#user-delete-explanation.bordered-input( name="user_delete_explanation" )
+            label.avant-garde-form-label( for='user-delete-explanation' ) Please Tell Us Why
+            textarea#user-delete-explanation.bordered-input( name='user_delete_explanation', rows='5' )
 
-        button#user-delete-submit.avant-garde-button-black.settings-submit.is-block( disabled='disabled' ) Delete My Account
+            hr.is-invisible
 
-      .settings-cancel-delete-account-link
-        a.faux-underline( href="/user/edit" ) Cancel
+            button.avant-garde-button-black( disabled='disabled' )
+              | Delete My Account
 
-    .settings-user-delete-success
-      | Your account has been deleted, click <a href='/users/sign_out'>here to continue</a>.
-
-    .settings-user-delete-error
-      p An error prevented us from deleting your account through this form.
-      p Please <a href="javascript:window.location.reload()">reload the page and try again</a>.
-      p If the problem persists, contact <a href="mailto:support@artsy.net">support@artsy.net</a>.
+    a.settings-disable-link.garamond-button-text( href='/user/edit' ) Cancel

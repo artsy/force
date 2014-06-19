@@ -1,23 +1,17 @@
 .settings-profile-icon-upload
-  margin 10px auto 40px
+  width 200px
+  margin 20px auto
   position relative
   text-align center
-  width 200px
-  &:hover
-    .spiu-delete, .spiu-upload
-      transform rotate(0deg)
-    .spiu-delete
-      left 0
-    .spiu-file-input
-      display inline-block
-    .spiu-upload, .spiu-file-input
-      left 125px
-    .spiu-upload, .spiu-delete
-      opacity 1
-    
+  &:hover .spiu-delete
+    left -20px
+    opacity 1
+    transform rotate(0deg)
+
   .profile-badge
     background-color white
-    border-radius 70px // Clip to a circle in case we're waiting for image processing
+    // Clip to a circle in case we're waiting for image processing
+    border-radius 50%
     display inline-block
     position relative
     vertical-align top
@@ -26,7 +20,8 @@
 
     .profile-badge-icon
       background-position center center
-      border-radius 70px // Clip to a circle in case we're waiting for image processing
+      // Clip to a circle in case we're waiting for image processing
+      border-radius 50%
       height 140px
 
 .spiu-error-message
@@ -46,17 +41,15 @@
   bottom -5px
   height 5px
   position absolute
-  transition wdith 0.25s linear
+  transition width 0.25s linear
   width 0
 
 .spiu-controls
   bottom 0
-  display inline-block
   height 25px
-  left 25px
+  left 0
+  right 0
   position absolute
-  text-align left
-  width 150px
   button
     margin-top 0
 
@@ -77,20 +70,19 @@
     color white
     position relative
 
-.spiu-upload
-  transform rotate(-180deg)
-  &::before
-    font-size 75%
-    top -7px
-  &:hover, &.is-hover
-    background-color purple-color
+.settings-profile-icon-upload-button
+  position relative
+  margin 20px 0
 
 .spiu-file-input
-  display none
   opacity 0 !important
   overflow hidden
   position absolute
   z-index 1
+  top 0
+  left 0
+  width 100%
+  height 100%
 
 .spiu-delete
   transform rotate(-180deg)

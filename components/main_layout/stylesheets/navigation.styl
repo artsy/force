@@ -6,11 +6,14 @@
 .garamond-tab
   position relative
   text-decoration none
+  border-bottom 1px solid transparent
+  transition border-bottom-color 0.125s
+  &:hover
+  &:focus
+    border-bottom-color black
   &.is-active
     color purple-color
-    border-bottom 1px solid purple-light-color
-  &:hover, &:focus
-    border-bottom 1px solid
+    border-bottom-color purple-light-color
 
 .garamond-tab-separator
   display inline-block

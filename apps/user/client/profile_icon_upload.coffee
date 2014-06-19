@@ -1,32 +1,37 @@
-_        = require 'underscore'
-sd       = require('sharify').data
+_ = require 'underscore'
 Backbone = require 'backbone'
 
 module.exports = class ProfileIconUpload extends Backbone.View
+  events:
+    'click .spiu-delete': 'onRemoveImage'
+    'mouseenter .spiu-file-input': 'onFileInputMouseover'
+    'mouseleave .spiu-file-input': 'onFileInputMouseleave'
 
   initialize: (options) ->
     { @accessToken, @profile } = options
 
-    @$errorMessage = @$ '.spiu-error-message'
-    @$uploadButton = @$ '.spiu-upload'
-    @$deleteButton = @$ '.spiu-delete'
-    @$profileIcon = @$ '.profile-badge-icon'
-    @$progressIndicator = @$ '.spiu-progress-indicator'
+    @cacheSelectors()
 
     @$el.addClass 'has-image' if @profile.has 'icon'
 
     @listenTo @model, 'invalid', @onInvalid
 
-    @$file = @$ '.spiu-file-input'
+    @$file = @$('.spiu-file-input')
     @$file.fileupload
-      add            : @onImageAdd
-      dataType       : 'json'
-      done           : @onUploadComplete
-      fail           : @onFail
-      progress       : @onProgressUpdate
-      stop           : @onStop
-      url            : @model.url()
-    @
+      add: @onImageAdd
+      dataType: 'json'
+      done: @onUploadComplete
+      fail: @onFail
+      progress: @onProgressUpdate
+      stop: @onStop
+      url: @model.url()
+
+  cacheSelectors: ->
+    @$errorMessage = @$('.spiu-error-message')
+    @$uploadButton = @$('.spiu-upload')
+    @$deleteButton = @$('.spiu-delete')
+    @$profileIcon = @$('.profile-badge-icon')
+    @$progressIndicator = @$('.spiu-progress-indicator')
 
   renderError: (message) ->
     @$errorMessage
@@ -38,24 +43,14 @@ module.exports = class ProfileIconUpload extends Backbone.View
     @$el.addClass 'is-loading'
     @$progressIndicator.hide().css 'width', 0
     $("<img src=\"#{@profile.iconImageUrl()}\" />").on 'load', =>
-      @$el.removeClass 'is-loading'
+      @$el.removeClass('is-loading').addClass 'has-image'
       @$profileIcon.css 'background-image', "url(#{@profile.iconImageUrl()})"
-      @$el.addClass 'has-image'
-
-  #
-  # Events
-  #
-  events:
-    'click .spiu-delete'         : 'onRemoveImage'
-    'mouseenter .spiu-file-input': 'onFileInputMouseover'
-    'mouseleave .spiu-file-input': 'onFileInputMouseleave'
 
   onRemoveImage: ->
     @profile.set 'icon', null
     @$profileIcon.css 'background-image', "url(#{@profile.iconImageUrl()})"
     @$el.removeClass 'has-image'
-    @model.destroy
-      data: { access_token: @accessToken }
+    @model.destroy data: access_token: @accessToken
 
   # Since the file input is transparent over the top of the upload button,
   # it cancels the CSS hover states.
@@ -68,14 +63,11 @@ module.exports = class ProfileIconUpload extends Backbone.View
   onInvalid: (model, error, options) ->
     @renderError error
 
-  #
   # Handlers for Upload Plugin Events
   # Fat-arrow bind all of these since the scope isn't coming from the view's event hash
-  #
   onFail: (e, data) =>
     @renderError 'There was a problem uploading your file'
-    # Clean up failed file uploads
-    @onRemoveImage()
+    @onRemoveImage() # Clean up failed file uploads
 
   onStop: =>
     @$progressIndicator.hide().css 'width', 0
@@ -87,11 +79,10 @@ module.exports = class ProfileIconUpload extends Backbone.View
         .error @onError
 
   onUploadComplete: (e, data) =>
-    data.result.profileId = @profile.get 'id'
+    data.result.profileId = @profile.id
     @profile.set 'icon', data.result
     @renderUploadedImage()
 
   onProgressUpdate: (e, data) =>
     @$progressIndicator.show() unless @$progressIndicator.is(':visible')
-    w = parseInt(data.loaded / data.total * 140, 10)
-    @$progressIndicator.width w
+    @$progressIndicator.width parseInt(data.loaded / data.total * 140, 10)
