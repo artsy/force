@@ -5,7 +5,9 @@
   res.render 'index'
 
 @collection = (req, res) ->
-  profile = res.locals.profile
+  unless profile = res.locals.profile
+    res.status 404
+    return next new Error "Profile not found."
   new ArtworkCollection(id: req.params.id, user_id: profile.get('owner').id).fetch
     data: private: true, access_token: req.user?.get('accessToken')
     error: res.backboneError
