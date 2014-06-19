@@ -10,27 +10,37 @@
     color purple-color
 
 .play-button
-  background-color: #000
-  cursor: pointer
-  display: none
-  height: 78px
-  width: 78px
-  left: 50%
-  margin-left: -39px
-  padding: 24px
-  position: absolute
-  transition background-color 0.3s
+  position absolute
+  background-color black
+  cursor pointer
+  height 55px
+  width 75px
+  top 50%
+  left @top
+  margin-top -(@height / 2)
+  margin-left -(@width / 2)
+  padding 25px
+  transition background-color 0.25s
   &:hover
-    background-color: purple-color
-  .play-button-arrow
-    width: 0
-    height: 0
-    border-top: 15px solid transparent
-    border-bottom: 15px solid transparent
-    border-left: 15px solid white
-    position: absolute
-    top: 24px
-    left: 31px
+    background-color purple-color
+  &:after
+    display block
+    position absolute
+    content ''
+    top 50%
+    left @top
+    width 0
+    height 0
+    border-top 10px solid transparent
+    border-bottom @border-top
+    border-left 20px solid white
+    margin-top -10px
+    margin-left @margin-top
+
+.button-separator
+  display inline-block
+  width 0
+  margin 0 5px
 
 .avant-garde-button
   display inline-block
