@@ -1,3 +1,4 @@
+_         = require 'underscore'
 sd        = require('sharify').data
 Backbone  = require 'backbone'
 Icon      = require './icon.coffee'
@@ -27,9 +28,15 @@ module.exports = class Partner extends Backbone.Model
   displayName: ->
     @get('name')
 
+  displayNameAndLocation: ->
+    _.compact([
+      @displayName()
+      @displayLocations()
+    ]).join(', ')
+
   # @param {String} preferredLocation (optional)
   displayLocations: (preferredLocation) ->
-    if @get('locations').length
+    if @get('locations')?.length
       string =
         @get('locations').findWhere(city: preferredLocation)?.get('city') or
         @get('locations').first().get('city') or
