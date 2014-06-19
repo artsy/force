@@ -34,6 +34,6 @@ describe 'Location route', ->
 
     _.defer =>
       @res.render.args[0][0].should.equal 'show'
-      @res.render.args[0][1].title.should.equal "Galleries and Shows near Tokyo"
+      @res.render.args[0][1].title.should.equal "Galleries and Art Shows Near Tokyo"
       @res.render.args[0][1].name.should.equal "Tokyo"
       done()
