@@ -198,3 +198,26 @@
     line-height 0
     margin-right 10px
     vertical-align middle
+
+.garamond-button-text
+  display inline-block
+  position relative
+  garamond()
+  text-transform uppercase
+  letter-spacing 1px
+  color black
+  text-decoration none
+  line-height 1
+  cursor pointer
+  border none
+  &[data-state='loading'], &.is-loading
+    &, &[disabled], &[disabled]:hover
+      color transparent !important
+      // Note:
+      // Giving the loading state to input[type='submit']
+      // or input[type='button'] will *not* display a spinner.
+      // These elements don't support psuedo-elements.
+      &::before
+        display block
+        content ''
+        spinner(25px, 6px, black)
