@@ -78,6 +78,7 @@ module.exports.track =
           referrer: document?.referrer
           collector_level: sd.CURRENT_USER?.collector_level
           user_id: sd.CURRENT_USER?.id
+          lab_features: sd.CURRENT_USER?.lab_features
 
         mixpanel.track? description, options
 
