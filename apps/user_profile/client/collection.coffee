@@ -35,7 +35,6 @@ module.exports.CollectionView = class CollectionView extends Backbone.View
     @nextPage()?.then (res) => @renderEmpty() if res.length is 0
 
   redirectAfterDestroy: =>
-    return alert 'dead'
     window.location = (
       if @user.get('default_profile_id') is @profile.get('id') then '/favorites' \
       else '/' + @user.get('default_profile_id') + '/favorites'

@@ -77,11 +77,17 @@ describe 'FavoritesView', ->
       @view.renderCollections()
       @view.$el.html().should.include 'Warhols for my bathroom.'
 
-  describe '#renderZigZagBanner', ->
+  describe '#renderFirstZigZagBanner', ->
 
     it 'creates a new zig zag view', ->
-      @view.renderZigZagBanner()
+      @view.renderFirstZigZagBanner()
       @ZigZagBanner.args[0][0].message.should.include 'Create a new set'
+
+  describe '#renderSecondZigZagBanner', ->
+
+    it 'creates a new zig zag view', ->
+      @view.renderSecondZigZagBanner()
+      @ZigZagBanner.args[0][0].message.should.include 'Great, now save'
 
   describe '#renderPrivacy', ->
 
