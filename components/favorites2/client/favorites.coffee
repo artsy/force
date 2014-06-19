@@ -88,7 +88,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
       message: 'Great, now save a work into your new set.'
       $target: @$('.artwork-item').first()
       backwards: true
-    @secondZigZagBanner.$el.css marginTop: 0
+    @secondZigZagBanner.$el?.css marginTop: 0
 
   events:
     'click .favorites2-new-collection': 'openNewModal'
