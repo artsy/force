@@ -1,171 +1,103 @@
 @import '../../../components/stylus_lib'
 @import './profile_icon'
 
-#main-layout-container
-  margin-left 0
-  margin-right 0
-
 #settings
-  margin-left 0
-  margin-right 0
-
-  .avant-garde-header-center
-    font-size 24px
-    padding 50px 0 30px
-
+  padding 50px 0
   .garamond-tablist
-    margin 0 auto 30px auto
-    text-align center
-    width auto
+    margin-bottom 30px
 
-  .bordered-input
-    margin-bottom 7px
-    width 100%
+.settings-account-form
+.settings-collector-form
+.settings-profile-form
+  fadeIn()
 
-  .settings-bookmark-artists-container
-    margin 20px 0
-  #settings-bookmark-artists .bordered-input
-    margin 0
+.settings-split
+  display table
+  width 100%
+  margin 20px 0
+  &:first-child
+    margin-top 0
+  &:last-child
+    margin-bottom 0
+.ss-left
+  padding-right 10px
+.ss-right
+  text-align right
+.ss-left
+.ss-right
+  vertical-align top
+  display table-cell
 
-  .settings-group-leader
-    margin-top 20px
+.settings-disable-link
+  color gray-dark-color
+  &[data-state='loading']::before
+    background-color @color
 
-  textarea
-    visibility hidden
+#settings-collector-introduction-preview
+  margin 20px 25% 20px 0
+  color gray-darker-color
+  font-size 24px
+  line-height 1.4
+  fadeIn()
 
+.settings-disabled-indicator
+  margin-right 20px
 
-  // These elements jump around the page if they are not hidden initially
-  &.is-loaded
-    textarea
-      visibility visible
-    .settings-success-message
-      display block
-
-  // The view will show the enable favorites toggle if the user has a favorites colleciton
-  .settings-enable-public-favorites
+.settings-form-errors
+  margin-bottom 20px
+  &, a
+    color red-color
+  &:empty
     display none
 
-// success message
-.settings-success-message
-  avant-garde()
-  color purple-color
-  display none
-  opacity 0
-  margin-top -60px
-  position absolute
-  text-align center
-  transition opacity 0.2s, margin-top 0.5s
-  width 100%
-  &.is-active
-    margin-top -20px
-    opacity 1
-
-.settings-group-label
-  margin-bottom 10px
-
-.settings-confirm-email
-  margin-bottom 1em
-
-.settings-forms
-  margin 0 auto 30px
-  width 380px
-
-.settings-submit
-  margin-top 20px
-
-.settings-form-error
-  color red-color
-  position absolute
-  margin-left 390px
-  max-width 250px
-  margin-top -35px
-  opacity 1
-  transition opacity 0.2s
-  &:empty
-    opacity 0
-  &.settings-form-message
-    color black
-
-.settings-form
-  display none
-  margin-bottom 40px
-  &.is-active
-    display block
-  textarea
-    height 100px
-
-  .input-group
-    clear both
-    margin-bottom 10px
-
-  .settings-toggle-twitter
-    margin-bottom 20px
-
-.settings-email-support
-.settings-password-support
+#settings-change-password-new
   display none
 
-.settings-cancel-delete-account-link
-.settings-delete-account-link
-  font-size 13px
-  margin-bottom 50px
-  text-align right
-  text-transform uppercase
-  a
-    &::before
-      height 1.5em
-.settings-delete-account-link
-  a
-    &:hover, &:focus
+.settings-toggle-service
+  &:after
+    content 'Connect'
+  &[data-connected='connected']
+    &:after
+      content 'Connected'
+    &:hover
       color red-color
-      &::before
-        border-color red-color
+      &:after
+        content 'Disconnect'
 
-// Delete User
-.settings-user-delete-success
-.settings-user-delete-error
-  display none
-  margin-bottom 50px
-  text-align center
-
-.settings-user-delete-error
-  p
-    margin-bottom 20px
-    &:first-child
-      color red-color
-
-#settings #user-delete-explanation
-  height 150px
-  visibility visible
-
-#user-delete-confirm
-  display inline-block
-  margin-top 4px
-  vertical-align top
-  width auto
-
-#user-delete-submit
-  margin-bottom 50px
-
-label[for="user-delete-confirm"]
-  garamond()
-  color red-color
+.settings-checkbox-label
   cursor pointer
-  display inline-block
-  margin-bottom 20px
-  margin-left 20px
-  width 90%
 
-.settings-cancel-delete-account-link
-  a
-    &:hover, &:focus
-      color purple-color
-      &::before
-        border-color purple-color
-
-#settings-generic-error
-  color red-color
-  text-align center
-  padding 20px 0
-  a
-    color red-color
+// Grouped section (extract)
+.grouped-section
+  margin 20px 0
+  padding 20px 0 60px 0
+  clearfix()
+  border-bottom 1px solid gray-lighter-color
+  &:last-child
+    border-bottom none
+.gs-header
+.gs-body
+  float left
+.gs-header
+  width 25%
+  padding-right 60px
+  h1
+  h2
+    margin-bottom 20px
+    line-height 1.25
+  h1
+    avant-garde()
+    font-size 23px
+  h2
+    garamond()
+    font-size 28px
+.gs-body
+  width 75%
+.gs-constrain
+  width 50%
+  margin 0
+header.grouped-section
+  .gs-body p
+    font-size 24px
+    line-height 1.25
+    margin-right 40px

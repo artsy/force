@@ -1,38 +1,80 @@
-mixin locationSearch(value)
-  include ../../../components/location_search/template
+if profile.get('private')
+  header.grouped-section
+    .gs-header &nbsp;
+    .gs-body
+      p
+        em.settings-disabled-indicator Your profile is currently disabled
+        a.settings-toggle-profile.avant-garde-button-black
+          | Enable public profile
+else
+  .grouped-section
+    .gs-header: h2 Your Profile Information
+    .gs-body: .gs-constrain
+      #settings-profile-information
+        .settings-form-errors
+          //- Rendered elsewhere
 
-form.settings-form.settings-profile-form( class=editProfileIsActive, method="post", action="#{sd.APP_URL}/profile", accept-charset="UTF-8" )
+        form.stacked-form
+          label.avant-garde-form-label( for='settings-handle' ) Username
+          input#settings-handle.bordered-input(
+            type='text'
+            value=profile.id
+            size='30'
+            maxlength='20'
+            name='handle'
+            required
+          )
 
-  label.avant-garde-form-label( for="profile-id" ) Username
-  input#profile-id.bordered-input( type="text", value=profile.get('id'), size="30", maxlength="20", name="id")
-  .settings-form-error( data-attr='handle' )
+          label.avant-garde-form-label( for='settings-bio' ) Bio
+          textarea#settings-bio.bordered-input(
+            name='bio'
+            rows='5'
+          )!= profile.get('bio')
 
-  label.avant-garde-form-label( for="profile-bio" ) Bio
-  textarea#profile-bio.bordered-input( name="bio" )!= profile.get('bio')
-  .settings-form-error( data-attr='bio' )
+          label.avant-garde-form-label Location
+          #settings-profile-location
+            //- Rendered elsewhere
 
-  label.avant-garde-form-label( for="profile-location" ) Location
-  #profile-location
-    //- The user location contains the object and the profile will set the display string of that object
-    +locationSearch(user.location().cityStateCountry())
+          label.avant-garde-form-label( for='settings-website' ) Website
+          input#settings-website.bordered-input(
+            type='url'
+            value=profile.get('website')
+            size='30'
+            name='website'
+            placeholder='http://'
+          )
 
-  label.avant-garde-form-label( for="profile-website" ) Website
-  input#profile-website.bordered-input( type="url", value=profile.get('website'), size="30", name="website", placeholder="http://mysite.com" )
-  .settings-form-error( data-attr='website' )
+          hr.is-invisible
 
-  label.settings-group-leader.settings-group-label.avant-garde-form-label Privacy
-  .input-group
-    a#profile-public.artsy-toggle.profile-is-public( data-state=profileEdit.onOffPublic(), href="" )
-      .artsy-toggle-dot
-    .artsy-toggle-label
-      | Enable My Public Profile
-      .help-tooltip( data-message="This allows others to view your full name, username, bio, location, website, and posts. Your public Artsy User URL will be: artsy.net/#{profile.id}." )
+          .is-center-aligned: button.avant-garde-button-white
+            | Save Changes
 
-  .input-group.settings-enable-public-favorites
-    a#profile-favorites.artsy-toggle.profile-favorites( data-state='off', href="" )
-      .artsy-toggle-dot
-    .artsy-toggle-label
-      | Enable Public Favorites
-      .help-tooltip( data-message="This allows others to view your Favorites. This also enables your public profile. Your public Artsy User URL will be: artsy.net/#{profile.id}." )
+  .grouped-section
+    .gs-header: h2 Profile Picture
+    .gs-body: .gs-constrain.is-center-aligned
+      include profile_icon
 
-  button#profile-edit-submit.avant-garde-button-black.settings-submit.is-block Save Changes
+  #settings-profile-advanced-container.grouped-section
+    .gs-header
+      h2 Advanced Settings
+      p You can adjust what part of your profile you would like to share publically
+    .gs-body: .gs-constrain
+      #settings-profile-advanced
+        form
+          .settings-split
+            .ss-left.settings-checkbox-label Enable Public Favorites
+            .ss-right: .artsy-checkbox
+              input(
+                type='checkbox'
+                id='profile-favorites'
+                checked=user.checked('public_favorites')
+              )
+              label( for='profile-favorites' )
+
+          hr.is-invisible
+
+          .is-center-aligned: button.avant-garde-button-white
+            | Save Changes
+
+  a.settings-toggle-profile.settings-disable-link.garamond-button-text
+    | Disable Profile

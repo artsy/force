@@ -1,83 +1,160 @@
-form.settings-form.settings-account-form( class=editAccountIsActive, method="post", action="#{sd.APP_URL}/users/edit", accept-charset="UTF-8" )
-  label.avant-garde-form-label( for="user-name" ) Full Name
-  input#user-name.bordered-input( type="text", value=user.get('name') || "", name="name" )
-  .settings-form-error( data-attr='name' )
+.grouped-section
+  .gs-header: h2 Information
+  .gs-body: .gs-constrain
+    #settings-account-details
+      .settings-form-errors
+        //- Rendered elsewhere
 
-  label.avant-garde-form-label( for="user-email" ) Email
-  input#user-email.bordered-input( type="email", value=user.get('email'), name="email" )
-  .settings-form-error( data-attr='email' )
+      form.stacked-form
+        label.avant-garde-form-label( for='settings-user-name' ) Full Name
+        input#settings-user-name.bordered-input(
+          type='text'
+          value=user.get('name')
+          name='name'
+          required
+        )
 
-  .settings-email-support
-    label.avant-garde-form-label( for="user-email-confirmation" ) Repeat New Email
-    input#user-email-confirmation.bordered-input( type="email", value='', name="email_confirmation" )
-    .settings-form-error( data-attr='email_confirmation' )
+        label.avant-garde-form-label( for='settings-user-email' ) Email
+        input#settings-user-email.bordered-input(
+          type='email'
+          value=user.get('email')
+          name='email'
+          required
+        )
 
-  label.avant-garde-form-label( for="user-new-password" ) New Password
-  input#user-new-password.bordered-input( type="password", name="new_password", placeholder="(Leave blank to keep password unchanged)" )
-  .settings-form-error.settings-form-message( data-attr='new_password' )
+        label.avant-garde-form-label( for='settings-user-phone' ) Phone Number
+        input#settings-user-phone.bordered-input( type='tel', value=user.get('phone'), name='phone' )
 
-  .settings-password-support
-    label.avant-garde-form-label( for="user-password-confirmation" ) Repeat New Password
-    input#user-password-confirmation.bordered-input( type="password", name="password_confirmation" )
-    .settings-form-error( data-attr='password_confirmation' )
+        hr.is-invisible
 
-    label.avant-garde-form-label( for="user-current-password" ) Current Password
-    input#user-current-password.bordered-input( type="password", name="current_password" )
-    .settings-form-error( data-attr='current_password' )
+        .is-center-aligned: button#settings-account-submit.avant-garde-button-white
+          | Save Changes
 
-  label.avant-garde-form-label( for="user-phone" ) Phone Number
-  input#user-phone.bordered-input( type="tel", value=user.get('phone') || '', name="phone" )
-  .settings-form-error( data-attr='phone' )
+.grouped-section
+  .gs-header: h2 Password
+  .gs-body: .gs-constrain
+    #settings-change-password-current.stacked-form
+      label.avant-garde-form-label( for="user-new-password" ) Current Password
+      input.bordered-input( type="password", placeholder="●●●●●●●", disabled )
 
-  label.avant-garde-form-label( for="user-id" ) Profession
-  input#user-profession.bordered-input( type="text", value=user.get('profession'), name="profession")
-  .settings-form-error( data-attr='profession' )
+      hr.is-invisible
 
-  .settings-bookmark-artists-container
-    label.avant-garde-form-label Artists you collect
-    #settings-bookmark-artists
-      //- Rendered client-side
+      .is-center-aligned: a.avant-garde-button-white.settings-toggle-password
+        | Create New Password
 
-  label.settings-group-leader.settings-group-label.avant-garde-form-label Sharing
-  .input-group.settings-toggle-fb
-    a#user-link-facebook.artsy-toggle.account-link-fb( data-state=user.onOffFacebook(), href="" )
-      .artsy-toggle-dot
-    .artsy-toggle-label
-      | Link my Facebook account
-      .help-tooltip( data-message="Having your account linked will enable quick sharing on Facebook. In the future, it will help us find your friends on Artsy. We don't share anything on Facebook without your permission." )
-  .input-group.settings-toggle-twitter
-    a#user-link-twitter.artsy-toggle.account-link-twitter( data-state=user.onOffTwitter(), href="" )
-      .artsy-toggle-dot
-    .artsy-toggle-label
-      | Link my Twitter account
-      .help-tooltip( data-message="Having your account linked will enable quick sharing on Twitter. In the future, it will help us find your contacts on Artsy. We don't share anything on Twitter without your permission." )
+    #settings-change-password-new
+      .settings-form-errors
+        //- Rendered elsewhere
+      form.stacked-form
+        label.avant-garde-form-label( for='user-current-password' ) Current Password
+        input#user-current-password.bordered-input(
+            name= 'current_password'
+            type= 'password'
+            autocomplete= 'on'
+            pattern= '.{6,}'
+            title= '6 characters minimum'
+            autofocus
+            required
+        )
 
-  label.settings-group-leader.settings-group-label.avant-garde-form-label Email Me&hellip;
+        label.avant-garde-form-label( for='user-new-password' ) New Password
+        input#user-new-password.bordered-input(
+            name= 'new_password'
+            type= 'password'
+            autocomplete= 'on'
+            pattern= '.{6,}'
+            title= '6 characters minimum'
+            required
+        )
 
-  .input-group
-    a#user-weekly-email.artsy-toggle.account-link-fb(
-      data-state=user.toOnOff("receive_weekly_email")
-      data-attr="receive_weekly_email"
-      href="" )
-      .artsy-toggle-dot
-    .artsy-toggle-label &hellip;weekly featured content from Artsy
+        label.avant-garde-form-label( for='user-password-confirmation' ) Repeat New Password
+        input#user-password-confirmation.bordered-input(
+            name= 'password_confirmation'
+            type= 'password'
+            autocomplete= 'on'
+            pattern= '.{6,}'
+            title= '6 characters minimum'
+            required
+        )
 
-  .input-group
-    a#user-personalized-email.artsy-toggle.account-link-twitter( data-state=user.toOnOff('receive_personalized_email'), href="" )
-      .artsy-toggle-dot
-    .artsy-toggle-label &hellip;weekly personalized email
+        hr.is-invisible
 
-  .input-group
-    a#user-follows-email.artsy-toggle.account-link-twitter( data-state=user.toOnOff('receive_follow_users_email'), href="" )
-      .artsy-toggle-dot
-    .artsy-toggle-label &hellip;when I have new followers
+        .is-center-aligned
+          button.avant-garde-button-black
+            | Save Changes
+          .button-separator
+          a.avant-garde-button-white.settings-toggle-password
+            | Cancel
 
-  .input-group
-    a#user-offer-emails.artsy-toggle.account-link-fb(
-      data-state=user.toOnOff("receive_offer_emails")
-      data-attr="receive_offer_emails"
-      href="" )
-      .artsy-toggle-dot
-    .artsy-toggle-label &hellip;occasional buying opportunities
+.grouped-section
+  .gs-header: h2 Sharing
+  .gs-body: .gs-constrain
+    #settings-auth-errors.settings-form-errors
+      //- Rendered elsewhere
 
-  button#user-edit-submit.avant-garde-button-black.settings-submit.is-block Save Changes
+    for service in ['Twitter', 'Facebook']
+      .settings-split
+        .ss-left
+          | Link my account to #{service}
+          br
+          em This allows you to login with #{service}
+
+        - connected = user.isLinkedTo(service.toLowerCase()) ? 'connected' : 'disconnected'
+        .ss-right: a.avant-garde-button-white.settings-toggle-service(
+          id="#user-link-#{service.toLowerCase()}"
+          data-service=service.toLowerCase()
+          data-connected=connected
+        )
+          i( class="icon-#{service.toLowerCase()}" )
+
+.grouped-section
+  .gs-header: h2 Email
+  .gs-body: .gs-constrain
+    #settings-email-preferences: form
+      .settings-split
+        .ss-left.settings-checkbox-label Weekly featured content from Artsy
+        .ss-right: .artsy-checkbox
+          input(
+            type='checkbox'
+            id='receive_weekly_email'
+            name='receive_weekly_email'
+            checked= user.checked('receive_weekly_email')
+          )
+          label( for='receive_weekly_email' )
+      .settings-split
+        .ss-left.settings-checkbox-label Weekly personalized email
+        .ss-right: .artsy-checkbox
+          input(
+            type='checkbox'
+            id='receive_personalized_email'
+            name='receive_personalized_email'
+            checked= user.checked('receive_personalized_email')
+          )
+          label( for='receive_personalized_email' )
+      .settings-split
+        .ss-left.settings-checkbox-label When I have new followers
+        .ss-right: .artsy-checkbox
+          input(
+            type='checkbox'
+            id='receive_follow_users_email'
+            name='receive_follow_users_email'
+            checked= user.checked('receive_follow_users_email')
+          )
+          label( for='receive_follow_users_email' )
+      .settings-split
+        .ss-left.settings-checkbox-label Occasional buying opportunities
+        .ss-right: .artsy-checkbox
+          input(
+            type='checkbox'
+            id='receive_offer_emails'
+            name='receive_offer_emails'
+            checked= user.checked('receive_offer_emails')
+          )
+          label( for='receive_offer_emails' )
+
+      hr.is-invisible
+
+      .is-center-aligned: button.avant-garde-button-white.settings-submit
+        | Save Changes
+
+a.settings-disable-link.garamond-button-text( href='/user/delete' ) Delete Account

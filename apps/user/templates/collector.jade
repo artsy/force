@@ -1,0 +1,33 @@
+.grouped-section
+  .gs-header
+    h2 About You
+    p Information that will give galleries a bit more context about where you are from and what you do.
+  .gs-body
+    #settings-collector-form
+      .settings-form-errors
+        //- Rendered elsewhere
+
+      form.gs-constrain.stacked-form
+        label.avant-garde-form-label Primary Location
+        #settings-collector-location
+
+        label.avant-garde-form-label( for='settings-profession' ) Profession
+        input#settings-profession.bordered-input( type="text", value= user.get('profession'), name="profession" )
+
+        hr.is-invisible
+
+        .is-center-aligned: button.avant-garde-button-white
+          | Save Changes
+
+.grouped-section
+  .gs-header
+    h2 Artists in Your Collection
+    p Adding artists that you collect will insure that galleries can best serve your needs when answering your inquiry.
+  .gs-body: #settings-collector-bookmarks.gs-constrain
+
+.grouped-section
+  .gs-header: h2 Your Gallery Introduction
+  .gs-body
+    label.avant-garde-form-label Preview
+    #settings-collector-introduction-preview
+      //- Rendered elsewhere
