@@ -17,8 +17,17 @@ module.exports = class ShippingForm extends ErrorHandlingForm
     @$submit = @$('.order-form-button')
     @setUpFields()
 
+    @renderPartnerLocations()
+
     unless isTouchDevice()
       @$('input:first').focus()
+
+  renderPartnerLocations: ->
+    for partner in @model.getLineItemPartners()
+      locations = partner.locations()
+      locations.fetch
+        success: ->
+          $('.order-seller-section .name').text partner.displayNameAndLocation()
 
   onSubmit: =>
     return if @$submit.hasClass('is-loading')
