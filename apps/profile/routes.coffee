@@ -9,9 +9,10 @@ Following = require '../../components/follow_button/collection.coffee'
     success: -> res.redirect "/#{req.params.id}"
 
 @setProfile = (req, res, next) ->
+  data = {}
+  data['access_token'] = req.user.get('accessToken') if req.user
   new Profile(id: req.params.id).fetch
-    data:
-      access_token: req.user?.get('accessToken')
+    data: data
     success: (profile) ->
       res.locals.profile = profile
       res.locals.sd.PROFILE = profile.toJSON()

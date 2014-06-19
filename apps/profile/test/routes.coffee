@@ -40,3 +40,8 @@ describe 'Profile routes', ->
       @req.user = new Backbone.Model accessToken: 'foobar'
       routes.setProfile @req, @res, next = sinon.stub()
       _.last(Backbone.sync.args)[2].data.access_token.should.include 'foobar'
+
+    it 'does not pass an access token with no user', ->
+      @req.user = null
+      routes.setProfile @req, @res, next = sinon.stub()
+      (_.last(Backbone.sync.args)[2].data.access_token?).should.not.be.ok
