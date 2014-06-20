@@ -1,20 +1,29 @@
 extends ../../../components/main_layout/templates/index
 
 block head
+  title Unsubscribe | Artsy
 
 append locals
   - assetPackage = 'unsubscribe'
 
 block body
-  #main-layout-container
-    #error-handler
-      h1
-        | Unsubscribe me from the following: 
+  #unsubscribe-page.main-layout-container
+    h1 Unsubscribe me from the following:
+
+    hr.is-invisible
+
+    form.stacked-form
       each emailDisplay, emailType in emailTypes
-        .unsubscribe-email
-          label #{emailDisplay}
-            input( name="#{emailType}", type='checkbox' )
-      .unsubscribe-check-all
-        label Select All
-          input( name='selectAll', type='checkbox' )
-      button.submit Submit Preferences
+        .stacked-form-cell: .artsy-checkbox
+          input( id=emailType, name=emailType, type='checkbox' )
+          label( for=emailType, data-label=emailDisplay )
+
+      hr
+
+      .unsubscribe-check-all.stacked-form-cell: .artsy-checkbox
+        input( id='selectAll', name='selectAll', type='checkbox' )
+        label( for='selectAll', data-label='Select All' )
+
+      hr.is-invisible
+
+      button.avant-garde-button-black Submit Preferences
