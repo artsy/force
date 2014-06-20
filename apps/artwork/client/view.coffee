@@ -23,6 +23,7 @@ qs                        = require 'querystring'
 ContactView               = require '../components/contact/view.coffee'
 ArtworkColumnsView        = require '../../../components/artwork_columns/view.coffee'
 Cookies                   = require 'cookies-js'
+mediator                 = require '../../../lib/mediator.coffee'
 
 detailTemplate              = -> require('../templates/_detail.jade') arguments...
 auctionPlaceholderTemplate  = -> require('../templates/auction_placeholder.jade') arguments...
@@ -102,6 +103,23 @@ module.exports = class ArtworkView extends Backbone.View
     @artwork.fetch()
 
     @preventRightClick()
+
+    if @currentUser?.hasLabFeature('Talk To Artsy')
+      require 'annyang'
+      events = {
+        'skrillex' : => mediator.trigger 'search:skrillex'
+        'go to :path' : @pathNavigator
+        'search for :term' : @searchFor
+        'go back' : => window.history.back()
+      }
+      annyang.addCommands(events)
+      annyang.start()
+
+  searchFor: (term) ->
+    window.location = "/search?q=#{term}"
+
+  pathNavigator: (path) ->
+    window.location = "/#{path}"
 
   preventRightClick: ->
     (@$artworkImage ?= @$('#the-artwork-image')).on 'contextmenu', (event) ->
