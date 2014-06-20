@@ -63,6 +63,19 @@
         &:after
           color @background-color
 
+.circle-icon-button-add
+  @extends .circle-icon-button
+  svg
+    height 22px
+    margin-bottom 4px
+  path
+    fill black
+  &:hover
+    path
+      fill white
+  &:after
+    content 'Add to SEt'
+
 .circle-icon-button-share
   @extends .circle-icon-button
   &:before
