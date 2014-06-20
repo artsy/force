@@ -50,7 +50,7 @@ max-items = 20
   stroke-dasharray 4000px
   transition stroke-dashoffset 1s linear
 
-.save-controls-drop-down-container
+.save-controls-drop-down-container, .artwork-image-actions
   &[data-state='saving']
     .overlay-button-save
       opacity 1
@@ -224,3 +224,43 @@ for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20
 
 .artwork-item-image-link
   overflow visible !important
+
+.save-controls-drop-down-menu-artwork-page-container
+  position absolute
+  opacity 0
+  z-index -1
+  max-height 0
+  margin -58px 0 0 -15px
+  transition max-height 0.3s
+  overflow hidden
+  padding-right 14px
+  .save-controls-drop-down-menu
+    left inherit
+    top inherit
+    margin 0
+    overflow hidden
+    position relative
+  .icon-arrow-down
+    top 20px
+    right 3px
+    color black
+    font-size 14px
+    transform scaleY(1.5) rotateZ(-90deg)
+    width 20px
+    height 20px
+    position absolute
+
+.circle-icon-button-save .loading-spinner-small
+  display none
+
+.artwork-image-actions[data-state='saving']
+  .circle-icon-button-save
+    &::before
+      display none
+    .loading-spinner-small
+      display block
+
+ .artwork-image-actions[data-state='saved'] .save-controls-drop-down-menu-artwork-page-container
+  opacity 1
+  z-index 1
+  max-height 1000px

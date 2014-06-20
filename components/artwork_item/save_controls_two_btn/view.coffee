@@ -20,20 +20,20 @@ module.exports = class SaveControls extends Backbone.View
     true
 
   events:
-    'click .overlay-button-save:not([data-state=saved])': 'save'
-    'click .overlay-button-save[data-state=saved]': 'remove'
-    'click .save-controls-two-btn-add-to-collection': 'openCollectionModal'
+    'click .overlay-button-save:not([data-state=saved]), .circle-icon-button-save': 'save'
+    'click .overlay-button-s4ave[data-state=saved], .circle-icon-button-save[data-state=saved]': 'remove'
+    'click .save-controls-two-btn-add-to-collection, .circle-icon-button-add': 'openCollectionModal'
 
   save: (e) ->
     e?.preventDefault()
     return @showSignupModal() unless @user
     @savedArtworks.saveArtwork @model
-    @$('.overlay-button-save').attr 'data-state', 'saved'
+    @$('.overlay-button-save, .circle-icon-button-save').attr 'data-state', 'saved'
 
   remove: (e) ->
     e?.preventDefault()
     @savedArtworks.removeArtwork @model
-    @$('.overlay-button-save').attr 'data-state', null
+    @$('.overlay-button-save, .circle-icon-button-save').attr 'data-state', null
 
   openCollectionModal: (e) ->
     e?.preventDefault()

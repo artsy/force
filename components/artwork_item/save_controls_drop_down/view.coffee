@@ -28,8 +28,7 @@ module.exports = class SaveControls extends Backbone.View
 
   closeOnClickOff: (e) =>
     return if $(e.target).closest('.save-controls-drop-down-menu').length
-    @$el.attr 'data-state', 'saved-close'
-    $(document).off 'click.save-controls-' + @cid
+    @rollup()
 
   addToCollection: (col) ->
     col.saveArtwork @model
@@ -51,7 +50,7 @@ module.exports = class SaveControls extends Backbone.View
     @clearRollup()
 
   events:
-    'click .overlay-button-save': 'openCollectionModal'
+    'click .overlay-button-save, .circle-icon-button-save': 'openDropDown'
     'click .save-controls-drop-down-menu-item:not(.save-controls-drop-down-new):not(.is-active)': 'onAddToCollection'
     'click .save-controls-drop-down-menu-item.is-active': 'onRemoveFromCollection'
     'click form button': 'newCollection'
@@ -69,8 +68,9 @@ module.exports = class SaveControls extends Backbone.View
   clearRollup: ->
     clearTimeout @rollupTimeout
     $(window).off 'scroll.view-' + @cid
+    $(document).off 'click.save-controls-' + @cid
 
-  openCollectionModal: ->
+  openDropDown: ->
     return @showSignupModal() unless @user
     @$el.attr 'data-state', 'saving'
     @collections.fetch success: =>

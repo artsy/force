@@ -291,9 +291,17 @@ module.exports = class ArtworkView extends Backbone.View
     @syncSavedArtworks @artwork
 
   setupSaveButton: ($el, artwork, options = {}) ->
-    if @currentUser? and 'Set Management' in @currentUser.get('lab_features') and
-       (Cookies.get('save-controls') or analytics.getProperty('ab:save:controls')) is 'one button'
+    if @currentUser? and 'Set Management' in @currentUser.get('lab_features')
       SaveControls = require '../../../components/artwork_item/save_controls.coffee'
+      switch (Cookies.get('save-controls') or analytics.getProperty('ab:save:controls'))
+        when 'two button'
+          @$('.circle-icon-button-save').after(
+            require('../../../components/artwork_item/save_controls_two_btn/templates/artwork_page_button.jade')()
+          )
+        when 'drop down'
+          @$('.circle-icon-button-save').replaceWith(
+            require('../../../components/artwork_item/save_controls_drop_down/templates/artwork_page_button.jade')()
+          )
       new SaveControls
         model: artwork
         el: @$('.artwork-image-actions')
