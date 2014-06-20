@@ -1,28 +1,26 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
+FlashMessage = require '../../../components/flash/index.coffee'
 
 module.exports = class UnsubscribeView extends Backbone.View
-
   events:
-    "click input[name='selectAll']"  : 'toggleSelectAll'
-    "click button.submit"            : 'submitUnsubscribe'
+    'click input[name="selectAll"]': 'toggleSelectAll'
+    'submit form': 'submit'
+    'click button': 'submit'
 
   toggleSelectAll: (e) ->
-    checked = $(e.currentTarget).is(':checked')
-    for input in @$("input[name!='selectAll']")
-      if checked
-        $(input).click() unless $(input).is(':checked')
-      else
-        $(input).click() if $(input).is(':checked')
+    @$('input[name!="selectAll"]').prop 'checked', $(e.currentTarget).is(':checked')
 
-  submitUnsubscribe: (e) ->
-    types = []
-    for input in @$("input[name!='selectAll']:checked")
-      types.push $(input).attr('name')
+  submit: (e) ->
+    e.preventDefault()
+    types = _.without @$('input:checked').map(-> $(this).attr('name')), 'selectAll'
+    (@$button ?= @$('button')).attr 'data-state', 'loading'
     new Backbone.Model().save { authentication_token: sd.UNSUB_AUTH_TOKEN, type: types },
       url: "#{sd.API_URL}/api/v1/me/unsubscribe"
       success: =>
-        @$('#error-handler').append "<div class='unsubscribe-message'>You've been unsubscribed.</div>"
+        @$button.attr 'data-state', null
+        new FlashMessage message: 'You’ve been unsubscribed.'
       error: =>
-        @$('#error-handler').append "<div class='unsubscribe-message'>Whoops, there was an error.</div>"
+        @$button.attr 'data-state', 'error'
+        new FlashMessage message: 'Whoops, there was an error.'
