@@ -22,13 +22,11 @@ module.exports = class Slideshow extends Backbone.View
   render: =>
     @$("#upc-slideshow-artworks").html @artworks.map((artwork) ->
       """
-        <figure>
-          <div class='ucp-slideshow-img-container'>
-            <img src='#{artwork.defaultImageUrl 'larger'}'>
-            <figcaption>
-              #{artwork.get('artist').name}
-              <em>#{artwork.get 'title'}</em>, #{artwork.get 'date'}
-            </figcaption>
+        <figure style='background-image: url("#{artwork.defaultImageUrl 'larger'}")'>
+          <figcaption>
+            #{artwork.get('artist').name}
+            <em>#{artwork.get 'title'}</em>, #{artwork.get 'date'}
+          </figcaption>
         </figure>
       """
     )
