@@ -35,7 +35,6 @@ class ArtworkCollection extends Backbone.Model
   initArtworks: ->
     @artworks ?= new Artworks [], artworkCollection: this
     @artworks.url = "#{API_URL}/api/v1/collection/#{@get 'id'}/artworks?user_id=#{@userId()}&total_count=true"
-    @artworks.on 'sync', -> debugger
 
 module.exports = class ArtworkCollections extends Backbone.Collection
 
