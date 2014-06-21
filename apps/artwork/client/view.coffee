@@ -13,6 +13,7 @@ FeatureNavigationView     = require './feature-navigation.coffee'
 BelowTheFoldView          = require './below-the-fold.coffee'
 trackArtworkImpressions   = require("../../../components/analytics/impression_tracking.coffee").trackArtworkImpressions
 MonocleView               = require './monocles.coffee'
+AnnyangView               = require './annyang.coffee'
 BlurbView                 = require '../../../components/blurb/view.coffee'
 Sale                      = require '../../../models/sale.coffee'
 ZigZagBanner              = require '../../../components/zig_zag_banner/index.coffee'
@@ -23,7 +24,6 @@ qs                        = require 'querystring'
 ContactView               = require '../components/contact/view.coffee'
 ArtworkColumnsView        = require '../../../components/artwork_columns/view.coffee'
 Cookies                   = require 'cookies-js'
-mediator                 = require '../../../lib/mediator.coffee'
 
 detailTemplate              = -> require('../templates/_detail.jade') arguments...
 auctionPlaceholderTemplate  = -> require('../templates/auction_placeholder.jade') arguments...
@@ -105,22 +105,8 @@ module.exports = class ArtworkView extends Backbone.View
     @preventRightClick()
 
     if @currentUser?.hasLabFeature('Talk To Artsy')
-      require 'annyang'
-      events = {
-        'skrillex' : => mediator.trigger 'search:skrillex'
-        'go to :path' : @pathNavigator
-        'search for :term' : @searchFor
-        'go back' : => window.history.back()
-      }
-      annyang.addCommands(events)
-      annyang.start()
-
-  searchFor: (term) ->
-    window.location = "/search?q=#{term}"
-
-  pathNavigator: (path) ->
-    window.location = "/#{path}"
-
+      @setupAnnyang()
+      
   preventRightClick: ->
     (@$artworkImage ?= @$('#the-artwork-image')).on 'contextmenu', (event) ->
       event.preventDefault()
@@ -322,6 +308,10 @@ module.exports = class ArtworkView extends Backbone.View
       modelName: 'artist'
       model: @artist
     @following?.syncFollows [@artist.id]
+
+  setupAnnyang: ->
+    new AnnyangView
+      artwork: @artwork
 
   setupMonocleView: ->
     @$('.artwork-image').append("<div class='monocle-zoom'></div>")
