@@ -41,6 +41,8 @@
 
 #upc-slideshow-artworks
   height 100%
+  figcaption
+    margin-top 20px
   figure
     text-align center
     opacity 0
@@ -48,8 +50,12 @@
     top 0
     left 0
     width 100%
-    height 100%
+    height calc(100% \- 90px)
+    max-height 780px
     transition opacity 0.4s ease-in-out
+    background center center no-repeat
+    background-size contain
+    margin-top 20px
     &::before
       content '.'
       height 100%
