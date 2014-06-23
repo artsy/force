@@ -30,6 +30,10 @@ describe 'ArtworkCollections', ->
       @collections.first().artworks.first().destroy()
       spy.called.should.be.ok
 
+    it 'fetches artworks by recently saved', ->
+      @collections.add { id: 'saved-artwork' }
+      @collections.first().artworks.url.should.include 'sort=-position'
+
   describe '#saveArtwork', ->
 
     it 'saves the artwork to the collection', ->
