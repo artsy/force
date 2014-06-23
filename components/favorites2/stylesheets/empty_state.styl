@@ -32,12 +32,18 @@
   display none
   margin-top 4px
   .icon-heart
-    background purple-color
+    background rgba(0,0,0,0.5)
     border-radius 100px
-    padding 4px
+    padding 5px 4px 4px 4px
     color white
     margin 0 10px
     position relative
     top 6px
     font-size 30px
     margin-top 4px
+    transition background 0.3s
+    cursor pointer
+    &:hover
+      background black
+    &.is-active
+      background purple-color

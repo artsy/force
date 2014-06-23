@@ -81,7 +81,7 @@ describe 'FavoritesView', ->
 
     it 'creates a new zig zag view', ->
       @view.renderFirstZigZagBanner()
-      @ZigZagBanner.args[0][0].message.should.include 'Create a new set'
+      @ZigZagBanner.args[0][0].message.should.include 'Get started'
 
   describe '#renderSecondZigZagBanner', ->
 

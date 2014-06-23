@@ -28,9 +28,11 @@ module.exports.CollectionView = class CollectionView extends Backbone.View
     @slideshow = new Slideshow
       el: @$el
       artworks: @artworkCollection.artworks
+    @slideshow.on 'next:page', @nextPage
     @$el.infiniteScroll @nextPage
     @artworkCollection.on 'change:name', @renderName
     @artworkCollection.artworks.on 'remove', @onRemove
+    @artworkCollection.artworks.on 'sync', @onSync
     @artworkCollection.on 'destroy', => @artworkCollection.once 'sync', @redirectAfterDestroy
     @nextPage()?.then (res) => @renderEmpty() if res.length is 0
 
@@ -48,7 +50,13 @@ module.exports.CollectionView = class CollectionView extends Backbone.View
     else
       @columnsView.render()
 
+  onSync: (c, res) =>
+    @columnsView.appendArtworks(
+      new Artworks(res, artworkCollection: @artworkCollection).models
+    )
+
   renderEmpty: ->
+    @$('#user-profile-collection-right-slideshow').hide()
     new FavoritesEmptyStateView el: @$('#user-profile-collection-artworks')
 
   renderName: =>
@@ -61,9 +69,6 @@ module.exports.CollectionView = class CollectionView extends Backbone.View
       remove: false
       success: (col, res) =>
         return @endInfiniteScroll() if res.length is 0
-        @columnsView.appendArtworks new Artworks(res, artworkCollection: @artworkCollection).models
-
-
 
   endInfiniteScroll: =>
     @$('#user-profile-collection-artworks-spinner').hide()

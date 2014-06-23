@@ -12,6 +12,9 @@ class ArtworkCollection extends Backbone.Model
     else
       "#{API_URL}/api/v1/collection/#{@get 'id'}?user_id=#{@userId()}"
 
+  artworkParams: ->
+    qs.stringify user_id: @userId(), total_count: true, sort: '-position', size: 50
+
   initialize: ->
     @initArtworks()
 
@@ -34,7 +37,8 @@ class ArtworkCollection extends Backbone.Model
 
   initArtworks: ->
     @artworks ?= new Artworks [], artworkCollection: this
-    @artworks.url = "#{API_URL}/api/v1/collection/#{@get 'id'}/artworks?user_id=#{@userId()}&total_count=true"
+    @artworks.url = "#{API_URL}/api/v1/collection/#{@get 'id'}/artworks?" + @artworkParams()
+
 
 module.exports = class ArtworkCollections extends Backbone.Collection
 

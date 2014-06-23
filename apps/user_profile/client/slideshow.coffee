@@ -5,6 +5,8 @@ module.exports = class Slideshow extends Backbone.View
 
   initialize: (options) ->
     { @artworks } = options
+    @index = 0
+    @artworks.on 'request', @toggleSpinner
     @artworks.on 'sync', @render
     $('body').on 'keyup', @onKeyup
     @next()
@@ -19,24 +21,34 @@ module.exports = class Slideshow extends Backbone.View
       when 37 then @next -1 # Left arrow
       when 27 then @toggle() if @$('#user-profile-collection-slideshow').is(':visible') # ESC
 
+  toggleSpinner: =>
+    @$('#upc-slideshow-spinner').toggle()
+
   render: =>
     @$("#upc-slideshow-artworks").html @artworks.map((artwork) ->
       """
         <figure style='background-image: url("#{artwork.defaultImageUrl 'larger'}")'>
           <figcaption>
-            #{artwork.get('artist').name}
+            #{artwork.get('artist')?.name}
             <em>#{artwork.get 'title'}</em>, #{artwork.get 'date'}
           </figcaption>
         </figure>
       """
     )
     @$('#upc-slideshow-left, #upc-slideshow-right').remove() if @artworks.length is 1
+    @toggleSpinner()
+    @renderActive()
+
+  renderActive: ->
+    @$('#upc-slideshow-artworks figure').removeClass('is-active')
+    @$("#upc-slideshow-artworks figure:eq(#{@index})").addClass('is-active')
 
   next: (dir = 1) ->
-    index = @$('#upc-slideshow-artworks figure.is-active').index() + dir
-    index = 0 if index is @$('#upc-slideshow-artworks figure').length
-    @$('#upc-slideshow-artworks figure').removeClass('is-active')
-    @$("#upc-slideshow-artworks figure:eq(#{index})").addClass('is-active')
+    @index += dir
+    if @index is @$('#upc-slideshow-artworks figure').length
+      @trigger 'next:page'
+    else
+      @renderActive()
     @resetInterval()
 
   events:

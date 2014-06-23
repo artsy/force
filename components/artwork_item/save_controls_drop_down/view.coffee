@@ -75,6 +75,9 @@ module.exports = class SaveControls extends Backbone.View
     @$el.attr 'data-state', 'saving'
     @collections.fetch success: =>
       @$el.attr 'data-state', 'saved'
+      $menu = @$('.save-controls-drop-down-menu')
+      if $menu.offset().left + $menu.width() > $(window).width()
+        $menu.css left: 'inherit', right: 32
       @addToCollection @collections.get('saved-artwork')
       $(document).on 'click', @closeOnClickOff
 

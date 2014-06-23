@@ -78,7 +78,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
   renderFirstZigZagBanner: ->
     @firstZigZagBanner = new ZigZagBanner
       name: 'favorites_new_set'
-      message: 'Become an Artsy Curator. Create a new set.'
+      message: 'Get started by creating a new set.'
       $target: @$('.favorites2-new-collection')
       backwards: true
 
