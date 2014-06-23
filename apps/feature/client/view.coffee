@@ -19,8 +19,12 @@ auctionRegisterButtonTemplate   = -> require('../templates/auction_register_butt
 auctionCountdownTemplate        = -> require('../templates/auction_countdown.jade') arguments...
 
 module.exports = class FeatureView extends Backbone.View
+
   events:
     'click .auction-info-register-button .avant-garde-button-black' : 'triggerLoginPopup'
+    'click .featured-set-artist-expand'                             : 'seeAllArtists'
+
+  maxArtists: 60
 
   initialize: (options) ->
     @handleTab options.tab if options.tab
@@ -145,11 +149,18 @@ module.exports = class FeatureView extends Backbone.View
       artworkGroups[0].push artworkGroups.pop(2)[0]
 
     $lastColumn = @$('.artwork-column:last-of-type')
-    $lastColumn.prepend artistsTemplate { artworkGroups: artworkGroups }
+    $lastColumn.prepend artistsTemplate(
+      artworkGroups: artworkGroups
+      artistListTruncated: artworks.length > @maxArtists
+    )
     @$('.artwork-column').parent().css 'visibility', 'visible'
 
     # Rebalance columns now that the artist list has been added
     @artworkColumns.rebalance(@$('.feature-set-item-artist-list').css('height').replace('px',''), $lastColumn.index())
+
+  seeAllArtists: (e) ->
+    @$('.artist-list-truncated').removeClass('artist-list-truncated')
+    $(e.target).remove()
 
   handleTab: (tab) ->
     new FeatureRouter feature: @feature

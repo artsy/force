@@ -131,9 +131,29 @@
   &:last-of-type
     padding-right: 0
 
+.feature-set-artist-container
+  height 100%
+  transition height 0.25s
+  overflow hidden
+  position relative
+  &.artist-list-truncated
+    height 500px
+    &::before
+      height 60px
+      width 100%
+      bottom 0px
+      position absolute
+      content ''
+      background linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, #ffffff 100%)
+
+.featured-set-artist-expand
+  avant-garde()
+  margin-top 10px
+  font-size 13px
+
 .feature-set-item-artist-link
   display block
-  margin-bottom 12px
+  margin-bottom 3px
   overflow ellipsis
   text-align left
   text-decoration none
