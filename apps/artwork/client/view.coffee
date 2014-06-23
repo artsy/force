@@ -106,7 +106,7 @@ module.exports = class ArtworkView extends Backbone.View
 
     if @currentUser?.hasLabFeature('Talk To Artsy')
       @setupAnnyang()
-      
+
   preventRightClick: ->
     (@$artworkImage ?= @$('#the-artwork-image')).on 'contextmenu', (event) ->
       event.preventDefault()
