@@ -18,14 +18,18 @@ module.exports.PasswordResetView = class PasswordResetView extends Backbone.View
 
   save: (e) ->
     e.preventDefault()
-    attrs = @$el.serialize()
+
+    @model.clear()
+    @model.set
+      password              : @$("input[name='password']").val()
+      password_confirmation : @$("input[name='password_confirmation']").val()
 
     if window?.location?.search?.length
       token = qs.parse(parse(window.location.search).query).reset_password_token
       if token
-        attrs += "&reset_password_token=#{token}"
+        @model.set
+          reset_password_token: token
 
-    @model.url = "#{@model.url}?#{attrs}"
     @model.isNew = -> false
     @model.save {},
       success: ->
