@@ -62,6 +62,5 @@ setupJquery = ->
   $.ajaxSettings.headers =
     'X-XAPP-TOKEN'  : sd.ARTSY_XAPP_TOKEN
     'X-ACCESS-TOKEN': sd.CURRENT_USER?.accessToken
-    'Access-Control-Expose-Headers': 'X-Total-Count'
 
 setupAnalytics()
