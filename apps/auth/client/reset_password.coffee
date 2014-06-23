@@ -35,7 +35,6 @@ module.exports.PasswordResetView = class PasswordResetView extends Backbone.View
       success: ->
         window.location = '/'
       error: (m, err) =>
-        @model.clear()
         @$('.auth-page-error-message').html JSON.parse(err.responseText).error
 
 module.exports.init = ->
