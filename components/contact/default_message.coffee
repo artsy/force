@@ -3,4 +3,4 @@ module.exports = (artwork) ->
   message += " by #{artwork.get('artist').name}" if artwork.get('artist')
   message += '. Could you please confirm its availability'
   message += ' and price' unless artwork.isPriceDisplayable()
-  message += '? Thank you!'
+  message += '? Thank you.'

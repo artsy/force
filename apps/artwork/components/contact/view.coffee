@@ -33,12 +33,6 @@ module.exports = class ContactView extends Backbone.View
     @$submit    = @$('button')
     @$textarea  = @$('textarea')
 
-    @focusTextarea() if @user
-
-  focusTextarea: =>
-    val = @$textarea.val()
-    @$textarea.focus().val('').val val
-
   submit: (e) ->
     e.preventDefault()
 
