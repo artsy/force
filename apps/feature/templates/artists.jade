@@ -1,7 +1,10 @@
 .feature-set-item-artist-list
   .feature-set-item-artist-list-heading Jump to Artist
-  for group in artworkGroups
-    .feature-set-item-artist-list-group
-      for artwork in group
-        if artwork.has('artist')
-          a.feature-set-item-artist-link( href=artwork.href() )!= artwork.get('artist').name
+  .feature-set-artist-container( class=(artistListTruncated ? 'artist-list-truncated' : '') )
+    for group in artworkGroups
+      .feature-set-item-artist-list-group
+        for artwork in group
+          if artwork.has('artist')
+            a.feature-set-item-artist-link( href=artwork.href() )!= artwork.get('artist').name
+  if artistListTruncated
+    a.featured-set-artist-expand See All
