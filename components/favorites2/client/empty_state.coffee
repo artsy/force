@@ -13,3 +13,9 @@ module.exports = class FavoritesEmptyStateView extends Backbone.View
         @$el.html(
           emptyTemplate featuredLinks: _.sample(featuredLinks.models, 4)
         )
+
+  events:
+    'click .favorites2-empty-state-header-cta .icon-heart': 'onClickHeart'
+
+  onClickHeart: ->
+    @$('.favorites2-empty-state-header-cta .icon-heart').addClass 'is-active'
