@@ -138,6 +138,8 @@ module.exports = class FeatureView extends Backbone.View
     artworks = @getArtworksOrderedByArtist artworks
     artworks = @uniqueArtworksByArtist artworks
 
+    return unless artworks.length
+
     n = Math.floor artworks.length/2
     n = 1 if n < 1
 
