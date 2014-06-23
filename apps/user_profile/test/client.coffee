@@ -112,6 +112,12 @@ describe 'CollectionView', ->
       @view.openShareModal()
       @ShareModal.args[0][0].description.should.include "Andy Foobar's Dulloroids"
 
+  describe '#onSync', ->
+
+    it 'appends works', ->
+      @view.onSync [], [fabricate 'artwork', id: 'andy-foobar-skull']
+      @view.columnsView.appendArtworks.args[0][0][0].get('id').should.equal 'andy-foobar-skull'
+
   describe '#renderEmpty', ->
 
     it 'renders an emtpy state', ->
@@ -177,9 +183,20 @@ describe 'Slideshow', ->
 
     it 'moves the next active artwork', ->
       @view.next()
-      @view.$('.is-active').index().should.equal 0
+      @view.$('.is-active').index().should.equal 2
       @view.next()
-      @view.$('.is-active').index().should.equal 1
+      @view.$('.is-active').index().should.equal 3
+
+  describe '#renderActive', ->
+
+    beforeEach ->
+      @view.artworks.reset (fabricate('artwork')  for i in [0..10])
+      @view.render()
+
+    it 'sets the active item', ->
+      @view.index = 4
+      @view.renderActive()
+      @view.$('.is-active').index().should.equal 4
 
   describe '#toggle', ->
 
