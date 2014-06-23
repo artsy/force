@@ -25,10 +25,12 @@ describe 'Unsubscribe View', ->
       benv.render resolve(__dirname, '../templates/index.jade'), {
         sd: {}
         emailTypes:
-          'weekly_email': "Weekly Newsletters"
-          'personalized_email': "Personalized Emails"
-          'follow_users_email': "User Follow Emails"
-          'offer_emails': "Offer Emails"
+          'weekly_email'               : "Weekly Newsletters"
+          'personalized_email'         : "Personalized Emails"
+          'follow_users_email'         : "User Follow Emails"
+          'offer_emails'               : "Offer Emails"
+          'personaliezd_show_email'    : "Personalized Show Guide" 
+          'personalized_artists_email' : "Personalized Artists and Artworks Emails"
       }, =>
         UnsubscribeView.__set__ 'sd', { UNSUB_AUTH_TOKEN: 'cat' }
         @view = new UnsubscribeView
