@@ -18,9 +18,8 @@ module.exports = class FilterView extends Backbone.View
       model.get('saleArtwork').get('highest_bid_amount_cents')
 
   initialize: (options) ->
-    @artworks = options.artworks
-    @reRender = options.reRender
-    @sortArtworks options.startingSearch
+    { @artworks, @reRender, @startingSearch } = options
+    @sortArtworks @startingSearch
 
   triggerArtworkFilter: (event) ->
     @sortArtworks $(event.target).attr 'data-id'
