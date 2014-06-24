@@ -23,12 +23,13 @@ describe 'ArtworkCollections', ->
       @collections.first().url().should.include '/api/v1/collection/saved-artwork?user_id=' + @user.id
       @collections.first().artworks.url.should.include '/api/v1/collection/saved-artwork/artworks'
 
-    it 'triggers destroy:artwork when a collection artwork is destroyed', ->
-      @collections.on 'destroy:artwork', spy = sinon.spy()
-      @collections.add { id: 'saved-artwork' }
-      @collections.first().artworks.add fabricate 'artwork'
-      @collections.first().artworks.first().destroy()
-      spy.called.should.be.ok
+    it 'triggers {event}:artwork when a collection artwork is acted on', ->
+      for e in ['destroy', 'remove', 'add']
+        @collections.on e + ':artwork', spy = sinon.spy()
+        @collections.add { id: 'saved-artwork' }
+        @collections.first().artworks.add fabricate 'artwork'
+        @collections.first().artworks.first().destroy()
+        spy.called.should.be.ok
 
     it 'fetches artworks by recently saved', ->
       @collections.add { id: 'saved-artwork' }
