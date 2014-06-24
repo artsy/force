@@ -3,7 +3,7 @@ Backbone                  = require 'backbone'
 mediator                  = require '../../../lib/mediator.coffee'
 CurrentUser               = require '../../../models/current_user.coffee'
 FeatureRouter             = require './router.coffee'
-FilterView                = requrie './filter.coffee'
+FilterView                = require './filter.coffee'
 SaleArtworkView           = require '../../../components/artwork_item/views/sale_artwork.coffee'
 AuctionClockView          = require '../../../components/auction_clock/view.coffee'
 trackArtworkImpressions   = require('../../../components/analytics/impression_tracking.coffee').trackArtworkImpressions
@@ -13,12 +13,12 @@ ArtworkColumnsView        = require '../../../components/artwork_columns/view.co
 Artworks                  = require '../../../collections/artworks.coffee'
 ShareView                 = require '../../../components/share/view.coffee'
 
-
 artworkColumns                  = -> require('../../../components/artwork_columns/template.jade') arguments...
 setsTemplate                    = -> require('../templates/sets.jade') arguments...
 artistsTemplate                 = -> require('../templates/artists.jade') arguments...
 auctionRegisterButtonTemplate   = -> require('../templates/auction_register_button.jade') arguments...
 auctionCountdownTemplate        = -> require('../templates/auction_countdown.jade') arguments...
+filterTemplate                  = -> require('../templates/artwork_filter.jade') arguments...
 
 module.exports = class FeatureView extends Backbone.View
 
@@ -54,11 +54,19 @@ module.exports = class FeatureView extends Backbone.View
     @setupShareButtons()
 
   setupArtworkFiltering: (artworks) ->
-    new FilterView
-      el: @$('#feature-artworks')
-      artworks: artworks
+    @$('#feature-artworks').before filterTemplate()
 
-  appendArtworks: (artworks) ->
+    new FilterView
+      el: @$('.feature-artwork-filter')
+      artworks: artworks
+      startingSearch: 'artist-a-to-z'
+      reRender: (artworks) =>
+        @$('#feature-artworks').html ''
+        @artworkColumns = undefined
+        @appendArtworks artworks, true
+        @renderArtistList artworks
+
+  appendArtworks: (artworks, skipArtworkFormatting) ->
     @artworkColumns ?= new ArtworkColumnsView
       el              : @$('#feature-artworks')
       collection      : new Artworks
@@ -68,7 +76,8 @@ module.exports = class FeatureView extends Backbone.View
       showBlurbs      : true
       isAuction       : @sale.isAuction()
 
-    artworks = Artworks.fromSale(new Backbone.Collection artworks)
+    unless skipArtworkFormatting
+      artworks = Artworks.fromSale(new Backbone.Collection artworks)
     @artworkColumns.appendArtworks artworks.models
     @setupSaleArtworks artworks, @sale
 

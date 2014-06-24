@@ -40,6 +40,6 @@ describe 'CollectorForm', ->
 
   describe 'introduction', ->
     it 'renders an up-to-date introduction', ->
-      @view.$el.html().should.include 'Craig Spaeth is a collector and has been an Artsy member since'
+      @view.$el.html().should.include 'Craig is a collector and has been an Artsy member since'
       @view.bookmarksView.bookmarks.add fabricate 'artwork'
       @view.$el.html().should.include 'Craig’s collection includes Andy Warhol'

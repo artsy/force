@@ -45,8 +45,6 @@
   margin 50px 0
   padding 20px 0
   text-align center
-  border-bottom 1px solid gray-color
-  border-top @border-bottom
   display table
 
 #feature-description-register-container
@@ -70,6 +68,9 @@
   text-transform uppercase
   letter-spacing 1px
   font-size 15px
+
+#feature-description-register-container .auction-info-register-button a
+  width 100%
 
 .feature-set
   border-bottom 1px solid gray-color
@@ -218,10 +219,18 @@
     margin-top: 10px
     font-weight: normal
 
-.feature-artworks-filter
+
+
+.feature-artwork-filter
   font-size 17px
+  padding-bottom 25px
+  border-bottom 1px solid gray-lighter-color
+  margin-bottom 50px
+  text-align left
   a
     letter-spacing 1px
     text-transform uppercase
     display inline-block
     margin 0px 15px
+    &.active
+      color purple-color

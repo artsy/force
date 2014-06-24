@@ -6,6 +6,9 @@ qs = require 'querystring'
 
 class ArtworkCollection extends Backbone.Model
 
+  defaults:
+    private: true
+
   url: ->
     if @isNew()
       "#{API_URL}/api/v1/collection?user_id=#{@userId()}"
@@ -39,7 +42,6 @@ class ArtworkCollection extends Backbone.Model
     @artworks ?= new Artworks [], artworkCollection: this
     @artworks.url = "#{API_URL}/api/v1/collection/#{@get 'id'}/artworks?" + @artworkParams()
 
-
 module.exports = class ArtworkCollections extends Backbone.Collection
 
   url: ->
@@ -58,8 +60,10 @@ module.exports = class ArtworkCollections extends Backbone.Collection
     { @user } = options
     @on 'add', (col) =>
       col.initArtworks()
-      col.artworks.on 'remove destroy', (artwork) =>
-        @trigger 'destroy:artwork', artwork, col
+      for event in ['destroy', 'add', 'remove']
+        col.artworks.on event, ((e) =>
+          (artwork) => @trigger e + ':artwork', artwork, col
+        )(event)
 
   fetchNextArtworksPage: (options = {}) =>
     @page ?= 0

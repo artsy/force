@@ -6,8 +6,10 @@ max-items = 20
   position absolute
   right 5px
   top 5px
+  height 40px
   z-index 1
   transition right grow-time
+  force-hardware-acceleration()
 
 .save-controls-drop-down-container .overlay-button-save
   width 40px
@@ -60,7 +62,7 @@ max-items = 20
         opacity 0.4
     .overlay-button-save-heart path
       stroke-dashoffset 4000px
-  &[data-state='saved']
+  &[data-state='saved'], &[data-state='saved-reopen']
     right -25px
     .overlay-button-save
       opacity 1
@@ -88,6 +90,18 @@ max-items = 20
       transition top 0.2s linear menu-delay
     .overlay-button-save-heart path
       transition-duration 0s
+  &[data-state='saved-reopen']
+    right 5px
+    .overlay-button-save
+      width 40px
+      &::after
+        display none
+    .save-controls-drop-down-menu
+      margin-left -15px
+      margin-top -30px
+      transition max-height 0.2s linear 0 !important
+    .save-controls-drop-down-menu-item
+      transition top 0.2s linear 0 !important
   &[data-state='saved-close']
     .overlay-button-save
       opacity 1
@@ -99,7 +113,7 @@ max-items = 20
       display block
       opacity 1
       z-index -1
-      transition max-height 0.3s 0 !important
+      transition max-height 0.2s linear 0, margin-top 0s linear 0.5s, margin-left 0s linear 0.5s !important
 
 .artwork-item
   &:hover
@@ -190,7 +204,7 @@ max-items = 20
   .save-controls-drop-down-menu-item.is-active
     .icon-check
       display block
-    &:hover:not(.is-init-click)
+    &:hover
       .icon-close
         display block
       .icon-check

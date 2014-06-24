@@ -10,13 +10,14 @@ module.exports = class SaveControls extends Backbone.View
     @user = CurrentUser.orNull()
     return unless @user
     @collections = new ArtworkCollections [], user: @user
-    @collections.on 'add', @renderCollections
+    @collections.on 'add add:artwork remove:artwork', @renderCollections
 
   renderCollections: =>
     @$('.save-controls-drop-down-menu-item:not(.save-controls-drop-down-new)').remove()
-    @$('.save-controls-drop-down-menu nav').prepend @collections.map((collection) ->
+    @$('.save-controls-drop-down-menu nav').prepend @collections.map((collection) =>
       """
-      <div class='save-controls-drop-down-menu-item' \
+      <div class='save-controls-drop-down-menu-item \
+                  #{if collection.artworks.get(@model.get 'id')? then 'is-active' else ''}' \
            style='#{if collection.get('id') is 'saved-artwork' then 'display: none' else ''}'>
         #{collection.get('name')}
         <span class='icon-check'></span>
@@ -33,8 +34,6 @@ module.exports = class SaveControls extends Backbone.View
   addToCollection: (col) ->
     col.saveArtwork @model
     mediator.trigger 'create:artwork:collection', col
-    @$('.save-controls-drop-down-menu-item').removeClass 'is-active'
-    @$(".save-controls-drop-down-menu-item:eq(#{@collections.indexOf col})").addClass 'is-active'
 
   showSignupModal: ->
     track.funnel 'Triggered sign up form via save button'
@@ -42,11 +41,12 @@ module.exports = class SaveControls extends Backbone.View
       mode: 'register'
       copy: 'Sign up to save artworks'
       destination: "#{@model.href()}/save"
-    false
 
   rollup: =>
     return if @$('.save-controls-drop-down-new input').is(':focus')
-    @$el.attr('data-state', 'saved-close') if @$el.attr('data-state') is 'saved'
+    @rollingUp = true
+    setTimeout (=> @rollingUp = false), 400
+    @$el.attr('data-state', 'saved-close') if @$el.attr('data-state') in ['saved', 'saved-reopen']
     @clearRollup()
 
   events:
@@ -58,20 +58,17 @@ module.exports = class SaveControls extends Backbone.View
     'click': (e) -> e.preventDefault()
     'mouseover .icon-plus-small': -> @$('.save-controls-drop-down-new').addClass 'is-hover'
     'mouseout .icon-plus-small': -> @$('.save-controls-drop-down-new').removeClass 'is-hover'
-    'mouseout': 'setRollup'
-    'mouseover': 'clearRollup'
-
-  setRollup: ->
-    @rollupTimeout = setTimeout @rollup, 4000
-    $(window).one 'scroll.view-' + @cid, @rollup
+    'mouseenter': 'onMouseOver'
 
   clearRollup: ->
     clearTimeout @rollupTimeout
     $(window).off 'scroll.view-' + @cid
     $(document).off 'click.save-controls-' + @cid
 
-  openDropDown: ->
+  openDropDown: (e) ->
+    e.preventDefault()
     return @showSignupModal() unless @user
+    return if @$el.attr('data-state') in ['saved-close', 'saved-reopen']
     @$el.attr 'data-state', 'saving'
     @collections.fetch success: =>
       @$el.attr 'data-state', 'saved'
@@ -84,14 +81,12 @@ module.exports = class SaveControls extends Backbone.View
   onAddToCollection: (e) ->
     e.preventDefault()
     @addToCollection @collections.at $(e.currentTarget).index()
-    $(e.currentTarget).addClass('is-init-click')
-    $(e.currentTarget).one 'mouseout', -> $(e.currentTarget).removeClass('is-init-click')
     setTimeout @rollup, 300
 
   onRemoveFromCollection: (e) ->
+    e.preventDefault()
     col = @collections.at $(e.currentTarget).index()
-    col.removeArtwork @model.get 'id'
-    $(e.currentTarget).removeClass 'is-active'
+    col.removeArtwork @model
     $removed = $(e.currentTarget).find('.save-controls-removed')
     $removed.show()
     setTimeout (-> $removed.fadeOut 'fast'), 1000
@@ -107,3 +102,8 @@ module.exports = class SaveControls extends Backbone.View
       @$('.save-controls-drop-down-new').removeClass 'is-loading'
       @addToCollection collection
     @$('form input').val ''
+
+  onMouseOver: ->
+    @clearRollup()
+    if not @rollingUp and @$el.attr('data-state') is 'saved-close'
+      @$el.attr 'data-state', 'saved-reopen'
