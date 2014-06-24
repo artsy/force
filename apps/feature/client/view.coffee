@@ -3,6 +3,7 @@ Backbone                  = require 'backbone'
 mediator                  = require '../../../lib/mediator.coffee'
 CurrentUser               = require '../../../models/current_user.coffee'
 FeatureRouter             = require './router.coffee'
+FilterView                = requrie './filter.coffee'
 SaleArtworkView           = require '../../../components/artwork_item/views/sale_artwork.coffee'
 AuctionClockView          = require '../../../components/auction_clock/view.coffee'
 trackArtworkImpressions   = require('../../../components/analytics/impression_tracking.coffee').trackArtworkImpressions
@@ -11,6 +12,7 @@ CurrentUser               = require '../../../models/current_user.coffee'
 ArtworkColumnsView        = require '../../../components/artwork_columns/view.coffee'
 Artworks                  = require '../../../collections/artworks.coffee'
 ShareView                 = require '../../../components/share/view.coffee'
+
 
 artworkColumns                  = -> require('../../../components/artwork_columns/template.jade') arguments...
 setsTemplate                    = -> require('../templates/sets.jade') arguments...
@@ -25,6 +27,7 @@ module.exports = class FeatureView extends Backbone.View
     'click .featured-set-artist-expand'                             : 'seeAllArtists'
 
   maxArtists: 60
+  minArtworksForFilter: 10
 
   initialize: (options) ->
     @handleTab options.tab if options.tab
@@ -45,8 +48,15 @@ module.exports = class FeatureView extends Backbone.View
         @appendArtworks newSaleArtworks
       artworksSuccess: (saleFeaturedSet) =>
         @setupArtworks saleFeaturedSet
+        if saleFeaturedSet.get('data')?.length > @minArtworksForFilter
+          @setupArtworkFiltering saleFeaturedSet.get('data')
 
     @setupShareButtons()
+
+  setupArtworkFiltering: (artworks) ->
+    new FilterView
+      el: @$('#feature-artworks')
+      artworks: artworks
 
   appendArtworks: (artworks) ->
     @artworkColumns ?= new ArtworkColumnsView
