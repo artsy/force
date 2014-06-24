@@ -5,12 +5,19 @@ module.exports = class Scrollbar
     @$els     = $els?.add(@$body) or @$body
 
   set: ->
+    @fixFirefoxJump(true)
     @$body.addClass 'is-modal'
     @$els.css 'padding-right', ((@scrollbarWidth ?= @measure()) or 0)
 
   reset: ->
+    @fixFirefoxJump(false)
     @$body.removeClass 'is-modal'
     @$els.css 'padding-right', ''
+
+  fixFirefoxJump: (set) ->
+    return unless navigator.userAgent.match('Firefox')
+    @ffTop = $('body, html').scrollTop() if set
+    setTimeout => $('body, html').scrollTop @ffTop
 
   # http://davidwalsh.name/detect-scrollbar-width
   measure: ->
