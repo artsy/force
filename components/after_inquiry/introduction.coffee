@@ -1,4 +1,5 @@
 _ = require 'underscore'
+_.mixin require 'underscore.string'
 moment = require 'moment'
 human = require 'humanparser'
 
@@ -10,7 +11,7 @@ module.exports = class Introduction
   blurb: ->
     blurb = []
     # Sentence:
-    blurb.push @user.get 'name'
+    blurb.push @firstName()
     if @user.isCollector()
       blurb.push 'is a collector'
       blurb.push 'and' if @user.id and !@user.hasLocation()
@@ -33,7 +34,7 @@ module.exports = class Introduction
     return blurb unless _.isEmpty(blurb)
 
   firstName: ->
-    @__firstName__ ?= human.parseName(@user.get('name')).firstName
+    @__firstName__ ?= _.titleize human.parseName(@user.get('name')).firstName
 
   location: ->
     @__location__ ?=
