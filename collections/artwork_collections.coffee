@@ -42,7 +42,6 @@ class ArtworkCollection extends Backbone.Model
     @artworks ?= new Artworks [], artworkCollection: this
     @artworks.url = "#{API_URL}/api/v1/collection/#{@get 'id'}/artworks?" + @artworkParams()
 
-
 module.exports = class ArtworkCollections extends Backbone.Collection
 
   url: ->

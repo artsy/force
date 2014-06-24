@@ -17,4 +17,4 @@
         unless collection.get('id') == 'saved-artwork'
           button.favorites2-edit( data-id=collection.get('id') ) Edit
         .favorites2-collection-title!= collection.get('name')
-        //- .favorites2-collection-num-works 100 works
+        .favorites2-collection-num-works #{collection.artworks.totalCount} works

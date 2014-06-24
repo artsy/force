@@ -19,6 +19,10 @@ describe 'Artworks', ->
       as = new Artworks [{ id: 'foo' }], artworkCollection: 'foo'
       as.first().collection.artworkCollection.should.equal 'foo'
 
+    it 'sets total count on sync', ->
+      @artworks.trigger 'sync', null, null, { xhr: { getResponseHeader: -> 90 }}
+      @artworks.totalCount.should.equal 90
+
   describe '#fillwidthDimensions', ->
 
     it 'maps the artworks into a dimensions array for fillwidth', ->
