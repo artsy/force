@@ -6,6 +6,7 @@ sd              = require('sharify').data
 { resolve }     = require 'path'
 rewire          = require 'rewire'
 UnsubscribeView = rewire '../client/view'
+UnsubscribeView.__set__ 'FlashMessage', flashStub = sinon.stub()
 
 describe 'Unsubscribe View', ->
 
@@ -24,10 +25,12 @@ describe 'Unsubscribe View', ->
       benv.render resolve(__dirname, '../templates/index.jade'), {
         sd: {}
         emailTypes:
-          'weekly_email': "Weekly Newsletters"
-          'personalized_email': "Personalized Emails"
-          'follow_users_email': "User Follow Emails"
-          'offer_emails': "Offer Emails"
+          'weekly_email'               : "Weekly Newsletters"
+          'personalized_email'         : "Personalized Emails"
+          'follow_users_email'         : "User Follow Emails"
+          'offer_emails'               : "Offer Emails"
+          'personalized_show_email'    : "Personalized Show Guide" 
+          'personalized_artists_email' : "Personalized Artists and Artworks Emails"
       }, =>
         UnsubscribeView.__set__ 'sd', { UNSUB_AUTH_TOKEN: 'cat' }
         @view = new UnsubscribeView
@@ -50,12 +53,14 @@ describe 'Unsubscribe View', ->
       _.last(Backbone.sync.args)[1].attributes.type[0].should.equal 'personalized_email'
       _.last(Backbone.sync.args)[1].attributes.authentication_token.should.equal 'cat'
 
-    it 'renders success message on success', ->
+    it 'renders success flash message on success', ->
+      Backbone.sync.restore()
+      sinon.stub(Backbone, 'sync').yieldsTo 'success'
       @view.$el.find('button').click()
-      _.last(Backbone.sync.args)[2].success {}
-      @view.$el.html().should.include "You've been unsubscribed"
+      _.last(flashStub.args)[0].message.should.equal "You’ve been unsubscribed."
 
-    it 'renders error message on error', ->
+    it 'renders error flash message on error', ->
+      Backbone.sync.restore()
+      sinon.stub(Backbone, 'sync').yieldsTo 'error'
       @view.$el.find('button').click()
-      _.last(Backbone.sync.args)[2].error {}
-      @view.$el.html().should.include "Whoops, there was an error"
+      _.last(flashStub.args)[0].message.should.equal "Whoops, there was an error."

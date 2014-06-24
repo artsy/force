@@ -1,61 +1,65 @@
-_            = require 'underscore'
-sd           = require('sharify').data
-Backbone     = require 'backbone'
-CurrentUser  = require '../../../models/current_user.coffee'
-ErrorHelpers = require './error_handling.coffee'
+_ = require 'underscore'
+sd = require('sharify').data
+Backbone = require 'backbone'
+CurrentUser = require '../../../models/current_user.coffee'
+Form = require '../../../components/mixins/form.coffee'
+FlashMessage = require '../../../components/flash/index.coffee'
+
+errorMessage = """
+  An error prevented us from deleting your account through this form.
+  Please <a href='javascript:window.location.reload()'>reload the page and try again</a>.
+  If the problem persists, contact <a href='mailto:support@artsy.net'>support@artsy.net</a>.
+"""
 
 module.exports = class UserDeleteForm extends Backbone.View
-
-  _.extend @prototype, ErrorHelpers
-
-  initialize: (options) ->
-    # Reference to frequently accessed DOM elements
-    @$confirm = @$ '#user-delete-confirm'
-    @$explanation = @$ '#user-delete-explanation'
-    @$submitButton = @$ '#user-delete-submit'
-    @$hideMe = @$ 'form, .settings-cancel-delete-account-link'
-    @$successMessage = @$ '.settings-user-delete-success'
-    @$failureMessage = @$ '.settings-user-delete-error'
-    @
+  _.extend @prototype, Form
 
   events:
-    'click #user-delete-confirm': 'onConfirmToggle'
-    'click #user-delete-submit' : 'onSubmit'
-    'form'                      : 'onFormSubmit'
+    'click .settings-checkbox-label': 'toggleCheckbox'
+    'click #user-delete-confirm': 'toggleSubmit'
+    'submit form': 'submit'
+    'click button': 'submit'
 
-  onConfirmToggle: ->
-    if @$confirm.is ':checked'
-      @$submitButton.removeAttr "disabled"
-    else
-      @$submitButton.attr "disabled", "disabled"
+  initialize: ->
+    @cacheSelectors()
 
-  # Let's make this really dilberate and for a click on the button
-  # Hitting enter can happen unintentionally at times...
-  onFormSubmit: ->
-    false
+  cacheSelectors: ->
+    @$form = @$('form')
+    @$button = @$('button')
+    @$confirm = @$('input:checkbox')
+    @$explanation = @$('textarea')
+    @$errors = @$('.settings-form-errors')
 
-  onSubmit: ->
+  toggleCheckbox: (e) ->
+    $(e.currentTarget).siblings().find('label').click()
+
+  toggleSubmit: ->
+    @$button.prop 'disabled', !@$confirm.is(':checked')
+
+  submit: (e) ->
+    e.preventDefault()
+
     return false unless @$confirm.is ':checked'
-    @$submitButton.addClass 'is-loading'
+    return false unless @validateForm()
+    return false if @formIsSubmitting()
+
+    @$button.attr 'data-state', 'loading'
+
     $.ajax
-      method: 'delete'
+      method: 'DELETE'
+      url: @model.url()
       data:
         access_token: @model.get 'accessToken'
-        explanation : @$explanation.val()
-        url         : '/user/delete' # This is added to the feedback form
-      url: @model.url()
+        explanation: @$explanation.val()
+        url: '/user/delete'
       success: =>
-        @$successMessage.show()
-        $('#main-layout-header').remove()
-        @$hideMe.hide()
+        new FlashMessage message: "<a href='/users/sign_out'>Your account has been deleted, click here to continue</a>.", autoclose: false
       error: =>
-        @$failureMessage.show()
-        @$hideMe.hide()
-    false
-
+        @$errors.html errorMessage
+      complete: =>
+        @$button.attr 'data-state', null
 
 module.exports.init = ->
-
   new UserDeleteForm
-    el   : $('#settings')
+    el: $('#settings')
     model: new CurrentUser sd.USER

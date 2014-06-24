@@ -13,6 +13,7 @@ FeatureNavigationView     = require './feature-navigation.coffee'
 BelowTheFoldView          = require './below-the-fold.coffee'
 trackArtworkImpressions   = require("../../../components/analytics/impression_tracking.coffee").trackArtworkImpressions
 MonocleView               = require './monocles.coffee'
+AnnyangView               = require './annyang.coffee'
 BlurbView                 = require '../../../components/blurb/view.coffee'
 Sale                      = require '../../../models/sale.coffee'
 ZigZagBanner              = require '../../../components/zig_zag_banner/index.coffee'
@@ -102,6 +103,9 @@ module.exports = class ArtworkView extends Backbone.View
     @artwork.fetch()
 
     @preventRightClick()
+
+    if @currentUser?.hasLabFeature('Talk To Artsy')
+      @setupAnnyang()
 
   preventRightClick: ->
     (@$artworkImage ?= @$('#the-artwork-image')).on 'contextmenu', (event) ->
@@ -304,6 +308,10 @@ module.exports = class ArtworkView extends Backbone.View
       modelName: 'artist'
       model: @artist
     @following?.syncFollows [@artist.id]
+
+  setupAnnyang: ->
+    new AnnyangView
+      artwork: @artwork
 
   setupMonocleView: ->
     @$('.artwork-image').append("<div class='monocle-zoom'></div>")

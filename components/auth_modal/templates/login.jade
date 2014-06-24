@@ -28,11 +28,9 @@
         button#auth-submit.avant-garde-button-black.is-block Log in
 
         footer.auth-form-options
-          label
-            input(
-              name='remember_me', type='checkbox', value='1', checked
-            )
-            | &nbsp;Remember me
+          .artsy-checkbox
+            input( id='remember_me', name='remember_me', type='checkbox', value='1', checked )
+            label( for='remember_me', data-label='Remember me' )
           a.faux-underline.auth-toggle( href='/forgot', data-mode='forgot', rel='nofollow' ) Forgot Password?
 
     include ./_login_footer.jade

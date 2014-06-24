@@ -1,72 +1,29 @@
-_            = require 'underscore'
-_.str        = require 'underscore.string'
-Backbone     = require 'backbone'
-CurrentUser  = require '../../../models/current_user.coffee'
-{ API_URL, CURRENT_USER, SESSION_ID } = require('sharify').data
+_ = require 'underscore'
+Backbone = require 'backbone'
+CurrentUser = require '../../../models/current_user.coffee'
+{ API_URL } = require('sharify').data
 
-#
-# UserEdit
-#
-# Inherits from CurrentUser and provides methods specific to editing the user:
-# client validation, refreshing the session user, fetching authentications,
-# translating boolean values for the toggle component.
-#
 module.exports = class UserEdit extends CurrentUser
-
-  errorMessages:
-    email_confirmation_emtpy: "Please repeat the new email."
-    email_confirmation      : "Emails don't match up. Please try again."
-    name_empty              : "Please enter your full name."
-
-  validate: (attrs, options) ->
-    errors = {}
-
-    # Email
-    if attrs.email and @get('email') isnt attrs.email
-      if attrs.email isnt attrs.email_confirmation
-        errors.email_confirmation = @errorMessages.email_confirmation
-      unless attrs.email_confirmation
-        errors.email_confirmation = @errorMessages.email_confirmation_emtpy
-
-    # Name
-    if attrs.name and _.clean(attrs.name) is ""
-      errors.name = @errorMessages.name_empty
-
-    # Only return errors validation failed
-    return errors unless _.isEmpty errors
-
-  updateFavorites: (isPrivate) ->
+  publishFavorites: (boolean, options = {}) ->
+    @set 'public_favorites', boolean
     favorites = @defaultArtworkCollection()
-    $.ajax favorites.url(),
+    $.ajax favorites.url(), _.extend options,
+      method: 'PUT'
       data:
         access_token: @get 'accessToken'
-        id: favorites.get 'id'
-        private: isPrivate
-        user_id: @get 'id'
-      method: 'put'
+        id: favorites.id
+        private: !boolean
+        user_id: @id
 
   fetchAuthentications: (options = {}) ->
-    passThrough = options.success if options.success?
     new Backbone.Collection().fetch _.extend options,
-      url    : "#{API_URL}/api/v1/me/authentications"
-      success: (collection) =>
+      url: "#{API_URL}/api/v1/me/authentications"
+      success: _.wrap options.success, (success, collection, response, options) =>
         @set 'authentications', collection.toJSON()
-        passThrough?()
+        success? collection, response, options
 
   isLinkedTo: (provider) ->
     _.where(@get('authentications'), provider: provider).length > 0
 
-  toOnOff: (attribute) ->
-    if _.isBoolean(@get(attribute)) and @get(attribute)
-      'on'
-    else
-      'off'
-
-  onOffFacebook: ->
-    if @get('publish_to_facebook') or @isLinkedTo('facebook')
-      'on'
-    else
-      'off'
-
-  onOffTwitter: ->
-    if @isLinkedTo('twitter') then 'on' else 'off'
+  checked: (attribute) ->
+    if (_.isBoolean(@get attribute) and @get(attribute)) then true else undefined

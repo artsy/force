@@ -84,7 +84,7 @@ module.exports = class AuthModalView extends ModalView
         @showError message
 
   onSubmitSuccess: (model, response, options) =>
-    @reenableForm()
+    @reenableForm null, reset: false
 
     if response.error?
       @showError _.capitalize response.error

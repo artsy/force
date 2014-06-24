@@ -419,8 +419,9 @@
       "from": "backbone-pageable@*"
     },
     "moment": {
-      "version": "2.6.0",
-      "from": "moment@*"
+      "version": "2.7.0",
+      "from": "moment@2.7.0",
+      "resolved": "http://registry.npmjs.org/moment/-/moment-2.7.0.tgz"
     },
     "validator": {
       "version": "3.9.0",
@@ -429,7 +430,14 @@
     "artsy-xapp-middleware": {
       "version": "0.1.2",
       "from": "artsy-xapp-middleware@git://github.com/artsy/artsy-xapp-middleware.git",
-      "resolved": "git://github.com/artsy/artsy-xapp-middleware.git#d249cd04510c770497b4d984f4de7a5a5902f0a3"
+      "resolved": "git://github.com/artsy/artsy-xapp-middleware.git#d249cd04510c770497b4d984f4de7a5a5902f0a3",
+      "dependencies": {
+        "moment": {
+          "version": "2.7.0",
+          "from": "moment@2.7.0",
+          "resolved": "http://registry.npmjs.org/moment/-/moment-2.7.0.tgz"
+        }
+      }
     },
     "artsy-passport": {
       "version": "0.1.4",
@@ -463,7 +471,7 @@
                   "from": "passport-strategy@1.x.x"
                 },
                 "oauth": {
-                  "version": "0.9.12",
+                  "version": "0.9.11",
                   "from": "oauth@0.9.x"
                 },
                 "uid2": {
@@ -487,7 +495,7 @@
                   "from": "passport-strategy@1.x.x"
                 },
                 "oauth": {
-                  "version": "0.9.12",
+                  "version": "0.9.11",
                   "from": "oauth@0.9.x"
                 },
                 "utils-merge": {
@@ -526,7 +534,6 @@
             "connect": {
               "version": "2.12.0",
               "from": "connect@2.12.0",
-              "resolved": "https://registry.npmjs.org/connect/-/connect-2.12.0.tgz",
               "dependencies": {
                 "batch": {
                   "version": "0.5.0",
@@ -559,6 +566,7 @@
                 "multiparty": {
                   "version": "2.2.0",
                   "from": "multiparty@2.2.0",
+                  "resolved": "https://registry.npmjs.org/multiparty/-/multiparty-2.2.0.tgz",
                   "dependencies": {
                     "readable-stream": {
                       "version": "1.1.13-1",
@@ -593,7 +601,6 @@
             "commander": {
               "version": "1.3.2",
               "from": "commander@1.3.2",
-              "resolved": "https://registry.npmjs.org/commander/-/commander-1.3.2.tgz",
               "dependencies": {
                 "keypress": {
                   "version": "0.1.0",
@@ -611,7 +618,8 @@
             },
             "cookie": {
               "version": "0.1.0",
-              "from": "cookie@0.1.0"
+              "from": "cookie@0.1.0",
+              "resolved": "https://registry.npmjs.org/cookie/-/cookie-0.1.0.tgz"
             },
             "buffer-crc32": {
               "version": "0.2.1",
@@ -1435,6 +1443,11 @@
           }
         }
       }
+    },
+    "humanparser": {
+      "version": "0.0.15",
+      "from": "humanparser@",
+      "resolved": "https://registry.npmjs.org/humanparser/-/humanparser-0.0.15.tgz"
     }
   }
 }
