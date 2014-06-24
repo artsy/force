@@ -62,8 +62,9 @@ module.exports = class ArtworkCollections extends Backbone.Collection
     @on 'add', (col) =>
       col.initArtworks()
       for event in ['destroy', 'add', 'remove']
-        col.artworks.on event, (artwork) =>
-          @trigger event + ':artwork', artwork, col
+        col.artworks.on event, ((e) =>
+          (artwork) => @trigger e + ':artwork', artwork, col
+        )(event)
 
   fetchNextArtworksPage: (options = {}) =>
     @page ?= 0
