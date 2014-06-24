@@ -118,6 +118,11 @@ describe 'CollectionView', ->
       @view.onSync [], [fabricate 'artwork', id: 'andy-foobar-skull']
       @view.columnsView.appendArtworks.args[0][0][0].get('id').should.equal 'andy-foobar-skull'
 
+    it 'renders total count', ->
+      @view.artworkCollection.artworks.totalCount = 978
+      @view.onSync [], [fabricate 'artwork', id: 'andy-foobar-skull']
+      @view.$el.html().should.include '978 works'
+
   describe '#renderEmpty', ->
 
     it 'renders an emtpy state', ->

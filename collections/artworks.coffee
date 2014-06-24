@@ -13,6 +13,7 @@ module.exports = class Artworks extends Backbone.Collection
 
   initialize: (models, options = {}) ->
     { @artworkCollection } = options
+    @on 'sync', (a, b, jqXHR) => @totalCount = jqXHR?.xhr?.getResponseHeader('X-Total-Count')
 
   # Maps each artwork's images into an array of image { width, height } hashes meant to be
   # passed into fillwidth.

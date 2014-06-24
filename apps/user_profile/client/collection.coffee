@@ -54,6 +54,7 @@ module.exports.CollectionView = class CollectionView extends Backbone.View
     @columnsView.appendArtworks(
       new Artworks(res, artworkCollection: @artworkCollection).models
     )
+    @$('#upc-artworks-total').html "#{@artworkCollection.artworks.totalCount} works"
 
   renderEmpty: ->
     @$('#user-profile-collection-right-slideshow').hide()
