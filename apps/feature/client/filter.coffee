@@ -6,16 +6,16 @@ module.exports = class FilterView extends Backbone.View
     'click a' : 'triggerArtworkFilter'
 
   sortHash:
-    'artist-a-to-z' : (model) ->
-      model.get('artist').sortable_id
-    'most-bids': (model) ->
-      - model.get('saleArtwork').get('bidder_positions_count')
-    'least-bids': (model) ->
-      model.get('saleArtwork').get('bidder_positions_count')
-    'highest-current-bid' : (model) ->
-      - model.get('saleArtwork').get('highest_bid_amount_cents')
-    'lowest-current-bid' : (model) ->
-      model.get('saleArtwork').get('highest_bid_amount_cents')
+    'artist-a-to-z' : (a) ->
+      a.get('artist').sortable_id
+    'most-bids': (a) ->
+      - a.get('saleArtwork').get('bidder_positions_count')
+    'least-bids': (a) ->
+      a.get('saleArtwork').get('bidder_positions_count')
+    'highest-current-bid' : (a) ->
+      - a.get('saleArtwork').get('highest_bid_amount_cents')
+    'lowest-current-bid' : (a) ->
+      a.get('saleArtwork').get('highest_bid_amount_cents')
 
   initialize: (options) ->
     { @artworks, @reRender, @startingSearch } = options
@@ -31,4 +31,4 @@ module.exports = class FilterView extends Backbone.View
     return unless @sortHash[sortId]
     @artworks.comparator = @sortHash[sortId]
     @artworks.sort()
-    @reRender(@artworks)
+    @reRender @artworks
