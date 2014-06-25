@@ -3,7 +3,15 @@ header.favorites2-follows-header
   h1.avant-garde-header-center Favorites &amp; Follows
   +follows-tab-nav
   include favorites_action
+  nav.favorites2-tabs
+    a.favorites2-tabs-sets.is-active
+      include ../../artwork_item/save_controls_two_btn/images/add_to_collection.svg
+      | Sets
+    a.favorites2-tabs-favorites
+      span.icon-heart
+      | Favorites
 main.favorites-2-main
+  section.favorites2-favorites-artworks
   section.favorites2-collections
     .loading-spinner
   section.favorites2-artworks
