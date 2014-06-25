@@ -45,7 +45,9 @@ module.exports = class FeatureView extends Backbone.View
         @$('#feature-sets-container').html setsTemplate(sets: @sets)
         @initializeSale @sets
       artworkPageSuccess: (fullCollection, newSaleArtworks) =>
-        @appendArtworks newSaleArtworks
+        @createArtworkColumns()
+        artworks = Artworks.fromSale(new Backbone.Collection newSaleArtworks)
+        @appendArtworks artworks
       artworksSuccess: (saleFeaturedSet) =>
         @setupArtworks saleFeaturedSet
         if saleFeaturedSet.get('data')?.length > @minArtworksForFilter
@@ -60,13 +62,17 @@ module.exports = class FeatureView extends Backbone.View
       el: @$('.feature-artwork-filter')
       artworks: artworks
       startingSearch: 'artist-a-to-z'
-      reRender: (artworks) =>
-        @$('#feature-artworks').html ''
-        @artworkColumns = undefined
-        @appendArtworks artworks, true
-        @renderArtistList artworks
+    artworks.on 'sort', _.debounce =>
+      @$('#feature-artworks').empty()
+      @artworkColumns.undelegateEvents()
+      @artworkColumns.unbind()
+      @artworkColumns = undefined
 
-  appendArtworks: (artworks, skipArtworkFormatting) ->
+      @createArtworkColumns()
+      @appendArtworks artworks
+    , 500
+
+  createArtworkColumns: ->
     @artworkColumns ?= new ArtworkColumnsView
       el              : @$('#feature-artworks')
       collection      : new Artworks
@@ -76,8 +82,7 @@ module.exports = class FeatureView extends Backbone.View
       showBlurbs      : true
       isAuction       : @sale.isAuction()
 
-    unless skipArtworkFormatting
-      artworks = Artworks.fromSale(new Backbone.Collection artworks)
+  appendArtworks: (artworks) ->
     @artworkColumns.appendArtworks artworks.models
     @setupSaleArtworks artworks, @sale
 

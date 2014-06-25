@@ -18,7 +18,7 @@ module.exports = class FilterView extends Backbone.View
       a.get('saleArtwork').get('highest_bid_amount_cents')
 
   initialize: (options) ->
-    { @artworks, @reRender, @startingSearch } = options
+    { @artworks, @startingSearch } = options
     @sortArtworks @startingSearch
 
   triggerArtworkFilter: (event) ->
@@ -31,4 +31,3 @@ module.exports = class FilterView extends Backbone.View
     return unless @sortHash[sortId]
     @artworks.comparator = @sortHash[sortId]
     @artworks.sort()
-    @reRender @artworks
