@@ -1,25 +1,49 @@
 @import '../../stylus_lib'
 
-.favorites2-collection-list li
-  transition background-color 0.3s
-  cursor pointer
-  padding 12px 14px
-  .icon-check
-    float right
-    font-size 14px
-    display none
-    margin-top -5px
-  &:hover
-    background gray-lightest-color
-  &.is-active
-    border 2px solid black
-    padding 10px 12px
+.favorites2-collection-list
+  max-height 180px
+  display block
+  overflow-y scroll
+  li
+    transition background-color 0.3s
+    cursor pointer
+    padding 8px 12px
+    margin 3px 1px
     .icon-check
-      display block
+      float right
+      font-size 14px
+      display none
+      margin-top -5px
+    &:hover
+      background gray-lightest-color
+    &.is-active
+      border 2px solid black
+      padding 6px 10px
+      .icon-check
+        display block
+    &.is-active:hover
+      background yellow-light-color
+      .favorites2-collection-list-remove
+        display block
+      .icon-check
+        display none
+
+.favorites2-collection-list-remove
+  avant-garde()
+  float right
+  font-size default-avant-garde-font-size - 1
+  display none
+  margin-top -9px
+  .icon-remove-small
+    font-size 18px
+    position relative
+    top 3px
+    margin-left 3px
 
 .favorites2-collection-list-create
-  margin-top 15px
+  padding-top 15px
   position relative
+  border-top 1px solid gray-lighter-color
   input
     border-width 1px
     transition width 0.3s linear 0.2s !important
@@ -35,7 +59,7 @@
         transition opacity 0.3s ease-out 0.1s
   button
     position absolute
-    top 0
+    top 15px
     right 0
     padding 14px 0
     width 100px

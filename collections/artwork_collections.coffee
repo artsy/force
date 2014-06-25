@@ -47,7 +47,6 @@ module.exports = class ArtworkCollections extends Backbone.Collection
   url: ->
     "#{API_URL}/api/v1/collections?" + qs.stringify(
       private: true
-      bustCache: Math.random()
       user_id: @user.get 'id'
     )
 
@@ -99,5 +98,15 @@ module.exports = class ArtworkCollections extends Backbone.Collection
 
   removeArtwork: (artworkId) ->
     @each (col) -> col.removeArtwork(artwork) if artwork = col.artworks.get artworkId
+
+  # Injects an artwork into each collection it belongs to by fetching
+  # /api/v1/collections?artwork_id=
+  injectArtwork: (artwork, options) ->
+    new Backbone.Collection().fetch
+      url: @url() + '&artwork_id=' + artwork.id
+      error: options.error
+      success: (cols) =>
+        cols.each (c) => @get(c.id).artworks.add(artwork)
+        options?.success?()
 
 module.exports.ArtworkCollection = ArtworkCollection

@@ -1,8 +1,12 @@
-ul.favorites2-collection-list
-  for collection in collections
-    li( data-id=collection.get('id') )
-      = collection.get('name')
-      .icon-check
-.favorites2-collection-list-create
-  input.bordered-input( placeholder='Create New Set' )
-  button.avant-garde-button-white( disabled='disabled' ) Create
+.favorites2-collection-list-container
+  ul.favorites2-collection-list
+    for collection in collections
+      li( data-id=collection.get('id') class=(collection.artworks.get(artwork.id) ? 'is-active' : '') )
+        = collection.get('name')
+        .icon-check
+        .favorites2-collection-list-remove
+          | Remove
+          span.icon-remove-small
+  .favorites2-collection-list-create
+    input.bordered-input( placeholder='Create New Set' )
+    button.avant-garde-button-white( disabled='disabled' ) Create
