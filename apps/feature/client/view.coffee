@@ -3,6 +3,7 @@ Backbone                  = require 'backbone'
 mediator                  = require '../../../lib/mediator.coffee'
 CurrentUser               = require '../../../models/current_user.coffee'
 FeatureRouter             = require './router.coffee'
+FilterView                = require './filter.coffee'
 SaleArtworkView           = require '../../../components/artwork_item/views/sale_artwork.coffee'
 AuctionClockView          = require '../../../components/auction_clock/view.coffee'
 trackArtworkImpressions   = require('../../../components/analytics/impression_tracking.coffee').trackArtworkImpressions
@@ -17,6 +18,7 @@ setsTemplate                    = -> require('../templates/sets.jade') arguments
 artistsTemplate                 = -> require('../templates/artists.jade') arguments...
 auctionRegisterButtonTemplate   = -> require('../templates/auction_register_button.jade') arguments...
 auctionCountdownTemplate        = -> require('../templates/auction_countdown.jade') arguments...
+filterTemplate                  = -> require('../templates/artwork_filter.jade') arguments...
 
 module.exports = class FeatureView extends Backbone.View
 
@@ -25,6 +27,7 @@ module.exports = class FeatureView extends Backbone.View
     'click .featured-set-artist-expand'                             : 'seeAllArtists'
 
   maxArtists: 60
+  minArtworksForFilter: 10
 
   initialize: (options) ->
     @handleTab options.tab if options.tab
@@ -42,13 +45,34 @@ module.exports = class FeatureView extends Backbone.View
         @$('#feature-sets-container').html setsTemplate(sets: @sets)
         @initializeSale @sets
       artworkPageSuccess: (fullCollection, newSaleArtworks) =>
-        @appendArtworks newSaleArtworks
+        @createArtworkColumns()
+        artworks = Artworks.fromSale(new Backbone.Collection newSaleArtworks)
+        @appendArtworks artworks
       artworksSuccess: (saleFeaturedSet) =>
         @setupArtworks saleFeaturedSet
+        if saleFeaturedSet.get('data')?.length > @minArtworksForFilter
+          @setupArtworkFiltering saleFeaturedSet.get('data')
 
     @setupShareButtons()
 
-  appendArtworks: (artworks) ->
+  setupArtworkFiltering: (artworks) ->
+    @$('#feature-artworks').before filterTemplate()
+
+    new FilterView
+      el: @$('.feature-artwork-filter')
+      artworks: artworks
+      startingSearch: 'artist-a-to-z'
+    artworks.on 'sort', _.debounce =>
+      @$('#feature-artworks').empty()
+      @artworkColumns.undelegateEvents()
+      @artworkColumns.unbind()
+      @artworkColumns = undefined
+
+      @createArtworkColumns()
+      @appendArtworks artworks
+    , 500
+
+  createArtworkColumns: ->
     @artworkColumns ?= new ArtworkColumnsView
       el              : @$('#feature-artworks')
       collection      : new Artworks
@@ -58,7 +82,7 @@ module.exports = class FeatureView extends Backbone.View
       showBlurbs      : true
       isAuction       : @sale.isAuction()
 
-    artworks = Artworks.fromSale(new Backbone.Collection artworks)
+  appendArtworks: (artworks) ->
     @artworkColumns.appendArtworks artworks.models
     @setupSaleArtworks artworks, @sale
 
