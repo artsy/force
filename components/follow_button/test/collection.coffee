@@ -150,14 +150,14 @@ describe 'Following collection', ->
         @following.followAll [@profileId2, @profileId2]
         Backbone.sync.args[0][0].should.equal 'create'
         Backbone.sync.args[0][2].url.should.include '/api/v1/me/follow/profiles'
-        Backbone.sync.args[0][2].data.should.equal 'profile_id%5B%5D=profile-2&profile_id%5B%5D=profile-2'
+        Backbone.sync.args[0][2].data.should.equal 'profile_id%5B%5D=profile-2&profile_id%5B%5D=profile-2&auto=true'
 
       it 'accepts callbacks', (done) ->
         @following.followAll [@profileId2, @profileId2], success: done
 
       it 'can accept a single ID', ->
         @following.followAll @profileId1
-        Backbone.sync.args[0][2].data.should.equal 'profile_id%5B%5D=profile-1'
+        Backbone.sync.args[0][2].data.should.equal 'profile_id%5B%5D=profile-1&auto=true'
 
       it 'sticks kind onto every returned model', ->
         @following.followAll [@profileId2, @profileId2]
