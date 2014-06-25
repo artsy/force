@@ -17,16 +17,18 @@ describe 'CollectionList', ->
       sinon.stub Backbone, 'sync'
       user = new CurrentUser id: 'craig'
       collections = new ArtworkCollections [{ id: 'cat-portraits' }], { user: user }
+      artwork = new Backbone.Model fabricate 'artwork'
       benv.render resolve(__dirname, '../../templates/collection_list.jade'), {
         sd: {}
         collections: collections.models
+        artwork: artwork
       }, =>
         CollectionList = benv.require resolve(__dirname, '../../client/collection_list')
         @view = new CollectionList
           el: $('body')
           user: user
           collections: collections
-          artwork: new Backbone.Model fabricate 'artwork'
+          artwork: artwork
           collection: new ArtworkCollection { id: 'saved-artwork' }, user_id: user
         done()
 
@@ -34,14 +36,19 @@ describe 'CollectionList', ->
     benv.teardown()
     Backbone.sync.restore()
 
-  describe '#moveArtwork', ->
+  describe '#removeArtwork', ->
 
-    it 'removes it from the current set and adds it to another', ->
-      @view.moveArtwork { currentTarget: $('li').first() }
+    it 'removes it from the current set', ->
+      @view.removeArtwork { currentTarget: $('li').first() }
       Backbone.sync.args[0][0].should.equal 'delete'
-      Backbone.sync.args[0][2].url.should.include '/collection/saved-artwork/artwork'
-      Backbone.sync.args[1][0].should.equal 'create'
-      Backbone.sync.args[1][2].url.should.include '/collection/cat-portraits/artwork'
+      Backbone.sync.args[0][2].url.should.include '/collection/cat-portraits/artwork'
+
+  describe '#addArtwork', ->
+
+    it 'adds it to the set', ->
+      @view.addArtwork { currentTarget: $('li').first() }
+      Backbone.sync.args[0][0].should.equal 'create'
+      Backbone.sync.args[0][2].url.should.include '/collection/cat-portraits/artwork'
 
   describe '#newCollection', ->
 
