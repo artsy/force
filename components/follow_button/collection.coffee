@@ -94,7 +94,7 @@ module.exports = class Following extends Backbone.Collection
       success?()
 
     new Backbone.Model().save null,
-      _.extend options, url: @url(), data: $.param('profile_id[]': ids)
+      _.extend options, url: @url(), data: $.param('profile_id[]': ids, auto: true)
 
   # There's no bulk unfollow endpoint yet
   unfollowAll: (ids, options = {}) ->
