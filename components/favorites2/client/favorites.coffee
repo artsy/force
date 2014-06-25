@@ -1,18 +1,18 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
-EditWorkModal = require './edit_work_modal.coffee'
-EditCollectionModal =  require './edit_collection_modal.coffee'
+RemoveConfirmModal = require './remove_confirm_modal.coffee'
+EditCollectionModal = require './edit_collection_modal.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 Artwork = require '../../../models/artwork.coffee'
 Artworks = require '../../../collections/artworks.coffee'
-{ ArtworkCollection } = ArtworkCollections = require '../../../collections/artwork_collections.coffee'
 ArtworkColumnsView = require '../../artwork_columns/view.coffee'
 ShareView = require '../../share/view.coffee'
 ZigZagBanner = require '../../zig_zag_banner/index.coffee'
 FavoritesEmptyStateView = require './empty_state.coffee'
 JumpView = require '../../jump/view.coffee'
 mediator = require '../../../lib/mediator.coffee'
+{ ArtworkCollection } = ArtworkCollections = require '../../../collections/artwork_collections.coffee'
 hintTemplate = -> require('../templates/empty_hint.jade') arguments...
 collectionsTemplate = -> require('../templates/collections.jade') arguments...
 
@@ -34,16 +34,17 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
     @jump = new JumpView threshold: $(window).height()
     @$el.append @jump.$el.addClass 'jump-from-bottom'
     mediator.on 'create:artwork:collection', (col) => @collections.add col
-    @collections.on 'add remove change:name sync', => _.defer @renderCollections
+    @collections.on 'add remove change:name sync remove:artwork', => _.defer @renderCollections
     @collections.on 'next:artworks', (a) =>
       @artworkColumnsView.appendArtworks a
     @collections.on 'end:artworks', @endInfiniteScroll
-    @collections.on 'destroy:artwork', @onRemoveArtwork
+    @collections.on 'remove:artwork', @onRemoveArtwork
     @$el.infiniteScroll @collections.fetchNextArtworksPage
     @setup()
 
   setup: ->
     @collections.fetch success: =>
+      @collections.remove @collections.get 'saved-artwork'
       return @showEmptyHint() if @collections.length is 0
       @renderPrivacy()
       @collections.fetchNextArtworksPage success: =>
@@ -93,8 +94,8 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
   events:
     'click .favorites2-new-collection': 'openNewModal'
     'click .favorites2-edit': 'openEditModal'
-    'click .artwork-item-edit': 'openEditWorkModal'
     'click .favorites2-privacy a': 'togglePrivacy'
+    'click .artwork-item-remove': 'removeWork'
 
   openNewModal: (e) ->
     e?.preventDefault()
@@ -110,15 +111,13 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
     collection = @collections.get $(e.currentTarget).data('id')
     new EditCollectionModal width: 500, collection: collection
 
-  openEditWorkModal: (e) ->
-    e.preventDefault()
-    collection = @collections.get $(e.currentTarget).data 'collection-id'
-    artwork = collection.artworks.get $(e.currentTarget).data 'id'
-    new EditWorkModal
-      width: 550
-      collection: collection
-      artwork: artwork
-
   togglePrivacy: ->
     @collections.togglePrivacy()
     @renderPrivacy()
+
+  removeWork: (e) ->
+    e.preventDefault()
+    new RemoveConfirmModal
+      width: 550
+      collections: @collections
+      artworkId: $(e.currentTarget).data 'id'

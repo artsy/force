@@ -55,7 +55,6 @@ describe 'FavoritesView', ->
       _.last(Backbone.sync.args)[2].success [{ id: 'saved-artwork' }, { id: 'bathroom-warhols' }]
       for args in _.last(Backbone.sync.args, 2)
         args[2].success []
-        args[2].complete []
       @view.showEmptyHint.called.should.be.ok
 
   describe '#showEmptyHint', ->

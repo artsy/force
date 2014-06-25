@@ -12,7 +12,7 @@ figure.artwork-item( data-artwork=artwork.get('id') )
       else
         include ./variable_width_image
       if artwork.collection && artwork.collection.artworkCollection
-        .artwork-item-edit.icon-edit(
+        .artwork-item-remove.icon-remove-small(
           data-id=artwork.get('id')
           data-collection-id=artwork.collection.artworkCollection.id
         )

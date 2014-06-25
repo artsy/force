@@ -143,12 +143,6 @@ describe 'CollectionView', ->
       @view.onRemove @view.artworkCollection.artworks.first()
       @view.columnsView.render.called.should.be.ok
 
-  describe '#openEditWorkModal', ->
-
-    it 'opens an edit work modal', ->
-      @view.openEditWorkModal(preventDefault: ->)
-      @EditWorkModal.args[0][0].width.should.equal 550
-
 describe 'Slideshow', ->
 
   beforeEach (done) ->
