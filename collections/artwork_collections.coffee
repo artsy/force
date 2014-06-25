@@ -97,4 +97,7 @@ module.exports = class ArtworkCollections extends Backbone.Collection
     else
       @each (col) -> col.save private: false
 
+  removeArtwork: (artworkId) ->
+    @each (col) -> col.removeArtwork(artwork) if artwork = col.artworks.get artworkId
+
 module.exports.ArtworkCollection = ArtworkCollection

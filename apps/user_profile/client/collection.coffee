@@ -6,8 +6,8 @@ Artworks = require '../../../collections/artworks.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 ShareView = require '../../../components/share/view.coffee'
 ShareModal = require '../../../components/share/modal.coffee'
+RemoveConfirmModal = require '../../../components/favorites2/client/remove_confirm_modal.coffee'
 EditCollectionModal = require '../../../components/favorites2/client/edit_collection_modal.coffee'
-EditWorkModal = require '../../../components/favorites2/client/edit_work_modal.coffee'
 FavoritesEmptyStateView = require '../../../components/favorites2/client/empty_state.coffee'
 Slideshow = require './slideshow.coffee'
 { ArtworkCollection } = ArtworkCollections = require '../../../collections/artwork_collections.coffee'
@@ -78,11 +78,7 @@ module.exports.CollectionView = class CollectionView extends Backbone.View
   events:
     'click #user-profile-collection-right-edit': 'openEditModal'
     'click #user-profile-collection-right-share': 'openShareModal'
-    'click .artwork-item-edit': 'openEditWorkModal'
-
-  openEditModal: (e) ->
-    new EditCollectionModal width: 500, collection: @artworkCollection
-    false
+    'click .artwork-item-remove': 'removeWork'
 
   openShareModal: ->
     new ShareModal
@@ -91,12 +87,12 @@ module.exports.CollectionView = class CollectionView extends Backbone.View
       description: @artworkCollection.get('name')
     false
 
-  openEditWorkModal: (e) ->
+  removeWork: (e) ->
     e.preventDefault()
-    new EditWorkModal
+    new RemoveConfirmModal
       width: 550
-      artwork: @artworkCollection.artworks.get($(e.currentTarget).attr 'data-id')
       collection: @artworkCollection
+      artwork: @artworkCollection.artworks.get $(e.currentTarget).data 'id'
 
 module.exports.init = ->
   new CollectionView
