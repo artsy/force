@@ -25,7 +25,7 @@ describe 'location page', ->
       @template   = render('show')(
         title: "Galleries and Art Shows Near Tokyo"
         name: 'Tokyo'
-        shows: new PartnerShows()
+        shows: new PartnerShows().models
         profiles: new Profiles()
         fairs: new Fairs([@fair])
         sd: {}
@@ -45,7 +45,7 @@ describe 'location page', ->
       @template   = render('show')(
         title: "Galleries and Art Shows Near Tokyo"
         name: 'Tokyo'
-        shows: new PartnerShows([@show])
+        shows: new PartnerShows([@show]).models
         profiles: new Profiles()
         fairs: new Fairs()
         sd: {}
@@ -61,7 +61,7 @@ describe 'location page', ->
       @template   = render('show')(
         title: "Galleries and Art Shows Near Tokyo"
         name: 'Tokyo'
-        shows: new PartnerShows()
+        shows: new PartnerShows().models
         profiles: new Profiles([@profile])
         fairs: new Fairs()
         sd: {}

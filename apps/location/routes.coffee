@@ -20,7 +20,7 @@ querystring = require 'querystring'
     res.render 'show',
       title: "Galleries and Art Shows Near #{context.name}"
       name: context.name
-      shows: shows
+      shows: shows.models
       profiles: profiles
       fairs: fairs
 

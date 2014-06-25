@@ -200,9 +200,17 @@ module.exports = class PartnerShow extends Backbone.Model
     @formatArtists @maxDisplayedArtists
 
   formatLeadHeading: ->
-    if @running() then return 'Current show'
-    if @upcoming() then return 'Upcoming show'
-    if @closed() then return 'Past show'
+    status =
+      if @running() then 'Current'
+      else if @upcoming() then 'Upcoming'
+      else if @closed() then 'Past'
+    type = if @get('fair') then 'fair booth' else 'show'
+    "#{status} #{type}"
+
+  getSortValue: ->
+    if @upcoming() then return 2
+    if @running() then return 1
+    if @closed() then return 0
 
   fairLocationDisplay: ->
     city = @formatCity()
