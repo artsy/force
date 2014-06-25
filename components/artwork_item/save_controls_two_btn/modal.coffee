@@ -23,9 +23,10 @@ module.exports = class SaveControlsModal extends ModalView
       artwork: @model
     @collections.on 'add remove', @renderInner
     @collections.fetch success: =>
-      @collections.remove @collections.get 'saved-artwork'
-      @updatePosition()
-      @isLoaded()
+      @collections.injectArtwork @model, success: =>
+        @collections.remove @collections.get 'saved-artwork'
+        @updatePosition()
+        @isLoaded()
     super
 
   postRender: ->

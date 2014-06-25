@@ -81,6 +81,17 @@ describe 'ArtworkCollections', ->
       @collections.add { id: 'saved-artwork', name: "Saved Artwork" }
       @collections.first().get('name').should.equal 'My Favorite Works'
 
+  describe '#injectArtwork', ->
+
+    it 'checks where an artwork exists and injects it into the collections', ->
+      @collections.reset [{ id: 'foos-for-my-bar' }, { id: 'saved-artwork' }]
+      @collections.injectArtwork(
+        new Backbone.Model(fabricate 'artwork', id: 'andy-foobar-skull')
+        {}
+      )
+      _.last(Backbone.sync.args)[2].success [{ id: 'foos-for-my-bar' }]
+      (@collections.get('foos-for-my-bar').artworks.get('andy-foobar-skull')?).should.be.ok
+
   describe '#public', ->
 
     it 'checks wheter all collections are public/private'

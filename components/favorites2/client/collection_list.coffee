@@ -1,23 +1,31 @@
 Backbone = require 'backbone'
 { ArtworkCollection } = ArtworkCollections = require '../../../collections/artwork_collections.coffee'
+template = -> require('../templates/collection_list.jade') arguments...
 
 module.exports = class CollectionList extends Backbone.View
 
   initialize: (options) ->
-    { @user, @collections, @collection, @artwork } = options
+    { @user, @collections, @artwork } = options
+    @collections.on 'add:artwork remove:artwork', @render
+
+  render: =>
+    @$('.favorites2-collection-list-container').replaceWith template
+      collections: @collections.models
+      artwork: @artwork
 
   events:
     'click .favorites2-collection-list-create button': 'newCollection'
     'keyup .favorites2-collection-list-create input': 'onKeyup'
-    'click .favorites2-collection-list li': 'moveArtwork'
+    'click .favorites2-collection-list li:not(.is-active)': 'addArtwork'
+    'click .favorites2-collection-list li.is-active': 'removeArtwork'
 
-  moveArtwork: (e) ->
-    @collection?.removeArtwork @artwork
+  addArtwork: (e) ->
     col = @collections.at $(e.currentTarget).index()
     if col.isNew() then col.once('sync', => col.saveArtwork @artwork) else col.saveArtwork @artwork
-    @collection = col
-    @$('.favorites2-collection-list li').removeClass('is-active')
-    $(e.currentTarget).addClass('is-active')
+
+  removeArtwork: (e) ->
+    col = @collections.at $(e.currentTarget).index()
+    col.removeArtwork @artwork
 
   onKeyup: (e) ->
     e.preventDefault()

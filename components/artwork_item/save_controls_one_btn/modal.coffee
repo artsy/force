@@ -15,16 +15,17 @@ module.exports = class SaveControlsModal extends ModalView
   initialize: ->
     @user = CurrentUser.orNull()
     @collections = new ArtworkCollections [], user: @user
-    @collections.on 'add', @renderInner
     new CollectionList
       el: @$el
       collections: @collections
       user: @user
       collection: null
       artwork: @model
+    @collections.on 'add', @renderInner
     @collections.fetch success: =>
-      @updatePosition()
-      @isLoaded()
+      @collections.injectArtwork @model, success: =>
+        @updatePosition()
+        @isLoaded()
     super
 
   postRender: ->
