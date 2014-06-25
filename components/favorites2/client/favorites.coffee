@@ -56,7 +56,6 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
         @showEmptyHint() if total is 0
 
   setupForTwoButton: ->
-    window.view = this
     return unless (Cookies.get('save-controls') or analytics.getProperty('ab:save:controls')) is 'two button'
     @collections.remove favorites = @collections.get('saved-artwork')
     @$('.favorites2-tabs').show()
