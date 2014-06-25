@@ -11,8 +11,8 @@ module.exports = (artwork) ->
   imgHeight = $image.height()
   image = new Image  # used for canvas
   image.src = $('img').attr('src')
-  beatDrops = [ 6600, 20200, 27900, 34000 ]
-  beatStops = [ 16700, 27200, 30200, 38800 ]
+  beatDrops = [ 7000, 20600, 28300, 34400 ]
+  beatStops = [ 17100, 27600, 30600, 39200 ]
   songEnd = 42000
   canvas = $("<canvas width=#{imgWidth} height=#{imgHeight}>")[0]
   $canvas = $(canvas)
