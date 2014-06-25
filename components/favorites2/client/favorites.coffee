@@ -4,6 +4,7 @@ sd = require('sharify').data
 RemoveConfirmModal = require './remove_confirm_modal.coffee'
 EditCollectionModal = require './edit_collection_modal.coffee'
 analytics = require '../../../lib/analytics.coffee'
+Cookies = require 'cookies-js'
 CurrentUser = require '../../../models/current_user.coffee'
 Artwork = require '../../../models/artwork.coffee'
 Artworks = require '../../../collections/artworks.coffee'
@@ -13,7 +14,6 @@ ZigZagBanner = require '../../zig_zag_banner/index.coffee'
 FavoritesEmptyStateView = require './empty_state.coffee'
 JumpView = require '../../jump/view.coffee'
 mediator = require '../../../lib/mediator.coffee'
-Cookies = require 'cookies-js'
 { ArtworkCollection } = ArtworkCollections = require '../../../collections/artwork_collections.coffee'
 hintTemplate = -> require('../templates/empty_hint.jade') arguments...
 collectionsTemplate = -> require('../templates/collections.jade') arguments...
