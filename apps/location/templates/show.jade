@@ -11,7 +11,7 @@ block body
     h1.garamond-header-center Galleries and Art Shows Near&nbsp;
       em= name
 
-    if !fairs.isEmpty()
+    if fairs.length
       .list_section.fairs
         h3.avant-garde-header-center Fairs
         for fair in fairs.models
@@ -24,14 +24,14 @@ block body
                 a( href=fair.href() )= fair.get('name')
               .summary= fair.get('summary')
 
-    if !shows.isEmpty()
+    if shows.length
       .list_section.shows
         - var header = "Shows"
         include ../../../components/related_shows/template.jade
         .see_more
           a.avant-garde-button-text( href='/shows' ) See More Shows
 
-    if !profiles.isEmpty()
+    if profiles.length
       .list_section.featured-partners-grid.profiles
         h3.avant-garde-header-center Galleries and Institutions
 
