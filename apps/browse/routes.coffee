@@ -6,9 +6,6 @@ Genes = require '../../collections/genes.coffee'
 FilterSuggest = require '../../models/filter_suggest.coffee'
 { API_URL } = require('sharify').data
 
-renderCanonicalTag = (req) ->
-  if Object.keys(req.query)?.length > 0 then false else true
-
 @index = (req, res) ->
   featuredGenes = new OrderedSets(key: 'browse:featured-genes')
   popularCategories = new OrderedSets(key: 'browse:popular-categories')
@@ -24,7 +21,6 @@ renderCanonicalTag = (req) ->
       mediums: filterSuggest.mediumsHash()
       showBrowseCategories: true
       filterRoot: '/browse/artworks'
-      renderCanonicalTag: renderCanonicalTag(req)
 
 @categories = (req, res) ->
   geneCategories = new OrderedSets(key: 'browse:gene-categories')
@@ -50,7 +46,6 @@ renderCanonicalTag = (req) ->
         showBrowseCategories: false
         filterRoot: '/browse/artworks'
         mediums: filterSuggest.mediumsHash()
-        renderCanonicalTag: renderCanonicalTag(req)
 
 @redirectToCategories = (req, res) ->
   res.redirect '/categories'
