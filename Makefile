@@ -27,8 +27,17 @@ ss:
 sp:
 	API_URL=http://api.artsy.net $(BIN)/coffee index.coffee
 
+# Start server pointing to production with cache
 spc:
 	REDIS_URL=http://localhost:6379 API_URL=http://api.artsy.net $(BIN)/coffee index.coffee
+
+# Start server in debug mode pointing to staging & open node inspector
+ssd:
+	$(BIN)/node-inspector & API_URL=http://stagingapi.artsy.net $(BIN)/coffee --nodejs --debug index.coffee
+
+# Start server in debug mode pointing to production & open node inspector
+spd:
+	$(BIN)/node-inspector & API_URL=http://api.artsy.net $(BIN)/coffee --nodejs --debug index.coffee
 
 # Run all of the project-level tests, followed by app-level tests
 test: assets-fast
