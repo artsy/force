@@ -27,7 +27,8 @@ module.exports = class FeatureView extends Backbone.View
     'click .featured-set-artist-expand'                             : 'seeAllArtists'
 
   maxArtists: 60
-  minArtworksForFilter: 10
+  minArtworksForFilter: 8
+  artworkFilteringSetup: false
 
   initialize: (options) ->
     @handleTab options.tab if options.tab
@@ -44,33 +45,49 @@ module.exports = class FeatureView extends Backbone.View
         @sets = sets
         @$('#feature-sets-container').html setsTemplate(sets: @sets)
         @initializeSale @sets
-      artworkPageSuccess: (fullCollection, newSaleArtworks) =>
-        @createArtworkColumns()
-        artworks = Artworks.fromSale(new Backbone.Collection newSaleArtworks)
-        @appendArtworks artworks
-      artworksSuccess: (saleFeaturedSet) =>
-        @setupArtworks saleFeaturedSet
-        if saleFeaturedSet.get('data')?.length > @minArtworksForFilter
-          @setupArtworkFiltering saleFeaturedSet.get('data')
+      artworkPageSuccess: @artworkPageSuccess
+      artworksSuccess: @doneFetchingSaleArtworks
 
     @setupShareButtons()
 
-  setupArtworkFiltering: (artworks) ->
-    @$('#feature-artworks').before filterTemplate()
+  artworkPageSuccess: (fullCollection, newSaleArtworks) =>
+    @createArtworkColumns()
 
-    new FilterView
-      el: @$('.feature-artwork-filter')
-      artworks: artworks
-      startingSearch: 'artist-a-to-z'
-    artworks.on 'sort', _.debounce =>
-      @$('#feature-artworks').empty()
+    artworks = Artworks.fromSale(new Backbone.Collection newSaleArtworks)
+
+    unless @artworkFilteringSetup
+      if fullCollection.length > @minArtworksForFilter
+        @setupArtworkFiltering fullCollection, artworks
+        @renderArtistList artworks
+
+    @appendArtworks artworks
+
+  doneFetchingSaleArtworks: (saleFeaturedSet) =>
+    @setupArtworks saleFeaturedSet
+
+    @artworks = saleFeaturedSet.get('data')
+
+    @filterView.setArtworks @artworks
+
+    @artworks.on 'filterSort', =>
+      @$('#feature-artworks').html ''
       @artworkColumns.undelegateEvents()
-      @artworkColumns.unbind()
       @artworkColumns = undefined
 
       @createArtworkColumns()
-      @appendArtworks artworks
-    , 500
+      @appendArtworks @artworks
+      @renderArtistList @artworks if saleFeaturedSet and saleFeaturedSet.get('display_artist_list')
+
+    @filterView.trigger 'doneFetching'
+
+  setupArtworkFiltering: (saleArtworksCollection) ->
+    @$('#feature-artworks').before filterTemplate()
+
+    @filterView = new FilterView
+      el: @$('.feature-artwork-filter')
+      startingSort: 'artist-a-to-z'
+
+    @artworkFilteringSetup = true
 
   createArtworkColumns: ->
     @artworkColumns ?= new ArtworkColumnsView
@@ -93,7 +110,6 @@ module.exports = class FeatureView extends Backbone.View
 
   setupArtworks: (set) ->
     artworks = set.get 'data'
-    @renderArtistList artworks if set and set.get('display_artist_list')
     @setupArtworkImpressionTracking artworks.models
 
   initializeAuction: (sale, set) ->
@@ -159,7 +175,7 @@ module.exports = class FeatureView extends Backbone.View
       true
 
   renderArtistList: (artworks) ->
-    artworks = @getArtworksOrderedByArtist artworks
+    artworks = @getArtworksOrderedByArtist(artworks)
     artworks = @uniqueArtworksByArtist artworks
 
     return unless artworks.length
