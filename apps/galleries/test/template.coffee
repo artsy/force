@@ -68,10 +68,10 @@ describe 'Galleries', ->
       $('.featured-partners-count-value').text().should.equal "#{@partners.length}"
       $('.featured-partners-count-label').text().should.equal 'Selected Gallery Partners'
 
-    it 'includes a link to a wufoo "become a partner" form', ->
+    it 'includes a link to the "become a partner" form', ->
       $ = cheerio.load @html
       $('.featured-partners-partner-invite').length.should.equal 1
-      $('.featured-partners-partner-invite a').attr('href').should.equal "https://artsy.wufoo.com/forms/artsy-partnership-request-form/"
+      $('.featured-partners-partner-invite a').attr('href').should.equal "http://apply.artsy.net/"
 
     it 'includes links to galleries and instutions in the header and footer', ->
       $ = cheerio.load @html
