@@ -4,7 +4,8 @@ meta( name="description", content="Browse artworks by subject matter, style/tech
 meta( property="og:description", content="Browse artworks by subject matter, style/technique, movement, price, and gallery/institution." )
 meta( property="twitter:description", content="Browse artworks by subject matter, style/technique, movement, price, and gallery/institution." )
 link( rel="alternate", media=sd.MOBILE_MEDIA_QUERY, href=(sd.CANONICAL_MOBILE_URL + "/browse") )
-link( rel="canonical", href=(sd.APP_URL + "/browse") )
+if renderCanonicalTag
+  link( rel="canonical", href=(sd.APP_URL + "/browse") )
 meta( property="og:url", content=(sd.APP_URL + "/browse") )
 meta( property="og:image", content="#{sd.ASSET_PATH}og_image.jpg" )
 meta( property="og:type", content="website" )
