@@ -24,9 +24,12 @@ block body
             if fair.get('organizer')
               +back('/' + fair.get('organizer').profile_id, fair.get('name'))
           when 'partner'
-            +back('/' + partner.get('default_profile_id'), partner.get('name'))
+            +back(partner.href(), partner.get('name'))
         #show-left-info
-          a.partner-link( href='/' + partner.get('default_profile_id') )= partner.get('name')
+          if partner.isLinkable()
+            a.partner-link( href=partner.href() )= partner.get('name')
+          else
+            .partner-link= partner.get('name')
           .plus-follow-button
             .icon-follow-circle
             .follow-button-text          
