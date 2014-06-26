@@ -45,7 +45,7 @@ module.exports = class SaveControls extends Backbone.View
   rollup: =>
     return if @$('.save-controls-drop-down-new input').is(':focus')
     @rollingUp = true
-    setTimeout (=> @rollingUp = false), 400
+    setTimeout (=> @rollingUp = false), if @$('.circle-icon-button-save').length then 100 else 400
     @$el.attr('data-state', 'saved-close') if @$el.attr('data-state') in ['saved', 'saved-reopen']
     @clearRollup()
 
@@ -71,12 +71,13 @@ module.exports = class SaveControls extends Backbone.View
     return if @$el.attr('data-state') in ['saved-close', 'saved-reopen']
     @$el.attr 'data-state', 'saving'
     @collections.fetch success: =>
-      @$el.attr 'data-state', 'saved'
-      $menu = @$('.save-controls-drop-down-menu')
-      if $menu.offset().left + $menu.width() > $(window).width()
-        $menu.css left: 'inherit', right: 32
-      @addToCollection @collections.get('saved-artwork')
-      $(document).on 'click', @closeOnClickOff
+      @collections.injectArtwork @model, success: =>
+        @$el.attr 'data-state', 'saved'
+        $menu = @$('.save-controls-drop-down-menu')
+        if $menu.offset().left + $menu.width() > $(window).width()
+          $menu.css left: 'inherit', right: 32
+        @addToCollection @collections.get('saved-artwork')
+        $(document).on 'click', @closeOnClickOff
 
   onAddToCollection: (e) ->
     e.preventDefault()

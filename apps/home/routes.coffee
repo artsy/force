@@ -15,6 +15,7 @@ getRedirectTo = (req) ->
   featuredLinks = new FeaturedLinks
 
   render = _.after 2, ->
+    debugger
     res.render 'index',
       heroUnits: heroUnits.models
       featuredLinks: featuredLinks.models
