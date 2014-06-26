@@ -9,7 +9,14 @@ request             = require 'superagent'
 
 module.exports = (req, res, next) ->
   if req.query._escaped_fragment_?
-    request.get(REFLECTION_URL + parse(req.url).pathname).end (resp) ->
+    request.get(reflectionUrl(req)).end (resp) ->
       res.send(resp.text)
   else
     next()
+
+reflectionUrl = (req) ->
+  url = parse(req.url)
+  dest = REFLECTION_URL + url.pathname
+  query = url.query?.replace(/&?_escaped_fragment_=/, '')
+  dest += encodeURIComponent("?" + query) if query?.length
+  dest
