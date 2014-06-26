@@ -3,6 +3,8 @@ Backbone = require 'backbone'
 sd = require('sharify').data
 RemoveConfirmModal = require './remove_confirm_modal.coffee'
 EditCollectionModal = require './edit_collection_modal.coffee'
+analytics = require '../../../lib/analytics.coffee'
+Cookies = require 'cookies-js'
 CurrentUser = require '../../../models/current_user.coffee'
 Artwork = require '../../../models/artwork.coffee'
 Artworks = require '../../../collections/artworks.coffee'
@@ -44,7 +46,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
 
   setup: ->
     @collections.fetch success: =>
-      @collections.remove @collections.get 'saved-artwork'
+      @setupForTwoButton()
       return @showEmptyHint() if @collections.length is 0
       @renderPrivacy()
       @collections.fetchNextArtworksPage success: =>
@@ -52,6 +54,31 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
         @renderCollections()
         @renderFirstZigZagBanner()
         @showEmptyHint() if total is 0
+
+  setupForTwoButton: ->
+    return unless (Cookies.get('save-controls') or analytics.getProperty('ab:save:controls')) is 'two button'
+    @collections.remove favorites = @collections.get('saved-artwork')
+    @$('.favorites2-tabs').show()
+    @favoritesView = new ArtworkColumnsView
+      el: @$('.favorites2-favorites-artworks')
+      collection: new Artworks
+      numberOfColumns: 4
+      gutterWidth: 40
+      totalWidth: @$('.favorites2-artworks-list').width()
+      artworkSize: 'tall'
+    page = 0
+    nextPage = =>
+      page++
+      new Artworks().fetch
+        url: favorites.artworks.url
+        data: { private: true, page: page }
+        success: (col, res) =>
+          @favoritesView.appendArtworks col.models
+    @$el.infiniteScroll nextPage
+    @$('.favorites2-tabs-sets').click => @$el.removeClass('is-in-favorites')
+    @$('.favorites2-tabs-favorites').click =>
+      @$el.addClass('is-in-favorites')
+      nextPage()
 
   onRemoveArtwork: (artwork, col) =>
     @$("[data-id='#{artwork.get 'id'}']" +

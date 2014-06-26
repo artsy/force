@@ -136,3 +136,59 @@ for i in 1 2 3
   cursor pointer
   &:hover
     background black
+
+.favorites2-tabs
+  position relative
+  top 30px
+  text-align center
+  position relative
+  display none
+  a
+    avant-garde()
+    font-size default-avant-garde-font-size
+    border-top 2px solid gray-color
+    border-bottom 2px solid gray-color
+    padding 9px 0 8px 0
+    color gray-color
+    transition border-color 0.3s, color 0.3s
+    display inline-block
+    width 120px
+    padding-left 20px
+  svg
+    width 17px
+    height 18px
+    position absolute
+    margin-left -25px
+    *
+      fill gray-color
+  .icon-heart
+    position absolute
+    margin-left -30px
+    margin-top -6px
+    font-size 30px
+
+.favorites-container:not(.is-in-favorites)
+  .favorites2-tabs-sets
+    color black
+    border-color black
+    svg *
+      fill black
+  .favorites2-favorites-artworks
+    display none
+
+.is-in-favorites
+  .favorites2-favorites-artworks
+    display block
+    margin 60px 0
+  .favorites2-collections, .favorites2-artworks
+    display none
+  .favorites2-tabs-favorites
+    color black
+    border-color black
+    svg *
+      fill black
+  .favorites2-tabs-sets a
+    color gray-color
+    border-color gray-color
+    svg *
+      fill gray-color
