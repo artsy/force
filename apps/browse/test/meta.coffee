@@ -18,6 +18,5 @@ describe 'Meta tags', ->
     it 'includes mobile alternate, canonical, twitter card and og tags', ->
       @html.should.include "<link rel=\"alternate\" media=\"mobile-media-query\" href=\"http://m.localhost:5000/browse"
       @html.should.include "<meta property=\"twitter:card\" content=\"summary"
-      @html.should.include "<link rel=\"canonical\" href=\"http://localhost:5000/browse"
       @html.should.include "<meta property=\"og:url\" content=\"http://localhost:5000/browse"
       @html.should.include "<meta property=\"og:title\" content=\"Browse | Artsy"

@@ -4,5 +4,6 @@ Gene = require '../../models/gene'
   new Gene(id: req.params.id).fetch
     success: (gene) ->
       res.locals.sharify.data.GENE = gene.toJSON()
-      res.render 'index', gene: gene
+      res.render 'index',
+        gene: gene
     error: res.backboneError
