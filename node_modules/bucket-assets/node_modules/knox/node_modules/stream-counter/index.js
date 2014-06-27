@@ -1,6 +1,6 @@
 module.exports = ByteCounter;
 
-var Writable = require('readable-stream').Writable;
+var Writable = require('stream').Writable;
 var util = require('util');
 
 util.inherits(ByteCounter, Writable);

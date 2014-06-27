@@ -42,7 +42,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
     @$favoriteArtworks = @$('.favorite-artworks')
     @$loadingSpinner = @$('.favorite-artworks .loading-spinner')
     @initializeArtworkColumns()
-    @loadNextPage(); @$el.infiniteScroll @loadNextPage
+    @loadNextPage(); $.onInfiniteScroll @loadNextPage
     @setupStatus()
     @setupShareButton()
 
@@ -89,7 +89,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
     @artworkColumnsView.appendArtworks col.models if col.length > 0
     @showEmptyHint() if @$favoriteArtworks.attr('data-state') is 'no-results'
 
-  # $.fn.infiniteScroll callback
+  # $.onInfiniteScroll callback
   loadNextPage: =>
     return if @$favoriteArtworks.attr('data-state') is 'no-results' or
               @$favoriteArtworks.attr('data-state') is 'finished-paging'

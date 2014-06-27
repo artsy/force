@@ -18,7 +18,7 @@ describe 'FilterArtworksView', ->
         for method in ['appendArtworks', 'reset', 'remove']
           @[klass].prototype[method] = sinon.stub()
         FilterArtworksView.__set__ klass, @[klass]
-      $.fn.infiniteScroll = sinon.stub()
+      $.onInfiniteScroll = sinon.stub()
       sinon.stub Backbone, 'sync'
       @view = new FilterArtworksView
         el: $ "<div></div>"

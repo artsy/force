@@ -41,7 +41,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
       @artworkColumnsView.appendArtworks a
     @collections.on 'end:artworks', @endInfiniteScroll
     @collections.on 'remove:artwork', @onRemoveArtwork
-    @$el.infiniteScroll @collections.fetchNextArtworksPage
+    $.onInfiniteScroll @collections.fetchNextArtworksPage
     @setup()
 
   setup: ->
@@ -74,7 +74,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
         data: { private: true, page: page }
         success: (col, res) =>
           @favoritesView.appendArtworks col.models
-    @$el.infiniteScroll nextPage
+    $.onInfiniteScroll nextPage
     @$('.favorites2-tabs-sets').click => @$el.removeClass('is-in-favorites')
     @$('.favorites2-tabs-favorites').click =>
       @$el.addClass('is-in-favorites')

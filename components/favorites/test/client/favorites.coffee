@@ -14,7 +14,7 @@ describe 'FavoritesView', ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
-      $.fn.infiniteScroll = sinon.stub()
+      $.onInfiniteScroll = sinon.stub()
       done()
 
   after ->

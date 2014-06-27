@@ -7,7 +7,7 @@ Wires up the common auth handlers for Artsy's [Ezel](http://ezeljs.com)-based ap
 #### Make sure you first mount session, body parser, and [xapp](https://github.com/artsy/artsy-xapp-middleware) middlware.
 
 ````coffeescript
-app.use require('artsy-xapp-middlware') { #... }
+app.use require('artsy-xapp-middleware') { #... }
 app.use express.bodyParser()
 app.use express.cookieParser('foobar')
 app.use express.cookieSession()
