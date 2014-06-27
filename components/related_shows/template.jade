@@ -1,3 +1,5 @@
+- isLinkable = 
+
 h3.avant-garde-header-center= header
 
 if shows.length === 1
@@ -9,7 +11,10 @@ if shows.length === 1
       h4.related-show-label= show.formatLeadHeading()
       if show.get('partner').name !== show.get('name')
         h4.rsf-partner-name.avant-garde-header-center
-          a( href="/#{show.get('partner').default_profile_id}" )
+          if show.partnerHref()
+            a( href=show.partnerHref() )
+              = show.get('partner').name
+          else
             = show.get('partner').name
       a( href=show.href() )
         h4.rsf-name= show.get('name')
@@ -26,7 +31,10 @@ if shows.length > 1
           h4.related-show-label= show.formatLeadHeading()
           if show.get('partner').name !== show.get('name')
             h4.rsr-partner-name.avant-garde-header-center
-              a( href="/#{show.get('partner').default_profile_id}" )
+              if show.partnerHref()
+                a( href=show.partnerHref() )
+                  = show.get('partner').name
+              else
                 = show.get('partner').name
           a( href=show.href() )
             h4.rsr-name= show.get('name')
