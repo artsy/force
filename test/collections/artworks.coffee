@@ -56,14 +56,6 @@ describe 'Artworks', ->
       }]
       artworks.first().get('saleArtwork').get('user_notes').should.include 'vomit'
 
-    it "sorts by position", ->
-      artworks = Artworks.fromSale new Backbone.Collection [
-        { artwork: fabricate('artwork', title: 'b'), position: 2 }
-        { artwork: fabricate('artwork', title: 'a'), position: 1 }
-        { artwork: fabricate('artwork', title: 'c'), position: 3 }
-      ]
-      artworks.pluck('title').join('').should.equal 'abc'
-
     it 'sets the current bid', ->
       artworks = Artworks.fromSale new Backbone.Collection [{
         artwork: fabricate 'artwork'
