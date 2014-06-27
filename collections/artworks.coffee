@@ -64,5 +64,3 @@ module.exports = class Artworks extends Backbone.Collection
     artworks = new Artworks saleArtworks.map (saleArtwork) ->
       _.extend saleArtwork.get('artwork'),
         saleArtwork: new SaleArtwork saleArtwork.omit('artwork')
-    artworks.comparator = (artwork) -> artwork.get('saleArtwork').get('position')
-    artworks.sort()

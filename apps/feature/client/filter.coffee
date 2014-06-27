@@ -5,6 +5,7 @@ module.exports = class FilterView extends Backbone.View
   events:
     'click a' : 'triggerArtworkFilter'
 
+
   sortHash:
     'artist-a-to-z' : (a) ->
       a.get('artist').sortable_id
@@ -18,12 +19,15 @@ module.exports = class FilterView extends Backbone.View
       a.get('saleArtwork').get('highest_bid_amount_cents')
 
   initialize: (options) ->
-    { @artworks, @startingSearch } = options
-    @sortArtworks @startingSearch
+    @on 'doneFetching', =>
+      @sortArtworks options.startingSort
 
   triggerArtworkFilter: (event) ->
     @sortArtworks $(event.target).attr 'data-id'
     false
+
+  setArtworks: (artworks) =>
+    @artworks = artworks
 
   sortArtworks: (sortId) ->
     @$('.active, .faux-underline').removeClass('faux-underline').removeClass('active')
@@ -31,3 +35,4 @@ module.exports = class FilterView extends Backbone.View
     return unless @sortHash[sortId]
     @artworks.comparator = @sortHash[sortId]
     @artworks.sort()
+    @artworks.trigger 'filterSort'
