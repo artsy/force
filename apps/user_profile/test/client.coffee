@@ -24,7 +24,7 @@ describe 'UserProfileView', ->
         stubChildClasses UserProfileView, @,
           ['PoplockitFeed', 'ArtworkColumnsView']
           ['appendArtworks']
-        $.fn.infiniteScroll = sinon.stub()
+        $.onInfiniteScroll = sinon.stub()
         @view = new UserProfileView
           el: $('#profile')
           model: profile
@@ -68,7 +68,7 @@ describe 'CollectionView', ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
-      $.fn.infiniteScroll = sinon.stub()
+      $.onInfiniteScroll = sinon.stub()
       sinon.stub Backbone, 'sync'
       benv.render resolve(__dirname, '../templates/collection.jade'), {
         profile: profile = new Profile(fabricate 'profile')
@@ -149,7 +149,7 @@ describe 'Slideshow', ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
-      $.fn.infiniteScroll = sinon.stub()
+      $.onInfiniteScroll = sinon.stub()
       sinon.stub Backbone, 'sync'
       benv.render resolve(__dirname, '../templates/collection.jade'), {
         profile: profile = new Profile(fabricate 'profile')

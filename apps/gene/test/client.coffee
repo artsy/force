@@ -30,7 +30,7 @@ describe 'GeneView', ->
       @[klass]::params = new Backbone.Model
       @[klass]::el = $('<div>')
       mod.__set__ klass, @[klass]
-    $.fn.infiniteScroll = sinon.stub()
+    $.onInfiniteScroll = sinon.stub()
     sinon.stub Backbone, 'sync'
     @view = new GeneView
       el: $('body')

@@ -61,7 +61,7 @@ module.exports = class UserProfileView extends Backbone.View
       gutterWidth: 40
     @favorites.on 'sync', (c, res) =>
       @columnsView.appendArtworks new Artworks(res).models
-    @$el.infiniteScroll =>
+    $.onInfiniteScroll =>
       @favorites.params.page++
       @favorites.fetch(data: @favorites.params).then (res) =>
         return unless res.length is 0

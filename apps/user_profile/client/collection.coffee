@@ -29,7 +29,7 @@ module.exports.CollectionView = class CollectionView extends Backbone.View
       el: @$el
       artworks: @artworkCollection.artworks
     @slideshow.on 'next:page', @nextPage
-    @$el.infiniteScroll @nextPage
+    $.onInfiniteScroll @nextPage
     @artworkCollection.on 'change:name', @renderName
     @artworkCollection.artworks.on 'remove', @onRemove
     @artworkCollection.artworks.on 'sync', @onSync

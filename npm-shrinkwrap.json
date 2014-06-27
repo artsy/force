@@ -430,19 +430,12 @@
     "artsy-xapp-middleware": {
       "version": "0.1.2",
       "from": "artsy-xapp-middleware@git://github.com/artsy/artsy-xapp-middleware.git",
-      "resolved": "git://github.com/artsy/artsy-xapp-middleware.git#d249cd04510c770497b4d984f4de7a5a5902f0a3",
-      "dependencies": {
-        "moment": {
-          "version": "2.7.0",
-          "from": "moment@2.7.0",
-          "resolved": "http://registry.npmjs.org/moment/-/moment-2.7.0.tgz"
-        }
-      }
+      "resolved": "git://github.com/artsy/artsy-xapp-middleware.git#d249cd04510c770497b4d984f4de7a5a5902f0a3"
     },
     "artsy-passport": {
       "version": "0.1.4",
       "from": "artsy-passport@git://github.com/artsy/artsy-passport.git",
-      "resolved": "git://github.com/artsy/artsy-passport.git#af1178822a0a230ec29b4d617273b82a146a7e7f",
+      "resolved": "git://github.com/artsy/artsy-passport.git#40097373993e6f1524ec35e25efcb87e51f47e9c",
       "dependencies": {
         "passport": {
           "version": "0.2.0",
@@ -471,7 +464,7 @@
                   "from": "passport-strategy@1.x.x"
                 },
                 "oauth": {
-                  "version": "0.9.11",
+                  "version": "0.9.12",
                   "from": "oauth@0.9.x"
                 },
                 "uid2": {
@@ -495,7 +488,7 @@
                   "from": "passport-strategy@1.x.x"
                 },
                 "oauth": {
-                  "version": "0.9.11",
+                  "version": "0.9.12",
                   "from": "oauth@0.9.x"
                 },
                 "utils-merge": {
@@ -534,10 +527,12 @@
             "connect": {
               "version": "2.12.0",
               "from": "connect@2.12.0",
+              "resolved": "https://registry.npmjs.org/connect/-/connect-2.12.0.tgz",
               "dependencies": {
                 "batch": {
                   "version": "0.5.0",
-                  "from": "batch@0.5.0"
+                  "from": "batch@0.5.0",
+                  "resolved": "https://registry.npmjs.org/batch/-/batch-0.5.0.tgz"
                 },
                 "qs": {
                   "version": "0.6.6",
@@ -557,16 +552,17 @@
                 },
                 "raw-body": {
                   "version": "1.1.2",
-                  "from": "raw-body@1.1.2"
+                  "from": "raw-body@1.1.2",
+                  "resolved": "https://registry.npmjs.org/raw-body/-/raw-body-1.1.2.tgz"
                 },
                 "negotiator": {
                   "version": "0.3.0",
-                  "from": "negotiator@0.3.0"
+                  "from": "negotiator@0.3.0",
+                  "resolved": "https://registry.npmjs.org/negotiator/-/negotiator-0.3.0.tgz"
                 },
                 "multiparty": {
                   "version": "2.2.0",
                   "from": "multiparty@2.2.0",
-                  "resolved": "https://registry.npmjs.org/multiparty/-/multiparty-2.2.0.tgz",
                   "dependencies": {
                     "readable-stream": {
                       "version": "1.1.13-1",
@@ -601,6 +597,7 @@
             "commander": {
               "version": "1.3.2",
               "from": "commander@1.3.2",
+              "resolved": "https://registry.npmjs.org/commander/-/commander-1.3.2.tgz",
               "dependencies": {
                 "keypress": {
                   "version": "0.1.0",
@@ -618,8 +615,7 @@
             },
             "cookie": {
               "version": "0.1.0",
-              "from": "cookie@0.1.0",
-              "resolved": "https://registry.npmjs.org/cookie/-/cookie-0.1.0.tgz"
+              "from": "cookie@0.1.0"
             },
             "buffer-crc32": {
               "version": "0.2.1",
@@ -645,11 +641,13 @@
             },
             "cookie-signature": {
               "version": "1.0.1",
-              "from": "cookie-signature@1.0.1"
+              "from": "cookie-signature@1.0.1",
+              "resolved": "https://registry.npmjs.org/cookie-signature/-/cookie-signature-1.0.1.tgz"
             },
             "merge-descriptors": {
               "version": "0.0.1",
-              "from": "merge-descriptors@0.0.1"
+              "from": "merge-descriptors@0.0.1",
+              "resolved": "https://registry.npmjs.org/merge-descriptors/-/merge-descriptors-0.0.1.tgz"
             },
             "debug": {
               "version": "0.8.1",
