@@ -81,7 +81,7 @@ module.exports.HomeView = class HomeView extends Backbone.View
         artworkModels = artworks.models[0..3]
         @setFeaturedArtworksHeader('New for you on Artsy')
         $('#home-featured-artworks').html featuredArtworksTemplate(artworks: artworkModels)
-        @initializeArtworks artworksModels
+        @initializeArtworks artworkModels
       else
         @renderFeaturedArtworks()
 
