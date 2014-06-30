@@ -126,10 +126,10 @@ module.exports.multi = (description, modelName, ids) ->
     )(@encodeMulti(chunk))
 
 module.exports.getProperty = (property) =>
-  mixpanel.get_property property
+  mixpanel?.get_property property
 
 module.exports.setProperty = (hash) =>
-  mixpanel.register_once hash
+  mixpanel?.register_once hash
 
 # Conduct an A/B test by using this helper to determine what path to take.
 # Returns true if the user is in the new feature, returns false if the user

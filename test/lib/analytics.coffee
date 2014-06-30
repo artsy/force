@@ -42,6 +42,8 @@ describe 'analytics', ->
       it 'doesnt let failed analytics mess up js code', ->
         analytics mixpanel: null, ga: null, location: { pathname: 'foobar' }
         analytics.trackPageview()
+        analytics.getProperty('foo')
+        analytics.setProperty('foo')
 
     describe '#modelNameAndIdToLabel', ->
 
