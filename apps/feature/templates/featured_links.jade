@@ -2,7 +2,7 @@ mixin featuredLinks(items)
   for item in items
     figure( class="feature-set-item feature-set-item-#{item.layoutStyle(items.length)}" )
       if item.has('href') && item.hasImageForLayout(items.length)
-        a.feature-set-item-image-link( href=item.get('href') )
+        a.feature-set-item-image-link.hoverable-image-link( href=item.get('href') )
           img.feature-set-item-image( src=item.imageUrlForLayout(items.length) )
       else if item.hasImageForLayout(items.length)
         img.feature-set-item-image( src=item.imageUrlForLayout(items.length) )
