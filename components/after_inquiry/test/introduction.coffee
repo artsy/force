@@ -68,6 +68,10 @@ describe 'Introduction', ->
       @user.set 'profession', 'Engineer @ Artsy'
       @introduction.blurb().should.equal 'Damon has been an Artsy member since March 2012. Damon’s profession is noted as “Engineer @ Artsy.”'
 
+    it 'deals with blank strings in the profession field', ->
+      @user.set 'profession', ''
+      @introduction.blurb().should.equal 'Damon has been an Artsy member since March 2012.'
+
     it 'renders the correct string if the user has more than 3 artists in their collection (1)', ->
       @bookmarks.newFromArtist new Backbone.Model(fabricate 'artist', name: 'Foo Bar')
       @bookmarks.newFromArtist new Backbone.Model(fabricate 'artist', name: 'Bar Baz')
