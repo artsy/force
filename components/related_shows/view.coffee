@@ -31,4 +31,4 @@ module.exports = class RelatedShowsView extends Backbone.View
   # Filters out shows w/o images and closed shows in a fair
   filterShows: (collection) ->
     collection.filter (show) ->
-      show.thumbImageUrl()?.length > 0 && !(show.get('status') == 'closed' && show.get('fair'))
+      show.thumbImageUrl()?.length > 0 && show.get('displayable') && !(show.get('status') == 'closed' && show.get('fair'))
