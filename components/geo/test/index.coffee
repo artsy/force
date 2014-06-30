@@ -43,7 +43,7 @@ describe 'Geo', ->
 
     it 'loads the Google Maps places library and runs the callback', (done) ->
       $.getScript = (url) ->
-        url.should.equal 'https://maps.googleapis.com/maps/api/js?libraries=places&sensor=true&callback=googleMapsCallback'
+        url.should.equal 'https://maps.googleapis.com/maps/api/js?libraries=places&sensor=true&language=en&callback=googleMapsCallback'
         window.googleMapsCallback()
       _.isUndefined(window.googleMapsCallback).should.be.true
       Geo.loadGoogleMaps ->

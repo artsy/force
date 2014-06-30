@@ -2,7 +2,7 @@ GeoFormatter  = require 'geoformatter'
 Backbone      = require 'backbone'
 
 module.exports =
-  googleMapsAPI: 'https://maps.googleapis.com/maps/api/js?libraries=places&sensor=true'
+  googleMapsAPI: 'https://maps.googleapis.com/maps/api/js?libraries=places&sensor=true&language=en'
 
   loadGoogleMaps: (cb) ->
     return cb() if @googleMapsLoaded

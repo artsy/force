@@ -27,7 +27,7 @@ module.exports = class Introduction
       else # Kill this sentence
         blurb = []
     # Sentence:
-    blurb.push "#{@firstName()}’s profession is noted as “#{@user.get('profession')}.”" if @user.has 'profession'
+    blurb.push "#{@firstName()}’s profession is noted as “#{@user.get('profession')}.”" unless _.isEmpty(@user.get 'profession')
     # Sentence:
     blurb.push "#{@firstName()}’s collection includes #{@collectionSentence()}." if @collection()?.length
     blurb = blurb.join(' ').replace ' .', '.'
