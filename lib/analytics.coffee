@@ -125,9 +125,11 @@ module.exports.multi = (description, modelName, ids) ->
       , (500 * index) + 1)
     )(@encodeMulti(chunk))
 
+# Code using this function should cope with it returning undefined
 module.exports.getProperty = (property) =>
   mixpanel?.get_property property
 
+# Code using this function should cope with it returning undefined
 module.exports.setProperty = (hash) =>
   mixpanel?.register_once hash
 
