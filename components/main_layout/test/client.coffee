@@ -16,4 +16,10 @@ describe 'Layout init code', ->
 
   afterEach -> benv.teardown()
 
-  it 'adds a global error handler'
+  it 'logs you out if Gravity throws an auth error', ->
+    sd.CURRENT_USER = fabricate 'user'
+    @syncAuth()
+    $.ajax.args[0][0].url.should.include 'api/v1/me'
+    $.ajax.args[0][0].error()
+    window.location.should.equal '/users/sign_out'
+    sd.CURRENT_USER = null

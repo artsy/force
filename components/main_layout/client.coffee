@@ -12,8 +12,16 @@ module.exports = ->
   setupViews()
   setupReferrerTracking()
   setupKioskMode()
+  syncAuth()
 
-setupAnalytics = ->
+syncAuth = ->
+  # Log out of Force if you're not logged in to Gravity
+  if sd.CURRENT_USER
+    $.ajax
+      url: "#{sd.ARTSY_URL}/api/v1/me"
+      error: -> window.location = '/users/sign_out'
+
+setupAnalytics = module.exports.syncAuth = ->
   # Initialize analytics & track page view if we included mixpanel
   # (not included in test environment).
   return if not mixpanel? or mixpanel is 'undefined'
