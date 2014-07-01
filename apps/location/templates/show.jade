@@ -24,10 +24,20 @@ block body
                 a( href=fair.href() )= fair.get('name')
               .summary= fair.get('summary')
 
-    if shows.length
+    - var otherHeader = "Current and Upcoming Shows"
+    if showsOpeningThisWeek.length
+      - otherHeader = "Other " + otherHeader
       .list_section.shows
-        - var header = "Shows"
+        - var header = "Shows Opening This Week"
+        - var shows = showsOpeningThisWeek
         include ../../../components/related_shows/template.jade
+
+    if otherShows.length
+      .list_section.shows
+        - var header = otherHeader
+        - var shows = otherShows
+        include ../../../components/related_shows/template.jade
+
         .see_more
           a.avant-garde-button-text( href='/shows' ) See More Shows
 

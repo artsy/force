@@ -17,10 +17,12 @@ querystring = require 'querystring'
   profiles = new Profiles()
 
   render = _.after 2, ->
+    openingThisWeek = shows.groupBy (show) -> show.openingThisWeek()
     res.render 'show',
       title: "Galleries and Art Shows Near #{context.name}"
       name: context.name
-      shows: shows.models
+      showsOpeningThisWeek: openingThisWeek[true] || []
+      otherShows: openingThisWeek[false] || []
       profiles: profiles
       fairs: fairs
 
@@ -49,7 +51,7 @@ querystring = require 'querystring'
       published_with_eligible_artworks: true
       status: 'current'
       fair_id: null
-      sort: '-publish_at'
-      size: 20
+      sort: '-start_at'
+      size: 40
 
   Q.allSettled(requests).then(render).done()

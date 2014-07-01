@@ -12,6 +12,7 @@ DateHelpers     = require '../components/util/date_helpers.coffee'
 { Image }       = require 'artsy-backbone-mixins'
 { compactObject } = require './mixins/compact_object.coffee'
 fetchUntilEnd   = require('artsy-backbone-mixins').Fetch(sd.API_URL).fetchUntilEnd
+moment          = require 'moment'
 
 module.exports = class PartnerShow extends Backbone.Model
 
@@ -224,6 +225,19 @@ module.exports = class PartnerShow extends Backbone.Model
   closed: -> @get('status') is 'closed'
   renderable: -> @get('eligible_artworks_count') > 0 || @get('images_count') > 2
 
+  # opens at any time between the previous and future weekend
+  openingThisWeek: ->
+    start = moment().day(-2).startOf('day')
+    end = moment().day(8).startOf('day')
+    startAt = @startAtDate()
+    start < startAt && end > startAt
+
+  startAtDate: ->
+    new Date(@get('start_at'))
+
+  endAtDate: ->
+    new Date(@get('end_at'))
+
   toJSONLD: ->
     if @get('location')
       @get('location').name = @partnerName()
@@ -234,8 +248,8 @@ module.exports = class PartnerShow extends Backbone.Model
       name : @title()
       image: @metaImage()?.imageUrl()
       url: "#{sd.APP_URL}#{@href()}"
-      startDate: new Date(@get('start_at')).toISOString()
-      endDate: new Date(@get('end_at')).toISOString()
+      startDate: @startAtDate().toISOString()
+      endDate: @endAtDate().toISOString()
       location: @location()?.toJSONLD()
       performer: artist.toJSONLDShort() for artist in @artists().models
     }
