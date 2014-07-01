@@ -35,6 +35,15 @@ form.artwork-bid-form( action="/feature/#{auction.id}/bid/#{saleArtwork.id}" )
   )
     = auction.bidButtonState(user).label
 
+  if artwork.get('acquireable')
+    if artwork.isPriceDisplayable()
+      .artwork-meta-price
+        .artwork-meta-price-label.is-not-sold Buy Now price
+        .artwork-meta-price-amount= artwork.priceDisplay()
+
+    a.avant-garde-button-black.artwork-buy-button.artwork-contact-buy-button
+      | Buy Now
+
   .abf-help
     a.abf-help-link( href='#' )
       | How does bidding work

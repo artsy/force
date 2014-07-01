@@ -53,6 +53,7 @@ module.exports = class AuctionDetailView extends Backbone.View
       user            : @user
       auction         : @auction
       saleArtwork     : @saleArtwork
+      artwork         : @saleArtwork.artwork()
       bidderPositions : @bidderPositions
     ).addClass 'is-fade-in'
     @
