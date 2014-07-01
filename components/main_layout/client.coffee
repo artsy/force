@@ -12,6 +12,14 @@ module.exports = ->
   setupViews()
   setupReferrerTracking()
   setupKioskMode()
+  syncAuth()
+
+syncAuth = module.exports.syncAuth = ->
+  # Log out of Force if you're not logged in to Gravity
+  if sd.CURRENT_USER
+    $.ajax
+      url: "#{sd.ARTSY_URL}/api/v1/me"
+      error: -> window.location = '/users/sign_out'
 
 setupAnalytics = ->
   # Initialize analytics & track page view if we included mixpanel
