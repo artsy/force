@@ -25,10 +25,12 @@ describe 'location page', ->
       @template   = render('show')(
         title: "Galleries and Art Shows Near Tokyo"
         name: 'Tokyo'
-        shows: new PartnerShows().models
+        showsOpeningThisWeek: []
+        otherShows: []
         profiles: new Profiles()
         fairs: new Fairs([@fair])
         sd: {}
+        otherLocations: []
       )
 
     it 'should be titled with location name', ->
@@ -41,19 +43,26 @@ describe 'location page', ->
 
   describe 'shows', ->
     beforeEach ->
-      @show = new PartnerShow fabricate 'show', { name: 'Much Show', start_at: '2013-07-12', end_at: '2013-09-01' }
+      @show1 = new PartnerShow fabricate 'show', { name: 'This Show', start_at: '2013-07-12', end_at: '2013-09-01' }
+      @show2 = new PartnerShow fabricate 'show', { name: 'That Show', start_at: '2013-07-12', end_at: '2013-09-01' }
       @template   = render('show')(
         title: "Galleries and Art Shows Near Tokyo"
         name: 'Tokyo'
-        shows: new PartnerShows([@show]).models
+        showsOpeningThisWeek: [@show1]
+        otherShows: [@show2]
         profiles: new Profiles()
         fairs: new Fairs()
         sd: {}
+        otherLocations: [['san-francisco', {name: 'San Francisco'}]]
       )
 
     it 'should list shows', ->
-      @template.should.include "Much Show"
+      @template.should.include "This Show"
       @template.should.include "Jul. 12th &#x2013; Sep. 1st 2013"
+      @template.should.include "That Show"
+      @template.should.include "Other Current and Upcoming Shows"
+      @template.should.include "Other Cities"
+      @template.should.include "San Francisco"
 
   describe 'partner profiles', ->
     beforeEach ->
@@ -61,10 +70,12 @@ describe 'location page', ->
       @template   = render('show')(
         title: "Galleries and Art Shows Near Tokyo"
         name: 'Tokyo'
-        shows: new PartnerShows().models
+        showsOpeningThisWeek: []
+        otherShows: []
         profiles: new Profiles([@profile])
         fairs: new Fairs()
         sd: {}
+        otherLocations: []
       )
 
     it 'should list profiles', ->

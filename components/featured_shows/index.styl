@@ -1,0 +1,54 @@
+column-gap = 30px
+
+.featured-shows-featured-show
+  display inline-block
+  vertical-align top
+  padding-bottom 20px
+  a
+    text-decoration none
+  h6
+    color gray-darker-color
+    font-size 12px
+    margin-top 5px
+  h4
+    avant-garde()
+    font-size 13px
+  h5
+    font-size 18px
+  h4, h5, h6
+    overflow ellipsis
+
+.featured-shows-featured-cover-img
+  overflow hidden
+  background no-repeat center center
+  background-size cover
+  padding-bottom 70%
+  img
+    display none
+
+.featured-shows-two-items li
+  &:nth-child(1), &:nth-child(2)
+    width 50%
+  &:nth-child(1)
+    padding-right (column-gap / 2)
+  &:nth-child(2)
+    padding-left (column-gap / 2)
+
+.featured-shows-four-items li
+  display inline-block
+  vertical-align top
+  width 25%
+  a
+    text-decoration none
+  img
+    width 100%
+  &:nth-child(1)
+    padding-right column-gap * .75
+  &:nth-child(2)
+    padding-left column-gap * .25
+    padding-right column-gap * .5
+  &:nth-child(3)
+    padding-left column-gap * .5
+    padding-right column-gap * .25
+  &:nth-child(4)
+    padding-left column-gap * .75

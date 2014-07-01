@@ -29,7 +29,7 @@ class ArtworkCollection extends Backbone.Model
     @get('user_id') or @collection?.user.get('id')
 
   saveArtwork: (artwork, options = {}) ->
-    @artworks.add artwork
+    @artworks.add artwork, at: 0
     new Backbone.Model().save {}, _.extend options,
       url: "#{API_URL}/api/v1/collection/#{@get 'id'}/artwork/#{artwork.get 'id'}?user_id=#{@userId()}"
 
@@ -41,6 +41,10 @@ class ArtworkCollection extends Backbone.Model
   initArtworks: ->
     @artworks ?= new Artworks [], artworkCollection: this
     @artworks.url = "#{API_URL}/api/v1/collection/#{@get 'id'}/artworks?" + @artworkParams()
+    for event in ['destroy', 'add', 'remove']
+      @artworks.on event, ((event) =>
+        (artwork) => @collection?.trigger event + ':artwork', artwork, this
+      )(event)
 
 module.exports = class ArtworkCollections extends Backbone.Collection
 
@@ -48,6 +52,7 @@ module.exports = class ArtworkCollections extends Backbone.Collection
     "#{API_URL}/api/v1/collections?" + qs.stringify(
       private: true
       user_id: @user.get 'id'
+      bustCache: Math.random()
     )
 
   model: ArtworkCollection
@@ -57,12 +62,7 @@ module.exports = class ArtworkCollections extends Backbone.Collection
 
   initialize: (models, options) ->
     { @user } = options
-    @on 'add', (col) =>
-      col.initArtworks()
-      for event in ['destroy', 'add', 'remove']
-        col.artworks.on event, ((e) =>
-          (artwork) => @trigger e + ':artwork', artwork, col
-        )(event)
+    @on 'add', (col) => col.initArtworks()
 
   fetchNextArtworksPage: (options = {}) =>
     @page ?= 0

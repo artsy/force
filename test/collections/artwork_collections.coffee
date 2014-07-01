@@ -48,6 +48,12 @@ describe 'ArtworkCollections', ->
       @collections.first().saveArtwork new Artwork id: 'foo-bar'
       @collections.first().artworks.first().get('id').should.equal 'foo-bar'
 
+    it 'adds the artwork at the beginning', ->
+      @collections.add { id: 'saved-artwork' }
+      @collections.first().artworks.reset [fabricate('artwork'), fabricate('artwork'), fabricate('artwork')]
+      @collections.first().saveArtwork new Artwork id: 'foo-bar'
+      @collections.first().artworks.first().get('id').should.equal 'foo-bar'
+
   describe 'comparator', ->
 
     it 'orders the saved-artwork first', ->

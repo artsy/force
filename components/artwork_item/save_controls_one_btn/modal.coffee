@@ -1,6 +1,5 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-{ ArtworkCollection } = ArtworkCollections = require '../../../collections/artwork_collections.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 ModalView = require '../../modal/view.coffee'
 CollectionList = require '../../favorites2/client/collection_list.coffee'
@@ -12,9 +11,9 @@ module.exports = class SaveControlsModal extends ModalView
   template: (locals) ->
     template _.extend locals, artwork: @model, collections: @collections.models
 
-  initialize: ->
+  initialize: (options) ->
     @user = CurrentUser.orNull()
-    @collections = new ArtworkCollections [], user: @user
+    { @collections } = options
     new CollectionList
       el: @$el
       collections: @collections

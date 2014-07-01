@@ -27,6 +27,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
       el: @$('.favorites2-share')
     @artworkColumnsView = new ArtworkColumnsView
       el: @$('.favorites2-artworks-list')
+      collections: @collections
       collection: new Artworks
       numberOfColumns: 4
       gutterWidth: 40
@@ -36,7 +37,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
     @jump = new JumpView threshold: $(window).height()
     @$el.append @jump.$el.addClass 'jump-from-bottom'
     mediator.on 'create:artwork:collection', (col) => @collections.add col
-    @collections.on 'add remove change:name sync remove:artwork', => _.defer @renderCollections
+    @collections.on 'add remove change:name remove:artwork add:artwork', @renderCollections
     @collections.on 'next:artworks', (a) =>
       @artworkColumnsView.appendArtworks a
     @collections.on 'end:artworks', @endInfiniteScroll
