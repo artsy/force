@@ -1,8 +1,9 @@
-benv = require 'benv'
-Backbone = require 'backbone'
-sinon = require 'sinon'
-{ resolve } = require 'path'
-sd = require('sharify').data
+sd            = require('sharify').data
+benv          = require 'benv'
+Backbone      = require 'backbone'
+sinon         = require 'sinon'
+
+{ resolve }   = require 'path'
 { fabricate } = require 'antigravity'
 
 describe 'Layout init code', ->
