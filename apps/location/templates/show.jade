@@ -24,10 +24,28 @@ block body
                 a( href=fair.href() )= fair.get('name')
               .summary= fair.get('summary')
 
-    if shows.length
+    - var otherHeader = "Current and Upcoming Shows"
+    if showsOpeningThisWeek.length
+      - otherHeader = "Other " + otherHeader
       .list_section.shows
-        - var header = "Shows"
-        include ../../../components/related_shows/template.jade
+        h3.avant-garde-header-center Shows Opening This Week
+        - var shows = showsOpeningThisWeek.slice(0, 2)
+        include ../../../components/featured_shows/large
+        - var shows = showsOpeningThisWeek.slice(2)
+        include ../../../components/featured_shows/small
+
+    if otherShows.length
+      .list_section.shows
+        h3.avant-garde-header-center= otherHeader
+        if showsOpeningThisWeek.length
+          - var shows = otherShows
+          include ../../../components/featured_shows/small
+        else
+          - var shows = otherShows.slice(0, 2)
+          include ../../../components/featured_shows/large
+          - var shows = otherShows.slice(2)
+          include ../../../components/featured_shows/small
+
         .see_more
           a.avant-garde-button-text( href='/shows' ) See More Shows
 
@@ -47,3 +65,12 @@ block body
                 h4.featured-partner-profile-location= partner['type']
           .see_more
             a.avant-garde-button-text( href='/partners' ) See More Partners
+
+  .list_section.locations
+    | Other Cities:
+    = ' '
+    each loc, i in otherLocations
+      - var locSlug = loc[0], locName = loc[1].name
+      a( href="/#{locSlug}" )!= locName
+      if i != otherLocations.length - 1
+        = ', '

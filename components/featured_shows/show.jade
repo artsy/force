@@ -1,0 +1,11 @@
+li.featured-shows-featured-show
+  a( href=show.href() )
+    .featured-shows-featured-cover-img(
+      style="background-image: url(" + show.imageUrl(imageSize) + ")",
+    )
+    if location = show.location()
+      h6!= show.runningDates() + ' &nbsp;∙&nbsp; ' + location.singleLine()
+    else
+      h6!= show.runningDates()
+    h4= show.partnerName()
+    h5= show.get('name')
