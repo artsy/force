@@ -31,3 +31,12 @@ describe 'Profile', ->
     it 'renders profile header', ->
       $ = cheerio.load @html
       $('#profile').html().should.containEql 'Craig Spaeth'
+
+    it 'does not render xss stuff', ->
+      @profile = new Profile fabricate 'profile', owner: {
+        name: """ '"><img src=x onerror=alert('xss'); } """
+      }
+      render('index')({
+        sd      : @sd
+        profile : @profile
+      }).should.not.include '<img src=x'
