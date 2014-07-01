@@ -28,15 +28,23 @@ block body
     if showsOpeningThisWeek.length
       - otherHeader = "Other " + otherHeader
       .list_section.shows
-        - var header = "Shows Opening This Week"
-        - var shows = showsOpeningThisWeek
-        include ../../../components/related_shows/template.jade
+        h3.avant-garde-header-center Shows Opening This Week
+        - var shows = showsOpeningThisWeek.slice(0, 2)
+        include ../../../components/featured_shows/large
+        - var shows = showsOpeningThisWeek.slice(2)
+        include ../../../components/featured_shows/small
 
     if otherShows.length
       .list_section.shows
-        - var header = otherHeader
-        - var shows = otherShows
-        include ../../../components/related_shows/template.jade
+        h3.avant-garde-header-center= otherHeader
+        if showsOpeningThisWeek.length
+          - var shows = otherShows
+          include ../../../components/featured_shows/small
+        else
+          - var shows = otherShows.slice(0, 2)
+          include ../../../components/featured_shows/large
+          - var shows = otherShows.slice(2)
+          include ../../../components/featured_shows/small
 
         .see_more
           a.avant-garde-button-text( href='/shows' ) See More Shows

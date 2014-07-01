@@ -1,20 +1,5 @@
-mixin list-item(show)
-  - imgUrl = show.imageUrl(i < 2 ? 'featured' : 'large')
-  li.home-featured-show
-    a( href=show.href() )
-      .home-featured-cover-img(
-        style="background-image: url(" + imgUrl + ")",
-      )
-      h6!= show.runningDates()
-      h4= show.partnerName()
-      h5= show.get('name')
-
-ul.home-two-items
-  for show, i in shows.slice(0, 2)
-    +list-item(show)
-ul.home-four-items
-  for show, i in shows.slice(2, 6)
-    +list-item(show)
-ul.home-four-items
-  for show, i in shows.slice(6, 10)
-    +list-item(show)
+- var allShows = shows
+- shows = allShows.slice(0, 2)
+include ../../../components/featured_shows/large
+- shows = allShows.slice(2)
+include ../../../components/featured_shows/small
