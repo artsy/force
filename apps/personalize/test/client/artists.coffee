@@ -35,6 +35,17 @@ describe 'ArtistsView', ->
     @view.setupSearch.restore()
     @view.initializeBookmarkedArtists.restore()
 
+  describe '#initializeArtistsFromFavorites', ->
+    beforeEach ->
+      @view.user.artistsFromFavorites = new Backbone.Collection [], model: Artist
+      @view.user.artistsFromFavorites.add fabricate('artist')
+      @view.user.artistsFromFavorites.add fabricate('artist')
+      @view.initializeArtistsFromFavorites()
+
+    it 'adds a suggestion set if the user has favorited some artworks in the previous step', ->
+      @view.$el.html().should.include 'Artists suggested based on the artworks in your favorites'
+      @view.$('.personalize-suggestion').length.should.equal 2
+
   describe '#setupFollowButton', ->
     it 'sets up a FollowButton view that can be accessed later', ->
       artist  = new Artist fabricate 'artist'

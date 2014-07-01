@@ -5,6 +5,7 @@ StepView                      = require './step.coffee'
 Artist                        = require '../../../../models/artist.coffee'
 Followable                    = require '../mixins/followable.coffee'
 GeneArtists                   = require '../mixins/gene_artists.coffee'
+Genes                         = require '../mixins/genes.coffee'
 BookmarkedArtists             = require '../mixins/bookmarked_artists.coffee'
 { FollowButton, Following }   = require '../../../../components/follow_button/index.coffee'
 
@@ -14,6 +15,7 @@ suggestedArtistsTemplate  = -> require('../../templates/suggested_artists.jade')
 module.exports = class ArtistsView extends StepView
   _.extend @prototype, Followable
   _.extend @prototype, GeneArtists
+  _.extend @prototype, Genes
   _.extend @prototype, BookmarkedArtists
 
   analyticsUnfollowMessage : 'Unfollowed artist from personalize artist search'
@@ -33,11 +35,19 @@ module.exports = class ArtistsView extends StepView
 
     @initializeFollowable()
     @initializeSuggestions()
+    @initializeArtistsFromFavorites()
 
     @listenTo @followed, 'add', @fetchRelatedArtists
     @listenTo @followed, 'remove', @disposeSuggestionSet
     @listenTo @suggestions, 'add', @renderSuggestions
     @listenTo @suggestions, 'remove', @renderSuggestions
+
+  initializeArtistsFromFavorites: ->
+    if @user.artistsFromFavorites?.length
+      @suggestions.add new Backbone.Model
+        id: 'artists-from-favorites'
+        name: 'Artists suggested based on the artworks in your favorites'
+        suggestions: @user.artistsFromFavorites
 
   initializeSuggestions: ->
     if @user.isCollector()
