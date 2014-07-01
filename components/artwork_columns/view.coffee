@@ -63,7 +63,7 @@ module.exports = class ArtworkColumns extends Backbone.View
     @$columns.filter(':last-child').css marginRight: 0
 
   setUserSavedArtworks: ->
-    @currentUser = CurrentUser.orNull()
+    @currentUser ?= CurrentUser.orNull()
     @currentUser?.initializeDefaultArtworkCollection()
     @artworkCollection = @currentUser?.defaultArtworkCollection()
 
