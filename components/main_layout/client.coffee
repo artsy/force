@@ -18,7 +18,7 @@ syncAuth = module.exports.syncAuth = ->
   # Log out of Force if you're not logged in to Gravity
   if sd.CURRENT_USER
     $.ajax
-      url: "#{sd.ARTSY_URL}/api/v1/me"
+      url: "#{sd.API_URL}/api/v1/me"
       error: -> window.location = '/users/sign_out'
 
 setupAnalytics = ->
