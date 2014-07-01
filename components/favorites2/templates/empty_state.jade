@@ -1,5 +1,10 @@
 h2.favorites2-empty-state-header
-  | You haven't saved any works #{sd.CURRENT_PATH && sd.CURRENT_PATH.match('/collection/') && 'to this set'} yet.
+  | You haven't saved any works&nbsp;
+  if inSetView
+    | to this set&nbsp;
+  else if inTwoButtonMode
+    | into sets&nbsp;
+  | yet.
   .favorites2-empty-state-header-cta
     | Add works to your favorites by clicking
     i.icon-heart
