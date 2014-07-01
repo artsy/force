@@ -9,7 +9,7 @@ append locals
 
 block body
   - isUser = user && user.get('id') == profile.get('owner').id
-  #user-profile-collection.main-layout-container
+  #user-profile-collection.main-layout-container( class=(isUser ? '' : 'upc-isnt-user') )
     header
       a.contextual-return-link(
         href=(isUser ? '/favorites' : '/' + profile.get('id') + '/favorites')
