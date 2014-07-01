@@ -1,6 +1,5 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-{ ArtworkCollection } = ArtworkCollections = require '../../../collections/artwork_collections.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 ModalView = require '../../modal/view.coffee'
 CollectionList = require '../../favorites2/client/collection_list.coffee'
@@ -12,9 +11,9 @@ module.exports = class SaveControlsModal extends ModalView
   template: (locals) ->
     template _.extend locals, artwork: @model, collections: @collections.models
 
-  initialize: ->
+  initialize: (options) ->
     @user = CurrentUser.orNull()
-    @collections = new ArtworkCollections [], user: @user
+    { @collections } = options
     new CollectionList
       el: @$el
       collections: @collections
@@ -22,11 +21,13 @@ module.exports = class SaveControlsModal extends ModalView
       collection: null
       artwork: @model
     @collections.on 'add remove', @renderInner
-    @collections.fetch success: =>
-      @collections.injectArtwork @model, success: =>
-        @collections.remove @collections.get 'saved-artwork'
-        @updatePosition()
-        @isLoaded()
+    @collections.fetch
+      silent: true
+      success: =>
+        @collections.injectArtwork @model, success: =>
+          @collections.remove @collections.get 'saved-artwork'
+          @updatePosition()
+          @isLoaded()
     super
 
   postRender: ->

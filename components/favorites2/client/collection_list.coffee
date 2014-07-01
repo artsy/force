@@ -9,9 +9,11 @@ module.exports = class CollectionList extends Backbone.View
     @collections.on 'add:artwork remove:artwork', @render
 
   render: =>
+    oldScrollTop = @$('.favorites2-collection-list').scrollTop()
     @$('.favorites2-collection-list-container').replaceWith template
       collections: @collections.models
       artwork: @artwork
+    @$('.favorites2-collection-list').scrollTop(oldScrollTop)
 
   events:
     'click .favorites2-collection-list-create button': 'newCollection'

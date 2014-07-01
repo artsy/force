@@ -7,9 +7,10 @@ CurrentUser = require '../../../models/current_user.coffee'
 module.exports = class SaveControls extends Backbone.View
 
   initialize: (options) ->
+    { @collections } = options
     @user = CurrentUser.orNull()
     return unless @user
-    @collections = new ArtworkCollections [], user: @user
+    @collections ?= new ArtworkCollections [], user: @user
     @collections.on 'add add:artwork remove:artwork', @renderCollections
 
   renderCollections: =>

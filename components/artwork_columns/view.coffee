@@ -94,6 +94,7 @@ module.exports = class ArtworkColumns extends Backbone.View
     for artwork in artworks
       $artwork = if @isOrdered then @addToNextColumn(artwork) else @addToShortestColumn(artwork)
       new SaveControls
+        collections: @collections
         artworkCollection: @artworkCollection
         model: artwork
         el: $artwork.find('.overlay-container')
