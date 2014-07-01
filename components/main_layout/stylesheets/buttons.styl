@@ -2,6 +2,44 @@
 @import './spinners'
 @import '../../follow_button'
 
+.circle-button
+  display inline-block
+  position relative
+  width 58px
+  margin 0 10px
+  height @width
+  cursor pointer
+  color black
+  background-color transparent
+  text-align center
+  vertical-align middle
+  border 2px solid gray-lighter-color
+  border-radius (@width / 2)
+  opacity 1
+  user-select none
+  // Override icon-styling line-height
+  line-height @height !important
+  transition all 0.125s
+  &:hover
+    background-color gray-darker-color
+    border-color @background-color
+    color white
+  &.is-active
+  &[data-state='active']
+    background-color purple-color
+    border-color @background-color
+    color white
+
+.circle-button-with-label
+  display inline-block
+  text-align center
+
+.circle-button-label
+  avant-garde()
+  font-size 11px
+  color black
+  margin-top 5px
+
 .highlight-link
   line-height 1.1
   text-decoration none
