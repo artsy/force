@@ -2,23 +2,23 @@ header.profile-header
   if profile
     .profile-info-container
       .profile-icon-container.profile-badge
-        a( href=profile.href() )
+        a( href= profile.href() )
           include ../profile_badge/profile_icon
       .profile-info
-        a( href=profile.href() ).profile-badge-name=profile.displayName()
+        a( href=profile.href() ).profile-badge-name= profile.displayName()
         if profile.get('bio')
           .profile-bio!= profile.mdToHtml('bio') + ' '
         if profile.isMe()
           a.edit-profile( href='/profile/edit' ) Edit Profile
         if profile.isUser() || profile.isInstitution()
-          .profile-followers!= profile.formatFollowText()
+          .profile-followers= profile.formatFollowText()
         if profile.get('website') || profile.get('location')
           .profile-where
             if profile.get('location')
-              span.location!= profile.get('location')
+              span.location= profile.get('location')
               if profile.get('website')
                 | &nbsp;&#8211;&nbsp;
             if profile.get('website')
-              a.website( href=profile.get('website'), target="_blank" )!= profile.getFormattedWebsite()
+              a.website( href=profile.get('website'), target="_blank" )= profile.getFormattedWebsite()
   
         .follow-button.avant-garde-button-white
