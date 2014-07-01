@@ -16,7 +16,7 @@ class ArtworkCollection extends Backbone.Model
       "#{API_URL}/api/v1/collection/#{@get 'id'}?user_id=#{@userId()}"
 
   artworkParams: ->
-    qs.stringify user_id: @userId(), total_count: true, sort: '-position', size: 50, bustCache: Math.random()
+    qs.stringify user_id: @userId(), total_count: true, sort: '-position', size: 50
 
   initialize: ->
     @initArtworks()
