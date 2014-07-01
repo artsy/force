@@ -23,7 +23,7 @@ describe 'CollectionList', ->
         collections: collections.models
         artwork: artwork
       }, =>
-        CollectionList = benv.require resolve(__dirname, '../../client/collection_list')
+        CollectionList = benv.requireWithJadeify resolve(__dirname, '../../client/collection_list'), ['template']
         @view = new CollectionList
           el: $('body')
           user: user

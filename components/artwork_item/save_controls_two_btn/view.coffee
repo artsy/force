@@ -10,6 +10,8 @@ module.exports = class SaveControls extends Backbone.View
   initialize: (options) ->
     @user = CurrentUser.orNull()
     @savedArtworks = new ArtworkCollection id: 'saved-artwork', user_id: @user.get('id')
+    { @collections } = options
+    @collections ?= new ArtworkCollections [], user: @user
 
   showSignupModal: ->
     track.funnel 'Triggered sign up form via save button'
@@ -38,4 +40,4 @@ module.exports = class SaveControls extends Backbone.View
   openCollectionModal: (e) ->
     e?.preventDefault()
     return @showSignupModal() unless @user
-    new SaveControlsModal width: 500, model: @model
+    new SaveControlsModal width: 500, model: @model, collections: @collections
