@@ -1,34 +1,21 @@
-_               = require 'underscore'
-Backbone        = require 'backbone'
-Genes           = require '../../../../collections/genes.coffee'
-{ Following }   = require '../../../../components/follow_button/index.coffee'
-priceBuckets    = require '../mixins/price_buckets.coffee'
+Backbone = require 'backbone'
 
 module.exports =
   initializeGeneArtists: ->
-    @geneFollowing = new Following null, kind: 'gene'
-    @geneFollowing.fetch
-      data: size: 5
-      success: (collection, response, options) =>
-        @setupGenes collection
+    @initializeGenes size: 5, success: => @setupArtists()
 
-  setupGenes: (collection) ->
-    @genes = new Genes collection.pluck('gene')
+  setupArtists: ->
     $.when.apply(null, @genes.map (gene) =>
       gene.trendingArtists.fetch
-        data:
-          size        : 5
-          price_range : @user.get 'price_range'
+        data: size: 5, price_range: @user.get('price_range')
     ).then =>
       @renderGeneSuggestions()
 
   renderGeneSuggestions: ->
-    @genes.each (gene) =>
-      @suggestions.add @createGeneSuggestionSet gene
-    @renderSuggestions()
+    @suggestions.add(@genes.map (gene) => @createGeneSuggestionSet gene)
 
   createGeneSuggestionSet: (gene) ->
     new Backbone.Model
-      id          : gene.id
-      name        : "Suggested for you in #{gene.get 'name'}"
-      suggestions : gene.trendingArtists
+      id: gene.id
+      name: "Suggested for you in #{gene.get 'name'}"
+      suggestions: gene.trendingArtists
