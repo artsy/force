@@ -30,7 +30,7 @@ locations =
 
 handler = (context) ->
   (req, res) ->
-    routes.show req, res, context
+    routes.show req, res, context, ([slug, loc] for slug, loc of locations when loc isnt context)
 
 for slug, context of locations
   app.get "/#{slug}", handler(context)

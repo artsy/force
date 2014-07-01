@@ -8,7 +8,7 @@ sd = require('sharify').data
 Q = require 'q'
 querystring = require 'querystring'
 
-@show = (req, res, context) ->
+@show = (req, res, context, otherLocations) ->
   requests = []
 
   fairs = new Fairs()
@@ -25,6 +25,7 @@ querystring = require 'querystring'
       otherShows: openingThisWeek[false] || []
       profiles: profiles
       fairs: fairs
+      otherLocations: otherLocations
 
   requests.push partners.fetch
     cache: true
