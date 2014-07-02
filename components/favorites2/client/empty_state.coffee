@@ -2,7 +2,9 @@ _ = require 'underscore'
 FeaturedLinks = require '../../../collections/featured_links.coffee'
 Backbone = require 'backbone'
 emptyTemplate = -> require('../templates/empty_state.jade') arguments...
-{ API_URL, EMPTY_COLLECTION_SET_ID } = require('sharify').data
+analytics = require '../../../lib/analytics.coffee'
+Cookies = require 'cookies-js'
+{ API_URL, EMPTY_COLLECTION_SET_ID, CURRENT_PATH } = require('sharify').data
 
 module.exports = class FavoritesEmptyStateView extends Backbone.View
 
@@ -11,7 +13,12 @@ module.exports = class FavoritesEmptyStateView extends Backbone.View
       url: "#{API_URL}/api/v1/set/#{EMPTY_COLLECTION_SET_ID}/items"
       success: (featuredLinks) =>
         @$el.html(
-          emptyTemplate featuredLinks: _.sample(featuredLinks.models, 4)
+          emptyTemplate {
+            featuredLinks: _.sample(featuredLinks.models, 4)
+            inSetView: CURRENT_PATH.match('/collection/')
+            inTwoButtonMode: ((Cookies.get('save-controls') or
+              analytics.getProperty('ab:save:controls')) is 'two button')
+          }
         )
 
   events:

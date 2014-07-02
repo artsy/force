@@ -1,12 +1,14 @@
 .foryou-section.artists
   .large-garamond-header
-    | Works by Artists You Follow at 
-    != fair.get('name')
+    | Works by Artists You Follow at
+    = " "
+    = fair.get('name')
   .artworks
    .loading-spinner
 .foryou-section.partners
   .large-garamond-header
-    | Exhibitors You Follow at 
-    != fair.get('name') 
+    | Exhibitors You Follow at
+    = " "
+    = fair.get('name')
   .loading-spinner
   .feed
