@@ -1,49 +1,44 @@
-_                   = require 'underscore'
-fs                  = require 'fs'
-jade                = require 'jade'
-{ REVEAL_ERRORS }   = require '../../config'
+_ = require 'underscore'
+fs = require 'fs'
+jade = require 'jade'
+{ REVEAL_ERRORS } = require '../../config'
 
-renderTemplate = jade.compile(
-  fs.readFileSync(__dirname + '/template.jade')
-  { filename: __dirname + '/template.jade' }
-)
-
-errorHandler = module.exports = exports = {}
+render = (res, data) ->
+  res.send jade.compile(
+    fs.readFileSync(__dirname + '/template.jade')
+    { filename: __dirname + '/template.jade' }
+  )(data)
 
 # Since this is the last non-error-handling middleware
 # use()d, we assume 404, as nothing else responded.
-errorHandler.pageNotFound = (req, res, next) ->
+@pageNotFound = (req, res, next) ->
   if req.accepts 'html' # respond with html page
     data = _.extend
       code  : 404
       error : 'Not Found'
       sd    : {}
     , res.locals
-
-    res.send 404, renderTemplate(data)
+    res.status 404
+    render res, data
     return
-
   if req.accepts 'json' # respond with json
     res.send error: 'Not found'
     return
-
   # Default to plain-text. send()
   (res.type 'txt').send 'Not found'
 
 # Error-handling middleware
-errorHandler.internalError = (err, req, res, next) ->
+@internalError = (err, req, res, next) ->
   detail = if REVEAL_ERRORS then err.message or err.text or err.toString() else null
-
   data = _.extend
     code   : res.statusCode
     error  : err
     detail : detail
     sd     : {}
   , res.locals
+  render res, data
 
-  res.send res.statusCode, renderTemplate(data)
-
-errorHandler.socialAuthError = (err, req, res, next) ->
+@socialAuthError = (err, req, res, next) ->
   if err.toString().match('User Already Exists')
     # Error urls need to be compatible with Gravity
     params =
@@ -66,3 +61,9 @@ errorHandler.socialAuthError = (err, req, res, next) ->
     res.redirect '/user/edit?error=could-not-auth'
   else
     next err
+
+@loginError = (err, req, res, next) ->
+  res.status switch err.message
+    when 'invalid email or password' then 403
+    else 500
+  res.send { error: err.message }

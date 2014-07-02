@@ -30,9 +30,7 @@ localsMiddleware = require './middleware/locals'
 micrositeMiddleware = require './middleware/microsite'
 helpersMiddleware = require './middleware/helpers'
 ensureSSL = require './middleware/ensure_ssl'
-errorHandler = require "../components/error_handler"
 unsupportedBrowserCheck = require "./middleware/unsupported_browser"
-{ notFoundError, loginError } = require('./middleware/errors')
 flash = require 'connect-flash'
 flashMiddleware = require './middleware/flash'
 bodyParser = require 'body-parser'
@@ -129,8 +127,6 @@ module.exports = (app) ->
     CurrentUser: CurrentUser
     SECURE_ARTSY_URL: API_URL
 
-  app.use errorHandler.socialAuthError
-
   # Proxy / redirect requests before they even have to deal with Force routing
   # (This must be after the auth middleware to be able to proxy auth routes)
   app.use proxyGravity.app
@@ -199,6 +195,4 @@ module.exports = (app) ->
 
   # Finally 404 and error handling middleware when the request wasn't handled
   # successfully by anything above.
-  app.use errorHandler.pageNotFound
-  app.use '/users/sign_in', loginError
-  app.use errorHandler.internalError
+  require("../apps/error_handler")(app)

@@ -4,7 +4,7 @@
   return next() unless res.locals.profile?.isUser()
   res.render 'index'
 
-@collection = (req, res) ->
+@collection = (req, res, next) ->
   unless profile = res.locals.profile
     res.status 404
     return next new Error "Profile not found."
