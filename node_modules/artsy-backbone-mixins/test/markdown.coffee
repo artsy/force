@@ -16,7 +16,7 @@ describe 'Dimensions Mixin', ->
 
     it 'returns html from parsed markdown', ->
       @model.set foo: "**foo**"
-      @model.mdToHtml('foo').should.include '<strong>foo</strong>'
+      @model.mdToHtml('foo').should.containEql '<strong>foo</strong>'
 
     it 'is defensive about missing data', ->
       @model.set foo: null
