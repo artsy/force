@@ -1,7 +1,7 @@
 .fair-overview-top
   .fair-overview-top-left
     img.large-profile-image( alt=fair.get('name'), title=fair.get('name'), src=profile.icon().imageUrl('square') )
-    h1.fair-name!= fair.get('name')
+    h1.fair-name= fair.get('name')
     .fair-location!= fair.formatLocation()
     .fair-dates!= fair.formatDates()
     if profile.get('bio')
