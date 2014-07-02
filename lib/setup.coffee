@@ -175,17 +175,8 @@ module.exports = (app) ->
   app.use require "../apps/unsubscribe"
   app.use require "../apps/unsupported_browser"
   # Profile middleware and apps that use profiles
-  app.use (req, res, next) ->
-    console.log 'before profile'
-    next()
   app.use require "../apps/profile"
-  app.use (req, res, next) ->
-    console.log 'user prof'
-    next()
   app.use require "../apps/user_profile"
-  app.use (req, res, next) ->
-    console.log 'after'
-    next()
   app.use require "../apps/partner"
   app.use require "../apps/fair"
   app.use require "../apps/user"
@@ -204,4 +195,4 @@ module.exports = (app) ->
 
   # Finally 404 and error handling middleware when the request wasn't handled
   # successfully by anything above.
-  app.use require "../apps/error_handler"
+  require("../apps/error_handler")(app)

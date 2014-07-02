@@ -3,6 +3,12 @@ fs = require 'fs'
 jade = require 'jade'
 { REVEAL_ERRORS } = require '../../config'
 
+render = (res, data) ->
+  res.send jade.compile(
+    fs.readFileSync(__dirname + '/template.jade')
+    { filename: __dirname + '/template.jade' }
+  )(data)
+
 # Since this is the last non-error-handling middleware
 # use()d, we assume 404, as nothing else responded.
 @pageNotFound = (req, res, next) ->
@@ -12,7 +18,8 @@ jade = require 'jade'
       error : 'Not Found'
       sd    : {}
     , res.locals
-    res.send 404, res.render 'template', data
+    res.status 404
+    render res, data
     return
   if req.accepts 'json' # respond with json
     res.send error: 'Not found'
@@ -29,7 +36,7 @@ jade = require 'jade'
     detail : detail
     sd     : {}
   , res.locals
-  res.render 'template', data
+  render res, data
 
 @socialAuthError = (err, req, res, next) ->
   if err.toString().match('User Already Exists')
