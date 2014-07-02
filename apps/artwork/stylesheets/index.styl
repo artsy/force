@@ -54,12 +54,14 @@ artwork-detail-item-height  = 36px
 .related-posts-add-button.avant-garde-header-small
   padding-left 0px
 
-#artwork-feature-navigation
+.artwork-left-section
   position absolute
   top 0
   left 0
   width 200px
   text-align left
+
+#artwork-feature-navigation
   opacity 0
   transition opacity 0.5s
   a
@@ -183,7 +185,7 @@ artwork-detail-item-height  = 36px
 
 .artwork-bid-status
   margin 10px 0
-  padding 10px 0
+  padding-top 10px
   border-top 1px dotted
   border-bottom 1px dotted
   border-color transparify(gray-lighter-color, black)
@@ -197,7 +199,7 @@ artwork-detail-item-height  = 36px
   line-height 1.5
 
 .artwork-bid-form
-  margin 20px 0
+  margin-top 6px
   label
     display block
     margin 5px 0
@@ -228,6 +230,17 @@ artwork-detail-item-height  = 36px
   margin 20px 0
   .auction-clock-value > li > small
     color transparify(#aaa, black)
+
+  .clock-header
+    text-align left
+    letter-spacing 1px
+    font-size 13px
+  .auction-clock-value
+    text-align left
+    margin-top 6px
+    font-size 24px
+    li small
+      text-align center
 
 #auction-detail
 #artwork-auction-clock

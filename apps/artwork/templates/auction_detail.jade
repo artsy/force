@@ -17,30 +17,26 @@ if auction.isOpen()
     .abs-amount= saleArtwork.currentBid()
     .abs-count= saleArtwork.formatBidsAndReserve()
 
-form.artwork-bid-form( action="/feature/#{auction.id}/bid/#{saleArtwork.id}" )
-  if auction.isOpen() && user
-    .abf-validation-error
-      | Your bid needs to be at least #{saleArtwork.minBid()}
-    label( for='bid' ) Your Max. bid:
-    .typed-bordered-input.is-block
-      span $
-      input.bordered-input( name='bid', autocomplete='off', required )
-    .abf-min-next
-      | Enter #{saleArtwork.minBid()} or higher
+    form.artwork-bid-form( action="/feature/#{auction.id}/bid/#{saleArtwork.id}" )
+      if auction.isOpen() && user
+        .abf-validation-error
+          | Your bid needs to be at least #{saleArtwork.minBid()}
+        .typed-bordered-input.is-block
+          span $
+          input.bordered-input( name='bid', autocomplete='off', required )
+        .abf-min-next
+          | Enter #{saleArtwork.minBid()} or higher
 
-  button.avant-garde-button-black.abf-button(
-    type      = 'submit'
-    class     = auction.bidButtonState(user).classes
-    disabled  = !auction.bidButtonState(user).enabled
-  )
-    = auction.bidButtonState(user).label
+      button.avant-garde-button-black.abf-button(
+        type      = 'submit'
+        class     = auction.bidButtonState(user).classes
+        disabled  = !auction.bidButtonState(user).enabled
+      )
+        = auction.bidButtonState(user).label
 
   if artwork.get('acquireable')
-    if artwork.isPriceDisplayable()
-      .artwork-meta-price
-        .artwork-meta-price-label.is-not-sold Buy Now price
-        .artwork-meta-price-amount= artwork.priceDisplay()
-
+    .abs-bid Buy Now price:
+    .abs-amount= artwork.saleMessage()
     a.avant-garde-button-black.artwork-buy-button.artwork-contact-buy-button
       | Buy Now
 
