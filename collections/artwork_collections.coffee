@@ -109,7 +109,7 @@ module.exports = class ArtworkCollections extends Backbone.Collection
       url: @url() + '&artwork_id=' + artwork.id
       error: options.error
       success: (cols) =>
-        cols.each (c) => @get(c.id).artworks.add(artwork)
+        cols.each (c) => @get(c.id)?.artworks.add(artwork)
         options?.success?()
 
 module.exports.ArtworkCollection = ArtworkCollection
