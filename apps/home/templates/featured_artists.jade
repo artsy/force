@@ -1,5 +1,5 @@
 for link in artistLinks
-  li.home-featured-artist-link
+  li.home-featured-artist-link.grid-item
     a( href=link.get('href') )
       .home-featured-cover-img(
         style="background-image: url(" + link.imageUrl('large_rectangle') + ")",
