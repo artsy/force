@@ -8,8 +8,10 @@
   unless profile = res.locals.profile
     res.status 404
     return next new Error "Profile not found."
+  data = { private: true }
+  data.access_token = req.user.get('accessToken') if req.user
   new ArtworkCollection(id: req.params.id, user_id: profile.get('owner').id).fetch
-    data: private: true, access_token: req.user?.get('accessToken')
+    data: data
     error: res.backboneError
     success: (collection) ->
       res.locals.sd.COLLECTION = collection.toJSON()
