@@ -20,7 +20,7 @@ describe 'CurrentUser Mixin', ->
 
     it 'unlinks the user from a provider', ->
       @user.unlinkAccount 'facebook'
-      Backbone.sync.args[0][1].url.should.include 'v1/me/authentications/facebook'
+      Backbone.sync.args[0][1].url.should.containEql 'v1/me/authentications/facebook'
 
   describe '#sync', ->
 

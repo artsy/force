@@ -12,14 +12,13 @@
   height @width
   cursor pointer
   color white
-  background-color gray-darker-color
-  background-color rgba(0, 0, 0, 0.4)
+  background-color gray-dark-color
+  background-color transparify(gray-dark-color, black)
   text-align center
   font-size 16px
   line-height @height
   border-radius (@width / 2)
   opacity 1
-  transition opacity 0.125s
   &:hover
     background-color black
   &[data-state='saved']

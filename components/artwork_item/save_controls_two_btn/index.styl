@@ -6,7 +6,8 @@
 .save-controls-two-btn-container .overlay-button, .save-controls-two-btn-add-to-collection
   width 40px
   height @width
-  background-color rgba(0, 0, 0, 0.4)
+  background-color gray-dark-color
+  background-color transparify(gray-dark-color, black)
   border-radius (@width / 2)
   line-height @height
   text-align center
@@ -19,7 +20,8 @@
   display inline-block
   cursor pointer
   color white
-  background-color gray-darker-color
+  background-color gray-dark-color
+  background-color transparify(gray-dark-color, black)
   font-size 16px
   opacity 1
   &[data-state='saved']
@@ -39,12 +41,15 @@
 
 .artwork-item
   &:hover
-    .save-controls-two-btn-container .overlay-button-save, .save-controls-two-btn-add-to-collection
-      display inline-block
-  .save-controls-two-btn-container .overlay-button-save, .save-controls-two-btn-add-to-collection
-    display none
+    .save-controls-two-btn-container .overlay-button-save
+    .save-controls-two-btn-add-to-collection
+      opacity 1
+  .save-controls-two-btn-container .overlay-button-save
+  .save-controls-two-btn-add-to-collection
+    display inline-block
+    opacity 0
     &[data-state='saved']
-      display inline-block
+      opacity 1
 
 .save-controls-two-btn-add-to-collection
   margin-left 5px

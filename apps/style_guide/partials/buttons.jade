@@ -23,13 +23,13 @@ h3 Buttons
 article.sg-component
   h3 Default Button
   .sg-component-rendered
-      a.avant-garde-button.sg-display Button
-      a.avant-garde-button.sg-display.is-success Button
-      a.avant-garde-button.sg-display.is-error Button
-      br
-      a.avant-garde-button.sg-display( disabled ) Button
-      a.avant-garde-button.sg-display.is-success( disabled ) Button
-      a.avant-garde-button.sg-display.is-error( disabled ) Button
+    a.avant-garde-button.sg-display Button
+    a.avant-garde-button.sg-display.is-success Button
+    a.avant-garde-button.sg-display.is-error Button
+    br
+    a.avant-garde-button.sg-display( disabled ) Button
+    a.avant-garde-button.sg-display.is-success( disabled ) Button
+    a.avant-garde-button.sg-display.is-error( disabled ) Button
   pre: code .avant-garde-button Button
 
 article.sg-component
@@ -91,3 +91,29 @@ article.sg-component
     |   a.avant-garde-button-black Log in using Twitter
     |   a.avant-garde-button-black Log in using Facebook
     |   a.avant-garde-button-black Log in using MeowMeowBeenz
+
+article.sg-component
+  h3 Circle Buttons
+  .sg-component-rendered
+    a.circle-button.icon-heart
+    a.circle-button.icon-heart( data-state='active' )
+    a.circle-button.icon-share
+    hr
+    .circle-button-with-label
+      a.circle-button.icon-heart
+      .circle-button-label Favorite
+    .circle-button-with-label
+      a.circle-button.icon-share
+      .circle-button-label Share
+  pre: code
+    | a.circle-button.icon-heart
+    | a.circle-button.icon-heart( data-state='active' )
+    | a.circle-button.icon-share
+  pre: code
+    | //- With labels
+    | .circle-button-with-label
+    |   a.circle-button.icon-heart
+    |   .circle-button-label Favorite
+    | .circle-button-with-label
+    |   a.circle-button.icon-share
+    |   .circle-button-label Share

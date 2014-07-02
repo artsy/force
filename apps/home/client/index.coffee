@@ -45,7 +45,6 @@ module.exports.HomeView = class HomeView extends Backbone.View
     @renderFeaturedPosts()
     @renderFeaturedArtists()
     @setupFavoritesOnboardingModal()
-    @setupModal()
 
   setupFavoritesOnboardingModal: ->
     return unless @user and 'Set Management' in @user.get('lab_features')
@@ -109,17 +108,6 @@ module.exports.HomeView = class HomeView extends Backbone.View
       artworkCollection.syncSavedArtworks()
 
     trackArtworkImpressions artworkModels, @$el
-
-  # Open the signup modal for logged out users, or the login modal if the user has
-  # signed in before, or if they have already dismissed it this session
-  setupModal: ->
-    return if @user? or location.search.match('no-auth-modal') or Cookies.get('dismissed_auth_modal')
-
-    mediator.trigger 'open:auth',
-      mode: if Cookies.get('signed_in') is 'true' then 'login' else 'signup'
-
-    mediator.on 'modal:closed', ->
-      Cookies.set 'dismissed_auth_modal', true
 
 module.exports.init = ->
     new HomeView el: $('body')

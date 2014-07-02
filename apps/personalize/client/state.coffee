@@ -27,8 +27,8 @@ module.exports = class PersonalizeState extends Backbone.Model
     current_level : 2 # Interested in starting
     __steps__:
       '3' : ['collect', 'bookmarks', 'price_range', 'artists', 'galleries', 'institutions']
-      '2' : ['collect', 'categories', 'price_range', 'artists', 'galleries', 'institutions']
-      '1' : ['collect', 'galleries', 'institutions', 'categories', 'artists']
+      '2' : ['collect', 'categories', 'favorites', 'artists', 'price_range', 'galleries', 'institutions']
+      '1' : ['collect', 'categories', 'favorites', 'artists', 'galleries', 'institutions']
 
   initialize: (options = {}) ->
     { @user } = options

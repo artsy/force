@@ -18,7 +18,7 @@ describe 'Dimensions Mixin', ->
 
     it 'returns the dimensions chosen by metric', ->
       @model.set metric: 'in', dimensions: { in: 'foobar' }
-      @model.dimensions().should.include 'foobar'
+      @model.dimensions().should.containEql 'foobar'
 
     it 'wraps the dimensions string in a superscript tag when it encounters ' +
        'fractions following whole numbers', ->

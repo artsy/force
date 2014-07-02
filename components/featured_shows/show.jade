@@ -1,7 +1,7 @@
 li.featured-shows-featured-show.grid-item
   a( href=show.href() )
     .featured-shows-featured-cover-img(
-      style="background-image: url(" + show.imageUrl(imageSize) + ")",
+      style="background-image: url(" + show.bestImageUrl(imageSizes) + ")",
     )
     if location = show.location()
       h6!= show.runningDates() + ' &nbsp;∙&nbsp; ' + location.singleLine()
