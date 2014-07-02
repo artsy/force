@@ -51,7 +51,7 @@ block body
       nav.show-share
         +share(show.shareTitle())
       if show.has('fair')
-        h1.show-heading-title!= partner.get('name')
+        h1.show-heading-title= partner.get('name')
           br
           em= fair.get('name')
       else
