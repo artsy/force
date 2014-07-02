@@ -8,6 +8,7 @@ GeneArtists                   = require '../mixins/gene_artists.coffee'
 Genes                         = require '../mixins/genes.coffee'
 BookmarkedArtists             = require '../mixins/bookmarked_artists.coffee'
 { FollowButton, Following }   = require '../../../../components/follow_button/index.coffee'
+Artists                       = require '../../../../collections/artists.coffee'
 
 template                  = -> require('../../templates/artists.jade') arguments...
 suggestedArtistsTemplate  = -> require('../../templates/suggested_artists.jade') arguments...
@@ -33,10 +34,6 @@ module.exports = class ArtistsView extends StepView
     @suggestions  = new Backbone.Collection
     @followed     = new Backbone.Collection [], model: Artist
 
-    @initializeFollowable()
-    @initializeSuggestions()
-    @initializeArtistsFromFavorites()
-
     @listenTo @followed, 'add', @fetchRelatedArtists
     @listenTo @followed, 'remove', @disposeSuggestionSet
     @listenTo @suggestions, 'add', @renderSuggestions
@@ -50,10 +47,17 @@ module.exports = class ArtistsView extends StepView
         suggestions: @user.artistsFromFavorites
 
   initializeSuggestions: ->
-    if @user.isCollector()
-      @initializeBookmarkedArtists()
-    else
-      @initializeGeneArtists()
+    (if @user.isCollector() then @initializeBookmarkedArtists() else @initializeGeneArtists())
+      ?.then (response) => @fetchFallbackSuggestions() unless response.length
+
+  fetchFallbackSuggestions: ->
+    artists = new Artists
+    artists.url = "#{sd.API_URL}/api/v1/artists/sample"
+    artists.fetch data: { size: 5 }, success: =>
+      @suggestions.add new Backbone.Model
+        id: 'artist-sample'
+        name: 'Artists you may enjoy following'
+        suggestions: artists
 
   setupFollowButton: (key, model, el) ->
     @followButtonViews ?= {}
@@ -107,9 +111,15 @@ module.exports = class ArtistsView extends StepView
         @listenTo button, 'click', => @setSkipLabel()
       @following.syncFollows suggestionSet.get('suggestions').pluck 'id'
 
+  postRender: ->
+    @initializeFollowable()
+    @initializeSuggestions()
+    @initializeArtistsFromFavorites()
+
   render: ->
     @$el.html template(user: @user, state: @state, autofocus: @autofocus())
     @setupSearch mode: 'artists'
+    @postRender()
     this
 
   remove: ->

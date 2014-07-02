@@ -35,6 +35,14 @@ describe 'ArtistsView', ->
     @view.setupSearch.restore()
     @view.initializeBookmarkedArtists.restore()
 
+  describe 'fallback artists', ->
+    beforeEach ->
+      @view.initializeGeneArtists = -> then: (fn) -> fn []
+      @view.initializeSuggestions()
+
+    it 'fetches the fallback artists when we fail to come up with suggestions', ->
+      _.last(Backbone.sync.args)[1].url.should.include '/api/v1/artists/sample'
+
   describe '#initializeArtistsFromFavorites', ->
     beforeEach ->
       @view.user.artistsFromFavorites = new Backbone.Collection [], model: Artist
@@ -133,6 +141,7 @@ describe 'ArtistsView', ->
       beforeEach ->
         @user.set 'collector_level', 3
         @view = new ArtistsView state: @state, user: @user
+        @view.render()
 
       it 'is initializes the bookmark artists', ->
         @view.initializeBookmarkedArtists.called.should.be.true
