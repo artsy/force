@@ -12,7 +12,12 @@ block body
   #artwork-page.main-layout-container( data-route='show' )
     article.artwork-container
       section.artwork-overview
-        #artwork-feature-navigation
+        .artwork-left-section
+          #artwork-feature-navigation
+          #artwork-auction-clock
+            //- Rendered client-side
+            include ../../../components/auction_clock/template
+
         .artwork-image
           a.artwork-image-zoom(
             href  = "/artwork/#{artwork.id}/zoom"

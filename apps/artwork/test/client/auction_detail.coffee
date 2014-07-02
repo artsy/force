@@ -65,7 +65,6 @@ describe 'AuctionDetailView', ->
         @auction.__bidButtonState__ = undefined
         @view.render()
         $button = @view.$('.abf-button')
-        $button = @view.$('.abf-button')
         $button.text().should.equal 'Register to bid'
         _.isUndefined($button.attr 'disabled').should.be.ok
 

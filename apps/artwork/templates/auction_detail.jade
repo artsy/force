@@ -12,32 +12,38 @@ if auction.isOpen()
       else if (position = bidderPositions.isOutbid())
         | Your max bid of #{position.maxBid()} has been outbid.
 
-  .artwork-bid-status
-    .abs-bid #{saleArtwork.bidLabel()}:
-    .abs-amount= saleArtwork.currentBid()
-    .abs-count= saleArtwork.formatBidsAndReserve()
+.artwork-bid-status
+  .abs-bid #{saleArtwork.bidLabel()}:
+  .abs-amount= saleArtwork.currentBid()
+  .abs-count= saleArtwork.formatBidsAndReserve()
 
-form.artwork-bid-form( action="/feature/#{auction.id}/bid/#{saleArtwork.id}" )
-  if auction.isOpen() && user
-    .abf-validation-error
-      | Your bid needs to be at least #{saleArtwork.minBid()}
-    label( for='bid' ) Your Max. bid:
-    .typed-bordered-input.is-block
-      span $
-      input.bordered-input( name='bid', autocomplete='off', required )
-    .abf-min-next
-      | Enter #{saleArtwork.minBid()} or higher
+  form.artwork-bid-form( action="/feature/#{auction.id}/bid/#{saleArtwork.id}" )
+    if auction.isOpen() && user
+      .abf-validation-error
+        | Your bid needs to be at least #{saleArtwork.minBid()}
+      .typed-bordered-input.is-block
+        span $
+        input.bordered-input( name='bid', autocomplete='off', required )
+      .abf-min-next
+        | Enter #{saleArtwork.minBid()} or higher
 
-  button.avant-garde-button-black.abf-button(
-    type      = 'submit'
-    class     = auction.bidButtonState(user).classes
-    disabled  = !auction.bidButtonState(user).enabled
-  )
-    = auction.bidButtonState(user).label
+    button.avant-garde-button-black.abf-button(
+      type      = 'submit'
+      class     = auction.bidButtonState(user).classes
+      disabled  = !auction.bidButtonState(user).enabled
+    )
+      = auction.bidButtonState(user).label
 
-  .abf-help
-    a.abf-help-link( href='#' )
-      | How does bidding work
-    br
-    a( href="artwork/#{saleArtwork.id}/ask_specialist", data-client )
-      | Ask an Artsy specialist
+if auction.isOpen() && artwork.get('acquireable')
+  .artwork-meta-price
+    .artwork-meta-price-label.is-not-sold Buy Now Price
+    .artwork-meta-price-amount= artwork.priceDisplay()
+  a.avant-garde-button-black.artwork-buy-button.artwork-contact-buy-button
+    | Buy Now
+
+.abf-help
+  a.abf-help-link( href='#' )
+    | How do auctions work?
+  br
+  a( href="artwork/#{saleArtwork.id}/ask_specialist", data-client )
+    | Ask an Artsy specialist
