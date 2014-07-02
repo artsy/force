@@ -2,7 +2,7 @@
   .sections-left
     .fair-sections-small-heading
       | Browse 
-      != fair.get('name')
+      = fair.get('name')
     .fair-search-options
       for column in filteredSearchColumns
         .fair-search-options-column
@@ -20,5 +20,5 @@
       br
       | — Your personal guide to
       br
-      != fair.get('name')
+      = fair.get('name')
     .mobile-section-iphone

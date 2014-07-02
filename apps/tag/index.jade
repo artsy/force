@@ -11,7 +11,7 @@ block body
   #tag-filter
     .filter-fixed-header-nav
       .filter-fixed-header-left
-        != tag.get('name')
+        = tag.get('name')
         | &nbsp;&mdash;&nbsp;
         em
           span.filter-artworks-num

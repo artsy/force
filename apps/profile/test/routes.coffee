@@ -35,3 +35,13 @@ describe 'Profile routes', ->
       _.last(Backbone.sync.args)[1].url().should.include '/profile/foo'
       _.last(Backbone.sync.args)[2].success fabricate 'profile', id: 'moobar'
       @res.locals.profile.get('id').should.equal 'moobar'
+
+    it 'passes the users access token', ->
+      @req.user = new Backbone.Model accessToken: 'foobar'
+      routes.setProfile @req, @res, next = sinon.stub()
+      _.last(Backbone.sync.args)[2].data.access_token.should.include 'foobar'
+
+    it 'does not pass an access token with no user', ->
+      @req.user = null
+      routes.setProfile @req, @res, next = sinon.stub()
+      (_.last(Backbone.sync.args)[2].data.access_token?).should.not.be.ok
