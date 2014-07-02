@@ -151,12 +151,6 @@ describe 'Homepage init code', ->
 
   xit 'renders featured artists'
 
-  it 'opens the signup modal', ->
-    mediator = @mod.__get__ 'mediator'
-    mediator.on 'open:auth', spy = sinon.spy()
-    @init()
-    spy.args[0][0].mode.should.equal 'signup'
-
   it 'does not open the signup modal if passed a query param', ->
     mediator = @mod.__get__ 'mediator'
     mediator.on 'open:auth', spy = sinon.spy()
