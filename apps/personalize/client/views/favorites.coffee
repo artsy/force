@@ -76,16 +76,16 @@ module.exports = class FavoritesView extends StepView
     @disableArtworkLinks()
     @fadeInHearts()
 
-  # Disable links to the artworks and delegate to the favorite button
+  # Disable links to the artworks
   disableArtworkLinks: ->
     @$('.artwork-item-image-link')
       .attr('href', null)
-      .click -> $(this).find('.overlay-button-save').click()
+      .css('cursor', 'default')
 
   # Fades in a column of hearts at a time
   fadeInHearts: ->
     $buttonColumns = _.map @artworkColumnsView.$columns, (column) ->
-      $(column).find('.overlay-button-save').css 'opacity', 0
+      $(column).find('.overlay-container > *').css 'opacity', 0
     _.delay =>
       _.each $buttonColumns, (buttonColumn, i) ->
         _.delay (=> $(buttonColumn).css 'opacity', 1), (i + 1) * 50
