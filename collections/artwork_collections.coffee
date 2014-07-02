@@ -52,7 +52,7 @@ module.exports = class ArtworkCollections extends Backbone.Collection
     "#{API_URL}/api/v1/collections?" + qs.stringify(
       private: true
       user_id: @user.get 'id'
-      # bustCache: Math.random()
+      bustCache: Math.random()
     )
 
   model: ArtworkCollection
