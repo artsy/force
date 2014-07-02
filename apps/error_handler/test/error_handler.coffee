@@ -1,24 +1,18 @@
 rewire = require 'rewire'
 sinon = require 'sinon'
 express = require 'express'
-errorHandler = rewire '../'
+errorHandler = rewire '../routes'
 
 describe '#internalError', ->
 
   it 'renders a 500 page', ->
     errorHandler.internalError new Error("Some blah error"), {}, { statusCode: 500, send: spy = sinon.spy() }
-    spy.args[0][0].should.equal 500
-    spy.args[0][1].should.include "Some blah error"
+    spy.args[0][0].should.include "Some blah error"
 
   it 'hides error details in production', ->
     errorHandler.__set__ 'REVEAL_ERRORS', false
     errorHandler.internalError new Error("Some blah error"), {}, { statusCode: 500, send: spy = sinon.spy() }
-    spy.args[0][0].should.equal 500
-    spy.args[0][1].should.not.include "Some blah error"
-
-  it 'renders the status code', ->
-    errorHandler.internalError new Error("Some blah error"), {}, { statusCode: 404, send: spy = sinon.spy() }
-    spy.args[0][0].should.equal 404
+    spy.args[0][0].should.not.include "Some blah error"
 
   it 'renders sharify data', ->
     errorHandler.internalError new Error("Some blah error"), {}, { statusCode: 404, send: spy = sinon.spy(), locals: sharify: script: script = sinon.stub() }
@@ -30,9 +24,9 @@ describe '#pageNotFound', ->
     # Fake a Express request object with Accept header set
     req = express.request
     req.headers = Accept: 'text/html'
-    errorHandler.pageNotFound req, { send: spy = sinon.spy() }
-    spy.args[0][0].should.equal 404
-    spy.args[0][1].should.include "The page you were looking for doesn't exist"
+    errorHandler.pageNotFound req, { send: spy = sinon.spy(), status: stub = sinon.stub() }
+    stub.args[0][0].should.equal 404
+    spy.args[0][0].should.include "The page you were looking for doesn't exist"
 
 describe '#socialAuthError', ->
 
