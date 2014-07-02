@@ -15,6 +15,7 @@ views =
   PriceRangeView   : require './views/price_range.coffee'
   CategoriesView   : require './views/categories.coffee'
   BookmarksView    : require './views/bookmarks.coffee'
+  FavoritesView    : require './views/favorites.coffee'
 
 _.mixin(require 'underscore.string')
 

@@ -37,9 +37,11 @@ describe 'state', ->
       @state.next()
       @state.get('current_step').should.equal 'categories'
       @state.next()
-      @state.get('current_step').should.equal 'price_range'
+      @state.get('current_step').should.equal 'favorites'
       @state.next()
       @state.get('current_step').should.equal 'artists'
+      @state.next()
+      @state.get('current_step').should.equal 'price_range'
       @state.next()
       @state.get('current_step').should.equal 'galleries'
       @state.next()
@@ -51,13 +53,15 @@ describe 'state', ->
       @state.set current_level: 1
       @state.get('current_step').should.equal 'collect'
       @state.next()
+      @state.get('current_step').should.equal 'categories'
+      @state.next()
+      @state.get('current_step').should.equal 'favorites'
+      @state.next()
+      @state.get('current_step').should.equal 'artists'
+      @state.next()
       @state.get('current_step').should.equal 'galleries'
       @state.next()
       @state.get('current_step').should.equal 'institutions'
-      @state.next()
-      @state.get('current_step').should.equal 'categories'
-      @state.next()
-      @state.get('current_step').should.equal 'artists'
       @state.next() # Done
 
   describe '#completedSteps', ->

@@ -5,8 +5,10 @@ StepView                      = require './step.coffee'
 Artist                        = require '../../../../models/artist.coffee'
 Followable                    = require '../mixins/followable.coffee'
 GeneArtists                   = require '../mixins/gene_artists.coffee'
+Genes                         = require '../mixins/genes.coffee'
 BookmarkedArtists             = require '../mixins/bookmarked_artists.coffee'
 { FollowButton, Following }   = require '../../../../components/follow_button/index.coffee'
+Artists                       = require '../../../../collections/artists.coffee'
 
 template                  = -> require('../../templates/artists.jade') arguments...
 suggestedArtistsTemplate  = -> require('../../templates/suggested_artists.jade') arguments...
@@ -14,6 +16,7 @@ suggestedArtistsTemplate  = -> require('../../templates/suggested_artists.jade')
 module.exports = class ArtistsView extends StepView
   _.extend @prototype, Followable
   _.extend @prototype, GeneArtists
+  _.extend @prototype, Genes
   _.extend @prototype, BookmarkedArtists
 
   analyticsUnfollowMessage : 'Unfollowed artist from personalize artist search'
@@ -31,19 +34,30 @@ module.exports = class ArtistsView extends StepView
     @suggestions  = new Backbone.Collection
     @followed     = new Backbone.Collection [], model: Artist
 
-    @initializeFollowable()
-    @initializeSuggestions()
-
     @listenTo @followed, 'add', @fetchRelatedArtists
     @listenTo @followed, 'remove', @disposeSuggestionSet
     @listenTo @suggestions, 'add', @renderSuggestions
     @listenTo @suggestions, 'remove', @renderSuggestions
 
+  initializeArtistsFromFavorites: ->
+    if @user.artistsFromFavorites?.length
+      @suggestions.add new Backbone.Model
+        id: 'artists-from-favorites'
+        name: 'Artists suggested based on the artworks in your favorites'
+        suggestions: @user.artistsFromFavorites
+
   initializeSuggestions: ->
-    if @user.isCollector()
-      @initializeBookmarkedArtists()
-    else
-      @initializeGeneArtists()
+    (if @user.isCollector() then @initializeBookmarkedArtists() else @initializeGeneArtists())
+      ?.then (response) => @fetchFallbackSuggestions() unless response.length
+
+  fetchFallbackSuggestions: ->
+    artists = new Artists
+    artists.url = "#{sd.API_URL}/api/v1/artists/sample"
+    artists.fetch data: { size: 5 }, success: =>
+      @suggestions.add new Backbone.Model
+        id: 'artist-sample'
+        name: 'Artists you may enjoy following'
+        suggestions: artists
 
   setupFollowButton: (key, model, el) ->
     @followButtonViews ?= {}
@@ -97,9 +111,15 @@ module.exports = class ArtistsView extends StepView
         @listenTo button, 'click', => @setSkipLabel()
       @following.syncFollows suggestionSet.get('suggestions').pluck 'id'
 
+  postRender: ->
+    @initializeFollowable()
+    @initializeSuggestions()
+    @initializeArtistsFromFavorites()
+
   render: ->
     @$el.html template(user: @user, state: @state, autofocus: @autofocus())
     @setupSearch mode: 'artists'
+    @postRender()
     this
 
   remove: ->
