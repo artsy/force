@@ -214,17 +214,25 @@ The Artsy API often structures image data like `{ image_url: 'foo/bar/:version.j
 featuredLink.imageUrl('small')
 ````
 
-#### missingImageUrl()
+### missingImageUrl()
 
 `imageUrl` uses the `missingImageUrl` on the model to know what image to show when it can't find a version of it in the data. Defaults to `/image/missing_image.png`.
 
-#### defaultImageVersion()
+### defaultImageVersion()
 
 Tell `imageUrl` which version to look for first. Defaults to the first item in the `image_versions` or `versions` attribute.
 
-#### hasImage(version)
+### hasImage(version)
 
 Checks the `image_versions` or `versions` attribute for the image version and returns true/false.
+
+### bestImageUrl([versions])
+
+Return an image URL, preferring the earlier versions in `versions` if available, but degrading to the later ones otherwise. Finally, degrades to `missingImageUrl`.
+
+```coffeescript
+feature.bestImageUrl(['large', 'medium', 'small'])
+```
 
 ## Contributing
 

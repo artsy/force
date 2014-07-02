@@ -660,12 +660,118 @@
     "artsy-backbone-mixins": {
       "version": "0.0.15",
       "from": "artsy-backbone-mixins@git://github.com/artsy/artsy-backbone-mixins.git",
-      "resolved": "git://github.com/artsy/artsy-backbone-mixins.git#a0184c32886644a1303307da7d4f03f9c1a4c8be",
+      "resolved": "git://github.com/artsy/artsy-backbone-mixins.git#f598984a26b4a436aeea4b9faa1abc48f03c62dc",
       "dependencies": {
-        "showdown": {
-          "version": "0.3.1",
-          "from": "showdown@git://github.com/craigspaeth/showdown.git",
-          "resolved": "git://github.com/craigspaeth/showdown.git#4d04b7855d5ed327ebbe5a917c9e9607a4188f77"
+        "should": {
+          "version": "4.0.4",
+          "from": "should@4.0.4"
+        },
+        "sinon": {
+          "version": "1.10.2",
+          "from": "sinon@1.10.2",
+          "dependencies": {
+            "formatio": {
+              "version": "1.0.2",
+              "from": "formatio@1.0.2",
+              "dependencies": {
+                "samsam": {
+                  "version": "1.1.1",
+                  "from": "samsam@1.1.1"
+                }
+              }
+            },
+            "util": {
+              "version": "0.10.3",
+              "from": "util@0.10.3",
+              "dependencies": {
+                "inherits": {
+                  "version": "2.0.1",
+                  "from": "inherits@2.0.1"
+                }
+              }
+            }
+          }
+        },
+        "mocha": {
+          "version": "1.20.1",
+          "from": "mocha@1.20.1",
+          "dependencies": {
+            "commander": {
+              "version": "2.0.0",
+              "from": "https://registry.npmjs.org/commander/-/commander-2.0.0.tgz",
+              "resolved": "https://registry.npmjs.org/commander/-/commander-2.0.0.tgz"
+            },
+            "growl": {
+              "version": "1.7.0",
+              "from": "growl@1.7.0"
+            },
+            "jade": {
+              "version": "0.26.3",
+              "from": "https://registry.npmjs.org/jade/-/jade-0.26.3.tgz",
+              "resolved": "https://registry.npmjs.org/jade/-/jade-0.26.3.tgz",
+              "dependencies": {
+                "commander": {
+                  "version": "0.6.1",
+                  "from": "https://registry.npmjs.org/commander/-/commander-0.6.1.tgz",
+                  "resolved": "https://registry.npmjs.org/commander/-/commander-0.6.1.tgz"
+                },
+                "mkdirp": {
+                  "version": "0.3.0",
+                  "from": "https://registry.npmjs.org/mkdirp/-/mkdirp-0.3.0.tgz",
+                  "resolved": "https://registry.npmjs.org/mkdirp/-/mkdirp-0.3.0.tgz"
+                }
+              }
+            },
+            "diff": {
+              "version": "1.0.7",
+              "from": "diff@1.0.7"
+            },
+            "debug": {
+              "version": "1.0.2",
+              "from": "debug@1.0.2",
+              "dependencies": {
+                "ms": {
+                  "version": "0.6.2",
+                  "from": "https://registry.npmjs.org/ms/-/ms-0.6.2.tgz",
+                  "resolved": "https://registry.npmjs.org/ms/-/ms-0.6.2.tgz"
+                }
+              }
+            },
+            "mkdirp": {
+              "version": "0.3.5",
+              "from": "https://registry.npmjs.org/mkdirp/-/mkdirp-0.3.5.tgz",
+              "resolved": "https://registry.npmjs.org/mkdirp/-/mkdirp-0.3.5.tgz"
+            },
+            "glob": {
+              "version": "3.2.3",
+              "from": "https://registry.npmjs.org/glob/-/glob-3.2.3.tgz",
+              "resolved": "https://registry.npmjs.org/glob/-/glob-3.2.3.tgz",
+              "dependencies": {
+                "minimatch": {
+                  "version": "0.2.14",
+                  "from": "minimatch@0.2.14",
+                  "dependencies": {
+                    "lru-cache": {
+                      "version": "2.5.0",
+                      "from": "lru-cache@2.5.0"
+                    },
+                    "sigmund": {
+                      "version": "1.0.0",
+                      "from": "sigmund@1.0.0"
+                    }
+                  }
+                },
+                "graceful-fs": {
+                  "version": "2.0.3",
+                  "from": "graceful-fs@2.0.3"
+                },
+                "inherits": {
+                  "version": "2.0.1",
+                  "from": "inherits@2.0.1"
+                }
+              }
+            }
+          }
         }
       }
     },

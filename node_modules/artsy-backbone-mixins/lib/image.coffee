@@ -19,6 +19,11 @@ module.exports = (secureImagesUrl, imagesUrlPrefix='http://static%d.artsy.net') 
     else
       @missingImageUrl()
 
+  bestImageUrl: (versions = []) ->
+    for version in versions
+      return @imageUrl(version) if @hasImage(version)
+    @imageUrl()  # default or missing image
+
   # Replace the image URL with an https:// URL
   sslUrl: (url) ->
     return url unless secureImagesUrl and imagesUrlPrefix

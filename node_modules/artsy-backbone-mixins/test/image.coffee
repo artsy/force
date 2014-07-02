@@ -42,6 +42,21 @@ describe 'Image Mixin', ->
         it "returns missing image for a version that doesn't exist", ->
           @model.imageUrl('square').should.equal '/images/missing_image.png'
 
+    describe 'bestImageUrl', ->
+
+      it 'chooses first version if available', ->
+        @model.bestImageUrl(['small_square', 'medium_square']).should.equal '/bitty/small_square'
+
+      it 'chooses later version if early ones unavailable', ->
+        @model.bestImageUrl(['unknown_version', 'medium_square']).should.equal '/bitty/medium_square'
+
+      it 'falls back to default version', ->
+        @model.bestImageUrl(['unknown_version', 'other_unknown']).should.equal '/bitty/large_square'
+
+      it 'renders missing placeholder if none', ->
+        @model.set image_versions: []
+        @model.bestImageUrl(['small_square', 'medium_square']).should.equal '/images/missing_image.png'
+
   describe 'with an ssl url', ->
 
     beforeEach ->
