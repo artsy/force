@@ -6,6 +6,7 @@ Artists = require '../../../../collections/artists.coffee'
 Genes = require '../mixins/genes.coffee'
 ArtworkColumnsView = require '../../../../components/artwork_columns/view.coffee'
 { setSkipLabel } = require '../mixins/followable.coffee'
+{ API_URL } = require('sharify').data
 
 template = -> require('../../templates/favorites.jade') arguments...
 
@@ -19,11 +20,27 @@ module.exports = class FavoritesView extends StepView
 
   initialize: (options) ->
     super
+    @artworks = new Artworks
+    @initializeGenes size: 5, success: (collection, response, options) =>
+      if response.length
+        @fetchArtworks()
+      else # No genes were followed
+        @fetchFallbackArtworks()
 
-    @initializeGenes size: 5, success: => @fetchArtworks()
+  fetchFallbackArtworks: ->
+    artists = new Artists
+    artists.url = "#{API_URL}/api/v1/artists/sample"
+    artists.fetch data: { size: 10 }, success: =>
+      $.when.apply(null, artists.map (artist) =>
+        artist.artworks.fetch
+          data: size: 2
+          success: (collection, response, options) =>
+            @artworks.add response
+      ).then =>
+        @setupFavorites()
+        @renderArtworks()
 
   fetchArtworks: ->
-    @artworks = new Artworks
     $.when.apply(null, @genes.map (gene) =>
       gene.fetchArtworks
         data: size: 10
@@ -31,7 +48,6 @@ module.exports = class FavoritesView extends StepView
           @artworks.add response
     ).then =>
       @setupFavorites()
-      @artworks.reset @artworks.shuffle(), silent: true
       @renderArtworks()
 
   setupFavorites: ->
@@ -45,6 +61,7 @@ module.exports = class FavoritesView extends StepView
         @user.artistsFromFavorites.add @artworks.get(favorite.id).get('artist')
 
   renderArtworks: ->
+    @artworks.reset @artworks.shuffle(), silent: true
     @artworkColumnsView = new ArtworkColumnsView
       el: @$('#personalize-favorites-container')
       collection: @artworks

@@ -20,7 +20,7 @@ describe 'FavoritesView', ->
     benv.teardown()
 
   beforeEach ->
-    sinon.stub(Backbone, 'sync').yieldsTo 'success'
+    sinon.stub Backbone, 'sync'
 
     @user = new CurrentUser fabricate 'user', collector_level: 2
     @state = new PersonalizeState user: @user
@@ -38,30 +38,55 @@ describe 'FavoritesView', ->
 
   describe '#initialize', ->
     it 'initializes the followed genes', ->
-      _.first(Backbone.sync.args)[0].should.equal 'read'
-      _.first(Backbone.sync.args)[1].kind.should.equal 'gene'
-      _.first(Backbone.sync.args)[1].url().should.include '/api/v1/me/follow/genes'
+      Backbone.sync.args[0][1].kind.should.equal 'gene'
+      Backbone.sync.args[0][1].url().should.include '/api/v1/me/follow/genes'
 
-  describe '#fetchArtworks', ->
+  describe 'without gene results', ->
     beforeEach ->
+      sinon.spy FavoritesView::, 'fetchFallbackArtworks'
+      Backbone.sync.args[0][2].success []
       Backbone.sync.restore()
       sinon.stub(Backbone, 'sync').yieldsTo 'success'
-      @view.genes.add fabricate 'gene'
-      @view.fetchArtworks()
 
-    it 'fetches the gene artworks', ->
-      _.first(Backbone.sync.args)[0].should.equal 'read'
-      _.first(Backbone.sync.args)[1].url.should.include "/api/v1/gene/#{@view.genes.first().id}/artworks"
+    afterEach ->
+      @view.fetchFallbackArtworks.restore()
 
-  describe '#setupFavorites', ->
-    it 'sets up the favorites collection', ->
-      _.isUndefined(@view.favorites).should.be.false
+    describe '#fetchFallbackArtworks', ->
+      it 'is called when there is an empty gene response', ->
+        @view.fetchFallbackArtworks.called.should.be.true
 
-    describe 'fetched', ->
+      it 'sets up some sample artists, then gets some artworks', ->
+        @view.fetchFallbackArtworks()
+        Backbone.sync.args[0][1].url.should.include '/api/v1/artists/sample'
+        success = Backbone.sync.args[0][2].success
+        Backbone.sync.restore()
+        sinon.stub(Backbone, 'sync').yieldsTo 'success'
+        success [(artist = fabricate 'artist')]
+        Backbone.sync.args[0][1].url.should.include "/api/v1/artist/#{artist.id}/artworks"
+
+  describe 'with gene results', ->
+    beforeEach ->
+      Backbone.sync.args[0][2].success [id: 1, kind: 'gene', gene: fabricate('gene')]
+      Backbone.sync.restore()
+      sinon.stub(Backbone, 'sync').yieldsTo 'success'
+
+    describe '#fetchArtworks', ->
       beforeEach ->
-        @view.artworks.add fabricate('artwork')
-        @view.favorites.saveArtwork(@view.artworks.first().id)
-        @view.favorites.trigger 'artworksFetched'
+        @view.genes.add fabricate 'gene'
+        @view.fetchArtworks()
 
-      it 'should extract artists from the favorited artworks', ->
-        @view.user.artistsFromFavorites.first().get('name').should.equal 'Andy Warhol'
+      it 'fetches the gene artworks', ->
+        Backbone.sync.args[0][1].url.should.include "/api/v1/gene/#{@view.genes.first().id}/artworks"
+
+    describe '#setupFavorites', ->
+      it 'sets up the favorites collection', ->
+        _.isUndefined(@view.favorites).should.be.false
+
+      describe 'fetched', ->
+        beforeEach ->
+          @view.artworks.add fabricate('artwork')
+          @view.favorites.saveArtwork(@view.artworks.first().id)
+          @view.favorites.trigger 'artworksFetched'
+
+        it 'should extract artists from the favorited artworks', ->
+          @view.user.artistsFromFavorites.first().get('name').should.equal 'Andy Warhol'
