@@ -14,11 +14,19 @@ module.exports = ->
   setupKioskMode()
   syncAuth()
 
+ensureFreshUser = (data) ->
+  return unless sd.CURRENT_USER
+  for attr in ['id', 'type', 'name', 'email', 'phone', 'lab_features',
+               'default_profile_id', 'has_partner_access', 'collector_level']
+    if not _.isEqual data[attr], sd.CURRENT_USER[attr]
+      $.ajax('/user/refresh').then -> window.location.reload()
+
 syncAuth = module.exports.syncAuth = ->
   # Log out of Force if you're not logged in to Gravity
   if sd.CURRENT_USER
     $.ajax
       url: "#{sd.API_URL}/api/v1/me"
+      success: ensureFreshUser
       error: -> window.location = '/users/sign_out'
 
 setupAnalytics = ->
