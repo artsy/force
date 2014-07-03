@@ -11,7 +11,7 @@ module.exports = class SaveControls extends Backbone.View
     @user = CurrentUser.orNull()
     return unless @user
     @collections ?= new ArtworkCollections [], user: @user
-    @collections.on 'add add:artwork remove:artwork', @renderCollections
+    @collections.on 'add sync add:artwork remove:artwork', @renderCollections
 
   renderCollections: =>
     @$('.save-controls-drop-down-menu-item:not(.save-controls-drop-down-new)').remove()
@@ -19,11 +19,11 @@ module.exports = class SaveControls extends Backbone.View
       """
       <div class='save-controls-drop-down-menu-item \
                   #{if collection.artworks.get(@model.get 'id')? then 'is-active' else ''}' \
-           style='#{if collection.get('id') is 'saved-artwork' then 'display: none' else ''}'>
+           style='#{if collection.get('id') is 'saved-artwork' then 'display: none' else ''}' \
+           data-id='#{collection.get('id')}'>
         #{collection.get('name')}
         <span class='icon-check'></span>
         <span class='icon-close'></span>
-        <span class='save-controls-removed'>removed</span>
       </div>
       """
     ).join ''
@@ -71,7 +71,7 @@ module.exports = class SaveControls extends Backbone.View
     return @showSignupModal() unless @user
     return if @$el.attr('data-state') in ['saved-close', 'saved-reopen']
     @$el.attr 'data-state', 'saving'
-    @collections.fetch success: =>
+    @collections.fetchUntilEnd success: =>
       @collections.injectArtwork @model, success: =>
         @$el.attr 'data-state', 'saved'
         $menu = @$('.save-controls-drop-down-menu')
@@ -89,9 +89,6 @@ module.exports = class SaveControls extends Backbone.View
     e.preventDefault()
     col = @collections.at $(e.currentTarget).index()
     col.removeArtwork @model
-    $removed = $(e.currentTarget).find('.save-controls-removed')
-    $removed.show()
-    setTimeout (-> $removed.fadeOut 'fast'), 1000
 
   newCollection: (e) ->
     return unless val = @$('.save-controls-drop-down-new input').val()

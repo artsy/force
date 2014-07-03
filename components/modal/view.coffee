@@ -117,10 +117,10 @@ module.exports = class ModalView extends Backbone.View
 
   postRender: -> #
 
-  open: ->
+  open: =>
     @setup()
 
-    mediator.trigger 'modal:opened'
+    mediator.trigger 'modal:opened', { view: this }
 
     this
 
