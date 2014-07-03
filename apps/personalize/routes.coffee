@@ -1,11 +1,11 @@
 _ = require 'underscore'
 
 @index = (req, res) ->
-  if req.user
+  if req.user?
     req.user.fetch
       success: (model, response, options) ->
         res.locals.sd.CURRENT_USER =
           _.extend(response, res.locals.sd.CURRENT_USER)
         res.render 'template'
   else
-    res.render 'template'
+    res.redirect '/log_in?redirect_uri=/personalize'
