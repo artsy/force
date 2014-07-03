@@ -46,7 +46,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
     @setup()
 
   setup: ->
-    @collections.fetch success: =>
+    @collections.fetchUntilEnd success: =>
       @setupForTwoButton()
       return @showEmptyHint() if @collections.length is 0
       @renderPrivacy()

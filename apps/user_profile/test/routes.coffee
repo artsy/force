@@ -25,3 +25,7 @@ describe 'User profile routes', ->
       _.last(Backbone.sync.args)[2].success { id: 'saved-artwork' }
       @res.render.args[0][0].should.equal 'collection'
       @res.locals.sd.COLLECTION.id.should.equal 'saved-artwork'
+
+    it 'doesnt pass an empty access token so a Forbidden is shown', ->
+      routes.collection @req, @res
+      (_.last(Backbone.sync.args)[2].data.access_token?).should.not.be.ok

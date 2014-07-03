@@ -1,8 +1,9 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 Artworks = require './artworks.coffee'
-{ API_URL } = require('sharify').data
 qs = require 'querystring'
+{ API_URL } = require('sharify').data
+{ Fetch } = require 'artsy-backbone-mixins'
 
 class ArtworkCollection extends Backbone.Model
 
@@ -47,6 +48,8 @@ class ArtworkCollection extends Backbone.Model
       )(event)
 
 module.exports = class ArtworkCollections extends Backbone.Collection
+
+  _.extend @prototype, Fetch(API_URL)
 
   url: ->
     "#{API_URL}/api/v1/collections?" + qs.stringify(
@@ -106,7 +109,7 @@ module.exports = class ArtworkCollections extends Backbone.Collection
       url: @url() + '&artwork_id=' + artwork.id
       error: options.error
       success: (cols) =>
-        cols.each (c) => @get(c.id).artworks.add(artwork)
+        cols.each (c) => @get(c.id)?.artworks.add(artwork)
         options?.success?()
 
 module.exports.ArtworkCollection = ArtworkCollection
