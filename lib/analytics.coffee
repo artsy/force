@@ -66,22 +66,21 @@ module.exports.track =
     memo[kind] = (description, options={}) ->
 
       # Don't track admins
-      # return if sd.CURRENT_USER?.type == 'Admin'
+      return if sd.CURRENT_USER?.type == 'Admin'
 
       # Format and Send mixpanel event
-      return unless mixpanel?
-      options.category  = categories[kind] || categories.other
+      unless typeof mixpanel is 'undefined'
+        options.category  = categories[kind] || categories.other
 
-      _.defaults options,
-        queryString: window?.location.search
-        page: window?.location.pathname
-        referrer: document?.referrer
-        collector_level: sd.CURRENT_USER?.collector_level
-        user_id: sd.CURRENT_USER?.id
-        lab_features: sd.CURRENT_USER?.lab_features
+        _.defaults options,
+          queryString: window?.location.search
+          page: window?.location.pathname
+          referrer: document?.referrer
+          collector_level: sd.CURRENT_USER?.collector_level
+          user_id: sd.CURRENT_USER?.id
+          lab_features: sd.CURRENT_USER?.lab_features
 
-      console.log description, options
-      mixpanel.track? description, options
+        mixpanel.track? description, options
 
       # Send google analytics event
       ga? 'send', {

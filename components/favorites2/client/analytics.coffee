@@ -12,7 +12,7 @@ _.mixin require 'underscore.string'
 Cookies = require 'cookies-js'
 mediator = require '../../../lib/mediator.coffee'
 
-MODE = (Cookies.get('save-controls') or analytics.getProperty('ab:save:controls'))
+MODE = Cookies.get('save-controls') or analytics.getProperty('ab:save:controls')
 
 # Funnel 1 (NUX Onboarding modal to new set made)
 # ------------------------------------------------------------------------------
