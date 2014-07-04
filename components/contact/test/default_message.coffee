@@ -1,9 +1,10 @@
 Backbone        = require 'backbone'
 defaultMessage  = require '../default_message'
+Artwork         = require '../../../models/artwork'
 
 describe 'defaultMessage', ->
   beforeEach ->
-    @model = new Backbone.Model artist: name: 'Foo Bar'
+    @model = new Artwork artist: name: 'Foo Bar'
     @model.isPriceDisplayable = -> false
 
   it 'returns the default message if there is an artist', ->
