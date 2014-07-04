@@ -80,6 +80,10 @@ module.exports.CollectionView = class CollectionView extends Backbone.View
     'click #user-profile-collection-right-share': 'openShareModal'
     'click .artwork-item-remove': 'removeWork'
 
+  openEditModal: (e) ->
+    e.preventDefault()
+    new EditCollectionModal width: 500, collection: @artworkCollection
+
   openShareModal: ->
     new ShareModal
       width: '350px'

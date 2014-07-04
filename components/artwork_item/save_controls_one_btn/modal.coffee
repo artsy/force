@@ -21,7 +21,7 @@ module.exports = class SaveControlsModal extends ModalView
       collection: null
       artwork: @model
     @collections.on 'add', @renderInner
-    @collections.fetch success: =>
+    @collections.fetchUntilEnd success: =>
       @collections.injectArtwork @model, success: =>
         @updatePosition()
         @isLoaded()
