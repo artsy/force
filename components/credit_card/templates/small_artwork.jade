@@ -1,5 +1,5 @@
 img.line-item-image( src=artwork.defaultImageUrl() )
 .line-item-image-info
   if artwork.get('artist')
-    .artist= artwork.get('artist').name
+    .artist= artwork.artistName()
   .title!= artwork.titleAndYear()

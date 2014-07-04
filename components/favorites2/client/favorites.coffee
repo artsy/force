@@ -48,7 +48,9 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
   setup: ->
     @collections.fetchUntilEnd success: =>
       @setupForTwoButton()
-      return @showEmptyHint() if @collections.length is 0
+      if @collections.length is 0
+        @renderFirstZigZagBanner()
+        return @showEmptyHint()
       @renderPrivacy()
       @collections.fetchNextArtworksPage success: =>
         total = _.reduce @collections.map((c) -> c.artworks.length), (m, num) -> m + num

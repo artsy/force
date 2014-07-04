@@ -23,7 +23,7 @@ module.exports = class SaveControls extends Backbone.View
 
   events:
     'click .overlay-button-save:not([data-state=saved]), .circle-icon-button-save': 'save'
-    'click .overlay-button-s4ave[data-state=saved], .circle-icon-button-save[data-state=saved]': 'remove'
+    'click .overlay-button-save[data-state=saved], .circle-icon-button-save[data-state=saved]': 'remove'
     'click .save-controls-two-btn-add-to-collection, .circle-icon-button-add': 'openCollectionModal'
 
   save: (e) ->
