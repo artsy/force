@@ -51,13 +51,13 @@ describe 'Artwork Item template', ->
 
     it 'displays the artist name if available', ->
       $ = cheerio.load @html
-      $('.artwork-item-artist').text().should.equal @artwork.get('artist').name
+      $('.artwork-item-artist').text().should.equal @artwork.artistName()
       $('.artwork-item-artist a').should.have.lengthOf 0
 
     it 'links to the artist if it\'s public', ->
       @artwork.get('artist').public = true
       $ = cheerio.load render('artwork')({ artwork: @artwork })
-      $('.artwork-item-artist a').text().should.equal @artwork.get('artist').name
+      $('.artwork-item-artist a').text().should.equal @artwork.artistName()
       $('.artwork-item-artist a').attr('href').should.equal @artwork.artistLink()
 
     it 'links to the partner name', ->

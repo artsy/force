@@ -30,9 +30,9 @@ figure.artwork-item( data-artwork=artwork.get('id') )
     if artwork.has('artist')
       p.artwork-item-artist.artwork-item-overflow
         if artwork.get('artist').public
-          a.faux-underline-hover( href=artwork.artistLink() )!= artwork.get('artist').name
+          a.faux-underline-hover( href=artwork.artistLink() )!= artwork.artistName()
         else
-          != artwork.get('artist').name
+          != artwork.artistName()
     p.artwork-item-title.artwork-item-overflow!= artwork.titleAndYear()
     if artwork.partnerName()
       //- Note: if the <a..> is in a <p..> text-overflow ellipsis doesn't work

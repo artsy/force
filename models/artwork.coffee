@@ -15,6 +15,7 @@ module.exports = class Artwork extends Backbone.Model
 
   urlRoot: ->
     "#{sd.API_URL}/api/v1/artwork"
+  
   bidSuccessUrl: -> "#{@href()}/confirm-bid"
 
   initialize: ->
@@ -374,3 +375,6 @@ module.exports = class Artwork extends Backbone.Model
       medium: @get('medium')
       description: @get('blurb')
     }
+
+  artistName: ->
+    @get('artist')?.name or ''

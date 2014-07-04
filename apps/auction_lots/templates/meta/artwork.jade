@@ -10,7 +10,7 @@ if artwork.hasImage('large')
 else
   meta( property="twitter:card", content="summary" )
 if artwork.get('artist')
-  meta( property=(sd.FACEBOOK_APP_NAMESPACE + ":artist"), content=artwork.get('artist').name )
+  meta( property=(sd.FACEBOOK_APP_NAMESPACE + ":artist"), content=artwork.artistName() )
 if artwork.get('dimensions')
   meta( property=(sd.FACEBOOK_APP_NAMESPACE + ":dimensions"), content=artwork.get('dimensions') )
 if artwork.get('date')
