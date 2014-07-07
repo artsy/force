@@ -52,13 +52,16 @@ module.exports = class FavoritesView extends StepView
 
   setupFavorites: ->
     @user.initializeDefaultArtworkCollection()
+    @user.artistsFromFavorites = new Artists
     @favorites = @user.defaultArtworkCollection()
-    @listenTo @favorites, 'artworksFetched', =>
-      @favoriteArtworks = @favorites.get 'artworks'
-      @user.artistsFromFavorites = new Artists(@favoriteArtworks.map (favorite) => @artworks.get(favorite.id).get('artist'))
-      @listenToOnce @favoriteArtworks, 'add remove', @setSkipLabel, this
-      @listenTo @favoriteArtworks, 'add', (favorite) =>
-        @user.artistsFromFavorites.add @artworks.get(favorite.id).get('artist')
+    @favoriteArtworks = @favorites.get 'artworks'
+
+    @listenTo @favoriteArtworks, 'add remove', @setSkipLabel, this
+    @listenTo @favoriteArtworks, 'add', (favorite) =>
+      @user.artistsFromFavorites.add @artworks.get(favorite.id).get('artist')
+    @listenTo @favorites, 'artworksFetched', => # Called more than once
+      @user.artistsFromFavorites.add @favoriteArtworks.map (favorite) =>
+        @artworks.get(favorite.id).get 'artist'
 
   renderArtworks: ->
     @artworks.reset @artworks.shuffle(), silent: true
