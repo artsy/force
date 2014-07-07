@@ -13,8 +13,8 @@ module.exports = class SearchBarView extends Backbone.View
     return unless @$el.length
 
     # Search takes a fair_id param specific to fairs. Doesn't work for other models
-    { @mode, @restrictType, @$input, @fairId, @includePrivateResults, @limit } =
-      _.defaults(options, limit: 10)
+    { @mode, @restrictType, @$input, @fairId, @includePrivateResults, @limit, @autoselect } =
+      _.defaults options, limit: 10, autoselect: false
 
     @$input ?= @$('input')
     throw new Error('Requires an input field') unless @$input?
@@ -94,12 +94,12 @@ module.exports = class SearchBarView extends Backbone.View
       @$input.on "typeahead:#{action}", (args...) =>
         @trigger "search:#{action}", args...
 
-    @$input.typeahead null,
-      template   : 'custom'
-      templates  : suggestion: @suggestionTemplate
-      displayKey : 'value'
-      name       : _.uniqueId 'search'
-      source     : @setupBloodHound().ttAdapter()
+    @$input.typeahead { autoselect: @autoselect },
+      template: 'custom'
+      templates: suggestion: @suggestionTemplate
+      displayKey: 'value'
+      name: _.uniqueId 'search'
+      source: @setupBloodHound().ttAdapter()
 
   clear: ->
     @$input.typeahead 'val', ''
