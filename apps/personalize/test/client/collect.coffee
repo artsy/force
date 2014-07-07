@@ -36,5 +36,14 @@ describe 'CollectView', ->
   describe '#render', ->
     it 'renders the template', ->
       html = @view.$el.html()
+      html.should.include '60-Second Sign Up'
       _.each @state.get('levels'), (level) ->
         html.should.include level
+
+  describe 'reonboarding', ->
+    beforeEach ->
+      @state.set 'reonboarding', true
+      @view.render()
+
+    it 'does not render the onboarding copy', ->
+      @view.$el.html().should.not.include '60-Second Sign Up'

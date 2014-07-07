@@ -1,7 +1,8 @@
 i.icon-logotype.personalize-initial-logotype
 
 header.personalize-header
-  h2 60-Second Sign Up:
+  unless state.get('reonboarding')
+    h2 60-Second Sign Up:
   h1 Do you buy art?
 
 section.personalize-step
