@@ -76,7 +76,7 @@ describe 'CategoriesView', ->
     beforeEach ->
       @html = @view.$el.html()
     it 'renders the featured categories', ->
-      @html.should.include 'src="a/original'
+      @html.should.include 'url(a/original)'
       @html.should.include '<h3>A</h3>'
       @html.should.include 'data-id="a"'
 
