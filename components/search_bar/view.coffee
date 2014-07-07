@@ -1,11 +1,10 @@
-_           = require 'underscore'
-Backbone    = require 'backbone'
-sd          = require('sharify').data
-Search      = require './collections/search.coffee'
-mediator    = require '../../lib/mediator.coffee'
-analytics   = require '../../lib/analytics.coffee'
-{ fill }    = require '../../lib/resizer.coffee'
-
+_ = require 'underscore'
+Backbone = require 'backbone'
+sd = require('sharify').data
+Search = require './collections/search.coffee'
+mediator = require '../../lib/mediator.coffee'
+analytics = require '../../lib/analytics.coffee'
+{ fill } = require '../../lib/resizer.coffee'
 itemTemplate = -> require('./templates/item.jade') arguments...
 
 module.exports = class SearchBarView extends Backbone.View
@@ -20,20 +19,20 @@ module.exports = class SearchBarView extends Backbone.View
     throw new Error('Requires an input field') unless @$input?
 
     @search = new Search
-      restrictType : @restrictType
-      mode         : @mode
-      fairId       : @fairId
+      restrictType: @restrictType
+      mode: @mode
+      fairId: @fairId
 
-    @on 'search:start',    @indicateLoading
+    @on 'search:start', @indicateLoading
     @on 'search:complete', @concealLoading
-    @on 'search:opened',   @displaySuggestions
-    @on 'search:closed',   @hideSuggestions
+    @on 'search:opened', @displaySuggestions
+    @on 'search:closed', @hideSuggestions
 
     @setupTypeahead()
 
   events:
-    'keyup input' : 'checkSubmission'
-    'focus input' : 'trackFocusInput'
+    'keyup input': 'checkSubmission'
+    'focus input': 'trackFocusInput'
 
   trackFocusInput: ->
     analytics.track.click "Focused on search input"
@@ -70,15 +69,15 @@ module.exports = class SearchBarView extends Backbone.View
 
   setupBloodHound: ->
     @hound = new Bloodhound
-      limit          : @limit
-      datumTokenizer : Bloodhound.tokenizers.obj.whitespace 'value'
-      queryTokenizer : Bloodhound.tokenizers.whitespace
+      limit: @limit
+      datumTokenizer: Bloodhound.tokenizers.obj.whitespace 'value'
+      queryTokenizer: Bloodhound.tokenizers.whitespace
       remote:
-        url    : "#{@search._url()}&term=%QUERY"
-        filter : (results) =>
+        url: "#{@search._url()}&term=%QUERY"
+        filter: (results) =>
           @trackSearchResults results
           @search._parse results
-        ajax   :
+        ajax:
           beforeSend: (xhr) =>
             xhr.setRequestHeader 'X-XAPP-TOKEN', sd.ARTSY_XAPP_TOKEN
             @trigger 'search:start', xhr
@@ -107,8 +106,8 @@ module.exports = class SearchBarView extends Backbone.View
   selectResult: (e, model) ->
     return false unless model and model.get('published')
     analytics.track.click 'Selected item from search',
-      query : @query
-      label : analytics.modelNameAndIdToLabel model.get('display_model'), model.id
+      query: @query
+      label: analytics.modelNameAndIdToLabel model.get('display_model'), model.id
     @selected = true
     window.location = model.get 'location'
 
