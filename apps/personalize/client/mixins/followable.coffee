@@ -19,6 +19,7 @@ module.exports =
       restrictType : options.restrictType
       el           : @$('#personalize-search-container')
       $input       : @$searchInput ?= @$('#personalize-search')
+      autoselect   : true
 
     @listenTo @searchBarView, 'search:selected', @follow
 
