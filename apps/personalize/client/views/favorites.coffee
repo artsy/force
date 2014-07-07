@@ -76,6 +76,7 @@ module.exports = class FavoritesView extends StepView
       seeMore: false
       artworkSize: 'tall'
       currentUser: @user
+      displayPrice: false
     @disableArtworkLinks()
     @fadeInHearts()
 
