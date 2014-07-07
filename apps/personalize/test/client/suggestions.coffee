@@ -49,7 +49,7 @@ describe 'SuggestionsView', ->
     it 'renders the template', ->
       html = @view.$el.html()
       html.should.include 'Follow galleries on Artsy'
-      html.should.include 'Receive notifications on upcoming shows and fairs'
+      html.should.include 'Receive notifications of upcoming shows and fairs'
       html.should.include 'Type your favorite gallery name'
       html.should.include 'Below are galleries we think you’ll enjoy based on artists you follow and your location,'
       html.should.include 'New York'
