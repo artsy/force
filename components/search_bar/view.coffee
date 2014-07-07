@@ -25,6 +25,7 @@ module.exports = class SearchBarView extends Backbone.View
 
     @on 'search:start', @indicateLoading
     @on 'search:complete', @concealLoading
+    @on 'search:complete', @maybeHighlight
     @on 'search:opened', @displaySuggestions
     @on 'search:closed', @hideSuggestions
 
@@ -46,6 +47,12 @@ module.exports = class SearchBarView extends Backbone.View
 
   concealLoading: ->
     @$el.removeClass 'is-loading'
+
+  # Adds a highlight class if autoselect is true
+  # (rather than actually moving the cursor down
+  # which would overwrite the user's typing)
+  maybeHighlight: ->
+    @$('.tt-suggestion:first').addClass('tt-cursor') if @autoselect
 
   shouldDisplaySuggestions: ->
     _.isEmpty(_.trim(@$input.val()))
