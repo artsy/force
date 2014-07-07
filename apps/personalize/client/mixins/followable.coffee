@@ -20,6 +20,7 @@ module.exports =
       el           : @$('#personalize-search-container')
       $input       : @$searchInput ?= @$('#personalize-search')
       autoselect   : true
+      displayKind  : false
 
     @listenTo @searchBarView, 'search:selected', @follow
 

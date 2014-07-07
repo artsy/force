@@ -12,8 +12,8 @@ module.exports = class SearchBarView extends Backbone.View
     return unless @$el.length
 
     # Search takes a fair_id param specific to fairs. Doesn't work for other models
-    { @mode, @restrictType, @$input, @fairId, @includePrivateResults, @limit, @autoselect } =
-      _.defaults options, limit: 10, autoselect: false
+    { @mode, @restrictType, @$input, @fairId, @includePrivateResults, @limit, @autoselect, @displayModel } =
+      _.defaults options, limit: 10, autoselect: false, displayKind: true
 
     @$input ?= @$('input')
     throw new Error('Requires an input field') unless @$input?
@@ -57,7 +57,7 @@ module.exports = class SearchBarView extends Backbone.View
     @$el.removeClass 'is-open'
 
   suggestionTemplate: (item) =>
-    itemTemplate fill: fill, item: item
+    itemTemplate fill: fill, item: item, displayModel: @displayModel
 
   announceQuery: (query) ->
     mediator.trigger 'search:doge'     if query is 'doge'
