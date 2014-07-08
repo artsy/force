@@ -3,8 +3,8 @@
 # Examples could include a year in review or a stumble upon page.
 #
 # Why not just drop in a bunch of .html files on S3 and use shortcuts?
-# Who wants to write html! This lets us be lazy about easily leveraging existing
-# UI components and preprocessors like stylus/jade. ༼;´༎ຶ ۝ ༎ຶ༽
+# Who wants to write html!? This lets us be lazy about easily leveraging
+# existing UI components and preprocessors like stylus/jade. ༼;´༎ຶ ۝ ༎ຶ༽
 #
 
 express = require 'express'
