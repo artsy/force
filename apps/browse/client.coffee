@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-iframePopover = require '../../components/iframe_popover/index.coffee'
+scrollFrame = require 'scroll-frame'
 FilterArtworksView = require '../../components/filter/artworks/view.coffee'
 { API_URL } = require('sharify').data
 
@@ -10,7 +10,7 @@ module.exports.index = ->
     countsUrl: "#{API_URL}/api/v1/search/filtered/main/suggest"
     urlRoot: "browse"
   Backbone.history.start pushState: true
-  iframePopover $('#browse-filter .filter-artworks')
+  scrollFrame '#browse-filter .filter-artworks a'
   params.trigger 'reset'
 
 module.exports.categories = ->

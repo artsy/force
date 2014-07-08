@@ -8,7 +8,7 @@ ShareView = require '../../components/share/view.coffee'
 RelatedGenesView = require '../../components/related_genes/view.coffee'
 FilterArtworksView = require '../../components/filter/artworks/view.coffee'
 { GENE, CURRENT_USER, API_URL } = require('sharify').data
-iframePopover = require '../../components/iframe_popover/index.coffee'
+scrollFrame = require 'scroll-frame'
 BlurbView = require '../../components/blurb/view.coffee'
 RelatedArtistsTemplate = -> require('./templates/related_artists.jade') arguments...
 
@@ -105,4 +105,4 @@ module.exports.init = ->
     el: $ 'body'
     model: gene
   Backbone.history.start pushState: true
-  iframePopover $('#gene-filter')
+  scrollFrame '#gene-filter a'

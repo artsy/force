@@ -13,7 +13,7 @@ describe 'AboutRouter', ->
       { @index } = mod = rewire '../client.coffee'
       sinon.stub Backbone.history, 'start'
       stubChildClasses mod, @,
-        ['FilterArtworksView', 'iframePopover']
+        ['FilterArtworksView', 'scrollFrame']
         []
       @FilterArtworksView::params = new Backbone.Model
       done()
