@@ -182,6 +182,7 @@ module.exports = (app) ->
   app.use require "../apps/user"
   app.use require "../apps/style_guide"
   app.use require "../apps/auth"
+  app.use require "../apps/static"
   # Shortcuts are prioritized last
   app.use require "../apps/shortcuts"
 
