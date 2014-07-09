@@ -5,6 +5,6 @@ a.mlsb-suggestion( class=item.publishedClass()  )
   span.mlsb-suggestion-value
     span.mlsb-suggestion-display
       = item.display()
-    if item.get('model')
+    if item.get('model') && displayKind
       em.mlsb-suggestion-kind
         = item.displayModel()

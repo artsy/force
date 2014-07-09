@@ -163,6 +163,7 @@ module.exports = class ArtworkColumns extends Backbone.View
       displayAuctionPrice : displayAuctionPrice
       estimate            : estimate
       artworkSize         : @artworkSize
+      displayPrice        : @displayPrice
     $renderedArtwork = $(renderedArtwork)
     @$(".artwork-column:eq(#{column})").append $renderedArtwork
     $renderedArtwork

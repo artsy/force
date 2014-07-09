@@ -1,11 +1,10 @@
-_           = require 'underscore'
-Backbone    = require 'backbone'
-sd          = require('sharify').data
-Search      = require './collections/search.coffee'
-mediator    = require '../../lib/mediator.coffee'
-analytics   = require '../../lib/analytics.coffee'
-{ fill }    = require '../../lib/resizer.coffee'
-
+_ = require 'underscore'
+Backbone = require 'backbone'
+sd = require('sharify').data
+Search = require './collections/search.coffee'
+mediator = require '../../lib/mediator.coffee'
+analytics = require '../../lib/analytics.coffee'
+{ fill } = require '../../lib/resizer.coffee'
 itemTemplate = -> require('./templates/item.jade') arguments...
 
 module.exports = class SearchBarView extends Backbone.View
@@ -13,27 +12,28 @@ module.exports = class SearchBarView extends Backbone.View
     return unless @$el.length
 
     # Search takes a fair_id param specific to fairs. Doesn't work for other models
-    { @mode, @restrictType, @$input, @fairId, @includePrivateResults, @limit } =
-      _.defaults(options, limit: 10)
+    { @mode, @restrictType, @$input, @fairId, @includePrivateResults, @limit, @autoselect, @displayModel } =
+      _.defaults options, limit: 10, autoselect: false, displayKind: true
 
     @$input ?= @$('input')
     throw new Error('Requires an input field') unless @$input?
 
     @search = new Search
-      restrictType : @restrictType
-      mode         : @mode
-      fairId       : @fairId
+      restrictType: @restrictType
+      mode: @mode
+      fairId: @fairId
 
-    @on 'search:start',    @indicateLoading
+    @on 'search:start', @indicateLoading
     @on 'search:complete', @concealLoading
-    @on 'search:opened',   @displaySuggestions
-    @on 'search:closed',   @hideSuggestions
+    @on 'search:complete', @maybeHighlight
+    @on 'search:opened', @displaySuggestions
+    @on 'search:closed', @hideSuggestions
 
     @setupTypeahead()
 
   events:
-    'keyup input' : 'checkSubmission'
-    'focus input' : 'trackFocusInput'
+    'keyup input': 'checkSubmission'
+    'focus input': 'trackFocusInput'
 
   trackFocusInput: ->
     analytics.track.click "Focused on search input"
@@ -48,6 +48,12 @@ module.exports = class SearchBarView extends Backbone.View
   concealLoading: ->
     @$el.removeClass 'is-loading'
 
+  # Adds a highlight class if autoselect is true
+  # (rather than actually moving the cursor down
+  # which would overwrite the user's typing)
+  maybeHighlight: ->
+    @$('.tt-suggestion:first').addClass('tt-cursor') if @autoselect
+
   shouldDisplaySuggestions: ->
     _.isEmpty(_.trim(@$input.val()))
 
@@ -58,7 +64,7 @@ module.exports = class SearchBarView extends Backbone.View
     @$el.removeClass 'is-open'
 
   suggestionTemplate: (item) =>
-    itemTemplate fill: fill, item: item
+    itemTemplate fill: fill, item: item, displayModel: @displayModel
 
   announceQuery: (query) ->
     mediator.trigger 'search:doge'     if query is 'doge'
@@ -70,15 +76,15 @@ module.exports = class SearchBarView extends Backbone.View
 
   setupBloodHound: ->
     @hound = new Bloodhound
-      limit          : @limit
-      datumTokenizer : Bloodhound.tokenizers.obj.whitespace 'value'
-      queryTokenizer : Bloodhound.tokenizers.whitespace
+      limit: @limit
+      datumTokenizer: Bloodhound.tokenizers.obj.whitespace 'value'
+      queryTokenizer: Bloodhound.tokenizers.whitespace
       remote:
-        url    : "#{@search._url()}&term=%QUERY"
-        filter : (results) =>
+        url: "#{@search._url()}&term=%QUERY"
+        filter: (results) =>
           @trackSearchResults results
           @search._parse results
-        ajax   :
+        ajax:
           beforeSend: (xhr) =>
             xhr.setRequestHeader 'X-XAPP-TOKEN', sd.ARTSY_XAPP_TOKEN
             @trigger 'search:start', xhr
@@ -94,12 +100,12 @@ module.exports = class SearchBarView extends Backbone.View
       @$input.on "typeahead:#{action}", (args...) =>
         @trigger "search:#{action}", args...
 
-    @$input.typeahead null,
-      template   : 'custom'
-      templates  : suggestion: @suggestionTemplate
-      displayKey : 'value'
-      name       : _.uniqueId 'search'
-      source     : @setupBloodHound().ttAdapter()
+    @$input.typeahead { autoselect: @autoselect },
+      template: 'custom'
+      templates: suggestion: @suggestionTemplate
+      displayKey: 'value'
+      name: _.uniqueId 'search'
+      source: @setupBloodHound().ttAdapter()
 
   clear: ->
     @$input.typeahead 'val', ''
@@ -107,8 +113,8 @@ module.exports = class SearchBarView extends Backbone.View
   selectResult: (e, model) ->
     return false unless model and model.get('published')
     analytics.track.click 'Selected item from search',
-      query : @query
-      label : analytics.modelNameAndIdToLabel model.get('display_model'), model.id
+      query: @query
+      label: analytics.modelNameAndIdToLabel model.get('display_model'), model.id
     @selected = true
     window.location = model.get 'location'
 

@@ -24,9 +24,9 @@ module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Rout
     'personalize/:step': 'step'
 
   initialize: (options) ->
-    { @user } = options
+    { @user, @reonboarding } = options
 
-    @state  = new PersonalizeState user: @user
+    @state  = new PersonalizeState user: @user, reonboarding: @reonboarding
     @$el    = $('#personalize-page')
 
     @listenTo @state, 'transition:next', @next
@@ -70,8 +70,9 @@ module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Rout
       window.location = @redirectLocation()
 
 module.exports.init = ->
+  reonboarding = /reonboarding/.test(window.location.search)
   user = CurrentUser.orNull()
   return unless user
   user.approximateLocation success: -> user.save()
-  new PersonalizeRouter user: user
+  new PersonalizeRouter user: user, reonboarding: reonboarding
   Backbone.history.start pushState: true

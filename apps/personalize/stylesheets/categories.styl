@@ -1,3 +1,5 @@
+category-size = 400px
+
 #personalize-categories
 #personalize-category-anything-else
   max-width 950px
@@ -17,13 +19,20 @@
 #personalize-categories
   position relative
   min-height 200px
+  max-width (category-size * 2) + 80px
 
 .personalize-category
+  margin 20px
+  display inline-block
+  width category-size
+
+.personalize-category-image
+  width category-size
+  height @width
   margin 20px 0
-  border-bottom 1px solid gray-lighter-color
-  &:first-child
-    padding-top 20px
-    border-top 1px solid gray-lighter-color
+  background-color gray-lighter-color
+  background-size cover
+  background-position center center
 
 .personalize-category-metadata
   position relative

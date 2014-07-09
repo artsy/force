@@ -3,6 +3,7 @@
 - displayPurchase = displayPurchase || false
 - showBlurbs = showBlurbs || false
 - isAuction = isAuction || (set && set.get('type') === 'auction artworks') || false
+- displayPrice != null ? displayPrice : displayPrice = true
 
 figure.artwork-item( data-artwork=artwork.get('id') )
   .artwork-item-image-container
@@ -42,7 +43,7 @@ figure.artwork-item( data-artwork=artwork.get('id') )
         else
           != artwork.partnerName()
 
-    if artwork.saleMessage()
+    if artwork.saleMessage() && displayPrice
       p.artwork-item-sale-price!= artwork.saleMessage()
 
     if artwork.has('saleArtwork') && isAuction

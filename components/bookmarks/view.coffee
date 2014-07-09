@@ -29,26 +29,13 @@ module.exports = class BookmarksView extends Backbone.View
     @following = new Following null, kind: 'artist'
 
     @autocomplete = new SearchBarView
-      el    : @$('#bookmark-artists-search')
-      mode  : 'artists'
-      limit : @limit
+      el: @$('#bookmark-artists-search')
+      mode: 'artists'
+      limit: @limit
+      autoselect: true
 
     @listenTo @autocomplete, 'search:selected', @collect
     @listenTo @bookmarks, 'sync add remove', @renderCollection
-
-    @autocomplete.$input.on 'keydown', @trapEnter
-
-  # Hack for dealing with enter event in Typeahead:
-  # (apparently an option for this is coming in the next release)
-  # Trap the enter event, manaully trigger down, then tab select
-  # that result, then return false
-  trapEnter: (event) =>
-    if event.which is 13
-      (down = $.Event 'keydown').keyCode = down.which = 40
-      @autocomplete.$input.triggerHandler down
-      (tab = $.Event 'keydown').keyCode = tab.which = 9
-      @autocomplete.$input.triggerHandler tab
-      false
 
   collect: (e, model) ->
     @trigger 'collect'

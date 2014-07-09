@@ -1,6 +1,7 @@
 .personalize-category
+  h3= category.get('title')
   if category.get('image_versions')
-    img( src=category.get('image_url').replace(':version', 'original') )
-  .personalize-category-metadata
-    h3= category.get('title')
-    a.avant-garde-button-white.follow-button( data-id="#{category.get('gene_id')}" )
+    .personalize-category-image(
+      style="background-image: url(#{category.get('image_url').replace(':version', 'original')});"
+    )
+  a.avant-garde-button-white.is-block.follow-button( data-id="#{category.get('gene_id')}" )

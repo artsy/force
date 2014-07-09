@@ -14,7 +14,7 @@ suggestionTemplates =
 
 module.exports = class CategoriesView extends StepView
   keys:
-    featured  : 'personalize:featured-suggested-categories'
+    featured  : 'personalize:featured-suggested-categories-updated'
     secondary : 'personalize:secondary-suggested-categories'
 
   setSkipLabel: setSkipLabel

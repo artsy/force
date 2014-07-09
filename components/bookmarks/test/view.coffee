@@ -86,17 +86,6 @@ describe 'BookmarksView', ->
       @view.$('.bookmark-artist-remove').click()
       @view.following.length.should.equal 0
 
-  describe '#trapEnter', ->
-    beforeEach ->
-      sinon.stub @view.autocomplete.$input, 'triggerHandler'
-      (@enter = $.Event 'keydown').keyCode = @enter.which = 13
-
-    it 'traps the enter keydown and selects the first result', ->
-      @view.trapEnter @enter
-      @view.autocomplete.$input.triggerHandler.callCount.should.equal 2
-      @view.autocomplete.$input.triggerHandler.args[0][0].which.should.equal 40
-      @view.autocomplete.$input.triggerHandler.args[1][0].which.should.equal 9
-
   describe 'when persist is false', ->
     beforeEach ->
       Backbone.sync.restore()
