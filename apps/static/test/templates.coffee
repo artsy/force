@@ -1,6 +1,7 @@
 jade = require 'jade'
 path = require 'path'
 fs = require 'fs'
+Page = require '../../../models/page'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../templates/#{templateName}.jade"
@@ -12,5 +13,5 @@ render = (templateName) ->
 describe 'Future of Art', ->
 
   it 'includes a link to the WSJ article', ->
-    render('future_of_art')(sd: {}).should
+    render('future_of_art')(sd: {}, page: new Page()).should
       .include "online.wsj.com/articles/carter-cleveland"
