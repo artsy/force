@@ -57,12 +57,14 @@ else
   #settings-profile-advanced-container.grouped-section
     .gs-header
       h2 Advanced Settings
-      p You can adjust what part of your profile you would like to share publically
     .gs-body: .gs-constrain
       #settings-profile-advanced
         form
           .settings-split
-            .ss-left.settings-checkbox-label Enable Public Favorites
+            .ss-left.settings-checkbox-label
+              | Enable Public Favorites
+              br
+              em Allows others to view the artworks you save
             .ss-right: .artsy-checkbox
               input(
                 type='checkbox'
