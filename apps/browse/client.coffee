@@ -10,7 +10,7 @@ module.exports.index = ->
     countsUrl: "#{API_URL}/api/v1/search/filtered/main/suggest"
     urlRoot: "browse"
   Backbone.history.start pushState: true
-  scrollFrame '#browse-filter .filter-artworks a'
+  scrollFrame '#browse-filter a'
   params.trigger 'reset'
 
 module.exports.categories = ->

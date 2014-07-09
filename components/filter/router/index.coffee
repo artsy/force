@@ -18,4 +18,5 @@ module.exports = class FilterRouter extends Backbone.Router
 
   artworks: ->
     queryParams = qs.parse(location.search.replace(/^\?/, ''))
-    @params.set(_.extend queryParams, { page: 1, size: 10 }).trigger('reset')
+    params = _.extend queryParams, { page: 1, size: 10 }
+    @params.set(params, silent: true)
