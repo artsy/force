@@ -14,6 +14,7 @@ Profile           = require '../../../models/profile.coffee'
 Fair              = require '../../../models/fair.coffee'
 { FavoritesView } = require '../../../components/favorites/client/favorites.coffee'
 { FollowsView }   = require '../../../components/favorites/client/follows.coffee'
+scrollFrame       = require 'scroll-frame'
 
 module.exports.FairView = class FairView extends Backbone.View
   _.extend @prototype, SearchBar
@@ -70,8 +71,7 @@ module.exports.init = ->
     Backbone.history.start pushState: true
 
     # Links in the browse section keep your scroll position
-    iframePopover = require '../../../components/iframe_popover/index.coffee'
-    iframePopover $('#fair-browse .feed')
+    scrollFrame '#fair-browse a'
 
   # Checks to see if the href is an internal link to:
   # an artwork, artist, show, or post

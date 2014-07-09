@@ -1552,6 +1552,10 @@
       "version": "0.0.15",
       "from": "humanparser@",
       "resolved": "https://registry.npmjs.org/humanparser/-/humanparser-0.0.15.tgz"
+    },
+    "scroll-frame": {
+      "version": "0.0.4",
+      "from": "scroll-frame@*"
     }
   }
 }

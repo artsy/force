@@ -5,7 +5,8 @@ link( rel='icon', type='image/png', href=(sd.ASSET_PATH + 'favicon.ico') )
 link( rel='search', type='application/opensearchdescription+xml', href=(sd.ASSET_PATH + 'opensearch.xml'), title='Artsy' )
 meta( name='msapplication-config', content=(sd.ASSET_PATH + 'browserconfig.xml') )
 meta( name='viewport', content='user-scalable=0, width=device-width' )
-include ../../iframe_popover/head_script
+script
+  include ../../../node_modules/scroll-frame/scroll-frame-head.js
 if sd.NODE_ENV != 'test' && sd.NODE_ENV != 'development' && newrelic
   != newrelic.getBrowserTimingHeader()
 //- Mixpanel wants to include it's script in the head b/c it async downloads

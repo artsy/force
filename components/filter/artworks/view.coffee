@@ -59,6 +59,9 @@ module.exports = class FilterArtworksView extends Backbone.View
       @artworks.fetch { data: @params.toJSON(), remove: false }
     $.onInfiniteScroll @nextPage
 
+    # Ensure things kick off on initialize
+    _.defer => @params.trigger 'reset'
+
   render: (col, res) =>
     @$('.filter-artworks').attr 'data-state',
       if @artworks.length is 0 then 'no-results'

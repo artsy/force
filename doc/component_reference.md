@@ -440,21 +440,6 @@ Example usage:
       el: @$('.artist-info-section .related-genes')
 ```
 
-## Iframe Popover
-
-A utility that lets you keep your scroll position with some seriously unorthodox tricks.
-
-````coffeescript
-iframePopover = require '../../../components/iframe_popover/index.coffee'
-
-# Links in the browse section keep your scroll position
-iframePopover $('#fair-browse')
-````
-
-The iframe popover will hijack clicks to `a[href]`s and render the next page in an iframe that sits on top of, and locks the scroll position of, the body behind it. It also hooks up a router to remove the iframe when going backwards and refreshes the page when going forwards. This creates the illusion of retaining your scroll position between pages.
-
-The main layout component is wired up to use the iframe popover so you should only need to require the `index.coffee` function and indicate which element you want to listen for `a[href]` clicks on.
-
 ## Partner Buttons
 
 Buttons used for common actions among partners such as following them or contacting them for a show inquiry.

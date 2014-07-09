@@ -41,7 +41,8 @@
     "static-favicon": "*",
     "morgan": "*",
     "forever": "*",
-    "humanparser": "*"
+    "humanparser": "*",
+    "scroll-frame": "*"
   },
   "devDependencies": {
     "browserify": "*",
