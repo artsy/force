@@ -11,6 +11,7 @@ describe 'FilterArtworksView', ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
+      sinon.stub _, 'defer'
       FilterArtworksView = benv.require resolve __dirname, '../view'
       for klass in ['ArtworkColumnsView', 'FilterSortCount', 'FilterFixedHeader', 'FilterRouter']
         @[klass] = (opts) -> _.extend @, opts
@@ -27,6 +28,7 @@ describe 'FilterArtworksView', ->
 
   afterEach ->
     Backbone.sync.restore()
+    _.defer.restore()
     benv.teardown()
 
   describe '#initialize', ->
