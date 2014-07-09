@@ -19,5 +19,5 @@ app.get '/future-of-art', (req, res) ->
     cache: true
     error: res.backboneError
     success: (page) ->
-    res.render 'future_of_art', page: page
+      res.render 'future_of_art', page: page
 app.use express.static __dirname + "/public"
