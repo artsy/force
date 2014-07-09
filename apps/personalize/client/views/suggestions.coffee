@@ -144,9 +144,10 @@ module.exports = class SuggestionsView extends StepView
     new Backbone.Collection().fetch
       url: "#{sd.API_URL}/api/v1/me/follow/profiles?auto=1&size=48"
       success: (collection, response, options) =>
-        @followsToSuggestions collection
-        @following.syncFollows @suggestions.pluck 'id'
-        @renderSuggestions()
+        if response.length
+          @followsToSuggestions collection
+          @following.syncFollows @suggestions.pluck 'id'
+          @renderSuggestions()
 
   followsToSuggestions: (collection) ->
     @suggestions.reset _.filter collection.pluck('profile'), (profile) =>

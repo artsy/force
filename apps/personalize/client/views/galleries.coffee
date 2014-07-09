@@ -19,10 +19,15 @@ module.exports = class GalleriesView extends SuggestionsView
   fetchAndRenderSuggestions: (options = {}) ->
     @suggestions = new Profiles
     if @state.get 'reonboarding'
-      @fetchAutoFollowedProfiles()
+      @fetchAutoFollowedProfiles().then (response) =>
+        # Fallback if the user doesn't actually have auto-follows
+        @actuallyFetchSuggestions() unless response.length
     else
-      @suggestions.url = "#{sd.API_URL}/api/v1/me/suggested/profiles"
-      @suggestions.fetch success: =>
-        @following.followAll @suggestions.pluck('id')
-        @following.unfollowAll(@existingSuggestions) if @existingSuggestions?
-        @renderSuggestions()
+      @actuallyFetchSuggestions()
+
+  actuallyFetchSuggestions: ->
+    @suggestions.url = "#{sd.API_URL}/api/v1/me/suggested/profiles"
+    @suggestions.fetch success: =>
+      @following.followAll @suggestions.pluck('id')
+      @following.unfollowAll(@existingSuggestions) if @existingSuggestions?
+      @renderSuggestions()
