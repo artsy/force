@@ -1,13 +1,13 @@
-_                             = require 'underscore'
-Backbone                      = require 'backbone'
-StepView                      = require './step.coffee'
-mediator                      = require '../../../../lib/mediator.coffee'
-Followable                    = require '../mixins/followable.coffee'
-Partner                       = require '../../../../models/partner.coffee'
-LocationModalView             = require '../../components/location_modal/index.coffee'
-{ FollowButton, Following }   = require '../../../../components/follow_button/index.coffee'
-analytics                     = require '../../../../lib/analytics.coffee'
-
+_ = require 'underscore'
+sd = require('sharify').data
+Backbone = require 'backbone'
+StepView = require './step.coffee'
+mediator = require '../../../../lib/mediator.coffee'
+Followable = require '../mixins/followable.coffee'
+Partner = require '../../../../models/partner.coffee'
+LocationModalView = require '../../components/location_modal/index.coffee'
+{ FollowButton, Following } = require '../../../../components/follow_button/index.coffee'
+analytics = require '../../../../lib/analytics.coffee'
 suggestedTemplate = -> require('../../templates/suggested_profiles.jade') arguments...
 
 module.exports = class SuggestionsView extends StepView
@@ -139,6 +139,18 @@ module.exports = class SuggestionsView extends StepView
       else
         $target.hide()
     analytics.track.click "Clicked for next page on personalize #{@kind} suggestions"
+
+  fetchAutoFollowedProfiles: ->
+    new Backbone.Collection().fetch
+      url: "#{sd.API_URL}/api/v1/me/follow/profiles?auto=1&size=48"
+      success: (collection, response, options) =>
+        @followsToSuggestions collection
+        @following.syncFollows @suggestions.pluck 'id'
+        @renderSuggestions()
+
+  followsToSuggestions: (collection) ->
+    @suggestions.reset _.filter collection.pluck('profile'), (profile) =>
+      profile.owner_type is @restrictType
 
   remove: ->
     @searchBarView?.remove()

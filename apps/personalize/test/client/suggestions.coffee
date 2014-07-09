@@ -136,3 +136,43 @@ describe 'SuggestionsView', ->
         @view.followButtonViews   = undefined
         @view.remove()
         done()
+
+  describe '#fetchAutoFollowedProfiles', ->
+    beforeEach ->
+      Backbone.sync.restore()
+      sinon.stub GalleriesView::, 'renderSuggestions'
+      follow1 = profile: id: 'foo', owner_type: @view.restrictType
+      follow2 = profile: id: 'bar', owner_type: @view.restrictType
+      sinon.stub(Backbone, 'sync').yieldsTo('success', [follow1, follow2])
+
+    afterEach ->
+      @view.renderSuggestions.restore()
+
+    it 'fetches the follows and renders suggestions', ->
+      @view.fetchAutoFollowedProfiles()
+      Backbone.sync.args[0][0].should.equal 'read'
+      Backbone.sync.args[0][2].url.should.include '/api/v1/me/follow/profiles?auto=1&size=48'
+      @view.suggestions.length.should.equal 2
+      @view.renderSuggestions.called.should.be.ok
+
+  describe '#followsToSuggestions', ->
+    beforeEach ->
+      @view.suggestions.reset()
+
+    it 'takes a collection of follows and converts it to suggestions', ->
+      @view.suggestions.length.should.equal 0
+      follow1 = profile: id: 'foo', owner_type: @view.restrictType
+      follow2 = profile: id: 'bar', owner_type: @view.restrictType
+      collection = new Backbone.Collection [follow1, follow2]
+      @view.followsToSuggestions collection
+      @view.suggestions.length.should.equal 2
+      @view.suggestions.first().id.should.equal 'foo'
+      @view.suggestions.last().id.should.equal 'bar'
+
+    it 'filters out results with non-matching restrictTypes', ->
+      follow1 = profile: id: 'bar', owner_type: @view.restrictType
+      follow2 = profile: id: 'baz', owner_type: 'PartnerMuseum'
+      collection = new Backbone.Collection [follow1, follow2]
+      @view.followsToSuggestions collection
+      @view.suggestions.length.should.equal 1
+      @view.suggestions.first().id.should.equal 'bar'
