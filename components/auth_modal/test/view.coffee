@@ -82,3 +82,8 @@ describe 'AuthModalView', ->
       @view.state.set mode: 'login'
       @view.submit $.Event('click')
       _.last(@AuthModalView.__get__('Cookies').set.args)[1].should.be.true
+
+    it 'redirects to /personalize when mode is register by default', ->
+      @view.state.set mode: 'register'
+      @view.submit $.Event('click')
+      location.href.should.include '/personalize'

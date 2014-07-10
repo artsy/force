@@ -15,8 +15,6 @@ module.exports = class AuthModalView extends ModalView
 
   className: 'auth'
 
-  redirectTo: '/personalize'
-
   template: ->
     templateMap[@state.get 'mode'] arguments...
 
@@ -94,12 +92,12 @@ module.exports = class AuthModalView extends ModalView
       switch @state.get('mode')
         when 'login'
           Cookies.set('signed_in', true, expires: 60 * 60 * 24 * 7)
-          if @redirectTo and @redirectTo != '/personalize'
+          if @redirectTo
             location.href = @redirectTo
           else
             location.reload()
         when 'register'
-          location.href = @redirectTo
+          location.href = @redirectTo or '/personalize'
         when 'forgot'
           mediator.trigger 'auth:change:mode', 'reset'
 
