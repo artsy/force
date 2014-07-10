@@ -81,7 +81,7 @@ describe 'SuggestionsView', ->
 
     it 'fetches the suggestions', ->
       Backbone.sync.args[0][0].should.equal 'read'
-      Backbone.sync.args[0][1].url.should.include '/api/v1/me/suggested/profiles'
+      Backbone.sync.args[0][2].url.should.include '/api/v1/me/suggested/profiles'
 
     describe '#renderSuggestions', ->
       it 'renders the suggestions', ->
@@ -143,7 +143,8 @@ describe 'SuggestionsView', ->
       sinon.stub GalleriesView::, 'renderSuggestions'
       follow1 = profile: id: 'foo', owner_type: @view.restrictType
       follow2 = profile: id: 'bar', owner_type: @view.restrictType
-      sinon.stub(Backbone, 'sync').yieldsTo('success', [follow1, follow2])
+      follow3 = profile: id: 'baz', owner_type: 'PartnerMuseum'
+      sinon.stub(Backbone, 'sync').yieldsTo('success', [follow1, follow2, follow3])
 
     afterEach ->
       @view.renderSuggestions.restore()
