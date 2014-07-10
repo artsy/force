@@ -12,7 +12,7 @@ module.exports = class SearchBarView extends Backbone.View
     return unless @$el.length
 
     # Search takes a fair_id param specific to fairs. Doesn't work for other models
-    { @mode, @restrictType, @$input, @fairId, @includePrivateResults, @limit, @autoselect, @displayModel } =
+    { @mode, @restrictType, @$input, @fairId, @includePrivateResults, @limit, @autoselect, @displayKind } =
       _.defaults options, limit: 10, autoselect: false, displayKind: true
 
     @$input ?= @$('input')
@@ -64,7 +64,7 @@ module.exports = class SearchBarView extends Backbone.View
     @$el.removeClass 'is-open'
 
   suggestionTemplate: (item) =>
-    itemTemplate fill: fill, item: item, displayModel: @displayModel
+    itemTemplate fill: fill, item: item, displayKind: @displayKind
 
   announceQuery: (query) ->
     mediator.trigger 'search:doge'     if query is 'doge'
