@@ -1,7 +1,6 @@
 a.avant-garde-button-white.personalize-skip Skip
 
 header.personalize-header
-  h2= state.stepDisplay()
   h1 Follow #{headerKind} on Artsy
   aside= aside
 
@@ -26,8 +25,3 @@ section.personalize-step( data-step='#{kind}' )
         | Unfollow all
 
   #personalize-suggestions.grid-n-up: .loading-spinner
-
-  if pageable
-    .personalize-suggestions-more-container
-      a.avant-garde-button-white.personalize-suggestions-more
-        | Show more #{headerKind}

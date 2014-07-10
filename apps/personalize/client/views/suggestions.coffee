@@ -1,5 +1,6 @@
 _ = require 'underscore'
 sd = require('sharify').data
+qs = require 'querystring'
 Backbone = require 'backbone'
 StepView = require './step.coffee'
 mediator = require '../../../../lib/mediator.coffee'
@@ -7,6 +8,7 @@ Followable = require '../mixins/followable.coffee'
 Partner = require '../../../../models/partner.coffee'
 LocationModalView = require '../../components/location_modal/index.coffee'
 { FollowButton, Following } = require '../../../../components/follow_button/index.coffee'
+Profiles = require '../../../../collections/profiles.coffee'
 analytics = require '../../../../lib/analytics.coffee'
 suggestedTemplate = -> require('../../templates/suggested_profiles.jade') arguments...
 
@@ -151,7 +153,25 @@ module.exports = class SuggestionsView extends StepView
 
   followsToSuggestions: (collection) ->
     @suggestions.reset _.filter collection.pluck('profile'), (profile) =>
-      profile.owner_type is @restrictType
+      _.contains @restrictType, profile.owner_type
+
+  fetchAndRenderSuggestions: (options = {}) ->
+    @suggestions = new Profiles
+    if @state.get 'reonboarding'
+      @fetchAutoFollowedProfiles().then =>
+        # Fallback if the user doesn't actually have auto-follows
+        @fetchSuggestions() unless @suggestions.length
+    else
+      @fetchSuggestions()
+
+  fetchSuggestions: ->
+    @suggestions.fetch
+      url: "#{sd.API_URL}/api/v1/me/suggested/profiles"
+      data: owner_type: @restrictType
+      success: =>
+        @following.followAll @suggestions.pluck('id')
+        @following.unfollowAll(@existingSuggestions) if @existingSuggestions?
+        @renderSuggestions()
 
   remove: ->
     @searchBarView?.remove()

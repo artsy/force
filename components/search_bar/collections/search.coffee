@@ -10,15 +10,16 @@ module.exports = class Search extends Backbone.Collection
   _url: ->
     [
       "#{sd.API_URL}/api/v1/match/"
-      (@mode || '')
+      (@mode or '')
       '?visible_to_public=true'
       (if @fairId then "&fair_id=#{@fairId}" else "")
     ].join('')
 
   parseResults: (items) ->
     if @restrictType?
-      _.reject items, (item) =>
-        item?.owner_type isnt @restrictType
+      @restrictType = [@restrictType] unless _.isArray @restrictType
+      _.filter items, (item) =>
+        _.contains @restrictType, item?.owner_type
     else
       items
 

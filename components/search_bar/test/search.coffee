@@ -29,6 +29,13 @@ describe 'Search', ->
       parsed.length.should.equal 1
       parsed[0].get('model').should.equal 'profile'
 
+    it 'can restrict the results by multiple owner_types', ->
+      search = new Search mode: 'profiles', restrictType: ['PartnerMuseum', 'PartnerNonProfit']
+      @items.push owner_type: 'PartnerNonProfit'
+      parsed = search._parse(@items)
+      parsed.length.should.equal 2
+      parsed[0].get('model').should.equal 'profile'
+
     it 'can return heterogeneous results', ->
       search = new Search
       parsed = search._parse(@items)

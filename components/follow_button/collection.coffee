@@ -87,6 +87,7 @@ module.exports = class Following extends Backbone.Collection
 
   followAll: (ids, options = {}) ->
     ids = [ids] unless _.isArray ids
+    ids = _.map ids, (id) -> id.toLowerCase()
 
     options.success = _.wrap options.success, (success, model, response, options) =>
       @set _.map response, (attributes) =>
