@@ -40,11 +40,14 @@ module.exports = class ArtistsView extends StepView
     @listenTo @suggestions, 'remove', @renderSuggestions
 
   initializeArtistsFromFavorites: ->
-    if @user.artistsFromFavorites?.length
-      @suggestions.add new Backbone.Model
-        id: 'artists-from-favorites'
-        name: 'Artists suggested based on the artworks in your favorites'
-        suggestions: @user.artistsFromFavorites
+    new Backbone.Collection().fetch
+      data: sort: '-position', private: true, user_id: @user.id, size: 5
+      url: "#{sd.API_URL}/api/v1/collection/saved-artwork/artworks"
+      success: (collection, response, options) =>
+        @suggestions.add new Backbone.Model
+          id: 'artists-from-favorites'
+          name: 'Artists suggested based on the artworks in your favorites'
+          suggestions: new Artists(collection.pluck 'artist')
 
   initializeSuggestions: ->
     (if @user.isCollector() then @initializeBookmarkedArtists() else @initializeGeneArtists())
