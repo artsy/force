@@ -11,58 +11,128 @@ describe 'state', ->
     @state.get('current_step').should.equal 'collect'
 
   it 'has the appropriate set of steps for the appropriate level', ->
-    @state.steps().should.eql @state.get('__steps__')[@state.get('current_level')]
+    @state.steps().should.eql @state.get('__steps__')[@state.stepKey()]
 
   describe 'can be driven through all the state transitions depending on the user level', ->
-    it 'works for a user that buys art (level 3)', (done) ->
-      @state.on 'done', -> done()
+    describe 'new users', ->
+      beforeEach ->
+        @state.unset 'reonboarding'
+
+      it 'works for a user that is just looking and learning (level 1)', (done) ->
+        @state.on 'done', -> done()
+        @state.set current_level: 1
+        @state.get('current_step').should.equal 'collect'
+        @state.next()
+        @state.get('current_step').should.equal 'categories'
+        @state.next()
+        @state.get('current_step').should.equal 'favorites'
+        @state.next()
+        @state.get('current_step').should.equal 'artists'
+        @state.next()
+        @state.get('current_step').should.equal 'galleries'
+        @state.next()
+        @state.get('current_step').should.equal 'institutions'
+        @state.next() # Done
+
+      it 'works for a user that is interested in starting to buy art (level 2)', (done) ->
+        @state.on 'done', -> done()
+        @state.set current_level: 2
+        @state.get('current_step').should.equal 'collect'
+        @state.next()
+        @state.get('current_step').should.equal 'price_range'
+        @state.next()
+        @state.get('current_step').should.equal 'categories'
+        @state.next()
+        @state.get('current_step').should.equal 'favorites'
+        @state.next()
+        @state.get('current_step').should.equal 'artists'
+        @state.next()
+        @state.get('current_step').should.equal 'galleries'
+        @state.next()
+        @state.get('current_step').should.equal 'institutions'
+        @state.next() # Done
+
+      it 'works for a user that buys art (level 3)', (done) ->
+        @state.on 'done', -> done()
+        @state.set current_level: 3
+        @state.get('current_step').should.equal 'collect'
+        @state.next()
+        @state.get('current_step').should.equal 'bookmarks'
+        @state.next()
+        @state.get('current_step').should.equal 'artists'
+        @state.next()
+        @state.get('current_step').should.equal 'price_range'
+        @state.next()
+        @state.get('current_step').should.equal 'galleries'
+        @state.next()
+        @state.get('current_step').should.equal 'institutions'
+        @state.next() # Done
+
+    describe 'existing users (reonboarding)', ->
+      beforeEach ->
+        @state.set 'reonboarding', true
+        # Reset steps to beginning
+        @state.set 'current_step', @state.steps()[0]
+
+      it 'works for a user that is just looking and learning (level 1)', (done) ->
+        @state.on 'done', -> done()
+        @state.set current_level: 1
+        @state.get('current_step').should.equal 'galleries'
+        @state.next()
+        @state.get('current_step').should.equal 'institutions'
+        @state.next()
+        @state.get('current_step').should.equal 'collect'
+        @state.next()
+        @state.get('current_step').should.equal 'categories'
+        @state.next()
+        @state.get('current_step').should.equal 'favorites'
+        @state.next()
+        @state.get('current_step').should.equal 'artists'
+        @state.next() # Done
+
+      it 'works for a user that is interested in starting to buy art (level 2)', (done) ->
+        @state.on 'done', -> done()
+        @state.set current_level: 2
+        @state.get('current_step').should.equal 'galleries'
+        @state.next()
+        @state.get('current_step').should.equal 'institutions'
+        @state.next()
+        @state.get('current_step').should.equal 'collect'
+        @state.next()
+        @state.get('current_step').should.equal 'price_range'
+        @state.next()
+        @state.get('current_step').should.equal 'categories'
+        @state.next()
+        @state.get('current_step').should.equal 'favorites'
+        @state.next()
+        @state.get('current_step').should.equal 'artists'
+        @state.next() # Done
+
+      it 'works for a user that buys art (level 3)', (done) ->
+        @state.on 'done', -> done()
+        @state.set current_level: 3
+        @state.get('current_step').should.equal 'galleries'
+        @state.next()
+        @state.get('current_step').should.equal 'institutions'
+        @state.next()
+        @state.get('current_step').should.equal 'collect'
+        @state.next()
+        @state.get('current_step').should.equal 'bookmarks'
+        @state.next()
+        @state.get('current_step').should.equal 'artists'
+        @state.next()
+        @state.get('current_step').should.equal 'price_range'
+        @state.next() # Done
+
+  describe '#stepKey', ->
+    it 'returns the correct key', ->
+      @state.set current_level: 2, reonboarding: true
+      @state.stepKey().should.equal 'existing_2'
+      @state.set current_level: 1, reonboarding: false
+      @state.stepKey().should.equal 'new_1'
       @state.set current_level: 3
-      @state.get('current_step').should.equal 'collect'
-      @state.next()
-      @state.get('current_step').should.equal 'bookmarks'
-      @state.next()
-      @state.get('current_step').should.equal 'price_range'
-      @state.next()
-      @state.get('current_step').should.equal 'artists'
-      @state.next()
-      @state.get('current_step').should.equal 'galleries'
-      @state.next()
-      @state.get('current_step').should.equal 'institutions'
-      @state.next() # Done
-
-    it 'works for a user that is interested in starting to buy art (level 2)', (done) ->
-      @state.on 'done', -> done()
-      @state.set current_level: 2
-      @state.get('current_step').should.equal 'collect'
-      @state.next()
-      @state.get('current_step').should.equal 'categories'
-      @state.next()
-      @state.get('current_step').should.equal 'favorites'
-      @state.next()
-      @state.get('current_step').should.equal 'artists'
-      @state.next()
-      @state.get('current_step').should.equal 'price_range'
-      @state.next()
-      @state.get('current_step').should.equal 'galleries'
-      @state.next()
-      @state.get('current_step').should.equal 'institutions'
-      @state.next() # Done
-
-    it 'works for a user that is just looking and learning (level 1)', (done) ->
-      @state.on 'done', -> done()
-      @state.set current_level: 1
-      @state.get('current_step').should.equal 'collect'
-      @state.next()
-      @state.get('current_step').should.equal 'categories'
-      @state.next()
-      @state.get('current_step').should.equal 'favorites'
-      @state.next()
-      @state.get('current_step').should.equal 'artists'
-      @state.next()
-      @state.get('current_step').should.equal 'galleries'
-      @state.next()
-      @state.get('current_step').should.equal 'institutions'
-      @state.next() # Done
+      @state.unset 'reonboarding'
+      @state.stepKey().should.equal 'new_3'
 
   describe '#completedSteps', ->
     describe 'returns an array of steps that have already been completed', ->
@@ -93,17 +163,17 @@ describe 'state', ->
   describe '#steps', ->
     it 'reflects the actual state of the steps the casual user needs to complete on initialization', ->
       @state.set current_level: 1
-      @state.steps().should.eql @state.get('__steps__')[1]
+      @state.steps().should.eql @state.get('__steps__')['new_1']
 
     it 'reflects the actual state of the steps the collector user needs to complete on initialization', ->
       @state.set current_level: 2
-      @state.steps().should.eql @state.get('__steps__')[2]
+      @state.steps().should.eql @state.get('__steps__')['new_2']
 
     it 'reflects the actual state of the steps the collector user who has a semi-complete profile needs to complete on initialization', ->
       @state.__completedSteps__ = null
       @state.set current_level: 2
       @user.set collector_level: 2
-      @state.steps().should.eql _.without(@state.get('__steps__')[2], 'collect')
+      @state.steps().should.eql _.without(@state.get('__steps__')['new_2'], 'collect')
 
   describe '#currentStepIndex', ->
     it 'returns the appropriate index', ->

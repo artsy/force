@@ -9,26 +9,29 @@ _.mixin(require 'underscore.string')
 attributeMap =
   # Set to 1 by default in Gravity
   collector_level:
-    value     : 'collect'
-    predicate : ->
+    value: 'collect'
+    predicate: ->
       @user.get('collector_level') isnt 1 and
       @user.get('collector_level')?
   price_range:
-    value     : 'price_range'
-    predicate : -> @user.has 'price_range'
+    value: 'price_range'
+    predicate: -> @user.has 'price_range'
   location:
-    value     : 'location'
-    predicate : -> @user.hasLocation()
+    value: 'location'
+    predicate: -> @user.hasLocation()
 
 module.exports = class PersonalizeState extends Backbone.Model
   defaults:
-    levels        : ['Yes, I buy art', 'Interested in starting', 'Just looking and learning']
-    current_step  : 'collect'
-    current_level : 2 # Interested in starting
+    levels: ['Yes, I buy art', 'Interested in starting', 'Just looking and learning']
+    current_step: 'collect'
+    current_level: 2 # Interested in starting
     __steps__:
-      '3' : ['collect', 'bookmarks', 'price_range', 'artists', 'galleries', 'institutions']
-      '2' : ['collect', 'categories', 'favorites', 'artists', 'price_range', 'galleries', 'institutions']
-      '1' : ['collect', 'categories', 'favorites', 'artists', 'galleries', 'institutions']
+      new_1: ['collect', 'categories', 'favorites', 'artists', 'galleries', 'institutions']
+      new_2: ['collect', 'price_range', 'categories', 'favorites', 'artists', 'galleries', 'institutions']
+      new_3: ['collect', 'bookmarks', 'artists', 'price_range', 'galleries', 'institutions']
+      existing_1: ['galleries', 'institutions', 'collect', 'categories', 'favorites', 'artists']
+      existing_2: ['galleries', 'institutions', 'collect', 'price_range', 'categories', 'favorites', 'artists']
+      existing_3: ['galleries', 'institutions', 'collect', 'bookmarks', 'artists', 'price_range']
 
   initialize: (options = {}) ->
     { @user } = options
@@ -41,7 +44,7 @@ module.exports = class PersonalizeState extends Backbone.Model
     super
 
   get: (attr) ->
-    return @get('__steps__')[@get('current_level')] if attr is 'steps'
+    return @get('__steps__')[@stepKey()] if attr is 'steps'
     super
 
   # Steps that are complete at initialization
@@ -50,6 +53,12 @@ module.exports = class PersonalizeState extends Backbone.Model
   completedSteps: ->
     @__completedSteps__ ?= _.compact _.map attributeMap, (x) =>
       x.value if x.predicate.call this
+
+  stepKey: ->
+    "#{@reonboardingKey()}_#{@get('current_level')}"
+
+  reonboardingKey: ->
+    if @get('reonboarding') then 'existing' else 'new'
 
   steps: ->
     _.without [@get 'steps'].concat(@completedSteps())...
