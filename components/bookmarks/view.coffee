@@ -33,6 +33,7 @@ module.exports = class BookmarksView extends Backbone.View
       mode: 'artists'
       limit: @limit
       autoselect: true
+      displayKind: false
 
     @listenTo @autocomplete, 'search:selected', @collect
     @listenTo @bookmarks, 'sync add remove', @renderCollection
