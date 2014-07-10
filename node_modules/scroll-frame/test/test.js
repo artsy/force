@@ -49,4 +49,8 @@ describe('scrollFrame', function() {
       });
     });
   });
+
+  // TODO: Use benv (https://github.com/artsy/benv) to unit test this
+  xit('does not try to refresh the page in accomodation of a deep iframe unless ' +
+      'the message involves scrollFrame: true and an href thats not the previous');
 });
