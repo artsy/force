@@ -46,8 +46,9 @@
     iframe.setAttribute('src', url);
     iframe.setAttribute('style', [
       'position: fixed', 'top: 0', 'left: 0', 'width: 100%', 'height: 100%',
-      'z-index: 3', 'background-color: white'
+      'z-index: 3', 'background-color: white', 'border: 0'
     ].join(';'));
+
     body.setAttribute('style',
       'overflow: hidden;' + (body.getAttribute('style') || ''));
 
@@ -76,12 +77,11 @@
 
   var refreshOnNewIframePage = function() {
     addEventListener('message', function(e) {
-      if (!e.data.href && e.data.scrollFrame) return;
+      if (!e.data.href && !e.data.scrollFrame) return;
       if (e.data.href == this.location.href) return;
       var body = document.getElementsByTagName('body')[0];
       var html = document.getElementsByTagName('html')[0];
-      html.removeChild(body);
-      this.location = e.data.href;
+      this.location.assign(e.data.href);
     });
   }
 
