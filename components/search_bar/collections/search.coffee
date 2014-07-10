@@ -18,8 +18,8 @@ module.exports = class Search extends Backbone.Collection
   parseResults: (items) ->
     if @restrictType?
       @restrictType = [@restrictType] unless _.isArray @restrictType
-      _.reject items, (item) =>
-        not _.contains @restrictType, item?.owner_type
+      _.filter items, (item) =>
+        _.contains @restrictType, item?.owner_type
     else
       items
 
