@@ -45,10 +45,12 @@ describe 'ArtistsView', ->
 
   describe '#initializeArtistsFromFavorites', ->
     beforeEach ->
-      @view.user.artistsFromFavorites = new Backbone.Collection [], model: Artist
-      @view.user.artistsFromFavorites.add fabricate('artist')
-      @view.user.artistsFromFavorites.add fabricate('artist')
+      Backbone.sync.restore()
+      sinon.stub(Backbone, 'sync').yieldsTo 'success', [fabricate('artist'), fabricate('artist')]
       @view.initializeArtistsFromFavorites()
+
+    it 'fetches your recently favorited artworks', ->
+      Backbone.sync.args[0][2].url.should.include '/api/v1/collection/saved-artwork/artworks'
 
     it 'adds a suggestion set if the user has favorited some artworks in the previous step', ->
       @view.$el.html().should.include 'Artists suggested based on the artworks in your favorites'
@@ -121,7 +123,7 @@ describe 'ArtistsView', ->
         followGene = id: _.uniqueId('gene'), gene: fabricate 'gene'
         Backbone.sync.args[0][2].success([followGene])
         @view.genes.length.should.equal 1
-        Backbone.sync.args[1][1].url.should.include "api/v1/artists/trending?gene=#{followGene.gene.id}"
+        _.last(Backbone.sync.args)[1].url.should.include "api/v1/artists/trending?gene=#{followGene.gene.id}"
 
     describe '#renderGeneSuggestions', ->
       it 'creates a suggestionSet and calls out to #renderSuggestions', ->
@@ -139,6 +141,8 @@ describe 'ArtistsView', ->
 
     describe 'collector_level 3', ->
       beforeEach ->
+        Backbone.sync.restore()
+        sinon.stub Backbone, 'sync'
         @user.set 'collector_level', 3
         @view = new ArtistsView state: @state, user: @user
         @view.render()
@@ -147,4 +151,4 @@ describe 'ArtistsView', ->
         @view.initializeBookmarkedArtists.called.should.be.true
 
       it 'fetches the bookmarks collection', ->
-        _.last(Backbone.sync.args)[1].url.should.include '/api/v1/me/bookmark/artists'
+        Backbone.sync.args[0][1].url.should.include '/api/v1/me/bookmark/artists'
