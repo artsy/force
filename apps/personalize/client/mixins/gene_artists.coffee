@@ -18,4 +18,5 @@ module.exports =
     new Backbone.Model
       id: gene.id
       name: "Suggested for you in #{gene.get 'name'}"
+      analyticsLabel: 'artist gene suggestions'
       suggestions: gene.trendingArtists
