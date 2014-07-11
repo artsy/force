@@ -106,7 +106,6 @@ module.exports = class SuggestionsView extends StepView
     # Attach FollowButton views
     @suggestions.each (model) =>
       button = @setupFollowButton model, @$suggestions.find(".follow-button[data-id='#{model.id}']")
-      @listenTo button, 'click', => @setSkipLabel()
 
   fetchAndRenderLocations: ->
     @suggestions.map (profile) =>
