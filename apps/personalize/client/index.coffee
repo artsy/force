@@ -33,6 +33,7 @@ module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Rout
     @listenTo @state, 'done', @done
 
     track.funnel 'Landed on personalize page', label: "User:#{@user.id}"
+    track.funnel 'Started re-onboarding' if @reonboarding
 
     _.defer => @next()
 

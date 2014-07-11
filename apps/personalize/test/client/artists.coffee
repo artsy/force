@@ -46,7 +46,11 @@ describe 'ArtistsView', ->
   describe '#initializeArtistsFromFavorites', ->
     beforeEach ->
       Backbone.sync.restore()
-      sinon.stub(Backbone, 'sync').yieldsTo 'success', [fabricate('artist'), fabricate('artist')]
+      sinon.stub(Backbone, 'sync').yieldsTo 'success', [
+        fabricate('artwork', artist: fabricate('artist'))
+        fabricate('artwork', artist: null)
+        fabricate('artwork', artist: fabricate('artist'))
+      ]
       @view.initializeArtistsFromFavorites()
 
     it 'fetches your recently favorited artworks', ->
@@ -55,6 +59,8 @@ describe 'ArtistsView', ->
     it 'adds a suggestion set if the user has favorited some artworks in the previous step', ->
       @view.$el.html().should.include 'Artists suggested based on the artworks in your favorites'
       @view.$('.personalize-suggestion').length.should.equal 2
+
+    it 'sets the skip button state to "Next" if there are artists to auto-follow'
 
   describe '#setupFollowButton', ->
     it 'sets up a FollowButton view that can be accessed later', ->
