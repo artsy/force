@@ -46,7 +46,11 @@ describe 'ArtistsView', ->
   describe '#initializeArtistsFromFavorites', ->
     beforeEach ->
       Backbone.sync.restore()
-      sinon.stub(Backbone, 'sync').yieldsTo 'success', [fabricate('artist'), fabricate('artist')]
+      sinon.stub(Backbone, 'sync').yieldsTo 'success', [
+        fabricate('artwork', artist: fabricate('artist'))
+        fabricate('artwork', artist: null)
+        fabricate('artwork', artist: fabricate('artist'))
+      ]
       @view.initializeArtistsFromFavorites()
 
     it 'fetches your recently favorited artworks', ->

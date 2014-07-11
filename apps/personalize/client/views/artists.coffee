@@ -59,8 +59,8 @@ module.exports = class ArtistsView extends StepView
       data: sort: '-position', private: true, user_id: @user.id, size: 5
       url: "#{sd.API_URL}/api/v1/collection/saved-artwork/artworks"
       success: (collection, response, options) =>
-        if collection.length
-          artists = new Artists(collection.pluck 'artist')
+        artists = new Artists(_.compact(collection.pluck 'artist'))
+        if artists.length
           # Follow all artists suggested based on your favorites
           artists.map (artist) => @following.follow artist.id, auto: true
           @suggestions.add new Backbone.Model
