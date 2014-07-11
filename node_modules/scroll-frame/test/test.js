@@ -26,7 +26,7 @@ describe('scrollFrame', function() {
       }
       browser.clickLink('li:nth-child(6) a', function() {
         browser.html().should
-          .containEql('<iframe class="scroll-frame-iframe" src="http://localhost:5000/detail.html')
+          .containEql('<iframe class="scroll-frame-iframe"')
         done();
       });
     });
@@ -40,10 +40,10 @@ describe('scrollFrame', function() {
       }
       browser.clickLink('li:nth-child(6) a', function() {
         browser.html().should
-          .containEql('<iframe class="scroll-frame-iframe" src="http://localhost:5000/detail.html')
+          .containEql('<iframe class="scroll-frame-iframe"')
         browser.back(function() {
           browser.html().should.not
-            .containEql('<iframe class="scroll-frame-iframe" src="http://localhost:5000/detail.html')
+            .containEql('<iframe class="scroll-frame-iframe"')
           done();
         });
       });

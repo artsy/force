@@ -1554,7 +1554,7 @@
       "resolved": "https://registry.npmjs.org/humanparser/-/humanparser-0.0.15.tgz"
     },
     "scroll-frame": {
-      "version": "0.0.5",
+      "version": "0.0.8",
       "from": "scroll-frame@*"
     }
   }

@@ -40,7 +40,7 @@ Then simply use the `scrollFrame` function to indicate what links should retain 
 scrollFrame('#my-infinite-scrolling-list a');
 ````
 
-For a working example check out the [example folder](https://github.com/artsy/scroll-frame/tree/master/example) which you can [visit a live demo here](http://artsy.github.io/scroll-frame) or run yourself by cloning the project and running `npm run example`.
+For a working example check out the [example folder](https://github.com/artsy/scroll-frame/tree/master/example) which you can [visit a live demo here](http://artsy.github.io/scroll-frame/demo.html) or run yourself by cloning the project and running `npm run example`.
 
 ## How it Works
 
