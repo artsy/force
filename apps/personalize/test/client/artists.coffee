@@ -60,6 +60,8 @@ describe 'ArtistsView', ->
       @view.$el.html().should.include 'Artists suggested based on the artworks in your favorites'
       @view.$('.personalize-suggestion').length.should.equal 2
 
+    it 'sets the skip button state to "Next" if there are artists to auto-follow'
+
   describe '#setupFollowButton', ->
     it 'sets up a FollowButton view that can be accessed later', ->
       artist  = new Artist fabricate 'artist'

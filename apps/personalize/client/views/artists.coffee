@@ -61,6 +61,8 @@ module.exports = class ArtistsView extends StepView
       success: (collection, response, options) =>
         artists = new Artists(_.compact(collection.pluck 'artist'))
         if artists.length
+          # Auto-follows mean changing the default state of the button to 'Next'
+          @setSkipLabel()
           # Follow all artists suggested based on your favorites
           artists.map (artist) => @following.follow artist.id, auto: true
           @suggestions.add new Backbone.Model
