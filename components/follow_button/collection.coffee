@@ -66,7 +66,7 @@ module.exports = class Following extends Backbone.Collection
 
     follow = new Follow null, kind: @kind
 
-    data = _.pick options, 'notes', 'access_token'
+    data = _.pick options, 'notes', 'access_token', 'auto'
     data["#{@kind}_id"] = id
 
     # Set a nested id so it can be found optimistically

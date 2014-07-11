@@ -104,13 +104,6 @@ describe 'SuggestionsView', ->
         views.length.should.equal @view.suggestions.length
         _.uniq(views)[0].should.equal 'FollowButton'
 
-      it 'sets up a listener for setting the skip label', ->
-        @view.__labelSet__?.should.not.be.ok
-        @view.$('.personalize-skip').text().should.equal 'Skip'
-        @view.$suggestions.find('.follow-button').first().click()
-        @view.__labelSet__.should.be.ok
-        @view.$('.personalize-skip').text().should.equal 'Next'
-
     describe '#unfollowAll', ->
       it 'unfollows anything in the following collection', ->
         @view.following.follow 'foo'

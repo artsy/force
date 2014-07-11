@@ -81,12 +81,3 @@ describe 'FavoritesView', ->
     describe '#setupFavorites', ->
       it 'sets up the favorites collection', ->
         _.isUndefined(@view.favorites).should.be.false
-
-      describe 'fetched', ->
-        beforeEach ->
-          @view.artworks.add fabricate('artwork')
-          @view.favorites.saveArtwork(@view.artworks.first().id)
-          @view.favorites.trigger 'artworksFetched'
-
-        it 'should extract artists from the favorited artworks', ->
-          @view.user.artistsFromFavorites.first().get('name').should.equal 'Andy Warhol'

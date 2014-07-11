@@ -1,17 +1,30 @@
-_                             = require 'underscore'
-sd                            = require('sharify').data
-Backbone                      = require 'backbone'
-StepView                      = require './step.coffee'
-Artist                        = require '../../../../models/artist.coffee'
-Followable                    = require '../mixins/followable.coffee'
-GeneArtists                   = require '../mixins/gene_artists.coffee'
-Genes                         = require '../mixins/genes.coffee'
-BookmarkedArtists             = require '../mixins/bookmarked_artists.coffee'
-{ FollowButton, Following }   = require '../../../../components/follow_button/index.coffee'
-Artists                       = require '../../../../collections/artists.coffee'
+_ = require 'underscore'
+sd = require('sharify').data
+Backbone = require 'backbone'
+StepView = require './step.coffee'
+Artist = require '../../../../models/artist.coffee'
+Followable = require '../mixins/followable.coffee'
+GeneArtists = require '../mixins/gene_artists.coffee'
+Genes = require '../mixins/genes.coffee'
+BookmarkedArtists = require '../mixins/bookmarked_artists.coffee'
+{ FollowButton, Following } = require '../../../../components/follow_button/index.coffee'
+Artists = require '../../../../collections/artists.coffee'
+analytics = require '../../../../lib/analytics.coffee'
+mediator = require '../../../../lib/mediator.coffee'
 
-template                  = -> require('../../templates/artists.jade') arguments...
-suggestedArtistsTemplate  = -> require('../../templates/suggested_artists.jade') arguments...
+template = -> require('../../templates/artists.jade') arguments...
+suggestedArtistsTemplate = -> require('../../templates/suggested_artists.jade') arguments...
+
+Analytics =
+  attach: ->
+    mediator.on 'follow-button:follow', ($el, model) ->
+      analytics.track.click "Followed artist from personalize #{$el.data 'analyticsLabel'}"
+
+    mediator.on 'follow-button:unfollow', ($el, model) ->
+      analytics.track.click "Unfollowed artist from personalize #{$el.data 'analyticsLabel'}"
+
+  detach: ->
+    mediator.off 'follow-button:unfollow follow-button:follow'
 
 module.exports = class ArtistsView extends StepView
   _.extend @prototype, Followable
@@ -19,35 +32,42 @@ module.exports = class ArtistsView extends StepView
   _.extend @prototype, Genes
   _.extend @prototype, BookmarkedArtists
 
-  analyticsUnfollowMessage : 'Unfollowed artist from personalize artist search'
-  analyticsFollowMessage   : 'Followed artist from personalize artist search'
+  analyticsUnfollowMessage: 'Unfollowed artist from personalize artist search'
+  analyticsFollowMessage: 'Followed artist from personalize artist search'
 
   events:
-    'click .personalize-skip'       : 'advance'
-    'click .pfa-remove'             : 'unfollow'
-    'click .personalize-suggestion' : 'followSuggestion'
+    'click .personalize-skip': 'advance'
+    'click .pfa-remove': 'unfollow'
+    'click .personalize-suggestion': 'followSuggestion'
 
   initialize: (options) ->
     super
 
-    @following    = new Following [], kind: 'artist'
-    @suggestions  = new Backbone.Collection
-    @followed     = new Backbone.Collection [], model: Artist
+    @following = new Following [], kind: 'artist'
+    @suggestions = new Backbone.Collection
+    @followed = new Backbone.Collection [], model: Artist
 
     @listenTo @followed, 'add', @fetchRelatedArtists
     @listenTo @followed, 'remove', @disposeSuggestionSet
     @listenTo @suggestions, 'add', @renderSuggestions
     @listenTo @suggestions, 'remove', @renderSuggestions
 
+    Analytics.attach()
+
   initializeArtistsFromFavorites: ->
     new Backbone.Collection().fetch
       data: sort: '-position', private: true, user_id: @user.id, size: 5
       url: "#{sd.API_URL}/api/v1/collection/saved-artwork/artworks"
       success: (collection, response, options) =>
-        @suggestions.add new Backbone.Model
-          id: 'artists-from-favorites'
-          name: 'Artists suggested based on the artworks in your favorites'
-          suggestions: new Artists(collection.pluck 'artist')
+        if collection.length
+          artists = new Artists(collection.pluck 'artist')
+          # Follow all artists suggested based on your favorites
+          artists.map (artist) => @following.follow artist.id, auto: true
+          @suggestions.add new Backbone.Model
+            id: 'artists-from-favorites'
+            name: 'Artists suggested based on the artworks in your favorites'
+            analyticsLabel: 'artist autofollow suggestions'
+            suggestions: artists
 
   initializeSuggestions: ->
     (if @user.isCollector() then @initializeBookmarkedArtists() else @initializeGeneArtists())
@@ -60,19 +80,18 @@ module.exports = class ArtistsView extends StepView
       @suggestions.add new Backbone.Model
         id: 'artist-sample'
         name: 'Artists you may enjoy following'
+        analyticsLabel: 'artist fallback suggestions'
         suggestions: artists
 
   setupFollowButton: (key, model, el) ->
     @followButtonViews ?= {}
     @followButtonViews[key].remove() if @followButtonViews[key]?
     @followButtonViews[key] = new FollowButton
-      analyticsUnfollowMessage : 'Unfollowed artist from personalize artist suggestions'
-      analyticsFollowMessage   : 'Followed artist from personalize artist suggestions'
-      notes                    : 'Followed from /personalize'
-      following                : @following
-      model                    : model
-      modelName                : 'artist'
-      el                       : el
+      notes: 'Followed from /personalize'
+      following: @following
+      model: model
+      modelName: 'artist'
+      el: el
 
   # Delegates to follow button
   followSuggestion: (e) ->
@@ -80,9 +99,10 @@ module.exports = class ArtistsView extends StepView
 
   createSuggestionSet: (artist) ->
     new Backbone.Model
-      id          : artist.id
-      name        : "Artists related to #{artist.get 'name'}"
-      suggestions : artist.relatedArtists
+      id: artist.id
+      name: "Artists related to #{artist.get 'name'}"
+      analyticsLabel: 'artist related suggestions'
+      suggestions: artist.relatedArtists
 
   fetchRelatedArtists: (artist) ->
     artist.fetchRelatedArtists 'Artists',
@@ -126,6 +146,7 @@ module.exports = class ArtistsView extends StepView
     this
 
   remove: ->
+    Analytics.detach()
     @searchBarView.remove()
     @suggestions.each (suggestionSet) => @disposeSuggestionSet(suggestionSet)
     super

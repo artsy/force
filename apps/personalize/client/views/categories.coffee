@@ -44,17 +44,17 @@ module.exports = class CategoriesView extends StepView
   followCategory: (e) ->
     $(e.currentTarget).find('.follow-button').click()
 
-  setupFollowButton: (model, el) ->
+  setupFollowButton: (model, el, set) ->
     key = model.id
     @followButtonViews ?= {}
     @followButtonViews[key].remove() if @followButtonViews[key]?
     @followButtonViews[key] = new FollowButton
-      analyticsUnfollowMessage : 'Unfollowed gene from personalize gene suggestions'
-      analyticsFollowMessage   : 'Followed gene from personalize gene suggestions'
-      modelName                : 'Gene'
-      model                    : model
-      el                       : el
-      following                : @following
+      analyticsUnfollowMessage: "Unfollowed gene from #{set} personalize gene suggestions"
+      analyticsFollowMessage: "Followed gene from #{set} personalize gene suggestions"
+      modelName: 'Gene'
+      model: model
+      el: el
+      following: @following
 
   setupFollowButtons: ->
     _.each @categories, (categories, key) =>
@@ -62,7 +62,7 @@ module.exports = class CategoriesView extends StepView
       categories.each (category) =>
         model   = new Gene id: category.get 'gene_id'
         el      = @$(".follow-button[data-id=#{category.get('gene_id')}]")
-        button  = @setupFollowButton model, el
+        button  = @setupFollowButton model, el, key
         @listenTo button, 'click', @setSkipLabel, this
 
   setupCategories: (categories, key) ->
