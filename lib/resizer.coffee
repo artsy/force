@@ -1,7 +1,6 @@
 _ = require 'underscore'
-
-{ USE_RESIZE_PROXY, EMBEDLY_KEY } = require '../config.coffee'
-
+EMBEDLY_KEY = 'a1f82558d8134f6cbebceb9e67d04980'
+USE_RESIZE_PROXY = true
 baseUrl = 'https://i.embed.ly/1/display'
 
 module.exports =
