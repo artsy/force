@@ -1,19 +1,24 @@
-_             = require 'underscore'
-sd            = require('sharify').data
-Backbone      = require 'backbone'
-SearchResult  = require '../../../models/search_result.coffee'
+_ = require 'underscore'
+sd = require('sharify').data
+Backbone = require 'backbone'
+SearchResult = require '../../../models/search_result.coffee'
 
-module.exports = class Search extends Backbone.Collection
-  initialize: (options={}) ->
+class Results extends Backbone.Collection
+  model: SearchResult
+
+module.exports = class Search
+  constructor: (options = {}) ->
     { @mode, @restrictType, @fairId, @includePrivateResults } = options
+    @results = new Results
 
-  _url: ->
+  url: ->
     [
       "#{sd.API_URL}/api/v1/match/"
-      (@mode or '')
+      @mode or ''
       '?visible_to_public=true'
-      (if @fairId then "&fair_id=#{@fairId}" else "")
-    ].join('')
+      if @fairId then "&fair_id=#{@fairId}" else ''
+      '&term=%QUERY'
+    ].join ''
 
   parseResults: (items) ->
     if @restrictType?
@@ -23,7 +28,7 @@ module.exports = class Search extends Backbone.Collection
     else
       items
 
-  _parse: (items) ->
-    _.map @parseResults(items), (item) =>
+  parse: (items) ->
+    @results.reset _.map @parseResults(items), (item) =>
       item.model = @mode?.slice(0,-1) unless item.model?
-      new SearchResult item
+      item
