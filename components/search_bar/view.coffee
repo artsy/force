@@ -1,4 +1,5 @@
 _ = require 'underscore'
+_s = require 'underscore.string'
 Backbone = require 'backbone'
 sd = require('sharify').data
 Search = require './collections/search.coffee'
@@ -26,6 +27,7 @@ module.exports = class SearchBarView extends Backbone.View
     @on 'search:start', @indicateLoading
     @on 'search:complete', @concealLoading
     @on 'search:complete', @maybeHighlight
+    @on 'search:complete', @displayFeedback
     @on 'search:opened', @displaySuggestions
     @on 'search:closed', @hideSuggestions
 
@@ -43,6 +45,7 @@ module.exports = class SearchBarView extends Backbone.View
     @trigger 'search:entered', @$input.val()
 
   indicateLoading: ->
+    @renderFeedback()
     @$el.addClass 'is-loading'
 
   concealLoading: ->
@@ -54,14 +57,31 @@ module.exports = class SearchBarView extends Backbone.View
   maybeHighlight: ->
     @$('.tt-suggestion:first').addClass('tt-cursor') if @autoselect
 
+  feedbackString: ->
+    @__feedbackString__ ?= if @mode?
+      "Search for #{_s.titleize(@mode)}…"
+    else
+      'Search Artists, Artworks, Galleries, Museums, Categories…'
+
+  displayFeedback: ->
+    unless @search.results.length
+      @renderFeedback 'No results found'
+      @$el.addClass 'is-no-results'
+
+  renderFeedback: (feedback) ->
+    (@$feedback ?= @$('.autocomplete-feedback'))
+      .text feedback or @feedbackString()
+
   shouldDisplaySuggestions: ->
     _.isEmpty(_.trim(@$input.val()))
 
   displaySuggestions: ->
-    @$el.addClass 'is-open' if @shouldDisplaySuggestions()
+    if @shouldDisplaySuggestions()
+      @renderFeedback()
+      @$el.addClass 'is-open'
 
   hideSuggestions: ->
-    @$el.removeClass 'is-open'
+    @$el.removeClass 'is-open is-no-results'
 
   suggestionTemplate: (item) =>
     itemTemplate fill: fill, item: item, displayKind: @displayKind
@@ -80,10 +100,10 @@ module.exports = class SearchBarView extends Backbone.View
       datumTokenizer: Bloodhound.tokenizers.obj.whitespace 'value'
       queryTokenizer: Bloodhound.tokenizers.whitespace
       remote:
-        url: "#{@search._url()}&term=%QUERY"
+        url: @search.url()
         filter: (results) =>
           @trackSearchResults results
-          @search._parse results
+          @search.parse results
         ajax:
           beforeSend: (xhr) =>
             xhr.setRequestHeader 'X-XAPP-TOKEN', sd.ARTSY_XAPP_TOKEN
