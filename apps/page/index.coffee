@@ -17,6 +17,7 @@ app.get '/past-privacy', routes.vanityUrl('past-privacy')
 app.get '/press', routes.vanityUrl('press')
 app.get '/conditions-of-sale', routes.vanityUrl('conditions-of-sale')
 app.get '/auction-info', routes.vanityUrl('auction-info')
+app.get '/embed-terms', routes.vanityUrl('embed-terms')
 
 app.get '/job/:id', routes.index
 # Handle urls like /job/devops-engineer/about
