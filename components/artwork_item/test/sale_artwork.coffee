@@ -41,3 +41,5 @@ describe 'SaleArtworks', ->
   xit 'should have a working buy button'
 
   xit 'should have a working contact seller button'
+
+  it 'should have a buy now button when the auction is open and the artwork is acquireable'

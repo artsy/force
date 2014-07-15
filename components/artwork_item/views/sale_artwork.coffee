@@ -14,6 +14,7 @@ module.exports = class SaleArtworkView extends Backbone.View
     'click .artwork-item-buy'            : 'acquire'
     'click .artwork-item-contact-seller' : 'contactSeller'
     'click .artwork-item-bid'            : 'bid'
+    'click .artwork-item-buy-now'        : 'acquire'
 
   initialize: (options = {}) ->
     { @currentUser, @sale, @artworkCollection } = options
@@ -45,6 +46,7 @@ module.exports = class SaleArtworkView extends Backbone.View
 
   acquire: (e) ->
     e.preventDefault()
+    $(e.currentTarget).attr 'data-state', 'loading'
     # Redirect to artwork page if artwork has multiple editions
     if @model.get 'edition_sets_count' > 1
       return window.location.href = @model.href()
@@ -59,11 +61,16 @@ module.exports = class SaleArtworkView extends Backbone.View
         redirectTo  : @sale.redirectUrl @model
 
   setupAuctionState: ->
-    @appendAuctionId() if @sale.isOpen()
+    if @sale.isOpen()
+      @appendAuctionId()
+    else
+      # Possibly hide the buy now button
+      @$('.artwork-item-buy-now').hide()
 
     # Possibly hide the bid status
     @$('.artwork-item-auction-bid-status').hide() if @sale.isClosed()
 
+    # Set bid button state
     # Set button state
     $button   = @$('.artwork-item-bid')
     state     = @sale.bidButtonState @currentUser, @model
