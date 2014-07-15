@@ -67,7 +67,7 @@ module.exports = class FeatureView extends Backbone.View
 
     @artworks = saleFeaturedSet.get('data')
 
-    @filterView.setArtworks @artworks
+    @filterView?.setArtworks @artworks
 
     @artworks.on 'filterSort', =>
       @$('#feature-artworks').html ''
@@ -78,7 +78,7 @@ module.exports = class FeatureView extends Backbone.View
       @appendArtworks @artworks
       @renderArtistList @artworks if saleFeaturedSet and saleFeaturedSet.get('display_artist_list')
 
-    @filterView.trigger 'doneFetching'
+    @filterView?.trigger 'doneFetching'
 
   setupArtworkFiltering: (saleArtworksCollection) ->
     @$('#feature-artworks').before filterTemplate()
