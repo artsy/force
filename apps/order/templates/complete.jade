@@ -4,3 +4,6 @@ each artwork in order.getLineItemArtworks()
 | We've sent you an email confirming your order. An Artsy specialist
 | will be in touch to introduce you to the seller and arrange for pick-up
 | or shipping. Thanks for collecting on Artsy!
+if order.getLineItemArtworks().length == 1
+  br
+  .avant-garde-button-text( href=order.getLineItemArtworks()[0].href() ) Back to Artwork

@@ -58,6 +58,7 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
               return success() if xhr.responseJSON?.message is 'Sale is already taken.'
               @showError "Registration submission error", xhr
         error: =>
+          debugger
           @showError "Error adding your credit card", response
       analytics.track.funnel 'Registration card validated'
     else
