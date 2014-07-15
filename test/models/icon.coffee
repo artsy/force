@@ -45,14 +45,14 @@ describe 'Icon', ->
   describe '#imageUrl', ->
 
     it 'does the usual version swap if the image is processed and happy', ->
-      @icon.imageUrl('circle').should.equal @icon.get('image_url').replace(':version','circle').replace('jpg', 'png')
+      @icon.imageUrl().should.equal @icon.get('image_url').replace(':version','square').replace('jpg', 'png')
 
     it 'returns the original if the image has not had versions processed', ->
       @icon.set 'versions', null
-      @icon.imageUrl('circle').should.equal @icon.get('image_url').replace(':version','original')
+      @icon.imageUrl().should.equal @icon.get('image_url').replace(':version','original')
 
     it 'returns the default as a fall through', ->
       @icon.set
         versions: null
         image_filename: null
-      @icon.imageUrl('circle').should.equal Icon.DefaultUserIconUrl
+      @icon.imageUrl().should.equal Icon.DefaultUserIconUrl
