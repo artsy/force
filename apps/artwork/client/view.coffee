@@ -112,6 +112,7 @@ module.exports = class ArtworkView extends Backbone.View
       event.preventDefault()
 
   checkQueryStringForAuction: ->
+    return if @artwork.get('sold')
     { auction_id } = qs.parse(parse(window.location.search).query)
     @renderAuctionPlaceholder auction_id if auction_id
 
