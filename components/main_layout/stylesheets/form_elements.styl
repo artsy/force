@@ -260,6 +260,13 @@ form.is-validated
     width 50px
     height 100%
 
+  &.is-open
+  &.is-no-results
+    .autocomplete-feedback
+      visibility visible
+      transition opacity 0.125s
+      opacity 1
+
   &.is-block
     display block
     &
@@ -275,7 +282,7 @@ form.is-validated
     display none
   .tt-dropdown-menu
     width 100%
-    background-color #fff
+    background-color white
     border 2px solid purple-color
     border-top none
     text-align left
@@ -286,9 +293,24 @@ form.is-validated
       border-bottom none
     &:hover
     &.tt-cursor
-      background-color #000
+      background-color black
       *
-        color #fff
+        color white
+.autocomplete-feedback
+  display block
+  visibility hidden
+  position absolute
+  top 100%
+  left 0
+  right 0
+  padding (logo-size / 4) (logo-size / 2)
+  line-height logo-size
+  opacity 0
+  border 2px solid purple-color
+  border-top none
+  background-color gray-lightest-color
+  overflow ellipsis
+  pointer-events none
 
 // Result lists
 // (typically appended to from autocompletes)

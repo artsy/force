@@ -1,6 +1,5 @@
 #main-layout-search-bar-container
-  input#main-layout-search-bar-input.bordered-input( placeholder!='Search&hellip;', tabindex=1, value=term )
-  #main-layout-search-bar-spinner
-    .loading-spinner-small
-  #main-layout-search-bar-suggested
-    span Search Artists, Artworks, Galleries, Museums, Categories&hellip;
+  input#main-layout-search-bar-input.bordered-input( placeholder!='Search&hellip;', tabindex='1', value=term )
+  #main-layout-search-bar-spinner: .loading-spinner-small
+  #main-layout-search-bar-feedback.autocomplete-feedback
+    //- Rendered client-side
