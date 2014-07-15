@@ -64,7 +64,7 @@ figure.artwork-item( data-artwork=artwork.get('id') )
         href=artwork.href()
       ) More Info
 
-    if isAuction
+    if isAuction && !artwork.get('sold')
       a.artwork-item-bid.avant-garde-button-black.is-tiny(
         href=artwork.href()
       ) Bid

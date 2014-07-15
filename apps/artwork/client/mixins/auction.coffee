@@ -7,10 +7,13 @@ AuctionDetailView   = require '../auction_detail.coffee'
 module.exports =
   setupAuction: (sale) ->
     @auction = @sale
-
-    @$('.artwork-detail').addClass 'is-auction'
-
     @setupAuctionDetailView()
+
+    return if @artwork.get 'sold'
+    # This hides the normal availablity status UI
+    # which we just wind up using if the artwork is already sold
+    # (via 'Buy Now')
+    @$('.artwork-detail').addClass 'is-auction'
 
   setupAuctionClock: ->
     @clock = new AuctionClockView
@@ -34,13 +37,16 @@ module.exports =
       @setupSaleArtwork()
       @setupBidderPositions()
     ])).then =>
-      @auctionDetailView = new AuctionDetailView(
-        user            : @currentUser
-        bidderPositions : @bidderPositions
-        saleArtwork     : @saleArtwork
-        auction         : @auction
-        el              : @$('#auction-detail')
-      ).render()
+      # Set up everything but the auction detail view
+      # if the artwork is already sold (via 'Buy Now')
+      unless @artwork.get 'sold'
+        @auctionDetailView = new AuctionDetailView(
+          user            : @currentUser
+          bidderPositions : @bidderPositions
+          saleArtwork     : @saleArtwork
+          auction         : @auction
+          el              : @$('#auction-detail')
+        ).render()
 
   setupBidderPositions: ->
     return unless @currentUser
