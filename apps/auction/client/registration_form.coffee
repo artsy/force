@@ -48,12 +48,14 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
       card.url  = "#{sd.API_URL}/api/v1/me/credit_cards"
       card.save token: response.data.uri,
         success: =>
+          success = =>
+            @success()
+            analytics.track.funnel 'Registration submitted'
           @currentUser.createBidder
             saleId: @model.get('id')
-            success: =>
-              @success()
-              analytics.track.funnel 'Registration submitted'
-            error: (xhr) =>
+            success: success
+            error: (model, xhr) =>
+              return success() if xhr.responseJSON?.message is 'Sale is already taken.'
               @showError "Registration submission error", xhr
         error: =>
           @showError "Error adding your credit card", response
