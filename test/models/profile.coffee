@@ -21,7 +21,7 @@ describe 'Profile', ->
         id: "51eefb79275b2420810001fe",
         image_filename: "GGLogo1.jpg",
         image_url: "http://static2.artsy.net/profile_icons/51eefb79275b2420810001fe/:version.jpg",
-        versions: [ "circle", "square" ]
+        image_versions: [ "square140" ]
         x: 0
         y: 0
         width: 140
@@ -34,8 +34,6 @@ describe 'Profile', ->
 
     it "returns the icon url for the model's default icon version", ->
       @profile.iconImageUrl().should.include "square"
-      @profile.set 'default_icon_version', 'circle'
-      @profile.iconImageUrl().should.include "circle"
 
   describe '#alphaSortKey', ->
 
