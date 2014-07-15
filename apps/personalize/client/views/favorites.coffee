@@ -2,57 +2,35 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 StepView = require './step.coffee'
 Artworks = require '../../../../collections/artworks.coffee'
-Artists = require '../../../../collections/artists.coffee'
-Genes = require '../mixins/genes.coffee'
 ArtworkColumnsView = require '../../../../components/artwork_columns/view.coffee'
 { setSkipLabel } = require '../mixins/followable.coffee'
 { API_URL } = require('sharify').data
-
 template = -> require('../../templates/favorites.jade') arguments...
 
 module.exports = class FavoritesView extends StepView
-  _.extend @prototype, Genes
-
   setSkipLabel: setSkipLabel
+
+  suggestedArtworksSetId: '53c554ec72616961ab9a2000'
 
   events:
     'click .personalize-skip': 'advance'
 
   initialize: (options) ->
     super
-    @artworks = new Artworks
-    @initializeGenes size: 5, success: (collection, response, options) =>
-      if response.length
-        @fetchArtworks()
-      else # No genes were followed
-        @fetchFallbackArtworks()
+    @fetchArtworks()
 
-  fetchFallbackArtworks: ->
-    artists = new Artists
-    artists.url = "#{API_URL}/api/v1/artists/sample"
-    artists.fetch data: { size: 10 }, success: =>
-      $.when.apply(null, artists.map (artist) =>
-        artist.artworks.fetch
-          data: size: 2
-          success: (collection, response, options) =>
-            @artworks.add response
-      ).then =>
+  fetchArtworks: ->
+    @artworks = new Artworks
+    @artworks.fetch
+      data: size: 40
+      url: "#{API_URL}/api/v1/set/#{@suggestedArtworksSetId}/items"
+      success: (collection, response, options) =>
+        @artworks.reset collection.shuffle()
         @setupFavorites()
         @renderArtworks()
 
-  fetchArtworks: ->
-    $.when.apply(null, @genes.map (gene) =>
-      gene.fetchArtworks
-        data: size: 10
-        success: (collection, response, options) =>
-          @artworks.add response
-    ).then =>
-      @setupFavorites()
-      @renderArtworks()
-
   setupFavorites: ->
     @user.initializeDefaultArtworkCollection()
-    @user.artistsFromFavorites = new Artists
     @favorites = @user.defaultArtworkCollection()
     @favoriteArtworks = @favorites.get 'artworks'
     @listenTo @favoriteArtworks, 'add remove', @setSkipLabel, this
