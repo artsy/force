@@ -132,3 +132,6 @@ describe 'Artwork Item template', ->
 
       $ = cheerio.load render('artwork')({ artwork: @artwork, displayPurchase: true })
       $('.artwork-item-sold').should.have.lengthOf 1
+
+  describe 'is auction', ->
+    it 'displays a buy now price'
