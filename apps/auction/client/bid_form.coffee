@@ -1,11 +1,10 @@
-_                  = require 'underscore'
-Backbone           = require 'backbone'
-sd                 = require('sharify').data
-analytics          = require '../../../lib/analytics.coffee'
-ModalPageView      = require '../../../components/modal/page.coffee'
-BidderPosition     = require '../../../models/bidder_position.coffee'
-ErrorHandlingForm  = require '../../../components/credit_card/client/error_handling_form.coffee'
-{ SESSION_ID }     = require('sharify').data
+_ = require 'underscore'
+Backbone = require 'backbone'
+sd = require('sharify').data
+analytics = require '../../../lib/analytics.coffee'
+ModalPageView = require '../../../components/modal/page.coffee'
+ErrorHandlingForm = require '../../../components/credit_card/client/error_handling_form.coffee'
+{ SESSION_ID } = require('sharify').data
 
 module.exports = class BidForm extends ErrorHandlingForm
 
@@ -13,17 +12,17 @@ module.exports = class BidForm extends ErrorHandlingForm
   maxTimesPolledForBidPlacement: 6
 
   events:
-    'click .registration-form-content .avant-garde-button-black' : 'placeBid'
-    'click .bidding-question' : 'showBiddingDialog'
+    'click .registration-form-content .avant-garde-button-black': 'placeBid'
+    'click .bidding-question': 'showBiddingDialog'
 
   showBiddingDialog: (e) ->
     e.preventDefault()
     new ModalPageView
-      width  : '700px'
-      pageId : 'auction-info'
+      width: '700px'
+      pageId: 'auction-info'
 
   initialize: (options) ->
-    @saleArtwork = options.saleArtwork
+    { @saleArtwork, @bidderPositions } = options
     @$submit = @$('.registration-form-content .avant-garde-button-black')
     if options.submitImmediately
       @placeBid()
@@ -41,11 +40,11 @@ module.exports = class BidForm extends ErrorHandlingForm
     @$submit.addClass('is-loading')
     @clearErrors()
 
-    if @getBidAmount() >= @saleArtwork.get('minimum_next_bid_cents')
+    if @getBidAmount() >= @bidderPositions.minBidCents()
       bidderPosition = new BidderPosition
-        sale_id              : @model.get('id')
-        artwork_id           : @saleArtwork.get('artwork').id
-        max_bid_amount_cents : @getBidAmount()
+        sale_id: @model.get('id')
+        artwork_id: @saleArtwork.get('artwork').id
+        max_bid_amount_cents: @getBidAmount()
       bidderPosition.save null,
         success: =>
           _.delay =>
@@ -54,12 +53,13 @@ module.exports = class BidForm extends ErrorHandlingForm
         error: (xhr) =>
           @showError 'Error placing your bid', xhr
     else
-      @showError "Your bid must be higher than #{@saleArtwork.minBid()}"
+      @showError "Your bid must be higher than #{@bidderPositions.minBid()}"
 
   pollForBidPlacement: (minimumBidAmountInCents) ->
     @saleArtwork.fetch
       success: (saleArtwork) =>
-        if @saleArtwork.get('highest_bid_amount_cents') >= minimumBidAmountInCents or @timesPolledForBidPlacement > @maxTimesPolledForBidPlacement
+        if @saleArtwork.get('highest_bid_amount_cents') >= minimumBidAmountInCents or
+           @timesPolledForBidPlacement > @maxTimesPolledForBidPlacement
           @showSuccessfulBidMessage()
         else
           @timesPolledForBidPlacement = @timesPolledForBidPlacement + 1
