@@ -45,5 +45,7 @@ describe 'CollectView', ->
       @state.set 'reonboarding', true
       @view.render()
 
-    it 'does not render the onboarding copy', ->
-      @view.$el.html().should.not.include '60-Second Sign Up'
+    it 'renders the reonboarding copy', ->
+      html = @view.$el.html()
+      html.should.not.include '60-Second Sign Up'
+      html.should.include 'Personalize your Artsy experience'

@@ -1,7 +1,9 @@
 i.icon-logotype.personalize-initial-logotype
 
 header.personalize-header
-  unless state.get('reonboarding')
+  if state.get('reonboarding')
+    h2 Personalize your Artsy experience:
+  else
     h2 60-Second Sign Up:
   h1 Do you buy art?
 
