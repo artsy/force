@@ -43,16 +43,11 @@ figure.artwork-item( data-artwork=artwork.get('id') )
         else
           != artwork.partnerName()
 
-    if artwork.saleMessage() && displayPrice
+    //- Display price for non-auctions
+    if artwork.saleMessage() && displayPrice && !isAuction
       p.artwork-item-sale-price!= artwork.saleMessage()
 
-    if artwork.has('saleArtwork') && isAuction
-      - var saleArtwork = artwork.get('saleArtwork')
-      .artwork-item-auction-bid-status
-        | #{saleArtwork.bidLabel()}: #{saleArtwork.currentBid()}
-        if saleArtwork.get('bidder_positions_count') >= 1
-          | &nbsp;(#{saleArtwork.bidCount()})
-
+    //- In the case of auctions this blurb is usually an estimate
     if artwork.has('saleArtwork') || showBlurbs
       - var saleArtwork = artwork.get('saleArtwork')
       if artwork.has('blurb') && artwork.get('blurb')
@@ -60,6 +55,26 @@ figure.artwork-item( data-artwork=artwork.get('id') )
       else
         if saleArtwork && saleArtwork.get('user_notes')
           .artwork-item-blurb!= saleArtwork.mdToHtml('user_notes')
+
+    //- Auction related pricing information
+    - var displayBidStatus = artwork.has('saleArtwork') && isAuction
+    - var displayBuyNowPrice = artwork.saleMessage() && displayPrice && isAuction
+    if displayBuyNowPrice || displayBidStatus
+      .artwork-item-sale-metadata
+        if displayBidStatus
+          - var saleArtwork = artwork.get('saleArtwork')
+          .artwork-item-auction-bid-status
+            | #{saleArtwork.bidLabel()}: #{saleArtwork.currentBid()}
+            if saleArtwork.get('bidder_positions_count') >= 1
+              | &nbsp;(#{saleArtwork.bidCount()})
+
+        if displayBuyNowPrice
+          .artwork-item-sale-price
+            | Buy Now Price:
+            = ' '
+            != artwork.saleMessage()
+
+    if artwork.has('saleArtwork') || showBlurbs
       a.artwork-item-more-info.avant-garde-button-black.is-tiny(
         href=artwork.href()
       ) More Info
