@@ -1,7 +1,7 @@
-Backbone     = require 'backbone'
-analytics    = require '../../../lib/analytics.coffee'
-Marketplace  = require '../../../models/marketplace.coffee'
-sd           = require('sharify').data
+Backbone = require 'backbone'
+analytics = require '../../../lib/analytics.coffee'
+Marketplace = require '../../../models/marketplace.coffee'
+sd = require('sharify').data
 ShippingForm = require('./shipping_form.coffee')
 { SESSION_ID } = require('sharify').data
 
@@ -10,14 +10,14 @@ module.exports = class CheckoutForm extends ShippingForm
   balanced: false
 
   events:
-    'click .order-form-button'         : 'onSubmit'
-    'click .credit-card-form-checkbox input' : 'toggleShippingAddress'
+    'click .order-form-button': 'onSubmit'
+    'click .credit-card-form-checkbox input': 'toggleShippingAddress'
 
   toggleShippingAddress: =>
     if @$('.credit-card-form-checkbox input').is(':checked')
       @$('.credit-card-form-hidden').hide()
     else
-      @$('.credit-card-form-hidden').show()
+      @$('.credit-card-form-hidden').show().find(':input').val('')
 
   setUpFields: ->
     @fields =

@@ -89,3 +89,11 @@ describe 'CheckoutForm', ->
       @view.balanced.should.be.ok
       _.last(Backbone.sync.args)[2].success {}
       @success.should.equal true
+
+  describe '#toggleShippingAddress', ->
+
+    it 'clears the inputs', ->
+      @view.$('.credit-card-form-hidden').show().find(':input').first().val '401 broadway'
+      @view.$('.credit-card-form-checkbox input').removeAttr('checked')
+      @view.toggleShippingAddress()
+      @view.$('.credit-card-form-hidden').show().find(':input').first().val().should.equal ''
