@@ -1,16 +1,17 @@
-_               = require 'underscore'
-benv            = require 'benv'
-jade            = require 'jade'
-path            = require 'path'
-fs              = require 'fs'
-Backbone        = require 'backbone'
-{ AToZ }        = require 'artsy-backbone-mixins'
-{ fabricate }   = require 'antigravity'
-Artwork         = require '../../../models/artwork'
-Order           = require '../../../models/order'
-SaleArtwork     = require '../../../models/sale_artwork'
-Sale            = require '../../../models/sale'
-cheerio         = require 'cheerio'
+_ = require 'underscore'
+benv = require 'benv'
+jade = require 'jade'
+path = require 'path'
+fs = require 'fs'
+Backbone = require 'backbone'
+{ AToZ } = require 'artsy-backbone-mixins'
+{ fabricate } = require 'antigravity'
+Artwork = require '../../../models/artwork'
+BidderPositions = require '../../../collections/bidder_positions'
+Order = require '../../../models/order'
+SaleArtwork = require '../../../models/sale_artwork'
+Sale = require '../../../models/sale'
+cheerio = require 'cheerio'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../templates/#{templateName}.jade"
@@ -20,14 +21,16 @@ render = (templateName) ->
   )
 
 describe 'Auction', ->
-  after -> benv.teardown()
+
+  after ->
+    benv.teardown()
 
   before (done) ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
       @sd =
-        CANONICAL_MOBILE_URL : 'http://localhost:5000'
-        API_URL : 'http://localhost:5000'
+        CANONICAL_MOBILE_URL: 'http://localhost:5000'
+        API_URL: 'http://localhost:5000'
         ASSET_PATH: 'http://localhost:5000'
         CSS_EXT: '.css.gz'
         JS_EXT: '.js.gz'
@@ -38,6 +41,7 @@ describe 'Auction', ->
       done()
 
   describe 'register template', ->
+
     it 'renders the template without errors', ->
       template = render('registration')
         sd: @sd
@@ -48,12 +52,15 @@ describe 'Auction', ->
       @$template.html().should.not.containEql 'undefined'
 
   describe 'bid template', ->
+
     it 'renders the template for unregistred users without errors', ->
       template = render('bid-form')
         sd: @sd
         sale: @sale
         artwork: @saleArtwork.artwork()
         saleArtwork: @saleArtwork
+        bidderPositions: new BidderPositions([fabricate 'bidder_position'],
+          { saleArtwork: @saleArtwork, sale: @sale })
         isRegistered: false
         maxBid: 1234
         monthRange: @order.getMonthRange()
@@ -68,6 +75,8 @@ describe 'Auction', ->
         sale: @sale
         artwork: @saleArtwork.artwork()
         saleArtwork: @saleArtwork
+        bidderPositions: new BidderPositions([fabricate 'bidder_position'],
+          { saleArtwork: @saleArtwork, sale: @sale })
         isRegistered: true
         maxBid: 1234
         monthRange: @order.getMonthRange()

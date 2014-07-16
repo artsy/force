@@ -24,7 +24,7 @@ describe 'BidderPositions', ->
     it 'uses the correct URL when fetching', ->
       @bidderPositions.fetch()
       Backbone.sync.args[0][1].url().
-        should.equal "/api/v1/me/bidder_positions?sale_id=#{@sale.id}&artwork_id=#{@saleArtwork.id}"
+        should.include "/api/v1/me/bidder_positions?sale_id=#{@sale.id}&artwork_id=#{@saleArtwork.id}"
 
   describe 'isHighestBidder', ->
     it 'is undefined if the bidder positions does not contain a highest bidder', ->
