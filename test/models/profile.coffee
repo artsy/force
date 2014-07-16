@@ -30,6 +30,14 @@ describe 'Profile', ->
   afterEach ->
     Backbone.sync.restore()
 
+  describe '#isUserClass', ->
+
+    it 'returns is-user if the profile is a user and is set to use a circular default icon', ->
+      @profile.isUserClass().should.equal 'is-partner'
+      @profile.set owner_type: 'User'
+      @profile.set default_icon_version: 'circle'
+      @profile.isUserClass().should.equal 'is-user'
+
   describe '#iconImageUrl', ->
 
     it "returns the icon url for the model's default icon version", ->

@@ -66,7 +66,7 @@ module.exports = class Profile extends Backbone.Model
   isFairOranizer: -> @get('owner_type') == 'FairOrganizer'
 
   isUserClass: ->
-    if @isUser()
+    if @isUser() && @get('default_icon_version') is 'circle'
       'is-user'
     else
       'is-partner'
