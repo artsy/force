@@ -3,6 +3,7 @@ Backbone = require 'backbone'
 sd = require('sharify').data
 analytics = require '../../../lib/analytics.coffee'
 ModalPageView = require '../../../components/modal/page.coffee'
+BidderPosition = require '../../../models/bidder_position.coffee'
 ErrorHandlingForm = require '../../../components/credit_card/client/error_handling_form.coffee'
 { SESSION_ID } = require('sharify').data
 

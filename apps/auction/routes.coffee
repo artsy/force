@@ -81,13 +81,6 @@ registerOrRender = (sale, req, res, next) ->
       monthRange: new Order().getMonthRange()
       yearRange: new Order().getYearRange()
 
-  saleArtwork.fetch
-    error: res.backboneError
-    success: ->
-      bidderPositions.fetch
-        data: { access_token: req.user.get('accessToken') }
-        error: res.backboneError
-        success: render
   sale.fetch
     error: res.backboneError
     success: ->
@@ -96,6 +89,13 @@ registerOrRender = (sale, req, res, next) ->
       else
         res.status 404
         next new Error('Not Found')
+  saleArtwork.fetch
+    error: res.backboneError
+    success: ->
+      bidderPositions.fetch
+        data: { access_token: req.user.get('accessToken') }
+        error: res.backboneError
+        success: render
   req.user.checkRegisteredForAuction
     saleId: sale.get('id')
     error: res.backboneError
