@@ -61,18 +61,22 @@ figure.artwork-item( data-artwork=artwork.get('id') )
     - var displayBuyNowPrice = artwork.saleMessage() && displayPrice && isAuction
     if displayBuyNowPrice || displayBidStatus
       .artwork-item-sale-metadata
-        if displayBidStatus
-          - var saleArtwork = artwork.get('saleArtwork')
-          .artwork-item-auction-bid-status
-            | #{saleArtwork.bidLabel()}: #{saleArtwork.currentBid()}
-            if saleArtwork.get('bidder_positions_count') >= 1
-              | &nbsp;(#{saleArtwork.bidCount()})
-
-        if displayBuyNowPrice
+        if artwork.get('sold')
           .artwork-item-sale-price
-            | Buy Now Price:
-            = ' '
             != artwork.saleMessage()
+        else
+          if displayBidStatus
+            - var saleArtwork = artwork.get('saleArtwork')
+            .artwork-item-auction-bid-status
+              | #{saleArtwork.bidLabel()}: #{saleArtwork.currentBid()}
+              if saleArtwork.get('bidder_positions_count') >= 1
+                | &nbsp;(#{saleArtwork.bidCount()})
+
+          if displayBuyNowPrice
+            .artwork-item-sale-price
+              | Buy Now Price:
+              = ' '
+              != artwork.saleMessage()
 
     if artwork.has('saleArtwork') || showBlurbs
       a.artwork-item-more-info.avant-garde-button-black.is-tiny(
