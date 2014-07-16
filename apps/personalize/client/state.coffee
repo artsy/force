@@ -29,9 +29,9 @@ module.exports = class PersonalizeState extends Backbone.Model
       new_1: ['collect', 'categories', 'favorites', 'artists', 'galleries', 'institutions']
       new_2: ['collect', 'price_range', 'categories', 'favorites', 'artists', 'galleries', 'institutions']
       new_3: ['collect', 'bookmarks', 'artists', 'price_range', 'galleries', 'institutions']
-      existing_1: ['galleries', 'institutions', 'collect', 'categories', 'favorites', 'artists']
-      existing_2: ['galleries', 'institutions', 'collect', 'price_range', 'categories', 'favorites', 'artists']
-      existing_3: ['galleries', 'institutions', 'collect', 'bookmarks', 'artists', 'price_range']
+      existing_1: ['collect', 'categories', 'favorites', 'artists', 'galleries', 'institutions']
+      existing_2: ['collect', 'price_range', 'categories', 'favorites', 'artists', 'galleries', 'institutions']
+      existing_3: ['collect', 'bookmarks', 'artists', 'price_range', 'galleries', 'institutions']
 
   initialize: (options = {}) ->
     { @user } = options

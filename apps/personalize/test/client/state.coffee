@@ -77,10 +77,6 @@ describe 'state', ->
       it 'works for a user that is just looking and learning (level 1)', (done) ->
         @state.on 'done', -> done()
         @state.set current_level: 1
-        @state.get('current_step').should.equal 'galleries'
-        @state.next()
-        @state.get('current_step').should.equal 'institutions'
-        @state.next()
         @state.get('current_step').should.equal 'collect'
         @state.next()
         @state.get('current_step').should.equal 'categories'
@@ -88,15 +84,15 @@ describe 'state', ->
         @state.get('current_step').should.equal 'favorites'
         @state.next()
         @state.get('current_step').should.equal 'artists'
+        @state.next()
+        @state.get('current_step').should.equal 'galleries'
+        @state.next()
+        @state.get('current_step').should.equal 'institutions'
         @state.next() # Done
 
       it 'works for a user that is interested in starting to buy art (level 2)', (done) ->
         @state.on 'done', -> done()
         @state.set current_level: 2
-        @state.get('current_step').should.equal 'galleries'
-        @state.next()
-        @state.get('current_step').should.equal 'institutions'
-        @state.next()
         @state.get('current_step').should.equal 'collect'
         @state.next()
         @state.get('current_step').should.equal 'price_range'
@@ -106,15 +102,15 @@ describe 'state', ->
         @state.get('current_step').should.equal 'favorites'
         @state.next()
         @state.get('current_step').should.equal 'artists'
+        @state.next()
+        @state.get('current_step').should.equal 'galleries'
+        @state.next()
+        @state.get('current_step').should.equal 'institutions'
         @state.next() # Done
 
       it 'works for a user that buys art (level 3)', (done) ->
         @state.on 'done', -> done()
         @state.set current_level: 3
-        @state.get('current_step').should.equal 'galleries'
-        @state.next()
-        @state.get('current_step').should.equal 'institutions'
-        @state.next()
         @state.get('current_step').should.equal 'collect'
         @state.next()
         @state.get('current_step').should.equal 'bookmarks'
@@ -122,6 +118,10 @@ describe 'state', ->
         @state.get('current_step').should.equal 'artists'
         @state.next()
         @state.get('current_step').should.equal 'price_range'
+        @state.next()
+        @state.get('current_step').should.equal 'galleries'
+        @state.next()
+        @state.get('current_step').should.equal 'institutions'
         @state.next() # Done
 
   describe '#stepKey', ->
