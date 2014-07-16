@@ -6,4 +6,5 @@ each artwork in order.getLineItemArtworks()
 | or shipping. Thanks for collecting on Artsy!
 if order.getLineItemArtworks().length == 1
   br
-  .avant-garde-button-text( href=order.getLineItemArtworks()[0].href() ) Back to Artwork
+  br
+  a.avant-garde-button-text( href=order.getLineItemArtworks()[0].href() ) Back to Artwork
