@@ -17,7 +17,6 @@ module.exports = class CheckoutForm extends ShippingForm
     if @$('.credit-card-form-checkbox input').is(':checked')
       @$('.credit-card-form-hidden').hide()
     else
-      console.log 'show'
       @$('.credit-card-form-hidden').show().find(':input').val('')
 
   setUpFields: ->
