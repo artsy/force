@@ -51,6 +51,9 @@ module.exports = class Order extends Backbone.Model
       address?.country
     ]).join('<br />')
 
+  # TOOD: This and `getYearRange` should be able to be handled by moment, and if not
+  # probably better served as a /lib or static method. [1..12] also doesn't need to be
+  # a method.
   getMonthRange: -> [1..12]
 
   getYearRange: (range=10) ->

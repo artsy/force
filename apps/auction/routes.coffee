@@ -4,6 +4,7 @@ Sale = require '../../models/sale.coffee'
 Order = require '../../models/order.coffee'
 Artwork = require '../../models/artwork.coffee'
 SaleArtwork = require '../../models/sale_artwork.coffee'
+BidderPositions = require '../../collections/bidder_positions.coffee'
 
 registerOrRender = (sale, req, res, next) ->
   req.user.fetchCreditCards
@@ -18,7 +19,7 @@ registerOrRender = (sale, req, res, next) ->
             res.backboneError
       else
         order = new Order()
-        res.render 'templates/registration',
+        res.render 'registration',
           sale: sale
           monthRange: order.getMonthRange()
           yearRange: order.getYearRange()
@@ -48,7 +49,7 @@ registerOrRender = (sale, req, res, next) ->
 
       # Sale is not registerable yet: render error page
       else if sale.isAuction()
-        res.render 'templates/registration_error',
+        res.render 'registration_error',
           sale: sale
 
       # Sale is not an auction: 404
@@ -60,33 +61,44 @@ registerOrRender = (sale, req, res, next) ->
   unless req.user
     return res.redirect "/log_in?redirect_uri=/feature/#{req.params.id}/bid/#{req.params.artwork}"
 
-  new Sale(id: req.params.id).fetch
-    error  : res.backboneError
-    success: (sale) ->
-      unless sale.isBidable()
+  # TODO: Refactor this cluster of business and fetching logic into a model/service layer.
+  # Potentitally in Artsy Backbone Mixins for Martsy.
+  sale = new Sale(id: req.params.id)
+  saleArtwork = new SaleArtwork(artwork: new Artwork(id: req.params.artwork), sale: sale)
+  bidderPositions = new BidderPositions(null, { saleArtwork: saleArtwork, sale: sale })
+
+  render = _.after 3, ->
+    res.locals.sd.BIDDER_POSITIONS = bidderPositions.toJSON()
+    res.locals.sd.SALE = sale.toJSON()
+    res.locals.sd.SALE_ARTWORK = saleArtwork.toJSON()
+    res.render 'bid-form',
+      sale: sale
+      artwork: saleArtwork.artwork()
+      saleArtwork: saleArtwork
+      bidderPositions: bidderPositions
+      isRegistered: res.locals.sd.REGISTERED
+      maxBid: (if req.query.bid then ( req.query.bid / 100 ) else '')
+      monthRange: new Order().getMonthRange()
+      yearRange: new Order().getYearRange()
+
+  sale.fetch
+    error: res.backboneError
+    success: ->
+      if sale.isBidable()
+        render()
+      else
         res.status 404
         next new Error('Not Found')
-      else
-        saleArtwork = new SaleArtwork
-          artwork: new Artwork(id: req.params.artwork)
-          sale: sale
-
-        saleArtwork.fetch
-          error  : res.backboneError
-          success: (saleArtwork) ->
-            order = new Order()
-            req.user.checkRegisteredForAuction
-              saleId : sale.get('id')
-              error  : res.backboneError
-              success: (isRegistered) ->
-                res.locals.sd.SALE = sale
-                res.locals.sd.SALE_ARTWORK = saleArtwork
-                res.locals.sd.REGISTERED = isRegistered
-                res.render 'templates/bid-form',
-                  sale: sale
-                  artwork: saleArtwork.artwork()
-                  saleArtwork: saleArtwork
-                  isRegistered: isRegistered
-                  maxBid: (if req.query.bid then ( req.query.bid / 100 ) else '')
-                  monthRange: order.getMonthRange()
-                  yearRange: order.getYearRange()
+  saleArtwork.fetch
+    error: res.backboneError
+    success: ->
+      bidderPositions.fetch
+        data: { access_token: req.user.get('accessToken') }
+        error: res.backboneError
+        success: render
+  req.user.checkRegisteredForAuction
+    saleId: sale.get('id')
+    error: res.backboneError
+    success: (registered) ->
+      res.locals.sd.REGISTERED = registered
+      render()
