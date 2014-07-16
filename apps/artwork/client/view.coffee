@@ -119,7 +119,6 @@ module.exports = class ArtworkView extends Backbone.View
   renderAuctionPlaceholder: (auction_id) ->
     @suppressInquiry = true
     @$('.artwork-detail').addClass 'is-auction'
-    @$('#artwork-detail-spinner').remove()
     @$('#auction-detail').html(
       auctionPlaceholderTemplate
         auction_id : auction_id
@@ -128,8 +127,6 @@ module.exports = class ArtworkView extends Backbone.View
 
   setupEmbeddedInquiryForm: ->
     return if @suppressInquiry
-    @$('#artwork-detail-spinner').remove()
-    @$('#artwork-detail-contact').show()
     new ContactView el: @$('#artwork-detail-contact'), model: @artwork
 
   # Currently, Safari 5 is the only browser we support that doesn't support CSS `Calc`
