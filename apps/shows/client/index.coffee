@@ -1,8 +1,8 @@
-_                       = require 'underscore'
-Backbone                = require 'backbone'
-sd                      = require('sharify').data
-FeedView                = require('../../../components/feed/client/shows_feed.coffee')
-FeedItems               = require('../../../components/feed/collections/feed_items.coffee')
+_ = require 'underscore'
+Backbone = require 'backbone'
+sd = require('sharify').data
+FeedView = require('../../../components/feed/client/shows_feed.coffee')
+FeedItems = require('../../../components/feed/collections/feed_items.coffee')
 
 module.exports.ShowsView = class ShowsView extends Backbone.View
 
@@ -17,8 +17,8 @@ module.exports.ShowsView = class ShowsView extends Backbone.View
         if items.models.length > 0
           items.urlRoot = @urlRoot()
           new FeedView
-            feedItems : items
-            el        : @$('.feed')
+            feedItems: items
+            el: @$('.feed')
         else
           callback?.error()
 

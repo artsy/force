@@ -1,11 +1,14 @@
-Backbone        = require 'backbone'
-BidderPosition  = require '../models/bidder_position.coffee'
+Backbone = require 'backbone'
+BidderPosition = require '../models/bidder_position.coffee'
+{ API_URL } = require('sharify').data
+{ formatMoney } = require 'accounting'
 
 module.exports = class BidderPositions extends Backbone.Collection
+
   model: BidderPosition
 
   url: ->
-    "/api/v1/me/bidder_positions?sale_id=#{@sale.id}&artwork_id=#{@saleArtwork.id}"
+    "#{API_URL}/api/v1/me/bidder_positions?sale_id=#{@sale.id}&artwork_id=#{@saleArtwork.id}"
 
   initialize: (models, options = {}) ->
     { @saleArtwork, @sale } = options
@@ -29,3 +32,12 @@ module.exports = class BidderPositions extends Backbone.Collection
       'is-highest'
     else if @isOutbid()
       'is-outbid'
+
+  minBidCents: ->
+    Math.max(
+      @first()?.get('suggested_next_bid_cents') or -Infinity
+      @saleArtwork.get('minimum_next_bid_cents') or -Infinity
+    )
+
+  minBid: ->
+    formatMoney @minBidCents() / 100, '$', 0

@@ -1,4 +1,4 @@
-require('backbone').$  = $
+require('backbone').$ = $
 $ ->
   switch location.pathname
     when '/following/artists', '/following/genes'

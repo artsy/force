@@ -1,9 +1,9 @@
-_             = require 'underscore'
-sinon         = require 'sinon'
-Backbone      = require 'backbone'
-Post          = require '../../models/post'
-Profile       = require '../../models/profile'
-Artwork       = require '../../models/artwork'
+_ = require 'underscore'
+sinon = require 'sinon'
+Backbone = require 'backbone'
+Post = require '../../models/post'
+Profile = require '../../models/profile'
+Artwork = require '../../models/artwork'
 { fabricate } = require 'antigravity'
 
 describe 'Post', ->
@@ -14,17 +14,17 @@ describe 'Post', ->
   describe '#extendedSummary', ->
 
     it 'will leave the first paragraph alone if it is under 385 chars long', ->
-      lt385   = "One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it and seemed ready to slide off any."
-      body    = "<p>#{lt385}</p><p>#{lt385}</p>"
-      post    = new Post body: body
+      lt385 = "One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it and seemed ready to slide off any."
+      body = "<p>#{lt385}</p><p>#{lt385}</p>"
+      post = new Post body: body
       post.extendedSummary().should.not.equal body
       post.extendedSummary().should.equal lt385
 
     it 'will truncate with an ellipsis if the first paragraph is less than 210 chars, but the entire body is greater than 385', ->
-      lt210     = "One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could."
-      body      = "<p>#{lt210}</p><p>#{lt210}</p>"
-      post      = new Post body: body
-      summary   = post.extendedSummary()
+      lt210 = "One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could."
+      body = "<p>#{lt210}</p><p>#{lt210}</p>"
+      post = new Post body: body
+      summary = post.extendedSummary()
       summary.length.should.be.greaterThan 210
       summary.length.should.be.lessThan 390
       summary.should.include '&hellip;'
@@ -75,8 +75,8 @@ describe 'Post', ->
       post.defaultImage().get('is_default').should.equal image.is_default
 
     it 'returns the first image if there is no artwork', ->
-      image   = type: 'PostImage'
-      post    = new Post(attachments: [image])
+      image = type: 'PostImage'
+      post = new Post(attachments: [image])
       post.defaultImage().get('type').should.equal 'PostImage'
 
     it 'returns the first image if there is no PostImage or artwork', ->

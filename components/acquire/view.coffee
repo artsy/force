@@ -1,6 +1,6 @@
 CurrentUser = require '../../models/current_user.coffee'
-analytics   = require '../../lib/analytics.coffee'
-mediator    = require '../../lib/mediator.coffee'
+analytics = require '../../lib/analytics.coffee'
+mediator = require '../../lib/mediator.coffee'
 
 module.exports =
 

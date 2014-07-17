@@ -1,13 +1,13 @@
-Backbone       = require 'backbone'
-sinon          = require 'sinon'
-Partner        = require '../../../../models/partner.coffee'
-Profile        = require '../../../../models/profile.coffee'
-PartnerShows   = require '../../../../collections/partner_shows.coffee'
-_              = require 'underscore'
-benv           = require 'benv'
-{ resolve }    = require 'path'
-{ fabricate }  = require 'antigravity'
-rewire         = require 'rewire'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+Partner = require '../../../../models/partner.coffee'
+Profile = require '../../../../models/profile.coffee'
+PartnerShows = require '../../../../collections/partner_shows.coffee'
+_ = require 'underscore'
+benv = require 'benv'
+{ resolve } = require 'path'
+{ fabricate } = require 'antigravity'
+rewire = require 'rewire'
 
 PartnerShowsGridView = rewire '../../client/shows_grid'
 
@@ -23,7 +23,7 @@ describe 'PartnerShowsGridView', ->
       }, =>
 
         # fabricated shows groundtruth
-        # gallery     => featured: 0, current: 3, upcoming: 2, past: 5 (total: 10)
+        # gallery => featured: 0, current: 3, upcoming: 2, past: 5 (total: 10)
         # institution => featured: 1, current: 3, upcoming: 2, past: 4 (total: 10)
         @src = [
           fabricate('show', { name: 'show1' } ),

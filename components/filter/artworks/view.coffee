@@ -100,12 +100,12 @@ module.exports = class FilterArtworksView extends Backbone.View
     "84": 'Large'
 
   priceHash:
-    '-1:1000'            : 'Under $1,000'
-    '1000:5000'          : 'beweeen $1,000 & $5,000'
-    '5000:10000'         : 'between $5,000 & $10,000'
-    '10000:50000'        : 'between $10,000 & $50,000'
+    '-1:1000': 'Under $1,000'
+    '1000:5000': 'beweeen $1,000 & $5,000'
+    '5000:10000': 'between $5,000 & $10,000'
+    '10000:50000': 'between $10,000 & $50,000'
     '50000:1000000000000': 'over $50,000'
-    '-1:1000000000000'   : 'for Sale'
+    '-1:1000000000000': 'for Sale'
 
   paramsToHeading: ->
     if @dimensionHash[@params.get('dimension')] or @priceHash[@params.get('price_range')] or @params.get('medium')

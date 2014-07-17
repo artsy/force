@@ -1,6 +1,6 @@
-fs            = require 'fs'
-jade          = require 'jade'
-Artwork       = require '../../../../models/artwork'
+fs = require 'fs'
+jade = require 'jade'
+Artwork = require '../../../../models/artwork'
 { fabricate } = require 'antigravity'
 
 describe 'Meta tags', ->
@@ -18,7 +18,7 @@ describe 'Meta tags', ->
       @artwork = new Artwork fabricate 'artwork'
       @html = jade.render fs.readFileSync(@file).toString(),
         artwork: @artwork
-        sd     : @sd
+        sd: @sd
 
     it 'includes mobile alternate, canonical, twitter card and og tags', ->
       @html.should.include "<meta property=\"twitter:card\" content=\"summary"
@@ -34,7 +34,7 @@ describe 'Meta tags', ->
       @artwork.set image_versions: ["large"]
       @html = jade.render fs.readFileSync(@file).toString(),
         artwork: @artwork
-        sd     : @sd
+        sd: @sd
 
     it 'includes og:image and twitter card', ->
       @html.should.include "<meta property=\"og:image\" content=\"http://localhost:5000/artwork/#{@artwork.get('id')}.jpg"

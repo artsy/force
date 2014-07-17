@@ -1,7 +1,7 @@
-Backbone          = require 'backbone'
-sd                = require('sharify').data
-infoTemplate      = -> require('../templates/info.jade') arguments...
-analytics         = require '../../../lib/analytics.coffee'
+Backbone = require 'backbone'
+sd = require('sharify').data
+infoTemplate = -> require('../templates/info.jade') arguments...
+analytics = require '../../../lib/analytics.coffee'
 
 module.exports = class FairInfo extends Backbone.View
 
@@ -23,7 +23,7 @@ module.exports = class FairInfo extends Backbone.View
     src = location.mapImageSrc(@mapWidth, @mapHeight)
     @$('img.map').attr('src': src) if src
     @$('.fair-map-link').attr
-      'href' : location.googleMapsLink()
+      'href': location.googleMapsLink()
 
   targetBlankLinks: ->
     @$('a').attr target: "_blank"

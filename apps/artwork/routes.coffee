@@ -1,15 +1,15 @@
-Artwork   = require '../../models/artwork'
-Artist    = require '../../models/artist'
-Backbone  = require 'backbone'
+Artwork = require '../../models/artwork'
+Artist = require '../../models/artist'
+Backbone = require 'backbone'
 defaultMessage = require '../../components/contact/default_message.coffee'
 { stringifyJSONForWeb } = require '../../components/util/json.coffee'
 
 @index = (req, res) ->
   artwork = new Artwork id: req.params.id
   artwork.fetch
-    cache   : true
-    error   : res.backboneError
-    success : (model, response, options) ->
+    cache: true
+    error: res.backboneError
+    success: (model, response, options) ->
       # Remove the current artwork tab from the path to more easily test against artwork.href()
       artworkPath = res.locals.sd.CURRENT_PATH
       if req.params?.tab
@@ -20,20 +20,20 @@ defaultMessage = require '../../components/contact/default_message.coffee'
         if artwork.get('artist')
           artist = new Artist artwork.get('artist')
           artist.fetch
-            cache   : true
-            error   : res.backboneError
-            success : (model, response, options) ->
+            cache: true
+            error: res.backboneError
+            success: (model, response, options) ->
               res.locals.sd.ARTIST = response
               res.render 'index',
                 artwork: artwork
-                artist : artist
-                tab    : req.params.tab
-                jsonLD : stringifyJSONForWeb(artwork.toJSONLD())
+                artist: artist
+                tab: req.params.tab
+                jsonLD: stringifyJSONForWeb(artwork.toJSONLD())
                 defaultMessage: defaultMessage(artwork)
         else
           res.render 'index',
             artwork: artwork
-            jsonLD : stringifyJSONForWeb(artwork.toJSONLD())
+            jsonLD: stringifyJSONForWeb(artwork.toJSONLD())
             defaultMessage: defaultMessage(artwork)
       else
         res.redirect artwork.href()

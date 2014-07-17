@@ -39,11 +39,11 @@ collection's `groupByColumnsInOrder` method. This returns the models ready to go
 
 ```jade
 # Dependencies for the view
-Artworks        = require '../../../collections/artworks.coffee'
-Backbone        = require 'backbone'
-CurrentUser     = require '../../../models/current_user.coffee'
-SaveControls    = require '../../../components/artwork_item/save_controls.coffee'
-artworkColumnsTemplate  = -> require('../../../components/artwork_columns/template.jade') arguments...
+Artworks = require '../../../collections/artworks.coffee'
+Backbone = require 'backbone'
+CurrentUser = require '../../../models/current_user.coffee'
+SaveControls = require '../../../components/artwork_item/save_controls.coffee'
+artworkColumnsTemplate = -> require('../../../components/artwork_columns/template.jade') arguments...
 
 # When the view has artworks to render
 @$('.show-artworks').html artworkColumnsTemplate artworkColumns: artworks.groupByColumnsInOrder(3)
@@ -56,8 +56,8 @@ listItems =
     new SaveControls
       artworkCollection: @artworkCollection  # This is the current user's saved artworks collection,
                                              # which is a model...
-      el               : overlay
-      model            : artwork
+      el: overlay
+      model: artwork
 if @artworkCollection
   @artworkCollection.addRepoArtworks @collection
   @artworkCollection.syncSavedArtworks()
@@ -73,7 +73,7 @@ Benefits:
 - See more option to reveal more works
 ```coffeescript
   @columnsView = new ArtworkColumnsView
-    el:         @$ '.artwork-columns'
+    el: @$ '.artwork-columns'
     collection: new Artworks @saleArtworks.pluck('artwork')
     gutterWidth: 40
     totalWidth: 1000 # Desired width of the container
@@ -401,8 +401,8 @@ More useful is to extend the `ContactView` when configuration is more complex. T
 ```coffeescript
 _ = require 'underscore'
 sd = require('sharify').data
-ContactView   = require './view.coffee'
-headerTemplate  = -> require('./templates/feedback_header.jade') arguments...
+ContactView = require './view.coffee'
+headerTemplate = -> require('./templates/feedback_header.jade') arguments...
 
 module.exports = class FeedbackView extends ContactView
   headerTemplate: headerTemplate
@@ -491,8 +491,8 @@ ModalPageView = require '../../../components/modal/page.coffee'
 
 # Pass a width and a pageId
 new ModalPageView
-  width  : '700px'
-  pageId : 'auction-info'
+  width: '700px'
+  pageId: 'auction-info'
 ```
 
 ## Flash Message
@@ -532,10 +532,10 @@ ZigZagBanner = require '../../../components/zig_zag_banner/index.coffee'
 # ...
 
 new ZigZagBanner
-  persist : true # Creates a cookie that persists for a year (defaults to true)
-  name    : 'inquiry' # Used in naming the cookie (so that multiple banners can exist)
-  message : 'Interested in this work? Request more info here'
-  $target : $inquiryButton # Gets vertically centered to the left of this DOM node
+  persist: true # Creates a cookie that persists for a year (defaults to true)
+  name: 'inquiry' # Used in naming the cookie (so that multiple banners can exist)
+  message: 'Interested in this work? Request more info here'
+  $target: $inquiryButton # Gets vertically centered to the left of this DOM node
   backwards: false # Renders the banner from left to right
 ```
 
@@ -546,7 +546,7 @@ Blurb view using [jQuery dotdotdot](https://github.com/BeSite/jQuery.dotdotdot).
 
 Example
 ```coffeescript
-BlurbView      = require '../../../components/blurb/view.coffee'
+BlurbView = require '../../../components/blurb/view.coffee'
 
 new BlurbView
   el: @$('.artist-blurb')
@@ -567,7 +567,7 @@ class FormView extends Backbone.View
   _.extend @prototype, Form
 
   events:
-    'click button' : 'submit'
+    'click button': 'submit'
 
   submit: (e) ->
     e.preventDefault()

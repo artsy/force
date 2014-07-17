@@ -1,14 +1,14 @@
-_             = require 'underscore'
-sinon         = require 'sinon'
-Backbone      = require 'backbone'
+_ = require 'underscore'
+sinon = require 'sinon'
+Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
-sd            = require('sharify').data
-should        = require 'should'
-Backbone      = require 'backbone'
-PartnerShow   = require '../../../models/partner_show'
-CurrentUser   = require '../../../models/current_user'
-FeedItems     = require '../collections/feed_items'
-FeedItem      = require '../models/feed_item'
+sd = require('sharify').data
+should = require 'should'
+Backbone = require 'backbone'
+PartnerShow = require '../../../models/partner_show'
+CurrentUser = require '../../../models/current_user'
+FeedItems = require '../collections/feed_items'
+FeedItem = require '../models/feed_item'
 
 describe 'PartnerShow', ->
 

@@ -1,38 +1,38 @@
-_               = require 'underscore'
-sd              = require('sharify').data
-Backbone        = require 'backbone'
-CurrentUser     = require '../../../models/current_user.coffee'
-Partner         = require '../../../models/partner.coffee'
-Profile         = require '../../../models/profile.coffee'
-ContactView     = require './contact.coffee'
-CollectionView  = require './collection.coffee'
-ShowsView       = require './shows.coffee'
-PostsView       = require './posts.coffee'
-ArtistsView     = require './artists.coffee'
-OverviewView    = require './overview.coffee'
+_ = require 'underscore'
+sd = require('sharify').data
+Backbone = require 'backbone'
+CurrentUser = require '../../../models/current_user.coffee'
+Partner = require '../../../models/partner.coffee'
+Profile = require '../../../models/profile.coffee'
+ContactView = require './contact.coffee'
+CollectionView = require './collection.coffee'
+ShowsView = require './shows.coffee'
+PostsView = require './posts.coffee'
+ArtistsView = require './artists.coffee'
+OverviewView = require './overview.coffee'
 tablistTemplate = -> require('../templates/tablist.jade') arguments...
 
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 
 sectionToView =
-  contact     : ContactView
-  about       : ContactView
-  collection  : CollectionView
-  shop        : CollectionView
-  shows       : ShowsView
-  posts       : PostsView
-  artists     : ArtistsView
-  overview    : OverviewView
+  contact: ContactView
+  about: ContactView
+  collection: CollectionView
+  shop: CollectionView
+  shows: ShowsView
+  posts: PostsView
+  artists: ArtistsView
+  overview: OverviewView
 
 sectionViewParams =
-  collection  : { isForSale: false }
-  shop        : { isForSale: true }
+  collection: { isForSale: false }
+  shop: { isForSale: true }
 
 module.exports = class PartnerView extends Backbone.View
 
   events:
     # Links want to use router should have partner-route-link class
-    'click .partner-route-link' : 'intercept'
+    'click .partner-route-link': 'intercept'
 
   defaults:
     currentSection: 'overview'
@@ -57,10 +57,10 @@ module.exports = class PartnerView extends Backbone.View
     return unless @isPartnerFetched or @currentSection isnt 'overview'
 
     new sectionToView[@currentSection]?( _.extend(
-      el      : @$('.partner-content')
-      profile : @profile
-      partner : @partner
-      cache   : @cache[@currentSection]
+      el: @$('.partner-content')
+      profile: @profile
+      partner: @partner
+      cache: @cache[@currentSection]
     , @sectionViewParams))
 
   intercept: (e) ->
@@ -121,7 +121,7 @@ module.exports = class PartnerView extends Backbone.View
   #
   getSections: ->
     # The order in the array will be used for presentation
-    gallery     = ['overview', 'shows', 'artists', 'posts', 'contact']
+    gallery = ['overview', 'shows', 'artists', 'posts', 'contact']
     institution = ['shows', 'collection', 'posts', 'shop', 'about']
     nonPartnerGallery = ['overview']
 
@@ -136,13 +136,13 @@ module.exports = class PartnerView extends Backbone.View
   # @param {Object} sections An array of sections to be filtered.
   getDisplayableSections: (sections) ->
     criteria =
-      overview:   => true
-      shows:      => @partner.get('displayable_shows_count') > 0
-      artists:    => @partner.get('partner_artists_count') > 0
+      overview: => true
+      shows: => @partner.get('displayable_shows_count') > 0
+      artists: => @partner.get('partner_artists_count') > 0
       collection: => @partner.get('published_not_for_sale_artworks_count') > 0
-      contact:    => true
-      about:      => true
-      posts:      => @profile.hasPosts()
-      shop:       => @partner.get('published_for_sale_artworks_count') > 0
+      contact: => true
+      about: => true
+      posts: => @profile.hasPosts()
+      shop: => @partner.get('published_for_sale_artworks_count') > 0
 
     _.filter sections, (s) -> criteria[s]?()

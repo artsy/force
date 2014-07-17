@@ -1,7 +1,7 @@
-_               = require 'underscore'
-Backbone        = require 'backbone'
-Artist          = require '../models/artist.coffee'
-{ API_URL }   = require('sharify').data
+_ = require 'underscore'
+Backbone = require 'backbone'
+Artist = require '../models/artist.coffee'
+{ API_URL } = require('sharify').data
 { Fetch, AToZ } = require 'artsy-backbone-mixins'
 
 module.exports = class Artists extends Backbone.Collection

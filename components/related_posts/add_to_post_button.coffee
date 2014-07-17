@@ -1,16 +1,16 @@
-_           = require 'underscore'
-sd          = require('sharify').data
-Backbone    = require 'backbone'
-Cookies     = require 'cookies-js'
-Post        = require '../../models/post.coffee'
+_ = require 'underscore'
+sd = require('sharify').data
+Backbone = require 'backbone'
+Cookies = require 'cookies-js'
+Post = require '../../models/post.coffee'
 CurrentUser = require '../../models/current_user.coffee'
-mediator    = require '../../lib/mediator.coffee'
-analytics   = require '../../lib/analytics.coffee'
+mediator = require '../../lib/mediator.coffee'
+analytics = require '../../lib/analytics.coffee'
 
 module.exports = class AddToPostButton extends Backbone.View
 
   events:
-    'click .related-posts-add-button' : 'addPost'
+    'click .related-posts-add-button': 'addPost'
 
   initialize: (options) ->
     @modelName = options.modelName
@@ -48,6 +48,6 @@ module.exports = class AddToPostButton extends Backbone.View
         post.isNew = -> true
         post.url = "#{post.url()}/#{post.id}/artwork/#{@model.id}"
         post.save null,
-          success : success
-          error   : success
+          success: success
+          error: success
       error: success

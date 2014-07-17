@@ -14,7 +14,10 @@ module.exports = class UnsubscribeView extends Backbone.View
 
   submit: (e) ->
     e.preventDefault()
-    types = _.without @$('input:checked').map(-> $(this).attr('name')), 'selectAll'
+    if @$("input[name='selectAll']").prop('checked')
+      types = ['all']
+    else
+      types = _.without @$('input:checked').map(-> $(this).attr('name')), 'selectAll'
     (@$button ?= @$('button')).attr 'data-state', 'loading'
     new Backbone.Model().save { authentication_token: sd.UNSUB_AUTH_TOKEN, type: types },
       url: "#{sd.API_URL}/api/v1/me/unsubscribe"

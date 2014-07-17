@@ -1,12 +1,12 @@
-_             = require 'underscore'
-benv          = require 'benv'
-Backbone      = require 'backbone'
-sinon         = require 'sinon'
-fabricate     = require('antigravity').fabricate
-{ resolve }   = require 'path'
+_ = require 'underscore'
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+fabricate = require('antigravity').fabricate
+{ resolve } = require 'path'
 
-SearchResult    = require '../../../models/search_result'
-SearchBarView   = require '../view'
+SearchResult = require '../../../models/search_result'
+SearchBarView = require '../view'
 
 Bloodhound = -> ttAdapter: sinon.stub(), initialize: sinon.stub()
 Bloodhound.tokenizers = obj: whitespace: sinon.stub()
@@ -20,26 +20,15 @@ describe 'SearchBarView', ->
       Backbone.$ = $
 
       benv.render resolve(__dirname, '../template.jade'), {}, =>
-        @indicateLoadingSpy     = sinon.spy SearchBarView::, 'indicateLoading'
-        @concealLoadingSpy      = sinon.spy SearchBarView::, 'concealLoading'
-        @selectResultSpy        = sinon.spy SearchBarView::, 'selectResult'
-        @displaySuggestionsSpy  = sinon.spy SearchBarView::, 'displaySuggestions'
-        @hideSuggestionsSpy     = sinon.spy SearchBarView::, 'hideSuggestions'
-
-        @$input             = $('#main-layout-search-bar-input')
-        @$input.typeahead   = sinon.stub()
+        @$input = $('#main-layout-search-bar-input')
+        @$input.typeahead = sinon.stub()
 
         @view = new SearchBarView
-          el     : $('#main-layout-search-bar-container')
-          $input : @$input
+          el: $('#main-layout-search-bar-container')
+          $input: @$input
         done()
 
   afterEach ->
-    @indicateLoadingSpy.restore()
-    @concealLoadingSpy.restore()
-    @selectResultSpy.restore()
-    @displaySuggestionsSpy.restore()
-    @hideSuggestionsSpy.restore()
     benv.teardown()
 
   describe '#initialize', ->
@@ -71,18 +60,61 @@ describe 'SearchBarView', ->
       @view.selectResult({}, model)
       window.location.should.equal model.get 'location'
 
-  it 'responds to search:start with #indicateLoading', ->
-    @view.trigger 'search:start'
-    @indicateLoadingSpy.called.should.be.ok
+  describe '#indicateLoading', ->
+    beforeEach ->
+      @view.trigger 'search:start'
 
-  it 'responds to search:complete with #concealLoading', ->
-    @view.trigger 'search:complete'
-    @concealLoadingSpy.called.should.be.ok
+    it 'triggers the loading state of the component', ->
+      @view.$el.attr('class').should.include 'is-loading'
 
-  it 'responds to search:opened with #displaySuggestions', ->
-    @view.trigger 'search:opened'
-    @displaySuggestionsSpy.called.should.be.ok
+    it 'restores the feedback to the original state', ->
+      @view.$el.html().should.include 'Search Artists, Artworks, Galleries, Museums, Categories'
 
-  it 'responds to search:closed with #hideSuggestions', ->
-    @view.trigger 'search:closed'
-    @hideSuggestionsSpy.called.should.be.ok
+  describe '#concealLoading', ->
+    it 'removes the loading state', ->
+      @view.trigger 'search:start'
+      @view.$el.attr('class').should.include 'is-loading'
+      @view.trigger 'search:complete'
+      @view.$el.attr('class').should.not.include 'is-loading'
+
+  describe '#displaySuggestions', ->
+    it 'displays the feedback when the input is empty', ->
+      @view.$('.autocomplete-feedback').text ''
+      _.isEmpty(@view.$('input').text()).should.be.true
+      @view.trigger 'search:opened'
+      @view.$el.html().should.include 'Search Artists, Artworks, Galleries, Museums, Categories'
+      @view.$el.attr('class').should.include 'is-open'
+
+    it 'does not display the feedback when the input has text', ->
+      @view.$('input').val 'Foo Bar'
+      @view.trigger 'search:opened'
+      _.isEmpty(@view.$el.attr('class')).should.be.true
+
+  describe '#hideSuggestions', ->
+    it 'removes the open state', ->
+      @view.trigger 'search:opened'
+      @view.$el.attr('class').should.include 'is-open'
+      @view.trigger 'search:closed'
+      _.isEmpty(@view.$el.attr('class')).should.be.true
+
+  describe '#displayFeedback', ->
+    it 'does not render a message when there are results', ->
+      @view.search.results.add(fabricate 'artist')
+      @view.search.results.length.should.equal 1
+      @view.trigger 'search:complete'
+      @view.$el.html().should.not.include 'No results found'
+      _.isEmpty(@view.$el.attr 'class').should.be.true
+
+    it 'renders a message when there are no results', ->
+      @view.search.results.length.should.equal 0
+      @view.trigger 'search:complete'
+      @view.$el.html().should.include 'No results found'
+      @view.$el.attr('class').should.include 'is-no-results'
+
+  describe '#feedbackString', ->
+    it 'uses the mode if there is one available', ->
+      @view.mode = 'artists'
+      @view.feedbackString().should.equal 'Search for Artists…'
+
+    it 'falls back to the default string', ->
+      @view.feedbackString().should.equal 'Search Artists, Artworks, Galleries, Museums, Categories…'

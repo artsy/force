@@ -1,7 +1,7 @@
-sinon           = require 'sinon'
-Backbone        = require 'backbone'
-{ fabricate }   = require 'antigravity'
-Items           = require '../../collections/items'
+sinon = require 'sinon'
+Backbone = require 'backbone'
+{ fabricate } = require 'antigravity'
+Items = require '../../collections/items'
 
 describe 'Items', ->
   beforeEach ->

@@ -1,7 +1,7 @@
-_             = require 'underscore'
-routes        = require '../routes'
-sinon         = require 'sinon'
-Backbone      = require 'backbone'
+_ = require 'underscore'
+routes = require '../routes'
+sinon = require 'sinon'
+Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 
 describe '#index', ->
@@ -10,12 +10,12 @@ describe '#index', ->
     sinon.stub Backbone, 'sync'
     @req = { params: { id: 'awesome-feature' } }
     @res =
-      render  : sinon.stub()
+      render: sinon.stub()
       redirect: sinon.stub()
-      locals  :
+      locals:
         sd:
           ASSET_PATH: "http://localhost:5000"
-          API_URL : 'http://localhost:5000'
+          API_URL: 'http://localhost:5000'
 
   afterEach ->
     Backbone.sync.restore()

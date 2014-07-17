@@ -1,10 +1,10 @@
-_           = require 'underscore'
-Backbone    = require 'backbone'
-Post        = require '../../../models/post.coffee'
-Artwork     = require '../../../models/artwork.coffee'
-Artworks    = require '../../../collections/artworks.coffee'
+_ = require 'underscore'
+Backbone = require 'backbone'
+Post = require '../../../models/post.coffee'
+Artwork = require '../../../models/artwork.coffee'
+Artworks = require '../../../collections/artworks.coffee'
 PartnerShow = require '../../../models/partner_show.coffee'
-underscore  = require('../../util/string.coffee').underscore
+underscore = require('../../util/string.coffee').underscore
 
 module.exports = class FeedItem extends Backbone.Model
 

@@ -1,12 +1,12 @@
-_               = require 'underscore'
-benv            = require 'benv'
-Backbone        = require 'backbone'
-sinon           = require 'sinon'
-HeroUnits       = require '../../../collections/hero_units'
-FeaturedLinks   = require '../../../collections/featured_links'
-CurrentUser     = require '../../../models/current_user'
-{ resolve }     = require 'path'
-{ fabricate }   = require 'antigravity'
+_ = require 'underscore'
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+HeroUnits = require '../../../collections/hero_units'
+FeaturedLinks = require '../../../collections/featured_links'
+CurrentUser = require '../../../models/current_user'
+{ resolve } = require 'path'
+{ fabricate } = require 'antigravity'
 
 describe 'HeroUnitView', ->
 

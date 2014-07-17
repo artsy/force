@@ -1,15 +1,15 @@
-sd                  = require('sharify').data
-_                   = require 'underscore'
-Backbone            = require 'backbone'
+sd = require('sharify').data
+_ = require 'underscore'
+Backbone = require 'backbone'
 { Image, Markdown } = require 'artsy-backbone-mixins'
-PartnerLocation     = require './partner_location.coffee'
-OrderedSets         = require '../collections/ordered_sets.coffee'
-Profiles            = require '../collections/profiles.coffee'
-DateHelpers         = require '../components/util/date_helpers.coffee'
-Clock               = require './mixins/clock.coffee'
-moment              = require 'moment'
-Profile             = require './profile.coffee'
-FilterSuggest       = require './filter_suggest.coffee'
+PartnerLocation = require './partner_location.coffee'
+OrderedSets = require '../collections/ordered_sets.coffee'
+Profiles = require '../collections/profiles.coffee'
+DateHelpers = require '../components/util/date_helpers.coffee'
+Clock = require './mixins/clock.coffee'
+moment = require 'moment'
+Profile = require './profile.coffee'
+FilterSuggest = require './filter_suggest.coffee'
 
 module.exports = class Fair extends Backbone.Model
 

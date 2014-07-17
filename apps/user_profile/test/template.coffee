@@ -1,11 +1,11 @@
-_               = require 'underscore'
-jade            = require 'jade'
-path            = require 'path'
-fs              = require 'fs'
-cheerio         = require 'cheerio'
-Backbone        = require 'backbone'
-{ fabricate }   = require 'antigravity'
-Profile         = require '../../../models/profile'
+_ = require 'underscore'
+jade = require 'jade'
+path = require 'path'
+fs = require 'fs'
+cheerio = require 'cheerio'
+Backbone = require 'backbone'
+{ fabricate } = require 'antigravity'
+Profile = require '../../../models/profile'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../templates/#{templateName}.jade"
@@ -18,12 +18,12 @@ describe 'Profile', ->
 
   beforeEach ->
     @sd =
-      API_URL : 'http://localhost:5000'
+      API_URL: 'http://localhost:5000'
       ASSET_PATH: 'http://localhost:5000'
     @profile = new Profile fabricate 'profile'
     @html = render('index')({
-      sd      : @sd
-      profile : @profile
+      sd: @sd
+      profile: @profile
     })
 
   describe 'template', ->
@@ -37,6 +37,6 @@ describe 'Profile', ->
         name: """ '"><img src=x onerror=alert('xss'); } """
       }
       render('index')({
-        sd      : @sd
-        profile : @profile
+        sd: @sd
+        profile: @profile
       }).should.not.include '<img src=x'

@@ -1,12 +1,12 @@
-_               = require 'underscore'
-Backbone        = require 'backbone'
-benv            = require 'benv'
-sinon           = require 'sinon'
-sd              = require('sharify').data
-PartnerShow     = require '../../../models/partner_show.coffee'
-Profile         = require '../../../models/profile.coffee'
-{ fabricate }   = require 'antigravity'
-{ resolve }     = require 'path'
+_ = require 'underscore'
+Backbone = require 'backbone'
+benv = require 'benv'
+sinon = require 'sinon'
+sd = require('sharify').data
+PartnerShow = require '../../../models/partner_show.coffee'
+Profile = require '../../../models/profile.coffee'
+{ fabricate } = require 'antigravity'
+{ resolve } = require 'path'
 
 describe 'Partner Show View', ->
 
@@ -47,7 +47,7 @@ describe 'Partner Show View', ->
       fabricate 'artwork'
     ]
     @view = new @PartnerShowView.PartnerShowView
-      el   : $("<div id='show'>
+      el: $("<div id='show'>
         <div class='show-artworks'></div>
         <div class='show-share'></div>
         <div class='carousel'></div>

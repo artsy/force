@@ -1,11 +1,11 @@
-_                       = require 'underscore'
-Backbone                = require 'backbone'
-sd                      = require('sharify').data
-analytics               = require('../../../lib/analytics.coffee')
-ShareView               = require '../../share/view.coffee'
-PostAdmin               = require('./post_admin.coffee')
-PostVideoLink           = require('./post_video_link.coffee')
-Attachments             = require('../collections/post_attachments.coffee')
+_ = require 'underscore'
+Backbone = require 'backbone'
+sd = require('sharify').data
+analytics = require('../../../lib/analytics.coffee')
+ShareView = require '../../share/view.coffee'
+PostAdmin = require('./post_admin.coffee')
+PostVideoLink = require('./post_video_link.coffee')
+Attachments = require('../collections/post_attachments.coffee')
 
 module.exports.FeedItemPost = class FeedItemPost extends Backbone.View
 
@@ -26,10 +26,10 @@ module.exports.FeedItemPost = class FeedItemPost extends Backbone.View
       isMe = @isMe()
       if isMe or options.currentUser.isAdmin()
         new PostAdmin
-          el         : @el
-          isMe       : isMe
-          model      : @post
-          parent     : @parent
+          el: @el
+          isMe: isMe
+          model: @post
+          parent: @parent
           currentUser: options.currentUser
 
     if options.limitPostBodyHeight
@@ -66,12 +66,12 @@ module.exports.FeedItemPost = class FeedItemPost extends Backbone.View
       attachments = new Attachments(@post.get('attachments'))
       model = attachments.get($(item).data('attachment'))
       view = new PostVideoLink
-        el    : item
-        model : model
+        el: item
+        model: model
         onPlay: => @parent.recomputeEachShowHeight()
 
   events:
-    'click .see-post' : 'seeMore'
+    'click .see-post': 'seeMore'
 
   seeMore: ->
     analytics.track.click "Clicked show more on post"

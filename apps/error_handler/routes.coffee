@@ -14,9 +14,9 @@ render = (res, data) ->
 @pageNotFound = (req, res, next) ->
   if req.accepts 'html' # respond with html page
     data = _.extend
-      code  : 404
-      error : 'Not Found'
-      sd    : {}
+      code: 404
+      error: 'Not Found'
+      sd: {}
     , res.locals
     res.status 404
     render res, data
@@ -31,10 +31,10 @@ render = (res, data) ->
 @internalError = (err, req, res, next) ->
   detail = if REVEAL_ERRORS then err.message or err.text or err.toString() else null
   data = _.extend
-    code   : res.statusCode
-    error  : err
-    detail : detail
-    sd     : {}
+    code: res.statusCode
+    error: err
+    detail: detail
+    sd: {}
   , res.locals
   render res, data
 

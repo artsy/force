@@ -1,13 +1,13 @@
-_               = require 'underscore'
-jade            = require 'jade'
-path            = require 'path'
-fs              = require 'fs'
-cheerio         = require 'cheerio'
-Backbone        = require 'backbone'
-{ fabricate }   = require 'antigravity'
-Post            = require '../../../models/post'
-Profile         = require '../../../models/profile'
-Artwork         = require '../../../models/artwork'
+_ = require 'underscore'
+jade = require 'jade'
+path = require 'path'
+fs = require 'fs'
+cheerio = require 'cheerio'
+Backbone = require 'backbone'
+{ fabricate } = require 'antigravity'
+Post = require '../../../models/post'
+Profile = require '../../../models/profile'
+Artwork = require '../../../models/artwork'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../templates/#{templateName}.jade"
@@ -22,14 +22,14 @@ describe 'Post Templates', ->
 
     beforeEach ->
       sd =
-        API_URL : 'http://localhost:5000'
+        API_URL: 'http://localhost:5000'
         ASSET_PATH: 'http://localhost:5000'
       post = new Post fabricate('post')
       profile = new Profile fabricate 'profile'
       @html = render('index')({
-        sd      : sd
-        post    : post
-        profile : profile
+        sd: sd
+        post: post
+        profile: profile
       })
 
     describe 'template', ->

@@ -1,14 +1,14 @@
-_               = require 'underscore'
-Backbone        = require 'backbone'
-Cookies         = require 'cookies-js'
-analytics       = require '../../../../lib/analytics.coffee'
-CurrentUser     = require '../../../../models/current_user.coffee'
-FlashMessage    = require '../../../../components/flash/index.coffee'
-Form            = require '../../../../components/mixins/form.coffee'
-AfterInquiry    = require '../../../../components/after_inquiry/mixin.coffee'
-defaultMessage  = require '../../../../components/contact/default_message.coffee'
+_ = require 'underscore'
+Backbone = require 'backbone'
+Cookies = require 'cookies-js'
+analytics = require '../../../../lib/analytics.coffee'
+CurrentUser = require '../../../../models/current_user.coffee'
+FlashMessage = require '../../../../components/flash/index.coffee'
+Form = require '../../../../components/mixins/form.coffee'
+AfterInquiry = require '../../../../components/after_inquiry/mixin.coffee'
+defaultMessage = require '../../../../components/contact/default_message.coffee'
 
-{ SESSION_ID, API_URL }  = require('sharify').data
+{ SESSION_ID, API_URL } = require('sharify').data
 
 module.exports = class ContactView extends Backbone.View
   _.extend @prototype, Form
@@ -17,21 +17,21 @@ module.exports = class ContactView extends Backbone.View
   eligibleForAfterInquiryFlow: true
 
   events:
-    'submit #artwork-contact-form' : 'submit'
-    'click button'                 : 'submit'
-    'mouseover button'             : 'hoveredSubmit'
+    'submit #artwork-contact-form': 'submit'
+    'click button': 'submit'
+    'mouseover button': 'hoveredSubmit'
 
   initialize: ->
     @user = CurrentUser.orNull()
 
-    @inquiry      = new Backbone.Model
-    @inquiry.url  = "#{API_URL}/api/v1/me/artwork_inquiry_request"
+    @inquiry = new Backbone.Model
+    @inquiry.url = "#{API_URL}/api/v1/me/artwork_inquiry_request"
 
     @render()
 
   render: ->
-    @$submit    = @$('button')
-    @$textarea  = @$('textarea')
+    @$submit = @$('button')
+    @$textarea = @$('textarea')
 
   submit: (e) ->
     e.preventDefault()
@@ -42,12 +42,12 @@ module.exports = class ContactView extends Backbone.View
     @$submit.attr 'data-state', 'loading'
 
     @inquiry.set _.extend @serializeForm(),
-      artwork         : @model.id
-      contact_gallery : true
-      session_id      : if @user then undefined else SESSION_ID
-      referring_url   : Cookies.get('force-referrer')
-      landing_url     : Cookies.get('force-session-start')
-      inquiry_url     : window.location.href
+      artwork: @model.id
+      contact_gallery: true
+      session_id: if @user then undefined else SESSION_ID
+      referring_url: Cookies.get('force-referrer')
+      landing_url: Cookies.get('force-session-start')
+      inquiry_url: window.location.href
 
     @maybeSend @inquiry,
       success: =>

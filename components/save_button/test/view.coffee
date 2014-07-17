@@ -1,12 +1,12 @@
-benv          = require 'benv'
-sinon         = require 'sinon'
-Backbone      = require 'backbone'
-SaveButton    = require '../view'
-mediator      = require '../../../lib/mediator'
-{ resolve }   = require 'path'
+benv = require 'benv'
+sinon = require 'sinon'
+Backbone = require 'backbone'
+SaveButton = require '../view'
+mediator = require '../../../lib/mediator'
+{ resolve } = require 'path'
 
-model           = new Backbone.Model(id: 'artwork')
-model.isSaved   = sinon.stub()
+model = new Backbone.Model(id: 'artwork')
+model.isSaved = sinon.stub()
 
 describe 'SaveButton', ->
   describe '#save', ->
@@ -32,9 +32,9 @@ describe 'SaveButton', ->
         benv.setup =>
           benv.expose { $: benv.require 'jquery' }
           Backbone.$ = $
-          saved                 = new Backbone.Collection
-          saved.unsaveArtwork   = sinon.stub()
-          saved.saveArtwork     = sinon.stub()
+          saved = new Backbone.Collection
+          saved.unsaveArtwork = sinon.stub()
+          saved.saveArtwork = sinon.stub()
           @view = new SaveButton { saved: saved, model: model, el: $('<a></a>') }
           done()
 

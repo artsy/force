@@ -1,21 +1,21 @@
-_               = require 'underscore'
-benv            = require 'benv'
-Backbone        = require 'backbone'
-sinon           = require 'sinon'
-{ resolve }     = require 'path'
-{ fabricate }   = require 'antigravity'
+_ = require 'underscore'
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+{ resolve } = require 'path'
+{ fabricate } = require 'antigravity'
 
 { Layer, Layers, LayeredSearchView } =
   benv.requireWithJadeify resolve(__dirname, '../../client/layered-search'), ['template']
 
 Artwork = require '../../../../models/artwork'
-Fair    = require '../../../../models/fair'
+Fair = require '../../../../models/fair'
 
 describe 'Layers, Layer', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    @artwork  = new Artwork fabricate 'artwork'
-    @layers   = new Layers artwork: @artwork
+    @artwork = new Artwork fabricate 'artwork'
+    @layers = new Layers artwork: @artwork
 
   afterEach ->
     Backbone.sync.restore()
@@ -41,9 +41,9 @@ describe 'Layers, Layer', ->
 
   describe 'with fair', ->
     beforeEach ->
-      @fair      = new Fair fabricate 'fair'
-      @artwork   = new Artwork fabricate 'artwork'
-      @layers    = new Layers artwork: @artwork, fair: @fair
+      @fair = new Fair fabricate 'fair'
+      @artwork = new Artwork fabricate 'artwork'
+      @layers = new Layers artwork: @artwork, fair: @fair
       @layers.reset [
         { type: 'synthetic', id: 'for-sale' }
         { type: 'gene', id: 'foobar' }
@@ -115,8 +115,8 @@ describe 'LayeredSearchView', ->
   describe 'with an artwork', ->
     beforeEach (done) ->
       sinon.stub Backbone, 'sync'
-      @artwork  = new Artwork fabricate 'artwork'
-      @view     = new LayeredSearchView $el: $('<div></div>'), artwork: @artwork
+      @artwork = new Artwork fabricate 'artwork'
+      @view = new LayeredSearchView $el: $('<div></div>'), artwork: @artwork
       done()
 
     afterEach ->
@@ -130,8 +130,8 @@ describe 'LayeredSearchView', ->
 
     describe 'rendered view', ->
       beforeEach ->
-        @artworks  = _.times 2, -> new Artwork fabricate 'artwork'
-        @layers    = _.times 2, -> id: _.uniqueId('layer'), name: _.uniqueId('name')
+        @artworks = _.times 2, -> new Artwork fabricate 'artwork'
+        @layers = _.times 2, -> id: _.uniqueId('layer'), name: _.uniqueId('name')
         @view.layers.reset @layers
         @view.render()
 
@@ -148,7 +148,7 @@ describe 'LayeredSearchView', ->
       describe '#selectLayer', ->
         beforeEach ->
           @$buttons = @view.$('.layered-search-layer-button')
-          @$target  = @$buttons.last()
+          @$target = @$buttons.last()
           @$target.click()
         it 'should activate the correct layer', ->
           id = @$target.data 'id'
@@ -163,12 +163,12 @@ describe 'LayeredSearchView', ->
   describe 'with an artwork and a fair', ->
     beforeEach (done) ->
       sinon.stub Backbone, 'sync'
-      @artwork  = new Artwork fabricate 'artwork'
-      @fair     = new Fair fabricate 'fair'
-      @view     = new LayeredSearchView $el: $('<div></div>'), artwork: @artwork
+      @artwork = new Artwork fabricate 'artwork'
+      @fair = new Fair fabricate 'fair'
+      @view = new LayeredSearchView $el: $('<div></div>'), artwork: @artwork
 
-      @artworks  = _.times 2, -> new Artwork fabricate 'artwork'
-      @layers    = _.times 2, -> id: _.uniqueId('layer'), name: _.uniqueId('name')
+      @artworks = _.times 2, -> new Artwork fabricate 'artwork'
+      @layers = _.times 2, -> id: _.uniqueId('layer'), name: _.uniqueId('name')
       @view.layers.fair = @fair
       @layers.push id: _.uniqueId('layer'), type: 'fair'
       @view.layers.reset @layers

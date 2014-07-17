@@ -1,27 +1,27 @@
-_                 = require 'underscore'
-benv              = require 'benv'
-Backbone          = require 'backbone'
-sinon             = require 'sinon'
-PersonalizeState  = require '../../client/state'
-CurrentUser       = require '../../../../models/current_user.coffee'
-{ fabricate }     = require 'antigravity'
-{ resolve }       = require 'path'
+_ = require 'underscore'
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+PersonalizeState = require '../../client/state'
+CurrentUser = require '../../../../models/current_user.coffee'
+{ fabricate } = require 'antigravity'
+{ resolve } = require 'path'
 
 describe 'CollectView', ->
   before (done) ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
-      Backbone.$    = $
-      @CollectView  = benv.requireWithJadeify resolve(__dirname, '../../client/views/collect'), ['template']
+      Backbone.$ = $
+      @CollectView = benv.requireWithJadeify resolve(__dirname, '../../client/views/collect'), ['template']
       done()
 
   after ->
     benv.teardown()
 
   beforeEach ->
-    @user   = new CurrentUser fabricate 'user'
-    @state  = new PersonalizeState user: @user
-    @view   = new @CollectView(state: @state, user: @user)
+    @user = new CurrentUser fabricate 'user'
+    @state = new PersonalizeState user: @user
+    @view = new @CollectView(state: @state, user: @user)
     @view.render()
 
   describe '#setCollectorLevel', ->
@@ -45,5 +45,7 @@ describe 'CollectView', ->
       @state.set 'reonboarding', true
       @view.render()
 
-    it 'does not render the onboarding copy', ->
-      @view.$el.html().should.not.include '60-Second Sign Up'
+    it 'renders the reonboarding copy', ->
+      html = @view.$el.html()
+      html.should.not.include '60-Second Sign Up'
+      html.should.include 'Personalize your Artsy experience'

@@ -1,7 +1,7 @@
 Backbone = require 'backbone'
-_        = require 'underscore'
-sd       = require('sharify').data
-Icon     = require './icon.coffee'
+_ = require 'underscore'
+sd = require('sharify').data
+Icon = require './icon.coffee'
 { Image } = require 'artsy-backbone-mixins'
 
 module.exports = class Icon extends Backbone.Model
@@ -9,8 +9,8 @@ module.exports = class Icon extends Backbone.Model
 
   @DefaultUserIconUrl: "/images/user_profile.png"
 
-  # Uplaod validation constraints
-  maxFileSize    : 3000000 # 3MB
+  # Upload validation constraints
+  maxFileSize: 3000000 # 3MB
   acceptFileTypes: /(\.|\/)(gif|jpe?g|png|tiff)$/i
 
   url: ->
@@ -20,9 +20,11 @@ module.exports = class Icon extends Backbone.Model
   # For users:
   #   - render a default icon if there is none instead of "missing_image"
   #   - display an unprocessed original version if the image is waiting on a delayed job
-  imageUrl: (version) ->
-    if @hasImage version
-      @sslUrl @get('image_url').replace(':version', version).replace('.jpg', '.png')
+  imageUrl: ->
+    if @hasImage 'square_140'
+      @sslUrl @get('image_url').replace(':version', 'square_140').replace('.jpg', '.png')
+    else if @hasImage 'square'
+      @sslUrl @get('image_url').replace(':version', 'square').replace('.jpg', '.png')
     else if @has('image_filename') and _.isNull(@get('versions'))
       @sslUrl @get('image_url').replace(':version', 'original')
     else

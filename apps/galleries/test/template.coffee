@@ -1,11 +1,11 @@
-_             = require 'underscore'
-jade          = require 'jade'
-path          = require 'path'
-fs            = require 'fs'
-cheerio       = require 'cheerio'
-Backbone      = require 'backbone'
+_ = require 'underscore'
+jade = require 'jade'
+path = require 'path'
+fs = require 'fs'
+cheerio = require 'cheerio'
+Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
-Partners      = require '../../../collections/partners'
+Partners = require '../../../collections/partners'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../#{templateName}.jade"
@@ -18,7 +18,7 @@ describe 'Galleries', ->
 
   before ->
     sd =
-      API_URL : 'http://localhost:5000'
+      API_URL: 'http://localhost:5000'
       ASSET_PATH: 'http://localhost:5000'
     @partners = new Partners [
       fabricate('partner',
@@ -42,8 +42,8 @@ describe 'Galleries', ->
     ]
     @aToZGroup = @partners.groupByAlphaWithColumns(3)
     @html = render('template')({
-      sd          : sd
-      aToZGroup   : @aToZGroup
+      sd: sd
+      aToZGroup: @aToZGroup
       partnerCount: @partners.length
     })
 

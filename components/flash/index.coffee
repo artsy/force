@@ -1,6 +1,6 @@
-_         = require 'underscore'
-Backbone  = require 'backbone'
-mediator  = require '../../lib/mediator.coffee'
+_ = require 'underscore'
+Backbone = require 'backbone'
+mediator = require '../../lib/mediator.coffee'
 
 module.exports = class FlashMessage extends Backbone.View
   container: '#main-layout-flash'
@@ -9,7 +9,7 @@ module.exports = class FlashMessage extends Backbone.View
   visibleDuration: 2000
 
   events:
-    'click' : 'close'
+    'click': 'close'
 
   template: ->
     "<span>#{@message}</span>"

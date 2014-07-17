@@ -1,5 +1,5 @@
-_      = require 'underscore'
-sd     = require('sharify').data
+_ = require 'underscore'
+sd = require('sharify').data
 
 #
 # Message users of unsupported browsers to upgrade

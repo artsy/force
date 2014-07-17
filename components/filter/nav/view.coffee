@@ -42,7 +42,7 @@ module.exports = class FilterNav extends Backbone.View
   # mouseout event and dismiss the menu.
   #
   # NOTE2: The click events will bubble up the DOM tree, but they simply
-  # never reach the body or the document on iOS. :(
+  # never reach the body or the document on iOS.:(
   #
   # https://developer.apple.com/library/safari/documentation/appleapplications/reference/safariwebcontent/HandlingEvents/HandlingEvents.html#//apple_ref/doc/uid/TP40006511-SW7
   setupForceMouseOut: ->
@@ -57,8 +57,8 @@ module.exports = class FilterNav extends Backbone.View
 
   adjustMenu: (e) ->
     $dropdown = $(e.currentTarget)
-    $menu     = $dropdown.find('nav')
-    $world    = $(document)
+    $menu = $dropdown.find('nav')
+    $world = $(document)
 
     if $dropdown.offset().left + $menu.width() > $world.width()
       $menu.css left: 'auto', right: 0

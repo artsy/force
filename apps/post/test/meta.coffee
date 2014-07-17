@@ -1,8 +1,8 @@
-fs            = require 'fs'
-jade          = require 'jade'
-sd            = require('sharify').data
+fs = require 'fs'
+jade = require 'jade'
+sd = require('sharify').data
 { fabricate } = require 'antigravity'
-Post          = require '../../../models/post'
+Post = require '../../../models/post'
 
 describe 'Meta tags', ->
 
@@ -13,7 +13,7 @@ describe 'Meta tags', ->
       @file = "#{process.cwd()}/apps/post/templates/meta.jade"
       @post = new Post fabricate('post')
       @html = jade.render fs.readFileSync(@file).toString(),
-        sd  : sd
+        sd: sd
         post: @post
 
     it 'includes canonical url, twitter card, og tags, and title', ->
@@ -30,7 +30,7 @@ describe 'Meta tags', ->
       @file = "#{process.cwd()}/apps/post/templates/meta.jade"
       @post = new Post fabricate('post', shareable_image_url: 'http://share.me/image')
       @html = jade.render fs.readFileSync(@file).toString(),
-        sd  : sd
+        sd: sd
         post: @post
 
     it 'includes canonical url, twitter card, og tags, and title', ->

@@ -1,12 +1,12 @@
-_             = require 'underscore'
-sd            = require('sharify').data
-benv          = require 'benv'
-Backbone      = require 'backbone'
-sinon         = require 'sinon'
-moment        = require 'moment'
-{ resolve }   = require 'path'
+_ = require 'underscore'
+sd = require('sharify').data
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+moment = require 'moment'
+{ resolve } = require 'path'
 { fabricate } = require 'antigravity'
-Fair          = require '../../../../models/fair.coffee'
+Fair = require '../../../../models/fair.coffee'
 
 describe 'ForYouView', ->
 
@@ -20,7 +20,7 @@ describe 'ForYouView', ->
       benv.expose { $: benv.require 'jquery' }
       sinon.stub Backbone, 'sync'
       @OverviewView = require '../../client/overview.coffee'
-      Backbone.$  = $
+      Backbone.$ = $
 
       @fair = new Fair fabricate 'fair'
       done()

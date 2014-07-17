@@ -1,10 +1,10 @@
-cheerio       = require 'cheerio'
-fs            = require 'fs'
-jade          = require 'jade'
-path          = require 'path'
-Backbone      = require 'backbone'
+cheerio = require 'cheerio'
+fs = require 'fs'
+jade = require 'jade'
+path = require 'path'
+Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
-Artwork       = require '../../../models/artwork'
+Artwork = require '../../../models/artwork'
 
 render = (template) ->
   filename = path.resolve __dirname, "../templates/#{template}.jade"
@@ -132,3 +132,6 @@ describe 'Artwork Item template', ->
 
       $ = cheerio.load render('artwork')({ artwork: @artwork, displayPurchase: true })
       $('.artwork-item-sold').should.have.lengthOf 1
+
+  describe 'is auction', ->
+    it 'displays a buy now price'

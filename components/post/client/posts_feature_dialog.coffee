@@ -1,17 +1,17 @@
-_                  = require 'underscore'
-Backbone           = require 'backbone'
-sd                 = require('sharify').data
-Artists            = require('../../../collections/artists.coffee')
-Artworks           = require('../../../collections/artworks.coffee')
+_ = require 'underscore'
+Backbone = require 'backbone'
+sd = require('sharify').data
+Artists = require('../../../collections/artists.coffee')
+Artworks = require('../../../collections/artworks.coffee')
 featurePostArtworkTemplate = -> require('../templates/actions_feature_post_artwork.jade') arguments...
-featurePostArtistTemplate  = -> require('../templates/actions_feature_post_artist.jade') arguments...
+featurePostArtistTemplate = -> require('../templates/actions_feature_post_artist.jade') arguments...
 
 module.exports = class PostsFeatureDialog extends Backbone.View
 
   events:
-    'click .feature-by-slug'        : 'featureBySlug'
-    'click a.post-dialog-feature'   : 'featurePostOnPage'
-    'click a.post-dialog-unfeature' : 'unfeaturePostOnPage'
+    'click .feature-by-slug': 'featureBySlug'
+    'click a.post-dialog-feature': 'featurePostOnPage'
+    'click a.post-dialog-unfeature': 'unfeaturePostOnPage'
 
   getFeatureUrl: (modelName, modelId) ->
     "#{sd.API_URL}/api/v1/post/#{@model.get('id')}/#{modelName.toLowerCase()}/#{modelId}/feature"
@@ -25,7 +25,7 @@ module.exports = class PostsFeatureDialog extends Backbone.View
       @loadPosts()
     @$postsDialog.toggleClass 'on'
 
-  hide :-> @$postsDialog.removeClass 'on'
+  hide:-> @$postsDialog.removeClass 'on'
 
   loadPosts: ->
     @model.ensureFeatureArtistsFetched @displayFeatureArtists

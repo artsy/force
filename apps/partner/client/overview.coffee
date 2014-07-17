@@ -1,24 +1,24 @@
-_             = require 'underscore'
-sd            = require('sharify').data
-Backbone      = require 'backbone'
-CurrentUser   = require '../../../models/current_user.coffee'
-Partner       = require '../../../models/partner.coffee'
-PartnerArtists   = require '../../../collections/partner_artists.coffee'
+_ = require 'underscore'
+sd = require('sharify').data
+Backbone = require 'backbone'
+CurrentUser = require '../../../models/current_user.coffee'
+Partner = require '../../../models/partner.coffee'
+PartnerArtists = require '../../../collections/partner_artists.coffee'
 PartnerShowsGrid = require './shows_grid.coffee'
 PartnerLocations = require '../../../collections/partner_locations.coffee'
-ArtistsListView  = require './artists_list.coffee'
-template      = -> require('../templates/overview.jade') arguments...
+ArtistsListView = require './artists_list.coffee'
+template = -> require('../templates/overview.jade') arguments...
 artistsGridTemplate = -> require('../templates/_artists_grid.jade') arguments...
 
 module.exports = class PartnerOverviewView extends Backbone.View
 
   partnerDefaults:
-    numberOfFeatured  : 1 # number of featured shows needed
-    numberOfShows     : 6 # number of other shows needed
+    numberOfFeatured: 1 # number of featured shows needed
+    numberOfShows: 6 # number of other shows needed
 
   nonPartnerDefaults:
-    numberOfFeatured  : 0
-    numberOfShows     : 6
+    numberOfFeatured: 0
+    numberOfShows: 6
 
   initialize: (options={}) ->
     { @profile, @partner } = _.defaults options, @defaults

@@ -1,7 +1,7 @@
-_             = require 'underscore'
-Backbone      = require 'backbone'
-FeedbackView  = require '../../contact/feedback.coffee'
-mediator      = require '../../../lib/mediator.coffee'
+_ = require 'underscore'
+Backbone = require 'backbone'
+FeedbackView = require '../../contact/feedback.coffee'
+mediator = require '../../../lib/mediator.coffee'
 
 module.exports = class FooterView extends Backbone.View
   events:

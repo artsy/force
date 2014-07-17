@@ -1,7 +1,7 @@
-_             = require 'underscore'
-geo           = require '../../components/geo/index.coffee'
-Location      = require '../location.coffee'
-GeoFormatter  = require 'geoformatter'
+_ = require 'underscore'
+geo = require '../../components/geo/index.coffee'
+Location = require '../location.coffee'
+GeoFormatter = require 'geoformatter'
 
 module.exports =
   location: ->
@@ -9,8 +9,8 @@ module.exports =
 
   approximateLocation: (options = {}) ->
     geo.locate
-      accuracy : 'low'
-      success  : _.wrap options.success, (success, geoFormatted) =>
+      accuracy: 'low'
+      success: _.wrap options.success, (success, geoFormatted) =>
         @setGeo(geoFormatted) unless @hasLocation()
         success?()
 
@@ -31,20 +31,20 @@ module.exports =
       # We just set the name as the "city"
       # this also lets the user remove their location
       @set location:
-        city        : obj.name or ''
-        state       : ''
-        state_code  : ''
-        postal_code : ''
-        coordinates : null
-        country     : ''
+        city: obj.name or ''
+        state: ''
+        state_code: ''
+        postal_code: ''
+        coordinates: null
+        country: ''
     else
       @setGeo new GeoFormatter(obj)
 
   setGeo: (geoFormatted) ->
     @set location:
-      city        : geoFormatted.getCity() or ''
-      state       : geoFormatted.getState() or ''
-      state_code  : geoFormatted.getStateCode() or ''
-      postal_code : geoFormatted.getPostalCode() or ''
-      coordinates : geoFormatted.getCoordinates() or null
-      country     : geoFormatted.getCountry() or ''
+      city: geoFormatted.getCity() or ''
+      state: geoFormatted.getState() or ''
+      state_code: geoFormatted.getStateCode() or ''
+      postal_code: geoFormatted.getPostalCode() or ''
+      coordinates: geoFormatted.getCoordinates() or null
+      country: geoFormatted.getCountry() or ''

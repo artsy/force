@@ -4,7 +4,7 @@ module.exports = class DateHelpers
 
   @timespanInWords: (utc_start, utc_end) ->
     start = moment.utc utc_start
-    end   = moment.utc utc_end
+    end = moment.utc utc_end
 
     startMonth = start.format('MMM')
     # don't append a . for May, 0-based months

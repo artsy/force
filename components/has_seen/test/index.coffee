@@ -1,12 +1,12 @@
-benv    = require 'benv'
-sinon   = require 'sinon'
+benv = require 'benv'
+sinon = require 'sinon'
 
 describe 'hasSeen', ->
   beforeEach (done) ->
     benv.setup =>
-      @hasSeen  = require '../index'
-      @Cookies  = require 'cookies-js'
-      @setSpy   = sinon.spy @Cookies, 'set'
+      @hasSeen = require '../index'
+      @Cookies = require 'cookies-js'
+      @setSpy = sinon.spy @Cookies, 'set'
 
       done()
 

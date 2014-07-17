@@ -1,9 +1,9 @@
-_             = require 'underscore'
-sd            = require('sharify').data
-Backbone      = require 'backbone'
-{ API_URL }   = require('sharify').data
-{ Fetch }     = require 'artsy-backbone-mixins'
-Follow        = require './model.coffee'
+_ = require 'underscore'
+sd = require('sharify').data
+Backbone = require 'backbone'
+{ API_URL } = require('sharify').data
+{ Fetch } = require 'artsy-backbone-mixins'
+Follow = require './model.coffee'
 
 module.exports = class Following extends Backbone.Collection
   _.extend @prototype, Fetch(API_URL)

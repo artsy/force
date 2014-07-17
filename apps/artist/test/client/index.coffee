@@ -1,13 +1,13 @@
-rewire                = require 'rewire'
-benv                  = require 'benv'
-Backbone              = require 'backbone'
-sinon                 = require 'sinon'
-AuctionLots           = require '../../../../collections/auction_lots'
-Artist                = require '../../../../models/artist'
-_                     = require 'underscore'
-{ resolve }           = require 'path'
-{ fabricate }         = require 'antigravity'
-{ stubChildClasses }  = require '../../../../test/helpers/stubs'
+rewire = require 'rewire'
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+AuctionLots = require '../../../../collections/auction_lots'
+Artist = require '../../../../models/artist'
+_ = require 'underscore'
+{ resolve } = require 'path'
+{ fabricate } = require 'antigravity'
+{ stubChildClasses } = require '../../../../test/helpers/stubs'
 
 setupView = (artistOptions = {}, done) ->
   @artist = new Artist fabricate 'artist', artistOptions

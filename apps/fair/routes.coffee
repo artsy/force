@@ -38,8 +38,8 @@ client = cache.client
   return next() unless res.locals.sd.FAIR
   return res.redirect("/#{req.params.id}") unless term = req.query.q
   fair = res.locals.fair
-  fairSearch  = new Search
-  search  = new Search
+  fairSearch = new Search
+  search = new Search
   success = _.after 2, ->
     res.locals.sd.SECTION = 'search'
     res.render 'index', { term: term, fairResults: fairSearch.models, results: search.models }

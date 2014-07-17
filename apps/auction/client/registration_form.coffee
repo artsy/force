@@ -1,10 +1,10 @@
-sd                 = require('sharify').data
-Backbone           = require 'backbone'
-analytics          = require '../../../lib/analytics.coffee'
-Marketplace        = require '../../../models/marketplace.coffee'
-CurrentUser        = require '../../../models/current_user.coffee'
-ErrorHandlingForm  = require('../../../components/credit_card/client/error_handling_form.coffee')
-ModalPageView      = require '../../../components/modal/page.coffee'
+sd = require('sharify').data
+Backbone = require 'backbone'
+analytics = require '../../../lib/analytics.coffee'
+Marketplace = require '../../../models/marketplace.coffee'
+CurrentUser = require '../../../models/current_user.coffee'
+ErrorHandlingForm = require('../../../components/credit_card/client/error_handling_form.coffee')
+ModalPageView = require '../../../components/modal/page.coffee'
 
 { SESSION_ID } = require('sharify').data
 
@@ -13,8 +13,8 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
   balanced: false
 
   events:
-    'click .registration-form-content .avant-garde-button-black' : 'onSubmit'
-    'click .bidding-question' : 'showBiddingDialog'
+    'click .registration-form-content .avant-garde-button-black': 'onSubmit'
+    'click .bidding-question': 'showBiddingDialog'
 
   initialize: (options) ->
     @success = options.success
@@ -25,8 +25,8 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
   showBiddingDialog: (e) ->
     e.preventDefault()
     new ModalPageView
-      width  : '700px'
-      pageId : 'auction-info'
+      width: '700px'
+      pageId: 'auction-info'
 
   setUpFields: ->
     @fields =
@@ -44,16 +44,18 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
 
   cardCallback: (response) =>
     if response.status == 201
-      card      = new Backbone.Model
-      card.url  = "#{sd.API_URL}/api/v1/me/credit_cards"
+      card = new Backbone.Model
+      card.url = "#{sd.API_URL}/api/v1/me/credit_cards"
       card.save token: response.data.uri,
         success: =>
+          success = =>
+            @success()
+            analytics.track.funnel 'Registration submitted'
           @currentUser.createBidder
             saleId: @model.get('id')
-            success: =>
-              @success()
-              analytics.track.funnel 'Registration submitted'
-            error: (xhr) =>
+            success: success
+            error: (model, xhr) =>
+              return success() if xhr.responseJSON?.message is 'Sale is already taken.'
               @showError "Registration submission error", xhr
         error: =>
           @showError "Error adding your credit card", response

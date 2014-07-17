@@ -1,8 +1,8 @@
-_               = require 'underscore'
-sd              = require('sharify').data
-{ fabricate }   = require 'antigravity'
-Backbone        = require 'backbone'
-BidderPosition  = require '../../models/bidder_position'
+_ = require 'underscore'
+sd = require('sharify').data
+{ fabricate } = require 'antigravity'
+Backbone = require 'backbone'
+BidderPosition = require '../../models/bidder_position'
 
 describe 'BidderPosition', ->
   beforeEach ->

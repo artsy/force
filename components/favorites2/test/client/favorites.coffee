@@ -14,7 +14,7 @@ describe 'FavoritesView', ->
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       $.fn.hidehover = sinon.stub()
-      $.onInfiniteScroll  = sinon.stub()
+      $.onInfiniteScroll = sinon.stub()
       sinon.stub Backbone, 'sync'
       benv.render resolve(__dirname, '../fixtures/favorites.jade'), { sd: {} }, =>
         { FavoritesView } = mod = benv.requireWithJadeify(

@@ -1,9 +1,9 @@
-fs            = require 'fs'
-jade          = require 'jade'
-sd            = require('sharify').data
+fs = require 'fs'
+jade = require 'jade'
+sd = require('sharify').data
 { fabricate } = require 'antigravity'
-PartnerShow   = require '../../../models/partner_show'
-cheerio       = require 'cheerio'
+PartnerShow = require '../../../models/partner_show'
+cheerio = require 'cheerio'
 
 describe 'Meta tags', ->
 
@@ -13,7 +13,7 @@ describe 'Meta tags', ->
       @file = "#{process.cwd()}/apps/show/meta.jade"
       @show = new PartnerShow fabricate('show')
       @html = jade.render fs.readFileSync(@file).toString(),
-        sd  : sd
+        sd: sd
         show: @show
 
     it 'includes canonical url, twitter card, og tags, and title', ->
@@ -28,7 +28,7 @@ describe 'Meta tags', ->
       @show.set 'image_url', ''
       @show.set 'image_version', []
       @html = jade.render fs.readFileSync(@file).toString(),
-        sd  : sd
+        sd: sd
         show: @show
       $ = cheerio.load @html
       $("meta[property='og:image']").attr('content').should.include 'og_image.jpg'

@@ -1,7 +1,7 @@
-_              = require 'underscore'
-Backbone       = require 'backbone'
-PartnerShows   = require '../../../collections/partner_shows.coffee'
-template       = -> require('../templates/shows_grid.jade') arguments...
+_ = require 'underscore'
+Backbone = require 'backbone'
+PartnerShows = require '../../../collections/partner_shows.coffee'
+template = -> require('../templates/shows_grid.jade') arguments...
 
 #
 # Partner shows grid view
@@ -14,16 +14,16 @@ template       = -> require('../templates/shows_grid.jade') arguments...
 module.exports = class PartnerShowsGridView extends Backbone.View
 
   defaults:
-    numberOfFeatured  : 1         # number of featured shows needed
-    isCombined        : false     # if combining current, upcoming and past shows
-    numberOfShows     : Infinity  # number of combined shows needed
-    heading           : ''
-    seeAll            : true
+    numberOfFeatured: 1         # number of featured shows needed
+    isCombined: false     # if combining current, upcoming and past shows
+    numberOfShows: Infinity  # number of combined shows needed
+    heading: ''
+    seeAll: true
 
   initialize: (options={}) ->
     { @partner, @numberOfFeatured, @numberOfShows, @isCombined, @heading, @seeAll } = _.defaults options, @defaults
     @initializeShows()
-    
+
   renderShows: (featured=[], current=[], upcoming=[], past=[]) ->
     numberOfAllShows = _.reduce(arguments, ( (m, n) -> m + n.length ), 0)
     return @$el.hide() if numberOfAllShows is 0
@@ -73,15 +73,15 @@ module.exports = class PartnerShowsGridView extends Backbone.View
 
         exclude = if f then [f] else []
 
-        current   = current.concat partnerShows.current(exclude).models
-        upcoming  = upcoming.concat partnerShows.upcoming(exclude).models
-        past      = past.concat partnerShows.past(exclude).models
+        current = current.concat partnerShows.current(exclude).models
+        upcoming = upcoming.concat partnerShows.upcoming(exclude).models
+        past = past.concat partnerShows.past(exclude).models
         numberOfShowsSoFar = current.length + upcoming.length + past.length
 
         if (numberOfShowsSoFar >= @numberOfShows and
            featured.length >= @numberOfFeatured) or
            partnerShows.length == 0
-  
+
           if @isCombined
             # order of getting combined shows: current -> upcoming -> past
             shows = current.concat(upcoming, past).slice(0, @numberOfShows)

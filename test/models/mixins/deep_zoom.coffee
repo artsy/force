@@ -1,8 +1,8 @@
-_               = require 'underscore'
-Backbone        = require 'backbone'
-{ fabricate }   = require 'antigravity'
-DeepZoom        = require '../../../models/mixins/deep_zoom'
-{ Image }           = require 'artsy-backbone-mixins'
+_ = require 'underscore'
+Backbone = require 'backbone'
+{ fabricate } = require 'antigravity'
+DeepZoom = require '../../../models/mixins/deep_zoom'
+{ Image } = require 'artsy-backbone-mixins'
 
 describe 'Deep Zoom mixin', ->
   describe 'secure', ->

@@ -1,16 +1,16 @@
-_                       = require 'underscore'
-Backbone                = require 'backbone'
-sd                      = require('sharify').data
-CurrentUser             = require '../../../models/current_user.coffee'
-Artworks                = require '../../../collections/artworks.coffee'
-hintTemplate            = -> require('../templates/empty_hint.jade') arguments...
+_ = require 'underscore'
+Backbone = require 'backbone'
+sd = require('sharify').data
+CurrentUser = require '../../../models/current_user.coffee'
+Artworks = require '../../../collections/artworks.coffee'
+hintTemplate = -> require('../templates/empty_hint.jade') arguments...
 favoritesStatusTemplate = -> require('../templates/favorites_status.jade') arguments...
-SaveControls            = require '../../../components/artwork_item/save_controls.coffee'
-ArtworkColumnsView      = require '../../../components/artwork_columns/view.coffee'
-SuggestedGenesView      = require '../../../components/suggested_genes/view.coffee'
-ShareView               = require '../../../components/share/view.coffee'
-PublishModal            = require '../../../components/publish_modal/view.coffee'
-mediator                = require '../../../lib/mediator.coffee'
+SaveControls = require '../../../components/artwork_item/save_controls.coffee'
+ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
+SuggestedGenesView = require '../../../components/suggested_genes/view.coffee'
+ShareView = require '../../../components/share/view.coffee'
+PublishModal = require '../../../components/publish_modal/view.coffee'
+mediator = require '../../../lib/mediator.coffee'
 
 module.exports.FavoritesView = class FavoritesView extends Backbone.View
 
@@ -18,7 +18,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
     pageSize: 10
 
   events:
-    'click .make-public'  : 'makePublic'
+    'click .make-public': 'makePublic'
 
   initialize: (options) ->
     { @pageSize } = _.defaults options or {}, @defaults
@@ -107,11 +107,11 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
 
   showStatusDialog: ->
     new PublishModal
-      persist      : true
-      width        : '350px'
-      name         : 'favorites_publish_prompt'
-      publishEvent : 'favorites:make:public'
-      message      : 'Your favorites need to be public to share. Make them public now?'
+      persist: true
+      width: '350px'
+      name: 'favorites_publish_prompt'
+      publishEvent: 'favorites:make:public'
+      message: 'Your favorites need to be public to share. Make them public now?'
 
   renderStatus: () ->
     isPrivate = @savedArtworkCollection.get('private') ? true

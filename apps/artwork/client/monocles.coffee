@@ -33,8 +33,8 @@ module.exports = class MonocleView extends Backbone.View
       @largerWidth = 1024
 
   events:
-    'mouseleave img'         : 'hideMonocle'
-    'mouseenter img'         : 'showMonocle'
+    'mouseleave img': 'hideMonocle'
+    'mouseenter img': 'showMonocle'
 
   showMonocle: ->
     @$('.monocle-zoom').show()
@@ -52,11 +52,11 @@ module.exports = class MonocleView extends Backbone.View
     left = @currentLeft - @left + @monocleSize - @adjLeftFactor
     top = @currentTop - @top - @monocleSize
     @$('.monocle-zoom').css
-      'left' : left
-      'top'  : top
+      'left': left
+      'top': top
     @recalcBackground()
 
-  recalcBackground: -> 
+  recalcBackground: ->
     distToTop = @currentTop - @imgTop
     distFromLeft = @currentLeft - @imgLeft
     pctOffsetTop = distToTop / @imgHeight

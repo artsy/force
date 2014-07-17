@@ -8,16 +8,16 @@
 # Heavily leveraging @craigspaeth's work from microgravity.
 # https://github.com/artsy/microgravity/blob/master/apps/feature
 #
-_             = require 'underscore'
-sd            = require('sharify').data
-{ Image }     = require 'artsy-backbone-mixins'
-Artworks      = require '../collections/artworks.coffee'
-Backbone      = require 'backbone'
+_ = require 'underscore'
+sd = require('sharify').data
+{ Image } = require 'artsy-backbone-mixins'
+Artworks = require '../collections/artworks.coffee'
+Backbone = require 'backbone'
 FeaturedLinks = require '../collections/featured_links.coffee'
-FeaturedSet   = require './featured_set.coffee'
-Sale          = require './sale.coffee'
+FeaturedSet = require './featured_set.coffee'
+Sale = require './sale.coffee'
 
-{ smartTruncate }   = require "../components/util/string.coffee"
+{ smartTruncate } = require "../components/util/string.coffee"
 { Markdown, Image } = require 'artsy-backbone-mixins'
 
 module.exports = class Feature extends Backbone.Model
@@ -95,11 +95,11 @@ module.exports = class Feature extends Backbone.Model
 
               @set sale: (sale = new Sale items.first().toJSON())
               sale.fetchArtworks
-                each    : options.artworkPageSuccess
-                success : _.bind ((orderedSet, saleArtworks) =>
+                each: options.artworkPageSuccess
+                success: _.bind ((orderedSet, saleArtworks) =>
                   orderedSet.set
-                    data                : Artworks.fromSale(saleArtworks)
-                    display_artist_list : sale.get 'display_artist_list'
+                    data: Artworks.fromSale(saleArtworks)
+                    display_artist_list: sale.get 'display_artist_list'
                   options.artworksSuccess? orderedSet
                   callback()
                 ), @, orderedSet
@@ -132,7 +132,7 @@ module.exports = class Feature extends Backbone.Model
     sets.fetch
       data:
         owner_type: 'Feature'
-        owner_id  : @get 'id'
+        owner_id: @get 'id'
       success: (sets) =>
         err = null
         success = _.after sets.length, ->
@@ -163,8 +163,8 @@ module.exports = class Feature extends Backbone.Model
         set = orderedSets.get(items.id)
         items = if itemType is 'FeaturedLink' then new FeaturedLinks(items.toJSON()) else items
         finalHashes.push {
-          orderedSet : set
-          items      : items
+          orderedSet: set
+          items: items
         }
         success()
       error: (m, e) -> error(e)

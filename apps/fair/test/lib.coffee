@@ -20,17 +20,17 @@ describe 'fairDataMiddleware', ->
     @success = =>
       Fair::fetchPrimarySets.args[0][0].success()
       Fair::fetchOverviewData.args[0][0].success(
-        fair:                  new Fair(fabricate 'fair', id: 'the-foo-show')
-        profile:               new Profile(fabricate 'profile', id: 'thefooshow')
-        filterSuggest:         new FilterSuggest({ "design": 4002, "drawing": 3772 })
+        fair: new Fair(fabricate 'fair', id: 'the-foo-show')
+        profile: new Profile(fabricate 'profile', id: 'thefooshow')
+        filterSuggest: new FilterSuggest({ "design": 4002, "drawing": 3772 })
         filteredSearchOptions: new FilterSuggest({ "design": 4002, "drawing": 3772 })
         filteredSearchColumns: []
-        sections:              new Backbone.Collection
-        galleries:             new Backbone.Collection([fabricate 'partner'])
-        exhibitorsCount:       1
-        exhibitorsAToZGroup:   []
-        artistsAToZGroup:      []
-        coverImage:            new CoverImage(fabricate 'cover_image')
+        sections: new Backbone.Collection
+        galleries: new Backbone.Collection([fabricate 'partner'])
+        exhibitorsCount: 1
+        exhibitorsAToZGroup: []
+        artistsAToZGroup: []
+        coverImage: new CoverImage(fabricate 'cover_image')
       )
     @cache = fairDataMiddleware.__get__ 'cache'
     @cache.setHash = sinon.stub()

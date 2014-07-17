@@ -1,6 +1,6 @@
-_         = require 'underscore'
-sd        = require('sharify').data
-Backbone  = require 'backbone'
+_ = require 'underscore'
+sd = require('sharify').data
+Backbone = require 'backbone'
 
 module.exports = class Follow extends Backbone.Model
   urlRoot: ->

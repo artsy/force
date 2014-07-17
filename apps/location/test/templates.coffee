@@ -1,15 +1,15 @@
-jade            = require 'jade'
-path            = require 'path'
-fs              = require 'fs'
-Backbone        = require 'backbone'
-{ fabricate }   = require 'antigravity'
-PartnerShow     = require '../../../models/partner_show'
-PartnerShows    = require '../../../collections/partner_shows'
-Fair            = require '../../../models/fair'
-Fairs           = require '../../../collections/fairs'
-Partners        = require '../../../collections/partners'
-Profile         = require '../../../models/profile'
-Profiles        = require '../../../collections/profiles'
+jade = require 'jade'
+path = require 'path'
+fs = require 'fs'
+Backbone = require 'backbone'
+{ fabricate } = require 'antigravity'
+PartnerShow = require '../../../models/partner_show'
+PartnerShows = require '../../../collections/partner_shows'
+Fair = require '../../../models/fair'
+Fairs = require '../../../collections/fairs'
+Partners = require '../../../collections/partners'
+Profile = require '../../../models/profile'
+Profiles = require '../../../collections/profiles'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../templates/#{templateName}.jade"
@@ -22,7 +22,7 @@ describe 'location page', ->
   describe 'fair', ->
     beforeEach ->
       @fair = new Fair fabricate 'fair', { organizer: {profile_id: 'big-fair'}, name: 'Big Fair', summary: 'huge fair' }
-      @template   = render('show')(
+      @template = render('show')(
         title: "Galleries and Art Shows Near Tokyo"
         name: 'Tokyo'
         showsOpeningThisWeek: []
@@ -45,7 +45,7 @@ describe 'location page', ->
     beforeEach ->
       @show1 = new PartnerShow fabricate 'show', { name: 'This Show', start_at: '2013-07-12', end_at: '2013-09-01' }
       @show2 = new PartnerShow fabricate 'show', { name: 'That Show', start_at: '2013-07-12', end_at: '2013-09-01' }
-      @template   = render('show')(
+      @template = render('show')(
         title: "Galleries and Art Shows Near Tokyo"
         name: 'Tokyo'
         showsOpeningThisWeek: [@show1]
@@ -67,7 +67,7 @@ describe 'location page', ->
   describe 'partner profiles', ->
     beforeEach ->
       @profile = new Profile fabricate 'partner_profile', { partner: { name: 'Gagosian Gallery' } }
-      @template   = render('show')(
+      @template = render('show')(
         title: "Galleries and Art Shows Near Tokyo"
         name: 'Tokyo'
         showsOpeningThisWeek: []

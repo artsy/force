@@ -1,12 +1,12 @@
-_             = require 'underscore'
-jade          = require 'jade'
-path          = require 'path'
-fs            = require 'fs'
-cheerio       = require 'cheerio'
-Backbone      = require 'backbone'
+_ = require 'underscore'
+jade = require 'jade'
+path = require 'path'
+fs = require 'fs'
+cheerio = require 'cheerio'
+Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
-Artwork       = require '../../../../models/artwork.coffee'
-Artworks      = require '../../../../collections/artworks.coffee'
+Artwork = require '../../../../models/artwork.coffee'
+Artworks = require '../../../../collections/artworks.coffee'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../../templates/#{templateName}.jade"
@@ -19,7 +19,7 @@ describe 'Featured Links', ->
 
   beforeEach ->
     @sd =
-      API_URL : 'http://localhost:5000'
+      API_URL: 'http://localhost:5000'
       ASSET_PATH: 'http://localhost:5000'
     @groups = [
       [
@@ -37,7 +37,7 @@ describe 'Featured Links', ->
   describe 'template', ->
 
     it 'renders artists names linked to artworks from arrays of artwork models', ->
-        $ = cheerio.load render('artists')({ artworkGroups : @groups })
+        $ = cheerio.load render('artists')({ artworkGroups: @groups })
         works = _.flatten @groups, true
         $('.feature-set-item-artist-list').should.have.lengthOf 1
         $('.feature-set-item-artist-list-heading').text().should.equal 'Jump to Artist'

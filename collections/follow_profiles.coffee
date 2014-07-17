@@ -1,9 +1,9 @@
-_             = require 'underscore'
-sd            = require('sharify').data
-Backbone      = require 'backbone'
-CurrentUser   = require '../models/current_user.coffee'
+_ = require 'underscore'
+sd = require('sharify').data
+Backbone = require 'backbone'
+CurrentUser = require '../models/current_user.coffee'
 FollowProfile = require '../models/follow_profile.coffee'
-analytics     = require '../lib/analytics.coffee'
+analytics = require '../lib/analytics.coffee'
 
 #
 # FollowProfiles
@@ -37,10 +37,10 @@ module.exports = class FollowProfiles extends Backbone.Collection
     return if profileIds.length is 0
     # Fetch the first up to @maxSyncSize
     options =
-      data  : { profiles: _.first(profileIds, @maxSyncSize) }
-      cache : false
+      data: { profiles: _.first(profileIds, @maxSyncSize) }
+      cache: false
       remove: false
-      merge : true
+      merge: true
     @fetch options
     # Recursively fetch the rest
     @syncFollows _.rest(profileIds, @maxSyncSize)

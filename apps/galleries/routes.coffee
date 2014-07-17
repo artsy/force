@@ -1,5 +1,5 @@
-_        = require 'underscore'
-sd       = require('sharify').data
+_ = require 'underscore'
+sd = require('sharify').data
 Backbone = require 'backbone'
 Partners = require '../../collections/partners'
 
@@ -17,6 +17,6 @@ Partners = require '../../collections/partners'
     success: ->
       aToZGroup = galleries.groupByAlphaWithColumns 3
       res.render 'template',
-        aToZGroup   : aToZGroup
+        aToZGroup: aToZGroup
         partnerCount: galleries.length
   galleries.fetchUntilEnd options

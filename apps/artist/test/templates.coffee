@@ -1,9 +1,9 @@
-jade            = require 'jade'
-path            = require 'path'
-fs              = require 'fs'
-Backbone        = require 'backbone'
-{ fabricate }   = require 'antigravity'
-Artist          = require '../../../models/artist'
+jade = require 'jade'
+path = require 'path'
+fs = require 'fs'
+Backbone = require 'backbone'
+{ fabricate } = require 'antigravity'
+Artist = require '../../../models/artist'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../templates/#{templateName}.jade"
@@ -15,8 +15,8 @@ render = (templateName) ->
 describe 'Artist header', ->
   describe 'artist with some artworks', ->
     beforeEach ->
-      @artist     = new Artist fabricate 'artist', { published_artworks_count: 1 }
-      @template   = render('index')(
+      @artist = new Artist fabricate 'artist', { published_artworks_count: 1 }
+      @template = render('index')(
         sd: {}
         artist: @artist
       )
@@ -27,8 +27,8 @@ describe 'Artist header', ->
 
   describe 'artist with some artworks (on the overview page)', ->
     beforeEach ->
-      @artist     = new Artist fabricate 'artist', { published_artworks_count: 0 }
-      @template   = render('index')(
+      @artist = new Artist fabricate 'artist', { published_artworks_count: 0 }
+      @template = render('index')(
         sd: { CURRENT_PATH: "/artist/#{@artist.id}" }
         artist: @artist
       )
@@ -39,8 +39,8 @@ describe 'Artist header', ->
 
   describe 'artist with auction results', ->
     beforeEach ->
-      @artist     = new Artist fabricate 'artist', { published_artworks_count: 1, auction_lots_count: 1 }
-      @template   = render('index')(
+      @artist = new Artist fabricate 'artist', { published_artworks_count: 1, auction_lots_count: 1 }
+      @template = render('index')(
         sd: {}
         artist: @artist
       )
@@ -52,8 +52,8 @@ describe 'Artist header', ->
 
   describe 'artist with no auction results', ->
     beforeEach ->
-      @artist     = new Artist fabricate 'artist', { published_artworks_count: 1, auction_lots_count: 0 }
-      @template   = render('index')(
+      @artist = new Artist fabricate 'artist', { published_artworks_count: 1, auction_lots_count: 0 }
+      @template = render('index')(
         sd: {}
         artist: @artist
       )

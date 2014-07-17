@@ -1,11 +1,11 @@
-_               = require 'underscore'
-Backbone        = require 'backbone'
-{ API_URL }   = require('sharify').data
-{ Markdown }    = require 'artsy-backbone-mixins'
-analytics       = require '../../../lib/analytics.coffee'
+_ = require 'underscore'
+Backbone = require 'backbone'
+{ API_URL } = require('sharify').data
+{ Markdown } = require 'artsy-backbone-mixins'
+analytics = require '../../../lib/analytics.coffee'
 
-Artworks            = require '../../../collections/artworks.coffee'
-ArtworkColumnsView  = require '../../../components/artwork_columns/view.coffee'
+Artworks = require '../../../collections/artworks.coffee'
+ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 
 template = -> require('../templates/layered-search.jade') arguments...
 
@@ -59,7 +59,7 @@ module.exports.LayeredSearchView = class LayeredSearchView extends Backbone.View
   template: template
 
   events:
-    'click .layered-search-layer-button' : 'selectLayer'
+    'click .layered-search-layer-button': 'selectLayer'
 
   initialize: (options = {}) ->
     { @artwork, @fair } = options
@@ -68,8 +68,8 @@ module.exports.LayeredSearchView = class LayeredSearchView extends Backbone.View
   setupLayers: ->
     @layers = new Layers artwork: @artwork, fair: @fair
     @layers.fetch
-      success:  => @render()
-      error:    => @remove()
+      success: => @render()
+      error: => @remove()
 
   # Activate the clicked layer or
   # activate the first layer if called without a click event
@@ -128,9 +128,9 @@ module.exports.LayeredSearchView = class LayeredSearchView extends Backbone.View
       artworkSize: 'tall'
 
   postRender: ->
-    @$layeredSearchResults  = @$('#layered-search-results-container')
-    @$layerGeneButton       = @$('#layered-search-layer-gene-button')
-    @$layerButtons          = @$('.layered-search-layer-button')
+    @$layeredSearchResults = @$('#layered-search-results-container')
+    @$layerGeneButton = @$('#layered-search-layer-gene-button')
+    @$layerButtons = @$('.layered-search-layer-button')
     @selectLayer() # Activate the first tab
 
   render: ->

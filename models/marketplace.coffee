@@ -1,4 +1,4 @@
-Backbone    = require 'backbone'
+Backbone = require 'backbone'
 
 module.exports = class Marketplace extends Backbone.Model
 

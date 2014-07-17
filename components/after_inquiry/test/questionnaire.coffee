@@ -1,12 +1,12 @@
-_               = require 'underscore'
-sd              = require('sharify').data
-benv            = require 'benv'
-sinon           = require 'sinon'
-Backbone        = require 'backbone'
-rewire          = require 'rewire'
-{ resolve }     = require 'path'
-mediator        = require '../../../lib/mediator'
-LoggedOutUser   = require '../../../models/logged_out_user'
+_ = require 'underscore'
+sd = require('sharify').data
+benv = require 'benv'
+sinon = require 'sinon'
+Backbone = require 'backbone'
+rewire = require 'rewire'
+{ resolve } = require 'path'
+mediator = require '../../../lib/mediator'
+LoggedOutUser = require '../../../models/logged_out_user'
 
 describe 'Questionnaire', ->
   before (done) ->
@@ -34,12 +34,12 @@ describe 'Questionnaire', ->
     sinon.stub(@Questionnaire::, 'modalTemplate').returns('<div class="modal-body"></div>')
 
     @viewOptions =
-      transition : 'slide'
-      width      : '450px'
-      backdrop   : false
-      user       : new LoggedOutUser
-      inquiry    : new Backbone.Model session_id: 'xxx'
-      loggedIn   : true
+      transition: 'slide'
+      width: '450px'
+      backdrop: false
+      user: new LoggedOutUser
+      inquiry: new Backbone.Model session_id: 'xxx'
+      loggedIn: true
 
   afterEach ->
     _.delay.restore()

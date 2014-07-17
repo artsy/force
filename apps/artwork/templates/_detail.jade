@@ -72,12 +72,7 @@
     //- Rendered client-side
 
 .artwork-actions
-
-  //- NOTE: Used for the embedded inquiry form A/B Test.
-  //-       Remove this spinner and container if the modal wins.
-  #artwork-detail-spinner( style='height: 80px; position: relative' )
-    .loading-spinner-small
-  #artwork-detail-contact( style='display: none' )
+  #artwork-detail-contact
     include ../components/contact/template
 
   if artwork.showActionsList(user)
@@ -92,7 +87,7 @@
         )
           i.icon-download
           | Download Image
-  
+
       //- Administrative actions
       if user && user.isAdmin()
         a( href="#{sd.ADMIN_URL}/artworks/artwork/#{artwork.id}", target='_blank' )

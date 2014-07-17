@@ -1,8 +1,8 @@
-benv          = require 'benv'
-sinon         = require 'sinon'
-Backbone      = require 'backbone'
-{ resolve }   = require 'path'
-CurrentUser   = require '../../../../../models/current_user'
+benv = require 'benv'
+sinon = require 'sinon'
+Backbone = require 'backbone'
+{ resolve } = require 'path'
+CurrentUser = require '../../../../../models/current_user'
 
 describe 'LocationModalView', ->
   before (done) ->

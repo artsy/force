@@ -1,13 +1,13 @@
-_               = require 'underscore'
-sd              = require('sharify').data
-Backbone        = require 'backbone'
-SearchBarView   = require '../search_bar/view.coffee'
-Following       = require '../follow_button/collection.coffee'
-Bookmarks       = require './collection.coffee'
-analytics       = require '../../lib/analytics.coffee'
+_ = require 'underscore'
+sd = require('sharify').data
+Backbone = require 'backbone'
+SearchBarView = require '../search_bar/view.coffee'
+Following = require '../follow_button/collection.coffee'
+Bookmarks = require './collection.coffee'
+analytics = require '../../lib/analytics.coffee'
 
-template            = -> require('./templates/index.jade') arguments...
-bookmarksTemplate   = -> require('./templates/bookmarks.jade') arguments...
+template = -> require('./templates/index.jade') arguments...
+bookmarksTemplate = -> require('./templates/bookmarks.jade') arguments...
 
 module.exports = class BookmarksView extends Backbone.View
   template: ->
@@ -16,7 +16,7 @@ module.exports = class BookmarksView extends Backbone.View
     bookmarksTemplate arguments...
 
   events:
-    'click .bookmark-artist-remove' : 'uncollect'
+    'click .bookmark-artist-remove': 'uncollect'
 
   initialize: (options = {}) ->
     { @limit, @autofocus, @$collection, @persist } = _.defaults options, persist: true
@@ -48,8 +48,8 @@ module.exports = class BookmarksView extends Backbone.View
 
   uncollect: (e) ->
     @trigger 'uncollect'
-    id      = $(e.currentTarget).data 'id'
-    model   = @bookmarks.findByArtistId id
+    id = $(e.currentTarget).data 'id'
+    model = @bookmarks.findByArtistId id
     model.destroy()
     @autocomplete.$input.focus()
     @following.unfollow id

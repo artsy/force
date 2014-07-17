@@ -1,7 +1,7 @@
-_                   = require 'underscore'
-sd                  = require('sharify').data
-Backbone            = require 'backbone'
-AuctionLot          = require '../models/auction_lot.coffee'
+_ = require 'underscore'
+sd = require('sharify').data
+Backbone = require 'backbone'
+AuctionLot = require '../models/auction_lot.coffee'
 
 module.exports = class ComparableResults extends Backbone.Collection
   model: AuctionLot

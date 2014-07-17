@@ -1,8 +1,8 @@
 @import '../stylus_lib'
 
-logo-size                   = 52px
-suggestion-thumbnail-size   = 32px
-suggestion-height           = (suggestion-thumbnail-size + 20px)
+logo-size = 52px
+suggestion-thumbnail-size = 32px
+suggestion-height = (suggestion-thumbnail-size + 20px)
 
 #main-layout-search-bar-container
   position relative
@@ -10,30 +10,30 @@ suggestion-height           = (suggestion-thumbnail-size + 20px)
   border-left 1px solid gray-lighter-color
 
   &.is-open
-    #main-layout-search-bar-suggested
+  &.is-no-results
+    #main-layout-search-bar-feedback
+      visibility visible
       transition opacity 0.125s
-      height logo-size
       opacity 1
 
   &.is-loading
     #main-layout-search-bar-spinner
       display block
-    #main-layout-search-bar-suggested
+    #main-layout-search-bar-feedback
       display none
 
-#main-layout-search-bar-suggested
+#main-layout-search-bar-feedback
   display block
   position absolute
   width calc('100% + 2px')
-  height 0
+  height logo-size
   top 100%
-  left 0px
+  left 0
   right auto
   padding 0 (logo-size / 2)
   margin-left -1px
   line-height logo-size
   opacity 0
-  background-color #fff
   border 1px solid gray-lighter-color
   background-color gray-lightest-color
   overflow ellipsis

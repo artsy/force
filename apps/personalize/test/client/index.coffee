@@ -1,11 +1,11 @@
-_               = require 'underscore'
-benv            = require 'benv'
-Backbone        = require 'backbone'
-sinon           = require 'sinon'
-rewire          = require 'rewire'
-{ resolve }     = require 'path'
-{ fabricate }   = require 'antigravity'
-CurrentUser     = require '../../../../models/current_user.coffee'
+_ = require 'underscore'
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+rewire = require 'rewire'
+{ resolve } = require 'path'
+{ fabricate } = require 'antigravity'
+CurrentUser = require '../../../../models/current_user.coffee'
 
 describe 'PersonalizeRouter', ->
   beforeEach (done) ->
@@ -52,8 +52,8 @@ describe 'PersonalizeRouter', ->
 
   describe '#done', ->
     it 'sets the $el state to loading, saves the user, redirects', ->
-      @router.user      = save: sinon.stub()
-      @router.$el.attr  = sinon.stub()
+      @router.user = save: sinon.stub()
+      @router.$el.attr = sinon.stub()
       @router.state.trigger 'done'
 
       @router.$el.attr.args[0][0].should.equal 'data-state'

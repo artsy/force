@@ -1,13 +1,13 @@
-_                 = require 'underscore'
-benv              = require 'benv'
-Backbone          = require 'backbone'
-sinon             = require 'sinon'
-PersonalizeState  = require '../../client/state'
-CurrentUser       = require '../../../../models/current_user.coffee'
-Artist            = require '../../../../models/artist.coffee'
-{ fabricate }     = require 'antigravity'
-{ resolve }       = require 'path'
-ArtistsView       = benv.requireWithJadeify resolve(__dirname, '../../client/views/artists'), ['template', 'suggestedArtistsTemplate']
+_ = require 'underscore'
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+PersonalizeState = require '../../client/state'
+CurrentUser = require '../../../../models/current_user.coffee'
+Artist = require '../../../../models/artist.coffee'
+{ fabricate } = require 'antigravity'
+{ resolve } = require 'path'
+ArtistsView = benv.requireWithJadeify resolve(__dirname, '../../client/views/artists'), ['template', 'suggestedArtistsTemplate']
 
 describe 'ArtistsView', ->
   before (done) ->
@@ -41,7 +41,12 @@ describe 'ArtistsView', ->
       @view.initializeSuggestions()
 
     it 'fetches the fallback artists when we fail to come up with suggestions', ->
-      _.last(Backbone.sync.args)[1].url.should.include '/api/v1/artists/sample'
+      _.last(Backbone.sync.args)[2].url.should.include '/api/v1/set/53c55a777261692d45b70100/items'
+
+    it 'renders two rows of results', ->
+      _.last(Backbone.sync.args)[2].success _.times(15, -> fabricate 'artist')
+      @view.$('.personalize-suggestion').length.should.equal 10
+      @view.$el.html().should.include 'Artists you may enjoy following'
 
   describe '#initializeArtistsFromFavorites', ->
     beforeEach ->
@@ -64,16 +69,16 @@ describe 'ArtistsView', ->
 
   describe '#setupFollowButton', ->
     it 'sets up a FollowButton view that can be accessed later', ->
-      artist  = new Artist fabricate 'artist'
-      key     = _.uniqueId(artist.id)
-      view    = @view.setupFollowButton key, artist, $('<div></div>')
+      artist = new Artist fabricate 'artist'
+      key = _.uniqueId(artist.id)
+      view = @view.setupFollowButton key, artist, $('<div></div>')
       view.constructor.name.should.equal 'FollowButton'
       @view.followButtonViews[key].should.equal view
 
   describe '#fetchRelatedArtists', ->
     it 'fetches related artists', ->
-      artist        = new Artist(fabricate 'artist')
-      suggestions   = [fabricate('artist'), fabricate('artist')]
+      artist = new Artist(fabricate 'artist')
+      suggestions = [fabricate('artist'), fabricate('artist')]
       sinon.stub(artist, 'fetchRelatedArtists').yieldsTo('success', {}, suggestions)
       @view.fetchRelatedArtists artist
       artist.fetchRelatedArtists.called.should.be.ok
@@ -86,9 +91,9 @@ describe 'ArtistsView', ->
       artist.relatedArtists = new Backbone.Collection artist
       _.isUndefined(@view.followButtonViews).should.be.ok
       @view.suggestions.add @view.createSuggestionSet(artist)
-      suggestionSet   = @view.suggestions.at(0)
-      suggested       = suggestionSet.get('suggestions').at(0)
-      key             = "#{suggestionSet.id}_#{suggested.id}"
+      suggestionSet = @view.suggestions.at(0)
+      suggested = suggestionSet.get('suggestions').at(0)
+      key = "#{suggestionSet.id}_#{suggested.id}"
       _.isUndefined(@view.followButtonViews[key]).should.not.be.ok
       @view.disposeSuggestionSet artist
       _.isNull(@view.followButtonViews[key]).should.be.ok

@@ -1,12 +1,12 @@
-_               = require 'underscore'
-benv            = require 'benv'
-Backbone        = require 'backbone'
-sinon           = require 'sinon'
-{ resolve }     = require 'path'
-{ fabricate }   = require 'antigravity'
+_ = require 'underscore'
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+{ resolve } = require 'path'
+{ fabricate } = require 'antigravity'
 
-Artworks  = require '../../../../collections/artworks'
-Artwork   = require '../../../../models/artwork'
+Artworks = require '../../../../collections/artworks'
+Artwork = require '../../../../models/artwork'
 
 describe 'RelatedShowView', ->
   before (done) ->
@@ -24,8 +24,8 @@ describe 'RelatedShowView', ->
     RelatedShowView = benv.requireWithJadeify resolve(__dirname, '../../client/related-show'), ['template']
     RelatedShowView.__set__ 'ArtworkColumnsView', Backbone.View
 
-    @artwork  = new Artwork fabricate 'artwork'
-    @view     = new RelatedShowView artwork: @artwork, model: new Backbone.Model(fabricate 'show')
+    @artwork = new Artwork fabricate 'artwork'
+    @view = new RelatedShowView artwork: @artwork, model: new Backbone.Model(fabricate 'show')
 
     @view.setup new Artworks([
       @artwork

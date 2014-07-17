@@ -1,12 +1,12 @@
-_                 = require 'underscore'
-Backbone          = require 'backbone'
-Cookies           = require 'cookies-js'
-ContactView       = require './view.coffee'
-Representatives   = require './collections/representatives.coffee'
-analytics         = require('../../lib/analytics.coffee')
+_ = require 'underscore'
+Backbone = require 'backbone'
+Cookies = require 'cookies-js'
+ContactView = require './view.coffee'
+Representatives = require './collections/representatives.coffee'
+analytics = require('../../lib/analytics.coffee')
 
-formTemplate    = -> require('./templates/inquiry_form.jade') arguments...
-headerTemplate  = -> require('./templates/inquiry_header.jade') arguments...
+formTemplate = -> require('./templates/inquiry_form.jade') arguments...
+headerTemplate = -> require('./templates/inquiry_header.jade') arguments...
 
 { SESSION_ID, API_URL } = require('sharify').data
 
@@ -16,22 +16,22 @@ module.exports = class InquiryView extends ContactView
   # Prevents clicks on the backdrop from closing
   # the contact form
   events: -> _.extend super,
-    'click.handler .modal-backdrop' : undefined
+    'click.handler .modal-backdrop': undefined
 
   headerTemplate: (locals) ->
     headerTemplate _.extend locals,
-      representative : @representatives.first()
-      user           : @user
+      representative: @representatives.first()
+      user: @user
 
   formTemplate: (locals) ->
     formTemplate _.extend locals,
-      artwork        : @artwork
-      user           : @user
-      contactGallery : false
+      artwork: @artwork
+      user: @user
+      contactGallery: false
 
   defaults: -> _.extend super,
-    url            : "#{API_URL}/api/v1/me/artwork_inquiry_request"
-    successMessage : 'Thank you. Your inquiry has been sent.'
+    url: "#{API_URL}/api/v1/me/artwork_inquiry_request"
+    successMessage: 'Thank you. Your inquiry has been sent.'
 
   initialize: (options) ->
     { @artwork } = options
@@ -48,14 +48,14 @@ module.exports = class InquiryView extends ContactView
 
   submit: ->
     analytics.track.funnel 'Sent artwork inquiry',
-      label : analytics.modelNameAndIdToLabel('artwork', @artwork.id)
+      label: analytics.modelNameAndIdToLabel('artwork', @artwork.id)
 
     @model.set
-      artwork         : @artwork.id
-      contact_gallery : false
-      session_id      : SESSION_ID
-      referring_url   : Cookies.get('force-referrer')
-      landing_url     : Cookies.get('force-session-start')
-      inquiry_url     : window.location.href
+      artwork: @artwork.id
+      contact_gallery: false
+      session_id: SESSION_ID
+      referring_url: Cookies.get('force-referrer')
+      landing_url: Cookies.get('force-session-start')
+      inquiry_url: window.location.href
 
     super

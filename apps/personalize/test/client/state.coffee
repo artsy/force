@@ -1,128 +1,17 @@
-_                 = require 'underscore'
-CurrentUser       = require '../../../../models/current_user'
-PersonalizeState  = require '../../client/state'
+_ = require 'underscore'
+CurrentUser = require '../../../../models/current_user'
+PersonalizeState = require '../../client/state'
 
 describe 'state', ->
   beforeEach ->
-    @user   = new CurrentUser
-    @state  = new PersonalizeState user: @user
+    @user = new CurrentUser
+    @state = new PersonalizeState user: @user
 
   it 'has a default current_step', ->
     @state.get('current_step').should.equal 'collect'
 
   it 'has the appropriate set of steps for the appropriate level', ->
     @state.steps().should.eql @state.get('__steps__')[@state.stepKey()]
-
-  describe 'can be driven through all the state transitions depending on the user level', ->
-    describe 'new users', ->
-      beforeEach ->
-        @state.unset 'reonboarding'
-
-      it 'works for a user that is just looking and learning (level 1)', (done) ->
-        @state.on 'done', -> done()
-        @state.set current_level: 1
-        @state.get('current_step').should.equal 'collect'
-        @state.next()
-        @state.get('current_step').should.equal 'categories'
-        @state.next()
-        @state.get('current_step').should.equal 'favorites'
-        @state.next()
-        @state.get('current_step').should.equal 'artists'
-        @state.next()
-        @state.get('current_step').should.equal 'galleries'
-        @state.next()
-        @state.get('current_step').should.equal 'institutions'
-        @state.next() # Done
-
-      it 'works for a user that is interested in starting to buy art (level 2)', (done) ->
-        @state.on 'done', -> done()
-        @state.set current_level: 2
-        @state.get('current_step').should.equal 'collect'
-        @state.next()
-        @state.get('current_step').should.equal 'price_range'
-        @state.next()
-        @state.get('current_step').should.equal 'categories'
-        @state.next()
-        @state.get('current_step').should.equal 'favorites'
-        @state.next()
-        @state.get('current_step').should.equal 'artists'
-        @state.next()
-        @state.get('current_step').should.equal 'galleries'
-        @state.next()
-        @state.get('current_step').should.equal 'institutions'
-        @state.next() # Done
-
-      it 'works for a user that buys art (level 3)', (done) ->
-        @state.on 'done', -> done()
-        @state.set current_level: 3
-        @state.get('current_step').should.equal 'collect'
-        @state.next()
-        @state.get('current_step').should.equal 'bookmarks'
-        @state.next()
-        @state.get('current_step').should.equal 'artists'
-        @state.next()
-        @state.get('current_step').should.equal 'price_range'
-        @state.next()
-        @state.get('current_step').should.equal 'galleries'
-        @state.next()
-        @state.get('current_step').should.equal 'institutions'
-        @state.next() # Done
-
-    describe 'existing users (reonboarding)', ->
-      beforeEach ->
-        @state.set 'reonboarding', true
-        # Reset steps to beginning
-        @state.set 'current_step', @state.steps()[0]
-
-      it 'works for a user that is just looking and learning (level 1)', (done) ->
-        @state.on 'done', -> done()
-        @state.set current_level: 1
-        @state.get('current_step').should.equal 'galleries'
-        @state.next()
-        @state.get('current_step').should.equal 'institutions'
-        @state.next()
-        @state.get('current_step').should.equal 'collect'
-        @state.next()
-        @state.get('current_step').should.equal 'categories'
-        @state.next()
-        @state.get('current_step').should.equal 'favorites'
-        @state.next()
-        @state.get('current_step').should.equal 'artists'
-        @state.next() # Done
-
-      it 'works for a user that is interested in starting to buy art (level 2)', (done) ->
-        @state.on 'done', -> done()
-        @state.set current_level: 2
-        @state.get('current_step').should.equal 'galleries'
-        @state.next()
-        @state.get('current_step').should.equal 'institutions'
-        @state.next()
-        @state.get('current_step').should.equal 'collect'
-        @state.next()
-        @state.get('current_step').should.equal 'price_range'
-        @state.next()
-        @state.get('current_step').should.equal 'categories'
-        @state.next()
-        @state.get('current_step').should.equal 'favorites'
-        @state.next()
-        @state.get('current_step').should.equal 'artists'
-        @state.next() # Done
-
-      it 'works for a user that buys art (level 3)', (done) ->
-        @state.on 'done', -> done()
-        @state.set current_level: 3
-        @state.get('current_step').should.equal 'galleries'
-        @state.next()
-        @state.get('current_step').should.equal 'institutions'
-        @state.next()
-        @state.get('current_step').should.equal 'collect'
-        @state.next()
-        @state.get('current_step').should.equal 'bookmarks'
-        @state.next()
-        @state.get('current_step').should.equal 'artists'
-        @state.next()
-        @state.get('current_step').should.equal 'price_range'
-        @state.next() # Done
 
   describe '#stepKey', ->
     it 'returns the correct key', ->
@@ -214,3 +103,106 @@ describe 'state', ->
       @state.on 'done', done
       @state.next()
       @state.off 'done'
+
+  describe 'can be driven through all the state transitions depending on the user level', ->
+    describe 'new users', ->
+      it 'works for a user that is just looking and learning (level 1)', (done) ->
+        state = new PersonalizeState user: @user, current_level: 1
+        state.on 'done', -> done()
+        state.get('current_step').should.equal 'collect'
+        state.next()
+        state.get('current_step').should.equal 'categories'
+        state.next()
+        state.get('current_step').should.equal 'favorites'
+        state.next()
+        state.get('current_step').should.equal 'artists'
+        state.next()
+        state.get('current_step').should.equal 'galleries'
+        state.next()
+        state.get('current_step').should.equal 'institutions'
+        state.next() # Done
+
+      it 'works for a user that is interested in starting to buy art (level 2)', (done) ->
+        state = new PersonalizeState user: @user, current_level: 2
+        state.on 'done', -> done()
+        state.get('current_step').should.equal 'collect'
+        state.next()
+        state.get('current_step').should.equal 'price_range'
+        state.next()
+        state.get('current_step').should.equal 'categories'
+        state.next()
+        state.get('current_step').should.equal 'favorites'
+        state.next()
+        state.get('current_step').should.equal 'artists'
+        state.next()
+        state.get('current_step').should.equal 'galleries'
+        state.next()
+        state.get('current_step').should.equal 'institutions'
+        state.next() # Done
+
+      it 'works for a user that buys art (level 3)', (done) ->
+        state = new PersonalizeState user: @user, current_level: 3
+        state.on 'done', -> done()
+        state.get('current_step').should.equal 'price_range'
+        state.next()
+        state.get('current_step').should.equal 'collect'
+        state.next()
+        state.get('current_step').should.equal 'bookmarks'
+        state.next()
+        state.get('current_step').should.equal 'artists'
+        state.next()
+        state.get('current_step').should.equal 'galleries'
+        state.next()
+        state.get('current_step').should.equal 'institutions'
+        state.next() # Done
+
+    describe 'existing users (reonboarding)', ->
+      it 'works for a user that is just looking and learning (level 1)', (done) ->
+        state = new PersonalizeState user: @user, current_level: 1, reonboarding: true
+        state.on 'done', -> done()
+        state.get('current_step').should.equal 'collect'
+        state.next()
+        state.get('current_step').should.equal 'categories'
+        state.next()
+        state.get('current_step').should.equal 'favorites'
+        state.next()
+        state.get('current_step').should.equal 'artists'
+        state.next()
+        state.get('current_step').should.equal 'galleries'
+        state.next()
+        state.get('current_step').should.equal 'institutions'
+        state.next() # Done
+
+      it 'works for a user that is interested in starting to buy art (level 2)', (done) ->
+        state = new PersonalizeState user: @user, current_level: 2, reonboarding: true
+        state.on 'done', -> done()
+        state.get('current_step').should.equal 'collect'
+        state.next()
+        state.get('current_step').should.equal 'price_range'
+        state.next()
+        state.get('current_step').should.equal 'categories'
+        state.next()
+        state.get('current_step').should.equal 'favorites'
+        state.next()
+        state.get('current_step').should.equal 'artists'
+        state.next()
+        state.get('current_step').should.equal 'galleries'
+        state.next()
+        state.get('current_step').should.equal 'institutions'
+        state.next() # Done
+
+      it 'works for a user that buys art (level 3)', (done) ->
+        state = new PersonalizeState user: @user, current_level: 3, reonboarding: true
+        state.on 'done', -> done()
+        state.get('current_step').should.equal 'price_range'
+        state.next()
+        state.get('current_step').should.equal 'collect'
+        state.next()
+        state.get('current_step').should.equal 'bookmarks'
+        state.next()
+        state.get('current_step').should.equal 'artists'
+        state.next()
+        state.get('current_step').should.equal 'galleries'
+        state.next()
+        state.get('current_step').should.equal 'institutions'
+        state.next() # Done

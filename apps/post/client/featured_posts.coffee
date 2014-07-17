@@ -1,8 +1,8 @@
-_                       = require 'underscore'
-sd                      = require('sharify').data
-Backbone                = require 'backbone'
-FeedItems               = require '../../../components/feed/collections/feed_items.coffee'
-featuredPostsTemplate   = -> require('../templates/featured_posts.jade') arguments...
+_ = require 'underscore'
+sd = require('sharify').data
+Backbone = require 'backbone'
+FeedItems = require '../../../components/feed/collections/feed_items.coffee'
+featuredPostsTemplate = -> require('../templates/featured_posts.jade') arguments...
 
 module.exports = class FeaturedPosts extends Backbone.View
 

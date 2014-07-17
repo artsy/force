@@ -1,12 +1,12 @@
-_               = require 'underscore'
-Backbone        = require 'backbone'
-Cookies         = require 'cookies-js'
-{ parse }       = require 'url'
-ModalView       = require '../modal/view.coffee'
-Form            = require '../mixins/form.coffee'
-mediator        = require '../../lib/mediator.coffee'
-analytics       = require '../../lib/analytics.coffee'
-LoggedOutUser   = require '../../models/logged_out_user.coffee'
+_ = require 'underscore'
+Backbone = require 'backbone'
+Cookies = require 'cookies-js'
+{ parse } = require 'url'
+ModalView = require '../modal/view.coffee'
+Form = require '../mixins/form.coffee'
+mediator = require '../../lib/mediator.coffee'
+analytics = require '../../lib/analytics.coffee'
+LoggedOutUser = require '../../models/logged_out_user.coffee'
 
 { templateMap, stateEventMap, successEventMap } = require './maps.coffee'
 
@@ -19,9 +19,9 @@ module.exports = class AuthModalView extends ModalView
     templateMap[@state.get 'mode'] arguments...
 
   events: -> _.extend super,
-    'click .auth-toggle' : 'toggleMode'
-    'submit form'        : 'submit'
-    'click #auth-submit' : 'submit'
+    'click .auth-toggle': 'toggleMode'
+    'submit form': 'submit'
+    'click #auth-submit': 'submit'
 
   initialize: (options) ->
     { @destination } = options
@@ -30,13 +30,13 @@ module.exports = class AuthModalView extends ModalView
     super
 
   preInitialize: (options = {}) ->
-    @user   = new LoggedOutUser
-    @state  = new Backbone.Model(mode: options.mode)
+    @user = new LoggedOutUser
+    @state = new Backbone.Model(mode: options.mode)
 
     @templateData =
-      copy       : options.copy or 'Enter your name, email and password to join'
-      pathname   : location.pathname
-      redirectTo : @redirectTo
+      copy: options.copy or 'Enter your name, email and password to join'
+      pathname: location.pathname
+      redirectTo: @redirectTo
 
     @listenTo @state, 'change:mode', @reRender
     @listenTo @state, 'change:mode', @logState
@@ -75,8 +75,8 @@ module.exports = class AuthModalView extends ModalView
 
     @user.set (data = @serializeForm())
     @user[@state.get 'mode']
-      success : @onSubmitSuccess
-      error   : (model, response, options) =>
+      success: @onSubmitSuccess
+      error: (model, response, options) =>
         @reenableForm()
         message = @errorMessage response
         @showError message

@@ -1,21 +1,21 @@
-_                 = require 'underscore'
-Backbone          = require 'backbone'
-PersonalizeState  = require './state.coffee'
-CurrentUser       = require '../../../models/current_user.coffee'
-Transition        = require '../../../components/mixins/transition.coffee'
-track             = require('../../../lib/analytics.coffee').track
-Cookies           = require 'cookies-js'
+_ = require 'underscore'
+Backbone = require 'backbone'
+PersonalizeState = require './state.coffee'
+CurrentUser = require '../../../models/current_user.coffee'
+Transition = require '../../../components/mixins/transition.coffee'
+track = require('../../../lib/analytics.coffee').track
+Cookies = require 'cookies-js'
 
 views =
-  CollectView      : require './views/collect.coffee'
-  LocationView     : require './views/location.coffee'
-  ArtistsView      : require './views/artists.coffee'
-  GalleriesView    : require './views/galleries.coffee'
-  InstitutionsView : require './views/institutions.coffee'
-  PriceRangeView   : require './views/price_range.coffee'
-  CategoriesView   : require './views/categories.coffee'
-  BookmarksView    : require './views/bookmarks.coffee'
-  FavoritesView    : require './views/favorites.coffee'
+  CollectView: require './views/collect.coffee'
+  LocationView: require './views/location.coffee'
+  ArtistsView: require './views/artists.coffee'
+  GalleriesView: require './views/galleries.coffee'
+  InstitutionsView: require './views/institutions.coffee'
+  PriceRangeView: require './views/price_range.coffee'
+  CategoriesView: require './views/categories.coffee'
+  BookmarksView: require './views/bookmarks.coffee'
+  FavoritesView: require './views/favorites.coffee'
 
 _.mixin(require 'underscore.string')
 
@@ -26,8 +26,8 @@ module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Rout
   initialize: (options) ->
     { @user, @reonboarding } = options
 
-    @state  = new PersonalizeState user: @user, reonboarding: @reonboarding
-    @$el    = $('#personalize-page')
+    @state = new PersonalizeState user: @user, reonboarding: @reonboarding
+    @$el = $('#personalize-page')
 
     @listenTo @state, 'transition:next', @next
     @listenTo @state, 'done', @done

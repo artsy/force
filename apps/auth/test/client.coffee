@@ -1,9 +1,9 @@
-_           = require 'underscore'
-benv        = require 'benv'
-rewire      = require 'rewire'
-Backbone    = require 'backbone'
-sinon       = require 'sinon'
-sd          = require('sharify').data
+_ = require 'underscore'
+benv = require 'benv'
+rewire = require 'rewire'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+sd = require('sharify').data
 PasswordResetView = require('../client/reset_password').PasswordResetView
 
 { resolve } = require 'path'

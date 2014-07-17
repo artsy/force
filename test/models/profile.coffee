@@ -1,11 +1,11 @@
-_             = require 'underscore'
+_ = require 'underscore'
 { fabricate } = require 'antigravity'
-sd            = require('sharify').data
-should        = require 'should'
-Backbone      = require 'backbone'
-Partner       = require '../../models/partner'
-Profile       = require '../../models/profile'
-sinon         = require 'sinon'
+sd = require('sharify').data
+should = require 'should'
+Backbone = require 'backbone'
+Partner = require '../../models/partner'
+Profile = require '../../models/profile'
+sinon = require 'sinon'
 
 describe 'Profile', ->
 
@@ -21,7 +21,7 @@ describe 'Profile', ->
         id: "51eefb79275b2420810001fe",
         image_filename: "GGLogo1.jpg",
         image_url: "http://static2.artsy.net/profile_icons/51eefb79275b2420810001fe/:version.jpg",
-        versions: [ "circle", "square" ]
+        image_versions: [ "square140" ]
         x: 0
         y: 0
         width: 140
@@ -30,12 +30,18 @@ describe 'Profile', ->
   afterEach ->
     Backbone.sync.restore()
 
+  describe '#isUserClass', ->
+
+    it 'returns is-user if the profile is a user and is set to use a circular default icon', ->
+      @profile.isUserClass().should.equal 'is-partner'
+      @profile.set owner_type: 'User'
+      @profile.set default_icon_version: 'circle'
+      @profile.isUserClass().should.equal 'is-user'
+
   describe '#iconImageUrl', ->
 
     it "returns the icon url for the model's default icon version", ->
       @profile.iconImageUrl().should.include "square"
-      @profile.set 'default_icon_version', 'circle'
-      @profile.iconImageUrl().should.include "circle"
 
   describe '#alphaSortKey', ->
 

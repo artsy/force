@@ -1,8 +1,8 @@
-_             = require 'underscore'
-routes        = require '../routes'
-sinon         = require 'sinon'
-Backbone      = require 'backbone'
-CurrentUser   = require '../../../models/current_user.coffee'
+_ = require 'underscore'
+routes = require '../routes'
+sinon = require 'sinon'
+Backbone = require 'backbone'
+CurrentUser = require '../../../models/current_user.coffee'
 { fabricate } = require 'antigravity'
 
 describe '/user', ->
@@ -11,10 +11,10 @@ describe '/user', ->
     sinon.stub Backbone, 'sync'
     @req = { url: '/user/edit' }
     @res =
-      json    : sinon.stub()
-      render  : sinon.stub()
+      json: sinon.stub()
+      render: sinon.stub()
       redirect: sinon.stub()
-      locals  : { sd: { API_URL: 'http://localhost:5000'} }
+      locals: { sd: { API_URL: 'http://localhost:5000'} }
 
   afterEach ->
     Backbone.sync.restore()
@@ -29,7 +29,7 @@ describe '/user', ->
 
       beforeEach ->
         @req =
-          user : new CurrentUser fabricate 'user'
+          user: new CurrentUser fabricate 'user'
           login: sinon.stub()
         routes.refresh @req, @res
         Backbone.sync.args[0][2].success @req.user
@@ -47,7 +47,7 @@ describe '/user', ->
     describe 'with a logged in user', ->
 
       beforeEach ->
-        @req = { user : new CurrentUser fabricate 'user' }
+        @req = { user: new CurrentUser fabricate 'user' }
         routes.settings @req, @res
 
       it "fetches the current user and the user's profile", ->
@@ -72,7 +72,7 @@ describe '/user', ->
     describe 'with a logged in user', ->
 
       it 'renders the account delete form', ->
-        @req = { user : new CurrentUser fabricate 'user' }
+        @req = { user: new CurrentUser fabricate 'user' }
         routes.delete @req, @res
         @res.render.args[0][0].should.include 'delete'
         @res.render.args[0][1].user.should.equal @req.user
@@ -80,6 +80,6 @@ describe '/user', ->
     describe 'with a logged in admin', ->
 
       it 'redirects to the home page - the "me" API does not delete admins', ->
-        @req = { user : new CurrentUser fabricate 'user', type: 'Admin' }
+        @req = { user: new CurrentUser fabricate 'user', type: 'Admin' }
         routes.delete @req, @res
         @res.redirect.args[0][0].should.equal '/'

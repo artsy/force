@@ -1,9 +1,9 @@
-_             = require 'underscore'
-sd            = require('sharify').data
-Backbone      = require 'backbone'
-imagesLoaded  = require '../../lib/vendor/imagesloaded.js'
-Artist        = require '../../models/artist.coffee'
-analytics     = require '../../lib/analytics.coffee'
+_ = require 'underscore'
+sd = require('sharify').data
+Backbone = require 'backbone'
+imagesLoaded = require '../../lib/vendor/imagesloaded.js'
+Artist = require '../../models/artist.coffee'
+analytics = require '../../lib/analytics.coffee'
 
 { Following, FollowButton } = require '../../components/follow_button/index.coffee'
 
@@ -11,8 +11,8 @@ module.exports.CarouselView = class CarouselView extends Backbone.View
   increment: 2
   active: 0
   events:
-    'click .afc-next' : 'next'
-    'click .afc-prev' : 'prev'
+    'click .afc-next': 'next'
+    'click .afc-prev': 'prev'
 
   initialize: (options) ->
     @resize = _.debounce @updateValues, 100
@@ -26,9 +26,9 @@ module.exports.CarouselView = class CarouselView extends Backbone.View
     @$images    ?= @$panels.find('img')
     @$bumpers   ?= @$('.afc-next, .afc-prev')
 
-    panelWidth  = @$el.width() / @increment
-    @positions  = _.map @$panels, (panel, i) -> panelWidth * i
-    @stopAt     = @positions.length - @increment
+    panelWidth = @$el.width() / @increment
+    @positions = _.map @$panels, (panel, i) -> panelWidth * i
+    @stopAt = @positions.length - @increment
 
     @$panels.outerWidth "#{panelWidth}px"
     @$bumpers.height "#{@$images.height()}px"
@@ -86,8 +86,8 @@ module.exports.ArtistsView = class ArtistsView extends Backbone.View
     @carouselView = new CarouselView el: @$('.artists-featured-carousel')
 
   setupFollowing: ->
-    featuredArtistFollowIds   = @setupFollowButtons @$('.artists-featured-carousel .follow-button'), 'Followed from /artists featured'
-    trendingArtistFollowIds   = @setupFollowButtons @$('.artists-featured-genes .follow-button'), 'Followed from /artists trending'
+    featuredArtistFollowIds = @setupFollowButtons @$('.artists-featured-carousel .follow-button'), 'Followed from /artists featured'
+    trendingArtistFollowIds = @setupFollowButtons @$('.artists-featured-genes .follow-button'), 'Followed from /artists trending'
 
     @following?.syncFollows featuredArtistFollowIds.concat(trendingArtistFollowIds)
 

@@ -1,8 +1,8 @@
-_             = require 'underscore'
-sd            = require('sharify').data
-Backbone      = require 'backbone'
-FeaturedLink  = require './featured_link.coffee'
-{ Image, Markdown }   = require 'artsy-backbone-mixins'
+_ = require 'underscore'
+sd = require('sharify').data
+Backbone = require 'backbone'
+FeaturedLink = require './featured_link.coffee'
+{ Image, Markdown } = require 'artsy-backbone-mixins'
 { SECURE_IMAGES_URL } = require('sharify').data
 
 module.exports = class Video extends Backbone.Model

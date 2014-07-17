@@ -1,10 +1,10 @@
-_               = require 'underscore'
-benv            = require 'benv'
-sinon           = require 'sinon'
-rewire          = require 'rewire'
-Backbone        = require 'backbone'
-mediator        = require '../../../lib/mediator'
-LoggedOutUser   = require '../../../models/logged_out_user'
+_ = require 'underscore'
+benv = require 'benv'
+sinon = require 'sinon'
+rewire = require 'rewire'
+Backbone = require 'backbone'
+mediator = require '../../../lib/mediator'
+LoggedOutUser = require '../../../models/logged_out_user'
 
 describe 'AfterInquiry', ->
   before (done) ->
@@ -28,9 +28,9 @@ describe 'AfterInquiry', ->
     sinon.stub Backbone, 'sync'
     sinon.stub($, 'ajax').yieldsTo 'success'
 
-    @user     = new LoggedOutUser
-    @inquiry  = new Backbone.Model name: 'Foo Bar', email: 'foo@bar.com'
-    @flow     = new @AfterInquiry user: @user, inquiry: @inquiry
+    @user = new LoggedOutUser
+    @inquiry = new Backbone.Model name: 'Foo Bar', email: 'foo@bar.com'
+    @flow = new @AfterInquiry user: @user, inquiry: @inquiry
 
     sinon.stub @flow.flash, 'close'
 

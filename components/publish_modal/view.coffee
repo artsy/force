@@ -1,8 +1,8 @@
-_           = require 'underscore'
-ModalView   = require '../modal/view.coffee'
-mediator    = require '../../lib/mediator.coffee'
-template    = -> require('./template.jade') arguments...
-Cookies     = require 'cookies-js'
+_ = require 'underscore'
+ModalView = require '../modal/view.coffee'
+mediator = require '../../lib/mediator.coffee'
+template = -> require('./template.jade') arguments...
+Cookies = require 'cookies-js'
 
 module.exports = class PublishModal extends ModalView
   className: 'publish-modal'
@@ -10,8 +10,8 @@ module.exports = class PublishModal extends ModalView
   template: template
 
   events: -> _.extend super,
-    'click .make-public' : 'makePublic'
-    'click .cancel'      : 'cancel'
+    'click .make-public': 'makePublic'
+    'click .cancel': 'cancel'
 
   initialize: (options = {}) ->
     { @name, @publishEvent, @message, @persist, @top } = _.defaults(options, persist: true)

@@ -1,8 +1,8 @@
-_                       = require 'underscore'
-Backbone                = require 'backbone'
-sd                      = require('sharify').data
-FeedItems               = require '../../../components/feed/collections/feed_items.coffee'
-PoplockitFeed           = require('../../../components/feed/client/poplockit_feed.coffee')
+_ = require 'underscore'
+Backbone = require 'backbone'
+sd = require('sharify').data
+FeedItems = require '../../../components/feed/collections/feed_items.coffee'
+PoplockitFeed = require('../../../components/feed/client/poplockit_feed.coffee')
 
 module.exports = class FairPosts extends Backbone.View
 
@@ -19,6 +19,6 @@ module.exports = class FairPosts extends Backbone.View
       success: (items) =>
         items.urlRoot = url
         new PoplockitFeed
-          limitPostBodyHeight : true
-          feedItems           : items
-          el                  : @$el
+          limitPostBodyHeight: true
+          feedItems: items
+          el: @$el

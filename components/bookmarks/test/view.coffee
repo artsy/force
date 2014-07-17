@@ -1,8 +1,8 @@
-_             = require 'underscore'
-benv          = require 'benv'
-sinon         = require 'sinon'
-Backbone      = require 'backbone'
-{ resolve }   = require 'path'
+_ = require 'underscore'
+benv = require 'benv'
+sinon = require 'sinon'
+Backbone = require 'backbone'
+{ resolve } = require 'path'
 
 BookmarksView = benv.requireWithJadeify resolve(__dirname, '../view'), ['template', 'bookmarksTemplate']
 BookmarksView.__set__ 'sd', CURRENT_USER: 'existy'

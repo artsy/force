@@ -1,9 +1,9 @@
-benv      = require 'benv'
-sinon     = require 'sinon'
-Backbone  = require 'backbone'
-sd        = require('sharify').data
-mediator  = require '../../../lib/mediator'
-rewire    = require 'rewire'
+benv = require 'benv'
+sinon = require 'sinon'
+Backbone = require 'backbone'
+sd = require('sharify').data
+mediator = require '../../../lib/mediator'
+rewire = require 'rewire'
 { resolve } = require 'path'
 
 describe 'PublishModal', ->
@@ -21,10 +21,10 @@ describe 'PublishModal', ->
 
   describe '#makePublic', ->
     beforeEach ->
-      @e        = $.Event('click')
-      @close    = sinon.stub @PublishModal::, 'close'
-      @trigger  = sinon.stub mediator, 'trigger'
-      @view     = new @PublishModal
+      @e = $.Event('click')
+      @close = sinon.stub @PublishModal::, 'close'
+      @trigger = sinon.stub mediator, 'trigger'
+      @view = new @PublishModal
 
     afterEach ->
       @close.restore()
@@ -48,8 +48,8 @@ describe 'PublishModal', ->
 
       it 'if cancelled then the modal should not present itself again', ->
         @view = new @PublishModal
-          persist      : true
-          name         : 'foobar'
-          publishEvent : 'foo:bar'
-          message      : 'Foo Bar'
+          persist: true
+          name: 'foobar'
+          publishEvent: 'foo:bar'
+          message: 'Foo Bar'
         @PublishModal::remove.called.should.be.true

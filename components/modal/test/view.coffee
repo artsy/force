@@ -1,8 +1,8 @@
-rewire    = require 'rewire'
-benv      = require 'benv'
-Backbone  = require 'backbone'
-sinon     = require 'sinon'
-mediator  = require '../../../lib/mediator.coffee'
+rewire = require 'rewire'
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+mediator = require '../../../lib/mediator.coffee'
 { resolve } = require 'path'
 ModalView = benv.requireWithJadeify resolve(__dirname, '../view'), ['modalTemplate']
 
@@ -11,15 +11,15 @@ describe 'ModalView', ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
 
-      Backbone.$                  = $
-      $.support.transition        = end: 'transitionend'
-      $.fn.emulateTransitionEnd   = -> @trigger $.support.transition.end
+      Backbone.$ = $
+      $.support.transition = end: 'transitionend'
+      $.fn.emulateTransitionEnd = -> @trigger $.support.transition.end
 
       benv.render resolve(__dirname, '../template.jade'), {}, =>
-        @closeSpy     = sinon.spy ModalView.prototype, 'close'
-        @openSpy      = sinon.spy ModalView.prototype, 'open'
-        @mediatorSpy  = sinon.spy mediator, 'trigger'
-        @view         = new ModalView $container: $('#modal-container')
+        @closeSpy = sinon.spy ModalView.prototype, 'close'
+        @openSpy = sinon.spy ModalView.prototype, 'open'
+        @mediatorSpy = sinon.spy mediator, 'trigger'
+        @view = new ModalView $container: $('#modal-container')
         done()
 
   afterEach ->

@@ -1,6 +1,6 @@
-_         = require 'underscore'
-sd        = require('sharify').data
-Backbone  = require 'backbone'
+_ = require 'underscore'
+sd = require('sharify').data
+Backbone = require 'backbone'
 { Image } = require 'artsy-backbone-mixins'
 
 _.mixin(require 'underscore.string')
@@ -10,11 +10,11 @@ module.exports = class SearchResult extends Backbone.Model
 
   initialize: (options) ->
     @set
-      display:        @display()
-      image_url:      @imageUrl()
-      display_model:  @displayModel()
-      location:       @location()
-      is_human:       @isHuman()
+      display: @display()
+      image_url: @imageUrl()
+      display_model: @displayModel()
+      location: @location()
+      is_human: @isHuman()
 
     # Set value attribute for autocomplete usage
     @value = @display()

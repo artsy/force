@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
-moment   = require 'moment'
-sd       = require('sharify').data
+moment = require 'moment'
+sd = require('sharify').data
 
 module.exports =
   calculateOffsetTimes: (options = {}) ->

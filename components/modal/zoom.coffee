@@ -1,5 +1,5 @@
-_           = require 'underscore'
-ModalView   = require './view.coffee'
+_ = require 'underscore'
+ModalView = require './view.coffee'
 
 module.exports = class ZoomView extends ModalView
   className: 'zoom-modal'
@@ -13,9 +13,9 @@ module.exports = class ZoomView extends ModalView
     super
 
   setupImage: ->
-    @img      = new Image()
-    @img.src  = @imgSrc
-    @$img     = $('<img/>').attr 'src', @imgSrc
+    @img = new Image()
+    @img.src = @imgSrc
+    @$img = $('<img/>').attr 'src', @imgSrc
 
   postRender: ->
     @isLoading()

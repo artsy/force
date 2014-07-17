@@ -1,23 +1,23 @@
-_              = require 'underscore'
-Backbone       = require 'backbone'
-mediator       = require '../../lib/mediator.coffee'
-analytics      = require '../../lib/analytics.coffee'
+_ = require 'underscore'
+Backbone = require 'backbone'
+mediator = require '../../lib/mediator.coffee'
+analytics = require '../../lib/analytics.coffee'
 FollowProfiles = require '../../collections/follow_profiles.coffee'
 
 module.exports = class FollowProfileButton extends Backbone.View
 
-  analyticsFollowMessage:   'Followed partner profile from /partners'
+  analyticsFollowMessage: 'Followed partner profile from /partners'
 
   analyticsUnfollowMessage: 'Unfollowed partner profile from /partners'
 
   events:
-    'click' : 'onFollowClick'
+    'click': 'onFollowClick'
 
   initialize: (options) ->
     return unless @collection
 
-    @analyticsUnfollowMessage   = options.analyticsUnfollowMessage || @analyticsUnfollowMessage
-    @analyticsFollowMessage     = options.analyticsFollowMessage || @analyticsFollowMessage
+    @analyticsUnfollowMessage = options.analyticsUnfollowMessage || @analyticsUnfollowMessage
+    @analyticsFollowMessage = options.analyticsFollowMessage || @analyticsFollowMessage
 
     @listenTo @collection, "add:#{@model.get('id')}", @onFollowChange
     @listenTo @collection, "remove:#{@model.get('id')}", @onFollowChange

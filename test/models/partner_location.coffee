@@ -1,8 +1,8 @@
-_               = require 'underscore'
-sd              = require('sharify').data
-benv            = require 'benv'
-should          = require 'should'
-Backbone        = require 'backbone'
+_ = require 'underscore'
+sd = require('sharify').data
+benv = require 'benv'
+should = require 'should'
+Backbone = require 'backbone'
 PartnerLocation = require '../../models/partner_location'
 
 describe 'PartnerLocation', ->

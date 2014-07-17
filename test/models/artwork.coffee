@@ -1,9 +1,9 @@
-_               = require 'underscore'
-sinon           = require 'sinon'
-should          = require 'should'
-Backbone        = require 'backbone'
-Artwork         = require '../../models/artwork'
-{ fabricate }   = require 'antigravity'
+_ = require 'underscore'
+sinon = require 'sinon'
+should = require 'should'
+Backbone = require 'backbone'
+Artwork = require '../../models/artwork'
+{ fabricate } = require 'antigravity'
 
 describe 'Artwork', ->
   beforeEach ->
@@ -46,8 +46,8 @@ describe 'Artwork', ->
 
   describe '#additionalImages', ->
     it 'returns an array of image objects sans the defaultImage', ->
-      defaultImage      = @artwork.defaultImage()
-      additionalImages  = @artwork.additionalImages()
+      defaultImage = @artwork.defaultImage()
+      additionalImages = @artwork.additionalImages()
       additionalImages.length.should.be.ok
       _.contains(_.pluck(additionalImages, 'id'), defaultImage.id).should.not.be.ok
 

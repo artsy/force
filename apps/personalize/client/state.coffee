@@ -1,8 +1,7 @@
-_         = require 'underscore'
-sd        = require('sharify').data
-Backbone  = require 'backbone'
-
-_.mixin(require 'underscore.string')
+_ = require 'underscore'
+_s = require 'underscore.string'
+sd = require('sharify').data
+Backbone = require 'backbone'
 
 # Mapping between the user attribute, the step, and a predicate
 # that should return true if they are "completed"
@@ -28,24 +27,23 @@ module.exports = class PersonalizeState extends Backbone.Model
     __steps__:
       new_1: ['collect', 'categories', 'favorites', 'artists', 'galleries', 'institutions']
       new_2: ['collect', 'price_range', 'categories', 'favorites', 'artists', 'galleries', 'institutions']
-      new_3: ['collect', 'bookmarks', 'artists', 'price_range', 'galleries', 'institutions']
-      existing_1: ['galleries', 'institutions', 'collect', 'categories', 'favorites', 'artists']
-      existing_2: ['galleries', 'institutions', 'collect', 'price_range', 'categories', 'favorites', 'artists']
-      existing_3: ['galleries', 'institutions', 'collect', 'bookmarks', 'artists', 'price_range']
+      new_3: ['price_range', 'collect', 'bookmarks', 'artists', 'galleries', 'institutions']
+      existing_1: ['collect', 'categories', 'favorites', 'artists', 'galleries', 'institutions']
+      existing_2: ['collect', 'price_range', 'categories', 'favorites', 'artists', 'galleries', 'institutions']
+      existing_3: ['price_range', 'collect', 'bookmarks', 'artists', 'galleries', 'institutions']
 
   initialize: (options = {}) ->
     { @user } = options
-
     @listenTo this, 'transition:next', @next
-
-    # Figure out the first step and set it
-    @set 'current_step', @steps()[0]
-
+    @resetSteps()
     super
 
   get: (attr) ->
     return @get('__steps__')[@stepKey()] if attr is 'steps'
     super
+
+  resetSteps: ->
+    @set 'current_step', @steps()[0]
 
   # Steps that are complete at initialization
   #
@@ -67,7 +65,7 @@ module.exports = class PersonalizeState extends Backbone.Model
     _.indexOf @steps(), @get('current_step')
 
   currentStepLabel: ->
-    _.map(@get('current_step').split('_'), _.capitalize).join ' '
+    _.map(@get('current_step').split('_'), _s.capitalize).join ' '
 
   stepDisplay: ->
     "Step #{(@currentStepIndex() + 1)} of #{@steps().length}"
@@ -78,5 +76,4 @@ module.exports = class PersonalizeState extends Backbone.Model
   next: ->
     if @currentStepIndex() + 1 >= @steps().length
       return @trigger 'done'
-
     @set 'current_step', @steps()[@currentStepIndex() + 1]
