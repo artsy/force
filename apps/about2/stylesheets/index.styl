@@ -1,6 +1,32 @@
+@import '../../../components/stylus_lib'
 @import './hero_unit'
 @import './lib'
+
+.body-about2
+  #main-layout-header
+    position absolute
+  #main-layout-container
+    margin-top 0 !important
 
 .about2-container
   width container-width
   margin auto
+
+.about2-section-header
+  font-size 42px
+  line-height 54px
+  avant-garde()
+  position relative
+  text-align center
+  padding 120px 0 60px 0
+  letter-spacing 2px
+  &::after
+    content '.'
+    color transparent
+    width 50px
+    height 3px
+    background black
+    bottom 48px
+    display block
+    position absolute
+    left calc(50% \- @width / 2)
