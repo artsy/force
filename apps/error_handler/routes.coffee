@@ -30,6 +30,7 @@ render = (res, data) ->
 # Error-handling middleware
 @internalError = (err, req, res, next) ->
   detail = if REVEAL_ERRORS then err.message or err.text or err.toString() else null
+  res.status err.status or 500
   data = _.extend
     code: res.statusCode
     error: err

@@ -6,17 +6,33 @@ errorHandler = rewire '../routes'
 describe '#internalError', ->
 
   it 'renders a 500 page', ->
-    errorHandler.internalError new Error("Some blah error"), {}, { statusCode: 500, send: spy = sinon.spy() }
+    errorHandler.internalError new Error("Some blah error"), {},
+      { statusCode: 500, send: spy = sinon.spy(), status: -> }
     spy.args[0][0].should.include "Some blah error"
 
   it 'hides error details in production', ->
     errorHandler.__set__ 'REVEAL_ERRORS', false
-    errorHandler.internalError new Error("Some blah error"), {}, { statusCode: 500, send: spy = sinon.spy() }
+    errorHandler.internalError new Error("Some blah error"), {},
+      { statusCode: 500, send: spy = sinon.spy(), status: -> }
     spy.args[0][0].should.not.include "Some blah error"
 
   it 'renders sharify data', ->
-    errorHandler.internalError new Error("Some blah error"), {}, { statusCode: 404, send: spy = sinon.spy(), locals: sharify: script: script = sinon.stub() }
+    errorHandler.internalError new Error("Some blah error"), {},
+      { statusCode: 404, send: spy = sinon.spy(), status: (->), locals: sharify: script: script = sinon.stub() }
     script.called.should.be.ok
+
+  it 'sends a 500 by default', ->
+    errorHandler.internalError new Error("Some blah error"), {},
+      { statusCode: 500, send: spy = sinon.spy(), status: status = sinon.stub() }
+    status.args[0][0].should.equal 500
+
+  it 'will look at the errors status', ->
+    err = new Error("Some blah error")
+    err.status = 404
+    errorHandler.internalError err, {},
+      { statusCode: 500, send: spy = sinon.spy(), status: status = sinon.stub() }
+    status.args[0][0].should.equal 404
+
 
 describe '#pageNotFound', ->
 
