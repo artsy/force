@@ -11,7 +11,6 @@ BookmarkedArtists = require '../mixins/bookmarked_artists.coffee'
 Artists = require '../../../../collections/artists.coffee'
 analytics = require '../../../../lib/analytics.coffee'
 mediator = require '../../../../lib/mediator.coffee'
-
 template = -> require('../../templates/artists.jade') arguments...
 suggestedArtistsTemplate = -> require('../../templates/suggested_artists.jade') arguments...
 
@@ -34,6 +33,8 @@ module.exports = class ArtistsView extends StepView
 
   analyticsUnfollowMessage: 'Unfollowed artist from personalize artist search'
   analyticsFollowMessage: 'Followed artist from personalize artist search'
+
+  suggestedArtistsSetId: '53c55a777261692d45b70100'
 
   events:
     'click .personalize-skip': 'advance'
@@ -77,13 +78,16 @@ module.exports = class ArtistsView extends StepView
 
   fetchFallbackSuggestions: ->
     artists = new Artists
-    artists.url = "#{sd.API_URL}/api/v1/artists/sample"
-    artists.fetch data: { size: 5 }, success: =>
-      @suggestions.add new Backbone.Model
-        id: 'artist-sample'
-        name: 'Artists you may enjoy following'
-        analyticsLabel: 'artist fallback suggestions'
-        suggestions: artists
+    artists.fetch
+      data: size: 15
+      url: "#{sd.API_URL}/api/v1/set/#{@suggestedArtistsSetId}/items"
+      success: (collection, response, options) =>
+        artists.reset collection.chain().shuffle().first(10).value()
+        @suggestions.add new Backbone.Model
+          id: 'artist-sample'
+          name: 'Artists you may enjoy following'
+          analyticsLabel: 'artist fallback suggestions'
+          suggestions: artists
 
   setupFollowButton: (key, model, el) ->
     @followButtonViews ?= {}
