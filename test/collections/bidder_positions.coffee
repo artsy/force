@@ -1,10 +1,10 @@
-_                 = require 'underscore'
-sinon             = require 'sinon'
-Backbone          = require 'backbone'
-{ fabricate }     = require 'antigravity'
-BidderPositions   = require '../../collections/bidder_positions'
-SaleArtwork       = require '../../models/sale_artwork'
-Sale              = require '../../models/sale'
+_ = require 'underscore'
+sinon = require 'sinon'
+Backbone = require 'backbone'
+{ fabricate } = require 'antigravity'
+BidderPositions = require '../../collections/bidder_positions'
+SaleArtwork = require '../../models/sale_artwork'
+Sale = require '../../models/sale'
 
 describe 'BidderPositions', ->
   beforeEach ->
@@ -14,8 +14,8 @@ describe 'BidderPositions', ->
       fabricate 'bidder_position', id: _.uniqueId(), created_at: '2013-11-14T00:03:27Z', highest_bid: id: _.uniqueId()
       fabricate 'bidder_position', id: _.uniqueId(), created_at: '2012-11-14T00:03:27Z', highest_bid: id: _.uniqueId()
     ],
-      saleArtwork : @saleArtwork  = new SaleArtwork fabricate 'sale_artwork'
-      sale        : @sale         = new Sale fabricate 'sale'
+      saleArtwork: @saleArtwork = new SaleArtwork fabricate 'sale_artwork', minimum_next_bid_cents: 500
+      sale: @sale = new Sale fabricate 'sale'
 
   afterEach ->
     Backbone.sync.restore()
@@ -54,3 +54,20 @@ describe 'BidderPositions', ->
       @bidderPositions.classes().should.equal 'is-outbid'
       @saleArtwork.set('highest_bid', id: @bidderPositions.last().get('highest_bid').id)
       @bidderPositions.classes().should.equal 'is-highest'
+
+  describe '#minBidCents', ->
+    it 'returns the minimum next bid (in this case from the first bidder position suggested_next_bid_cents)', ->
+      @bidderPositions.minBidCents().should.equal 325000
+
+    it 'returns the minimum next bid (if the sale artwork has a higher minimum_next_bid_cents)', ->
+      @saleArtwork.set 'minimum_next_bid_cents', 650000
+      @bidderPositions.minBidCents().should.equal 650000
+
+    it 'still returns in the event sale artwork minimum_next_bid_cents is undefined', ->
+      @saleArtwork.unset 'minimum_next_bid_cents'
+      @bidderPositions.minBidCents().should.equal 325000
+
+    it 'still returns in the event there are no bidder positions', ->
+      @saleArtwork.set 'minimum_next_bid_cents', 500
+      bidderPositions = new BidderPositions [], saleArtwork: @saleArtwork, sale: @sale
+      bidderPositions.minBidCents().should.equal 500

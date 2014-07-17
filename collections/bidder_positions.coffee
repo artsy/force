@@ -35,8 +35,8 @@ module.exports = class BidderPositions extends Backbone.Collection
 
   minBidCents: ->
     Math.max(
-      @first()?.get('suggested_next_bid_cents') or 0
-      @saleArtwork.get('minimum_next_bid_cents')
+      @first()?.get('suggested_next_bid_cents') or -Infinity
+      @saleArtwork.get('minimum_next_bid_cents') or -Infinity
     )
 
   minBid: ->
