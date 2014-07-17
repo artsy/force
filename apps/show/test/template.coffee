@@ -1,16 +1,16 @@
-_               = require 'underscore'
-jade            = require 'jade'
-path            = require 'path'
-fs              = require 'fs'
-sd              = require('sharify').data
-cheerio         = require 'cheerio'
-Backbone        = require 'backbone'
-{ fabricate }   = require 'antigravity'
-PartnerShow     = require '../../../models/partner_show'
-Profile         = require '../../../models/profile'
+_ = require 'underscore'
+jade = require 'jade'
+path = require 'path'
+fs = require 'fs'
+sd = require('sharify').data
+cheerio = require 'cheerio'
+Backbone = require 'backbone'
+{ fabricate } = require 'antigravity'
+PartnerShow = require '../../../models/partner_show'
+Profile = require '../../../models/profile'
 AdditionalImage = require '../../../models/additional_image'
-Artwork         = require '../../../models/artwork'
-Artworks        = require '../../../collections/artworks'
+Artwork = require '../../../models/artwork'
+Artworks = require '../../../collections/artworks'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../#{templateName}.jade"
@@ -27,24 +27,24 @@ describe 'Partner Show', ->
       @show = new PartnerShow fabricate('show')
       @profile = new Profile fabricate 'partner_profile'
       @html = render('template')({
-        fair    : @show.fair()
+        fair: @show.fair()
         location: @show.location()
-        partner : @show.partner()
-        sd      : sd
-        show    : @show
-        profile : @profile
+        partner: @show.partner()
+        sd: sd
+        show: @show
+        profile: @profile
       })
 
     describe 'template', ->
 
       it 'always renders a container for install shots with a spinner while fetching', ->
         @html = render('template')({
-          fair    : @show.fair()
+          fair: @show.fair()
           location: @show.location()
-          partner : @show.partner()
-          sd      : sd
-          show    : @show
-          profile : @profile
+          partner: @show.partner()
+          sd: sd
+          show: @show
+          profile: @profile
         })
         $ = cheerio.load @html
         $('.carousel').should.have.lengthOf 1
@@ -52,13 +52,13 @@ describe 'Partner Show', ->
       it 'renders back navigation', ->
         @show.set fair: fabricate('fair')
         @html = render('template')({
-          fair    : @show.fair()
+          fair: @show.fair()
           location: @show.location()
-          partner : @show.partner()
-          sd      : sd
-          show    : @show
-          profile : @profile
-          context : 'fair'
+          partner: @show.partner()
+          sd: sd
+          show: @show
+          profile: @profile
+          context: 'fair'
         })
         $ = cheerio.load @html
         $('#show-left-info').should.have.lengthOf 1
@@ -68,13 +68,13 @@ describe 'Partner Show', ->
         @show.set fair: fabricate('fair')
         @show.fair().set organizer: undefined
         @html = render('template')({
-          fair    : @show.fair()
+          fair: @show.fair()
           location: @show.location()
-          partner : @show.partner()
-          sd      : sd
-          show    : @show
-          profile : @profile
-          context : 'fair'
+          partner: @show.partner()
+          sd: sd
+          show: @show
+          profile: @profile
+          context: 'fair'
         })
         $ = cheerio.load @html
         $('#show-left-info').should.have.lengthOf 1
@@ -107,11 +107,11 @@ describe 'Partner Show', ->
       @show = new PartnerShow fabricate('show')
       @show.partner().default_profile_public = false
       @html = render('template')({
-        fair    : @show.fair()
+        fair: @show.fair()
         location: @show.location()
-        partner : @show.partner()
-        sd      : sd
-        show    : @show
+        partner: @show.partner()
+        sd: sd
+        show: @show
       })
 
     describe 'template', ->

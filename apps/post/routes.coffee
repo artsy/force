@@ -1,5 +1,5 @@
-Post     = require '../../models/post.coffee'
-Profile  = require '../../models/profile.coffee'
+Post = require '../../models/post.coffee'
+Profile = require '../../models/profile.coffee'
 
 render = (res, post, profile) ->
   if post
@@ -8,13 +8,13 @@ render = (res, post, profile) ->
     res.locals.sd.PROFILE = profile.toJSON()
 
   res.render 'templates/index',
-    post    : post
-    profile : profile
-    JSONLD  : post.toJSONLD()
+    post: post
+    profile: profile
+    JSONLD: post.toJSONLD()
 
 @index = (req, res) ->
   new Post(id: req.params.id).fetch
-    error  : res.backboneError
+    error: res.backboneError
     success: (post) ->
       if post.href() == res.locals.sd.CURRENT_PATH
         if post.get('profile')?.id

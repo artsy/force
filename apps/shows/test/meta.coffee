@@ -1,5 +1,5 @@
-fs            = require 'fs'
-jade          = require 'jade'
+fs = require 'fs'
+jade = require 'jade'
 { fabricate } = require 'antigravity'
 
 describe 'Meta tags', ->
@@ -10,7 +10,7 @@ describe 'Meta tags', ->
       APP_URL: "http://localhost:5000"
     @file = "#{process.cwd()}/apps/shows/meta.jade"
     @html = jade.render fs.readFileSync(@file).toString(),
-      sd  : @sd
+      sd: @sd
 
   it 'includes canonical url, twitter card, og tags, and title', ->
     @html.should.include "<meta property=\"twitter:card\" content=\"summary"

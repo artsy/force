@@ -1,10 +1,10 @@
-_             = require 'underscore'
-sd            = require('sharify').data
-Backbone      = require 'backbone'
-CoverImage    = require './cover_image.coffee'
-Icon          = require './icon.coffee'
-Artworks      = require '../collections/artworks.coffee'
-{ Markdown }  = require 'artsy-backbone-mixins'
+_ = require 'underscore'
+sd = require('sharify').data
+Backbone = require 'backbone'
+CoverImage = require './cover_image.coffee'
+Icon = require './icon.coffee'
+Artworks = require '../collections/artworks.coffee'
+{ Markdown } = require 'artsy-backbone-mixins'
 { compactObject } = require './mixins/compact_object.coffee'
 
 _.mixin(require 'underscore.string')
@@ -59,10 +59,10 @@ module.exports = class Profile extends Backbone.Model
     if @has 'website'
       @get('website').replace('http://', '').replace('https://', '')
 
-  isUser:        -> _.contains @USER_OWNER_TYPES, @get('owner_type')
+  isUser: -> _.contains @USER_OWNER_TYPES, @get('owner_type')
   isInstitution: -> _.contains @INSTITUTION_OWNER_TYPES, @get('owner_type')
-  isGallery:     -> _.contains @GALLERY_OWNER_TYPES, @get('owner_type')
-  isPartner:     -> @isGallery() or @isInstitution()
+  isGallery: -> _.contains @GALLERY_OWNER_TYPES, @get('owner_type')
+  isPartner: -> @isGallery() or @isInstitution()
   isFairOranizer: -> @get('owner_type') == 'FairOrganizer'
 
   isUserClass: ->
@@ -139,8 +139,8 @@ module.exports = class Profile extends Backbone.Model
 
   toJSONLD: ->
     compactObject {
-      "@context" : "http://schema.org"
-      "@type" : if @isUser() then "Person" else "Organization"
+      "@context": "http://schema.org"
+      "@type": if @isUser() then "Person" else "Organization"
       image: @iconImageUrl()
       name: @displayName()
       url: "#{sd.APP_URL}#{@href()}"

@@ -1,12 +1,12 @@
-_             = require 'underscore'
-benv          = require 'benv'
-Backbone      = require 'backbone'
-sinon         = require 'sinon'
-fabricate     = require('antigravity').fabricate
-{ resolve }   = require 'path'
+_ = require 'underscore'
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+fabricate = require('antigravity').fabricate
+{ resolve } = require 'path'
 
-SearchResult    = require '../../../models/search_result'
-SearchBarView   = require '../view'
+SearchResult = require '../../../models/search_result'
+SearchBarView = require '../view'
 
 Bloodhound = -> ttAdapter: sinon.stub(), initialize: sinon.stub()
 Bloodhound.tokenizers = obj: whitespace: sinon.stub()

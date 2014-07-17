@@ -81,8 +81,8 @@ module.exports.GeneView = class GeneView extends Backbone.View
     ).fetchAndRender()
 
   events:
-    'click #gene-filter-all-artists'  : 'artistMode'
-    'click #gene-filter-artworks-nav' : 'artworksMode'
+    'click #gene-filter-all-artists': 'artistMode'
+    'click #gene-filter-artworks-nav': 'artworksMode'
 
   artistMode: ->
     @$el.removeClass 'body-infinite-scroll'

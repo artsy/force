@@ -1,7 +1,7 @@
-_         = require 'underscore'
-Backbone  = require 'backbone'
-JumpView  = require '../../components/jump/view.coffee'
-mediator  = require '../../lib/mediator.coffee'
+_ = require 'underscore'
+Backbone = require 'backbone'
+JumpView = require '../../components/jump/view.coffee'
+mediator = require '../../lib/mediator.coffee'
 
 module.exports.AboutRouter = class AboutRouter extends Backbone.Router
   routes:
@@ -9,10 +9,10 @@ module.exports.AboutRouter = class AboutRouter extends Backbone.Router
     'about/:slug': 'toSection'
 
   initialize: ->
-    @$header          = $('#main-layout-header')
-    @$jumpContainer   = $('#about-page-jump')
-    @$window          = $(window)
-    @jump             = new JumpView threshold: @_getThreshold()
+    @$header = $('#main-layout-header')
+    @$jumpContainer = $('#about-page-jump')
+    @$window = $(window)
+    @jump = new JumpView threshold: @_getThreshold()
 
     @$jumpContainer.html @jump.$el.css
       # Line up jump nav with container

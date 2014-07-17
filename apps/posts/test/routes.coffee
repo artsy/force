@@ -1,5 +1,5 @@
-sinon   = require 'sinon'
-routes  = require '../routes'
+sinon = require 'sinon'
+routes = require '../routes'
 Backbone = require 'backbone'
 CurrentUser = require '../../../models/current_user.coffee'
 { fabricate } = require 'antigravity'

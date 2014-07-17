@@ -13,15 +13,15 @@ ConfirmRegistrationModal = require '../../../components/credit_card/client/confi
 module.exports = class ArtworkRouter extends Backbone.Router
 
   routes:
-    'artwork/:id'                 : 'show'
-    'artwork/:id/ask_specialist'  : 'inquire'
-    'artwork/:id/contact-gallery' : 'contactPartner'
-    'artwork/:id/contact_gallery' : 'contactPartner'
-    'artwork/:id/confirm-bid'     : 'confirmBid'
+    'artwork/:id': 'show'
+    'artwork/:id/ask_specialist': 'inquire'
+    'artwork/:id/contact-gallery': 'contactPartner'
+    'artwork/:id/contact_gallery': 'contactPartner'
+    'artwork/:id/confirm-bid': 'confirmBid'
     'artwork/:id/confirm-registration': 'confirmRegistration'
-    'artwork/:id/inquire'         : 'inquire'
-    'artwork/:id/view-in-room'    : 'viewInRoom'
-    'artwork/:id/zoom'            : 'zoom'
+    'artwork/:id/inquire': 'inquire'
+    'artwork/:id/view-in-room': 'viewInRoom'
+    'artwork/:id/zoom': 'zoom'
 
   initialize: (options) ->
     { @artwork, @artist } = options

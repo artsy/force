@@ -1,17 +1,17 @@
-PartnerShow     = require '../../models/partner_show'
-Profile         = require '../../models/profile'
+PartnerShow = require '../../models/partner_show'
+Profile = require '../../models/profile'
 { stringifyJSONForWeb } = require '../../components/util/json.coffee'
-{ parse }       = require 'url'
+{ parse } = require 'url'
 
 render = (res, show, profile=null) ->
   res.locals.sd.SHOW = show.toJSON()
   res.render 'template',
-    fair    : show.fair()
+    fair: show.fair()
     location: show.location()
-    partner : show.partner()
-    show    : show
-    profile : profile
-    jsonLD  : stringifyJSONForWeb(show.toJSONLD())
+    partner: show.partner()
+    show: show
+    profile: profile
+    jsonLD: stringifyJSONForWeb(show.toJSONLD())
 
 setReferringContext = (req, res, show) ->
   return unless req.get 'referrer'
@@ -29,8 +29,8 @@ setReferringContext = (req, res, show) ->
 
 @index = (req, res) ->
   new PartnerShow(id: req.params.id).fetch
-    cache  : true
-    error  : res.backboneError
+    cache: true
+    error: res.backboneError
     success: (show) =>
       setReferringContext(req, res, show)
 

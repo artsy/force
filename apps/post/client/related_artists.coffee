@@ -1,7 +1,7 @@
-_                       = require 'underscore'
-Backbone                = require 'backbone'
-relatedArtistsTemplate  = -> require('../templates/related_artists.jade') arguments...
-Artist                  = require '../../../models/artist.coffee'
+_ = require 'underscore'
+Backbone = require 'backbone'
+relatedArtistsTemplate = -> require('../templates/related_artists.jade') arguments...
+Artist = require '../../../models/artist.coffee'
 
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 

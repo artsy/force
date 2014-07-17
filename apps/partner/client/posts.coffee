@@ -1,7 +1,7 @@
-_             = require 'underscore'
-Backbone      = require 'backbone'
-CurrentUser   = require '../../../models/current_user.coffee'
-FeedItems     = require '../../../components/feed/collections/feed_items.coffee'
+_ = require 'underscore'
+Backbone = require 'backbone'
+CurrentUser = require '../../../models/current_user.coffee'
+FeedItems = require '../../../components/feed/collections/feed_items.coffee'
 PoplockitFeed = require '../../../components/feed/client/poplockit_feed.coffee'
 { API_URL } = require('sharify').data
 
@@ -24,6 +24,6 @@ module.exports = class PartnerPostsView extends Backbone.View
       success: (items) =>
         items.urlRoot = url
         new PoplockitFeed
-          limitPostBodyHeight : true
-          feedItems           : items
-          el                  : @$('#partner-posts')
+          limitPostBodyHeight: true
+          feedItems: items
+          el: @$('#partner-posts')

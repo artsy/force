@@ -1,6 +1,6 @@
-_                       = require 'underscore'
-FeedView                = require('./feed.coffee')
-{ isTouchDevice }       = require '../../util/device.coffee'
+_ = require 'underscore'
+FeedView = require('./feed.coffee')
+{ isTouchDevice } = require '../../util/device.coffee'
 
 module.exports = class PoplockitFeed extends FeedView
 
@@ -12,10 +12,10 @@ module.exports = class PoplockitFeed extends FeedView
 
   afterLoadCont: ->
     @$el.popLockIt
-      columnSelector         : '.feed-column'
-      feedItems              : @$('.feed-item')
-      preventFixed           : isTouchDevice()
-      onScroll               : ((scrollTop) => @infiniteScroll(scrollTop))
+      columnSelector: '.feed-column'
+      feedItems: @$('.feed-item')
+      preventFixed: isTouchDevice()
+      onScroll: ((scrollTop) => @infiniteScroll(scrollTop))
     @$feedItems.removeClass 'unrendered-feed-item'
     @popLockItInitialized = true
 

@@ -1,13 +1,13 @@
-_                   = require 'underscore'
-sinon               = require 'sinon'
-rewire              = require 'rewire'
-{ REFLECTION_URL }  = require '../../../config'
-proxyToReflection   = rewire '../../../lib/middleware/proxy_to_reflection'
-{ parse }           = require 'url'
-querystring         = require 'querystring'
+_ = require 'underscore'
+sinon = require 'sinon'
+rewire = require 'rewire'
+{ REFLECTION_URL } = require '../../../config'
+proxyToReflection = rewire '../../../lib/middleware/proxy_to_reflection'
+{ parse } = require 'url'
+querystring = require 'querystring'
 
-endStub   = sinon.stub()
-getStub   = sinon.stub()
+endStub = sinon.stub()
+getStub = sinon.stub()
 proxyToReflection.__set__ 'request',
   get: (url) ->
     getStub url
@@ -15,8 +15,8 @@ proxyToReflection.__set__ 'request',
 
 describe 'proxyToReflection', ->
   beforeEach ->
-    @res    = {}
-    @next   = sinon.stub()
+    @res = {}
+    @next = sinon.stub()
 
   it 'passes through when there is no escaped fragment query param', ->
     req = url: '/artwork/foo-bar', query: {}

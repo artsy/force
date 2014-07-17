@@ -1,9 +1,9 @@
-_         = require 'underscore'
-rewire    = require 'rewire'
-benv      = require 'benv'
-Backbone  = require 'backbone'
-sinon     = require 'sinon'
-mediator  = require '../../../../lib/mediator.coffee'
+_ = require 'underscore'
+rewire = require 'rewire'
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+mediator = require '../../../../lib/mediator.coffee'
 
 { resolve } = require 'path'
 

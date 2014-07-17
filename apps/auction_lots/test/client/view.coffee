@@ -1,14 +1,14 @@
-_               = require 'underscore'
-rewire          = require 'rewire'
-benv            = require 'benv'
-Backbone        = require 'backbone'
-sinon           = require 'sinon'
-Artist          = require '../../../../models/artist'
-AuctionLot      = require '../../../../models/auction_lot'
-AuctionLots     = require '../../../../collections/auction_lots'
-Artworks        = require '../../../../collections/artworks'
-{ resolve }     = require 'path'
-{ fabricate }   = require 'antigravity'
+_ = require 'underscore'
+rewire = require 'rewire'
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+Artist = require '../../../../models/artist'
+AuctionLot = require '../../../../models/auction_lot'
+AuctionLots = require '../../../../collections/auction_lots'
+Artworks = require '../../../../collections/artworks'
+{ resolve } = require 'path'
+{ fabricate } = require 'antigravity'
 
 describe 'Auction results client-side code', ->
   before (done) ->
@@ -21,10 +21,10 @@ describe 'Auction results client-side code', ->
     benv.teardown()
 
   before (done) ->
-    @lot          = new AuctionLot fabricate 'auction_result'
-    @artist       = new Artist fabricate 'artist'
-    @artworks     = new Artworks [fabricate 'artwork']
-    @auctionLots  = new AuctionLots [@lot], state: totalRecords: 1
+    @lot = new AuctionLot fabricate 'auction_result'
+    @artist = new Artist fabricate 'artist'
+    @artworks = new Artworks [fabricate 'artwork']
+    @auctionLots = new AuctionLots [@lot], state: totalRecords: 1
 
     benv.render resolve(__dirname, '../../templates/detail.jade'), {
       sd: {}

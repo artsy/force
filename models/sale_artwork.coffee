@@ -1,15 +1,15 @@
-_               = require 'underscore'
+_ = require 'underscore'
 { formatMoney } = require 'accounting'
-sd              = require('sharify').data
-Backbone        = require 'backbone'
-{ Markdown }    = require 'artsy-backbone-mixins'
-Artwork         = require './artwork.coffee'
-Sale            = require './sale.coffee'
+sd = require('sharify').data
+Backbone = require 'backbone'
+{ Markdown } = require 'artsy-backbone-mixins'
+Artwork = require './artwork.coffee'
+Sale = require './sale.coffee'
 
 _.mixin(require 'underscore.string')
 
-MAX_POLL_TIMES  = 7
-POLL_DELAY      = 1000
+MAX_POLL_TIMES = 7
+POLL_DELAY = 1000
 
 module.exports = class SaleArtwork extends Backbone.Model
   _.extend @prototype, Markdown
@@ -18,9 +18,9 @@ module.exports = class SaleArtwork extends Backbone.Model
     "#{sd.API_URL}/api/v1/sale/#{@get('sale').id}/sale_artwork/#{@get('artwork').id}"
 
   reserveFormat:
-    no_reserve      : null
-    reserve_met     : 'Reserve met'
-    reserve_not_met : 'Reserve not met'
+    no_reserve: null
+    reserve_met: 'Reserve met'
+    reserve_not_met: 'Reserve not met'
 
   artwork: -> new Artwork(@get('artwork'))
   sale: -> new Sale(@get('sale'))
@@ -35,8 +35,8 @@ module.exports = class SaleArtwork extends Backbone.Model
 
   estimate: ->
     if @has('low_estimate_cents') or @has('high_estimate_cents')
-      high  = formatMoney(@get('high_estimate_cents') / 100, '$', 0) if @has 'high_estimate_cents'
-      low   = formatMoney(@get('low_estimate_cents') / 100, '$', 0)  if @has 'low_estimate_cents'
+      high = formatMoney(@get('high_estimate_cents') / 100, '$', 0) if @has 'high_estimate_cents'
+      low = formatMoney(@get('low_estimate_cents') / 100, '$', 0)  if @has 'low_estimate_cents'
       "Estimate: #{_.compact([high, low]).join '–'}"
 
   # Changes bidAmount to a number in cents
@@ -50,7 +50,7 @@ module.exports = class SaleArtwork extends Backbone.Model
 
   bidCount: ->
     n = @get('bidder_positions_count') or 0
-    count  = "#{n} bid"
+    count = "#{n} bid"
     count += if n is 1 then '' else 's'
     count
 

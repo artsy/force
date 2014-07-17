@@ -1,8 +1,8 @@
-_             = require 'underscore'
-benv          = require 'benv'
-sinon         = require 'sinon'
-Backbone      = require 'backbone'
-{ resolve }   = require 'path'
+_ = require 'underscore'
+benv = require 'benv'
+sinon = require 'sinon'
+Backbone = require 'backbone'
+{ resolve } = require 'path'
 
 LocationSearchView = benv.requireWithJadeify(resolve(__dirname, '../index'), ['template'])
 
@@ -16,8 +16,8 @@ describe 'Location Search', ->
         maps:
           places: Autocomplete: sinon.stub()
           event:
-            addListener    : sinon.stub()
-            addDomListener : sinon.stub()
+            addListener: sinon.stub()
+            addDomListener: sinon.stub()
       LocationSearchView.__set__ 'google', @google
       @view = new LocationSearchView
       done()

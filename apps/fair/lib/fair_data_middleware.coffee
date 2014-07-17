@@ -25,17 +25,17 @@ module.exports = (req, res, next) ->
         next()
       key = "fair:#{req.params.id}"
       cache.getHash key, {
-        fair:                  require '../../../models/fair'
-        profile:               require '../../../models/profile'
-        filterSuggest:         require '../../../models/filter_suggest'
+        fair: require '../../../models/fair'
+        profile: require '../../../models/profile'
+        filterSuggest: require '../../../models/filter_suggest'
         filteredSearchOptions: require '../../../models/filter_suggest'
         filteredSearchColumns: null # Vanilla JS object
-        sections:              require('backbone').Collection
-        galleries:             require('backbone').Collection
-        exhibitorsCount:       null # Just a Number
-        exhibitorsAToZGroup:   null # Complex data structures that can't simply be wrapped in a class.
-        artistsAToZGroup:      null # We'll need to deserialized this manually.
-        coverImage:            require '../../../models/cover_image'
+        sections: require('backbone').Collection
+        galleries: require('backbone').Collection
+        exhibitorsCount: null # Just a Number
+        exhibitorsAToZGroup: null # Complex data structures that can't simply be wrapped in a class.
+        artistsAToZGroup: null # We'll need to deserialized this manually.
+        coverImage: require '../../../models/cover_image'
       }, (err, cachedData) ->
         return next err if err
         return end cachedData if cachedData

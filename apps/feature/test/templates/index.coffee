@@ -1,11 +1,11 @@
-_               = require 'underscore'
-jade            = require 'jade'
-path            = require 'path'
-fs              = require 'fs'
-cheerio         = require 'cheerio'
-Backbone        = require 'backbone'
-{ fabricate }   = require 'antigravity'
-Feature         = require '../../../../models/feature'
+_ = require 'underscore'
+jade = require 'jade'
+path = require 'path'
+fs = require 'fs'
+cheerio = require 'cheerio'
+Backbone = require 'backbone'
+{ fabricate } = require 'antigravity'
+Feature = require '../../../../models/feature'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../../templates/#{templateName}.jade"
@@ -18,12 +18,12 @@ describe 'Partner Show', ->
 
   beforeEach ->
     @sd =
-      API_URL : 'http://localhost:5000'
+      API_URL: 'http://localhost:5000'
       ASSET_PATH: 'http://localhost:5000'
     @feature = new Feature fabricate('feature', { image_versions: ['wide'] })
     @html = render('index')({
-      sd      : @sd
-      feature : @feature
+      sd: @sd
+      feature: @feature
     })
 
   describe 'template', ->

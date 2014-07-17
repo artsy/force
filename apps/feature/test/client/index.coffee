@@ -1,11 +1,11 @@
-_             = require 'underscore'
-benv          = require 'benv'
-Backbone      = require 'backbone'
-sinon         = require 'sinon'
-Artwork       = require '../../../../models/artwork.coffee'
-Artworks      = require '../../../../collections/artworks.coffee'
-Feature       = require '../../../../models/feature.coffee'
-{ resolve }   = require 'path'
+_ = require 'underscore'
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+Artwork = require '../../../../models/artwork.coffee'
+Artworks = require '../../../../collections/artworks.coffee'
+Feature = require '../../../../models/feature.coffee'
+{ resolve } = require 'path'
 { fabricate } = require 'antigravity'
 
 describe 'FeatureView', ->
@@ -14,7 +14,7 @@ describe 'FeatureView', ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
-      @FeatureView   = require '../../client/index.coffee'
+      @FeatureView = require '../../client/index.coffee'
       done()
 
   after ->

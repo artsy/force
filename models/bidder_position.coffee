@@ -1,7 +1,7 @@
-_           = require 'underscore'
-Backbone    = require 'backbone'
-sd          = require('sharify').data
-accounting  = require 'accounting'
+_ = require 'underscore'
+Backbone = require 'backbone'
+sd = require('sharify').data
+accounting = require 'accounting'
 
 module.exports = class BidderPosition extends Backbone.Model
   url: ->

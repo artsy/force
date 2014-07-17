@@ -1,7 +1,7 @@
-_           = require 'underscore'
-Backbone    = require 'backbone'
-mediator    = require '../../lib/mediator.coffee'
-analytics   = require '../../lib/analytics.coffee'
+_ = require 'underscore'
+Backbone = require 'backbone'
+mediator = require '../../lib/mediator.coffee'
+analytics = require '../../lib/analytics.coffee'
 
 module.exports = class FollowButton extends Backbone.View
   events:
@@ -18,8 +18,8 @@ module.exports = class FollowButton extends Backbone.View
     @listenTo @following, "add:#{@model.id}", @change
     @listenTo @following, "remove:#{@model.id}", @change
 
-    @analyticsFollowMessage     = options.analyticsFollowMessage or @defaultAnalyticsMessage('Followed')
-    @analyticsUnfollowMessage   = options.analyticsUnfollowMessage or @defaultAnalyticsMessage('Unfollowed')
+    @analyticsFollowMessage = options.analyticsFollowMessage or @defaultAnalyticsMessage('Followed')
+    @analyticsUnfollowMessage = options.analyticsUnfollowMessage or @defaultAnalyticsMessage('Unfollowed')
 
     @$el.addClass "no-touch"
 

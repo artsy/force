@@ -1,12 +1,12 @@
-_                 = require 'underscore'
-benv              = require 'benv'
-Backbone          = require 'backbone'
-sinon             = require 'sinon'
-{ resolve }       = require 'path'
-{ fabricate }     = require 'antigravity'
-Fair              = require '../../../../models/fair.coffee'
-Profile           = require '../../../../models/profile.coffee'
-FairInfo          = require '../../client/info.coffee'
+_ = require 'underscore'
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+{ resolve } = require 'path'
+{ fabricate } = require 'antigravity'
+Fair = require '../../../../models/fair.coffee'
+Profile = require '../../../../models/profile.coffee'
+FairInfo = require '../../client/info.coffee'
 
 describe 'FairInfoView', ->
 
@@ -25,9 +25,9 @@ describe 'FairInfoView', ->
     @fair = new Fair fair
     @profile = new Profile profile
     benv.render resolve(__dirname, '../../templates/index.jade'), {
-      sd      : { FAIR: fair, PROFILE: profile }
-      fair    : @fair
-      profile : @profile
+      sd: { FAIR: fair, PROFILE: profile }
+      fair: @fair
+      profile: @profile
     }, =>
       $('body').html '<div id="fair"><a class="fair-map-link"></a><img class="map" /></div>'
       @view = new FairInfo { el: $('#fair'), model: @profile, fair: @fair }

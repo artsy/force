@@ -1,9 +1,9 @@
-_               = require 'underscore'
-sinon           = require 'sinon'
-Backbone        = require 'backbone'
-routes          = require '../routes'
-Search          = require '../../../collections/search'
-{ fabricate }   = require 'antigravity'
+_ = require 'underscore'
+sinon = require 'sinon'
+Backbone = require 'backbone'
+routes = require '../routes'
+Search = require '../../../collections/search'
+{ fabricate } = require 'antigravity'
 
 describe 'Search routes', ->
   beforeEach ->

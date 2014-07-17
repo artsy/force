@@ -6,9 +6,9 @@ qs = require 'querystring'
 module.exports = class HomeAuthRouter extends Backbone.Router
 
   routes:
-    'log_in' : 'login'
+    'log_in': 'login'
     'sign_up': 'signup'
-    'forgot' : 'forgot'
+    'forgot': 'forgot'
 
   login: ->
     error = qs.parse(location.search.replace /^\?/, '').error

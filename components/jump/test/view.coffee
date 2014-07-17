@@ -1,9 +1,9 @@
-benv          = require 'benv'
-Backbone      = require 'backbone'
-sinon         = require 'sinon'
-mediator      = require '../../../lib/mediator.coffee'
-JumpView      = require '../view.coffee'
-{ resolve }   = require 'path'
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+mediator = require '../../../lib/mediator.coffee'
+JumpView = require '../view.coffee'
+{ resolve } = require 'path'
 
 describe 'JumpView', ->
   beforeEach (done) ->

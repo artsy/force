@@ -1,20 +1,20 @@
-_              = require 'underscore'
-Backbone       = require 'backbone'
-sd             = require('sharify').data
-FeedItems      = require '../../../components/feed/collections/feed_items.coffee'
-ShowsFeed      = require '../../../components/feed/client/shows_feed.coffee'
-Artist         = require '../../../models/artist.coffee'
-Profile        = require '../../../models/profile.coffee'
-Profiles       = require '../../../collections/profiles.coffee'
-Artworks       = require '../../../collections/artworks.coffee'
-Artists        = require '../../../collections/artists.coffee'
+_ = require 'underscore'
+Backbone = require 'backbone'
+sd = require('sharify').data
+FeedItems = require '../../../components/feed/collections/feed_items.coffee'
+ShowsFeed = require '../../../components/feed/client/shows_feed.coffee'
+Artist = require '../../../models/artist.coffee'
+Profile = require '../../../models/profile.coffee'
+Profiles = require '../../../collections/profiles.coffee'
+Artworks = require '../../../collections/artworks.coffee'
+Artists = require '../../../collections/artists.coffee'
 FollowProfiles = require '../../../collections/follow_profiles.coffee'
-CurrentUser    = require '../../../models/current_user.coffee'
-FeedItems      = require '../../../components/feed/collections/feed_items.coffee'
-analytics      = require '../../../lib/analytics.coffee'
+CurrentUser = require '../../../models/current_user.coffee'
+FeedItems = require '../../../components/feed/collections/feed_items.coffee'
+analytics = require '../../../lib/analytics.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 FollowProfileButton = require '../../../components/partner_buttons/follow_profile.coffee'
-exhibitorsTemplate  = -> require('../templates/exhibitors_columns.jade') arguments...
+exhibitorsTemplate = -> require('../templates/exhibitors_columns.jade') arguments...
 
 module.exports = class ForYouView extends Backbone.View
 
@@ -47,11 +47,11 @@ module.exports = class ForYouView extends Backbone.View
 
   initFollowButton: (profile, el) ->
     new FollowProfileButton
-      el         : el
-      model      : profile
-      collection : @followProfiles
-      analyticsFollowMessage   : @analyticsFollowMessage
-      analyticsUnfollowMessage : @analyticsUnfollowMessage
+      el: el
+      model: profile
+      collection: @followProfiles
+      analyticsFollowMessage: @analyticsFollowMessage
+      analyticsUnfollowMessage: @analyticsUnfollowMessage
 
   fetchFollowingArtists: ->
     url = "#{sd.API_URL}/api/v1/me/follow/artists"
@@ -81,9 +81,9 @@ module.exports = class ForYouView extends Backbone.View
     new FeedItems().fetch
       url: "#{@fair.url()}/shows"
       data:
-        artworks  : true
-        artist    : artistId
-        size      : 3
+        artworks: true
+        artist: artistId
+        size: 3
       success: (items) =>
         for item in items.models
           @artworkColumnsView.appendArtworks item.artworks().models
@@ -114,8 +114,8 @@ module.exports = class ForYouView extends Backbone.View
           feedItems.doneFetching = true
           @$('.foryou-section.partners .loading-spinner').remove()
           feed = new ShowsFeed
-            el               : @$('.foryou-section.partners .feed').show()
-            feedItems        : feedItems
+            el: @$('.foryou-section.partners .feed').show()
+            feedItems: feedItems
           for exhibitor in followingExhibitors.models
             @fetchAndAppendBooth exhibitor.get('profile'), feed
         else

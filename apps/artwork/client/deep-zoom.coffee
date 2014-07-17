@@ -1,7 +1,7 @@
-_           = require 'underscore'
-Backbone    = require 'backbone'
-Transition  = require '../../../components/mixins/transition.coffee'
-getScript   = require '../../../lib/get_script.coffee'
+_ = require 'underscore'
+Backbone = require 'backbone'
+Transition = require '../../../components/mixins/transition.coffee'
+getScript = require '../../../lib/get_script.coffee'
 
 template = -> require('../templates/deep-zoom.jade') arguments...
 
@@ -13,17 +13,17 @@ module.exports = class DeepZoomView extends Backbone.View
   inactiveDuration: 1000
 
   events:
-    'click .dz-close'         : 'return'
-    'click .dz-slider-minus'  : 'zoomOut'
-    'click .dz-slider-plus'   : 'zoomIn'
-    'change .dz-slider-range' : 'zoomTo'
-    'mousemove'               : 'detectActivity'
+    'click .dz-close': 'return'
+    'click .dz-slider-minus': 'zoomOut'
+    'click .dz-slider-plus': 'zoomIn'
+    'change .dz-slider-range': 'zoomTo'
+    'mousemove': 'detectActivity'
 
   initialize: (options) ->
     { @artwork, @$container } = options
 
-    @zoomTo           = _.throttle @_zoomTo, 50
-    @detectActivity   = _.throttle @_detectActivity, 500
+    @zoomTo = _.throttle @_zoomTo, 50
+    @detectActivity = _.throttle @_detectActivity, 500
 
     (@$window = $(window)).on 'keyup', @escape
 
@@ -44,21 +44,21 @@ module.exports = class DeepZoomView extends Backbone.View
 
     getScript 'openseadragon', =>
       @viewer = OpenSeadragon
-        id                    : @id
-        debugMode             : false
-        showNavigationControl : false
-        immediateRender       : false
-        blendTime             : 0.0
-        animationTime         : 1.5
-        springStiffness       : 15.0
-        maxZoomPixelRatio     : 1.0
-        minZoomImageRatio     : 0.9
-        zoomPerClick          : @zoomPerClick
-        zoomPerScroll         : 1.1
-        constrainDuringPan    : true
-        visibilityRatio       : 1
-        tileSources           : image.deepZoomJson()
-        error                 : @return
+        id: @id
+        debugMode: false
+        showNavigationControl: false
+        immediateRender: false
+        blendTime: 0.0
+        animationTime: 1.5
+        springStiffness: 15.0
+        maxZoomPixelRatio: 1.0
+        minZoomImageRatio: 0.9
+        zoomPerClick: @zoomPerClick
+        zoomPerScroll: 1.1
+        constrainDuringPan: true
+        visibilityRatio: 1
+        tileSources: image.deepZoomJson()
+        error: @return
 
       @postRender()
 

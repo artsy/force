@@ -1,24 +1,24 @@
-_               = require 'underscore'
+_ = require 'underscore'
 AdditionalImage = require '../../models/additional_image.coffee'
-Backbone        = require 'backbone'
-CurrentUser     = require '../../models/current_user.coffee'
-SaveControls    = require '../artwork_item/save_controls.coffee'
-artworkColumns  = -> require('./template.jade') arguments...
-artworkItem     = -> require('../artwork_item/templates/artwork.jade') arguments...
+Backbone = require 'backbone'
+CurrentUser = require '../../models/current_user.coffee'
+SaveControls = require '../artwork_item/save_controls.coffee'
+artworkColumns = -> require('./template.jade') arguments...
+artworkItem = -> require('../artwork_item/templates/artwork.jade') arguments...
 trackArtworkImpressions = require("../analytics/impression_tracking.coffee").trackArtworkImpressions
 
 module.exports = class ArtworkColumns extends Backbone.View
 
   # Configureable Defaults
-  seeMore         : false
-  numberOfColumns : 3
+  seeMore: false
+  numberOfColumns: 3
   initialItemCount: 10
   maxArtworkHeight: 400
-  currentColumn   : 0
-  isOrdered       : false
-  gutterWidth     : 80
-  artworkSize     : 'tall'
-  allowDuplicates : false
+  currentColumn: 0
+  isOrdered: false
+  gutterWidth: 80
+  artworkSize: 'tall'
+  allowDuplicates: false
 
   events:
     'click .artwork-columns-see-more': 'onSeeMoreClick'
@@ -72,8 +72,8 @@ module.exports = class ArtworkColumns extends Backbone.View
     @$el
       .html artworkColumns
         numberOfColumns: @numberOfColumns
-        buttonLabel    : @buttonLabel()
-        seeMore        : @seeMore
+        buttonLabel: @buttonLabel()
+        seeMore: @seeMore
 
     @sizeColumns()
 
@@ -125,9 +125,9 @@ module.exports = class ArtworkColumns extends Backbone.View
       @$(".artwork-column:eq(#{@shortestColumn})").append $artwork
       height = $artwork.find('img').height()
     else
-      img       = artwork.defaultImage()
-      height    = img.maxHeightForWidth @columnWidth, @maxArtworkHeight
-      $artwork  = @appendFigure artwork, @shortestColumn, notes
+      img = artwork.defaultImage()
+      height = img.maxHeightForWidth @columnWidth, @maxArtworkHeight
+      $artwork = @appendFigure artwork, @shortestColumn, notes
 
     fullArtworkItemHeight = height + parseInt($artwork.find('.artwork-item-caption').css('height').replace('px', ''))
     @columns[@shortestColumn].height += fullArtworkItemHeight
@@ -151,19 +151,19 @@ module.exports = class ArtworkColumns extends Backbone.View
     # NOTE: The artwork item template ignores all of these, but will need to
     # work with them soon, so I'm going to leave these in.
     renderedArtwork = artworkItem
-      artwork             : artwork
-      fixedWidth          : @columnWidth
-      maxDimension        : @maxArtworkHeight
-      notes               : (if @displayNotes && notes then notes)
-      displayBid          : @displayBid
-      isAuction           : @isAuction
-      displayPurchase     : @displayPurchase
-      displaySold         : @displaySold
-      displayMoreInfo     : @displayMoreInfo
-      displayAuctionPrice : displayAuctionPrice
-      estimate            : estimate
-      artworkSize         : @artworkSize
-      displayPrice        : @displayPrice
+      artwork: artwork
+      fixedWidth: @columnWidth
+      maxDimension: @maxArtworkHeight
+      notes: (if @displayNotes && notes then notes)
+      displayBid: @displayBid
+      isAuction: @isAuction
+      displayPurchase: @displayPurchase
+      displaySold: @displaySold
+      displayMoreInfo: @displayMoreInfo
+      displayAuctionPrice: displayAuctionPrice
+      estimate: estimate
+      artworkSize: @artworkSize
+      displayPrice: @displayPrice
     $renderedArtwork = $(renderedArtwork)
     @$(".artwork-column:eq(#{column})").append $renderedArtwork
     $renderedArtwork

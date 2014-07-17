@@ -1,13 +1,13 @@
-_               = require 'underscore'
-benv            = require 'benv'
-Backbone        = require 'backbone'
-sinon           = require 'sinon'
-{ resolve }     = require 'path'
-{ fabricate }   = require 'antigravity'
+_ = require 'underscore'
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+{ resolve } = require 'path'
+{ fabricate } = require 'antigravity'
 
-Fair                = require '../../../models/fair'
-Profile             = require '../../../models/profile'
-{ FairHeaderView }  = require '../index'
+Fair = require '../../../models/fair'
+Profile = require '../../../models/profile'
+{ FairHeaderView } = require '../index'
 
 Bloodhound = -> ttAdapter: sinon.stub(), initialize: sinon.stub()
 Bloodhound.tokenizers = obj: whitespace: sinon.stub()
@@ -18,18 +18,18 @@ describe 'FairHeaderView', ->
       benv.expose
         $: benv.require 'jquery'
         Bloodhound: Bloodhound
-      Backbone.$      = $
-      $.fn.typeahead  = sinon.stub()
+      Backbone.$ = $
+      $.fn.typeahead = sinon.stub()
       done()
 
   after -> benv.teardown()
 
   beforeEach (done) ->
-    @fair     = new Fair fabricate 'fair'
-    @profile  = new Profile fabricate 'fair_profile'
+    @fair = new Fair fabricate 'fair'
+    @profile = new Profile fabricate 'fair_profile'
     benv.render resolve(__dirname, '../header.jade'), { micrositeFair: @fair, micrositeProfile: @profile }, =>
-      @view       = new FairHeaderView el: $('.fair-page-header'), model: @profile, fair: @fair
-      @$template  = $('body')
+      @view = new FairHeaderView el: $('.fair-page-header'), model: @profile, fair: @fair
+      @$template = $('body')
       done()
 
   describe 'template', ->

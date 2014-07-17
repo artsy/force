@@ -1,17 +1,17 @@
-_               = require 'underscore'
-rewire          = require 'rewire'
-benv            = require 'benv'
-Backbone        = require 'backbone'
-sinon           = require 'sinon'
-{ resolve }     = require 'path'
-{ fabricate }   = require 'antigravity'
-{ stubChildClasses }  = require '../../../../test/helpers/stubs'
+_ = require 'underscore'
+rewire = require 'rewire'
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+{ resolve } = require 'path'
+{ fabricate } = require 'antigravity'
+{ stubChildClasses } = require '../../../../test/helpers/stubs'
 
-Artist        = require '../../../../models/artist'
-Artwork       = require '../../../../models/artwork'
-Fair          = require '../../../../models/fair'
-Sale          = require '../../../../models/sale'
-CurrentUser   = require '../../../../models/current_user'
+Artist = require '../../../../models/artist'
+Artwork = require '../../../../models/artwork'
+Fair = require '../../../../models/fair'
+Sale = require '../../../../models/sale'
+CurrentUser = require '../../../../models/current_user'
 
 describe 'ArtworkView', ->
   before (done) ->
@@ -117,8 +117,8 @@ describe 'ArtworkView', ->
     describe '#setupRelatedLayers', ->
       describe 'has no relations', ->
         beforeEach ->
-          @artwork.fetchRelatedCollections            = sinon.stub()
-          @view.belowTheFoldView.setupLayeredSearch   = sinon.stub()
+          @artwork.fetchRelatedCollections = sinon.stub()
+          @view.belowTheFoldView.setupLayeredSearch = sinon.stub()
 
         it 'sets up layered search by default', ->
           @view.setupRelatedLayers()
@@ -126,17 +126,17 @@ describe 'ArtworkView', ->
 
       describe 'has relations', ->
         beforeEach ->
-          @view.belowTheFoldView.setupFair            = sinon.stub()
-          @view.belowTheFoldView.setupSale            = sinon.stub()
-          @view.belowTheFoldView.setupLayeredSearch   = sinon.stub()
-          @view.setupFeatureNavigation                = sinon.stub()
-          @artwork.fetchRelatedCollections            = sinon.stub()
-          @view.deltaTrackPageView                    = sinon.stub()
+          @view.belowTheFoldView.setupFair = sinon.stub()
+          @view.belowTheFoldView.setupSale = sinon.stub()
+          @view.belowTheFoldView.setupLayeredSearch = sinon.stub()
+          @view.setupFeatureNavigation = sinon.stub()
+          @artwork.fetchRelatedCollections = sinon.stub()
+          @view.deltaTrackPageView = sinon.stub()
 
-          fairs       = new Backbone.Collection [new Fair(id: 'i am a fair')]
-          fairs.kind  = 'fairs'
-          sales       = new Backbone.Collection [new Sale(id: 'i am a sale')]
-          sales.kind  = 'sales'
+          fairs = new Backbone.Collection [new Fair(id: 'i am a fair')]
+          fairs.kind = 'fairs'
+          sales = new Backbone.Collection [new Sale(id: 'i am a sale')]
+          sales.kind = 'sales'
 
           @artwork.relatedCollections = [sales, fairs]
 
@@ -155,11 +155,11 @@ describe 'ArtworkView', ->
 
         describe 'zig zag', ->
           beforeEach ->
-            @sales       = new Backbone.Collection [new Sale id: 'i am a sale']
-            @sales.kind  = 'sales'
+            @sales = new Backbone.Collection [new Sale id: 'i am a sale']
+            @sales.kind = 'sales'
             @artwork.relatedCollections = [@sales]
-            @view.setupZigZag             = sinon.stub()
-            @view.setupAuctionDetailView  = sinon.stub()
+            @view.setupZigZag = sinon.stub()
+            @view.setupAuctionDetailView = sinon.stub()
 
           describe '#hasAnyAuctions', ->
             it 'returns true or false if there is auction or not', ->

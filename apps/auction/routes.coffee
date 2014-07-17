@@ -8,14 +8,14 @@ BidderPositions = require '../../collections/bidder_positions.coffee'
 
 registerOrRender = (sale, req, res, next) ->
   req.user.fetchCreditCards
-    error  : res.backboneError
+    error: res.backboneError
     success: (creditCards) ->
       if creditCards.length > 0
         req.user.createBidder
           saleId: sale.get('id')
           success: ->
             return res.redirect sale.registrationSuccessUrl()
-          error  : ->
+          error: ->
             res.backboneError
       else
         order = new Order()
@@ -29,7 +29,7 @@ registerOrRender = (sale, req, res, next) ->
     return res.redirect "/log_in?redirect_uri=/auction-registration/#{req.params.id}"
 
   new Sale(id: req.params.id).fetch
-    error  : res.backboneError
+    error: res.backboneError
     success: (sale) ->
       res.locals.sd.SALE = sale
 
@@ -39,8 +39,8 @@ registerOrRender = (sale, req, res, next) ->
         # If so, redirect back to the feature
         # If not, render the auction registration page
         req.user.checkRegisteredForAuction
-          saleId : sale.get('id')
-          error  : res.backboneError
+          saleId: sale.get('id')
+          error: res.backboneError
           success: (isRegistered) ->
             if isRegistered
               return res.redirect sale.registrationSuccessUrl()

@@ -1,14 +1,14 @@
-_               = require 'underscore'
-benv            = require 'benv'
-Backbone        = require 'backbone'
-sinon           = require 'sinon'
-{ resolve }     = require 'path'
-{ fabricate }   = require 'antigravity'
+_ = require 'underscore'
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+{ resolve } = require 'path'
+{ fabricate } = require 'antigravity'
 
-CurrentUser       = require '../../../../models/current_user'
-SaleArtwork       = require '../../../../models/sale_artwork'
-Sale              = require '../../../../models/sale'
-BidderPositions   = require '../../../../collections/bidder_positions'
+CurrentUser = require '../../../../models/current_user'
+SaleArtwork = require '../../../../models/sale_artwork'
+Sale = require '../../../../models/sale'
+BidderPositions = require '../../../../collections/bidder_positions'
 
 describe 'AuctionDetailView', ->
   before (done) ->
@@ -26,17 +26,17 @@ describe 'AuctionDetailView', ->
     @triggerSpy = sinon.stub()
     AuctionDetailView.__set__ 'mediator', trigger: @triggerSpy
 
-    @saleArtwork  = new SaleArtwork fabricate 'sale_artwork', minimum_next_bid_cents: 500000, reserve_status: 'no_reserve'
-    @auction      = new Sale fabricate 'sale'
+    @saleArtwork = new SaleArtwork fabricate 'sale_artwork', minimum_next_bid_cents: 500000, reserve_status: 'no_reserve'
+    @auction = new Sale fabricate 'sale'
 
     @auction.set 'auctionState', 'open'
 
     @view = new AuctionDetailView(
-      user            : @user = new CurrentUser fabricate 'user'
-      bidderPositions : @bidderPositions = new BidderPositions
-      saleArtwork     : @saleArtwork
-      auction         : @auction
-      el              : @$el = $('<div></div>')
+      user: @user = new CurrentUser fabricate 'user'
+      bidderPositions: @bidderPositions = new BidderPositions
+      saleArtwork: @saleArtwork
+      auction: @auction
+      el: @$el = $('<div></div>')
     ).render()
     done()
 

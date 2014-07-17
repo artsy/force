@@ -1,9 +1,9 @@
-_             = require 'underscore'
+_ = require 'underscore'
 { fabricate } = require 'antigravity'
-sinon         = require 'sinon'
-should        = require 'should'
-Backbone      = require 'backbone'
-Fair          = require '../../models/fair'
+sinon = require 'sinon'
+should = require 'should'
+Backbone = require 'backbone'
+Fair = require '../../models/fair'
 
 describe 'Fair', ->
 

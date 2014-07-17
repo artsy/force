@@ -1,8 +1,8 @@
-_                   = require 'underscore'
-AuctionClockView    = require '../../../../components/auction_clock/view.coffee'
-BidderPositions     = require '../../../../collections/bidder_positions.coffee'
-SaleArtwork         = require '../../../../models/sale_artwork.coffee'
-AuctionDetailView   = require '../auction_detail.coffee'
+_ = require 'underscore'
+AuctionClockView = require '../../../../components/auction_clock/view.coffee'
+BidderPositions = require '../../../../collections/bidder_positions.coffee'
+SaleArtwork = require '../../../../models/sale_artwork.coffee'
+AuctionDetailView = require '../auction_detail.coffee'
 
 module.exports =
   setupAuction: (sale) ->
@@ -17,17 +17,17 @@ module.exports =
 
   setupAuctionClock: ->
     @clock = new AuctionClockView
-      modelName : 'Auction'
-      model     : @auction
-      el        : @$auctionClock = @$('#artwork-auction-clock')
+      modelName: 'Auction'
+      model: @auction
+      el: @$auctionClock = @$('#artwork-auction-clock')
     @$auctionClock.addClass 'is-fade-in'
     @clock.start()
 
   setupSaleArtwork: ->
     @saleArtwork = new SaleArtwork
-      id      : @artwork.id
-      artwork : @artwork
-      sale    : @auction
+      id: @artwork.id
+      artwork: @artwork
+      sale: @auction
     @saleArtwork.fetch()
 
   setupAuctionDetailView: ->
@@ -41,18 +41,18 @@ module.exports =
       # if the artwork is already sold (via 'Buy Now')
       unless @artwork.get 'sold'
         @auctionDetailView = new AuctionDetailView(
-          user            : @currentUser
-          bidderPositions : @bidderPositions
-          saleArtwork     : @saleArtwork
-          auction         : @auction
-          el              : @$('#auction-detail')
+          user: @currentUser
+          bidderPositions: @bidderPositions
+          saleArtwork: @saleArtwork
+          auction: @auction
+          el: @$('#auction-detail')
         ).render()
 
   setupBidderPositions: ->
     return unless @currentUser
     @bidderPositions = new BidderPositions null,
-      saleArtwork : @saleArtwork
-      sale        : @auction
+      saleArtwork: @saleArtwork
+      sale: @auction
     @bidderPositions.fetch()
 
   setupAuctionUser: ->

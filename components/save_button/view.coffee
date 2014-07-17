@@ -1,11 +1,11 @@
-_           = require 'underscore'
-Backbone    = require 'backbone'
-mediator    = require '../../lib/mediator.coffee'
-analytics   = require '../../lib/analytics.coffee'
+_ = require 'underscore'
+Backbone = require 'backbone'
+mediator = require '../../lib/mediator.coffee'
+analytics = require '../../lib/analytics.coffee'
 
 module.exports = class SaveButton extends Backbone.View
   events:
-    'click' : 'toggle'
+    'click': 'toggle'
 
   initialize: (options) ->
     return unless options.saved
@@ -15,8 +15,8 @@ module.exports = class SaveButton extends Backbone.View
     @listenTo @saved, "add:#{@model.id}", @change
     @listenTo @saved, "remove:#{@model.id}", @change
 
-    @analyticsSaveMessage     = options.analyticsSaveMessage or @defaultAnalyticsMessage('Saved')
-    @analyticsUnsaveMessage   = options.analyticsUnsaveMessage or @defaultAnalyticsMessage('Unsaved')
+    @analyticsSaveMessage = options.analyticsSaveMessage or @defaultAnalyticsMessage('Saved')
+    @analyticsUnsaveMessage = options.analyticsUnsaveMessage or @defaultAnalyticsMessage('Unsaved')
 
     @change()
 

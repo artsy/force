@@ -1,14 +1,14 @@
-_               = require 'underscore'
-Backbone        = require 'backbone'
-{ API_URL }   = require('sharify').data
+_ = require 'underscore'
+Backbone = require 'backbone'
+{ API_URL } = require('sharify').data
 
-Artworks                  = require '../../../collections/artworks.coffee'
-ArtworkColumnsView        = require '../../../components/artwork_columns/view.coffee'
-SaleArtworkView           = require '../../../components/artwork_item/views/sale_artwork.coffee'
-trackArtworkImpressions   = require("../../../components/analytics/impression_tracking.coffee").trackArtworkImpressions
+Artworks = require '../../../collections/artworks.coffee'
+ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
+SaleArtworkView = require '../../../components/artwork_item/views/sale_artwork.coffee'
+trackArtworkImpressions = require("../../../components/analytics/impression_tracking.coffee").trackArtworkImpressions
 
-template                = -> require('../templates/sale.jade') arguments...
-artworkColumnsTemplate  = -> require('../../../components/artwork_columns/template.jade') arguments...
+template = -> require('../templates/sale.jade') arguments...
+artworkColumnsTemplate = -> require('../../../components/artwork_columns/template.jade') arguments...
 
 module.exports = class SaleView extends Backbone.View
   initialize: (options) ->
@@ -30,16 +30,16 @@ module.exports = class SaleView extends Backbone.View
   setupSaleArtworkViews: ->
     @saleArtworkViews = @artworks.map (artwork) =>
       new SaleArtworkView
-        artworkCollection : @saved
-        el                : @$(".artwork-item[data-artwork='#{artwork.id}']")
-        model             : artwork
-        sale              : @sale
-        currentUser       : @currentUser
+        artworkCollection: @saved
+        el: @$(".artwork-item[data-artwork='#{artwork.id}']")
+        model: artwork
+        sale: @sale
+        currentUser: @currentUser
 
   render: ->
     @$el.html template(sale: @sale)
     @$('#sale-artwork-columns').html artworkColumnsTemplate
-      artworkColumns  : @artworks.groupByColumnsInOrder()
-      setHeight       : 400
-      displayPurchase : true
-      isAuction       : @sale.isAuction()
+      artworkColumns: @artworks.groupByColumnsInOrder()
+      setHeight: 400
+      displayPurchase: true
+      isAuction: @sale.isAuction()

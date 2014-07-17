@@ -1,7 +1,7 @@
-_         = require 'underscore'
-Backbone  = require 'backbone'
-template  = -> require('./template.jade') arguments...
-Cookies   = require 'cookies-js'
+_ = require 'underscore'
+Backbone = require 'backbone'
+template = -> require('./template.jade') arguments...
+Cookies = require 'cookies-js'
 
 module.exports = class ZigZagBanner extends Backbone.View
   className: 'zig-zag-banner'
@@ -9,7 +9,7 @@ module.exports = class ZigZagBanner extends Backbone.View
   segmentTransitionLength: 300
 
   events:
-    'click .zzb-close' : 'close'
+    'click .zzb-close': 'close'
 
   template: template
 
@@ -37,16 +37,16 @@ module.exports = class ZigZagBanner extends Backbone.View
     @$target.css('position', 'relative') if @$target.css('position') is 'static'
     @$target.append @$el
 
-    @$one     = @$('.zzb-one')
-    @$two     = @$('.zzb-two')
-    @$three   = @$('.zzb-three')
+    @$one = @$('.zzb-one')
+    @$two = @$('.zzb-two')
+    @$three = @$('.zzb-three')
 
     @verticallyCenter()
 
   verticallyCenter: ->
-    existingMargin  = parseInt(@$el.css 'marginTop')
-    offset          = @$target.outerHeight() / 2
-    newMargin       = offset + existingMargin
+    existingMargin = parseInt(@$el.css 'marginTop')
+    offset = @$target.outerHeight() / 2
+    newMargin = offset + existingMargin
 
     @$el.css marginTop: newMargin
 

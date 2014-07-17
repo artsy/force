@@ -1,13 +1,13 @@
-benv           = require 'benv'
-Backbone       = require 'backbone'
-sinon          = require 'sinon'
-Partner        = require '../../../../models/partner.coffee'
-Profile        = require '../../../../models/profile.coffee'
-PartnerShows   = require '../../../../collections/partner_shows.coffee'
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+Partner = require '../../../../models/partner.coffee'
+Profile = require '../../../../models/profile.coffee'
+PartnerShows = require '../../../../collections/partner_shows.coffee'
 PartnerArtists = require '../../../../collections/partner_artists.coffee'
-_              = require 'underscore'
-{ resolve }    = require 'path'
-{ fabricate }  = require 'antigravity'
+_ = require 'underscore'
+{ resolve } = require 'path'
+{ fabricate } = require 'antigravity'
 
 describe 'PartnerOverviewView', ->
 

@@ -1,7 +1,7 @@
-_             = require 'underscore'
+_ = require 'underscore'
 { fabricate } = require 'antigravity'
-should        = require 'should'
-Backbone      = require 'backbone'
+should = require 'should'
+Backbone = require 'backbone'
 PartnerArtist = require '../../models/partner_artist'
 
 describe 'PartnerArtist', ->

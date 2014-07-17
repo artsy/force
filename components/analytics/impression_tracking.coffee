@@ -1,5 +1,5 @@
-_         = require 'underscore'
-sd        = require('sharify').data
+_ = require 'underscore'
+sd = require('sharify').data
 analytics = require '../../lib/analytics.coffee'
 
 # very basic impression tracking that tracks all visible artworks when the $list is scrolled to

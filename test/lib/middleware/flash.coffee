@@ -1,12 +1,12 @@
-_                 = require 'underscore'
-sinon             = require 'sinon'
-flashMiddleware   = require '../../../lib/middleware/flash'
+_ = require 'underscore'
+sinon = require 'sinon'
+flashMiddleware = require '../../../lib/middleware/flash'
 
 describe 'flashMiddleware', ->
   beforeEach ->
-    @req    = flash: sinon.stub().returns(['my', 'my', 'metrocard'])
-    @res    = locals: { sd: {} }, render: (@renderStub = sinon.stub())
-    @next   = sinon.stub()
+    @req = flash: sinon.stub().returns(['my', 'my', 'metrocard'])
+    @res = locals: { sd: {} }, render: (@renderStub = sinon.stub())
+    @next = sinon.stub()
 
   it 'monkey patches render to inject flash messages into the locals', ->
     @res.render()

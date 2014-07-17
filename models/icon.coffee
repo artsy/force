@@ -1,7 +1,7 @@
 Backbone = require 'backbone'
-_        = require 'underscore'
-sd       = require('sharify').data
-Icon     = require './icon.coffee'
+_ = require 'underscore'
+sd = require('sharify').data
+Icon = require './icon.coffee'
 { Image } = require 'artsy-backbone-mixins'
 
 module.exports = class Icon extends Backbone.Model
@@ -10,7 +10,7 @@ module.exports = class Icon extends Backbone.Model
   @DefaultUserIconUrl: "/images/user_profile.png"
 
   # Upload validation constraints
-  maxFileSize    : 3000000 # 3MB
+  maxFileSize: 3000000 # 3MB
   acceptFileTypes: /(\.|\/)(gif|jpe?g|png|tiff)$/i
 
   url: ->

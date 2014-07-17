@@ -1,12 +1,12 @@
-_               = require 'underscore'
-benv            = require 'benv'
-Backbone        = require 'backbone'
-sinon           = require 'sinon'
-{ resolve }     = require 'path'
-{ fabricate }   = require 'antigravity'
+_ = require 'underscore'
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+{ resolve } = require 'path'
+{ fabricate } = require 'antigravity'
 
-ViewInRoomView  = benv.requireWithJadeify resolve(__dirname, '../../client/view-in-room'), ['template']
-Artwork         = require '../../../../models/artwork'
+ViewInRoomView = benv.requireWithJadeify resolve(__dirname, '../../client/view-in-room'), ['template']
+Artwork = require '../../../../models/artwork'
 
 describe 'ViewInRoomView', ->
   before (done) ->
@@ -21,9 +21,9 @@ describe 'ViewInRoomView', ->
     benv.teardown()
 
   beforeEach (done) ->
-    @artwork    = new Artwork(fabricate 'artwork', width: 20)
-    $container  = $('<div></div>')
-    $img        = $('<img>').
+    @artwork = new Artwork(fabricate 'artwork', width: 20)
+    $container = $('<div></div>')
+    $img = $('<img>').
       width(200).height(200).
       attr('src', 'foobar.jpg').
       css(top: '200px', left: '200px')

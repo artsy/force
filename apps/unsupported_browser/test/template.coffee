@@ -1,9 +1,9 @@
-_        = require 'underscore'
-jade     = require 'jade'
-path     = require 'path'
-fs       = require 'fs'
-sd       = require('sharify').data
-cheerio  = require 'cheerio'
+_ = require 'underscore'
+jade = require 'jade'
+path = require 'path'
+fs = require 'fs'
+sd = require('sharify').data
+cheerio = require 'cheerio'
 uaParser = require 'ua-parser'
 
 render = ->

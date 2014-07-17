@@ -1,13 +1,13 @@
-benv            = require 'benv'
-_               = require 'underscore'
-jade            = require 'jade'
-path            = require 'path'
-fs              = require 'fs'
-Backbone        = require 'backbone'
-{ fabricate }   = require 'antigravity'
-Search          = require '../../../collections/search'
-SearchResult    = require '../../../models/search_result'
-sinon           = require 'sinon'
+benv = require 'benv'
+_ = require 'underscore'
+jade = require 'jade'
+path = require 'path'
+fs = require 'fs'
+Backbone = require 'backbone'
+{ fabricate } = require 'antigravity'
+Search = require '../../../collections/search'
+SearchResult = require '../../../models/search_result'
+sinon = require 'sinon'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../#{templateName}.jade"

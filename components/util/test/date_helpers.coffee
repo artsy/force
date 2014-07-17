@@ -1,4 +1,4 @@
-should      = require 'should'
+should = require 'should'
 DateHelpers = require '../date_helpers'
 
 describe 'DateHelpers', ->

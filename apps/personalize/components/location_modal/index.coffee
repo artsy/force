@@ -1,6 +1,6 @@
-_                   = require 'underscore'
-ModalView           = require '../../../../components/modal/view.coffee'
-LocationSearchView  = require '../../../../components/location_search/index.coffee'
+_ = require 'underscore'
+ModalView = require '../../../../components/modal/view.coffee'
+LocationSearchView = require '../../../../components/location_search/index.coffee'
 
 template = -> require('./template.jade') arguments...
 
@@ -11,8 +11,8 @@ module.exports = class LocationModalView extends ModalView
     template arguments...
 
   events: -> _.extend super,
-    'submit form'  : 'submit'
-    'click button' : 'submit'
+    'submit form': 'submit'
+    'click button': 'submit'
 
   initialize: (options = {}) ->
     { @user } = options

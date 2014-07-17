@@ -1,8 +1,8 @@
-_               = require 'underscore'
-Backbone        = require 'backbone'
-AuctionResults  = require '../../collections/auction_lots.coffee'
-CurrentUser     = require '../../models/current_user.coffee'
-mediator        = require '../../lib/mediator.coffee'
+_ = require 'underscore'
+Backbone = require 'backbone'
+AuctionResults = require '../../collections/auction_lots.coffee'
+CurrentUser = require '../../models/current_user.coffee'
+mediator = require '../../lib/mediator.coffee'
 
 template = -> require('./template.jade') arguments...
 
@@ -10,7 +10,7 @@ module.exports = class RelatedAuctionResultsView extends Backbone.View
   template: template
 
   events:
-    'click .related-auction-result' : 'clickResult'
+    'click .related-auction-result': 'clickResult'
 
   initialize: (options = {}) ->
     { @artistId, @amount } = _.defaults(options, amount: 4)
@@ -37,7 +37,7 @@ module.exports = class RelatedAuctionResultsView extends Backbone.View
 
     @$el.
       html(template
-        user           : @user
-        auctionResults : results
-        artistId       : @artistId
+        user: @user
+        auctionResults: results
+        artistId: @artistId
       ).addClass 'is-fade-in'

@@ -1,6 +1,6 @@
-_             = require 'underscore'
-Backbone      = require 'backbone'
-sd            = require('sharify').data
+_ = require 'underscore'
+Backbone = require 'backbone'
+sd = require('sharify').data
 
 module.exports = class Shortcut extends Backbone.Model
 

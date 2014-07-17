@@ -1,22 +1,22 @@
-_                       = require 'underscore'
-Backbone                = require 'backbone'
-Artworks                = require '../../../models/artwork.coffee'
-sd                      = require('sharify').data
-ShareView               = require '../../share/view.coffee'
-AcquireArtwork          = require('../../acquire/view.coffee').acquireArtwork
-analytics               = require('../../../lib/analytics.coffee')
-SaveControls            = require '../../artwork_item/save_controls.coffee'
-ContactPartnerView      = require '../../contact/contact_partner.coffee'
-artworkColumns          = -> require('../../artwork_columns/template.jade') arguments...
-Artwork                 = require('../../../models/artwork.coffee')
+_ = require 'underscore'
+Backbone = require 'backbone'
+Artworks = require '../../../models/artwork.coffee'
+sd = require('sharify').data
+ShareView = require '../../share/view.coffee'
+AcquireArtwork = require('../../acquire/view.coffee').acquireArtwork
+analytics = require('../../../lib/analytics.coffee')
+SaveControls = require '../../artwork_item/save_controls.coffee'
+ContactPartnerView = require '../../contact/contact_partner.coffee'
+artworkColumns = -> require('../../artwork_columns/template.jade') arguments...
+Artwork = require('../../../models/artwork.coffee')
 trackArtworkImpressions = require("../../analytics/impression_tracking.coffee").trackArtworkImpressions
 
 module.exports.FeedItemView = class FeedItemView extends Backbone.View
 
   events:
-    'click .see-more'                    : 'fetchMoreArtworks'
-    "click .artwork-item-buy"            : "acquire"
-    "click .artwork-item-contact-seller" : "contactSeller"
+    'click .see-more': 'fetchMoreArtworks'
+    "click .artwork-item-buy": "acquire"
+    "click .artwork-item-contact-seller": "contactSeller"
 
   artworksPage: 1
   artworksPageSize: 8
@@ -52,8 +52,8 @@ module.exports.FeedItemView = class FeedItemView extends Backbone.View
         overlay = @$(".artwork-item[data-artwork='#{artwork.get('id')}']").find('.overlay-container')
         if overlay.length
           new SaveControls
-            el               : overlay
-            model            : artwork
+            el: overlay
+            model: artwork
             artworkCollection: @artworkCollection
 
     if @artworkCollection

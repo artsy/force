@@ -1,6 +1,6 @@
-Backbone  = require 'backbone'
-track     = require('../../../../lib/analytics.coffee').track
-device    = require '../../../../components/util/device.coffee'
+Backbone = require 'backbone'
+track = require('../../../../lib/analytics.coffee').track
+device = require '../../../../components/util/device.coffee'
 
 module.exports = class StepView extends Backbone.View
   className: 'personalize-frame'

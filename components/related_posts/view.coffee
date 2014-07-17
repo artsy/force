@@ -1,19 +1,19 @@
-_               = require 'underscore'
-sd              = require('sharify').data
-Backbone        = require 'backbone'
-Post            = require '../../models/post.coffee'
+_ = require 'underscore'
+sd = require('sharify').data
+Backbone = require 'backbone'
+Post = require '../../models/post.coffee'
 AddToPostButton = require './add_to_post_button.coffee'
 
 templates =
-  empty    : -> require('./templates/empty.jade') arguments...
-  list     : -> require('./templates/list.jade') arguments...
-  grid     : -> require('./templates/grid.jade') arguments...
-  extended : -> require('./templates/extended.jade') arguments...
-  vertical : -> require('./templates/vertical.jade') arguments...
+  empty: -> require('./templates/empty.jade') arguments...
+  list: -> require('./templates/list.jade') arguments...
+  grid: -> require('./templates/grid.jade') arguments...
+  extended: -> require('./templates/extended.jade') arguments...
+  vertical: -> require('./templates/vertical.jade') arguments...
 
 module.exports = class RelatedPostsView extends Backbone.View
   events:
-    'click .related-posts-show-all'   : 'showAll'
+    'click .related-posts-show-all': 'showAll'
 
   initialize: (options = {}) ->
     { @model, @numToShow, @modelName, @mode, @canBeEmpty } = _.defaults(options, mode: 'list', canBeEmpty: true)
@@ -31,15 +31,15 @@ module.exports = class RelatedPostsView extends Backbone.View
 
   render: ->
     templateData =
-      model      : @model
-      modelName  : @modelName
-      mode       : @mode
-      entityName : @entityName()
+      model: @model
+      modelName: @modelName
+      mode: @mode
+      entityName: @entityName()
 
     if @model.relatedPosts.length
       @$el.html templates[@mode] _.extend templateData,
-        posts      : @model.relatedPosts.first @numToShow
-        remaining  : Math.max (@model.relatedPosts.length - @numToShow), 0
+        posts: @model.relatedPosts.first @numToShow
+        remaining: Math.max (@model.relatedPosts.length - @numToShow), 0
     else
       if @canBeEmpty
         @$el.html templates.empty templateData

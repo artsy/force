@@ -1,5 +1,5 @@
-sinon   = require 'sinon'
-routes  = require '../routes'
+sinon = require 'sinon'
+routes = require '../routes'
 Backbone = require 'backbone'
 
 describe 'Galleries routes', ->

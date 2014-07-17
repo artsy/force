@@ -1,18 +1,18 @@
-_                 = require 'underscore'
-benv              = require 'benv'
-Backbone          = require 'backbone'
-sinon             = require 'sinon'
-PersonalizeState  = require '../../client/state'
-CurrentUser       = require '../../../../models/current_user.coffee'
-{ fabricate }     = require 'antigravity'
-{ resolve }       = require 'path'
+_ = require 'underscore'
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+PersonalizeState = require '../../client/state'
+CurrentUser = require '../../../../models/current_user.coffee'
+{ fabricate } = require 'antigravity'
+{ resolve } = require 'path'
 
 describe 'LocationView', ->
   before (done) ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
-      Backbone.$      = $
-      @LocationView   = benv.requireWithJadeify resolve(__dirname, '../../client/views/location'), ['template']
+      Backbone.$ = $
+      @LocationView = benv.requireWithJadeify resolve(__dirname, '../../client/views/location'), ['template']
       @LocationView.__set__ 'LocationSearchView', Backbone.View
       done()
 
@@ -20,10 +20,10 @@ describe 'LocationView', ->
     benv.teardown()
 
   beforeEach ->
-    @location   = require '../fixtures/location.coffee'
-    @user       = new CurrentUser fabricate 'user'
-    @state      = new PersonalizeState user: @user
-    @view       = new @LocationView(state: @state, user: @user)
+    @location = require '../fixtures/location.coffee'
+    @user = new CurrentUser fabricate 'user'
+    @state = new PersonalizeState user: @user
+    @view = new @LocationView(state: @state, user: @user)
     @view.render()
 
   describe '#update', ->

@@ -1,9 +1,9 @@
-Q             = require 'q'
-_             = require 'underscore'
-sd            = require('sharify').data
-Backbone      = require 'backbone'
-FeaturedLink  = require '../models/featured_link.coffee'
-OrderedSet    = require '../models/ordered_set.coffee'
+Q = require 'q'
+_ = require 'underscore'
+sd = require('sharify').data
+Backbone = require 'backbone'
+FeaturedLink = require '../models/featured_link.coffee'
+OrderedSet = require '../models/ordered_set.coffee'
 
 class OrderedSets extends Backbone.Collection
   url: "#{sd.API_URL}/api/v1/sets"
@@ -23,8 +23,8 @@ class OrderedSets extends Backbone.Collection
   # This could simply be replaced with:
   # new OrderedSets(owner_type: 'your_owner_type', owner_id: 'your_owner_id', sort: 'key')
   fetchItemsByOwner: (ownerType, ownerId, cache=false) ->
-    dfd  = Q.defer()
-    promises  = [
+    dfd = Q.defer()
+    promises = [
       @fetch
         url: "#{sd.API_URL}/api/v1/sets?owner_type=#{ownerType}&owner_id=#{ownerId}&sort=key"
         cache: cache

@@ -1,11 +1,11 @@
-_               = require 'underscore'
-benv            = require 'benv'
-sinon           = require 'sinon'
-Backbone        = require 'backbone'
-rewire          = require 'rewire'
-{ fabricate }   = require 'antigravity'
-{ resolve }     = require 'path'
-Artwork         = require '../../../models/artwork'
+_ = require 'underscore'
+benv = require 'benv'
+sinon = require 'sinon'
+Backbone = require 'backbone'
+rewire = require 'rewire'
+{ fabricate } = require 'antigravity'
+{ resolve } = require 'path'
+Artwork = require '../../../models/artwork'
 
 describe 'Inquiry', ->
   before (done) ->
@@ -19,8 +19,8 @@ describe 'Inquiry', ->
 
   beforeEach (done) ->
     sinon.stub Backbone, 'sync'
-    @artwork  = new Artwork fabricate 'artwork'
-    @partner  = fabricate 'partner'
+    @artwork = new Artwork fabricate 'artwork'
+    @partner = fabricate 'partner'
     benv.render resolve(__dirname, '../templates/index.jade'), {}, =>
       Inquiry = benv.requireWithJadeify(resolve(__dirname, '../inquiry'), ['formTemplate', 'headerTemplate'])
       @analytics = Inquiry.__get__('analytics')

@@ -1,9 +1,9 @@
-_               = require 'underscore'
-benv            = require 'benv'
-Backbone        = require 'backbone'
-sinon           = require 'sinon'
-{ resolve }     = require 'path'
-{ fabricate }   = require 'antigravity'
+_ = require 'underscore'
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+{ resolve } = require 'path'
+{ fabricate } = require 'antigravity'
 
 RelatedAuctionResultsView = benv.requireWithJadeify resolve(__dirname, '../view.coffee'), ['template']
 
@@ -21,8 +21,8 @@ describe 'RelatedAuctionResultsView', ->
     sinon.stub Backbone, 'sync'
     RelatedAuctionResultsView.__set__ 'mediator', { trigger: @triggerStub = sinon.stub() }
     @view = new RelatedAuctionResultsView
-      amount   : 4
-      artistId : 'foo-bar'
+      amount: 4
+      artistId: 'foo-bar'
     Backbone.sync.args[0][2].success [
       fabricate 'auction_result'
       fabricate 'auction_result'

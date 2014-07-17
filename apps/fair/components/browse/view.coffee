@@ -14,7 +14,7 @@ module.exports = class FairBrowseView extends Backbone.View
     _.extend @, options
     @filterArtworksView = new FilterArtworksView
       el: $ '.fair-page-content'
-      artworksUrl : "#{API_URL}/api/v1/search/filtered/fair/#{@fair.get 'id'}"
+      artworksUrl: "#{API_URL}/api/v1/search/filtered/fair/#{@fair.get 'id'}"
       countsUrl: "#{API_URL}/api/v1/search/filtered/fair/#{@fair.get 'id'}/suggest"
       urlRoot: "#{@profile.id}/browse"
     @artworkParams = @filterArtworksView.params
@@ -77,10 +77,10 @@ module.exports = class FairBrowseView extends Backbone.View
       .addClass('is-active')
 
   events:
-    'click #fair-filter-all-artists' : 'artistsAZ'
-    'click #fair-booths-az-as-list'  : 'exhibitorsAZ'
-    'click #fair-booths-as-grid'     : 'exhibitorsGrid'
-    'click'                          : 'triggerReflow'
+    'click #fair-filter-all-artists': 'artistsAZ'
+    'click #fair-booths-az-as-list': 'exhibitorsAZ'
+    'click #fair-booths-as-grid': 'exhibitorsGrid'
+    'click': 'triggerReflow'
 
   artistsAZ: ->
     @router.navigate "#{@profile.get 'id'}/browse/artists"

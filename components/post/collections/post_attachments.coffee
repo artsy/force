@@ -1,9 +1,9 @@
-_           = require 'underscore'
-Backbone    = require 'backbone'
+_ = require 'underscore'
+Backbone = require 'backbone'
 PostArtwork = require '../models/post_artwork.coffee'
-PostLink    = require '../models/post_link.coffee'
-PostImage   = require '../models/post_image.coffee'
-PostEmbed   = require '../models/post_embed.coffee'
+PostLink = require '../models/post_link.coffee'
+PostImage = require '../models/post_image.coffee'
+PostEmbed = require '../models/post_embed.coffee'
 
 module.exports = class PostAttachments extends Backbone.Collection
 

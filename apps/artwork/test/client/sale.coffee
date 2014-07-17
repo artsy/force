@@ -1,12 +1,12 @@
-benv            = require 'benv'
-Backbone        = require 'backbone'
-sinon           = require 'sinon'
-{ resolve }     = require 'path'
-{ fabricate }   = require 'antigravity'
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+{ resolve } = require 'path'
+{ fabricate } = require 'antigravity'
 
-Artworks  = require '../../../../collections/artworks'
-Artwork   = require '../../../../models/artwork'
-Sale      = require '../../../../models/sale'
+Artworks = require '../../../../collections/artworks'
+Artwork = require '../../../../models/artwork'
+Sale = require '../../../../models/sale'
 
 describe 'SaleView', ->
   before (done) ->
@@ -22,8 +22,8 @@ describe 'SaleView', ->
     sinon.stub(Backbone, 'sync')
     SaleView = benv.requireWithJadeify resolve(__dirname, '../../client/sale'), ['template', 'artworkColumnsTemplate']
 
-    @artwork  = new Artwork fabricate 'artwork'
-    @sale     = new Sale(fabricate 'sale')
+    @artwork = new Artwork fabricate 'artwork'
+    @sale = new Sale(fabricate 'sale')
 
     @sale.fetchArtworks = sinon.stub().yieldsTo 'success', new Backbone.Collection
 
@@ -50,8 +50,8 @@ describe 'SaleView', ->
       saleArtwork = new Backbone.Model(fabricate 'sale_artwork')
       # A bug with the comparator means you can't add to this collection (FWIW)
       # So we reset it completely here
-      @view.artworks  = Artworks.fromSale [saleArtwork]
-      artwork         = @view.artworks.first()
+      @view.artworks = Artworks.fromSale [saleArtwork]
+      artwork = @view.artworks.first()
       @view.render()
 
       # Various content assertions

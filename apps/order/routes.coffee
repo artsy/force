@@ -1,4 +1,4 @@
-_     = require 'underscore'
+_ = require 'underscore'
 Order = require '../../models/order.coffee'
 
 fetchPendingOrder = (req, res, options) ->

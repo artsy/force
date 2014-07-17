@@ -1,8 +1,8 @@
-_                   = require 'underscore'
-StepView            = require './step.coffee'
-LocationSearchView  = require '../../../../components/location_search/index.coffee'
-GeoFormatter        = require 'geoformatter'
-template            = -> require('../../templates/location.jade') arguments...
+_ = require 'underscore'
+StepView = require './step.coffee'
+LocationSearchView = require '../../../../components/location_search/index.coffee'
+GeoFormatter = require 'geoformatter'
+template = -> require('../../templates/location.jade') arguments...
 
 module.exports = class LocationView extends StepView
   events:

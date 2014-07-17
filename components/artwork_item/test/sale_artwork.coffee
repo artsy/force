@@ -1,12 +1,12 @@
-_                 = require 'underscore'
-benv              = require 'benv'
-sinon             = require 'sinon'
-Backbone          = require 'backbone'
-{ fabricate }     = require 'antigravity'
-{ resolve }       = require 'path'
-Artwork           = require '../../../models/artwork'
-Sale              = require '../../../models/sale'
-CurrentUser       = require '../../../models/current_user'
+_ = require 'underscore'
+benv = require 'benv'
+sinon = require 'sinon'
+Backbone = require 'backbone'
+{ fabricate } = require 'antigravity'
+{ resolve } = require 'path'
+Artwork = require '../../../models/artwork'
+Sale = require '../../../models/sale'
+CurrentUser = require '../../../models/current_user'
 
 describe 'SaleArtworks', ->
   beforeEach (done) ->
@@ -14,14 +14,14 @@ describe 'SaleArtworks', ->
       benv.expose $: benv.require 'jquery'
       Backbone.$ = $
 
-      @artwork  = new Artwork fabricate 'artwork', acquireable: true, sale_artwork: fabricate('sale_artwork')
-      @sale     = new Sale fabricate 'sale', is_auction: true
+      @artwork = new Artwork fabricate 'artwork', acquireable: true, sale_artwork: fabricate('sale_artwork')
+      @sale = new Sale fabricate 'sale', is_auction: true
 
       benv.render resolve(__dirname, '../templates/artwork.jade'), { artwork: @artwork, displayPurchase: true }, =>
         SaleArtworkView = benv.require resolve(__dirname, '../views/sale_artwork.coffee')
         @view = new SaleArtworkView
-          el    : $('body')
-          model : @artwork
+          el: $('body')
+          model: @artwork
         done()
 
   afterEach ->
