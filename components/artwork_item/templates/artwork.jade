@@ -62,7 +62,7 @@ figure.artwork-item( data-artwork=artwork.get('id') )
     if displayBuyNowPrice || displayBidStatus
       .artwork-item-sale-metadata
         if artwork.get('sold')
-          .artwork-item-sale-price
+          .artwork-item-buy-now-price
             != artwork.saleMessage()
         else
           if displayBidStatus
@@ -73,7 +73,7 @@ figure.artwork-item( data-artwork=artwork.get('id') )
                 | &nbsp;(#{saleArtwork.bidCount()})
 
           if displayBuyNowPrice
-            .artwork-item-sale-price
+            .artwork-item-buy-now-price
               | Buy Now Price:
               = ' '
               != artwork.saleMessage()
