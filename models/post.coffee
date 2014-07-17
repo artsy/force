@@ -1,16 +1,16 @@
-_                   = require 'underscore'
-Backbone            = require 'backbone'
-sd                  = require('sharify').data
-moment              = require 'moment'
-Profile             = require './profile.coffee'
-Artwork             = require './artwork.coffee'
-Artists             = require '../collections/artists.coffee'
-Artworks            = require '../collections/artworks.coffee'
-AdditionalImage     = require '../models/additional_image.coffee'
-Attachments         = require '../components/post/collections/post_attachments.coffee'
-Reposts             = require '../components/post/collections/reposts.coffee'
-{ smartTruncate }   = require '../components/util/string.coffee'
-{ compactObject }   = require './mixins/compact_object.coffee'
+_ = require 'underscore'
+Backbone = require 'backbone'
+sd = require('sharify').data
+moment = require 'moment'
+Profile = require './profile.coffee'
+Artwork = require './artwork.coffee'
+Artists = require '../collections/artists.coffee'
+Artworks = require '../collections/artworks.coffee'
+AdditionalImage = require '../models/additional_image.coffee'
+Attachments = require '../components/post/collections/post_attachments.coffee'
+Reposts = require '../components/post/collections/reposts.coffee'
+{ smartTruncate } = require '../components/util/string.coffee'
+{ compactObject } = require './mixins/compact_object.coffee'
 
 _.mixin require 'underscore.string'
 
@@ -26,8 +26,8 @@ module.exports = class Post extends Backbone.Model
   # continue pulling in second paragraph.
   # Cut text with ellipsis at 385 chars.
   extendedSummary: ->
-    paragraphMin  = 210
-    maxLimit      = 385
+    paragraphMin = 210
+    maxLimit = 385
 
     firstParagraph = _.stripTags _.first(@get('body').split '</p>')
     summary = if firstParagraph.length < paragraphMin
@@ -91,8 +91,8 @@ module.exports = class Post extends Backbone.Model
     if @attachments().length
       src = _.first(@attachments()).imageSrc()
       if src
-        imageUrlFor : -> src
-        imageUrl    : -> src
+        imageUrlFor: -> src
+        imageUrl: -> src
 
   artworks: ->
     new Artworks(@get('attachments')
@@ -207,14 +207,14 @@ module.exports = class Post extends Backbone.Model
       artists = new Backbone.Collection()
       artists.fetch
         url: "#{@url()}/features/artists"
-        success: (artists)  =>
+        success: (artists) =>
           @set('feature_artists', artists)
           callback?(artists)
 
   toJSONLD: ->
     compactObject {
-      "@context" : "http://schema.org"
-      "@type" : "Article"
+      "@context": "http://schema.org"
+      "@type": "Article"
       image: @get('shareable_image_url')
       title: @titleOrBody(100)
       description: smartTruncate(@get('summary'), 200)

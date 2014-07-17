@@ -1,9 +1,9 @@
-_               = require 'underscore'
-sinon           = require 'sinon'
-Backbone        = require 'backbone'
-rewire          = require 'rewire'
-routes          = rewire '../routes'
-{ fabricate }   = require 'antigravity'
+_ = require 'underscore'
+sinon = require 'sinon'
+Backbone = require 'backbone'
+rewire = require 'rewire'
+routes = rewire '../routes'
+{ fabricate } = require 'antigravity'
 
 Q = require 'q'
 totalCount = sinon.stub()
@@ -19,8 +19,8 @@ describe 'Auction results routes', ->
 
   describe '#detail', ->
     beforeEach ->
-      @req  = params: artist_id: 'andy-foobar', id: 'a-lot'
-      @res  = status: sinon.stub(), render: sinon.stub(), locals: artsyXappToken: 'token', sd: {}
+      @req = params: artist_id: 'andy-foobar', id: 'a-lot'
+      @res = status: sinon.stub(), render: sinon.stub(), locals: artsyXappToken: 'token', sd: {}
       @next = sinon.stub()
 
     it 'makes the appropriate requests', (done) ->

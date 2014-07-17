@@ -1,8 +1,8 @@
-_   = require 'underscore'
-sd  = require('sharify').data
+_ = require 'underscore'
+sd = require('sharify').data
 
-ModalView         = require '../modal/view.coffee'
-ShareButtonsView  = require './view.coffee'
+ModalView = require '../modal/view.coffee'
+ShareButtonsView = require './view.coffee'
 
 template = -> require('./modal.jade') arguments...
 

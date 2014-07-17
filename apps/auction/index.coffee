@@ -3,7 +3,7 @@
 #
 
 express = require 'express'
-routes  = require './routes'
+routes = require './routes'
 
 app = module.exports = express()
 app.set 'views', __dirname + '/templates'

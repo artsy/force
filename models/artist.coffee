@@ -1,10 +1,10 @@
-_             = require 'underscore'
-Backbone      = require 'backbone'
-sd            = require('sharify').data
-Artworks      = require '../collections/artworks.coffee'
-{ Markdown }  = require 'artsy-backbone-mixins'
-{ Image }     = require 'artsy-backbone-mixins'
-{ smartTruncate }     = require '../components/util/string.coffee'
+_ = require 'underscore'
+Backbone = require 'backbone'
+sd = require('sharify').data
+Artworks = require '../collections/artworks.coffee'
+{ Markdown } = require 'artsy-backbone-mixins'
+{ Image } = require 'artsy-backbone-mixins'
+{ smartTruncate } = require '../components/util/string.coffee'
 { SECURE_IMAGES_URL } = require('sharify').data
 { compactObject } = require './mixins/compact_object.coffee'
 
@@ -14,8 +14,8 @@ module.exports = class Artist extends Backbone.Model
   _.extend @prototype, Image(SECURE_IMAGES_URL)
 
   sortCriteriaForArtworks:
-    ''               : 'Relevance'
-    '-published_at'  : 'Recently Added'
+    '': 'Relevance'
+    '-published_at': 'Recently Added'
 
   validSort: (sort) ->
     _.contains(_.keys(@sortCriteriaForArtworks), sort)
@@ -96,8 +96,8 @@ module.exports = class Artist extends Backbone.Model
   #
   # @return {String}
   displayAvailableWorks: ->
-    work    = (n) -> if n > 1 then 'works' else 'work'
-    string  = (n, kind) -> "#{n} #{kind} #{work(n)}" if n
+    work = (n) -> if n > 1 then 'works' else 'work'
+    string = (n, kind) -> "#{n} #{kind} #{work(n)}" if n
 
     _.compact([
       string(@get('forsale_artworks_count'), 'available')
@@ -106,16 +106,16 @@ module.exports = class Artist extends Backbone.Model
 
   toJSONLDShort: ->
     compactObject {
-      "@type" : "Person"
-      image   : @imageUrl('large')
-      name    : @displayName()
-      sameAs  : "#{sd.APP_URL}#{@href()}"
+      "@type": "Person"
+      image: @imageUrl('large')
+      name: @displayName()
+      sameAs: "#{sd.APP_URL}#{@href()}"
     }
 
   toJSONLD: ->
     compactObject {
-      "@context" : "http://schema.org"
-      "@type" : "Person"
+      "@context": "http://schema.org"
+      "@type": "Person"
       image: @imageUrl('large')
       name: @displayName()
       url: "#{sd.APP_URL}#{@href()}"

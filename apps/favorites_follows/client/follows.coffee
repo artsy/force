@@ -1,4 +1,4 @@
-{ FollowsView }   = require '../../../components/favorites/client/follows.coffee'
+{ FollowsView } = require '../../../components/favorites/client/follows.coffee'
 
 module.exports.init = ->
   new FollowsView

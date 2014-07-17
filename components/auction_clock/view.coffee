@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-moment   = require 'moment'
+moment = require 'moment'
 
 UNIT_MAP =
   'days': 'days'

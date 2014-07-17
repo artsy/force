@@ -1,21 +1,21 @@
-_                       = require 'underscore'
-Backbone                = require 'backbone'
-sd                      = require('sharify').data
-Post                    = require '../../../models/post.coffee'
-Profile                 = require '../../../models/profile.coffee'
-CurrentUser             = require '../../../models/current_user.coffee'
-FollowProfiles          = require '../../../collections/follow_profiles.coffee'
-FollowProfileButton     = require '../../../components/partner_buttons/follow_profile.coffee'
-FeedItem                = require '../../../components/feed/models/feed_item.coffee'
-FeedItems               = require '../../../components/feed/collections/feed_items.coffee'
-PoplockitFeed           = require('../../../components/feed/client/poplockit_feed.coffee')
-OrderedSets             = require '../../../collections/ordered_sets.coffee'
-FeaturedPosts           = require './featured_posts.coffee'
-RelatedArtists          = require './related_artists.coffee'
+_ = require 'underscore'
+Backbone = require 'backbone'
+sd = require('sharify').data
+Post = require '../../../models/post.coffee'
+Profile = require '../../../models/profile.coffee'
+CurrentUser = require '../../../models/current_user.coffee'
+FollowProfiles = require '../../../collections/follow_profiles.coffee'
+FollowProfileButton = require '../../../components/partner_buttons/follow_profile.coffee'
+FeedItem = require '../../../components/feed/models/feed_item.coffee'
+FeedItems = require '../../../components/feed/collections/feed_items.coffee'
+PoplockitFeed = require('../../../components/feed/client/poplockit_feed.coffee')
+OrderedSets = require '../../../collections/ordered_sets.coffee'
+FeaturedPosts = require './featured_posts.coffee'
+RelatedArtists = require './related_artists.coffee'
 
 module.exports = class PostView extends Backbone.View
 
-  pageSize   : 10
+  pageSize: 10
 
   initialize: (options) ->
     @$window = $(window)
@@ -54,26 +54,26 @@ module.exports = class PostView extends Backbone.View
     items.add feedItem
     items.doneFetching = true
     new PoplockitFeed
-      limitPostBodyHeight : false
-      feedItems           : items
-      el                  : @$('.feed')
+      limitPostBodyHeight: false
+      feedItems: items
+      el: @$('.feed')
 
   renderFeaturedPosts: ->
     @featuredPosts = new FeaturedPosts
-      el          : @$('.post-featured-posts')
-      feed        : @feed
-      model       : @model
-      pageSize    : @pageSize
+      el: @$('.post-featured-posts')
+      feed: @feed
+      model: @model
+      pageSize: @pageSize
 
   renderRelatedArtists: ->
     @relatedArtists = new RelatedArtists
-      el         : @$('.post-related-artists')
-      model      : @model
-      postSize   : @pageSize
-      currentUser : @currentUser
+      el: @$('.post-related-artists')
+      model: @model
+      postSize: @pageSize
+      currentUser: @currentUser
 
 module.exports.init = ->
   new PostView
     profile: new Profile sd.PROFILE
-    model  : new Post sd.POST
-    el     : $('#post')
+    model: new Post sd.POST
+    el: $('#post')

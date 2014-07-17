@@ -1,7 +1,7 @@
-_               = require 'underscore'
-Backbone        = require 'backbone'
-{ Image }       = require 'artsy-backbone-mixins'
-{ Dimensions }  = require 'artsy-backbone-mixins'
+_ = require 'underscore'
+Backbone = require 'backbone'
+{ Image } = require 'artsy-backbone-mixins'
+{ Dimensions } = require 'artsy-backbone-mixins'
 
 { API_URL, SECURE_IMAGES_URL } = require('sharify').data
 
@@ -34,7 +34,7 @@ module.exports = class AuctionLot extends Backbone.Model
   #
   # @return {String}
   toPageTitle: (artist) ->
-    titleAndName  = "\"#{@get('title') or 'Untitled'}\""
+    titleAndName = "\"#{@get('title') or 'Untitled'}\""
     titleAndName += " (#{@get('dates_text')})" if @get('dates_text')
     titleAndName += " by #{artist?.get('name')}" if artist?.get('name')
     organizationAndDate = @get('organization')

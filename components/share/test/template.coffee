@@ -1,8 +1,8 @@
-_     = require 'underscore'
-jade  = require 'jade'
-path  = require 'path'
-fs    = require 'fs'
-benv  = require 'benv'
+_ = require 'underscore'
+jade = require 'jade'
+path = require 'path'
+fs = require 'fs'
+benv = require 'benv'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "#{templateName}.jade"

@@ -1,5 +1,5 @@
-Q         = require 'q'
-request   = require 'superagent'
+Q = require 'q'
+request = require 'superagent'
 
 # Makes a HEAD request,
 # ensures the total_count param is set,

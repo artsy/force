@@ -1,11 +1,11 @@
-_             = require 'underscore'
-sd            = require('sharify').data
-Backbone      = require 'backbone'
-Partner       = require '../../../models/partner.coffee'
-PartnerLocations  = require '../../../collections/partner_locations.coffee'
-template          = -> require('../templates/contact.jade') arguments...
-locationTemplate  = -> require('../templates/location.jade') arguments...
-contactTemplate   = -> require('../templates/contact_info.jade') arguments...
+_ = require 'underscore'
+sd = require('sharify').data
+Backbone = require 'backbone'
+Partner = require '../../../models/partner.coffee'
+PartnerLocations = require '../../../collections/partner_locations.coffee'
+template = -> require('../templates/contact.jade') arguments...
+locationTemplate = -> require('../templates/location.jade') arguments...
+contactTemplate = -> require('../templates/contact_info.jade') arguments...
 
 module.exports = class PartnerContactView extends Backbone.View
   initialize: (options) ->

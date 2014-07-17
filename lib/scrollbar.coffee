@@ -1,8 +1,8 @@
 module.exports = class Scrollbar
   constructor: (options = {})->
-    { $els }  = options
-    @$body    = $('body')
-    @$els     = $els?.add(@$body) or @$body
+    { $els } = options
+    @$body = $('body')
+    @$els = $els?.add(@$body) or @$body
 
   set: ->
     @fixFirefoxJump(true)

@@ -1,15 +1,15 @@
-_             = require 'underscore'
+_ = require 'underscore'
 { fabricate } = require 'antigravity'
-sd            = require('sharify').data
-should        = require 'should'
-Backbone      = require 'backbone'
-Partner       = require '../../models/partner'
+sd = require('sharify').data
+should = require 'should'
+Backbone = require 'backbone'
+Partner = require '../../models/partner'
 
 describe 'Partner', ->
 
   before ->
     @sd =
-      API_URL : 'http://localhost:5000'
+      API_URL: 'http://localhost:5000'
       ASSET_PATH: 'http://localhost:5000'
     @partner = new Partner(fabricate('partner',
       type: "Gallery"

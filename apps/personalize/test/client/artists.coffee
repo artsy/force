@@ -69,16 +69,16 @@ describe 'ArtistsView', ->
 
   describe '#setupFollowButton', ->
     it 'sets up a FollowButton view that can be accessed later', ->
-      artist  = new Artist fabricate 'artist'
-      key     = _.uniqueId(artist.id)
-      view    = @view.setupFollowButton key, artist, $('<div></div>')
+      artist = new Artist fabricate 'artist'
+      key = _.uniqueId(artist.id)
+      view = @view.setupFollowButton key, artist, $('<div></div>')
       view.constructor.name.should.equal 'FollowButton'
       @view.followButtonViews[key].should.equal view
 
   describe '#fetchRelatedArtists', ->
     it 'fetches related artists', ->
-      artist        = new Artist(fabricate 'artist')
-      suggestions   = [fabricate('artist'), fabricate('artist')]
+      artist = new Artist(fabricate 'artist')
+      suggestions = [fabricate('artist'), fabricate('artist')]
       sinon.stub(artist, 'fetchRelatedArtists').yieldsTo('success', {}, suggestions)
       @view.fetchRelatedArtists artist
       artist.fetchRelatedArtists.called.should.be.ok
@@ -91,9 +91,9 @@ describe 'ArtistsView', ->
       artist.relatedArtists = new Backbone.Collection artist
       _.isUndefined(@view.followButtonViews).should.be.ok
       @view.suggestions.add @view.createSuggestionSet(artist)
-      suggestionSet   = @view.suggestions.at(0)
-      suggested       = suggestionSet.get('suggestions').at(0)
-      key             = "#{suggestionSet.id}_#{suggested.id}"
+      suggestionSet = @view.suggestions.at(0)
+      suggested = suggestionSet.get('suggestions').at(0)
+      key = "#{suggestionSet.id}_#{suggested.id}"
       _.isUndefined(@view.followButtonViews[key]).should.not.be.ok
       @view.disposeSuggestionSet artist
       _.isNull(@view.followButtonViews[key]).should.be.ok

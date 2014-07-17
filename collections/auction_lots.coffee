@@ -1,16 +1,16 @@
-_                   = require 'underscore'
-sd                  = require('sharify').data
-Backbone            = require 'backbone'
-AuctionLot          = require '../models/auction_lot.coffee'
-PageableCollection  = require 'backbone-pageable'
+_ = require 'underscore'
+sd = require('sharify').data
+Backbone = require 'backbone'
+AuctionLot = require '../models/auction_lot.coffee'
+PageableCollection = require 'backbone-pageable'
 
 module.exports = class AuctionLots extends PageableCollection
   model: AuctionLot
 
   sortCriteria:
-    '-auction_date'                        : 'Most Recent'
-    '-high_estimate_dollar,-auction_date'  : 'Estimate'
-    '-price_realized_dollar,-auction_date' : 'Sale Price'
+    '-auction_date': 'Most Recent'
+    '-high_estimate_dollar,-auction_date': 'Estimate'
+    '-price_realized_dollar,-auction_date': 'Sale Price'
 
   url: ->
     "#{sd.API_URL}/api/v1/artist/#{@id}/auction_lots?page=#{@state.currentPage}&size=#{@state.pageSize}&sort=#{@sortBy}&total_count=1"

@@ -1,13 +1,13 @@
-_             = require 'underscore'
-jade          = require 'jade'
-path          = require 'path'
-fs            = require 'fs'
-cheerio       = require 'cheerio'
-Backbone      = require 'backbone'
+_ = require 'underscore'
+jade = require 'jade'
+path = require 'path'
+fs = require 'fs'
+cheerio = require 'cheerio'
+Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
-OrderedSets   = require '../../../collections/ordered_sets.coffee'
-Profiles      = require '../../../collections/profiles'
-Partner       = require '../../../models/partner'
+OrderedSets = require '../../../collections/ordered_sets.coffee'
+Profiles = require '../../../collections/profiles'
+Partner = require '../../../models/partner'
 
 
 render = (templateName) ->
@@ -21,7 +21,7 @@ describe 'Partners', ->
 
   before ->
     sd =
-      API_URL : 'http://localhost:5000'
+      API_URL: 'http://localhost:5000'
       ASSET_PATH: 'http://localhost:5000'
 
     @profiles = new Profiles [

@@ -1,5 +1,5 @@
-Backbone        = require 'backbone'
-{ API_URL }   = require('sharify').data
+Backbone = require 'backbone'
+{ API_URL } = require('sharify').data
 
 Profile = require '../../../models/profile.coffee'
 class Representative extends Profile

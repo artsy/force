@@ -1,22 +1,22 @@
-_                  = require 'underscore'
-Backbone           = require 'backbone'
-sd                 = require('sharify').data
+_ = require 'underscore'
+Backbone = require 'backbone'
+sd = require('sharify').data
 featuredByTemplate = -> require('../templates/featured_by.jade') arguments...
-PostFeatureDialog  = require('./posts_feature_dialog.coffee')
-Cookies            = require 'cookies-js'
+PostFeatureDialog = require('./posts_feature_dialog.coffee')
+Cookies = require 'cookies-js'
 
 module.exports = class PostAdmin extends Backbone.View
 
   events:
-    'click a.post-remove'              : 'removePostClick'
-    'click a.post-edit'                : 'editPostClick'
-    'click a.post-feature'             : 'featurePostClick'
-    'click a.post-unfeature'           : 'unfeaturePostClick'
-    'click a.post-repost'              : 'repostPostClick'
-    'click a.post-unrepost'            : 'unrepostPostClick'
-    'click a.post-flag'                : 'flagPostClick'
-    'click a.post-flagged'             : 'unflagPostClick'
-    'click a.post-show-feature-dialog' : 'showPostsFeatureDialog'
+    'click a.post-remove': 'removePostClick'
+    'click a.post-edit': 'editPostClick'
+    'click a.post-feature': 'featurePostClick'
+    'click a.post-unfeature': 'unfeaturePostClick'
+    'click a.post-repost': 'repostPostClick'
+    'click a.post-unrepost': 'unrepostPostClick'
+    'click a.post-flag': 'flagPostClick'
+    'click a.post-flagged': 'unflagPostClick'
+    'click a.post-show-feature-dialog': 'showPostsFeatureDialog'
 
   initialize: (options) ->
     throw 'requires currentUser' unless options.currentUser
@@ -38,7 +38,7 @@ module.exports = class PostAdmin extends Backbone.View
 
   showPostsFeatureDialog: ->
     @postsFeatureDialog ||= new PostFeatureDialog
-      el   : @$el
+      el: @$el
       model: @model
     @postsFeatureDialog.show()
     false

@@ -1,6 +1,6 @@
-sinon       = require 'sinon'
-Backbone    = require 'backbone'
-Bookmarks   = require '../collection'
+sinon = require 'sinon'
+Backbone = require 'backbone'
+Bookmarks = require '../collection'
 
 describe 'Bookmarks', ->
   beforeEach ->

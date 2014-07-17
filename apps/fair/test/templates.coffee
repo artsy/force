@@ -1,24 +1,24 @@
-_               = require 'underscore'
-benv            = require 'benv'
-jade            = require 'jade'
-path            = require 'path'
-fs              = require 'fs'
-Backbone        = require 'backbone'
-{ AToZ }        = require 'artsy-backbone-mixins'
-{ fabricate }   = require 'antigravity'
-Fair            = require '../../../models/fair'
-Profile         = require '../../../models/profile'
-CoverImage      = require '../../../models/cover_image'
-SearchResult    = require '../../../models/search_result'
-Artists         = require '../../../collections/artists'
-Partners        = require '../../../collections/partners'
-Item            = require '../../../models/item'
-Items           = require '../../../collections/items'
-OrderedSet      = require '../../../models/ordered_set'
-OrderedSets     = require '../../../collections/ordered_sets'
-FeedItem        = require '../../../components/feed/models/feed_item'
-cheerio         = require 'cheerio'
-sinon           = require 'sinon'
+_ = require 'underscore'
+benv = require 'benv'
+jade = require 'jade'
+path = require 'path'
+fs = require 'fs'
+Backbone = require 'backbone'
+{ AToZ } = require 'artsy-backbone-mixins'
+{ fabricate } = require 'antigravity'
+Fair = require '../../../models/fair'
+Profile = require '../../../models/profile'
+CoverImage = require '../../../models/cover_image'
+SearchResult = require '../../../models/search_result'
+Artists = require '../../../collections/artists'
+Partners = require '../../../collections/partners'
+Item = require '../../../models/item'
+Items = require '../../../collections/items'
+OrderedSet = require '../../../models/ordered_set'
+OrderedSets = require '../../../collections/ordered_sets'
+FeedItem = require '../../../components/feed/models/feed_item'
+cheerio = require 'cheerio'
+sinon = require 'sinon'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../templates/#{templateName}.jade"
@@ -35,9 +35,9 @@ describe 'Fair', ->
       benv.setup =>
         benv.expose { $: benv.require 'jquery' }
         sd =
-          CANONICAL_MOBILE_URL : 'http://localhost:5000'
-          APP_URL : 'http://localhost:5000'
-          API_URL : 'http://localhost:5000'
+          CANONICAL_MOBILE_URL: 'http://localhost:5000'
+          APP_URL: 'http://localhost:5000'
+          API_URL: 'http://localhost:5000'
           ASSET_PATH: 'http://localhost:5000'
           CSS_EXT: '.css.gz'
           JS_EXT: '.js.gz'
@@ -63,8 +63,8 @@ describe 'Fair', ->
       benv.setup =>
         benv.expose { $: benv.require 'jquery' }
         sd =
-          CANONICAL_MOBILE_URL : 'http://localhost:5000'
-          APP_URL : 'http://localhost:5000'
+          CANONICAL_MOBILE_URL: 'http://localhost:5000'
+          APP_URL: 'http://localhost:5000'
           ASSET_PATH: 'http://localhost:5000'
           CSS_EXT: '.css.gz'
           JS_EXT: '.js.gz'
@@ -92,8 +92,8 @@ describe 'Fair', ->
     before (done) ->
       benv.setup =>
         sd =
-          CANONICAL_MOBILE_URL : 'http://localhost:5000'
-          APP_URL : 'http://localhost:5000'
+          CANONICAL_MOBILE_URL: 'http://localhost:5000'
+          APP_URL: 'http://localhost:5000'
           ASSET_PATH: 'http://localhost:5000'
           CSS_EXT: '.css.gz'
           JS_EXT: '.js.gz'
@@ -218,7 +218,7 @@ describe 'Fair', ->
       filteredSearchColumns = fair.filteredSearchColumns filteredSearchOptions
       @template = render('overview')
         sd:
-          APP_URL : 'http://localhost:5000'
+          APP_URL: 'http://localhost:5000'
           ASSET_PATH: 'http://localhost:5000'
           CURRENT_PATH: '/cool-fair'
         fair: fair
@@ -248,7 +248,7 @@ describe 'Fair', ->
         artworks: [fabricate('artwork')]
       )
       @template = render('exhibitors_columns')
-        columns : [[partnerShow, partnerShow], [partnerShow, partnerShow]]
+        columns: [[partnerShow, partnerShow], [partnerShow, partnerShow]]
 
     it 'renders without errors', ->
       $ = cheerio.load @template

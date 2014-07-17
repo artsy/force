@@ -1,5 +1,5 @@
-fs            = require 'fs'
-jade          = require 'jade'
+fs = require 'fs'
+jade = require 'jade'
 { fabricate } = require 'antigravity'
 
 describe 'Meta tags', ->

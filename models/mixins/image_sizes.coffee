@@ -1,5 +1,5 @@
-_   = require 'underscore'
-sd  = require('sharify').data
+_ = require 'underscore'
+sd = require('sharify').data
 
 # requires the image mixin
 module.exports =

@@ -1,12 +1,12 @@
-_                 = require 'underscore'
-{ fabricate }     = require 'antigravity'
-sd                = require('sharify').data
-should            = require 'should'
-Backbone          = require 'backbone'
-PartnerShow       = require '../../models/partner_show'
-PartnerLocation   = require '../../models/partner_location'
-FairLocation      = require '../../models/partner_location'
-sinon             = require 'sinon'
+_ = require 'underscore'
+{ fabricate } = require 'antigravity'
+sd = require('sharify').data
+should = require 'should'
+Backbone = require 'backbone'
+PartnerShow = require '../../models/partner_show'
+PartnerLocation = require '../../models/partner_location'
+FairLocation = require '../../models/partner_location'
+sinon = require 'sinon'
 
 describe 'PartnerShow', ->
 

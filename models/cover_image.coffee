@@ -1,5 +1,5 @@
-_         = require 'underscore'
-Backbone  = require 'backbone'
+_ = require 'underscore'
+Backbone = require 'backbone'
 { Image } = require 'artsy-backbone-mixins'
 { SECURE_IMAGES_URL } = require('sharify').data
 

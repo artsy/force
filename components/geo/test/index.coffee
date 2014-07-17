@@ -1,8 +1,8 @@
-_           = require 'underscore'
-benv        = require 'benv'
-sinon       = require 'sinon'
-Backbone    = require 'backbone'
-Geo         = require '../index'
+_ = require 'underscore'
+benv = require 'benv'
+sinon = require 'sinon'
+Backbone = require 'backbone'
+Geo = require '../index'
 
 describe 'Geo', ->
   before (done) ->

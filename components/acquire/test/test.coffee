@@ -1,7 +1,7 @@
-benv           = require 'benv'
-Backbone       = require 'backbone'
+benv = require 'benv'
+Backbone = require 'backbone'
 acquireArtwork = require('../view.coffee').acquireArtwork
-sinon          = require 'sinon'
+sinon = require 'sinon'
 
 describe 'AcquireArtwork Component', ->
 

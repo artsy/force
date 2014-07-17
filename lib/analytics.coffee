@@ -4,10 +4,10 @@
 # services like Google Analytics are integrated.
 #
 
-_          = require 'underscore'
-sd         = require('sharify').data
+_ = require 'underscore'
+sd = require('sharify').data
 createHash = require('crypto').createHash
-qs         = require('querystring')
+qs = require('querystring')
 
 _.mixin(require 'underscore.string')
 
@@ -53,13 +53,13 @@ module.exports.registerCurrentUser = ->
 # Analytics wrapper class from Gravity
 categories =
   impression: 'Impressions'
-  hover:      'UI Interactions'
-  click:      'UI Interactions'
-  funnel:     'Funnel Progressions'
-  segment:    'UI A/B Test Segments'
-  error:      'UI Errors'
-  multi:      'Multi-object Events'
-  other:      'Other Events'
+  hover: 'UI Interactions'
+  click: 'UI Interactions'
+  funnel: 'Funnel Progressions'
+  segment: 'UI A/B Test Segments'
+  error: 'UI Errors'
+  multi: 'Multi-object Events'
+  other: 'Other Events'
 
 module.exports.track =
   _.reduce(Object.keys(categories), (memo, kind) ->
@@ -70,7 +70,7 @@ module.exports.track =
 
       # Format and Send mixpanel event
       unless typeof mixpanel is 'undefined'
-        options.category  = categories[kind] || categories.other
+        options.category = categories[kind] || categories.other
 
         _.defaults options,
           queryString: window?.location.search

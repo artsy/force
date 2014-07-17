@@ -1,8 +1,8 @@
-_                   = require 'underscore'
-sd                  = require('sharify').data
-Backbone            = require 'backbone'
-Item                = require '../models/item.coffee'
-PageableCollection  = require 'backbone-pageable'
+_ = require 'underscore'
+sd = require('sharify').data
+Backbone = require 'backbone'
+Item = require '../models/item.coffee'
+PageableCollection = require 'backbone-pageable'
 
 # Collection of Items for an OrderedSet
 module.exports = class Items extends PageableCollection

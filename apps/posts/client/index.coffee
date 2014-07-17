@@ -1,10 +1,10 @@
-_              = require 'underscore'
-Backbone       = require 'backbone'
-sd             = require('sharify').data
-FeedItems      = require('../../../components/feed/collections/feed_items.coffee')
-PoplockitFeed  = require('../../../components/feed/client/poplockit_feed.coffee')
-CurrentUser    = require '../../../models/current_user.coffee'
-mediator       = require '../../../lib/mediator.coffee'
+_ = require 'underscore'
+Backbone = require 'backbone'
+sd = require('sharify').data
+FeedItems = require('../../../components/feed/collections/feed_items.coffee')
+PoplockitFeed = require('../../../components/feed/client/poplockit_feed.coffee')
+CurrentUser = require '../../../models/current_user.coffee'
+mediator = require '../../../lib/mediator.coffee'
 
 module.exports = class PostsView extends Backbone.View
 
@@ -26,9 +26,9 @@ module.exports = class PostsView extends Backbone.View
         if items.models.length > 0
           items.urlRoot = url
           new PoplockitFeed
-            limitPostBodyHeight : true
-            feedItems           : items
-            el                  : @$('.feed')
+            limitPostBodyHeight: true
+            feedItems: items
+            el: @$('.feed')
         else
           callback?.error()
 
@@ -38,7 +38,7 @@ module.exports = class PostsView extends Backbone.View
           .removeClass('is-loading')
 
   events:
-    'click .add-to-post' : 'showPostSignupDialog'
+    'click .add-to-post': 'showPostSignupDialog'
 
   showPostSignupDialog: ->
     unless CurrentUser.orNull()
@@ -47,5 +47,5 @@ module.exports = class PostsView extends Backbone.View
 
 module.exports.init = ->
   new PostsView
-    el : $('#posts-page')
+    el: $('#posts-page')
     tab: ($('#posts-page .is-active').attr('data-tab') or 'featured')

@@ -1,11 +1,11 @@
-_             = require 'underscore'
+_ = require 'underscore'
 { fabricate } = require 'antigravity'
-sd            = require('sharify').data
-should        = require 'should'
-Backbone      = require 'backbone'
-Partner       = require '../../models/partner'
-Profile       = require '../../models/profile'
-sinon         = require 'sinon'
+sd = require('sharify').data
+should = require 'should'
+Backbone = require 'backbone'
+Partner = require '../../models/partner'
+Profile = require '../../models/profile'
+sinon = require 'sinon'
 
 describe 'Profile', ->
 

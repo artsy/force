@@ -1,11 +1,11 @@
-_                 = require 'underscore'
-benv              = require 'benv'
-Backbone          = require 'backbone'
-sinon             = require 'sinon'
-PersonalizeState  = require '../../client/state'
-CurrentUser       = require '../../../../models/current_user.coffee'
-{ fabricate }     = require 'antigravity'
-{ resolve }       = require 'path'
+_ = require 'underscore'
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+PersonalizeState = require '../../client/state'
+CurrentUser = require '../../../../models/current_user.coffee'
+{ fabricate } = require 'antigravity'
+{ resolve } = require 'path'
 
 describe 'PriceRangeView', ->
   before (done) ->
@@ -21,9 +21,9 @@ describe 'PriceRangeView', ->
     benv.teardown()
 
   beforeEach ->
-    @user   = new CurrentUser fabricate 'user'
-    @state  = new PersonalizeState user: @user
-    @view   = new @PriceRangeView(state: @state, user: @user)
+    @user = new CurrentUser fabricate 'user'
+    @state = new PersonalizeState user: @user
+    @view = new @PriceRangeView(state: @state, user: @user)
     @view.state.set current_step: 'price_range'
     @view.render()
 

@@ -4,7 +4,7 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
-{ stubChildClasses }  = require '../../../../test/helpers/stubs'
+{ stubChildClasses } = require '../../../../test/helpers/stubs'
 
 describe 'OrderRouter', ->
 

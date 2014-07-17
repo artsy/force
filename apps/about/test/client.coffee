@@ -1,11 +1,11 @@
-benv            = require 'benv'
-rewire          = require 'rewire'
-Backbone        = require 'backbone'
-sinon           = require 'sinon'
-Page            = require '../../../models/page.coffee'
-mediator        = require '../../../lib/mediator.coffee'
-{ fabricate }   = require 'antigravity'
-rewire          = require 'rewire'
+benv = require 'benv'
+rewire = require 'rewire'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+Page = require '../../../models/page.coffee'
+mediator = require '../../../lib/mediator.coffee'
+{ fabricate } = require 'antigravity'
+rewire = require 'rewire'
 
 describe 'AboutRouter', ->
 

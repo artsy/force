@@ -1,13 +1,13 @@
-_              = require 'underscore'
-sd             = require('sharify').data
-Backbone       = require 'backbone'
-CurrentUser    = require '../../../models/current_user.coffee'
-Artist         = require '../../../models/artist.coffee'
-Partner        = require '../../../models/partner.coffee'
-Artworks       = require '../../../collections/artworks.coffee'
+_ = require 'underscore'
+sd = require('sharify').data
+Backbone = require 'backbone'
+CurrentUser = require '../../../models/current_user.coffee'
+Artist = require '../../../models/artist.coffee'
+Partner = require '../../../models/partner.coffee'
+Artworks = require '../../../collections/artworks.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
-BlurbView      = require '../../../components/blurb/view.coffee'
-template       = -> require('../templates/artists_artist.jade') arguments...
+BlurbView = require '../../../components/blurb/view.coffee'
+template = -> require('../templates/artists_artist.jade') arguments...
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 
 module.exports = class PartnerArtistsArtistView extends Backbone.View
@@ -93,10 +93,10 @@ module.exports = class PartnerArtistsArtistView extends Backbone.View
     $button = @$('.follow-button')
     following = new Following null, kind: 'artist' if sd.CURRENT_USER?
     new FollowButton
-      analyticsFollowMessage   : 'Followed artist from /:id/artists'
-      analyticsUnfollowMessage : 'Unfollowed artist from /:id/artists'
-      following : following
-      model     : @artist
-      modelName : 'artist'
-      el        : $button
+      analyticsFollowMessage: 'Followed artist from /:id/artists'
+      analyticsUnfollowMessage: 'Unfollowed artist from /:id/artists'
+      following: following
+      model: @artist
+      modelName: 'artist'
+      el: $button
     following?.syncFollows [@artist.get('id')]

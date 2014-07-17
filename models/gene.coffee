@@ -1,9 +1,9 @@
-_         = require 'underscore'
-sd        = require('sharify').data
-Backbone  = require 'backbone'
-Artworks  = require '../collections/artworks.coffee'
+_ = require 'underscore'
+sd = require('sharify').data
+Backbone = require 'backbone'
+Artworks = require '../collections/artworks.coffee'
 { Image, Markdown } = require 'artsy-backbone-mixins'
-Artist    = require '../models/artist.coffee'
+Artist = require '../models/artist.coffee'
 
 SUBJECT_MATTER_MATCHES = [
   "content", "medium", "concrete contemporary",
@@ -29,10 +29,10 @@ module.exports = class Gene extends Backbone.Model
   toPageDescription: -> @mdToHtmlToText('description')
 
   initialize: ->
-    @relatedArtists       = new Backbone.Collection [], model: Artist
-    @relatedArtists.url   = "#{sd.API_URL}/api/v1/gene/#{@id}/artists"
-    @trendingArtists      = new Backbone.Collection [], model: Artist
-    @trendingArtists.url  = "#{sd.API_URL}/api/v1/artists/trending?gene=#{@id}"
+    @relatedArtists = new Backbone.Collection [], model: Artist
+    @relatedArtists.url = "#{sd.API_URL}/api/v1/gene/#{@id}/artists"
+    @trendingArtists = new Backbone.Collection [], model: Artist
+    @trendingArtists.url = "#{sd.API_URL}/api/v1/artists/trending?gene=#{@id}"
 
   fetchArtists: (type, options={}) ->
     @["#{type}Artists"].fetch(options)

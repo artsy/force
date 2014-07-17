@@ -1,9 +1,9 @@
-_             = require 'underscore'
-sd            = require('sharify').data
-ModalView     = require '../../modal/view.coffee'
-mediator      = require '../../../lib/mediator.coffee'
+_ = require 'underscore'
+sd = require('sharify').data
+ModalView = require '../../modal/view.coffee'
+mediator = require '../../../lib/mediator.coffee'
 
-template      = -> require('../templates/bid-confirmation.jade') arguments...
+template = -> require('../templates/bid-confirmation.jade') arguments...
 
 module.exports = class ConfirmBid extends ModalView
 
@@ -17,13 +17,13 @@ module.exports = class ConfirmBid extends ModalView
     paddleNumber: null
 
   events: -> _.extend super,
-    'click .bid-close-button' : 'close'
+    'click .bid-close-button': 'close'
 
   initialize: (options = {}) ->
     @options = _.defaults options, @defaults()
     _.extend @templateData,
-      artwork      : @options.artwork
-      paddleNumber : @options.paddleNumber
-      kioskMode    : sd.KIOSK_MODE
-      signOutUrl   :"/users/sign_out?redirect_uri=#{sd.APP_URL}#{sd.KIOSK_PAGE}"
+      artwork: @options.artwork
+      paddleNumber: @options.paddleNumber
+      kioskMode: sd.KIOSK_MODE
+      signOutUrl:"/users/sign_out?redirect_uri=#{sd.APP_URL}#{sd.KIOSK_PAGE}"
     super @options

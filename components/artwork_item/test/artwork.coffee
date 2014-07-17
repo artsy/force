@@ -1,10 +1,10 @@
-cheerio       = require 'cheerio'
-fs            = require 'fs'
-jade          = require 'jade'
-path          = require 'path'
-Backbone      = require 'backbone'
+cheerio = require 'cheerio'
+fs = require 'fs'
+jade = require 'jade'
+path = require 'path'
+Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
-Artwork       = require '../../../models/artwork'
+Artwork = require '../../../models/artwork'
 
 render = (template) ->
   filename = path.resolve __dirname, "../templates/#{template}.jade"

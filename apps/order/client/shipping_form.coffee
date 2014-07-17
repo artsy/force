@@ -1,15 +1,15 @@
-_                       = require 'underscore'
-Backbone                = require 'backbone'
-CurrentUser             = require '../../../models/current_user.coffee'
-sd                      = require('sharify').data
-ErrorHandlingForm       = require('../../../components/credit_card/client/error_handling_form.coffee')
-analytics               = require('../../../lib/analytics.coffee')
-{ isTouchDevice }       = require '../../../components/util/device.coffee'
+_ = require 'underscore'
+Backbone = require 'backbone'
+CurrentUser = require '../../../models/current_user.coffee'
+sd = require('sharify').data
+ErrorHandlingForm = require('../../../components/credit_card/client/error_handling_form.coffee')
+analytics = require('../../../lib/analytics.coffee')
+{ isTouchDevice } = require '../../../components/util/device.coffee'
 
 module.exports = class ShippingForm extends ErrorHandlingForm
 
   events:
-    'click .order-form-button' : 'onSubmit'
+    'click .order-form-button': 'onSubmit'
 
   initialize: (options) ->
     throw 'You must pass a success callback' unless options.success

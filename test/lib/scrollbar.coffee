@@ -1,7 +1,7 @@
-sinon       = require 'sinon'
-benv        = require 'benv'
-Backbone    = require 'backbone'
-Scrollbar   = require '../../lib/scrollbar'
+sinon = require 'sinon'
+benv = require 'benv'
+Backbone = require 'backbone'
+Scrollbar = require '../../lib/scrollbar'
 
 describe 'Scrollbar', ->
   before (done) ->

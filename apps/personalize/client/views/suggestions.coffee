@@ -18,17 +18,17 @@ module.exports = class SuggestionsView extends StepView
   suggestedTemplate: ->
     suggestedTemplate arguments...
 
-  kind             : 'default'
-  followKind       : 'default'
-  locationRequests : []
+  kind: 'default'
+  followKind: 'default'
+  locationRequests: []
 
   events:
-    'click .personalize-skip'                     : 'advance'
-    'click .pfa-remove'                           : 'unfollow'
-    'click .grid-item'                            : 'followSuggestion'
-    'click .personalize-suggestions-more'         : 'loadNextPage'
-    'click #personalize-suggestions-location'     : 'changeLocation'
-    'click #personalize-suggestions-unfollow-all' : 'unfollowAll'
+    'click .personalize-skip': 'advance'
+    'click .pfa-remove': 'unfollow'
+    'click .grid-item': 'followSuggestion'
+    'click .personalize-suggestions-more': 'loadNextPage'
+    'click #personalize-suggestions-location': 'changeLocation'
+    'click #personalize-suggestions-unfollow-all': 'unfollowAll'
 
   initialize: (options = {}) ->
     super
@@ -81,13 +81,13 @@ module.exports = class SuggestionsView extends StepView
     @followButtonViews ?= {}
     @followButtonViews[key].remove() if @followButtonViews[key]?
     @followButtonViews[key] = new FollowButton
-      analyticsUnfollowMessage : "Unfollowed #{@kind} from personalize #{@kind} suggestions"
-      analyticsFollowMessage   : "Followed #{@kind} from personalize #{@kind} suggestions"
-      notes                    : 'Followed from /personalize'
-      following                : @following
-      model                    : model
-      modelName                : @kind
-      el                       : el
+      analyticsUnfollowMessage: "Unfollowed #{@kind} from personalize #{@kind} suggestions"
+      analyticsFollowMessage: "Followed #{@kind} from personalize #{@kind} suggestions"
+      notes: 'Followed from /personalize'
+      following: @following
+      model: model
+      modelName: @kind
+      el: el
 
   renderSuggestions: ->
     (@$container ?= @$('#personalize-suggestions-container')).

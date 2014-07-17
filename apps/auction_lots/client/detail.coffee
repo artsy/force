@@ -1,8 +1,8 @@
-_             = require 'underscore'
-ModalView     = require '../../../components/modal/view.coffee'
-CurrentUser   = require '../../../models/current_user.coffee'
-template      = -> require('../templates/modal.jade') arguments...
-imagesLoaded  = require '../../../lib/vendor/imagesloaded.js'
+_ = require 'underscore'
+ModalView = require '../../../components/modal/view.coffee'
+CurrentUser = require '../../../models/current_user.coffee'
+template = -> require('../templates/modal.jade') arguments...
+imagesLoaded = require '../../../lib/vendor/imagesloaded.js'
 
 module.exports = class DetailView extends ModalView
   template: template
@@ -11,18 +11,18 @@ module.exports = class DetailView extends ModalView
 
   events: -> _.extend super,
     # Disable zoom
-    'click .auction-lot-image-zoom' : -> false
+    'click .auction-lot-image-zoom': -> false
 
   initialize: (options) ->
     @templateData =
-      lot    : options.lot
-      artist : options.artist
-      user   : CurrentUser.orNull()
+      lot: options.lot
+      artist: options.artist
+      user: CurrentUser.orNull()
     super
 
   postRender: ->
-    $metaData   = @$('.ard-metadata')
-    $image      = @$('.auction-lot-image-zoom')
+    $metaData = @$('.ard-metadata')
+    $image = @$('.auction-lot-image-zoom')
     $image.css opacity: 0
     @$el.imagesLoaded().done =>
       @updatePosition() if $image.height() > $metaData.height()

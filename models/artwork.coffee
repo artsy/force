@@ -1,8 +1,8 @@
-_                 = require 'underscore'
-sd                = require('sharify').data
-Backbone          = require 'backbone'
-Edition           = require './edition.coffee'
-AdditionalImage   = require './additional_image.coffee'
+_ = require 'underscore'
+sd = require('sharify').data
+Backbone = require 'backbone'
+Edition = require './edition.coffee'
+AdditionalImage = require './additional_image.coffee'
 { compactObject } = require './mixins/compact_object.coffee'
 
 { Image, Dimensions, Markdown } = require 'artsy-backbone-mixins'
@@ -15,7 +15,7 @@ module.exports = class Artwork extends Backbone.Model
 
   urlRoot: ->
     "#{sd.API_URL}/api/v1/artwork"
-  
+
   bidSuccessUrl: -> "#{@href()}/confirm-bid"
 
   initialize: ->
@@ -31,7 +31,7 @@ module.exports = class Artwork extends Backbone.Model
     , options
 
   parse: (response, options) ->
-    @editions   = new Backbone.Collection response?.edition_sets, model: Edition
+    @editions = new Backbone.Collection response?.edition_sets, model: Edition
     @setImagesCollection response?.images
 
     @setDefaultImage()
@@ -356,14 +356,14 @@ module.exports = class Artwork extends Backbone.Model
     if @get('artist')
       creator =
         compactObject {
-          "@type" : "Person"
-          name    : @get('artist').name
-          sameAs  : "#{sd.APP_URL}/artist/#{@get('artist').id}"
+          "@type": "Person"
+          name: @get('artist').name
+          sameAs: "#{sd.APP_URL}/artist/#{@get('artist').id}"
         }
 
     compactObject {
-      "@context" : "http://schema.org"
-      "@type" : "CreativeWork"
+      "@context": "http://schema.org"
+      "@type": "CreativeWork"
       image: @defaultImageUrl('large')
       name: @getTitle()
       url: "#{sd.APP_URL}#{@href()}"

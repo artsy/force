@@ -1,8 +1,8 @@
-_             = require 'underscore'
-sinon         = require 'sinon'
-Backbone      = require 'backbone'
-Icon          = require '../../models/icon'
-Profile       = require '../../models/profile'
+_ = require 'underscore'
+sinon = require 'sinon'
+Backbone = require 'backbone'
+Icon = require '../../models/icon'
+Profile = require '../../models/profile'
 { fabricate } = require 'antigravity'
 
 describe 'Icon', ->

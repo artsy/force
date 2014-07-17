@@ -1,6 +1,6 @@
-Backbone        = require 'backbone'
-defaultMessage  = require '../default_message'
-Artwork         = require '../../../models/artwork'
+Backbone = require 'backbone'
+defaultMessage = require '../default_message'
+Artwork = require '../../../models/artwork'
 
 describe 'defaultMessage', ->
   beforeEach ->

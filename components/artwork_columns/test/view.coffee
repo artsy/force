@@ -1,12 +1,12 @@
-_                  = require 'underscore'
-benv               = require 'benv'
-sinon              = require 'sinon'
-Backbone           = require 'backbone'
-CurrentUser        = require '../../../models/current_user.coffee'
-Artwork            = require '../../../models/artwork.coffee'
-Artworks           = require '../../../collections/artworks.coffee'
-{ fabricate }      = require 'antigravity'
-{ resolve }        = require 'path'
+_ = require 'underscore'
+benv = require 'benv'
+sinon = require 'sinon'
+Backbone = require 'backbone'
+CurrentUser = require '../../../models/current_user.coffee'
+Artwork = require '../../../models/artwork.coffee'
+Artworks = require '../../../collections/artworks.coffee'
+{ fabricate } = require 'antigravity'
+{ resolve } = require 'path'
 
 # This view has templates, need to require with Jadeify
 ArtworkColumnsView = benv.requireWithJadeify resolve(__dirname, '../view'), ['artworkColumns', 'artworkItem']
@@ -36,7 +36,7 @@ describe 'ArtworkColumns', ->
       new Artwork fabricate 'artwork'
     ])
     @view = new ArtworkColumnsView
-      el:         $('body')
+      el: $('body')
       collection: @artworks
 
   describe '#initialize', ->
@@ -53,7 +53,7 @@ describe 'ArtworkColumns', ->
       it 'inits the saved artworks collection', ->
         sinon.stub(CurrentUser, 'orNull').returns new CurrentUser fabricate 'user'
         @view = new ArtworkColumnsView
-          el:         $('body')
+          el: $('body')
           collection: @artworks
         @view.currentUser.should.be.instanceOf CurrentUser
         @view.artworkCollection.should.be.ok
@@ -83,9 +83,9 @@ describe 'ArtworkColumns', ->
         _.extend artwork.get('images')[0], dims[index]
       $('body').empty()
       @view = new ArtworkColumnsView
-        el:         $('body')
+        el: $('body')
         collection: @artworks
-        isOrdered:  true
+        isOrdered: true
         allowDuplicates: true
 
       it 'removes artworks from the last column and redistributes to the shortest column', ->
@@ -119,9 +119,9 @@ describe 'ArtworkColumns', ->
 
       it 'adds artworks to the next column from left to right', ->
         @view = new ArtworkColumnsView
-          el:         $('body')
+          el: $('body')
           collection: @artworks
-          isOrdered:  true
+          isOrdered: true
           allowDuplicates: true
         $('.artwork-column:eq(0) .artwork-item').should.have.lengthOf 3
         $('.artwork-column:eq(1) .artwork-item').should.have.lengthOf 3
@@ -186,8 +186,8 @@ describe 'ArtworkColumns', ->
           @view.shortestColumn.should.equal 1
 
         it 'can accept jQuery objects directly', ->
-          $column   = @view.$(".artwork-column:eq(#{@view.shortestColumn})")
-          $artwork  = $column.find('.artwork-item').last().clone()
+          $column = @view.$(".artwork-column:eq(#{@view.shortestColumn})")
+          $artwork = $column.find('.artwork-item').last().clone()
           @view.shortestColumn.should.equal 2
           @view.addToShortestColumn $artwork
           @view.shortestColumn.should.equal 2
@@ -198,9 +198,9 @@ describe 'ArtworkColumns', ->
 
     it 'doesnt add duplicates', ->
       @view = new ArtworkColumnsView
-        el:         $('body')
+        el: $('body')
         collection: @artworks
-        isOrdered:  true
+        isOrdered: true
       @view.collection.reset [fabricate('artwork', id: 'bar'), fabricate('artwork', id: 'foo')]
       @view.appendArtworks [new Artwork(fabricate('artwork', id: 'foo'))]
       @view.collection.length.should.equal 2

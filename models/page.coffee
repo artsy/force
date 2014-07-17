@@ -1,6 +1,6 @@
-_            = require 'underscore'
-sd           = require('sharify').data
-Backbone     = require 'backbone'
+_ = require 'underscore'
+sd = require('sharify').data
+Backbone = require 'backbone'
 { Markdown } = require 'artsy-backbone-mixins'
 
 module.exports = class Page extends Backbone.Model

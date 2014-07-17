@@ -1,7 +1,7 @@
-_               = require 'underscore'
-Backbone        = require 'backbone'
-ModalPageView   = require '../../../components/modal/page.coffee'
-mediator        = require '../../../lib/mediator.coffee'
+_ = require 'underscore'
+Backbone = require 'backbone'
+ModalPageView = require '../../../components/modal/page.coffee'
+mediator = require '../../../lib/mediator.coffee'
 
 template = -> require('../templates/auction_detail.jade') arguments...
 
@@ -9,8 +9,8 @@ module.exports = class AuctionDetailView extends Backbone.View
   template: template
 
   events:
-    'submit form'          : 'submit'
-    'click .abf-help-link' : 'displayHelp'
+    'submit form': 'submit'
+    'click .abf-help-link': 'displayHelp'
 
   initialize: (options) ->
     { @user, @auction, @saleArtwork, @bidderPositions } = options
@@ -19,9 +19,9 @@ module.exports = class AuctionDetailView extends Backbone.View
     e.preventDefault()
     unless @user
       mediator.trigger 'open:auth',
-        mode        : 'register'
-        copy        : 'Sign up to bid'
-        redirectTo  : @auction.redirectUrl @saleArtwork.artwork()
+        mode: 'register'
+        copy: 'Sign up to bid'
+        redirectTo: @auction.redirectUrl @saleArtwork.artwork()
       return false
     else
       @$('button').attr 'data-state', 'loading'
@@ -45,15 +45,15 @@ module.exports = class AuctionDetailView extends Backbone.View
   displayHelp: (e) ->
     e.preventDefault()
     new ModalPageView
-      width  : '700px'
-      pageId : 'auction-info'
+      width: '700px'
+      pageId: 'auction-info'
 
   render: ->
     @$el.html(template
-      user            : @user
-      auction         : @auction
-      saleArtwork     : @saleArtwork
-      artwork         : @saleArtwork.artwork()
-      bidderPositions : @bidderPositions
+      user: @user
+      auction: @auction
+      saleArtwork: @saleArtwork
+      artwork: @saleArtwork.artwork()
+      bidderPositions: @bidderPositions
     ).addClass 'is-fade-in'
     @

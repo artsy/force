@@ -1,6 +1,6 @@
-_         = require 'underscore'
-Backbone  = require 'backbone'
-template  = -> require('./template.jade') arguments...
+_ = require 'underscore'
+Backbone = require 'backbone'
+template = -> require('./template.jade') arguments...
 
 module.exports = class RelatedShowsView extends Backbone.View
   maxShows: 8
@@ -22,8 +22,8 @@ module.exports = class RelatedShowsView extends Backbone.View
         @$el.
           addClass('is-fade-in').
           html template
-            header : "Shows including #{@model.get('name')}"
-            shows  : shows[...@maxShows]
+            header: "Shows including #{@model.get('name')}"
+            shows: shows[...@maxShows]
       @
     else
       @remove()

@@ -1,22 +1,22 @@
-_                   = require 'underscore'
-Backbone            = require 'backbone'
-Cookies             = require 'cookies-js'
-SearchBarView       = require '../../search_bar/view.coffee'
-AuthModalView       = require '../../auth_modal/view.coffee'
-mediator            = require '../../../lib/mediator.coffee'
-sd                  = require('sharify').data
-{ isTouchDevice }   = require '../../util/device.coffee'
-analytics           = require '../../../lib/analytics.coffee'
-FlashMessage        = require '../../flash/index.coffee'
-PublishModal        = require '../../publish_modal/view.coffee'
-Profile             = require '../../../models/profile.coffee'
+_ = require 'underscore'
+Backbone = require 'backbone'
+Cookies = require 'cookies-js'
+SearchBarView = require '../../search_bar/view.coffee'
+AuthModalView = require '../../auth_modal/view.coffee'
+mediator = require '../../../lib/mediator.coffee'
+sd = require('sharify').data
+{ isTouchDevice } = require '../../util/device.coffee'
+analytics = require '../../../lib/analytics.coffee'
+FlashMessage = require '../../flash/index.coffee'
+PublishModal = require '../../publish_modal/view.coffee'
+Profile = require '../../../models/profile.coffee'
 
 module.exports = class HeaderView extends Backbone.View
 
   events:
-    'click .mlh-login'  : 'login'
-    'click .mlh-signup' : 'signup'
-    'click .user-nav-profile-link' : 'showProfilePrivateDialog'
+    'click .mlh-login': 'login'
+    'click .mlh-signup': 'signup'
+    'click .user-nav-profile-link': 'showProfilePrivateDialog'
 
   initialize: (options) ->
     { @$window, @$body } = options
@@ -24,8 +24,8 @@ module.exports = class HeaderView extends Backbone.View
     @$welcomeHeader = @$('#main-layout-welcome-header')
 
     @searchBarView = new SearchBarView
-      el     : @$('#main-layout-search-bar-container')
-      $input : @$('#main-layout-search-bar-input')
+      el: @$('#main-layout-search-bar-container')
+      $input: @$('#main-layout-search-bar-input')
 
     @searchBarView.on 'search:entered', (term) -> window.location = "/search?q=#{term}"
     @searchBarView.on 'search:selected', @searchBarView.selectResult
@@ -53,11 +53,11 @@ module.exports = class HeaderView extends Backbone.View
       success: (profile) =>
         if profile.get('private')
           new PublishModal
-            persist      : false
-            width        : '350px'
-            name         : 'profile_publish_prompt'
-            publishEvent : 'profile:make:public'
-            message      : 'Make your profile public to share.'
+            persist: false
+            width: '350px'
+            name: 'profile_publish_prompt'
+            publishEvent: 'profile:make:public'
+            message: 'Make your profile public to share.'
           mediator.on 'profile:make:public', @makePublic, @
           false
         else

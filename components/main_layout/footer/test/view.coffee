@@ -1,8 +1,8 @@
-rewire        = require 'rewire'
-benv          = require 'benv'
-Backbone      = require 'backbone'
-sinon         = require 'sinon'
-{ resolve }   = require 'path'
+rewire = require 'rewire'
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+{ resolve } = require 'path'
 
 describe 'FooterView', ->
   beforeEach (done) ->

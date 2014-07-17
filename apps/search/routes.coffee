@@ -1,9 +1,9 @@
 Search = require '../../collections/search'
 
 @index = (req, res) ->
-  term    = req.query.q
+  term = req.query.q
   res.redirect("/") unless term
-  search  = new Search
+  search = new Search
   search.fetch
     data: { term: term }
     cache: true

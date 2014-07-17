@@ -1,4 +1,4 @@
-sd       = require('sharify').data
+sd = require('sharify').data
 Backbone = require 'backbone'
 
 module.exports = class FollowProfile extends Backbone.Model

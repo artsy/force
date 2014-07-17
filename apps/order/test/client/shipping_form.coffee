@@ -1,11 +1,11 @@
-rewire        = require 'rewire'
-benv          = require 'benv'
-Backbone      = require 'backbone'
-sinon         = require 'sinon'
-_             = require 'underscore'
-Order         = require '../../../../models/order'
-ShippingForm  = require('../../client/shipping_form')
-{ resolve }   = require 'path'
+rewire = require 'rewire'
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+_ = require 'underscore'
+Order = require '../../../../models/order'
+ShippingForm = require('../../client/shipping_form')
+{ resolve } = require 'path'
 { fabricate } = require 'antigravity'
 
 describe 'ShippingForm', ->
@@ -29,7 +29,7 @@ describe 'ShippingForm', ->
     }, =>
       @success = false
       @view = new ShippingForm
-        el   : $('body')
+        el: $('body')
         model: new Order(fabricate 'order')
         success: => @success = true
       done()

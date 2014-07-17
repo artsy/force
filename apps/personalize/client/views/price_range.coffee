@@ -1,7 +1,7 @@
-_             = require 'underscore'
-StepView      = require './step.coffee'
-priceBuckets  = require '../mixins/price_buckets.coffee'
-template      = -> require('../../templates/price_range.jade') arguments...
+_ = require 'underscore'
+StepView = require './step.coffee'
+priceBuckets = require '../mixins/price_buckets.coffee'
+template = -> require('../../templates/price_range.jade') arguments...
 
 module.exports = class PriceRangeView extends StepView
   events:

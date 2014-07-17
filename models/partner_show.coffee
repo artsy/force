@@ -1,18 +1,18 @@
-_               = require 'underscore'
-sd              = require('sharify').data
-Artworks        = require '../collections/artworks.coffee'
-Backbone        = require 'backbone'
-Fair            = require './fair.coffee'
-FairLocation    = require './fair_location.coffee'
-InstallShot     = require './install_shot.coffee'
-Partner         = require './partner.coffee'
-Artists         = require '../collections/artists.coffee'
+_ = require 'underscore'
+sd = require('sharify').data
+Artworks = require '../collections/artworks.coffee'
+Backbone = require 'backbone'
+Fair = require './fair.coffee'
+FairLocation = require './fair_location.coffee'
+InstallShot = require './install_shot.coffee'
+Partner = require './partner.coffee'
+Artists = require '../collections/artists.coffee'
 PartnerLocation = require './partner_location.coffee'
-DateHelpers     = require '../components/util/date_helpers.coffee'
-{ Image }       = require 'artsy-backbone-mixins'
+DateHelpers = require '../components/util/date_helpers.coffee'
+{ Image } = require 'artsy-backbone-mixins'
 { compactObject } = require './mixins/compact_object.coffee'
-fetchUntilEnd   = require('artsy-backbone-mixins').Fetch(sd.API_URL).fetchUntilEnd
-moment          = require 'moment'
+fetchUntilEnd = require('artsy-backbone-mixins').Fetch(sd.API_URL).fetchUntilEnd
+moment = require 'moment'
 
 module.exports = class PartnerShow extends Backbone.Model
 
@@ -97,10 +97,10 @@ module.exports = class PartnerShow extends Backbone.Model
     # if not, fetch some artworks and use one of their images
     @artworks = new Artworks []
     options =
-      data    : { size: 10, published: true }
-      url     : "#{@url()}/artworks"
-      cache   : true
-      success : =>
+      data: { size: 10, published: true }
+      url: "#{@url()}/artworks"
+      cache: true
+      success: =>
         if @artworks?.length
           imageUrl = @artworks.first().defaultImage().imageUrl size
           @trigger "fetch:posterImageUrl", imageUrl
@@ -135,8 +135,8 @@ module.exports = class PartnerShow extends Backbone.Model
     throw "You must pass a success callback" unless callbacks?.success? and _.isFunction(callbacks.success)
     @installShots = new Backbone.Collection [], { model: InstallShot }
     options =
-      data   : { default: false }
-      url    : "#{sd.API_URL}/api/v1/partner_show/#{@get('id')}/images"
+      data: { default: false }
+      url: "#{sd.API_URL}/api/v1/partner_show/#{@get('id')}/images"
     _.extend options, callbacks
     fetchUntilEnd.call @installShots, options
 
@@ -144,8 +144,8 @@ module.exports = class PartnerShow extends Backbone.Model
     throw "You must pass a success callback" unless callbacks?.success? and _.isFunction(callbacks.success)
     @artworks = new Artworks []
     options =
-      data   : { size: 10, published: true }
-      url    : "#{@url()}/artworks"
+      data: { size: 10, published: true }
+      url: "#{@url()}/artworks"
     _.extend options, callbacks
     @artworks.fetchUntilEnd options
 
@@ -243,9 +243,9 @@ module.exports = class PartnerShow extends Backbone.Model
       @get('location').name = @partnerName()
 
     compactObject {
-      "@context" : "http://schema.org"
-      "@type" : "Event"
-      name : @title()
+      "@context": "http://schema.org"
+      "@type": "Event"
+      name: @title()
       image: @metaImage()?.imageUrl()
       url: "#{sd.APP_URL}#{@href()}"
       startDate: @startAtDate().toISOString()

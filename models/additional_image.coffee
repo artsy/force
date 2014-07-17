@@ -1,5 +1,5 @@
-_         = require 'underscore'
-Backbone  = require 'backbone'
+_ = require 'underscore'
+Backbone = require 'backbone'
 { Image } = require 'artsy-backbone-mixins'
 ImageSizes = require './mixins/image_sizes.coffee'
 DeepZoom = require './mixins/deep_zoom.coffee'

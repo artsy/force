@@ -1,8 +1,8 @@
-_              = require 'underscore'
-Backbone       = require 'backbone'
-template       = -> require('./template.jade') arguments...
-SaveControls   = require('../artwork_item/save_controls.coffee')
-sd             = require('sharify').data
+_ = require 'underscore'
+Backbone = require 'backbone'
+template = -> require('./template.jade') arguments...
+SaveControls = require('../artwork_item/save_controls.coffee')
+sd = require('sharify').data
 trackArtworkImpressions = require("../analytics/impression_tracking.coffee").trackArtworkImpressions
 
 module.exports = class FillwidthView extends Backbone.View

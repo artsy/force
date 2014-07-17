@@ -1,7 +1,7 @@
-fabricate     = require('antigravity').fabricate
-rewire        = require 'rewire'
-SearchResult  = rewire '../../models/search_result.coffee'
-Fair          = require '../../models/fair.coffee'
+fabricate = require('antigravity').fabricate
+rewire = require 'rewire'
+SearchResult = rewire '../../models/search_result.coffee'
+Fair = require '../../models/fair.coffee'
 
 describe 'SearchResult', ->
   describe '#initialize', ->

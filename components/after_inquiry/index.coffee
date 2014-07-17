@@ -1,10 +1,10 @@
-_               = require 'underscore'
-Backbone        = require 'backbone'
-FlashMessage    = require '../flash/index.coffee'
-mediator        = require '../../lib/mediator.coffee'
-Questionnaire   = require './questionnaire.coffee'
-analytics       = require '../../lib/analytics.coffee'
-Cookies         = require 'cookies-js'
+_ = require 'underscore'
+Backbone = require 'backbone'
+FlashMessage = require '../flash/index.coffee'
+mediator = require '../../lib/mediator.coffee'
+Questionnaire = require './questionnaire.coffee'
+analytics = require '../../lib/analytics.coffee'
+Cookies = require 'cookies-js'
 
 # The after inquiry flow is composed of a Flash message and
 # a modal Questionnire. This class sets them up and
@@ -12,10 +12,10 @@ Cookies         = require 'cookies-js'
 module.exports = class AfterInquiry
   _.extend @prototype, Backbone.Events
 
-  messagePending : 'Thank you. Your inquiry is sending&hellip;'
-  messageSent    : 'Thank you. Your inquiry has been sent.'
-  messageError   : 'There was a problem with sending your inquiry'
-  pauseInterval  : 2000
+  messagePending: 'Thank you. Your inquiry is sending&hellip;'
+  messageSent: 'Thank you. Your inquiry has been sent.'
+  messageError: 'There was a problem with sending your inquiry'
+  pauseInterval: 2000
 
   constructor: (options = {}) ->
     { @user, @inquiry } = options
@@ -81,11 +81,11 @@ module.exports = class AfterInquiry
 
   initializeQuestionnaire: =>
     @questionnaire = new Questionnaire
-      transition : 'slide'
-      width      : '450px'
-      backdrop   : false
-      user       : @user
-      inquiry    : @inquiry
+      transition: 'slide'
+      width: '450px'
+      backdrop: false
+      user: @user
+      inquiry: @inquiry
 
   remove: =>
     @flash.close()

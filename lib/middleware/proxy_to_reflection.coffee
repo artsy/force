@@ -3,9 +3,9 @@
 # https://github.com/artsy/reflection
 #
 
-request             = require 'superagent'
-{ parse }           = require 'url'
-{ REFLECTION_URL }  = require '../../config'
+request = require 'superagent'
+{ parse } = require 'url'
+{ REFLECTION_URL } = require '../../config'
 
 module.exports = (req, res, next) ->
   if req.query._escaped_fragment_?

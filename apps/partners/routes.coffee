@@ -1,10 +1,10 @@
-_             = require 'underscore'
-sd            = require('sharify').data
-Backbone      = require 'backbone'
-OrderedSets   = require '../../collections/ordered_sets.coffee'
-Partner       = require '../../models/partner'
-Profiles      = require '../../collections/profiles'
-Q             = require 'q'
+_ = require 'underscore'
+sd = require('sharify').data
+Backbone = require 'backbone'
+OrderedSets = require '../../collections/ordered_sets.coffee'
+Partner = require '../../models/partner'
+Profiles = require '../../collections/profiles'
+Q = require 'q'
 
 @index = (req, res) ->
   featuredPartners = new OrderedSets(key: 'partners:featured-partners')

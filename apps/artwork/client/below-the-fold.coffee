@@ -1,10 +1,10 @@
-_         = require 'underscore'
-sd        = require('sharify').data
-Backbone  = require 'backbone'
+_ = require 'underscore'
+sd = require('sharify').data
+Backbone = require 'backbone'
 
-Artworks            = require '../../../collections/artworks.coffee'
-LayeredSearchView   = require('./layered-search.coffee').LayeredSearchView
-SaleView            = require './sale.coffee'
+Artworks = require '../../../collections/artworks.coffee'
+LayeredSearchView = require('./layered-search.coffee').LayeredSearchView
+SaleView = require './sale.coffee'
 
 module.exports = class BelowTheFold extends Backbone.View
   initialize: (options) ->

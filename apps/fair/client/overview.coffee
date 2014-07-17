@@ -1,19 +1,19 @@
-_              = require 'underscore'
-Backbone       = require 'backbone'
-sd             = require('sharify').data
-Clock          = require '../../../components/auction_clock/view.coffee'
-FeedItems      = require '../../../components/feed/collections/feed_items.coffee'
-FeedView       = require '../../../components/feed/client/feed.coffee'
-Artists        = require '../../../collections/artists.coffee'
-mediator       = require '../../../lib/mediator.coffee'
-analytics      = require '../../../lib/analytics.coffee'
-ForYouView     = require './for_you.coffee'
+_ = require 'underscore'
+Backbone = require 'backbone'
+sd = require('sharify').data
+Clock = require '../../../components/auction_clock/view.coffee'
+FeedItems = require '../../../components/feed/collections/feed_items.coffee'
+FeedView = require '../../../components/feed/client/feed.coffee'
+Artists = require '../../../collections/artists.coffee'
+mediator = require '../../../lib/mediator.coffee'
+analytics = require '../../../lib/analytics.coffee'
+ForYouView = require './for_you.coffee'
 forYouTemplate = -> require('../templates/for_you_logged_in.jade') arguments...
 
 module.exports = class Overview extends Backbone.View
 
   events:
-    'click .container-left .large-section' : 'clickForYou'
+    'click .container-left .large-section': 'clickForYou'
 
   initialize: (options) ->
     @fair = options.fair
@@ -23,8 +23,8 @@ module.exports = class Overview extends Backbone.View
       @$('.for-you-container').html forYouTemplate(fair: @fair)
       new ForYouView
         model: @model
-        fair : @fair
-        el   : @el
+        fair: @fair
+        el: @el
         onFetchFollowingArtists: @onFetchFollowingArtists
     else if @fair.get('display_vip')
       mediator.trigger 'open:auth', { mode: 'register', copy: "Create an account or log in to activate your VIP preview for #{@fair.get('name')}", redirectTo: location.pathname }

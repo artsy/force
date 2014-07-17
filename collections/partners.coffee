@@ -1,7 +1,7 @@
-_               = require 'underscore'
-sd              = require('sharify').data
-Backbone        = require 'backbone'
-Partner         = require '../models/partner.coffee'
+_ = require 'underscore'
+sd = require('sharify').data
+Backbone = require 'backbone'
+Partner = require '../models/partner.coffee'
 { API_URL } = require('sharify').data
 { Fetch, AToZ } = require 'artsy-backbone-mixins'
 

@@ -1,7 +1,7 @@
-sinon           = require 'sinon'
-rewire          = require 'rewire'
-Backbone        = require 'backbone'
-{ fabricate }   = require 'antigravity'
+sinon = require 'sinon'
+rewire = require 'rewire'
+Backbone = require 'backbone'
+{ fabricate } = require 'antigravity'
 
 OrderedSet = rewire '../../models/ordered_set.coffee'
 

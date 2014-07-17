@@ -1,8 +1,8 @@
-_               = require 'underscore'
-Backbone        = require 'backbone'
-sinon           = require 'sinon'
-{ fabricate }   = require 'antigravity'
-CurrentUser     = require '../../models/current_user'
+_ = require 'underscore'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+{ fabricate } = require 'antigravity'
+CurrentUser = require '../../models/current_user'
 
 describe 'CurrentUser', ->
   beforeEach ->

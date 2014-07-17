@@ -1,9 +1,9 @@
-jade            = require 'jade'
-path            = require 'path'
-fs              = require 'fs'
-Backbone        = require 'backbone'
-{ fabricate }   = require 'antigravity'
-Profile         = require '../../../models/profile'
+jade = require 'jade'
+path = require 'path'
+fs = require 'fs'
+Backbone = require 'backbone'
+{ fabricate } = require 'antigravity'
+Profile = require '../../../models/profile'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../templates/#{templateName}.jade"

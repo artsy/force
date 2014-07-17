@@ -1,13 +1,13 @@
-_               = require 'underscore'
-rewire          = require 'rewire'
-benv            = require 'benv'
-Backbone        = require 'backbone'
-sinon           = require 'sinon'
-{ resolve }     = require 'path'
-{ fabricate }   = require 'antigravity'
+_ = require 'underscore'
+rewire = require 'rewire'
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+{ resolve } = require 'path'
+{ fabricate } = require 'antigravity'
 
-Icon         = require '../../../../models/icon.coffee'
-Profile      = require '../../../../models/profile.coffee'
+Icon = require '../../../../models/icon.coffee'
+Profile = require '../../../../models/profile.coffee'
 
 describe 'ProfileIconUpload', ->
 
@@ -41,9 +41,9 @@ describe 'ProfileIconUpload', ->
           (resolve __dirname, '../../client/profile_icon_upload.coffee'), []
         )
         @profileIconUpload = new @ProfileIconUpload
-          el         : $ '.settings-profile-icon-upload'
-          model      : @profile.icon()
-          profile    : @profile
+          el: $ '.settings-profile-icon-upload'
+          model: @profile.icon()
+          profile: @profile
           accessToken: @accessToken
         done()
 
@@ -67,9 +67,9 @@ describe 'ProfileIconUpload', ->
           (resolve __dirname, '../../client/profile_icon_upload.coffee'), []
         )
         @profileIconUpload = new @ProfileIconUpload
-          el         : $ '.settings-profile-icon-upload'
-          model      : @profile.icon()
-          profile    : @profile
+          el: $ '.settings-profile-icon-upload'
+          model: @profile.icon()
+          profile: @profile
           accessToken: @accessToken
         done()
 

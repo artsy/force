@@ -1,8 +1,8 @@
 #
 # Redirect unsupported browsers to an unsupported browser page
 #
-{ parse }      = require 'url'
-uaParser       = require 'ua-parser'
+{ parse } = require 'url'
+uaParser = require 'ua-parser'
 
 isUnsupported = (ua, req) ->
   (ua.family is 'IE' and ua.major < 9) and

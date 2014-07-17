@@ -1,14 +1,14 @@
-_               = require 'underscore'
-rewire          = require 'rewire'
-benv            = require 'benv'
-Backbone        = require 'backbone'
-sinon           = require 'sinon'
-Artist          = require '../../../models/artist'
-{ resolve }     = require 'path'
-{ fabricate }   = require 'antigravity'
+_ = require 'underscore'
+rewire = require 'rewire'
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+Artist = require '../../../models/artist'
+{ resolve } = require 'path'
+{ fabricate } = require 'antigravity'
 
-elWidth   = 1000
-fixture   = """
+elWidth = 1000
+fixture = """
   <div class='artists-featured-carousel' style='width: #{elWidth}px;'>
     <div class='afc-next'></div>
     <div class='afc-prev'></div>
@@ -120,8 +120,8 @@ describe 'Artists client-side code', ->
 
     describe '#setupFollowButtons', ->
       before ->
-        @artists    = _.times(3, (-> new Artist(fabricate 'artist')))
-        @$fixture   = _.reduce(@artists, ($memo, artist) ->
+        @artists = _.times(3, (-> new Artist(fabricate 'artist')))
+        @$fixture = _.reduce(@artists, ($memo, artist) ->
           $div = $('<div class="fixture"></div>')
           $div.data 'id', artist.id
           $memo.append $div

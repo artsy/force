@@ -1,19 +1,19 @@
-Backbone            = require 'backbone'
-ZoomView            = require '../../../components/modal/zoom.coffee'
-mediator            = require '../../../lib/mediator.coffee'
-CurrentUser         = require '../../../models/current_user.coffee'
-{ isTouchDevice }   = require '../../../components/util/device.coffee'
-FillwidthView       = require '../../../components/fillwidth_row/view.coffee'
+Backbone = require 'backbone'
+ZoomView = require '../../../components/modal/zoom.coffee'
+mediator = require '../../../lib/mediator.coffee'
+CurrentUser = require '../../../models/current_user.coffee'
+{ isTouchDevice } = require '../../../components/util/device.coffee'
+FillwidthView = require '../../../components/fillwidth_row/view.coffee'
 
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 
 module.exports = class AuctionResultsView extends Backbone.View
   events:
-    'click .auction-lot-image-zoom'         : 'zoomImage'
-    'click .auction-lot-sale-signup'        : 'signUp'
-    'click .auction-lots-feedback-link'     : 'feedback'
-    'click .auction-lot'                    : 'onRowClick'
-    'click a[data-client]'                  : 'intercept'
+    'click .auction-lot-image-zoom': 'zoomImage'
+    'click .auction-lot-sale-signup': 'signUp'
+    'click .auction-lots-feedback-link': 'feedback'
+    'click .auction-lot': 'onRowClick'
+    'click a[data-client]': 'intercept'
 
   initialize: (options) ->
     { @artist, @artworks } = options

@@ -1,12 +1,12 @@
-_               = require 'underscore'
-jade            = require 'jade'
-path            = require 'path'
-fs              = require 'fs'
-Backbone        = require 'backbone'
-{ fabricate }   = require 'antigravity'
-Artist          = require '../../../../models/artist'
-AuctionLots     = require '../../../../collections/auction_lots'
-CurrentUser     = require '../../../../models/current_user'
+_ = require 'underscore'
+jade = require 'jade'
+path = require 'path'
+fs = require 'fs'
+Backbone = require 'backbone'
+{ fabricate } = require 'antigravity'
+Artist = require '../../../../models/artist'
+AuctionLots = require '../../../../collections/auction_lots'
+CurrentUser = require '../../../../models/current_user'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../../templates/#{templateName}.jade"
@@ -18,9 +18,9 @@ render = (templateName) ->
 describe 'Artist auction lots template', ->
   describe 'Sparse results', ->
     beforeEach ->
-      @artist       = new Artist fabricate 'artist'
-      @auctionLots  = new AuctionLots(_.times(10, (-> fabricate 'auction_result')), { state: { totalRecords: 10 }})
-      @template     = render('artist')(
+      @artist = new Artist fabricate 'artist'
+      @auctionLots = new AuctionLots(_.times(10, (-> fabricate 'auction_result')), { state: { totalRecords: 10 }})
+      @template = render('artist')(
         sd: {}
         artist: @artist
         auctionLots: @auctionLots
@@ -38,9 +38,9 @@ describe 'Artist auction lots template', ->
 
   describe 'Dense results', ->
     beforeEach ->
-      @artist       = new Artist fabricate 'artist'
-      @auctionLots  = new AuctionLots(_.times(26, (-> fabricate 'auction_result')), { state: { totalRecords: 26 }})
-      @template     = render('artist')(
+      @artist = new Artist fabricate 'artist'
+      @auctionLots = new AuctionLots(_.times(26, (-> fabricate 'auction_result')), { state: { totalRecords: 26 }})
+      @template = render('artist')(
         sd: {}
         artist: @artist
         auctionLots: @auctionLots
@@ -54,9 +54,9 @@ describe 'Artist auction lots template', ->
 
   describe 'Not logged in', ->
     beforeEach ->
-      @artist       = new Artist fabricate 'artist'
-      @auctionLots  = new AuctionLots([fabricate 'auction_result'], { state: { totalRecords: 1 }})
-      @template     = render('artist')(
+      @artist = new Artist fabricate 'artist'
+      @auctionLots = new AuctionLots([fabricate 'auction_result'], { state: { totalRecords: 1 }})
+      @template = render('artist')(
         sd: {}
         artist: @artist
         auctionLots: @auctionLots
@@ -67,10 +67,10 @@ describe 'Artist auction lots template', ->
 
   describe 'Logged in', ->
     beforeEach ->
-      @artist       = new Artist fabricate 'artist'
-      @auctionLots  = new AuctionLots([fabricate 'auction_result'], { state: { totalRecords: 1 }})
-      @user         = new CurrentUser fabricate 'user'
-      @template     = render('artist')(
+      @artist = new Artist fabricate 'artist'
+      @auctionLots = new AuctionLots([fabricate 'auction_result'], { state: { totalRecords: 1 }})
+      @user = new CurrentUser fabricate 'user'
+      @template = render('artist')(
         sd: {}
         artist: @artist
         auctionLots: @auctionLots

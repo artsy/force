@@ -1,9 +1,9 @@
-_             = require 'underscore'
-routes        = require '../routes'
-sinon         = require 'sinon'
-Backbone      = require 'backbone'
+_ = require 'underscore'
+routes = require '../routes'
+sinon = require 'sinon'
+Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
-CurrentUser   = require '../../../models/current_user.coffee'
+CurrentUser = require '../../../models/current_user.coffee'
 
 describe '#auctionRegistration', ->
 
@@ -11,13 +11,13 @@ describe '#auctionRegistration', ->
     sinon.stub Backbone, 'sync'
     @req = { params: { id: 'awesome-sale' } }
     @res =
-      status  : sinon.stub()
-      render  : sinon.stub()
+      status: sinon.stub()
+      render: sinon.stub()
       redirect: sinon.stub()
-      locals  :
+      locals:
         sd:
           ASSET_PATH: "http://localhost:5000"
-          API_URL : 'http://localhost:5000'
+          API_URL: 'http://localhost:5000'
     @next = sinon.stub()
 
   afterEach ->
@@ -79,13 +79,13 @@ describe '#bid', ->
     sinon.stub Backbone, 'sync'
     @req = { params: { id: 'awesome-sale', artwork: 'artwork-id' }, query: { bid: '50000'} }
     @res =
-      status  : sinon.stub()
-      render  : sinon.stub()
+      status: sinon.stub()
+      render: sinon.stub()
       redirect: sinon.stub()
-      locals  :
+      locals:
         sd:
           ASSET_PATH: "http://localhost:5000"
-          API_URL : 'http://localhost:5000'
+          API_URL: 'http://localhost:5000'
     @next = sinon.stub()
 
   afterEach ->

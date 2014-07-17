@@ -1,6 +1,6 @@
-_           = require 'underscore'
-ModalView   = require './view.coffee'
-Page        = require '../../models/page.coffee'
+_ = require 'underscore'
+ModalView = require './view.coffee'
+Page = require '../../models/page.coffee'
 
 module.exports = class ModalPageView extends ModalView
   className: 'page-modal'

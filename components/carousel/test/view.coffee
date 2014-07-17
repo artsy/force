@@ -1,13 +1,13 @@
-_               = require 'underscore'
-benv            = require 'benv'
-fs              = require 'fs'
-jade            = require 'jade'
-sinon           = require 'sinon'
-path            = require 'path'
-{ fabricate }   = require 'antigravity'
-{ resolve }     = require 'path'
+_ = require 'underscore'
+benv = require 'benv'
+fs = require 'fs'
+jade = require 'jade'
+sinon = require 'sinon'
+path = require 'path'
+{ fabricate } = require 'antigravity'
+{ resolve } = require 'path'
 AdditionalImage = require '../../../models/additional_image'
-Backbone        = require 'backbone'
+Backbone = require 'backbone'
 
 render = (template) ->
   filename = path.resolve __dirname, "../#{template}.jade"

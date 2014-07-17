@@ -1,10 +1,10 @@
-_               = require 'underscore'
-sinon           = require 'sinon'
-Backbone        = require 'backbone'
-moment          = require 'moment'
-{ fabricate }   = require 'antigravity'
-ClockMixin      = require '../../../models/mixins/clock'
-sd              = require('sharify').data
+_ = require 'underscore'
+sinon = require 'sinon'
+Backbone = require 'backbone'
+moment = require 'moment'
+{ fabricate } = require 'antigravity'
+ClockMixin = require '../../../models/mixins/clock'
+sd = require('sharify').data
 
 class Model extends Backbone.Model
   _.extend @prototype, ClockMixin

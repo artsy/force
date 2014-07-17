@@ -1,13 +1,13 @@
-_                 = require 'underscore'
-benv              = require 'benv'
-Backbone          = require 'backbone'
-sinon             = require 'sinon'
-{ resolve }       = require 'path'
-{ fabricate }     = require 'antigravity'
-Genes             = require '../../../collections/genes'
-Gene              = require '../../../models/gene'
-Artist            = require '../../../models/artist'
-RelatedGenesView  = benv.requireWithJadeify resolve(__dirname, '../view.coffee'), ['genesTemplate']
+_ = require 'underscore'
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+{ resolve } = require 'path'
+{ fabricate } = require 'antigravity'
+Genes = require '../../../collections/genes'
+Gene = require '../../../models/gene'
+Artist = require '../../../models/artist'
+RelatedGenesView = benv.requireWithJadeify resolve(__dirname, '../view.coffee'), ['genesTemplate']
 
 describe 'RelatedGenesView', ->
 
@@ -53,8 +53,8 @@ describe 'RelatedGenesView', ->
 
       it 'renders the right content', ->
         genes = {
-          'Catitudeness' : 'catitudeness'
-          'Bittyness' : 'bittyness'
+          'Catitudeness': 'catitudeness'
+          'Bittyness': 'bittyness'
         }
         _.last(Backbone.sync.args)[2].success {related_genes: genes}
         @view.$el.html().should.include "<a href=\"/gene/catitudeness\">Catitudeness</a>"

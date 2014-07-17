@@ -1,7 +1,7 @@
-Backbone          = require 'backbone'
-SearchBarView     = require '../../../../components/search_bar/view.coffee'
-analytics         = require '../../../../lib/analytics.coffee'
-followedTemplate  = -> require('../../templates/followed.jade') arguments...
+Backbone = require 'backbone'
+SearchBarView = require '../../../../components/search_bar/view.coffee'
+analytics = require '../../../../lib/analytics.coffee'
+followedTemplate = -> require('../../templates/followed.jade') arguments...
 
 # Common functionality between views with auto-complete/following
 module.exports =
@@ -15,12 +15,12 @@ module.exports =
 
   setupSearch: (options = {}) ->
     @searchBarView = new SearchBarView
-      mode         : options.mode
-      restrictType : options.restrictType
-      el           : @$('#personalize-search-container')
-      $input       : @$searchInput ?= @$('#personalize-search')
-      autoselect   : true
-      displayKind  : false
+      mode: options.mode
+      restrictType: options.restrictType
+      el: @$('#personalize-search-container')
+      $input: @$searchInput ?= @$('#personalize-search')
+      autoselect: true
+      displayKind: false
 
     @listenTo @searchBarView, 'search:selected', @follow
 
@@ -44,8 +44,8 @@ module.exports =
     analytics.track.click @analyticsFollowMessage, label: analytics.modelNameAndIdToLabel(displayModel, model.get('id'))
 
   unfollow: (e) ->
-    id      = $(e.currentTarget).data 'id'
-    model   = @followed.remove id
+    id = $(e.currentTarget).data 'id'
+    model = @followed.remove id
     @following.unfollow id
 
     displayModel = model.get('display_model') or 'displayModelUnknown'

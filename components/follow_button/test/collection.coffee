@@ -1,13 +1,13 @@
-_               = require 'underscore'
-sd              = require('sharify').data
-benv            = require 'benv'
-should          = require 'should'
-sinon           = require 'sinon'
-Backbone        = require 'backbone'
-Follow          = require '../model'
-Profile         = require '../../../models/profile'
-{ fabricate }   = require 'antigravity'
-Following       = require '../collection'
+_ = require 'underscore'
+sd = require('sharify').data
+benv = require 'benv'
+should = require 'should'
+sinon = require 'sinon'
+Backbone = require 'backbone'
+Follow = require '../model'
+Profile = require '../../../models/profile'
+{ fabricate } = require 'antigravity'
+Following = require '../collection'
 
 describe 'Following collection', ->
   before (done) ->
@@ -18,16 +18,16 @@ describe 'Following collection', ->
     benv.teardown()
 
   beforeEach ->
-    @follow1    = new Follow id: '111', name: 'follow1', profile: id: 'profile-1'
-    @follow2    = new Follow id: '222', name: 'follow2', profile: id: 'profile-2'
-    @following  = new Following null, kind: 'profile'
+    @follow1 = new Follow id: '111', name: 'follow1', profile: id: 'profile-1'
+    @follow2 = new Follow id: '222', name: 'follow2', profile: id: 'profile-2'
+    @following = new Following null, kind: 'profile'
     @following.reset()
     @following.add @follow1
 
   describe "#initialize", ->
     it 'binds to add / remove callbacks to proxy model specific event triggers', ->
-      onAdd     = sinon.spy()
-      onRemove  = sinon.spy()
+      onAdd = sinon.spy()
+      onRemove = sinon.spy()
       @following.once "add:#{@follow2.get('profile').id}", onAdd
       @following.once "remove:#{@follow2.get('profile').id}", onRemove
       @following.add @follow2
@@ -118,8 +118,8 @@ describe 'Following collection', ->
 
     describe "#follow", ->
       it 'creates a follow through the API and updates the collection', ->
-        onAdd       = sinon.spy()
-        onSuccess   = sinon.spy()
+        onAdd = sinon.spy()
+        onSuccess = sinon.spy()
         @following.once "add:#{@profileId2}", onAdd
         @following.follow @profileId2, success: onSuccess
         Backbone.sync.args[0][0].should.equal 'create'

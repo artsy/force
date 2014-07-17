@@ -1,6 +1,6 @@
-_                   = require 'underscore'
-Backbone            = require 'backbone'
-{ compactObject }   = require './mixins/compact_object.coffee'
+_ = require 'underscore'
+Backbone = require 'backbone'
+{ compactObject } = require './mixins/compact_object.coffee'
 
 module.exports = class Location extends Backbone.Model
   defaults: ->
@@ -78,7 +78,7 @@ module.exports = class Location extends Backbone.Model
       name: @get('name')
       address: compactObject {
         "@type": "PostalAddress"
-        streetAddress : address
+        streetAddress: address
         addressLocality: @get('city')
         addressRegion: @get('state')
         postalCode: @get('postal_code')

@@ -1,7 +1,7 @@
-_               = require 'underscore'
-Backbone        = require 'backbone'
-Artwork         = require './artwork.coffee'
-Partner         = require './partner.coffee'
+_ = require 'underscore'
+Backbone = require 'backbone'
+Artwork = require './artwork.coffee'
+Partner = require './partner.coffee'
 PartnerLocation = require './partner_location.coffee'
 { API_URL, SESSION_ID } = require('sharify').data
 
@@ -11,7 +11,7 @@ module.exports = class Order extends Backbone.Model
 
   submit: (options = {}) ->
     model = new Backbone.Model
-      credit_card_uri : options.creditCardUri
+      credit_card_uri: options.creditCardUri
     model.isNew = -> false
     model.url = "#{@url()}/submit"
     model.save null,

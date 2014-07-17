@@ -1,14 +1,14 @@
-_                       = require 'underscore'
-Backbone                = require 'backbone'
-Genes                   = require '../../../collections/genes.coffee'
-sd                      = require('sharify').data
-FillwidthView           = require '../../../components/fillwidth_row/view.coffee'
-CurrentUser             = require '../../../models/current_user.coffee'
-itemTemplate            = -> require('../templates/follows_item.jade') arguments...
-hintTemplate            = -> require('../templates/empty_hint.jade') arguments...
-Artist                  = require '../../../models/artist.coffee'
-Gene                    = require '../../../models/gene.coffee'
-SuggestedGenesView      = require '../../../components/suggested_genes/view.coffee'
+_ = require 'underscore'
+Backbone = require 'backbone'
+Genes = require '../../../collections/genes.coffee'
+sd = require('sharify').data
+FillwidthView = require '../../../components/fillwidth_row/view.coffee'
+CurrentUser = require '../../../models/current_user.coffee'
+itemTemplate = -> require('../templates/follows_item.jade') arguments...
+hintTemplate = -> require('../templates/empty_hint.jade') arguments...
+Artist = require '../../../models/artist.coffee'
+Gene = require '../../../models/gene.coffee'
+SuggestedGenesView = require '../../../components/suggested_genes/view.coffee'
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 
 kindToModel = artist: Artist, gene: Gene

@@ -1,11 +1,11 @@
-Backbone       = require 'backbone'
-sinon          = require 'sinon'
+Backbone = require 'backbone'
+sinon = require 'sinon'
 PartnerArtists = require '../../../../collections/partner_artists.coffee'
-_              = require 'underscore'
-benv           = require 'benv'
-{ resolve }    = require 'path'
-{ fabricate }  = require 'antigravity'
-rewire         = require 'rewire'
+_ = require 'underscore'
+benv = require 'benv'
+{ resolve } = require 'path'
+{ fabricate } = require 'antigravity'
+rewire = require 'rewire'
 
 PartnerArtistsListView = rewire '../../client/artists_list'
 

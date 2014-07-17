@@ -1,12 +1,12 @@
-_               = require 'underscore'
-benv            = require 'benv'
-sinon           = require 'sinon'
-Backbone        = require 'backbone'
-Artwork         = require '../../../../../models/artwork'
-jade            = require 'jade'
-fs              = require 'fs'
-{ fabricate }   = require 'antigravity'
-{ resolve }     = require 'path'
+_ = require 'underscore'
+benv = require 'benv'
+sinon = require 'sinon'
+Backbone = require 'backbone'
+Artwork = require '../../../../../models/artwork'
+jade = require 'jade'
+fs = require 'fs'
+{ fabricate } = require 'antigravity'
+{ resolve } = require 'path'
 
 render = (templateName) ->
   filename = resolve __dirname, "../#{templateName}.jade"

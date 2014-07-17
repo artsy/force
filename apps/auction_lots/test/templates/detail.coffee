@@ -1,17 +1,17 @@
-_               = require 'underscore'
-jade            = require 'jade'
-path            = require 'path'
-fs              = require 'fs'
-Backbone        = require 'backbone'
-benv            = require 'benv'
-{ fabricate }   = require 'antigravity'
-{ resolve }     = require 'path'
+_ = require 'underscore'
+jade = require 'jade'
+path = require 'path'
+fs = require 'fs'
+Backbone = require 'backbone'
+benv = require 'benv'
+{ fabricate } = require 'antigravity'
+{ resolve } = require 'path'
 
-Artist        = require '../../../../models/artist'
-AuctionLot    = require '../../../../models/auction_lot'
-AuctionLots   = require '../../../../collections/auction_lots'
-Artworks      = require '../../../../collections/artworks'
-CurrentUser   = require '../../../../models/current_user'
+Artist = require '../../../../models/artist'
+AuctionLot = require '../../../../models/auction_lot'
+AuctionLots = require '../../../../collections/auction_lots'
+Artworks = require '../../../../collections/artworks'
+CurrentUser = require '../../../../models/current_user'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../../templates/#{templateName}.jade"
@@ -24,10 +24,10 @@ describe 'Detail auction lots template', ->
   before (done) ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'
-      @lot          = new AuctionLot fabricate 'auction_result'
-      @artist       = new Artist fabricate 'artist', published_artworks_count: 2, forsale_artworks_count: 1
-      @artworks     = new Artworks [fabricate 'artwork']
-      @auctionLots  = new AuctionLots _.times(3, -> new AuctionLot fabricate 'auction_result'), state: totalRecords: 1
+      @lot = new AuctionLot fabricate 'auction_result'
+      @artist = new Artist fabricate 'artist', published_artworks_count: 2, forsale_artworks_count: 1
+      @artworks = new Artworks [fabricate 'artwork']
+      @auctionLots = new AuctionLots _.times(3, -> new AuctionLot fabricate 'auction_result'), state: totalRecords: 1
 
       benv.render resolve(__dirname, '../../templates/detail.jade'), {
         sd: {}
@@ -36,8 +36,8 @@ describe 'Detail auction lots template', ->
         artworks: @artworks
         auctionLots: @auctionLots
       }, =>
-        @$template  = $('body')
-        @template   = @$template.html()
+        @$template = $('body')
+        @template = @$template.html()
 
         done()
 
