@@ -1,0 +1,53 @@
+@import '../../../components/stylus_lib'
+@import './lib'
+
+images1-offset = 200px
+
+#about2-section1
+  > .about2-pull-blurb:first-of-type
+    margin-top 70px
+    width (column-width * 3) + (gutter-width * 4)
+
+#about2-section1-images1
+  position relative
+  top -(images1-offset)
+  ul
+    display inline-block
+    vertical-align top
+    width column-width * 3 + gutter-width * 4
+    &:first-child
+      margin-right gutter-width * 2
+  li
+    margin-bottom 50px
+  img
+    width 100%
+    margin-bottom 10px
+
+#about2-section1-images1-left
+  clearfix()
+  padding-top (images1-offset + 70px)
+  li
+    float right
+  li:nth-child(2n-1)
+    width column-width * 2 + gutter-width * 2
+
+#about2-section1-images1-right
+  clearfix()
+  li
+    float left
+  li:nth-child(2n-2)
+    width column-width * 2 + gutter-width * 2
+
+.about2-right-half-width-column
+  .about2-pull-blurb
+    width (column-width * 3) + (gutter-width * 4)
+  li
+    margin-top 70px
+
+.about2-left-half-width-column
+  small
+    font-size 15px
+    color gray-dark-color
+    font-style italic
+    margin 5px 0 70px 0
+    display block
