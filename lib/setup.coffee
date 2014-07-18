@@ -199,4 +199,5 @@ module.exports = (app) ->
 
   # Finally 404 and error handling middleware when the request wasn't handled
   # successfully by anything above.
-  require("../apps/error_handler")(app)
+  require('artsy-error-handler') app,
+    template: path.resolve(__dirname, '../components/main_layout/templates/error.jade')
