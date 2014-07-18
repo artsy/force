@@ -11,6 +11,8 @@ module.exports.init = ->
   new ArtworkRouter artwork: artwork, artist: artist
   Backbone.history.start pushState: true
 
+  require './analytics.coffee'
+
   # Reflection doesn't like easter eggs:(
   return if navigator.userAgent.match('PhantomJS')
   require('./ascii-easter-egg.coffee')(artwork)
