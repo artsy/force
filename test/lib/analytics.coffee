@@ -4,6 +4,8 @@ analytics = require '../../lib/analytics'
 Artwork = require '../../models/artwork'
 sinon = require 'sinon'
 sd = require('sharify').data
+benv = require 'benv'
+_ = require 'underscore'
 
 describe 'analytics', ->
 
@@ -133,7 +135,6 @@ describe 'analytics', ->
           @mixpanelStub.register.args.length.should.equal 1
           @mixpanelStub.register.args[0][0]['User Type'].should.equal 'Logged Out'
 
-
       describe '#multi', ->
 
         it 'sets the object ID to the concatenation of shortened MD5 hashes', (done) ->
@@ -146,6 +147,57 @@ describe 'analytics', ->
             @gaStub.args[2][4].should.equal 'Artwork:cb7a5c6f-ab197545'
             done()
           , 1000
+
+      describe 'with a DOM', ->
+        beforeEach (done) ->
+          benv.setup =>
+            benv.expose $: benv.require 'jquery'
+            done()
+
+        after ->
+          benv.teardown()
+
+        describe '#trackLinks', ->
+          beforeEach ->
+            sinon.stub _, 'delay'
+            $('body').html """
+              <a href="/foobar" class="click-me">Click me</a>
+              <a href="/foobar" target="_blank" class="click-me-external">Click me</a>
+            """
+            rewiredAnalytics.trackLinks '.click-me', 'Clicked the link'
+            rewiredAnalytics.trackLinks '.click-me-external', 'Clicked the external link'
+
+          afterEach ->
+            _.delay.restore()
+            $('body').html ''
+
+          it 'tracks links', ->
+            $('.click-me').click()
+            @gaStub.args[2][1].eventAction.should.equal 'Clicked the link'
+
+          it 'sets up a delayed callback incase mixpanel doesnt return', ->
+            $('.click-me').click()
+            _.delay.args[0][1].should.equal 300
+            _.delay.args[0][0]() # Run the callback
+            window.location.should.include '/foobar'
+
+          it 'does not run a delayed callback if the link is external', ->
+            $('.click-me-external').click()
+            @gaStub.args[2][1].eventAction.should.equal 'Clicked the external link'
+            _.delay.called.should.be.false
+
+          describe 'with stubbed track.click', ->
+            beforeEach ->
+              sinon.stub rewiredAnalytics.track, 'click'
+
+            afterEach ->
+              rewiredAnalytics.track.click.restore()
+
+            it 'passes the callback to track', ->
+              $('.click-me').click()
+              rewiredAnalytics.track.click.args[0][0].should.equal 'Clicked the link'
+              rewiredAnalytics.track.click.args[0][2]() # Run the callback
+              window.location.should.include 'foobar'
 
     describe '#abTest', ->
 
