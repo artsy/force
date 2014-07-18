@@ -63,14 +63,13 @@ categories =
 
 module.exports.track =
   _.reduce(Object.keys(categories), (memo, kind) ->
-    memo[kind] = (description, options={}) ->
-
+    memo[kind] = (description, options = {}, callback) ->
       # Don't track admins
-      return if sd.CURRENT_USER?.type == 'Admin'
+      return if sd.CURRENT_USER?.type is 'Admin'
 
       # Format and Send mixpanel event
       unless typeof mixpanel is 'undefined'
-        options.category = categories[kind] || categories.other
+        options.category = categories[kind] or categories.other
 
         _.defaults options,
           queryString: window?.location.search
@@ -80,7 +79,7 @@ module.exports.track =
           user_id: sd.CURRENT_USER?.id
           lab_features: sd.CURRENT_USER?.lab_features
 
-        mixpanel.track? description, options
+        mixpanel.track? description, options, callback
 
       # Send google analytics event
       ga? 'send', {
@@ -199,3 +198,22 @@ module.exports.load = (callback) ->
     callback()
   if mixpanel.__loaded then cb() else mixpanel.set_config(loaded: cb)
   setTimeout cb, 5000 # Ensure we callback whether mixpanel is working or not
+
+# Based on some code via http://stackoverflow.com/a/18542443/160937
+# Implementation similar to mixpanel.track_links that accomodates dynamically
+# added elements and delgates to our track.click wrapper
+#
+# ```
+# trackLinks '.abf-button', 'Clicked "Bid" on the artwork page'
+# ```
+module.exports.trackLinks = (selector, description, options = {}) ->
+  $(document).on 'click', selector, (e) ->
+    callback = ->
+      return if newTab
+      window.location = options.url
+    newTab = e.which is 2 or e.metaKey or e.target.target is '_blank'
+    options.url = e.target.href
+    unless newTab
+      e.preventDefault()
+      _.delay callback, 300
+    module.exports.track.click description, options, callback
