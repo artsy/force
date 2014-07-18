@@ -1,6 +1,8 @@
 @import '../../../components/stylus_lib'
-@import './hero_unit'
 @import './lib'
+@import './hero_unit'
+@import './section1'
+@import './grid'
 
 .body-about2
   #main-layout-header
@@ -11,6 +13,8 @@
 .about2-container
   width container-width
   margin auto
+  font-size 18px
+  line-height 28px
 
 .about2-section-header
   font-size 42px
@@ -30,3 +34,45 @@
     display block
     position absolute
     left calc(50% \- @width / 2)
+
+.about2-section-preamble
+  width (gutter-width * 2) + (column-width * 2)
+  line-height 28px
+  &:first-letter
+    font-size 40px
+
+.about2-pull-blurb
+  h1
+    avant-garde()
+    font-size 11px
+  h2
+    font-size 42px
+    line-height 48px
+  h1 + h2
+    margin-top 3px
+  h2 + p
+    margin-top 40px
+
+.about2-avant-garde-caption
+  avant-garde()
+  font-size 11px
+  em
+    color gray-dark-color
+    font-style normal
+    &:before
+      content '–'
+      padding 0 5px
+      display inline-block
+
+.about2-left-half-width-column
+  width column-width * 3 + gutter-width * 4
+  margin-right gutter-width * 2
+
+.about2-right-half-width-column
+  width column-width * 3 + gutter-width * 4
+
+.about2-left-half-width-column, .about2-right-half-width-column
+  display inline-block
+  vertical-align top
+  img
+    max-width 100%
