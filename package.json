@@ -31,6 +31,7 @@
     "artsy-xapp-middleware": "git://github.com/artsy/artsy-xapp-middleware.git",
     "artsy-passport": "git://github.com/artsy/artsy-passport.git",
     "artsy-backbone-mixins": "git://github.com/artsy/artsy-backbone-mixins.git",
+    "artsy-error-handler": "git://github.com/artsy/artsy-error-handler.git",
     "konami-js": "*",
     "redis": "*",
     "connect-flash": "*",
