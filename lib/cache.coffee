@@ -77,3 +77,7 @@ if NODE_ENV isnt "test" and REDIS_URL
       callback null, deserialized
     else
       callback()
+
+@flushall = (callback) ->
+  return callback() unless client?
+  client.flushall callback

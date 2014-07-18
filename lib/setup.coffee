@@ -146,7 +146,6 @@ module.exports = (app) ->
 
   # Mount apps
   app.use require "../apps/home"
-
   # Needs to be above artwork and artist routes to support the /type/:id/* routes
   app.use require "../apps/auction_lots"
   app.use require "../apps/auction"
@@ -186,6 +185,7 @@ module.exports = (app) ->
   app.use require "../apps/static"
   # Shortcuts are prioritized last
   app.use require "../apps/shortcuts"
+  app.use require "../apps/clear_cache"
 
   # Route to ping for system up
   app.get '/system/up', (req, res) ->
