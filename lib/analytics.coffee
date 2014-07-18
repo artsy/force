@@ -208,12 +208,15 @@ module.exports.load = (callback) ->
 # ```
 module.exports.trackLinks = (selector, description, options = {}) ->
   $(document).on 'click', selector, (e) ->
-    callback = ->
-      return if newTab
-      window.location = options.url
+    locationHandledAlready = e.isDefaultPrevented()
     newTab = e.which is 2 or e.metaKey or e.target.target is '_blank'
     options.url = e.target.href
-    unless newTab
+    callback = ->
+      return if newTab or locationHandledAlready
+      window.location = options.url
+    unless newTab or locationHandledAlready
       e.preventDefault()
       _.delay callback, 300
-    module.exports.track.click description, options, callback
+      module.exports.track.click description, options, callback
+    else # Track click without any funny-business
+      module.exports.track.click description, options
