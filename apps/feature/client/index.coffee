@@ -7,5 +7,3 @@ module.exports.init = ->
     el: $('#feature')
     model: new Feature sd.FEATURE
     tab: sd.TAB
-
-  require './analytics.coffee'
