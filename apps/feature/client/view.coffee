@@ -56,11 +56,13 @@ module.exports = class FeatureView extends Backbone.View
     artworks = Artworks.fromSale(new Backbone.Collection newSaleArtworks)
 
     unless @artworkFilteringSetup
-      if fullCollection.length > @minArtworksForFilter
+      if @isAuction() and fullCollection.length > @minArtworksForFilter
         @setupArtworkFiltering fullCollection, artworks
         @renderArtistList artworks
 
     @appendArtworks artworks
+
+  isAuction: -> @sale?.isAuction()
 
   doneFetchingSaleArtworks: (saleFeaturedSet) =>
     @setupArtworks saleFeaturedSet
@@ -170,8 +172,9 @@ module.exports = class FeatureView extends Backbone.View
   uniqueArtworksByArtist: (artworks) ->
     artists = {}
     artworks.filter (artwork) ->
-      return false if artists[artwork.get('artist').id]
-      artists[artwork.get('artist').id] = true
+      artistId = artwork.get('artist')?.id
+      return false if artists[artistId]
+      artists[artistId] = true
       true
 
   renderArtistList: (artworks) ->
