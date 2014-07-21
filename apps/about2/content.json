@@ -1,0 +1,20 @@
+{
+  "sections": [
+    "The Art World<br>Online",
+    "Collecting on<br>Artsy",
+    "The Art Genome<br>Project",
+    "Education",
+    "Working<br>At Artsy",
+    "Partnering<br>& Press"
+  ],
+  "hero": {
+    "title": "Artsy's mission is to make all the world's art accessible to anyone with an Internet connection.<br><br>We are a resource for art collecting and education.",
+    "images": [
+      "http://cl.ly/image/2h1F3j1e0D2h/img.jpg",
+      "http://cl.ly/image/2h1F3j1e0D2h/img.jpg"
+    ]
+  },
+  "section1": {
+    "title": "To make all the world’s art accesible, Artsy partners with top galleries, museums, institutions, & art fairs. Our growing collection of 140,000+ artworks is one of the largest availabe online and represents the scope of the art world.  We are creating a platform for art-lovers, collectors, students and educators to discover art."
+  }
+}
