@@ -1,5 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
+sd = require('sharify').data
+s3UploadForm = -> require('../templates/s3_upload.jade') arguments...
 
 module.exports = class ProfileIconUpload extends Backbone.View
   events:
@@ -16,16 +18,64 @@ module.exports = class ProfileIconUpload extends Backbone.View
 
     @listenTo @model, 'invalid', @onInvalid
 
-    @$file = @$('.spiu-file-input')
-    @$file.fileupload
-      add: @onImageAdd
+    @$formPlaceholder = @$('.spiu-form')
+
+    @encodedCredentials = @encode(sd.GEMINI_ACCOUNT_KEY, '') 
+
+    $.ajax
+      type: 'GET'
       dataType: 'json'
-      done: @onUploadComplete
+      url: "#{sd.GEMINI_APP}/uploads/new.json"
+      data: 
+        acl: 'private'
+      headers: { 'Authorization' : "Basic #{@encodedCredentials}"}
+      success: (resp) =>
+        @renderForm(resp)
+
+  renderForm: (data) ->
+    key = "#{data.policy_document.conditions[1][2]}/${filename}"
+    bucket = data.policy_document.conditions[0].bucket
+    @$formPlaceholder.html s3UploadForm(
+      acl: data.policy_document.conditions[2].acl
+      successAction: data.policy_document.conditions[3].success_action_status
+      base64Policy: data.policy_encoded
+      signature: data.signature
+      key: key
+      s3Key: sd.GEMINI_S3_ACCESS_KEY
+      uploadBucket: bucket
+    )
+    @attachFileUploadUI(bucket, key)
+
+  attachFileUploadUI: (bucket, key) ->
+    $form = @$('form')
+    metadata = { _type: 'ProfileIcon', id: @profile.get('id') }
+
+    $form.fileupload
+      type: 'POST'
+      dataType: 'xml'
+      done: (e, data) =>
+        fileName = data.files[0].name
+        key = key.replace('${filename}', fileName)
+        $.ajax
+          type: 'POST'
+          dataType: 'json'
+          url: "#{sd.GEMINI_APP}/entries.json"
+          data: { entry: { source_key: key, source_bucket: bucket, template_key: 'profile-icon', metadata: metadata } }
+          headers: { 'Authorization' : "Basic #{@encodedCredentials}"}
+          success: (resp) =>
+            @onUploadComplete()
+      add: (e, data) =>
+        fileName = data.files[0].name
+        fileType = data.files[0].type
+        $(@).find("form input[name='Content-Type']").val fileType  # We only know this after a file has been added.
+        data.submit()
       fail: @onFail
       progress: @onProgressUpdate
       stop: @onStop
-      url: @model.url()
 
+  encode: (key, secret) ->
+    btoa(unescape(encodeURIComponent([ key, secret ].join(':'))))
+    
   cacheSelectors: ->
     @$errorMessage = @$('.spiu-error-message')
     @$uploadButton = @$('.spiu-upload')
@@ -72,15 +122,9 @@ module.exports = class ProfileIconUpload extends Backbone.View
   onStop: =>
     @$progressIndicator.hide().css 'width', 0
 
-  onImageAdd: (e, data) =>
-    @model.set 'file', data.originalFiles[0]
-    if @model.isValid()
-      data.submit()
-        .error @onError
-
-  onUploadComplete: (e, data) =>
-    data.result.profileId = @profile.id
-    @profile.set 'icon', data.result
+  # Render processing message?
+  onUploadComplete: =>
+    @profile.set 'icon', { profileId: @profile.get('id') }
     @renderUploadedImage()
 
   onProgressUpdate: (e, data) =>
