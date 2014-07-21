@@ -7,7 +7,8 @@ var domGlobals = [
   'navigator',
   'document',
   'location',
-  'getComputedStyle'
+  'getComputedStyle',
+  'btoa'
 ];
 
 var globals = {};
@@ -24,7 +25,7 @@ module.exports.setup = function(callback) {
     done: function(errs, w) {
       global.window = w;
       domGlobals.forEach(function(varName) {
-        global[varName] = w[varName];
+        global[varName] = w[varName] || function(){};
       });
       if (callback) callback();
     }
