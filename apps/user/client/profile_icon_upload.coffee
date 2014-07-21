@@ -46,24 +46,26 @@ module.exports = class ProfileIconUpload extends Backbone.View
     )
     @attachFileUploadUI(bucket, key)
 
+  makeGeminiRequest: (data) =>
+    fileName = data.files[0].name
+    key = data.key.replace('${filename}', fileName)
+    metadata = { _type: 'ProfileIcon', id: @profile.get('id') }
+    $.ajax
+      type: 'POST'
+      dataType: 'json'
+      url: "#{sd.GEMINI_APP}/entries.json"
+      data: { entry: { source_key: key, source_bucket: data.bucket, template_key: 'profile-icon', metadata: metadata } }
+      headers: { 'Authorization' : "Basic #{@encodedCredentials}"}
+      success: (resp) =>
+        @onUploadComplete()
+
   attachFileUploadUI: (bucket, key) ->
     $form = @$('form')
-    metadata = { _type: 'ProfileIcon', id: @profile.get('id') }
-
     $form.fileupload
       type: 'POST'
       dataType: 'xml'
       done: (e, data) =>
-        fileName = data.files[0].name
-        key = key.replace('${filename}', fileName)
-        $.ajax
-          type: 'POST'
-          dataType: 'json'
-          url: "#{sd.GEMINI_APP}/entries.json"
-          data: { entry: { source_key: key, source_bucket: bucket, template_key: 'profile-icon', metadata: metadata } }
-          headers: { 'Authorization' : "Basic #{@encodedCredentials}"}
-          success: (resp) =>
-            @onUploadComplete()
+        @makeGeminiRequest(_.extend(data, { key: key, bucket: bucket }))
       add: (e, data) =>
         fileName = data.files[0].name
         fileType = data.files[0].type
