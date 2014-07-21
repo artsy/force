@@ -7,6 +7,7 @@ sd = require('sharify').data
 rewire = require 'rewire'
 UnsubscribeView = rewire '../client/view'
 UnsubscribeView.__set__ 'FlashMessage', flashStub = sinon.stub()
+emailTypes = require '../email_types.coffee'
 
 describe 'Unsubscribe View', ->
 
@@ -24,13 +25,7 @@ describe 'Unsubscribe View', ->
       sinon.stub Backbone, 'sync'
       benv.render resolve(__dirname, '../templates/index.jade'), {
         sd: {}
-        emailTypes:
-          'weekly_email': "Weekly Newsletters"
-          'personalized_email': "Personalized Emails"
-          'follow_users_email': "User Follow Emails"
-          'offer_emails': "Offer Emails"
-          'personalized_show_email': "Personalized Show Guide"
-          'personalized_artists_email': "Personalized Artists and Artworks Emails"
+        emailTypes: emailTypes
       }, =>
         UnsubscribeView.__set__ 'sd', { UNSUB_AUTH_TOKEN: 'cat' }
         @view = new UnsubscribeView
@@ -41,7 +36,7 @@ describe 'Unsubscribe View', ->
     Backbone.sync.restore()
 
   it 'renders checkboxes for each email type, including a select all', ->
-    _([ 'weekly_email', 'personalized_email', 'follow_users_email', 'offer_emails', 'personalized_show_email', 'personalized_artists_email' ]).each (type) =>
+    _(_.keys(emailTypes)).each (type) =>
       @view.$el.find("input[name='#{type}']").length.should.equal 1
     @view.$el.find("input[name='selectAll']").length.should.equal 1
 
