@@ -3,10 +3,9 @@
 
 images1-offset = 200px
 
-#about2-section1
-  > .about2-pull-blurb:first-of-type
-    margin-top 70px
-    width (column-width * 3) + (gutter-width * 4)
+#about2-pull-blurb-1
+  margin-top 70px
+  width (column-width * 3) + (gutter-width * 4)
 
 #about2-section1-images1
   position relative
@@ -39,7 +38,7 @@ images1-offset = 200px
     width column-width * 2 + gutter-width * 2
 
 .about2-right-half-width-column
-  .about2-pull-blurb
+  #about2-pull-blurb-2
     width (column-width * 3) + (gutter-width * 4)
   li
     margin-top 70px
@@ -51,3 +50,47 @@ images1-offset = 200px
     font-style italic
     margin 5px 0 70px 0
     display block
+
+#about2-pull-blurb-3
+  width (column-width * 2) + (gutter-width * 2)
+  margin-right gutter-width * 2
+  display inline-block
+  vertical-align top
+  button
+    font-style 11px
+    margin-top 50px
+    small-avant-garde()
+
+#about2-pull-blurb-3-artworks
+  width (column-width * 4) + (gutter-width * 6)
+  display inline-block
+  vertical-align top
+  column-gap gutter-width * 2
+  column-count 2
+  li
+    font-size 16px
+    color gray-dark-color
+    line-height 22px
+    margin-bottom 50px
+  img
+    max-width 100%
+    margin-bottom 20px
+
+#about2-pull-blurb-4
+  .about2-pull-blurb
+    width (column-width * 2) + (gutter-width * 3)
+    margin-right gutter-width
+  > img
+    width (column-width * 2) + (gutter-width * 2)
+    margin-right gutter-width * 2
+  > img, .about2-pull-blurb
+    display inline-block
+    vertical-align top
+  label
+    avant-garde()
+    small-avant-garde()
+    display block
+    margin-top 70px
+  input
+    width 300px
+    margin-top 10px

@@ -1,11 +1,12 @@
-{ fabricate } = require 'antigravity'
 _ = require 'underscore'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 routes = require '../routes'
-Page = require '../../../models/page.coffee'
+fs = require 'fs'
+{ resolve }  = require 'path'
+{ fabricate } = require 'antigravity'
 
-describe 'Post routes', ->
+describe 'About2 routes', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
@@ -17,8 +18,10 @@ describe 'Post routes', ->
 
   describe '#index', ->
 
-    it 'fetches the about2 page and turns it into useful locals', ->
+    it 'reads the json into locals', (done) ->
+      @res.render = (tmpl, locals) =>
+        data = JSON.parse fs.readFileSync(resolve __dirname, '../content.json')
+        tmpl.should.equal 'index'
+        locals.hero.title.should.include data.hero.title
+        done()
       routes.index @req, @res
-      _.last(Backbone.sync.args)[2].success fabricate 'page', content: '# This is one complex bit of content'
-      @res.render.args[0][0].should.equal 'index'
-      @res.render.args[0][1].heroTitle.should.include "This is one complex bit of content"

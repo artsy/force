@@ -1,0 +1,150 @@
+{
+  "hero": {
+    "title": "Artsy's mission is to make all the world's art accessible to anyone with an Internet connection.<br><br>We are a resource for art collecting and education.",
+    "images": [
+      "http://f.cl.ly/items/3A2u2C1o3J0v2e3g040b/bg.jpg",
+      "http://f.cl.ly/items/3A2u2C1o3J0v2e3g040b/bg.jpg"
+    ]
+  },
+  "sections": [
+    {
+      "title": "The Art World<br>Online",
+      "preamble": "To make all the world’s art accesible, Artsy partners with top galleries, museums, institutions, & art fairs. Our growing collection of 140,000+ artworks is one of the largest availabe online and represents the scope of the art world.  We are creating a platform for art-lovers, collectors, students and educators to discover art.",
+      "pullBlurb1": {
+        "h1": "The Artsy Collection",
+        "h2": "Our collection comes from leading galleries and museums around the world",
+        "images": [
+          {
+            "src": "http://cl.ly/image/2h1F3j1e0D2h/img.jpg",
+            "caption": "Gagosian Gallery - New York"
+          },
+          {
+            "src": "http://cl.ly/image/2h1F3j1e0D2h/img.jpg",
+            "caption": "Gagosian Gallery - New York"
+          },
+          {
+            "src": "http://cl.ly/image/2h1F3j1e0D2h/img.jpg",
+            "caption": "Gagosian Gallery - New York"
+          },
+          {
+            "src": "http://cl.ly/image/2h1F3j1e0D2h/img.jpg",
+            "caption": "Gagosian Gallery - New York"
+          },
+          {
+            "src": "http://cl.ly/image/2h1F3j1e0D2h/img.jpg",
+            "caption": "Gagosian Gallery - New York"
+          },
+          {
+            "src": "http://cl.ly/image/2h1F3j1e0D2h/img.jpg",
+            "caption": "Gagosian Gallery - New York"
+          },
+          {
+            "src": "http://cl.ly/image/2h1F3j1e0D2h/img.jpg",
+            "caption": "Gagosian Gallery - New York"
+          }
+        ]
+      },
+      "pullBlurb2": {
+        "h1": "Shows and Art Fairs",
+        "h2": "We cover international show openings and art fairs",
+        "p": "In striving to make the art world accessible to an international audience, Artsy has focused on providing comprehensive online coverage of art world events around the world. We want to provide a resource to stay informed and see the collections of shows and art fairs before they reach the public.",
+        "leftImages": [
+          {
+            "src": "http://cl.ly/image/0A3D2N2f3C2m/cimg.jpg",
+            "caption": "Image Courtesty of Armory Show"
+          },
+          {
+            "src": "http://cl.ly/image/0A3D2N2f3C2m/cimg.jpg",
+            "caption": "Image Courtesty of Armory Show"
+          },
+          {
+            "src": "http://cl.ly/image/0A3D2N2f3C2m/cimg.jpg",
+            "caption": "Image Courtesty of Armory Show"
+          }
+        ],
+        "rightImages": [
+          {
+            "src": "http://cl.ly/image/0y273x3i3x32/Image%202014-07-14%20at%205.13.16%20PM.png",
+            "author": "Artsy Editorial",
+            "caption": "Kanye West’s Surprise Performance at Design Miami/ Basel: Find Out Which Designers He Loves"
+          },
+          {
+            "src": "http://cl.ly/image/0y273x3i3x32/Image%202014-07-14%20at%205.13.16%20PM.png",
+            "author": "Artsy Editorial",
+            "caption": "Kanye West’s Surprise Performance at Design Miami/ Basel: Find Out Which Designers He Loves"
+          }
+        ]
+      },
+      "pullBlurb3": {
+        "h2": "Save works and curate sets on Artsy",
+        "p": "Artsy allows you to save and organize any works you find in our collection. “Sets” are customizable collections of works you find on Artsy that can be shared or made completely private.",
+        "button": "Sign up to start a Library",
+        "artworks": [
+          {
+            "src": "http://cl.ly/image/1H422v0M0V3m/cimg.jpg",
+            "artist": "John Currin",
+            "title": "Constance Towers",
+            "date": "2009",
+            "partner": "Gagosian Gallery"
+          },
+          {
+            "src": "http://cl.ly/image/1H422v0M0V3m/cimg.jpg",
+            "artist": "John Currin",
+            "title": "Constance Towers",
+            "date": "2009",
+            "partner": "Gagosian Gallery"
+          },
+          {
+            "src": "http://cl.ly/image/1H422v0M0V3m/cimg.jpg",
+            "artist": "John Currin",
+            "title": "Constance Towers",
+            "date": "2009",
+            "partner": "Gagosian Gallery"
+          },
+          {
+            "src": "http://cl.ly/image/1H422v0M0V3m/cimg.jpg",
+            "artist": "John Currin",
+            "title": "Constance Towers",
+            "date": "2009",
+            "partner": "Gagosian Gallery"
+          },
+          {
+            "src": "http://cl.ly/image/1H422v0M0V3m/cimg.jpg",
+            "artist": "John Currin",
+            "title": "Constance Towers",
+            "date": "2009",
+            "partner": "Gagosian Gallery"
+          },
+          {
+            "src": "http://cl.ly/image/1H422v0M0V3m/cimg.jpg",
+            "artist": "John Currin",
+            "title": "Constance Towers",
+            "date": "2009",
+            "partner": "Gagosian Gallery"
+          }
+        ]
+      },
+      "pullBlurb4": {
+        "h1": "Artsy Iphone App",
+        "h2": "Access from anywhere",
+        "p": "Making the art world accessible means making our collection availble wherever you go. Our iPhone app allows you to browse, save, and collect from anywhere.",
+        "src": "http://cl.ly/image/3c2Y0e3g321T/Screen%20Shot%202014-07-21%20at%204.40.19%20PM.png"
+      }
+    },
+    {
+      "title": "Collecting on<br>Artsy"
+    },
+    {
+      "title": "The Art Genome<br>Project"
+    },
+    {
+      "title": "Education"
+    },
+    {
+      "title": "Working<br>At Artsy"
+    },
+    {
+      "title": "Partnering<br>& Press"
+    }
+  ]
+}
