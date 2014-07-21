@@ -21,8 +21,8 @@ module.exports = class Icon extends Backbone.Model
   #   - render a default icon if there is none instead of "missing_image"
   #   - display an unprocessed original version if the image is waiting on a delayed job
   imageUrl: ->
-    if @hasImage 'square_140'
-      @sslUrl @get('image_url').replace(':version', 'square_140').replace('.jpg', '.png')
+    if @hasImage 'square140'
+      @sslUrl @get('image_url').replace(':version', 'square140').replace('.jpg', '.png')
     else if @hasImage 'square'
       @sslUrl @get('image_url').replace(':version', 'square').replace('.jpg', '.png')
     else if @has('image_filename') and _.isNull(@get('versions'))
