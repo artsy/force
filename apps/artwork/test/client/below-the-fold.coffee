@@ -1,15 +1,15 @@
-benv            = require 'benv'
-Backbone        = require 'backbone'
-sinon           = require 'sinon'
-{ resolve }     = require 'path'
-{ fabricate }   = require 'antigravity'
-Artwork           = require '../../../../models/artwork'
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+{ resolve } = require 'path'
+{ fabricate } = require 'antigravity'
+Artwork = require '../../../../models/artwork'
 
 describe 'BelowTheFoldView', ->
   before (done) ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'
-      @BelowTheFoldView  = require '../../client/below-the-fold'
+      @BelowTheFoldView = require '../../client/below-the-fold'
       Backbone.$ = $
       done()
 
@@ -18,13 +18,13 @@ describe 'BelowTheFoldView', ->
 
   beforeEach (done) ->
     sinon.stub Backbone, 'sync'
-    @setupLayeredSearchSpy   = sinon.spy @BelowTheFoldView::, 'setupLayeredSearch'
-    @setupSaleSpy            = sinon.spy @BelowTheFoldView::, 'setupSale'
-    @setupFairSpy            = sinon.spy @BelowTheFoldView::, 'setupFair'
+    @setupLayeredSearchSpy = sinon.spy @BelowTheFoldView::, 'setupLayeredSearch'
+    @setupSaleSpy = sinon.spy @BelowTheFoldView::, 'setupSale'
+    @setupFairSpy = sinon.spy @BelowTheFoldView::, 'setupFair'
 
-    @$fixture   = $('<div></div>')
-    @artwork    = new Artwork fabricate 'artwork'
-    @view       = new @BelowTheFoldView $el: @$fixture, artwork: @artwork
+    @$fixture = $('<div></div>')
+    @artwork = new Artwork fabricate 'artwork'
+    @view = new @BelowTheFoldView $el: @$fixture, artwork: @artwork
     done()
 
   afterEach ->

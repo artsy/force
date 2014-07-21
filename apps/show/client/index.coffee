@@ -1,21 +1,21 @@
-_                  = require 'underscore'
-sd                 = require('sharify').data
-Backbone           = require 'backbone'
-Artworks           = require '../../../collections/artworks.coffee'
-CarouselView       = require '../../../components/carousel/view.coffee'
-CurrentUser        = require '../../../models/current_user.coffee'
-SaveControls       = require '../../../components/artwork_item/save_controls.coffee'
-PartnerShow        = require '../../../models/partner_show.coffee'
-ShareView          = require '../../../components/share/view.coffee'
+_ = require 'underscore'
+sd = require('sharify').data
+Backbone = require 'backbone'
+Artworks = require '../../../collections/artworks.coffee'
+CarouselView = require '../../../components/carousel/view.coffee'
+CurrentUser = require '../../../models/current_user.coffee'
+SaveControls = require '../../../components/artwork_item/save_controls.coffee'
+PartnerShow = require '../../../models/partner_show.coffee'
+ShareView = require '../../../components/share/view.coffee'
 PartnerShowButtons = require '../../../components/partner_buttons/show_buttons.coffee'
-artworkColumns     = -> require('../../../components/artwork_columns/template.jade') arguments...
+artworkColumns = -> require('../../../components/artwork_columns/template.jade') arguments...
 trackArtworkImpressions = require("../../../components/analytics/impression_tracking.coffee").trackArtworkImpressions
 
 module.exports.PartnerShowView = class PartnerShowView extends Backbone.View
 
   initialize: (options) ->
     @shareView = new ShareView
-      el        : @$('.show-share')
+      el: @$('.show-share')
     @setupCurrentUser()
     new PartnerShowButtons
       el: @$(".show-header")
@@ -27,9 +27,9 @@ module.exports.PartnerShowView = class PartnerShowView extends Backbone.View
       success: (installShots) =>
         if installShots.length > 0
           @carouselView = new CarouselView
-            el        : @$carousel
+            el: @$carousel
             collection: installShots
-            height    : 480
+            height: 480
         else
           @$carousel.remove()
       error: =>
@@ -62,8 +62,8 @@ module.exports.PartnerShowView = class PartnerShowView extends Backbone.View
         overlay = @$(".artwork-item[data-artwork='#{artwork.get('id')}']").find('.overlay-container')
         new SaveControls
           artworkCollection: @artworkCollection
-          el               : overlay
-          model            : artwork
+          el: overlay
+          model: artwork
     if @artworkCollection
       @artworkCollection.addRepoArtworks @collection
       @artworkCollection.syncSavedArtworks()
@@ -71,5 +71,5 @@ module.exports.PartnerShowView = class PartnerShowView extends Backbone.View
 module.exports.init = ->
 
   new PartnerShowView
-    el   : $('#show')
+    el: $('#show')
     model: new PartnerShow sd.SHOW

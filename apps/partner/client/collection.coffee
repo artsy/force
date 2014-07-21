@@ -1,9 +1,9 @@
-_             = require 'underscore'
-sd            = require('sharify').data
-Backbone      = require 'backbone'
-CurrentUser   = require '../../../models/current_user.coffee'
-Partner       = require '../../../models/partner.coffee'
-Artworks      = require '../../../collections/artworks.coffee'
+_ = require 'underscore'
+sd = require('sharify').data
+Backbone = require 'backbone'
+CurrentUser = require '../../../models/current_user.coffee'
+Partner = require '../../../models/partner.coffee'
+Artworks = require '../../../collections/artworks.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 
 module.exports = class PartnerCollectionView extends Backbone.View

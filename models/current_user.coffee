@@ -1,18 +1,18 @@
-_                   = require 'underscore'
-Backbone            = require 'backbone'
-ArtworkCollection   = require './artwork_collection.coffee'
-Post                = require './post.coffee'
-Genes               = require '../collections/genes.coffee'
-Artists             = require '../collections/artists.coffee'
-Artworks            = require '../collections/artworks.coffee'
-sd                  = require('sharify').data
-analytics           = require '../lib/analytics.coffee'
-Order               = require './order.coffee'
-Genes               = require '../collections/genes.coffee'
-Following           = require '../components/follow_button/collection.coffee'
-ABM                 = require 'artsy-backbone-mixins'
-mediator            = require '../lib/mediator.coffee'
-User                = require './user.coffee'
+_ = require 'underscore'
+Backbone = require 'backbone'
+ArtworkCollection = require './artwork_collection.coffee'
+Post = require './post.coffee'
+Genes = require '../collections/genes.coffee'
+Artists = require '../collections/artists.coffee'
+Artworks = require '../collections/artworks.coffee'
+sd = require('sharify').data
+analytics = require '../lib/analytics.coffee'
+Order = require './order.coffee'
+Genes = require '../collections/genes.coffee'
+Following = require '../components/follow_button/collection.coffee'
+ABM = require 'artsy-backbone-mixins'
+mediator = require '../lib/mediator.coffee'
+User = require './user.coffee'
 
 module.exports = class CurrentUser extends User
   _.extend @prototype, ABM.CurrentUser(sd.API_URL)
@@ -21,8 +21,8 @@ module.exports = class CurrentUser extends User
     "#{sd.API_URL}/api/v1/me"
 
   defaults:
-    followArtists : null
-    followGenes   : null
+    followArtists: null
+    followGenes: null
 
   href: -> "/#{@get('default_profile_id')}"
 
@@ -49,18 +49,18 @@ module.exports = class CurrentUser extends User
 
   addToPendingOrder: (options) =>
     data =
-      edition_set_id : options.editionSetId
-      artwork_id     : options.artworkId
-      replace_order  : true
-      quantity       : options.quantity
+      edition_set_id: options.editionSetId
+      artwork_id: options.artworkId
+      replace_order: true
+      quantity: options.quantity
     unless @get('accessToken')
       data.session_id = sd.SESSION_ID
 
     model = new Backbone.Model data
     model.save null,
-      url    : "#{@url()}/order/pending/items"
+      url: "#{@url()}/order/pending/items"
       success: options.success
-      error  : options.error
+      error: options.error
 
   isAdmin: ->
     (@get('type') is 'Admin') and ! @get('is_slumming')

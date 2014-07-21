@@ -2,8 +2,11 @@ header#about2-hero-unit
   ul#about2-hero-unit-bgs
     for url in heroImageUrls
       li( style="background-image: url(#{url})" )
-  #about2-hero-unit-h1.about2-container
-    h1!= heroTitle
-  nav#about2-nav.about2-container
-    for section in sections
-      a!= section
+  #about2-hero-unit-container
+    #about2-hero-unit-h1.about2-container
+      h1!= heroTitle
+    nav#about2-nav.about2-container
+      for section in sections
+        a
+          span!= section
+    .icon-chevron-down

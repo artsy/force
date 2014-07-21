@@ -19,6 +19,7 @@ module.exports = (req, res, next) ->
       errorText = 'Not Found'
 
     console.warn errorText, r?.error?.toString(), r?.status
-    res.status(r?.error?.status) if r?.error?.status
-    next new Error(errorText)
+    err = new Error(errorText)
+    err.status = r?.error?.status
+    next err
   next()

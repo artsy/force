@@ -1,7 +1,7 @@
-_         = require 'underscore'
-sd        = require('sharify').data
-Backbone  = require 'backbone'
-Icon      = require './icon.coffee'
+_ = require 'underscore'
+sd = require('sharify').data
+Backbone = require 'backbone'
+Icon = require './icon.coffee'
 
 module.exports = class Partner extends Backbone.Model
 

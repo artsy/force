@@ -13,10 +13,10 @@ qs = require 'querystring'
 
 @loginWithTrustToken = (req, res, next) ->
   request.post(API_URL + '/oauth2/access_token').send(
-    grant_type    : 'trust_token'
-    client_id     : ARTSY_ID
-    client_secret : ARTSY_SECRET
-    code          : req.query['token']
+    grant_type: 'trust_token'
+    client_id: ARTSY_ID
+    client_secret: ARTSY_SECRET
+    code: req.query['token']
   ).end (err, response) ->
     (err or response?.body.error_description)
     # Delete all connect cookies - we have some under artsy.net and others under .artsy.net.

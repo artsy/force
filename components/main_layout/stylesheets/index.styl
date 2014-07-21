@@ -27,6 +27,7 @@
 @import './navigation'
 @import './alerts'
 @import './utilities'
+@import './error'
 
 global-reset()
 
@@ -114,10 +115,11 @@ html.wf-loading
     margin 0px 200px
 
 .is-kioskmode #main-layout-container
-  margin-top 66px
+  margin-top main-footer-height
 
-#main-layout-footer, .main-layout-footer-push
-  height: 66px
+#main-layout-footer
+.main-layout-footer-push
+  height main-footer-height
 
 #blank-layout-container
   height 100%

@@ -1,30 +1,30 @@
-_                         = require 'underscore'
-Backbone                  = require 'backbone'
-mediator                  = require '../../../lib/mediator.coffee'
-CurrentUser               = require '../../../models/current_user.coffee'
-FeatureRouter             = require './router.coffee'
-FilterView                = require './filter.coffee'
-SaleArtworkView           = require '../../../components/artwork_item/views/sale_artwork.coffee'
-AuctionClockView          = require '../../../components/auction_clock/view.coffee'
-trackArtworkImpressions   = require('../../../components/analytics/impression_tracking.coffee').trackArtworkImpressions
-Sale                      = require '../../../models/sale.coffee'
-CurrentUser               = require '../../../models/current_user.coffee'
-ArtworkColumnsView        = require '../../../components/artwork_columns/view.coffee'
-Artworks                  = require '../../../collections/artworks.coffee'
-ShareView                 = require '../../../components/share/view.coffee'
+_ = require 'underscore'
+Backbone = require 'backbone'
+mediator = require '../../../lib/mediator.coffee'
+CurrentUser = require '../../../models/current_user.coffee'
+FeatureRouter = require './router.coffee'
+FilterView = require './filter.coffee'
+SaleArtworkView = require '../../../components/artwork_item/views/sale_artwork.coffee'
+AuctionClockView = require '../../../components/auction_clock/view.coffee'
+trackArtworkImpressions = require('../../../components/analytics/impression_tracking.coffee').trackArtworkImpressions
+Sale = require '../../../models/sale.coffee'
+CurrentUser = require '../../../models/current_user.coffee'
+ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
+Artworks = require '../../../collections/artworks.coffee'
+ShareView = require '../../../components/share/view.coffee'
 
-artworkColumns                  = -> require('../../../components/artwork_columns/template.jade') arguments...
-setsTemplate                    = -> require('../templates/sets.jade') arguments...
-artistsTemplate                 = -> require('../templates/artists.jade') arguments...
-auctionRegisterButtonTemplate   = -> require('../templates/auction_register_button.jade') arguments...
-auctionCountdownTemplate        = -> require('../templates/auction_countdown.jade') arguments...
-filterTemplate                  = -> require('../templates/artwork_filter.jade') arguments...
+artworkColumns = -> require('../../../components/artwork_columns/template.jade') arguments...
+setsTemplate = -> require('../templates/sets.jade') arguments...
+artistsTemplate = -> require('../templates/artists.jade') arguments...
+auctionRegisterButtonTemplate = -> require('../templates/auction_register_button.jade') arguments...
+auctionCountdownTemplate = -> require('../templates/auction_countdown.jade') arguments...
+filterTemplate = -> require('../templates/artwork_filter.jade') arguments...
 
 module.exports = class FeatureView extends Backbone.View
 
   events:
-    'click .auction-info-register-button .avant-garde-button-black' : 'triggerLoginPopup'
-    'click .featured-set-artist-expand'                             : 'seeAllArtists'
+    'click .auction-info-register-button .avant-garde-button-black': 'triggerLoginPopup'
+    'click .featured-set-artist-expand': 'seeAllArtists'
 
   maxArtists: 60
   minArtworksForFilter: 8
@@ -91,13 +91,13 @@ module.exports = class FeatureView extends Backbone.View
 
   createArtworkColumns: ->
     @artworkColumns ?= new ArtworkColumnsView
-      el              : @$('#feature-artworks')
-      collection      : new Artworks
-      displayPurchase : true
-      setHeight       : 400
-      gutterWidth     : 0
-      showBlurbs      : true
-      isAuction       : @sale.isAuction()
+      el: @$('#feature-artworks')
+      collection: new Artworks
+      displayPurchase: true
+      setHeight: 400
+      gutterWidth: 0
+      showBlurbs: true
+      isAuction: @sale.isAuction()
 
   appendArtworks: (artworks) ->
     @artworkColumns.appendArtworks artworks.models
@@ -121,16 +121,16 @@ module.exports = class FeatureView extends Backbone.View
 
   renderAuctionInfo: (sale) ->
     @$('#feature-description-register-container').html auctionRegisterButtonTemplate
-      sale       : sale
-      registered : @currentUser?.get('registered_to_bid')?
+      sale: sale
+      registered: @currentUser?.get('registered_to_bid')?
     @$('#feature-auction-info-countdown-container').html auctionCountdownTemplate(sale: sale)
     @setupAuctionClock sale
 
   setupAuctionClock: (sale) ->
     @clock = new AuctionClockView
-      modelName : 'Auction'
-      model     : sale
-      el        : @$('.auction-info-countdown')
+      modelName: 'Auction'
+      model: sale
+      el: @$('.auction-info-countdown')
     @clock.start()
 
   setupArtworkImpressionTracking: (artworks) ->
@@ -151,11 +151,11 @@ module.exports = class FeatureView extends Backbone.View
   setupSaleArtworks: (artworks, sale) ->
     artworks.each (artwork) =>
       new SaleArtworkView
-        currentUser       : @currentUser
-        artworkCollection : @artworkCollection
-        el                : @$(".artwork-item[data-artwork='#{artwork.id}']")
-        model             : artwork
-        sale              : sale
+        currentUser: @currentUser
+        artworkCollection: @artworkCollection
+        el: @$(".artwork-item[data-artwork='#{artwork.id}']")
+        model: artwork
+        sale: sale
     if @artworkCollection
       @artworkCollection.addRepoArtworks artworks
       @artworkCollection.syncSavedArtworks()

@@ -43,9 +43,9 @@ module.exports = class HeroUnitView extends Backbone.View
     @setBodyClass()
 
   events:
-    'click #home-hero-units-left-arrow'   : 'onLeftArrow'
-    'click #home-hero-units-right-arrow'  : 'onRightArrow'
-    'click #home-hero-unit-dots li'       : 'onDot'
+    'click #home-hero-units-left-arrow': 'onLeftArrow'
+    'click #home-hero-units-right-arrow': 'onRightArrow'
+    'click #home-hero-unit-dots li': 'onDot'
 
   onKeyUp: (e) ->
     switch e.keyCode

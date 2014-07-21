@@ -1,11 +1,11 @@
-_               = require 'underscore'
-benv            = require 'benv'
-sinon           = require 'sinon'
-rewire          = require 'rewire'
-Backbone        = require 'backbone'
-mediator        = require '../../../lib/mediator'
-LoggedOutUser   = require '../../../models/logged_out_user'
-CurrentUser     = require '../../../models/current_user'
+_ = require 'underscore'
+benv = require 'benv'
+sinon = require 'sinon'
+rewire = require 'rewire'
+Backbone = require 'backbone'
+mediator = require '../../../lib/mediator'
+LoggedOutUser = require '../../../models/logged_out_user'
+CurrentUser = require '../../../models/current_user'
 
 describe 'AfterInquiryMixin', ->
   before (done) ->
@@ -27,11 +27,11 @@ describe 'AfterInquiryMixin', ->
       _.extend @prototype, AfterInquiryMixin
       eligibleForAfterInquiryFlow: true
 
-    @view           = new View
-    @view.user      = new CurrentUser id: 'existy'
-    @inquiry        = new Backbone.Model
-    @inquiry.url    = '/api/v1/me/artwork_inquiry_request'
-    @view.inquiry   = @inquiry
+    @view = new View
+    @view.user = new CurrentUser id: 'existy'
+    @inquiry = new Backbone.Model
+    @inquiry.url = '/api/v1/me/artwork_inquiry_request'
+    @view.inquiry = @inquiry
 
   afterEach ->
     Backbone.sync.restore()

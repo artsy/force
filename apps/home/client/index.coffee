@@ -1,20 +1,20 @@
-_               = require 'underscore'
-mediator        = require '../../../lib/mediator.coffee'
-CurrentUser     = require '../../../models/current_user.coffee'
-Backbone        = require 'backbone'
-HeroUnitView    = require './hero_unit_view.coffee'
-Artworks        = require '../../../collections/artworks.coffee'
-OrderedSets     = require '../../../collections/ordered_sets.coffee'
-FeaturedLinks   = require '../../../collections/featured_links.coffee'
-PartnerShows    = require '../../../collections/partner_shows.coffee'
-HomeAuthRouter  = require './auth_router.coffee'
-analytics       = require '../../../lib/analytics.coffee'
-SaveControls    = require '../../../components/artwork_item/save_controls.coffee'
-featuredLinksTemplate    = -> require('../templates/featured_links.jade') arguments...
+_ = require 'underscore'
+mediator = require '../../../lib/mediator.coffee'
+CurrentUser = require '../../../models/current_user.coffee'
+Backbone = require 'backbone'
+HeroUnitView = require './hero_unit_view.coffee'
+Artworks = require '../../../collections/artworks.coffee'
+OrderedSets = require '../../../collections/ordered_sets.coffee'
+FeaturedLinks = require '../../../collections/featured_links.coffee'
+PartnerShows = require '../../../collections/partner_shows.coffee'
+HomeAuthRouter = require './auth_router.coffee'
+analytics = require '../../../lib/analytics.coffee'
+SaveControls = require '../../../components/artwork_item/save_controls.coffee'
+featuredLinksTemplate = -> require('../templates/featured_links.jade') arguments...
 featuredArtworksTemplate = -> require('../templates/featured_artworks.jade') arguments...
-featuredShowsTemplate    = -> require('../templates/featured_shows.jade') arguments...
-featuredPostsTemplate    = -> require('../templates/featured_posts.jade') arguments...
-featuredArtistsTemplate  = -> require('../templates/featured_artists.jade') arguments...
+featuredShowsTemplate = -> require('../templates/featured_shows.jade') arguments...
+featuredPostsTemplate = -> require('../templates/featured_posts.jade') arguments...
+featuredArtistsTemplate = -> require('../templates/featured_artists.jade') arguments...
 Cookies = require 'cookies-js'
 
 trackArtworkImpressions = require("../../../components/analytics/impression_tracking.coffee").trackArtworkImpressions
@@ -22,7 +22,7 @@ trackArtworkImpressions = require("../../../components/analytics/impression_trac
 module.exports.HomeView = class HomeView extends Backbone.View
 
   events:
-    'click #home-featured-artworks'       : 'onClickFeaturedArtwork'
+    'click #home-featured-artworks': 'onClickFeaturedArtwork'
 
   onClickFeaturedArtwork: ->
     analytics.track.click "Clicked homepage artwork"

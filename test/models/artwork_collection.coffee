@@ -134,7 +134,7 @@ describe 'ArtworkCollection', ->
 
     it 'determines if an artwork is in the user\'s saved artworks artworkCollection', ->
       unsavedArtwork = new Artwork({ id: 'baz', title: 'Baz' })
-      savedArtwork   = @artworkCollection.get('artworks').first()
+      savedArtwork = @artworkCollection.get('artworks').first()
       @artworkCollection.isSaved(unsavedArtwork).should.be.false
       @artworkCollection.isSaved(savedArtwork).should.be.true
 

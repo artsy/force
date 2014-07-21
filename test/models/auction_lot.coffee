@@ -1,9 +1,9 @@
-_               = require 'underscore'
-sinon           = require 'sinon'
-should          = require 'should'
-Backbone        = require 'backbone'
-{ fabricate }   = require 'antigravity'
-AuctionLot      = require '../../models/auction_lot'
+_ = require 'underscore'
+sinon = require 'sinon'
+should = require 'should'
+Backbone = require 'backbone'
+{ fabricate } = require 'antigravity'
+AuctionLot = require '../../models/auction_lot'
 
 describe 'AuctionLot', ->
   before ->

@@ -1,25 +1,25 @@
-_                   = require 'underscore'
-Backbone            = require 'backbone'
-ModalView           = require '../modal/view.coffee'
-LocationSearchView  = require '../location_search/index.coffee'
-GeoFormatter        = require 'geoformatter'
-Form                = require '../mixins/form.coffee'
-mediator            = require '../../lib/mediator.coffee'
-analytics           = require '../../lib/analytics.coffee'
-BookmarksView       = require '../bookmarks/view.coffee'
-Introduction        = require './introduction.coffee'
+_ = require 'underscore'
+Backbone = require 'backbone'
+ModalView = require '../modal/view.coffee'
+LocationSearchView = require '../location_search/index.coffee'
+GeoFormatter = require 'geoformatter'
+Form = require '../mixins/form.coffee'
+mediator = require '../../lib/mediator.coffee'
+analytics = require '../../lib/analytics.coffee'
+BookmarksView = require '../bookmarks/view.coffee'
+Introduction = require './introduction.coffee'
 
 templateMap =
-  initial       : -> require('./templates/initial.jade') arguments...
-  questionnaire : -> require('./templates/questionnaire.jade') arguments...
-  signup        : -> require('./templates/signup.jade') arguments...
-  login         : -> require('./templates/login.jade') arguments...
+  initial: -> require('./templates/initial.jade') arguments...
+  questionnaire: -> require('./templates/questionnaire.jade') arguments...
+  signup: -> require('./templates/signup.jade') arguments...
+  login: -> require('./templates/login.jade') arguments...
 
 stateEventMap =
-  initial       : 'Viewed after inquiry initial step'
-  questionnaire : 'Viewed after inquiry questionnaire step'
-  signup        : 'Viewed after inquiry signup form'
-  login         : 'Viewed after inquiry login form'
+  initial: 'Viewed after inquiry initial step'
+  questionnaire: 'Viewed after inquiry questionnaire step'
+  signup: 'Viewed after inquiry signup form'
+  login: 'Viewed after inquiry login form'
 
 module.exports = class Questionnaire extends ModalView
   _.extend @prototype, Form
@@ -31,14 +31,14 @@ module.exports = class Questionnaire extends ModalView
 
   events: -> _.extend super,
     # Prevents clicks on the backdrop from closing the contact form
-    'click.handler .modal-backdrop'             : undefined
-    'click a[data-mode]'                        : 'toggleMode'
-    'click .after-inquiry-initial-submit'       : 'advance'
-    'submit #after-inquiry-questionnaire-form'  : 'done'
-    'click #after-inquiry-questionnaire-submit' : 'done'
-    'submit #after-inquiry-auth-form'           : 'auth'
-    'click #after-inquiry-auth-submit'          : 'auth'
-    'click #auth-skip'                          : 'skip'
+    'click.handler .modal-backdrop': undefined
+    'click a[data-mode]': 'toggleMode'
+    'click .after-inquiry-initial-submit': 'advance'
+    'submit #after-inquiry-questionnaire-form': 'done'
+    'click #after-inquiry-questionnaire-submit': 'done'
+    'submit #after-inquiry-auth-form': 'auth'
+    'click #after-inquiry-auth-submit': 'auth'
+    'click #auth-skip': 'skip'
 
   initialize: (options) ->
     { @user, @inquiry } = options

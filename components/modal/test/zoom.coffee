@@ -1,9 +1,9 @@
-# rewire        = require 'rewire'
-# benv          = require 'benv'
-# Backbone      = require 'backbone'
-# sinon         = require 'sinon'
-# { resolve }   = require 'path'
-# ZoomView      = rewire '../zoom'
+# rewire = require 'rewire'
+# benv = require 'benv'
+# Backbone = require 'backbone'
+# sinon = require 'sinon'
+# { resolve } = require 'path'
+# ZoomView = rewire '../zoom'
 
 # ZoomView.__set__ 'Image', -> { width: 500, height: 500 }
 # ZoomView.__set__ 'ModalView', Backbone.View

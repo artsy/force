@@ -1,8 +1,8 @@
-_             = require 'underscore'
-sd            = require('sharify').data
-Backbone      = require 'backbone'
-CurrentUser   = require '../../../models/current_user.coffee'
-Profiles      = require '../../../collections/profiles.coffee'
+_ = require 'underscore'
+sd = require('sharify').data
+Backbone = require 'backbone'
+CurrentUser = require '../../../models/current_user.coffee'
+Profiles = require '../../../collections/profiles.coffee'
 
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 

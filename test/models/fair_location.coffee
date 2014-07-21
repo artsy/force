@@ -1,6 +1,6 @@
-_            = require 'underscore'
-should       = require 'should'
-Backbone     = require 'backbone'
+_ = require 'underscore'
+should = require 'should'
+Backbone = require 'backbone'
 FairLocation = require '../../models/partner_location'
 
 describe 'FairLocation', ->

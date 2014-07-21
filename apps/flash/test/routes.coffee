@@ -1,5 +1,5 @@
-sinon   = require 'sinon'
-routes  = require '../routes'
+sinon = require 'sinon'
+routes = require '../routes'
 
 describe 'Flash routes', ->
   beforeEach ->

@@ -1,17 +1,17 @@
-_                       = require 'underscore'
-Backbone                = require 'backbone'
-Artworks                = require '../../../models/artwork.coffee'
-sd                      = require('sharify').data
-analytics               = require '../../../lib/analytics.coffee'
-CurrentUser             = require '../../../models/current_user.coffee'
-FeedItems               = require '../collections/feed_items.coffee'
-Profile                 = require '../../../models/profile.coffee'
-FollowProfiles          = require '../../../collections/follow_profiles.coffee'
-FeedItem                = require '../models/feed_item.coffee'
-FeedItemView            = require('./feed_item.coffee').FeedItemView
-FeedItemPost            = require('../../post/client/feed_item_post.coffee').FeedItemPost
-feedItemsTemplate       = -> require('../templates/feed_items.jade') arguments...
-FollowProfileButton     = require '../../../apps/partners/client/follow_profiles_button.coffee'
+_ = require 'underscore'
+Backbone = require 'backbone'
+Artworks = require '../../../models/artwork.coffee'
+sd = require('sharify').data
+analytics = require '../../../lib/analytics.coffee'
+CurrentUser = require '../../../models/current_user.coffee'
+FeedItems = require '../collections/feed_items.coffee'
+Profile = require '../../../models/profile.coffee'
+FollowProfiles = require '../../../collections/follow_profiles.coffee'
+FeedItem = require '../models/feed_item.coffee'
+FeedItemView = require('./feed_item.coffee').FeedItemView
+FeedItemPost = require('../../post/client/feed_item_post.coffee').FeedItemPost
+feedItemsTemplate = -> require('../templates/feed_items.jade') arguments...
+FollowProfileButton = require '../../../apps/partners/client/follow_profiles_button.coffee'
 feedItemsContainerTemplate = -> require('../templates/feed_items_container.jade') arguments...
 
 module.exports = class FeedView extends Backbone.View
@@ -54,21 +54,21 @@ module.exports = class FeedView extends Backbone.View
       @$window.on 'resize.feed', throttledOnResize
 
   storeOptions: (options) ->
-    @feedItems             = options.feedItems
+    @feedItems = options.feedItems
 
     # for Fair labels
-    @headingText           = options.headingText or false
-    @headingSortOrder      = options.headingSortOrder or false
+    @headingText = options.headingText or false
+    @headingSortOrder = options.headingSortOrder or false
 
-    @afterFetchCont        = options.afterFetch
-    @widthOffset           = options.widthOffset or 0
-    @sortOrder             = options.sortOrder
-    @limitPostBodyHeight   = options.limitPostBodyHeight
-    @additionalParams      = options.additionalParams
-    @hideSeeMoreButtons    = options.hideSeeMoreButtons
+    @afterFetchCont = options.afterFetch
+    @widthOffset = options.widthOffset or 0
+    @sortOrder = options.sortOrder
+    @limitPostBodyHeight = options.limitPostBodyHeight
+    @additionalParams = options.additionalParams
+    @hideSeeMoreButtons = options.hideSeeMoreButtons
 
     if options.afterLoadCont
-      @afterLoadCont       = options.afterLoadCont
+      @afterLoadCont = options.afterLoadCont
 
   render: (items) =>
     @latestItems = items
@@ -77,14 +77,14 @@ module.exports = class FeedView extends Backbone.View
     @imageWidth = @getImageWidth()
 
     @$el.html feedItemsContainerTemplate(
-      headingText       : @headingText
-      headingSortOrder  : @headingSortOrder
-      fixedWidth        : @fixedWidth
-      imageWidth        : @imageWidth
-      feedItemClass     : @feedItemClass
+      headingText: @headingText
+      headingSortOrder: @headingSortOrder
+      fixedWidth: @fixedWidth
+      imageWidth: @imageWidth
+      feedItemClass: @feedItemClass
       hideSeeMoreButtons: @hideSeeMoreButtons
-      displayPurchase   : @displayPurchase
-      sd                : sd
+      displayPurchase: @displayPurchase
+      sd: sd
     )
 
     @$feedItems = @$('section.feed-items')
@@ -115,15 +115,15 @@ module.exports = class FeedView extends Backbone.View
 
   getFeedItemHtml: (items, opts = {}) ->
     $html = $(feedItemsTemplate(
-      feedItems         : items
-      fixedWidth        : @fixedWidth
-      imageWidth        : @imageWidth
-      textColumnWidth   : @textColumnWidth
-      sd                : sd
-      currentUser       : @currentUser
-      feedItemClass     : @feedItemClass
+      feedItems: items
+      fixedWidth: @fixedWidth
+      imageWidth: @imageWidth
+      textColumnWidth: @textColumnWidth
+      sd: sd
+      currentUser: @currentUser
+      feedItemClass: @feedItemClass
       hideSeeMoreButtons: @hideSeeMoreButtons
-      displayPurchase   : @displayPurchase
+      displayPurchase: @displayPurchase
     ))
     $html.attr('data-cursor', @feedItems.lastCursor)
     for $item, index in $html
@@ -133,11 +133,11 @@ module.exports = class FeedView extends Backbone.View
   initializeFeedItem: ($item, model) ->
     params =
       limitPostBodyHeight: @limitPostBodyHeight
-      artworkCollection  : @artworkCollection
-      currentUser        : @currentUser
-      model              : model
-      el                 : $item
-      parent             : @
+      artworkCollection: @artworkCollection
+      currentUser: @currentUser
+      model: model
+      el: $item
+      parent: @
 
     new FeedItemView params
     if model.get('_type') == 'Post'
@@ -153,11 +153,11 @@ module.exports = class FeedView extends Backbone.View
 
   initFollowButton: (profile, el) ->
     new FollowProfileButton
-      el         : el
-      model      : profile
-      collection : @followProfiles
-      analyticsFollowMessage   : @analyticsFollowMessage
-      analyticsUnfollowMessage : @analyticsUnfollowMessage
+      el: el
+      model: profile
+      collection: @followProfiles
+      analyticsFollowMessage: @analyticsFollowMessage
+      analyticsUnfollowMessage: @analyticsUnfollowMessage
 
   infiniteScroll: (scrollTop) ->
     @scrollTop = scrollTop || @$window.scrollTop()

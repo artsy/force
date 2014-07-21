@@ -1,7 +1,7 @@
-_          = require 'underscore'
-Backbone   = require 'backbone'
-Artwork    = require('../../../models/artwork.coffee')
-{ Image }  = require 'artsy-backbone-mixins'
+_ = require 'underscore'
+Backbone = require 'backbone'
+Artwork = require('../../../models/artwork.coffee')
+{ Image } = require 'artsy-backbone-mixins'
 ImageSizes = require '../../../models/mixins/image_sizes.coffee'
 { SECURE_IMAGES_URL } = require('sharify').data
 

@@ -1,12 +1,12 @@
-_               = require 'underscore'
-Backbone        = require 'backbone'
-benv            = require 'benv'
-sinon           = require 'sinon'
-sd              = require('sharify').data
-FeedItem        = require '../../../components/feed/models/feed_item.coffee'
-FeedItems       = require '../../../components/feed/collections/feed_items.coffee'
-{ fabricate }   = require 'antigravity'
-{ resolve }     = require 'path'
+_ = require 'underscore'
+Backbone = require 'backbone'
+benv = require 'benv'
+sinon = require 'sinon'
+sd = require('sharify').data
+FeedItem = require '../../../components/feed/models/feed_item.coffee'
+FeedItems = require '../../../components/feed/collections/feed_items.coffee'
+{ fabricate } = require 'antigravity'
+{ resolve } = require 'path'
 
 describe 'Posts', ->
 

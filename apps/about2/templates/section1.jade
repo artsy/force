@@ -1,0 +1,39 @@
+section#about2-section1.about2-container
+  h1.about2-section-header!= sections[0]
+  p.about2-section-preamble= section1Preamble
+  // "Our collection comes from leading..."
+  section.about2-pull-blurb
+    h1= section1PullBlurb1H1
+    h2= section1PullBlurb1H2
+  #about2-section1-images1
+    - half = Math.ceil(section1Images1ImageUrls.length / 2)
+    ul#about2-section1-images1-left
+      for image, i in section1Images1ImageUrls.slice(half)
+        li
+          img( src=image )
+          small.about2-avant-garde-caption= section1Images1Captions[i * 2]
+            em= section1Images1Captions[i * 2 + 1]
+    ul#about2-section1-images1-right
+      for image, i in section1Images1ImageUrls.slice(0, half)
+        li
+          img( src=image )
+          small.about2-avant-garde-caption= section1Images1Captions[i + half * 2]
+            em= section1Images1Captions[i + half * 2 + 1]
+  // "We cover international show..."
+  .about2-left-half-width-column
+    ul
+      for url, i in section1PullBlurb2LeftImageUrls
+        li
+          img( src=url )
+          small= section1PullBlurb2LeftCaptions[i]
+  .about2-right-half-width-column
+    section.about2-pull-blurb
+      h1= section1PullBlurb2H1
+      h2= section1PullBlurb2H2
+      p= section1PullBlurb2P
+    ul
+      for url, i in section1PullBlurb2RightImageUrls
+        li
+          img( src=url )
+          small.about2-avant-garde-caption= section1PullBlurb2RightImageAuthors[i]
+          p= section1PullBlurb2RightCaptions[i]

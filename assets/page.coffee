@@ -1,1 +1,1 @@
-require('backbone').$  = $
+require('backbone').$ = $

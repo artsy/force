@@ -1,15 +1,15 @@
-_               = require 'underscore'
-benv            = require 'benv'
-jade            = require 'jade'
-path            = require 'path'
-fs              = require 'fs'
-Backbone        = require 'backbone'
-{ AToZ }        = require 'artsy-backbone-mixins'
-{ fabricate }   = require 'antigravity'
-Fair            = require '../../../../../models/fair'
-Profile         = require '../../../../../models/profile'
-Partners        = require '../../../../../collections/partners'
-cheerio         = require 'cheerio'
+_ = require 'underscore'
+benv = require 'benv'
+jade = require 'jade'
+path = require 'path'
+fs = require 'fs'
+Backbone = require 'backbone'
+{ AToZ } = require 'artsy-backbone-mixins'
+{ fabricate } = require 'antigravity'
+Fair = require '../../../../../models/fair'
+Profile = require '../../../../../models/profile'
+Partners = require '../../../../../collections/partners'
+cheerio = require 'cheerio'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../#{templateName}.jade"
@@ -35,7 +35,7 @@ describe 'Browse templates', ->
         sd: {}
         fair: fair
         profile: profile
-        exhibitorsAToZGroup : exhibitorsAToZGroup.groupByAlphaWithColumns(3)
+        exhibitorsAToZGroup: exhibitorsAToZGroup.groupByAlphaWithColumns(3)
 
     it 'renders without errors', ->
       $ = cheerio.load @template

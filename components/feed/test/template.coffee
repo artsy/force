@@ -1,14 +1,14 @@
-jade            = require 'jade'
-path            = require 'path'
-fs              = require 'fs'
-Backbone        = require 'backbone'
-_               = require 'underscore'
-cheerio         = require 'cheerio'
-{ fabricate }   = require 'antigravity'
-FeedItem        = require '../models/feed_item'
-FeedItems       = require '../collections/feed_items'
-CurrentUser     = require '../../../models/current_user.coffee'
-sd              = require('sharify').data
+jade = require 'jade'
+path = require 'path'
+fs = require 'fs'
+Backbone = require 'backbone'
+_ = require 'underscore'
+cheerio = require 'cheerio'
+{ fabricate } = require 'antigravity'
+FeedItem = require '../models/feed_item'
+FeedItems = require '../collections/feed_items'
+CurrentUser = require '../../../models/current_user.coffee'
+sd = require('sharify').data
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../templates/#{templateName}.jade"
@@ -31,9 +31,9 @@ describe 'Feed Templates', ->
           artists: [fabricate('artist')]
           artworks: [fabricate('artwork')]
         )
-        @feedItems   = new FeedItems
+        @feedItems = new FeedItems
         @feedItems.add @partnerShow
-        @html    = render('feed_items')(
+        @html = render('feed_items')(
           feedItems: @feedItems.models
           fixedWidth: 1000
           imageWidth: 500
@@ -63,9 +63,9 @@ describe 'Feed Templates', ->
           fair_location: fairLocation
           fair: fabricate('fair', end_at: new Date())
         )
-        @feedItems   = new FeedItems
+        @feedItems = new FeedItems
         @feedItems.add @partnerShow
-        @html    = render('feed_items')(
+        @html = render('feed_items')(
           feedItems: @feedItems.models
           fixedWidth: 1000
           imageWidth: 500
@@ -90,9 +90,9 @@ describe 'Feed Templates', ->
           artists: []
           artworks: []
         )
-        @feedItems   = new FeedItems
+        @feedItems = new FeedItems
         @feedItems.add @partnerShow
-        @html    = render('feed_items')(
+        @html = render('feed_items')(
           feedItems: @feedItems.models
           fixedWidth: 1000
           imageWidth: 500
@@ -161,9 +161,9 @@ describe 'Feed Templates', ->
       )
 
     it 'Renders a feed of posts', ->
-      feedItems  = new FeedItems
+      feedItems = new FeedItems
       feedItems.add @post
-      html      = render('feed_items')(
+      html = render('feed_items')(
         feedItems: feedItems.models
         fixedWidth: 1000
         imageWidth: 500
@@ -190,10 +190,10 @@ describe 'Feed Templates', ->
       @html.should.not.include "\#{"
 
     it 'includes admin controls', ->
-      feedItems  = new FeedItems
+      feedItems = new FeedItems
       feedItems.add @post
       sd.ADMIN_URL = 'admin.com'
-      html      = render('feed_items')(
+      html = render('feed_items')(
         feedItems: feedItems.models
         fixedWidth: 1000
         imageWidth: 500
@@ -206,10 +206,10 @@ describe 'Feed Templates', ->
       $('.post-modifier-actions a.post-admin').attr('href').should.equal "admin.com/post/#{@post.get('id')}"
 
     it 'includes admin controls for user who created the post', ->
-      feedItems  = new FeedItems
+      feedItems = new FeedItems
       feedItems.add @post
       sd.CURRENT_USER = default_profile_id: @post.get('profile').id
-      html      = render('feed_items')(
+      html = render('feed_items')(
         feedItems: feedItems.models
         fixedWidth: 1000
         imageWidth: 500

@@ -1,9 +1,9 @@
-cheerio         = require 'cheerio'
-fs              = require 'fs'
-jade            = require 'jade'
-path            = require 'path'
-Backbone        = require 'backbone'
-{ fabricate }   = require 'antigravity'
+cheerio = require 'cheerio'
+fs = require 'fs'
+jade = require 'jade'
+path = require 'path'
+Backbone = require 'backbone'
+{ fabricate } = require 'antigravity'
 AdditionalImage = require '../../../models/additional_image'
 
 render = (template) ->

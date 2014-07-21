@@ -1,7 +1,7 @@
-jade            = require 'jade'
-path            = require 'path'
-fs              = require 'fs'
-CurrentUser     = require '../../../models/current_user'
+jade = require 'jade'
+path = require 'path'
+fs = require 'fs'
+CurrentUser = require '../../../models/current_user'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../templates/#{templateName}.jade"

@@ -1,21 +1,21 @@
-_                = require 'underscore'
-Backbone         = require 'backbone'
+_ = require 'underscore'
+Backbone = require 'backbone'
 carouselTemplate = -> require('./template.jade') arguments...
 
 module.exports = class Carousel extends Backbone.View
 
   className: 'carousel'
-  tagName  : 'section'
+  tagName: 'section'
 
   events:
-    'click .carousel-dot'                         : 'dotClick'
-    'click .carousel-figures .carousel-figure'    : 'figureClick'
-    'click .carousel-pre-decoys .carousel-figure' : 'leftArrowClick'
-    'click .carousel-arrow-left'                  : 'leftArrowClick'
+    'click .carousel-dot': 'dotClick'
+    'click .carousel-figures .carousel-figure': 'figureClick'
+    'click .carousel-pre-decoys .carousel-figure': 'leftArrowClick'
+    'click .carousel-arrow-left': 'leftArrowClick'
     'click .carousel-post-decoys .carousel-figure': 'rightArrowClick'
-    'click .carousel-arrow-right'                 : 'rightArrowClick'
-    'touchstart .carousel-figures-clip'           : 'swipeStart'
-    'touchend .carousel-figures-clip'             : 'swipeEnd'
+    'click .carousel-arrow-right': 'rightArrowClick'
+    'touchstart .carousel-figures-clip': 'swipeStart'
+    'touchend .carousel-figures-clip': 'swipeEnd'
 
   active: 0
   centerIndex: 0
@@ -33,7 +33,7 @@ module.exports = class Carousel extends Backbone.View
   transitionEvents: 'transitionEnd oTransitionEnd msTransitionEnd transitionend webkitTransitionEnd'
 
   initialize: (options) ->
-    imagesLoaded     = require '../../lib/vendor/imagesloaded.js'
+    imagesLoaded = require '../../lib/vendor/imagesloaded.js'
     throw 'You must pass a collection' unless @collection?
     @$window = $(window)
     @$document = $(document)
@@ -246,7 +246,7 @@ module.exports = class Carousel extends Backbone.View
     wasSwiping = @isSwiping; @isSwiping = false; @isDoneSwiping = true
     $('.carousel-figures-clip').unbind("touchmove")
     return unless wasSwiping # was tapping
-    
+
     left = @$track.offset().left
 
     # If swiping to the left of the first item...

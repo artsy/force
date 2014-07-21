@@ -1,8 +1,8 @@
-_         = require 'underscore'
-sinon     = require 'sinon'
-Backbone  = require 'backbone'
-benv      = require 'benv'
-rewire    = require 'rewire'
+_ = require 'underscore'
+sinon = require 'sinon'
+Backbone = require 'backbone'
+benv = require 'benv'
+rewire = require 'rewire'
 
 googleyAddress =
   address_components: [
@@ -43,12 +43,12 @@ googleyAddress =
   html_attributions: []
 
 geoFormatter =
-  getCity        : -> 'My city'
-  getState       : -> 'My state'
-  getStateCode   : -> 'My statecode'
-  getPostalCode  : -> 'My postalcode'
-  getCoordinates : -> [0, 0]
-  getCountry     : -> 'My country'
+  getCity: -> 'My city'
+  getState: -> 'My state'
+  getStateCode: -> 'My statecode'
+  getPostalCode: -> 'My postalcode'
+  getCoordinates: -> [0, 0]
+  getCountry: -> 'My country'
 
 Geo = rewire '../../../models/mixins/geo'
 Geo.__set__ 'geo', locate: (locateStub = sinon.stub().yieldsTo 'success', geoFormatter)

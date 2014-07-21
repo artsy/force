@@ -1,10 +1,10 @@
-sd            = require('sharify').data
-benv          = require 'benv'
-Backbone      = require 'backbone'
-sinon         = require 'sinon'
-path          = require 'path'
-ClockView     = require '../view.coffee'
-Sale          = require '../../../models/sale'
+sd = require('sharify').data
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+path = require 'path'
+ClockView = require '../view.coffee'
+Sale = require '../../../models/sale'
 { fabricate } = require 'antigravity'
 
 describe 'AuctionClockView', ->
@@ -16,7 +16,7 @@ describe 'AuctionClockView', ->
       sd.CURRENT_PATH = ""
       benv.expose { $: benv.require 'jquery' }
       sinon.stub Backbone, 'sync'
-      Backbone.$  = $
+      Backbone.$ = $
       @view = new ClockView
         model: new Sale(fabricate('sale'))
         el: $("<div></div>")

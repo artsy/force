@@ -1,11 +1,11 @@
-Backbone        = require 'backbone'
-Backbone.$      = $
-_               = require 'underscore'
-Cookies         = require 'cookies-js'
-HeaderView      = require './header/view.coffee'
-FooterView      = require './footer/view.coffee'
-sd              = require('sharify').data
-analytics       = require '../../lib/analytics.coffee'
+Backbone = require 'backbone'
+Backbone.$ = $
+_ = require 'underscore'
+Cookies = require 'cookies-js'
+HeaderView = require './header/view.coffee'
+FooterView = require './footer/view.coffee'
+sd = require('sharify').data
+analytics = require '../../lib/analytics.coffee'
 
 module.exports = ->
   setupJquery()
@@ -76,7 +76,7 @@ setupJquery = ->
   require 'jquery-on-infinite-scroll'
   require '../../lib/jquery/hidehover.coffee'
   $.ajaxSettings.headers =
-    'X-XAPP-TOKEN'  : sd.ARTSY_XAPP_TOKEN
+    'X-XAPP-TOKEN': sd.ARTSY_XAPP_TOKEN
     'X-ACCESS-TOKEN': sd.CURRENT_USER?.accessToken
 
 setupAnalytics()

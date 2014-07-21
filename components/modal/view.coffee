@@ -1,9 +1,9 @@
-_                   = require 'underscore'
-Backbone            = require 'backbone'
-mediator            = require '../../lib/mediator.coffee'
-Transition          = require '../mixins/transition.coffee'
-{ isTouchDevice }   = require '../../components/util/device.coffee'
-Scrollbar           = require '../../lib/scrollbar.coffee'
+_ = require 'underscore'
+Backbone = require 'backbone'
+mediator = require '../../lib/mediator.coffee'
+Transition = require '../mixins/transition.coffee'
+{ isTouchDevice } = require '../../components/util/device.coffee'
+Scrollbar = require '../../lib/scrollbar.coffee'
 
 modalTemplate = -> require('./modal.jade') arguments...
 
@@ -19,10 +19,10 @@ module.exports = class ModalView extends Backbone.View
   templateData: {}
 
   events: ->
-    'click.handler .modal-backdrop' : 'onClickBackdrop'
-    'click.handler .modal-close'    : 'close'
-    'click.internal .modal-close'    : '__announceCloseButtonClick__'
-    'click.internal .modal-backdrop' : '__announceBackdropClick__'
+    'click.handler .modal-backdrop': 'onClickBackdrop'
+    'click.handler .modal-close': 'close'
+    'click.internal .modal-close': '__announceCloseButtonClick__'
+    'click.internal .modal-backdrop': '__announceBackdropClick__'
 
   initialize: (options = {}) ->
     { @width, @transition, @backdrop } = _.defaults options, width: '400px', transition: 'fade', backdrop: true
@@ -58,7 +58,7 @@ module.exports = class ModalView extends Backbone.View
 
   updatePosition: =>
     @$dialog.css
-      top:  ((@$el.height() - @$dialog.height()) / 2) + 'px'
+      top: ((@$el.height() - @$dialog.height()) / 2) + 'px'
       left: ((@$el.width() - @$dialog.width()) / 2) + 'px'
 
   autofocus: ->

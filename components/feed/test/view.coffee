@@ -1,11 +1,11 @@
-benv          = require 'benv'
-Backbone      = require 'backbone'
-sinon         = require 'sinon'
-{ resolve }   = require 'path'
-sd            = require('sharify').data
-FeedItem      = require '../models/feed_item'
-FeedItems     = require '../collections/feed_items'
-analytics     = require '../../../lib/analytics'
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+{ resolve } = require 'path'
+sd = require('sharify').data
+FeedItem = require '../models/feed_item'
+FeedItems = require '../collections/feed_items'
+analytics = require '../../../lib/analytics'
 { fabricate } = require 'antigravity'
 
 describe 'FeedView', ->
@@ -25,7 +25,7 @@ describe 'FeedView', ->
       @gaStub = sinon.stub()
       analytics ga: @gaStub, location: { pathname: 'foobar' }
 
-      Backbone.$  = $
+      Backbone.$ = $
       @partnerShow = new FeedItem fabricate('show',
         _type: "PartnerShow",
         artists: [fabricate('artist')]

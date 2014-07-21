@@ -1,16 +1,16 @@
-_             = require 'underscore'
+_ = require 'underscore'
 { fabricate } = require 'antigravity'
-sd            = require('sharify').data
-should        = require 'should'
-Backbone      = require 'backbone'
-PartnerShow   = require '../../models/partner_show'
-PartnerShows  = require '../../collections/partner_shows'
+sd = require('sharify').data
+should = require 'should'
+Backbone = require 'backbone'
+PartnerShow = require '../../models/partner_show'
+PartnerShows = require '../../collections/partner_shows'
 
 describe 'PartnerShows', ->
 
   beforeEach ->
     @partnerShows = new PartnerShows([
-                                                                                # featured | currrent | upcoming | past 
+                                                                                # featured | currrent | upcoming | past
       fabricate('show', { name: 'show1' }),                                     #                                    x
       fabricate('show', { name: 'show2', status: 'running', featured: true }),  #   x          x
       fabricate('show', { name: 'show3', status: 'running' }),                  #              x

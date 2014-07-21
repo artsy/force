@@ -1,8 +1,8 @@
-_                 = require 'underscore'
-Q                 = require 'q'
-OrderedSets       = require '../../collections/ordered_sets'
-Artist            = require '../../models/artist'
-ArtistsByLetter   = require './collections/artists_by_letter'
+_ = require 'underscore'
+Q = require 'q'
+OrderedSets = require '../../collections/ordered_sets'
+Artist = require '../../models/artist'
+ArtistsByLetter = require './collections/artists_by_letter'
 
 parseGenes = (collection) ->
   collection.chain().
@@ -12,43 +12,43 @@ parseGenes = (collection) ->
     value()
 
 @index = (req, res) ->
-  featuredArtists   = new OrderedSets(key: 'homepage:featured-artists')
-  featuredGenes     = new OrderedSets(key: 'artists:featured-genes')
-  genes             = null
+  featuredArtists = new OrderedSets(key: 'homepage:featured-artists')
+  featuredGenes = new OrderedSets(key: 'artists:featured-genes')
+  genes = null
 
   render = _.after 2, ->
     res.render 'index',
-      letterRange:      ArtistsByLetter::range
-      featuredArtists:  featuredArtists.at 0
-      featuredGenes:    genes
+      letterRange: ArtistsByLetter::range
+      featuredArtists: featuredArtists.at 0
+      featuredGenes: genes
 
   featuredArtists.fetchAll(cache: true).then ->
     links = featuredArtists.at(0)
     Q.allSettled(links.get('items').map (link) ->
       # Fetch and relate the artist featured in the link
-      id      = link.get('href').replace(/\/?artist\//, '')
-      artist  = new Artist(id: id)
+      id = link.get('href').replace(/\/?artist\//, '')
+      artist = new Artist(id: id)
       link.set 'artist', artist
       artist.fetch cache: true
     ).then render
 
   featuredGenes.fetchAll(cache: true).then ->
-    genesSet  = featuredGenes.findWhere item_type: 'Gene'
-    genes     = genesSet.get 'items'
+    genesSet = featuredGenes.findWhere item_type: 'Gene'
+    genes = genesSet.get 'items'
     Q.allSettled(genes.map (gene) ->
       gene.fetchArtists 'trending',
-        cache   : true
-        success : ->
+        cache: true
+        success: ->
           gene.trendingArtists = parseGenes gene.trendingArtists
     ).then render
 
 @letter = (req, res) ->
-  currentPage   = parseInt(req.query.page) or 1
-  letter        = req.params.letter.replace('artists-starting-with-', '')
-  artists       = new ArtistsByLetter([], { letter: letter, state: { currentPage: currentPage } })
+  currentPage = parseInt(req.query.page) or 1
+  letter = req.params.letter.replace('artists-starting-with-', '')
+  artists = new ArtistsByLetter([], { letter: letter, state: { currentPage: currentPage } })
 
   artists.fetch().then ->
     res.render 'letter',
-      artists:      artists
-      letterRange:  artists.range
-      letter:       _.capitalize(letter)
+      artists: artists
+      letterRange: artists.range
+      letter: _.capitalize(letter)

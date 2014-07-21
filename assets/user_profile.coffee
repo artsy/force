@@ -1,4 +1,4 @@
-require('backbone').$  = $
+require('backbone').$ = $
 $ ->
   if location.pathname.match /// (.*)/collection/(.*) ///
     require('../apps/user_profile/client/collection.coffee').init()

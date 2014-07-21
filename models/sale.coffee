@@ -1,10 +1,10 @@
-_             = require 'underscore'
-sd            = require('sharify').data
-moment        = require 'moment'
-Backbone      = require 'backbone'
-{ Fetch }     = require 'artsy-backbone-mixins'
-Clock         = require './mixins/clock.coffee'
-SaleArtworks  = require '../collections/sale_artworks.coffee'
+_ = require 'underscore'
+sd = require('sharify').data
+moment = require 'moment'
+Backbone = require 'backbone'
+{ Fetch } = require 'artsy-backbone-mixins'
+Clock = require './mixins/clock.coffee'
+SaleArtworks = require '../collections/sale_artworks.coffee'
 
 module.exports = class Sale extends Backbone.Model
   _.extend @prototype, Clock

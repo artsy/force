@@ -1,14 +1,14 @@
-_                 = require 'underscore'
-benv              = require 'benv'
-sinon             = require 'sinon'
-Backbone          = require 'backbone'
-Artist            = require '../../../../models/artist.coffee'
-PersonalizeState  = require '../../client/state'
-CurrentUser       = require '../../../../models/current_user.coffee'
-{ Following }     = require '../../../../components/follow_button/index.coffee'
-{ resolve }       = require 'path'
-{ fabricate }     = require 'antigravity'
-Followable        = benv.requireWithJadeify resolve(__dirname, '../../client/mixins/followable'), ['followedTemplate']
+_ = require 'underscore'
+benv = require 'benv'
+sinon = require 'sinon'
+Backbone = require 'backbone'
+Artist = require '../../../../models/artist.coffee'
+PersonalizeState = require '../../client/state'
+CurrentUser = require '../../../../models/current_user.coffee'
+{ Following } = require '../../../../components/follow_button/index.coffee'
+{ resolve } = require 'path'
+{ fabricate } = require 'antigravity'
+Followable = benv.requireWithJadeify resolve(__dirname, '../../client/mixins/followable'), ['followedTemplate']
 
 class TestView extends Backbone.View
   _.extend @prototype, Followable
@@ -34,9 +34,9 @@ describe 'Followable', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
 
-    @user   = new CurrentUser fabricate 'user'
-    @state  = new PersonalizeState user: @user
-    @view   = new TestView(state: @state, user: @user)
+    @user = new CurrentUser fabricate 'user'
+    @state = new PersonalizeState user: @user
+    @view = new TestView(state: @state, user: @user)
 
     @view.render()
 
@@ -61,9 +61,9 @@ describe 'Followable', ->
 
   describe '#unfollow', ->
     it 'unfollows the artist', ->
-      artist            = new Artist fabricate 'artist'
-      e                 = $.Event('click')
-      e.currentTarget   = $('<a></a>').data('id', artist.id)
+      artist = new Artist fabricate 'artist'
+      e = $.Event('click')
+      e.currentTarget = $('<a></a>').data('id', artist.id)
       @view.follow e, artist
       @view.followed.length.should.equal 1
       @view.following.length.should.equal 1

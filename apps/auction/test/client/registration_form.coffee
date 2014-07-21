@@ -1,13 +1,13 @@
-benv              = require 'benv'
-Backbone          = require 'backbone'
-sinon             = require 'sinon'
-{ resolve }       = require 'path'
-{ fabricate }     = require 'antigravity'
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+{ resolve } = require 'path'
+{ fabricate } = require 'antigravity'
 
-CurrentUser       = require '../../../../models/current_user'
-Order             = require '../../../../models/order'
-Sale              = require '../../../../models/sale'
-RegistrationForm  = require '../../client/registration_form'
+CurrentUser = require '../../../../models/current_user'
+Order = require '../../../../models/order'
+Sale = require '../../../../models/sale'
+RegistrationForm = require '../../client/registration_form'
 
 describe 'RegistrationForm', ->
 
@@ -23,24 +23,24 @@ describe 'RegistrationForm', ->
   beforeEach (done) ->
     sinon.stub(Backbone, 'sync')#.yieldsTo('success')
 
-    @order  = new Order()
-    @sale   = new Sale fabricate 'sale'
+    @order = new Order()
+    @sale = new Sale fabricate 'sale'
 
     benv.render resolve(__dirname, '../../templates/registration.jade'), {
-      sd           : {}
-      sale         : @sale
-      monthRange   : @order.getMonthRange()
-      yearRange    : @order.getYearRange()
+      sd: {}
+      sale: @sale
+      monthRange: @order.getMonthRange()
+      yearRange: @order.getYearRange()
     }, =>
       @view = new RegistrationForm
-        el      : $('#auction-registration-page')
-        model   : @sale
-        success : =>
+        el: $('#auction-registration-page')
+        model: @sale
+        success: =>
           window.location = '/registration/was/successful'
       @view.currentUser = new CurrentUser fabricate 'user'
       @view.balanced =
-        init : sinon.stub()
-        card :
+        init: sinon.stub()
+        card:
           create: (data, cb) ->
             cb status: 201, data: uri: 'foobar'
     done()

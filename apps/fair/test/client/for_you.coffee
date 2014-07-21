@@ -1,13 +1,13 @@
-_             = require 'underscore'
-sd            = require('sharify').data
-benv          = require 'benv'
-Backbone      = require 'backbone'
-sinon         = require 'sinon'
-{ resolve }   = require 'path'
+_ = require 'underscore'
+sd = require('sharify').data
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+{ resolve } = require 'path'
 { fabricate } = require 'antigravity'
-Fair          = require '../../../../models/fair.coffee'
-Profile       = require '../../../../models/profile.coffee'
-FeedItem      = require '../../../../components/feed/models/feed_item.coffee'
+Fair = require '../../../../models/fair.coffee'
+Profile = require '../../../../models/profile.coffee'
+FeedItem = require '../../../../components/feed/models/feed_item.coffee'
 
 describe 'ForYouView', ->
 
@@ -20,7 +20,7 @@ describe 'ForYouView', ->
       sd.CURRENT_USER = id: 'foo'
       benv.expose { $: benv.require 'jquery' }
       sinon.stub Backbone, 'sync'
-      Backbone.$  = $
+      Backbone.$ = $
 
       @ForYouView = benv.require resolve(__dirname, '../../client/for_you.coffee')
       @ForYouView.__set__ 'FeedView', benv.requireWithJadeify resolve(__dirname, '../../../../components/feed/client/feed.coffee'), ['feedItemsTemplate', 'feedItemsContainerTemplate']

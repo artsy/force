@@ -1,6 +1,6 @@
-fs            = require 'fs'
-jade          = require 'jade'
-Artist        = require '../../../models/artist'
+fs = require 'fs'
+jade = require 'jade'
+Artist = require '../../../models/artist'
 { fabricate } = require 'antigravity'
 
 describe 'Meta tags', ->
@@ -18,7 +18,7 @@ describe 'Meta tags', ->
       @artist = new Artist fabricate 'artist'
       @html = jade.render fs.readFileSync(@file).toString(),
         artist: @artist
-        sd    : @sd
+        sd: @sd
 
     it 'includes mobile alternate, canonical, twitter card and og tags', ->
       @html.should.include "<link rel=\"alternate\" media=\"mobile-media-query\" href=\"http://m.localhost:5000/artist/pablo-picasso"
@@ -33,12 +33,12 @@ describe 'Meta tags', ->
     beforeEach ->
       @artist = new Artist fabricate 'artist'
       @artist.set
-        nationality : null
-        blurb       : null
-        years       : null
+        nationality: null
+        blurb: null
+        years: null
       @html = jade.render fs.readFileSync(@file).toString(),
         artist: @artist
-        sd    : @sd
+        sd: @sd
 
     it 'renders correctly', ->
       @html.should.include "<meta property=\"og:description\" content=\"Pablo Picasso"
@@ -51,7 +51,7 @@ describe 'Meta tags', ->
       @artist.set image_versions: ["large"]
       @html = jade.render fs.readFileSync(@file).toString(),
         artist: @artist
-        sd    : @sd
+        sd: @sd
 
     it 'includes og:image and twitter card', ->
       @html.should.include "<meta property=\"og:image\" content=\"/foo/bar/large"
@@ -64,7 +64,7 @@ describe 'Meta tags', ->
       @artist.set blurb: "Obsessed with celebrity, consumer culture, and mechanical (re)production, Pop artist Andy Warhol created some of the most iconic images of the 20th century. As famous for his quips as for his art—he variously mused that “art is what you can get away with” and “everyone will be famous for 15 minutes”—Warhol drew widely from popular culture and everyday subject matter, creating works like his 32 Campbell's Soup Cans (1962), Brillo pad box sculptures, and portraits of Marilyn Monroe, using the medium of silk-screen."
       @html = jade.render fs.readFileSync(@file).toString(),
         artist: @artist
-        sd    : @sd
+        sd: @sd
 
     it 'renders short blurb for facebook and long one for twitter', ->
       @html.should.include "og:description\" content=\"Pablo Picasso (1900-2000). Obsessed with celebrity, consumer culture, and mechanical (re)production, Pop artist Andy Warhol created some of the most..."
@@ -77,7 +77,7 @@ describe 'Meta tags', ->
       @artist.set nationality: 'Nationality'
       @html = jade.render fs.readFileSync(@file).toString(),
         artist: @artist
-        sd    : @sd
+        sd: @sd
 
     it 'formats description with nationality correctly', ->
       @html.should.include "<meta property=\"og:description\" content=\"Pablo Picasso (Nationality, 1900-2000). This is Pablo Picasso"

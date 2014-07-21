@@ -1,17 +1,17 @@
-_                 = require 'underscore'
-benv              = require 'benv'
-Backbone          = require 'backbone'
-sinon             = require 'sinon'
-PersonalizeState  = require '../../client/state'
-CurrentUser       = require '../../../../models/current_user'
-Items             = require '../../../../collections/items'
-Profile           = require '../../../../models/profile'
-{ fabricate }     = require 'antigravity'
-{ resolve }       = require 'path'
-Followable        = require '../../client/mixins/followable'
+_ = require 'underscore'
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+PersonalizeState = require '../../client/state'
+CurrentUser = require '../../../../models/current_user'
+Items = require '../../../../collections/items'
+Profile = require '../../../../models/profile'
+{ fabricate } = require 'antigravity'
+{ resolve } = require 'path'
+Followable = require '../../client/mixins/followable'
 
-SuggestionsView   = benv.requireWithJadeify resolve(__dirname, '../../client/views/suggestions'), ['suggestedTemplate']
-GalleriesView     = benv.requireWithJadeify resolve(__dirname, '../../client/views/galleries'), ['template']
+SuggestionsView = benv.requireWithJadeify resolve(__dirname, '../../client/views/suggestions'), ['suggestedTemplate']
+GalleriesView = benv.requireWithJadeify resolve(__dirname, '../../client/views/galleries'), ['template']
 
 # Hack for inherited compiled jade templates
 GalleriesView::suggestedTemplate = SuggestionsView::suggestedTemplate
@@ -27,9 +27,9 @@ describe 'SuggestionsView', ->
     benv.teardown()
 
   beforeEach ->
-    @user   = new CurrentUser fabricate 'user', location: city: 'New York'
-    @state  = new PersonalizeState user: @user
-    @view   = new GalleriesView(state: @state, user: @user, followKind: 'artist')
+    @user = new CurrentUser fabricate 'user', location: city: 'New York'
+    @state = new PersonalizeState user: @user
+    @view = new GalleriesView(state: @state, user: @user, followKind: 'artist')
 
     sinon.stub GalleriesView::, 'setupSearch'
     profiles = _.times 4, -> fabricate('partner_profile', id: _.uniqueId 'profile_')
@@ -115,18 +115,18 @@ describe 'SuggestionsView', ->
 
     describe '#remove', ->
       it 'tears down the view when there are extra things to tear down', ->
-        @view.searchBarView       = remove: sinon.stub()
-        @view.locationRequests    = [abort: sinon.stub()]
-        @view.followButtonViews   = { view: remove: sinon.stub() }
+        @view.searchBarView = remove: sinon.stub()
+        @view.locationRequests = [abort: sinon.stub()]
+        @view.followButtonViews = { view: remove: sinon.stub() }
         @view.remove()
         @view.searchBarView.remove.called.should.be.true
         @view.locationRequests[0].abort.called.should.be.true
         @view.followButtonViews.view.remove.called.should.be.true
 
       it 'tears down the view when there are not extra things to tear down', (done) ->
-        @view.searchBarView       = undefined
-        @view.locationRequests    = []
-        @view.followButtonViews   = undefined
+        @view.searchBarView = undefined
+        @view.locationRequests = []
+        @view.followButtonViews = undefined
         @view.remove()
         done()
 

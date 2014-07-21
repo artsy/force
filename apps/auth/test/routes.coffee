@@ -1,8 +1,8 @@
-_         = require 'underscore'
-sinon     = require 'sinon'
-Backbone  = require 'backbone'
-rewire    = require 'rewire'
-routes    = rewire '../routes'
+_ = require 'underscore'
+sinon = require 'sinon'
+Backbone = require 'backbone'
+rewire = require 'rewire'
+routes = rewire '../routes'
 
 describe 'Auth routes', ->
   beforeEach ->

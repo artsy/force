@@ -1,12 +1,12 @@
-_               = require 'underscore'
-benv            = require 'benv'
-Backbone        = require 'backbone'
-sinon           = require 'sinon'
-{ resolve }     = require 'path'
-{ fabricate }   = require 'antigravity'
+_ = require 'underscore'
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+{ resolve } = require 'path'
+{ fabricate } = require 'antigravity'
 
-Artist            = require '../../../models/artist'
-RelatedShowsView  = benv.requireWithJadeify resolve(__dirname, '../view.coffee'), ['template']
+Artist = require '../../../models/artist'
+RelatedShowsView = benv.requireWithJadeify resolve(__dirname, '../view.coffee'), ['template']
 
 describe 'RelatedShowsView', ->
   before (done) ->
@@ -20,10 +20,10 @@ describe 'RelatedShowsView', ->
 
   beforeEach (done) ->
     sinon.stub Backbone, 'sync'
-    @artist   = new Artist fabricate 'artist'
-    @view     = new RelatedShowsView
-      model      : @artist
-      collection : @artist.relatedShows
+    @artist = new Artist fabricate 'artist'
+    @view = new RelatedShowsView
+      model: @artist
+      collection: @artist.relatedShows
     done()
 
   afterEach ->

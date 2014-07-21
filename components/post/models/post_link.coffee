@@ -1,5 +1,5 @@
-Backbone      = require 'backbone'
-sd            = require('sharify').data
+Backbone = require 'backbone'
+sd = require('sharify').data
 
 module.exports = class PostLink extends Backbone.Model
 

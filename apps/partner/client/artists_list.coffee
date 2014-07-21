@@ -1,6 +1,6 @@
-_              = require 'underscore'
-Backbone       = require 'backbone'
-template       = -> require('../templates/artists_list.jade') arguments...
+_ = require 'underscore'
+Backbone = require 'backbone'
+template = -> require('../templates/artists_list.jade') arguments...
 
 module.exports = class PartnerArtistsListView extends Backbone.View
 
@@ -11,7 +11,7 @@ module.exports = class PartnerArtistsListView extends Backbone.View
   initialize: (options={}) ->
     { @numberOfColumns, @linkToPartnerArtist } = _.defaults options, @defaults
     @render()
-    
+
   render: ->
     return @$el.hide() if @collection.length is 0
     @$el.html template
@@ -22,21 +22,21 @@ module.exports = class PartnerArtistsListView extends Backbone.View
     h = Math.ceil pas.length / @numberOfColumns
 
     groups = _.groupBy pas, (pa) -> pa.get 'represented_by'
-    bigger  = label: "represented artists", list: groups.true or []
+    bigger = label: "represented artists", list: groups.true or []
     smaller = label: "works available by", list: groups.false or []
 
     if bigger.list.length < smaller.list.length
       temp = bigger; bigger = smaller; smaller = temp
     if smaller.list.length is 0
       bigger.label = "artists"
- 
+
     smaller.numOfCols = Math.ceil smaller.list.length / h
-    bigger.numOfCols  = @numberOfColumns - smaller.numOfCols
+    bigger.numOfCols = @numberOfColumns - smaller.numOfCols
 
     # Split arrays into columns
     for g in [bigger, smaller]
-      quot  = Math.floor g.list.length / g.numOfCols
-      remd  = g.list.length % g.numOfCols
+      quot = Math.floor g.list.length / g.numOfCols
+      remd = g.list.length % g.numOfCols
       steps = _.map(_.range(g.numOfCols), (i) -> if i >= remd then quot else quot + 1)
 
       g.cols = []; i = 0

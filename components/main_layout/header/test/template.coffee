@@ -1,10 +1,10 @@
-_     = require 'underscore'
-jade  = require 'jade'
-path  = require 'path'
-fs    = require 'fs'
+_ = require 'underscore'
+jade = require 'jade'
+path = require 'path'
+fs = require 'fs'
 
 { fabricate } = require 'antigravity'
-CurrentUser   = require '../../../../models/current_user'
+CurrentUser = require '../../../../models/current_user'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../templates/#{templateName}.jade"

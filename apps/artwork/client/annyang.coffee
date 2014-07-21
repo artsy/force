@@ -9,9 +9,9 @@ module.exports = class AnnyangView extends Backbone.View
     if annyang
       { @artwork } = options
       events = {
-        'skrillex' : @triggerSkrillex
-        'go to *term' : @onPath
-        'go back' : @goBack
+        'skrillex': @triggerSkrillex
+        'go to *term': @onPath
+        'go back': @goBack
       }
       annyang.addCommands(events)
       annyang.start()

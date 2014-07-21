@@ -1,18 +1,18 @@
-_               = require 'underscore'
-benv            = require 'benv'
-jade            = require 'jade'
-path            = require 'path'
-fs              = require 'fs'
-Backbone        = require 'backbone'
-{ AToZ }        = require 'artsy-backbone-mixins'
-{ fabricate }   = require 'antigravity'
-Fair            = require '../../../models/fair'
-Profile         = require '../../../models/profile'
-Item            = require '../../../models/item'
-Items           = require '../../../collections/items'
-OrderedSet      = require '../../../models/ordered_set'
-OrderedSets     = require '../../../collections/ordered_sets'
-cheerio         = require 'cheerio'
+_ = require 'underscore'
+benv = require 'benv'
+jade = require 'jade'
+path = require 'path'
+fs = require 'fs'
+Backbone = require 'backbone'
+{ AToZ } = require 'artsy-backbone-mixins'
+{ fabricate } = require 'antigravity'
+Fair = require '../../../models/fair'
+Profile = require '../../../models/profile'
+Item = require '../../../models/item'
+Items = require '../../../collections/items'
+OrderedSet = require '../../../models/ordered_set'
+OrderedSets = require '../../../collections/ordered_sets'
+cheerio = require 'cheerio'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../templates/#{templateName}.jade"
@@ -65,12 +65,12 @@ describe 'Fair', ->
       curatorItems.add new Item( fabricate 'featured_link', { title: 'EVEN Moar Curator Art' } )
 
       @template = render('footer')
-        editorialItems : editorialItems.models
-        exploreItems   : exploreItems.models
-        primaryItems   : primaryItems.models
-        curatorItems   : curatorItems.models
-        fair           : fair
-        profile        : profile
+        editorialItems: editorialItems.models
+        exploreItems: exploreItems.models
+        primaryItems: primaryItems.models
+        curatorItems: curatorItems.models
+        fair: fair
+        profile: profile
 
     it 'renders valid html', ->
       $ = cheerio.load @template

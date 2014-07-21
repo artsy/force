@@ -1,6 +1,6 @@
-sinon     = require 'sinon'
-Backbone  = require 'backbone'
-rewire    = require 'rewire'
+sinon = require 'sinon'
+Backbone = require 'backbone'
+rewire = require 'rewire'
 
 { fill, crop, resize } = resizer = rewire '../../lib/resizer'
 

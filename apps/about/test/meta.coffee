@@ -1,5 +1,5 @@
-fs            = require 'fs'
-jade          = require 'jade'
+fs = require 'fs'
+jade = require 'jade'
 { fabricate } = require 'antigravity'
 
 describe 'Meta tags', ->
@@ -9,9 +9,9 @@ describe 'Meta tags', ->
     before ->
       @file = "#{process.cwd()}/apps/about/meta.jade"
       @sd =
-        CANONICAL_MOBILE_URL : 'http://m.localhost:5000'
-        MOBILE_MEDIA_QUERY   : 'mobile-media-query'
-        APP_URL          : 'http://localhost:5000'
+        CANONICAL_MOBILE_URL: 'http://m.localhost:5000'
+        MOBILE_MEDIA_QUERY: 'mobile-media-query'
+        APP_URL: 'http://localhost:5000'
       @html = jade.render fs.readFileSync(@file).toString(),
         sd: @sd
 

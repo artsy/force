@@ -1,10 +1,10 @@
-{ fabricate }   = require 'antigravity'
-_               = require 'underscore'
-sinon           = require 'sinon'
-Backbone        = require 'backbone'
-routes          = require '../routes'
-CurrentUser     = require '../../../models/current_user.coffee'
-Artwork         = require '../../../models/artwork.coffee'
+{ fabricate } = require 'antigravity'
+_ = require 'underscore'
+sinon = require 'sinon'
+Backbone = require 'backbone'
+routes = require '../routes'
+CurrentUser = require '../../../models/current_user.coffee'
+Artwork = require '../../../models/artwork.coffee'
 
 describe 'Artwork routes', ->
   beforeEach ->

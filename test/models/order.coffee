@@ -1,9 +1,9 @@
-_               = require 'underscore'
-should          = require 'should'
-Backbone        = require 'backbone'
-{ fabricate }   = require 'antigravity'
-Order           = require '../../models/order.coffee'
-sinon           = require 'sinon'
+_ = require 'underscore'
+should = require 'should'
+Backbone = require 'backbone'
+{ fabricate } = require 'antigravity'
+Order = require '../../models/order.coffee'
+sinon = require 'sinon'
 
 shippingInfo =
   telephone: '8675309'

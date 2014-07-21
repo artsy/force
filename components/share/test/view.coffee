@@ -1,18 +1,18 @@
-benv          = require 'benv'
-Backbone      = require 'backbone'
-sinon         = require 'sinon'
-mediator      = require '../../../lib/mediator.coffee'
-ShareView     = require '../view.coffee'
-{ resolve }   = require 'path'
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+mediator = require '../../../lib/mediator.coffee'
+ShareView = require '../view.coffee'
+{ resolve } = require 'path'
 
 describe 'ShareView', ->
 
   before (done) ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
-      Backbone.$  = $
-      @openSpy    = sinon.spy window, 'open'
-      @view       = new ShareView el: $("""
+      Backbone.$ = $
+      @openSpy = sinon.spy window, 'open'
+      @view = new ShareView el: $("""
         <div>
           <a href='#share' data-service='okcupid'></a>
         </div>

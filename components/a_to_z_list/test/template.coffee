@@ -1,10 +1,10 @@
-_         = require 'underscore'
-{ AToZ }  = require 'artsy-backbone-mixins'
-Backbone  = require 'backbone'
-cheerio   = require 'cheerio'
-fs        = require 'fs'
-jade      = require 'jade'
-path      = require 'path'
+_ = require 'underscore'
+{ AToZ } = require 'artsy-backbone-mixins'
+Backbone = require 'backbone'
+cheerio = require 'cheerio'
+fs = require 'fs'
+jade = require 'jade'
+path = require 'path'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../#{templateName}.jade"
@@ -15,8 +15,8 @@ render = (templateName) ->
 
 class AToZCollectionModel extends Backbone.Model
   alphaSortKey: -> @get 'sortable_id'
-  displayName : -> @get 'name'
-  href        : -> "/#{@get('sortable_id')}"
+  displayName: -> @get 'name'
+  href: -> "/#{@get('sortable_id')}"
 
 class AToZCollection extends Backbone.Collection
   _.extend @prototype, AToZ

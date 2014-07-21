@@ -1,27 +1,27 @@
-_               = require 'underscore'
-rewire          = require 'rewire'
-benv            = require 'benv'
-Backbone        = require 'backbone'
-sinon           = require 'sinon'
-{ resolve }     = require 'path'
-{ fabricate }   = require 'antigravity'
+_ = require 'underscore'
+rewire = require 'rewire'
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+{ resolve } = require 'path'
+{ fabricate } = require 'antigravity'
 
-Artwork         = require '../../../../models/artwork'
-OpenSeadragon   = ->
+Artwork = require '../../../../models/artwork'
+OpenSeadragon = ->
   addHandler: sinon.stub()
   viewport:
-    getZoom:          -> 1
-    getMinZoom:       -> 0.5
-    getMaxZoom:       -> 3
-    getHomeZoom:      -> 1
-    zoomBy:           sinon.stub()
-    zoomTo:           sinon.stub()
+    getZoom: -> 1
+    getMinZoom: -> 0.5
+    getMaxZoom: -> 3
+    getHomeZoom: -> 1
+    zoomBy: sinon.stub()
+    zoomTo: sinon.stub()
     applyConstraints: sinon.stub()
 
 describe 'DeepZoomView', ->
   before (done) ->
-    @_defer   = _.defer
-    _.defer   = (cb) -> cb()
+    @_defer = _.defer
+    _.defer = (cb) -> cb()
 
     benv.setup =>
       benv.expose
@@ -143,8 +143,8 @@ describe 'DeepZoomView', ->
       @view.render()
 
     it 'sets the zoom level on the OpenSeadragon viewport to a float value of the currentTarget', ->
-      e                 = $.Event()
-      e.currentTarget   = { value: '0.5' }
+      e = $.Event()
+      e.currentTarget = { value: '0.5' }
       @view._zoomTo e
       @view.viewer.viewport.zoomTo.args[0][0].should.equal 0.5
 

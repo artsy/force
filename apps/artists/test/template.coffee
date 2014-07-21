@@ -1,17 +1,17 @@
-_               = require 'underscore'
-benv            = require 'benv'
-jade            = require 'jade'
-path            = require 'path'
-fs              = require 'fs'
-Backbone        = require 'backbone'
-{ fabricate }   = require 'antigravity'
-OrderedSet      = require '../../../models/ordered_set'
-FeaturedLink    = require '../../../models/featured_link'
-Gene            = require '../../../models/gene'
-Artists         = require '../../../collections/artists'
-Artist          = require '../../../models/artist'
+_ = require 'underscore'
+benv = require 'benv'
+jade = require 'jade'
+path = require 'path'
+fs = require 'fs'
+Backbone = require 'backbone'
+{ fabricate } = require 'antigravity'
+OrderedSet = require '../../../models/ordered_set'
+FeaturedLink = require '../../../models/featured_link'
+Gene = require '../../../models/gene'
+Artists = require '../../../collections/artists'
+Artist = require '../../../models/artist'
 ArtistsByLetter = require '../collections/artists_by_letter'
-Items           = require '../../../collections/items'
+Items = require '../../../collections/items'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../templates/#{templateName}.jade"
@@ -52,17 +52,17 @@ describe 'Artists', ->
 
         template = render('index')(
           sd:
-            CANONICAL_MOBILE_URL : 'http://localhost:5000'
-            API_URL : 'http://localhost:5000'
-            APP_URL : 'http://localhost:5000'
+            CANONICAL_MOBILE_URL: 'http://localhost:5000'
+            API_URL: 'http://localhost:5000'
+            APP_URL: 'http://localhost:5000'
             ASSET_PATH: 'http://localhost:5000/'
             CSS_EXT: '.css.gz'
             JS_EXT: '.js.gz'
             NODE_ENV: 'test'
             CURRENT_PATH: '/artists'
-          letterRange:      ['a', 'b', 'c']
-          featuredArtists:  @featuredArtists
-          featuredGenes:    @genes
+          letterRange: ['a', 'b', 'c']
+          featuredArtists: @featuredArtists
+          featuredGenes: @genes
         )
 
         @$template = $(template)
@@ -109,16 +109,16 @@ describe 'Artists', ->
 
         template = render('letter')(
           sd:
-            CANONICAL_MOBILE_URL : 'http://localhost:5000'
-            APP_URL : 'http://localhost:5000'
+            CANONICAL_MOBILE_URL: 'http://localhost:5000'
+            APP_URL: 'http://localhost:5000'
             ASSET_PATH: 'http://localhost:5000'
             CSS_EXT: '.css.gz'
             JS_EXT: '.js.gz'
             NODE_ENV: 'test'
             CURRENT_PATH: '/artists-starting-with-a'
-          letter          : 'A'
-          letterRange:      ['a', 'b', 'c']
-          artists         : @artistsByLetter
+          letter: 'A'
+          letterRange: ['a', 'b', 'c']
+          artists: @artistsByLetter
         )
 
         @$template = $(template)

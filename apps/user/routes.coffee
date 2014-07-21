@@ -28,7 +28,7 @@ Profile = require '../../models/profile.coffee'
       profile: profile
 
   # Fetching here gets all current user properties, as is, req.user
-  # only has :public fields. Also note that UserEdit inherits
+  # only has:public fields. Also note that UserEdit inherits
   # CurrentUser's override of sync to add the access_token data param
   user.fetch
     error: res.backboneError

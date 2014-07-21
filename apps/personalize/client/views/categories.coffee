@@ -1,28 +1,28 @@
-_                             = require 'underscore'
-Q                             = require 'q'
-StepView                      = require './step.coffee'
-track                         = require('../../../../lib/analytics.coffee').track
-OrderedSets                   = require '../../../../collections/ordered_sets.coffee'
-Gene                          = require '../../../../models/gene.coffee'
-{ setSkipLabel }              = require '../mixins/followable.coffee'
-{ FollowButton, Following }   = require '../../../../components/follow_button/index.coffee'
+_ = require 'underscore'
+Q = require 'q'
+StepView = require './step.coffee'
+track = require('../../../../lib/analytics.coffee').track
+OrderedSets = require '../../../../collections/ordered_sets.coffee'
+Gene = require '../../../../models/gene.coffee'
+{ setSkipLabel } = require '../mixins/followable.coffee'
+{ FollowButton, Following } = require '../../../../components/follow_button/index.coffee'
 
 template = -> require('../../templates/categories.jade') arguments...
 suggestionTemplates =
-  featured  : -> require('../../templates/featured_category.jade') arguments...
-  secondary : -> require('../../templates/secondary_category.jade') arguments...
+  featured: -> require('../../templates/featured_category.jade') arguments...
+  secondary: -> require('../../templates/secondary_category.jade') arguments...
 
 module.exports = class CategoriesView extends StepView
   keys:
-    featured  : 'personalize:featured-suggested-categories-updated'
-    secondary : 'personalize:secondary-suggested-categories'
+    featured: 'personalize:featured-suggested-categories-updated'
+    secondary: 'personalize:secondary-suggested-categories'
 
   setSkipLabel: setSkipLabel
 
   events:
-    'click .personalize-skip'               : 'advance'
-    'click .personalize-category'           : 'followCategory'
-    'click .personalize-secondary-category' : 'followCategory'
+    'click .personalize-skip': 'advance'
+    'click .personalize-category': 'followCategory'
+    'click .personalize-secondary-category': 'followCategory'
 
   initialize: (options) ->
     super
@@ -30,8 +30,8 @@ module.exports = class CategoriesView extends StepView
     @following = new Following null, kind: 'gene'
 
     @categories =
-      featured  : new OrderedSets key: @keys.featured
-      secondary : new OrderedSets key: @keys.secondary
+      featured: new OrderedSets key: @keys.featured
+      secondary: new OrderedSets key: @keys.secondary
 
     Q.allSettled(_.map @categories, (set) -> set.fetchAll()).then => @bootstrap()
 
@@ -60,9 +60,9 @@ module.exports = class CategoriesView extends StepView
     _.each @categories, (categories, key) =>
       @following.syncFollows categories.pluck('gene_id')
       categories.each (category) =>
-        model   = new Gene id: category.get 'gene_id'
-        el      = @$(".follow-button[data-id=#{category.get('gene_id')}]")
-        button  = @setupFollowButton model, el, key
+        model = new Gene id: category.get 'gene_id'
+        el = @$(".follow-button[data-id=#{category.get('gene_id')}]")
+        button = @setupFollowButton model, el, key
         @listenTo button, 'click', @setSkipLabel, this
 
   setupCategories: (categories, key) ->

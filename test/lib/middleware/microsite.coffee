@@ -1,11 +1,11 @@
-sinon                 = require 'sinon'
-micrositeMiddleware   = require '../../../lib/middleware/microsite'
+sinon = require 'sinon'
+micrositeMiddleware = require '../../../lib/middleware/microsite'
 
 describe 'microsite middleware', ->
   describe 'does not have the microsite context', ->
     beforeEach ->
-      @req  = query: {}
-      @res  = locals: sd: {}
+      @req = query: {}
+      @res = locals: sd: {}
 
     it 'leaves the locals alone', ->
       micrositeMiddleware(@req, @res, ->)

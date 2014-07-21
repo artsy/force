@@ -1,9 +1,9 @@
-benv      = require 'benv'
+benv = require 'benv'
 analytics = require '../../../lib/analytics'
-Artwork   = require '../../../models/artwork'
-sinon     = require 'sinon'
-Backbone  = require 'backbone'
-sd        = require('sharify').data
+Artwork = require '../../../models/artwork'
+sinon = require 'sinon'
+Backbone = require 'backbone'
+sd = require('sharify').data
 impressionTracking = require '../impression_tracking'
 
 describe 'ImpressionTracking', ->

@@ -1,8 +1,8 @@
-_                   = require 'underscore'
-Backbone            = require 'backbone'
-Show                = require '../../../models/partner_show.coffee'
-ArtworkColumnsView  = require '../../../components/artwork_columns/view.coffee'
-PartnerShowButtons  = require '../../../components/partner_buttons/show_buttons.coffee'
+_ = require 'underscore'
+Backbone = require 'backbone'
+Show = require '../../../models/partner_show.coffee'
+ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
+PartnerShowButtons = require '../../../components/partner_buttons/show_buttons.coffee'
 
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 
@@ -44,17 +44,17 @@ module.exports = class RelatedShowView extends Backbone.View
 
   setupPartnerButtons: ->
     new PartnerShowButtons
-      el    : @$('.partner-buttons-show-buttons')
-      model : @show
+      el: @$('.partner-buttons-show-buttons')
+      model: @show
 
   setupArtworks: (artworks) ->
     @artworkColumnsView = new ArtworkColumnsView
-      el               : @$('#artwork-related-show-artworks')
-      collection       : artworks
-      numberOfColumns  : 4
-      gutterWidth      : 40
-      maxArtworkHeight : 400
-      isOrdered        : false
-      seeMore          : false
-      allowDuplicates  : true
-      artworkSize      : 'tall'
+      el: @$('#artwork-related-show-artworks')
+      collection: artworks
+      numberOfColumns: 4
+      gutterWidth: 40
+      maxArtworkHeight: 400
+      isOrdered: false
+      seeMore: false
+      allowDuplicates: true
+      artworkSize: 'tall'

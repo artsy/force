@@ -1,7 +1,7 @@
-_               = require 'underscore'
-benv            = require 'benv'
-sinon           = require 'sinon'
-Backbone        = require 'backbone'
+_ = require 'underscore'
+benv = require 'benv'
+sinon = require 'sinon'
+Backbone = require 'backbone'
 
 describe 'BlurbView', ->
 

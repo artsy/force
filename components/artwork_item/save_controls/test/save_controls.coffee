@@ -1,17 +1,17 @@
-benv          = require 'benv'
-sinon         = require 'sinon'
-Backbone      = require 'backbone'
-SaveControls  = require '../view'
-mediator      = require '../../../../lib/mediator'
-{ resolve }   = require 'path'
+benv = require 'benv'
+sinon = require 'sinon'
+Backbone = require 'backbone'
+SaveControls = require '../view'
+mediator = require '../../../../lib/mediator'
+{ resolve } = require 'path'
 
-model           = new Backbone.Model(id: 'artwork')
-model.isSaved   = sinon.stub()
-model.href      = -> '/foo/bar'
+model = new Backbone.Model(id: 'artwork')
+model.isSaved = sinon.stub()
+model.href = -> '/foo/bar'
 
-artworkCollection                 = new Backbone.Collection
-artworkCollection.unsaveArtwork   = sinon.stub()
-artworkCollection.saveArtwork     = sinon.stub()
+artworkCollection = new Backbone.Collection
+artworkCollection.unsaveArtwork = sinon.stub()
+artworkCollection.saveArtwork = sinon.stub()
 
 describe 'SaveControls', ->
   describe '#save', ->

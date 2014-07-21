@@ -1,5 +1,5 @@
-GeoFormatter  = require 'geoformatter'
-Backbone      = require 'backbone'
+GeoFormatter = require 'geoformatter'
+Backbone = require 'backbone'
 
 module.exports =
   googleMapsAPI: 'https://maps.googleapis.com/maps/api/js?libraries=places&sensor=true&language=en'
@@ -18,10 +18,10 @@ module.exports =
 
   geoIp: (cb) ->
     new Backbone.Model().fetch
-      headers  : null
-      url      : 'https://freegeoip.net/json/'
-      dataType : 'jsonp'
-      success  : (model, response, options) ->
+      headers: null
+      url: 'https://freegeoip.net/json/'
+      dataType: 'jsonp'
+      success: (model, response, options) ->
         cb response
 
   fallback: (cb) ->

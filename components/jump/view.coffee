@@ -1,6 +1,6 @@
-_         = require 'underscore'
-Backbone  = require 'backbone'
-mediator  = require '../../lib/mediator.coffee'
+_ = require 'underscore'
+Backbone = require 'backbone'
+mediator = require '../../lib/mediator.coffee'
 analytics = require '../../lib/analytics.coffee'
 
 module.exports = class JumpView extends Backbone.View
@@ -9,9 +9,9 @@ module.exports = class JumpView extends Backbone.View
   initialize: (options) ->
     { @duration, @threshold, @frequency } =
       _.defaults (options || {}),
-        duration:   500 # Scroll animation duration
-        threshold:  400 # Point at which to hide the navigation
-        frequency:  250 # How often scroll position is checked
+        duration: 500 # Scroll animation duration
+        threshold: 400 # Point at which to hide the navigation
+        frequency: 250 # How often scroll position is checked
 
     @isScrolling = false
     @state = 'hidden'

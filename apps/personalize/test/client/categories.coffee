@@ -1,13 +1,13 @@
-_                 = require 'underscore'
-benv              = require 'benv'
-Backbone          = require 'backbone'
-sinon             = require 'sinon'
-{ fabricate }     = require 'antigravity'
-{ resolve }       = require 'path'
-PersonalizeState  = require '../../client/state'
-CurrentUser       = require '../../../../models/current_user'
-Artist            = require '../../../../models/artist'
-FeaturedLink      = require '../../../../models/featured_link'
+_ = require 'underscore'
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+{ fabricate } = require 'antigravity'
+{ resolve } = require 'path'
+PersonalizeState = require '../../client/state'
+CurrentUser = require '../../../../models/current_user'
+Artist = require '../../../../models/artist'
+FeaturedLink = require '../../../../models/featured_link'
 
 CategoriesView = benv.requireWithJadeify resolve(__dirname, '../../client/views/categories'), ['template', 'suggestionTemplates.featured', 'suggestionTemplates.secondary']
 CategoriesView.__set__ 'OrderedSets', Backbone.Collection
@@ -26,11 +26,11 @@ describe 'CategoriesView', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
 
-    @user       = new CurrentUser fabricate 'user'
-    @state      = new PersonalizeState user: @user
-    @view       = new CategoriesView state: @state, user: @user
-    @geneLinkA  = new FeaturedLink fabricate 'featured_link', href: '/gene/a', title: 'A', image_url: 'a/:version'
-    @geneLinkB  = new FeaturedLink fabricate 'featured_link', href: '/gene/b', title: 'B', image_url: 'b/:version'
+    @user = new CurrentUser fabricate 'user'
+    @state = new PersonalizeState user: @user
+    @view = new CategoriesView state: @state, user: @user
+    @geneLinkA = new FeaturedLink fabricate 'featured_link', href: '/gene/a', title: 'A', image_url: 'a/:version'
+    @geneLinkB = new FeaturedLink fabricate 'featured_link', href: '/gene/b', title: 'B', image_url: 'b/:version'
 
     @view.render()
     @view.categories.featured.first().set items: new Backbone.Collection [@geneLinkA]
@@ -67,8 +67,8 @@ describe 'CategoriesView', ->
 
   describe '#followCategory', ->
     it 'should toggle the category follow no matter where in the category a click happens', ->
-      $button   = @view.$('.follow-button').first()
-      $parent   = $button.closest('.personalize-category')
+      $button = @view.$('.follow-button').first()
+      $parent = $button.closest('.personalize-category')
       $parent.click()
       @view.$('.personalize-skip').text().should.equal 'Next'
 

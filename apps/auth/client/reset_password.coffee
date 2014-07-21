@@ -1,7 +1,7 @@
-Backbone    = require 'backbone'
-sd          = require('sharify').data
-{ parse }   = require 'url'
-qs          = require 'querystring'
+Backbone = require 'backbone'
+sd = require('sharify').data
+{ parse } = require 'url'
+qs = require 'querystring'
 
 module.exports.PasswordResetView = class PasswordResetView extends Backbone.View
 
@@ -21,8 +21,8 @@ module.exports.PasswordResetView = class PasswordResetView extends Backbone.View
 
     @model.clear()
     @model.set
-      password              : @$("input[name='password']").val()
-      password_confirmation : @$("input[name='password_confirmation']").val()
+      password: @$("input[name='password']").val()
+      password_confirmation: @$("input[name='password_confirmation']").val()
 
     if window?.location?.search?.length
       token = qs.parse(parse(window.location.search).query).reset_password_token

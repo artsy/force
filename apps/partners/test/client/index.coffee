@@ -1,15 +1,15 @@
-_               = require 'underscore'
-sd              = require('sharify').data
-benv            = require 'benv'
-sinon           = require 'sinon'
-rewire          = require 'rewire'
-{ resolve }     = require 'path'
-{ fabricate }   = require 'antigravity'
-Backbone        = require 'backbone'
-CurrentUser     = require '../../../../models/current_user.coffee'
-Follow          = require '../../../../components/follow_button/model.coffee'
-Partner         = require '../../../../models/partner.coffee'
-Profiles        = require '../../../../collections/profiles.coffee'
+_ = require 'underscore'
+sd = require('sharify').data
+benv = require 'benv'
+sinon = require 'sinon'
+rewire = require 'rewire'
+{ resolve } = require 'path'
+{ fabricate } = require 'antigravity'
+Backbone = require 'backbone'
+CurrentUser = require '../../../../models/current_user.coffee'
+Follow = require '../../../../components/follow_button/model.coffee'
+Partner = require '../../../../models/partner.coffee'
+Profiles = require '../../../../collections/profiles.coffee'
 
 describe 'FeaturedPartnersView', ->
   before (done) ->

@@ -9,7 +9,11 @@
   CANONICAL_MOBILE_URL, IMAGES_URL_PREFIX, SECURE_IMAGES_URL, GOOGLE_ANALYTICS_ID, MIXPANEL_ID,
   COOKIE_DOMAIN, AUTO_GRAVITY_LOGIN, GOOGLE_MAPS_API_KEY, ADMIN_URL, CMS_URL, MAX_SOCKETS,
   DELTA_HOST, ENABLE_AB_TEST, KIOSK_MODE, KIOSK_PAGE, SUGGESTIONS_AB_TEST, SESSION_COOKIE_KEY,
+<<<<<<< HEAD
   EMPTY_COLLECTION_SET_ID, GEMINI_S3_ACCESS_KEY, GEMINI_APP, GEMINI_ACCOUNT_KEY } = config = require "../config"
+=======
+  EMPTY_COLLECTION_SET_ID, BIDDER_H1_COPY, BIDDER_H2_COPY } = config = require "../config"
+>>>>>>> master
 
 { parse, format } = require 'url'
 
@@ -69,6 +73,8 @@ sharify.data =
   GEMINI_S3_ACCESS_KEY: GEMINI_S3_ACCESS_KEY
   GEMINI_APP: GEMINI_APP
   GEMINI_ACCOUNT_KEY: GEMINI_ACCOUNT_KEY
+  BIDDER_H1_COPY: BIDDER_H1_COPY
+  BIDDER_H2_COPY: BIDDER_H2_COPY
 CurrentUser = require '../models/current_user'
 
 module.exports = (app) ->
@@ -124,7 +130,7 @@ module.exports = (app) ->
   app.use session
     secret: SESSION_SECRET
     domain: COOKIE_DOMAIN
-    key   : SESSION_COOKIE_KEY
+    key: SESSION_COOKIE_KEY
     maxage: SESSION_COOKIE_MAX_AGE
   app.use artsyPassport _.extend config,
     CurrentUser: CurrentUser
@@ -149,7 +155,6 @@ module.exports = (app) ->
 
   # Mount apps
   app.use require "../apps/home"
-
   # Needs to be above artwork and artist routes to support the /type/:id/* routes
   app.use require "../apps/auction_lots"
   app.use require "../apps/auction"
@@ -189,6 +194,7 @@ module.exports = (app) ->
   app.use require "../apps/static"
   # Shortcuts are prioritized last
   app.use require "../apps/shortcuts"
+  app.use require "../apps/clear_cache"
 
   # Route to ping for system up
   app.get '/system/up', (req, res) ->
@@ -200,4 +206,5 @@ module.exports = (app) ->
 
   # Finally 404 and error handling middleware when the request wasn't handled
   # successfully by anything above.
-  require("../apps/error_handler")(app)
+  require('artsy-error-handler') app,
+    template: path.resolve(__dirname, '../components/main_layout/templates/error.jade')

@@ -28,7 +28,7 @@ describe 'Meta tags', ->
       @file = resolve __dirname, "../templates/profile_meta.jade"
       @profile = new Profile fabricate('profile')
       @html = jade.render fs.readFileSync(@file).toString(),
-        sd  : @sd
+        sd: @sd
         profile: @profile
 
     it 'includes canonical url, twitter card, og tags, and title and respects current_path', ->

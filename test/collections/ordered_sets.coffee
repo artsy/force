@@ -1,8 +1,8 @@
-sinon           = require 'sinon'
-rewire          = require 'rewire'
-Backbone        = require 'backbone'
-OrderedSets     = rewire '../../collections/ordered_sets.coffee'
-{ fabricate }   = require 'antigravity'
+sinon = require 'sinon'
+rewire = require 'rewire'
+Backbone = require 'backbone'
+OrderedSets = rewire '../../collections/ordered_sets.coffee'
+{ fabricate } = require 'antigravity'
 
 describe 'OrderedSets', ->
   beforeEach ->

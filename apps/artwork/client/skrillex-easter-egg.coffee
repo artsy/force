@@ -3,7 +3,7 @@ _ = require 'underscore'
 module.exports = (artwork) ->
   return unless location.pathname.match('/skrillex')
   $('#artwork-page.main-layout-container').prepend(
-    "<audio id='skrillex' src='/sounds/skrillex(cut).mp3'></audio>" 
+    "<audio id='skrillex' src='/sounds/skrillex(cut).mp3'></audio>"
   )
   $container = $('.artwork-image')
   $image = $container.find('img')
@@ -17,8 +17,8 @@ module.exports = (artwork) ->
   canvas = $("<canvas width=#{imgWidth} height=#{imgHeight}>")[0]
   $canvas = $(canvas)
   $canvas.css
-    'display' : 'inline-block'
-    'position' : 'absolute'
+    'display': 'inline-block'
+    'position': 'absolute'
   $container.prepend canvas
   context = canvas.getContext('2d')
   $skrillex = $('#skrillex')

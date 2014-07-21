@@ -1,32 +1,32 @@
-_                         = require 'underscore'
-sd                        = require('sharify').data
-Backbone                  = require 'backbone'
-ShareModal                = require '../../../components/share/modal.coffee'
-Transition                = require '../../../components/mixins/transition.coffee'
-CurrentUser               = require '../../../models/current_user.coffee'
-SaveButton                = require '../../../components/save_button/view.coffee'
-AddToPostButton           = require '../../../components/related_posts/add_to_post_button.coffee'
-RelatedPostsView          = require '../../../components/related_posts/view.coffee'
-analytics                 = require '../../../lib/analytics.coffee'
-acquireArtwork            = require('../../../components/acquire/view.coffee').acquireArtwork
-FeatureNavigationView     = require './feature-navigation.coffee'
-BelowTheFoldView          = require './below-the-fold.coffee'
-trackArtworkImpressions   = require("../../../components/analytics/impression_tracking.coffee").trackArtworkImpressions
-MonocleView               = require './monocles.coffee'
-AnnyangView               = require './annyang.coffee'
-BlurbView                 = require '../../../components/blurb/view.coffee'
-Sale                      = require '../../../models/sale.coffee'
-ZigZagBanner              = require '../../../components/zig_zag_banner/index.coffee'
-Auction                   = require './mixins/auction.coffee'
-RelatedShowView           = require './related-show.coffee'
-qs                        = require 'querystring'
-{ parse }                 = require 'url'
-ContactView               = require '../components/contact/view.coffee'
-ArtworkColumnsView        = require '../../../components/artwork_columns/view.coffee'
-Cookies                   = require 'cookies-js'
+_ = require 'underscore'
+sd = require('sharify').data
+Backbone = require 'backbone'
+ShareModal = require '../../../components/share/modal.coffee'
+Transition = require '../../../components/mixins/transition.coffee'
+CurrentUser = require '../../../models/current_user.coffee'
+SaveButton = require '../../../components/save_button/view.coffee'
+AddToPostButton = require '../../../components/related_posts/add_to_post_button.coffee'
+RelatedPostsView = require '../../../components/related_posts/view.coffee'
+analytics = require '../../../lib/analytics.coffee'
+acquireArtwork = require('../../../components/acquire/view.coffee').acquireArtwork
+FeatureNavigationView = require './feature-navigation.coffee'
+BelowTheFoldView = require './below-the-fold.coffee'
+trackArtworkImpressions = require("../../../components/analytics/impression_tracking.coffee").trackArtworkImpressions
+MonocleView = require './monocles.coffee'
+AnnyangView = require './annyang.coffee'
+BlurbView = require '../../../components/blurb/view.coffee'
+Sale = require '../../../models/sale.coffee'
+ZigZagBanner = require '../../../components/zig_zag_banner/index.coffee'
+Auction = require './mixins/auction.coffee'
+RelatedShowView = require './related-show.coffee'
+qs = require 'querystring'
+{ parse } = require 'url'
+ContactView = require '../components/contact/view.coffee'
+ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
+Cookies = require 'cookies-js'
 
-detailTemplate              = -> require('../templates/_detail.jade') arguments...
-auctionPlaceholderTemplate  = -> require('../templates/auction_placeholder.jade') arguments...
+detailTemplate = -> require('../templates/_detail.jade') arguments...
+auctionPlaceholderTemplate = -> require('../templates/auction_placeholder.jade') arguments...
 
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 
@@ -34,14 +34,14 @@ module.exports = class ArtworkView extends Backbone.View
   _.extend @prototype, Auction
 
   events:
-    'click a[data-client]'                  : 'intercept'
-    'click .circle-icon-button-share'       : 'openShare'
-    'click .artwork-additional-image'       : 'changeImage'
-    'click .artwork-download-button'        : 'trackDownload'
-    'click .artwork-auction-results-button' : 'trackComparable'
-    'change .aes-radio-button'              : 'selectEdition'
-    'click .artwork-buy-button'             : 'buy'
-    'click .artwork-more-info .avant-garde-header-small' : 'toggleMoreInfo'
+    'click a[data-client]': 'intercept'
+    'click .circle-icon-button-share': 'openShare'
+    'click .artwork-additional-image': 'changeImage'
+    'click .artwork-download-button': 'trackDownload'
+    'click .artwork-auction-results-button': 'trackComparable'
+    'change .aes-radio-button': 'selectEdition'
+    'click .artwork-buy-button': 'buy'
+    'click .artwork-more-info .avant-garde-header-small': 'toggleMoreInfo'
 
   toggleMoreInfo: (event) ->
     $target = $(event.target)
@@ -79,16 +79,16 @@ module.exports = class ArtworkView extends Backbone.View
       @sale = new Sale sale.attributes
       @$('#artist-artworks-section').remove()
       @belowTheFoldView.setupSale
-        sale        : @sale
-        saved       : @saved
-        currentUser : @currentUser
+        sale: @sale
+        saved: @saved
+        currentUser: @currentUser
       @setupAuction @sale if @sale.isAuction()
     @on 'related:shows', (show) ->
       @$('#artist-artworks-section').remove()
       new RelatedShowView
-        el      : @$('#artwork-related-show-section')
-        model   : show
-        artwork : @artwork
+        el: @$('#artwork-related-show-section')
+        model: show
+        artwork: @artwork
         currentUser: @currentUser
     @on 'related:none', ->
       @belowTheFoldView.setupLayeredSearch()
@@ -121,8 +121,8 @@ module.exports = class ArtworkView extends Backbone.View
     @$('.artwork-detail').addClass 'is-auction'
     @$('#auction-detail').html(
       auctionPlaceholderTemplate
-        auction_id : auction_id
-        artwork_id : @artwork.id
+        auction_id: auction_id
+        artwork_id: @artwork.id
     ).addClass 'is-fade-in'
 
   setupEmbeddedInquiryForm: ->
@@ -142,10 +142,10 @@ module.exports = class ArtworkView extends Backbone.View
   setupZigZag: ->
     if @displayZigZag()
       new ZigZagBanner
-        persist : true
-        name    : 'inquiry'
-        message : 'Interested in this work?<br>Request more info here'
-        $target : @$inquiryButton
+        persist: true
+        name: 'inquiry'
+        message: 'Interested in this work?<br>Request more info here'
+        $target: @$inquiryButton
 
   deltaTrackPageView: (fair) ->
     el = $('#scripts')
@@ -181,8 +181,8 @@ module.exports = class ArtworkView extends Backbone.View
   setupCurrentUser: ->
     @currentUser = CurrentUser.orNull()
     @currentUser?.initializeDefaultArtworkCollection()
-    @saved      = @currentUser?.defaultArtworkCollection()
-    @following  = new Following(null, kind: 'artist') if @currentUser?
+    @saved = @currentUser?.defaultArtworkCollection()
+    @following = new Following(null, kind: 'artist') if @currentUser?
 
   setupArtistArtworks: ->
     return unless @artist?.get('artworks_count') > 1
@@ -198,24 +198,24 @@ module.exports = class ArtworkView extends Backbone.View
     @$('#artist-artworks-section').addClass('is-fade-in').show()
 
     new ArtworkColumnsView
-      el             : @$('#artist-artworks-section .artworks-list')
-      collection     : @artist.artworks
+      el: @$('#artist-artworks-section .artworks-list')
+      collection: @artist.artworks
       allowDuplicates: true
-      numberOfColumns  : 4
-      gutterWidth      : 40
-      maxArtworkHeight : 400
-      isOrdered        : false
-      seeMore          : false
-      artworkSize      : 'tall'
+      numberOfColumns: 4
+      gutterWidth: 40
+      maxArtworkHeight: 400
+      isOrdered: false
+      seeMore: false
+      artworkSize: 'tall'
 
     trackArtworkImpressions @artist.artworks.models, @$('#artwork-artist-artworks-container')
 
   renderDetail: ->
     @$('.artwork-detail').html detailTemplate
-      sd          : require('sharify').data
-      artwork     : @artwork
-      artist      : @artist
-      user        : @currentUser
+      sd: require('sharify').data
+      artwork: @artwork
+      artist: @artist
+      user: @currentUser
 
     @followButton.setElement @$('.artwork-artist-follow-button')
     @following?.syncFollows [@artist.id]

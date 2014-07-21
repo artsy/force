@@ -1,13 +1,13 @@
-_               = require 'underscore'
-benv            = require 'benv'
-Backbone        = require 'backbone'
-sinon           = require 'sinon'
-{ resolve }     = require 'path'
-{ fabricate }   = require 'antigravity'
+_ = require 'underscore'
+benv = require 'benv'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+{ resolve } = require 'path'
+{ fabricate } = require 'antigravity'
 
-CurrentUser       = require '../../../models/current_user'
-Post              = require '../../../models/post'
-Artist            = require '../../../models/artist'
+CurrentUser = require '../../../models/current_user'
+Post = require '../../../models/post'
+Artist = require '../../../models/artist'
 
 describe 'RelatedPostsView', ->
   before (done) ->
@@ -24,8 +24,8 @@ describe 'RelatedPostsView', ->
   describe 'default behavior', ->
     beforeEach (done) ->
       sinon.stub Backbone, 'sync'
-      artist  = new Artist fabricate 'artist'
-      @view   = new @RelatedPostsView { el: $('<fixture></fixture>'), model: artist, numToShow: 2, modelName: 'Artist' }
+      artist = new Artist fabricate 'artist'
+      @view = new @RelatedPostsView { el: $('<fixture></fixture>'), model: artist, numToShow: 2, modelName: 'Artist' }
       done()
 
     afterEach ->

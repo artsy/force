@@ -1,7 +1,7 @@
-Backbone          = require 'backbone'
-_          = require 'underscore'
-sd                = require('sharify').data
-footerTemplate    = -> require('../templates/footer.jade') arguments...
+Backbone = require 'backbone'
+_ = require 'underscore'
+sd = require('sharify').data
+footerTemplate = -> require('../templates/footer.jade') arguments...
 
 module.exports = class FairFooter extends Backbone.View
 
@@ -16,10 +16,10 @@ module.exports = class FairFooter extends Backbone.View
         editorialItems = primarySets.where({ key: 'editorial' })?[0]?.get('items').models
 
         @$el.html footerTemplate(
-          editorialItems : editorialItems
-          exploreItems   : exploreItems
-          primaryItems   : primaryItems
-          curatorItems   : curatorItems
-          fair           : @fair
-          profile        : @model
+          editorialItems: editorialItems
+          exploreItems: exploreItems
+          primaryItems: primaryItems
+          curatorItems: curatorItems
+          fair: @fair
+          profile: @model
         )

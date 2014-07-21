@@ -1,13 +1,13 @@
-_              = require 'underscore'
-sd             = require('sharify').data
-should         = require 'should'
-sinon          = require 'sinon'
-{ fabricate }  = require 'antigravity'
-Backbone       = require 'backbone'
-CurrentUser    = require '../../models/current_user.coffee'
+_ = require 'underscore'
+sd = require('sharify').data
+should = require 'should'
+sinon = require 'sinon'
+{ fabricate } = require 'antigravity'
+Backbone = require 'backbone'
+CurrentUser = require '../../models/current_user.coffee'
 FollowProfiles = require '../../collections/follow_profiles'
-FollowProfile  = require '../../models/follow_profile'
-Profile        = require '../../models/profile'
+FollowProfile = require '../../models/follow_profile'
+Profile = require '../../models/profile'
 
 describe 'FollowProfiles', ->
 

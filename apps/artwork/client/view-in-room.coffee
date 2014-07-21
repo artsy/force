@@ -1,5 +1,5 @@
-_         = require 'underscore'
-Backbone  = require 'backbone'
+_ = require 'underscore'
+Backbone = require 'backbone'
 
 template = -> require('../templates/view-in-room.jade') arguments...
 
@@ -11,7 +11,7 @@ module.exports = class ViewInRoom extends Backbone.View
   benchRatio: 5.5
 
   events:
-    'click .view-in-room-close' : 'return'
+    'click .view-in-room-close': 'return'
 
   # Should be visually at about 57" from interstitial
   eyeLevel: ->
@@ -24,8 +24,8 @@ module.exports = class ViewInRoom extends Backbone.View
   initialize: (options) ->
     { @$container, @$img, @artwork } = options
 
-    @$window  = $(window)
-    @$body    = $('body')
+    @$window = $(window)
+    @$body = $('body')
 
     @$window.on 'resize.view-in-room', _.throttle(@scale, 100)
 
@@ -50,9 +50,9 @@ module.exports = class ViewInRoom extends Backbone.View
     false
 
   cacheSelectors: ->
-    @$artwork       = @$('#vir-artwork')
-    @$placeholder   = @$('#vir-placeholder')
-    @$room          = @$('.vir-room')
+    @$artwork = @$('#vir-artwork')
+    @$placeholder = @$('#vir-placeholder')
+    @$room = @$('.vir-room')
 
   injectImage: ->
     @$placeholder.add(@$artwork).attr('src', @$img.attr 'src')
@@ -119,10 +119,10 @@ module.exports = class ViewInRoom extends Backbone.View
     @scaleArtwork()
 
   roomScalingFactor: ->
-    roomRatio       = @$room.width() / @$room.height()
-    viewportRatio   = @$el.width() / @$el.height()
-    direction       = if viewportRatio > roomRatio then 'width' else 'height'
-    factor          = @$el[direction]() / @$room[direction]()
+    roomRatio = @$room.width() / @$room.height()
+    viewportRatio = @$el.width() / @$el.height()
+    direction = if viewportRatio > roomRatio then 'width' else 'height'
+    factor = @$el[direction]() / @$room[direction]()
     Math.round(factor * 100) / 100
 
   artworkScalingFactor: ->

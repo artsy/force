@@ -1,16 +1,16 @@
-_             = require 'underscore'
+_ = require 'underscore'
 { fabricate } = require 'antigravity'
-sd            = require('sharify').data
-should        = require 'should'
-Backbone      = require 'backbone'
-Profile       = require '../../models/profile'
+sd = require('sharify').data
+should = require 'should'
+Backbone = require 'backbone'
+Profile = require '../../models/profile'
 FollowProfile = require '../../models/follow_profile'
 
 describe 'FollowProfile', ->
 
   before ->
     @sd =
-      API_URL : 'http://localhost:5000'
+      API_URL: 'http://localhost:5000'
       ASSET_PATH: 'http://localhost:5000'
 
   describe '#url', ->

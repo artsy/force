@@ -1,7 +1,7 @@
-_                   = require 'underscore'
-sd                  = require('sharify').data
-Artist              = require '../../../models/artist'
-PageableCollection  = require 'backbone-pageable'
+_ = require 'underscore'
+sd = require('sharify').data
+Artist = require '../../../models/artist'
+PageableCollection = require 'backbone-pageable'
 
 module.exports = class ArtistsByLetter extends PageableCollection
   url: ->
