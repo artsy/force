@@ -775,6 +775,11 @@
         }
       }
     },
+    "artsy-error-handler": {
+      "version": "0.0.2",
+      "from": "git://github.com/artsy/artsy-error-handler.git",
+      "resolved": "git://github.com/artsy/artsy-error-handler.git#71a80420c7f594fe0ca7d47da8ca504b6de8720e"
+    },
     "konami-js": {
       "version": "0.0.2",
       "from": "konami-js@*",

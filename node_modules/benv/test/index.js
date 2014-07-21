@@ -7,6 +7,7 @@ describe('benv.setup', function() {
     benv.setup(function(){
       should.exist(navigator.userAgent);
       should.exist(document);
+      btoa.should.be.type('function');
       done();
     });
   });
