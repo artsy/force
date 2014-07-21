@@ -37,11 +37,14 @@ module.exports = class Introduction
     @__firstName__ ?= _.titleize human.parseName(@user.get('name')).firstName
 
   location: ->
-    @__location__ ?=
-      if (location = @user.location())
+    if (location = @user.location())
+      country = location.get 'country'
+      domestic = country is "United States"
+      region = if domestic then location.get 'state_code' else location.get 'country'
+      @__location__ ?=
         _.compact([
           location.get 'city'
-          location.get 'country'
+          region
         ]).join ', '
 
   collection: ->
