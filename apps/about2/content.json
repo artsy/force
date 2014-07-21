@@ -132,7 +132,69 @@
       }
     },
     {
-      "title": "Collecting on<br>Artsy"
+      "title": "Collecting",
+      "preamble": "Currently there are over 100,000 works available for sale on Artsy provided by our international (**howmany**) gallery partners. These works range in price from under $500 to over $1,000,000, with new ones added every day.",
+      "pullBlurb1": {
+        "h1": "Buying Art on Artsy",
+        "h2": "How buying art on Artsy Works",
+        "p": "When you're interested in a for-sale work you can contact the gallery to disucss price, availability, and purchase of the work. They will message you back with the information you are interested in. Often, the more information you give the gallery about yourself, the quicker the response will be.  The gallery will help you to arrange shipping to your location, anywhere around world.",
+        "src": "http://cl.ly/image/351Y2B043T2k/cimg.jpg"
+      },
+      "pullBlurb2": {
+        "h1": "Art Fair & Show Previews",
+        "h2": "Early access to fairs and shows",
+        "p": "We have dedicated pages to art fairs and gallery shows where you can browse the collection well before they open to the public. Get a head-start on finding the work that’s right for you.",
+        "src": "http://cl.ly/image/182g2r0n0Q1o/cimg.jpg",
+        "caption": "Image courtesy of The Armory Show"
+      },
+      "pullBlurb3": {
+        "h1": "Follow Artists, Galleries, & Museums",
+        "h2": "Follow artists and galleries to receive alerts on new works and shows",
+        "p": "We want to keep you informed on the artists and galleries you love. By following an artist or gallery you will receive weekly emails informing you of shows, news works, and news related to what you follow.",
+        "src": "http://cl.ly/image/1T2y0I1L1c00/cimg.jpg"
+      },
+      "pullBlurb4": {
+        "h1": "Artsy Specialists",
+        "h2": "We’re here to help you find art",
+        "p": "Artsy specialists are available to all Artsy users, whether you are purchasing your first work or building upon an existing collection. Our specialists join Artsy from leading auction houses, galleries, and museums, and are available to help you find works that you love, with your price range, interests, and current collection in mind. Your specialist can also source works which aren't publicly listed on the site through our international network of gallery partners.",
+        "specialists": [
+          {
+            "src": "http://cl.ly/image/1U3T2m3s0R08/cimg.jpg",
+            "name": "Julia Colavita"
+          },
+          {
+            "src": "http://cl.ly/image/1U3T2m3s0R08/cimg.jpg",
+            "name": "Julia Colavita"
+          },
+          {
+            "src": "http://cl.ly/image/1U3T2m3s0R08/cimg.jpg",
+            "name": "Julia Colavita"
+          },
+          {
+            "src": "http://cl.ly/image/1U3T2m3s0R08/cimg.jpg",
+            "name": "Julia Colavita"
+          },
+          {
+            "src": "http://cl.ly/image/1U3T2m3s0R08/cimg.jpg",
+            "name": "Julia Colavita"
+          },
+          {
+            "src": "http://cl.ly/image/1U3T2m3s0R08/cimg.jpg",
+            "name": "Julia Colavita"
+          }
+        ]
+      },
+      "callToAction": {
+        "label": "More questions about collecting? ",
+        "button1": {
+          "text": "Collecting FAQ",
+          "href": ""
+        },
+        "button2": {
+          "text": "Contact Specialist",
+          "href": ""
+        }
+      }
     },
     {
       "title": "The Art Genome<br>Project"

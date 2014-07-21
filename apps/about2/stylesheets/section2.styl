@@ -1,0 +1,82 @@
+@import '../../../components/stylus_lib'
+@import './lib'
+
+#about2-section2-pull-blurb-1
+  margin-top -100px
+  .about2-pull-blurb
+    width (column-width * 2) + (gutter-width * 2)
+    margin-right gutter-width * 2
+  img
+    width (column-width * 4) + (gutter-width * 6)
+  img, .about2-pull-blurb
+    display inline-block
+    vertical-align bottom
+
+#about2-section2-pull-blurb-2
+  .about2-pull-blurb
+    width (column-width * 2) + (gutter-width * 2)
+    margin-left gutter-width * 2
+  #about2-section2-pull-blurb-2-left
+    width (column-width * 4) + (gutter-width * 6)
+  small
+    color gray-dark-color
+    font-size 16px
+    font-style italic
+  img
+    max-width 100%
+    margin-bottom 7px
+  .about2-pull-blurb, #about2-section2-pull-blurb-2-left
+    display inline-block
+    vertical-align top
+
+#about2-section2-pull-blurb-3
+  position relative
+  .about2-pull-blurb
+    width (column-width * 3) + (gutter-width * 4)
+    margin-right gutter-width * 2
+    position absolute
+    left 0
+    top 0
+    z-index 1
+  img
+    width (column-width * 4) + (gutter-width * 6)
+    margin-left (column-width * 2) + (gutter-width * 4)
+  img, .about2-pull-blurb
+    display inline-block
+    vertical-align top
+
+#about2-section2-pull-blurb-4
+  position relative
+  .about2-pull-blurb
+    position absolute
+    top 0
+    margin-left (column-width * 3) + (gutter-width * 6)
+  #about2-section2-specialists
+    margin-left (column-width * 1) + (gutter-width * 2)
+    margin-right @margin-left
+    column-count 2
+    column-gap gutter-width * 2
+    li
+      width (column-width * 2) + (gutter-width * 2)
+      margin-bottom 50px
+      img
+        max-width 100%
+        margin-bottom 12px
+      small
+        avant-garde()
+        small-avant-garde()
+  #about2-section2-specialists-break
+    height 360px
+    -webkit-column-break-before always
+
+#about2-section2-cta
+  text-align center
+  h1
+    display inline-block
+    font-style italic
+    margin-right 30px
+  a
+    display inline-block
+    small-avant-garde()
+    &:first-of-type
+      margin-right 30px
