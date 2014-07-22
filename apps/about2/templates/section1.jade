@@ -3,7 +3,7 @@ section#about2-section1.about2-container
   p.about2-section-preamble= sections[0].preamble
 
   // "Our collection comes from leading..."
-  section#about2-pull-blurb-1.about2-pull-blurb
+  section#about2-section1-pull-blurb-1.about2-pull-blurb
     h1= sections[0].pullBlurb1.h1
     h2= sections[0].pullBlurb1.h2
   #about2-section1-images1
@@ -29,7 +29,7 @@ section#about2-section1.about2-container
           img( src=image.src )
           small= image.caption
   .about2-right-half-width-column
-    section#about2-pull-blurb-2.about2-pull-blurb
+    section#about2-section1-pull-blurb-2.about2-pull-blurb
       h1= sections[0].pullBlurb2.h1
       h2= sections[0].pullBlurb2.h2
       p= sections[0].pullBlurb2.p
@@ -42,11 +42,11 @@ section#about2-section1.about2-container
 
   // "Save works and curate sets on Artsy..."
   .about2-spacer( style="height: 270px" )
-  section#about2-pull-blurb-3.about2-pull-blurb
+  section#about2-section1-pull-blurb-3.about2-pull-blurb
     h2= sections[0].pullBlurb3.h2
     p= sections[0].pullBlurb3.p
     button.avant-garde-button-white= sections[0].pullBlurb3.button
-  ul#about2-pull-blurb-3-artworks
+  ul#about2-section1-pull-blurb-3-artworks
     for artwork in sections[0].pullBlurb3.artworks
       li
         img( src=artwork.src )
@@ -58,7 +58,8 @@ section#about2-section1.about2-container
         = artwork.partner
 
   // "Access from anywhere..."
-  section#about2-pull-blurb-4
+  .about2-spacer( style="height: 50px" )
+  section#about2-section1-pull-blurb-4
     .about2-pull-blurb
       h1= sections[0].pullBlurb4.h1
       h2= sections[0].pullBlurb4.h2

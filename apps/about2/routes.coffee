@@ -5,4 +5,8 @@ fs = require 'fs'
 @index = (req, res) ->
   fs.readFile __dirname + '/content.json', (err, json) ->
     return next(err) if err
-    res.render 'index', JSON.parse(json.toString())
+    try
+      data = JSON.parse(json.toString())
+      res.render 'index', data
+    catch e
+      next e
