@@ -387,7 +387,50 @@
       }
     },
     {
-      "title": "Working<br>At Artsy"
+      "title": "Working<br>At Artsy",
+      "pullBlurb1": {
+        "h1": "The Artsy Team",
+        "h2": "Our team is working to make the art world more accessible",
+        "p": "At its core, Artsy is the convergence of art and science. We’re a team of designers, engineers, and arts professionals who share a passion for bringing the art world into the digital age. Making all the world’s art accessible to anyone with an internet connection is an ambitious goal. Amazing colleagues, challenging problems, and 360-degree views of Manhattan keep us inspired everyday.",
+        "srcs": [
+          "http://cl.ly/image/3T3p2N0o002S/cimg.jpg",
+          "http://cl.ly/image/1X2Q1j471X1F/cimg.jpg",
+          "http://cl.ly/image/1X2Q1j471X1F/cimg.jpg",
+          "http://cl.ly/image/1H422v0M0V3m/cimg.jpg",
+          "http://cl.ly/image/3T3p2N0o002S/cimg.jpg"
+        ]
+      },
+      "pullBlurb2": {
+        "h1": "Our Team",
+        "h2": "We've come a long way",
+        "p": "At its core, Artsy is the convergence of art and science. We’re a team of designers, engineers, and arts professionals who share a passion for bringing the art world into the digital age. Making all the world’s art accessible to anyone with an internet connection is an ambitious goal. Amazing colleagues, challenging problems, and 360-degree views of Manhattan keep us inspired everyday.At its core, Artsy is the convergence of art and science. We’re a team of designers, engineers, and arts professionals who share a passion for bringing the art world into the digital age.",
+        "images": [
+          {
+            "src": "http://cl.ly/image/3T3p2N0o002S/cimg.jpg",
+            "caption": "Carter an Caroline present at TC Disrupt"
+          },
+          {
+            "src": "http://cl.ly/image/1X2Q1j471X1F/cimg.jpg"
+          },
+          {
+            "src": "http://cl.ly/image/3T3p2N0o002S/cimg.jpg"
+          },
+          {
+            "src": "http://cl.ly/image/1H422v0M0V3m/cimg.jpg"
+          },
+          {
+            "src": "http://cl.ly/image/3T3p2N0o002S/cimg.jpg"
+          },
+          {
+            "src": "http://cl.ly/image/1X2Q1j471X1F/cimg.jpg"
+          }
+        ]
+      },
+      "pullBlurb3": {
+        "h1": "Jobs at Artsy",
+        "h2": "Join the Artsy team",
+        "p": "At its core, Artsy is the convergence of art and science. We’re a team of designers, engineers, and arts professionals who share a passion for bringing the art world into the digital age.<br><br>Making all the world’s art accessible to anyone with an internet connection is an ambitious goal. Amazing colleagues, challenging problems, and 360-degree views of Manhattan keep us inspired everyday."
+      }
     },
     {
       "title": "Partnering<br>& Press"
