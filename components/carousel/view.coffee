@@ -33,7 +33,7 @@ module.exports = class Carousel extends Backbone.View
   transitionEvents: 'transitionEnd oTransitionEnd msTransitionEnd transitionend webkitTransitionEnd'
 
   initialize: (options) ->
-    imagesLoaded = require '../../lib/vendor/imagesloaded.js'
+    imagesLoaded = require 'imagesloaded'
     throw 'You must pass a collection' unless @collection?
     @$window = $(window)
     @$document = $(document)

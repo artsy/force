@@ -34,7 +34,7 @@ module.exports = class ViewInRoom extends Backbone.View
     @$container.html @$el
 
   render: ->
-    imagesLoaded = require '../../../lib/vendor/imagesloaded.js'
+    imagesLoaded = require 'imagesloaded'
 
     @adjustViewport()
     @_render()
@@ -123,7 +123,7 @@ module.exports = class ViewInRoom extends Backbone.View
     viewportRatio = @$el.width() / @$el.height()
     direction = if viewportRatio > roomRatio then 'width' else 'height'
     factor = @$el[direction]() / @$room[direction]()
-    Math.round(factor * 100) / 100
+    Math.ceil(factor * 100) / 100
 
   artworkScalingFactor: ->
     @__artworkFactor__ ?= if @artwork.hasDimension('diameter') and not @artwork.hasDimension('width')

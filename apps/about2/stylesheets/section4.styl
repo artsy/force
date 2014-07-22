@@ -1,0 +1,90 @@
+@import '../../../components/stylus_lib'
+@import './lib'
+
+#about2-section4-preamble
+  img
+    width (column-width * 3) + (gutter-width * 4)
+    margin-left gutter-width * 2
+    margin-top 70px
+  p, img
+    display inline-block
+    vertical-align top
+
+#about2-section4-pull-blurb-1-container
+  .about2-pull-blurb
+    width (column-width * 2) + (gutter-width * 2)
+    margin-right gutter-width * 2
+    display inline-block
+    vertical-align top
+
+#about2-section4-pull-blurb-1-images
+  width (column-width * 4) + (gutter-width * 6)
+  display inline-block
+  vertical-align top
+  column-gap 44px
+  column-count 4
+  margin-top 10px
+  li
+    margin-bottom 44px
+
+#about2-section4-pull-blurb-2-container .about2-pull-blurb
+  width (column-width * 3) + (gutter-width * 4)
+
+#about2-section4-pull-blurb-2-images
+  margin-top 70px
+  img
+    width 100%
+  li
+    width (column-width * 2) + (gutter-width * 2)
+    margin-right gutter-width * 2
+    display inline-block
+    vertical-align top
+    &:last-child
+      margin-right 0
+  small
+    avant-garde()
+    small-avant-garde()
+    margin-top 12px 0 6px
+    display block
+
+#about2-section4-pull-blurb-3-container
+  position relative
+  img
+    margin-left column-width + (gutter-width * 2)
+    width (column-width * 3) + (gutter-width * 4)
+    margin-right gutter-width * 2
+  .about2-pull-blurb
+    width (column-width * 2) + (gutter-width * 2)
+  img, .about2-pull-blurb
+    display inline-block
+    vertical-align top
+  #about2-section4-pull-blurb-3-details
+    width (column-width * 2) + (gutter-width * 2)
+    position absolute
+    bottom 0
+    right 0
+    color gray-dark-color
+
+#about2-section4-pull-blurb-4-container
+  ul
+    margin-top 120px
+    width (column-width * 2) + (gutter-width * 2)
+    small
+      avant-garde()
+      small-avant-garde()
+      margin 12px 0 8px 0
+  li
+    margin-bottom 70px
+
+#about2-section4-pull-blurb-4-right
+  width (column-width * 3) + (gutter-width * 4)
+
+#about2-section4-pull-blurb-4-left
+  width (column-width * 3) + (gutter-width * 4)
+  margin-right gutter-width * 2
+
+#about2-section4-pull-blurb-4-right, #about2-section4-pull-blurb-4-left
+  display inline-block
+  vertical-align top
+  img
+    width 100%

@@ -1,0 +1,79 @@
+@import '../../../components/stylus_lib'
+@import './lib'
+
+#about2-section3-preamble
+  p, img
+    display inline-block
+    vertical-align top
+  img
+    width (column-width * 4) + (gutter-width * 6)
+    margin-left gutter-width * 2
+    margin-top 80px
+
+#about2-section3-pull-blurb-1
+  margin-left (column-width * 3) + (gutter-width * 6)
+
+#about2-section3-example-work-right
+  avant-garde()
+  small-avant-garde()
+  width (column-width * 3) + (gutter-width * 4)
+  margin-left (column-width * 3) + (gutter-width * 6)
+  display inline-block
+  vertical-align top
+  h1
+    text-align center
+    margin-bottom 70px
+    padding-bottom 2px
+    span
+      display inline-block
+      border-bottom 2px solid
+  ul
+    left -28px
+    margin-right @left
+    position relative
+    li
+      display inline-block
+      width 25%
+      text-align center
+      vertical-align top
+      height 70px
+
+#about2-section3-pull-blurb-1-container
+  position relative
+  .about2-section3-genome-artwork
+    top 0
+
+.about2-section3-genome-artwork
+  width (column-width * 3) + (gutter-width * 3)
+  margin-right gutter-width * 3
+  position absolute
+  img
+    max-width 100%
+    margin-bottom 15px
+  color gray-dark-color
+  font-size 16px
+  line-height 22px
+
+.about2-section3-genome-artwork-genes
+  position absolute
+  top 0
+  avant-garde()
+  small-avant-garde()
+  right -142px
+  text-align center
+  width 120px
+  color black
+  li
+    margin-bottom 100px
+
+#about2-section3-pull-blurb-2
+  margin-left (column-width * 3) + (gutter-width * 6)
+
+#about2-section3-genome-works
+  > li
+    position relative
+    margin-bottom 300px
+    &:nth-child(2n-1)
+      padding-left (column-width * 3) + (gutter-width * 7)
+      .about2-section3-genome-artwork-genes
+        left -142px
