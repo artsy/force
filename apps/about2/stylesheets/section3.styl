@@ -17,6 +17,9 @@
   avant-garde()
   small-avant-garde()
   width (column-width * 3) + (gutter-width * 4)
+  margin-left (column-width * 3) + (gutter-width * 6)
+  display inline-block
+  vertical-align top
   h1
     text-align center
     margin-bottom 70px
@@ -26,7 +29,8 @@
       border-bottom 2px solid
   ul
     left -28px
-    margin-right -@left
+    margin-right @left
+    position relative
     li
       display inline-block
       width 25%
@@ -34,10 +38,15 @@
       vertical-align top
       height 70px
 
-#about2-section3-example-work-left
-  width (column-width * 3) + (gutter-width * 4)
-  margin-right gutter-width * 2
-  padding-top 52px
+#about2-section3-pull-blurb-1-container
+  position relative
+  .about2-section3-genome-artwork
+    top 0
+
+.about2-section3-genome-artwork
+  width (column-width * 3) + (gutter-width * 3)
+  margin-right gutter-width * 3
+  position absolute
   img
     max-width 100%
     margin-bottom 15px
@@ -45,9 +54,26 @@
   font-size 16px
   line-height 22px
 
-#about2-section3-example-work-right, #about2-section3-example-work-left
-  display inline-block
-  vertical-align top
+.about2-section3-genome-artwork-genes
+  position absolute
+  top 0
+  avant-garde()
+  small-avant-garde()
+  right -142px
+  text-align center
+  width 120px
+  color black
+  li
+    margin-bottom 100px
 
 #about2-section3-pull-blurb-2
   margin-left (column-width * 3) + (gutter-width * 6)
+
+#about2-section3-genome-works
+  > li
+    position relative
+    margin-bottom 300px
+    &:nth-child(2n-1)
+      padding-left (column-width * 3) + (gutter-width * 7)
+      .about2-section3-genome-artwork-genes
+        left -142px

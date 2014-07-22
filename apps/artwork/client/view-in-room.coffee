@@ -34,7 +34,7 @@ module.exports = class ViewInRoom extends Backbone.View
     @$container.html @$el
 
   render: ->
-    imagesLoaded = require '../../../lib/vendor/imagesloaded.js'
+    imagesLoaded = require 'imagesloaded'
 
     @adjustViewport()
     @_render()

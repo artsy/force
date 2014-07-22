@@ -1,7 +1,7 @@
 _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
-imagesLoaded = require '../../lib/vendor/imagesloaded.js'
+imagesLoaded = require 'imagesloaded'
 Artist = require '../../models/artist.coffee'
 analytics = require '../../lib/analytics.coffee'
 

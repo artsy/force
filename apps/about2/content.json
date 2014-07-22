@@ -208,7 +208,7 @@
         "p": "Our team of art historians and experts works hard to assign various characteristics and subject matter to our works. This allows for amazing possibility of discovery."
       },
       "exampleWork": {
-        "genes": [
+        "totalGenes": [
           "Late 19th Century",
           "Oil Painting",
           "Modern",
@@ -228,7 +228,7 @@
           "Scenes of Everyday Life",
           "United States"
         ],
-        "src": "http://cl.ly/image/130X1E003n09/cimg.jpg",
+        "src": "http://cl.ly/image/2j1x0u0O2p1p/cimg.jpg",
         "artist": "Mary Cassat",
         "title": "Little Girl in a Blue Armchair",
         "date": "1878",
@@ -238,10 +238,153 @@
         "h1": "A System Built for Discovery",
         "h2": "Characterstics are used to connect artwork",
         "p": "Our team of art historians and experts works hard to assign various characteristics and subject matter to our works. This is not a perfect science but allows for amazing possibility of discovery."
-      }
+      },
+      "genomeWorks": [
+        {
+          "src": "http://cl.ly/image/2j1x0u0O2p1p/cimg.jpg",
+          "artist": "Mary Cassat",
+          "title": "Little Girl in a Blue Armchair",
+          "date": "1878",
+          "partner": "National Gallery of Art, Washington D.C.",
+          "genes": [
+            "Scenes of Everyday Life",
+            "Reclining",
+            "Stolen Moments"
+          ]
+        },
+        {
+          "src": "http://cl.ly/image/2j1x0u0O2p1p/cimg.jpg",
+          "artist": "Mary Cassat",
+          "title": "Little Girl in a Blue Armchair",
+          "date": "1878",
+          "partner": "National Gallery of Art, Washington D.C.",
+          "genes": [
+            "Scenes of Everyday Life",
+            "Reclining",
+            "Stolen Moments"
+          ]
+        },
+        {
+          "src": "http://cl.ly/image/2j1x0u0O2p1p/cimg.jpg",
+          "artist": "Mary Cassat",
+          "title": "Little Girl in a Blue Armchair",
+          "date": "1878",
+          "partner": "National Gallery of Art, Washington D.C.",
+          "genes": [
+            "Scenes of Everyday Life",
+            "Reclining",
+            "Stolen Moments"
+          ]
+        },
+        {
+          "src": "http://cl.ly/image/2j1x0u0O2p1p/cimg.jpg",
+          "artist": "Mary Cassat",
+          "title": "Little Girl in a Blue Armchair",
+          "date": "1878",
+          "partner": "National Gallery of Art, Washington D.C.",
+          "genes": [
+            "Scenes of Everyday Life",
+            "Reclining",
+            "Stolen Moments"
+          ]
+        },
+        {
+          "src": "http://cl.ly/image/2j1x0u0O2p1p/cimg.jpg",
+          "artist": "Mary Cassat",
+          "title": "Little Girl in a Blue Armchair",
+          "date": "1878",
+          "partner": "National Gallery of Art, Washington D.C.",
+          "genes": [
+            "Scenes of Everyday Life",
+            "Reclining",
+            "Stolen Moments"
+          ]
+        }
+      ]
     },
     {
-      "title": "Education"
+      "title": "Education",
+      "preamble": {
+        "text": "Wether you’re a student, teacher, curator, or collector, Artsy offers a variety of ways to learn about art and design. Most art websites offer few ways to search for art. The Art Genome Project has created over 1,000 categories for discovery and learning, including art-historical movements, subject matter, and formal qualities.",
+        "src": "http://cl.ly/image/280i1z2Q3228/cimg.jpg"
+      },
+      "pullBlurb1": {
+        "h1": "A System Built for Discovery",
+        "h2": "Images for learning and teaching",
+        "p": "Artsy provides online access to 160,000+ artworks by 29,000+ artists from 250+ museums and institutions and 1,800+ galleries. Today, more than 25,000 images of art and architecture are also downloadable. Use Artsy to supplement your language, literature and history courses—as well as art history and studio art.",
+        "srcs": [
+          "http://cl.ly/image/383I3t3e3834/cimg.jpg",
+          "http://cl.ly/image/383I3t3e3834/cimg.jpg",
+          "http://cl.ly/image/383I3t3e3834/cimg.jpg",
+          "http://cl.ly/image/383I3t3e3834/cimg.jpg",
+          "http://cl.ly/image/383I3t3e3834/cimg.jpg",
+          "http://cl.ly/image/383I3t3e3834/cimg.jpg",
+          "http://cl.ly/image/383I3t3e3834/cimg.jpg",
+          "http://cl.ly/image/383I3t3e3834/cimg.jpg",
+          "http://cl.ly/image/383I3t3e3834/cimg.jpg",
+          "http://cl.ly/image/383I3t3e3834/cimg.jpg",
+          "http://cl.ly/image/383I3t3e3834/cimg.jpg",
+          "http://cl.ly/image/383I3t3e3834/cimg.jpg",
+          "http://cl.ly/image/383I3t3e3834/cimg.jpg",
+          "http://cl.ly/image/383I3t3e3834/cimg.jpg",
+          "http://cl.ly/image/383I3t3e3834/cimg.jpg",
+          "http://cl.ly/image/383I3t3e3834/cimg.jpg",
+          "http://cl.ly/image/383I3t3e3834/cimg.jpg",
+          "http://cl.ly/image/383I3t3e3834/cimg.jpg",
+          "http://cl.ly/image/383I3t3e3834/cimg.jpg",
+          "http://cl.ly/image/383I3t3e3834/cimg.jpg",
+          "http://cl.ly/image/383I3t3e3834/cimg.jpg"
+        ]
+      },
+      "pullBlurb2": {
+        "h2": "Educational content",
+        "p": "Artsy provides editorial coverage of hundreds of major gallery and museum exhibitions, art fairs, and biennials around the world. Check the Artsy homepage daily for new posts, interviews, and editorial coverage and browse gallery and institutional pages for the latest exhibitions.",
+        "images": [
+          {
+            "src": "http://cl.ly/image/0y273x3i3x32/Image%202014-07-14%20at%205.13.16%20PM.png",
+            "author": "Artsy Editorial",
+            "caption": "Six Iconic Performance Pieces You’ll Find in Hans Ulrich Obrist and Klaus Biesenbach’s “14 Rooms”"
+          },
+          {
+            "src": "http://cl.ly/image/0y273x3i3x32/Image%202014-07-14%20at%205.13.16%20PM.png",
+            "author": "Artsy Editorial",
+            "caption": "Six Iconic Performance Pieces You’ll Find in Hans Ulrich Obrist and Klaus Biesenbach’s “14 Rooms”"
+          },
+          {
+            "src": "http://cl.ly/image/0y273x3i3x32/Image%202014-07-14%20at%205.13.16%20PM.png",
+            "author": "Artsy Editorial",
+            "caption": "Six Iconic Performance Pieces You’ll Find in Hans Ulrich Obrist and Klaus Biesenbach’s “14 Rooms”"
+          }
+        ]
+      },
+      "pullBlurb3": {
+        "h2": "Artist Biographies",
+        "p": "Want to learn quickly about an artist’s life and work. Artsy’s Editorial Team has published over 5,300 biographies of artists—both historically-significant and contemporary—in an approachable style.",
+        "artwork": {
+          "src": "http://cl.ly/image/1n3M3l3M3T0T/cimg.jpg",
+          "artist": "Vincent Van Gogh",
+          "title": "Self-Portrait",
+          "date": "1887",
+          "partner": "Art Institute of Chicago"
+        }
+      },
+      "pullBlurb4": {
+        "h2": "Current Art News",
+        "p": "Want to learn quickly about an artist’s life and work. Artsy’s Editorial Team has published over 5,300 biographies of artists—both historically-significant and contemporary—in an approachable style.",
+        "leftImage": "http://cl.ly/image/3K2K053n2W2l/cimg.jpg",
+        "rightImages": [
+          {
+            "src": "http://cl.ly/image/250I0Q21021s/cimg.jpg",
+            "author": "Artsy Editorial",
+            "caption": "Six Iconic Performance Pieces You’ll Find in Hans Ulrich Obrist and Klaus Biesenbach’s “14 Rooms”"
+          },
+          {
+            "src": "http://cl.ly/image/250I0Q21021s/cimg.jpg",
+            "author": "Artsy Editorial",
+            "caption": "Six Iconic Performance Pieces You’ll Find in Hans Ulrich Obrist and Klaus Biesenbach’s “14 Rooms”"
+          }
+        ]
+      }
     },
     {
       "title": "Working<br>At Artsy"

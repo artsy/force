@@ -50,12 +50,7 @@ section#about2-section1.about2-container
     for artwork in sections[0].pullBlurb3.artworks
       li
         img( src=artwork.src )
-        strong= artwork.artist
-        br
-        em= artwork.title
-        | , #{artwork.date}
-        br
-        = artwork.partner
+        include artwork_details
 
   // "Access from anywhere..."
   .about2-spacer( style="height: 50px" )
