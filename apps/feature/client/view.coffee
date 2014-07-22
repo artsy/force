@@ -62,7 +62,8 @@ module.exports = class FeatureView extends Backbone.View
 
     @appendArtworks artworks
 
-  isAuction: -> @sale?.isAuction()
+  isAuction: =>
+    @sale?.isAuction()
 
   doneFetchingSaleArtworks: (saleFeaturedSet) =>
     @setupArtworks saleFeaturedSet
@@ -99,7 +100,7 @@ module.exports = class FeatureView extends Backbone.View
       setHeight: 400
       gutterWidth: 0
       showBlurbs: true
-      isAuction: @sale.isAuction()
+      isAuction: @isAuction()
 
   appendArtworks: (artworks) ->
     @artworkColumns.appendArtworks artworks.models
@@ -108,7 +109,7 @@ module.exports = class FeatureView extends Backbone.View
   initializeSale: (sets) ->
     saleSets = _.filter sets, (set) -> set.get('item_type') is 'Sale'
     for set in saleSets
-      @initializeAuction @sale, set if @sale.isAuction()
+      @initializeAuction @sale, set if @isAuction()
 
   setupArtworks: (set) ->
     artworks = set.get 'data'
@@ -173,6 +174,7 @@ module.exports = class FeatureView extends Backbone.View
     artists = {}
     artworks.filter (artwork) ->
       artistId = artwork.get('artist')?.id
+      return false unless artistId
       return false if artists[artistId]
       artists[artistId] = true
       true
@@ -201,7 +203,7 @@ module.exports = class FeatureView extends Backbone.View
     @$('.artwork-column').parent().css 'visibility', 'visible'
 
     # Rebalance columns now that the artist list has been added
-    @artworkColumns.rebalance(@$('.feature-set-item-artist-list').css('height').replace('px',''), $lastColumn.index())
+    @artworkColumns.rebalance(@$('.feature-set-item-artist-list').css('height')?.replace('px',''), $lastColumn.index())
 
   seeAllArtists: (e) ->
     @$('.artist-list-truncated').removeClass('artist-list-truncated')
