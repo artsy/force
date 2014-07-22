@@ -65,6 +65,7 @@ module.exports = class FeatureView extends Backbone.View
   isAuction: -> @sale?.isAuction()
 
   doneFetchingSaleArtworks: (saleFeaturedSet) =>
+    console.log 'done fetching'
     @setupArtworks saleFeaturedSet
 
     @artworks = saleFeaturedSet.get('data')
@@ -99,7 +100,7 @@ module.exports = class FeatureView extends Backbone.View
       setHeight: 400
       gutterWidth: 0
       showBlurbs: true
-      isAuction: @sale.isAuction()
+      isAuction: @isAuction()
 
   appendArtworks: (artworks) ->
     @artworkColumns.appendArtworks artworks.models
@@ -108,7 +109,7 @@ module.exports = class FeatureView extends Backbone.View
   initializeSale: (sets) ->
     saleSets = _.filter sets, (set) -> set.get('item_type') is 'Sale'
     for set in saleSets
-      @initializeAuction @sale, set if @sale.isAuction()
+      @initializeAuction @sale, set if @isAuction()
 
   setupArtworks: (set) ->
     artworks = set.get 'data'

@@ -3,8 +3,12 @@ benv = require 'benv'
 Backbone = require 'backbone'
 sinon = require 'sinon'
 Artwork = require '../../../../models/artwork.coffee'
+SaleArtwork = require '../../../../models/sale_artwork.coffee'
 Artworks = require '../../../../collections/artworks.coffee'
 Feature = require '../../../../models/feature.coffee'
+Sale = require '../../../../models/sale.coffee'
+
+{ stubChildClasses } = require '../../../../test/helpers/stubs'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
 
@@ -14,52 +18,70 @@ describe 'FeatureView', ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
-      @FeatureView = require '../../client/index.coffee'
+      @FeatureView = mod = benv.requireWithJadeify(
+        (resolve __dirname, '../../client/view'),
+        ['setsTemplate', 'artistsTemplate', 'auctionRegisterButtonTemplate', 'auctionCountdownTemplate', 'filterTemplate', 'artworkColumns']
+      )
+      stubChildClasses @FeatureView, @, ['ArtworkColumnsView'], ['appendArtworks']
+      @FeatureView.__set__ 'setupSaleArtworks', (@setupSaleArtworksStub = sinon.stub())
+      @FeatureView.setupSaleArtworks = sinon.stub()
       done()
 
   after ->
     benv.teardown()
 
-  xdescribe 'on init', ->
+  describe 'feature with a sale that is not an auction', ->
 
     beforeEach (done) ->
-      @artworks = [
-        new Artwork fabricate 'artwork', { artist: fabricate 'artist', { name: 'Matthew Abbott', sortable_id: 'abbott-matthew' } }
-        new Artwork fabricate 'artwork', { artist: fabricate 'artist', { name: 'Leo Da Vinci', sortable_id: 'da-vinci-leo' } }
-        new Artwork fabricate 'artwork', { artist: fabricate 'artist', { name: 'Pablo Picasso', sortable_id: 'picasso-pablo' } }
-        new Artwork fabricate 'artwork', { artist: fabricate 'artist', { name: 'Frank Calloway', sortable_id: 'calloway-frank' } }
-        new Artwork fabricate 'artwork', { artist: fabricate 'artist', { name: 'Ellen Eagle', sortable_id: 'eagle-ellen' } }
-        new Artwork fabricate 'artwork', { artist: fabricate 'artist', { name: 'Andy Warhol', sortable_id: 'warhol-andy' } }
-      ]
-      for artwork in @artworks
-        artwork.set 'saleArtwork', fabricate('sale_artwork')
+      sinon.stub Backbone, 'sync'
       @feature = new Feature fabricate 'feature'
 
-      sinon.stub Backbone, 'sync'
       benv.render resolve(__dirname, '../../templates/index.jade'), {
         feature: @feature
         sd: { FEATURE: @feature }
       }, =>
-        { PartnerView, @init } = mod = benv.requireWithJadeify(
-          (resolve __dirname, '../../client/index'), ['setsTemplate', 'artistsTemplate']
-        )
-
-        @featureTemplate = sinon.stub()
-        mod.__set__ 'setsTemplate', @setsTemplate
-        mod.__set__ 'artistsTemplate', @artistsTemplate
         @view = new @FeatureView
-          model: @profile
+          model: @feature
           el: $ 'body'
-        @view.partner.set 'displayable_shows_count', 1
+
         done()
 
     afterEach ->
       Backbone.sync.restore()
 
-    describe '#getArtworksOrderedByArtist', ->
+    describe '#initialize', ->
 
-      it 'sorts the collection for the artist list', ->
-        true.should.be.false
+      it 'appends sets', ->
+        sale = new Sale(fabricate 'sale')
+        _.last(Backbone.sync.args)[2].success([fabricate 'set', name: 'Explore this bidness', id: 'abc', item_type: 'Sale'])
+        _.last(Backbone.sync.args)[2].success(sale)
+        _.last(Backbone.sync.args)[2].success([])
+        @view.sale.id.should.equal sale.id
+        @view.$el.html().should.include 'Explore this bidness'
+
+        # Does not include artwork filter
+        @view.$el.find('.feature-artwork-filter').length.should.equal 0
+
+      it 'sale with artworks', ->
+        saleArtworks = [
+          fabricate 'sale_artwork', { artwork: fabricate 'artwork', artist: fabricate 'artist', { name: 'Matthew Abbott', sortable_id: 'abbott-matthew' } }
+          fabricate 'sale_artwork', { artwork: fabricate 'artwork', artist: fabricate 'artist', { name: 'Leo Da Vinci', sortable_id: 'da-vinci-leo' } }
+          fabricate 'sale_artwork', { artwork: fabricate 'artwork', artist: false }
+        ]
+
+        sale = new Sale(fabricate 'sale')
+        _.last(Backbone.sync.args)[2].success([fabricate 'set', name: 'Explore this bidness', id: 'abc', item_type: 'Sale'])
+        _.last(Backbone.sync.args)[2].success(sale)
+        _.last(Backbone.sync.args)[2].success(saleArtworks)
+        _.last(Backbone.sync.args)[2].success([])
+
+        console.log @view.$el.html()
+
+        @view.sale.id.should.equal sale.id
+        @view.$el.html().should.include 'Explore this bidness'
+
+        # Does not include artwork filter
+        @view.$el.find('.feature-artwork-filter').length.should.equal 0
 
     describe '#renderArtistList', ->
 
