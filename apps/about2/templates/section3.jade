@@ -1,3 +1,12 @@
+mixin work(artwork)
+  section.about2-section3-genome-artwork
+    img( src=artwork.src )
+    include artwork_details
+    if artwork.genes
+      ul.about2-section3-genome-artwork-genes
+        for gene in artwork.genes
+          li= gene
+
 section#about2-section3.about2-container
   h1.about2-section-header!= sections[2].title
   .about2-spacer( style="height: 60px" )
@@ -7,34 +16,34 @@ section#about2-section3.about2-container
 
   // "Works are given a genome..."
   .about2-spacer( style="height: 200px" )
-  section#about2-section3-pull-blurb-1
-    .about2-pull-blurb
-      h1= sections[2].pullBlurb1.h1
-      h2= sections[2].pullBlurb1.h2
-      p= sections[2].pullBlurb1.p
+  #about2-section3-pull-blurb-1-container
+    section#about2-section3-pull-blurb-1
+      .about2-pull-blurb
+        h1= sections[2].pullBlurb1.h1
+        h2= sections[2].pullBlurb1.h2
+        p= sections[2].pullBlurb1.p
+    +work(sections[2].exampleWork)
 
   // "This Work's Genome"
   .about2-spacer( style="height: 100px" )
-  section#about2-section3-example-work-left
-    img( src=sections[2].exampleWork.src )
-    strong= sections[2].exampleWork.artist
-    br
-    em= sections[2].exampleWork.title
-    | ,&nbsp;
-    = sections[2].exampleWork.date
-    br
-    = sections[2].exampleWork.partner
   section#about2-section3-example-work-right
     h1
       span This work's Genome
     ul
-      for gene in sections[2].exampleWork.genes
+      for gene in sections[2].exampleWork.totalGenes
         li= gene
 
   // "Characterstics are used to connect artworks"
-  .about2-spacer( style="height: 100px" )
+  .about2-spacer( style="height: 130px" )
   section#about2-section3-pull-blurb-2
     .about2-pull-blurb
       h1= sections[2].pullBlurb2.h1
       h2= sections[2].pullBlurb2.h2
       p= sections[2].pullBlurb2.p
+
+  // Track of genome works
+  .about2-spacer( style="height: 170px" )
+  ul#about2-section3-genome-works
+    for artwork in sections[2].genomeWorks
+      li
+        +work(artwork)
