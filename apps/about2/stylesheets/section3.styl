@@ -1,0 +1,53 @@
+@import '../../../components/stylus_lib'
+@import './lib'
+
+#about2-section3-preamble
+  p, img
+    display inline-block
+    vertical-align top
+  img
+    width (column-width * 4) + (gutter-width * 6)
+    margin-left gutter-width * 2
+    margin-top 80px
+
+#about2-section3-pull-blurb-1
+  margin-left (column-width * 3) + (gutter-width * 6)
+
+#about2-section3-example-work-right
+  avant-garde()
+  small-avant-garde()
+  width (column-width * 3) + (gutter-width * 4)
+  h1
+    text-align center
+    margin-bottom 70px
+    padding-bottom 2px
+    span
+      display inline-block
+      border-bottom 2px solid
+  ul
+    left -28px
+    margin-right -@left
+    li
+      display inline-block
+      width 25%
+      text-align center
+      vertical-align top
+      height 70px
+
+#about2-section3-example-work-left
+  width (column-width * 3) + (gutter-width * 4)
+  margin-right gutter-width * 2
+  padding-top 52px
+  img
+    max-width 100%
+    margin-bottom 15px
+  color gray-dark-color
+  font-size 16px
+  line-height 22px
+
+#about2-section3-example-work-right, #about2-section3-example-work-left
+  display inline-block
+  vertical-align top
+
+#about2-section3-pull-blurb-2
+  margin-left (column-width * 3) + (gutter-width * 6)

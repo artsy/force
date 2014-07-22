@@ -197,7 +197,48 @@
       }
     },
     {
-      "title": "The Art Genome<br>Project"
+      "title": "The Art Genome<br>Project",
+      "preamble": {
+        "text": "The Art Genome Project is an ongoing study to map the characteristics (known as ‘genes’) that connect the world’s artists and artworks. There are over 500 genes including art-historical movements, subject matter, and formal qualities.",
+        "src": "http://cl.ly/image/130X1E003n09/cimg.jpg"
+      },
+      "pullBlurb1": {
+        "h1": "Get a deeper understanding",
+        "h2": "Works are given a genome, or set of characteristics",
+        "p": "Our team of art historians and experts works hard to assign various characteristics and subject matter to our works. This allows for amazing possibility of discovery."
+      },
+      "exampleWork": {
+        "genes": [
+          "Late 19th Century",
+          "Oil Painting",
+          "Modern",
+          "Gestural",
+          "American Impressionism",
+          "Childhood",
+          "Reclining",
+          "Figurative Painting",
+          "Painting",
+          "Human Figure",
+          "France",
+          "Portrait",
+          "Bright / Vivid",
+          "19th Century",
+          "Figurative Art",
+          "Individual Portrait",
+          "Scenes of Everyday Life",
+          "United States"
+        ],
+        "src": "http://cl.ly/image/130X1E003n09/cimg.jpg",
+        "artist": "Mary Cassat",
+        "title": "Little Girl in a Blue Armchair",
+        "date": "1878",
+        "partner": "National Gallery of Art, Washington D.C."
+      },
+      "pullBlurb2": {
+        "h1": "A System Built for Discovery",
+        "h2": "Characterstics are used to connect artwork",
+        "p": "Our team of art historians and experts works hard to assign various characteristics and subject matter to our works. This is not a perfect science but allows for amazing possibility of discovery."
+      }
     },
     {
       "title": "Education"
