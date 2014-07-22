@@ -46,7 +46,7 @@ describe 'BidForm', ->
         model: @sale
         saleArtwork: @saleArtwork
         bidderPositions: @bidderPositions
-    done()
+      done()
 
   afterEach ->
     Backbone.sync.restore()
