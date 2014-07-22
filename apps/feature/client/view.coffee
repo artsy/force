@@ -62,10 +62,10 @@ module.exports = class FeatureView extends Backbone.View
 
     @appendArtworks artworks
 
-  isAuction: -> @sale?.isAuction()
+  isAuction: =>
+    @sale?.isAuction()
 
   doneFetchingSaleArtworks: (saleFeaturedSet) =>
-    console.log 'done fetching'
     @setupArtworks saleFeaturedSet
 
     @artworks = saleFeaturedSet.get('data')
@@ -174,6 +174,7 @@ module.exports = class FeatureView extends Backbone.View
     artists = {}
     artworks.filter (artwork) ->
       artistId = artwork.get('artist')?.id
+      return false unless artistId
       return false if artists[artistId]
       artists[artistId] = true
       true
@@ -202,7 +203,7 @@ module.exports = class FeatureView extends Backbone.View
     @$('.artwork-column').parent().css 'visibility', 'visible'
 
     # Rebalance columns now that the artist list has been added
-    @artworkColumns.rebalance(@$('.feature-set-item-artist-list').css('height').replace('px',''), $lastColumn.index())
+    @artworkColumns.rebalance(@$('.feature-set-item-artist-list').css('height')?.replace('px',''), $lastColumn.index())
 
   seeAllArtists: (e) ->
     @$('.artist-list-truncated').removeClass('artist-list-truncated')
