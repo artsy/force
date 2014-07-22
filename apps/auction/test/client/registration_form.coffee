@@ -43,7 +43,7 @@ describe 'RegistrationForm', ->
         card:
           create: (data, cb) ->
             cb status: 201, data: uri: 'foobar'
-    done()
+      done()
 
   afterEach ->
     Backbone.sync.restore()
