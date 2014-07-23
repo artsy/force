@@ -1,0 +1,51 @@
+section#about2-section5.about2-container
+  h1.about2-section-header!= sections[4].title
+
+  // "Our team is working to make the ..."
+  .about2-spacer( style="height: 60px" )
+  section#about2-section5-pull-blurb-1
+    .about2-pull-blurb
+      h1= sections[4].pullBlurb1.h1
+      h2= sections[4].pullBlurb1.h2
+      p= sections[4].pullBlurb1.p
+    img( src=sections[4].pullBlurb1.srcs[0] )
+  ul#about2-section5-pull-blurb-1-images
+    for src in sections[4].pullBlurb1.srcs.slice(1)
+      li
+        img( src=src )
+
+  // "We’ve come a long way"
+  .about2-spacer( style="height: 60px" )
+  section#about2-section5-pull-blurb-2
+    .about2-pull-blurb
+      h1= sections[4].pullBlurb2.h1
+      h2= sections[4].pullBlurb2.h2
+      p= sections[4].pullBlurb2.p
+    img( src=sections[4].pullBlurb2.images[0].src )
+    small= sections[4].pullBlurb2.images[0].caption
+  ul#about2-section5-pull-blurb-2-images
+    for image in sections[4].pullBlurb2.images.slice(1)
+      li
+        img( src=image.src )
+
+  // "Join the Artsy team"
+  section#about2-section5-pull-blurb-3
+    .about2-pull-blurb
+      h1= sections[4].pullBlurb3.h1
+      h2= sections[4].pullBlurb3.h2
+      p!= sections[4].pullBlurb3.p
+    img( src=sections[4].pullBlurb3.src )
+
+  // Job Listings
+  .about2-spacer( style="height: 80px" )
+  ul#about2-section5-jobs
+    for job in sections[4].jobs
+      li
+        section
+          header
+            h1= job.title
+            h2= job.location
+          p= job.description
+          a.icon-chevron-right( href=job.href )
+  #about2-section5-jobs-all
+    a.faux-underline See all #{sections[4].jobs.length} openings

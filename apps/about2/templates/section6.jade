@@ -1,0 +1,32 @@
+mixin blurb(blurb)
+  .about2-pull-blurb
+      h1= blurb.h1
+      h2= blurb.h2
+      p= blurb.p
+    button.avant-garde-button-white= blurb.button
+  for link in blurb.links
+    section.about2-section6-link
+      h1= link.h1
+      a( href=link.href )= link.text
+
+.about2-spacer( style="height: 200px" )
+section#about2-section6.about2-container
+  h1.about2-section-header!= sections[5].title
+  .about2-spacer( style="height: 140px" )
+
+  // "Gallery Partnerships"
+  #about2-section6-left
+    +blurb(sections[5].pullBlurbLeft)
+
+  // "Institutional Partnerships"
+  #about2-section6-right
+    +blurb(sections[5].pullBlurbRight)
+
+  // Image & media gallery
+  .about2-pull-blurb
+    h1= sections[5].mediaGallery.h1
+    h2= sections[5].mediaGallery.h2
+  ul#about2-section6-media-gallery
+    for src in sections[5].mediaGallery.srcs
+      li
+        img( src=src )
