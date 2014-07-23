@@ -4,11 +4,9 @@ sectionsTemplates = require '../templates/sections.jade'
 { DATA } = require('sharify').data
 
 hulkCallback = (data) ->
-  console.log("Here's the updated data: ", data);
   render(data)
 
 render = (data) ->
-  console.log data
   $('#about2-edit-example').html sectionsTemplates(data)
 
 module.exports.init = ->
