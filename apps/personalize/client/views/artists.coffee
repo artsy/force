@@ -77,12 +77,14 @@ module.exports = class ArtistsView extends StepView
       ?.then (response) => @fetchFallbackSuggestions() unless response.length
 
   fetchFallbackSuggestions: ->
+    setSize = 40
+    takeSize = 20
     artists = new Artists
     artists.fetch
-      data: size: 15
+      data: size: setSize
       url: "#{sd.API_URL}/api/v1/set/#{@suggestedArtistsSetId}/items"
       success: (collection, response, options) =>
-        artists.reset collection.chain().shuffle().first(10).value()
+        artists.reset collection.chain().shuffle().first(takeSize).value()
         @suggestions.add new Backbone.Model
           id: 'artist-sample'
           name: 'Artists you may enjoy following'
