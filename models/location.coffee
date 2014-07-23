@@ -42,6 +42,12 @@ module.exports = class Location extends Backbone.Model
       @get('postal_code') or ''
     ]).join(' ')
 
+  cityPhone: ->
+    _.compact([
+      @get('city')
+      @get('phone')
+    ]).join(': ')
+
   singleLine: ->
     _.compact([
       @get 'city' or ''

@@ -4,6 +4,7 @@ Backbone = require 'backbone'
 ShareModal = require '../../../components/share/modal.coffee'
 Transition = require '../../../components/mixins/transition.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
+Partner = require '../../../models/partner.coffee'
 SaveButton = require '../../../components/save_button/view.coffee'
 AddToPostButton = require '../../../components/related_posts/add_to_post_button.coffee'
 RelatedPostsView = require '../../../components/related_posts/view.coffee'
@@ -26,6 +27,7 @@ ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 Cookies = require 'cookies-js'
 
 detailTemplate = -> require('../templates/_detail.jade') arguments...
+partnerPhoneNumberTemplate = -> require('../templates/partner_phone.jade') arguments...
 auctionPlaceholderTemplate = -> require('../templates/auction_placeholder.jade') arguments...
 
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
@@ -42,6 +44,7 @@ module.exports = class ArtworkView extends Backbone.View
     'change .aes-radio-button': 'selectEdition'
     'click .artwork-buy-button': 'buy'
     'click .artwork-more-info .avant-garde-header-small': 'toggleMoreInfo'
+    'click .show-phone-number' : 'showPhoneNumber'
 
   toggleMoreInfo: (event) ->
     $target = $(event.target)
@@ -104,8 +107,24 @@ module.exports = class ArtworkView extends Backbone.View
 
     @preventRightClick()
 
+    @setupPhoneNumbers()
+
     if @currentUser?.hasLabFeature('Talk To Artsy')
       @setupAnnyang()
+
+  setupPhoneNumbers: ->
+    if @artwork.isContactable() and @artwork.get('partner')
+      partner = new Partner @artwork.get('partner')
+      partner.fetchLocations (locations) =>
+        locationsWithPhoneNumber = locations.filter (location) ->
+          location.get('phone')?.length > 0
+        if locationsWithPhoneNumber.length > 0
+          @$('.artwork-partner-phone-container').html partnerPhoneNumberTemplate
+            locations: locationsWithPhoneNumber
+
+  showPhoneNumber: ->
+    @$('.show-phone-number').remove()
+    @$('.partner-phone-numbers').show()
 
   preventRightClick: ->
     (@$artworkImage ?= @$('#the-artwork-image')).on 'contextmenu', (event) ->

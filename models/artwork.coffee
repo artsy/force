@@ -128,7 +128,6 @@ module.exports = class Artwork extends Backbone.Model
     return false if @hasDimension('depth')
     return true  if @hasDimension('width') and @hasDimension('height') and not @tooBig()
     return true  if @hasDimension('diameter')
-
     false
 
   # Should we include a button to contact the partner?
@@ -136,6 +135,12 @@ module.exports = class Artwork extends Backbone.Model
   # return {Boolean}
   isContactable: ->
     @get('forsale') and @has('partner') and not @get('acquireable')
+
+  hasPartnerPhoneNumber: ->
+    console.log @get('partner')
+
+  partnerPhoneNumber: ->
+    console.log @get('partner')
 
   # The work is not for sale but a buyer may be interested
   # in related works
