@@ -43,9 +43,9 @@ describe 'ArtistsView', ->
     it 'fetches the fallback artists when we fail to come up with suggestions', ->
       _.last(Backbone.sync.args)[2].url.should.include '/api/v1/set/53c55a777261692d45b70100/items'
 
-    it 'renders two rows of results', ->
-      _.last(Backbone.sync.args)[2].success _.times(15, -> fabricate 'artist')
-      @view.$('.personalize-suggestion').length.should.equal 10
+    it 'renders four rows of results', ->
+      _.last(Backbone.sync.args)[2].success _.times(40, -> fabricate 'artist')
+      @view.$('.personalize-suggestion').length.should.equal 20
       @view.$el.html().should.include 'Artists you may enjoy following'
 
   describe '#initializeArtistsFromFavorites', ->
