@@ -1,0 +1,85 @@
+@import '../../../components/stylus_lib'
+
+.body-about2-edit
+  #main-layout-container
+    margin 20px !important
+    min-width 1730px
+
+#about2-edit-h1
+  margin 120px 0 60px 0
+  font-size 40px
+  letter-spacing 2px
+
+#about2-edit-hulk, #about2-edit-example
+  display inline-block
+  vertical-align top
+
+#about2-edit-example
+  min-width 1200px
+  width calc(100% \- 560px)
+  position relative
+  padding 80px 0
+  #about2-hero-unit-bgs li
+    height 660px
+
+#about2-edit-hulk
+  width 500px
+  padding-right 30px
+  position relative
+  margin-right @padding-right
+  .hulk-separator
+    display none
+  .hulk-collapse-item, .hulk-collapse-item
+    display none
+  input, p, textarea, button
+    display block
+    width 100%
+    margin 8px 0
+    padding 8px
+    font-size 12px
+    line-height 1.3em
+    border-width 1px
+  input, textarea
+    font-family Helvetica, sans-serif;
+    border 1px solid gray-color
+  input:not(.hulk-map-key), textarea:not(.hulk-map-key)
+    padding 8px !important
+  .hulk-map-key
+    avant-garde()
+    border 0
+    padding 0
+    z-index -1
+    margin 0
+  .hulk-map-add-pair
+    display none
+  .hulk-array-element
+    margin-top 15px
+    padding 0 8px
+    border 1px solid gray-lighter-color
+  [value='sections']
+    color transparent
+  [value='sections'] + .hulk-map-value-container
+    padding-left 0
+    > .hulk-array-add-pair:last-of-type
+      display none
+  [value='sections'] + .hulk-map-value-container > .hulk-array-element
+    margin-top 100px
+    padding 0
+    padding-top 20px
+    border 0
+    border-top 3px solid black
+  .hulk-map-pair > .hulk-map-key:first-of-type
+    margin-top 20px
+  .hulk-map-value-container
+    padding-left 50px
+  .hulk-save
+    position fixed
+    bottom 0
+    left 0
+    padding 14px
+    width 100%
+    background black
+    color white
+    border 40px solid white
+    margin 0
+    z-index 2
