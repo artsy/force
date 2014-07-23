@@ -90,6 +90,21 @@ iconfont-styling()
   -webkit-font-smoothing antialiased
   -moz-osx-font-smoothing grayscale
 
+bottom-cover-gradient(height)
+  position relative
+  &::after
+    content '.'
+    width 100%
+    height height
+    position absolute
+    bottom 0
+    left 0
+    color transparent
+    display block
+    position absolute
+    z-index 2
+    background linear-gradient(top, rgba(255,255,255,0), white)
+
 // Takes a color and returns the RGBA equivalent
 //
 // transparify(light-grey-text-color, black)
