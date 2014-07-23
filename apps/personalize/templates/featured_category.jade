@@ -1,7 +1,8 @@
 .personalize-category
   h3= category.get('title')
   if category.get('image_versions')
-    .personalize-category-image(
-      style="background-image: url(#{category.get('image_url').replace(':version', 'original')});"
-    )
+    a.hoverable-image-link
+      .hoverable-image.personalize-category-image(
+        style="background-image: url(#{category.get('image_url').replace(':version', 'original')});"
+      )
   a.avant-garde-button-white.is-block.follow-button( data-id="#{category.get('gene_id')}" )
