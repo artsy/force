@@ -1,2 +1,6 @@
 require('backbone').$ = $
-$ require('../apps/about2/client/index.coffee').init
+$ ->
+  if location.pathname.match /// /about2/edit ///
+    require('../apps/about2/client/edit.coffee').init()
+  else
+    require('../apps/about2/client/index.coffee').init()

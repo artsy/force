@@ -6,16 +6,18 @@ class AboutView extends Backbone.View
 
   initialize: ->
     @$window = $(window)
-    @$window.on 'resize', _.debounce @setupHero
     @$window.on 'keyup', @toggleGrid
-    @setupHero()
+    @setupHeroUnits()
     @setGenomeWorkHeights()
 
-  setupHero: =>
-    @$('#about2-hero-unit').height @$window.height()
-    @$('#about2-hero-unit-container').css(
-      top: "calc(50% - #{@$('#about2-hero-unit-container').height() / 2}px)"
-    )
+  setupHeroUnits: ->
+    @$units = @$('.about2-hero-unit-bg')
+    i = 0
+    setInterval (=>
+      $(current = @$units.removeClass('is-active').get i).addClass('is-active')
+      i = (if (i + 1 < @$units.length) then i + 1 else 0)
+    ), 5000
+
 
   toggleGrid: (e) =>
     @$('#about2-grid').toggle() if e.which is 71 # "g" key
