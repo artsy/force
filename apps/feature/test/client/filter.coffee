@@ -7,7 +7,7 @@ Artworks = require '../../../../collections/artworks'
 
 describe 'FilterView', ->
 
-  beforeEach (done) ->
+  before (done) ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
@@ -15,7 +15,7 @@ describe 'FilterView', ->
       @view = new FilterView el: $('body')
       done()
 
-  afterEach ->
+  after ->
     benv.teardown()
 
   describe '#sortArtworks', ->

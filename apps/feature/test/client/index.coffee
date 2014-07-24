@@ -27,7 +27,7 @@ describe 'FeatureView', ->
       done()
 
   after ->
-    benv.teardown()
+    benv.teardown(false)
 
   beforeEach (done) ->
     sinon.stub Backbone, 'sync'
