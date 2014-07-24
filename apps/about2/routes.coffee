@@ -16,6 +16,9 @@ getJSON = (callback) ->
     res.render 'index', data
 
 @edit = (req, res, next) ->
+  if req.user?.get('type') isnt 'Admin'
+    res.status 403
+    return next new Error "You must be logged in as an admin to clear the cache."
   getJSON (err, data) ->
     return next err if err
     res.locals.sd.DATA = data
