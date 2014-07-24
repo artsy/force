@@ -2,6 +2,7 @@ _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
 Icon = require './icon.coffee'
+PartnerLocations = require '../collections/partner_locations.coffee'
 
 module.exports = class Partner extends Backbone.Model
 
@@ -33,6 +34,11 @@ module.exports = class Partner extends Backbone.Model
       @displayName()
       @displayLocations()
     ]).join(', ')
+
+  fetchLocations: (success) ->
+    locations = new PartnerLocations()
+    locations.url = "#{@url()}/locations"
+    locations.fetchUntilEnd success: success
 
   # @param {String} preferredLocation (optional)
   displayLocations: (preferredLocation) ->

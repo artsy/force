@@ -7,6 +7,9 @@ if artwork.isContactable()
         = artwork.partnerName()
     else
       .partner-name= artwork.partnerName()
+
+    .artwork-partner-phone-container
+
     if user
       //- Logged in
       input( type='hidden', name='name', value=user.get('name') )
