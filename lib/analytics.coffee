@@ -126,11 +126,12 @@ module.exports.multi = (description, modelName, ids) ->
 
 # Code using this function should cope with it returning undefined
 module.exports.getProperty = (property) =>
-  mixpanel?.get_property property
+  # We need to be extra safe here - sometimes mixpanel has not loaded, sometimes it has but doesn't have the get_property function
+  mixpanel?.get_property?(property)
 
 # Code using this function should cope with it returning undefined
 module.exports.setProperty = (hash) =>
-  mixpanel?.register_once hash
+  mixpanel?.register_once?(hash)
 
 # Conduct an A/B test by using this helper to determine what path to take.
 # Returns true if the user is in the new feature, returns false if the user
