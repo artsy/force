@@ -10,5 +10,8 @@
       .about2-chevron: a.icon-chevron-down
 
   ul.about2-hero-unit-bgs
-    for url in hero.images
-      li( style="background-image: url(#{url})" )
+    for url, i in hero.images
+      li.about2-hero-unit-bg(
+        style="background-image: url(#{url})"
+        class="#{i === 0 ? 'is-active' : 'is-inactive'}"
+      )
