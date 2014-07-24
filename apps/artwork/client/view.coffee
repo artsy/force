@@ -121,10 +121,12 @@ module.exports = class ArtworkView extends Backbone.View
         if locationsWithPhoneNumber.length > 0
           @$('.artwork-partner-phone-container').html partnerPhoneNumberTemplate
             locations: locationsWithPhoneNumber
+          analytics.track.funnel "Displayed 'show phone number' button"
 
   showPhoneNumber: ->
     @$('.show-phone-number').remove()
     @$('.partner-phone-numbers').show()
+    analytics.track.click "Clicked 'Show phone number'"
 
   preventRightClick: ->
     (@$artworkImage ?= @$('#the-artwork-image')).on 'contextmenu', (event) ->
