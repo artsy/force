@@ -362,35 +362,41 @@
       "from": "underscore@*"
     },
     "newrelic": {
-      "version": "1.5.3",
-      "from": "newrelic@*",
-      "resolved": "http://registry.npmjs.org/newrelic/-/newrelic-1.5.3.tgz",
+      "version": "1.8.1",
+      "from": "newrelic@1.8.1",
+      "resolved": "https://registry.npmjs.org/newrelic/-/newrelic-1.8.1.tgz",
       "dependencies": {
         "bunyan": {
           "version": "0.14.6",
-          "from": "bunyan@0.14.6"
+          "from": "bunyan@0.14.6",
+          "resolved": "https://registry.npmjs.org/bunyan/-/bunyan-0.14.6.tgz"
         },
         "continuation-local-storage": {
           "version": "3.0.0",
           "from": "continuation-local-storage@^3.0.0",
+          "resolved": "https://registry.npmjs.org/continuation-local-storage/-/continuation-local-storage-3.0.0.tgz",
           "dependencies": {
             "emitter-listener": {
               "version": "1.0.1",
               "from": "emitter-listener@1.0.1",
+              "resolved": "https://registry.npmjs.org/emitter-listener/-/emitter-listener-1.0.1.tgz",
               "dependencies": {
                 "shimmer": {
                   "version": "1.0.0",
-                  "from": "shimmer@1.0.0"
+                  "from": "shimmer@1.0.0",
+                  "resolved": "https://registry.npmjs.org/shimmer/-/shimmer-1.0.0.tgz"
                 }
               }
             },
             "async-listener": {
               "version": "0.4.5",
               "from": "async-listener@0.4.5",
+              "resolved": "https://registry.npmjs.org/async-listener/-/async-listener-0.4.5.tgz",
               "dependencies": {
                 "shimmer": {
                   "version": "1.0.0",
-                  "from": "shimmer@1.0.0"
+                  "from": "shimmer@1.0.0",
+                  "resolved": "https://registry.npmjs.org/shimmer/-/shimmer-1.0.0.tgz"
                 }
               }
             }
@@ -398,7 +404,8 @@
         },
         "yakaa": {
           "version": "1.0.0",
-          "from": "yakaa@^1.0.0"
+          "from": "yakaa@^1.0.0",
+          "resolved": "https://registry.npmjs.org/yakaa/-/yakaa-1.0.0.tgz"
         }
       }
     },
