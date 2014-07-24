@@ -7,7 +7,7 @@ module.exports = class FilterView extends Backbone.View
 
   sortHash:
     'artist-a-to-z': (a) ->
-      a.get('artist').sortable_id
+      a.get('artist')?.sortable_id
     'most-bids': (a) ->
       - a.get('saleArtwork').get('bidder_positions_count')
     'least-bids': (a) ->

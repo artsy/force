@@ -57,7 +57,6 @@ describe 'Partner Show View', ->
   afterEach ->
     Backbone.sync.restore()
 
-
   describe '#initialize', ->
 
     it 'always fetches install shots and artworks', ->

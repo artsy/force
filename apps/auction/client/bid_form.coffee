@@ -37,6 +37,8 @@ module.exports = class BidForm extends ErrorHandlingForm
       @saleArtwork.cleanBidAmount val
 
   placeBid: =>
+    analytics.track.click 'Clicked "Confirm Bid" on bid page'
+
     @timesPolledForBidPlacement = 0
     @$submit.addClass('is-loading')
     @clearErrors()
@@ -51,6 +53,7 @@ module.exports = class BidForm extends ErrorHandlingForm
           _.delay =>
             @pollForBidPlacement(@saleArtwork.get('minimum_next_bid_cents'))
           , 1000
+          analytics.track.funnel 'Confirmed bid on bid page'
         error: (xhr) =>
           @showError 'Error placing your bid', xhr
     else

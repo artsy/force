@@ -99,7 +99,7 @@ Output:
 
 ## Building
 
-    node-waf configure build
+    node-gyp rebuild
 
 ## Acknowledgments
 
