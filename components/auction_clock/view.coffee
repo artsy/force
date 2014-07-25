@@ -45,7 +45,7 @@ module.exports = class AuctionClockView extends Backbone.View
     @$('.auction-clock-value').html _.compact((for unit, label of UNIT_MAP
       diff = moment.duration(@toDate?.diff(moment()))[unit]()
 
-      # Don't display '00' for if we have 0 months or days left
+      # Don't display '00' if we have 0 months
       if diff < 1 and unit in ['months']
         false
       else
