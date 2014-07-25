@@ -5,6 +5,15 @@ sectionsTemplates = require '../templates/sections.jade'
 
 hulkCallback = (data) ->
   render(data)
+  return unless confirm "Are you sure you want to update the about page " +
+                        "(these changes can't be undone)?"
+  $('.hulk-save').addClass 'is-loading'
+  $.ajax
+    type: 'POST'
+    url: '/about2/edit'
+    data: data
+    error: -> alert "Whoops. Something went wrong, try again. If it doesn't work ask Craig."
+    success: -> location.assign '/about2'
 
 render = (data) ->
   $('#about2-edit-example').html sectionsTemplates(data)

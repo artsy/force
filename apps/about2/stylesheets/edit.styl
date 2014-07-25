@@ -6,9 +6,15 @@
     min-width 1730px
 
 #about2-edit-h1
-  margin 120px 0 60px 0
+  margin 120px 0 40px 0
   font-size 40px
   letter-spacing 2px
+
+#about2-edit-container
+  padding-top 60px
+  border-top 1px solid gray-color
+  width 1730px
+  margin auto
 
 #about2-edit-hulk, #about2-edit-example
   display inline-block
@@ -19,8 +25,10 @@
   width calc(100% \- 560px)
   position relative
   padding 80px 0
-  #about2-hero-unit-bgs li
+  .about2-hero-unit-bgs, .about2-hero-unit-container
     height 660px
+  #about2-section1
+    margin-top 600px
 
 #about2-edit-hulk
   width 500px
@@ -75,11 +83,13 @@
   .hulk-save
     position fixed
     bottom 0
-    left 0
+    width 1730px
     padding 14px
-    width 100%
     background black
     color white
-    border 40px solid white
+    border-top 30px solid white
+    border-bottom @border-top
     margin 0
     z-index 2
+    &:hover
+      background purple-color

@@ -1,8 +1,10 @@
 _ = require 'underscore'
 sinon = require 'sinon'
 Backbone = require 'backbone'
-routes = require '../routes'
+rewire = require 'rewire'
+routes = rewire '../routes'
 fs = require 'fs'
+{ EventEmitter } = require 'events'
 { resolve }  = require 'path'
 { fabricate } = require 'antigravity'
 
@@ -16,7 +18,9 @@ describe 'About2 routes', ->
       redirect: sinon.stub()
       locals: { sd: { API_URL: 'http://localhost:5000', CURRENT_PATH: '/post/post-id' } }
       status: sinon.stub()
+      send: sinon.stub()
     }
+    routes.__set__ 'client', @client = { getFile: sinon.stub(), putBuffer: sinon.stub() }
 
   afterEach ->
     Backbone.sync.restore()
@@ -25,15 +29,25 @@ describe 'About2 routes', ->
 
     it 'reads the json into locals', (done) ->
       @res.render = (tmpl, locals) =>
-        data = JSON.parse fs.readFileSync(resolve __dirname, '../content.json')
-        tmpl.should.equal 'index'
-        locals.hero.title.should.include data.hero.title
+        locals.foo.should.equal "bar"
         done()
       routes.index @req, @res
+      @client.getFile.args[0][1](null, emitter = new EventEmitter)
+      emitter.emit 'data', '{ "foo": "bar"}'
+      emitter.emit 'end'
 
-  describe '#edit', ->
+  describe '#adminOnly', ->
 
     it 'restricts admins', ->
       @req.user = new Backbone.Model(type: 'User')
-      routes.edit @req, @res, next = sinon.stub()
+      routes.adminOnly @req, @res, next = sinon.stub()
       next.args[0][0].toString().should.include "You must be logged in as an admin"
+
+  describe '#upload', ->
+
+    it 'uploads the file to s3', ->
+      @req.body = { foo: 'bar' }
+      routes.upload @req, @res
+      @client.putBuffer.args[0][0].toString().should.equal JSON.stringify @req.body
+      @client.putBuffer.args[0][3](null, {})
+      @res.send.args[0][0].should.equal 200
