@@ -908,9 +908,17 @@
         }
       }
     },
-    "static-favicon": {
-      "version": "1.0.2",
-      "from": "static-favicon@*"
+    "serve-favicon": {
+      "version": "2.0.1",
+      "from": "serve-favicon@",
+      "resolved": "http://registry.npmjs.org/serve-favicon/-/serve-favicon-2.0.1.tgz",
+      "dependencies": {
+        "fresh": {
+          "version": "0.2.2",
+          "from": "fresh@0.2.2",
+          "resolved": "http://registry.npmjs.org/fresh/-/fresh-0.2.2.tgz"
+        }
+      }
     },
     "morgan": {
       "version": "1.0.0",

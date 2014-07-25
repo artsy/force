@@ -39,7 +39,7 @@
     "body-parser": "*",
     "cookie-parser": "*",
     "cookie-session": "*",
-    "static-favicon": "*",
+    "serve-favicon": "*",
     "morgan": "*",
     "forever": "*",
     "humanparser": "*",
