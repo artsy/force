@@ -36,7 +36,7 @@ flashMiddleware = require './middleware/flash'
 bodyParser = require 'body-parser'
 cookieParser = require 'cookie-parser'
 session = require 'cookie-session'
-favicon = require 'static-favicon'
+favicon = require 'serve-favicon'
 logger = require 'morgan'
 apiCache = require './middleware/api_cache'
 
@@ -197,7 +197,7 @@ module.exports = (app) ->
     res.send 200, { nodejs: true }
 
   # Static files middleware
-  app.use favicon(path.resolve __dirname, '../pubic/images/favicon.ico')
+  app.use favicon(path.resolve __dirname, '../public/images/favicon.ico')
   app.use express.static(path.resolve __dirname, "../public")
 
   # Finally 404 and error handling middleware when the request wasn't handled
