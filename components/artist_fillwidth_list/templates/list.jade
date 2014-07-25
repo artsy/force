@@ -1,7 +1,7 @@
 for artist in artists
   .artist-fillwidth-list-item( data-id=artist.get('id') )
     h4
-      a.faux-underline-hover-large( href=artist.clientUrl() )= artist.get('name')
+      a.faux-underline-hover-large( href=artist.href() )= artist.get('name')
     button.avant-garde-button-white.follow-button.is-small
     .artist-fillwidth-list-artworks
       .loading-spinner
