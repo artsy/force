@@ -1,7 +1,9 @@
+_ = require 'underscore'
 Backbone = require 'backbone'
 moment = require 'moment'
 
 UNIT_MAP =
+  'months': 'months'
   'days': 'days'
   'hours': 'hrs'
   'minutes': 'min'
@@ -40,12 +42,17 @@ module.exports = class AuctionClockView extends Backbone.View
 
   renderClock: =>
     @model.updateState()
-    @$('.auction-clock-value').html (for unit, label of UNIT_MAP
+    @$('.auction-clock-value').html _.compact((for unit, label of UNIT_MAP
       diff = moment.duration(@toDate?.diff(moment()))[unit]()
-      """
-        <li>
-          #{if diff < 10 then '0' + diff else diff}
-          <small>#{label}</small>
-        </li>
-      """
-    ).join '<li>:</li>'
+
+      # Don't display '00' for if we have 0 months or days left
+      if diff < 1 and unit in ['months']
+        false
+      else
+        """
+          <li>
+            #{if diff < 10 then '0' + diff else diff}
+            <small>#{label}</small>
+          </li>
+        """
+    )).join '<li>:</li>'
