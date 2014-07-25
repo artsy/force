@@ -186,8 +186,8 @@ describe 'Feed Templates', ->
       # PostLink
       $('.feed-right-column figure.video-link').length.should.equal 1
 
-      @html.should.not.containEql "undefined"
-      @html.should.not.containEql "\#{"
+      html.should.not.containEql "undefined"
+      html.should.not.containEql "\#{"
 
     it 'includes admin controls', ->
       feedItems = new FeedItems

@@ -9,7 +9,9 @@ LocationSearchView = benv.requireWithJadeify(resolve(__dirname, '../index'), ['t
 describe 'Location Search', ->
   beforeEach (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
+      benv.expose
+        $: benv.require 'jquery'
+        google: sinon.stub()
       Backbone.$ = $
       LocationSearchView.__set__ 'geo', loadGoogleMaps: (cb) -> cb()
       @google =
