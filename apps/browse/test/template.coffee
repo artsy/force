@@ -27,12 +27,12 @@ describe 'Browse', ->
 
     it "includes not include genes three genes and images", ->
       # featuredGenes
-      @template.should.not.include 'browse-featured-gene'
+      @template.should.not.containEql 'browse-featured-gene'
 
       # popularCategories
-      @template.should.not.include 'browse-popular-categories'
+      @template.should.not.containEql 'browse-popular-categories'
 
-      @template.should.include 'browse-filter'
+      @template.should.containEql 'browse-filter'
 
   describe 'with all 3 ordered sets', ->
     beforeEach ->
@@ -79,19 +79,19 @@ describe 'Browse', ->
 
     it "includes all three genes and images", ->
       # featuredGenes
-      @template.should.include 'browse-featured-gene'
-      @template.should.include 'Featured Gene 1'
-      @template.should.include 'Featured Gene 2'
+      @template.should.containEql 'browse-featured-gene'
+      @template.should.containEql 'Featured Gene 1'
+      @template.should.containEql 'Featured Gene 2'
 
       # popularCategories
-      @template.should.include 'browse-popular-categories'
-      @template.should.include 'Popular Category'
-      @template.should.include 'Chinese Art'
-      @template.should.include 'Color Fields'
+      @template.should.containEql 'browse-popular-categories'
+      @template.should.containEql 'Popular Category'
+      @template.should.containEql 'Chinese Art'
+      @template.should.containEql 'Color Fields'
 
     it 'includes partners (static list for now)', ->
       $ = cheerio.load @template
-      @template.should.include 'Browse Partners'
+      @template.should.containEql 'Browse Partners'
       $(".bpc-partners a[href='/galleries']").text().should.equal "Galleries A-Z"
       $(".bpc-partners a[href='/institutions']").text().should.equal "Institutions A-Z"
       $(".bpc-partners a[href='/sfmoma']").text().should.equal "SFMOMA"
@@ -109,4 +109,4 @@ describe 'Browse', ->
       )
 
     it "does not error", ->
-      @template.should.include 'Browse Works'
+      @template.should.containEql 'Browse Works'

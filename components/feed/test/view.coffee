@@ -46,14 +46,14 @@ describe 'FeedView', ->
   describe '#initialize', ->
 
     it "renders a feed", ->
-      @view.$el.html().should.not.include 'undefined'
-      @view.$el.html().should.not.include "\#{"
-      @view.$el.html().should.not.include "NaN"
+      @view.$el.html().should.not.containEql 'undefined'
+      @view.$el.html().should.not.containEql "\#{"
+      @view.$el.html().should.not.containEql "NaN"
 
       @view.$('.feed-item').length.should.equal 1
-      @view.$('.feed-item-top-section .show-link').text().should.include @partnerShow.toChildModel().formatFeedItemHeading()
-      @view.$('.feed-item-top-section .timeframe').text().should.include @partnerShow.get('location').city
-      @view.$('.artwork-item').text().should.include @partnerShow.get('artworks')[0].title
+      @view.$('.feed-item-top-section .show-link').text().should.containEql @partnerShow.toChildModel().formatFeedItemHeading()
+      @view.$('.feed-item-top-section .timeframe').text().should.containEql @partnerShow.get('location').city
+      @view.$('.artwork-item').text().should.containEql @partnerShow.get('artworks')[0].title
 
   describe '#fetchMoreItems', ->
 
@@ -75,9 +75,9 @@ describe 'FeedView', ->
 
       @view.$('.feed-item').length.should.equal 3
 
-      @view.$el.html().should.not.include 'undefined'
-      @view.$el.html().should.not.include "\#{"
-      @view.$el.html().should.not.include "NaN"
+      @view.$el.html().should.not.containEql 'undefined'
+      @view.$el.html().should.not.containEql "\#{"
+      @view.$el.html().should.not.containEql "NaN"
 
   describe "save buttons", ->
 

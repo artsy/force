@@ -17,12 +17,12 @@ describe 'FilterRouter', ->
     it 'reflects the filter params as query params in the url', ->
       @router.navigate = sinon.stub()
       @router.params.set { foo: 'bar' }
-      @router.navigate.args[0][0].should.include '/artworks?foo=bar'
+      @router.navigate.args[0][0].should.containEql '/artworks?foo=bar'
 
     it 'omits page from the params', ->
       @router.navigate = sinon.stub()
       @router.params.set { page: '10' }
-      @router.navigate.args[0][0].should.not.include 'page=10'
+      @router.navigate.args[0][0].should.not.containEql 'page=10'
 
   describe '#artworks', ->
 

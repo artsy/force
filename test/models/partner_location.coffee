@@ -45,15 +45,15 @@ describe 'PartnerLocation', ->
   describe '#lines', ->
 
     it 'returns an array of strings for the address', ->
-      @partnerLocation.lines().should.include @partnerLocation.get 'address'
-      @partnerLocation.lines().should.include @partnerLocation.cityStatePostalCode()
+      @partnerLocation.lines().should.containEql @partnerLocation.get 'address'
+      @partnerLocation.lines().should.containEql @partnerLocation.cityStatePostalCode()
       @partnerLocation.set
         address_2: '25th Floor'
         country: 'USA'
-      @partnerLocation.lines().should.include @partnerLocation.get 'address'
-      @partnerLocation.lines().should.include @partnerLocation.get 'address_2'
-      @partnerLocation.lines().should.include @partnerLocation.cityStatePostalCode()
-      @partnerLocation.lines().should.include @partnerLocation.get 'country'
+      @partnerLocation.lines().should.containEql @partnerLocation.get 'address'
+      @partnerLocation.lines().should.containEql @partnerLocation.get 'address_2'
+      @partnerLocation.lines().should.containEql @partnerLocation.cityStatePostalCode()
+      @partnerLocation.lines().should.containEql @partnerLocation.get 'country'
 
   describe '#cityState', ->
 

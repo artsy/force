@@ -5,10 +5,11 @@ var packer = require('browser-pack');
 
 test('transform', function (t) {
     t.plan(3);
-    var p = mdeps(__dirname + '/files/tr_2dep_module/main.js', {
+    var p = mdeps({
         transform: [ 'insert-aaa', 'insert-bbb' ],
         transformKey: [ 'browserify', 'transform' ]
     });
+    p.end(__dirname + '/files/tr_2dep_module/main.js');
     var pack = packer();
     
     p.pipe(JSONStream.stringify()).pipe(pack);

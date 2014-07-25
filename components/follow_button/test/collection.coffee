@@ -72,7 +72,7 @@ describe 'Following collection', ->
         onAdd = sinon.stub()
         @following.once "add:#{@profileId2}", onAdd
         @following.syncFollows [@profileId2]
-        Backbone.sync.args[0][2].data.profiles.should.include @follow2.get('profile').id
+        Backbone.sync.args[0][2].data.profiles.should.containEql @follow2.get('profile').id
         Backbone.sync.args[0][2].success [@follow2.attributes]
         onAdd.callCount.should.equal 1
         @following.should.have.lengthOf 2
@@ -123,8 +123,8 @@ describe 'Following collection', ->
         @following.once "add:#{@profileId2}", onAdd
         @following.follow @profileId2, success: onSuccess
         Backbone.sync.args[0][0].should.equal 'create'
-        _.keys(Backbone.sync.args[0][1].attributes).should.include 'profile_id'
-        _.keys(Backbone.sync.args[0][1].attributes).should.include 'profile'
+        _.keys(Backbone.sync.args[0][1].attributes).should.containEql 'profile_id'
+        _.keys(Backbone.sync.args[0][1].attributes).should.containEql 'profile'
         Backbone.sync.args[0][1].attributes.profile.id.should.equal @profileId2
         onAdd.callCount.should.equal 1
         onSuccess.callCount.should.equal 1
@@ -149,7 +149,7 @@ describe 'Following collection', ->
       it 'makes the appropriate API call', ->
         @following.followAll [@profileId2, @profileId2]
         Backbone.sync.args[0][0].should.equal 'create'
-        Backbone.sync.args[0][2].url.should.include '/api/v1/me/follow/profiles'
+        Backbone.sync.args[0][2].url.should.containEql '/api/v1/me/follow/profiles'
         Backbone.sync.args[0][2].data.should.equal 'profile_id%5B%5D=profile-2&profile_id%5B%5D=profile-2&auto=true'
 
       it 'accepts callbacks', (done) ->
@@ -175,9 +175,9 @@ describe 'Following collection', ->
       it 'makes the appropriate API calls', ->
         Backbone.sync.args.length.should.equal 2
         Backbone.sync.args[0][0].should.equal 'delete'
-        Backbone.sync.args[0][1].url().should.include '/api/v1/me/follow/profile/111'
+        Backbone.sync.args[0][1].url().should.containEql '/api/v1/me/follow/profile/111'
         Backbone.sync.args[0][1].attributes.should.equal @follow1.attributes
-        Backbone.sync.args[1][1].url().should.include '/api/v1/me/follow/profile/222'
+        Backbone.sync.args[1][1].url().should.containEql '/api/v1/me/follow/profile/222'
         Backbone.sync.args[1][1].attributes.should.equal @follow2.attributes
 
       it 'removes the follows from the collection', ->

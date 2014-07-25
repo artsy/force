@@ -62,7 +62,7 @@ describe 'Partner Show', ->
         })
         $ = cheerio.load @html
         $('#show-left-info').should.have.lengthOf 1
-        $('#show-left-info').text().should.include @show.fair().get('name')
+        $('#show-left-info').text().should.containEql @show.fair().get('name')
 
       it 'renders back navigation without fair organizer', ->
         @show.set fair: fabricate('fair')
@@ -78,7 +78,7 @@ describe 'Partner Show', ->
         })
         $ = cheerio.load @html
         $('#show-left-info').should.have.lengthOf 1
-        $('#show-left-info').text().should.include @show.fair().get('name')
+        $('#show-left-info').text().should.containEql @show.fair().get('name')
 
       it 'renders social sharing links', ->
         $ = cheerio.load @html
@@ -92,9 +92,9 @@ describe 'Partner Show', ->
 
       it 'renders show details', ->
         $ = cheerio.load @html
-        $('#show-left').text().should.include @show.get('partner').name
-        $('#show-left').text().should.include @show.location().singleLine()
-        $('#show-left').html().should.include @show.runningDates()
+        $('#show-left').text().should.containEql @show.get('partner').name
+        $('#show-left').text().should.containEql @show.location().singleLine()
+        $('#show-left').html().should.containEql @show.runningDates()
         $("#show-left a[href*='/show/#{@show.get('id')}']").should.have.lengthOf 0
 
       it 'renders a container for artwork columns', ->
@@ -136,9 +136,9 @@ describe 'Partner Show', ->
 
       it 'renders show details', ->
         $ = cheerio.load @html
-        $('#show-left').text().should.include @show.get('partner').name
-        $('#show-left').text().should.include @show.location().singleLine()
-        $('#show-left').html().should.include @show.runningDates()
+        $('#show-left').text().should.containEql @show.get('partner').name
+        $('#show-left').text().should.containEql @show.location().singleLine()
+        $('#show-left').html().should.containEql @show.runningDates()
         $("#show-left a[href*='/show/#{@show.get('id')}']").should.have.lengthOf 0
 
       it 'renders a container for artwork columns', ->

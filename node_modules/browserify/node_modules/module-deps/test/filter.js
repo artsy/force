@@ -9,13 +9,12 @@ var collect = []
 var entry = path.join(__dirname, 'files', 'filterable.js')
 
 test('can filter core deps', function (t) {
-
-    mdeps(entry, {
+    var p = mdeps({
         filter: function (e) {
             return !~core.indexOf(e)
         }
     })
-    .on('data', function (d) {
+    p.on('data', function (d) {
         collect.push(d)
         t.equal(d.id, entry)
         t.deepEqual(d.deps, {
@@ -28,10 +27,10 @@ test('can filter core deps', function (t) {
             dns: false
         })
         t.equal(d.entry, true)
-    })
-    .on('end', function () {
+    });
+    p.on('end', function () {
         t.equal(collect.length, 1)
         t.end()
-    })
-
+    });
+    p.end(entry);
 })

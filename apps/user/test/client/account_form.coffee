@@ -37,12 +37,12 @@ describe 'AccountForm', ->
         @view.$('.settings-toggle-service[data-service="twitter"]').click()
 
       it 'links the correct service', ->
-        window.location.should.include '/users/auth/twitter?'
+        window.location.should.containEql '/users/auth/twitter?'
 
       describe '#toggleLinked', ->
         it 'after linking redirects back to the user edit form', ->
-          window.location.should.include 'redirect-to='
-          window.location.should.include 'user%2Fedit'
+          window.location.should.containEql 'redirect-to='
+          window.location.should.containEql 'user%2Fedit'
 
     describe 'unlink', ->
       beforeEach ->
@@ -54,7 +54,7 @@ describe 'AccountForm', ->
 
       it 'destroys the authentication', ->
         Backbone.sync.args[0][0].should.equal 'delete'
-        Backbone.sync.args[0][1].url.should.include '/api/v1/me/authentications/twitter'
+        Backbone.sync.args[0][1].url.should.containEql '/api/v1/me/authentications/twitter'
 
       describe 'success', ->
         beforeEach ->
@@ -76,4 +76,3 @@ describe 'AccountForm', ->
 
         it 'resets the button state', ->
           _.isUndefined(@$button.attr('data-state')).should.be.true
-

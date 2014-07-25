@@ -21,7 +21,7 @@ function grabSourceMap(lastLine) {
 }
 
 function grabLastLine(src) {
-    return src.split('\n').pop();
+    return src.split('\n').slice(-2)[0];
 }
 
 test('pack one file with source file field and one without', function (t) {

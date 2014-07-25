@@ -81,9 +81,9 @@ describe 'DeepZoomView', ->
 
       it 'renders the template', ->
         html = @view.$container.html()
-        html.should.include 'deep-zoom'
-        html.should.include 'dz-slider'
-        html.should.include 'dz-close'
+        html.should.containEql 'deep-zoom'
+        html.should.containEql 'dz-slider'
+        html.should.containEql 'dz-close'
 
       it 'sets up the OpenSeadragon viewer', ->
         _.isObject(@view.viewer).should.be.ok

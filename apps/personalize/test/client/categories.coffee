@@ -43,9 +43,9 @@ describe 'CategoriesView', ->
   describe '#render', ->
     it 'renders the shell template', ->
       html = @view.$el.html()
-      html.should.include 'Which categories are you interested in?'
-      html.should.include 'Follow categories for better artist and artwork recommendations from Artsy.'
-      html.should.include '<h2>Anything else?</h2>'
+      html.should.containEql 'Which categories are you interested in?'
+      html.should.containEql 'Follow categories for better artist and artwork recommendations from Artsy.'
+      html.should.containEql '<h2>Anything else?</h2>'
 
   describe '#setupCategories', ->
     it 'sets a gene_id on each category', ->
@@ -55,9 +55,9 @@ describe 'CategoriesView', ->
   describe '#renderCategories', ->
     it 'it renders the categories given a collection of them and a template key', ->
       @view.renderCategories(@view.categories.featured, 'featured').
-        should.include 'class="personalize-category"'
+        should.containEql 'class="personalize-category"'
       @view.renderCategories(@view.categories.featured, 'secondary').
-        should.include 'class="personalize-secondary-category"'
+        should.containEql 'class="personalize-secondary-category"'
 
   describe '#setupFollowButtons', ->
     it 'adds a listener to the follow buttons that sets the skip label', ->
@@ -76,14 +76,14 @@ describe 'CategoriesView', ->
     beforeEach ->
       @html = @view.$el.html()
     it 'renders the featured categories', ->
-      @html.should.include 'url(a/original)'
-      @html.should.include '<h3>A</h3>'
-      @html.should.include 'data-id="a"'
+      @html.should.containEql 'url(a/original)'
+      @html.should.containEql '<h3>A</h3>'
+      @html.should.containEql 'data-id="a"'
 
     it 'renders the secondary categories', ->
-      @html.should.include 'src="b/original'
-      @html.should.include '<h3>B</h3>'
-      @html.should.include 'data-id="b"'
+      @html.should.containEql 'src="b/original'
+      @html.should.containEql '<h3>B</h3>'
+      @html.should.containEql 'data-id="b"'
 
   describe '#advance', ->
     it 'augments the base #advance by setting user notes', ->

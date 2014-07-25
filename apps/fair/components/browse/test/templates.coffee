@@ -42,4 +42,4 @@ describe 'Browse templates', ->
       $('.fair-exhibitors-list').length.should.equal 1
       $('.fair-exhibitors-list a').length.should.equal 1
       $('.fair-exhibitors-list .a-to-z-item').length.should.equal 2
-      @template.should.include '/the-armory-show/browse/booths'
+      @template.should.containEql '/the-armory-show/browse/booths'

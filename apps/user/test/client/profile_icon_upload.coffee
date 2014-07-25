@@ -51,7 +51,7 @@ describe 'ProfileIconUpload', ->
 
     it 'requests S3 credentials properly', ->
       args = $.ajax.args[0][0]
-      args.url.should.include 'uploads/new.json'
+      args.url.should.containEql 'uploads/new.json'
       args.data.acl.should.equal 'private'
 
     it 'renders the upload directly to S3 form with the right fields', ->
@@ -68,7 +68,7 @@ describe 'ProfileIconUpload', ->
       data = { key: 'percy', bucket: 'cat', files: [ { name: 'bitty' } ] }
       @profileIconUpload.makeGeminiRequest(data)
       args = $.ajax.args[1][0]
-      args.url.should.include '/entries.json'
+      args.url.should.containEql '/entries.json'
       entry = args.data.entry
       entry.source_key.should == 'percy'
       entry.source_bucket.should == 'cat'
@@ -77,7 +77,7 @@ describe 'ProfileIconUpload', ->
       entry.metadata._type.should == 'ProfileIcon'
 
     it 'renders a default image', ->
-      @profileIconUpload.$profileIcon.css('background-image').should.include Icon.DefaultUserIconUrl
+      @profileIconUpload.$profileIcon.css('background-image').should.containEql Icon.DefaultUserIconUrl
 
     it 'does not render a remove action', ->
       @profileIconUpload.$el.hasClass('has-image').should.be.false
@@ -101,4 +101,3 @@ describe 'ProfileIconUpload', ->
 
     it 'allows the user to remove the image', ->
       @profileIconUpload.$el.hasClass('has-image').should.be.true
-

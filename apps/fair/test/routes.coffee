@@ -129,7 +129,7 @@ describe 'Fair routes', ->
         results: [show]
         next: 'foo'
       ]
-      @res.redirect.args[0][0].should.include '/show/gagosian-gallery-inez-and-vinood'
+      @res.redirect.args[0][0].should.containEql '/show/gagosian-gallery-inez-and-vinood'
 
   describe 'cache busting', ->
 

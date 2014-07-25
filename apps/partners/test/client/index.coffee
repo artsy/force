@@ -92,7 +92,7 @@ describe 'FeaturedPartnersView', ->
 
       it 'syncs follow state with the server for rendered profiles', ->
         @profiles.each (profile) ->
-          Backbone.sync.args[0][2].data.profiles.should.include profile.get('id')
+          Backbone.sync.args[0][2].data.profiles.should.containEql profile.get('id')
 
     describe 'FollowButtonView', ->
       it 'updates button to indicate profiles that are followed', ->

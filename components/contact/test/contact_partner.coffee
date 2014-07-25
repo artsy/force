@@ -50,12 +50,12 @@ describe 'ContactPartnerView', ->
 
       it 'POSTs to the correct endpoint', ->
         _.last(Backbone.sync.args)[0].should.equal 'create'
-        _.last(Backbone.sync.args)[1].url.should.include 'api/v1/me/artwork_inquiry_request'
+        _.last(Backbone.sync.args)[1].url.should.containEql 'api/v1/me/artwork_inquiry_request'
 
       it 'sends the correct fields', ->
         keys = _.keys(_.last(Backbone.sync.args)[1].attributes)
         for field in ['artwork', 'contact_gallery', 'session_id', 'name', 'email', 'message']
-          keys.should.include field
+          keys.should.containEql field
 
       it 'has the correct data', ->
         attributes = _.last(Backbone.sync.args)[1].attributes
@@ -94,9 +94,9 @@ describe 'ContactPartnerView', ->
     it 'does render pricing if work cant display price', ->
       @view.artwork.isPriceDisplayable = -> false
       @view.$el.html @view.formTemplate @view.templateData
-      @view.$el.html().should.include 'and price'
+      @view.$el.html().should.containEql 'and price'
 
     it 'doesnt render pricing question if work can display price', ->
       @view.artwork.isPriceDisplayable = -> true
       @view.$el.html @view.formTemplate @view.templateData
-      @view.$el.html().should.not.include 'and price'
+      @view.$el.html().should.not.containEql 'and price'

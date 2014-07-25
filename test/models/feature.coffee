@@ -98,6 +98,6 @@ describe 'Feature', ->
 
     it 'returns the name, a link, and truncates to a tweet', ->
       shareThis = @feature.shareTitle()
-      shareThis.should.include @feature.get 'name'
-      shareThis.should.include 'on Artsy'
-      shareThis.should.include @feature.href()
+      shareThis.should.containEql @feature.get 'name'
+      shareThis.should.containEql 'on Artsy'
+      shareThis.should.containEql @feature.href()

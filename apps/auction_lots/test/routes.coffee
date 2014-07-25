@@ -27,11 +27,11 @@ describe 'Auction results routes', ->
       routes.detail @req, @res
       _.defer =>
         Backbone.sync.args.length.should.equal 4
-        Backbone.sync.args[0][1].url().should.include '/api/v1/auction_lot/a-lot'
-        Backbone.sync.args[1][1].url().should.include '/api/v1/artist/andy-foobar'
-        Backbone.sync.args[2][1].url().should.include '/api/v1/artist/andy-foobar/auction_lots?' # some random page
-        Backbone.sync.args[2][1].url().should.include '&size=3&sort=-price_realized_dollar,-auction_date&total_count=1'
-        Backbone.sync.args[3][1].url.should.include '/api/v1/artist/andy-foobar/artworks'
+        Backbone.sync.args[0][1].url().should.containEql '/api/v1/auction_lot/a-lot'
+        Backbone.sync.args[1][1].url().should.containEql '/api/v1/artist/andy-foobar'
+        Backbone.sync.args[2][1].url().should.containEql '/api/v1/artist/andy-foobar/auction_lots?' # some random page
+        Backbone.sync.args[2][1].url().should.containEql '&size=3&sort=-price_realized_dollar,-auction_date&total_count=1'
+        Backbone.sync.args[3][1].url.should.containEql '/api/v1/artist/andy-foobar/artworks'
         done()
 
     it '404s if the wrong artist is requested', (done) ->
@@ -64,8 +64,8 @@ describe 'Auction results routes', ->
     it 'makes the appropriate requests', ->
       routes.artist @req, @res
       Backbone.sync.args.length.should.equal 2
-      Backbone.sync.args[0][1].url().should.include '/api/v1/artist/andy-foobar'
-      Backbone.sync.args[1][1].url().should.include '/api/v1/artist/andy-foobar/auction_lots?page=1&size=25&sort=-price_realized_dollar,-auction_date&total_count=1'
+      Backbone.sync.args[0][1].url().should.containEql '/api/v1/artist/andy-foobar'
+      Backbone.sync.args[1][1].url().should.containEql '/api/v1/artist/andy-foobar/auction_lots?page=1&size=25&sort=-price_realized_dollar,-auction_date&total_count=1'
 
   describe '#artwork', ->
     beforeEach ->
@@ -75,8 +75,8 @@ describe 'Auction results routes', ->
     it 'makes the appropriate requests', ->
       routes.artwork @req, @res
       Backbone.sync.args.length.should.equal 2
-      Backbone.sync.args[0][1].url().should.include '/api/v1/artwork/andy-foobar-artwork'
-      Backbone.sync.args[1][1].url().should.include '/api/v1/artwork/andy-foobar-artwork/comparable_sales'
+      Backbone.sync.args[0][1].url().should.containEql '/api/v1/artwork/andy-foobar-artwork'
+      Backbone.sync.args[1][1].url().should.containEql '/api/v1/artwork/andy-foobar-artwork/comparable_sales'
 
 
   describe 'no results', ->

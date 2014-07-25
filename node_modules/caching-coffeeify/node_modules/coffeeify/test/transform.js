@@ -25,7 +25,7 @@ test('transform adds sourcemap comment', function (t) {
               sourceRoot: '',
               sources: [ file ],
               names: [],
-              mappings: 'AAAA,CAAQ,EAAR,IAAO,GAAK',
+              mappings: 'AAAA,OAAO,CAAC,GAAR,CAAY,OAAA,CAAQ,UAAR,CAAZ,CAAA,CAAA',
               sourcesContent: [ 'console.log(require \'./bar.js\')\n' ] },
             'adds sourcemap comment including original source'
       );

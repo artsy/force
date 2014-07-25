@@ -57,10 +57,10 @@ describe 'ViewInRoomView', ->
         @view.$artwork.attr('src').should.equal @view.$img.attr('src')
       it 'positions the artwork', ->
         style = @view.$artwork.attr('style')
-        style.should.include 'top'
-        style.should.include 'left'
-        style.should.include 'width'
-        style.should.include 'height'
+        style.should.containEql 'top'
+        style.should.containEql 'left'
+        style.should.containEql 'width'
+        style.should.containEql 'height'
 
     describe '#roomScalingFactor', ->
       it 'returns a non-zero value to scale the room by', ->

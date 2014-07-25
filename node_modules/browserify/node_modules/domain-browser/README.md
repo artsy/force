@@ -10,9 +10,13 @@
 
 [![Build Status](http://img.shields.io/travis-ci/bevry/domain-browser.png?branch=master)](http://travis-ci.org/bevry/domain-browser "Check this project's build status on TravisCI")
 [![NPM version](http://badge.fury.io/js/domain-browser.png)](https://npmjs.org/package/domain-browser "View this project on NPM")
+[![Dependency Status](https://david-dm.org/bevry/domain-browser.png?theme=shields.io)](https://david-dm.org/bevry/domain-browser)
+[![Development Dependency Status](https://david-dm.org/bevry/domain-browser/dev-status.png?theme=shields.io)](https://david-dm.org/bevry/domain-browser#info=devDependencies)<br/>
 [![Gittip donate button](http://img.shields.io/gittip/bevry.png)](https://www.gittip.com/bevry/ "Donate weekly to this project using Gittip")
 [![Flattr donate button](http://img.shields.io/flattr/donate.png?color=yellow)](http://flattr.com/thing/344188/balupton-on-Flattr "Donate monthly to this project using Flattr")
 [![PayPayl donate button](http://img.shields.io/paypal/donate.png?color=yellow)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QB8GQPZAH84N6 "Donate once-off to this project using Paypal")
+[![BitCoin donate button](http://img.shields.io/bitcoin/donate.png?color=yellow)](https://coinbase.com/checkouts/9ef59f5479eec1d97d63382c9ebcb93a "Donate once-off to this project using BitCoin")
+[![Wishlist browse button](http://img.shields.io/wishlist/browse.png?color=yellow)](http://amzn.com/w/2F8TXKSNAFG4V "Buy an item on our wishlist for us")
 
 <!-- /BADGES -->
 
@@ -28,14 +32,14 @@ Note, this is merely an evented try...catch with the same API as node. Nothing m
 
 ## Install
 
-### [Node](http://nodejs.org/)
+### [NPM](http://npmjs.org/)
 - Use: `require('domain-browser')`
 - Install: `npm install --save domain-browser`
 
 ### [Browserify](http://browserify.org/)
 - Use: `require('domain-browser')`
 - Install: `npm install --save domain-browser`
-- CDN URL: `//wzrd.in/bundle/domain-browser@1.1.1`
+- CDN URL: `//wzrd.in/bundle/domain-browser@1.1.2`
 
 ### [Ender](http://ender.jit.su/)
 - Use: `require('domain-browser')`
@@ -69,6 +73,8 @@ No sponsors yet! Will you be the first?
 [![Gittip donate button](http://img.shields.io/gittip/bevry.png)](https://www.gittip.com/bevry/ "Donate weekly to this project using Gittip")
 [![Flattr donate button](http://img.shields.io/flattr/donate.png?color=yellow)](http://flattr.com/thing/344188/balupton-on-Flattr "Donate monthly to this project using Flattr")
 [![PayPayl donate button](http://img.shields.io/paypal/donate.png?color=yellow)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QB8GQPZAH84N6 "Donate once-off to this project using Paypal")
+[![BitCoin donate button](http://img.shields.io/bitcoin/donate.png?color=yellow)](https://coinbase.com/checkouts/9ef59f5479eec1d97d63382c9ebcb93a "Donate once-off to this project using BitCoin")
+[![Wishlist browse button](http://img.shields.io/wishlist/browse.png?color=yellow)](http://amzn.com/w/2F8TXKSNAFG4V "Buy an item on our wishlist for us")
 
 ### Contributors
 

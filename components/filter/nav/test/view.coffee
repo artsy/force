@@ -49,7 +49,7 @@ describe 'FilterNav', ->
       @view.params.set price_range: '5000:10000'
       @view.renderActiveParams()
       @view.$('.filter-dropdown').hasClass('is-active').should.be.ok
-      @view.$('.filter-nav-active-text').text().should.include '$5,000 to $10,000'
+      @view.$('.filter-nav-active-text').text().should.containEql '$5,000 to $10,000'
       @view.$('nav a').hasClass('is-active').should.be.ok
 
 

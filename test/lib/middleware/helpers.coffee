@@ -12,16 +12,16 @@ describe 'Helpers middleware', ->
 
   it 'adds a backbone error handler helper', ->
     @res.backboneError {}, { error: {}, text: '{"error":"Foo Err"}' }
-    @next.args[1][0].toString().should.include 'Foo Err'
+    @next.args[1][0].toString().should.containEql 'Foo Err'
 
   it 'handles generic stringy errors', ->
     @res.backboneError {}, { error: 'Foo Err' }
-    @next.args[1][0].toString().should.include 'Foo Err'
+    @next.args[1][0].toString().should.containEql 'Foo Err'
 
   it 'turns 403 errors into 404s', ->
     helpers.__set__ 'NODE_ENV', 'production'
     @res.backboneError {}, { error: { status: 403 } }
-    @next.args[1][0].toString().should.include 'Not Found'
+    @next.args[1][0].toString().should.containEql 'Not Found'
 
   it 'attaches API status to the errors', ->
     helpers.__set__ 'NODE_ENV', 'production'

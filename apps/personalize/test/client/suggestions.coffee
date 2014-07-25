@@ -48,11 +48,11 @@ describe 'SuggestionsView', ->
   describe '#render', ->
     it 'renders the template', ->
       html = @view.$el.html()
-      html.should.include 'Follow galleries on Artsy'
-      html.should.include 'Receive notifications of upcoming shows and fairs'
-      html.should.include 'Type your favorite gallery name'
-      html.should.include 'Below are galleries we think you’ll enjoy based on artists you follow and your location,'
-      html.should.include 'New York'
+      html.should.containEql 'Follow galleries on Artsy'
+      html.should.containEql 'Receive notifications of upcoming shows and fairs'
+      html.should.containEql 'Type your favorite gallery name'
+      html.should.containEql 'Below are galleries we think you’ll enjoy based on artists you follow and your location,'
+      html.should.containEql 'New York'
 
   describe '#ensureLocation', ->
     beforeEach ->
@@ -67,7 +67,7 @@ describe 'SuggestionsView', ->
       @view.user.approximateLocation.called.should.be.true
       @view.user.set 'location', city: 'Susquehanna'
       @view.user.approximateLocation.args[0][0].success()
-      @view.$el.html().should.include 'Susquehanna'
+      @view.$el.html().should.containEql 'Susquehanna'
 
   describe '#setup', ->
     beforeEach ->
@@ -81,13 +81,13 @@ describe 'SuggestionsView', ->
 
     it 'fetches the suggestions', ->
       Backbone.sync.args[0][0].should.equal 'read'
-      Backbone.sync.args[0][2].url.should.include '/api/v1/me/suggested/profiles'
+      Backbone.sync.args[0][2].url.should.containEql '/api/v1/me/suggested/profiles'
 
     describe '#renderSuggestions', ->
       it 'renders the suggestions', ->
         html = @view.$el.html()
-        html.should.include 'Gagosian Gallery'
-        html.should.include 'The J. Paul Getty Trust is a cultural and philanthropic institution'
+        html.should.containEql 'Gagosian Gallery'
+        html.should.containEql 'The J. Paul Getty Trust is a cultural and philanthropic institution'
         @view.$('.grid-item').length.should.equal 4
         @view.$('.follow-button').length.should.equal 4
 
@@ -145,7 +145,7 @@ describe 'SuggestionsView', ->
     it 'fetches the follows and renders suggestions', ->
       @view.fetchAutoFollowedProfiles()
       Backbone.sync.args[0][0].should.equal 'read'
-      Backbone.sync.args[0][2].url.should.include '/api/v1/me/follow/profiles?auto=1&size=48'
+      Backbone.sync.args[0][2].url.should.containEql '/api/v1/me/follow/profiles?auto=1&size=48'
       @view.suggestions.length.should.equal 2
       @view.renderSuggestions.called.should.be.ok
 

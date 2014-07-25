@@ -23,7 +23,7 @@ describe 'Fillwidth row', ->
       )
 
     it 'correctly renders and displays the partner name', ->
-      @template.should.include 'House of Bitty'
+      @template.should.containEql 'House of Bitty'
 
   describe 'artwork with a partner', ->
     beforeEach ->
@@ -34,7 +34,7 @@ describe 'Fillwidth row', ->
       )
 
     it 'correctly renders and displays the partner name', ->
-      @template.should.include 'MOMA'
+      @template.should.containEql 'MOMA'
 
   describe 'artwork with a partner and a collecting institution field', ->
     it 'correctly renders and does not display the partner name', ->
@@ -43,7 +43,7 @@ describe 'Fillwidth row', ->
         sd: {}
         artworks: @artworks
       )
-      @template.should.include 'House of Bitty'
+      @template.should.containEql 'House of Bitty'
 
   describe 'artwork with no partner and no collecting institution field', ->
     beforeEach ->

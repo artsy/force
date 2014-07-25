@@ -20,15 +20,15 @@ describe 'Favorites and follows tab', ->
 
     it 'should contain three tabs for favorite artworks and followings', ->
 
-      @template.should.include "Works"
-      @template.should.include "Artists"
-      @template.should.include "Categories"
+      @template.should.containEql "Works"
+      @template.should.containEql "Artists"
+      @template.should.containEql "Categories"
 
     it 'should only hightlight the Artists tab ', ->
 
-      @template.should.include '<a href="/following/artists" class="garamond-tab is-active">Artists</a>'
-      @template.should.include '<a href="/following/genes" class="garamond-tab is-inactive">Categories</a>'
-      @template.should.include '<a href="/favorites" class="garamond-tab is-inactive">Works</a>'
+      @template.should.containEql '<a href="/following/artists" class="garamond-tab is-active">Artists</a>'
+      @template.should.containEql '<a href="/following/genes" class="garamond-tab is-inactive">Categories</a>'
+      @template.should.containEql '<a href="/favorites" class="garamond-tab is-inactive">Works</a>'
 
   describe 'on the following genes page', ->
     beforeEach ->
@@ -39,15 +39,15 @@ describe 'Favorites and follows tab', ->
 
     it 'should contain three tabs for favorite artworks and followings', ->
 
-      @template.should.include "Works"
-      @template.should.include "Artists"
-      @template.should.include "Categories"
+      @template.should.containEql "Works"
+      @template.should.containEql "Artists"
+      @template.should.containEql "Categories"
 
     it 'should only hightlight the Genes tab ', ->
 
-      @template.should.include '<a href="/following/artists" class="garamond-tab is-inactive">Artists</a>'
-      @template.should.include '<a href="/following/genes" class="garamond-tab is-active">Categories</a>'
-      @template.should.include '<a href="/favorites" class="garamond-tab is-inactive">Works</a>'
+      @template.should.containEql '<a href="/following/artists" class="garamond-tab is-inactive">Artists</a>'
+      @template.should.containEql '<a href="/following/genes" class="garamond-tab is-active">Categories</a>'
+      @template.should.containEql '<a href="/favorites" class="garamond-tab is-inactive">Works</a>'
 
   describe 'on the favorite artworks page', ->
     beforeEach ->
@@ -58,12 +58,12 @@ describe 'Favorites and follows tab', ->
 
     it 'should contain three tabs for favorite artworks and followings', ->
 
-      @template.should.include "Works"
-      @template.should.include "Artists"
-      @template.should.include "Categories"
+      @template.should.containEql "Works"
+      @template.should.containEql "Artists"
+      @template.should.containEql "Categories"
 
     it 'should only hightlight the favorite artworks tab ', ->
 
-      @template.should.include '<a href="/following/artists" class="garamond-tab is-inactive">Artists</a>'
-      @template.should.include '<a href="/following/genes" class="garamond-tab is-inactive">Categories</a>'
-      @template.should.include '<a href="/favorites" class="garamond-tab is-active">Works</a>'
+      @template.should.containEql '<a href="/following/artists" class="garamond-tab is-inactive">Artists</a>'
+      @template.should.containEql '<a href="/following/genes" class="garamond-tab is-inactive">Categories</a>'
+      @template.should.containEql '<a href="/favorites" class="garamond-tab is-active">Works</a>'

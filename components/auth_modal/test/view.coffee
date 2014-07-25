@@ -33,12 +33,12 @@ describe 'AuthModalView', ->
   describe '#preInitialize', ->
     it 'can render custom copy', ->
       @view.preInitialize copy: 'Sign up to foobar.'
-      @view.templateData.copy.should.include 'Sign up to foobar'
+      @view.templateData.copy.should.containEql 'Sign up to foobar'
 
     it 'can render custom redirect', ->
       @view.redirectTo = '/awesome-fair'
       @view.preInitialize copy: 'Sign up to foobar.'
-      @view.templateData.redirectTo.should.include '/awesome-fair'
+      @view.templateData.redirectTo.should.containEql '/awesome-fair'
 
     it 'passes the pathname to the template', ->
       _location = @AuthModalView.__get__ 'location'
@@ -63,14 +63,14 @@ describe 'AuthModalView', ->
       @view.state.set mode: 'register'
       @view.submit $.Event('click')
       Backbone.sync.args[0][2].url.should.equal '/users/invitation/accept'
-      location.href.should.include 'foobarbaz'
+      location.href.should.containEql 'foobarbaz'
 
     it 'submits to signup with custom redirect url', ->
       @view.redirectTo = '/awesome-fair'
       @view.state.set mode: 'register'
       @view.submit $.Event('click')
-      Backbone.sync.args[0][2].url.should.include 'users/invitation/accept'
-      location.href.should.include '/awesome-fair'
+      Backbone.sync.args[0][2].url.should.containEql 'users/invitation/accept'
+      location.href.should.containEql '/awesome-fair'
 
     it 'sets a cookie named destination with whatever the passed in destination is', ->
       @view.destination = '/artist/some-guy/follow'
@@ -86,4 +86,4 @@ describe 'AuthModalView', ->
     it 'redirects to /personalize when mode is register by default', ->
       @view.state.set mode: 'register'
       @view.submit $.Event('click')
-      location.href.should.include '/personalize'
+      location.href.should.containEql '/personalize'

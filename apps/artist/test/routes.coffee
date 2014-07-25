@@ -56,7 +56,7 @@ describe 'Artist routes', ->
       @res.redirect = sinon.stub()
       @req.user = new CurrentUser fabricate 'user'
       routes.follow @req, @res
-      Backbone.sync.args[0][1].url().should.include '/api/v1/me/follow/artist'
+      Backbone.sync.args[0][1].url().should.containEql '/api/v1/me/follow/artist'
       Backbone.sync.args[0][1].get('artist_id').should.equal 'foo'
       Backbone.sync.args[0][2].success()
       @res.redirect.args[0][0].should.equal '/artist/foo'

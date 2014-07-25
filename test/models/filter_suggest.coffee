@@ -7,7 +7,7 @@ describe 'FilterSuggest', ->
     @filterSuggest = new FilterSuggest
 
   it 'has a filter url', ->
-    new FilterSuggest(id: 'fair/foo').url().should.include 'api/v1/search/filtered/fair/foo'
+    new FilterSuggest(id: 'fair/foo').url().should.containEql 'api/v1/search/filtered/fair/foo'
 
   describe '#mediumsHash', ->
 

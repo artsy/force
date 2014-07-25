@@ -50,6 +50,12 @@ With [npm](https://npmjs.org) do:
 npm install typedarray
 ```
 
+To use this module in the browser, compile with
+[browserify](http://browserify.org)
+or download a UMD build from browserify CDN:
+
+http://wzrd.in/standalone/typedarray@latest
+
 # license
 
 MIT

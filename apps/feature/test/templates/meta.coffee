@@ -19,8 +19,8 @@ describe 'Meta tags', ->
         feature: @feature
 
     it 'includes canonical url, twitter card, og tags, and title', ->
-      @html.should.include "<meta property=\"twitter:card\" content=\"summary"
-      @html.should.include "<link rel=\"canonical\" href=\"#{@sd.APP_URL}#{@feature.href()}"
-      @html.should.include "<meta property=\"og:url\" content=\"#{@sd.APP_URL}#{@feature.href()}"
-      @html.should.include "<meta property=\"og:title\" content=\"#{@feature.metaTitle()}"
-      @html.should.include "<meta property=\"og:description\" content=\"#{@feature.metaDescription()}"
+      @html.should.containEql "<meta property=\"twitter:card\" content=\"summary"
+      @html.should.containEql "<link rel=\"canonical\" href=\"#{@sd.APP_URL}#{@feature.href()}"
+      @html.should.containEql "<meta property=\"og:url\" content=\"#{@sd.APP_URL}#{@feature.href()}"
+      @html.should.containEql "<meta property=\"og:title\" content=\"#{@feature.metaTitle()}"
+      @html.should.containEql "<meta property=\"og:description\" content=\"#{@feature.metaDescription()}"

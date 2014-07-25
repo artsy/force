@@ -43,7 +43,7 @@ describe 'AboutRouter', ->
       it 'should render a jump navigation and set its right CSS prop to inherit', ->
         sinon.spy @router.jump.$el, 'css'
         @router.initialize()
-        @router.$jumpContainer.html().should.include 'jump-to-top'
+        @router.$jumpContainer.html().should.containEql 'jump-to-top'
         @router.jump.$el.css.args[0][0].right.should.equal 'inherit'
 
     describe 'events', ->

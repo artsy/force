@@ -22,7 +22,7 @@ describe 'Profile routes', ->
       routes.follow @req, @res
 
     it 'follows the profile', ->
-      _.last(Backbone.sync.args)[1].urlRoot().should.include 'me/follow/profile'
+      _.last(Backbone.sync.args)[1].urlRoot().should.containEql 'me/follow/profile'
 
     it 'rediects back', ->
       _.last(Backbone.sync.args)[2].success()
@@ -32,14 +32,14 @@ describe 'Profile routes', ->
 
     it 'sets the profile in locals for other apps', ->
       routes.setProfile @req, @res, next = sinon.stub()
-      _.last(Backbone.sync.args)[1].url().should.include '/profile/foo'
+      _.last(Backbone.sync.args)[1].url().should.containEql '/profile/foo'
       _.last(Backbone.sync.args)[2].success fabricate 'profile', id: 'moobar'
       @res.locals.profile.get('id').should.equal 'moobar'
 
     it 'passes the users access token', ->
       @req.user = new Backbone.Model accessToken: 'foobar'
       routes.setProfile @req, @res, next = sinon.stub()
-      _.last(Backbone.sync.args)[2].data.access_token.should.include 'foobar'
+      _.last(Backbone.sync.args)[2].data.access_token.should.containEql 'foobar'
 
     it 'does not pass an access token with no user', ->
       @req.user = null

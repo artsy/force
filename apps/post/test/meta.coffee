@@ -17,11 +17,11 @@ describe 'Meta tags', ->
         post: @post
 
     it 'includes canonical url, twitter card, og tags, and title', ->
-      @html.should.include "<meta property=\"twitter:card\" content=\"summary"
-      @html.should.include "<link rel=\"canonical\" href=\"#{sd.APP_URL}#{@post.href()}"
-      @html.should.include "<meta property=\"og:url\" content=\"#{sd.APP_URL}#{@post.href()}"
-      @html.should.include "<meta property=\"og:title\" content=\"#{@post.metaTitle()}"
-      @html.should.include "<meta property=\"og:description\" content=\"#{@post.metaDescription()}"
+      @html.should.containEql "<meta property=\"twitter:card\" content=\"summary"
+      @html.should.containEql "<link rel=\"canonical\" href=\"#{sd.APP_URL}#{@post.href()}"
+      @html.should.containEql "<meta property=\"og:url\" content=\"#{sd.APP_URL}#{@post.href()}"
+      @html.should.containEql "<meta property=\"og:title\" content=\"#{@post.metaTitle()}"
+      @html.should.containEql "<meta property=\"og:description\" content=\"#{@post.metaDescription()}"
 
   describe 'Post with an image', ->
 
@@ -34,9 +34,9 @@ describe 'Meta tags', ->
         post: @post
 
     it 'includes canonical url, twitter card, og tags, and title', ->
-      @html.should.include "<meta property=\"twitter:card\" content=\"summary_large_image"
-      @html.should.include "<meta property=\"og:image\" content=\"http://share.me/image"
-      @html.should.include "<link rel=\"canonical\" href=\"#{sd.APP_URL}#{@post.href()}"
-      @html.should.include "<meta property=\"og:url\" content=\"#{sd.APP_URL}#{@post.href()}"
-      @html.should.include "<meta property=\"og:title\" content=\"#{@post.metaTitle()}"
-      @html.should.include "<meta property=\"og:description\" content=\"#{@post.metaDescription()}"
+      @html.should.containEql "<meta property=\"twitter:card\" content=\"summary_large_image"
+      @html.should.containEql "<meta property=\"og:image\" content=\"http://share.me/image"
+      @html.should.containEql "<link rel=\"canonical\" href=\"#{sd.APP_URL}#{@post.href()}"
+      @html.should.containEql "<meta property=\"og:url\" content=\"#{sd.APP_URL}#{@post.href()}"
+      @html.should.containEql "<meta property=\"og:title\" content=\"#{@post.metaTitle()}"
+      @html.should.containEql "<meta property=\"og:description\" content=\"#{@post.metaDescription()}"

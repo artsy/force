@@ -1,11 +1,11 @@
-_         = require 'underscore'
-Backbone  = require 'backbone'
-aToZ      = require '../lib/a_to_z'
+_ = require 'underscore'
+Backbone = require 'backbone'
+aToZ = require '../lib/a_to_z'
 
 class AToZCollectionModel extends Backbone.Model
   alphaSortKey: -> @get 'sortable_id'
-  displayName : -> @get 'name'
-  href        : -> "/#{@get('sortable_id')}"
+  displayName: -> @get 'name'
+  href: -> "/#{@get('sortable_id')}"
 
 class AToZCollection extends Backbone.Collection
   _.extend @prototype, aToZ
@@ -43,8 +43,8 @@ describe 'A to Z mixin', ->
 
     it 'requires collection models to have a displayName method', ->
       class NoDisplayNameModel extends Backbone.Model
-        displayName : null
-        href        : -> "/#{@get('sortable_id')}"
+        displayName: null
+        href: -> "/#{@get('sortable_id')}"
       m = new NoDisplayNameModel({ sortable_id: "zz", name: "Z Z" })
       collection = new AToZCollection([], { model: NoDisplayNameModel })
       collection.add m
@@ -52,8 +52,8 @@ describe 'A to Z mixin', ->
 
     it 'requires collection models to have an href method', ->
       class NoHrefModel extends Backbone.Model
-        displayName : -> @get 'name'
-        href        : null
+        displayName: -> @get 'name'
+        href: null
       m = new NoHrefModel({ sortable_id: "zz", name: "Z Z" })
       collection = new AToZCollection([], { model: NoHrefModel })
       collection.add m

@@ -40,8 +40,8 @@ describe 'FairInfoView', ->
 
     it 'adds map links and image src', ->
       html = @view.$el.html()
-      html.should.not.include 'undefined'
-      html.should.not.include '#{'
-      html.should.include 'maps.google'
+      html.should.not.containEql 'undefined'
+      html.should.not.containEql '#{'
+      html.should.containEql 'maps.google'
       @view.$('.fair-map-link').attr('href').should.equal @fair.location().googleMapsLink()
       @view.$('img.map').attr('src').should.equal @fair.location().mapImageSrc(300, 165)

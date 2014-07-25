@@ -44,4 +44,4 @@ describe 'ShowInquiryModal', ->
     it 'renders the partners locations', ->
       @view.$el.html "<div class='contact-location'></div>"
       @view.renderLocation()
-      @view.$el.html().should.include 'New York'
+      @view.$el.html().should.containEql 'New York'

@@ -20,8 +20,8 @@ describe 'ArtworkCollections', ->
 
     it 'sets the artworks and url when adding a collection', ->
       @collections.add { id: 'saved-artwork' }
-      @collections.first().url().should.include '/api/v1/collection/saved-artwork?user_id=' + @user.id
-      @collections.first().artworks.url.should.include '/api/v1/collection/saved-artwork/artworks'
+      @collections.first().url().should.containEql '/api/v1/collection/saved-artwork?user_id=' + @user.id
+      @collections.first().artworks.url.should.containEql '/api/v1/collection/saved-artwork/artworks'
 
     it 'triggers {event}:artwork when a collection artwork is acted on', ->
       for e in ['destroy', 'remove', 'add']
@@ -33,7 +33,7 @@ describe 'ArtworkCollections', ->
 
     it 'fetches artworks by recently saved', ->
       @collections.add { id: 'saved-artwork' }
-      @collections.first().artworks.url.should.include 'sort=-position'
+      @collections.first().artworks.url.should.containEql 'sort=-position'
 
   describe '#saveArtwork', ->
 
@@ -41,7 +41,7 @@ describe 'ArtworkCollections', ->
       @collections.add { id: 'saved-artwork' }
       @collections.first().saveArtwork new Artwork id: 'foo-bar'
       Backbone.sync.args[0][2].url.should
-        .include '/api/v1/collection/saved-artwork/artwork/foo-bar?user_id=' + @user.id
+        .containEql '/api/v1/collection/saved-artwork/artwork/foo-bar?user_id=' + @user.id
 
     it 'adds the artwork to the collections artworks', ->
       @collections.add { id: 'saved-artwork' }
@@ -105,4 +105,3 @@ describe 'ArtworkCollections', ->
   describe '#togglePrivacy', ->
 
     it 'toggles every collections privacy setting'
-

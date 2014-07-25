@@ -55,7 +55,7 @@ describe 'AfterInquiry', ->
           @user.set id: 'foobar'
           flow = new @AfterInquiry user: @user, inquiry: @inquiry
           Backbone.sync.called.should.be.true
-          Backbone.sync.args[0][1].url().should.include '/api/v1/me'
+          Backbone.sync.args[0][1].url().should.containEql '/api/v1/me'
           flow.remove()
 
     it 'initializes a new flash message', ->

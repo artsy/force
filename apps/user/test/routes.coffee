@@ -58,7 +58,7 @@ describe '/user', ->
       it "fetches the current user's authentications", ->
         Backbone.sync.args[0][2].success @req.user
         _.keys(Backbone.sync.args[1][2].data)[0].should.equal 'access_token'
-        Backbone.sync.args[1][2].url.should.include 'me/authentications'
+        Backbone.sync.args[1][2].url.should.containEql 'me/authentications'
 
       xit 'determines which model to edit first (profile or user)', ->
 
@@ -74,7 +74,7 @@ describe '/user', ->
       it 'renders the account delete form', ->
         @req = { user: new CurrentUser fabricate 'user' }
         routes.delete @req, @res
-        @res.render.args[0][0].should.include 'delete'
+        @res.render.args[0][0].should.containEql 'delete'
         @res.render.args[0][1].user.should.equal @req.user
 
     describe 'with a logged in admin', ->

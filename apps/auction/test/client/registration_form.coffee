@@ -68,14 +68,14 @@ describe 'RegistrationForm', ->
       @view.$submit.length.should.be.ok
       @view.$submit.click()
       html = @view.$el.html()
-      html.should.include 'Invalid name on card'
-      html.should.include 'Invalid card number'
-      html.should.include 'Invalid security code'
-      html.should.include 'Invalid city'
-      html.should.include 'Invalid state'
-      html.should.include 'Invalid zip'
-      html.should.include 'Invalid telephone'
-      html.should.include 'Please review the error(s) above and try again.'
+      html.should.containEql 'Invalid name on card'
+      html.should.containEql 'Invalid card number'
+      html.should.containEql 'Invalid security code'
+      html.should.containEql 'Invalid city'
+      html.should.containEql 'Invalid state'
+      html.should.containEql 'Invalid zip'
+      html.should.containEql 'Invalid telephone'
+      html.should.containEql 'Please review the error(s) above and try again.'
       @view.$submit.hasClass('is-loading').should.be.false
 
     it 'submits the form correctly', ->
@@ -85,19 +85,19 @@ describe 'RegistrationForm', ->
       Backbone.sync.args[1][1].changed.phone.should.equal '555-555-5555'
 
       # Fetches the marketplace
-      Backbone.sync.args[0][1].url().should.include '/api/v1/marketplace'
+      Backbone.sync.args[0][1].url().should.containEql '/api/v1/marketplace'
 
       Backbone.sync.args[0][1].set uri: (marketplaceUri = '/v1/marketplaces/TEST-FOOBAR')
       Backbone.sync.args[0][2].success()
       @view.balanced.init.args[0][0].should.equal marketplaceUri
 
       # Saves the credit card
-      Backbone.sync.args[2][1].url.should.include '/api/v1/me/credit_cards'
+      Backbone.sync.args[2][1].url.should.containEql '/api/v1/me/credit_cards'
       Backbone.sync.args[2][2].success()
 
       # Creates the bidder
       Backbone.sync.args[3][1].attributes.sale_id.should.equal @sale.id
-      Backbone.sync.args[3][2].url.should.include '/api/v1/bidder'
+      Backbone.sync.args[3][2].url.should.containEql '/api/v1/bidder'
 
     it 'still succeeds if the API throws an error for having already created a bidder', ->
       @view.success = sinon.stub()

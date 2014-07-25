@@ -47,7 +47,7 @@ describe 'ArtistFillwidthList', ->
     it 'renders the placeholders', ->
       @view.collection.reset [fabricate 'artist', name: 'Andy Foobar']
       @view.fetchAndRender()
-      @view.$el.html().should.include 'Andy Foobar'
+      @view.$el.html().should.containEql 'Andy Foobar'
 
   describe '#renderArtist', ->
 
@@ -60,7 +60,7 @@ describe 'ArtistFillwidthList', ->
 
     it 'adds a list of artists', ->
       @view.appendPage [], [fabricate 'artist', name: 'Andy Foobazio']
-      @view.$el.html().should.include 'Andy Foobazio'
+      @view.$el.html().should.containEql 'Andy Foobazio'
 
   describe '#nextPage', ->
 

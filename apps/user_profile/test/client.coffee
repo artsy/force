@@ -103,14 +103,14 @@ describe 'CollectionView', ->
     it 'includes the access token', ->
       @view.columnsView.appendArtworks = sinon.stub()
       @view.nextPage()
-      Backbone.sync.args[0][2].data.access_token.should.include 'foobaz'
+      Backbone.sync.args[0][2].data.access_token.should.containEql 'foobaz'
 
   describe '#openShareModal', ->
 
     it 'opens a share modal for the collection', ->
       @view.artworkCollection.set name: "Andy Foobar's Dulloroids", id: 'andy-foobar'
       @view.openShareModal()
-      @ShareModal.args[0][0].description.should.include "Andy Foobar's Dulloroids"
+      @ShareModal.args[0][0].description.should.containEql "Andy Foobar's Dulloroids"
 
   describe '#onSync', ->
 
@@ -121,7 +121,7 @@ describe 'CollectionView', ->
     it 'renders total count', ->
       @view.artworkCollection.artworks.totalCount = 978
       @view.onSync [], [fabricate 'artwork', id: 'andy-foobar-skull']
-      @view.$el.html().should.include '978 works'
+      @view.$el.html().should.containEql '978 works'
 
   describe '#renderEmpty', ->
 
@@ -172,7 +172,7 @@ describe 'Slideshow', ->
     it 'renders the artworks', ->
       @view.artworks.reset [fabricate 'artwork', title: 'Foobars in the Pond']
       @view.render()
-      @view.$el.html().should.include 'Foobars in the Pond'
+      @view.$el.html().should.containEql 'Foobars in the Pond'
 
   describe '#next', ->
 

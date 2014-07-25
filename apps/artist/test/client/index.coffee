@@ -46,7 +46,7 @@ describe 'ArtistView', ->
 
     describe '#template', ->
       it 'should have a no works available notice', ->
-        @view.$el.html().should.include "There are no #{@view.model.get('name')} works on Artsy yet"
+        @view.$el.html().should.containEql "There are no #{@view.model.get('name')} works on Artsy yet"
 
     describe '#pendRemovalOfEmptyNotice', ->
       it 'should remove the empty notice if it conspires that there are, in fact, artworks on the page', ->
@@ -66,8 +66,8 @@ describe 'ArtistView', ->
         view2Opts = @FillwidthView.args[1][0]
         view1Opts.fetchOptions['filter[]'].should.equal 'for_sale'
         view2Opts.fetchOptions['filter[]'].should.equal 'not_for_sale'
-        view1Opts.collection.url.should.include '/artworks'
-        view2Opts.collection.url.should.include '/artworks'
+        view1Opts.collection.url.should.containEql '/artworks'
+        view2Opts.collection.url.should.containEql '/artworks'
 
       it 'sets up the blurb view if there is one', ->
         fixture = """
@@ -107,7 +107,7 @@ describe 'ArtistView', ->
         """
         @view.onSortChange({ currentTarget: $fixture.find('a')})
         @view.sortBy.should.equal '-published_at'
-        @view.$el.find('.bordered-pulldown-toggle').html().should.include 'Recently Added'
+        @view.$el.find('.bordered-pulldown-toggle').html().should.containEql 'Recently Added'
 
       it 'passes the correct sort option into setupArtworks when sorting by Relevance', ->
         $fixture = $ """

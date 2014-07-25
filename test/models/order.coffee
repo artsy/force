@@ -36,12 +36,12 @@ describe "Order", ->
   describe '#getLineItemArtworks', ->
 
     it "returns artwork models in an order", ->
-      @order.getLineItemArtworks()[0].get('id').should.include 'skull'
+      @order.getLineItemArtworks()[0].get('id').should.containEql 'skull'
 
   describe '#getLineItemPartners', ->
 
     it "returns partner models with locations", ->
-      @order.getLineItemPartners()[0].get('id').should.include 'gagosian'
+      @order.getLineItemPartners()[0].get('id').should.containEql 'gagosian'
       @order.getLineItemPartners()[0].get('partner_location').get('name').should.equal 'Eli Ridgway'
 
   describe '#formatShippingLocal', ->
@@ -66,14 +66,14 @@ describe "Order", ->
 
     it 'constructs the correct url', ->
       @order.fetchPendingOrder({})
-      Backbone.sync.args[0][2].url.should.include 'api/v1/me/order/pending'
+      Backbone.sync.args[0][2].url.should.containEql 'api/v1/me/order/pending'
 
   describe '#update', ->
 
     it 'constructs the correct url', ->
       @order.update null, success: (order) =>
         order.id.should.equal 'updated'
-      Backbone.sync.args[0][2].url.should.include "api/v1/me/order/#{@order.id}"
+      Backbone.sync.args[0][2].url.should.containEql "api/v1/me/order/#{@order.id}"
       Backbone.sync.args[0][2].success(fabricate 'order', id: 'updated')
 
   describe '#resume', ->
@@ -81,5 +81,5 @@ describe "Order", ->
     it 'constructs the correct url', ->
       @order.resume success: (order) =>
         order.get('state').should.equal 'pending'
-      Backbone.sync.args[0][2].url.should.include "api/v1/me/order/#{@order.id}/resume"
+      Backbone.sync.args[0][2].url.should.containEql "api/v1/me/order/#{@order.id}/resume"
       Backbone.sync.args[0][2].success(fabricate 'order', state: 'pending')

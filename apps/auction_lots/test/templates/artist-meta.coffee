@@ -22,11 +22,11 @@ describe 'Meta tags', ->
         sd: @sd
 
     it 'includes mobile alternate, canonical, twitter card and og tags', ->
-      @html.should.include "<meta property=\"twitter:card\" content=\"summary"
-      @html.should.include "<link rel=\"canonical\" href=\"http://localhost:5000/artist/pablo-picasso"
-      @html.should.include "<meta property=\"og:url\" content=\"http://localhost:5000/artist/pablo-picasso"
-      @html.should.include "<meta property=\"og:description\" content=\"See details of Pablo Picasso auction results from recent, past, and upcoming sales. Let Artsy be your price guide to Pablo Picasso."
-      @html.should.include "<meta property=\"og:title\" content=\"Auction Results for Pablo Picasso on Artsy"
+      @html.should.containEql "<meta property=\"twitter:card\" content=\"summary"
+      @html.should.containEql "<link rel=\"canonical\" href=\"http://localhost:5000/artist/pablo-picasso"
+      @html.should.containEql "<meta property=\"og:url\" content=\"http://localhost:5000/artist/pablo-picasso"
+      @html.should.containEql "<meta property=\"og:description\" content=\"See details of Pablo Picasso auction results from recent, past, and upcoming sales. Let Artsy be your price guide to Pablo Picasso."
+      @html.should.containEql "<meta property=\"og:title\" content=\"Auction Results for Pablo Picasso on Artsy"
 
   describe 'with an image', ->
 
@@ -38,5 +38,5 @@ describe 'Meta tags', ->
         sd: @sd
 
     it 'includes og:image and twitter card', ->
-      @html.should.include "<meta property=\"og:image\" content=\"http://localhost:5000/artist/pablo-picasso"
-      @html.should.include "<meta property=\"twitter:card\" content=\"summary_large_image"
+      @html.should.containEql "<meta property=\"og:image\" content=\"http://localhost:5000/artist/pablo-picasso"
+      @html.should.containEql "<meta property=\"twitter:card\" content=\"summary_large_image"

@@ -28,8 +28,8 @@ describe 'Unsupported Browser', ->
 
   it 'renders a message for the unsupported browser', ->
     $ = cheerio.load @html
-    @html.should.include "#{@ua.family} #{@ua.major} is not supported."
-    @html.should.include 'Please update your browser.'
+    @html.should.containEql "#{@ua.family} #{@ua.major} is not supported."
+    @html.should.containEql 'Please update your browser.'
 
   it 'renders a form to continue with the bad browser anyway', ->
     $ = cheerio.load @html

@@ -7,7 +7,7 @@ var concat = require('concat-stream');
 test('global transforms', function (t) {
     t.plan(1);
     
-    var p = mdeps(__dirname + '/files/tr_global/main.js', {
+    var p = mdeps({
         transform: [ 'tr-c', 'tr-d' ],
         globalTransform: [
             __dirname + '/files/tr_global/node_modules/tr-e',
@@ -15,6 +15,7 @@ test('global transforms', function (t) {
         ],
         transformKey: [ 'browserify', 'transform' ]
     });
+    p.end(__dirname + '/files/tr_global/main.js');
     var pack = packer();
     
     p.pipe(JSONStream.stringify()).pipe(pack).pipe(concat(function (src) {

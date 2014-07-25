@@ -1,7 +1,13 @@
+1.0.4 / 2014-06-25
+==================
+
+ * corrected avoidance of timing attacks (thanks @tenbits!)
+
+
 1.0.3 / 2014-01-28
 ==================
 
- * fix for timing attacks
+ * [incorrect] fix for timing attacks
 
 1.0.2 / 2014-01-28
 ==================

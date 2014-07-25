@@ -161,11 +161,11 @@ Zlib.prototype._write = function(flush, input, in_off, in_len, out, out_off, out
   
   var strm = this.strm;
   strm.avail_in = in_len;
-  strm.next_in = input;
-  strm.next_in_index = in_off;
+  strm.input = input;
+  strm.next_in = in_off;
   strm.avail_out = out_len;
-  strm.next_out = out;
-  strm.next_out_index = out_off;
+  strm.output = out;
+  strm.next_out = out_off;
   
   switch (this.mode) {
     case exports.DEFLATE:

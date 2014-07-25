@@ -38,12 +38,12 @@ describe 'RelatedShowsView', ->
 
     it 'displays itself', ->
       @view.$el.is(':visible').should.be.true
-      @view.$el.attr('class').should.include 'is-fade-in'
+      @view.$el.attr('class').should.containEql 'is-fade-in'
 
     it 'renders correctly', ->
       html = @view.$el.html()
-      html.should.include 'Shows including Pablo Picasso'
-      html.should.not.include '.related-shows-rest'
+      html.should.containEql 'Shows including Pablo Picasso'
+      html.should.not.containEql '.related-shows-rest'
       @view.$('.rsf-name').text().should.equal @show.name
       @view.$('.related-show').length.should.equal 0
 

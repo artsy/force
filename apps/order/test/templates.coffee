@@ -36,9 +36,9 @@ describe "Shipping Templates", ->
 
     it "renders the order form", ->
       $ = cheerio.load @template
-      $('.order-summary .value').text().should.include @order.get('total')
-      $('.country.order-input-section select').val().should.include 'USA'
-      $('.order-summary .order-seller-section .name').text().should.include @order.get('line_items')[0].partner.name
+      $('.order-summary .value').text().should.containEql @order.get('total')
+      $('.country.order-input-section select').val().should.containEql 'USA'
+      $('.order-summary .order-seller-section .name').text().should.containEql @order.get('line_items')[0].partner.name
 
   describe "Order with shipping information", ->
 
@@ -53,12 +53,12 @@ describe "Shipping Templates", ->
 
     it "renders the order form", ->
       $ = cheerio.load @template
-      $('.order-summary .value').text().should.include @order.get('total')
-      $('.country.order-input-section select').val().should.include 'USA'
-      $('.order-summary .order-seller-section .name').text().should.include @order.get('line_items')[0].partner.name
+      $('.order-summary .value').text().should.containEql @order.get('total')
+      $('.country.order-input-section select').val().should.containEql 'USA'
+      $('.order-summary .order-seller-section .name').text().should.containEql @order.get('line_items')[0].partner.name
 
-      $('.order-form .telephone input').val().should.include shippingInfo.telephone
-      $('.order-form .street input').val().should.include shippingInfo.shipping_address.street
+      $('.order-form .telephone input').val().should.containEql shippingInfo.telephone
+      $('.order-form .street input').val().should.containEql shippingInfo.shipping_address.street
 
 describe "Checkout Templates", ->
 
@@ -74,9 +74,9 @@ describe "Checkout Templates", ->
 
     it "renders the order form", ->
       $ = cheerio.load @template
-      $('.order-summary .value').text().should.include @order.get('total')
-      $('.country.order-input-section select').val().should.include 'USA'
-      $('.order-summary .order-seller-section .name').text().should.include @order.get('line_items')[0].partner.name
+      $('.order-summary .value').text().should.containEql @order.get('total')
+      $('.country.order-input-section select').val().should.containEql 'USA'
+      $('.order-summary .order-seller-section .name').text().should.containEql @order.get('line_items')[0].partner.name
 
   describe "Order with shipping information", ->
 
@@ -92,12 +92,12 @@ describe "Checkout Templates", ->
 
     it "renders the order form", ->
       $ = cheerio.load @template
-      $('.order-summary .value').text().should.include @order.get('total')
-      $('.country.order-input-section select').val().should.include 'USA'
-      $('.order-summary .order-seller-section .name').text().should.include @order.get('line_items')[0].partner.name
+      $('.order-summary .value').text().should.containEql @order.get('total')
+      $('.country.order-input-section select').val().should.containEql 'USA'
+      $('.order-summary .order-seller-section .name').text().should.containEql @order.get('line_items')[0].partner.name
 
-      $('.order-form .telephone input').val().should.include shippingInfo.telephone
-      $('.order-form .street input').val().should.include shippingInfo.shipping_address.street
+      $('.order-form .telephone input').val().should.containEql shippingInfo.telephone
+      $('.order-form .street input').val().should.containEql shippingInfo.shipping_address.street
 
 describe "Complete Templates", ->
 
@@ -111,4 +111,4 @@ describe "Complete Templates", ->
 
   it "renders the order form", ->
     $ = cheerio.load @template
-    $('h2.garamond-header-center').text().should.include 'Congratulations'
+    $('h2.garamond-header-center').text().should.containEql 'Congratulations'

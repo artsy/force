@@ -34,12 +34,12 @@ describe 'location page', ->
       )
 
     it 'should be titled with location name', ->
-      @template.should.include "Galleries and Art Shows Near Tokyo"
-      @template.should.include "View galleries and art shows near Tokyo on Artsy."  # description
+      @template.should.containEql "Galleries and Art Shows Near Tokyo"
+      @template.should.containEql "View galleries and art shows near Tokyo on Artsy."  # description
 
     it 'should list fairs', ->
-      @template.should.include "Big Fair"
-      @template.should.include "huge fair"
+      @template.should.containEql "Big Fair"
+      @template.should.containEql "huge fair"
 
   describe 'shows', ->
     beforeEach ->
@@ -57,12 +57,12 @@ describe 'location page', ->
       )
 
     it 'should list shows', ->
-      @template.should.include "This Show"
-      @template.should.include "Jul. 12th &#x2013; Sep. 1st 2013"
-      @template.should.include "That Show"
-      @template.should.include "Other Current and Upcoming Shows"
-      @template.should.include "Other Cities"
-      @template.should.include "San Francisco"
+      @template.should.containEql "This Show"
+      @template.should.containEql "Jul. 12th &#x2013; Sep. 1st 2013"
+      @template.should.containEql "That Show"
+      @template.should.containEql "Other Current and Upcoming Shows"
+      @template.should.containEql "Other Cities"
+      @template.should.containEql "San Francisco"
 
   describe 'partner profiles', ->
     beforeEach ->
@@ -79,4 +79,4 @@ describe 'location page', ->
       )
 
     it 'should list profiles', ->
-      @template.should.include "Gagosian Gallery"
+      @template.should.containEql "Gagosian Gallery"

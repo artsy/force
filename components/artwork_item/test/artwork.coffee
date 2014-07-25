@@ -21,23 +21,23 @@ describe 'Artwork Item template', ->
 
     it 'defaults to a medium size artwork image', ->
       $ = cheerio.load render('artwork')({ artwork: @artwork })
-      $('.artwork-item-image').attr('src').should.include 'medium'
+      $('.artwork-item-image').attr('src').should.containEql 'medium'
 
     it 'can render a specified size', ->
       $ = cheerio.load render('artwork')({ artwork: @artwork, artworkSize: 'large' })
-      $('.artwork-item-image').attr('src').should.include 'large'
+      $('.artwork-item-image').attr('src').should.containEql 'large'
 
     it 'displays missing image if the size is not available', ->
       @artwork.attributes
       $ = cheerio.load render('artwork')({ artwork: @artwork, artworkSize: 'banana' })
-      $('.artwork-item-image').attr('src').should.not.include 'banana'
-      $('.artwork-item-image').attr('src').should.include 'missing'
+      $('.artwork-item-image').attr('src').should.not.containEql 'banana'
+      $('.artwork-item-image').attr('src').should.containEql 'missing'
 
     it 'renders with a fixed with', ->
       $ = cheerio.load render('artwork')({ artwork: @artwork, imageWidth: 500 })
       $('.artwork-item-image').attr('width').should.equal '500'
       $('.artwork-item-image').attr('height').should.equal '250'
-      $('.artwork-item-image').attr('src').should.include 'medium'
+      $('.artwork-item-image').attr('src').should.containEql 'medium'
 
   describe 'artwork caption', ->
     beforeEach ->

@@ -38,6 +38,6 @@ describe 'PriceRangeView', ->
   describe '#render', ->
     it 'renders the view', ->
       html = @view.$el.html()
-      html.should.include 'What price range are you considering?'
+      html.should.containEql 'What price range are you considering?'
       _.each _.pluck(@view.prices, 'display'), (price) ->
-        html.should.include price
+        html.should.containEql price

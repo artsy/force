@@ -61,6 +61,18 @@ test('object browser field as main', function(done) {
     });
 });
 
+// package.json has browser field as object
+// one of the keys replaces the main file
+// however the main has no prefix and browser uses ./ prefix for the same file
+test('object browser field as main', function(done) {
+    resolve('module-k', { paths: [ fixtures_dir ], package: { main: 'fixtures' } }, function(err, path, pkg) {
+        assert.ifError(err);
+        assert.equal(path, require.resolve('./fixtures/node_modules/module-k/browser'));
+        assert.equal(pkg.main, './browser.js');
+        done();
+    });
+});
+
 // browser field in package.json maps ./foo.js -> ./browser.js
 // when we resolve ./foo while in module-e, this mapping should take effect
 // the result is that ./foo resolves to ./browser

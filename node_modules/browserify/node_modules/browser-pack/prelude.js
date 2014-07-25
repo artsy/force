@@ -25,7 +25,9 @@
                 // many times as there are bundles until the module is found or
                 // we exhaust the require chain.
                 if (previousRequire) return previousRequire(name, true);
-                throw new Error('Cannot find module \'' + name + '\'');
+                var err = new Error('Cannot find module \'' + name + '\'');
+                err.code = 'MODULE_NOT_FOUND';
+                throw err;
             }
             var m = cache[name] = {exports:{}};
             modules[name][0].call(m.exports, function(x){

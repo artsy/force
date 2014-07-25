@@ -33,9 +33,9 @@ describe 'FavoritesView', ->
 
   describe '#render', ->
     it 'renders the template', ->
-      @view.$el.html().should.include 'Add works to your favorites'
+      @view.$el.html().should.containEql 'Add works to your favorites'
       @view.$('#personalize-favorites-container').length.should.equal 1
 
   describe '#fetchArtworks', ->
     it 'fetches the artworks set', ->
-      Backbone.sync.args[0][2].url.should.include '/api/v1/set/53c554ec72616961ab9a2000/items'
+      Backbone.sync.args[0][2].url.should.containEql '/api/v1/set/53c554ec72616961ab9a2000/items'

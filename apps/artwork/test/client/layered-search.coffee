@@ -26,7 +26,7 @@ describe 'Layers, Layer', ->
 
     it 'should fetch the correct URL', ->
       @layers.fetch()
-      @layers.url.should.include 'api/v1/related/layers'
+      @layers.url.should.containEql 'api/v1/related/layers'
       Backbone.sync.args[0][1].artwork.id.should.equal @artwork.id
 
     it 'should be correctly ordered', ->
@@ -76,7 +76,7 @@ describe 'Layers, Layer', ->
     it 'should have an artworks collection with the appropriate URL', ->
       layer = @layers.first()
       layer.artworks.url.
-        should.include "/api/v1/related/layer/#{layer.get('type')}/#{layer.id}/artworks?artwork[]=#{layer.get('artwork_id')}"
+        should.containEql "/api/v1/related/layer/#{layer.get('type')}/#{layer.id}/artworks?artwork[]=#{layer.get('artwork_id')}"
 
     describe '#label', ->
       it 'should have the appropriate label', ->
@@ -158,7 +158,7 @@ describe 'LayeredSearchView', ->
           @$target.data('state').should.equal 'active'
           @$buttons.not(@$target).data('state').should.equal 'inactive'
         it 'should have a spinner', ->
-          @view.$layeredSearchResults.html().should.include 'loading-spinner'
+          @view.$layeredSearchResults.html().should.containEql 'loading-spinner'
 
   describe 'with an artwork and a fair', ->
     beforeEach (done) ->

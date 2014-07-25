@@ -16,26 +16,26 @@ describe 'Artist', ->
   describe '#initialize', ->
 
     it 'sets up related artist collections', ->
-      @artist.relatedArtists.url.should.include '/api/v1/related/layer/main/artists'
-      @artist.relatedContemporary.url.should.include '/api/v1/related/layer/contemporary'
+      @artist.relatedArtists.url.should.containEql '/api/v1/related/layer/main/artists'
+      @artist.relatedContemporary.url.should.containEql '/api/v1/related/layer/contemporary'
 
   describe '#fetchRelatedArtists', ->
 
     it 'fetches one of its related artist collections with sensible default params', ->
       @artist.fetchRelatedArtists 'Contemporary'
-      _.last(Backbone.sync.args)[1].url.should.include 'layer/contemporary'
+      _.last(Backbone.sync.args)[1].url.should.containEql 'layer/contemporary'
       _.last(Backbone.sync.args)[2].data.size.should.equal 5
 
   describe '#fetchArtworks', ->
 
     it 'fetches the artists artworks and adds published=true', ->
       @artist.fetchArtworks()
-      _.last(Backbone.sync.args)[1].url.should.include "artist/#{@artist.get 'id'}/artworks"
+      _.last(Backbone.sync.args)[1].url.should.containEql "artist/#{@artist.get 'id'}/artworks"
       _.last(Backbone.sync.args)[2].data.published.should == true
 
     it 'fetches the artists artworks and adds published=true', ->
       @artist.fetchArtworks({ success: sinon.stub() })
-      _.last(Backbone.sync.args)[1].url.should.include "artist/#{@artist.get 'id'}/artworks"
+      _.last(Backbone.sync.args)[1].url.should.containEql "artist/#{@artist.get 'id'}/artworks"
       _.last(Backbone.sync.args)[2].data.published.should == true
 
   describe '#validSort', ->
@@ -72,4 +72,4 @@ describe 'Artist', ->
       json = @artist.toJSONLDShort()
       json['@type'].should.equal 'Person'
       json.name.should.equal 'Pablo Picasso'
-      json.sameAs.should.include 'artist/pablo-picasso'
+      json.sameAs.should.containEql 'artist/pablo-picasso'

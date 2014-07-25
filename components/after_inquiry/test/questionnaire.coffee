@@ -44,10 +44,15 @@ describe 'Questionnaire', ->
   afterEach ->
     _.delay.restore()
     Backbone.sync.restore()
-    @view.attachLocationSearch.restore()
-    @view.attachBookmarksView.restore()
-    @view.modalTemplate.restore()
-    @view.close.restore()
+    @view?.attachLocationSearch.restore()
+    @view?.attachBookmarksView.restore()
+    @view?.modalTemplate.restore()
+    @view?.close.restore()
+
+    sinon.restore @Questionnaire::, 'attachLocationSearch'
+    sinon.restore @Questionnaire::, 'attachBookmarksView'
+    sinon.restore @Questionnaire::, 'close'
+
     mediator.off null, null, this
 
   describe 'logged out', ->
@@ -159,7 +164,7 @@ describe 'Questionnaire', ->
 
         it 'syncs the user', ->
           Backbone.sync.called.should.be.true
-          Backbone.sync.args[0][1].url().should.include '/api/v1/me'
+          Backbone.sync.args[0][1].url().should.containEql '/api/v1/me'
 
         it 'saves all the bookmarks', ->
           @view.bookmarksView.saveAll.called.should.be.true
@@ -191,8 +196,8 @@ describe 'Questionnaire', ->
       it 'should start at the first step', ->
         @view.state.get('mode').should.equal 'initial'
         html = @view.$el.html()
-        html.should.include 'One question to serve you better'
-        html.should.include 'Have you ever bought art through a gallery or auction before?'
+        html.should.containEql 'One question to serve you better'
+        html.should.containEql 'Have you ever bought art through a gallery or auction before?'
 
       it 'geolocates the user', ->
         Backbone.sync.args[0][2].url.should.equal 'https://freegeoip.net/json/'
@@ -204,7 +209,7 @@ describe 'Questionnaire', ->
           @view.attachLocationSearch.called.should.be.true
           @view.state.get('mode').should.equal 'questionnaire'
           html = @view.$el.html()
-          html.should.include 'Final Step'
+          html.should.containEql 'Final Step'
           @view.$el.hasClass 'fade-in'
           @view.attachBookmarksView.called.should.be.true
 
@@ -214,7 +219,7 @@ describe 'Questionnaire', ->
           @view.attachLocationSearch.called.should.be.true
           @view.state.get('mode').should.equal 'questionnaire'
           html = @view.$el.html()
-          html.should.include 'Final Step'
+          html.should.containEql 'Final Step'
           @view.$el.hasClass 'fade-in'
           @view.attachBookmarksView.called.should.be.false
 
@@ -243,7 +248,7 @@ describe 'Questionnaire', ->
         @view.$('form').submit()
         _.last(Backbone.sync.args)[0].should.equal 'update'
         _.last(Backbone.sync.args)[1].changed.should.eql name: 'Foo Bar', profession: 'Human Being'
-        _.last(Backbone.sync.args)[1].url().should.include '/api/v1/me'
+        _.last(Backbone.sync.args)[1].url().should.containEql '/api/v1/me'
 
       it 'refreshes the user on success', ->
         @view.$('form').submit()

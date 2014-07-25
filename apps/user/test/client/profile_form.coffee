@@ -38,7 +38,7 @@ describe 'ProfileForm', ->
 
   describe '#render', ->
     it 'renders the view', ->
-      @view.$el.html().should.include 'Your Profile Information'
+      @view.$el.html().should.containEql 'Your Profile Information'
 
   describe '#initialize', ->
     it 'ensures the publish favorites checkbox is kept in sync with the user model', ->
@@ -62,7 +62,7 @@ describe 'ProfileForm', ->
       Backbone.sync.called.should.be.true
       Backbone.sync.args[0][0].should.equal 'update'
       Backbone.sync.args[0][1].attributes.private.should.be.true
-      Backbone.sync.args[0][1].url().should.include '/api/v1/profile/alessandra'
+      Backbone.sync.args[0][1].url().should.containEql '/api/v1/profile/alessandra'
 
     it 'renders the private template', ->
-      @view.$el.html().should.include 'Your profile is currently disabled'
+      @view.$el.html().should.containEql 'Your profile is currently disabled'

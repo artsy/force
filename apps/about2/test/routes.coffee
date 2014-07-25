@@ -41,7 +41,7 @@ describe 'About2 routes', ->
     it 'restricts admins', ->
       @req.user = new Backbone.Model(type: 'User')
       routes.adminOnly @req, @res, next = sinon.stub()
-      next.args[0][0].toString().should.include "You must be logged in as an admin"
+      next.args[0][0].toString().should.containEql "You must be logged in as an admin"
 
   describe '#upload', ->
 

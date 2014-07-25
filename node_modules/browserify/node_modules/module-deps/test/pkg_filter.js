@@ -7,13 +7,15 @@ var concat = require('concat-stream');
 test('pkg filter', function (t) {
     t.plan(3);
     
-    var p = mdeps(__dirname + '/files/pkg_filter/test.js', {
+    var p = mdeps({
         packageFilter: function (pkg) {
             t.equal(pkg.main, 'one.js');
             pkg.main = 'two.js'
             return pkg;
         }
     });
+    p.end(__dirname + '/files/pkg_filter/test.js');
+    
     var pack = packer();
     p.pipe(JSONStream.stringify()).pipe(pack);
     

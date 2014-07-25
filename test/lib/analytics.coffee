@@ -65,10 +65,17 @@ describe 'analytics', ->
 
     context 'with rewiredAnalytics', ->
 
-      beforeEach ->
-        rewiredAnalytics mixpanel: @mixpanelStub, ga: @gaStub, location: { pathname: 'foobar' }
-        rewiredAnalytics.__set__ 'ga', @gaStub
-        rewiredAnalytics.__set__ 'mixpanel', @mixpanelStub
+      beforeEach (done) ->
+        benv.setup =>
+          benv.expose
+            $: benv.require 'jquery'
+            ga: @gaStub
+            mixpanel: @mixpanelStub
+          rewiredAnalytics mixpanel: @mixpanelStub, ga: @gaStub, location: { pathname: 'foobar' }
+          done()
+
+      afterEach ->
+        benv.teardown()
 
       describe '#track', ->
 
@@ -149,13 +156,6 @@ describe 'analytics', ->
           , 1000
 
       describe 'with a DOM', ->
-        beforeEach (done) ->
-          benv.setup =>
-            benv.expose $: benv.require 'jquery'
-            done()
-
-        after ->
-          benv.teardown()
 
         describe '#trackLinks', ->
           beforeEach ->
@@ -179,7 +179,7 @@ describe 'analytics', ->
             $('.click-me').click()
             _.delay.args[0][1].should.equal 300
             _.delay.args[0][0]() # Run the callback
-            window.location.should.include '/foobar'
+            window.location.should.containEql '/foobar'
 
           it 'does not run a delayed callback if the link is external', ->
             $('.click-me-external').click()
@@ -197,7 +197,31 @@ describe 'analytics', ->
               $('.click-me').click()
               rewiredAnalytics.track.click.args[0][0].should.equal 'Clicked the link'
               rewiredAnalytics.track.click.args[0][2]() # Run the callback
-              window.location.should.include 'foobar'
+              window.location.should.containEql 'foobar'
+
+      describe '#splitTest', ->
+
+        beforeEach ->
+          rewiredAnalytics.__set__ 'sd', { ENABLE_AB_TEST: true }
+          rewiredAnalytics.getProperty = -> null
+          @_ = rewiredAnalytics.__get__ '_'
+          sinon.stub @_, 'random'
+
+        afterEach ->
+          @_.random.restore()
+
+        it 'fails if the percents dont add up', ->
+          (-> rewiredAnalytics.splitTest 'foo', { a: 0.1, b: 0.2, c: 0.1 }).should.throw(
+            "Your percent values for paths must add up to 1.0"
+          )
+
+        it 'returns a random path', ->
+          @_.random.returns 30
+          rewiredAnalytics.splitTest('foo', { a: 0.5, b: 0.2, c: 0.3 }).should.equal 'a'
+          @_.random.returns 60
+          rewiredAnalytics.splitTest('foo', { a: 0.5, b: 0.2, c: 0.3 }).should.equal 'b'
+          @_.random.returns 90
+          rewiredAnalytics.splitTest('foo', { a: 0.5, b: 0.2, c: 0.3 }).should.equal 'c'
 
     describe '#abTest', ->
 
@@ -217,31 +241,6 @@ describe 'analytics', ->
         rewiredAnalytics mixpanel: @mixpanelStub, ga: @gaStub, location: { pathname: 'foobar' }
         rewiredAnalytics.__set__ 'sd', { ENABLE_AB_TEST: false }
         rewiredAnalytics.abTest('foo').should.not.be.ok
-
-    describe '#splitTest', ->
-
-      beforeEach ->
-        rewiredAnalytics.__set__ 'sd', { ENABLE_AB_TEST: true }
-        rewiredAnalytics.__set__ 'mixpanel', @mixpanelStub
-        rewiredAnalytics.getProperty = -> null
-        @_ = rewiredAnalytics.__get__ '_'
-        sinon.stub @_, 'random'
-
-      afterEach ->
-        @_.random.restore()
-
-      it 'fails if the percents dont add up', ->
-        (-> rewiredAnalytics.splitTest 'foo', { a: 0.1, b: 0.2, c: 0.1 }).should.throw(
-          "Your percent values for paths must add up to 1.0"
-        )
-
-      it 'returns a random path', ->
-        @_.random.returns 30
-        rewiredAnalytics.splitTest('foo', { a: 0.5, b: 0.2, c: 0.3 }).should.equal 'a'
-        @_.random.returns 60
-        rewiredAnalytics.splitTest('foo', { a: 0.5, b: 0.2, c: 0.3 }).should.equal 'b'
-        @_.random.returns 90
-        rewiredAnalytics.splitTest('foo', { a: 0.5, b: 0.2, c: 0.3 }).should.equal 'c'
 
     describe '#delta', ->
       it 'appends a tracker pixel', ->

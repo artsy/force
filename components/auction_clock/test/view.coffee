@@ -53,9 +53,9 @@ describe 'AuctionClockView', ->
 
       @view.$el.html '<div class="auction-clock-value"></div>'
       @view.render()
-      @view.$el.html().should.include 'days'
-      @view.$el.html().should.include 'months'
-      @view.$el.html().should.not.include '00'
+      @view.$el.html().should.containEql 'days'
+      @view.$el.html().should.containEql 'months'
+      @view.$el.html().should.not.containEql '00'
 
     it 'excludes months sectoin if sale starts 0 months from now', ->
       @view.model.set
@@ -68,13 +68,13 @@ describe 'AuctionClockView', ->
 
       @view.$el.html '<div class="auction-clock-value"></div>'
       @view.render()
-      @view.$el.html().should.include 'days'
-      @view.$el.html().should.not.include 'months'
-      @view.$el.html().should.include '00'
+      @view.$el.html().should.containEql 'days'
+      @view.$el.html().should.not.containEql 'months'
+      @view.$el.html().should.containEql '00'
 
     it 'removes the register button at the top for open auctions', ->
       @view.model.set
         start_at: new Date(2000, 10, 10).toString()
         end_at: new Date(2015, 10, 10).toString()
       @view.render()
-      @view.$el.html().should.not.include 'Register to Bid'
+      @view.$el.html().should.not.containEql 'Register to Bid'

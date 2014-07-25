@@ -49,7 +49,7 @@ describe 'ArtworkCollection', ->
       artwork = new Artwork { id: 'baz', title: 'Baz' }
       @artworkCollection.saveArtwork artwork.get('id')
       Backbone.sync.args[0][0].should.equal 'create'
-      Backbone.sync.args[0][1].url.should.include '/api/v1/collection/saved-artwork/artwork/baz'
+      Backbone.sync.args[0][1].url.should.containEql '/api/v1/collection/saved-artwork/artwork/baz'
 
     it 'can trigger add events for a specific artwork', (done) ->
       specificArtworkAddedCalls = 0
@@ -79,7 +79,7 @@ describe 'ArtworkCollection', ->
       artwork = new Artwork { id: 'baz', title: 'Baz' }
       @artworkCollection.saveArtwork artwork.get('id'), { success: successCb }
       Backbone.sync.args[0][0].should.equal 'create'
-      Backbone.sync.args[0][1].url.should.include '/api/v1/collection/saved-artwork/artwork/baz'
+      Backbone.sync.args[0][1].url.should.containEql '/api/v1/collection/saved-artwork/artwork/baz'
       Backbone.sync.args[0][2].success { foo: 'bar' }
       successCb.called.should.be.ok
 
@@ -96,7 +96,7 @@ describe 'ArtworkCollection', ->
       artwork = @artworkCollection.get('artworks').first()
       @artworkCollection.unsaveArtwork artwork.get('id')
       Backbone.sync.args[0][0].should.equal 'delete'
-      Backbone.sync.args[0][1].url.should.include '/api/v1/collection/saved-artwork/artwork/foo'
+      Backbone.sync.args[0][1].url.should.containEql '/api/v1/collection/saved-artwork/artwork/foo'
 
     it 'can trigger remove events for a specific artwork', (done) ->
       specificArtworkRemovedCalls = 0
@@ -126,7 +126,7 @@ describe 'ArtworkCollection', ->
       artwork = @artworkCollection.get('artworks').first()
       @artworkCollection.unsaveArtwork artwork.get('id'), { success: successCb }
       Backbone.sync.args[0][0].should.equal 'delete'
-      Backbone.sync.args[0][1].url.should.include '/api/v1/collection/saved-artwork/artwork/foo'
+      Backbone.sync.args[0][1].url.should.containEql '/api/v1/collection/saved-artwork/artwork/foo'
       Backbone.sync.args[0][2].success { foo: 'bar' }
       successCb.called.should.be.ok
 

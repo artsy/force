@@ -25,10 +25,14 @@ or if you are a command line cowboy, something along the lines of
 browserify -t jadeify entry.js -o bundle.js
 ```
 
-Note that this project peer-depends on Jade and each template will do `require("jade/runtime")`, so everything will just
-work: there's no need to add any Jade-related stuff to your bundle manually.
+Note that this project peer-depends on Jade and each template will do `require("jade/runtime")`, so everything will just work: there's no need to add any Jade-related stuff to your bundle manually.
 
 So yeah, now `require`ing any `.jade` files will give you back a template function. Have fun!
 
+## Configuration
+
+Optionally, you can configure jadeify by adding a `"jadeify": { ... }` section to your `package.json`. Any options given there will be passed through to [Jade's API][].
+
 [Jade]: http://jade-lang.com/
 [browserify]: https://github.com/substack/node-browserify
+[Jade's API]: http://jade-lang.com/api/

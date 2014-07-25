@@ -32,11 +32,11 @@ describe 'BookmarksView', ->
   describe '#initialize', ->
     describe '#render', ->
       it 'renders the base template', ->
-        @view.$el.html().should.include 'Add an artist you own work by'
+        @view.$el.html().should.containEql 'Add an artist you own work by'
 
     it 'fetches the bookmarks collection', ->
       Backbone.sync.args[0][0].should.equal 'read'
-      Backbone.sync.args[0][1].url.should.include '/api/v1/me/bookmark/artists'
+      Backbone.sync.args[0][1].url.should.containEql '/api/v1/me/bookmark/artists'
 
     it 'sets up the autocomplete view', ->
       @view.autocomplete.mode.should.equal 'artists'

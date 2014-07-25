@@ -72,12 +72,12 @@ describe 'ForYouView', ->
       artworks = _.last(@ArtworkColumnsView.appendArtworks.args)[0]
       artworks.length.should.equal 1
 
-      view.$el.html().should.not.include 'undefined'
-      view.$el.html().should.not.include "\#{"
-      view.$el.html().should.not.include "NaN"
+      view.$el.html().should.not.containEql 'undefined'
+      view.$el.html().should.not.containEql "\#{"
+      view.$el.html().should.not.containEql "NaN"
 
       view.$('.foryou-section.artists').length.should.equal 1
       view.$('.foryou-section.partners .feed-item').length.should.equal 1
-      view.$('.foryou-section.partners .feed-item-top-section .heading').text().should.include feedItem.toChildModel().formatFeedItemHeading()
-      view.$('.foryou-section.partners .feed-item-top-section .timeframe').text().should.include feedItem.get('location').city
-      view.$('.foryou-section.partners .artwork-item').text().should.include feedItem.get('artworks')[0].title
+      view.$('.foryou-section.partners .feed-item-top-section .heading').text().should.containEql feedItem.toChildModel().formatFeedItemHeading()
+      view.$('.foryou-section.partners .feed-item-top-section .timeframe').text().should.containEql feedItem.get('location').city
+      view.$('.foryou-section.partners .artwork-item').text().should.containEql feedItem.get('artworks')[0].title

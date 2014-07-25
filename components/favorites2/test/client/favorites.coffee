@@ -77,19 +77,19 @@ describe 'FavoritesView', ->
       )
       @view.collections.first().artworks = new Backbone.Collection
       @view.renderCollections()
-      @view.$el.html().should.include 'Warhols for my bathroom.'
+      @view.$el.html().should.containEql 'Warhols for my bathroom.'
 
   describe '#renderFirstZigZagBanner', ->
 
     it 'creates a new zig zag view', ->
       @view.renderFirstZigZagBanner()
-      @ZigZagBanner.args[0][0].message.should.include 'Get started'
+      @ZigZagBanner.args[0][0].message.should.containEql 'Get started'
 
   describe '#renderSecondZigZagBanner', ->
 
     it 'creates a new zig zag view', ->
       @view.renderSecondZigZagBanner()
-      @ZigZagBanner.args[0][0].message.should.include 'Great, now save'
+      @ZigZagBanner.args[0][0].message.should.containEql 'Great, now save'
 
   describe '#renderPrivacy', ->
 

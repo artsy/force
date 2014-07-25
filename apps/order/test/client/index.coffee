@@ -25,4 +25,4 @@ describe 'OrderRouter', ->
     it 'tells force to stay in force for Martsy', ->
       @router.shipping()
       @ShippingForm.args[0][0].success()
-      window.location.should.include "/order/checkout?stop_microgravity_redirect=true"
+      window.location.should.containEql "/order/checkout?stop_microgravity_redirect=true"

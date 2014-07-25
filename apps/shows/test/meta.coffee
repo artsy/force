@@ -13,8 +13,8 @@ describe 'Meta tags', ->
       sd: @sd
 
   it 'includes canonical url, twitter card, og tags, and title', ->
-    @html.should.include "<meta property=\"twitter:card\" content=\"summary"
-    @html.should.include "<link rel=\"canonical\" href=\"http://localhost:5000/shows"
-    @html.should.include "<meta property=\"og:url\" content=\"http://localhost:5000/shows"
-    @html.should.include "<meta property=\"og:title\" content=\"Shows | Artsy"
-    @html.should.include "<meta property=\"og:description\" content=\"Explore all shows on Artsy"
+    @html.should.containEql "<meta property=\"twitter:card\" content=\"summary"
+    @html.should.containEql "<link rel=\"canonical\" href=\"http://localhost:5000/shows"
+    @html.should.containEql "<meta property=\"og:url\" content=\"http://localhost:5000/shows"
+    @html.should.containEql "<meta property=\"og:title\" content=\"Shows | Artsy"
+    @html.should.containEql "<meta property=\"og:description\" content=\"Explore all shows on Artsy"

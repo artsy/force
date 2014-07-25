@@ -27,7 +27,7 @@ describe 'Partner header', ->
           id: 'pace-gallery'
           artistId: 'yoshitomo-nara'
       )
-      @template.should.include '<link rel="canonical" href="http://localhost:3004/artist/yoshitomo-nara">'
+      @template.should.containEql '<link rel="canonical" href="http://localhost:3004/artist/yoshitomo-nara">'
 
     it 'has a canonical link to current url on other pages', ->
       @template = render('index')(
@@ -38,7 +38,7 @@ describe 'Partner header', ->
         params:
           id: 'pace-gallery'
       )
-      @template.should.include '<link rel="canonical" href="http://localhost:3004/pace-gallery">'
+      @template.should.containEql '<link rel="canonical" href="http://localhost:3004/pace-gallery">'
 
     it 'has meta fragment', ->
       @template = render('index')(
@@ -49,7 +49,7 @@ describe 'Partner header', ->
         params:
           id: 'pace-gallery'
       )
-      @template.should.include '<meta name="fragment" content="!">'
+      @template.should.containEql '<meta name="fragment" content="!">'
 
     it 'does not have meta fragment if tab is included', ->
       @template = render('index')(
@@ -61,4 +61,4 @@ describe 'Partner header', ->
         params:
           id: 'pace-gallery'
       )
-      @template.should.not.include '<meta name="fragment" content="!">'
+      @template.should.not.containEql '<meta name="fragment" content="!">'

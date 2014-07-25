@@ -33,12 +33,12 @@ describe 'CurrentUser', ->
   describe '#fetchSuggestedHomepageArtworks', ->
     it 'fetches homepages artworks', ->
       @user.fetchSuggestedHomepageArtworks({})
-      Backbone.sync.args[0][2].url.should.include 'suggested/artworks/homepage'
+      Backbone.sync.args[0][2].url.should.containEql 'suggested/artworks/homepage'
 
   describe '#followArtist', ->
     it 'follows an artist', ->
       @user.followArtist 'andy-foobar', {}
-      _.last(Backbone.sync.args)[1].url().should.include 'me/follow/artist'
+      _.last(Backbone.sync.args)[1].url().should.containEql 'me/follow/artist'
 
     it 'injects the access token', ->
       @user.set accessToken: 'xfoobar'

@@ -31,8 +31,8 @@ describe 'BookmarksView', ->
   describe '#render', ->
     it 'renders the template', ->
       html = @view.$el.html()
-      html.should.include 'Which artists are in your collection?'
-      html.should.include 'Skip'
+      html.should.containEql 'Which artists are in your collection?'
+      html.should.containEql 'Skip'
 
   describe '#advance', ->
     it 'is able to advance to the next step', ->

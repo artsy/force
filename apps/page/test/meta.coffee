@@ -17,11 +17,11 @@ describe 'Meta tags', ->
         sd: @sd
 
     it 'includes mobile alternate, canonical, twitter card and og tags', ->
-      @html.should.include "<link rel=\"alternate\" media=\"mobile-media-query\" href=\"http://m.localhost:5000/press"
-      @html.should.include "<meta property=\"twitter:card\" content=\"summary"
-      @html.should.include "<link rel=\"canonical\" href=\"http://localhost:5000/press"
-      @html.should.include "<meta property=\"og:url\" content=\"http://localhost:5000/press"
-      @html.should.include "<meta property=\"og:title\" content=\"Press | Artsy"
+      @html.should.containEql "<link rel=\"alternate\" media=\"mobile-media-query\" href=\"http://m.localhost:5000/press"
+      @html.should.containEql "<meta property=\"twitter:card\" content=\"summary"
+      @html.should.containEql "<link rel=\"canonical\" href=\"http://localhost:5000/press"
+      @html.should.containEql "<meta property=\"og:url\" content=\"http://localhost:5000/press"
+      @html.should.containEql "<meta property=\"og:title\" content=\"Press | Artsy"
 
   describe 'terms page', ->
 
@@ -35,11 +35,11 @@ describe 'Meta tags', ->
         sd: @sd
 
     it 'includes mobile alternate, canonical, twitter card and og tags', ->
-      @html.should.include "<link rel=\"alternate\" media=\"mobile-media-query\" href=\"http://m.localhost:5000/terms"
-      @html.should.include "<meta property=\"twitter:card\" content=\"summary"
-      @html.should.include "<link rel=\"canonical\" href=\"http://localhost:5000/terms"
-      @html.should.include "<meta property=\"og:url\" content=\"http://localhost:5000/terms"
-      @html.should.include "<meta property=\"og:title\" content=\"Terms of Use | Artsy"
+      @html.should.containEql "<link rel=\"alternate\" media=\"mobile-media-query\" href=\"http://m.localhost:5000/terms"
+      @html.should.containEql "<meta property=\"twitter:card\" content=\"summary"
+      @html.should.containEql "<link rel=\"canonical\" href=\"http://localhost:5000/terms"
+      @html.should.containEql "<meta property=\"og:url\" content=\"http://localhost:5000/terms"
+      @html.should.containEql "<meta property=\"og:title\" content=\"Terms of Use | Artsy"
 
   describe 'privacy page', ->
 
@@ -53,8 +53,8 @@ describe 'Meta tags', ->
         sd: @sd
 
     it 'includes mobile alternate, canonical, twitter card and og tags', ->
-      @html.should.include "<link rel=\"alternate\" media=\"mobile-media-query\" href=\"http://m.localhost:5000/privacy"
-      @html.should.include "<meta property=\"twitter:card\" content=\"summary"
-      @html.should.include "<link rel=\"canonical\" href=\"http://localhost:5000/privacy"
-      @html.should.include "<meta property=\"og:url\" content=\"http://localhost:5000/privacy"
-      @html.should.include "<meta property=\"og:title\" content=\"Privacy Policy | Artsy"
+      @html.should.containEql "<link rel=\"alternate\" media=\"mobile-media-query\" href=\"http://m.localhost:5000/privacy"
+      @html.should.containEql "<meta property=\"twitter:card\" content=\"summary"
+      @html.should.containEql "<link rel=\"canonical\" href=\"http://localhost:5000/privacy"
+      @html.should.containEql "<meta property=\"og:url\" content=\"http://localhost:5000/privacy"
+      @html.should.containEql "<meta property=\"og:title\" content=\"Privacy Policy | Artsy"

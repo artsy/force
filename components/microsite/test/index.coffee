@@ -35,10 +35,10 @@ describe 'FairHeaderView', ->
   describe 'template', ->
     it 'should render the header', ->
       html = @$template.html()
-      html.should.include '<a alt="Armory Show 2013" href="/the-armory-show" class="fair-logo">'
-      html.should.include 'fair-search-input'
-      html.should.include '<a href="/the-armory-show/browse/booths" class="garamond-tab">Browse</a>'
-      html.should.include '<a href="/the-armory-show/info" class="garamond-tab">Info</a>'
+      html.should.containEql '<a alt="Armory Show 2013" href="/the-armory-show" class="fair-logo">'
+      html.should.containEql 'fair-search-input'
+      html.should.containEql '<a href="/the-armory-show/browse/booths" class="garamond-tab">Browse</a>'
+      html.should.containEql '<a href="/the-armory-show/info" class="garamond-tab">Info</a>'
 
   describe '#initialize', ->
     it 'sets up the view', ->

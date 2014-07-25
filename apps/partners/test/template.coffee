@@ -64,8 +64,8 @@ describe 'Partners', ->
         $featuredProfile.find("a[href='/#{profile.get('id')}']").length.should.equal 2
         $featuredProfile.find(".featured-partner-profile-name").length.should.equal 1
         $featuredProfile.find(".featured-partner-profile-name").text().should.equal partner.displayName()
-        $featuredProfile.find(".featured-partner-profile-location").text().should.include partner.get('type')
-        $featuredProfile.find(".featured-partner-profile-location").text().should.include partner.get('locations').first().get('city')
+        $featuredProfile.find(".featured-partner-profile-location").text().should.containEql partner.get('type')
+        $featuredProfile.find(".featured-partner-profile-location").text().should.containEql partner.get('locations').first().get('city')
 
     it 'includes a page title', ->
       $ = cheerio.load @html

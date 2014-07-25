@@ -29,7 +29,7 @@ describe 'AuthClient', ->
     describe '#initialize', ->
 
       it 'creates a new model that saves to the reset password endpoint', ->
-        @view.model.url.should.include '/api/v1/users/reset_password'
+        @view.model.url.should.containEql '/api/v1/users/reset_password'
 
       it 'toggles the loading button on request and error', ->
         @view.$('#reset-password-form button').addClass('is-loading')
@@ -49,4 +49,4 @@ describe 'AuthClient', ->
         @view.$('[name=password_confirmation]').val 'foobarbaz'
         @view.save preventDefault: ->
         Backbone.sync.args[0][2].error({}, responseText: '{ "error":"FAIL WHALE"}')
-        @view.$el.html().should.include 'FAIL WHALE'
+        @view.$el.html().should.containEql 'FAIL WHALE'

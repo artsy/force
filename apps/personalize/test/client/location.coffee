@@ -41,7 +41,7 @@ describe 'LocationView', ->
   describe '#render', ->
     it 'renders the template', ->
       @view.render()
-      @view.$el.html().should.include 'Where do you call home?'
+      @view.$el.html().should.containEql 'Where do you call home?'
 
     it 'calls #postRender', ->
       spy = sinon.spy @view, 'postRender'

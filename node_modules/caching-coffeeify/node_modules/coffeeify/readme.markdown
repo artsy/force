@@ -49,7 +49,7 @@ module.exports = require('./baz')(5)
 ```
 
 ```
-$ browserify -t coffeeify --extension=coffee foo.coffee > bundle.js
+$ browserify -t coffeeify --extension=".coffee" foo.coffee > bundle.js
 $ node bundle.js
 555
 ```

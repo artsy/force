@@ -36,10 +36,10 @@ describe 'CollectorForm', ->
 
   describe '#render', ->
     it 'renders the view', ->
-      @view.$el.html().should.include 'About You'
+      @view.$el.html().should.containEql 'About You'
 
   describe 'introduction', ->
     it 'renders an up-to-date introduction', ->
-      @view.$el.html().should.include 'Craig is a collector and has been an Artsy member since'
+      @view.$el.html().should.containEql 'Craig is a collector and has been an Artsy member since'
       @view.bookmarksView.bookmarks.add fabricate 'artwork'
-      @view.$el.html().should.include 'Craig’s collection includes Andy Warhol'
+      @view.$el.html().should.containEql 'Craig’s collection includes Andy Warhol'

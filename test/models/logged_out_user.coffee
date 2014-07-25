@@ -21,7 +21,7 @@ describe 'LoggedOutUser', ->
       user.login()
       Backbone.sync.args[0][0].should.equal 'create'
       Backbone.sync.args[0][2].url.should.equal '/users/sign_in'
-      Backbone.sync.args[0][1].attributes.should.include email: 'foo@bar.com', password: 'foobar'
+      Backbone.sync.args[0][1].attributes.should.containEql email: 'foo@bar.com', password: 'foobar'
       @reloadStub.called.should.be.ok
 
     it 'accepts options and overwrites the default success', (done) ->
@@ -39,7 +39,7 @@ describe 'LoggedOutUser', ->
       user.signup()
       Backbone.sync.args[0][0].should.equal 'create'
       Backbone.sync.args[0][2].url.should.equal '/users/invitation/accept'
-      Backbone.sync.args[0][1].attributes.should.include name: 'Foo Bar', email: 'foo@bar.com', password: 'foobar'
+      Backbone.sync.args[0][1].attributes.should.containEql name: 'Foo Bar', email: 'foo@bar.com', password: 'foobar'
       @reloadStub.called.should.be.ok
 
     it 'accepts options and overwrites the default success', (done) ->
@@ -59,8 +59,8 @@ describe 'LoggedOutUser', ->
       user = new LoggedOutUser(email: 'foo@bar.com')
       user.forgot()
       Backbone.sync.args[0][0].should.equal 'create'
-      Backbone.sync.args[0][2].url.should.include '/api/v1/users/send_reset_password_instructions'
-      Backbone.sync.args[0][1].attributes.should.include email: 'foo@bar.com'
+      Backbone.sync.args[0][2].url.should.containEql '/api/v1/users/send_reset_password_instructions'
+      Backbone.sync.args[0][1].attributes.should.containEql email: 'foo@bar.com'
 
     it 'accepts options and overwrites the default success', (done) ->
       user = new LoggedOutUser(email: 'foo@bar.com')

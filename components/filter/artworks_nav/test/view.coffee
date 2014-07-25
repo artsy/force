@@ -29,8 +29,8 @@ describe 'FilterArtworksNav', ->
       dimension: { "24": 38 }
     }
     @view.renderCounts()
-    @view.$el.html().should.include '51'
-    @view.$el.html().should.include '38'
+    @view.$el.html().should.containEql '51'
+    @view.$el.html().should.containEql '38'
 
   it 'limits counts to the top 10', ->
     @view.counts.clear()
@@ -50,7 +50,7 @@ describe 'FilterArtworksNav', ->
         "l": 121
     }
     @view.renderCounts()
-    @view.$el.html().should.not.include '11'
+    @view.$el.html().should.not.containEql '11'
 
   it 'renders without errors', ->
-    @view.$el.html().should.not.include 'undefined'
+    @view.$el.html().should.not.containEql 'undefined'

@@ -26,11 +26,11 @@ describe 'Location Search', ->
     benv.teardown()
 
   it 'should render the template', ->
-    @view.render().$el.html().should.include 'Enter your city'
+    @view.render().$el.html().should.containEql 'Enter your city'
 
   it 'should render with a current value', ->
     value = "New York, NY, United States"
-    @view.render(value).$el.html().should.include value
+    @view.render(value).$el.html().should.containEql value
 
   it 'attach Google Maps specific event listeners', ->
     @view.render()

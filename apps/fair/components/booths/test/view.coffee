@@ -53,8 +53,8 @@ describe 'BoothsView', ->
       @view.params.get('sort').should.equal '-featured'
 
     it 'renders valid html', ->
-      @view.$el.html().should.not.include 'undefined'
-      @view.$el.html().should.include '/the-armory-show/browse/exhibitors'
+      @view.$el.html().should.not.containEql 'undefined'
+      @view.$el.html().should.containEql '/the-armory-show/browse/exhibitors'
 
   describe '#renderSections', ->
 
@@ -65,19 +65,19 @@ describe 'BoothsView', ->
         "artworks_count": 7,
         "partner_shows_count": 1
       }]
-      @view.$el.html().should.include 'FOCUS'
+      @view.$el.html().should.containEql 'FOCUS'
 
   describe '#renderHeader', ->
 
     it 'renders the header', ->
       @view.params.set section: 'FOCUS'
       @view.renderHeader()
-      @view.$el.html().should.include 'Exhibitors at FOCUS'
+      @view.$el.html().should.containEql 'Exhibitors at FOCUS'
 
     it 'renders the artist state header', ->
       @view.params.set artist: 'andy-foobar'
       @view.renderHeader()
-      @view.$el.html().should.include 'Andy Foobar'
+      @view.$el.html().should.containEql 'Andy Foobar'
 
   describe '#renderShows', ->
 
@@ -97,7 +97,7 @@ describe 'BoothsView', ->
 
     it 'naviates based on section', ->
       @view.params.set section: 'FOCUS'
-      @view.router.navigate.args[0][0].should.include 'browse/booths/section/FOCUS'
+      @view.router.navigate.args[0][0].should.containEql 'browse/booths/section/FOCUS'
 
     it 'naviates to /booths with no sections', ->
       @view.params.unset 'section'
@@ -108,7 +108,7 @@ describe 'BoothsView', ->
 
     it 'naviates based on sort', ->
       @view.params.set sort: 'foo'
-      @view.router.navigate.args[0][0].should.include '?sort=foo'
+      @view.router.navigate.args[0][0].should.containEql '?sort=foo'
 
   describe '#sort', ->
 
@@ -120,7 +120,7 @@ describe 'BoothsView', ->
 
     it 'hides the counts when in a section', ->
       @view.params.set section: 'VISTA'
-      @view.$('.fair-booths-count-container').attr('style').should.include 'display: none'
+      @view.$('.fair-booths-count-container').attr('style').should.containEql 'display: none'
 
   describe '#fetchShows', ->
 

@@ -12,7 +12,7 @@ describe 'Redirect mobile middleware', ->
   it 'redirects mobile user agents', ->
     @req.get = -> 'Mobile Android'
     redirectMobile @req, @res
-    @res.redirect.args[0][0].should.include 'm.foobart.sy'
+    @res.redirect.args[0][0].should.containEql 'm.foobart.sy'
 
   it 'does not redirect desktop user agents', ->
     @req.get = -> 'Chome'
