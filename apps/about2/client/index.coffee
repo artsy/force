@@ -14,7 +14,7 @@ class AboutView extends Backbone.View
     @$units = @$('.about2-hero-unit-bg')
     i = 0
     setInterval (=>
-      $(current = @$units.removeClass('is-active').get i).addClass('is-active')
+      $(@$units.removeClass('is-active').get i).addClass('is-active')
       i = (if (i + 1 < @$units.length) then i + 1 else 0)
     ), 5000
 
