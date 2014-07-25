@@ -31,8 +31,7 @@ describe 'About2 routes', ->
       @res.render = (tmpl, locals) =>
         locals.foo.should.equal "bar"
         done()
-      routes.index @req, @res, ->
-        console.log 'next!'
+      routes.index @req, @res
       @client.getFile.args[0][1](null, emitter = new EventEmitter)
       emitter.emit 'data', '{ "foo": "bar"}'
       emitter.emit 'end'

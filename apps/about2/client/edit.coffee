@@ -6,7 +6,7 @@ sectionsTemplates = require '../templates/sections.jade'
 hulkCallback = (data) ->
   render(data)
   return unless confirm "Are you sure you want to update the about page " +
-                        "(these change can't be undone)?"
+                        "(these changes can't be undone)?"
   $('.hulk-save').addClass 'is-loading'
   $.ajax
     type: 'POST'
