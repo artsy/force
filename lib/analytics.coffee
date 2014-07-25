@@ -79,7 +79,6 @@ module.exports.track =
           user_id: sd.CURRENT_USER?.id
           lab_features: sd.CURRENT_USER?.lab_features
 
-        console.log description, options
         mixpanel.track? description, options, callback
 
       # Send google analytics event
