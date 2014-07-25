@@ -2,11 +2,7 @@ _ = require 'underscore'
 Page = require '../../models/page'
 knox = require 'knox'
 { S3_KEY, S3_SECRET, S3_BUCKET } = require '../../config.coffee'
-
-client = knox.createClient
-  key: S3_KEY
-  secret: S3_SECRET
-  bucket: S3_BUCKET
+client = null
 
 CONTENT_PATH = '/about/content.json'
 
@@ -20,6 +16,12 @@ getJSON = (callback) ->
         callback null, JSON.parse json.toString()
       catch e
         callback e
+
+@initClient = ->
+  client = knox.createClient
+    key: S3_KEY
+    secret: S3_SECRET
+    bucket: S3_BUCKET
 
 @index = (req, res, next) ->
   getJSON (err, data) ->
