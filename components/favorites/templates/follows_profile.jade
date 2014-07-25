@@ -1,5 +1,6 @@
 .follows-profile( id= profile.id )
-  .follows-profile-icon(
+  a.follows-profile-icon(
+    href= profile.href()
     style="background-image: url(#{profile.icon().imageUrl('square')});"
   )
   .follows-profile-metadata
