@@ -4,7 +4,7 @@ section.suggested-genes
     ul.suggestion-row
       each g in genes
         li.suggestion-item
-          a(href=g.clientUrl())
+          a(href=g.href())
             .img-container
               img(src=g.imageUrl('tall'))
             .name= g.get('name')
