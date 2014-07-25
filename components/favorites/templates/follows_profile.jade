@@ -1,0 +1,11 @@
+.follows-profile( id= profile.id )
+  .follows-profile-icon(
+    style="background-image: url(#{profile.icon().imageUrl('square')});"
+  )
+  .follows-profile-metadata
+    a.follows-profile-metadata-name( href= profile.href() )
+      = profile.get('owner').name
+    br
+    .plus-follow-button
+      .icon-follow-circle
+      .follow-button-text
