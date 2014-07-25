@@ -1,27 +1,28 @@
 _ = require 'underscore'
 Page = require '../../models/page'
 knox = require 'knox'
-{ S3_KEY, S3_SECRET, S3_BUCKET } = require '../../config.coffee'
+request = require 'superagent'
+url = require 'url'
+{ S3_KEY, S3_SECRET, APPLICATION_NAME } = require '../../config.coffee'
 client = null
 
 CONTENT_PATH = '/about/content.json'
 
 getJSON = (callback) ->
-  client.getFile CONTENT_PATH, (err, res) ->
+  request.get(
+    "http://#{APPLICATION_NAME}.s3.amazonaws.com#{CONTENT_PATH}"
+  ).end (err, res) ->
     return callback err if err
-    json = ''
-    res.on 'data', (chunk) -> json += chunk
-    res.on 'end', ->
-      try
-        callback null, JSON.parse json.toString()
-      catch e
-        callback e
+    try
+      callback null, JSON.parse res.text
+    catch e
+      callback e
 
 @initClient = ->
   client = knox.createClient
     key: S3_KEY
     secret: S3_SECRET
-    bucket: S3_BUCKET
+    bucket: APPLICATION_NAME
 
 @index = (req, res, next) ->
   getJSON (err, data) ->
@@ -43,7 +44,7 @@ getJSON = (callback) ->
 
 @upload = (req, res, next) ->
   buffer = new Buffer JSON.stringify req.body
-  headers = { 'Content-Type': 'application/json' }
+  headers = { 'Content-Type': 'application/json', 'x-amz-acl': 'public-read' }
   client.putBuffer buffer, CONTENT_PATH, headers, (err, r) ->
     return next err if err
     res.send 200, { msg: "success" }

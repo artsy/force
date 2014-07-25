@@ -93,3 +93,21 @@
     z-index 2
     &:hover
       background purple-color
+  input[type=file]
+    position relative
+    &::after
+      content 'Replace Image'
+      background white
+      position absolute
+      top 0
+      left 0
+      z-index 2
+      text-align center
+      padding 10px
+      width 100%
+      cursor pointer
+      avant-garde()
+      transition background 0.3s
+      border-bottom 1px solid gray-color
+    &:hover::after
+      color purple-color
