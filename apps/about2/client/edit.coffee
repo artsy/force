@@ -22,6 +22,7 @@ initImageUploads = ->
   $('input').each ->
     return unless $(this).val().match(/\.jpg|\.png/)
     $(this).after("<input type='file' />")
+    $(this).before("<img src='#{$(this).val()}' class='about2-preview-image'>")
     $file = $(this).next()
     $file.click -> $file.val ''
     $file.change ->

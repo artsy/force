@@ -1,5 +1,5 @@
 section#about2-section5.about2-container
-  h1.about2-section-header!= sections[4].title
+  h1.about2-section-header!= sections[4].header
 
   // "Our team is working to make the ..."
   .about2-spacer( style="height: 60px" )
@@ -43,7 +43,7 @@ section#about2-section5.about2-container
       li
         section
           header
-            h1= job.title
+            h1= job.header
             h2= job.location
           p= job.description
           a.icon-chevron-right( href=job.href )
