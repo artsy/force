@@ -1,12 +1,17 @@
-header#about2-hero-unit
-  ul#about2-hero-unit-bgs
-    for url in hero.images
-      li( style="background-image: url(#{url})" )
-  #about2-hero-unit-container
-    #about2-hero-unit-h1.about2-container
-      h1!= hero.title
-    nav#about2-nav.about2-container
-      for section in sections
-        a
-          span!= section.title
-    .icon-chevron-down
+.about2-hero-unit
+  .about2-hero-unit-container
+    .a2huc-top.vam-outer: .vam-inner
+      .about2-hero-unit-h1.about2-container
+        h1!= hero.title
+    .a2huc-bottom
+      nav.about2-nav.about2-container
+        for section in sections
+          a: span!= section.title
+      .about2-chevron: a.icon-chevron-down
+
+  ul.about2-hero-unit-bgs
+    for url, i in hero.images
+      li.about2-hero-unit-bg(
+        style="background-image: url(#{url})"
+        class="#{i === 0 ? 'is-active' : undefined}"
+      )

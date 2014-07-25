@@ -70,7 +70,7 @@ describe 'ArtworkView', ->
   describe 'user logged in', ->
     beforeEach ->
       @ArtworkView.__set__ 'CurrentUser', { orNull: -> new CurrentUser(fabricate 'user') }
-      @ArtworkView.__set__ 'analytics', { track: { impression: (->), click: (->) } , abTest: -> }
+      @ArtworkView.__set__ 'analytics', { track: { impression: (->), click: (->), funnel: (->) } , abTest: -> }
       @view = new @ArtworkView el: $('#artwork-page'), artist: @artist, artwork: @artwork
 
     describe '#checkQueryStringForAuction', ->
@@ -239,7 +239,6 @@ describe 'ArtworkView', ->
         ])
         _.last(Backbone.sync.args)[2].success([])
 
-        console.log @view.$el.find('.artwork-partner-phone-container').html()
         @view.$el.find('.partner-phone-number').length.should.equal 1
 
     describe '#setupFollowButton', ->
