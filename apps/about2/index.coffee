@@ -16,3 +16,4 @@ try
   app.all '/about2*', routes.adminOnly
   app.get '/about2/edit', routes.edit
   app.post '/about2/edit', routes.upload
+  app.post '/about2/edit/image', routes.uploadImage
