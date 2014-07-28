@@ -15,21 +15,22 @@ class AboutView extends Backbone.View
     @scroller = new Scroller frequency: 100
 
     # Setup sticky nav
-    (@$nav = @scroller.listen @$('.about2-section-nav'))
-      .on('scroller:below', =>
-        @$nav.addClass 'is-fixed'
-      ).on 'scroller:above', =>
-        @$nav.removeClass 'is-fixed'
+    @$nav = @scroller.listen @$('.about2-section-nav')
+    @$fixedNav = @$nav.clone()
+    @$nav.on('scroller:below', =>
+      @$nav.css(visibility: 'hidden').after(@$fixedNav.addClass 'is-fixed')
+    ).on 'scroller:above', =>
+      @$fixedNav.remove()
+      @$nav.attr style: null
 
     # Setup section navigation
     _.map @$('.about2-section'), (el) =>
-      @scroller.listen($(el))
-        .on('scroller:enter', (e) =>
-          idx = $(e.currentTarget).addClass('is-active').data('idx')
-          @$nav.find("a[data-idx=#{idx}]").addClass 'is-active'
-        ).on 'scroller:leave', (e) =>
-          idx = $(e.currentTarget).removeClass('is-active').data('idx')
-          @$nav.find("a[data-idx=#{idx}]").removeClass 'is-active'
+      @scroller.listen($(el)).on('scroller:enter', (e) =>
+        idx = $(e.currentTarget).addClass('is-active').data('idx')
+        @$fixedNav.find("a[data-idx=#{idx}]").addClass 'is-active'
+      ).on 'scroller:leave', (e) =>
+        idx = $(e.currentTarget).removeClass('is-active').data('idx')
+        @$fixedNav.find("a[data-idx=#{idx}]").removeClass 'is-active'
 
     # Setup transitions
     @listenTo @scroller, 'position', (top) ->
