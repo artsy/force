@@ -21,6 +21,7 @@ describe 'About2 routes', ->
       send: sinon.stub()
     }
     routes.__set__ 'client', @client = { getFile: sinon.stub(), putBuffer: sinon.stub() }
+    routes.__set__ 'request', @request = {}
 
   afterEach ->
     Backbone.sync.restore()
@@ -31,10 +32,8 @@ describe 'About2 routes', ->
       @res.render = (tmpl, locals) =>
         locals.foo.should.equal "bar"
         done()
+      @request.get = -> end: (cb) -> cb null, { text: '{"foo": "bar"}' }
       routes.index @req, @res
-      @client.getFile.args[0][1](null, emitter = new EventEmitter)
-      emitter.emit 'data', '{ "foo": "bar"}'
-      emitter.emit 'end'
 
   describe '#adminOnly', ->
 

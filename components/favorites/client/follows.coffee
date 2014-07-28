@@ -1,28 +1,29 @@
 _ = require 'underscore'
-Backbone = require 'backbone'
-Genes = require '../../../collections/genes.coffee'
 sd = require('sharify').data
-FillwidthView = require '../../../components/fillwidth_row/view.coffee'
+Backbone = require 'backbone'
 CurrentUser = require '../../../models/current_user.coffee'
-itemTemplate = -> require('../templates/follows_item.jade') arguments...
-hintTemplate = -> require('../templates/empty_hint.jade') arguments...
+Genes = require '../../../collections/genes.coffee'
 Artist = require '../../../models/artist.coffee'
 Gene = require '../../../models/gene.coffee'
-SuggestedGenesView = require '../../../components/suggested_genes/view.coffee'
+Profile = require '../../../models/profile.coffee'
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
+FillwidthView = require '../../../components/fillwidth_row/view.coffee'
+SuggestedGenesView = require '../../../components/suggested_genes/view.coffee'
 
-kindToModel = artist: Artist, gene: Gene
+itemTemplate = -> require('../templates/follows_item.jade') arguments...
+hintTemplate = -> require('../templates/empty_hint.jade') arguments...
+profileTemplate = -> require('../templates/follows_profile.jade') arguments...
+
+modelMap = artist: Artist, gene: Gene, profile: Profile
 
 module.exports.FollowsView = class FollowsView extends Backbone.View
-
   defaults:
     pageSize: 10
-    nextPage: 1   # page number of the next page to load
+    nextPage: 1 # page number of the next page to load
 
-  initialize: (options={}) ->
+  initialize: (options = {}) ->
     { @pageSize, @nextPage } = _.defaults options, @defaults
     @followItems = if options.collection then options.collection else new Following(null, kind: sd.KIND)
-
     @setupCurrentUser()
     @loadNextPage()
 
@@ -52,15 +53,31 @@ module.exports.FollowsView = class FollowsView extends Backbone.View
         if @followItems.length > start
           showingItems = @followItems.slice start, end
           _.each showingItems, (item) =>
-            model = new kindToModel[item.kind] item.get(item.kind)
-            @appendItemSkeleton(model)
-            @showItemContent(model)
+            model = new modelMap[item.kind] item.get(item.kind)
+            if model.fetchArtworks?
+              # Setup for things with artwork fill widths views
+              @appendItemSkeleton(model)
+              @showItemContent(model)
+            else
+              # Setup for profile
+              @appendProfile(model)
           @nextPage = page + 1
+
+  appendProfile: (model) ->
+    $profile = $(profileTemplate profile: model)
+    (@$follows ?= @$('.follows')).append $profile
+    @attachFollowButton model, 'profile', $profile.find('.plus-follow-button')
+
+  attachFollowButton: (model, modelName, $el) ->
+    new FollowButton
+      following: @followItems
+      modelName: modelName
+      model: model
+      el: $el
 
   fetchNextPage: (options) ->
     return unless not @isFetching
     @isFetching = true
-
     data =
       page: @nextPage
       size: @pageSize
@@ -88,7 +105,7 @@ module.exports.FollowsView = class FollowsView extends Backbone.View
   # So that we can display some stuff to users asap.
   # @param {Object} followItem an item from the followItems collection
   appendItemSkeleton: (followItem) ->
-    @$('.follows').append $( itemTemplate item: followItem )
+    (@$follows ?= @$('.follows')).append $(itemTemplate item: followItem)
 
   # Display item content
   #
@@ -106,16 +123,10 @@ module.exports.FollowsView = class FollowsView extends Backbone.View
         empty: (-> @$el.parent().remove() )
         el: $artworks
       view.render()
-      new FollowButton
-        following: @followItems
-        modelName: 'artist'
-        model: followItem
-        el: $followButton
+      @attachFollowButton followItem, 'artist', $followButton
       _.defer ->
         view.hideSecondRow()
         view.removeHiddenItems()
 
 module.exports.init = ->
-  new FollowsView
-    el: $('body')
-    pageSize: 10
+  new FollowsView el: $('body'), pageSize: 10

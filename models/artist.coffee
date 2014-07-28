@@ -22,7 +22,6 @@ module.exports = class Artist extends Backbone.Model
 
   urlRoot: -> "#{sd.API_URL}/api/v1/artist"
 
-  clientUrl: -> "/artist/#{@get('id')}"
   href: -> "/artist/#{@get('id')}"
   displayName: -> @get("name")
 

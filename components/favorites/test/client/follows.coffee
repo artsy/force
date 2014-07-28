@@ -126,3 +126,30 @@ describe 'FollowsView', ->
         @view.loadNextPage()
         $following = @view.$el.find('.follows .follows-item')
         $following.length.should.equal 5
+
+  describe 'with following profiles', ->
+    beforeEach (done) ->
+      benv.render resolve(__dirname, '../fixtures/follows.jade'), { sd: {} }, =>
+        { @FollowsView } = mod = benv.requireWithJadeify resolve(__dirname, '../../client/follows'), [
+          'profileTemplate'
+        ]
+        mod.__set__ 'SuggestedGenesView', Backbone.View
+        mod.__set__ 'sd', KIND: 'profile'
+        @profiles = _.times 9, -> profile: fabricate 'partner_profile', id: _.uniqueId()
+        sinon.stub(Backbone, 'sync').yieldsTo 'success', @profiles
+        @view = new @FollowsView el: $('body'), pageSize: 3
+        done()
+
+    afterEach ->
+      Backbone.sync.restore()
+
+    describe '#initialize', ->
+      it 'renders the first page of profile results', ->
+        @view.$('.follows-profile').length.should.equal 3
+
+    describe '#loadNextPage', ->
+      it 'renders the next pages individually until the end', ->
+        @view.loadNextPage()
+        @view.$('.follows-profile').length.should.equal 6
+        @view.loadNextPage()
+        @view.$('.follows-profile').length.should.equal 9

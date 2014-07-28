@@ -18,6 +18,27 @@ hulkCallback = (data) ->
 render = (data) ->
   $('#about2-edit-example').html sectionsTemplates(data)
 
+initImageUploads = ->
+  $('input').each ->
+    return unless $(this).val().match(/\.jpg|\.png/)
+    $(this).after("<input type='file' />")
+    $(this).before("<img src='#{$(this).val()}' class='about2-preview-image'>")
+    $file = $(this).next()
+    $file.click -> $file.val ''
+    $file.change ->
+      alert 'Direct image upload coming soon.'
+      # TODO: Integrate Gemini for direct S3 upload
+      # formData = new FormData
+      # formData.append('image', $file[0].files[0], $file[0].files[0].name)
+      # $.ajax
+      #   type: 'POST'
+      #   url: '/about2/edit/image'
+      #   data: formData
+      #   contentType: false
+      #   processData: false
+      #   error: -> alert "Whoops. Something went wrong, try again. If it doesn't work ask Craig."
+      #   success: (data) -> console.log "UPLOADED!", data
+
 module.exports.init = ->
   $.hulk '#about2-edit-hulk', DATA, hulkCallback,
     separator: null
@@ -28,3 +49,4 @@ module.exports.init = ->
   # $('[value=title]').each -> $(this).parent().insertBefore $(this).parent().parent()
   $('textarea, input').on 'keyup', _.debounce (-> render $.hulkSmash('#about2-edit-hulk')), 300
   render(DATA)
+  initImageUploads()
