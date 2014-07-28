@@ -1854,6 +1854,10 @@
           "from": "once@^1.3.0"
         }
       }
+    },
+    "artsy-gemini-upload": {
+      "version": "0.0.4",
+      "from": "artsy-gemini-upload@"
     }
   }
 }

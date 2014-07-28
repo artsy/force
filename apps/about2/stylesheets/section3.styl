@@ -1,6 +1,8 @@
 @import '../../../components/stylus_lib'
 @import './lib'
 
+stick-margin = 100px
+
 #about2-section3-preamble
   p, img
     display inline-block
@@ -40,29 +42,42 @@
 
 #about2-section3-pull-blurb-1-container
   position relative
-  .about2-section3-genome-artwork
-    top 0
+
+.about2-section3-genome-artwork-track
+  width (column-width * 3) + (gutter-width * 3)
+  position absolute
+  min-height 500px
+  padding-top stick-margin
+  top -100px
+  &.is-fixed .about2-section3-genome-artwork
+    position fixed
+    top stick-margin !important
+  &.is-docked .about2-section3-genome-artwork
+    position absolute
+    bottom 0
 
 .about2-section3-genome-artwork
   width (column-width * 3) + (gutter-width * 3)
   margin-right gutter-width * 3
-  position absolute
   img
     max-width 100%
     margin-bottom 15px
   color gray-dark-color
   font-size 16px
   line-height 22px
+  z-index 2
 
 .about2-section3-genome-artwork-genes
   position absolute
-  top 0
   avant-garde()
   small-avant-garde()
   right -142px
   text-align center
   width 120px
   color black
+  left 0
+  top 20px
+  margin-left (column-width * 3) + (gutter-width * 4) - ((@width - gutter-width * 2) / 2)
   li
     margin-bottom 100px
 
@@ -71,9 +86,7 @@
 
 #about2-section3-genome-works
   > li
+    height 1200px
     position relative
-    margin-bottom 300px
-    &:nth-child(2n-1)
-      padding-left (column-width * 3) + (gutter-width * 7)
-      .about2-section3-genome-artwork-genes
-        left -142px
+  > li:nth-child(2n-1) .about2-section3-genome-artwork-track
+    margin-left (column-width * 3) + (gutter-width * 7)

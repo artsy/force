@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Scrollpoints Demo</title>
+	<link rel="stylesheet" href="main.css">
+</head>
+<body>
+
+	<section class="mega-height blue">Scroll down!</section>
+	<section class="mini-height">
+        <p>I will turn red when fully visible</p>
+        <p>and blue when 300px inside of the screen</p>
+        <p>I turn yellow when you scroll too far and I start to leave the screen.</p>
+        <p>When I start leaving the screen at the bottom edge, I will turn red again.</p>
+        <p>You can repeat the toggling between yellow and red as often as you want by scrolling up and down, but I won't turn blue again.</p>
+    </section>
+	<section class="mega-height green"></section>
+
+	<script src="../scrollpoints.min.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        var sections = document.getElementsByTagName('section');
+
+        Scrollpoints.add(sections[1], function(elem) {
+            elem.style.backgroundColor = 'red';
+        });
+
+        Scrollpoints.add(sections[1], function(elem) {
+            elem.style.backgroundColor = 'cyan';
+        }, {offset: 300});
+
+        Scrollpoints.add(sections[1], function(elem) {
+            elem.style.backgroundColor = 'yellow';
+        }, {when: 'leaving', once: false});
+
+        Scrollpoints.add(sections[1], function (elem) {
+            elem.style.backgroundColor = 'red';
+        }, {when: 'leaving', reversed: true, once: false});
+
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+html, body {
+	height: 100%;
+}
+
+/*
+	SOME RANDOM HEIGHTS
+*/
+
+.mega-height {
+	height: 200%;
+}
+
+.normal-height {
+	height: 50%;
+}
+
+.mini-height {
+	height: 300px;
+}
+
+/*
+	SOME RANDOM COLORS
+*/
+
+.blue {
+	background-color: #4E8EAD;
+}
+.red {
+	background-color: #B34848;
+}
+.green {
+	background-color: #3D6D43;
+}

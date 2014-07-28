@@ -21,11 +21,11 @@ sf:
 
 # Start the server pointing to staging
 ss:
-	API_URL=http://stagingapi.artsy.net $(BIN)/coffee index.coffee
+	APPLICATION_NAME=force-staging API_URL=http://stagingapi.artsy.net $(BIN)/coffee index.coffee
 
 # Start the server pointing to production
 sp:
-	API_URL=http://api.artsy.net $(BIN)/coffee index.coffee
+	APPLICATION_NAME=force-production API_URL=http://api.artsy.net $(BIN)/coffee index.coffee
 
 # Start server pointing to production with cache
 spc:

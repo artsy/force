@@ -74,6 +74,7 @@
     "jquery.poplockit": "*",
     "jquery.dotdotdot": "git://github.com/mzikherman/jquery.dotdotdot.git",
     "jquery-on-infinite-scroll": "*",
+    "jquery-waypoints": "git://github.com/imakewebthings/jquery-waypoints.git",
     "geoformatter": "git://github.com/dzucconi/geo_formatter.git",
     "annyang": "git://github.com/mzikherman/annyang.git",
     "node-inspector": "*",
