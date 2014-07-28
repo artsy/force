@@ -121,7 +121,8 @@ module.exports = (app) ->
     clientId: ARTSY_ID
     clientSecret: ARTSY_SECRET
   ) unless app.get('env') is 'test'
-  app.use bodyParser()
+  app.use bodyParser.json()
+  app.use bodyParser.urlencoded(extended: true)
   app.use cookieParser()
   app.use session
     secret: SESSION_SECRET

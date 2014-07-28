@@ -4,11 +4,14 @@ imagesLoaded = require 'imagesloaded'
 Scroller = require '../../../components/scroller/index.coffee'
 
 class AboutView extends Backbone.View
+
   initialize: ->
     @$window = $(window)
+    @$tracks = @$('.about2-section3-genome-artwork-track')
     @$window.on 'keyup', @toggleGrid
+    @$tracks.waypoint @onTrackWaypoint
     @setupHeroUnits()
-    @setGenomeWorkHeights()
+    @setupTracks()
     @setupScroller()
 
   setupScroller: ->
@@ -50,6 +53,27 @@ class AboutView extends Backbone.View
     imagesLoaded '#about2-section3-genome-works', =>
       @$('.about2-section3-genome-artwork').each ->
         $(this).parent('li').height $(this).children('img').height()
+
+  setupTracks: ->
+    @$tracks.imagesLoaded =>
+      for el, i in @$tracks.toArray()
+        next = @$tracks[i + 1]
+        continue unless next
+        bottom = $(next).offset().top + $(next).height()
+        $(el).height bottom - $(el).offset().top
+
+  onTrackWaypoint: (dir) ->
+    tracks = $('.about2-section3-genome-artwork-track').toArray()
+    for el, i in tracks
+      if el is this
+        index = i
+        break
+    if dir is 'down'
+      $(this).addClass('is-fixed') unless this is _.last tracks
+      $(tracks[i - 1])?.removeClass('is-fixed').addClass('is-docked')
+    else if dir is 'up'
+      $(this).removeClass('is-fixed is-docked')
+      $(tracks[i - 1])?.addClass('is-fixed').removeClass('is-docked')
 
 module.exports.init = ->
   new AboutView el: $ 'body'

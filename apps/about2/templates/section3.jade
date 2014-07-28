@@ -1,11 +1,12 @@
 mixin work(artwork)
-  section.about2-section3-genome-artwork
-    img( src=artwork.src )
-    include artwork_details
-    if artwork.genes
-      ul.about2-section3-genome-artwork-genes
-        for gene in artwork.genes
-          li= gene
+  .about2-section3-genome-artwork-track
+    section.about2-section3-genome-artwork
+      img( src=artwork.src )
+      include artwork_details
+  if artwork.genes
+    ul.about2-section3-genome-artwork-genes
+      for gene in artwork.genes
+        li= gene
 
 section#about2-section3.about2-container
   h1.about2-section-header!= sections[2].header

@@ -74,6 +74,7 @@ setupJquery = ->
   require 'jquery.dotdotdot'
   require 'jquery.poplockit'
   require 'jquery-on-infinite-scroll'
+  require 'jquery-waypoints/waypoints.js'
   require '../../lib/jquery/hidehover.coffee'
   $.ajaxSettings.headers =
     'X-XAPP-TOKEN': sd.ARTSY_XAPP_TOKEN
