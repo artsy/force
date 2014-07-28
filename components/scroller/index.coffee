@@ -46,7 +46,7 @@ module.exports = class Scroller
     else
       if element.inside
         element.inside = false
-        element.$el.trigger 'scroller:leave'
+        element.$el.trigger 'scroller:exit'
 
   listen: ($el) ->
     @elements.push (element = new Element $el)

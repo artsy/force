@@ -28,7 +28,7 @@ class AboutView extends Backbone.View
       @scroller.listen($(el)).on('scroller:enter', (e) =>
         idx = $(e.currentTarget).addClass('is-active').data('idx')
         @$fixedNav.find("a[data-idx=#{idx}]").addClass 'is-active'
-      ).on 'scroller:leave', (e) =>
+      ).on 'scroller:exit', (e) =>
         idx = $(e.currentTarget).removeClass('is-active').data('idx')
         @$fixedNav.find("a[data-idx=#{idx}]").removeClass 'is-active'
 
