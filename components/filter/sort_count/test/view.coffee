@@ -11,10 +11,6 @@ describe 'FilterSortCount', ->
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       FilterSortCount = benv.require resolve(__dirname, '../view')
-      FilterSortCount.__set__ 'mediator', @mediator = {
-        trigger: sinon.stub()
-        on: sinon.stub()
-      }
       @view = new FilterSortCount
         el: $ "<div></div>"
         counts: new Backbone.Model
