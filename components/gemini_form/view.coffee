@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-template = require './form.jade'
+template = -> require('./form.jade') arguments...
 _ = require 'underscore'
 
 module.exports = class GeminiForm extends Backbone.View

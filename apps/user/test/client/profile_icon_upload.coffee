@@ -5,6 +5,7 @@ Backbone = require 'backbone'
 sinon = require 'sinon'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
+{ stubChildClasses } = require '../../../../test/helpers/stubs'
 
 Icon = require '../../../../models/icon.coffee'
 Profile = require '../../../../models/profile.coffee'
@@ -43,6 +44,9 @@ describe 'ProfileIconUpload', ->
         @ProfileIconUpload = benv.requireWithJadeify(
           (resolve __dirname, '../../client/profile_icon_upload.coffee'), []
         )
+        stubChildClasses @ProfileIconUpload, this,
+          ['GeminiForm']
+          []
         @profileIconUpload = new @ProfileIconUpload
           el: $ '.settings-profile-icon-upload'
           model: @profile.icon()
@@ -66,6 +70,9 @@ describe 'ProfileIconUpload', ->
         @ProfileIconUpload = benv.requireWithJadeify(
           (resolve __dirname, '../../client/profile_icon_upload.coffee'), []
         )
+        stubChildClasses @ProfileIconUpload, this,
+          ['GeminiForm']
+          []
         @profileIconUpload = new @ProfileIconUpload
           el: $ '.settings-profile-icon-upload'
           model: @profile.icon()
