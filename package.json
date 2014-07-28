@@ -43,7 +43,8 @@
     "morgan": "*",
     "forever": "*",
     "humanparser": "*",
-    "knox": "*"
+    "knox": "*",
+    "artsy-gemini-upload": "*"
   },
   "devDependencies": {
     "browserify": "*",

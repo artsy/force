@@ -75,6 +75,7 @@ setupJquery = ->
   require 'jquery.poplockit'
   require 'jquery-on-infinite-scroll'
   require '../../lib/jquery/hidehover.coffee'
+  require('artsy-gemini-upload') $
   $.ajaxSettings.headers =
     'X-XAPP-TOKEN': sd.ARTSY_XAPP_TOKEN
     'X-ACCESS-TOKEN': sd.CURRENT_USER?.accessToken

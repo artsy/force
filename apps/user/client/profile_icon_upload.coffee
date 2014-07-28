@@ -1,7 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
-s3UploadForm = -> require('../templates/s3_upload.jade') arguments...
 
 module.exports = class ProfileIconUpload extends Backbone.View
   events:
@@ -19,65 +18,19 @@ module.exports = class ProfileIconUpload extends Backbone.View
     @listenTo @model, 'invalid', @onInvalid
 
     @$formPlaceholder = @$('.spiu-form')
-
-    @encodedCredentials = @encode(sd.GEMINI_ACCOUNT_KEY, '') 
-
-    $.ajax
-      type: 'GET'
-      dataType: 'json'
-      url: "#{sd.GEMINI_APP}/uploads/new.json"
-      data: 
-        acl: 'private'
-      headers: { 'Authorization' : "Basic #{@encodedCredentials}"}
-      success: (resp) =>
-        @renderForm(resp)
-
-  renderForm: (data) ->
-    key = "#{data.policy_document.conditions[1][2]}/${filename}"
-    bucket = data.policy_document.conditions[0].bucket
-    @$formPlaceholder.html s3UploadForm(
-      acl: data.policy_document.conditions[2].acl
-      successAction: data.policy_document.conditions[3].success_action_status
-      base64Policy: data.policy_encoded
-      signature: data.signature
-      key: key
+    @$formPlaceholder.geminiUpload
+      geminiApp: sd.GEMINI_APP
+      acl: 'private'
+      templateKey: 'profile-icon'
       s3Key: sd.GEMINI_S3_ACCESS_KEY
-      uploadBucket: bucket
-    )
-    @attachFileUploadUI(bucket, key)
+      geminiKey: sd.GEMINI_ACCOUNT_KEY
+      _type: 'ProfileIcon'
+      id: @profile.get('id')
+      onFail: @onFail
+      onProgressUpdate: @onProgressUpdate
+      onStop: @onStop
+      onUploadComplete: @onUploadComplete
 
-  makeGeminiRequest: (data) =>
-    fileName = data.files[0].name
-    key = data.key.replace('${filename}', fileName)
-    metadata = { _type: 'ProfileIcon', id: @profile.get('id') }
-    $.ajax
-      type: 'POST'
-      dataType: 'json'
-      url: "#{sd.GEMINI_APP}/entries.json"
-      data: { entry: { source_key: key, source_bucket: data.bucket, template_key: 'profile-icon', metadata: metadata } }
-      headers: { 'Authorization' : "Basic #{@encodedCredentials}"}
-      success: (resp) =>
-        @onUploadComplete()
-
-  attachFileUploadUI: (bucket, key) ->
-    $form = @$('form')
-    $form.fileupload
-      type: 'POST'
-      dataType: 'xml'
-      done: (e, data) =>
-        @makeGeminiRequest(_.extend(data, { key: key, bucket: bucket }))
-      add: (e, data) =>
-        fileName = data.files[0].name
-        fileType = data.files[0].type
-        $(@).find("form input[name='Content-Type']").val fileType  # We only know this after a file has been added.
-        data.submit()
-      fail: @onFail
-      progress: @onProgressUpdate
-      stop: @onStop
-
-  encode: (key, secret) ->
-    btoa(unescape(encodeURIComponent([ key, secret ].join(':'))))
-    
   cacheSelectors: ->
     @$errorMessage = @$('.spiu-error-message')
     @$uploadButton = @$('.spiu-upload')
