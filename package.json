@@ -21,7 +21,7 @@
     "http-proxy": "*",
     "showdown": "git://github.com/craigspaeth/showdown.git",
     "underscore": "*",
-    "newrelic": "*",
+    "newrelic": "1.3.2",
     "underscore.string": "*",
     "q": "*",
     "node-uuid": "*",
@@ -43,7 +43,8 @@
     "morgan": "*",
     "forever": "*",
     "humanparser": "*",
-    "knox": "*"
+    "knox": "*",
+    "artsy-gemini-upload": "*"
   },
   "devDependencies": {
     "browserify": "*",

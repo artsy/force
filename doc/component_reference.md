@@ -21,6 +21,7 @@ If a separate doc is required, add it to the component's directory as a
 - [Flash Message](#flash-message)
 - [Blurb](#blurb)
 - [Form Mixin](#form-mixin)
+- [Scroller](#scroller)
 
 ## Artwork Columns
 ![](images/artwork_columns.png)
@@ -587,3 +588,31 @@ class FormView extends Backbone.View
 ```
 
 You will want to have an actual `<button>` element in the form for handling submission. (The default `type` attribute is `submit` so this will trigger the form submission event.) `validateForm` will only apply the `is-validated` class to the form when there's a submit button due to click events firing before form submission events (*I think*).
+
+## Scroller
+
+Provides enter, exit, above, and below events for elements on the page (for building scroll spy/sticky nav style functionality). Recalculates element positions on window resize, and after images load. Accepts options for `frequency` (amount to throttle scroll and resize). Can also pass your own `$document` and `$window`.
+
+``` coffeescript
+Scroller = require '../../components/scroller/index.coffee'
+
+@scroller = new Scroller frequency: 100
+
+# Listen to elements
+$section = @scroller.listen '.section'
+
+# Subscribe to their events
+$section.on 'scroller:enter', ->
+  console.log 'Entered the element', $(this), @scroller.scrollTop
+$section.on 'scroller:exit', ->
+  console.log 'Left the element', $(this), @scroller.scrollTop
+$section.on 'scroller:above', ->
+  console.log 'Above the element', $(this), @scroller.scrollTop
+$section.on 'scroller:below', ->
+  console.log 'Below the element', $(this), @scroller.scrollTop
+
+# Also provides a throttled position event
+@listenTo @scroller, 'position', (top) ->
+  console.log 'At the position',  top
+
+```

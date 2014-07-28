@@ -76,6 +76,7 @@ setupJquery = ->
   require 'jquery-on-infinite-scroll'
   require 'jquery-waypoints/waypoints.js'
   require '../../lib/jquery/hidehover.coffee'
+  require('artsy-gemini-upload') $
   $.ajaxSettings.headers =
     'X-XAPP-TOKEN': sd.ARTSY_XAPP_TOKEN
     'X-ACCESS-TOKEN': sd.CURRENT_USER?.accessToken
