@@ -40,5 +40,6 @@ describe 'Profile Badge template', ->
 
     it 'displays a default profile icon for users', ->
       delete @profile.attributes.icon
+      @profile.set owner_type: 'User'
       $ = cheerio.load render('template')({ profile: @profile })
       $('.profile-badge-icon').css('background-image').should.containEql @profile.iconImageUrl()

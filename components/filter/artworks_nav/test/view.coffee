@@ -13,7 +13,6 @@ describe 'FilterArtworksNav', ->
       $.fn.hidehover = sinon.stub()
       benv.render resolve(__dirname, '../template.jade'), { sd: {}, filterRoot: '/browse/artworks' }, =>
         FilterArtworksNav = benv.require resolve(__dirname, '../view')
-        FilterArtworksNav.__set__ 'mediator', @mediator = trigger: sinon.stub(), on: sinon.stub()
         @view = new FilterArtworksNav
           el: $('.filter-nav')
           params: new Backbone.Model
