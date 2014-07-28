@@ -1,6 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
+GeminiForm = require '../../../components/gemini_form/view.coffee'
 
 module.exports = class ProfileIconUpload extends Backbone.View
   events:
@@ -17,13 +18,10 @@ module.exports = class ProfileIconUpload extends Backbone.View
 
     @listenTo @model, 'invalid', @onInvalid
 
-    @$formPlaceholder = @$('.spiu-form')
-    @$formPlaceholder.geminiUpload
-      geminiApp: sd.GEMINI_APP
+    new GeminiForm
+      el: @$('.spiu-form')
       acl: 'private'
       templateKey: 'profile-icon'
-      s3Key: sd.GEMINI_S3_ACCESS_KEY
-      geminiKey: sd.GEMINI_ACCOUNT_KEY
       _type: 'ProfileIcon'
       id: @profile.get('id')
       onFail: @onFail

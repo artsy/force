@@ -16,7 +16,7 @@ getJSON = (callback) ->
     try
       callback null, JSON.parse res.text
     catch e
-      callback e
+      callback new Error "Invalid JSON " + e
 
 @initClient = ->
   client = knox.createClient

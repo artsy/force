@@ -1,7 +1,8 @@
 _ = require 'underscore'
 require '../../../lib/vendor/hulk'
 sectionsTemplates = require '../templates/sections.jade'
-{ DATA } = require('sharify').data
+{ DATA } = sd = require('sharify').data
+GeminiForm = require '../../../components/gemini_form/view.coffee'
 
 hulkCallback = (data) ->
   render(data)
@@ -19,25 +20,19 @@ render = (data) ->
   $('#about2-edit-example').html sectionsTemplates(data)
 
 initImageUploads = ->
-  $('input').each ->
+  $('input, textarea').each ->
     return unless $(this).val().match(/\.jpg|\.png/)
-    $(this).after("<input type='file' />")
+    $(this).after("<div class='about2-edit-upload-form'>Replace Image</div>")
     $(this).before("<img src='#{$(this).val()}' class='about2-preview-image'>")
-    $file = $(this).next()
-    $file.click -> $file.val ''
-    $file.change ->
-      alert 'Direct image upload coming soon.'
-      # TODO: Integrate Gemini for direct S3 upload
-      # formData = new FormData
-      # formData.append('image', $file[0].files[0], $file[0].files[0].name)
-      # $.ajax
-      #   type: 'POST'
-      #   url: '/about2/edit/image'
-      #   data: formData
-      #   contentType: false
-      #   processData: false
-      #   error: -> alert "Whoops. Something went wrong, try again. If it doesn't work ask Craig."
-      #   success: (data) -> console.log "UPLOADED!", data
+    new GeminiForm
+      el: $form = $(this).next()
+      onUploadComplete: (res) =>
+        url = res.url + $form.find('[name=key]').val()
+          .replace('${filename}', encodeURIComponent(res.files[0].name))
+        $(this).val(url).trigger 'keyup'
+        $(this).prev('img').attr 'src', url
+        $form.removeClass 'is-loading'
+    $form.find('input').change -> $form.addClass 'is-loading'
 
 module.exports.init = ->
   $.hulk '#about2-edit-hulk', DATA, hulkCallback,
