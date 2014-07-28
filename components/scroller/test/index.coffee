@@ -5,7 +5,7 @@ Backbone = require 'backbone'
 Element = require '../element'
 
 setupStubs = (element) ->
-  _.reduce ['above', 'below', 'enter', 'leave'], (memo, direction) =>
+  _.reduce ['above', 'below', 'enter', 'exit'], (memo, direction) =>
     memo[direction] = sinon.stub()
     element.$el.on "scroller:#{direction}", memo[direction]
     memo
@@ -70,7 +70,7 @@ describe 'Scroller', ->
         stubs.above.called.should.be.true
         stubs.below.called.should.be.false
         stubs.enter.called.should.be.false
-        stubs.leave.called.should.be.true
+        stubs.exit.called.should.be.true
 
     describe 'below', ->
       beforeEach ->
@@ -89,7 +89,7 @@ describe 'Scroller', ->
         stubs.above.called.should.be.false
         stubs.below.called.should.be.true
         stubs.enter.called.should.be.false
-        stubs.leave.called.should.be.true
+        stubs.exit.called.should.be.true
 
     describe 'inside', ->
       beforeEach ->
@@ -107,4 +107,4 @@ describe 'Scroller', ->
         stubs.above.called.should.be.false
         stubs.below.called.should.be.true
         stubs.enter.called.should.be.true
-        stubs.leave.called.should.be.false
+        stubs.exit.called.should.be.false
