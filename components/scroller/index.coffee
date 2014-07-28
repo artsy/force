@@ -1,16 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 imagesLoaded = require 'imagesloaded'
-
-class Element
-  constructor: ($el) ->
-    $el = $($el) unless $el instanceof jQuery
-    @$el = $el
-    @recalculate()
-
-  recalculate: ->
-    @top = @$el.position().top
-    @bottom = @top + @$el.outerHeight()
+Element = require './element.coffee'
 
 module.exports = class Scroller
   _.extend @prototype, Backbone.Events
@@ -20,12 +11,13 @@ module.exports = class Scroller
   defaults:
     frequency: 100
     $window: $(window)
+    $document: $(document)
 
   constructor: (options = {}) ->
-    { @$window, @frequency } = _.defaults options, @defaults
-    @viewportHeight = $(document).height()
-    @$window.on 'scroll', _.throttle(@onScroll, @frequency)
-    @$window.on 'resize', _.throttle(@onResize, @frequency)
+    { @$window, @$document, @frequency } = _.defaults options, @defaults
+    @viewportHeight = @$document.height()
+    @$window.on 'scroll.scroller', _.throttle(@onScroll, @frequency)
+    @$window.on 'resize.scroller', _.throttle(@onResize, @frequency)
 
   onScroll: =>
     @scrollTop = @$window.scrollTop()
@@ -37,10 +29,16 @@ module.exports = class Scroller
     _.invoke @elements, 'recalculate'
 
   detect: (element) ->
-    element.$el.trigger if @scrollTop > element.top
-      'scroller:below'
+    if @scrollTop > element.top
+      element.above = false
+      unless element.below
+        element.below = true
+        element.$el.trigger 'scroller:below'
     else
-      'scroller:above'
+      element.below = false
+      unless element.above
+        element.above = true
+        element.$el.trigger 'scroller:above'
     if @scrollTop >= element.top and @scrollTop <= element.bottom
       unless element.inside
         element.inside = true
@@ -52,8 +50,11 @@ module.exports = class Scroller
 
   listen: ($el) ->
     @elements.push (element = new Element $el)
+    $el = element.$el
     $el.imagesLoaded @onResize
     $el
 
   remove: ->
-    @$window.off 'scroll'
+    @$window.off 'scroll.scroller'
+    @$window.off 'resize.scroller'
+    @stopListening()
