@@ -1,9 +1,5 @@
 include hero_unit
-
-.about2-section-nav
-  nav: for section, i in sections
-    a( data-idx=i )!= section.header
-
+include nav
 .about2-section( data-idx=0 ): include section1
 .about2-section( data-idx=1 ): include section2
 .about2-section( data-idx=2 ): include section3
