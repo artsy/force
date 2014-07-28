@@ -21,11 +21,11 @@ describe 'Meta tags', ->
         sd: @sd
 
     it 'includes mobile alternate, canonical, twitter card and og tags', ->
-      @html.should.include "<meta property=\"twitter:card\" content=\"summary"
-      @html.should.include "<link rel=\"canonical\" href=\"http://localhost:5000/artwork/#{@artwork.get('id')}"
-      @html.should.include "<meta property=\"og:url\" content=\"http://localhost:5000/artwork/#{@artwork.get('id')}"
-      @html.should.include "<meta property=\"og:description\" content=\"Related auction results for From Gagosian Gallery, Andy Warhol, Skull (1999), Watercolor on Paper, 10 × 20 × 30in"
-      @html.should.include "<meta property=\"og:title\" content=\"Andy Warhol, Skull (1999) | Related Auction Results | Artsy"
+      @html.should.containEql "<meta property=\"twitter:card\" content=\"summary"
+      @html.should.containEql "<link rel=\"canonical\" href=\"http://localhost:5000/artwork/#{@artwork.get('id')}"
+      @html.should.containEql "<meta property=\"og:url\" content=\"http://localhost:5000/artwork/#{@artwork.get('id')}"
+      @html.should.containEql "<meta property=\"og:description\" content=\"Related auction results for From Gagosian Gallery, Andy Warhol, Skull (1999), Watercolor on Paper, 10 × 20 × 30in"
+      @html.should.containEql "<meta property=\"og:title\" content=\"Andy Warhol, Skull (1999) | Related Auction Results | Artsy"
 
   describe 'with an image', ->
 
@@ -37,5 +37,5 @@ describe 'Meta tags', ->
         sd: @sd
 
     it 'includes og:image and twitter card', ->
-      @html.should.include "<meta property=\"og:image\" content=\"http://localhost:5000/artwork/#{@artwork.get('id')}.jpg"
-      @html.should.include "<meta property=\"twitter:card\" content=\"summary_large_image"
+      @html.should.containEql "<meta property=\"og:image\" content=\"http://localhost:5000/artwork/#{@artwork.get('id')}.jpg"
+      @html.should.containEql "<meta property=\"twitter:card\" content=\"summary_large_image"

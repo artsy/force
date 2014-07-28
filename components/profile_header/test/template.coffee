@@ -42,7 +42,7 @@ describe 'Profile Header template', ->
     it 'renders the profile icon', ->
       $ = cheerio.load render('template')({ profile: @profile })
       $('.profile-badge-icon').should.have.lengthOf 1
-      $('.profile-badge-icon').attr('style').should.include @profile.iconImageUrl()
+      $('.profile-badge-icon').attr('style').should.containEql @profile.iconImageUrl()
 
   describe 'with no icon', ->
 
@@ -55,8 +55,9 @@ describe 'Profile Header template', ->
 
     it 'displays a default profile icon for users', ->
       delete @profile.attributes.icon
+      @profile.set owner_type: 'User'
       $ = cheerio.load render('template')({ profile: @profile })
-      $('.profile-badge-icon').css('background-image').should.include @profile.iconImageUrl()
+      $('.profile-badge-icon').css('background-image').should.containEql @profile.iconImageUrl()
 
   describe 'with no profile', ->
 

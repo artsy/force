@@ -42,11 +42,11 @@ describe 'Feed Templates', ->
       it 'Renders a feed of partner shows', ->
         $ = cheerio.load @html
         $('.feed-item').length.should.equal 1
-        $('.feed-item-top-section .show-link').text().should.include @partnerShow.toChildModel().formatFeedItemHeading()
-        $('.feed-item-top-section .timeframe').html().should.include @partnerShow.toChildModel().runningDates()
-        $('.feed-item-top-section .timeframe').text().should.include @partnerShow.get('location').city
-        @html.should.not.include "undefined"
-        @html.should.not.include "\#{"
+        $('.feed-item-top-section .show-link').text().should.containEql @partnerShow.toChildModel().formatFeedItemHeading()
+        $('.feed-item-top-section .timeframe').html().should.containEql @partnerShow.toChildModel().runningDates()
+        $('.feed-item-top-section .timeframe').text().should.containEql @partnerShow.get('location').city
+        @html.should.not.containEql "undefined"
+        @html.should.not.containEql "\#{"
 
     describe 'in an art fair', ->
       beforeEach ->
@@ -74,12 +74,12 @@ describe 'Feed Templates', ->
       it 'Shows fair info', ->
         $ = cheerio.load @html
         $('.feed-item').length.should.equal 1
-        $('.feed-item-top-section .feed-item-fair-name').text().should.include @partnerShow.get('fair').name
-        $('.feed-item-top-section .fair-location').text().should.include 'New York – Booth 1234'
-        $('.fair-location').html().should.include @partnerShow.get('fair_location').display
+        $('.feed-item-top-section .feed-item-fair-name').text().should.containEql @partnerShow.get('fair').name
+        $('.feed-item-top-section .fair-location').text().should.containEql 'New York – Booth 1234'
+        $('.fair-location').html().should.containEql @partnerShow.get('fair_location').display
 
-        @html.should.not.include "undefined"
-        @html.should.not.include "\#{"
+        @html.should.not.containEql "undefined"
+        @html.should.not.containEql "\#{"
 
     describe 'no artists and artworks', ->
       beforeEach ->
@@ -101,10 +101,10 @@ describe 'Feed Templates', ->
       it 'Renders a feed of partner shows', ->
         $ = cheerio.load @html
         $('.feed-item').length.should.equal 1
-        $('.feed-item-top-section .show-link').text().should.include @partnerShow.toChildModel().formatFeedItemHeading()
-        $('.feed-item-top-section .timeframe').html().should.include @partnerShow.toChildModel().runningDates()
-        @html.should.not.include "undefined"
-        @html.should.not.include "\#{"
+        $('.feed-item-top-section .show-link').text().should.containEql @partnerShow.toChildModel().formatFeedItemHeading()
+        $('.feed-item-top-section .timeframe').html().should.containEql @partnerShow.toChildModel().runningDates()
+        @html.should.not.containEql "undefined"
+        @html.should.not.containEql "\#{"
 
   describe 'Post Feed Item', ->
     beforeEach ->
@@ -186,8 +186,8 @@ describe 'Feed Templates', ->
       # PostLink
       $('.feed-right-column figure.video-link').length.should.equal 1
 
-      @html.should.not.include "undefined"
-      @html.should.not.include "\#{"
+      html.should.not.containEql "undefined"
+      html.should.not.containEql "\#{"
 
     it 'includes admin controls', ->
       feedItems = new FeedItems

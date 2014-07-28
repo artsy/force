@@ -36,7 +36,7 @@ describe 'ContactView', ->
       it 'has sensible defaults which get set as the view options', ->
         @view.options.width.should.equal '470px'
         @view.options.placeholder.should.equal 'Your message'
-        @view.options.url.should.include 'api/v1/feedback'
+        @view.options.url.should.containEql 'api/v1/feedback'
 
       it 'instantiates a model to use with the passed in API URL', ->
         @view.model.url.should.equal @view.options.url

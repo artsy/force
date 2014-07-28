@@ -48,7 +48,7 @@ describe 'HeaderView', ->
   describe '#openAuth', ->
     it 'opens with custom copy', ->
       @view.openAuth copy: 'Sign up to foo bar'
-      @HeaderView.__get__('AuthModalView').args[0][0].copy.should.include 'Sign up to foo bar'
+      @HeaderView.__get__('AuthModalView').args[0][0].copy.should.containEql 'Sign up to foo bar'
 
   describe '#login', ->
     it 'triggers the mediator', ->

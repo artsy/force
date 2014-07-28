@@ -1,6 +1,17 @@
 @import '../../../components/stylus_lib'
 @import './lib'
 
+@keyframes pulse
+  0% { 
+    opacity 0.33 
+  }
+  50% { 
+    opacity 1
+  }
+  100% { 
+    opacity 0.33 
+  }
+
 .about2-hero-unit
   width 100%
   height 100%
@@ -75,11 +86,6 @@
     vertical-align middle
     line-height 18px
     transition opacity 0.25s
-
-@keyframes pulse
-  0% { opacity 0.33 }
-  50% { opacity 1 }
-  100% { opacity 0.33 }
 
 .about2-chevron
   display block

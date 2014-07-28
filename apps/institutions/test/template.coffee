@@ -29,7 +29,7 @@ describe 'Partners', ->
         id: '43-salon-inter-nacional-de-artistas'
         owner: fabricate('partner',
           type: "Museum"
-          name: '43 Salón (Inter) Nacional de Artistas'
+          name: '43 Salon (Inter) Nacional de Artistas'
         )
       )
       fabricate('featured_partners_profiles',
@@ -63,8 +63,8 @@ describe 'Partners', ->
       $ = cheerio.load @html
       @profiles.each (profile) ->
         markup = $(".featured-partners-institutions-list").html()
-        markup.should.include profile.get('owner').name
-        markup.should.include "/#{profile.get('id')}"
+        markup.should.containEql profile.get('owner').name
+        markup.should.containEql "/#{profile.get('id')}"
       $(".a-to-z-row-letter").eq(0).text().should.equal @aToZGroup[0].letter
       $(".a-to-z-row-letter").eq(1).text().should.equal @aToZGroup[1].letter
       $(".a-to-z-row-letter").eq(2).text().should.equal @aToZGroup[2].letter

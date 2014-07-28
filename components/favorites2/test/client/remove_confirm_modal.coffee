@@ -37,7 +37,7 @@ describe 'RemoveConfirmModal', ->
 
     it 'destroys the collection', ->
       @view.delete()
-      _.last(Backbone.sync.args)[2].url.should.include(
+      _.last(Backbone.sync.args)[2].url.should.containEql(
         'collection/saved-artwork/artwork/andy-foobar-skull'
       )
       _.last(Backbone.sync.args)[0].should.equal 'delete'

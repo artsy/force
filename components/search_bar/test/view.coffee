@@ -65,25 +65,25 @@ describe 'SearchBarView', ->
       @view.trigger 'search:start'
 
     it 'triggers the loading state of the component', ->
-      @view.$el.attr('class').should.include 'is-loading'
+      @view.$el.attr('class').should.containEql 'is-loading'
 
     it 'restores the feedback to the original state', ->
-      @view.$el.html().should.include 'Search Artists, Artworks, Galleries, Museums, Categories'
+      @view.$el.html().should.containEql 'Search Artists, Artworks, Galleries, Museums, Categories'
 
   describe '#concealLoading', ->
     it 'removes the loading state', ->
       @view.trigger 'search:start'
-      @view.$el.attr('class').should.include 'is-loading'
+      @view.$el.attr('class').should.containEql 'is-loading'
       @view.trigger 'search:complete'
-      @view.$el.attr('class').should.not.include 'is-loading'
+      @view.$el.attr('class').should.not.containEql 'is-loading'
 
   describe '#displaySuggestions', ->
     it 'displays the feedback when the input is empty', ->
       @view.$('.autocomplete-feedback').text ''
       _.isEmpty(@view.$('input').text()).should.be.true
       @view.trigger 'search:opened'
-      @view.$el.html().should.include 'Search Artists, Artworks, Galleries, Museums, Categories'
-      @view.$el.attr('class').should.include 'is-open'
+      @view.$el.html().should.containEql 'Search Artists, Artworks, Galleries, Museums, Categories'
+      @view.$el.attr('class').should.containEql 'is-open'
 
     it 'does not display the feedback when the input has text', ->
       @view.$('input').val 'Foo Bar'
@@ -93,7 +93,7 @@ describe 'SearchBarView', ->
   describe '#hideSuggestions', ->
     it 'removes the open state', ->
       @view.trigger 'search:opened'
-      @view.$el.attr('class').should.include 'is-open'
+      @view.$el.attr('class').should.containEql 'is-open'
       @view.trigger 'search:closed'
       _.isEmpty(@view.$el.attr('class')).should.be.true
 
@@ -102,14 +102,14 @@ describe 'SearchBarView', ->
       @view.search.results.add(fabricate 'artist')
       @view.search.results.length.should.equal 1
       @view.trigger 'search:complete'
-      @view.$el.html().should.not.include 'No results found'
+      @view.$el.html().should.not.containEql 'No results found'
       _.isEmpty(@view.$el.attr 'class').should.be.true
 
     it 'renders a message when there are no results', ->
       @view.search.results.length.should.equal 0
       @view.trigger 'search:complete'
-      @view.$el.html().should.include 'No results found'
-      @view.$el.attr('class').should.include 'is-no-results'
+      @view.$el.html().should.containEql 'No results found'
+      @view.$el.attr('class').should.containEql 'is-no-results'
 
   describe '#feedbackString', ->
     it 'uses the mode if there is one available', ->

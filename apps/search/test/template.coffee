@@ -38,7 +38,7 @@ describe 'Search results template', ->
       )
 
     it 'displays a message to the user that nothing can be found', ->
-      @template.should.include 'Nothing found'
+      @template.should.containEql 'Nothing found'
 
   describe 'Has results', ->
     beforeEach ->

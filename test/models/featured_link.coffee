@@ -15,10 +15,6 @@ describe 'FeaturedLink', ->
 
   xdescribe '#fetchItems', ->
 
-  describe '#initialize', ->
-    it 'adds original to the image versions', ->
-      _.contains(@featuredLink.get('image_versions'), 'original').should.be.true
-
   describe '#layoutStyle', ->
     it 'returns a descriptor for the required layout', ->
       @featuredLink.layoutStyle(1).should.equal 'full'
@@ -46,4 +42,7 @@ describe 'FeaturedLink', ->
         @featuredLink.hasImageForLayout(n).should.be.true
       @featuredLink.set 'image_versions', []
       _(4).times (n) =>
-        @featuredLink.hasImageForLayout(n).should.be.false
+        if n > 1
+          @featuredLink.hasImageForLayout(n).should.be.false
+        if n = 1
+          @featuredLink.hasImageForLayout(n).should.be.true

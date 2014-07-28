@@ -61,6 +61,10 @@ When `opts.always` is truthy, wrap every file with all the global variables
 without parsing. This is handy because parsing the scope can take a long time,
 so you can prioritize fast builds over saving bytes in the final output.
 
+Use `opts.vars` to override the default inserted variables, or set
+`opts.vars[name]` to `undefined` to override an undefined variable that has
+already been set by default.
+
 # events
 
 ## inserter.on('global', function (name) {})

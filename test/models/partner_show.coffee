@@ -53,25 +53,25 @@ describe 'PartnerShow', ->
   describe '#toPageTitle', ->
 
     it 'creates a title defensively handling empty or missing values', ->
-      @partnerShow.toPageTitle().should.include "Inez & Vinoodh | Gagosian Gallery |"
+      @partnerShow.toPageTitle().should.containEql "Inez & Vinoodh | Gagosian Gallery |"
 
     it 'omits the artworks for sale bit if the partner is not a gallery', ->
       @partnerShow.attributes.partner.name = "White Cube"
       @partnerShow.attributes.partner.type = "Museum"
-      @partnerShow.toPageTitle().should.not.include ", Artwork for Sale"
+      @partnerShow.toPageTitle().should.not.containEql ", Artwork for Sale"
 
   describe '#toPageDescription', ->
 
     it 'correctly renders the meta description', ->
-      @partnerShow.toPageDescription().should.include 'Past show at Gagosian Gallery New York, 529 W 20th St. 2nd Floor'
+      @partnerShow.toPageDescription().should.containEql 'Past show at Gagosian Gallery New York, 529 W 20th St. 2nd Floor'
 
     it 'adds a single artist to the meta description', ->
       @partnerShow.set 'artists', [fabricate('artist')]
-      @partnerShow.toPageDescription().should.include 'Past show featuring works by Pablo Picasso at Gagosian Gallery New York, 529 W 20th St. 2nd Floor'
+      @partnerShow.toPageDescription().should.containEql 'Past show featuring works by Pablo Picasso at Gagosian Gallery New York, 529 W 20th St. 2nd Floor'
 
     it 'adds multiple artists to the meta description', ->
       @partnerShow.set 'artists', [fabricate('artist'), fabricate('artist')]
-      @partnerShow.toPageDescription().should.include 'Past show featuring works by Pablo Picasso and Pablo Picasso at Gagosian Gallery New York, 529 W 20th St. 2nd Floor'
+      @partnerShow.toPageDescription().should.containEql 'Past show featuring works by Pablo Picasso and Pablo Picasso at Gagosian Gallery New York, 529 W 20th St. 2nd Floor'
 
   describe '#location', ->
 
@@ -131,19 +131,19 @@ describe 'PartnerShow', ->
 
   describe '#posterImageUrl', ->
     it 'returns an image', ->
-      @partnerShow.posterImageUrl().should.include 'partner_show_images/51f6a51d275b24a787000c36/1/large.jpg'
+      @partnerShow.posterImageUrl().should.containEql 'partner_show_images/51f6a51d275b24a787000c36/1/large.jpg'
 
     it 'returns a featured image', ->
-      @partnerShow.posterImageUrl(true).should.include '/partner_show_images/51f6a51d275b24a787000c36/1/featured.jpg'
+      @partnerShow.posterImageUrl(true).should.containEql '/partner_show_images/51f6a51d275b24a787000c36/1/featured.jpg'
 
     it 'returns larger if featured or large is unavailable', (done) ->
       @partnerShow.on 'fetch:posterImageUrl', (url) ->
-        url.should.include 'additional_images/4e7cb83e1c80dd00010038e2/1/large.jpg'
+        url.should.containEql 'additional_images/4e7cb83e1c80dd00010038e2/1/large.jpg'
         done()
 
       @partnerShow.unset 'image_versions'
       @partnerShow.posterImageUrl()
-      Backbone.sync.args[0][2].url.should.include "/api/v1/partner/#{@partnerShow.get('partner').id}/show/#{@partnerShow.id}/artworks"
+      Backbone.sync.args[0][2].url.should.containEql "/api/v1/partner/#{@partnerShow.get('partner').id}/show/#{@partnerShow.id}/artworks"
       Backbone.sync.args[0][2].success [fabricate 'artwork']
 
     it 'returns empty when there really is no image', ->

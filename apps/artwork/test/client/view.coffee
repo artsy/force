@@ -75,13 +75,13 @@ describe 'ArtworkView', ->
 
     describe '#checkQueryStringForAuction', ->
       it 'renders the auction placeholder when an auction_id is in the query string', ->
-        @view.$el.html().should.not.include 'Bid'
+        @view.$el.html().should.not.containEql 'Bid'
         search = window.location.search
         window.location.search = '?auction_id=my-sale-id'
         @view.checkQueryStringForAuction()
         html = @view.$el.html()
-        html.should.include 'my-sale-id'
-        html.should.include 'Bid'
+        html.should.containEql 'my-sale-id'
+        html.should.containEql 'Bid'
         window.location.search = search
 
       describe 'artwork is already sold', ->
@@ -91,8 +91,8 @@ describe 'ArtworkView', ->
           window.location.search = '?auction_id=my-sale-id'
           @view.checkQueryStringForAuction()
           html = @view.$el.html()
-          html.should.not.include 'my-sale-id'
-          html.should.not.include 'Bid'
+          html.should.not.containEql 'my-sale-id'
+          html.should.not.containEql 'Bid'
           window.location.search = search
 
     describe 'when an artwork changes', ->
@@ -194,12 +194,12 @@ describe 'ArtworkView', ->
         @artist.artworks.add([fabricate 'artwork'])
         @artist.artworks.trigger 'sync'
 
-        @artist.artworks.pluck('id').should.not.include @artwork.id
+        @artist.artworks.pluck('id').should.not.containEql @artwork.id
 
     describe '#openShare', ->
       it 'opens the share view when the share button is clicked', ->
         @view.$('.circle-icon-button-share').click()
-        @shareViewStub.args[0][0].description.should.include @artwork.toAltText()
+        @shareViewStub.args[0][0].description.should.containEql @artwork.toAltText()
         @shareViewStub.args[0][0].width.should.equal '350px'
 
     describe '#route', ->
@@ -245,7 +245,7 @@ describe 'ArtworkView', ->
       it 'syncs the following collection with the artist id', ->
         syncFollowsSpy = sinon.spy @view.following, 'syncFollows'
         @view.setupFollowButton()
-        syncFollowsSpy.args[0][0].should.include @artist.id
+        syncFollowsSpy.args[0][0].should.containEql @artist.id
 
     describe '#selectEdition', ->
       it 'sets a private value on the view that is otherwise undefined', ->

@@ -13,4 +13,4 @@ describe 'clear cache app', ->
   it 'doesnt allow non-admins', ->
     app.__get__('all')({ user: new Backbone.Model(type: 'User') }, { status: -> },
       next = sinon.stub())
-    next.args[0][0].toString().should.include 'must be logged in as an admin'
+    next.args[0][0].toString().should.containEql 'must be logged in as an admin'

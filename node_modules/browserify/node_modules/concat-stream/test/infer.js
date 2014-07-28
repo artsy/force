@@ -8,6 +8,7 @@ test('type inference works as expected', function(t) {
   t.equal(stream.inferEncoding(undefined), 'buffer', 'buffer')
   t.equal(stream.inferEncoding(new Uint8Array(1)), 'uint8array', 'uint8array')
   t.equal(stream.inferEncoding('hello'), 'string', 'string')
+  t.equal(stream.inferEncoding(''), 'string', 'string')
   t.equal(stream.inferEncoding({hello: "world"}), 'object', 'object')
   t.equal(stream.inferEncoding(1), 'buffer', 'buffer')
   t.end()

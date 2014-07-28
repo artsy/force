@@ -101,8 +101,8 @@ describe 'FollowsView', ->
       it 'renders the first page of following artists', ->
         $results = @view.$el.find('.follows .favorites2-follows-item')
         $results.length.should.equal 2
-        $results.eq(0).html().should.include 'artist1'
-        $results.eq(1).html().should.include 'artist2'
+        $results.eq(0).html().should.containEql 'artist1'
+        $results.eq(1).html().should.containEql 'artist2'
         @FillwidthView.render.should.calledTwice
 
     describe '#loadNextPage', ->
@@ -111,18 +111,18 @@ describe 'FollowsView', ->
         @view.loadNextPage()
         $following = @view.$el.find('.follows .favorites2-follows-item')
         $following.length.should.equal 4
-        $following.eq(0).html().should.include 'artist1'
-        $following.eq(1).html().should.include 'artist2'
-        $following.eq(2).html().should.include 'artist3'
-        $following.eq(3).html().should.include 'artist4'
+        $following.eq(0).html().should.containEql 'artist1'
+        $following.eq(1).html().should.containEql 'artist2'
+        $following.eq(2).html().should.containEql 'artist3'
+        $following.eq(3).html().should.containEql 'artist4'
         @view.loadNextPage()
         $following = @view.$el.find('.follows .favorites2-follows-item')
         $following.length.should.equal 5
-        $following.eq(0).html().should.include 'artist1'
-        $following.eq(1).html().should.include 'artist2'
-        $following.eq(2).html().should.include 'artist3'
-        $following.eq(3).html().should.include 'artist4'
-        $following.eq(4).html().should.include 'artist5'
+        $following.eq(0).html().should.containEql 'artist1'
+        $following.eq(1).html().should.containEql 'artist2'
+        $following.eq(2).html().should.containEql 'artist3'
+        $following.eq(3).html().should.containEql 'artist4'
+        $following.eq(4).html().should.containEql 'artist5'
         @view.loadNextPage()
         $following = @view.$el.find('.follows .favorites2-follows-item')
         $following.length.should.equal 5

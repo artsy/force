@@ -13,8 +13,8 @@ describe 'Meta tags', ->
       sd: @sd
 
   it 'includes canonical url, twitter card, og tags, and title', ->
-    @html.should.include "<meta property=\"twitter:card\" content=\"summary"
-    @html.should.include "<link rel=\"canonical\" href=\"http://localhost:5000/posts"
-    @html.should.include "<meta property=\"og:url\" content=\"http://localhost:5000/posts"
-    @html.should.include "<meta property=\"og:title\" content=\"Posts | Artsy"
-    @html.should.include "<meta property=\"og:description\" content=\"Posts are insights on artists and artworks by the Artsy community, including posts by users, galleries and institutions, and the Artsy editorial staff."
+    @html.should.containEql "<meta property=\"twitter:card\" content=\"summary"
+    @html.should.containEql "<link rel=\"canonical\" href=\"http://localhost:5000/posts"
+    @html.should.containEql "<meta property=\"og:url\" content=\"http://localhost:5000/posts"
+    @html.should.containEql "<meta property=\"og:title\" content=\"Posts | Artsy"
+    @html.should.containEql "<meta property=\"og:description\" content=\"Posts are insights on artists and artworks by the Artsy community, including posts by users, galleries and institutions, and the Artsy editorial staff."

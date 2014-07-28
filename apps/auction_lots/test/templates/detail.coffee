@@ -49,7 +49,7 @@ describe 'Detail auction lots template', ->
     h1.text().should.equal 'Pablo Picasso, MADONNA PAINTING — Auction Result'
 
   it 'has a link to the lot on the external auction site', ->
-    @$template.find('.ard-external').text().should.include 'Visit the lot on lempertz-online.de'
+    @$template.find('.ard-external').text().should.containEql 'Visit the lot on lempertz-online.de'
 
   it 'has an h3 tag describing the artist available/reference works', ->
     @$template.find('h3.ara-available-works-count').text().should.equal '1 available work & 1 reference work'

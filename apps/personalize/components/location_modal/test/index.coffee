@@ -31,15 +31,15 @@ describe 'LocationModalView', ->
 
   it 'renders the template', ->
     html = @view.$el.html()
-    html.should.include 'Where do you call home?'
-    html.should.include 'See top galleries near you'
-    html.should.include 'Continue'
+    html.should.containEql 'Where do you call home?'
+    html.should.containEql 'See top galleries near you'
+    html.should.containEql 'Continue'
 
   it 'listens to location update and updates the user', ->
     @view.user.setLocation = sinon.stub()
     @view.locationSearchView.trigger 'location:update', sinon.stub()
     @view.user.setLocation.called.should.be.true
     Backbone.sync.called.should.be.true
-    Backbone.sync.args[0][1].url().should.include '/api/v1/me'
+    Backbone.sync.args[0][1].url().should.containEql '/api/v1/me'
     @view.$('button').data('state').should.equal 'loading'
     @view.$('button').prop('disabled').should.be.true

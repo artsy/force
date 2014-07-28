@@ -41,7 +41,7 @@ describe 'Bookmarks', ->
       bookmark.get('bookmark_type').should.equal 'collecting'
       Backbone.sync.args[0][0].should.equal 'create'
       Backbone.sync.args[0][1].attributes.artist_id.should.equal 'qux'
-      Backbone.sync.args[0][1].url().should.include '/api/v1/me/bookmark/artist'
+      Backbone.sync.args[0][1].url().should.containEql '/api/v1/me/bookmark/artist'
 
     it 'rejects duplicate artists', ->
       @bookmarks.createFromArtist new Backbone.Model id: 'qux'

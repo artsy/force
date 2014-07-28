@@ -1,13 +1,11 @@
 //TODO: parseName
-//Randy S. Burdette, CAI, CES, CAGA
-//Randy S. Burdette, CAI, CES, CAGA
-//Robert (Bobby) Jones
+//John A. Doe, CAI, CES, CAGA
+//John (Johnnie) Doe
+//John "Johnnie" Doe
 
 //TODO: getUsableName(str, idx)
-//Matt Rymarski & Julie Schalm
-//Ros & Jim Higgins
-//Brent Roberts and Devon Rogers
-//Jim Brashier, Senior Broker Associates
+//John Doe & Jim Duncan
+//John Doe, Senior Whatever
 
 
 var chai = require('chai')

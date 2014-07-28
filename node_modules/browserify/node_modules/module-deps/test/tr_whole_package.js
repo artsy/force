@@ -5,9 +5,10 @@ var packer = require('browser-pack');
 
 test('transform', function (t) {
     t.plan(1);
-    var p = mdeps(__dirname + '/files/tr_whole_package/main.js', {
+    var p = mdeps({
         transformKey: [ 'browserify', 'transform' ]
     });
+    p.end(__dirname + '/files/tr_whole_package/main.js');
     var pack = packer();
     
     p.pipe(JSONStream.stringify()).pipe(pack);

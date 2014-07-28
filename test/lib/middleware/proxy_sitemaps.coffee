@@ -35,10 +35,10 @@ describe 'Setup', ->
 
   it 'proxies sitemap index request to s3', (done) ->
     request.get('http://localhost:5000/sitemap.xml').end (res) ->
-      res.text.should.include 'artsy.net/sitemap-things-1.xml'
+      res.text.should.containEql 'artsy.net/sitemap-things-1.xml'
       done()
 
   it 'proxies sitemap requests to s3', (done) ->
     request.get('http://localhost:5000/sitemap-things-1.xml').end (res) ->
-      res.text.should.include '/thing/1'
+      res.text.should.containEql '/thing/1'
       done()

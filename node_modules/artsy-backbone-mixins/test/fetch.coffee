@@ -48,6 +48,20 @@ describe 'fetch until end mixin', ->
       Backbone.sync.args[0][2].success []
       eachStub.callCount.should.equal 4
 
+    it 'works with complete with error', (done) ->
+      @collection.fetchUntilEnd complete: =>
+        done()
+      Backbone.sync.args[0][2].success [{ foo: 'bar' }]
+      Backbone.sync.args[0][2].error()
+      Backbone.sync.args[0][2].success [{ foo: 'bar' }]
+
+    it 'works with complete with success', (done) ->
+      @collection.fetchUntilEnd complete: =>
+        done()
+      Backbone.sync.args[0][2].success [{ foo: 'bar' }]
+      Backbone.sync.args[0][2].success [{ foo: 'bar' }]
+      Backbone.sync.args[0][2].success []
+
 describe 'fetch set items by key mixin', ->
 
   beforeEach ->

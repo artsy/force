@@ -15,7 +15,7 @@ describe 'OrderedSets', ->
   describe '#fetch', ->
     it 'sends the appropriate data as a query string', ->
       @orderedSets.fetch()
-      Backbone.sync.args[0][2].data.should.include 'key=browse:featured-genes'
+      Backbone.sync.args[0][2].data.should.containEql 'key=browse:featured-genes'
 
   describe '#fetchSets', ->
     beforeEach ->

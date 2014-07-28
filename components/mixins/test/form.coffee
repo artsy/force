@@ -87,7 +87,7 @@ describe 'Form', ->
       @view.$('form').find('input[name=name]').val values['name']
       @view.$('form').find('input[name=email]').val values['email']
       @view.$('form').find('textarea[name=comment]').val values['comment']
-      @view.serializeForm().should.include values
+      @view.serializeForm().should.containEql values
 
     it 'should work with an actual form submission', ->
       @view.$('form').submit()

@@ -27,14 +27,14 @@ describe 'Artist auction lots template', ->
       )
 
     it 'Displays the <h1>', ->
-      @template.should.include @artist.get('name')
+      @template.should.containEql @artist.get('name')
 
     it 'Shows only the number of results and not the number of pages', ->
-      @template.should.include '10 Results'
-      @template.should.not.include 'Page 1 of'
+      @template.should.containEql '10 Results'
+      @template.should.not.containEql 'Page 1 of'
 
     it 'Does *not* render the pagination nav', ->
-      @template.should.not.include 'pagination'
+      @template.should.not.containEql 'pagination'
 
   describe 'Dense results', ->
     beforeEach ->
@@ -47,10 +47,10 @@ describe 'Artist auction lots template', ->
       )
 
     it 'Shows the number of results and the number of pages', ->
-      @template.should.not.include "Page 1 of #{@auctionLots.totalPages}"
+      @template.should.not.containEql "Page 1 of #{@auctionLots.totalPages}"
 
     it 'Renders the pagination nav', ->
-      @template.should.include 'pagination'
+      @template.should.containEql 'pagination'
 
   describe 'Not logged in', ->
     beforeEach ->
@@ -63,7 +63,7 @@ describe 'Artist auction lots template', ->
       )
 
     it 'Displays the sign up link instead of the sale price in the sale column', ->
-      @template.should.include 'Sign up to see sale price'
+      @template.should.containEql 'Sign up to see sale price'
 
   describe 'Logged in', ->
     beforeEach ->
@@ -78,4 +78,4 @@ describe 'Artist auction lots template', ->
       )
 
     it 'Does not display the sign up call to action', ->
-      @template.should.not.include '<a class="auction-lot-sale-signup">Sign up to see sale price</a>'
+      @template.should.not.containEql '<a class="auction-lot-sale-signup">Sign up to see sale price</a>'

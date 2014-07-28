@@ -54,7 +54,7 @@ describe 'FeatureView', ->
       _.last(Backbone.sync.args)[2].success(sale)
       _.last(Backbone.sync.args)[2].success([])
       @view.sale.id.should.equal sale.id
-      @view.$el.html().should.include 'Explore this bidness'
+      @view.$el.html().should.containEql 'Explore this bidness'
 
       # Does not include artwork filter or artist list
       @view.$el.find('.feature-artwork-filter').length.should.equal 0
@@ -67,7 +67,7 @@ describe 'FeatureView', ->
       _.last(Backbone.sync.args)[2].success([])
       @view.isAuction().should.be.ok
       @view.sale.id.should.equal sale.id
-      @view.$el.html().should.include 'Explore this bidness'
+      @view.$el.html().should.containEql 'Explore this bidness'
 
       # Does not include artwork filter or artist list
       @view.$el.find('.feature-artwork-filter').length.should.equal 0
@@ -93,7 +93,7 @@ describe 'FeatureView', ->
         @saleArtworkViewStub.callCount.should.equal @callCount + @saleArtworks.length
 
         @view.sale.id.should.equal @sale.id
-        @view.$el.html().should.include 'Explore this bidness'
+        @view.$el.html().should.containEql 'Explore this bidness'
 
         # Does not include artwork filter or artist list
         @view.$el.find('.feature-artwork-filter').length.should.equal 0
@@ -139,7 +139,7 @@ describe 'FeatureView', ->
         @saleArtworkViewStub.callCount.should.equal @callCount + @saleArtworks.length + @saleArtworks.length
 
         @view.sale.id.should.equal @sale.id
-        @view.$el.html().should.include 'Explore this bidness'
+        @view.$el.html().should.containEql 'Explore this bidness'
 
         # Includes artwork filter, artist list and countdown
         @view.$el.find('.clock-header').length.should.equal 1

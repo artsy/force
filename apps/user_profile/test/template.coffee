@@ -39,4 +39,4 @@ describe 'Profile', ->
       render('index')({
         sd: @sd
         profile: @profile
-      }).should.not.include '<img src=x'
+      }).should.not.containEql '<img src=x'

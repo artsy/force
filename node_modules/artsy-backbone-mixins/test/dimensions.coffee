@@ -1,7 +1,7 @@
-_                 = require 'underscore'
-Backbone          = require 'backbone'
-sinon             = require 'sinon'
-dimensions        = require '../lib/dimensions'
+_ = require 'underscore'
+Backbone = require 'backbone'
+sinon = require 'sinon'
+dimensions = require '../lib/dimensions'
 
 class Model extends Backbone.Model
   _.extend @prototype, dimensions

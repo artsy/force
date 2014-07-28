@@ -53,8 +53,8 @@ describe 'Galleries', ->
       $ = cheerio.load @html
       @partners.each (partner) ->
         markup = $(".featured-partners-galleries-list").html()
-        markup.should.include partner.get 'name'
-        markup.should.include "/#{partner.get('default_profile_id')}"
+        markup.should.containEql partner.get 'name'
+        markup.should.containEql "/#{partner.get('default_profile_id')}"
       $(".a-to-z-row-letter").eq(0).text().should.equal @aToZGroup[0].letter
       $(".a-to-z-row-letter").eq(1).text().should.equal @aToZGroup[1].letter
       $(".a-to-z-row-letter").eq(2).text().should.equal @aToZGroup[2].letter

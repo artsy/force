@@ -161,7 +161,6 @@ Runner.prototype.checkGlobals = function(test){
   var ok = this._globals;
 
   var globals = this.globalProps();
-  var isNode = process.kill;
   var leaks;
 
   if (test) {
@@ -533,7 +532,13 @@ Runner.prototype.runSuite = function(suite, fn){
  */
 
 Runner.prototype.uncaught = function(err){
-  debug('uncaught exception %s', err.message);
+  if (err) {
+    debug('uncaught exception %s', err.message);
+  } else {
+    debug('uncaught undefined exception');
+    err = new Error('Catched undefined error, did you throw without specifying what?');
+  }
+  
   var runnable = this.currentRunnable;
   if (!runnable || 'failed' == runnable.state) return;
   runnable.clearTimeout();

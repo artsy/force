@@ -40,5 +40,5 @@ describe 'ContactView', ->
   describe '#submit', ->
     it 'submits an inquiry to the partner', ->
       @view.submit($.Event('submit'))
-      _.last(Backbone.sync.args)[1].url.should.include 'v1/me/artwork_inquiry_request'
+      _.last(Backbone.sync.args)[1].url.should.containEql 'v1/me/artwork_inquiry_request'
       _.last(Backbone.sync.args)[1].attributes.contact_gallery.should.be.ok

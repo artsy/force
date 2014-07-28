@@ -14,7 +14,7 @@ render = ->
 describe 'Main layout template', ->
 
   it 'includes the sharify script', ->
-    render()(sd: {}, sharify: { script: -> 'foobar' }).should.include 'foobar'
+    render()(sd: {}, sharify: { script: -> 'foobar' }).should.containEql 'foobar'
 
 describe 'Meta tags', ->
 
@@ -32,8 +32,8 @@ describe 'Meta tags', ->
         profile: @profile
 
     it 'includes canonical url, twitter card, og tags, and title and respects current_path', ->
-      @html.should.include "<meta property=\"twitter:card\" content=\"summary"
-      @html.should.include "<link rel=\"canonical\" href=\"#{@sd.APP_URL}/cool-profile/info"
-      @html.should.include "<meta property=\"og:url\" content=\"#{@sd.APP_URL}/cool-profile/info"
-      @html.should.include "<meta property=\"og:title\" content=\"#{@profile.metaTitle()}"
-      @html.should.include "<meta property=\"og:description\" content=\"#{@profile.metaDescription()}"
+      @html.should.containEql "<meta property=\"twitter:card\" content=\"summary"
+      @html.should.containEql "<link rel=\"canonical\" href=\"#{@sd.APP_URL}/cool-profile/info"
+      @html.should.containEql "<meta property=\"og:url\" content=\"#{@sd.APP_URL}/cool-profile/info"
+      @html.should.containEql "<meta property=\"og:title\" content=\"#{@profile.metaTitle()}"
+      @html.should.containEql "<meta property=\"og:description\" content=\"#{@profile.metaDescription()}"

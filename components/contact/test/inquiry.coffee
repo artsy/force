@@ -41,8 +41,8 @@ describe 'Inquiry', ->
   describe '#renderTemplates', ->
     it 'has the correct header', ->
       html = @view.$el.html()
-      html.should.include 'Foo Bar, an Artsy Specialist, is available'
-      html.should.include 'img alt="Foo Bar"'
+      html.should.containEql 'Foo Bar, an Artsy Specialist, is available'
+      html.should.containEql 'img alt="Foo Bar"'
 
   describe '#submit', ->
     describe 'Logged out', ->
@@ -54,12 +54,12 @@ describe 'Inquiry', ->
 
       it 'POSTs to the correct endpoint', ->
         _.last(Backbone.sync.args)[0].should.equal 'create'
-        _.last(Backbone.sync.args)[1].url.should.include 'api/v1/me/artwork_inquiry_request'
+        _.last(Backbone.sync.args)[1].url.should.containEql 'api/v1/me/artwork_inquiry_request'
 
       it 'sends the correct fields', ->
         keys = _.keys(_.last(Backbone.sync.args)[1].attributes)
         for field in ['artwork', 'contact_gallery', 'session_id', 'name', 'email', 'message']
-          keys.should.include field
+          keys.should.containEql field
 
       it 'has the correct data', ->
         attributes = _.last(Backbone.sync.args)[1].attributes

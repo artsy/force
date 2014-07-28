@@ -41,7 +41,7 @@ describe 'Profile', ->
   describe '#iconImageUrl', ->
 
     it "returns the icon url for the model's default icon version", ->
-      @profile.iconImageUrl().should.include "square"
+      @profile.iconImageUrl().should.containEql "square"
 
   describe '#alphaSortKey', ->
 
@@ -51,7 +51,7 @@ describe 'Profile', ->
   describe '#href', ->
 
     it "returns the client link to this profile", ->
-      @profile.href().should.include "/#{@profile.get('id')}"
+      @profile.href().should.containEql "/#{@profile.get('id')}"
 
   describe '#displayName', ->
 
@@ -133,12 +133,12 @@ describe 'Profile', ->
     it 'fetches the saved-artwork collection based on the owner', ->
       @profile.get('owner').id = 'foobar'
       @profile.fetchFavorites({})
-      Backbone.sync.args[0][1].url.should.include 'saved-artwork/artworks'
+      Backbone.sync.args[0][1].url.should.containEql 'saved-artwork/artworks'
 
     it 'returns feed items with a set url', (done) ->
       @profile.get('owner').id = 'foobar'
       @profile.fetchFavorites success: (items) ->
-        items.url.should.include 'saved-artwork/artworks'
+        items.url.should.containEql 'saved-artwork/artworks'
         done()
       Backbone.sync.args[0][2].success [{ id: 'bar' }]
 
@@ -147,4 +147,4 @@ describe 'Profile', ->
     it 'fetches posts', ->
       @profile.set id: 'moobar'
       @profile.fetchPosts({})
-      Backbone.sync.args[0][2].url.should.include 'profile/moobar/posts'
+      Backbone.sync.args[0][2].url.should.containEql 'profile/moobar/posts'

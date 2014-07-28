@@ -74,7 +74,7 @@ describe 'FollowProfiles', ->
         onAdd = sinon.spy()
         @followProfiles.on "add:#{@profileId}", onAdd
         @followProfiles.syncFollows [@profileId]
-        Backbone.sync.args[0][2].data.profiles.should.include @followProfile2.get('profile').id
+        Backbone.sync.args[0][2].data.profiles.should.containEql @followProfile2.get('profile').id
         Backbone.sync.args[0][2].success [ @followProfile2.attributes ]
         onAdd.callCount.should.equal 1
         @followProfiles.should.have.lengthOf 2

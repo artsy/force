@@ -69,13 +69,13 @@ describe 'FairBrowseView', ->
 
     xit 'navigates to the az url', ->
       @view.artistsAZ()
-      @router.args[0][0].should.include '/browse/artists'
+      @router.args[0][0].should.containEql '/browse/artists'
 
   describe '#exhibitorsAZ', ->
 
     xit 'navigates to the az url', ->
       @view.exhibitorsAZ()
-      @router.args[0][0].should.include '/browse/exhibitors'
+      @router.args[0][0].should.containEql '/browse/exhibitors'
 
   describe '#exhibitorsGrid', ->
 
@@ -88,6 +88,6 @@ describe 'FairBrowseView', ->
 
     it 'renders the gene name title and capitalized without trailing numbers', ->
       @view.artworkParams.set related_gene: 'contemporary-abstract-photography-1'
-      @view.$el.html().should.include 'Contemporary Abstract Photography'
+      @view.$el.html().should.containEql 'Contemporary Abstract Photography'
       @view.artworkParams.set related_gene: '20th-century-design'
-      @view.$el.html().should.include '20th Century Design'
+      @view.$el.html().should.containEql '20th Century Design'

@@ -41,14 +41,14 @@ describe 'CollectionList', ->
     it 'removes it from the current set', ->
       @view.removeArtwork { currentTarget: $('li').first() }
       Backbone.sync.args[0][0].should.equal 'delete'
-      Backbone.sync.args[0][2].url.should.include '/collection/cat-portraits/artwork'
+      Backbone.sync.args[0][2].url.should.containEql '/collection/cat-portraits/artwork'
 
   describe '#addArtwork', ->
 
     it 'adds it to the set', ->
       @view.addArtwork { currentTarget: $('li').first() }
       Backbone.sync.args[0][0].should.equal 'create'
-      Backbone.sync.args[0][2].url.should.include '/collection/cat-portraits/artwork'
+      Backbone.sync.args[0][2].url.should.containEql '/collection/cat-portraits/artwork'
 
   describe '#newCollection', ->
 

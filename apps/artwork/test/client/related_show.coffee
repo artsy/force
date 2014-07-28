@@ -51,6 +51,6 @@ describe 'RelatedShowView', ->
 
     it 'renders the partner metadata and artworks shell', ->
       html = @view.$el.html()
-      html.should.include 'Other works in show'
-      html.should.include @view.show.get('partner').name
+      html.should.containEql 'Other works in show'
+      html.should.containEql @view.show.get('partner').name
       @view.$('#artwork-related-show-artworks').length.should.be.ok

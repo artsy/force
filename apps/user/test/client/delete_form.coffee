@@ -60,8 +60,8 @@ describe 'UserDeleteForm', ->
         @flashStub.called.should.be.false
         @view.$button.click()
         @flashStub.called.should.be.true
-        @flashStub.args[0][0].message.should.include '/users/sign_out'
-        @flashStub.args[0][0].message.should.include 'Your account has been deleted, click here to continue'
+        @flashStub.args[0][0].message.should.containEql '/users/sign_out'
+        @flashStub.args[0][0].message.should.containEql 'Your account has been deleted, click here to continue'
 
     describe 'error', ->
       beforeEach ->
@@ -72,7 +72,7 @@ describe 'UserDeleteForm', ->
         @view.$confirm.click()
         @view.$button.click()
         @flashStub.called.should.be.false
-        @view.$errors.text().should.include 'An error prevented us from deleting your account through this form.'
+        @view.$errors.text().should.containEql 'An error prevented us from deleting your account through this form.'
 
     it 'adds the access token to the request', ->
       @user.set 'accessToken', '10101000101010101111010101010101'

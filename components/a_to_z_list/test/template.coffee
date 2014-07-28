@@ -44,13 +44,13 @@ describe 'A to Z List Template', ->
       $('.a-to-z-row a').length.should.equal 5
 
       $('.a-to-z-row-letter').eq(0).text().should.equal '0-9'
-      $('.a-to-z-row').eq(0).html().should.include @m2.displayName()
+      $('.a-to-z-row').eq(0).html().should.containEql @m2.displayName()
 
       $('.a-to-z-row-letter').eq(1).text().should.equal 'F'
-      $('.a-to-z-row').eq(1).html().should.include @m4.displayName()
+      $('.a-to-z-row').eq(1).html().should.containEql @m4.displayName()
 
       $('.a-to-z-row-letter').eq(2).text().should.equal 'T'
-      $('.a-to-z-row').eq(2).html().should.include @m6.displayName()
+      $('.a-to-z-row').eq(2).html().should.containEql @m6.displayName()
 
 
       # three rows with the specified three cols each

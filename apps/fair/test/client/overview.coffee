@@ -45,9 +45,9 @@ describe 'ForYouView', ->
       Backbone.sync.args[1][2].success [{artist: fabricate('artist')}]
       Backbone.sync.args[2][2].success []
 
-      view.$el.html().should.not.include 'undefined'
-      view.$el.html().should.not.include "\#{"
-      view.$el.html().should.not.include "NaN"
+      view.$el.html().should.not.containEql 'undefined'
+      view.$el.html().should.not.containEql "\#{"
+      view.$el.html().should.not.containEql "NaN"
 
       view.$('.container-left .large-section-subheading').length.should.equal 1
-      view.$('.container-left .large-section-subheading').text().should.include 'Pablo Picasso'
+      view.$('.container-left .large-section-subheading').text().should.containEql 'Pablo Picasso'

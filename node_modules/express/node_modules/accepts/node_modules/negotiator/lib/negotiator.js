@@ -6,15 +6,19 @@ function Negotiator(request) {
   this.request = request;
 }
 
-var set = { preferredCharset: [require('./charset.js'), 'accept-charset'],
-            preferredEncoding: [require('./encoding.js'), 'accept-encoding'],
-            preferredLanguage: [require('./language.js'), 'accept-language'],
-            preferredMediaType: [require('./mediaType.js'), 'accept'] };
+var set = { charset: 'accept-charset',
+            encoding: 'accept-encoding',
+            language: 'accept-language',
+            mediaType: 'accept' };
+
+
+function capitalize(string){
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
 Object.keys(set).forEach(function (k) {
-  var mh = set[k],
-      method = mh[0],
-      header = mh[1],
+  var header = set[k],
+      method = require('./'+k+'.js'),
       singular = k,
       plural = k + 's';
 
@@ -26,4 +30,8 @@ Object.keys(set).forEach(function (k) {
     var set = this[plural](available);
     if (set) return set[0];
   };
+
+  // Keep preferred* methods for legacy compatibility
+  Negotiator.prototype['preferred'+capitalize(plural)] = Negotiator.prototype[plural];
+  Negotiator.prototype['preferred'+capitalize(singular)] = Negotiator.prototype[singular];
 })

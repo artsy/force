@@ -27,5 +27,5 @@ describe 'AboutRouter', ->
     it 'creates a filter artworks view initializing it by triggering reset', ->
       @FilterArtworksView::params.on 'reset', spy = sinon.spy()
       @index()
-      @FilterArtworksView.args[0][0].artworksUrl.should.include 'filtered/main'
+      @FilterArtworksView.args[0][0].artworksUrl.should.containEql 'filtered/main'
       spy.called.should.be.ok

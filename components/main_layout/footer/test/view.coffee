@@ -19,7 +19,7 @@ describe 'FooterView', ->
 
   it 'knows what year it is', ->
     now = (new Date).getFullYear()
-    @view.$el.html().should.include now
+    @view.$el.html().should.containEql now
 
   describe '#feedback', ->
 

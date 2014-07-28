@@ -22,6 +22,9 @@ var Request = module.exports = function (xhr, params) {
     try { xhr.withCredentials = params.withCredentials }
     catch (e) {}
     
+    if (params.responseType) try { xhr.responseType = params.responseType }
+    catch (e) {}
+    
     xhr.open(
         params.method || 'GET',
         self.uri,

@@ -7,15 +7,15 @@ describe 'Search', ->
   describe '#url', ->
     it 'has the correct url', ->
       search = new Search()
-      search.url().should.include '/api/v1/match/?visible_to_public=true'
+      search.url().should.containEql '/api/v1/match/?visible_to_public=true'
 
     it 'can be used with multiple match endpoints', ->
       search = new Search mode: 'profiles'
-      search.url().should.include '/api/v1/match/profiles?visible_to_public=true'
+      search.url().should.containEql '/api/v1/match/profiles?visible_to_public=true'
 
     it 'takes a fair_id', ->
       search = new Search mode: 'profiles', fairId: 'fair-id'
-      search.url().should.include '/api/v1/match/profiles?visible_to_public=true&fair_id=fair-id'
+      search.url().should.containEql '/api/v1/match/profiles?visible_to_public=true&fair_id=fair-id'
 
   describe '#parse', ->
     it 'casts items as SearchResults', ->

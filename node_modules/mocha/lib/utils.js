@@ -169,16 +169,19 @@ function ignored(path){
  * @api private
  */
 
-exports.files = function(dir, ret){
+exports.files = function(dir, ext, ret){
   ret = ret || [];
+  ext = ext || ['js'];
+
+  var re = new RegExp('\\.(' + ext.join('|') + ')$');
 
   fs.readdirSync(dir)
   .filter(ignored)
   .forEach(function(path){
     path = join(dir, path);
     if (fs.statSync(path).isDirectory()) {
-      exports.files(path, ret);
-    } else if (path.match(/\.(js|coffee|litcoffee|coffee.md)$/)) {
+      exports.files(path, ext, ret);
+    } else if (path.match(re)) {
       ret.push(path);
     }
   });
@@ -209,7 +212,7 @@ exports.slug = function(str){
 exports.clean = function(str) {
   str = str
     .replace(/\r\n?|[\n\u2028\u2029]/g, "\n").replace(/^\uFEFF/, '')
-    .replace(/^function *\(.*\) *{/, '')
+    .replace(/^function *\(.*\) *{|\(.*\) *=> *{?/, '')
     .replace(/\s+\}$/, '');
 
   var spaces = str.match(/^\n?( *)/)[1].length
@@ -280,7 +283,7 @@ function highlight(js) {
     .replace(/('.*?')/gm, '<span class="string">$1</span>')
     .replace(/(\d+\.\d+)/gm, '<span class="number">$1</span>')
     .replace(/(\d+)/gm, '<span class="number">$1</span>')
-    .replace(/\bnew *(\w+)/gm, '<span class="keyword">new</span> <span class="init">$1</span>')
+    .replace(/\bnew[ \t]+(\w+)/gm, '<span class="keyword">new</span> <span class="init">$1</span>')
     .replace(/\b(function|new|throw|return|var|if|else)\b/gm, '<span class="keyword">$1</span>')
 }
 
@@ -297,3 +300,51 @@ exports.highlightTags = function(name) {
     code[i].innerHTML = highlight(code[i].innerHTML);
   }
 };
+
+
+/**
+ * Stringify `obj`.
+ *
+ * @param {Object} obj
+ * @return {String}
+ * @api private
+ */
+
+exports.stringify = function(obj) {
+  if (obj instanceof RegExp) return obj.toString();
+  return JSON.stringify(exports.canonicalize(obj), null, 2).replace(/,(\n|$)/g, '$1');
+}
+
+/**
+ * Return a new object that has the keys in sorted order.
+ * @param {Object} obj
+ * @return {Object}
+ * @api private
+ */
+
+exports.canonicalize = function(obj, stack) {
+   stack = stack || [];
+
+   if (exports.indexOf(stack, obj) !== -1) return '[Circular]';
+
+   var canonicalizedObj;
+
+   if ({}.toString.call(obj) === '[object Array]') {
+     stack.push(obj);
+     canonicalizedObj = exports.map(obj, function(item) {
+       return exports.canonicalize(item, stack);
+     });
+     stack.pop();
+   } else if (typeof obj === 'object' && obj !== null) {
+     stack.push(obj);
+     canonicalizedObj = {};
+     exports.forEach(exports.keys(obj).sort(), function(key) {
+       canonicalizedObj[key] = exports.canonicalize(obj[key], stack);
+     });
+     stack.pop();
+   } else {
+     canonicalizedObj = obj;
+   }
+
+   return canonicalizedObj;
+ }

@@ -11,10 +11,6 @@ describe 'FilterSortCount', ->
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       FilterSortCount = benv.require resolve(__dirname, '../view')
-      FilterSortCount.__set__ 'mediator', @mediator = {
-        trigger: sinon.stub()
-        on: sinon.stub()
-      }
       @view = new FilterSortCount
         el: $ "<div></div>"
         counts: new Backbone.Model
@@ -28,7 +24,7 @@ describe 'FilterSortCount', ->
     @view.counts = new Backbone.Model total: 1001
     @view.$el = $ "<div><div class='filter-sort-count-total'></div></div>"
     @view.renderTotal()
-    @view.$el.html().should.include '1,001'
+    @view.$el.html().should.containEql '1,001'
 
   it 'updates the params to sort', ->
     @view.sort target: $ "<div data-sort='-foo'></div>"
@@ -37,4 +33,4 @@ describe 'FilterSortCount', ->
   it 'renders singulars like a bawse', ->
     @view.counts.set total: 1
     @view.renderTotal()
-    @view.$el.html().should.not.include 'Works'
+    @view.$el.html().should.not.containEql 'Works'

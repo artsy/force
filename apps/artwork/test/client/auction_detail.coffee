@@ -85,8 +85,8 @@ describe 'AuctionDetailView', ->
         $button = @view.$('.abf-button')
         $button.text().should.equal 'Registered to bid'
         _.isUndefined($button.attr 'disabled').should.not.be.ok
-        $button.attr('class').should.include 'is-success'
-        $button.attr('class').should.include 'is-disabled'
+        $button.attr('class').should.containEql 'is-success'
+        $button.attr('class').should.containEql 'is-disabled'
 
       it 'handles open auctions', ->
         @auction.set 'auctionState', 'open'
@@ -103,7 +103,7 @@ describe 'AuctionDetailView', ->
         $button = @view.$('.abf-button')
         $button.text().should.equal 'Bidding closed'
         _.isUndefined($button.attr 'disabled').should.not.be.ok
-        $button.attr('class').should.include 'is-disabled'
+        $button.attr('class').should.containEql 'is-disabled'
 
   describe '#validate', ->
     it 'validates that any input is greater than or equal to the min bid and returns the value if it is valid', ->

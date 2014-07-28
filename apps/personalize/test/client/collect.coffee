@@ -36,9 +36,9 @@ describe 'CollectView', ->
   describe '#render', ->
     it 'renders the template', ->
       html = @view.$el.html()
-      html.should.include '60-Second Sign Up'
+      html.should.containEql '60-Second Sign Up'
       _.each @state.get('levels'), (level) ->
-        html.should.include level
+        html.should.containEql level
 
   describe 'reonboarding', ->
     beforeEach ->
@@ -47,5 +47,5 @@ describe 'CollectView', ->
 
     it 'renders the reonboarding copy', ->
       html = @view.$el.html()
-      html.should.not.include '60-Second Sign Up'
-      html.should.include 'Personalize your Artsy experience'
+      html.should.not.containEql '60-Second Sign Up'
+      html.should.containEql 'Personalize your Artsy experience'

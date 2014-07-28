@@ -62,3 +62,15 @@ test('string from buffers with multibyte characters', function (t) {
   }
   strings.end()
 })
+
+test('string infer encoding with empty string chunk', function (t) {
+  t.plan(2)
+  var strings = concat(function(out) {
+    t.equal(typeof out, 'string')
+    t.equal(out, 'nacho dogs')
+  })
+  strings.write("")
+  strings.write("nacho ")
+  strings.write("dogs")
+  strings.end()
+})

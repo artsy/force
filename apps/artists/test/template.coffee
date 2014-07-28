@@ -70,7 +70,7 @@ describe 'Artists', ->
         done()
 
     it 'renders the alphabetical nav', ->
-      @$template.html().should.not.include 'undefined'
+      @$template.html().should.not.containEql 'undefined'
       @$template.find('.alphabetical-index-range').text().should.equal 'abc'
 
     it 'has a single <h1> that displays the name of the artists set', ->
@@ -93,7 +93,7 @@ describe 'Artists', ->
       $links.first().text().should.equal fabricate('gene').name
 
     it 'uses four_thirds images', ->
-      @$template.find('.afg-artist img').attr('src').should.include 'four_thirds'
+      @$template.find('.afg-artist img').attr('src').should.containEql 'four_thirds'
 
   describe 'letter page', ->
     after -> benv.teardown()
@@ -126,7 +126,7 @@ describe 'Artists', ->
         done()
 
     it 'renders the alphabetical nav', ->
-      @$template.html().should.not.include 'undefined'
+      @$template.html().should.not.containEql 'undefined'
       @$template.find('.alphabetical-index-range').text().should.equal 'abc'
 
     it 'has a single <h1> that displays the name of the artists set', ->
@@ -136,6 +136,6 @@ describe 'Artists', ->
 
     it 'includes meta tags', ->
       html = @$template.html()
-      html.should.include '<link rel="next" href="http://localhost:5000/artists-starting-with-a?page=2"'
-      html.should.include '<meta property="og:title" content="Artists Starting With A'
-      html.should.include '<meta property="og:description" content="Research and discover artists starting with A on Artsy. Find works for sale, biographies, CVs, and auction results'
+      html.should.containEql '<link rel="next" href="http://localhost:5000/artists-starting-with-a?page=2"'
+      html.should.containEql '<meta property="og:title" content="Artists Starting With A'
+      html.should.containEql '<meta property="og:description" content="Research and discover artists starting with A on Artsy. Find works for sale, biographies, CVs, and auction results'

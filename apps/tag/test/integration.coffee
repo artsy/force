@@ -11,5 +11,5 @@ xdescribe 'Tag page', ->
     browser = new Browser
     browser.visit 'http://localhost:5000/tag/cow', ->
       browser.wait ->
-        browser.html().should.include 'Artwork related to “Cow”'
+        browser.html().should.containEql 'Artwork related to “Cow”'
         done()

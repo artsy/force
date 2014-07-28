@@ -60,4 +60,4 @@ describe 'Artwork routes', ->
       @req.user = new CurrentUser fabricate 'user'
       routes.save @req, @res
       _.last(Backbone.sync.args)[0].should.equal 'create'
-      _.last(Backbone.sync.args)[1].url.should.include "/api/v1/collection/saved-artwork/artwork/#{@req.params.id}?user_id=#{@req.user.id}"
+      _.last(Backbone.sync.args)[1].url.should.containEql "/api/v1/collection/saved-artwork/artwork/#{@req.params.id}?user_id=#{@req.user.id}"

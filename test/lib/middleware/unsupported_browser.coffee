@@ -41,7 +41,7 @@ describe 'Redirect for unsupported browsers', ->
 
   it 'redirects bad browsers', ->
     redirectBadBrowsers @req, @res, @next
-    @res.redirect.args[0][0].should.include '/unsupported-browser'
+    @res.redirect.args[0][0].should.containEql '/unsupported-browser'
     @next.callCount.should.equal 0
 
   it 'does not redirect bad browsers that have set a cookie to continue anyway', ->

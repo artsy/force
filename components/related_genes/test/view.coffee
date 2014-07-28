@@ -42,7 +42,7 @@ describe 'RelatedGenesView', ->
         @view.initialize({ el: $('body'), model: @gene, modelName: 'gene' })
 
       it 'makes the right API call', ->
-        _.last(Backbone.sync.args)[1].url.should.include 'api/v1/search/filtered/gene/bitty/options'
+        _.last(Backbone.sync.args)[1].url.should.containEql 'api/v1/search/filtered/gene/bitty/options'
 
       it 'doesnt render anything if there are no results', ->
         _.last(Backbone.sync.args)[2].success {}
@@ -57,10 +57,10 @@ describe 'RelatedGenesView', ->
           'Bittyness': 'bittyness'
         }
         _.last(Backbone.sync.args)[2].success {related_genes: genes}
-        @view.$el.html().should.include "<a href=\"/gene/catitudeness\">Catitudeness</a>"
-        @view.$el.html().should.include "<a href=\"/gene/bittyness\">Bittyness</a>"
+        @view.$el.html().should.containEql "<a href=\"/gene/catitudeness\">Catitudeness</a>"
+        @view.$el.html().should.containEql "<a href=\"/gene/bittyness\">Bittyness</a>"
         @view.$el.find('a').length.should.equal 2
-        @view.$el.html().should.include 'Related Categories'
+        @view.$el.html().should.containEql 'Related Categories'
 
   describe 'for an artist', ->
     beforeEach (done) ->
@@ -84,7 +84,7 @@ describe 'RelatedGenesView', ->
         @view.initialize({ el: $('body'), model: @artist, modelName: 'artist' })
 
       it 'makes the right API call', ->
-        _.last(Backbone.sync.args)[1].url.should.include '/api/v1/related/genes?artist[]=bitty'
+        _.last(Backbone.sync.args)[1].url.should.containEql '/api/v1/related/genes?artist[]=bitty'
 
       it 'doesnt render anything if there are no results', ->
         _.last(Backbone.sync.args)[2].success []
@@ -98,7 +98,7 @@ describe 'RelatedGenesView', ->
           fabricate 'gene', id: 'catitudeness', name: 'Catitudeness'
           fabricate 'gene', id: 'bittyness', name: 'Bittyness'
         ]
-        @view.$el.html().should.include "<a href=\"/gene/catitudeness\">Catitudeness</a>"
-        @view.$el.html().should.include "<a href=\"/gene/bittyness\">Bittyness</a>"
+        @view.$el.html().should.containEql "<a href=\"/gene/catitudeness\">Catitudeness</a>"
+        @view.$el.html().should.containEql "<a href=\"/gene/bittyness\">Bittyness</a>"
         @view.$el.find('a').length.should.equal 2
-        @view.$el.html().should.include 'Related Categories'
+        @view.$el.html().should.containEql 'Related Categories'

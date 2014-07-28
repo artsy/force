@@ -37,16 +37,6 @@ describe 'FlashMessage', ->
         flash = new FlashMessage message: 'A caesura', autoclose: false
         flash.startTimer.called.should.be.false
 
-  describe '#open', ->
-    it 'checks to see if the container is empty before starting the timer', ->
-      firstFlash = new FlashMessage message: 'Goodbye world.'
-      $('body').text().should.equal 'Goodbye world.'
-      @startTimerStub.restore()
-      @startTimerStub = sinon.stub FlashMessage::, 'startTimer'
-      secondFlash = new FlashMessage message: 'A caesura', autoclose: true
-      secondFlash.startTimer.called.should.be.false
-      $('body').text().should.equal 'Goodbye world.'
-
   describe '#setup', ->
     beforeEach ->
       @flash = new FlashMessage message: 'Goodbye world.'
@@ -84,3 +74,13 @@ describe 'FlashMessage', ->
       $('.fullscreen-flash-message').text().should.equal 'Goodbye world.'
       @flash.update 'Hello world.'
       $('.fullscreen-flash-message').text().should.equal 'Hello world.'
+
+  describe '#open', ->
+    it 'checks to see if the container is empty before starting the timer', ->
+      firstFlash = new FlashMessage message: 'Goodbye world.'
+      $('body').text().should.equal 'Goodbye world.'
+      @startTimerStub.restore()
+      @startTimerStub = sinon.stub FlashMessage::, 'startTimer'
+      secondFlash = new FlashMessage message: 'A caesura', autoclose: true
+      secondFlash.startTimer.called.should.be.false
+      $('body').text().should.equal 'Goodbye world.'

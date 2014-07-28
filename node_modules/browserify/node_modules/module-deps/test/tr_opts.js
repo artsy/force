@@ -6,9 +6,10 @@ var concat = require('concat-stream');
 
 test('transform options', function (t) {
     t.plan(1);
-    var p = mdeps(__dirname + '/tr_opts/main.js', {
+    var p = mdeps({
         transformKey: [ 'mdtr' ]
     });
+    p.end(__dirname + '/tr_opts/main.js');
     var pack = packer();
     
     p.pipe(JSONStream.stringify()).pipe(pack).pipe(concat(function (src) {

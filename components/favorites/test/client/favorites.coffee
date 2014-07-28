@@ -51,7 +51,7 @@ describe 'FavoritesView', ->
         done()
 
       it 'shows hint for adding favorite artworks', ->
-        @view.$el.html().should.include 'Add works to your favorites'
+        @view.$el.html().should.containEql 'Add works to your favorites'
 
       it 'shows suggested genes genes', ->
         @SuggestedGenesView::render.calledOnce.should.be.ok

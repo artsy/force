@@ -23,7 +23,7 @@ describe 'Artist header', ->
 
     it 'should not display the no works message if there is more than 0 artworks', ->
       @artist.get('published_artworks_count').should.be.above 0
-      @template.should.not.include "There are no #{@artist.get('name')} on Artsy yet."
+      @template.should.not.containEql "There are no #{@artist.get('name')} on Artsy yet."
 
   describe 'artist with some artworks (on the overview page)', ->
     beforeEach ->
@@ -35,7 +35,7 @@ describe 'Artist header', ->
 
     it 'should display the no works message if there is 0 artworks', ->
       @artist.get('published_artworks_count').should.equal 0
-      @template.should.include "There are no #{@artist.get('name')} works on Artsy yet."
+      @template.should.containEql "There are no #{@artist.get('name')} works on Artsy yet."
 
   describe 'artist with auction results', ->
     beforeEach ->
@@ -48,7 +48,7 @@ describe 'Artist header', ->
     it 'displays a link to the auction results', ->
       @artist.get('published_artworks_count').should.be.above 0
       @artist.get('auction_lots_count').should.be.above 0
-      @template.should.include "/artist/#{@artist.id}/auction-results"
+      @template.should.containEql "/artist/#{@artist.id}/auction-results"
 
   describe 'artist with no auction results', ->
     beforeEach ->
@@ -61,4 +61,4 @@ describe 'Artist header', ->
     it 'does not display a link to the auction results', ->
       @artist.get('auction_lots_count').should.equal 0
       @artist.get('published_artworks_count').should.be.above 0
-      @template.should.not.include 'artist-auction-results-link'
+      @template.should.not.containEql 'artist-auction-results-link'

@@ -72,7 +72,7 @@ describe 'Home routes', ->
       it 'deletes the hero unit key in redis when navigated to by an admin user', ->
         @req.user = new CurrentUser fabricate 'user', type: 'Admin'
         routes.bustHeroCache @req, @res, ->
-        @client.del.args[0][0].should.include '/api/v1/site_hero_units?enabled=true'
+        @client.del.args[0][0].should.containEql '/api/v1/site_hero_units?enabled=true'
         @res.redirect.args[0][0].should.equal '/'
 
       it 'does nothing when not an admin user', ->

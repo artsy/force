@@ -44,7 +44,7 @@ describe 'Introduction', ->
 
     it 'does not say the user is a collector if they have a collector level of 2 or below', ->
       @user.set 'collector_level', 2
-      @introduction.blurb().should.not.include 'is a collector'
+      @introduction.blurb().should.not.containEql 'is a collector'
 
     it 'denotes the user as a collector if they have a collector level of 3 or above', ->
       @user.set 'collector_level', 3

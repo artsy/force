@@ -1,3 +1,5 @@
+0.1.8
+    * Update NAN to 1.0.0 (Benjamin Byholm - @kkoopa)
 0.1.7
     * Fix broken builds with node >= 0.11.4 (Benjamin Byholm - @kkoopa)
 0.1.6

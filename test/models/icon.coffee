@@ -18,7 +18,7 @@ describe 'Icon', ->
   describe '#url', ->
 
     it 'returns a url with a profile id in it', ->
-      @icon.url().should.include "api/v1/profile/#{@profile.get('id')}/icon"
+      @icon.url().should.containEql "api/v1/profile/#{@profile.get('id')}/icon"
 
   describe '#validate', ->
 

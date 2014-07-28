@@ -40,8 +40,8 @@ describe 'SaleView', ->
   describe '#rendered', ->
     it 'has the correct title', ->
       text = @view.$('h2').text()
-      text.should.include 'Works from'
-      text.should.include 'Whitney Art Party'
+      text.should.containEql 'Works from'
+      text.should.containEql 'Whitney Art Party'
     it 'has a container for the artwork columns', ->
       @view.$('#sale-artwork-columns').length.should.be.ok
     it 'links to the feature', ->

@@ -14,7 +14,7 @@ describe 'Items', ->
   describe '#url', ->
     it 'should return the appropriate url', ->
       @items.id.should.equal 'foobar'
-      @items.url().should.include '/api/v1/set/foobar/items'
+      @items.url().should.containEql '/api/v1/set/foobar/items'
 
   describe '#model', ->
     it 'news up the appropriate class', ->

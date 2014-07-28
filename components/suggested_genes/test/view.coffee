@@ -35,7 +35,7 @@ describe 'SuggestedGenesView', ->
 
     it 'calls suggested genes api to get suggested genes', ->
       _.last(Backbone.sync.args)[2].success { id: '123' }
-      _.last(Backbone.sync.args)[2].url.should.include '/api/v1/set/123/items'
+      _.last(Backbone.sync.args)[2].url.should.containEql '/api/v1/set/123/items'
 
     it 'renders the exact number of genes', ->
       @view.collection.add fabricate 'gene', image_url: ''

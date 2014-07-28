@@ -1,8 +1,6 @@
 var mdeps = require('../');
 var JSONStream = require('JSONStream');
 
-var stringify = JSONStream.stringify();
-stringify.pipe(process.stdout);
-
-var file = __dirname + '/files/main.js';
-mdeps(file).pipe(stringify);
+var md = mdeps();
+md.pipe(JSONStream.stringify()).pipe(process.stdout);
+md.end({ file: __dirname + '/files/main.js' });

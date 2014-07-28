@@ -4,9 +4,9 @@ Parse a URL with memoization.
 
 ## API
 
-### var pathname = parseurl(req)
+### var parsedUrl = parseurl(req)
 
-`pathname` can then be passed to a router or something.
+`parsedUrl` is basically a `url.parse()` object.
 
 ## LICENSE
 

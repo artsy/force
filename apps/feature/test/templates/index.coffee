@@ -31,7 +31,7 @@ describe 'Partner Show', ->
     it 'renders a feature image', ->
       $ = cheerio.load @html
       $('.feature-image').should.have.lengthOf 1
-      $('.feature-image').attr('style').should.include @feature.imageUrl('wide')
+      $('.feature-image').attr('style').should.containEql @feature.imageUrl('wide')
 
     it 'renders the feature title', ->
       $ = cheerio.load @html

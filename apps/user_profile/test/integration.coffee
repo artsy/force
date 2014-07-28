@@ -11,8 +11,8 @@ describe 'Profile pages', ->
     browser = new Browser
     browser.visit 'http://localhost:5000/alessandra', ->
       browser.wait ->
-        browser.html().should.include 'Craig Spaeth'
-        browser.html().should.not.include 'undefined'
+        browser.html().should.containEql 'Craig Spaeth'
+        browser.html().should.not.containEql 'undefined'
         done()
 
   # TODO: 404 is not a shortcut. This should also be a project-level integration test
@@ -22,5 +22,5 @@ describe 'Profile pages', ->
     browser.visit 'http://localhost:5000/404', ->
       browser.wait ->
         # renders the terms page
-        browser.html().should.include 'This <em>page</em> is awesome!'
+        browser.html().should.containEql 'This <em>page</em> is awesome!'
         done()

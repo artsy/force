@@ -48,7 +48,7 @@ describe 'ModalView', ->
   describe '#open', ->
     describe '#setup', ->
       it 'renders the inner template function', ->
-        @view.$el.html().should.include 'Requires a template'
+        @view.$el.html().should.containEql 'Requires a template'
 
       it 'set the $dialog width', ->
         @view.$dialog.width().should.equal 400
@@ -58,19 +58,19 @@ describe 'ModalView', ->
 
       it 'sets the default classes', ->
         classes = @view.$el.attr('class')
-        classes.should.include 'is-fade-in'
-        classes.should.include 'has-backdrop'
+        classes.should.containEql 'is-fade-in'
+        classes.should.containEql 'has-backdrop'
 
       it 'should be able to accept backdrop and transition options', ->
         modal = new ModalView($container: $('#modal-container'), backdrop: false)
         classes = modal.$el.attr('class')
-        classes.should.include 'is-fade-in'
-        classes.should.include 'has-nobackdrop'
+        classes.should.containEql 'is-fade-in'
+        classes.should.containEql 'has-nobackdrop'
 
         modal = new ModalView($container: $('#modal-container'), backdrop: false, transition: 'slide')
         classes = modal.$el.attr('class')
-        classes.should.include 'is-slide-in'
-        classes.should.include 'has-nobackdrop'
+        classes.should.containEql 'is-slide-in'
+        classes.should.containEql 'has-nobackdrop'
 
     it 'triggers \'modal:opened\' on the mediator', ->
       @mediatorSpy.args[0][0].should.equal 'modal:opened'

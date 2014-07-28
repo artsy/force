@@ -73,7 +73,7 @@ describe 'SubForm', ->
 
       it 'refreshes the user', ->
         Backbone.sync.callCount.should.equal 2
-        _.last(Backbone.sync.args)[1].url().should.include '/api/v1/me'
+        _.last(Backbone.sync.args)[1].url().should.containEql '/api/v1/me'
 
       it 'clears the error messages', ->
         @view.$errors.text().should.equal ''
@@ -89,4 +89,3 @@ describe 'SubForm', ->
 
       it 'renders an error', ->
         @view.$errors.text().should.equal 'There was an error'
-

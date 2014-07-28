@@ -41,12 +41,12 @@ describe 'ArtistsView', ->
       @view.initializeSuggestions()
 
     it 'fetches the fallback artists when we fail to come up with suggestions', ->
-      _.last(Backbone.sync.args)[2].url.should.include '/api/v1/set/53c55a777261692d45b70100/items'
+      _.last(Backbone.sync.args)[2].url.should.containEql '/api/v1/set/53c55a777261692d45b70100/items'
 
     it 'renders four rows of results', ->
       _.last(Backbone.sync.args)[2].success _.times(40, -> fabricate 'artist')
       @view.$('.personalize-suggestion').length.should.equal 20
-      @view.$el.html().should.include 'Artists you may enjoy following'
+      @view.$el.html().should.containEql 'Artists you may enjoy following'
 
   describe '#initializeArtistsFromFavorites', ->
     beforeEach ->
@@ -59,10 +59,10 @@ describe 'ArtistsView', ->
       @view.initializeArtistsFromFavorites()
 
     it 'fetches your recently favorited artworks', ->
-      Backbone.sync.args[0][2].url.should.include '/api/v1/collection/saved-artwork/artworks'
+      Backbone.sync.args[0][2].url.should.containEql '/api/v1/collection/saved-artwork/artworks'
 
     it 'adds a suggestion set if the user has favorited some artworks in the previous step', ->
-      @view.$el.html().should.include 'Artists suggested based on the artworks in your favorites'
+      @view.$el.html().should.containEql 'Artists suggested based on the artworks in your favorites'
       @view.$('.personalize-suggestion').length.should.equal 2
 
     it 'sets the skip button state to "Next" if there are artists to auto-follow'
@@ -104,13 +104,13 @@ describe 'ArtistsView', ->
       artist.relatedArtists = new Backbone.Collection artist
       @view.suggestions.add @view.createSuggestionSet(artist)
       @view.renderSuggestions()
-      @view.$el.html().should.include @view.suggestions.at(0).get('name')
+      @view.$el.html().should.containEql @view.suggestions.at(0).get('name')
       @view.$('.personalize-suggestion-name').text().should.equal @view.suggestions.at(0).get('suggestions').at(0).get('name')
 
   describe '#render', ->
     describe 'collector_level 2', ->
       it 'renders the template with the correct copy', ->
-        @view.$el.html().should.include 'Follow artists you are interested in'
+        @view.$el.html().should.containEql 'Follow artists you are interested in'
 
     describe 'collector_level 3', ->
       beforeEach ->
@@ -119,29 +119,29 @@ describe 'ArtistsView', ->
 
       it 'renders the template with the correct copy', ->
         html = @view.$el.html()
-        html.should.include 'Follow artists to get alerts about new works for sale'
-        html.should.include 'Get alerts for new works from Artsy’s 2,000+ galleries, art fairs, and auctions'
+        html.should.containEql 'Follow artists to get alerts about new works for sale'
+        html.should.containEql 'Get alerts for new works from Artsy’s 2,000+ galleries, art fairs, and auctions'
 
   describe 'GeneArtists', ->
     describe '#initializeGeneArtists', ->
       it 'fetches your followed genes', ->
         Backbone.sync.args[0][0].should.equal 'read'
         Backbone.sync.args[0][1].kind.should.equal 'gene'
-        Backbone.sync.args[0][1].url().should.include 'api/v1/me/follow/genes'
+        Backbone.sync.args[0][1].url().should.containEql 'api/v1/me/follow/genes'
 
     describe '#setupGenes', ->
       it 'sets up the genes and fetches the trending artists for each', ->
         followGene = id: _.uniqueId('gene'), gene: fabricate 'gene'
         Backbone.sync.args[0][2].success([followGene])
         @view.genes.length.should.equal 1
-        _.last(Backbone.sync.args)[1].url.should.include "api/v1/artists/trending?gene=#{followGene.gene.id}"
+        _.last(Backbone.sync.args)[1].url.should.containEql "api/v1/artists/trending?gene=#{followGene.gene.id}"
 
     describe '#renderGeneSuggestions', ->
       it 'creates a suggestionSet and calls out to #renderSuggestions', ->
         followGene = id: _.uniqueId('gene'), gene: fabricate 'gene'
         Backbone.sync.args[0][2].success([followGene])
         @view.renderGeneSuggestions()
-        @view.$el.html().should.include 'Suggested for you in Pop Art'
+        @view.$el.html().should.containEql 'Suggested for you in Pop Art'
 
   describe 'BookmarkArtists', ->
     describe 'collector_level 2', ->
@@ -162,4 +162,4 @@ describe 'ArtistsView', ->
         @view.initializeBookmarkedArtists.called.should.be.true
 
       it 'fetches the bookmarks collection', ->
-        Backbone.sync.args[0][1].url.should.include '/api/v1/me/bookmark/artists'
+        Backbone.sync.args[0][1].url.should.containEql '/api/v1/me/bookmark/artists'

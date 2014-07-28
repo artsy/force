@@ -17,11 +17,11 @@ describe 'Meta tags', ->
         show: @show
 
     it 'includes canonical url, twitter card, og tags, and title', ->
-      @html.should.include "<meta property=\"twitter:card\" content=\"summary"
-      @html.should.include "<link rel=\"canonical\" href=\"#{sd.APP_URL}#{@show.href()}"
-      @html.should.include "<meta property=\"og:url\" content=\"#{sd.APP_URL}#{@show.href()}"
-      @html.should.include "<meta property=\"og:title\" content=\"#{@show.toPageTitle().replace('&', '&amp;')}"
-      @html.should.include "<meta property=\"og:description\" content=\"#{@show.toPageDescription()}"
+      @html.should.containEql "<meta property=\"twitter:card\" content=\"summary"
+      @html.should.containEql "<link rel=\"canonical\" href=\"#{sd.APP_URL}#{@show.href()}"
+      @html.should.containEql "<meta property=\"og:url\" content=\"#{sd.APP_URL}#{@show.href()}"
+      @html.should.containEql "<meta property=\"og:title\" content=\"#{@show.toPageTitle().replace('&', '&amp;')}"
+      @html.should.containEql "<meta property=\"og:description\" content=\"#{@show.toPageDescription()}"
 
     it 'defaults to the default og:image', ->
       @show = new PartnerShow fabricate('show')
@@ -31,7 +31,7 @@ describe 'Meta tags', ->
         sd: sd
         show: @show
       $ = cheerio.load @html
-      $("meta[property='og:image']").attr('content').should.include 'og_image.jpg'
+      $("meta[property='og:image']").attr('content').should.containEql 'og_image.jpg'
 
     describe 'with a poster image', ->
 

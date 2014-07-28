@@ -54,7 +54,7 @@ describe 'Artists client-side code', ->
         _.each @view.positions, (position) ->
           position.should.be.type 'number'
       it 'sets fixed pixel dimensions on the panels', ->
-        @view.$panels.first().attr('style').should.include "width: #{elWidth / @view.increment}px"
+        @view.$panels.first().attr('style').should.containEql "width: #{elWidth / @view.increment}px"
 
     describe '#setPosition', ->
       it 'sets the position appropriately', ->
