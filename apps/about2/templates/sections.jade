@@ -1,7 +1,12 @@
 include hero_unit
-include section1
-include section2
-include section3
-include section4
-include section5
-include section6
+
+.about2-section-nav
+  nav: for section, i in sections
+    a( data-idx=i )!= section.header
+
+.about2-section( data-idx=0 ): include section1
+.about2-section( data-idx=1 ): include section2
+.about2-section( data-idx=2 ): include section3
+.about2-section( data-idx=3 ): include section4
+.about2-section( data-idx=4 ): include section5
+.about2-section( data-idx=5 ): include section6
