@@ -76,7 +76,7 @@ describe 'CollectionView', ->
         sd: {}
       }, =>
         { CollectionView } = mod = benv.require resolve __dirname, '../client/collection'
-        stubChildClasses mod, @, ['ArtworkColumnsView', 'ShareModal', 'EditWorkModal', 'FavoritesEmptyStateView'], ['appendArtworks']
+        stubChildClasses mod, @, ['ArtworkColumnsView', 'ShareModal', 'FavoritesEmptyStateView'], ['appendArtworks']
         @view = new CollectionView
           el: $('body')
           artworkCollection: new ArtworkCollection id: 'saved-artwork', user_id: 'craig'
