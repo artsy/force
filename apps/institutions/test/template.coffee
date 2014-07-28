@@ -29,7 +29,7 @@ describe 'Partners', ->
         id: '43-salon-inter-nacional-de-artistas'
         owner: fabricate('partner',
           type: "Museum"
-          name: '43 Salón (Inter) Nacional de Artistas'
+          name: '43 Salon (Inter) Nacional de Artistas'
         )
       )
       fabricate('featured_partners_profiles',

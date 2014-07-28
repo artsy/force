@@ -37,6 +37,18 @@ describe 'Partner Show', ->
 
     describe 'template', ->
 
+      it 'renders a show title', ->
+        $ = cheerio.load @html
+        console.log $('.show-heading-title').text(), @show.title()
+        $('.show-heading-title').text().should.equal @show.title()
+
+      it 'renders show details', ->
+        $ = cheerio.load @html
+        $('#show-left').text().should.containEql @show.get('partner').name
+        $('#show-left').text().should.containEql @show.location().singleLine()
+        $('#show-left').html().should.containEql @show.runningDates()
+        $("#show-left a[href*='/show/#{@show.get('id')}']").should.have.lengthOf 0
+
       it 'always renders a container for install shots with a spinner while fetching', ->
         @html = render('template')({
           fair: @show.fair()
@@ -85,17 +97,6 @@ describe 'Partner Show', ->
         $('.show-share').should.have.lengthOf 1
         $('.show-share .share-to-facebook').should.have.lengthOf 1
         $('.show-share .share-to-twitter').should.have.lengthOf 1
-
-      it 'renders a show title', ->
-        $ = cheerio.load @html
-        $('.show-heading-title').text().should.equal @show.title()
-
-      it 'renders show details', ->
-        $ = cheerio.load @html
-        $('#show-left').text().should.containEql @show.get('partner').name
-        $('#show-left').text().should.containEql @show.location().singleLine()
-        $('#show-left').html().should.containEql @show.runningDates()
-        $("#show-left a[href*='/show/#{@show.get('id')}']").should.have.lengthOf 0
 
       it 'renders a container for artwork columns', ->
         $ = cheerio.load @html

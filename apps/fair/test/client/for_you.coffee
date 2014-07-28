@@ -23,7 +23,6 @@ describe 'ForYouView', ->
       Backbone.$ = $
 
       @ForYouView = benv.require resolve(__dirname, '../../client/for_you.coffee')
-      @ForYouView.__set__ 'FeedView', benv.requireWithJadeify resolve(__dirname, '../../../../components/feed/client/feed.coffee'), ['feedItemsTemplate', 'feedItemsContainerTemplate']
 
       @ArtworkColumnsView = sinon.stub()
       @ArtworkColumnsView.render = sinon.stub()
