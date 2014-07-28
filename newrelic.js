@@ -25,5 +25,10 @@ exports.config = {
      * production applications.
      */
     level : 'error'
+  },
+
+  error_collector: {
+    ignore_status_code: [403,401]
   }
+
 };
