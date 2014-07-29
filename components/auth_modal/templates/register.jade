@@ -1,7 +1,7 @@
 #auth-page.vam-outer
   .vam-inner
     include ./_header
-      p= copy.register || 'Enter your name, email and password to join'
+      p= copy.get('register') || 'Enter your name, email and password to join'
 
     section#auth-body
       .auth-register

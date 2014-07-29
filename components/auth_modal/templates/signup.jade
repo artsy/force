@@ -2,8 +2,8 @@
   .vam-inner
     include ./_header
       aside
-        if copy.signup
-          = copy.signup
+        if copy.has('signup')
+          = copy.get('signup')
         else
           | The world’s greatest art, online. Sign up
           br

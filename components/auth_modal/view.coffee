@@ -53,7 +53,7 @@ module.exports = class AuthModalView extends ModalView
     @logState()
 
   renderCopy: (copy) ->
-    copy = if copy?
+    attrs = if copy?
       if _.isObject copy
         containsRequired = _.partial _.contains, ['signup', 'register', 'login']
         # Ensure the object has one of the required copy keys
@@ -65,7 +65,8 @@ module.exports = class AuthModalView extends ModalView
     else # Fallback to route copy
       routeCopy = routeCopyMap[@redirectTo]
     # Ensure we return an object
-    copy or {}
+    attrs or {}
+    new Backbone.Model attrs
 
   setMode: (mode) ->
     @state.set 'mode', mode
