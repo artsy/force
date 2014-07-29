@@ -6,20 +6,18 @@ routes = require '../routes'
 CurrentUser = require '../../../models/current_user.coffee'
 
 describe 'Following routes', ->
-
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    @req = { params: { type: 'artists' } }
-    @res = { render: sinon.stub(), redirect: sinon.stub(), locals: { sd: { API_URL: 'http://localhost:5000'} } }
+    @req = url: '/following/artists', params: type: 'artists'
+    @res = render: sinon.stub(), redirect: sinon.stub(), locals: sd: API_URL: 'http://localhost:5000'
 
   afterEach ->
     Backbone.sync.restore()
 
   describe '#follows', ->
-
-    it 'redirect to the home page without user', ->
+    it 'redirect to the requested URL without user', ->
       routes.follows @req, @res
-      @res.redirect.args[0][0].should.equal '/'
+      @res.redirect.args[0][0].should.equal '/log_in?redirect_uri=%2Ffollowing%2Fartists'
 
     it 'renders the following artists template', ->
       @req.user = new CurrentUser fabricate 'user'
@@ -28,10 +26,9 @@ describe 'Following routes', ->
       @res.render.args[0][1].type.should.equal 'artists'
 
   describe '#favorites', ->
-
-    it 'redirect to the home page without user', ->
+    it 'redirect to the requested URL without user', ->
       routes.favorites @req, @res
-      @res.redirect.args[0][0].should.equal '/'
+      @res.redirect.args[0][0].should.equal '/log_in?redirect_uri=%2Ffollowing%2Fartists'
 
     it 'renders the favorites template', ->
       @req.user = new CurrentUser fabricate 'user'
