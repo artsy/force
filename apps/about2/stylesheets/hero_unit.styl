@@ -2,15 +2,20 @@
 @import './lib'
 
 @keyframes pulse
-  0% { 
-    opacity 0.33 
+  0% {
+    opacity 0.33
   }
-  50% { 
+  50% {
     opacity 1
   }
-  100% { 
-    opacity 0.33 
+  100% {
+    opacity 0.33
   }
+
+.about-2-foreground
+  background-color white
+  position relative
+  z-index 1
 
 .about2-hero-unit
   width 100%
@@ -19,7 +24,7 @@
   overflow hidden
 
 .about2-hero-unit-bgs
-  position absolute
+  position fixed
   top 0
   right 0
   bottom 0
