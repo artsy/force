@@ -1,40 +1,33 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 imagesLoaded = require 'imagesloaded'
-Scroller = require '../../../components/scroller/index.coffee'
 
 class AboutView extends Backbone.View
 
   initialize: ->
     @$window = $(window)
-    @$tracks = @$('.about2-section3-genome-artwork-track')
     @$window.on 'keyup', @toggleGrid
-    @$tracks.waypoint @onTrackWaypoint
     @setupHeroUnits()
     @setupTracks()
-    @setupScroller()
+    @setupStickyNav()
+    @setupSectionNavHighlighting()
 
   setupStickyNav: ->
     (@$nav = @$('.about2-section-nav'))
       .waypoint 'sticky'
 
-  setupScroller: ->
-    @setupStickyNav()
-
-    @scroller = new Scroller frequency: 100
-
-    # Setup section navigation
-    _.map @$('.about2-section'), (el) =>
-      @scroller.listen($(el)).on('scroller:enter', (e) =>
-        idx = $(e.currentTarget).addClass('is-active').data('idx')
-        @$nav.find("a[data-idx=#{idx}]").addClass 'is-active'
-      ).on 'scroller:exit', (e) =>
-        idx = $(e.currentTarget).removeClass('is-active').data('idx')
-        @$nav.find("a[data-idx=#{idx}]").removeClass 'is-active'
-
-    # Setup transitions
-    @listenTo @scroller, 'position', (top) ->
-      # Todo
+  setupSectionNavHighlighting: ->
+    $nav = @$nav
+    activateNavLink = (self) ->
+      idx = $(self).addClass('is-active').data 'idx'
+      $nav.find('a').removeClass 'is-active'
+      $nav.find("a[data-idx=#{idx}]").addClass 'is-active'
+    (@$sections = @$('.about2-section'))
+      .waypoint((direction) ->
+        activateNavLink(this) if direction is 'down'
+      ).waypoint (direction) ->
+        activateNavLink(this) if direction is 'up'
+      , offset: -> -$(this).height() + 100
 
   setupHeroUnits: ->
     @$units = @$('.about2-hero-unit-bg')
@@ -53,12 +46,14 @@ class AboutView extends Backbone.View
         $(this).parent('li').height $(this).children('img').height()
 
   setupTracks: ->
-    @$tracks.imagesLoaded =>
-      for el, i in @$tracks.toArray()
-        next = @$tracks[i + 1]
-        continue unless next
-        bottom = $(next).offset().top + $(next).height()
-        $(el).height bottom - $(el).offset().top
+    (@$tracks = @$('.about2-section3-genome-artwork-track'))
+      .waypoint(@onTrackWaypoint)
+      .imagesLoaded =>
+        for el, i in @$tracks.toArray()
+          next = @$tracks[i + 1]
+          continue unless next
+          bottom = $(next).offset().top + $(next).height()
+          $(el).height bottom - $(el).offset().top
 
   onTrackWaypoint: (dir) ->
     tracks = $('.about2-section3-genome-artwork-track').toArray()
