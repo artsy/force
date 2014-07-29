@@ -2,9 +2,12 @@
   .vam-inner
     include ./_header
       aside
-        | The world’s greatest art, online. Sign up
-        br
-        | to discover and collect your favorites.
+        if copy.signup
+          = copy.signup
+        else
+          | The world’s greatest art, online. Sign up
+          br
+          | to discover and collect your favorites.
 
     section#auth-body
       nav.auth-options

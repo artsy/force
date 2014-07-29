@@ -2,7 +2,7 @@
   .vam-inner
     section#auth-body
       .auth-login-social
-        p.small-caps Log in to Artsy
+        p.small-caps= copy.login || 'Log in to Artsy'
         nav.auth-options
           a.auth-login-facebook.avant-garde-button-black(
             href='/users/auth/facebook?redirect-to=' + pathname, rel='nofollow'

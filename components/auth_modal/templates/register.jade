@@ -1,7 +1,7 @@
 #auth-page.vam-outer
   .vam-inner
     include ./_header
-      p= copy
+      p= copy.register || 'Enter your name, email and password to join'
 
     section#auth-body
       .auth-register
@@ -14,12 +14,12 @@
             name='email', type='email', placeholder='Email', required
           )
           input.bordered-input.is-block(
-            name          = 'password'
-            type          = 'password'
-            placeholder   = 'Password'
-            autocomplete  = 'on'
-            pattern       = '.{6,}'
-            title         = '6 characters minimum'
+            name= 'password'
+            type= 'password'
+            placeholder= 'Password'
+            autocomplete= 'on'
+            pattern= '.{6,}'
+            title= '6 characters minimum'
             required
           )
           button#auth-submit.avant-garde-button-black.is-block Join Artsy
