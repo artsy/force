@@ -14,26 +14,23 @@ class AboutView extends Backbone.View
     @setupTracks()
     @setupScroller()
 
-  setupScroller: ->
-    @scroller = new Scroller frequency: 100
+  setupStickyNav: ->
+    (@$nav = @$('.about2-section-nav'))
+      .waypoint 'sticky'
 
-    # Setup sticky nav
-    @$nav = @scroller.listen @$('.about2-section-nav')
-    @$fixedNav = @$nav.clone()
-    @$nav.on('scroller:below', =>
-      @$nav.css(visibility: 'hidden').after(@$fixedNav.addClass 'is-fixed')
-    ).on 'scroller:above', =>
-      @$fixedNav.remove()
-      @$nav.attr style: null
+  setupScroller: ->
+    @setupStickyNav()
+
+    @scroller = new Scroller frequency: 100
 
     # Setup section navigation
     _.map @$('.about2-section'), (el) =>
       @scroller.listen($(el)).on('scroller:enter', (e) =>
         idx = $(e.currentTarget).addClass('is-active').data('idx')
-        @$fixedNav.find("a[data-idx=#{idx}]").addClass 'is-active'
+        @$nav.find("a[data-idx=#{idx}]").addClass 'is-active'
       ).on 'scroller:exit', (e) =>
         idx = $(e.currentTarget).removeClass('is-active').data('idx')
-        @$fixedNav.find("a[data-idx=#{idx}]").removeClass 'is-active'
+        @$nav.find("a[data-idx=#{idx}]").removeClass 'is-active'
 
     # Setup transitions
     @listenTo @scroller, 'position', (top) ->
