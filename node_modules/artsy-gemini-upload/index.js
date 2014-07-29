@@ -58,28 +58,33 @@ var attach = function($) {
         dataType: 'xml',
         done: (function(_this) {
           return function(e, data) {
-            var fileName;
-            fileName = data.files[0].name;
-            key = key.replace('${filename}', fileName);
-            return $.ajax({
-              type: 'POST',
-              dataType: 'json',
-              url: options.geminiApp + "/entries.json",
-              data: {
-                entry: {
-                  source_key: key,
-                  source_bucket: bucket,
-                  template_key: options.templateKey,
-                  metadata: metadata
+            if (typeof options.templateKey != 'undefined') {
+              var fileName;
+              fileName = data.files[0].name;
+              key = key.replace('${filename}', fileName);
+              return $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: options.geminiApp + "/entries.json",
+                data: {
+                  entry: {
+                    source_key: key,
+                    source_bucket: bucket,
+                    template_key: options.templateKey,
+                    metadata: metadata
+                  }
+                },
+                headers: {
+                  'Authorization': "Basic " + options.credentials
+                },
+                success: function(resp) {
+                  options.onUploadComplete(resp);
                 }
-              },
-              headers: {
-                'Authorization': "Basic " + options.credentials
-              },
-              success: function(resp) {
-                options.onUploadComplete(resp);
-              }
-            });
+              });
+            }
+            else {
+              options.onUploadComplete(data);
+            }
           };
         })(this),
         add: (function(_this) {

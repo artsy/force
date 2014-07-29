@@ -1856,8 +1856,9 @@
       }
     },
     "artsy-gemini-upload": {
-      "version": "0.0.4",
-      "from": "artsy-gemini-upload@"
+      "version": "0.0.6",
+      "from": "artsy-gemini-upload@*",
+      "resolved": "https://registry.npmjs.org/artsy-gemini-upload/-/artsy-gemini-upload-0.0.6.tgz"
     }
   }
 }
