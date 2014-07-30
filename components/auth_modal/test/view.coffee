@@ -17,7 +17,6 @@ describe 'AuthModalView', ->
         set: sinon.stub()
         get: sinon.stub()
       sinon.stub @AuthModalView::, 'initialize'
-
       done()
 
   after ->
@@ -25,15 +24,44 @@ describe 'AuthModalView', ->
 
   beforeEach ->
     @view = new @AuthModalView
-    sinon.stub(Backbone, 'sync').yieldsTo 'success', { user: { accessToken: 'secrets' } }
+    sinon.stub(Backbone, 'sync').yieldsTo 'success', user: accessToken: 'secrets'
 
   afterEach ->
     Backbone.sync.restore()
 
   describe '#preInitialize', ->
-    it 'can render custom copy', ->
-      @view.preInitialize copy: 'Sign up to foobar.'
-      @view.templateData.copy.should.containEql 'Sign up to foobar'
+    it 'can render custom copy a single individual mode', ->
+      @view.preInitialize copy: 'Log in to foobar', mode: 'login'
+      @view.templateData.copy.get('login').should.equal 'Log in to foobar'
+      @view.templateData.copy.has('register').should.be.false
+
+    it 'can render custom copy for the default individual mode', ->
+      # 'register' is the default mode for the view's State
+      @view.preInitialize copy: 'Sign up to foobar'
+      @view.templateData.copy.get('register').should.equal 'Sign up to foobar'
+      @view.templateData.copy.has('login').should.be.false
+
+    it 'can render custom copy for multiple individual modes', ->
+      @view.preInitialize copy:
+        register: 'Sign up to foobar'
+        signup: 'Create an account to foobar'
+        login: 'Log in to foobar'
+      @view.templateData.copy.attributes.should.eql
+        register: 'Sign up to foobar'
+        signup: 'Create an account to foobar'
+        login: 'Log in to foobar'
+
+    it 'always returns an object for copy templateData', ->
+      @view.preInitialize()
+      @view.templateData.copy.attributes.should.containEql {}
+
+    it 'returns custom copy for the redirecTo route if present', ->
+      @view.redirectTo = '/following/profiles'
+      @view.preInitialize()
+      @view.templateData.copy.attributes.should.eql
+        signup: null
+        register: 'Sign up to follow galleries and museums'
+        login: 'Login to follow galleries and museums'
 
     it 'can render custom redirect', ->
       @view.redirectTo = '/awesome-fair'

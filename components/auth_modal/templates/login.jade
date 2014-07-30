@@ -1,8 +1,11 @@
 #auth-page.vam-outer
   .vam-inner
+    include ./_header
+      aside
+        = copy.get('login') || 'Log in to Artsy'
+
     section#auth-body
       .auth-login-social
-        p.small-caps Log in to Artsy
         nav.auth-options
           a.auth-login-facebook.avant-garde-button-black(
             href='/users/auth/facebook?redirect-to=' + pathname, rel='nofollow'
@@ -14,8 +17,6 @@
           )
             i.icon-twitter
             | Log in using Twitter
-
-      hr.horizontal-rule-or
 
       form.auth-login-email.auth-form( action='/users/sign_in' )
         .auth-errors

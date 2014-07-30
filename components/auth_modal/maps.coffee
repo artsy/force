@@ -16,3 +16,21 @@ module.exports =
   successEventMap:
     login: 'Successfully logged in'
     register: 'Created account'
+
+  routeCopyMap:
+    '/favorites':
+      signup: null
+      register: 'Sign up to save artworks'
+      login: 'Login to save artworks'
+    '/following/genes':
+      signup: null
+      register: null
+      login: 'Log in to manage what you follow'
+    '/following/artists':
+      signup: null
+      register: 'Sign up to follow artists'
+      login: 'Log in to follow artists'
+    '/following/profiles':
+      signup: null
+      register: 'Sign up to follow galleries and museums'
+      login: 'Login to follow galleries and museums'

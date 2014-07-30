@@ -8,7 +8,10 @@ mediator = require '../../lib/mediator.coffee'
 analytics = require '../../lib/analytics.coffee'
 LoggedOutUser = require '../../models/logged_out_user.coffee'
 
-{ templateMap, stateEventMap, successEventMap } = require './maps.coffee'
+{ templateMap, stateEventMap, successEventMap, routeCopyMap } = require './maps.coffee'
+
+class State extends Backbone.Model
+  defaults: mode: 'register'
 
 module.exports = class AuthModalView extends ModalView
   _.extend @prototype, Form
@@ -30,11 +33,13 @@ module.exports = class AuthModalView extends ModalView
     super
 
   preInitialize: (options = {}) ->
+    { @copy } = options
     @user = new LoggedOutUser
-    @state = new Backbone.Model(mode: options.mode)
+    mode = mode: options.mode if options.mode
+    @state = new State mode
 
     @templateData =
-      copy: options.copy or 'Enter your name, email and password to join'
+      copy: @renderCopy(options.copy)
       pathname: location.pathname
       redirectTo: @redirectTo
 
@@ -46,6 +51,22 @@ module.exports = class AuthModalView extends ModalView
     mediator.on 'modal:closed', @logClose
 
     @logState()
+
+  renderCopy: (copy) ->
+    attrs = if copy?
+      if _.isObject copy
+        containsRequired = _.partial _.contains, ['signup', 'register', 'login']
+        # Ensure the object has one of the required copy keys
+        copy if _.any _.keys(copy), containsRequired
+      else if _.isString copy
+        # Return an object with the initialized state + the specified copy
+        _.tap {}, (hsh) =>
+          hsh[@state.get 'mode'] = copy
+    else # Fallback to route copy
+      routeCopy = routeCopyMap[@redirectTo]
+    # Ensure we return an object
+    attrs or {}
+    new Backbone.Model attrs
 
   setMode: (mode) ->
     @state.set 'mode', mode
