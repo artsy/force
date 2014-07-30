@@ -1,3 +1,5 @@
+@import '../stylus_lib'
+
 .jump-to-top
   position fixed
   cursor pointer
@@ -9,26 +11,22 @@
   font-size 35px
   text-align center
   vertical-align middle
-  // background-image is set in embedded.styl
   border 3px solid transparent
-  transition top 0.25s, opacity 0.25s, bottom 0.25s
-  // Prevent repaints
+  transition all 0.25s
+  z-index zindex-jump
   force-hardware-acceleration()
-
   &:hover
-    border-color #000
-
-  &[data-state='hidden'], &.is-hidden
-    top 0 !important
+    border-color black
+  &[data-state='hidden']
+  &.is-hidden
+    transform translateY(-(home-logo-size + 20px))
     opacity 0 !important
     border-color transparent !important
     cursor default
     pointer-events none
-
-  &.jump-from-bottom
+  &.from-bottom
     bottom 20px
     top auto
     z-index 2
     &[data-state='hidden']
-      bottom -100px
-      top auto !important
+      transform translateY(-20px)

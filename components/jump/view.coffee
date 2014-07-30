@@ -6,21 +6,20 @@ analytics = require '../../lib/analytics.coffee'
 module.exports = class JumpView extends Backbone.View
   className: 'jump-to-top icon-chevron-up'
 
-  initialize: (options) ->
-    { @duration, @threshold, @frequency } =
-      _.defaults (options || {}),
-        duration: 500 # Scroll animation duration
-        threshold: 400 # Point at which to hide the navigation
-        frequency: 250 # How often scroll position is checked
+  defaults:
+    direction: 'top' # Direction to animate in from
+    duration: 500 # Scroll animation duration
+    threshold: 400 # Point at which to hide the navigation
+    frequency: 150 # How often scroll position is checked
 
+  initialize: (options = {}) ->
+    { @duration, @threshold, @frequency, @direction } = _.defaults options, @defaults
+
+    @$el.addClass "from-#{@direction}"
     @isScrolling = false
-    @state = 'hidden'
-
-    @shouldBe @state
-
-    @toggler = _.throttle((=> @toggle()), @frequency)
-
-    $(window).on 'scroll', @toggler
+    @shouldBe (@state = 'hidden')
+    (@$window = $(window))
+      .on 'scroll.jump', _.throttle @toggle, @frequency
 
     mediator.on 'scroll:top', @scrollToTop, this
     mediator.on 'scroll:position', @scrollToPosition, this
@@ -33,36 +32,36 @@ module.exports = class JumpView extends Backbone.View
   #
   # Toggle is executed as long as we are not currently scrolling and
   # the new state is different than the current state
-  toggle: ->
+  toggle: =>
     return if @isScrolling
-    state = if $(window).scrollTop() > @threshold then 'visible' else 'hidden'
-    @shouldBe state if @state != state
+    state = if @$window.scrollTop() > @threshold then 'visible' else 'hidden'
+    @shouldBe state if @state isnt state
 
   # Set the data state of the jump link
   # Should be 'hidden' or 'visible'
   #
   # @param {String} state
   shouldBe: (state) ->
-    @state = state
-    @$el.attr 'data-state', @state
+    @$el.attr 'data-state', (@state = state)
 
   # Scrolls to a position on the page
   #
   # @param {Integer} position
   scrollToPosition: (position) ->
     @isScrolling = true
-    $('html, body').animate { scrollTop: position }, @duration, =>
-      @isScrolling = false
-      mediator.trigger 'scrolled:position', position
+    (@$htmlBody ?= $('html, body'))
+      .animate { scrollTop: position }, @duration, =>
+        @isScrolling = false
+        mediator.trigger 'scrolled:position', position
 
   # Simultaneously scrolls to the top of the page
   # and hides the jump navigation
   scrollToTop: ->
-    analytics.track.click "Clicked filter scrollToTop"
     @shouldBe 'hidden'
     @scrollToPosition 0
+    analytics.track.click 'Clicked filter scrollToTop'
 
   remove: ->
-    $(window).off 'scroll', @toggler
+    @$window.off 'scroll.jump'
     mediator.off null, null, this
     super
