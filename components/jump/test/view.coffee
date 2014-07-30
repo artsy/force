@@ -8,18 +8,25 @@ JumpView = require '../view.coffee'
 describe 'JumpView', ->
   beforeEach (done) ->
     benv.setup =>
-      benv.expose { $: benv.require 'jquery' }
+      benv.expose $: benv.require 'jquery'
       Backbone.$ = $
       @view = new JumpView
       done()
 
-  afterEach -> benv.teardown()
+  afterEach ->
+    benv.teardown()
 
   describe '#initialize', ->
     it 'should have some defaults', ->
       @view.state.should.equal 'hidden'
       @view.isScrolling.should.equal false
       @view.$el.attr('data-state').should.equal 'hidden'
+
+    it 'accepts a direction', ->
+      jump = new JumpView direction: 'bottom'
+      jump.$el.hasClass('from-bottom').should.be.true
+      jump = new JumpView
+      jump.$el.hasClass('from-top').should.be.true
 
   describe '#toggle', ->
     it 'toggles between view states depending on the position of the window scrollTop', ->
