@@ -8,6 +8,7 @@
     left 0
     right 0
     z-index 3
+    force-hardware-acceleration()
   > nav
     display table
     width container-width
@@ -25,7 +26,10 @@
       font-size 13px
       letter-spacing 2px
       color gray-color
-      transition color 0.5s
+      text-decoration none
+      > span
+        transition color 0.25s
       &:hover
       &.is-active
-        color purple-color
+        > span
+          color purple-color

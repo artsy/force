@@ -10,6 +10,7 @@ app.set 'views', __dirname + '/templates'
 app.set 'view engine', 'jade'
 
 app.get '/about2', routes.index
+app.get /^\/about2((?!\/edit).)*$/, routes.index
 # Safely init upload routes for missing S3 env vars (like in test)
 try
   routes.initClient()

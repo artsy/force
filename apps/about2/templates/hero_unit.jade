@@ -5,13 +5,16 @@
         h1!= hero.header
     .a2huc-bottom
       nav.about2-nav.about2-container
-        for section in sections
-          a: span!= section.header
-      .about2-chevron: a.icon-chevron-down
+        for section, i in sections
+          a.about2-nav-link( data-idx=i, href="/about2/#{section.slug}" )
+            span!= section.header
+      .about2-chevron: a.icon-chevron-down.about2-nav-link(
+        href="/about2/#{sections[0].slug}"
+      )
 
   ul.about2-hero-unit-bgs
     for url, i in hero.images
       li.about2-hero-unit-bg(
         style="background-image: url(#{url})"
-        class="#{i === 0 ? 'is-active' : undefined}"
+        class=(i === 0 ? 'is-active' : undefined)
       )
