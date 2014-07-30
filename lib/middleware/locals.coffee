@@ -7,14 +7,12 @@ uuid = require 'node-uuid'
 _ = require 'underscore'
 _.mixin require 'underscore.string'
 { NODE_ENV } = require '../../config'
-newrelic = require 'newrelic' unless _.contains(['development', 'test'], NODE_ENV)
 { fill, resize, crop } = require '../../lib/resizer'
 
 module.exports = (req, res, next) ->
 
   # Attach libraries to locals
   res.locals._ = _
-  res.locals.newrelic = newrelic
   res.locals.resize = resize
   res.locals.crop = crop
   res.locals.fill = fill
