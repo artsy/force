@@ -38,6 +38,10 @@ module.exports.GeneView = class GeneView extends Backbone.View
       countsUrl: "#{API_URL}/api/v1/search/filtered/gene/#{@model.get 'id'}/suggest"
       urlRoot: "gene/#{@model.id}"
       title: @model.get('name')
+
+    if @params.get('price_range') or @params.get('size') or location.pathname.match('/artworks')
+      $('meta[name=fragment]').remove()
+
     @setupMode()
     @onFollowRoute()
     @setupBlurb()

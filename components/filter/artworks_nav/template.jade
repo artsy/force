@@ -1,7 +1,7 @@
 include ../dropdown-mixin
 
 nav.filter-nav.filter-artworks-nav
-  a.filter-button.filter-nav-all( href=filterRoot ) All Works
+  a.filter-button.filter-nav-all( href=filterRoot) All Works
   +filter-dropdown('Price', 'Prices', 'price_range', {
     'Under $1,000': '-1:1000',
     '$1,000 to $5,000': '1000:5000',

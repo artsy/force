@@ -6,4 +6,5 @@ Gene = require '../../models/gene'
       res.locals.sharify.data.GENE = gene.toJSON()
       res.render 'index',
         gene: gene
+        filterRoot: gene.href() + '/artworks'
     error: res.backboneError
