@@ -1,522 +1,375 @@
 {
-  "hero": {
-    "header": "Artsy’s mission is to make all the world’s art accessible to anyone with an Internet connection.<br><br>We are a resource for art collecting and education.",
-    "images": [
-      "http://cl.ly/image/0n212R2h1A0n/placeholder2.jpg",
-      "http://cl.ly/image/2d091Z0k1P0A/placeholder1.jpg",
-      "http://static.damonzucconi.com/_capture/8w/zubsfk484k40c.png"
-    ]
-  },
-  "sections": [
-    {
-      "header": "The Art World<br>Online",
-      "preamble": "To make all the world’s art accesible, Artsy partners with top galleries, museums, institutions, & art fairs. Our growing collection of 140,000+ artworks is one of the largest availabe online and represents the scope of the art world.  We are creating a platform for art-lovers, collectors, students and educators to discover art.",
-      "pullBlurb1": {
-        "h1": "The Artsy Collection",
-        "h2": "Our collection comes from leading galleries and museums around the world",
-        "images": [
-          {
-            "src": "http://cl.ly/image/2h1F3j1e0D2h/img.jpg",
-            "caption": "Gagosian Gallery - New York"
-          },
-          {
-            "src": "http://cl.ly/image/2h1F3j1e0D2h/img.jpg",
-            "caption": "Gagosian Gallery - New York"
-          },
-          {
-            "src": "http://cl.ly/image/2h1F3j1e0D2h/img.jpg",
-            "caption": "Gagosian Gallery - New York"
-          },
-          {
-            "src": "http://cl.ly/image/2h1F3j1e0D2h/img.jpg",
-            "caption": "Gagosian Gallery - New York"
-          },
-          {
-            "src": "http://cl.ly/image/2h1F3j1e0D2h/img.jpg",
-            "caption": "Gagosian Gallery - New York"
-          },
-          {
-            "src": "http://cl.ly/image/2h1F3j1e0D2h/img.jpg",
-            "caption": "Gagosian Gallery - New York"
-          },
-          {
-            "src": "http://cl.ly/image/2h1F3j1e0D2h/img.jpg",
-            "caption": "Gagosian Gallery - New York"
-          }
-        ]
-      },
-      "pullBlurb2": {
-        "h1": "Shows and Art Fairs",
-        "h2": "We cover international show openings and art fairs",
-        "p": "In striving to make the art world accessible to an international audience, Artsy has focused on providing comprehensive online coverage of art world events around the world. We want to provide a resource to stay informed and see the collections of shows and art fairs before they reach the public.",
-        "leftImages": [
-          {
-            "src": "http://cl.ly/image/0A3D2N2f3C2m/cimg.jpg",
-            "caption": "Image Courtesty of Armory Show"
-          },
-          {
-            "src": "http://cl.ly/image/0A3D2N2f3C2m/cimg.jpg",
-            "caption": "Image Courtesty of Armory Show"
-          },
-          {
-            "src": "http://cl.ly/image/0A3D2N2f3C2m/cimg.jpg",
-            "caption": "Image Courtesty of Armory Show"
-          }
-        ],
-        "rightImages": [
-          {
-            "src": "http://cl.ly/image/0y273x3i3x32/Image%202014-07-14%20at%205.13.16%20PM.png",
-            "author": "Artsy Editorial",
-            "caption": "Kanye West’s Surprise Performance at Design Miami/ Basel: Find Out Which Designers He Loves"
-          },
-          {
-            "src": "http://cl.ly/image/0y273x3i3x32/Image%202014-07-14%20at%205.13.16%20PM.png",
-            "author": "Artsy Editorial",
-            "caption": "Kanye West’s Surprise Performance at Design Miami/ Basel: Find Out Which Designers He Loves"
-          }
-        ]
-      },
-      "pullBlurb3": {
-        "h2": "Save works and curate sets on Artsy",
-        "p": "Artsy allows you to save and organize any works you find in our collection. “Sets” are customizable collections of works you find on Artsy that can be shared or made completely private.",
-        "button": "Sign up to start a Library",
-        "artworks": [
-          {
-            "src": "http://cl.ly/image/1H422v0M0V3m/cimg.jpg",
-            "artist": "John Currin",
-            "header": "Constance Towers",
-            "date": "2009",
-            "partner": "Gagosian Gallery"
-          },
-          {
-            "src": "http://cl.ly/image/1H422v0M0V3m/cimg.jpg",
-            "artist": "John Currin",
-            "header": "Constance Towers",
-            "date": "2009",
-            "partner": "Gagosian Gallery"
-          },
-          {
-            "src": "http://cl.ly/image/1H422v0M0V3m/cimg.jpg",
-            "artist": "John Currin",
-            "header": "Constance Towers",
-            "date": "2009",
-            "partner": "Gagosian Gallery"
-          },
-          {
-            "src": "http://cl.ly/image/1H422v0M0V3m/cimg.jpg",
-            "artist": "John Currin",
-            "header": "Constance Towers",
-            "date": "2009",
-            "partner": "Gagosian Gallery"
-          },
-          {
-            "src": "http://cl.ly/image/1H422v0M0V3m/cimg.jpg",
-            "artist": "John Currin",
-            "header": "Constance Towers",
-            "date": "2009",
-            "partner": "Gagosian Gallery"
-          },
-          {
-            "src": "http://cl.ly/image/1H422v0M0V3m/cimg.jpg",
-            "artist": "John Currin",
-            "header": "Constance Towers",
-            "date": "2009",
-            "partner": "Gagosian Gallery"
-          }
-        ]
-      },
-      "pullBlurb4": {
-        "h1": "Artsy Iphone App",
-        "h2": "Access from anywhere",
-        "p": "Making the art world accessible means making our collection availble wherever you go. Our iPhone app allows you to browse, save, and collect from anywhere.",
-        "src": "http://cl.ly/image/3c2Y0e3g321T/Screen%20Shot%202014-07-21%20at%204.40.19%20PM.png"
-      }
+    "hero": {
+        "header": "Artsy’s mission is to make all the world’s art accessible to anyone with an Internet connection.<br><br>We are a resource for art collecting and education!",
+        "images": ["https://artsy-media-uploads.s3.amazonaws.com/VB3r7DzjN7BEt1BHakgubw/Jupiter_by_Cassini-Huygens.jpg", "https://artsy-media-uploads.s3.amazonaws.com/I86Ifc5AFt-elEcuBsC9vA/bluemarblewest.jpg", "https://artsy-media-uploads.s3.amazonaws.com/iiG32StDRKsFzdkS_ka3Lg/Jupiter_by_Cassini-Huygens.jpg"]
     },
-    {
-      "header": "Collecting",
-      "preamble": "Currently there are over 100,000 works available for sale on Artsy provided by our international (**howmany**) gallery partners. These works range in price from under $500 to over $1,000,000, with new ones added every day.",
-      "pullBlurb1": {
-        "h1": "Buying Art on Artsy",
-        "h2": "How buying art on Artsy Works",
-        "p": "When you're interested in a for-sale work you can contact the gallery to disucss price, availability, and purchase of the work. They will message you back with the information you are interested in. Often, the more information you give the gallery about yourself, the quicker the response will be.  The gallery will help you to arrange shipping to your location, anywhere around world.",
-        "src": "http://cl.ly/image/351Y2B043T2k/cimg.jpg"
-      },
-      "pullBlurb2": {
-        "h1": "Art Fair & Show Previews",
-        "h2": "Early access to fairs and shows",
-        "p": "We have dedicated pages to art fairs and gallery shows where you can browse the collection well before they open to the public. Get a head-start on finding the work that’s right for you.",
-        "src": "http://cl.ly/image/182g2r0n0Q1o/cimg.jpg",
-        "caption": "Image courtesy of The Armory Show"
-      },
-      "pullBlurb3": {
-        "h1": "Follow Artists, Galleries, & Museums",
-        "h2": "Follow artists and galleries to receive alerts on new works and shows",
-        "p": "We want to keep you informed on the artists and galleries you love. By following an artist or gallery you will receive weekly emails informing you of shows, news works, and news related to what you follow.",
-        "src": "http://cl.ly/image/1T2y0I1L1c00/cimg.jpg"
-      },
-      "pullBlurb4": {
-        "h1": "Artsy Specialists",
-        "h2": "We’re here to help you find art",
-        "p": "Artsy specialists are available to all Artsy users, whether you are purchasing your first work or building upon an existing collection. Our specialists join Artsy from leading auction houses, galleries, and museums, and are available to help you find works that you love, with your price range, interests, and current collection in mind. Your specialist can also source works which aren't publicly listed on the site through our international network of gallery partners.",
-        "specialists": [
-          {
-            "src": "http://cl.ly/image/1U3T2m3s0R08/cimg.jpg",
-            "name": "Julia Colavita"
-          },
-          {
-            "src": "http://cl.ly/image/1U3T2m3s0R08/cimg.jpg",
-            "name": "Julia Colavita"
-          },
-          {
-            "src": "http://cl.ly/image/1U3T2m3s0R08/cimg.jpg",
-            "name": "Julia Colavita"
-          },
-          {
-            "src": "http://cl.ly/image/1U3T2m3s0R08/cimg.jpg",
-            "name": "Julia Colavita"
-          },
-          {
-            "src": "http://cl.ly/image/1U3T2m3s0R08/cimg.jpg",
-            "name": "Julia Colavita"
-          },
-          {
-            "src": "http://cl.ly/image/1U3T2m3s0R08/cimg.jpg",
-            "name": "Julia Colavita"
-          }
-        ]
-      },
-      "callToAction": {
-        "label": "More questions about collecting? ",
-        "button1": {
-          "text": "Collecting FAQ",
-          "href": ""
+    "sections": [{
+        "slug": "the-art-world-online",
+        "header": "The Art World<br>Online",
+        "preamble": "To make all the world’s art accesible, Artsy partners with top galleries, museums, institutions, & art fairs. Our growing collection of 140,000+ artworks is one of the largest availabe online and represents the scope of the art world.  We are creating a platform for art-lovers, collectors, students and educators to discover art.",
+        "pullBlurb1": {
+            "h1": "The Artsy Collection",
+            "h2": "Our collection comes from leading galleries and museums around the world",
+            "images": [{
+                "caption": "Gagosian Gallery - New York",
+                "src": "http://cl.ly/image/2h1F3j1e0D2h/img.jpg"
+            }, {
+                "caption": "Gagosian Gallery - New York",
+                "src": "http://cl.ly/image/2h1F3j1e0D2h/img.jpg"
+            }, {
+                "caption": "Gagosian Gallery - New York",
+                "src": "http://cl.ly/image/2h1F3j1e0D2h/img.jpg"
+            }, {
+                "caption": "Gagosian Gallery - New York",
+                "src": "http://cl.ly/image/2h1F3j1e0D2h/img.jpg"
+            }, {
+                "caption": "Gagosian Gallery - New York",
+                "src": "http://cl.ly/image/2h1F3j1e0D2h/img.jpg"
+            }, {
+                "caption": "Gagosian Gallery - New York",
+                "src": "http://cl.ly/image/2h1F3j1e0D2h/img.jpg"
+            }, {
+                "caption": "Gagosian Gallery - New York",
+                "src": "http://cl.ly/image/2h1F3j1e0D2h/img.jpg"
+            }]
         },
-        "button2": {
-          "text": "Contact Specialist",
-          "href": ""
+        "pullBlurb2": {
+            "h1": "Shows and Art Fairs",
+            "h2": "We cover international show openings and art fairs",
+            "leftImages": [{
+                "caption": "Image Courtesty of Armory Show",
+                "src": "http://cl.ly/image/0A3D2N2f3C2m/cimg.jpg"
+            }, {
+                "caption": "Image Courtesty of Armory Show",
+                "src": "http://cl.ly/image/0A3D2N2f3C2m/cimg.jpg"
+            }, {
+                "caption": "Image Courtesty of Armory Show",
+                "src": "http://cl.ly/image/0A3D2N2f3C2m/cimg.jpg"
+            }],
+            "p": "In striving to make the art world accessible to an international audience, Artsy has focused on providing comprehensive online coverage of art world events around the world. We want to provide a resource to stay informed and see the collections of shows and art fairs before they reach the public.",
+            "rightImages": [{
+                "author": "Artsy Editorial",
+                "caption": "Kanye West’s Surprise Performance at Design Miami/ Basel: Find Out Which Designers He Loves",
+                "src": "http://cl.ly/image/0y273x3i3x32/Image%202014-07-14%20at%205.13.16%20PM.png"
+            }, {
+                "author": "Artsy Editorial",
+                "caption": "Kanye West’s Surprise Performance at Design Miami/ Basel: Find Out Which Designers He Loves",
+                "src": "http://cl.ly/image/0y273x3i3x32/Image%202014-07-14%20at%205.13.16%20PM.png"
+            }]
+        },
+        "pullBlurb3": {
+            "artworks": [{
+                "artist": "John Currin",
+                "date": "2009",
+                "header": "Constance Towers",
+                "partner": "Gagosian Gallery",
+                "src": "http://cl.ly/image/1H422v0M0V3m/cimg.jpg"
+            }, {
+                "artist": "John Currin",
+                "date": "2009",
+                "header": "Constance Towers",
+                "partner": "Gagosian Gallery",
+                "src": "http://cl.ly/image/1H422v0M0V3m/cimg.jpg"
+            }, {
+                "artist": "John Currin",
+                "date": "2009",
+                "header": "Constance Towers",
+                "partner": "Gagosian Gallery",
+                "src": "http://cl.ly/image/1H422v0M0V3m/cimg.jpg"
+            }, {
+                "artist": "John Currin",
+                "date": "2009",
+                "header": "Constance Towers",
+                "partner": "Gagosian Gallery",
+                "src": "http://cl.ly/image/1H422v0M0V3m/cimg.jpg"
+            }, {
+                "artist": "John Currin",
+                "date": "2009",
+                "header": "Constance Towers",
+                "partner": "Gagosian Gallery",
+                "src": "http://cl.ly/image/1H422v0M0V3m/cimg.jpg"
+            }, {
+                "artist": "John Currin",
+                "date": "2009",
+                "header": "Constance Towers",
+                "partner": "Gagosian Gallery",
+                "src": "http://cl.ly/image/1H422v0M0V3m/cimg.jpg"
+            }],
+            "button": "Sign up to start a Library",
+            "h2": "Save works and curate sets on Artsy",
+            "p": "Artsy allows you to save and organize any works you find in our collection. “Sets” are customizable collections of works you find on Artsy that can be shared or made completely private."
+        },
+        "pullBlurb4": {
+            "h1": "Artsy Iphone App",
+            "h2": "Access from anywhere",
+            "p": "Making the art world accessible means making our collection availble wherever you go. Our iPhone app allows you to browse, save, and collect from anywhere.",
+            "src": "http://cl.ly/image/3c2Y0e3g321T/Screen%20Shot%202014-07-21%20at%204.40.19%20PM.png"
         }
-      }
-    },
-    {
-      "header": "The Art Genome<br>Project",
-      "preamble": {
-        "text": "The Art Genome Project is an ongoing study to map the characteristics (known as ‘genes’) that connect the world’s artists and artworks. There are over 500 genes including art-historical movements, subject matter, and formal qualities.",
-        "src": "http://cl.ly/image/130X1E003n09/cimg.jpg"
-      },
-      "pullBlurb1": {
-        "h1": "Get a deeper understanding",
-        "h2": "Works are given a genome, or set of characteristics",
-        "p": "Our team of art historians and experts works hard to assign various characteristics and subject matter to our works. This allows for amazing possibility of discovery."
-      },
-      "exampleWork": {
-        "totalGenes": [
-          "Late 19th Century",
-          "Oil Painting",
-          "Modern",
-          "Gestural",
-          "American Impressionism",
-          "Childhood",
-          "Reclining",
-          "Figurative Painting",
-          "Painting",
-          "Human Figure",
-          "France",
-          "Portrait",
-          "Bright / Vivid",
-          "19th Century",
-          "Figurative Art",
-          "Individual Portrait",
-          "Scenes of Everyday Life",
-          "United States"
-        ],
-        "src": "http://cl.ly/image/2j1x0u0O2p1p/cimg.jpg",
-        "artist": "Mary Cassat",
-        "header": "Little Girl in a Blue Armchair",
-        "date": "1878",
-        "partner": "National Gallery of Art, Washington D.C."
-      },
-      "pullBlurb2": {
-        "h1": "A System Built for Discovery",
-        "h2": "Characterstics are used to connect artwork",
-        "p": "Our team of art historians and experts works hard to assign various characteristics and subject matter to our works. This is not a perfect science but allows for amazing possibility of discovery."
-      },
-      "genomeWorks": [
-        {
-          "src": "http://cl.ly/image/2j1x0u0O2p1p/cimg.jpg",
-          "artist": "Mary Cassat",
-          "header": "Little Girl in a Blue Armchair",
-          "date": "1878",
-          "partner": "National Gallery of Art, Washington D.C.",
-          "genes": [
-            "Scenes of Everyday Life",
-            "Reclining",
-            "Stolen Moments"
-          ]
+    }, {
+        "callToAction": {
+            "button1": {
+                "href": "",
+                "text": "Collecting FAQ"
+            },
+            "button2": {
+                "href": "",
+                "text": "Contact Specialist"
+            },
+            "label": "More questions about collecting? "
         },
-        {
-          "src": "http://cl.ly/image/2j1x0u0O2p1p/cimg.jpg",
-          "artist": "Mary Cassat",
-          "header": "Little Girl in a Blue Armchair",
-          "date": "1878",
-          "partner": "National Gallery of Art, Washington D.C.",
-          "genes": [
-            "Scenes of Everyday Life",
-            "Reclining",
-            "Stolen Moments"
-          ]
+        "slug": "collecting",
+        "header": "Collecting",
+        "preamble": "Currently there are over 100,000 works available for sale on Artsy provided by our international (**howmany**) gallery partners. These works range in price from under $500 to over $1,000,000, with new ones added every day.",
+        "pullBlurb1": {
+            "h1": "Buying Art on Artsy",
+            "h2": "How buying art on Artsy Works",
+            "p": "When you're interested in a for-sale work you can contact the gallery to disucss price, availability, and purchase of the work. They will message you back with the information you are interested in. Often, the more information you give the gallery about yourself, the quicker the response will be.  The gallery will help you to arrange shipping to your location, anywhere around world.",
+            "src": "http://cl.ly/image/351Y2B043T2k/cimg.jpg"
         },
-        {
-          "src": "http://cl.ly/image/2j1x0u0O2p1p/cimg.jpg",
-          "artist": "Mary Cassat",
-          "header": "Little Girl in a Blue Armchair",
-          "date": "1878",
-          "partner": "National Gallery of Art, Washington D.C.",
-          "genes": [
-            "Scenes of Everyday Life",
-            "Reclining",
-            "Stolen Moments"
-          ]
+        "pullBlurb2": {
+            "caption": "Image courtesy of The Armory Show",
+            "h1": "Art Fair & Show Previews",
+            "h2": "Early access to fairs and shows",
+            "p": "We have dedicated pages to art fairs and gallery shows where you can browse the collection well before they open to the public. Get a head-start on finding the work that’s right for you.",
+            "src": "http://cl.ly/image/182g2r0n0Q1o/cimg.jpg"
         },
-        {
-          "src": "http://cl.ly/image/2j1x0u0O2p1p/cimg.jpg",
-          "artist": "Mary Cassat",
-          "header": "Little Girl in a Blue Armchair",
-          "date": "1878",
-          "partner": "National Gallery of Art, Washington D.C.",
-          "genes": [
-            "Scenes of Everyday Life",
-            "Reclining",
-            "Stolen Moments"
-          ]
+        "pullBlurb3": {
+            "h1": "Follow Artists, Galleries, & Museums",
+            "h2": "Follow artists and galleries to receive alerts on new works and shows",
+            "p": "We want to keep you informed on the artists and galleries you love. By following an artist or gallery you will receive weekly emails informing you of shows, news works, and news related to what you follow.",
+            "src": "http://cl.ly/image/1T2y0I1L1c00/cimg.jpg"
         },
-        {
-          "src": "http://cl.ly/image/2j1x0u0O2p1p/cimg.jpg",
-          "artist": "Mary Cassat",
-          "header": "Little Girl in a Blue Armchair",
-          "date": "1878",
-          "partner": "National Gallery of Art, Washington D.C.",
-          "genes": [
-            "Scenes of Everyday Life",
-            "Reclining",
-            "Stolen Moments"
-          ]
+        "pullBlurb4": {
+            "h1": "Artsy Specialists",
+            "h2": "We’re here to help you find art",
+            "p": "Artsy specialists are available to all Artsy users, whether you are purchasing your first work or building upon an existing collection. Our specialists join Artsy from leading auction houses, galleries, and museums, and are available to help you find works that you love, with your price range, interests, and current collection in mind. Your specialist can also source works which aren't publicly listed on the site through our international network of gallery partners.",
+            "specialists": [{
+                "name": "Julia Colavita",
+                "src": "http://cl.ly/image/1U3T2m3s0R08/cimg.jpg"
+            }, {
+                "name": "Julia Colavita",
+                "src": "http://cl.ly/image/1U3T2m3s0R08/cimg.jpg"
+            }, {
+                "name": "Julia Colavita",
+                "src": "http://cl.ly/image/1U3T2m3s0R08/cimg.jpg"
+            }, {
+                "name": "Julia Colavita",
+                "src": "http://cl.ly/image/1U3T2m3s0R08/cimg.jpg"
+            }, {
+                "name": "Julia Colavita",
+                "src": "http://cl.ly/image/1U3T2m3s0R08/cimg.jpg"
+            }, {
+                "name": "Julia Colavita",
+                "src": "http://cl.ly/image/1U3T2m3s0R08/cimg.jpg"
+            }]
         }
-      ]
-    },
-    {
-      "header": "Education",
-      "preamble": {
-        "text": "Wether you’re a student, teacher, curator, or collector, Artsy offers a variety of ways to learn about art and design. Most art websites offer few ways to search for art. The Art Genome Project has created over 1,000 categories for discovery and learning, including art-historical movements, subject matter, and formal qualities.",
-        "src": "http://cl.ly/image/280i1z2Q3228/cimg.jpg"
-      },
-      "pullBlurb1": {
-        "h1": "A System Built for Discovery",
-        "h2": "Images for learning and teaching",
-        "p": "Artsy provides online access to 160,000+ artworks by 29,000+ artists from 250+ museums and institutions and 1,800+ galleries. Today, more than 25,000 images of art and architecture are also downloadable. Use Artsy to supplement your language, literature and history courses—as well as art history and studio art.",
-        "srcs": [
-          "http://cl.ly/image/383I3t3e3834/cimg.jpg",
-          "http://cl.ly/image/383I3t3e3834/cimg.jpg",
-          "http://cl.ly/image/383I3t3e3834/cimg.jpg",
-          "http://cl.ly/image/383I3t3e3834/cimg.jpg",
-          "http://cl.ly/image/383I3t3e3834/cimg.jpg",
-          "http://cl.ly/image/383I3t3e3834/cimg.jpg",
-          "http://cl.ly/image/383I3t3e3834/cimg.jpg",
-          "http://cl.ly/image/383I3t3e3834/cimg.jpg",
-          "http://cl.ly/image/383I3t3e3834/cimg.jpg",
-          "http://cl.ly/image/383I3t3e3834/cimg.jpg",
-          "http://cl.ly/image/383I3t3e3834/cimg.jpg",
-          "http://cl.ly/image/383I3t3e3834/cimg.jpg",
-          "http://cl.ly/image/383I3t3e3834/cimg.jpg",
-          "http://cl.ly/image/383I3t3e3834/cimg.jpg",
-          "http://cl.ly/image/383I3t3e3834/cimg.jpg",
-          "http://cl.ly/image/383I3t3e3834/cimg.jpg",
-          "http://cl.ly/image/383I3t3e3834/cimg.jpg",
-          "http://cl.ly/image/383I3t3e3834/cimg.jpg",
-          "http://cl.ly/image/383I3t3e3834/cimg.jpg",
-          "http://cl.ly/image/383I3t3e3834/cimg.jpg",
-          "http://cl.ly/image/383I3t3e3834/cimg.jpg"
-        ]
-      },
-      "pullBlurb2": {
-        "h2": "Educational content",
-        "p": "Artsy provides editorial coverage of hundreds of major gallery and museum exhibitions, art fairs, and biennials around the world. Check the Artsy homepage daily for new posts, interviews, and editorial coverage and browse gallery and institutional pages for the latest exhibitions.",
-        "images": [
-          {
-            "src": "http://cl.ly/image/0y273x3i3x32/Image%202014-07-14%20at%205.13.16%20PM.png",
-            "author": "Artsy Editorial",
-            "caption": "Six Iconic Performance Pieces You’ll Find in Hans Ulrich Obrist and Klaus Biesenbach’s “14 Rooms”"
-          },
-          {
-            "src": "http://cl.ly/image/0y273x3i3x32/Image%202014-07-14%20at%205.13.16%20PM.png",
-            "author": "Artsy Editorial",
-            "caption": "Six Iconic Performance Pieces You’ll Find in Hans Ulrich Obrist and Klaus Biesenbach’s “14 Rooms”"
-          },
-          {
-            "src": "http://cl.ly/image/0y273x3i3x32/Image%202014-07-14%20at%205.13.16%20PM.png",
-            "author": "Artsy Editorial",
-            "caption": "Six Iconic Performance Pieces You’ll Find in Hans Ulrich Obrist and Klaus Biesenbach’s “14 Rooms”"
-          }
-        ]
-      },
-      "pullBlurb3": {
-        "h2": "Artist Biographies",
-        "p": "Want to learn quickly about an artist’s life and work. Artsy’s Editorial Team has published over 5,300 biographies of artists—both historically-significant and contemporary—in an approachable style.",
-        "artwork": {
-          "src": "http://cl.ly/image/1n3M3l3M3T0T/cimg.jpg",
-          "artist": "Vincent Van Gogh",
-          "header": "Self-Portrait",
-          "date": "1887",
-          "partner": "Art Institute of Chicago"
+    }, {
+        "exampleWork": {
+            "artist": "Mary Cassat",
+            "date": "1878",
+            "header": "Little Girl in a Blue Armchair",
+            "partner": "National Gallery of Art, Washington D.C.",
+            "src": "http://cl.ly/image/2j1x0u0O2p1p/cimg.jpg",
+            "totalGenes": ["Late 19th Century", "Oil Painting", "Modern", "Gestural", "American Impressionism", "Childhood", "Reclining", "Figurative Painting", "Painting", "Human Figure", "France", "Portrait", "Bright / Vivid", "19th Century", "Figurative Art", "Individual Portrait", "Scenes of Everyday Life", "United States"]
+        },
+        "genomeWorks": [{
+            "artist": "Mary Cassat",
+            "date": "1878",
+            "genes": ["Scenes of Everyday Life", "Reclining", "Stolen Moments"],
+            "header": "Little Girl in a Blue Armchair",
+            "partner": "National Gallery of Art, Washington D.C.",
+            "src": "http://cl.ly/image/2j1x0u0O2p1p/cimg.jpg"
+        }, {
+            "artist": "Mary Cassat",
+            "date": "1878",
+            "genes": ["Scenes of Everyday Life", "Reclining", "Stolen Moments"],
+            "header": "Little Girl in a Blue Armchair",
+            "partner": "National Gallery of Art, Washington D.C.",
+            "src": "http://cl.ly/image/2j1x0u0O2p1p/cimg.jpg"
+        }, {
+            "artist": "Mary Cassat",
+            "date": "1878",
+            "genes": ["Scenes of Everyday Life", "Reclining", "Stolen Moments"],
+            "header": "Little Girl in a Blue Armchair",
+            "partner": "National Gallery of Art, Washington D.C.",
+            "src": "http://cl.ly/image/2j1x0u0O2p1p/cimg.jpg"
+        }, {
+            "artist": "Mary Cassat",
+            "date": "1878",
+            "genes": ["Scenes of Everyday Life", "Reclining", "Stolen Moments"],
+            "header": "Little Girl in a Blue Armchair",
+            "partner": "National Gallery of Art, Washington D.C.",
+            "src": "http://cl.ly/image/2j1x0u0O2p1p/cimg.jpg"
+        }, {
+            "artist": "Mary Cassat",
+            "date": "1878",
+            "genes": ["Scenes of Everyday Life", "Reclining", "Stolen Moments"],
+            "header": "Little Girl in a Blue Armchair",
+            "partner": "National Gallery of Art, Washington D.C.",
+            "src": "http://cl.ly/image/2j1x0u0O2p1p/cimg.jpg"
+        }],
+        "slug": "the-art-genome-project",
+        "header": "The Art Genome<br>Project",
+        "preamble": {
+            "src": "http://cl.ly/image/130X1E003n09/cimg.jpg",
+            "text": "The Art Genome Project is an ongoing study to map the characteristics (known as ‘genes’) that connect the world’s artists and artworks. There are over 500 genes including art-historical movements, subject matter, and formal qualities."
+        },
+        "pullBlurb1": {
+            "h1": "Get a deeper understanding",
+            "h2": "Works are given a genome, or set of characteristics",
+            "p": "Our team of art historians and experts works hard to assign various characteristics and subject matter to our works. This allows for amazing possibility of discovery."
+        },
+        "pullBlurb2": {
+            "h1": "A System Built for Discovery",
+            "h2": "Characterstics are used to connect artwork",
+            "p": "Our team of art historians and experts works hard to assign various characteristics and subject matter to our works. This is not a perfect science but allows for amazing possibility of discovery."
         }
-      },
-      "pullBlurb4": {
-        "h2": "Current Art News",
-        "p": "Want to learn quickly about an artist’s life and work. Artsy’s Editorial Team has published over 5,300 biographies of artists—both historically-significant and contemporary—in an approachable style.",
-        "leftImage": "http://cl.ly/image/3K2K053n2W2l/cimg.jpg",
-        "rightImages": [
-          {
-            "src": "http://cl.ly/image/250I0Q21021s/cimg.jpg",
-            "author": "Artsy Editorial",
-            "caption": "Six Iconic Performance Pieces You’ll Find in Hans Ulrich Obrist and Klaus Biesenbach’s “14 Rooms”"
-          },
-          {
-            "src": "http://cl.ly/image/250I0Q21021s/cimg.jpg",
-            "author": "Artsy Editorial",
-            "caption": "Six Iconic Performance Pieces You’ll Find in Hans Ulrich Obrist and Klaus Biesenbach’s “14 Rooms”"
-          }
-        ]
-      }
-    },
-    {
-      "header": "Working<br>At Artsy",
-      "pullBlurb1": {
-        "h1": "The Artsy Team",
-        "h2": "Our team is working to make the art world more accessible",
-        "p": "At its core, Artsy is the convergence of art and science. We’re a team of designers, engineers, and arts professionals who share a passion for bringing the art world into the digital age. Making all the world’s art accessible to anyone with an internet connection is an ambitious goal. Amazing colleagues, challenging problems, and 360-degree views of Manhattan keep us inspired everyday.",
-        "srcs": [
-          "http://cl.ly/image/3T3p2N0o002S/cimg.jpg",
-          "http://cl.ly/image/1X2Q1j471X1F/cimg.jpg",
-          "http://cl.ly/image/1X2Q1j471X1F/cimg.jpg",
-          "http://cl.ly/image/1H422v0M0V3m/cimg.jpg",
-          "http://cl.ly/image/3T3p2N0o002S/cimg.jpg"
-        ]
-      },
-      "pullBlurb2": {
-        "h1": "Our Team",
-        "h2": "We've come a long way",
-        "p": "At its core, Artsy is the convergence of art and science. We’re a team of designers, engineers, and arts professionals who share a passion for bringing the art world into the digital age. Making all the world’s art accessible to anyone with an internet connection is an ambitious goal. Amazing colleagues, challenging problems, and 360-degree views of Manhattan keep us inspired everyday.At its core, Artsy is the convergence of art and science. We’re a team of designers, engineers, and arts professionals who share a passion for bringing the art world into the digital age.",
-        "images": [
-          {
-            "src": "http://cl.ly/image/3T3p2N0o002S/cimg.jpg",
-            "caption": "Carter an Caroline present at TC Disrupt"
-          },
-          {
-            "src": "http://cl.ly/image/1X2Q1j471X1F/cimg.jpg"
-          },
-          {
-            "src": "http://cl.ly/image/3T3p2N0o002S/cimg.jpg"
-          },
-          {
-            "src": "http://cl.ly/image/1H422v0M0V3m/cimg.jpg"
-          },
-          {
-            "src": "http://cl.ly/image/3T3p2N0o002S/cimg.jpg"
-          },
-          {
-            "src": "http://cl.ly/image/1X2Q1j471X1F/cimg.jpg"
-          }
-        ]
-      },
-      "pullBlurb3": {
-        "h1": "Jobs at Artsy",
-        "h2": "Join the Artsy team",
-        "p": "At its core, Artsy is the convergence of art and science. We’re a team of designers, engineers, and arts professionals who share a passion for bringing the art world into the digital age.<br><br>Making all the world’s art accessible to anyone with an internet connection is an ambitious goal. Amazing colleagues, challenging problems, and 360-degree views of Manhattan keep us inspired everyday."
-      },
-      "jobs": [
-        {
-          "header": "Full Stack Software Engineer",
-          "location": "New York",
-          "description": "You're an experienced full stack software engineer with an impressive track record in building complex distributed applications written in Ruby and JavaScript.",
-          "href": ""
-
+    }, {
+        "slug": "education",
+        "header": "Education",
+        "preamble": {
+            "src": "http://cl.ly/image/280i1z2Q3228/cimg.jpg",
+            "text": "Wether you’re a student, teacher, curator, or collector, Artsy offers a variety of ways to learn about art and design. Most art websites offer few ways to search for art. The Art Genome Project has created over 1,000 categories for discovery and learning, including art-historical movements, subject matter, and formal qualities."
         },
-        {
-          "header": "Full Stack Software Engineer",
-          "location": "New York",
-          "description": "You're an experienced full stack software engineer with an impressive track record in building complex distributed applications written in Ruby and JavaScript.",
-          "href": ""
-
+        "pullBlurb1": {
+            "h1": "A System Built for Discovery",
+            "h2": "Images for learning and teaching",
+            "p": "Artsy provides online access to 160,000+ artworks by 29,000+ artists from 250+ museums and institutions and 1,800+ galleries. Today, more than 25,000 images of art and architecture are also downloadable. Use Artsy to supplement your language, literature and history courses—as well as art history and studio art.",
+            "srcs": ["http://cl.ly/image/383I3t3e3834/cimg.jpg", "http://cl.ly/image/383I3t3e3834/cimg.jpg", "http://cl.ly/image/383I3t3e3834/cimg.jpg", "http://cl.ly/image/383I3t3e3834/cimg.jpg", "http://cl.ly/image/383I3t3e3834/cimg.jpg", "http://cl.ly/image/383I3t3e3834/cimg.jpg", "http://cl.ly/image/383I3t3e3834/cimg.jpg", "http://cl.ly/image/383I3t3e3834/cimg.jpg", "http://cl.ly/image/383I3t3e3834/cimg.jpg", "http://cl.ly/image/383I3t3e3834/cimg.jpg", "http://cl.ly/image/383I3t3e3834/cimg.jpg", "http://cl.ly/image/383I3t3e3834/cimg.jpg", "http://cl.ly/image/383I3t3e3834/cimg.jpg", "http://cl.ly/image/383I3t3e3834/cimg.jpg", "http://cl.ly/image/383I3t3e3834/cimg.jpg", "http://cl.ly/image/383I3t3e3834/cimg.jpg", "http://cl.ly/image/383I3t3e3834/cimg.jpg", "http://cl.ly/image/383I3t3e3834/cimg.jpg", "http://cl.ly/image/383I3t3e3834/cimg.jpg", "http://cl.ly/image/383I3t3e3834/cimg.jpg", "http://cl.ly/image/383I3t3e3834/cimg.jpg"]
         },
-        {
-          "header": "Full Stack Software Engineer",
-          "location": "New York",
-          "description": "You're an experienced full stack software engineer with an impressive track record in building complex distributed applications written in Ruby and JavaScript.",
-          "href": ""
-
+        "pullBlurb2": {
+            "h2": "Educational content",
+            "images": [{
+                "author": "Artsy Editorial",
+                "caption": "Six Iconic Performance Pieces You’ll Find in Hans Ulrich Obrist and Klaus Biesenbach’s “14 Rooms”",
+                "src": "http://cl.ly/image/0y273x3i3x32/Image%202014-07-14%20at%205.13.16%20PM.png"
+            }, {
+                "author": "Artsy Editorial",
+                "caption": "Six Iconic Performance Pieces You’ll Find in Hans Ulrich Obrist and Klaus Biesenbach’s “14 Rooms”",
+                "src": "http://cl.ly/image/0y273x3i3x32/Image%202014-07-14%20at%205.13.16%20PM.png"
+            }, {
+                "author": "Artsy Editorial",
+                "caption": "Six Iconic Performance Pieces You’ll Find in Hans Ulrich Obrist and Klaus Biesenbach’s “14 Rooms”",
+                "src": "http://cl.ly/image/0y273x3i3x32/Image%202014-07-14%20at%205.13.16%20PM.png"
+            }],
+            "p": "Artsy provides editorial coverage of hundreds of major gallery and museum exhibitions, art fairs, and biennials around the world. Check the Artsy homepage daily for new posts, interviews, and editorial coverage and browse gallery and institutional pages for the latest exhibitions."
         },
-        {
-          "header": "Full Stack Software Engineer",
-          "location": "New York",
-          "description": "You're an experienced full stack software engineer with an impressive track record in building complex distributed applications written in Ruby and JavaScript.",
-          "href": ""
-
+        "pullBlurb3": {
+            "artwork": {
+                "artist": "Vincent Van Gogh",
+                "date": "1887",
+                "header": "Self-Portrait",
+                "partner": "Art Institute of Chicago",
+                "src": "http://cl.ly/image/1n3M3l3M3T0T/cimg.jpg"
+            },
+            "h2": "Artist Biographies",
+            "p": "Want to learn quickly about an artist’s life and work. Artsy’s Editorial Team has published over 5,300 biographies of artists—both historically-significant and contemporary—in an approachable style."
+        },
+        "pullBlurb4": {
+            "h2": "Current Art News",
+            "leftImage": "http://cl.ly/image/3K2K053n2W2l/cimg.jpg",
+            "p": "Want to learn quickly about an artist’s life and work. Artsy’s Editorial Team has published over 5,300 biographies of artists—both historically-significant and contemporary—in an approachable style.",
+            "rightImages": [{
+                "author": "Artsy Editorial",
+                "caption": "Six Iconic Performance Pieces You’ll Find in Hans Ulrich Obrist and Klaus Biesenbach’s “14 Rooms”",
+                "src": "http://cl.ly/image/250I0Q21021s/cimg.jpg"
+            }, {
+                "author": "Artsy Editorial",
+                "caption": "Six Iconic Performance Pieces You’ll Find in Hans Ulrich Obrist and Klaus Biesenbach’s “14 Rooms”",
+                "src": "http://cl.ly/image/250I0Q21021s/cimg.jpg"
+            }]
         }
-      ]
-    },
-    {
-      "header": "Partnering<br>& Press",
-      "pullBlurbLeft": {
-        "h1": "Interested in Partnering",
-        "h2": "Gallery Partnerships",
-        "p": "Our services for institutions include promoting your exhibitions, collections, and programs on your own institutional page on Artsy; and selling limited-edition artworks through Artsy’s e-commerce platform. We also host benefit auctions using cutting-edge web and mobile technology.",
-        "button": "Gallery Overview",
-        "links": [
-          {
-            "h1": "Press Contact",
-            "text": "press@arsy.net",
-            "href": ""
-          },
-          {
-            "h1": "The Pipeline",
-            "text": "Future events & exhibitions",
-            "href": ""
-          }
-        ]
-      },
-      "pullBlurbRight": {
-        "h1": "Interested in Partnering",
-        "h2": "Institutional partnerships",
-        "p": "Our services for institutions include promoting your exhibitions, collections, and programs on your own institutional page on Artsy; and selling limited-edition artworks through Artsy’s e-commerce platform. We also host benefit auctions using cutting-edge web and mobile technology.",
-        "button": "Partnership Overview",
-        "links": [
-          {
+    }, {
+        "slug": "jobs",
+        "header": "Working<br>At Artsy",
+        "jobs": [{
+            "description": "You're an experienced full stack software engineer with an impressive track record in building complex distributed applications written in Ruby and JavaScript.",
+            "header": "Full Stack Software Engineer",
+            "href": "",
+            "location": "New York"
+        }, {
+            "description": "You're an experienced full stack software engineer with an impressive track record in building complex distributed applications written in Ruby and JavaScript.",
+            "header": "Full Stack Software Engineer",
+            "href": "",
+            "location": "New York"
+        }, {
+            "description": "You're an experienced full stack software engineer with an impressive track record in building complex distributed applications written in Ruby and JavaScript.",
+            "header": "Full Stack Software Engineer",
+            "href": "",
+            "location": "New York"
+        }, {
+            "description": "You're an experienced full stack software engineer with an impressive track record in building complex distributed applications written in Ruby and JavaScript.",
+            "header": "Full Stack Software Engineer",
+            "href": "",
+            "location": "New York"
+        }],
+        "pullBlurb1": {
+            "h1": "The Artsy Team",
+            "h2": "Our team is working to make the art world more accessible",
+            "p": "At its core, Artsy is the convergence of art and science. We’re a team of designers, engineers, and arts professionals who share a passion for bringing the art world into the digital age. Making all the world’s art accessible to anyone with an internet connection is an ambitious goal. Amazing colleagues, challenging problems, and 360-degree views of Manhattan keep us inspired everyday.",
+            "srcs": ["http://cl.ly/image/3T3p2N0o002S/cimg.jpg", "http://cl.ly/image/1X2Q1j471X1F/cimg.jpg", "http://cl.ly/image/1X2Q1j471X1F/cimg.jpg", "http://cl.ly/image/1H422v0M0V3m/cimg.jpg", "http://cl.ly/image/3T3p2N0o002S/cimg.jpg"]
+        },
+        "pullBlurb2": {
+            "h1": "Our Team",
+            "h2": "We've come a long way",
+            "images": [{
+                "caption": "Carter an Caroline present at TC Disrupt",
+                "src": "http://cl.ly/image/3T3p2N0o002S/cimg.jpg"
+            }, {
+                "src": "http://cl.ly/image/1X2Q1j471X1F/cimg.jpg"
+            }, {
+                "src": "http://cl.ly/image/3T3p2N0o002S/cimg.jpg"
+            }, {
+                "src": "http://cl.ly/image/1H422v0M0V3m/cimg.jpg"
+            }, {
+                "src": "http://cl.ly/image/3T3p2N0o002S/cimg.jpg"
+            }, {
+                "src": "http://cl.ly/image/1X2Q1j471X1F/cimg.jpg"
+            }],
+            "p": "At its core, Artsy is the convergence of art and science. We’re a team of designers, engineers, and arts professionals who share a passion for bringing the art world into the digital age. Making all the world’s art accessible to anyone with an internet connection is an ambitious goal. Amazing colleagues, challenging problems, and 360-degree views of Manhattan keep us inspired everyday.At its core, Artsy is the convergence of art and science. We’re a team of designers, engineers, and arts professionals who share a passion for bringing the art world into the digital age."
+        },
+        "pullBlurb3": {
+            "h1": "Jobs at Artsy",
+            "h2": "Join the Artsy team",
+            "p": "At its core, Artsy is the convergence of art and science. We’re a team of designers, engineers, and arts professionals who share a passion for bringing the art world into the digital age.<br><br>Making all the world’s art accessible to anyone with an internet connection is an ambitious goal. Amazing colleagues, challenging problems, and 360-degree views of Manhattan keep us inspired everyday."
+        }
+    }, {
+        "slug": "press",
+        "header": "Partnering<br>& Press",
+        "mediaGallery": {
             "h1": "Archive",
-            "text": "Press Releases",
-            "href": ""
-          },
-          {
-            "h1": "Press Kit",
-            "text": "Artsy in the news",
-            "href": ""
-          }
-        ]
-      },
-      "mediaGallery": {
-        "h1": "Archive",
-        "h2": "Image & media gallery",
-        "srcs": [
-          "http://cl.ly/image/2V0v3n2g3106/cimg.jpg",
-          "http://cl.ly/image/1H422v0M0V3m/cimg.jpg",
-          "http://cl.ly/image/2V0v3n2g3106/cimg.jpg",
-          "http://cl.ly/image/1H422v0M0V3m/cimg.jpg",
-          "http://cl.ly/image/2V0v3n2g3106/cimg.jpg",
-          "http://cl.ly/image/1H422v0M0V3m/cimg.jpg",
-          "http://cl.ly/image/2V0v3n2g3106/cimg.jpg",
-          "http://cl.ly/image/1H422v0M0V3m/cimg.jpg",
-          "http://cl.ly/image/2V0v3n2g3106/cimg.jpg",
-          "http://cl.ly/image/1H422v0M0V3m/cimg.jpg"
-        ]
-      }
-    }
-  ]
+            "h2": "Image & media gallery",
+            "srcs": ["http://cl.ly/image/2V0v3n2g3106/cimg.jpg", "http://cl.ly/image/1H422v0M0V3m/cimg.jpg", "http://cl.ly/image/2V0v3n2g3106/cimg.jpg", "http://cl.ly/image/1H422v0M0V3m/cimg.jpg", "http://cl.ly/image/2V0v3n2g3106/cimg.jpg", "http://cl.ly/image/1H422v0M0V3m/cimg.jpg", "http://cl.ly/image/2V0v3n2g3106/cimg.jpg", "http://cl.ly/image/1H422v0M0V3m/cimg.jpg", "http://cl.ly/image/2V0v3n2g3106/cimg.jpg", "http://cl.ly/image/1H422v0M0V3m/cimg.jpg"]
+        },
+        "pullBlurbLeft": {
+            "button": "Gallery Overview",
+            "h1": "Interested in Partnering",
+            "h2": "Gallery Partnerships",
+            "links": [{
+                "h1": "Press Contact",
+                "href": "",
+                "text": "press@arsy.net"
+            }, {
+                "h1": "The Pipeline",
+                "href": "",
+                "text": "Future events & exhibitions"
+            }],
+            "p": "Our services for institutions include promoting your exhibitions, collections, and programs on your own institutional page on Artsy; and selling limited-edition artworks through Artsy’s e-commerce platform. We also host benefit auctions using cutting-edge web and mobile technology."
+        },
+        "pullBlurbRight": {
+            "button": "Partnership Overview",
+            "h1": "Interested in Partnering",
+            "h2": "Institutional partnerships",
+            "links": [{
+                "h1": "Archive",
+                "href": "",
+                "text": "Press Releases"
+            }, {
+                "h1": "Press Kit",
+                "href": "",
+                "text": "Artsy in the news"
+            }],
+            "p": "Our services for institutions include promoting your exhibitions, collections, and programs on your own institutional page on Artsy; and selling limited-edition artworks through Artsy’s e-commerce platform. We also host benefit auctions using cutting-edge web and mobile technology."
+        }
+    }]
 }
