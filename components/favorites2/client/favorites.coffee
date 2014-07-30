@@ -34,8 +34,8 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
       totalWidth: @$('.favorites2-artworks-list').width()
       artworkSize: 'tall'
       allowDuplicates: true
-    @jump = new JumpView threshold: $(window).height()
-    @$el.append @jump.$el.addClass 'jump-from-bottom'
+    @jump = new JumpView direction: 'bottom', threshold: $(window).height()
+    @$el.append @jump.$el
     mediator.on 'create:artwork:collection', (col) => @collections.add col
     @collections.on 'add remove change:name remove:artwork add:artwork', @renderCollections
     @collections.on 'next:artworks', (a) =>

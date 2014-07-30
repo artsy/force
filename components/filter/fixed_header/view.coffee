@@ -21,8 +21,8 @@ module.exports = class FilterFixedHeader extends Backbone.View
     @$bodyHtml.scrollTop @$el.offset().top + 60 - @mainHeaderHeight
 
   setupJump: ->
-    @jump = new JumpView threshold: @$window.height()
-    @$el.append @jump.$el.addClass 'jump-from-bottom'
+    @jump = new JumpView direction: 'bottom', threshold: @$window.height()
+    @$el.append @jump.$el
 
   wrap: =>
     @$el.wrap "<div class='filter-fixed-header-container'>"
