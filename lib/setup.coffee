@@ -110,9 +110,6 @@ module.exports = (app) ->
       )
       next()
 
-  if "production" is NODE_ENV
-    app.use(raven.middleware.express(SENTRY_URL))
-
   # Body parser has to be after proxy middleware for
   # node-http-proxy to work with POST/PUT/DELETE)
   app.use apiCache if apiCache?
@@ -204,6 +201,9 @@ module.exports = (app) ->
   # Static files middleware
   app.use favicon(path.resolve __dirname, '../public/images/favicon.ico')
   app.use express.static(path.resolve __dirname, "../public")
+
+  if "production" is NODE_ENV
+    app.use(raven.middleware.express(SENTRY_URL))
 
   # Finally 404 and error handling middleware when the request wasn't handled
   # successfully by anything above.
