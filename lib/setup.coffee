@@ -8,7 +8,7 @@
   FACEBOOK_APP_NAMESPACE, MOBILE_MEDIA_QUERY, MOBILE_URL, APP_URL, REDIS_URL, DEFAULT_CACHE_TIME,
   CANONICAL_MOBILE_URL, IMAGES_URL_PREFIX, SECURE_IMAGES_URL, GOOGLE_ANALYTICS_ID, MIXPANEL_ID,
   COOKIE_DOMAIN, AUTO_GRAVITY_LOGIN, GOOGLE_MAPS_API_KEY, ADMIN_URL, CMS_URL, MAX_SOCKETS,
-  DELTA_HOST, ENABLE_AB_TEST, KIOSK_MODE, KIOSK_PAGE, SUGGESTIONS_AB_TEST, SESSION_COOKIE_KEY,
+  DELTA_HOST, ENABLE_AB_TEST, KIOSK_MODE, KIOSK_PAGE, SUGGESTIONS_AB_TEST, SESSION_COOKIE_KEY, SENTRY_URL
   EMPTY_COLLECTION_SET_ID, GEMINI_S3_ACCESS_KEY, GEMINI_APP, GEMINI_ACCOUNT_KEY, BIDDER_H1_COPY, BIDDER_H2_COPY } = config = require "../config"
 
 { parse, format } = require 'url'
@@ -108,6 +108,9 @@ module.exports = (app) ->
         require('antigravity').fabricate('user', accessToken: 'footoken')
       )
       next()
+
+  if "production" is NODE_ENV
+    app.use(raven.middleware.express(SENTRY_URL))
 
   # Body parser has to be after proxy middleware for
   # node-http-proxy to work with POST/PUT/DELETE)

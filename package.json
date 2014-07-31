@@ -43,6 +43,7 @@
     "forever": "*",
     "humanparser": "*",
     "knox": "*",
+    "raven": "*",
     "artsy-gemini-upload": "*"
   },
   "devDependencies": {
