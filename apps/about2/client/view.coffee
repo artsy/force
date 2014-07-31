@@ -9,6 +9,8 @@ module.exports = class AboutView extends Backbone.View
   initialize: ->
     @$window = $(window)
     @$window.on 'keyup', @toggleGrid
+
+    @cacheSelectors()
     @setupHeroUnits()
     @setupTracks()
     @setupStickyNav()
@@ -18,13 +20,19 @@ module.exports = class AboutView extends Backbone.View
     e.preventDefault()
     Backbone.history.navigate $(e.currentTarget).attr('href'), trigger: true
 
+  cacheSelectors: ->
+    @$nav = @$('.about2-section-nav')
+    @$sections = @$('.about2-section')
+    @$heroUnitsContainer = @$('.about2-hero-unit-bgs')
+    @$heroUnits = @$('.about2-hero-unit-bg')
+    @$heroUnitNav = @$('.about2-nav')
+
   setupStickyNav: ->
-    (@$nav = @$('.about2-section-nav'))
-      .waypoint 'sticky'
+    @$nav.waypoint 'sticky'
 
   setupSectionNavHighlighting: ->
     $nav = @$nav
-    $sections = @$sections = @$('.about2-section')
+    $sections = @$sections
     activateNavLink = (el) ->
       $sections.removeClass 'is-active'
       $section = $(el).addClass 'is-active'
@@ -42,16 +50,27 @@ module.exports = class AboutView extends Backbone.View
   setupHeroUnits: ->
     @currentHeroUnit = 0
     @heroUnitPauseInterval = 5000
-    @$units = @$('.about2-hero-unit-bg')
     setInterval @stepHeroUnit, @heroUnitPauseInterval
-    # Set a waypoint for the very top section
-    @$('.a2huc-bottom').waypoint (direction) ->
-      Backbone.history.navigate '/about2', trigger: false, replace: true
-    , offset: -> -($(this).height() - 1)
+    $nav = @$nav
+    $heroUnitsContainer = @$heroUnitsContainer
+    @$heroUnitNav
+      # Fade in/out hero unit nav
+      .waypoint((direction) ->
+        if direction is 'down'
+          $(this).css 'opacity', 0
+          $heroUnitsContainer.css 'opacity', 0
+        else
+          $(this).css 'opacity', 1
+          $heroUnitsContainer.css 'opacity', 1
+      # Set a waypoint for the very top section
+      ).waypoint (direction) ->
+        Backbone.history.navigate '/about2', trigger: false, replace: true
+        $nav.find('a').removeClass 'is-active'
+      , offset: -> -($(this).height() - 1)
 
   stepHeroUnit: =>
-    $(@$units.removeClass('is-active').get @currentHeroUnit).addClass('is-active')
-    @currentHeroUnit = if (@currentHeroUnit + 1 < @$units.length) then @currentHeroUnit + 1 else 0
+    $(@$heroUnits.removeClass('is-active').get @currentHeroUnit).addClass('is-active')
+    @currentHeroUnit = if (@currentHeroUnit + 1 < @$heroUnits.length) then @currentHeroUnit + 1 else 0
 
   toggleGrid: (e) =>
     @$('#about2-grid').toggle() if e.which is 71 # "g" key

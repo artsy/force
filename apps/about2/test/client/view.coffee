@@ -32,10 +32,11 @@ describe 'AboutView', ->
 
   describe 'hero units', ->
     beforeEach ->
-      @view.setupHeroUnits()
+      @view.cacheSelectors()
+      @view.currentHeroUnit = 0
 
     it 'sets up the hero units', ->
-      @view.$units.length.should.equal 3
+      @view.$heroUnits.length.should.equal 3
 
     describe '#stepHeroUnit', ->
       it 'toggles one unit at a time and loops back to the beginning', ->
