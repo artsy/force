@@ -1,0 +1,51 @@
+.personalize-step
+  &[data-step='introduction']
+    h2
+      margin 20px 0
+      avant-garde()
+      font-size 15px
+      text-align center
+    aside
+      font-size 18px
+      color black
+
+#personalize-introduction-preview
+  position relative
+  min-height 1em
+  margin 20px auto 60px auto
+  .loading-spinner
+    display none
+  &[data-state='loading']
+    #personalize-introduction-rendered
+      opacity 0.25
+    .personalize-introduction-edit
+      opacity 0
+    .loading-spinner
+      display block
+
+#personalize-introduction-rendered
+.personalize-introduction-edit
+  transition opacity 0.5s
+#personalize-introduction-rendered
+  font-style italic
+  color gray-darker-color
+.personalize-introduction-edit
+  margin-left 10px
+
+#modal.personalize-introduction
+  .modal-body
+    padding 40px 35px
+    text-align center
+  h1
+    avant-garde()
+    font-size 19px
+    line-height 1.25
+  aside
+    margin 20px 0
+    text-align left
+  .stacked-form
+    margin 20px 0
+  .stacked-form-cell
+    margin 20px 0
+    > label
+      text-align left
