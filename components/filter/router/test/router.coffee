@@ -19,10 +19,15 @@ describe 'FilterRouter', ->
       @router.params.set { foo: 'bar' }
       @router.navigate.args[0][0].should.containEql '/artworks?foo=bar'
 
-    it 'omits page from the params', ->
+    it 'does not include page in the url params', ->
+      @router.navigate = sinon.stub()
+      @router.params.set { page: '10', foo: 'bar' }
+      @router.navigate.args[0][0].should.containEql '/artworks?foo=bar'
+
+    it 'does not route if no params in the url', ->
       @router.navigate = sinon.stub()
       @router.params.set { page: '10' }
-      @router.navigate.args[0][0].should.not.containEql 'page=10'
+      @router.navigate.callCount.should.equal 0
 
   describe '#artworks', ->
 

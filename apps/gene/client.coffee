@@ -39,7 +39,13 @@ module.exports.GeneView = class GeneView extends Backbone.View
       urlRoot: "gene/#{@model.id}"
       title: @model.get('name')
 
-    if @params.get('price_range') or @params.get('size') or location.pathname.match('/artworks')
+    if @params.get('price_range') or @params.get('dimension') or location.pathname.match('/artworks')
+      # Remove the fragment meta tag for urls that reflection does not crawl (/gene/:id/artworks*)
+      #
+      # If the head of a page has both a meta fragment and a canonical
+      # tag, google's crawler will use the meta fragment FIRST
+      # (re-crawling with ?_escaped_fragment_=). It then respects the
+      # canonical tag in the escaped_fragment html.
       $('meta[name=fragment]').remove()
 
     @setupMode()

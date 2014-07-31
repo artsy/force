@@ -15,9 +15,8 @@ module.exports = class FilterRouter extends Backbone.Router
 
   navigateParams: =>
     params = qs.stringify(_.omit @params.toJSON(), 'page', 'size')
-    # Only add /artworks to the url if there are params
-    # NOTE: This causes a problem going from /artworks?foo=bar back to /artworks
-    # Due to the complexity of gene pages (subject matter vs regular) we cannot have an 'else @navigate /artworks'
+    # Only add '/artworks' to the url if there are params
+    # Do not redirect from /gene/:id to gene/:id/artworks on pageload
     if params?.length > 0
       @navigate "#{@urlRoot}/artworks?#{params}"
 
