@@ -2,12 +2,15 @@
   width 100%
   background-color white
   border-bottom 1px solid gray-lighter-color
+  opacity 0
+  transition opacity 0.25s
   &.stuck
     position fixed
     top 0
     left 0
     right 0
     z-index 3
+    opacity 1
     force-hardware-acceleration()
   > nav
     display table
@@ -23,8 +26,9 @@
       text-align center
       vertical-align middle
       avant-garde()
-      font-size 13px
-      letter-spacing 2px
+      font-size 12px
+      letter-spacing 1px
+      line-height 1.4
       color gray-color
       text-decoration none
       > span
