@@ -39,6 +39,7 @@ session = require 'cookie-session'
 favicon = require 'serve-favicon'
 logger = require 'morgan'
 apiCache = require './middleware/api_cache'
+raven = require 'raven'
 
 # Setup sharify constants & require dependencies that use sharify data
 sharify.data =
