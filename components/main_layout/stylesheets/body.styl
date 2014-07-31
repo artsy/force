@@ -108,3 +108,11 @@ html[data-useragent*="iPad"]
 .body-infinite-scroll
   #main-layout-footer
     display none
+
+// Hides header and footer, and some margin adjustments for the iPad app
+.body-eigen
+  #main-layout-footer, #main-layout-header
+    display none !important
+  #main-layout-container
+    margin-top 0
+    padding 0 layout-side-margin
