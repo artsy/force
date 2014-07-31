@@ -26,5 +26,6 @@ module.exports = (req, res, next) ->
   res.locals.sd.CURRENT_PATH = parse(req.url).pathname
   res.locals.sd.ARTSY_XAPP_TOKEN = res.locals.artsyXappToken
   res.locals.sd.HIDE_HEADER = req.cookies?['hide-force-header']?
+  res.locals.sd.EIGEN = req.headers?['user-agent']?.match('Eigen')?
 
   next()
