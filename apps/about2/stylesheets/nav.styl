@@ -2,12 +2,15 @@
   width 100%
   background-color white
   border-bottom 1px solid gray-lighter-color
+  opacity 0
+  transition opacity 0.25s
   &.stuck
     position fixed
     top 0
     left 0
     right 0
     z-index 3
+    opacity 1
     force-hardware-acceleration()
   > nav
     display table
