@@ -1,6 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 imagesLoaded = require 'imagesloaded'
+{ isTouchDevice } = require '../../../components/util/device.coffee'
 
 module.exports = class AboutView extends Backbone.View
   events:
@@ -11,10 +12,11 @@ module.exports = class AboutView extends Backbone.View
     @$window.on 'keyup', @toggleGrid
 
     @cacheSelectors()
-    @setupHeroUnits()
-    @setupTracks()
     @setupStickyNav()
     @setupSectionNavHighlighting()
+    @setupHeroUnits()
+    return if isTouchDevice()
+    @setupTracks()
 
   intercept: (e) ->
     e.preventDefault()
