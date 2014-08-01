@@ -17,6 +17,7 @@ module.exports = class AboutView extends Backbone.View
     @setupHeroUnits()
     return if isTouchDevice()
     @setupTracks()
+    @setupFlipHearts()
 
   intercept: (e) ->
     e.preventDefault()
@@ -104,3 +105,10 @@ module.exports = class AboutView extends Backbone.View
     else if dir is 'up'
       $(this).removeClass('is-fixed is-docked')
       $(tracks[i - 1])?.addClass('is-fixed').removeClass('is-docked')
+
+  setupFlipHearts: ->
+    @$("#about2-section1-pull-blurb-3-artworks li").waypoint
+      handler: (dir) ->
+        console.log dir, this
+        $(this).find('.icon-heart')[if dir is 'down' then 'addClass' else 'removeClass'] 'is-active'
+      offset: $(window).height() * 0.6

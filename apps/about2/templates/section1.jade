@@ -47,9 +47,10 @@ section#about2-section1.about2-container
     p= sections[0].pullBlurb3.p
     button.avant-garde-button-white= sections[0].pullBlurb3.button
   ul#about2-section1-pull-blurb-3-artworks
-    for artwork in sections[0].pullBlurb3.artworks
+    for artwork, i in sections[0].pullBlurb3.artworks
       li
         img( src=artwork.src )
+        .icon-heart
         include artwork_details
 
   // "Access from anywhere..."

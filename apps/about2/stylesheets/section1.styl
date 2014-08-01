@@ -65,16 +65,39 @@ images1-offset = 200px
   width (column-width * 4) + (gutter-width * 6)
   display inline-block
   vertical-align top
-  column-gap gutter-width * 2
-  column-count 2
   li
     font-size 16px
     color gray-dark-color
     line-height 22px
+    display inline-block
     margin-bottom 50px
+    position relative
+    width (column-width * 2 + gutter-width * 2)
+    &:nth-child(2n - 1)
+      margin-right gutter-width * 2
   img
     max-width 100%
     margin-bottom 20px
+  .icon-heart
+    width 50px
+    height @width
+    border-radius @width
+    top 10px
+    right @top
+    position absolute
+    color white
+    z-index 1
+    line-height @width
+    text-align center
+    background-color purple-color
+    transform-style preserve-3d
+    transition transform 0.5s, opacity 0.3s
+    transform rotateX(-180deg)
+    backface-visibility visible
+    opacity 0
+    &.is-active
+      opacity 1
+      transform rotateX(0deg)
 
 #about2-section1-pull-blurb-4
   .about2-pull-blurb
