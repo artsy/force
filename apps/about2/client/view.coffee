@@ -109,6 +109,5 @@ module.exports = class AboutView extends Backbone.View
   setupFlipHearts: ->
     @$("#about2-section1-pull-blurb-3-artworks li").waypoint
       handler: (dir) ->
-        console.log dir, this
         $(this).find('.icon-heart')[if dir is 'down' then 'addClass' else 'removeClass'] 'is-active'
       offset: $(window).height() * 0.6
