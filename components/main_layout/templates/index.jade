@@ -9,8 +9,8 @@ block locals
 doctype html
 html( data-useragent=userAgent )
   head
-    block head
     include head
+    block head
     link( type='text/css', rel='stylesheet', href=(sd.ASSET_PATH + 'main_layout' + sd.CSS_EXT) )
     link( type='text/css', rel='stylesheet', href=(sd.ASSET_PATH + assetPackage + sd.CSS_EXT) )
     if sd.MICROSITE
