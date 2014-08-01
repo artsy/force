@@ -203,7 +203,13 @@ module.exports = (app) ->
   app.use express.static(path.resolve __dirname, "../public")
 
   if SENTRY_DSN
-    app.use raven.middleware.express(SENTRY_DSN)
+    client = new raven.Client SENTRY_DSN, {
+      stackFunction: Error.prepareStackTrace
+    }
+    app.use raven.middleware.express(client)
+    client.patchGlobal ->
+      console.log('Uncaught Exception. Process exited by raven.patchGlobal.')
+      process.exit(1)
 
   # Finally 404 and error handling middleware when the request wasn't handled
   # successfully by anything above.
