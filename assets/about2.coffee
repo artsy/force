@@ -7,3 +7,4 @@ $ ->
     require('../apps/about2/client/edit.coffee').init()
   else
     require('../apps/about2/client/index.coffee').init()
+  require('../apps/about2/client/easter_egg.coffee')()
