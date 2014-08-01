@@ -35,3 +35,16 @@ if sharify
 
 //- Add Google's jQuery
 script( src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js" )
+
+//- Add Sentry client-side error tracking
+if sd.SENTRY_PUBLIC_DSN
+  script( src="//cdn.ravenjs.com/1.1.16/backbone,jquery,native/raven.min.js" )
+  script.
+    Raven.config("#{sd.SENTRY_PUBLIC_DSN}", {
+      ignoreErrors: [
+        'top.GLOBALS',
+        'canvas.contentDocument',
+        'fb_xd_fragment'
+      ],
+      whitelistUrls: [/d3df9uo7bhy7ev\.cloudfront\.net/, /d1gmlxxulrit6a\.cloudfront\.net/, /artsy\.net/]
+    }).install();
