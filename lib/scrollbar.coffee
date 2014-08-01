@@ -3,10 +3,12 @@ module.exports = class Scrollbar
     { $els } = options
     @$body = $('body')
     @$els = $els?.add(@$body) or @$body
+    @hasScrollbar = $(document).height() > @$body.height()
 
   set: ->
     @fixFirefoxJump(true)
     @$body.addClass 'is-modal'
+    return unless @hasScrollbar
     @$els.css 'padding-right', ((@scrollbarWidth ?= @measure()) or 0)
 
   reset: ->
