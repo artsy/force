@@ -259,14 +259,13 @@ form.is-validated
     right 0
     width 50px
     height 100%
-
-  &.is-open
+  &.is-display-suggestions
   &.is-no-results
     .autocomplete-feedback
       visibility visible
-      transition opacity 0.125s
+      transition opacity 0.25s, border-color 0.75s
       opacity 1
-
+      border-color purple-color
   &.is-block
     display block
     &
@@ -306,7 +305,7 @@ form.is-validated
   padding (logo-size / 4) (logo-size / 2)
   line-height logo-size
   opacity 0
-  border 2px solid purple-color
+  border 2px solid gray-lighter-color
   border-top none
   background-color gray-lightest-color
   overflow ellipsis

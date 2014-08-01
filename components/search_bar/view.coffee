@@ -41,6 +41,7 @@ module.exports = class SearchBarView extends Backbone.View
     analytics.track.click "Focused on search input"
 
   checkSubmission: (e) ->
+    @hideSuggestions()
     return if !(e.which is 13) or @selected?
     @trigger 'search:entered', @$input.val()
 
@@ -64,7 +65,9 @@ module.exports = class SearchBarView extends Backbone.View
       'Search Artists, Artworks, Galleries, Museums, Categories…'
 
   displayFeedback: ->
-    unless @search.results.length
+    if @search.results.length
+      @hideSuggestions()
+    else
       @renderFeedback 'No results found'
       @$el.addClass 'is-no-results'
 
@@ -78,16 +81,16 @@ module.exports = class SearchBarView extends Backbone.View
   displaySuggestions: ->
     if @shouldDisplaySuggestions()
       @renderFeedback()
-      @$el.addClass 'is-open'
+      @$el.addClass 'is-display-suggestions'
 
   hideSuggestions: ->
-    @$el.removeClass 'is-open is-no-results'
+    @$el.removeClass 'is-display-suggestions is-no-results'
 
   suggestionTemplate: (item) =>
     itemTemplate fill: fill, item: item, displayKind: @displayKind
 
   announceQuery: (query) ->
-    mediator.trigger 'search:doge'     if query is 'doge'
+    mediator.trigger 'search:doge' if query is 'doge'
     mediator.trigger 'search:skrillex' if query is 'skrillex'
 
   trackSearchResults: (results) ->
