@@ -1,12 +1,23 @@
 @import '../stylus_lib'
 
 #bookmark-artists-results
+  margin 10px 0
   opacity 0
   transition opacity 0.5s
   &.is-fade-in
     opacity 1
   &:empty
     display none
+  &.is-pre
+    .results-list-item:last-child
+      border-bottom none
+  &.is-post
+    .results-list-item:first-child
+      border-top none
+  .results-list-item-cell:first-child
+    font-family inherit
+    text-transform inherit
+    font-size inherit
 
 .bookmark-artist-remove
   padding 10px 10px 10px 20px

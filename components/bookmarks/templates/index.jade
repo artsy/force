@@ -1,3 +1,6 @@
+if mode === 'pre'
+  #bookmark-artists-results.results-list.is-pre
+    //- Rendered separately
 #bookmark-artists-search.autocomplete-input-container.is-block
   input.bordered-input.autocomplete-input(
     type='text'
@@ -7,5 +10,6 @@
   .autocomplete-loading-indicator: .loading-spinner-small
   .autocomplete-feedback
     //- Rendered separately
-#bookmark-artists-results.results-list
-  //- Rendered separately
+if mode === 'post'
+  #bookmark-artists-results.results-list.is-post
+    //- Rendered separately
