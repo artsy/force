@@ -31,7 +31,7 @@ describe 'BookmarksView', ->
 
   describe '#initialize', ->
     it 'accepts a mode', ->
-      view = @view = new BookmarksView mode: 'pre'
+      view = new BookmarksView mode: 'pre'
       view.$el.html().should.containEql 'is-pre'
       view.$el.html().should.not.containEql 'is-post'
 
