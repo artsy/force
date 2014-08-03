@@ -48,3 +48,9 @@ describe 'Show route', ->
       routes.index @req, @res
       Backbone.sync.args[0][2].success fabricate 'show', id: 'foobar'
       @res.redirect.args[0][0].should.equal '/show/foobar'
+
+    it 'leaves query params alone', ->
+      @req.originalUrl = '/show/foobar?foo=bar'
+      routes.index @req, @res
+      Backbone.sync.args[0][2].success fabricate 'show', id: 'foobar'
+      @res.redirect.called.should.be.false
