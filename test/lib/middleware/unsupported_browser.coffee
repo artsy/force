@@ -6,7 +6,8 @@ describe 'Redirect for unsupported browsers', ->
 
   beforeEach ->
     @badBrowserUA = 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0; WOW64; Trident/4.0; SLCC1)'
-    @goodBrowserUA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/534.55.3 (KHTML, like Gecko) Version/5.1.3 Safari/534.53.10'
+    @safari5UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/534.55.3 (KHTML, like Gecko) Version/5.1.3 Safari/534.53.10'
+    @goodBrowserUA = 'Mozilla/5.0 (iPad; CPU OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5355d Safari/8536.25'
     @req =
       params: {}
       headers: { 'user-agent': @badBrowserUA }
@@ -40,6 +41,12 @@ describe 'Redirect for unsupported browsers', ->
     @next.callCount.should.equal 1
 
   it 'redirects bad browsers', ->
+    redirectBadBrowsers @req, @res, @next
+    @res.redirect.args[0][0].should.containEql '/unsupported-browser'
+    @next.callCount.should.equal 0
+
+  it 'redirects safari 5', ->
+    @req.headers['user-agent'] = @safari5UA
     redirectBadBrowsers @req, @res, @next
     @res.redirect.args[0][0].should.containEql '/unsupported-browser'
     @next.callCount.should.equal 0
