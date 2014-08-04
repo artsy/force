@@ -151,11 +151,11 @@ describe 'state', ->
         state.next()
         state.get('current_step').should.equal 'artists'
         state.next()
+        state.get('current_step').should.equal 'introduction'
+        state.next()
         state.get('current_step').should.equal 'galleries'
         state.next()
         state.get('current_step').should.equal 'institutions'
-        state.next()
-        state.get('current_step').should.equal 'introduction'
         state.next() # Done
 
     describe 'existing users (reonboarding)', ->
@@ -204,9 +204,9 @@ describe 'state', ->
         state.next()
         state.get('current_step').should.equal 'artists'
         state.next()
+        state.get('current_step').should.equal 'introduction'
+        state.next()
         state.get('current_step').should.equal 'galleries'
         state.next()
         state.get('current_step').should.equal 'institutions'
-        state.next()
-        state.get('current_step').should.equal 'introduction'
         state.next() # Done
