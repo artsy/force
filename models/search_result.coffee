@@ -8,8 +8,14 @@ _.mixin(require 'underscore.string')
 module.exports = class SearchResult extends Backbone.Model
   _.extend @prototype, Image(sd.SECURE_IMAGES_URL)
 
+  idAttribute: '_id'
+
   initialize: (options) ->
+    # Make the id unique to support Backbone collection's uniqueness requirement
+    # In the api, ids are just the slug of the model and are not unique across types
+    # For example: Maharam is an artist and a profile.
     @set
+      _id: "#{@get('id')}-#{@get('label')}"
       display: @display()
       image_url: @imageUrl()
       display_model: @displayModel()
@@ -27,11 +33,11 @@ module.exports = class SearchResult extends Backbone.Model
 
   location: ->
     if @get('model') is 'profile'
-      "/#{@id}"
+      "/#{@get('id')}"
     else if @get('model') is 'partnershow'
-      "/show/#{@id}"
+      "/show/#{@get('id')}"
     else
-      "/#{@get('model')}/#{@id}"
+      "/#{@get('model')}/#{@get('id')}"
 
   displayModel: ->
     model =
@@ -50,7 +56,7 @@ module.exports = class SearchResult extends Backbone.Model
   imageUrl: ->
     src = if @get('model') in ['artwork', 'partnershow'] then 'default_image.jpg' else 'image'
     model = if @get('model') is 'partnershow' then 'partner_show' else @get('model')
-    url = "#{sd.API_URL}/api/v1/#{model}/#{@id}/#{src}"
+    url = "#{sd.API_URL}/api/v1/#{model}/#{@get('id')}/#{src}"
     url = url + "?xapp_token=#{sd.ARTSY_XAPP_TOKEN}" if sd.ARTSY_XAPP_TOKEN?
     url
 
