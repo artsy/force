@@ -18,6 +18,10 @@ describe 'SearchResult', ->
         model = new SearchResult(fabricate('profile', model: 'profile'))
         model.get('location').should.equal '/alessandra'
 
+    it 'has a unique id based on the label', ->
+      model = new SearchResult(fabricate('profile', model: 'profile', label: 'profile'))
+      model.get('id').should.equal 'alessandra-profile'
+
     describe '#displayModel', ->
       it 'has a display_model attribute when it is a artwork', ->
         model = new SearchResult(fabricate('artwork', model: 'artwork'))

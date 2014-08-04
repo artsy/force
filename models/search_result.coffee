@@ -21,7 +21,7 @@ module.exports = class SearchResult extends Backbone.Model
     # In the api, ids are just the slug of the model and are not unique across types
     # For example: Maharam is an artist and a profile.
     @set
-      id: @get('_id') + @get('label')
+      id: "#{@get('_id')}-#{@get('label')}"
 
     # Set value attribute for autocomplete usage
     @value = @display()
