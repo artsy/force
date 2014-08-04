@@ -104,8 +104,10 @@ module.exports.modelNameAndIdToLabel = (modelName, id) ->
 maxTrackableMultiIds = 50
 
 module.exports.encodeMulti = (ids) ->
-  ids = _.compact(ids)
-  (_.map ids, (id) -> createHash('md5').update(id).digest('hex').substr(0, 8)).join("-")
+  # createHash('md5') requires Int32Array which is not supported by IE9
+  if Int32Array
+    ids = _.compact(ids)
+    (_.map ids, (id) -> createHash('md5').update(id).digest('hex').substr(0, 8)).join("-")
 
 module.exports.trackMulti = (description, data) =>
   ga? 'send', 'event', categories['multi'], description, data
