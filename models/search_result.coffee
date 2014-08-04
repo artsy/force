@@ -10,11 +10,18 @@ module.exports = class SearchResult extends Backbone.Model
 
   initialize: (options) ->
     @set
+      _id: @get('id')
       display: @display()
       image_url: @imageUrl()
       display_model: @displayModel()
       location: @location()
       is_human: @isHuman()
+
+    # Make the id unique to support Backbone collection's uniqueness requirement
+    # In the api, ids are just the slug of the model and are not unique across types
+    # For example: Maharam is an artist and a profile.
+    @set
+      id: @get('_id') + @get('label')
 
     # Set value attribute for autocomplete usage
     @value = @display()
