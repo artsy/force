@@ -18,8 +18,12 @@ module.exports = class BookmarksView extends Backbone.View
   events:
     'click .bookmark-artist-remove': 'uncollect'
 
+  defaults:
+    persist: true
+    mode: 'post'
+
   initialize: (options = {}) ->
-    { @limit, @autofocus, @$collection, @persist } = _.defaults options, persist: true
+    { @limit, @autofocus, @mode, @persist } = _.defaults options, @defaults
 
     @render()
 
@@ -66,7 +70,7 @@ module.exports = class BookmarksView extends Backbone.View
       @$collection.addClass('is-fade-in')
 
   render: ->
-    @$el.html @template(autofocus: @autofocus)
+    @$el.html @template(autofocus: @autofocus, mode: @mode)
     this
 
   remove: ->

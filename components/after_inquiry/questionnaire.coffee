@@ -156,7 +156,7 @@ module.exports = class Questionnaire extends ModalView
   attachBookmarksView: ->
     @bookmarksView = new BookmarksView
       el: @$('#after-inquiry-bookmark-artists')
-      $collection: @$('#after-inquiry-bookmark-artists-results')
+      mode: 'pre'
       limit: 2
       persist: @user.id?
     # Height changes on render so recenter the modal

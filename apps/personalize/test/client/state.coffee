@@ -143,9 +143,9 @@ describe 'state', ->
       it 'works for a user that buys art (level 3)', (done) ->
         state = new PersonalizeState user: @user, current_level: 3
         state.on 'done', -> done()
-        state.get('current_step').should.equal 'price_range'
-        state.next()
         state.get('current_step').should.equal 'collect'
+        state.next()
+        state.get('current_step').should.equal 'price_range'
         state.next()
         state.get('current_step').should.equal 'bookmarks'
         state.next()
@@ -154,6 +154,8 @@ describe 'state', ->
         state.get('current_step').should.equal 'galleries'
         state.next()
         state.get('current_step').should.equal 'institutions'
+        state.next()
+        state.get('current_step').should.equal 'introduction'
         state.next() # Done
 
     describe 'existing users (reonboarding)', ->
@@ -194,9 +196,9 @@ describe 'state', ->
       it 'works for a user that buys art (level 3)', (done) ->
         state = new PersonalizeState user: @user, current_level: 3, reonboarding: true
         state.on 'done', -> done()
-        state.get('current_step').should.equal 'price_range'
-        state.next()
         state.get('current_step').should.equal 'collect'
+        state.next()
+        state.get('current_step').should.equal 'price_range'
         state.next()
         state.get('current_step').should.equal 'bookmarks'
         state.next()
@@ -205,4 +207,6 @@ describe 'state', ->
         state.get('current_step').should.equal 'galleries'
         state.next()
         state.get('current_step').should.equal 'institutions'
+        state.next()
+        state.get('current_step').should.equal 'introduction'
         state.next() # Done

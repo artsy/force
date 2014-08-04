@@ -83,7 +83,7 @@ describe 'SearchBarView', ->
       _.isEmpty(@view.$('input').text()).should.be.true
       @view.trigger 'search:opened'
       @view.$el.html().should.containEql 'Search Artists, Artworks, Galleries, Museums, Categories'
-      @view.$el.attr('class').should.containEql 'is-open'
+      @view.$el.attr('class').should.containEql 'is-display-suggestions'
 
     it 'does not display the feedback when the input has text', ->
       @view.$('input').val 'Foo Bar'
@@ -93,7 +93,7 @@ describe 'SearchBarView', ->
   describe '#hideSuggestions', ->
     it 'removes the open state', ->
       @view.trigger 'search:opened'
-      @view.$el.attr('class').should.containEql 'is-open'
+      @view.$el.attr('class').should.containEql 'is-display-suggestions'
       @view.trigger 'search:closed'
       _.isEmpty(@view.$el.attr('class')).should.be.true
 
@@ -110,6 +110,13 @@ describe 'SearchBarView', ->
       @view.trigger 'search:complete'
       @view.$el.html().should.containEql 'No results found'
       @view.$el.attr('class').should.containEql 'is-no-results'
+
+    it 'hides the message if there are results after there had previously been none', ->
+      @view.trigger 'search:complete'
+      @view.$el.attr('class').should.containEql 'is-no-results'
+      @view.search.results.add(fabricate 'artist')
+      @view.trigger 'search:complete'
+      _.isEmpty(@view.$el.attr 'class').should.be.true
 
   describe '#feedbackString', ->
     it 'uses the mode if there is one available', ->

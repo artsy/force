@@ -14,6 +14,7 @@ describe 'Scrollbar', ->
 
   beforeEach ->
     @scrollbar = new Scrollbar
+    @scrollbar.hasScrollbar = true
 
   it 'should always have a body', ->
     @scrollbar.$body.length.should.equal 1
@@ -37,3 +38,9 @@ describe 'Scrollbar', ->
     @scrollbar.reset()
     $('body').attr('style').should.be.empty
     $('body').hasClass('is-modal').should.be.false
+
+  it 'does not add padding (but adds modal class) if there is no scrollbar present', ->
+    @scrollbar.hasScrollbar = false
+    @scrollbar.set()
+    $('body').attr('style').should.be.empty
+    $('body').hasClass('is-modal').should.be.true

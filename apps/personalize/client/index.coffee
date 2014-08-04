@@ -16,6 +16,7 @@ views =
   CategoriesView: require './views/categories.coffee'
   BookmarksView: require './views/bookmarks.coffee'
   FavoritesView: require './views/favorites.coffee'
+  IntroductionView: require './views/introduction.coffee'
 
 _.mixin(require 'underscore.string')
 
