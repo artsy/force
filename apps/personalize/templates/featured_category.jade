@@ -3,6 +3,6 @@
   if category.get('image_versions')
     a.hoverable-image-link
       .hoverable-image.personalize-category-image(
-        style="background-image: url(#{category.get('image_url').replace(':version', 'original')});"
+        style="background-image: url(#{category.get('image_url').replace(':version', 'wide')});"
       )
   a.avant-garde-button-white.is-block.follow-button( data-id="#{category.get('gene_id')}" )

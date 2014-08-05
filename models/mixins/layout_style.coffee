@@ -11,6 +11,6 @@ module.exports =
 
   imageSizeForLayout: (collectionLength) ->
     switch collectionLength
-      when 1 then 'original'
+      when 1 then 'wide'
       when 2, 3 then 'large_rectangle'
       else 'medium_rectangle'
