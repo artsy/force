@@ -19,6 +19,7 @@ module.exports = class AboutView extends Backbone.View
     return if isTouchDevice()
     @setupTracks()
     @setupFlipHearts()
+    @setupGenes()
 
   intercept: (e) ->
     e.preventDefault()
@@ -93,6 +94,20 @@ module.exports = class AboutView extends Backbone.View
           continue unless next
           bottom = $(next).offset().top + $(next).height()
           $(el).height bottom - $(el).offset().top
+
+  setupGenes: ->
+    @$genes = @$('.about2-section3-genome-artwork-genes')
+    @$genes
+      .waypoint((direction) ->
+        # At the bottom of the screen
+        $(this).addClass 'is-fade-in' if direction is 'down'
+        $(this).removeClass 'is-fade-in' if direction is 'up'
+      , offset: '60%')
+      .waypoint (direction) ->
+        # At the top of the screen
+        $(this).removeClass 'is-fade-in' if direction is 'up'
+        $(this).addClass 'is-fade-in' if direction is 'up'
+      , offset: '30%'
 
   onTrackWaypoint: (dir) ->
     tracks = $('.about2-section3-genome-artwork-track').toArray()
