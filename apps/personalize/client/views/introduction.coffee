@@ -5,6 +5,7 @@ StepView = require './step.coffee'
 IntroductionEditView = require './introduction_edit.coffee'
 mediator = require '../../../../lib/mediator.coffee'
 Form = require '../../../../components/mixins/form.coffee'
+IntroductionPreviewView = require '../../../../components/introduction/index.coffee'
 template = -> require('../../templates/introduction.jade') arguments...
 
 module.exports = class IntroductionView extends StepView
@@ -18,11 +19,6 @@ module.exports = class IntroductionView extends StepView
 
   initialize: ->
     super
-
-    @introduction = new Backbone.Model
-    @introduction.url = "#{API_URL}/api/v1/me/inquiry_introduction"
-
-    @listenTo @introduction, 'sync', @renderIntroduction
     @listenTo @user, 'sync', @syncIntroduction
     @listenTo mediator, 'modal:closed', @syncIntroduction
 
@@ -45,28 +41,24 @@ module.exports = class IntroductionView extends StepView
         @reenableForm()
 
   syncIntroduction: ->
-    return if @syncing
-    @syncing = true
-    @$introduction.attr 'data-state', 'loading'
-    @introduction.save null,
-      success: => @syncing = false
-      error: => @syncing = false
+    @introductionView?.update()
 
-  renderIntroduction: ->
-    @$introduction.attr 'data-state', 'loaded'
-    @$paragraph.text @introduction.get('introduction')
+  setupIntroduction: ->
+    @introductionView = new IntroductionPreviewView el: @$('#personalize-introduction-rendered')
 
   cacheSelectors: ->
-    @$introduction = @$('#personalize-introduction-preview')
-    @$paragraph = @$('#personalize-introduction-rendered')
     @$input = @$('input')
     @$button = @$('button')
 
   postRender: ->
     @cacheSelectors()
-    @syncIntroduction()
+    @setupIntroduction()
 
   render: ->
     @$el.html template(user: @user, state: @state)
     @postRender()
     this
+
+  remove: ->
+    @introductionView.remove()
+    super

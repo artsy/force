@@ -29,10 +29,6 @@ describe 'Introduction', ->
   afterEach ->
     Backbone.sync.restore()
 
-  describe '#initialize', ->
-    it 'sets up the introduction', ->
-      @view.introduction.url.should.containEql '/api/v1/me/inquiry_introduction'
-
   describe '#render', ->
     it 'renders the template', ->
       @view.$el.html().should.containEql 'Your gallery introduction'
@@ -56,23 +52,3 @@ describe 'Introduction', ->
     it 'advances the state', (done) ->
       @state.on 'transition:next', -> done()
       @view.$('form').submit()
-
-  describe '#syncIntroduction', ->
-    it 'sets the appropriate loading state of the introduction element', ->
-      @view.$introduction.attr('data-state').should.equal 'loading'
-      Backbone.sync.args[0][2].success()
-      @view.$introduction.attr('data-state').should.equal 'loaded'
-
-    it 'prevents additional syncs if already syncing', ->
-      Backbone.sync.callCount.should.equal 1
-      @view.syncIntroduction()
-      Backbone.sync.callCount.should.equal 1
-      Backbone.sync.args[0][2].success()
-      @view.syncIntroduction()
-      Backbone.sync.callCount.should.equal 2
-
-  describe '#renderIntroduction', ->
-    it 'renders the introduction text from the API response', ->
-      Backbone.sync.args[0][2].success introduction: 'HELLO, THIS IS DOG'
-      @view.$paragraph.text().should.equal 'HELLO, THIS IS DOG'
-      @view.$introduction.attr('data-state').should.equal 'loaded'
