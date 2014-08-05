@@ -45,7 +45,8 @@
     "knox": "*",
     "raven": "*",
     "artsy-gemini-upload": "*",
-    "twilio": "*"
+    "twilio": "*",
+    "spark-md5": "*"
   },
   "devDependencies": {
     "browserify": "*",
