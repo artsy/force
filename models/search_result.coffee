@@ -8,7 +8,7 @@ _.mixin(require 'underscore.string')
 module.exports = class SearchResult extends Backbone.Model
   _.extend @prototype, Image(sd.SECURE_IMAGES_URL)
 
-  idAttribute: '_id'
+  # idAttribute: '_id'
 
   initialize: (options) ->
     # Make the id unique to support Backbone collection's uniqueness requirement
