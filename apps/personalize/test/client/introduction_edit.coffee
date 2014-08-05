@@ -36,7 +36,8 @@ describe 'IntroductionEditView', ->
 
   describe '#render', ->
     it 'renders the template', ->
-      @view.$el.html().should.containEql 'Your gallery introduction is the most reliable way to ensure quick and high quality responses on artwork pricing and availability from our partner galleries'
+      @view.$el.html()
+        .should.containEql 'Your gallery introduction will help galleries to provide quick and high quality responses on artwork pricing and availability.'
 
   describe '#postRender', ->
     it 'attaches the location and bookmarks views', ->
