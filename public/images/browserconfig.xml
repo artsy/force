@@ -3,9 +3,9 @@
 <browserconfig>
     <msapplication>
         <tile>
-            <square70x70logo src="icon-72.png"/>
-            <square150x150logo src="og_image.png"/>
-            <square310x310logo src="og_image.png"/>
+            <square70x70logo src="icon-70.png"/>
+            <square150x150logo src="icon-150.png"/>
+            <square310x310logo src="icon-310.png"/>
         </tile>
     </msapplication>
 </browserconfig>
