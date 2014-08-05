@@ -107,7 +107,6 @@ module.exports.modelNameAndIdToLabel = (modelName, id) ->
 maxTrackableMultiIds = 50
 
 module.exports.encodeMulti = (ids) ->
-  console.log createHash
   if createHash
     ids = _.compact(ids)
     (_.map ids, (id) -> createHash('md5').update(id).digest('hex').substr(0, 8)).join("-")
