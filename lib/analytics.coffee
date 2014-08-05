@@ -6,8 +6,11 @@
 
 _ = require 'underscore'
 sd = require('sharify').data
-createHash = require('crypto').createHash
 qs = require('querystring')
+
+# createHash('md5') requires Int32Array which is not supported by IE9
+if Int32Array
+  createHash = require('crypto').createHash
 
 _.mixin(require 'underscore.string')
 
@@ -104,8 +107,7 @@ module.exports.modelNameAndIdToLabel = (modelName, id) ->
 maxTrackableMultiIds = 50
 
 module.exports.encodeMulti = (ids) ->
-  # createHash('md5') requires Int32Array which is not supported by IE9
-  if Int32Array
+  if createHash
     ids = _.compact(ids)
     (_.map ids, (id) -> createHash('md5').update(id).digest('hex').substr(0, 8)).join("-")
 
