@@ -24,7 +24,7 @@ module.exports = class IntroductionView extends StepView
 
   edit: (e) ->
     e.preventDefault()
-    new IntroductionEditView user: @user
+    new IntroductionEditView user: @user, width: '450px'
 
   setProfession: ->
     @user.save @serializeForm()
