@@ -18,6 +18,10 @@ describe 'SearchResult', ->
         model = new SearchResult(fabricate('profile', model: 'profile'))
         model.get('location').should.equal '/alessandra'
 
+    it 'has a unique id based on the label', ->
+      model = new SearchResult(fabricate('profile', model: 'profile', label: 'profile'))
+      model.get('_id').should.equal 'alessandra-profile'
+
     describe '#displayModel', ->
       it 'has a display_model attribute when it is a artwork', ->
         model = new SearchResult(fabricate('artwork', model: 'artwork'))
@@ -34,13 +38,13 @@ describe 'SearchResult', ->
     describe '#imageUrl', ->
       it 'has an image_url attribute that is tokenless when logged out', ->
         model = new SearchResult(fabricate('artwork', model: 'artwork'))
-        model.get('image_url').should.containEql "/api/v1/artwork/#{model.id}/default_image.jpg"
+        model.get('image_url').should.containEql "/api/v1/artwork/#{model.get('id')}/default_image.jpg"
 
       it 'has an image_url attribute that with the token appened when logged in', ->
         token = 'token'
         SearchResult.__set__ 'sd', { ARTSY_XAPP_TOKEN: token }
         model = new SearchResult(fabricate('artwork', model: 'artwork'))
-        model.get('image_url').should.containEql "/api/v1/artwork/#{model.id}/default_image.jpg?xapp_token=#{token}"
+        model.get('image_url').should.containEql "/api/v1/artwork/#{model.get('id')}/default_image.jpg?xapp_token=#{token}"
 
     describe '#highlightedDisplay', ->
       it 'highlights the search term in the display attribute and spits back some HTML', ->

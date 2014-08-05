@@ -1,0 +1,25 @@
+h1 Edit your information
+aside
+  | Your gallery introduction is the most reliable way to ensure quick and high quality responses on artwork pricing and availability from our partner galleries.
+
+form.stacked-form
+  .stacked-form-cell
+    label.avant-garde-form-label( for='name' ) Full Name
+    input.bordered-input.is-block(
+      placeholder= 'Your full name'
+      value= user.get('name')
+      name= 'name'
+      required
+    )
+
+  .stacked-form-cell
+    label.avant-garde-form-label Primary Location
+    #personalize-collector-location
+      //- Rendered separately
+
+  .stacked-form-cell
+    label.avant-garde-form-label Artists you collect
+    #personalize-bookmark-artists
+      //- Rendered separately
+
+  button.avant-garde-button-black Done

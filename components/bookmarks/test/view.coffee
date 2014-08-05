@@ -30,6 +30,16 @@ describe 'BookmarksView', ->
     Backbone.sync.restore()
 
   describe '#initialize', ->
+    it 'accepts a mode', ->
+      view = new BookmarksView mode: 'pre'
+      view.$el.html().should.containEql 'is-pre'
+      view.$el.html().should.not.containEql 'is-post'
+
+    it 'sets the default mode to "post"', ->
+      @view.mode.should.equal 'post'
+      @view.$el.html().should.containEql 'is-post'
+      @view.$el.html().should.not.containEql 'is-pre'
+
     describe '#render', ->
       it 'renders the base template', ->
         @view.$el.html().should.containEql 'Add an artist you own work by'

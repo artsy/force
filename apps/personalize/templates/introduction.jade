@@ -1,0 +1,17 @@
+header.personalize-header
+  h1 Your gallery introduction
+  aside
+    | When contacting galleries for artwork pricing and
+    br
+    | availability, Artsy will include a brief introduction:
+
+section.personalize-step( data-step='introduction' )
+  #personalize-introduction-preview
+    span#personalize-introduction-rendered
+    a.personalize-introduction-edit.faux-underline Edit
+    .loading-spinner
+
+  h2 What is your profession?
+  form.stacked-form
+    input.bordered-input( placeholder='Profession', name='profession', value=user.get('profession') )
+    button.avant-garde-button-black Complete gallery introduction

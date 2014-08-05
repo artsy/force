@@ -35,7 +35,7 @@ setReferringContext = (req, res, show) ->
       setReferringContext(req, res, show)
 
       # Redirect to canonical url
-      if show.href() != req.originalUrl and not res.locals.context
+      if show.href() isnt parse(req.originalUrl).pathname and not res.locals.context
         return res.redirect show.href()
 
       if show.partner().isLinkable()
