@@ -6,6 +6,7 @@ sinon = require 'sinon'
 { fabricate } = require 'antigravity'
 Profile = require '../../../../models/profile.coffee'
 UserEdit = require '../../models/user_edit.coffee'
+CurrentUser = require '../../../../models/current_user'
 CollectorForm = benv.requireWithJadeify((resolve __dirname, '../../client/collector_form.coffee'), ['template'])
 CollectorForm.__set__ 'LocationSearchView', Backbone.View
 BookmarksView = class BookmarksView extends Backbone.View
@@ -23,8 +24,9 @@ describe 'CollectorForm', ->
     benv.teardown()
 
   beforeEach (done) ->
+    @user = new CurrentUser fabricate 'user'
     @userEdit = new UserEdit fabricate 'user'
-    @view = new CollectorForm userEdit: @userEdit
+    @view = new CollectorForm userEdit: @userEdit, user: @user
     @view.render()
 
     sinon.stub Backbone, 'sync'
@@ -39,7 +41,15 @@ describe 'CollectorForm', ->
       @view.$el.html().should.containEql 'About You'
 
   describe 'introduction', ->
-    it 'renders an up-to-date introduction', ->
-      @view.$el.html().should.containEql 'Craig is a collector and has been an Artsy member since'
-      @view.bookmarksView.bookmarks.add fabricate 'artwork'
-      @view.$el.html().should.containEql 'Craig’s collection includes Andy Warhol'
+    beforeEach ->
+      sinon.stub @view, 'syncIntroduction'
+
+    afterEach ->
+      @view.syncIntroduction.restore()
+
+    it 'syncs when a bookmark is destroyed', ->
+      bookmark = new Backbone.Model
+      @view.bookmarksView.bookmarks.trigger 'remove', bookmark
+      @view.syncIntroduction.callCount.should.equal 0
+      bookmark.trigger 'sync'
+      @view.syncIntroduction.callCount.should.equal 1
