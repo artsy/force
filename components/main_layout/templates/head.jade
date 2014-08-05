@@ -5,8 +5,7 @@ link( rel='icon', type='image/png', href=(sd.ASSET_PATH + 'favicon.ico') )
 link( rel='search', type='application/opensearchdescription+xml', href=(sd.ASSET_PATH + 'opensearch.xml'), title='Artsy' )
 meta( name='msapplication-config', content=(sd.ASSET_PATH + 'browserconfig.xml') )
 meta( name='viewport', content='user-scalable=0, width=device-width' )
-script
-  include ../../../node_modules/scroll-frame/scroll-frame-head.js
+script( src=(sd.ASSET_PATH + 'scroll_frame' + sd.JS_EXT) )
 //- Mixpanel wants to include it's script in the head b/c it async downloads
 //- and injects it into the body. Hopefully this stops race conditions b/t
 //- DOM load and mixpanel init.
