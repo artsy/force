@@ -3,7 +3,9 @@ Page = require '../../models/page'
 knox = require 'knox'
 request = require 'superagent'
 url = require 'url'
-{ S3_KEY, S3_SECRET, APPLICATION_NAME } = require '../../config.coffee'
+twilio = require 'twilio'
+{ S3_KEY, S3_SECRET, APPLICATION_NAME, TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN,
+  TWILIO_NUMBER, IPHONE_APP_URL } = require '../../config.coffee'
 client = null
 
 CONTENT_PATH = '/about/content.json'
@@ -48,3 +50,13 @@ getJSON = (callback) ->
   client.putBuffer buffer, CONTENT_PATH, headers, (err, r) ->
     return next err if err
     res.send 200, { msg: "success" }
+
+@sendSMS = (req, res ,next) ->
+  twilioClient = new twilio.RestClient TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN
+  twilioClient.sendSms
+    to: req.param('to')
+    from: TWILIO_NUMBER
+    body: "Download the new Artsy iPhone app here: #{IPHONE_APP_URL}"
+  , (err, data) ->
+    return next err if err
+    res.send { msg: "success", data: data }

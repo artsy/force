@@ -6,6 +6,7 @@ imagesLoaded = require 'imagesloaded'
 module.exports = class AboutView extends Backbone.View
   events:
     'click .about2-nav-link': 'intercept'
+    'submit #about2-phone-link': 'submitPhoneLink'
 
   initialize: ->
     @$window = $(window)
@@ -111,3 +112,12 @@ module.exports = class AboutView extends Backbone.View
       handler: (dir) ->
         $(this).find('.icon-heart')[if dir is 'down' then 'addClass' else 'removeClass'] 'is-active'
       offset: -> $(window).height() * 0.6
+
+  submitPhoneLink: (e) ->
+    e.preventDefault()
+    @$('#about2-phone-link button').addClass 'is-loading'
+    $.ajax
+      type: 'POST'
+      url: '/about2/sms'
+      data: to: @$('#about2-phone-link input').val()
+      complete: => @$('#about2-phone-link button').removeClass 'is-loading'
