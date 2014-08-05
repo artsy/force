@@ -37,7 +37,7 @@ module.exports =
     @setSkipLabel()
     @searchBarView?.clear()
     @followed.unshift model.toJSON()
-    @following.follow model.id, { notes: 'Followed from /personalize' }
+    @following.follow model.get('id'), { notes: 'Followed from /personalize' }
 
     # Fallback in case model doesn't have display_model
     displayModel = model.get('display_model') or 'displayModelUnknown'

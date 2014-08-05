@@ -47,7 +47,7 @@ module.exports = class BookmarksView extends Backbone.View
     send = "#{if @persist then 'create' else 'new'}FromArtist"
     @bookmarks[send] model
     @autocomplete.clear()
-    @following.follow model.id if @persist
+    @following.follow model.get('id') if @persist
     analytics.track.other 'Added an artist to their collection'
 
   uncollect: (e) ->
