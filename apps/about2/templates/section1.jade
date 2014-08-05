@@ -60,8 +60,10 @@ section#about2-section1.about2-container
       h1= sections[0].pullBlurb4.h1
       h2= sections[0].pullBlurb4.h2
       p= sections[0].pullBlurb4.p
-      label Text me a download link:
-      input.bordered-input( placeholder='Your phone number here' )
+      form#about2-phone-link
+        label Send a link to your phone
+        input.bordered-input( placeholder='Enter your phone number' )
+        button.avant-garde-button-black Send
     img( src=sections[0].pullBlurb4.src )
 
 .about2-spacer( style="height: 200px" )

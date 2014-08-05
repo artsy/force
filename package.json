@@ -44,7 +44,8 @@
     "humanparser": "*",
     "knox": "*",
     "raven": "*",
-    "artsy-gemini-upload": "*"
+    "artsy-gemini-upload": "*",
+    "twilio": "*"
   },
   "devDependencies": {
     "browserify": "*",
