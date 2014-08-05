@@ -50,3 +50,24 @@ describe 'About2 routes', ->
       @client.putBuffer.args[0][0].toString().should.equal JSON.stringify @req.body
       @client.putBuffer.args[0][3](null, {})
       @res.send.args[0][0].should.equal 200
+
+  describe '#sendSMS', ->
+
+    twilioConstructorArgs = null; twilioSendSmsArgs = null; send = null; next = null
+
+    beforeEach ->
+      twilio = routes.__get__ 'twilio'
+      twilio.RestClient = class TwilioClientStub
+        constructor: -> twilioConstructorArgs = arguments
+        sendSms: -> twilioSendSmsArgs = arguments
+      routes.sendSMS { param: -> '555 111 2222' }, { send: send = sinon.stub() }, next = sinon.stub()
+
+    it 'sends a link with a valid phone number', ->
+      twilioSendSmsArgs[0].to.should.equal '555 111 2222'
+      twilioSendSmsArgs[0].body.should.containEql "Download the new Artsy iPhone app here: "
+      twilioSendSmsArgs[1] null, 'SUCCESS!'
+      send.args[0][0].msg.should.containEql 'success'
+
+    it 'throws an error if twilio doesnt like it', ->
+      twilioSendSmsArgs[1] 'fail', { message: 'You suck!' }
+      next.args[0][0].should.containEql 'fail'
