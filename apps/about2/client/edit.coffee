@@ -3,6 +3,7 @@ require '../../../lib/vendor/hulk'
 sectionsTemplates = require '../templates/sections.jade'
 { DATA } = sd = require('sharify').data
 GeminiForm = require '../../../components/gemini_form/view.coffee'
+{ crop } = require '../../../lib/resizer.coffee'
 
 hulkCallback = (data) ->
   render(data)
@@ -18,7 +19,7 @@ hulkCallback = (data) ->
 
 render = (data) ->
   $('#about2-edit-example').html sectionsTemplates _.extend data,
-    crop: (url, x, y, opts) -> url
+    crop: crop
 
 initImageUploads = ->
   $('input, textarea').each ->
