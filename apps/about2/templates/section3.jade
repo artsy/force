@@ -1,8 +1,9 @@
 mixin work(artwork)
   .about2-section3-genome-artwork-track
     section.about2-section3-genome-artwork
-      img( src=artwork.src )
-      include artwork_details
+      a( href=artwork.href )
+        img( src=artwork.src )
+        include artwork_details
   if artwork.genes
     ul.about2-section3-genome-artwork-genes
       for gene in artwork.genes

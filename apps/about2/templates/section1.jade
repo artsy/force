@@ -11,24 +11,24 @@ section#about2-section1.about2-container
     ul#about2-section1-images1-left
       for image, i in sections[0].pullBlurb1.images.slice(half)
         li
-          img( src=image.src )
-          small.about2-avant-garde-caption= image.caption.split(' - ')[0]
+          a( href= image.href ): img( src=image.src )
+          small.about2-avant-garde-caption: a( href= image.href )= image.caption.split(' - ')[0]
             em= image.caption.split(' - ')[1]
     ul#about2-section1-images1-right
       for image, i in sections[0].pullBlurb1.images.slice(0, half)
         li
-          img( src=image.src )
-          small.about2-avant-garde-caption= image.caption.split(' - ')[0]
+          a( href= image.href ): img( src=image.src )
+          small.about2-avant-garde-caption: a( href= image.href )= image.caption.split(' - ')[0]
             em= image.caption.split(' - ')[1]
 
+// "We cover international show..."
 section.about2-container
-  // "We cover international show..."
   .about2-left-half-width-column
     ul
       for image in sections[0].pullBlurb2.leftImages
         li
-          img( src=image.src )
-          small= image.caption
+          a( href= image.href ): img( src=image.src )
+          small: a( href= image.href )= image.caption
   .about2-right-half-width-column
     section#about2-section1-pull-blurb-2.about2-pull-blurb
       h1= sections[0].pullBlurb2.h1
@@ -37,12 +37,12 @@ section.about2-container
     ul
       for image in sections[0].pullBlurb2.rightImages
         li
-          img( src=image.src )
+          a( href=image.href ): img( src=image.src )
           small.about2-avant-garde-caption= image.author
           p= image.caption
 
+// "Save works and curate sets on Artsy..."
 section.about2-container
-  // "Save works and curate sets on Artsy..."
   section#about2-section1-pull-blurb-3.about2-pull-blurb
     h2= sections[0].pullBlurb3.h2
     p= sections[0].pullBlurb3.p
@@ -50,11 +50,11 @@ section.about2-container
   ul#about2-section1-pull-blurb-3-artworks
     for artwork in sections[0].pullBlurb3.artworks
       li
-        img( src=artwork.src )
+        a( href= artwork.href ): img( src=artwork.src )
         .icon-heart
         include artwork_details
 
-  // "Access from anywhere..."
+// "Access from anywhere..."
 section.about2-container
   section#about2-section1-pull-blurb-4
     .about2-pull-blurb
