@@ -15,6 +15,6 @@
   ul.about2-hero-unit-bgs
     for url, i in hero.images
       li.about2-hero-unit-bg(
-        style="background-image: url(#{url})"
+        style="background-image: url(#{crop(url, 1500, 900, { quality: 90 })})"
         class=(i === 0 ? 'is-active' : undefined)
       )

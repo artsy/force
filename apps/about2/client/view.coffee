@@ -15,6 +15,7 @@ module.exports = class AboutView extends Backbone.View
     @cacheSelectors()
     @setupStickyNav()
     @setupSectionNavHighlighting()
+    @setupHeroUnitSlideshow()
     @setupHeroUnits()
     return if isTouchDevice()
     @setupTracks()
@@ -53,9 +54,6 @@ module.exports = class AboutView extends Backbone.View
       , offset: -> -$(this).height()
 
   setupHeroUnits: ->
-    @currentHeroUnit = 0
-    @heroUnitPauseInterval = 5000
-    setInterval @stepHeroUnit, @heroUnitPauseInterval
     $nav = @$nav
     $heroUnitsContainer = @$heroUnitsContainer
     @$heroUnitNav
@@ -72,6 +70,13 @@ module.exports = class AboutView extends Backbone.View
         Backbone.history.navigate '/about2', trigger: false, replace: true
         $nav.find('a').removeClass 'is-active'
       , offset: -> -($(this).height() - 1)
+
+  setupHeroUnitSlideshow: ->
+    @currentHeroUnit = 0
+    @heroUnitPauseInterval = 4000
+    @$heroUnitsContainer.imagesLoaded =>
+      @$heroUnitsContainer.addClass 'is-fade-in'
+      setInterval @stepHeroUnit, @heroUnitPauseInterval
 
   stepHeroUnit: =>
     $(@$heroUnits.removeClass('is-active').get @currentHeroUnit).addClass('is-active')
