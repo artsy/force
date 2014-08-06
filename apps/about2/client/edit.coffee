@@ -17,7 +17,8 @@ hulkCallback = (data) ->
     success: -> location.assign '/about2'
 
 render = (data) ->
-  $('#about2-edit-example').html sectionsTemplates(data)
+  $('#about2-edit-example').html sectionsTemplates _.extend data,
+    crop: (url, x, y, opts) -> url
 
 initImageUploads = ->
   $('input, textarea').each ->
