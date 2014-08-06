@@ -76,12 +76,12 @@ describe 'CategoriesView', ->
     beforeEach ->
       @html = @view.$el.html()
     it 'renders the featured categories', ->
-      @html.should.containEql 'url(a/original)'
+      @html.should.containEql 'url(a/wide)'
       @html.should.containEql '<h3>A</h3>'
       @html.should.containEql 'data-id="a"'
 
     it 'renders the secondary categories', ->
-      @html.should.containEql 'src="b/original'
+      @html.should.containEql 'src="b/wide'
       @html.should.containEql '<h3>B</h3>'
       @html.should.containEql 'data-id="b"'
 

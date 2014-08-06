@@ -163,7 +163,7 @@ module.exports = fabricate = (type, extObj = {}) ->
       title: 'This is a page all about Bitty'
       subtitle: "If you are interested in cats, and specifically the best cat in the world, you've come to the right place"
       image_url: '/bitty/:version'
-      image_versions: ["large_square", "medium_square", "small_square", "medium_rectangle", "large_rectangle","small_rectangle"]
+      image_versions: ["large_square", "medium_square", "small_square", "medium_rectangle", "large_rectangle", "small_rectangle", "wide"]
       item_type: 'FeaturedLink'
 
     when 'user'

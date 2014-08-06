@@ -49,7 +49,7 @@ describe 'Featured Links', ->
       $html.find('.feature-set-item a').should.have.lengthOf 3
 
     it 'adds an image when the model has one', ->
-      @set.get('data').first().set 'image_versions', ['original', 'large_rectangle', 'medium_rectangle']
+      @set.get('data').first().set 'image_versions', ['wide', 'large_rectangle', 'medium_rectangle']
       link = @set.get('data').first()
       $html = $(render('sets')(sets: [@set]))
       $html.find('.feature-set-item img').should.have.lengthOf 1
