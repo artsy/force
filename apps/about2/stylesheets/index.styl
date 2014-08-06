@@ -13,13 +13,9 @@
   .main-layout-footer-push
     background-color white
 
-.about2-spacer
-  width 100%
-  display block
-
 .about2-container
   width container-width
-  margin auto
+  margin 120px auto
   font-size 18px
   line-height 28px
 
@@ -29,7 +25,7 @@
   avant-garde()
   position relative
   text-align center
-  padding 120px 0 60px 0
+  margin 120px 0 60px 0
   letter-spacing 2px
   &::after
     content '.'
@@ -37,14 +33,15 @@
     width 50px
     height 3px
     background black
-    bottom 48px
+    bottom -20px
     display block
     position absolute
     left calc(50% \- @width / 2)
 
 .about2-section-preamble
-  width (gutter-width * 2) + (column-width * 2)
+  width (gutter-width * 6) + (column-width * 3)
   line-height 28px
+  margin 60px auto 120px
   &:first-letter
     font-size 40px
 
@@ -52,11 +49,12 @@
   h1
     avant-garde()
     small-avant-garde()
+    line-height 1
   h2
     font-size 42px
     line-height 48px
   h1 + h2
-    margin-top 3px
+    margin-top 10px
   h2 + p
     margin-top 30px
 
@@ -87,10 +85,6 @@
 
 .about2-section
   overflow hidden
-  // Debug
-  // background-color blue
-  // &.is-active
-  //   background-color red
 
 @import './grid'
 @import './nav'

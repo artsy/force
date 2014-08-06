@@ -1,8 +1,8 @@
 section#about2-section5.about2-container
   h1.about2-section-header!= sections[4].header
 
+section.about2-container
   // "Our team is working to make the ..."
-  .about2-spacer( style="height: 60px" )
   section#about2-section5-pull-blurb-1
     .about2-pull-blurb
       h1= sections[4].pullBlurb1.h1
@@ -14,8 +14,8 @@ section#about2-section5.about2-container
       li
         img( src=src )
 
+section.about2-container
   // "We’ve come a long way"
-  .about2-spacer( style="height: 40px" )
   section#about2-section5-pull-blurb-2
     .about2-pull-blurb
       h1= sections[4].pullBlurb2.h1
@@ -36,8 +36,8 @@ section#about2-section5.about2-container
       p!= sections[4].pullBlurb3.p
     img( src=sections[4].pullBlurb3.src )
 
+section.about2-container
   // Job Listings
-  .about2-spacer( style="height: 80px" )
   ul#about2-section5-jobs
     for job in sections[4].jobs
       li
@@ -49,5 +49,3 @@ section#about2-section5.about2-container
           a.icon-chevron-right( href=job.href )
   #about2-section5-jobs-all
     a.faux-underline See all #{sections[4].jobs.length} openings
-
-.about2-spacer( style="height: 200px" )

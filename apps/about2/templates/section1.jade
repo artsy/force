@@ -21,6 +21,7 @@ section#about2-section1.about2-container
           small.about2-avant-garde-caption= image.caption.split(' - ')[0]
             em= image.caption.split(' - ')[1]
 
+section.about2-container
   // "We cover international show..."
   .about2-left-half-width-column
     ul
@@ -40,8 +41,8 @@ section#about2-section1.about2-container
           small.about2-avant-garde-caption= image.author
           p= image.caption
 
+section.about2-container
   // "Save works and curate sets on Artsy..."
-  .about2-spacer( style="height: 102px" )
   section#about2-section1-pull-blurb-3.about2-pull-blurb
     h2= sections[0].pullBlurb3.h2
     p= sections[0].pullBlurb3.p
@@ -54,7 +55,7 @@ section#about2-section1.about2-container
         include artwork_details
 
   // "Access from anywhere..."
-  .about2-spacer( style="height: 50px" )
+section.about2-container
   section#about2-section1-pull-blurb-4
     .about2-pull-blurb
       h1= sections[0].pullBlurb4.h1
@@ -65,5 +66,3 @@ section#about2-section1.about2-container
         input.bordered-input( placeholder='Enter your phone number' )
         button.avant-garde-button-black Send
     img( src=sections[0].pullBlurb4.src )
-
-.about2-spacer( style="height: 200px" )
