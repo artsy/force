@@ -3,9 +3,6 @@ Backbone = require 'backbone'
 imagesLoaded = require 'imagesloaded'
 { isTouchDevice } = require '../../../components/util/device.coffee'
 
-# Stub the crop function used in
-window.crop = ->
-
 module.exports = class AboutView extends Backbone.View
   events:
     'click .about2-nav-link': 'intercept'
