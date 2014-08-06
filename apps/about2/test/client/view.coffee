@@ -8,7 +8,9 @@ Backbone = require 'backbone'
 describe 'AboutView', ->
   before (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
+      benv.expose
+        $: benv.require 'jquery'
+        crop: sinon.stub()
       Backbone.$ = $
       @AboutView = rewire '../../client/view'
       @AboutView.__set__ 'imagesLoaded', (cb) -> cb()
