@@ -1,31 +1,28 @@
-_ = require 'underscore'
 jade = require 'jade'
 path = require 'path'
 fs = require 'fs'
-cheerio = require 'cheerio'
-Artworks = require '../../../../collections/artworks.coffee'
-Backbone = require 'backbone'
+benv = require 'benv'
 { fabricate } = require 'antigravity'
 FeaturedSet = require '../../../../models/featured_set.coffee'
-FeaturedLink = require '../../../../models/featured_link.coffee'
 FeaturedLinks = require '../../../../collections/featured_links.coffee'
-SaleArtwork = require '../../../../models/sale_artwork.coffee'
 
 render = (templateName) ->
   filename = path.resolve __dirname, "../../templates/#{templateName}.jade"
-  jade.compile(
-    fs.readFileSync(filename),
-    { filename: filename }
-  )
+  jade.compile(fs.readFileSync(filename), filename: filename)
 
 describe 'Featured Sets', ->
+  before (done) ->
+    benv.setup =>
+      benv.expose $: require 'jquery'
+      done()
+
+  after ->
+    benv.teardown()
 
   beforeEach ->
-    @sd =
-      API_URL: 'http://localhost:5000'
-      ASSET_PATH: 'http://localhost:5000'
+    @sd = API_URL: 'http://localhost:5000', ASSET_PATH: 'http://localhost:5000'
     @set = new FeaturedSet
-      owner: fabricate('feature', { image_versions: ['wide'] })
+      owner: fabricate('feature', image_versions: ['wide'])
       id: "52b347c59c18db5aef000208"
       published: true
       key: "1"
@@ -36,44 +33,38 @@ describe 'Featured Sets', ->
       owner_type: "Feature"
 
   describe 'template', ->
-
     it 'renders the name of the set', ->
-      $ = cheerio.load render('sets')({ sets: [ @set ] })
-      $('.feature-set-title').should.have.lengthOf 1
-      $('.feature-set-title').text().should.equal @set.get('name')
+      $html = $(render('sets')(sets: [@set]))
+      $html.find('.feature-set-title').should.have.lengthOf 1
+      $html.find('.feature-set-title').text().should.equal @set.get('name')
 
     it 'renders the set description if there is one', ->
-      $ = cheerio.load render('sets')({ sets: [ @set ] })
-      $('.feature-set-description').should.have.lengthOf 1
-      $('.feature-set-description').text().should.equal @set.mdToHtmlToText 'description'
+      $html = $(render('sets')(sets: [@set]))
+      $html.find('.feature-set-description').should.have.lengthOf 1
+      $html.find('.feature-set-description').text().should.equal @set.mdToHtmlToText 'description'
 
     it 'renders without a title or description', ->
-      @set.set { description: null, name: null }
-      $ = cheerio.load render('sets')({ sets: [ @set ] })
-      $('.feature-set-title').should.have.lengthOf 0
-      $('.feature-set-description').should.have.lengthOf 0
-      $('.feature-set').should.have.lengthOf 1
+      @set.set description: null, name: null
+      $html = $(render('sets')(sets: [@set]))
+      $html.find('.feature-set-title').should.have.lengthOf 0
+      $html.find('.feature-set-description').should.have.lengthOf 0
+      $html.is('.feature-set').should.be.true
+      $html.is(':empty').should.be.true
 
   describe "fetured links", ->
-
     it 'renders a featured link', ->
       @set.set 'data', new FeaturedLinks([ fabricate('featured_link')])
-      @html = render('sets')({ sets: [ @set ] })
-      $ = cheerio.load render('sets')({ sets: [ @set ] })
-      $('.feature-set-item').should.have.lengthOf 1
+      $html = $(render('sets')(sets: [@set]))
+      $html.find('.feature-set-item').should.have.lengthOf 1
 
   describe "videos", ->
-
     it 'renders videos', ->
       @set.set 'data', new FeaturedLinks([ fabricate('featured_link')])
-      @html = render('sets')({ sets: [ @set ] })
-      $ = cheerio.load render('sets')({ sets: [ @set ] })
-      $('.feature-set-item').should.have.lengthOf 1
+      $html = $(render('sets')(sets: [@set]))
+      $html.find('.feature-set-item').should.have.lengthOf 1
 
   describe "sale artworks", ->
-
     it 'renders sale artworks in an artwork column component', ->
       @set.set 'type', 'artworks'
-      @html = render('sets')({ sets: [ @set ] })
-      $ = cheerio.load render('sets')({ sets: [ @set ] })
-      $('#feature-artworks').should.have.lengthOf 1
+      $html = $(render('sets')(sets: [@set]))
+      $html.find('#feature-artworks').should.have.lengthOf 1

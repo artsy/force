@@ -27,7 +27,7 @@ describe 'FeatureView', ->
       done()
 
   after ->
-    benv.teardown(false)
+    benv.teardown()
 
   beforeEach (done) ->
     sinon.stub Backbone, 'sync'
@@ -125,6 +125,7 @@ describe 'FeatureView', ->
         Backbone.sync.args[2][2].success(@saleArtworks)
 
         # Stub Clock time
+        @clock = sinon.useFakeTimers()
         Backbone.sync.args[4][2].success({
           start_at: new Date(2000, 10, 10).toString()
           end_at: new Date(2015, 10, 10).toString()
@@ -132,6 +133,9 @@ describe 'FeatureView', ->
 
         # End sale artwork requests
         _.last(Backbone.sync.args)[2].success([])
+
+      afterEach ->
+        @clock.restore()
 
       it 'renders without errors', ->
         @view.isAuction().should.be.ok
