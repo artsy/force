@@ -76,13 +76,19 @@
   margin-left column-width + (gutter-width * 2)
   bottom-cover-gradient(220px)
   li
-    padding 25px 0
     border-bottom 1px solid gray-color
+    a
+      display block
+      padding 25px 0
+      transition opacity 0.125s
+      &:hover
+        opacity 0.6
     header
       width (column-width * 2) + (gutter-width * 2)
       font-size 26px
       line-height 32px
-    h1, h2
+    h1
+    h2
       display block
     h2
       font-style italic
@@ -92,14 +98,13 @@
     .icon-chevron-right
       font-size 24px
       font-weight bold
-      position relative
       width column-width - gutter-width
-      &::before
-        right 0
-        position absolute
-    header, p, .icon-chevron-right
+      text-align right
+    header
+    p
+    .icon-chevron-right
       display inline-block
-      vertical-align top
+      vertical-align middle
 
 #about2-section5-jobs-all
   font-size 26px
