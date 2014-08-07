@@ -9,7 +9,7 @@ module.exports = class CollectView extends StepView
   setCollectorLevel: (e) ->
     e.preventDefault()
     value = parseInt $(e.target).data 'value'
-    @user.set 'collector_level', value
+    @user.save collector_level: value
     @state.set 'current_level', value
 
     track.funnel "Personalize collector level:#{value}", { label: "User:#{@user.id}" }

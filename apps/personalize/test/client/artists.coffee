@@ -7,7 +7,6 @@ CurrentUser = require '../../../../models/current_user.coffee'
 Artist = require '../../../../models/artist.coffee'
 { fabricate } = require 'antigravity'
 { resolve } = require 'path'
-ArtistsView = benv.requireWithJadeify resolve(__dirname, '../../client/views/artists'), ['template', 'suggestedArtistsTemplate']
 
 describe 'ArtistsView', ->
   before (done) ->
@@ -20,13 +19,16 @@ describe 'ArtistsView', ->
     benv.teardown()
 
   beforeEach ->
+    @ArtistsView = benv.requireWithJadeify resolve(__dirname, '../../client/views/artists'), ['template', 'suggestedArtistsTemplate']
+    @ArtistsView.__set__ 'imagesLoaded', (cb) -> cb()
     sinon.stub Backbone, 'sync'
-    sinon.stub ArtistsView::, 'setupSearch'
-    sinon.spy ArtistsView::, 'initializeBookmarkedArtists'
+    sinon.stub @ArtistsView::, 'setupSearch'
+    sinon.spy @ArtistsView::, 'initializeBookmarkedArtists'
+    $.fn.imagesLoaded = (cb) -> cb()
 
     @user = new CurrentUser fabricate 'user', collector_level: 2
     @state = new PersonalizeState user: @user
-    @view = new ArtistsView state: @state, user: @user
+    @view = new @ArtistsView state: @state, user: @user
 
     @view.render()
 
@@ -102,10 +104,10 @@ describe 'ArtistsView', ->
     it 'renders related artists based on following', ->
       artist = new Artist(fabricate 'artist')
       artist.relatedArtists = new Backbone.Collection artist
-      @view.suggestions.add @view.createSuggestionSet(artist)
-      @view.renderSuggestions()
-      @view.$el.html().should.containEql @view.suggestions.at(0).get('name')
-      @view.$('.personalize-suggestion-name').text().should.equal @view.suggestions.at(0).get('suggestions').at(0).get('name')
+      suggestionSet = @view.createSuggestionSet(artist)
+      @view.renderSuggestions suggestionSet
+      @view.$el.html().should.containEql suggestionSet.get('name')
+      @view.$('.personalize-suggestion-name').text().should.equal suggestionSet.get('suggestions').at(0).get('name')
 
   describe '#render', ->
     describe 'collector_level 2', ->
@@ -147,7 +149,7 @@ describe 'ArtistsView', ->
     describe 'collector_level 2', ->
       it 'does not initialize bookmark artists', ->
         @user.set 'collector_level', 2
-        view = new ArtistsView state: @state, user: @user
+        view = new @ArtistsView state: @state, user: @user
         view.initializeBookmarkedArtists.called.should.be.false
 
     describe 'collector_level 3', ->
@@ -155,7 +157,7 @@ describe 'ArtistsView', ->
         Backbone.sync.restore()
         sinon.stub Backbone, 'sync'
         @user.set 'collector_level', 3
-        @view = new ArtistsView state: @state, user: @user
+        @view = new @ArtistsView state: @state, user: @user
         @view.render()
 
       it 'is initializes the bookmark artists', ->

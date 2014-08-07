@@ -19,15 +19,22 @@ describe 'CollectView', ->
     benv.teardown()
 
   beforeEach ->
+    sinon.stub Backbone, 'sync'
     @user = new CurrentUser fabricate 'user'
     @state = new PersonalizeState user: @user
     @view = new @CollectView(state: @state, user: @user)
     @view.render()
 
+  afterEach ->
+    Backbone.sync.restore()
+
   describe '#setCollectorLevel', ->
-    it 'sets the collector level when the button is clicked', ->
+    it 'saves the collector level when the button is clicked', ->
       @view.$('a').eq(0).click()
       @view.user.get('collector_level').should.equal 3
+      Backbone.sync.args[0][0].should.equal 'update'
+      Backbone.sync.args[0][1].attributes.collector_level.should.equal 3
+      Backbone.sync.args[0][1].url().should.containEql '/api/v1/me'
 
     it 'sets the level of PersonalizeState', ->
       @view.$('a').eq(1).click()

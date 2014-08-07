@@ -12,6 +12,7 @@ module.exports = class IntroductionView extends StepView
   _.extend @prototype, Form
 
   events:
+    'click .personalize-skip': 'advance'
     'click .personalize-introduction-edit': 'edit'
     'submit form': 'complete'
     'click button': 'complete'

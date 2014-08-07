@@ -11,6 +11,7 @@ BookmarkedArtists = require '../mixins/bookmarked_artists.coffee'
 Artists = require '../../../../collections/artists.coffee'
 analytics = require '../../../../lib/analytics.coffee'
 mediator = require '../../../../lib/mediator.coffee'
+imagesLoaded = require 'imagesloaded'
 template = -> require('../../templates/artists.jade') arguments...
 suggestedArtistsTemplate = -> require('../../templates/suggested_artists.jade') arguments...
 
@@ -73,8 +74,8 @@ module.exports = class ArtistsView extends StepView
             suggestions: artists
 
   initializeSuggestions: ->
-    (if @user.isCollector() then @initializeBookmarkedArtists() else @initializeGeneArtists())
-      ?.then (response) => @fetchFallbackSuggestions() unless response.length
+    if @user.isCollector() then @initializeBookmarkedArtists() else @initializeGeneArtists()
+    @fetchFallbackSuggestions()
 
   fetchFallbackSuggestions: ->
     setSize = 40
@@ -127,20 +128,21 @@ module.exports = class ArtistsView extends StepView
         @followButtonViews[key].remove()
         @followButtonViews[key] = null
 
-  renderSuggestions: ->
-    (@$suggestions ?= @$('#personalize-suggestions')).
-      html suggestedArtistsTemplate suggestions: @suggestions.models
-    @setupFollowButtons()
+  renderSuggestions: (suggestionSet) ->
+    $suggestionSet = $(suggestedArtistsTemplate(suggestionSet: suggestionSet))
+    (@$suggestions ?= @$('#personalize-suggestions')).prepend $suggestionSet
+    @setupFollowButtons suggestionSet
+    $suggestionSet.imagesLoaded ->
+      $suggestionSet.addClass 'is-fade-in'
 
-  setupFollowButtons: ->
-    @suggestions.each (suggestionSet) =>
-      suggestionSet.get('suggestions').each (artist) =>
-        $button = @$suggestions.
-          find(".personalize-suggestions-set[data-id='#{suggestionSet.id}']").
-          find(".follow-button[data-id='#{artist.id}']")
-        button = @setupFollowButton "#{suggestionSet.id}_#{artist.id}", artist, $button
-        @listenTo button, 'click', => @setSkipLabel()
-      @following.syncFollows suggestionSet.get('suggestions').pluck 'id'
+  setupFollowButtons: (suggestionSet) ->
+    suggestionSet.get('suggestions').each (artist) =>
+      $button = @$suggestions.
+        find(".personalize-suggestions-set[data-id='#{suggestionSet.id}']").
+        find(".follow-button[data-id='#{artist.id}']")
+      button = @setupFollowButton "#{suggestionSet.id}_#{artist.id}", artist, $button
+      @listenTo button, 'click', => @setSkipLabel()
+    @following.syncFollows suggestionSet.get('suggestions').pluck 'id'
 
   postRender: ->
     @initializeFollowable()
