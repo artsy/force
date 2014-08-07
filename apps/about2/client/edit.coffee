@@ -18,7 +18,8 @@ hulkCallback = (data) ->
     success: -> location.assign '/about2'
 
 render = (data) ->
-  $('#about2-edit-example').html sectionsTemplates _.extend data,
+  renderData = JSON.parse(JSON.stringify(data))
+  $('#about2-edit-example').html sectionsTemplates _.extend renderData,
     crop: crop
 
 initImageUploads = ->
