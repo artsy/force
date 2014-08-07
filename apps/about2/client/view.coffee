@@ -2,10 +2,12 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 imagesLoaded = require 'imagesloaded'
 { isTouchDevice } = require '../../../components/util/device.coffee'
+mediator = require '../../../lib/mediator.coffee'
 
 module.exports = class AboutView extends Backbone.View
   events:
     'click .about2-nav-link': 'intercept'
+    'click .about2-signup-button': 'signup'
     'submit #about2-phone-link': 'submitPhoneLink'
 
   initialize: ->
@@ -21,6 +23,9 @@ module.exports = class AboutView extends Backbone.View
     @setupTracks()
     @setupFlipHearts()
     @setupGenes()
+
+  signup: (e) ->
+    mediator.trigger 'open:auth', mode: 'register'
 
   intercept: (e) ->
     e.preventDefault()
