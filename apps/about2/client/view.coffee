@@ -23,7 +23,6 @@ module.exports = class AboutView extends Backbone.View
     @setupHeroUnitSlideshow()
     @setupHeroUnits()
     return if isTouchDevice()
-    @setupTracks()
     @setupFlipHearts()
     @setupGenes()
 

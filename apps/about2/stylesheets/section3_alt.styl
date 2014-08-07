@@ -1,0 +1,55 @@
+#about2-section3-alt-preamble
+  img
+    width (column-width * 4) + (gutter-width * 6)
+    margin auto
+
+#about2-section3-alt-pull-blurb-1
+  width (column-width * 4) + (gutter-width * 6)
+  margin auto
+  padding 60px (column-width + (gutter-width * 2)) 60px 0
+  background-color white
+
+#about2-section3-alt-pull-blurb-2
+  width (column-width * 2) + (gutter-width * 4)
+
+#about2-section3-alt-genome-trail
+  position relative
+  &::after
+    content ''
+    position absolute
+    display block
+    top 0
+    left 50%
+    width 2px
+    height 100%
+    margin-left -1px
+    background-color black
+    z-index -1
+
+.about2-section3-alt-genome-artwork-track
+  width (column-width * 4) + (gutter-width * 6)
+  margin auto
+
+.about2-section3-alt-genome-artwork
+  width (column-width * 4) + (gutter-width * 6)
+  font-size 16px
+  line-height 22px
+  img
+    width 100%
+    padding 15px 0
+    background-color white
+  a
+    text-decoration none
+    color gray-dark-color
+
+.about2-section3-alt-genome-artwork-genes
+  text-align center
+  avant-garde()
+  small-avant-garde()
+  color black
+  li
+    margin-bottom 60px
+    padding 5px 0
+    background-color white
+    &:first-child
+      margin-top 100px
