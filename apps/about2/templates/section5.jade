@@ -38,14 +38,15 @@ section.about2-container
 
 section.about2-container
   // Job Listings
-  ul#about2-section5-jobs
+  ul#about2-section5-jobs.is-truncated
     for job in sections[4].jobs
       li
-        section
+        section: a( href= job.href )
           header
             h1= job.header
             h2= job.location
           p= job.description
-          a.icon-chevron-right( href=job.href )
+          i.icon-chevron-right
   #about2-section5-jobs-all
-    a.faux-underline See all #{sections[4].jobs.length} openings
+    a#about2-section5-jobs-all-button.faux-underline
+      | See all #{sections[4].jobs.length} openings

@@ -24,7 +24,7 @@ section#about2-section1.about2-container
 // "We cover international show..."
 section.about2-container
   .about2-left-half-width-column
-    ul
+    ul#about2-section1-images2-left
       for image in sections[0].pullBlurb2.leftImages
         li
           a( href= image.href ): img( src=image.src )
@@ -46,7 +46,8 @@ section.about2-container
   section#about2-section1-pull-blurb-3.about2-pull-blurb
     h2= sections[0].pullBlurb3.h2
     p= sections[0].pullBlurb3.p
-    button.avant-garde-button-white= sections[0].pullBlurb3.button
+    button.avant-garde-button-white.about2-signup-button
+      = sections[0].pullBlurb3.button
   ul#about2-section1-pull-blurb-3-artworks
     for artwork in sections[0].pullBlurb3.artworks
       li
