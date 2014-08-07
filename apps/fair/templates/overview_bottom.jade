@@ -14,7 +14,7 @@ if primarySets.where({ key: 'editorial' }).length
         for item in set.get('items').models.slice(1, 4)
           a.small-post( href=item.get('href') )
             .small-post-img-container
-              img( src=item.imageUrl('medium_square') )
+              img( src=item.imageUrl('medium_rectangle') )
             .post-text
               h2.section-heading= item.get('title')
               if item.get('subtitle')
