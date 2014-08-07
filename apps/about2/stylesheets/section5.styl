@@ -74,7 +74,19 @@
 
 #about2-section5-jobs
   margin-left column-width + (gutter-width * 2)
+  overflow hidden
+  transition all 0.5s
   bottom-cover-gradient(220px)
+  // Can't animate to height auto but can
+  // animate an arbitrary max-height
+  max-height 9999px
+  &::after
+    transition opacity 0.5s
+    opacity 0
+  &.is-truncated
+    max-height 600px
+    &::after
+      opacity 1
   li
     border-bottom 1px solid gray-color
     a
@@ -110,3 +122,9 @@
   font-size 26px
   text-align right
   margin-top 50px
+
+#about2-section5-jobs-all-button
+  transition opacity 0.5s
+  &.is-clicked
+    opacity 0
+    cursor default

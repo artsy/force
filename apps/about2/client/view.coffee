@@ -9,6 +9,7 @@ module.exports = class AboutView extends Backbone.View
     'click .about2-nav-link': 'intercept'
     'click .about2-signup-button': 'signup'
     'submit #about2-phone-link': 'submitPhoneLink'
+    'click #about2-section5-jobs-all-button': 'displayJobs'
 
   initialize: ->
     @$window = $(window)
@@ -37,6 +38,7 @@ module.exports = class AboutView extends Backbone.View
     @$heroUnitsContainer = @$('.about2-hero-unit-bgs')
     @$heroUnits = @$('.about2-hero-unit-bg')
     @$heroUnitNav = @$('.about2-nav')
+    @$jobs = @$('#about2-section5-jobs')
 
   setupStickyNav: ->
     @$nav.waypoint 'sticky'
@@ -86,6 +88,11 @@ module.exports = class AboutView extends Backbone.View
   stepHeroUnit: =>
     $(@$heroUnits.removeClass('is-active').get @currentHeroUnit).addClass('is-active')
     @currentHeroUnit = if (@currentHeroUnit + 1 < @$heroUnits.length) then @currentHeroUnit + 1 else 0
+
+  displayJobs: (e) ->
+    e.preventDefault()
+    $(e.currentTarget).addClass 'is-clicked'
+    @$jobs.removeClass 'is-truncated'
 
   toggleGrid: (e) =>
     @$('#about2-grid').toggle() if e.which is 71 # "g" key
