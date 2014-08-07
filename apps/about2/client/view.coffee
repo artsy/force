@@ -3,6 +3,7 @@ Backbone = require 'backbone'
 imagesLoaded = require 'imagesloaded'
 { isTouchDevice } = require '../../../components/util/device.coffee'
 mediator = require '../../../lib/mediator.coffee'
+ZoomView = require '../../../components/modal/zoom.coffee'
 
 module.exports = class AboutView extends Backbone.View
   events:
@@ -10,6 +11,7 @@ module.exports = class AboutView extends Backbone.View
     'click .about2-signup-button': 'signup'
     'submit #about2-phone-link': 'submitPhoneLink'
     'click #about2-section5-jobs-all-button': 'displayJobs'
+    'click .about2-image-zoom': 'zoomImage'
 
   initialize: ->
     @$window = $(window)
@@ -24,6 +26,10 @@ module.exports = class AboutView extends Backbone.View
     @setupTracks()
     @setupFlipHearts()
     @setupGenes()
+
+  zoomImage: (e) ->
+    e.preventDefault()
+    new ZoomView imgSrc: $(e.currentTarget).attr 'href'
 
   signup: (e) ->
     mediator.trigger 'open:auth', mode: 'register'
