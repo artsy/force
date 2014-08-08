@@ -19,14 +19,14 @@ describe('sharify', function() {
       var locals = {};
       sharify.data.escapeHTML = '--></script>';
       sharify({}, { locals: locals }, function(){});
-      locals.sharify.script().should.include('window.__sharifyData = {"escapeHTML":"--\\>\\u003c/script>"};');
+      locals.sharify.script().should.containEql('window.__sharifyData = {"escapeHTML":"--\\>\\u003c/script>"};');
     });
 
     it('returns middleware that adds a sharify script to locals', function() {
       var locals = {};
       sharify.data.foo = 'bar';
       sharify({}, { locals: locals }, function(){});
-      locals.sharify.script().should.include('window.__sharifyData = {"foo":"bar"};');
+      locals.sharify.script().should.containEql('window.__sharifyData = {"foo":"bar"};');
     });
 
     it('exports the data to be required elsewhere', function() {
@@ -42,11 +42,11 @@ describe('sharify', function() {
       sharify.data.foo = 'bar';
       sharify({}, { locals: locals }, function(){});
       locals.sd.location = "NY";
-      locals.sharify.script().should.include('window.__sharifyData = {"foo":"bar","location":"NY"};');
+      locals.sharify.script().should.containEql('window.__sharifyData = {"foo":"bar","location":"NY"};');
 
       locals = {};
       sharify({}, { locals: locals }, function(){});
-      locals.sharify.script().should.include('window.__sharifyData = {"foo":"bar"};');
+      locals.sharify.script().should.containEql('window.__sharifyData = {"foo":"bar"};');
     });
 
     it('does not inject locals data into the constant data', function() {
