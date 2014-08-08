@@ -56,6 +56,7 @@ describe 'Questionnaire', ->
 
     describe '#done', ->
       beforeEach ->
+        @view.user.set name: 'Foo Bar', profession: 'Baz'
         @view.state.set mode: 'questionnaire'
         @view.$('button').click()
 
@@ -66,6 +67,21 @@ describe 'Questionnaire', ->
         @view.inquiry.trigger 'sync'
         @view.$el.attr('data-state').should.equal 'open'
         @view.state.get('mode').should.equal 'signup'
+
+      it 'tries to generate an introduction before sending', ->
+        _.last(Backbone.sync.args)[0].should.equal 'create'
+        _.last(Backbone.sync.args)[1].url.should.containEql '/api/v1/me/inquiry_introduction'
+        _.last(Backbone.sync.args)[1].attributes.should.eql name: 'Foo Bar', profession: 'Baz'
+        _.last(Backbone.sync.args)[2].success introduction: 'Foo is Bar'
+        @view.inquiry.get('introduction').should.equal 'Foo is Bar'
+
+      it 'sends the inquiry on introduction success', (done) ->
+        mediator.once 'inquiry:send', -> done()
+        _.last(Backbone.sync.args)[2].success()
+
+      it 'sends the inquiry on introduction error', (done) ->
+        mediator.once 'inquiry:send', -> done()
+        _.last(Backbone.sync.args)[2].error()
 
     describe '#auth', ->
       describe 'signup mode', ->
@@ -232,8 +248,8 @@ describe 'Questionnaire', ->
         @view.$('form').submit()
         @view.$('button').attr('data-state').should.equal 'loading'
 
-      xit 'triggers the inquiry to send', (done) ->
-        mediator.on 'inquiry:send', done, this
+      it 'triggers the inquiry to send', (done) ->
+        mediator.once 'inquiry:send', -> done()
         @view.$('form').submit()
 
       it 'persists the user model', ->

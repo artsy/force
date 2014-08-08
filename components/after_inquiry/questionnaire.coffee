@@ -7,7 +7,7 @@ Form = require '../mixins/form.coffee'
 mediator = require '../../lib/mediator.coffee'
 analytics = require '../../lib/analytics.coffee'
 BookmarksView = require '../bookmarks/view.coffee'
-Introduction = require './introduction.coffee'
+Introduction = require '../introduction/model.coffee'
 
 templateMap =
   initial: -> require('./templates/initial.jade') arguments...
@@ -80,13 +80,18 @@ module.exports = class Questionnaire extends ModalView
     @$('button').attr 'data-state', 'loading'
 
     unless @user.id?
-      @inquiry.set
-        introduction: new Introduction(@user, @bookmarksView?.bookmarks).blurb()
-
-    mediator.trigger 'inquiry:send'
+      # Generate logged out introduction before sending inquiry
+      introduction = new Introduction
+      introduction.generate @user, @bookmarksView?.bookmarks,
+        success: =>
+          @inquiry.set 'introduction', introduction.get('introduction')
+          mediator.trigger 'inquiry:send'
+        error: ->
+          mediator.trigger 'inquiry:send'
 
     # Logged in:
     if @user.id?
+      mediator.trigger 'inquiry:send'
       @user.save null,
         error: => @close()
         success: =>
