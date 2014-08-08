@@ -19,7 +19,9 @@ module.exports = function(req, res, next) {
                //see http://stackoverflow.com/a/4180424/266795
                JSON.stringify(data)
                  .replace(/</g, '\\u003c')
-                 .replace(/-->/g, '--\\>') +
+                 .replace(/-->/g, '--\\>')
+                 .replace(/\u2028/g, '\\u2028')
+                 .replace(/\u2029/g, '\\u2029') +
                ';</script>';
     }
   };
