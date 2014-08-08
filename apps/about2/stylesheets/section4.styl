@@ -1,60 +1,55 @@
-#about2-section4-preamble
-  img
-    width (column-width * 3) + (gutter-width * 4)
-    margin-left gutter-width * 2
-    margin-top 70px
-  p, img
-    display inline-block
-    vertical-align top
-
 #about2-section4-pull-blurb-1-container
   .about2-pull-blurb
     width (column-width * 2) + (gutter-width * 2)
     margin-right gutter-width * 2
     display inline-block
     vertical-align top
+  > img
+    display inline-block
+    width (column-width * 4) + (gutter-width * 6)
 
-#about2-section4-pull-blurb-1-images
-  width (column-width * 4) + (gutter-width * 6)
-  display inline-block
-  vertical-align top
-  column-gap 44px
-  column-count 4
-  margin-top 10px
-  li
-    margin-bottom 44px
-
-#about2-section4-pull-blurb-2-container .about2-pull-blurb
-  width (column-width * 3) + (gutter-width * 4)
-
+#about2-section4-pull-blurb-2-container
+  // Kill bottom margin due to column layout height
+  margin-bottom 0
+  .about2-pull-blurb
+    display inline-block
+    width (column-width * 2) + (gutter-width * 2)
+    vertical-align top
 #about2-section4-pull-blurb-2-images
-  margin-top 70px
+  display inline-block
+  width (column-width * 4) + (gutter-width * 6)
+  vertical-align top
+  margin-right (gutter-width * 2)
+  column-width (column-width * 2) + (gutter-width * 2)
+  column-gap gutter-width * 2
+  column-count 2
+  li
+    display inline-block
+    width (column-width * 2) + (gutter-width * 2)
+    margin-bottom 30px
+    vertical-align top
   img
     width 100%
-  li
-    width (column-width * 2) + (gutter-width * 2)
-    margin-right gutter-width * 2
-    display inline-block
-    vertical-align top
-    &:last-child
-      margin-right 0
   small
+    display block
+    margin 12px 0 6px
     avant-garde()
     small-avant-garde()
-    margin 12px 0 6px
-    display block
   a
     text-decoration none
 
 #about2-section4-pull-blurb-3-container
   position relative
+  // Kill top margin due to column layout height
+  margin-top 0
   img
     margin-left column-width + (gutter-width * 2)
     width (column-width * 3) + (gutter-width * 4)
     margin-right gutter-width * 2
   .about2-pull-blurb
     width (column-width * 2) + (gutter-width * 2)
-  img, .about2-pull-blurb
+  img
+  .about2-pull-blurb
     display inline-block
     vertical-align top
   #about2-section4-pull-blurb-3-details
@@ -62,7 +57,9 @@
     position absolute
     bottom 0
     right 0
-    color gray-dark-color
+    a
+      color gray-dark-color
+      text-decoration none
 
 #about2-section4-pull-blurb-4-container
   ul

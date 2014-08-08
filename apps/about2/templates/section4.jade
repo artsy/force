@@ -1,58 +1,51 @@
 section#about2-section4.about2-container
   h1.about2-section-header!= sections[3].header
-  p.about2-section-preamble= sections[3].preamble.text
+  p.about2-section-preamble= sections[3].preamble
 
-  #about2-section4-preamble
-    img( src=sections[3].preamble.src )
+//- "Images for learning..."
+#about2-section4-pull-blurb-1-container.about2-container
+  section.about2-pull-blurb
+    h1= sections[3].pullBlurb1.h1
+    h2= sections[3].pullBlurb1.h2
+    p= sections[3].pullBlurb1.p
+  img( src=sections[3].pullBlurb1.src )
 
-section.about2-container
-  // "Images for learning..."
-  #about2-section4-pull-blurb-1-container
-    section.about2-pull-blurb
-      h1= sections[3].pullBlurb1.h1
-      h2= sections[3].pullBlurb1.h2
-      p= sections[3].pullBlurb1.p
-    ul#about2-section4-pull-blurb-1-images
-      for src in sections[3].pullBlurb1.srcs
-        li
-          img( src=src )
+//- "Educational content"
+#about2-section4-pull-blurb-2-container.about2-container
+  ul#about2-section4-pull-blurb-2-images
+    for image in sections[3].pullBlurb2.images
+      li: a( href=image.href )
+        img( src=image.src )
+        small= image.author
+        p!=image.caption
+  section.about2-pull-blurb
+    h1= sections[3].pullBlurb2.h1
+    h2= sections[3].pullBlurb2.h2
+    p= sections[3].pullBlurb2.p
 
-section.about2-container
-  // "Educational content"
-  #about2-section4-pull-blurb-2-container
-    section.about2-pull-blurb
-      h2= sections[3].pullBlurb2.h2
-      p= sections[3].pullBlurb2.p
-    ul#about2-section4-pull-blurb-2-images
-      for image in sections[3].pullBlurb2.images
-        li: a( href=image.href )
-          img( src=image.src )
-          small= image.author
-          p=image.caption
-
-section.about2-container
-  // "Artist Biographies"
-  #about2-section4-pull-blurb-3-container
-    - artwork = sections[3].pullBlurb3.artwork
-    img( src=artwork.src )
-    section.about2-pull-blurb
-      h2= sections[3].pullBlurb3.h2
-      p= sections[3].pullBlurb3.p
-    #about2-section4-pull-blurb-3-details
+//- "Artist Biographies"
+#about2-section4-pull-blurb-3-container.about2-container
+  - artwork = sections[3].pullBlurb3.artwork
+  a( href=artwork.href ): img( src=artwork.src )
+  section.about2-pull-blurb
+    h2= sections[3].pullBlurb3.h2
+    p= sections[3].pullBlurb3.p
+  #about2-section4-pull-blurb-3-details
+    a( href=artwork.href )
       include artwork_details
 
-section.about2-container
-  // "Current Art News"
-  #about2-section4-pull-blurb-4-container
-    #about2-section4-pull-blurb-4-left
-      img( src=sections[3].pullBlurb4.leftImage )
-    #about2-section4-pull-blurb-4-right
-      section.about2-pull-blurb
-        h2= sections[3].pullBlurb4.h2
-        p= sections[3].pullBlurb4.p
-      ul
-        for image in sections[3].pullBlurb4.rightImages
-          li: a( href=image.href )
-            image( src=image.src )
-            small= image.author
-            p= image.caption
+//- "Current Art News"
+#about2-section4-pull-blurb-4-container.about2-container
+  #about2-section4-pull-blurb-4-left
+    for image in sections[3].pullBlurb4.leftImages
+      img( src=image.src )
+  #about2-section4-pull-blurb-4-right
+    section.about2-pull-blurb
+      h2= sections[3].pullBlurb4.h2
+      p= sections[3].pullBlurb4.p
+    ul
+      for image in sections[3].pullBlurb4.rightImages
+        li: a( href=image.href )
+          image( src=image.src )
+          small= image.author
+          p= image.caption
