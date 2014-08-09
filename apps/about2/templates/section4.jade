@@ -1,58 +1,60 @@
-section#about2-section4.about2-container
-  h1.about2-section-header!= sections[3].header
-  p.about2-section-preamble= sections[3].preamble.text
+- section = sections[3]
 
-  #about2-section4-preamble
-    img( src=sections[3].preamble.src )
+.about2-container
+  h1.about2-section-header!= section.header
+  p.about2-section-preamble= section.preamble
 
-section.about2-container
-  // "Images for learning..."
-  #about2-section4-pull-blurb-1-container
-    section.about2-pull-blurb
-      h1= sections[3].pullBlurb1.h1
-      h2= sections[3].pullBlurb1.h2
-      p= sections[3].pullBlurb1.p
-    ul#about2-section4-pull-blurb-1-images
-      for src in sections[3].pullBlurb1.srcs
-        li
-          img( src=src )
+//- "Images for learning..."
+.about2-container
+  .span2.about2-pull-blurb
+    h1= section.pullBlurb1.h1
+    h2= section.pullBlurb1.h2
+    p= section.pullBlurb1.p
+  .span4: img( src= section.pullBlurb1.src )
 
-section.about2-container
-  // "Educational content"
-  #about2-section4-pull-blurb-2-container
-    section.about2-pull-blurb
-      h2= sections[3].pullBlurb2.h2
-      p= sections[3].pullBlurb2.p
-    ul#about2-section4-pull-blurb-2-images
-      for image in sections[3].pullBlurb2.images
-        li: a( href=image.href )
-          img( src=image.src )
-          small= image.author
-          p=image.caption
+//- "Educational content"
+.about2-container
+  .span2: for image in firstHalf(section.pullBlurb2.images)
+    a.about2-image-container( href= image.href )
+      img( src= image.src )
+      .about2-avant-garde-caption= image.author
+      p!= image.caption
+  .span2: for image in secondHalf(section.pullBlurb2.images)
+    a.about2-image-container( href= image.href )
+      img( src= image.src )
+      .about2-avant-garde-caption= image.author
+      p!= image.caption
+  .span2.about2-pull-blurb
+    h1= section.pullBlurb2.h1
+    h2= section.pullBlurb2.h2
+    p= section.pullBlurb2.p
 
-section.about2-container
-  // "Artist Biographies"
-  #about2-section4-pull-blurb-3-container
-    - artwork = sections[3].pullBlurb3.artwork
-    img( src=artwork.src )
-    section.about2-pull-blurb
-      h2= sections[3].pullBlurb3.h2
-      p= sections[3].pullBlurb3.p
+//- "Artist Biographies"
+#about2-section4-pull-blurb-3-container.about2-container
+  - artwork = section.pullBlurb3.artwork
+  .span4: a( href=artwork.href ): img( src=artwork.src )
+  .span2
+    .about2-pull-blurb
+      h2= section.pullBlurb3.h2
+      p= section.pullBlurb3.p
     #about2-section4-pull-blurb-3-details
-      include artwork_details
+      a( href=artwork.href )
+        include artwork_details
 
-section.about2-container
-  // "Current Art News"
-  #about2-section4-pull-blurb-4-container
-    #about2-section4-pull-blurb-4-left
-      img( src=sections[3].pullBlurb4.leftImage )
-    #about2-section4-pull-blurb-4-right
-      section.about2-pull-blurb
-        h2= sections[3].pullBlurb4.h2
-        p= sections[3].pullBlurb4.p
-      ul
-        for image in sections[3].pullBlurb4.rightImages
-          li: a( href=image.href )
-            image( src=image.src )
-            small= image.author
-            p= image.caption
+//- "Current Art News"
+.about2-container
+  .span3
+    for image in section.pullBlurb4.leftImages
+      .about2-image-container
+        img( src=image.src )
+        .about2-garamond-caption= image.caption
+  .span3
+    .about2-pull-blurb
+      h2= section.pullBlurb4.h2
+      p= section.pullBlurb4.p
+      hr.is-invisible
+    .span2: for image in section.pullBlurb4.rightImages
+      a.about2-image-container( href=image.href )
+        image( src=image.src )
+        .about2-avant-garde-caption= image.author
+        p= image.caption

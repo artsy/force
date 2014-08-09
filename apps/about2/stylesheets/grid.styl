@@ -1,5 +1,4 @@
-@import '../../../components/stylus_lib'
-@import './lib'
+guide-color = #4affff
 
 #about2-grid
   position fixed
@@ -11,14 +10,15 @@
   display none
   pointer-events none
   .about2-container
+    margin 0 auto
     height 100%
     > div
       display inline-block
       vertical-align left
-      border-right 1px solid #4AFFFF
+      border-right 1px solid guide-color
       height 100%
       &:first-child
-        border-left 1px solid #4AFFFF
+        border-left 1px solid guide-color
   .about2-grid-column
     width column-width
   .about2-grid-gutter

@@ -1,69 +1,80 @@
-section#about2-section1.about2-container
-  h1.about2-section-header!= sections[0].header
-  p.about2-section-preamble= sections[0].preamble
+- section = sections[0]
 
-  // "Our collection comes from leading..."
-  section#about2-section1-pull-blurb-1.about2-pull-blurb
-    h1= sections[0].pullBlurb1.h1
-    h2= sections[0].pullBlurb1.h2
-  #about2-section1-images1
-    - half = Math.ceil(sections[0].pullBlurb1.images.length / 2)
-    ul#about2-section1-images1-left
-      for image, i in sections[0].pullBlurb1.images.slice(half)
-        li
-          a( href= image.href ): img( src=image.src )
-          small.about2-avant-garde-caption: a( href= image.href )= image.caption.split(' - ')[0]
-            em= image.caption.split(' - ')[1]
-    ul#about2-section1-images1-right
-      for image, i in sections[0].pullBlurb1.images.slice(0, half)
-        li
-          a( href= image.href ): img( src=image.src )
-          small.about2-avant-garde-caption: a( href= image.href )= image.caption.split(' - ')[0]
-            em= image.caption.split(' - ')[1]
+.about2-container
+  h1.about2-section-header!= section.header
+  p.about2-section-preamble= section.preamble
 
-// "We cover international show..."
-section.about2-container
-  .about2-left-half-width-column
-    ul#about2-section1-images2-left
-      for image in sections[0].pullBlurb2.leftImages
-        li
-          a( href= image.href ): img( src=image.src )
-          small: a( href= image.href )= image.caption
-  .about2-right-half-width-column
-    section#about2-section1-pull-blurb-2.about2-pull-blurb
-      h1= sections[0].pullBlurb2.h1
-      h2= sections[0].pullBlurb2.h2
-      p= sections[0].pullBlurb2.p
-    ul
-      for image in sections[0].pullBlurb2.rightImages
-        li
-          a( href=image.href ): img( src=image.src )
-          small.about2-avant-garde-caption= image.author
-          p= image.caption
-
-// "Save works and curate sets on Artsy..."
-section.about2-container
-  section#about2-section1-pull-blurb-3.about2-pull-blurb
-    h2= sections[0].pullBlurb3.h2
-    p= sections[0].pullBlurb3.p
-    button.avant-garde-button-white.about2-signup-button
-      = sections[0].pullBlurb3.button
-  ul#about2-section1-pull-blurb-3-artworks
-    for artwork in sections[0].pullBlurb3.artworks
-      li
-        a( href= artwork.href ): img( src=artwork.src )
-        .icon-heart
-        include artwork_details
-
-// "Access from anywhere..."
-section.about2-container
-  section#about2-section1-pull-blurb-4
+//- "Our collection comes from leading..."
+.about2-container
+  #about2-section1-images1-left.span3
     .about2-pull-blurb
-      h1= sections[0].pullBlurb4.h1
-      h2= sections[0].pullBlurb4.h2
-      p= sections[0].pullBlurb4.p
-      form#about2-phone-link
-        label Send a link to your phone
-        input.bordered-input( placeholder='Enter your phone number' )
+      h1= section.pullBlurb1.h1
+      h2= section.pullBlurb1.h2
+    for image in secondHalf(section.pullBlurb1.images)
+      a.about2-image-container( href= image.href )
+        img( src= image.src )
+        .about2-avant-garde-caption
+          = image.caption.split(' - ')[0]
+          em= image.caption.split(' - ')[1]
+  #about2-section1-images1-right.span3
+    for image in firstHalf(section.pullBlurb1.images)
+      a.about2-image-container( href= image.href )
+        img( src=image.src )
+        .about2-avant-garde-caption
+          = image.caption.split(' - ')[0]
+          em= image.caption.split(' - ')[1]
+
+//- "We cover international show..."
+.about2-container
+  #about2-section1-images2-left.span3
+    for image in section.pullBlurb2.leftImages
+      a.about2-image-container( href= image.href )
+        img( src= image.src )
+        .about2-garamond-caption: em= image.caption
+  .span3
+    .about2-pull-blurb
+      h1= section.pullBlurb2.h1
+      h2= section.pullBlurb2.h2
+      p= section.pullBlurb2.p
+    for image in section.pullBlurb2.rightImages
+      a.about2-image-container.span2( href=image.href )
+        img( src=image.src )
+        .about2-avant-garde-caption= image.author
+        p= image.caption
+
+
+//- "Save works and curate sets on Artsy..."
+.about2-container
+  .span2
+    .about2-pull-blurb
+      h2= section.pullBlurb3.h2
+      p= section.pullBlurb3.p
+    button.avant-garde-button-white.about2-signup-button.is-block
+      = section.pullBlurb3.button
+  #about2-section1-pull-blurb-3-artworks.span4
+    .span2
+      for artwork in firstHalf(section.pullBlurb3.artworks)
+        a.about2-image-container( href= artwork.href )
+          img( src=artwork.src )
+          .icon-heart
+          include artwork_details
+    .span2
+      for artwork in secondHalf(section.pullBlurb3.artworks)
+        a.about2-image-container( href= artwork.href )
+          img( src=artwork.src )
+          .icon-heart
+          include artwork_details
+
+//- "Access from anywhere..."
+.about2-container
+  .span2
+    .about2-pull-blurb
+      h1= section.pullBlurb4.h1
+      h2= section.pullBlurb4.h2
+      p= section.pullBlurb4.p
+    form#about2-phone-link
+      label.avant-garde-form-label Text me a download link:
+      .bordered-input-with-button
+        input.bordered-input( placeholder='Enter your phone number', type='tel', required )
         button.avant-garde-button-black Send
-    img( src=sections[0].pullBlurb4.src )
+  .span2: img( src=section.pullBlurb4.src )

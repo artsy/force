@@ -28,7 +28,7 @@
   margin 120px 0 60px 0
   letter-spacing 2px
   &::after
-    content '.'
+    content ''
     color transparent
     width 50px
     height 3px
@@ -39,11 +39,12 @@
     left calc(50% \- @width / 2)
 
 .about2-section-preamble
-  width (gutter-width * 6) + (column-width * 3)
+  width columns(3) + gutters(6)
   line-height 28px
-  margin 60px auto 120px
+  margin gutter-width auto gutters(2)
 
 .about2-pull-blurb
+  margin-bottom gutter-width
   h1
     avant-garde()
     small-avant-garde()
@@ -59,6 +60,7 @@
 .about2-avant-garde-caption
   avant-garde()
   small-avant-garde()
+  margin 10px 0
   a
     text-decoration none
   em
@@ -69,19 +71,31 @@
       padding 0 5px
       display inline-block
 
-.about2-left-half-width-column
-  width column-width * 3 + gutter-width * 4
-  margin-right gutter-width * 2
+.about2-garamond-caption
+  garamond()
+  font-size 15px
+  margin 10px 0
+  &, a
+    color gray-dark-color
+  a
+    text-decoration none
 
-.about2-right-half-width-column
-  width column-width * 3 + gutter-width * 4
+.about2-artwork-details
+  @extends .about2-garamond-caption
+  font-size 16px
+  line-height 1.4
 
-.about2-left-half-width-column, .about2-right-half-width-column
-  display inline-block
-  vertical-align top
+.about2-image-container
+  display block
+  margin gutter-width 0
+  position relative
+  &:first-child
+    margin-top 0
+  &:last-child
+    margin-bottom 0
   img
-    max-width 100%
-    margin-bottom 8px
+    width 100%
+    margin-bottom 15px
 
 .about2-section
   overflow hidden
@@ -92,7 +106,6 @@
 @import './section1'
 @import './section2'
 @import './section3'
-@import './section3_alt'
 @import './section4'
 @import './section5'
 @import './section6'

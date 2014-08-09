@@ -1,76 +1,6 @@
-#about2-section5-pull-blurb-1, #about2-section5-pull-blurb-2
-  position relative
-  .about2-pull-blurb
-    width (column-width * 3) + (gutter-width * 4)
-    position absolute
-    z-index 1
-    top 0
-    left 0
-    p
-      width (column-width * 2) + (gutter-width * 2)
-  img, small
-    width (column-width * 4) + (gutter-width * 6)
-    margin-left (column-width * 2) + (gutter-width * 4)
-  img
-    margin-top 50px
-
-#about2-section5-pull-blurb-1-images
-  margin-left column-width + (gutter-width * 2)
-  margin-top gutter-width * 2
-  clearfix()
-  li
-    margin-bottom (gutter-width * 2)
-    img
-      width 100%
-  li:nth-child(1), li:nth-child(3)
-    float left
-    width (column-width * 2) + (gutter-width * 2)
-    margin-right gutter-width * 2
-  li:nth-child(2), li:nth-child(4)
-    float right
-    width (column-width * 3) + (gutter-width * 4)
-
-#about2-section5-pull-blurb-2
-  margin-bottom 50px
-  small
-    color gray-dark-color
-    font-size 16px
-    font-style italic
-
-#about2-section5-pull-blurb-2-images
-  clearfix()
-  li
-    margin-bottom (gutter-width * 2)
-    img
-      width 100%
-  li:nth-child(1)
-    margin-left (column-width * 2) + (gutter-width * 4)
-    width (column-width * 3) + (gutter-width * 4)
-    margin-right column-width + (gutter-width * 2)
-  li:nth-child(2)
-    width (column-width * 3) + (gutter-width * 4)
-    margin-right gutter-width * 2
-    float left
-  li:nth-child(3)
-    float right
-    width (column-width * 2) + (gutter-width * 2)
-    margin-right column-width + (gutter-width * 2)
-  li:nth-child(4)
-    margin-left column-width + (gutter-width * 2)
-    margin-right @margin-left
-    width (column-width * 4) + (gutter-width * 6)
-  li:nth-child(5)
-    float right
-    width (column-width * 3) + (gutter-width * 4)
-
-#about2-section5-pull-blurb-3
-  width (column-width * 2) + (gutter-width * 2)
-  margin-right (gutter-width * 2)
-  margin-top -390px
-  margin-left (gutter-width * 2) + column-width
-
+// Jobs module
 #about2-section5-jobs
-  margin-left column-width + (gutter-width * 2)
+  margin-left column-width + gutters(2)
   overflow hidden
   transition all 0.5s
   bottom-cover-gradient(220px)
@@ -84,42 +14,37 @@
     max-height 600px
     &::after
       opacity 1
-  li
-    border-bottom 1px solid gray-color
-    a
-      display block
-      padding 25px 0
-      transition opacity 0.125s
-      &:hover
-        opacity 0.6
-    header
-      width (column-width * 2) + (gutter-width * 2)
-      font-size 26px
-      line-height 32px
-    h1
-    h2
-      display block
-    h2
-      font-style italic
-    p
-      margin-left gutter-width * 2
-      width (column-width * 2) + (gutter-width * 5)
-    .icon-chevron-right
-      font-size 24px
-      font-weight bold
-      width column-width - gutter-width
-      text-align right
-    header
-    p
-    .icon-chevron-right
-      display inline-block
-      vertical-align middle
-
+.about2-job
+  border-bottom 1px solid gray-color
+  display block
+  padding 25px 0
+  transition opacity 0.125s
+  &:hover
+    opacity 0.6
+  > .icon-chevron-right
+    font-size 24px
+    font-weight bold
+    width column-width - gutter-width
+    text-align right
+  > *
+    display inline-block
+    vertical-align middle
+.about2-job-left
+  width columns(2) + gutters(2)
+  font-size 26px
+  line-height 32px
+.about2-job-title
+.about2-job-location
+  display block
+.about2-job-location
+  font-style italic
+.about2-job-description
+  margin-left gutters(2)
+  width columns(2) + gutters(5)
 #about2-section5-jobs-all
   font-size 26px
   text-align right
   margin-top 50px
-
 #about2-section5-jobs-all-button
   transition opacity 0.5s
   &.is-clicked

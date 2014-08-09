@@ -1,131 +1,35 @@
-images1-offset = 200px
-
-#about2-section1-pull-blurb-1
-  position absolute
-  width (column-width * 3) + (gutter-width * 4)
-
-#about2-section1-images1
-  position relative
-  ul
-    display inline-block
-    vertical-align top
-    width column-width * 3 + gutter-width * 4
-    &:first-child
-      margin-right gutter-width * 2
-  li
-    margin-bottom 50px
-    &:last-child
-      margin-bottom 0
-  img
-    width 100%
-    margin-bottom 10px
-
 #about2-section1-images1-left
-  clearfix()
-  padding-top (images1-offset + 70px)
-  li
+  .about2-image-container
     float right
-  li:nth-child(2n-1)
-    width column-width * 2 + gutter-width * 2
-
+#about2-section1-images1-left
 #about2-section1-images1-right
   clearfix()
-  li
-    float left
-  li:nth-child(2n-2)
-    width column-width * 2 + gutter-width * 2
-
-.about2-right-half-width-column
-  #about2-section1-pull-blurb-2
-    width (column-width * 3) + (gutter-width * 4)
-  li
-    margin-top 70px
-
-.about2-left-half-width-column
-  small
-    font-size 15px
-    font-style italic
-    margin 5px 0 70px 0
-    display block
-    a
-      text-decoration none
-      color gray-dark-color
+  .about2-image-container:nth-child(even)
+    span(2)
 
 #about2-section1-images2-left
-  clearfix()
-  li
+  .about2-image-container
     float right
     &:nth-child(even)
-      width (column-width * 2) + (gutter-width * 2)
+      span(2)
 
-#about2-section1-pull-blurb-3
-  width (column-width * 2) + (gutter-width * 2)
-  margin-right gutter-width * 2
-  display inline-block
-  vertical-align top
-  button
-    font-style 11px
-    margin-top 50px
-    small-avant-garde()
-
-#about2-section1-pull-blurb-3-artworks
-  width (column-width * 4) + (gutter-width * 6)
-  display inline-block
-  vertical-align top
-  li
-    font-size 16px
-    color gray-dark-color
-    line-height 22px
-    display inline-block
-    margin-bottom 50px
-    position relative
-    width (column-width * 2 + gutter-width * 2)
-    &:nth-child(2n - 1)
-      margin-right gutter-width * 2
-  img
-    max-width 100%
-    margin-bottom 20px
-  .icon-heart
-    width 50px
-    height @width
-    border-radius @width
-    top 10px
-    right @top
-    position absolute
-    color white
-    z-index 1
-    line-height @width
-    text-align center
-    background-color purple-color
-    transform-style preserve-3d
-    transition transform 0.5s, opacity 0.3s
-    transform rotateX(-180deg)
-    backface-visibility visible
-    opacity 0
-    &.is-active
-      opacity 1
-      transform rotateX(0deg)
-
-#about2-section1-pull-blurb-4
-  .about2-pull-blurb
-    width (column-width * 2) + (gutter-width * 3)
-    margin-right gutter-width
-  > img
-    width (column-width * 2) + (gutter-width * 2)
-    margin-right gutter-width * 2
-  > img, .about2-pull-blurb
-    display inline-block
-    vertical-align top
-  label
-    avant-garde()
-    small-avant-garde()
-    display block
-    margin-top 70px
-  input
-    width calc(70% \- 10px)
-    margin 10px 10px 0 0
-  input + button
-    width 30%
-    position relative
-    top -2px
-    padding 14px 0 15px 0
+.icon-heart
+  width 50px
+  height @width
+  border-radius 50%
+  top 10px
+  right @top
+  position absolute
+  color white
+  z-index 1
+  line-height @width
+  text-align center
+  background-color purple-color
+  transform-style preserve-3d
+  transition transform 0.5s, opacity 0.3s
+  transform rotateX(-180deg)
+  backface-visibility visible
+  opacity 0
+  &.is-active
+    opacity 1
+    transform rotateX(0deg)
