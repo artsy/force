@@ -22,9 +22,7 @@ module.exports = class AboutView extends Backbone.View
     @setupSectionNavHighlighting()
     @setupHeroUnitSlideshow()
     @setupHeroUnits()
-    return if isTouchDevice()
     @setupFlipHearts()
-    @setupGenes()
 
   zoomImage: (e) ->
     e.preventDefault()
@@ -102,50 +100,8 @@ module.exports = class AboutView extends Backbone.View
   toggleGrid: (e) =>
     @$('#about2-grid').toggle() if e.which is 71 # "g" key
 
-  setGenomeWorkHeights: =>
-    imagesLoaded '#about2-section3-genome-works', =>
-      @$('.about2-section3-genome-artwork').each ->
-        $(this).parent('li').height $(this).children('img').height()
-
-  setupTracks: ->
-    (@$tracks = @$('.about2-section3-genome-artwork-track'))
-      .waypoint(@onTrackWaypoint)
-      .imagesLoaded =>
-        for el, i in @$tracks.toArray()
-          next = @$tracks[i + 1]
-          continue unless next
-          bottom = $(next).offset().top + $(next).height()
-          $(el).height bottom - $(el).offset().top
-
-  setupGenes: ->
-    @$genes = @$('.about2-section3-genome-artwork-genes')
-    @$genes
-      .waypoint((direction) ->
-        # At the bottom of the screen
-        $(this).addClass 'is-fade-in' if direction is 'down'
-        $(this).removeClass 'is-fade-in' if direction is 'up'
-      , offset: '60%')
-      .waypoint (direction) ->
-        # At the top of the screen
-        $(this).removeClass 'is-fade-in' if direction is 'up'
-        $(this).addClass 'is-fade-in' if direction is 'up'
-      , offset: '30%'
-
-  onTrackWaypoint: (dir) ->
-    tracks = $('.about2-section3-genome-artwork-track').toArray()
-    for el, i in tracks
-      if el is this
-        index = i
-        break
-    if dir is 'down'
-      $(this).addClass('is-fixed') unless this is _.last tracks
-      $(tracks[i - 1])?.removeClass('is-fixed').addClass('is-docked')
-    else if dir is 'up'
-      $(this).removeClass('is-fixed is-docked')
-      $(tracks[i - 1])?.addClass('is-fixed').removeClass('is-docked')
-
   setupFlipHearts: ->
-    @$("#about2-section1-pull-blurb-3-artworks li").waypoint
+    @$("#about2-section1-pull-blurb-3-artworks .about2-image-container").waypoint
       handler: (dir) ->
         $(this).find('.icon-heart')[if dir is 'down' then 'addClass' else 'removeClass'] 'is-active'
       offset: -> $(window).height() * 0.6
@@ -157,4 +113,5 @@ module.exports = class AboutView extends Backbone.View
       type: 'POST'
       url: '/about2/sms'
       data: to: @$('#about2-phone-link input').val()
-      complete: => @$('#about2-phone-link button').removeClass 'is-loading'
+      complete: =>
+        @$('#about2-phone-link button').removeClass 'is-loading'

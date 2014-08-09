@@ -1,91 +1,10 @@
-#about2-section4-pull-blurb-1-container
-  .about2-pull-blurb
-    width (column-width * 2) + (gutter-width * 2)
-    margin-right gutter-width * 2
-    display inline-block
-    vertical-align top
-  > img
-    display inline-block
-    width (column-width * 4) + (gutter-width * 6)
-
-#about2-section4-pull-blurb-2-container
-  // Kill bottom margin due to column layout height
-  margin-bottom 0
-  .about2-pull-blurb
-    display inline-block
-    width (column-width * 2) + (gutter-width * 2)
-    vertical-align top
-#about2-section4-pull-blurb-2-images
-  display inline-block
-  width (column-width * 4) + (gutter-width * 6)
-  vertical-align top
-  margin-right (gutter-width * 2)
-  column-width (column-width * 2) + (gutter-width * 2)
-  column-gap gutter-width * 2
-  column-count 2
-  li
-    display inline-block
-    width (column-width * 2) + (gutter-width * 2)
-    margin-bottom 30px
-    vertical-align top
-  img
-    width 100%
-  small
-    display block
-    margin 12px 0 6px
-    avant-garde()
-    small-avant-garde()
-  a
-    text-decoration none
-
 #about2-section4-pull-blurb-3-container
   position relative
-  // Kill top margin due to column layout height
-  margin-top 0
   img
-    margin-left column-width + (gutter-width * 2)
-    width (column-width * 3) + (gutter-width * 4)
-    margin-right gutter-width * 2
-  .about2-pull-blurb
-    width (column-width * 2) + (gutter-width * 2)
-  img
-  .about2-pull-blurb
-    display inline-block
-    vertical-align top
-  #about2-section4-pull-blurb-3-details
-    width (column-width * 2) + (gutter-width * 2)
-    position absolute
-    bottom 0
-    right 0
-    a
-      color gray-dark-color
-      text-decoration none
-
-#about2-section4-pull-blurb-4-container
-  ul
-    margin-top 120px
-    width (column-width * 2) + (gutter-width * 2)
-    small
-      avant-garde()
-      small-avant-garde()
-      display block
-      margin 12px 0 6px 0
-  li
-    margin-bottom 70px
-
-#about2-section4-pull-blurb-4-right
-  width (column-width * 3) + (gutter-width * 4)
-
-#about2-section4-pull-blurb-4-left
-  width (column-width * 3) + (gutter-width * 4)
-  margin-right gutter-width * 2
-
-#about2-section4-pull-blurb-4-right
-#about2-section4-pull-blurb-4-left
-  display inline-block
-  vertical-align top
-  img
-    width 100%
-  a
-    text-decoration none
-
+    float right
+    span(3)
+#about2-section4-pull-blurb-3-details
+  position absolute
+  bottom 0
+  .about2-artwork-details
+    margin 0

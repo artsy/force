@@ -1,52 +1,35 @@
-section#about2-section5.about2-container
-  h1.about2-section-header!= sections[4].header
+- section = sections[4]
 
-section.about2-container
-  // "Our team is working to make the ..."
-  section#about2-section5-pull-blurb-1
+.about2-container
+  h1.about2-section-header!= section.header
+
+//- "Our team is working to make the ..."
+.about2-container
+  .span3
     .about2-pull-blurb
-      h1= sections[4].pullBlurb1.h1
-      h2= sections[4].pullBlurb1.h2
-      p= sections[4].pullBlurb1.p
-    img( src=sections[4].pullBlurb1.srcs[0] )
-  ul#about2-section5-pull-blurb-1-images
-    for src in sections[4].pullBlurb1.srcs.slice(1)
-      li
-        img( src=src )
+      h1= section.pullBlurb1.h1
+      h2= section.pullBlurb1.h2
+      p= section.pullBlurb1.p
 
-section.about2-container
-  // "We’ve come a long way"
-  section#about2-section5-pull-blurb-2
+//- "Join the Artsy team"
+.about2-container
+  .span3
     .about2-pull-blurb
-      h1= sections[4].pullBlurb2.h1
-      h2= sections[4].pullBlurb2.h2
-      p= sections[4].pullBlurb2.p
-    img( src=sections[4].pullBlurb2.images[0].src )
-    small= sections[4].pullBlurb2.images[0].caption
-  ul#about2-section5-pull-blurb-2-images
-    for image in sections[4].pullBlurb2.images.slice(1)
-      li
-        img( src=image.src )
+      h1= section.pullBlurb3.h1
+      h2= section.pullBlurb3.h2
+      p!= section.pullBlurb3.p
+  .span3: img( src= section.pullBlurb3.src )
 
-  // "Join the Artsy team"
-  section#about2-section5-pull-blurb-3
-    .about2-pull-blurb
-      h1= sections[4].pullBlurb3.h1
-      h2= sections[4].pullBlurb3.h2
-      p!= sections[4].pullBlurb3.p
-    img( src=sections[4].pullBlurb3.src )
-
-section.about2-container
-  // Job Listings
-  ul#about2-section5-jobs.is-truncated
-    for job in sections[4].jobs
-      li
-        section: a( href= job.href )
-          header
-            h1= job.header
-            h2= job.location
-          p= job.description
-          i.icon-chevron-right
+//- Job Listings
+.about2-container
+  #about2-section5-jobs.is-truncated
+    for job in section.jobs
+      a.about2-job( href= job.href )
+        .about2-job-left
+          .about2-job-title= job.header
+          .about2-job-location= job.location
+        .about2-job-description= job.description
+        i.icon-chevron-right
   #about2-section5-jobs-all
     a#about2-section5-jobs-all-button.faux-underline
-      | See all #{sections[4].jobs.length} openings
+      | See all #{section.jobs.length} openings

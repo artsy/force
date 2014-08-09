@@ -1,28 +1,16 @@
-#about2-section6-left, #about2-section6-right
-  width (column-width * 3) + (gutter-width * 4)
-  display inline-block
-  vertical-align top
-  button
-    small-avant-garde()
-    margin-top 40px
-
-#about2-section6-left
-  margin-right gutter-width * 2
-
+.about2-section6-links
+  margin 60px 0
 .about2-section6-link
-  margin-bottom 70px
-  &:first-of-type
-    margin-top 140px
-  h1
-    avant-garde()
-    small-avant-garde()
+  display block
+  padding gutter-width 0
+  font-size 40px
+  border-bottom 1px solid gray-color
+  transition border-color 0.5s
+  .about2-avant-garde-caption
     margin-bottom 20px
-  a
-    font-size 40px
-    padding-bottom 35px
-    border-bottom 1px solid gray-color
-    display block
-    text-decoration none
+  &:hover
+    .about2-avant-garde-caption
+      color purple-color
 
 #about2-section6-media-gallery
   column-width (column-width * 2) + (gutter-width * 2)

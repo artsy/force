@@ -1,50 +1,21 @@
-mixin work(artwork)
-  .about2-section3-genome-artwork-track
-    section.about2-section3-genome-artwork
-      a( href=artwork.href )
-        img( src=artwork.src )
-        include artwork_details
-  if artwork.genes
-    ul.about2-section3-genome-artwork-genes
-      for gene in artwork.genes
-        li= gene
+- section = sections[2]
 
-section#about2-section3.about2-container
-  h1.about2-section-header!= sections[2].header
-  p.about2-section-preamble= sections[2].preamble.text
-  #about2-section3-preamble
-    img( src=sections[2].preamble.src )
+.about2-container
+  h1.about2-section-header!= section.header
+  p.about2-section-preamble= section.preamble.text
 
-section.about2-container
-  // "Works are given a genome..."
-  #about2-section3-pull-blurb-1-container
-    section#about2-section3-pull-blurb-1
-      .about2-pull-blurb
-        h1= sections[2].pullBlurb1.h1
-        h2= sections[2].pullBlurb1.h2
-        p= sections[2].pullBlurb1.p
-    +work(sections[2].exampleWork)
+//- "Works are given a genome..."
+.about2-container
+  .span4: img( src=section.preamble.src )
+  .span2.about2-pull-blurb
+    h1= section.pullBlurb1.h1
+    h2= section.pullBlurb1.h2
+    p= section.pullBlurb1.p
 
-section.about2-container
-  // "This Work's Genome"
-  section#about2-section3-example-work-right
-    h1
-      span This work's Genome
-    ul
-      for gene in sections[2].exampleWork.totalGenes
-        li= gene
-
-section.about2-container
-  // "Characterstics are used to connect artworks"
-  section#about2-section3-pull-blurb-2
+//- "Characterstics are used to connect artworks"
+.about2-container
+  .span3
     .about2-pull-blurb
-      h1= sections[2].pullBlurb2.h1
-      h2= sections[2].pullBlurb2.h2
-      p= sections[2].pullBlurb2.p
-
-section.about2-container
-  // Track of genome works
-  ul#about2-section3-genome-works
-    for artwork in sections[2].genomeWorks
-      li
-        +work(artwork)
+      h1= section.pullBlurb2.h1
+      h2= section.pullBlurb2.h2
+      p= section.pullBlurb2.p

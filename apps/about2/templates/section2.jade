@@ -1,58 +1,63 @@
-section#about2-section2.about2-container
-  h1.about2-section-header!= sections[1].header
-  p.about2-section-preamble= sections[1].preamble
+- section = sections[1]
 
-  // "Buy works from thousands of galleries..."
-  section#about2-section2-pull-blurb-1
+.about2-container
+  h1.about2-section-header!= section.header
+  p.about2-section-preamble= section.preamble
+
+//- "Buy works from thousands of galleries..."
+#about2-section2-pull-blurb-1.about2-container
+  .span2
     .about2-pull-blurb
-      h1= sections[1].pullBlurb1.h1
-      h2= sections[1].pullBlurb1.h2
-      p= sections[1].pullBlurb1.p
-    img( src=sections[1].pullBlurb1.src )
+      h1= section.pullBlurb1.h1
+      h2= section.pullBlurb1.h2
+      p= section.pullBlurb1.p
+  .span4: img( src=section.pullBlurb1.src )
 
-// "Early access to fairs and shows"
-section.about2-container
-  section#about2-section2-pull-blurb-2
-    #about2-section2-pull-blurb-2-left
-      img( src=sections[1].pullBlurb2.src )
-      small= sections[1].pullBlurb2.caption
+//- "Early access to fairs and shows"
+#about2-section2-pull-blurb-2.about2-container
+  .span4
+    .about2-image-container
+      img( src=section.pullBlurb2.src )
+      .about2-garamond-caption
+        em= section.pullBlurb2.caption
+  .span2.about2-pull-blurb
+    h1= section.pullBlurb2.h1
+    h2= section.pullBlurb2.h2
+    p= section.pullBlurb2.p
+
+//- "Follow artists and galleries to receive..."
+.about2-container
+  .span2.about2-pull-blurb
+      h1= section.pullBlurb3.h1
+      h2= section.pullBlurb3.h2
+      p= section.pullBlurb3.p
+  .span4: img( src=section.pullBlurb3.src )
+
+//- "We’re here to help you find art..."
+#about2-section2-pull-blurb-4.about2-container
+  .span3
+    #about2-section2-specialists-left
+      for specialist in firstHalf(section.pullBlurb4.specialists)
+        .about2-image-container
+          img( src=specialist.src )
+          .about2-avant-garde-caption
+            = specialist.name
+  .span3
     .about2-pull-blurb
-      h1= sections[1].pullBlurb2.h1
-      h2= sections[1].pullBlurb2.h2
-      p= sections[1].pullBlurb2.p
+      h1= section.pullBlurb4.h1
+      h2= section.pullBlurb4.h2
+      p= section.pullBlurb4.p
+    #about2-section2-specialists-right
+      for specialist in secondHalf(section.pullBlurb4.specialists)
+        .about2-image-container
+          img( src=specialist.src )
+          .about2-avant-garde-caption
+            = specialist.name
 
-// "Follow artists and galleries to receive..."
-section.about2-container
-  section#about2-section2-pull-blurb-3
-    .about2-pull-blurb
-      h1= sections[1].pullBlurb3.h1
-      h2= sections[1].pullBlurb3.h2
-      p= sections[1].pullBlurb3.p
-    img( src=sections[1].pullBlurb3.src )
-
-// "We’re here to help you find art..."
-section.about2-container
-  section#about2-section2-pull-blurb-4
-    .about2-pull-blurb
-      h1= sections[1].pullBlurb4.h1
-      h2= sections[1].pullBlurb4.h2
-      p= sections[1].pullBlurb4.p
-    ul#about2-section2-specialists
-      for specialist, i in sections[1].pullBlurb4.specialists
-        if i == Math.round(sections[1].pullBlurb4.specialists.length / 2)
-          li#about2-section2-specialists-break
-        else
-          li
-            img( src=specialist.src )
-            small= specialist.name
-
-// "More questions about collecting"
-section.about2-container
-  section#about2-section2-cta
-    h1= sections[1].callToAction.label
-    a.avant-garde-button-white(
-      href=sections[1].callToAction.button1.href
-    )= sections[1].callToAction.button1.text
-    a.avant-garde-button-white(
-      href=sections[1].callToAction.button2.href
-    )= sections[1].callToAction.button2.text
+//- "More questions about collecting"
+#about2-section2-cta.about2-container
+  em= section.callToAction.label
+  a.avant-garde-button-white( href=section.callToAction.button1.href )
+    = section.callToAction.button1.text
+  a.avant-garde-button-white( href=section.callToAction.button2.href )
+    = section.callToAction.button2.text
