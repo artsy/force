@@ -8,12 +8,13 @@ append locals
 
 block body
   .main-layout-container
-    h1.garamond-header-center Galleries and Art Shows Near&nbsp;
+    h1.avant-garde-header-center
       em= name
+      | &nbsp;Art Gallery Shows and Museum Exhibitions
 
     if fairs.length
       .list_section.fairs
-        h3.avant-garde-header-center Fairs
+        h2 Fairs
         for fair in fairs.models
           .fair
             .fair_image
@@ -28,7 +29,7 @@ block body
     if showsOpeningThisWeek.length
       - otherHeader = "Other " + otherHeader
       .list_section.shows
-        h3.avant-garde-header-center Shows Opening This Week
+        h2 Shows Opening This Week
         - var shows = showsOpeningThisWeek.slice(0, 2)
         include ../../../components/featured_shows/large
         - var shows = showsOpeningThisWeek.slice(2)
@@ -36,7 +37,7 @@ block body
 
     if otherShows.length
       .list_section.shows
-        h3.avant-garde-header-center= otherHeader
+        h2= otherHeader
         if showsOpeningThisWeek.length
           - var shows = otherShows
           include ../../../components/featured_shows/small
@@ -51,7 +52,7 @@ block body
 
     if profiles.length
       .list_section.featured-partners-grid.profiles
-        h3.avant-garde-header-center Galleries and Institutions
+        h2 Galleries and Institutions
 
         .profiles
           for profile in profiles.models

@@ -19,7 +19,7 @@ querystring = require 'querystring'
   render = _.after 2, ->
     openingThisWeek = shows.groupBy (show) -> show.openingThisWeek()
     res.render 'show',
-      title: "Galleries and Art Shows Near #{context.name}"
+      title: "#{context.name} Art Gallery Shows and Museum Exhibitions"
       name: context.name
       showsOpeningThisWeek: openingThisWeek[true] || []
       otherShows: openingThisWeek[false] || []
