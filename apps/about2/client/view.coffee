@@ -24,6 +24,7 @@ module.exports = class AboutView extends Backbone.View
     @setupHeroUnits()
     @setupFlipHearts()
     @setupSkylineSlideshow()
+    @setupGenes()
 
   zoomImage: (e) ->
     e.preventDefault()
@@ -45,6 +46,7 @@ module.exports = class AboutView extends Backbone.View
     @$jobs = @$('#about2-section5-jobs')
     @$skylineContainer = @$('#about2-section5-slideshow')
     @$skylineSlides = @$('.about2-section5-slide')
+    @$genes = @$('.about2-genome-work-gene')
 
   setupStickyNav: ->
     @$nav.waypoint 'sticky'
@@ -120,7 +122,7 @@ module.exports = class AboutView extends Backbone.View
     @$("#about2-section1-pull-blurb-3-artworks .about2-image-container").waypoint
       handler: (dir) ->
         $(this).find('.icon-heart')[if dir is 'down' then 'addClass' else 'removeClass'] 'is-active'
-      offset: -> $(window).height() * 0.6
+      offset: '75%'
 
   submitPhoneLink: (e) ->
     e.preventDefault()
@@ -131,3 +133,12 @@ module.exports = class AboutView extends Backbone.View
       data: to: @$('#about2-phone-link input').val()
       complete: =>
         @$('#about2-phone-link button').removeClass 'is-loading'
+
+  setupGenes: ->
+    @$genes.waypoint (direction) ->
+      $(this).addClass 'is-active' if direction is 'down'
+      $(this).removeClass 'is-active' if direction is 'up'
+    , offset: '90%'
+
+
+
