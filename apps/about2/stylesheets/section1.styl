@@ -1,17 +1,11 @@
 #about2-section1-images1-left
-  .about2-image-container
-    float right
-#about2-section1-images1-left
 #about2-section1-images1-right
-  clearfix()
-  .about2-image-container:nth-child(even)
+  .about2-image-container:nth-child(even) > *
     span(2)
 
 #about2-section1-images2-left
-  .about2-image-container
-    float right
-    &:nth-child(even)
-      span(2)
+  .about2-image-container:nth-child(even) > *
+    span(2)
 
 .icon-heart
   width 50px
