@@ -6,11 +6,7 @@
 
 //- "Buy works from thousands of galleries..."
 #about2-section2-pull-blurb-1.about2-container
-  .span2
-    .about2-pull-blurb
-      h1= section.pullBlurb1.h1
-      h2= section.pullBlurb1.h2
-      p= section.pullBlurb1.p
+  .span2: +pull-blurb(section.pullBlurb1)
   .span4: img( src=section.pullBlurb1.src )
 
 //- "Early access to fairs and shows"
@@ -20,17 +16,11 @@
       img( src=section.pullBlurb2.src )
       .about2-garamond-caption
         em= section.pullBlurb2.caption
-  .span2.about2-pull-blurb
-    h1= section.pullBlurb2.h1
-    h2= section.pullBlurb2.h2
-    p= section.pullBlurb2.p
+  .span2: +pull-blurb(section.pullBlurb2)
 
 //- "Follow artists and galleries to receive..."
 .about2-container
-  .span2.about2-pull-blurb
-      h1= section.pullBlurb3.h1
-      h2= section.pullBlurb3.h2
-      p= section.pullBlurb3.p
+  .span2: +pull-blurb(section.pullBlurb3)
   .span4: img( src=section.pullBlurb3.src )
 
 //- "We’re here to help you find art..."
@@ -38,15 +28,12 @@
   .span3
     #about2-section2-specialists-left
       for specialist in firstHalf(section.pullBlurb4.specialists)
-        .about2-image-container
+        .about2-image-container.is-pin-right
           img( src=specialist.src )
           .about2-avant-garde-caption
             = specialist.name
   .span3
-    .about2-pull-blurb
-      h1= section.pullBlurb4.h1
-      h2= section.pullBlurb4.h2
-      p= section.pullBlurb4.p
+    +pull-blurb(section.pullBlurb4)
     #about2-section2-specialists-right
       for specialist in secondHalf(section.pullBlurb4.specialists)
         .about2-image-container

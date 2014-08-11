@@ -1,3 +1,32 @@
+#about2-section5-images1-left
+#about2-section5-images1-right
+  .about2-image-container:nth-child(even) > *
+    span(2)
+
+// Slideshow
+#about2-section5-slideshow
+  position relative
+.about2-section5-slide
+  position absolute
+  top 0
+  transition opacity 2s
+  opacity 0
+  &.is-active
+    // Fade in is faster than fade out
+    transition opacity 1s
+    opacity 1
+  &:first-child
+    position relative
+
+#about2-section5-images2-left
+  .about2-image-container:nth-child(odd) > *
+    span(2)
+  .about2-pull-blurb
+    padding-left gutters(2) + column-width
+#about2-section5-images2-right
+  .about2-image-container:nth-child(even) > *
+    span(2)
+
 // Jobs module
 #about2-section5-jobs
   margin-left column-width + gutters(2)

@@ -6,10 +6,7 @@
 
 //- "Images for learning..."
 .about2-container
-  .span2.about2-pull-blurb
-    h1= section.pullBlurb1.h1
-    h2= section.pullBlurb1.h2
-    p= section.pullBlurb1.p
+  .span2: +pull-blurb(section.pullBlurb1)
   .span4: img( src= section.pullBlurb1.src )
 
 //- "Educational content"
@@ -24,19 +21,14 @@
       img( src= image.src )
       .about2-avant-garde-caption= image.author
       p!= image.caption
-  .span2.about2-pull-blurb
-    h1= section.pullBlurb2.h1
-    h2= section.pullBlurb2.h2
-    p= section.pullBlurb2.p
+  .span2: +pull-blurb(section.pullBlurb2)
 
 //- "Artist Biographies"
 #about2-section4-pull-blurb-3-container.about2-container
   - artwork = section.pullBlurb3.artwork
   .span4: a( href=artwork.href ): img( src=artwork.src )
   .span2
-    .about2-pull-blurb
-      h2= section.pullBlurb3.h2
-      p= section.pullBlurb3.p
+    +pull-blurb(section.pullBlurb3)
     #about2-section4-pull-blurb-3-details
       a( href=artwork.href )
         include artwork_details
@@ -49,10 +41,8 @@
         img( src=image.src )
         .about2-garamond-caption= image.caption
   .span3
-    .about2-pull-blurb
-      h2= section.pullBlurb4.h2
-      p= section.pullBlurb4.p
-      hr.is-invisible
+    +pull-blurb(section.pullBlurb4)
+    hr.is-invisible
     .span2: for image in section.pullBlurb4.rightImages
       a.about2-image-container( href=image.href )
         image( src=image.src )

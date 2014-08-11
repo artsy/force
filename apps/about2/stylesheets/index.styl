@@ -60,7 +60,7 @@
 .about2-avant-garde-caption
   avant-garde()
   small-avant-garde()
-  margin 10px 0
+  margin-bottom 10px
   a
     text-decoration none
   em
@@ -74,7 +74,7 @@
 .about2-garamond-caption
   garamond()
   font-size 15px
-  margin 10px 0
+  margin-bottom 10px
   &, a
     color gray-dark-color
   a
@@ -94,8 +94,14 @@
   &:last-child
     margin-bottom 0
   img
-    width 100%
     margin-bottom 15px
+  > *
+    display inline-block
+    width 100%
+  &.is-pin-right
+    text-align right
+    > *
+      text-align left
 
 .about2-section
   overflow hidden

@@ -7,15 +7,20 @@
 //- "Works are given a genome..."
 .about2-container
   .span4: img( src=section.preamble.src )
-  .span2.about2-pull-blurb
-    h1= section.pullBlurb1.h1
-    h2= section.pullBlurb1.h2
-    p= section.pullBlurb1.p
+  .span2: +pull-blurb(section.pullBlurb1)
 
 //- "Characterstics are used to connect artworks"
-.about2-container
-  .span3
-    .about2-pull-blurb
-      h1= section.pullBlurb2.h1
-      h2= section.pullBlurb2.h2
-      p= section.pullBlurb2.p
+#about2-section3-genome-works.about2-container
+  #about2-section3-genome-works-pullblurb.span3
+    +pull-blurb(section.pullBlurb2)
+  #about2-section3-genome-works-column
+    for artwork, i in section.genomeWorks
+      .about2-genome-work
+        .about2-genome-work-image
+          img( src= artwork.src, alt= artwork.title )
+          if artwork.genes
+            .about2-genome-work-genes
+              for gene in artwork.genes
+                .about2-avant-garde-caption
+                  = gene
+          include artwork_details
