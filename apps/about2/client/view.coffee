@@ -139,6 +139,3 @@ module.exports = class AboutView extends Backbone.View
       $(this).addClass 'is-active' if direction is 'down'
       $(this).removeClass 'is-active' if direction is 'up'
     , offset: '90%'
-
-
-
