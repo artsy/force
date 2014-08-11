@@ -2,6 +2,15 @@
 - function firstHalf(arr) { return arr.slice(0, middle(arr)) }
 - function secondHalf(arr) { return arr.slice(middle(arr)) }
 
+mixin pull-blurb(pullBlurb)
+  .about2-pull-blurb
+    if pullBlurb.h1
+      h1!= pullBlurb.h1
+    if pullBlurb.h2
+      h2!= pullBlurb.h2
+    if pullBlurb.p
+      p!= pullBlurb.p
+
 include hero_unit
 .about-2-foreground
   include nav

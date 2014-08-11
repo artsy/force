@@ -32,20 +32,17 @@ describe 'AboutView', ->
     @clock.restore()
     @view.initialize.restore()
 
-  describe 'hero units', ->
+  describe 'slideshow', ->
     beforeEach ->
       @view.cacheSelectors()
-      @view.currentHeroUnit = 0
+      @view.currentHeroUnitFrame = 0
 
-    it 'sets up the hero units', ->
-      @view.$heroUnits.length.should.equal 3
-
-    describe '#stepHeroUnit', ->
+    describe '#stepSlide', ->
       it 'toggles one unit at a time and loops back to the beginning', ->
-        @view.currentHeroUnit.should.equal 0
-        @view.stepHeroUnit()
-        @view.currentHeroUnit.should.equal 1
-        @view.stepHeroUnit()
-        @view.currentHeroUnit.should.equal 2
-        @view.stepHeroUnit()
-        @view.currentHeroUnit.should.equal 0
+        @view.currentHeroUnitFrame.should.equal 0
+        @view.stepSlide @view.$heroUnits, 'HeroUnit'
+        @view.currentHeroUnitFrame.should.equal 1
+        @view.stepSlide @view.$heroUnits, 'HeroUnit'
+        @view.currentHeroUnitFrame.should.equal 2
+        @view.stepSlide @view.$heroUnits, 'HeroUnit'
+        @view.currentHeroUnitFrame.should.equal 0

@@ -7,15 +7,8 @@
 //- "Works are given a genome..."
 .about2-container
   .span4: img( src=section.preamble.src )
-  .span2.about2-pull-blurb
-    h1= section.pullBlurb1.h1
-    h2= section.pullBlurb1.h2
-    p= section.pullBlurb1.p
+  .span2: +pull-blurb(section.pullBlurb1)
 
 //- "Characterstics are used to connect artworks"
 .about2-container
-  .span3
-    .about2-pull-blurb
-      h1= section.pullBlurb2.h1
-      h2= section.pullBlurb2.h2
-      p= section.pullBlurb2.p
+  .span3: +pull-blurb(section.pullBlurb2)

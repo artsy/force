@@ -23,6 +23,7 @@ module.exports = class AboutView extends Backbone.View
     @setupHeroUnitSlideshow()
     @setupHeroUnits()
     @setupFlipHearts()
+    @setupSkylineSlideshow()
 
   zoomImage: (e) ->
     e.preventDefault()
@@ -42,6 +43,8 @@ module.exports = class AboutView extends Backbone.View
     @$heroUnits = @$('.about2-hero-unit-bg')
     @$heroUnitNav = @$('.about2-nav')
     @$jobs = @$('#about2-section5-jobs')
+    @$skylineContainer = @$('#about2-section5-slideshow')
+    @$skylineSlides = @$('.about2-section5-slide')
 
   setupStickyNav: ->
     @$nav.waypoint 'sticky'
@@ -82,15 +85,22 @@ module.exports = class AboutView extends Backbone.View
       , offset: -> -($(this).height() - 1)
 
   setupHeroUnitSlideshow: ->
-    @currentHeroUnit = 0
-    @heroUnitPauseInterval = 4000
-    @$heroUnitsContainer.imagesLoaded =>
-      @$heroUnitsContainer.addClass 'is-fade-in'
-      setInterval @stepHeroUnit, @heroUnitPauseInterval
+    @setupSlideshow @$heroUnitsContainer, @$heroUnits, 'HeroUnit'
 
-  stepHeroUnit: =>
-    $(@$heroUnits.removeClass('is-active').get @currentHeroUnit).addClass('is-active')
-    @currentHeroUnit = if (@currentHeroUnit + 1 < @$heroUnits.length) then @currentHeroUnit + 1 else 0
+  setupSkylineSlideshow: ->
+    @setupSlideshow @$skylineContainer, @$skylineSlides, 'Skyline'
+
+  setupSlideshow: ($container, $slides, name) ->
+    @["current#{name}Frame"] = 0
+    @slideshowPauseInterval = 4000
+    $container.imagesLoaded =>
+      $container.addClass 'is-fade-in'
+      @stepSlide($slides, name)
+      setInterval (=> @stepSlide($slides, name)), @slideshowPauseInterval
+
+  stepSlide: ($slides, name) =>
+    $($slides.removeClass('is-active').get @["current#{name}Frame"]).addClass('is-active')
+    @["current#{name}Frame"] = if (@["current#{name}Frame"] + 1 < $slides.length) then @["current#{name}Frame"] + 1 else 0
 
   displayJobs: (e) ->
     e.preventDefault()

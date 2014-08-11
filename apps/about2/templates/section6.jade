@@ -7,10 +7,7 @@
 .about2-container
   for blurb in [section.pullBlurbLeft, section.pullBlurbRight]
     .span3
-      .about2-pull-blurb
-        h1= blurb.h1
-        h2= blurb.h2
-        p= blurb.p
+      +pull-blurb(blurb)
       a.avant-garde-button-white
         = blurb.button
       .about2-section6-links: for link in blurb.links
@@ -20,9 +17,7 @@
 
 //- Image & media gallery
 .about2-container
-  .about2-pull-blurb
-    h1= section.mediaGallery.h1
-    h2= section.mediaGallery.h2
+  +pull-blurb(section.mediaGallery)
   ul#about2-section6-media-gallery
     for src in section.mediaGallery.srcs
       li: a.about2-image-zoom( href=src ): img( src=src )
