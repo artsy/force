@@ -24,6 +24,7 @@ module.exports = class AboutView extends Backbone.View
     @setupHeroUnits()
     @setupFlipHearts()
     @setupSkylineSlideshow()
+    @setupGenes()
 
   zoomImage: (e) ->
     e.preventDefault()
@@ -45,6 +46,7 @@ module.exports = class AboutView extends Backbone.View
     @$jobs = @$('#about2-section5-jobs')
     @$skylineContainer = @$('#about2-section5-slideshow')
     @$skylineSlides = @$('.about2-section5-slide')
+    @$genes = @$('.about2-genome-work-gene')
 
   setupStickyNav: ->
     @$nav.waypoint 'sticky'
@@ -85,22 +87,28 @@ module.exports = class AboutView extends Backbone.View
       , offset: -> -($(this).height() - 1)
 
   setupHeroUnitSlideshow: ->
-    @setupSlideshow @$heroUnitsContainer, @$heroUnits, 'HeroUnit'
+    @setupSlideshow @$heroUnitsContainer, @$heroUnits, 'heroUnit'
 
   setupSkylineSlideshow: ->
-    @setupSlideshow @$skylineContainer, @$skylineSlides, 'Skyline'
+    @setupSlideshow @$skylineContainer, @$skylineSlides, 'skyline', 6000
 
-  setupSlideshow: ($container, $slides, name) ->
-    @["current#{name}Frame"] = 0
-    @slideshowPauseInterval = 4000
+  setupSlideshow: ($container, $slides, name, speed = 4000) ->
+    @["#{name}Frame"] = 0
+    @["#{name}Interval"] = speed
     $container.imagesLoaded =>
       $container.addClass 'is-fade-in'
       @stepSlide($slides, name)
-      setInterval (=> @stepSlide($slides, name)), @slideshowPauseInterval
+      setInterval (=> @stepSlide($slides, name)), @["#{name}Interval"]
 
   stepSlide: ($slides, name) =>
-    $($slides.removeClass('is-active').get @["current#{name}Frame"]).addClass('is-active')
-    @["current#{name}Frame"] = if (@["current#{name}Frame"] + 1 < $slides.length) then @["current#{name}Frame"] + 1 else 0
+    $active = $slides.filter('.is-active')
+      .removeClass('is-active').addClass 'is-deactivating'
+    _.delay (=> $active.removeClass 'is-deactivating'), @["#{name}Interval"] / 2
+    $($slides.get @["#{name}Frame"]).addClass 'is-active'
+    @["#{name}Frame"] = if (@["#{name}Frame"] + 1 < $slides.length)
+      @["#{name}Frame"] + 1
+    else
+      0
 
   displayJobs: (e) ->
     e.preventDefault()
@@ -114,7 +122,7 @@ module.exports = class AboutView extends Backbone.View
     @$("#about2-section1-pull-blurb-3-artworks .about2-image-container").waypoint
       handler: (dir) ->
         $(this).find('.icon-heart')[if dir is 'down' then 'addClass' else 'removeClass'] 'is-active'
-      offset: -> $(window).height() * 0.6
+      offset: '75%'
 
   submitPhoneLink: (e) ->
     e.preventDefault()
@@ -125,3 +133,9 @@ module.exports = class AboutView extends Backbone.View
       data: to: @$('#about2-phone-link input').val()
       complete: =>
         @$('#about2-phone-link button').removeClass 'is-loading'
+
+  setupGenes: ->
+    @$genes.waypoint (direction) ->
+      $(this).addClass 'is-active' if direction is 'down'
+      $(this).removeClass 'is-active' if direction is 'up'
+    , offset: '90%'
