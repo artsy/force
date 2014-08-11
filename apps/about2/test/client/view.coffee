@@ -35,14 +35,14 @@ describe 'AboutView', ->
   describe 'slideshow', ->
     beforeEach ->
       @view.cacheSelectors()
-      @view.currentHeroUnitFrame = 0
+      @view.heroUnitFrame = 0
 
     describe '#stepSlide', ->
       it 'toggles one unit at a time and loops back to the beginning', ->
-        @view.currentHeroUnitFrame.should.equal 0
-        @view.stepSlide @view.$heroUnits, 'HeroUnit'
-        @view.currentHeroUnitFrame.should.equal 1
-        @view.stepSlide @view.$heroUnits, 'HeroUnit'
-        @view.currentHeroUnitFrame.should.equal 2
-        @view.stepSlide @view.$heroUnits, 'HeroUnit'
-        @view.currentHeroUnitFrame.should.equal 0
+        @view.heroUnitFrame.should.equal 0
+        @view.stepSlide @view.$heroUnits, 'heroUnit'
+        @view.heroUnitFrame.should.equal 1
+        @view.stepSlide @view.$heroUnits, 'heroUnit'
+        @view.heroUnitFrame.should.equal 2
+        @view.stepSlide @view.$heroUnits, 'heroUnit'
+        @view.heroUnitFrame.should.equal 0

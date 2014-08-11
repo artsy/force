@@ -85,22 +85,28 @@ module.exports = class AboutView extends Backbone.View
       , offset: -> -($(this).height() - 1)
 
   setupHeroUnitSlideshow: ->
-    @setupSlideshow @$heroUnitsContainer, @$heroUnits, 'HeroUnit'
+    @setupSlideshow @$heroUnitsContainer, @$heroUnits, 'heroUnit'
 
   setupSkylineSlideshow: ->
-    @setupSlideshow @$skylineContainer, @$skylineSlides, 'Skyline'
+    @setupSlideshow @$skylineContainer, @$skylineSlides, 'skyline', 6000
 
-  setupSlideshow: ($container, $slides, name) ->
-    @["current#{name}Frame"] = 0
-    @slideshowPauseInterval = 4000
+  setupSlideshow: ($container, $slides, name, speed = 4000) ->
+    @["#{name}Frame"] = 0
+    @["#{name}Interval"] = speed
     $container.imagesLoaded =>
       $container.addClass 'is-fade-in'
       @stepSlide($slides, name)
-      setInterval (=> @stepSlide($slides, name)), @slideshowPauseInterval
+      setInterval (=> @stepSlide($slides, name)), @["#{name}Interval"]
 
   stepSlide: ($slides, name) =>
-    $($slides.removeClass('is-active').get @["current#{name}Frame"]).addClass('is-active')
-    @["current#{name}Frame"] = if (@["current#{name}Frame"] + 1 < $slides.length) then @["current#{name}Frame"] + 1 else 0
+    $active = $slides.filter('.is-active')
+      .removeClass('is-active').addClass 'is-deactivating'
+    _.delay (=> $active.removeClass 'is-deactivating'), @["#{name}Interval"] / 2
+    $($slides.get @["#{name}Frame"]).addClass 'is-active'
+    @["#{name}Frame"] = if (@["#{name}Frame"] + 1 < $slides.length)
+      @["#{name}Frame"] + 1
+    else
+      0
 
   displayJobs: (e) ->
     e.preventDefault()
