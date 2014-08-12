@@ -2,7 +2,7 @@ include ../../share/template
 .see-post.icon-chevron-down
 .post-actions
   .post-share-actions
-    +share(post.shareTitle(), null)
+    +share(post.shareTitle(), post.get('shareable_image_url'))
   .post-modifier-actions
     if profile && profile.isCurrentProfile()
       a.post-edit Edit
