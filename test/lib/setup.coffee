@@ -17,6 +17,7 @@ startServer = (callback) ->
     stdio: ["ipc"]
     env: envVars
   child.on "message", callback
+
 closeServer = => child.kill()
 
 describe 'Setup', ->
