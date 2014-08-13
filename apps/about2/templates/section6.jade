@@ -8,7 +8,7 @@
   for blurb in [section.pullBlurbLeft, section.pullBlurbRight]
     .span3
       +pull-blurb(blurb)
-      a.avant-garde-button-white
+      a.avant-garde-button-white( href=blurb.href, target='_blank' )
         = blurb.button
       .about2-section6-links: for link in blurb.links
         a.about2-section6-link( href=link.href )
