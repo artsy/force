@@ -71,7 +71,25 @@ module.exports = class Artist extends Backbone.Model
     , options
 
   toPageTitle: ->
-    "#{if @get('name') then @htmlToText('name') else 'Unnamed Artist'} | Artist Biography, Artwork for Sale | Artsy"
+    # A/B test artist page titles
+    if /[a-h]/.exec(@id[0])
+      "#{if @get('name') then @htmlToText('name') else 'Unnamed Artist'} | #{@pageTitleArtworksCount()}, Artist Biography | Artsy"
+    else
+      "#{if @get('name') then @htmlToText('name') else 'Unnamed Artist'} | Artist Biography, Artwork for Sale | Artsy"
+
+  pageTitleArtworksCount: ->
+    artworksCount =
+      if @get('published_artworks_count') > 1000
+        Math.floor(@get('published_artworks_count') / 1000) * 1000
+      else if @get('published_artworks_count') > 100
+        Math.floor(@get('published_artworks_count') / 100) * 100
+      else if @get('published_artworks_count') > 20
+        Math.floor(@get('published_artworks_count') / 20) * 20
+
+    _.compact([
+      if artworksCount then "#{artworksCount}+"
+      "Artworks"
+    ]).join(' ')
 
   toPageDescription: (length=200) ->
     # artists are usually displayed: Name (Nationality, Born-Died)
