@@ -29,7 +29,7 @@ getJSON = (callback) ->
 @index = (req, res, next) ->
   getJSON (err, data) ->
     return next err if err
-    res.render 'index', _.extend data, user: req.user
+    res.render 'index', data
 
 @adminOnly = (req, res, next) ->
   if req.user?.get('type') isnt 'Admin'
