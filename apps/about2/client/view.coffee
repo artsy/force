@@ -122,7 +122,7 @@ module.exports = class AboutView extends Backbone.View
     @$("#about2-section1-pull-blurb-3-artworks .about2-image-container").waypoint
       handler: (dir) ->
         $(this).find('.icon-heart')[if dir is 'down' then 'addClass' else 'removeClass'] 'is-active'
-      offset: '75%'
+      offset: '50%'
 
   submitPhoneLink: (e) ->
     e.preventDefault()
