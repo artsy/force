@@ -1,7 +1,7 @@
 h2.avant-garde-header-center Related Artworks
 nav.layered-search-layers
   for layer in layers.models
-    a.layered-search-layer-button.faux-underline-hover( data-id= layer.id )
+    a.layered-search-layer-button.faux-underline-hover( data-id=layer.id, href=layer.get('more_info_url') )
       if layer.get('fair')
         | Works from #{layer.get('fair').get('name')}
       else
