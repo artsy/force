@@ -75,6 +75,7 @@ module.exports.LayeredSearchView = class LayeredSearchView extends Backbone.View
   # activate the first layer if called without a click event
   selectLayer: (e) ->
     id = if e
+      e.preventDefault()
       ($target = $(e.currentTarget)).data 'id'
     else
       ($target = @$layerButtons.first()).data 'id'
