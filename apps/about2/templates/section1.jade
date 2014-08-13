@@ -14,6 +14,7 @@
         .about2-avant-garde-caption
           = image.caption.split(' - ')[0]
           em= image.caption.split(' - ')[1]
+        .about2-garamond-caption: em!= image.credit
   #about2-section1-images1-right.span3
     for image in firstHalf(section.pullBlurb1.images)
       a.about2-image-container( href= image.href )
@@ -21,6 +22,7 @@
         .about2-avant-garde-caption
           = image.caption.split(' - ')[0]
           em= image.caption.split(' - ')[1]
+        .about2-garamond-caption: em!= image.credit
 
 //- "We cover international show..."
 .about2-container
