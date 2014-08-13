@@ -5,50 +5,49 @@
 
 //- "Our team is working to make the ..."
 .about2-container
-  .span3
-    +pull-blurb(section.pullBlurb1)
-    #about2-section5-images1-left
-      for image in firstHalf(section.pullBlurb1.srcs)
-        .about2-image-container.is-pin-right
+  .row
+    .span3
+      +pull-blurb(section.pullBlurb1)
+      #about2-section5-images1-left
+        for image in firstHalf(section.pullBlurb1.srcs)
+          .about2-image-container.is-pin-right
+            img( src= image.src )
+            .about2-garamond-caption: em
+              = image.caption
+    #about2-section5-images1-right.span3
+      for image in secondHalf(section.pullBlurb1.srcs)
+        .about2-image-container
           img( src= image.src )
           .about2-garamond-caption: em
             = image.caption
-  #about2-section5-images1-right.span3
-    for image in secondHalf(section.pullBlurb1.srcs)
-      .about2-image-container
-        img( src= image.src )
-        .about2-garamond-caption: em
-          = image.caption
-
-//- Skyline slideshow
-#about2-section5-slideshow.about2-container
-  .span6
+  //- Skyline slideshow
+  .row: #about2-section5-slideshow.span6
     for image in section.slideshow.srcs
       .about2-section5-slide
         img( src= image.src )
 
-//- "Join the Artsy team"
-.about2-container
-  .span4.is-centered
-    - firstImage = section.pullBlurb2.images.shift()
-    .about2-image-container
-      img( src= firstImage.src )
-      .about2-garamond-caption: em
-        = firstImage.caption
-.about2-container
-  #about2-section5-images2-left.span3
-    for image in firstHalf(section.pullBlurb2.images)
-      .about2-image-container.is-pin-right
-        img( src= image.src )
-        .about2-garamond-caption: em
-          = image.caption
-    +pull-blurb(section.pullBlurb3)
-  #about2-section5-images2-right.span3
-    for image in secondHalf(section.pullBlurb2.images)
+  //- "Join the Artsy team"
+  .row
+    .span4.is-centered
+      - firstImage = section.pullBlurb2.images.shift()
       .about2-image-container
-        img( src= image.src )
+        img( src= firstImage.src )
         .about2-garamond-caption: em
-          = image.caption
+          = firstImage.caption
+  .row
+    #about2-section5-images2-left.span3
+      for image in firstHalf(section.pullBlurb2.images)
+        .about2-image-container.is-pin-right
+          img( src= image.src )
+          .about2-garamond-caption: em
+            = image.caption
+      +pull-blurb(section.pullBlurb3)
+    #about2-section5-images2-right.span3
+      for image in secondHalf(section.pullBlurb2.images)
+        .about2-image-container
+          img( src= image.src )
+          .about2-garamond-caption: em
+            = image.caption
 
 //- Job Listings
 .about2-container
