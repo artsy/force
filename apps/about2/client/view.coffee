@@ -31,6 +31,7 @@ module.exports = class AboutView extends Backbone.View
     new ZoomView imgSrc: $(e.currentTarget).attr 'href'
 
   signup: (e) ->
+    e.preventDefault()
     mediator.trigger 'open:auth', mode: 'register'
 
   intercept: (e) ->
