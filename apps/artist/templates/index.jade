@@ -10,17 +10,19 @@ append locals
 block body
   .main-layout-container
     +artist-header(artist)
-    .artist-works-section
-      h3 For Sale
-      #artist-available-works
-        //- Rendered client-side
-        .loading-spinner
 
-    .artist-works-section
-      h3 Museums and Other
-      #artist-institution-works
-        //- Rendered client-side
-        .loading-spinner
+    #artwork-section
+      //- Rendered client-side
+      .artist-works-section-old
+        h3 For Sale
+        #artist-available-works
+          //- Rendered client-side
+          .loading-spinner
+      .artist-works-section-old
+        h3 Museums and Other
+        #artist-institution-works
+          //- Rendered client-side
+          .loading-spinner
 
     .artist-related-posts.artist-info-section
       //- Rendered client-side
