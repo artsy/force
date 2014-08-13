@@ -92,10 +92,8 @@ module.exports = class Artist extends Backbone.Model
     ]).join(' ')
 
   toPageDescription: (length=200) ->
-    # artists are usually displayed: Name (Nationality, Born-Died)
-    info = _.compact([@get('nationality'), @get('years')]).join(', ')
     smartTruncate(_.compact([
-     (if info?.length > 0 then "#{@get('name')} (#{info})" else @get('name'))
+     "Find the latest shows, biography, and artworks for sale by #{@displayName()}"
      (if @get('blurb')?.length > 0 then @mdToHtmlToText('blurb') else undefined)
     ]).join(". "), length)
 
