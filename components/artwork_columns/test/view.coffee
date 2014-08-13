@@ -46,6 +46,15 @@ describe 'ArtworkColumns', ->
       @view.columns[0].should.have.property 'height'
       @view.columns[0].should.have.property 'artworkCount'
 
+  describe '#length', ->
+
+    it 'reports the number of rendered elements', ->
+      @view.length().should.equal 0
+      @view.appendArtworks _.times 4, (-> new Artwork fabricate 'artwork')
+      @view.length().should.equal 4
+      @view.appendArtworks _.times 4, (-> new Artwork fabricate 'artwork')
+      @view.length().should.equal 8
+
   describe '#setUserSavedArtworks', ->
 
     describe 'with a current user', ->
