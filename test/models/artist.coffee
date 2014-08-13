@@ -73,3 +73,18 @@ describe 'Artist', ->
       json['@type'].should.equal 'Person'
       json.name.should.equal 'Pablo Picasso'
       json.sameAs.should.containEql 'artist/pablo-picasso'
+
+  describe '#pageTitleArtworksCount', ->
+
+    it 'formats count correctly for various artworks sizes', ->
+      @artist.set published_artworks_count: 1001
+      @artist.pageTitleArtworksCount().should.equal '1000+ Artworks'
+
+      @artist.set published_artworks_count: 101
+      @artist.pageTitleArtworksCount().should.equal '100+ Artworks'
+
+      @artist.set published_artworks_count: 51
+      @artist.pageTitleArtworksCount().should.equal '40+ Artworks'
+
+      @artist.set published_artworks_count: 19
+      @artist.pageTitleArtworksCount().should.equal 'Artworks'
