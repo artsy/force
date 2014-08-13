@@ -27,8 +27,10 @@
   bottom 0
   left 0
   z-index 0
-  fadeIn()
-  transition opacity 1s
+  opacity 0
+  &.is-fade-in
+    transition opacity 1s
+    opacity 1
   // Prevent full page repaints as this sits
   // behind the foreground when scrolling
   force-hardware-acceleration()
