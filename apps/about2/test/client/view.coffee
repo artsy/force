@@ -33,16 +33,28 @@ describe 'AboutView', ->
     @view.initialize.restore()
 
   describe 'slideshow', ->
-    beforeEach ->
-      @view.cacheSelectors()
-      @view.heroUnitFrame = 0
+    before ->
+      @$fixture = $("""
+        <ul>
+          <li class='fixture'>a</li>
+          <li class='fixture'>b</li>
+          <li class='fixture'>c</li>
+        </ul>
+      """)
 
     describe '#stepSlide', ->
-      it 'toggles one unit at a time and loops back to the beginning', ->
-        @view.heroUnitFrame.should.equal 0
-        @view.stepSlide @view.$heroUnits, 'heroUnit'
-        @view.heroUnitFrame.should.equal 1
-        @view.stepSlide @view.$heroUnits, 'heroUnit'
-        @view.heroUnitFrame.should.equal 2
-        @view.stepSlide @view.$heroUnits, 'heroUnit'
-        @view.heroUnitFrame.should.equal 0
+      it 'toggles one frame at a time and loops back to the beginning', ->
+        @view.fixtureFrame = 0
+        $frames = @$fixture.find('.fixture')
+        @view.stepSlide $frames, 'fixture'
+        @view.fixtureFrame.should.equal 1
+        @$fixture.find('.is-active').text().should.equal 'a'
+        @view.stepSlide $frames, 'fixture'
+        @view.fixtureFrame.should.equal 2
+        @$fixture.find('.is-active').text().should.equal 'b'
+        @view.stepSlide $frames, 'fixture'
+        @view.fixtureFrame.should.equal 0
+        @$fixture.find('.is-active').text().should.equal 'c'
+        @view.stepSlide $frames, 'fixture'
+        @view.fixtureFrame.should.equal 1
+        @$fixture.find('.is-active').text().should.equal 'a'
