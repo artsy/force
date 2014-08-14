@@ -21,6 +21,5 @@
           if artwork.genes
             .about2-genome-work-genes
               for gene in artwork.genes
-                .about2-genome-work-gene
-                  = gene
+                a.about2-genome-work-gene( href= gene.href )= gene.name
           include artwork_details

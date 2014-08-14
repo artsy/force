@@ -13,9 +13,15 @@
   .main-layout-footer-push
     background-color white
 
+header-margin = 180px
+.about2-section > .about2-container
+  &:first-child
+    margin-top (header-margin / 1.5)
+  &:last-child
+    margin-bottom (header-margin / 1.5)
 .about2-container
   width container-width
-  margin 180px auto
+  margin header-margin auto
   font-size 18px
   line-height 28px
 

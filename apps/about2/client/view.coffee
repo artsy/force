@@ -91,7 +91,7 @@ module.exports = class AboutView extends Backbone.View
     @setupSlideshow @$heroUnitsContainer, @$heroUnits, 'heroUnit'
 
   setupSkylineSlideshow: ->
-    @setupSlideshow @$skylineContainer, @$skylineSlides, 'skyline', 6000
+    @setupSlideshow @$skylineContainer, @$skylineSlides, 'skyline', 4000
 
   setupSlideshow: ($container, $slides, name, speed = 4000) ->
     @["#{name}Frame"] = 0
