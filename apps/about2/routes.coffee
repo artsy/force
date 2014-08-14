@@ -60,3 +60,10 @@ getJSON = (callback) ->
   , (err, data) ->
     return next err if err
     res.send { msg: "success", data: data }
+
+@page = (id) ->
+  (req, res) ->
+    new Page(id: id).fetch
+      cache: true
+      success: (page) -> res.render 'page', page: page
+      error: res.backboneError
