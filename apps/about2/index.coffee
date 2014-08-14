@@ -9,8 +9,13 @@ app = module.exports = express()
 app.set 'views', __dirname + '/templates'
 app.set 'view engine', 'jade'
 
+# Markdown pages
+app.get '/about2/press', routes.page('press-list')
+app.get '/about2/events', routes.page('events')
+
 app.get '/about2', routes.index
-app.get /^\/about2((?!\/edit).)*$/, routes.index
+app.get /^\/about2((?!\/edit).)*$/, routes.index # Scroll routes
+
 # Safely init upload routes for missing S3 env vars (like in test)
 try
   routes.initClient()

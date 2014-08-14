@@ -1,0 +1,14 @@
+extends ../../../components/main_layout/templates/index
+
+block head
+  include meta
+
+append locals
+  - assetPackage = 'about2'
+
+block body
+  #about2-markdown-page
+    a.contextual-return-link( href='/about2' )
+      i.icon-chevron-small-left
+      | Back to the about page
+    != page.mdToHtml('content')
