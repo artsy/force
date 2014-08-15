@@ -8,7 +8,6 @@ module.exports = class VideoView extends Backbone.View
   initialize: (options) ->
     { @artwork } = options
     return unless @artwork.get('website')? and @artwork.get('category').match('Video')
-    @host = parse(@artwork.get 'website').host
     @render()
 
   render: ->
@@ -26,7 +25,7 @@ module.exports = class VideoView extends Backbone.View
 
   play: ->
     $('.artwork-video-img').remove()
-    switch @host
+    switch parse(@artwork.get 'website').host
       when 'youtu.be'
         id = _.last @artwork.get('website').split('/')
         @$video.append $iframe = """

@@ -197,8 +197,7 @@ module.exports.load = (callback) ->
     return if called
     called = true
     callback()
-  window.mixpanel ?= {}
-  if mixpanel.__loaded then cb() else mixpanel.set_config?(loaded: cb)
+  if mixpanel.__loaded then cb() else mixpanel.set_config(loaded: cb)
   setTimeout cb, 5000 # Ensure we callback whether mixpanel is working or not
 
 # Based on some code via http://stackoverflow.com/a/18542443/160937
