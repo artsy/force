@@ -1,9 +1,10 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 imagesLoaded = require 'imagesloaded'
-{ isTouchDevice } = require '../../../components/util/device.coffee'
+{ isRetina, isTouchDevice } = require '../../../components/util/device.coffee'
 mediator = require '../../../lib/mediator.coffee'
 ZoomView = require '../../../components/modal/zoom.coffee'
+{ resize } = require '../../../lib/resizer.coffee'
 
 module.exports = class AboutView extends Backbone.View
   events:
@@ -25,6 +26,7 @@ module.exports = class AboutView extends Backbone.View
     @setupFlipHearts()
     @setupSkylineSlideshow()
     @setupGenes()
+    @setImages()
 
   zoomImage: (e) ->
     e.preventDefault()
@@ -140,3 +142,19 @@ module.exports = class AboutView extends Backbone.View
       $(this).addClass 'is-active' if direction is 'down'
       $(this).removeClass 'is-active' if direction is 'up'
     , offset: '90%'
+
+  setImages: ->
+    setImage = (img) ->
+      $img = $(img)
+      src = $img.data 'src'
+      $parent = $img.parent()
+      $parent.imagesLoaded -> $.waypoints('refresh')
+      width = $parent.width()
+      src = if isRetina() then src else resize(src, width: width)
+      $img.attr 'src', src
+    if isTouchDevice()
+      @$('img').each -> setImage this
+    else
+      @$('img').waypoint ->
+        setImage this
+      , triggerOnce: true, offset: '150%'

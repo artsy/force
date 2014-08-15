@@ -10,7 +10,7 @@
     +pull-blurb(section.pullBlurb1)
     for image in secondHalf(section.pullBlurb1.images)
       a.about2-image-container.is-pin-right( href= image.href )
-        img( src= image.src )
+        img( data-src= image.src )
         .about2-avant-garde-caption
           = image.caption.split(' - ')[0]
           em= image.caption.split(' - ')[1]
@@ -18,7 +18,7 @@
   #about2-section1-images1-right.span3
     for image in firstHalf(section.pullBlurb1.images)
       a.about2-image-container( href= image.href )
-        img( src=image.src )
+        img( data-src= image.src )
         .about2-avant-garde-caption
           = image.caption.split(' - ')[0]
           em= image.caption.split(' - ')[1]
@@ -29,13 +29,13 @@
   #about2-section1-images2-left.span3
     for image in section.pullBlurb2.leftImages
       a.about2-image-container.is-pin-right( href= image.href )
-        img( src= image.src )
+        img( data-src= image.src )
         .about2-garamond-caption: em= image.caption
   .span3
     +pull-blurb(section.pullBlurb2)
     for image in section.pullBlurb2.rightImages
       a.about2-image-container.span2( href=image.href )
-        img( src=image.src )
+        img( data-src= image.src )
         .about2-avant-garde-caption= image.author
         p= image.caption
 
@@ -49,13 +49,13 @@
     .span2
       for artwork in firstHalf(section.pullBlurb3.artworks)
         a.about2-image-container( href= artwork.href )
-          img( src=artwork.src )
+          img( data-src=artwork.src )
           .icon-heart
           include artwork_details
     .span2
       for artwork in secondHalf(section.pullBlurb3.artworks)
         a.about2-image-container( href= artwork.href )
-          img( src=artwork.src )
+          img( data-src=artwork.src )
           .icon-heart
           include artwork_details
 
@@ -68,4 +68,4 @@
       .bordered-input-with-button
         input.bordered-input( placeholder='Enter your phone number', type='tel', required )
         button.avant-garde-button-black Send
-  .span2: img( src=section.pullBlurb4.src )
+  .span2: img( data-src=section.pullBlurb4.src )

@@ -10,8 +10,8 @@ app.set 'views', __dirname + '/templates'
 app.set 'view engine', 'jade'
 
 # Markdown pages
-app.get '/about2/press', routes.page('press-list')
-app.get '/about2/events', routes.page('events')
+app.get '/about2/page/press', routes.page('press-list')
+app.get '/about2/page/events', routes.page('events')
 
 app.get '/about2', routes.index
 app.get /^\/about2((?!\/edit).)*$/, routes.index # Scroll routes
