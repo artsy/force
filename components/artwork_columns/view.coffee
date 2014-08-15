@@ -47,7 +47,7 @@ module.exports = class ArtworkColumns extends Backbone.View
     @render()
 
     unless @totalWidth
-      $(window).on 'resize', _.debounce @sizeColumns, 100
+      $(window).on 'resize.columns', _.debounce @sizeColumns, 100
 
   _columnWidth: ->
     width = @totalWidth or @$el.width()
@@ -198,3 +198,12 @@ module.exports = class ArtworkColumns extends Backbone.View
     # Readd artworks to shortest columns
     for artwork in removedArtworks
       @addToShortestColumn(artwork)
+
+  length: ->
+    _.reduce @columns, (memo, column) ->
+      memo + column.artworkCount
+    , 0
+
+  stopListening: ->
+    $(window).off 'resize.columns'
+    super
