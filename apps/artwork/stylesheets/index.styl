@@ -447,18 +447,7 @@ artwork-detail-item-height = 36px
 .artwork-video-img
   position relative
   cursor pointer
-  &::before
-    height 130px
-    width 80px
-    top calc(50% \- (@height / 2))
-    left calc(50% \- (@width / 2))
-    transform rotateZ(-90deg)
-    color white
-    background black
-    line-height @height
-    display block
-    position absolute
-    transition background-color 0.3s
-    font-size 28px
-  &:hover::before
-    background purple-color
+  &:hover .play-button
+    background-color purple-color
+  .play-button
+    z-index 2
