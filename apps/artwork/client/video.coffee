@@ -2,6 +2,7 @@ _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
 { parse } = require 'url'
+qs = require 'querystring'
 
 module.exports = class VideoView extends Backbone.View
 
@@ -17,7 +18,8 @@ module.exports = class VideoView extends Backbone.View
             style='background: url(#{@artwork.defaultImageUrl('large')})'>
       </div>
     """
-    @$video.css(width: 600, height: 400)
+    q = qs.parse parse(@artwork.get 'website').query
+    @$video.css(width: q.width or 600, height: q.height or 400)
     @$('.artwork-image').replaceWith @$video
 
   events:
