@@ -9,3 +9,6 @@ module.exports =
 
   autofocus: ->
     if @isTouchDevice() then undefined else true
+
+  isRetina: ->
+    (window.devicePixelRatio or 1) > 1
