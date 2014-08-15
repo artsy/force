@@ -143,14 +143,18 @@ module.exports = class AboutView extends Backbone.View
       $(this).removeClass 'is-active' if direction is 'up'
     , offset: '90%'
 
-
   setImages: ->
-    @$('img').waypoint ->
-      $img = $(this)
+    setImage = (img) ->
+      $img = $(img)
       src = $img.data 'src'
       $parent = $img.parent()
       $parent.imagesLoaded -> $.waypoints('refresh')
       width = $parent.width()
       src = if isRetina() then src else resize(src, width: width)
       $img.attr 'src', src
-    , triggerOnce: true, offset: '150%'
+    if isTouchDevice()
+      @$('img').each -> setImage this
+    else
+      @$('img').waypoint ->
+        setImage this
+      , triggerOnce: true, offset: '150%'
