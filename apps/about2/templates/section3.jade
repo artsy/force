@@ -6,7 +6,7 @@
 
 //- "Works are given a genome..."
 .about2-container
-  .span4: img( src=section.preamble.src )
+  .span4: img( data-src= section.preamble.src )
   .span2: +pull-blurb(section.pullBlurb1)
 
 //- "Characterstics are used to connect artworks"
@@ -17,7 +17,7 @@
     for artwork, i in section.genomeWorks
       .about2-genome-work
         .about2-genome-work-image
-          img( src= artwork.src, alt= artwork.title )
+          img( data-src= artwork.src, alt= artwork.title )
           if artwork.genes
             .about2-genome-work-genes
               for gene in artwork.genes
