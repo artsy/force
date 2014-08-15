@@ -2,7 +2,7 @@ a.search-result( href=result.href(), class=result.publishedClass() )
   .search-result-thumbnail
     .search-result-thumbnail-fallback( class=result.humanClass() )
       img(
-        src= fill(result.imageUrl(), 70, 70, { color: 'fff' }),
+        src= fill(result.imageUrl(), { width: 70, height: 70, color: 'fff' }),
         width='70', height='70',
         alt= result.get('display'),
         onerror='this.style.display="none";'
