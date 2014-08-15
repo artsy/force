@@ -437,3 +437,27 @@ artwork-detail-item-height = 36px
 
 .about-artwork-section.add-margin-bottom
   margin-bottom 40px
+
+.artwork-video
+  margin auto
+  iframe, .artwork-video-img
+    width 100%
+    height 100%
+
+.artwork-video-img
+  position relative
+  cursor pointer
+  &::before
+    height 150px
+    width 100px
+    top calc(50% \- (@height / 2))
+    left calc(50% \- (@width / 2))
+    transform rotateZ(-90deg)
+    color white
+    background black
+    line-height @height
+    display block
+    position absolute
+    transition background-color 0.3s
+  &:hover::before
+    background purple-color
