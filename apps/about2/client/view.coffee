@@ -157,4 +157,4 @@ module.exports = class AboutView extends Backbone.View
     else
       @$('img').waypoint ->
         setImage this
-      , triggerOnce: true, offset: '150%'
+      , triggerOnce: true, offset: '200%'
