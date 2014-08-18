@@ -2,7 +2,6 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 ModalView = require '../modal/view.coffee'
 LocationSearchView = require '../location_search/index.coffee'
-GeoFormatter = require 'geoformatter'
 Form = require '../mixins/form.coffee'
 mediator = require '../../lib/mediator.coffee'
 analytics = require '../../lib/analytics.coffee'
@@ -171,7 +170,7 @@ module.exports = class Questionnaire extends ModalView
     @locationSearchView = new LocationSearchView el: @$('#after-inquiry-collector-location'), autofocus: false
     @locationSearchView.render @user.location()?.cityStateCountry()
     @listenTo @locationSearchView, 'location:update', (location) =>
-      @user.setGeo(new GeoFormatter location)
+      @user.setLocation location
 
   remove: ->
     mediator.off null, null, this
