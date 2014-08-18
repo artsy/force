@@ -15,6 +15,9 @@
           = image.caption.split(' - ')[0]
           em= image.caption.split(' - ')[1]
         .about2-garamond-caption: em!= image.credit
+    a.avant-garde-button-white.is-pull-right(
+      href= section.pullBlurb1.button.href
+    )= section.pullBlurb1.button.text
   #about2-section1-images1-right.span3
     for image in firstHalf(section.pullBlurb1.images)
       a.about2-image-container( href= image.href )
@@ -43,7 +46,7 @@
 .about2-container
   .span2
     +pull-blurb(section.pullBlurb3)
-    button.avant-garde-button-white.about2-signup-button.is-block
+    button.avant-garde-button-white.about2-signup-button
       = section.pullBlurb3.button
   #about2-section1-pull-blurb-3-artworks.span4
     .span2
