@@ -2,23 +2,23 @@
     "hero": {
         "header": "Artsy’s mission is to make all the world’s art accessible to anyone with an Internet connection.<br><br>We are a resource for art collecting and education. ",
         "images": [{
-            "src": "https://artsy-media-uploads.s3.amazonaws.com/ELd8EKgTf0WeXdwiHKgNrQ/Vermeer_girlWithPearlEaring.jpg",
-            "credit": "Johannes Vermeer, Girl with a Pearl Earring (ca. 1665), Oil on canvas, 44 1/2 × 39 cm"
+            "credit": "Johannes Vermeer, Girl with a Pearl Earring (ca. 1665), Oil on canvas, 44 1/2 × 39 cm",
+            "src": "https://artsy-media-uploads.s3.amazonaws.com/ELd8EKgTf0WeXdwiHKgNrQ/Vermeer_girlWithPearlEaring.jpg"
         }, {
-            "src": "https://artsy-media-uploads.s3.amazonaws.com/O-D-IfkiWScuakLWInNhnw/about_ReneMagritte1.jpg",
-            "credit": "René Magritte, The Healer (Le Thérapeute) (1937), Oil on canvas, 36 1/4 × 25 9/16 in"
+            "credit": "René Magritte, The Healer (Le Thérapeute) (1937), Oil on canvas, 36 1/4 × 25 9/16 in",
+            "src": "https://artsy-media-uploads.s3.amazonaws.com/O-D-IfkiWScuakLWInNhnw/about_ReneMagritte1.jpg"
         }, {
-            "src": "https://artsy-media-uploads.s3.amazonaws.com/1XRaooSSb4vp1nWIy2pnaw/Turell%2004.jpg",
-            "credit": "James Turrell, Rendering for Aten Reign (2013), Daylight and LED light"
+            "credit": "James Turrell, Rendering for Aten Reign (2013), Daylight and LED light",
+            "src": "https://artsy-media-uploads.s3.amazonaws.com/1XRaooSSb4vp1nWIy2pnaw/Turell%2004.jpg"
         }, {
-            "src": "https://artsy-media-uploads.s3.amazonaws.com/YCEi8ef9Fcj8Wgj_CFGNkw/about_adamAvikainen1.jpg",
-            "credit": "Adam Avikainen, Ginger Glacier, 2012 ±5,000,000,000 years Frozen heat wave in the form of Ginger Glacier's skin and a monologue with itself possessed by teenaged human"
+            "credit": "Adam Avikainen, Ginger Glacier, 2012 ±5,000,000,000 years Frozen heat wave in the form of Ginger Glacier's skin and a monologue with itself possessed by teenaged human",
+            "src": "https://artsy-media-uploads.s3.amazonaws.com/YCEi8ef9Fcj8Wgj_CFGNkw/about_adamAvikainen1.jpg"
         }, {
-            "src": "https://artsy-media-uploads.s3.amazonaws.com/nzqzhjtl5tYrojx6tY7qJg/about_zhangHuan1.jpg",
-            "credit": "Zhang Huan, Q Confucius No.2 (2011), Silicone, Steel, Carbon Fibre and Acrylic"
+            "credit": "Zhang Huan, Q Confucius No.2 (2011), Silicone, Steel, Carbon Fibre and Acrylic",
+            "src": "https://artsy-media-uploads.s3.amazonaws.com/nzqzhjtl5tYrojx6tY7qJg/about_zhangHuan1.jpg"
         }, {
-            "src": "https://artsy-media-uploads.s3.amazonaws.com/2L8gOZVglHsQP_7z0bUMoA/about_Rothko.jpg",
-            "credit": "Mark Rothko, Orange, Red and Red (1962), Oil on canvas, 93 1/8 × 80 1/8 in"
+            "credit": "Mark Rothko, Orange, Red and Red (1962), Oil on canvas, 93 1/8 × 80 1/8 in",
+            "src": "https://artsy-media-uploads.s3.amazonaws.com/2L8gOZVglHsQP_7z0bUMoA/about_Rothko.jpg"
         }]
     },
     "sections": [{
@@ -62,7 +62,11 @@
                 "credit": "",
                 "href": "/cheim-and-read",
                 "src": "https://artsy-media-uploads.s3.amazonaws.com/8uU7UcN_OJ8Go3LUjwQ3FQ/about_cheimAndRead.jpg"
-            }]
+            }],
+            "button": {
+                "href": "/partners",
+                "text": "See our full list of partners"
+            }
         },
         "pullBlurb2": {
             "h1": "Shows and Art Fairs",
@@ -110,33 +114,40 @@
                 "partner": "Gagosian Gallery",
                 "src": "https://artsy-media-uploads.s3.amazonaws.com/YshuV6S1cnlx2gLsZYjTzQ/about_royLichetenstein.jpg"
             }, {
-                "artist": "Pablo Picasso",
-                "date": "1962",
-                "header": "L’enlèvement des Sabines (The Rape of the Sabines)",
-                "href": "/artwork//pablo-picasso-lenlevement-des-sabines-the-rape-of-the-sabines",
-                "partner": "Dallas Museum of Art",
-                "src": "https://artsy-media-uploads.s3.amazonaws.com/hhIJUo-HmlqqqV-g37z85g/about_Picasso.jpg"
-            }, {
-                "artist": "Hayal Pozanti",
-                "date": "2009",
-                "header": "Second Spectrum Spool, 2013",
-                "href": "/artwork/hayal-pozanti-second-spectrum-spool",
-                "partner": "Jessica Silverman Gallery",
-                "src": "https://artsy-media-uploads.s3.amazonaws.com/UtmqH4xPvdGdapm7ukBtYg/about_hayalBotero.jpg"
-            }, {
-                "artist": "Vivian Maier",
-                "date": "1954",
-                "header": "Untitled",
-                "href": "/artwork/vivian-maier-untitled-6",
-                "partner": "Howard Greenburg Gallery",
-                "src": "https://artsy-media-uploads.s3.amazonaws.com/GhrMWsa2h0pEP2l1NeIWHw/about_VivianMaier.jpg"
-            }, {
-                "artist": "Fernando Botero",
+                "artist": "Fernando BOtero",
                 "date": "2007",
                 "header": "Donna Sdraiata",
                 "href": "/artwork/fernando-botero-donna-sdraiata",
                 "partner": "Rosenbaum Contemporary",
-                "src": "https://artsy-media-uploads.s3.amazonaws.com/cRe6jqr60MPlAakLT3Fk0Q/about_Botero.jpg"
+                "src": "https://artsy-media-uploads.s3.amazonaws.com/cRe6jqr60MPlAakLT3Fk0Q/about_Botero.jpg\n"
+            }, {
+                "artist": "Belisario Corenzio",
+                "date": "ca. 1625",
+                "header": "Study of a Seated Bishop",
+                "href": "/artwork/belisario-corenzio-study-of-a-seated-bishop",
+                "partner": "Cooper Hewitt, Smithsonian Design Museum ",
+                "src": "https://artsy-media-uploads.s3.amazonaws.com/tLFBfqMAYPaMp9dspKhOOw/about_Bishop.jpg"
+            }, {
+                "artist": "Hayal Pozanti",
+                "date": "2013",
+                "header": "Second Spectrum Spool",
+                "href": "/artwork/hayal-pozanti-second-spectrum-spool ",
+                "partner": "Jessica Silverman Gallery",
+                "src": "https://artsy-media-uploads.s3.amazonaws.com/UtmqH4xPvdGdapm7ukBtYg/about_hayalBotero.jpg\n"
+            }, {
+                "artist": "Vivian Maier",
+                "date": "1957",
+                "header": "Untitled",
+                "href": "/artwork/vivian-maier-untitled-6 ",
+                "partner": "Howard Greenberg Gallery",
+                "src": "https://artsy-media-uploads.s3.amazonaws.com/GhrMWsa2h0pEP2l1NeIWHw/about_VivianMaier.jpg"
+            }, {
+                "artist": "Pablo Picasso",
+                "date": "1962",
+                "header": "L’enlèvement des Sabines (The Rape of the Sabines)",
+                "href": "/artwork/fernando-botero-donna-sdraiata",
+                "partner": "Fondation Beyeler",
+                "src": "https://artsy-media-uploads.s3.amazonaws.com/hhIJUo-HmlqqqV-g37z85g/about_Picasso.jpg"
             }],
             "button": "Sign up to start curating",
             "h2": "Save works and curate sets",
@@ -215,8 +226,8 @@
                 "href": "/gene/reclining",
                 "name": "Reclining"
             }, {
-                "href": "/gene/stolen-moments",
-                "name": "Stolen Moments"
+                "href": "/gene/people-at-home",
+                "name": "People at Home"
             }],
             "header": "Little Girl in a Blue Armchair",
             "href": "/artwork/mary-cassatt-little-girl-in-a-blue-armchair",
@@ -229,8 +240,8 @@
                 "href": "/gene/black-and-white-photography",
                 "name": "Black & White Photography"
             }, {
-                "href": "/gene/people-at-home",
-                "name": "People at Home"
+                "href": "/tag/couple",
+                "name": "Couple"
             }, {
                 "href": "/gene/cultural-commentary",
                 "name": "Cultural Commentary"
@@ -249,8 +260,8 @@
                 "href": "/gene/race",
                 "name": "Race"
             }, {
-                "href": "/gene/focus-on-social-margins",
-                "name": "Focus on Social Margins"
+                "href": "/gene/portrait",
+                "name": "Contemporary Portaiture"
             }],
             "header": "Little Girl in a Blue Armchair",
             "href": "/artwork/mary-cassatt-little-girl-in-a-blue-armchair",
@@ -278,7 +289,7 @@
             "date": "1878",
             "genes": [{
                 "href": "/gene/long-distance-and-deep-distance",
-                "name": "Long Distance / Deep Distance"
+                "name": "Long Distance View"
             }, {
                 "href": "/gene/northern-renaissance",
                 "name": "Northern Renaissance"
@@ -300,8 +311,8 @@
                 "href": "/gene/nude",
                 "name": "Nude"
             }, {
-                "href": "/gene/eye-contact",
-                "name": "Eye Contact"
+                "href": "/gene/16th-century",
+                "name": "16th Century"
             }],
             "header": "Little Girl in a Blue Armchair",
             "href": "/artwork/mary-cassatt-little-girl-in-a-blue-armchair",
@@ -427,7 +438,11 @@
                 "caption": "Six Iconic Performance Pieces You’ll Find in Hans Ulrich Obrist and Klaus Biesenbach’s “14 Rooms”",
                 "href": "/post/editorial-six-iconic-performance-pieces-youll-find-in",
                 "src": "https://artsy-media-uploads.s3.amazonaws.com/LpfqppXCvOzlrVVLuY682w/about_damianOrtega.jpg"
-            }]
+            }],
+            "button": {
+                "href": "/education",
+                "text": "Go to Artsy’s Education page"
+            }
         },
         "slug": "education"
     }, {
