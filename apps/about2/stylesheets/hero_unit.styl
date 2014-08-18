@@ -34,18 +34,30 @@
   // Prevent full page repaints as this sits
   // behind the foreground when scrolling
   force-hardware-acceleration()
-  li
-    position absolute
-    width 100%
-    height 100%
-    background center center no-repeat
-    background-size cover
-    transition opacity 2s
-    opacity 0
-    &.is-active
-      // Fade in is faster than fade out
-      transition opacity 1s
-      opacity 1
+.about2-hero-unit-bg
+  position absolute
+  width 100%
+  height 100%
+  background center center no-repeat
+  background-size cover
+  transition opacity 2s
+  opacity 0
+  &.is-active
+    // Fade in is faster than fade out
+    transition opacity 1s
+    opacity 1
+.about2-hero-unit-bg-credit
+  position absolute
+  right 0
+  bottom 0
+  left 0
+  > span
+    display block
+    width container-width
+    margin 20px auto
+    font-size 11px
+    font-style italic
+    color white
 
 .about2-hero-unit-container
   position absolute
