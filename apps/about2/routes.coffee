@@ -58,7 +58,6 @@ getJSON = (callback) ->
     from: TWILIO_NUMBER
     body: IPHONE_APP_COPY
   , (err, data) ->
-    console.log err
     return res.json err.status or 400, { msg: err.message } if err
     res.send { msg: "success", data: data }
 
