@@ -44,6 +44,7 @@ module.exports =
   REFLECTION_URL: 'http://artsy-reflection.s3-website-us-east-1.amazonaws.com/__reflection/forceartsynet'
   USE_RESIZE_PROXY: true
   SITEMAP_BASE_URL: 'http://artsy-sitemaps.s3-website-us-east-1.amazonaws.com'
+  ARTWORK_EMBED_URL: 'https://widgets.artsy.net/artwork/embed_link?url='
   ENABLE_AB_TEST: true
   KIOSK_MODE: false
   KIOSK_PAGE: false
