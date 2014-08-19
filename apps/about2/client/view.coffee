@@ -50,6 +50,7 @@ module.exports = class AboutView extends Backbone.View
     @$skylineContainer = @$('#about2-section5-slideshow')
     @$skylineSlides = @$('.about2-section5-slide')
     @$genes = @$('.about2-genome-work-gene')
+    @$spinner = @$('#about2-spinner')
 
   setupStickyNav: ->
     @$nav.waypoint 'sticky'
@@ -143,15 +144,33 @@ module.exports = class AboutView extends Backbone.View
       $(this).removeClass 'is-active' if direction is 'up'
     , offset: '90%'
 
+  loadUptoSection: (selector, callback) ->
+    @loadedSections ?= []
+    return callback() if _.contains @loadedSections, selector.substring(1)
+    $section = @$sections.filter selector
+    $sections = @$sections.slice 0, $section.index()
+    $.when.apply(null, _.map $sections, (el) =>
+      @loadSection($el = $(el)).then =>
+        @loadedSections.push $el.attr 'id'
+    ).then callback
+
+  loadSection: ($section) ->
+    setImage = @setImage
+    $images = $section.find('img')
+    $images.each -> setImage this
+    $images.imagesLoaded()
+
+  setImage: (img) ->
+    $img = $(img)
+    src = $img.data 'src'
+    $parent = $img.parent()
+    $parent.imagesLoaded -> $.waypoints('refresh')
+    width = $parent.width()
+    src = if isRetina() then src else resize(src, width: width)
+    $img.attr 'src', src
+
   setImages: ->
-    setImage = (img) ->
-      $img = $(img)
-      src = $img.data 'src'
-      $parent = $img.parent()
-      $parent.imagesLoaded -> $.waypoints('refresh')
-      width = $parent.width()
-      src = if isRetina() then src else resize(src, width: width)
-      $img.attr 'src', src
+    setImage = @setImage
     if isTouchDevice()
       @$('img').each -> setImage this
     else
