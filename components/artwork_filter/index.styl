@@ -8,7 +8,7 @@ small-avant-garde-size = 11px
   padding-top 20px
   clearfix()
 .artwork-filter
-.artwork-columns
+.artwork-columns-section > .artwork-columns
   transition opacity 0.25s
   &[data-state='loading']
     opacity 0.5
@@ -20,6 +20,8 @@ small-avant-garde-size = 11px
   width 80%
   float right
   padding-left 20px
+  > .artwork-columns
+    margin-bottom 40px
 .artwork-filter
   width 20%
   float left
