@@ -6,7 +6,6 @@ CurrentUser = require '../../../models/current_user.coffee'
 Artist = require '../../../models/artist.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 DateHelpers = require '../../../components/util/date_helpers.coffee'
-moment = require 'moment'
 
 template = -> require('../templates/artist.jade') arguments...
 
@@ -18,16 +17,16 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
     @notifications.fetch
       success: =>
         @$('#notifications-published-artworks-spinner').remove()
-        @render()
+        @appendArtworks()
     $.onInfiniteScroll @nextPage
 
   # Needs an artwork column view for each group (by artist)
-  render: ->
+  appendArtworks: ->
     grouppedArtworks = @notifications.groupBy((n) -> n.get('artist').name)
     for artistName, publishedArtworks of grouppedArtworks
       artworks = new Artworks publishedArtworks
       artist = new Artist artworks.first().get('artist')
-      publishedAt = DateHelpers.formatDate artworks.first().get('published_at')
+      publishedAt = DateHelpers.formatDate artworks.first().get('published_changed_at')
       @$('#notifications-published-artworks').append template(artist: artist, publishedAt: publishedAt)
       new ArtworkColumnsView
         el: @$('.notifications-list-item').last().find('.notifications-published-artworks').last()
@@ -41,7 +40,7 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
     @notifications.state.currentPage++
     @notifications.fetch
       success: =>
-        @render()
+        @appendArtworks()
 
 module.exports.init = ->
   new NotificationsView
