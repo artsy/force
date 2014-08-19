@@ -1,0 +1,7 @@
+h2
+  | #{artist.get('name')}:
+  = ' '
+  if labels = filter.selected.labels()
+    | #{labels}—#{filter.get('total')} works
+  else
+    | #{filter.get('total')} works

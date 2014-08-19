@@ -6,9 +6,14 @@ ArtworkColumnsView = require '../artwork_columns/view.coffee'
 { API_URL } = require('sharify').data
 template = -> require('./templates/index.jade') arguments...
 filterTemplate = -> require('./templates/filter.jade') arguments...
+headerTemplate = -> require('./templates/header.jade') arguments...
 
 class Params extends Backbone.Model
   defaults: size: 9, page: 1
+  next: ->
+    @set page: @get('page') + 1
+  prev: ->
+    @set page: @get('page') - 1
 
 module.exports = class ArtworkFilterView extends Backbone.View
   events:
@@ -36,8 +41,8 @@ module.exports = class ArtworkFilterView extends Backbone.View
 
   scrollToTop: ->
     @$htmlBody ?= $('html, body')
-    @$header ?= $('#main-layout-header')
-    visibleTop = @$el.offset().top - @$header.height()
+    @$siteHeader ?= $('#main-layout-header')
+    visibleTop = @$el.offset().top - @$siteHeader.height()
     @$htmlBody.animate { scrollTop: visibleTop }, 500
 
   handleState: (el, eventName) ->
@@ -53,14 +58,14 @@ module.exports = class ArtworkFilterView extends Backbone.View
   toggleBoolean: (e) ->
     $target = $(e.currentTarget)
     @filter.toggle $target.attr('name'), $target.prop('checked')
+    @trigger 'navigate'
 
   loadNextPage: ->
-    @params.set 'page', @params.get('page') + 1
-    @fetchArtworks()
+    @params.next()
+    @fetchArtworks error: => @params.prev()
 
   fetchArtworks: (options = {}) ->
-    options.data = {}
-    _.extend options.data, @filter.selected.attributes, @params.attributes
+    options.data = _.extend {}, @filter.selected.attributes, @params.attributes
     @artworks.fetch options
 
   fetchArtworksFromBeginning: ->
@@ -71,6 +76,7 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @$columns = @$('#artwork-columns')
     @$filter = @$('#artwork-filter')
     @$button = @$('#artwork-see-more')
+    @$header = @$('#artwork-columns-header')
 
   postRender: ->
     @cacheSelectors()
@@ -79,13 +85,24 @@ module.exports = class ArtworkFilterView extends Backbone.View
     e.preventDefault()
     $target = $(e.currentTarget)
     @filter.by $target.data('key'), $target.data('value')
+    @trigger 'navigate'
 
   removeCriteria: (e) ->
     @filter.deselect $(e.currentTarget).data('key')
+    @trigger 'navigate'
 
-  setButtonVisibility: ->
-    send = if @columns?.length() >= @filter.get('total') then 'hide' else 'show'
-    @$button[send]()
+  setState: ->
+    @setButtonState()
+    @renderHeader()
+
+  setButtonState: ->
+    length = @columns?.length() or 0
+    remaining = @filter.get('total') - length
+    visibility = if length >= @filter.get('total') then 'hide' else 'show'
+    @$button.text("See More (#{remaining})")[visibility]()
+
+  renderHeader: ->
+    @$header.html headerTemplate(filter: @filter, artist: @model)
 
   renderColumns: ->
     if @params.get('page') > 1
@@ -102,11 +119,11 @@ module.exports = class ArtworkFilterView extends Backbone.View
         seeMore: false
         allowDuplicates: true
         artworkSize: 'tall'
-    @setButtonVisibility()
+    @setState()
 
   renderFilter: ->
     @$filter.html(filterTemplate filter: @filter)
-    @setButtonVisibility()
+    @setState()
 
   render: ->
     @$el.html template(filter: @filter, artworks: @artworks)

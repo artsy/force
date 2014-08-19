@@ -14,7 +14,7 @@ BorderedPulldown = require '../../../components/bordered_pulldown/view.coffee'
 RelatedAuctionResultsView = require '../../../components/related_auction_results/view.coffee'
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 RelatedShowsView = require '../../../components/related_shows/view.coffee'
-# ArtworkFilterView = require '../../../components/artwork_filter/view.coffee'
+# ArtworkFilter = require '../../../components/artwork_filter/index.coffee'
 
 artistSort = -> require('../templates/sort.jade') arguments...
 
@@ -84,7 +84,7 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
       @$('.artist-header-empty').remove() if collection.length
 
   setupArtworks: ->
-    # @artworkFilterView = new ArtworkFilterView el: @$('#artwork-section'), model: @model
+    # ArtworkFilter.init el: @$('#artwork-section'), model: @model
     @setupArtworksOld()
 
   setupArtworksOld: ->
