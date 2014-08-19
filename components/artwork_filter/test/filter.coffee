@@ -63,6 +63,18 @@ describe 'Filter', ->
       @filter.deselect 'baz'
       Backbone.sync.args[0][2].data.should.eql foo: 'bar'
 
+    it 'also accepts objects', ->
+      @filter.by foo: 'bar'
+      Backbone.sync.args[0][2].data.should.eql foo: 'bar'
+      @filter.by foo: 'foo', baz: 'qux'
+      Backbone.sync.args[0][2].data.should.eql foo: 'foo', baz: 'qux'
+
+    it 'accepts options which are passed along to #fetch', (done) ->
+      @filter.by 'foo', 'bar', success: -> done()
+
+    it 'accepts options which are passed along to #fetch, when passing an object', (done) ->
+      @filter.by foo: 'bar', null, success: -> done()
+
   describe '#deselect', ->
     beforeEach ->
       @filter.by 'medium', 'drawing'
