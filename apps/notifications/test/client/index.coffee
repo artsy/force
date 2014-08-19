@@ -21,12 +21,11 @@ setupView = (done) ->
       ['ArtworkColumnsView']
       ['render']
     $.onInfiniteScroll = sinon.stub()
-    CurrentUser.orNull = -> new CurrentUser fabricate 'user'
     @view = new @NotificationsView el: $('body')
     done()
 
 describe 'NotificationsView', ->
-  
+
   before (done) ->
     benv.setup ->
       benv.expose
@@ -40,9 +39,12 @@ describe 'NotificationsView', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
+    sinon.stub CurrentUser, 'orNull'
+    CurrentUser.orNull.returns new CurrentUser fabricate 'user'
 
   afterEach ->
     Backbone.sync.restore()
+    CurrentUser.orNull.restore()
 
   describe '#initialize', ->
     beforeEach (done) ->
