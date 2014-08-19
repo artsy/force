@@ -6,6 +6,7 @@ ArtworkColumnsView = require '../artwork_columns/view.coffee'
 { API_URL } = require('sharify').data
 template = -> require('./templates/index.jade') arguments...
 filterTemplate = -> require('./templates/filter.jade') arguments...
+headerTemplate = -> require('./templates/header.jade') arguments...
 
 class Params extends Backbone.Model
   defaults: size: 9, page: 1
@@ -40,8 +41,8 @@ module.exports = class ArtworkFilterView extends Backbone.View
 
   scrollToTop: ->
     @$htmlBody ?= $('html, body')
-    @$header ?= $('#main-layout-header')
-    visibleTop = @$el.offset().top - @$header.height()
+    @$siteHeader ?= $('#main-layout-header')
+    visibleTop = @$el.offset().top - @$siteHeader.height()
     @$htmlBody.animate { scrollTop: visibleTop }, 500
 
   handleState: (el, eventName) ->
@@ -74,6 +75,7 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @$columns = @$('#artwork-columns')
     @$filter = @$('#artwork-filter')
     @$button = @$('#artwork-see-more')
+    @$header = @$('#artwork-columns-header')
 
   postRender: ->
     @cacheSelectors()
@@ -86,12 +88,18 @@ module.exports = class ArtworkFilterView extends Backbone.View
   removeCriteria: (e) ->
     @filter.deselect $(e.currentTarget).data('key')
 
+  setState: ->
+    @setButtonState()
+    @renderHeader()
+
   setButtonState: ->
     length = @columns?.length() or 0
     remaining = @filter.get('total') - length
-    visible = length >= @filter.get('total')
-    send = if visible then 'hide' else 'show'
-    @$button.text("See More (#{remaining})")[send]()
+    visibility = if length >= @filter.get('total') then 'hide' else 'show'
+    @$button.text("See More (#{remaining})")[visibility]()
+
+  renderHeader: ->
+    @$header.html headerTemplate(filter: @filter, artist: @model)
 
   renderColumns: ->
     if @params.get('page') > 1
@@ -108,11 +116,11 @@ module.exports = class ArtworkFilterView extends Backbone.View
         seeMore: false
         allowDuplicates: true
         artworkSize: 'tall'
-    @setButtonState()
+    @setState()
 
   renderFilter: ->
     @$filter.html(filterTemplate filter: @filter)
-    @setButtonState()
+    @setState()
 
   render: ->
     @$el.html template(filter: @filter, artworks: @artworks)

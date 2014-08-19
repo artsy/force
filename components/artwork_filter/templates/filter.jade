@@ -4,11 +4,10 @@ h2
 
 if filter.engaged
   section.artwork-filter-selected
-    ul: for value, key in filter.selected.attributes
-      unless key === 'price_range'
-        li: a.artwork-filter-reset( data-value= value, data-key= key )
-          i.icon-remove-small
-          = filter.humanize(value)
+    ul: for value, key in filter.selected.visibleAttributes()
+      li: a.artwork-filter-reset( data-value= value, data-key= key )
+        i.icon-remove-small
+        = filter.humanize(value)
 
 .artwork-filter-for-sale.artsy-checkbox
   input( type='checkbox', name='for-sale', id='for-sale', checked=(filter.selected.has('price_range') ? 'checked' : undefined) )

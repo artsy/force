@@ -5,7 +5,7 @@ Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 { resolve } = require 'path'
 Artist = require '../../../models/artist'
-ArtworkFilterView = benv.requireWithJadeify resolve(__dirname, '../view'), ['template', 'filterTemplate']
+ArtworkFilterView = benv.requireWithJadeify resolve(__dirname, '../view'), ['template', 'filterTemplate', 'headerTemplate']
 ArtworkFilterView.__set__ 'ArtworkColumnsView', sinon.stub().returns { length: -> 999 }
 
 describe 'ArtworkFilterView', ->
