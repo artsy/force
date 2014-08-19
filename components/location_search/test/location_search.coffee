@@ -39,11 +39,9 @@ describe 'Location Search', ->
     @google.maps.event.addListener.args[0][1].should.equal 'place_changed'
     @google.maps.event.addDomListener.args[0][1].should.equal 'keydown'
 
-  it 'should announce it\'s location', ->
-    spy = sinon.spy()
-    @view.on 'location:update', spy
+  it 'should announce it\'s location', (done) ->
+    @view.once 'location:update', -> done()
     @view.announce {}
-    spy.called.should.be.ok
 
   describe '#determineAutofocus', ->
     it 'should set the appropriate autofocus attribute', ->
@@ -58,3 +56,12 @@ describe 'Location Search', ->
       _.isUndefined(new LocationSearchView().determineAutofocus()).should.be.true
       _.isUndefined(new LocationSearchView(autofocus: false).determineAutofocus()).should.be.true
       _.isUndefined(new LocationSearchView(autofocus: true).determineAutofocus()).should.be.true
+
+  describe '#preAnnounce', ->
+    it 'should announce a named location string when the input is blurred', (done) ->
+      @view.$el.html '<input>'
+      @view.$('input').val 'Lemuria'
+      @view.once 'location:update', (location) ->
+        location.should.eql name: 'Lemuria'
+        done()
+      @view.$('input').trigger 'blur'

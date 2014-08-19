@@ -113,6 +113,21 @@ header-margin = 180px
 .about2-section
   overflow hidden
 
+.about2-spinner
+  position fixed
+  width column-width
+  height @width
+  top 50%
+  left 50%
+  margin-top -(column-width / 2)
+  margin-left @margin-top
+  background-color black
+  z-index 3
+  display none
+  force-hardware-acceleration()
+  &[data-state='loading']
+    display block
+
 @import './grid'
 @import './nav'
 @import './hero_unit'

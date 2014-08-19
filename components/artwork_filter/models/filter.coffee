@@ -2,6 +2,7 @@ _ = require 'underscore'
 _s = require 'underscore.string'
 Backbone = require 'backbone'
 { API_URL } = require('sharify').data
+Selected = require './selected.coffee'
 
 sectionMap =
   related_gene: 'Category'
@@ -20,13 +21,16 @@ module.exports = class Filter extends Backbone.Model
   initialize: (attributes, options = {}) ->
     { @id } = options
     throw new Error 'Requires an ID' unless @id?
-    @selected = new Backbone.Model
+    @selected = new Selected
     @history = new Backbone.Collection
 
   by: (key, value, options = {}) ->
+    @bySansFetch arguments...
+    @fetch _.extend options, data: @selected.attributes
+
+  bySansFetch: (key, value, options = {}) ->
     @engaged = true
     @selected.set key, value
-    @fetch _.extend options, data: @selected.attributes
 
   criteria: ->
     _.reduce _.keys(@attributes), (criteria, x) =>
