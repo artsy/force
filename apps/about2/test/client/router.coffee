@@ -37,6 +37,8 @@ describe 'AboutRouter', ->
   describe '#toSection', ->
     beforeEach ->
       sinon.stub($.fn, 'offset').returns top: 200
+      @router.view.$spinner = $('<div>')
+      @router.view.loadUptoSection = (selector, cb) -> cb()
 
     afterEach ->
       $.fn.offset.restore()
@@ -45,3 +47,4 @@ describe 'AboutRouter', ->
       @router.toSection('section2')
       @router.jump.scrollToPosition.called.should.be.true
       @router.jump.scrollToPosition.args[0][0].should.equal 201
+      @router.view.$spinner.data('state').should.equal 'loaded'

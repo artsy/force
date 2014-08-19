@@ -19,13 +19,14 @@ module.exports = class AboutRouter extends Backbone.Router
     @$body.append @jump.$el
 
   toTop: ->
-    if @$window.scrollTop() isnt 0
-      @jump.scrollToTop()
+    @jump.scrollToTop() if @$window.scrollTop() isnt 0
 
   toSection: (slug) ->
-    _.defer =>
-      @jump.scrollToPosition (@sectionPositionFromSlug(slug) + 1)
+    @view.$spinner.attr 'data-state', 'loading'
+    @view.loadUptoSection selector = "##{slug}", =>
+      @view.$spinner.attr 'data-state', 'loaded'
+      @jump.scrollToPosition @sectionPosition(selector) + 1
 
-  sectionPositionFromSlug: (slug) ->
+  sectionPosition: (selector) ->
     # May not exist if old route
-    $("##{slug}")?.offset()?.top
+    $(selector)?.offset()?.top
