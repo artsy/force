@@ -40,6 +40,12 @@ describe 'VideoView', ->
       @view.initialize({ artwork: @artwork })
       @view.render.called.should.not.be.ok
 
+    it 'doesnt do anything for artworks with a vimeo/youtube website', ->
+      @artwork.set website: 'http://foobar.com'
+      @view.render = sinon.stub()
+      @view.initialize({ artwork: @artwork })
+      @view.render.called.should.not.be.ok
+
   describe '#play', ->
 
     it 'appends a vimeo iframe for vimeo websites', ->
