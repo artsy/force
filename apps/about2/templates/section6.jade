@@ -11,9 +11,14 @@
       a.avant-garde-button-white( href=blurb.href, target='_blank' )
         = blurb.button
       .about2-section6-links: for link in blurb.links
-        a.about2-section6-link( href=link.href )
+        .about2-section6-link
           .about2-avant-garde-caption= link.h1
-          = link.text
+          a( href=link.href )= link.text
+          if link.h1.match(/follow us/i)
+            span.about2-section6-social-media
+              a.icon-twitter( href='https://twitter.com/artsy' target='_blank' )
+              a.icon-facebook( href='https://facebook.com/artsy' target='_blank' )
+              a.icon-instagram( href='https://instagram.com/artsy' target='_blank' )
 
 //- CTA / Logo
 .about2-container

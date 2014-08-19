@@ -7,7 +7,7 @@
 //- "Buy works from thousands of galleries..."
 #about2-section2-pull-blurb-1.about2-container
   .span2: +pull-blurb(section.pullBlurb1)
-  .span4: img( data-src= section.pullBlurb1.src )
+  .span3: img( data-src= section.pullBlurb1.src )
 
 //- "Early access to fairs and shows"
 #about2-section2-pull-blurb-2.about2-container
@@ -46,5 +46,5 @@
   em= section.callToAction.label
   a.avant-garde-button-white( href=section.callToAction.button1.href )
     = section.callToAction.button1.text
-  a.avant-garde-button-white( href=section.callToAction.button2.href )
+  a.avant-garde-button-white.about2-section2-contact-specialist( href=section.callToAction.button2.href )
     = section.callToAction.button2.text
