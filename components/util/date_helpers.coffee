@@ -2,6 +2,16 @@ moment = require 'moment'
 
 module.exports = class DateHelpers
 
+  @formatDate: (utc_date) ->
+    date = moment.utc utc_date
+
+    month = date.format('MMM')
+    if date.month() isnt 4 then month += "."
+
+    day = date.format('Do')
+
+    "#{month} #{day}"
+
   @timespanInWords: (utc_start, utc_end) ->
     start = moment.utc utc_start
     end = moment.utc utc_end
