@@ -87,6 +87,20 @@ describe 'ArtworkFilterView', ->
       Backbone.sync.callCount.should.equal 4
       _.last(Backbone.sync.args)[2].data.should.eql size: 9, page: 3
 
+    describe 'error', ->
+      it 'reverts the params', ->
+        @view.params.attributes.should.eql size: 9, page: 1
+        @view.$('#artwork-see-more').click()
+        _.last(Backbone.sync.args)[2].data.should.eql size: 9, page: 2
+        Backbone.sync.restore()
+        sinon.stub(Backbone, 'sync').yieldsTo 'error'
+        # Tries to get next page but errors
+        @view.$('#artwork-see-more').click()
+        _.last(Backbone.sync.args)[2].data.should.eql size: 9, page: 3
+        # Next try should have the same params
+        @view.$('#artwork-see-more').click()
+        _.last(Backbone.sync.args)[2].data.should.eql size: 9, page: 3
+
   describe '#selectCriteria', ->
     beforeEach ->
       Backbone.sync.args[0][2].success fabricate 'artist_filtered_search_suggest'

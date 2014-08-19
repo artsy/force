@@ -9,6 +9,10 @@ filterTemplate = -> require('./templates/filter.jade') arguments...
 
 class Params extends Backbone.Model
   defaults: size: 9, page: 1
+  next: ->
+    @set page: @get('page') + 1
+  prev: ->
+    @set page: @get('page') - 1
 
 module.exports = class ArtworkFilterView extends Backbone.View
   events:
@@ -55,8 +59,8 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @filter.toggle $target.attr('name'), $target.prop('checked')
 
   loadNextPage: ->
-    @params.set 'page', @params.get('page') + 1
-    @fetchArtworks()
+    @params.next()
+    @fetchArtworks error: => @params.prev()
 
   fetchArtworks: (options = {}) ->
     options.data = _.extend {}, @filter.selected.attributes, @params.attributes
