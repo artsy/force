@@ -39,13 +39,13 @@ describe 'Post', ->
 
     it "correctly formats meta title", ->
       new Post(profile: @profile).metaTitle().should.equal "Craig Spaeth | Artsy"
-      new Post(title: "Title", profile: @profile).metaTitle().should.equal "Craig Spaeth | Title | Artsy"
-      new Post(summary: "Body", profile: @profile).metaTitle().should.equal "Craig Spaeth | Body | Artsy"
-      new Post(summary: "Body", title: "Title", profile: @profile).metaTitle().should.equal "Craig Spaeth | Title | Artsy"
+      new Post(title: "Title", profile: @profile).metaTitle().should.equal "Title | Craig Spaeth | Artsy"
+      new Post(summary: "Body", profile: @profile).metaTitle().should.equal "Body | Craig Spaeth | Artsy"
+      new Post(summary: "Body", title: "Title", profile: @profile).metaTitle().should.equal "Title | Craig Spaeth | Artsy"
       new Post(
         profile: @profile
         summary: "I am a much longer body for this post. Wohoo! OMG LOL. The red brown fox jumped over the grey dog."
-      ).metaTitle().should.equal "Craig Spaeth | I am a much longer body for this post. Wohoo! OMG LOL. The... | Artsy"
+      ).metaTitle().should.equal "I am a much longer body for this post. Wohoo! OMG LOL. The... | Craig Spaeth | Artsy"
 
   describe "#metaDescription", ->
 
