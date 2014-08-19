@@ -1,0 +1,16 @@
+extends ../../../components/main_layout/templates/index
+
+append locals
+  - assetPackage = 'notifications'
+
+block body
+  #notifications-page.main-layout-container
+    #notifications-header
+      span.garamond-header-center
+        | Works by Artists You Follow
+      span.notifications-header-follow
+        a( href='/following/profiles') Manage who you follow
+        span.icon-chevron-right
+    #notifications-published-artworks
+      #notifications-published-artworks-spinner
+        .loading-spinner
