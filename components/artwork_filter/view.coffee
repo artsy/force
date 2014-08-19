@@ -58,6 +58,7 @@ module.exports = class ArtworkFilterView extends Backbone.View
   toggleBoolean: (e) ->
     $target = $(e.currentTarget)
     @filter.toggle $target.attr('name'), $target.prop('checked')
+    @trigger 'navigate'
 
   loadNextPage: ->
     @params.next()
@@ -84,9 +85,11 @@ module.exports = class ArtworkFilterView extends Backbone.View
     e.preventDefault()
     $target = $(e.currentTarget)
     @filter.by $target.data('key'), $target.data('value')
+    @trigger 'navigate'
 
   removeCriteria: (e) ->
     @filter.deselect $(e.currentTarget).data('key')
+    @trigger 'navigate'
 
   setState: ->
     @setButtonState()
