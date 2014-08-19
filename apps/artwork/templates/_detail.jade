@@ -83,12 +83,18 @@
         a( href= artwork.get('website'), target='_blank' )
           i.icon-website
           | Visit Website
+
       if artwork.isDownloadable()
         a.artwork-download-button(
           href= artwork.defaultImageUrl('larger'), target='_blank', download= artwork.downloadableFilename()
         )
           i.icon-download
           | Download Image
+
+      if artwork.isEmbeddableByUser(user)
+        a( href= artwork.embedUrl(), target='_blank' )
+          i.icon-embed
+          | Embed Image
 
       //- Administrative actions
       if user && user.isAdmin()
