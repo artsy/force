@@ -25,9 +25,12 @@ module.exports = class Filter extends Backbone.Model
     @history = new Backbone.Collection
 
   by: (key, value, options = {}) ->
+    @bySansFetch arguments...
+    @fetch _.extend options, data: @selected.attributes
+
+  bySansFetch: (key, value, options = {}) ->
     @engaged = true
     @selected.set key, value
-    @fetch _.extend options, data: @selected.attributes
 
   criteria: ->
     _.reduce _.keys(@attributes), (criteria, x) =>
