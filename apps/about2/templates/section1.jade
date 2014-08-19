@@ -46,8 +46,9 @@
 .about2-container
   .span2
     +pull-blurb(section.pullBlurb3)
-    button.avant-garde-button-white.about2-signup-button
-      = section.pullBlurb3.button
+    unless user
+      button.avant-garde-button-white.about2-signup-button
+        = section.pullBlurb3.button
   #about2-section1-pull-blurb-3-artworks.span4
     .span2
       for artwork in firstHalf(section.pullBlurb3.artworks)
@@ -69,6 +70,7 @@
     form#about2-phone-link
       label.avant-garde-form-label Text me a download link:
       .bordered-input-with-button
+        .about2-section1-phone-error
         input.bordered-input( placeholder='Enter your phone number', type='tel', required )
         button.avant-garde-button-black Send
   .span2: img( data-src=section.pullBlurb4.src )

@@ -5,7 +5,7 @@ request = require 'superagent'
 url = require 'url'
 twilio = require 'twilio'
 { S3_KEY, S3_SECRET, APPLICATION_NAME, TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN,
-  TWILIO_NUMBER, IPHONE_APP_URL } = require '../../config.coffee'
+  TWILIO_NUMBER, IPHONE_APP_COPY } = require '../../config.coffee'
 client = null
 
 CONTENT_PATH = '/about/content.json'
@@ -56,9 +56,10 @@ getJSON = (callback) ->
   twilioClient.sendSms
     to: req.param('to')
     from: TWILIO_NUMBER
-    body: "Download the new Artsy iPhone app here: #{IPHONE_APP_URL}"
+    body: IPHONE_APP_COPY
   , (err, data) ->
-    return next err if err
+    console.log err
+    return res.json err.status or 400, { msg: err.message } if err
     res.send { msg: "success", data: data }
 
 @page = (id) ->

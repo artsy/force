@@ -58,7 +58,7 @@ module.exports =
   BIDDER_H1_COPY: 'Please enter your credit card details'
   BIDDER_H2_COPY: 'NOTE: All bidders need to have a valid payment method on file. Winning bidders will have the opportunity to pay by credit card, check or wire transfer.'
   SENTRY_DSN: null
-  IPHONE_APP_URL: 'https://itunes.apple.com/us/app/artsy-art-world-in-your-pocket/id703796080?ls=1&mt=8'
+  IPHONE_APP_COPY: 'Download the iPhone app: https://itunes.apple.com/us/app/artsy-art-world-in-your-pocket/id703796080?ls=1&mt=8'
   TWILIO_NUMBER: null
   TWILIO_ACCOUNT_SID: null
   TWILIO_AUTH_TOKEN: null

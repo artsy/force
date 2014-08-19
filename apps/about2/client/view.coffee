@@ -5,6 +5,7 @@ imagesLoaded = require 'imagesloaded'
 mediator = require '../../../lib/mediator.coffee'
 ZoomView = require '../../../components/modal/zoom.coffee'
 { resize } = require '../../../lib/resizer.coffee'
+FeedbackView = require '../../../components/contact/feedback.coffee'
 
 module.exports = class AboutView extends Backbone.View
   events:
@@ -13,6 +14,7 @@ module.exports = class AboutView extends Backbone.View
     'submit #about2-phone-link': 'submitPhoneLink'
     'click #about2-section5-jobs-all-button': 'displayJobs'
     'click .about2-image-zoom': 'zoomImage'
+    'click .about2-section2-contact-specialist': 'contactSpecialistModal'
 
   initialize: ->
     @$window = $(window)
@@ -134,8 +136,10 @@ module.exports = class AboutView extends Backbone.View
       type: 'POST'
       url: '/about2/sms'
       data: to: @$('#about2-phone-link input').val()
-      complete: =>
-        @$('#about2-phone-link button').removeClass 'is-loading'
+      error: (xhr) ->
+        $('.about2-section1-phone-error').show().text(xhr.responseJSON.msg)
+      complete: ->
+        $('#about2-phone-link button').removeClass 'is-loading'
 
   setupGenes: ->
     @$genes.waypoint (direction) ->
@@ -158,3 +162,7 @@ module.exports = class AboutView extends Backbone.View
       @$('img').waypoint ->
         setImage this
       , triggerOnce: true, offset: '200%'
+
+  contactSpecialistModal: (e) ->
+    e.preventDefault()
+    new FeedbackView
