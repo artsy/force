@@ -1,4 +1,3 @@
-
 _ = require 'underscore'
 benv = require 'benv'
 sinon = require 'sinon'
@@ -134,3 +133,34 @@ describe 'ArtworkFilterView', ->
       _.last(Backbone.sync.args)[2].data.should.eql price_range: '-1:1000000000000'
       @view.$('input[type="checkbox"]').first().click()
       _.last(Backbone.sync.args)[2].data.should.eql {}
+
+  describe '#setButtonState', ->
+    beforeEach ->
+      @columnLength = 0
+      @view.columns = length: => @columnLength
+
+    it 'sets the correct button state when there is 1 remaining artwork', ->
+      @view.filter.set 'total', 10
+      @columnLength = 9
+      @view.setButtonState()
+      @view.$button.is(':visible').should.be.true
+      @view.$button.text().should.equal 'See More (1)'
+
+    it 'sets the correct button state when there are no remaining artworks', ->
+      @view.filter.set 'total', 10
+      @columnLength = 10
+      @view.setButtonState()
+      @view.$button.attr('style').should.equal 'display: none;'
+      @view.$button.text().should.equal 'See More (0)'
+
+    it 'sets the correct state when toggled', ->
+      @view.filter.set 'total', 10
+      @columnLength = 10
+      @view.setButtonState()
+      # Is hidden
+      @view.$button.attr('style').should.equal 'display: none;'
+      @columnLength = 4
+      @view.setButtonState()
+      # Is now visible again
+      _.isEmpty(@view.$button.attr('style')).should.be.true
+      @view.$button.text().should.equal 'See More (6)'

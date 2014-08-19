@@ -59,8 +59,7 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @fetchArtworks()
 
   fetchArtworks: (options = {}) ->
-    options.data = {}
-    _.extend options.data, @filter.selected.attributes, @params.attributes
+    options.data = _.extend {}, @filter.selected.attributes, @params.attributes
     @artworks.fetch options
 
   fetchArtworksFromBeginning: ->
@@ -83,9 +82,12 @@ module.exports = class ArtworkFilterView extends Backbone.View
   removeCriteria: (e) ->
     @filter.deselect $(e.currentTarget).data('key')
 
-  setButtonVisibility: ->
-    send = if @columns?.length() >= @filter.get('total') then 'hide' else 'show'
-    @$button[send]()
+  setButtonState: ->
+    length = @columns?.length() or 0
+    remaining = @filter.get('total') - length
+    visible = length >= @filter.get('total')
+    send = if visible then 'hide' else 'show'
+    @$button.text("See More (#{remaining})")[send]()
 
   renderColumns: ->
     if @params.get('page') > 1
@@ -102,11 +104,11 @@ module.exports = class ArtworkFilterView extends Backbone.View
         seeMore: false
         allowDuplicates: true
         artworkSize: 'tall'
-    @setButtonVisibility()
+    @setButtonState()
 
   renderFilter: ->
     @$filter.html(filterTemplate filter: @filter)
-    @setButtonVisibility()
+    @setButtonState()
 
   render: ->
     @$el.html template(filter: @filter, artworks: @artworks)
