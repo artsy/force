@@ -1,19 +1,18 @@
 @import '../../../components/stylus_lib'
 
 #notifications-header
-  padding-top 20px
-  padding-bottom 20px
+  padding-top 25px
+  padding-bottom 25px
   span.garamond-header-center
     text-align left
     display inline
   .notifications-header-follow
     float right
-    .icon-chevron-right
-      font-size 16px
-    a
-      avant-garde()
-      font-size default-avant-garde-font-size
-      text-decoration none
+
+#notifications-manage-follow
+  font-size default-avant-garde-font-size
+  margin 10px 0
+  text-align right
 
 .notifications-list-item
   h4
@@ -24,6 +23,9 @@
       float right
       text-transform none
       color gray-darker-color
+      garamond()
+      letter-spacing 0px
+      font-size 15px
 
   border-top 1px solid gray-lighter-color
   padding-top 20px
