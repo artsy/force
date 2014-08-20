@@ -64,6 +64,5 @@ getJSON = (callback) ->
 @page = (id) ->
   (req, res) ->
     new Page(id: id).fetch
-      cache: true
       success: (page) -> res.render 'page', page: page
       error: res.backboneError
