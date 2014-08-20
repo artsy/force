@@ -1,3 +1,4 @@
+@import '../../../components/stylus_lib'
 @import './shows_grid'
 @import './artists_list'
 @import './overview'
@@ -12,13 +13,11 @@
   .partner-header
     padding 40px 0
     margin-bottom 50px
-    border-bottom 1px solid #ccc
+    border-bottom 1px solid gray-color
     text-align center
-
     .partner-info-container
       width 650px
       margin 0 auto 40px auto
-
     .partner-icon
       display inline-block
       vertical-align top
@@ -34,7 +33,6 @@
           vertical-align middle
           max-width 140px
           max-height 140px
-
     .partner-info
       display inline-block
       text-align left
@@ -44,14 +42,13 @@
         avant-garde()
         font-size 17px
         line-height 1.6
-      .partner-followers
-        color #666
-
     .partner-actions
-      text-align right
+      margin 10px 0
       padding-right 55px
-      margin-top 5px
-
+      .partner-followers
+        margin-left 20px
+        display inline-block
+        color gray-darker-color
   .loading-spinner
     position relative
     top 50px
