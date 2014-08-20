@@ -1,3 +1,41 @@
+iphone-top-margin = 99px
+ease-in-out-quart = cubic-bezier(0.770, 0.000, 0.175, 1.000)
+
+@keyframes touch-scroll
+  0% {
+    transform translateY(0)
+  }
+  10% {
+    transform translateY(0)
+  }
+  20% {
+    transform translateY(-300px)
+  }
+  30% {
+    transform translateY(-300px)
+  }
+  35% {
+    transform translateY(-300px)
+  }
+  45% {
+    transform translateY(-700px)
+  }
+  60% {
+    transform translateY(-700px)
+  }
+  70% {
+    transform translateY(-1000px)
+  }
+  80% {
+    transform translateY(-1000px)
+  }
+  90% {
+    transform translateY(-1000px)
+  }
+  100% {
+    transform translateY(-1000px)
+  }
+
 #about2-section1-images1-left
 #about2-section1-images1-right
   .about2-image-container:nth-child(even) > *
@@ -34,3 +72,37 @@
   margin 5px 0 15px 0
   line-height 1.2em
   font-size 16px
+
+.about2-section1-phone-plate
+.about2-section1-phone-bg
+  width 100%
+  height 800px
+  background-size contain
+
+.about2-section1-phone-plate
+  background-image url("/images/about_iphone_plate.png")
+  z-index 2
+  height 674px
+
+.about2-section1-phone-container
+  position relative
+
+.about2-section1-phone-img-wrapper
+  overflow hidden
+  position absolute
+  top iphone-top-margin
+  left 0
+  padding 0 23px 0 28px
+  width 100%
+  height calc(100% \- (iphone-top-margin * 2))
+  z-index -1
+
+.about2-section1-phone-bg
+  width 100%
+  background-image url("/images/about_iphone_bg.jpg")
+  height 1544px
+  width 100%
+  position relative
+  force-hardware-acceleration()
+  transition transform 0.7s ease-in-out-quart
+  animation touch-scroll 3.4s infinite alternate
