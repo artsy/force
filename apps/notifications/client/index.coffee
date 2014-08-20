@@ -31,9 +31,9 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
       new ArtworkColumnsView
         el: @$('.notifications-list-item').last().find('.notifications-published-artworks').last()
         collection: artworks
-        artworkSize: 'larger'
-        numberOfColumns: 4
-        gutterWidth: 80
+        artworkSize: 'tall'
+        numberOfColumns: 3
+        gutterWidth: 40
         allowDuplicates: true
 
   nextPage: =>
