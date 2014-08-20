@@ -44,12 +44,14 @@ work-offset = columns(2) + gutters(2)
   margin gutter-width 0
   opacity 0
   transition all 0.5s
+  transition-delay 0
   text-decoration none
   &:hover
     color purple-color
   &.is-active
     opacity 1
     transform translateX(0) !important
+    transition-delay 0.4s
   &:first-child
     margin-top 0
   &:last-child
