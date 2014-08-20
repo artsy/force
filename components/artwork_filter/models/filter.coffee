@@ -1,85 +1,80 @@
 _ = require 'underscore'
-_s = require 'underscore.string'
+qs = require 'querystring'
 Backbone = require 'backbone'
-{ API_URL } = require('sharify').data
+FilterStates = require '../collections/filter_states.coffee'
+FilterState = require './filter_state.coffee'
 Selected = require './selected.coffee'
 
-sectionMap =
-  related_gene: 'Category'
-  medium: 'Medium'
-  gallery: 'Gallery'
-  institution: 'Institution'
-  period: 'Time Period'
-
-module.exports = class Filter extends Backbone.Model
-  url: ->
-    "#{API_URL}/api/v1/search/filtered/artist/#{@id}/suggest"
+module.exports = class Filter
+  _.extend @prototype, Backbone.Events
 
   booleans:
-    'for-sale': ['price_range', '-1:1000000000000']
+    'for-sale': price_range: '-1:1000000000000'
 
-  initialize: (attributes, options = {}) ->
-    { @id } = options
-    throw new Error 'Requires an ID' unless @id?
+  constructor: (options = {}) ->
+    { @model } = options
+    throw new Error 'Requires a model' unless @model?
     @selected = new Selected
-    @history = new Backbone.Collection
+    @filterStates = new FilterStates
+    @root = @active = @newState()
 
   by: (key, value, options = {}) ->
-    @bySansFetch arguments...
-    @fetch _.extend options, data: @selected.attributes
-
-  bySansFetch: (key, value, options = {}) ->
     @engaged = true
+    @selected.reset silent: true unless key is 'price_range'
     @selected.set key, value
+    @newState options
 
-  criteria: ->
-    _.reduce _.keys(@attributes), (criteria, x) =>
-      if sectionMap[x] and not _.isEmpty(@get x)
-        criteria[x] =
-          label: sectionMap[x]
-          filters: @sortFilters(x, _.map @get(x), (count, key) =>
-            key: key, count: count, label: @humanize(key)
-          )
-      criteria
-    , {}
+  priced: ->
+    pricedId = @booleanId 'for-sale'
+    priced = @filterStates.get pricedId
+    return priced if priced?
+    return if @fetchingPriced
+    @fetchingPriced = true
+    filterState = new FilterState { id: pricedId }, modelId: @model.id
+    filterState.fetch data: @booleans['for-sale'], success: (model, response, options) =>
+      @filterStates.add model
+      @trigger 'update:counts'
+    false
 
-  sortFilters: (key, filters) ->
-    # Leave period filters in chronological order
-    return filters if key is 'period'
-    # Sort the rest by their count
-    _.sortBy(filters, 'count').reverse()
+  newState: (options = {}) ->
+    filterState = new FilterState { id: @stateId() }, modelId: @model.id
+    options.success = _.wrap options.success, (success, model, response, options) =>
+      @active = model
+      success? model, response, options
+    @fetch filterState, options
+    filterState
 
-  boolean: (name) ->
-    @get(@booleans[name][0])[@booleans[name][1]]
+  fetch: (filterState, options = {}) ->
+    if state = @filterStates.get(@stateId())
+      options.success? state
+      @trigger 'all sync', state
+      return
+    @trigger 'all request'
+    options.success = _.wrap options.success, (success, model, response, options) =>
+      @filterStates.add filterState
+      success? model, response, options
+      @trigger 'all sync', model
+    options.data ?= @selected.attributes
+    filterState.fetch options
 
-  humanize: (string) ->
-    _s.titleize _s.humanize string
+  stateId: ->
+    qs.stringify(@selected.attributes) or 'root'
+
+  booleanId: (name) ->
+    qs.stringify @booleans[name]
 
   toggle: (name, boolean) ->
     if boolean
-      @by @booleans[name]...
+      @by _.flatten(_.pairs(@booleans[name]))...
     else
-      @deselect @booleans[name][0]
+      @deselect _.first(_.keys(@booleans[name]))
 
   deselect: (key, options = {}) ->
     @selected.unset key
     @engaged = false unless _.keys(@selected.attributes).length
-    @fetch _.extend options, data: @selected.attributes
+    @newState options
 
   reset: (options = {}) ->
     @engaged = false
     @selected.clear()
-    @fetch options
-
-  fetch: (options = {}) ->
-    id = _.map(options.data, (v, k) -> "#{k}=#{v}").join '&'
-    state = @history.get id
-    if state?
-      @clear().set data = state.get 'data'
-      options.success? this, data
-      @trigger 'sync', this, data
-      return
-    options.success = _.wrap options.success, (success, model, response, options) =>
-      @history.add id: id, data: model.toJSON()
-      success? model, response, options
-    super
+    @newState options

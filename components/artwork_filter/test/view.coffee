@@ -106,36 +106,36 @@ describe 'ArtworkFilterView', ->
       Backbone.sync.args[0][2].success fabricate 'artist_filtered_search_suggest'
 
     it 'pulls the filter criteria out of the link and selects it', ->
-      @view.$('.artwork-filter-criteria').first().click()
+      @view.$('.artwork-filter-select').first().click()
       @view.filter.selected.attributes.should.eql medium: 'work-on-paper'
-      @view.$('.artwork-filter-criteria').last().click()
-      @view.filter.selected.attributes.should.eql medium: 'work-on-paper', period: 2010
+      @view.$('.artwork-filter-select').last().click()
+      @view.filter.selected.attributes.should.eql period: 2010
 
   describe '#fetchArtworks', ->
     beforeEach ->
       Backbone.sync.args[0][2].success fabricate 'artist_filtered_search_suggest'
 
     it 'fetches the artworks, passing in the selected filters + view params', ->
-      @view.$('.artwork-filter-criteria:eq(0)').click()
+      @view.$('.artwork-filter-select:eq(0)').click()
       _.last(Backbone.sync.args)[2].data.should.eql medium: 'work-on-paper'
-      @view.$('.artwork-filter-criteria:eq(1)').click()
+      @view.$('.artwork-filter-select:eq(1)').click()
       _.last(Backbone.sync.args)[2].data.should.eql medium: 'sculpture'
-      @view.$('.artwork-filter-criteria').last().click()
-      _.last(Backbone.sync.args)[2].data.should.eql medium: 'sculpture', period: 2010
+      @view.$('.artwork-filter-select').last().click()
+      _.last(Backbone.sync.args)[2].data.should.eql period: 2010
       @view.$('#artwork-see-more').click()
-      _.last(Backbone.sync.args)[2].data.should.eql medium: 'sculpture', period: 2010, size: 9, page: 2
+      _.last(Backbone.sync.args)[2].data.should.eql period: 2010, size: 9, page: 2
 
   describe '#fetchArtworksFromBeginning', ->
     beforeEach ->
       Backbone.sync.args[0][2].success fabricate 'artist_filtered_search_suggest'
 
     it 'fetches resets the params before fetching artworks when a filter is clicked', ->
-      @view.$('.artwork-filter-criteria:eq(0)').click()
+      @view.$('.artwork-filter-select:eq(0)').click()
       @view.$('#artwork-see-more').click()
       _.last(Backbone.sync.args)[2].data.should.eql medium: 'work-on-paper', size: 9, page: 2
       @view.$('#artwork-see-more').click()
       _.last(Backbone.sync.args)[2].data.should.eql medium: 'work-on-paper', size: 9, page: 3
-      @view.$('.artwork-filter-criteria:eq(1)').click()
+      @view.$('.artwork-filter-select:eq(1)').click()
       _.last(Backbone.sync.args)[2].data.should.eql medium: 'sculpture'
 
   describe '#toggleBoolean', ->
@@ -144,9 +144,11 @@ describe 'ArtworkFilterView', ->
 
     it 'fetches the artworks, toggling the boolean filter criteria', ->
       @view.$('input[type="checkbox"]').first().click()
+      @view.filter.selected.attributes.should.eql price_range: '-1:1000000000000'
       _.last(Backbone.sync.args)[2].data.should.eql price_range: '-1:1000000000000'
       @view.$('input[type="checkbox"]').first().click()
-      _.last(Backbone.sync.args)[2].data.should.eql {}
+      @view.filter.selected.attributes.should.eql {}
+      _.last(Backbone.sync.args)[2].data.should.not.containEql price_range: '-1:1000000000000'
 
   describe '#setButtonState', ->
     beforeEach ->
@@ -154,21 +156,21 @@ describe 'ArtworkFilterView', ->
       @view.columns = length: => @columnLength
 
     it 'sets the correct button state when there is 1 remaining artwork', ->
-      @view.filter.set 'total', 10
+      @view.filter.active.set 'total', 10
       @columnLength = 9
       @view.setButtonState()
       @view.$button.is(':visible').should.be.true
       @view.$button.text().should.equal 'See More (1)'
 
     it 'sets the correct button state when there are no remaining artworks', ->
-      @view.filter.set 'total', 10
+      @view.filter.active.set 'total', 10
       @columnLength = 10
       @view.setButtonState()
       @view.$button.attr('style').should.equal 'display: none;'
       @view.$button.text().should.equal 'See More (0)'
 
     it 'sets the correct state when toggled', ->
-      @view.filter.set 'total', 10
+      @view.filter.active.set 'total', 10
       @columnLength = 10
       @view.setButtonState()
       # Is hidden

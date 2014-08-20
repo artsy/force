@@ -1,36 +1,75 @@
 _ = require 'underscore'
 sinon = require 'sinon'
 Backbone = require 'backbone'
+Artist = require '../../../models/artist'
 { fabricate } = require 'antigravity'
 Filter = require '../models/filter'
 
 describe 'Filter', ->
-  it 'requires an ID', ->
-    (=> new Filter).should.throw 'Requires an ID'
+  it 'requires a model', ->
+    (=> new Filter).should.throw 'Requires a model'
 
   beforeEach ->
     sinon.stub(Backbone, 'sync').yieldsTo 'success', fabricate 'artist_filtered_search_suggest'
-    @filter = new Filter null, id: 'louise-bourgeois'
+    artist = new Artist fabricate('artist', id: 'louise-bourgeois')
+    @filter = new Filter model: artist
 
   afterEach ->
     Backbone.sync.restore()
 
-  describe '#criteria', ->
+  describe '#stateId', ->
+    it 'is root if there are no selected attributes', ->
+      @filter.stateId().should.equal 'root'
+
+    it 'is the stringified selected attributes object otherwise', ->
+      @filter.selected.set foo: 'bar', baz: 'qux'
+      @filter.stateId().should.equal 'foo=bar&baz=qux'
+
+  describe '#booleanId', ->
+    it 'returns the ID of any booleans', ->
+      @filter.booleanId('for-sale').should.equal 'price_range=-1%3A1000000000000'
+      @filter.booleanId('doesnt-exist').should.be.empty
+
+  describe '#newState', ->
     beforeEach ->
-      @filter.fetch()
+      @filter.selected.set 'foo', 'bar'
 
-    it 'selects the filter sections from the response', ->
-      _.keys(@filter.criteria()).should.eql ['medium', 'gallery', 'institution', 'period']
+    it 'fetches and returns a new state based on the current selected model', ->
+      Backbone.sync.callCount.should.equal 1
+      state = @filter.newState()
+      state.id.should.equal 'foo=bar'
+      Backbone.sync.args[0][2].data.should.eql foo: 'bar'
+      Backbone.sync.callCount.should.equal 2
 
-    it 'sets up some labels by humanizing the keys', ->
-      @filter.criteria().medium.label.should.equal 'Medium'
-      @filter.criteria().medium.filters[0].label.should.equal 'Work On Paper'
+    it 'sets the active state to the most recent successful fetch', ->
+      state = @filter.newState()
+      @filter.active.should.equal state
 
-    it 'sorts the filters by count', ->
-      _.pluck(@filter.criteria().medium.filters, 'count').should.eql [41, 23, 10, 8, 7, 1, 1]
+    it 'accepts callbacks in the options', (done) ->
+      @filter.newState success: -> done()
 
-    it 'it leaves the period filters in chronological order', ->
-      _.pluck(@filter.criteria().period.filters, 'key').should.eql ['1940', '1960', '1970', '1980', '1990', '2000', '2010']
+  describe '#priced', ->
+    describe 'already fetched', ->
+      beforeEach ->
+        @priced = @filter.toggle 'for-sale', true
+        @filter.by 'foo', 'bar'
+
+      it 'returns the already fetched priced filter state without fetching again', ->
+        Backbone.sync.callCount.should.equal 3
+        @filter.priced().should.equal @priced
+        Backbone.sync.callCount.should.equal 3
+
+    describe 'not yet fetched', ->
+      it 'fetches the priced filter state', ->
+        Backbone.sync.callCount.should.equal 1
+        @filter.priced().should.be.false
+        Backbone.sync.callCount.should.equal 2
+        @filter.priced().id.should.equal 'price_range=-1%3A1000000000000'
+        Backbone.sync.callCount.should.equal 2
+
+      it 'triggers an update:counts event', (done) ->
+        @filter.once 'update:counts', -> done()
+        @filter.priced()
 
   describe '#toggle', ->
     beforeEach ->
@@ -55,19 +94,24 @@ describe 'Filter', ->
       @filter.by.called.should.be.false
 
   describe '#by', ->
-    it 'builds up query data and sends the selected criteria when fetching the filter', ->
+    it 'toggles filter criteria and sends the selected criteria when fetching the filter', ->
       @filter.by 'foo', 'bar'
       Backbone.sync.args[0][2].data.should.eql foo: 'bar'
       @filter.by 'baz', 'qux'
-      Backbone.sync.args[0][2].data.should.eql foo: 'bar', baz: 'qux'
-      @filter.deselect 'baz'
-      Backbone.sync.args[0][2].data.should.eql foo: 'bar'
+      Backbone.sync.args[0][2].data.should.eql baz: 'qux'
+      # Only price range can be combined
+      @filter.by 'price_range', 'x'
+      Backbone.sync.args[0][2].data.should.eql baz: 'qux', price_range: 'x'
+      @filter.by 'foo', 'bar'
+      Backbone.sync.args[0][2].data.should.eql foo: 'bar', price_range: 'x'
+      @filter.deselect 'foo'
+      Backbone.sync.args[0][2].data.should.eql price_range: 'x'
 
     it 'also accepts objects', ->
       @filter.by foo: 'bar'
       Backbone.sync.args[0][2].data.should.eql foo: 'bar'
-      @filter.by foo: 'foo', baz: 'qux'
-      Backbone.sync.args[0][2].data.should.eql foo: 'foo', baz: 'qux'
+      @filter.by foo: 'foo', price_range: 'x'
+      Backbone.sync.args[0][2].data.should.eql foo: 'foo', price_range: 'x'
 
     it 'accepts options which are passed along to #fetch', (done) ->
       @filter.by 'foo', 'bar', success: -> done()
@@ -78,56 +122,22 @@ describe 'Filter', ->
   describe '#deselect', ->
     beforeEach ->
       @filter.by 'medium', 'drawing'
-      @filter.by 'period', '1940'
+      @filter.by 'price_range', 'x'
 
     it 'unsets the filter condition', ->
-      Backbone.sync.callCount.should.equal 2
+      Backbone.sync.callCount.should.equal 3
       @filter.selected.has('medium').should.be.true
       @filter.deselect 'medium'
       @filter.selected.has('medium').should.be.false
       @filter.engaged.should.be.true
-      Backbone.sync.args[0][2].data.should.eql period: '1940'
-      Backbone.sync.callCount.should.equal 3
+      Backbone.sync.args[0][2].data.should.eql price_range: 'x'
+      Backbone.sync.callCount.should.equal 4
+      @filter.filterStates.pluck('id').should.eql ['root', 'medium=drawing', 'medium=drawing&price_range=x', 'price_range=x']
 
     it 'disengages the filter when there is no selected criteria', ->
-      Backbone.sync.callCount.should.equal 2
+      Backbone.sync.callCount.should.equal 3
       @filter.deselect 'medium'
-      @filter.deselect 'period'
+      @filter.deselect 'price_range'
       @filter.engaged.should.be.false
       Backbone.sync.callCount.should.equal 4
-
-  describe '#fetch', ->
-    beforeEach ->
-      Backbone.sync.restore()
-      sinon.stub(Backbone, 'sync').yieldsTo 'success', example: 'example'
-
-    it 'keeps a history of fetches so we dont grab the same filter state more than once', ->
-      @filter.by 'baz', 'qux'
-      Backbone.sync.callCount.should.equal 1
-      @filter.history.length.should.equal 1
-      @filter.history.last().attributes.should.eql id: 'baz=qux', data: example: 'example'
-      @filter.attributes.should.eql example: 'example'
-      # Modify this history state to test restoration
-      @filter.history.last().set 'data', example: 'sentinel'
-
-      @filter.by 'fresh', 'noodles'
-      Backbone.sync.callCount.should.equal 2
-      @filter.history.length.should.equal 2
-      @filter.history.last().attributes.should.eql id: 'baz=qux&fresh=noodles', data: example: 'example'
-      @filter.attributes.should.eql example: 'example'
-
-      @filter.deselect 'fresh'
-      Backbone.sync.callCount.should.equal 2
-      @filter.history.length.should.equal 2
-      # Restored the previous history state
-      @filter.get('example').should.equal 'sentinel'
-
-      # Reselect same filter
-      @filter.by 'baz', 'qux'
-      Backbone.sync.callCount.should.equal 2
-      @filter.history.length.should.equal 2
-
-      # Reselect same filter with different value
-      @filter.by 'baz', 'quxx'
-      Backbone.sync.callCount.should.equal 3
-      @filter.history.length.should.equal 3
+      @filter.filterStates.pluck('id').should.eql ['root', 'medium=drawing', 'medium=drawing&price_range=x', 'price_range=x']
