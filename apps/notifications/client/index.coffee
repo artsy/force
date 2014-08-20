@@ -27,14 +27,15 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
       artworks = new Artworks publishedArtworks
       artist = new Artist artworks.first().get('artist')
       publishedAt = DateHelpers.formatDate artworks.first().get('published_changed_at')
-      @$('#notifications-published-artworks').append template(artist: artist, publishedAt: publishedAt)
+      @$('#notifications-published-artworks').append template(artist: artist, publishedAt: publishedAt, count: artworks.length)
       new ArtworkColumnsView
         el: @$('.notifications-list-item').last().find('.notifications-published-artworks').last()
         collection: artworks
-        artworkSize: 'tall'
+        artworkSize: 'larger'
         numberOfColumns: 3
         gutterWidth: 40
         allowDuplicates: true
+        maxArtworkHeight: 600
 
   nextPage: =>
     @notifications.state.currentPage++
