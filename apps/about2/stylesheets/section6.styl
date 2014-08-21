@@ -1,5 +1,7 @@
 .about2-section6-links
   margin 60px 0
+  &:first-child
+    margin-right gutter-width * 2
 .about2-section6-link
   display block
   padding gutter-width 0
@@ -21,8 +23,8 @@
 
 .about2-section6-social-media
   margin-left 30px
-  position relative
-  top 10px
+  position absolute
+  margin-top -6px
   .icon-twitter
     font-size 58px
     top 5px
@@ -35,3 +37,11 @@
   a
     position relative
     margin-right 5px
+
+.about2-section6-pull-blurb .avant-garde-button-white
+  margin-right 25px
+
+.about2-section6-blurbs
+  margin-bottom 0
+  & + .about2-container
+    margin-top 0

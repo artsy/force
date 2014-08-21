@@ -19,6 +19,7 @@ module.exports = class AboutView extends Backbone.View
   initialize: ->
     @$window = $(window)
     @$window.on 'keyup', @toggleGrid
+    @$window.on 'scroll', @iphoneScroll
 
     @cacheSelectors()
     @setupStickyNav()
@@ -185,3 +186,10 @@ module.exports = class AboutView extends Backbone.View
   contactSpecialistModal: (e) ->
     e.preventDefault()
     new FeedbackView
+
+  iphoneScroll: =>
+    windowBottom = @$window.scrollTop() + @$window.height()
+    iphoneTop = @$('.about2-section1-phone-container').offset().top
+    return unless windowBottom > iphoneTop
+    offset = (windowBottom - iphoneTop) * 0.4
+    @$('.about2-section1-phone-bg').css transform: "translateY(-#{offset}px)"
