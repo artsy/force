@@ -6,6 +6,7 @@ Search = require '../../collections/search.coffee'
 FilterSuggest = require '../../models/filter_suggest.coffee'
 cache = require '../../lib/cache'
 client = cache.client
+kinds = require '../favorites_follows/kinds'
 
 @overview = (req, res, next) ->
   return next() unless res.locals.sd.FAIR
@@ -71,9 +72,8 @@ client = cache.client
 @follows = (req, res, next) ->
   return next() unless res.locals.sd.FAIR
   return res.redirect("/#{req.params.id}") unless req.user
-  if (route = req.params.type) in ['artists', 'genes']
-    routeToKind = artists: 'artist', genes: 'gene'
-    res.locals.sd.KIND = routeToKind[route] or 'artist'
+  if (route = req.params.type) in _.keys(kinds)
+    res.locals.sd.KIND = kinds[route] or 'artist'
     res.locals.sd.SECTION = 'follows'
     res.render 'favorites',
       profileId: req.user.get('default_profile_id')
