@@ -13,7 +13,7 @@ if user
   window.clearSaveControls = ->
     Cookies.set 'save-controls', null
 
-  if false #user.hasLabFeature('Set Management')
+  if user.hasLabFeature('Set Management')
     splitTestPath = Cookies.get('save-controls') or splitTest 'ab:save:controls',
       'drop down': 1 / 3
       'two button': 1 / 3
