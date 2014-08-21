@@ -9,7 +9,7 @@
       .rpe-content
         a.rpe-image.hoverable-image-link( href="/post/#{post.id}" )
           if post.defaultImage()
-            .hoverable-image.is-four-three( style="background-image: url(#{post.defaultImage().imageUrlFor(300, 300)})" )
+            .hoverable-image.is-four-three( style="background-image: url(#{crop(post.defaultImage().imageUrlFor(), { width: 300, height: 225 })})" )
         .rpe-blurb
           a.rpe-author( href="/#{profile.get('owner').default_profile_id}" )
             | By #{profile.get('owner').name}

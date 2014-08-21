@@ -16,6 +16,7 @@ featuredShowsTemplate = -> require('../templates/featured_shows.jade') arguments
 featuredPostsTemplate = -> require('../templates/featured_posts.jade') arguments...
 featuredArtistsTemplate = -> require('../templates/featured_artists.jade') arguments...
 Cookies = require 'cookies-js'
+{ crop } = require '../../../lib/resizer.coffee'
 
 trackArtworkImpressions = require("../../../components/analytics/impression_tracking.coffee").trackArtworkImpressions
 
@@ -60,7 +61,7 @@ module.exports.HomeView = class HomeView extends Backbone.View
 
   renderFeaturedArtists: ->
     new FeaturedLinks().fetchSetItemsByKey 'homepage:featured-artists', success: (links) ->
-      $('#home-featured-artists').html featuredArtistsTemplate(artistLinks: links.models[0..3])
+      $('#home-featured-artists').html featuredArtistsTemplate(artistLinks: links.models[0..3], crop: crop)
 
   renderFeaturedPosts: ->
     new FeaturedLinks().fetchSetItemsByKey 'homepage:featured-links', success: (links) ->
@@ -68,7 +69,7 @@ module.exports.HomeView = class HomeView extends Backbone.View
 
   renderFeaturedShows: ->
     new PartnerShows().fetchSetItemsByKey 'homepage:featured-shows', success: (shows) ->
-      $('#home-featured-shows').html featuredShowsTemplate(shows: shows.models[0..9])
+      $('#home-featured-shows').html featuredShowsTemplate(shows: shows.models[0..9], crop: crop)
 
   setFeaturedArtworksHeader: (text) ->
     return $(".home-featured-header.top-featured-header").text(text)

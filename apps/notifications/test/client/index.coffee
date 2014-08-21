@@ -63,3 +63,5 @@ describe 'NotificationsView', ->
       @view.$el.html().should.containEql 'Percy Z'
       @view.$el.html().should.containEql "/artist/bitty"
       @view.$el.html().should.containEql "/artist/percy"
+      @view.$el.html().should.containEql "2 works added"
+      @view.$el.html().should.containEql "1 work added"

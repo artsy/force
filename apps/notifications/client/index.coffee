@@ -14,33 +14,31 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
   initialize: (options) ->
     @user = CurrentUser.orNull()
     @notifications = new Notifications(null, since: 30, type: 'ArtworkPublished', userId: @user.get('id'))
+    @notifications.on 'sync', @appendArtworks
     @notifications.fetch
       success: =>
         @$('#notifications-published-artworks-spinner').remove()
-        @appendArtworks()
     $.onInfiniteScroll @nextPage
 
   # Needs an artwork column view for each group (by artist)
-  appendArtworks: ->
+  appendArtworks: =>
     grouppedArtworks = @notifications.groupBy((n) -> n.get('artist').name)
     for artistName, publishedArtworks of grouppedArtworks
       artworks = new Artworks publishedArtworks
       artist = new Artist artworks.first().get('artist')
       publishedAt = DateHelpers.formatDate artworks.first().get('published_changed_at')
-      @$('#notifications-published-artworks').append template(artist: artist, publishedAt: publishedAt)
+      @$('#notifications-published-artworks').append template(artist: artist, publishedAt: publishedAt, count: artworks.length)
       new ArtworkColumnsView
         el: @$('.notifications-list-item').last().find('.notifications-published-artworks').last()
         collection: artworks
         artworkSize: 'larger'
-        numberOfColumns: 4
-        gutterWidth: 80
+        numberOfColumns: 3
+        gutterWidth: 40
         allowDuplicates: true
+        maxArtworkHeight: 600
 
   nextPage: =>
-    @notifications.state.currentPage++
-    @notifications.fetch
-      success: =>
-        @appendArtworks()
+    @notifications.getNextPage()
 
 module.exports.init = ->
   new NotificationsView

@@ -1,7 +1,7 @@
 - section = sections[2]
 
 .about2-container
-  h1.about2-section-header!= section.header
+  include header
   p.about2-section-preamble= section.preamble.text
 
 //- "Works are given a genome..."
@@ -17,7 +17,8 @@
     for artwork, i in section.genomeWorks
       .about2-genome-work
         .about2-genome-work-image
-          img( data-src= artwork.src, alt= artwork.title )
+          a( href=artwork.href )
+            img( data-src= artwork.src, alt= artwork.title )
           if artwork.genes
             .about2-genome-work-genes
               for gene in artwork.genes

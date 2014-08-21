@@ -27,8 +27,6 @@ column-gap = 30px
   background no-repeat center center
   background-size cover
   padding-bottom 70%
-  img
-    display none
 
 li.grid-item a
   text-decoration none
@@ -71,7 +69,6 @@ li.grid-item a
   avant-garde()
   padding-left 105px
 
-
 // Featured artworks
 // -----------------
 
@@ -95,16 +92,18 @@ li.grid-item a
   vertical-align top
   width 20%
   height 250px
+  a
+    display block
   &:first-child
     float left
     width (golden-ratio-small-percent + 2)
     padding-right column-gap
     height auto
-    .home-featured-cover-img
-      padding-bottom 410px
     h4
       font-size 24px
       line-height 1.2em
+    .home-featured-cover-img
+      padding-bottom 410px
   &:nth-child(2), &:nth-child(5)
     padding-right (column-gap * .66)
   &:nth-child(3), &:nth-child(6)
@@ -116,6 +115,7 @@ li.grid-item a
     margin-bottom 20px
   .home-featured-cover-img
     padding-bottom 140px
+    width 100%
   h4
     margin-top 10px
   h5
@@ -135,3 +135,7 @@ li.grid-item a
     avant-garde()
     margin 12px 0 6px 0
     font-size 13px
+  a
+    display block
+  img
+    width 100%

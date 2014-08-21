@@ -61,7 +61,7 @@ small-avant-garde-size = 11px
 .artwork-filter-for-sale
   margin 0
 
-.artwork-filter-criteria
+.artwork-filter-criterion
   display block
   clearfix()
   font-size 18px
@@ -69,6 +69,20 @@ small-avant-garde-size = 11px
   transition color 0.25s
   &:hover
     color gray-darker-color
+  &.is-active
+    .artwork-filter-label
+      max-width 65%
+    .artwork-filter-label
+    .artwork-filter-count
+      color purple-color
+  &.is-disabled
+    a:first-child
+      cursor arrow
+      pointer-events none
+    .artwork-filter-label
+    .artwork-filter-count
+    .artwork-filter-remove
+      color gray-dark-color
 .artwork-filter-label
 .artwork-filter-count
   float left
@@ -77,5 +91,9 @@ small-avant-garde-size = 11px
   max-width 80%
 .artwork-filter-total
 .artwork-filter-count
+  margin-left 0.25em
   color gray-darker-color
-  margin 0 0.25em
+.artwork-filter-remove
+  margin-left 0.25em
+  color purple-color
+  text-decoration underline
