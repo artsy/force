@@ -43,7 +43,7 @@ describe 'ArtworkFilterView', ->
       Backbone.sync.args[0][2].success fabricate 'artist_filtered_search_suggest'
 
     it 'renders the filter template', ->
-      @view.$filter.html().should.containEql 'Works<span class="artwork-filter-total">(65)</span></h2>'
+      @view.$filter.html().should.containEql '<h2>Works</h2>'
 
   describe '#handleState', ->
     describe '#handleFilterState', ->
