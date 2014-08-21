@@ -28,7 +28,7 @@ work-offset = columns(2) + gutters(2)
     max-width 75%
 .about2-genome-work-image
   position relative
-  > img
+  > a > img
     width 100%
 .about2-genome-work-genes
   position absolute
@@ -51,7 +51,10 @@ work-offset = columns(2) + gutters(2)
   &.is-active
     opacity 1
     transform translateX(0) !important
-    transition-delay 0.4s
+  &:nth-child(2)
+    transition-delay 0.05s
+  &:nth-child(3)
+    transition-delay 0.1s
   &:first-child
     margin-top 0
   &:last-child
