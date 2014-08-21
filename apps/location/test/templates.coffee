@@ -2,6 +2,7 @@ jade = require 'jade'
 path = require 'path'
 fs = require 'fs'
 Backbone = require 'backbone'
+sinon = require 'sinon'
 { fabricate } = require 'antigravity'
 PartnerShow = require '../../../models/partner_show'
 PartnerShows = require '../../../collections/partner_shows'
@@ -31,6 +32,7 @@ describe 'location page', ->
         fairs: new Fairs([@fair])
         sd: {}
         otherLocations: []
+        crop: sinon.stub()
       )
 
     it 'should be titled with location name', ->
@@ -53,6 +55,7 @@ describe 'location page', ->
         profiles: new Profiles()
         fairs: new Fairs()
         sd: {}
+        crop: sinon.stub()
         otherLocations: [['san-francisco', {name: 'San Francisco'}]]
       )
 
@@ -76,6 +79,7 @@ describe 'location page', ->
         fairs: new Fairs()
         sd: {}
         otherLocations: []
+        crop: sinon.stub()
       )
 
     it 'should list profiles', ->
