@@ -1,6 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 template = -> require('./template.jade') arguments...
+{ crop } = require '../../lib/resizer.coffee'
 
 module.exports = class RelatedShowsView extends Backbone.View
   maxShows: 8
@@ -24,6 +25,7 @@ module.exports = class RelatedShowsView extends Backbone.View
           html template
             header: "Shows including #{@model.get('name')}"
             shows: shows[...@maxShows]
+            crop: crop
       @
     else
       @remove()

@@ -3,6 +3,7 @@ sd = require('sharify').data
 Backbone = require 'backbone'
 Post = require '../../models/post.coffee'
 AddToPostButton = require './add_to_post_button.coffee'
+{ crop } = require '../../lib/resizer.coffee'
 
 templates =
   empty: -> require('./templates/empty.jade') arguments...
@@ -35,6 +36,7 @@ module.exports = class RelatedPostsView extends Backbone.View
       modelName: @modelName
       mode: @mode
       entityName: @entityName()
+      crop: crop
 
     if @model.relatedPosts.length
       @$el.html templates[@mode] _.extend templateData,
