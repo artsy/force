@@ -24,7 +24,7 @@ if shows.length > 1
     for show in shows
       .related-show.grid-item
         a.hoverable-image-link( href=show.href() )
-          .hoverable-image.is-four-three( style="background-image: url(#{show.thumbImageUrl()})")
+          .hoverable-image.is-four-three( style="background-image: url(#{crop(show.posterImageUrl(), { width: 325, height: 244 } )})" ) 
         .rsr-metadata
           h4.related-show-label= show.formatLeadHeading()
           if show.get('partner').name !== show.get('name')
