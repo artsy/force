@@ -33,7 +33,7 @@ module.exports = class Artist extends Backbone.Model
     @relatedPosts = new Backbone.Collection [], model: require('./post.coffee')
     @relatedPosts.url = "#{sd.API_URL}/api/v1/related/posts"
     @relatedShows = new Backbone.Collection [], model: require('./partner_show.coffee')
-    @relatedShows.url = "#{sd.API_URL}/api/v1/related/shows?artist[]=#{@id}"
+    @relatedShows.url = "#{sd.API_URL}/api/v1/related/shows?artist[]=#{@id}&sort=-end_at"
     @artworks = new Artworks
     @artworks.url = "#{@url()}/artworks"
 
