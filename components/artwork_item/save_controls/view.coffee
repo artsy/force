@@ -20,7 +20,19 @@ module.exports = class SaveControls extends Backbone.View
 
     @listenTo @artworkCollection, "add:#{@model.id}", @onArtworkSaveChange
     @listenTo @artworkCollection, "remove:#{@model.id}", @onArtworkSaveChange
+
+    # Embed labs feature
+    if @artworkCollection.embeddableCollection
+      @listenTo @artworkCollection.embeddableCollection, "embeddable:#{@model.id}", @onEmbeddableChange
+
     @onArtworkSaveChange()
+
+  onEmbeddableChange: ->
+    @$el.append "<div class='overlay-button-embed'></div>"
+    @$('.overlay-button-embed').click (e) =>
+      e.preventDefault()
+      window.location = @model.embedUrl()
+      false
 
   onArtworkSaveChange: ->
     state = if @model.isSaved @artworkCollection then 'saved' else 'unsaved'
