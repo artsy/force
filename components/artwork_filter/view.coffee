@@ -17,25 +17,25 @@ class Params extends Backbone.Model
 
 module.exports = class ArtworkFilterView extends Backbone.View
   events:
-    'click .artwork-filter-criteria': 'selectCriteria'
-    'click .artwork-filter-reset': 'removeCriteria'
+    'click .artwork-filter-select': 'selectCriteria'
+    'click .artwork-filter-remove': 'removeCriteria'
     'click input[type="checkbox"]': 'toggleBoolean'
     'click #artwork-see-more': 'loadNextPage'
 
   initialize: ->
     @artworks = new Artworks
     @artworks.url = "#{API_URL}/api/v1/search/filtered/artist/#{@model.id}"
-    @filter = new Filter null, id: @model.id
+    @filter = new Filter model: @model
     @params = new Params
 
     @listenTo @artworks, 'all', @handleArtworksState
-    @listenTo @filter, 'all', @handleFilterState
-    @listenTo @filter, 'sync', @renderFilter
     @listenTo @artworks, 'sync', @renderColumns
+    @listenTo @filter, 'all', @handleFilterState
+    @listenTo @filter, 'sync update:counts', @renderFilter
+    @listenTo @filter, 'sync', @renderHeader
     @listenTo @filter.selected, 'change', @fetchArtworksFromBeginning
     @listenTo @filter.selected, 'change', @scrollToTop
 
-    @filter.fetch()
     @fetchArtworks()
     @render()
 
@@ -88,17 +88,17 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @trigger 'navigate'
 
   removeCriteria: (e) ->
+    e.preventDefault()
     @filter.deselect $(e.currentTarget).data('key')
     @trigger 'navigate'
 
   setState: ->
     @setButtonState()
-    @renderHeader()
 
   setButtonState: ->
     length = @columns?.length() or 0
-    remaining = @filter.get('total') - length
-    visibility = if length >= @filter.get('total') then 'hide' else 'show'
+    remaining = @filter.active.get('total') - length
+    visibility = if length >= @filter.active.get('total') then 'hide' else 'show'
     @$button.text("See More (#{remaining})")[visibility]()
 
   renderHeader: ->
@@ -121,11 +121,14 @@ module.exports = class ArtworkFilterView extends Backbone.View
         artworkSize: 'tall'
     @setState()
 
+  displayFilter: ->
+    (if @filter.selected.has('price_range') then @filter.priced() else @filter.root) or @filter.root
+
   renderFilter: ->
-    @$filter.html(filterTemplate filter: @filter)
+    @$filter.html(filterTemplate filter: @filter, displayFilter: @displayFilter())
     @setState()
 
   render: ->
-    @$el.html template(filter: @filter, artworks: @artworks)
+    @$el.html template()
     @postRender()
     this
