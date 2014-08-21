@@ -1,19 +1,11 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 Filter = require './models/filter.coffee'
-Artworks = require '../../collections/artworks.coffee'
+ArtworkColumns = require './collections/artwork_columns.coffee'
 ArtworkColumnsView = require '../artwork_columns/view.coffee'
-{ API_URL } = require('sharify').data
 template = -> require('./templates/index.jade') arguments...
 filterTemplate = -> require('./templates/filter.jade') arguments...
 headerTemplate = -> require('./templates/header.jade') arguments...
-
-class Params extends Backbone.Model
-  defaults: size: 9, page: 1
-  next: ->
-    @set page: @get('page') + 1
-  prev: ->
-    @set page: @get('page') - 1
 
 module.exports = class ArtworkFilterView extends Backbone.View
   events:
@@ -23,10 +15,8 @@ module.exports = class ArtworkFilterView extends Backbone.View
     'click #artwork-see-more': 'loadNextPage'
 
   initialize: ->
-    @artworks = new Artworks
-    @artworks.url = "#{API_URL}/api/v1/search/filtered/artist/#{@model.id}"
+    @artworks = new ArtworkColumns [], modelId: @model.id
     @filter = new Filter model: @model
-    @params = new Params
 
     @listenTo @artworks, 'all', @handleArtworksState
     @listenTo @artworks, 'sync', @renderColumns
@@ -61,16 +51,13 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @trigger 'navigate'
 
   loadNextPage: ->
-    @params.next()
-    @fetchArtworks error: => @params.prev()
+    @artworks.nextPage data: @filter.selected.toJSON()
 
-  fetchArtworks: (options = {}) ->
-    options.data = _.extend {}, @filter.selected.attributes, @params.attributes
-    @artworks.fetch options
+  fetchArtworks: ->
+    @artworks.fetch data: @filter.selected.toJSON()
 
   fetchArtworksFromBeginning: ->
-    @params.clear().set(@params.defaults)
-    @fetchArtworks()
+    @artworks.fetchFromBeginning data: @filter.selected.toJSON()
 
   cacheSelectors: ->
     @$columns = @$('#artwork-columns')
@@ -105,7 +92,7 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @$header.html headerTemplate(filter: @filter, artist: @model)
 
   renderColumns: ->
-    if @params.get('page') > 1
+    if @artworks.params.get('page') > 1
       @columns.appendArtworks @artworks.models
     else
       @columns?.stopListening()

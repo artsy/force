@@ -36,7 +36,7 @@ describe 'ArtworkFilterView', ->
       Backbone.sync.args[0][1].url().should.containEql '/api/v1/search/filtered/artist/foo-bar/suggest'
 
     it 'fetches the artworks', ->
-      Backbone.sync.args[1][1].url.should.containEql '/api/v1/search/filtered/artist/foo-bar'
+      Backbone.sync.args[1][1].url().should.containEql '/api/v1/search/filtered/artist/foo-bar'
 
   describe '#renderFilter', ->
     beforeEach ->
@@ -77,19 +77,19 @@ describe 'ArtworkFilterView', ->
   describe '#loadNextPage', ->
     it 'loads the next page when the button is clicked', ->
       Backbone.sync.callCount.should.equal 2
-      @view.params.get('page').should.equal 1
+      @view.artworks.params.get('page').should.equal 1
       @view.$('#artwork-see-more').click()
-      @view.params.get('page').should.equal 2
+      @view.artworks.params.get('page').should.equal 2
       Backbone.sync.callCount.should.equal 3
       _.last(Backbone.sync.args)[2].data.should.eql size: 9, page: 2
       @view.$('#artwork-see-more').click()
-      @view.params.get('page').should.equal 3
+      @view.artworks.params.get('page').should.equal 3
       Backbone.sync.callCount.should.equal 4
       _.last(Backbone.sync.args)[2].data.should.eql size: 9, page: 3
 
     describe 'error', ->
       it 'reverts the params', ->
-        @view.params.attributes.should.eql size: 9, page: 1
+        @view.artworks.params.attributes.should.eql size: 9, page: 1
         @view.$('#artwork-see-more').click()
         _.last(Backbone.sync.args)[2].data.should.eql size: 9, page: 2
         Backbone.sync.restore()
