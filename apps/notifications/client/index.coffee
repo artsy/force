@@ -14,14 +14,14 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
   initialize: (options) ->
     @user = CurrentUser.orNull()
     @notifications = new Notifications(null, since: 30, type: 'ArtworkPublished', userId: @user.get('id'))
+    @notifications.on 'sync', @appendArtworks
     @notifications.fetch
       success: =>
         @$('#notifications-published-artworks-spinner').remove()
-        @appendArtworks()
     $.onInfiniteScroll @nextPage
 
   # Needs an artwork column view for each group (by artist)
-  appendArtworks: ->
+  appendArtworks: =>
     grouppedArtworks = @notifications.groupBy((n) -> n.get('artist').name)
     for artistName, publishedArtworks of grouppedArtworks
       artworks = new Artworks publishedArtworks
@@ -38,10 +38,7 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
         maxArtworkHeight: 600
 
   nextPage: =>
-    @notifications.state.currentPage++
-    @notifications.fetch
-      success: =>
-        @appendArtworks()
+    @notifications.getNextPage()
 
 module.exports.init = ->
   new NotificationsView
