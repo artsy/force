@@ -3,4 +3,4 @@
 #
 
 module.exports = (req, res, next) ->
-  res.headers['X-Frame-Options'] = 'SAMEORIGIN'
+  res.headers?['X-Frame-Options'] = 'SAMEORIGIN'

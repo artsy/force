@@ -12,3 +12,9 @@ describe 'Same origin middleware', ->
     @req.get = -> 'http:'
     sameOrign @req, @res
     @res.headers['X-Frame-Options'].should.equal 'SAMEORIGIN'
+
+  it 'doesnt error if headers are not defined', ->
+    @res.headers = undefined
+    @req.get = -> 'http:'
+    sameOrign @req, @res
+    @res.should.be.ok
