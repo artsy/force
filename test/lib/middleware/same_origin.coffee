@@ -6,15 +6,10 @@ describe 'Same origin middleware', ->
 
   beforeEach ->
     @req = { }
-    @res = { headers: {} }
+    @res = { headers: [], setHeader: (name, value) -> @headers[name] = value }
+    @next = sinon.stub()
 
   it 'adds x-frame-options header', ->
     @req.get = -> 'http:'
-    sameOrign @req, @res
+    sameOrign @req, @res, @next
     @res.headers['X-Frame-Options'].should.equal 'SAMEORIGIN'
-
-  it 'doesnt error if headers are not defined', ->
-    @res.headers = undefined
-    @req.get = -> 'http:'
-    sameOrign @req, @res
-    @res.should.be.ok
