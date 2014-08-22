@@ -7,7 +7,8 @@ link( rel="alternate", media=sd.MOBILE_MEDIA_QUERY, href=(sd.CANONICAL_MOBILE_UR
 link( rel="canonical", href=(sd.APP_URL + "/artist/" + artist.get('id')) )
 meta( property="og:url", content=(sd.APP_URL + "/artist/" + artist.get('id')) )
 meta( property="og:type", content=(sd.FACEBOOK_APP_NAMESPACE + ":artist" ) )
-meta( name="fragment", content="!" )
+if sd.INCLUDE_ESCAPED_FRAGMENT
+  meta( name="fragment", content="!" )
 if artist.hasImage('large')
   meta( property="twitter:card", content="summary_large_image" )
   meta( property="og:image", content=artist.imageUrl('large'))

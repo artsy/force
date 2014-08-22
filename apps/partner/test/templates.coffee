@@ -36,7 +36,7 @@ describe 'Partner header', ->
     it 'has meta fragment', ->
       @template = render('index')(
         profile: @profile
-        sd: APP_URL: 'http://localhost:3004', CURRENT_PATH: '/pace-gallery'
+        sd: APP_URL: 'http://localhost:3004', CURRENT_PATH: '/pace-gallery', INCLUDE_ESCAPED_FRAGMENT: true
         params: id: 'pace-gallery'
       )
       @template.should.containEql '<meta name="fragment" content="!">'
@@ -45,7 +45,8 @@ describe 'Partner header', ->
       @template = render('index')(
         profile: @profile
         tab: 'overview'
-        sd: APP_URL: 'http://localhost:3004', CURRENT_PATH: '/pace-gallery'
+        sd:
+          APP_URL: 'http://localhost:3004', CURRENT_PATH: '/pace-gallery', INCLUDE_ESCAPED_FRAGMENT: true
         params: id: 'pace-gallery'
       )
       @template.should.not.containEql '<meta name="fragment" content="!">'
