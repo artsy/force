@@ -1,0 +1,23 @@
+- function middle(arr) { return Math.ceil(arr.length / 2) }
+- function firstHalf(arr) { return arr.slice(0, middle(arr)) }
+- function secondHalf(arr) { return arr.slice(middle(arr)) }
+
+mixin pull-blurb(pullBlurb)
+  .about-pull-blurb
+    if pullBlurb.h1
+      h1!= pullBlurb.h1
+    if pullBlurb.h2
+      h2!= pullBlurb.h2
+    if pullBlurb.p
+      p!= pullBlurb.p
+
+#about-spinner.about-spinner: .loading-spinner-white
+include hero_unit
+.about-2-foreground
+  include nav
+  .about-section( id= sections[0].slug, data-href="/about/#{sections[0].slug}" ): include section1
+  .about-section( id= sections[1].slug, data-href="/about/#{sections[1].slug}" ): include section2
+  .about-section( id= sections[2].slug, data-href="/about/#{sections[2].slug}" ): include section3
+  .about-section( id= sections[3].slug, data-href="/about/#{sections[3].slug}" ): include section4
+  .about-section( id= sections[4].slug, data-href="/about/#{sections[4].slug}" ): include section5
+  .about-section( id= sections[5].slug, data-href="/about/#{sections[5].slug}" ): include section6

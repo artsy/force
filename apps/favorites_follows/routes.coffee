@@ -1,15 +1,10 @@
 _ = require 'underscore'
-typeMap =
-  artists: 'artist'
-  genes: 'gene'
-  galleries: 'profile'
-  institutions: 'profile'
-  profiles: 'profile'
+kinds = require './kinds'
 
 @follows = (req, res, next) ->
   return res.redirect "/log_in?redirect_uri=#{encodeURIComponent(req.url)}" unless req.user
-  if (route = req.params.type) in _.keys(typeMap)
-    res.locals.sd.KIND = typeMap[route] or 'artist'
+  if (route = req.params.type) in _.keys(kinds)
+    res.locals.sd.KIND = kinds[route] or 'artist'
     res.render 'follows', type: route
   else
     next()

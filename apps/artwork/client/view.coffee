@@ -25,6 +25,7 @@ qs = require 'querystring'
 ContactView = require '../components/contact/view.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 Cookies = require 'cookies-js'
+VideoView = require './video.coffee'
 
 detailTemplate = -> require('../templates/_detail.jade') arguments...
 partnerPhoneNumberTemplate = -> require('../templates/partner_phone.jade') arguments...
@@ -66,6 +67,7 @@ module.exports = class ArtworkView extends Backbone.View
     @setupBelowTheFold()
     @setupMainSaveButton()
     @setupArtworkOverview()
+    new VideoView el: @el, artwork: @artwork
 
     # Track pageview
     analytics.track.impression 'Artwork page', { id: @artwork.id }

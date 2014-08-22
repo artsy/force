@@ -25,7 +25,7 @@ describe 'Meta tags', ->
       @html.should.containEql "<meta property=\"twitter:card\" content=\"summary"
       @html.should.containEql "<link rel=\"canonical\" href=\"http://localhost:5000/artist/pablo-picasso"
       @html.should.containEql "<meta property=\"og:url\" content=\"http://localhost:5000/artist/pablo-picasso"
-      @html.should.containEql "<meta property=\"og:description\" content=\"Pablo Picasso (1900-2000). This is Pablo Picasso"
+      @html.should.containEql "<meta property=\"og:description\" content=\"#{@artist.toPageDescription(155)}"
       @html.should.containEql "<meta property=\"og:title\" content=\"Pablo Picasso | Artist Biography, Artwork for Sale | Artsy"
 
   describe 'artist with name no blurb, nationality, or years', ->
@@ -41,7 +41,7 @@ describe 'Meta tags', ->
         sd: @sd
 
     it 'renders correctly', ->
-      @html.should.containEql "<meta property=\"og:description\" content=\"Pablo Picasso"
+      @html.should.containEql "<meta property=\"og:description\" content=\"Find the latest shows, biography, and artworks for sale by Pablo Picasso"
       @html.should.containEql "<meta property=\"og:title\" content=\"Pablo Picasso | Artist Biography, Artwork for Sale | Artsy"
 
   describe 'with an image', ->
@@ -67,17 +67,5 @@ describe 'Meta tags', ->
         sd: @sd
 
     it 'renders short blurb for facebook and long one for twitter', ->
-      @html.should.containEql "og:description\" content=\"Pablo Picasso (1900-2000). Obsessed with celebrity, consumer culture, and mechanical (re)production, Pop artist Andy Warhol created some of the most..."
-      @html.should.containEql "<meta property=\"twitter:description\" content=\"Pablo Picasso (1900-2000). Obsessed with celebrity, consumer culture, and mechanical (re)production, Pop artist Andy Warhol created some of the most iconic images of the 20th century. As famous for..."
-
-  describe 'with nationality', ->
-
-    beforeEach ->
-      @artist = new Artist fabricate 'artist'
-      @artist.set nationality: 'Nationality'
-      @html = jade.render fs.readFileSync(@file).toString(),
-        artist: @artist
-        sd: @sd
-
-    it 'formats description with nationality correctly', ->
-      @html.should.containEql "<meta property=\"og:description\" content=\"Pablo Picasso (Nationality, 1900-2000). This is Pablo Picasso"
+      @html.should.containEql "og:description\" content=\"Find the latest shows, biography, and artworks for sale by Pablo Picasso. Obsessed with celebrity, consumer culture, and mechanical (re)production, Pop..."
+      @html.should.containEql "<meta property=\"twitter:description\" content=\"Find the latest shows, biography, and artworks for sale by Pablo Picasso. Obsessed with celebrity, consumer culture, and mechanical (re)production, Pop artist Andy Warhol created some of the most..."

@@ -1,0 +1,24 @@
+h2 Works
+
+.artwork-filter-for-sale.artsy-checkbox
+  input(
+    type='checkbox', name='for-sale', id='for-sale'
+    checked=(filter.selected.has('price_range') ? 'checked' : undefined)
+  )
+  label( for='for-sale', data-label="Only For Sale" )
+
+for criteria, key in filter.root.criteria()
+  section
+    h3= criteria.label
+    ul: for criterion in criteria.filters
+      - active = filter.selected.isActive(criterion.key)
+      - count = displayFilter.get(key)[criterion.key] || 0
+      li.artwork-filter-criterion(
+        class=(active ? 'is-active' : 'is-inactive')
+        class=(count ? undefined : 'is-disabled' )
+      )
+        a.artwork-filter-select( data-value= criterion.key, data-key= key )
+          span.artwork-filter-label= criterion.label
+          span.artwork-filter-count (#{count})
+        if active
+          a.artwork-filter-remove( data-key= key ) Clear

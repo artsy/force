@@ -1,0 +1,14 @@
+.notifications-list-item
+  h4
+    a( href=artist.href() )= artist.get('name')
+    span= publishedAt
+    .notifications-works-added
+      = count + ' '
+      if count == 1
+        | work added
+      else
+        | works added
+  .notifications-published-artworks
+  .notifications-see-more
+    a.avant-garde-jump-link( href=artist.href() + '?sort=-published_at' ) See More
+      i.icon-chevron-small-right

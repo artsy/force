@@ -44,6 +44,7 @@ module.exports =
   REFLECTION_URL: 'http://artsy-reflection.s3-website-us-east-1.amazonaws.com/__reflection/forceartsynet'
   USE_RESIZE_PROXY: true
   SITEMAP_BASE_URL: 'http://artsy-sitemaps.s3-website-us-east-1.amazonaws.com'
+  ARTWORK_EMBED_URL: 'https://widgets.artsy.net/artwork/embed_link?url='
   ENABLE_AB_TEST: true
   KIOSK_MODE: false
   KIOSK_PAGE: false
@@ -58,7 +59,7 @@ module.exports =
   BIDDER_H1_COPY: 'Please enter your credit card details'
   BIDDER_H2_COPY: 'NOTE: All bidders need to have a valid payment method on file. Winning bidders will have the opportunity to pay by credit card, check or wire transfer.'
   SENTRY_DSN: null
-  IPHONE_APP_URL: 'https://itunes.apple.com/us/app/artsy-art-world-in-your-pocket/id703796080?ls=1&mt=8'
+  IPHONE_APP_COPY: 'Download the iPhone app: https://itunes.apple.com/us/app/artsy-art-world-in-your-pocket/id703796080?ls=1&mt=8'
   TWILIO_NUMBER: null
   TWILIO_ACCOUNT_SID: null
   TWILIO_AUTH_TOKEN: null

@@ -33,7 +33,7 @@ module.exports = class Artist extends Backbone.Model
     @relatedPosts = new Backbone.Collection [], model: require('./post.coffee')
     @relatedPosts.url = "#{sd.API_URL}/api/v1/related/posts"
     @relatedShows = new Backbone.Collection [], model: require('./partner_show.coffee')
-    @relatedShows.url = "#{sd.API_URL}/api/v1/related/shows?artist[]=#{@id}"
+    @relatedShows.url = "#{sd.API_URL}/api/v1/related/shows?artist[]=#{@id}&sort=-end_at"
     @artworks = new Artworks
     @artworks.url = "#{@url()}/artworks"
 
@@ -71,13 +71,29 @@ module.exports = class Artist extends Backbone.Model
     , options
 
   toPageTitle: ->
-    "#{if @get('name') then @htmlToText('name') else 'Unnamed Artist'} | Artist Biography, Artwork for Sale | Artsy"
+    # A/B test artist page titles
+    if /[a-h]/.exec(@id[0])
+      "#{if @get('name') then @htmlToText('name') else 'Unnamed Artist'} | #{@pageTitleArtworksCount()}, Artist Biography | Artsy"
+    else
+      "#{if @get('name') then @htmlToText('name') else 'Unnamed Artist'} | Artist Biography, Artwork for Sale | Artsy"
+
+  pageTitleArtworksCount: ->
+    artworksCount =
+      if @get('published_artworks_count') > 1000
+        Math.floor(@get('published_artworks_count') / 1000) * 1000
+      else if @get('published_artworks_count') > 100
+        Math.floor(@get('published_artworks_count') / 100) * 100
+      else if @get('published_artworks_count') > 20
+        Math.floor(@get('published_artworks_count') / 20) * 20
+
+    _.compact([
+      if artworksCount then "#{artworksCount}+"
+      "Artworks"
+    ]).join(' ')
 
   toPageDescription: (length=200) ->
-    # artists are usually displayed: Name (Nationality, Born-Died)
-    info = _.compact([@get('nationality'), @get('years')]).join(', ')
     smartTruncate(_.compact([
-     (if info?.length > 0 then "#{@get('name')} (#{info})" else @get('name'))
+     "Find the latest shows, biography, and artworks for sale by #{@displayName()}"
      (if @get('blurb')?.length > 0 then @mdToHtmlToText('blurb') else undefined)
     ]).join(". "), length)
 

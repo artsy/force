@@ -4,7 +4,7 @@
     a.related-post-content( href="/post/#{post.id}" )
       if post.defaultImage()
         .hoverable-image-link
-          .hoverable-image.is-four-three( style="background-image: url(#{post.defaultImage().imageUrlFor(300, 300)})" )
+          .hoverable-image.is-four-three( style="background-image: url(#{crop(post.defaultImage().imageUrlFor(), { width: 300, height: 225 })})" )
       if profile.get('owner')
         .rpc-author By #{profile.get('owner').name}
        if post.get('title')

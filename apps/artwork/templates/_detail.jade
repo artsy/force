@@ -83,6 +83,7 @@
         a( href= artwork.get('website'), target='_blank' )
           i.icon-website
           | Visit Website
+
       if artwork.isDownloadable()
         a.artwork-download-button(
           href= artwork.defaultImageUrl('larger'), target='_blank', download= artwork.downloadableFilename()
@@ -90,11 +91,22 @@
           i.icon-download
           | Download Image
 
+      if user
+        if artwork.isEmbeddableByUser(user)
+          a( href= artwork.embedUrl(), target='_blank' )
+            i.icon-code
+            | Embed Image
+        else
+          if user.hasLabFeature('Embed')
+            a( href='https://artsy.wufoo.com/forms/artsy-image-request-form/', target='_blank' )
+              i.icon-code
+              | Request Embed Access
+
       //- Administrative actions
       if user && user.isAdmin()
         a( href="#{sd.ADMIN_URL}/artworks/artwork/#{artwork.id}", target='_blank' )
           i.icon-edit
           | Edit
         a( href="#{sd.ADMIN_URL}/genome/artwork/#{artwork.id}", target='_blank' )
-          i.icon-genome
+          i.icon-link
           | Genome

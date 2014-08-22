@@ -1,0 +1,42 @@
+- section = sections[5]
+
+.about-container
+  include header
+
+//- "Gallery Partnerships"
+.about-container.about-section6-blurbs
+
+  .span3.about-section6-pull-blurb
+    +pull-blurb(section.pullBlurbLeft)
+    a.avant-garde-button-white( href=section.pullBlurbLeft.href, target='_blank' )
+      = section.pullBlurbLeft.button
+
+  .span3.about-section6-pull-blurb
+    +pull-blurb(section.pullBlurbRight)
+    for button in [section.pullBlurbRight.button1, section.pullBlurbRight.button2]
+      a.avant-garde-button-white( href=button.href, target='_blank' )
+        = button.label
+
+//- Links
+.about-container
+  for links in [section.pullBlurbLeft.links, section.pullBlurbRight.links]
+    .span3.about-section6-links: for link in links
+      .about-section6-link
+        .about-avant-garde-caption= link.h1
+        a( href=link.href )= link.text
+        if link.h1.match(/follow us/i)
+          span.about-section6-social-media
+            a.icon-twitter( href='https://twitter.com/artsy' target='_blank' )
+            a.icon-facebook( href='https://facebook.com/artsy' target='_blank' )
+            a.icon-instagram( href='https://instagram.com/artsy' target='_blank' )
+
+//- CTA / Logo
+.about-container
+  .span2
+    if user
+      | &nbsp;
+    else
+      +pull-blurb(section.pullBlurbCTA)
+      a.avant-garde-button-white.about-signup-button
+        = section.pullBlurbCTA.button
+  .span2: a( href='/' ): i#about-section6-logo.icon-logo

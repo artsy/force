@@ -6,11 +6,18 @@ geo = require '../geo/index.coffee'
 template = -> require('./template.jade') arguments...
 
 module.exports = class LocationSearchView extends Backbone.View
+  events:
+    'blur input': 'preAnnounce'
+
   initialize: (options = {}) ->
     { @autofocus } = options
 
   announce: (location) ->
     @trigger 'location:update', location
+
+  # Should always fire before Google's place_changed event
+  preAnnounce: ->
+    @announce name: @$('input').val()
 
   attach: ->
     google.maps.event.addListener @autocomplete, 'place_changed', =>

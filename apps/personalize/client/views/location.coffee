@@ -1,7 +1,6 @@
 _ = require 'underscore'
 StepView = require './step.coffee'
 LocationSearchView = require '../../../../components/location_search/index.coffee'
-GeoFormatter = require 'geoformatter'
 template = -> require('../../templates/location.jade') arguments...
 
 module.exports = class LocationView extends StepView
@@ -9,8 +8,7 @@ module.exports = class LocationView extends StepView
     'click a': 'advance'
 
   update: (location) ->
-    @geo = new GeoFormatter(location)
-    @user.setGeo @geo
+    @user.setLocation location
     @advance()
 
   remove: ->

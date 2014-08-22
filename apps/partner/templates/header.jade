@@ -9,8 +9,9 @@ header.partner-header
     .partner-info
       h1.partner-name= profile.displayName()
       p.partner-bio= profile.get('bio')
-      if profile.isInstitution()
-        .partner-followers= profile.formatFollowText()
       .partner-actions
         button.avant-garde-button-white.follow-button
+        if profile.get('follows_count')
+          .partner-followers
+            = profile.formatFollowText()
   .partner-nav

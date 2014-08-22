@@ -60,8 +60,8 @@ module.exports = class Post extends Backbone.Model
 
   metaTitle: ->
     _.compact([
-      @profile()?.displayName()
       @titleOrBody()
+      @profile()?.displayName()
       "Artsy"
     ]).join(" | ")
 

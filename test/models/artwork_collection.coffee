@@ -36,7 +36,15 @@ describe 'ArtworkCollection', ->
   afterEach ->
     Backbone.sync.restore()
 
-  describe 'saveArtwork', ->
+  describe '#initialize', ->
+
+    it 'initializes an embeddable collection for embed labs', ->
+      sd.CURRENT_USER = { lab_features: ['Embed'] }
+      artworkCollection = new ArtworkCollection(userId: @currentUser.get('id'))
+      artworkCollection.embeddableCollection.should.be.ok
+      sd.CURRENT_USER = undefined
+
+  describe '#saveArtwork', ->
 
     it 'adds artwork to the saved artworks collection', ->
       artwork = new Artwork { id: 'baz', title: 'Baz' }
@@ -83,7 +91,7 @@ describe 'ArtworkCollection', ->
       Backbone.sync.args[0][2].success { foo: 'bar' }
       successCb.called.should.be.ok
 
-  describe 'unsaveArtwork', ->
+  describe '#unsaveArtwork', ->
 
     it 'removes artwork from the saved artworks artworkCollection', ->
       artwork = @artworkCollection.get('artworks').first()
@@ -138,7 +146,7 @@ describe 'ArtworkCollection', ->
       @artworkCollection.isSaved(unsavedArtwork).should.be.false
       @artworkCollection.isSaved(savedArtwork).should.be.true
 
-  describe 'broadcastSaved', ->
+  describe '#broadcastSaved', ->
 
     it 'triggers an artwork specific add for all artworks in the artworkCollection', (done) ->
       specificArtworkAddedCalls = 0
@@ -152,7 +160,7 @@ describe 'ArtworkCollection', ->
         done()
       , 100
 
-  describe 'artworkIdsToSync', ->
+  describe '#artworkIdsToSync', ->
 
     it 'returns all artwork ids that need a server check to determine if saved', ->
       @artworkCollection.addRepoArtworks new Artworks([
@@ -167,7 +175,7 @@ describe 'ArtworkCollection', ->
       @artworkCollection.artworkIdsToSync().length.should.equal 1
 
 
-  describe 'syncSavedArtworks', ->
+  describe '#syncSavedArtworks', ->
 
     xit 'requests the difference between this artworkCollection and the application artworks repository to determine what\'s saved', ->
       @artworkCollection.addRepoArtworks new Artworks([
@@ -193,7 +201,7 @@ describe 'ArtworkCollection', ->
       @artworkCollection.pendingRequests.length.should.equal 0
       @artworkCollection.completedRequests.length.should.equal 0
 
-  describe 'processRequests', ->
+  describe '#processRequests', ->
 
     xit 'makes multiple requests determined by @requestSlugMax', ->
       @artworkCollection.artworkIdsToSync = sinon.stub().returns(['moo', 'foo', 'bar'])

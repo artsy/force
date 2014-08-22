@@ -9,8 +9,7 @@
         a.related-post-content( href="/post/#{post.id}" )
           .hoverable-image-link
             if post.defaultImage()
-              .hoverable-image.is-four-three( style="background-image: url(#{post.defaultImage().imageUrlFor(300, 300)})" )
-
+              .hoverable-image.is-four-three( style="background-image: url(#{crop(post.defaultImage().imageUrlFor(), { width: 300, height: 225 })})" )
           if post.get('title')
             .rpc-title!= post.get('title')
           if profile.get('owner')

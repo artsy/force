@@ -14,7 +14,9 @@ module.exports = class PostVideoLink extends Backbone.View
     @$el.show()
 
   showVideo: =>
-    @$('.video').append(@model.get('oembed_json').html).show()
+    # Replace http with https
+    html = @model.get('oembed_json').html.replace('http://', 'https://')
+    @$('.video').append(html).show()
     @$('.placeholder').hide()
     @onPlay?()
     false

@@ -54,6 +54,9 @@ module.exports = class Artwork extends Backbone.Model
     # Blank additionalImage is to handle works without images
     @images?.findWhere(is_default: true) or @images?.first() or new AdditionalImage()
 
+  embedUrl: ->
+    "#{sd.ARTWORK_EMBED_URL}#{sd.APP_URL}#{@href()}"
+
   hasAdditionalImages: ->
     @images?.length > 1
 
@@ -327,7 +330,10 @@ module.exports = class Artwork extends Backbone.Model
     not _.isFunction @saleMessage
 
   showActionsList: (user) ->
-    @get('website') or @isDownloadable() or (user and user.isAdmin())
+    @get('website') or @isDownloadable() or (user and user.isAdmin()) or @isEmbeddableByUser(user)
+
+  isEmbeddableByUser: (user) ->
+    user?.hasLabFeature('Embed') and @get('absolutely_embeddable')
 
   showAboutArtworkHeading: ->
     @get('blurb') or @get('provenance') or @get('exhibition_history') or @get('signature') or @get('additional_information') or @get('literature')

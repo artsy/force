@@ -1,0 +1,19 @@
+extends ../../../components/main_layout/templates/index
+
+block head
+  if page.id == 'events'
+    include events_meta
+  else if page.id == 'press-list'
+    include press_meta
+  else
+    include meta
+
+append locals
+  - assetPackage = 'about'
+
+block body
+  #about-markdown-page
+    a.contextual-return-link( href='/about' )
+      i.icon-chevron-small-left
+      | Back to the about page
+    != page.mdToHtml('content')

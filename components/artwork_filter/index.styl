@@ -1,0 +1,105 @@
+@import '../stylus_lib'
+
+small-avant-garde-size = 11px
+
+.artwork-section
+  position relative
+  min-height 500px
+  clearfix()
+.artwork-filter
+.artwork-columns-section > .artwork-columns
+  transition opacity 0.25s
+  &[data-state='loading']
+    opacity 0.5
+    pointer-events none
+.artwork-columns-section
+.artwork-filter
+  position relative
+  padding 20px 0
+.artwork-columns-section
+  width 78%
+  float right
+  padding-left 20px
+  > .artwork-columns
+    margin-bottom 40px
+  h2
+    margin 5px 0 20px 0
+    font-style italic
+.artwork-filter
+  width 22%
+  float left
+  background-color white
+  &[data-position='docked']
+    position absolute
+    bottom 0
+  &[data-position='stuck']
+    position fixed
+    top home-logo-size
+  section
+    margin 20px 0
+  h2
+  h3
+    margin 5px 0
+  h2
+    garamond()
+    font-size 26px
+    margin-bottom 20px
+  h3
+    avant-garde()
+    font-size small-avant-garde-size
+  li
+    line-height 1.6
+#artwork-see-more
+  display block
+  margin 20px auto
+
+.artwork-filter-reset
+  display block
+  overflow ellipsis
+  avant-garde()
+  font-size small-avant-garde-size
+  transition color 0.25s
+  > i
+    font-size @font-size
+    margin-right 0.25em
+  &:hover
+    color red-color
+
+.artwork-filter-for-sale
+  margin 0
+
+.artwork-filter-criterion
+  display block
+  clearfix()
+  font-size 18px
+  text-decoration none
+  transition color 0.25s
+  &:hover
+    color gray-darker-color
+  &.is-active
+    .artwork-filter-label
+      max-width 65%
+    .artwork-filter-label
+    .artwork-filter-count
+      color purple-color
+  &.is-disabled
+    a:first-child
+      cursor arrow
+      pointer-events none
+    .artwork-filter-label
+    .artwork-filter-count
+    .artwork-filter-remove
+      color gray-dark-color
+.artwork-filter-label
+.artwork-filter-count
+  float left
+.artwork-filter-label
+  overflow ellipsis
+  max-width 80%
+.artwork-filter-count
+  margin-left 0.25em
+  color gray-darker-color
+.artwork-filter-remove
+  margin-left 0.25em
+  color purple-color
+  text-decoration underline

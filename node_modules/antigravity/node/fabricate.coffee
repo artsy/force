@@ -758,4 +758,50 @@ module.exports = fabricate = (type, extObj = {}) ->
       end_at: "2014-03-08T17:30:00+00:00"
       updated_at: "2014-02-24T16:34:25Z"
 
+    when 'artist_filtered_search_suggest'
+      total: 65
+      related_gene: {}
+      medium:
+        design: 1
+        drawing: 10
+        installation: 1
+        painting: 7
+        prints: 8
+        sculpture: 23
+        "work-on-paper": 41
+      dimension:
+        96: 63
+      gallery:
+        "armand-bartos-fine-art": 2
+        "artware-editions": 1
+        "barbara-krakow-gallery": 4
+        "carolina-nitsch-contemporary-art": 15
+        "casterline-goodman-gallery": 1
+        caviar20: 1
+        "cheim-and-read": 21
+        "galerie-le-minotaure": 1
+        "galerie-zlotowski": 1
+        "lora-reynolds-gallery": 1
+        mixografia: 1
+        "peter-blum-gallery": 4
+        "robert-miller-gallery": 2
+        "senior-and-shopmaker-gallery": 3
+        "susan-sheehan-gallery": 1
+        "xavier-hufkens": 3
+      institution:
+        "miniature-museum-ria-and-lex-daniels": 1
+        "museum-of-arts-and-design": 1
+        "serpentine-gallery": 1
+      period:
+        1940: 4
+        1960: 8
+        1970: 1
+        1980: 3
+        1990: 16
+        2000: 27
+        2010: 3
+      sale_status: {}
+      price_range:
+        "-1:1000000000000": 58
+
   , extObj
