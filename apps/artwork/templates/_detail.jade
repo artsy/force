@@ -93,7 +93,7 @@
 
       if artwork.isEmbeddableByUser(user)
         a( href= artwork.embedUrl(), target='_blank' )
-          i.icon-embed
+          i.icon-code
           | Embed Image
 
       //- Administrative actions
@@ -102,5 +102,5 @@
           i.icon-edit
           | Edit
         a( href="#{sd.ADMIN_URL}/genome/artwork/#{artwork.id}", target='_blank' )
-          i.icon-genome
+          i.icon-link
           | Genome
