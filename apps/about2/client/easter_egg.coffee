@@ -26,6 +26,10 @@ module.exports = ->
                 <em>Source</em></a>
             </p>
           </div>
+          <div class='carter-section-scroll-down avant-garde-header-center' style='width: 720px; margin-left: 400px'>
+            Scroll Down
+            <div class='icon-chevron-down' style='margin-bottom: 7px'></div>
+          </div>
           <video id='carter-video' \
             style="position: fixed; top: 0; left: 0; opacity: 0; transition: opacity 0.3s; z-index: -1">
             <source src="#{location.origin}/video/carter.mp4" type='video/mp4' />
@@ -46,7 +50,9 @@ module.exports = ->
             height: if wide then '100%' else null
         else
           $(this).css position: 'relative'
-          $(video).css opacity: 0
+          css = opacity: 0
+          css[if $(window).width() > $(window).height() then 'height' else 'width'] = "100%"
+          $(video).css css
       offset: 120
     $("html, body").animate { scrollTop: $('#about2-section7').offset().top }, 700, ->
       $(window).on 'scroll', ->
