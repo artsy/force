@@ -5,6 +5,6 @@ require('../lib/vendor/jquery.iframe-transport.js')
 $ ->
   if location.pathname.match /// /about/edit ///
     require('../apps/about/client/edit.coffee').init()
-  else
+  else unless location.pathname.match /// about/page/.* ///
     require('../apps/about/client/index.coffee').init()
-  require('../apps/about/client/easter_egg.coffee')()
+    require('../apps/about/client/easter_egg.coffee')()
