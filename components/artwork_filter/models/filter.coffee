@@ -16,7 +16,7 @@ module.exports = class Filter
     throw new Error 'Requires a model' unless @model?
     @selected = new Selected
     @filterStates = new FilterStates
-    @root = @active = @newState()
+    @root = @active = @buildState()
 
   by: (key, value, options = {}) ->
     @engaged = true
@@ -36,13 +36,21 @@ module.exports = class Filter
       @trigger 'update:counts'
     false
 
-  newState: (options = {}) ->
-    filterState = new FilterState { id: @stateId() }, modelId: @model.id
+  buildState: ->
+    new FilterState { id: @stateId() }, modelId: @model.id
+
+  fetchState: (filterState, options = {}) ->
     options.success = _.wrap options.success, (success, model, response, options) =>
       @active = model
       success? model, response, options
     @fetch filterState, options
     filterState
+
+  newState: (options = {}) ->
+    @fetchState @buildState(), options
+
+  fetchRoot: (options = {}) ->
+    @fetchState @root, options
 
   fetch: (filterState, options = {}) ->
     if state = @filterStates.get(@stateId())

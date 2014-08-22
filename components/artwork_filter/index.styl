@@ -5,7 +5,6 @@ small-avant-garde-size = 11px
 .artwork-section
   position relative
   min-height 500px
-  padding-top 20px
   clearfix()
 .artwork-filter
 .artwork-columns-section > .artwork-columns
@@ -16,6 +15,7 @@ small-avant-garde-size = 11px
 .artwork-columns-section
 .artwork-filter
   position relative
+  padding 20px 0
 .artwork-columns-section
   width 78%
   float right
@@ -28,6 +28,13 @@ small-avant-garde-size = 11px
 .artwork-filter
   width 22%
   float left
+  background-color white
+  &[data-position='docked']
+    position absolute
+    bottom 0
+  &[data-position='stuck']
+    position fixed
+    top home-logo-size
   section
     margin 20px 0
   h2

@@ -6,15 +6,15 @@ Backbone = require 'backbone'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
 Artwork = require '../../../models/artwork'
-ArtworkFilterRouter = rewire '../router'
-ArtworkFilterView = benv.requireWithJadeify resolve(__dirname, '../view'), ['template', 'filterTemplate', 'headerTemplate']
-ArtworkFilterRouter.__set__ 'ArtworkFilterView', ArtworkFilterView
 
 describe 'ArtworkFilterRouter', ->
   before (done) ->
     benv.setup =>
       benv.expose $: require 'jquery'
       Backbone.$ = $
+      @ArtworkFilterRouter = rewire '../router'
+      ArtworkFilterView = benv.requireWithJadeify resolve(__dirname, '../view'), ['template', 'filterTemplate', 'headerTemplate']
+      @ArtworkFilterRouter.__set__ 'ArtworkFilterView', ArtworkFilterView
       done()
 
   after ->
@@ -22,7 +22,7 @@ describe 'ArtworkFilterRouter', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    @router = new ArtworkFilterRouter model: new Artwork(fabricate 'artwork')
+    @router = new @ArtworkFilterRouter model: new Artwork(fabricate 'artwork')
 
   afterEach ->
     Backbone.sync.restore()

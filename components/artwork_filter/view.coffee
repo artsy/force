@@ -3,6 +3,7 @@ Backbone = require 'backbone'
 Filter = require './models/filter.coffee'
 ArtworkColumns = require './collections/artwork_columns.coffee'
 ArtworkColumnsView = require '../artwork_columns/view.coffee'
+tick = require '../util/tick.coffee'
 template = -> require('./templates/index.jade') arguments...
 filterTemplate = -> require('./templates/filter.jade') arguments...
 headerTemplate = -> require('./templates/header.jade') arguments...
@@ -26,14 +27,16 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @listenTo @filter.selected, 'change', @fetchArtworksFromBeginning
     @listenTo @filter.selected, 'change', @scrollToTop
 
-    @fetchArtworks()
+    @initialStickyFilterSetup = _.once @setupStickyFilter
+
     @render()
+    @filter.fetchRoot()
+    @fetchArtworks()
 
   scrollToTop: ->
     @$htmlBody ?= $('html, body')
-    @$siteHeader ?= $('#main-layout-header')
     visibleTop = @$el.offset().top - @$siteHeader.height()
-    @$htmlBody.animate { scrollTop: visibleTop }, 500
+    @$htmlBody.animate { scrollTop: visibleTop - 1 }, 500
 
   handleState: (el, eventName) ->
     if state = { request: 'loading', sync: 'loaded', error: 'loaded' }[eventName]
@@ -60,6 +63,9 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @artworks.fetchFromBeginning data: @filter.selected.toJSON()
 
   cacheSelectors: ->
+    @$window = $(window)
+    @$siteHeader = $('#main-layout-header')
+    @$columnsSection = @$('#artwork-columns-section')
     @$columns = @$('#artwork-columns')
     @$filter = @$('#artwork-filter')
     @$button = @$('#artwork-see-more')
@@ -67,6 +73,51 @@ module.exports = class ArtworkFilterView extends Backbone.View
 
   postRender: ->
     @cacheSelectors()
+
+  setupStickyFilter: ->
+    @onResize()
+    @setupPositionHelpers()
+    @listenTo @artworks, 'sync', (-> _.defer @onScroll)
+    @$window
+      .on 'scroll.filter', tick(@onScroll)
+      .on 'resize.filter', tick(@onResize)
+
+  onResize: =>
+    @sp =
+      headerHeight: @$siteHeader.height()
+      visibleArea: @$window.height() - @$siteHeader.height()
+    if @$filter.height() > @sp.visibleArea
+      @lockDisabled = true
+      @$filter.attr 'data-position', 'default'
+    else
+      @lockDisabled = false
+
+  setupPositionHelpers: ->
+    @dp =
+      columnsTop: => @$columnsSection.offset().top
+      columnsBottom: => @dp.columnsTop() + @$columnsSection.height()
+      filterBottom: => @$filter.offset().top + @$filter.height()
+      filterFromBottom: => @dp.columnsBottom() - @$filter.height()
+      aboveColumns: (top) => top < @dp.columnsTop()
+      insideColumns: (top) => top <= @dp.filterFromBottom() and top >= @dp.columnsTop()
+      belowColumns: (top) => @dp.filterBottom() >= @dp.columnsBottom()
+
+  onScroll: =>
+    return if @lockDisabled
+
+    top = @$window.scrollTop() + @sp.headerHeight
+
+    if @filterPosition is 'stuck' and @filterPosition isnt 'docked' and @dp.belowColumns(top)
+      @filterPosition = 'docked'
+      @$filter.attr 'data-position', 'docked'
+
+    else if @filterPosition isnt 'stuck' and @dp.insideColumns(top)
+      @filterPosition = 'stuck'
+      @$filter.attr 'data-position', 'stuck'
+
+    else if @filterPosition isnt 'default' and @dp.aboveColumns(top)
+      @filterPosition = 'default'
+      @$filter.attr 'data-position', 'default'
 
   selectCriteria: (e) ->
     e.preventDefault()
@@ -114,6 +165,7 @@ module.exports = class ArtworkFilterView extends Backbone.View
   renderFilter: ->
     @$filter.html(filterTemplate filter: @filter, displayFilter: @displayFilter())
     @setState()
+    @initialStickyFilterSetup()
 
   render: ->
     @$el.html template()
