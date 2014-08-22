@@ -15,7 +15,7 @@ app.get '/past-terms-10-29-12', routes.vanityUrl('past-terms-10-29-12')
 app.get '/privacy', routes.vanityUrl('privacy')
 app.get '/past-privacy', routes.vanityUrl('past-privacy')
 app.get '/security', routes.vanityUrl('security')
-app.get '/press', routes.vanityUrl('press')
+app.get '/press', (req, res) -> res.redirect '/about/page/press'
 app.get '/conditions-of-sale', routes.vanityUrl('conditions-of-sale')
 app.get '/auction-info', routes.vanityUrl('auction-info')
 app.get '/embed-terms', routes.vanityUrl('embed-terms')
