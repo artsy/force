@@ -18,7 +18,6 @@ module.exports = class AboutView extends Backbone.View
 
   initialize: ->
     @$window = $(window)
-    @$window.on 'keyup', @toggleGrid
     @$window.on 'scroll', @iphoneScroll
 
     @cacheSelectors()
@@ -121,9 +120,6 @@ module.exports = class AboutView extends Backbone.View
     e.preventDefault()
     $(e.currentTarget).addClass 'is-clicked'
     @$jobs.removeClass 'is-truncated'
-
-  toggleGrid: (e) =>
-    @$('#about-grid').toggle() if e.which is 71 # "g" key
 
   setupFlipHearts: ->
     @$("#about-section1-pull-blurb-3-artworks .about-image-container").waypoint
