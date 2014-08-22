@@ -15,4 +15,5 @@ if (show.posterImageUrl())
   meta( property="og:image", content=show.posterImageUrl() )
 else
   meta( property="og:image", content="#{sd.ASSET_PATH}og_image.jpg" )
-meta( name='fragment', content='!' )
+if sd.INCLUDE_ESCAPED_FRAGMENT
+  meta( name="fragment", content="!" )

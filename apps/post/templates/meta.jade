@@ -13,4 +13,5 @@ if post.get('shareable_image_url')
   meta( property="og:image", content=post.get('shareable_image_url') )
 else
   meta( property="twitter:card", content="summary" )
-meta( name='fragment', content='!' )
+if sd.INCLUDE_ESCAPED_FRAGMENT
+  meta( name='fragment', content='!' )

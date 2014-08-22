@@ -12,5 +12,6 @@ if params.artistId
   link( rel="canonical", href=("#{sd.APP_URL}/artist/#{params.artistId}") )
 else
   link( rel="canonical", href=(sd.APP_URL + sd.CURRENT_PATH) )
-unless tab
-  meta( name="fragment", content="!" )
+if sd.INCLUDE_ESCAPED_FRAGMENT
+  unless tab
+    meta( name="fragment", content="!" )
