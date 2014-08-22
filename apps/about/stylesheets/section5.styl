@@ -1,0 +1,92 @@
+#about-section5-images1-left
+#about-section5-images1-right
+  .about-image-container:nth-child(even) > *
+    span(2)
+
+// Slideshow
+#about-section5-slideshow
+  position relative
+  margin 0 auto 20px auto
+  background-color black
+.about-section5-slide
+  position absolute
+  top 0
+  transition opacity 4s linear
+  opacity 0
+  z-index 0
+  &.is-deactivating
+    opacity 1
+    z-index 1
+  &.is-active
+    transition opacity 3s linear
+    opacity 1
+    z-index 2
+  &:first-child
+    position relative
+
+#about-section5-images2-left
+  .about-image-container:nth-child(odd) > *
+    span(2)
+  .about-pull-blurb
+    padding-left gutters(2) + column-width
+#about-section5-images2-right
+  .about-image-container:nth-child(even) > *
+    span(2)
+
+// Jobs module
+#about-section5-jobs
+  margin-left column-width + gutters(2)
+  overflow hidden
+  transition all 0.5s
+  bottom-cover-gradient(220px)
+  // Can't animate to height auto but can
+  // animate an arbitrary max-height
+  max-height 9999px
+  &::after
+    transition opacity 0.5s
+    opacity 0
+  &.is-truncated
+    max-height 600px
+    &::after
+      opacity 1
+.about-job
+  border-bottom 1px solid gray-color
+  display block
+  padding 25px 0
+  transition opacity 0.125s
+  &:hover
+    opacity 0.6
+  > .icon-chevron-right
+    font-size 24px
+    font-weight bold
+    width column-width - gutter-width
+    text-align right
+  > *
+    display inline-block
+    vertical-align middle
+.about-job-left
+  width columns(2) + gutters(2)
+  font-size 26px
+  line-height 32px
+.about-job-title
+.about-job-location
+  display block
+.about-job-location
+  font-style italic
+.about-job-description
+  margin-left gutters(2)
+  width columns(2) + gutters(5)
+#about-section5-jobs-all
+  font-size 26px
+  text-align right
+  margin-top 50px
+#about-section5-jobs-all-button
+  transition opacity 0.5s
+  &.is-clicked
+    opacity 0
+    cursor default
+
+#about-section5-images
+  margin-bottom 80px
+  & + .about-container
+    margin-top 0

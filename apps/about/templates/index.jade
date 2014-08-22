@@ -1,0 +1,12 @@
+extends ../../../components/main_layout/templates/index
+
+block head
+  include meta
+
+append locals
+  - bodyClass = bodyClass + ' body-no-margins body-transparent-header body-transparent-header-white body-about'
+  - assetPackage = 'about'
+
+block body
+  include grid
+  include sections

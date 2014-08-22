@@ -1,0 +1,4 @@
+.about-section-nav
+  nav: for section, i in sections
+    a.about-nav-link( data-idx=i, href="/about/#{section.slug}" )
+      span!= section.header
