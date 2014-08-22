@@ -1,0 +1,14 @@
+extends ../../../components/main_layout/templates/index
+
+block head
+  include meta
+
+append locals
+  - bodyClass = bodyClass + ' body-about-edit'
+  - assetPackage = 'about'
+
+block body
+  h1#about-edit-h1.avant-garde-header-center Edit About Page
+  #about-edit-container
+    #about-edit-hulk
+    #about-edit-example

@@ -1,0 +1,64 @@
+- section = sections[4]
+
+.about-container
+  include header
+
+//- "Our team is working to make the ..."
+.about-container#about-section5-images
+  .row
+    .span3
+      +pull-blurb(section.pullBlurb1)
+      #about-section5-images1-left
+        for image in firstHalf(section.pullBlurb1.srcs)
+          .about-image-container.is-pin-right
+            img( data-src= image.src )
+            .about-garamond-caption: em
+              = image.caption
+    #about-section5-images1-right.span3
+      for image in secondHalf(section.pullBlurb1.srcs)
+        .about-image-container
+          img( data-src= image.src )
+          .about-garamond-caption: em
+            = image.caption
+  //- Skyline slideshow
+  .row: #about-section5-slideshow
+    for image in section.slideshow.srcs
+      .about-section5-slide.span6
+        img( data-src= image.src )
+
+  //- "Join the Artsy team"
+  .row
+    .span4.is-centered
+      - firstImage = section.pullBlurb2.images.shift()
+      .about-image-container
+        img( data-src= firstImage.src )
+        .about-garamond-caption: em
+          = firstImage.caption
+  .row
+    #about-section5-images2-left.span3
+      for image in firstHalf(section.pullBlurb2.images)
+        .about-image-container.is-pin-right
+          img( data-src= image.src )
+          .about-garamond-caption: em
+            = image.caption
+      +pull-blurb(section.pullBlurb3)
+    #about-section5-images2-right.span3
+      for image in secondHalf(section.pullBlurb2.images)
+        .about-image-container
+          img( data-src= image.src )
+          .about-garamond-caption: em
+            = image.caption
+
+//- Job Listings
+.about-container
+  #about-section5-jobs.is-truncated
+    for job in section.jobs
+      a.about-job( href= job.href )
+        .about-job-left
+          .about-job-title= job.header
+          .about-job-location= job.location
+        .about-job-description= job.description
+        i.icon-chevron-right
+  #about-section5-jobs-all
+    a#about-section5-jobs-all-button.faux-underline
+      | See all #{section.jobs.length} openings
