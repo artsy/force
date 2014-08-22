@@ -1,6 +1,6 @@
 //- Common external scripts
 
-if sd.NODE_ENV != 'test'
+if sd.NODE_ENV != 'test' && sd.BROWSER && sd.BROWSER.family != 'PhantomJS'
   //- Mixpanel & Google analytics script
   include ./google_analytics.html
   //- Fonts.com font loader
