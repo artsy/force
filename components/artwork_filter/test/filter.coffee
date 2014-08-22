@@ -35,11 +35,11 @@ describe 'Filter', ->
       @filter.selected.set 'foo', 'bar'
 
     it 'fetches and returns a new state based on the current selected model', ->
-      Backbone.sync.callCount.should.equal 1
+      Backbone.sync.callCount.should.equal 0
       state = @filter.newState()
       state.id.should.equal 'foo=bar'
       Backbone.sync.args[0][2].data.should.eql foo: 'bar'
-      Backbone.sync.callCount.should.equal 2
+      Backbone.sync.callCount.should.equal 1
 
     it 'sets the active state to the most recent successful fetch', ->
       state = @filter.newState()
@@ -55,17 +55,17 @@ describe 'Filter', ->
         @filter.by 'foo', 'bar'
 
       it 'returns the already fetched priced filter state without fetching again', ->
-        Backbone.sync.callCount.should.equal 3
+        Backbone.sync.callCount.should.equal 2
         @filter.priced().should.equal @priced
-        Backbone.sync.callCount.should.equal 3
+        Backbone.sync.callCount.should.equal 2
 
     describe 'not yet fetched', ->
       it 'fetches the priced filter state', ->
-        Backbone.sync.callCount.should.equal 1
+        Backbone.sync.callCount.should.equal 0
         @filter.priced().should.be.false
-        Backbone.sync.callCount.should.equal 2
+        Backbone.sync.callCount.should.equal 1
         @filter.priced().id.should.equal 'price_range=-1%3A1000000000000'
-        Backbone.sync.callCount.should.equal 2
+        Backbone.sync.callCount.should.equal 1
 
       it 'triggers an update:counts event', (done) ->
         @filter.once 'update:counts', -> done()
@@ -125,19 +125,20 @@ describe 'Filter', ->
       @filter.by 'price_range', 'x'
 
     it 'unsets the filter condition', ->
-      Backbone.sync.callCount.should.equal 3
+      Backbone.sync.callCount.should.equal 2
       @filter.selected.has('medium').should.be.true
       @filter.deselect 'medium'
       @filter.selected.has('medium').should.be.false
       @filter.engaged.should.be.true
       Backbone.sync.args[0][2].data.should.eql price_range: 'x'
-      Backbone.sync.callCount.should.equal 4
-      @filter.filterStates.pluck('id').should.eql ['root', 'medium=drawing', 'medium=drawing&price_range=x', 'price_range=x']
+      Backbone.sync.callCount.should.equal 3
+      @filter.filterStates.pluck('id').should.eql ['medium=drawing', 'medium=drawing&price_range=x', 'price_range=x']
 
     it 'disengages the filter when there is no selected criteria', ->
-      Backbone.sync.callCount.should.equal 3
+      Backbone.sync.callCount.should.equal 2
       @filter.deselect 'medium'
       @filter.deselect 'price_range'
+      # Needs to fetch root
       @filter.engaged.should.be.false
       Backbone.sync.callCount.should.equal 4
-      @filter.filterStates.pluck('id').should.eql ['root', 'medium=drawing', 'medium=drawing&price_range=x', 'price_range=x']
+      @filter.filterStates.pluck('id').should.eql ['medium=drawing', 'medium=drawing&price_range=x', 'price_range=x', 'root']
