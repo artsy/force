@@ -15,6 +15,7 @@ app.get '/about/page/events', routes.page('events')
 
 app.get '/about', routes.index
 app.get /^\/about((?!\/edit).)*$/, routes.index # Scroll routes
+app.post '/about/sms', routes.sendSMS
 
 # Safely init upload routes for missing S3 env vars (like in test)
 try
@@ -22,5 +23,4 @@ try
   app.all '/about*', routes.adminOnly
   app.get '/about/edit', routes.edit
   app.post '/about/edit', routes.upload
-app.post '/about/sms', routes.sendSMS
 app.use express.static __dirname + '/public'
