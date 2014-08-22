@@ -1,7 +1,12 @@
 extends ../../../components/main_layout/templates/index
 
 block head
-  include meta
+  if page.id == 'events'
+    include events_meta
+  else if page.id == 'press-list'
+    include press_meta
+  else
+    include meta
 
 append locals
   - assetPackage = 'about'
