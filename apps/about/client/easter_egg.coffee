@@ -47,7 +47,7 @@ module.exports = ->
         else
           $(this).css position: 'relative'
           $(video).css opacity: 0
-        wide = $(window).width() > $(window).height()
+        wide = $(window).width() / $(window).height() > 1.77 # Wider than video aspect ratio
         $(video).css
           width: if wide then '100%' else null
           height: if wide then null else '100%'
