@@ -180,3 +180,128 @@ describe 'ArtworkFilterView', ->
       # Is now visible again
       _.isEmpty(@view.$button.attr('style')).should.be.true
       @view.$button.text().should.equal 'See More (6)'
+
+  describe 'locking filter', ->
+    beforeEach ->
+      @view.onResize()
+      @view.setupPositionHelpers()
+      sinon.stub(@view.$filter, 'offset').returns top: 250
+      sinon.stub(@view.$filter, 'height').returns 200
+      sinon.stub(@view.$columnsSection, 'offset').returns top: 250
+      sinon.stub(@view.$columnsSection, 'height').returns 500
+
+    afterEach ->
+      @view.$filter.offset.restore()
+      @view.$filter.height.restore()
+      @view.$columnsSection.offset.restore()
+      @view.$columnsSection.height.restore()
+
+    describe '#setupPositionHelpers', ->
+      it 'returns the correct values for the different properties we are observing', ->
+        @view.dp.columnsTop().should.equal 250
+        @view.dp.columnsBottom().should.equal 750
+        @view.dp.filterBottom().should.equal 450
+        @view.dp.filterFromBottom().should.equal 550
+
+      describe 'scrolling', ->
+        it 'returns the correct boolean values when above the columns', ->
+          top = 50
+          @view.dp.aboveColumns(top).should.be.true
+          @view.dp.insideColumns(top).should.be.false
+          @view.dp.belowColumns(top).should.be.false
+
+        it 'returns the correct boolean values when inside the columns', ->
+          # Note this denotes the area between the top and the filterFromBottom
+          # columnsButtom is @ 750
+          top = 300
+          @view.dp.aboveColumns(top).should.be.false
+          @view.dp.insideColumns(top).should.be.true
+          @view.dp.belowColumns(top).should.be.false
+          top = 549
+          @view.dp.aboveColumns(top).should.be.false
+          @view.dp.insideColumns(top).should.be.true
+          @view.dp.belowColumns(top).should.be.false
+          top = 551
+          @view.dp.aboveColumns(top).should.be.false
+          @view.dp.insideColumns(top).should.be.false
+          @view.dp.belowColumns(top).should.be.true
+
+        it 'returns the correct boolean values when below the columns', ->
+          top = 700
+          @view.dp.aboveColumns(top).should.be.false
+          @view.dp.insideColumns(top).should.be.false
+          @view.dp.belowColumns(top).should.be.true
+
+    describe '#onScroll', ->
+      beforeEach ->
+        @attrSpy = sinon.spy $.fn, 'attr'
+
+      afterEach ->
+        @attrSpy.restore()
+        @view.$window.scrollTop.restore()
+
+      it 'applies the correct data-position when above the columns', ->
+        sinon.stub(@view.$window, 'scrollTop').returns 0
+        @view.onScroll()
+        @view.onScroll()
+        @view.onScroll()
+        @attrSpy.callCount.should.equal 1
+        @view.$filter.attr('data-position').should.equal 'default'
+
+      it 'applies the correct data-position when above the columns', ->
+        sinon.stub(@view.$window, 'scrollTop').returns 249
+        @view.onScroll()
+        @view.onScroll()
+        @view.onScroll()
+        @attrSpy.callCount.should.equal 1
+        @view.$filter.data('position').should.equal 'default'
+        @view.$window.scrollTop.restore()
+        sinon.stub(@view.$window, 'scrollTop').returns 250
+        @view.onScroll()
+        @view.onScroll()
+        @view.onScroll()
+        @attrSpy.callCount.should.equal 2
+        @view.$filter.attr('data-position').should.equal 'stuck'
+
+      it 'applies the correct data-position when below the columns', ->
+        sinon.stub(@view.$window, 'scrollTop').returns 700
+        @view.onScroll()
+        # Must first be stuck to be able to dock
+        @attrSpy.callCount.should.equal 0
+        @view.filterPosition = 'stuck'
+        @view.onScroll()
+        @view.onScroll()
+        @view.onScroll()
+        @attrSpy.callCount.should.equal 1
+        @view.$filter.attr('data-position').should.equal 'docked'
+        # Can un-dock
+        @view.$window.scrollTop.restore()
+        sinon.stub(@view.$window, 'scrollTop').returns 400
+        @view.onScroll()
+        @view.$filter.attr('data-position').should.equal 'stuck'
+
+    describe '#onResize', ->
+      beforeEach ->
+        sinon.stub(@view, 'getStaticPositions')
+        sinon.stub(@view.$window, 'scrollTop')
+
+      afterEach ->
+        @view.getStaticPositions.restore()
+        @view.$window.scrollTop.restore()
+
+      it 'disables the lock if the filter is larger than the visible area height', ->
+        @view.$filter.height().should.equal 200
+        @view.sp.visibleArea = 100
+        @view.onResize()
+        @view.lockDisabled.should.be.true
+        @view.$filter.attr('data-position').should.equal 'default'
+        @view.onScroll()
+        @view.$window.scrollTop.called.should.be.false
+
+      it 'enables the lock if the filter is smaller than the visible area height', ->
+        @view.$filter.height().should.equal 200
+        @view.sp.visibleArea = 1000
+        @view.onResize()
+        @view.lockDisabled.should.be.false
+        @view.onScroll()
+        @view.$window.scrollTop.called.should.be.true

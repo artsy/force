@@ -82,10 +82,14 @@ module.exports = class ArtworkFilterView extends Backbone.View
       .on 'scroll.filter', tick(@onScroll)
       .on 'resize.filter', tick(@onResize)
 
-  onResize: =>
+  getStaticPositions: ->
     @sp =
       headerHeight: @$siteHeader.height()
       visibleArea: @$window.height() - @$siteHeader.height()
+
+  onResize: =>
+    @getStaticPositions()
+
     if @$filter.height() > @sp.visibleArea
       @lockDisabled = true
       @$filter.attr 'data-position', 'default'
@@ -100,7 +104,7 @@ module.exports = class ArtworkFilterView extends Backbone.View
       filterFromBottom: => @dp.columnsBottom() - @$filter.height()
       aboveColumns: (top) => top < @dp.columnsTop()
       insideColumns: (top) => top <= @dp.filterFromBottom() and top >= @dp.columnsTop()
-      belowColumns: (top) => @dp.filterBottom() >= @dp.columnsBottom()
+      belowColumns: (top) => (top + @$filter.height()) >= @dp.columnsBottom()
 
   onScroll: =>
     return if @lockDisabled
