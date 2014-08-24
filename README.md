@@ -26,7 +26,7 @@ Ezel [shares javascript modules that run in the browser and on the server](http:
 
 ## NOTE: This app is not runnable. 
 
-Due to image licensing issues we cannot open up the artsy.net API. We are actively working on this. In the mean time, we are putting this up as an example of how we write code and structure our applications at Artsy. We would love any feedback!
+Due to image licensing issues we cannot open up the artsy.net API. We are actively working on this. In the meantime, we are putting this up as an example of how we write code and structure our applications at Artsy. We would love any feedback!
 
 If you have any questions please feel free to hit us up on twitter: [@craigspaeth](https://twitter.com/craigspaeth), [@dzucconi](https://twitter.com/dzucconi) and [@zamiang](https://twitter.com/zamiang)
 
