@@ -19,6 +19,7 @@ app.get '/press', (req, res) -> res.redirect '/about/page/press'
 app.get '/conditions-of-sale', routes.vanityUrl('conditions-of-sale')
 app.get '/auction-info', routes.vanityUrl('auction-info')
 app.get '/embed-terms', routes.vanityUrl('embed-terms')
+app.get '/embeddable-artists', routes.vanityUrl('embeddable-artists')
 
 app.get '/job/:id', routes.index
 # Handle urls like /job/devops-engineer/about
