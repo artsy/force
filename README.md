@@ -30,6 +30,10 @@ Due to image licensing issues we cannot open up the artsy.net API. We are active
 
 If you have any questions please feel free to hit us up on twitter: [@craigspaeth](https://twitter.com/craigspaeth), [@dzucconi](https://twitter.com/dzucconi) and [@zamiang](https://twitter.com/zamiang)
 
+### License
+
+MIT License, see [LICENSE](LICENSE.md) for details.
+
 ````
                   ._,.
             ."..-..pf
