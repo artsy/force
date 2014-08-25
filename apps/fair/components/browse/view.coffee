@@ -30,7 +30,8 @@ module.exports = class FairBrowseView extends Backbone.View
     @artworkParams.on 'change reset', @artworksSection
     @artworkParams.on 'change reset', @renderArtworksHeader
     @artworkParams.on 'change reset', @updateFilterPageTitle
-    @counts.fetch()
+    @counts.fetch
+      success: => @fair.trigger 'countsFetched'
     @highlightHome()
 
   updateFilterPageTitle: =>

@@ -29,7 +29,7 @@ sp:
 
 # Start server pointing to production with cache
 spc:
-	REDIS_URL=http://localhost:6379 API_URL=http://api.artsy.net $(BIN)/coffee index.coffee
+	REDIS_URL=http://localhost:6379 APPLICATION_NAME=force-production API_URL=http://api.artsy.net foreman start
 
 # Start server in debug mode pointing to staging & open node inspector
 ssd:

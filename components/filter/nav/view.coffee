@@ -80,3 +80,4 @@ module.exports = class FilterNav extends Backbone.View
 
   all: ->
     @params.clear().trigger('reset')
+    false
