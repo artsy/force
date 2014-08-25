@@ -2,6 +2,8 @@
 
 @index = (req, res, next) ->
   return next() unless res.locals.profile?.isUser()
+  if res.locals.tab
+    res.locals.sd.INCLUDE_ESCAPED_FRAGMENT = false
   res.render 'index'
 
 @collection = (req, res, next) ->
