@@ -42,6 +42,14 @@ module.exports = class Carousel extends Backbone.View
     @height = options.height
     @render()
 
+  cacheSelectors: ->
+    @$track = @$('.carousel-track')
+    @$preDecoys = @$('.carousel-pre-decoys')
+    @$postDecoys = @$('.carousel-post-decoys')
+    @$decoys = @$preDecoys.add @$postDecoys
+    @$figures = @$('.carousel-figures .carousel-figure')
+    @$dots = @$('.carousel-dot')
+
   render: ->
     figures = @collection.models
 
@@ -55,11 +63,11 @@ module.exports = class Carousel extends Backbone.View
     postFigures = figures[..]
     center = Math.ceil(@length / 2)
 
-    @$el.addClass('carousel-loading')
+    @cacheSelectors()
+
+    @$el.addClass 'carousel-loading'
     # Start the carousel at the first image
     @setActive 0
-    # Store jQuery ref to the track that shifts
-    @$track = @$('.carousel-track')
     # When images are loaded, do the math
     if @$el?.imagesLoaded
       @$el.imagesLoaded => @setStops()
@@ -89,17 +97,17 @@ module.exports = class Carousel extends Backbone.View
     # Must reset these or the throttled resize will use stale values.
     @stopPositions = []
     windowWidth = @$window.width()
-    if @$('.carousel-pre-decoys').width() < windowWidth
+    if @$preDecoys.width() < windowWidth
       @noDecoys = true
-      @$('.carousel-pre-decoys, .carousel-post-decoys').hide()
+      @$decoys.hide()
       @prefixWidth = 0
     else
       @noDecoys = false
-      @$('.carousel-pre-decoys, .carousel-post-decoys').show()
-      @prefixWidth = @$('.carousel-pre-decoys').width()
+      @$decoys.show()
+      @prefixWidth = @$preDecoys.width()
 
     totalLefts = @prefixWidth
-    @$('.carousel-figures .carousel-figure').each (index, figure) =>
+    @$figures.each (index, figure) =>
       $fig = $(figure)
       w = $fig.outerWidth(true)
       widths.push w
@@ -114,7 +122,7 @@ module.exports = class Carousel extends Backbone.View
     @firstDecoyPosition = Math.floor((windowWidth - _.first(widths)) / 2) - (totalLefts)
 
     @shiftCarousel @stopPositions[@active], false
-    @$el.removeClass('carousel-loading')
+    @$el.removeClass 'carousel-loading'
 
 
   bindEvents: ->
@@ -136,11 +144,15 @@ module.exports = class Carousel extends Backbone.View
     @$track.off @transitionEvents
 
   setActive: (index) ->
-    @$(".carousel-figures .carousel-figure").removeClass('carousel-active')
-    @$(".carousel-dot").removeClass('carousel-active')
     @active = index
-    @$(".carousel-figures .carousel-figure:eq(#{@active})").addClass('carousel-active')
-    @$(".carousel-dot:eq(#{@active})").addClass('carousel-active')
+    @$figures
+      .removeClass('carousel-active')
+      .filter(":eq(#{@active})")
+      .addClass 'carousel-active'
+    @$dots
+      .removeClass('carousel-active')
+      .filter(":eq(#{@active})")
+      .addClass 'carousel-active'
 
   shiftCarousel: (stop, animate = true) ->
     # Borrowed from apple and John Ball's write up here http://johnbhall.com/iphone-4s/
