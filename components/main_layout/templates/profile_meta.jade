@@ -9,4 +9,5 @@ link( rel="alternate", media=sd.MOBILE_MEDIA_QUERY, href=(sd.CANONICAL_MOBILE_UR
 meta( property="og:type", content="profile" )
 meta( property="profile:username", content=profile.get('id') )
 meta( property="twitter:card", content="summary" )
-meta( name='fragment', content='!' )
+if sd.INCLUDE_ESCAPED_FRAGMENT
+  meta( name='fragment', content='!' )
