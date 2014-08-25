@@ -1,8 +1,8 @@
 # Force: The Artsy.net frontend
 
-This is the public repository for [artsy.net's](https://artsy.net) frontend application. This is renders the html and provides rich interaction for artsy.net
+This is the public repository for [artsy.net's](https://artsy.net) frontend application. This application renders the html and provides rich interaction for artsy.net
 
- 'Isomorphic' web apps are a very new thing. At Artsy, we would love to share our working version of one with the community. This repo is an example of a large application using the [Ezel](https://github.com/artsy/ezel) boilerplate. Ezel projects share code server/client and renders server/client. They grow by breaking up the application into modular [apps](https://github.com/artsy/force-public/tree/master/apps) and reusable [components](https://github.com/artsy/force-public/tree/master/components).
+ 'Isomorphic' web apps are a very new thing. At Artsy, we would love to share our working version of one with the community. This repo is an example of a large application using the [Ezel](https://github.com/artsy/ezel) boilerplate. Ezel projects share code server/client and render server/client. They grow by breaking up the application into modular [apps](https://github.com/artsy/force-public/tree/master/apps) and reusable [components](https://github.com/artsy/force-public/tree/master/components).
 
 Please see the [doc folder](https://github.com/artsy/force-public/tree/master/doc) for help.
 
