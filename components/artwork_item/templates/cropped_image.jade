@@ -1,0 +1,8 @@
+- var defaultImage = artwork.defaultImage()
+img.artwork-item-image(
+  src= crop(defaultImage.imageUrlForMaxSize(), { width: imageWidth, height: imageHeight })
+  nopin= artwork.noPinAttr()
+  alt= artwork.toAltText()
+  width= imageWidth
+  height= imageHeight
+)

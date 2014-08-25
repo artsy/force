@@ -8,7 +8,9 @@
 figure.artwork-item( data-artwork=artwork.get('id') )
   .artwork-item-image-container
     a.artwork-item-image-link(href=artwork.href())
-      if imageWidth
+      if imageWidth && imageHeight
+        include ./cropped_image
+      else if imageWidth
         include ./fixed_width_image
       else
         include ./variable_width_image
