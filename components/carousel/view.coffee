@@ -210,9 +210,9 @@ module.exports = class Carousel extends Backbone.View
     false
 
   # Shift the carousel on clicks unless the artwork is the currently selected.
-  figureClick: (event) ->
+  figureClick: (e) ->
     unless @inTransition
-      index = $(event.target).parent().data('carousel-figure-index')
+      index = $(e.currentTarget).data 'carousel-figure-index'
       @shiftRight() if index > @active
       @shiftLeft() if index < @active
     false
