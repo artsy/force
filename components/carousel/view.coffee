@@ -10,10 +10,10 @@ module.exports = class Carousel extends Backbone.View
   events:
     'click .carousel-dot': 'dotClick'
     'click .carousel-figures .carousel-figure': 'figureClick'
-    'click .carousel-pre-decoys .carousel-figure': 'leftArrowClick'
-    'click .carousel-arrow-left': 'leftArrowClick'
-    'click .carousel-post-decoys .carousel-figure': 'rightArrowClick'
-    'click .carousel-arrow-right': 'rightArrowClick'
+    'click .carousel-pre-decoys .carousel-figure': 'shiftLeft'
+    'click .carousel-arrow-left': 'shiftLeft'
+    'click .carousel-post-decoys .carousel-figure': 'shiftRight'
+    'click .carousel-arrow-right': 'shiftRight'
     'touchstart .carousel-figures-clip': 'swipeStart'
     'touchend .carousel-figures-clip': 'swipeEnd'
 
@@ -177,15 +177,14 @@ module.exports = class Carousel extends Backbone.View
 
     @$track.css props
 
-  keyUp: (event) ->
-    switch event.keyCode
+  keyUp: (e) ->
+    switch e.keyCode
       # left arrow and the h key
       when 37, 72
         @shiftLeft()
       # right arrow and the l key
       when 39, 76
         @shiftRight()
-    false
 
   shiftLeft: ->
     unless @inTransition
@@ -196,7 +195,6 @@ module.exports = class Carousel extends Backbone.View
       _.defer =>
         @setActive @active - 1
         @shiftCarousel()
-    false
 
   shiftRight: ->
     unless @inTransition
@@ -207,7 +205,6 @@ module.exports = class Carousel extends Backbone.View
       _.defer =>
         @setActive @active + 1
         @shiftCarousel()
-    false
 
   # Shift the carousel on clicks unless the artwork is the currently selected.
   figureClick: (e) ->
@@ -215,17 +212,12 @@ module.exports = class Carousel extends Backbone.View
       index = $(e.currentTarget).data 'carousel-figure-index'
       @shiftRight() if index > @active
       @shiftLeft() if index < @active
-    false
 
   # Shift the carousel on clicks unless the artwork is the currently selected.
-  dotClick: (event) ->
+  dotClick: (e) ->
     unless @inTransition
-      @setActive @$(event.target).data('carousel-dot-position')
+      @setActive @$(e.target).data('carousel-dot-position')
       @shiftCarousel()
-    false
-
-  leftArrowClick: (event) -> @shiftLeft(); return false
-  rightArrowClick: (event) -> @shiftRight(); return false
 
   swipeStart: (e) ->
     e.preventDefault()
