@@ -13,6 +13,8 @@
   var scrollFrame = function(selector) {
     refreshOnNewIframePage();
     document.addEventListener('click', function(e) {
+      // Ignore ctrl/cmd/shift clicks, as well as middle clicks
+      if (e.ctrlKey || e.metaKey || e.shiftKey || e.which === 2) return;
 
       // Ignore if the element doesnt match our selector
       var els = document.querySelectorAll(selector);
