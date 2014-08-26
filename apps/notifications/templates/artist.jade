@@ -1,14 +1,13 @@
 .notifications-list-item
-  h4
-    a( href=artist.href() )= artist.get('name')
-    span= publishedAt
-    .notifications-works-added
-      = count + ' '
-      if count == 1
-        | work added
-      else
-        | works added
+  header.notifications-list-item-header
+    .is-pull-left
+      h4: a( href=artist.href() )= artist.get('name')
+      .notifications-works-added
+        | #{count} work#{count === 1 ? undefined : 's'} added
+    .notifications-list-item-timestamp.is-pull-right
+      = publishedAt
   .notifications-published-artworks
   .notifications-see-more
-    a.avant-garde-jump-link( href=artist.href() + '?sort=-published_at' ) See More
+    a.avant-garde-jump-link( href=artist.href() + '?sort=-published_at' )
+      | See More
       i.icon-chevron-small-right
