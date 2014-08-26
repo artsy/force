@@ -53,31 +53,27 @@ module.exports = class Carousel extends Backbone.View
   render: ->
     figures = @collection.models
 
-    @$el.html(carouselTemplate carouselFigures: figures, height: @height)
-
     if @length < @minLength
       @$el.empty()
-      return @
+      return this
 
-    preFigures = figures[..]
-    postFigures = figures[..]
-    center = Math.ceil(@length / 2)
-
+    @$el
+      .addClass('carousel-loading')
+      .html(carouselTemplate carouselFigures: figures, height: @height)
     @cacheSelectors()
 
-    @$el.addClass 'carousel-loading'
     # Start the carousel at the first image
     @setActive 0
     # When images are loaded, do the math
     if @$el?.imagesLoaded
       @$el.imagesLoaded => @setStops()
     # Ensure the carousel is revealed even if an image gets stuck
-    _.delay (=>
+    _.delay =>
       @$el.removeClass('carousel-loading')
       @setStops()
-    ), 5000
+    , 5000
     @bindEvents()
-    @
+    this
 
   # In order to prevent DOM manipulation, the stage has two copies of the figures.
   # For a list of 6 figures (numbered 1 through 6), the rendered list looks like this:
@@ -127,12 +123,10 @@ module.exports = class Carousel extends Backbone.View
 
   bindEvents: ->
     # Bind key events to cycle the carousel
-    @$document.on "keyup.partner-show-carousel", (event) => @keyUp(event)
+    @$document.on "keyup.partner-show-carousel", (e) => @keyUp(e)
 
-    # Update the layout on window resize with a loading spinner while stops
-    # are re-calculated
+    # Update the layout on window resize
     throttledSetStops = _.throttle (=> @setStops()), 500
-    @$window.on "resize.partner-show-carousel", => @$el.addClass('loading')
     @$window.on "resize.partner-show-carousel", throttledSetStops
 
     # This will release the inTransition blocker when transitions complete
