@@ -2,15 +2,18 @@ extends ../../../components/main_layout/templates/index
 
 append locals
   - assetPackage = 'notifications'
+  - bodyClass = bodyClass + ' body-infinite-scroll'
 
 block body
   #notifications-page.main-layout-container
     #notifications-header
-      span.garamond-header-center
-        | Works by Artists You Follow
-      span.notifications-header-follow
-        a#notifications-manage-follow.avant-garde-jump-link( href='/following/profiles') Manage who you follow
-          i.icon-chevron-small-right
+      h1 Works by Artists You Follow
+      a#notifications-manage-follow.avant-garde-jump-link(
+        href='/following/profiles'
+      )
+        | Manage who you follow
+        i.icon-chevron-small-right
     #notifications-published-artworks
-      #notifications-published-artworks-spinner
-        .loading-spinner
+      //- Rendered client-side
+    #notifications-published-artworks-spinner
+      .loading-spinner
