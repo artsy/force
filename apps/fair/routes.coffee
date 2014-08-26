@@ -3,7 +3,6 @@ _.mixin(require 'underscore.string')
 Profile = require '../../models/profile.coffee'
 Fair = require '../../models/fair.coffee'
 Search = require '../../collections/search.coffee'
-FilterSuggest = require '../../models/filter_suggest.coffee'
 cache = require '../../lib/cache'
 client = cache.client
 kinds = require '../favorites_follows/kinds'
