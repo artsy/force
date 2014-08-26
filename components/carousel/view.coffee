@@ -93,14 +93,21 @@ module.exports = class Carousel extends Backbone.View
     # Must reset these or the throttled resize will use stale values.
     @stopPositions = []
     windowWidth = @$window.width()
-    if @$preDecoys.width() < windowWidth
+
+    # The decoys width isn't going to change, so cache it, which helps
+    # if we want to externally show and hide the carousel
+    @preDecoysWidth ?= @$preDecoys.width()
+
+    if @preDecoysWidth < windowWidth
       @noDecoys = true
       @$decoys.hide()
       @prefixWidth = 0
+      @trigger 'width:insufficient'
     else
       @noDecoys = false
       @$decoys.show()
       @prefixWidth = @$preDecoys.width()
+      @trigger 'width:sufficient'
 
     totalLefts = @prefixWidth
     @$figures.each (index, figure) =>
