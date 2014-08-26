@@ -6,12 +6,11 @@ PageableCollection = require 'backbone-pageable'
 { API_URL } = require('sharify').data
 
 module.exports = class Notifications extends PageableCollection
-  
   model: Artwork
 
   url: "#{sd.API_URL}/api/v1/notifications"
-  
-  defaults: 
+
+  defaults:
     type: 'ArtworkPublished'
     since: 30
 
@@ -26,4 +25,4 @@ module.exports = class Notifications extends PageableCollection
 
   fetch: (options = {}) ->
     options.data = user_id: @userId, type: @type, since: @since
-    super
+    PageableCollection::fetch.call this, options
