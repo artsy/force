@@ -1,18 +1,26 @@
 - height = height || 480
+
+mixin carouselFigure(figure)
+  if figure.has('href') || typeof figure.href === 'function'
+    a( href=(figure.get('href') || figure.href()) )
+      img( src=figure.imageUrlForHeight(height) )
+  else
+    img( src=figure.imageUrlForHeight(height) )
+
 .carousel-figures-clip
   .carousel-track
     .carousel-set.carousel-pre-decoys
       each figure in carouselFigures
         figure.carousel-figure
-          img( src=figure.imageUrlForHeight(height) )
+          +carouselFigure(figure)
     .carousel-set.carousel-figures
       each figure, index in carouselFigures
         figure.carousel-figure( data-carousel-figure-index=index )
-          img( src=figure.imageUrlForHeight(height) )
+          +carouselFigure(figure)
     .carousel-set.carousel-post-decoys
       each figure in carouselFigures
         figure.carousel-figure
-          img( src=figure.imageUrlForHeight(height) )
+          +carouselFigure(figure)
 
 .carousel-controls
   .icon-chevron-left.carousel-arrow-left
