@@ -32,6 +32,7 @@ module.exports = class Filter
     @fetchingPriced = true
     filterState = new FilterState { id: pricedId }, modelId: @model.id
     filterState.fetch data: @booleans['for-sale'], success: (model, response, options) =>
+      @fetchingPriced = false
       @filterStates.add model
       @trigger 'update:counts'
     false
