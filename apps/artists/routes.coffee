@@ -1,4 +1,5 @@
 _ = require 'underscore'
+_s = require 'underscore.string'
 Q = require 'q'
 OrderedSets = require '../../collections/ordered_sets'
 Artist = require '../../models/artist'
@@ -51,4 +52,4 @@ parseGenes = (collection) ->
     res.render 'letter',
       artists: artists
       letterRange: artists.range
-      letter: _.capitalize(letter)
+      letter: _s.capitalize(letter)

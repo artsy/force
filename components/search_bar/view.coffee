@@ -76,7 +76,7 @@ module.exports = class SearchBarView extends Backbone.View
       .text feedback or @feedbackString()
 
   shouldDisplaySuggestions: ->
-    _.isEmpty(_.trim(@$input.val()))
+    _.isEmpty(_s.trim(@$input.val()))
 
   displaySuggestions: ->
     if @shouldDisplaySuggestions()

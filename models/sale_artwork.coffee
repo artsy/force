@@ -6,8 +6,6 @@ Backbone = require 'backbone'
 Artwork = require './artwork.coffee'
 Sale = require './sale.coffee'
 
-_.mixin(require 'underscore.string')
-
 MAX_POLL_TIMES = 7
 POLL_DELAY = 1000
 

@@ -1,4 +1,5 @@
 _ = require 'underscore'
+_s = require 'underscore.string'
 sd = require('sharify').data
 Backbone = require 'backbone'
 CoverImage = require './cover_image.coffee'
@@ -6,8 +7,6 @@ Icon = require './icon.coffee'
 Artworks = require '../collections/artworks.coffee'
 { Markdown } = require 'artsy-backbone-mixins'
 { compactObject } = require './mixins/compact_object.coffee'
-
-_.mixin(require 'underscore.string')
 
 module.exports = class Profile extends Backbone.Model
 
@@ -80,7 +79,7 @@ module.exports = class Profile extends Backbone.Model
   formatFollowText: ->
     return unless @has('follows_count')
     follows = @get('follows_count')
-    "#{_.numberFormat(follows)} Follower#{if follows is 1 then '' else 's'}"
+    "#{_s.numberFormat(follows)} Follower#{if follows is 1 then '' else 's'}"
 
   metaTitle: (tab) ->
     _.compact([

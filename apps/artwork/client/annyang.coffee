@@ -1,10 +1,9 @@
 Backbone = require 'backbone'
-_ = require 'underscore'
+_s = require 'underscore.string'
 mediator = require '../../../lib/mediator.coffee'
 require 'annyang'
 
 module.exports = class AnnyangView extends Backbone.View
-
   initialize: (options) ->
     if annyang
       { @artwork } = options
@@ -25,7 +24,7 @@ module.exports = class AnnyangView extends Backbone.View
   onPath: (term) ->
     words = term.split(' ')
     route = words[0]
-    slug = _.slugify(words.slice(1, words.length).join(' '))
+    slug = _s.slugify(words.slice(1, words.length).join(' '))
     if route is 'profile'
       window.location = "/#{slug}"
     else

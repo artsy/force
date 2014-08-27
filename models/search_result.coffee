@@ -1,9 +1,8 @@
 _ = require 'underscore'
+_s = require 'underscore.string'
 sd = require('sharify').data
 Backbone = require 'backbone'
 { Image } = require 'artsy-backbone-mixins'
-
-_.mixin(require 'underscore.string')
 
 module.exports = class SearchResult extends Backbone.Model
   _.extend @prototype, Image(sd.SECURE_IMAGES_URL)
@@ -26,10 +25,10 @@ module.exports = class SearchResult extends Backbone.Model
     @value = @display()
 
   display: ->
-    _.trim(@get('name') || @get('owner')?.name || @get('display'))
+    _s.trim(@get('name') || @get('owner')?.name || @get('display'))
 
   trimmedDisplay: ->
-    _.trim(_.truncate(@get('display'), 75))
+    _s.trim(_s.truncate(@get('display'), 75))
 
   location: ->
     if @get('model') is 'profile'
@@ -47,7 +46,7 @@ module.exports = class SearchResult extends Backbone.Model
         'show'
       else @get('model')
 
-    _.capitalize model
+    _s.capitalize model
 
   highlightedDisplay: (term) ->
     text = @get('display')

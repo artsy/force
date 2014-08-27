@@ -1,5 +1,5 @@
 _ = require 'underscore'
-_.mixin(require 'underscore.string')
+_s = require 'underscore.string'
 Backbone = require 'backbone'
 sd = require('sharify').data
 FeedItems = require '../../../../components/feed/collections/feed_items.coffee'
@@ -59,7 +59,7 @@ module.exports = class BoothsView extends Backbone.View
       else if @params.get 'partner_region'
         "Exhibitors from #{@params.get 'partner_region'}"
       else if @params.get 'artist'
-        "#{_.titleize _.humanize @params.get 'artist'} at #{@fair.get 'name'}"
+        "#{_s.titleize _s.humanize @params.get 'artist'} at #{@fair.get 'name'}"
       else
         "All Exhibitors at #{@fair.get 'name'}"
     )

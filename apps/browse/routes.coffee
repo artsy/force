@@ -1,6 +1,4 @@
 Q = require 'q'
-_ = require 'underscore'
-_.mixin require 'underscore.string'
 OrderedSets = require '../../collections/ordered_sets.coffee'
 Genes = require '../../collections/genes.coffee'
 FilterSuggest = require '../../models/filter_suggest.coffee'

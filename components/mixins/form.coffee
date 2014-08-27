@@ -1,5 +1,5 @@
 _ = require 'underscore'
-_.mixin(require 'underscore.string')
+_s = require 'underscore.string'
 
 # Extract out into a site-wide language file (?)
 en =
@@ -47,7 +47,7 @@ module.exports =
     , {}
 
     form = _.reduce $form.serializeArray(), (memo, input) ->
-      memo[input.name] = _.trim input.value
+      memo[input.name] = _s.trim input.value
       memo
     , {}
 
@@ -89,7 +89,7 @@ module.exports =
         # provided they have name attributes
         @$("[name=#{k}]").attr 'data-state', 'error'
 
-        "#{_.humanize(k)} #{v}"
+        "#{_s.humanize(k)} #{v}"
       )
         .join('; ')
         # Multiple errors on a single param are

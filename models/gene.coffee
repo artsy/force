@@ -1,4 +1,5 @@
 _ = require 'underscore'
+_s = require 'underscore.string'
 sd = require('sharify').data
 Backbone = require 'backbone'
 Artworks = require '../collections/artworks.coffee'
@@ -26,7 +27,7 @@ module.exports = class Gene extends Backbone.Model
   toPageTitle: -> "#{@get('name')} | Artsy"
 
   # Trim whitespace and newlines
-  toPageDescription: -> _.clean(@mdToHtmlToText('description'))
+  toPageDescription: -> _s.clean(@mdToHtmlToText('description'))
 
   initialize: ->
     @relatedArtists = new Backbone.Collection [], model: Artist

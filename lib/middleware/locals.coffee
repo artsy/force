@@ -5,7 +5,6 @@
 uuid = require 'node-uuid'
 { parse, format } = require 'url'
 _ = require 'underscore'
-_.mixin require 'underscore.string'
 { NODE_ENV } = require '../../config'
 { fill, resize, crop } = require '../../lib/resizer'
 

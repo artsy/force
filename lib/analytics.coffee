@@ -5,11 +5,10 @@
 #
 
 _ = require 'underscore'
+_s = require 'underscore.string'
 sd = require('sharify').data
 qs = require('querystring')
 hash = require('spark-md5').hash
-
-_.mixin(require 'underscore.string')
 
 module.exports = (options) =>
   return if module.exports.getUserAgent()?.indexOf?('PhantomJS') > -1
@@ -94,7 +93,7 @@ module.exports.track =
 
 module.exports.modelNameAndIdToLabel = (modelName, id) ->
   throw new Error('Requires modelName and id') unless modelName? and id?
-  "#{_.capitalize(modelName)}:#{id}"
+  "#{_s.capitalize(modelName)}:#{id}"
 
 # Special multi-event
 #
