@@ -41,10 +41,6 @@ describe 'Filter', ->
       Backbone.sync.args[0][2].data.should.eql foo: 'bar'
       Backbone.sync.callCount.should.equal 1
 
-    it 'sets the active state to the most recent successful fetch', ->
-      state = @filter.newState()
-      @filter.active.should.equal state
-
     it 'accepts callbacks in the options', (done) ->
       @filter.newState success: -> done()
 
