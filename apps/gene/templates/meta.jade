@@ -5,7 +5,7 @@ meta( property="og:description", content=gene.toPageDescription() )
 meta( property="twitter:description", content=gene.toPageDescription() )
 link( rel="canonical", href=(sd.APP_URL + "/gene/#{gene.get('id')}") )
 meta( property="og:url", content=(sd.APP_URL + "/gene/#{gene.get('id')}") )
-meta( property="og:image", content="#{sd.ASSET_PATH}og_image.jpg" )
+meta( property="og:image", content=gene.imageUrl('big_and_tall') )
 meta( property="og:type", content=(sd.FACEBOOK_APP_NAMESPACE + ":gene" ) )
 meta( property="twitter:card", content="summary" )
 if sd.INCLUDE_ESCAPED_FRAGMENT
