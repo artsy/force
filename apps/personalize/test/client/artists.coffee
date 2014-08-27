@@ -100,6 +100,10 @@ describe 'ArtistsView', ->
       @view.disposeSuggestionSet artist
       _.isNull(@view.followButtonViews[key]).should.be.ok
 
+    it 'guards against cases where an undefined is passed in (?)', (done) ->
+      @view.disposeSuggestionSet undefined
+      done()
+
   describe '#renderSuggestions', ->
     it 'renders related artists based on following', ->
       artist = new Artist(fabricate 'artist')
