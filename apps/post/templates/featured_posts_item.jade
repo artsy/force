@@ -1,15 +1,15 @@
-- attachment  = post.get('featured_posts_thumbnail')
-- profile     = post.profile()
+- attachment = post.get('featured_posts_thumbnail')
+- profile = post.profile()
 
 if attachment && (attachment.get('type') === 'PostArtwork')
-  - url = attachment.artwork().defaultImage().imageUrlFor(249, 167)
+  - src = attachment.artwork().defaultImage().cropUrlFor({ width: 250, height: 167 })
 else
-  - url = attachment.imageUrlFor(249, 167)
+  - src = attachment.cropUrlFor({ width: 250, height: 167 })
 
 .grid-item.post-featured-post-item( data-id=post.id )
   if attachment
     a.hoverable-image-link( href=post.href(), data-attachment=attachment.id )
-      .hoverable-image.is-three-two( style="background-image: url(#{url});" )
+      img( src= src )
   if post.get('title')
     h2.pfpi-title: a( href=post.href() )!= post.get('title')
   if post.has('profile')
