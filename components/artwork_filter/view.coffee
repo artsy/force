@@ -163,11 +163,21 @@ module.exports = class ArtworkFilterView extends Backbone.View
         artworkSize: 'tall'
     @setState()
 
-  displayFilter: ->
+  pricedFilter: ->
     (if @filter.selected.has('price_range') then @filter.priced() else @filter.root) or @filter.root
 
+  forSaleCount: ->
+    count = if @filter.selected.has('price_range')
+      @filter.active.get('total')
+    else
+      @filter.active.boolean('for-sale')
+    count or 0
+
   renderFilter: ->
-    @$filter.html(filterTemplate filter: @filter, displayFilter: @displayFilter())
+    @$filter.html filterTemplate
+      filter: @filter
+      pricedFilter: @pricedFilter()
+      forSaleCount: @forSaleCount()
     @setState()
     @initialStickyFilterSetup()
 
