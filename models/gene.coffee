@@ -24,7 +24,9 @@ module.exports = class Gene extends Backbone.Model
   alphaSortKey: -> @get('id')
 
   toPageTitle: -> "#{@get('name')} | Artsy"
-  toPageDescription: -> @mdToHtmlToText('description')
+
+  # Trim whitespace and newlines
+  toPageDescription: -> _.clean(@mdToHtmlToText('description'))
 
   initialize: ->
     @relatedArtists = new Backbone.Collection [], model: Artist
