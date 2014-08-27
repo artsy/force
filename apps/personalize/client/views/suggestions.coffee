@@ -1,5 +1,4 @@
 _ = require 'underscore'
-_s = require 'underscore.string'
 sd = require('sharify').data
 qs = require 'querystring'
 Backbone = require 'backbone'
@@ -153,7 +152,7 @@ module.exports = class SuggestionsView extends StepView
 
   followsToSuggestions: (collection) ->
     @suggestions.reset _.filter collection.pluck('profile'), (profile) =>
-      _s.contains @restrictType, profile.owner_type
+      _.contains @restrictType, profile.owner_type
 
   fetchAndRenderSuggestions: (options = {}) ->
     @suggestions = new Profiles
