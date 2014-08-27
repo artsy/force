@@ -1,4 +1,5 @@
 _ = require 'underscore'
+_s = require 'underscore.string'
 Backbone = require 'backbone'
 Cookies = require 'cookies-js'
 { parse } = require 'url'
@@ -7,7 +8,6 @@ Form = require '../mixins/form.coffee'
 mediator = require '../../lib/mediator.coffee'
 analytics = require '../../lib/analytics.coffee'
 LoggedOutUser = require '../../models/logged_out_user.coffee'
-
 { templateMap, stateEventMap, successEventMap, routeCopyMap } = require './maps.coffee'
 
 class State extends Backbone.Model
@@ -106,7 +106,7 @@ module.exports = class AuthModalView extends ModalView
     @reenableForm null, reset: false
 
     if response.error?
-      @showError _.capitalize response.error
+      @showError _s.capitalize response.error
     else
       Cookies.set('destination', @destination, expires: 60 * 60 * 24) if @destination
 

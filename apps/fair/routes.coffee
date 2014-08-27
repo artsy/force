@@ -1,5 +1,4 @@
 _ = require 'underscore'
-_.mixin(require 'underscore.string')
 Profile = require '../../models/profile.coffee'
 Fair = require '../../models/fair.coffee'
 Search = require '../../collections/search.coffee'

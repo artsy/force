@@ -1,5 +1,5 @@
 _ = require 'underscore'
-_.mixin require 'underscore.string'
+_s = require 'underscore.string'
 Backbone = require 'backbone'
 Artworks = require '../../../collections/artworks.coffee'
 FilterSortCount = require '../sort_count/view.coffee'
@@ -71,7 +71,7 @@ module.exports = class FilterArtworksView extends Backbone.View
     @columnsView.appendArtworks(new Artworks(res).models)
 
   renderCounts: =>
-    countsFormat = _.numberFormat @counts.get('total')
+    countsFormat = _s.numberFormat @counts.get('total')
     @$('.filter-artworks-num').html countsFormat
 
     # Update meta description

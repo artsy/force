@@ -1,4 +1,5 @@
 _ = require 'underscore'
+_s = require 'underscore.string'
 sd = require('sharify').data
 Backbone = require 'backbone'
 Edition = require './edition.coffee'
@@ -84,7 +85,7 @@ module.exports = class Artwork extends Backbone.Model
     @defaultImage().get('downloadable')
 
   downloadableFilename: ->
-    _.slugify @toOneLine()
+    _s.slugify @toOneLine()
 
   # Are there comparable artworks;
   # such that we can display a link to auction results

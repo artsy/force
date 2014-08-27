@@ -1,4 +1,5 @@
 _ = require 'underscore'
+_s = require 'underscore.string'
 Backbone = require 'backbone'
 PersonalizeState = require './state.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
@@ -17,8 +18,6 @@ views =
   BookmarksView: require './views/bookmarks.coffee'
   FavoritesView: require './views/favorites.coffee'
   IntroductionView: require './views/introduction.coffee'
-
-_.mixin(require 'underscore.string')
 
 module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Router
   routes:
@@ -45,7 +44,7 @@ module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Rout
 
       track.funnel "Starting Personalize #{@state.currentStepLabel()}", label: "User:#{@user.id}"
 
-      @view = new views["#{_.classify(step)}View"] state: @state, user: @user
+      @view = new views["#{_s.classify(step)}View"] state: @state, user: @user
       @$el.html @view.render().$el
 
   next: ->

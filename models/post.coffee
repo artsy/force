@@ -1,4 +1,5 @@
 _ = require 'underscore'
+_s = require 'underscore.string'
 Backbone = require 'backbone'
 sd = require('sharify').data
 moment = require 'moment'
@@ -11,8 +12,6 @@ Attachments = require '../components/post/collections/post_attachments.coffee'
 Reposts = require '../components/post/collections/reposts.coffee'
 { smartTruncate } = require '../components/util/string.coffee'
 { compactObject } = require './mixins/compact_object.coffee'
-
-_.mixin require 'underscore.string'
 
 module.exports = class Post extends Backbone.Model
 
@@ -29,13 +28,13 @@ module.exports = class Post extends Backbone.Model
     paragraphMin = 210
     maxLimit = 385
 
-    firstParagraph = _.stripTags _.first(@get('body').split '</p>')
+    firstParagraph = _s.stripTags _.first(@get('body').split '</p>')
     summary = if firstParagraph.length < paragraphMin
-      _.stripTags(@get 'body')
+      _s.stripTags(@get 'body')
     else
       firstParagraph
 
-    _.prune summary, maxLimit, '&hellip;'
+    _s.prune summary, maxLimit, '&hellip;'
 
   onPostPage: (location) ->
     location ?= window?.location?.pathname
@@ -219,7 +218,7 @@ module.exports = class Post extends Backbone.Model
       title: @titleOrBody(100)
       description: smartTruncate(@get('summary'), 200)
       datePublished: @get('last_promoted_at')
-      articleBody: _.stripTags(@get 'body')
+      articleBody: _s.stripTags(@get 'body')
       sourceOrganization:
         name: 'artsy'
         url: 'https://artsy.net'

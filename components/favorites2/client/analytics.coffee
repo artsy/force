@@ -6,8 +6,6 @@
 # See: http://cl.ly/image/3q040w1J2I2y/o
 #
 
-_ = require 'underscore'
-_.mixin require 'underscore.string'
 { track } = analytics = require '../../../lib/analytics.coffee'
 Cookies = require 'cookies-js'
 mediator = require '../../../lib/mediator.coffee'

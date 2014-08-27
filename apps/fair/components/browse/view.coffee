@@ -1,6 +1,6 @@
 _ = require 'underscore'
+_s = require 'underscore.string'
 sd = require('sharify').data
-_.mixin require 'underscore.string'
 Backbone = require 'backbone'
 BoothsView = require '../booths/view.coffee'
 FilterArtworksView = require '../../../../components/filter/artworks/view.coffee'
@@ -42,7 +42,7 @@ module.exports = class FairBrowseView extends Backbone.View
       if @boothParams.get('section')
         "Exhibitors at #{@boothParams.get('section')}"
       else if @boothParams.get('artist')
-        _.titleize _.humanize _.rtrim @boothParams.get('artist'), /[0-9]/
+        _s.titleize _s.humanize _s.rtrim @boothParams.get('artist'), /[0-9]/
       else
         "Browse #{sd.EXHIBITORS_COUNT} Exhibitors"
     )
@@ -66,7 +66,7 @@ module.exports = class FairBrowseView extends Backbone.View
   renderArtworksHeader: =>
     @$('#fair-browse-artworks-header').text(
       if @artworkParams.get 'related_gene'
-        geneName = _.titleize _.humanize _.rtrim @artworkParams.get('related_gene'), /[0-9]/
+        geneName = _s.titleize _s.humanize _s.rtrim @artworkParams.get('related_gene'), /[0-9]/
       else
         ''
     )

@@ -134,8 +134,8 @@ describe 'SuggestionsView', ->
     beforeEach ->
       Backbone.sync.restore()
       sinon.stub GalleriesView::, 'renderSuggestions'
-      follow1 = profile: id: 'foo', owner_type: @view.restrictType
-      follow2 = profile: id: 'bar', owner_type: @view.restrictType
+      follow1 = profile: id: 'foo', owner_type: 'PartnerGallery'
+      follow2 = profile: id: 'bar', owner_type: 'PartnerGallery'
       follow3 = profile: id: 'baz', owner_type: 'PartnerMuseum'
       sinon.stub(Backbone, 'sync').yieldsTo('success', [follow1, follow2, follow3])
 
@@ -155,8 +155,8 @@ describe 'SuggestionsView', ->
 
     it 'takes a collection of follows and converts it to suggestions', ->
       @view.suggestions.length.should.equal 0
-      follow1 = profile: id: 'foo', owner_type: @view.restrictType
-      follow2 = profile: id: 'bar', owner_type: @view.restrictType
+      follow1 = profile: id: 'foo', owner_type: 'PartnerGallery'
+      follow2 = profile: id: 'bar', owner_type: 'PartnerGallery'
       collection = new Backbone.Collection [follow1, follow2]
       @view.followsToSuggestions collection
       @view.suggestions.length.should.equal 2
@@ -164,7 +164,7 @@ describe 'SuggestionsView', ->
       @view.suggestions.last().id.should.equal 'bar'
 
     it 'filters out results with non-matching restrictTypes', ->
-      follow1 = profile: id: 'bar', owner_type: @view.restrictType
+      follow1 = profile: id: 'bar', owner_type: 'PartnerGallery'
       follow2 = profile: id: 'baz', owner_type: 'PartnerMuseum'
       collection = new Backbone.Collection [follow1, follow2]
       @view.followsToSuggestions collection
