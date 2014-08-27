@@ -41,10 +41,6 @@ describe 'Filter', ->
       Backbone.sync.args[0][2].data.should.eql foo: 'bar'
       Backbone.sync.callCount.should.equal 1
 
-    it 'sets the active state to the most recent successful fetch', ->
-      state = @filter.newState()
-      @filter.active.should.equal state
-
     it 'accepts callbacks in the options', (done) ->
       @filter.newState success: -> done()
 
@@ -142,3 +138,14 @@ describe 'Filter', ->
       @filter.engaged.should.be.false
       Backbone.sync.callCount.should.equal 4
       @filter.filterStates.pluck('id').should.eql ['medium=drawing', 'medium=drawing&price_range=x', 'price_range=x', 'root']
+
+    describe '#forSaleCount', ->
+      it 'returns the for sale count when the for sale boolean is toggled', ->
+        @filter.set 'total', 999
+        @filter.selected.has('price_range').should.be.true
+        @filter.forSaleCount().should.equal 999
+
+      it 'returns the for sale count when the for sale boolean is not toggled', ->
+        @filter.toggle 'for-sale', false
+        @filter.set 'total', 999
+        @filter.forSaleCount().should.equal 58

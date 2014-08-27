@@ -156,21 +156,21 @@ describe 'ArtworkFilterView', ->
       @view.columns = length: => @columnLength
 
     it 'sets the correct button state when there is 1 remaining artwork', ->
-      @view.filter.active.set 'total', 10
+      @view.filter.set 'total', 10
       @columnLength = 9
       @view.setButtonState()
       @view.$button.is(':visible').should.be.true
       @view.$button.text().should.equal 'See More (1)'
 
     it 'sets the correct button state when there are no remaining artworks', ->
-      @view.filter.active.set 'total', 10
+      @view.filter.set 'total', 10
       @columnLength = 10
       @view.setButtonState()
       @view.$button.attr('style').should.equal 'display: none;'
       @view.$button.text().should.equal 'See More (0)'
 
     it 'sets the correct state when toggled', ->
-      @view.filter.active.set 'total', 10
+      @view.filter.set 'total', 10
       @columnLength = 10
       @view.setButtonState()
       # Is hidden

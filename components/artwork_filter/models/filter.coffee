@@ -16,7 +16,7 @@ module.exports = class Filter
     throw new Error 'Requires a model' unless @model?
     @selected = new Selected
     @filterStates = new FilterStates
-    @root = @active = @buildState()
+    @root = @buildState()
 
   by: (key, value, options = {}) ->
     @engaged = true
@@ -32,17 +32,34 @@ module.exports = class Filter
     @fetchingPriced = true
     filterState = new FilterState { id: pricedId }, modelId: @model.id
     filterState.fetch data: @booleans['for-sale'], success: (model, response, options) =>
+      @fetchingPriced = false
       @filterStates.add model
       @trigger 'update:counts'
     false
+
+  forSaleCount: ->
+    (if @selected.has('price_range') then @get('total') else @boolean('for-sale')) or 0
+
+  active: ->
+    @__active__() or @root
+
+  __active__: ->
+    @filterStates.get(@stateId())
+
+  get: ->
+    @active().get arguments...
+
+  set: ->
+    @active().set arguments...
+
+  boolean: (name) ->
+    [key, value] = _.flatten(_.pairs(@booleans[name]))
+    @get(key)?[value]
 
   buildState: ->
     new FilterState { id: @stateId() }, modelId: @model.id
 
   fetchState: (filterState, options = {}) ->
-    options.success = _.wrap options.success, (success, model, response, options) =>
-      @active = model
-      success? model, response, options
     @fetch filterState, options
     filterState
 
@@ -53,7 +70,7 @@ module.exports = class Filter
     @fetchState @root, options
 
   fetch: (filterState, options = {}) ->
-    if state = @filterStates.get(@stateId())
+    if state = @__active__()
       options.success? state
       @trigger 'all sync', state
       return

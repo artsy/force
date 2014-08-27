@@ -139,8 +139,8 @@ module.exports = class ArtworkFilterView extends Backbone.View
 
   setButtonState: ->
     length = @columns?.length() or 0
-    remaining = @filter.active.get('total') - length
-    visibility = if length >= @filter.active.get('total') then 'hide' else 'show'
+    remaining = @filter.get('total') - length
+    visibility = if length >= @filter.get('total') then 'hide' else 'show'
     @$button.text("See More (#{remaining})")[visibility]()
 
   renderHeader: ->
@@ -163,11 +163,11 @@ module.exports = class ArtworkFilterView extends Backbone.View
         artworkSize: 'tall'
     @setState()
 
-  displayFilter: ->
+  pricedFilter: ->
     (if @filter.selected.has('price_range') then @filter.priced() else @filter.root) or @filter.root
 
   renderFilter: ->
-    @$filter.html(filterTemplate filter: @filter, displayFilter: @displayFilter())
+    @$filter.html filterTemplate(filter: @filter, pricedFilter: @pricedFilter())
     @setState()
     @initialStickyFilterSetup()
 

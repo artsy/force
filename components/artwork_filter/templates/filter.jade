@@ -5,14 +5,14 @@ h2 Works
     type='checkbox', name='for-sale', id='for-sale'
     checked=(filter.selected.has('price_range') ? 'checked' : undefined)
   )
-  label( for='for-sale', data-label="Only For Sale" )
+  label( for='for-sale', data-label="Only For Sale (#{filter.forSaleCount()})" )
 
 for criteria, key in filter.root.criteria()
   section
     h3= criteria.label
     ul: for criterion in criteria.filters
       - active = filter.selected.isActive(criterion.key)
-      - count = displayFilter.get(key)[criterion.key] || 0
+      - count = pricedFilter.get(key)[criterion.key] || 0
       li.artwork-filter-criterion(
         class=(active ? 'is-active' : 'is-inactive')
         class=(count ? undefined : 'is-disabled' )
