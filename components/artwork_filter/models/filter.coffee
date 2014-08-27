@@ -46,8 +46,9 @@ module.exports = class Filter
   get: ->
     @active().get arguments...
 
-  boolean: ->
-    @active().boolean arguments...
+  boolean: (name) ->
+    [key, value] = _.flatten(_.pairs(@booleans[name]))
+    @get(key)?[value]
 
   buildState: ->
     new FilterState { id: @stateId() }, modelId: @model.id

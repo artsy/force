@@ -16,16 +16,9 @@ module.exports = class FilterState extends Backbone.Model
   url: ->
     "#{API_URL}/api/v1/search/filtered/artist/#{@modelId}/suggest"
 
-  booleans:
-    'for-sale': price_range: '-1:1000000000000'
-
   initialize: (attributes, options = {}) ->
     { @modelId } = options
     throw new Error 'Requires an modelId' unless @modelId?
-
-  boolean: (name) ->
-    [key, value] = _.flatten(_.pairs(@booleans[name]))
-    @get(key)?[value]
 
   criteria: ->
     _.reduce _.keys(@attributes), (criteria, x) =>
