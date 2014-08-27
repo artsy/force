@@ -5,7 +5,7 @@ h2 Works
     type='checkbox', name='for-sale', id='for-sale'
     checked=(filter.selected.has('price_range') ? 'checked' : undefined)
   )
-  label( for='for-sale', data-label="Only For Sale (#{forSaleCount})" )
+  label( for='for-sale', data-label="Only For Sale (#{filter.forSaleCount()})" )
 
 for criteria, key in filter.root.criteria()
   section

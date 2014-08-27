@@ -37,6 +37,9 @@ module.exports = class Filter
       @trigger 'update:counts'
     false
 
+  forSaleCount: ->
+    (if @selected.has('price_range') then @get('total') else @boolean('for-sale')) or 0
+
   active: ->
     @__active__() or @root
 
@@ -45,6 +48,9 @@ module.exports = class Filter
 
   get: ->
     @active().get arguments...
+
+  set: ->
+    @active().set arguments...
 
   boolean: (name) ->
     [key, value] = _.flatten(_.pairs(@booleans[name]))

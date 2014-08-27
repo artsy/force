@@ -166,18 +166,8 @@ module.exports = class ArtworkFilterView extends Backbone.View
   pricedFilter: ->
     (if @filter.selected.has('price_range') then @filter.priced() else @filter.root) or @filter.root
 
-  forSaleCount: ->
-    count = if @filter.selected.has('price_range')
-      @filter.get('total')
-    else
-      @filter.boolean('for-sale')
-    count or 0
-
   renderFilter: ->
-    @$filter.html filterTemplate
-      filter: @filter
-      pricedFilter: @pricedFilter()
-      forSaleCount: @forSaleCount()
+    @$filter.html filterTemplate(filter: @filter, pricedFilter: @pricedFilter())
     @setState()
     @initialStickyFilterSetup()
 
