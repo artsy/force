@@ -22,8 +22,9 @@ module.exports = class ArtworkColumns extends Artworks
     super
 
   fetch: (options = {}) ->
+    @xhr.abort() if @xhr? and @xhr.readyState isnt 4
     options.data = _.extend (options.data or {}), @params.attributes
-    super
+    @xhr = Artworks::fetch.call this, options
 
   fetchFromBeginning: (options = {}) ->
     @params.clear().set(@params.defaults)
