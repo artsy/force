@@ -1,5 +1,5 @@
 _ = require 'underscore'
-_s = require 'underscore.string'
+deslugify = require '../../deslugify/index.coffee'
 Backbone = require 'backbone'
 
 module.exports = class Selected extends Backbone.Model
@@ -15,7 +15,7 @@ module.exports = class Selected extends Backbone.Model
 
   humanize: (string) ->
     return 'For Sale' if string is '-1:1000000000000'
-    _s.titleize _s.humanize string
+    deslugify string
 
   isActive: (attribute) ->
     _.include _.values(@attributes), attribute

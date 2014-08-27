@@ -1,9 +1,9 @@
 _ = require 'underscore'
-_s = require 'underscore.string'
 qs = require 'querystring'
 Backbone = require 'backbone'
 { API_URL } = require('sharify').data
 Selected = require './selected.coffee'
+deslugify = require '../../deslugify/index.coffee'
 
 sectionMap =
   related_gene: 'Category'
@@ -26,7 +26,7 @@ module.exports = class FilterState extends Backbone.Model
         criteria[x] =
           label: sectionMap[x]
           filters: @sortFilters(x, _.map @get(x), (count, key) =>
-            key: key, count: count, label: @humanize(key)
+            key: key, count: count, label: deslugify(key)
           )
       criteria
     , {}
@@ -36,6 +36,3 @@ module.exports = class FilterState extends Backbone.Model
     return filters if key is 'period'
     # Sort the rest by their count
     _.sortBy(filters, 'count').reverse()
-
-  humanize: (string) ->
-    _s.titleize _s.humanize string
