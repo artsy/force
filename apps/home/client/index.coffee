@@ -16,7 +16,7 @@ featuredShowsTemplate = -> require('../templates/featured_shows.jade') arguments
 featuredPostsTemplate = -> require('../templates/featured_posts.jade') arguments...
 featuredArtistsTemplate = -> require('../templates/featured_artists.jade') arguments...
 Cookies = require 'cookies-js'
-{ crop } = require '../../../lib/resizer.coffee'
+{ crop } = require '../../../components/resizer/index.coffee'
 
 trackArtworkImpressions = require("../../../components/analytics/impression_tracking.coffee").trackArtworkImpressions
 

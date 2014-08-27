@@ -6,7 +6,7 @@ uuid = require 'node-uuid'
 { parse, format } = require 'url'
 _ = require 'underscore'
 { NODE_ENV } = require '../../config'
-{ fill, resize, crop } = require '../../lib/resizer'
+{ fill, resize, crop } = require '../../components/resizer/index'
 
 module.exports = (req, res, next) ->
 

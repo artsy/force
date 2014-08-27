@@ -3,7 +3,7 @@ require '../../../lib/vendor/hulk'
 sectionsTemplates = require '../templates/sections.jade'
 { DATA } = sd = require('sharify').data
 GeminiForm = require '../../../components/gemini_form/view.coffee'
-{ crop } = require '../../../lib/resizer.coffee'
+{ crop } = require '../../../components/resizer/index.coffee'
 
 hulkCallback = (data) ->
   render(data)

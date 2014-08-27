@@ -2,7 +2,7 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 rewire = require 'rewire'
 
-{ fill, crop, resize } = resizer = rewire '../../lib/resizer'
+{ fill, crop, resize } = resizer = rewire '../index'
 
 describe 'using the proxy', ->
   before ->
