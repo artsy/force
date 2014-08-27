@@ -1,5 +1,4 @@
 _ = require 'underscore'
-_s = require 'underscore.string'
 Backbone = require 'backbone'
 sd = require('sharify').data
 FeedItems = require '../../../../components/feed/collections/feed_items.coffee'
@@ -7,6 +6,7 @@ ShowsFeed = require '../../../../components/feed/client/shows_feed.coffee'
 BorderedPulldown = require '../../../../components/bordered_pulldown/view.coffee'
 qs = require 'querystring'
 FilterNav = require '../../../../components/filter/nav/view.coffee'
+deslugify = require '../../../../components/deslugify/index.coffee'
 navSectionsTemplate = -> require('./nav_sections.jade') arguments...
 
 module.exports = class BoothsView extends Backbone.View
@@ -59,7 +59,7 @@ module.exports = class BoothsView extends Backbone.View
       else if @params.get 'partner_region'
         "Exhibitors from #{@params.get 'partner_region'}"
       else if @params.get 'artist'
-        "#{_s.titleize _s.humanize @params.get 'artist'} at #{@fair.get 'name'}"
+        "#{deslugify(@params.get 'artist')} at #{@fair.get 'name'}"
       else
         "All Exhibitors at #{@fair.get 'name'}"
     )
