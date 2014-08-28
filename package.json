@@ -19,7 +19,6 @@
     "backbone-cache-sync": "*",
     "coffee-script": "*",
     "http-proxy": "*",
-    "showdown": "git://github.com/craigspaeth/showdown.git",
     "underscore": "*",
     "underscore.string": "*",
     "q": "*",
