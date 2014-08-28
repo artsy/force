@@ -27,7 +27,7 @@ class Artwork extends Backbone.Model
 
 ### mdToHtml(attr)
 
-Converts an attribute into markdown using showdown.js
+Converts an attribute into markdown
 
 ````coffeescript
 artist.mdToHtml('biography')

@@ -1,13 +1,15 @@
-Showdown = require 'showdown'
-converter = new Showdown.converter()
+markdown = require('markdown').markdown
+
+stripTags = (str) ->
+  return '' unless str?
+  String(str).replace(/<\/?[^>]+>/g, '')
 
 module.exports =
-
   mdToHtml: (attr) ->
-    converter.makeHtml @get(attr) or ''
+    markdown.toHTML @get(attr) or ''
 
   mdToHtmlToText: (attr) ->
-    @mdToHtml(attr).replace(/<(?:.|\n)*?>/gm, '')
+    stripTags(@mdToHtml attr)
 
   htmlToText: (attr) ->
-    @get(attr).replace(/<(?:.|\n)*?>/gm, '')
+    stripTags(@get attr)
