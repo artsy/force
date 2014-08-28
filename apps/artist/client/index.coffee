@@ -16,6 +16,8 @@ RelatedAuctionResultsView = require '../../../components/related_auction_results
 RelatedShowsView = require '../../../components/related_shows/view.coffee'
 # ArtworkFilter = require '../../../components/artwork_filter/index.coffee'
 
+analytics = require '../../../lib/analytics.coffee'
+
 artistSort = -> require('../templates/sort.jade') arguments...
 
 module.exports.ArtistView = class ArtistView extends Backbone.View
@@ -34,6 +36,9 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     @setupRelatedPosts()
     @setupShareButtons()
     @setupHeader()
+
+    # Track pageview
+    analytics.track.impression 'Artist page', { id: @model.id }
 
   setupHeader: ->
     @setupBlurb()
