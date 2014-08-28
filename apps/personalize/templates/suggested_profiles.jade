@@ -7,7 +7,7 @@ for profile in suggestions.models
     a.hoverable-image-link( data-id=profile.id )
       .hoverable-image.is-four-three(
         data-initials= profile.defaultIconInitials()
-        style="background-image: url(#{profile.coverImage().imageUrl('medium')})"
+        style="background-image: url(#{profile.coverImage().cropUrlFor({ width: 250, height: 188 })})"
       )
     .personalize-suggestion-name
       = profile.get('owner').name

@@ -4,7 +4,7 @@ imagesLoaded = require 'imagesloaded'
 { isRetina, isTouchDevice } = require '../../../components/util/device.coffee'
 mediator = require '../../../lib/mediator.coffee'
 ZoomView = require '../../../components/modal/zoom.coffee'
-{ resize } = require '../../../lib/resizer.coffee'
+{ resize } = require '../../../components/resizer/index.coffee'
 FeedbackView = require '../../../components/contact/feedback.coffee'
 
 module.exports = class AboutView extends Backbone.View

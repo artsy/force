@@ -3,7 +3,7 @@ sd = require('sharify').data
 Backbone = require 'backbone'
 Post = require '../../models/post.coffee'
 AddToPostButton = require './add_to_post_button.coffee'
-{ crop } = require '../../lib/resizer.coffee'
+{ crop } = require '../resizer/index.coffee'
 
 templates =
   empty: -> require('./templates/empty.jade') arguments...

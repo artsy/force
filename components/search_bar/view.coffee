@@ -5,7 +5,7 @@ sd = require('sharify').data
 Search = require './collections/search.coffee'
 mediator = require '../../lib/mediator.coffee'
 analytics = require '../../lib/analytics.coffee'
-{ fill } = require '../../lib/resizer.coffee'
+{ fill } = require '../resizer/index.coffee'
 itemTemplate = -> require('./templates/item.jade') arguments...
 
 module.exports = class SearchBarView extends Backbone.View

@@ -1,9 +1,8 @@
 - artwork = artist.get('poster_artwork')
-- url = artwork.defaultImage().imageUrlFor(249, 167)
 
 .grid-item.post-related-artists-item
   a.hoverable-image-link( href=artist.href() )
-    .hoverable-image.is-three-two( style="background-image: url(#{url});" )
+    img( src= artwork.defaultImage().cropUrlFor({ width: 250, height: 167 }) )
   h3.prai-name: a( href=artist.href() )!= artist.get('name')
   if currentUser
     button.avant-garde-button-white.follow-button( data-id=artist.id )

@@ -1,5 +1,6 @@
 _ = require 'underscore'
 sd = require('sharify').data
+resizer = require '../../components/resizer/index.coffee'
 
 # requires the image mixin
 module.exports =
@@ -69,4 +70,14 @@ module.exports =
       return @imageUrl(size) if _.contains(sizes, size)
     null
 
-  aspectRatio: -> @get('aspect_ratio')
+  resizeUrlFor: ->
+    resizer.resize @imageUrlForMaxSize(), arguments...
+
+  cropUrlFor: ->
+    resizer.crop @imageUrlForMaxSize(), arguments...
+
+  fillUrlFor: ->
+    resizer.fill @imageUrlForMaxSize(), arguments...
+
+  aspectRatio: ->
+    @get('aspect_ratio')
