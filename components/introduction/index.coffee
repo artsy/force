@@ -19,5 +19,5 @@ module.exports = class IntroductionView extends Backbone.View
       error: => @isUpdating = false
 
   render: ->
-    @$el.html @model.get('introduction')
+    @$el.text @model.get('introduction')
     this
