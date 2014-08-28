@@ -38,7 +38,7 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     @setupHeader()
 
     # Track pageview
-    analytics.track.impression 'artist page', { id: @model.id }
+    analytics.track.impression 'Artist page', { id: @model.id }
 
   setupHeader: ->
     @setupBlurb()
