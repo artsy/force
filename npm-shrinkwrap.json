@@ -263,12 +263,20 @@
       }
     },
     "sharify": {
-      "version": "0.1.4",
-      "from": "sharify@*"
+      "version": "0.1.5",
+      "from": "sharify@0.1.5",
+      "resolved": "https://registry.npmjs.org/sharify/-/sharify-0.1.5.tgz"
     },
     "backbone": {
       "version": "1.1.2",
-      "from": "backbone@*"
+      "from": "backbone@*",
+      "dependencies": {
+        "underscore": {
+          "version": "1.7.0",
+          "from": "underscore@1.7.0",
+          "resolved": "https://registry.npmjs.org/underscore/-/underscore-1.7.0.tgz"
+        }
+      }
     },
     "backbone-super-sync": {
       "version": "0.0.12",
@@ -318,6 +326,11 @@
       "version": "0.0.3",
       "from": "backbone-cache-sync@*",
       "dependencies": {
+        "underscore": {
+          "version": "1.7.0",
+          "from": "underscore@1.7.0",
+          "resolved": "https://registry.npmjs.org/underscore/-/underscore-1.7.0.tgz"
+        },
         "backbone-super-sync": {
           "version": "0.0.5",
           "from": "backbone-super-sync@0.0.5",
@@ -384,14 +397,10 @@
         }
       }
     },
-    "showdown": {
-      "version": "0.3.1",
-      "from": "showdown@git://github.com/craigspaeth/showdown.git",
-      "resolved": "git://github.com/craigspaeth/showdown.git#4d04b7855d5ed327ebbe5a917c9e9607a4188f77"
-    },
     "underscore": {
-      "version": "1.6.0",
-      "from": "underscore@*"
+      "version": "1.7.0",
+      "from": "underscore@1.7.0",
+      "resolved": "https://registry.npmjs.org/underscore/-/underscore-1.7.0.tgz"
     },
     "underscore.string": {
       "version": "2.3.3",
@@ -407,7 +416,14 @@
     },
     "backbone-pageable": {
       "version": "1.4.8",
-      "from": "backbone-pageable@*"
+      "from": "backbone-pageable@*",
+      "dependencies": {
+        "underscore": {
+          "version": "1.7.0",
+          "from": "underscore@1.7.0",
+          "resolved": "https://registry.npmjs.org/underscore/-/underscore-1.7.0.tgz"
+        }
+      }
     },
     "moment": {
       "version": "2.7.0",
@@ -553,7 +569,7 @@
                   "from": "multiparty@2.2.0",
                   "dependencies": {
                     "readable-stream": {
-                      "version": "1.1.13-1",
+                      "version": "1.1.13",
                       "from": "readable-stream@~1.1.9",
                       "dependencies": {
                         "core-util-is": {
@@ -566,7 +582,7 @@
                           "resolved": "http://registry.npmjs.org/isarray/-/isarray-0.0.1.tgz"
                         },
                         "string_decoder": {
-                          "version": "0.10.25-1",
+                          "version": "0.10.31",
                           "from": "string_decoder@~0.10.x"
                         },
                         "inherits": {
@@ -621,7 +637,6 @@
             "send": {
               "version": "0.1.4",
               "from": "send@0.1.4",
-              "resolved": "http://registry.npmjs.org/send/-/send-0.1.4.tgz",
               "dependencies": {
                 "mime": {
                   "version": "1.2.11",
@@ -648,12 +663,25 @@
     "artsy-backbone-mixins": {
       "version": "0.0.17",
       "from": "artsy-backbone-mixins@git://github.com/artsy/artsy-backbone-mixins.git",
-      "resolved": "git://github.com/artsy/artsy-backbone-mixins.git#3be6115eea4b6f173eda5f30fca9f94205f746cb",
+      "resolved": "git://github.com/artsy/artsy-backbone-mixins.git#eacf51deff0d05a0015104c97ee122e83f7154c5",
       "dependencies": {
-        "showdown": {
-          "version": "0.3.1",
-          "from": "showdown@git://github.com/craigspaeth/showdown.git",
-          "resolved": "git://github.com/craigspaeth/showdown.git#4d04b7855d5ed327ebbe5a917c9e9607a4188f77"
+        "markdown": {
+          "version": "0.5.0",
+          "from": "markdown@*",
+          "resolved": "http://registry.npmjs.org/markdown/-/markdown-0.5.0.tgz",
+          "dependencies": {
+            "nopt": {
+              "version": "2.1.2",
+              "from": "nopt@~2.1.1",
+              "dependencies": {
+                "abbrev": {
+                  "version": "1.0.5",
+                  "from": "abbrev@1",
+                  "resolved": "http://registry.npmjs.org/abbrev/-/abbrev-1.0.5.tgz"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -1495,7 +1523,14 @@
     },
     "humanparser": {
       "version": "0.0.16",
-      "from": "humanparser@*"
+      "from": "humanparser@*",
+      "dependencies": {
+        "underscore": {
+          "version": "1.6.0",
+          "from": "underscore@1.6.0",
+          "resolved": "https://registry.npmjs.org/underscore/-/underscore-1.6.0.tgz"
+        }
+      }
     },
     "knox": {
       "version": "0.9.0",
@@ -2116,6 +2151,11 @@
             }
           }
         },
+        "underscore": {
+          "version": "1.7.0",
+          "from": "underscore@1.7.0",
+          "resolved": "https://registry.npmjs.org/underscore/-/underscore-1.7.0.tgz"
+        },
         "jwt-simple": {
           "version": "0.1.0",
           "from": "jwt-simple@0.1.x"
@@ -2130,6 +2170,10 @@
       "version": "0.0.5",
       "from": "spark-md5@*",
       "resolved": "http://registry.npmjs.org/spark-md5/-/spark-md5-0.0.5.tgz"
+    },
+    "diacritics": {
+      "version": "1.2.0",
+      "from": "diacritics@*"
     }
   }
 }

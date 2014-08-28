@@ -45,7 +45,8 @@
     "raven": "*",
     "artsy-gemini-upload": "*",
     "twilio": "*",
-    "spark-md5": "*"
+    "spark-md5": "*",
+    "diacritics": "*"
   },
   "devDependencies": {
     "browserify": "*",
