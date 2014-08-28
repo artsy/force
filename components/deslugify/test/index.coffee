@@ -12,3 +12,7 @@ describe 'deslugify', ->
     deslugify('whitney-museum-of-american-art-82').should.equal 'Whitney Museum Of American Art'
     deslugify('whitney-museum-of-american-art_999').should.equal 'Whitney Museum Of American Art'
     deslugify('1-whitney-museum-of-american-art_999').should.equal '1 Whitney Museum Of American Art'
+
+  it 'preserves strings which are entirely numeric', ->
+    deslugify('1990').should.equal '1990'
+    deslugify('2000').should.equal '2000'
