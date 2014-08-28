@@ -54,3 +54,8 @@ describe 'IntroductionView', ->
       @view.update()
       @view.update()
       Backbone.sync.callCount.should.equal 3
+
+  describe 'XSS', ->
+    it 'prevents HTML from being injected', ->
+      Backbone.sync.args[0][2].success introduction: 'Foo is baz<script>alert("hi");</script>'
+      @view.$el.html().should.equal 'Foo is baz&lt;script&gt;alert("hi");&lt;/script&gt;'
