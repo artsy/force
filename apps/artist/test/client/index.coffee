@@ -14,8 +14,7 @@ setupView = (artistOptions = {}, done) ->
   benv.render resolve(__dirname, '../../templates/index.jade'), {
     sd: {}, artist: @artist, sortBy: '-published_at'
   }, =>
-    { @ArtistView, @init } = mod =
-      benv.requireWithJadeify resolve(__dirname, '../../client/index'), ['artistSort']
+    { @ArtistView, @init } = mod = rewire '../../client/index'
     stubChildClasses mod, this,
       ['FillwidthView', 'BlurbView', 'RelatedPostsView', 'RelatedGenesView', 'ArtistFillwidthList']
       ['nextPage', 'render']

@@ -4,10 +4,6 @@ mixin artist-header(artist)
   header.artist-header
     h1.avant-garde-header-center= artist.get('name')
 
-    if artist.get('published_artworks_count')
-      nav.artist-share
-        +share(artist.get('name') + ' on Artsy', artist.imageUrl('large'))
-
     if (artist.get('nationality') && artist.get('years'))
       h2 #{artist.get('nationality')}, #{artist.get('years')}
 
@@ -19,6 +15,10 @@ mixin artist-header(artist)
 
     button#artist-follow-button.avant-garde-button-white.follow-button
 
+    if artist.get('published_artworks_count')
+      nav.artist-share
+        +share(artist.get('name') + ' on Artsy', artist.imageUrl('large'))
+
     .bisected-header
       if artist.get('blurb')
         .bisected-header-cell
@@ -27,6 +27,3 @@ mixin artist-header(artist)
             .blurb!= artist.mdToHtml('blurb')
 
       .bisected-header-cell: .artist-related-genes.related-genes
-
-    if artist.get('published_artworks_count')
-      .artist-works-sort: include ../templates/sort
