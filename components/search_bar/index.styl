@@ -10,7 +10,6 @@ suggestion-height = (suggestion-thumbnail-size + 20px)
   border-left 1px solid gray-lighter-color
 
   &.is-display-suggestions
-  &.is-no-results
     #main-layout-search-bar-feedback
       visibility visible
       transition opacity 0.125s
@@ -78,17 +77,29 @@ search-bar-input-placeholder()
       border-bottom none
     &:hover
     &.tt-cursor
+      opacity 1
       background-color #000
       *
         color #fff
+    &.empty-item
+      background-color yellow-light-color
+      &:hover
+        background-color yellow-light-color
+        *
+          color black
+      .mlsb-suggestion-value
+        padding-left 26px
+      .mlsb-suggestion-thumbnail
+        display: none
+
+  .mlsb-suggestion-kind
+    display none
 
 .mlsb-suggestion
   display block
   width 100%
   text-decoration none
   overflow ellipsis
-  &.unpublished-search-result
-    opacity 0.5
 
 .mlsb-suggestion-thumbnail,
 .mlsb-suggestion-value
@@ -129,3 +140,12 @@ search-bar-input-placeholder()
   margin-left 10px
   font-style italic
   color gray-darker-color
+
+.search-result-images
+  height 90px
+  margin-top 31px
+  overflow hidden
+  img
+    display inline-block
+    height 90px
+    margin-right 12px

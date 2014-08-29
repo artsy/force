@@ -75,7 +75,7 @@ describe 'SearchBarView', ->
       @view.trigger 'search:start'
       @view.$el.attr('class').should.containEql 'is-loading'
       @view.trigger 'search:complete'
-      @view.$el.attr('class').should.not.containEql 'is-loading'
+      _.isUndefined(@view.$el.attr('class')).should.be.ok
 
   describe '#displaySuggestions', ->
     it 'displays the feedback when the input is empty', ->
@@ -105,15 +105,8 @@ describe 'SearchBarView', ->
       @view.$el.html().should.not.containEql 'No results found'
       _.isEmpty(@view.$el.attr 'class').should.be.true
 
-    it 'renders a message when there are no results', ->
-      @view.search.results.length.should.equal 0
-      @view.trigger 'search:complete'
-      @view.$el.html().should.containEql 'No results found'
-      @view.$el.attr('class').should.containEql 'is-no-results'
-
     it 'hides the message if there are results after there had previously been none', ->
       @view.trigger 'search:complete'
-      @view.$el.attr('class').should.containEql 'is-no-results'
       @view.search.results.add(fabricate 'artist')
       @view.trigger 'search:complete'
       _.isEmpty(@view.$el.attr 'class').should.be.true

@@ -64,6 +64,8 @@ module.exports =
   TWILIO_ACCOUNT_SID: null
   TWILIO_AUTH_TOKEN: null
   SENTRY_PUBLIC_DSN: null
+  GOOGLE_SEARCH_KEY: null
+  GOOGLE_SEARCH_CX: null
 
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or

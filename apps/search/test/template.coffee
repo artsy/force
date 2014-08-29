@@ -34,7 +34,7 @@ describe 'Search results template', ->
         sd: {}
         results: @search.models
         term: 'foobar'
-        fill: sinon.stub()
+        crop: sinon.stub()
       )
 
     it 'displays a message to the user that nothing can be found', ->
@@ -54,7 +54,7 @@ describe 'Search results template', ->
         sd: {}
         results: @search.models
         term: 'skull'
-        fill: sinon.stub()
+        crop: sinon.stub()
       )
 
       @$template = $(template)
@@ -64,6 +64,3 @@ describe 'Search results template', ->
 
     it 'highlights the search term', ->
       @$template.find('.is-highlighted').should.be.ok
-
-    it 'correctly identifies humans', ->
-      @$template.find('.is-human').length.should.equal @artists.length

@@ -7,14 +7,15 @@ mediator = require '../../lib/mediator.coffee'
 analytics = require '../../lib/analytics.coffee'
 { fill } = require '../resizer/index.coffee'
 itemTemplate = -> require('./templates/item.jade') arguments...
+emptyItemTemplate = -> require('./templates/empty-item.jade') arguments...
 
 module.exports = class SearchBarView extends Backbone.View
   initialize: (options) ->
     return unless @$el.length
 
     # Search takes a fair_id param specific to fairs. Doesn't work for other models
-    { @mode, @restrictType, @$input, @fairId, @includePrivateResults, @limit, @autoselect, @displayKind } =
-      _.defaults options, limit: 10, autoselect: false, displayKind: true
+    { @mode, @restrictType, @$input, @fairId, @includePrivateResults, @limit, @autoselect, @displayKind, @displayEmptyItem } =
+      _.defaults options, limit: 10, autoselect: false, displayKind: true, displayEmptyItem: false
 
     @$input ?= @$('input')
     throw new Error('Requires an input field') unless @$input?
@@ -36,6 +37,7 @@ module.exports = class SearchBarView extends Backbone.View
   events:
     'keyup input': 'checkSubmission'
     'focus input': 'trackFocusInput'
+    'click .empty-item': 'emptyItemClick'
 
   trackFocusInput: ->
     analytics.track.click "Focused on search input"
@@ -67,9 +69,6 @@ module.exports = class SearchBarView extends Backbone.View
   displayFeedback: ->
     if @search.results.length
       @hideSuggestions()
-    else
-      @renderFeedback 'No results found'
-      @$el.addClass 'is-no-results'
 
   renderFeedback: (feedback) ->
     (@$feedback ?= @$('.autocomplete-feedback'))
@@ -84,10 +83,14 @@ module.exports = class SearchBarView extends Backbone.View
       @$el.addClass 'is-display-suggestions'
 
   hideSuggestions: ->
-    @$el.removeClass 'is-display-suggestions is-no-results'
+    @$el.removeClass 'is-display-suggestions'
 
   suggestionTemplate: (item) =>
     itemTemplate fill: fill, item: item, displayKind: @displayKind
+
+  emptyItemTemplate: (options) =>
+    if @displayEmptyItem
+      emptyItemTemplate query: options.query
 
   announceQuery: (query) ->
     mediator.trigger 'search:doge' if query is 'doge'
@@ -125,7 +128,10 @@ module.exports = class SearchBarView extends Backbone.View
 
     @$input.typeahead { autoselect: @autoselect },
       template: 'custom'
-      templates: suggestion: @suggestionTemplate
+      templates:
+        suggestion: @suggestionTemplate
+        empty: -> "" # Typeahead won't render the header for empty results unless 'empty' is defined
+        header: @emptyItemTemplate
       displayKey: 'value'
       name: _.uniqueId 'search'
       source: @setupBloodHound().ttAdapter()
@@ -133,13 +139,20 @@ module.exports = class SearchBarView extends Backbone.View
   clear: ->
     @$input.typeahead 'val', ''
 
+  emptyItemClick: ->
+    analytics.track.click 'Selected item from search',
+      query: @query
+      label: analytics.modelNameAndIdToLabel 'user-query', 'query'
+    @selected = true
+    window.location = "/search?q=#{@query}"
+
   selectResult: (e, model) ->
-    return false unless model and model.get('published')
+    return false unless model
     analytics.track.click 'Selected item from search',
       query: @query
       label: analytics.modelNameAndIdToLabel model.get('display_model'), model.id
     @selected = true
-    window.location = model.get 'location'
+    window.location = model.href()
 
   remove: ->
     mediator.off null, null, this

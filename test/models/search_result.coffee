@@ -8,19 +8,15 @@ describe 'SearchResult', ->
     describe '#location', ->
       it 'has a location attribute when it is an artwork', ->
         model = new SearchResult(fabricate('artwork', model: 'artwork'))
-        model.get('location').should.containEql '/artwork/skull'
+        model.href().should.containEql '/artwork/skull'
 
       it 'has a location attribute when it is a show', ->
         model = new SearchResult(fabricate('show', model: 'partnershow'))
-        model.get('location').should.containEql '/show/gagosian-gallery-inez-and-vinoodh'
+        model.href().should.containEql '/show/gagosian-gallery-inez-and-vinoodh'
 
       it 'has a location attribute when it is a profile', ->
         model = new SearchResult(fabricate('profile', model: 'profile'))
-        model.get('location').should.equal '/alessandra'
-
-    it 'has a unique id based on the label', ->
-      model = new SearchResult(fabricate('profile', model: 'profile', label: 'profile'))
-      model.get('_id').should.equal 'alessandra-profile'
+        model.href().should.equal '/alessandra'
 
     describe '#displayModel', ->
       it 'has a display_model attribute when it is a artwork', ->
@@ -51,20 +47,6 @@ describe 'SearchResult', ->
         model = new SearchResult(fabricate('artwork', model: 'artwork'))
         model.highlightedDisplay('skull').should.equal '<span class="is-highlighted">Skull</span> by Andy Warhol'
 
-    describe '#isHuman', ->
-      it 'knows what a human is', ->
-        modelA = new SearchResult(fabricate('artwork', model: 'artwork'))
-        modelB = new SearchResult(fabricate('artist', model: 'artist'))
-        modelA.get('is_human').should.not.be.ok
-        modelB.get('is_human').should.be.ok
-
-    describe '#humanClass', ->
-      it 'returns the appropriate class name', ->
-        modelA = new SearchResult(fabricate('artwork', model: 'artwork'))
-        modelB = new SearchResult(fabricate('artist', model: 'artist'))
-        modelA.humanClass().should.equal 'is-not-human'
-        modelB.humanClass().should.equal 'is-human'
-
     describe '#updateForFair', ->
       it 'cleans up data returned from fair search API', ->
         fair = new Fair(fabricate 'fair')
@@ -75,6 +57,5 @@ describe 'SearchResult', ->
         modelB.updateForFair(fair)
 
         modelA.get('display_model').should.equal 'Booth'
-        modelA.get('location').should.containEql '/show/gagosian-gallery-inez-and-vinoodh'
-
-        modelB.get('location').should.containEql "/the-armory-show/browse/artist/pablo"
+        modelA.href().should.containEql '/show/gagosian-gallery-inez-and-vinoodh'
+        modelB.href().should.containEql "/the-armory-show/browse/artist/pablo"
