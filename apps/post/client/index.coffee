@@ -48,7 +48,7 @@ module.exports = class PostView extends Backbone.View
     @$('.post-related-sets').html OrderedSetsTemplate(sets: sets)
 
   renderPost: ->
-    feedItem = new FeedItem(sd.POST)
+    feedItem = new FeedItem sd.POST, parse: true
     feedItem.set _type: 'Post'
     items = new FeedItems()
     items.add feedItem

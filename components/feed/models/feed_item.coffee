@@ -5,6 +5,7 @@ Artwork = require '../../../models/artwork.coffee'
 Artworks = require '../../../collections/artworks.coffee'
 PartnerShow = require '../../../models/partner_show.coffee'
 underscore = require('../../util/string.coffee').underscore
+{ DOMPurify } = require 'dompurify'
 
 module.exports = class FeedItem extends Backbone.Model
 
@@ -20,6 +21,10 @@ module.exports = class FeedItem extends Backbone.Model
     active: false
     isAbove: false
     initialArtworkSize: 8
+
+  parse: (response) ->
+    response.body = DOMPurify.sanitize(response.body)
+    response
 
   artworks: (max) =>
     if @isPost()
