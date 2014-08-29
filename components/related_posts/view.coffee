@@ -39,16 +39,17 @@ module.exports = class RelatedPostsView extends Backbone.View
       crop: crop
 
     if @model.relatedPosts.length
-      @$el.html templates[@mode] _.extend templateData,
+      @$el.show().html templates[@mode] _.extend templateData,
         posts: @model.relatedPosts.first @numToShow
         remaining: Math.max (@model.relatedPosts.length - @numToShow), 0
     else
       if @canBeEmpty
         @$el.html templates.empty templateData
       else
-        @remove()
+        return @remove()
 
     _.defer =>
+      @$el.addClass 'is-fade-in'
       if not @__rendered__
         @$('.related-posts').addClass 'is-fade-in'
         @__rendered__ = true
