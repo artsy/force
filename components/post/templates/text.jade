@@ -2,7 +2,6 @@
   include ./featured_by
   if post.get('title')
     if post.onPostPage()
-      h1.post-title( href=post.href() )!= post.get('title')
+      h1.post-title( href=post.href() )= post.get('title')
     else
-      h1
-        a.post-title( href=post.href() )!= post.get('title')
+      h1: a.post-title( href=post.href() )= post.get('title')
