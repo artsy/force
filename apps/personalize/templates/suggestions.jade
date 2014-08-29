@@ -19,7 +19,7 @@ section.personalize-step( data-step='#{kind}' )
       | Below are #{kind} we think you’ll enjoy based on artists you follow and your location,
       = ' '
       a#personalize-suggestions-location.faux-underline.small-caps
-        != user.location().singleWord() || '&hellip;'
+        = user.location().singleWord() || '…'
 
       a#personalize-suggestions-unfollow-all.faux-underline
         | Unfollow all
