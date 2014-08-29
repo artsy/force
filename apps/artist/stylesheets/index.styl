@@ -1,5 +1,19 @@
 @import '../../../components/stylus_lib'
-@import './header'
+
+// To accomodate full-bleed carousel
+#main-layout-container
+  margin-left 0
+  margin-right 0
+
+#artist-fillwidth-section
+#artist-related-artists-section
+#artist-related-contemporary-section
+#artist-related-posts-section
+  display none
+  fadeIn()
+
+.artist-works-sort
+  margin 20px 0
 
 .artist-works-section-old
   border-top 1px solid gray-lighter-color
@@ -11,15 +25,14 @@
     position relative
     margin 150px 0
 
+.artist-info-section
 .artist-related-section
   border-top 1px solid gray-lighter-color
   margin 40px 0
+.artist-related-section
   h3
     margin 30px 0 10px 0
     font-size 17px
-  .main-layout-container
-    position relative
-    min-height 200px
   .artist-fillwidth-list-see-more
     display none
 
@@ -27,20 +40,11 @@
   margin 20px auto
 
 .artist-info-section
-  border-top 1px solid gray-lighter-color
+.artist-auction-results-section
   margin 40px 0
-  padding-top 40px
-  .avant-garde-header-center
-    margin 0 0 20px 0
-    font-size 17px
+  padding-top 20px
 
 .artist-auction-results-section
   text-align center
 
-.artist-auction-results
-  margin 20px 0
-
-// Related shows section
-#artist-related-shows
-  padding-bottom 20px
-  border-bottom 1px solid gray-lighter-color
+@import './header'

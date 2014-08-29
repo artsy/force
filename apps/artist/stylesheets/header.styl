@@ -31,13 +31,16 @@
     width 170px
 
 .artist-share
-  position absolute
-  right 0
-  top 42px
+  text-align right
   > a
     display inline-block
-    text-decoration none
-    font-size 16px
-    font-weight normal
-    garamond()
-    text-transform none
+    line-height 0
+    vertical-align bottom
+    // Tooltips
+    &::after
+      garamond()
+      text-decoration none
+      font-size 16px
+      line-height 1
+      font-weight normal
+      text-transform none

@@ -14,11 +14,11 @@ BorderedPulldown = require '../../../components/bordered_pulldown/view.coffee'
 RelatedAuctionResultsView = require '../../../components/related_auction_results/view.coffee'
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 RelatedShowsView = require '../../../components/related_shows/view.coffee'
-# ArtworkFilter = require '../../../components/artwork_filter/index.coffee'
-
 analytics = require '../../../lib/analytics.coffee'
+ArtistCarouselView = require '../../../components/artist_carousel/view.coffee'
+ArtworkFilter = require '../../../components/artwork_filter/index.coffee'
 
-artistSort = -> require('../templates/sort.jade') arguments...
+ARTIST_PAGE_SPLIT_TEST = 'fillwidth' # ['fillwidth', 'filter', 'filter-carousel']
 
 module.exports.ArtistView = class ArtistView extends Backbone.View
   events:
@@ -29,13 +29,19 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     { @sortBy } = options
 
     @setupCurrentUser()
+
+    # Header
+    @setupHeader()
     @setupFollowButton()
-    @setupArtworks()
+    @setupShareButtons()
+
+    # Main section
+    @setupSplitTest()
+
+    # Bottom sections
     @setupRelatedArtists()
     @setupRelatedShows()
     @setupRelatedPosts()
-    @setupShareButtons()
-    @setupHeader()
 
     # Track pageview
     analytics.track.impression 'Artist page', { id: @model.id }
@@ -72,28 +78,26 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
         el: $blurb
       $blurb.css maxHeight: 'none'
 
-  setupRelatedShows: ->
-    new RelatedShowsView
-      collection: @model.relatedShows
-      model: @model
-      el: @$('#artist-related-shows')
+  setupSplitTest: ->
+    switch ARTIST_PAGE_SPLIT_TEST
+      when 'fillwidth'
+        @setupArtworksFillwidth()
+      when 'filter'
+        @setupArtworkFilter()
+      when 'filter-carousel'
+        @setupCarousel()
+        @setupArtworkFilter()
 
-  setupRelatedGenes: ->
-    new RelatedGenesView
-      modelName: 'artist'
-      model: @model
-      el: @$('.artist-related-genes')
+  setupCarousel: ->
+    new ArtistCarouselView el: @$('#artist-carousel'), model: @model
 
-  pendRemovalOfEmptyNotice: (collection) ->
-    @listenTo collection, 'sync', (collection) =>
-      @$('.artist-header-empty').remove() if collection.length
+  setupArtworkFilter: ->
+    ArtworkFilter.init el: @$('#artwork-section'), model: @model
 
-  setupArtworks: ->
-    # ArtworkFilter.init el: @$('#artwork-section'), model: @model
-    @setupArtworksOld()
+  setupArtworksFillwidth: ->
+    @fadeInSection @$('#artist-fillwidth-section')
 
-  setupArtworksOld: ->
-    new BorderedPulldown el: $('.bordered-pulldown')
+    new BorderedPulldown el: @$('.bordered-pulldown')
 
     # Available Works
     $availableWorks = @$('#artist-available-works')
@@ -123,15 +127,39 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
       el: $institutionalWorks
     ).nextPage(false, 10)
 
+  onSortChange: (e) ->
+    @sortBy = $(e.currentTarget).data('sort')
+    @setupArtworksFillwidth()
+
+  setupRelatedShows: ->
+    new RelatedShowsView
+      collection: @model.relatedShows
+      model: @model
+      el: @$('#artist-related-shows')
+
+  setupRelatedGenes: ->
+    new RelatedGenesView
+      modelName: 'artist'
+      model: @model
+      el: @$('.artist-related-genes')
+
+  pendRemovalOfEmptyNotice: (collection) ->
+    @listenTo collection, 'sync', (collection) =>
+      @$('.artist-header-empty').remove() if collection.length
+
   setupRelatedPosts: ->
-    letter = @model.id[0]
     new RelatedPostsView
-      el: @$('.artist-related-posts')
+      el: @$('#artist-related-posts-section')
       numToShow: 4
       model: @model
       modelName: 'artist'
       mode: 'extended'
       canBeEmpty: false
+
+  fadeInSection: ($el) ->
+    $el.show()
+    _.defer => $el.addClass 'is-fade-in'
+    $el
 
   setupRelatedArtists: ->
     @relatedArtistsPage = 1
@@ -142,23 +170,20 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     @nextRelatedArtistsPage 'Contemporary'
 
   renderRelatedArtists: (type) =>
-    $artistContainer = @$("#artist-related-#{type.toLowerCase()}")
-    if @model["related#{type}"]?.models.length > 0
+    $section = @$("#artist-related-#{type.toLowerCase()}-section")
+    if @model["related#{type}"]?.models.length
+      @fadeInSection $section
       new ArtistFillwidthList(
         el: @$("#artist-related-#{type.toLowerCase()}")
         collection: @model["related#{type}"]
         user: @currentUser
       ).fetchAndRender()
     else
-      $artistContainer.parent().remove()
-
-  onSortChange: (e) ->
-    @sortBy = $(e.currentTarget).data('sort')
-    @setupArtworks()
+      $section.remove()
 
   nextRelatedArtistsPage: (e) ->
     type = if _.isString(e) then e else $(e).data 'type'
-    @model.fetchRelatedArtists type, data: { page: @["related#{type}Page"]++ }
+    @model.fetchRelatedArtists type, data: page: @["related#{type}Page"]++
 
 module.exports.init = ->
   new ArtistView

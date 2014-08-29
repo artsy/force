@@ -1,0 +1,14 @@
+#artist-fillwidth-section
+  if artist.get('published_artworks_count')
+    .artist-works-sort: include ../templates/sort
+
+  .artist-works-section-old
+    h3 For Sale
+    #artist-available-works
+      //- Rendered client-side
+      .loading-spinner
+  .artist-works-section-old
+    h3 Museums and Other
+    #artist-institution-works
+      //- Rendered client-side
+      .loading-spinner

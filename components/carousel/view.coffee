@@ -10,10 +10,10 @@ module.exports = class Carousel extends Backbone.View
   events:
     'click .carousel-dot': 'dotClick'
     'click .carousel-figures .carousel-figure': 'figureClick'
-    'click .carousel-pre-decoys .carousel-figure': 'leftArrowClick'
-    'click .carousel-arrow-left': 'leftArrowClick'
-    'click .carousel-post-decoys .carousel-figure': 'rightArrowClick'
-    'click .carousel-arrow-right': 'rightArrowClick'
+    'click .carousel-pre-decoys .carousel-figure': 'shiftLeft'
+    'click .carousel-arrow-left': 'shiftLeft'
+    'click .carousel-post-decoys .carousel-figure': 'shiftRight'
+    'click .carousel-arrow-right': 'shiftRight'
     'touchstart .carousel-figures-clip': 'swipeStart'
     'touchend .carousel-figures-clip': 'swipeEnd'
 
@@ -42,34 +42,38 @@ module.exports = class Carousel extends Backbone.View
     @height = options.height
     @render()
 
+  cacheSelectors: ->
+    @$track = @$('.carousel-track')
+    @$preDecoys = @$('.carousel-pre-decoys')
+    @$postDecoys = @$('.carousel-post-decoys')
+    @$decoys = @$preDecoys.add @$postDecoys
+    @$figures = @$('.carousel-figures .carousel-figure')
+    @$dots = @$('.carousel-dot')
+
   render: ->
     figures = @collection.models
 
-    @$el.html(carouselTemplate carouselFigures: figures, height: @height)
-
     if @length < @minLength
       @$el.empty()
-      return @
+      return this
 
-    preFigures = figures[..]
-    postFigures = figures[..]
-    center = Math.ceil(@length / 2)
+    @$el
+      .addClass('carousel-loading')
+      .html(carouselTemplate carouselFigures: figures, height: @height)
+    @cacheSelectors()
 
-    @$el.addClass('carousel-loading')
     # Start the carousel at the first image
     @setActive 0
-    # Store jQuery ref to the track that shifts
-    @$track = @$('.carousel-track')
     # When images are loaded, do the math
     if @$el?.imagesLoaded
       @$el.imagesLoaded => @setStops()
     # Ensure the carousel is revealed even if an image gets stuck
-    _.delay (=>
+    _.delay =>
       @$el.removeClass('carousel-loading')
       @setStops()
-    ), 5000
+    , 5000
     @bindEvents()
-    @
+    this
 
   # In order to prevent DOM manipulation, the stage has two copies of the figures.
   # For a list of 6 figures (numbered 1 through 6), the rendered list looks like this:
@@ -89,17 +93,24 @@ module.exports = class Carousel extends Backbone.View
     # Must reset these or the throttled resize will use stale values.
     @stopPositions = []
     windowWidth = @$window.width()
-    if @$('.carousel-pre-decoys').width() < windowWidth
+
+    # The decoys width isn't going to change, so cache it, which helps
+    # if we want to externally show and hide the carousel
+    @preDecoysWidth ?= @$preDecoys.width()
+
+    if @preDecoysWidth < windowWidth
       @noDecoys = true
-      @$('.carousel-pre-decoys, .carousel-post-decoys').hide()
+      @$decoys.hide()
       @prefixWidth = 0
+      @trigger 'width:insufficient'
     else
       @noDecoys = false
-      @$('.carousel-pre-decoys, .carousel-post-decoys').show()
-      @prefixWidth = @$('.carousel-pre-decoys').width()
+      @$decoys.show()
+      @prefixWidth = @$preDecoys.width()
+      @trigger 'width:sufficient'
 
     totalLefts = @prefixWidth
-    @$('.carousel-figures .carousel-figure').each (index, figure) =>
+    @$figures.each (index, figure) =>
       $fig = $(figure)
       w = $fig.outerWidth(true)
       widths.push w
@@ -114,17 +125,15 @@ module.exports = class Carousel extends Backbone.View
     @firstDecoyPosition = Math.floor((windowWidth - _.first(widths)) / 2) - (totalLefts)
 
     @shiftCarousel @stopPositions[@active], false
-    @$el.removeClass('carousel-loading')
+    @$el.removeClass 'carousel-loading'
 
 
   bindEvents: ->
     # Bind key events to cycle the carousel
-    @$document.on "keyup.partner-show-carousel", (event) => @keyUp(event)
+    @$document.on "keyup.partner-show-carousel", (e) => @keyUp(e)
 
-    # Update the layout on window resize with a loading spinner while stops
-    # are re-calculated
+    # Update the layout on window resize
     throttledSetStops = _.throttle (=> @setStops()), 500
-    @$window.on "resize.partner-show-carousel", => @$el.addClass('loading')
     @$window.on "resize.partner-show-carousel", throttledSetStops
 
     # This will release the inTransition blocker when transitions complete
@@ -136,11 +145,15 @@ module.exports = class Carousel extends Backbone.View
     @$track.off @transitionEvents
 
   setActive: (index) ->
-    @$(".carousel-figures .carousel-figure").removeClass('carousel-active')
-    @$(".carousel-dot").removeClass('carousel-active')
     @active = index
-    @$(".carousel-figures .carousel-figure:eq(#{@active})").addClass('carousel-active')
-    @$(".carousel-dot:eq(#{@active})").addClass('carousel-active')
+    @$figures
+      .removeClass('carousel-active')
+      .filter(":eq(#{@active})")
+      .addClass 'carousel-active'
+    @$dots
+      .removeClass('carousel-active')
+      .filter(":eq(#{@active})")
+      .addClass 'carousel-active'
 
   shiftCarousel: (stop, animate = true) ->
     # Borrowed from apple and John Ball's write up here http://johnbhall.com/iphone-4s/
@@ -165,15 +178,14 @@ module.exports = class Carousel extends Backbone.View
 
     @$track.css props
 
-  keyUp: (event) ->
-    switch event.keyCode
+  keyUp: (e) ->
+    switch e.keyCode
       # left arrow and the h key
       when 37, 72
         @shiftLeft()
       # right arrow and the l key
       when 39, 76
         @shiftRight()
-    false
 
   shiftLeft: ->
     unless @inTransition
@@ -184,7 +196,6 @@ module.exports = class Carousel extends Backbone.View
       _.defer =>
         @setActive @active - 1
         @shiftCarousel()
-    false
 
   shiftRight: ->
     unless @inTransition
@@ -195,25 +206,19 @@ module.exports = class Carousel extends Backbone.View
       _.defer =>
         @setActive @active + 1
         @shiftCarousel()
-    false
 
   # Shift the carousel on clicks unless the artwork is the currently selected.
-  figureClick: (event) ->
+  figureClick: (e) ->
     unless @inTransition
-      index = $(event.target).parent().data('carousel-figure-index')
+      index = $(e.currentTarget).data 'carousel-figure-index'
       @shiftRight() if index > @active
       @shiftLeft() if index < @active
-    false
 
   # Shift the carousel on clicks unless the artwork is the currently selected.
-  dotClick: (event) ->
+  dotClick: (e) ->
     unless @inTransition
-      @setActive @$(event.target).data('carousel-dot-position')
+      @setActive @$(e.target).data('carousel-dot-position')
       @shiftCarousel()
-    false
-
-  leftArrowClick: (event) -> @shiftLeft(); return false
-  rightArrowClick: (event) -> @shiftRight(); return false
 
   swipeStart: (e) ->
     e.preventDefault()
