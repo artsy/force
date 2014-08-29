@@ -36,7 +36,7 @@ describe 'Featured Sets', ->
     it 'renders the name of the set', ->
       $html = $(render('sets')(sets: [@set]))
       $html.find('.feature-set-title').should.have.lengthOf 1
-      $html.find('.feature-set-title').text().should.equal @set.get('name')
+      $html.find('.feature-set-title').text().should.containEql @set.get('name')
 
     it 'renders the set description if there is one', ->
       $html = $(render('sets')(sets: [@set]))

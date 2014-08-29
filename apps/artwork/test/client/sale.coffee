@@ -59,4 +59,4 @@ describe 'SaleView', ->
       link.length.should.be.ok
       link.attr('href').should.equal artwork.href()
 
-      @view.$('.artwork-item-blurb').text().should.equal artwork.get('saleArtwork').get('user_notes')
+      @view.$('.artwork-item-blurb').text().should.containEql artwork.get('saleArtwork').get('user_notes')
