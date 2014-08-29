@@ -111,7 +111,7 @@ describe 'Artwork Item template', ->
       @artwork.set 'saleArtwork', fabricate 'sale_artwork'
       $ = cheerio.load render('artwork')({ artwork: @artwork })
       $('.artwork-item-blurb').should.have.lengthOf 1
-      $('.artwork-item-blurb').text().should.equal @artwork.get 'blurb'
+      $('.artwork-item-blurb').text().should.containEql 'This is the blurb'
 
   describe 'buy button', ->
 

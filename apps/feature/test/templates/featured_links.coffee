@@ -65,5 +65,5 @@ describe 'Featured Links', ->
       link = @set.get('data').first()
       $html = $(render('sets')(sets: [@set]))
       $html.find('.feature-set-item-caption').should.have.lengthOf 1
-      $html.find('.feature-set-item-caption-heading').text().should.equal link.get('title')
-      $html.find('.feature-set-item-caption-subheading').text().should.have.equal link.get('subtitle')
+      $html.find('.feature-set-item-caption-heading').text().should.containEql link.get('title')
+      $html.find('.feature-set-item-caption-subheading').text().should.containEql link.get('subtitle')
