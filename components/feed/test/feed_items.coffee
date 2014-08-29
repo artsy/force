@@ -7,8 +7,11 @@ should = require 'should'
 Backbone = require 'backbone'
 PartnerShow = require '../../../models/partner_show'
 CurrentUser = require '../../../models/current_user'
+rewire = require 'rewire'
+FeedItem = rewire '../models/feed_item'
+FeedItem.__set__ 'DOMPurify', sanitize: ->
 FeedItems = require '../collections/feed_items'
-FeedItem = require '../models/feed_item'
+FeedItems::model = FeedItem
 
 describe 'PartnerShow', ->
 
