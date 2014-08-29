@@ -18,6 +18,7 @@ module.exports = class Search
       '?visible_to_public=true'
       if @fairId then "&fair_id=#{@fairId}" else ''
       '&term=%QUERY'
+      "&size=3"
     ].join ''
 
   parseResults: (items) ->
@@ -28,7 +29,12 @@ module.exports = class Search
     else
       items
 
-  parse: (items) ->
+  parse: (items, query) ->
+    # Remove tags
+    items = _.filter(items, (item) ->
+      item.model != 'tag'
+    )
+
     @results.reset _.map @parseResults(items), (item) =>
       item.model = @mode?.slice(0,-1) unless item.model?
       item

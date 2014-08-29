@@ -28,7 +28,6 @@ block body
     .search-results
       if results.length > 0
         for result in results
-          include ./search_result
+          include ./search_result.jade
       else
-        if term
-          | Nothing found
+        | Nothing found

@@ -1,11 +1,11 @@
 @import '../../components/stylus_lib'
 
-.is-highlighted
-  background-color yellow-light-color
-  color #000
-
 #search-page
   padding 20px 100px
+  b
+    background-color yellow-light-color
+    color #000
+    font-weight normal
 
 .search-results
   margin 20px 0
@@ -17,10 +17,10 @@
   border-top 1px solid gray-lighter-color
   text-decoration none
   transition all 0.125s
+  &.artist, &.category
+    font-size 24px
   &:last-child
     border-bottom 1px solid gray-lighter-color
-
-.search-result.published-search-result
   &:after
     display block
     position absolute
@@ -30,41 +30,23 @@
     margin-top -(@height / 2)
     iconfont-styling()
     content '\e61c'
-    color gray-color
+    color gray-dark-color
   &:hover
-    background-color #000
-    &
-    &:after
-    .search-result-kind
-      color #fff
-
-.search-result.unpublished-search-result
-  color gray-darker-color
-  cursor default
-  .search-result-kind
-    color gray-darker-color
+    background-color gray-lighter-color
 
 .search-result-thumbnail
 .search-result-info
   display table-cell
-  vertical-align middle
+  vertical-align top
 
 .search-result-thumbnail
-  padding 15px
+  padding 20px
 
 .search-result-thumbnail-fallback
   position relative
   width 70px
   height @width
   background-color gray-lightest-color
-  &.is-human::before
-    display block
-    position absolute
-    iconfont-styling()
-    content '\e61a'
-    font-size @width
-    line-height @width
-    color #fff
   > img
     display block
     position absolute
@@ -72,12 +54,15 @@
 .search-result-info
   // Force width
   width 100%
-  padding 15px 40px 15px 0
+  padding 20px 40px 20px 0
 
-.search-result-display
-  font-size 24px
+.search-result-about
+  margin-top 2px
+  color gray-darker-color
+  max-width: 540px
 
 .search-result-kind
-  padding-top 10px
-  line-height 1
-  color gray-darker-color
+  avant-garde()
+  line-height 150%
+  font-size 11px
+  margin-bottom 2px

@@ -1,12 +1,17 @@
-a.search-result( href=result.href(), class=result.publishedClass() )
+a.search-result( href=result.href(), class=result.get('display_model'), data-id=result.get('id') )
   .search-result-thumbnail
-    .search-result-thumbnail-fallback( class=result.humanClass() )
+    .search-result-thumbnail-fallback
       img(
-        src= fill(result.imageUrl(), { width: 70, height: 70, color: 'fff' }),
+        src= crop(result.imageUrl(), { width: 70, height: 70 }),
         width='70', height='70',
-        alt= result.get('display'),
+        alt= result.get('title'),
         onerror='this.style.display="none";'
       )
   .search-result-info
-    .search-result-display!= result.highlightedDisplay(term)
-    .search-result-kind= result.get('display_model')
+    if result.get('display_model')
+      .search-result-kind= result.get('display_model')
+    .search-result-title!= result.get('display')
+    if result.get('about')
+      .search-result-about!= result.get('about')
+    if result.get('display_model') == 'artist' || result.get('display_model') == 'category'
+      .search-result-images

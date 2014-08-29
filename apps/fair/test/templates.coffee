@@ -114,7 +114,6 @@ describe 'Fair', ->
              image_url: 'http://artsy.net/api/v1/artist/andy-warh'
              display_model: 'Artist',
              location: '/artist/andy-warhol',
-             is_human: true
           ]
         fairResults = [
          new SearchResult
@@ -129,7 +128,6 @@ describe 'Fair', ->
            image_url: 'http://artsy.net/api/v1/'
            display_model: 'Booth',
            location: '/show/oriol-galeria-dart-oriol-galeria-dart-at-the-armory-show-2013',
-           is_human: false
         ]
         fair = new Fair (fabricate 'fair', about: 'about the fair')
         profile = new Profile (fabricate 'fair_profile')
@@ -140,7 +138,7 @@ describe 'Fair', ->
           profile: profile
           results: results
           fairResults: fairResults
-          fill: sinon.stub()
+          crop: sinon.stub()
         @$template = $(template)
         done()
 
