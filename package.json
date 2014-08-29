@@ -81,6 +81,7 @@
     "annyang": "git://github.com/mzikherman/annyang.git",
     "node-inspector": "*",
     "imagesloaded": "*",
-    "scroll-frame": "*"
+    "scroll-frame": "*",
+    "dompurify": "*"
   }
 }
