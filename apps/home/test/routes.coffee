@@ -11,7 +11,7 @@ describe 'Home routes', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    @req = { body: {}, query: {}, get: sinon.stub() }
+    @req = { body: {}, query: {}, get: @getStub = sinon.stub() }
     @res = { render: sinon.stub(), redirect: sinon.stub() }
 
   afterEach ->
@@ -53,7 +53,15 @@ describe 'Home routes', ->
       @res.redirect.args[0][0].should.equal '/awesome-fair'
 
     it 'redirects logged in users to home if they log in from /log_in', ->
+      @getStub.returns '/log_in'
       @req.url = '/log_in'
+      @req.user = {}
+      routes.redirectLoggedInHome @req, @res
+      @res.redirect.args[0][0].should.equal '/'
+
+    it 'redirects logged in users to home if they log in from /sign_up', ->
+      @getStub.returns '/sign_up'
+      @req.url = '/sign_up'
       @req.user = {}
       routes.redirectLoggedInHome @req, @res
       @res.redirect.args[0][0].should.equal '/'
