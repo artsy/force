@@ -17,5 +17,5 @@ module.exports = class Selected extends Backbone.Model
     return 'For Sale' if string is '-1:1000000000000'
     deslugify string
 
-  isActive: (attribute) ->
-    _.include _.values(@attributes), attribute
+  isActive: (value) ->
+    (_.find _.values(@attributes), (val) -> String(val) is String(value))?
