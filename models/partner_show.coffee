@@ -30,14 +30,6 @@ module.exports = class PartnerShow extends Backbone.Model
 
   href: -> "/show/#{@get('id')}"
 
-  metaImage: ->
-    if @has 'image_url' and @get 'image_versions' and @hasImage 'large'
-      @imageUrl 'large'
-    else if @artworks?.length > 0 and @artworks.first().hasImage 'large'
-      @artworks.first().imageUrl 'large'
-    else
-      null
-
   toPageTitle: ->
     _.compact([
       @title()
@@ -106,6 +98,14 @@ module.exports = class PartnerShow extends Backbone.Model
           @trigger "fetch:posterImageUrl", imageUrl
     @artworks.fetch options
     false
+
+  metaImageUrl: ->
+    if @imageUrl 'large'
+      @imageUrl 'large'
+    else if @artworks?.length > 0 and @artworks.first().defaultImage()
+      @artworks.first().defaultImage().imageUrl 'large'
+    else
+      null
 
   thumbImageUrl: ->
     return @imageUrl('general') if @hasImage('general')
@@ -238,6 +238,9 @@ module.exports = class PartnerShow extends Backbone.Model
   endAtDate: ->
     new Date(@get('end_at'))
 
+  performers: ->
+    artist.toJSONLDShort() for artist in @artists().models
+
   toJSONLD: ->
     if @get('location')
       @get('location').name = @partnerName()
@@ -246,10 +249,10 @@ module.exports = class PartnerShow extends Backbone.Model
       "@context": "http://schema.org"
       "@type": "Event"
       name: @title()
-      image: @metaImage()?.imageUrl()
+      image: @metaImageUrl()
       url: "#{sd.APP_URL}#{@href()}"
       startDate: @startAtDate().toISOString()
       endDate: @endAtDate().toISOString()
       location: @location()?.toJSONLD()
-      performer: artist.toJSONLDShort() for artist in @artists().models
+      performer: @performers()
     }
