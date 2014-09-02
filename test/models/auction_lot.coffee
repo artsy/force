@@ -9,10 +9,6 @@ describe 'AuctionLot', ->
   before ->
     @lot = new AuctionLot fabricate 'auction_result'
 
-  describe '#formattedEstimateText', ->
-    it 'formats the estimate text with line breaks and an endash', ->
-      @lot.formattedEstimateText().should.equal '€120,000&nbsp;&ndash;<br>160,000'
-
   describe '#href', ->
     it 'returns a URL to the auction lot', ->
       @lot.href(new Backbone.Model(id: 'foo-bar')).should.equal "/artist/foo-bar/auction-result/#{@lot.id}"
