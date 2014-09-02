@@ -22,11 +22,11 @@ describe 'GoogleSearchResults', ->
   it '#moveMatchResultsToTop', ->
     results = new GoogleSearchResults [
       {
-        display: 'bar bar'
+        title: 'bar bar'
         link: '/artwork/foo'
       },
       {
-        display: 'foo bar'
+        title: 'foo bar'
         link: '/artist/foo'
       }
     ]
