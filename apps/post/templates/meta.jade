@@ -1,5 +1,5 @@
-title!= post.metaTitle()
-meta( property="og:title", content!=post.metaTitle() )
+title= post.metaTitle()
+meta( property="og:title", content=post.metaTitle() )
 meta( name="description", content=post.metaDescription() )
 meta( property="og:description", content=post.metaDescription() )
 meta( property="twitter:description", content=post.metaDescription() )
