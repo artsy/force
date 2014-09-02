@@ -27,6 +27,7 @@ describe 'proxyToReflection', ->
     paths =
       '/artwork/foo-bar?_escaped_fragment_=': '/artwork/foo-bar'
       '/artwork/foo-bar?a=b&c=d&_escaped_fragment_=': '/artwork/foo-bar%3Fa%3Db%26c%3Dd'
+      '/artwork/foo-bar?a=b&c=d%3Ae&_escaped_fragment_=': '/artwork/foo-bar%3Fa%3Db%26c%3Dd%3Ae'
 
     for source, dest of paths
       it "proxies #{source} to #{dest}", ->
