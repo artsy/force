@@ -5,7 +5,7 @@ nav.layered-search-layers
       if layer.get('fair')
         | Works from #{layer.get('fair').get('name')}
       else
-        != layer.get('name')
+        = layer.get('name')
 #layered-search-results.artwork-columns
   #layered-search-results-container: .loading-spinner
   #layered-search-layer-gene-button-container
