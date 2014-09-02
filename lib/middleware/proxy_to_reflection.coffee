@@ -18,5 +18,5 @@ reflectionUrl = (req) ->
   url = parse(req.url)
   dest = REFLECTION_URL + url.pathname
   query = url.query?.replace(/&?_escaped_fragment_=/, '')
-  dest += encodeURIComponent("?" + query) if query?.length
+  dest += encodeURIComponent("?" + decodeURIComponent(query)) if query?.length
   dest
