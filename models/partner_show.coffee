@@ -43,7 +43,7 @@ module.exports = class PartnerShow extends Backbone.Model
       @title()
       @get('partner')?.name || ''
       "Artsy"
-    ]).join(' | ').replace('&#x2013;', '-')
+    ]).join(' | ')
 
   # past / current / upcomming show featuring works by {artists} on view at {gallery name} {location} {dates}
   toPageDescription: ->
@@ -63,7 +63,7 @@ module.exports = class PartnerShow extends Backbone.Model
       @formatLeadHeading()
       artistText
       info
-    ]).join(' ').replace('&#x2013;', '-')
+    ]).join(' ')
 
   formatArtistText: ->
     artists = []

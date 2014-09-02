@@ -61,7 +61,7 @@ describe 'location page', ->
 
     it 'should list shows', ->
       @template.should.containEql "This Show"
-      @template.should.containEql "Jul. 12th &#x2013; Sep. 1st 2013"
+      @template.should.containEql "Jul. 12th – Sep. 1st 2013"
       @template.should.containEql "That Show"
       @template.should.containEql "Other Current and Upcoming Shows"
       @template.should.containEql "Other Cities"

@@ -30,13 +30,13 @@ module.exports = class DateHelpers
       if start.month() is end.month() and start.date() is end.date()
         monthAndDate = "#{startMonth} #{startDay}"
       else if start.month() == end.month()
-        monthAndDate = "#{startMonth} #{startDay} &#x2013; #{endDay}"
+        monthAndDate = "#{startMonth} #{startDay} – #{endDay}"
       else
-        monthAndDate = "#{startMonth} #{startDay} &#x2013; #{endMonth} #{endDay}"
+        monthAndDate = "#{startMonth} #{startDay} – #{endMonth} #{endDay}"
 
       if start.year() isnt moment(new Date()).year()
         "#{monthAndDate} #{start.year()}"
       else
         monthAndDate
     else
-      "#{startMonth} #{startDay}, #{start.format('YYYY')} &#x2013; #{endMonth} #{endDay}, #{end.format('YYYY')}"
+      "#{startMonth} #{startDay}, #{start.format('YYYY')} – #{endMonth} #{endDay}, #{end.format('YYYY')}"
