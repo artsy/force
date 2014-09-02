@@ -13,10 +13,9 @@ h2.avant-garde-header-center Other works in show
 
   if show.get('start_at') && show.get('end_at')
     .ars-timeframe
-      != show.runningDates()
+      = show.runningDates()
       if show.formatCity()
-        = ', '
-        != show.formatCity()
+        | , #{show.formatCity()}
 
   .ars-buttons: include ../../../components/partner_buttons/show_buttons
 

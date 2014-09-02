@@ -7,15 +7,14 @@ h1 Enter a password to #{action} account and save your information
 
 form.stacked-form#after-inquiry-auth-form
   input.bordered-input(
-    name          = 'password'
-    type          = 'password'
-    placeholder   = 'Password'
-    autocomplete  = 'on'
-    pattern       = '.{6,}'
-    title         = '6 characters minimum'
-    autofocus     = autofocus
+    name= 'password'
+    type= 'password'
+    placeholder= 'Password'
+    autocomplete= 'on'
+    pattern= '.{6,}'
+    title= '6 characters minimum'
+    autofocus= autofocus
     required
   )
-  button#auth-submit.avant-garde-button-black
-    != buttonLabel
+  button#auth-submit.avant-garde-button-black= buttonLabel
   a#auth-skip.avant-garde-button-white No thanks

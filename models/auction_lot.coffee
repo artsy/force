@@ -11,9 +11,6 @@ module.exports = class AuctionLot extends Backbone.Model
   _.extend @prototype, Dimensions
   _.extend @prototype, Image(SECURE_IMAGES_URL)
 
-  formattedEstimateText: ->
-    @get('estimate_text')?.replace /\ -\ /, '&nbsp;&ndash;<br>'
-
   href: (artist) ->
     "/artist/#{artist.id}/auction-result/#{@id}"
 

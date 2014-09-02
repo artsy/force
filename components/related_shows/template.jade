@@ -17,14 +17,14 @@ if shows.length === 1
       a( href=show.href() )
         h4.rsf-name= show.get('name')
         if show.get('start_at') && show.get('end_at')
-          .rsf-timeframe!= show.runningDates()
+          .rsf-timeframe= show.runningDates()
 
 if shows.length > 1
   .related-shows-rest.grid-4-up
     for show in shows
       .related-show.grid-item
         a.hoverable-image-link( href=show.href() )
-          .hoverable-image.is-four-three( style="background-image: url(#{crop(show.posterImageUrl(), { width: 325, height: 244 } )})" ) 
+          .hoverable-image.is-four-three( style="background-image: url(#{crop(show.posterImageUrl(), { width: 325, height: 244 } )})" )
         .rsr-metadata
           h4.related-show-label= show.formatLeadHeading()
           if show.get('partner').name !== show.get('name')
@@ -37,4 +37,4 @@ if shows.length > 1
           a( href=show.href() )
             h4.rsr-name= show.get('name')
             if show.get('start_at') && show.get('end_at')
-              .rsr-timeframe!= show.runningDates()
+              .rsr-timeframe= show.runningDates()

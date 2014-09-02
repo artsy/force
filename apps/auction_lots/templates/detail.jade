@@ -11,7 +11,7 @@ block body
     header.auction-result-detail-header
       h1( data-id= lot.id )
         a( href= artist.href() ) #{artist.get('name')},&nbsp;
-        em!= lot.get('title')
+        em= lot.get('title')
         |  &mdash; Auction Result
 
     section.auction-result-detail

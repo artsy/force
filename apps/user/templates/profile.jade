@@ -29,7 +29,7 @@ else
           textarea#settings-bio.bordered-input(
             name='bio'
             rows='5'
-          )!= profile.get('bio')
+          )= profile.get('bio')
 
           label.avant-garde-form-label Location
           #settings-profile-location

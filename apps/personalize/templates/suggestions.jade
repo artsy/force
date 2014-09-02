@@ -7,7 +7,7 @@ header.personalize-header
 section.personalize-step( data-step='#{kind}' )
   #personalize-search-container.autocomplete-input-container.is-block
     input#personalize-search.bordered-input(
-      type='text', placeholder!='#{placeholder}', autofocus=autofocus
+      type='text', placeholder=placeholder, autofocus=autofocus
     )
     .autocomplete-loading-indicator: .loading-spinner-small
 

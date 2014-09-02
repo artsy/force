@@ -32,18 +32,18 @@ block body
             .partner-link= partner.get('name')
           .plus-follow-button
             .icon-follow-circle
-            .follow-button-text          
+            .follow-button-text
           br
           if show.has('fair')
             if fair.get('organizer')
               a( href='/' + fair.get('organizer').profile_id )= fair.get('name')
               br
-            != fair.formatDates()
+            = fair.formatDates()
             if show.get('fair_location')
               br
               = show.get('fair_location').display
           else
-            != show.runningDates()
+            = show.runningDates()
             if location
               br
               = location.singleLine()
@@ -55,7 +55,7 @@ block body
           br
           em= fair.get('name')
       else
-        h1.show-heading-title!= show.title()
+        h1.show-heading-title= show.title()
 
       #show-main-buttons
         include ../../components/partner_buttons/show_buttons

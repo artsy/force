@@ -35,7 +35,13 @@ tbody
         != lot.dimensions({ metric: 'cm', format: 'decimal' })
       td.auction-lot-organization= lot.get('organization')
       td= lot.get('auction_dates_text')
-      td!= lot.formattedEstimateText()
+      td
+        if lot.has('estimate_text')
+          - var estimate = lot.get('estimate_text').split(' - ')
+          = estimate[0]
+          | &nbsp;&ndash;
+          br
+          = estimate[1]
       td
         if (user)
           = lot.get('price_realized_text')

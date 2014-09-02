@@ -17,7 +17,7 @@ block body
       .feature-content
         nav.feature-share
           +share(feature.shareTitle())
-        h1.feature-title!= feature.get('name')
+        h1.feature-title= feature.get('name')
 
         //- Requires auctions to have descriptions
         //- which I assume they do. But this needs to be revisited.

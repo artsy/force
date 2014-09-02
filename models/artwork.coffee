@@ -315,9 +315,9 @@ module.exports = class Artwork extends Backbone.Model
     return undefined if @get('sale_message') is 'Contact For Price'
     if @get('sale_message')?.indexOf('Sold') > - 1
       _.compact([
-        "<span style='letter-spacing: 1px;'>SOLD</span>"
+        'SOLD'
         @get('price')
-      ]).join(' &ndash; ')
+      ]).join(' – ')
     else
       @get 'sale_message'
 

@@ -18,7 +18,8 @@ block body
               .bid-input-container
                 label.bid-dollar-sign $
                 input.max-bid.bordered-input( name='bid', autocomplete='off', autofocus='true', value=maxBid )
-              .bid-input-help-text!= "Enter " + bidderPositions.minBid() + " or higher"
+              .bid-input-help-text
+                | Enter #{bidderPositions.minBid()} or higher
               a.bidding-question How do auctions work?
           .auction-bid-errors
         if isRegistered

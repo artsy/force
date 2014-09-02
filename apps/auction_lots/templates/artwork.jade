@@ -47,7 +47,7 @@ block body
           td
             .auction-lot-title-container
               a( href="/artwork/#{artwork.id}" )
-                img.auction-lot-image( src!= artwork.defaultImageUrl(), alt= artwork.get('title') )
+                img.auction-lot-image( src= artwork.defaultImageUrl(), alt= artwork.get('title') )
               .auction-lot-title
                 a( href="/artwork/#{artwork.id}" )
                   em= artwork.get('title')

@@ -8,4 +8,4 @@
       if profile.get('owner')
         .rpc-author By #{profile.get('owner').name}
        if post.get('title')
-        .rpc-title!= post.get('title')
+        .rpc-title= post.get('title')

@@ -131,10 +131,10 @@ li.artist-related-post
   a.artist-related-post-content( href="/post/#{post.get('id')}" )
     if post.get('title')
       .arpc-title
-        != post.get('title')
+        = post.get('title')
     if post.get('summary')
       .arpc-body
-        != post.get('summary')
+        = post.get('summary')
 
   unless profile.isNew()
     .artist-related-post-profile

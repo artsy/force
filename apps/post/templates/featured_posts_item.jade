@@ -11,6 +11,6 @@ else
     a.hoverable-image-link( href=post.href(), data-attachment=attachment.id )
       img( src= src )
   if post.get('title')
-    h2.pfpi-title: a( href=post.href() )!= post.get('title')
+    h2.pfpi-title: a( href=post.href() )= post.get('title')
   if post.has('profile')
     a.pfpi-author( href=profile.href() )= profile.displayName()

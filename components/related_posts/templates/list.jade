@@ -11,9 +11,9 @@
           href="/post/#{post.id}"
         )
           if post.get('title')
-            .rpc-title!= post.get('title')
+            .rpc-title= post.get('title')
           if post.get('summary')
-            .rpc-body!= post.get('summary')
+            .rpc-body= post.get('summary')
 
         unless profile.isNew()
           .related-post-profile
