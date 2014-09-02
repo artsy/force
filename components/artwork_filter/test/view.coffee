@@ -27,6 +27,12 @@ describe 'ArtworkFilterView', ->
     Backbone.sync.restore()
 
   describe '#initialize', ->
+    beforeEach ->
+      sinon.spy @ArtworkFilterView::, 'remove'
+
+    afterEach ->
+      @view.remove.restore()
+
     describe '#render', ->
       it 'renders the container template', ->
         @view.$el.html().should.containEql 'artwork-filter'
@@ -37,6 +43,10 @@ describe 'ArtworkFilterView', ->
 
     it 'fetches the artworks', ->
       Backbone.sync.args[1][1].url().should.containEql '/api/v1/search/filtered/artist/foo-bar'
+
+    it 'removes itself if the initial filter state returns without any works', ->
+      Backbone.sync.args[0][2].success {}
+      @view.remove.called.should.be.true
 
   describe '#renderFilter', ->
     beforeEach ->

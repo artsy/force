@@ -8,7 +8,7 @@ _ = require 'underscore'
 _s = require 'underscore.string'
 sd = require('sharify').data
 qs = require('querystring')
-hash = require('spark-md5').hash
+sparkMd5Hash = require('spark-md5').hash
 
 module.exports = (options) =>
   return if module.exports.getUserAgent()?.indexOf?('PhantomJS') > -1
@@ -104,7 +104,7 @@ maxTrackableMultiIds = 50
 
 module.exports.encodeMulti = (ids) ->
   ids = _.compact(ids)
-  (_.map ids, (id) -> hash(id).substr(0, 8) ).join("-")
+  (_.map ids, (id) -> sparkMd5Hash(id).substr(0, 8) ).join("-")
 
 module.exports.trackMulti = (description, data) =>
   ga? 'send', 'event', categories['multi'], description, data
