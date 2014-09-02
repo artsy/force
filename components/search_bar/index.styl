@@ -11,9 +11,8 @@ suggestion-height = (suggestion-thumbnail-size + 20px)
 
   &.is-display-suggestions
     #main-layout-search-bar-feedback
-      visibility visible
-      transition opacity 0.125s
-      opacity 1
+      height logo-size
+      border 1px solid gray-lighter-color
 
   &.is-loading
     #main-layout-search-bar-spinner
@@ -25,17 +24,18 @@ suggestion-height = (suggestion-thumbnail-size + 20px)
   display block
   position absolute
   width calc('100% + 2px')
-  height logo-size
-  top 100%
+  height 0px
   left 0
   right auto
   padding 0 (logo-size / 2)
   margin-left -1px
   line-height logo-size
-  opacity 0
-  border 1px solid gray-lighter-color
+  border 0px solid
   background-color gray-lightest-color
-  overflow ellipsis
+  overflow hidden
+  visibility visible
+  opacity 1
+  transition height 0.125s
 
 #main-layout-search-bar-spinner
   display none
