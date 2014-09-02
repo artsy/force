@@ -23,6 +23,12 @@ Profile = require '../../models/profile.coffee'
   render = _.after 2, ->
     res.locals.sd.PROFILE = profile
     res.locals.sd.USER_EDIT = user
+
+    # HTTP cache headers to prevent browser caching
+    res.setHeader('Cache-Control', 'private, no-cache, no-store, max-age=0')
+    res.setHeader('Pragma', 'no-cache')
+    res.setHeader('Expires', '0')
+
     res.render './templates/index.jade',
       user: user
       profile: profile
