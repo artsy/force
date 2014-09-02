@@ -1,5 +1,6 @@
 _ = require 'underscore'
 FeedView = require('./feed.coffee')
+imagesLoaded = require 'imagesloaded'
 { isTouchDevice } = require '../../util/device.coffee'
 
 module.exports = class PoplockitFeed extends FeedView
@@ -19,7 +20,7 @@ module.exports = class PoplockitFeed extends FeedView
     @$feedItems.removeClass 'unrendered-feed-item'
     @popLockItInitialized = true
 
-    _.defer =>
+    @$el.imagesLoaded =>
       @recomputeEachShowHeight()
 
   onResize: =>
@@ -55,7 +56,7 @@ module.exports = class PoplockitFeed extends FeedView
     @createNewItems $unrenderedItems
     $unrenderedItems.removeClass 'unrendered-feed-item'
 
-    _.defer =>
+    @$el.imagesLoaded =>
       @recomputeEachShowHeight()
 
   createNewItems: ($items) ->
