@@ -1,6 +1,7 @@
 .bordered-bid-form-group.current-bid
-  .bid-group-label!= saleArtwork.bidLabel() + ":"
+  .bid-group-label
+    | #{saleArtwork.bidLabel()}:
   .bid-group-content
-    .bid-group-value!= saleArtwork.currentBid()
+    .bid-group-value= saleArtwork.currentBid()
     if saleArtwork.formatBidsAndReserve()
-      .bidder-positions-count!= saleArtwork.formatBidsAndReserve()
+      .bidder-positions-count= saleArtwork.formatBidsAndReserve()

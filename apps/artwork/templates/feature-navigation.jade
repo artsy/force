@@ -1,6 +1,5 @@
-p
-  | Part of&nbsp;
-  a( href=href )!= model.get('name')
+p: a( href=href )
+  | Part of #{model.get('name')}
 
 a.avant-garde-jump-link( href=href )
   | Go to #{kind}

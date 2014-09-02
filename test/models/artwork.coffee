@@ -39,7 +39,7 @@ describe 'Artwork', ->
       @artwork.save
         sale_message: '$6,000 - Sold'
         price: '$6,000'
-      @artwork.saleMessage().should.equal "<span style='letter-spacing: 1px;'>SOLD</span> &ndash; $6,000"
+      @artwork.saleMessage().should.equal "SOLD – $6,000"
       @artwork.save
         sale_message: '$6,000'
       @artwork.saleMessage().should.equal '$6,000'

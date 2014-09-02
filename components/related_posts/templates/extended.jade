@@ -15,7 +15,7 @@
             | By #{profile.get('owner').name}
           a( href="/post/#{post.id}" )
             if post.get('title')
-              h3.rpe-title!= post.get('title')
+              h3.rpe-title= post.get('title')
             if post.get('body')
               .rpe-summary
                 != post.extendedSummary()

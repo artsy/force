@@ -43,7 +43,7 @@ describe 'Feed Templates', ->
         $ = cheerio.load @html
         $('.feed-item').length.should.equal 1
         $('.feed-item-top-section .show-link').text().should.containEql @partnerShow.toChildModel().formatFeedItemHeading()
-        $('.feed-item-top-section .timeframe').html().should.containEql @partnerShow.toChildModel().runningDates()
+        $('.feed-item-top-section .timeframe').text().should.containEql @partnerShow.toChildModel().runningDates()
         $('.feed-item-top-section .timeframe').text().should.containEql @partnerShow.get('location').city
         @html.should.not.containEql "undefined"
         @html.should.not.containEql "\#{"
@@ -102,7 +102,7 @@ describe 'Feed Templates', ->
         $ = cheerio.load @html
         $('.feed-item').length.should.equal 1
         $('.feed-item-top-section .show-link').text().should.containEql @partnerShow.toChildModel().formatFeedItemHeading()
-        $('.feed-item-top-section .timeframe').html().should.containEql @partnerShow.toChildModel().runningDates()
+        $('.feed-item-top-section .timeframe').text().should.containEql @partnerShow.toChildModel().runningDates()
         @html.should.not.containEql "undefined"
         @html.should.not.containEql "\#{"
 

@@ -72,6 +72,6 @@ block body
     = ' '
     each loc, i in otherLocations
       - var locSlug = loc[0], locName = loc[1].name
-      a( href="/#{locSlug}" )!= locName
+      a( href="/#{locSlug}" )= locName
       if i != otherLocations.length - 1
         = ', '

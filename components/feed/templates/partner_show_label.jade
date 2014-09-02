@@ -6,7 +6,8 @@ include ../../share/template
     include ../../partner_buttons/show_buttons
   if feedItemChildModel.partnerName()
     if feedItemChildModel.partnerHref()
-      a.exhibitor.faux-underline-hover-large( href=feedItemChildModel.partnerHref() )!= feedItemChildModel.partnerName()
+      a.exhibitor.faux-underline-hover-large( href=feedItemChildModel.partnerHref() )
+        = feedItemChildModel.partnerName()
     else
       .exhibitor!= feedItemChildModel.partnerName()
     .plus-follow-button
@@ -15,15 +16,16 @@ include ../../share/template
 
   br
   if feedItemChildModel.get('fair')
-    a.feed-item-fair-name.faux-underline-hover( href=feedItemChildModel.href() )!= feedItemChildModel.fairName()
+    a.feed-item-fair-name.faux-underline-hover( href=feedItemChildModel.href() )
+      = feedItemChildModel.fairName()
     if feedItemChildModel.fairLocationDisplay()
       .fair-location!= feedItemChildModel.fairLocationDisplay()
 
   else
-    a.show-link.faux-underline-hover( href=feedItemChildModel.href() )!= feedItemChildModel.formatFeedItemHeading()
+    a.show-link.faux-underline-hover( href=feedItemChildModel.href() )
+      != feedItemChildModel.formatFeedItemHeading()
     if feedItemChildModel.get('start_at') && feedItemChildModel.get('end_at')
       .timeframe
-        != feedItemChildModel.runningDates()
+        = feedItemChildModel.runningDates()
         if feedItemChildModel.formatCity()
-          = ', '
-          != feedItemChildModel.formatCity()
+          | , #{feedItemChildModel.formatCity()}

@@ -2,8 +2,8 @@ li.featured-shows-featured-show.grid-item
   a( href=show.href() )
     img.featured-shows-featured-cover-img( src=crop(show.bestImageUrl(['featured', 'large_rectangle']), { width: width, height: height }) )
     if location = show.location()
-      h6!= show.runningDates() + ' &nbsp;∙&nbsp; ' + location.singleLine()
+      h6 #{show.runningDates()}  ∙  #{location.singleLine()}
     else
-      h6!= show.runningDates()
+      h6= show.runningDates()
     h4= show.partnerName()
     h5= show.get('name')

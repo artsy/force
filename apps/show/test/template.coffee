@@ -46,7 +46,7 @@ describe 'Partner Show', ->
         $ = cheerio.load @html
         $('#show-left').text().should.containEql @show.get('partner').name
         $('#show-left').text().should.containEql @show.location().singleLine()
-        $('#show-left').html().should.containEql @show.runningDates()
+        $('#show-left').text().should.containEql @show.runningDates()
         $("#show-left a[href*='/show/#{@show.get('id')}']").should.have.lengthOf 0
 
       it 'always renders a container for install shots with a spinner while fetching', ->
@@ -139,7 +139,7 @@ describe 'Partner Show', ->
         $ = cheerio.load @html
         $('#show-left').text().should.containEql @show.get('partner').name
         $('#show-left').text().should.containEql @show.location().singleLine()
-        $('#show-left').html().should.containEql @show.runningDates()
+        $('#show-left').text().should.containEql @show.runningDates()
         $("#show-left a[href*='/show/#{@show.get('id')}']").should.have.lengthOf 0
 
       it 'renders a container for artwork columns', ->

@@ -5,4 +5,4 @@
       for artwork in group
         if artwork.get('artist')
           .artwork-column-artist
-            a( href=artwork.searchPath() )!= artwork.get('artist').get('name')
+            a( href=artwork.searchPath() )= artwork.get('artist').get('name')

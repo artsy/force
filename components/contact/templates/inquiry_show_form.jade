@@ -2,13 +2,13 @@ form.contact-form.stacked-form
   .contact-show-details.stacked-form-cell
     img( src=show.imageUrl() )
     p= show.get('name')
-    p!= show.runningDates()
+    p= show.runningDates()
 
   textarea.bordered-input.is-persistplaceholder(
-      placeholder   = 'Your message to the gallery'
-      name          = 'message'
-      autofocus     = autofocus
-      rows          = '7'
+      placeholder= 'Your message to the gallery'
+      name= 'message'
+      autofocus= autofocus
+      rows= '7'
       required
     )
   if user && user.id
@@ -21,15 +21,15 @@ form.contact-form.stacked-form
   else
     //- Logged out
     input.bordered-input.is-persistplaceholder(
-      placeholder   = 'Your full name'
-      type          = 'text'
-      name          = 'name'
+      placeholder= 'Your full name'
+      type= 'text'
+      name= 'name'
       required
     )
     input.bordered-input(
-      type          = 'email'
-      name          = 'email'
-      placeholder   = 'Your email address'
+      type= 'email'
+      name= 'email'
+      placeholder= 'Your email address'
       required
     )
   button#contact-submit.avant-garde-button-black( href='#', data-state='ok' )

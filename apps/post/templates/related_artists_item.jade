@@ -3,6 +3,6 @@
 .grid-item.post-related-artists-item
   a.hoverable-image-link( href=artist.href() )
     img( src= artwork.defaultImage().cropUrlFor({ width: 250, height: 167 }) )
-  h3.prai-name: a( href=artist.href() )!= artist.get('name')
+  h3.prai-name: a( href=artist.href() )= artist.get('name')
   if currentUser
     button.avant-garde-button-white.follow-button( data-id=artist.id )

@@ -33,21 +33,21 @@ figure.artwork-item( data-artwork=artwork.get('id') )
     if artwork.has('artist')
       p.artwork-item-artist.artwork-item-overflow
         if artwork.get('artist').public
-          a.faux-underline-hover( href=artwork.artistLink() )!= artwork.artistName()
+          a.faux-underline-hover( href=artwork.artistLink() )= artwork.artistName()
         else
-          != artwork.artistName()
+          = artwork.artistName()
     p.artwork-item-title.artwork-item-overflow!= artwork.titleAndYear()
     if artwork.partnerName()
       //- Note: if the <a..> is in a <p..> text-overflow ellipsis doesn't work
       p.artwork-item-partner.artwork-item-overflow
         if artwork.partnerLink()
-          a.faux-underline-hover( href=artwork.partnerLink() )!= artwork.partnerName()
+          a.faux-underline-hover( href=artwork.partnerLink() )= artwork.partnerName()
         else
-          != artwork.partnerName()
+          = artwork.partnerName()
 
     //- Display price for non-auctions
     if artwork.saleMessage() && displayPrice && !isAuction
-      p.artwork-item-sale-price!= artwork.saleMessage()
+      p.artwork-item-sale-price= artwork.saleMessage()
 
     //- In the case of auctions this blurb is usually an estimate
     if artwork.has('saleArtwork') || showBlurbs
@@ -65,7 +65,7 @@ figure.artwork-item( data-artwork=artwork.get('id') )
       .artwork-item-sale-metadata
         if artwork.get('sold')
           .artwork-item-buy-now-price
-            != artwork.saleMessage()
+            = artwork.saleMessage()
         else
           if displayBidStatus
             - var saleArtwork = artwork.get('saleArtwork')
@@ -76,9 +76,7 @@ figure.artwork-item( data-artwork=artwork.get('id') )
 
           if displayBuyNowPrice
             .artwork-item-buy-now-price
-              | Buy Now Price:
-              = ' '
-              != artwork.saleMessage()
+              | Buy Now Price: #{artwork.saleMessage()}
 
     if artwork.has('saleArtwork') || showBlurbs
       a.artwork-item-more-info.avant-garde-button-black.is-tiny(
@@ -105,7 +103,7 @@ figure.artwork-item( data-artwork=artwork.get('id') )
       else if artwork.isContactable()
         a.artwork-item-contact-seller.avant-garde-button-black.is-tiny(
           href=artwork.href(), data-id=artwork.get('id')
-        )!= artwork.contactLabel()
+        )= artwork.contactLabel()
 
     if artwork.collection && artwork.collection.artworkCollection
       a.artwork-item-collection-name(

@@ -2,8 +2,8 @@
   .fair-overview-top-left
     img.large-profile-image( alt=fair.get('name'), title=fair.get('name'), src=profile.icon().imageUrl('square') )
     h1.fair-name= fair.get('name')
-    .fair-location!= fair.formatLocation()
-    .fair-dates!= fair.formatDates()
+    .fair-location= fair.formatLocation()
+    .fair-dates= fair.formatDates()
     if profile.get('bio')
       .profile-bio!= profile.mdToHtml('bio') + ' '
     include ../../../components/auction_clock/template
@@ -12,8 +12,7 @@
       .fair-overview-browse-image( style="background-image: url(" + fair.imageUrl('large_rectangle') + ")" )
       .fair-overview-browse-heading.overview-heading Browse all exhibitors
       .fair-overview-browse-subheading
-        != exhibitorsCount + " "
-        | Exhibitors, Updated Daily
+        | #{exhibitorsCount} Exhibitors, Updated Daily
 
 .fair-overview-below-top-container
   .fair-overview-below-top
