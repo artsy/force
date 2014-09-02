@@ -17,8 +17,7 @@ RelatedShowsView = require '../../../components/related_shows/view.coffee'
 analytics = require '../../../lib/analytics.coffee'
 ArtistCarouselView = require '../../../components/artist_carousel/view.coffee'
 ArtworkFilter = require '../../../components/artwork_filter/index.coffee'
-
-ARTIST_PAGE_SPLIT_TEST = 'fillwidth' # ['fillwidth', 'filter', 'filter-carousel']
+splitTestInterface = require './split_test.coffee'
 
 module.exports.ArtistView = class ArtistView extends Backbone.View
   events:
@@ -79,12 +78,12 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
       $blurb.css maxHeight: 'none'
 
   setupSplitTest: ->
-    switch ARTIST_PAGE_SPLIT_TEST
+    switch splitTestInterface
       when 'fillwidth'
         @setupArtworksFillwidth()
       when 'filter'
         @setupArtworkFilter()
-      when 'filter-carousel'
+      when 'filter_carousel'
         @setupCarousel()
         @setupArtworkFilter()
 
