@@ -21,6 +21,6 @@ module.exports = class GoogleSearchResults extends Backbone.Collection
   moveMatchResultsToTop: (query) ->
     models = @models
     for item, index in @models
-      if item.get('title').toLowerCase() == query.toLowerCase()
+      if item.get('display').toLowerCase() == query.toLowerCase()
         models.splice(0, 0, models.splice(index, 1)[0] );
     models

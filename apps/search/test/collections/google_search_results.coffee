@@ -22,14 +22,14 @@ describe 'GoogleSearchResults', ->
   it '#moveMatchResultsToTop', ->
     results = new GoogleSearchResults [
       {
-        title: 'bar bar'
+        display: 'bar bar'
         link: '/artwork/foo'
       },
       {
-        title: 'foo bar'
+        display: 'foo bar'
         link: '/artist/foo'
       }
     ]
-    results.models[0].get('title').should.equal 'bar bar'
+    results.models[0].get('display').should.equal 'bar bar'
     results.moveMatchResultsToTop 'foo bar'
-    results.models[0].get('title').should.equal 'foo bar'
+    results.models[0].get('display').should.equal 'foo bar'
