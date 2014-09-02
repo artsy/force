@@ -37,14 +37,24 @@ initImageUploads = ->
         $form.removeClass 'is-loading'
     $form.find('input').change -> $form.addClass 'is-loading'
 
+setupArrayAddRemove = ->
+  addX = ($el) ->
+    $el.append $remove = $ "<button class='about-edit-remove'>✖</button>"
+    $remove.click -> $el.remove()
+  $('.hulk-array').each ->
+    $(this).children('.hulk-array-element').each -> addX $(this)
+    $(this).append $button = $ "<button class='avant-garde-button'>Add another</button>"
+    $button.click ->
+      $(this).before $el = $(this).prev().clone()
+      addX $el
+
 module.exports.init = ->
   $.hulk '#about-edit-hulk', DATA, hulkCallback,
     separator: null
     permissions: "values-only"
   $('button').addClass 'avant-garde-button'
   $('#about-edit-hulk *:hidden').remove()
-  # TODO: Find out how to move the title to the top without messing up serializing
-  # $('[value=title]').each -> $(this).parent().insertBefore $(this).parent().parent()
   $('textarea, input').on 'keyup', _.debounce (-> render $.hulkSmash('#about-edit-hulk')), 300
   render(DATA)
   initImageUploads()
+  setupArrayAddRemove()

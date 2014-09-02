@@ -8,7 +8,7 @@
 .body-about-edit
   #main-layout-container
     margin 20px !important
-    min-width 1730px
+    min-width 1100px
 
 #about-edit-h1
   margin 120px 0 40px 0
@@ -18,7 +18,7 @@
 #about-edit-container
   padding-top 60px
   border-top 1px solid gray-color
-  width 1730px
+  width 1100px
   margin auto
 
 #about-edit-hulk, #about-edit-example
@@ -26,10 +26,11 @@
   vertical-align top
 
 #about-edit-example
-  min-width 1200px
-  width calc(100% \- 560px)
-  position relative
+  width 1139px
+  position absolute
   padding 80px 0
+  transform scale(0.5)
+  transform-origin 0 0
   .about-hero-unit-bgs, .about-hero-unit-container
     height 660px
     position relative
@@ -64,7 +65,7 @@
     padding 0
     z-index -1
     margin 0
-  .hulk-map-add-pair
+  .hulk-map-add-pair, .hulk-array-add-pair
     display none
   .hulk-array-element
     margin-top 15px
@@ -74,8 +75,6 @@
     color transparent
   [value='sections'] + .hulk-map-value-container
     padding-left 0
-    > .hulk-array-add-pair:last-of-type
-      display none
   [value='sections'] + .hulk-map-value-container > .hulk-array-element
     margin-top 100px
     padding 0
@@ -89,12 +88,11 @@
   .hulk-save
     position fixed
     bottom 0
-    width 1730px
-    padding 14px
+    left 0
+    width 100%
+    padding 25px
     background black
     color white
-    border-top 30px solid white
-    border-bottom @border-top
     margin 0
     z-index 2
     &:hover
@@ -119,3 +117,15 @@
       color purple-color
   .about-edit-upload-form.is-loading input[type=file]::after
     content '...'
+  .hulk-array-element
+    position relative
+    .about-edit-remove
+      position absolute
+      top -9px
+      right -1px
+      border 1px solid #e5e5e5
+      background: white
+      display inline-block
+      width inherit
+      cursor pointer
+      padding 5px 7px
