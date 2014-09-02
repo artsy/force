@@ -16,3 +16,6 @@ describe 'deslugify', ->
   it 'preserves strings which are entirely numeric', ->
     deslugify('1990').should.equal '1990'
     deslugify('2000').should.equal '2000'
+
+  it 'handles special cases', ->
+    deslugify('film-video').should.equal 'Film / Video'
