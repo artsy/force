@@ -23,6 +23,7 @@ module.exports = class FeedItem extends Backbone.Model
     initialArtworkSize: 8
 
   parse: (response) ->
+    response.title = DOMPurify.sanitize(response.title)
     response.body = DOMPurify.sanitize(response.body)
     response
 
