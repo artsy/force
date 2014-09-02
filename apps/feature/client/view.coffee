@@ -38,7 +38,9 @@ module.exports = class FeatureView extends Backbone.View
     @feature = @model
 
     # Make the sale available as soon as possible
-    @feature.on 'change:sale', => @sale = @feature.get 'sale'
+    @feature.on 'change:sale', =>
+      @sale = @feature.get 'sale'
+      @updateMetaType()
 
     @feature.fetchSets
       setsSuccess: (sets) =>
@@ -91,6 +93,10 @@ module.exports = class FeatureView extends Backbone.View
       startingSort: 'artist-a-to-z'
 
     @artworkFilteringSetup = true
+
+  updateMetaType: ->
+    type = if @isAuction() then 'auction' else 'sale'
+    $('head').append("<meta property='og:event' content='#{type}'>")
 
   createArtworkColumns: ->
     @artworkColumns ?= new ArtworkColumnsView

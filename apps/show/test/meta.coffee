@@ -31,10 +31,8 @@ describe 'Meta tags', ->
         sd: sd
         show: @show
       $ = cheerio.load @html
-      $("meta[property='og:image']").attr('content').should.containEql 'og_image.jpg'
+      $("meta[property='og:image']").length.should.equal 0
 
-    describe 'with a poster image', ->
-
-      it 'links to the poster image for the og:image', ->
-        $ = cheerio.load @html
-        $("meta[property='og:image']").attr('content').should.equal @show.posterImageUrl()
+    it 'links to the poster image for the og:image', ->
+      $ = cheerio.load @html
+      $("meta[property='og:image']").attr('content').should.equal @show.posterImageUrl()
