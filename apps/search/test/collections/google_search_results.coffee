@@ -30,6 +30,6 @@ describe 'GoogleSearchResults', ->
         link: '/artist/foo'
       }
     ]
-    results.models[0].get('title').should.equal 'bar bar'
+    results.models[0].get('display').should.equal 'bar bar'
     results.moveMatchResultsToTop 'foo bar'
-    results.models[0].get('title').should.equal 'foo bar'
+    results.models[0].get('display').should.equal 'foo bar'
