@@ -16,7 +16,7 @@ module.exports = class VideoView extends Backbone.View
     @$video = $ """
       <div class='artwork-video'>
         <div class='artwork-video-img' \
-             style='background: url(#{@artwork.defaultImageUrl('large')})'>
+             style='background-image: url(#{@artwork.defaultImageUrl('large')})'>
           <div class='play-button'></div>
         </div>
       </div>
