@@ -1,6 +1,6 @@
 _ = require 'underscore'
 benv = require 'benv'
-fs = require 'fs'
+fs = require 'graceful-fs'
 jade = require 'jade'
 sinon = require 'sinon'
 path = require 'path'

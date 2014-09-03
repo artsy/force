@@ -4,7 +4,7 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 Artwork = require '../../../../../models/artwork'
 jade = require 'jade'
-fs = require 'fs'
+fs = require 'graceful-fs'
 { fabricate } = require 'antigravity'
 { resolve } = require 'path'
 

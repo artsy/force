@@ -1,7 +1,7 @@
 _ = require 'underscore'
 jade = require 'jade'
 path = require 'path'
-fs = require 'fs'
+fs = require 'graceful-fs'
 
 { fabricate } = require 'antigravity'
 CurrentUser = require '../../../../models/current_user'

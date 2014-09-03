@@ -1,6 +1,6 @@
 jade = require 'jade'
 path = require 'path'
-fs = require 'fs'
+fs = require 'graceful-fs'
 Backbone = require 'backbone'
 _ = require 'underscore'
 cheerio = require 'cheerio'

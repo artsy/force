@@ -1,7 +1,7 @@
 _ = require 'underscore'
 jade = require 'jade'
 path = require 'path'
-fs = require 'fs'
+fs = require 'graceful-fs'
 Backbone = require 'backbone'
 benv = require 'benv'
 { fabricate } = require 'antigravity'
