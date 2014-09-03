@@ -1,7 +1,0 @@
-.personalize-secondary-category
-  if category.get('image_versions')
-    .personalize-category-image
-      img( src=category.get('image_url').replace(':version', 'wide') )
-  .personalize-category-metadata
-    h3= category.get('title')
-    a.avant-garde-button-white.follow-button( data-id= category.get('gene_id') )
