@@ -119,6 +119,13 @@ transparify(color, basecolor)
   else
     rgba(basecolor, unit(lightness(color), '') * 0.01)
 
+block-margins(margin-size = 20px)
+  margin margin-size 0
+  &:first-child
+    margin-top 0
+  &:last-child
+    margin-bottom 0
+
 // Grid mixins used in the grid component mostly, but elsewhere for custom gap sizes
 grid-n-up(n, gap)
   > .grid-item
