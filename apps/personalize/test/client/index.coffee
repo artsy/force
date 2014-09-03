@@ -10,20 +10,33 @@ CurrentUser = require '../../../../models/current_user.coffee'
 describe 'PersonalizeRouter', ->
   beforeEach (done) ->
     benv.setup =>
-      benv.expose { $: benv.require 'jquery' }
+      benv.expose $: benv.require 'jquery'
       Backbone.$ = $
+      sinon.stub _, 'defer', (cb) -> cb()
       { @PersonalizeRouter, init } = mod = rewire '../../client/index'
-      mod.__set__ 'Transition', { fade: (@fadeStub = sinon.stub()) }
-      mod.__set__ 'views', { LocationView: => { render: => { $el: 'location' } } }
-      sinon.spy @PersonalizeRouter.prototype, 'navigate'
+      mod.__set__ 'Transition', fade: (@fadeStub = sinon.stub())
+      mod.__set__ 'views', LocationView: => render: => $el: 'location'
+      sinon.spy @PersonalizeRouter::, 'navigate'
       @router = new @PersonalizeRouter user: new CurrentUser
       done()
 
   afterEach ->
+    _.defer.restore()
     @router.navigate.restore()
 
   after ->
     benv.teardown()
+
+  describe '#initialize', ->
+    beforeEach ->
+      @nextSpy = sinon.spy @PersonalizeRouter::, 'next'
+
+    afterEach ->
+      @nextSpy.restore()
+
+    it 'calls #next to figure out the initial step', ->
+      router = new @PersonalizeRouter user: new CurrentUser
+      router.next.called.should.be.true
 
   describe '#step', ->
     it 'steps the view', ->
