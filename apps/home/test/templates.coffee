@@ -1,6 +1,6 @@
 jade = require 'jade'
 { resolve } = require 'path'
-fs = require 'fs'
+fs = require 'graceful-fs'
 CurrentUser = require '../../../models/current_user'
 
 render = ->

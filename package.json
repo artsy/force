@@ -46,7 +46,8 @@
     "artsy-gemini-upload": "*",
     "twilio": "*",
     "spark-md5": "*",
-    "diacritics": "*"
+    "diacritics": "*",
+    "graceful-fs": "*"
   },
   "devDependencies": {
     "browserify": "*",

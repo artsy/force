@@ -288,17 +288,21 @@ module.exports = function authenticate(passport, name, options, callback) {
        * @api public
        */
       strategy.redirect = function(url, status) {
-        if (typeof res.redirect == 'function') {
-          // If possible use redirect method on the response
-          // Assume Express API, optional status is last
-          res.redirect(url, status || 302);
-        } else {
-          // Otherwise fall back to native methods
-          res.statusCode = status || 302;
-          res.setHeader('Location', url);
-          res.setHeader('Content-Length', '0');
-          res.end();
-        }
+        // NOTE: Do not use `res.redirect` from Express, because it can't decide
+        //       what it wants.
+        //
+        //       Express 2.x: res.redirect(url, status)
+        //       Express 3.x: res.redirect(status, url) -OR- res.redirect(url, status)
+        //         - as of 3.14.0, deprecated warnings are issued if res.redirect(url, status)
+        //           is used
+        //       Express 4.x: res.redirect(status, url)
+        //         - all versions (as of 4.8.7) continue to accept res.redirect(url, status)
+        //           but issue deprecated versions
+        
+        res.statusCode = status || 302;
+        res.setHeader('Location', url);
+        res.setHeader('Content-Length', '0');
+        res.end();
       };
       
       /**
