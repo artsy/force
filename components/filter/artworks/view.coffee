@@ -87,7 +87,14 @@ module.exports = class FilterArtworksView extends Backbone.View
 
   reset: =>
     @params.set({ page: 1, size: @pageSize }, { silent: true }).trigger('change change:page')
-    @counts.fetch data: @params.toJSON()
+
+    @counts.fetch
+      data:
+        price_range: @params.get('price_range')
+        dimension: @params.get('dimension')
+        medium: @params.get('medium')
+        sort: @params.get('sort')
+
     @$('.filter-artworks-list').html ''
     _.defer @newColumnsView
     if headingText = @paramsToHeading()
