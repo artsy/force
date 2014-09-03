@@ -24,3 +24,5 @@ module.exports = class FilterRouter extends Backbone.Router
     queryParams = qs.parse(location.search.replace(/^\?/, ''))
     params = _.extend queryParams, { page: 1, size: 10 }
     @params.set(params, silent: true)
+
+    @trigger 'artworks-route'
