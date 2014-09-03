@@ -41,9 +41,9 @@ module.exports = class FairBrowseView extends Backbone.View
         @fair.trigger 'countsFetched'
 
         # For initializing fair artwork filtering on pageload
-        @triggerArtworks = _.once => @artworkParams.trigger 'reset'
         @filterArtworksView.router.on 'artworks-route', =>
-          @triggerArtworks()
+          _.defer => @artworkParams.trigger 'reset'
+          @filterArtworksView.router.off 'artworks-route'
 
         Backbone.history.start pushState: true
 
