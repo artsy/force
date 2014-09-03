@@ -40,7 +40,6 @@ module.exports.delta = (event, data, el) ->
   el.append '<img src="' + url + '" style="display:none;" />'
 
 module.exports.registerCurrentUser = ->
-  return
   # Don't track admins
   return if sd.CURRENT_USER?.type == 'Admin'
 
