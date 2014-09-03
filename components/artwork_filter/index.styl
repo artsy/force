@@ -1,6 +1,7 @@
 @import '../stylus_lib'
 
 small-avant-garde-size = 11px
+sidebar-width = default-max-page-width / 5
 
 .artwork-section
   position relative
@@ -17,18 +18,20 @@ small-avant-garde-size = 11px
   position relative
   padding 20px 0
 .artwork-columns-section
-  width 78%
+  width 100%
   float right
-  padding-left 20px
+  padding-left sidebar-width + 20px
+  margin-left -@padding-left
   > .artwork-columns
     margin-bottom 40px
   h2
     margin 5px 0 20px 0
     font-style italic
 .artwork-filter
-  width 22%
+  width sidebar-width
   float left
   background-color white
+  z-index 1
   &[data-position='docked']
     position absolute
     bottom 0
