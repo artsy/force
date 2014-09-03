@@ -57,10 +57,12 @@ module.exports = class FilterArtworksView extends Backbone.View
     @params.on 'change:price_range change:dimension change:medium change:sort reset', @reset
     @params.on 'change:page', =>
       @artworks.fetch { data: @params.toJSON(), remove: false }
+
     $.onInfiniteScroll @nextPage
 
     # Ensure things kick off on initialize
-    _.defer => @params.trigger 'reset'
+    unless @skipReset
+      _.defer => @params.trigger 'reset'
 
   render: (col, res) =>
     @$('.filter-artworks').attr 'data-state',

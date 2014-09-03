@@ -17,6 +17,7 @@ module.exports = class FairBrowseView extends Backbone.View
       artworksUrl: "#{API_URL}/api/v1/search/filtered/fair/#{@fair.get 'id'}"
       countsUrl: "#{API_URL}/api/v1/search/filtered/fair/#{@fair.get 'id'}/suggest"
       urlRoot: "#{@profile.id}/browse"
+      skipReset: true
     @artworkParams = @filterArtworksView.params
     @counts = @filterArtworksView.counts
     @boothsView = new BoothsView
@@ -31,7 +32,17 @@ module.exports = class FairBrowseView extends Backbone.View
     @artworkParams.on 'change reset', @renderArtworksHeader
     @artworkParams.on 'change reset', @updateFilterPageTitle
     @counts.fetch
-      success: => @fair.trigger 'countsFetched'
+      success: =>
+        # The order here is very important
+        #
+        # We wait until we have all the required information and then
+        # give the router the last say about which panel to
+        # display. It does fetch the artworks feed reguardless of the
+        # current panel but is reliable.
+        @fair.trigger 'countsFetched'
+        @artworkParams.trigger 'reset'
+        Backbone.history.start pushState: true
+
     @highlightHome()
 
   updateFilterPageTitle: =>

@@ -70,11 +70,6 @@ module.exports.init = ->
       fair: fair
       profile: profile
 
-    # Don't start the router until counts have been fetched
-    # Ensures that count events for artwork filter don't override other filter sections
-    fair.on 'countsFetched', ->
-      Backbone.history.start pushState: true
-
     # Links in the browse section keep your scroll position
     scrollFrame '#fair-browse a'
 
