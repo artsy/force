@@ -5,7 +5,6 @@ Artist = require '../../../models/artist.coffee'
 sd = require('sharify').data
 FillwidthView = require '../../../components/fillwidth_row/view.coffee'
 ArtistFillwidthList = require '../../../components/artist_fillwidth_list/view.coffee'
-BlurbView = require '../../../components/blurb/view.coffee'
 RelatedPostsView = require '../../../components/related_posts/view.coffee'
 RelatedGenesView = require '../../../components/related_genes/view.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
@@ -46,7 +45,6 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     analytics.track.impression 'Artist page', { id: @model.id }
 
   setupHeader: ->
-    @setupBlurb()
     @setupRelatedGenes()
 
   setupShareButtons: ->
@@ -68,14 +66,6 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     @currentUser = CurrentUser.orNull()
     @currentUser?.initializeDefaultArtworkCollection()
     @artworkCollection = @currentUser?.defaultArtworkCollection()
-
-  setupBlurb: ->
-    if ($blurb = @$('.blurb')).length
-      new BlurbView
-        updateOnResize: true
-        lineCount: 5
-        el: $blurb
-      $blurb.css maxHeight: 'none'
 
   setupSplitTest: ->
     switch splitTestInterface

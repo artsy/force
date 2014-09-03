@@ -16,7 +16,7 @@ setupView = (artistOptions = {}, done) ->
   }, =>
     { @ArtistView, @init } = mod = rewire '../../client/index'
     stubChildClasses mod, this,
-      ['FillwidthView', 'BlurbView', 'RelatedPostsView', 'RelatedGenesView', 'ArtistFillwidthList']
+      ['FillwidthView', 'RelatedPostsView', 'RelatedGenesView', 'ArtistFillwidthList']
       ['nextPage', 'render']
     @view = new @ArtistView el: $('body'), model: @artist
     done()
@@ -67,20 +67,6 @@ describe 'ArtistView', ->
         view2Opts.fetchOptions['filter[]'].should.equal 'not_for_sale'
         view1Opts.collection.url.should.containEql '/artworks'
         view2Opts.collection.url.should.containEql '/artworks'
-
-      it 'sets up the blurb view if there is one', ->
-        fixture = """
-          <div class='artist-info-section'>
-            <div class='artist-blurb'>
-              <div class='blurb'></div>
-            </div>
-          </div>
-        """
-        @view.$el.html fixture
-        @view.setupBlurb()
-        viewBlurbOpts = @BlurbView.args[0][0]
-        viewBlurbOpts.updateOnResize.should.equal true
-        viewBlurbOpts.lineCount.should.equal 5
 
       it 'sets up the related genes view properly', ->
         viewGeneOpts = @RelatedGenesView.args[0][0]
