@@ -9,6 +9,7 @@ mediator = require '../../lib/mediator.coffee'
 analytics = require '../../lib/analytics.coffee'
 LoggedOutUser = require '../../models/logged_out_user.coffee'
 { templateMap, stateEventMap, successEventMap, routeCopyMap } = require './maps.coffee'
+sanitizeRedirect = require '../sanitize_redirect/index.coffee'
 
 class State extends Backbone.Model
   defaults: mode: 'register'
@@ -28,7 +29,7 @@ module.exports = class AuthModalView extends ModalView
 
   initialize: (options) ->
     { @destination } = options
-    @redirectTo = options.redirectTo if options.redirectTo
+    @redirectTo = sanitizeRedirect(options.redirectTo) if options.redirectTo
     @preInitialize options
     super
 
