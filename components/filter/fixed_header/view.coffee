@@ -8,7 +8,10 @@ module.exports = class FilterFixedHeader extends Backbone.View
     _.extend @, options
     @$bodyHtml = $('body, html')
     @$window = $ window
-    @mainHeaderHeight = $('#main-layout-header').height()
+
+    # Sometimes we get incorrect measurements from
+    # $('#main-layout-header').height() on fair pages so this is fixed
+    @mainHeaderHeight = 64
     @$window.on 'scroll', @popLock
     @$window.on 'resize', _.throttle(@squeeze, 100)
     @params.on 'change', @scrollToTop

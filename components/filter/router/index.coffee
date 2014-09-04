@@ -23,6 +23,6 @@ module.exports = class FilterRouter extends Backbone.Router
   artworks: ->
     queryParams = qs.parse(location.search.replace(/^\?/, ''))
     params = _.extend queryParams, { page: 1, size: 10 }
-    @params.set(params, silent: true)
 
-    @trigger 'artworks-route'
+    # Causes artworks to be fetched 1x for each param but is more reliable than passing `silent: true`
+    @params.set(params)
