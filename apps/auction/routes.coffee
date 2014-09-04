@@ -54,8 +54,9 @@ registerOrRender = (sale, req, res, next) ->
 
       # Sale is not an auction: 404
       else
-        res.status 404
-        next new Error('Not Found')
+        err = new Error('Not Found')
+        err.status = 404
+        next err
 
 @bid = (req, res, next) ->
   unless req.user
@@ -87,8 +88,9 @@ registerOrRender = (sale, req, res, next) ->
       if sale.isBidable()
         render()
       else
-        res.status 404
-        next new Error('Not Found')
+        err = new Error('Not Found')
+        err.status = 404
+        next err
   saleArtwork.fetch
     error: res.backboneError
     success: ->

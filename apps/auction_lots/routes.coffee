@@ -23,8 +23,9 @@ randomPage = (total, pageSize) ->
         auctionLots: auctionLots
         artworks: artworks
     else
-      res.status 404
-      next new Error('Not Found')
+      err = new Error('Not Found')
+      err.status = 404
+      next err
 
   lot.fetch
     cache: true
