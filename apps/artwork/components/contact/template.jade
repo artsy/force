@@ -1,15 +1,22 @@
 //- Contact Gallery form
 if artwork.isContactable()
+  //- Gallery/Institution link
+  if artwork.partnerLink()
+    h2.ad-header
+      = artwork.contactLabel()
+    a.artwork-partner-name( href= artwork.partnerLink() )
+      = artwork.partnerName()
+    span#artwork-partner-locations
+      //- Rendered client-side
+    hr
+
+  //- Phone number
+  #artwork-partner-phone-container
+    //- Rendered client-side
+
+  //- Embedded inquiry form
+  h2.ad-header Message #{artwork.contactLabel()}
   form#artwork-contact-form
-    h2.avant-garde-header= artwork.contactLabel()
-    if artwork.partnerLink()
-      a.partner-name( href= artwork.partnerLink() )
-        = artwork.partnerName()
-    else
-      .partner-name= artwork.partnerName()
-
-    .artwork-partner-phone-container
-
     if user
       //- Logged in
       input( type='hidden', name='name', value=user.get('name') )

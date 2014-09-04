@@ -1,0 +1,240 @@
+// Need a lib
+artwork-detail-width = 250px
+artwork-detail-item-height = 36px
+
+.artwork-detail
+  float right
+  width artwork-detail-width
+  margin-bottom 20px
+  padding-left 20px
+  font-size 17px
+  // Buttons are narrower
+  // and always block
+  .avant-garde-button-black
+    display block
+    width 100%
+    padding 13px 30px 10px
+    &[data-state='loading'], &.is-loading
+      &::before
+        width 20px
+        height 5px
+  // Auction state
+  &.is-auction
+    // Hide some elements
+    .artwork-meta-price
+    .artwork-inquiry
+    .artwork-contact-button
+    #artwork-detail-contact
+      display none
+  .ad-header
+    avant-garde()
+    font-size 13px
+  hr
+    height 0
+    margin 10px 0
+    border none
+    border-bottom 1px dotted
+    border-color transparify(gray-lighter-color, black)
+    background-color transparent
+
+.artwork-detail-artist
+  avant-garde()
+  margin-right 5px
+  display: inline-block
+  > a
+    text-decoration none
+    &:hover
+      text-decoration underline
+
+.artwork-detail-title
+  display block
+  margin-bottom 10px
+  > em
+    font-style italic
+
+.artwork-detail-medium
+  text-transform lowercase
+
+.artwork-meta-photo-credit
+  margin-top 10px
+  font-size 11px
+  line-height 1.2
+
+.artwork-meta-partner
+  margin-top 10px
+  > a
+    text-decoration none
+
+.artwork-meta-price
+  display table
+  width 100%
+  border-top 1px dotted
+  border-bottom 1px dotted
+  border-color transparify(gray-lighter-color, black)
+  margin 10px 0
+  line-height artwork-detail-item-height
+.artwork-meta-price-label
+.artwork-meta-price-amount
+  display table-cell
+.artwork-meta-price-amount
+  text-align right
+.artwork-meta-price-label
+  &.is-sold
+    avant-garde()
+    font-size 15px
+    color red-color
+
+.artwork-actions
+  margin-top 20px
+
+// Auction
+.artwork-auction-estimate
+  margin 10px 0
+
+.artwork-bidder-position-status
+  margin 20px 0
+  padding 10px 0
+  border-top 2px solid
+  border-bottom 2px solid
+  font-size 17px
+  &.is-highest
+    color purple-color
+  &.is-outbid
+    color red-color
+
+.artwork-bid-status
+  margin 10px 0 20px
+  padding-top 10px
+  border-top 1px dotted
+  border-color transparify(gray-lighter-color, black)
+.abs-bid
+  font-weight bold
+.abs-count
+  color transparify(gray-dark-color, black)
+.abs-amount
+  avant-garde()
+  font-size 24px
+  line-height 1.5
+
+.artwork-bid-form
+  margin-top 6px
+  label
+    display block
+    margin 5px 0
+  input
+    width 100%
+    border-color transparify(gray-lighter-color, black)
+.abf-min-next
+  margin 5px 0
+  color transparify(gray-dark-color, black)
+.abf-button
+  margin 10px 0
+.abf-validation-error
+  display none
+  margin 20px 0
+  padding 10px 0
+  border-top 2px solid
+  border-bottom 2px solid
+  color red-color
+  font-size 15px
+.abf-help
+  margin 10px 0
+  > a
+    color transparify(gray-dark-color, black)
+    font-size 15px
+    font-style italic
+
+#artwork-auction-clock
+  margin 20px 0
+  .auction-clock-value > li > small
+    color transparify(#aaa, black)
+
+  .clock-header
+    text-align left
+    letter-spacing 1px
+    font-size 13px
+  .auction-clock-value
+    text-align left
+    margin-top 6px
+    font-size 24px
+    li small
+      text-align center
+
+#auction-detail
+#artwork-auction-clock
+  opacity 0
+  transition opacity 1s
+  &.is-fade-in
+    opacity 1
+
+#auction-detail .artwork-meta-price
+  display table
+
+// Inquiry
+.artwork-inquiry
+  margin 20px 0
+  text-align center
+  > .small-caps
+    font-size 11px
+    line-height 1.2
+    letter-spacing 0
+    color gray-darker-color
+
+.artwork-edition-sets
+  margin 10px 0
+.artwork-edition-set
+  display block
+  position relative
+  padding 5px 0
+  font-size 13px
+  line-height 1.5
+  border-bottom 1px dotted
+  border-color transparify(gray-lighter-color, black)
+  clearfix()
+  &:first-child
+    border-top 1px dotted
+.aes-radio
+.aes-details
+  float left
+.aes-radio
+  margin-right 10px
+.aes-edition-size
+  color gray-darker-color
+.aes-price
+  position absolute
+  top 5px
+  right 5px
+
+.artwork-actions-list
+  margin-top 20px
+  border-top 1px dotted
+  border-color transparify(gray-lighter-color, black)
+  > a
+    display block
+    position relative
+    line-height artwork-detail-item-height
+    padding-left @line-height
+    text-decoration none
+    transition all 0.125s
+    border-bottom 1px dotted
+    border-color transparify(gray-lighter-color, black)
+    &.is-hidden
+      display none
+    > i
+      position absolute
+      line-height @line-height
+      left 0
+    > sup
+      text-transform uppercase
+      margin-left 0.5em
+      // Tone down superscript a bit
+      vertical-align 4px
+    .icon-code
+      font-size 12px
+      font-size: 20px
+      padding-left: 5px
+    &:hover
+      background-color purple-color
+      border-color @background-color
+      color white
+      transition none

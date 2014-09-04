@@ -1,4 +1,7 @@
-{ trackLinks } = require '../../../lib/analytics.coffee'
+analytics = require '../../../lib/analytics.coffee'
+track = analytics.track
 
-trackLinks '.abf-button', 'Clicked "Bid" on the artwork page'
-trackLinks '.artwork-buy-button', 'Clicked "Buy" on the artwork page'
+$document = $(document)
+
+$document.on 'click', '.show-phone-number', ->
+  track.click "Clicked 'Show phone number'"

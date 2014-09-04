@@ -7,11 +7,11 @@ ArtworkRouter = require './router.coffee'
 module.exports.init = ->
   artist = new Artist sd.ARTIST
   artwork = new Artwork sd.ARTWORK, parse: true
-
   new ArtworkRouter artwork: artwork, artist: artist
   Backbone.history.start pushState: true
+  require './analytics.coffee'
 
-  # Reflection doesn't like easter eggs:(
+  # Reflection doesn't like easter eggs :(
   return if navigator.userAgent.match('PhantomJS')
   require('./ascii-easter-egg.coffee')(artwork)
   require('./skrillex-easter-egg.coffee')(artwork)
