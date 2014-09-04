@@ -7,7 +7,11 @@ sanitizeRedirect = require '../../components/sanitize_redirect/index'
 
 @logout = (req, res, next) ->
   req.logout()
-  next()
+  request
+    .del("#{API_URL}/api/v1/access_token")
+    .send(access_token: req.user?.get('accessToken'))
+    .end (res) ->
+      next()
 
 @resetPassword = (req, res) ->
   res.render 'templates/reset_password'
