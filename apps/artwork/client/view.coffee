@@ -37,8 +37,6 @@ module.exports = class ArtworkView extends Backbone.View
     'click a[data-client]': 'intercept'
     'click .circle-icon-button-share': 'openShare'
     'click .artwork-additional-image': 'changeImage'
-    'click .artwork-download-button': 'trackDownload'
-    'click .artwork-auction-results-button': 'trackComparable'
     'change .aes-radio-button': 'selectEdition'
     'click .artwork-buy-button': 'buy'
     'click .artwork-more-info .avant-garde-header-small': 'toggleMoreInfo'
@@ -60,9 +58,6 @@ module.exports = class ArtworkView extends Backbone.View
     @setupPartnerLocations()
     @setupAnnyang()
     @setupMonocleView()
-
-    # Track pageview
-    analytics.track.impression 'Artwork page', id: @artwork.id
 
     # Handle all related content
     @setupRelatedLayers()
@@ -333,7 +328,6 @@ module.exports = class ArtworkView extends Backbone.View
 
   openShare: (e) ->
     e.preventDefault()
-    analytics.track.click 'Viewed sharing_is_caring form'
     new ShareModal
       width: '350px'
       media: @artwork.defaultImageUrl('large')
@@ -341,21 +335,13 @@ module.exports = class ArtworkView extends Backbone.View
 
   changeImage: (e) ->
     e.preventDefault()
-
     (@$artworkAdditionalImages ?= @$('.artwork-additional-image')).
       removeClass 'is-active'
     ($target = $(e.currentTarget)).
       addClass 'is-active'
     (@$artworkImage ?= @$('#the-artwork-image')).
       attr('src', $target.data 'href')
-
     @artwork.setActiveImage($target.data 'id')
-
-  trackDownload: ->
-    analytics.track.click 'Downloaded lo-res image'
-
-  trackComparable: ->
-    analytics.track.click "Viewed 'Comparables'"
 
   selectEdition: (e) ->
     @__selectedEdition__ = e.currentTarget.value
