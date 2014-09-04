@@ -1,13 +1,17 @@
 express = require 'express'
+routes = require './routes.coffee'
 
 app = module.exports = express()
 app.set 'views', __dirname + '/templates'
 app.set 'view engine', 'jade'
 
-# Just render the index or pass if it's not a partner.
-# Routing is handled client-side.
-for route in ['/:id', '/:id/overview', '/:id/contact', '/:id/about', '/:id/collection',
-              '/:id/shop', '/:id/shows', '/:id/artists', '/:id/artist/:artistId', '/:id/posts']
-  app.get route, (req, res, next) ->
-    return next() unless res.locals.profile?.isPartner()
-    res.render 'index', params: req.params
+app.get '/:id', routes.overview
+app.get '/:id/overview', routes.redirectToOverview
+app.get '/:id/contact', routes.contact
+app.get '/:id/about', routes.about
+app.get '/:id/collection', routes.collection
+app.get '/:id/shop', routes.shop
+app.get '/:id/shows', routes.shows
+app.get '/:id/artists', routes.artists
+app.get '/:id/artist/:artistId', routes.artist
+app.get '/:id/posts', routes.posts

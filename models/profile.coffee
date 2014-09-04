@@ -91,31 +91,6 @@ module.exports = class Profile extends Backbone.Model
     follows = @get('follows_count')
     "#{_s.numberFormat(follows)} Follower#{if follows is 1 then '' else 's'}"
 
-  metaTitle: (tab) ->
-    _.compact([
-      (if @displayName() then "#{@displayName()}" else "Profile")
-      (if @isGallery() then "Artists, Art for Sale, and Contact Info" else null)
-      (if @isPartner() and !@isGallery() and !@isFairOranizer() then "Artists, Artworks, and Contact Info" else null)
-      (if @isFairOranizer() then @fairMetaTitle(tab) else null)
-      "Artsy"
-    ]).join(" | ")
-
-  fairMetaTitle: (tab) ->
-    if tab is 'info'
-      "Visitor Information"
-    else if tab is 'posts'
-       "Read Highlights from the Fair"
-    else if tab is 'forYou'
-      "Your Personal Fair Guide"
-    else
-      "Fair Info, Artists, and Art for Sale"
-
-  metaDescription: ->
-    if @get('bio')
-      @get('bio')
-    else
-      if @displayName() then "#{@displayName()} on Artsy" else "Profile on Artsy"
-
   isCurrentProfile: ->
     sd.CURRENT_USER?.default_profile_id == @get('id')
 
@@ -154,3 +129,98 @@ module.exports = class Profile extends Backbone.Model
       name: @displayName()
       url: "#{sd.APP_URL}#{@href()}"
     }
+
+
+
+  #
+  # Logic for page titles and description
+  #
+
+  # TITLE
+  fairTitle:
+    forYou: "Your Personal Fair Guide"
+    posts: "Highlighted Articles"
+    info: "Visitor Information"
+    search: "Search"
+    browse: "Browse"
+    favorites: "Favorites"
+    follows: "Following"
+
+  partnerTitle:
+    overview: null # Conditional
+    contact: "Contact Information"
+    about: "Visitor Information"
+    collection: "Collection"
+    shop: "Shop"
+    shows: "Shows"
+    artists: "Artists"
+    artist: null  # Canonical redirects to artist page
+    posts: "Posts"
+
+  metaTitle: (tab) ->
+    _.compact([
+      (if @displayName() then "#{@displayName()}" else "Profile")
+      (if @isPartner() and !@isFairOranizer() then @partnerMetaTitle(tab) else null)
+      (if @isFairOranizer() then @fairMetaTitle(tab) else null)
+      "Artsy"
+    ]).join(" | ")
+
+  fairMetaTitle: (tab) ->
+    if text = @fairTitle[tab]
+      text
+    else
+      "Fair Info, Artists, and Art for Sale"
+
+  partnerMetaTitle: (tab) ->
+    if text = @partnerTitle[tab]
+      text
+    else
+      if @isGallery() then "Artists, Art for Sale, and Contact Info" else "Artists, Artworks, and Contact Info"
+
+
+  # DESCRIPTION
+  partnerDescription:
+    overview: null # Conditional
+    contact: "Contact information including a map of locations with phone numbers for"
+    about: "Visitor information including location and phone number for"
+    collection: "Artworks in the collection of"
+    shop: null
+    shows: "List of current, upcomming and past shows at"
+    artists: "List of artists represented by"
+    artist: null  # Canonical redirects to artist page
+    posts: "Articles about and created by"
+
+  fairDescription:
+    forYou: null # Private
+    posts: "Featured articles about the fair"
+    info: "Visitor information including location, tickets and phone number for the fair"
+    search: null # Hopefully not indexed
+    browse: "Browse artworks at the fair by subject matter, style/technique, movement, price, and booth"
+    favorites: null # Private
+    follows: null # Private
+
+  partnerMetaDescription: (tab) ->
+    if text = @partnerDescription[tab]
+      [text, @displayName()].join(' ')
+    else
+      @profileMetaDescription()
+
+  fairMetaDescription: (tab) ->
+    if text = @fairDescription[tab]
+      text
+    else
+      @profileMetaDescription()
+
+  profileMetaDescription: ->
+    if @get('bio')
+      @get('bio')
+    else
+      if @displayName() then "#{@displayName()} on Artsy" else "Profile on Artsy"
+
+  metaDescription: (tab) ->
+    if @isPartner() and !@isFairOranizer()
+      @partnerMetaDescription(tab)
+    else if @isFairOranizer()
+      @fairMetaDescription(tab)
+    else
+      @profileMetaDescription()

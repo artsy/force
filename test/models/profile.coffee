@@ -107,6 +107,15 @@ describe 'Profile', ->
     it 'correctly formats title for galleries', ->
       @profile.set owner_type: 'PartnerGallery'
       @profile.metaTitle().should.equal 'J. Paul Getty Museum | Artists, Art for Sale, and Contact Info | Artsy'
+      @profile.metaTitle('overview').should.equal 'J. Paul Getty Museum | Artists, Art for Sale, and Contact Info | Artsy'
+      @profile.metaTitle('contact').should.equal 'J. Paul Getty Museum | Contact Information | Artsy'
+      @profile.metaTitle('about').should.equal 'J. Paul Getty Museum | Visitor Information | Artsy'
+      @profile.metaTitle('collection').should.equal 'J. Paul Getty Museum | Collection | Artsy'
+      @profile.metaTitle('shop').should.equal 'J. Paul Getty Museum | Shop | Artsy'
+      @profile.metaTitle('shows').should.equal 'J. Paul Getty Museum | Shows | Artsy'
+      @profile.metaTitle('artists').should.equal 'J. Paul Getty Museum | Artists | Artsy'
+      @profile.metaTitle('artist').should.equal 'J. Paul Getty Museum | Artists, Art for Sale, and Contact Info | Artsy'
+      @profile.metaTitle('posts').should.equal 'J. Paul Getty Museum | Posts | Artsy'
 
     it 'correctly formats title for non-gallery partners', ->
       @profile.set owner_type: 'PartnerMuseum'
@@ -116,8 +125,12 @@ describe 'Profile', ->
       @profile.set owner_type: 'FairOrganizer'
       @profile.metaTitle().should.equal 'J. Paul Getty Museum | Fair Info, Artists, and Art for Sale | Artsy'
       @profile.metaTitle('info').should.equal 'J. Paul Getty Museum | Visitor Information | Artsy'
-      @profile.metaTitle('posts').should.equal 'J. Paul Getty Museum | Read Highlights from the Fair | Artsy'
+      @profile.metaTitle('posts').should.equal 'J. Paul Getty Museum | Highlighted Articles | Artsy'
       @profile.metaTitle('forYou').should.equal 'J. Paul Getty Museum | Your Personal Fair Guide | Artsy'
+      @profile.metaTitle('search').should.equal 'J. Paul Getty Museum | Search | Artsy'
+      @profile.metaTitle('browse').should.equal 'J. Paul Getty Museum | Browse | Artsy'
+      @profile.metaTitle('favorites').should.equal 'J. Paul Getty Museum | Favorites | Artsy'
+      @profile.metaTitle('follows').should.equal 'J. Paul Getty Museum | Following | Artsy'
 
   describe '#metaDescription', ->
 
@@ -127,6 +140,30 @@ describe 'Profile', ->
 
       @profile.set('bio', undefined)
       @profile.metaDescription().should.equal 'J. Paul Getty Museum on Artsy'
+
+    it 'correctly formats title for galleries', ->
+      @profile.set owner_type: 'PartnerGallery'
+      @profile.metaDescription().should.equal "The J. Paul Getty Trust is a cultural and philanthropic institution dedicated to critical thinking in the presentation, conservation, and interpretation of the world's artistic legacy."
+      @profile.metaDescription('overview').should.equal "The J. Paul Getty Trust is a cultural and philanthropic institution dedicated to critical thinking in the presentation, conservation, and interpretation of the world's artistic legacy."
+      @profile.metaDescription('contact').should.equal 'Contact information including a map of locations with phone numbers for J. Paul Getty Museum'
+      @profile.metaDescription('about').should.equal 'Visitor information including location and phone number for J. Paul Getty Museum'
+      @profile.metaDescription('collection').should.equal 'Artworks in the collection of J. Paul Getty Museum'
+      @profile.metaDescription('shop').should.equal "The J. Paul Getty Trust is a cultural and philanthropic institution dedicated to critical thinking in the presentation, conservation, and interpretation of the world's artistic legacy."
+      @profile.metaDescription('shows').should.equal 'List of current, upcomming and past shows at J. Paul Getty Museum'
+      @profile.metaDescription('artists').should.equal 'List of artists represented by J. Paul Getty Museum'
+      @profile.metaDescription('artist').should.equal "The J. Paul Getty Trust is a cultural and philanthropic institution dedicated to critical thinking in the presentation, conservation, and interpretation of the world's artistic legacy."
+      @profile.metaDescription('posts').should.equal 'Articles about and created by J. Paul Getty Museum'
+
+    it 'correctly formats title for fairs', ->
+      @profile.set owner_type: 'FairOrganizer'
+      @profile.metaDescription().should.equal "The J. Paul Getty Trust is a cultural and philanthropic institution dedicated to critical thinking in the presentation, conservation, and interpretation of the world's artistic legacy."
+      @profile.metaDescription('info').should.equal "Visitor information including location, tickets and phone number for the fair"
+      @profile.metaDescription('posts').should.equal 'Featured articles about the fair'
+      @profile.metaDescription('forYou').should.equal "The J. Paul Getty Trust is a cultural and philanthropic institution dedicated to critical thinking in the presentation, conservation, and interpretation of the world's artistic legacy."
+      @profile.metaDescription('search').should.equal "The J. Paul Getty Trust is a cultural and philanthropic institution dedicated to critical thinking in the presentation, conservation, and interpretation of the world's artistic legacy."
+      @profile.metaDescription('browse').should.equal "Browse artworks at the fair by subject matter, style/technique, movement, price, and booth"
+      @profile.metaDescription('favorites').should.equal "The J. Paul Getty Trust is a cultural and philanthropic institution dedicated to critical thinking in the presentation, conservation, and interpretation of the world's artistic legacy."
+      @profile.metaDescription('follows').should.equal "The J. Paul Getty Trust is a cultural and philanthropic institution dedicated to critical thinking in the presentation, conservation, and interpretation of the world's artistic legacy."
 
   describe '#fetchFavorites', ->
 
