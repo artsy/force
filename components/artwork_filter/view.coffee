@@ -30,8 +30,11 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @initialStickyFilterSetup = _.once @setupStickyFilter
 
     @render()
-    @filter.fetchRoot success: (model, response, options) =>
-      @remove() unless response.total
+    @filter.fetchRoot
+      success: (model, response, options) =>
+        @remove() unless response.total
+      error: =>
+        @remove()
     @fetchArtworks()
 
   scrollToTop: ->
