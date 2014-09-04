@@ -102,7 +102,11 @@ module.exports = class FilterArtworksView extends Backbone.View
     _.defer @newColumnsView
     if headingText = @paramsToHeading()
       @$('h1.filter-heading').text(headingText).show()
-      document.title = "#{headingText} | Artsy"
+      document.title = _.compact([
+        @customPageTitle
+        _s.capitalize(headingText)
+        "Artsy"
+      ]).join(' | ')
     else
       @$('h1.filter-heading').hide()
 
