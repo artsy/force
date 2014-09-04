@@ -51,10 +51,13 @@ module.exports = class FilterArtworksView extends Backbone.View
       params: @params
       urlRoot: @urlRoot
 
+    # Reset gets called on many events, debounce so only the last one gets called
+    @throttledReset = _.debounce @reset, 200
+
     # Hook up events on the artworks, params, and counts
     @artworks.on 'sync', @render
     @counts.on 'sync', @renderCounts
-    @params.on 'change:price_range change:dimension change:medium change:sort reset', @reset
+    @params.on 'change:price_range change:dimension change:medium change:sort reset', @throttledReset
     @params.on 'change:page', =>
       @artworks.fetch { data: @params.toJSON(), remove: false }
 
@@ -87,6 +90,8 @@ module.exports = class FilterArtworksView extends Backbone.View
 
   reset: =>
     @params.set({ page: 1, size: @pageSize }, { silent: true }).trigger('change change:page')
+
+    console.log 'hellloo', @params
 
     @counts.fetch
       data:
