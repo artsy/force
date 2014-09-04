@@ -29,7 +29,6 @@ module.exports = class BookmarksView extends Backbone.View
 
     @bookmarks = new Bookmarks
     @bookmarks.fetch() if @persist
-
     @following = new Following null, kind: 'artist'
 
     @autocomplete = new SearchBarView
@@ -53,7 +52,7 @@ module.exports = class BookmarksView extends Backbone.View
   uncollect: (e) ->
     @trigger 'uncollect'
     id = $(e.currentTarget).data 'id'
-    model = @bookmarks.findByArtistId id
+    model = @bookmarks.findByInterestId id
     model.destroy()
     @autocomplete.$input.focus()
     @following.unfollow id

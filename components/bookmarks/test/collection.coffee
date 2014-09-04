@@ -7,15 +7,15 @@ describe 'Bookmarks', ->
     sinon.stub Backbone, 'sync'
 
     @bookmarks = new Bookmarks
-    @bookmarks.add id: 'foo', artist: id: 'bar'
-    @bookmarks.add id: 'bar', artist: id: 'baz'
+    @bookmarks.add id: 'foo', interest: id: 'bar'
+    @bookmarks.add id: 'bar', interest: id: 'baz'
 
   afterEach ->
     Backbone.sync.restore()
 
-  describe '#findByArtistId', ->
-    it 'can find a bookmark by the artist id', ->
-      @bookmarks.findByArtistId('bar').id.should.equal 'foo'
+  describe '#findByInterestId', ->
+    it 'can find a bookmark by the interest id', ->
+      @bookmarks.findByInterestId('bar').id.should.equal 'foo'
 
   describe '#newFromArtist', ->
     it 'accepts an artist(-like) model and news up a bookmark from it', ->
@@ -36,12 +36,12 @@ describe 'Bookmarks', ->
       @bookmarks.createFromArtist new Backbone.Model id: 'qux'
       @bookmarks.length.should.equal 3
       bookmark = @bookmarks.first()
-      bookmark.get('artist').id.should.equal 'qux'
-      bookmark.get('artist_id').should.equal 'qux'
-      bookmark.get('bookmark_type').should.equal 'collecting'
+      bookmark.get('interest').id.should.equal 'qux'
+      bookmark.get('interest_id').should.equal 'qux'
+      bookmark.get('category').should.equal 'collected_before'
       Backbone.sync.args[0][0].should.equal 'create'
-      Backbone.sync.args[0][1].attributes.artist_id.should.equal 'qux'
-      Backbone.sync.args[0][1].url().should.containEql '/api/v1/me/bookmark/artist'
+      Backbone.sync.args[0][1].attributes.interest_id.should.equal 'qux'
+      Backbone.sync.args[0][1].url().should.containEql '/api/v1/me/user_interest'
 
     it 'rejects duplicate artists', ->
       @bookmarks.createFromArtist new Backbone.Model id: 'qux'
@@ -50,11 +50,11 @@ describe 'Bookmarks', ->
       Backbone.sync.callCount.should.equal 1
 
   describe '#parse', ->
-    it 'ignores bookmarks without an artist', ->
+    it 'ignores bookmarks without an interest', ->
       @bookmarks.reset([
-        { artist_id: 'foo', artist: null }
-        { artist_id: 'bar', artist: 'existy' }
-        { artist_id: 'baz', artist: 'existy' }
-        { artist_id: 'qux', artist: null }
+        { interest_id: 'foo', interest: null }
+        { interest_id: 'bar', interest: 'existy' }
+        { interest_id: 'baz', interest: 'existy' }
+        { interest_id: 'qux', interest: null }
       ], parse: true)
-      @bookmarks.pluck('artist_id').should.eql ['bar', 'baz']
+      @bookmarks.pluck('interest_id').should.eql ['bar', 'baz']

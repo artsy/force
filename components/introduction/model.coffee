@@ -8,6 +8,6 @@ module.exports = class Introduction extends Backbone.Model
   generate: (user, bookmarks, options = {}) ->
     attributes = user.pick 'name', 'profession', 'collector_level'
     attributes.location = user.location()?.attributes if user.location()?
-    artistNames = _.pluck bookmarks?.pluck('artist'), 'name'
+    artistNames = _.pluck bookmarks?.pluck('interest'), 'name'
     attributes.collection = artistNames if artistNames.length
     @save attributes, options
