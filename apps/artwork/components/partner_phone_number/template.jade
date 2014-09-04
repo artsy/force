@@ -1,0 +1,8 @@
+h2.ad-header Call #{artwork.contactLabel()}
+a.show-phone-number( href='#' )
+  | Show Phone Number#{locations.length > 1 ? 's' : ''}
+.partner-phone-numbers
+  for location in locations
+    .partner-phone-number
+      = location.cityPhone()
+hr
