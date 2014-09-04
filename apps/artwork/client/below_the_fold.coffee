@@ -1,9 +1,8 @@
 _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
-
 Artworks = require '../../../collections/artworks.coffee'
-LayeredSearchView = require('./layered-search.coffee').LayeredSearchView
+LayeredSearchView = require('./layered_search.coffee').LayeredSearchView
 SaleView = require './sale.coffee'
 
 module.exports = class BelowTheFold extends Backbone.View

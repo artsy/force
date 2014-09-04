@@ -4,7 +4,6 @@ Backbone = require 'backbone'
 sinon = require 'sinon'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
-
 CurrentUser = require '../../../../models/current_user'
 SaleArtwork = require '../../../../models/sale_artwork'
 Sale = require '../../../../models/sale'

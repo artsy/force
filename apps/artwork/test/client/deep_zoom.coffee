@@ -5,7 +5,6 @@ Backbone = require 'backbone'
 sinon = require 'sinon'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
-
 Artwork = require '../../../../models/artwork'
 OpenSeadragon = ->
   addHandler: sinon.stub()
@@ -42,8 +41,8 @@ describe 'DeepZoomView', ->
     @OpenSeadragon = OpenSeadragon()
 
     sinon.stub Backbone, 'sync'
-    benv.render resolve(__dirname, '../../templates/deep-zoom.jade'), {}, =>
-      DeepZoomView = benv.requireWithJadeify resolve(__dirname, '../../client/deep-zoom'), ['template']
+    benv.render resolve(__dirname, '../../templates/deep_zoom.jade'), {}, =>
+      DeepZoomView = benv.requireWithJadeify resolve(__dirname, '../../client/deep_zoom'), ['template']
       DeepZoomView.__set__ 'getScript', (x, cb) -> cb()
 
       @view = new DeepZoomView $container: $('body'), artwork: @artwork

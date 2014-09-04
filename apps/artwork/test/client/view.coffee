@@ -6,7 +6,6 @@ sinon = require 'sinon'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
 { stubChildClasses } = require '../../../../test/helpers/stubs'
-
 Artist = require '../../../../models/artist'
 Artwork = require '../../../../models/artwork'
 Fair = require '../../../../models/fair'
@@ -16,9 +15,9 @@ CurrentUser = require '../../../../models/current_user'
 describe 'ArtworkView', ->
   before (done) ->
     benv.setup =>
-      benv.expose { $: benv.require 'jquery' }
+      benv.expose $: benv.require 'jquery'
       Backbone.$ = $
-      $.support.transition = { end: 'transitionend' }
+      $.support.transition = end: 'transitionend'
       $.fn.emulateTransitionEnd = -> @trigger $.support.transition.end
       done()
 

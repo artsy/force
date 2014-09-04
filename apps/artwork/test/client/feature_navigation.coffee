@@ -1,11 +1,10 @@
-
 _ = require 'underscore'
 benv = require 'benv'
 Backbone = require 'backbone'
 sinon = require 'sinon'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
-FeatureNavigationView = benv.requireWithJadeify resolve(__dirname, '../../client/feature-navigation'), ['template']
+FeatureNavigationView = benv.requireWithJadeify resolve(__dirname, '../../client/feature_navigation'), ['template']
 
 describe 'FeatureNavigationView', ->
   before (done) ->

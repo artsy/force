@@ -5,7 +5,7 @@ sinon = require 'sinon'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
 
-ViewInRoomView = benv.requireWithJadeify resolve(__dirname, '../../client/view-in-room'), ['template']
+ViewInRoomView = benv.requireWithJadeify resolve(__dirname, '../../client/view_in_room'), ['template']
 Artwork = require '../../../../models/artwork'
 
 describe 'ViewInRoomView', ->

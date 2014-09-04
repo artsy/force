@@ -4,10 +4,7 @@ Backbone = require 'backbone'
 sinon = require 'sinon'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
-
-{ Layer, Layers, LayeredSearchView } =
-  benv.requireWithJadeify resolve(__dirname, '../../client/layered-search'), ['template']
-
+{ Layer, Layers, LayeredSearchView } = benv.requireWithJadeify resolve(__dirname, '../../client/layered_search'), ['template']
 Artwork = require '../../../../models/artwork'
 Fair = require '../../../../models/fair'
 

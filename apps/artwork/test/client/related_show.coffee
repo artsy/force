@@ -4,7 +4,6 @@ Backbone = require 'backbone'
 sinon = require 'sinon'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
-
 Artworks = require '../../../../collections/artworks'
 Artwork = require '../../../../models/artwork'
 
@@ -21,7 +20,7 @@ describe 'RelatedShowView', ->
   beforeEach (done) ->
     sinon.stub Backbone, 'sync'
 
-    RelatedShowView = benv.requireWithJadeify resolve(__dirname, '../../client/related-show'), ['template']
+    RelatedShowView = benv.requireWithJadeify resolve(__dirname, '../../client/related_show'), ['template']
     RelatedShowView.__set__ 'ArtworkColumnsView', Backbone.View
 
     @artwork = new Artwork fabricate 'artwork'

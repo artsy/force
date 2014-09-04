@@ -9,7 +9,7 @@ describe 'BelowTheFoldView', ->
   before (done) ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'
-      @BelowTheFoldView = require '../../client/below-the-fold'
+      @BelowTheFoldView = require '../../client/below_the_fold'
       Backbone.$ = $
       done()
 

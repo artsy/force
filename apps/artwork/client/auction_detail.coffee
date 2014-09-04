@@ -2,7 +2,6 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 ModalPageView = require '../../../components/modal/page.coffee'
 mediator = require '../../../lib/mediator.coffee'
-
 template = -> require('../templates/auction_detail.jade') arguments...
 
 module.exports = class AuctionDetailView extends Backbone.View
