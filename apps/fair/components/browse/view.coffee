@@ -18,6 +18,7 @@ module.exports = class FairBrowseView extends Backbone.View
       countsUrl: "#{API_URL}/api/v1/search/filtered/fair/#{@fair.get 'id'}/suggest"
       urlRoot: "#{@profile.id}/browse"
       skipReset: true
+      customPageTitle: @profile.displayName()
     @artworkParams = @filterArtworksView.params
     @counts = @filterArtworksView.counts
     @boothsView = new BoothsView
@@ -95,7 +96,7 @@ module.exports = class FairBrowseView extends Backbone.View
     @$('.filter-fixed-header-nav .is-active').removeClass('is-active')
     @$('#fair-filter-all-artists').addClass('is-active')
     @$el.attr 'data-section', 'artists-a-to-z'
-    @updatePageTitle 'See A-Z List of All Artists'
+    @updatePageTitle 'A-Z List of All Artists'
     false
 
   exhibitorsAZ: ->
@@ -103,7 +104,7 @@ module.exports = class FairBrowseView extends Backbone.View
     @$('.filter-fixed-header-nav .is-active').removeClass('is-active')
     @$('#fair-filter-all-exhibitors').addClass('is-active')
     @$el.attr 'data-section', 'exhibitors-a-to-z'
-    @updatePageTitle 'See A-Z List of All Exhibitors'
+    @updatePageTitle 'A-Z List of All Exhibitors'
     false
 
   exhibitorsGrid: ->
