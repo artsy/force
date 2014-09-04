@@ -7,8 +7,8 @@ describe 'Bookmarks', ->
     sinon.stub Backbone, 'sync'
 
     @bookmarks = new Bookmarks
-    @bookmarks.add id: 'foo', artist: id: 'bar'
-    @bookmarks.add id: 'bar', artist: id: 'baz'
+    @bookmarks.add id: 'foo', interest: id: 'bar'
+    @bookmarks.add id: 'bar', interest: id: 'baz'
 
   afterEach ->
     Backbone.sync.restore()
