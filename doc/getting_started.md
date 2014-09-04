@@ -56,5 +56,5 @@ Client-side code and templates will automatically reload on page refresh, but se
 ````
 npm install coffeee-script -g
 npm install nodemon -g
-nodemon coffee app.coffee
+nodemon index.coffee
 ````

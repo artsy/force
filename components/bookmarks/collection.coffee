@@ -4,24 +4,24 @@ Bookmark = require './model.coffee'
 { API_URL } = require('sharify').data
 
 module.exports = class Bookmarks extends Backbone.Collection
-  url: "#{API_URL}/api/v1/me/bookmark/artists"
+  url: "#{API_URL}/api/v1/me/user_interest/artists"
 
   model: Bookmark
 
   parse: (response) ->
     _.filter response, (obj) ->
-      !_.isEmpty(obj.artist)
+      !_.isEmpty(obj.interest)
 
   comparator: (bookmark) ->
     -Date.parse(bookmark.get 'updated_at')
 
-  findByArtistId: (id) ->
+  findByInterestId: (id) ->
     @find (bookmark) ->
-      bookmark.get('artist').id is id
+      bookmark.get('interest').id is id
 
   newFromArtist: (artist) ->
-    return if @findByArtistId(artist.get('id'))?
-    @unshift artist_id: artist.get('id'), artist: artist.attributes
+    return if @findByInterestId(artist.get('id'))?
+    @unshift interest_id: artist.get('id'), interest: artist.attributes
 
   createFromArtist: (artist) ->
     @newFromArtist(artist)?.save()

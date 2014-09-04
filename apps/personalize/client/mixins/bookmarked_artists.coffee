@@ -8,4 +8,4 @@ module.exports =
         # While although these artists *may* not actually be followed,
         # (if they have bookmarked them then unfollowed them)
         # this is pretty unlikely; so just display all artists "following"
-        @followed.add @bookmarks.pluck('artist')
+        @followed.add @bookmarks.pluck('interest')

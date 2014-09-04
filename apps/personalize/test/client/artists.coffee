@@ -168,4 +168,4 @@ describe 'ArtistsView', ->
         @view.initializeBookmarkedArtists.called.should.be.true
 
       it 'fetches the bookmarks collection', ->
-        Backbone.sync.args[0][1].url.should.containEql '/api/v1/me/bookmark/artists'
+        Backbone.sync.args[0][1].url.should.containEql '/api/v1/me/user_interest/artists'

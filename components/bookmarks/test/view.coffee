@@ -46,7 +46,7 @@ describe 'BookmarksView', ->
 
     it 'fetches the bookmarks collection', ->
       Backbone.sync.args[0][0].should.equal 'read'
-      Backbone.sync.args[0][1].url.should.containEql '/api/v1/me/bookmark/artists'
+      Backbone.sync.args[0][1].url.should.containEql '/api/v1/me/user_interest/artists'
 
     it 'sets up the autocomplete view', ->
       @view.autocomplete.mode.should.equal 'artists'
