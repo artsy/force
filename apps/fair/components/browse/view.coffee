@@ -36,15 +36,7 @@ module.exports = class FairBrowseView extends Backbone.View
         # The order here is very important
         #
         # We wait until we have all the required information and then
-        # give the router the last say about which panel to
-        # display.
-        @fair.trigger 'countsFetched'
-
-        # For initializing fair artwork filtering on pageload
-        @filterArtworksView.router.on 'artworks-route', =>
-          _.defer => @artworkParams.trigger 'reset'
-          @filterArtworksView.router.off 'artworks-route'
-
+        # give the router the last say about which panel to display.
         Backbone.history.start pushState: true
 
     @highlightHome()
