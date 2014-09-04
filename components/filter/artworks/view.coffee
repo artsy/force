@@ -91,8 +91,6 @@ module.exports = class FilterArtworksView extends Backbone.View
   reset: =>
     @params.set({ page: 1, size: @pageSize }, { silent: true }).trigger('change change:page')
 
-    console.log 'hellloo', @params
-
     @counts.fetch
       data:
         price_range: @params.get('price_range')
