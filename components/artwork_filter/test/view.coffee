@@ -48,6 +48,10 @@ describe 'ArtworkFilterView', ->
       Backbone.sync.args[0][2].success {}
       @view.remove.called.should.be.true
 
+    it 'removes itself if the initial filter state errors', ->
+      Backbone.sync.args[0][2].error {}
+      @view.remove.called.should.be.true
+
   describe '#renderFilter', ->
     beforeEach ->
       Backbone.sync.args[0][2].success fabricate 'artist_filtered_search_suggest'
