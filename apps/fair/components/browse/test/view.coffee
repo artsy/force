@@ -3,6 +3,7 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 Fair = require '../../../../../models/fair'
+Profile = require '../../../../../models/profile'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
 
@@ -26,7 +27,7 @@ describe 'FairBrowseView', ->
         @view = new FairBrowseView
           el: $('body')
           fair: @fair
-          profile: new Backbone.Model
+          profile: new Profile(fabricate 'fair_profile')
           router: @router = navigate: sinon.stub()
         done()
 
