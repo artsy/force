@@ -92,6 +92,7 @@ module.exports = class Profile extends Backbone.Model
     "#{_s.numberFormat(follows)} Follower#{if follows is 1 then '' else 's'}"
 
   metaTitle: (tab) ->
+    console.log tab
     _.compact([
       (if @displayName() then "#{@displayName()}" else "Profile")
       (if @isGallery() then "Artists, Art for Sale, and Contact Info" else null)
