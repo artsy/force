@@ -13,7 +13,7 @@ module.exports = class Partner extends Backbone.Model
 
   locations: ->
     return @get('locations') if @has('locations')
-    locations = new Backbone.Collection([], { model: Backbone.Model })
+    locations = new PartnerLocations
     locations.url = "#{@url()}/locations"
     @set 'locations', locations
     locations
