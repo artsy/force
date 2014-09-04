@@ -70,7 +70,7 @@ describe '#auctionRegistration', ->
       routes.auctionRegistration @req, @res, @next
       Backbone.sync.args[0][2].success fabricate 'sale', name: 'Awesome Sale', is_auction: false
 
-      @res.status.args[0][0].should.equal 404
+      @next.args[0][0].status.should.equal 404
       @next.args[0][0].message.should.equal 'Not Found'
 
 describe '#bid', ->
@@ -119,12 +119,12 @@ describe '#bid', ->
 
     it '404 if sale is not auction', ->
       Backbone.sync.args[0][2].success fabricate 'sale', name: 'Awesome Sale', is_auction: false
-      @res.status.args[0][0].should.equal 404
+      @next.args[0][0].status.should.equal 404
       @next.args[0][0].message.should.equal 'Not Found'
 
     it '404 if sale not active', ->
       Backbone.sync.args[0][2].success fabricate 'sale', name: 'Awesome Sale', is_auction: true, auction_state: 'closed'
-      @res.status.args[0][0].should.equal 404
+      @next.args[0][0].status.should.equal 404
       @next.args[0][0].message.should.equal 'Not Found'
 
     it 'passes the bidder positions', ->

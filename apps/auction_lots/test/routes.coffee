@@ -51,7 +51,7 @@ describe 'Auction results routes', ->
         Backbone.sync.args[1][1].set _id: 'mary-foobar'
         Backbone.sync.args[0][2].success()
         @res.render.calledTwice.should.not.be.ok
-        @res.status.args[0][0].should.equal 404
+        @next.args[0][0].status.should.equal 404
         @next.args[0][0].message.should.equal 'Not Found'
 
         done()

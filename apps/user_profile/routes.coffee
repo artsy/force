@@ -8,8 +8,9 @@
 
 @collection = (req, res, next) ->
   unless profile = res.locals.profile
-    res.status 404
-    return next new Error "Profile not found."
+    err = new Error "Profile not found."
+    err.status = 404
+    return next err
   data = { private: true }
   data.access_token = req.user.get('accessToken') if req.user
   new ArtworkCollection(id: req.params.id, user_id: profile.get('owner').id).fetch
