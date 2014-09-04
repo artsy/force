@@ -3,6 +3,7 @@ CurrentUser = require '../../models/current_user.coffee'
 { API_URL, ARTSY_ID, ARTSY_SECRET, APP_URL } = require('../../config')
 { parse } = require 'url'
 qs = require 'querystring'
+sanitizeRedirect = require '../../components/sanitize_redirect/index'
 
 @logout = (req, res, next) ->
   req.logout()
@@ -33,4 +34,4 @@ qs = require 'querystring'
         req.param('redirect_uri') or
         parse(req.get('Referrer') or '').path or
         '/'
-  res.redirect url
+  res.redirect sanitizeRedirect(url)
