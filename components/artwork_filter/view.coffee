@@ -4,6 +4,7 @@ Filter = require './models/filter.coffee'
 ArtworkColumns = require './collections/artwork_columns.coffee'
 ArtworkColumnsView = require '../artwork_columns/view.coffee'
 tick = require '../util/tick.coffee'
+mediator = require '../../lib/mediator.coffee'
 template = -> require('./templates/index.jade') arguments...
 filterTemplate = -> require('./templates/filter.jade') arguments...
 headerTemplate = -> require('./templates/header.jade') arguments...
@@ -32,7 +33,8 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @render()
     @filter.fetchRoot
       success: (model, response, options) =>
-        @remove() unless response.total
+        mediator.trigger 'artwork_filter:filter:sync', model
+        @remove() unless model.get('total')
       error: =>
         @remove()
     @fetchArtworks()
