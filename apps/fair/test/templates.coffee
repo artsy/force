@@ -43,8 +43,11 @@ describe 'Fair', ->
           JS_EXT: '.js.gz'
           NODE_ENV: 'test'
           CURRENT_PATH: '/cool-fair'
-        fair = new Fair (fabricate 'fair')
-        profile = new Profile (fabricate 'fair_profile')
+          PROFILE: fabricate 'fair_profile'
+          FAIR: fabricate 'fair'
+          FACEBOOK_APP_NAMESPACE: 'namespace'
+        fair = new Fair (sd.FAIR)
+        profile = new Profile (sd.PROFILE)
         template = render('index')
           sd: sd
           fair: fair
@@ -62,6 +65,8 @@ describe 'Fair', ->
     before (done) ->
       benv.setup =>
         benv.expose { $: benv.require 'jquery' }
+        fair = fabricate 'fair'
+        fair.about = 'about the fair'
         sd =
           CANONICAL_MOBILE_URL: 'http://localhost:5000'
           APP_URL: 'http://localhost:5000'
@@ -71,8 +76,11 @@ describe 'Fair', ->
           NODE_ENV: 'test'
           SECTION: 'info'
           CURRENT_PATH: '/cool-fair'
-        fair = new Fair (fabricate 'fair', about: 'about the fair')
-        profile = new Profile (fabricate 'fair_profile')
+          PROFILE: fabricate 'fair_profile'
+          FAIR: fair
+          FACEBOOK_APP_NAMESPACE: 'namespace'
+        fair = new Fair sd.FAIR
+        profile = new Profile sd.PROFILE
         template = render('index')
           sd: sd
           fair: fair
@@ -98,6 +106,8 @@ describe 'Fair', ->
           CSS_EXT: '.css.gz'
           JS_EXT: '.js.gz'
           NODE_ENV: 'test'
+          PROFILE: fabricate 'fair_profile'
+          FAIR: fabricate 'fair'
           SECTION: 'search'
           CURRENT_PATH: '/cool-fair'
         benv.expose { $: benv.require 'jquery' }
@@ -219,6 +229,8 @@ describe 'Fair', ->
           APP_URL: 'http://localhost:5000'
           ASSET_PATH: 'http://localhost:5000'
           CURRENT_PATH: '/cool-fair'
+          PROFILE: fabricate 'fair_profile'
+          FAIR: fabricate 'fair'
         fair: fair
         profile: profile
         filteredSearchColumns: filteredSearchColumns

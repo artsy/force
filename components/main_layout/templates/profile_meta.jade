@@ -6,11 +6,18 @@ meta( property="twitter:description", content=profile.metaDescription(sd.SECTION
 link( rel="canonical", href=(sd.APP_URL + sd.CURRENT_PATH) )
 meta( property="og:url", content=(sd.APP_URL + sd.CURRENT_PATH) )
 link( rel="alternate", media=sd.MOBILE_MEDIA_QUERY, href=(sd.CANONICAL_MOBILE_URL + sd.CURRENT_PATH) )
-meta( property="og:type", content="profile" )
+if profile.profileType() == 'Fair'
+  meta( property="og:type", content=(sd.FACEBOOK_APP_NAMESPACE + ":exhibition" ) )
+  meta( property="og:start_time", content=sd.FAIR.start_at )
+  meta( property="og:end_time", content=sd.FAIR.end_at )
+  if sd.FAIR.location
+    meta( property="og:location", content=sd.FAIR.location.raw )
+else
+  meta( property="og:type", content="profile" )
 meta( property="profile:type", content=profile.profileType() )
 meta( property="profile:username", content=profile.get('id') )
 meta( property="twitter:card", content="summary" )
 if profile.iconImageUrl()
-  meta( property="og:image", content=profile.iconImageUrl() ) 
+  meta( property="og:image", content=profile.iconImageUrl() )
 if sd.INCLUDE_ESCAPED_FRAGMENT
   meta( name='fragment', content='!' )

@@ -7,6 +7,12 @@ link( rel="alternate", media=sd.MOBILE_MEDIA_QUERY, href=(sd.CANONICAL_MOBILE_UR
 link( rel="canonical", href=(sd.APP_URL + "/artist/" + artist.get('id')) )
 meta( property="og:url", content=(sd.APP_URL + "/artist/" + artist.get('id')) )
 meta( property="og:type", content=(sd.FACEBOOK_APP_NAMESPACE + ":artist" ) )
+if artist.get('nationality')
+  meta( property="og:nationality", content=artist.get('nationality') )
+if artist.get('birthday')
+  meta( property="og:birthyear", content=artist.get('birthday') )
+if artist.get('deathday')
+  meta( property="og:deathyear", content=artist.get('deathday') )
 if sd.INCLUDE_ESCAPED_FRAGMENT
   meta( name="fragment", content="!" )
 if artist.hasImage('large')
