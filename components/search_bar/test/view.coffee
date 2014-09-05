@@ -4,10 +4,8 @@ Backbone = require 'backbone'
 sinon = require 'sinon'
 fabricate = require('antigravity').fabricate
 { resolve } = require 'path'
-
 SearchResult = require '../../../models/search_result'
 SearchBarView = require '../view'
-
 Bloodhound = -> ttAdapter: sinon.stub(), initialize: sinon.stub()
 Bloodhound.tokenizers = obj: whitespace: sinon.stub()
 
@@ -18,14 +16,10 @@ describe 'SearchBarView', ->
         $: benv.require 'jquery'
         Bloodhound: Bloodhound
       Backbone.$ = $
-
       benv.render resolve(__dirname, '../template.jade'), {}, =>
         @$input = $('#main-layout-search-bar-input')
         @$input.typeahead = sinon.stub()
-
-        @view = new SearchBarView
-          el: $('#main-layout-search-bar-container')
-          $input: @$input
+        @view = new SearchBarView el: $('#main-layout-search-bar-container'), $input: @$input
         done()
 
   afterEach ->
@@ -33,20 +27,19 @@ describe 'SearchBarView', ->
 
   describe '#initialize', ->
     it 'listens to the relevant events', ->
-      @view._events.should.have.keys('search:start', 'search:complete', 'search:opened', 'search:closed')
+      @view._events.should.have.keys 'search:start', 'search:complete', 'search:opened', 'search:closed', 'search:cursorchanged'
 
     describe '#setupTypeahead', ->
       it 'triggers events that happen on the input on the view', (done) ->
-        finish = _.after 3, (-> done())
-        @view.on 'search:opened', finish
-        @view.on 'search:closed', finish
-        @view.on 'search:selected', finish
+        finish = _.after 4, (-> done())
+        @view.once 'search:opened', finish
+        @view.once 'search:closed', finish
+        @view.once 'search:selected', finish
+        @view.once 'search:cursorchanged', finish
         @$input.trigger 'typeahead:opened'
         @$input.trigger 'typeahead:closed'
         @$input.trigger 'typeahead:selected'
-        @view.off 'search:opened'
-        @view.off 'search:closed'
-        @view.off 'search:selected'
+        @$input.trigger 'typeahead:cursorchanged'
 
       it 'sets up typeahead', ->
         @$input.typeahead.args[0][1].name.should.be.an.instanceOf String

@@ -24,13 +24,13 @@ suggestion-height = (suggestion-thumbnail-size + 20px)
   display block
   position absolute
   width calc('100% + 2px')
-  height 0px
+  height 0
   left 0
   right auto
   padding 0 (logo-size / 2)
   margin-left -1px
   line-height logo-size
-  border 0px solid
+  border 0 solid
   background-color gray-lightest-color
   overflow hidden
   visibility visible
@@ -46,12 +46,12 @@ suggestion-height = (suggestion-thumbnail-size + 20px)
   height suggestion-thumbnail-size
 
 search-bar-input-placeholder()
-  color #000
+  color black
 
 #main-layout-search-bar-input
   height 100%
   width @height
-  padding 0 26px 0px 44px
+  padding 0 26px 0 44px
   border none
   placeholder(search-bar-input-placeholder)
 
@@ -77,7 +77,7 @@ search-bar-input-placeholder()
   .tt-dropdown-menu
     width calc('100% + 2px')
     margin-left -1px
-    background-color #fff
+    background-color white
     border 1px solid gray-lighter-color
 
   .tt-suggestion
@@ -87,12 +87,13 @@ search-bar-input-placeholder()
     &:hover
     &.tt-cursor
       opacity 1
-      background-color #000
+      background-color black
       *
-        color #fff
+        color white
     &.empty-item
-      background-color yellow-light-color
+      background-color lighten(yellow-light-color, 50%)
       &:hover
+      &.tt-cursor
         background-color yellow-light-color
         *
           color black
@@ -135,7 +136,7 @@ search-bar-input-placeholder()
     font-family 'artsy-icons'
     font-size suggestion-thumbnail-size
     line-height suggestion-thumbnail-size
-    color #fff
+    color white
   > img
     vertical-align bottom
     position absolute
