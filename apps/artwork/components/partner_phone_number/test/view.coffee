@@ -35,7 +35,7 @@ describe 'PartnerPhoneNumberView', ->
 
   describe '#render', ->
     it 'renders all of the phone numbers', ->
-      @view.$('.ad-header').text().should.equal 'Call Gallery'
+      @view.$('.artwork-detail-header').text().should.equal 'Call Gallery'
       @view.$('.show-phone-number').length.should.equal 1
       @view.$('.partner-phone-number').length.should.equal 3
 
