@@ -35,6 +35,9 @@ module.exports = class GooogleSearchResult extends Backbone.Model
       if @href().indexOf('/show/') > -1
         # Shows have the og:type 'article'
         'show'
+      else if profileType = @get('pagemap')?.metatags[0]?['profile:type']
+        @set baseType: @get('pagemap')?.metatags[0]?['og:type']?.replace("#{sd.FACEBOOK_APP_NAMESPACE}:", "")
+        profileType
       else
         @get('pagemap')?.metatags[0]?['og:type']?.replace("#{sd.FACEBOOK_APP_NAMESPACE}:", "")
     @set
@@ -44,7 +47,7 @@ module.exports = class GooogleSearchResult extends Backbone.Model
   about: (text) ->
     if @get('display_model') == 'article'
       text
-    else if @get('display_model') == 'show' or @href().indexOf('/feature/') > -1 or @ogType() == 'profile'
+    else if @get('display_model') == 'show' or @href().indexOf('/feature/') > -1 or @ogType() == 'profile' or @get('baseType') == 'profile'
       @get('pagemap')?.metatags[0]?['og:description']
     else undefined
 
