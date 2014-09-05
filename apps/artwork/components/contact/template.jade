@@ -2,7 +2,7 @@
 if artwork.isContactable()
   //- Gallery/Institution link
   if artwork.partnerLink()
-    h2.ad-header
+    h2.artwork-detail-header
       = artwork.contactLabel()
     a.artwork-partner-name( href= artwork.partnerLink() )
       = artwork.partnerName()
@@ -15,7 +15,7 @@ if artwork.isContactable()
     //- Rendered client-side
 
   //- Embedded inquiry form
-  h2.ad-header Message #{artwork.contactLabel()}
+  h2.artwork-detail-header Message #{artwork.contactLabel()}
   form#artwork-contact-form
     if user
       //- Logged in
