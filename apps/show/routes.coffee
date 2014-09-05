@@ -27,12 +27,18 @@ setReferringContext = (req, res, show) ->
       ''
   )
 
-@index = (req, res) ->
+@index = (req, res, next) ->
   new PartnerShow(id: req.params.id).fetch
     cache: true
     error: res.backboneError
     success: (show) =>
       setReferringContext(req, res, show)
+
+      # 404 if show isn't displayable
+      if !show.get('displayable')
+        err = new Error('Not Found')
+        err.status = 404
+        return next err
 
       # Redirect to canonical url
       if show.href() isnt parse(req.originalUrl).pathname and not res.locals.context

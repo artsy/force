@@ -7,6 +7,7 @@ describe 'Show route', ->
   beforeEach ->
     @req = { params: {}, get: sinon.stub(), originalUrl: '/show/foo' }
     @res = { render: sinon.stub(), redirect: sinon.stub(), locals: { sd: {} } }
+    @next = sinon.stub()
     sinon.stub Backbone, 'sync'
 
   afterEach ->
@@ -48,6 +49,13 @@ describe 'Show route', ->
       routes.index @req, @res
       Backbone.sync.args[0][2].success fabricate 'show', id: 'foobar'
       @res.redirect.args[0][0].should.equal '/show/foobar'
+
+    it 'redirects to canonical url', ->
+      @req.originalUrl = '/show/bar'
+      routes.index @req, @res, @next
+      Backbone.sync.args[0][2].success fabricate 'show', id: 'foobar', displayable: false
+      @next.args[0][0].status.should.equal 404
+      @next.args[0][0].message.should.equal 'Not Found'
 
     it 'leaves query params alone', ->
       @req.originalUrl = '/show/foobar?foo=bar'
