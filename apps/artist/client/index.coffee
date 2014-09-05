@@ -69,7 +69,7 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     @artworkCollection = @currentUser?.defaultArtworkCollection()
 
   setupSplitTest: ->
-    switch splitTestInterface
+    switch splitTestInterface()
       when 'fillwidth'
         @setupArtworksFillwidth()
       when 'filter'

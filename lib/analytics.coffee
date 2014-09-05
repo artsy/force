@@ -128,6 +128,9 @@ module.exports.getProperty = (property) =>
   # We need to be extra safe here - sometimes mixpanel has not loaded, sometimes it has but doesn't have the get_property function
   mixpanel?.get_property?(property)
 
+module.exports.unsetProperty = (property) =>
+  mixpanel?.unregister?(property)
+
 # Code using this function should cope with it returning undefined
 module.exports.setProperty = (hash) =>
   mixpanel?.register_once?(hash)
