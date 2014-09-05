@@ -15,11 +15,12 @@ module.exports.SearchResultsView = class SearchResultsView extends Backbone.View
     'click .search-result' : 'trackClick'
 
   initialize: (options) ->
-    for result in options.results
-      if result.display_model == 'artist'
-        @initializeArtistRow result
-      else if result.display_model == 'category'
-        @initializeGeneRow result
+    if options.results
+      for result in options.results
+        if result.display_model is 'artist'
+          @initializeArtistRow result
+        else if result.display_model is 'category'
+          @initializeGeneRow result
 
   initializeArtistRow: (result) ->
     new Artist(id: result.id).fetchArtworks

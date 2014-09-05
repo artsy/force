@@ -20,10 +20,7 @@ module.exports = class SearchBarView extends Backbone.View
     @$input ?= @$('input')
     throw new Error('Requires an input field') unless @$input?
 
-    @search = new Search
-      restrictType: @restrictType
-      mode: @mode
-      fairId: @fairId
+    @search = new Search restrictType: @restrictType, mode: @mode, fairId: @fairId
 
     @on 'search:start', @indicateLoading
     @on 'search:complete', @concealLoading
@@ -31,6 +28,7 @@ module.exports = class SearchBarView extends Backbone.View
     @on 'search:complete', @displayFeedback
     @on 'search:opened', @displaySuggestions
     @on 'search:closed', @hideSuggestions
+    @on 'search:cursorchanged', @ensureResult
 
     @setupTypeahead()
 
@@ -54,6 +52,9 @@ module.exports = class SearchBarView extends Backbone.View
   concealLoading: ->
     @$el.removeClass 'is-loading'
 
+  ensureResult: (e, result) ->
+    @set @query unless result
+
   # Adds a highlight class if autoselect is true
   # (rather than actually moving the cursor down
   # which would overwrite the user's typing)
@@ -67,8 +68,7 @@ module.exports = class SearchBarView extends Backbone.View
       'Search Artists, Artworks, Galleries, Museums, Categories…'
 
   displayFeedback: ->
-    if @search.results.length
-      @hideSuggestions()
+    @hideSuggestions() if @search.results.length
 
   renderFeedback: (feedback) ->
     (@$feedback ?= @$('.autocomplete-feedback'))
@@ -122,7 +122,7 @@ module.exports = class SearchBarView extends Backbone.View
     @hound
 
   setupTypeahead: ->
-    _.each ['opened', 'closed', 'selected'], (action) =>
+    _.each ['opened', 'closed', 'selected', 'cursorchanged'], (action) =>
       @$input.on "typeahead:#{action}", (args...) =>
         @trigger "search:#{action}", args...
 
@@ -137,7 +137,10 @@ module.exports = class SearchBarView extends Backbone.View
       source: @setupBloodHound().ttAdapter()
 
   clear: ->
-    @$input.typeahead 'val', ''
+    @set ''
+
+  set: (value) ->
+    @$input.typeahead 'val', value
 
   emptyItemClick: ->
     analytics.track.click 'Selected item from search',
@@ -147,7 +150,7 @@ module.exports = class SearchBarView extends Backbone.View
     window.location = "/search?q=#{@query}"
 
   selectResult: (e, model) ->
-    return false unless model
+    return @emptyItemClick() unless model
     analytics.track.click 'Selected item from search',
       query: @query
       label: analytics.modelNameAndIdToLabel model.get('display_model'), model.id
