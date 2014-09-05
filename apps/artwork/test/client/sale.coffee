@@ -3,7 +3,6 @@ Backbone = require 'backbone'
 sinon = require 'sinon'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
-
 Artworks = require '../../../../collections/artworks'
 Artwork = require '../../../../models/artwork'
 Sale = require '../../../../models/sale'

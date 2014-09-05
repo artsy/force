@@ -38,10 +38,10 @@
           if artwork.isEditionAcquireable(edition)
             .aes-radio
               input.aes-radio-button(
-                type      = 'radio'
-                value     = edition.id
-                name      = 'edition'
-                checked   = i === 0 ? true : undefined
+                type= 'radio'
+                value= edition.id
+                name= 'edition'
+                checked= i === 0 ? true : undefined
               )
           .aes-details
             .aes-imperial!= edition.dimensions({ metric: 'in', format: 'superscript' })
@@ -74,6 +74,7 @@
     //- Rendered client-side
 
 .artwork-actions
+  //- Contact info
   #artwork-detail-contact
     include ../components/contact/template
 

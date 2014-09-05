@@ -6,7 +6,6 @@ sinon = require 'sinon'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
 { stubChildClasses } = require '../../../../test/helpers/stubs'
-
 Artist = require '../../../../models/artist'
 Artwork = require '../../../../models/artwork'
 Fair = require '../../../../models/fair'
@@ -16,9 +15,9 @@ CurrentUser = require '../../../../models/current_user'
 describe 'ArtworkView', ->
   before (done) ->
     benv.setup =>
-      benv.expose { $: benv.require 'jquery' }
+      benv.expose $: benv.require 'jquery'
       Backbone.$ = $
-      $.support.transition = { end: 'transitionend' }
+      $.support.transition = end: 'transitionend'
       $.fn.emulateTransitionEnd = -> @trigger $.support.transition.end
       done()
 
@@ -46,7 +45,7 @@ describe 'ArtworkView', ->
     }, =>
       @ArtworkView = mod = benv.requireWithJadeify(
         (resolve __dirname, '../../client/view'),
-        ['detailTemplate', 'auctionPlaceholderTemplate', 'partnerPhoneNumberTemplate']
+        ['detailTemplate', 'auctionPlaceholderTemplate']
       )
       @ArtworkView.__set__ 'analytics', { abTest: sinon.stub(), delta: sinon.stub(), track: { click: sinon.stub() } }
       @ArtworkView.__set__ 'ShareModal', (@shareViewStub = sinon.stub())
@@ -223,23 +222,6 @@ describe 'ArtworkView', ->
         @view.artwork.activeImage().id.should.equal @$imageLink.data('id')
 
         @$imageLink.hasClass('is-active').should.be.ok
-
-    describe '#setupPhoneNumbers', ->
-      it 'renders locations with phone numbers', ->
-        @view.artwork.set
-          forsale: true
-          acquireable: false
-          partner: fabricate 'partner'
-        @view.$el.html "<div class='artwork-partner-phone-container'></div>"
-
-        @view.setupPhoneNumbers()
-        _.last(Backbone.sync.args)[2].success([
-          { phone: '1234', city: 'New York' }
-          { phone: false, city: 'New York' }
-        ])
-        _.last(Backbone.sync.args)[2].success([])
-
-        @view.$el.find('.partner-phone-number').length.should.equal 1
 
     describe '#setupFollowButton', ->
       it 'syncs the following collection with the artist id', ->

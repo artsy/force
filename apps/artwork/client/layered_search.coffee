@@ -3,11 +3,9 @@ Backbone = require 'backbone'
 { API_URL } = require('sharify').data
 { Markdown } = require 'artsy-backbone-mixins'
 analytics = require '../../../lib/analytics.coffee'
-
 Artworks = require '../../../collections/artworks.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
-
-template = -> require('../templates/layered-search.jade') arguments...
+template = -> require('../templates/layered_search.jade') arguments...
 
 module.exports.Layer = class Layer extends Backbone.Model
   _.extend @prototype, Markdown

@@ -1,7 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-
-template = -> require('../templates/view-in-room.jade') arguments...
+template = -> require('../templates/view_in_room.jade') arguments...
 
 module.exports = class ViewInRoom extends Backbone.View
   className: 'artwork-view-in-room'

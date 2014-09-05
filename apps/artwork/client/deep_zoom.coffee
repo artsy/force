@@ -2,8 +2,7 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 Transition = require '../../../components/mixins/transition.coffee'
 getScript = require '../../../lib/get_script.coffee'
-
-template = -> require('../templates/deep-zoom.jade') arguments...
+template = -> require('../templates/deep_zoom.jade') arguments...
 
 module.exports = class DeepZoomView extends Backbone.View
   id: 'deep-zoom'

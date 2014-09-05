@@ -174,11 +174,11 @@ describe 'Artwork', ->
   describe '#contactLabel', ->
     it 'says to contact the appropriate thing', ->
       @artwork.set 'partner', { type: 'Gallery' }
-      @artwork.contactLabel().should.equal 'Contact Gallery'
+      @artwork.contactLabel().should.equal 'Gallery'
       @artwork.set 'partner', { type: 'Institution' }
-      @artwork.contactLabel().should.equal 'Contact Seller'
+      @artwork.contactLabel().should.equal 'Seller'
       @artwork.unset 'partner'
-      @artwork.contactLabel().should.equal 'Contact Seller'
+      @artwork.contactLabel().should.equal 'Seller'
 
   describe '#priceDisplay', ->
     it 'displays the price or not', ->

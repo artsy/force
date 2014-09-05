@@ -1,37 +1,34 @@
 _ = require 'underscore'
 sd = require('sharify').data
+qs = require 'querystring'
+{ parse } = require 'url'
+Cookies = require 'cookies-js'
 Backbone = require 'backbone'
 ShareModal = require '../../../components/share/modal.coffee'
 Transition = require '../../../components/mixins/transition.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
-Partner = require '../../../models/partner.coffee'
 SaveButton = require '../../../components/save_button/view.coffee'
 AddToPostButton = require '../../../components/related_posts/add_to_post_button.coffee'
 RelatedPostsView = require '../../../components/related_posts/view.coffee'
 analytics = require '../../../lib/analytics.coffee'
-acquireArtwork = require('../../../components/acquire/view.coffee').acquireArtwork
-FeatureNavigationView = require './feature-navigation.coffee'
-BelowTheFoldView = require './below-the-fold.coffee'
-trackArtworkImpressions = require("../../../components/analytics/impression_tracking.coffee").trackArtworkImpressions
+{ acquireArtwork } = require '../../../components/acquire/view.coffee'
+FeatureNavigationView = require './feature_navigation.coffee'
+BelowTheFoldView = require './below_the_fold.coffee'
+{ trackArtworkImpressions } = require '../../../components/analytics/impression_tracking.coffee'
 MonocleView = require './monocles.coffee'
 AnnyangView = require './annyang.coffee'
 BlurbView = require '../../../components/blurb/view.coffee'
 Sale = require '../../../models/sale.coffee'
 ZigZagBanner = require '../../../components/zig_zag_banner/index.coffee'
 Auction = require './mixins/auction.coffee'
-RelatedShowView = require './related-show.coffee'
-qs = require 'querystring'
-{ parse } = require 'url'
+RelatedShowView = require './related_show.coffee'
 ContactView = require '../components/contact/view.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
-Cookies = require 'cookies-js'
 VideoView = require './video.coffee'
-
-detailTemplate = -> require('../templates/_detail.jade') arguments...
-partnerPhoneNumberTemplate = -> require('../templates/partner_phone.jade') arguments...
-auctionPlaceholderTemplate = -> require('../templates/auction_placeholder.jade') arguments...
-
+PartnerLocations = require '../components/partner_locations/index.coffee'
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
+detailTemplate = -> require('../templates/_detail.jade') arguments...
+auctionPlaceholderTemplate = -> require('../templates/auction_placeholder.jade') arguments...
 
 module.exports = class ArtworkView extends Backbone.View
   _.extend @prototype, Auction
@@ -40,19 +37,9 @@ module.exports = class ArtworkView extends Backbone.View
     'click a[data-client]': 'intercept'
     'click .circle-icon-button-share': 'openShare'
     'click .artwork-additional-image': 'changeImage'
-    'click .artwork-download-button': 'trackDownload'
-    'click .artwork-auction-results-button': 'trackComparable'
     'change .aes-radio-button': 'selectEdition'
     'click .artwork-buy-button': 'buy'
     'click .artwork-more-info .avant-garde-header-small': 'toggleMoreInfo'
-    'click .show-phone-number' : 'showPhoneNumber'
-
-  toggleMoreInfo: (event) ->
-    $target = $(event.target)
-    $target.find('.arrow-toggle').toggleClass('active')
-
-    $blurb = $target.next()
-    $blurb.toggleClass 'is-hidden'
 
   initialize: (options) ->
     { @artwork, @artist } = options
@@ -67,10 +54,10 @@ module.exports = class ArtworkView extends Backbone.View
     @setupBelowTheFold()
     @setupMainSaveButton()
     @setupArtworkOverview()
-    new VideoView el: @el, artwork: @artwork
-
-    # Track pageview
-    analytics.track.impression 'Artwork page', { id: @artwork.id }
+    @setupVideoView()
+    @setupPartnerLocations()
+    @setupAnnyang()
+    @setupMonocleView()
 
     # Handle all related content
     @setupRelatedLayers()
@@ -100,8 +87,6 @@ module.exports = class ArtworkView extends Backbone.View
     @on 'related:not_auction', ->
       @setupZigZag()
 
-    if @currentUser?.hasLabFeature('Monocles')
-      @setupMonocleView()
     # Re-fetch and update detail
     @artwork.on "change:sale_message", @renderDetail, @
     @artwork.on "change:ecommerce", @renderDetail, @
@@ -109,30 +94,19 @@ module.exports = class ArtworkView extends Backbone.View
 
     @preventRightClick()
 
-    @setupPhoneNumbers()
+  toggleMoreInfo: (e) ->
+    $target = $(e.target)
+    $target.find('.arrow-toggle').toggleClass('active')
+    $blurb = $target.next()
+    $blurb.toggleClass 'is-hidden'
 
-    if @currentUser?.hasLabFeature('Talk To Artsy')
-      @setupAnnyang()
-
-  setupPhoneNumbers: ->
-    if @artwork.isContactable() and @artwork.get('partner')
-      partner = new Partner @artwork.get('partner')
-      partner.fetchLocations (locations) =>
-        locationsWithPhoneNumber = locations.filter (location) ->
-          location.get('phone')?.length > 0
-        if locationsWithPhoneNumber.length > 0
-          @$('.artwork-partner-phone-container').html partnerPhoneNumberTemplate
-            locations: locationsWithPhoneNumber
-          analytics.track.funnel "Displayed 'show phone number' button"
-
-  showPhoneNumber: ->
-    @$('.show-phone-number').remove()
-    @$('.partner-phone-numbers').show()
-    analytics.track.click "Clicked 'Show phone number'"
+  setupPartnerLocations: ->
+    new PartnerLocations $el: @$el, artwork: @artwork
 
   preventRightClick: ->
-    (@$artworkImage ?= @$('#the-artwork-image')).on 'contextmenu', (event) ->
-      event.preventDefault()
+    (@$artworkImage ?= @$('#the-artwork-image'))
+      .on 'contextmenu', (e) ->
+        e.preventDefault()
 
   checkQueryStringForAuction: ->
     return if @artwork.get('sold')
@@ -172,14 +146,8 @@ module.exports = class ArtworkView extends Backbone.View
 
   deltaTrackPageView: (fair) ->
     el = $('#scripts')
-    analytics.delta('fair_artist_view',
-                    fair: fair.get('_id'),
-                    id: @artist.get('_id'),
-                    el)
-    analytics.delta('fair_partner_view',
-                    fair: fair.get('_id'),
-                    id: @artwork.get('partner')._id,
-                    el)
+    analytics.delta 'fair_artist_view', { fair: fair.get('_id'), id: @artist.get('_id') }, el
+    analytics.delta 'fair_partner_view', { fair: fair.get('_id'), id: @artwork.get('partner')._id }, el
 
   setupRelatedLayers: ->
     $.when.apply(null, @artwork.fetchRelatedCollections()).then =>
@@ -330,16 +298,18 @@ module.exports = class ArtworkView extends Backbone.View
       model: @artist
     @following?.syncFollows [@artist.id]
 
+  setupVideoView: ->
+    new VideoView el: @el, artwork: @artwork
+
   setupAnnyang: ->
-    new AnnyangView
-      artwork: @artwork
+    return unless @currentUser?.hasLabFeature 'Talk To Artsy'
+    new AnnyangView artwork: @artwork
 
   setupMonocleView: ->
+    return unless @currentUser?.hasLabFeature('Monocles')
     @$('.artwork-image').append("<div class='monocle-zoom'></div>")
     @$('.monocle-zoom').css('background-image', "url(#{@artwork.defaultImage().imageUrl('larger')})")
-    new MonocleView
-      artwork: @artwork
-      el: @$('.artwork-image')
+    new MonocleView artwork: @artwork, el: @$('.artwork-image')
 
   route: (route) ->
     # Initial server rendered route is 'show'
@@ -358,7 +328,6 @@ module.exports = class ArtworkView extends Backbone.View
 
   openShare: (e) ->
     e.preventDefault()
-    analytics.track.click 'Viewed sharing_is_caring form'
     new ShareModal
       width: '350px'
       media: @artwork.defaultImageUrl('large')
@@ -366,21 +335,13 @@ module.exports = class ArtworkView extends Backbone.View
 
   changeImage: (e) ->
     e.preventDefault()
-
     (@$artworkAdditionalImages ?= @$('.artwork-additional-image')).
       removeClass 'is-active'
     ($target = $(e.currentTarget)).
       addClass 'is-active'
     (@$artworkImage ?= @$('#the-artwork-image')).
       attr('src', $target.data 'href')
-
     @artwork.setActiveImage($target.data 'id')
-
-  trackDownload: ->
-    analytics.track.click 'Downloaded lo-res image'
-
-  trackComparable: ->
-    analytics.track.click "Viewed 'Comparables'"
 
   selectEdition: (e) ->
     @__selectedEdition__ = e.currentTarget.value

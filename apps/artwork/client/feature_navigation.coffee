@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-template = -> require('../templates/feature-navigation.jade') arguments...
+template = -> require('../templates/feature_navigation.jade') arguments...
 
 module.exports = class FeatureNavigationView extends Backbone.View
   initialize: (options) ->

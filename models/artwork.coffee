@@ -170,7 +170,7 @@ module.exports = class Artwork extends Backbone.Model
     not _.isEmpty(@get('literature'))
 
   contactLabel: ->
-    if @get('partner')?.type is 'Gallery' then 'Contact Gallery' else 'Contact Seller'
+    if @get('partner')?.type is 'Gallery' then 'Gallery' else 'Seller'
 
   hasCollectingInstitution: ->
     @get('collecting_institution')?.length > 0
