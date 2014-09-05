@@ -20,6 +20,8 @@ app.get '/conditions-of-sale', routes.vanityUrl('conditions-of-sale')
 app.get '/auction-info', routes.vanityUrl('auction-info')
 app.get '/embed-terms', routes.vanityUrl('embed-terms')
 app.get '/embeddable-artists', routes.vanityUrl('embeddable-artists')
+app.get '/past-terms-8-5-13', routes.vanityUrl('past-terms-8-5-13')
+app.get '/past-privacy-10-29-12', routes.vanityUrl('past-privacy-10-29-12')
 
 app.get '/job/:id', routes.index
 # Handle urls like /job/devops-engineer/about
