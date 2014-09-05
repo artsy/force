@@ -17,6 +17,7 @@ analytics = require '../../../lib/analytics.coffee'
 ArtistCarouselView = require '../../../components/artist_carousel/view.coffee'
 ArtworkFilter = require '../../../components/artwork_filter/index.coffee'
 splitTestInterface = require './split_test.coffee'
+mediator = require '../../../lib/mediator.coffee'
 
 module.exports.ArtistView = class ArtistView extends Backbone.View
   events:
@@ -82,6 +83,8 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
 
   setupArtworkFilter: ->
     ArtworkFilter.init el: @$('#artwork-section'), model: @model
+    @listenToOnce mediator, 'artwork_filter:filter:sync', (model) ->
+      @$('.artist-header-empty').remove() if model.get('total')
 
   setupArtworksFillwidth: ->
     @fadeInSection @$('#artist-fillwidth-section')
