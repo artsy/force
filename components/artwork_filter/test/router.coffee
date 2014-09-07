@@ -40,3 +40,11 @@ describe 'ArtworkFilterRouter', ->
       @router.currentFragment().should.containEql '?baz=qux'
       @router.view.filter.deselect 'baz'
       @router.currentFragment().should.not.containEql '?'
+
+  describe '#filteredParams', ->
+    it 'doesnt return ignored', ->
+      @router.searchString = -> '?foo=bar&utm_source=email&baz=qux'
+      spy = sinon.spy @router.view.filter, 'by'
+      @router.navigateBasedOnParams()
+      (spy.args[0][0].utm_source?).should.not.be.ok
+      spy.args[0][0].baz.should.equal 'qux'
