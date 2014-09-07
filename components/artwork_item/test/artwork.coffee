@@ -135,3 +135,9 @@ describe 'Artwork Item template', ->
 
   describe 'is auction', ->
     it 'displays a buy now price'
+
+  describe 'contact button', ->
+    it 'says "Contact Gallery"', ->
+      @artwork = new Artwork fabricate 'artwork', forsale: true
+      $ = cheerio.load render('artwork')(artwork: @artwork, displayPurchase: true)
+      $('.artwork-item-contact-seller').text().should.equal 'Contact Gallery'
