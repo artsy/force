@@ -15,5 +15,5 @@ describe 'flashMiddleware', ->
     @next.called.should.be.ok
     @res.render('foobar')
     @req.flash.called.should.be.ok
-    @res.locals.sd.should.eql FLASH: 'my<br>my<br>metrocard'
+    @res.locals.sd.should.eql FLASH: 'my, my, metrocard'
     _.last(@renderStub.args)[0].should.equal 'foobar'
