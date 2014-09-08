@@ -12,12 +12,13 @@ describe 'FlashMessage', ->
       Backbone.$ = $
       $.support.transition = end: 'transitionend'
       $.fn.emulateTransitionEnd = -> @trigger $.support.transition.end
-      @startTimerStub = sinon.stub FlashMessage::, 'startTimer'
+      @sandbox = sinon.sandbox.create()
+      @startTimerStub = @sandbox.stub FlashMessage::, 'startTimer'
       benv.render resolve(__dirname, '../template.jade'), {}, =>
         done()
 
   afterEach ->
-    @startTimerStub.restore()
+    @sandbox.restore()
     benv.teardown()
 
   describe '#initialize', ->
@@ -60,7 +61,7 @@ describe 'FlashMessage', ->
       @flash = new FlashMessage message: 'Goodbye world.'
 
     it 'removes the flash message when clicked, leaving the container empty', (done) ->
-      @flash.$el.on 'transitionend', =>
+      @flash.$el.on 'transitionend', ->
         _.defer ->
           $('body').html().should.equal '<div id="main-layout-flash"></div>'
           done()
@@ -75,17 +76,18 @@ describe 'FlashMessage', ->
       @flash.update 'Hello world.'
       $('.fullscreen-flash-message').text().should.equal 'Hello world.'
 
+  describe 'XSS', ->
+    it 'escapes HTML', ->
+      flash = new FlashMessage message: '><img src=x onerror=alert("PWN")>'
+      $('body').text().should.equal '><img src=x onerror=alert("PWN")>'
+
   describe '#open', ->
     it 'checks to see if the container is empty before starting the timer', ->
       firstFlash = new FlashMessage message: 'Goodbye world.'
       $('body').text().should.equal 'Goodbye world.'
       @startTimerStub.restore()
-      @startTimerStub = sinon.stub FlashMessage::, 'startTimer'
+      @startTimerStub = @sandbox.stub FlashMessage::, 'startTimer'
       secondFlash = new FlashMessage message: 'A caesura', autoclose: true
       secondFlash.startTimer.called.should.be.false
       $('body').text().should.equal 'Goodbye world.'
 
-  describe 'XSS', ->
-    it 'escapes HTML', ->
-      flash = new FlashMessage message: '><img src=x onerror=alert("PWN")>'
-      $('body').text().should.equal '><img src=x onerror=alert("PWN")>'
