@@ -47,7 +47,7 @@ module.exports = class ArtistFillwidthList extends Backbone.View
 
         # Add follow button
         new FollowButton
-          el: $row.find('.avant-garde-button-white')
+          el: $row.find('.plus-follow-button')
           following: @following
           model: artist
           modelName: 'artist'
