@@ -16,10 +16,6 @@ hero-units-height = 470px
   margin-top hero-units-height
   padding-bottom 20px
 
-html[data-useragent*="iPad"]
-  #home-foreground
-    top hero-units-height - 70
-
 #home-hero-units
   height hero-units-height
   position fixed
@@ -32,3 +28,7 @@ html[data-useragent*="iPad"]
 #home-unsubscribe
   text-align center
   margin-top 200px
+
+html[data-useragent*="iPad"]
+  #home-hero-units
+    position absolute
