@@ -11,8 +11,7 @@ module.exports = class FlashMessage extends Backbone.View
   events:
     'click': 'close'
 
-  template: ->
-    "<span>#{@message}</span>"
+  template: _.template "<span><%- message %></span>"
 
   initialize: (options = {}) ->
     throw new Error('You must pass a message option') unless options.message
@@ -34,7 +33,7 @@ module.exports = class FlashMessage extends Backbone.View
 
   setup: ->
     if @empty()
-      @$el.html @template()
+      @$el.html @template(message: @message)
       @$container.html @$el
       _.defer => @$el.attr 'data-state', 'open'
 
@@ -55,7 +54,7 @@ module.exports = class FlashMessage extends Backbone.View
 
   update: (message) ->
     @message = message
-    @$el.html @template()
+    @$el.html @template(message: @message)
 
   close: =>
     mediator.off null, null, this
