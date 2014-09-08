@@ -21,6 +21,7 @@ If a separate doc is required, add it to the component's directory as a
 - [Flash Message](#flash-message)
 - [Blurb](#blurb)
 - [Form Mixin](#form-mixin)
+- [Related Links](#related-links)
 
 ## Artwork Columns
 ![](images/artwork_columns.png)
@@ -587,3 +588,45 @@ class FormView extends Backbone.View
 ```
 
 You will want to have an actual `<button>` element in the form for handling submission. (The default `type` attribute is `submit` so this will trigger the form submission event.) `validateForm` will only apply the `is-validated` class to the form when there's a submit button due to click events firing before form submission events (*I think*).
+
+## Related Links
+
+Use it with a pre-existing collection. Pass in a `displayKey` for the link textual label and a `displayValue` for the href. Default `displayKey` is 'name', `displayValue` is 'href'. The view will check if those are functions before trying to pluck them as attributes.
+
+
+``` coffeescript
+RelatedLinksView = require '../../components/related_links/view.coffee'
+
+# ...
+
+@relatedLinksView = new RelatedLinksView collection: @collection, displayKey: 'name', displayValue: 'id'
+@relatedLinksView.render()
+
+# @relatedLinksView.$el.html()
+# => <div><a href="pop-art1">Pop Art</a>, [...]</div>
+```
+
+Extend the view with custom templates and collection setup: The `wrapperTemplate` is provided with `links`, a comma separated list of `<a>` tags.
+
+``` coffeescript
+RelatedLinksView = require '../../components/related_links/view.coffee'
+
+# ...
+
+class Representation extends Backbone.Model
+  href: ->
+    "/#{@get('partner').default_profile_id}"
+
+  name: ->
+    @get('partner').name
+
+class RelatedRepresentationsLinksView extends RelatedLinksView
+  headerTemplate: _.template '<h2>Gallery Representation</h2>'
+  wrapperTemplate: _.template '<div class="related-represenations-links"><%= links %></div>'
+
+  initialize: (options = {}) ->
+    @collection = new Backbone.Collection [], model: Representation
+    @collection.url = "#{API_URL}/api/v1/artist/#{options.id}/partner_artists"
+    @collection.fetch()
+    super
+```
