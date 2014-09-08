@@ -26,4 +26,10 @@ mixin artist-header(artist)
             h2 Biography
             .blurb!= artist.mdToHtml('blurb')
 
-      .bisected-header-cell: .artist-related-genes.related-genes
+      .bisected-header-cell
+        .artist-related-genes.related-links
+          //- Rendered client-side
+
+        //- Waiting on https://trello.com/c/qbJVWofE/134-public-artist-partner-artists-api
+        //- .artist-related-representations.related-links
+        //-   Rendered client-side

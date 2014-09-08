@@ -68,10 +68,6 @@ describe 'ArtistView', ->
         view1Opts.collection.url.should.containEql '/artworks'
         view2Opts.collection.url.should.containEql '/artworks'
 
-      it 'sets up the related genes view properly', ->
-        viewGeneOpts = @RelatedGenesView.args[0][0]
-        viewGeneOpts.model.should.equal @view.model
-
       it 'sets up related artists', ->
         @view.relatedArtistsPage.should.equal 2
         @view.relatedContemporaryPage.should.equal 2

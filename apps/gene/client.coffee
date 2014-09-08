@@ -5,15 +5,14 @@ CurrentUser = require '../../models/current_user.coffee'
 ArtistFillwidthList = require '../../components/artist_fillwidth_list/view.coffee'
 { Following, FollowButton } = require '../../components/follow_button/index.coffee'
 ShareView = require '../../components/share/view.coffee'
-RelatedGenesView = require '../../components/related_genes/view.coffee'
 FilterArtworksView = require '../../components/filter/artworks/view.coffee'
 { GENE, CURRENT_USER, API_URL } = require('sharify').data
 scrollFrame = require 'scroll-frame'
 BlurbView = require '../../components/blurb/view.coffee'
 RelatedArtistsTemplate = -> require('./templates/related_artists.jade') arguments...
+RelatedGenesView = require '../../components/related_links/types/gene_genes.coffee'
 
 module.exports.GeneView = class GeneView extends Backbone.View
-
   initialize: (options) ->
     { @user } = options
     @$window = $ window
@@ -26,12 +25,8 @@ module.exports.GeneView = class GeneView extends Backbone.View
       modelName: 'categorie' # followButton pluralizes by adding 's'
       model: @model
     following?.syncFollows [@model.get('id')]
-    new ShareView
-      el: @$('#gene-share-buttons')
-    new RelatedGenesView
-      el: @$('.main-layout-container .related-genes')
-      model: @model
-      modelName: 'gene'
+    new ShareView el: @$('#gene-share-buttons')
+    new RelatedGenesView el: @$('.main-layout-container .related-genes'), id: @model.id
     { @router, @params } = new FilterArtworksView
       el: $ '#gene-filter'
       artworksUrl: "#{API_URL}/api/v1/search/filtered/gene/#{@model.get 'id'}"

@@ -1,6 +1,0 @@
-h2= title
-.genes
-  each gene, idx in genes
-    a( href="/gene/#{gene.id}" )!= gene.get('name')
-    if idx != genes.length - 1
-      = ', '

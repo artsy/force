@@ -21,8 +21,10 @@ block body
           h2 About
           .blurb!= gene.mdToHtml('description')
       .bisected-header-cell
-        .related-genes
-        .related-artists
+        .related-genes.related-links
+          //- Rendered client-side
+        .related-artists.related-links
+          //- Rendered client-side
 
     #gene-filter( data-state=gene.isSubjectMatter() ? 'artworks' : 'artists' )
       include filter
