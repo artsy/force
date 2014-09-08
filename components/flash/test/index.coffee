@@ -84,3 +84,8 @@ describe 'FlashMessage', ->
       secondFlash = new FlashMessage message: 'A caesura', autoclose: true
       secondFlash.startTimer.called.should.be.false
       $('body').text().should.equal 'Goodbye world.'
+
+  describe 'XSS', ->
+    it 'escapes HTML', ->
+      flash = new FlashMessage message: '><img src=x onerror=alert("PWN")>'
+      $('body').text().should.equal '><img src=x onerror=alert("PWN")>'
