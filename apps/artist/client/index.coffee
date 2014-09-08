@@ -6,7 +6,6 @@ sd = require('sharify').data
 FillwidthView = require '../../../components/fillwidth_row/view.coffee'
 ArtistFillwidthList = require '../../../components/artist_fillwidth_list/view.coffee'
 RelatedPostsView = require '../../../components/related_posts/view.coffee'
-RelatedGenesView = require '../../../components/related_genes/view.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 ShareView = require '../../../components/share/view.coffee'
 BorderedPulldown = require '../../../components/bordered_pulldown/view.coffee'
@@ -18,6 +17,8 @@ ArtistCarouselView = require '../../../components/artist_carousel/view.coffee'
 ArtworkFilter = require '../../../components/artwork_filter/index.coffee'
 splitTestInterface = require './split_test.coffee'
 mediator = require '../../../lib/mediator.coffee'
+RelatedGenesView = require '../../../components/related_links/types/artist_genes.coffee'
+RelatedRepresentationsGenesView = require '../../../components/related_links/types/artist_representations.coffee'
 
 module.exports.ArtistView = class ArtistView extends Backbone.View
   events:
@@ -47,6 +48,8 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
 
   setupHeader: ->
     @setupRelatedGenes()
+    # Waiting on https://trello.com/c/qbJVWofE/134-public-artist-partner-artists-api
+    # @setupRelatedRepresentations()
 
   setupShareButtons: ->
     new ShareView el: @$('.artist-share')
@@ -130,10 +133,10 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
       el: @$('#artist-related-shows')
 
   setupRelatedGenes: ->
-    new RelatedGenesView
-      modelName: 'artist'
-      model: @model
-      el: @$('.artist-related-genes')
+    new RelatedGenesView el: @$('.artist-related-genes'), id: @model.id
+
+  setupRelatedRepresentations: ->
+    new RelatedRepresentationsGenesView el: @$('.artist-related-representations'), id: @model.id
 
   pendRemovalOfEmptyNotice: (collection) ->
     @listenTo collection, 'sync', (collection) =>
