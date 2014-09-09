@@ -11,6 +11,8 @@ FlashMessage = require '../../flash/index.coffee'
 PublishModal = require '../../publish_modal/view.coffee'
 Profile = require '../../../models/profile.coffee'
 
+splitTestInterface = require './split_test.coffee'
+
 module.exports = class HeaderView extends Backbone.View
 
   events:
@@ -23,11 +25,14 @@ module.exports = class HeaderView extends Backbone.View
 
     @$welcomeHeader = @$('#main-layout-welcome-header')
 
+    searchType = splitTestInterface()
+
     @searchBarView = new SearchBarView
       el: @$('#main-layout-search-bar-container')
       $input: @$('#main-layout-search-bar-input')
       displayEmptyItem: true
       autoselect: true
+      mode: if searchType == 'autocomplete' then 'suggest' else null
 
     @searchBarView.on 'search:entered', (term) -> window.location = "/search?q=#{term}"
     @searchBarView.on 'search:selected', @searchBarView.selectResult
