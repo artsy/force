@@ -1,19 +1,42 @@
 footer#main-layout-footer
-  nav#main-layout-footer-internal
-    a#main-layout-footer-logo.icon-logo( href='/' )
-    span.mlf-links
-      span &copy;#{(new Date).getFullYear()} Artsy
-      span |
+  .mlf-upper: .main-layout-container
+    .mlf-upper-column-aside
+      h4 Want help collecting on Artsy?
+      a.mlf-specialist( href='#' ) Contact an Artsy Specialist
+      h4 General Questions & Feedback?
+      a( href='mailto:support@artsy.net' ) Contact support@artsy.net
+      a.mlf-feedback( href='#' ) Send us Feedback
+    .mlf-upper-column
+      h4 Collecting
+      a( href='/about/collecting' ) Collecting on Artsy
+      a( href='/feature/collect-with-artsy' ) Collecting Resources
+    .mlf-upper-column
+      h4 Education
+      a( href='/feature/artsy-education' ) Education
+      a( href='/about/the-art-genome-project' ) The Art Genome Project
+    .mlf-upper-column
+      h4 About Artsy
       a( href='/about' ) About
       a( href='/about/jobs' ) Jobs
-      a( href='/press' ) Press
       a( href='http://artsy.github.com/open-source/', target='_blank' ) Open Source
-      a( href='/terms' ) Terms of Use
-      a( href='/privacy' ) Privacy Policy
-      a( href='/security' ) Security
-      a.mlf-feedback( href='#' ) Feedback
+      a( href='/galleries' ) Galleries A–Z
+      a( href='/institutions' ) Museums A–Z
+    .mlf-upper-column
+      h4 Partnering & Press
+      a( href='/pdf/gallery-overview.pdf' ) Artsy for Galleries (PDF)
+      a( href='/pdf/institutions-overview.pdf' ) Artsy for Institutions (PDF)
+      a( href='http://apply.artsy.net' ) Apply to become a partner
+      a( href='/press' ) Press
 
-  nav#main-layout-footer-external
-    a.mlf-social.icon-twitter( href='http://twitter.com/artsy', target='_blank')
-    a.mlf-social.icon-facebook( href='http://www.facebook.com/artsy', target='_blank')
-    a.mlf-social.icon-tumblr( href='http://artsy.tumblr.com', target='_blank')
+  .mlf-lower: .main-layout-container
+    nav#main-layout-footer-internal
+      a#main-layout-footer-logo.icon-logo( href='/' )
+      span.mlf-links
+        span &copy; #{(new Date).getFullYear()} Artsy
+        a( href='/terms' ) Terms of Use
+        a( href='/privacy' ) Privacy Policy
+        a( href='/security' ) Security
+    nav#main-layout-footer-external
+      a.mlf-social.icon-twitter( href='http://twitter.com/artsy', target='_blank')
+      a.mlf-social.icon-facebook( href='http://www.facebook.com/artsy', target='_blank')
+      a.mlf-social.icon-tumblr( href='http://artsy.tumblr.com', target='_blank')

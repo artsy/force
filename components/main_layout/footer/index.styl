@@ -1,51 +1,71 @@
-logo-size = 30px
+@import '../../../components/stylus_lib'
+
+mlf-upper-column-aside-width = 30%
+mlf-upper-column-width = ((100% - mlf-upper-column-aside-width) / 4)
 
 #main-layout-footer
   padding 18px
-  background #000
+  background-color white
   clearfix()
-  margin-top -60px
-  a, span
+
+.mlf-upper
+.mlf-lower
+  clearfix()
+  padding 20px 0
+  border-top 1px solid gray-lighter-color
+
+// Upper
+.mlf-upper-column
+.mlf-upper-column-aside
+  float left
+  line-height 1.7
+  padding-right 20px
+  a
+    display block
+    overflow ellipsis
+.mlf-upper-column-aside
+  width mlf-upper-column-aside-width
+  h4
+    font-weight bold
+    block-margins(5px)
+.mlf-upper-column
+  width mlf-upper-column-width
+  h4
+    avant-garde()
+    font-size 13px
+    margin-bottom 5px
+  a
+    text-decoration none
+
+@media screen and (max-width: 1024px)
+  mlf-upper-column-aside-width = 25%
+  .mlf-upper-column-aside
+    width mlf-upper-column-aside-width
+  .mlf-upper-column
+    width mlf-upper-column-width
+
+// Lower
+#main-layout-footer-internal
+  float left
+  a
+  span
     display inline-block
     margin 0 7px
-    height logo-size
-    line-height logo-size
     vertical-align middle
-    color #fff
     text-decoration none
-    transition opacity 0.25s
     &:first-child
       margin-left 0
     &:last-child
       margin-right 0
-  a
-    &:hover
-      opacity 0.8
 
-#main-layout-footer-internal
-  float left
+#main-layout-footer-logo
+  display inline-block
+  font-size 30px
+  margin-right 20px
 
 #main-layout-footer-external
   float right
 
-#main-layout-footer-logo, .mlf-social
+.mlf-social
   display inline-block
   font-size 18px
-
-#main-layout-footer-logo
-  font-size logo-size
-  margin-right 20px
-
-.mlf-social
-  width 20px
-  height @width
-  background-size @width
-  margin-left 20px
-
-@media screen and (min-width: 768px)
-  .mlf-social
-    display none
-
-.mlf-links
-  // Visual vertical center
-  padding-top 1px

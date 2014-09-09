@@ -2,9 +2,9 @@ form.contact-form.stacked-form
   .stacked-form-cell
     include ./artwork_details
   textarea.bordered-input.is-persistplaceholder(
-    name          = 'message'
-    placeholder   = 'Your message to Artsy'
-    rows          = '7'
+    name= 'message'
+    placeholder= 'Your message to Artsy'
+    rows= '7'
     required
   )
     if contactGallery
@@ -19,15 +19,15 @@ form.contact-form.stacked-form
     input( type='hidden', name='email', value=user.get('email') )
   else
     input.bordered-input.is-persistplaceholder(
-      type          = 'text'
-      name          = 'name'
-      placeholder   = 'Your full name'
+      type= 'text'
+      name= 'name'
+      placeholder= 'Your full name'
       required
     )
     input.bordered-input(
-      type          = 'email'
-      name          = 'email'
-      placeholder   = 'Your email address'
+      type= 'email'
+      name= 'email'
+      placeholder= 'Your email address'
       required
     )
   button#contact-submit.avant-garde-button-black( href='#', data-state='ok' )
