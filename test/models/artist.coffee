@@ -88,3 +88,22 @@ describe 'Artist', ->
 
       @artist.set published_artworks_count: 19
       @artist.pageTitleArtworksCount().should.equal 'Artworks'
+
+
+  describe '#displayNationalityAndBirthdate', ->
+    it 'renders the correct string', ->
+      @artist.set nationality: 'American', years: 'born 1955'
+      @artist.displayNationalityAndBirthdate().should.equal 'American, born 1955'
+      @artist.unset 'nationality'
+      @artist.displayNationalityAndBirthdate().should.equal 'born 1955'
+      @artist.unset 'years'
+      @artist.displayNationalityAndBirthdate().should.be.empty
+
+  describe '#displayFollowers', ->
+    it 'renders the correct string', ->
+      @artist.set 'follow_count', 1
+      @artist.displayFollowers().should.equal '1 Follower'
+      @artist.set 'follow_count', 1000
+      @artist.displayFollowers().should.equal '1,000 Followers'
+      @artist.unset 'follow_count'
+      _.isUndefined(@artist.displayFollowers()).should.be.true
