@@ -1,4 +1,5 @@
 extends ../../components/main_layout/templates/index
+include ../../components/pagination/paginator
 
 block head
   include meta
@@ -31,3 +32,5 @@ block body
           include ./search_result.jade
       else
         | Nothing found
+
+    +paginate(currentPage, totalPages, '?q=' + term + '&')
