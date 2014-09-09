@@ -13,7 +13,7 @@ module.exports = class Search
 
   url: ->
     [
-      "#{sd.API_URL}/api/v1/match/suggest"
+      "#{sd.API_URL}/api/v1/match/"
       @mode or ''
       '?visible_to_public=true'
       if @fairId then "&fair_id=#{@fairId}" else ''
