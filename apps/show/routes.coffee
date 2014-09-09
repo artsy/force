@@ -29,7 +29,6 @@ setReferringContext = (req, res, show) ->
 
 @index = (req, res, next) ->
   new PartnerShow(id: req.params.id).fetch
-    cache: true
     error: res.backboneError
     success: (show) =>
       setReferringContext(req, res, show)
