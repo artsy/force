@@ -21,7 +21,7 @@ If a separate doc is required, add it to the component's directory as a
 - [Flash Message](#flash-message)
 - [Blurb](#blurb)
 - [Form Mixin](#form-mixin)
-- [Scroller](#scroller)
+- [Related Links](#related-links)
 
 ## Artwork Columns
 ![](images/artwork_columns.png)
@@ -589,30 +589,44 @@ class FormView extends Backbone.View
 
 You will want to have an actual `<button>` element in the form for handling submission. (The default `type` attribute is `submit` so this will trigger the form submission event.) `validateForm` will only apply the `is-validated` class to the form when there's a submit button due to click events firing before form submission events (*I think*).
 
-## Scroller
+## Related Links
 
-Provides enter, exit, above, and below events for elements on the page (for building scroll spy/sticky nav style functionality). Recalculates element positions on window resize, and after images load. Accepts options for `frequency` (amount to throttle scroll and resize). Can also pass your own `$document` and `$window`.
+Use it with a pre-existing collection. Pass in a `displayKey` for the link textual label and a `displayValue` for the href. Default `displayKey` is 'name', `displayValue` is 'href'. The view will check if those are functions before trying to pluck them as attributes.
+
 
 ``` coffeescript
-Scroller = require '../../components/scroller/index.coffee'
+RelatedLinksView = require '../../components/related_links/view.coffee'
 
-@scroller = new Scroller frequency: 100
+# ...
 
-# Listen to elements
-$section = @scroller.listen '.section'
+@relatedLinksView = new RelatedLinksView collection: @collection, displayKey: 'name', displayValue: 'id'
+@relatedLinksView.render()
 
-# Subscribe to their events
-$section.on 'scroller:enter', ->
-  console.log 'Entered the element', $(this), @scroller.scrollTop
-$section.on 'scroller:exit', ->
-  console.log 'Left the element', $(this), @scroller.scrollTop
-$section.on 'scroller:above', ->
-  console.log 'Above the element', $(this), @scroller.scrollTop
-$section.on 'scroller:below', ->
-  console.log 'Below the element', $(this), @scroller.scrollTop
+# @relatedLinksView.$el.html()
+# => <div><a href="pop-art1">Pop Art</a>, [...]</div>
+```
 
-# Also provides a throttled position event
-@listenTo @scroller, 'position', (top) ->
-  console.log 'At the position',  top
+Extend the view with custom templates and collection setup: The `wrapperTemplate` is provided with `links`, a comma separated list of `<a>` tags.
 
+``` coffeescript
+RelatedLinksView = require '../../components/related_links/view.coffee'
+
+# ...
+
+class Representation extends Backbone.Model
+  href: ->
+    "/#{@get('partner').default_profile_id}"
+
+  name: ->
+    @get('partner').name
+
+class RelatedRepresentationsLinksView extends RelatedLinksView
+  headerTemplate: _.template '<h2>Gallery Representation</h2>'
+  wrapperTemplate: _.template '<div class="related-represenations-links"><%= links %></div>'
+
+  initialize: (options = {}) ->
+    @collection = new Backbone.Collection [], model: Representation
+    @collection.url = "#{API_URL}/api/v1/artist/#{options.id}/partner_artists"
+    @collection.fetch()
+    super
 ```
