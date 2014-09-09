@@ -91,16 +91,8 @@ sub
 figure
   margin 0
 
-// Hide the document until typekit loads Garamond
-html.wf-loading
-  visibility hidden
-
 #main-layout-container
   margin-top (content-margin-top + main-header-height + welcome-header-height)
-  // To stick footer at the bottom of the page
-  min-height: 100%
-  height: auto !important
-  height: 100%
 
 // The 1250px max inner container
 .main-layout-container
@@ -113,13 +105,6 @@ html.wf-loading
     margin 0px 150px
   @media screen and (min-width: 1660px)
     margin 0px 200px
-
-.is-kioskmode #main-layout-container
-  margin-top main-footer-height
-
-#main-layout-footer
-.main-layout-footer-push
-  height main-footer-height
 
 #blank-layout-container
   height 100%

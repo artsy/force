@@ -15,11 +15,9 @@ html( data-useragent=userAgent )
     include ../header/templates/microsite
     #main-layout-container
       block body
-      .main-layout-footer-push
     #scripts
       include scripts
       script( src=(sd.ASSET_PATH + 'main_layout' + sd.JS_EXT) )
       script( src=(sd.ASSET_PATH + assetPackage + sd.JS_EXT) )
       block scripts
-
     include ../footer/template
