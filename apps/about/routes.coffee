@@ -7,6 +7,7 @@ twilio = require 'twilio'
 { S3_KEY, S3_SECRET, APPLICATION_NAME, TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN,
   TWILIO_NUMBER, IPHONE_APP_COPY } = require '../../config.coffee'
 client = null
+cache = require '../../lib/cache'
 
 CONTENT_PATH = '/about/content.json'
 
@@ -53,13 +54,17 @@ getJSON = (callback) ->
 
 @sendSMS = (req, res ,next) ->
   twilioClient = new twilio.RestClient TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN
-  twilioClient.sendSms
-    to: req.param('to')
-    from: TWILIO_NUMBER
-    body: IPHONE_APP_COPY
-  , (err, data) ->
-    return res.json err.status or 400, { msg: err.message } if err
-    res.send { msg: "success", data: data }
+  to = req.param('to').replace /[^\d\+]/g, ''
+  cache.get "sms/iphone/#{to}", (err, cachedData) ->
+    return res.json 400, { msg: 'Download link has already been sent to this number.' } if cachedData
+    twilioClient.sendSms
+      to: to
+      from: TWILIO_NUMBER
+      body: IPHONE_APP_COPY
+    , (err, data) ->
+      return res.json err.status or 400, { msg: err.message } if err
+      cache.set "sms/iphone/#{to}", new Date().getTime().toString(), 600
+      res.send 201, { msg: "success", data: data }
 
 @page = (id) ->
   (req, res) ->

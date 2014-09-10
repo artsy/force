@@ -53,21 +53,52 @@ describe 'About2 routes', ->
 
   describe '#sendSMS', ->
 
-    twilioConstructorArgs = null; twilioSendSmsArgs = null; send = null; json = null
+    twilioConstructorArgs = null
+    twilioSendSmsArgs = null
+    send = null
+    json = null
+    cacheSetArgs = null
 
-    beforeEach ->
-      twilio = routes.__get__ 'twilio'
-      twilio.RestClient = class TwilioClientStub
-        constructor: -> twilioConstructorArgs = arguments
-        sendSms: -> twilioSendSmsArgs = arguments
-      routes.sendSMS { param: -> '555 111 2222' }, { send: send = sinon.stub(), json: json = sinon.stub() }
+    describe 'first time', ->
 
-    it 'sends a link with a valid phone number', ->
-      twilioSendSmsArgs[0].to.should.equal '555 111 2222'
-      twilioSendSmsArgs[0].body.should.match /Download(.*)iPhone app/
-      twilioSendSmsArgs[1] null, 'SUCCESS!'
-      send.args[0][0].msg.should.containEql 'success'
+      beforeEach ->
+        cache = routes.__get__ 'cache'
+        cache.get = (key, callback) ->
+          callback null, null
+        cache.set = (key, value) ->
+          cacheSetArgs = arguments
 
-    it 'throws an error if twilio doesnt like it', ->
-      twilioSendSmsArgs[1] { message: 'You suck!' }
-      json.args[0][1].msg.should.equal   'You suck!'
+        twilio = routes.__get__ 'twilio'
+        twilio.RestClient = class TwilioClientStub
+          constructor: -> twilioConstructorArgs = arguments
+          sendSms: -> twilioSendSmsArgs = arguments
+
+        routes.sendSMS { param: -> '+1 555 111 2222' }, { send: send = sinon.stub(), json: json = sinon.stub() }
+
+      it 'sends a link with a valid phone number', ->
+        twilioSendSmsArgs[0].to.should.equal '+15551112222'
+        twilioSendSmsArgs[0].body.should.match /Download(.*)iPhone app/
+        twilioSendSmsArgs[1] null, 'SUCCESS!'
+        send.args[0][0].should.equal 201
+        send.args[0][1].msg.should.containEql 'success'
+
+      it 'throws an error if twilio doesnt like it', ->
+        twilioSendSmsArgs[1] { message: 'Error!' }
+        json.args[0][1].msg.should.equal 'Error!'
+
+      it 'sets sent in the cache', ->
+        cacheSetArgs[0].should.equal 'sms/iphone/+15551112222'
+
+    describe 'second time time', ->
+
+      beforeEach ->
+        cache = routes.__get__ 'cache'
+        cache.get = (key, callback) ->
+          callback null, 'value set'
+        cache.set = (key, value) ->
+          cacheSetArgs = arguments
+
+        routes.sendSMS { param: -> '+1 555 111 2222' }, { send: send = sinon.stub(), json: json = sinon.stub() }
+
+      it 'throws an error', ->
+        json.args[0][1].msg.should.equal 'Download link has already been sent to this number.'
