@@ -1,171 +1,32 @@
 @import '../stylus_lib'
-@import '../profile_badge'
 
-.related-posts
-  opacity 0
-  transition opacity 0.5s
-  &.is-fade-in
-  &.is-rendered
-    opacity 1
-  &.is-rendered
-    transition none
-
-  // Grid layout
-  &.is-grid
-    text-align center
-    .grid-4-up
-      margin 20px 0
-    .related-post-content
-      text-decoration none
-      display block
-    .rpc-thumbnail
-      width 100%
-      height 100%
-      background-size cover
-      background-position center center
-      transition opacity 0.5s
-    .rpc-title
-      font-size 18px
-    .rpc-author
-      margin 10px auto 0
-      avant-garde()
-      font-size 11px
-      line-height 1.3
-      overflow ellipsis
-      max-width 80%
-
-    // Empty
-    .related-posts-no-posts
-      max-width 75%
-      margin auto
-
-  // Vertical layout
-  &.is-vertical
-    height: 100%
-    .related-post-content
-      text-decoration none
-      display block
-      margin-bottom: 20px
-      &:last-child
-        margin-bottom: 0px
-    .hoverable-image-link
-      width: 100%
-      height: 100%
-    .rpc-thumbnail
-      width 100%
-      height 100%
-      background-size cover
-      background-position center center
-      transition opacity 0.5s
-    .rpc-title
-      font-size: 24px
-      line-height: 130%
-    .rpc-author
-      margin 10px 0px 5px
-      avant-garde()
-      font-size 11px
-      line-height 1.3
-      overflow ellipsis
-
-  // List layout
-  &.is-list
-    .related-post
-      display table
-      width 100%
-      text-align left
-      border-top 1px solid gray-lighter-color
-      transition background-color 0.125s
-      a
-        text-decoration none
-      &:hover
-        background-color gray-lightest-color
-        .rpc-title
-          color purple-color
-    .rpc-title
-      font-size 18px
-    .related-post-content
-    .related-post-profile
-      display table-cell
-      padding 10px
-    .related-post-content
-      vertical-align top
-      font-size default-avant-garde-font-size
-    .related-post-profile
-      text-align center
-      vertical-align middle
-      width 150px
-      .profile-badge-icon
-        display inline-block
-        width 72px
-        height 72px
-      .profile-badge-name
-        font-size 10px
-        text-align center
-
-    .related-posts-show-all
-      float right
-    .related-posts-actions
-      margin 20px 0
-      &.is-hasremaining > .related-posts-add-button
-        float left
-
-.related-posts-show-all
-  avant-garde()
-  font-size 12px
-  text-decoration none
-
-.related-posts-no-posts
-  margin-top 20px
-  padding 20px 60px
-  text-align center
-  border 1px solid gray-lighter-color
-  .related-posts-no-posts-text
-    font-size 18px
-    line-height 150%
-    margin-bottom 20px
-
-// Accomodate icon
-.related-posts-add-button
-  padding-left 24px
-  > i
-    margin-right 5px
-    line-height 0
-    vertical-align -8px
-
-// Extended layout
-.related-posts.is-extended
-  .related-posts-actions
-    text-align center
-.related-post-extended
-  width 66.6%
-  margin 40px auto
+.related-post
+  block-margins(40px)
+  clearfix()
   a
     display block
     text-decoration none
-.rpe-author
+
+.rp-author
   line-height 1
-.rpe-title
+.rp-title
   width 90%
   margin 10px 0
   font-size 28px
   line-height 1.25
-.rpe-content
-  display block
-  text-decoration none
-  clearfix()
-.rpe-image
+.rp-image
   float left
-  width 33.3%
-.rpe-blurb
+  width 30%
+.rp-blurb
   float left
-  width 66.6%
+  width 70%
   padding-left 40px
-.rpe-author
-.rpe-go
+.rp-author
+.rp-go
   avant-garde()
   font-size 11px
   white-space nowrap
-.rpe-go
+.rp-go
   margin 0 10px
   &:hover
     border-bottom 2px solid
