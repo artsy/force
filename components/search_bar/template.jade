@@ -1,6 +1,9 @@
-#main-layout-search-bar-container
-  #main-layout-search-bar-icon.icon-search
-  input#main-layout-search-bar-input.bordered-input( placeholder='Search…', tabindex='1', value=term )
-  #main-layout-search-bar-spinner: .loading-spinner-small
-  #main-layout-search-bar-feedback.autocomplete-feedback
-    //- Rendered client-side
+#main-layout-search-bar-container( itemscope, itemtype="http://schema.org/WebSite" )
+  meta( itemprop="url" content="https://artsy.net" )
+  form( itemprop="potentialAction", itemscope, itemtype="http://schema.org/SearchAction" )
+    #main-layout-search-bar-icon.icon-search
+    meta( itemprop="target" content="https://artsy.net/search?q={search_term}" )
+    input#main-layout-search-bar-input.bordered-input( placeholder='Search…', tabindex='1', value=term, itemprop="query-input", type="text", name="search_term", required )
+    #main-layout-search-bar-spinner: .loading-spinner-small
+    #main-layout-search-bar-feedback.autocomplete-feedback
+      //- Rendered client-side
