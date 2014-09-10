@@ -32,7 +32,7 @@ module.exports = class Artist extends Backbone.Model
     @relatedContemporary = new Backbone.Collection [], model: Artist
     @relatedContemporary.url = "#{sd.API_URL}/api/v1/related/layer/contemporary/artists"
     @relatedPosts = new Backbone.Collection [], model: require('./post.coffee')
-    @relatedPosts.url = "#{sd.API_URL}/api/v1/related/posts"
+    @relatedPosts.url = "#{sd.API_URL}/api/v1/related/posts?artist[]=#{@id}"
     @relatedShows = new Backbone.Collection [], model: require('./partner_show.coffee')
     @relatedShows.url = "#{sd.API_URL}/api/v1/related/shows?artist[]=#{@id}&sort=-end_at"
     @artworks = new Artworks
@@ -62,14 +62,6 @@ module.exports = class Artist extends Backbone.Model
       success: (artworks) =>
         @set { poster_artwork: artworks.models[0] }
         @
-
-  fetchRelatedPosts: (options = {}) ->
-    @relatedPosts.fetch _.extend
-      remove: false
-      data: _.extend (options.data ? {}),
-        size: 15
-        'artist[]': @get 'id'
-    , options
 
   toPageTitle: ->
     # A/B test artist page titles

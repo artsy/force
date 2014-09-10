@@ -27,13 +27,11 @@ module.exports = class Post extends Backbone.Model
   extendedSummary: ->
     paragraphMin = 210
     maxLimit = 385
-
     firstParagraph = _s.stripTags _.first(@get('body').split '</p>')
     summary = if firstParagraph.length < paragraphMin
       _s.stripTags(@get 'body')
     else
       firstParagraph
-
     _s.prune summary, maxLimit, '…'
 
   onPostPage: (location) ->

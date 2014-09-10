@@ -22,14 +22,8 @@ module.exports = class Artwork extends Backbone.Model
   initialize: ->
     # Defer Post model require to prevent circular dependency
     @relatedPosts = new Backbone.Collection [], model: require('./post.coffee')
-    @relatedPosts.url = "#{sd.API_URL}/api/v1/related/posts"
+    @relatedPosts.url = "#{sd.API_URL}/api/v1/related/posts?artwork[]=#{@id}"
     @setupRelatedCollections()
-
-  fetchRelatedPosts: (options = {}) ->
-    @relatedPosts.fetch _.extend
-      remove: false
-      data: _.extend (options.data ? {}), 'artwork[]': @id
-    , options
 
   parse: (response, options) ->
     @editions = new Backbone.Collection response?.edition_sets, model: Edition
