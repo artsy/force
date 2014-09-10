@@ -233,15 +233,11 @@ module.exports = class ArtworkView extends Backbone.View
       modelName: 'artwork'
 
   setupRelatedPosts: ->
-    @listenTo @artwork.relatedPosts, 'sync', @handlePosts, @
+    @listenTo @artwork.relatedPosts, 'sync', @handlePosts, this
     new RelatedPostsView
       el: @$('#artwork-artist-related-posts-container')
-      model: @artwork
-      modelName: 'artwork'
-      mode: 'vertical'
+      collection: @artwork.relatedPosts
       numToShow: 2
-      canBeEmpty: false
-
     @$('.ari-right').css
       'min-height': @$('.ari-left').height()
 
