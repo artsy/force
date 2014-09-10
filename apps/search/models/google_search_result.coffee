@@ -2,6 +2,7 @@ _ = require 'underscore'
 _s = require 'underscore.string'
 sd = require('sharify').data
 Backbone = require 'backbone'
+moment = require 'moment'
 
 module.exports = class GooogleSearchResult extends Backbone.Model
 
@@ -47,6 +48,8 @@ module.exports = class GooogleSearchResult extends Backbone.Model
   about: (text) ->
     if @get('display_model') == 'article'
       text
+    else if @get('display_model') == 'Fair'
+      @formatEventAbout('Art fair')
     else if @get('display_model') == 'show' or @href().indexOf('/feature/') > -1 or @ogType() == 'profile' or @get('baseType') == 'profile'
       @get('pagemap')?.metatags[0]?['og:description']
     else undefined
@@ -66,3 +69,18 @@ module.exports = class GooogleSearchResult extends Backbone.Model
       'category'
     else
       @ogType()
+
+  formatEventAbout: (title) ->
+    metatags = @get('pagemap')?.metatags[0]
+
+    if startTime = metatags['og:start_time']
+      formattedStartTime = moment(startTime).format("MMMM Do")
+    if endTime = metatags['og:end_time']
+      formattedEndTime = moment(endTime).format("MMMM Do, YYYY")
+
+    location = metatags['og:location']
+
+    if formattedStartTime and formattedEndTime and location
+      "#{title} running from #{formattedStartTime} to #{formattedEndTime} at #{location}"
+    else
+      metatags['og:description']
