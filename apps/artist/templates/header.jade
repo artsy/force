@@ -4,10 +4,18 @@ mixin artist-header(artist)
   header.artist-header
     h1.avant-garde-header-center= artist.get('name')
 
-    if (artist.get('nationality') && artist.get('years'))
-      h2 #{artist.get('nationality')}, #{artist.get('years')}
+    - var bday = artist.displayNationalityAndBirthdate()
+    - var followCount = artist.displayFollowers()
+    if bday || followCount
+      h2
+        if bday
+          span.artist-header-birthdate= bday
+        if bday && followCount
+          span.artist-header-meta-sep &ndash;
+        if followCount
+          span.artist-header-follow-count= followCount
 
-    if artist.get('published_artworks_count') === 0
+    unless artist.get('published_artworks_count')
       .artist-header-empty
         | There are no #{artist.get('name')} works on Artsy yet.
         br

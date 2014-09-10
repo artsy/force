@@ -29,7 +29,7 @@ querystring = require 'querystring'
 
   requests.push partners.fetch
     cache: true
-    data: { near: context.coords.toString(), has_full_profile: true, size: 80, sort: 'relative_size' }
+    data: { near: context.coords.toString(), has_full_profile: true, size: 120, sort: 'relative_size' }
     success: ->
       return render() if partners.isEmpty()
       @partnerProfileIds = _.compact(partners.pluck('default_profile_id'))

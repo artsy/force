@@ -1,4 +1,5 @@
 _ = require 'underscore'
+_s = require 'underscore.string'
 Backbone = require 'backbone'
 sd = require('sharify').data
 Artworks = require '../collections/artworks.coffee'
@@ -118,6 +119,16 @@ module.exports = class Artist extends Backbone.Model
       string(@get('forsale_artworks_count'), 'available')
       string((@get('published_artworks_count') - @get('forsale_artworks_count')), 'reference')
     ]).join ' & '
+
+  displayNationalityAndBirthdate: ->
+    _.compact([
+      @get('nationality')
+      @get('years')
+    ]).join ', '
+
+  displayFollowers: ->
+    if c = @get 'follow_count'
+      "#{_s.numberFormat(c)} Follower#{if c is 1 then '' else 's'}"
 
   toJSONLDShort: ->
     compactObject {
