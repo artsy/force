@@ -4,13 +4,12 @@ Backbone = require 'backbone'
 sinon = require 'sinon'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
-
 Artist = require '../../../models/artist'
 RelatedShowsView = benv.requireWithJadeify resolve(__dirname, '../view.coffee'), ['template']
 
 describe 'RelatedShowsView', ->
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose $: benv.require 'jquery'
       Backbone.$ = $
       done()
@@ -21,9 +20,7 @@ describe 'RelatedShowsView', ->
   beforeEach (done) ->
     sinon.stub Backbone, 'sync'
     @artist = new Artist fabricate 'artist'
-    @view = new RelatedShowsView
-      model: @artist
-      collection: @artist.relatedShows
+    @view = new RelatedShowsView model: @artist, collection: @artist.relatedShows, nUp: 3
     done()
 
   afterEach ->
@@ -34,18 +31,13 @@ describe 'RelatedShowsView', ->
       @show = fabricate 'show'
       Backbone.sync.args[0][2].success [@show]
       @view.collection.trigger 'sync'
-      _.defer done
-
-    it 'displays itself', ->
-      @view.$el.is(':visible').should.be.true
-      @view.$el.attr('class').should.containEql 'is-fade-in'
+      done()
 
     it 'renders correctly', ->
       html = @view.$el.html()
-      html.should.containEql 'Shows including Pablo Picasso'
-      html.should.not.containEql '.related-shows-rest'
-      @view.$('.rsf-name').text().should.equal @show.name
-      @view.$('.related-show').length.should.equal 0
+      html.should.containEql 'grid-3-up'
+      @view.$('.rsr-name').text().should.equal @show.name
+      @view.$('.related-show').length.should.equal 1
 
   describe 'has multiple shows', ->
     beforeEach (done) ->
@@ -56,8 +48,7 @@ describe 'RelatedShowsView', ->
       ]
       Backbone.sync.args[0][2].success @shows
       @view.collection.trigger 'sync'
-      _.defer done
+      done()
 
     it 'renders correctly', ->
-      @view.$('.related-show-featured').length.should.equal 0
       @view.$('.related-show').length.should.equal 3

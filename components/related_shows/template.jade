@@ -1,40 +1,19 @@
-h3.avant-garde-header-center= header
+.related-shows( class='grid-' + nUp + '-up' )
+  for show in shows
+    .related-show.grid-item
+      a.hoverable-image-link( href=show.href() )
+        img( src= show.cropUrlFor({ width: 500, height: 375 }) )
 
-if shows.length === 1
-  - show = shows[0]
-  .related-show-featured
-    a.rsf-image.hoverable-image-link( href=show.href() )
-      img.hoverable-image( src= show.posterImageUrl() )
-    .rsf-metadata
-      h4.related-show-label= show.formatLeadHeading()
-      if show.get('partner').name !== show.get('name')
-        h4.rsf-partner-name.avant-garde-header-center
-          if show.partnerHref()
-            a( href=show.partnerHref() )
-              = show.get('partner').name
-          else
-            = show.get('partner').name
-      a( href=show.href() )
-        h4.rsf-name= show.get('name')
+      .rsr-metadata
         if show.get('start_at') && show.get('end_at')
-          .rsf-timeframe= show.runningDates()
+          .rsr-timeframe= show.runningDates()
 
-if shows.length > 1
-  .related-shows-rest.grid-4-up
-    for show in shows
-      .related-show.grid-item
-        a.hoverable-image-link( href=show.href() )
-          .hoverable-image.is-four-three( style="background-image: url(#{crop(show.posterImageUrl(), { width: 325, height: 244 } )})" )
-        .rsr-metadata
-          h4.related-show-label= show.formatLeadHeading()
-          if show.get('partner').name !== show.get('name')
-            h4.rsr-partner-name.avant-garde-header-center
-              if show.partnerHref()
-                a( href=show.partnerHref() )
-                  = show.get('partner').name
-              else
-                = show.get('partner').name
-          a( href=show.href() )
-            h4.rsr-name= show.get('name')
-            if show.get('start_at') && show.get('end_at')
-              .rsr-timeframe= show.runningDates()
+        if show.get('partner').name !== show.get('name')
+          h4.rsr-partner-name
+            if show.partnerHref()
+              a( href=show.partnerHref() )= show.get('partner').name
+            else
+              = show.get('partner').name
+
+        a( href=show.href() )
+          h4.rsr-name= show.get('name')

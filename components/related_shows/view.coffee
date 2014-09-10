@@ -1,36 +1,35 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 template = -> require('./template.jade') arguments...
-{ crop } = require '../resizer/index.coffee'
 
 module.exports = class RelatedShowsView extends Backbone.View
-  maxShows: 8
+  defaults:
+    nUp: 2
+    maxShows: 8
 
-  initialize: ->
-    @fetchThenRender()
-
-  fetchThenRender: ->
+  initialize: (options = {}) ->
+    { @maxShows, @nUp } = _.defaults options, @defaults
     @listenTo @collection, 'sync', @render
-    @collection.comparator = (s) -> - s.getSortValue()
+    @collection.comparator = (s) -> -(s.getSortValue())
+    @collection.fetch success: @filterShows
 
-    @collection.fetch()
+  filterShows: (collection, response, options) =>
+    xs = collection
+      .chain()
+      .filter((show) ->
+        show.get('displayable') and
+        # Remove shows without images
+        show.imageUrlForMaxSize()? and
+        # Remove closed shows in a fair
+        not (show.get('status') is 'closed' and show.get('fair'))
+      )
+      .take(@maxShows)
+      .value()
+    @collection.reset xs
 
   render: ->
-    shows = @filterShows @collection
-    if shows.length
-      @$el.show()
-      _.defer =>
-        @$el.
-          addClass('is-fade-in').
-          html template
-            header: "Shows including #{@model.get('name')}"
-            shows: shows[...@maxShows]
-            crop: crop
-      @
+    if @collection.length
+      @$el.html template(shows: @collection.models, nUp: @nUp)
+      this
     else
       @remove()
-
-  # Filters out shows w/o images and closed shows in a fair
-  filterShows: (collection) ->
-    collection.filter (show) ->
-      show.thumbImageUrl()?.length > 0 && show.get('displayable') && !(show.get('status') == 'closed' && show.get('fair'))
