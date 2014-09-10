@@ -18,9 +18,9 @@ removeDiacritics = require('diacritics').remove
     data: data
     success: (results, response) ->
       totalPages = Math.floor(response.queries?.nextPage?[0].totalResults / 10)
-      # Google docs say they only supports 10 pages
+      # Google docs say they only supports 99 pages
       # They seem to support a few more but it is unreliable
-      totalPage = 10 if totalPages > 10
+      totalPages = 99 if totalPages > 99
 
       models = results.moveMatchResultsToTop term
       res.locals.sd.RESULTS = results.toJSON()
