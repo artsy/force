@@ -1,0 +1,22 @@
+gutter = 40px
+
+.ap-grid
+  position absolute
+  top 0
+  right -(gutter / 2)
+  bottom 0
+  left @right
+  z-index 99
+  pointer-events none
+  display none
+  .ap-grid-column
+    display inline-block
+    width 25%
+    padding 0 (gutter / 2)
+    height 100%
+    &:after
+      content ''
+      display block
+      height 100%
+      width 100%
+      background-color rgba(blue, 0.1)

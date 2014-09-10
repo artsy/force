@@ -11,7 +11,10 @@ block body
   #artist-carousel
     //- Rendered client-side
 
-  .responsive-layout-container: .main-layout-container
+  #artist-page.responsive-layout-container: .main-layout-container
+    .ap-grid.grid-4-up: for n in [0, 0, 0, 0]
+      .grid-item
+
     +artist-header(artist)
 
     #artwork-section
