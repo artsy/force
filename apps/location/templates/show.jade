@@ -48,7 +48,7 @@ block body
           include ../../../components/featured_shows/small
 
         .see_more
-          a.avant-garde-button-text( href='/shows' ) See More Shows
+          a.avant-garde-button-text( href='/shows' ) See All Shows
 
     if profiles.length
       .list_section.featured-partners-grid.profiles
@@ -65,7 +65,7 @@ block body
                   a( href="/" + profile.get('id') )= partner['name']
                 h4.featured-partner-profile-location= partner['type']
           .see_more
-            a.avant-garde-button-text( href='/partners' ) See More Partners
+            a.avant-garde-button-text( href='/partners' ) See All Partners
 
   .list_section.locations
     | Other Cities:
