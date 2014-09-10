@@ -43,6 +43,26 @@ describe 'Profile', ->
     it "returns the icon url for the model's default icon version", ->
       @profile.iconImageUrl().should.containEql "square"
 
+  describe '#bestAvailableImage', ->
+
+    it "returns the icon image url if there is no cover", ->
+      @profile.unset 'cover_image'
+      @profile.bestAvailableImage().should.containEql("square")
+
+    it "returns the cover image url for medium if exists", ->
+      @profile.set
+        cover_image:
+          image_url: "http://static2.artsy.net/profile_icons/51eefb79275b2420810001fe/:version.jpg",
+          image_versions: [ "medium" ]
+      @profile.bestAvailableImage().should.containEql('medium')
+
+    it "returns the cover image url for medium250x165 if it exists", ->
+      @profile.set
+        cover_image:
+          image_url: "http://static2.artsy.net/profile_icons/51eefb79275b2420810001fe/:version.jpg",
+          image_versions: [ "medium250x165" ]
+      @profile.bestAvailableImage().should.containEql('medium250x165')
+
   describe '#alphaSortKey', ->
 
     it "returns the profile owner's display name", ->
