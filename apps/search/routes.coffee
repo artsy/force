@@ -10,7 +10,7 @@ removeDiacritics = require('diacritics').remove
   res.locals.sd.term = term
   if page = Number(req.query.page)
     res.locals.sd.page = page
-    data.start = page * 10
+    data.start = (page - 1) * 10
 
   results = new GoogleSearchResults()
   results.fetch
