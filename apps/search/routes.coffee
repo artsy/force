@@ -3,12 +3,11 @@ GoogleSearchResults = require './collections/google_search_results.coffee'
 removeDiacritics = require('diacritics').remove
 
 @index = (req, res) ->
-  data = {}
-  term = req.query.q
-  return res.redirect("/") unless term
+  return res.redirect("/") unless req.query.q
+
+  term = removeDiacritics req.query.q
   data = { q: term }
   res.locals.sd.term = term
-
   if page = Number(req.query.page)
     res.locals.sd.page = page
     data.start = page * 10
