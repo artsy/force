@@ -135,7 +135,11 @@ module.exports = class AboutView extends Backbone.View
       url: '/about/sms'
       data: to: @$('#about-phone-link input').val()
       error: (xhr) ->
+        $('.about-section1-phone-success').hide()
         $('.about-section1-phone-error').show().text(xhr.responseJSON.msg)
+      success: ->
+        $('.about-section1-phone-success').show().text('Message sent, please check your phone.')
+        $('.about-section1-phone-error').hide()
       complete: ->
         $('#about-phone-link button').removeClass 'is-loading'
 
