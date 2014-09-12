@@ -19,6 +19,7 @@ splitTestInterface = require './split_test.coffee'
 mediator = require '../../../lib/mediator.coffee'
 RelatedGenesView = require '../../../components/related_links/types/artist_genes.coffee'
 RelatedRepresentationsGenesView = require '../../../components/related_links/types/artist_representations.coffee'
+Sticky = require '../../../components/sticky/index.coffee'
 
 module.exports.ArtistView = class ArtistView extends Backbone.View
   events:
@@ -44,6 +45,8 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     @setupRelatedArtists()
     @setupRelatedShows()
     @setupRelatedPosts()
+
+    @sticky = new Sticky
 
     # Track pageview
     analytics.track.impression 'Artist page', id: @model.id
@@ -90,6 +93,7 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     ArtworkFilter.init el: @$('#artwork-section'), model: @model
     @listenToOnce mediator, 'artwork_filter:filter:sync', (model) ->
       @$('.artist-header-empty').remove() if model.get('total')
+      _.defer => @sticky.add @$('#artwork-filter')
 
   setupArtworksFillwidth: ->
     @fadeInSection @$('#artist-fillwidth-section')
@@ -130,7 +134,7 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
 
   setupRelatedShows: ->
     @listenToOnce @model.relatedShows, 'reset', (collection) =>
-      @fadeInSection @$('#artist-related-shows-section') if collection.length
+      @setupRelatedSection @$('#artist-related-shows-section') if collection.length
     new RelatedShowsView
       el: @$('#artist-related-shows')
       collection: @model.relatedShows
@@ -148,11 +152,16 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
 
   setupRelatedPosts: ->
     @listenToOnce @model.relatedPosts, 'reset', (collection) =>
-      @fadeInSection @$('#artist-related-posts-section') if collection.length
+      @setupRelatedSection @$('#artist-related-posts-section') if collection.length
     new RelatedPostsView
       el: @$('#artist-related-posts')
       collection: @model.relatedPosts
       numToShow: 4
+
+  setupRelatedSection: ($el) ->
+    $section = @fadeInSection $el
+    @sticky.add $section.find('.artist-related-section-header')
+    $el
 
   fadeInSection: ($el) ->
     $el.show()
@@ -170,7 +179,7 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
   renderRelatedArtists: (type) =>
     $section = @$("#artist-related-#{type.toLowerCase()}-section")
     if @model["related#{type}"]?.models.length
-      @fadeInSection $section
+      @setupRelatedSection $section
       new ArtistFillwidthList(
         el: @$("#artist-related-#{type.toLowerCase()}")
         collection: @model["related#{type}"]
