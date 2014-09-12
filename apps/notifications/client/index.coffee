@@ -10,6 +10,9 @@ JumpView = require '../../../components/jump/view.coffee'
 template = -> require('../templates/artist.jade') arguments...
 
 module.exports.NotificationsView = class NotificationsView extends Backbone.View
+  events:
+    'click #for-sale': 'toggleForSale'
+
   initialize: ->
     @cacheSelectors()
 
@@ -22,7 +25,7 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
 
     @setupJumpView()
 
-    @notifications.fetch()
+    @notifications.getFirstPage()
     $.onInfiniteScroll @nextPage
 
   setupJumpView: ->
@@ -40,15 +43,32 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
     @$publishedArtworks = @$('#notifications-published-artworks')
 
   appendArtworks: ->
+    if @notifications.state.currentPage is 1
+      # Reset the DOM
+      renderMethod = 'html'
+      @columnViews = []
+      # Remove any existing column views
+      _.each @columnViews, (view) -> view?.remove()
+    else
+      renderMethod = 'append'
+
     groupedArtworks = @groupArtworks @notifications
     for artistName, publishedArtworks of groupedArtworks
       artworks = new Artworks publishedArtworks
       artist = new Artist artworks.first().get('artist')
       publishedAt = DateHelpers.formatDate artworks.first().get('published_changed_at')
+
       # Render container
-      @$publishedArtworks.append template(artist: artist, publishedAt: publishedAt, count: artworks.length)
+      @$publishedArtworks[renderMethod] template
+        artist: artist
+        publishedAt: publishedAt
+        count: artworks.length
+
+      # Only reset the DOM on the first iteration
+      renderMethod = 'append'
+
       # Render columns
-      new ArtworkColumnsView
+      @columnViews.push new ArtworkColumnsView
         el: @$('.notifications-list-item').last().find('.notifications-published-artworks').last()
         collection: artworks
         artworkSize: 'large'
@@ -63,6 +83,10 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
 
   nextPage: =>
     @notifications.getNextPage()
+
+  toggleForSale: (e) ->
+    toggle = $(e.currentTarget).prop('checked')
+    @notifications.getFirstPage data: for_sale: toggle
 
 module.exports.init = ->
   new NotificationsView el: $('body')

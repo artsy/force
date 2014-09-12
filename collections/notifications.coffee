@@ -24,5 +24,5 @@ module.exports = class Notifications extends PageableCollection
     { @userId, @type, @since } = _.defaults(options, @defaults)
 
   fetch: (options = {}) ->
-    options.data = user_id: @userId, type: @type, since: @since
+    options.data = _.defaults (options.data or {}), user_id: @userId, type: @type, since: @since
     PageableCollection::fetch.call this, options
