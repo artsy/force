@@ -23,9 +23,10 @@
       )= section.pullBlurb1.cta.button.text
 
     .about-section1-cta
-      a.avant-garde-button-white.is-block(
-        href= section.pullBlurb1.button.href
-      )= section.pullBlurb1.button.text
+      for button in [section.pullBlurb1.button1, section.pullBlurb1.button2]
+        a.avant-garde-button-white.is-block(
+          href= button.href
+        )= button.text
 
   #about-section1-images1-right.span3
     for image in firstHalf(section.pullBlurb1.images)
