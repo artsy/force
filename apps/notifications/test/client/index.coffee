@@ -37,19 +37,17 @@ describe 'NotificationsView', ->
   after ->
     benv.teardown()
 
-  beforeEach ->
+  beforeEach (done) ->
     sinon.stub Backbone, 'sync'
     sinon.stub CurrentUser, 'orNull'
     CurrentUser.orNull.returns new CurrentUser fabricate 'user'
+    setupView.call this, done
 
   afterEach ->
     Backbone.sync.restore()
     CurrentUser.orNull.restore()
 
   describe '#initialize', ->
-    beforeEach (done) ->
-      setupView.call this, done
-
     it 'makes the right API call', ->
       _.last(Backbone.sync.args)[2].url.should.containEql '/api/v1/notifications'
       _.last(Backbone.sync.args)[2].data.should.containEql type: 'ArtworkPublished', since: 30, page: 1, size: 10
