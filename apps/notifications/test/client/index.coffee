@@ -52,16 +52,29 @@ describe 'NotificationsView', ->
 
     it 'makes the right API call', ->
       _.last(Backbone.sync.args)[2].url.should.containEql '/api/v1/notifications'
+      _.last(Backbone.sync.args)[2].data.should.containEql type: 'ArtworkPublished', since: 30, page: 1, size: 10
 
     it 'groups and renders properly', ->
       bittyArtwork1 = fabricate 'artwork', published_changed_at: '2012-05-07T04:00:00+00:00', artist: fabricate 'artist', { id: 'bitty', name: 'Bitty Z' }
       bittyArtwork2 = fabricate 'artwork', published_changed_at: '2012-05-07T04:00:00+00:00', artist: fabricate 'artist', { id: 'bitty', name: 'Bitty Z' }
       percyArtwork1 = fabricate 'artwork', published_changed_at: '2012-05-06T04:00:00+00:00', artist: fabricate 'artist', { id: 'percy', name: 'Percy Z' }
       _.last(Backbone.sync.args)[2].success([ bittyArtwork1, bittyArtwork2, percyArtwork1 ])
-      @view.$el.find('.notifications-list-item').length.should.equal 2   # One for Bitty, One for Percy
+      @view.$el.find('.notifications-list-item').length.should.equal 2 # One for Bitty, One for Percy
       @view.$el.html().should.containEql 'Bitty Z'
       @view.$el.html().should.containEql 'Percy Z'
       @view.$el.html().should.containEql "/artist/bitty"
       @view.$el.html().should.containEql "/artist/percy"
       @view.$el.html().should.containEql "2 works added"
       @view.$el.html().should.containEql "1 work added"
+
+  describe '#toggleForSale', ->
+    it 'turns on the for_sale boolean in the fetch and starts from the first page', ->
+      @view.nextPage()
+      _.last(Backbone.sync.args)[2].data.should.containEql page: 2
+      @view.$('#for-sale').click()
+      _.last(Backbone.sync.args)[2].data.should.containEql
+        for_sale: true
+        type: 'ArtworkPublished'
+        since: 30
+        page: 1
+        size: 10
