@@ -17,7 +17,7 @@ bareHost = (hostname) ->
   _.last(hostname.split('.'), subdomainOffset = 2).join '.'
 
 safeAddress = (address) ->
-  _.contains whitelistHosts, bareHost(parse(address).hostname)
+  _.contains whitelistHosts, bareHost(parse(address, false, true).hostname)
 
 module.exports = (address) ->
   if safeAddress(address) then address else redirectFallback
