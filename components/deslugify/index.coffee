@@ -13,4 +13,16 @@ checkSpecialCases = (str) ->
   return 'Film / Video' if str is 'film-video'
   str
 
-module.exports = _.compose(_s.trim, preserveFullNumbersRNumericTrim, _s.titleize, _s.humanize, checkSpecialCases)
+symbolWords = (str) ->
+  str
+    .replace(/\sslash\s/i, ' / ')
+    .replace(/\sdot\s/i, '.')
+
+module.exports = _.compose(
+  _s.trim
+  symbolWords
+  preserveFullNumbersRNumericTrim
+  _s.titleize
+  _s.humanize
+  checkSpecialCases
+)

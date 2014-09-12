@@ -19,3 +19,7 @@ describe 'deslugify', ->
 
   it 'handles special cases', ->
     deslugify('film-video').should.equal 'Film / Video'
+
+  it 'handles slugs with symbol words in them', ->
+    deslugify('fleisher-slash-ollman').should.equal 'Fleisher / Ollman'
+    deslugify('bernarducci-dot-meisel-gallery').should.equal 'Bernarducci.Meisel Gallery'
