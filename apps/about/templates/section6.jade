@@ -8,8 +8,9 @@
 
   .span3.about-section6-pull-blurb
     +pull-blurb(section.pullBlurbLeft)
-    a.avant-garde-button-white( href=section.pullBlurbLeft.href, target='_blank' )
-      = section.pullBlurbLeft.button
+    for button in [section.pullBlurbLeft.button1, section.pullBlurbLeft.button2]
+      a.avant-garde-button-white( href=button.href, target='_blank' )
+        = button.label
 
   .span3.about-section6-pull-blurb
     +pull-blurb(section.pullBlurbRight)
