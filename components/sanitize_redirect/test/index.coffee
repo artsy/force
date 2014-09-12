@@ -2,8 +2,20 @@ sinon = require 'sinon'
 sanitizeRedirect = require '../index'
 
 describe 'sanitizeRedirect', ->
+  it 'lets artsy.net through', ->
+    sanitizeRedirect('http://artsy.net').should.equal 'http://artsy.net'
+
+  it 'lets artsy.net without a protocol through', ->
+    sanitizeRedirect('//artsy.net').should.equal '//artsy.net'
+
   it 'lets artsy.net subdomains through', ->
     sanitizeRedirect('http://2013.artsy.net').should.equal 'http://2013.artsy.net'
+
+  it 'lets artsy.net subdomains without a protocol through', ->
+    sanitizeRedirect('//2013.artsy.net').should.equal '//2013.artsy.net'
+
+  it 'lets relative paths through', ->
+    sanitizeRedirect('/path').should.equal '/path'
 
   it 'lets deeply nested artsy.net subdomains through', ->
     sanitizeRedirect('https://foo.2013.artsy.net').should.equal 'https://foo.2013.artsy.net'
@@ -17,5 +29,17 @@ describe 'sanitizeRedirect', ->
   it 'lets internal paths through', ->
     sanitizeRedirect('/log_in?redirect-to=/foo/bar').should.equal '/log_in?redirect-to=/foo/bar'
 
+  it 'blocks data urls', ->
+    sanitizeRedirect('data:text/html;base64,PHNjcmlwdD5hbGVydChsb2NhdGlvbi5oYXNoKTs8L3NjcmlwdD4=')[0].should.equal '/'
+
   it 'blocks external links not whitelisted; redirects to root', ->
     sanitizeRedirect('http://google.com').should.equal '/'
+
+  it 'blocks external links that lack protocol; redirects to root', ->
+    sanitizeRedirect('//google.com').should.equal '/'
+
+  it 'blocks other protocols; redirects to root', ->
+    sanitizeRedirect('ftp://google.com').should.equal '/'
+
+  it 'blocks other protocols; redirects to root', ->
+    sanitizeRedirect('ftp://google.com').should.equal '/'
