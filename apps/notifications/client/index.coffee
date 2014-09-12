@@ -90,3 +90,4 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
 
 module.exports.init = ->
   new NotificationsView el: $('body')
+  require './analytics.coffee'
