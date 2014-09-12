@@ -1,8 +1,8 @@
 _ = require 'underscore'
+sd = require('sharify').data
 Backbone = require 'backbone'
 Artworks = require '../../../collections/artworks.coffee'
 Artist = require '../../../models/artist.coffee'
-sd = require('sharify').data
 FillwidthView = require '../../../components/fillwidth_row/view.coffee'
 ArtistFillwidthList = require '../../../components/artist_fillwidth_list/view.coffee'
 RelatedPostsView = require '../../../components/related_posts/view.coffee'
@@ -28,6 +28,8 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
   initialize: (options) ->
     { @sortBy } = options
 
+    $(window).on 'keyup', (e) -> @$('.ap-grid').toggle() if e.which is 71 # "g" key
+
     @setupCurrentUser()
 
     # Header
@@ -44,7 +46,7 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     @setupRelatedPosts()
 
     # Track pageview
-    analytics.track.impression 'Artist page', { id: @model.id }
+    analytics.track.impression 'Artist page', id: @model.id
 
   setupHeader: ->
     @setupRelatedGenes()
@@ -127,10 +129,12 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     @setupArtworksFillwidth()
 
   setupRelatedShows: ->
+    @listenToOnce @model.relatedShows, 'reset', (collection) =>
+      @fadeInSection @$('#artist-related-shows-section') if collection.length
     new RelatedShowsView
+      el: @$('#artist-related-shows')
       collection: @model.relatedShows
       model: @model
-      el: @$('#artist-related-shows')
 
   setupRelatedGenes: ->
     new RelatedGenesView el: @$('.artist-related-genes'), id: @model.id
@@ -139,17 +143,16 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     new RelatedRepresentationsGenesView el: @$('.artist-related-representations'), id: @model.id
 
   pendRemovalOfEmptyNotice: (collection) ->
-    @listenTo collection, 'sync', (collection) =>
+    @listenToOnce collection, 'sync', (collection) =>
       @$('.artist-header-empty').remove() if collection.length
 
   setupRelatedPosts: ->
+    @listenToOnce @model.relatedPosts, 'reset', (collection) =>
+      @fadeInSection @$('#artist-related-posts-section') if collection.length
     new RelatedPostsView
-      el: @$('#artist-related-posts-section')
+      el: @$('#artist-related-posts')
+      collection: @model.relatedPosts
       numToShow: 4
-      model: @model
-      modelName: 'artist'
-      mode: 'extended'
-      canBeEmpty: false
 
   fadeInSection: ($el) ->
     $el.show()
@@ -181,7 +184,5 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     @model.fetchRelatedArtists type, data: page: @["related#{type}Page"]++
 
 module.exports.init = ->
-  new ArtistView
-    model: new Artist sd.ARTIST
-    el: $('body')
-    sortBy: sd.sortBy
+  artist = new Artist sd.ARTIST
+  new ArtistView el: $('body'), model: artist, sortBy: sd.sortBy

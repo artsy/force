@@ -9,9 +9,10 @@
   margin-right 0
 
 #artist-fillwidth-section
+#artist-related-shows-section
+#artist-related-posts-section
 #artist-related-artists-section
 #artist-related-contemporary-section
-#artist-related-posts-section
   display none
   fade-in()
 
@@ -28,16 +29,25 @@
     position relative
     margin 150px 0
 
-.artist-info-section
 .artist-related-section
   border-top 1px solid gray-lighter-color
   margin 40px 0
 .artist-related-section
-  h3
-    margin 30px 0 10px 0
-    font-size 17px
+  clearfix()
   .artist-fillwidth-list-see-more
     display none
+
+.artist-related-section-header
+.artist-related-section-content
+  float left
+  padding 30px 0 10px 0
+.artist-related-section-header
+  width 26%
+  padding-right 40px
+  font-size 26px
+  line-height 1.5
+.artist-related-section-content
+  width 74%
 
 .artist-related-see-more
   margin 20px auto
