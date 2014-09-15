@@ -12,7 +12,7 @@ Cookies = require 'cookies-js'
 module.exports = class AfterInquiry
   _.extend @prototype, Backbone.Events
 
-  messagePending: 'Thank you. Your inquiry is sending&hellip;'
+  messagePending: 'Thank you. Your inquiry is sending…'
   messageSent: 'Thank you. Your inquiry has been sent.'
   messageError: 'There was a problem with sending your inquiry'
   pauseInterval: 2000
