@@ -34,7 +34,7 @@ module.exports = class Post extends Backbone.Model
     else
       firstParagraph
 
-    _s.prune summary, maxLimit, '&hellip;'
+    _s.prune summary, maxLimit, '…'
 
   onPostPage: (location) ->
     location ?= window?.location?.pathname

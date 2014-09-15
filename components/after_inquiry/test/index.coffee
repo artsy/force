@@ -59,7 +59,7 @@ describe 'AfterInquiry', ->
           flow.remove()
 
     it 'initializes a new flash message', ->
-      @flow.flash.message.should.equal 'Thank you. Your inquiry is sending&hellip;'
+      @flow.flash.message.should.equal 'Thank you. Your inquiry is sending…'
 
     it 'responds to the inquiry success event by updating the flash message accordingly', ->
       @inquiry.trigger 'sync'
