@@ -5,8 +5,8 @@ Backbone = require 'backbone'
 Edition = require './edition.coffee'
 AdditionalImage = require './additional_image.coffee'
 { compactObject } = require './mixins/compact_object.coffee'
-
 { Image, Dimensions, Markdown } = require 'artsy-backbone-mixins'
+analytics = require '../lib/analytics.coffee'
 
 module.exports = class Artwork extends Backbone.Model
 
@@ -188,7 +188,7 @@ module.exports = class Artwork extends Backbone.Model
 
   # If the price is hidden, contact for price.
   # Fallback on the sale message as well,
-  # sometimes this will be 'Contact for Price'
+  # sometimes this will be 'Contact For Price'
   # without the price_hidden attribute being set
   #
   # return {String}
@@ -312,8 +312,12 @@ module.exports = class Artwork extends Backbone.Model
     "Related auction results for #{@toPageDescription()}"
 
   saleMessage: ->
-    return undefined if @get('sale_message') is 'Contact For Price'
-    if @get('sale_message')?.indexOf('Sold') > - 1
+    if @get('sale_message') is 'Contact For Price'
+      if analytics.abTest('ab:artwork:sale_message', 0.5)
+        return @get('sale_message')
+      else
+        return undefined
+    else if @get('sale_message')?.indexOf('Sold') > - 1
       _.compact([
         'SOLD'
         @get('price')
