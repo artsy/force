@@ -29,8 +29,6 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
   initialize: (options) ->
     { @sortBy } = options
 
-    $(window).on 'keyup', (e) -> @$('.ap-grid').toggle() if e.which is 71 # "g" key
-
     @setupCurrentUser()
 
     # Header
