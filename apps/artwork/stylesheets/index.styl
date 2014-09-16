@@ -196,23 +196,19 @@ artwork-detail-item-height = 36px
 .about-artwork-section.add-margin-bottom
   margin-bottom 40px
 
+.artwork-image
+  position relative
+
 .artwork-video
   margin auto
-  max-width 100%
-  iframe, .artwork-video-img
-    width 100%
-    height 100%
-
-.artwork-video-img
-  position relative
-  cursor pointer
-  max-width 100%
-  background no-repeat center top
-  background-size contain
+  height 100%
+  width 100%
+  position absolute
+  top 0
+  left 0
+  z-index 2
   &:hover .play-button
     background-color purple-color
-  .play-button
-    z-index 2
 
 @import './deep_zoom'
 @import './circle_buttons'
