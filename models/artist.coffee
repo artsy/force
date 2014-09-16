@@ -48,7 +48,7 @@ module.exports = class Artist extends Backbone.Model
   fetchRelatedArtists: (type, options = {}) ->
     @["related#{type}"].fetch _.extend
       remove: false
-      data: _.extend (options.data ? {}),
+      data: _.defaults (options.data ? {}),
         size: 5
         'artist[]': @get 'id'
         'exclude_artists_without_artworks': true
