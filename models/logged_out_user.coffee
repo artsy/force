@@ -23,10 +23,10 @@ module.exports = class LoggedOutUser extends User
     new Backbone.Model().save (@pick 'email', 'password'), settings
 
   signup: (options = {}) ->
+    success = options.success
     settings = _.defaults options,
       url: "#{sd.API_URL}/api/v1/user"
-      success: injectToken -> location.reload()
-    settings.success = injectToken settings.success
+    settings.success = => @login(success: success)
     new Backbone.Model().save (@pick 'name', 'email', 'password'), settings
 
   # Alias #signup
