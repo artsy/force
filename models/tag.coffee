@@ -1,8 +1,13 @@
+sd = require('sharify').data
 _ = require 'underscore'
 { API_URL } = require('sharify').data
 Backbone = require 'backbone'
 
+{ Markdown } = require 'artsy-backbone-mixins'
+
 module.exports = class Tag extends Backbone.Model
+
+  _.extend @prototype, Markdown
 
   urlRoot: "#{API_URL}/api/v1/tag"
 
