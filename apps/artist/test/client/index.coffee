@@ -76,8 +76,6 @@ describe 'ArtistView', ->
         it 'sets up related posts', ->
           viewRelatedPostOpts = @RelatedPostsView.args[0][0]
           viewRelatedPostOpts.numToShow.should.equal 4
-          viewRelatedPostOpts.model.should.equal @view.model
-          viewRelatedPostOpts.mode.should.equal 'extended'
 
     describe 'sorting', ->
       it 'passes the correct sort option into setupArtworks when sorting by Recently Added, and updates the picker', ->

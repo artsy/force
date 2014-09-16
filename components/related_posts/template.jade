@@ -1,0 +1,20 @@
+.related-posts
+  for post in posts
+    - var profile = post.profile()
+    .related-post
+      a.rp-image.hoverable-image-link( href="/post/#{post.id}" )
+        img( src= post.defaultImage().cropUrlFor({ width: 300, height: 225 }), alt= post.get('title') )
+      .rp-blurb
+        a.rp-author( href="/#{profile.get('owner').default_profile_id}" )
+          | By #{profile.get('owner').name}
+        a( href="/post/#{post.id}" )
+          if post.get('title')
+            h3.rp-title= post.get('title')
+          if post.get('body')
+            .rp-summary
+              = post.extendedSummary()
+              span.rp-go Go to post
+
+  if remaining > 0
+    .related-posts-show-all.avant-garde-button-white.is-block
+      | Show More Related Posts (#{remaining})

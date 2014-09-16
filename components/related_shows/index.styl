@@ -1,56 +1,23 @@
 @import '../components/stylus_lib'
 
-.related-shows
-  display none
-  opacity 0
-  transition opacity 0.5s
-  text-align center
-  &.is-fade-in
-    opacity 1
-
-// Large featured show
-.related-show-featured
-  display table
-  width 100%
-  margin 20px 0
-  a
-    text-decoration none
-.rsf-image
-.rsf-metadata
-  display table-cell
-  vertical-align middle
-  text-align center
-.rsf-metadata
-  padding 20px
-.rsf-partner-name
-  margin 0
-  font-size 13px
-.rsf-name
-  font-size 36px
-  line-height 1.2
-  margin 20px 0
-
-// Small thumbnailed shows
-.related-shows-rest
-  margin 20px 0
-
 .related-show a
   text-decoration none
 
-.related-show-label
-  avant-garde()
-  margin-bottom 5px
-  margin-top 20px
-  font-size 12px
-
+.rsr-metadata
+  line-height 1
+  margin 20px 0
+  padding-right 20px
 .rsr-name
-  font-style italic
-  font-size 24px
-  overflow ellipsis
-  margin 5px 0
 .rsr-partner-name
-  font-size 13px
+.rsr-timeframe
   overflow ellipsis
 .rsr-timeframe
   font-size 18px
-  overflow ellipsis
+  color gray-darkest-color
+.rsr-partner-name
+  avant-garde()
+  font-size 13px
+  margin 10px 0
+.rsr-name
+  font-size 24px
+  margin 5px 0

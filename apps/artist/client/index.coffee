@@ -1,8 +1,8 @@
 _ = require 'underscore'
+sd = require('sharify').data
 Backbone = require 'backbone'
 Artworks = require '../../../collections/artworks.coffee'
 Artist = require '../../../models/artist.coffee'
-sd = require('sharify').data
 FillwidthView = require '../../../components/fillwidth_row/view.coffee'
 ArtistFillwidthList = require '../../../components/artist_fillwidth_list/view.coffee'
 RelatedPostsView = require '../../../components/related_posts/view.coffee'
@@ -19,6 +19,7 @@ splitTestInterface = require './split_test.coffee'
 mediator = require '../../../lib/mediator.coffee'
 RelatedGenesView = require '../../../components/related_links/types/artist_genes.coffee'
 RelatedRepresentationsGenesView = require '../../../components/related_links/types/artist_representations.coffee'
+Sticky = require '../../../components/sticky/index.coffee'
 
 module.exports.ArtistView = class ArtistView extends Backbone.View
   events:
@@ -43,8 +44,10 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     @setupRelatedShows()
     @setupRelatedPosts()
 
+    @sticky = new Sticky
+
     # Track pageview
-    analytics.track.impression 'Artist page', { id: @model.id }
+    analytics.track.impression 'Artist page', id: @model.id
 
   setupHeader: ->
     @setupRelatedGenes()
@@ -88,6 +91,7 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     ArtworkFilter.init el: @$('#artwork-section'), model: @model
     @listenToOnce mediator, 'artwork_filter:filter:sync', (model) ->
       @$('.artist-header-empty').remove() if model.get('total')
+      _.defer => @sticky.add @$('#artwork-filter')
 
   setupArtworksFillwidth: ->
     @fadeInSection @$('#artist-fillwidth-section')
@@ -127,10 +131,12 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     @setupArtworksFillwidth()
 
   setupRelatedShows: ->
+    @listenToOnce @model.relatedShows, 'reset', (collection) =>
+      @setupRelatedSection @$('#artist-related-shows-section') if collection.length
     new RelatedShowsView
+      el: @$('#artist-related-shows')
       collection: @model.relatedShows
       model: @model
-      el: @$('#artist-related-shows')
 
   setupRelatedGenes: ->
     new RelatedGenesView el: @$('.artist-related-genes'), id: @model.id
@@ -139,17 +145,21 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     new RelatedRepresentationsGenesView el: @$('.artist-related-representations'), id: @model.id
 
   pendRemovalOfEmptyNotice: (collection) ->
-    @listenTo collection, 'sync', (collection) =>
+    @listenToOnce collection, 'sync', (collection) =>
       @$('.artist-header-empty').remove() if collection.length
 
   setupRelatedPosts: ->
+    @listenToOnce @model.relatedPosts, 'reset', (collection) =>
+      @setupRelatedSection @$('#artist-related-posts-section') if collection.length
     new RelatedPostsView
-      el: @$('#artist-related-posts-section')
+      el: @$('#artist-related-posts')
+      collection: @model.relatedPosts
       numToShow: 4
-      model: @model
-      modelName: 'artist'
-      mode: 'extended'
-      canBeEmpty: false
+
+  setupRelatedSection: ($el) ->
+    $section = @fadeInSection $el
+    @sticky.add $section.find('.artist-related-section-header')
+    $el
 
   fadeInSection: ($el) ->
     $el.show()
@@ -167,7 +177,7 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
   renderRelatedArtists: (type) =>
     $section = @$("#artist-related-#{type.toLowerCase()}-section")
     if @model["related#{type}"]?.models.length
-      @fadeInSection $section
+      @setupRelatedSection $section
       new ArtistFillwidthList(
         el: @$("#artist-related-#{type.toLowerCase()}")
         collection: @model["related#{type}"]
@@ -181,7 +191,5 @@ module.exports.ArtistView = class ArtistView extends Backbone.View
     @model.fetchRelatedArtists type, data: page: @["related#{type}Page"]++
 
 module.exports.init = ->
-  new ArtistView
-    model: new Artist sd.ARTIST
-    el: $('body')
-    sortBy: sd.sortBy
+  artist = new Artist sd.ARTIST
+  new ArtistView el: $('body'), model: artist, sortBy: sd.sortBy
