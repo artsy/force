@@ -8,7 +8,8 @@ removeDiacritics = require('diacritics').remove
   term = removeDiacritics req.query.q
   data = { q: term }
   res.locals.sd.term = term
-  if page = Number(req.query.page)
+  page = Number(req.query.page)
+  if page && page > 1
     res.locals.sd.page = page
     data.start = (page - 1) * 10
 
