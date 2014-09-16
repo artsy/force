@@ -1,6 +1,5 @@
 _ = require 'underscore'
 StepView = require './step.coffee'
-track = require('../../../../lib/analytics.coffee').track
 Items = require '../../../../collections/items.coffee'
 Gene = require '../../../../models/gene.coffee'
 { setSkipLabel } = require '../mixins/followable.coffee'
