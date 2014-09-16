@@ -3,5 +3,5 @@ ArtworkFilterRouter = require './router.coffee'
 
 module.exports.init = (options = {}) ->
   new ArtworkFilterRouter options
-  Backbone.history.start pushState: true
   require './analytics.coffee'
+  Backbone.history.start(pushState: true) unless Backbone.History.started
