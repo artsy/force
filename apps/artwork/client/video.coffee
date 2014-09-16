@@ -15,33 +15,42 @@ module.exports = class VideoView extends Backbone.View
   render: ->
     @$video = $ """
       <div class='artwork-video'>
-        <div class='artwork-video-img' \
-             style='background-image: url(#{@artwork.defaultImageUrl('large')})'>
-          <div class='play-button'></div>
-        </div>
+        <iframe></iframe>
+        <div class='play-button'></div>
       </div>
     """
-    q = qs.parse parse(@artwork.get 'website').query
-    @$video.css(width: q.width or 600, height: q.height or 400)
-    @$('.artwork-image').replaceWith @$video
+    @$('.artwork-image').append @$video
 
   events:
     'click .artwork-video': 'play'
+    'click .artwork-additional-images > a': 'toggleVideo'
 
   play: ->
-    $('.artwork-video-img').remove()
-    switch parse(@artwork.get 'website').host
+    q = qs.parse parse(@artwork.get 'website').query
+    height = q.height or @$('.artwork-image img').height()
+    width = q.width or @$('.artwork-image img').width()
+
+    @$video.find('iframe').replaceWith switch parse(@artwork.get 'website').host
       when 'youtu.be'
         id = _.last @artwork.get('website').split('/')
-        @$video.append $iframe = """
+        """
           <iframe src="//www.youtube.com/embed/#{id}?autoplay=1"
+                  height="#{height}" width="#{width}"
                   allowfullscreen>
           </iframe>
         """
       when 'vimeo.com'
         id = _.last @artwork.get('website').split('/')
-        @$video.append $iframe = """
+        """
           <iframe src="//player.vimeo.com/video/#{id}?color=ffffff&autoplay=1"
+                  height="#{height}" width="#{width}"
                   allowfullscreen>
           </iframe>
         """
+
+  toggleVideo: (e) ->
+    if $(e.currentTarget).is(':first-child')
+      @$video.show()
+    else
+      @$video.find('iframe').replaceWith '<iframe></iframe>'
+      @$video.hide()
