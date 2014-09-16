@@ -9,22 +9,10 @@ Genes = require '../mixins/genes.coffee'
 BookmarkedArtists = require '../mixins/bookmarked_artists.coffee'
 { FollowButton, Following } = require '../../../../components/follow_button/index.coffee'
 Artists = require '../../../../collections/artists.coffee'
-analytics = require '../../../../lib/analytics.coffee'
 mediator = require '../../../../lib/mediator.coffee'
 imagesLoaded = require 'imagesloaded'
 template = -> require('../../templates/artists.jade') arguments...
 suggestedArtistsTemplate = -> require('../../templates/suggested_artists.jade') arguments...
-
-Analytics =
-  attach: ->
-    mediator.on 'follow-button:follow', ($el, model) ->
-      analytics.track.click "Followed artist from personalize #{$el.data 'analyticsLabel'}"
-
-    mediator.on 'follow-button:unfollow', ($el, model) ->
-      analytics.track.click "Unfollowed artist from personalize #{$el.data 'analyticsLabel'}"
-
-  detach: ->
-    mediator.off 'follow-button:unfollow follow-button:follow'
 
 module.exports = class ArtistsView extends StepView
   _.extend @prototype, Followable
@@ -53,8 +41,6 @@ module.exports = class ArtistsView extends StepView
     @listenTo @followed, 'remove', @disposeSuggestionSet
     @listenTo @suggestions, 'add', @renderSuggestions
     @listenTo @suggestions, 'remove', @renderSuggestions
-
-    Analytics.attach()
 
   initializeArtistsFromFavorites: ->
     new Backbone.Collection().fetch
@@ -157,7 +143,6 @@ module.exports = class ArtistsView extends StepView
     this
 
   remove: ->
-    Analytics.detach()
     @searchBarView.remove()
     @suggestions.each (suggestionSet) => @disposeSuggestionSet(suggestionSet)
     super
