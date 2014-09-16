@@ -1,4 +1,5 @@
 extends ../../components/main_layout/templates/index
+include ../../components/share/template
 
 block head
   include meta
@@ -7,14 +8,25 @@ append locals
   - assetPackage = 'tag'
 
 block body
-  h1#tag-header.avant-garde-header-center Artwork related to “#{tag.get('name')}”
-  #tag-filter
-    .filter-fixed-header-nav
-      .filter-fixed-header-left
-        = tag.get('name')
-        | &nbsp;&mdash;&nbsp;
-        em
-          span.filter-artworks-num
-          | &nbsp;Works
-      include ../../components/filter/artworks_nav/template.jade
-    include ../../components/filter/artworks/template.jade
+  .main-layout-container
+    header#tag-header
+      h1.avant-garde-header-center Artwork related to “#{tag.get('name')}”
+      #tag-share-buttons
+        +share(tag.get('name') + ' on Artsy')
+
+    .bisected-header
+      if tag.get('description')
+        .bisected-header-cell.tag-blurb
+          h2 About
+          .blurb!= tag.mdToHtml('description')
+
+    #tag-filter
+      #tag-filter-nav.filter-fixed-header-nav
+        .filter-fixed-header-left
+          = tag.get('name')
+          | &nbsp;&mdash;&nbsp;
+          em
+            span.filter-artworks-num
+            | &nbsp;Works
+        include ../../components/filter/artworks_nav/template.jade
+      include ../../components/filter/artworks/template.jade
