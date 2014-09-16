@@ -90,14 +90,14 @@ describe 'AuthModalView', ->
       @view.redirectTo = 'foobarbaz'
       @view.state.set mode: 'register'
       @view.submit $.Event('click')
-      Backbone.sync.args[0][2].url.should.equal '/users/invitation/accept'
+      Backbone.sync.args[0][2].url.should.containEql '/api/v1/user'
       location.href.should.containEql 'foobarbaz'
 
     it 'submits to signup with custom redirect url', ->
       @view.redirectTo = '/awesome-fair'
       @view.state.set mode: 'register'
       @view.submit $.Event('click')
-      Backbone.sync.args[0][2].url.should.containEql 'users/invitation/accept'
+      Backbone.sync.args[0][2].url.should.containEql '/api/v1/user'
       location.href.should.containEql '/awesome-fair'
 
     it 'sets a cookie named destination with whatever the passed in destination is', ->
