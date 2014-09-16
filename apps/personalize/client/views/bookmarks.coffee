@@ -2,7 +2,6 @@ StepView = require './step.coffee'
 analytics = require '../../../../lib/analytics.coffee'
 BookmarksSearchView = require '../../../../components/bookmarks/view.coffee'
 { setSkipLabel } = require '../mixins/followable.coffee'
-analytics = require '../../../../lib/analytics.coffee'
 template = -> require('../../templates/bookmarks.jade') arguments...
 
 module.exports = class BookmarksView extends StepView
