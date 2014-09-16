@@ -11,8 +11,6 @@ FlashMessage = require '../../flash/index.coffee'
 PublishModal = require '../../publish_modal/view.coffee'
 Profile = require '../../../models/profile.coffee'
 
-splitTestInterface = require './split_test.coffee'
-
 module.exports = class HeaderView extends Backbone.View
 
   events:
