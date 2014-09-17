@@ -49,13 +49,6 @@ describe 'Profile', ->
       @profile.unset 'cover_image'
       @profile.bestAvailableImage().should.containEql("square")
 
-    it "returns the cover image url for medium if exists", ->
-      @profile.set
-        cover_image:
-          image_url: "http://static2.artsy.net/profile_icons/51eefb79275b2420810001fe/:version.jpg",
-          image_versions: [ "medium" ]
-      @profile.bestAvailableImage().should.containEql('medium')
-
     it "returns the cover image url for medium250x165 if it exists", ->
       @profile.set
         cover_image:
