@@ -6,7 +6,6 @@ CurrentUser = require '../../../models/current_user.coffee'
 Transition = require '../../../components/mixins/transition.coffee'
 track = require('../../../lib/analytics.coffee').track
 Cookies = require 'cookies-js'
-
 views =
   CollectView: require './views/collect.coffee'
   LocationView: require './views/location.coffee'
@@ -77,3 +76,4 @@ module.exports.init = ->
   user.approximateLocation success: -> user.save()
   new PersonalizeRouter user: user, reonboarding: reonboarding
   Backbone.history.start pushState: true
+  require('./analytics.coffee')(user)
