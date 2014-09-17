@@ -247,8 +247,9 @@ accessTokenCallback = (done, params) ->
     try
       err = JSON.parse(res.text).error_description
       err ?= JSON.parse(res.text).error
-    err ?= "Artsy returned a generic #{res.status}" if res.status > 400
-    err ?= "Artsy returned no access token and no error" unless res.body.access_token?
+    err ?= res.body.error_description if res?.body.error_description?
+    err ?= "Artsy returned a generic #{res.status}" if res?.status > 400
+    err ?= "Artsy returned no access token and no error" unless res?.body.access_token?
     err ?= e
 
     # If there are no errors create the user from the access token
@@ -272,7 +273,7 @@ accessTokenCallback = (done, params) ->
 
     # Other errors
     else
-      console.warn "Error requesting an access token from Artsy: " + res.text
+      console.warn "Error requesting an access token from Artsy: " + res?.text
       done err
 
 #

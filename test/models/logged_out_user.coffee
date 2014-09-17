@@ -38,7 +38,7 @@ describe 'LoggedOutUser', ->
       user = new LoggedOutUser(email: 'foo@bar.com', name: 'Foo Bar', password: 'foobar')
       user.signup()
       Backbone.sync.args[0][0].should.equal 'create'
-      Backbone.sync.args[0][2].url.should.equal '/users/invitation/accept'
+      Backbone.sync.args[0][2].url.should.containEql '/api/v1/user'
       Backbone.sync.args[0][1].attributes.should.containEql name: 'Foo Bar', email: 'foo@bar.com', password: 'foobar'
       @reloadStub.called.should.be.ok
 

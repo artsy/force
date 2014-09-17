@@ -100,7 +100,7 @@ describe 'Questionnaire', ->
         it 'signs up the user', ->
           @view.$('form').submit()
           _.last(Backbone.sync.args)[0].should.equal 'create'
-          _.last(Backbone.sync.args)[2].url.should.equal '/users/invitation/accept'
+          _.last(Backbone.sync.args)[2].url.should.containEql '/api/v1/user'
 
       describe 'login mode', ->
         beforeEach ->

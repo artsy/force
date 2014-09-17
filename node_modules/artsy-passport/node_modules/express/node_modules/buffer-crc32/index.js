@@ -55,6 +55,9 @@ var CRC_TABLE = [
   0x2d02ef8d
 ];
 
+if (typeof Int32Array !== 'undefined')
+  CRC_TABLE = new Int32Array(CRC_TABLE);
+
 function bufferizeInt(num) {
   var tmp = Buffer(4);
   tmp.writeInt32BE(num, 0);
