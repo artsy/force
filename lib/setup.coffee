@@ -32,6 +32,7 @@ helpersMiddleware = require './middleware/helpers'
 ensureSSL = require './middleware/ensure_ssl'
 escapedFragmentMiddleware = require './middleware/escaped_fragment'
 sameOriginMiddleware = require './middleware/same_origin'
+hstsMiddleware = require './middleware/hsts'
 unsupportedBrowserCheck = require "./middleware/unsupported_browser"
 flash = require 'connect-flash'
 flashMiddleware = require './middleware/flash'
@@ -155,6 +156,7 @@ module.exports = (app) ->
   app.use micrositeMiddleware
   app.use helpersMiddleware
   app.use sameOriginMiddleware
+  app.use hstsMiddleware
   app.use escapedFragmentMiddleware
   app.use logger('dev')
   app.use unsupportedBrowserCheck
