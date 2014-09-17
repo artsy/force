@@ -8,8 +8,6 @@ module.exports = class VideoView extends Backbone.View
 
   initialize: (options) ->
     { @artwork } = options
-    return unless @artwork.get('website')?.match('vimeo|youtu') and
-                  @artwork.get('category').match('Video')
     @render()
 
   render: ->

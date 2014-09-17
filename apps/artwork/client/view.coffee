@@ -295,6 +295,8 @@ module.exports = class ArtworkView extends Backbone.View
     @following?.syncFollows [@artist.id]
 
   setupVideoView: ->
+    return unless @artwork.get('website')?.match('vimeo|youtu') and
+                  @artwork.get('category').match('Video')
     new VideoView el: @el, artwork: @artwork
 
   setupAnnyang: ->

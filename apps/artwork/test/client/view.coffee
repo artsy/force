@@ -51,7 +51,7 @@ describe 'ArtworkView', ->
       @ArtworkView.__set__ 'ShareModal', (@shareViewStub = sinon.stub())
       @ArtworkView.__set__ 'acquireArtwork', (@acquireArtworkStub = sinon.stub())
 
-      stubChildClasses mod, @, ['BlurbView'], []
+      stubChildClasses mod, @, ['BlurbView', 'VideoView'], []
 
       @artworkColumnsView = { appendArtworks: sinon.stub() }
       @ArtworkColumnsView = sinon.stub()
@@ -228,6 +228,16 @@ describe 'ArtworkView', ->
         syncFollowsSpy = sinon.spy @view.following, 'syncFollows'
         @view.setupFollowButton()
         syncFollowsSpy.args[0][0].should.containEql @artist.id
+
+    describe '#setupVideoView', ->
+      it 'doesnt do anything for non-video artworks', ->
+        @view.artwork.set category: 'Painting'
+        @view.setupVideoView()
+        @VideoView.called.should.not.be.ok
+      it 'inits a video view for video artworks', ->
+        @view.artwork.set category: 'Video', website: 'youtube.com/foobar'
+        @view.setupVideoView()
+        @VideoView.called.should.be.ok
 
     describe '#selectEdition', ->
       it 'sets a private value on the view that is otherwise undefined', ->
