@@ -28,12 +28,6 @@ describe 'VideoView', ->
 
   describe '#initialize', ->
 
-    it 'doesnt do anything for non-video artworks', ->
-      @artwork.set category: 'Painting'
-      @view.render = sinon.stub()
-      @view.initialize({ artwork: @artwork })
-      @view.render.called.should.not.be.ok
-
     it 'doesnt do anything for artworks without a website', ->
       @artwork.set website: ''
       @view.render = sinon.stub()
