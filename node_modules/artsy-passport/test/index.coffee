@@ -192,3 +192,25 @@ describe 'Artsy Passport methods', ->
     it 'logs in a user if they pass their access token as a header', ->
       @headerLogin @req, @res, @next
       @req.login.args[0][0].get('accessToken').should.equal 'access-foo-token'
+
+  describe '#logout', ->
+    beforeEach ->
+      @artsyPassport.__set__ 'request', del: @del = sinon.stub().returns(send: @send = sinon.stub().returns(end: (cb) -> cb()))
+      @logout = @artsyPassport.__get__ 'logout'
+      @req = { query: {}, get: (-> 'access-foo-token'), logout: sinon.stub(), user: {get: -> 'secret'} }
+      @res = { send: sinon.stub() }
+      @next = sinon.stub()
+
+    it 'logs out, deletes the auth token, and redirects home', ->
+      @logout @req, @res, @next
+      @req.logout.called.should.be.true
+      @del.args[0][0].should.containEql '/api/v1/access_token'
+      @send.args[0][0].should.eql access_token: 'secret'
+      @next.called.should.be.true
+
+    it 'still works if there is no access token', ->
+      @req.user = undefined
+      @logout @req, @res, @next
+      @req.logout.called.should.be.true
+      @del.called.should.not.be.ok
+      @next.called.should.be.true

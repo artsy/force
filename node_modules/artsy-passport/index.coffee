@@ -28,6 +28,7 @@ opts =
   twitterCallbackPath: '/users/auth/twitter/callback'
   facebookCallbackPath: '/users/auth/facebook/callback'
   twitterLastStepPath: '/users/auth/twitter/email'
+  logoutPath: '/users/sign_out'
   userKeys: ['id', 'type', 'name', 'email', 'phone', 'lab_features',
              'default_profile_id', 'has_partner_access', 'collector_level']
   twitterSignupTempEmail: (token) ->
@@ -59,6 +60,7 @@ initApp = ->
   app.get opts.twitterCallbackPath, socialAuth('twitter'), socialSignup('twitter')
   app.get opts.facebookCallbackPath, socialAuth('facebook'), socialSignup('facebook')
   app.get opts.twitterLastStepPath, loginBeforeTwitterLastStep
+  app.get opts.logoutPath, logout
   app.post opts.twitterLastStepPath, submitTwitterLastStep
   app.use headerLogin
   app.use addLocals
@@ -275,6 +277,21 @@ accessTokenCallback = (done, params) ->
     else
       console.warn "Error requesting an access token from Artsy: " + res?.text
       done err
+
+destroyAccessToken = (req, res, next) ->
+  accessToken = req.user?.get('accessToken')
+  if accessToken
+    request
+      .del("#{opts.SECURE_ARTSY_URL}/api/v1/access_token")
+      .send(access_token: accessToken)
+      .end (res) ->
+        next()
+  else
+    next()
+
+logout = (req, res, next) ->
+  req.logout()
+  destroyAccessToken(req, res, next)
 
 #
 # Serialize user by fetching and caching user data in the session.
