@@ -70,8 +70,7 @@ setup = (app) ->
   app.get '/personalize', (req, res) ->
     res.redirect '/' unless req.user?
     res.send 'Personalize Flow for ' + req.user.get('name')
-  app.get '/logout', (req, res) ->
-    req.logout()
+  app.get '/users/sign_out', (req, res) ->
     res.redirect '/'
 
   return unless module is require.main

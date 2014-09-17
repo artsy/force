@@ -21,15 +21,15 @@ sf:
 
 # Start the server pointing to staging
 ss:
-	APPLICATION_NAME=force-staging API_URL=http://stagingapi.artsy.net foreman start
+	APPLICATION_NAME=force-staging API_URL=https://stagingapi.artsy.net foreman start
 
 # Start the server pointing to production
 sp:
-	APPLICATION_NAME=force-production API_URL=http://api.artsy.net foreman start
+	APPLICATION_NAME=force-production API_URL=https://api.artsy.net foreman start
 
 # Start server pointing to production with cache
 spc:
-	REDIS_URL=http://localhost:6379 APPLICATION_NAME=force-production API_URL=http://api.artsy.net foreman start
+	REDIS_URL=http://localhost:6379 APPLICATION_NAME=force-production API_URL=https://api.artsy.net foreman start
 
 # Start server in debug mode pointing to staging & open node inspector
 ssd:
