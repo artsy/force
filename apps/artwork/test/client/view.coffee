@@ -234,7 +234,7 @@ describe 'ArtworkView', ->
         @view.artwork.set category: 'Painting'
         @view.setupVideoView()
         @VideoView.called.should.not.be.ok
-      it 'inits a video view for view artworks', ->
+      it 'inits a video view for video artworks', ->
         @view.artwork.set category: 'Video', website: 'youtube.com/foobar'
         @view.setupVideoView()
         @VideoView.called.should.be.ok
