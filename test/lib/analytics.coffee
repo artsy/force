@@ -20,13 +20,15 @@ describe 'analytics', ->
     beforeEach ->
       sd.MIXPANEL_ID = 'mix that panel'
       sd.GOOGLE_ANALYTICS_ID = 'goog that analytics'
+      sd.SNOWPLOW_COLLECTOR_HOST = 'plow that snow'
       @mixpanelStub = { get_property: sinon.stub(), register_once: sinon.stub() }
       @mixpanelStub.track = sinon.stub()
       @mixpanelStub.register = sinon.stub()
       @mixpanelStub.init = sinon.stub()
+      @snowplowStub = sinon.stub()
 
       @gaStub = sinon.stub()
-      analytics mixpanel: @mixpanelStub, ga: @gaStub, location: { pathname: 'foobar' }
+      analytics mixpanel: @mixpanelStub, ga: @gaStub, location: { pathname: 'foobar' }, snowplow: @snowplowStub
 
     describe 'initialize function', ->
 
@@ -71,7 +73,8 @@ describe 'analytics', ->
             $: benv.require 'jquery'
             ga: @gaStub
             mixpanel: @mixpanelStub
-          rewiredAnalytics mixpanel: @mixpanelStub, ga: @gaStub, location: { pathname: 'foobar' }
+            snowplow: @snowplowStub
+          rewiredAnalytics mixpanel: @mixpanelStub, ga: @gaStub, location: { pathname: 'foobar' }, snowplow: @snowplowStub
           done()
 
       afterEach ->
@@ -129,18 +132,26 @@ describe 'analytics', ->
           sd.CURRENT_USER = { type: 'Admin' }
           rewiredAnalytics.registerCurrentUser()
           @mixpanelStub.register.args.length.should.equal 0
+          @snowplowStub.args.length.should.equal 0
 
         it 'Tracks normal users', ->
-          sd.CURRENT_USER = { type: 'User' }
+          sd.CURRENT_USER = { type: 'User', id: 'Driver' }
           rewiredAnalytics.registerCurrentUser()
           @mixpanelStub.register.args.length.should.equal 1
           @mixpanelStub.register.args[0][0]['User Type'].should.equal 'Logged In'
+          @snowplowStub.args[0][0].should.equal 'setUserId'
+          @snowplowStub.args[0][1].should.equal 'Driver'
 
         it 'Tracks logged out users', ->
           sd.CURRENT_USER = null
           rewiredAnalytics.registerCurrentUser()
           @mixpanelStub.register.args.length.should.equal 1
           @mixpanelStub.register.args[0][0]['User Type'].should.equal 'Logged Out'
+
+        it "Doesn't include artsy user_id for logged out users", ->
+          sd.CURRENT_USER = null
+          rewiredAnalytics.registerCurrentUser()
+          @snowplowStub.args.length.should.equal 0
 
       describe '#multi', ->
 
@@ -290,3 +301,4 @@ describe 'analytics', ->
       it 'doesnt let failed analytics mess up js code', ->
         analytics mixpanel: null, ga: null, location: { pathname: 'foobar' }
         analytics.trackPageview()
+        analytics.snowplowStruct()

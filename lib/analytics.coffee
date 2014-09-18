@@ -31,6 +31,11 @@ module.exports.trackPageview = =>
 
   @ga? 'send', 'pageview'
 
+module.exports.snowplowStruct = (category, action, label, property, value, contexts) ->
+  # in general: https://github.com/snowplow/snowplow/wiki/2-Specific-event-tracking-with-the-Javascript-tracker#custom-structured-events
+  # contexts json: http://snowplowanalytics.com/blog/2014/01/27/snowplow-custom-contexts-guide/#contexts
+  snowplow?('trackStructEvent', category, action, label, property, value, contexts)
+
 # Delta tracking pixel
 module.exports.delta = (event, data, el) ->
   data.name = event
@@ -47,6 +52,7 @@ module.exports.registerCurrentUser = ->
 
   ga?('set', 'dimension1', userType)
   mixpanel?.register "User Type": userType
+  snowplow?('setUserId', sd.CURRENT_USER?.id) if sd.CURRENT_USER?
 
 # This basically just sets some defaults loosely based on the
 # Analytics wrapper class from Gravity
