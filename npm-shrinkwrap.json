@@ -8,12 +8,12 @@
     },
     "artsy-backbone-mixins": {
       "version": "0.0.17",
-      "from": "artsy-backbone-mixins@git://github.com/artsy/artsy-backbone-mixins.git",
-      "resolved": "git://github.com/artsy/artsy-backbone-mixins.git#cd59b941b7ae94d6cdca7418f2d19f8810a81476",
+      "from": "git://github.com/artsy/artsy-backbone-mixins.git",
+      "resolved": "git://github.com/artsy/artsy-backbone-mixins.git#e9c1067e81cc297b0dab5915addc63f01419a66b",
       "dependencies": {
         "marked": {
           "version": "0.3.2",
-          "from": "marked@*"
+          "from": "marked@0.3.2"
         }
       }
     },
