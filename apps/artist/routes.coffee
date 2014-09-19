@@ -1,6 +1,10 @@
 Backbone = require 'backbone'
 Artist = require '../../models/artist'
-{ stringifyJSONForWeb } = require '../../components/util/json.coffee'
+{ stringifyJSONForWeb } = require '../../components/util/json'
+
+@tab = (req, res) =>
+  req.params.tab = res.locals.sd.CURRENT_PATH.split('/').pop()
+  @index req, res
 
 @index = (req, res) ->
   sort = req.query.sort
@@ -8,13 +12,15 @@ Artist = require '../../models/artist'
   new Artist(id: req.params.id).fetch
     cache: true
     success: (artist) ->
-      if artist.href() == res.locals.sd.CURRENT_PATH
+      if req.params.tab? or artist.href() is res.locals.sd.CURRENT_PATH
         res.locals.sd.ARTIST = artist.toJSON()
-        res.locals.sd.sortBy = sort
+        res.locals.sd.TAB = req.params.tab
+        res.locals.sd.SORT_BY = sort
         res.render 'index',
           artist: artist
           sortBy: sort
           jsonLD: stringifyJSONForWeb(artist.toJSONLD())
+          tab: req.params.tab
       else
         res.redirect artist.href()
     error: res.backboneError
