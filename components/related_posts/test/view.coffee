@@ -5,7 +5,7 @@ sinon = require 'sinon'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
 CurrentUser = require '../../../models/current_user'
-Post = require '../../../models/post'
+Posts = require '../../../collections/posts'
 
 describe 'RelatedPostsView', ->
   before (done) ->
@@ -25,24 +25,16 @@ describe 'RelatedPostsView', ->
       fabricate 'post', id: 'bitty-the-queen', title: 'Bitty is the best cat', attachments: [fabricate 'artwork_image', type: 'PostImage']
       fabricate 'post', id: 'lame-no-image', title: 'Lame no image'
     ]
-    @collection = new Backbone.Collection [], model: Post
+    @collection = new Posts
     @view = new @RelatedPostsView collection: @collection, numToShow: 1
     done()
 
   afterEach ->
     Backbone.sync.restore()
 
-  describe '#initialize', ->
-    it 'fetches the collection', ->
-      Backbone.sync.called.should.be.true
-
   describe '#render', ->
-    it 'doesnt render anything if there are no results', ->
-      Backbone.sync.args[0][2].success []
-      @view.$el.html().should.be.empty
-
     it 'renders the right content', ->
-      Backbone.sync.args[0][2].success @response
+      @collection.reset @response, parse: true
       @collection.trigger 'sync'
       html = @view.$el.html()
       html.should.containEql 'href="/post/cats-rule-dogs-drool-literally"'
