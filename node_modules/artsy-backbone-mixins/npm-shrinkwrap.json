@@ -1,0 +1,20 @@
+{
+  "name": "artsy-backbone-mixins",
+  "version": "0.0.17",
+  "dependencies": {
+    "backbone": {
+      "version": "1.1.2",
+      "from": "backbone@*",
+      "resolved": "http://registry.npmjs.org/backbone/-/backbone-1.1.2.tgz"
+    },
+    "marked": {
+      "version": "0.3.2",
+      "from": "marked@*"
+    },
+    "underscore": {
+      "version": "1.7.0",
+      "from": "underscore@*",
+      "resolved": "http://registry.npmjs.org/underscore/-/underscore-1.7.0.tgz"
+    }
+  }
+}
