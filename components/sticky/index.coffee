@@ -1,3 +1,4 @@
+_ = require 'underscore'
 { isTouchDevice } = require '../util/device.coffee'
 
 module.exports = class Sticky
@@ -7,10 +8,11 @@ module.exports = class Sticky
     require './vendor/stickyfill.js'
 
   add: ($el) ->
-    return unless $el.length
-    return if $el.height() > @visibleArea()
-    @native $el
-    Stickyfill.add $el[0]
+    _.defer =>
+      return unless $el.length
+      return if $el.height() > @visibleArea()
+      @native $el
+      Stickyfill.add $el[0]
 
   native: ($el) ->
     $el.attr 'style', "position: -webkit-sticky; position: sticky; top: #{@viewportTop()}px"
@@ -23,3 +25,7 @@ module.exports = class Sticky
 
   viewportTop: ->
     if isTouchDevice() then 0 else @headerHeight()
+
+  # Yearn for method_missing
+  rebuild: ->
+    Stickyfill?.rebuild()
