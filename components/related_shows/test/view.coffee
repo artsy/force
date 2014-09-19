@@ -29,7 +29,7 @@ describe 'RelatedShowsView', ->
   describe 'has a single show', ->
     beforeEach (done) ->
       @show = fabricate 'show'
-      Backbone.sync.args[0][2].success [@show]
+      @artist.relatedShows.reset [@show], parse: true
       @view.collection.trigger 'sync'
       done()
 
@@ -46,7 +46,7 @@ describe 'RelatedShowsView', ->
         fabricate 'show'
         fabricate 'show'
       ]
-      Backbone.sync.args[0][2].success @shows
+      @artist.relatedShows.reset @shows, parse: true
       @view.collection.trigger 'sync'
       done()
 
