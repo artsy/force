@@ -28,3 +28,18 @@ spinner(width=25px, height=6px, color=black)
 .loading-spinner-small-white
   @extends .loading-spinner-small
   background white
+
+@keyframes fade
+  0%
+    opacity 0
+  50%
+    opacity 1
+  100%
+    opacity 0
+
+.loading-ellipsis > span
+  letter-spacing 2px
+  for i in 1 2 3
+    &:nth-child({i})
+      animation fade 1s infinite
+      animation-delay i * 0.2s
