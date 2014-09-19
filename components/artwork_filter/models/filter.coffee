@@ -11,8 +11,7 @@ module.exports = class Filter
   booleans:
     'for-sale': price_range: '-1:1000000000000'
 
-  constructor: (options = {}) ->
-    { @model } = options
+  constructor: ({ @model } = {}) ->
     throw new Error 'Requires a model' unless @model?
     @selected = new Selected
     @filterStates = new FilterStates
