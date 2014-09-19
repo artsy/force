@@ -1,7 +1,7 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
-Backbone = require 'backbone'
 sd = require('sharify').data
+Backbone = require 'backbone'
 Artworks = require '../collections/artworks.coffee'
 { Markdown } = require 'artsy-backbone-mixins'
 { Image } = require 'artsy-backbone-mixins'
@@ -28,40 +28,35 @@ module.exports = class Artist extends Backbone.Model
 
   initialize: ->
     @relatedArtists = new Backbone.Collection [], model: Artist
-    @relatedArtists.url = "#{sd.API_URL}/api/v1/related/layer/main/artists"
+    @relatedArtists.url = "#{sd.API_URL}/api/v1/related/layer/main/artists?artist[]=#{@id}&exclude_artists_without_artworks=true"
     @relatedContemporary = new Backbone.Collection [], model: Artist
-    @relatedContemporary.url = "#{sd.API_URL}/api/v1/related/layer/contemporary/artists"
-    @relatedPosts = new Backbone.Collection [], model: require('./post.coffee')
-    @relatedPosts.url = "#{sd.API_URL}/api/v1/related/posts?artist[]=#{@id}"
-    @relatedShows = new Backbone.Collection [], model: require('./partner_show.coffee')
-    @relatedShows.url = "#{sd.API_URL}/api/v1/related/shows?artist[]=#{@id}&sort=-end_at"
-    @artworks = new Artworks
-    @artworks.url = "#{@url()}/artworks"
+    @relatedContemporary.url = "#{sd.API_URL}/api/v1/related/layer/contemporary/artists?artist[]=#{@id}&exclude_artists_without_artworks=true"
 
-  fetchArtworks: (options={}) ->
-    # Always include published=true
-    # The api returns unpublised works for admins and gallery partners but we do not want to display them
-    options.data ||= {}
-    options.data.published = true
+    Posts = require '../collections/posts.coffee'
+    @relatedPosts = new Posts
+    @relatedPosts.url = "#{sd.API_URL}/api/v1/related/posts?artist[]=#{@id}"
+
+    PartnerShows = require '../collections/partner_shows.coffee'
+    @relatedShows = new PartnerShows
+    @relatedShows.url = "#{sd.API_URL}/api/v1/related/shows?artist[]=#{@id}&sort=-end_at"
+
+    @artworks = new Artworks
+    @artworks.url = "#{@url()}/artworks?published=true"
+
+  fetchArtworks: (options = {}) ->
     @artworks.fetch options
 
   fetchRelatedArtists: (type, options = {}) ->
     @["related#{type}"].fetch _.extend
       remove: false
-      data: _.defaults (options.data ? {}),
-        size: 5
-        'artist[]': @get 'id'
-        'exclude_artists_without_artworks': true
+      data: _.defaults (options.data ? {}), size: 5
     , options
 
-  fetchPosterArtwork: (options) ->
+  fetchPosterArtwork: ->
     @fetchArtworks
-      data:
-        page: 1
-        size: 1
+      data: page: 1, size: 1
       success: (artworks) =>
-        @set { poster_artwork: artworks.models[0] }
-        @
+        @set poster_artwork: artworks.models[0]
 
   toPageTitle: ->
     # A/B test artist page titles

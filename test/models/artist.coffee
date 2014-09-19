@@ -30,13 +30,11 @@ describe 'Artist', ->
 
     it 'fetches the artists artworks and adds published=true', ->
       @artist.fetchArtworks()
-      _.last(Backbone.sync.args)[1].url.should.containEql "artist/#{@artist.get 'id'}/artworks"
-      _.last(Backbone.sync.args)[2].data.published.should == true
+      _.last(Backbone.sync.args)[1].url.should.containEql "artist/#{@artist.get 'id'}/artworks?published=true"
 
     it 'fetches the artists artworks and adds published=true', ->
       @artist.fetchArtworks({ success: sinon.stub() })
-      _.last(Backbone.sync.args)[1].url.should.containEql "artist/#{@artist.get 'id'}/artworks"
-      _.last(Backbone.sync.args)[2].data.published.should == true
+      _.last(Backbone.sync.args)[1].url.should.containEql "artist/#{@artist.get 'id'}/artworks?published=true"
 
   describe '#validSort', ->
 
