@@ -5,6 +5,11 @@ Backbone = require 'backbone'
 routes = require '../routes'
 CurrentUser = require '../../../models/current_user.coffee'
 Artist = require '../../../models/artist.coffee'
+sections = require '../sections'
+
+describe 'sections', ->
+  it 'returns the correct tab slugs in the correct order', ->
+    sections.should.eql ['works', 'posts', 'shows', 'related-artists']
 
 describe 'Artist routes', ->
 
@@ -32,13 +37,13 @@ describe 'Artist routes', ->
     it 'makes the right API call using the passed in sort', ->
       routes.index @req, @res
       _.last(Backbone.sync.args)[2].success fabricate 'artist', id: 'andy-foobar'
-      @res.locals.sd.sortBy.should.equal '-published_at'
+      @res.locals.sd.SORT_BY.should.equal '-published_at'
 
     it 'sets the default sort if not a valid sort', ->
       @req.query.sort = 'bogus'
       routes.index @req, @res
       _.last(Backbone.sync.args)[2].success fabricate 'artist', id: 'andy-foobar'
-      @res.locals.sd.sortBy.should.equal ''
+      @res.locals.sd.SORT_BY.should.equal ''
 
     it 'redirects to canonical url', ->
       @res.locals.sd.CURRENT_PATH = '/artist/bar'

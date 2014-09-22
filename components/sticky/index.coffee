@@ -26,6 +26,5 @@ module.exports = class Sticky
   viewportTop: ->
     if isTouchDevice() then 0 else @headerHeight()
 
-  # Yearn for method_missing
   rebuild: ->
     Stickyfill?.rebuild()

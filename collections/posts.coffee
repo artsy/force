@@ -8,4 +8,5 @@ module.exports = class Posts extends Backbone.Collection
   parse: (response) ->
     _.filter response, (obj) ->
       post = new Post obj
-      post.defaultImage()?.imageUrlForMaxSize?()
+      # Specs for these collection filters?
+      post.defaultImage()?.imageUrlForMaxSize?()?

@@ -11,7 +11,7 @@ describe 'ArtistData', ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'
       Backbone.$ = $
-      @artist = new Artist fabricate 'artist'
+      @artist = new Artist fabricate 'artist', id: 'foobar'
       done()
 
   after ->
@@ -39,11 +39,11 @@ describe 'ArtistData', ->
       Backbone.sync.callCount.should.equal 5
       urls = _.pluck(_.map(Backbone.sync.args, (args) -> args[1]), 'url')
       urls.should.eql [
-        'undefined/api/v1/artist/pablo-picasso1/artworks?published=true'
-        'undefined/api/v1/related/posts?artist[]=pablo-picasso1'
-        'undefined/api/v1/related/shows?artist[]=pablo-picasso1&sort=-end_at'
-        'undefined/api/v1/related/layer/main/artists?artist[]=pablo-picasso1&exclude_artists_without_artworks=true'
-        'undefined/api/v1/related/layer/contemporary/artists?artist[]=pablo-picasso1&exclude_artists_without_artworks=true'
+        'undefined/api/v1/artist/foobar/artworks?published=true'
+        'undefined/api/v1/related/posts?artist[]=foobar'
+        'undefined/api/v1/related/shows?artist[]=foobar&sort=-end_at'
+        'undefined/api/v1/related/layer/main/artists?artist[]=foobar&exclude_artists_without_artworks=true'
+        'undefined/api/v1/related/layer/contemporary/artists?artist[]=foobar&exclude_artists_without_artworks=true'
       ]
       data = _.pluck(_.map(Backbone.sync.args, (args) -> args[2]), 'data')
       data.should.eql [
