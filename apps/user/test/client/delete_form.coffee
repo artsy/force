@@ -60,7 +60,7 @@ describe 'UserDeleteForm', ->
         @flashStub.called.should.be.false
         @view.$button.click()
         @flashStub.called.should.be.true
-        @flashStub.args[0][0].message.should.containEql '/users/sign_out'
+        @flashStub.args[0][0].href.should.eql '/users/sign_out'
         @flashStub.args[0][0].message.should.containEql 'Your account has been deleted, click here to continue'
 
     describe 'error', ->
