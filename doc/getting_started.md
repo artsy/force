@@ -1,12 +1,6 @@
 # Getting Started with Force
 
-*Force* is the codename for the desktop web app found at artsy.net.
-
-Before you can set up Force for development you will want to set up [Gravity](https://github.com/artsy/gravity) which will provide the Artsy API Force consumes. This doc will assume you've set up XCode and common development tools after getting started with Gravity.
-
-## Ezel
-
-Read up on [Ezel](http://ezeljs.com/) and familarize yourself with Force concepts by understanding the foundation it was built on.
+*Force* is the codename for the desktop web app found at artsy.net. This doc will assume you've set up XCode and common development tools.
 
 ## Install Node.js
 
@@ -30,11 +24,29 @@ Then tell nvm to use the latest version of node by default and to update your PA
 nvm alias default 0.10
 ````
 
-## Install Node Modules
+## Install the Heroku Toolbelt
+
+Visit the [Heroku Toolbelt website](https://toolbelt.heroku.com/) and install the package. This will let you manage staging/production and gives us [Foreman](https://github.com/ddollar/foreman).
+
+## Download the .env file
+
+Force uses a .env file & Foreman to store sensitive config (allowing it to be open source). We have a private force_env.env gist under the Artsy IT Github account. Log in to gists.github.com as Artsy IT to find it, or ask someone on Slack for a link. Once you find the gist write a .env file and copy + paste the env variables into it.
+
+## Run the Server
+
+Force uses [Gravity](http://github.com/artsy/gravity)'s API. Simply run
 
 ````
-npm install
+make ss
 ````
+
+to point to use Gravity's staging API.
+
+-------
+
+## Optional
+
+### Global Node Modules
 
 Although not necessary, it's recommended to install mocha and coffeescript globally for debugging.
 
@@ -43,18 +55,10 @@ npm install mocha -g
 npm install coffee-script -g
 ````
 
-## Run the Server
+### Local Gravity
 
-Make sure Gravity is running on localhost:3000, then run the server, and open force at [localhost:3004](http://localhost:3004).
+ Follow Gravity's [getting started](https://github.com/artsy/gravity/blob/master/doc/GettingStarted.md) to set it up locally and run on `http://localhost:3000`. Then run Force via `foreman start`.
 
-````
-make s
-````
+### Code auto-reloading
 
-Client-side code and templates will automatically reload on page refresh, but server-side code will not automatically reload without restarting the server. If you would like to watch for file changes and restart the server nodemon is a very popular tool.
-
-````
-npm install coffeee-script -g
-npm install nodemon -g
-nodemon index.coffee
-````
+Client-side code reloads on refresh, however server-side code doesn't come with the nice auto-code-reload stuff you might be used to in Rails. Node's recommended solution is a watcher tool like [nodemon](https://github.com/remy/nodemon). Use at your own risk/convenience.
