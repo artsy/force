@@ -17,7 +17,7 @@ module.exports = class RelatedPostsView extends Backbone.View
   filterPosts: (collection, response, options) =>
     xs = collection.filter (post) ->
       # Remove posts without images
-      post.defaultImage()?.imageUrlForMaxSize()?
+      post.defaultImage()?.imageUrlForMaxSize?()?
     @collection.reset xs
 
   showAll: (e) ->
