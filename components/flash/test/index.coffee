@@ -67,6 +67,14 @@ describe 'FlashMessage', ->
           done()
       @flash.$el.click()
 
+    it 'redirects if an href is present', (done) ->
+      flash = new FlashMessage message: 'A caesura', href: '/something/else', autoclose: false
+      @flash.$el.on 'transitionend', ->
+        _.defer ->
+          window.location.should.equal '/something/else'
+          done()
+      @flash.$el.click()
+
   describe '#update', ->
     beforeEach ->
       @flash = new FlashMessage message: 'Goodbye world.'

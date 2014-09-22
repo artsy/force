@@ -5,7 +5,6 @@ mediator = require '../../lib/mediator.coffee'
 module.exports = class FlashMessage extends Backbone.View
   container: '#main-layout-flash'
   className: 'fullscreen-flash-message'
-
   visibleDuration: 2000
 
   events:
@@ -15,16 +14,12 @@ module.exports = class FlashMessage extends Backbone.View
 
   initialize: (options = {}) ->
     throw new Error('You must pass a message option') unless options.message
-
-    { @message, @autoclose } = _.defaults options, autoclose: true
-
+    { @message, @autoclose, @href } = _.defaults options, autoclose: true
     mediator.on 'flash:close', @close, this
-
     @open()
 
   open: ->
     @setup()
-
     # Check for existing flash message and only
     # start a timer if there isn't one on screen
     # (and autoclose option is true)
@@ -33,10 +28,8 @@ module.exports = class FlashMessage extends Backbone.View
 
   setup: ->
     if @empty()
-      @$el.html @template(message: @message)
-      @$container.html @$el
+      @$container.html @render().$el
       _.defer => @$el.attr 'data-state', 'open'
-
     # If there already is a flash message on screen
     # Take over its el then update the message
     else
@@ -54,14 +47,21 @@ module.exports = class FlashMessage extends Backbone.View
 
   update: (message) ->
     @message = message
+    @render()
+
+  render: ->
     @$el.html @template(message: @message)
+    this
+
+  maybeRedirect: ->
+    window.location = @href if @href
 
   close: =>
     mediator.off null, null, this
-
     @$el.
       attr('data-state', 'closed').
       one($.support.transition.end, =>
         @remove()
         @stopTimer()
+        @maybeRedirect()
       ).emulateTransitionEnd 500

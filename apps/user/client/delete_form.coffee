@@ -53,7 +53,10 @@ module.exports = class UserDeleteForm extends Backbone.View
         explanation: @$explanation.val()
         url: '/user/delete'
       success: =>
-        new FlashMessage message: "<a href='/users/sign_out'>Your account has been deleted, click here to continue</a>.", autoclose: false
+        new FlashMessage
+          message: 'Your account has been deleted, click here to continue'
+          href: '/users/sign_out'
+          autoclose: false
       error: =>
         @$errors.html errorMessage
       complete: =>
