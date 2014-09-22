@@ -40,7 +40,7 @@ Force uses [Gravity](http://github.com/artsy/gravity)'s API. Simply run
 make ss
 ````
 
-to point to use Gravity's staging API.
+to start Force pointing to Gravity's staging API.
 
 -------
 
