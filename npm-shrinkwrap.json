@@ -28,13 +28,14 @@
       "resolved": "https://registry.npmjs.org/artsy-gemini-upload/-/artsy-gemini-upload-0.0.6.tgz"
     },
     "artsy-passport": {
-      "version": "0.1.7",
+      "version": "0.1.8",
       "from": "git://github.com/artsy/artsy-passport.git",
-      "resolved": "git://github.com/artsy/artsy-passport.git#ef55e3d17fd603c0edf80a890a773a7835f68644",
+      "resolved": "git://github.com/artsy/artsy-passport.git#f581fa4c69270629ce13d71a39f3bd59589bfad2",
       "dependencies": {
         "passport": {
           "version": "0.2.1",
           "from": "passport@0.2.1",
+          "resolved": "http://registry.npmjs.org/passport/-/passport-0.2.1.tgz",
           "dependencies": {
             "passport-strategy": {
               "version": "1.0.0",

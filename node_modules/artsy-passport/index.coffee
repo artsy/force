@@ -278,12 +278,12 @@ accessTokenCallback = (done, params) ->
       console.warn "Error requesting an access token from Artsy: " + res?.text
       done err
 
-destroyAccessToken = (req, res, next, accessToken) ->
+destroyAccessToken = (next, accessToken) ->
   if accessToken
     request
       .del("#{opts.SECURE_ARTSY_URL}/api/v1/access_token")
       .send(access_token: accessToken)
-      .end (res) ->
+      .end (error, response) ->
         next()
   else
     next()
@@ -291,7 +291,7 @@ destroyAccessToken = (req, res, next, accessToken) ->
 logout = (req, res, next) ->
   accessToken = req.user?.get('accessToken')
   req.logout()
-  destroyAccessToken(req, res, next, accessToken)
+  destroyAccessToken(next, accessToken)
 
 #
 # Serialize user by fetching and caching user data in the session.
