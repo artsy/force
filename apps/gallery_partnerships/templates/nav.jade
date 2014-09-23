@@ -1,0 +1,8 @@
+nav.gallery-partnerships-section-nav
+  for section, i in sections
+    a.gallery-partnerships-nav-link(
+      data-index=i
+      href="/gallery-partnerships/#{section.slug}"
+      class=(i === sections.length - 1 ? 'avant-garde-button-black is-small' : undefined)
+    )
+      span= section.title

@@ -1,0 +1,166 @@
+@import '../components/grid'
+@import '../../../components/stylus_lib'
+
+container-width = 1120px
+container-margin = 100px
+section-margin-bottom = 120px
+hero-unit-height = 435px
+
+.gallery-partnerships-container
+  width container-width
+  margin container-margin auto
+  font-size 18px
+  line-height 28px
+
+.gallery-partnerships-hero-unit-header
+  margin-bottom 30px
+  .grid-item
+    vertical-align baseline
+
+.gallery-partnerships-hero-unit-image
+  height hero-unit-height
+  display none
+  &.is-active
+    display block
+
+.gallery-partnerships-section
+.gallery-partnerships-section-nav
+  margin-bottom section-margin-bottom
+
+.gallery-partnerships-section-nav
+  display flex
+  justify-content space-between
+  padding 20px 0
+
+.gallery-partnerships-nav-link
+  avant-garde()
+  text-decoration none
+  font-size 13px
+  line-height 1
+  padding 10px
+
+.gallery-partnerships-section-header
+  margin-bottom 60px
+  &.audience
+    position relative
+    z-index 1
+  &.apply
+    text-align center
+    h3
+      margin-bottom 50px
+    .apply-button
+      font-size 30px
+      padding 20px 60px
+  .grid-item
+    vertical-align top
+
+.gallery-partnerships-section-content
+  // Network
+  .support-liaison
+  .network-gallery-info
+    avant-garde()
+    text-align center
+    line-height 1.5em
+    font-size 14px
+    margin 15px 0 10px 0
+  .support-liaison-location
+  .network-gallery-location
+    color gray-dark-color
+
+  // Audience
+  &.audience
+    position relative
+    height 475px - section-margin-bottom
+  .audience-map
+  .audience-quotes
+    position absolute
+    width 100%
+  .audience-map
+    height 475px
+    top -120px
+    z-index 0
+  .audience-quotes
+    bottom 0
+    z-index 1
+
+  // Brwoser images carousel
+  .browser-images-container
+    position relative
+    width 75%
+    margin 0 auto
+  .browser-frame, .browser-images
+    &, img
+      width 100%
+  .browser-images
+    position absolute
+    top 23px
+    padding 3px
+  .browser-image
+    display none
+    &.is-active
+      display block
+
+  .ipad-images-container
+  .iphone-images-container
+    display inline-block
+  .ipad-images-container
+    width 60%
+  .iphone-images-container
+    margin 0 10% 2%
+    width 15%
+  .ipad-images
+    top 0
+    padding 30px 60px
+  .iphone-images
+    top 0
+    padding 42px 11px
+
+  // Support
+  .support-liaisons
+    display flex
+    justify-content space-between
+    margin-bottom 50px
+  .support-liaison
+    width 13%
+    img
+      width 100%
+      margin-bottom 10px
+  .support-quotes
+    width 75%
+    margin 0 auto
+
+  // Quotes
+  .quote
+    &:before
+      content ''
+      width 50%
+      border-top 2px solid gray-darkest-color
+      display inline-block
+  .quote-text
+    &:before
+      content "\201C"
+    &:after
+      content "\201D"
+  .quote-author
+    margin-top 10px
+    font-style italic
+    &:before
+      content "\2013"
+
+.body-gallery-partnerships
+  h1
+    font-size 72px
+  h2, h3
+    font-size 42px
+    line-height 1.15em
+  h2
+    font-style italic
+    &:after
+      content: "\2014"
+  #main-layout-header
+    position absolute
+  #main-layout-container
+    margin-top 0 !important
+    height 100% !important
+  #main-layout-footer
+    display none
