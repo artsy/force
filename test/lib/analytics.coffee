@@ -13,9 +13,11 @@ describe 'analytics', ->
 
     before ->
       sinon.stub(analytics, 'getUserAgent').returns "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.102 Safari/537.36"
+      @clock = sinon.useFakeTimers();
 
     after ->
       analytics.getUserAgent.restore()
+      @clock.restore()
 
     beforeEach ->
       sd.MIXPANEL_ID = 'mix that panel'
