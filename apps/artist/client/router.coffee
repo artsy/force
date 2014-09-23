@@ -50,14 +50,22 @@ module.exports = class ArtistRouter extends Backbone.Router
     # the artist data is synced
     if @data.synced
       @headerView.renderNav()
-      @setSection()
+      @options.section = @getSection()
+      # Abort route and redirect to overview if the section isn't in the returns
+      return @navigateToOverview() unless @validSection(@options.section)
       super # Route handler
       @renderCurrentView()
 
-  setSection: ->
+  validSection: (section) ->
+    _.contains @data.returns, section
+
+  navigateToOverview: ->
+    @navigate "artist/#{@model.id}", trigger: true
+
+  getSection: ->
     slug = _.last(Backbone.history.fragment.split '/')
     slug = '' if slug is @model.id
-    @options.section = _.findWhere @data.sections, slug: slug
+    _.findWhere @data.sections, slug: slug
 
   renderCurrentView: ->
     (@$content ?= $('#artist-page-content'))
