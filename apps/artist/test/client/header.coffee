@@ -44,6 +44,31 @@ describe 'HeaderView', ->
       _.findWhere(navData, rel: 'prev').name.should.equal 'Works'
       _.findWhere(navData, rel: 'next').name.should.equal 'Shows'
 
+  describe '#updateTags', ->
+    before ->
+      $('body').prepend @$head = $('<head></head>')
+
+    it 'updates the "next" and "rel" tags', ->
+      # Navigate to 'Overview'
+      Backbone.history.fragment = 'artist/foo-bar'
+      @view.updateHeadTags(@view.navData @view.data.sections)
+      @$head.find('link[rel="next"]').length.should.equal 1
+      @$head.find('link[rel="prev"]').length.should.equal 0
+      @$head.find('link[rel="next"]').attr('href').should.containEql '/artist/foo-bar/works'
+      # Navigate to 'Posts'
+      Backbone.history.fragment = 'artist/foo-bar/posts'
+      @view.updateHeadTags(@view.navData @view.data.sections)
+      @$head.find('link[rel="next"]').length.should.equal 1
+      @$head.find('link[rel="prev"]').length.should.equal 1
+      @$head.find('link[rel="next"]').attr('href').should.containEql '/artist/foo-bar/shows'
+      @$head.find('link[rel="prev"]').attr('href').should.containEql '/artist/foo-bar/works'
+      # Navigate to 'Related Artists'
+      Backbone.history.fragment = 'artist/foo-bar/related-artists'
+      @view.updateHeadTags(@view.navData @view.data.sections)
+      @$head.find('link[rel="next"]').length.should.equal 0
+      @$head.find('link[rel="prev"]').length.should.equal 1
+      @$head.find('link[rel="prev"]').attr('href').should.containEql '/artist/foo-bar/shows'
+
   describe '#renderNav', ->
     beforeEach ->
       @view.data.returns = @view.data.sections
@@ -59,5 +84,3 @@ describe 'HeaderView', ->
         '/artist/foo-bar/related-artists'
       ]
       @view.$nav.find('.is-active').text().should.equal 'Shows'
-      @view.$nav.find('[rel="prev"]').text().should.equal 'Posts'
-      @view.$nav.find('[rel="next"]').text().should.equal 'Related Artists'

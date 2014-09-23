@@ -44,8 +44,16 @@ module.exports = class ArtistHeaderView extends Backbone.View
           clone[i - 1]?.rel = 'prev'
           clone[i + 1]?.rel = 'next'
 
+  updateHeadTags: (sections) ->
+    $tags = _.map ['prev', 'next'], (rel) ->
+      $("link[rel='#{rel}']").remove()
+      if href = _.findWhere(sections, rel: rel)?.href
+        $('<link>').attr rel: rel, href: "#{location.host}/#{href}"
+    (@$head ?= $('head')).append $tags
+
   renderNav: ->
+    @updateHeadTags sections = @navData(@data.returns)
     (@$nav ?= @$('#artist-tabs'))
       .html navTemplate
         artist: @model
-        sections: @navData(@data.returns)
+        sections: sections
