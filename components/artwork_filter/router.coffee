@@ -4,8 +4,7 @@ Backbone = require 'backbone'
 ArtworkFilterView = require './view.coffee'
 
 module.exports = class ArtworkFilterRouter extends Backbone.Router
-
-  ignoredParams = ['utm_source', 'utm_campaign', 'utm_medium']
+  ignoredParams: ['utm_source', 'utm_campaign', 'utm_medium']
 
   initialize: (options = {}) ->
     @view = new ArtworkFilterView options
@@ -24,5 +23,5 @@ module.exports = class ArtworkFilterRouter extends Backbone.Router
     location.search.substring(1)
 
   navigateBasedOnParams: ->
-    params = _.omit(qs.parse(@searchString()), ignoredParams)
+    params = _.omit(qs.parse(@searchString()), @ignoredParams)
     @view.filter.by params unless _.isEmpty(params)

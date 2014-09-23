@@ -16,8 +16,7 @@ module.exports = class FilterState extends Backbone.Model
   url: ->
     "#{API_URL}/api/v1/search/filtered/artist/#{@modelId}/suggest"
 
-  initialize: (attributes, options = {}) ->
-    { @modelId } = options
+  initialize: (attributes, { @modelId }) ->
     throw new Error 'Requires an modelId' unless @modelId?
 
   criteria: ->

@@ -178,8 +178,7 @@ module.exports = class ArtworkView extends Backbone.View
   setupArtistArtworks: ->
     return unless @artist?.get('artworks_count') > 1
     @listenTo @artist.artworks, 'sync', @renderArtistArtworks
-    @artist.artworks.fetch
-      published: true
+    @artist.artworks.fetch()
 
   renderArtistArtworks: ->
     # Ensure the current artwork is not in the collection
@@ -233,13 +232,14 @@ module.exports = class ArtworkView extends Backbone.View
       modelName: 'artwork'
 
   setupRelatedPosts: ->
+    @$('.ari-right').css 'min-height', @$('.ari-left').height()
     @listenTo @artwork.relatedPosts, 'sync', @handlePosts, this
-    new RelatedPostsView
-      el: @$('#artwork-artist-related-posts-container')
-      collection: @artwork.relatedPosts
-      numToShow: 2
-    @$('.ari-right').css
-      'min-height': @$('.ari-left').height()
+    @artwork.relatedPosts.fetch success: =>
+      if @artwork.relatedPosts.length
+        subView = new RelatedPostsView collection: @artwork.relatedPosts, numToShow: 2
+        @$('#artwork-artist-related-posts-container').html subView.render().$el
+      else
+        @$('#artwork-artist-related-posts-container').remove()
 
   handlePosts: ->
     if @$('.ari-left').length < 1 and @artwork.relatedPosts.length < 1

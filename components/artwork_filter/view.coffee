@@ -13,9 +13,9 @@ module.exports = class ArtworkFilterView extends Backbone.View
     'click .artwork-filter-select': 'selectCriteria'
     'click .artwork-filter-remove': 'removeCriteria'
     'click input[type="checkbox"]': 'toggleBoolean'
-    'click #artwork-see-more': 'loadNextPage'
+    'click #artwork-see-more': 'clickSeeMore'
 
-  initialize: ->
+  initialize: ({ @mode }) ->
     @artworks = new ArtworkColumns [], modelId: @model.id
     @filter = new Filter model: @model
 
@@ -48,16 +48,24 @@ module.exports = class ArtworkFilterView extends Backbone.View
   handleFilterState: (eventName) ->
     @handleState @$filter, eventName
   handleArtworksState: (eventName) ->
-    state = @handleState @$columns, eventName
-    @$button?.attr 'data-state', state if state
+    if @mode is 'infinite'
+      @handleState @$button, eventName
+    else
+      state = @handleState @$columns, eventName
+      @$button?.attr 'data-state', state if state
 
   toggleBoolean: (e) ->
     $target = $(e.currentTarget)
     @filter.toggle $target.attr('name'), $target.prop('checked')
     @trigger 'navigate'
 
-  loadNextPage: ->
-    @artworks.nextPage data: @filter.selected.toJSON()
+  clickSeeMore: (e) ->
+    e.preventDefault()
+    @loadNextPage()
+
+  loadNextPage: (options = {}) ->
+    return if @remaining is 0
+    @artworks.nextPage _.defaults(options, data: @filter.selected.toJSON())
 
   fetchArtworks: ->
     @artworks.fetch data: @filter.selected.toJSON()
@@ -92,9 +100,9 @@ module.exports = class ArtworkFilterView extends Backbone.View
 
   setButtonState: ->
     length = @columns?.length() or 0
-    remaining = @filter.get('total') - length
+    @remaining = @filter.get('total') - length
     visibility = if length >= @filter.get('total') then 'hide' else 'show'
-    @$button.text("See More (#{remaining})")[visibility]()
+    @$button.text("See More (#{@remaining})")[visibility]()
 
   renderHeader: ->
     @$header.html headerTemplate(filter: @filter, artist: @model)

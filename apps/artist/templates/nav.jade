@@ -1,0 +1,8 @@
+nav.garamond-tablist
+  for tab, i in sections
+    a.garamond-tab(
+      href='/' + tab.href
+      class=(tab.active ? 'is-active' : '')
+    )= tab.name
+    if i !== sections.length - 1
+      span.garamond-tab-separator

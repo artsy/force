@@ -29,10 +29,8 @@ module.exports = class ArtistFillwidthList extends Backbone.View
     @syncFollowsOnAjaxStop()
 
   renderArtist: (artist, i) =>
-    artist.fetchArtworks
-      data:
-        size: 10
-        published: true
+    artist.artworks.fetch
+      data: size: 10
       success: (artworks) =>
         $row = @$(".artist-fillwidth-list-item[data-id=\"#{artist.get('id')}\"]")
         return $row.remove() if artworks.length is 0

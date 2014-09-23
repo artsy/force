@@ -12,40 +12,9 @@ block body
     //- Rendered client-side
 
   #artist-page.responsive-layout-container: .main-layout-container
-    .ap-grid: for n in [0, 0, 0, 0]
-      .ap-grid-column
-
-    +artist-header(artist)
-
-    #artwork-section
-      //- Temporarily here for supporting the ABC test
-      include fillwidth
-
-    #artist-related-shows-section.artist-related-section
-      h3.artist-related-section-header Shows on Artsy
-      #artist-related-shows.artist-related-section-content
-        //- Rendered client-side
-
-    #artist-related-posts-section.artist-related-section
-      h3.artist-related-section-header Posts about #{artist.get('name')}
-      #artist-related-posts.artist-related-section-content
-        //- Rendered client-side
-
-    if artist.get('auction_lots_count')
-      #artist-related-moreinfo-section.artist-related-section
-        h3.artist-related-section-header More info
-        #artist-related-moreinfo.artist-related-section-content
-          a.faux-underline( href="/artist/#{artist.id}/auction-results" )
-            | Auction Results for #{artist.get('name')}
-
-    #artist-related-artists-section.artist-related-section
-      h3.artist-related-section-header Related Artists
-      #artist-related-artists.artist-related-section-content
-        //- Rendered client-side
-
-    #artist-related-contemporary-section.artist-related-section
-      h3.artist-related-section-header Suggested Contemporary Artists
-      #artist-related-contemporary.artist-related-section-content
-        //- Rendered client-side
+    #artist-page-header: include ./header
+    #artist-page-content.artist-page-content
+      unless tab
+        include ./overview
 
   include ../../../components/main_layout/templates/json_ld

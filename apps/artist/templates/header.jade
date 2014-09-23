@@ -1,43 +1,32 @@
 include ../../../components/share/template
 
-mixin artist-header(artist)
-  header.artist-header
-    h1.avant-garde-header-center= artist.get('name')
+header.artist-header
+  h1.avant-garde-header-center= artist.get('name')
 
-    - var bday = artist.displayNationalityAndBirthdate()
-    - var followCount = artist.displayFollowers()
-    if bday || followCount
-      h2
-        if bday
-          span.artist-header-birthdate= bday
-        if bday && followCount
-          span.artist-header-meta-sep &ndash;
-        if followCount
-          span.artist-header-follow-count= followCount
+  - var bday = artist.displayNationalityAndBirthdate()
+  - var followCount = artist.displayFollowers()
+  if bday || followCount
+    h2
+      if bday
+        span.artist-header-birthdate= bday
+      if bday && followCount
+        span.artist-header-meta-sep &ndash;
+      if followCount
+        span.artist-header-follow-count= followCount
 
-    unless artist.get('published_artworks_count')
-      .artist-header-empty
-        | There are no #{artist.get('name')} works on Artsy yet.
-        br
-        | Follow the artist to get alerts when works are added.
+  unless artist.get('published_artworks_count')
+    .artist-header-empty
+      | There are no #{artist.get('name')} works on Artsy yet.
+      br
+      | Follow the artist to get alerts when works are added.
 
-    button#artist-follow-button.avant-garde-button-white.follow-button
+  button#artist-follow-button.avant-garde-button-white.follow-button
 
-    if artist.get('published_artworks_count')
-      nav.artist-share
-        +share(artist.get('name') + ' on Artsy', artist.imageUrl('large'))
+  if artist.get('published_artworks_count')
+    nav.artist-share
+      +share(artist.get('name') + ' on Artsy', artist.imageUrl('large'))
 
-    .bisected-header
-      if artist.get('blurb')
-        .bisected-header-cell
-          .artist-blurb
-            h2 Biography
-            .blurb!= artist.mdToHtml('blurb')
-
-      .bisected-header-cell
-        .artist-related-genes.related-links
-          //- Rendered client-side
-
-        //- Waiting on https://trello.com/c/qbJVWofE/134-public-artist-partner-artists-api
-        //- .artist-related-representations.related-links
-        //-   Rendered client-side
+  #artist-tabs.artist-tabs
+    //- Rendered client-side
+    .loading-ellipsis: each x in [0, 0, 0]
+      span .

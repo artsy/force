@@ -3,15 +3,8 @@
 //
 
 @keyframes spin
-  0%
-    transform rotate(0deg)
-    animation-timing-function linear
-  50%
-    transform rotate(180deg)
-    animation-timing-function linear
   100%
     transform rotate(360deg)
-    animation-timing-function linear
 
 spinner(width=25px, height=6px, color=black)
   background color
@@ -20,7 +13,7 @@ spinner(width=25px, height=6px, color=black)
   position absolute
   top calc('50% - (%s / 2)' % height)
   left calc('50% - (%s / 2)' % width)
-  animation spin 1s infinite
+  animation spin 1s infinite linear
 
 .loading-spinner
   spinner(25px, 6px)
@@ -35,3 +28,18 @@ spinner(width=25px, height=6px, color=black)
 .loading-spinner-small-white
   @extends .loading-spinner-small
   background white
+
+@keyframes fade
+  0%
+    opacity 0
+  50%
+    opacity 1
+  100%
+    opacity 0
+
+.loading-ellipsis > span
+  letter-spacing 2px
+  for i in 1 2 3
+    &:nth-child({i})
+      animation fade 1s infinite
+      animation-delay i * 0.2s
