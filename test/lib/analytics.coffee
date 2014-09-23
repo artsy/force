@@ -38,6 +38,12 @@ describe 'analytics', ->
 
     describe '#trackPageview', ->
 
+      beforeEach ->
+        @clock = sinon.useFakeTimers();
+
+      afterEach ->
+        @clock.restore()
+
       it 'sends a google pageview', ->
         analytics.trackPageview()
         @gaStub.args[1][0].should.equal 'send'
