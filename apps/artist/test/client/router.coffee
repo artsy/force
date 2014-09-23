@@ -20,6 +20,7 @@ describe 'ArtistRouter', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
     sinon.stub @ArtistRouter::, 'deferredDispatch'
+    sinon.stub @ArtistRouter::, 'navigate'
     @model = new Artist fabricate 'artist', id: 'foo-bar'
     @user = new CurrentUser fabricate 'user'
     @router = new @ArtistRouter model: @model, user: @user
@@ -27,17 +28,18 @@ describe 'ArtistRouter', ->
   afterEach ->
     Backbone.sync.restore()
     @router.deferredDispatch.restore()
+    @router.navigate.restore()
 
-  describe '#setSection', ->
+  describe '#getSection', ->
     it 'pulls the slug out of the history fragment and sets it in the options hash', ->
       Backbone.history.fragment = 'artist/foo-bar/related-artists'
-      @router.setSection()
-      @router.options.section.slug.should.equal 'related-artists'
-      @router.options.section.name.should.equal 'Related Artists'
+      section = @router.getSection()
+      section.slug.should.equal 'related-artists'
+      section.name.should.equal 'Related Artists'
       Backbone.history.fragment = 'artist/foo-bar'
-      @router.setSection()
-      @router.options.section.slug.should.equal ''
-      @router.options.section.name.should.equal 'Overview'
+      section = @router.getSection()
+      section.slug.should.equal ''
+      section.name.should.equal 'Overview'
 
   describe '#execute', ->
     beforeEach ->
@@ -70,3 +72,15 @@ describe 'ArtistRouter', ->
         @removeStub.called.should.be.true
         @renderStub.called.should.be.true
         @renderNavStub.called.should.be.true
+
+    describe 'invalid section', ->
+      it 'redirects to the artist overview if a route for a non-returned section is triggered', ->
+        invalid = _.findWhere @router.data.sections, slug: 'shows'
+        @router.data.returns = _.without @router.data.sections, invalid
+        Backbone.history.fragment = 'artist/foo-bar/related-artists'
+        @router.execute()
+        @router.navigate.called.should.be.false
+        Backbone.history.fragment = 'artist/foo-bar/shows'
+        @router.execute()
+        @router.navigate.called.should.be.true
+        @router.navigate.args[0][0].should.equal 'artist/foo-bar'
