@@ -36,7 +36,7 @@ module.exports = class Artist extends Backbone.Model
     @relatedPosts = new Posts
     @relatedPosts.url = "#{sd.API_URL}/api/v1/related/posts?artist[]=#{@id}"
 
-    PartnerShows = require '../collections/partner_shows.coffee'
+    PartnerShows = require '../collections/related_partner_shows.coffee'
     @relatedShows = new PartnerShows
     @relatedShows.url = "#{sd.API_URL}/api/v1/related/shows?artist[]=#{@id}&sort=-end_at"
 

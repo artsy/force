@@ -11,19 +11,7 @@ module.exports = class PartnerShows extends Backbone.Collection
 
   model: PartnerShow
 
-  comparator: (show) ->
-    -(show.getSortValue())
-
   url: "#{sd.API_URL}/api/v1/shows"
-
-  parse: (response) ->
-    _.filter response, (obj) ->
-      show = new PartnerShow obj
-      show.get('displayable') and
-      # Remove shows without images
-      show.imageUrlForMaxSize()? and
-      # Remove closed shows in a fair
-      not (show.get('status') is 'closed' and show.get('fair'))
 
   # Get the running partner shows collection.
   #
