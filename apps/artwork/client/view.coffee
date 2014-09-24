@@ -59,6 +59,9 @@ module.exports = class ArtworkView extends Backbone.View
     @setupAnnyang()
     @setupMonocleView()
 
+    # ab:artwork:sidebar_design
+    @setupSidebarABTest()
+
     # Handle all related content
     @setupRelatedLayers()
     @on 'related:features', (feature) ->
@@ -93,6 +96,11 @@ module.exports = class ArtworkView extends Backbone.View
     @artwork.fetch()
 
     @preventRightClick()
+
+  # ab:artwork:sidebar_design
+  setupSidebarABTest: ->
+    path = if analytics.abTest('ab:artwork:sidebar_design', 0.5) then 'compact' else 'expanded'
+    @$('.artwork-detail').addClass "is-abtest-#{path}"
 
   toggleMoreInfo: (e) ->
     $target = $(e.target)
