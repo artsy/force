@@ -18,6 +18,6 @@ if sd.NODE_ENV != 'test' && sd.BROWSER && sd.BROWSER.family != 'PhantomJS'
     include ./snowplow.html
     script.
       snowplow('newTracker', 'cf', "#{sd.SNOWPLOW_COLLECTOR_HOST}", {
-       appId: "{{#{sd.APPLICATION_NAME}}}",
-       cookieDomain: '{{artsy}}'
+       appId: "#{sd.APPLICATION_NAME}",
+       cookieDomain: 'artsy'
       });

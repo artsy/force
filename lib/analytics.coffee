@@ -34,6 +34,7 @@ module.exports.trackPageview = =>
   # Track 15 second bounce rate
   setTimeout("ga('send','event','15 Seconds','time on page more than 15 seconds')", 15000)
   setTimeout("ga('send','event','3 Minutes','time on page more than 3 minutes')", 180000)
+  snowplow?('trackPageView')
 
 module.exports.snowplowStruct = (category, action, label, property, value, contexts) ->
   # in general: https://github.com/snowplow/snowplow/wiki/2-Specific-event-tracking-with-the-Javascript-tracker#custom-structured-events
