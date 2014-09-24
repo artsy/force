@@ -185,7 +185,7 @@ module.exports = class Profile extends Backbone.Model
     about: "Visitor information including location and phone number for"
     collection: "Artworks in the collection of"
     shop: null
-    shows: "List of current, upcomming and past shows at"
+    shows: "List of current, upcoming and past shows at"
     artists: "List of artists represented by"
     artist: null  # Canonical redirects to artist page
     posts: "Articles about and created by"

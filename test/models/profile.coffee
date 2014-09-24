@@ -162,7 +162,7 @@ describe 'Profile', ->
       @profile.metaDescription('about').should.equal 'Visitor information including location and phone number for J. Paul Getty Museum'
       @profile.metaDescription('collection').should.equal 'Artworks in the collection of J. Paul Getty Museum'
       @profile.metaDescription('shop').should.equal "The J. Paul Getty Trust is a cultural and philanthropic institution dedicated to critical thinking in the presentation, conservation, and interpretation of the world's artistic legacy."
-      @profile.metaDescription('shows').should.equal 'List of current, upcomming and past shows at J. Paul Getty Museum'
+      @profile.metaDescription('shows').should.equal 'List of current, upcoming and past shows at J. Paul Getty Museum'
       @profile.metaDescription('artists').should.equal 'List of artists represented by J. Paul Getty Museum'
       @profile.metaDescription('artist').should.equal "The J. Paul Getty Trust is a cultural and philanthropic institution dedicated to critical thinking in the presentation, conservation, and interpretation of the world's artistic legacy."
       @profile.metaDescription('posts').should.equal 'Articles about and created by J. Paul Getty Museum'

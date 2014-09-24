@@ -39,7 +39,7 @@ module.exports = class PartnerShow extends Backbone.Model
       "Artsy"
     ]).join(' | ')
 
-  # past / current / upcomming show featuring works by {artists} on view at {gallery name} {location} {dates}
+  # past / current / upcoming show featuring works by {artists} on view at {gallery name} {location} {dates}
   toPageDescription: ->
     artistText = @formatArtistText()
     if artistText
