@@ -24,12 +24,8 @@ block body
         #home-body
           ul#home-top-featured-links
             include featured_links
-          h2.home-featured-header.top-featured-header
-          ul#home-featured-artworks.grid-4-up.home-featured-list
-            li.loading-spinner
-          a.home-browse-all.avant-garde-button-text(
-            href='/browse/artworks?price_range=-1%3A1000000000000'
-          ) Browse all for sale artworks
+          #home-featured-artworks-section
+            //- Rendered client-side
           h2.home-featured-header Featured Shows
           ul#home-featured-shows.home-featured-list
             li.loading-spinner

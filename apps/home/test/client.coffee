@@ -83,9 +83,8 @@ describe 'Homepage init code', ->
     benv.teardown()
 
   beforeEach ->
-    { @init } = @mod = benv.requireWithJadeify resolve(__dirname, '../client/index.coffee'), [
+    { @init, @HomeView } = @mod = benv.requireWithJadeify resolve(__dirname, '../client/index.coffee'), [
       'featuredLinksTemplate'
-      'featuredArtworksTemplate'
       'featuredShowsTemplate'
       'featuredPostsTemplate'
       'featuredArtistsTemplate'
@@ -93,59 +92,26 @@ describe 'Homepage init code', ->
     @mod.__set__ 'HeroUnitView', ->
     sinon.stub Backbone.history, 'start'
     sinon.stub Backbone, 'sync'
+    sinon.stub @HomeView::, 'renderArtworks'
     @init()
 
   afterEach ->
     Backbone.sync.restore()
     Backbone.history.start.restore()
-
-  context 'with a user', ->
-
-    beforeEach (done) ->
-      user = new CurrentUser(fabricate 'user', lab_features: ["Suggested Artworks"])
-      sinon.stub(user, 'hasSuggestions').returns true
-      CurrentUser = @mod.__get__ 'CurrentUser'
-      sinon.stub(CurrentUser, 'orNull').returns user
-      benv.render resolve(__dirname, '../templates/index.jade'), {
-          heroUnits: new HeroUnits([
-            fabricate 'site_hero_unit'
-            fabricate 'site_hero_unit'
-            fabricate 'site_hero_unit'
-          ]).models
-          featuredLinks: new FeaturedLinks([
-            fabricate 'featured_link'
-          ]).models
-
-          user: user
-          sd: {}
-        }, =>
-          @init()
-          done()
-
-    afterEach ->
-      CurrentUser.orNull.restore()
-
-    it 'renders suggested artworks', ->
-      Backbone.sync.args[4][2].success [fabricate('artwork', title: 'Foobaz')]
-      $('body').html().should.containEql "Foobaz"
-
-  it 'renders featured artworks', ->
-    Backbone.sync.args[0][2].success [fabricate 'set']
-    _.last(Backbone.sync.args)[2].success [fabricate 'artwork', title: "Foo At Bar"]
-    $('body').html().should.containEql "Foo At Bar"
+    @HomeView::renderArtworks.restore()
 
   it 'renders featured show', ->
-    Backbone.sync.args[1][2].success [fabricate 'set']
+    Backbone.sync.args[0][2].success [fabricate 'set']
     _.last(Backbone.sync.args)[2].success [fabricate 'show', name: "Fooshow At Bar"]
     $('body').html().should.containEql "Fooshow At Bar"
 
   it 'renders featured posts', ->
-    Backbone.sync.args[2][2].success [fabricate 'set']
+    Backbone.sync.args[1][2].success [fabricate 'set']
     _.last(Backbone.sync.args)[2].success [fabricate 'post', title: "Retrospect on Andy Foobar"]
     $('body').html().should.containEql "Retrospect on Andy Foobar"
 
   it 'renders links', ->
-    Backbone.sync.args[2][2].success [fabricate 'set']
+    Backbone.sync.args[1][2].success [fabricate 'set']
     _.last(Backbone.sync.args)[2].success [fabricate 'post', title: "Retrospect on Andy Foobar"]
     $('.home-featured-post-link').first().html().should.containEql '<a>'
 

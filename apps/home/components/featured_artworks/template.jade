@@ -1,0 +1,26 @@
+if artworks.length
+  h2.home-featured-header.top-featured-header
+    if artworks.personalized && artworks.personalized.length
+      | Works by Artists you follow
+    else
+      | Featured Artworks for Sale
+
+ul#home-featured-artworks.grid-4-up.home-featured-list
+  if artworks.length
+    for artwork in artworks.models
+      li.grid-item( class="is-via-#{artwork.get('source')}" )
+        - showBlurb = true
+        //- 298 happens to be the max width of an image when
+        //- 4-up at default-max-page-width
+        - imageWidth = 298
+        - imageHeight = 298
+        include ../../../../components/artwork_item/templates/artwork
+  else
+    li.loading-spinner
+
+if artworks.personalized && artworks.personalized.length
+  a.home-browse-all.avant-garde-button-text( href='/works-for-you' )
+    | Browse more artworks
+else
+  a.home-browse-all.avant-garde-button-text( href='/browse/artworks?price_range=-1%3A1000000000000' )
+    | Browse all for sale artworks
