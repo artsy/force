@@ -22,9 +22,13 @@ module.exports = class FeaturedArtworks extends Backbone.Collection
 
   takeResponse: ->
     _.take flatCompact([
-      @personalized?.models
-      @featured.models
+      @setSource(@personalized, 'personalized')?.models
+      @setSource(@featured, 'featured').models
     ]), @limit
+
+  setSource: (collection, source) ->
+    collection?.invoke 'set', source: source
+    collection
 
   fetch: (options = {}) ->
     $.when.apply(null, _.compact([

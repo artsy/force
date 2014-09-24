@@ -1,28 +1,20 @@
 _ = require 'underscore'
-mediator = require '../../../lib/mediator.coffee'
-CurrentUser = require '../../../models/current_user.coffee'
 Backbone = require 'backbone'
+Cookies = require 'cookies-js'
+mediator = require '../../../lib/mediator.coffee'
+{ crop } = require '../../../components/resizer/index.coffee'
+CurrentUser = require '../../../models/current_user.coffee'
 HeroUnitView = require './hero_unit_view.coffee'
 FeaturedLinks = require '../../../collections/featured_links.coffee'
 PartnerShows = require '../../../collections/partner_shows.coffee'
 HomeAuthRouter = require './auth_router.coffee'
-analytics = require '../../../lib/analytics.coffee'
+FeaturedArtworksView = require '../components/featured_artworks/view.coffee'
 featuredLinksTemplate = -> require('../templates/featured_links.jade') arguments...
 featuredShowsTemplate = -> require('../templates/featured_shows.jade') arguments...
 featuredPostsTemplate = -> require('../templates/featured_posts.jade') arguments...
 featuredArtistsTemplate = -> require('../templates/featured_artists.jade') arguments...
-Cookies = require 'cookies-js'
-{ crop } = require '../../../components/resizer/index.coffee'
-
-FeaturedArtworksView = require '../components/featured_artworks/view.coffee'
 
 module.exports.HomeView = class HomeView extends Backbone.View
-  events:
-    'click #home-featured-artworks': 'onClickFeaturedArtwork'
-
-  onClickFeaturedArtwork: ->
-    analytics.track.click "Clicked homepage artwork"
-
   initialize: (options) ->
     @user = CurrentUser.orNull()
 
@@ -66,4 +58,5 @@ module.exports.HomeView = class HomeView extends Backbone.View
       $('#home-featured-shows').html featuredShowsTemplate(shows: shows.take(10), crop: crop)
 
 module.exports.init = ->
-    new HomeView el: $('body')
+  new HomeView el: $('body')
+  require './analytics.coffee'
