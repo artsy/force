@@ -10,5 +10,6 @@ app.set 'views', __dirname + '/templates'
 app.set 'view engine', 'jade'
 
 app.get '/gallery-partnerships', routes.index
+app.get /^\/gallery-partnerships((?!\/edit).)*$/, routes.index # Scroll routes
 
 app.use express.static __dirname + '/public'

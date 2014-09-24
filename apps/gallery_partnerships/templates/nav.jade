@@ -1,8 +1,7 @@
-nav.gallery-partnerships-section-nav
-  for section, i in sections
-    a.gallery-partnerships-nav-link(
-      data-index=i
-      href="/gallery-partnerships/#{section.slug}"
-      class=(i === sections.length - 1 ? 'avant-garde-button-black is-small' : undefined)
-    )
-      span= section.title
+.gallery-partnerships-section-nav
+  nav
+    for section, i in sections.slice(0, -1)
+      a.gallery-partnerships-nav-link( href="/gallery-partnerships/#{section.slug}" )
+        span= section.title
+    a.gallery-partnershiips-nav-link.avant-garde-button-black.is-small( href="http://apply.artsy.net/" )
+      span=sections[sections.length - 1].title

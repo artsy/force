@@ -3,7 +3,7 @@
 
 container-width = 1120px
 container-margin = 100px
-section-margin-bottom = 120px
+section-margin-top = 120px
 hero-unit-height = 435px
 
 .gallery-partnerships-container
@@ -24,13 +24,29 @@ hero-unit-height = 435px
     display block
 
 .gallery-partnerships-section
-.gallery-partnerships-section-nav
-  margin-bottom section-margin-bottom
+  padding-top section-margin-top
 
 .gallery-partnerships-section-nav
-  display flex
-  justify-content space-between
   padding 20px 0
+  &.stuck
+    position fixed
+    width 100%
+    top 0
+    left 0
+    right 0
+    background-color white
+    border-bottom 1px solid gray-lighter-color
+    z-index 3
+    > nav
+      width container-width
+      margin 0 auto
+    .gallery-partnerships-nav-link:not(.avant-garde-button-black)
+      color gray-color
+      &.is-active
+        color purple-color
+  > nav
+    display flex
+    justify-content space-between
 
 .gallery-partnerships-nav-link
   avant-garde()
@@ -70,7 +86,7 @@ hero-unit-height = 435px
   // Audience
   &.audience
     position relative
-    height 475px - section-margin-bottom
+    height 475px - section-margin-top
   .audience-map
   .audience-quotes
     position absolute
