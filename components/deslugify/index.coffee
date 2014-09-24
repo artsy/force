@@ -17,6 +17,7 @@ symbolWords = (str) ->
   str
     .replace(/\sslash\s/i, ' / ')
     .replace(/\sdot\s/i, '.')
+    .replace(/\splus\s/i, ' + ')
 
 module.exports = _.compose(
   _s.trim
