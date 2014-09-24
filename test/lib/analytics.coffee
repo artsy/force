@@ -55,6 +55,14 @@ describe 'analytics', ->
         analytics.getProperty('foo')
         analytics.setProperty('foo')
 
+      it 'tracks bounce rates', ->
+        analytics.trackPageview()
+        @gaStub.args.length.should.equal 2
+        @clock.tick 15000
+        _.last(_.last(@gaStub.args)).should.equal 'time on page more than 15 seconds'
+        @clock.tick 165000 # Remaining time to 3 minutes
+        _.last(_.last(@gaStub.args)).should.equal 'time on page more than 3 minutes'
+
     describe '#modelNameAndIdToLabel', ->
 
       it 'capitalizes modelname', ->
