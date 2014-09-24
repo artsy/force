@@ -27,3 +27,23 @@ getJSON = (callback) ->
   getJSON (err, data) ->
     return next err if err
     res.render 'index', data
+
+@adminOnly = (req, res, next) ->
+  if req.user?.get('type') isnt 'Admin'
+    res.status 403
+    next new Error "You must be logged in as an admin to edit the gallery partnerships page."
+  else
+    next()
+
+@edit = (req, res, next) ->
+  getJSON (err, data) ->
+    return next err if err
+    res.locals.sd.DATA = data
+    res.render 'edit'
+
+@upload = (req, res, next) ->
+  buffer = new Buffer JSON.stringify req.body
+  headers = { 'Content-Type': 'application/json', 'x-amz-acl': 'public-read' }
+  client.putBuffer buffer, CONTENT_PATH, headers, (err, r) ->
+    return next err if err
+    res.send 200, { msg: "success" }
