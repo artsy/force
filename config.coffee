@@ -52,7 +52,6 @@ module.exports =
   CLIENT_CACHE_ROUTES: null
   CLIENT_CACHE_TIME: 3600
   MAX_SOCKETS: -1
-  SUGGESTIONS_AB_TEST: 'ab:home:suggestions'
   EMPTY_COLLECTION_SET_ID: null
   GEMINI_S3_ACCESS_KEY: null
   GEMINI_APP: 'http://localhost:3004'
