@@ -27,13 +27,20 @@ module.exports.getUserAgent = ->
 
 module.exports.trackPageview = =>
   # Don't send pageviews for admins
-  return if sd.CURRENT_USER?.type == 'Admin'
+  return if sd.CURRENT_USER?.type is 'Admin'
 
   @ga? 'send', 'pageview'
 
   # Track 15 second bounce rate
-  setTimeout("ga('send','event','15 Seconds','time on page more than 15 seconds')", 15000)
-  setTimeout("ga('send','event','3 Minutes','time on page more than 3 minutes')", 180000)
+  setTimeout =>
+    @ga? 'send', 'event', '15 Seconds', 'time on page more than 15 seconds'
+  , 15000
+
+  # Track 3 Minute bounce rate
+  setTimeout =>
+    @ga? 'send', 'event', '3 Minutes', 'time on page more than 3 minutes'
+  , 180000
+
   snowplow?('trackPageView')
 
 module.exports.snowplowStruct = (category, action, label, property, value, contexts) ->
