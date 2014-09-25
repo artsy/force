@@ -86,7 +86,10 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
 
   toggleForSale: (e) ->
     toggle = $(e.currentTarget).prop('checked')
-    @notifications.getFirstPage data: for_sale: toggle
+    @$publishedArtworks.hide()
+    @notifications.getFirstPage
+      data: for_sale: toggle
+      success: => @$publishedArtworks.show()
 
 module.exports.init = ->
   new NotificationsView el: $('body')
