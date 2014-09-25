@@ -131,6 +131,22 @@ hero-unit-height = 435px
     z-index 1
 
   //
+  // Support
+  //
+  .support-liaisons
+    display flex
+    justify-content space-between
+    margin-bottom 50px
+  .support-liaison
+    width 13%
+    img
+      width 100%
+      margin-bottom 10px
+  .support-quotes
+    width 75%
+    margin 0 auto
+
+  //
   // Brwoser Images Slideshow
   //
   .browser-images-container
@@ -154,6 +170,9 @@ hero-unit-height = 435px
       transition opacity 1s
       opacity 1
 
+  //
+  // iPad/iPhone images Slideshos (override the Browser's)
+  //
   .ipad-images-container
   .iphone-images-container
     display inline-block
@@ -166,20 +185,6 @@ hero-unit-height = 435px
     padding 30px 60px
   .iphone-image
     padding 42px 11px
-
-  // Support
-  .support-liaisons
-    display flex
-    justify-content space-between
-    margin-bottom 50px
-  .support-liaison
-    width 13%
-    img
-      width 100%
-      margin-bottom 10px
-  .support-quotes
-    width 75%
-    margin 0 auto
 
   // Quotes
   .quote
@@ -199,6 +204,9 @@ hero-unit-height = 435px
     &:before
       content "\2013"
 
+//
+// Page specific
+//
 .body-gallery-partnerships
   h1
     font-size 72px

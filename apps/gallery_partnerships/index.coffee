@@ -1,5 +1,5 @@
 #
-# About page requires different enough functionality from page app
+# Gallery Partnerships page requires different functionality from others.
 #
 
 express = require 'express'
@@ -17,5 +17,3 @@ try
   routes.initClient()
   app.get  '/gallery-partnerships/edit', routes.adminOnly, routes.edit
   app.post '/gallery-partnerships/edit', routes.adminOnly, routes.upload
-
-app.use express.static __dirname + '/public'
