@@ -62,7 +62,7 @@ module.exports = class SearchBarView extends Backbone.View
     @$('.tt-suggestion:first').addClass('tt-cursor') if @autoselect
 
   feedbackString: ->
-    @__feedbackString__ ?= if @mode?
+    @__feedbackString__ ?= if @mode? and @mode isnt 'suggest'
       "Search for #{_s.titleize(@mode)}…"
     else
       'Search Artists, Artworks, Galleries, Museums, Categories…'
