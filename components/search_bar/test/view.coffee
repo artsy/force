@@ -19,7 +19,7 @@ describe 'SearchBarView', ->
       benv.render resolve(__dirname, '../template.jade'), {}, =>
         @$input = $('#main-layout-search-bar-input')
         @$input.typeahead = sinon.stub()
-        @view = new SearchBarView el: $('#main-layout-search-bar-container'), $input: @$input
+        @view = new SearchBarView el: $('#main-layout-search-bar-container'), $input: @$input, mode: 'suggest'
         done()
 
   afterEach ->
