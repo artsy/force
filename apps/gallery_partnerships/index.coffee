@@ -10,7 +10,7 @@ app.set 'views', __dirname + '/templates'
 app.set 'view engine', 'jade'
 
 app.get '/gallery-partnerships', routes.index
-app.get /^\/gallery-partnerships((?!\/edit).)*$/, routes.index # Scroll routes
+app.get /^\/gallery-partnerships\/((?!edit$).)+$/, routes.index # Scroll routes
 
 # Safely init upload routes for missing S3 env vars (like in test)
 try

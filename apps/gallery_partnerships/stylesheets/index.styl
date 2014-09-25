@@ -7,26 +7,46 @@ container-margin = 100px
 section-margin-top = 120px
 hero-unit-height = 435px
 
+//
+// Page Container
+//
 .gallery-partnerships-container
   width container-width
   margin container-margin auto
   font-size 18px
   line-height 28px
 
+//
+// Hero Units
+//
 .gallery-partnerships-hero-unit-header
   margin-bottom 30px
   .grid-item
     vertical-align baseline
 
-.gallery-partnerships-hero-unit-image
+.gallery-partnerships-hero-unit-images
+  position relative
   height hero-unit-height
-  display none
-  &.is-active
-    display block
 
+.gallery-partnerships-hero-unit-image
+  position absolute
+  width 100%
+  height 100%
+  transition opacity 1.5s
+  opacity 0
+  &.is-active
+    transition opacity 1s
+    opacity 1
+
+//
+// Sections
+//
 .gallery-partnerships-section
   padding-top section-margin-top
 
+//
+// Scetion Nav
+//
 .gallery-partnerships-section-nav
   padding 20px 0
   &.stuck
@@ -56,6 +76,9 @@ hero-unit-height = 435px
   line-height 1
   padding 10px
 
+//
+// Section Header
+//
 .gallery-partnerships-section-header
   margin-bottom 60px
   &.audience
@@ -71,8 +94,13 @@ hero-unit-height = 435px
   .grid-item
     vertical-align top
 
+//
+// Content of Each Section
+//
 .gallery-partnerships-section-content
+  //
   // Network
+  //
   .support-liaison
   .network-gallery-info
     avant-garde()
@@ -84,7 +112,9 @@ hero-unit-height = 435px
   .network-gallery-location
     color gray-dark-color
 
+  //
   // Audience
+  //
   &.audience
     position relative
     height 475px - section-margin-top
@@ -100,7 +130,9 @@ hero-unit-height = 435px
     bottom 0
     z-index 1
 
-  // Brwoser images carousel
+  //
+  // Brwoser Images Slideshow
+  //
   .browser-images-container
     position relative
     width 75%
@@ -110,12 +142,17 @@ hero-unit-height = 435px
       width 100%
   .browser-images
     position absolute
-    top 23px
-    padding 3px
+    top 0
   .browser-image
-    display none
+    position absolute
+    left 0
+    right 0
+    padding 26px 3px 3px 3px
+    transition opacity 1.5s
+    opacity 0
     &.is-active
-      display block
+      transition opacity 1s
+      opacity 1
 
   .ipad-images-container
   .iphone-images-container
@@ -125,11 +162,9 @@ hero-unit-height = 435px
   .iphone-images-container
     margin 0 10% 2%
     width 15%
-  .ipad-images
-    top 0
+  .ipad-image
     padding 30px 60px
-  .iphone-images
-    top 0
+  .iphone-image
     padding 42px 11px
 
   // Support
@@ -150,7 +185,7 @@ hero-unit-height = 435px
   .quote
     &:before
       content ''
-      width 50%
+      width 30%
       border-top 2px solid gray-darkest-color
       display inline-block
   .quote-text
