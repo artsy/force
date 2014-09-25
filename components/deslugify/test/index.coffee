@@ -23,3 +23,4 @@ describe 'deslugify', ->
   it 'handles slugs with symbol words in them', ->
     deslugify('fleisher-slash-ollman').should.equal 'Fleisher / Ollman'
     deslugify('bernarducci-dot-meisel-gallery').should.equal 'Bernarducci.Meisel Gallery'
+    deslugify('m-plus-b').should.equal 'M + B'
