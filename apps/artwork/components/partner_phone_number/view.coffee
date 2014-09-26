@@ -12,6 +12,7 @@ module.exports = class PartnerPhoneNumberView extends Backbone.View
 
   showPhoneNumber: (e) ->
     e.preventDefault()
+    analytics.snowplowStruct 'phone_number', 'click', @model.get('_id'), 'artwork'
     @$('.show-phone-number').remove()
     @$('.partner-phone-numbers').show()
 

@@ -39,12 +39,14 @@ module.exports = class ArtworkRouter extends Backbone.Router
 
   zoom: ->
     analytics.track.click 'Clicked to zoom in on artwork'
+    analytics.snowplowStruct 'artwork', 'zoom', @artwork.get('_id'), 'artwork'
     @baseView.route 'zoom'
     @view = new DeepZoomView $container: $('#artwork-deep-zoom-container'), artwork: @artwork
     @view.render()
 
   viewInRoom: ->
     analytics.track.click "Entered 'View In Room'"
+    analytics.snowplowStruct 'artwork', 'view_in_room', @artwork.get('_id'), 'artwork'
 
     # The container will collapse so prop up with the original height
     ($ac = $('.artwork-container')).height($ac.height())
@@ -65,6 +67,7 @@ module.exports = class ArtworkRouter extends Backbone.Router
 
   inquire: ->
     analytics.track.click "Clicked 'Contact Artsy Specialist'"
+    analytics.snowplowStruct 'inquiry_introduction', 'click', @artwork.get('_id'), 'artwork'
     new InquiryView artwork: @artwork
     mediator.on 'modal:closed', => Backbone.history.navigate(@artwork.href(), trigger: true, replace: true)
 
