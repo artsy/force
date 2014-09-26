@@ -12,7 +12,8 @@ module.exports = class FeedbackView extends ContactView
       representative: @representatives.first()
       user: @user
 
-  formTemplate: formTemplate
+  formTemplate: ->
+    formTemplate arguments...
 
   defaults: -> _.extend super,
     placeholder: 'Leave your comments'

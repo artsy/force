@@ -39,7 +39,6 @@ describe 'Partner Show', ->
 
       it 'renders a show title', ->
         $ = cheerio.load @html
-        console.log $('.show-heading-title').text(), @show.title()
         $('.show-heading-title').text().should.equal @show.title()
 
       it 'renders show details', ->

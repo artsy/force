@@ -21,5 +21,4 @@ module.exports = class FooterView extends Backbone.View
 
   openSpecialist: (e) ->
     e.preventDefault()
-    console.log 'SpecialistView'
     new SpecialistView

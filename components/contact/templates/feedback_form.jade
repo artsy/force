@@ -1,4 +1,5 @@
 form.contact-form.stacked-form
+  input( type='hidden', name='url', value= window.location.href )
   textarea.bordered-input.is-persistplaceholder(
     name= 'message'
     autofocus= autofocus
@@ -10,9 +11,9 @@ form.contact-form.stacked-form
     //- Logged in
     .stacked-form-cell
       | From: #{user.get('name')}
-      span.mcf-email  (#{user.get('email')})
-    input( type='hidden', name='name', value=user.get('name') )
-    input( type='hidden', name='email', value=user.get('email') )
+      = ' '
+      span.mcf-email (#{user.get('email')})
+      //- If the user is logged in; we don't need to post name/email
   else
     //- Logged out
     input.bordered-input.is-persistplaceholder(
