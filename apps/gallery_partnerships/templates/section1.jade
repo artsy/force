@@ -1,0 +1,22 @@
+- section = sections[1]
+
+.gallery-partnerships-section-header.audience
+  .grid-2-up
+    .grid-item
+      h2= section.title
+      h3= section.heading
+    .grid-item
+      p.preamble= section.preamble
+
+.gallery-partnerships-section-content.audience
+  .audience-map(
+    style="background-image: url(#{src=crop(section.images[0].src, { width: 1120, height: 475, quality: 90 })})"
+  )
+  .audience-quotes
+    .grid-2-up
+      .grid-item
+      .grid-item
+        - q = section.quotes[0]
+        .quote
+          .quote-text= q.quote
+          .quote-author #{q.author}, #{q.title}

@@ -1,0 +1,14 @@
+extends ../../../components/main_layout/templates/index
+
+block head
+  include meta
+
+append locals
+  - bodyClass = bodyClass + ' body-gallery-partnerships-edit'
+  - assetPackage = 'gallery_partnerships'
+
+block body
+  h1#gallery-partnerships-edit-h1.avant-garde-header-center Edit Gallery Partnerships Page
+  #gallery-partnerships-edit-container
+    #gallery-partnerships-edit-hulk
+    #gallery-partnerships-edit-preview.body-gallery-partnerships

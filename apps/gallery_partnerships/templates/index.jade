@@ -1,0 +1,12 @@
+extends ../../../components/main_layout/templates/index
+
+block head
+  include meta
+
+append locals
+  - bodyClass = bodyClass + ' body-no-margins body-gallery-partnerships'
+  - assetPackage = 'gallery_partnerships'
+
+block body
+  .gallery-partnerships-container
+    include sections
