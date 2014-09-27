@@ -28,4 +28,5 @@ module.exports = class PartnerShowButtons extends Backbone.View
     'click .partner-buttons-contact': 'contactGallery'
 
   contactGallery: ->
+    analytics.snowplowStruct 'inquiry', 'click', @model.get('_id'), 'show'
     new ShowInquiryModal show: @model
