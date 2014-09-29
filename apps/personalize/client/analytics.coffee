@@ -16,10 +16,12 @@ module.exports = (user) ->
       track.funnel 'Changed location on introduction step of personalize flow'
 
   mediator.on 'follow-button:follow', ($el, model) ->
-    track.click "Followed artist from personalize #{$el.data 'analyticsLabel'}"
+    if (label = $el.data 'analyticsLabel')?
+      track.click "Followed artist from personalize #{label}"
 
   mediator.on 'follow-button:unfollow', ($el, model) ->
-    track.click "Unfollowed artist from personalize #{$el.data 'analyticsLabel'}"
+    if (label = $el.data 'analyticsLabel')?
+      track.click "Unfollowed artist from personalize #{label}"
 
   user.on 'change:name', (model, value, options) ->
     track.funnel 'Changed name on introduction step of personalize flow'
