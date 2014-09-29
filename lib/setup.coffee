@@ -138,6 +138,9 @@ module.exports = (app) ->
     domain: COOKIE_DOMAIN
     key: SESSION_COOKIE_KEY
     maxage: SESSION_COOKIE_MAX_AGE
+    # secure uses req.connection.encrypted, but heroku has nginx terminating SSL
+    # secureProxy just sets secure=true
+    secureProxy: "production" is NODE_ENV or "staging" is NODE_ENV
   app.use artsyPassport _.extend config,
     CurrentUser: CurrentUser
     SECURE_ARTSY_URL: API_URL
