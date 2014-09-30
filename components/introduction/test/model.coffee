@@ -1,3 +1,4 @@
+
 _ = require 'underscore'
 Backbone = require 'backbone'
 sinon = require 'sinon'
@@ -22,13 +23,13 @@ describe 'Introduction', ->
       Backbone.sync.restore()
       sinon.stub(Backbone, 'sync').yieldsTo 'success'
       introduction = new Introduction
-      introduction.generate @user, null, success: -> done()
+      introduction.generate @user, null, null, success: -> done()
 
     it 'accepts an error callback', (done) ->
       Backbone.sync.restore()
       sinon.stub(Backbone, 'sync').yieldsTo 'error'
       introduction = new Introduction
-      introduction.generate @user, null, error: -> done()
+      introduction.generate @user, null, null, error: -> done()
 
     describe 'with bookmarks', ->
       beforeEach ->
@@ -40,9 +41,9 @@ describe 'Introduction', ->
         introduction.generate @user, @bookmarks
         Backbone.sync.args[0][0].should.equal 'create'
         Backbone.sync.args[0][1].attributes.should.eql
-          name: 'Craig Spaeth',
-          profession: 'engineer',
-          collector_level: '5',
+          name: 'Craig Spaeth'
+          profession: 'engineer'
+          collector_level: '5'
           collection: ['Pablo Picasso', 'Pablo Picasso', 'Pablo Picasso', 'Pablo Picasso', 'Pablo Picasso']
 
     describe 'with user location (and no bookmarks)', ->
@@ -54,16 +55,29 @@ describe 'Introduction', ->
         introduction.generate @user, null
         Backbone.sync.args[0][1].attributes.should.eql
           name: 'Craig Spaeth',
-          profession: 'engineer',
-          collector_level: '5',
+          profession: 'engineer'
+          collector_level: '5'
           location:
-            city: 'New York',
-            country: 'United States',
-            raw: '',
-            address: '',
-            address_2: '',
-            state: '',
-            state_code: '',
-            postal_code: '',
-            coordinates: null,
+            city: 'New York'
+            country: 'United States'
+            raw: ''
+            address: ''
+            address_2: ''
+            state: ''
+            state_code: ''
+            postal_code: ''
+            coordinates: null
             summary: ''
+
+    describe 'with attendance', ->
+      beforeEach ->
+        @attendance = new Backbone.Model name: 'The Armory Show'
+
+      it 'makes an introduction request for logged out users', ->
+        introduction = new Introduction
+        introduction.generate @user, null, @attendance
+        Backbone.sync.args[0][1].attributes.should.eql
+          name: 'Craig Spaeth'
+          profession: 'engineer'
+          collector_level: '5'
+          attending: 'The Armory Show'
