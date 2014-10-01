@@ -1,8 +1,8 @@
 - function isActive(path) {
 -   var exceptions, currentPath;
--   exceptions    = ['/about'];
--   path          = path.replace(/\/$/, ''); // Strip trailing slash
--   currentPath   = sd.CURRENT_PATH.replace(/\/$/, ''); // Strip trailing slash
+-   exceptions = ['/about'];
+-   path = path.replace(/\/$/, ''); // Strip trailing slash
+-   currentPath = sd.CURRENT_PATH.replace(/\/$/, ''); // Strip trailing slash
 -   if (exceptions.indexOf(path) != -1) {
 -     return currentPath.indexOf(path) != -1;
 -   } else {
