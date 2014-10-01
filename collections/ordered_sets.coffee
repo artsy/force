@@ -49,7 +49,7 @@ class OrderedSets extends Backbone.Collection
     @fetch(options).then =>
       @fetchSets(options).then =>
         @trigger 'sync:complete'
-        dfd.resolve()
+        dfd.resolve arguments...
     dfd.promise
 
 class OrderedSetMeta extends Backbone.Model
