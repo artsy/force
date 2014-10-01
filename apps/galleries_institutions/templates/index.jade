@@ -1,0 +1,39 @@
+extends ../../../components/main_layout/templates/index
+include ../../../components/util/activator
+
+block head
+  include meta
+
+append locals
+  - assetPackage = 'galleries_institutions'
+
+block body
+  #galleries-institutions-page.main-layout-container
+    header.galleries-institutions-header
+      .galleries-institutions-header-info
+        if partnerCount
+          .galleries-institutions-count
+            span.galleries-institutions-count-value= partnerCount
+            = ' '
+            span.galleries-institutions-count-label Selected #{copy.adjective} Partners
+        .galleries-institutions-partner-invite
+          | Interested in partnering with Artsy?
+          = ' '
+          a.faux-underline(
+            href='http://apply.artsy.net/'
+            target='_blank'
+          ) Contact us
+
+      include ./nav
+
+      h1.galleries-institutions-title
+        = copy.header
+
+    if featuredProfiles
+      include ./featured_profiles
+
+    if aToZGroup
+      section.galleries-institutions-list
+        include ../../../components/a_to_z_list/template
+      footer
+        include ./nav
