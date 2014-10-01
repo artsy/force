@@ -1,3 +1,4 @@
+# I SHOULDN'T EXIST
 _ = require 'underscore'
 Backbone = require 'backbone'
 mediator = require '../../../lib/mediator.coffee'
