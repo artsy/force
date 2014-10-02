@@ -46,8 +46,8 @@ fetchInstitutions = ->
 
 @partners = (req, res) ->
   Q.allSettled([
-    fetchFeaturedProfiles('partners:featured-institutions')
     fetchFeaturedProfiles('partners:featured-galleries')
+    fetchFeaturedProfiles('partners:featured-institutions')
   ]).then (results) ->
     [featuredGalleries, featuredInstitutions] = _.pluck results, 'value'
     featuredGalleries.add(featuredInstitutions.models)
