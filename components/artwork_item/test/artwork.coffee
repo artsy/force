@@ -5,6 +5,7 @@ path = require 'path'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 Artwork = require '../../../models/artwork'
+SaleArtwork = require '../../../models/sale_artwork'
 
 render = (template) ->
   filename = path.resolve __dirname, "../templates/#{template}.jade"
@@ -108,7 +109,7 @@ describe 'Artwork Item template', ->
       $ = cheerio.load render('artwork')({ artwork: @artwork })
       $('.artwork-item-blurb').should.have.lengthOf 0
 
-      @artwork.set 'saleArtwork', fabricate 'sale_artwork'
+      @artwork.set 'saleArtwork', new SaleArtwork fabricate 'sale_artwork'
       $ = cheerio.load render('artwork')({ artwork: @artwork })
       $('.artwork-item-blurb').should.have.lengthOf 1
       $('.artwork-item-blurb').text().should.containEql 'This is the blurb'
@@ -134,7 +135,17 @@ describe 'Artwork Item template', ->
       $('.artwork-item-sold').should.have.lengthOf 1
 
   describe 'is auction', ->
-    it 'displays a buy now price'
+    it 'displays a buy now price', ->
+      @artwork = new Artwork fabricate 'artwork', { sale_message: '$10,000' }
+      @artwork.set 'saleArtwork', new SaleArtwork fabricate 'sale_artwork'
+      $ = cheerio.load render('artwork')({ artwork: @artwork, isAuction: true })
+      $('.artwork-item-buy-now-price').text().should.containEql '$10,000'
+
+    it 'displays estimate', ->
+      @artwork = new Artwork fabricate 'artwork'
+      @artwork.set 'saleArtwork', new SaleArtwork fabricate 'sale_artwork', { low_estimate_cents: 300000, high_estimate_cents: 700000 }
+      $ = cheerio.load render('artwork')({ artwork: @artwork, isAuction: true })
+      $('.artwork-item-estimate').text().should.containEql 'Estimate: $7,000–$3,000'
 
   describe 'contact button', ->
     it 'says "Contact Gallery"', ->

@@ -25,7 +25,7 @@ describe 'AuctionDetailView', ->
     @triggerSpy = sinon.stub()
     AuctionDetailView.__set__ 'mediator', trigger: @triggerSpy
 
-    @saleArtwork = new SaleArtwork fabricate 'sale_artwork', minimum_next_bid_cents: 500000, reserve_status: 'no_reserve'
+    @saleArtwork = new SaleArtwork fabricate 'sale_artwork', minimum_next_bid_cents: 500000, low_estimate_cents: 600000, high_estimate_cents: 800000, reserve_status: 'no_reserve'
     @auction = new Sale fabricate 'sale'
 
     @auction.set 'auctionState', 'open'
@@ -49,6 +49,9 @@ describe 'AuctionDetailView', ->
 
     it 'displays a description of the bid status', ->
       @view.$('.abs-count').text().should.equal '(0 bids)'
+
+    it 'displays estimate', ->
+      @view.$('.artwork-auction-estimate').text().should.equal 'Estimate: $8,000–$6,000'
 
     it 'does not display what it does not have', ->
       @view.$('.artwork-bidder-position-status').length.should.not.be.ok

@@ -58,6 +58,14 @@ figure.artwork-item( data-artwork=artwork.get('id') )
         if saleArtwork && saleArtwork.get('user_notes')
           .artwork-item-blurb!= saleArtwork.mdToHtml('user_notes')
 
+    //- Auction estimate
+    if artwork.has('saleArtwork') && isAuction
+      - var saleArtwork = artwork.get('saleArtwork')
+      - var estimate = saleArtwork.estimate()
+      if estimate
+        .artwork-item-estimate
+          | #{estimate}
+
     //- Auction related pricing information
     - var displayBidStatus = artwork.has('saleArtwork') && isAuction
     - var displayBuyNowPrice = artwork.saleMessage() && displayPrice && isAuction
