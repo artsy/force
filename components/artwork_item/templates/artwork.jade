@@ -49,15 +49,6 @@ figure.artwork-item( data-artwork=artwork.get('id') )
     if artwork.saleMessage() && displayPrice && !isAuction
       p.artwork-item-sale-price= artwork.saleMessage()
 
-    //- In the case of auctions this blurb is usually an estimate
-    if artwork.has('saleArtwork') || showBlurbs
-      - var saleArtwork = artwork.get('saleArtwork')
-      if artwork.has('blurb') && artwork.get('blurb')
-        .artwork-item-blurb!= artwork.mdToHtml('blurb')
-      else
-        if saleArtwork && saleArtwork.get('user_notes')
-          .artwork-item-blurb!= saleArtwork.mdToHtml('user_notes')
-
     //- Auction estimate
     if artwork.has('saleArtwork') && isAuction
       - var saleArtwork = artwork.get('saleArtwork')
@@ -85,6 +76,15 @@ figure.artwork-item( data-artwork=artwork.get('id') )
           if displayBuyNowPrice
             .artwork-item-buy-now-price
               | Buy Now Price: #{artwork.saleMessage()}
+
+    //- In the case of auctions this blurb is usually an estimate
+    if artwork.has('saleArtwork') || showBlurbs
+      - var saleArtwork = artwork.get('saleArtwork')
+      if artwork.has('blurb') && artwork.get('blurb')
+        .artwork-item-blurb!= artwork.mdToHtml('blurb')
+      else
+        if saleArtwork && saleArtwork.get('user_notes')
+          .artwork-item-blurb!= saleArtwork.mdToHtml('user_notes')
 
     if artwork.has('saleArtwork') || showBlurbs
       a.artwork-item-more-info.avant-garde-button-black.is-tiny(
