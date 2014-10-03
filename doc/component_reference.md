@@ -553,10 +553,10 @@ class FormView extends Backbone.View
     'click button': 'submit'
 
   submit: (e) ->
-    e.preventDefault()
-
     return unless @validateForm()
     return if @formIsSubmitting()
+
+    e.preventDefault()
 
     @model.save @serializeForm(),
       success: (model, response, options) =>
@@ -569,7 +569,7 @@ class FormView extends Backbone.View
 
 ```
 
-You will want to have an actual `<button>` element in the form for handling submission. (The default `type` attribute is `submit` so this will trigger the form submission event.) `validateForm` will only apply the `is-validated` class to the form when there's a submit button due to click events firing before form submission events (*I think*).
+You will want to have an actual `<button>` element in the form for handling submission. (The default `type` attribute is `submit` so this will trigger the form submission event.) `validateForm` will only apply the `is-validated` class to the form when there's a submit button due to click events firing before form submission events. You also want to prevent the default form event *after* calling `validateForm`.
 
 ## Related Links
 
