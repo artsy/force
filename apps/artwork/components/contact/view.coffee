@@ -34,10 +34,10 @@ module.exports = class ContactView extends Backbone.View
     @$textarea = @$('textarea')
 
   submit: (e) ->
-    e.preventDefault()
-
     return unless @validateForm()
     return if @formIsSubmitting()
+
+    e.preventDefault()
 
     @$submit.attr 'data-state', 'loading'
 
