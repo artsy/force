@@ -177,6 +177,9 @@ artwork-detail-item-height = 36px
     letter-spacing 0
     color gray-darker-color
 
+.artwork-detail-partner-link
+  margin 5px 0
+
 .artwork-edition-sets
   margin 10px 0
 .artwork-edition-set
@@ -235,19 +238,3 @@ artwork-detail-item-height = 36px
       border-color @background-color
       color white
       transition none
-
-// ab:artwork:sidebar_design
-.artwork-detail
-  // Handle toggling of elements based on test path
-  &.is-abtest-compact .for-abtest-expanded
-  &.is-abtest-expanded .for-abtest-compact
-    display none
-  // Changes to be folded into the winning path
-  &.is-abtest-compact
-    .artwork-detail-partner-link
-      margin 5px 0
-    #artwork-contact-form
-      margin 15px 0
-
-  &.is-abtest-expanded
-    // Nothin.

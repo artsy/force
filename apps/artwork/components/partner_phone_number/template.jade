@@ -1,18 +1,6 @@
-//- ab:artwork:sidebar_design
-.for-abtest-expanded
-  h2.artwork-detail-header Call #{artwork.contactLabel()}
-  a.show-phone-number( href='#' )
-    | Show Phone Number#{locations.length > 1 ? 's' : ''}
-  .partner-phone-numbers
-    for location in locations
-      .partner-phone-number
-        = location.cityPhone()
-  hr
-
-.for-abtest-compact
-  a.avant-garde-button-underlined.show-phone-number( href='#' )
-    | Show Phone Number#{locations.length > 1 ? 's' : ''}
-  .partner-phone-numbers
-    for location in locations
-      .partner-phone-number
-        = location.cityPhone()
+a.avant-garde-button-underlined.show-phone-number( href='#' )
+  | Show Phone Number#{locations.length > 1 ? 's' : ''}
+.partner-phone-numbers
+  for location in locations
+    .partner-phone-number
+      = location.cityPhone()
