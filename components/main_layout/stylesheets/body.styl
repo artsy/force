@@ -34,7 +34,9 @@ html[data-useragent*="iPad"]
 .minimal-header
   #main-layout-header
     position relative !important
-  #main-layout-search-bar-container, #main-layout-header-right
+  #main-layout-search-bar-container
+  #main-layout-header-center
+  #main-layout-header-right
     display none
   #main-layout-header-home-logo
     border-right 1px solid gray-lighter-color
@@ -65,10 +67,9 @@ html[data-useragent*="iPad"]
     background transparent
 .body-transparent-header
   #main-layout-header
-    border-color rgba(0,0,0,0.1)
+    border-color rgba(black, 0.1)
     *:not(.tt-suggestion):not(.tt-dropdown-menu)
-      border-color rgba(0,0,0,0.1)
-
+      border-color rgba(black, 0.1)
 .body-hide-header
   #main-layout-header
     display none
@@ -76,12 +77,14 @@ html[data-useragent*="iPad"]
 // Dark banners and backgrounds need the header it to be white text and outlines
 // for visiblity.
 .body-transparent-header-white
+  #main-layout-header-center a
   #main-layout-header-right a
-  .header-user-name
+  .mlh-user-name
   #main-layout-header-home-logo
   #main-layout-welcome-header
   #main-layout-search-bar-icon
     color white
+  #main-layout-header-center a::after
   #main-layout-header-right a::after
     border-color white
   #main-layout-search-bar-input
@@ -98,9 +101,9 @@ html[data-useragent*="iPad"]
       &:last-child::after
         background white
   #main-layout-header
-    border-color rgba(255,255,255,0.3)
+    border-color rgba(white, 0.3)
     *:not(.tt-suggestion):not(.tt-dropdown-menu)
-      border-color rgba(255,255,255,0.3)
+      border-color rgba(white, 0.3)
   #main-layout-search-bar-container.is-loading .loading-spinner-small
     background white
   #main-layout-header-home-logo::after

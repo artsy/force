@@ -10,29 +10,32 @@ header#main-layout-header
             br
             | museums, and private collections.
       i#main-layout-welcome-logo.icon-logotype
-  nav
-    #main-layout-header-left
-      a#main-layout-header-home-logo.icon-logo( href='/', class=activeClass('/') )
+  nav.mlh-navbar
+    #main-layout-header-left.mlh-navbar-cell
+      a#main-layout-header-home-logo.mlh-top-nav-link.icon-logo( href='/', class=activeClass('/') )
       include ../../../search_bar/template
-    #main-layout-header-right
+    #main-layout-header-center.mlh-navbar-cell
       if user
-        a.header-post-button.icon-write( href='/post', class=activeClass('/post') )
-      a( href='/browse', class=activeClass('/browse') ) Browse
-      a( href='/artists', class=activeClass('/artists') ) Artists
-      a( href='/posts', class=activeClass('/posts') ) Posts
+        a.mlh-post-link.icon-write( href='/post', class=activeClass('/post') )
+      a.mlh-top-nav-link( href='/browse', class=activeClass('/browse') ) Browse
+      a.mlh-top-nav-link( href='/artists', class=activeClass('/artists') ) Artists
+      a.mlh-top-nav-link( href='/posts', class=activeClass('/posts') ) Posts
       if user
-        a( href='/favorites', class=activeClass('/favorites') ) Favorites
-      a( href='/feature/artsy-education', class=activeClass('/feature/artsy-education') ) Education
-      a( href='/about', class=activeClass('/about') ) About
-      if user
-        if user.get('name')
-          .header-user-name= user.get('name')
-            #main-layout-header-user-nav
-              include ./user_nav
+        a.mlh-top-nav-link( href='/favorites', class=activeClass('/favorites') ) Favorites
+      a.mlh-top-nav-link( href='/feature/artsy-education', class=activeClass('/feature/artsy-education') ) Education
+      a.mlh-top-nav-link( href='/about', class=activeClass('/about') ) About
+    #main-layout-header-right.mlh-navbar-cell
+      span.mlh-session
+        if user
+          if user.get('name')
+            .mlh-user-name
+              = user.get('name')
+              #main-layout-header-user-nav
+                include ./user_nav
+          else
+            .mlh-user-name Account
+              #main-layout-header-user-nav
+                include ./user_nav
         else
-          .header-user-name account
-            #main-layout-header-user-nav
-              include ./user_nav
-      else
-        a.mlh-login( href='/log_in' ) Log in
-        a.mlh-signup( href='/sign_up' ) Sign up
+          a.mlh-top-nav-link.mlh-login( href='/log_in' ) Log in
+          a.mlh-top-nav-link.mlh-signup( href='/sign_up' ) Sign up

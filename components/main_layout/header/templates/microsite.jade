@@ -1,28 +1,27 @@
 include ../../../util/activator
 
 header#main-layout-header.force-position-absolute.microsite-header
-  nav
-    #main-layout-header-left
+  nav.mlh-navbar
+    #main-layout-header-left.mlh-navbar-cell
       if sd.KIOSK_MODE && sd.KIOSK_PAGE
-        a#main-layout-header-home-logo.icon-logo( href=sd.KIOSK_PAGE )
+        a#main-layout-header-home-logo.icon-logo( href= sd.KIOSK_PAGE )
       else
         a#main-layout-header-home-logo.icon-logo( href='/' )
-        a.header-text( href='/' ) Back to Artsy.net
-
-    #microsite-header-right
+        a.mshr-garamond-nav-link( href='/' ) Back to Artsy.net
+    #microsite-header-right.mlh-navbar-cell
       if user
         if profile
-          a.header-text( href="#{profile.href()}/favorites" ) Favorites
+          a.mshr-nav-link( href="#{profile.href()}/favorites" ) Favorites
         else if sd.KIOSK_MODE
-          a.header-text( href="/users/sign_out" ) Sign Out
+          a.mshr-nav-link( href="/users/sign_out" ) Sign Out
         else
-          a.header-text( href="/favorites" ) Favorites
-        .header-spacer |
+          a.mshr-nav-link( href="/favorites" ) Favorites
+        span.mshr-spacer
         if user.get('name')
-          a.header-text( href="/" + user.get('default_profile_id') )= user.get('name')
+          a.mshr-nav-link( href="/#{user.get('default_profile_id')}" )= user.get('name')
         else
-          .header-user-name Account
+          .mlh-user-name Account
       else
-        a.header-text.mlh-login( href='/log_in' ) Log in
-        .header-spacer |
-        a.header-text.mlh-signup( href='/sign_up' ) Sign up
+        a.mshr-nav-link.mlh-login( href='/log_in' ) Log in
+        span.mshr-spacer
+        a.mshr-nav-link.mlh-signup( href='/sign_up' ) Sign up
