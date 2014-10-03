@@ -5,7 +5,6 @@ Artworks = require '../../collections/artworks'
 AuctionLot = require '../../models/auction_lot'
 AuctionLots = require '../../collections/auction_lots'
 ComparableSales = require '../../collections/comparable_sales'
-
 totalCount = require '../../components/pagination/total_count'
 randomPage = (total, pageSize) ->
   Math.floor(Math.random() * (total / pageSize)) + 1
@@ -41,28 +40,28 @@ randomPage = (total, pageSize) ->
       res.locals.sd.ARTIST = response
       render()
 
-  # totalCount(res.locals.artsyXappToken, auctionLots.url()).then (total) ->
-  #   auctionLots.state.currentPage = randomPage(total, auctionLots.state.pageSize)
-  auctionLots.fetch
-    cache: true
-    error: res.backboneError
-    success: (collection, response, options) ->
-      res.locals.sd.AUCTION_LOTS = response
-      # Ensure the current lot is not in this collection
-      auctionLots.remove lot
-      render()
+  totalCount(res.locals.artsyXappToken, auctionLots.url()).then (total) ->
+    auctionLots.state.currentPage = randomPage(total, auctionLots.state.pageSize)
+    auctionLots.fetch
+      cache: true
+      error: res.backboneError
+      success: (collection, response, options) ->
+        res.locals.sd.AUCTION_LOTS = response
+        # Ensure the current lot is not in this collection
+        auctionLots.remove lot
+        render()
 
   artworks.url = artist.url() + '/artworks'
-  # totalCount(res.locals.artsyXappToken, artworks.url).then (total) ->
-  artworks.fetch
-    cache: true
-    error: res.backboneError
-    data:
-      size: 10
-      published: true
-    success: (collection, response) ->
-      res.locals.sd.ARTWORKS = response
-      render()
+  totalCount(res.locals.artsyXappToken, artworks.url).then (total) ->
+    artworks.fetch
+      cache: true
+      error: res.backboneError
+      data:
+        size: 10
+        published: true
+      success: (collection, response) ->
+        res.locals.sd.ARTWORKS = response
+        render()
 
 @artist = (req, res) ->
   currentPage = parseInt req.query.page or 1
