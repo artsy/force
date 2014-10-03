@@ -1,11 +1,13 @@
 if user.get('name')
-  a.user-nav-no-link( href="#" )= user.get('name')
-  a.user-nav-profile-link.is-profile-text( href="/" + user.get('default_profile_id') ) Profile
+  span.mlh-nav-link= user.get('name')
+  a.mlh-nav-link.user-nav-profile-link.is-profile-text(
+    href="/#{user.get('default_profile_id')}"
+  ) Profile
 else
-  a.user-nav-no-link( href="#" ) account
-a( href="/user/edit" ) Settings
+  span.mlh-nav-link Account
+a.mlh-nav-link( href='/user/edit' ) Settings
 if user.isAdmin()
-  a( href=sd.ADMIN_URL ) Admin
+  a.mlh-nav-link( href= sd.ADMIN_URL ) Admin
 if user.isAdmin() || user.get('has_partner_access')
-  a( href=sd.CMS_URL ) CMS
-a( href="/users/sign_out" ) Log out
+  a.mlh-nav-link( href= sd.CMS_URL ) CMS
+a.mlh-nav-link( href='/users/sign_out' ) Log out

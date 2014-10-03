@@ -1,25 +1,22 @@
 @import '../stylus_lib'
 
-logo-size = 52px
-suggestion-thumbnail-size = 32px
+logo-size = home-logo-size
+suggestion-thumbnail-size = default-icon-font-size
 suggestion-height = (suggestion-thumbnail-size + 20px)
 
 #main-layout-search-bar-container
   position relative
   width calc('100% - %s' % logo-size)
   border-left 1px solid gray-lighter-color
-
   form
     position relative
     width 100%
-    height logo-size
-
+    height 100%
   &.is-display-suggestions
     #main-layout-search-bar-feedback
       height logo-size
       border 1px solid gray-lighter-color
       opacity 1
-
   &.is-loading
     #main-layout-search-bar-spinner
       display block
@@ -29,7 +26,7 @@ suggestion-height = (suggestion-thumbnail-size + 20px)
 #main-layout-search-bar-feedback
   display block
   position absolute
-  width calc('100% + 3px')
+  width calc('100% + 2px')
   height 0
   left 0
   right auto
@@ -45,10 +42,10 @@ suggestion-height = (suggestion-thumbnail-size + 20px)
 #main-layout-search-bar-spinner
   display none
   position absolute
-  top 10px
+  top 0
+  bottom 0
   right 10px
   width suggestion-thumbnail-size
-  height suggestion-thumbnail-size
 
 search-bar-input-placeholder()
   color black
@@ -61,13 +58,14 @@ search-bar-input-placeholder()
   placeholder(search-bar-input-placeholder)
 
 #main-layout-search-bar-icon
-  width 32px
-  height 32px
-  iconfont-styling()
-  top 9px
-  left 18px
-  font-size 20px
   position absolute
+  iconfont-styling()
+  width default-icon-font-size
+  height default-icon-font-size
+  font-size 20px
+  top 50%
+  left 18px
+  transform translateY(-50%)
 
 // Results dropdown
 #main-layout-search-bar-container
@@ -75,16 +73,13 @@ search-bar-input-placeholder()
     display block
     width 100%
     height 100%
-
   .tt-hint
     display none
-
   .tt-dropdown-menu
     width calc('100% + 2px')
     margin-left -1px
     background-color white
     border 1px solid gray-lighter-color
-
   .tt-suggestion
     border-bottom 1px solid gray-lighter-color
     &:last-child
@@ -105,8 +100,7 @@ search-bar-input-placeholder()
       .mlsb-suggestion-value
         padding-left 26px
       .mlsb-suggestion-thumbnail
-        display: none
-
+        display none
   .mlsb-suggestion-kind
     display none
 

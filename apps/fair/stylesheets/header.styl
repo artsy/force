@@ -9,19 +9,40 @@
     vertical-align top
     .profile-badge-icon
       width 100px
-      height 100px
-      background-size 100px
+      height @width
+      background-size @width
   #fair-search-container
     display inline-block
     vertical-align top
-    margin-top 25px
-    margin-left 90px
+    margin 25px 0 0 90px
     input
       width 400px
-      border-color: transparify(gray-color, black)
-      &:hover, &:active
+      border-color transparify(gray-color, black)
+      &:hover
+      &:active
         border-color purple-color
   .fair-tabs
     position absolute
     top 37px
     right 0px
+
+#microsite-header-right
+  margin-right 20px
+  avant-garde()
+.mshr-nav-link
+  display inline-block
+  font-size 13px
+  text-decoration none
+  line-height home-logo-size
+.mshr-garamond-nav-link
+  display inline-block
+  margin-left 10px
+  text-decoration none
+  line-height home-logo-size
+.mshr-spacer
+  display inline-block
+  margin 0 15px -2px 15px
+  width 1px
+  height 0.9em
+  vertical-align baseline
+  background-color transparify(gray-color, black)
