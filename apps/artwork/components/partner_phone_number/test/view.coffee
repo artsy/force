@@ -35,10 +35,8 @@ describe 'PartnerPhoneNumberView', ->
 
   describe '#render', ->
     it 'renders all of the phone numbers', ->
-      @view.$('.artwork-detail-header').text().should.equal 'Call Gallery'
-      # ab:artwork:sidebar_design
-      # @view.$('.show-phone-number').length.should.equal 1
-      # @view.$('.partner-phone-number').length.should.equal 3
+      @view.$('.show-phone-number').length.should.equal 1
+      @view.$('.partner-phone-number').length.should.equal 3
 
   describe '#showPhoneNumber', ->
     it 'removes the "Show Phone Number" link and displays the phone numbers when clicked', ->

@@ -3,27 +3,18 @@ if artwork.isContactable()
   //- Gallery/Institution link
   if artwork.partnerLink()
     h2.artwork-detail-header
-      //- ab:artwork:sidebar_design
-      span.for-abtest-compact
-        | Contact
-        = ' '
-      = artwork.contactLabel()
-    //- ab:artwork:sidebar_design
+      | Contact #{artwork.contactLabel()}
     .artwork-detail-partner-link
       a.artwork-partner-name( href= artwork.partnerLink() )
         = artwork.partnerName()
       span#artwork-partner-locations
         //- Rendered client-side
-    hr.for-abtest-expanded
 
   //- Phone number
   #artwork-partner-phone-container
     //- Rendered client-side
 
   //- Embedded inquiry form
-  //- ab:artwork:sidebar_design
-  h2.for-abtest-expanded.artwork-detail-header
-    | Message #{artwork.contactLabel()}
   form#artwork-contact-form
     if user
       //- Logged in
