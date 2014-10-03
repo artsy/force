@@ -18,4 +18,4 @@ module.exports = class HeroUnit extends Backbone.Model
     @sslUrl @get('background_image_url')
 
   titleImageUrl: ->
-    @sslUrl @get('title_image_url')
+    @sslUrl @get('title_image_retina_url') or @get('title_image_url')
