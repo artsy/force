@@ -25,6 +25,7 @@ describe 'HeroUnitView', ->
         sd: {}
       }
       Backbone.$ = $
+      $.fn.imagesLoaded = ->
       done()
 
   after ->
@@ -37,6 +38,12 @@ describe 'HeroUnitView', ->
 
   afterEach ->
     Backbone.sync.restore()
+
+  describe '#setRetinaHeroTitles', ->
+
+    it 'swaps in the retina images', ->
+      @view.setRetinaHeroTitles()
+      @view.$('.home-hero-unit-title').first().attr('src').should.containEql '2x'
 
   describe '#setBodyClass', ->
 
