@@ -6,9 +6,9 @@ form.stacked-form
   .stacked-form-cell
     label.avant-garde-form-label( for='name' ) Full Name
     input.bordered-input.is-block(
-      placeholder= 'Your full name'
+      placeholder='Your full name'
       value= user.get('name')
-      name= 'name'
+      name='name'
       required
     )
 
@@ -16,6 +16,14 @@ form.stacked-form
     label.avant-garde-form-label Primary Location
     #personalize-collector-location
       //- Rendered separately
+
+  .stacked-form-cell
+    label.avant-garde-form-label( for='profession' ) Profession
+    input.bordered-input.is-block(
+      placeholder='There’s nothing here, yet'
+      value= user.get('profession')
+      name='profession'
+    )
 
   .stacked-form-cell
     label.avant-garde-form-label Artists you collect

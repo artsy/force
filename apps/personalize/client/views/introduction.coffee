@@ -14,9 +14,6 @@ module.exports = class IntroductionView extends StepView
   events:
     'click .personalize-skip': 'advance'
     'click .personalize-introduction-edit': 'edit'
-    'submit form': 'complete'
-    'click button': 'complete'
-    'blur input': 'setProfession'
 
   initialize: ->
     super
@@ -27,33 +24,11 @@ module.exports = class IntroductionView extends StepView
     e.preventDefault()
     new IntroductionEditView user: @user, width: '450px'
 
-  setProfession: ->
-    @user.save @serializeForm()
-
-  complete: (e) ->
-    e.preventDefault()
-    return if @formIsSubmitting()
-    @$button.attr 'data-state', 'loading'
-    @user.save @serializeForm(),
-      success: =>
-        @advance()
-      error: =>
-        @$button.attr 'data-state', 'error'
-        @reenableForm()
-
   syncIntroduction: ->
     @introductionView?.update()
 
-  setupIntroduction: ->
-    @introductionView = new IntroductionPreviewView el: @$('#personalize-introduction-rendered')
-
-  cacheSelectors: ->
-    @$input = @$('input')
-    @$button = @$('button')
-
   postRender: ->
-    @cacheSelectors()
-    @setupIntroduction()
+    @introductionView = new IntroductionPreviewView el: @$('#personalize-introduction-rendered')
 
   render: ->
     @$el.html template(user: @user, state: @state)
