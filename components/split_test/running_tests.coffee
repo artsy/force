@@ -8,8 +8,8 @@ module.exports =
   #   default: 'fillwidth'
   #   edge: 'filter_carousel'
 
-  'header-design':
-    key: 'header-design'
+  header_design:
+    key: 'header_design'
     outcomes:
       old: 1/2
       new: 1/2
