@@ -47,7 +47,9 @@ describe 'IntroductionEditView', ->
   describe '#submit', ->
     it 'saves the user attributes then closes the modal', ->
       @view.$('input[name="name"]').val 'Fifi'
+      @view.$('input[name="profession"]').val 'Dog'
       @view.$('form').submit()
       Backbone.sync.args[0][0].should.equal 'update'
       Backbone.sync.args[0][1].attributes.name.should.equal 'Fifi'
+      Backbone.sync.args[0][1].attributes.profession.should.equal 'Dog'
       @view.close.called.should.be.true
