@@ -1,0 +1,17 @@
+module.exports =
+  # artist_page_interface:
+  #   key: 'artist_page_interface'
+  #   outcomes:
+  #     fillwidth: 1/3
+  #     filter: 1/3
+  #     filter_carousel: 1/3
+  #   default: 'fillwidth'
+  #   edge: 'filter_carousel'
+
+  'header-design':
+    key: 'header-design'
+    outcomes:
+      old: 1/2
+      new: 1/2
+    default: 'old'
+    edge: 'new'
