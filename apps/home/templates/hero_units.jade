@@ -9,7 +9,8 @@ ul#home-hero-units
           .main-layout-container
             .home-hero-unit-header!= heroUnit.get('heading')
             img.home-hero-unit-title(
-              src=heroUnit.titleImageUrl(),
+              src=heroUnit.get('title_image_url'),
+              data-retina=heroUnit.get('title_image_retina_url')
               alt=heroUnit.get('name')
             )
             .subheading!= heroUnit.mdToHtml('description')

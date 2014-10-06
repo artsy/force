@@ -1,5 +1,6 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
+imagesLoaded = require 'imagesloaded'
 
 module.exports = class HeroUnitView extends Backbone.View
 
@@ -11,6 +12,13 @@ module.exports = class HeroUnitView extends Backbone.View
     @setInterval()
     @$window.on 'scroll', _.throttle @setBodyClass, 100
     @$window.on 'keyup', (e) => @onKeyUp(e)
+    @$heroUnits.imagesLoaded @setRetinaHeroTitles
+
+  setRetinaHeroTitles: =>
+    @$('.home-hero-unit-title').each ->
+      $(this)
+        .height($(this).height())
+        .attr 'src', $(this).attr('data-retina')
 
   setInterval: ->
     clearInterval @interval
