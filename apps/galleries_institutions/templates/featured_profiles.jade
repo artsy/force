@@ -1,9 +1,8 @@
 section.galleries-institutions-featured-profiles.grid-4-up
   for profile in featuredProfiles.shuffle()
-    - var partner = profile.get('owner')
     .grid-item.gallery-institutions-profile
-      a.hoverable-image-link( href="/#{profile.id}" )
-        img( src= profile.bestAvailableImage(), alt= profile.get('name') )
+      include ../../../components/partner_profile_cover/template
+      - var partner = profile.get('owner')
       .gip-metadata
         h3.gip-name: a( href="/#{profile.id}" )= partner.get('name')
         .gip-location= partner.get('type')
