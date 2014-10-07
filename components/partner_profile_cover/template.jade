@@ -1,0 +1,19 @@
+- if (/missing_image.png/.test(profile.bestAvailableImage())) {
+-   mode = 'missing'
+- } else if (/user_profile.png/.test(profile.bestAvailableImage())) {
+-   mode = 'missing'
+- } else if (!profile.has('cover_image')) {
+-   mode = 'fallback'
+- } else {
+-   mode = 'cover'
+- }
+
+a.partner-profile-cover.hoverable-image-link(
+  data-id= profile.id
+  data-mode= mode
+  href= profile.href(), class="is-#{mode}"
+)
+  .hoverable-image.is-three-two(
+    data-initials= profile.defaultIconInitials()
+    style=(mode !== 'missing' ? "background-image: url(#{profile.bestAvailableImage()});" : undefined)
+  )
