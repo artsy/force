@@ -5,7 +5,6 @@ module.exports =
   #     fillwidth: 1/3
   #     filter: 1/3
   #     filter_carousel: 1/3
-  #   default: 'fillwidth'
   #   edge: 'filter_carousel'
 
   header_design:
@@ -13,5 +12,4 @@ module.exports =
     outcomes:
       old: 1/2
       new: 1/2
-    default: 'old'
     edge: 'new'

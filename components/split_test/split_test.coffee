@@ -5,7 +5,7 @@ CurrentUser = require '../../models/current_user.coffee'
 { getProperty, setProperty, unsetProperty } = require '../../lib/analytics.coffee'
 
 module.exports = class SplitTest
-  constructor: ({ @key, @outcomes, @default, @edge }) ->
+  constructor: ({ @key, @outcomes, @edge }) ->
     return throw new Error('Your probability values for outcomes must add up to 1.0') if @sum() isnt 1
 
   _key: ->
