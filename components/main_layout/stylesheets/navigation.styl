@@ -2,7 +2,6 @@
   text-transform uppercase
   letter-spacing 2px
   white-space nowrap
-
 .garamond-tab
   position relative
   text-decoration none
@@ -14,7 +13,6 @@
   &.is-active
     color purple-color
     border-bottom-color purple-light-color
-
 .garamond-tab-separator
   display inline-block
   margin 0 15px -2px 15px
@@ -52,7 +50,6 @@
   &:hover > .icon-chevron-small-right
     color black
 
-// Hoverable images
 .hoverable-image-link
   position relative
   display inline-block
@@ -69,7 +66,6 @@
     transition opacity 0.33s
   &:hover:after
     opacity 0.5
-
 .hoverable-image-link > img
 .hoverable-image
   width 100%
@@ -83,3 +79,29 @@
     padding-bottom 66.67%
   &.is-four-three
     padding-bottom 75%
+
+.alphabetical-index
+  display table
+  table-layout fixed
+  font-size 18px
+  width 100%
+  border-top 1px solid gray-lighter-color
+  border-bottom 1px solid gray-lighter-color
+.alphabetical-index-label
+.alphabetical-index-range
+  display table-cell
+  white-space nowrap
+.alphabetical-index-label
+  width 200px
+  padding 20px 20px 20px 0
+.alphabetical-index-range
+  text-align right
+  > a
+    display inline-block
+    padding 20px 0.75%
+    text-transform uppercase
+    text-decoration none
+    transition color 0.25s
+    &:hover
+    &.is-active
+      color purple-color

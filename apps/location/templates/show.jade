@@ -57,8 +57,7 @@ block body
           for profile in profiles.models
             - var partner = profile.get('owner')
             .grid-item
-              a.hoverable-image-link( href="/#{profile.id}" )
-                img( src=profile.bestAvailableImage(), alt= partnername )
+              include ../../../components/partner_profile_cover/template
               .location-profile-metadata
                 h3.location-profile-name: a( href="/#{profile.id}" )= partner.name
                 h4.location-profile-location= partner.type

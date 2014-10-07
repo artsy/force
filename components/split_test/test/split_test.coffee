@@ -11,6 +11,7 @@ describe 'SplitTest', ->
 
   afterEach ->
     @setStub.restore()
+    benv.teardown()
 
   it 'requires probabilities to add up to 1.0', ->
     (=> new @SplitTest key: 'foobar', outcomes: foo: 0.5, bar: 0.4)

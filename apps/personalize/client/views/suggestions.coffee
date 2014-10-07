@@ -29,6 +29,7 @@ module.exports = class SuggestionsView extends StepView
     'click .personalize-suggestions-more': 'loadNextPage'
     'click #personalize-suggestions-location': 'changeLocation'
     'click #personalize-suggestions-unfollow-all': 'unfollowAll'
+    'click .partner-profile-cover': (e) -> e.preventDefault()
 
   initialize: (options = {}) ->
     super
@@ -100,9 +101,6 @@ module.exports = class SuggestionsView extends StepView
 
   postRenderSuggestions: ->
     @locationRequests = @locationRequests.concat @fetchAndRenderLocations()
-
-    @fallbackImages()
-
     # Attach FollowButton views
     @suggestions.each (model) =>
       button = @setupFollowButton model, @$suggestions.find(".follow-button[data-id='#{model.id}']")
@@ -115,21 +113,6 @@ module.exports = class SuggestionsView extends StepView
           @$suggestions.
             find(".personalize-suggestion-location[data-id='#{partner.id}']").
             html partner.displayLocations(@user.get('location')?.city)
-
-  fallbackImages: ->
-    @suggestions.map (profile) ->
-      unless profile.coverImage().has 'image_versions'
-        # Filter out the user_profile default image
-        # and replace with the gallery logo
-        unless /user_profile.png/.test (imageUrl = profile.iconImageUrl())
-          return @$(".hoverable-image-link[data-id='#{profile.id}'] .hoverable-image").
-            addClass('is-fallback').
-            css(backgroundImage: "url(#{imageUrl})")
-
-        # Still missing an image?
-        $image = @$(".hoverable-image-link[data-id='#{profile.id}'] .hoverable-image")
-        if /missing_image.png/.test $image.css('backgroundImage')
-          $image.addClass 'is-missing'
 
   loadNextPage: (e) ->
     e.preventDefault()

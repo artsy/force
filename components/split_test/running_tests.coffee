@@ -10,6 +10,6 @@ module.exports =
   header_design:
     key: 'header_design'
     outcomes:
-      old: 1/2
-      new: 1/2
+      old: 0.8
+      new: 0.2
     edge: 'new'
