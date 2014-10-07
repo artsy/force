@@ -21,6 +21,7 @@ If a separate doc is required, add it to the component's directory as a
 - [Blurb](#blurb)
 - [Form Mixin](#form-mixin)
 - [Related Links](#related-links)
+- [Split Test](#split-test)
 
 ## Artwork Columns
 ![](images/artwork_columns.png)
@@ -611,4 +612,29 @@ class RelatedRepresentationsLinksView extends RelatedLinksView
     @collection.url = "#{API_URL}/api/v1/artist/#{options.id}/partner_artists"
     @collection.fetch()
     super
+```
+
+## Split Test
+
+Add the test configuration to the `./components/split_test/running_tests.coffee` file:
+
+``` coffeescript
+module.exports =
+  header_design: # Key to reference when initializing the test
+    key: 'header_design'
+    outcomes: # Test group outcomes that add up to 1.0
+      old: 1/2
+      new: 1/2
+    edge: 'new' # Functionality that is always deployed to admins
+```
+
+Initialize the test:
+
+``` coffeescript
+splitTest = require '../../components/split_test/index.coffee'
+
+headerTest = splitTest('header_design')
+headerTest.key() # => 'split_test--header_design' (a namespaced key used for cookie / Mixpanel)
+headerTest.outcome() # => 'new' || 'old'
+headerTest.cssClass() # => 'is-splittest-header_design--new' || 'is-splittest-header_design--old'
 ```
