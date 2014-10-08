@@ -1,10 +1,14 @@
 @import '../stylus_lib'
 
+.bordered-pulldown-label
+  margin-right 10px
+
 .bordered-pulldown
   display inline-block
   width 200px
   position relative
   border 2px solid gray-lighter-color
+  text-align left
   &:hover > .bordered-pulldown-options
     display block
     border-color gray-color
@@ -31,20 +35,22 @@
 .bordered-pulldown-options
   display none
   position absolute
-  background #fff
+  background white
   border 2px solid gray-lighter-color
   // Offset border width
   top -2px
-  left -2px
-  right -2px
+  left @top
+  right @top
   z-index 2
   > a
     text-decoration none
     overflow ellipsis
     &:hover
       background-color gray-lightest-color
-    &.is-active
-      color red
 
-.bordered-pulldown-label
-  margin-right 10px
+// Scrollable variant
+.bordered-scrollable-pulldown
+  @extends .bordered-pulldown
+  > .bordered-pulldown-options
+    max-height 245px
+    overflow-y auto
