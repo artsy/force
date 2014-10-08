@@ -1,0 +1,13 @@
+extends ../../../components/main_layout/templates/blank
+
+append locals
+  - assetPackage = 'style_guide'
+
+block head
+  title Style Guide | Artsy
+
+block body
+  #style-guide.responsive-layout-container: .main-layout-container
+    include ./partials/header
+
+    block content
