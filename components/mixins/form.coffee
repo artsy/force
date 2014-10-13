@@ -62,9 +62,24 @@ module.exports =
     $form ?= @$('form')
     $form.addClass 'is-validated'
     if $form[0].checkValidity
+      # Check for any confirmable fields
+      if ($confirmables = $form.find('input[data-confirm]')).length
+        @validateConfirmables $form, $confirmables
       $form[0].checkValidity()
     else # Let the server handle it
       true
+
+  # Ensures fields with data-confirm='some_name' has a value matching the value
+  # of the field called out in the data-confirm attribute
+  validateConfirmables: ($form, $confirmables) ->
+    _.each $confirmables, (el) ->
+      $el = $(el)
+      confirm = $el.data('confirm')
+      $confirm = $form.find("input[name='#{confirm}']")
+      if $confirm.length and $el.val() isnt $confirm.val()
+        $el[0].setCustomValidity? "#{_s.humanize(confirm)} must match"
+      else
+        $el[0].setCustomValidity? ''
 
   # Attempt to normalize the error response and pull out a message
   #

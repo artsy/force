@@ -23,6 +23,14 @@ class FormView extends Backbone.View
       </form>
     """
 
+  confirmables: ->
+    """
+      <input type='password' name='password'>
+      <input type='password' name='password_confirmation' data-confirm='password'>
+      <input type='foobar' name='foobar'>
+      <input type='foobar' name='foobar_confirmation' data-confirm='foobar'>
+    """
+
   submitStub: -> # Stubbed in beforeEach hook
   submit: ->
     return if @formIsSubmitting()
@@ -103,6 +111,24 @@ describe 'Form', ->
       @view.validateForm()
       @view.$('form').hasClass('is-validated').should.be.ok
       @view.$('form')[0].checkValidity.called.should.be.ok
+
+    describe 'with confirmable fields', ->
+      beforeEach ->
+        @view.$('form')[0].checkValidity = sinon.stub()
+        @view.$('form').prepend @view.confirmables()
+
+      it 'should check for confirmable fields and validate they match', ->
+        @view.$('input[name="password"]').val 'foo'
+        @view.$('input[name="password_confirmation"]').val 'bar'
+        @view.$('input[name="password_confirmation"]')[0].setCustomValidity = sinon.stub()
+        @view.validateForm()
+        @view.$('input[name="password_confirmation"]')[0].setCustomValidity.called.should.be.true
+        @view.$('input[name="password_confirmation"]')[0].setCustomValidity.args[0][0].should.equal 'Password must match'
+        # Resolve the validation
+        @view.$('input[name="password_confirmation"]').val 'foo'
+        @view.validateForm()
+        # Empty string clears the custom validation
+        _.last(@view.$('input[name="password_confirmation"]')[0].setCustomValidity.args)[0].should.equal ''
 
   describe '#errorMessage', ->
     _.each errorResponses, (responseObj) ->
