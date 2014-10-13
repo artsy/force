@@ -14,7 +14,7 @@ describe 'Auth routes', ->
       session: {}
       get: sinon.stub()
       logout: sinon.stub()
-      user: new Backbone.Model(accessToken: 'secret')
+      user: new Backbone.Model accessToken: 'secret'
     @res = render: sinon.stub(), send: sinon.stub(), redirect: sinon.stub()
     @next = sinon.stub()
 
@@ -28,9 +28,9 @@ describe 'Auth routes', ->
 
     it 'renders the reset password page when there is no reset_password_token query param', ->
       routes.resetPassword @req, @res
-      @res.render.args[0][0].should.equal 'templates/reset_password'
+      @res.render.args[0][0].should.equal 'reset_password'
 
   describe '#twitterLastStep', ->
     it 'renders the last step email page', ->
       routes.twitterLastStep @req, @res
-      @res.render.args[0][0].should.equal 'templates/twitter_email'
+      @res.render.args[0][0].should.equal 'twitter_email'
