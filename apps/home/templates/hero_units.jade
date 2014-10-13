@@ -9,9 +9,9 @@ ul#home-hero-units
           .main-layout-container
             .home-hero-unit-header!= heroUnit.get('heading')
             img.home-hero-unit-title(
-              src=heroUnit.get('title_image_url'),
-              data-retina=heroUnit.get('title_image_retina_url')
-              alt=heroUnit.get('name')
+              src= heroUnit.titleImageUrl()
+              data-retina= heroUnit.titleImageRetinaUrl()
+              alt= heroUnit.get('name')
             )
             .subheading!= heroUnit.mdToHtml('description')
             .avant-garde-button(
