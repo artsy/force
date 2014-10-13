@@ -1,13 +1,16 @@
-doctype html
-html
-  head
-    title Artsy - Discover, Research, and Collect the World's Best Art Online
-    link( type='text/css', rel='stylesheet', href=(sd.ASSET_PATH + 'main_layout' + sd.CSS_EXT) )
-    link( type='text/css', rel='stylesheet', href=(sd.ASSET_PATH + 'auth' + sd.CSS_EXT) )
-  body
-    #auth-twitter-email.auth-style-form
-      #auth-artsy-logo.icon-logotype
-      h1 Just one more step
-      form( method='post', action='/users/auth/twitter/email?redirect-to=/personalize' )
-        input.bordered-input( type='email', placeholder='Email', autofocus=true, name='email' )
-        button.avant-garde-button-black Join Artsy
+extends ../../../components/main_layout/templates/blank
+
+append locals
+  - assetPackage = 'auth'
+
+block head
+  title Reset Password | Artsy
+
+block body
+  #auth-page.responsive-layout-container: .main-layout-container
+    #auth-artsy-logo.icon-logotype
+
+    h1.small-caps Just one more step
+    form.stacked-form( method='post', action='/users/auth/twitter/email?redirect-to=/personalize' )
+      input.bordered-input( type='email', placeholder='Email', name='email', autofocus )
+      button.avant-garde-button-black Join Artsy
