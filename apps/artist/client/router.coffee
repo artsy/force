@@ -2,7 +2,6 @@ _ = require 'underscore'
 _s = require 'underscore.string'
 sd = require('sharify').data
 Backbone = require 'backbone'
-splitTestInterface = require './split_test.coffee'
 ArtistCarouselView = require '../../../components/artist_carousel/view.coffee'
 HeaderView = require './views/header.coffee'
 OverviewView = require './views/overview.coffee'
@@ -35,8 +34,7 @@ module.exports = class ArtistRouter extends Backbone.Router
     @user?.initializeDefaultArtworkCollection()
 
   setupCarousel: ->
-    if splitTestInterface() is 'filter_carousel'
-      new ArtistCarouselView el: $('#artist-carousel'), model: @model
+    new ArtistCarouselView el: $('#artist-carousel'), model: @model
 
   setupHeaderView: ->
     @headerView = new HeaderView _.extend el: $('#artist-page-header'), @options

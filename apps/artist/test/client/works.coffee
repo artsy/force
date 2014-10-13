@@ -4,7 +4,6 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
-{ stubChildClasses } = require '../../../../test/helpers/stubs'
 Artist = require '../../../../models/artist'
 
 describe 'WorksView', ->
@@ -20,14 +19,11 @@ describe 'WorksView', ->
     benv.teardown()
 
   beforeEach ->
+    $.onInfiniteScroll = sinon.stub()
     sinon.stub _, 'defer', (cb) -> cb()
     sinon.stub Backbone, 'sync'
-    @WorksView.__set__ 'splitTestInterface', -> 'fillwidth'
-    stubChildClasses @WorksView, this,
-      ['FillwidthView']
-      ['render', 'nextPage', 'remove']
+    @WorksView.__set__ 'ArtworkFilter', init: @artworkFilterInitStub = sinon.stub().returns(view: new Backbone.View)
     @view = new @WorksView model: @model
-    @view.sortBy = '-published_at'
 
   afterEach ->
     _.defer.restore()
@@ -38,36 +34,8 @@ describe 'WorksView', ->
     it 'renders the template', ->
       @view.render()
       @view.$('#artwork-section').length.should.equal 1
-      @view.$('.bordered-pulldown-text').text().should.equal 'Recently Added'
 
   describe '#postRender', ->
-    beforeEach ->
+    it 'sets up artwork filter in infinite mode', ->
       @view.render()
-
-    it 'sets up fillwidth views with collections pointing to for sale and not for sale works', ->
-      view1Opts = @FillwidthView.args[0][0]
-      view2Opts = @FillwidthView.args[1][0]
-      view1Opts.fetchOptions['filter[]'].should.equal 'for_sale'
-      view2Opts.fetchOptions['filter[]'].should.equal 'not_for_sale'
-      view1Opts.collection.url.should.containEql '/artworks'
-      view2Opts.collection.url.should.containEql '/artworks'
-
-    describe 'sorting', ->
-      it 'passes the correct sort option into setupArtworks when sorting by Recently Added, and updates the picker', ->
-        $fixture = $ """
-          <div class="bordered-pulldown-options">
-            <a data-sort="-published_at">Recently Added<a>
-          </div>
-        """
-        @view.onSortChange currentTarget: $fixture.find('a')
-        @view.sortBy.should.equal '-published_at'
-        @view.$el.find('.bordered-pulldown-toggle').html().should.containEql 'Recently Added'
-
-      it 'passes the correct sort option into setupArtworks when sorting by Relevance', ->
-        $fixture = $ """
-          <div class="bordered-pulldown-options">
-            <a data-sort>Relevance<a>
-          </div>
-        """
-        @view.onSortChange currentTarget: $fixture.find('a')
-        @view.sortBy.should.equal ''
+      @artworkFilterInitStub.args[0][0].mode.should.equal 'infinite'

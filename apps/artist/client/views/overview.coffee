@@ -23,18 +23,11 @@ module.exports = class OverviewView extends Backbone.View
     'click .artist-works-sort a': 'onSortChange'
 
   initialize: ({ @user, @data }) ->
-    @sortBy = sd.SORT_BY
     @sticky = new Sticky
 
   setupSubHeader: ->
     @setupRelatedGenes()
     @setupRelatedRepresentations()
-
-  # Currently shares same configuration as WorksView
-  setupSplitTest: WorksView::setupSplitTest
-  setupArtworksFillwidth: WorksView::setupArtworksFillwidth
-  setupFillwidth: WorksView::setupFillwidth
-  onSortChange: WorksView::onSortChange
 
   setupArtworkFilter: ->
     # Need to resolve issues with changing heights and sticky not getting correct height
@@ -97,14 +90,14 @@ module.exports = class OverviewView extends Backbone.View
     # Sub-header
     @setupSubHeader()
     # Main section
-    @setupSplitTest()
+    @setupArtworkFilter()
     # Bottom sections
     @setupRelatedArtists()
     @setupRelatedShows()
     @setupRelatedPosts()
 
   render: ->
-    @$el.html template(artist: @model, sortBy: @sortBy)
+    @$el.html template(artist: @model)
     _.defer => @postRender()
     this
 

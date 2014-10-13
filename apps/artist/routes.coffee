@@ -18,7 +18,6 @@ Artist = require '../../models/artist'
         res.locals.sd.SORT_BY = sort
         res.render 'index',
           artist: artist
-          sortBy: sort
           jsonLD: stringifyJSONForWeb(artist.toJSONLD())
           tab: req.params.tab
       else
