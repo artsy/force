@@ -16,7 +16,7 @@ describe 'HeaderView', ->
       @model = new Artist fabricate 'artist', id: 'foo-bar'
       @data = new ArtistData model: @model
       benv.render resolve(__dirname, '../../templates/index.jade'), {
-        sd: {}, artist: @model, sortBy: '-published_at'
+        sd: {}, artist: @model
       }, => done()
 
   after ->

@@ -11,10 +11,20 @@ carousel-controls-height = 46px
   height carousel-height + carousel-top-padding + carousel-controls-height
   &:empty
     display none
+  .carousel-figures
+    height carousel-height
+  .carousel-figure
+    vertical-align top
+    > a
+      display block
+      overflow hidden
+      height 100%
   .carousel-figures-clip
     min-height inherit
     height carousel-height
     img
+      display block
       max-height 100%
+      height inherit
   .carousel-dots
     display none
