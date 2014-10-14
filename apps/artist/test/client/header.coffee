@@ -44,6 +44,11 @@ describe 'HeaderView', ->
       _.findWhere(navData, rel: 'prev').name.should.equal 'Works'
       _.findWhere(navData, rel: 'next').name.should.equal 'Shows'
 
+    it 'takes in to consideration query strings', ->
+      Backbone.history.fragment = 'artist/foo-bar/works?price_range=-1%3A1000000000000'
+      navData = @view.navData @data.sections
+      _.findWhere(navData, active: true).name.should.equal 'Works'
+
   describe '#updateTags', ->
     before ->
       $('body').prepend @$head = $('<head></head>')

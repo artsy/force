@@ -41,6 +41,15 @@ describe 'ArtistRouter', ->
       section.slug.should.equal ''
       section.name.should.equal 'Overview'
 
+    it 'takes into consideration query strings', ->
+      Backbone.history.fragment = 'artist/foo-bar/works?price_range=-1%3A1000000000000'
+      section = @router.getSection()
+      section.slug.should.equal 'works'
+      Backbone.history.fragment = 'artist/foo-bar?price_range=-1%3A1000000000000'
+      section = @router.getSection()
+      section.slug.should.equal ''
+      section.name.should.equal 'Overview'
+
   describe '#execute', ->
     beforeEach ->
       @renderStub = renderStub = sinon.stub()
