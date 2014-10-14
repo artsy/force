@@ -21,7 +21,7 @@ describe 'AccountForm', ->
   beforeEach (done) ->
     sinon.stub Backbone, 'sync'
 
-    @userEdit = new UserEdit fabricate 'user', location: fabricate 'location'
+    @userEdit = new UserEdit fabricate 'user', paddle_number: '1234', location: fabricate 'location'
     @view = new AccountForm userEdit: @userEdit
     @view.render()
 
@@ -29,6 +29,13 @@ describe 'AccountForm', ->
 
   afterEach ->
     Backbone.sync.restore()
+
+  describe '#render', ->
+    it 'renders the view', ->
+      @view.$el.html().should.containEql 'Information'
+
+    it 'displays bidder number', ->
+      @view.$('label.user-bidder-number').text().should.containEql '1234'
 
   describe '#toggleService', ->
     describe 'link', ->
