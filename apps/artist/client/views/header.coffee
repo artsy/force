@@ -40,7 +40,7 @@ module.exports = class ArtistHeaderView extends Backbone.View
     _.tap JSON.parse(JSON.stringify sections), (clone) =>
       _.each clone, (section, i) =>
         section.href = section.href.replace ':id', @model.id
-        if section.active = Backbone.history.fragment is section.href
+        if section.active = Backbone.history.fragment.split('?')[0] is section.href
           clone[i - 1]?.rel = 'prev'
           clone[i + 1]?.rel = 'next'
 

@@ -61,7 +61,7 @@ module.exports = class ArtistRouter extends Backbone.Router
     @navigate "artist/#{@model.id}", trigger: true
 
   getSection: ->
-    slug = _.last(Backbone.history.fragment.split '/')
+    slug = _.last(Backbone.history.fragment.split '/').split('?')[0]
     slug = '' if slug is @model.id
     _.findWhere @data.sections, slug: slug
 
