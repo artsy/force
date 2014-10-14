@@ -22,8 +22,12 @@
           required
         )
 
-        label.avant-garde-form-label( for='settings-user-phone' ) Phone Number
+        label.avant-garde-form-label( for='settings-user-phone' ) Mobile Number
         input#settings-user-phone.bordered-input( type='tel', value=user.get('phone'), name='phone' )
+
+        if user.get('paddle_number')
+          label.avant-garde-form-label( for='settings-user-bidder-number' ) Bidder Number
+          label.user-bidder-number= user.get('paddle_number')
 
         hr.is-invisible
 
