@@ -126,6 +126,13 @@ block-margins(margin-size = 20px)
   &:last-child
     margin-bottom 0
 
+inline-block-margins(margin-size = 20px)
+  margin 0 margin-size
+  &:first-child
+    margin-left 0
+  &:last-child
+    margin-right 0
+
 // Grid mixins used in the grid component mostly, but elsewhere for custom gap sizes
 grid-n-up(n, gap)
   > .grid-item
