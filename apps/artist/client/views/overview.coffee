@@ -69,16 +69,16 @@ module.exports = class OverviewView extends Backbone.View
     $el
 
   setupRelatedArtists: ->
-    @renderRelatedArtists 'Artists'
-    @renderRelatedArtists 'Contemporary'
+    @renderRelatedArtists 'artists'
+    @renderRelatedArtists 'contemporary'
 
   renderRelatedArtists: (type) ->
-    $section = @$("#artist-related-#{type.toLowerCase()}-section")
-    if @model["related#{type}"]?.length
+    $section = @$("#artist-related-#{type}-section")
+    if @model.related()[type].length
       @setupRelatedSection $section
-      collection = new Backbone.Collection(@model["related#{type}"].take 5)
+      collection = new Backbone.Collection(@model.related()[type].take 5)
       subView = new ArtistFillwidthList
-        el: @$("#artist-related-#{type.toLowerCase()}")
+        el: @$("#artist-related-#{type}")
         collection: collection
         user: @user
       subView.fetchAndRender()
