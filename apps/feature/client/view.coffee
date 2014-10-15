@@ -161,7 +161,6 @@ module.exports = class FeatureView extends Backbone.View
     artworks.each (artwork) =>
       new SaleArtworkView
         currentUser: @currentUser
-        artworkCollection: @artworkCollection
         el: @$(".artwork-item[data-artwork='#{artwork.id}']")
         model: artwork
         sale: sale
