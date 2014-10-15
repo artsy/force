@@ -3,13 +3,9 @@ sd = require('sharify').data
 Backbone = require 'backbone'
 AcquireArtwork = require('../../acquire/view.coffee').acquireArtwork
 ContactPartnerView = require '../../contact/contact_partner.coffee'
-SaveControls = require '../../artwork_item/save_controls.coffee'
 mediator = require '../../../lib/mediator.coffee'
 
 module.exports = class SaleArtworkView extends Backbone.View
-  analyticsRemoveMessage: 'Removed artwork from collection, via sale'
-  analyticsSaveMessage: 'Added artwork to collection, via sale'
-
   events:
     'click .artwork-item-buy': 'acquire'
     'click .artwork-item-contact-seller': 'contactSeller'
@@ -17,15 +13,7 @@ module.exports = class SaleArtworkView extends Backbone.View
     'click .artwork-item-buy-now': 'acquire'
 
   initialize: (options = {}) ->
-    { @currentUser, @sale, @artworkCollection } = options
-
-    saveView = new SaveControls
-      artworkCollection: @artworkCollection
-      el: @$el
-      model: @model
-
-    saveView.analyticsRemoveMessage = @analyticsRemoveMessage
-    saveView.analyticsSaveMessage = @analyticsSaveMessage
+    { @currentUser, @sale } = options
 
     if @sale?.isAuction()
       if @sale.has 'auctionState'
