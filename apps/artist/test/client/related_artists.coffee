@@ -16,8 +16,8 @@ describe 'RelatedArtistsView', ->
       Backbone.$ = $
       @RelatedArtistsView = benv.requireWithJadeify resolve(__dirname, '../../client/views/related_artists'), ['template']
       @model = new Artist fabricate 'artist', id: 'foo-bar'
-      @model.relatedArtists.add fabricate('artist')
-      @model.relatedContemporary.add fabricate('artist')
+      @model.related().artists.add fabricate('artist')
+      @model.related().contemporary.add fabricate('artist')
       done()
 
   after ->

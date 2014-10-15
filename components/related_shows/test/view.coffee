@@ -20,7 +20,7 @@ describe 'RelatedShowsView', ->
   beforeEach (done) ->
     sinon.stub Backbone, 'sync'
     @artist = new Artist fabricate 'artist'
-    @view = new RelatedShowsView model: @artist, collection: @artist.relatedShows, nUp: 3
+    @view = new RelatedShowsView model: @artist, collection: @artist.related().shows, nUp: 3
     done()
 
   afterEach ->
@@ -29,7 +29,7 @@ describe 'RelatedShowsView', ->
   describe 'has a single show', ->
     beforeEach (done) ->
       @show = fabricate 'show'
-      @artist.relatedShows.reset [@show], parse: true
+      @artist.related().shows.reset [@show], parse: true
       @view.collection.trigger 'sync'
       done()
 
@@ -46,7 +46,7 @@ describe 'RelatedShowsView', ->
         fabricate 'show'
         fabricate 'show'
       ]
-      @artist.relatedShows.reset @shows, parse: true
+      @artist.related().shows.reset @shows, parse: true
       @view.collection.trigger 'sync'
       done()
 

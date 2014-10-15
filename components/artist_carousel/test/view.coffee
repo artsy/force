@@ -58,7 +58,7 @@ describe 'ArtistCarouselView', ->
     it 'renders once the iconic works are fetched + when the related shows event comes in', ->
       Backbone.sync.args[0][2].success _.times 4, -> fabricate 'artwork_image'
       @view.render.callCount.should.equal 1
-      @view.model.relatedShows.trigger 'sync'
+      @view.model.related().shows.trigger 'sync'
       @view.checkRelatedShows.called.should.be.true
       _.isUndefined(@view.rendered).should.be.true
       @view.render()

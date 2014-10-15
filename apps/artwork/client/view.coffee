@@ -177,19 +177,19 @@ module.exports = class ArtworkView extends Backbone.View
 
   setupArtistArtworks: ->
     return unless @artist?.get('artworks_count') > 1
-    @listenTo @artist.artworks, 'sync', @renderArtistArtworks
-    @artist.artworks.fetch()
+    @listenTo @artist.related().artworks, 'sync', @renderArtistArtworks
+    @artist.related().artworks.fetch()
 
   renderArtistArtworks: ->
     # Ensure the current artwork is not in the collection
-    @artist.artworks.remove @artwork
+    @artist.related().artworks.remove @artwork
 
-    return unless @artist.artworks.length
+    return unless @artist.related().artworks.length
     @$('#artist-artworks-section').addClass('is-fade-in').show()
 
     new ArtworkColumnsView
       el: @$('#artist-artworks-section .artworks-list')
-      collection: @artist.artworks
+      collection: @artist.related().artworks
       allowDuplicates: true
       numberOfColumns: 4
       gutterWidth: 40
@@ -198,7 +198,7 @@ module.exports = class ArtworkView extends Backbone.View
       seeMore: false
       artworkSize: 'tall'
 
-    trackArtworkImpressions @artist.artworks.models, @$('#artwork-artist-artworks-container')
+    trackArtworkImpressions @artist.related().artworks.models, @$('#artwork-artist-artworks-container')
 
   renderDetail: ->
     @$('.artwork-detail').html detailTemplate

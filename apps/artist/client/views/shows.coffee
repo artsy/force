@@ -5,7 +5,7 @@ template = -> require('../../templates/sections/shows.jade') arguments...
 
 module.exports = class ShowsView extends Backbone.View
   initialize: ->
-    @collection = @model.relatedShows
+    @collection = @model.related().shows
 
   postRender: ->
     @subView = new RelatedShowsView collection: @collection, nUp: 3, maxShows: 20

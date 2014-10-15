@@ -16,8 +16,8 @@ describe 'Artist', ->
   describe '#initialize', ->
 
     it 'sets up related artist collections', ->
-      @artist.relatedArtists.url.should.containEql '/api/v1/related/layer/main/artists'
-      @artist.relatedContemporary.url.should.containEql '/api/v1/related/layer/contemporary'
+      @artist.related().artists.url.should.containEql '/api/v1/related/layer/main/artists'
+      @artist.related().contemporary.url.should.containEql '/api/v1/related/layer/contemporary'
 
   describe '#fetchRelatedArtists', ->
 

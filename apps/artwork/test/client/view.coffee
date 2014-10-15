@@ -26,7 +26,7 @@ describe 'ArtworkView', ->
 
   beforeEach (done) ->
     @artist = new Artist(fabricate 'artist')
-    sinon.stub @artist.artworks, 'fetch'
+    sinon.stub @artist.related().artworks, 'fetch'
 
     # Interestingly: jQuery "Every attempt is made to convert the string to a
     # JavaScript value (this includes booleans, numbers, objects, arrays, and null)"
@@ -63,7 +63,7 @@ describe 'ArtworkView', ->
 
   afterEach ->
     Backbone.sync.restore()
-    @artist.artworks.fetch.restore()
+    @artist.related().artworks.fetch.restore()
     @renderDetailSpy.restore()
 
   describe 'user logged in', ->
@@ -186,14 +186,14 @@ describe 'ArtworkView', ->
 
     describe '#setupArtistArtworks', ->
       it 'fetches a sample of the artwork artist\'s works', ->
-        @artist.artworks.fetch.callCount.should.equal 1
+        @artist.related().artworks.fetch.callCount.should.equal 1
 
     describe '#renderArtistArtworks', ->
       it 'renders the artist\'s artworks', ->
-        @artist.artworks.add([fabricate 'artwork'])
-        @artist.artworks.trigger 'sync'
+        @artist.related().artworks.add([fabricate 'artwork'])
+        @artist.related().artworks.trigger 'sync'
 
-        @artist.artworks.pluck('id').should.not.containEql @artwork.id
+        @artist.related().artworks.pluck('id').should.not.containEql @artwork.id
 
     describe '#openShare', ->
       it 'opens the share view when the share button is clicked', ->

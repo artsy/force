@@ -19,22 +19,22 @@ module.exports.sections = sections = [
   href: 'artist/:id/posts'
   name: 'Posts'
   calls: [
-    ['relatedPosts', [data: size: 5]]
+    ['posts', [data: size: 5]]
   ]
 ,
   slug: 'shows'
   href: 'artist/:id/shows'
   name: 'Shows'
   calls: [
-    ['relatedShows', [data: size: 5]]
+    ['shows', [data: size: 5]]
   ]
 ,
   slug: 'related-artists'
   href: 'artist/:id/related-artists'
   name: 'Related Artists'
   calls: [
-    ['relatedArtists', [data: size: 10]]
-    ['relatedContemporary', [data: size: 10]]
+    ['artists', [data: size: 10]]
+    ['contemporary', [data: size: 10]]
   ]
 ]
 
@@ -56,7 +56,7 @@ module.exports.ArtistData = class ArtistData
   run: ->
     _.flatten _.map @sections, ({ calls }) =>
       _.map calls, (call) =>
-        @model[call[0]].fetch call[1]...
+        @model.related()[call[0]].fetch call[1]...
 
   # Returns a new sections structure with only the sections
   # that should ultimately be displayed + simultaneously
@@ -64,7 +64,7 @@ module.exports.ArtistData = class ArtistData
   processReturns: ->
     _.compact _.map @sections, (section) =>
       display = _.any _.map section.calls, (call) =>
-        collection = @model[call[0]]
+        collection = @model.related()[call[0]]
         @trigger "sync:#{call[1]}", collection.length
         collection.length isnt 0
       section if display or section.always

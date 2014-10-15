@@ -97,7 +97,7 @@ module.exports = class ArtistsView extends StepView
       id: artist.id
       name: "Artists related to #{artist.get 'name'}"
       analyticsLabel: 'artist related suggestions'
-      suggestions: artist.relatedArtists
+      suggestions: artist.related().artists
 
   fetchRelatedArtists: (artist) ->
     artist.fetchRelatedArtists 'Artists',
