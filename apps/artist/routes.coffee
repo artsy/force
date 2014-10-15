@@ -1,3 +1,5 @@
+fs = require 'graceful-fs'
+{ resolve } = require 'path'
 Backbone = require 'backbone'
 Artist = require '../../models/artist'
 { stringifyJSONForWeb } = require '../../components/util/json'
@@ -30,3 +32,14 @@ Artist = require '../../models/artist'
     error: res.backboneError
     success: ->
       res.redirect "/artist/#{req.params.id}"
+
+# Temporary
+@data = (req, res) ->
+  try
+    filename = resolve __dirname, "./public/data/#{req.params.id}/#{req.params.section}.json"
+    data = fs.readFileSync filename
+  catch
+    data = '[]'
+  res.header 'Content-Type', 'application/json; charset=utf-8'
+  res.write data
+  res.end()
