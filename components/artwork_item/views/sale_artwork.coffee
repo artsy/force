@@ -19,14 +19,6 @@ module.exports = class SaleArtworkView extends Backbone.View
   initialize: (options = {}) ->
     { @currentUser, @sale, @artworkCollection } = options
 
-    saveView = new SaveControls
-      artworkCollection: @artworkCollection
-      el: @$el
-      model: @model
-
-    saveView.analyticsRemoveMessage = @analyticsRemoveMessage
-    saveView.analyticsSaveMessage = @analyticsSaveMessage
-
     if @sale?.isAuction()
       if @sale.has 'auctionState'
         @setupAuctionState()
