@@ -55,7 +55,8 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
             saleId: @model.get('id')
             success: success
             error: (model, xhr) =>
-              return success() if xhr.responseJSON?.message is 'Sale is already taken.'
+              if xhr.responseJSON?.message is 'Sale is already taken.'
+                return success()
               @showError "Registration submission error", xhr
         error: =>
           @showError "Error adding your credit card", response
