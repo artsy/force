@@ -33,7 +33,7 @@ module.exports = class ArtistHeaderView extends Backbone.View
 
   maybeRemoveEmptyNotice: ->
     @listenToOnce @data, 'sync:all', =>
-      if @model.artworks.length
+      if @model.related().artworks.length
         @$('.artist-header-empty').remove()
 
   navData: (sections) ->

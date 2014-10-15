@@ -16,7 +16,7 @@ module.exports = class ArtistCarouselView extends Backbone.View
     @renderSpinner()
 
     @collection = new Backbone.Collection [], model: InstallShot
-    @listenTo @model.relatedShows, 'sync', @checkRelatedShows
+    @listenTo @model.related().shows, 'sync', @checkRelatedShows
     @fetchIconicWorks()
 
   shouldDisplay: ->
@@ -26,7 +26,7 @@ module.exports = class ArtistCarouselView extends Backbone.View
     @$el.html $('<div />').attr 'class', 'loading-spinner'
 
   fetchIconicWorks: ->
-    @model.artworks.fetch
+    @model.related().artworks.fetch
       data: sort: '-iconicity', published: true, size: 7
       success: (collection, response, options) =>
         @collection.add collection.map (artwork) ->
@@ -36,7 +36,7 @@ module.exports = class ArtistCarouselView extends Backbone.View
         @render()
 
   findSoloShows: ->
-    @model.relatedShows.filter (partnerShow) =>
+    @model.related().shows.filter (partnerShow) =>
       partnerShow.get('artists').length is 1
 
   checkRelatedShows: ->

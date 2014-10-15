@@ -81,16 +81,16 @@ describe 'ArtistsView', ->
     it 'fetches related artists', ->
       artist = new Artist(fabricate 'artist')
       suggestions = [fabricate('artist'), fabricate('artist')]
-      sinon.stub(artist, 'fetchRelatedArtists').yieldsTo('success', {}, suggestions)
+      sinon.stub(artist.related().artists, 'fetch').yieldsTo('success', {}, suggestions)
       @view.fetchRelatedArtists artist
-      artist.fetchRelatedArtists.called.should.be.ok
+      artist.related().artists.fetch.called.should.be.ok
       @view.suggestions.at(0).id.should.equal artist.id
       @view.suggestions.at(0).get('name').should.equal "Artists related to #{artist.get('name')}"
 
   describe '#disposeSuggestionSet', ->
     it 'disposes of the suggestionSet that corresponds with an artist', ->
       artist = new Artist(fabricate 'artist')
-      artist.relatedArtists = new Backbone.Collection artist
+      artist.related().artists = new Backbone.Collection artist
       _.isUndefined(@view.followButtonViews).should.be.ok
       @view.suggestions.add @view.createSuggestionSet(artist)
       suggestionSet = @view.suggestions.at(0)
@@ -107,7 +107,7 @@ describe 'ArtistsView', ->
   describe '#renderSuggestions', ->
     it 'renders related artists based on following', ->
       artist = new Artist(fabricate 'artist')
-      artist.relatedArtists = new Backbone.Collection artist
+      artist.related().artists = new Backbone.Collection artist
       suggestionSet = @view.createSuggestionSet(artist)
       @view.renderSuggestions suggestionSet
       @view.$el.html().should.containEql suggestionSet.get('name')

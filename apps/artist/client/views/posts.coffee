@@ -5,7 +5,7 @@ template = -> require('../../templates/sections/posts.jade') arguments...
 
 module.exports = class PostsView extends Backbone.View
   initialize: ->
-    @collection = @model.relatedPosts
+    @collection = @model.related().posts
 
   postRender: ->
     if @collection.fetched

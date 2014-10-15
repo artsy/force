@@ -12,12 +12,12 @@ module.exports = class RelatedArtistsView extends Backbone.View
 
   postRender: ->
     _.map @section.calls, (call) =>
-      key = _s.dasherize call[0]
-      collection = @model[call[0]]
-      $section = @$("#artist-#{key}-section")
+      key = call[0]
+      collection = @model.related()[key]
+      $section = @$("#artist-related-#{key}-section")
       if collection.length
         subView = new ArtistFillwidthList
-          el: @$("#artist-#{key}")
+          el: @$("#artist-related-#{key}")
           collection: collection
           user: @user
         subView.fetchAndRender()

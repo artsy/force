@@ -8,11 +8,12 @@ Artworks = require '../collections/artworks.coffee'
 { smartTruncate } = require '../components/util/string.coffee'
 { SECURE_IMAGES_URL } = require('sharify').data
 { compactObject } = require './mixins/compact_object.coffee'
+Relations = require './mixins/relations/artist.coffee'
 
 module.exports = class Artist extends Backbone.Model
-
   _.extend @prototype, Markdown
   _.extend @prototype, Image(SECURE_IMAGES_URL)
+  _.extend @prototype, Relations
 
   sortCriteriaForArtworks:
     '': 'Relevance'
@@ -21,33 +22,20 @@ module.exports = class Artist extends Backbone.Model
   validSort: (sort) ->
     _.contains(_.keys(@sortCriteriaForArtworks), sort)
 
-  urlRoot: -> "#{sd.API_URL}/api/v1/artist"
+  urlRoot: ->
+    "#{sd.API_URL}/api/v1/artist"
 
-  href: -> "/artist/#{@get('id')}"
-  displayName: -> @get("name")
+  href: ->
+    "/artist/#{@get('id')}"
 
-  initialize: ->
-    @relatedArtists = new Backbone.Collection [], model: Artist
-    @relatedArtists.url = "#{sd.API_URL}/api/v1/related/layer/main/artists?artist[]=#{@id}&exclude_artists_without_artworks=true"
-    @relatedContemporary = new Backbone.Collection [], model: Artist
-    @relatedContemporary.url = "#{sd.API_URL}/api/v1/related/layer/contemporary/artists?artist[]=#{@id}&exclude_artists_without_artworks=true"
-
-    Posts = require '../collections/posts.coffee'
-    @relatedPosts = new Posts
-    @relatedPosts.url = "#{sd.API_URL}/api/v1/related/posts?artist[]=#{@id}"
-
-    PartnerShows = require '../collections/related_partner_shows.coffee'
-    @relatedShows = new PartnerShows
-    @relatedShows.url = "#{sd.API_URL}/api/v1/related/shows?artist[]=#{@id}&sort=-end_at"
-
-    @artworks = new Artworks
-    @artworks.url = "#{@url()}/artworks?published=true"
+  displayName: ->
+    @get 'name'
 
   fetchArtworks: (options = {}) ->
-    @artworks.fetch options
+    @related().artworks.fetch options
 
   fetchRelatedArtists: (type, options = {}) ->
-    @["related#{type}"].fetch _.extend
+    @related()[type.toLowerCase()].fetch _.extend
       remove: false
       data: _.defaults (options.data ? {}), size: 5
     , options

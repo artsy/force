@@ -39,14 +39,14 @@ module.exports = class OverviewView extends Backbone.View
     @subViews.push filterRouter.view
 
   setupRelatedShows: ->
-    if (collection = @model.relatedShows).length
+    if (collection = @model.related().shows).length
       subView = new RelatedShowsView collection: collection
       @$('#artist-related-shows').html subView.render().$el
       @subViews.push subView
       @setupRelatedSection @$('#artist-related-shows-section')
 
   setupRelatedPosts: ->
-    if (collection = @model.relatedPosts).length
+    if (collection = @model.related().posts).length
       subView = new RelatedPostsView collection: collection, numToShow: 4
       @$('#artist-related-posts').html subView.render().$el
       @subViews.push subView
