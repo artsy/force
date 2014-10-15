@@ -1,12 +1,11 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 { API_URL } = require('sharify').data
-
 Artworks = require '../../../collections/artworks.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 SaleArtworkView = require '../../../components/artwork_item/views/sale_artwork.coffee'
 trackArtworkImpressions = require("../../../components/analytics/impression_tracking.coffee").trackArtworkImpressions
-
+SaveControls = require '../../../components/artwork_item/save_controls.coffee'
 template = -> require('../templates/sale.jade') arguments...
 artworkColumnsTemplate = -> require('../../../components/artwork_columns/template.jade') arguments...
 
@@ -29,12 +28,16 @@ module.exports = class SaleView extends Backbone.View
 
   setupSaleArtworkViews: ->
     @saleArtworkViews = @artworks.map (artwork) =>
+      $artwork = @$(".artwork-item[data-artwork='#{artwork.id}']")
       new SaleArtworkView
-        artworkCollection: @saved
-        el: @$(".artwork-item[data-artwork='#{artwork.id}']")
+        el: $artwork
         model: artwork
         sale: @sale
         currentUser: @currentUser
+      new SaveControls
+        artworkCollection: @saved
+        el: $artwork.find('.overlay-container')
+        model: @artwork
 
   render: ->
     @$el.html template(sale: @sale)
