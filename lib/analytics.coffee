@@ -63,7 +63,7 @@ module.exports.registerCurrentUser = ->
   userType = if sd.CURRENT_USER then "Logged In" else "Logged Out"
 
   ga?('set', 'dimension1', userType)
-  mixpanel?.register "User Type": userType
+  mixpanel?.register?("User Type": userType)
   snowplow?('setUserId', sd.CURRENT_USER?.id) if sd.CURRENT_USER?
 
 # This basically just sets some defaults loosely based on the
