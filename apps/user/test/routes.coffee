@@ -31,12 +31,17 @@ describe '/user', ->
         @req =
           user: new CurrentUser fabricate 'user'
           login: sinon.stub()
-        routes.refresh @req, @res
+
+        @next = sinon.stub()
+        routes.refresh @req, @res, @next
         Backbone.sync.args[0][2].success @req.user
 
       it 'calls req.login to refresh the session', ->
         @req.login.calledOnce.should.be.true
-
+        @req.login.args[0][1]()
+        @next.calledOnce.should.not.be.true
+        @req.login.args[0][1](true)
+        @next.calledOnce.should.be.true
 
   describe '#settings', ->
 
