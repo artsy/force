@@ -2,7 +2,7 @@ _ = require 'underscore'
 UserEdit = require './models/user_edit.coffee'
 Profile = require '../../models/profile.coffee'
 
-@refresh = (req, res) ->
+@refresh = (req, res, next) ->
   return res.redirect("/") unless req.user
   req.user.fetch
     error: res.backboneError
