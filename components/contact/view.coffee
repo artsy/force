@@ -65,10 +65,10 @@ module.exports = class ContactView extends ModalView
     @$('#contact-form').html @formTemplate(@templateData)
 
   submit: (e) ->
-    e.preventDefault()
-
     return unless @validateForm()
     return if @formIsSubmitting()
+
+    e.preventDefault()
 
     @$submit ?= @$('#contact-submit')
     @$errors ?= @$('#contact-errors')
