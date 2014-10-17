@@ -22,6 +22,7 @@ If a separate doc is required, add it to the component's directory as a
 - [Form Mixin](#form-mixin)
 - [Related Links](#related-links)
 - [Split Test](#split-test)
+- [Filterable List](#filterable-list)
 
 ## Artwork Columns
 ![](images/artwork_columns.png)
@@ -637,4 +638,45 @@ headerTest = splitTest('header_design')
 headerTest.key() # => 'split_test--header_design' (a namespaced key used for cookie / Mixpanel)
 headerTest.outcome() # => 'new' || 'old'
 headerTest.cssClass() # => 'is-splittest-header_design--new' || 'is-splittest-header_design--old'
+```
+
+## Filterable List
+
+``` coffeescript
+FilterableListView = require '../../components/filterable_list/view.coffee'
+```
+
+``` coffeescript
+class PressListView extends FilterableListView
+  # Use your own templates by sub-classing and overwriting template functions
+
+  # filtersTemplate
+  # itemsTemplate
+  # headerTemplate
+  # itemTemplate
+
+  # Return a string or pass on to a normal template
+  itemTemplate: ({ item, filter_by }) ->
+    """
+      <!-- Ensure there is a `.filterable-list-item` class wrapper + a data-value -->
+      <div class='filterable-list-item' data-value='#{item.get filter_by}'>
+        #{item.get 'name'}
+      </div>
+    """
+```
+
+``` coffeescript
+view = new FilterableListView
+  collection: @collection
+  group_by: 'year' # Optional
+  filter_by: 'type'
+  filters:
+    # Value -> Label
+    catalogue: 'Exhibition Catalogues'
+    review: 'Exhibtion Reviews'
+    interview: 'Interviews'
+    monograph: 'Monographs'
+    biography: 'Biographies'
+
+$('body').html view.render().$el
 ```

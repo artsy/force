@@ -27,6 +27,15 @@ module.exports =
     artworks = new Artworks
     artworks.url = "#{@url()}/artworks?published=true"
 
+    bibliography = new Backbone.Collection
+    bibliography.url = "/artist/data/#{@id}/bibliography"
+
+    collections = new Backbone.Collection
+    collections.url = "/artist/data/#{@id}/collections"
+
+    exhibitionHistory = new Backbone.Collection
+    exhibitionHistory.url = "/artist/data/#{@id}/shows"
+
     # Return:
     @__related__ =
       artists: artists
@@ -34,3 +43,6 @@ module.exports =
       posts: posts
       shows: shows
       artworks: artworks
+      bibliography: bibliography
+      collections: collections
+      exhibitionHistory: exhibitionHistory

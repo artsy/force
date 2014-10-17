@@ -1,0 +1,29 @@
+@import '../../components/stylus_lib'
+
+
+.filterable-list-filters
+  margin 20px 0
+.filterable-list-filter
+  display inline-block
+  avant-garde()
+  inline-block-margins(7px)
+  font-size 12px
+  border-bottom 2px solid transparent
+  line-height 1.25
+  transition border-bottom-color 0.125s
+  &:hover
+    border-bottom-color black
+  &:active
+  &.is-active
+    color purple-color
+    border-bottom-color @color
+
+.filterable-list-items
+  //
+.filterable-list-item-header
+  margin 10px 0 5px
+  avant-garde()
+  font-size 12px
+.filterable-list-item
+  padding 0.125em 0
+  list-style none
