@@ -1,0 +1,13 @@
+- function isActive(section) { return filter.get('active') === section };
+- function activeClass(section) { return isActive(section) ? 'is-active' : 'is-inactive'; };
+
+.filterable-list-filters
+  a.filterable-list-filter(
+    data-filter='all'
+    class=activeClass('all') ) All
+  span.meta-separator
+  for label, section in filter.relevant()
+    a.filterable-list-filter(
+      data-filter= section
+      class=activeClass(section)
+    )= label
