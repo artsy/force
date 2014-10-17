@@ -17,6 +17,8 @@ removeDiacritics = require('diacritics').remove
   results.fetch
     dataType: 'jsonp'
     data: data
+    cache: true
+    cacheTime: 86400 # 1 day
     success: (results, response) ->
       totalPages = Math.floor(response.queries?.nextPage?[0].totalResults / 10)
       # Google docs say they only supports 99 pages
