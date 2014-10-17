@@ -6,7 +6,6 @@ CarouselView = require '../carousel/view.coffee'
 
 module.exports = class ArtistCarouselView extends Backbone.View
   className: 'artist-carousel carousel'
-
   minLength: 4
 
   initialize: ->
@@ -73,7 +72,7 @@ module.exports = class ArtistCarouselView extends Backbone.View
   # Called once after iconic works are fetched, and again after install shots are fetched
   render: _.after 2, ->
     return if @rendered or @minLength > @collection.length
-    @carouselView = new CarouselView el: @$el, collection: @collection
+    @carouselView = new CarouselView el: @$el, collection: @collection, height: 300
     @postRender()
     @rendered = true
     this
