@@ -3,9 +3,9 @@
 mixin carouselFigure(figure)
   if figure.has('href') || typeof figure.href === 'function'
     a( href=(figure.get('href') || figure.href()) )
-      img( src=figure.imageUrlForHeight(height) )
+      img( src=figure.resizeUrlFor({ height: height }) )
   else
-    img( src=figure.imageUrlForHeight(height) )
+    img( src=figure.resizeUrlFor({ height: height }) )
 
 .carousel-figures-clip
   .carousel-track
