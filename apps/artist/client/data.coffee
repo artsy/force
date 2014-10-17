@@ -29,6 +29,20 @@ module.exports.sections = sections = [
     ['shows', [data: size: 5]]
   ]
 ,
+  slug: 'press'
+  href: 'artist/:id/press'
+  name: 'Press'
+  calls: [
+    ['bibliography']
+  ]
+,
+  slug: 'collections'
+  href: 'artist/:id/collections'
+  name: 'Collections'
+  calls: [
+    ['collections']
+  ]
+,
   slug: 'related-artists'
   href: 'artist/:id/related-artists'
   name: 'Related Artists'
