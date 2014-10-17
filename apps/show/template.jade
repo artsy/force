@@ -57,6 +57,9 @@ block body
       else
         h1.show-heading-title= show.title()
 
+      if show.get('description')
+        .show-description.garamond-header-center= show.get('description')
+
       #show-main-buttons
         include ../../components/partner_buttons/show_buttons
 
