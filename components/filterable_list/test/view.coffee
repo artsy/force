@@ -24,7 +24,7 @@ describe 'FilterableListView', ->
   describe 'with grouping', ->
     beforeEach ->
       types = ['catalogue', 'catalogue', 'review', 'interview', 'review']
-      years = ['1-1-2005', '1-1-2005', '1-1-2005', '1-1-2003', '1-1-2010']
+      years = ['2005-01-01', '2005-01-01', '2005-01-01', '2003-01-01', '2010-01-01']
       @collection = new Backbone.Collection _.times 5, (i) ->
         fabricate 'show', type: types[i], year: years[i]
       @view = new FilterableListView

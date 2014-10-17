@@ -1,4 +1,5 @@
 _ = require 'underscore'
+moment = require 'moment'
 Backbone = require 'backbone'
 Filter = require './model.coffee'
 filtersTemplate = -> require('./templates/filters.jade') arguments...
@@ -29,11 +30,11 @@ module.exports = class FilterableListView extends Backbone.View
 
   # Default assumption is that the group_by attribute is a timestamp
   itemSortBy: (item) =>
-    -(Date.parse(item.get(@filter.get('group_by'))))
+    -(moment(item.get(@filter.get('group_by'))))
 
   # Default assumption is that the group_by attribute is a timestamp
   itemGroupBy: (item) =>
-    -(new Date(item.get(@filter.get('group_by'))).getFullYear())
+    -(moment(item.get(@filter.get('group_by'))).format('YYYY'))
 
   processHeading: (heading) ->
     Math.abs heading
