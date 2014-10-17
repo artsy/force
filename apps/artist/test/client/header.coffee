@@ -72,7 +72,7 @@ describe 'HeaderView', ->
       @view.updateHeadTags(@view.navData @view.data.sections)
       @$head.find('link[rel="next"]').length.should.equal 0
       @$head.find('link[rel="prev"]').length.should.equal 1
-      @$head.find('link[rel="prev"]').attr('href').should.containEql '/artist/foo-bar/shows'
+      @$head.find('link[rel="prev"]').attr('href').should.containEql '/artist/foo-bar/collections'
 
   describe '#renderNav', ->
     beforeEach ->
@@ -82,10 +82,12 @@ describe 'HeaderView', ->
       Backbone.history.fragment = 'artist/foo-bar/shows'
       @view.renderNav()
       (_.map @view.$nav.find('a'), (el) -> $(el).attr('href')).should.eql [
-        '/artist/foo-bar',
-        '/artist/foo-bar/works',
-        '/artist/foo-bar/posts',
-        '/artist/foo-bar/shows',
+        '/artist/foo-bar'
+        '/artist/foo-bar/works'
+        '/artist/foo-bar/posts'
+        '/artist/foo-bar/shows'
+        '/artist/foo-bar/press'
+        '/artist/foo-bar/collections'
         '/artist/foo-bar/related-artists'
       ]
       @view.$nav.find('.is-active').text().should.equal 'Shows'

@@ -41,4 +41,4 @@ describe 'Carousel template', ->
     $ = cheerio.load render('template')({ carouselFigures: @figures.models, height: 300 })
     @figures.each (figure, index) ->
       $(".carousel-figure[data-carousel-figure-index='#{index}']").should.have.lengthOf 1
-      $(".carousel-figure[data-carousel-figure-index='#{index}'] img").attr('src').should.equal figure.imageUrlForHeight(300)
+      $(".carousel-figure[data-carousel-figure-index='#{index}'] img").attr('src').should.equal figure.resizeUrlFor(height: 300)
