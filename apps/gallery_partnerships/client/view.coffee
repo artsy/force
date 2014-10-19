@@ -54,7 +54,7 @@ module.exports = class GalleryPartnershipsView extends Backbone.View
     @$('.browser-images').each (i, el) =>
       @setupSlideshow $(el), $(el).find('.browser-image'), "browser#{i}"
 
-  setupSlideshow: ($container, $slides, name, interval = 4000) ->
+  setupSlideshow: ($container, $slides, name, interval = 3000) ->
     @["#{name}Frame"] = 0
     @["#{name}Interval"] = interval
     $container.imagesLoaded =>
