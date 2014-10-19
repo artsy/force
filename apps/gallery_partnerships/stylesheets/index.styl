@@ -127,13 +127,13 @@ highlight-color = #6a0ac1
   .audience-quotes
     position absolute
     width 100%
+    padding-right 40%
+    bottom 0
+    z-index 1
   .audience-map
     height 475px
     top -120px
     z-index 0
-  .audience-quotes
-    bottom 0
-    z-index 1
 
   //
   // Support
@@ -193,10 +193,13 @@ highlight-color = #6a0ac1
 
   // Quotes
   .quote
+    color highlight-color
+    font-size 23px
+    line-height 1.5
     &:before
       content ''
-      width 30%
-      border-top 2px solid gray-darkest-color
+      width 45%
+      border-top 2px solid highlight-color
       display inline-block
   .quote-text
     &:before
