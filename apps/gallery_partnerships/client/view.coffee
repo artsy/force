@@ -16,6 +16,7 @@ module.exports = class GalleryPartnershipsView extends Backbone.View
     @setupSectionNavHighlighting()
     @setupHeroUnitSlideshow()
     @setupSectionsSlideshow()
+    @setupLiaisonsFading()
 
   intercept: (e) ->
     e.preventDefault()
@@ -26,6 +27,40 @@ module.exports = class GalleryPartnershipsView extends Backbone.View
     @$sections = @$ '.gallery-partnerships-section'
     @$heroUnitsContainer = @$ '.gallery-partnerships-hero-unit-images'
     @$heroUnitsSlides = @$ '.gallery-partnerships-hero-unit-image'
+    @$liaisonsContainer = @$ '.support-liaisons'
+
+  #
+  # Replace a liaison image and info, and call the callback after image
+  # has loaded.
+  #
+  replaceLiaison: ($target, liaison, callback) ->
+    $target.find('img').attr 'src', liaison.src
+    $target.find('.support-liaison-name').html liaison.name
+    $target.find('.support-liaison-location').html liaison.location
+    $target.imagesLoaded callback
+
+  #
+  # Randomly swap one visible liaison with one invisible liaison.
+  #
+  swapLiaisons: (liaisons, indexArray, numOfActive) ->
+    a = _.random(0, numOfActive - 1)
+    b = _.random(numOfActive, liaisons.length - 1)
+    $target = $ @$liaisonsContainer.find('.support-liaison').get(a)
+    @replaceLiaison $target.find('.current'), liaisons[indexArray[b]], =>
+      $target.find('.current').addClass('transitioning')
+      _.delay =>
+        @replaceLiaison $target.find('.previous'), liaisons[indexArray[b]], ->
+          $target.find('.current').removeClass('transitioning')
+        t = indexArray[a]
+        indexArray[a] = indexArray[b]
+        indexArray[b] = t
+      , 1100
+
+  setupLiaisonsFading: ->
+    liaisons = @$liaisonsContainer.data('liaisons')
+    numOfActive = @$liaisonsContainer.children('.support-liaison').length
+    indexArray = _.range(liaisons.length)
+    setInterval (=> @swapLiaisons(liaisons, indexArray, numOfActive)), 3000
 
   setupStickyNav: ->
     @$nav.waypoint('sticky')

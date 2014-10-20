@@ -149,10 +149,20 @@ separator-color = #d4d4d4
     justify-content space-between
     margin-bottom 50px
   .support-liaison
+    position relative
     width 13%
     img
       width 100%
       margin-bottom 10px
+    .previous
+      position absolute
+    .current
+      position relative
+      background-color white
+      transition opacity 1s
+      opacity 0
+      &.transitioning
+        opacity 1
   .support-quotes
     width 75%
     margin 0 auto

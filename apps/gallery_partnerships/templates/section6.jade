@@ -9,12 +9,17 @@
       p.preamble= section.preamble
 
 .gallery-partnerships-section-content
-  .support-liaisons
-    each liaison in section.liaisons
+  .support-liaisons( data-liaisons=section.liaisons )
+    for liaison in section.liaisons.slice(0, 5)
       .support-liaison
-        img( src=liaison.src )
-        .support-liaison-name= liaison.name
-        .support-liaison-location= liaison.location
+        .previous
+          img( src=liaison.src )
+          .support-liaison-name= liaison.name
+          .support-liaison-location= liaison.location
+        .current
+          img( src=liaison.src )
+          .support-liaison-name= liaison.name
+          .support-liaison-location= liaison.location
 
   .support-quotes
     - q = section.quotes[0]
