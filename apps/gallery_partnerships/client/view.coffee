@@ -54,13 +54,13 @@ module.exports = class GalleryPartnershipsView extends Backbone.View
         t = indexArray[a]
         indexArray[a] = indexArray[b]
         indexArray[b] = t
-      , 1100
+      , 1000
 
   setupLiaisonsFading: ->
     liaisons = @$liaisonsContainer.data('liaisons')
     numOfActive = @$liaisonsContainer.children('.support-liaison').length
     indexArray = _.range(liaisons.length)
-    setInterval (=> @swapLiaisons(liaisons, indexArray, numOfActive)), 3000
+    setInterval (=> @swapLiaisons(liaisons, indexArray, numOfActive)), 1200
 
   setupStickyNav: ->
     @$nav.waypoint('sticky')
