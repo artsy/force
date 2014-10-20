@@ -15,7 +15,7 @@ module.exports = class HeroUnitView extends Backbone.View
     @$heroUnits.imagesLoaded @setRetinaHeroTitles
 
   setRetinaHeroTitles: =>
-    @$('.home-hero-unit-title').each ->
+    @$('.hhu-title').each ->
       $(this)
         .height($(this).height())
         .attr 'src', $(this).attr('data-retina')
