@@ -1,6 +1,13 @@
 benv = require 'benv'
 sinon = require 'sinon'
-runningTests = require '../running_tests.coffee'
+runningTests =
+  # Example test
+  header_design:
+    key: 'header_design'
+    outcomes:
+      old: 0.8
+      new: 0.2
+    edge: 'new'
 
 describe 'SplitTest', ->
   beforeEach (done) ->

@@ -15,9 +15,8 @@
 .mlh-navbar-cell
   white-space nowrap
 
-// Leftmost cell
 #main-layout-header-left
-  flex 1
+  flex 1.5
 #main-layout-header-home-logo
   float left
   width home-logo-size
@@ -27,55 +26,39 @@
   border none
   &:after
     border-left none
-#main-layout-search-bar-container
-  float left
-  height home-logo-size
-  border-right 1px solid gray-lighter-color
-  border-left @border-right
-
-// Center/rightmost cell
+#main-layout-header-center
+  padding-left 20px
 #main-layout-header-center
 #main-layout-header-right
   avant-garde()
+#main-layout-header-right
+  flex 1
+  text-align right
 
-// General link styles
 .mlh-nav-link
   position relative
   display inline-block
-  padding 16px 20px 14px 20px
+  padding 16px 9px 14px 9px
   vertical-align middle
   text-decoration none
   font-size 13px
-  border-right 1px solid gray-lighter-color
   &.is-active
     color purple-color
 .mlh-top-nav-link
   @extends .mlh-nav-link
-  &:after
-    display block
-    content ''
-    position absolute
-    top 0
-    right 0
-    bottom 0
-    left 0
-    opacity 0
-    color transparent
-    border 3px solid black
   &:hover
-  &:focus
   &:active
+  &:focus
     color purple-color
-  &:hover:after
-    opacity 1
-// Post icon link
-.mlh-post-link
-  @extends .mlh-top-nav-link
-  padding 10px 12px 10px 14px
-  font-size default-icon-font-size
 // Rightmost username dropdown wrapper
+.mlh-session
+  border-left 1px solid gray-lighter-color
+.mlh-login
+  padding-left 20px
 .mlh-user-name
   @extends .mlh-nav-link
+  padding-left 20px
+  padding-right 20px
   position relative
   min-width 130px
   text-align center
@@ -127,6 +110,7 @@
       height 3px
     &:hover
       background-color gray-lightest-color
+      color inherit
 
 // Temporary welcome header
 #main-layout-welcome-header
@@ -155,5 +139,3 @@
   line-height 1
   text-align center
   padding 20px 0
-
-@import './split_test'
