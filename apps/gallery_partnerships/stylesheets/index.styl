@@ -4,9 +4,10 @@
 
 container-width = 1120px
 container-margin = 50px
-section-margin-top = 120px
+section-margin = 120px
 hero-unit-height = 435px
 highlight-color = #6a0ac1
+separator-color = #d4d4d4
 
 //
 // Page Container
@@ -43,7 +44,12 @@ highlight-color = #6a0ac1
 // Sections
 //
 .gallery-partnerships-section
-  padding-top section-margin-top
+  padding-top (section-margin / 2)
+  padding-bottom (section-margin / 2)
+  border-top 1px solid separator-color
+  &:first-child
+    padding-top section-margin
+    border none
 
 //
 // Scetion Nav
@@ -122,7 +128,7 @@ highlight-color = #6a0ac1
   //
   &.audience
     position relative
-    height 475px - section-margin-top
+    height 475px - (section-margin / 2)
   .audience-map
   .audience-quotes
     position absolute
