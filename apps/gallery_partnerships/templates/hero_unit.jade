@@ -1,9 +1,5 @@
 .gallery-partnerships-hero-unit-header
-  .grid-2-up
-    .grid-item
-      h1!= hero.heading
-    .grid-item
-      .preamble!= hero.preamble
+  h1!= hero.heading
 
 .gallery-partnerships-hero-unit-content
   ul.gallery-partnerships-hero-unit-images
@@ -12,3 +8,4 @@
         style="background-image: url(#{crop(image.src, { width: 1120, height: 435, quality: 90 })})"
         class=(i === 0 ? 'is-active' : undefined)
       )
+  .preamble!= hero.preamble
