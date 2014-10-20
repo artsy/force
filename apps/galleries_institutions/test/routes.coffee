@@ -90,4 +90,4 @@ describe 'Galleries / Institutions routes', ->
       @res.render.args[0][0].should.equal 'index'
       @res.render.args[0][1].aToZGroup[0].columns.length.should.equal 3
       @res.render.args[0][1].featuredProfiles.first().id.should.equal 'an-institution'
-      @res.render.args[0][1].copy.header.should.equal 'Institutions, Museums, and Nonprofits'
+      @res.render.args[0][1].copy.header.should.equal 'Featured Museums and Institutions'

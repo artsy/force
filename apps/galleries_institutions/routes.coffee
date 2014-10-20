@@ -79,4 +79,4 @@ fetchInstitutions = ->
       aToZGroup: aToZGroup
       partnerCount: institutions.length
       featuredProfiles: featuredInstitutions
-      copy: header: 'Institutions, Museums, and Nonprofits', adjective: 'Institutional'
+      copy: header: 'Featured Museums and Institutions', adjective: 'Institutional'
