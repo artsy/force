@@ -9,15 +9,12 @@ Artist = require '../../models/artist'
   @index req, res
 
 @index = (req, res) ->
-  sort = req.query.sort
-  sort = '' unless (new Artist).validSort(sort)
   new Artist(id: req.params.id).fetch
     cache: true
     success: (artist) ->
       if req.params.tab? or artist.href() is res.locals.sd.CURRENT_PATH
         res.locals.sd.ARTIST = artist.toJSON()
         res.locals.sd.TAB = req.params.tab
-        res.locals.sd.SORT_BY = sort
         res.render 'index',
           artist: artist
           jsonLD: stringifyJSONForWeb(artist.toJSONLD())

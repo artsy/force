@@ -40,17 +40,6 @@ describe 'Artist routes', ->
       _.last(Backbone.sync.args)[2].success fabricate 'artist', id: 'andy-foobar'
       @res.locals.sd.ARTIST.id.should.equal 'andy-foobar'
 
-    it 'makes the right API call using the passed in sort', ->
-      routes.index @req, @res
-      _.last(Backbone.sync.args)[2].success fabricate 'artist', id: 'andy-foobar'
-      @res.locals.sd.SORT_BY.should.equal '-published_at'
-
-    it 'sets the default sort if not a valid sort', ->
-      @req.query.sort = 'bogus'
-      routes.index @req, @res
-      _.last(Backbone.sync.args)[2].success fabricate 'artist', id: 'andy-foobar'
-      @res.locals.sd.SORT_BY.should.equal ''
-
     it 'redirects to canonical url', ->
       @res.locals.sd.CURRENT_PATH = '/artist/bar'
       routes.index @req, @res
