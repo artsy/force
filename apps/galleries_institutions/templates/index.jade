@@ -10,21 +10,22 @@ append locals
 block body
   #galleries-institutions-page.main-layout-container
     header.galleries-institutions-header
-      .galleries-institutions-header-info
-        if partnerCount
-          .galleries-institutions-count
-            span.galleries-institutions-count-value= partnerCount
+      .galleries-institutions-header-meta
+        .galleries-institutions-header-info
+          if partnerCount
+            .galleries-institutions-count
+              span.galleries-institutions-count-value= partnerCount
+              = ' '
+              span.galleries-institutions-count-label Selected #{copy.adjective} Partners
+          .galleries-institutions-partner-invite
+            | Interested in partnering with Artsy?
             = ' '
-            span.galleries-institutions-count-label Selected #{copy.adjective} Partners
-        .galleries-institutions-partner-invite
-          | Interested in partnering with Artsy?
-          = ' '
-          a.faux-underline(
-            href='http://apply.artsy.net/'
-            target='_blank'
-          ) Contact us
+            a.faux-underline(
+              href='http://apply.artsy.net/'
+              target='_blank'
+            ) Contact us
 
-      include ./nav
+        include ./nav
 
       h1.galleries-institutions-title
         = copy.header
