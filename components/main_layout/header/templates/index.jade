@@ -15,10 +15,9 @@ header#main-layout-header
       a#main-layout-header-home-logo.mlh-top-nav-link.icon-logo( href='/', class=activeClass('/') )
       include ../../../search_bar/template
     #main-layout-header-center.mlh-navbar-cell
-      if user
-        a.mlh-post-link.icon-write( href='/post', class=activeClass('/post') )
       a.mlh-top-nav-link( href='/browse', class=activeClass('/browse') ) Browse
       a.mlh-top-nav-link( href='/artists', class=activeClass('/artists') ) Artists
+      a.mlh-top-nav-link( href='/galleries', class=activeClass('/galleries') ) Galleries
       a.mlh-top-nav-link( href='/feature/auctions ', class=activeClass('/feature/auctions') ) Auctions
       a.mlh-top-nav-link( href='/posts', class=activeClass('/posts') ) Posts
       if user

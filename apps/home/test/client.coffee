@@ -43,7 +43,7 @@ describe 'HeroUnitView', ->
 
     it 'swaps in the retina images', ->
       @view.setRetinaHeroTitles()
-      @view.$('.home-hero-unit-title').first().attr('src').should.containEql '2x'
+      @view.$('.hhu-title').first().attr('src').should.containEql '2x'
 
   describe '#setBodyClass', ->
 

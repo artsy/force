@@ -10,7 +10,6 @@ analytics = require '../../../lib/analytics.coffee'
 FlashMessage = require '../../flash/index.coffee'
 PublishModal = require '../../publish_modal/view.coffee'
 Profile = require '../../../models/profile.coffee'
-splitTest = require '../../split_test/index.coffee'
 
 module.exports = class HeaderView extends Backbone.View
   events:
@@ -40,12 +39,6 @@ module.exports = class HeaderView extends Backbone.View
 
     @checkRemoveWelcomeHeader()
     @checkForFlash()
-    # split-test--header-design
-    @setupHeaderSplitTest()
-
-  # split-test--header-design
-  setupHeaderSplitTest: ->
-    @$body.addClass splitTest('header_design').cssClass()
 
   checkRemoveWelcomeHeader: =>
     if sd.CURRENT_USER or (@$window.scrollTop() > @$welcomeHeader.height())

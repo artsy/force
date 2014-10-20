@@ -6,8 +6,12 @@ suggestion-height = (suggestion-thumbnail-size + 20px)
 
 #main-layout-search-bar-container
   position relative
+  float left
   width calc('100% - %s' % logo-size)
-  border-left 1px solid gray-lighter-color
+  height default-icon-font-size
+  margin ((home-logo-size - default-icon-font-size) / 2) 0
+  padding 0
+  border 2px solid gray-color
   form
     position relative
     width 100%
@@ -26,12 +30,13 @@ suggestion-height = (suggestion-thumbnail-size + 20px)
 #main-layout-search-bar-feedback
   display block
   position absolute
-  width calc('100% + 2px')
+  width calc('100% + 4px')
   height 0
   left 0
   right auto
+  margin-top 2px
+  margin-left -2px
   padding 0 (logo-size / 2)
-  margin-left -1px
   visibility visible
   overflow hidden
   line-height logo-size
@@ -44,7 +49,7 @@ suggestion-height = (suggestion-thumbnail-size + 20px)
   position absolute
   top 0
   bottom 0
-  right 10px
+  right 0
   width suggestion-thumbnail-size
 
 search-bar-input-placeholder()
@@ -53,7 +58,7 @@ search-bar-input-placeholder()
 #main-layout-search-bar-input
   height 100%
   width @height
-  padding 0 26px 0 44px
+  padding 0 26px 0 35px
   border none
   placeholder(search-bar-input-placeholder)
 
@@ -64,7 +69,7 @@ search-bar-input-placeholder()
   height default-icon-font-size
   font-size 20px
   top 50%
-  left 18px
+  left 9px
   transform translateY(-50%)
 
 // Results dropdown
@@ -76,8 +81,9 @@ search-bar-input-placeholder()
   .tt-hint
     display none
   .tt-dropdown-menu
-    width calc('100% + 2px')
-    margin-left -1px
+    width calc('100% + 4px')
+    margin-top 2px
+    margin-left -2px
     background-color white
     border 1px solid gray-lighter-color
   .tt-suggestion

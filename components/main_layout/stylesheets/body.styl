@@ -65,11 +65,14 @@ html[data-useragent*="iPad"]
 .body-transparent-header
   #main-layout-header
     background transparent
+
 .body-transparent-header
   #main-layout-header
     border-color rgba(black, 0.1)
     *:not(.tt-suggestion):not(.tt-dropdown-menu)
       border-color rgba(black, 0.1)
+    #main-layout-search-bar-container
+      border-color black
 .body-hide-header
   #main-layout-header
     display none
@@ -83,16 +86,14 @@ html[data-useragent*="iPad"]
   #main-layout-header-home-logo
   #main-layout-welcome-header
   #main-layout-search-bar-icon
-    color white
-  #main-layout-header-center a::after
-  #main-layout-header-right a::after
-    border-color white
   #main-layout-search-bar-input
     color white
+  #main-layout-search-bar-input
     placeholder(search-bar-input-placeholder-white)
   #main-layout-header-user-nav
     background black
-    &::before, &::after
+    &::before
+    &::after
       background white
     a
       border-top-color white
@@ -104,6 +105,8 @@ html[data-useragent*="iPad"]
     border-color rgba(white, 0.3)
     *:not(.tt-suggestion):not(.tt-dropdown-menu)
       border-color rgba(white, 0.3)
+    #main-layout-search-bar-container
+      border-color white
   #main-layout-search-bar-container.is-loading .loading-spinner-small
     background white
   #main-layout-header-home-logo::after
