@@ -28,6 +28,8 @@ module.exports = class BibliographyView extends Backbone.View
       group_by: 'published_date'
       filter_by: 'type'
       filters:
+        book: 'Books'
+        article: 'Articles'
         catalogue: 'Exhibition Catalogues'
         review: 'Exhibtion Reviews'
         interview: 'Interviews'
