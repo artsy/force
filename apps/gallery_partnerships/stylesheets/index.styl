@@ -26,6 +26,22 @@ separator-color = #d4d4d4
   .grid-item
     vertical-align baseline
 
+.gallery-partnerships-hero-unit-content
+  position relative
+  .preamble
+    position absolute
+    width 50%
+    bottom container-margin
+    right 0
+    padding 0 container-margin 0 (container-margin / 2)
+    color white
+    &:before
+      content ''
+      width 13%
+      border-top 2px solid white
+      display block
+      margin-bottom 10px
+
 .gallery-partnerships-hero-unit-images
   position relative
   height hero-unit-height
@@ -234,6 +250,7 @@ separator-color = #d4d4d4
 .body-gallery-partnerships
   h1
     font-size 72px
+    line-height 1em
   h2, h3
     font-size 42px
     line-height 1.15em
