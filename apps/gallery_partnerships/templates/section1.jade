@@ -9,9 +9,8 @@
       p.preamble= section.preamble
 
 .gallery-partnerships-section-content.audience
-  .audience-map(
-    style="background-image: url(#{src=crop(section.images[0].src, { width: 1120, height: 475, quality: 90 })})"
-  )
+  .audience-map
+    img( src=section.images[0].src )
   .audience-quotes
     - q = section.quotes[0]
     .quote
