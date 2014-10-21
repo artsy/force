@@ -35,39 +35,45 @@ li.grid-item a
 // ------------------
 
 #home-top-featured-links
-  position relative
-  min-height 120px
-
+  display table
+  width 100%
+  margin-bottom 20px
+  border-bottom 1px solid gray-lighter-color
 .home-top-feature-link
-  display inline-block
-  padding (column-gap / 2)
-  padding-right 0
-  border-right 1px solid gray-lighter-color
-  border-bottom @border-right
+  display table-cell
   width 25%
+  height 100%
+  padding 0 (column-gap / 2)
   vertical-align top
-  height 102px
-  overflow hidden
-  a
-    text-decoration none
+  border-right 1px solid gray-lighter-color
   &:first-child
     padding-left 0
   &:last-child
     border-right 0
     padding-right 0
-  img
+.htfl-image-link
+  display table
+  text-decoration none
+.htfl-image
+.htfl-details
+  display table-cell
+  vertical-align top
+.htfl-image
+  padding (column-gap / 2) 0
+  > img
     max-width 95px
     max-height @max-width
-    position absolute
-  h4
-    font-size default-avant-garde-font-size
-  h3
-    font-size 11px
-    color #666
-
-.home-top-feature-link-details
+.htfl-details
+  padding (column-gap / 2) 10px
   avant-garde()
-  padding-left 105px
+  > h3
+    margin 5px 0
+    line-height 1
+    font-size 11px
+    color gray-darker-color
+  > h4
+    line-height 1.5
+    font-size default-avant-garde-font-size
 
 // Featured artworks
 // -----------------
