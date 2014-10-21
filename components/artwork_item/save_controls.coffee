@@ -21,9 +21,7 @@ if user
     sharify.data.SAVE_CONTROLS_SPLIT_TEST = splitTestPath
 
   module.exports = switch splitTestPath
-    when 'drop down' then require './save_controls_drop_down/view.coffee'
-    when 'two button' then require './save_controls_two_btn/view.coffee'
-    when 'one button' then require './save_controls_one_btn/view.coffee'
+    when 'drop down' or 'two button' or 'one button' then require './save_controls_two_btn/view.coffee'
     else require './save_controls/view.coffee'
 
 else

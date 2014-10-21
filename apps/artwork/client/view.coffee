@@ -265,13 +265,9 @@ module.exports = class ArtworkView extends Backbone.View
     if @currentUser? and 'Set Management' in @currentUser.get('lab_features')
       SaveControls = require '../../../components/artwork_item/save_controls.coffee'
       switch (Cookies.get('save-controls') or analytics.getProperty('ab:save:controls'))
-        when 'two button'
+        when 'two button' or 'drop down' or 'one button'
           @$('.circle-icon-button-save').after(
             require('../../../components/artwork_item/save_controls_two_btn/templates/artwork_page_button.jade')()
-          )
-        when 'drop down'
-          @$('.circle-icon-button-save').replaceWith(
-            require('../../../components/artwork_item/save_controls_drop_down/templates/artwork_page_button.jade')()
           )
       new SaveControls
         model: artwork
