@@ -47,13 +47,15 @@ module.exports = class GalleryPartnershipsView extends Backbone.View
     b = _.random(numOfActive, liaisons.length - 1)
     $target = $ @$liaisonsContainer.find('.support-liaison').get(a)
     @replaceLiaison $target.find('.current'), liaisons[indexArray[b]], =>
-      $target.find('.current').addClass('transitioning')
+      $target.find('.current').addClass('fade-in')
+      $target.find('.previous').addClass('fade-out')
       _.delay =>
         @replaceLiaison $target.find('.previous'), liaisons[indexArray[b]], ->
-          $target.find('.current').removeClass('transitioning')
-        t = indexArray[a]
-        indexArray[a] = indexArray[b]
-        indexArray[b] = t
+          $target.find('.current').removeClass('fade-in')
+          $target.find('.previous').removeClass('fade-out')
+          t = indexArray[a]
+          indexArray[a] = indexArray[b]
+          indexArray[b] = t
       , 1000
 
   setupLiaisonsFading: ->
