@@ -21,15 +21,15 @@ module.exports.PartnerShowView = class PartnerShowView extends Backbone.View
       el: @$(".show-header")
       model: @model
     @$showArtworks = @$('.show-artworks')
-    @$carousel = @$('.carousel')
+    @$carousel = @$('#show-installation-shot-carousel')
 
     @model.fetchInstallShots
       success: (installShots) =>
         if installShots.length > 0
           @carouselView = new CarouselView
-            el: @$carousel
             collection: installShots
             height: 480
+          @$carousel.html @carouselView.render().$el
         else
           @$carousel.remove()
       error: =>
