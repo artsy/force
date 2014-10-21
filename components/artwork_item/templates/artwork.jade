@@ -21,7 +21,7 @@ figure.artwork-item( data-artwork=artwork.get('id') )
         )
       if sd && sd.SAVE_CONTROLS_SPLIT_TEST
         case sd.SAVE_CONTROLS_SPLIT_TEST
-          when 'drop down' or 'two button' or 'one button'
+          when 'drop down' || 'two button' || 'one button'
             include ../save_controls_two_btn/templates/controls
       else
         include ../save_controls/template
