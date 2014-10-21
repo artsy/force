@@ -4,21 +4,23 @@ Backbone = require 'backbone'
 { Markdown, Image } = require 'artsy-backbone-mixins'
 
 module.exports = class HeroUnit extends Backbone.Model
-
   _.extend @prototype, Markdown
   _.extend @prototype, Image(SECURE_IMAGES_URL)
 
   cssClass: ->
     [
-      'home-hero-unit-' + @get('menu_color_class')
-      'home-hero-unit-' + @get('type')
+      "home-hero-unit-#{@get('menu_color_class')}"
+      "home-hero-unit-#{@get('type')}"
     ].join ' '
 
+  guardedImageUrl: (attr) ->
+    @sslUrl(@get attr) if @has(attr)
+
   backgroundImageUrl: ->
-    @sslUrl @get('background_image_url')
+    @guardedImageUrl 'background_image_url'
 
   titleImageUrl: ->
-    @sslUrl @get('title_image_url')
+    @guardedImageUrl 'title_image_url'
 
   titleImageRetinaUrl: ->
-    @sslUrl @get('title_image_retina_url')
+    @guardedImageUrl 'title_image_retina_url'
