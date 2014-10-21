@@ -14,13 +14,6 @@ module.exports = class Artist extends Backbone.Model
   _.extend @prototype, Image(SECURE_IMAGES_URL)
   _.extend @prototype, Relations
 
-  sortCriteriaForArtworks:
-    '': 'Relevance'
-    '-published_at': 'Recently Added'
-
-  validSort: (sort) ->
-    _.contains(_.keys(@sortCriteriaForArtworks), sort)
-
   urlRoot: ->
     "#{sd.API_URL}/api/v1/artist"
 

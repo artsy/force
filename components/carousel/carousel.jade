@@ -1,0 +1,22 @@
+.loading-spinner
+
+.carousel-figures-clip: .carousel-track
+  .carousel-set.carousel-pre-decoys
+    each figure in carouselFigures
+      figure.carousel-figure
+        +carouselFigure(figure)
+  .carousel-set.carousel-figures
+    each figure, index in carouselFigures
+      figure.carousel-figure( data-carousel-figure-index=index )
+        +carouselFigure(figure)
+  .carousel-set.carousel-post-decoys
+    each figure in carouselFigures
+      figure.carousel-figure
+        +carouselFigure(figure)
+
+.carousel-controls
+  .icon-chevron-left.carousel-arrow-left
+  .icon-chevron-right.carousel-arrow-right
+  .carousel-dots
+    each figure, index in carouselFigures
+      .carousel-dot( data-carousel-dot-position= index ) •

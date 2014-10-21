@@ -1,9 +1,9 @@
 _ = require 'underscore'
+imagesLoaded = require 'imagesloaded'
 Backbone = require 'backbone'
-carouselTemplate = -> require('./template.jade') arguments...
+template = -> require('./template.jade') arguments...
 
 module.exports = class Carousel extends Backbone.View
-
   className: 'carousel'
   tagName: 'section'
 
@@ -26,21 +26,15 @@ module.exports = class Carousel extends Backbone.View
   length: 0
   minLength: 2
   noDecoys: false
-  noTransitions: false
   prefixWidth: 0
   stopPositions: []
   transitionDuration: '0.5s'
-  transitionEvents: 'transitionEnd oTransitionEnd msTransitionEnd transitionend webkitTransitionEnd'
 
   initialize: (options) ->
-    imagesLoaded = require 'imagesloaded'
-    throw 'You must pass a collection' unless @collection?
     @$window = $(window)
     @$document = $(document)
-    @length = @collection.length
-    @noTransitions = $('html').hasClass('no-csstransitions')
-    @height = options.height
-    @render()
+    @length = @collection?.length or @$('.carousel-figures .carousel-figure').length
+    { @height } = options
 
   cacheSelectors: ->
     @$track = @$('.carousel-track')
@@ -50,29 +44,30 @@ module.exports = class Carousel extends Backbone.View
     @$figures = @$('.carousel-figures .carousel-figure')
     @$dots = @$('.carousel-dot')
 
-  render: ->
-    figures = @collection.models
+  postRender: ->
+    @cacheSelectors()
 
+    # Start the carousel at the first image
+    @setActive 0
+
+    # When images are loaded, do the math
+    @$el.imagesLoaded?()?.always =>
+      @setStops()
+      @$el.addClass 'is-done'
+
+    @bindEvents()
+
+  render: ->
     if @length < @minLength
       @$el.empty()
       return this
 
     @$el
-      .addClass('carousel-loading')
-      .html(carouselTemplate carouselFigures: figures, height: @height)
-    @cacheSelectors()
+      .addClass('is-loading')
+      .html template(carouselFigures: @collection.models, height: @height)
 
-    # Start the carousel at the first image
-    @setActive 0
-    # When images are loaded, do the math
-    if @$el?.imagesLoaded
-      @$el.imagesLoaded => @setStops()
-    # Ensure the carousel is revealed even if an image gets stuck
-    _.delay =>
-      @$el.removeClass('carousel-loading')
-      @setStops()
-    , 5000
-    @bindEvents()
+    @postRender()
+
     this
 
   # In order to prevent DOM manipulation, the stage has two copies of the figures.
@@ -86,8 +81,6 @@ module.exports = class Carousel extends Backbone.View
   # viewport is large. Another iteration could determine length of the prefix and postfix
   # lists relative to the viewport or based on a param.
   setStops: ->
-    # This function breaks tests if it runs. It should always be stubbed in tests
-
     # Use a local widths array to help calculate the stored stop positions
     widths = []
     # Must reset these or the throttled resize will use stale values.
@@ -102,12 +95,10 @@ module.exports = class Carousel extends Backbone.View
       @noDecoys = true
       @$decoys.hide()
       @prefixWidth = 0
-      @trigger 'width:insufficient'
     else
       @noDecoys = false
       @$decoys.show()
       @prefixWidth = @$preDecoys.width()
-      @trigger 'width:sufficient'
 
     totalLefts = @prefixWidth
     @$figures.each (index, figure) =>
@@ -120,63 +111,45 @@ module.exports = class Carousel extends Backbone.View
     # Set up the decoy of the last figure in the first spot
     lastWidth = _.last widths
     @lastDecoyPosition = Math.floor((windowWidth - lastWidth) / 2) - (@prefixWidth - lastWidth)
-
     # Set up the decoy of the first figure in the last spot
     @firstDecoyPosition = Math.floor((windowWidth - _.first(widths)) / 2) - (totalLefts)
 
     @shiftCarousel @stopPositions[@active], false
-    @$el.removeClass 'carousel-loading'
-
+    @$el.removeClass 'is-loading'
 
   bindEvents: ->
     # Bind key events to cycle the carousel
-    @$document.on "keyup.partner-show-carousel", (e) => @keyUp(e)
-
+    @$document.on 'keyup.partner-show-carousel', (e) => @keyUp(e)
     # Update the layout on window resize
     throttledSetStops = _.throttle (=> @setStops()), 500
-    @$window.on "resize.partner-show-carousel", throttledSetStops
-
-    # This will release the inTransition blocker when transitions complete
-    @$track.on(@transitionEvents, => @inTransition = false)
+    @$window.on 'resize.partner-show-carousel', throttledSetStops
 
   releaseEvents: ->
-    @$document.off ".partner-show-carousel"
-    @$window.off ".partner-show-carousel"
-    @$track.off @transitionEvents
+    @$document.off '.partner-show-carousel'
+    @$window.off '.partner-show-carousel'
 
   setActive: (index) ->
     @active = index
     @$figures
-      .removeClass('carousel-active')
+      .removeClass('is-active')
       .filter(":eq(#{@active})")
-      .addClass 'carousel-active'
+      .addClass 'is-active'
     @$dots
-      .removeClass('carousel-active')
+      .removeClass('is-active')
       .filter(":eq(#{@active})")
-      .addClass 'carousel-active'
+      .addClass 'is-active'
 
   shiftCarousel: (stop, animate = true) ->
     # Borrowed from apple and John Ball's write up here http://johnbhall.com/iphone-4s/
     # In order to get the switch from the decoy end caps to make the list circular,
     # the css transition duration needs to be set to zero in javascript (swapping classes doesn't work).
-    stop ?= @stopPositions[@active]
-    props = {}
-    props.left = stop
-
-    # This browser doesn't support CSS3 transitions
-    if animate and @noTransitions
-      @$track.animate { left: props.left }, 500, => @inTransition = false
-      return
     if animate
       duration = @transitionDuration
-      @inTransition = true
     else
       duration = '0s'
-
-    _.each ['-webkit-', '-moz-', '-o-', '-ms-', ''], (value, index) =>
-      props[value + "transition-duration"] = duration
-
-    @$track.css props
+    @$track.css
+      transform: "translateX(#{(stop ?= @stopPositions[@active])}px)"
+      transitionDuration: duration
 
   keyUp: (e) ->
     switch e.keyCode
@@ -188,68 +161,61 @@ module.exports = class Carousel extends Backbone.View
         @shiftRight()
 
   shiftLeft: ->
-    unless @inTransition
-      if @active is 0
-        @shiftCarousel(@firstDecoyPosition, false) unless @noDecoys
-        @active = @length
-      # The decoy illusion requires a separate thread here
-      _.defer =>
-        @setActive @active - 1
-        @shiftCarousel()
+    if @active is 0
+      @shiftCarousel(@firstDecoyPosition, false) unless @noDecoys
+      @active = @length
+    # The decoy illusion requires a separate thread here
+    _.defer =>
+      @setActive @active - 1
+      @shiftCarousel()
 
   shiftRight: ->
-    unless @inTransition
-      if @active is @length - 1
-        @shiftCarousel(@lastDecoyPosition, false) unless @noDecoys
-        @active = -1
-      # The decoy illusion requires a separate thread here
-      _.defer =>
-        @setActive @active + 1
-        @shiftCarousel()
+    if @active is @length - 1
+      @shiftCarousel(@lastDecoyPosition, false) unless @noDecoys
+      @active = -1
+    # The decoy illusion requires a separate thread here
+    _.defer =>
+      @setActive @active + 1
+      @shiftCarousel()
 
   # Shift the carousel on clicks unless the artwork is the currently selected.
   figureClick: (e) ->
-    unless @inTransition
-      index = $(e.currentTarget).data 'carousel-figure-index'
-      @shiftRight() if index > @active
-      @shiftLeft() if index < @active
+    index = $(e.currentTarget).data 'carousel-figure-index'
+    @shiftRight() if index > @active
+    @shiftLeft() if index < @active
 
   # Shift the carousel on clicks unless the artwork is the currently selected.
   dotClick: (e) ->
-    unless @inTransition
-      @setActive @$(e.target).data('carousel-dot-position')
-      @shiftCarousel()
+    @setActive @$(e.target).data('carousel-dot-position')
+    @shiftCarousel()
 
   swipeStart: (e) ->
     e.preventDefault()
 
     # Remove transition delay while swiping
-    props = {}
-    _.each ['-webkit-', '-moz-', '-o-', '-ms-', ''], (value) =>
-      props[value + "transition-duration"] = '0s'
-    @$track.css props
+    @$track.css transitionDuration: '0s'
 
     # Follow me while moving!
     @isSwiping = @isDoneSwiping = false
     trackOriginX = @$track.offset().left
     pointerOriginX = e.originalEvent.touches[0]?.pageX or e.pageX
-    $('.carousel-figures-clip').on( "touchmove", _.throttle((e) =>
+    $('.carousel-figures-clip').on 'touchmove', _.throttle((e) =>
       # Prevent throttled event handler from triggering after `touchend`
       return if @isDoneSwiping
 
       @isSwiping = true
       pointerX = e.originalEvent.touches[0]?.pageX or e.pageX
       left = trackOriginX + pointerX - pointerOriginX
-      @$track.css left: left + 'px'
+      @$track.css transform: "translateX(#{left}px)"
 
       # Prevent touchmove event from bubbling up and triggering
       # vertical scrolling of the entire page.
       e.stopPropagation()
-    , 30) )
+    , 30)
 
   swipeEnd: (e) ->
     wasSwiping = @isSwiping; @isSwiping = false; @isDoneSwiping = true
-    $('.carousel-figures-clip').unbind("touchmove")
+    $('.carousel-figures-clip').unbind 'touchmove'
     return unless wasSwiping # was tapping
 
     left = @$track.offset().left

@@ -29,33 +29,31 @@ describe 'Artist routes', ->
     Backbone.sync.restore()
 
   describe '#index', ->
-    it 'renders the artist template', ->
+    it 'renders the artist template', (done) ->
       routes.index @req, @res
-      _.last(Backbone.sync.args)[2].success fabricate 'artist', id: 'andy-foobar'
-      @res.render.args[0][0].should.equal 'index'
-      @res.render.args[0][1].artist.get('id').should.equal 'andy-foobar'
+      Backbone.sync.args[0][2].success fabricate 'artist', id: 'andy-foobar'
+      Backbone.sync.args[1][2].success()
+      _.defer =>
+        @res.render.args[0][0].should.equal 'index'
+        @res.render.args[0][1].artist.get('id').should.equal 'andy-foobar'
+        done()
 
-    it 'bootstraps the artist', ->
+    it 'bootstraps the artist', (done) ->
       routes.index @req, @res
-      _.last(Backbone.sync.args)[2].success fabricate 'artist', id: 'andy-foobar'
-      @res.locals.sd.ARTIST.id.should.equal 'andy-foobar'
+      Backbone.sync.args[0][2].success fabricate 'artist', id: 'andy-foobar'
+      Backbone.sync.args[1][2].success()
+      _.defer =>
+        @res.locals.sd.ARTIST.id.should.equal 'andy-foobar'
+        done()
 
-    it 'makes the right API call using the passed in sort', ->
-      routes.index @req, @res
-      _.last(Backbone.sync.args)[2].success fabricate 'artist', id: 'andy-foobar'
-      @res.locals.sd.SORT_BY.should.equal '-published_at'
-
-    it 'sets the default sort if not a valid sort', ->
-      @req.query.sort = 'bogus'
-      routes.index @req, @res
-      _.last(Backbone.sync.args)[2].success fabricate 'artist', id: 'andy-foobar'
-      @res.locals.sd.SORT_BY.should.equal ''
-
-    it 'redirects to canonical url', ->
+    it 'redirects to canonical url', (done) ->
       @res.locals.sd.CURRENT_PATH = '/artist/bar'
       routes.index @req, @res
-      _.last(Backbone.sync.args)[2].success fabricate 'artist', id: 'andy-foobar'
-      @res.redirect.args[0][0].should.equal '/artist/andy-foobar'
+      Backbone.sync.args[0][2].success fabricate 'artist', id: 'andy-foobar'
+      Backbone.sync.args[1][2].success()
+      _.defer =>
+        @res.redirect.args[0][0].should.equal '/artist/andy-foobar'
+        done()
 
   describe '#follow', ->
     it 'redirect to artist page without user', ->

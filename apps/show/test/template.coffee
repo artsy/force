@@ -58,7 +58,7 @@ describe 'Partner Show', ->
           profile: @profile
         })
         $ = cheerio.load @html
-        $('.carousel').should.have.lengthOf 1
+        $('#show-installation-shot-carousel').should.have.lengthOf 1
 
       it 'renders back navigation', ->
         @show.set fair: fabricate('fair')
@@ -118,7 +118,7 @@ describe 'Partner Show', ->
 
       it 'renders a conainer for install shots', ->
         $ = cheerio.load @html
-        $('.carousel').should.have.lengthOf 1
+        $('#show-installation-shot-carousel').should.have.lengthOf 1
 
       it 'doesnt render a small profile badge', ->
         $ = cheerio.load @html

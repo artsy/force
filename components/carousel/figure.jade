@@ -1,0 +1,4 @@
+- height = height || 480
+
+mixin carouselFigure(figure)
+  img( src=figure.resizeUrlFor({ height: height }) )

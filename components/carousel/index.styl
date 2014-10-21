@@ -3,29 +3,29 @@
 height = 480px
 
 .carousel
-  clear both
-  margin-bottom 20px
   width 100%
+  margin-bottom 20px
   user-select none
-  &.carousel-loading .carousel-figures-clip
+  &.is-loading .carousel-figures-clip
     opacity 0
   img
     height height
     opacity 1
     transition opacity 0.25s
 
+  &.is-done > .loading-spinner
+    display none
+
 .carousel-figures-clip
   min-height height
   margin 0 0 20px 0
   opacity 1
   overflow hidden
-  top 0
   transition opacity 0.5s
 
 .carousel-track
-  left 0
   position relative
-  transition left 0.5s
+  transition transform 0.5s
   white-space nowrap
 .carousel-set
   display inline-block
@@ -40,7 +40,8 @@ height = 480px
 .carousel-controls
   clear both
   height 46px
-.carousel-arrow-left, .carousel-arrow-right
+.carousel-arrow-left
+.carousel-arrow-right
   border 3px solid transparent
   cursor pointer
   float left
@@ -73,5 +74,6 @@ height = 480px
   display inline-block
   margin 0 2px
   transition color 0.2s ease-in-out
-  &:hover, &.carousel-active
+  &:hover
+  &.is-active
     color black

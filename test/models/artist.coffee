@@ -36,13 +36,6 @@ describe 'Artist', ->
       @artist.fetchArtworks({ success: sinon.stub() })
       _.last(Backbone.sync.args)[1].url.should.containEql "artist/#{@artist.get 'id'}/artworks?published=true"
 
-  describe '#validSort', ->
-
-    it 'only returns true for values in the valid sort hash', ->
-      _(_.keys(@artist.sortCriteriaForArtworks)).each (key) =>
-        @artist.validSort(key).should.be.ok
-      @artist.validSort('random').should.not.be.ok
-
   describe '#displayAvailableWorks', ->
     it 'returns a string describing the number of available and reference works', ->
       @artist.set published_artworks_count: 2, forsale_artworks_count: 1

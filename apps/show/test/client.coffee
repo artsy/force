@@ -17,7 +17,7 @@ describe 'Partner Show View', ->
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       @PartnerShowView = benv.requireWithJadeify resolve(__dirname, '../client/index.coffee'), ['artworkColumns']
-      @PartnerShowView.__set__ 'CarouselView', benv.requireWithJadeify resolve(__dirname, '../../../components/carousel/view.coffee'), ['carouselTemplate']
+      @PartnerShowView.__set__ 'CarouselView', benv.requireWithJadeify resolve(__dirname, '../../../components/carousel/view.coffee'), ['template']
       @PartnerShowView.__set__ 'PartnerShowButtons', @PartnerShowButtons = sinon.stub()
       carouselView = @PartnerShowView.__get__ 'CarouselView'
       carouselView::setStops = sinon.stub()
@@ -50,7 +50,7 @@ describe 'Partner Show View', ->
       el: $("<div id='show'>
         <div class='show-artworks'></div>
         <div class='show-share'></div>
-        <div class='carousel'></div>
+        <div id='show-installation-shot-carousel'></div>
         </div>")
       model: @show
 
