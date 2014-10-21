@@ -51,8 +51,8 @@ module.exports = class Carousel extends Backbone.View
     @setActive 0
 
     # When images are loaded, do the math
-    @$el.imagesLoaded()
-      .always(=> @setStops())
+    @$el.imagesLoaded?()
+      ?.always(=> @setStops())
 
     @bindEvents()
 
