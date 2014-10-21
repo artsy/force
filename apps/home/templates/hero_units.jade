@@ -5,7 +5,7 @@
       style="background-image: url('#{heroUnit.backgroundImageUrl()}')"
     )
       a.hhu-frame( href=heroUnit.get('link') ): .responsive-layout-container: .main-layout-container
-        .hhu-inner
+        .vam-outer: .vam-inner: .hhu-inner
           .hhu-header.small-caps
             = heroUnit.get('heading')
           img.hhu-title(
