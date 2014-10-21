@@ -6,7 +6,7 @@ height = 480px
   width 100%
   margin-bottom 20px
   user-select none
-  &.carousel-loading .carousel-figures-clip
+  &.is-loading .carousel-figures-clip
     opacity 0
   img
     height height
@@ -37,7 +37,8 @@ height = 480px
 .carousel-controls
   clear both
   height 46px
-.carousel-arrow-left, .carousel-arrow-right
+.carousel-arrow-left
+.carousel-arrow-right
   border 3px solid transparent
   cursor pointer
   float left
@@ -70,5 +71,6 @@ height = 480px
   display inline-block
   margin 0 2px
   transition color 0.2s ease-in-out
-  &:hover, &.carousel-active
+  &:hover
+  &.is-active
     color black

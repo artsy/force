@@ -51,8 +51,9 @@ module.exports = class Carousel extends Backbone.View
     @setActive 0
 
     # When images are loaded, do the math
-    @$el.imagesLoaded?()
-      ?.always(=> @setStops())
+    @$el.imagesLoaded?()?.always =>
+      @setStops()
+      @$el.addClass 'is-done'
 
     @bindEvents()
 
@@ -62,7 +63,7 @@ module.exports = class Carousel extends Backbone.View
       return this
 
     @$el
-      .addClass('carousel-loading')
+      .addClass('is-loading')
       .html template(carouselFigures: @collection.models, height: @height)
 
     @postRender()
@@ -114,7 +115,7 @@ module.exports = class Carousel extends Backbone.View
     @firstDecoyPosition = Math.floor((windowWidth - _.first(widths)) / 2) - (totalLefts)
 
     @shiftCarousel @stopPositions[@active], false
-    @$el.removeClass 'carousel-loading'
+    @$el.removeClass 'is-loading'
 
   bindEvents: ->
     # Bind key events to cycle the carousel
@@ -130,13 +131,13 @@ module.exports = class Carousel extends Backbone.View
   setActive: (index) ->
     @active = index
     @$figures
-      .removeClass('carousel-active')
+      .removeClass('is-active')
       .filter(":eq(#{@active})")
-      .addClass 'carousel-active'
+      .addClass 'is-active'
     @$dots
-      .removeClass('carousel-active')
+      .removeClass('is-active')
       .filter(":eq(#{@active})")
-      .addClass 'carousel-active'
+      .addClass 'is-active'
 
   shiftCarousel: (stop, animate = true) ->
     # Borrowed from apple and John Ball's write up here http://johnbhall.com/iphone-4s/

@@ -7,6 +7,6 @@ mixin carouselFigure(artwork)
 
 if artist.related().artworks.length >= 4
   - var carouselFigures = artist.related().artworks.models
-  #artist-carousel.artist-carousel.carousel.carousel-loading
+  #artist-carousel.artist-carousel.carousel.is-loading
     .loading-spinner
     include ../../../components/carousel/carousel.jade
