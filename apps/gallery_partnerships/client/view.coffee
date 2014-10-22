@@ -6,7 +6,7 @@ imagesLoaded = require 'imagesloaded'
 
 module.exports = class GalleryPartnershipsView extends Backbone.View
   events:
-    'click .gallery-partnerships-nav-link': 'intercept'
+    'click .gallery-partnerships-nav-link.internal': 'intercept'
 
   initialize: ->
     @$window = $(window)
