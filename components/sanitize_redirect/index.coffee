@@ -2,11 +2,15 @@ _ = require 'underscore'
 { parse } = require 'url'
 
 redirectFallback = '/'
-
 whitelistHosts = [
   'internal'
   'localhost'
   'artsy.net'
+]
+whitelistProtocols = [
+  'http:'
+  'https:'
+  null
 ]
 
 hasStatus = (args) ->
@@ -17,7 +21,9 @@ bareHost = (hostname) ->
   _.last(hostname.split('.'), subdomainOffset = 2).join '.'
 
 safeAddress = (address) ->
-  _.contains whitelistHosts, bareHost(parse(address, false, true).hostname)
+  parsed = parse(address, false, true)
+  _.contains(whitelistProtocols, parsed.protocol) and
+  _.contains(whitelistHosts, bareHost(parsed.hostname))
 
 module.exports = (address) ->
   if safeAddress(address) then address else redirectFallback
