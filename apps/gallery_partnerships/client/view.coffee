@@ -77,12 +77,13 @@ module.exports = class GalleryPartnershipsView extends Backbone.View
       href = $(el).data('href')
       Backbone.history.navigate href, trigger: false, replace: true
       @$nav.find("a[href='#{href}']").addClass 'is-active'
+    $nav = @$nav
     @$sections
       .waypoint((direction) ->
         activateNavLink(this) if direction is 'down'
-      ).waypoint (direction) ->
+      , offset: $nav.outerHeight()).waypoint (direction) ->
         activateNavLink(this) if direction is 'up'
-      , offset: -> -$(this).height()
+      , offset: -> -$(this).height() - $nav.outerHeight()
 
   setupHeroUnitSlideshow: ->
     @setupSlideshow @$heroUnitsContainer, @$heroUnitsSlides, 'heroUnit'
