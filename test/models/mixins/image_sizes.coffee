@@ -3,19 +3,18 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 { Image } = require 'artsy-backbone-mixins'
-imageSizesMixin = require '../../../models/mixins/image_sizes'
+ImageSizes = require '../../../models/mixins/image_sizes'
 sd = require('sharify').data
 
 class Model extends Backbone.Model
   _.extend @prototype, Image()
-  _.extend @prototype, imageSizesMixin
+  _.extend @prototype, ImageSizes
 
 describe 'Image Sizes Mixin', ->
   beforeEach ->
     @model = new Model fabricate 'featured_link'
 
   describe '#publicVersions', ->
-
     it 'ignores the normalized (private) size', ->
       public_versions = @model.get 'image_versions'
       copy = public_versions[..]
@@ -100,7 +99,16 @@ describe 'Image Sizes Mixin', ->
       @model.imageUrlForMaxSize().should.equal @model.imageUrlFor('larger.jpg')
 
   describe '#aspectRatio', ->
-
     it 'returns the image aspect ratio', ->
       @model.set { aspect_ratio: 1.0 }
       @model.aspectRatio().should.equal @model.get('aspect_ratio')
+
+  describe '#resizeDimensionsFor', ->
+    it 'returns new dimensions based on the passed in dimensions', ->
+      @model.set original_height: 2253, original_width: 1200
+      @model.resizeDimensionsFor(width: 400).should.eql width: 400, height: 751
+      @model.resizeDimensionsFor(width: 400, height: 400).should.eql width: 213, height: 400
+      @model.resizeDimensionsFor(height: 400).should.eql width: 213, height: 400
+      @model.resizeDimensionsFor(width: 4000).should.eql width: 4000, height: 7510
+      @model.resizeDimensionsFor(width: 4000, height: 4000).should.eql width: 2130, height: 4000
+      @model.resizeDimensionsFor(height: 4000).should.eql width: 2130, height: 4000
