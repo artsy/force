@@ -42,4 +42,4 @@ describe 'sanitizeRedirect', ->
     sanitizeRedirect('ftp://google.com').should.equal '/'
 
   it 'blocks other protocols; redirects to root', ->
-    sanitizeRedirect('ftp://google.com').should.equal '/'
+    sanitizeRedirect('javascript:alert(1);').should.equal '/'
