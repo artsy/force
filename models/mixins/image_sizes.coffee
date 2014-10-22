@@ -73,6 +73,13 @@ module.exports =
   resizeUrlFor: ->
     resizer.resize @imageUrlForMaxSize(), arguments...
 
+  resizeDimensionsFor: ({ width, height }) ->
+    ratios = _.compact _.map { width: width, height: height }, (value, dimension) =>
+      value / @get("original_#{dimension}") if value
+    ratio = Math.min ratios...
+    width: Math.floor(@get('original_width') * ratio)
+    height: Math.floor(@get('original_height') * ratio)
+
   cropUrlFor: ->
     resizer.crop @imageUrlForMaxSize(), arguments...
 

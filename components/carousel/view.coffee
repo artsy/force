@@ -29,6 +29,7 @@ module.exports = class Carousel extends Backbone.View
   prefixWidth: 0
   stopPositions: []
   transitionDuration: '0.5s'
+  hasDimensions: true
 
   initialize: (options) ->
     @$window = $(window)
@@ -51,11 +52,18 @@ module.exports = class Carousel extends Backbone.View
     @setActive 0
 
     # When images are loaded, do the math
-    @$el.imagesLoaded?()?.always =>
-      @setStops()
-      @$el.addClass 'is-done'
+    if @hasDimensions
+      @complete()
+    else
+      @$el.imagesLoaded?()?.always => @complete()
 
     @bindEvents()
+
+  complete: ->
+    @setStops()
+    @$el
+      .removeClass('is-loading')
+      .addClass 'is-done'
 
   render: ->
     if @length < @minLength
@@ -66,7 +74,7 @@ module.exports = class Carousel extends Backbone.View
       .addClass('is-loading')
       .html template(carouselFigures: @collection.models, height: @height)
 
-    @postRender()
+    _.defer => @postRender()
 
     this
 
@@ -115,7 +123,6 @@ module.exports = class Carousel extends Backbone.View
     @firstDecoyPosition = Math.floor((windowWidth - _.first(widths)) / 2) - (totalLefts)
 
     @shiftCarousel @stopPositions[@active], false
-    @$el.removeClass 'is-loading'
 
   bindEvents: ->
     # Bind key events to cycle the carousel

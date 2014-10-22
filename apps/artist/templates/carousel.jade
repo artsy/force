@@ -1,8 +1,13 @@
 mixin carouselFigure(artwork)
+  - var options = { height: 300 }
+  - var image = artwork.defaultImage()
+  - var dimensions = image.resizeDimensionsFor(options)
   a( href= artwork.href() )
     img(
-      src= artwork.defaultImage().resizeUrlFor({ height: 300 })
+      src= image.resizeUrlFor(options)
       alt= artwork.get('title')
+      width= dimensions.width
+      height= dimensions.height
     )
 
 if artist.related().artworks.length >= 4

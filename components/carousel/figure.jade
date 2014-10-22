@@ -1,4 +1,8 @@
-- height = height || 480
-
 mixin carouselFigure(figure)
-  img( src=figure.resizeUrlFor({ height: height }) )
+  - var options = { height: (height || 480) }
+  - var dimensions = figure.resizeDimensionsFor(options)
+  img(
+    src= figure.resizeUrlFor(options)
+    width= dimensions.width
+    height= dimensions.height
+  )
