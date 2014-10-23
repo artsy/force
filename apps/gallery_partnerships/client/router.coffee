@@ -22,5 +22,6 @@ module.exports = class GalleryPartnershipsRouter extends Backbone.Router
     @jump.scrollToTop() if @$window.scrollTop() isnt 0
 
   toSection: (slug) ->
+    $nav = $ '.gallery-partnerships-section-nav'
     selector = "##{slug}"
-    @jump.scrollToPosition $(selector)?.offset()?.top
+    @jump.scrollToPosition $(selector)?.offset()?.top - $nav.outerHeight() / 2
