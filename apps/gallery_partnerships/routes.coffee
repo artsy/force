@@ -1,9 +1,10 @@
-_       = require 'underscore'
-knox    = require 'knox'
-url     = require 'url'
+_ = require 'underscore'
+knox = require 'knox'
+url = require 'url'
 request = require 'superagent'
-client  = null
+client = null
 { S3_KEY, S3_SECRET, APPLICATION_NAME } = require '../../config.coffee'
+{ crop } = require '../../components/resizer'
 
 CONTENT_PATH = '/gallery-partnerships/content.json'
 
@@ -26,7 +27,7 @@ getJSON = (callback) ->
 @index = (req, res, next) ->
   getJSON (err, data) ->
     return next err if err
-    res.render 'index', data
+    res.render 'index', _.extend data, crop: crop
 
 @adminOnly = (req, res, next) ->
   if req.user?.get('type') isnt 'Admin'

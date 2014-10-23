@@ -6,15 +6,11 @@ uuid = require 'node-uuid'
 { parse, format } = require 'url'
 _ = require 'underscore'
 { NODE_ENV } = require '../../config'
-{ fill, resize, crop } = require '../../components/resizer/index'
 
 module.exports = (req, res, next) ->
 
   # Attach libraries to locals
   res.locals._ = _
-  res.locals.resize = resize
-  res.locals.crop = crop
-  res.locals.fill = fill
 
   # Pass the user agent into locals for data-useragent device detection
   res.locals.userAgent = req.get('user-agent')

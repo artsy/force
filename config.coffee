@@ -25,7 +25,7 @@ module.exports =
   FACEBOOK_SECRET: 'facebook-secret'
   TWITTER_KEY: 'twitter-key'
   TWITTER_SECRET: 'twitter-secret'
-  EMBEDLY_KEY: null
+  EMBEDLY_KEY: 'a1f82558d8134f6cbebceb9e67d04980'
   S3_KEY: null
   S3_SECRET: null
   NEW_RELIC_LICENSE_KEY: null
@@ -66,7 +66,6 @@ module.exports =
   SENTRY_PUBLIC_DSN: null
   GOOGLE_SEARCH_KEY: null
   GOOGLE_SEARCH_CX: null
-  EMBEDLY_KEY: 'a1f82558d8134f6cbebceb9e67d04980'
 
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or
