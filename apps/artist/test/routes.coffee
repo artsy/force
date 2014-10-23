@@ -20,9 +20,7 @@ describe 'Artist routes', ->
     @res =
       render: sinon.stub()
       redirect: sinon.stub()
-      header: sinon.stub()
-      write: sinon.stub()
-      end: sinon.stub()
+      send: sinon.stub()
       locals: sd: APP_URL: 'http://localhost:5000', CURRENT_PATH: '/artist/andy-foobar'
 
   afterEach ->
@@ -72,13 +70,41 @@ describe 'Artist routes', ->
   # Temporary
   describe '#data', ->
     it 'returns the example data when it has it available', ->
-      @req = params: id: 'sterling-ruby', section: 'bibliography'
+      @req = query: {}, params: id: 'sterling-ruby', section: 'bibliography'
       routes.data @req, @res
-      JSON.parse(@res.write.args[0][0].toString())[0].artist_id.should.equal 'sterling-ruby'
+      @res.send.args[0][0][0].artist_id.should.equal 'sterling-ruby'
 
     it 'returns an empty array when it does not have anything available', ->
-      @req = params: id: 'damon-zucconi', section: 'bibliography'
+      @req = query: {}, params: id: 'damon-zucconi', section: 'bibliography'
       routes.data @req, @res
-      response = JSON.parse(@res.write.args[0][0].toString())
-      response.should.be.instanceOf Array
-      response.length.should.equal 0
+      @res.send.args[0][0].should.be.instanceOf Array
+      @res.send.args[0][0].length.should.equal 0
+
+    it 'accepts a type filter query param', ->
+      @req =
+        query: type: ['review']
+        params: id: 'sterling-ruby', section: 'bibliography'
+      routes.data @req, @res
+      _.uniq(_.pluck(@res.send.args[0][0], 'type')).should.eql ['review']
+
+    it 'accepts multiple type filter query param', ->
+      @req =
+        query: type: ['interview', 'review']
+        params: id: 'sterling-ruby', section: 'bibliography'
+      routes.data @req, @res
+      _.uniq(_.pluck(@res.send.args[0][0], 'type')).should.eql ['interview', 'review']
+
+    it 'accepts a merchandisable filter query param', ->
+      @req =
+        query: merchandisable: [true]
+        params: id: 'sterling-ruby', section: 'bibliography'
+      routes.data @req, @res
+      _.every(_.pluck(@res.send.args[0][0], 'merchandisable')).should.be.true
+
+    it 'accepts both filter query params', ->
+      @req =
+        query: merchandisable: [true], type: ['catalogue']
+        params: id: 'sterling-ruby', section: 'bibliography'
+      routes.data @req, @res
+      _.every(_.pluck(@res.send.args[0][0], 'merchandisable')).should.be.true
+      _.uniq(_.pluck(@res.send.args[0][0], 'type')).should.eql ['catalogue']
