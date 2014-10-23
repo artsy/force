@@ -49,8 +49,8 @@ Artist = require '../../models/artist'
 
   data = JSON.parse(data)
 
-  for filter in ['type', 'merchandisable']
-    if (f = req.query[filter])
-      data = _.filter data, (obj) -> _.contains(f, obj[filter])
-
+  for key in ['type', 'merchandisable']
+    if (filters = req.query[key])
+      data = _.filter data, (item) ->
+        _.contains(filters, "#{item[key]}")
   res.send data

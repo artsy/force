@@ -86,7 +86,7 @@ describe 'HeaderView', ->
         '/artist/foo-bar/works'
         '/artist/foo-bar/posts'
         '/artist/foo-bar/shows'
-        '/artist/foo-bar/press'
+        '/artist/foo-bar/books'
         '/artist/foo-bar/collections'
         '/artist/foo-bar/related-artists'
       ]

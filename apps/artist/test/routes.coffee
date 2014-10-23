@@ -9,7 +9,7 @@ sections = require '../sections'
 
 describe 'sections', ->
   it 'returns the correct tab slugs in the correct order', ->
-    sections.should.eql ['works', 'posts', 'shows', 'press', 'collections', 'related-artists']
+    sections.should.eql ['works', 'posts', 'shows', 'books', 'collections', 'related-artists']
 
 describe 'Artist routes', ->
   beforeEach ->
@@ -96,15 +96,15 @@ describe 'Artist routes', ->
 
     it 'accepts a merchandisable filter query param', ->
       @req =
-        query: merchandisable: [true]
+        query: merchandisable: ['true']
         params: id: 'sterling-ruby', section: 'bibliography'
       routes.data @req, @res
-      _.every(_.pluck(@res.send.args[0][0], 'merchandisable')).should.be.true
+      _.uniq(_.pluck(@res.send.args[0][0], 'merchandisable')).should.eql [true]
 
     it 'accepts both filter query params', ->
       @req =
-        query: merchandisable: [true], type: ['catalogue']
+        query: merchandisable: ['true'], type: ['catalogue']
         params: id: 'sterling-ruby', section: 'bibliography'
       routes.data @req, @res
-      _.every(_.pluck(@res.send.args[0][0], 'merchandisable')).should.be.true
+      _.uniq(_.pluck(@res.send.args[0][0], 'merchandisable')).should.eql [true]
       _.uniq(_.pluck(@res.send.args[0][0], 'type')).should.eql ['catalogue']
