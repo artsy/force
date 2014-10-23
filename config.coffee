@@ -25,7 +25,7 @@ module.exports =
   FACEBOOK_SECRET: 'facebook-secret'
   TWITTER_KEY: 'twitter-key'
   TWITTER_SECRET: 'twitter-secret'
-  EMBEDLY_KEY: null
+  EMBEDLY_KEY: 'a1f82558d8134f6cbebceb9e67d04980'
   S3_KEY: null
   S3_SECRET: null
   NEW_RELIC_LICENSE_KEY: null

@@ -52,7 +52,7 @@ describe 'ArtistData', ->
         { size: 1 }
         { size: 5 }
         { size: 5 }
-        null
+        { merchandisable: [true] }
         null
         { size: 10 }
         { size: 10 }

@@ -1,6 +1,7 @@
 Search = require '../../collections/search'
 GoogleSearchResults = require './collections/google_search_results.coffee'
 removeDiacritics = require('diacritics').remove
+{ crop, fill } = require '../../components/resizer'
 
 @index = (req, res) ->
   return res.redirect("/") unless req.query.q
@@ -33,6 +34,8 @@ removeDiacritics = require('diacritics').remove
         results: models
         currentPage: page or 1
         totalPages: totalPages
+        crop: crop
+        fill: fill
     error: ->
       res.render 'template',
         term: term

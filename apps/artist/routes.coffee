@@ -1,3 +1,4 @@
+_ = require 'underscore'
 Q = require 'q'
 fs = require 'graceful-fs'
 { resolve } = require 'path'
@@ -45,6 +46,11 @@ Artist = require '../../models/artist'
     data = fs.readFileSync filename
   catch
     data = '[]'
-  res.header 'Content-Type', 'application/json; charset=utf-8'
-  res.write data
-  res.end()
+
+  data = JSON.parse(data)
+
+  for key in ['type', 'merchandisable']
+    if (filters = req.query[key])
+      data = _.filter data, (item) ->
+        _.contains(filters, "#{item[key]}")
+  res.send data

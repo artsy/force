@@ -1,0 +1,21 @@
+h2.artist-section-header Books & Catalogs for purchase
+.merchandisable-items
+  if items.length
+    for item in items
+      a.merchandisable-item( href= item.get('url'), target='_blank' )
+        .merchandisable-item-image: img(
+          src= item.cropUrlFor({ width: 175, height: 225 })
+          alt= item.get('title')
+        )
+        .merchandisable-item-metadata
+          h4.merchandisable-item-title
+            = item.get('name')
+          if item.has('author')
+            .merchandisable-item-author
+              | by #{item.get('author')}
+          if item.has('published_date')
+            .merchandisable-item-publish-date(
+              datetime= item.get('published_date')
+            ) (#{item.date('published_date').format('D MMMM YYYY')})
+  else
+    .loading-spinner
