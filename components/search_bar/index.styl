@@ -11,7 +11,7 @@ suggestion-height = (suggestion-thumbnail-size + 20px)
   height default-icon-font-size
   margin ((home-logo-size - default-icon-font-size) / 2) 0
   padding 0
-  border 2px solid gray-color
+  border 1px solid gray-color
   form
     position relative
     width 100%
@@ -19,7 +19,6 @@ suggestion-height = (suggestion-thumbnail-size + 20px)
   &.is-display-suggestions
     #main-layout-search-bar-feedback
       height logo-size
-      border 1px solid gray-lighter-color
       opacity 1
   &.is-loading
     #main-layout-search-bar-spinner
@@ -30,17 +29,18 @@ suggestion-height = (suggestion-thumbnail-size + 20px)
 #main-layout-search-bar-feedback
   display block
   position absolute
-  width calc('100% + 4px')
+  width calc('100% + 2px')
   height 0
   left 0
   right auto
-  margin-top 2px
-  margin-left -2px
+  margin-top 1px
+  margin-left -1px
   padding 0 (logo-size / 2)
   visibility visible
   overflow hidden
   line-height logo-size
   border 1px solid gray-lighter-color
+  border-top none
   background-color gray-lightest-color
   transition opacity 0.125s, height 0.125s
 
@@ -81,9 +81,9 @@ search-bar-input-placeholder()
   .tt-hint
     display none
   .tt-dropdown-menu
-    width calc('100% + 4px')
-    margin-top 2px
-    margin-left -2px
+    width calc('100% + 2px')
+    margin-top 1px
+    margin-left -1px
     background-color white
     border 1px solid gray-lighter-color
   .tt-suggestion
