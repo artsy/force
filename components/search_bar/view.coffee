@@ -65,7 +65,7 @@ module.exports = class SearchBarView extends Backbone.View
     @__feedbackString__ ?= if @mode? and @mode isnt 'suggest'
       "Search for #{_s.titleize(@mode)}…"
     else
-      'Search Artists, Artworks, Galleries, Museums, Categories…'
+      'Search Artsy'
 
   displayFeedback: ->
     @hideSuggestions() if @search.results.length

@@ -61,7 +61,7 @@ describe 'SearchBarView', ->
       @view.$el.attr('class').should.containEql 'is-loading'
 
     it 'restores the feedback to the original state', ->
-      @view.$el.html().should.containEql 'Search Artists, Artworks, Galleries, Museums, Categories'
+      @view.$el.html().should.containEql 'Search Artsy'
 
   describe '#concealLoading', ->
     it 'removes the loading state', ->
@@ -75,7 +75,7 @@ describe 'SearchBarView', ->
       @view.$('.autocomplete-feedback').text ''
       _.isEmpty(@view.$('input').text()).should.be.true
       @view.trigger 'search:opened'
-      @view.$el.html().should.containEql 'Search Artists, Artworks, Galleries, Museums, Categories'
+      @view.$el.html().should.containEql 'Search Artsy'
       @view.$el.attr('class').should.containEql 'is-display-suggestions'
 
     it 'does not display the feedback when the input has text', ->
@@ -110,4 +110,4 @@ describe 'SearchBarView', ->
       @view.feedbackString().should.equal 'Search for Artists…'
 
     it 'falls back to the default string', ->
-      @view.feedbackString().should.equal 'Search Artists, Artworks, Galleries, Museums, Categories…'
+      @view.feedbackString().should.equal 'Search Artsy'
