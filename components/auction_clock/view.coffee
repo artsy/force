@@ -35,7 +35,7 @@ module.exports = class AuctionClockView extends Backbone.View
         @$('.clock-header').html "#{@modelName} closes in:"
         @toDate = @model.get 'offsetEndAtMoment'
       when 'closed'
-        @$el.html "<div class='clock-header auction-clock-closed'>#{@modelName} Closed</div>"
+        @$el.html "<div class='clock-header auction-clock-closed'>Online Bidding Closed</div>"
         return
     @renderClock()
     @interval = setInterval @renderClock, 1000
