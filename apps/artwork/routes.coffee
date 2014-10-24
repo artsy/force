@@ -28,11 +28,14 @@ defaultMessage = require '../../components/contact/default_message.coffee'
                 artwork: artwork
                 artist: artist
                 tab: req.params.tab
+                auctionId: req.query?.auction_id
                 jsonLD: stringifyJSONForWeb(artwork.toJSONLD())
                 defaultMessage: defaultMessage(artwork)
         else
           res.render 'index',
             artwork: artwork
+            tab: req.params.tab
+            auctionId: req.query?.auction_id
             jsonLD: stringifyJSONForWeb(artwork.toJSONLD())
             defaultMessage: defaultMessage(artwork)
       else
