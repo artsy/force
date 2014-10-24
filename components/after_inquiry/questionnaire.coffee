@@ -39,9 +39,7 @@ module.exports = class Questionnaire extends ModalView
     'click #after-inquiry-auth-submit': 'auth'
     'click #auth-skip': 'skip'
 
-  initialize: (options) ->
-    { @user, @inquiry } = options
-
+  initialize: ({ @user, @inquiry, @attendance }) ->
     @user.approximateLocation()
     @templateData = user: @user
 
@@ -81,7 +79,7 @@ module.exports = class Questionnaire extends ModalView
     unless @user.id?
       # Generate logged out introduction before sending inquiry
       introduction = new Introduction
-      introduction.generate @user, @bookmarksView?.bookmarks,
+      introduction.generate @user, @bookmarksView?.bookmarks, @attendance,
         success: =>
           @inquiry.set 'introduction', introduction.get('introduction')
           mediator.trigger 'inquiry:send'

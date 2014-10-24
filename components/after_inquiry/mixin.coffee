@@ -26,7 +26,7 @@ module.exports =
       @send()
 
   initializeAfterInquiry: ->
-    new AfterInquiry inquiry: @inquiry, user: @user
+    new AfterInquiry inquiry: @inquiry, user: @user, attendance: @attendance
     mediator.on 'inquiry:send', (=> @send()), this
 
   displayAfterInquiryFlow: ->

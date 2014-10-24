@@ -17,9 +17,7 @@ module.exports = class AfterInquiry
   messageError: 'There was a problem with sending your inquiry'
   pauseInterval: 2000
 
-  constructor: (options = {}) ->
-    { @user, @inquiry } = options
-
+  constructor: ({ @user, @inquiry, @attendance }) ->
     @setupUser()
     @bindInquiryEvents()
 
@@ -86,6 +84,7 @@ module.exports = class AfterInquiry
       backdrop: false
       user: @user
       inquiry: @inquiry
+      attendance: @attendance
 
   remove: =>
     @flash.close()
