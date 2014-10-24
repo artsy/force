@@ -29,6 +29,7 @@ module.exports.PartnerShowView = class PartnerShowView extends Backbone.View
           @carouselView = new CarouselView
             collection: installShots
             height: 480
+            hasDimensions: false
           @$carousel.html @carouselView.render().$el
         else
           @$carousel.remove()
