@@ -89,4 +89,4 @@ module.exports = class Sale extends Backbone.Model
     else if @isOpen()
       label: 'Bid', enabled: true, classes: undefined, href: (@bidUrl(artwork) if artwork)
     else if @isClosed()
-      label: 'Bidding closed', enabled: false, classes: 'is-disabled', href: undefined
+      label: 'Online Bidding Closed', enabled: false, classes: 'is-disabled', href: undefined
