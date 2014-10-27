@@ -2,4 +2,6 @@
   if registered
     .avant-garde-button-black( disabled ) You're Registered to Bid
   else
-    a.avant-garde-button-black( href=sale.registerUrl() ) Register to bid
+    a#auction-register-button.avant-garde-button-black(
+      href=sale.registerUrl()
+    ) Register to bid

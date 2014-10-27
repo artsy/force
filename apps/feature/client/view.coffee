@@ -218,7 +218,7 @@ module.exports = class FeatureView extends Backbone.View
     new FeatureRouter feature: @feature
     Backbone.history.start pushState: true
 
-  triggerLoginPopup: =>
+  triggerLoginPopup: (e) =>
     unless @currentUser
       mediator.trigger 'open:auth', { mode: 'register', copy: 'Sign up to bid on artworks', redirectTo: @sale.registerUrl() }
-      false
+      e.preventDefault()
