@@ -117,9 +117,13 @@ module.exports = class GalleryPartnershipsView extends Backbone.View
   trackNavLinkClicks: (e) ->
     analytics.track.click 'Clicked nav link on gallery partnerships',
       section: $(e.currentTarget).attr('data-section')
+    analytics.snowplowStruct 'gallery_partnerships', 'click_nav_link',
+      'section', $(e.currentTarget).attr('data-section')
 
   trackNavApplyClicks: ->
     analytics.track.click 'Clicked nav apply on gallery partnerships'
+    analytics.snowplowStruct 'gallery_partnerships', 'click_nav_apply'
 
   trackBottomApplyClicks: ->
     analytics.track.click 'Clicked bottom apply on gallery partnerships'
+    analytics.snowplowStruct 'gallery_partnerships', 'click_bottom_apply'

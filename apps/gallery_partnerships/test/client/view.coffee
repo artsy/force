@@ -22,7 +22,9 @@ describe 'GalleryPartnershipsView', ->
 
   beforeEach ->
     @GalleryPartnershipsView = rewire '../../client/view'
-    @GalleryPartnershipsView.__set__ 'analytics', track: click: (@track = sinon.stub())
+    @GalleryPartnershipsView.__set__ 'analytics',
+      track: click: (@mixpanel = sinon.stub())
+      snowplowStruct: @snowplow = sinon.stub()
     sinon.stub @GalleryPartnershipsView::, 'initialize'
     @view = new @GalleryPartnershipsView el: $('body')
     @clock = sinon.useFakeTimers()
@@ -33,27 +35,37 @@ describe 'GalleryPartnershipsView', ->
 
   describe 'analytics', ->
     it 'tracks nav link clicks', ->
-      (track = @track).notCalled.should.be.ok
+      (mixpanel = @mixpanel).notCalled.should.be.ok
+      (snowplow = @snowplow).notCalled.should.be.ok
       callCount = 0
       $('.gallery-partnerships-nav-link.internal').each ->
         $(this).click()
-        track.callCount.should.equal ++callCount
-        _.last(track.args)[0].should.equal 'Clicked nav link on gallery partnerships'
-        _.last(track.args)[1].should.eql section: $(this).attr('data-section')
+        mixpanel.callCount.should.equal ++callCount
+        snowplow.callCount.should.equal callCount
+        _.last(mixpanel.args)[0].should.equal 'Clicked nav link on gallery partnerships'
+        _.last(mixpanel.args)[1].should.eql section: $(this).attr('data-section')
+        _.last(snowplow.args)[0].should.equal 'gallery_partnerships'
+        _.last(snowplow.args)[1].should.equal 'click_nav_link'
+        _.last(snowplow.args)[2].should.equal 'section'
+        _.last(snowplow.args)[3].should.equal $(this).attr('data-section')
 
     it 'tracks nav apply button clicks', ->
-      @track.notCalled.should.be.ok
+      @mixpanel.notCalled.should.be.ok
       $('.gallery-partnerships-nav-link.apply').click()
-      @track.calledOnce.should.be.ok
-      @track.args[0][0].should.equal 'Clicked nav apply on gallery partnerships'
+      @mixpanel.calledOnce.should.be.ok
+      @snowplow.calledOnce.should.be.ok
+      @mixpanel.args[0][0].should.equal 'Clicked nav apply on gallery partnerships'
+      @snowplow.args[0][0].should.equal 'gallery_partnerships'
+      @snowplow.args[0][1].should.equal 'click_nav_apply'
 
     it 'tracks bottom apply button clicks', ->
-      console.log @track.callCount
-      @track.notCalled.should.be.ok
+      @mixpanel.notCalled.should.be.ok
       $('.apply .apply-button').click()
-      console.log @track.callCount
-      @track.calledOnce.should.be.ok
-      @track.args[0][0].should.equal 'Clicked bottom apply on gallery partnerships'
+      @mixpanel.calledOnce.should.be.ok
+      @snowplow.calledOnce.should.be.ok
+      @mixpanel.args[0][0].should.equal 'Clicked bottom apply on gallery partnerships'
+      @snowplow.args[0][0].should.equal 'gallery_partnerships'
+      @snowplow.args[0][1].should.equal 'click_bottom_apply'
 
   describe 'slideshow', ->
     before ->
