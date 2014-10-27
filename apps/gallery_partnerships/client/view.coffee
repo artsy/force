@@ -2,11 +2,15 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 mediator = require '../../../lib/mediator.coffee'
 imagesLoaded = require 'imagesloaded'
+analytics = require '../../../lib/analytics.coffee'
 { resize } = require '../../../components/resizer/index.coffee'
 
 module.exports = class GalleryPartnershipsView extends Backbone.View
   events:
     'click .gallery-partnerships-nav-link.internal': 'intercept'
+    'click.analytics .gallery-partnerships-nav-link.internal': 'trackNavLinkClicks'
+    'click.analytics .gallery-partnerships-nav-link.apply': 'trackNavApplyClicks'
+    'click.analytics .apply .apply-button': 'trackBottomApplyClicks'
 
   initialize: ->
     @$window = $(window)
@@ -108,3 +112,14 @@ module.exports = class GalleryPartnershipsView extends Backbone.View
       @["#{name}Frame"] + 1
     else
       0
+
+  # Analytics
+  trackNavLinkClicks: (e) ->
+    analytics.track.click 'Clicked nav link on gallery partnerships',
+      section: $(e.currentTarget).attr('data-section')
+
+  trackNavApplyClicks: ->
+    analytics.track.click 'Clicked nav apply on gallery partnerships'
+
+  trackBottomApplyClicks: ->
+    analytics.track.click 'Clicked bottom apply on gallery partnerships'
