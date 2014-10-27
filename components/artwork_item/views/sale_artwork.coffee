@@ -49,11 +49,14 @@ module.exports = class SaleArtworkView extends Backbone.View
         redirectTo: @sale.redirectUrl @model
 
   setupAuctionState: ->
-    @appendAuctionId()
+    if @sale.isOpen()
+      @appendAuctionId()
+    else
+      # Possibly hide the buy now button
+      @$('.artwork-item-buy-now').hide()
 
-    unless @sale.isOpen()
-      # Hide the bid status and buy now button
-      @$('.artwork-item-auction-bid-status, .artwork-item-buy-now').hide()
+    # Possibly hide the bid status
+    @$('.artwork-item-auction-bid-status').hide() if @sale.isClosed()
 
     # Set bid button state
     # Set button state
