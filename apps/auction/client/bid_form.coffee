@@ -6,6 +6,7 @@ ModalPageView = require '../../../components/modal/page.coffee'
 BidderPosition = require '../../../models/bidder_position.coffee'
 ErrorHandlingForm = require '../../../components/credit_card/client/error_handling_form.coffee'
 { SESSION_ID } = require('sharify').data
+trackSnowplow = analytics.snowplowStruct
 
 module.exports = class BidForm extends ErrorHandlingForm
 
@@ -37,8 +38,6 @@ module.exports = class BidForm extends ErrorHandlingForm
       @saleArtwork.cleanBidAmount val
 
   placeBid: =>
-    analytics.track.click 'Clicked "Confirm Bid" on bid page'
-
     @timesPolledForBidPlacement = 0
     @$submit.addClass('is-loading')
     @clearErrors()
@@ -49,15 +48,18 @@ module.exports = class BidForm extends ErrorHandlingForm
         artwork_id: @saleArtwork.get('artwork').id
         max_bid_amount_cents: @getBidAmount()
       bidderPosition.save null,
-        success: =>
+        success: (model, response, options) =>
           _.delay =>
             @pollForBidPlacement(@saleArtwork.get('minimum_next_bid_cents'))
           , 1000
           analytics.track.funnel 'Confirmed bid on bid page'
+          trackSnowplow 'bid', 'confirm', @saleArtwork.artwork().get('_id'), 'artwork', undefined, { sale_id: @model.get('_id'), bid_id: model.id }
         error: (xhr) =>
           @showError 'Error placing your bid', xhr
     else
       @showError "Your bid must be higher than #{@bidderPositions.minBid()}"
+
+    analytics.track.click 'Clicked "Confirm Bid" on bid page'
 
   pollForBidPlacement: (minimumBidAmountInCents) ->
     @saleArtwork.fetch
@@ -73,3 +75,7 @@ module.exports = class BidForm extends ErrorHandlingForm
 
   showSuccessfulBidMessage: =>
     window.location = @saleArtwork.artwork().bidSuccessUrl()
+
+  showError: (description, response = {}) =>
+    trackSnowplow 'bid', 'validation_error', @saleArtwork.artwork().get('_id'), 'artwork', undefined, { error_name: description }
+    super
