@@ -35,7 +35,7 @@ module.exports = class Carousel extends Backbone.View
     @$window = $(window)
     @$document = $(document)
     @length = @collection?.length or @$('.carousel-figures .carousel-figure').length
-    { @height } = options
+    { @height, @hasDimensions } = options
 
   cacheSelectors: ->
     @$track = @$('.carousel-track')
