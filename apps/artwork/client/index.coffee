@@ -12,7 +12,7 @@ module.exports.init = ->
   Backbone.history.start pushState: true
 
   track.impression 'Artwork page', id: artwork.id
-  require './analytics.coffee'
+  require('./analytics.coffee')(artwork)
 
   # Reflection doesn't like easter eggs :(
   return if navigator.userAgent.match('PhantomJS')
