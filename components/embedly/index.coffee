@@ -18,7 +18,7 @@ class Response extends Backbone.Model
 module.exports = class Embedly extends Backbone.Collection
   model: Response
 
-  url: 'http://api.embed.ly/1/oembed'
+  url: 'https://api.embed.ly/1/oembed'
 
   fetch: (options = {}) ->
     data = qs.stringify _.extend(options.data, key: EMBEDLY_KEY)
