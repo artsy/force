@@ -51,7 +51,7 @@ describe 'AuctionDetailView', ->
       @view.$('.abs-count').text().should.equal '(0 bids)'
 
     it 'displays estimate', ->
-      @view.$('.artwork-auction-estimate').text().should.equal 'Estimate: $8,000–$6,000'
+      @view.$('.artwork-auction-estimate').text().should.equal 'Estimate: $6,000–$8,000'
 
     it 'does not display what it does not have', ->
       @view.$('.artwork-bidder-position-status').length.should.not.be.ok

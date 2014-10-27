@@ -35,7 +35,7 @@ module.exports = class SaleArtwork extends Backbone.Model
     if @has('low_estimate_cents') or @has('high_estimate_cents')
       high = formatMoney(@get('high_estimate_cents') / 100, '$', 0) if @has 'high_estimate_cents'
       low = formatMoney(@get('low_estimate_cents') / 100, '$', 0)  if @has 'low_estimate_cents'
-      "Estimate: #{_.compact([high, low]).join '–'}"
+      "Estimate: #{_.compact([low, high]).join '–'}"
 
   # Changes bidAmount to a number in cents
   cleanBidAmount: (bidAmount)->
