@@ -80,7 +80,7 @@ categories =
 
 module.exports.track =
   _.reduce(Object.keys(categories), (memo, kind) ->
-    memo[kind] = (description, options = {}, callback) ->
+    memo[kind] = (description, options = {}) ->
       # Don't track admins
       return if sd.CURRENT_USER?.type is 'Admin'
 
@@ -96,7 +96,7 @@ module.exports.track =
           user_id: sd.CURRENT_USER?.id
           lab_features: sd.CURRENT_USER?.lab_features
 
-        mixpanel.track? description, options, callback
+        mixpanel.track? description, options
 
       # Send google analytics event
       ga? 'send', {
