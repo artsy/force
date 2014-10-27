@@ -44,6 +44,8 @@ module.exports.trackPageview = =>
   snowplow?('trackPageView')
 
 module.exports.snowplowStruct = (category, action, label, property, value = '0.0', contexts = {}) ->
+  # Don't track admins
+  return if sd.CURRENT_USER?.type is 'Admin'
   # in general: https://github.com/snowplow/snowplow/wiki/2-Specific-event-tracking-with-the-Javascript-tracker#custom-structured-events
   # contexts json: http://snowplowanalytics.com/blog/2014/01/27/snowplow-custom-contexts-guide/#contexts
   snowplow?('trackStructEvent', category, action, label, property, value, contexts)
