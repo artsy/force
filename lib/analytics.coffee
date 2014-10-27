@@ -44,6 +44,8 @@ module.exports.trackPageview = =>
   snowplow?('trackPageView')
 
 module.exports.snowplowStruct = (category, action, label, property, value = '0.0', contexts = {}) ->
+  # Don't track admins
+  return if sd.CURRENT_USER?.type is 'Admin'
   # in general: https://github.com/snowplow/snowplow/wiki/2-Specific-event-tracking-with-the-Javascript-tracker#custom-structured-events
   # contexts json: http://snowplowanalytics.com/blog/2014/01/27/snowplow-custom-contexts-guide/#contexts
   snowplow?('trackStructEvent', category, action, label, property, value, contexts)
@@ -72,6 +74,7 @@ categories =
   impression: 'Impressions'
   hover: 'UI Interactions'
   click: 'UI Interactions'
+  submit: 'UI Interactions'
   funnel: 'Funnel Progressions'
   segment: 'UI A/B Test Segments'
   error: 'UI Errors'
@@ -80,7 +83,7 @@ categories =
 
 module.exports.track =
   _.reduce(Object.keys(categories), (memo, kind) ->
-    memo[kind] = (description, options = {}, callback) ->
+    memo[kind] = (description, options = {}) ->
       # Don't track admins
       return if sd.CURRENT_USER?.type is 'Admin'
 
@@ -96,7 +99,7 @@ module.exports.track =
           user_id: sd.CURRENT_USER?.id
           lab_features: sd.CURRENT_USER?.lab_features
 
-        mixpanel.track? description, options, callback
+        mixpanel.track? description, options
 
       # Send google analytics event
       ga? 'send', {
@@ -220,25 +223,3 @@ module.exports.load = (callback) ->
   window.mixpanel ?= {}
   if mixpanel.__loaded then cb() else mixpanel.set_config?(loaded: cb)
   setTimeout cb, 5000 # Ensure we callback whether mixpanel is working or not
-
-# Based on some code via http://stackoverflow.com/a/18542443/160937
-# Implementation similar to mixpanel.track_links that accomodates dynamically
-# added elements and delgates to our track.click wrapper
-#
-# ```
-# trackLinks '.abf-button', 'Clicked "Bid" on the artwork page'
-# ```
-module.exports.trackLinks = (selector, description, options = {}) ->
-  $(document).on 'click', selector, (e) ->
-    locationHandledAlready = e.isDefaultPrevented()
-    newTab = e.which is 2 or e.metaKey or e.target.target is '_blank'
-    options.url = e.target.href
-    callback = ->
-      return if newTab or locationHandledAlready
-      window.location = options.url
-    unless newTab or locationHandledAlready
-      e.preventDefault()
-      _.delay callback, 300
-      module.exports.track.click description, options, callback
-    else # Track click without any funny-business
-      module.exports.track.click description, options

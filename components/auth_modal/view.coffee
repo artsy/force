@@ -119,6 +119,7 @@ module.exports = class AuthModalView extends ModalView
           else
             location.reload()
         when 'register'
+          mediator.trigger 'auth:sign_up:success'
           location.href = @redirectTo or '/personalize'
         when 'forgot'
           mediator.trigger 'auth:change:mode', 'reset'
