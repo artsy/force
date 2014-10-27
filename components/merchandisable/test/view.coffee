@@ -33,7 +33,7 @@ describe 'MerchandisableView', ->
     html.should.containEql 'Books &amp; Catalogs for purchase'
 
   it 'plucks and fetches the Embedly response for the URLs in the collection', ->
-    Backbone.sync.args[0][1].url.should.equal  'http://api.embed.ly/1/oembed'
+    Backbone.sync.args[0][1].url.should.equal  'https://api.embed.ly/1/oembed'
     Backbone.sync.args[0][2].data.should.containEql 'urls=http%3A%2F%2Ffoo.bar&urls=http%3A%2F%2Fbar.baz'
 
   describe 'with Embedly response', ->
