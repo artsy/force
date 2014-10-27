@@ -220,25 +220,3 @@ module.exports.load = (callback) ->
   window.mixpanel ?= {}
   if mixpanel.__loaded then cb() else mixpanel.set_config?(loaded: cb)
   setTimeout cb, 5000 # Ensure we callback whether mixpanel is working or not
-
-# Based on some code via http://stackoverflow.com/a/18542443/160937
-# Implementation similar to mixpanel.track_links that accomodates dynamically
-# added elements and delgates to our track.click wrapper
-#
-# ```
-# trackLinks '.abf-button', 'Clicked "Bid" on the artwork page'
-# ```
-module.exports.trackLinks = (selector, description, options = {}) ->
-  $(document).on 'click', selector, (e) ->
-    locationHandledAlready = e.isDefaultPrevented()
-    newTab = e.which is 2 or e.metaKey or e.target.target is '_blank'
-    options.url = e.target.href
-    callback = ->
-      return if newTab or locationHandledAlready
-      window.location = options.url
-    unless newTab or locationHandledAlready
-      e.preventDefault()
-      _.delay callback, 300
-      module.exports.track.click description, options, callback
-    else # Track click without any funny-business
-      module.exports.track.click description, options
