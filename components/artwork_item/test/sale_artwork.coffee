@@ -17,14 +17,21 @@ describe 'SaleArtworks', ->
       @artwork = new Artwork fabricate 'artwork', acquireable: true, sale_artwork: fabricate('sale_artwork')
       @sale = new Sale fabricate 'sale', is_auction: true
 
-      benv.render resolve(__dirname, '../templates/artwork.jade'), { artwork: @artwork, displayPurchase: true }, =>
+      benv.render resolve(__dirname, '../templates/artwork.jade'), {
+        artwork: @artwork
+        displayPurchase: true
+      }, =>
         SaleArtworkView = benv.require resolve(__dirname, '../views/sale_artwork.coffee')
-        @view = new SaleArtworkView
-          el: $('body')
-          model: @artwork
+        sinon.spy SaleArtworkView::, 'hideBuyNowButtons'
+        sinon.spy SaleArtworkView::, 'hideBidStatuses'
+        sinon.spy SaleArtworkView::, 'appendAuctionId'
+        @view = new SaleArtworkView el: $('body'), model: @artwork
         done()
 
   afterEach ->
+    @view.hideBuyNowButtons.restore()
+    @view.hideBidStatuses.restore()
+    @view.appendAuctionId.restore()
     benv.teardown()
 
   describe '#appendAuctionId', ->
@@ -34,14 +41,36 @@ describe 'SaleArtworks', ->
       artworkLinks = _.map @view.$('a'), (a) -> $(a).attr('href')
       artworkLinks.should.match(new RegExp("auction_id=#{@sale.id}"))
 
-  xit 'should alter the template to reflect the state of the auction'
+  describe 'auction states', ->
+    beforeEach ->
+      sinon.stub(@sale, 'bidButtonState').returns {}
 
-  xit 'should set up the save controls'
+    afterEach ->
+      @sale.bidButtonState.restore()
 
-  xit 'should have a working buy button'
+    describe 'auctionState is open', ->
+      it 'only appends the auction id to links; does not hide anything', ->
+        @sale.set 'auctionState', 'open'
+        @view.sale = @sale
+        @view.setupAuctionState()
+        @view.appendAuctionId.called.should.be.true
+        artworkLinks = _.map @view.$('a'), (a) -> $(a).attr('href')
+        artworkLinks.should.match(new RegExp("auction_id=#{@sale.id}"))
 
-  xit 'should have a working contact seller button'
+    describe 'auctionState is preview', ->
+      it 'hides the buy now buttons; does not hide the bid status', ->
+        @sale.set 'auctionState', 'preview'
+        @view.sale = @sale
+        @view.setupAuctionState()
+        @view.appendAuctionId.called.should.be.false
+        @view.hideBuyNowButtons.called.should.be.true
+        @view.hideBidStatuses.called.should.be.false
 
-  it 'should have a buy now button when the auction is open and the artwork is acquireable'
-
-  it 'should not have a bid button or a buy now button if the work is already sold'
+    describe 'auctionState is closed', ->
+      it 'hides the buy now buttons; hides the bid status', ->
+        @sale.set 'auctionState', 'closed'
+        @view.sale = @sale
+        @view.setupAuctionState()
+        @view.appendAuctionId.called.should.be.false
+        @view.hideBuyNowButtons.called.should.be.true
+        @view.hideBidStatuses.called.should.be.true
