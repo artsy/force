@@ -12,7 +12,6 @@ describe 'GalleryPartnershipsView', ->
         $: benv.require 'jquery'
         crop: sinon.stub()
       Backbone.$ = $
-      @GalleryPartnershipsView = rewire '../../client/view'
       $.fn.waypoint = sinon.stub()
       data = _.extend require('../fixture/content.json'), sd: {}
       benv.render resolve(__dirname, '../../templates/index.jade'), data, =>
@@ -22,6 +21,8 @@ describe 'GalleryPartnershipsView', ->
     benv.teardown()
 
   beforeEach ->
+    @GalleryPartnershipsView = rewire '../../client/view'
+    @GalleryPartnershipsView.__set__ 'analytics', track: click: (@track = sinon.stub())
     sinon.stub @GalleryPartnershipsView::, 'initialize'
     @view = new @GalleryPartnershipsView el: $('body')
     @clock = sinon.useFakeTimers()
@@ -29,6 +30,30 @@ describe 'GalleryPartnershipsView', ->
   afterEach ->
     @clock.restore()
     @view.initialize.restore()
+
+  describe 'analytics', ->
+    it 'tracks nav link clicks', ->
+      (track = @track).notCalled.should.be.ok
+      callCount = 0
+      $('.gallery-partnerships-nav-link.internal').each ->
+        $(this).click()
+        track.callCount.should.equal ++callCount
+        _.last(track.args)[0].should.equal 'Clicked nav link on gallery partnerships'
+        _.last(track.args)[1].should.eql section: $(this).attr('data-section')
+
+    it 'tracks nav apply button clicks', ->
+      @track.notCalled.should.be.ok
+      $('.gallery-partnerships-nav-link.apply').click()
+      @track.calledOnce.should.be.ok
+      @track.args[0][0].should.equal 'Clicked nav apply on gallery partnerships'
+
+    it 'tracks bottom apply button clicks', ->
+      console.log @track.callCount
+      @track.notCalled.should.be.ok
+      $('.apply .apply-button').click()
+      console.log @track.callCount
+      @track.calledOnce.should.be.ok
+      @track.args[0][0].should.equal 'Clicked bottom apply on gallery partnerships'
 
   describe 'slideshow', ->
     before ->
