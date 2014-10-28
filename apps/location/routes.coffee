@@ -7,6 +7,7 @@ PartnerShows = require '../../collections/partner_shows.coffee'
 sd = require('sharify').data
 Q = require 'q'
 querystring = require 'querystring'
+{ crop } = require '../../components/resizer'
 
 @show = (req, res, context, otherLocations) ->
   requests = []
@@ -26,6 +27,7 @@ querystring = require 'querystring'
       profiles: profiles
       fairs: fairs
       otherLocations: otherLocations
+      crop: crop
 
   requests.push partners.fetch
     cache: true
