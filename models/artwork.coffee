@@ -6,7 +6,6 @@ Edition = require './edition.coffee'
 AdditionalImage = require './additional_image.coffee'
 { compactObject } = require './mixins/compact_object.coffee'
 { Image, Dimensions, Markdown } = require 'artsy-backbone-mixins'
-analytics = require '../lib/analytics.coffee'
 
 module.exports = class Artwork extends Backbone.Model
 
@@ -306,12 +305,8 @@ module.exports = class Artwork extends Backbone.Model
     "Related auction results for #{@toPageDescription()}"
 
   saleMessage: ->
-    if @get('sale_message') is 'Contact For Price'
-      if analytics.abTest('ab:artwork:sale_message', 0.5)
-        return @get('sale_message')
-      else
-        return undefined
-    else if @get('sale_message')?.indexOf('Sold') > - 1
+    return if @get('sale_message') is 'Contact For Price'
+    if @get('sale_message')?.indexOf('Sold') > - 1
       _.compact([
         'SOLD'
         @get('price')
