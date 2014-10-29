@@ -7,9 +7,9 @@ template = -> require('../../templates/sections/shows.jade') arguments...
 class ExhibitionHistoryListView extends FilterableListView
   itemTemplate: ({ item, filter_by }) ->
     showFragment = if item.has('show_id')
-      "<a class='faux-underline' href=/show/#{item.get('show_id')}>#{item.get('name')}</a>"
+      "<a class='faux-underline' href=/show/#{item.get('show_id')}>#{item.get('title')}</a>"
     else
-      item.get 'name'
+      item.get 'title'
     partnerFragment = if item.has('partner_id')
       "<a class='faux-underline' href=/#{item.get('partner_id')}>#{item.get('partner_name')}</a>"
     else
@@ -34,16 +34,16 @@ module.exports = class ShowsView extends Backbone.View
     @subViews.push relatedShowsSubView
 
     exhibitionHistoryListSubView = new ExhibitionHistoryListView
-      collection: @model.related().exhibitionHistory
+      collection: @model.related().exhibitions
       group_by: 'start_date'
-      filter_by: 'type'
+      filter_by: 'kind'
       filters:
         solo: 'Solo Shows'
         'two-person': 'Two-person Shows'
         group: 'Group Shows'
         screening: 'Screenings'
     @subViews.push exhibitionHistoryListSubView
-    @model.related().exhibitionHistory.fetch()
+    @model.related().exhibitions.fetch()
 
     @$('#artist-page-content-section').html [
       relatedShowsSubView.render().$el

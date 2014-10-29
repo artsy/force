@@ -27,7 +27,7 @@ module.exports = class CollectionsView extends Backbone.View
   postRender: ->
     @subView = new CollectionsListView
       collection: @collection
-      filter_by: 'type'
+      filter_by: 'kind'
       filters:
         public: 'Public Collections'
         private: 'Private Collections'
