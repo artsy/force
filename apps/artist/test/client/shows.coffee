@@ -39,4 +39,4 @@ describe 'ShowsView', ->
 
   describe '#postRender', ->
     it 'fetches the artist exhibitionHistory', ->
-      Backbone.sync.args[0][1].url.should.equal '/artist/data/foo-bar/shows'
+      Backbone.sync.args[0][1].url.should.equal '/artist/data/foo-bar/exhibitions'

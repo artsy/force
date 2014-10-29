@@ -15,11 +15,12 @@ module.exports.sections = sections = [
     ['artworks', data: size: 1]
   ]
 ,
-  slug: 'posts'
-  href: 'artist/:id/posts'
-  name: 'Posts'
+  slug: 'articles'
+  href: 'artist/:id/articles'
+  name: 'Articles'
   calls: [
     ['posts', data: size: 5]
+    ['articles']
   ]
 ,
   slug: 'shows'
@@ -33,7 +34,7 @@ module.exports.sections = sections = [
   href: 'artist/:id/books'
   name: 'Books'
   calls: [
-    ['bibliography', data: merchandisable: [true]]
+    ['merchandisable']
   ]
 ,
   slug: 'collections'

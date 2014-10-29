@@ -37,10 +37,10 @@ describe 'HeaderView', ->
       _.findWhere(navData, active: true).name.should.equal 'Overview'
       _.findWhere(navData, rel: 'next').name.should.equal 'Works'
       _.isUndefined(_.findWhere(navData, rel: 'prev')).should.be.true
-      # Navigate to 'Posts'
-      Backbone.history.fragment = 'artist/foo-bar/posts'
+      # Navigate to 'Articles'
+      Backbone.history.fragment = 'artist/foo-bar/articles'
       navData = @view.navData @data.sections
-      _.findWhere(navData, active: true).name.should.equal 'Posts'
+      _.findWhere(navData, active: true).name.should.equal 'Articles'
       _.findWhere(navData, rel: 'prev').name.should.equal 'Works'
       _.findWhere(navData, rel: 'next').name.should.equal 'Shows'
 
@@ -60,8 +60,8 @@ describe 'HeaderView', ->
       @$head.find('link[rel="next"]').length.should.equal 1
       @$head.find('link[rel="prev"]').length.should.equal 0
       @$head.find('link[rel="next"]').attr('href').should.containEql '/artist/foo-bar/works'
-      # Navigate to 'Posts'
-      Backbone.history.fragment = 'artist/foo-bar/posts'
+      # Navigate to 'Articles'
+      Backbone.history.fragment = 'artist/foo-bar/articles'
       @view.updateHeadTags(@view.navData @view.data.sections)
       @$head.find('link[rel="next"]').length.should.equal 1
       @$head.find('link[rel="prev"]').length.should.equal 1
@@ -84,7 +84,7 @@ describe 'HeaderView', ->
       (_.map @view.$nav.find('a'), (el) -> $(el).attr('href')).should.eql [
         '/artist/foo-bar'
         '/artist/foo-bar/works'
-        '/artist/foo-bar/posts'
+        '/artist/foo-bar/articles'
         '/artist/foo-bar/shows'
         '/artist/foo-bar/books'
         '/artist/foo-bar/collections'

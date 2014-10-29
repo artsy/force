@@ -31,18 +31,19 @@ describe 'ArtistData', ->
     it 'has the appropriate sections + calls', ->
       @data.sections.length.should.equal 7
       lengths = _.pluck(_.pluck(@data.sections, 'calls'), 'length')
-      lengths.should.eql [0, 1, 1, 1, 1, 1, 2] # Per section sync calls
-      _.reduce(lengths, ((memo, i) -> memo + i), 0).should.equal 7 # Total # of calls to Backbone.sync
+      lengths.should.eql [0, 1, 2, 1, 1, 1, 2] # Per section sync calls
+      _.reduce(lengths, ((memo, i) -> memo + i), 0).should.equal 8 # Total # of calls to Backbone.sync
 
     it 'runs over the sections data running all the fetches to the various related collections', ->
       @data.sync()
-      Backbone.sync.callCount.should.equal 7
+      Backbone.sync.callCount.should.equal 8
       urls = _.pluck(_.map(Backbone.sync.args, (args) -> args[1]), 'url')
       urls.should.eql [
         'undefined/api/v1/artist/foobar/artworks?published=true'
         'undefined/api/v1/related/posts?artist[]=foobar'
+        '/artist/data/foobar/publications?merchandisable[]=false'
         'undefined/api/v1/related/shows?artist[]=foobar&sort=-end_at'
-        '/artist/data/foobar/bibliography'
+        '/artist/data/foobar/publications?merchandisable[]=true'
         '/artist/data/foobar/collections'
         'undefined/api/v1/related/layer/main/artists?artist[]=foobar&exclude_artists_without_artworks=true'
         'undefined/api/v1/related/layer/contemporary/artists?artist[]=foobar&exclude_artists_without_artworks=true'
@@ -51,8 +52,9 @@ describe 'ArtistData', ->
       data.should.eql [
         { size: 1 }
         { size: 5 }
+        null
         { size: 5 }
-        { merchandisable: [true] }
+        null
         null
         { size: 10 }
         { size: 10 }

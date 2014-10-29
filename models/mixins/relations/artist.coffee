@@ -10,6 +10,7 @@ module.exports =
     Posts = require '../../../collections/posts.coffee'
     PartnerShows = require '../../../collections/related_partner_shows.coffee'
     Artworks = require '../../../collections/artworks.coffee'
+    Articles = Books = require '../../../components/artsypedia/collection.coffee'
 
     # Setup:
     artists = new Backbone.Collection [], model: Artist
@@ -27,14 +28,17 @@ module.exports =
     artworks = new Artworks
     artworks.url = "#{@url()}/artworks?published=true"
 
-    bibliography = new Backbone.Collection
-    bibliography.url = "/artist/data/#{@id}/bibliography"
+    articles = new Articles
+    articles.url = "/artist/data/#{@id}/publications?merchandisable[]=false"
+
+    merchandisable = new Books
+    merchandisable.url = "/artist/data/#{@id}/publications?merchandisable[]=true"
 
     collections = new Backbone.Collection
     collections.url = "/artist/data/#{@id}/collections"
 
-    exhibitionHistory = new Backbone.Collection
-    exhibitionHistory.url = "/artist/data/#{@id}/shows"
+    exhibitions = new Backbone.Collection
+    exhibitions.url = "/artist/data/#{@id}/exhibitions"
 
     # Return:
     @__related__ =
@@ -43,6 +47,7 @@ module.exports =
       posts: posts
       shows: shows
       artworks: artworks
-      bibliography: bibliography
+      articles: articles
+      merchandisable: merchandisable
       collections: collections
-      exhibitionHistory: exhibitionHistory
+      exhibitions: exhibitions
