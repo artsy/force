@@ -48,7 +48,7 @@ module.exports = class Artist extends Backbone.Model
   pageTitleArtworksCount: ->
     artworksCount = @get('published_artworks_count')
     _.compact([
-      if artworksCount then "#{artworksCount}+"
+      artworksCount
       "Artworks"
     ]).join(' ')
 
