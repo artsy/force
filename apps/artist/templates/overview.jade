@@ -23,12 +23,15 @@ include ./sections/works
   #artist-related-posts.artist-related-section-content
     //- Rendered client-side
 
-if artist.get('auction_lots_count')
-  #artist-related-moreinfo-section.artist-related-section
-    h3.artist-related-section-header More info
+#artist-related-moreinfo-section.artist-related-section
+  h3.artist-related-section-header More info
+  if artist.get('auction_lots_count')
     #artist-related-moreinfo.artist-related-section-content
       a.faux-underline( href="/artist/#{artist.id}/auction-results" )
         | Auction Results for #{artist.get('name')}
+  #artist-related-moreinfo.artist-related-section-content.last-modified-section
+    span Page Last Modified:&nbsp;
+    span.last-modified
 
 #artist-related-artists-section.artist-related-section
   h3.artist-related-section-header Related Artists

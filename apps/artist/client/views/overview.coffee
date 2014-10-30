@@ -1,5 +1,6 @@
 _ = require 'underscore'
 sd = require('sharify').data
+Q = require 'q'
 Backbone = require 'backbone'
 analytics = require '../../../../lib/analytics.coffee'
 mediator = require '../../../../lib/mediator.coffee'
@@ -14,6 +15,7 @@ ArtworkFilter = require '../../../../components/artwork_filter/index.coffee'
 RelatedPostsView = require '../../../../components/related_posts/view.coffee'
 RelatedShowsView = require '../../../../components/related_shows/view.coffee'
 ArtistFillwidthList = require '../../../../components/artist_fillwidth_list/view.coffee'
+moment = require 'moment'
 template = ->  require('../../templates/overview.jade') arguments...
 
 module.exports = class OverviewView extends Backbone.View
@@ -36,7 +38,8 @@ module.exports = class OverviewView extends Backbone.View
     #   @sticky.add @$('#artwork-filter')
     # @listenTo filterRouter.view.artworks, 'sync', @sticky.rebuild
     filterRouter = ArtworkFilter.init el: @$('#artwork-section'), model: @model
-    @subViews.push filterRouter.view
+    @filterView = filterRouter.view
+    @subViews.push @filterView
 
   setupRelatedShows: ->
     if (collection = @model.related().shows).length
@@ -72,6 +75,36 @@ module.exports = class OverviewView extends Backbone.View
     @renderRelatedArtists 'artists'
     @renderRelatedArtists 'contemporary'
 
+  setupLastModifiedDate: (artworks) ->
+    sortFunction = (a, b) -> b - a
+
+    Q.allSettled(artwork.fetch() for artwork in artworks.models).done =>
+      # Iterate through posts
+      mostRecentPostDate =
+        (for post in @model.related().posts?.models[0...4]
+          new Date(post.get('last_promoted_at')).valueOf()
+        ).sort(sortFunction)[0]
+
+      mostRecentShowDate =
+        (for show in @model.related().shows?.models[0...4]
+          new Date(show.get('updated_at')).valueOf()
+        ).sort(sortFunction)[0]
+
+      mostRecentArtworkDate =
+        (for artwork in artworks?.models
+          new Date(artwork.get('published_at')).valueOf()
+        ).sort(sortFunction[0])[0]
+
+      console.log mostRecentPostDate, mostRecentPostDate, mostRecentArtworkDate
+      if mostRecentPostDate or mostRecentPostDate or mostRecentArtworkDate
+        mostRecentDate = moment [mostRecentPostDate, mostRecentPostDate, mostRecentArtworkDate].sort(sortFunction)[0]
+        @$('.last-modified').html mostRecentDate.format('MMMM Do, YYYY')
+
+      else
+        # Remove if the artist has no posts, shows or artworks since we
+        # have no way to know when the pages was updated
+        @$('.last-modified-section').remove()
+
   renderRelatedArtists: (type) ->
     $section = @$("#artist-related-#{type}-section")
     if @model.related()[type].length
@@ -95,6 +128,8 @@ module.exports = class OverviewView extends Backbone.View
     @setupRelatedArtists()
     @setupRelatedShows()
     @setupRelatedPosts()
+    @filterView.listenTo @filterView.artworks, 'sync', _.once (artworks) =>
+      @setupLastModifiedDate artworks
 
   render: ->
     @$el.html template(artist: @model)
