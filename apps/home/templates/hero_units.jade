@@ -1,23 +1,4 @@
 #home-hero-units
   for heroUnit, i in heroUnits
-    .home-hero-unit(
-      class= heroUnit.cssClass() + (i == 0 ? ' home-hero-unit-active' : ''),
-      style="background-image: url('#{heroUnit.backgroundImageUrl()}')"
-    )
-      a.hhu-frame( href=heroUnit.get('link') ): .responsive-layout-container: .main-layout-container
-        .vam-outer: .vam-inner: .hhu-inner
-          .hhu-header.small-caps
-            = heroUnit.get('heading')
-          img.hhu-title(
-            src= heroUnit.titleImageUrl()
-            data-retina= heroUnit.titleImageRetinaUrl()
-            alt= heroUnit.get('name')
-          )
-          .hhu-subheading
-            != heroUnit.mdToHtml('description')
-          .avant-garde-button(
-            onMouseOver="this.style.color='##{heroUnit.get('link_color_hover_hex') || '000'}'",
-            onMouseOut="this.style.color=null"
-          )= heroUnit.get('link_text')
-
-        .hhu-credit= heroUnit.get('credit_line')
+    //- if heroUnit.get('name') == 'welcome-hero'
+    include ./hero_unit

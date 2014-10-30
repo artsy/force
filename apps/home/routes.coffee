@@ -1,11 +1,12 @@
 _ = require 'underscore'
 HeroUnits = require '../../collections/hero_units'
-FeaturedLinks = require '../../collections/featured_links.coffee'
+FeaturedLinks = require '../../collections/featured_links'
 { parse } = require 'url'
 Backbone = require 'backbone'
 sd = require('sharify').data
 cache = require '../../lib/cache'
 client = cache.client
+welcomeHero = require './welcome'
 
 getRedirectTo = (req) ->
   req.body['redirect-to'] or req.query['redirect-to'] or req.query['redirect_uri'] or parse(req.get('Referrer') or '').path or '/'
@@ -15,13 +16,16 @@ getRedirectTo = (req) ->
   featuredLinks = new FeaturedLinks
 
   render = _.after 2, ->
+    heroUnits.unshift(welcomeHero) unless req.user?
     res.render 'index',
       heroUnits: heroUnits.models
       featuredLinks: featuredLinks.models
+
   heroUnits.fetch
     cache: true
     success: render
     error: res.backboneError
+
   featuredLinks.fetchSetItemsByKey 'homepage:featured-sections',
     cache: true
     success: render
