@@ -69,15 +69,12 @@ describe 'Artist', ->
 
     it 'formats count correctly for various artworks sizes', ->
       @artist.set published_artworks_count: 1001
-      @artist.pageTitleArtworksCount().should.equal '1000+ Artworks'
+      @artist.pageTitleArtworksCount().should.equal '1001 Artworks'
 
       @artist.set published_artworks_count: 101
-      @artist.pageTitleArtworksCount().should.equal '100+ Artworks'
+      @artist.pageTitleArtworksCount().should.equal '101 Artworks'
 
-      @artist.set published_artworks_count: 51
-      @artist.pageTitleArtworksCount().should.equal '40+ Artworks'
-
-      @artist.set published_artworks_count: 19
+      @artist.set published_artworks_count: undefined
       @artist.pageTitleArtworksCount().should.equal 'Artworks'
 
 
