@@ -35,7 +35,7 @@ module.exports = class Feature extends Backbone.Model
     "#{@get('name')} | Artsy"
 
   metaDescription: ->
-    smartTruncate @get('description')
+    smartTruncate(@mdToHtmlToText('description'))
 
   shareTitle: (truncate = false) ->
     smartTruncate "#{@get('name')} on Artsy #{sd.APP_URL}#{@href()}", 140
