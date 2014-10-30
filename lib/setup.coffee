@@ -43,6 +43,7 @@ favicon = require 'serve-favicon'
 logger = require 'morgan'
 apiCache = require './middleware/api_cache'
 raven = require 'raven'
+fs = require 'graceful-fs'
 
 # Setup sharify constants & require dependencies that use sharify data
 sharify.data =
@@ -214,7 +215,13 @@ module.exports = (app) ->
 
   # Static files middleware
   app.use favicon(path.resolve __dirname, '../public/images/favicon.ico')
-  app.use express.static(path.resolve __dirname, "../public")
+
+  # Mount static middleware for sub apps, components, and project-wide
+  fs.readdirSync(path.resolve __dirname, '../apps').forEach (fld) ->
+    app.use express.static(path.resolve __dirname, "../apps/#{fld}/public")
+  fs.readdirSync(path.resolve __dirname, '../components').forEach (fld) ->
+    app.use express.static(path.resolve __dirname, "../components/#{fld}/public")
+  app.use express.static(path.resolve __dirname, '../public')
 
   if SENTRY_DSN
     client = new raven.Client SENTRY_DSN, {
