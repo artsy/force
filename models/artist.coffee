@@ -46,14 +46,7 @@ module.exports = class Artist extends Backbone.Model
       "#{if @get('name') then @htmlToText('name') else 'Unnamed Artist'} | Artist Biography, Artwork for Sale | Artsy"
 
   pageTitleArtworksCount: ->
-    artworksCount =
-      if @get('published_artworks_count') > 1000
-        Math.floor(@get('published_artworks_count') / 1000) * 1000
-      else if @get('published_artworks_count') > 100
-        Math.floor(@get('published_artworks_count') / 100) * 100
-      else if @get('published_artworks_count') > 20
-        Math.floor(@get('published_artworks_count') / 20) * 20
-
+    artworksCount = @get('published_artworks_count')
     _.compact([
       if artworksCount then "#{artworksCount}+"
       "Artworks"
