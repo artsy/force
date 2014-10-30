@@ -101,3 +101,9 @@ describe 'Feature', ->
       shareThis.should.containEql @feature.get 'name'
       shareThis.should.containEql 'on Artsy'
       shareThis.should.containEql @feature.href()
+
+  describe '#metaDescription', ->
+
+    it 'Strips markdown in the description', ->
+      @feature.set description: "**Children’s Museum of the Arts’ Art Auction** All proceeds support CMA’s Community Programs. To purchase tickets, click [here](http://cmany.org/events/art-auction/)!]"
+      @feature.metaDescription().should.containEql 'Children’s Museum of the Arts’ Art Auction All proceeds support CMA’s Community Programs. To purchase tickets, click here!'
