@@ -1,18 +1,26 @@
-Backbone = require 'backbone'
 _ = require 'underscore'
+Backbone = require 'backbone'
 imagesLoaded = require 'imagesloaded'
 
 module.exports = class HeroUnitView extends Backbone.View
+  events:
+    'click #home-hero-units-left-arrow': 'onLeftArrow'
+    'click #home-hero-units-right-arrow': 'onRightArrow'
+    'click #home-hero-unit-dots li': 'onDot'
 
   initialize: ->
-    @$window = $ window
+    @$window = $(window)
     @$mainHeader = @$('#main-layout-header')
-    @$heroUnits = @$('#home-hero-units')
+    @$heroUnitsContainer = @$('#home-hero-units')
+    @$heroUnits = @$('.home-hero-unit')
+
     @setBodyClass()
     @setInterval()
+
     @$window.on 'scroll', _.throttle @setBodyClass, 100
     @$window.on 'keyup', (e) => @onKeyUp(e)
-    @$heroUnits.imagesLoaded @setRetinaHeroTitles
+
+    @$heroUnitsContainer.imagesLoaded @setRetinaHeroTitles
 
   setRetinaHeroTitles: =>
     @$('.hhu-title').each ->
@@ -25,9 +33,8 @@ module.exports = class HeroUnitView extends Backbone.View
     @interval = setInterval @nextHeroUnit, 8000
 
   setBodyClass: =>
-    if @$window.scrollTop() + @$mainHeader.height() <= @$heroUnits.height()
-      $activeLi = @$('.home-hero-unit.home-hero-unit-active')
-      if $activeLi.hasClass('home-hero-unit-white')
+    if @$window.scrollTop() + @$mainHeader.height() <= @$heroUnitsContainer.height()
+      if @$('.home-hero-unit-active').hasClass('home-hero-unit-white')
         @$el.removeClass('body-transparent-header-white').addClass 'body-transparent-header'
       else
         @$el.removeClass('body-transparent-header').addClass 'body-transparent-header-white'
@@ -36,24 +43,23 @@ module.exports = class HeroUnitView extends Backbone.View
 
   nextHeroUnit: (direction = 1) =>
     if direction is 1
-      $next = @$('.home-hero-unit.home-hero-unit-active').next()
-      $next = @$('.home-hero-unit').first() unless $next.length
+      $next = @$('.home-hero-unit-active').next()
+      $next = @$heroUnits.first() unless $next.length
     else
-      $next = @$('.home-hero-unit.home-hero-unit-active').prev()
-      $next = @$('.home-hero-unit').last() unless $next.length
+      $next = @$('.home-hero-unit-active').prev()
+      $next = @$heroUnits.last() unless $next.length
     @showHeroUnit $next.index()
 
   showHeroUnit: (index) ->
-    @$('.home-hero-unit').removeClass('home-hero-unit-active')
-    @$('.home-hero-unit').eq(index).addClass('home-hero-unit-active')
-    @$("#home-hero-unit-dots li").removeClass 'hhud-active'
-    @$("#home-hero-unit-dots li").eq(index).addClass('hhud-active')
+    @$('.home-hero-unit')
+      .removeClass('home-hero-unit-active')
+      .eq(index)
+      .addClass('home-hero-unit-active')
+    @$('.hhu-dot')
+      .removeClass('hhud-active')
+      .eq(index)
+      .addClass('hhud-active')
     @setBodyClass()
-
-  events:
-    'click #home-hero-units-left-arrow': 'onLeftArrow'
-    'click #home-hero-units-right-arrow': 'onRightArrow'
-    'click #home-hero-unit-dots li': 'onDot'
 
   onKeyUp: (e) ->
     switch e.keyCode
