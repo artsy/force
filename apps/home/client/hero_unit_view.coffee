@@ -1,12 +1,17 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 imagesLoaded = require 'imagesloaded'
+{ CURRENT_USER } = require('sharify').data
+mediator = require '../../../lib/mediator.coffee'
 
 module.exports = class HeroUnitView extends Backbone.View
+  pauseLength: 8000
+
   events:
     'click #home-hero-units-left-arrow': 'onLeftArrow'
     'click #home-hero-units-right-arrow': 'onRightArrow'
-    'click #home-hero-unit-dots li': 'onDot'
+    'click .hhu-dot': 'onDot'
+    'click .home-hero-unit-welcome .avant-garde-button': 'signUp'
 
   initialize: ->
     @$window = $(window)
@@ -15,7 +20,7 @@ module.exports = class HeroUnitView extends Backbone.View
     @$heroUnits = @$('.home-hero-unit')
 
     @setBodyClass()
-    @setInterval()
+    @initInterval()
 
     @$window.on 'scroll', _.throttle @setBodyClass, 100
     @$window.on 'keyup', (e) => @onKeyUp(e)
@@ -28,9 +33,12 @@ module.exports = class HeroUnitView extends Backbone.View
         .height($(this).height())
         .attr 'src', $(this).attr('data-retina')
 
-  setInterval: ->
+  initInterval: ->
+    if CURRENT_USER? then @setInterval else _.delay(@setInterval, @pauseLength)
+
+  setInterval: =>
     clearInterval @interval
-    @interval = setInterval @nextHeroUnit, 8000
+    @interval = setInterval @nextHeroUnit, @pauseLength
 
   setBodyClass: =>
     if @$window.scrollTop() + @$mainHeader.height() <= @$heroUnitsContainer.height()
@@ -79,3 +87,7 @@ module.exports = class HeroUnitView extends Backbone.View
 
   onDot: (e) ->
     @showHeroUnit $(e.target).index()
+
+  signUp: (e) ->
+    e.preventDefault()
+    mediator.trigger 'open:auth', mode: 'signup'
