@@ -2,10 +2,8 @@ _ = require 'underscore'
 sinon = require 'sinon'
 should = require 'should'
 Backbone = require 'backbone'
-rewire = require 'rewire'
 { fabricate } = require 'antigravity'
-Artwork = rewire '../../models/artwork'
-Artwork.__set__ 'analytics', abTest: abTestStub = sinon.stub()
+Artwork = require '../../models/artwork'
 
 describe 'Artwork', ->
   beforeEach ->
@@ -44,13 +42,7 @@ describe 'Artwork', ->
       @artwork.saleMessage().should.equal '$6,000'
 
     describe 'sale_message is "Contact for Price"', ->
-      it 'displays the correct sale message when AB test enabled', ->
-        abTestStub.returns true
-        @artwork.set sale_message: 'Contact For Price', price: '$6,000'
-        @artwork.saleMessage().should.equal 'Contact For Price'
-
-      it 'displays the correct sale message when AB test disabled', ->
-        abTestStub.returns false
+      it 'returns undefined', ->
         @artwork.set sale_message: 'Contact For Price', price: '$6,000'
         _.isUndefined(@artwork.saleMessage()).should.be.true
 
