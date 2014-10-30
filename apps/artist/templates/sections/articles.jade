@@ -1,0 +1,31 @@
+.artist-page-related-posts
+  if artist.related().posts.length
+    h2.artist-section-header Articles on Artsy
+    #artist-page-related-posts-section: .loading-spinner
+      //- Rendered client-side
+
+  if artist.related().articles.length
+    #artist-page-articles-section
+      h2.artist-section-header Articles on the Web
+      .related-posts: for article in articles
+        - var source = article.get('publication_name') || article.get('publisher_name')
+        .related-post
+          a.rp-image.hoverable-image-link( href= article.get('external_url') )
+            img(
+              src= article.cropUrlFor('image_url', { width: 300, height: 225 })
+              alt= article.get('title')
+            )
+          .rp-blurb
+            if article.has('author_name')
+              a.rp-author( href= article.get('external_url'), target='_blank' )
+                if article.has('favicon_url')
+                  img.rp-favicon( src= article.cropUrlFor('favicon_url', { width: 16, height: 16 }) )
+                span.rp-author-source= source
+                span.rp-author-name= article.get('author_name')
+            a( href= article.get('external_url'), target='_blank' )
+              if article.get('title')
+                h3.rp-title= article.get('title')
+              .rp-summary
+                = article.get('description')
+                if source
+                  span.rp-go Read on #{source}

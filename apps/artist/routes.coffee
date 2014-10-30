@@ -49,7 +49,7 @@ Artist = require '../../models/artist'
 
   data = JSON.parse(data)
 
-  for key in ['type', 'merchandisable']
+  for key in ['kind', 'merchandisable']
     if (filters = req.query[key])
       data = _.filter data, (item) ->
         _.contains(filters, "#{item[key]}")

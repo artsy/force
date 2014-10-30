@@ -9,7 +9,7 @@ sections = require '../sections'
 
 describe 'sections', ->
   it 'returns the correct tab slugs in the correct order', ->
-    sections.should.eql ['works', 'posts', 'shows', 'books', 'collections', 'related-artists']
+    sections.should.eql ['works', 'articles', 'shows', 'books', 'collections', 'related-artists']
 
 describe 'Artist routes', ->
   beforeEach ->
@@ -70,41 +70,41 @@ describe 'Artist routes', ->
   # Temporary
   describe '#data', ->
     it 'returns the example data when it has it available', ->
-      @req = query: {}, params: id: 'sterling-ruby', section: 'bibliography'
+      @req = query: {}, params: id: 'sterling-ruby', section: 'publications'
       routes.data @req, @res
       @res.send.args[0][0][0].artist_id.should.equal 'sterling-ruby'
 
     it 'returns an empty array when it does not have anything available', ->
-      @req = query: {}, params: id: 'damon-zucconi', section: 'bibliography'
+      @req = query: {}, params: id: 'damon-zucconi', section: 'publications'
       routes.data @req, @res
       @res.send.args[0][0].should.be.instanceOf Array
       @res.send.args[0][0].length.should.equal 0
 
-    it 'accepts a type filter query param', ->
+    it 'accepts a kind filter query param', ->
       @req =
-        query: type: ['review']
-        params: id: 'sterling-ruby', section: 'bibliography'
+        query: kind: ['review']
+        params: id: 'sterling-ruby', section: 'publications'
       routes.data @req, @res
-      _.uniq(_.pluck(@res.send.args[0][0], 'type')).should.eql ['review']
+      _.uniq(_.pluck(@res.send.args[0][0], 'kind')).should.eql ['review']
 
-    it 'accepts multiple type filter query param', ->
+    it 'accepts multiple kind filter query param', ->
       @req =
-        query: type: ['interview', 'review']
-        params: id: 'sterling-ruby', section: 'bibliography'
+        query: kind: ['interview', 'review']
+        params: id: 'sterling-ruby', section: 'publications'
       routes.data @req, @res
-      _.uniq(_.pluck(@res.send.args[0][0], 'type')).should.eql ['interview', 'review']
+      _.uniq(_.pluck(@res.send.args[0][0], 'kind')).should.eql ['interview', 'review']
 
     it 'accepts a merchandisable filter query param', ->
       @req =
         query: merchandisable: ['true']
-        params: id: 'sterling-ruby', section: 'bibliography'
+        params: id: 'sterling-ruby', section: 'publications'
       routes.data @req, @res
       _.uniq(_.pluck(@res.send.args[0][0], 'merchandisable')).should.eql [true]
 
     it 'accepts both filter query params', ->
       @req =
-        query: merchandisable: ['true'], type: ['catalogue']
-        params: id: 'sterling-ruby', section: 'bibliography'
+        query: merchandisable: ['true'], kind: ['catalogue']
+        params: id: 'sterling-ruby', section: 'publications'
       routes.data @req, @res
       _.uniq(_.pluck(@res.send.args[0][0], 'merchandisable')).should.eql [true]
-      _.uniq(_.pluck(@res.send.args[0][0], 'type')).should.eql ['catalogue']
+      _.uniq(_.pluck(@res.send.args[0][0], 'kind')).should.eql ['catalogue']
