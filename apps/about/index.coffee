@@ -23,4 +23,3 @@ try
   app.all '/about*', routes.adminOnly
   app.get '/about/edit', routes.edit
   app.post '/about/edit', routes.upload
-app.use express.static __dirname + '/public'
