@@ -77,7 +77,6 @@ module.exports = class OverviewView extends Backbone.View
 
   setupLastModifiedDate: (artworks) ->
     sortFunction = (a, b) -> b - a
-
     Q.allSettled(artwork.fetch() for artwork in artworks.models).done =>
       # Iterate through posts
       mostRecentPostDate =
@@ -95,10 +94,10 @@ module.exports = class OverviewView extends Backbone.View
           new Date(artwork.get('published_at')).valueOf()
         ).sort(sortFunction[0])[0]
 
-      console.log mostRecentPostDate, mostRecentPostDate, mostRecentArtworkDate
       if mostRecentPostDate or mostRecentPostDate or mostRecentArtworkDate
         mostRecentDate = moment [mostRecentPostDate, mostRecentPostDate, mostRecentArtworkDate].sort(sortFunction)[0]
         @$('.last-modified').html mostRecentDate.format('MMMM Do, YYYY')
+        $('head').append "<meta itemprop='datePublished' content='#{mostRecentDate.format('YYYY-MM-DD')}' id='date'>"
 
       else
         # Remove if the artist has no posts, shows or artworks since we
