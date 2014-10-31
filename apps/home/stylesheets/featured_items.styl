@@ -1,26 +1,27 @@
-@import '../../../components/stylus_lib'
-
 column-gap = 30px
 
 // Generic elements
 // ----------------
 
 .home-featured-header
-  font-size 38px
-  padding 30px 0
-  border-top 1px solid gray-lighter-color
+  margin (column-gap * 2) 0
+  text-align center
+  font-size 20px
+  small-caps()
   clear both
-  &:first-of-type
-    border-top 0
 
 .home-featured-list
   position relative
   min-height 300px
 
 .home-browse-all
-  margin 30px 0
+  margin column-gap 0
   float right
   font-size default-avant-garde-font-size
+
+.home-browse-all-center
+  margin column-gap 0
+  text-align center
 
 .home-featured-cover-img
   overflow hidden
@@ -37,14 +38,13 @@ li.grid-item a
 #home-top-featured-links
   display table
   width 100%
-  margin-bottom 20px
-  border-bottom 1px solid gray-lighter-color
+  margin 20px 0
 .home-top-feature-link
   display table-cell
   width 25%
   height 100%
-  padding 0 (column-gap / 2)
-  vertical-align top
+  padding 0 column-gap
+  vertical-align middle
   border-right 1px solid gray-lighter-color
   &:first-child
     padding-left 0
@@ -57,23 +57,21 @@ li.grid-item a
 .htfl-image
 .htfl-details
   display table-cell
-  vertical-align top
-.htfl-image
-  padding (column-gap / 2) 0
-  > img
-    max-width 95px
-    max-height @max-width
+  vertical-align middle
+.htfl-image > img
+  max-width 95px
+  max-height @max-width
 .htfl-details
   padding (column-gap / 2) 10px
   avant-garde()
   > h3
-    margin 5px 0
-    line-height 1
     font-size 11px
     color gray-darker-color
   > h4
-    line-height 1.5
-    font-size default-avant-garde-font-size
+    font-size 14px
+  > h3
+  > h4
+    line-height 1.4
 
 // Featured artworks
 // -----------------

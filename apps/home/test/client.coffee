@@ -22,6 +22,7 @@ describe 'HeroUnitView', ->
         featuredLinks: new FeaturedLinks([
           fabricate 'featured_link'
         ]).models
+        exploreSections: []
         sd: {}
       }
       Backbone.$ = $
@@ -81,6 +82,7 @@ describe 'Homepage init code', ->
         featuredLinks: new FeaturedLinks([
           fabricate 'featured_link'
         ]).models
+        exploreSections: []
         sd: {}
       }, ->
         Backbone.$ = $

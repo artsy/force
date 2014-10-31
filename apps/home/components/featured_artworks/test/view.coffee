@@ -32,8 +32,8 @@ describe 'FeaturedArtworks', ->
 
       it 'renders an empty state', ->
         @view.$('.loading-spinner').length.should.equal 1
-        @view.$('.home-browse-all').text().should.equal 'Browse all for sale artworks'
-        @view.$('.home-browse-all').attr('href').should.equal '/browse/artworks?price_range=-1%3A1000000000000'
+        @view.$('.home-browse-all-center a').text().should.equal 'All for sale artworks'
+        @view.$('.home-browse-all-center a').attr('href').should.equal '/browse/artworks?price_range=-1%3A1000000000000'
 
     describe 'after collections are fetched', ->
       describe 'with featured works', ->
@@ -46,9 +46,9 @@ describe 'FeaturedArtworks', ->
         it 'renders the artworks', ->
           @view.$('.loading-spinner').length.should.equal 0
           @view.$('.artwork-item').length.should.equal 4
-          @view.$('.top-featured-header').text().should.equal 'Featured Artworks for Sale'
-          @view.$('.home-browse-all').text().should.equal 'Browse all for sale artworks'
-          @view.$('.home-browse-all').attr('href').should.equal '/browse/artworks?price_range=-1%3A1000000000000'
+          @view.$('.top-featured-header').text().should.equal 'Featured artworks for sale'
+          @view.$('.home-browse-all-center').text().should.equal 'All for sale artworks'
+          @view.$('.home-browse-all-center a').attr('href').should.equal '/browse/artworks?price_range=-1%3A1000000000000'
 
       describe 'with personalized works', ->
         beforeEach ->
@@ -60,6 +60,6 @@ describe 'FeaturedArtworks', ->
         it 'renders the artworks', ->
           @view.$('.loading-spinner').length.should.equal 0
           @view.$('.artwork-item').length.should.equal 4
-          @view.$('.top-featured-header').text().should.equal 'Works by Artists you follow'
-          @view.$('.home-browse-all').text().should.equal 'Browse more artworks'
-          @view.$('.home-browse-all').attr('href').should.equal '/works-for-you'
+          @view.$('.top-featured-header').text().should.equal 'Works by artists you follow'
+          @view.$('.home-browse-all-center a').text().should.equal 'All works by artists you follow'
+          @view.$('.home-browse-all-center a').attr('href').should.equal '/works-for-you'

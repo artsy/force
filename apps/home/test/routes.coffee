@@ -6,6 +6,7 @@ rewire = require 'rewire'
 routes = rewire '../routes'
 CurrentUser = require '../../../models/current_user.coffee'
 HeroUnits = require '../../../collections/hero_units'
+Q = require 'q'
 
 describe 'Home routes', ->
 
@@ -18,24 +19,27 @@ describe 'Home routes', ->
     Backbone.sync.restore()
 
   describe '#index', ->
-
-    it 'renders the home page with hero units + welcome hero unit', ->
-      routes.index @req, @res
-      Backbone.sync.args[0][2].success [fabricate 'site_hero_unit']
-      Backbone.sync.args[1][2].success [fabricate 'set']
-      Backbone.sync.args[2][2].success [fabricate 'featured_link']
-      @res.render.args[0][0].should.equal 'index'
-      @res.render.args[0][1].heroUnits[0].get('description').should.equal 'Sign up to get updates on your favorite artists'
-      @res.render.args[0][1].heroUnits[1].get('description').should.equal 'My hero'
+    describe 'logged out', ->
+      it 'renders the home page with hero units + welcome hero unit', (done) ->
+        routes.index @req, @res
+        Backbone.sync.args[0][2].success [fabricate 'site_hero_unit']
+        Backbone.sync.args[1][2].success [fabricate 'featured_link']
+        Backbone.sync.args[2][2].success [fabricate 'featured_link']
+        _.defer =>
+          @res.render.args[0][0].should.equal 'index'
+          @res.render.args[0][1].heroUnits[0].get('description').should.equal 'Sign up to get updates on your favorite artists'
+          @res.render.args[0][1].heroUnits[1].get('description').should.equal 'My hero'
+          done()
 
     describe 'logged in', ->
-      it 'renders the homepage without the welcome hero unit', ->
+      it 'renders the homepage without the welcome hero unit', (done) ->
         routes.index _.extend({ user: 'existy' }, @req), @res
         Backbone.sync.args[0][2].success [fabricate 'site_hero_unit']
-        Backbone.sync.args[1][2].success [fabricate 'set']
-        Backbone.sync.args[2][2].success [fabricate 'featured_link']
-        @res.render.args[0][0].should.equal 'index'
-        @res.render.args[0][1].heroUnits[0].get('description').should.equal 'My hero'
+        Backbone.sync.args[1][2].success [fabricate 'featured_link']
+        _.defer =>
+          @res.render.args[0][0].should.equal 'index'
+          @res.render.args[0][1].heroUnits[0].get('description').should.equal 'My hero'
+          done()
 
   describe '#redirectToSignup', ->
 

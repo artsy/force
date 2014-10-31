@@ -13,4 +13,4 @@ render = ->
 describe 'Home template', ->
 
   it "doesn't choke on 0 hero units", ->
-    render()(heroUnits: [], sd: {}, featuredLinks: [])
+    render()(heroUnits: [], sd: {}, featuredLinks: [], exploreSections: [])
