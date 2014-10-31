@@ -77,7 +77,7 @@ module.exports = class OverviewView extends Backbone.View
 
   setupLastModifiedDate: (artworks) ->
     sortFunction = (a, b) -> b - a
-    Q.allSettled(artwork.fetch() for artwork in artworks.models).done =>
+    $.when.apply(artwork.fetch() for artwork in artworks.models).then =>
       # Iterate through posts
       mostRecentPostDate =
         (for post in @model.related().posts?.models[0...4]
