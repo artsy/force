@@ -81,21 +81,23 @@ module.exports = class OverviewView extends Backbone.View
   # TODO: Only append if the date is within the past 3 months
   setupLastModifiedDate: (artworks) ->
     decendingSort = (a, b) -> b - a
-    # Iterate through posts
-    mostRecentPostDate =
-      (for post in @model.related().posts?.models[0...4]
-        new Date(post.get('last_promoted_at')).valueOf()
-      ).sort(decendingSort)[0]
+    if posts = @model.related().posts?.models
+      mostRecentPostDate =
+        (for post in posts[0...4]
+          new Date(post.get('last_promoted_at')).valueOf()
+        ).sort(decendingSort)[0]
 
-    mostRecentShowDate =
-      (for show in @model.related().shows?.models[0...4]
-        new Date(show.get('updated_at')).valueOf()
-      ).sort(decendingSort)[0]
+    if shows = @model.related().shows?.models
+      mostRecentShowDate =
+        (for show in shows[0...4]
+          new Date(show.get('updated_at')).valueOf()
+        ).sort(decendingSort)[0]
 
-    mostRecentArtworkDate =
-      (for artwork in artworks?.models
-        new Date(artwork.get('published_at')).valueOf()
-      ).sort(decendingSort[0])[0]
+    if artworks = artworks?.models
+      mostRecentArtworkDate =
+        (for artwork in artworks
+          new Date(artwork.get('published_at')).valueOf()
+        ).sort(decendingSort[0])[0]
 
     if mostRecentPostDate or mostRecentShowDate or mostRecentArtworkDate
       mostRecentDate = moment [mostRecentPostDate, mostRecentPostDate, mostRecentArtworkDate].sort(decendingSort)[0]
