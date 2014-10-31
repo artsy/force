@@ -22,18 +22,23 @@ block body
     #home-layout-container.responsive-layout-container
       .main-layout-container
         #home-body
+          if exploreSections.length
+            include explore_sections
+          if exploreSections.length
+            h2.home-featured-header Currently on Artsy
           ul#home-top-featured-links
             include featured_links
+
           #home-featured-artworks-section
             //- Rendered client-side
           h2.home-featured-header Featured Shows
           ul#home-featured-shows.home-featured-list
             li.loading-spinner
-          a.home-browse-all.avant-garde-button-text( href='/shows' ) Browse all Shows
+          a.home-browse-all.avant-garde-button-text( href='/shows' ) All Shows
           h2.home-featured-header Featured Posts
           ul#home-featured-posts.home-featured-list
             li.loading-spinner
-          a.home-browse-all.avant-garde-button-text( href='/posts/featured' ) Browse all Posts
+          a.home-browse-all.avant-garde-button-text( href='/posts/featured' ) All Posts
           h2.home-featured-header Featured Artists
           ul#home-featured-artists.grid-4-up.home-featured-list
             li.loading-spinner
