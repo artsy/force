@@ -43,7 +43,7 @@ module.exports =
   REVEAL_ERRORS: 'production' != process.env['NODE_ENV']
   DELTA_HOST: 'delta.artsy.net'
   REFLECTION_URL: 'http://artsy-reflection.s3-website-us-east-1.amazonaws.com/__reflection/forceartsynet'
-  USE_RESIZE_PROXY: true
+  DISABLE_IMAGE_PROXY: false
   SITEMAP_BASE_URL: 'http://artsy-sitemaps.s3-website-us-east-1.amazonaws.com'
   ARTWORK_EMBED_URL: 'https://widgets.artsy.net/artwork/embed_link?url='
   ENABLE_AB_TEST: true

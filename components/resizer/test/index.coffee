@@ -33,3 +33,12 @@ describe 'using the proxy', ->
     it 'supports options', ->
       fill('http://foobar.jpg', width: 300, height: 200, quality: 50, color: 'ff00cc').
         should.equal 'https://i.embed.ly/1/display/fill?width=300&height=200&quality=50&color=ff00cc&url=http%3A%2F%2Ffoobar.jpg&key=xxx'
+
+  describe 'when disabled', ->
+    beforeEach ->
+      resizer.__set__ 'DISABLE_IMAGE_PROXY', 'true'
+
+    it 'returns the non-proxied URL', ->
+      resize('http://foobar.jpg', width: 32, height: 32).should.equal 'http://foobar.jpg'
+      crop('http://foobar.jpg', width: 32, height: 32).should.equal 'http://foobar.jpg'
+      fill('http://foobar.jpg', width: 32, height: 32).should.equal 'http://foobar.jpg'
