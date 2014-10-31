@@ -102,7 +102,6 @@ module.exports = class Artist extends Backbone.Model
     compactObject {
       "@context": "http://schema.org"
       "@type": "Person"
-      itemref: 'artist'
       image: @imageUrl('large')
       name: @displayName()
       url: "#{sd.APP_URL}#{@href()}"
