@@ -1,6 +1,5 @@
 _ = require 'underscore'
 sd = require('sharify').data
-Q = require 'q'
 Backbone = require 'backbone'
 analytics = require '../../../../lib/analytics.coffee'
 mediator = require '../../../../lib/mediator.coffee'
@@ -17,6 +16,7 @@ RelatedShowsView = require '../../../../components/related_shows/view.coffee'
 ArtistFillwidthList = require '../../../../components/artist_fillwidth_list/view.coffee'
 moment = require 'moment'
 template = ->  require('../../templates/overview.jade') arguments...
+jsonLdTemplate = -> require('../../../../components/main_layout/templates/json_ld.jade') arguments...
 
 module.exports = class OverviewView extends Backbone.View
   subViews: []
@@ -75,34 +75,45 @@ module.exports = class OverviewView extends Backbone.View
     @renderRelatedArtists 'artists'
     @renderRelatedArtists 'contemporary'
 
+  # Finds the most recently modified item among related posts, shows and artworks
+  # Appends that date to the head and the body
+  #
+  # TODO: Only append if the date is within the past 3 months
   setupLastModifiedDate: (artworks) ->
-    sortFunction = (a, b) -> b - a
-    $.when.apply(artwork.fetch() for artwork in artworks.models).then =>
-      # Iterate through posts
-      mostRecentPostDate =
-        (for post in @model.related().posts?.models[0...4]
-          new Date(post.get('last_promoted_at')).valueOf()
-        ).sort(sortFunction)[0]
+    decendingSort = (a, b) -> b - a
+    # Iterate through posts
+    mostRecentPostDate =
+      (for post in @model.related().posts?.models[0...4]
+        new Date(post.get('last_promoted_at')).valueOf()
+      ).sort(decendingSort)[0]
 
-      mostRecentShowDate =
-        (for show in @model.related().shows?.models[0...4]
-          new Date(show.get('updated_at')).valueOf()
-        ).sort(sortFunction)[0]
+    mostRecentShowDate =
+      (for show in @model.related().shows?.models[0...4]
+        new Date(show.get('updated_at')).valueOf()
+      ).sort(decendingSort)[0]
 
-      mostRecentArtworkDate =
-        (for artwork in artworks?.models
-          new Date(artwork.get('published_at')).valueOf()
-        ).sort(sortFunction[0])[0]
+    mostRecentArtworkDate =
+      (for artwork in artworks?.models
+        new Date(artwork.get('published_at')).valueOf()
+      ).sort(decendingSort[0])[0]
 
-      if mostRecentPostDate or mostRecentPostDate or mostRecentArtworkDate
-        mostRecentDate = moment [mostRecentPostDate, mostRecentPostDate, mostRecentArtworkDate].sort(sortFunction)[0]
-        @$('.last-modified').html mostRecentDate.format('MMMM Do, YYYY')
-        $('head').append "<meta itemprop='datePublished' content='#{mostRecentDate.format('YYYY-MM-DD')}' id='date'>"
+    if mostRecentPostDate or mostRecentShowDate or mostRecentArtworkDate
+      mostRecentDate = moment [mostRecentPostDate, mostRecentPostDate, mostRecentArtworkDate].sort(decendingSort)[0]
+      @appendLastModifiedDate mostRecentDate
+    else
+      # Remove if the artist has no posts, shows or artworks since we
+      # have no way to know when the pages was updated
+      @$('.last-modified-section').remove()
 
-      else
-        # Remove if the artist has no posts, shows or artworks since we
-        # have no way to know when the pages was updated
-        @$('.last-modified-section').remove()
+  appendLastModifiedDate: (lastModifiedDate) ->
+    metaFormattedDate = lastModifiedDate.format('YYYY-MM-DD')
+    displayFormattedDate = lastModifiedDate.format('MMMM Do, YYYY')
+    @$('.last-modified').html "<time datetime='#{metaFormattedDate}' itemprop='datePublished'>#{displayFormattedDate}</time>"
+
+    # re-append the artist json-ld information
+    @model.set lastModified: metaFormattedDate
+    $('#json-ld').remove()
+    $('body').append jsonLdTemplate(jsonLD: JSON.stringify(@model.toJSONLD()))
 
   renderRelatedArtists: (type) ->
     $section = @$("#artist-related-#{type}-section")
