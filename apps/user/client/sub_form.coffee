@@ -11,7 +11,7 @@ module.exports = class SubForm extends Backbone.View
     'click button': 'submit'
 
   initialize: (options = {}) ->
-    { @model, @user } = options
+    { @model, @user, @afterSuccess } = options
 
     @cacheSelectors()
 
@@ -37,6 +37,7 @@ module.exports = class SubForm extends Backbone.View
     @user.refresh()
     @$errors.text ''
     new FlashMessage message: 'Your settings have been saved'
+    @afterSuccess?()
 
   submitError: (model, response, options) =>
     @reenableForm()
