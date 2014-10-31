@@ -66,6 +66,7 @@ module.exports =
   SENTRY_PUBLIC_DSN: null
   GOOGLE_SEARCH_KEY: null
   GOOGLE_SEARCH_CX: null
+  SHOW_AUCTIONS_IN_HEADER: true
 
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or
