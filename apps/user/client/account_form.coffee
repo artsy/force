@@ -43,8 +43,11 @@ module.exports = class AccountForm extends Backbone.View
     $(e.currentTarget).siblings().find('label').click()
 
   setupForms: ->
+    # Changing your password logs you out so we direct to login after changing password
+    changePasswordSuccess = -> _.delay (-> window.location = '/log_in?redirect_uri=/user/edit'), 300
+
     @detailsForm = new SubForm el: @$('#settings-account-details'), model: @userEdit, user: @userEdit
-    @passwordForm = new SubForm el: @$('#settings-change-password-new'), model: @password, user: @userEdit
+    @passwordForm = new SubForm el: @$('#settings-change-password-new'), model: @password, user: @userEdit, afterSuccess: changePasswordSuccess
     @emailPreferencesForm = new SubForm el: @$('#settings-email-preferences'), model: @userEdit, user: @userEdit
 
   postRender: ->
