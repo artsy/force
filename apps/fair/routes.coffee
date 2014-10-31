@@ -5,6 +5,7 @@ Search = require '../../collections/search.coffee'
 cache = require '../../lib/cache'
 client = cache.client
 kinds = require '../favorites_follows/kinds'
+{ crop, fill } = require '../../components/resizer'
 
 @overview = (req, res, next) ->
   return next() unless res.locals.sd.FAIR
@@ -41,7 +42,12 @@ kinds = require '../favorites_follows/kinds'
   search = new Search
   success = _.after 2, ->
     res.locals.sd.SECTION = 'search'
-    res.render 'index', { term: term, fairResults: fairSearch.models, results: search.models }
+    res.render 'index',
+      term: term
+      fairResults: fairSearch.models
+      results: search.models
+      crop: crop
+      fill: fill
 
   fairSearch.fetch
     data:
