@@ -3,6 +3,7 @@ extends ./template
 block content
   section.sg-components
     h2 Forms
+
     article.sg-component
       h3 Default Input
       .sg-component-rendered
@@ -91,3 +92,19 @@ block content
         |   input.bordered-input( placeholder='Name' )
         |   input.bordered-input( placeholder='Email', type='email' )
         |   a.avant-garde-button-black Submit
+
+    article.sg-component
+      h3 Bordered Select
+      .sg-component-rendered
+        label.bordered-select: select
+          option All Cities
+          option New York
+          option Los Angeles
+          option London
+          option Berlin
+          option Paris
+      pre: code
+        | label.bordered-select: select
+        |   option All Cities
+        |   option New York
+        |   [...]

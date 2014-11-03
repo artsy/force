@@ -72,14 +72,13 @@ fade-in()
   &.is-fade-in
     opacity 1
 
-caret()
+caret(color = black)
   display inline-block
   content ''
   width 0
   height 0
   vertical-align middle
-
-  border-top 8px solid
+  border-top 8px solid color
   border-right 4px solid transparent
   border-left 4px solid transparent
   margin 2px 0 4px 4px
