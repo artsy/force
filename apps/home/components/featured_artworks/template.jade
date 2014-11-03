@@ -10,10 +10,7 @@ ul#home-featured-artworks.grid-4-up.home-featured-list
     for artwork in artworks.models
       li.grid-item( class="is-via-#{artwork.get('source')}" )
         - showBlurb = true
-        //- 298 happens to be the max width of an image when
-        //- 4-up at default-max-page-width
-        - imageWidth = 298
-        - imageHeight = 298
+        - artworkSize = 'square'
         include ../../../../components/artwork_item/templates/artwork
   else
     li.loading-spinner
