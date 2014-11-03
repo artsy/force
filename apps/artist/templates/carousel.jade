@@ -1,10 +1,9 @@
 mixin carouselFigure(artwork)
-  - var options = { height: 300 }
   - var image = artwork.defaultImage()
-  - var dimensions = image.resizeDimensionsFor(options)
+  - var dimensions = image.resizeDimensionsFor({ height: 300 })
   a( href= artwork.href() )
     img(
-      src= image.resizeUrlFor(options)
+      src= image.imageUrlForHeight(300)
       alt= artwork.get('title')
       width= dimensions.width
       height= dimensions.height
