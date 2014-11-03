@@ -1,8 +1,5 @@
 for artwork in artworks
   li.grid-item
     - showBlurb = true
-    //- 298 happens to be the max width of an image when
-    //- 4-up at default-max-page-width
-    - imageWidth = 298
-    - imageHeight = 298
+    - artworkSize = 'square'
     include ../../../components/artwork_item/templates/artwork
