@@ -237,6 +237,36 @@ describe 'Fair', ->
         coverImage: coverImage
         primarySets: primarySets
 
+      nestedFilteredSearchOptions = new Backbone.Model {
+        related_gene:
+          'abstract-painting':
+            'name': 'Abstract Painting'
+            'count': 388
+          'art-since-2000':
+            'name': 'Art since 2000'
+            'count': 1717
+          'black-and-white-photography':
+            'name': 'Black and White Photography'
+            'count': 99
+          'contemporary-slash-modern':
+            'name': 'Contemporary/Modern'
+            'count': 38
+      }
+
+      nestedFilteredSearchColumns = fair.filteredSearchColumns nestedFilteredSearchOptions
+      @nestedTemplate = render('overview')
+        sd:
+          APP_URL: 'http://localhost:5000'
+          ASSET_PATH: 'http://localhost:5000'
+          CURRENT_PATH: '/cool-fair'
+          PROFILE: fabricate 'fair_profile'
+          FAIR: fabricate 'fair'
+        fair: fair
+        profile: profile
+        filteredSearchColumns: nestedFilteredSearchColumns
+        coverImage: coverImage
+        primarySets: primarySets
+
     it 'renders without errors', ->
       $ = cheerio.load @template
       $('.fair-search-options-column').length.should.equal 2
@@ -249,6 +279,12 @@ describe 'Fair', ->
       $('.fair-overview-curator .small-section').length.should.equal 2
       $('.fair-overview-post-container .large-post').length.should.equal 1
       $('.fair-overview-post-container .small-post').length.should.equal 1
+
+    it 'renders nested gene names without errors', ->
+      $ = cheerio.load @nestedTemplate
+      $('.fair-search-options-column').length.should.equal 2
+      $('.fair-search-options-column a').length.should.equal 4
+      $('.fair-search-options-column').text().should.containEql 'Contemporary/Modern'
 
   describe 'exhibitors columns', ->
     before ->

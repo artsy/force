@@ -123,8 +123,10 @@ module.exports = class Fair extends Backbone.Model
   filteredSearchColumns: (filterdSearchOptions, numberOfColumns=2, key='related_gene', namespace='artworks') ->
     href = @href()
     items = for item in _.keys(filterdSearchOptions.get(key))
+      actualName = filterdSearchOptions.get(key)[item]['name']
+      name = actualName || item.replace('1', '').split('-').join(' ')
       {
-        name: item.replace('1', '').split('-').join(' ')
+        name: name
         href: "#{href}/browse/#{namespace}?#{key}=#{item}"
       }
     @itemsToColumns items, numberOfColumns
