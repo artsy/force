@@ -1,6 +1,10 @@
 if headingText
-  .a-to-z-heading( style="width: #{fixedWidth}px" )
+  .a-to-z-heading(
+    style= (fixedWidth ? "width: #{fixedWidth}px" : undefined)
+  )
     = headingText
     if headingSortOrder
       .browse-sort-order= headingSortOrder
-section.feed-items( style="width: #{fixedWidth}px" )
+section.feed-items(
+  style= (fixedWidth ? "width: #{fixedWidth}px" : undefined)
+)
