@@ -6,11 +6,9 @@
 //
 
 @import '../../node_modules/nib'
+@import './typography'
 
 // Widths
-default-avant-garde-font-size = 14px
-default-garamond-font-size = 16px
-large-avant-garde-font-size = 24px
 content-margin-top = 10px
 home-logo-size = 52px
 body-min-width = 950px
@@ -32,25 +30,6 @@ zindex-deepzoom = 1000
 zindex-iframepopover = 1050
 zindex-flash = 1060
 zindex-modal = 1070
-
-// Typography
-avant-garde()
-  font-family 'ITC Avant Garde Gothic W04', 'AvantGardeGothicITCW01D 731075', 'AvantGardeGothicITCW01Dm', 'Helvetica', 'sans-serif'
-  font-smoothing antialiased
-  text-transform uppercase
-  letter-spacing 1px
-
-garamond()
-  font-family 'Adobe Garamond W08', 'adobe-garamond-pro', 'AGaramondPro-Regular', 'Times New Roman', 'Times', 'serif'
-  font-smoothing antialiased
-
-monospace()
-  font-family 'Menlo', 'Monaco', 'Andale Mono', 'lucida console', 'Courier New', 'monospace'
-  font-smoothing antialiased
-
-small-caps()
-  text-transform uppercase
-  letter-spacing 1px
 
 // Utilities
 force-hardware-acceleration()
