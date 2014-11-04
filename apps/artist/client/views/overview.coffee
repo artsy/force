@@ -97,10 +97,10 @@ module.exports = class OverviewView extends Backbone.View
       mostRecentArtworkDate =
         (for artwork in artworks
           new Date(artwork.get('published_at')).valueOf()
-        ).sort(decendingSort[0])[0]
+        ).sort(decendingSort)[0]
 
     if mostRecentPostDate or mostRecentShowDate or mostRecentArtworkDate
-      mostRecentDate = moment [mostRecentPostDate, mostRecentPostDate, mostRecentArtworkDate].sort(decendingSort)[0]
+      mostRecentDate = moment [mostRecentPostDate, mostRecentShowDate, mostRecentArtworkDate].sort(decendingSort)[0]
       @appendLastModifiedDate mostRecentDate
     else
       # Remove if the artist has no posts, shows or artworks since we
