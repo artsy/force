@@ -1,0 +1,41 @@
+@import '../../../components/stylus_lib'
+
+#shows-page
+  padding 40px 0
+
+.shows-page-header
+  margin 40px 0
+  font-size 30px
+
+.shows-page-featured-section
+  margin 40px 0 60px 0
+
+.shows-page-featured-empty
+  margin 40px 0 60px 0
+  padding 40px 0
+  font-size 30px
+  color gray-color
+  border-width 1px 0
+  border-style solid
+  border-color gray-lighter-color
+
+.shows-page-cities-nav > .is-dominant
+  overflow ellipsis
+  position relative
+  // Ellipsis doesn't work in Chrome on flex containers
+  // Consider wrapping this into the .horizontal-list-nav class
+  &:after
+    content ''
+    display block
+    position absolute
+    top 0
+    right 0
+    bottom 0
+    width 20%
+    background linear-gradient(left, transparent, white)
+    pointer-events none
+
+.shows-page-feed-header
+  margin-bottom 0
+  padding-bottom 40px
+  border-bottom 1px solid gray-lighter-color

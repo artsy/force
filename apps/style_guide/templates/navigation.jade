@@ -22,6 +22,29 @@ block content
         |   a.garamond-tab( href='/institutions' ) Institutions
 
     article.sg-component
+      h3 Horizontal list nav
+      .sg-component-rendered
+        nav.horizontal-list-nav
+          .hln-cell.is-dominant
+            span.hln-link.is-active All
+            a.hln-link( href='#' ) New York
+            a.hln-link( href='#' ) Los Angeles
+            a.hln-link( href='#' ) Berlin
+            a.hln-link( href='#' ) London
+            a.hln-link( href='#' ) Paris
+            a.hln-link( href='#' ) Miami
+          .hln-cell
+            a.hln-link More&hellip;
+      pre: code
+        | nav.horizontal-list-nav
+        |   .hln-cell.is-dominant
+        |     span.hln-link.is-active All
+        |     a.hln-link( href='#' ) New York
+        |     //- [...]
+        |   .hln-cell
+        |     a.hln-link More&hellip;
+
+    article.sg-component
       h3 Alphabetical Index
       .sg-component-rendered
         nav.alphabetical-index

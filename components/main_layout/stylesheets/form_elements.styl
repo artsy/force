@@ -116,20 +116,45 @@ bordered-input-placeholder--autofocus-focus()
     padding-right 0
     padding-left 0
 
-.bordered-select
-  garamond()
-  font-size 16px
-  width 100%
-  padding 10px
-  border 2px solid gray-lighter-color
-  border-radius 0px
-  box-shadow none
-  appearance none
-  outline none
-  margin-top 0px
-  background-repeat no-repeat
-  background-position right
-  background-size 24px auto
+bordered-select-caret-width = 8px
+bordered-select-border-width = 2px
+.bordered-select // label
+  position relative
+  display inline-block
+  // Hides the default caret button in FF
+  &:before
+    display block
+    position absolute
+    content ''
+    top bordered-select-border-width
+    right @top
+    bottom @top
+    width (bordered-select-caret-width * 3)
+    background-color white
+    border-top 10px solid white // faux margins
+    border-bottom @border-top
+    border-left 1px solid gray-lighter-color
+    pointer-events none
+  &:after
+    caret(gray-color)
+    position absolute
+    top 50%
+    right (bordered-select-caret-width + (bordered-select-border-width / 2))
+    margin-top -(bordered-select-border-width * 2)
+  > select
+    appearance none
+    outline none
+    display inline-block
+    width 200px
+    margin 0
+    padding 0
+    padding 8px 10px 7px
+    garamond()
+    font-size default-garamond-font-size
+    border 2px solid gray-lighter-color
+    border-radius 0
+    box-shadow none
+    background-color white
 
 // Textarea-specific
 textarea.bordered-input

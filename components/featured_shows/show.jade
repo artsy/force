@@ -1,9 +1,43 @@
-li.featured-shows-featured-show.grid-item
-  a( href=show.href() )
-    img.featured-shows-featured-cover-img( src=crop(show.bestImageUrl(['featured', 'large_rectangle']), { width: width, height: height }) )
-    if location = show.location()
-      h6 #{show.runningDates()}  ∙  #{location.singleLine()}
-    else
-      h6= show.runningDates()
-    h4= show.partnerName()
-    h5= show.get('name')
+- displayLocation = displayLocation || false
+
+//- Sometimes a show will have an image_url but not image_versions
+if show.has('image_versions') && show.get('image_versions').length
+  li.featured-shows-featured-show.grid-item
+    a.hoverable-image-link( href=show.href() )
+      img.fsfs-cover-image(
+        src= show.cropUrlFor({ width: width, height: height })
+        alt= show.get('name')
+      )
+
+    a.fsfs-metadata( href=show.href() )
+      h4.fsfs-partner-name= show.partnerName()
+      h5.fsfs-show-name= show.get('name')
+
+      if displayLocation
+        h6.fsfs-running-dates
+          if show.formatCity()
+            = show.formatCity()
+          if show.upcoming()
+            if show.formatCity()
+              = ', '
+            | Opening #{show.date('start_at').format('MMM DD')}
+          else if show.isEndingSoon()
+            if show.formatCity()
+              = ', '
+            span.fsfs-warning Closing #{show.endingIn()}
+
+      else
+        case show.get('status')
+          when 'running'
+            //- Display nothing
+          when 'upcoming'
+            h6.fsfs-running-dates
+              if show.isOpeningToday()
+                | Opening today
+              else
+                | Opening #{show.date('start_at').format('MMM DD')}
+          when 'closed'
+            h6.fsfs-running-dates
+              | #{show.date('start_at').format('MMM DD')} – #{show.date('end_at').format('MMM DD')}
+        if show.isEndingSoon()
+          .fsfs-warning Closing #{show.endingIn()}

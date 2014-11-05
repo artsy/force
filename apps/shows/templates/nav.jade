@@ -1,0 +1,20 @@
+include ../../../components/bordered_pulldown/mixin
+include ../../../components/util/activator
+
+nav.shows-page-cities-nav.horizontal-list-nav
+  .hln-cell.is-dominant
+    a.hln-link.shows-location(
+      href='/shows'
+      class= activeClass('/shows')
+    ) All
+    for city in cities.slice(0, 10)
+      a.hln-link.shows-location(
+        href="/shows/#{city.slug}"
+        class= activeClass("/shows/#{city.slug}")
+      )= city.name
+  .hln-cell
+    +bordered-scrollable-pulldown('All Cities', null)
+      a( href='/shows' ) All Cities
+      for city in cities
+        a( href="/shows/#{city.slug}" )
+          = city.name

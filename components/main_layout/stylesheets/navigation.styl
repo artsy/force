@@ -88,28 +88,44 @@
   &.is-four-three
     padding-bottom 75%
 
-.alphabetical-index
-  display table
-  table-layout fixed
-  font-size 18px
+.horizontal-list-nav
+  display flex
+  align-items center
+  font-size 17px
   width 100%
-  border-top 1px solid gray-lighter-color
-  border-bottom 1px solid gray-lighter-color
+  border-width 1px 0
+  border-style solid
+  border-color gray-lighter-color
+.hln-cell
+  &.is-dominant
+    flex 1
+  &:first-child
+    text-align left
+  &:last-child
+    text-align right
+.hln-link
+  display inline-block
+  padding 20px 0.75%
+  text-decoration none
+  transition color 0.25s
+  &:first-child
+    padding-left 0
+  &:last-child
+    padding-right 0
+  &:hover
+  &.is-active
+    color purple-color
+
+.alphabetical-index
+  @extends .horizontal-list-nav
 .alphabetical-index-label
 .alphabetical-index-range
-  display table-cell
-  white-space nowrap
+  @extends .hln-cell
 .alphabetical-index-label
-  width 200px
   padding 20px 20px 20px 0
 .alphabetical-index-range
   text-align right
+  flex 1
   > a
-    display inline-block
-    padding 20px 0.75%
+    @extends .hln-link
     text-transform uppercase
-    text-decoration none
-    transition color 0.25s
-    &:hover
-    &.is-active
-      color purple-color

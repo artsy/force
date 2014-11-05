@@ -7,6 +7,7 @@ PartnerShow = require '../../models/partner_show'
 PartnerLocation = require '../../models/partner_location'
 FairLocation = require '../../models/partner_location'
 sinon = require 'sinon'
+moment = require 'moment'
 
 describe 'PartnerShow', ->
 
@@ -150,3 +151,60 @@ describe 'PartnerShow', ->
       @partnerShow.unset 'image_versions'
       @partnerShow.posterImageUrl()
       Backbone.sync.args[0][2].success []
+
+  describe '#isEndingSoon', ->
+    beforeEach ->
+      @ending = '2013-08-23T04:00:00+00:00'
+      @partnerShow.set 'end_at', @ending
+
+    it 'returns a boolean if the show ends within the desired timeframe (default 5 days)', ->
+      @clock = sinon.useFakeTimers(moment(@ending).subtract(3, 'days').valueOf())
+      @partnerShow.isEndingSoon().should.be.true
+      @clock.restore()
+      @clock = sinon.useFakeTimers(moment(@ending).subtract(5, 'days').valueOf())
+      @partnerShow.isEndingSoon().should.be.true
+      @clock.restore()
+      @clock = sinon.useFakeTimers(moment(@ending).subtract(5.1, 'days').valueOf())
+      @partnerShow.isEndingSoon().should.be.false
+      @clock.restore()
+      @clock = sinon.useFakeTimers(moment(@ending).subtract(6, 'days').valueOf())
+      @partnerShow.isEndingSoon().should.be.false
+      @clock.restore()
+
+    it 'supports custom day values for "soon"', ->
+      @clock = sinon.useFakeTimers(moment(@ending).subtract(3, 'days').valueOf())
+      @partnerShow.isEndingSoon(2).should.be.false
+      @partnerShow.isEndingSoon(3).should.be.true
+      @clock.restore()
+
+  describe '#endingIn', ->
+    beforeEach ->
+      @ending = '2013-08-23T04:00:00+00:00'
+      @partnerShow.set 'end_at', @ending
+
+    it 'returns the correct string', ->
+      @clock = sinon.useFakeTimers(moment(@ending).subtract(3, 'days').valueOf())
+      @partnerShow.endingIn().should.equal 'in 3 days'
+      @clock.restore()
+      @clock = sinon.useFakeTimers(moment(@ending).subtract(1, 'day').valueOf())
+      @partnerShow.endingIn().should.equal 'in 1 day'
+      @clock.restore()
+      @clock = sinon.useFakeTimers(moment(@ending).valueOf())
+      @partnerShow.endingIn().should.equal 'today'
+      @clock.restore()
+
+  describe '#isOpeningToday', ->
+    beforeEach ->
+      @starting = '2013-07-12T04:00:00+00:00'
+      @partnerShow.set 'start_at', @starting
+
+    it 'returns a boolean value for whether or not the show opens *today*', ->
+      @clock = sinon.useFakeTimers(moment(@starting).subtract(1, 'day').valueOf())
+      @partnerShow.isOpeningToday().should.be.false
+      @clock.restore()
+      @clock = sinon.useFakeTimers(moment(@starting).add(1, 'day').valueOf())
+      @partnerShow.isOpeningToday().should.be.false
+      @clock.restore()
+      @clock = sinon.useFakeTimers(moment(@starting).valueOf())
+      @partnerShow.isOpeningToday().should.be.true
+      @clock.restore()
