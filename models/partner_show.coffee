@@ -133,6 +133,9 @@ module.exports = class PartnerShow extends Backbone.Model
   runningDates: ->
     DateHelpers.timespanInWords @get('start_at'), @get('end_at')
 
+  date: (attr) ->
+    moment(@get attr)
+
   fetchInstallShots: (callbacks) ->
     throw "You must pass a success callback" unless callbacks?.success? and _.isFunction(callbacks.success)
     @installShots = new Backbone.Collection [], { model: InstallShot }
@@ -196,7 +199,7 @@ module.exports = class PartnerShow extends Backbone.Model
   artists: -> new Artists(@get('artists'))
 
   formatCity: =>
-    @get('location')?.city
+    @get('location')?.city?.trim()
 
   formatFeedItemHeading: ->
     return @get('name') if @get('name')?.length > 0
@@ -239,6 +242,19 @@ module.exports = class PartnerShow extends Backbone.Model
 
   endAtDate: ->
     new Date(@get('end_at'))
+
+  # Defaults to 5 days
+  isEndingSoon: (days = 5) ->
+    soon = moment.duration(days, 'days').valueOf()
+    diff = moment(@get('end_at')).diff(Date.new)
+    diff <= soon and diff >= 0
+
+  endingIn: ->
+    days = moment(@get('end_at')).diff(Date.new, 'days')
+    if days is 0 then 'today' else "in #{days} day#{if days is 1 then '' else 's'}"
+
+  isOpeningToday: ->
+    moment(@get('start_at')).diff(Date.new, 'days') is 0
 
   performers: ->
     artist.toJSONLDShort() for artist in @artists().models
