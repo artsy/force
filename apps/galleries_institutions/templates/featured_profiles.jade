@@ -1,5 +1,12 @@
 section.galleries-institutions-featured-profiles.grid-4-up
-  for profile in featuredProfiles.shuffle()
+
+  if (featuredProfiles.length % 4 !== 0)
+    .grid-item: .gallery-partnerships-callout: .gpc-inner: .vam-outer: .vam-inner
+      | Interested in partnering with Artsy?
+      = ' '
+      a.faux-underline( href='/gallery-partnerships' ) Learn&nbsp;More
+
+  for profile in featuredProfiles
     .grid-item.gallery-institutions-profile
       include ../../../components/partner_profile_cover/template
       - var partner = profile.get('owner')

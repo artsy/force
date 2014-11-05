@@ -48,35 +48,38 @@ fetchInstitutions = ->
   Q.allSettled([
     fetchFeaturedProfiles('partners:featured-galleries')
     fetchFeaturedProfiles('partners:featured-institutions')
-  ]).then (results) ->
+  ]).then((results) ->
     [featuredGalleries, featuredInstitutions] = _.pluck results, 'value'
     featuredGalleries.add(featuredInstitutions.models)
     res.render 'index',
-      featuredProfiles: featuredGalleries
+      featuredProfiles: featuredGalleries.take(20)
       copy: header: 'Featured Partners'
+  ).done
 
 @galleries = (req, res) ->
   Q.allSettled([
     fetchFeaturedProfiles('partners:featured-galleries')
     fetchGalleries()
-  ]).then (results) ->
+  ]).then((results) ->
     [featuredGalleries, galleries] = _.pluck results, 'value'
     aToZGroup = galleries.groupByAlphaWithColumns 3
     res.render 'index',
       aToZGroup: aToZGroup
       partnerCount: galleries.length
-      featuredProfiles: featuredGalleries
+      featuredProfiles: _.take featuredGalleries.shuffle(), 15 # Make room for partnership callout
       copy: header: 'Featured Galleries', adjective: 'Gallery'
+  ).done()
 
 @institutions = (req, res) ->
   Q.allSettled([
     fetchFeaturedProfiles('partners:featured-institutions')
     fetchInstitutions()
-  ]).then (results) ->
+  ]).then((results) ->
     [featuredInstitutions, institutions] = _.pluck results, 'value'
     aToZGroup = institutions.groupByAlphaWithColumns 3
     res.render 'index',
       aToZGroup: aToZGroup
       partnerCount: institutions.length
-      featuredProfiles: featuredInstitutions
+      featuredProfiles: _.take featuredInstitutions.shuffle(), 16
       copy: header: 'Featured Museums and Institutions', adjective: 'Institutional'
+  ).done()
