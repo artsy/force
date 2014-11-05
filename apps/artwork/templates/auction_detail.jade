@@ -42,8 +42,12 @@ if auction.isOpen() && artwork.get('acquireable')
     | Buy Now
 
 .abf-help
-  a.abf-help-link( href='#' )
-    | How do auctions work?
+  a( href='/auction-info' )
+    | How Bidding Works
+  br
+  a( href='/conditions-of-sale' )
+    | Conditions of Sale
+  br
   br
   a( href="artwork/#{saleArtwork.id}/ask_specialist", data-client )
     | Ask an Artsy specialist
