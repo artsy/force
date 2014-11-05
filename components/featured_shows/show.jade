@@ -2,7 +2,6 @@
 
 //- Sometimes a show will have an image_url but not image_versions
 if show.has('image_versions') && show.get('image_versions').length
-  = displayLocation
   li.featured-shows-featured-show.grid-item
     a.hoverable-image-link( href=show.href() )
       img.fsfs-cover-image(
