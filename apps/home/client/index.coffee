@@ -55,7 +55,7 @@ module.exports.HomeView = class HomeView extends Backbone.View
 
   renderFeaturedShows: ->
     new PartnerShows().fetchSetItemsByKey 'homepage:featured-shows', success: (shows) ->
-      $('#home-featured-shows').html featuredShowsTemplate(shows: shows.take(10), crop: crop)
+      $('#home-featured-shows').html featuredShowsTemplate(shows: shows.take(8), displayLocation: true)
 
 module.exports.init = ->
   new HomeView el: $('body')
