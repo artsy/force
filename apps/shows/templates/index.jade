@@ -1,0 +1,19 @@
+extends ../../../components/main_layout/templates/index
+
+block head
+  include meta
+
+append locals
+  - assetPackage = 'shows'
+
+block body
+  #shows-page.main-layout-container
+    include nav
+
+    if shows.length
+      h1.shows-page-header Featured Shows
+      - displayLocation = true
+      include ../../home/templates/featured_shows
+
+    h2.shows-page-header.shows-page-feed-header Current Museum & Gallery Shows
+    #shows-feed.shows-feed.feed: .loading-spinner

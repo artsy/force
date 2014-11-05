@@ -1,0 +1,38 @@
+extends ../../../components/main_layout/templates/index
+
+block head
+  include meta
+
+append locals
+  - assetPackage = 'shows'
+
+block body
+  #shows-page.main-layout-container
+    include nav
+
+    if opening.length
+      h1.shows-page-header Opening this week
+      - var shows = opening
+      .shows-page-featured-section: include ../../../components/featured_shows/small
+
+    if upcoming.length
+      h1.shows-page-header Upcoming Shows
+      - var shows = upcoming
+      .shows-page-featured-section: include ../../../components/featured_shows/small
+
+    if current.length
+      h2.shows-page-header Current Shows in #{city.name}
+      - var shows = current
+      .shows-page-featured-section: include ../../../components/featured_shows/small
+
+    if (opening.length + upcoming.length + current.length) === 0
+      h1.shows-page-header Current Shows in #{city.name}
+      .shows-page-featured-empty
+        | There are currently no shows in #{city.name} on Artsy
+
+    if (opening.length + upcoming.length + current.length) < 6 && past.length
+      h2.shows-page-header Past shows in #{city.name}
+      - var shows = past
+      .shows-page-featured-section: include ../../../components/featured_shows/small
+
+    include nav

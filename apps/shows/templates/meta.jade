@@ -1,0 +1,14 @@
+- var title = city ? city.name + ' Art Gallery Shows and Museum Exhibitions | Artsy' : 'Art Gallery Shows and Museum Exhibitions | Artsy'
+- var description = city ? 'Explore shows in ' + city.name + 'on Artsy.' : 'Explore all shows on Artsy.'
+
+title= title
+meta( property="og:title", content= title )
+meta( name="description", content= description )
+meta( property="og:description", content= description )
+meta( property="twitter:description", content= description )
+link( rel="canonical", href="#{sd.APP_URL}/shows" )
+meta( property="og:url", content="#{sd.APP_URL}/shows" )
+meta( property="og:image", content="#{sd.ASSET_PATH}/og_image.jpg" )
+meta( property="og:type", content="website" )
+meta( property="twitter:card", content="summary" )
+meta( name='fragment', content='!' )

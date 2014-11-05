@@ -1,32 +1,24 @@
 _ = require 'underscore'
-Backbone = require 'backbone'
 sd = require('sharify').data
-FeedView = require('../../../components/feed/client/shows_feed.coffee')
-FeedItems = require('../../../components/feed/collections/feed_items.coffee')
+Backbone = require 'backbone'
+FeedView = require '../../../components/feed/client/shows_feed.coffee'
+FeedItems = require '../../../components/feed/collections/feed_items.coffee'
 
 module.exports.ShowsView = class ShowsView extends Backbone.View
-
-  urlRoot: -> "#{sd.API_URL}/api/v1/shows/feed"
+  url: "#{sd.API_URL}/api/v1/shows/feed"
 
   initialize: (options) ->
     new FeedItems().fetch
-      url: @urlRoot()
-      data:
-        size: 3
+      url: @url
+      data: size: 3
       success: (items) =>
-        if items.models.length > 0
-          items.urlRoot = @urlRoot()
-          new FeedView
-            feedItems: items
-            el: @$('.feed')
+        if items.models.length
+          items.urlRoot = @url
+          new FeedView el: @$('#shows-feed'), feedItems: items
         else
           callback?.error()
-
       error: =>
-        @$('.feed')
-          .html('empty')
-          .removeClass('loading')
+        @$('#shows-feed').remove()
 
 module.exports.init = ->
-  new ShowsView
-    el: $('#shows-page')
+  new ShowsView el: $('#shows-page')
