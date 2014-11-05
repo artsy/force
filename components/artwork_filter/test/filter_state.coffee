@@ -19,3 +19,17 @@ describe 'FilterState', ->
 
     it 'it leaves the period filters in chronological order', ->
       _.pluck(@filterState.criteria().period.filters, 'key').should.eql ['1940', '1960', '1970', '1980', '1990', '2000', '2010']
+
+  describe '#criteria with nested fields', ->
+    beforeEach ->
+      @filterStateNested = new FilterState fabricate('artist_filtered_search_nested_suggest'), modelId: _.uniqueId()
+
+    it 'selects the filter sections from the response', ->
+      _.keys(@filterStateNested.criteria()).should.eql ['medium', 'gallery', 'institution']
+
+    it 'grabs the correct name without simply desluggifying keys', ->
+      _.pluck(@filterStateNested.criteria().gallery.filters, 'label').should.eql ['Armand Bartos Fine Art', 'Artware Editions', 'Barbara Krakow Gallery', 'Carolina Nitsch Contemporary Art', 'CASTERLINE GOODMAN GALLERY']
+
+    it 'sets up some labels by humanizing the keys', ->
+      @filterStateNested.criteria().medium.label.should.equal 'Medium'
+      @filterStateNested.criteria().medium.filters[0].label.should.equal 'Work On Paper'

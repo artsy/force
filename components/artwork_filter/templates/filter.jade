@@ -12,7 +12,11 @@ for criteria, key in filter.root.criteria()
     h3= criteria.label
     ul: for criterion in criteria.filters
       - active = filter.selected.isActive(criterion.key)
-      - count = pricedFilter.get(key)[criterion.key] || 0
+      - countSource = pricedFilter.get(key)[criterion.key]
+      - if (countSource)
+        - count = countSource['count'] || countSource
+      - else
+        - count = 0
       li.artwork-filter-criterion(
         class=(active ? 'is-active' : 'is-inactive')
         class=(count ? undefined : 'is-disabled' )
