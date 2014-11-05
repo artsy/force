@@ -20,7 +20,9 @@ describe 'Galleries / Institutions routes', ->
     beforeEach ->
       returnGalleriesProfiles = value: new Backbone.Collection [fabricate 'profile', id: 'a-gallery']
       returnInstitutionalProfiles = value: new Backbone.Collection [fabricate 'profile', id: 'an-institution']
-      sinon.stub(Q, 'allSettled').returns(then: (cb) -> cb([returnGalleriesProfiles, returnInstitutionalProfiles]))
+      sinon.stub(Q, 'allSettled').returns then: (cb) ->
+        cb([returnGalleriesProfiles, returnInstitutionalProfiles])
+        done: sinon.stub()
       routes.partners @req, @res
 
     it 'fetches featured gallery profiles + featured institutional profiles', ->
@@ -37,14 +39,16 @@ describe 'Galleries / Institutions routes', ->
       @res.render.args[0][0].should.equal 'index'
       @res.render.args[0][1].copy.header.should.equal 'Featured Partners'
       profiles = @res.render.args[0][1].featuredProfiles
-      profiles.first().id.should.equal 'a-gallery'
-      profiles.last().id.should.equal 'an-institution'
+      _.first(profiles).id.should.equal 'a-gallery'
+      _.last(profiles).id.should.equal 'an-institution'
 
   describe '#galleries', ->
     beforeEach ->
       returnGalleriesProfiles = value: new Backbone.Collection [fabricate 'profile', id: 'a-gallery']
       returnGalleries = value: new Partners [fabricate 'partner']
-      sinon.stub(Q, 'allSettled').returns(then: (cb) -> cb([returnGalleriesProfiles, returnGalleries]))
+      sinon.stub(Q, 'allSettled').returns then: (cb) ->
+        cb([returnGalleriesProfiles, returnGalleries])
+        done: sinon.stub()
       routes.galleries @req, @res
 
     it 'fetches featured gallery profiles + all the galleries', ->
@@ -66,14 +70,16 @@ describe 'Galleries / Institutions routes', ->
       @res.render.called.should.be.true
       @res.render.args[0][0].should.equal 'index'
       @res.render.args[0][1].aToZGroup[0].columns.length.should.equal 3
-      @res.render.args[0][1].featuredProfiles.first().id.should.equal 'a-gallery'
+      @res.render.args[0][1].featuredProfiles[0].id.should.equal 'a-gallery'
       @res.render.args[0][1].copy.header.should.equal 'Featured Galleries'
 
   describe '#institutions', ->
     beforeEach ->
       returnInstitutionalProfiles = value: new Backbone.Collection [fabricate 'profile', id: 'an-institution']
       returnInstitutions = value: new Partners [fabricate 'partner']
-      sinon.stub(Q, 'allSettled').returns(then: (cb) -> cb([returnInstitutionalProfiles, returnInstitutions]))
+      sinon.stub(Q, 'allSettled').returns then: (cb) ->
+        cb([returnInstitutionalProfiles, returnInstitutions])
+        done: sinon.stub()
       routes.institutions @req, @res
 
     it 'fetches featured institutional profiles + the set of all institutions', ->
@@ -89,5 +95,5 @@ describe 'Galleries / Institutions routes', ->
       @res.render.called.should.be.true
       @res.render.args[0][0].should.equal 'index'
       @res.render.args[0][1].aToZGroup[0].columns.length.should.equal 3
-      @res.render.args[0][1].featuredProfiles.first().id.should.equal 'an-institution'
+      @res.render.args[0][1].featuredProfiles[0].id.should.equal 'an-institution'
       @res.render.args[0][1].copy.header.should.equal 'Featured Museums and Institutions'
