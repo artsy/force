@@ -10,6 +10,7 @@ Clock = require './mixins/clock.coffee'
 moment = require 'moment'
 Profile = require './profile.coffee'
 FilterSuggest = require './filter_suggest.coffee'
+deslugify = require '../components/deslugify/index.coffee'
 
 module.exports = class Fair extends Backbone.Model
 
@@ -124,7 +125,7 @@ module.exports = class Fair extends Backbone.Model
     href = @href()
     items = for item in _.keys(filterdSearchOptions.get(key))
       actualName = filterdSearchOptions.get(key)[item]['name']
-      name = actualName || item.replace('1', '').split('-').join(' ')
+      name = actualName || deslugify(item)
       {
         name: name
         href: "#{href}/browse/#{namespace}?#{key}=#{item}"
