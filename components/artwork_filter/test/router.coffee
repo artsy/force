@@ -43,8 +43,7 @@ describe 'ArtworkFilterRouter', ->
 
   describe '#filteredParams', ->
     it 'doesnt return ignored', ->
-      @router.searchString = -> '?foo=bar&utm_source=email&baz=qux'
+      @router.searchString = -> '?foo=bar&utm_source=email&baz=qux&gallery=cool&price_range=-1%3A1000000000000'
       spy = sinon.spy @router.view.filter, 'by'
       @router.navigateBasedOnParams()
-      (spy.args[0][0].utm_source?).should.not.be.ok
-      spy.args[0][0].baz.should.equal 'qux'
+      spy.args[0][0].should.eql gallery: 'cool', price_range: '-1:1000000000000'

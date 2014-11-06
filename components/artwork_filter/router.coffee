@@ -2,10 +2,11 @@ _ = require 'underscore'
 qs = require 'querystring'
 Backbone = require 'backbone'
 ArtworkFilterView = require './view.coffee'
+sections = require './sections.coffee'
+booleans = require './booleans.coffee'
+whitelist = _.keys(sections).concat booleans
 
 module.exports = class ArtworkFilterRouter extends Backbone.Router
-  ignoredParams: ['utm_source', 'utm_campaign', 'utm_medium']
-
   initialize: (options = {}) ->
     @view = new ArtworkFilterView options
     @view.on 'navigate', => @navigate @currentFragment()
@@ -23,5 +24,5 @@ module.exports = class ArtworkFilterRouter extends Backbone.Router
     location.search.substring(1)
 
   navigateBasedOnParams: ->
-    params = _.omit(qs.parse(@searchString()), @ignoredParams)
+    params = _.pick qs.parse(@searchString()), whitelist...
     @view.filter.by params unless _.isEmpty(params)
