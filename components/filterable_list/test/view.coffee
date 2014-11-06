@@ -22,54 +22,78 @@ describe 'FilterableListView', ->
     benv.teardown()
 
   describe 'with grouping', ->
-    beforeEach ->
-      types = ['catalogue', 'catalogue', 'review', 'interview', 'review']
-      years = ['2005-01-01', '2005-01-01', '2005-01-01', '2003-01-01', '2010-01-01']
-      @collection = new Backbone.Collection _.times 5, (i) ->
-        fabricate 'show', type: types[i], year: years[i]
-      @view = new FilterableListView
-        collection: @collection
-        group_by: 'year'
-        filter_by: 'type'
-        filters:
-          catalogue: 'Exhibition Catalogues'
-          review: 'Exhibtion Reviews'
-          interview: 'Interviews'
-          monograph: 'Monographs'
-          biography: 'Biographies'
-      $('body').html @view.render().$el
+    describe 'with some undefined groupings / bad data', ->
+      beforeEach ->
+        types = ['catalogue', 'catalogue', 'review', 'interview', 'review']
+        years = ['', undefined, '2005-01-01', '2003-01-01', '2010-01-01']
+        @collection = new Backbone.Collection _.times 5, (i) ->
+          fabricate 'show', type: types[i], year: years[i]
+        @view = new FilterableListView
+          collection: @collection
+          group_by: 'year'
+          filter_by: 'type'
+          filters:
+            catalogue: 'Exhibition Catalogues'
+            review: 'Exhibtion Reviews'
+            interview: 'Interviews'
+            monograph: 'Monographs'
+            biography: 'Biographies'
+        $('body').html @view.render().$el
 
-    it 'renders a grouped list', ->
-      @view.$('.filterable-list-item-header').length.should.equal 3
-      @view.$('.filterable-list-item-header').first().text().should.equal '2010'
-      @view.$('.filterable-list-item-header').last().text().should.equal '2003'
+      it 'renders a grouped list', ->
+        @view.$('.filterable-list-item-header').length.should.equal 4
+        @view.$('.filterable-list-item-header').first().text().should.equal '2010'
+        @view.$('.filterable-list-item-header').last().text().should.equal 'Unknown'
 
-    it 'renders the relevant filters', ->
-      @view.$('.filterable-list-filter').first().text().should.equal 'All'
-      @view.$('.filterable-list-filter').first().hasClass 'is-active'
-      @view.$('.filterable-list-filter').first().data('filter').should.equal 'all'
-      @view.$('.filterable-list-filter').map(-> $(this).text()).get().should.eql [
-        'All'
-        'Exhibition Catalogues'
-        'Exhibtion Reviews'
-        'Interviews'
-      ]
+    describe 'with expected data', ->
+      beforeEach ->
+        types = ['catalogue', 'catalogue', 'review', 'interview', 'review']
+        years = ['2005-01-01', '2005-01-01', '2005-01-01', '2003-01-01', '2010-01-01']
+        @collection = new Backbone.Collection _.times 5, (i) ->
+          fabricate 'show', type: types[i], year: years[i]
+        @view = new FilterableListView
+          collection: @collection
+          group_by: 'year'
+          filter_by: 'type'
+          filters:
+            catalogue: 'Exhibition Catalogues'
+            review: 'Exhibtion Reviews'
+            interview: 'Interviews'
+            monograph: 'Monographs'
+            biography: 'Biographies'
+        $('body').html @view.render().$el
 
-    it 'filters the view when filters are clicked', ->
-      # Click interviews
-      @view.$('.filterable-list-filter[data-filter="interview"]').click()
-      @view.$('.filterable-list-filter[data-filter="interview"]').hasClass 'is-active'
-      @view.$('.filterable-list-filter.is-active').length.should.equal 1
-      @view.$('.filterable-list-item-header').length.should.equal 1
-      @view.$('.filterable-list-item').length.should.equal 1
-      @view.$('.filterable-list-item').data('value').should.equal 'interview'
-      # Click reviews
-      @view.$('.filterable-list-filter[data-filter="review"]').click()
-      @view.$('.filterable-list-filter[data-filter="review"]').hasClass 'is-active'
-      @view.$('.filterable-list-filter.is-active').length.should.equal 1
-      @view.$('.filterable-list-item-header').length.should.equal 2
-      @view.$('.filterable-list-item').length.should.equal 2
-      @view.$('.filterable-list-item').data('value').should.equal 'review'
+      it 'renders a grouped list', ->
+        @view.$('.filterable-list-item-header').length.should.equal 3
+        @view.$('.filterable-list-item-header').first().text().should.equal '2010'
+        @view.$('.filterable-list-item-header').last().text().should.equal '2003'
+
+      it 'renders the relevant filters', ->
+        @view.$('.filterable-list-filter').first().text().should.equal 'All'
+        @view.$('.filterable-list-filter').first().hasClass 'is-active'
+        @view.$('.filterable-list-filter').first().data('filter').should.equal 'all'
+        @view.$('.filterable-list-filter').map(-> $(this).text()).get().should.eql [
+          'All'
+          'Exhibition Catalogues'
+          'Exhibtion Reviews'
+          'Interviews'
+        ]
+
+      it 'filters the view when filters are clicked', ->
+        # Click interviews
+        @view.$('.filterable-list-filter[data-filter="interview"]').click()
+        @view.$('.filterable-list-filter[data-filter="interview"]').hasClass 'is-active'
+        @view.$('.filterable-list-filter.is-active').length.should.equal 1
+        @view.$('.filterable-list-item-header').length.should.equal 1
+        @view.$('.filterable-list-item').length.should.equal 1
+        @view.$('.filterable-list-item').data('value').should.equal 'interview'
+        # Click reviews
+        @view.$('.filterable-list-filter[data-filter="review"]').click()
+        @view.$('.filterable-list-filter[data-filter="review"]').hasClass 'is-active'
+        @view.$('.filterable-list-filter.is-active').length.should.equal 1
+        @view.$('.filterable-list-item-header').length.should.equal 2
+        @view.$('.filterable-list-item').length.should.equal 2
+        @view.$('.filterable-list-item').data('value').should.equal 'review'
 
   describe 'without grouping', ->
     beforeEach ->
