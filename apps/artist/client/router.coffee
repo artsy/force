@@ -9,7 +9,7 @@ WorksView = require './views/works.coffee'
 ShowsView = require './views/shows.coffee'
 ArticlesView = require './views/articles.coffee'
 RelatedArtistsView = require './views/related_artists.coffee'
-BooksView = require './views/books.coffee'
+PublicationsView = require './views/publications.coffee'
 CollectionsView = require './views/collections.coffee'
 { ArtistData, sections } = require './data.coffee'
 
@@ -20,7 +20,7 @@ module.exports = class ArtistRouter extends Backbone.Router
     'artist/:id/shows': 'shows'
     'artist/:id/articles': 'articles'
     'artist/:id/collections': 'collections'
-    'artist/:id/books': 'books'
+    'artist/:id/publications': 'publications'
     'artist/:id/related-artists': 'relatedArtists'
 
   initialize: ({ @model, @user }) ->
@@ -89,8 +89,8 @@ module.exports = class ArtistRouter extends Backbone.Router
   relatedArtists: ->
     @view = new RelatedArtistsView @options
 
-  books: ->
-    @view = new BooksView @options
+  publications: ->
+    @view = new PublicationsView @options
 
   collections: ->
     @view = new CollectionsView @options

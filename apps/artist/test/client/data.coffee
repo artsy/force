@@ -43,7 +43,7 @@ describe 'ArtistData', ->
         'undefined/api/v1/related/posts?artist[]=foobar'
         '/artist/data/foobar/publications?merchandisable[]=false'
         'undefined/api/v1/related/shows?artist[]=foobar&sort=-end_at'
-        '/artist/data/foobar/publications?merchandisable[]=true'
+        '/artist/data/foobar/publications'
         '/artist/data/foobar/collections'
         'undefined/api/v1/related/layer/main/artists?artist[]=foobar&exclude_artists_without_artworks=true'
         'undefined/api/v1/related/layer/contemporary/artists?artist[]=foobar&exclude_artists_without_artworks=true'

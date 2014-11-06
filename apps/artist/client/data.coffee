@@ -30,11 +30,11 @@ module.exports.sections = sections = [
     ['shows', data: size: 5]
   ]
 ,
-  slug: 'books'
-  href: 'artist/:id/books'
-  name: 'Books'
+  slug: 'publications'
+  href: 'artist/:id/publications'
+  name: 'Publications'
   calls: [
-    ['merchandisable']
+    ['bibliography']
   ]
 ,
   slug: 'collections'
