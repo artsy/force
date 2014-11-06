@@ -1,0 +1,69 @@
+form( action="https://www.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8", method="POST" )
+  input.bordered-input( name="oid", type="hidden", value="00DC0000000PWQJ" )
+  input.bordered-input( name="retURL", type="hidden", value="https://artsy.net/gallery-application/success" )
+
+  label.avant-garde-form-label( for="company" ) Organization
+  input.bordered-input#company( maxlength="40", name="company", size="20", type="text" )
+
+  label.bordered-select.partner-type-label( for="00NC0000004hoNU" )
+    select.partner-type-select#00NC0000004hoNU( name="00NC0000004hoNU" )
+      option( value="" ) Select Gallery/Institution etc
+      option( value="Art Advisor" ) Art Advisor
+      option( value="Artist" ) Artist
+      option( value="Artist Estate" ) Artist Estate
+      option( value="Corporate Collection" ) Corporate Collection
+      option( value="Curator" ) Curator
+      option( value="Dealer" ) Dealer
+      option( value="Art Fair" ) Art Fair
+      option( value="Gallery" ) Gallery
+      option( value="Independent Art World Professional" ) Independent Art World Professional
+      option( value="Interior Designer" ) Interior Designer
+      option( value="Museum/Institution" ) Museum/Institution
+      option( value="Non-Profit" ) Non-Profit
+      option( value="Online Platform" ) Online Platform
+      option( value="Other" ) Other
+      option( value="Press/Publication" ) Press/Publication
+      option( value="Private Collection" ) Private Collection
+      option( value="Biennial / Triennial" ) Biennial / Triennial
+      option( value="Auction House" ) Auction House
+      option( value="Benefit Auction" ) Benefit Auction
+
+  .split-left
+    label.avant-garde-form-label( for="first_name" ) First Name
+    input.bordered-input#first_name( maxlength="40", name="first_name", size="20", type="text" )
+  .split-right
+    label.avant-garde-form-label( for="last_name" ) Last Name
+    input.bordered-input#last_name( maxlength="80", name="last_name", size="20", type="text" )
+
+  label.avant-garde-form-label( for="title" ) Title
+  input.bordered-input#title( maxlength="40", name="title", size="20", type="text" )
+
+  label.avant-garde-form-label( for="email" ) Email
+  input.bordered-input#email( maxlength="80", name="email", size="20", type="text" )
+
+  label.avant-garde-form-label( for="URL" ) Website
+  input.bordered-input#URL( maxlength="80", name="URL", size="20", type="text" )
+
+  label.avant-garde-form-label( for="phone" ) Phone
+  input.bordered-input#phone( maxlength="40", name="phone", size="20", type="text" )
+
+  label.avant-garde-form-label( for="street" ) Address
+  textarea.bordered-input( name="street" )
+
+  .split-left
+    label.avant-garde-form-label( for="city" ) City
+    input.bordered-input#city( maxlength="40", name="city", size="20", type="text" )
+  .split-right
+    label.avant-garde-form-label( for="country" ) Country
+    input.bordered-input#country( maxlength="40", name="country", size="20", type="text" )
+  br
+  br
+  include gallery-form
+
+  label.avant-garde-form-label( for="00NC0000005Qo0v" ) Anything else you'd like to add? 
+  textarea.bordered-input#00NC0000005Qo0v( name="00NC0000005Qo0v", rows="10", type="text", wrap="soft", placeholder="How you found out about Artsy, etc." )
+
+  br
+  br
+
+  input.avant-garde-button-black.is-block( name="submit", type="submit", class='btn btn-full-width' )
