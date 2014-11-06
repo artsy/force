@@ -18,7 +18,7 @@ module.exports = class Selected extends Backbone.Model
       return 'For Sale'
     else
       label = if filterHash[type] then filterHash[type][string] else ''
-      name = if label['name'] then label['name'] else deslugify(string)
+      name = if label?['name'] then label['name'] else deslugify(string)
 
   isActive: (value) ->
     (_.find _.values(@attributes), (val) -> String(val) is String(value))?
