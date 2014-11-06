@@ -77,7 +77,6 @@ describe 'Artist', ->
       @artist.set published_artworks_count: undefined
       @artist.pageTitleArtworksCount().should.equal 'Artworks'
 
-
   describe '#displayNationalityAndBirthdate', ->
     it 'renders the correct string', ->
       @artist.set nationality: 'American', years: 'born 1955'
@@ -95,3 +94,12 @@ describe 'Artist', ->
       @artist.displayFollowers().should.equal '1,000 Followers'
       @artist.unset 'follow_count'
       _.isUndefined(@artist.displayFollowers()).should.be.true
+
+  describe '#toPageTitle', ->
+    it 'renders the correct string for artists a-h', ->
+      @artist.set(id: 'abc').toPageTitle().should.equal 'Pablo Picasso | Artworks, Artist Biography | Artsy'
+
+    it 'renders the correct string for artists not in a-h', ->
+      @artist.set(id: 'zerg', gender: 'is a social construct', name: 'Zerg').toPageTitle().should.equal 'Zerg - Explore their Artworks, Biography & Shows on Artsy'
+      @artist.set(id: 'zerg', gender: 'male', name: 'Zerg').toPageTitle().should.equal 'Zerg - Explore his Artworks, Biography & Shows on Artsy'
+      @artist.set(id: 'zerg', gender: 'female', name: 'Zerg').toPageTitle().should.equal 'Zerg - Explore her Artworks, Biography & Shows on Artsy'

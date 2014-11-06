@@ -43,7 +43,13 @@ module.exports = class Artist extends Backbone.Model
     if /[a-h]/.exec(@id[0])
       "#{if @get('name') then @htmlToText('name') else 'Unnamed Artist'} | #{@pageTitleArtworksCount()}, Artist Biography | Artsy"
     else
-      "#{if @get('name') then @htmlToText('name') else 'Unnamed Artist'} | Artist Biography, Artwork for Sale | Artsy"
+      genderPronoun =
+        if @get('gender') == 'male'
+          'his'
+        else if @get('gender') == 'female'
+          'her'
+        else 'their'
+      "#{if @get('name') then @htmlToText('name') else 'Unnamed Artist'} - Explore #{genderPronoun} Artworks, Biography & Shows on Artsy"
 
   pageTitleArtworksCount: ->
     artworksCount = @get('published_artworks_count')
