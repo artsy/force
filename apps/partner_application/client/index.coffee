@@ -22,6 +22,7 @@ module.exports.init = ->
   if window.location.search?.indexOf('gallery') > -1
     showHideGalleryForm 'Gallery'
     $('.partner-type-select').val('Gallery').hide()
+    $('.partner-type-label').hide()
   else
     showHideGalleryForm false
 
