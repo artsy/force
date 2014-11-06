@@ -1,0 +1,16 @@
+extends ../../../components/main_layout/templates/minimal_header
+
+block head
+  include partner-application-meta
+
+append locals
+  - assetPackage = 'partner_application'
+
+block body
+  #partner-application
+    header
+      h1.large-garamond-header Thank you for your application.
+      p Your application has been submitted successfully. You'll receive a confirmation email shortly.
+    br
+    .is-center-aligned
+      a.avant-garde-button-white( href="https://artsy.net" ) Return to the Artsy Website

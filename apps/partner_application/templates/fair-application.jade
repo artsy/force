@@ -1,0 +1,14 @@
+extends ../../../components/main_layout/templates/minimal_header
+
+block head
+  include fair-application-meta
+
+append locals
+  - assetPackage = 'partner_application'
+
+block body
+  #partner-application
+    header
+      h1.large-garamond-header Artsy Art Fair Partnership Request
+      p We will use the following information about your fair to help us better assess if it would be a good fit for our platform.
+    include fair-form
