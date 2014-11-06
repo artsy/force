@@ -9,7 +9,7 @@ sections = require '../sections'
 
 describe 'sections', ->
   it 'returns the correct tab slugs in the correct order', ->
-    sections.should.eql ['works', 'articles', 'shows', 'books', 'collections', 'related-artists']
+    sections.should.eql ['works', 'articles', 'shows', 'publications', 'collections', 'related-artists']
 
 describe 'Artist routes', ->
   beforeEach ->

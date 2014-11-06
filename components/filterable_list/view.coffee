@@ -30,14 +30,21 @@ module.exports = class FilterableListView extends Backbone.View
 
   # Default assumption is that the group_by attribute is a timestamp
   itemSortBy: (item) =>
-    -(moment(item.get(@filter.get('group_by'))))
+    value = item.get(@filter.get('group_by'))
+    timestamp = -(moment(value))# if value
+    if isNaN(timestamp) or not (value?)
+      Infinity # Send to end
+    else
+      timestamp
 
   # Default assumption is that the group_by attribute is a timestamp
   itemGroupBy: (item) =>
-    -(moment(item.get(@filter.get('group_by'))).format('YYYY'))
+    value = item.get(@filter.get('group_by'))
+    if value then -(moment(value).format('YYYY')) else 'Unknown'
 
   processHeading: (heading) ->
-    Math.abs heading
+    year = Math.abs heading
+    if isNaN(year) then 'Unknown' else year
 
   itemRender: (item) =>
     @itemTemplate(item: item, filter_by: @filter.get('filter_by'))

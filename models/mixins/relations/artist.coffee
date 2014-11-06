@@ -34,6 +34,9 @@ module.exports =
     merchandisable = new Books
     merchandisable.url = "/artist/data/#{@id}/publications?merchandisable[]=true"
 
+    bibliography = new Books
+    bibliography.url = "/artist/data/#{@id}/publications"
+
     collections = new Backbone.Collection
     collections.url = "/artist/data/#{@id}/collections"
 
@@ -49,5 +52,6 @@ module.exports =
       artworks: artworks
       articles: articles
       merchandisable: merchandisable
+      bibliography: bibliography
       collections: collections
       exhibitions: exhibitions
