@@ -2,12 +2,12 @@ form( action="https://www.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-
   input.bordered-input( name="oid", type="hidden", value="00DC0000000PWQJ" )
   input.bordered-input( name="retURL", type="hidden", value="https://artsy.net/gallery-application/success" )
 
-  label.avant-garde-form-label( for="company" ) Organization
+  label.avant-garde-form-label.organization-name-label( for="company" ) Organization
   input.bordered-input#company( maxlength="40", name="company", size="20", type="text" )
 
   label.bordered-select.partner-type-label( for="00NC0000004hoNU" )
     select.partner-type-select#00NC0000004hoNU( name="00NC0000004hoNU" )
-      option( value="" ) Select Gallery/Institution etc
+      option( value="" ) Select type of organization
       option( value="Art Advisor" ) Art Advisor
       option( value="Artist" ) Artist
       option( value="Artist Estate" ) Artist Estate
@@ -60,8 +60,8 @@ form( action="https://www.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-
   br
   include gallery-form
 
-  label.avant-garde-form-label( for="00NC0000005Qo0v" ) Anything else you'd like to add? 
-  textarea.bordered-input#00NC0000005Qo0v( name="00NC0000005Qo0v", rows="10", type="text", wrap="soft", placeholder="How you found out about Artsy, etc." )
+  label.avant-garde-form-label( for="00NC0000005Qo0v" ) Message to Artsy
+  textarea.bordered-input#00NC0000005Qo0v( name="00NC0000005Qo0v", rows="10", type="text", wrap="soft", placeholder="Additional information about your organization, information about how you would like to partner with Artsy, etc." )
 
   br
   br

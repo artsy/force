@@ -1,0 +1,59 @@
+form( action="https://formkeep.com/f/cc69cc790714", method="POST", accept=( charset="UTF-8" )  )
+  input.bordered-input( name="utf8", type="hidden", value="✓" )
+
+  label.avant-garde-form-label( for="fair-name" ) Fair Name
+  input.bordered-input#fair-name( name="fair-name", type="text", required=true )
+
+  label.avant-garde-form-label( for="email" ) Email
+  input.bordered-input#email( name="email", type="email", required=true )
+
+  label.avant-garde-form-label( for="phone" ) Phone
+  input.bordered-input#phone( name="phone", type="tel", required=true )
+
+  label.avant-garde-form-label( for="url" ) Website
+  input.bordered-input#url( name="url", type="url" )
+
+  label.avant-garde-form-label( for="fair-location" ) Fair Location
+  input.bordered-input#fair-location( name="fair-location", type="text" )
+
+  .split-left
+    label.avant-garde-form-label( for="first_name" ) Director First Name
+    input.bordered-input#first_name( maxlength="40", name="first_name", size="20", type="text" )
+  .split-right
+    label.avant-garde-form-label( for="last_name" ) Director Last Name
+    input.bordered-input#last_name( maxlength="80", name="last_name", size="20", type="text" )
+
+  label.avant-garde-form-label( for="years_held" ) Number of years held
+  input.bordered-input#years_held( name="years_held", type="text" )
+
+  label.avant-garde-form-label( for="address" ) Street Address
+  input.bordered-input#address( name="address", type="text" )
+
+  label.avant-garde-form-label( for="city" ) City
+  input.bordered-input#city( name="city", type="text" )
+
+  label.avant-garde-form-label( for="country" ) Country
+  input.bordered-input#country( name="country", type="text" )
+
+  label.avant-garde-form-label( for="pr_firm" ) PR Firm
+  input.bordered-input#pr_firm( name="pr_firm", type="text" )
+
+  label.avant-garde-form-label( for="exhibitor_counts" ) Number of Exhibitors (approximate)
+  input.bordered-input#exhibitor_counts( name="exhibitor_counts", type="text" )
+
+  label.avant-garde-form-label( for="confirmed_partners" ) Confirmed Sponsors and Partners
+  input.bordered-input#confirmed_partners( name="confirmed_partners", type="text" )
+
+  label.avant-garde-form-label( for="email_list_size" ) Size of Email Distribution List (approximate)
+  input.bordered-input#email_list_size( name="email_list_size", type="text" )
+
+  label.avant-garde-form-label( for="social_list_size" ) Social Media Following (approximate)
+  input.bordered-input#social_list_size( name="social_list_size", type="text" )
+
+  label.avant-garde-form-label( for="how_did_you_find_out" ) How did you find out about Artsy? 
+  textarea.bordered-input#how_did_you_find_out( name="how_did_you_find_out", rows="4", type="text", wrap="soft" )
+
+  label.avant-garde-form-label( for="anything_else" ) Anything else you'd like to add (programming, venue, newsletter mailing schedule, etc.)
+  textarea.bordered-input#anything_else( name="anything_else", rows="10", type="text", wrap="soft" )
+
+  input.avant-garde-button-black( name="submit", type="submit" )
