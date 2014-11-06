@@ -1,0 +1,12 @@
+extends ../../../components/main_layout/templates/minimal_header
+
+block head
+  include meta
+
+append locals
+  - assetPackage = 'partner_application'
+
+block body
+  #partner-application
+    include header
+    include form
