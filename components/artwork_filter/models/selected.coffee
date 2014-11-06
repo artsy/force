@@ -10,12 +10,16 @@ module.exports = class Selected extends Backbone.Model
     _.map @visibleAttributes(), (attribute) =>
       @unset attribute, options
 
-  labels: ->
-    _.map(_.values(@attributes), (key) => @humanize key).join ', '
+  labels: (filter_hash) ->
+    _.map(@attributes, (string, type) => @humanize(string, type, filter_hash)).join ', '
 
-  humanize: (string) ->
-    return 'For Sale' if string is '-1:1000000000000'
-    deslugify string
+  humanize: (string, type, filter_hash) ->
+    if string is '-1:1000000000000'
+      return 'For Sale'
+    else
+      label = if filter_hash[type] then filter_hash[type][string] else ''
+      name = if label['name'] then label['name'] else deslugify(string)
+    return name
 
   isActive: (value) ->
     (_.find _.values(@attributes), (val) -> String(val) is String(value))?

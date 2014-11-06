@@ -18,8 +18,20 @@ describe 'Selected', ->
 
   describe '#labels', ->
     it 'labels the selected attributes by humanizing and joining the values', ->
+      filter_hash = {
+        'medium':
+          'works-on-paper':14
+        'institution':
+          'whitney-museum':
+            'name':'WHITNEY Museum'
+            'count':10
+      }
       @selected.set medium: 'works-on-paper', price_range: '-1:1000000000000', institution: 'whitney-museum'
-      @selected.labels().should.equal 'Works On Paper, For Sale, Whitney Museum'
+      @selected.labels(filter_hash).should.equal 'Works On Paper, For Sale, WHITNEY Museum'
+    it 'fails silently when there is missing information', ->
+      filter_hash = {}
+      @selected.set medium: 'works-on-paper', price_range: '-1:1000000000000', institution: 'whitney-museum'
+      @selected.labels(filter_hash).should.equal 'Works On Paper, For Sale, Whitney Museum'
 
   describe '#isActive', ->
     it 'checks to see if a value is selected', ->
