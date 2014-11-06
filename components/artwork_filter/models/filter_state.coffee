@@ -4,13 +4,7 @@ Backbone = require 'backbone'
 { API_URL } = require('sharify').data
 Selected = require './selected.coffee'
 deslugify = require '../../deslugify/index.coffee'
-
-sectionMap =
-  related_gene: 'Category'
-  medium: 'Medium'
-  gallery: 'Gallery'
-  institution: 'Institution'
-  period: 'Time Period'
+sectionMap = require '../sections.coffee'
 
 module.exports = class FilterState extends Backbone.Model
   url: ->
