@@ -38,9 +38,11 @@ module.exports = class Artist extends Backbone.Model
       success: (artworks) =>
         @set poster_artwork: artworks.models[0]
 
+  # Helper for A/B test artist page titles / descriptions
+  inFirstArtistTestGroup: -> /[a-h]/.exec(@id[0])
+
   toPageTitle: ->
-    # A/B test artist page titles
-    if /[a-h]/.exec(@id[0])
+    if @inFirstArtistTestGroup()
       "#{if @get('name') then @htmlToText('name') else 'Unnamed Artist'} | #{@pageTitleArtworksCount()}, Artist Biography | Artsy"
     else
       genderPronoun =
@@ -59,10 +61,13 @@ module.exports = class Artist extends Backbone.Model
     ]).join(' ')
 
   toPageDescription: (length=200) ->
-    smartTruncate(_.compact([
-     "Find the latest shows, biography, and artworks for sale by #{@displayName()}"
-     (if @get('blurb')?.length > 0 then @mdToHtmlToText('blurb') else undefined)
-    ]).join(". "), length)
+    if @inFirstArtistTestGroup()
+      smartTruncate(_.compact([
+       "Find the latest shows, biography, and artworks for sale by #{@displayName()}"
+       (if @get('blurb')?.length > 0 then @mdToHtmlToText('blurb') else undefined)
+      ]).join(". "), length)
+    else
+      "Browse the best of #{@displayName()}, including artwork for sale, her latest shows & events, biography, and exclusive #{@displayName()} articles."
 
   toAuctionResultsPageTitle: ->
     "Auction Results for #{if @get('name') then @htmlToText('name') else 'Unnamed Artist'} on Artsy"
