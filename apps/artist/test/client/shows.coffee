@@ -39,4 +39,6 @@ describe 'ShowsView', ->
 
   describe '#postRender', ->
     it 'fetches the artist exhibitionHistory', ->
-      Backbone.sync.args[0][1].url.should.equal '/artist/data/foo-bar/exhibitions'
+      _.first(Backbone.sync.args)[1].url.should.containEql '/api/v1/related/shows?artist[]=foo-bar&sort=-end_at'
+      _.first(Backbone.sync.args)[2].data.size.should.equal 20
+      _.last(Backbone.sync.args)[1].url.should.equal '/artist/data/foo-bar/exhibitions'
