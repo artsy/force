@@ -224,3 +224,25 @@ describe 'Artsy Passport methods', ->
       (@req.user?).should.not.be.ok
       @del.called.should.not.be.ok
       @next.called.should.be.true
+
+  describe '#socialAuth', ->
+    describe 'with user', ->
+      xit 'includes state in the callback url'
+
+  describe '#(facebook|twitter)Callback', ->
+    describe 'with user', ->
+      xit 'checks state'
+      xit 'associates a social account'
+
+    describe 'without user', ->
+      xit 'does a login'
+
+  describe '#secureHash', ->
+    before ->
+      @secureHash = @artsyPassport.__get__ 'secureHash'
+
+    it 'hashes data', ->
+      @secureHash('data').should.equal 'a17c9aaa61e8'
+
+    it 'produces a unique hash', ->
+      @secureHash('one').should.not.equal @secureHash('two')
