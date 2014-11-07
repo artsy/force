@@ -17,6 +17,7 @@ module.exports.CarouselView = class CarouselView extends Backbone.View
   initialize: (options) ->
     @resize = _.debounce @updateValues, 100
     $(window).on 'resize', @resize
+    $(document).on 'keyup', (e) => @keyUp(e)
 
     # Wait for the first image to load before enabling anything
     @$el.imagesLoaded?().progress _.once(@updateValues)
@@ -61,6 +62,8 @@ module.exports.CarouselView = class CarouselView extends Backbone.View
 
   next: (e) ->
     e?.preventDefault()
+    if @active is @$images.length - @increment
+      @active -= @$images.length
 
     @active += @increment
     @moveToActive()
@@ -69,11 +72,22 @@ module.exports.CarouselView = class CarouselView extends Backbone.View
 
   prev: (e) ->
     e?.preventDefault()
+    if @active is 0
+      @active = @$images.length
 
     @active -= @increment
     @moveToActive()
 
     analytics.track.click 'Previous page in /artists carousel'
+
+  keyUp: (e) ->
+    switch e.keyCode
+      # left arrow and the h key
+      when 37, 72
+        @prev()
+      # right arrow and the l key
+      when 39, 76
+        @next()
 
 module.exports.ArtistsView = class ArtistsView extends Backbone.View
   initialize: (options) ->
