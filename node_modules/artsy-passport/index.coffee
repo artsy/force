@@ -19,6 +19,9 @@ crypto = require 'crypto'
 # request-level data in the passport callbacks.)
 artsyXappToken = null
 
+secureHash = (value) ->
+  crypto.createHash('sha1').update(value).digest('hex').substr(0, 12)
+
 # Default options
 opts =
   facebookPath: '/users/auth/facebook'
@@ -32,7 +35,7 @@ opts =
   userKeys: ['id', 'type', 'name', 'email', 'phone', 'lab_features',
              'default_profile_id', 'has_partner_access', 'collector_level']
   twitterSignupTempEmail: (token) ->
-    hash = crypto.createHash('sha1').update(token).digest('hex').substr(0, 12)
+    hash = secureHash(token)
     "#{hash}@artsy.tmp"
 
 #
@@ -86,8 +89,13 @@ socialAuth = (provider) ->
   (req, res, next) ->
     return next("#{provider} denied") if req.query.denied
     artsyXappToken = res.locals.artsyXappToken if res.locals.artsyXappToken
+    query = req.query
+    # hash the access token, will act as CSRF when linking a social login to an existing account
+    if req.user?.get('accessToken')
+      state = secureHash req.user.get('accessToken')
+      query = _.extend(query, state: state)
     passport.authenticate(provider,
-      callbackURL: "#{opts.APP_URL}#{opts[provider + 'CallbackPath']}?#{qs.stringify req.query}"
+      callbackURL: "#{opts.APP_URL}#{opts[provider + 'CallbackPath']}?#{qs.stringify query}"
       scope: 'email'
     )(req, res, next)
 
@@ -197,12 +205,15 @@ artsyCallback = (username, password, done) ->
 
 facebookCallback = (req, accessToken, refreshToken, profile, done) ->
   if req.user
-    request.post("#{opts.SECURE_ARTSY_URL}/api/v1/me/authentications/facebook").query(
-      oauth_token: accessToken
-      access_token: req.user.get 'accessToken'
-    ).end (res) ->
-      err = res.body.error or res.body.message + ': Facebook' if res.error
-      done err, req.user
+    if req.query.state != secureHash(req.user.get('accessToken'))
+      done 'Facebook: Invalid State', req.user
+    else
+      request.post("#{opts.SECURE_ARTSY_URL}/api/v1/me/authentications/facebook").query(
+        oauth_token: accessToken
+        access_token: req.user.get 'accessToken'
+      ).end (res) ->
+        err = res.body.error or res.body.message + ': Facebook' if res.error
+        done err, req.user
   else
     request.get("#{opts.SECURE_ARTSY_URL}/oauth2/access_token").query(
       client_id: opts.ARTSY_ID
@@ -218,13 +229,16 @@ facebookCallback = (req, accessToken, refreshToken, profile, done) ->
 
 twitterCallback = (req, token, tokenSecret, profile, done) ->
   if req.user
-    request.post("#{opts.SECURE_ARTSY_URL}/api/v1/me/authentications/twitter").query(
-      oauth_token: token
-      oauth_token_secret: tokenSecret
-      access_token: req.user.get 'accessToken'
-    ).end (res) ->
-      err = res.body.error or res.body.message + ': Twitter' if res.error
-      done err, req.user
+    if req.query.state != secureHash(req.user.get('accessToken'))
+      done 'Twitter: Invalid State', req.user
+    else
+      request.post("#{opts.SECURE_ARTSY_URL}/api/v1/me/authentications/twitter").query(
+        oauth_token: token
+        oauth_token_secret: tokenSecret
+        access_token: req.user.get 'accessToken'
+      ).end (res) ->
+        err = res.body.error or res.body.message + ': Twitter' if res.error
+        done err, req.user
   else
     request.get("#{opts.SECURE_ARTSY_URL}/oauth2/access_token").query(
       client_id: opts.ARTSY_ID
