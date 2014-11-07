@@ -1,4 +1,5 @@
 _ = require 'underscore'
+qs = require 'querystring'
 sd = require('sharify').data
 Backbone = require 'backbone'
 SearchResult = require '../../../models/search_result.coffee'
@@ -7,19 +8,23 @@ class Results extends Backbone.Collection
   model: SearchResult
 
 module.exports = class Search
+  urlRoot: "#{sd.API_URL}/api/v1/match"
+
+  defaults: size: 4
+
   constructor: (options = {}) ->
-    { @mode, @restrictType, @fairId, @includePrivateResults } = options
+    { @mode, @restrictType, @fairId, @includePrivateResults, @size } =
+      _.defaults options, @defaults
     @results = new Results
 
   url: ->
-    [
-      "#{sd.API_URL}/api/v1/match/"
-      @mode or ''
-      '?visible_to_public=true'
-      if @fairId then "&fair_id=#{@fairId}" else ''
-      '&term=%QUERY'
-      "&size=3"
-    ].join ''
+    @urlRoot +
+    (if @mode then "/#{@mode}" else '') +
+    "?#{@data()}"
+
+  data: ->
+    data = visible_to_public: true, fair_id: @fairId, size: @size
+    "#{qs.stringify data}&term=%QUERY" # Requires an unencoded percent character
 
   parseResults: (items) ->
     if @restrictType?
@@ -31,9 +36,8 @@ module.exports = class Search
 
   parse: (items, query) ->
     # Remove tags
-    items = _.filter(items, (item) ->
-      item.model != 'tag'
-    )
+    items = _.filter items, (item) ->
+      item.model isnt 'tag'
 
     @results.reset _.map @parseResults(items), (item) =>
       item.model = @mode?.slice(0,-1) unless item.model?

@@ -10,17 +10,23 @@ itemTemplate = -> require('./templates/item.jade') arguments...
 emptyItemTemplate = -> require('./templates/empty-item.jade') arguments...
 
 module.exports = class SearchBarView extends Backbone.View
+  defaults:
+    limit: 4
+    autoselect: false
+    displayKind: true
+    displayEmptyItem: false
+
   initialize: (options) ->
     return unless @$el.length
 
     # Search takes a fair_id param specific to fairs. Doesn't work for other models
     { @mode, @restrictType, @$input, @fairId, @includePrivateResults, @limit, @autoselect, @displayKind, @displayEmptyItem } =
-      _.defaults options, limit: 10, autoselect: false, displayKind: true, displayEmptyItem: false
+      _.defaults options, @defaults
 
     @$input ?= @$('input')
     throw new Error('Requires an input field') unless @$input?
 
-    @search = new Search restrictType: @restrictType, mode: @mode, fairId: @fairId
+    @search = new Search restrictType: @restrictType, mode: @mode, fairId: @fairId, size: @limit
 
     @on 'search:start', @indicateLoading
     @on 'search:complete', @concealLoading
