@@ -7,7 +7,8 @@ describe 'Search', ->
   describe '#url', ->
     it 'has the correct url', ->
       search = new Search()
-      search.url().should.containEql '/api/v1/match/?visible_to_public=true'
+      search.url().should.containEql '/api/v1/match?visible_to_public=true'
+      search.url().should.containEql 'term=%QUERY'
 
     it 'can be used with multiple match endpoints', ->
       search = new Search mode: 'profiles'

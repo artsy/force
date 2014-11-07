@@ -26,6 +26,7 @@ module.exports = class HeaderView extends Backbone.View
       displayEmptyItem: true
       autoselect: true
       mode: 'suggest'
+      limit: 7
 
     @searchBarView.on 'search:entered', (term) -> window.location = "/search?q=#{term}"
     @searchBarView.on 'search:selected', @searchBarView.selectResult
