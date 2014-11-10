@@ -18,7 +18,7 @@ module.exports = class Fair extends Backbone.Model
   _.extend @prototype, Markdown
   _.extend @prototype, Clock
 
-  urlRoot: -> "#{sd.API_URL}/api/v1/fair"
+  urlRoot: "#{sd.API_URL}/api/v1/fair"
 
   href: ->
     "/#{@get('organizer')?.profile_id}"
@@ -132,7 +132,6 @@ module.exports = class Fair extends Backbone.Model
       }
     @itemsToColumns items, numberOfColumns
 
-
   # Fetches all of the data necessary to render the initial fair page and returns a
   # giant hash full of those models/az-groups/etc.
   #
@@ -185,3 +184,24 @@ module.exports = class Fair extends Backbone.Model
           data.galleries = y
           after()
         @fetchArtists(error: options.error, success: (x) => data.artistsAToZGroup = x; after())
+
+  isEligible: ->
+    @get('has_full_feature') and @get('published') and @has('organizer')
+
+  isEventuallyEligible: ->
+    @get('has_full_feature') and @get('published') and not @has('organizer')
+
+  isNotOver: ->
+    Date.parse(@get('end_at')) > new Date
+
+  isOver: ->
+    Date.parse(@get('end_at')) < new Date
+
+  isCurrent: ->
+    @isEligible() and @isNotOver()
+
+  isUpcoming: ->
+    @isEventuallyEligible() and @isNotOver()
+
+  isPast: ->
+    @isEligible() and @isOver()
