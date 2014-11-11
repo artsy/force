@@ -1,6 +1,7 @@
 _ = require 'underscore'
 benv = require 'benv'
 moment = require 'moment'
+{ resolve } = require 'path'
 { fabricate } = require 'antigravity'
 Fair = require '../../../models/fair'
 Items = require '../../../collections/items'
@@ -22,7 +23,7 @@ describe 'Fairs template', ->
     before (done) ->
       benv.setup =>
         benv.expose $: benv.require 'jquery'
-        benv.render '../templates/index.jade',
+        benv.render resolve(__dirname, '../templates/index.jade'),
           sd: {}
           featuredFairs: @currentFairs
           currentFairs: @currentFairs
@@ -34,14 +35,14 @@ describe 'Fairs template', ->
       benv.teardown()
 
     it 'renders correctly', ->
-      $('.fairs-page-fairs-current .fairs-page-subheader').text().should.equal 'Current Fairs'
-      $('.fpfc-fair').length.should.equal 2
+      $('.fairs-page-fairs-featured .fairs-page-subheader').first().text().should.equal 'Current Fairs'
+      $('.fpff-fair').length.should.equal 6
 
   describe 'without current fairs', ->
     before (done) ->
       benv.setup =>
         benv.expose $: benv.require 'jquery'
-        benv.render '../templates/index.jade',
+        benv.render resolve(__dirname, '../templates/index.jade'),
           sd: {}
           featuredFairs: @pastFairs
           currentFairs: []
@@ -53,5 +54,5 @@ describe 'Fairs template', ->
       benv.teardown()
 
     it 'renders correctly', ->
-      $('.fairs-page-fairs-current .fairs-page-subheader').text().should.equal 'Past Fairs'
-      $('.fpfc-fair').length.should.equal 4
+      $('.fairs-page-fairs-featured .fairs-page-subheader').first().text().should.equal 'Past Fairs'
+      $('.fpff-fair').length.should.equal 4

@@ -45,7 +45,6 @@ describe 'Fairs routes', ->
         Backbone.sync.args[0][2].data.size.should.equal 50
         Backbone.sync.args[0][2].success(@fairs)
         _.defer =>
-          @res.render.args[0][1].featuredFairs.should.eql @currentFairs
           @res.render.args[0][1].currentFairs.should.eql @currentFairs
           @res.render.args[0][1].upcomingFairs.should.eql @upcomingFairs
           @res.render.args[0][1].pastFairs.should.eql @pastFairs
@@ -66,7 +65,6 @@ describe 'Fairs routes', ->
         Backbone.sync.args[0][2].data.size.should.equal 50
         Backbone.sync.args[0][2].success(@fairs)
         _.defer =>
-          @res.render.args[0][1].featuredFairs.should.eql @pastFairs
           @res.render.args[0][1].currentFairs.should.eql []
           @res.render.args[0][1].upcomingFairs.should.eql @upcomingFairs
           @res.render.args[0][1].pastFairs.should.eql @pastFairs

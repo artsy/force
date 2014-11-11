@@ -25,24 +25,17 @@ representation = (fair) ->
       upcomingFairs = fairs.filter (fair) -> fair.isUpcoming()
       pastFairs = fairs.filter (fair) -> fair.isPast()
 
-      sd.FEATURED_FAIRS = featuredFairs = if currentFairs.length then currentFairs else pastFairs
+      sd.FEATURED_FAIRS = featuredFairs = _.flatten [currentFairs, pastFairs]
       allFairs = _.flatten [featuredFairs, upcomingFairs]
 
-      promises = _.compact _.flatten([
+      promises = _.compact _.flatten [
         # Fetch all displayable fairs (so that we can get their location)
         _.map(allFairs, (fair) -> fair.fetch(cache: true))
 
         # Get the two smaller images to use via the fair 'explore' sets
         # (This is a pretty ineffcient way to go about it though)
         _.map(featuredFairs, representation)
-
-        # Fetch all profiles of featured fairs (so that we can get their logo)
-        # Currently not useful due to images being square; open issue.
-        # _.map(featuredFairs, (fair) ->
-        #   fair.profile = new Profile id: fair.get('organizer').profile_id
-        #   fair.profile.fetch(cache: true)
-        # )
-      ])
+      ]
 
       Q.allSettled(promises).then(->
 
