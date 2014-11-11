@@ -25,7 +25,6 @@ getRedirectTo = (req) ->
     exploreSections.fetch(cache: true) unless req.user?
   ])).then(->
     heroUnits.unshift(welcomeHero) unless req.user?
-    res.locals.sd.HERO_UNITS = heroUnits.toJSON()
     res.render 'index',
       heroUnits: heroUnits.models
       featuredLinks: featuredLinks.models
