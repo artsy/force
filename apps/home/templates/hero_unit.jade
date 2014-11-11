@@ -1,6 +1,7 @@
 .home-hero-unit(
-  class= heroUnit.cssClass() + (i == 0 ? ' home-hero-unit-active' : ''),
+  class= heroUnit.cssClass() + (i == 0 ? ' home-hero-unit-active' : '')
   style="background-image: url('#{heroUnit.backgroundImageUrl()}')"
+  data-type=heroUnit.get('type').toLowerCase()
 )
   a.hhu-frame( href=heroUnit.get('link') ): .responsive-layout-container: .main-layout-container
     .vam-outer: .vam-inner: .hhu-inner

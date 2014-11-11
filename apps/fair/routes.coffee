@@ -12,6 +12,7 @@ kinds = require '../favorites_follows/kinds'
   # TODO: Dependent on attribute of fair
   res.locals.sd.BODY_CLASS = 'body-transparent-header'
   res.locals.sd.SECTION = 'overview'
+  debugger
   res.render 'overview'
 
 @info = (req, res, next) ->
