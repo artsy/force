@@ -23,7 +23,7 @@ representation = (fair) ->
     success: (collection, response, options) ->
       currentFairs = fairs.filter (fair) -> fair.isCurrent()
       upcomingFairs = fairs.filter (fair) -> fair.isUpcoming()
-      pastFairs = fairs.filter (fair) -> fair.isPast()
+      pastFairs = fairs.chain().filter((fair) -> fair.isPast()).take(6).value()
 
       sd.FEATURED_FAIRS = featuredFairs = _.flatten [currentFairs, pastFairs]
       allFairs = _.flatten [featuredFairs, upcomingFairs]
