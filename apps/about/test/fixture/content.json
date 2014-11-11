@@ -34,7 +34,7 @@
             "preamble": "Artsy features the world’s leading galleries, museum collections, foundations, artist estates, art fairs, and benefit auctions, all in one place. Our growing database of 175,000 images of art, architecture, and design by 25,000 artists spans historical, modern, and contemporary works, and includes the largest online database of contemporary art. Artsy is used by art lovers, museum-goers, patrons, collectors, students, and educators to discover, learn about, and collect art.\n",
             "pullBlurb1": {
                 "button1": {
-                    "href": "http://apply.artsy.net",
+                    "href": "/partner-application",
                     "text": "Apply to become a partner"
                 },
                 "button2": {
@@ -760,7 +760,7 @@
                     "label": "Gallery Overview"
                 },
                 "button2": {
-                    "href": "http://apply.artsy.net",
+                    "href": "/partner-application",
                     "label": "Apply to Partner"
                 },
                 "h1": "Become a gallery partner",
@@ -777,7 +777,7 @@
                         "text": "News & Press Releases"
                     }
                 ],
-                "p": "Artsy offers galleries a central online platform to reach a global audience of Internet-connected art lovers and collectors. In addition to public promotion, gallery partners have access to behind-the-scenes tools to manage inventory and support gallery operations, including a cloud-based CMS and iPad app. Artsy gallery partnerships are invitation-only and operate on a flat monthly subscription fee. If you are interested in partnering with Artsy, please <a href=\"http://apply.artsy.net\"> complete this application form</a>  to tell us more about your program. \n"
+                "p": "Artsy offers galleries a central online platform to reach a global audience of Internet-connected art lovers and collectors. In addition to public promotion, gallery partners have access to behind-the-scenes tools to manage inventory and support gallery operations, including a cloud-based CMS and iPad app. Artsy gallery partnerships are invitation-only and operate on a flat monthly subscription fee. If you are interested in partnering with Artsy, please <a href=\"/partner-application\"> complete this application form</a>  to tell us more about your program. \n"
             },
             "pullBlurbRight": {
                 "button1": {
