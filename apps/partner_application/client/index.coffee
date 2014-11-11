@@ -19,7 +19,6 @@ module.exports.init = ->
   if window.location.pathname.indexOf("/success") > -1
     track.funnel "Visited #{formType} Application Success"
   else
-    console.log "Visited #{formType} Application"
     track.funnel "Visited #{formType} Application"
 
   if formType == "Partner"

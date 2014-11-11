@@ -36,6 +36,6 @@ module.exports = class Items extends PageableCollection
       else
         new Item attrs, options
 
-  initialize: (models, options) ->
+  initialize: (models, options = {}) ->
     { @id, @item_type } = options
     super

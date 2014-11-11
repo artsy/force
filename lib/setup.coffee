@@ -179,6 +179,7 @@ module.exports = (app) ->
   app.use require "../apps/artwork"
   app.use require "../apps/about"
   app.use require "../apps/browse"
+  app.use require "../apps/fairs"
   app.use require "../apps/feature"
   app.use require "../apps/flash"
   app.use require "../apps/galleries_institutions"
