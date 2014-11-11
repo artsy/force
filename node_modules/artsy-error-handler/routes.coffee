@@ -2,12 +2,14 @@ _ = require 'underscore'
 fs = require 'fs'
 jade = require 'jade'
 template = null
+showDetail = null
 
 module.exports = (options) ->
   template = options.template
+  showDetail = options.showDetail
 
 render = (res, data) ->
-  res.send jade.compile(fs.readFileSync(template), filename: template)(data)
+  res.send jade.compile(fs.readFileSync(template), filename: template)(_.extend(data, showDetail: showDetail))
 
 # Since this is the last non-error-handling middleware
 # use()d, we assume 404, as nothing else responded.

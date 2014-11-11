@@ -1,10 +1,13 @@
 rewire = require 'rewire'
 sinon = require 'sinon'
 express = require 'express'
+jade = require 'jade'
+fs = require 'fs'
+{ resolve } = require 'path'
 errorHandler = rewire '../routes'
 
 beforeEach ->
-  errorHandler(template: __dirname + '/template.jade')
+  errorHandler(template: __dirname + '/template.jade', showDetail: true)
 
 describe '#internalError', ->
 
@@ -24,7 +27,6 @@ describe '#internalError', ->
     errorHandler.internalError err, {},
       { statusCode: 500, send: spy = sinon.spy(), status: status = sinon.stub() }
     status.args[0][0].should.equal 404
-
 
 describe '#pageNotFound', ->
 
@@ -53,3 +55,11 @@ describe '#socialAuthError', ->
   it 'directs social linking errors to the user edit page', ->
     errorHandler.socialAuthError "Another Account Already Linked: Twitter", { url: 'twitter' }, @res = { redirect: sinon.stub() }
     @res.redirect.args[0][0].should.equal '/user/edit?error=twitter-already-linked'
+
+describe '#template', ->
+
+  it 'renders the error message if showDetail is true', ->
+    jade.render(fs.readFileSync(resolve __dirname + '/template.jade').toString(), { detail: 'Catty Error', showDetail: true }).should.containEql 'Catty Error'
+
+  it 'wont render error details if showDetail if false', ->
+    jade.render(fs.readFileSync(resolve __dirname + '/template.jade').toString(), { detail: 'Catty Error', showDetail: false }).should.not.containEql 'Catty Error'
