@@ -1,0 +1,51 @@
+extends ../../../components/main_layout/templates/index
+
+block head
+  include meta
+
+append locals
+  - assetPackage = 'fairs'
+
+block body
+  #fairs-page.main-layout-container
+    h1.fairs-page-header Preview and Collect from Leading Art Fairs
+
+    .fairs-page-fairs
+      .fairs-page-fairs-current
+        h2.fairs-page-subheader #{currentFairs.length > 0 ? 'Current' : 'Past'} Fairs
+        for fair in featuredFairs
+          .fpfc-fair
+            .fpfc-fair-cell-left
+              a.hoverable-image-link( href= fair.href() )
+                .hoverable-image( style="background-image: url(#{fair.imageUrl('large_rectangle')});" )
+
+            .fpfc-fair-cell-center
+              - var representations = fair.representation.chain().shuffle().take(2).value()
+              for representation in representations
+                .fpfc-fair-small-image
+                  a.hoverable-image-link( href= fair.href() )
+                    .hoverable-image( style="background-image: url(#{representation.imageUrl('medium_square')});" )
+
+            .fpfc-fair-cell-right
+              //- Currently not useful due to images being square; open issue.
+              //- a.fpfc-fair-profile-image( href= fair.href() ): img(
+              //-   src= fair.profile.icon().imageUrl('square')
+              //-   alt="#{fair.get('name')} logo"
+              //- )
+
+              .fpfc-fair-name= fair.get('name')
+              .fpfc-location= fair.location().cityStateCountry()
+              .fpfc-date= fair.formatDates()
+              .fpfc-clock( data-id= fair.id )
+                //- This is weird and should be rendered client-side
+                include ../../../components/auction_clock/template
+              .fpfc-button: a.avant-garde-button-black( href= fair.href() ) Go to preview
+
+      if upcomingFairs.length
+        .fairs-page-fairs-upcoming
+          h2.fairs-page-subheader Upcoming Fairs
+          for fair in upcomingFairs
+            .fpfu-fair( href= fair.href() )
+              h3= fair.get('name')
+              .fpfu-location= fair.location().cityStateCountry()
+              .fpfu-date= fair.formatDates()
