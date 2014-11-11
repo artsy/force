@@ -24,8 +24,11 @@ cities = require '../../components/locations/cities'
     size: 18
 
   upcoming = new PartnerShows
+  upcoming.comparator = (show) -> Date.parse(show.get('start_at'))
   current = new PartnerShows
+  current.comparator = (show) -> Date.parse(show.get('end_at'))
   past = new PartnerShows
+  past.comparator = (show) -> -(Date.parse(show.get('end_at')))
 
   Q.allSettled([
     upcoming.fetch(cache: true, data: criteria('upcoming'))
@@ -33,6 +36,7 @@ cities = require '../../components/locations/cities'
     past.fetch(cache: true, data: criteria('closed'))
   ]).then(->
     opening = upcoming.groupBy (show) -> show.openingThisWeek()
+
     res.render 'city',
       city: city
       cities: cities

@@ -1,6 +1,8 @@
 _ = require 'underscore'
 sinon = require 'sinon'
+moment = require 'moment'
 Backbone = require 'backbone'
+PartnerShow = require '../../../models/partner_show'
 { fabricate } = require 'antigravity'
 routes = require '../routes'
 
@@ -47,4 +49,29 @@ describe 'Shows routes', ->
         @res.render.called.should.be.true
         @res.render.args[0][0].should.equal 'city'
         @res.render.args[0][1].city.name.should.equal 'New York'
+        done()
+
+    it 'sorts the shows', (done) ->
+      shows = [
+        showOpeningFirst = new PartnerShow fabricate('show', start_at: moment().add(5, 'days').format(), end_at: moment().add(15, 'days').format())
+        showOpeningLast = new PartnerShow fabricate('show', start_at: moment().add(15, 'days').format(), end_at: moment().add(20, 'days').format())
+        showEndingFirst = new PartnerShow fabricate('show', start_at: moment().add(7, 'days').format(), end_at: moment().add(10, 'days').format())
+        showEndingLast = new PartnerShow fabricate('show', start_at: moment().add(6, 'days').format(), end_at: moment().add(25, 'days').format())
+      ]
+
+      routes.city { params: city: 'new-york' }, @res, @next
+      Backbone.sync.args[0][2].success shows
+      Backbone.sync.args[1][2].success shows
+      Backbone.sync.args[2][2].success shows
+
+      _.defer =>
+        _.first(@res.render.args[0][1].upcoming).should.equal showOpeningFirst
+        _.last(@res.render.args[0][1].upcoming).should.equal showOpeningLast
+
+        _.first(@res.render.args[0][1].current).should.equal showEndingFirst
+        _.last(@res.render.args[0][1].current).should.equal showEndingLast
+
+        _.first(@res.render.args[0][1].past).should.equal showEndingLast
+        _.last(@res.render.args[0][1].past).should.equal showEndingFirst
+
         done()
