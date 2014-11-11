@@ -14,9 +14,10 @@ if show.has('image_versions') && show.get('image_versions').length
       h5.fsfs-show-name= show.get('name')
 
       if displayLocation
-        h6.fsfs-running-dates
+        .fsfs-running-dates
           if show.formatCity()
             = show.formatCity()
+
           if show.upcoming()
             if show.formatCity()
               = ', '
@@ -27,17 +28,21 @@ if show.has('image_versions') && show.get('image_versions').length
             span.fsfs-warning Closing #{show.endingIn()}
 
       else
-        case show.get('status')
-          when 'running'
-            //- Display nothing
-          when 'upcoming'
-            h6.fsfs-running-dates
-              if show.isOpeningToday()
-                | Opening today
-              else
-                | Opening #{show.date('start_at').format('MMM DD')}
-          when 'closed'
-            h6.fsfs-running-dates
-              | #{show.date('start_at').format('MMM DD')} – #{show.date('end_at').format('MMM DD')}
+        if show.formatStreetAddress()
+          .fsfs-street-address
+            = show.formatStreetAddress()
+
+        if show.get('status') === 'upcoming'
+          .fsfs-running-dates
+            if show.isOpeningToday()
+              | Opening today
+            else
+              | Opening #{show.date('start_at').format('MMM DD')}
+        if show.get('status') === 'closed'
+          .fsfs-running-dates
+            | #{show.date('start_at').format('MMM DD')} – #{show.date('end_at').format('MMM DD')}
+
         if show.isEndingSoon()
           .fsfs-warning Closing #{show.endingIn()}
+        else if show.get('status') === 'running'
+          .fsfs-closing-date Closes #{show.date('end_at').format('MMM DD')}
