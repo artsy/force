@@ -15,14 +15,14 @@ block body
       - var shows = opening
       .shows-page-featured-section: include ../../../components/featured_shows/small
 
-    if upcoming.length
-      h1.shows-page-header Upcoming Shows
-      - var shows = upcoming
-      .shows-page-featured-section: include ../../../components/featured_shows/small
-
     if current.length
       h2.shows-page-header Current Shows in #{city.name}
       - var shows = current
+      .shows-page-featured-section: include ../../../components/featured_shows/small
+
+    if upcoming.length
+      h1.shows-page-header Upcoming Shows
+      - var shows = upcoming
       .shows-page-featured-section: include ../../../components/featured_shows/small
 
     if (opening.length + upcoming.length + current.length) === 0
