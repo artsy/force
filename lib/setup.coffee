@@ -238,4 +238,4 @@ module.exports = (app) ->
   # successfully by anything above.
   require('artsy-error-handler') app,
     template: path.resolve(__dirname, '../components/main_layout/templates/error.jade'),
-    showDetail: NODE_ENV is not 'production'
+    showDetail: NODE_ENV isnt 'production'
