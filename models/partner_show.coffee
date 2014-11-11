@@ -201,6 +201,9 @@ module.exports = class PartnerShow extends Backbone.Model
   formatCity: =>
     @get('location')?.city?.trim()
 
+  formatStreetAddress: ->
+    @get('location')?.address?.trim()
+
   formatFeedItemHeading: ->
     return @get('name') if @get('name')?.length > 0
     @formatArtists @maxDisplayedArtists
