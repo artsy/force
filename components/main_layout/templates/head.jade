@@ -10,6 +10,9 @@ script( src=(sd.ASSET_PATH + 'scroll_frame' + sd.JS_EXT) )
 //- and injects it into the body. Hopefully this stops race conditions b/t
 //- DOM load and mixpanel init.
 if sd.NODE_ENV != 'test' && sd.BROWSER && sd.BROWSER.family != 'PhantomJS'
+  //- Fonts.com font loader
+  script( type='text/javascript', src='//fast.fonts.net/jsapi/f7f47a40-b25b-44ee-9f9c-cfdfc8bb2741.js' )
+
   if sd.MIXPANEL_ID
     include ./mixpanel.html
     script.
