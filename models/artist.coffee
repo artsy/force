@@ -41,17 +41,18 @@ module.exports = class Artist extends Backbone.Model
   # Helper for A/B test artist page titles / descriptions
   inFirstArtistTestGroup: -> /[a-h]/.exec(@id[0])
 
+  genderPronoun: ->
+    switch @get('gender')
+      when 'male' then 'his'
+      when 'female' then 'her'
+      else
+        'their'
+
   toPageTitle: ->
     if @inFirstArtistTestGroup()
       "#{if @get('name') then @htmlToText('name') else 'Unnamed Artist'} | #{@pageTitleArtworksCount()}, Artist Biography | Artsy"
     else
-      genderPronoun =
-        if @get('gender') == 'male'
-          'his'
-        else if @get('gender') == 'female'
-          'her'
-        else 'their'
-      "#{if @get('name') then @htmlToText('name') else 'Unnamed Artist'} - Explore #{genderPronoun} Artworks, Biography & Shows on Artsy"
+      "#{if @get('name') then @htmlToText('name') else 'Unnamed Artist'} - Explore #{@genderPronoun()} Artworks, Biography & Shows on Artsy"
 
   pageTitleArtworksCount: ->
     artworksCount = @get('published_artworks_count')
@@ -67,7 +68,7 @@ module.exports = class Artist extends Backbone.Model
        (if @get('blurb')?.length > 0 then @mdToHtmlToText('blurb') else undefined)
       ]).join(". "), length)
     else
-      "Browse the best of #{@displayName()}, including artwork for sale, her latest shows & events, biography, and exclusive #{@displayName()} articles."
+      "Browse the best of #{@displayName()}, including artwork for sale, #{@genderPronoun()} latest shows & events, biography, and exclusive #{@displayName()} articles."
 
   toAuctionResultsPageTitle: ->
     "Auction Results for #{if @get('name') then @htmlToText('name') else 'Unnamed Artist'} on Artsy"
