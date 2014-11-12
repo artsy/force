@@ -7,7 +7,7 @@ nav.shows-page-cities-nav.horizontal-list-nav
       href='/shows'
       class= activeClass('/shows')
     ) All
-    for city in cities.slice(0, 10)
+    for city in featuredCities
       a.hln-link.shows-location(
         href="/shows/#{city.slug}"
         class= activeClass("/shows/#{city.slug}")

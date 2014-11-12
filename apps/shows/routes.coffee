@@ -3,12 +3,14 @@ Q = require 'q'
 Items = require '../../collections/items'
 PartnerShows = require '../../collections/partner_shows'
 cities = require '../../components/locations/cities'
+featuredCities = require '../../components/locations/featured_cities'
 
 @index = (req, res) ->
   shows = new Items [], id: '530ebe92139b21efd6000071', item_type: 'PartnerShow'
   render = ->
     res.render 'index',
       cities: cities
+      featuredCities: featuredCities
       shows: shows.take 8 # 2, 3, 3
   shows.fetch success: render, error: render
 
@@ -40,6 +42,7 @@ cities = require '../../components/locations/cities'
     res.render 'city',
       city: city
       cities: cities
+      featuredCities: featuredCities
       opening: opening.true or []
       upcoming: opening.false or []
       current: current.models
