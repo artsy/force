@@ -3,6 +3,7 @@ Artist = require '../../models/artist'
 Backbone = require 'backbone'
 defaultMessage = require '../../components/contact/default_message.coffee'
 { stringifyJSONForWeb } = require '../../components/util/json.coffee'
+{ client } = require '../../lib/cache'
 
 @index = (req, res) ->
   artwork = new Artwork id: req.params.id
@@ -49,3 +50,9 @@ defaultMessage = require '../../components/contact/default_message.coffee'
     error: res.backboneError
     success: ->
       res.redirect "/artwork/#{req.params.id}"
+
+@bustCache = (req, res, next) ->
+  return next() unless req.user?.get('type') is 'Admin'
+  artwork = new Artwork id: req.params.id
+  client?.del(artwork.url())
+  res.redirect artwork.href()
