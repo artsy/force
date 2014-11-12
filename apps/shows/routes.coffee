@@ -3,12 +3,14 @@ Q = require 'q'
 Items = require '../../collections/items'
 PartnerShows = require '../../collections/partner_shows'
 cities = require '../../components/locations/cities'
+featuredCities = require '../../components/locations/featured_cities'
 
 @index = (req, res) ->
   shows = new Items [], id: '530ebe92139b21efd6000071', item_type: 'PartnerShow'
   render = ->
     res.render 'index',
       cities: cities
+      featuredCities: featuredCities
       shows: shows.take 8 # 2, 3, 3
   shows.fetch success: render, error: render
 
@@ -24,8 +26,11 @@ cities = require '../../components/locations/cities'
     size: 18
 
   upcoming = new PartnerShows
+  upcoming.comparator = (show) -> Date.parse(show.get('start_at'))
   current = new PartnerShows
+  current.comparator = (show) -> Date.parse(show.get('end_at'))
   past = new PartnerShows
+  past.comparator = (show) -> -(Date.parse(show.get('end_at')))
 
   Q.allSettled([
     upcoming.fetch(cache: true, data: criteria('upcoming'))
@@ -33,9 +38,11 @@ cities = require '../../components/locations/cities'
     past.fetch(cache: true, data: criteria('closed'))
   ]).then(->
     opening = upcoming.groupBy (show) -> show.openingThisWeek()
+
     res.render 'city',
       city: city
       cities: cities
+      featuredCities: featuredCities
       opening: opening.true or []
       upcoming: opening.false or []
       current: current.models
