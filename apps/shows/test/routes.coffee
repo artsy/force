@@ -39,11 +39,11 @@ describe 'Shows routes', ->
     it 'fetches all the shows and renders the city template', (done) ->
       routes.city { params: city: 'new-york' }, @res, @next
       Backbone.sync.callCount.should.equal 3
-      Backbone.sync.args[0][2].data.near.should.equal '40.74729,-73.98188'
+      Backbone.sync.args[0][2].data.near.should.equal '40.7127837,-74.0059413'
       Backbone.sync.args[0][2].data.status.should.equal 'upcoming'
-      Backbone.sync.args[1][2].data.near.should.equal '40.74729,-73.98188'
+      Backbone.sync.args[1][2].data.near.should.equal '40.7127837,-74.0059413'
       Backbone.sync.args[1][2].data.status.should.equal 'running'
-      Backbone.sync.args[2][2].data.near.should.equal '40.74729,-73.98188'
+      Backbone.sync.args[2][2].data.near.should.equal '40.7127837,-74.0059413'
       Backbone.sync.args[2][2].data.status.should.equal 'closed'
       _.defer =>
         @res.render.called.should.be.true
