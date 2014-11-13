@@ -104,6 +104,10 @@ describe 'Artist', ->
       @artist.set(id: 'zerg', gender: 'male', name: 'Zerg').toPageTitle().should.equal 'Zerg - Explore his Artworks, Biography & Shows on Artsy'
       @artist.set(id: 'zerg', gender: 'female', name: 'Zerg').toPageTitle().should.equal 'Zerg - Explore her Artworks, Biography & Shows on Artsy'
 
+    it 'supports a custom override', ->
+      @artist.set(id: 'test-artist')
+      @artist.toPageTitle().should.equal 'Test Artist title'
+
   describe '#toPageDescription', ->
     it 'renders the correct string for artists a-h', ->
       @artist.set(id: 'abc').toPageDescription().should.containEql 'Find the latest shows, biography, and artworks for sale by Pablo Picasso. This is Pablo Picasso'
@@ -112,3 +116,7 @@ describe 'Artist', ->
       @artist.set(id: 'zerg', gender: 'is a social construct', name: 'Zerg').toPageDescription().should.equal 'Browse the best of Zerg, including artwork for sale, their latest shows & events, biography, and exclusive Zerg articles.'
       @artist.set(id: 'zerg', gender: 'male', name: 'Zerg').toPageDescription().should.equal 'Browse the best of Zerg, including artwork for sale, his latest shows & events, biography, and exclusive Zerg articles.'
       @artist.set(id: 'zerg', gender: 'female', name: 'Zerg').toPageDescription().should.equal 'Browse the best of Zerg, including artwork for sale, her latest shows & events, biography, and exclusive Zerg articles.'
+
+    it 'supports a custom override', ->
+      @artist.set(id: 'test-artist')
+      @artist.toPageDescription().should.equal 'Test Artist description'
