@@ -5,7 +5,6 @@ module.exports = class MonocleView extends Backbone.View
 
   initialize: (options) ->
     { @artwork } = options
-    @adjLeftFactor = 24
     @monocleSize = parseInt(@$('.monocle-zoom').css('width').replace 'px', '') / 2
     @preCalc()
     @bindMonocles()
@@ -49,7 +48,7 @@ module.exports = class MonocleView extends Backbone.View
   positionAndRecalc: ->
     @currentLeft = event.pageX
     @currentTop = event.pageY
-    left = @currentLeft - @left + @monocleSize - @adjLeftFactor
+    left = @currentLeft - @left - @monocleSize
     top = @currentTop - @top - @monocleSize
     @$('.monocle-zoom').css
       'left': left
