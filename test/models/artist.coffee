@@ -1,8 +1,13 @@
 _ = require 'underscore'
 sinon = require 'sinon'
 Backbone = require 'backbone'
-Artist = require '../../models/artist'
+rewire = require 'rewire'
 { fabricate } = require 'antigravity'
+Artist = rewire '../../models/artist'
+Artist.__set__ 'metaOverrides',
+  'test-artist':
+    title: 'Test Artist title'
+    description: 'Test Artist description'
 
 describe 'Artist', ->
 
