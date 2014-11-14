@@ -8,6 +8,7 @@ Artworks = require '../collections/artworks.coffee'
 { SECURE_IMAGES_URL } = require('sharify').data
 { compactObject } = require './mixins/compact_object.coffee'
 Relations = require './mixins/relations/artist.coffee'
+metaOverrides = require './mixins/meta_overrides.coffee'
 
 module.exports = class Artist extends Backbone.Model
   _.extend @prototype, Markdown
@@ -48,8 +49,13 @@ module.exports = class Artist extends Backbone.Model
       else
         'their'
 
+  metaOverrides: (tag) ->
+    metaOverrides[@id]?[tag]
+
   toPageTitle: ->
-    if @inFirstArtistTestGroup()
+    if title = @metaOverrides('title')
+      title
+    else if @inFirstArtistTestGroup()
       "#{if @get('name') then @htmlToText('name') else 'Unnamed Artist'} | #{@pageTitleArtworksCount()}, Artist Biography | Artsy"
     else
       "#{if @get('name') then @htmlToText('name') else 'Unnamed Artist'} - Explore #{@genderPronoun()} Artworks, Biography & Shows on Artsy"
@@ -61,8 +67,10 @@ module.exports = class Artist extends Backbone.Model
       "Artworks"
     ]).join(' ')
 
-  toPageDescription: (length=200) ->
-    if @inFirstArtistTestGroup()
+  toPageDescription: (length = 200) ->
+    if description = @metaOverrides('description')
+      description
+    else if @inFirstArtistTestGroup()
       smartTruncate(_.compact([
        "Find the latest shows, biography, and artworks for sale by #{@displayName()}"
        (if @get('blurb')?.length > 0 then @mdToHtmlToText('blurb') else undefined)
