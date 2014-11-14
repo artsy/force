@@ -11,7 +11,7 @@ describe 'OverviewView', ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'
       Backbone.$ = $
-      @OverviewView = benv.requireWithJadeify resolve(__dirname, '../../client/views/overview'), ['template', 'jsonLdTemplate']
+      @OverviewView = benv.requireWithJadeify resolve(__dirname, '../../client/views/overview'), ['template']
       done()
 
   after ->
@@ -28,8 +28,9 @@ describe 'OverviewView', ->
       posts: length: 0
     })
     @model = new Artist fabricate 'artist', id: 'foo-bar', published_artworks_count: 1
-    filterView = new Backbone.View()
-    filterView.artworks = new Backbone.Collection()
+    filterView = new Backbone.View
+    filterView.artworks = new Backbone.Collection
+    filterView.filter = new Backbone.Model
     @OverviewView.__set__ 'ArtworkFilter', init: @artworkFilterInitStub = sinon.stub().returns(view: filterView)
     @view = new @OverviewView model: @model
 
@@ -49,18 +50,3 @@ describe 'OverviewView', ->
     it 'checks on the correct relations', ->
       @view.model.related.callCount.should.equal 4
       # Way to spy on property access?
-
-  describe 'setupLastModifiedDate', ->
-    it 'removes last modified date if there are no posts, shows or artworks', ->
-      @view.$('.last-modified-section').length.should.equal 1
-      @view.filterView.artworks.trigger 'sync'
-      @view.$('.last-modified-section').length.should.equal 0
-
-    it 'displays last modified date if artist has artworks', ->
-      @view.$('.last-modified-section').length.should.equal 1
-      @view.filterView.artworks.add fabricate('artwork', published_at: '2014-06-17T20:49:00+00:00')
-      @view.filterView.artworks.trigger 'sync', new Backbone.Collection(fabricate('artwork', published_at: '2014-06-17T20:49:00+00:00'))
-      @view.$('.last-modified-section').length.should.equal 1
-      @view.$('.last-modified-section').text().should.containEql 'June'
-      $('#json-ld').html().should.containEql "datePublished"
-      $('#json-ld').html().should.containEql "2014-06-17"
