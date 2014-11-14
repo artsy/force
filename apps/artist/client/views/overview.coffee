@@ -14,9 +14,8 @@ ArtworkFilter = require '../../../../components/artwork_filter/index.coffee'
 RelatedPostsView = require '../../../../components/related_posts/view.coffee'
 RelatedShowsView = require '../../../../components/related_shows/view.coffee'
 ArtistFillwidthList = require '../../../../components/artist_fillwidth_list/view.coffee'
-moment = require 'moment'
-template = ->  require('../../templates/overview.jade') arguments...
-jsonLdTemplate = -> require('../../../../components/main_layout/templates/json_ld.jade') arguments...
+lastModified = require './last_modified.coffee'
+template = -> require('../../templates/overview.jade') arguments...
 
 module.exports = class OverviewView extends Backbone.View
   subViews: []
@@ -32,11 +31,6 @@ module.exports = class OverviewView extends Backbone.View
     @setupRelatedRepresentations()
 
   setupArtworkFilter: ->
-    # Need to resolve issues with changing heights and sticky not getting correct height
-    # @listenToOnce mediator, 'artwork_filter:filter:sync', (model) ->
-    #   # Once the filter height is apparent
-    #   @sticky.add @$('#artwork-filter')
-    # @listenTo filterRouter.view.artworks, 'sync', @sticky.rebuild
     filterRouter = ArtworkFilter.init el: @$('#artwork-section'), model: @model
     @filterView = filterRouter.view
     @subViews.push @filterView
@@ -75,47 +69,20 @@ module.exports = class OverviewView extends Backbone.View
     @renderRelatedArtists 'artists'
     @renderRelatedArtists 'contemporary'
 
-  # Finds the most recently modified item among related posts, shows and artworks
-  # Appends that date to the head and the body
-  #
-  # TODO: Only append if the date is within the past 3 months
-  setupLastModifiedDate: (artworks) ->
-    decendingSort = (a, b) -> b - a
-    if posts = @model.related().posts?.models
-      mostRecentPostDate =
-        (for post in posts[0...4]
-          new Date(post.get('last_promoted_at')).valueOf()
-        ).sort(decendingSort)[0]
+  setupLastModifiedDate: ->
+    @listenToOnce @filterView.filter, 'sync', @pendLastModified
 
-    if shows = @model.related().shows?.models
-      mostRecentShowDate =
-        (for show in shows[0...4]
-          new Date(show.get('updated_at')).valueOf()
-        ).sort(decendingSort)[0]
-
-    if artworks = artworks?.models
-      mostRecentArtworkDate =
-        (for artwork in artworks
-          new Date(artwork.get('published_at')).valueOf()
-        ).sort(decendingSort)[0]
-
-    if mostRecentPostDate or mostRecentShowDate or mostRecentArtworkDate
-      mostRecentDate = moment [mostRecentPostDate, mostRecentShowDate, mostRecentArtworkDate].sort(decendingSort)[0]
-      @appendLastModifiedDate mostRecentDate
+  pendLastModified: ->
+    { filter, artworks } = @filterView
+    # If there is a total but no artworks yet...
+    if filter.root.get('total') and artworks.length is 0
+      # ...then wait for them to sync
+      @listenToOnce artworks, 'sync', @renderLastModified
     else
-      # Remove if the artist has no posts, shows or artworks since we
-      # have no way to know when the pages was updated
-      @$('.last-modified-section').remove()
+      @renderLastModified()
 
-  appendLastModifiedDate: (lastModifiedDate) ->
-    metaFormattedDate = lastModifiedDate.format('YYYY-MM-DD')
-    displayFormattedDate = lastModifiedDate.format('MMMM Do, YYYY')
-    @$('.last-modified').html "<time datetime='#{metaFormattedDate}' itemprop='datePublished'>#{displayFormattedDate}</time>"
-
-    # re-append the artist json-ld information
-    @model.set lastModified: metaFormattedDate
-    $('#json-ld').remove()
-    $('body').append jsonLdTemplate(jsonLD: JSON.stringify(@model.toJSONLD()))
+  renderLastModified: ->
+    lastModified @model, @filterView.artworks
 
   renderRelatedArtists: (type) ->
     $section = @$("#artist-related-#{type}-section")
@@ -140,8 +107,7 @@ module.exports = class OverviewView extends Backbone.View
     @setupRelatedArtists()
     @setupRelatedShows()
     @setupRelatedPosts()
-    @filterView.listenTo @filterView.artworks, 'sync', _.once (artworks) =>
-      @setupLastModifiedDate artworks
+    @setupLastModifiedDate()
 
   render: ->
     @$el.html template(artist: @model)
