@@ -19,7 +19,7 @@ describe 'Home routes', ->
     Backbone.sync.restore()
 
   describe '#index', ->
-    describe 'logged out', ->
+    xdescribe 'logged out', ->
       it 'renders the home page with hero units + welcome hero unit', (done) ->
         routes.index @req, @res
         Backbone.sync.args[0][2].success [fabricate 'site_hero_unit']
