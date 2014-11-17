@@ -31,7 +31,7 @@ describe 'Fairs routes', ->
   describe '#index', ->
     describe 'with active current fairs', ->
       beforeEach ->
-        @res = render: sinon.stub()
+        @res = render: sinon.stub(), locals: sd: sinon.stub()
         @fairs = _.flatten [
           @currentFairs
           @pastFairs
@@ -52,7 +52,7 @@ describe 'Fairs routes', ->
 
     describe 'with no current fairs', ->
       beforeEach ->
-        @res = render: sinon.stub()
+        @res = render: sinon.stub(), locals: sd: sinon.stub()
         @fairs = _.flatten [
           @pastFairs
           @upcomingFairs
