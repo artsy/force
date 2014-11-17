@@ -51,7 +51,7 @@ describe 'Shows routes', ->
         @res.render.args[0][1].city.name.should.equal 'New York'
         done()
 
-    it 'sorts the shows', (done) ->
+    xit 'sorts the shows', (done) ->
       shows = [
         showOpeningFirst = new PartnerShow fabricate('show', start_at: moment().add(5, 'days').format(), end_at: moment().add(15, 'days').format())
         showOpeningLast = new PartnerShow fabricate('show', start_at: moment().add(15, 'days').format(), end_at: moment().add(20, 'days').format())
