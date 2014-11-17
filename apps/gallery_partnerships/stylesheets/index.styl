@@ -23,8 +23,17 @@ separator-color = #d4d4d4
 //
 .gallery-partnerships-hero-unit-header
   margin-bottom 30px
-  .grid-item
-    vertical-align baseline
+  font-size 0
+  h1, .gallery-partnerships-contact
+    display inline-block
+  h1
+    width calc('100% - 230px')
+  .gallery-partnerships-contact
+    width 230px
+    text-align right
+
+.gallery-partnerships-contact
+  font-size 23px
 
 .gallery-partnerships-hero-unit-content
   position relative
@@ -115,7 +124,7 @@ separator-color = #d4d4d4
     z-index 1
   &.apply
     text-align center
-    h3
+    h3, .apply-button
       margin-bottom 50px
     .apply-button
       font-size 30px
