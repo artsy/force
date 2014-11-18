@@ -1,0 +1,20 @@
+.ap-featured-item
+  h3.af-name: a( href="/auction/#{auction.id}" )= auction.get('name')
+
+  .af-metadata
+    .af-clock( data-id= auction.id )
+      include ../../../components/auction_clock/template
+
+    .af-stats
+      .af-stats-count #{auction.get('eligible_sale_artworks_count')} Works in Auction
+      .af-stats-status Bidding #{auction.get('auction_state')}
+
+    a.af-go-button.avant-garde-button-black( href="/auction/#{auction.id}" )
+      | Go to auction
+
+  .af-artworks( data-id= auction.id )
+    for artwork in auction.related().artworks.models
+      a( href= artwork.href() ): img.af-artwork(
+        src= artwork.defaultImage().imageUrl('medium')
+        alt= artwork.get('title')
+      )
