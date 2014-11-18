@@ -5,9 +5,11 @@ Backbone = require 'backbone'
 { Fetch } = require 'artsy-backbone-mixins'
 Clock = require './mixins/clock.coffee'
 SaleArtworks = require '../collections/sale_artworks.coffee'
+Relations = require './mixins/relations/sale.coffee'
 
 module.exports = class Sale extends Backbone.Model
   _.extend @prototype, Clock
+  _.extend @prototype, Relations
 
   urlRoot: "#{sd.API_URL}/api/v1/sale"
 
@@ -90,3 +92,6 @@ module.exports = class Sale extends Backbone.Model
       label: 'Bid', enabled: true, classes: undefined, href: (@bidUrl(artwork) if artwork)
     else if @isClosed()
       label: 'Online Bidding Closed', enabled: false, classes: 'is-disabled', href: undefined
+
+  date: (attr) ->
+    moment(@get attr)

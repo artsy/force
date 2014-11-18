@@ -1,0 +1,39 @@
+extends ../../../components/main_layout/templates/index
+
+block head
+  include meta
+
+append locals
+  - assetPackage = 'auctions'
+
+block body
+  #auctions-page.aggregate-page.main-layout-container
+    h1.aggregate-page-header Collect from leading Auctions
+
+    .aggregate-page-items
+      .aggregate-page-items-featured
+        if currentAuctions.length
+          .aggregate-page-items-featured-set
+            h2.aggregate-page-subheader Current Auctions
+            for auction in currentAuctions
+              include auction
+
+        if pastAuctions.length
+          .aggregate-page-items-featured-set
+            h2.aggregate-page-subheader Past Auctions
+            for auction in pastAuctions
+              include auction
+
+      .aggregate-page-items-upcoming
+        h2.aggregate-page-subheader How Auctions Work
+        .ap-upcoming-item
+          a.auctions-learn-link( href='/auction-info' )
+            | Learn about Bidding Increments, Max Bids, Reserves, and more
+
+        if upcomingAuctions.length
+          h2.aggregate-page-subheader Upcoming Auctions
+          for auction in upcomingAuctions
+            .ap-upcoming-item
+              .au-name= auction.get('name')
+              .au-date Opens #{auction.date('start_at').format('MMMM Do')}
+

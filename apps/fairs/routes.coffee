@@ -1,6 +1,5 @@
 _ = require 'underscore'
 Q = require 'q'
-sd = require('sharify').data
 Fairs = require '../../collections/fairs'
 Fair = require '../../models/fair'
 OrderedSets = require '../../collections/ordered_sets'
@@ -25,7 +24,7 @@ representation = (fair) ->
       upcomingFairs = fairs.filter (fair) -> fair.isUpcoming()
       pastFairs = fairs.chain().filter((fair) -> fair.isPast()).take(6).value()
 
-      sd.FEATURED_FAIRS = featuredFairs = _.flatten [currentFairs, pastFairs]
+      res.locals.sd.FEATURED_FAIRS = featuredFairs = _.flatten [currentFairs, pastFairs]
       allFairs = _.flatten [featuredFairs, upcomingFairs]
 
       promises = _.compact _.flatten [
