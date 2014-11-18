@@ -18,7 +18,7 @@ Artist = require '../../models/artist'
     artist.related().artworks.fetch(cache: true, data: sort: '-iconicity', published: true, size: 7)
   ]).spread((artistRequest, artworksRequest) ->
     if artistRequest.state is 'rejected'
-      res.backboneError(artist, artistRequest.reason.res)
+      res.backboneError(artist, artistRequest.reason)
     else
       if req.params.tab? or artist.href() is res.locals.sd.CURRENT_PATH
         res.locals.sd.ARTIST = artist.toJSON()
