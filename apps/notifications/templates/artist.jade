@@ -7,7 +7,8 @@
     .notifications-list-item-timestamp.is-pull-right
       = publishedAt
   .notifications-published-artworks
+    //- Rendered separately
   .notifications-see-more
-    a.avant-garde-jump-link( href=artist.href() + '?sort=-published_at' )
+    a.avant-garde-jump-link( href= "#{artist.href()}?sort=-published_at" )
       | See More
       i.icon-chevron-small-right
