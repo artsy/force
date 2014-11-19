@@ -26,3 +26,7 @@ module.exports = class Notifications extends PageableCollection
   fetch: (options = {}) ->
     options.data = _.defaults (options.data or {}), user_id: @userId, type: @type, since: @since
     PageableCollection::fetch.call this, options
+
+  groupedByArtist: ->
+    @groupBy (notification) ->
+      notification.get('artist')?.name
