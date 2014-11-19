@@ -1,0 +1,20 @@
+extends ../../../components/main_layout/templates/index
+
+block head
+  include meta
+
+append locals
+  - assetPackage = 'articles'
+
+block body
+  #articles-show
+    h1.large-garamond-header= article.get('title')
+    br
+    if article.get('sections')[0].type == 'slideshow'
+      #articles-slideshow-container
+        ul#articles-slideshow
+          .loading-spinner
+    for section in article.get('sections')
+      case section.type
+        when 'text'
+          .articles-section-text!= section.body

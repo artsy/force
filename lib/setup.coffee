@@ -9,7 +9,8 @@
   CANONICAL_MOBILE_URL, IMAGES_URL_PREFIX, SECURE_IMAGES_URL, GOOGLE_ANALYTICS_ID, MIXPANEL_ID, SNOWPLOW_COLLECTOR_HOST, GOOGLE_SEARCH_CX, GOOGLE_SEARCH_KEY,
   COOKIE_DOMAIN, AUTO_GRAVITY_LOGIN, GOOGLE_MAPS_API_KEY, ADMIN_URL, CMS_URL, MAX_SOCKETS, ARTWORK_EMBED_URL,
   DELTA_HOST, ENABLE_AB_TEST, KIOSK_MODE, KIOSK_PAGE, SESSION_COOKIE_KEY, SENTRY_DSN, SENTRY_PUBLIC_DSN, SHOW_AUCTIONS_IN_HEADER,
-  EMPTY_COLLECTION_SET_ID, GEMINI_S3_ACCESS_KEY, GEMINI_APP, GEMINI_ACCOUNT_KEY, BIDDER_H1_COPY, BIDDER_H2_COPY, APPLICATION_NAME, EMBEDLY_KEY, DISABLE_IMAGE_PROXY } = config = require "../config"
+  EMPTY_COLLECTION_SET_ID, GEMINI_S3_ACCESS_KEY, GEMINI_APP, GEMINI_ACCOUNT_KEY, BIDDER_H1_COPY, BIDDER_H2_COPY, APPLICATION_NAME, EMBEDLY_KEY, DISABLE_IMAGE_PROXY,
+  POSITRON_URL } = config = require "../config"
 
 { parse, format } = require 'url'
 
@@ -51,6 +52,7 @@ sharify.data =
   CSS_EXT: (if ("production" is NODE_ENV or "staging" is NODE_ENV) then ".min.css.cgz" else ".css")
   ASSET_PATH: ASSET_PATH
   APP_URL: APP_URL
+  POSITRON_URL: POSITRON_URL
   API_URL: API_URL
   NODE_ENV: NODE_ENV
   MOBILE_MEDIA_QUERY: MOBILE_MEDIA_QUERY
@@ -197,6 +199,7 @@ module.exports = (app) ->
   app.use require "../apps/tag"
   app.use require "../apps/post"
   app.use require "../apps/posts"
+  app.use require "../apps/articles"
   app.use require "../apps/favorites_follows"
   app.use require "../apps/unsubscribe"
   app.use require "../apps/unsupported_browser"

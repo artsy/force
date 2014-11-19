@@ -10,6 +10,7 @@ module.exports =
   NODE_ENV: 'development'
   PORT: 3004
   API_URL: 'http://localhost:3000'
+  POSITRON_URL: 'http://localhost:3005'
   APP_URL: 'http://localhost:3004'
   MOBILE_URL: 'http://localhost:3003'
   CANONICAL_MOBILE_URL: 'http://m.artsy.net'
