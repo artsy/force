@@ -4,11 +4,12 @@
       a.hoverable-image-link( href= fair.href() )
         .hoverable-image( style="background-image: url(#{fair.imageUrl('large_rectangle')});" )
     .fpff-fair-cell-center
-      - var representations = fair.representation.chain().shuffle().take(2).value()
-      for representation in representations
-        .fpff-fair-small-image
-          a.hoverable-image-link( href= fair.href() )
-            .hoverable-image( style="background-image: url(#{representation.imageUrl('medium_square')});" )
+      if fair.representation
+        - var representations = fair.representation.chain().shuffle().take(2).value()
+        for representation in representations
+          .fpff-fair-small-image
+            a.hoverable-image-link( href= fair.href() )
+              .hoverable-image( style="background-image: url(#{representation.imageUrl('medium_square')});" )
 
   .fpff-fair-cell-right
     .fpff-fair-name
