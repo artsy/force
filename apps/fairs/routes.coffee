@@ -14,34 +14,53 @@ representation = (fair) ->
     dfd.resolve set
   dfd.promise
 
+# Get profiles of fairs that have organizers so we can
+# see if they are published or not
+profiles = (fairs) ->
+  _.compact fairs.map (fair) ->
+    if fair.has('organizer')
+      fair.related().profile.fetch(cache: true)
+
+parseGroups = (fairs) ->
+  currentFairs: fairs.filter((fair) -> fair.isCurrent())
+  pastFairs: fairs.chain()
+    .filter((fair) -> fair.isPast())
+    .take(6)
+    .value()
+  upcomingFairs: fairs.chain()
+    .filter((fair) -> fair.isUpcoming())
+    .sortBy((fair) -> Date.parse(fair.get 'start_at'))
+    .value()
+
 @index = (req, res) ->
   fairs = new Fairs
   fairs.fetch
     cache: true
     data: sort: '-start_at', size: 50
-    success: (collection, response, options) ->
-      currentFairs = fairs.filter (fair) -> fair.isCurrent()
-      upcomingFairs = fairs.filter (fair) -> fair.isUpcoming()
-      pastFairs = fairs.chain().filter((fair) -> fair.isPast()).take(6).value()
+    success: ->
+      Q.allSettled(profiles(fairs)).then(->
 
-      res.locals.sd.FEATURED_FAIRS = featuredFairs = _.flatten [currentFairs, pastFairs]
-      allFairs = _.flatten [featuredFairs, upcomingFairs]
+        { currentFairs, pastFairs, upcomingFairs } = parseGroups(fairs)
 
-      promises = _.compact _.flatten [
-        # Fetch all displayable fairs (so that we can get their location)
-        _.map(allFairs, (fair) -> fair.fetch(cache: true))
+        featuredFairs = _.flatten [currentFairs, pastFairs]
+        allFairs = _.flatten [featuredFairs, upcomingFairs]
 
-        # Get the two smaller images to use via the fair 'explore' sets
-        # (This is a pretty ineffcient way to go about it though)
-        _.map(featuredFairs, representation)
-      ]
+        promises = _.compact _.flatten [
+          # Fetch all displayable fairs (so that we can get their location)
+          _.map(allFairs, (fair) -> fair.fetch(cache: true))
 
-      Q.allSettled(promises).then(->
+          # Get the two smaller images to use via the fair 'explore' sets
+          # (This is a pretty ineffcient way to go about it though)
+          _.map(featuredFairs, representation)
+        ]
 
-        res.render 'index',
-          featuredFairs: featuredFairs
-          currentFairs: currentFairs
-          upcomingFairs: upcomingFairs
-          pastFairs: pastFairs
+        Q.allSettled(promises).then(->
+          res.locals.sd.FAIRS = currentFairs
+          res.render 'index',
+            featuredFairs: featuredFairs
+            currentFairs: currentFairs
+            upcomingFairs: upcomingFairs
+            pastFairs: pastFairs
 
+        ).done()
       ).done()

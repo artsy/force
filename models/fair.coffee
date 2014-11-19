@@ -11,9 +11,10 @@ moment = require 'moment'
 Profile = require './profile.coffee'
 FilterSuggest = require './filter_suggest.coffee'
 deslugify = require '../components/deslugify/index.coffee'
+Relations = require './mixins/relations/fair.coffee'
 
 module.exports = class Fair extends Backbone.Model
-
+  _.extend @prototype, Relations
   _.extend @prototype, Image(sd.SECURE_IMAGES_URL)
   _.extend @prototype, Markdown
   _.extend @prototype, Clock
@@ -186,10 +187,16 @@ module.exports = class Fair extends Backbone.Model
         @fetchArtists(error: options.error, success: (x) => data.artistsAToZGroup = x; after())
 
   isEligible: ->
-    @get('has_full_feature') and @get('published') and @has('organizer')
+    @get('has_full_feature') and
+    @get('published') and
+    @has('organizer') and
+    # Can be undefined which would cause this whole chain to be undefined
+    @related().profile.get('published') is true
 
   isEventuallyEligible: ->
-    @get('has_full_feature') and @get('published') and not @has('organizer')
+    @get('has_full_feature') and
+    @get('published') and
+    (not @has('organizer') or not @related().profile.get('published'))
 
   isNotOver: ->
     Date.parse(@get('end_at')) > new Date
