@@ -14,15 +14,20 @@ routes.__set__ 'OrderedSets', OrderedSetsFixture
 describe 'Fairs routes', ->
   beforeEach ->
     @currentFairs = _.times 2, ->
-      new Fair fabricate('fair', id: _.uniqueId(), published: true, has_full_feature: true, organizer: fabricate('fair_organizer'), end_at: moment().add(10, 'days'))
+      new Fair fabricate('fair', id: _.uniqueId('current'), published: true, has_full_feature: true, organizer: fabricate('fair_organizer'), end_at: moment().add(10, 'days'))
     @pastFairs = _.times 4, ->
-      new Fair fabricate('fair', id: _.uniqueId(), published: true, has_full_feature: true, organizer: fabricate('fair_organizer'), end_at: moment().subtract(10, 'days'))
+      new Fair fabricate('fair', id: _.uniqueId('past'), published: true, has_full_feature: true, organizer: fabricate('fair_organizer'), end_at: moment().subtract(10, 'days'))
     @upcomingFairs = _.times 3, ->
-      new Fair fabricate('fair', id: _.uniqueId(), published: true, has_full_feature: true, organizer: null, end_at: moment().add(10, 'days'))
+      new Fair fabricate('fair', id: _.uniqueId('upcoming'), published: true, has_full_feature: true, organizer: null, end_at: moment().add(10, 'days'))
     @invalidFairs = [
-      new Fair(fabricate 'fair', id: 'invalid-1', published: false)
-      new Fair(fabricate 'fair', id: 'invalid-2', published: true, has_full_feature: false)
+      new Fair(fabricate 'fair', id: _.uniqueId('invalid'), published: false)
+      new Fair(fabricate 'fair', id: _.uniqueId('invalid'), published: true, has_full_feature: false)
     ]
+
+    # Eligible fairs have published profiles
+    _.map _.flatten([@currentFairs, @pastFairs]), (fair) ->
+      fair.related().profile.set published: true
+
     sinon.stub Backbone, 'sync'
 
   afterEach ->
