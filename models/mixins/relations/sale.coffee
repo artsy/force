@@ -1,6 +1,3 @@
-_ = require 'underscore'
-Backbone = require 'backbone'
-
 module.exports =
   related: ->
     return @__related__ if @__related__?
