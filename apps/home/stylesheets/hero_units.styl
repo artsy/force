@@ -99,6 +99,13 @@ hhu-credit-height = 30px
     right 0
     padding 0 0 0 3px
     margin-right 10px
+  // Hide the controls when there is only one hero unit.
+  // Instead of displaying none or not rendering
+  // toggle visibility so that the top-most margin
+  // doesn't collapse
+  &[data-length='1']
+    height 0
+    visibility hidden
 
 #home-hero-unit-dots
   display inline-block

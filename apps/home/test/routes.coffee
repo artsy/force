@@ -9,27 +9,41 @@ HeroUnits = require '../../../collections/hero_units'
 Q = require 'q'
 
 describe 'Home routes', ->
-
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    @req = { body: {}, query: {}, get: @getStub = sinon.stub() }
-    @res = { render: sinon.stub(), redirect: sinon.stub() }
+    @req = { body: {}, query: {}, get: @getStub = sinon.stub(), cookies: {} }
+    @res = { render: sinon.stub(), redirect: sinon.stub(), cookie: @cookieStub = sinon.stub() }
 
   afterEach ->
     Backbone.sync.restore()
 
   describe '#index', ->
-    xdescribe 'logged out', ->
-      it 'renders the home page with hero units + welcome hero unit', (done) ->
-        routes.index @req, @res
-        Backbone.sync.args[0][2].success [fabricate 'site_hero_unit']
-        Backbone.sync.args[1][2].success [fabricate 'featured_link']
-        Backbone.sync.args[2][2].success [fabricate 'featured_link']
-        _.defer =>
-          @res.render.args[0][0].should.equal 'index'
-          @res.render.args[0][1].heroUnits[0].get('description').should.equal 'Sign up to get updates on your favorite artists'
-          @res.render.args[0][1].heroUnits[1].get('description').should.equal 'My hero'
-          done()
+    describe 'logged out', ->
+      describe 'first time', ->
+        it 'renders the home page with hero units + welcome hero unit at the front', (done) ->
+          routes.index @req, @res
+          Backbone.sync.args[0][2].success [fabricate 'site_hero_unit']
+          Backbone.sync.args[1][2].success [fabricate 'featured_link']
+          Backbone.sync.args[2][2].success [fabricate 'featured_link']
+          _.defer =>
+            @res.render.args[0][0].should.equal 'index'
+            @res.render.args[0][1].heroUnits[0].get('description').should.equal 'Sign up to get updates on your favorite artists'
+            @res.render.args[0][1].heroUnits[1].get('description').should.equal 'My hero'
+            @res.cookie.args[0][0].should.equal 'hide-welcome-hero'
+            @res.cookie.args[0][1].should.equal '1'
+            done()
+
+      describe 'after first time', ->
+        it 'renders the home page with hero units + welcome hero unit at the end', (done) ->
+          @req.cookies = 'hide-welcome-hero': '1'
+          routes.index @req, @res
+          Backbone.sync.args[0][2].success [fabricate 'site_hero_unit']
+          Backbone.sync.args[1][2].success [fabricate 'featured_link']
+          Backbone.sync.args[2][2].success [fabricate 'featured_link']
+          _.defer =>
+            @res.render.args[0][0].should.equal 'index'
+            _.last(@res.render.args[0][1].heroUnits).get('description').should.equal 'Sign up to get updates on your favorite artists'
+            done()
 
     describe 'logged in', ->
       it 'renders the homepage without the welcome hero unit', (done) ->

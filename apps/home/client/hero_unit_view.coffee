@@ -1,7 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 imagesLoaded = require 'imagesloaded'
-{ CURRENT_USER } = require('sharify').data
 mediator = require '../../../lib/mediator.coffee'
 
 module.exports = class HeroUnitView extends Backbone.View
@@ -34,7 +33,7 @@ module.exports = class HeroUnitView extends Backbone.View
         .attr 'src', $(this).attr('data-retina')
 
   initInterval: ->
-    if CURRENT_USER? then @setInterval else _.delay(@setInterval, @pauseLength)
+    if (@$heroUnits.first().data('type') is 'welcome') then @setInterval else _.delay(@setInterval, @pauseLength)
 
   setInterval: =>
     clearInterval @interval
