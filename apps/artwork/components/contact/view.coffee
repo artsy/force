@@ -99,7 +99,7 @@ module.exports = class ContactView extends Backbone.View
           label: analytics.modelNameAndIdToLabel('artwork', @model.id)
         changed = if @inquiry.get('message') is defaultMessage(@model) then 'Did not change' else 'Changed'
         analytics.track.funnel "#{changed} default message"
-        analytics.snowplowStruct 'inquiry', 'submit', @model.id, 'artwork', '0.0',
+        analytics.snowplowStruct 'inquiry', 'submit', @model._id, 'artwork', '0.0',
           { inquiry: { inquiry_id: @inquiry.id }, user: { email: @inquiry.email }}
 
   hoveredSubmit: ->
