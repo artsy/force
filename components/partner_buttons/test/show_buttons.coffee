@@ -6,31 +6,52 @@ Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 
 describe 'PartnerShowButtons', ->
+  describe 'with valid data', ->
+    beforeEach (done) ->
+      benv.setup =>
+        benv.expose $: benv.require 'jquery'
+        Backbone.$ = $
+        PartnerShowButtons = benv.require resolve __dirname, '../show_buttons'
+        PartnerShowButtons.__set__ 'FollowProfileButton', @FollowProfileButton = sinon.stub()
+        PartnerShowButtons.__set__ 'ShowInquiryModal', @ShowInquiryModal = sinon.stub()
+        PartnerShowButtons.__set__ 'analytics', @analytics = snowplowStruct: sinon.stub()
+        @view = new PartnerShowButtons el: $('body'), model: new Backbone.Model fabricate 'show'
+        done()
 
-  beforeEach (done) ->
-    benv.setup =>
-      benv.expose { $: benv.require 'jquery' }
-      Backbone.$ = $
-      PartnerShowButtons = benv.require resolve __dirname, '../show_buttons'
-      PartnerShowButtons.__set__ 'FollowProfileButton', @FollowProfileButton = sinon.stub()
-      PartnerShowButtons.__set__ 'ShowInquiryModal', @ShowInquiryModal = sinon.stub()
-      PartnerShowButtons.__set__ 'analytics', @analytics = { snowplowStruct: sinon.stub() }
-      @view = new PartnerShowButtons
-        el: $ 'body'
-        model: new Backbone.Model fabricate 'show'
-      done()
+    afterEach ->
+      benv.teardown()
 
-  afterEach ->
-    benv.teardown()
+    describe '#initialize', ->
+      it 'creates a follow profile button passsing in options', ->
+        @ShowInquiryModal.calledWithNew.should.be.ok
 
-  describe '#initialize', ->
+    describe '#contactGallery', ->
+      it 'creates a new show inquiry modal', ->
+        @analytics.abTest = -> false
+        @view.contactGallery()
+        @ShowInquiryModal.calledWithNew.should.be.ok
 
-    it 'creates a follow profile button passsing in options', ->
-      @ShowInquiryModal.calledWithNew.should.be.ok
+  describe 'with invalid data', ->
+    beforeEach (done) ->
+      benv.setup =>
+        benv.expose $: benv.require 'jquery'
+        Backbone.$ = $
+        PartnerShowButtons = benv.require resolve __dirname, '../show_buttons'
+        PartnerShowButtons.__set__ 'FollowProfileButton', @FollowProfileButton = sinon.stub()
+        PartnerShowButtons.__set__ 'ShowInquiryModal', @ShowInquiryModal = sinon.stub()
+        PartnerShowButtons.__set__ 'analytics', @analytics = snowplowStruct: sinon.stub()
+        @view = new PartnerShowButtons el: $('body'), model: new Backbone.Model fabricate 'show', partner: null
+        done()
 
-  describe '#contactGallery', ->
+    afterEach ->
+      benv.teardown()
 
-    it 'creates a new show inquiry modal', ->
-      @analytics.abTest = -> false
-      @view.contactGallery()
-      @ShowInquiryModal.calledWithNew.should.be.ok
+    describe '#initialize', ->
+      it 'creates a follow profile button passsing in options', ->
+        @ShowInquiryModal.calledWithNew.should.be.ok
+
+    describe '#contactGallery', ->
+      it 'creates a new show inquiry modal', ->
+        @analytics.abTest = -> false
+        @view.contactGallery()
+        @ShowInquiryModal.calledWithNew.should.be.ok

@@ -17,7 +17,7 @@ module.exports = class ShowsFeed extends FeedView
         analyticsFollowMessage: @analyticsFollowMessage
         analyticsUnfollowMessage: @analyticsUnfollowMessage
 
-    profileIds = shows.map (s) -> s.get('partner').default_profile_id
+    profileIds = shows.map (s) -> s.get('partner')?.default_profile_id
     @followProfiles?.syncFollows profileIds
 
   render: (items) =>
