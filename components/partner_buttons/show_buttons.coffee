@@ -14,7 +14,7 @@ module.exports = class PartnerShowButtons extends Backbone.View
     @setupFollowProfiles()
     new FollowProfileButton
       el: @$('.plus-follow-button')
-      model: new Profile(id: @model.get('partner').default_profile_id)
+      model: new Profile(id: @model.get('partner')?.default_profile_id)
       collection: @followProfiles
       analyticsFollowMessage: @analyticsFollowMessage
       analyticsUnfollowMessage: @analyticsUnfollowMessage
@@ -22,7 +22,7 @@ module.exports = class PartnerShowButtons extends Backbone.View
   setupFollowProfiles: ->
     return if @followProfiles
     @followProfiles = CurrentUser.orNull() and new FollowProfiles
-    _.defer => @followProfiles?.syncFollows [@model.get('partner').default_profile_id]
+    _.defer => @followProfiles?.syncFollows [@model.get('partner')?.default_profile_id]
 
   events:
     'click .partner-buttons-contact': 'contactGallery'

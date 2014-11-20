@@ -1,3 +1,3 @@
-if show.partner().typeName() == 'Gallery'
-  span.partner-buttons-show-buttons( data-id=show.get('id') )
+if show.partner() && show.partner().typeName() == 'Gallery'
+  span.partner-buttons-show-buttons( data-id= show.get('id') )
     button.avant-garde-button-white.partner-buttons-contact Contact Gallery
