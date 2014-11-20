@@ -24,8 +24,7 @@ getRedirectTo = (req) ->
     featuredLinks.fetch(cache: true)
     exploreSections.fetch(cache: true) unless req.user?
   ])).then(->
-    # Temporarily disable this; re-enable after ICI
-    # heroUnits.unshift(welcomeHero) unless req.user?
+    heroUnits.unshift(welcomeHero) unless req.user?
     res.render 'index',
       heroUnits: heroUnits.models
       featuredLinks: featuredLinks.models
