@@ -10,11 +10,11 @@ module.exports = class OnboardingModal extends ModalView
   close: ->
     count = parseInt Cookies.get 'favorites_onboarding_dismiss_count'
     count ||= 0
-    Cookies.set 'favorites_onboarding_dismiss_count', count + 1
+    Cookies.set 'favorites_onboarding_dismiss_count', (count + 1), expires: 31536000
     super
 
   events: -> _.extend super,
     'click a[href*=favorites]': 'clickedThrough'
 
   clickedThrough: ->
-    Cookies.set 'favorites_onboarding_dismiss_count', 2
+    Cookies.set 'favorites_onboarding_dismiss_count', 2, expires: 31536000
