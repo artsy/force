@@ -4,7 +4,7 @@ column-gap = 30px
 // ----------------
 
 .home-featured-header
-  margin (column-gap * 2) 0
+  margin (column-gap * 2) 0 column-gap 0
   text-align center
   font-size 20px
   small-caps()
@@ -39,12 +39,14 @@ li.grid-item a
   display table
   width 100%
   margin 20px 0
+  table-layout fixed
 .home-top-feature-link
   display table-cell
   width 25%
   height 100%
-  padding 0 column-gap
+  padding 0 (column-gap / 2)
   vertical-align middle
+  overflow hidden
   border-right 1px solid gray-lighter-color
   &:first-child
     padding-left 0
@@ -59,7 +61,7 @@ li.grid-item a
   display table-cell
   vertical-align middle
 .htfl-image > img
-  max-width 95px
+  max-width 80px
   max-height @max-width
 .htfl-details
   padding (column-gap / 2) 10px
