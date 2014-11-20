@@ -1,16 +1,28 @@
+overflow-width = 1100px
+body-width = 570px
+gutter-size = 30px
+
 #articles-show
-  margin-top 100px
+  margin-top 140px
   h1
     width 900px
     margin auto
-    line-height 1.2em
+    font-size 40px
     text-align center
+  h2
+    text-align center
+    margin gutter-size 0
 
-.articles-section-text
+#articles-lead-paragraph, .articles-section-text
+  font-size 20px
+  line-height 27px
   width 500px
   margin auto
   p
     margin-bottom 1em
+
+#articles-lead-paragraph
+  margin-top 40px
 
 #articles-slideshow-container
   overflow-x scroll
@@ -19,10 +31,64 @@
   position relative
   height 630px
   width 10000px
+  margin-bottom gutter-size
 
 #articles-slideshow li
   display inline-block
   vertical-align top
-  margin-right 20px
+  margin-right gutter-size
   img
     height 500px
+
+#articles-show-author, #articles-social
+  display inline-block
+  vertical-align middle
+
+#articles-show-date
+  font-size 13px
+  margin-bottom 5px
+
+#articles-show-author
+  avant-garde()
+  font-size default-avant-garde-font-size - 1px
+  padding-right 20px
+  margin-right 15px
+  border-right 1px solid gray-lighter-color
+
+#articles-social
+  position relative
+  top 2px
+
+.articles-section-image
+  width overflow-width
+  margin auto
+  margin-bottom gutter-size
+  img
+    width 100%
+  figcaption
+    font-style italic
+    color gray-dark-color
+
+.articles-section-artworks[data-layout="column_width"]
+  width body-width
+  margin auto
+  li
+    margin-bottom gutter-size
+  .artwork-item-image-link
+    width 100%
+    img
+      width 100%
+
+.articles-section-artworks-loading
+  height body-width
+  background gray-lighter-color
+  position relative
+
+.articles-section-video
+  width body-width
+  margin auto
+  iframe
+    margin auto
+    width body-width
+    height (9 / 16 * body-width)
+

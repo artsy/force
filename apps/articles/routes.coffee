@@ -12,5 +12,9 @@ Article = require '../../models/article.coffee'
   new Article(id: req.params.id).fetch
     error: res.backboneError
     success: (article) ->
-      res.locals.sd.ARTICLE = article.toJSON()
-      res.render 'show', article: article
+      article.fetchAuthor
+        error: res.backboneError
+        success: (author) ->
+          res.locals.sd.ARTICLE = article.toJSON()
+          res.locals.sd.AUTHOR = author.toJSON()
+          res.render 'show', article: article, author: author

@@ -12,3 +12,9 @@ module.exports = class Article extends Backbone.Model
       @slideshowArtworks = new Artworks(
         { id: item.id } for item in slideshow.items when item.type is 'artwork'
       )
+
+  fetchAuthor: (options) ->
+    new Backbone.Model().fetch
+      url: "#{sd.API_URL}/api/v1/user/#{@get 'author_id'}"
+      error: options.error
+      success: options.success

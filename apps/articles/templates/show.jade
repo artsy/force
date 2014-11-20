@@ -1,3 +1,5 @@
+include ../../../components/share/template
+
 extends ../../../components/main_layout/templates/index
 
 block head
@@ -9,12 +11,30 @@ append locals
 block body
   #articles-show
     h1.large-garamond-header= article.get('title')
-    br
+    #articles-lead-paragraph!= article.get('lead_paragraph')
+    h2
+      #articles-show-date
+        = moment(article.get('published_at')).format('MMM Do, YYYY h:mm a')
+      #articles-show-author= author.get('name')
+      #articles-social
+        +share(article.get('title'), article.get('thumbnail_image'))
     if article.get('sections')[0].type == 'slideshow'
       #articles-slideshow-container
         ul#articles-slideshow
-          .loading-spinner
-    for section in article.get('sections')
+        .loading-spinner
+    for section, i in article.get('sections')
       case section.type
         when 'text'
           .articles-section-text!= section.body
+        when 'image'
+          figure.articles-section-image
+            img( src=section.url )
+            figcaption!= section.caption
+        when 'artworks'
+          ul.articles-section-artworks( data-layout=section.layout )
+            for id in section.ids
+              li.articles-section-artworks-loading( data-id=id )
+                .loading-spinner
+        when 'video'
+          .articles-section-video
+            != embedVideo(section.url)
