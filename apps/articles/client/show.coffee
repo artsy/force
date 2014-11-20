@@ -30,14 +30,12 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
         when 'image'
           "<li><img src='#{item.url}'></li>"
         when 'artwork'
-          [
-            "<li>"
+          "<li>" +
             artworkItemTemplate(
               artwork: @article.slideshowArtworks.get(item.id)
               artworkSize: 'large'
-            )
-            "</li>"
-          ].join ''
+            ) +
+          "</li>"
     ).join('')
     @$('#articles-slideshow').height 'auto'
 

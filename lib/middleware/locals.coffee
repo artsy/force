@@ -6,7 +6,6 @@ uuid = require 'node-uuid'
 { parse, format } = require 'url'
 _ = require 'underscore'
 moment = require 'moment'
-embedVideo = require 'embed-video'
 { NODE_ENV } = require '../../config'
 
 module.exports = (req, res, next) ->
@@ -14,7 +13,6 @@ module.exports = (req, res, next) ->
   # Attach libraries to locals
   res.locals._ = _
   res.locals.moment = moment
-  res.locals.embedVideo = embedVideo
 
   # Pass the user agent into locals for data-useragent device detection
   res.locals.userAgent = req.get('user-agent')

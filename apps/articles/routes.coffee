@@ -1,6 +1,7 @@
 sd = require('sharify').data
 Articles = require '../../collections/articles.coffee'
 Article = require '../../models/article.coffee'
+embedVideo = require 'embed-video'
 
 @index = (req, res, next) ->
   new Articles().fetch
@@ -17,4 +18,7 @@ Article = require '../../models/article.coffee'
         success: (author) ->
           res.locals.sd.ARTICLE = article.toJSON()
           res.locals.sd.AUTHOR = author.toJSON()
-          res.render 'show', article: article, author: author
+          res.render 'show',
+            article: article
+            author: author
+            embedVideo: embedVideo

@@ -48,9 +48,8 @@
     "spark-md5": "*",
     "diacritics": "*",
     "graceful-fs": "*",
-    "embed-video": "*"
-  },
-  "devDependencies": {
+    "embed-video": "*",
+
     "browserify": "*",
     "stylus": "*",
     "jadeify": "*",

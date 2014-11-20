@@ -19,3 +19,11 @@ describe "Article", ->
     it 'sets up a collection for slideshow artworks', ->
       @article.slideshowArtworks.pluck('id').join('')
         .should.equal '54276766fd4f50996aeca2b8'
+
+  describe '#fetchAuthor', ->
+
+    it 'gets the author from gravity', (done) ->
+      @article.fetchAuthor success: (author) ->
+        author.get('name').should.equal 'Marina'
+        done()
+      Backbone.sync.args[0][2].success fabricate 'user', name: 'Marina'
