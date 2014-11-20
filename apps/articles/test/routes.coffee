@@ -3,6 +3,7 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 routes = require '../routes'
 fixtures = require '../../../test/helpers/fixtures.coffee'
+{ fabricate } = require 'antigravity'
 
 describe 'Article routes', ->
 
@@ -20,5 +21,6 @@ describe 'Article routes', ->
       routes.show @req, @res
       Backbone.sync.args[0][1].url().should.containEql 'articles/foo'
       Backbone.sync.args[0][2].success _.extend fixtures.article, title: 'Foo'
+      Backbone.sync.args[1][2].success fabricate 'user'
       @res.render.args[0][0].should.equal 'show'
       @res.render.args[0][1].article.get('title').should.equal 'Foo'

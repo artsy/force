@@ -47,9 +47,9 @@
     "twilio": "*",
     "spark-md5": "*",
     "diacritics": "*",
-    "graceful-fs": "*"
-  },
-  "devDependencies": {
+    "graceful-fs": "*",
+    "embed-video": "*",
+
     "browserify": "*",
     "stylus": "*",
     "jadeify": "*",
