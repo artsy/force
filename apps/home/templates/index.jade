@@ -13,7 +13,7 @@ append locals
 block body
   include hero_units
   #home-foreground
-    #home-hero-units-controls
+    #home-hero-units-controls( data-length= heroUnits.length )
       button#home-hero-units-left-arrow.icon-chevron-left
       ul#home-hero-unit-dots
         for x, i in heroUnits
