@@ -15,6 +15,11 @@ getRedirectTo = (req) ->
   parse(req.get('Referrer') or '').path or
   '/'
 
+positionWelcomeHeroMethod = (req, res) ->
+  method = if req.cookies?['hide-welcome-hero']? then 'push' else 'unshift'
+  res.cookie 'hide-welcome-hero', '1', expires: new Date(Date.now() + 31536000000)
+  method
+
 @index = (req, res) ->
   heroUnits = new HeroUnits
   featuredLinks = new Items [], id: '529939e2275b245e290004a0', item_type: 'FeaturedLink'
@@ -24,7 +29,8 @@ getRedirectTo = (req) ->
     featuredLinks.fetch(cache: true)
     exploreSections.fetch(cache: true) unless req.user?
   ])).then(->
-    heroUnits.unshift(welcomeHero) unless req.user?
+    heroUnits[positionWelcomeHeroMethod(req, res)](welcomeHero) unless req.user?
+
     res.render 'index',
       heroUnits: heroUnits.models
       featuredLinks: featuredLinks.models
