@@ -4,9 +4,8 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 routes = require '../routes'
 CurrentUser = require '../../../models/current_user.coffee'
-Artwork = require '../../../models/artwork.coffee'
 
-describe 'Artwork routes', ->
+describe 'Gene routes', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
     @req = { params: { id: 'foo' }, query: { sort: '-published_at' }, originalUrl: 'http://localhost:5000/gene/gene' }
