@@ -20,6 +20,7 @@ describe 'GoogleSearchResults', ->
     it 'filters out 403s', ->
       @response.items.push title: '403 Forbidden', link: '/artist/bar'
       @response.items.push title: 'Artist page', link: '/artist/baz'
+      @response.items.push title: '403 Forbidden - Artsy', link: '/artist/bar'
       results = new GoogleSearchResults @response, parse: true
       results.length.should.equal 2
 

@@ -13,7 +13,7 @@ module.exports = class GoogleSearchResults extends Backbone.Collection
       # Filter out auction results
       item.link?.indexOf('/auction-result') isnt -1 or
       # Filter out 403s
-      item.title is '403 Forbidden'
+      item.title?.indexOf('403 Forbidden') isnt -1
 
   moveMatchResultsToTop: (query) ->
     models = @models
