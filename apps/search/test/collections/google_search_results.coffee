@@ -5,31 +5,30 @@ Backbone = require 'backbone'
 GoogleSearchResults = require '../../collections/google_search_results.coffee'
 
 describe 'GoogleSearchResults', ->
+  describe '#parse', ->
+    beforeEach ->
+      @response = items: [
+        { title: 'Auction result page', link: '/artwork/foo/auction-result/foo'}
+        { title: 'Auction result page', link: '/artist/foo/auction-results' }
+        { title: 'Artist page', link: '/artist/foo' }
+      ]
 
-  it '#parse', ->
     it 'filters out auction results', ->
-      results = new GoogleSearchResults()
-      items = results.parse {items: [
-        {
-          link: '/artwork/foo/auction-result/foo'
-        },
-        {
-          link: '/artist/foo/auction-results'
-        }
-      ]}
-      results.length.should.equal 0
+      results = new GoogleSearchResults @response, parse: true
+      results.length.should.equal 1
 
-  it '#moveMatchResultsToTop', ->
-    results = new GoogleSearchResults [
-      {
-        title: 'bar bar'
-        link: '/artwork/foo'
-      },
-      {
-        title: 'foo bar'
-        link: '/artist/foo'
-      }
-    ]
-    results.models[0].get('display').should.equal 'bar bar'
-    results.moveMatchResultsToTop 'foo bar'
-    results.models[0].get('display').should.equal 'foo bar'
+    it 'filters out 403s', ->
+      @response.items.push title: '403 Forbidden', link: '/artist/bar'
+      @response.items.push title: 'Artist page', link: '/artist/baz'
+      results = new GoogleSearchResults @response, parse: true
+      results.length.should.equal 2
+
+  describe '#moveMatchResultsToTop', ->
+    it 'moves matching results to the top', ->
+      results = new GoogleSearchResults [
+        { title: 'bar bar', link: '/artwork/foo' }
+        { title: 'foo bar', link: '/artist/foo' }
+      ]
+      results.first().get('display').should.equal 'bar bar'
+      results.moveMatchResultsToTop 'foo bar'
+      results.first().get('display').should.equal 'foo bar'
