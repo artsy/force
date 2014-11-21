@@ -67,7 +67,7 @@
     "cookies-js": "*",
     "superagent": "*",
     "cheerio": "*",
-    "antigravity": "git+ssh://git@github.com:artsy/antigravity.git",
+    "antigravity": "git://github.com/artsy/antigravity.git",
     "bucket-assets": "git://github.com/artsy/bucket-assets.git",
     "rewire": "*",
     "typeahead.js": "git://github.com/twitter/typeahead.js.git",
