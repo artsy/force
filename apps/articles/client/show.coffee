@@ -5,7 +5,6 @@ Article = require '../../../models/article.coffee'
 Artwork = require '../../../models/artwork.coffee'
 ShareView = require '../../../components/share/view.coffee'
 CarouselView = require '../../../components/carousel/view.coffee'
-imagesLoaded = require 'imagesloaded'
 carouselTemplate = -> require('../templates/carousel.jade') arguments...
 artworkItemTemplate = -> require(
   '../../../components/artwork_item/templates/artwork.jade') arguments...
