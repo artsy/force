@@ -13,6 +13,7 @@ module.exports = class BrowseRouter extends Backbone.Router
     ':id/browse/booths(/)': 'booths'
     ':id/browse/booths/region/:region(/)': 'boothsRegion'
     ':id/browse/booths/section/:section(/)': 'boothsSection'
+    ':id/browse/shows/section=:section(/)': 'boothsSection'
     ':id/browse/category/:category(/)': 'category'
     ':id/browse/exhibitors(/)': 'exhibitors'
     ':id/browse(/)': 'browse'
