@@ -130,6 +130,10 @@ describe 'PartnerShow', ->
 
       @partnerShow.fairLocationDisplay().should.equal "<i>New York</i> &ndash; Booth 1234"
 
+    it 'works with a missing fair location', ->
+      @partnerShow.set fair_location: null
+      @partnerShow.fairLocationDisplay().should.equal "<i>New York</i> &ndash; "
+
   describe '#posterImageUrl', ->
     it 'returns an image', ->
       @partnerShow.posterImageUrl().should.containEql 'partner_show_images/51f6a51d275b24a787000c36/1/large.jpg'
