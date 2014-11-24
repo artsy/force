@@ -6,6 +6,8 @@ Artwork = require '../../../models/artwork.coffee'
 ShareView = require '../../../components/share/view.coffee'
 CarouselView = require '../../../components/carousel/view.coffee'
 carouselTemplate = -> require('../templates/carousel.jade') arguments...
+artworkItemTemplate = -> require(
+  '../../../components/artwork_item/templates/artwork.jade') arguments...
 
 module.exports.ArticleView = class ArticleView extends Backbone.View
 
@@ -39,8 +41,6 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
           @$("[data-id=#{artwork.get '_id'}]").html(
             artworkItemTemplate artwork: artwork, artworkSize: 'larger'
           ).removeClass 'articles-section-artworks-loading'
-
-
 
 module.exports.init = ->
   new ArticleView el: $('body'), article: new Article(sd.ARTICLE)
