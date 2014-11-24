@@ -271,13 +271,14 @@ describe 'Artwork', ->
 
   describe '#toAltText', ->
     it "Includes title, date and artist name", ->
-      @artwork.toAltText().should.equal "Skull, 1999, by Andy Warhol"
+      @artwork.toAltText().should.equal "Andy Warhol, 'Skull,' 1999, Gagosian Gallery"
 
-    it "Works without title, date and artist name", ->
+    it "Works without title, date, partner, and artist name", ->
       @artwork.set
         artist: undefined
         date: undefined
         title: undefined
+        partner: undefined
       @artwork.toAltText().should.equal ""
 
   describe "#toPageTitle", ->
