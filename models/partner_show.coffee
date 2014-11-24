@@ -225,7 +225,7 @@ module.exports = class PartnerShow extends Backbone.Model
     city = @formatCity()
     if city
       city = "<i>#{city}</i> &ndash; "
-    display = @get('fair_location').display or ''
+    display = @get('fair_location')?.display or ''
     _.compact([city, display]).join('')
 
   upcoming: -> @get('status') is 'upcoming'
