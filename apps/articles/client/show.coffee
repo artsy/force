@@ -4,8 +4,8 @@ Backbone = require 'backbone'
 Article = require '../../../models/article.coffee'
 Artwork = require '../../../models/artwork.coffee'
 ShareView = require '../../../components/share/view.coffee'
-artworkItemTemplate = -> require(
-  '../../../components/artwork_item/templates/artwork.jade') arguments...
+CarouselView = require '../../../components/carousel/view.coffee'
+carouselTemplate = -> require('../templates/carousel.jade') arguments...
 
 module.exports.ArticleView = class ArticleView extends Backbone.View
 
@@ -24,20 +24,13 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
       @renderSlideshow()
 
   renderSlideshow: =>
-    @$('#articles-slideshow-container .loading-spinner').remove()
-    @$('#articles-slideshow').html (for item in @article.get('sections')[0].items
-      switch item.type
-        when 'image'
-          "<li><img src='#{item.url}'></li>"
-        when 'artwork'
-          "<li>" +
-            artworkItemTemplate(
-              artwork: @article.slideshowArtworks.get(item.id)
-              artworkSize: 'large'
-            ) +
-          "</li>"
-    ).join('')
-    @$('#articles-slideshow').height 'auto'
+    @$('#articles-slideshow-inner').html carouselTemplate
+      article: @article
+      carouselFigures: @article.get('sections')[0].items
+    @carouselView = new CarouselView
+      el: $('#articles-slideshow-inner')
+      height: 545
+    @carouselView.postRender()
 
   renderArtworks: ->
     for section in @article.get('sections') when section.type is 'artworks'

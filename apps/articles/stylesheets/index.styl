@@ -8,6 +8,7 @@ gutter-size = 30px
     width 900px
     margin auto
     font-size 40px
+    line-height 48px
     text-align center
   h2
     text-align center
@@ -25,11 +26,18 @@ gutter-size = 30px
   margin-top 40px
 
 #articles-slideshow-container
-  overflow-x scroll
+  height 600px
+  #articles-slideshow-inner
+    position absolute
+    left 20px
+    width calc(100% \- @left)
+  .carousel-figure
+    vertical-align top
+  img
+    height 400px
 
 #articles-slideshow
   position relative
-  height 630px
   width 10000px
   margin-bottom gutter-size
 

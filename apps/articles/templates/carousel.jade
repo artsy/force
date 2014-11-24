@@ -1,0 +1,9 @@
+mixin carouselFigure(item)
+  case item.type
+    when 'image'
+      img( src=item.url )
+    when 'artwork'
+      - artworkSize = 'larger'
+      - artwork = article.slideshowArtworks.findWhere({ _id: item.id })
+      include ../../../components/artwork_item/templates/artwork.jade
+include ../../../components/carousel/carousel.jade
