@@ -22,7 +22,7 @@ module.exports =
     description: 'Browse Jenny Saville paintings, drawings, biographical information, and upcoming shows.'
 
   'barbara-kruger':
-    title: 'Barbara Kruger Art - 39 Artworks, Bio & more on ARtsy'
+    title: 'Barbara Kruger Art - 39 Artworks, Bio & more on Artsy'
     description: 'Best known for laying directive slogans over magazine photographs, Barbara Kruger developed a visual language that...'
 
   'hannah-hoch':
