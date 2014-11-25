@@ -11,7 +11,8 @@ PartnerLocation = require './partner_location.coffee'
 DateHelpers = require '../components/util/date_helpers.coffee'
 { Image } = require 'artsy-backbone-mixins'
 { compactObject } = require './mixins/compact_object.coffee'
-fetchUntilEnd = require('artsy-backbone-mixins').Fetch(sd.API_URL).fetchUntilEnd
+{ Fetch, Markdown } = require 'artsy-backbone-mixins'
+{ fetchUntilEnd } = Fetch(sd.API_URL)
 moment = require 'moment'
 ImageSizes = require './mixins/image_sizes.coffee'
 
@@ -23,6 +24,7 @@ module.exports = class PartnerShow extends Backbone.Model
 
   _.extend @prototype, Image(sd.SECURE_IMAGES_URL)
   _.extend @prototype, ImageSizes
+  _.extend @prototype, Markdown
 
   url: ->
     if @has('partner')

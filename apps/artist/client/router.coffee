@@ -38,7 +38,10 @@ module.exports = class ArtistRouter extends Backbone.Router
     @user?.initializeDefaultArtworkCollection()
 
   setupCarousel: ->
-    @carouselView = new CarouselView el: $('#artist-carousel'), height: 300
+    @carouselView = new CarouselView
+      el: $('#artist-carousel')
+      height: 300
+      align: 'left'
     @carouselView.postRender()
 
   setupHeaderView: ->

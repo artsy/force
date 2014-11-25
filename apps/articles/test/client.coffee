@@ -6,16 +6,20 @@ Article = require '../../../models/article'
 fixtures = require '../../../test/helpers/fixtures.coffee'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
+{ stubChildClasses } = require '../../../test/helpers/stubs'
 
 describe 'ArticleView', ->
   before (done) ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'
       Backbone.$ = $
-      { @ArticleView } = benv.requireWithJadeify(
+      { @ArticleView } = mod = benv.requireWithJadeify(
         resolve(__dirname, '../client/show')
-        ['artworkItemTemplate']
+        ['artworkItemTemplate', 'carouselTemplate']
       )
+      stubChildClasses mod, this,
+        ['CarouselView']
+        ['postRender']
       benv.render resolve(__dirname, '../templates/show.jade'), {
         article: @article = new Article fixtures.article
         author: new Backbone.Model fabricate 'user'
@@ -37,12 +41,23 @@ describe 'ArticleView', ->
 
   describe '#setupSlideshow', ->
 
-    it 'renders the articles artworks', ->
+    beforeEach ->
+      artworks = [
+        fabricate 'artwork',
+          title: 'Foo on the Bar', _id: '54276766fd4f50996aeca2b8'
+        fabricate 'artwork',
+          title: 'Moo on the Baz', _id: '54276766fd4f50996aeca2bz'
+      ]
+      @view.article.slideshowArtworks.set artworks
       @view.setupSlideshow()
-      for arg in Backbone.sync.args
-        arg[2].success fabricate 'artwork',
-          title: 'Foo on the Bar', id: '54276766fd4f50996aeca2b8'
-      @view.$('#articles-slideshow').html().should.containEql 'Foo on the Bar'
+      arg[2].success(artworks[i]) for arg, i in Backbone.sync.args
+
+    it 'renders the articles artworks', ->
+      @view.$('#articles-slideshow-inner').html()
+        .should.containEql 'Foo on the Bar'
+
+    it 'adds a carousel view', ->
+      @CarouselView.called.should.be.ok
 
   describe '#renderArtworks', ->
 

@@ -241,10 +241,11 @@ module.exports = class Artwork extends Backbone.Model
 
   toAltText: ->
     _.compact([
-      @get('title'),
-      @get('date'),
-      (if @get('artist')?.name then "by #{@get('artist')?.name}" else undefined)
-    ]).join(", ")
+      (if @get('artist')?.name then @get('artist')?.name else undefined)
+      (", '#{@get 'title'},' " if @get 'title'),
+      ("#{@get 'date'}" if @get 'date'),
+      (", #{@get('partner')?.name}" if @get 'partner')
+    ]).join('')
 
   toTitleWithDate: ->
     _.compact([
