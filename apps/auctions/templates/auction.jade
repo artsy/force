@@ -12,9 +12,9 @@
     a.af-go-button.avant-garde-button-black( href="/auction/#{auction.id}" )
       | Go to auction
 
-  .af-artworks( data-id= auction.id )
+  ul.af-artworks( data-id= auction.id )
     for artwork in auction.related().artworks.models
-      a( href= artwork.href() ): img.af-artwork(
+      li.af-artwork: img(
         src= artwork.defaultImage().imageUrl('medium')
         alt= artwork.get('title')
       )

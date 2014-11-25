@@ -27,17 +27,14 @@
 .af-go-button
   float right
 
+artworks-height = 260px
 .af-artworks
-  height 260px
-  display flex
-  justify-content space-between
-  flex-direction row
-  align-items flex-start
-  flex-wrap wrap
+  height artworks-height
   overflow hidden
-
+  fade-in()
 .af-artwork
   display inline-block
-  inline-block-margins(10px)
-  max-height 100%
-  max-width 100%
+  margin 0 10px artworks-height 0
+  > img
+    max-width 100%
+    max-height 100%
