@@ -41,6 +41,7 @@ elligibleFilter = _.partial _.filter, _, ((sale) ->
 
 @redirect = (req, res) ->
   new Backbone.Collection().fetch
+    cache: true
     url: "#{API_URL}/api/v1/sets/contains?item_type=Sale&item_id=#{req.params.id}"
     error: res.backboneError
     success: (collection, response, options) ->
