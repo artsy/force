@@ -110,6 +110,7 @@ module.exports.methods =
       data:
         owner_type: 'Feature'
         owner_id: @get 'id'
+        size: 50
       success: (sets) =>
         err = null
         success = _.after sets.length, ->
