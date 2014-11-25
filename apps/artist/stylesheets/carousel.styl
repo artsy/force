@@ -1,3 +1,4 @@
+artist-header-top-padding = 40px
 carousel-height = 300px
 carousel-top-padding = 20px
 carousel-controls-height = 46px
@@ -5,8 +6,8 @@ carousel-controls-height = 46px
 .artist-carousel
   position relative
   padding-top carousel-top-padding
-  margin-bottom -60px
-  height carousel-height + carousel-top-padding + carousel-controls-height
+  height (carousel-height + carousel-top-padding)
+  margin-bottom -(artist-header-top-padding / 2)
   &:empty
     display none
   .carousel-figures

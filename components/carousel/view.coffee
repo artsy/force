@@ -18,24 +18,24 @@ module.exports = class Carousel extends Backbone.View
     'touchend .carousel-figures-clip': 'swipeEnd'
 
   active: 0
-  centerIndex: 0
-  firstDecoyPosition: 0
-  height: 480
-  inTransition: false
-  lastDecoyPosition: 0
   length: 0
   minLength: 2
   noDecoys: false
-  prefixWidth: 0
   stopPositions: []
   transitionDuration: '0.5s'
-  hasDimensions: true
+
+  defaults:
+    height: 480
+    hasDimensions: true
+    align: 'center'
+    offset: 0
 
   initialize: (options) ->
     @$window = $(window)
     @$document = $(document)
     @length = @collection?.length or @$('.carousel-figures .carousel-figure').length
-    { @height, @hasDimensions } = options
+
+    { @height, @hasDimensions, @align, @offset } = _.defaults options, @defaults
 
   cacheSelectors: ->
     @$track = @$('.carousel-track')
@@ -78,6 +78,41 @@ module.exports = class Carousel extends Backbone.View
 
     this
 
+  sum: (arr) ->
+    _.reduce arr, ((sum, n) -> n + sum), 0
+
+  widths: ->
+    @__widths__ ?= @$figures.map(-> $(this).outerWidth()).get()
+
+  # Calculating a 'left' by aggregating widths, offset by 1 element to the left
+  lefts: (offset = 0) ->
+    _.map @widths(), (width, i) =>
+      -((if i is 0 then 0 else @sum(@widths()[0..(i - 1)])) + offset)
+
+  leftAlignPositioning: (offset = 0) ->
+    positions = @lefts(offset)
+    {
+      stopPositions: positions
+      lastDecoyPosition: _.first(positions) + _.last(@widths())
+      firstDecoyPosition: _.last(positions) - _.last(@widths())
+    }
+
+  centerAlignPositioning: (offset = 0) ->
+    windowWidth = @$window.width()
+    positions = _.map _.zip(@lefts(offset), @widths()), ([left, width]) ->
+      Math.floor((windowWidth - width) / 2) + left
+    {
+      stopPositions: positions
+      lastDecoyPosition: Math.floor((windowWidth - _.last(@widths())) / 2) - (offset - _.last(@widths()))
+      firstDecoyPosition: Math.floor((windowWidth - _.first(@widths())) / 2) - (@sum(@widths()) + offset)
+    }
+
+  getPositioning: (offset = 0) ->
+    @["#{@align}AlignPositioning"](offset + @offset)
+
+  hideDecoys: ->
+    @$preDecoys.width() < @$window.width()
+
   # In order to prevent DOM manipulation, the stage has two copies of the figures.
   # For a list of 6 figures (numbered 1 through 6), the rendered list looks like this:
   # [1', 2', 3', 4', 5', 6', 1, 2, 3, 4, 5, 6, 1', 2', 3', 4', 5', 6']
@@ -89,51 +124,25 @@ module.exports = class Carousel extends Backbone.View
   # viewport is large. Another iteration could determine length of the prefix and postfix
   # lists relative to the viewport or based on a param.
   setStops: ->
-    # Use a local widths array to help calculate the stored stop positions
-    widths = []
-    # Must reset these or the throttled resize will use stale values.
-    @stopPositions = []
-    windowWidth = @$window.width()
-
-    # The decoys width isn't going to change, so cache it, which helps
-    # if we want to externally show and hide the carousel
-    @preDecoysWidth ?= @$preDecoys.width()
-
-    if @preDecoysWidth < windowWidth
+    if @hideDecoys()
       @noDecoys = true
       @$decoys.hide()
-      @prefixWidth = 0
+      offset = 0
     else
       @noDecoys = false
       @$decoys.show()
-      @prefixWidth = @$preDecoys.width()
+      offset = @$preDecoys.width()
 
-    totalLefts = @prefixWidth
-    @$figures.each (index, figure) =>
-      $fig = $(figure)
-      w = $fig.outerWidth(true)
-      widths.push w
-      @stopPositions.push Math.floor((windowWidth - w) / 2) - (totalLefts)
-      totalLefts += w
-
-    # Set up the decoy of the last figure in the first spot
-    lastWidth = _.last widths
-    @lastDecoyPosition = Math.floor((windowWidth - lastWidth) / 2) - (@prefixWidth - lastWidth)
-    # Set up the decoy of the first figure in the last spot
-    @firstDecoyPosition = Math.floor((windowWidth - _.first(widths)) / 2) - (totalLefts)
+    { @stopPositions, @lastDecoyPosition, @firstDecoyPosition } = @getPositioning(offset)
 
     @shiftCarousel @stopPositions[@active], false
 
   bindEvents: ->
     # Bind key events to cycle the carousel
-    @$document.on 'keyup.partner-show-carousel', (e) => @keyUp(e)
+    @$document.on 'keyup.partner-show-carousel', @keyUp
     # Update the layout on window resize
     throttledSetStops = _.throttle (=> @setStops()), 500
     @$window.on 'resize.partner-show-carousel', throttledSetStops
-
-  releaseEvents: ->
-    @$document.off '.partner-show-carousel'
-    @$window.off '.partner-show-carousel'
 
   setActive: (index) ->
     @active = index
@@ -158,7 +167,7 @@ module.exports = class Carousel extends Backbone.View
       transform: "translateX(#{(stop ?= @stopPositions[@active])}px)"
       transitionDuration: duration
 
-  keyUp: (e) ->
+  keyUp: (e) =>
     switch e.keyCode
       # left arrow and the h key
       when 37, 72
@@ -261,3 +270,8 @@ module.exports = class Carousel extends Backbone.View
       return @searchClosest(array, target, midIndex + 1, rightIndex)
     else
       return midIndex
+
+  remove: ->
+    @$document.off '.partner-show-carousel'
+    @$window.off '.partner-show-carousel'
+    super

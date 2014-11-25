@@ -1,27 +1,13 @@
 _ = require 'underscore'
 benv = require 'benv'
-fs = require 'graceful-fs'
-jade = require 'jade'
 sinon = require 'sinon'
-path = require 'path'
-{ fabricate } = require 'antigravity'
-{ resolve } = require 'path'
-AdditionalImage = require '../../../models/additional_image'
 Backbone = require 'backbone'
-
-render = (template) ->
-  filename = path.resolve __dirname, "../#{template}.jade"
-  jade.compile(
-    fs.readFileSync(filename),
-    { filename: filename }
-  )
+{ resolve } = require 'path'
 
 describe 'CarouselView', ->
-
   before (done) ->
-    benv.setup =>
-      benv.expose { $: benv.require 'jquery' }
-      $.fn.fillwidth = ->
+    benv.setup ->
+      benv.expose $: benv.require 'jquery'
       Backbone.$ = $
       done()
 
@@ -29,27 +15,39 @@ describe 'CarouselView', ->
     benv.teardown()
 
   beforeEach ->
-    Carousel = require '../view.coffee'
-    @figures = new Backbone.Collection [
-      new AdditionalImage fabricate 'artwork_image', { default: true }
-      new AdditionalImage fabricate 'artwork_image'
-      new AdditionalImage fabricate 'artwork_image'
-      new AdditionalImage fabricate 'artwork_image'
-      new AdditionalImage fabricate 'artwork_image'
-      new AdditionalImage fabricate 'artwork_image'
-    ]
-    $('body').append $("<div class=\"carousel\"></div>")
-    $('.carousel').append render('template')({ carouselFigures: @figures.models })
-    Carousel::setStops = sinon.stub()
-    @view = new Carousel { el: $('.carousel'), collection: @figures }
+    CarouselView = benv.requireWithJadeify resolve(__dirname, '../view'), ['template']
+    @widths = [337, 228, 266, 335, 420, 238, 530]
+    sinon.stub(CarouselView::, 'widths').returns @widths
+    @view = new CarouselView height: 300
 
-  describe '#setStops', ->
+  afterEach ->
+    @view.widths.restore()
 
-    # This doesn't work. Check image widths...?
-    xit 'sets stops for shifting the carousel track left', ->
-      window.width = 1024
-      @view.$('.carousel-pre-decoys').width 1024
-      @view.setStops()
-      @view.stopPositions.should.have.lengthOf @figures.length
-      @view.lastDecoyPosition.should.be.greaterThan _.first(@view.stopPositions)
-      @view.lastDecoyPosition.should.be.lessThan _.last(@view.stopPositions)
+  describe '#lefts', ->
+    it 'calculates "left" positions', ->
+      @view.lefts().should.eql [0, -337, -565, -831, -1166, -1586, -1824]
+
+    it 'supports an optional offset', ->
+      @view.lefts(100).should.eql [-100, -437, -665, -931, -1266, -1686, -1924]
+
+  describe '#leftAlignPositioning', ->
+    it 'returns an object containing the required positioning information for anchoring the carousel to the left', ->
+      @view.leftAlignPositioning().should.eql {
+        stopPositions: [0, -337, -565, -831, -1166, -1586, -1824]
+        lastDecoyPosition: 530
+        firstDecoyPosition: -2354
+      }
+
+  describe '#centerAlignPositioning', ->
+    beforeEach ->
+      sinon.stub(@view.$window, 'width').returns 1000
+
+    afterEach ->
+      @view.$window.width.restore()
+
+    it 'returns an object containing the required positioning information for anchoring the carousel in the center', ->
+      @view.centerAlignPositioning().should.eql {
+        stopPositions: [331, 49, -198, -499, -876, -1205, -1589]
+        lastDecoyPosition: 765
+        firstDecoyPosition: -2023
+      }
