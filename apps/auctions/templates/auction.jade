@@ -9,8 +9,9 @@
       .af-stats-count #{auction.get('eligible_sale_artworks_count')} Works in Auction
       .af-stats-status Bidding #{auction.get('auction_state')}
 
-    a.af-go-button.avant-garde-button-black( href="/auction/#{auction.id}" )
-      | Go to auction
+    if auction.get('auction_state') === 'open'
+      a.af-go-button.avant-garde-button-black( href="/auction/#{auction.id}" )
+        | Go to auction
 
   ul.af-artworks( data-id= auction.id )
     for artwork in auction.related().artworks.models
