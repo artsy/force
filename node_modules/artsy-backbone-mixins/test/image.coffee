@@ -77,6 +77,7 @@ describe 'Image Mixin', ->
     describe 'with an image url', ->
 
       it 'returns missing image', ->
+        @model.unset 'image_versions'
         @model.imageUrl('foo').should.equal '/images/missing_image.png'
 
       it 'returns an image URL when passed a valid version', ->
