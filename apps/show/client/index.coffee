@@ -36,10 +36,8 @@ module.exports.PartnerShowView = class PartnerShowView extends Backbone.View
       error: =>
         @$carousel.remove()
 
-    window.model = @model
     @model.fetchArtworks
       success: (artworks) =>
-        window.artworks = artworks
         if artworks.length > 0
           @collection = artworks
           @$showArtworks.html artworkColumns
