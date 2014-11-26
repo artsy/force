@@ -10,7 +10,7 @@
 .aggregate-page-subheader
   margin 30px 0
   avant-garde()
-  font-size default-avant-garde-font-size
+  font-size 15px
 
 .aggregate-page-items
   clearfix()
@@ -30,7 +30,10 @@
   padding-left 30px
 
 .aggregate-page-items-featured-set
-  block-margins(60px)
+  block-margins(120px)
+  &:last-child .ap-featured-item:last-child
+    padding 0
+    border none
 
 .ap-upcoming-item
   display block
@@ -46,6 +49,3 @@
   padding-bottom 20px
   border-bottom 1px solid gray-lighter-color
   clearfix()
-  &:last-child
-    padding 0
-    border none

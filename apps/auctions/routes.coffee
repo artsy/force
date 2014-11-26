@@ -20,23 +20,28 @@ elligibleFilter = _.partial _.filter, _, ((sale) ->
       Q.allSettled(sales.map (sale) ->
         sale.related().saleArtworks.fetch
           cache: true
-          data: size: 6
+          data: size: 5
           success: (collection, response, options) ->
-            # Sort artworks by width for maximal packing
-            sale.related().artworks.comparator = (artwork) ->
-              artwork.defaultImage().resizeDimensionsFor(height: 260).width
             sale.related().artworks.reset(Artworks.fromSale(collection).models, parse: true)
       ).then(->
         { closed, open, preview } = sales.groupBy 'auction_state'
-        res.locals.sd.AUCTIONS = elligibleFilter(open)
+
+        open = elligibleFilter(open) or []
+        closed = elligibleFilter(closed) or []
+
+        res.locals.sd.CURRENT_AUCTIONS = open
+        res.locals.sd.ARTWORK_DIMENSIONS = _.map open.concat(closed), (auction) ->
+          id: auction.id, dimensions: auction.related().artworks.fillwidthDimensions(260)
+
         res.render 'index',
-          pastAuctions: elligibleFilter(closed) or []
-          currentAuctions: elligibleFilter(open) or []
+          pastAuctions: closed
+          currentAuctions: open
           upcomingAuctions: preview or []
       ).done()
 
 @redirect = (req, res) ->
   new Backbone.Collection().fetch
+    cache: true
     url: "#{API_URL}/api/v1/sets/contains?item_type=Sale&item_id=#{req.params.id}"
     error: res.backboneError
     success: (collection, response, options) ->

@@ -1,7 +1,7 @@
 _ = require 'underscore'
 sinon = require 'sinon'
 Backbone = require 'backbone'
-imageMixin = require '../lib/image'
+imageMixin = require '../lib/image.coffee'
 
 describe 'Image Mixin', ->
 
@@ -22,6 +22,7 @@ describe 'Image Mixin', ->
     describe 'imageUrl', ->
 
       it 'returns missing image', ->
+        @model.set image_versions: []
         @model.imageUrl('foo').should.equal '/images/missing_image.png'
 
       it 'returns an image URL when passed a valid version', ->
@@ -29,6 +30,10 @@ describe 'Image Mixin', ->
 
       it 'returns the first image version by default', ->
         @model.imageUrl().should.equal '/bitty/large_square'
+
+      it 'falls back to any image rather than showing a missing one', ->
+        @model.set image_versions: ['small']
+        @model.imageUrl('large').should.equal '/bitty/small'
 
       describe 'with a round image', ->
         beforeEach ->
@@ -38,9 +43,6 @@ describe 'Image Mixin', ->
 
         it 'returns an image url', ->
           @model.imageUrl('round').should.equal 'http://stazic1.artsy.net/additional_images/42/round.jpg'
-
-        it "returns missing image for a version that doesn't exist", ->
-          @model.imageUrl('square').should.equal '/images/missing_image.png'
 
     describe 'bestImageUrl', ->
 

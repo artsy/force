@@ -18,6 +18,8 @@ module.exports = (secureImagesUrl, imagesUrlPrefix='http://static%d.artsy.net') 
   imageUrl: (version = @defaultImageVersion()) ->
     if @hasImage version
       @sslUrl @get('image_url').replace(':version', version)
+    else if @get('image_versions').length
+      @sslUrl @get('image_url').replace(':version', @get('image_versions')[0])
     else
       @missingImageUrl()
 
