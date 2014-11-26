@@ -66,7 +66,9 @@ module.exports = class Artwork extends Backbone.Model
     @__activeImage__ ?= @defaultImage()
 
   defaultImageUrl: (version = 'medium') ->
-    @defaultImage().imageUrl version
+    url = @defaultImage().imageUrl(version)
+    url = @defaultImage().imageUrl() if url.match 'missing_image'
+    url
 
   isSaved: (artworkCollection) ->
     artworkCollection and artworkCollection.isSaved(@)

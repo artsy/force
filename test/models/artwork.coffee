@@ -215,6 +215,13 @@ describe 'Artwork', ->
       @artwork.images.reset()
       @artwork.defaultImageUrl().should.equal @artwork.missingImageUrl()
 
+    it 'finds a better image if one size is missing', ->
+      @artwork.images = null
+      @artwork.set images: [fabricate 'artwork_image', image_versions: ['small']]
+      @artwork.defaultImageUrl('large').should.match(
+        /// /local/additional_images/.*/small.jpg ///
+      )
+
   describe '#defaultImage', ->
     it 'works if artwork.images is null but has images', ->
       @artwork.images = null
