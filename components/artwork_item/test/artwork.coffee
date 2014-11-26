@@ -29,10 +29,16 @@ describe 'Artwork Item template', ->
       $('.artwork-item-image').attr('src').should.containEql 'large'
 
     it 'displays missing image if the size is not available', ->
-      @artwork.attributes
+      @artwork.set images: fabricate('artwork_image', image_versions: [])
       $ = cheerio.load render('artwork')({ artwork: @artwork, artworkSize: 'banana' })
       $('.artwork-item-image').attr('src').should.not.containEql 'banana'
       $('.artwork-item-image').attr('src').should.containEql 'missing'
+
+    it 'displays a fallback nothing available', ->
+      @artwork.set images: fabricate('artwork_image', image_versions: ['small'])
+      $ = cheerio.load render('artwork')({ artwork: @artwork, artworkSize: 'banana' })
+      $('.artwork-item-image').attr('src').should.not.containEql 'banana'
+      $('.artwork-item-image').attr('src').should.containEql 'small'
 
     it 'renders with a fixed with', ->
       $ = cheerio.load render('artwork')({ artwork: @artwork, imageWidth: 500 })
