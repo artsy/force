@@ -9,6 +9,4 @@ module.exports = (req) ->
   req
     .set('X-XAPP-TOKEN': artsyXappMiddlware.token)
     .timeout(API_REQUEST_TIMEOUT)
-    .on 'error', ->
-      console.warn 'API REQUEST TIMEOUT'
-      req.abort()
+    .on 'error', -> req.abort()
