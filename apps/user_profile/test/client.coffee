@@ -34,6 +34,20 @@ describe 'UserProfileView', ->
     Backbone.sync.restore()
     benv.teardown()
 
+  describe '#handleWebsiteClick', ->
+    beforeEach ->
+      @openedWindowSpy = sinon.stub()
+      @openedWindowSpy.opener = 1
+      @openSpy = sinon.stub(window, "open").returns(@openedWindowSpy)
+
+    it 'sets window.opener to null', ->
+      @view.model.set 'website', 'http://example.org'
+      @view.handleWebsiteClick()
+      @openSpy.called.should.be.ok
+      @openSpy.args[0][0].should.equal 'http://example.org'
+      @openSpy.args[0][1].should.equal '_blank'
+      @openedWindowSpy.opener?.should.be.null
+
   describe '#renderState', ->
 
     it 'sets the state for just posts', ->
@@ -208,3 +222,4 @@ describe 'Slideshow', ->
       @view.next()
       @view.toggle()
       @view.$('.is-active').index().should.equal 0
+

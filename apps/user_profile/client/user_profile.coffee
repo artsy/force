@@ -14,12 +14,19 @@ COLUMN_WIDTH = 300
 
 module.exports = class UserProfileView extends Backbone.View
 
+  events:
+    'click a.website': 'handleWebsiteClick'
+
   initialize: (options) ->
     @followProfiles = if CurrentUser.orNull() then new FollowProfiles [] else null
     @handleFollowButton()
     @followProfiles?.syncFollows [@model.get('id')]
     @model.fetchFavorites success: ((@favorites) =>), complete: => @render()
     @model.fetchPosts success: ((@posts) =>), complete: => @render()
+
+  handleWebsiteClick: ->
+    popup = window.open @model.get('website'), '_blank'
+    popup.opener = null
 
   handleFollowButton: ->
     if sd.CURRENT_USER?.default_profile_id == @model.get('id')

@@ -89,3 +89,15 @@ describe 'GoogleSearchResult', ->
       result.get('image_url').should.equal 'imgurl'
       result.get('location').should.equal '/artist/cool-artist'
       result.get('display_model').should.equal 'artist'
+
+  describe '#ogType', ->
+
+    it 'works without metadata', ->
+      result = new GoogleSearchResult({
+        link: 'https://artsy.net/artist/cool-artist'
+        title: "Artist Name | Artsy"
+        snippet: 'cool artist snippet'
+        pagemap:
+          metatags: null
+      })
+      result.ogType()
