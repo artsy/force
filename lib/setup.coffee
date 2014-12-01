@@ -29,7 +29,6 @@ proxyReflection = require './middleware/proxy_to_reflection'
 proxySitemaps = require './middleware/proxy_sitemaps'
 localsMiddleware = require './middleware/locals'
 micrositeMiddleware = require './middleware/microsite'
-helpersMiddleware = require './middleware/helpers'
 ensureSSL = require './middleware/ensure_ssl'
 escapedFragmentMiddleware = require './middleware/escaped_fragment'
 sameOriginMiddleware = require './middleware/same_origin'
@@ -42,9 +41,11 @@ cookieParser = require 'cookie-parser'
 session = require 'cookie-session'
 favicon = require 'serve-favicon'
 logger = require 'morgan'
+editRequest = require './edit_request'
 apiCache = require './middleware/api_cache'
 raven = require 'raven'
 fs = require 'graceful-fs'
+artsyError = require 'artsy-error-handler'
 
 # Setup sharify constants & require dependencies that use sharify data
 sharify.data =
@@ -100,7 +101,7 @@ module.exports = (app) ->
   # Override Backbone to use server-side sync, inject the XAPP token,
   # add redis caching, and augment sync with Q promises.
   Backbone.sync = require "backbone-super-sync"
-  Backbone.sync.editRequest = (req) -> req.set('X-XAPP-TOKEN': artsyXappMiddlware.token)
+  Backbone.sync.editRequest = editRequest
   backboneCacheSync(Backbone.sync, REDIS_URL, DEFAULT_CACHE_TIME, NODE_ENV) if REDIS_URL
 
   # Inject sharify data before anything
@@ -164,7 +165,7 @@ module.exports = (app) ->
   app.use flashMiddleware
   app.use localsMiddleware
   app.use micrositeMiddleware
-  app.use helpersMiddleware
+  app.use artsyError.helpers
   app.use sameOriginMiddleware
   app.use hstsMiddleware
   app.use escapedFragmentMiddleware
@@ -241,6 +242,5 @@ module.exports = (app) ->
 
   # Finally 404 and error handling middleware when the request wasn't handled
   # successfully by anything above.
-  require('artsy-error-handler') app,
-    template: path.resolve(__dirname, '../components/main_layout/templates/error.jade'),
-    showDetail: NODE_ENV isnt 'production'
+  artsyError.handlers app,
+    template: path.resolve(__dirname, '../components/main_layout/templates/error.jade')
