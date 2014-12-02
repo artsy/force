@@ -3,7 +3,6 @@ Profile = require '../../models/profile.coffee'
 Fair = require '../../models/fair.coffee'
 Search = require '../../collections/search.coffee'
 cache = require '../../lib/cache'
-client = cache.client
 kinds = require '../favorites_follows/kinds'
 { crop, fill } = require '../../components/resizer'
 
@@ -93,12 +92,40 @@ kinds = require '../favorites_follows/kinds'
     error: res.backboneError
     success: (show) -> res.redirect "/show/#{show.id}"
 
-# Busts cache for this fair, admin-only
-@bustCache = (req, res, next) ->
-  return next() unless req.user?.get('type') is 'Admin'
-  fairId = req.params.id
-  if client
-    client.del("fair:#{fairId}")
-    res.redirect "/#{fairId}"
-  else
-    res.redirect "/#{fairId}"
+# Fetches and caches fair data to be used across the fair app
+@fetchFairData = (req, res, next) ->
+  profile = res.locals.profile
+  return next() unless profile?.isFairOranizer() and profile?.get('owner').default_fair_id
+  fair = new Fair id: profile.get('owner').default_fair_id
+  fair.fetchPrimarySets
+    error: res.backboneError
+    success: (primarySets) =>
+      res.locals.primarySets = primarySets
+      end = (data) ->
+        res.locals[k] = v for k, v of data
+        res.locals.mediums = data.filterSuggest.mediumsHash()
+        res.locals.sd.EXHIBITORS_COUNT = data.galleries.length
+        res.locals.sd.FAIR = data.fair.toJSON()
+        res.locals.sd.PROFILE = data.profile.toJSON()
+        next()
+      key = "fair:#{req.params.id}"
+      cache.getHash key, {
+        fair: require '../../models/fair'
+        profile: require '../../models/profile'
+        filterSuggest: require '../../models/filter_suggest'
+        filteredSearchOptions: require '../../models/filter_suggest'
+        filteredSearchColumns: null # Vanilla JS object
+        sections: require('backbone').Collection
+        galleries: require('backbone').Collection
+        exhibitorsCount: null # Just a Number
+        exhibitorsAToZGroup: null # Complex data structures that can't simply be wrapped in a class.
+        artistsAToZGroup: null # We'll need to deserialized this manually.
+        coverImage: require '../../models/cover_image'
+      }, (err, cachedData) ->
+        return next err if err
+        return end cachedData if cachedData
+        fair.fetchOverviewData
+          error: res.backboneError
+          success: (data) ->
+            cache.setHash key, data
+            end data

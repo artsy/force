@@ -1,27 +1,30 @@
 #
-# /:id
+# Large fair app that does browsing, microsite, and more. /:fair.profile_id/*
 #
 
 express = require 'express'
 routes = require './routes'
-fairDataMiddleware = require './lib/fair_data_middleware'
+timeout = require 'connect-timeout'
 
 app = module.exports = express()
 app.set 'views', __dirname + '/templates'
 app.set 'view engine', 'jade'
+getFairData = [
+  timeout('25s')
+  routes.fetchFairData
+  (req, res, next) -> next() unless req.timedout
+]
 
-app.get '/:id', fairDataMiddleware, routes.overview
-app.get '/:id/overview', fairDataMiddleware, routes.overview
-app.get '/:id/posts', fairDataMiddleware, routes.fairPosts
-app.get '/:id/info', fairDataMiddleware, routes.info
-app.get '/:id/for-you', fairDataMiddleware, routes.forYou
-app.get '/:id/search', fairDataMiddleware, routes.search
-app.get '/:id/browse/show/:partner_id', fairDataMiddleware, routes.showRedirect
-app.get '/:id/browse', fairDataMiddleware, routes.browse
-app.get '/:id/browse/*', fairDataMiddleware, routes.browse
-app.get '/:id/following/:type', fairDataMiddleware, routes.follows
-app.get '/:id/favorites', fairDataMiddleware, routes.favorites
+app.get '/:id', getFairData, routes.overview
+app.get '/:id/overview', getFairData, routes.overview
+app.get '/:id/posts', getFairData, routes.fairPosts
+app.get '/:id/info', getFairData, routes.info
+app.get '/:id/for-you', getFairData, routes.forYou
+app.get '/:id/search', getFairData, routes.search
+app.get '/:id/browse/show/:partner_id', getFairData, routes.showRedirect
+app.get '/:id/browse', getFairData, routes.browse
+app.get '/:id/browse/*', getFairData, routes.browse
+app.get '/:id/following/:type', getFairData, routes.follows
+app.get '/:id/favorites', getFairData, routes.favorites
 # Handle microgravity urls that get crawled by google
-app.get '/:id/programming', fairDataMiddleware, routes.overview
-# Cache busting route
-app.get '/fair/bust_cache/:id', routes.bustCache
+app.get '/:id/programming', getFairData, routes.overview

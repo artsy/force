@@ -7,6 +7,10 @@ routes = rewire '../routes'
 CurrentUser = require '../../../models/current_user.coffee'
 Fair = require '../../../models/fair.coffee'
 Profile = require '../../../models/profile.coffee'
+FilterSuggest = require '../../../models/filter_suggest'
+FilteredSearchOptions = require '../../../models/filter_suggest'
+OrderedSets = require '../../../collections/ordered_sets'
+CoverImage = require '../../../models/cover_image'
 
 describe 'Fair routes', ->
 
@@ -131,25 +135,58 @@ describe 'Fair routes', ->
       ]
       @res.redirect.args[0][0].should.containEql '/show/gagosian-gallery-inez-and-vinood'
 
-  describe 'cache busting', ->
+describe '#fetchFairData', ->
 
-    beforeEach ->
-      routes.__set__ 'client', @client = { del: sinon.stub() }
+  beforeEach ->
+    sinon.stub Backbone, 'sync'
+    sinon.stub Fair.prototype, 'fetchOverviewData'
+    sinon.stub Fair.prototype, 'fetchPrimarySets'
+    @success = =>
+      Fair::fetchPrimarySets.args[0][0].success()
+      Fair::fetchOverviewData.args[0][0].success(
+        fair: new Fair(fabricate 'fair', id: 'the-foo-show')
+        profile: new Profile(fabricate 'profile', id: 'thefooshow')
+        filterSuggest: new FilterSuggest({ "design": 4002, "drawing": 3772 })
+        filteredSearchOptions: new FilterSuggest({ "design": 4002, "drawing": 3772 })
+        filteredSearchColumns: []
+        sections: new Backbone.Collection
+        galleries: new Backbone.Collection([fabricate 'partner'])
+        exhibitorsCount: 1
+        exhibitorsAToZGroup: []
+        artistsAToZGroup: []
+        coverImage: new CoverImage(fabricate 'cover_image')
+      )
+    @cache = routes.__get__ 'cache'
+    @cache.setHash = sinon.stub()
+    @req = { params: { id: 'the-foo-show' } }
+    @res = { locals: { sd: {}, profile: new Profile(fabricate('fair_profile')) } }
+    @next = sinon.stub()
 
-    describe '#bustCache', ->
+  afterEach ->
+    Backbone.sync.restore()
+    Fair::fetchOverviewData.restore()
+    Fair::fetchPrimarySets.restore()
 
-      beforeEach ->
-        @req = { params: { id: 'cat-fair' } }
-        @res = { redirect: sinon.stub() }
+  it 'fetches the fair data', ->
+    routes.fetchFairData @req, @res, @next
+    @success()
+    Fair::fetchOverviewData.called.should.be.ok
 
-      it 'deletes the fair key in redis when navigated to by an admin user', ->
-        @req.user = new CurrentUser fabricate 'user', type: 'Admin'
-        routes.bustCache @req, @res, ->
-        @client.del.args[0][0].should.equal 'fair:cat-fair'
-        @res.redirect.args[0][0].should.equal '/cat-fair'
+  it 'sets a bunch of locals', ->
+    routes.fetchFairData @req, @res, @next
+    @success()
+    @res.locals.fair.get('id').should.equal 'the-foo-show'
+    @res.locals.sd.EXHIBITORS_COUNT.should.equal 1
+    @res.locals.sd.FAIR.id.should.equal 'the-foo-show'
+    @res.locals.sd.PROFILE.id.should.equal 'thefooshow'
 
-      it 'does nothing when not an admin user', ->
-        routes.bustCache @req, @res, (next = sinon.stub())
-        @client.del.called.should.not.be.ok
-        @res.redirect.called.should.not.be.ok
-        next.called.should.be.ok
+  it 'caches the data in a special key', ->
+    routes.fetchFairData @req, @res, @next
+    @success()
+    @cache.setHash.args[0][0].should.equal 'fair:the-foo-show'
+
+  it 'caches the big blob of data', ->
+    routes.fetchFairData @req, @res, @next
+    @success()
+    (@cache.setHash.args[0][1].fair?).should.be.ok
+    (@cache.setHash.args[0][1].profile?).should.be.ok
