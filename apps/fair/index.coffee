@@ -1,22 +1,20 @@
 #
-# Large fair app that does browsing, microsite, and more. /:fair_profile_id/*
+# Large fair app that does browsing, microsite, and more. /:fair.profile_id/*
 #
 
 express = require 'express'
 routes = require './routes'
 timeout = require 'connect-timeout'
-fairDataMiddleware = require './lib/fair_data_middleware'
 
 app = module.exports = express()
 app.set 'views', __dirname + '/templates'
 app.set 'view engine', 'jade'
 getFairData = [
-  timeout('1s')
-  fairDataMiddleware
+  timeout('25s')
+  routes.fetchFairData
   (req, res, next) -> next() unless req.timedout
 ]
 
-# Routes that require the large blob of cached fair data. Timedout for Heroku.
 app.get '/:id', getFairData, routes.overview
 app.get '/:id/overview', getFairData, routes.overview
 app.get '/:id/posts', getFairData, routes.fairPosts
