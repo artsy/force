@@ -49,6 +49,7 @@
     "diacritics": "*",
     "graceful-fs": "*",
     "embed-video": "*",
+    "connect-timeout": "*",
 
     "browserify": "*",
     "stylus": "*",

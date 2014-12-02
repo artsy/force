@@ -92,13 +92,3 @@ kinds = require '../favorites_follows/kinds'
   fair.fetchShowForPartner req.params.partner_id,
     error: res.backboneError
     success: (show) -> res.redirect "/show/#{show.id}"
-
-# Busts cache for this fair, admin-only
-@bustCache = (req, res, next) ->
-  return next() unless req.user?.get('type') is 'Admin'
-  fairId = req.params.id
-  if client
-    client.del("fair:#{fairId}")
-    res.redirect "/#{fairId}"
-  else
-    res.redirect "/#{fairId}"
