@@ -1,19 +1,29 @@
 #
 # A library of common cache helpers. If you need to do something more complex than
-# the naive query caching Backbone Cache Sync (https://github.com/artsy/backbone-cache-sync)
+# the naive query caching in Backbone Super Sync (https://github.com/artsy/backbone-super-sync#built-in-request-caching)
 # provides then it's recommended to wrap it up in a function in this lib.
+#
+# This also providers a safe wrapper around redis calls so the app can function
+# without redis when necessary.
 #
 
 _ = require 'underscore'
-{ NODE_ENV, DEFAULT_CACHE_TIME, REDIS_URL, DEFAULT_CACHE_TIME } = require '../config'
+{ NODE_ENV, OPENREDIS_URL, DEFAULT_CACHE_TIME } = require '../config'
 redis = require 'redis'
 client = null
 
 # Setup redis client
-if NODE_ENV isnt "test" and REDIS_URL
-  red = require("url").parse(REDIS_URL)
+@setup = (callback) ->
+  return callback() if NODE_ENV is "test" or not OPENREDIS_URL
+  red = require("url").parse(OPENREDIS_URL)
+
   client = redis.createClient(red.port, red.hostname)
-  client.auth(red.auth.split(":")[1]) if red.auth
+    .on 'error', _.once (err) ->
+      client = null
+      console.warn 'REDIS_CONNECTION_ERROR', err
+      callback()
+    .on 'ready', _.once callback
+  client.auth(red.auth.split(":")[1]) if client and red.auth
 
 # Export the redis client
 @client = client

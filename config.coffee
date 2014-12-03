@@ -39,7 +39,7 @@ module.exports =
   SNOWPLOW_COLLECTOR_HOST: 'snowplow-stream-collector.herokuapp.com'
   GOOGLE_ANALYTICS_ID: null
   COOKIE_DOMAIN: null
-  REDIS_URL: null
+  OPENREDIS_URL: null
   GOOGLE_MAPS_API_KEY: null
   REVEAL_ERRORS: 'production' != process.env['NODE_ENV']
   DELTA_HOST: 'delta.artsy.net'
@@ -50,8 +50,6 @@ module.exports =
   ENABLE_AB_TEST: true
   KIOSK_MODE: false
   KIOSK_PAGE: false
-  CLIENT_CACHE_ROUTES: null
-  CLIENT_CACHE_TIME: 3600
   MAX_SOCKETS: -1
   EMPTY_COLLECTION_SET_ID: null
   GEMINI_S3_ACCESS_KEY: null

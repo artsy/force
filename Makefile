@@ -29,7 +29,7 @@ sp:
 
 # Start server pointing to production with cache
 spc:
-	APP_URL=http://localhost:5000 REDIS_URL=http://localhost:6379 APPLICATION_NAME=force-production API_URL=https://api.artsy.net foreman start
+	APP_URL=http://localhost:5000 OPENREDIS_URL=http://localhost:6379 APPLICATION_NAME=force-production API_URL=https://api.artsy.net foreman start
 
 # Start server in debug mode pointing to staging & open node inspector
 ssd:
