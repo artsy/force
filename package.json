@@ -16,7 +16,6 @@
     "sharify": "*",
     "backbone": "*",
     "backbone-super-sync": "*",
-    "backbone-cache-sync": "*",
     "coffee-script": "*",
     "http-proxy": "*",
     "underscore": "*",

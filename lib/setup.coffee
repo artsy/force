@@ -4,16 +4,19 @@
 # populating sharify data
 #
 
-{ API_URL, NODE_ENV, ARTSY_ID, ARTSY_SECRET, SESSION_SECRET, SESSION_COOKIE_MAX_AGE, PORT, ASSET_PATH,
-  FACEBOOK_APP_NAMESPACE, MOBILE_MEDIA_QUERY, MOBILE_URL, APP_URL, REDIS_URL, DEFAULT_CACHE_TIME,
-  CANONICAL_MOBILE_URL, IMAGES_URL_PREFIX, SECURE_IMAGES_URL, GOOGLE_ANALYTICS_ID, MIXPANEL_ID, SNOWPLOW_COLLECTOR_HOST, GOOGLE_SEARCH_CX, GOOGLE_SEARCH_KEY,
-  COOKIE_DOMAIN, AUTO_GRAVITY_LOGIN, GOOGLE_MAPS_API_KEY, ADMIN_URL, CMS_URL, MAX_SOCKETS, ARTWORK_EMBED_URL,
-  DELTA_HOST, ENABLE_AB_TEST, KIOSK_MODE, KIOSK_PAGE, SESSION_COOKIE_KEY, SENTRY_DSN, SENTRY_PUBLIC_DSN, SHOW_AUCTIONS_IN_HEADER,
-  EMPTY_COLLECTION_SET_ID, GEMINI_S3_ACCESS_KEY, GEMINI_APP, GEMINI_ACCOUNT_KEY, BIDDER_H1_COPY, BIDDER_H2_COPY, APPLICATION_NAME, EMBEDLY_KEY, DISABLE_IMAGE_PROXY,
+{ API_URL, NODE_ENV, ARTSY_ID, ARTSY_SECRET, SESSION_SECRET,
+  SESSION_COOKIE_MAX_AGE, PORT, ASSET_PATH, FACEBOOK_APP_NAMESPACE,
+  MOBILE_MEDIA_QUERY, MOBILE_URL, APP_URL, OPEN_REDIS_URL, DEFAULT_CACHE_TIME,
+  CANONICAL_MOBILE_URL, IMAGES_URL_PREFIX, SECURE_IMAGES_URL,
+  GOOGLE_ANALYTICS_ID, MIXPANEL_ID, SNOWPLOW_COLLECTOR_HOST, GOOGLE_SEARCH_CX,
+  GOOGLE_SEARCH_KEY, COOKIE_DOMAIN, AUTO_GRAVITY_LOGIN, GOOGLE_MAPS_API_KEY,
+  ADMIN_URL, CMS_URL, MAX_SOCKETS, ARTWORK_EMBED_URL, DELTA_HOST,
+  ENABLE_AB_TEST, KIOSK_MODE, KIOSK_PAGE, SESSION_COOKIE_KEY, SENTRY_DSN,
+  SENTRY_PUBLIC_DSN, SHOW_AUCTIONS_IN_HEADER, EMPTY_COLLECTION_SET_ID,
+  GEMINI_S3_ACCESS_KEY, GEMINI_APP, GEMINI_ACCOUNT_KEY, BIDDER_H1_COPY,
+  BIDDER_H2_COPY, APPLICATION_NAME, EMBEDLY_KEY, DISABLE_IMAGE_PROXY,
   POSITRON_URL } = config = require "../config"
-
 { parse, format } = require 'url'
-
 _ = require 'underscore'
 express = require "express"
 Backbone = require "backbone"
@@ -22,7 +25,6 @@ http = require 'http'
 path = require "path"
 artsyPassport = require 'artsy-passport'
 artsyXappMiddlware = require 'artsy-xapp-middleware'
-backboneCacheSync = require 'backbone-cache-sync'
 redirectMobile = require './middleware/redirect_mobile'
 proxyGravity = require './middleware/proxy_to_gravity'
 proxyReflection = require './middleware/proxy_to_reflection'
@@ -42,10 +44,10 @@ session = require 'cookie-session'
 favicon = require 'serve-favicon'
 logger = require 'morgan'
 editRequest = require './edit_request'
-apiCache = require './middleware/api_cache'
 raven = require 'raven'
 fs = require 'graceful-fs'
 artsyError = require 'artsy-error-handler'
+cache = require './cache'
 
 # Setup sharify constants & require dependencies that use sharify data
 sharify.data =
@@ -102,7 +104,8 @@ module.exports = (app) ->
   # add redis caching, and augment sync with Q promises.
   Backbone.sync = require "backbone-super-sync"
   Backbone.sync.editRequest = editRequest
-  backboneCacheSync(Backbone.sync, REDIS_URL, DEFAULT_CACHE_TIME, NODE_ENV) if REDIS_URL
+  Backbone.sync.cacheClient = cache.client
+  Backbone.sync.defaultCacheTime = DEFAULT_CACHE_TIME
 
   # Inject sharify data before anything
   app.use sharify
@@ -127,7 +130,6 @@ module.exports = (app) ->
 
   # Body parser has to be after proxy middleware for
   # node-http-proxy to work with POST/PUT/DELETE)
-  app.use apiCache if apiCache?
   app.all '/api*', proxyGravity.api
 
   # Setup Artsy XAPP & Passport middleware for authentication along with the
