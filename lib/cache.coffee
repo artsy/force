@@ -8,14 +8,14 @@
 #
 
 _ = require 'underscore'
-{ NODE_ENV, OPEN_REDIS_URL, DEFAULT_CACHE_TIME } = require '../config'
+{ NODE_ENV, OPENREDIS_URL, DEFAULT_CACHE_TIME } = require '../config'
 redis = require 'redis'
 client = null
 
 # Setup redis client
 @setup = (callback) ->
-  return callback() if NODE_ENV is "test" or not OPEN_REDIS_URL
-  red = require("url").parse(OPEN_REDIS_URL)
+  return callback() if NODE_ENV is "test" or not OPENREDIS_URL
+  red = require("url").parse(OPENREDIS_URL)
 
   client = redis.createClient(red.port, red.hostname)
     .on 'error', _.once (err) ->

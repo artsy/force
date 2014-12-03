@@ -39,7 +39,7 @@ module.exports =
   SNOWPLOW_COLLECTOR_HOST: 'snowplow-stream-collector.herokuapp.com'
   GOOGLE_ANALYTICS_ID: null
   COOKIE_DOMAIN: null
-  OPEN_REDIS_URL: null
+  OPENREDIS_URL: null
   GOOGLE_MAPS_API_KEY: null
   REVEAL_ERRORS: 'production' != process.env['NODE_ENV']
   DELTA_HOST: 'delta.artsy.net'
