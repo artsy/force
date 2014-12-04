@@ -93,8 +93,8 @@ module.exports = class Post extends Backbone.Model
 
   artworks: ->
     new Artworks(@get('attachments')
-      .filter((attachment) -> attachment.type == "PostArtwork" && attachment.artwork )
-      .map((attachment) -> attachment.artwork )
+      ?.filter((attachment) -> attachment.type is "PostArtwork" and attachment.artwork)
+      ?.map((attachment) -> attachment.artwork)
     )
 
   relatedArtists: (limit=10) ->
