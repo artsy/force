@@ -13,6 +13,6 @@ app.set 'view engine', 'jade'
 
 app.get '/artist/:id/follow', routes.follow
 app.get '/artist/:id', routes.index
-_.map sections, (slug) -> app.get "/artist/:id/#{slug}", routes.tab
+_.map sections, ({ slug }) ->
+  app.get "/artist/:id/#{slug}", routes.tab
 app.get '/artist/data/:id/:section', routes.data # Temporary
-app.get '/artist/:id/*', routes.index # Handled client-side

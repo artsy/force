@@ -1,4 +1,5 @@
 include ../../../components/share/template
+include ../../../components/util/activator
 
 header.artist-header
   h1.avant-garde-header-center= artist.get('name')
@@ -27,6 +28,11 @@ header.artist-header
       +share(artist.get('name') + ' on Artsy', artist.imageUrl('large'))
 
   #artist-tabs.artist-tabs
-    //- Rendered client-side
-    .loading-ellipsis: each x in [0, 0, 0]
-      span .
+    nav.garamond-tablist
+      for link, i in nav.sections()
+        a.garamond-tab(
+          href= link.href
+          class= activeClass(link.href)
+        )= link.name
+        if i !== nav.sections().length - 1
+          span.garamond-tab-separator

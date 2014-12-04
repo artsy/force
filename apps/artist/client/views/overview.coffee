@@ -1,5 +1,5 @@
 _ = require 'underscore'
-sd = require('sharify').data
+{ STATUSES } = require('sharify').data
 Backbone = require 'backbone'
 analytics = require '../../../../lib/analytics.coffee'
 mediator = require '../../../../lib/mediator.coffee'
@@ -8,7 +8,6 @@ Sticky = require '../../../../components/sticky/index.coffee'
 RelatedGenesView = require '../../../../components/related_links/types/artist_genes.coffee'
 RelatedRepresentationsGenesView = require '../../../../components/related_links/types/artist_representations.coffee'
 # Main section
-WorksView = require './works.coffee'
 ArtworkFilter = require '../../../../components/artwork_filter/index.coffee'
 # Bottom sections
 RelatedPostsView = require '../../../../components/related_posts/view.coffee'
@@ -19,11 +18,9 @@ template = -> require('../../templates/overview.jade') arguments...
 
 module.exports = class OverviewView extends Backbone.View
   subViews: []
+  fetches: []
 
-  events:
-    'click .artist-works-sort a': 'onSortChange'
-
-  initialize: ({ @user, @data }) ->
+  initialize: ({ @user }) ->
     @sticky = new Sticky
 
   setupSubHeader: ->
@@ -36,15 +33,17 @@ module.exports = class OverviewView extends Backbone.View
     @subViews.push @filterView
 
   setupRelatedShows: ->
-    if (collection = @model.related().shows).length
-      subView = new RelatedShowsView collection: collection
+    if STATUSES.shows
+      @fetches.push @model.related().shows.fetch()
+      subView = new RelatedShowsView collection: @model.related().shows
       @$('#artist-related-shows').html subView.render().$el
       @subViews.push subView
       @setupRelatedSection @$('#artist-related-shows-section')
 
   setupRelatedPosts: ->
-    if (collection = @model.related().posts).length
-      subView = new RelatedPostsView collection: collection, numToShow: 4
+    if STATUSES.posts
+      @fetches.push @model.related().posts.fetch()
+      subView = new RelatedPostsView collection: @model.related().posts, numToShow: 4
       @$('#artist-related-posts').html subView.render().$el
       @subViews.push subView
       @setupRelatedSection @$('#artist-related-posts-section')
@@ -66,23 +65,23 @@ module.exports = class OverviewView extends Backbone.View
     $el
 
   setupRelatedArtists: ->
-    @renderRelatedArtists 'artists'
-    @renderRelatedArtists 'contemporary'
+    _.each _.pick(STATUSES, 'artists', 'contemporary'), (display, key) =>
+      if display
+        @fetches.push @model.related()[key].fetch
+          data: size: 5
+          success: =>
+            @renderRelatedArtists key
 
   setupLastModifiedDate: ->
-    @listenToOnce @filterView.filter, 'sync', @pendLastModified
+    @fetches.push @waitForFilter()
+    $.when.apply(null, @fetches).then =>
+      lastModified @model, @filterView.artworks
 
-  pendLastModified: ->
+  waitForFilter: ->
+    dfd = $.Deferred()
     { filter, artworks } = @filterView
-    # If there is a total but no artworks yet...
-    if filter.root.get('total') and artworks.length is 0
-      # ...then wait for them to sync
-      @listenToOnce artworks, 'sync', @renderLastModified
-    else
-      @renderLastModified()
-
-  renderLastModified: ->
-    lastModified @model, @filterView.artworks
+    @listenToOnce artworks, 'sync', dfd.resolve
+    dfd.promise()
 
   renderRelatedArtists: (type) ->
     $section = @$("#artist-related-#{type}-section")

@@ -1,4 +1,4 @@
-{ API_URL } = require('sharify').data
+{ API_URL, APP_URL } = require('sharify').data
 Backbone = require 'backbone'
 
 module.exports =
@@ -29,19 +29,19 @@ module.exports =
     artworks.url = "#{@url()}/artworks?published=true"
 
     articles = new Articles
-    articles.url = "/artist/data/#{@id}/publications?merchandisable[]=false"
+    articles.url = "#{APP_URL}/artist/data/#{@id}/publications?merchandisable[]=false"
 
     merchandisable = new Books
-    merchandisable.url = "/artist/data/#{@id}/publications?merchandisable[]=true"
+    merchandisable.url = "#{APP_URL}/artist/data/#{@id}/publications?merchandisable[]=true"
 
     bibliography = new Books
-    bibliography.url = "/artist/data/#{@id}/publications"
+    bibliography.url = "#{APP_URL}/artist/data/#{@id}/publications"
 
     collections = new Backbone.Collection
-    collections.url = "/artist/data/#{@id}/collections"
+    collections.url = "#{APP_URL}/artist/data/#{@id}/collections"
 
     exhibitions = new Backbone.Collection
-    exhibitions.url = "/artist/data/#{@id}/exhibitions"
+    exhibitions.url = "#{APP_URL}/artist/data/#{@id}/exhibitions"
 
     # Return:
     @__related__ =

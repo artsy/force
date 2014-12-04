@@ -22,11 +22,11 @@ class CollectionsListView extends FilterableListView
 
 module.exports = class CollectionsView extends Backbone.View
   initialize: ->
-    @collection = @model.related().collections
+    @model.related().collections.fetch()
 
   postRender: ->
     @subView = new CollectionsListView
-      collection: @collection
+      collection: @model.related().collections
       filter_by: 'kind'
       filters:
         public: 'Public Collections'

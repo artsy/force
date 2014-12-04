@@ -3,12 +3,11 @@ Q = require 'q'
 fs = require 'graceful-fs'
 { resolve } = require 'path'
 Backbone = require 'backbone'
-Artist = require '../../models/artist'
 { stringifyJSONForWeb } = require '../../components/util/json'
-
-@tab = (req, res) =>
-  req.params.tab = res.locals.sd.CURRENT_PATH.split('/').pop()
-  @index req, res
+Artist = require '../../models/artist'
+getStatuses = require './statuses'
+sections = require './sections'
+Nav = require './nav'
 
 @index = (req, res) ->
   artist = new Artist id: req.params.id
@@ -16,21 +15,35 @@ Artist = require '../../models/artist'
   Q.allSettled([
     artist.fetch(cache: true)
     artist.related().artworks.fetch(cache: true, data: sort: '-iconicity', published: true, size: 7)
-  ]).spread((artistRequest, artworksRequest) ->
+    getStatuses(artist, { cache: true })
+  ]).spread((artistRequest, artworksRequest, statusesRequest) ->
+
+    nav = new Nav artist: artist, statuses: statusesRequest.value
+
     if artistRequest.state is 'rejected'
       res.backboneError(artist, artistRequest.reason)
     else
       if req.params.tab? or artist.href() is res.locals.sd.CURRENT_PATH
+
         res.locals.sd.ARTIST = artist.toJSON()
-        res.locals.sd.TAB = req.params.tab
+        res.locals.sd.TAB = tab = req.params.tab or ''
+        res.locals.sd.STATUSES = statuses = statusesRequest.value
+
         res.render 'index',
           artist: artist
+          tab: tab
+          statuses: statuses
+          nav: nav
           jsonLD: stringifyJSONForWeb(artist.toJSONLD())
-          tab: req.params.tab
+
       else
         res.redirect artist.href()
 
   ).done()
+
+@tab = (req, res) =>
+  req.params.tab = res.locals.sd.CURRENT_PATH.split('/').pop()
+  @index req, res
 
 @follow = (req, res) ->
   return res.redirect "/artist/#{req.params.id}" unless req.user

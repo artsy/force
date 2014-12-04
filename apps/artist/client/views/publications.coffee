@@ -23,11 +23,12 @@ class BiblographyListView extends FilterableListView
 
 module.exports = class PublicationsView extends Backbone.View
   initialize: ->
-    @collection = @model.related().bibliography
+    @listenTo @model.related().bibliography, 'sync', @render
+    @model.related().bibliography.fetch()
 
   postRender: ->
     @subView = new BiblographyListView
-      collection: @collection
+      collection: @model.related().bibliography
       group_by: 'publish_date'
       filter_by: 'kind'
       filters:
@@ -44,8 +45,8 @@ module.exports = class PublicationsView extends Backbone.View
   render: ->
     @$el.html template
       artist: @model
-      books: @collection.where(merchandisable: true)
-      bibliography: @collection
+      books: @model.related().bibliography.where(merchandisable: true)
+      bibliography: @model.related().bibliography
     _.defer => @postRender()
     this
 

@@ -11,8 +11,7 @@ template = -> require('../../templates/sections/works.jade') arguments...
 module.exports = class WorksView extends Backbone.View
   subViews: []
 
-  initialize: (options) ->
-    { @user } = options
+  initialize: ({ @user }) ->
     @sticky = new Sticky
 
   fadeInSection: ($el) ->
@@ -21,11 +20,6 @@ module.exports = class WorksView extends Backbone.View
     $el
 
   setupArtworkFilter: ->
-    # Need to resolve issues with changing heights and sticky not getting correct height
-    # @listenToOnce mediator, 'artwork_filter:filter:sync', (model) ->
-    #   # Once the filter height is apparent
-    #   @sticky.add @$('#artwork-filter')
-    # @listenTo filterRouter.view.artworks, 'sync', @sticky.rebuild
     filterRouter = ArtworkFilter.init el: @$('#artwork-section'), model: @model, mode: 'infinite'
     @subViews.push filterRouter.view
     $.onInfiniteScroll ->
