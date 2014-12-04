@@ -13,7 +13,7 @@ getArtworks = (artist, options = {}) ->
   filterState.fetch
     cache: options.cache
     success: (model, response) ->
-      dfd.resolve artworks: !!response.total
+      dfd.resolve artworks: !!response?.total
     error: -> dfd.resolve artworks: false
 
   dfd.promise

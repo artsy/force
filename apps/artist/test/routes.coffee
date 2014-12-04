@@ -1,22 +1,16 @@
-{ fabricate } = require 'antigravity'
 _ = require 'underscore'
 sinon = require 'sinon'
 Backbone = require 'backbone'
-routes = require '../routes'
+{ fabricate } = require 'antigravity'
 CurrentUser = require '../../../models/current_user.coffee'
 Artist = require '../../../models/artist.coffee'
+routes = require '../routes'
 sections = require '../sections'
-
-describe 'sections', ->
-  it 'returns the correct tab slugs in the correct order', ->
-    sections.should.eql ['works', 'articles', 'shows', 'publications', 'collections', 'related-artists']
 
 describe 'Artist routes', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    @req =
-      params: id: 'foo'
-      query: sort: '-published_at'
+    @req = params: id: 'foo'
     @res =
       render: sinon.stub()
       redirect: sinon.stub()
@@ -31,6 +25,7 @@ describe 'Artist routes', ->
       routes.index @req, @res
       Backbone.sync.args[0][2].success fabricate 'artist', id: 'andy-foobar'
       Backbone.sync.args[1][2].success()
+      _.each Backbone.sync.args[2..-1], (args) -> args[2].success()
       _.defer =>
         @res.render.args[0][0].should.equal 'index'
         @res.render.args[0][1].artist.get('id').should.equal 'andy-foobar'
@@ -40,6 +35,7 @@ describe 'Artist routes', ->
       routes.index @req, @res
       Backbone.sync.args[0][2].success fabricate 'artist', id: 'andy-foobar'
       Backbone.sync.args[1][2].success()
+      _.each Backbone.sync.args[2..-1], (args) -> args[2].success()
       _.defer =>
         @res.locals.sd.ARTIST.id.should.equal 'andy-foobar'
         done()
@@ -49,6 +45,7 @@ describe 'Artist routes', ->
       routes.index @req, @res
       Backbone.sync.args[0][2].success fabricate 'artist', id: 'andy-foobar'
       Backbone.sync.args[1][2].success()
+      _.each Backbone.sync.args[2..-1], (args) -> args[2].success()
       _.defer =>
         @res.redirect.args[0][0].should.equal '/artist/andy-foobar'
         done()

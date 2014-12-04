@@ -29,9 +29,11 @@ class ExhibitionHistoryListView extends FilterableListView
 module.exports = class ShowsView extends Backbone.View
   subViews: []
 
+  initialize: ->
+    @model.related().shows.fetch(data: size: 20)
+
   postRender: ->
     relatedShowsSubView = new RelatedShowsView collection: @model.related().shows, nUp: 3, maxShows: 20
-    @model.related().shows.fetch(data: size: 20)
     @subViews.push relatedShowsSubView
 
     exhibitionHistoryListSubView = new ExhibitionHistoryListView

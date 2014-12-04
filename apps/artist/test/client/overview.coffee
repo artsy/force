@@ -30,10 +30,11 @@ describe 'OverviewView', ->
     @model = new Artist fabricate 'artist', id: 'foo-bar', published_artworks_count: 1
     filterView = new Backbone.View
     filterView.artworks = new Backbone.Collection
-    filterView.filter = new Backbone.Model
+    filterView.filter = root: new Backbone.Model
     @OverviewView.__set__ 'ArtworkFilter', init: @artworkFilterInitStub = sinon.stub().returns(view: filterView)
+    @OverviewView.__set__ 'STATUSES', {}
+    @OverviewView.__set__ 'lastModified', sinon.stub()
     @view = new @OverviewView model: @model
-
     @view.render()
 
   afterEach ->
@@ -45,8 +46,3 @@ describe 'OverviewView', ->
   describe '#render', ->
     it 'renders the template', ->
       @view.$('#artwork-section').length.should.equal 1
-
-  describe 'setup', ->
-    it 'checks on the correct relations', ->
-      @view.model.related.callCount.should.equal 4
-      # Way to spy on property access?
