@@ -91,3 +91,16 @@ module.exports.init = ->
           "&profile_id=#{profile.id}" +
           "&fair_id=#{fair.id}" +
           "&fair_name=#{fair.get('name')}"
+
+  # Start: Remove anytime after ~12/8/2014
+  return unless fair.id is 'nada-miami-beach-2014'
+  background = null
+  $background = $('.feature-image')
+  $('#fair-nada-wallpapers').hover ->
+    background = $background.css('background-image')
+    $background.css
+      backgroundImage: 'url("/images/wallpapers-hover.gif")'
+      backgroundSize: 'inherit'
+  , ->
+    $background.css backgroundImage: background
+  # End: Remove anytime after ~12/8/2014
