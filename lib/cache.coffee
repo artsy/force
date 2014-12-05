@@ -17,13 +17,13 @@ client = null
   return callback() if NODE_ENV is "test" or not OPENREDIS_URL
   red = require("url").parse(OPENREDIS_URL)
 
-  client = redis.createClient(red.port, red.hostname)
+  @client = client = redis.createClient(red.port, red.hostname)
     .on 'error', _.once (err) ->
       client = null
       console.warn 'REDIS_CONNECTION_ERROR', err
       callback()
     .on 'ready', _.once callback
-  client.auth(red.auth.split(":")[1]) if client and red.auth
+  @client.auth(red.auth.split(":")[1]) if client and red.auth
 
 # Export the redis client
 @client = client
