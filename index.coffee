@@ -10,10 +10,11 @@ express = require "express"
 setup = require "./lib/setup"
 cache = require './lib/cache'
 
+app = module.exports = express()
+
 # Attempt to connect to Redis. If it fails, no worries, the app will move on
 # without caching.
 cache.setup ->
-  app = module.exports = express()
   setup app
 
   # Start the server and send a message to IPC for the integration test helper
