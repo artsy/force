@@ -50,9 +50,3 @@ defaultMessage = require '../../components/contact/default_message.coffee'
     error: res.backboneError
     success: ->
       res.redirect "/artwork/#{req.params.id}"
-
-@bustCache = (req, res, next) ->
-  return next() unless req.user?.get('type') is 'Admin'
-  artwork = new Artwork id: req.params.id
-  client?.del(artwork.url())
-  res.redirect artwork.href()
