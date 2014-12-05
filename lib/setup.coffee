@@ -104,7 +104,6 @@ module.exports = (app) ->
   # add redis caching, and augment sync with Q promises.
   Backbone.sync = require "backbone-super-sync"
   Backbone.sync.editRequest = editRequest
-  console.log 'CACHE', cache.client
   Backbone.sync.cacheClient = cache.client
   Backbone.sync.defaultCacheTime = DEFAULT_CACHE_TIME
 
