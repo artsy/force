@@ -16,6 +16,8 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
     new ShareView el: @$('#articles-social')
     @setupSlideshow()
     @renderArtworks()
+    if $(@article.get 'lead_paragraph').text().trim() is ''
+      @$('#articles-lead-paragraph').hide()
 
   setupSlideshow: ->
     return unless @article.get('sections')[0].type is 'slideshow'
@@ -31,8 +33,12 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
       carouselFigures: @article.get('sections')[0].items
     @carouselView = new CarouselView
       el: $('#articles-slideshow-inner')
-      height: 545
-    @carouselView.postRender()
+      height: 500
+      align: 'left'
+    @$el.imagesLoaded =>
+      @carouselView.postRender()
+      @carouselView.$decoys.hide()
+      @$('#articles-slideshow-inner .loading-spinner').hide()
 
   renderArtworks: ->
     for section in @article.get('sections') when section.type is 'artworks'
