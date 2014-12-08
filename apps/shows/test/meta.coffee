@@ -30,9 +30,9 @@ describe 'Meta tags', ->
     it 'includes canonical url, twitter card, og tags, title, description', ->
       @html.should.containEql '<title>Cool Place Art Gallery Shows and Museum Exhibitions | Artsy</title>'
       @html.should.containEql '<meta property="og:title" content="Cool Place Art Gallery Shows and Museum Exhibitions | Artsy"/>'
-      @html.should.containEql '<meta name="description" content="Explore shows in Cool Placeon Artsy."/>'
-      @html.should.containEql '<meta property="og:description" content="Explore shows in Cool Placeon Artsy."/>'
-      @html.should.containEql '<meta property="twitter:description" content="Explore shows in Cool Placeon Artsy."/>'
+      @html.should.containEql '<meta name="description" content="Explore shows in Cool Place on Artsy."/>'
+      @html.should.containEql '<meta property="og:description" content="Explore shows in Cool Place on Artsy."/>'
+      @html.should.containEql '<meta property="twitter:description" content="Explore shows in Cool Place on Artsy."/>'
       @html.should.containEql '<link rel="canonical" href="http://localhost:5000/shows"/>'
       @html.should.containEql '<meta property="og:url" content="http://localhost:5000/shows"/>'
       @html.should.containEql '<meta property="og:image" content="http://localhost:5000/og_image.jpg"/>'
