@@ -12,6 +12,7 @@ describe 'ArticleView', ->
   before (done) ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'
+      $.fn.imagesLoaded = sinon.stub()
       Backbone.$ = $
       { @ArticleView } = mod = benv.requireWithJadeify(
         resolve(__dirname, '../client/show')

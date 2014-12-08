@@ -8,7 +8,7 @@ moment = require 'moment'
   thumbnail_image: 'http://kitten.com',
   tags: ['Fair Coverage', 'Magazine']
   title: 'Top Ten Booths',
-  lead_paragraph: 'Just before the lines start forming...',
+  lead_paragraph: '<p>Just before the lines start forming</p>...',
   published: true,
   published_at: moment().format(),
   updated_at: moment().format(),
