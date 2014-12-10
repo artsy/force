@@ -37,7 +37,7 @@ module.exports = class Filter
     false
 
   forSaleCount: ->
-    (if @selected.has('price_range') then @get('total') else @boolean('for-sale')) or 0
+    (if @selected.has('price_range') then @get('total') else @boolean('for-sale').count) or 0
 
   active: ->
     @__active__() or @root
