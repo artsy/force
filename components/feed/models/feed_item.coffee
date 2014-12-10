@@ -5,7 +5,7 @@ Artwork = require '../../../models/artwork.coffee'
 Artworks = require '../../../collections/artworks.coffee'
 PartnerShow = require '../../../models/partner_show.coffee'
 underscore = require('../../util/string.coffee').underscore
-{ DOMPurify } = require 'dompurify'
+DOMPurify = require 'dompurify'
 
 module.exports = class FeedItem extends Backbone.Model
 
