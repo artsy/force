@@ -37,7 +37,7 @@ ssd:
 
 # Start server in debug mode pointing to production & open node inspector
 spd:
-	$(BIN)/node-inspector & API_URL=http://api.artsy.net $(BIN)/coffee --nodejs --debug index.coffee
+	$(BIN)/node-inspector & API_URL=https://api.artsy.net $(BIN)/coffee --nodejs --debug index.coffee
 
 # Run all of the project-level tests, followed by app-level tests
 test: assets-fast

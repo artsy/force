@@ -11,6 +11,7 @@ setup = require "./lib/setup"
 cache = require './lib/cache'
 
 app = module.exports = express()
+app.set 'view engine', 'jade'
 
 # Attempt to connect to Redis. If it fails, no worries, the app will move on
 # without caching.
