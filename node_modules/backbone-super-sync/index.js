@@ -10,32 +10,16 @@ var METHOD_MAP = {
 };
 
 module.exports = function(method, model, options) {
+  var req;
   var url = (options.url ||
     (typeof model.url == 'function' ? model.url() : model.url));
   var data = (options.data ||
     (method === 'create' || method === 'update' ? model.toJSON() : {}));
-  var req = request[METHOD_MAP[method]](url);
   var deferred = Q.defer();
   var cacheClient = module.exports.cacheClient;
   var cacheTime = options.cacheTime || module.exports.defaultCacheTime;
   var cacheKey = url + JSON.stringify(data);
   var cached = options.cache && cacheClient;
-
-  // Allow intercepting of the request object to inject sync-wide things like
-  // an oAuth token.
-  module.exports.editRequest(req, method, model, options);
-
-  // Inject POST/PUT data in body or GET data in querystring
-  if (method == 'create' || method == 'update') {
-    req.send(data);
-  } else {
-    req.query(data);
-  }
-
-  // Add common Backbone options like `headers`
-  if (options.headers) {
-    for(key in options.headers) req.set(key, options.headers[key]);
-  }
 
   // Helpers to resolve success/error/complete and to send the request.
   var success = function(res) {
@@ -50,6 +34,20 @@ module.exports = function(method, model, options) {
     deferred.reject(err);
   }
   var send = function(callback) {
+    req = request[METHOD_MAP[method]](url);
+    // Allow intercepting of the request object to inject sync-wide things like
+    // an oAuth token.
+    module.exports.editRequest(req, method, model, options);
+    // Inject POST/PUT data in body or GET data in querystring
+    if (method == 'create' || method == 'update') {
+      req.send(data);
+    } else {
+      req.query(data);
+    }
+    // Add common Backbone options like `headers`
+    if (options.headers) {
+      for(key in options.headers) req.set(key, options.headers[key]);
+    }
     req.on('error', error).end(function(res) {
       if (!res.ok) {
         error(res);
