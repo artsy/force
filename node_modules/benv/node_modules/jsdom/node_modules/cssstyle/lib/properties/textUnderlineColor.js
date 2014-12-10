@@ -4,7 +4,7 @@ var parseColor = require('../parsers').parseColor;
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('text-underline-color', parseColor(v));
+        this._setProperty('text-underline-color', parseColor(v));
     },
     get: function () {
         return this.getPropertyValue('text-underline-color');

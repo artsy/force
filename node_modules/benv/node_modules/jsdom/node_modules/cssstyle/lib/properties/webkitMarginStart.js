@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-margin-start', v);
+        this._setProperty('-webkit-margin-start', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-margin-start');

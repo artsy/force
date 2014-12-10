@@ -1,14 +1,15 @@
 # cookie-parser
 
-[![NPM Version](https://badge.fury.io/js/cookie-parser.svg)](https://badge.fury.io/js/cookie-parser)
-[![Build Status](https://travis-ci.org/expressjs/cookie-parser.svg?branch=master)](https://travis-ci.org/expressjs/cookie-parser)
-[![Coverage Status](https://img.shields.io/coveralls/expressjs/cookie-parser.svg?branch=master)](https://coveralls.io/r/expressjs/cookie-parser)
+[![NPM Version][npm-image]][npm-url]
+[![NPM Downloads][downloads-image]][downloads-url]
+[![Build Status][travis-image]][travis-url]
+[![Test Coverage][coveralls-image]][coveralls-url]
 
 Parse `Cookie` header and populate `req.cookies` with an object keyed by the cookie
 names. Optionally you may enable signed cookie support by passing a `secret` string,
 which assigns `req.secret` so it may be used by other middleware.
 
-## Install
+## Installation
 
 ```sh
 $ npm install cookie-parser
@@ -17,7 +18,11 @@ $ npm install cookie-parser
 ## API
 
 ```js
+var express      = require('express')
 var cookieParser = require('cookie-parser')
+
+var app = express()
+app.use(cookieParser())
 ```
 
 ### cookieParser(secret, options)
@@ -45,15 +50,29 @@ Given an object, this will iterate over the keys and check if any value is a sig
 ## Example
 
 ```js
-var cookieParser = require('cookie-parser');
+var express      = require('express')
+var cookieParser = require('cookie-parser')
 
-connect()
- .use(cookieParser('optional secret string'))
- .use(function(req, res, next){
-   res.end(JSON.stringify(req.cookies));
- })
+var app = express()
+app.use(cookieParser())
+
+app.get('/', function(req, res) {
+  console.log("Cookies: ", req.cookies)
+})
+
+app.listen(8080)
+
+// curl command that sends an HTTP request with two cookies
+// curl http://127.0.0.1:8080 --cookie "Cho=Kim;Greet=Hello"
 ```
 
-## License
+### [MIT Licensed](LICENSE)
 
-MIT
+[npm-image]: https://img.shields.io/npm/v/cookie-parser.svg?style=flat
+[npm-url]: https://npmjs.org/package/cookie-parser
+[travis-image]: https://img.shields.io/travis/expressjs/cookie-parser.svg?style=flat
+[travis-url]: https://travis-ci.org/expressjs/cookie-parser
+[coveralls-image]: https://img.shields.io/coveralls/expressjs/cookie-parser.svg?style=flat
+[coveralls-url]: https://coveralls.io/r/expressjs/cookie-parser?branch=master
+[downloads-image]: https://img.shields.io/npm/dm/cookie-parser.svg?style=flat
+[downloads-url]: https://npmjs.org/package/cookie-parser

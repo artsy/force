@@ -1,12 +1,13 @@
 var parser = require('../');
 var test = require('tape');
 var fs = require('fs');
+var path = require('path');
 
 var files = {
-    main: __dirname + '/files/main.js',
-    foo: __dirname + '/files/foo.js',
-    bar: __dirname + '/files/bar.js',
-    extra: __dirname + '/files/extra.js'
+    main: path.join(__dirname, '/files/main.js'),
+    foo: path.join(__dirname, '/files/foo.js'),
+    bar: path.join(__dirname, '/files/bar.js'),
+    extra: path.join(__dirname, '/files/extra.js')
 };
 var sources = {
     foo: fs.readFileSync(files.foo, 'utf8'),

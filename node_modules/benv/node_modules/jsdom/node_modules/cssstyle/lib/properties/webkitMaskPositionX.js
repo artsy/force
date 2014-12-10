@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-mask-position-x', v);
+        this._setProperty('-webkit-mask-position-x', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-mask-position-x');

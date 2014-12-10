@@ -1,10 +1,11 @@
 var parser = require('../');
 var test = require('tape');
 var fs = require('fs');
+var path = require('path');
 
 var files = {
-    foo: __dirname + '/files/foo.js',
-    bar: __dirname + '/files/bar.js'
+    foo: path.join(__dirname, '/files/foo.js'),
+    bar: path.join(__dirname, '/files/bar.js')
 };
 
 var sources = Object.keys(files).reduce(function (acc, file) {

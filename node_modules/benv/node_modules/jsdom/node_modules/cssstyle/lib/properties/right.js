@@ -4,7 +4,7 @@ var parseMeasurement = require('../parsers').parseMeasurement;
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('right', parseMeasurement(v));
+        this._setProperty('right', parseMeasurement(v));
     },
     get: function () {
         return this.getPropertyValue('right');

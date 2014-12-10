@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-font-variant-ligatures', v);
+        this._setProperty('-webkit-font-variant-ligatures', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-font-variant-ligatures');

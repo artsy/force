@@ -1,10 +1,10 @@
 /*
  * create-server-test.js : namespace socket unit test for TLS.
  *
- * (C) 2011, Nodejitsu Inc.
+ * (C) 2011, Charlie Robbins, Paolo Fragomeni, & the Contributors.
  *
  */
- 
+
 var assert = require('assert'),
     fs = require('fs'),
     net = require('net'),
@@ -23,7 +23,7 @@ function getBatch() {
       topic: function () {
         var outbound = new nssocket.NsSocket(),
             server = nssocket.createServer(this.callback.bind(null, null, outbound));
-            
+
         server.listen.apply(server, args.concat(function () {
           outbound.connect.apply(outbound, args);
         }));

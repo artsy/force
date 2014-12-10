@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('resize', v);
+        this._setProperty('resize', v);
     },
     get: function () {
         return this.getPropertyValue('resize');

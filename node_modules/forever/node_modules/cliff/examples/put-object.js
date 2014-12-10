@@ -1,10 +1,10 @@
 /*
  * put-object.js: Example usage for `cliff.putObject`.
  *
- * (C) 2010, Nodejitsu Inc.
+ * (C) 2010, Charlie Robbins & the Contributors
  *
  */
- 
+
 var cliff = require('../lib/cliff');
 
 cliff.putObject({

@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-filter', v);
+        this._setProperty('-webkit-filter', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-filter');

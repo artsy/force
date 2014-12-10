@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-font-smoothing', v);
+        this._setProperty('-webkit-font-smoothing', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-font-smoothing');

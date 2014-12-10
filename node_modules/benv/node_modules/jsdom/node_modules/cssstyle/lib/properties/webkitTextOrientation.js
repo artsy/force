@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-text-orientation', v);
+        this._setProperty('-webkit-text-orientation', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-text-orientation');

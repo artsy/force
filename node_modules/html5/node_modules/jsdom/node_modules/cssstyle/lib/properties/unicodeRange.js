@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('unicode-range', v);
+        this._setProperty('unicode-range', v);
     },
     get: function () {
         return this.getPropertyValue('unicode-range');

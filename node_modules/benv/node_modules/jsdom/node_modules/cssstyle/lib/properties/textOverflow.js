@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('text-overflow', v);
+        this._setProperty('text-overflow', v);
     },
     get: function () {
         return this.getPropertyValue('text-overflow');

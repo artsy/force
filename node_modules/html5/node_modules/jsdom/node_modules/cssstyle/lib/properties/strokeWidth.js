@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('stroke-width', v);
+        this._setProperty('stroke-width', v);
     },
     get: function () {
         return this.getPropertyValue('stroke-width');

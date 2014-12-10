@@ -7,7 +7,7 @@ module.exports.isValid = function parse(v) {
     if (typeof v !== 'string') {
         return false;
     }
-    return (v.toLowerCase() === 'transparent' || parsers.valueType(v) === parsers.TYPES.COLOR);
+    return (v === '' || v.toLowerCase() === 'transparent' || parsers.valueType(v) === parsers.TYPES.COLOR);
 };
 var isValid = module.exports.isValid;
 

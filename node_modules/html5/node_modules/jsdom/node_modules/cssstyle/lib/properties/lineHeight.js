@@ -11,7 +11,7 @@ module.exports.isValid = function isValid(v) {
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('line-height', v);
+        this._setProperty('line-height', v);
     },
     get: function () {
         return this.getPropertyValue('line-height');

@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-border-before', v);
+        this._setProperty('-webkit-border-before', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-border-before');

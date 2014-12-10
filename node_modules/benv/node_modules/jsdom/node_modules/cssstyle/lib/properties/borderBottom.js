@@ -1,31 +1,23 @@
 'use strict';
 
+var shorthandSetter = require('../parsers').shorthandSetter;
+var shorthandGetter = require('../parsers').shorthandGetter;
 var shorthandParser = require('../parsers').shorthandParser;
 
 var shorthand_for = {
-    borderBottomWidth: require('./borderBottomWidth'),
-    borderBottomStyle: require('./borderBottomStyle'),
-    borderBottomColor: require('./borderBottomColor')
+    'border-bottom-width': require('./borderBottomWidth'),
+    'border-bottom-style': require('./borderBottomStyle'),
+    'border-bottom-color': require('./borderBottomColor')
 };
 
-var isValid = module.exports.isValid = function isValid(v) {
+var isValid = function isValid(v) {
     return shorthandParser(v, shorthand_for) !== undefined;
 };
+module.exports.isValid = isValid;
 
 module.exports.definition = {
-    set: function (v) {
-        var obj = shorthandParser(v, shorthand_for);
-        if (obj === undefined) {
-            return;
-        }
-        Object.keys(obj).forEach(function (property) {
-            this._values[property] = obj[property];
-        }, this);
-        this.setProperty('border-bottom', v);
-    },
-    get: function () {
-        return this.getPropertyValue('border-bottom');
-    },
+    set: shorthandSetter('border-bottom', shorthand_for),
+    get: shorthandGetter('border-bottom', shorthand_for),
     enumerable: true,
     configurable: true
 };

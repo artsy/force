@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-wrap', v);
+        this._setProperty('-webkit-wrap', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-wrap');

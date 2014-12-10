@@ -4,6 +4,9 @@
 
 var fs = require('fs')
   , path = require('path')
+  , basename = path.basename
+  , exists = fs.existsSync || path.existsSync
+  , glob = require('glob')
   , join = path.join
   , debug = require('debug')('mocha:watch');
 
@@ -225,18 +228,6 @@ exports.clean = function(str) {
 };
 
 /**
- * Escape regular expression characters in `str`.
- *
- * @param {String} str
- * @return {String}
- * @api private
- */
-
-exports.escapeRegexp = function(str){
-  return str.replace(/[-\\^$*+?.()|[\]{}]/g, "\\$&");
-};
-
-/**
  * Trim the given `str`.
  *
  * @param {String} str
@@ -295,7 +286,7 @@ function highlight(js) {
  */
 
 exports.highlightTags = function(name) {
-  var code = document.getElementsByTagName(name);
+  var code = document.getElementById('mocha').getElementsByTagName(name);
   for (var i = 0, len = code.length; i < len; ++i) {
     code[i].innerHTML = highlight(code[i].innerHTML);
   }
@@ -313,38 +304,85 @@ exports.highlightTags = function(name) {
 exports.stringify = function(obj) {
   if (obj instanceof RegExp) return obj.toString();
   return JSON.stringify(exports.canonicalize(obj), null, 2).replace(/,(\n|$)/g, '$1');
-}
+};
 
 /**
  * Return a new object that has the keys in sorted order.
  * @param {Object} obj
+ * @param {Array} [stack]
  * @return {Object}
  * @api private
  */
 
 exports.canonicalize = function(obj, stack) {
-   stack = stack || [];
+  stack = stack || [];
 
-   if (exports.indexOf(stack, obj) !== -1) return '[Circular]';
+  if (exports.indexOf(stack, obj) !== -1) return '[Circular]';
 
-   var canonicalizedObj;
+  var canonicalizedObj;
 
-   if ({}.toString.call(obj) === '[object Array]') {
-     stack.push(obj);
-     canonicalizedObj = exports.map(obj, function(item) {
-       return exports.canonicalize(item, stack);
-     });
-     stack.pop();
-   } else if (typeof obj === 'object' && obj !== null) {
-     stack.push(obj);
-     canonicalizedObj = {};
-     exports.forEach(exports.keys(obj).sort(), function(key) {
-       canonicalizedObj[key] = exports.canonicalize(obj[key], stack);
-     });
-     stack.pop();
-   } else {
-     canonicalizedObj = obj;
-   }
+  if ({}.toString.call(obj) === '[object Array]') {
+    stack.push(obj);
+    canonicalizedObj = exports.map(obj, function (item) {
+      return exports.canonicalize(item, stack);
+    });
+    stack.pop();
+  } else if (typeof obj === 'object' && obj !== null) {
+    stack.push(obj);
+    canonicalizedObj = {};
+    exports.forEach(exports.keys(obj).sort(), function (key) {
+      canonicalizedObj[key] = exports.canonicalize(obj[key], stack);
+    });
+    stack.pop();
+  } else {
+    canonicalizedObj = obj;
+  }
 
-   return canonicalizedObj;
- }
+  return canonicalizedObj;
+ };
+
+/**
+ * Lookup file names at the given `path`.
+ */
+exports.lookupFiles = function lookupFiles(path, extensions, recursive) {
+  var files = [];
+  var re = new RegExp('\\.(' + extensions.join('|') + ')$');
+
+  if (!exists(path)) {
+    if (exists(path + '.js')) {
+      path += '.js';
+    } else {
+      files = glob.sync(path);
+      if (!files.length) throw new Error("cannot resolve path (or pattern) '" + path + "'");
+      return files;
+    }
+  }
+
+  try {
+    var stat = fs.statSync(path);
+    if (stat.isFile()) return path;
+  }
+  catch (ignored) {
+    return;
+  }
+
+  fs.readdirSync(path).forEach(function(file){
+    file = join(path, file);
+    try {
+      var stat = fs.statSync(file);
+      if (stat.isDirectory()) {
+        if (recursive) {
+          files = files.concat(lookupFiles(file, extensions, recursive));
+        }
+        return;
+      }
+    }
+    catch (ignored) {
+      return;
+    }
+    if (!stat.isFile() || !re.test(file) || basename(file)[0] === '.') return;
+    files.push(file);
+  });
+
+  return files;
+};

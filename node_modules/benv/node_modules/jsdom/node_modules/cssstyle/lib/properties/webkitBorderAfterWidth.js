@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-border-after-width', v);
+        this._setProperty('-webkit-border-after-width', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-border-after-width');

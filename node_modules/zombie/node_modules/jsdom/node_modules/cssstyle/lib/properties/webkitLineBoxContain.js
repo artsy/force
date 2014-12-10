@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-line-box-contain', v);
+        this._setProperty('-webkit-line-box-contain', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-line-box-contain');

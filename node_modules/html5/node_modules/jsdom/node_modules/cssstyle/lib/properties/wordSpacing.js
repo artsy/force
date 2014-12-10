@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('word-spacing', v);
+        this._setProperty('word-spacing', v);
     },
     get: function () {
         return this.getPropertyValue('word-spacing');

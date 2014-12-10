@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('zoom', v);
+        this._setProperty('zoom', v);
     },
     get: function () {
         return this.getPropertyValue('zoom');

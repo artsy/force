@@ -1,17 +1,14 @@
+# node-diacritics
 
-# diacritics
+remove diacritics from strings
 
-  remove diacritics from strings
+useful when implementing some kind of search or filter functionality.
 
-  useful when implementing some kind of search or filter functionality.
+## Installation
 
-## Node.js Installation
-
-    $ npm install diacritics
-
-## Component Installation
-
-    $ component install andrewrk/diacritics
+```
+$ npm install diacritics
+```
 
 ## API
 
@@ -20,7 +17,3 @@ var removeDiacritics = require('diacritics').remove;
 console.log(removeDiacritics("Iлｔèｒｎåｔïｏｎɑｌíƶａｔï߀ԉ"));
 // prints "Internationalizati0n"
 ```
-
-## License
-
-  MIT

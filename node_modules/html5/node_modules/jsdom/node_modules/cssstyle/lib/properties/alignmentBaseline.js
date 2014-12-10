@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('alignment-baseline', v);
+        this._setProperty('alignment-baseline', v);
     },
     get: function () {
         return this.getPropertyValue('alignment-baseline');

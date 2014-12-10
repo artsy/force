@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-marquee', v);
+        this._setProperty('-webkit-marquee', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-marquee');

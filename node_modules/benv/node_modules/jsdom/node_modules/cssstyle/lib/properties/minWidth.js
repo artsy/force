@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('min-width', v);
+        this._setProperty('min-width', v);
     },
     get: function () {
         return this.getPropertyValue('min-width');

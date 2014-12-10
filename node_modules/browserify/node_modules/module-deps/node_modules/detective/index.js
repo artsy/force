@@ -1,4 +1,20 @@
-var esprima = require('esprima-fb');
+var aparse = require('acorn').parse;
+var defined = require('defined');
+
+function parse (src, opts) {
+    if (!opts) opts = {};
+    return aparse(src, {
+        ecmaVersion: defined(opts.ecmaVersion, 6),
+        ranges: defined(opts.ranges, opts.range),
+        locations: defined(opts.locations, opts.loc),
+        allowReturnOutsideFunction: defined(
+            opts.allowReturnOutsideFunction, true
+        ),
+        strictSemicolons: defined(opts.strictSemicolons, false),
+        allowTrailingCommas: defined(opts.allowTrailingCommas, true),
+        forbidReserved: defined(opts.forbidReserved, false)
+    });
+}
 var escodegen = require('escodegen');
 
 var traverse = function (node, cb) {
@@ -22,7 +38,7 @@ var traverse = function (node, cb) {
 };
 
 var walk = function (src, opts, cb) {
-    var ast = esprima.parse(src, opts);
+    var ast = parse(src, opts);
     traverse(ast, cb);
 };
 

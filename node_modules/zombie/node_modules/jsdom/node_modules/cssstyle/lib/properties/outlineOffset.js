@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('outline-offset', v);
+        this._setProperty('outline-offset', v);
     },
     get: function () {
         return this.getPropertyValue('outline-offset');

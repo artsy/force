@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-column-axis', v);
+        this._setProperty('-webkit-column-axis', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-column-axis');

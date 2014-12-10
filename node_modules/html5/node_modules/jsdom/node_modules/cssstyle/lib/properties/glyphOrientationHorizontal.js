@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('glyph-orientation-horizontal', v);
+        this._setProperty('glyph-orientation-horizontal', v);
     },
     get: function () {
         return this.getPropertyValue('glyph-orientation-horizontal');

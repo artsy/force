@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-mask-composite', v);
+        this._setProperty('-webkit-mask-composite', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-mask-composite');

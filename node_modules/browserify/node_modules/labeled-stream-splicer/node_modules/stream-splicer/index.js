@@ -83,6 +83,7 @@ Pipeline.prototype._notEmpty = function () {
         }
     });
     this._streams.push(stream);
+    this.length = this._streams.length;
 };
 
 Pipeline.prototype.push = function (stream) {

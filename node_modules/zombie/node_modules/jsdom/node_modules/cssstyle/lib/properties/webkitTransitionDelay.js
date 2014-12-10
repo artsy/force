@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-transition-delay', v);
+        this._setProperty('-webkit-transition-delay', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-transition-delay');

@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-margin-after-collapse', v);
+        this._setProperty('-webkit-margin-after-collapse', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-margin-after-collapse');

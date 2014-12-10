@@ -4,7 +4,7 @@ var parseColor = require('../parsers').parseColor;
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('flood-color', parseColor(v));
+        this._setProperty('flood-color', parseColor(v));
     },
     get: function () {
         return this.getPropertyValue('flood-color');

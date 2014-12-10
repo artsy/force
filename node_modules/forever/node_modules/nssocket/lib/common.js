@@ -1,7 +1,7 @@
 /*
  * common.js
  *
- * (C) 2011, Nodejitsu Inc.
+ * (C) 2011, Charlie Robbins, Paolo Fragomeni, & the Contributors.
  */
 
 var fs = require('fs'),
@@ -12,8 +12,8 @@ var fs = require('fs'),
 exports.createSocket = function (options) {
   options = options || {};
   options.type = options.type || 'tcp4';
-  
-  return options.type === 'tls' 
+
+  return options.type === 'tls'
     ? exports.createTlsSocket(options)
     : new net.Socket(options);
 };
@@ -27,29 +27,29 @@ exports.createSocket = function (options) {
 //
 exports.createTlsSocket = function(options) {
   var self = this;
-  
-  // 
+
+  //
   // Setup the TLS connection over the existing TCP connection:
-  // 
+  //
   // 1. Create a new instance of `net.Socket`.
   // 2. Create a new set of credentials with `options`.
   // 3. Create the TLS pair
   // 4. Pipe the TLS pair to the TCP socket
-  // 
+  //
   var socket = new net.Stream({ type: 'tcp4' });
-  
+
   function setupTlsPipe () {
     var sslcontext = crypto.createCredentials(options),
         pair = tls.createSecurePair(sslcontext, false),
         cleartext = pipe(pair, socket);
-        
+
     pair.on('secure', function() {
       var verifyError = pair.ssl.verifyError();
 
       if (verifyError) {
         cleartext.authorized = false;
         cleartext.authorizationError = verifyError;
-      } 
+      }
       else {
         cleartext.authorized = true;
       }
@@ -70,7 +70,7 @@ exports.createTlsSocket = function(options) {
 
 //
 // helper function for createTlsSocket
-// 
+//
 function pipe(pair, socket) {
   pair.encrypted.pipe(socket);
   socket.pipe(pair.encrypted);

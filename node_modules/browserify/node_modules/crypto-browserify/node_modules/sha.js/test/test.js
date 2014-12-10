@@ -3,7 +3,6 @@ var crypto = require('crypto')
 var tape   = require('tape')
 var Sha1   = require('../').sha1
 var Uint32toHex = Sha1.Uint32toHex
-var u = require('../util')
 
 function generateCount (m) {
   var s = ''

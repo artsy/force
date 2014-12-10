@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('list-style-type', v);
+        this._setProperty('list-style-type', v);
     },
     get: function () {
         return this.getPropertyValue('list-style-type');

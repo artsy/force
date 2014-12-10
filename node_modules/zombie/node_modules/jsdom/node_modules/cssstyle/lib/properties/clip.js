@@ -39,7 +39,7 @@ var parse = function (val) {
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('clip', parse(v));
+        this._setProperty('clip', parse(v));
     },
     get: function () {
         return this.getPropertyValue('clip');

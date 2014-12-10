@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('text-overline', v);
+        this._setProperty('text-overline', v);
     },
     get: function () {
         return this.getPropertyValue('text-overline');

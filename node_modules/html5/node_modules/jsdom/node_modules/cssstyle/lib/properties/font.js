@@ -31,7 +31,7 @@ module.exports.definition = {
             return setter.call(this, v);
         }
         if (valueType(v) === TYPES.KEYWORD && static_fonts.indexOf(v.toLowerCase()) !== -1) {
-            this.setProperty('font', v);
+            this._setProperty('font', v);
         }
     },
     get: shorthandGetter('background', shorthand_for),

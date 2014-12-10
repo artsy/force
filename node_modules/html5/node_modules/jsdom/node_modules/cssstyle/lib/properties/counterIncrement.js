@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('counter-increment', v);
+        this._setProperty('counter-increment', v);
     },
     get: function () {
         return this.getPropertyValue('counter-increment');

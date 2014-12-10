@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('font-stretch', v);
+        this._setProperty('font-stretch', v);
     },
     get: function () {
         return this.getPropertyValue('font-stretch');

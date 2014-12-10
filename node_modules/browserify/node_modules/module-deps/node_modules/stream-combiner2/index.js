@@ -67,6 +67,6 @@ function wrap (tr, opts) {
   var input = through(opts), output = through(opts)
   input.pipe(tr).pipe(output)
   var dup = duplexer(input, output)
-  tr.on('error', function (err) { dup.emit('error') });
+  tr.on('error', function (err) { dup.emit('error', err) });
   return dup;
 }

@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-line-break', v);
+        this._setProperty('-webkit-line-break', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-line-break');

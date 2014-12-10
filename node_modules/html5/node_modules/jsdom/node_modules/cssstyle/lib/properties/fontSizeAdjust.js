@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('font-size-adjust', v);
+        this._setProperty('font-size-adjust', v);
     },
     get: function () {
         return this.getPropertyValue('font-size-adjust');

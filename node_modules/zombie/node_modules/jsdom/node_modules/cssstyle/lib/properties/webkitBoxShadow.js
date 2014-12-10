@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-box-shadow', v);
+        this._setProperty('-webkit-box-shadow', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-box-shadow');

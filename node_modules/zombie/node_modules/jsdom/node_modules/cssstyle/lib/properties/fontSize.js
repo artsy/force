@@ -15,7 +15,7 @@ module.exports.isValid = function (v) {
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('font-size', v);
+        this._setProperty('font-size', v);
     },
     get: function () {
         return this.getPropertyValue('font-size');

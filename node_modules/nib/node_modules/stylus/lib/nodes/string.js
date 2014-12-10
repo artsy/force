@@ -25,6 +25,7 @@ var String = module.exports = function String(val, quote){
   Node.call(this);
   this.val = val;
   this.string = val;
+  this.prefixed = false;
   if (typeof quote !== 'string') {
     this.quote = "'";
   } else {
@@ -61,6 +62,23 @@ String.prototype.clone = function(){
   clone.lineno = this.lineno;
   clone.filename = this.filename;
   return clone;
+};
+
+/**
+ * Return a JSON representation of this node.
+ *
+ * @return {Object}
+ * @api public
+ */
+
+String.prototype.toJSON = function(){
+  return {
+    __type: 'String',
+    val: this.val,
+    quote: this.quote,
+    lineno: this.lineno,
+    filename: this.filename
+  };
 };
 
 /**
@@ -118,7 +136,9 @@ String.prototype.operate = function(op, right){
       // apply
       return sprintf.apply(null, [expr].concat(args));
     case '+':
-      return new String(this.val + this.coerce(right).val);
+      var expr = new nodes.Expression;
+      expr.push(new String(this.val + this.coerce(right).val));
+      return expr;
     default:
       return Node.prototype.operate.call(this, op, right);
   }

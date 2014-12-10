@@ -13,6 +13,21 @@ var Node = require('./node')
   , nodes = require('./');
 
 /**
+ * Unit conversion table.
+ */
+
+var FACTOR_TABLE = {
+  'mm': {val: 1, label: 'mm'},
+  'cm': {val: 10, label: 'mm'},
+  'in': {val: 25.4, label: 'mm'},
+  'pt': {val: 25.4/72, label: 'mm'},
+  'ms': {val: 1, label: 'ms'},
+  's': {val: 1000, label: 'ms'},
+  'Hz': {val: 1, label: 'Hz'},
+  'kHz': {val: 1000, label: 'Hz'}
+};
+
+/**
  * Initialize a new `Unit` with the given `val` and unit `type`
  * such as "px", "pt", "in", etc.
  *
@@ -23,7 +38,7 @@ var Node = require('./node')
 
 var Unit = module.exports = function Unit(val, type){
   Node.call(this);
-  this.val = val;
+  this.val = parseFloat( val.toFixed( 15 ) );
   this.type = type;
 };
 
@@ -61,7 +76,7 @@ Unit.prototype.toString = function(){
 
 /**
  * Return a clone of this node.
- * 
+ *
  * @return {Node}
  * @api public
  */
@@ -71,6 +86,23 @@ Unit.prototype.clone = function(){
   clone.lineno = this.lineno;
   clone.filename = this.filename;
   return clone;
+};
+
+/**
+ * Return a JSON representation of this node.
+ *
+ * @return {Object}
+ * @api public
+ */
+
+Unit.prototype.toJSON = function(){
+  return {
+    __type: 'Unit',
+    val: this.val,
+    type: this.type,
+    lineno: this.lineno,
+    filename: this.filename
+  };
 };
 
 /**
@@ -103,11 +135,13 @@ Unit.prototype.operate = function(op, right){
     switch (op) {
       case '-':
         return new Unit(this.val - right.val, type);
-      case '+':                               
+      case '+':
+        // keyframes interpolation
+        type = type || (right.type == '%' && right.type);
         return new Unit(this.val + right.val, type);
-      case '/':                               
+      case '/':
         return new Unit(this.val / right.val, type);
-      case '*':                               
+      case '*':
         return new Unit(this.val * right.val, type);
       case '%':
         return new Unit(this.val % right.val, type);
@@ -119,9 +153,15 @@ Unit.prototype.operate = function(op, right){
           , end = right.val
           , expr = new nodes.Expression
           , inclusive = '..' == op;
-        do {
-          expr.push(new nodes.Unit(start));
-        } while (inclusive ? ++start <= end : ++start < end);
+        if (start < end) {
+          do {
+            expr.push(new nodes.Unit(start));
+          } while (inclusive ? ++start <= end : ++start < end);
+        } else {
+          do {
+            expr.push(new nodes.Unit(start));
+          } while (inclusive ? --start >= end : --start > end);
+        }
         return expr;
     }
   }
@@ -137,10 +177,10 @@ Unit.prototype.operate = function(op, right){
  *    mm -> cm | in
  *    cm -> mm | in
  *    in -> mm | cm
- *    
+ *
  *    ms -> s
  *    s  -> ms
- *    
+ *
  *    Hz  -> kHz
  *    kHz -> Hz
  *
@@ -153,8 +193,8 @@ Unit.prototype.coerce = function(other){
   if ('unit' == other.nodeName) {
     var a = this
       , b = other
-      , factorA = factor(a)
-      , factorB = factor(b);
+      , factorA = FACTOR_TABLE[a.type]
+      , factorB = FACTOR_TABLE[b.type];
 
     if (factorA && factorB && (factorA.label == factorB.label)) {
       var bVal = b.val * (factorB.val / factorA.val);
@@ -163,29 +203,12 @@ Unit.prototype.coerce = function(other){
       return new nodes.Unit(b.val, a.type);
     }
   } else if ('string' == other.nodeName) {
-    var val = parseInt(other.val, 10);
+    // keyframes interpolation
+    if ('%' == other.val) return new nodes.Unit(0, '%');
+    var val = parseFloat(other.val);
     if (isNaN(val)) Node.prototype.coerce.call(this, other);
     return new nodes.Unit(val);
   } else {
     return Node.prototype.coerce.call(this, other);
   }
 };
-
-
-/**
- *  Convert a unit to base unit
- */
-function factor(unit) {
-  var factorTable = {
-    'mm': {val: 1, label: 'mm'},
-    'cm': {val: 10, label: 'mm'},
-    'in': {val: 25.4, label: 'mm'},
-    'ms': {val: 1, label: 'ms'},
-    's': {val: 1000, label: 'ms'},
-    'Hz': {val: 1, label: 'Hz'},
-    'kHz': {val: 1000, label: 'Hz'}
-  };
-
-  return factorTable[unit.type];
-};
-

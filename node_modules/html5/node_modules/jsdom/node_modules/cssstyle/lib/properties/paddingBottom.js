@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('padding-bottom', v);
+        this._setProperty('padding-bottom', v);
     },
     get: function () {
         return this.getPropertyValue('padding-bottom');

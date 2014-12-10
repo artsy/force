@@ -3,6 +3,7 @@ var test = require('tape');
 var JSONStream = require('JSONStream');
 var packer = require('browser-pack');
 var concat = require('concat-stream');
+var path = require('path');
 
 test('pkg filter', function (t) {
     t.plan(3);
@@ -14,7 +15,7 @@ test('pkg filter', function (t) {
             return pkg;
         }
     });
-    p.end(__dirname + '/files/pkg_filter/test.js');
+    p.end(path.join(__dirname, '/files/pkg_filter/test.js'));
     
     var pack = packer();
     p.pipe(JSONStream.stringify()).pipe(pack);

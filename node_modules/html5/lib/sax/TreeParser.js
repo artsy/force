@@ -30,7 +30,7 @@ function TreeParser(contentHandler, lexicalHandler){
 	this.locatorDelegate;
 
 	if (!contentHandler) {
-		throw new IllegalArgumentException("contentHandler was null.");
+		throw new Error("contentHandler was null.");
 	}
 	this.contentHandler = contentHandler;
 	if (!lexicalHandler) {

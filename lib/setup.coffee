@@ -206,6 +206,14 @@ module.exports = (app) ->
   app.use require "../apps/favorites_follows"
   app.use require "../apps/unsubscribe"
   app.use require "../apps/unsupported_browser"
+  # Static files middleware above profiles to ensure we don't try to fetch
+  # /assets or /images in attempt to check if it's a profile.
+  fs.readdirSync(path.resolve __dirname, '../apps').forEach (fld) ->
+    app.use express.static(path.resolve __dirname, "../apps/#{fld}/public")
+  fs.readdirSync(path.resolve __dirname, '../components').forEach (fld) ->
+    app.use express.static(path.resolve __dirname, "../components/#{fld}/public")
+  app.use express.static(path.resolve __dirname, '../public')
+  app.use favicon(path.resolve __dirname, '../public/images/favicon.ico')
   # Profile middleware and apps that use profiles
   app.use require "../apps/profile"
   app.use require "../apps/user_profile"
@@ -218,20 +226,9 @@ module.exports = (app) ->
   # Shortcuts are prioritized last
   app.use require "../apps/shortcuts"
   app.use require "../apps/clear_cache"
-
   # Route to ping for system up
   app.get '/system/up', (req, res) ->
     res.send 200, { nodejs: true }
-
-  # Static files middleware
-  app.use favicon(path.resolve __dirname, '../public/images/favicon.ico')
-
-  # Mount static middleware for sub apps, components, and project-wide
-  fs.readdirSync(path.resolve __dirname, '../apps').forEach (fld) ->
-    app.use express.static(path.resolve __dirname, "../apps/#{fld}/public")
-  fs.readdirSync(path.resolve __dirname, '../components').forEach (fld) ->
-    app.use express.static(path.resolve __dirname, "../components/#{fld}/public")
-  app.use express.static(path.resolve __dirname, '../public')
 
   if SENTRY_DSN
     client = new raven.Client SENTRY_DSN, {

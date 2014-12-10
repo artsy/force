@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-background-origin', v);
+        this._setProperty('-webkit-background-origin', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-background-origin');

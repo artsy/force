@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-flow-into', v);
+        this._setProperty('-webkit-flow-into', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-flow-into');

@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('border-radius', v);
+        this._setProperty('border-radius', v);
     },
     get: function () {
         return this.getPropertyValue('border-radius');

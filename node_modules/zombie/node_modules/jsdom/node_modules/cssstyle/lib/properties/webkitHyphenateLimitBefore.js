@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-hyphenate-limit-before', v);
+        this._setProperty('-webkit-hyphenate-limit-before', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-hyphenate-limit-before');

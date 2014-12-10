@@ -18,6 +18,10 @@ module.exports = function(options) {
       (options.transforms || []).forEach(function(t) {
         b.transform(t);
       });
+      (options.globalTransforms || []).forEach(function(t) {
+        b.transform({ global: true }, t);
+      });
+      if (options.intercept) options.intercept(b);
       b.bundle(function(err, text) {
         if (err) {
           console.warn(err);

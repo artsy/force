@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('pointer-events', v);
+        this._setProperty('pointer-events', v);
     },
     get: function () {
         return this.getPropertyValue('pointer-events');

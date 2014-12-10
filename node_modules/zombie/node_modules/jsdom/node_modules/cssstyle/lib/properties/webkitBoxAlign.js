@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-box-align', v);
+        this._setProperty('-webkit-box-align', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-box-align');

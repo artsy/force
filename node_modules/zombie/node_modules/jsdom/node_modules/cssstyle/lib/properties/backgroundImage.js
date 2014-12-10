@@ -19,7 +19,7 @@ module.exports.isValid = function isValid(v) {
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('background-image', parse(v));
+        this._setProperty('background-image', parse(v));
     },
     get: function () {
         return this.getPropertyValue('background-image');

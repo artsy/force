@@ -15,7 +15,7 @@ module.exports.isValid = function isValid(v) {
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('border-collapse', parse(v));
+        this._setProperty('border-collapse', parse(v));
     },
     get: function () {
         return this.getPropertyValue('border-collapse');

@@ -62,19 +62,47 @@ Group.prototype.__defineSetter__('block', function(block){
 });
 
 /**
+ * Check if this set has only placeholders.
+ *
+ * @return {Boolean}
+ * @api public
+ */
+
+Group.prototype.__defineGetter__('hasOnlyPlaceholders', function(){
+  return this.nodes.every(function(selector) { return selector.isPlaceholder; });
+});
+
+/**
  * Return a clone of this node.
  * 
  * @return {Node}
  * @api public
  */
 
-Group.prototype.clone = function(){
+Group.prototype.clone = function(parent){
   var clone = new Group;
   clone.lineno = this.lineno;
   this.nodes.forEach(function(node){
-    clone.push(node.clone());
+    clone.push(node.clone(parent, clone));
   });
   clone.filename = this.filename;
-  clone.block = this.block.clone();
+  clone.block = this.block.clone(parent, clone);
   return clone;
+};
+
+/**
+ * Return a JSON representation of this node.
+ *
+ * @return {Object}
+ * @api public
+ */
+
+Group.prototype.toJSON = function(){
+  return {
+    __type: 'Group',
+    nodes: this.nodes,
+    block: this.block,
+    lineno: this.lineno,
+    filename: this.filename
+  };
 };

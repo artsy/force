@@ -11,13 +11,13 @@ app.get('/moobar.js', function(req, res){
 });
 
 describe('browserifyMiddleware', function() {
-  
+
   var server;
 
-  before(function(done) { 
+  before(function(done) {
     server = app.listen(1234, done);
   });
-  
+
   after(function() {
     server.close();
   });

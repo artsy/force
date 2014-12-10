@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('outline-width', v);
+        this._setProperty('outline-width', v);
     },
     get: function () {
         return this.getPropertyValue('outline-width');

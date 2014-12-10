@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('background-clip', v);
+        this._setProperty('background-clip', v);
     },
     get: function () {
         return this.getPropertyValue('background-clip');

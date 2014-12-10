@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('cursor', v);
+        this._setProperty('cursor', v);
     },
     get: function () {
         return this.getPropertyValue('cursor');

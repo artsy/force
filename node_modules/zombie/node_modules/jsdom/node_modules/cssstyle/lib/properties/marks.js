@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('marks', v);
+        this._setProperty('marks', v);
     },
     get: function () {
         return this.getPropertyValue('marks');

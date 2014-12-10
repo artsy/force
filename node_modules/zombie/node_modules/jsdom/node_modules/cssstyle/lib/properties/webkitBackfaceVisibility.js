@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-backface-visibility', v);
+        this._setProperty('-webkit-backface-visibility', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-backface-visibility');

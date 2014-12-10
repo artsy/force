@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('min-height', v);
+        this._setProperty('min-height', v);
     },
     get: function () {
         return this.getPropertyValue('min-height');

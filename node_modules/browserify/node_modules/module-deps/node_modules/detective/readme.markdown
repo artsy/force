@@ -47,23 +47,25 @@ string arguments.
 
 The options parameter `opts` is passed along to `detective.find()`.
 
-## detective.find(src, opts)
+## var found = detective.find(src, opts)
 
-Give some source body `src`, return an object with "strings" and "expressions"
-arrays for each of the require() calls.
+Give some source body `src`, return `found` with:
 
-The "expressions" array will contain the stringified expressions.
+* `found.strings` - an array of each string found in a `require()`
+* `found.expressions` - an array of each stringified expression found in a
+`require()` call
+* `found.nodes` (when `opts.nodes === true`) - an array of AST nodes for each
+argument found in a `require()` call
 
-Optionally you can specify a different function besides `"require"` to analyze
-with `opts.word`.
+Optionally:
 
-You can also specify `opts.nodes = true` in order to include a "nodes" array 
-which contains an AST node for each of the require() calls.
-
-You can use `opts.isRequire(node)` to return a boolean signifying whether an
-esprima AST `node` is a require call.
-
-You can use `opts.parse` to supply options parsed to the parser ([esprima](http://esprima.org/doc/index.html)).
+* `opts.word` - specify a different function name instead of `"require"`
+* `opts.nodes` - when `true`, populate `found.nodes`
+* `opts.isRequire(node)` - a function returning whether an AST node is a require
+call
+* `opts.parse` - supply options directly to
+[acorn](https://npmjs.org/package/acorn) with some support for esprima-style
+options `range` and `loc`
 
 # install
 

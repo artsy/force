@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('elevation', v);
+        this._setProperty('elevation', v);
     },
     get: function () {
         return this.getPropertyValue('elevation');

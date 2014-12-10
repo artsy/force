@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-text-emphasis', v);
+        this._setProperty('-webkit-text-emphasis', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-text-emphasis');

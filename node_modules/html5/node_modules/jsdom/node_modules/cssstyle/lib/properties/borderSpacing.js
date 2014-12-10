@@ -29,7 +29,7 @@ module.exports.isValid = function isValid(v) {
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('border-spacing', parse(v));
+        this._setProperty('border-spacing', parse(v));
     },
     get: function () {
         return this.getPropertyValue('border-spacing');

@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('speak', v);
+        this._setProperty('speak', v);
     },
     get: function () {
         return this.getPropertyValue('speak');

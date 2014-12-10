@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('direction', v);
+        this._setProperty('direction', v);
     },
     get: function () {
         return this.getPropertyValue('direction');

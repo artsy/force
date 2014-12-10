@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('speak-punctuation', v);
+        this._setProperty('speak-punctuation', v);
     },
     get: function () {
         return this.getPropertyValue('speak-punctuation');

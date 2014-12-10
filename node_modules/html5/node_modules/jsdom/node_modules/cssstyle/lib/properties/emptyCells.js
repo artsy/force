@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('empty-cells', v);
+        this._setProperty('empty-cells', v);
     },
     get: function () {
         return this.getPropertyValue('empty-cells');

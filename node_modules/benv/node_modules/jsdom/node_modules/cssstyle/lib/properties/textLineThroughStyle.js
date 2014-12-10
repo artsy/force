@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('text-line-through-style', v);
+        this._setProperty('text-line-through-style', v);
     },
     get: function () {
         return this.getPropertyValue('text-line-through-style');

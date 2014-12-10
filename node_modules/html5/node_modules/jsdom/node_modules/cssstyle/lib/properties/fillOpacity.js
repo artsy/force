@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('fill-opacity', v);
+        this._setProperty('fill-opacity', v);
     },
     get: function () {
         return this.getPropertyValue('fill-opacity');

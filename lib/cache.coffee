@@ -18,11 +18,11 @@ client = null
   red = require("url").parse(OPENREDIS_URL)
 
   @client = client = redis.createClient(red.port, red.hostname)
-    .on 'error', _.once (err) ->
+    .on('error', _.once (err) ->
       client = null
       console.warn 'REDIS_CONNECTION_ERROR', err
       callback()
-    .on 'ready', _.once callback
+    ).on 'ready', _.once callback
   @client.auth(red.auth.split(":")[1]) if client and red.auth
 
 # Export the redis client

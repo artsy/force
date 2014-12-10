@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('baseline-shift', v);
+        this._setProperty('baseline-shift', v);
     },
     get: function () {
         return this.getPropertyValue('baseline-shift');

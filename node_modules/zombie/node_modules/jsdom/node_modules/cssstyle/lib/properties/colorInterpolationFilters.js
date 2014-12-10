@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('color-interpolation-filters', v);
+        this._setProperty('color-interpolation-filters', v);
     },
     get: function () {
         return this.getPropertyValue('color-interpolation-filters');

@@ -1,8 +1,11 @@
 # raw-body
 
-[![NPM version](https://badge.fury.io/js/raw-body.svg)](http://badge.fury.io/js/raw-body)
-[![Build Status](https://travis-ci.org/stream-utils/raw-body.svg?branch=master)](https://travis-ci.org/stream-utils/raw-body)
-[![Coverage Status](https://img.shields.io/coveralls/stream-utils/raw-body.svg?branch=master)](https://coveralls.io/r/stream-utils/raw-body)
+[![NPM version][npm-image]][npm-url]
+[![Build status][travis-image]][travis-url]
+[![Test coverage][coveralls-image]][coveralls-url]
+[![Dependency Status][david-image]][david-url]
+[![License][license-image]][license-url]
+[![Downloads][downloads-image]][downloads-url]
 
 Gets the entire buffer of a stream either as a `Buffer` or a string.
 Validates the stream's length against an expected length and maximum limit.
@@ -78,26 +81,15 @@ and you are responsible for correctly disposing the stream.
 For HTTP requests, no handling is required if you send a response.
 For streams that use file descriptors, you should `stream.destroy()` or `stream.close()` to prevent leaks.
 
-## License
-
-The MIT License (MIT)
-
-Copyright (c) 2013 Jonathan Ong me@jongleberry.com
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
+[npm-image]: https://img.shields.io/npm/v/raw-body.svg?style=flat-square
+[npm-url]: https://npmjs.org/package/raw-body
+[travis-image]: https://img.shields.io/travis/stream-utils/raw-body.svg?style=flat-square
+[travis-url]: https://travis-ci.org/stream-utils/raw-body
+[coveralls-image]: https://img.shields.io/coveralls/stream-utils/raw-body.svg?style=flat-square
+[coveralls-url]: https://coveralls.io/r/stream-utils/raw-body
+[david-image]: http://img.shields.io/david/stream-utils/raw-body.svg?style=flat-square
+[david-url]: https://david-dm.org/stream-utils/raw-body
+[license-image]: http://img.shields.io/npm/l/raw-body.svg?style=flat-square
+[license-url]: LICENSE
+[downloads-image]: http://img.shields.io/npm/dm/raw-body.svg?style=flat-square
+[downloads-url]: https://npmjs.org/package/raw-body

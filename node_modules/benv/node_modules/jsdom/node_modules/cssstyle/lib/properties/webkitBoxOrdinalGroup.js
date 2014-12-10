@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-box-ordinal-group', v);
+        this._setProperty('-webkit-box-ordinal-group', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-box-ordinal-group');

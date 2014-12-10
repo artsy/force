@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('background-origin', v);
+        this._setProperty('background-origin', v);
     },
     get: function () {
         return this.getPropertyValue('background-origin');

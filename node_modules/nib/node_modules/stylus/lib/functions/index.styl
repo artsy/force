@@ -1,3 +1,5 @@
+called-from = ()
+
 vendors = moz webkit o ms official
 
 // stringify the given arg
@@ -23,21 +25,6 @@ require-string(str)
   unless str is a 'string' or str is a 'ident'
     error('string expected, got a ' + -string(str))
 
-// apply js Math function
-
-math(n, fn)
-  require-unit(n)
-  require-string(fn)
-  -math(n, fn)
-
-// adjust the given color's property by amount
-
-adjust(color, prop, amount)
-  require-color(color)
-  require-string(prop)
-  require-unit(amount)
-  -adjust(color, prop, amount)
-
 // Math functions
 
 abs(n) { math(n, 'abs') }
@@ -60,9 +47,6 @@ sin(n)
 cos(n)
   n = degrees-to-radians(n) if unit(n) == 'deg'
   round(math(n, 'cos'), 9)
-
-tan(n)
-  round(sin(n) / cos(n), 9)
 
 // Rounding Math functions
 
@@ -139,8 +123,11 @@ desaturate(color, amount)
 
 // saturate color by amount
 
-saturate(color, amount)
-  adjust(color, 'saturation', amount)
+saturate(color = '', amount = 100%)
+  if color is a 'color'
+    adjust(color, 'saturation', amount)
+  else
+    unquote( "saturate(" + color + ")" )
 
 // darken by the given amount
 
@@ -206,31 +193,65 @@ mix(color1, color2, weight = 50%)
 
 // invert colors, leave alpha intact
 
-invert(color)
-  r = 255 - red(color)
-  g = 255 - green(color)
-  b = 255 - blue(color)
-  rgba(r,g,b,alpha(color))
+invert(color = '')
+  if color is a 'color'
+    r = 255 - red(color)
+    g = 255 - green(color)
+    b = 255 - blue(color)
+    rgba(r,g,b,alpha(color))
+  else
+    unquote( "invert(" + color + ")" )
+
+// give complement of the given color
+
+complement( color )
+  spin( color, 180 )
+
+// give grayscale of the given color
+
+grayscale( color = '' )
+  if color is a 'color'
+    desaturate( color, 100% )
+  else
+    unquote( "grayscale(" + color + ")" )
+
+// mix the given color with white
+
+tint( color, percent )
+  mix( white, color, percent )
+
+// mix the given color with black
+
+shade( color, percent )
+  mix( black, color, percent )
 
 // return the last value in the given expr
 
 last(expr)
   expr[length(expr) - 1]
 
-// return keys in the given pairs
+// return keys in the given pairs or object
 
 keys(pairs)
   ret = ()
-  for pair in pairs
-    push(ret, pair[0]);
+  if type(pairs) == 'object'
+    for key in pairs
+      push(ret, key)
+  else
+    for pair in pairs
+      push(ret, pair[0]);
   ret
 
-// return values in the given pairs
+// return values in the given pairs or object
 
 values(pairs)
   ret = ()
-  for pair in pairs
-    push(ret, pair[1]);
+  if type(pairs) == 'object'
+    for key, val in pairs
+      push(ret, val)
+  else
+    for pair in pairs
+      push(ret, pair[1]);
   ret
 
 // join values with the given delimiter
@@ -253,3 +274,23 @@ add-property(name, expr)
     {name} expr
   else
     add-property-function(name, expr)
+
+prefix-classes(prefix)
+  -prefix-classes(prefix, block)
+
+// Caching mixin, use inside your functions to enable caching by extending.
+
+$stylus_mixin_cache = {}
+cache()
+  $key = (current-media() or 'no-media') + '__' + called-from[0] + '__' + arguments
+  if $key in $stylus_mixin_cache
+    @extend {"$cache_placeholder_for_" + $stylus_mixin_cache[$key]}
+  else if 'cache' in called-from
+    {block}
+  else
+    $id = length($stylus_mixin_cache)
+
+    &,
+    /$cache_placeholder_for_{$id}
+      $stylus_mixin_cache[$key] = $id
+      {block}

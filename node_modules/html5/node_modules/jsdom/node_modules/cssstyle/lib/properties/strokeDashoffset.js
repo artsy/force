@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('stroke-dashoffset', v);
+        this._setProperty('stroke-dashoffset', v);
     },
     get: function () {
         return this.getPropertyValue('stroke-dashoffset');

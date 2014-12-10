@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-aspect-ratio', v);
+        this._setProperty('-webkit-aspect-ratio', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-aspect-ratio');

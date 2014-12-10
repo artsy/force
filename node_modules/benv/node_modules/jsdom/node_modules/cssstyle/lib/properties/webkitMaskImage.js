@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-mask-image', v);
+        this._setProperty('-webkit-mask-image', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-mask-image');

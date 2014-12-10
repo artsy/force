@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('marker-offset', v);
+        this._setProperty('marker-offset', v);
     },
     get: function () {
         return this.getPropertyValue('marker-offset');

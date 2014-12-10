@@ -8,7 +8,7 @@ module.exports.isValid = function isValid(v) {
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('font-variant', v);
+        this._setProperty('font-variant', v);
     },
     get: function () {
         return this.getPropertyValue('font-variant');

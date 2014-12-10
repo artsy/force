@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('text-decoration', v);
+        this._setProperty('text-decoration', v);
     },
     get: function () {
         return this.getPropertyValue('text-decoration');
