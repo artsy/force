@@ -7,6 +7,7 @@ Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 Artist = require '../../../models/artist'
 Nav = require '../nav'
+Carousel = require '../carousel'
 
 describe 'Artist header', ->
   before (done) ->
@@ -20,6 +21,7 @@ describe 'Artist header', ->
   describe 'artist with some artworks', ->
     before (done) ->
       @artist = new Artist fabricate 'artist', published_artworks_count: 1
+      @carousel = new Carousel artist: @artist
       @nav = new Nav artist: @artist, statuses:
         artworks: true
         shows: true
@@ -31,6 +33,7 @@ describe 'Artist header', ->
         sd: CURRENT_PATH: "/artist/#{@artist.id}/shows"
         artist: @artist
         nav: @nav
+        carousel: @carousel
       }, done
 
     it 'should not display the no works message if there is more than 0 artworks', ->
@@ -50,6 +53,7 @@ describe 'Artist header', ->
   describe 'artist with some artworks (on the overview page)', ->
     beforeEach (done) ->
       @artist = new Artist fabricate 'artist', published_artworks_count: 0
+      @carousel = new Carousel artist: @artist
       @nav = new Nav artist: @artist, statuses:
         artworks: false
         shows: true
@@ -61,6 +65,7 @@ describe 'Artist header', ->
         sd: CURRENT_PATH: "/artist/#{@artist.id}/shows"
         artist: @artist
         nav: @nav
+        carousel: @carousel
       }, done
 
     it 'should display the no works message if there is 0 artworks', ->
@@ -77,6 +82,7 @@ describe 'Artist header', ->
   describe 'artist with auction results', ->
     beforeEach (done) ->
       @artist = new Artist fabricate 'artist', published_artworks_count: 1, auction_lots_count: 1
+      @carousel = new Carousel artist: @artist
       @nav = new Nav artist: @artist, statuses:
         artworks: false
         shows: true
@@ -88,6 +94,7 @@ describe 'Artist header', ->
         sd: CURRENT_PATH: "/artist/#{@artist.id}/shows"
         artist: @artist
         nav: @nav
+        carousel: @carousel
       }, done
 
     it 'displays a link to the auction results', ->

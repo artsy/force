@@ -8,15 +8,17 @@ Artist = require '../../models/artist'
 getStatuses = require './statuses'
 sections = require './sections'
 Nav = require './nav'
+Carousel = require './carousel'
 
 @index = (req, res) ->
   artist = new Artist id: req.params.id
+  carousel = new Carousel artist: artist
 
   Q.allSettled([
     artist.fetch(cache: true)
-    artist.related().artworks.fetch(cache: true, data: sort: '-iconicity', published: true, size: 7)
+    carousel.fetch(cache: true)
     getStatuses(artist, { cache: true })
-  ]).spread((artistRequest, artworksRequest, statusesRequest) ->
+  ]).spread((artistRequest, carouselRequest, statusesRequest) ->
 
     nav = new Nav artist: artist, statuses: statusesRequest.value
 
@@ -31,6 +33,7 @@ Nav = require './nav'
 
         res.render 'index',
           artist: artist
+          carousel: carousel
           tab: tab
           statuses: statuses
           nav: nav
