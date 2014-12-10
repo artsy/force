@@ -24,5 +24,6 @@ redirect = (req, res, next) ->
     next()
 
 router.get '/partner-application*', isResponsive
+router.get '/fair-application*', isResponsive
 router.use redirect
 module.exports = router
