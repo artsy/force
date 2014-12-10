@@ -5,6 +5,7 @@ block locals
   - bodyClass = bodyClass + (sd.MICROSITE ? ' is-microsite' : '')
   - bodyClass = bodyClass + (sd.KIOSK_MODE ? ' is-kioskmode' : '')
   - bodyClass = bodyClass + (sd.EIGEN ? ' body-eigen' : '')
+  - if (sd.IS_RESPONSIVE) bodyClass += ' body-responsive';
 
 doctype html
 html( data-useragent=userAgent )
