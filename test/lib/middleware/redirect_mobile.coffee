@@ -6,21 +6,27 @@ describe 'Redirect mobile middleware', ->
 
   beforeEach ->
     redirectMobile.__set__ 'MOBILE_URL', 'm.foobart.sy'
+    @redirect = redirectMobile.__get__ 'redirect'
     @req = { params: {}, logout: sinon.stub() }
-    @res = { redirect: sinon.stub() }
+    @res = { redirect: sinon.stub(), locals: sd: {} }
 
   it 'redirects mobile user agents', ->
     @req.get = -> 'Mobile Android'
-    redirectMobile @req, @res
+    @redirect @req, @res
     @res.redirect.args[0][0].should.containEql 'm.foobart.sy'
 
   it 'does not redirect desktop user agents', ->
     @req.get = -> 'Chome'
-    redirectMobile @req, @res, ->
+    @redirect @req, @res, ->
     @res.redirect.called.should.not.be.ok
 
   it 'respects stop_microgravity_redirect param', ->
     @req.get = -> 'Mobile Android'
     @req.query = stop_microgravity_redirect: true
-    redirectMobile @req, @res, ->
+    @redirect @req, @res, ->
+    @res.redirect.called.should.not.be.ok
+
+  it 'does not redirect responsive pages', ->
+    @res.locals.sd.IS_RESPONSIVE = true
+    @redirect @req, @res, ->
     @res.redirect.called.should.not.be.ok
