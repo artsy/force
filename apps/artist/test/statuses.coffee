@@ -3,18 +3,19 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 Artist = require '../../../models/artist'
-getStatuses = require '../statuses'
+Statuses = require '../statuses'
 
-describe 'getStatuses', ->
+describe 'Statuses', ->
   beforeEach ->
     @artist = new Artist fabricate 'artist', id: 'foobar'
+    @statuses = new Statuses artist: @artist
     sinon.stub Backbone, 'sync'
 
   afterEach ->
     Backbone.sync.restore()
 
   it 'fetches the status of everything', ->
-    getStatuses(@artist)
+    @statuses.fetch()
     _.map(Backbone.sync.args, (args) -> args[1].url).should.eql [
       'undefined/api/v1/search/filtered/artist/foobar/suggest'
       'undefined/api/v1/related/shows?artist[]=foobar&sort=-end_at'
@@ -29,7 +30,7 @@ describe 'getStatuses', ->
     ]
 
   it 'resolves with the statuses', (done) ->
-    getStatuses(@artist).then (statuses) ->
+    @statuses.fetch().then (statuses) ->
       statuses.should.eql {
         artworks: true
         # In this instance shows and posts return false because of their

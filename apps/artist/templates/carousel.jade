@@ -1,15 +1,14 @@
-mixin carouselFigure(artwork)
-  - var image = artwork.defaultImage()
-  - var dimensions = image.resizeDimensionsFor({ height: 300 })
-  a( href= artwork.href() )
+mixin carouselFigure(figure)
+  - var dimensions = figure.resizeDimensionsFor({ height: 300 })
+  a( href= figure.get('href') )
     img(
-      src= image.imageUrlForHeight(300)
-      alt= artwork.get('title')
+      src= figure.imageUrlForHeight(300)
+      alt= figure.get('title')
       width= dimensions.width
       height= dimensions.height
     )
 
-if artist.related().artworks.length >= 4
-  - var carouselFigures = artist.related().artworks.models
+if carousel.figures.length >= 4
+  - var carouselFigures = carousel.figures.models
   #artist-carousel.artist-carousel.carousel
     include ../../../components/carousel/carousel.jade

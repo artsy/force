@@ -57,16 +57,12 @@ describe 'About2 routes', ->
     twilioSendSmsArgs = null
     send = null
     json = null
-    cacheSetArgs = null
 
     describe 'first time', ->
 
       beforeEach ->
-        cache = routes.__get__ 'cache'
-        cache.get = (key, callback) ->
-          callback null, null
-        cache.set = (key, value) ->
-          cacheSetArgs = arguments
+        sinon.stub routes.__get__('cache'), 'set', (key, value) =>
+          @cacheSet = arguments
 
         twilio = routes.__get__ 'twilio'
         twilio.RestClient = class TwilioClientStub
@@ -74,6 +70,9 @@ describe 'About2 routes', ->
           sendSms: -> twilioSendSmsArgs = arguments
 
         routes.sendSMS { param: -> '+1 555 111 2222' }, { send: send = sinon.stub(), json: json = sinon.stub() }
+
+      afterEach ->
+        routes.__get__('cache').set.restore()
 
       it 'sends a link with a valid phone number', ->
         twilioSendSmsArgs[0].to.should.equal '+15551112222'
@@ -87,18 +86,17 @@ describe 'About2 routes', ->
         json.args[0][1].msg.should.equal 'Error!'
 
       it 'sets sent in the cache', ->
-        cacheSetArgs[0].should.equal 'sms/iphone/+15551112222'
+        @cacheSet[0].should.equal 'sms/iphone/+15551112222'
 
     describe 'second time time', ->
 
       beforeEach ->
-        cache = routes.__get__ 'cache'
-        cache.get = (key, callback) ->
-          callback null, 'value set'
-        cache.set = (key, value) ->
-          cacheSetArgs = arguments
-
+        sinon.stub routes.__get__('cache'), 'get', (key, cb) ->
+          cb null, 'existy'
         routes.sendSMS { param: -> '+1 555 111 2222' }, { send: send = sinon.stub(), json: json = sinon.stub() }
+
+      afterEach ->
+        routes.__get__('cache').get.restore()
 
       it 'throws an error', ->
         json.args[0][1].msg.should.equal 'Download link has already been sent to this number.'
