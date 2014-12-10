@@ -129,7 +129,7 @@ module.exports = (app) ->
       next()
 
   # Body parser has to be after proxy middleware for
-  # node-http-proxy to work with POST/PUT/DELETE)
+  # node-http-proxy to work with POST/PUT/DELETE
   app.all '/api*', proxyGravity.api
 
   # Setup Artsy XAPP & Passport middleware for authentication along with the
@@ -153,6 +153,16 @@ module.exports = (app) ->
   app.use artsyPassport _.extend config,
     CurrentUser: CurrentUser
     SECURE_ARTSY_URL: API_URL
+
+  # Static file middleware above apps & redirects to ensure we don't try to
+  # fetch /assets/:pkg.js in an attempt to check for profile or redirect assets
+  # fetches to the mobile website for responsive pages.
+  fs.readdirSync(path.resolve __dirname, '../apps').forEach (fld) ->
+    app.use express.static(path.resolve __dirname, "../apps/#{fld}/public")
+  fs.readdirSync(path.resolve __dirname, '../components').forEach (fld) ->
+    app.use express.static(path.resolve __dirname, "../components/#{fld}/public")
+  app.use express.static(path.resolve __dirname, '../public')
+  app.use favicon(path.resolve __dirname, '../public/images/favicon.ico')
 
   # Proxy / redirect requests before they even have to deal with Force routing
   # (This must be after the auth middleware to be able to proxy auth routes)
@@ -206,14 +216,6 @@ module.exports = (app) ->
   app.use require "../apps/favorites_follows"
   app.use require "../apps/unsubscribe"
   app.use require "../apps/unsupported_browser"
-  # Static files middleware above profiles to ensure we don't try to fetch
-  # /assets or /images in attempt to check if it's a profile.
-  fs.readdirSync(path.resolve __dirname, '../apps').forEach (fld) ->
-    app.use express.static(path.resolve __dirname, "../apps/#{fld}/public")
-  fs.readdirSync(path.resolve __dirname, '../components').forEach (fld) ->
-    app.use express.static(path.resolve __dirname, "../components/#{fld}/public")
-  app.use express.static(path.resolve __dirname, '../public')
-  app.use favicon(path.resolve __dirname, '../public/images/favicon.ico')
   # Profile middleware and apps that use profiles
   app.use require "../apps/profile"
   app.use require "../apps/user_profile"
