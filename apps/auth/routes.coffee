@@ -18,8 +18,9 @@ sanitizeRedirect = require '../../components/sanitize_redirect/index'
     client_id: ARTSY_ID
     client_secret: ARTSY_SECRET
     code: req.query['token']
-  ).end (err, response) ->
-    (err or response?.body.error_description)
+  )
+  .on('error', next)
+  .end (response) ->
     # Delete all connect cookies - we have some under artsy.net and others under .artsy.net.
     res.clearCookie 'connect.sess'
     req.login new CurrentUser(accessToken: response?.body.access_token), ->
