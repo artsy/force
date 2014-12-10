@@ -90,7 +90,7 @@ function bodyParser(req, res, next) {
 
 [npm-image]: https://img.shields.io/npm/v/type-is.svg?style=flat
 [npm-url]: https://npmjs.org/package/type-is
-[node-version-image]: https://img.shields.io/badge/node.js-%3E%3D_0.6-brightgreen.svg?style=flat
+[node-version-image]: https://img.shields.io/node/v/type-is.svg?style=flat
 [node-version-url]: http://nodejs.org/download/
 [travis-image]: https://img.shields.io/travis/jshttp/type-is.svg?style=flat
 [travis-url]: https://travis-ci.org/jshttp/type-is

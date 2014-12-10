@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('stroke-miterlimit', v);
+        this._setProperty('stroke-miterlimit', v);
     },
     get: function () {
         return this.getPropertyValue('stroke-miterlimit');

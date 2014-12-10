@@ -59,8 +59,17 @@ exports.parseChar = parseChar;
 function parseChar(character, state) {
   if (character.length !== 1) throw new Error('Character must be a string of length 1');
   state = state || exports.defaultState();
+  state.src = state.src || '';
+  state.src += character;
   var wasComment = state.blockComment || state.lineComment;
   var lastChar = state.history ? state.history[0] : '';
+
+  if (state.regexpStart) {
+    if (character === '/' || character == '*') {
+      state.regexp = false;
+    }
+    state.regexpStart = false;
+  }
   if (state.lineComment) {
     if (character === '\n') {
       state.lineComment = false;
@@ -101,6 +110,7 @@ function parseChar(character, state) {
     state.blockComment = true;
   } else if (character === '/' && isRegexp(state.history)) {
     state.regexp = true;
+    state.regexpStart = true;
   } else if (character === '\'') {
     state.singleQuote = true;
   } else if (character === '"') {
@@ -119,6 +129,7 @@ function parseChar(character, state) {
     state.squareDepth--;
   }
   if (!state.blockComment && !state.lineComment && !wasComment) state.history = character + state.history;
+  state.lastChar = character; // store last character for ending block comments
   return state;
 }
 
@@ -130,6 +141,7 @@ function State() {
   this.singleQuote = false;
   this.doubleQuote = false;
   this.regexp = false;
+
   this.escaped = false;
 
   this.roundDepth = 0;
@@ -137,6 +149,7 @@ function State() {
   this.squareDepth = 0;
 
   this.history = ''
+  this.lastChar = ''
 }
 State.prototype.isString = function () {
   return this.singleQuote || this.doubleQuote;
@@ -154,6 +167,7 @@ function startsWith(str, start, i) {
 
 exports.isPunctuator = isPunctuator
 function isPunctuator(c) {
+  if (!c) return true; // the start of a string is a punctuator
   var code = c.charCodeAt(0)
 
   switch (code) {

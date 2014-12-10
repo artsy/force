@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('table-layout', v);
+        this._setProperty('table-layout', v);
     },
     get: function () {
         return this.getPropertyValue('table-layout');

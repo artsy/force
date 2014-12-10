@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-transition-timing-function', v);
+        this._setProperty('-webkit-transition-timing-function', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-transition-timing-function');

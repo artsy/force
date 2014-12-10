@@ -12,7 +12,7 @@ module.exports.definition = {
         if (!isValid(v)) {
             return;
         }
-        this.setProperty('background-attachment', v);
+        this._setProperty('background-attachment', v);
     },
     get: function () {
         return this.getPropertyValue('background-attachment');

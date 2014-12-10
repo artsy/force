@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('page-break-inside', v);
+        this._setProperty('page-break-inside', v);
     },
     get: function () {
         return this.getPropertyValue('page-break-inside');

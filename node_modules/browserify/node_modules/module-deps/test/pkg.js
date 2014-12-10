@@ -1,8 +1,9 @@
 var mdeps = require('../');
 var test = require('tape');
+var path = require('path');
 
 var pkg = require('./pkg/package.json');
-pkg.__dirname = __dirname + '/pkg';
+pkg.__dirname = path.join(__dirname, '/pkg');
 
 test('pkg', function (t) {
     t.plan(1);
@@ -11,6 +12,6 @@ test('pkg', function (t) {
     d.on('package', function (pkg_) {
         t.deepEqual(pkg_, pkg);
     });
-    d.end(__dirname + '/pkg/main.js');
+    d.end(path.join(__dirname, '/pkg/main.js'));
     d.resume();
 });

@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('volume', v);
+        this._setProperty('volume', v);
     },
     get: function () {
         return this.getPropertyValue('volume');

@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-box-flex-group', v);
+        this._setProperty('-webkit-box-flex-group', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-box-flex-group');

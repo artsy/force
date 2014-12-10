@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('word-break', v);
+        this._setProperty('word-break', v);
     },
     get: function () {
         return this.getPropertyValue('word-break');

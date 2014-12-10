@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('float', v);
+        this._setProperty('float', v);
     },
     get: function () {
         return this.getPropertyValue('float');

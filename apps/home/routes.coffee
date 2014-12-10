@@ -44,12 +44,3 @@ positionWelcomeHeroMethod = (req, res) ->
   pathname = parse(req.url or '').pathname
   req.query['redirect-to'] = '/' if pathname is '/log_in' or pathname is '/sign_up'
   if req.user? then res.redirect getRedirectTo(req) else next()
-
-@bustHeroCache = (req, res, next) ->
-  return next() unless req.user?.get('type') is 'Admin'
-  heros = new HeroUnits
-  if client
-    client.del(heros.url)
-    res.redirect '/'
-  else
-    res.redirect '/'

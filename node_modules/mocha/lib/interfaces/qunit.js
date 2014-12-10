@@ -1,10 +1,10 @@
-
 /**
  * Module dependencies.
  */
 
 var Suite = require('../suite')
   , Test = require('../test')
+  , escapeRe = require('escape-string-regexp')
   , utils = require('../utils');
 
 /**
@@ -109,7 +109,7 @@ module.exports = function(suite){
 
     context.test.only = function(title, fn){
       var test = context.test(title, fn);
-      var reString = '^' + utils.escapeRegexp(test.fullTitle()) + '$';
+      var reString = '^' + escapeRe(test.fullTitle()) + '$';
       mocha.grep(new RegExp(reString));
     };
 

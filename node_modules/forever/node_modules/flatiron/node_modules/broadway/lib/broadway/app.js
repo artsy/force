@@ -207,9 +207,9 @@ App.prototype.remove = function (name) {
   delete this.plugins[name];
   delete this.options[name];
   delete this.initializers[name];
-  
+
   var init = this.initlist.indexOf(name);
-  
+
   if (init !== -1) {
     this.initlist.splice(1, init);
   }

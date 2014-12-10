@@ -2,11 +2,12 @@ var parser = require('../');
 var test = require('tape');
 var fs = require('fs');
 var concat = require('concat-stream');
+var path = require('path');
 
 var files = {
-    main: __dirname + '/files/main.js',
-    foo: __dirname + '/files/foo.js',
-    bar: __dirname + '/files/bar.js'
+    main: path.join(__dirname, '/files/main.js'),
+    foo: path.join(__dirname, '/files/foo.js'),
+    bar: path.join(__dirname, '/files/bar.js')
 };
 
 var sources = Object.keys(files).reduce(function (acc, file) {

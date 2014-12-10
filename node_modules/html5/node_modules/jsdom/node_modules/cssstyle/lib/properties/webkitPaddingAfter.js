@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-padding-after', v);
+        this._setProperty('-webkit-padding-after', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-padding-after');

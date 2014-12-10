@@ -30,3 +30,31 @@ var Comment = module.exports = function Comment(str, suppress){
  */
 
 Comment.prototype.__proto__ = Node.prototype;
+
+/**
+ * Return a JSON representation of this node.
+ *
+ * @return {Object}
+ * @api public
+ */
+
+Comment.prototype.toJSON = function(){
+  return {
+    __type: 'Comment',
+    str: this.str,
+    suppress: this.suppress,
+    lineno: this.lineno,
+    filename: this.filename
+  };
+};
+
+/**
+ * Return comment.
+ *
+ * @return {String}
+ * @api public
+ */
+
+Comment.prototype.toString = function(){
+  return this.str;
+};

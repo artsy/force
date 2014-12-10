@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('shape-rendering', v);
+        this._setProperty('shape-rendering', v);
     },
     get: function () {
         return this.getPropertyValue('shape-rendering');

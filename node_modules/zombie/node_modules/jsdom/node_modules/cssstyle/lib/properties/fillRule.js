@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('fill-rule', v);
+        this._setProperty('fill-rule', v);
     },
     get: function () {
         return this.getPropertyValue('fill-rule');

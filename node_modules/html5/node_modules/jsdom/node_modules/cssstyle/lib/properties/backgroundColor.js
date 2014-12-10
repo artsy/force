@@ -23,7 +23,7 @@ module.exports.definition = {
         if (parsed === undefined) {
             return;
         }
-        this.setProperty('background-color', parsed);
+        this._setProperty('background-color', parsed);
     },
     get: function () {
         return this.getPropertyValue('background-color');

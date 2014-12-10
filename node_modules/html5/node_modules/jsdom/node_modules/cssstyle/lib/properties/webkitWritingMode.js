@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-writing-mode', v);
+        this._setProperty('-webkit-writing-mode', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-writing-mode');

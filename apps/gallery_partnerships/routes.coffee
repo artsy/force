@@ -11,8 +11,9 @@ CONTENT_PATH = '/gallery-partnerships/content.json'
 getJSON = (callback) ->
   request.get(
     "http://#{APPLICATION_NAME}.s3.amazonaws.com#{CONTENT_PATH}"
-  ).end (err, res) ->
-    return callback err if err
+  )
+  .on('error', callback)
+  .end (res) ->
     try
       callback null, JSON.parse res.text
     catch e

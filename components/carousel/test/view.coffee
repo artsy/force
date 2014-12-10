@@ -25,7 +25,7 @@ describe 'CarouselView', ->
 
   describe '#lefts', ->
     it 'calculates "left" positions', ->
-      @view.lefts().should.eql [0, -337, -565, -831, -1166, -1586, -1824]
+      @view.lefts().should.eql [-0, -337, -565, -831, -1166, -1586, -1824]
 
     it 'supports an optional offset', ->
       @view.lefts(100).should.eql [-100, -437, -665, -931, -1266, -1686, -1924]
@@ -33,7 +33,7 @@ describe 'CarouselView', ->
   describe '#leftAlignPositioning', ->
     it 'returns an object containing the required positioning information for anchoring the carousel to the left', ->
       @view.leftAlignPositioning().should.eql {
-        stopPositions: [0, -337, -565, -831, -1166, -1586, -1824]
+        stopPositions: [-0, -337, -565, -831, -1166, -1586, -1824]
         lastDecoyPosition: 530
         firstDecoyPosition: -2354
       }

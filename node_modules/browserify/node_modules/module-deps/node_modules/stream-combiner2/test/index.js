@@ -3,6 +3,24 @@ var through = require('through2')
 var combine = require('..')
 var test = require('tape')
 
+test('re-emit error object for old streams', function (test) {
+  test.plan(1)
+
+  var expectedErr = new Error('asplode')
+
+  var pipe = combine(
+    es.through(function(data) {
+      return this.emit('error', expectedErr)
+    })
+  )
+
+  pipe.on('error', function (err) {
+    test.equal(err, expectedErr)
+  })
+
+  pipe.write('pow')
+})
+
 test('do not duplicate errors', function (test) {
 
   var errors = 0;

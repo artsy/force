@@ -103,15 +103,23 @@ function regifyString(str, params) {
 
   str = out += str.substr(last);
 
-  var captures = str.match(/:([^\/]+)/ig),
-      length;
+   var captures = str.match(/:([^\/]+)/ig),
+       capture,
+       length;
 
-  if (captures) {
-    length = captures.length;
-    for (var i = 0; i < length; i++) {
-      str = str.replace(captures[i], paramifyString(captures[i], params));
-    }
+   if (captures) {
+     length = captures.length;
+     for (var i = 0; i < length; i++) {
+       capture = captures[i];
+       if ( capture.slice(0, 2) === "::" ) {
+           // This parameter was escaped and should be left in the url as a literal
+           // Remove the escaping : from the beginning
+           str = capture.slice( 1 );
+       } else {
+           str = str.replace(capture, paramifyString(capture, params));
   }
+     }
+   }
 
   return str;
 }
@@ -406,15 +414,17 @@ Router.prototype.runlist = function (fns) {
 Router.prototype.invoke = function (fns, thisArg, callback) {
   var self = this;
 
+  var apply;
   if (this.async) {
-    _asyncEverySeries(fns, function apply(fn, next) {
+    apply = function(fn, next){
       if (Array.isArray(fn)) {
         return _asyncEverySeries(fn, apply, next);
       }
       else if (typeof fn == 'function') {
         fn.apply(thisArg, fns.captures.concat(next));
       }
-    }, function () {
+    };
+    _asyncEverySeries(fns, apply, function () {
       //
       // Ignore the response here. Let the routed take care
       // of themselves and eagerly return true.
@@ -426,7 +436,7 @@ Router.prototype.invoke = function (fns, thisArg, callback) {
     });
   }
   else {
-    _every(fns, function apply(fn) {
+    apply = function(fn){
       if (Array.isArray(fn)) {
         return _every(fn, apply);
       }
@@ -436,7 +446,8 @@ Router.prototype.invoke = function (fns, thisArg, callback) {
       else if (typeof fn === 'string' && self.resource) {
         self.resource[fn].apply(thisArg, fns.captures || []);
       }
-    });
+    }
+    _every(fns, apply);
   }
 };
 
@@ -770,7 +781,7 @@ Router.prototype.mount = function(routes, path) {
         event = isRoute ? "on" : rename;
 
     if (isRoute) {
-      rename = rename.slice((rename.match(new RegExp(self.delimiter)) || [''])[0].length);
+      rename = rename.slice((rename.match(new RegExp('^' + self.delimiter)) || [''])[0].length);
       parts.shift();
     }
 

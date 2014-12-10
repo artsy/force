@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-margin-before', v);
+        this._setProperty('-webkit-margin-before', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-margin-before');

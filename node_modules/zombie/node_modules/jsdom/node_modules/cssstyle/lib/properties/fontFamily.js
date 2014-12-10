@@ -20,7 +20,7 @@ module.exports.isValid = function isValid(v) {
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('font-family', v);
+        this._setProperty('font-family', v);
     },
     get: function () {
         return this.getPropertyValue('font-family');

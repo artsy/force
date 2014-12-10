@@ -1,4 +1,5 @@
 var JSONStream = require('JSONStream');
+var defined = require('defined');
 var through = require('through2');
 var umd = require('umd');
 
@@ -30,8 +31,9 @@ module.exports = function (opts) {
     
     var first = true;
     var entries = [];
+    var basedir = defined(opts.basedir, process.cwd());
     var prelude = opts.prelude || defaultPrelude;
-    var preludePath = opts.preludePath || defaultPreludePath;
+    var preludePath = opts.preludePath || path.relative(basedir, defaultPreludePath);
     
     var lineno = 1 + newlinesIn(prelude);
     var sourcemap;

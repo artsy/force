@@ -40,15 +40,42 @@ BinOp.prototype.__proto__ = Node.prototype;
  * @api public
  */
 
-BinOp.prototype.clone = function(){
-  var clone = new BinOp(
-      this.op
-    , this.left.clone()
-    , this.right ?
-      this.right.clone()
-      : null);
+BinOp.prototype.clone = function(parent){
+  var clone = new BinOp(this.op);
+  clone.left = this.left.clone(parent, clone);
+  clone.right = this.right && this.right.clone(parent, clone);
   clone.lineno = this.lineno;
   clone.filename = this.filename;
-  if (this.val) clone.val = this.val.clone();
+  if (this.val) clone.val = this.val.clone(parent, clone);
   return clone;
+};
+
+/**
+ * Return <left> <op> <right>
+ *
+ * @return {String}
+ * @api public
+ */
+BinOp.prototype.toString = function() {
+  return this.left.toString() + ' ' + this.op + ' ' + this.right.toString();
+};
+
+/**
+ * Return a JSON representation of this node.
+ *
+ * @return {Object}
+ * @api public
+ */
+
+BinOp.prototype.toJSON = function(){
+  var json = {
+    __type: 'BinOp',
+    left: this.left,
+    right: this.right,
+    op: this.op,
+    lineno: this.lineno,
+    filename: this.filename
+  };
+  if (this.val) json.val = this.val;
+  return json;
 };

@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('pause', v);
+        this._setProperty('pause', v);
     },
     get: function () {
         return this.getPropertyValue('pause');

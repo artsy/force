@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('text-shadow', v);
+        this._setProperty('text-shadow', v);
     },
     get: function () {
         return this.getPropertyValue('text-shadow');

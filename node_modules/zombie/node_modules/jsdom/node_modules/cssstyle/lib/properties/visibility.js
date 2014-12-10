@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('visibility', v);
+        this._setProperty('visibility', v);
     },
     get: function () {
         return this.getPropertyValue('visibility');

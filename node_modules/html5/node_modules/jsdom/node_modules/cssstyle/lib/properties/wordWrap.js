@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('word-wrap', v);
+        this._setProperty('word-wrap', v);
     },
     get: function () {
         return this.getPropertyValue('word-wrap');

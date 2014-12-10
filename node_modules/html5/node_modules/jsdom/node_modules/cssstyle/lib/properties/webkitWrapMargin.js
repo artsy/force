@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-wrap-margin', v);
+        this._setProperty('-webkit-wrap-margin', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-wrap-margin');

@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('margin-left', v);
+        this._setProperty('margin-left', v);
     },
     get: function () {
         return this.getPropertyValue('margin-left');

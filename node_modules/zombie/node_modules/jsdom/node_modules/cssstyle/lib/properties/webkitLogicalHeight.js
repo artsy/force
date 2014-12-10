@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-logical-height', v);
+        this._setProperty('-webkit-logical-height', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-logical-height');

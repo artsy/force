@@ -183,8 +183,26 @@ describe('Backbone Super Sync', function() {
           model.fetch({
             cache: true,
             success: function() {
-              JSON.parse(memoryCache['http://localhost:5000/foo/bar{}'])
+              JSON.parse(memoryCache['http://localhost:5000/foo/bar{}']).body
                 .foo.should.equal('bar');
+              done();
+            }
+          });
+        }
+      });
+    });
+
+    it('naively caches headers', function(done) {
+      model.fetch({
+        url: 'http://localhost:5000/headers',
+        cache: true,
+        success: function() {
+          model.fetch({
+            url: 'http://localhost:5000/headers',
+            cache: true,
+            success: function() {
+              JSON.parse(memoryCache['http://localhost:5000/headers{}']).headers
+                ['x-foo-bar'].should.equal('baz');
               done();
             }
           });
@@ -212,7 +230,7 @@ describe('Backbone Super Sync', function() {
         cache: true,
         cacheTime: 0.2,
         success: function() {
-          JSON.parse(memoryCache['http://localhost:5000/foo/bar{}'])
+          JSON.parse(memoryCache['http://localhost:5000/foo/bar{}']).body
             .foo.should.equal('bar');
           setTimeout(function() {
             should(memoryCache['http://localhost:5000/foo/bar{}'])
@@ -233,7 +251,7 @@ describe('Backbone Super Sync', function() {
           success: function() {
             requestCount.should.equal(1);
             client.get('http://localhost:5000/foo/bar{}', function(err, val) {
-              val.should.equal("{\"foo\":\"bar\"}");
+              val.should.containEql("{\"foo\":\"bar\"}");
               model.fetch({
                 cache: true,
                 success: function() {

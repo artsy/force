@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-line-snap', v);
+        this._setProperty('-webkit-line-snap', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-line-snap');

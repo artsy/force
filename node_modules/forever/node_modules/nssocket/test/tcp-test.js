@@ -1,10 +1,10 @@
 /*
  * nssocket-test.js : namespace socket unit test for TCP
  *
- * (C) 2011, Nodejitsu Inc.
+ * (C) 2011, Charlie Robbins, Paolo Fragomeni, & the Contributors.
  *
  */
- 
+
 var assert = require('assert'),
     fs = require('fs'),
     net = require('net'),

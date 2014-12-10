@@ -4,6 +4,7 @@ var TreeParser = require('./TreeParser').TreeParser;
 
 function SAXParser() {
 	this.contentHandler = null;
+	this.lexicalHandler = null;
 	this._errorHandler = null;
 	this._treeBuilder = new SAXTreeBuilder();
 	this._tokenizer = new Tokenizer(this._treeBuilder);
@@ -14,7 +15,7 @@ SAXParser.prototype.parse = function(source) {
 	this._tokenizer.tokenize(source);
 	var document = this._treeBuilder.document;
 	if (document) {
-		new TreeParser(this.contentHandler).parse(document);
+		new TreeParser(this.contentHandler, this.lexicalHandler).parse(document);
 	}
 };
 
@@ -23,7 +24,7 @@ SAXParser.prototype.parseFragment = function(source, context) {
 	this._tokenizer.tokenize(source);
 	var fragment = this._treeBuilder.getFragment();
 	if (fragment) {
-		new TreeParser(this.contentHandler).parse(fragment);
+		new TreeParser(this.contentHandler, this.lexicalHandler).parse(fragment);
 	}
 };
 

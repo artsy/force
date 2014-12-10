@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-rtl-ordering', v);
+        this._setProperty('-webkit-rtl-ordering', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-rtl-ordering');

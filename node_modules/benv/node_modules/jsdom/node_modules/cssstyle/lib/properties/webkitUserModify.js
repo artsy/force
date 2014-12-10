@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-user-modify', v);
+        this._setProperty('-webkit-user-modify', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-user-modify');

@@ -2,6 +2,7 @@ var mdeps = require('../');
 var test = require('tape');
 var JSONStream = require('JSONStream');
 var packer = require('browser-pack');
+var path = require('path');
 
 test('transform', function (t) {
     t.plan(4);
@@ -9,7 +10,7 @@ test('transform', function (t) {
         transform: [ 'insert-aaa', 'insert-bbb' ],
         transformKey: [ 'browserify', 'transform' ]
     });
-    p.end(__dirname + '/files/tr_module/main.js');
+    p.end(path.join(__dirname, '/files/tr_module/main.js'));
     var pack = packer();
     
     p.pipe(JSONStream.stringify()).pipe(pack);

@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-svg-shadow', v);
+        this._setProperty('-webkit-svg-shadow', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-svg-shadow');

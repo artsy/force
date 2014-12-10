@@ -20,11 +20,12 @@ var Node = require('./node')
  * @api public
  */
 
-var Ident = module.exports = function Ident(name, val){
+var Ident = module.exports = function Ident(name, val, mixin){
   Node.call(this);
   this.name = name;
   this.string = name;
   this.val = val || nodes.null;
+  this.mixin = !!mixin;
 };
 
 /**
@@ -62,12 +63,35 @@ Ident.prototype.__proto__ = Node.prototype;
  * @api public
  */
 
-Ident.prototype.clone = function(){
-  var clone = new Ident(this.name, this.val.clone());
+Ident.prototype.clone = function(parent){
+  var clone = new Ident(this.name);
+  clone.val = this.val.clone(parent, clone);
+  clone.mixin = this.mixin;
   clone.lineno = this.lineno;
   clone.filename = this.filename;
   clone.property = this.property;
+  clone.rest = this.rest;
   return clone;
+};
+
+/**
+ * Return a JSON representation of this node.
+ *
+ * @return {Object}
+ * @api public
+ */
+
+Ident.prototype.toJSON = function(){
+  return {
+    __type: 'Ident',
+    name: this.name,
+    val: this.val,
+    mixin: this.mixin,
+    property: this.property,
+    rest: this.rest,
+    lineno: this.lineno,
+    filename: this.filename
+  };
 };
 
 /**

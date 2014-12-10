@@ -165,7 +165,22 @@ var JsDiff = (function() {
 
   var LineDiff = new Diff();
   LineDiff.tokenize = function(value) {
-    return value.split(/^/m);
+    var retLines = [],
+        lines = value.split(/^/m);
+
+    for(var i = 0; i < lines.length; i++) {
+      var line = lines[i],
+          lastLine = lines[i - 1];
+
+      // Merge lines that may contain windows new lines
+      if (line == '\n' && lastLine && lastLine[lastLine.length - 1] === '\r') {
+        retLines[retLines.length - 1] += '\n';
+      } else if (line) {
+        retLines.push(line);
+      }
+    }
+
+    return retLines;
   };
 
   return {

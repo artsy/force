@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-text-stroke-width', v);
+        this._setProperty('-webkit-text-stroke-width', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-text-stroke-width');

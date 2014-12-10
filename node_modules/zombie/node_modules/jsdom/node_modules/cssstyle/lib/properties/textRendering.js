@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('text-rendering', v);
+        this._setProperty('text-rendering', v);
     },
     get: function () {
         return this.getPropertyValue('text-rendering');

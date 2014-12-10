@@ -6,7 +6,7 @@ var implicitSetter = require('../parsers').implicitSetter;
 var styles = ['none', 'hidden', 'dotted', 'dashed', 'solid', 'double', 'groove', 'ridge', 'inset', 'outset'];
 
 module.exports.isValid = function parse(v) {
-    return typeof v === 'string' && styles.indexOf(v) !== -1;
+    return typeof v === 'string' && (v === '' || styles.indexOf(v) !== -1);
 };
 var isValid = module.exports.isValid;
 

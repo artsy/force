@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-perspective', v);
+        this._setProperty('-webkit-perspective', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-perspective');

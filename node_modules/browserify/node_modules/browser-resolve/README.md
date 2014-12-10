@@ -15,6 +15,10 @@ Options:
 * packageFilter - transform the parsed package.json contents before looking at the "main" field
 * modules - object with module id/name -> path mappings to consult before doing manual resolution (use to provide core modules)
 
+### resolve.sync(pkg, opts={})
+
+Same as the async resolve, just uses sync methods.
+
 ## basic usage
 
 you can resolve files like `require.resolve()`:

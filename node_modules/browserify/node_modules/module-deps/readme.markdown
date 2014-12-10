@@ -100,9 +100,15 @@ in `process.env.NODE_PATH`
 
 Input objects should be string filenames or objects with these parameters:
 
-`row.file` - filename
-`row.expose` - name to be exposed as
-`row.noparse` when true, don't parse the file contents for dependencies
+* `row.file` - filename
+* `row.expose` - name to be exposed as
+* `row.noparse` when true, don't parse the file contents for dependencies
+
+or objects can specify transforms:
+
+* `row.transform` - string name, path, or function
+* `row.options` - transform options as an object
+* `row.global` - boolean, whether the transform is global
 
 # events
 

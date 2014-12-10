@@ -3,13 +3,14 @@ var test = require('tape');
 var JSONStream = require('JSONStream');
 var packer = require('browser-pack');
 var concat = require('concat-stream');
+var path = require('path');
 
 test('transform options', function (t) {
     t.plan(1);
     var p = mdeps({
         transformKey: [ 'mdtr' ]
     });
-    p.end(__dirname + '/tr_opts/main.js');
+    p.end(path.join(__dirname, '/tr_opts/main.js'));
     var pack = packer();
     
     p.pipe(JSONStream.stringify()).pipe(pack).pipe(concat(function (src) {

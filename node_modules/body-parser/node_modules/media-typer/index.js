@@ -164,6 +164,11 @@ function parse(string) {
   paramRegExp.lastIndex = index
 
   while (match = paramRegExp.exec(string)) {
+    if (match.index !== index) {
+      throw new TypeError('invalid parameter format')
+    }
+
+    index += match[0].length
     key = match[1].toLowerCase()
     value = match[2]
 
@@ -175,6 +180,10 @@ function parse(string) {
     }
 
     params[key] = value
+  }
+
+  if (index !== -1 && index !== string.length) {
+    throw new TypeError('invalid parameter format')
   }
 
   obj.parameters = params

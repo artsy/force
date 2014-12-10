@@ -3,6 +3,7 @@ var test = require('tape');
 var JSONStream = require('JSONStream');
 var packer = require('browser-pack');
 var concat = require('concat-stream');
+var path = require('path');
 
 test('global transforms', function (t) {
     t.plan(1);
@@ -10,12 +11,12 @@ test('global transforms', function (t) {
     var p = mdeps({
         transform: [ 'tr-c', 'tr-d' ],
         globalTransform: [
-            __dirname + '/files/tr_global/node_modules/tr-e',
-            __dirname + '/files/tr_global/node_modules/tr-f'
+            path.join(__dirname, '/files/tr_global/node_modules/tr-e'),
+            path.join(__dirname, '/files/tr_global/node_modules/tr-f')
         ],
         transformKey: [ 'browserify', 'transform' ]
     });
-    p.end(__dirname + '/files/tr_global/main.js');
+    p.end(path.join(__dirname, '/files/tr_global/main.js'));
     var pack = packer();
     
     p.pipe(JSONStream.stringify()).pipe(pack).pipe(concat(function (src) {

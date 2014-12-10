@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-highlight', v);
+        this._setProperty('-webkit-highlight', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-highlight');

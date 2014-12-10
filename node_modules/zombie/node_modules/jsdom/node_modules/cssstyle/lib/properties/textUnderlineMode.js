@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('text-underline-mode', v);
+        this._setProperty('text-underline-mode', v);
     },
     get: function () {
         return this.getPropertyValue('text-underline-mode');

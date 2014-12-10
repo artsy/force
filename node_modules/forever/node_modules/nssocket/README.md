@@ -135,7 +135,7 @@ All tests are written with [vows][2] and should be run through [npm][3]:
 ```
 
 ### Author: [Nodejitsu](http://www.nodejitsu.com)
-### Contributors: [Paolo Fragomeni](http://github.com/hij1nx), [Charlie Robbins](http://github.com/indexzero), [Jameson Lee](http://github.com/drjackal)
+### Contributors: [Paolo Fragomeni](http://github.com/hij1nx), [Charlie Robbins](http://github.com/indexzero), [Jameson Lee](http://github.com/drjackal), [Gene Diaz Jr.](http://github.com/genediazjr)
  
 [0]: http://github.com/hij1nx/eventemitter2
 [1]: https://gist.github.com/848444

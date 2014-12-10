@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-background-size', v);
+        this._setProperty('-webkit-background-size', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-background-size');

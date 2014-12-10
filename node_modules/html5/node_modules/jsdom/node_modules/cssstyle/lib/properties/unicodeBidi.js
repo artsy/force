@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('unicode-bidi', v);
+        this._setProperty('unicode-bidi', v);
     },
     get: function () {
         return this.getPropertyValue('unicode-bidi');

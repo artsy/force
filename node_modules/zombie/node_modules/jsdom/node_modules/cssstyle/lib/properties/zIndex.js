@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('z-index', v);
+        this._setProperty('z-index', v);
     },
     get: function () {
         return this.getPropertyValue('z-index');

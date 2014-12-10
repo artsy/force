@@ -15,7 +15,7 @@ module.exports.isValid = function isValid(v) {
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('background-repeat', parse(v));
+        this._setProperty('background-repeat', parse(v));
     },
     get: function () {
         return this.getPropertyValue('background-repeat');

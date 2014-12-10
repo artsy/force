@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('mask', v);
+        this._setProperty('mask', v);
     },
     get: function () {
         return this.getPropertyValue('mask');

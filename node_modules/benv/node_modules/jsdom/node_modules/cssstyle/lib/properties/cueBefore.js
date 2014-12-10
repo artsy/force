@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('cue-before', v);
+        this._setProperty('cue-before', v);
     },
     get: function () {
         return this.getPropertyValue('cue-before');

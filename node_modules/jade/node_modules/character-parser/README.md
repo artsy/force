@@ -2,7 +2,7 @@
 
 Parse JavaScript one character at a time to look for snippets in Templates.  This is not a validator, it's just designed to allow you to have sections of JavaScript delimited by brackets robustly.
 
-[![Build Status](https://travis-ci.org/ForbesLindesay/character-parser.png?branch=master)](https://travis-ci.org/ForbesLindesay/character-parser)
+[![Build Status](https://img.shields.io/travis/ForbesLindesay/character-parser/master.svg)](https://travis-ci.org/ForbesLindesay/character-parser)
 
 ## Installation
 

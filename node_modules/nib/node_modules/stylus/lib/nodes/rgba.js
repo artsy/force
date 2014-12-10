@@ -12,7 +12,7 @@
 var Node = require('./node')
   , HSLA = require('./hsla')
   , functions = require('../functions')
-  , adjust = functions['-adjust']
+  , adjust = functions.adjust
   , nodes = require('./');
 
 /**
@@ -73,9 +73,30 @@ RGBA.prototype.clone = function(){
     , this.g
     , this.b
     , this.a);
+  clone.raw = this.raw;
   clone.lineno = this.lineno;
   clone.filename = this.filename;
   return clone;
+};
+
+/**
+ * Return a JSON representation of this node.
+ *
+ * @return {Object}
+ * @api public
+ */
+
+RGBA.prototype.toJSON = function(){
+  return {
+    __type: 'RGBA',
+    r: this.r,
+    g: this.g,
+    b: this.b,
+    a: this.a,
+    raw: this.raw,
+    lineno: this.lineno,
+    filename: this.filename
+  };
 };
 
 /**
@@ -191,7 +212,7 @@ RGBA.prototype.divide = function(n){
  */
 
 RGBA.prototype.operate = function(op, right){
-  right = right.first;
+  if ('in' != op) right = right.first
 
   switch (op) {
     case 'is a':

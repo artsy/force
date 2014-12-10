@@ -2960,7 +2960,7 @@ TreeBuilder.prototype.parseError = function(code, args) {
 	if (!this.errorHandler)
 		return;
 	var message = formatMessage(messages[code], args);
-	this.errorHandler.error(message, this.tokenizer._inputStream.location());
+	this.errorHandler.error(message, this.tokenizer._inputStream.location(), code);
 };
 
 /**

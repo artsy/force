@@ -4,7 +4,7 @@ var parseColor = require('../parsers').parseColor;
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-tap-highlight-color', parseColor(v));
+        this._setProperty('-webkit-tap-highlight-color', parseColor(v));
     },
     get: function () {
         return this.getPropertyValue('-webkit-tap-highlight-color');

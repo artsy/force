@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('speak-numeral', v);
+        this._setProperty('speak-numeral', v);
     },
     get: function () {
         return this.getPropertyValue('speak-numeral');

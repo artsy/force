@@ -1,11 +1,11 @@
-
 /**
  * Module dependencies.
  */
 
 var Suite = require('../suite')
   , Test = require('../test')
-  , utils = require('../utils');;
+  , escapeRe = require('escape-string-regexp')
+  , utils = require('../utils');
 
 /**
  * TDD-style interface:
@@ -112,7 +112,7 @@ module.exports = function(suite){
 
     context.test = function(title, fn){
       var suite = suites[0];
-      if (suite.pending) var fn = null;
+      if (suite.pending) fn = null;
       var test = new Test(title, fn);
       test.file = file;
       suite.addTest(test);
@@ -125,7 +125,7 @@ module.exports = function(suite){
 
     context.test.only = function(title, fn){
       var test = context.test(title, fn);
-      var reString = '^' + utils.escapeRegexp(test.fullTitle()) + '$';
+      var reString = '^' + escapeRe(test.fullTitle()) + '$';
       mocha.grep(new RegExp(reString));
     };
 

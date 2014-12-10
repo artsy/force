@@ -1,10 +1,10 @@
 /*
  * put-object-rows.js: Example usage for `cliff.putObjectRows`.
  *
- * (C) 2010, Nodejitsu Inc.
+ * (C) 2010, Charlie Robbins & the Contributors
  *
  */
- 
+
 var cliff = require('../lib/cliff');
 
 var objs = [], obj = {

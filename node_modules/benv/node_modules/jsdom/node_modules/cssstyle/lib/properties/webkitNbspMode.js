@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-nbsp-mode', v);
+        this._setProperty('-webkit-nbsp-mode', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-nbsp-mode');

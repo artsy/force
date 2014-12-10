@@ -1,31 +1,22 @@
 'use strict';
 
+var shorthandSetter = require('../parsers').shorthandSetter;
+var shorthandGetter = require('../parsers').shorthandGetter;
 var shorthandParser = require('../parsers').shorthandParser;
 
 var shorthand_for = {
-    borderTopWidth: require('./borderTopWidth'),
-    borderTopStyle: require('./borderTopStyle'),
-    borderTopColor: require('./borderTopColor')
+    'border-top-width': require('./borderTopWidth'),
+    'border-top-style': require('./borderTopStyle'),
+    'border-top-color': require('./borderTopColor')
 };
 
-var isValid = module.exports.isValid = function isValid(v) {
+module.exports.isValid = function (v) {
     return shorthandParser(v, shorthand_for) !== undefined;
 };
 
 module.exports.definition = {
-    set: function (v) {
-        var obj = shorthandParser(v, shorthand_for);
-        if (obj === undefined) {
-            return;
-        }
-        Object.keys(obj).forEach(function (property) {
-            this._values[property] = obj[property];
-        }, this);
-        this.setProperty('border-top', v);
-    },
-    get: function () {
-        return this.getPropertyValue('border-top');
-    },
+    set: shorthandSetter('border-top', shorthand_for),
+    get: shorthandGetter('border-top', shorthand_for),
     enumerable: true,
     configurable: true
 };

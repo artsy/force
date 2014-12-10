@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('background-repeat-x', v);
+        this._setProperty('background-repeat-x', v);
     },
     get: function () {
         return this.getPropertyValue('background-repeat-x');

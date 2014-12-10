@@ -533,17 +533,24 @@ Runner.prototype.runSuite = function(suite, fn){
 
 Runner.prototype.uncaught = function(err){
   if (err) {
-    debug('uncaught exception %s', err.message);
+    debug('uncaught exception %s', err !== function () {
+      return this;
+    }.call(err) ? err : ( err.message || err ));
   } else {
     debug('uncaught undefined exception');
-    err = new Error('Catched undefined error, did you throw without specifying what?');
+    err = new Error('Caught undefined error, did you throw without specifying what?');
   }
-  
-  var runnable = this.currentRunnable;
-  if (!runnable || 'failed' == runnable.state) return;
-  runnable.clearTimeout();
   err.uncaught = true;
+
+  var runnable = this.currentRunnable;
+  if (!runnable) return;
+
+  var wasAlreadyDone = runnable.state;
   this.fail(runnable, err);
+
+  runnable.clearTimeout();
+
+  if (wasAlreadyDone) return;
 
   // recover from test
   if ('test' == runnable.type) {
@@ -604,7 +611,7 @@ Runner.prototype.run = function(fn){
 Runner.prototype.abort = function(){
   debug('aborting');
   this._abort = true;
-}
+};
 
 /**
  * Filter leaks with the given globals flagged as `ok`.

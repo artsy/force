@@ -1,15 +1,15 @@
 /*
  * log-test.js: Tests for cliff.
  *
- * (C) 2010, Nodejitsu Inc.
+ * (C) 2010, Charlie Robbins & the Contributors
  *
  */
- 
+
 var assert = require('assert'),
     vows = require('vows'),
     eyes = require('eyes'),
     cliff = require('../lib/cliff');
-    
+
 vows.describe('cliff').addBatch({
   "When using cliff module": {
     "the columnMajor() method": {
@@ -19,7 +19,7 @@ vows.describe('cliff').addBatch({
           ["1b", "2b", "3b", "4b"],
           ["1c", "2c", "3c", "4c"]
         ];
-        
+
         columns = cliff.columnMajor(rows);
         for (var i = 0; i < columns.length; i++) {
           columns[i].forEach(function (val) {
@@ -68,9 +68,9 @@ vows.describe('cliff').addBatch({
           ['a', 'b'],
           [12345, 1]
         ];
-        
+
         assert.equal(
-          cliff.stringifyRows(rows), 
+          cliff.stringifyRows(rows),
           'a     b \n12345 1 '
         );
       }

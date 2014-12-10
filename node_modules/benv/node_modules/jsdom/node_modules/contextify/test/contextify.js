@@ -251,6 +251,26 @@ exports['asynchronous script tests'] = {
             test.ok(sandbox.test2);
             test.done();
         }, 0);
+    },
+
+    // Asynchronous context script execution:
+    // Ensure that async execution is safely executed after dispose
+    'setTimeout should not fail after dispose' : function (test) {
+        var sandbox = {
+            test: test,
+            setTimeout : setTimeout,
+            prop1 : 'prop1',
+            prop2 : 'prop2'
+        };
+        Contextify(sandbox);
+        sandbox.run("setTimeout(function () {" +
+                    "test.ok(prop1 == 'prop1');" +
+                    "test.ok(prop2 == 'prop2');" +
+                    "test.done();" +
+                    "}, 10)");
+        test.equal(sandbox.test1, undefined);
+        test.equal(sandbox.test2, undefined);
+        sandbox.dispose();
     }
 };
 

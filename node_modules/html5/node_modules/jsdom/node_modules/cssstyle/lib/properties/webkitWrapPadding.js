@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-wrap-padding', v);
+        this._setProperty('-webkit-wrap-padding', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-wrap-padding');

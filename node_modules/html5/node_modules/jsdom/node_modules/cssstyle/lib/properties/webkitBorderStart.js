@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-border-start', v);
+        this._setProperty('-webkit-border-start', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-border-start');

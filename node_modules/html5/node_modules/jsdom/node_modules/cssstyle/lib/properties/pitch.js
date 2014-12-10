@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('pitch', v);
+        this._setProperty('pitch', v);
     },
     get: function () {
         return this.getPropertyValue('pitch');

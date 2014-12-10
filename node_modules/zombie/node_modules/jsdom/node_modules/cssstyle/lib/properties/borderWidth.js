@@ -15,6 +15,9 @@ module.exports.isValid = function parse(v) {
     if (typeof v !== 'string') {
         return false;
     }
+    if (v === '') {
+        return true;
+    }
     v = v.toLowerCase();
     if (widths.indexOf(v) === -1) {
         return false;

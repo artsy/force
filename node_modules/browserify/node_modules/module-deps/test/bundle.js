@@ -2,11 +2,12 @@ var parser = require('../');
 var test = require('tape');
 var JSONStream = require('JSONStream');
 var packer = require('browser-pack');
+var path = require('path');
 
 test('bundle', function (t) {
     t.plan(1);
     var p = parser();
-    p.end(__dirname + '/files/main.js');
+    p.end(path.join(__dirname, '/files/main.js'));
     p.on('error', t.fail.bind(t));
     var pack = packer();
     

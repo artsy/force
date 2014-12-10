@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('border-image', v);
+        this._setProperty('border-image', v);
     },
     get: function () {
         return this.getPropertyValue('border-image');

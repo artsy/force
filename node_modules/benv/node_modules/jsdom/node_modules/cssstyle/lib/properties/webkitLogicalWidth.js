@@ -2,7 +2,7 @@
 
 module.exports.definition = {
     set: function (v) {
-        this.setProperty('-webkit-logical-width', v);
+        this._setProperty('-webkit-logical-width', v);
     },
     get: function () {
         return this.getPropertyValue('-webkit-logical-width');

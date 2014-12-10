@@ -33,6 +33,12 @@ So yeah, now `require`ing any `.jade` files will give you back a template functi
 
 Optionally, you can configure jadeify by adding a `"jadeify": { ... }` section to your `package.json`. Any options given there will be passed through to [Jade's API][].
 
+You may also pass options as a second argument to `bundle.transform`:
+
+```js
+bundle.transform(require("jadeify"), options);
+```
+
 [Jade]: http://jade-lang.com/
 [browserify]: https://github.com/substack/node-browserify
 [Jade's API]: http://jade-lang.com/api/
