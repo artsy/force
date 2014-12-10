@@ -1,6 +1,7 @@
 _ = require 'underscore'
 Q = require 'q'
 Backbone = require 'backbone'
+cache = require '../../lib/cache'
 { API_URL } = require('sharify').data
 AdditionalImage = require '../../models/additional_image'
 
@@ -10,12 +11,21 @@ module.exports = class Carousel
 
   fetch: ({ @cache } = {}) ->
     dfd = Q.defer()
-    Q.allSettled([
-      @fetchIconicWorks()
-      @fetchAllInstallShots()
-    ]).then(=>
-      dfd.resolve @figures
-    ).done()
+
+    cacheKey = "artist:#{@artist.id}:carousel"
+    cache.get cacheKey, (err, cachedData) =>
+      return dfd.resolve(@figures.reset(JSON.parse(cachedData))) if cachedData and @cache
+
+      Q.allSettled([
+        @fetchIconicWorks()
+        @fetchAllInstallShots()
+      ]).then(=>
+
+        dfd.resolve @figures
+        cache.set cacheKey, JSON.stringify(@figures.toJSON())
+
+      ).done()
+
     dfd.promise
 
   fetchIconicWorks: ->
