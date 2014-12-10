@@ -4,61 +4,62 @@ Backbone = require 'backbone'
 cache = require '../../lib/cache'
 { API_URL } = require('sharify').data
 
-getArtworks = (artist, options = {}) ->
-  dfd = Q.defer()
-  options = _.defaults options, cache: true
+module.exports = class Statuses
+  constructor: ({ @artist }) ->
+    @statuses = {}
 
-  filterState = new Backbone.Model
-  filterState.url = "#{API_URL}/api/v1/search/filtered/artist/#{artist.id}/suggest"
-  filterState.fetch
-    cache: options.cache
-    success: (model, response) ->
-      dfd.resolve artworks: !!response?.total
-    error: -> dfd.resolve artworks: false
+  fetch: ({ @cache } = {}) ->
+    dfd = Q.defer()
 
-  dfd.promise
+    cacheKey = "artist:#{@artist.id}:statuses"
+    cache.getHash cacheKey, {}, (err, cachedData) =>
+      return dfd.resolve(cachedData) if cachedData and @cache
 
-getStatus = (artist, name, options = {}) ->
-  dfd = Q.defer()
-  options = _.defaults options, cache: true, size: 1
-  resolve = (status) ->
-    dfd.resolve _.tap({}, (x) -> x[name] = status)
+      Q.allSettled([
+        @fetchArtworks()
+        @fetchStatus 'shows', size: 2 # Remove once Gravity is deployed
+        @fetchStatus 'posts'
+        @fetchStatus 'artists'
+        @fetchStatus 'contemporary'
+        @fetchStatus 'articles'
+        @fetchStatus 'merchandisable'
+        @fetchStatus 'bibliography'
+        @fetchStatus 'collections'
+        @fetchStatus 'exhibitions'
+      ]).then((states) =>
 
-  artist.related()[name].fetch
-    data: size: options.size
-    cache: options.cache
-    success: (collection) ->
-      resolve !!collection.length
-    error: -> resolve false
+        @statuses = _.extend {}, _.pluck(states, 'value')...
+        dfd.resolve @statuses
+        cache.setHash cacheKey, @statuses
 
-  dfd.promise
+      ).done()
 
-module.exports = (artist, options = {}) ->
-  dfd = Q.defer()
+    dfd.promise
 
-  cacheKey = "artist:#{artist.id}:statuses"
-  cache.getHash cacheKey, {}, (err, cachedData) ->
-    return dfd.resolve(cachedData) if cachedData and options.cache
+  fetchArtworks: ->
+    dfd = Q.defer()
 
-    get = _.partial getStatus, artist
+    filterState = new Backbone.Model
+    filterState.url = "#{API_URL}/api/v1/search/filtered/artist/#{@artist.id}/suggest"
+    filterState.fetch
+      cache: @cache
+      success: (model, response) ->
+        dfd.resolve artworks: !!response?.total
+      error: -> dfd.resolve artworks: false
 
-    Q.allSettled([
-      getArtworks artist
-      get 'shows', size: 2 # Remove once Gravity is deployed
-      get 'posts'
-      get 'artists'
-      get 'contemporary'
-      get 'articles'
-      get 'merchandisable'
-      get 'bibliography'
-      get 'collections'
-      get 'exhibitions'
-    ]).then((states) ->
+    dfd.promise
 
-      statuses = _.extend {}, _.pluck(states, 'value')...
-      dfd.resolve statuses
-      cache.setHash cacheKey, statuses
+  fetchStatus: (name, options = {}) ->
+    dfd = Q.defer()
+    options = _.defaults options, cache: @cache, size: 1
+    resolve = (status) ->
+      dfd.resolve _.tap({}, (x) -> x[name] = status)
 
-    ).done()
+    @artist.related()[name].fetch
+      data: size: options.size
+      cache: @cache
+      success: (collection) ->
+        resolve !!collection.length
+      error: -> resolve false
 
-  dfd.promise
+    dfd.promise

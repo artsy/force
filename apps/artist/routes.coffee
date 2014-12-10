@@ -5,7 +5,7 @@ fs = require 'graceful-fs'
 Backbone = require 'backbone'
 { stringifyJSONForWeb } = require '../../components/util/json'
 Artist = require '../../models/artist'
-getStatuses = require './statuses'
+Statuses = require './statuses'
 sections = require './sections'
 Nav = require './nav'
 Carousel = require './carousel'
@@ -13,11 +13,12 @@ Carousel = require './carousel'
 @index = (req, res) ->
   artist = new Artist id: req.params.id
   carousel = new Carousel artist: artist
+  statuses = new Statuses artist: artist
 
   Q.allSettled([
     artist.fetch(cache: true)
     carousel.fetch(cache: true)
-    getStatuses(artist, { cache: true })
+    statuses.fetch(cache: true)
   ]).spread((artistRequest, carouselRequest, statusesRequest) ->
 
     nav = new Nav artist: artist, statuses: statusesRequest.value
@@ -29,13 +30,13 @@ Carousel = require './carousel'
 
         res.locals.sd.ARTIST = artist.toJSON()
         res.locals.sd.TAB = tab = req.params.tab or ''
-        res.locals.sd.STATUSES = statuses = statusesRequest.value
+        res.locals.sd.STATUSES = statuses.statuses
 
         res.render 'index',
           artist: artist
           carousel: carousel
           tab: tab
-          statuses: statuses
+          statuses: statuses.statuses
           nav: nav
           jsonLD: stringifyJSONForWeb(artist.toJSONLD())
 
