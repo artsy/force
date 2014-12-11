@@ -14,7 +14,7 @@ Following = require '../../components/follow_button/collection.coffee'
   new Profile(id: req.params.id).fetch
     data: data
     success: (profile) ->
-      return next() unless profile.get('published')
+      return next() if profile.get('private') or not profile.get('published')
       res.locals.profile = profile
       res.locals.sd.PROFILE = profile.toJSON()
       res.locals.jsonLD = profile.toJSONLD()

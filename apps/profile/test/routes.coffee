@@ -50,3 +50,8 @@ describe 'Profile routes', ->
       routes.setProfile @req, @res, next = sinon.stub()
       _.last(Backbone.sync.args)[2].success fabricate 'profile', published: false
       next.called.should.be.ok
+
+    it 'moves on if the profile is private', ->
+      routes.setProfile @req, @res, next = sinon.stub()
+      _.last(Backbone.sync.args)[2].success fabricate 'profile', private: true
+      next.called.should.be.ok
