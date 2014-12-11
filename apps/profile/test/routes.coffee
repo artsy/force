@@ -45,3 +45,8 @@ describe 'Profile routes', ->
       @req.user = null
       routes.setProfile @req, @res, next = sinon.stub()
       (_.last(Backbone.sync.args)[2].data.access_token?).should.not.be.ok
+
+    it 'moves on if the profile is unpublished', ->
+      routes.setProfile @req, @res, next = sinon.stub()
+      _.last(Backbone.sync.args)[2].success fabricate 'profile', published: false
+      next.called.should.be.ok
