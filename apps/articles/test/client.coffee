@@ -9,6 +9,7 @@ fixtures = require '../../../test/helpers/fixtures.coffee'
 { stubChildClasses } = require '../../../test/helpers/stubs'
 
 describe 'ArticleView', ->
+
   before (done) ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'
@@ -19,9 +20,9 @@ describe 'ArticleView', ->
         ['artworkItemTemplate', 'carouselTemplate']
       )
       stubChildClasses mod, this,
-        ['CarouselView']
-        ['postRender']
-      benv.render resolve(__dirname, '../templates/show.jade'), {
+        ['CarouselView', 'FillwidthView']
+        ['postRender', 'render', 'hideSecondRow']
+      benv.render resolve(__dirname, '../templates/show.jade'), @locals = {
         article: @article = new Article fixtures.article
         author: new Backbone.Model fabricate 'user'
         sd: {}
@@ -71,3 +72,20 @@ describe 'ArticleView', ->
           title: 'Andy Foobar Flowers'
           _id: '5321b73dc9dc2458c4000196'
       @view.$el.html().should.containEql 'Andy Foobar Flowers'
+
+    xit 'adds fillwidth if theres fillwidth sections', (done) ->
+      sections = [{
+        type: 'artworks'
+        layout: 'overflow_fillwidth'
+        ids: ['5321b73dc9dc2458c4000196']
+      }]
+      Backbone.sync.restore()
+      sinon.stub Backbone, 'sync'
+      @locals.article.set sections: sections
+      @view.article.set sections: sections
+      benv.render resolve(__dirname, '../templates/show.jade'), @locals, =>
+        @view.renderArtworks()
+        Backbone.sync.args[0][2].success fabricate 'artwork',
+          title: 'Andy Foobar Flowers'
+          _id: '5321b73dc9dc2458c4000196'
+        @FillwidthView.called.should.be.ok
