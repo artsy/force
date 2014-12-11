@@ -105,8 +105,7 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @$button.text("See More (#{@remaining})")[visibility]()
 
   renderHeader: ->
-    @filterHash = if @filter.filterStates.models.length > 0 then @filter.filterStates.models[0].attributes else {}
-    @$header.html headerTemplate(filter: @filter, artist: @model, filterHash: @filterHash)
+    @$header.html headerTemplate(filter: @filter, artist: @model)
 
   renderColumns: ->
     if @artworks.params.get('page') > 1

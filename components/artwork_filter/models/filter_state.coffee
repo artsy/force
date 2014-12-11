@@ -18,11 +18,8 @@ module.exports = class FilterState extends Backbone.Model
       if sectionMap[x] and not _.isEmpty(@get x)
         criteria[x] =
           label: sectionMap[x]
-          filters: @sortFilters(x, _.map @get(x), (vals, key) =>
-            if vals['name']
-              key: key, count: vals['count'], label: vals['name']
-            else
-              key: key, count: vals, label: deslugify(key)
+          filters: @sortFilters(x, _.map @get(x), ({ count, name }, key) =>
+            key: key, count: count, label: name
           )
       criteria
     , {}

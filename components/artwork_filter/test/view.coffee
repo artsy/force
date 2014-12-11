@@ -59,8 +59,7 @@ describe 'ArtworkFilterView', ->
     it 'renders the filter template', ->
       @view.$filter.html().should.containEql '<h2>Works</h2>'
 
-  # Need to update antigravity
-  xdescribe '#handleState', ->
+  describe '#handleState', ->
     describe '#handleFilterState', ->
       it 'sets the state for the filter container depending on the request event', ->
         # _.isUndefined(@view.$filter.attr 'data-state').should.be.true
