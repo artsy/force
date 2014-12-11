@@ -30,13 +30,13 @@ Carousel = require './carousel'
 
         res.locals.sd.ARTIST = artist.toJSON()
         res.locals.sd.TAB = tab = req.params.tab or ''
-        res.locals.sd.STATUSES = statuses.statuses
+        res.locals.sd.STATUSES = statuses = statusesRequest.value
 
         res.render 'index',
           artist: artist
           carousel: carousel
           tab: tab
-          statuses: statuses.statuses
+          statuses: statuses
           nav: nav
           jsonLD: stringifyJSONForWeb(artist.toJSONLD())
 
