@@ -759,90 +759,98 @@ module.exports = fabricate = (type, extObj = {}) ->
       updated_at: "2014-02-24T16:34:25Z"
 
     when 'artist_filtered_search_suggest'
-      total: 65
+      total: 79
       related_gene: {}
       medium:
-        design: 1
-        drawing: 10
-        installation: 1
-        painting: 7
-        prints: 8
-        sculpture: 23
-        "work-on-paper": 41
+        design:
+          name: "Design"
+          count: 2
+        drawing:
+          name: "Drawing"
+          count: 10
+        painting:
+          name: "Painting"
+          count: 7
+        prints:
+          name: "Prints"
+          count: 8
+        sculpture:
+          name: "Sculpture"
+          count: 32
+        "work-on-paper":
+          name: "Work On Paper"
+          count: 44
       dimension:
-        96: 63
+        96:
+          name: "96"
+          count: 76
       gallery:
-        "armand-bartos-fine-art": 2
-        "artware-editions": 1
-        "barbara-krakow-gallery": 4
-        "carolina-nitsch-contemporary-art": 15
-        "casterline-goodman-gallery": 1
-        caviar20: 1
-        "cheim-and-read": 21
-        "galerie-le-minotaure": 1
-        "galerie-zlotowski": 1
-        "lora-reynolds-gallery": 1
-        mixografia: 1
-        "peter-blum-gallery": 4
-        "robert-miller-gallery": 2
-        "senior-and-shopmaker-gallery": 3
-        "susan-sheehan-gallery": 1
-        "xavier-hufkens": 3
-      institution:
-        "miniature-museum-ria-and-lex-daniels": 1
-        "museum-of-arts-and-design": 1
-        "serpentine-gallery": 1
-      period:
-        1940: 4
-        1960: 8
-        1970: 1
-        1980: 3
-        1990: 16
-        2000: 27
-        2010: 3
-      sale_status: {}
-      price_range:
-        "-1:1000000000000": 58
-
-    when 'artist_filtered_search_nested_suggest'
-      total: 65
-      related_gene: {}
-      medium:
-        design: 1
-        drawing: 10
-        installation: 1
-        painting: 7
-        prints: 8
-        sculpture: 23
-        "work-on-paper": 41
-      dimension:
-        96: 63
-      gallery:
-        "armand-bartos-fine-art":
-          'name': 'Armand Bartos Fine Art'
-          'count': 5
-        "artware-editions":
-          'name': 'Artware Editions'
-          'count': 4
         "barbara-krakow-gallery":
-          'name': 'Barbara Krakow Gallery'
-          'count': 3
+          name: "Barbara Krakow Gallery"
+          count: 3
         "carolina-nitsch-contemporary-art":
-          'name': 'Carolina Nitsch Contemporary Art'
-          'count': 2
-        "casterline-goodman-gallery":
-          'name': 'CASTERLINE GOODMAN GALLERY'
-          'count': 1
+          name: "Carolina Nitsch Contemporary Art"
+          count: 17
+        caviar20:
+          name: "Caviar20"
+          count: 2
+        "cheim-and-read":
+          name: "Cheim & Read"
+          count: 28
+        "peter-blum-gallery":
+          name: "Peter Blum Gallery"
+          count: 4
+        "robert-miller-gallery":
+          name: "Robert Miller Gallery"
+          count: 2
+        "senior-and-shopmaker-gallery":
+          name: "Senior & Shopmaker Gallery"
+          count: 3
+        "xavier-hufkens":
+          name: "Xavier Hufkens"
+          count: 3
       institution:
+        "miniature-museum-ria-and-lex-daniels":
+          name: "Miniature Museum Ria and Lex Daniels"
+          count: 1
         "museum-of-arts-and-design":
-          'name': 'Museum of Arts and Design'
-          'count': 1
+          name: "Museum of Arts and Design"
+          count: 1
         "serpentine-gallery":
-          'name': 'Serpentine Gallery'
-          'count': 2
-      period: {}
+          name: "Serpentine Gallery"
+          count: 1
+        "whitechapel-gallery":
+          name: "Whitechapel Gallery"
+          count: 1
+      period:
+        1940:
+          name: "1940s"
+          count: 5
+        1950:
+          name: "1950s"
+          count: 1
+        1960:
+          name: "1960s"
+          count: 9
+        1970:
+          name: "1970s"
+          count: 1
+        1980:
+          name: "1980s"
+          count: 3
+        1990:
+          name: "1990s"
+          count: 22
+        2000:
+          name: "2000s"
+          count: 32
+        2010:
+          name: "2010s"
+          count: 3
       sale_status: {}
       price_range:
-        "-1:1000000000000": 58
+        "-1:1000000000000":
+          name: "-1:1000000000000"
+          count: 74
 
   , extObj
