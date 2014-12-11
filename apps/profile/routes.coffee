@@ -14,7 +14,6 @@ Following = require '../../components/follow_button/collection.coffee'
   new Profile(id: req.params.id).fetch
     data: data
     success: (profile) ->
-      console.log profile.toJSON().published
       res.locals.profile = profile
       res.locals.sd.PROFILE = profile.toJSON()
       res.locals.jsonLD = profile.toJSONLD()
