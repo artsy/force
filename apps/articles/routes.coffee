@@ -25,6 +25,7 @@ embedVideo = require 'embed-video'
 
 @getArticle = (req, res, next) ->
   new Article(id: req.params.id).fetch
+    headers: 'X-Access-Token': req.user?.get('accessToken')
     error: res.backboneError
     success: (article) ->
       req.article = article
