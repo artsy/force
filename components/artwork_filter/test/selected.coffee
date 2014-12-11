@@ -18,20 +18,17 @@ describe 'Selected', ->
 
   describe '#labels', ->
     it 'labels the selected attributes by humanizing and joining the values', ->
-      filterHash = {
-        'medium':
-          'works-on-paper':14
-        'institution':
+      map =
+        medium:
+          'works-on-paper':
+            name: 'Works On Paper'
+            count: 14
+        institution:
           'whitney-museum':
-            'name':'WHITNEY Museum'
-            'count':10
-      }
+            'name': 'WHITNEY Museum'
+            'count': 10
       @selected.set medium: 'works-on-paper', price_range: '-1:1000000000000', institution: 'whitney-museum'
-      @selected.labels(filterHash).should.equal 'Works On Paper, For Sale, WHITNEY Museum'
-    it 'fails silently when there is missing information', ->
-      filterHash = {}
-      @selected.set medium: 'works-on-paper', price_range: '-1:1000000000000', institution: 'whitney-museum'
-      @selected.labels(filterHash).should.equal 'Works On Paper, For Sale, Whitney Museum'
+      @selected.labels(map).should.equal 'Works On Paper, For Sale, WHITNEY Museum'
 
   describe '#isActive', ->
     it 'checks to see if a value is selected', ->

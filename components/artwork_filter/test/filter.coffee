@@ -139,8 +139,7 @@ describe 'Filter', ->
       Backbone.sync.callCount.should.equal 4
       @filter.filterStates.pluck('id').should.eql ['medium=drawing', 'medium=drawing&price_range=x', 'price_range=x', 'root']
 
-    # Need to update antigravity
-    xdescribe '#forSaleCount', ->
+    describe '#forSaleCount', ->
       it 'returns the for sale count when the for sale boolean is toggled', ->
         @filter.set 'total', 999
         @filter.selected.has('price_range').should.be.true
@@ -149,4 +148,4 @@ describe 'Filter', ->
       it 'returns the for sale count when the for sale boolean is not toggled', ->
         @filter.toggle 'for-sale', false
         @filter.set 'total', 999
-        @filter.forSaleCount().should.equal 58
+        @filter.forSaleCount().should.equal 74

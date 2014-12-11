@@ -1,7 +1,7 @@
 h2
   | #{artist.get('name')}:
   = ' '
-  if labels = filter.selected.labels(filterHash)
+  if labels = filter.selected.labels(filter.root.attributes)
     | #{labels} &mdash; #{filter.get('total')} works
   else
     | #{filter.get('total')} works

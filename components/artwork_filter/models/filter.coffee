@@ -17,10 +17,10 @@ module.exports = class Filter
     @filterStates = new FilterStates
     @root = @buildState()
 
-  by: (key, value, options = {}) ->
+  by: (keyOrObj, value, options = {}) ->
     @engaged = true
-    @selected.reset silent: true unless key is 'price_range'
-    @selected.set key, value
+    @selected.reset silent: true unless keyOrObj is 'price_range'
+    @selected.set keyOrObj, value
     @newState options
 
   priced: ->
