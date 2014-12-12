@@ -14,21 +14,10 @@
   .main-layout-container
     margin 0 40px
 
-  .show-share
-    float right
-    margin-top 10px
-    position absolute
-    right -5px
-    a
-      text-decoration none
-    .share-to-pinterest
-      display: none
-
   .show-artworks
     margin-bottom 100px
     .artwork-item-image
       max-height none
-
   .artwork-column
     margin 0
     padding 0 40px
@@ -43,11 +32,10 @@
     left 40px
     max-width 260px
     position absolute
-
-  .profile-badge-icon, .profile-badge-initials
+  .profile-badge-icon
+  .profile-badge-initials
     float left
     margin-right 10px
-
   .profile-badge-name
     float left
     max-width 218px
@@ -62,42 +50,53 @@
   width 100%
 
 .show-header
-  text-align center
-  min-height 180px
+  display table
+  table-layout fixed
   position relative
+  margin-bottom 60px
+.show-header__left
+.show-header__center
+.show-header__right
+  display table-cell
+  vertical-align top
+.show-header__left
+.show-header__right
+  width 22%
+.show-header__center
+  text-align center
+  width 56%
+.show-header__right
+  text-align right
+.show-header__left
+  padding-top 10px
+
+.show-share
+  a
+    text-decoration none
+  .share-to-pinterest
+    display none
+
+.show-metadata
+  //
+.show-metadata__partner-link
+  avant-garde()
+  font-size 13px
+  margin-right 10px
+  > a
+    text-decoration none
 
 .show-heading-title
   garamond()
   font-size 36px
   line-height 1.25
-
-.show-heading-title, .show-description
-  margin 0 auto 20px auto
-  padding 0 260px
-  width 100%
-
+.show-heading-title
+.show-description
+  block-margins(20px)
 .show-description
   font-size 20px
   line-height 148%
 
-#show-left
-  margin-top 20px
-  // Prevent long partner names from overlapping the title of the show
-  max-width 250px
-  position absolute
-  text-align left
-  > a
-    margin-bottom 10px
-  .partner-link
-    avant-garde()
-    text-decoration none
-    font-size 13px
-    margin-right 6px
-
-#show-main-buttons
-  margin-bottom 10px
-  .follow-button
-    margin-right 10px
-  button
-    width 187px
-    padding 15px 10px 13px 10px
+.show-installation-shot-carousel
+  margin 60px 0
+  .loading-spinner
+    display none

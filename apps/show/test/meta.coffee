@@ -10,7 +10,7 @@ describe 'Meta tags', ->
   describe 'Partner Show', ->
 
     beforeEach ->
-      @file = "#{process.cwd()}/apps/show/meta.jade"
+      @file = "#{process.cwd()}/apps/show/templates/meta.jade"
       @show = new PartnerShow fabricate('show')
       @html = jade.render fs.readFileSync(@file).toString(),
         sd: sd

@@ -1,0 +1,22 @@
+extends ../../../components/main_layout/templates/index
+include ../../../components/share/template
+
+block head
+  include meta
+
+append locals
+  - assetPackage = 'show'
+
+block body
+  #show
+    include header
+
+    if installShots.length
+      section#show-installation-shot-carousel.show-installation-shot-carousel
+        - var carouselFigures = installShots.models
+        include ../../../components/carousel/template
+
+    section.show-container.show-artworks.artworks-columns
+      .loading-spinner
+
+  include ../../../components/main_layout/templates/json_ld

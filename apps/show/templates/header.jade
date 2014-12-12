@@ -1,0 +1,64 @@
+mixin back(href, text)
+  a.contextual-return-link( href= href )
+    i.icon-chevron-small-left
+    | Back to #{text}
+
+header.show-header.show-container
+  .show-header__left
+    case context
+      when 'home'
+        +back('/', 'Homepage')
+      when 'fair'
+        if fair.get('organizer')
+          +back('/' + fair.get('organizer').profile_id, fair.get('name'))
+      when 'partner'
+        +back(partner.href(), partner.get('name'))
+
+    .show-metadata
+      .show-metadata__partner
+        span.show-metadata__partner-link
+          if partner.isLinkable()
+            a( href= partner.href() )= partner.get('name')
+          else
+            = partner.get('name')
+
+        span.show-metadata__follow-button
+          .plus-follow-button
+            .icon-follow-circle
+            .follow-button-text
+
+      if show.has('fair')
+        if fair.get('organizer')
+          .show-metadata__fair-organizer
+            a( href="/#{fair.get('organizer').profile_id}" )
+              = fair.get('name')
+        .show-metadata__fair-dates
+          = fair.formatDates()
+        if show.get('fair_location')
+          .show-metadata__fair-location
+            = show.get('fair_location').display
+      else
+        .show-metadata__running-dates
+          = show.runningDates()
+        if location
+          .show-metadata__location
+            = location.singleLine()
+
+  .show-header__center
+    h1.show-heading-title
+      if show.has('fair')
+        = partner.get('name')
+        br
+        em= fair.get('name')
+      else
+        = show.title()
+
+    if show.get('description')
+      .show-description.garamond-header-center
+        != show.mdToHtml('description')
+
+    #show-main-buttons.show-main-buttons
+      include ../../../components/partner_buttons/show_buttons
+
+  .show-header__right
+    nav.show-share: +share(show.shareTitle())

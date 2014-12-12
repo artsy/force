@@ -2,15 +2,19 @@ PartnerShow = require '../../models/partner_show'
 Profile = require '../../models/profile'
 { stringifyJSONForWeb } = require '../../components/util/json.coffee'
 { parse } = require 'url'
+{ API_URL } = require('sharify').data
+Q = require 'q'
+InstallShots = require '../../collections/install_shots'
 
-render = (res, show, profile=null) ->
+render = (res, show, installShots, profile = null) ->
   res.locals.sd.SHOW = show.toJSON()
-  res.render 'template',
+  res.render 'index',
     fair: show.fair()
     location: show.location()
     partner: show.partner()
     show: show
     profile: profile
+    installShots: installShots
     jsonLD: stringifyJSONForWeb(show.toJSONLD())
 
 setReferringContext = (req, res, show) ->
@@ -28,9 +32,21 @@ setReferringContext = (req, res, show) ->
   )
 
 @index = (req, res, next) ->
-  new PartnerShow(id: req.params.id).fetch
-    error: res.backboneError
-    success: (show) =>
+  show = new PartnerShow(id: req.params.id)
+
+  installShots = new InstallShots
+  installShots.url = "#{API_URL}/api/v1/partner_show/#{show.id}/images"
+
+  Q.allSettled([
+    show.fetch(cache: true)
+    installShots.fetchUntilEndInParallel(cache: true, data: default: false)
+  ]).spread((showRequest, installShotsRequest) ->
+
+    if showRequest.state is 'rejected'
+      res.backboneError(show, showRequest.reason)
+    else
+
+      # Proceed as normal...
       setReferringContext(req, res, show)
 
       # 404 if show isn't displayable
@@ -48,9 +64,10 @@ setReferringContext = (req, res, show) ->
         profile.fetch
           cache: true
           success: (profile) =>
-            render res, show, profile
+            render res, show, installShots, profile
           error: =>
             # profile is private
-            render res, show
+            render res, show, installShots
       else
-        render res, show
+        render res, show, installShots
+  ).done()
