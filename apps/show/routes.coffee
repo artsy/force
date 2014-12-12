@@ -8,7 +8,7 @@ InstallShots = require '../../collections/install_shots'
 
 render = (res, show, installShots, profile = null) ->
   res.locals.sd.SHOW = show.toJSON()
-  res.render 'template',
+  res.render 'index',
     fair: show.fair()
     location: show.location()
     partner: show.partner()

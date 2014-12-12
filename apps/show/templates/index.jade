@@ -1,0 +1,26 @@
+extends ../../../components/main_layout/templates/index
+include ../../../components/share/template
+
+block head
+  include meta
+
+append locals
+  - assetPackage = 'show'
+
+mixin back(href, text)
+  a.contextual-return-link( href=href )
+    i.icon-chevron-small-left
+    | Back to #{text}
+
+block body
+  #show
+    include header
+
+    section#show-installation-shot-carousel.show-installation-shot-carousel
+      - var carouselFigures = installShots.models
+      include ../../../components/carousel/template
+
+    section.show-container.show-artworks.artworks-columns
+      .loading-spinner
+
+  include ../../../components/main_layout/templates/json_ld
