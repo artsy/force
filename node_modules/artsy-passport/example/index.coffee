@@ -70,8 +70,8 @@ setup = (app) ->
   app.get '/personalize', (req, res) ->
     res.redirect '/' unless req.user?
     res.send 'Personalize Flow for ' + req.user.get('name')
-  app.get '/users/sign_out', (req, res) ->
-    res.redirect '/'
+  app.delete '/users/sign_out', (req, res) ->
+    res.send JSON.stringify(status: 'ok')
 
   return unless module is require.main
   app.listen 3000, -> console.log "Example listening on 3000"

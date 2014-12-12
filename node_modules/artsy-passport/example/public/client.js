@@ -4,7 +4,19 @@ var sd;
 sd = require('sharify').data;
 
 $(function() {
-  return $('body').append("<br><br>your email from the client-side!<br> " + sd.CURRENT_USER.email);
+  $('body').append("<br><br>your email from the client-side!<br> " + sd.CURRENT_USER.email);
+  return $('a.logout').click(function() {
+    return $.ajax({
+      url: '/users/sign_out',
+      type: 'DELETE',
+      success: function() {
+        return window.location = '/';
+      },
+      error: function(xhr, status, error) {
+        return alert(error);
+      }
+    });
+  });
 });
 
 
