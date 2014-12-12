@@ -36,3 +36,6 @@ sanitizeRedirect = require '../../components/sanitize_redirect/index'
         parse(req.get('Referrer') or '').path or
         '/'
   res.redirect sanitizeRedirect(url)
+
+@logout = (req, res, next) ->
+  res.send 200, { msg: "success" }

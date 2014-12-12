@@ -16,6 +16,7 @@ module.exports = class HeaderView extends Backbone.View
     'click .mlh-login': 'login'
     'click .mlh-signup': 'signup'
     'click .user-nav-profile-link': 'showProfilePrivateDialog'
+    'click .mlh-logout': 'logout'
 
   initialize: ({ @$window, @$body }) ->
     @$welcomeHeader = @$('#main-layout-welcome-header')
@@ -95,6 +96,17 @@ module.exports = class HeaderView extends Backbone.View
     e.preventDefault()
     analytics.track.funnel 'Clicked login via the header'
     mediator.trigger 'open:auth', mode: 'login'
+
+  logout: (e) ->
+    e.preventDefault()
+    analytics.track.funnel 'Clicked logout via the header'
+    $.ajax
+      url: '/users/sign_out'
+      type: 'DELETE'
+      success: ->
+        location.reload()
+      error: (xhr, status, errorMessage) ->
+        new FlashMessage message: errorMessage
 
   checkForFlash: ->
     if sd.FLASH
