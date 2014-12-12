@@ -12,30 +12,16 @@ artworkColumns = -> require('../../../components/artwork_columns/template.jade')
 trackArtworkImpressions = require("../../../components/analytics/impression_tracking.coffee").trackArtworkImpressions
 
 module.exports.PartnerShowView = class PartnerShowView extends Backbone.View
-
   initialize: (options) ->
-    @shareView = new ShareView
-      el: @$('.show-share')
     @setupCurrentUser()
-    new PartnerShowButtons
-      el: @$(".show-header")
-      model: @model
+
+    new ShareView el: @$('.show-share')
+    new PartnerShowButtons el: @$('.show-header'), model: @model
+
+    @carouselView = new CarouselView el: @$('#show-installation-shot-carousel'), height: 480, align: 'left'
+    @carouselView.postRender()
+
     @$showArtworks = @$('.show-artworks')
-    @$carousel = @$('#show-installation-shot-carousel')
-
-    @model.fetchInstallShots
-      success: (installShots) =>
-        if installShots.length > 0
-          @carouselView = new CarouselView
-            collection: installShots
-            height: 480
-            hasDimensions: false
-          @$carousel.html @carouselView.render().$el
-        else
-          @$carousel.remove()
-      error: =>
-        @$carousel.remove()
-
     @model.fetchArtworks
       success: (artworks) =>
         if artworks.length > 0
@@ -70,7 +56,5 @@ module.exports.PartnerShowView = class PartnerShowView extends Backbone.View
       @artworkCollection.syncSavedArtworks()
 
 module.exports.init = ->
-
-  new PartnerShowView
-    el: $('#show')
-    model: new PartnerShow sd.SHOW
+  show = new PartnerShow sd.SHOW
+  new PartnerShowView el: $('#show'), model: show

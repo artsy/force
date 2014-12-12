@@ -65,7 +65,8 @@ block body
         include ../../components/partner_buttons/show_buttons
 
     section#show-installation-shot-carousel.show-installation-shot-carousel
-      .loading-spinner
+      - var carouselFigures = installShots.models
+      include ../../components/carousel/template
 
     section.show-container.show-artworks.artworks-columns
       .loading-spinner
