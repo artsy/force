@@ -21,23 +21,25 @@ describe 'NotificationsView', ->
   after ->
     benv.teardown()
 
-  describe 'without artist_id', ->
-    beforeEach (done) ->
-      sinon.stub Backbone, 'sync'
-      sinon.stub CurrentUser, 'orNull'
-      CurrentUser.orNull.returns new CurrentUser fabricate 'user'
-      benv.render resolve(__dirname, '../../templates/index.jade'), { sd: {} }, =>
-        { @NotificationsView, @init } = mod = benv.requireWithJadeify resolve(__dirname, '../../client/index'), ['template']
-        stubChildClasses mod, this,
-          ['ArtworkColumnsView']
-          ['render']
-        $.onInfiniteScroll = sinon.stub()
-        @view = new @NotificationsView el: $('body')
-        done()
+  beforeEach (done) ->
+    sinon.stub Backbone, 'sync'
+    sinon.stub CurrentUser, 'orNull'
+    CurrentUser.orNull.returns new CurrentUser fabricate 'user'
+    benv.render resolve(__dirname, '../../templates/index.jade'), { sd: {} }, =>
+      { @NotificationsView, @init } = mod = benv.requireWithJadeify resolve(__dirname, '../../client/index'), ['artistTemplate', 'emptyTemplate']
+      stubChildClasses mod, this,
+        ['ArtworkColumnsView']
+        ['render']
+      $.onInfiniteScroll = sinon.stub()
+      done()
 
-    afterEach ->
-      Backbone.sync.restore()
-      CurrentUser.orNull.restore()
+  afterEach ->
+    Backbone.sync.restore()
+    CurrentUser.orNull.restore()
+
+  describe 'without an artist_id', ->
+    beforeEach ->
+      @view = new @NotificationsView el: $('body')
 
     describe '#initialize', ->
       it 'makes the right API call', ->
@@ -70,23 +72,11 @@ describe 'NotificationsView', ->
           size: 10
 
   describe 'with an artist_id param', ->
-    beforeEach (done) ->
-      sinon.stub Backbone, 'sync'
-      sinon.stub CurrentUser, 'orNull'
-      CurrentUser.orNull.returns new CurrentUser fabricate 'user'
-      benv.render resolve(__dirname, '../../templates/index.jade'), { sd: {} }, =>
-        { @NotificationsView, @init } = mod = benv.requireWithJadeify resolve(__dirname, '../../client/index'), ['template']
-        stubChildClasses mod, this,
-          ['ArtworkColumnsView']
-          ['render']
-        $.onInfiniteScroll = sinon.stub()
-        sinon.stub(@NotificationsView::, 'params').returns artist_id: 'foobar'
-        @view = new @NotificationsView el: $('body')
-        done()
+    beforeEach ->
+      sinon.stub(@NotificationsView::, 'params').returns artist_id: 'foobar'
+      @view = new @NotificationsView el: $('body')
 
     afterEach ->
-      Backbone.sync.restore()
-      CurrentUser.orNull.restore()
       @view.params.restore()
 
     it 'fetches the artist slug first; pins it', ->
@@ -94,4 +84,31 @@ describe 'NotificationsView', ->
       Backbone.sync.args[0][1].url().should.containEql 'api/v1/artist/foobar'
       Backbone.sync.args[1][1].url.should.containEql 'api/v1/artist/foobar/artworks?published=true'
 
-    it 'accomodates artists that 404'
+  describe '#isEmpty', ->
+    beforeEach ->
+      @view = new @NotificationsView el: $('body')
+
+    it 'returns true when there are no notifications and no pins', ->
+      @view.notifications.reset()
+      @view.notifications.length.should.equal 0
+      @view.pinnedArtworks?.should.be.false
+      @view.isEmpty().should.be.true
+
+    it 'returns false when there are some notifications and no pins', ->
+      @view.notifications.add existy: true
+      @view.notifications.length.should.equal 1
+      @view.pinnedArtworks?.should.be.false
+      @view.isEmpty().should.be.false
+
+    it 'returns false when there are no notifications and some pins', ->
+      @view.pinnedArtworks = new Backbone.Collection(fabricate 'artwork')
+      @view.pinnedArtworks.length.should.equal 1
+      @view.notifications.length.should.equal 0
+      @view.isEmpty().should.be.false
+
+    it 'returns true when there are no notifications and some pins and for sale is enabled', ->
+      @view.pinnedArtworks = new Backbone.Collection(fabricate 'artwork')
+      @view.pinnedArtworks.length.should.equal 1
+      @view.notifications.length.should.equal 0
+      @view.forSale = true
+      @view.isEmpty().should.be.true
