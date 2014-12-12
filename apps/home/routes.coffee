@@ -25,7 +25,7 @@ positionWelcomeHeroMethod = (req, res) ->
   featuredLinks = new Items [], id: '529939e2275b245e290004a0', item_type: 'FeaturedLink'
   exploreSections = new Items [], id: '54528dc072616942f91f0200', item_type: 'FeaturedLink'
   Q.allSettled(_.compact([
-    heroUnits.fetch(cache: true)
+    heroUnits.fetch(cache: true, cacheTime: 1800) # Cache for half an hour
     featuredLinks.fetch(cache: true)
     exploreSections.fetch(cache: true) unless req.user?
   ])).then(->
