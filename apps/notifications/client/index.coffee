@@ -8,7 +8,8 @@ Artist = require '../../../models/artist.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 DateHelpers = require '../../../components/util/date_helpers.coffee'
 JumpView = require '../../../components/jump/view.coffee'
-template = -> require('../templates/artist.jade') arguments...
+artistTemplate = -> require('../templates/artist.jade') arguments...
+emptyTemplate = -> require('../templates/empty.jade') arguments...
 
 module.exports.NotificationsView = class NotificationsView extends Backbone.View
   columnViews: []
@@ -29,8 +30,8 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
     @setupJumpView()
 
     @setup =>
-      @notifications.getFirstPage()
       $.onInfiniteScroll @nextPage
+      @notifications.getFirstPage()?.then @checkIfEmpty
 
   params: ->
     qs.parse(location.search.substring(1))
@@ -63,8 +64,8 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
 
     $.when.apply(null, [
       @pinnedArtist.fetch()
-      @pinnedArtworks.fetch(data: size: 3, sort: '-published_at')
-    ]).then =>
+      @pinnedArtworks.fetch(data: size: 6, sort: '-published_at')
+    ])?.then =>
       @$pins.html $container = @renderContainerTemplate(@pinnedArtist, @pinnedArtworks)
       @renderColumns $container.find('.notifications-published-artworks'), @pinnedArtworks
       @scrollToPins()
@@ -102,7 +103,7 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
       _.contains @pinnedIds, artwork.id
 
   renderContainerTemplate: (artist, artworks) ->
-    $ template
+    $ artistTemplate
       artist: artist
       publishedAt: @publishedAt(artworks)
       count: artworks.length
@@ -122,15 +123,24 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
       maxArtworkHeight: 600
 
   nextPage: =>
-    @notifications.getNextPage()
+    @notifications.getNextPage()?.then (response) ->
+      unless response.length
+        $(window).off 'infiniteScroll'
 
   toggleForSale: (e) ->
-    toggle = $(e.currentTarget).prop('checked')
+    @forSale = $(e.currentTarget).prop('checked')
     @$feed.hide()
     @$pins.hide() # Only relevant on initial load
-    @notifications.getFirstPage
-      data: for_sale: toggle
+    @notifications.getFirstPage(
+      data: for_sale: @forSale
       success: => @$feed.show()
+    )?.then @checkIfEmpty
+
+  isEmpty: ->
+    !@notifications.length and (!@pinnedArtworks?.length is !@forSale)
+
+  checkIfEmpty: =>
+    @$feed.html(emptyTemplate()) if @isEmpty()
 
 module.exports.init = ->
   new NotificationsView el: $('body')
