@@ -7,18 +7,14 @@ block head
 append locals
   - assetPackage = 'show'
 
-mixin back(href, text)
-  a.contextual-return-link( href=href )
-    i.icon-chevron-small-left
-    | Back to #{text}
-
 block body
   #show
     include header
 
-    section#show-installation-shot-carousel.show-installation-shot-carousel
-      - var carouselFigures = installShots.models
-      include ../../../components/carousel/template
+    if installShots.length
+      section#show-installation-shot-carousel.show-installation-shot-carousel
+        - var carouselFigures = installShots.models
+        include ../../../components/carousel/template
 
     section.show-container.show-artworks.artworks-columns
       .loading-spinner

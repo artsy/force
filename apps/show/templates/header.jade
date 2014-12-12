@@ -1,5 +1,10 @@
+mixin back(href, text)
+  a.contextual-return-link( href= href )
+    i.icon-chevron-small-left
+    | Back to #{text}
+
 header.show-header.show-container
-  #show-left
+  .show-header__left
     case context
       when 'home'
         +back('/', 'Homepage')
@@ -8,41 +13,52 @@ header.show-header.show-container
           +back('/' + fair.get('organizer').profile_id, fair.get('name'))
       when 'partner'
         +back(partner.href(), partner.get('name'))
-    #show-left-info
-      if partner.isLinkable()
-        a.partner-link( href=partner.href() )= partner.get('name')
-      else
-        .partner-link= partner.get('name')
-      .plus-follow-button
-        .icon-follow-circle
-        .follow-button-text
-      br
+
+    .show-metadata
+      .show-metadata__partner
+        span.show-metadata__partner-link
+          if partner.isLinkable()
+            a( href= partner.href() )= partner.get('name')
+          else
+            = partner.get('name')
+
+        span.show-metadata__follow-button
+          .plus-follow-button
+            .icon-follow-circle
+            .follow-button-text
+
       if show.has('fair')
         if fair.get('organizer')
-          a( href='/' + fair.get('organizer').profile_id )= fair.get('name')
-          br
-        = fair.formatDates()
+          .show-metadata__fair-organizer
+            a( href="/#{fair.get('organizer').profile_id}" )
+              = fair.get('name')
+        .show-metadata__fair-dates
+          = fair.formatDates()
         if show.get('fair_location')
-          br
-          = show.get('fair_location').display
+          .show-metadata__fair-location
+            = show.get('fair_location').display
       else
-        = show.runningDates()
+        .show-metadata__running-dates
+          = show.runningDates()
         if location
-          br
-          = location.singleLine()
+          .show-metadata__location
+            = location.singleLine()
 
-  nav.show-share
-    +share(show.shareTitle())
-  if show.has('fair')
-    h1.show-heading-title= partner.get('name')
-      br
-      em= fair.get('name')
-  else
-    h1.show-heading-title= show.title()
+  .show-header__center
+    h1.show-heading-title
+      if show.has('fair')
+        = partner.get('name')
+        br
+        em= fair.get('name')
+      else
+        = show.title()
 
-  if show.get('description')
-    .show-description.garamond-header-center
-      != show.mdToHtml('description')
+    if show.get('description')
+      .show-description.garamond-header-center
+        != show.mdToHtml('description')
 
-  #show-main-buttons
-    include ../../../components/partner_buttons/show_buttons
+    #show-main-buttons.show-main-buttons
+      include ../../../components/partner_buttons/show_buttons
+
+  .show-header__right
+    nav.show-share: +share(show.shareTitle())
