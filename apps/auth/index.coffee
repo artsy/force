@@ -22,7 +22,7 @@ app.get facebookCallbackPath, routes.redirectBack
 app.post '/users/sign_in_trust_token', routes.loginWithTrustToken, routes.redirectBack
 
 # Log out
-app.get logoutPath, routes.redirectBack
+app.delete logoutPath, routes.logout
 
 # Twitter "One last Step" UI to enter email and login
 app.get twitterLastStepPath, routes.twitterLastStep

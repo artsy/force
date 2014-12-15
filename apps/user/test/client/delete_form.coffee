@@ -43,24 +43,26 @@ describe 'UserDeleteForm', ->
       $.ajax.args[0][0].data.explanation.should.equal @view.$explanation.val()
 
   describe '#submit', ->
-    it 'makes a DELETE to delete the user', ->
-      @view.$confirm.click()
-      @view.$button.click()
-      $.ajax.args[0][0].data.explanation.should.equal ''
-      $.ajax.args[0][0].data.url.should.equal '/user/delete' # source of the post
-      $.ajax.args[0][0].url.should.equal @user.url()
-
     describe 'success', ->
       beforeEach ->
         $.ajax.restore()
-        sinon.stub($, 'ajax').yieldsTo 'success'
+        sinon.stub($, 'ajax').yieldsTo("success")
+        @view.$confirm.click()
+        @view.$button.click()
+
+      it 'DELETEs the user', ->
+        $.ajax.args[0][0].method.should.equal 'DELETE'
+        $.ajax.args[0][0].data.explanation.should.equal ''
+        $.ajax.args[0][0].data.url.should.equal '/user/delete' # source of the post
+        $.ajax.args[0][0].url.should.equal @user.url()
+
+      it 'logs the user out', ->
+        $.ajax.args[1][0].method.should.equal 'DELETE'
+        $.ajax.args[1][0].url.should.equal '/users/sign_out'
 
       it 'flashes a success notification', ->
-        @view.$confirm.click()
-        @flashStub.called.should.be.false
-        @view.$button.click()
         @flashStub.called.should.be.true
-        @flashStub.args[0][0].href.should.eql '/users/sign_out'
+        @flashStub.args[0][0].href.should.eql '/'
         @flashStub.args[0][0].message.should.containEql 'Your account has been deleted, click here to continue'
 
     describe 'error', ->

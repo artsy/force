@@ -10,4 +10,4 @@ if user.isAdmin()
   a.mlh-nav-link( href= sd.ADMIN_URL ) Admin
 if user.isAdmin() || user.get('has_partner_access')
   a.mlh-nav-link( href= sd.CMS_URL ) CMS
-a.mlh-nav-link( href='/users/sign_out' ) Log out
+a.mlh-nav-link.mlh-logout Log out
