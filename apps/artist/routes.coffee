@@ -9,6 +9,9 @@ Statuses = require './statuses'
 sections = require './sections'
 Nav = require './nav'
 Carousel = require './carousel'
+request = require 'superagent'
+{ APPLICATION_NAME } = require '../../config'
+cache = require '../../lib/cache'
 
 @index = (req, res) ->
   artist = new Artist id: req.params.id
@@ -56,18 +59,22 @@ Carousel = require './carousel'
     success: ->
       res.redirect "/artist/#{req.params.id}"
 
-# Temporary
 @data = (req, res) ->
-  try
-    filename = resolve __dirname, "./public/data/#{req.params.id}/#{req.params.section}.json"
-    data = fs.readFileSync filename
-  catch
-    data = '[]'
+  key = url = "http://#{APPLICATION_NAME}.s3.amazonaws.com/data/#{req.params.id}/#{req.params.section}.json"
 
-  data = JSON.parse(data)
+  render = (data) ->
+    for key in ['kind', 'merchandisable']
+      if (filters = req.query[key])
+        data = _.filter data, (item) ->
+          _.contains filters, "#{item[key]}"
+    res.type 'application/json'
+    res.send data
 
-  for key in ['kind', 'merchandisable']
-    if (filters = req.query[key])
-      data = _.filter data, (item) ->
-        _.contains(filters, "#{item[key]}")
-  res.send data
+  cache.get key, (err, data) ->
+    if data
+      render data
+    else
+      request.get(url).end (err, response) ->
+        data = if response.status is 200 then response.body else []
+        cache.set key, JSON.stringify(data)
+        render data

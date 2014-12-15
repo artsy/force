@@ -1,10 +1,11 @@
 _ = require 'underscore'
 sinon = require 'sinon'
+rewire = require 'rewire'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 CurrentUser = require '../../../models/current_user.coffee'
 Artist = require '../../../models/artist.coffee'
-routes = require '../routes'
+routes = rewire '../routes'
 sections = require '../sections'
 
 describe 'Artist routes', ->
@@ -15,6 +16,7 @@ describe 'Artist routes', ->
       render: sinon.stub()
       redirect: sinon.stub()
       send: sinon.stub()
+      type: sinon.stub()
       locals: sd: APP_URL: 'http://localhost:5000', CURRENT_PATH: '/artist/andy-foobar'
 
   afterEach ->
@@ -64,16 +66,26 @@ describe 'Artist routes', ->
       Backbone.sync.args[0][2].success()
       @res.redirect.args[0][0].should.equal '/artist/foo'
 
-  # Temporary
   describe '#data', ->
-    it 'returns the example data when it has it available', ->
+    beforeEach ->
+      @response = require './fixtures/publications'
+      @request = routes.__get__('request')
+      sinon.stub(@request, 'get').returns(end: @endStub = sinon.stub())
+
+    afterEach ->
+      @request.get.restore()
+
+    it 'fetches the data', ->
       @req = query: {}, params: id: 'sterling-ruby', section: 'publications'
       routes.data @req, @res
-      @res.send.args[0][0][0].artist_id.should.equal 'sterling-ruby'
+      @request.get.args[0][0].should.equal 'http://force-staging.s3.amazonaws.com/data/sterling-ruby/publications.json'
+      @endStub.args[0][0](null, status: 200, body: [foo: 'bar'])
+      @res.send.args[0][0].should.eql [foo: 'bar']
 
     it 'returns an empty array when it does not have anything available', ->
       @req = query: {}, params: id: 'damon-zucconi', section: 'publications'
       routes.data @req, @res
+      @endStub.args[0][0](null, status: 404)
       @res.send.args[0][0].should.be.instanceOf Array
       @res.send.args[0][0].length.should.equal 0
 
@@ -82,6 +94,7 @@ describe 'Artist routes', ->
         query: kind: ['review']
         params: id: 'sterling-ruby', section: 'publications'
       routes.data @req, @res
+      @endStub.args[0][0](null, status: 200, body: @response)
       _.uniq(_.pluck(@res.send.args[0][0], 'kind')).should.eql ['review']
 
     it 'accepts multiple kind filter query param', ->
@@ -89,6 +102,7 @@ describe 'Artist routes', ->
         query: kind: ['interview', 'review']
         params: id: 'sterling-ruby', section: 'publications'
       routes.data @req, @res
+      @endStub.args[0][0](null, status: 200, body: @response)
       _.uniq(_.pluck(@res.send.args[0][0], 'kind')).should.eql ['interview', 'review']
 
     it 'accepts a merchandisable filter query param', ->
@@ -96,6 +110,7 @@ describe 'Artist routes', ->
         query: merchandisable: ['true']
         params: id: 'sterling-ruby', section: 'publications'
       routes.data @req, @res
+      @endStub.args[0][0](null, status: 200, body: @response)
       _.uniq(_.pluck(@res.send.args[0][0], 'merchandisable')).should.eql [true]
 
     it 'accepts both filter query params', ->
@@ -103,5 +118,6 @@ describe 'Artist routes', ->
         query: merchandisable: ['true'], kind: ['catalogue']
         params: id: 'sterling-ruby', section: 'publications'
       routes.data @req, @res
+      @endStub.args[0][0](null, status: 200, body: @response)
       _.uniq(_.pluck(@res.send.args[0][0], 'merchandisable')).should.eql [true]
       _.uniq(_.pluck(@res.send.args[0][0], 'kind')).should.eql ['catalogue']
