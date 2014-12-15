@@ -21,6 +21,7 @@ describe 'analytics', ->
       sd.MIXPANEL_ID = 'mix that panel'
       sd.GOOGLE_ANALYTICS_ID = 'goog that analytics'
       sd.SNOWPLOW_COLLECTOR_HOST = 'plow that snow'
+      sd.REQUEST_TIMESTAMP = 0
       @mixpanelStub = { get_property: sinon.stub(), register_once: sinon.stub() }
       @mixpanelStub.track = sinon.stub()
       @mixpanelStub.register = sinon.stub()
@@ -39,7 +40,7 @@ describe 'analytics', ->
     describe '#trackPageview', ->
 
       beforeEach ->
-        @clock = sinon.useFakeTimers();
+        @clock = sinon.useFakeTimers()
 
       afterEach ->
         @clock.restore()
@@ -57,11 +58,16 @@ describe 'analytics', ->
 
       it 'tracks bounce rates', ->
         analytics.trackPageview()
-        @gaStub.args.length.should.equal 2
+        @gaStub.args.length.should.equal 3
         @clock.tick 15000
         _.last(_.last(@gaStub.args)).should.equal 'time on page more than 15 seconds'
         @clock.tick 165000 # Remaining time to 3 minutes
         _.last(_.last(@gaStub.args)).should.equal 'time on page more than 3 minutes'
+
+      it 'registers time to initialize javascript', ->
+        @clock.tick 15000
+        analytics.trackPageview()
+        _.last(_.last(@gaStub.args)).should.equal 15000
 
     describe '#modelNameAndIdToLabel', ->
 
