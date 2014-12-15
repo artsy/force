@@ -1,8 +1,9 @@
 //- Common external scripts
 
 if sd.NODE_ENV != 'test' && sd.BROWSER && sd.BROWSER.family != 'PhantomJS'
-  //- Mixpanel & Google analytics script
+  //- Analytics integrations
   include ./google_analytics.html
+  include ./adroll.html
 
 //- Wire up sharify
 if sharify
