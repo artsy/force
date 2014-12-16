@@ -212,3 +212,17 @@ describe 'PartnerShow', ->
       @clock = sinon.useFakeTimers(moment(@starting).valueOf())
       @partnerShow.isOpeningToday().should.be.true
       @clock.restore()
+
+  describe '#contextualLabel', ->
+    describe 'with name', ->
+        new PartnerShow(artists: [0, 0, 0], fair: null).contextualLabel('Foobar').should.equal 'Group Show including Foobar'
+        new PartnerShow(artists: [0], fair: null).contextualLabel('Foobar').should.equal 'Solo Show'
+        new PartnerShow(artists: [0], fair: 'existy').contextualLabel('Foobar').should.equal 'Fair Booth including Foobar'
+        new PartnerShow(artists: [0, 0, 0], fair: 'existy').contextualLabel('Foobar').should.equal 'Fair Booth including Foobar'
+
+    describe 'without name', ->
+      it 'returns the correct label', ->
+        new PartnerShow(artists: [0, 0, 0], fair: null).contextualLabel().should.equal 'Group Show'
+        new PartnerShow(artists: [0], fair: null).contextualLabel().should.equal 'Solo Show'
+        new PartnerShow(artists: [0], fair: 'existy').contextualLabel().should.equal 'Fair Booth'
+        new PartnerShow(artists: [0, 0, 0], fair: 'existy').contextualLabel().should.equal 'Fair Booth'
