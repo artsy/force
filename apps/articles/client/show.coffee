@@ -2,6 +2,7 @@ _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
 Article = require '../../../models/article.coffee'
+Articles = require '../../../collections/articles.coffee'
 Artwork = require '../../../models/artwork.coffee'
 Artworks = require '../../../collections/artworks.coffee'
 ShareView = require '../../../components/share/view.coffee'
@@ -19,6 +20,7 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
     new ShareView el: @$('#articles-social')
     @setupSlideshow()
     @renderArtworks()
+    @renderFooter()
     if $(@article.get 'lead_paragraph').text().trim() is ''
       @$('#articles-lead-paragraph').hide()
 

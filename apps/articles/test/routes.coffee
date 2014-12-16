@@ -18,9 +18,18 @@ describe 'Article routes', ->
   describe '#show', ->
 
     it 'fetches an article and renders it', ->
-      @req.article = new Article _.extend fixtures.article, title: 'Foo'
       routes.show @req, @res
-      Backbone.sync.args[0][2].success fixtures.article
-      Backbone.sync.args[1][2].success fabricate 'user'
+      Backbone.sync.args[0][2].success [fixtures.article]
+      Backbone.sync.args[1][2].success _.extend fixtures.article, title: 'Foo'
+      Backbone.sync.args[2][2].success fabricate 'user'
       @res.render.args[0][0].should.equal 'show'
       @res.render.args[0][1].article.get('title').should.equal 'Foo'
+
+    xit 'renders the footer articles', ->
+      routes.show @req, @res
+      Backbone.sync.args[0][2].success [fixtures.article]
+      Backbone.sync.args[1][2].success fixtures.article
+      Backbone.sync.args[2][2].success fabricate 'user'
+      # TODO: Why does the first success not update the collection
+      @res.render.args[0][1].footerArticles[0]
+        .get('title').should.equal 'Moo'
