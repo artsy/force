@@ -8,7 +8,8 @@ module.exports = class ShowsView extends Backbone.View
   subViews: []
 
   initialize: ->
-    @model.related().shows.fetch(data: size: 20)
+    @model.related().shows.fetchUntilEnd()
+    @model.related().exhibitions.fetch()
 
   postRender: ->
     relatedShowsSubView = new RelatedShowsView collection: @model.related().shows, nUp: 3, maxShows: 20
@@ -24,7 +25,6 @@ module.exports = class ShowsView extends Backbone.View
         group: 'Group Shows'
         screening: 'Screenings'
     @subViews.push exhibitionHistoryListSubView
-    @model.related().exhibitions.fetch()
 
     @$('#artist-page-content-section').html [
       relatedShowsSubView.render().$el
