@@ -29,14 +29,15 @@ describe 'Statuses', ->
       'undefined/artist/data/foobar/exhibitions'
     ]
 
+
   it 'resolves with the statuses', (done) ->
     @statuses.fetch().then (statuses) ->
       statuses.should.eql {
         artworks: true
-        # In this instance shows and posts return false because of their
+        shows: true
+        # In this instance posts return false because of it's
         # parse methods which do some client-side filtering. Everything
         # else is going to be purely existential
-        shows: false
         posts: false
         artists: true
         contemporary: true

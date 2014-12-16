@@ -36,7 +36,7 @@ module.exports = class OverviewView extends Backbone.View
     if STATUSES.shows
       @fetches.push @model.related().shows.fetch(remove: false, data: solo_show: true, size: 4)
       @fetches.push @model.related().shows.fetch(remove: false, data: solo_show: false, size: 4)
-      subView = new RelatedShowsView collection: @model.related().shows
+      subView = new RelatedShowsView model: @model, collection: @model.related().shows
       @$('#artist-related-shows').html subView.render().$el
       @subViews.push subView
       @setupRelatedSection @$('#artist-related-shows-section')

@@ -279,3 +279,24 @@ module.exports = class PartnerShow extends Backbone.Model
       location: @location()?.toJSONLD()
       performer: @performers()
     }
+
+  isSolo: ->
+    @get('artists')?.length is 1
+
+  isGroup: ->
+    not @isSolo()
+
+  isFairBooth: ->
+    @has 'fair'
+
+  contextualLabel: (name) ->
+    type = if @isFairBooth()
+      'Fair Booth'
+    else if @isSolo()
+      'Solo Show'
+    else
+      'Group Show'
+    if name? and (@isGroup() or @isFairBooth())
+      "#{type} including #{name}"
+    else
+      type

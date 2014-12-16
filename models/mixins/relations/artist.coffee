@@ -8,7 +8,7 @@ module.exports =
     # Deferred requires:
     Artist = require '../../artist.coffee'
     Posts = require '../../../collections/posts.coffee'
-    PartnerShows = require '../../../collections/related_partner_shows.coffee'
+    PartnerShows = require '../../../collections/partner_shows.coffee'
     Artworks = require '../../../collections/artworks.coffee'
     Articles = Books = require '../../../components/artsypedia/collection.coffee'
 
@@ -24,8 +24,13 @@ module.exports =
 
     shows = new PartnerShows
     shows.url = "#{API_URL}/api/v1/related/shows?artist[]=#{@id}&sort=-end_at&displayable=true"
-    # Push solo shows to the front
-    shows.comparator = (show) -> if show.get('artists')?.length is 1 then 0 else 1
+    shows.comparator = (show) ->
+      if show.isFairBooth()
+        1
+      else if show.isSolo()
+        -1
+      else
+        0
 
     artworks = new Artworks
     artworks.url = "#{@url()}/artworks?published=true"

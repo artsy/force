@@ -28,7 +28,7 @@ describe 'Featured Shows templates', ->
   it 'optionally displays the location', ->
     shows = new PartnerShows [fabricate 'show']
     $html = $(render('large')(shows: shows.models, displayLocation: true))
-    $html.find('.fsfs-running-dates').last().text().should.equal 'New York'
+    $html.find('.fsfs-running-dates').last().text().should.containEql 'New York'
 
   describe 'relative date logic', ->
     it 'renders correctly', ->

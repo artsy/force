@@ -13,6 +13,7 @@ module.exports = class RelatedShowsView extends Backbone.View
 
   render: ->
     @$el.html template
+      artist: @model
       shows: @collection.take(@maxShows)
       nUp: @nUp
     this
