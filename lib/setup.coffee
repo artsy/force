@@ -228,6 +228,11 @@ module.exports = (app) ->
   # Shortcuts are prioritized last
   app.use require "../apps/shortcuts"
   app.use require "../apps/clear_cache"
+
+  # route to ping for system time
+  app.get '/system/time', (req, res)->
+    res.send 200, {time: Date.now()}
+
   # Route to ping for system up
   app.get '/system/up', (req, res) ->
     res.send 200, { nodejs: true }
