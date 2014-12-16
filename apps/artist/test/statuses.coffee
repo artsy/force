@@ -18,7 +18,7 @@ describe 'Statuses', ->
     @statuses.fetch()
     _.map(Backbone.sync.args, (args) -> args[1].url).should.eql [
       'undefined/api/v1/search/filtered/artist/foobar/suggest'
-      'undefined/api/v1/related/shows?artist[]=foobar&sort=-end_at'
+      'undefined/api/v1/related/shows?artist[]=foobar&sort=-end_at&displayable=true'
       'undefined/api/v1/related/posts?artist[]=foobar'
       'undefined/api/v1/related/layer/main/artists?artist[]=foobar&exclude_artists_without_artworks=true'
       'undefined/api/v1/related/layer/contemporary/artists?artist[]=foobar&exclude_artists_without_artworks=true'
