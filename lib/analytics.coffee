@@ -8,7 +8,6 @@ _ = require 'underscore'
 _s = require 'underscore.string'
 sd = require('sharify').data
 qs = require('querystring')
-moment = require 'moment'
 sparkMd5Hash = require('spark-md5').hash
 
 module.exports = (options) =>
