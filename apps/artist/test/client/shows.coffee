@@ -39,3 +39,17 @@ describe 'ShowsView', ->
     it 'fetches the artist exhibitionHistory', ->
       _.first(Backbone.sync.args)[1].url.should.containEql '/api/v1/related/shows?artist[]=foo-bar&sort=-end_at&displayable=true'
       _.last(Backbone.sync.args)[1].url.should.containEql '/artist/data/foo-bar/exhibitions'
+
+  describe '#renderHeader', ->
+    it 're-renders the header copy if new fairs or shows come in', ->
+      @model.related().shows.add [fabricate 'show']
+      @model.related().shows.trigger 'sync'
+      @view.$header.text().should.equal 'Foo Bar shows on Artsy'
+
+      @model.related().shows.add [fabricate 'show', fair: 'existy']
+      @model.related().shows.trigger 'sync'
+      @view.$header.text().should.equal 'Foo Bar shows and fair booths on Artsy'
+
+      @model.related().shows.reset [fabricate 'show', fair: 'existy']
+      @model.related().shows.trigger 'sync'
+      @view.$header.text().should.equal 'Foo Bar fair booths on Artsy'

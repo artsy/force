@@ -11,6 +11,8 @@ module.exports = class ShowsView extends Backbone.View
     @model.related().shows.fetchUntilEnd()
     @model.related().exhibitions.fetch()
 
+    @listenTo @model.related().shows, 'sync', @renderHeader
+
   postRender: ->
     relatedShowsSubView = new RelatedShowsView model: @model, collection: @model.related().shows, nUp: 3, maxShows: 20
     @subViews.push relatedShowsSubView
@@ -30,6 +32,18 @@ module.exports = class ShowsView extends Backbone.View
       relatedShowsSubView.render().$el
       exhibitionHistoryListSubView.render().$el
     ]
+
+  renderHeader: ->
+    statuses = @model.related().shows.invoke 'has', 'fair'
+
+    return unless statuses.length
+
+    things = _.compact [
+      'shows' if _.any statuses, _.negate(Boolean) # Has shows
+      'fair booths' if _.any statuses # Has fairs
+    ]
+
+    (@$header ?= @$('#artist-shows-header')).text "#{@model.get('name')} #{things.join(' and ')} on Artsy"
 
   render: ->
     @$el.html template(artist: @model)
