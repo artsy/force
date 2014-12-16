@@ -12,7 +12,7 @@ module.exports = class ShowsView extends Backbone.View
     @model.related().exhibitions.fetch()
 
   postRender: ->
-    relatedShowsSubView = new RelatedShowsView collection: @model.related().shows, nUp: 3, maxShows: 20
+    relatedShowsSubView = new RelatedShowsView model: @model, collection: @model.related().shows, nUp: 3, maxShows: 20
     @subViews.push relatedShowsSubView
 
     exhibitionHistoryListSubView = new ExhibitionHistoryListView

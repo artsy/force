@@ -1,19 +1,8 @@
+- var width = 500
+- var height = 375
+- var displayLocation = true
+- var displayContextualLabel = true
+
 .related-shows( class='grid-' + nUp + '-up' )
   for show in shows
-    .related-show.grid-item
-      a.hoverable-image-link( href=show.href() )
-        img( src= show.cropUrlFor({ width: 500, height: 375 }) )
-
-      .rsr-metadata
-        if show.get('start_at') && show.get('end_at')
-          .rsr-timeframe= show.runningDates()
-
-        if show.get('partner').name !== show.get('name')
-          h4.rsr-partner-name
-            if show.partnerHref()
-              a( href=show.partnerHref() )= show.get('partner').name
-            else
-              = show.get('partner').name
-
-        a( href=show.href() )
-          h4.rsr-name= show.get('name')
+    include ../../components/featured_shows/show

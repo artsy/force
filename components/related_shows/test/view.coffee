@@ -28,7 +28,7 @@ describe 'RelatedShowsView', ->
 
   describe 'has a single show', ->
     beforeEach (done) ->
-      @show = fabricate 'show'
+      @show = fabricate 'show', name: 'Foobar Show'
       @artist.related().shows.reset [@show], parse: true
       @view.collection.trigger 'sync'
       done()
@@ -36,8 +36,8 @@ describe 'RelatedShowsView', ->
     it 'renders correctly', ->
       html = @view.$el.html()
       html.should.containEql 'grid-3-up'
-      @view.$('.rsr-name').text().should.equal @show.name
-      @view.$('.related-show').length.should.equal 1
+      @view.$('.fsfs-show-name').text().should.equal 'Foobar Show'
+      @view.$('.grid-item').length.should.equal 1
 
   describe 'has multiple shows', ->
     beforeEach (done) ->
@@ -51,4 +51,4 @@ describe 'RelatedShowsView', ->
       done()
 
     it 'renders correctly', ->
-      @view.$('.related-show').length.should.equal 3
+      @view.$('.grid-item').length.should.equal 3
