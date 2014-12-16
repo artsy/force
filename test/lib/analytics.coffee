@@ -17,18 +17,30 @@ describe 'analytics', ->
     after ->
       analytics.getUserAgent.restore()
 
-    beforeEach ->
-      sd.MIXPANEL_ID = 'mix that panel'
-      sd.GOOGLE_ANALYTICS_ID = 'goog that analytics'
-      sd.SNOWPLOW_COLLECTOR_HOST = 'plow that snow'
-      @mixpanelStub = { get_property: sinon.stub(), register_once: sinon.stub() }
-      @mixpanelStub.track = sinon.stub()
-      @mixpanelStub.register = sinon.stub()
-      @mixpanelStub.init = sinon.stub()
-      @snowplowStub = sinon.stub()
+    beforeEach (done)->
+      benv.setup =>
+        benv.expose
+          $: benv.require 'jquery'
 
-      @gaStub = sinon.stub()
-      analytics mixpanel: @mixpanelStub, ga: @gaStub, location: { pathname: 'foobar' }, snowplow: @snowplowStub
+        sinon.stub($, 'ajax')
+
+        sd.MIXPANEL_ID = 'mix that panel'
+        sd.GOOGLE_ANALYTICS_ID = 'goog that analytics'
+        sd.SNOWPLOW_COLLECTOR_HOST = 'plow that snow'
+        sd.REQUEST_TIMESTAMP = 0
+        @mixpanelStub = { get_property: sinon.stub(), register_once: sinon.stub() }
+        @mixpanelStub.track = sinon.stub()
+        @mixpanelStub.register = sinon.stub()
+        @mixpanelStub.init = sinon.stub()
+        @snowplowStub = sinon.stub()
+
+        @gaStub = sinon.stub()
+        analytics mixpanel: @mixpanelStub, ga: @gaStub, location: { pathname: 'foobar' }, snowplow: @snowplowStub
+
+        done()
+
+    afterEach ->
+      benv.teardown()
 
     describe 'initialize function', ->
 
@@ -39,7 +51,7 @@ describe 'analytics', ->
     describe '#trackPageview', ->
 
       beforeEach ->
-        @clock = sinon.useFakeTimers();
+        @clock = sinon.useFakeTimers()
 
       afterEach ->
         @clock.restore()
@@ -89,6 +101,7 @@ describe 'analytics', ->
             mixpanel: @mixpanelStub
             snowplow: @snowplowStub
           rewiredAnalytics mixpanel: @mixpanelStub, ga: @gaStub, location: { pathname: 'foobar' }, snowplow: @snowplowStub
+
           done()
 
       afterEach ->
@@ -139,6 +152,28 @@ describe 'analytics', ->
 
           @mixpanelStub.track.args[0][0].should.equal 'Did something'
           @mixpanelStub.track.args[0][1].label.should.equal 'cool label'
+
+      describe '#trackTimeTo', ->
+
+        beforeEach ->
+          sd.REQUEST_TIMESTAMP = 0
+          @clock = sinon.useFakeTimers()
+          sinon.stub($, 'ajax')
+
+        afterEach ->
+          @clock.restore()
+
+        it 'tracks the time it takes for an event to occur after the route is requested', ->
+          @clock.tick 1000
+
+          rewiredAnalytics.trackTimeTo 'fake event occurred'
+          track = rewiredAnalytics.track.timing = sinon.stub()
+
+          @clock.tick 100 # time it takes for ajax to return response
+          $.ajax.args[0][0].success time: 1000
+          track.args[0][0].should.equal 'fake event occurred'
+          track.args[0][1].milliseconds.should.equal 900
+
 
       describe '#registerCurrentUser', ->
 
@@ -242,15 +277,25 @@ describe 'analytics', ->
     after ->
       analytics.getUserAgent.restore()
 
-    beforeEach ->
-      sd.MIXPANEL_ID = 'mix that panel'
-      sd.GOOGLE_ANALYTICS_ID = 'goog that analytics'
-      @mixpanelStub = {}
-      @mixpanelStub.track = sinon.stub()
+    beforeEach (done)->
+      benv.setup =>
+        benv.expose
+          $: benv.require 'jquery'
 
-      @mixpanelStub.init = sinon.stub()
-      @gaStub = sinon.stub()
-      analytics mixpanel: @mixpanelStub, ga: @gaStub, location: { pathname: 'foobar' }
+        sinon.stub($, 'ajax')
+        sd.MIXPANEL_ID = 'mix that panel'
+        sd.GOOGLE_ANALYTICS_ID = 'goog that analytics'
+        @mixpanelStub = {}
+        @mixpanelStub.track = sinon.stub()
+
+        @mixpanelStub.init = sinon.stub()
+        @gaStub = sinon.stub()
+        analytics mixpanel: @mixpanelStub, ga: @gaStub, location: { pathname: 'foobar' }
+
+        done()
+
+    afterEach ->
+      benv.teardown()
 
     describe 'initialize function', ->
 

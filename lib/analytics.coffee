@@ -79,9 +79,10 @@ categories =
   segment: 'UI A/B Test Segments'
   error: 'UI Errors'
   multi: 'Multi-object Events'
+  timing: 'Timing'
   other: 'Other Events'
 
-module.exports.track =
+module.exports.track = track =
   _.reduce(Object.keys(categories), (memo, kind) ->
     memo[kind] = (description, options = {}) ->
       # Don't track admins
@@ -115,6 +116,23 @@ module.exports.track =
 module.exports.modelNameAndIdToLabel = (modelName, id) ->
   throw new Error('Requires modelName and id') unless modelName? and id?
   "#{_s.capitalize(modelName)}:#{id}"
+
+#
+# Tracks the time it takes between the page request and the specified event
+#
+# Needs to get the time from the server to account for any discrepancies with client-side time
+#
+module.exports.trackTimeTo = trackTimeTo = (description) ->
+  return if not sd.REQUEST_TIMESTAMP?
+
+  stopwatch = Date.now()
+  $.ajax
+    type: 'GET'
+    url: '/system/time'
+    success: (data) =>
+      ajaxTime = Date.now() - stopwatch
+      milliseconds = data.time - sd.REQUEST_TIMESTAMP - ajaxTime
+      track.timing description, {milliseconds: milliseconds}
 
 # Special multi-event
 #
