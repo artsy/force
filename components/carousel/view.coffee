@@ -1,6 +1,5 @@
 _ = require 'underscore'
 imagesLoaded = require 'imagesloaded'
-{ trackTimeTo } = require '../../lib/analytics.coffee'
 mediator = require '../../lib/mediator.coffee'
 Backbone = require 'backbone'
 template = -> require('./template.jade') arguments...
