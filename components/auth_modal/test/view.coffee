@@ -72,7 +72,7 @@ describe 'AuthModalView', ->
       _location = @AuthModalView.__get__ 'location'
       @AuthModalView.__set__ 'location', pathname: 'foobarbaz'
       @view.preInitialize {}
-      @view.templateData.pathname.should.equal 'foobarbaz'
+      @view.templateData.redirectTo.should.equal 'foobarbaz'
       @AuthModalView.__set__ 'location', _location
 
   describe '#submit', ->
