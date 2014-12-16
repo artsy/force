@@ -1,3 +1,4 @@
-h2.artist-section-header #{artist.get('name')} shows on Artsy
+h2#artist-shows-header.artist-section-header
+  | #{artist.get('name')} shows on Artsy
 #artist-page-content-section( data-tab='shows' ): .loading-spinner
   //- Rendered client-side
