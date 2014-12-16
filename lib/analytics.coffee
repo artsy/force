@@ -8,6 +8,7 @@ _ = require 'underscore'
 _s = require 'underscore.string'
 sd = require('sharify').data
 qs = require('querystring')
+moment = require 'moment'
 sparkMd5Hash = require('spark-md5').hash
 
 module.exports = (options) =>
@@ -31,7 +32,7 @@ module.exports.trackPageview = =>
 
   @ga? 'send', 'pageview'
 
-  @ga? 'send', 'event', 'JS initialize', Date.now() - sd.REQUEST_TIMESTAMP if sd.REQUEST_TIMESTAMP?
+  # trackTimeTo 'impression', 'Javascript initialized'
 
   # Track 15 second bounce rate
   setTimeout =>
@@ -83,7 +84,7 @@ categories =
   multi: 'Multi-object Events'
   other: 'Other Events'
 
-module.exports.track =
+module.exports.track = track =
   _.reduce(Object.keys(categories), (memo, kind) ->
     memo[kind] = (description, options = {}) ->
       # Don't track admins
@@ -117,6 +118,23 @@ module.exports.track =
 module.exports.modelNameAndIdToLabel = (modelName, id) ->
   throw new Error('Requires modelName and id') unless modelName? and id?
   "#{_s.capitalize(modelName)}:#{id}"
+
+#
+# Tracks the time it takes between the page request and the specified event
+#
+# Needs to get the time from the server to account for any discrepancies with client-side time
+#
+module.exports.trackTimeTo = trackTimeTo = (type, description) ->
+  return if not sd.REQUEST_TIMESTAMP?
+
+  stopwatch = Date.now()
+  $.ajax
+    type: 'GET'
+    url: '/system/time'
+    success: (data) =>
+      ajaxTime = Date.now() - stopwatch
+      milliseconds = data.time - sd.REQUEST_TIMESTAMP - ajaxTime
+      track[type] description, {milliseconds: milliseconds}
 
 # Special multi-event
 #
