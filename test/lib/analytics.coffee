@@ -58,16 +58,11 @@ describe 'analytics', ->
 
       it 'tracks bounce rates', ->
         analytics.trackPageview()
-        @gaStub.args.length.should.equal 3
+        @gaStub.args.length.should.equal 2
         @clock.tick 15000
         _.last(_.last(@gaStub.args)).should.equal 'time on page more than 15 seconds'
         @clock.tick 165000 # Remaining time to 3 minutes
         _.last(_.last(@gaStub.args)).should.equal 'time on page more than 3 minutes'
-
-      it 'registers time to initialize javascript', ->
-        @clock.tick 15000
-        analytics.trackPageview()
-        _.last(_.last(@gaStub.args)).should.equal 15000
 
     describe '#modelNameAndIdToLabel', ->
 
@@ -95,6 +90,7 @@ describe 'analytics', ->
             mixpanel: @mixpanelStub
             snowplow: @snowplowStub
           rewiredAnalytics mixpanel: @mixpanelStub, ga: @gaStub, location: { pathname: 'foobar' }, snowplow: @snowplowStub
+
           done()
 
       afterEach ->
@@ -145,6 +141,28 @@ describe 'analytics', ->
 
           @mixpanelStub.track.args[0][0].should.equal 'Did something'
           @mixpanelStub.track.args[0][1].label.should.equal 'cool label'
+
+      describe '#trackTimeTo', ->
+
+        beforeEach ->
+          sd.REQUEST_TIMESTAMP = 0
+          @clock = sinon.useFakeTimers()
+          sinon.stub($, 'ajax')
+
+        afterEach ->
+          @clock.restore()
+
+        it 'tracks the time it takes for an event to occur after the route is requested', ->
+          @clock.tick 1000
+
+          rewiredAnalytics.trackTimeTo 'impression', 'fake event occurred'
+          track = rewiredAnalytics.track.impression = sinon.stub()
+
+          @clock.tick 100 # time it takes for ajax to return response
+          $.ajax.args[0][0].success time: 1000
+          track.args[0][0].should.equal 'fake event occurred'
+          track.args[0][1].milliseconds.should.equal 900
+
 
       describe '#registerCurrentUser', ->
 
