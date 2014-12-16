@@ -31,8 +31,6 @@ module.exports.trackPageview = =>
 
   @ga? 'send', 'pageview'
 
-  trackTimeTo 'Javascript initialized'
-
   # Track 15 second bounce rate
   setTimeout =>
     @ga? 'send', 'event', '15 Seconds', 'time on page more than 15 seconds'
