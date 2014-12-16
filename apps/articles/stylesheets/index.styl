@@ -10,9 +10,10 @@ gutter-size = 30px
     font-size 40px
     line-height 48px
     text-align center
+    padding-bottom (gutter-size / 2)
+
   h2
     text-align center
-    margin gutter-size 0
 
 #articles-lead-paragraph, .articles-section-text
   font-size 20px
@@ -23,7 +24,7 @@ gutter-size = 30px
     margin-bottom 1em
 
 #articles-lead-paragraph
-  margin-top 40px
+  margin (gutter-size / 2) auto
 
 #articles-slideshow-container
   height 600px
@@ -47,24 +48,30 @@ gutter-size = 30px
   img
     height 500px
 
-#articles-show-author, #articles-social
-  display inline-block
+#articles-show-author, .articles-social
   vertical-align middle
 
 #articles-show-date
-  font-size 13px
+  avant-garde()
+  font-size 11px
   margin-bottom 5px
+  color gray-darker-color
 
 #articles-show-author
   avant-garde()
-  font-size default-avant-garde-font-size - 1px
-  padding-right 20px
-  margin-right 15px
-  border-right 1px solid gray-lighter-color
+  font-size default-avant-garde-font-size
 
-#articles-social
-  position relative
-  top 2px
+.articles-social
+  text-align center
+  padding 10px 0
+
+  .articles-social__header
+    avant-garde()
+    font-size default-avant-garde-font-size
+    margin-bottom 10px
+
+  &.add-bottom
+    margin-bottom (gutter-size * 3)
 
 .articles-section-image
   width overflow-width
@@ -73,6 +80,7 @@ gutter-size = 30px
   img
     width 100%
   figcaption
+    margin-top 15px
     font-style italic
     color gray-dark-color
 
