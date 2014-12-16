@@ -1,6 +1,7 @@
 _ = require 'underscore'
 imagesLoaded = require 'imagesloaded'
 { trackTimeTo } = require '../../lib/analytics.coffee'
+mediator = require '../../lib/mediator.coffee'
 Backbone = require 'backbone'
 template = -> require('./template.jade') arguments...
 
@@ -66,7 +67,7 @@ module.exports = class Carousel extends Backbone.View
       .removeClass('is-loading')
       .addClass 'is-done'
 
-    trackTimeTo 'impression', 'Carousel images loaded'
+    mediator.trigger 'carousel:images:loaded'
 
   render: ->
     if @length < @minLength

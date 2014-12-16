@@ -49,7 +49,9 @@ module.exports = class OverviewView extends Backbone.View
       @setupRelatedSection @$('#artist-related-posts-section')
 
   setupRelatedGenes: ->
-    @subViews.push new RelatedGenesView(el: @$('.artist-related-genes'), id: @model.id)
+    subView = new RelatedGenesView(el: @$('.artist-related-genes'), id: @model.id)
+    subView.collection.on 'sync', -> mediator.trigger 'related:genes:render'
+    @subViews.push subView
 
   setupRelatedRepresentations: ->
     @subViews.push new RelatedRepresentationsGenesView(el: @$('.artist-related-representations'), id: @model.id)
@@ -75,6 +77,7 @@ module.exports = class OverviewView extends Backbone.View
   setupLastModifiedDate: ->
     @fetches.push @waitForFilter()
     $.when.apply(null, @fetches).then =>
+      mediator.trigger 'overview:fetches:complete'
       lastModified @model, @filterView.artworks
 
   waitForFilter: ->
