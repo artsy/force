@@ -32,7 +32,7 @@ module.exports.trackPageview = =>
 
   @ga? 'send', 'pageview'
 
-  # trackTimeTo 'impression', 'Javascript initialized'
+  trackTimeTo 'Javascript initialized'
 
   # Track 15 second bounce rate
   setTimeout =>
@@ -82,6 +82,7 @@ categories =
   segment: 'UI A/B Test Segments'
   error: 'UI Errors'
   multi: 'Multi-object Events'
+  timing: 'Timing'
   other: 'Other Events'
 
 module.exports.track = track =
@@ -124,7 +125,7 @@ module.exports.modelNameAndIdToLabel = (modelName, id) ->
 #
 # Needs to get the time from the server to account for any discrepancies with client-side time
 #
-module.exports.trackTimeTo = trackTimeTo = (type, description) ->
+module.exports.trackTimeTo = trackTimeTo = (description) ->
   return if not sd.REQUEST_TIMESTAMP?
 
   stopwatch = Date.now()
@@ -134,7 +135,7 @@ module.exports.trackTimeTo = trackTimeTo = (type, description) ->
     success: (data) =>
       ajaxTime = Date.now() - stopwatch
       milliseconds = data.time - sd.REQUEST_TIMESTAMP - ajaxTime
-      track[type] description, {milliseconds: milliseconds}
+      track.timing description, {milliseconds: milliseconds}
 
 # Special multi-event
 #
