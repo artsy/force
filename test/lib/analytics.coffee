@@ -17,19 +17,30 @@ describe 'analytics', ->
     after ->
       analytics.getUserAgent.restore()
 
-    beforeEach ->
-      sd.MIXPANEL_ID = 'mix that panel'
-      sd.GOOGLE_ANALYTICS_ID = 'goog that analytics'
-      sd.SNOWPLOW_COLLECTOR_HOST = 'plow that snow'
-      sd.REQUEST_TIMESTAMP = 0
-      @mixpanelStub = { get_property: sinon.stub(), register_once: sinon.stub() }
-      @mixpanelStub.track = sinon.stub()
-      @mixpanelStub.register = sinon.stub()
-      @mixpanelStub.init = sinon.stub()
-      @snowplowStub = sinon.stub()
+    beforeEach (done)->
+      benv.setup =>
+        benv.expose
+          $: benv.require 'jquery'
 
-      @gaStub = sinon.stub()
-      analytics mixpanel: @mixpanelStub, ga: @gaStub, location: { pathname: 'foobar' }, snowplow: @snowplowStub
+        sinon.stub($, 'ajax')
+
+        sd.MIXPANEL_ID = 'mix that panel'
+        sd.GOOGLE_ANALYTICS_ID = 'goog that analytics'
+        sd.SNOWPLOW_COLLECTOR_HOST = 'plow that snow'
+        sd.REQUEST_TIMESTAMP = 0
+        @mixpanelStub = { get_property: sinon.stub(), register_once: sinon.stub() }
+        @mixpanelStub.track = sinon.stub()
+        @mixpanelStub.register = sinon.stub()
+        @mixpanelStub.init = sinon.stub()
+        @snowplowStub = sinon.stub()
+
+        @gaStub = sinon.stub()
+        analytics mixpanel: @mixpanelStub, ga: @gaStub, location: { pathname: 'foobar' }, snowplow: @snowplowStub
+
+        done()
+
+    afterEach ->
+      benv.teardown()
 
     describe 'initialize function', ->
 
@@ -155,8 +166,8 @@ describe 'analytics', ->
         it 'tracks the time it takes for an event to occur after the route is requested', ->
           @clock.tick 1000
 
-          rewiredAnalytics.trackTimeTo 'impression', 'fake event occurred'
-          track = rewiredAnalytics.track.impression = sinon.stub()
+          rewiredAnalytics.trackTimeTo 'fake event occurred'
+          track = rewiredAnalytics.track.timing = sinon.stub()
 
           @clock.tick 100 # time it takes for ajax to return response
           $.ajax.args[0][0].success time: 1000
@@ -266,15 +277,25 @@ describe 'analytics', ->
     after ->
       analytics.getUserAgent.restore()
 
-    beforeEach ->
-      sd.MIXPANEL_ID = 'mix that panel'
-      sd.GOOGLE_ANALYTICS_ID = 'goog that analytics'
-      @mixpanelStub = {}
-      @mixpanelStub.track = sinon.stub()
+    beforeEach (done)->
+      benv.setup =>
+        benv.expose
+          $: benv.require 'jquery'
 
-      @mixpanelStub.init = sinon.stub()
-      @gaStub = sinon.stub()
-      analytics mixpanel: @mixpanelStub, ga: @gaStub, location: { pathname: 'foobar' }
+        sinon.stub($, 'ajax')
+        sd.MIXPANEL_ID = 'mix that panel'
+        sd.GOOGLE_ANALYTICS_ID = 'goog that analytics'
+        @mixpanelStub = {}
+        @mixpanelStub.track = sinon.stub()
+
+        @mixpanelStub.init = sinon.stub()
+        @gaStub = sinon.stub()
+        analytics mixpanel: @mixpanelStub, ga: @gaStub, location: { pathname: 'foobar' }
+
+        done()
+
+    afterEach ->
+      benv.teardown()
 
     describe 'initialize function', ->
 
