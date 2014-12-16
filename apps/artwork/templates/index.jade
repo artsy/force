@@ -46,7 +46,8 @@ block body
 
         .artwork-image-actions
           a.circle-icon-button-save
-          a.circle-icon-button-share
+          if artwork.get('can_share_image')
+            a.circle-icon-button-share
           if artwork.isHangable()
             a.circle-icon-button-frame(
               href="/artwork/#{artwork.id}/view-in-room", data-client, rel='nofollow'
