@@ -8,7 +8,7 @@ module.exports =
     # Deferred requires:
     Artist = require '../../artist.coffee'
     Posts = require '../../../collections/posts.coffee'
-    PartnerShows = require '../../../collections/related_partner_shows.coffee'
+    PartnerShows = require '../../../collections/partner_shows.coffee'
     Artworks = require '../../../collections/artworks.coffee'
     Articles = Books = require '../../../components/artsypedia/collection.coffee'
 
