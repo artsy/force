@@ -23,7 +23,9 @@ module.exports =
     posts.url = "#{API_URL}/api/v1/related/posts?artist[]=#{@id}"
 
     shows = new PartnerShows
-    shows.url = "#{API_URL}/api/v1/related/shows?artist[]=#{@id}&sort=-end_at"
+    shows.url = "#{API_URL}/api/v1/related/shows?artist[]=#{@id}&sort=-end_at&displayable=true"
+    # Push solo shows to the front
+    shows.comparator = (show) -> if show.get('artists')?.length is 1 then 0 else 1
 
     artworks = new Artworks
     artworks.url = "#{@url()}/artworks?published=true"
