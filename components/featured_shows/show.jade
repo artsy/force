@@ -26,6 +26,11 @@ if show.has('image_versions') && show.get('image_versions').length
             if show.formatCity()
               = ', '
             span.fsfs-warning Closing #{show.endingIn()}
+          else
+            if show.formatCity()
+              | ,
+              = ' '
+            | #{show.date('start_at').format('MMM DD')} – #{show.date('end_at').format('MMM DD')}
 
       else
         if show.formatStreetAddress()
