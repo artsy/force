@@ -16,7 +16,14 @@ module.exports =
       error? arguments...
 
     options.success = (collection, response, opts) =>
-      total = parseInt(opts?.res?.headers?['x-total-count'] or 0)
+      total = parseInt(
+        # Count when server-side
+        opts?.res?.headers?['x-total-count'] or
+        # Count when client-side
+        opts?.xhr?.getResponseHeader?('X-Total-Count')
+        # Fallback
+        0
+      )
 
       if response.length >= total # Return if already at the end or no total
         dfd.resolve this
@@ -25,7 +32,7 @@ module.exports =
         remaining = Math.ceil(total / size) - 1
 
         Q.allSettled(_.times(remaining, (n) =>
-          @fetch cache: options.cache, remove: options.remove, data: _.extend { page: n + 2 }, options.data
+          @fetch cache: options.cache, remove: options.remove, data: _.extend { page: n + 2 }, _.omit(options.data, 'total_count')
         )).then(=>
           dfd.resolve this
           success? this

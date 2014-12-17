@@ -26,13 +26,13 @@ describe 'Parallel mixin', ->
       Backbone.sync.args[0][2].success([])
       _.map(Backbone.sync.args, (args) -> args[2].data).should.eql [
         { total_count: 1, size: 10 }
-        { page: 2, total_count: 1, size: 10 }
-        { page: 3, total_count: 1, size: 10 }
-        { page: 4, total_count: 1, size: 10 }
-        { page: 5, total_count: 1, size: 10 }
-        { page: 6, total_count: 1, size: 10 }
-        { page: 7, total_count: 1, size: 10 }
-        { page: 8, total_count: 1, size: 10 }
+        { page: 2, size: 10 }
+        { page: 3, size: 10 }
+        { page: 4, size: 10 }
+        { page: 5, size: 10 }
+        { page: 6, size: 10 }
+        { page: 7, size: 10 }
+        { page: 8, size: 10 }
       ]
 
     it 'maintains the original options', ->
@@ -41,8 +41,8 @@ describe 'Parallel mixin', ->
       Backbone.sync.args[0][2].success([])
       _.map(Backbone.sync.args, (args) -> args[2].data).should.eql [
         { zone: 'no-flex', total_count: 1, size: 12 }
-        { page: 2, zone: 'no-flex', total_count: 1, size: 12 }
-        { page: 3, zone: 'no-flex', total_count: 1, size: 12 }
+        { page: 2, zone: 'no-flex', size: 12 }
+        { page: 3, zone: 'no-flex', size: 12 }
       ]
 
     it 'returns early if we are done on the first fetch', (done) ->
