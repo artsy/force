@@ -121,3 +121,21 @@ describe 'Artist routes', ->
       @endStub.args[0][0](null, status: 200, body: @response)
       _.uniq(_.pluck(@res.send.args[0][0], 'merchandisable')).should.eql [true]
       _.uniq(_.pluck(@res.send.args[0][0], 'kind')).should.eql ['catalogue']
+
+    describe 'cached', ->
+      beforeEach ->
+        @cache = routes.__get__('cache')
+        @ogGet = @cache.get
+        @cache.get = (x, cb) =>
+          cb(null, JSON.stringify(@response))
+
+      afterEach ->
+        @cache.get = @ogGet
+
+      it 'is able to filter cached data', ->
+        @req =
+          query: merchandisable: ['true'], kind: ['catalogue']
+          params: id: 'sterling-ruby', section: 'publications'
+        routes.data @req, @res
+        _.uniq(_.pluck(@res.send.args[0][0], 'merchandisable')).should.eql [true]
+        _.uniq(_.pluck(@res.send.args[0][0], 'kind')).should.eql ['catalogue']

@@ -63,10 +63,15 @@ cache = require '../../lib/cache'
   key = url = "http://#{APPLICATION_NAME}.s3.amazonaws.com/data/#{req.params.id}/#{req.params.section}.json"
 
   render = (data) ->
-    for key in ['kind', 'merchandisable']
-      if (filters = req.query[key])
-        data = _.filter data, (item) ->
-          _.contains filters, "#{item[key]}"
+    unless _.isEmpty(req.query)
+      # If data is cached it's coming out as a string
+      data = JSON.parse(data) if _.isString(data)
+      for key in ['kind', 'merchandisable']
+        if (filters = req.query[key])
+          data = _.filter data, (item) ->
+            # Cast value to a string for comparison (in the case of booleans)
+            _.contains filters, "#{item[key]}"
+
     res.type 'application/json'
     res.send data
 
