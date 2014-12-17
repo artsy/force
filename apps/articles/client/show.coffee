@@ -17,7 +17,6 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
 
   initialize: (options) ->
     { @article } = options
-    window.view = this
     new ShareView el: @$('#articles-social')
     @setupSlideshow()
     @renderArtworks()
