@@ -29,6 +29,7 @@ describe 'ArticleView', ->
         sd: {}
         embedVideo: require('embed-video')
         moment: require('moment')
+        resize: sinon.stub()
       }, =>
         done()
 

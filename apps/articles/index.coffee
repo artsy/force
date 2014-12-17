@@ -4,10 +4,12 @@
 
 express = require 'express'
 routes = require './routes'
+{ resize } = require '../../components/resizer'
 
 app = module.exports = express()
 app.set 'views', __dirname + '/templates'
 app.set 'view engine', 'jade'
+app.locals.resize = resize
 
 # Permalink routes
 app.get '/articles', routes.index
