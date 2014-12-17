@@ -8,7 +8,7 @@ moment = require 'moment'
 { fabricate } = require 'antigravity'
 Fair = require '../../../../models/fair.coffee'
 
-describe 'ForYouView', ->
+xdescribe 'ForYouView', ->
 
   before (done) ->
     benv.setup =>
@@ -32,7 +32,7 @@ describe 'ForYouView', ->
 
   describe '#initialize', ->
 
-    xit "renders personalized artist list", ->
+    it "renders personalized artist list", ->
       view = new @OverviewView
         el: $("""<div>
             <div class='auction-clock'></div>

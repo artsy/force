@@ -64,7 +64,7 @@ describe 'Galleries / Institutions routes', ->
         type: 'PartnerGallery'
         sort: 'sortable_id'
         has_full_profile: true
-        page: 1
+        total_count: 1
 
     it 'calls render with the right data', ->
       @res.render.called.should.be.true
