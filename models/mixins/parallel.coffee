@@ -16,7 +16,7 @@ module.exports =
       error? arguments...
 
     options.success = (collection, response, opts) =>
-      total = parseInt(opts?.res?.headers?['x-total-count'])
+      total = parseInt(opts?.res?.headers?['x-total-count'] or 0)
 
       if response.length >= total # Return if already at the end or no total
         dfd.resolve this
