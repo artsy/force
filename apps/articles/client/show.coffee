@@ -11,12 +11,13 @@ carouselTemplate = -> require('../templates/carousel.jade') arguments...
 artworkItemTemplate = -> require(
   '../../../components/artwork_item/templates/artwork.jade') arguments...
 Q = require 'q'
-FillwidthView = require '../../../components/fillwidth_row/view.coffee'
+imagesLoaded = require 'imagesloaded'
 
 module.exports.ArticleView = class ArticleView extends Backbone.View
 
   initialize: (options) ->
     { @article } = options
+    window.view = this
     new ShareView el: @$('#articles-social')
     @setupSlideshow()
     @renderArtworks()
@@ -57,12 +58,19 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
         $el = @$("[data-layout=overflow_fillwidth]" +
           " li[data-id=#{artworks.first().get '_id'}]").parent()
         return unless $el.length
-        fillwidthView = new FillwidthView
-          doneFetching: true
-          collection: artworks
-          el: $el
-        fillwidthView.render()
-        fillwidthView.hideSecondRow()
+        @fillwidth $el
+
+  fillwidth: (el) ->
+    $list = @$(el)
+    $imgs = $list.find('img')
+    imagesLoaded $list[0], =>
+      widths = $imgs.map -> $(this).width()
+      sum = _.reduce widths, (m, n) -> m + n
+      return unless sum > listWidth = $list.width()
+      newWidths = _.map widths, (w) -> Math.floor w * (listWidth / sum)
+      $list.children('li').each (i) -> $(this).width newWidths[i] - 30
+      tallest = _.max $imgs.map -> $(this).height()
+      $list.find('.artwork-item-image-container').each -> $(this).height tallest
 
 module.exports.init = ->
   new ArticleView el: $('body'), article: new Article(sd.ARTICLE)

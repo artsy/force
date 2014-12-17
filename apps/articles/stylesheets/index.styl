@@ -63,7 +63,7 @@ gutter-size = 30px
 
 .articles-social
   text-align center
-  padding 10px 0
+  padding 10px 0 20px 0
 
   .articles-social__header
     avant-garde()
@@ -95,12 +95,20 @@ gutter-size = 30px
       width 100%
 .articles-section-artworks[data-layout="overflow_fillwidth"]
   width overflow-width
-  margin auto
+  margin 0 auto gutter-size auto
   text-align center
+  [data-id]
+    display inline-block
+    vertical-align top
+    padding 0 (gutter-size / 2)
+  .artwork-item-image-container img
+    height auto
+  .overlay-container
+    display none
 
 .articles-section-artworks-loading
   height (body-width * 0.33)
-  background gray-lighter-color
+  width body-width
   position relative
 
 .articles-section-video
