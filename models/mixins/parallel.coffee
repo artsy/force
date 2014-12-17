@@ -20,7 +20,7 @@ module.exports =
         # Count when server-side
         opts?.res?.headers?['x-total-count'] or
         # Count when client-side
-        opts?.xhr?.getResponseHeader?('X-Total-Count')
+        opts?.xhr?.getResponseHeader?('X-Total-Count') or
         # Fallback
         0
       )
