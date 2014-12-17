@@ -21,7 +21,7 @@ fetchFeaturedProfiles = (key) ->
 fetchGalleries = ->
   dfd = Q.defer()
   galleries = new Partners
-  galleries.fetchUntilEnd
+  galleries.fetchUntilEndInParallel
     data:
       size: 20
       active: true
@@ -30,13 +30,13 @@ fetchGalleries = ->
       has_full_profile: true
     cache: true
     success: dfd.resolve
-    error: dfd.resolve
+    error: dfd.reject
   dfd.promise
 
 fetchInstitutions = ->
   dfd = Q.defer()
   profiles = new Profiles
-  profiles.fetchUntilEnd
+  profiles.fetchUntilEnd # Does not support total_count
     url: "#{API_URL}/api/v1/set/51fbd2f28b3b81c2de000444/items"
     data: size: 20
     cache: true
