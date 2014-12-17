@@ -60,6 +60,7 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
         @fillwidth $el
 
   fillwidth: (el) ->
+    return if $(window).width() < 700
     $list = @$(el)
     $imgs = $list.find('img')
     imagesLoaded $list[0], =>
