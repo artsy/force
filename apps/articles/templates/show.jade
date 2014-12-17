@@ -37,7 +37,21 @@ block body
         when 'video'
           .articles-section-video
             != embedVideo(section.url)
-
     .articles-social.add-bottom
       h2.articles-social__header Share this article
       +share(article.get('title'), article.get('thumbnail_image'))
+  section#articles-footer
+    h1 What to Read Next
+    ul#articles-footer-list
+      for article in footerArticles
+        li
+          .articles-footer-list-left
+            a( href="/article/#{article.get('slug')}" )
+              img( src=article.get('thumbnail_image') )
+          .articles-footer-list-right
+            h2
+              a( href="/article/#{article.get('slug')}" )
+                = article.get('thumbnail_title')
+            //- TODO: Hack for now, we need to save author data on the
+            //- Positron article to avoid fetches every time.
+            h3: a( href="/editorial" ) By Artsy Editorial
