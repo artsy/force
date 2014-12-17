@@ -73,7 +73,7 @@ describe 'PartnerOverviewView', ->
     describe '#renderArtistsGrid', ->
 
       it 'fetches all the partner artists and renders them in grid', ->
-        @partnerArtists.fetchUntilEnd = (options) =>
+        @partnerArtists.fetchUntilEndInParallel = (options) =>
           @partnerArtists.add @pas
           options.success?()
         @view.initializeArtists()
@@ -99,7 +99,7 @@ describe 'PartnerOverviewView', ->
         )
 
         @partnerArtists = new PartnerArtists()
-        @partnerArtists.fetchUntilEnd = (options) => options?.success?()
+        @partnerArtists.fetchUntilEndInParallel = (options) => options?.success?()
         @PartnerArtistsCollection = sinon.stub()
         @PartnerArtistsCollection.returns @partnerArtists
         mod.__set__ 'PartnerArtists', @PartnerArtistsCollection
