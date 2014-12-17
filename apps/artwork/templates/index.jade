@@ -20,24 +20,24 @@ block body
 
         .artwork-image
           a.artwork-image-zoom(
-            href  = "/artwork/#{artwork.id}/zoom"
-            rel   = 'nofollow'
+            href= "/artwork/#{artwork.id}/zoom"
+            rel= 'nofollow'
             data-client
           )
             img#the-artwork-image(
-              alt     = artwork.get('title')
-              title   = artwork.get('title')
-              nopin   = artwork.noPinAttr()
-              src     = artwork.defaultImage().imageUrlFor(640, 640)
+              alt= artwork.get('title')
+              title= artwork.get('title')
+              nopin= artwork.noPinAttr()
+              src= artwork.defaultImage().imageUrlFor(640, 640)
             )
 
         if artwork.hasAdditionalImages()
           .artwork-additional-images
             for image, i in artwork.images.models
               a.artwork-additional-image(
-                class       = i === 0 ? 'is-active' : 'is-inactive'
-                data-id     = image.id
-                data-href   = image.imageUrlFor(640, 640)
+                class= i === 0 ? 'is-active' : 'is-inactive'
+                data-id= image.id
+                data-href= image.imageUrlFor(640, 640)
               )
                 img(
                   src= image.imageUrl('small')
@@ -46,7 +46,8 @@ block body
 
         .artwork-image-actions
           a.circle-icon-button-save
-          a.circle-icon-button-share
+          if artwork.get('can_share_image')
+            a.circle-icon-button-share
           if artwork.isHangable()
             a.circle-icon-button-frame(
               href="/artwork/#{artwork.id}/view-in-room", data-client, rel='nofollow'

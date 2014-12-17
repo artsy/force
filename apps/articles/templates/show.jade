@@ -1,4 +1,4 @@
-include ../../../components/share/template
+include ./share
 
 extends ../../../components/main_layout/templates/index
 
@@ -11,13 +11,13 @@ append locals
 block body
   #articles-show
     h1.large-garamond-header= article.get('title')
+    h2#articles-show-author= author.get('name')
+    h2#articles-show-date
+      = moment(article.get('published_at')).format('MMM Do, YYYY h:mm a')
+    .articles-social
+      +share(article.get('title'), article.get('thumbnail_image'))
     #articles-lead-paragraph!= article.get('lead_paragraph')
-    h2
-      #articles-show-date
-        = moment(article.get('published_at')).format('MMM Do, YYYY h:mm a')
-      #articles-show-author= author.get('name')
-      #articles-social
-        +share(article.get('title'), article.get('thumbnail_image'))
+
     if article.get('sections')[0].type == 'slideshow'
       #articles-slideshow-container
         #articles-slideshow-inner
@@ -37,6 +37,9 @@ block body
         when 'video'
           .articles-section-video
             != embedVideo(section.url)
+    .articles-social.add-bottom
+      h2.articles-social__header Share this article
+      +share(article.get('title'), article.get('thumbnail_image'))
   section#articles-footer
     h1 What to Read Next
     ul#articles-footer-list

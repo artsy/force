@@ -33,8 +33,8 @@ embedVideo = require 'embed-video'
     cache: true
     headers: 'X-Access-Token': req.user?.get('accessToken')
     error: res.backboneError
-    success: (a) ->
-      (article = a).fetchAuthor
+    success: ->
+      article.fetchAuthor
         cache: true
         error: res.backboneError
         success: (a) -> author = a; done()

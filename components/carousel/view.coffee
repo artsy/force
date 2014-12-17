@@ -1,5 +1,6 @@
 _ = require 'underscore'
 imagesLoaded = require 'imagesloaded'
+mediator = require '../../lib/mediator.coffee'
 Backbone = require 'backbone'
 template = -> require('./template.jade') arguments...
 
@@ -64,6 +65,8 @@ module.exports = class Carousel extends Backbone.View
     @$el
       .removeClass('is-loading')
       .addClass 'is-done'
+
+    mediator.trigger 'carousel:images:loaded'
 
   render: ->
     if @length < @minLength

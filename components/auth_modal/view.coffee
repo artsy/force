@@ -41,8 +41,7 @@ module.exports = class AuthModalView extends ModalView
 
     @templateData =
       copy: @renderCopy(options.copy)
-      pathname: location.pathname
-      redirectTo: @redirectTo
+      redirectTo: @redirectTo or location.pathname
 
     @listenTo @state, 'change:mode', @reRender
     @listenTo @state, 'change:mode', @logState

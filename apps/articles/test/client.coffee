@@ -23,6 +23,7 @@ describe 'ArticleView', ->
         ['CarouselView', 'FillwidthView']
         ['postRender', 'render', 'hideSecondRow']
       benv.render resolve(__dirname, '../templates/show.jade'), @locals = {
+        footerArticles: []
         article: @article = new Article fixtures.article
         author: new Backbone.Model fabricate 'user'
         sd: {}

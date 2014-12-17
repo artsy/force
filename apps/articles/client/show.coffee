@@ -20,7 +20,6 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
     new ShareView el: @$('#articles-social')
     @setupSlideshow()
     @renderArtworks()
-    @renderFooter()
     if $(@article.get 'lead_paragraph').text().trim() is ''
       @$('#articles-lead-paragraph').hide()
 
