@@ -43,8 +43,7 @@ module.exports = class PartnerOverviewView extends Backbone.View
   initializeArtists: ->
     partnerArtists = new PartnerArtists()
     partnerArtists.url = "#{@partner.url()}/partner_artists"
-    partnerArtists.fetchUntilEnd
-      cache: true
+    partnerArtists.fetchUntilEndInParallel
       success: =>
         # Display represented artists or non- ones who have published artworks
         displayables = partnerArtists.filter (pa) ->
