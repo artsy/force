@@ -23,6 +23,7 @@ redirect = (req, res, next) ->
   else
     next()
 
+router.get '/article/:id', isResponsive
 router.get '/partner-application*', isResponsive
 router.get '/fair-application*', isResponsive
 router.use redirect
