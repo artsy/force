@@ -12,7 +12,8 @@ describe 'Home routes', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
     @req = { body: {}, query: {}, get: @getStub = sinon.stub(), cookies: {} }
-    @res = { render: sinon.stub(), redirect: sinon.stub(), cookie: @cookieStub = sinon.stub() }
+    @res = { locals: { sd: {} }, render: sinon.stub(), redirect: sinon.stub(), \
+      cookie: @cookieStub = sinon.stub() }
 
   afterEach ->
     Backbone.sync.restore()
