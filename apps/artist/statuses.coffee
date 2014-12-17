@@ -17,7 +17,7 @@ module.exports = class Statuses
 
       Q.allSettled([
         @fetchArtworks()
-        @fetchStatus 'shows', size: 2 # Remove once Gravity is deployed
+        @fetchStatus 'shows'
         @fetchStatus 'posts'
         @fetchStatus 'artists'
         @fetchStatus 'contemporary'
