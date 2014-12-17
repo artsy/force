@@ -26,7 +26,7 @@ block body
           .articles-section-text!= section.body
         when 'image'
           figure.articles-section-image
-            img( src=section.url )
+            img( src=resize(section.url, { width: 1100 }) )
             figcaption!= section.caption
         when 'artworks'
           ul.articles-section-artworks( data-layout=section.layout )
@@ -46,7 +46,7 @@ block body
         li
           .articles-footer-list-left
             a( href="/article/#{article.get('slug')}" )
-              img( src=article.get('thumbnail_image') )
+              img( src=resize(article.get('thumbnail_image'), { width: 300 }) )
           .articles-footer-list-right
             h2
               a( href="/article/#{article.get('slug')}" )
