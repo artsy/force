@@ -30,8 +30,13 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
     @setupJumpView()
 
     @setup =>
-      $.onInfiniteScroll @nextPage
+      @attachScrollHandler()
       @notifications.getFirstPage()?.then @checkIfEmpty
+
+  attachScrollHandler: ->
+    @$feed.waypoint (direction) =>
+      @nextPage() if direction is 'down'
+    , { offset: 'bottom-in-view' }
 
   params: ->
     qs.parse(location.search.substring(1))
@@ -78,6 +83,9 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
     # Reset the DOM
     @renderMethod = 'html'
     @columnViews = []
+    # Reset the waypoints
+    $.waypoints 'destroy'
+    @attachScrollHandler()
 
   appendArtworks: ->
     if @notifications.state.currentPage is 1
@@ -95,6 +103,8 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
       @renderMethod = 'append'
 
       @columnViews.push @renderColumns($container.find('.notifications-published-artworks'), artworks)
+
+    $.waypoints 'refresh'
 
   filterForPinned: (artworks) ->
     return artworks unless @pinnedArtworks?.length
@@ -125,7 +135,7 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
   nextPage: =>
     @notifications.getNextPage()?.then (response) ->
       unless response.length
-        $(window).off 'infiniteScroll'
+        $.waypoints 'destroy'
 
   toggleForSale: (e) ->
     @forSale = $(e.currentTarget).prop('checked')

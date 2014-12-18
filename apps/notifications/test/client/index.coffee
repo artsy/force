@@ -30,7 +30,8 @@ describe 'NotificationsView', ->
       stubChildClasses mod, this,
         ['ArtworkColumnsView']
         ['render']
-      $.onInfiniteScroll = sinon.stub()
+      $.fn.waypoint = sinon.stub()
+      $.waypoints = sinon.stub()
       done()
 
   afterEach ->
