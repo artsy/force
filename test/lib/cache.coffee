@@ -1,12 +1,15 @@
 sinon = require 'sinon'
-rewire = require 'rewire'
-cache = rewire '../../lib/cache'
+cache = require '../../lib/cache'
 Backbone = require 'backbone'
 
 describe 'cache lib', ->
 
   beforeEach ->
-    cache.__set__ 'client', @client = { set: sinon.stub(), get: sinon.stub(), expire: sinon.stub() }
+    cache.client = @client = {
+      set: sinon.stub()
+      get: sinon.stub()
+      expire: sinon.stub()
+    }
 
   describe '#set', ->
 

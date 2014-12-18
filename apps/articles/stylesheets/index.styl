@@ -3,7 +3,7 @@ body-width = 570px
 gutter-size = 30px
 
 #articles-show
-  margin-top 140px
+  margin-top 120px
   h1
     width 900px
     margin auto
@@ -14,6 +14,9 @@ gutter-size = 30px
 
   h2
     text-align center
+
+.body-welcome-header #articles-show
+  margin-top 180px
 
 #articles-lead-paragraph, .articles-section-text
   font-size 20px
@@ -77,14 +80,19 @@ gutter-size = 30px
   width overflow-width
   margin auto
   margin-bottom gutter-size
-  text-align center
   img
     max-width 100%
-    display inline-block
+    display block
+    margin auto
   figcaption
-    margin-top 15px
+    margin-top 10px
     font-style italic
     color gray-dark-color
+    text-align left
+
+.articles-section-artworks
+  position relative
+  min-height (body-width * .33)
 
 .articles-section-artworks[data-layout="column_width"]
   width body-width
@@ -96,22 +104,25 @@ gutter-size = 30px
     img
       width 100%
 .articles-section-artworks[data-layout="overflow_fillwidth"]
-  width overflow-width
+  width (overflow-width + gutter-size)
   margin 0 auto gutter-size auto
   text-align center
+  &.is-loading
+    [data-id]
+      opacity 0
+    height 500px
+    .loading-spinner
+      display block
+  .loading-spinner
+    display none
   [data-id]
     display inline-block
     vertical-align top
-    padding 0 (gutter-size / 2)
+    padding 0
   .artwork-item-image-container img
     height auto
   .overlay-container
     display none
-
-.articles-section-artworks-loading
-  height (body-width * 0.33)
-  width body-width
-  position relative
 
 .articles-section-video
   width body-width
@@ -179,4 +190,3 @@ gutter-size = 30px
     [data-layout="overflow_fillwidth"] [data-id]
       padding 0
       margin-bottom 20px
-      

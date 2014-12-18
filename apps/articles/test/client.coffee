@@ -19,6 +19,7 @@ describe 'ArticleView', ->
         resolve(__dirname, '../client/show')
         ['artworkItemTemplate', 'carouselTemplate']
       )
+      mod.__set__ 'imagesLoaded', sinon.stub()
       stubChildClasses mod, this,
         ['CarouselView']
         ['postRender', 'render']

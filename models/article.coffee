@@ -16,5 +16,6 @@ module.exports = class Article extends Backbone.Model
   fetchAuthor: (options) ->
     new Backbone.Model().fetch
       url: "#{sd.API_URL}/api/v1/user/#{@get 'author_id'}"
+      cache: options.cache
       error: options.error
       success: options.success
