@@ -100,7 +100,7 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
       # fit the width of the container
       dir = if imgsWidth() > $list.width() then -1 else 1
 
-      # Resize each li, maintaining aspect ratio, until the row fits
+      # Resize each img, maintaining aspect ratio, until the row fits
       i = 0
       while widthDiff() > 1
         for img in imgs
@@ -110,9 +110,8 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
 
       # Round off sizes
       for img in imgs
-        fn = if dir is 1 then Math.ceil else Math.floor
-        img.width = fn img.width
-        img.height = fn img.height
+        img.width = Math.floor img.width
+        img.height = Math.floor img.height
         break if widthDiff() is 0
 
       # Apply to DOM
