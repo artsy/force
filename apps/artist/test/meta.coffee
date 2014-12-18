@@ -29,7 +29,7 @@ describe 'Meta tags', ->
       @html.should.containEql "<link rel=\"canonical\" href=\"http://localhost:5000/artist/pablo-picasso"
       @html.should.containEql "<meta property=\"og:url\" content=\"http://localhost:5000/artist/pablo-picasso"
       @html.should.containEql "<meta property=\"og:description\" content=\"#{@artist.toPageDescription(155).replace('&', '&amp;')}"
-      @html.should.containEql "<meta property=\"og:title\" content=\"Pablo Picasso - Explore their Artworks, Biography"
+      @html.should.containEql "<meta property=\"og:title\" content=\"Pablo Picasso - Artworks, Bio"
       @html.should.containEql "<link rel=\"next\" href=\"http://localhost:5000/artist/pablo-picasso/shows\""
       @html.should.containEql "<link rel=\"prev\" href=\"http://localhost:5000/artist/pablo-picasso/works\""
 
@@ -47,7 +47,7 @@ describe 'Meta tags', ->
 
     it 'renders correctly', ->
       @html.should.containEql "<meta property=\"og:description\" content=\"#{@artist.toPageDescription().replace('&', '&amp;')}"
-      @html.should.containEql "<meta property=\"og:title\" content=\"Pablo Picasso - Explore their Artworks, Biography"
+      @html.should.containEql "<meta property=\"og:title\" content=\"Pablo Picasso - Artworks, Bio"
 
   describe 'with an image', ->
     beforeEach ->

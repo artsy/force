@@ -24,6 +24,9 @@ module.exports = class Artist extends Backbone.Model
   displayName: ->
     @get 'name'
 
+  metaName: ->
+    if @get('name') then @htmlToText('name') else 'Unnamed Artist'
+
   fetchArtworks: (options = {}) ->
     @related().artworks.fetch options
 
@@ -55,17 +58,12 @@ module.exports = class Artist extends Backbone.Model
   toPageTitle: ->
     if title = @metaOverrides('title')
       title
-    else if @inFirstArtistTestGroup()
-      "#{if @get('name') then @htmlToText('name') else 'Unnamed Artist'} | #{@pageTitleArtworksCount()}, Artist Biography | Artsy"
     else
-      "#{if @get('name') then @htmlToText('name') else 'Unnamed Artist'} - Explore #{@genderPronoun()} Artworks, Biography & Shows on Artsy"
+      "#{@metaName()} - #{@pageTitleArtworksCount()}, Bio & Shows on Artsy"
 
-  pageTitleArtworksCount: ->
-    artworksCount = @get('published_artworks_count')
-    _.compact([
-      artworksCount
-      "Artworks"
-    ]).join(' ')
+  pageTitleArtworksCount: (threshold = 1) ->
+    count = @get('published_artworks_count')
+    if count <= threshold or not count? then 'Artworks' else "#{count} Artworks"
 
   toPageDescription: (length = 200) ->
     if description = @metaOverrides('description')
@@ -79,11 +77,10 @@ module.exports = class Artist extends Backbone.Model
       "Browse the best of #{@displayName()}, including artwork for sale, #{@genderPronoun()} latest shows & events, biography, and exclusive #{@displayName()} articles."
 
   toAuctionResultsPageTitle: ->
-    "Auction Results for #{if @get('name') then @htmlToText('name') else 'Unnamed Artist'} on Artsy"
+    "Auction Results for #{@metaName()} on Artsy"
 
   toAuctionResultsPageDescription: ->
-    name = if @get('name') then @htmlToText('name') else 'Unnamed Artist'
-    "See details of #{name} auction results from recent, past, and upcoming sales. Let Artsy be your price guide to #{name}."
+    "See details of #{@metaName()} auction results from recent, past, and upcoming sales. Let Artsy be your price guide to #{@metaName()}."
 
   isFollowed: (followArtistCollection) ->
     followArtistCollection && followArtistCollection.isFollowed(@)
