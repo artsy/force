@@ -6,7 +6,6 @@ mediator = require '../../../../lib/mediator.coffee'
 Sticky = require '../../../../components/sticky/index.coffee'
 # Sub-header
 RelatedGenesView = require '../../../../components/related_links/types/artist_genes.coffee'
-RelatedRepresentationsGenesView = require '../../../../components/related_links/types/artist_representations.coffee'
 # Main section
 ArtworkFilter = require '../../../../components/artwork_filter/index.coffee'
 # Bottom sections
@@ -22,10 +21,6 @@ module.exports = class OverviewView extends Backbone.View
 
   initialize: ({ @user }) ->
     @sticky = new Sticky
-
-  setupSubHeader: ->
-    @setupRelatedGenes()
-    @setupRelatedRepresentations()
 
   setupArtworkFilter: ->
     filterRouter = ArtworkFilter.init el: @$('#artwork-section'), model: @model
@@ -53,9 +48,6 @@ module.exports = class OverviewView extends Backbone.View
     subView = new RelatedGenesView(el: @$('.artist-related-genes'), id: @model.id)
     subView.collection.on 'sync', -> mediator.trigger 'related:genes:render'
     @subViews.push subView
-
-  setupRelatedRepresentations: ->
-    @subViews.push new RelatedRepresentationsGenesView(el: @$('.artist-related-representations'), id: @model.id)
 
   setupRelatedSection: ($el) ->
     $section = @fadeInSection $el
@@ -103,7 +95,7 @@ module.exports = class OverviewView extends Backbone.View
 
   postRender: ->
     # Sub-header
-    @setupSubHeader()
+    @setupRelatedGenes()
     # Main section
     @setupArtworkFilter()
     # Bottom sections
