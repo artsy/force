@@ -1,5 +1,6 @@
 _ = require 'underscore'
 sd = require('sharify').data
+sanitizeRedirect = require '../../components/sanitize_redirect/index'
 
 #
 # Message users of unsupported browsers to upgrade
@@ -15,4 +16,5 @@ sd = require('sharify').data
 @continueAnyway = (req, res) ->
   tomorrow = new Date (new Date()).getTime() + (24*60*60*1000)
   res.cookie 'continue_with_bad_browser', 1, { expires: tomorrow }
-  res.redirect req.body['redirect-to'] or '/'
+  url = req.body['redirect-to'] or '/'
+  res.redirect sanitizeRedirect(url)
