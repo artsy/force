@@ -32,7 +32,9 @@ module.exports =
         remaining = Math.ceil(total / size) - 1
 
         Q.allSettled(_.times(remaining, (n) =>
-          @fetch cache: options.cache, remove: options.remove, data: _.extend { page: n + 2 }, _.omit(options.data, 'total_count')
+          @fetch _.extend _.omit(options, 'success', 'error'), {
+            data: _.extend _.omit(options.data, 'total_count'), { page: n + 2 }
+          }
         )).then(=>
           dfd.resolve this
           success? this

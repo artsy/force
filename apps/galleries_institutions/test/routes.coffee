@@ -89,7 +89,7 @@ describe 'Galleries / Institutions routes', ->
       Backbone.sync.args[0][2].data.should.eql key: 'partners:featured-institutions', public: true
       # Set of all institutions
       Backbone.sync.args[1][2].url.should.containEql '/api/v1/set/51fbd2f28b3b81c2de000444/items'
-      Backbone.sync.args[1][2].data.should.eql size: 20, page: 1
+      Backbone.sync.args[1][2].data.should.eql size: 20, total_count: 1
 
     it 'calls render with the right data', ->
       @res.render.called.should.be.true
