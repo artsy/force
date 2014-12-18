@@ -36,9 +36,14 @@ describe 'Parallel mixin', ->
       ]
 
     it 'maintains the original options', ->
-      @collection.fetchUntilEndInParallel(data: zone: 'no-flex', size: 12)
+      @collection.fetchUntilEndInParallel(url: 'http://foo.bar/baz', data: zone: 'no-flex', size: 12)
       Backbone.sync.args[0][2].res = headers: 'x-total-count': 25
       Backbone.sync.args[0][2].success([])
+      _.map(Backbone.sync.args, (args) -> args[2].url).should.eql [
+        'http://foo.bar/baz'
+        'http://foo.bar/baz'
+        'http://foo.bar/baz'
+      ]
       _.map(Backbone.sync.args, (args) -> args[2].data).should.eql [
         { zone: 'no-flex', total_count: 1, size: 12 }
         { page: 2, zone: 'no-flex', size: 12 }
