@@ -79,8 +79,24 @@ describe 'Artist', ->
       @artist.set published_artworks_count: 101
       @artist.pageTitleArtworksCount().should.equal '101 Artworks'
 
+      @artist.set published_artworks_count: 2
+      @artist.pageTitleArtworksCount().should.equal '2 Artworks'
+
+      @artist.set published_artworks_count: 1
+      @artist.pageTitleArtworksCount().should.equal 'Artworks'
+
+      @artist.set published_artworks_count: 0
+      @artist.pageTitleArtworksCount().should.equal 'Artworks'
+
       @artist.set published_artworks_count: undefined
       @artist.pageTitleArtworksCount().should.equal 'Artworks'
+
+    it 'supports a threshold', ->
+      @artist.set published_artworks_count: 2
+      @artist.pageTitleArtworksCount(2).should.equal 'Artworks'
+
+      @artist.set published_artworks_count: 3
+      @artist.pageTitleArtworksCount(2).should.equal '3 Artworks'
 
   describe '#displayNationalityAndBirthdate', ->
     it 'renders the correct string', ->
@@ -101,13 +117,8 @@ describe 'Artist', ->
       _.isUndefined(@artist.displayFollowers()).should.be.true
 
   describe '#toPageTitle', ->
-    it 'renders the correct string for artists a-h', ->
-      @artist.set(id: 'abc').toPageTitle().should.equal 'Pablo Picasso | Artworks, Artist Biography | Artsy'
-
-    it 'renders the correct string for artists not in a-h', ->
-      @artist.set(id: 'zerg', gender: 'is a social construct', name: 'Zerg').toPageTitle().should.equal 'Zerg - Explore their Artworks, Biography & Shows on Artsy'
-      @artist.set(id: 'zerg', gender: 'male', name: 'Zerg').toPageTitle().should.equal 'Zerg - Explore his Artworks, Biography & Shows on Artsy'
-      @artist.set(id: 'zerg', gender: 'female', name: 'Zerg').toPageTitle().should.equal 'Zerg - Explore her Artworks, Biography & Shows on Artsy'
+    it 'renders the correct string', ->
+      @artist.set(id: 'zerg', gender: 'is a social construct', name: 'Zerg').toPageTitle().should.equal 'Zerg - Artworks, Bio & Shows on Artsy'
 
     it 'supports a custom override', ->
       @artist.set(id: 'test-artist')
