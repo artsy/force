@@ -30,7 +30,7 @@ redis = require 'redis'
 # @param {String} val
 # @param {Number} expiresIn Defaults to 30 mins
 @set = (key, val, expiresIn = 1800) =>
-  return unless client?
+  return unless @client?
   @client.set key, val
   @client.expire key, expiresIn
 
