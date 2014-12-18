@@ -45,3 +45,12 @@ describe 'Unsupported Browser', ->
       @req.body['redirect-to'] = '/artwork/matthew-abbott-lobby-and-supercomputer'
       routes.continueAnyway @req, @res
       @res.redirect.args[0][0].should.equal '/artwork/matthew-abbott-lobby-and-supercomputer'
+
+    it 'does not redirect to an external url', ->
+      @req.body['redirect-to'] = 'http://example.com'
+      routes.continueAnyway @req, @res
+      @res.redirect.args[0][0].should.equal '/'
+
+    it 'defaults redirect to /', ->
+      routes.continueAnyway @req, @res
+      @res.redirect.args[0][0].should.equal '/'
