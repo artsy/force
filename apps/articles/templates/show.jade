@@ -27,12 +27,14 @@ block body
         when 'image'
           figure.articles-section-image
             img( src=resize(section.url, { width: 1100 }) )
-            figcaption!= section.caption
+            if section.caption
+              figcaption!= section.caption
         when 'artworks'
-          ul.articles-section-artworks( data-layout=section.layout )
-            for id in section.ids
-              li.articles-section-artworks-loading( data-id=id )
-                .loading-spinner
+          .articles-section-artworks.is-loading( data-layout=section.layout )
+            .loading-spinner
+            ul
+              for id in section.ids
+                li( data-id=id )
         when 'video'
           .articles-section-video
             != embedVideo(section.url)

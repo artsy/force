@@ -17,9 +17,11 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
 
   initialize: (options) ->
     { @article } = options
-    new ShareView el: @$('#articles-social')
+    new ShareView el: @$('.articles-social')
     @setupSlideshow()
     @renderArtworks()
+    @breakCaptions()
+    window.view = this
     if $(@article.get 'lead_paragraph').text().trim() is ''
       @$('#articles-lead-paragraph').hide()
 
@@ -51,7 +53,7 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
           new Artwork(id: id).fetch success: (artwork) =>
             @$("[data-id=#{artwork.get '_id'}]").html(
               artworkItemTemplate artwork: artwork, artworkSize: 'larger'
-            ).removeClass 'articles-section-artworks-loading'
+            )
       ).spread (artworks...) =>
         artworks = new Artworks artworks
         $el = @$("[data-layout=overflow_fillwidth]" +
@@ -59,18 +61,60 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
         return unless $el.length
         @fillwidth $el
 
+  breakCaptions: ->
+    @$('.articles-section-image').each ->
+      imagesLoaded $(this), =>
+        $(this).width $(this).children('img').width()
+
+  # TODO: Open source into fillwidthLite
   fillwidth: (el) ->
     return if $(window).width() < 700
+    targetHeight = 500
     $list = @$(el)
     $imgs = $list.find('img')
     imagesLoaded $list[0], =>
-      widths = $imgs.map -> $(this).width()
-      sum = _.reduce widths, (m, n) -> m + n
-      return unless sum > listWidth = $list.width()
-      newWidths = _.map widths, (w) -> Math.floor w * (listWidth / sum)
-      $list.children('li').each (i) -> $(this).width newWidths[i] - 30
-      tallest = _.max $imgs.map -> $(this).height()
-      $list.find('.artwork-item-image-container').each -> $(this).height tallest
+
+      # Map the images into objects of dimension data for performance.
+      # Add helpers to do the mathz.
+      imgs = $imgs.map(->
+        { width: $(this).width(), height: $(this).height(), $el: $(this) }
+      ).toArray()
+      imgsWidth = -> _.reduce _.map(imgs, (i) -> i.width), (m, n) -> m + n
+      diff = -> Math.abs $list.width() - imgsWidth()
+      resize = (img, dir) ->
+        img.width += (img.width / img.height) * dir
+        img.height += dir
+
+      # Resize all imgs to a uniform height maintaining aspect ratio
+      for img in imgs
+        img.width = img.width * (targetHeight / img.height)
+        img.height = targetHeight
+
+      # Decide whether we need to make the row of imgs smaller or larger to
+      # fit the width of the container
+      dir = if imgsWidth() > $list.width() then -1 else 1
+
+      # Resize each li, maintaining aspect ratio, until the row fits
+      i = 0
+      while diff() > 1
+        for img in imgs
+          resize img, dir
+          break if diff() <= 1
+        break if i += 1 > 9999
+
+      # Round off sizes
+      for img in imgs
+        fn = if dir is 1 then Math.ceil else Math.floor
+        img.width = fn img.width
+        img.height = fn img.height
+        break if diff() is 0
+
+      # Apply to DOM
+      for img in imgs
+        $li = img.$el.closest('li')
+        $li.width(img.width) unless img.width > img.$el.width()
+        $li.css(padding: '0 15px')
+      $list.parent().removeClass('is-loading')
 
 module.exports.init = ->
   new ArticleView el: $('body'), article: new Article(sd.ARTICLE)
