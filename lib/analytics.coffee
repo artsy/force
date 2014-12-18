@@ -85,6 +85,7 @@ categories =
 module.exports.track = track =
   _.reduce(Object.keys(categories), (memo, kind) ->
     memo[kind] = (description, options = {}) ->
+
       # Don't track admins
       return if sd.CURRENT_USER?.type is 'Admin'
 

@@ -66,7 +66,7 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
         $(this).width $(this).children('img').width()
 
   fillwidth: (el) ->
-    return if $(window).width() < 700
+    return @$(el).parent().removeClass('is-loading') if $(window).width() < 700
     $list = @$(el)
     $imgs = $list.find('img')
     imagesLoaded $list[0], =>
