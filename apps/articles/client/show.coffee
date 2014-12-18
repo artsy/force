@@ -66,21 +66,28 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
       imagesLoaded $(this), =>
         $(this).width $(this).children('img').width()
 
-  # TODO: Open source into fillwidthLite
   fillwidth: (el) ->
     return if $(window).width() < 700
-    targetHeight = 500
     $list = @$(el)
     $imgs = $list.find('img')
     imagesLoaded $list[0], =>
+      #
+      # TODO: Open source into fillwidthLite or something
+      #
 
-      # Map the images into objects of dimension data for performance.
-      # Add helpers to do the mathz.
+      # The height we're aiming for the row to be
+      targetHeight = 500
+
+      # Map the image DOM els into objects of dimension data for performance.
       imgs = $imgs.map(->
         { width: $(this).width(), height: $(this).height(), $el: $(this) }
       ).toArray()
-      imgsWidth = -> _.reduce _.map(imgs, (i) -> i.width), (m, n) -> m + n
-      diff = -> Math.abs $list.width() - imgsWidth()
+
+      # Helpers to do the mathz.
+      imgsWidth = ->
+        _.reduce _.map(imgs, (i) -> i.width), (m, n) -> m + n
+      widthDiff = ->
+        Math.abs $list.width() - imgsWidth()
       resize = (img, dir) ->
         img.width += (img.width / img.height) * dir
         img.height += dir
@@ -96,10 +103,10 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
 
       # Resize each li, maintaining aspect ratio, until the row fits
       i = 0
-      while diff() > 1
+      while widthDiff() > 1
         for img in imgs
           resize img, dir
-          break if diff() <= 1
+          break if widthDiff() <= 1
         break if i += 1 > 9999
 
       # Round off sizes
@@ -107,13 +114,13 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
         fn = if dir is 1 then Math.ceil else Math.floor
         img.width = fn img.width
         img.height = fn img.height
-        break if diff() is 0
+        break if widthDiff() is 0
 
       # Apply to DOM
       for img in imgs
         $li = img.$el.closest('li')
-        $li.width(img.width) unless img.width > img.$el.width()
-        $li.css(padding: '0 15px')
+        img.$el.height(img.height)
+        $li.width(img.width).css(padding: '0 15px')
       $list.parent().removeClass('is-loading')
 
 module.exports.init = ->
