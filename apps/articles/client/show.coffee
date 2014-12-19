@@ -22,7 +22,6 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
     @setupSlideshow()
     @renderArtworks()
     @breakCaptions()
-    window.view = this
     if $(@article.get 'lead_paragraph').text().trim() is ''
       @$('#articles-lead-paragraph').hide()
 
