@@ -27,7 +27,12 @@ syncAuth = module.exports.syncAuth = ->
     $.ajax
       url: "#{sd.API_URL}/api/v1/me"
       success: ensureFreshUser
-      error: -> window.location = '/users/sign_out'
+      error: ->
+        $.ajax
+          method: 'DELETE'
+          url: '/users/sign_out'
+          complete: ->
+            window.location.reload()
 
 setupAnalytics = ->
   # Initialize analytics & track page view if we included mixpanel
