@@ -48,6 +48,7 @@ raven = require 'raven'
 fs = require 'graceful-fs'
 artsyError = require 'artsy-error-handler'
 cache = require './cache'
+timeout = require 'connect-timeout'
 
 # Setup sharify constants & require dependencies that use sharify data
 sharify.data =
@@ -230,7 +231,7 @@ module.exports = (app) ->
   app.use require "../apps/clear_cache"
 
   # route to ping for system time
-  app.get '/system/time', (req, res)->
+  app.get '/system/time', timeout('25s'), (req, res)->
     res.send 200, {time: Date.now()}
 
   # Route to ping for system up
