@@ -6,7 +6,7 @@ module.exports = class BiblographyListView extends FilterableListView
   hasAny: (item, attrs...) ->
     _.any _.map(attrs, (attr) -> item.has attr)
 
-  formattedTitlte: (item) ->
+  formattedTitle: (item) ->
     return unless item.has('title')
     "<em>#{item.get('title')}.</em>"
 
@@ -35,7 +35,7 @@ module.exports = class BiblographyListView extends FilterableListView
     else
       _.compact([
         @formattedAuthors(item)
-        @formattedTitlte(item)
+        @formattedTitle(item)
         @formattedPublishInformation(item)
         @formattedPublicationLocationInformation(item)
       ]).join ' '
