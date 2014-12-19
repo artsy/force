@@ -4,5 +4,8 @@
 - var displayContextualLabel = true
 
 .related-shows( class='grid-' + nUp + '-up' )
-  for show in shows
-    include ../../components/featured_shows/show
+  if shows.length
+    for show in shows
+      include ../../components/featured_shows/show
+  else
+    .loading-spinner

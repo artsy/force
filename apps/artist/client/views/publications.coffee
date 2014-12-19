@@ -1,6 +1,7 @@
 _ = require 'underscore'
 moment = require 'moment'
 Backbone = require 'backbone'
+{ STATUSES } = require('sharify').data
 Books = require '../../../../components/artsypedia/collection.coffee'
 BiblographyListView = require './bibliography.coffee'
 template = -> require('../../templates/sections/publications.jade') arguments...
@@ -26,16 +27,19 @@ module.exports = class PublicationsView extends Backbone.View
 
     @$('#artist-page-bibliography-section').html @subView.render().$el
 
-  render: ->
+  processBooks: ->
     books = _.map @model.related().bibliography.where(merchandisable: true), (book) -> book.toJSON()
-    books = new Books(books, parse: true)
+    new Books(books, parse: true)
 
+  render: ->
     @$el.html template
+      STATUSES: STATUSES
       artist: @model
-      books: books.models
+      books: @processBooks().models
       bibliography: @model.related().bibliography
 
-    _.defer => @postRender()
+    _.defer =>
+      @postRender()
 
     this
 

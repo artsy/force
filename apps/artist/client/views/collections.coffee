@@ -4,19 +4,23 @@ FilterableListView = require '../../../../components/filterable_list/view.coffee
 template = -> require('../../templates/sections/collections.jade') arguments...
 
 class CollectionsListView extends FilterableListView
+  formattedName: (item) ->
+    return unless item.has('name')
+    if item.has('partner_id')
+      "<a class='faux-underline' href=/#{item.get('partner_id')}>#{item.get('name')}</a>"
+    else
+      item.get 'name'
+
   itemTemplate: ({ item, column }) ->
     displayString = _.compact([
-      item.get('name')
+      @formattedName(item)
       item.get('city')
       item.get('country')
     ]).join ', '
-    innerTemplate = if item.has 'partner_id'
-      "<a class='faux-underline' href='/#{item.get('partner_id')}' target='_blank'>#{displayString}</a>"
-    else
-      displayString
+
     """
       <li class='filterable-list-item' data-value='#{item.get(column)}'>
-        #{innerTemplate}
+        #{displayString}
       </li>
     """
 
