@@ -2,6 +2,8 @@ mixin carouselFigure(item)
   case item.type
     when 'image'
       img( src=item.url )
+    when 'video'
+      != embedVideo(item.url)
     when 'artwork'
       - artworkSize = 'larger'
       - artwork = article.slideshowArtworks.findWhere({ _id: item.id })
