@@ -10,7 +10,7 @@ module.exports = class HeroUnitView extends Backbone.View
     'click #home-hero-units-left-arrow': 'onLeftArrow'
     'click #home-hero-units-right-arrow': 'onRightArrow'
     'click .hhu-dot': 'onDot'
-    'click .home-hero-unit-welcome .avant-garde-button': 'signUp'
+    'click .home-hero-unit-welcome': 'signUp'
 
   initialize: ->
     @$window = $(window)
