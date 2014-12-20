@@ -20,6 +20,7 @@ block body
     if article.get('sections')[0].type == 'slideshow'
       #articles-slideshow-container
         #articles-slideshow-inner
+          include carousel
     for section, i in article.get('sections')
       case section.type
         when 'text'

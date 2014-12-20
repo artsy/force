@@ -7,7 +7,6 @@ Artwork = require '../../../models/artwork.coffee'
 Artworks = require '../../../collections/artworks.coffee'
 ShareView = require '../../../components/share/view.coffee'
 CarouselView = require '../../../components/carousel/view.coffee'
-carouselTemplate = -> require('../templates/carousel.jade') arguments...
 artworkItemTemplate = -> require(
   '../../../components/artwork_item/templates/artwork.jade') arguments...
 Q = require 'q'
@@ -17,33 +16,22 @@ embedVideo = require 'embed-video'
 module.exports.ArticleView = class ArticleView extends Backbone.View
 
   initialize: (options) ->
-    { @article } = options
+    { @article, @slideshowArtworks } = options
     new ShareView el: @$('.articles-social')
-    @setupSlideshow()
+    @renderSlideshow() if @slideshowArtworks?.length
     @renderArtworks()
     @breakCaptions()
     if $(@article.get 'lead_paragraph').text().trim() is ''
       @$('#articles-lead-paragraph').hide()
 
-  setupSlideshow: ->
-    return unless @article.get('sections')[0].type is 'slideshow'
-    if @article.slideshowArtworks.length
-      done = _.after @article.slideshowArtworks.length, @renderSlideshow
-      @article.slideshowArtworks.map (a) -> a.fetch success: done
-    else
-      @renderSlideshow()
-
   renderSlideshow: =>
-    @$('#articles-slideshow-inner').html carouselTemplate
-      article: @article
-      carouselFigures: @article.get('sections')[0].items
-      embedVideo: embedVideo
-    @carouselView = new CarouselView el: $('#articles-slideshow-inner')
-    imagesLoaded @$('#articles-slideshow-inner'), =>
-      @carouselView.postRender()
-      @carouselView.$decoys.hide()
-      @$('#articles-slideshow-inner .loading-spinner').hide()
-    if @article.get('sections')[0].items.length is 1
+    @carouselView = new CarouselView
+      el: $('#articles-slideshow-inner')
+      height: 500
+      align: 'left'
+    @carouselView.postRender()
+    @$('#articles-slideshow-inner .loading-spinner').hide()
+    if @article.get('sections')[0].items?.length is 1
       @$('.carousel-controls').hide()
 
   renderArtworks: ->
@@ -140,4 +128,9 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
       $list.parent().removeClass('is-loading')
 
 module.exports.init = ->
-  new ArticleView el: $('body'), article: new Article(sd.ARTICLE)
+  article = new Article sd.ARTICLE
+  slideshowArtworks = new Articles sd.SLIDESHOW_ARTWORKS
+  new ArticleView
+    el: $('body')
+    article: article
+    slideshowArtworks: slideshowArtworks

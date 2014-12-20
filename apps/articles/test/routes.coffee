@@ -2,6 +2,7 @@ _ = require 'underscore'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 Article = require '../../../models/article'
+Articles = require '../../../collections/articles'
 routes = require '../routes'
 fixtures = require '../../../test/helpers/fixtures.coffee'
 { fabricate } = require 'antigravity'
@@ -12,24 +13,25 @@ describe 'Article routes', ->
     sinon.stub Backbone, 'sync'
     @req = { params: {} }
     @res = { render: sinon.stub(), locals: { sd: {} } }
+    sinon.stub Article.prototype, 'fetchWithRelated'
+
   afterEach ->
     Backbone.sync.restore()
+    Article::fetchWithRelated.restore()
 
   describe '#show', ->
 
-    it 'fetches an article and renders it', ->
+    it 'fetches an article, its related content, and renders it', ->
+      @fetchWithRelated =
       routes.show @req, @res
-      Backbone.sync.args[0][2].success [fixtures.article]
-      Backbone.sync.args[1][2].success _.extend fixtures.article, title: 'Foo'
-      Backbone.sync.args[2][2].success fabricate 'user'
+      Article::fetchWithRelated.args[0][0].success(
+        new Article(_.extend fixtures.article, title: 'Foo')
+        new Backbone.Model(fabricate 'user', name: 'Tess')
+        new Articles([_.extend fixtures.article, title: 'Bar'])
+        null
+      )
       @res.render.args[0][0].should.equal 'show'
       @res.render.args[0][1].article.get('title').should.equal 'Foo'
-
-    xit 'renders the footer articles', ->
-      routes.show @req, @res
-      Backbone.sync.args[0][2].success [fixtures.article]
-      Backbone.sync.args[1][2].success fixtures.article
-      Backbone.sync.args[2][2].success fabricate 'user'
-      # TODO: Why does the first success not update the collection
-      @res.render.args[0][1].footerArticles[0]
-        .get('title').should.equal 'Moo'
+      @res.render.args[0][1].author.get('name').should.equal 'Tess'
+      @res.render.args[0][1].footerArticles[0].get('title')
+        .should.equal 'Bar'
