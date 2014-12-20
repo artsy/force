@@ -12,6 +12,7 @@ artworkItemTemplate = -> require(
   '../../../components/artwork_item/templates/artwork.jade') arguments...
 Q = require 'q'
 imagesLoaded = require 'imagesloaded'
+embedVideo = require 'embed-video'
 
 module.exports.ArticleView = class ArticleView extends Backbone.View
 
@@ -36,14 +37,14 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
     @$('#articles-slideshow-inner').html carouselTemplate
       article: @article
       carouselFigures: @article.get('sections')[0].items
-    @carouselView = new CarouselView
-      el: $('#articles-slideshow-inner')
-      height: 500
-      align: 'left'
-    @$el.imagesLoaded =>
+      embedVideo: embedVideo
+    @carouselView = new CarouselView el: $('#articles-slideshow-inner')
+    imagesLoaded @$('#articles-slideshow-inner'), =>
       @carouselView.postRender()
       @carouselView.$decoys.hide()
       @$('#articles-slideshow-inner .loading-spinner').hide()
+    if @article.get('sections')[0].items.length is 1
+      @$('.carousel-controls').hide()
 
   renderArtworks: ->
     for section in @article.get('sections') when section.type is 'artworks'
@@ -87,7 +88,7 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
         _.reduce _.map(imgs, (i) -> i.width), (m, n) -> m + n
       widthDiff = ->
         Math.abs $list.width() - imgsWidth()
-      resize = (img, dir) ->
+      resizeHeight = (img, dir) ->
         img.width += (img.width / img.height) * dir
         img.height += dir
 
@@ -100,13 +101,23 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
       # fit the width of the container
       dir = if imgsWidth() > $list.width() then -1 else 1
 
-      # Resize each img, maintaining aspect ratio, until the row fits
+      # Resize each img, maintaining aspect ratio, until the row fits the
+      # width of the container
       i = 0
-      while widthDiff() > 1
+      until widthDiff() < 1
         for img in imgs
-          resize img, dir
-          break if widthDiff() <= 1
-        break if i += 1 > 9999
+          resizeHeight img, dir
+          break if widthDiff() < 1
+        break if i += 1 > 999
+
+      # Resize down to accomodate padding
+      i = 0
+      totalWhitespace = imgs.length * 30
+      until imgsWidth() <= $list.width() - totalWhitespace
+        for img in imgs
+          resizeHeight img, -1
+          break if imgsWidth() <= $list.width() - totalWhitespace
+        break if i += 1 > 999
 
       # Round off sizes
       for img in imgs
@@ -116,9 +127,16 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
 
       # Apply to DOM
       for img in imgs
+        img.$el.width(img.width)
         $li = img.$el.closest('li')
-        img.$el.height(img.height)
-        $li.width(img.width).css(padding: '0 15px')
+        $li.css(padding: '0 15px')
+
+      # Make sure the captions line up in case rounding off skewed things
+      tallest = _.max $list.find('.artwork-item-image-container').map(->
+        $(this).height()).toArray()
+      $list.find('.artwork-item-image-container').each -> $(this).height tallest
+
+      # Remove loading state
       $list.parent().removeClass('is-loading')
 
 module.exports.init = ->
