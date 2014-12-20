@@ -1,6 +1,7 @@
 overflow-width = 1100px
 body-width = 570px
 gutter-size = 30px
+artwork-height = 500px
 
 #articles-show
   margin-top 120px
@@ -30,26 +31,15 @@ gutter-size = 30px
   margin (gutter-size / 2) auto
 
 #articles-slideshow-container
-  height 600px
-  #articles-slideshow-inner
-    position absolute
-    left 20px
-    width calc(100% \- @left)
+  height artwork-height + 200
+  margin-bottom gutter-size
   .carousel-figure
     vertical-align top
   img
-    height 400px
-
-#articles-slideshow
-  position relative
-  margin-bottom gutter-size
-
-#articles-slideshow li
-  display inline-block
-  vertical-align top
-  margin-right gutter-size
-  img
-    height 500px
+    height artwork-height
+  iframe
+    height artwork-height
+    width 888px
 
 #articles-show-author, .articles-social
   vertical-align middle
@@ -97,12 +87,15 @@ gutter-size = 30px
 .articles-section-artworks[data-layout="column_width"]
   width body-width
   margin auto
+  .loading-spinner
+    display none
   li
     margin-bottom gutter-size
   .artwork-item-image-link
     width 100%
     img
       width 100%
+
 .articles-section-artworks[data-layout="overflow_fillwidth"]
   width (overflow-width + gutter-size)
   margin 0 auto gutter-size auto
@@ -110,7 +103,7 @@ gutter-size = 30px
   &.is-loading
     [data-id]
       opacity 0
-    height 500px
+    height artwork-height
     .loading-spinner
       display block
   .loading-spinner
@@ -121,6 +114,8 @@ gutter-size = 30px
     padding 0
   .artwork-item-image-container img
     height auto
+  .artwork-item-caption
+    overflow ellipsis
   .overlay-container
     display none
 

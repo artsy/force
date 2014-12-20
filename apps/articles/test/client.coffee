@@ -17,7 +17,7 @@ describe 'ArticleView', ->
       Backbone.$ = $
       { @ArticleView } = mod = benv.requireWithJadeify(
         resolve(__dirname, '../client/show')
-        ['artworkItemTemplate', 'carouselTemplate']
+        ['artworkItemTemplate']
       )
       mod.__set__ 'imagesLoaded', sinon.stub()
       stubChildClasses mod, this,
@@ -25,7 +25,16 @@ describe 'ArticleView', ->
         ['postRender', 'render']
       benv.render resolve(__dirname, '../templates/show.jade'), @locals = {
         footerArticles: []
-        article: @article = new Article fixtures.article
+        slideshowArtworks: null
+        article: @article = new Article _.extend fixtures.article,
+          sections: [
+            { type: 'text', body: 'Foo' }
+            {
+              type: 'artworks',
+              ids: ['5321b73dc9dc2458c4000196', '5321b71c275b24bcaa0001a5'],
+              layout: 'overflow_fillwidth'
+            }
+        ]
         author: new Backbone.Model fabricate 'user'
         sd: {}
         embedVideo: require('embed-video')
@@ -44,24 +53,10 @@ describe 'ArticleView', ->
   afterEach ->
     Backbone.sync.restore()
 
-  describe '#setupSlideshow', ->
+  describe '#renderSlideshow', ->
 
-    beforeEach ->
-      artworks = [
-        fabricate 'artwork',
-          title: 'Foo on the Bar', _id: '54276766fd4f50996aeca2b8'
-        fabricate 'artwork',
-          title: 'Moo on the Baz', _id: '54276766fd4f50996aeca2bz'
-      ]
-      @view.article.slideshowArtworks.set artworks
-      @view.setupSlideshow()
-      arg[2].success(artworks[i]) for arg, i in Backbone.sync.args
-
-    it 'renders the articles artworks', ->
-      @view.$('#articles-slideshow-inner').html()
-        .should.containEql 'Foo on the Bar'
-
-    it 'adds a carousel view', ->
+    it 'renders the slideshow', ->
+      @view.renderSlideshow()
       @CarouselView.called.should.be.ok
 
   describe '#renderArtworks', ->
