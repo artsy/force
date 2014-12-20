@@ -3,7 +3,7 @@ sd = require('sharify').data
 Backbone = require 'backbone'
 Artworks = require '../collections/artworks.coffee'
 Articles = require '../collections/articles.coffee'
-Q = require 'Q'
+Q = require 'q'
 
 module.exports = class Article extends Backbone.Model
 
