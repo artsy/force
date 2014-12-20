@@ -18,15 +18,15 @@ module.exports = class Article extends Backbone.Model
     footerArticles = new Articles
     author = new Backbone.Model
     Q.all(
+      @fetch
+        cache: true
+        headers: 'X-Access-Token': options.accessToken
       footerArticles.fetch
         cache: true
         data:
           # Artsy Editorial. TODO: Smart footer data.
           author_id: '503f86e462d56000020002cc'
           published: true
-      @fetch
-        cache: true
-        headers: 'X-Access-Token': options.accessToken
     ).fail((r) -> options.error null, r).then =>
       slideshowArtworks = @slideshowArtworks()
       Q.all(_.compact _.flatten [
