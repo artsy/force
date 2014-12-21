@@ -63,9 +63,10 @@ fetchInstitutions = ->
   ]).then((results) ->
     [featuredGalleries, galleries] = _.pluck results, 'value'
     aToZGroup = galleries.groupByAlphaWithColumns 3
+    divisor = Math.pow(10, galleries.length.toString().length - 1)
     res.render 'index',
       aToZGroup: aToZGroup
-      partnerCount: galleries.length
+      partnerCount: Math.round(galleries.length / divisor) * divisor + '+'
       featuredProfiles: _.take featuredGalleries.shuffle(), 15 # Make room for partnership callout
       copy: header: 'Featured Galleries', adjective: 'Gallery'
   ).done()
