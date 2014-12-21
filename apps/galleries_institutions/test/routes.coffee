@@ -73,6 +73,10 @@ describe 'Galleries / Institutions routes', ->
       @res.render.args[0][1].featuredProfiles[0].id.should.equal 'a-gallery'
       @res.render.args[0][1].copy.header.should.equal 'Featured Galleries'
 
+    it 'rounds off the number of galleires', ->
+      @res.render.args[0][0].should.equal 'index'
+      @res.render.args[0][1].partnerCount.should.equal '1+'
+
   describe '#institutions', ->
     beforeEach ->
       returnInstitutionalProfiles = value: new Backbone.Collection [fabricate 'profile', id: 'an-institution']
