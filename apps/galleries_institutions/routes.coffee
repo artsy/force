@@ -65,7 +65,7 @@ fetchInstitutions = ->
     aToZGroup = galleries.groupByAlphaWithColumns 3
     res.render 'index',
       aToZGroup: aToZGroup
-      partnerCount: galleries.length
+      partnerCount: '700+'
       featuredProfiles: _.take featuredGalleries.shuffle(), 15 # Make room for partnership callout
       copy: header: 'Featured Galleries', adjective: 'Gallery'
   ).done()
