@@ -57,7 +57,6 @@ artwork-height = 500px
 .articles-social
   text-align center
   padding 10px 0 20px 0
-
   .articles-social__header
     avant-garde()
     font-size default-avant-garde-font-size
@@ -191,3 +190,135 @@ artwork-height = 500px
     [data-layout="overflow_fillwidth"] [data-id]
       padding 0
       margin-bottom 20px
+
+#articles-magazine-primary-article
+  width 66%
+  display inline-block
+  vertical-align top
+  padding-right 15px
+  figure
+    height 420px
+  figcaption
+    background #fff
+    padding 30px
+    position relative
+    top 370px
+    width 560px
+    left calc(50% \- (@width / 2))
+    text-align center
+  .aaf-title
+    position relative
+    top -5px
+
+.aaf-title
+  font-size 26px
+  line-height 34px
+
+.aaf-author
+  avant-garde()
+  font-size 10px
+  margin-top 10px
+
+.aaf-img
+  position absolute
+  top 0
+  left 0
+  width 100%
+  height 100%
+  background center center
+  background-size cover
+
+.aaf-date
+  color gray-dark-color
+  display block
+  margin-bottom 3px
+
+.articles-article-figure
+  position relative
+  a
+    text-decoration none
+
+#articles-magazine-featured-aside, #articles-magazine-feed
+  width 33%
+  display inline-block
+  vertical-align top
+  padding-left (gutter-size / 2)
+  figure
+    margin-bottom 30px
+    height 120px
+  img
+    width 100%
+    padding-right (gutter-size / 2)
+  figcaption
+    padding-left 50%
+    display inline-block
+    vertical-align top
+  img
+    display inline-block
+    vertical-align top
+  .aaf-title
+    font-size 22px
+    line-height 27px
+    max-height 84px
+    overflow hidden
+  .aaf-author
+    margin-top 2px
+    color gray-darkest-color
+  .aaf-img
+    width calc(50% \- (gutter-size / 2))
+  .articles-article-figure
+    display table
+    figcaption
+      display table-cell
+      vertical-align middle
+
+#articles-magazine-featured-aside
+  figcaption
+    display table-cell
+    vertical-align middle
+  figure
+    display block
+  a
+    height 100%
+    display table
+
+#articles-magazine-featured-aside, #articles-magazine-primary-article
+  margin-top 40px
+
+#articles-magazine-feed
+  margin-top 110px
+  width 66%
+  padding-right (gutter-size * 1.5)
+  padding-left 0
+  .avant-garde-header
+    font-size 14px
+    border-bottom 1px solid gray-lighter-color
+    padding-bottom (gutter-size - 17)
+  figure
+    height 250px
+    border-bottom 1px solid gray-lighter-color
+    width 100%
+    margin-bottom 0
+  .aaf-img
+    width golden-ratio-small-percent
+    height calc(100% \- ((gutter-size - 10) * 2))
+    top (gutter-size - 10)
+  .aaf-title
+    font-size 26px
+    line-height 34px
+    max-height 107px
+    padding-right 80px
+  .aaf-share
+    position absolute
+    right 0
+    bottom 8px
+    a
+      display none
+    a[data-service=twitter], a[data-service=facebook]
+      display inline-block
+  figcaption
+    width 100% - golden-ratio-small-percent
+    padding (gutter-size - 10) 0
+    padding-left gutter-size
+  button
+    margin-top gutter-size

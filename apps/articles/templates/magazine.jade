@@ -1,0 +1,24 @@
+extends ../../../components/main_layout/templates/index
+include ./figure
+include ../../../components/share/template
+
+block head
+  include meta/magazine
+
+append locals
+  - assetPackage = 'articles'
+
+block body
+  if featuredArticles.length
+    header#articles-magazine-header
+      #articles-magazine-primary-article
+        +article-figure(featuredArticles[0], 1000)
+      aside#articles-magazine-featured-aside
+        for article in featuredArticles.slice(1)
+          +article-figure(article, 300)
+  #articles-magazine-feed
+    .avant-garde-header Latest Articles
+    #articles-magazine-feed-list
+      - articles = articlesFeed
+      include ./feed
+    button.avant-garde-button-white.is-block Show previous articles
