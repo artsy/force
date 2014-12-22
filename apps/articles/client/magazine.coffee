@@ -7,14 +7,13 @@ feedTemplate = -> require('../templates/feed.jade') arguments...
 { resize, crop } = require '../../../components/resizer/index.coffee'
 moment = require 'moment'
 
-module.exports.ArticleView = class ArticleView extends Backbone.View
+module.exports.MagazineView = class MagazineView extends Backbone.View
 
   initialize: (options) ->
     @offset = 0
     { @articles } = options
     @articles.on 'sync', @renderArticles
     @attachShareViews()
-    window.view = this
 
   renderArticles: =>
     @$('#articles-magazine-feed-list').html(
@@ -22,6 +21,7 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
         articles: @articles.models
         crop: crop
         moment: moment
+        sd: sd
     )
     @attachShareViews()
 
@@ -48,6 +48,6 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
       complete: -> $btn.removeClass 'is-loading'
 
 module.exports.init = ->
-  new ArticleView
+  new MagazineView
     el: $('body')
     articles: new Articles sd.ARTICLES

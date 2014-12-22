@@ -35,3 +35,22 @@ describe 'Article routes', ->
       @res.render.args[0][1].author.get('name').should.equal 'Tess'
       @res.render.args[0][1].footerArticles[0].get('title')
         .should.equal 'Bar'
+
+  describe '#magazine', ->
+
+    it 'fetches published articles and splits them by tier', ->
+      routes.magazine @req, @res, @next
+      Backbone.sync.args[0][2].success results: [
+        { tier: 1, id: 'a' }
+        { tier: 1, id: 'b' }
+        { tier: 1, id: 'c' }
+        { tier: 1, id: 'd' }
+        { tier: 2, id: 'e' }
+        { tier: 2, id: 'f' }
+        { tier: 1, id: 'g' }
+        { tier: 2, id: 'h' }
+      ]
+      _.pluck(@res.render.args[0][1].featuredArticles, 'id').join('')
+        .should.equal 'abcd'
+      _.pluck(@res.render.args[0][1].articlesFeed, 'id').join('')
+        .should.equal 'efgh'
