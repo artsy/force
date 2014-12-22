@@ -4,11 +4,20 @@ Article = require '../../models/article'
 Articles = require '../../collections/articles'
 embedVideo = require 'embed-video'
 
-@index = (req, res, next) ->
+@magazine = (req, res, next) ->
   new Articles().fetch
-    data: published: true
+    data:
+      published: true
+      limit: 50
+      # Artsy Editorial. TODO: When we launch Writer externally drop this.
+      author_id: '503f86e462d56000020002cc'
     error: res.backboneError
-    success: (articles) -> res.render 'index', articles: articles.models
+    cache: true
+    success: (articles) ->
+      res.locals.sd.ARTICLES = articles.toJSON()
+      res.render 'magazine',
+        featuredArticles: featuredArticles = articles.where(tier: 1).slice(0, 4)
+        articlesFeed: articles.reject (a) -> a in featuredArticles
 
 @show = (req, res, next) ->
   new Article(id: req.params.slug).fetchWithRelated
