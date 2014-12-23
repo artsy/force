@@ -10,6 +10,7 @@ RelatedGenesView = require '../../../../components/related_links/types/artist_ge
 ArtworkFilter = require '../../../../components/artwork_filter/index.coffee'
 # Bottom sections
 RelatedPostsView = require '../../../../components/related_posts/view.coffee'
+RelatedArticlesView = require '../../../../components/related_articles/view.coffee'
 RelatedShowsView = require '../../../../components/related_shows/view.coffee'
 ArtistFillwidthList = require '../../../../components/artist_fillwidth_list/view.coffee'
 lastModified = require './last_modified.coffee'
@@ -38,8 +39,12 @@ module.exports = class OverviewView extends Backbone.View
 
   setupRelatedPosts: ->
     if STATUSES.posts
-      @fetches.push @model.related().posts.fetch()
-      subView = new RelatedPostsView collection: @model.related().posts, numToShow: 4
+      if 'Articles' in (sd.CURRENT_USER?.lab_features or [])
+        @fetches.push @model.related().articles.fetch()
+        subView = new RelatedArticlesView collection: @model.related().articles, numToShow: 4
+      else
+        @fetches.push @model.related().posts.fetch()
+        subView = new RelatedPostsView collection: @model.related().posts, numToShow: 4
       @$('#artist-related-posts').html subView.render().$el
       @subViews.push subView
       @setupRelatedSection @$('#artist-related-posts-section')

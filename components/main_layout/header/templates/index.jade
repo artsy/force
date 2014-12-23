@@ -21,7 +21,10 @@ header#main-layout-header
       a.mlh-top-nav-link( href='/art-fairs', class=activeClass('/art-fairs') ) Fairs
       if sd.SHOW_AUCTIONS_IN_HEADER
         a.mlh-top-nav-link( href='/auctions', class=activeClass('/auctions') ) Auctions
-      a.mlh-top-nav-link( href='/posts', class=activeClass('/posts') ) Posts
+      if user && user.hasLabFeature('Articles')
+        a.mlh-top-nav-link( href='/magazine', class=activeClass('/magazine') ) Magazine
+      else
+        a.mlh-top-nav-link( href='/posts', class=activeClass('/posts') ) Posts
       if user
         a.mlh-top-nav-link( href='/favorites', class=activeClass('/favorites') ) Favorites
       a.mlh-top-nav-link( href='/feature/artsy-education', class=activeClass('/feature/artsy-education') ) Education

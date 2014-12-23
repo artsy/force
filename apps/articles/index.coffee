@@ -15,10 +15,3 @@ app.locals.crop = crop
 # Permalink routes
 app.get '/magazine', routes.magazine
 app.get '/article/:slug', routes.show
-
-# If there's a lab feature enabled hijack post routes
-app.get '/post/:id', (req, res, next) ->
-  if 'Articles' in (req.user?.get('lab_features') or [])
-    res.redirect "/article/#{req.params.id}"
-  else
-    next()
