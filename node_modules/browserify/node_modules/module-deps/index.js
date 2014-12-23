@@ -40,6 +40,9 @@ function Deps (opts) {
         this.paths = process.env.NODE_PATH.split(':');
     }
     if (!this.paths) this.paths = [];
+    this.paths = this.paths.map(function (p) {
+        return path.resolve(self.basedir, p);
+    });
     
     this.transforms = [].concat(opts.transform).filter(Boolean);
     this.globalTransforms = [].concat(opts.globalTransform).filter(Boolean);

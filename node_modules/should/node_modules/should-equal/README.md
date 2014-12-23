@@ -1,6 +1,8 @@
 equal
 =====
 
+[![Build Status](https://travis-ci.org/shouldjs/equal.svg?branch=master)](https://travis-ci.org/shouldjs/equal)
+
 Deep equality comparison implementation for should.js
 
 Function return an object that have result of comparison and description of fail:

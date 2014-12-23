@@ -1,0 +1,13 @@
+{
+  "name": "offset",
+  "repo": "anthonyshort/offset",
+  "description": "Get the x/y offset of an element",
+  "version": "0.0.1",
+  "keywords": [],
+  "dependencies": {},
+  "development": {},
+  "license": "MIT",
+  "scripts": [
+    "index.js"
+  ]
+}

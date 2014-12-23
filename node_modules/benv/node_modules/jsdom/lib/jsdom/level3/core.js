@@ -115,10 +115,10 @@ core.Node.prototype.compareDocumentPosition = function compareDocumentPosition( 
   if( thisOwner !== otherOwner ) return DOCUMENT_POSITION_DISCONNECTED
 
   // Text nodes for attributes does not have a _parentNode. So we need to find them as attribute child.
-  if( this.nodeType === this.ATTRIBUTE_NODE && this._childNodes && this._childNodes._toArray().indexOf(otherNode) !== -1)
+  if( this.nodeType === this.ATTRIBUTE_NODE && this._childNodes && this._childNodes.indexOf(otherNode) !== -1)
     return DOCUMENT_POSITION_FOLLOWING + DOCUMENT_POSITION_CONTAINED_BY
 
-  if( otherNode.nodeType === this.ATTRIBUTE_NODE && otherNode._childNodes && otherNode._childNodes._toArray().indexOf(this) !== -1)
+  if( otherNode.nodeType === this.ATTRIBUTE_NODE && otherNode._childNodes && otherNode._childNodes.indexOf(this) !== -1)
     return DOCUMENT_POSITION_PRECEDING + DOCUMENT_POSITION_CONTAINS
 
   var point = this
@@ -136,8 +136,8 @@ core.Node.prototype.compareDocumentPosition = function compareDocumentPosition( 
     var location_index = parents.indexOf( point )
     if( location_index !== -1) {
      var smallest_common_ancestor = parents[ location_index ]
-     var this_index = smallest_common_ancestor._childNodes._toArray().indexOf( parents[location_index - 1] )
-     var other_index = smallest_common_ancestor._childNodes._toArray().indexOf( previous )
+     var this_index = smallest_common_ancestor._childNodes.indexOf( parents[location_index - 1] )
+     var other_index = smallest_common_ancestor._childNodes.indexOf( previous )
      if( this_index > other_index ) {
            return DOCUMENT_POSITION_PRECEDING
      }
@@ -175,10 +175,10 @@ defineGetter(core.Node.prototype, 'textContent', function() {
     case this.ENTITY_NODE:
     case this.ENTITY_REFERENCE_NODE:
       var out = '';
-      for (var i = 0 ; i < this.childNodes.length ; ++i) {
-        if (this.childNodes[i].nodeType !== this.COMMENT_NODE &&
-            this.childNodes[i].nodeType !== this.PROCESSING_INSTRUCTION_NODE) {
-          out += this.childNodes[i].textContent || '';
+      for (var i = 0 ; i < this._childNodes.length ; ++i) {
+        if (this._childNodes[i].nodeType !== this.COMMENT_NODE &&
+            this._childNodes[i].nodeType !== this.PROCESSING_INSTRUCTION_NODE) {
+          out += this._childNodes[i].textContent || '';
         }
       }
       return out;
@@ -197,8 +197,8 @@ defineSetter(core.Node.prototype, 'textContent', function(txt) {
       return this.nodeValue = String(txt);
   }
 
-  for (var i = this.childNodes.length; --i >=0;) {
-    this.removeChild(this.childNodes.item(i));
+  for (var i = this._childNodes.length; --i >=0;) {
+    this.removeChild(this._childNodes[i]);
   }
   if (txt !== "" && txt != null) {
     this.appendChild(this._ownerDocument.createTextNode(txt));
@@ -258,7 +258,7 @@ core.Node.prototype.isEqualNode = function(other) {
   if (this.nodeType != other.nodeType) return(false);
   if (diffValues('nodeName', 'localName', 'namespaceURI', 'prefix', 'nodeValue')) return(false);
   if (diffNamedNodeMaps(this.attributes, other.attributes)) return(false);
-  if (diffNodeLists(this.childNodes, other.childNodes)) return(false);
+  if (diffNodeLists(this._childNodes, other._childNodes)) return(false);
   if (this.nodeType == DOCUMENT_TYPE_NODE) {
     if (diffValues('publicId', 'systemId', 'internalSubset')) return(false);
     if (diffNamedNodeMaps(this.entities, other.entities)) return(false);
