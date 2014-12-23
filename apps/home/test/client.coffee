@@ -98,6 +98,7 @@ describe 'Homepage init code', ->
       'featuredPostsTemplate'
       'featuredArtistsTemplate'
     ]
+    global.sd = {}
     @mod.__set__ 'HeroUnitView', ->
     sinon.stub Backbone.history, 'start'
     sinon.stub Backbone, 'sync'
@@ -105,6 +106,7 @@ describe 'Homepage init code', ->
     @init()
 
   afterEach ->
+    global.sd = undefined
     Backbone.sync.restore()
     Backbone.history.start.restore()
     @HomeView::renderArtworks.restore()

@@ -10,6 +10,7 @@ CurrentUser = require '../../../models/current_user.coffee'
 SaveButton = require '../../../components/save_button/view.coffee'
 AddToPostButton = require '../../../components/related_posts/add_to_post_button.coffee'
 RelatedPostsView = require '../../../components/related_posts/view.coffee'
+RelatedArticlesView = require '../../../components/related_articles/view.coffee'
 analytics = require '../../../lib/analytics.coffee'
 { acquireArtwork } = require '../../../components/acquire/view.coffee'
 FeatureNavigationView = require './feature_navigation.coffee'
@@ -43,10 +44,12 @@ module.exports = class ArtworkView extends Backbone.View
 
   initialize: (options) ->
     { @artwork, @artist } = options
-
     @checkQueryStringForAuction()
     @setupEmbeddedInquiryForm()
-    @setupRelatedPosts()
+    if 'Articles' in (sd.CURRENT_USER?.lab_features or [])
+      @setupRelatedArticles()
+    else
+      @setupRelatedPosts()
     @setupPostButton()
     @setupCurrentUser()
     @setupArtistArtworks()
@@ -233,7 +236,9 @@ module.exports = class ArtworkView extends Backbone.View
 
   setupRelatedPosts: ->
     @$('.ari-right').css 'min-height', @$('.ari-left').height()
-    @listenTo @artwork.relatedPosts, 'sync', @handlePosts, this
+    @listenTo @artwork.relatedPosts, 'sync', =>
+      if @$('.ari-left').length < 1 and @artwork.relatedPosts.length < 1
+        @$('.artwork-related-information').remove()
     @artwork.relatedPosts.fetch success: =>
       if @artwork.relatedPosts.length
         subView = new RelatedPostsView collection: @artwork.relatedPosts, numToShow: 2
@@ -241,9 +246,17 @@ module.exports = class ArtworkView extends Backbone.View
       else
         @$('#artwork-artist-related-posts-container').remove()
 
-  handlePosts: ->
-    if @$('.ari-left').length < 1 and @artwork.relatedPosts.length < 1
-      @$('.artwork-related-information').remove()
+  setupRelatedArticles: ->
+    @$('.ari-right').css 'min-height', @$('.ari-left').height()
+    @listenTo @artwork.relatedArticles, 'sync', =>
+      if @$('.ari-left').length < 1 and @artwork.relatedArticles.length < 1
+        @$('.artwork-related-information').remove()
+    @artwork.relatedArticles.fetch success: =>
+      if @artwork.relatedArticles.length
+        subView = new RelatedArticlesView collection: @artwork.relatedArticles, numToShow: 2
+        @$('#artwork-artist-related-posts-container').html subView.render().$el
+      else
+        @$('#artwork-artist-related-posts-container').remove()
 
   setupFeatureNavigation: (options) ->
     new FeatureNavigationView

@@ -1,0 +1,21 @@
+.related-articles
+  for article in articles
+    .related-article
+      a.ra-image.hoverable-image-link( href="/article/#{article.get('slug')}" )
+        img(
+          src= crop(article.get('thumbnail_image'), { width: 300, height: 225 })
+          alt= article.get('title')
+        )
+      .ra-blurb
+        a.ra-author( href="/editorial" )
+          | By Artsy Editorial
+        a( href="/article/#{article.get('slug')}" )
+          if article.get('thumbnail_title')
+            h3.ra-title= article.get('thumbnail_title')
+          if article.get('thumbnail_teaser')
+            .ra-summary
+              = _s.prune(article.get('thumbnail_teaser'), 450)
+              span.ra-go Go to article
+  if remaining > 0
+    .related-articles-show-all.avant-garde-button-white.is-block
+      | Show More Related Posts (#{remaining})

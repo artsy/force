@@ -10,7 +10,8 @@ module.exports =
     Posts = require '../../../collections/posts.coffee'
     PartnerShows = require '../../../collections/partner_shows.coffee'
     Artworks = require '../../../collections/artworks.coffee'
-    Articles = Books = require '../../../components/artsypedia/collection.coffee'
+    WebArticles = Books = require '../../../components/artsypedia/collection.coffee'
+    Articles = require '../../../collections/articles.coffee'
 
     # Setup:
     artists = new Backbone.Collection [], model: Artist
@@ -35,8 +36,11 @@ module.exports =
     artworks = new Artworks
     artworks.url = "#{@url()}/artworks?published=true"
 
+    webArticles = new WebArticles
+    webArticles.url = "#{APP_URL}/artist/data/#{@id}/publications?merchandisable[]=false"
+
     articles = new Articles
-    articles.url = "#{APP_URL}/artist/data/#{@id}/publications?merchandisable[]=false"
+    articles.url += "?artist_id=#{@get '_id'}&published=true"
 
     merchandisable = new Books
     merchandisable.url = "#{APP_URL}/artist/data/#{@id}/publications?merchandisable[]=true"
@@ -57,6 +61,7 @@ module.exports =
       posts: posts
       shows: shows
       artworks: artworks
+      webArticles: webArticles
       articles: articles
       merchandisable: merchandisable
       bibliography: bibliography
