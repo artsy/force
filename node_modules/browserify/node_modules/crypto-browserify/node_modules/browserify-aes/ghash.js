@@ -12,7 +12,7 @@ function GHASH(key){
 GHASH.prototype.ghash = function (block) {
   var i = -1;
   while (++i < block.length) {
-   this.state[i] ^= 0xff & block[i];
+   this.state[i] ^= block[i];
   }
   this._multiply();
 };

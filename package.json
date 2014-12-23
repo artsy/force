@@ -49,6 +49,7 @@
     "graceful-fs": "*",
     "embed-video": "*",
     "connect-timeout": "*",
+    "newrelic": "*",
 
     "browserify": "*",
     "stylus": "*",

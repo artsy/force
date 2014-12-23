@@ -15,6 +15,7 @@ var etag = require('etag');
 var fresh = require('fresh');
 var fs = require('fs');
 var ms = require('ms');
+var parseUrl = require('parseurl');
 var path = require('path');
 var resolve = path.resolve;
 
@@ -58,7 +59,10 @@ module.exports = function favicon(path, options){
   }
 
   return function favicon(req, res, next){
-    if ('/favicon.ico' !== req.url) return next();
+    if (parseUrl(req).pathname !== '/favicon.ico') {
+      next();
+      return;
+    }
 
     if ('GET' !== req.method && 'HEAD' !== req.method) {
       var status = 'OPTIONS' === req.method ? 200 : 405;

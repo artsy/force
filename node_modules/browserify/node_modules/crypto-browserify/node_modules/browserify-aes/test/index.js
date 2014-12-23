@@ -388,3 +388,67 @@ for (var i in TEST_CASES) {
 }
 });
 }
+function corectPaddingWords(padding, result) {
+  test('correct padding ' + padding.toString('hex'), function (t) {
+    t.plan(1);
+    var block1 = new Buffer(16);
+    block1.fill(4);
+    result = block1.toString('hex') + result.toString('hex');
+    var cipher = _crypto.createCipher('aes128', new Buffer('password'));
+    cipher.setAutoPadding(false);
+    var decipher = crypto.createDecipher('aes128', new Buffer('password'));
+    var out = new Buffer('');
+    out = Buffer.concat([out, cipher.update(block1)]);
+    out = Buffer.concat([out, cipher.update(padding)]);
+    var deciphered = decipher.update(out);
+    deciphered = Buffer.concat([deciphered, decipher.final()]);
+    t.equals(deciphered.toString('hex'), result);
+  });
+}
+
+var sixteens = new Buffer(16);
+sixteens.fill(16);
+corectPaddingWords(sixteens, new Buffer(''));
+var fifteens = new Buffer(16);
+fifteens.fill(15);
+fifteens[0] = 5;
+corectPaddingWords(fifteens, new Buffer([5]));
+var one = _crypto.randomBytes(16);
+one[15] = 1;
+corectPaddingWords(one, one.slice(0, -1));
+function incorectPaddingthrows(padding) {
+  test('incorrect padding ' + padding.toString('hex'), function (t) {
+    t.plan(2);
+    var block1 = new Buffer(16);
+    block1.fill(4);
+    var cipher = _crypto.createCipher('aes128', new Buffer('password'));
+    cipher.setAutoPadding(false);
+    var decipher = crypto.createDecipher('aes128', new Buffer('password'));
+    var decipher2 = _crypto.createDecipher('aes128', new Buffer('password'));
+    var out = new Buffer('');
+    out = Buffer.concat([out, cipher.update(block1)]);
+    out = Buffer.concat([out, cipher.update(padding)]);
+    decipher.update(out);
+    decipher2.update(out);
+    t.throws(function () {
+      decipher.final();
+    }, 'mine');
+    t.throws(function () {
+      decipher2.final();
+    }, 'node');
+  });
+}
+var sixteens2 = new Buffer(16);
+sixteens2.fill(16);
+sixteens2[3] = 5;
+incorectPaddingthrows(sixteens2);
+var fifteens2 = new Buffer(16);
+fifteens2.fill(15);
+fifteens2[0] = 5;
+fifteens2[1] = 6;
+incorectPaddingthrows(fifteens2);
+
+var two = _crypto.randomBytes(16);
+two[15] = 2;
+two[14] = 1;
+incorectPaddingthrows(two);

@@ -65,6 +65,12 @@ Splitter.prototype.flush = function () {
 };
 function unpad(last) {
   var padded = last[15];
+  var i = -1;
+  while (++i < padded) {
+    if (last[(i + (16 - padded))] !== padded) {
+      throw new Error('unable to decrypt data');
+    }
+  }
   if (padded === 16) {
     return;
   }

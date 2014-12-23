@@ -5,5 +5,6 @@ module.exports = {
   AToZ: require("./lib/a_to_z"),
   Image: require("./lib/image"),
   Feature: require("./lib/feature"),
-  CurrentUser: require("./lib/current_user")
+  CurrentUser: require("./lib/current_user"),
+  ArtworkHelpers: require("./lib/artwork_helpers")
 }
