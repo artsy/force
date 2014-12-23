@@ -12,7 +12,6 @@ embedVideo = require 'embed-video'
       # Artsy Editorial. TODO: When we launch Writer externally drop this.
       author_id: '503f86e462d56000020002cc'
     error: res.backboneError
-    cache: true
     success: (articles) ->
       res.locals.sd.ARTICLES = articles.toJSON()
       res.render 'magazine',
