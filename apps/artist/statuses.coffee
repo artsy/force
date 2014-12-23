@@ -21,7 +21,7 @@ module.exports = class Statuses
         @fetchStatus 'posts'
         @fetchStatus 'artists'
         @fetchStatus 'contemporary'
-        @fetchStatus 'articles'
+        @fetchStatus 'webArticles'
         @fetchStatus 'merchandisable'
         @fetchStatus 'bibliography'
         @fetchStatus 'collections'

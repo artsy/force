@@ -41,7 +41,7 @@ describe 'Statuses', ->
         posts: false
         artists: true
         contemporary: true
-        articles: true
+        webArticles: true
         merchandisable: true
         bibliography: true
         collections: true

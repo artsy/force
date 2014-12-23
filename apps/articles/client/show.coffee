@@ -25,6 +25,7 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
       @$('#articles-lead-paragraph').hide()
 
   renderSlideshow: =>
+    @$('.artwork-item').each -> $(this).width $(this).find('img').width()
     @carouselView = new CarouselView
       el: $('#articles-slideshow-inner')
       height: 500
@@ -115,9 +116,8 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
 
       # Apply to DOM
       for img in imgs
-        img.$el.width(img.width)
         $li = img.$el.closest('li')
-        $li.css(padding: '0 15px')
+        $li.css(padding: '0 15px').width(img.width)
 
       # Make sure the captions line up in case rounding off skewed things
       tallest = _.max $list.find('.artwork-item-image-container').map(->

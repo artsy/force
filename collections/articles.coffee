@@ -8,6 +8,6 @@ module.exports = class Articles extends Backbone.Collection
 
   model: Article
 
-  parse: (data) ->
+  parse: (data = {}) ->
     { @total, @count } = data
     data.results

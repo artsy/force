@@ -1,7 +1,10 @@
 for link, i in postLinks
   - imgUrl = link.imageUrl(i == 0 ? 'large_rectangle' : 'medium_rectangle')
   li.home-featured-post-link
-    a( href=link.get('href') )
+    - href = link.get('href')
+    if sd.CURRENT_USER && sd.CURRENT_USER.lab_features.indexOf('Articles')
+      - href = href.replace('/post/', '/article/')
+    a( href=href )
       .home-featured-cover-img( style="background-image: url(" + imgUrl + ")" )
       h4= link.get('title')
       h5= link.get('subtitle')

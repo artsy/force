@@ -35,7 +35,6 @@ class ArticlesView2 extends Backbone.View
   subViews: []
 
   initialize: ->
-    window.view = this
     @listenTo @model.related().webArticles, 'sync', @render
     @listenTo @model.related().articles, 'sync', @render
     @model.related().articles.fetch()
