@@ -18,9 +18,7 @@ module.exports = class Article extends Backbone.Model
     footerArticles = new Articles
     author = new Backbone.Model
     Q.all(
-      @fetch
-        cache: true
-        headers: 'X-Access-Token': options.accessToken
+      @fetch()
       footerArticles.fetch
         cache: true
         data:
