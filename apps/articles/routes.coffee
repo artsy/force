@@ -15,7 +15,7 @@ embedVideo = require 'embed-video'
     success: (articles) ->
       res.locals.sd.ARTICLES = articles.toJSON()
       res.render 'magazine',
-        featuredArticles: articles.featuredArticles()
+        featuredArticles: articles.featured()
         articlesFeed: articles.feed()
 
 @show = (req, res, next) ->

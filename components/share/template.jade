@@ -2,7 +2,7 @@ mixin share(description, media, url)
   - url = url || encodeURIComponent(sd.APP_URL + sd.CURRENT_PATH)
   - description = description || ''
   - media = media || ''
-  - console.log(url, 'moo')
+  
   a.share-to-facebook.black-tooltip(
     data-message='Post to Facebook',
     data-service='facebook',

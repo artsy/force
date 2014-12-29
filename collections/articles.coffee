@@ -12,8 +12,8 @@ module.exports = class Articles extends Backbone.Collection
     { @total, @count } = data
     data.results
 
-  featuredArticles: ->
+  featured: ->
     @where(tier: 1).slice(0, 4)
 
   feed: ->
-    @reject (a) => a in @featuredArticles()
+    @reject (a) => a in @featured()
