@@ -11,3 +11,9 @@ module.exports = class Articles extends Backbone.Collection
   parse: (data = {}) ->
     { @total, @count } = data
     data.results
+
+  featuredArticles: ->
+    @where(tier: 1).slice(0, 4)
+
+  feed: ->
+    @reject (a) => a in @featuredArticles()
