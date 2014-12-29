@@ -3,6 +3,7 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 Article = require '../../../models/article'
+Articles = require '../../../collections/articles'
 fixtures = require '../../../test/helpers/fixtures.coffee'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
@@ -95,7 +96,7 @@ describe 'MagazineView', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    @view = new @MagazineView el: $('body'), articles: new Backbone.Collection
+    @view = new @MagazineView el: $('body'), articles: new Articles
 
   afterEach ->
     Backbone.sync.restore()
