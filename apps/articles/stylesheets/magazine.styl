@@ -1,12 +1,13 @@
 @import '../../../components/stylus_lib'
+@import './lib'
 
-headline-font-size = 30px
-headline-line-height = 38px
-headline2-font-size = 30px
-gutter-size = 30px
+#articles-magazine-header
+  position relative
 
 #articles-magazine-primary-article
   width 66%
+  height calc(100% \- 40px)
+  position absolute
   display inline-block
   vertical-align top
   padding-right 15px
@@ -15,14 +16,16 @@ gutter-size = 30px
   figcaption
     background white
     padding-top 30px
-    position relative
-    top 370px
+    position absolute
+    bottom -48px
     width 560px
     left calc(50% \- (@width / 2))
     text-align center
   .aaf-title
     position relative
     top -3px
+  .articles-article-figure
+    height 100%
 
 .aaf-title
   font-size headline-font-size
@@ -41,7 +44,6 @@ gutter-size = 30px
   height 100%
   background gray-lightest-color center center
   background-size cover
-  min-height 200px
 
 .aaf-date
   color gray-dark-color
@@ -62,6 +64,8 @@ gutter-size = 30px
   figure
     margin-bottom 30px
     height 120px
+    &:last-child
+      margin-bottom 0
   img
     width 100%
     padding-right (gutter-size / 2)
@@ -75,7 +79,6 @@ gutter-size = 30px
   .aaf-title
     font-size 22px
     line-height 27px
-    max-height 84px
     overflow hidden
   .aaf-author
     color gray-darkest-color
@@ -88,6 +91,7 @@ gutter-size = 30px
       vertical-align middle
 
 #articles-magazine-featured-aside
+  margin-left 66%
   figcaption
     display table-cell
     vertical-align middle
@@ -117,6 +121,7 @@ gutter-size = 30px
     margin-bottom 0
   .aaf-img
     width golden-ratio-small-percent
+    min-height 200px
     height calc(100% \- ((gutter-size - 10) * 2))
     top (gutter-size - 10)
   .aaf-title
