@@ -290,7 +290,9 @@ form.is-validated
   input[type='checkbox']
     visibility hidden
     &:checked + label:after
-      opacity 1
+      opacity 1 !important
+.artsy-checkbox + label
+  user-select none
 
 // Auto-complete
 .autocomplete-input-container
