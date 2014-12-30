@@ -1,0 +1,28 @@
+include checkbox
+
+header.partner-application-header
+  .pah-step Step #{state.get('step')} of 3
+  h1 How did you learn about Artsy?
+
+form.partner-application-form.stacked-form
+  .grid-2-up
+    .grid-item: +checkbox('learned-from-art-fair', 'Art Fair')
+    .grid-item: +checkbox('learned-from-artsy-staff', 'Artsy Staff')
+    .grid-item: +checkbox('learned-from-gallery', 'Gallery')
+    .grid-item: +checkbox('learned-from-collector-patron', 'Collector / Patron')
+    .grid-item: +checkbox('learned-from-artist', 'Artist')
+    .grid-item: +checkbox('learned-from-museum-institution', 'Museum / Institution')
+    .grid-item: +checkbox('learned-from-online-search', 'Online Search')
+    .grid-item: +checkbox('learned-from-press', 'Press')
+    .grid-item: +checkbox('learned-from-advertisement', 'Advertisement')
+    .grid-item: +checkbox('learned-from-other', 'Other')
+
+  textarea.bordered-input( placeholder='Please provide more detail on your above selection', name='learned-from-detail' )
+    = form.get('learned-from-detail')
+
+  p.is-center-aligned Is there anything else you would like to add that is relevant to your application?
+
+  textarea.bordered-input( name='anything-else' )
+    = form.get('anything-else')
+
+  button.avant-garde-button-black Finish

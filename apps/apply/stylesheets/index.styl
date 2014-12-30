@@ -1,0 +1,40 @@
+form-width = 600px
+
+#partner-application-page
+  padding 20px 0
+
+.partner-application-header
+  text-align center
+  > h1
+    font-size 30px
+    margin 10px 0 20px 0
+    line-height 1.1
+
+.pah-step
+  color gray-darker-color
+
+.partner-application-form
+  max-width form-width
+  margin 20px auto
+
+.paf-checkbox-set
+  margin 20px 10%
+  // Extract out an artsy-checkbox wrapper; convert existing to use this HTML form
+  // rather than data-label style
+  > .stacked-form-cell:hover > .artsy-checkbox > label::after
+    opacity 0.1
+
+.pah-success
+  max-width (form-width / 1.5)
+  margin 20px auto
+  text-align center
+  > p
+    text-align left
+    block-margins(10px)
+
+.pah-success-message
+  color green-color
+  > .icon-check
+    font-size 0.75em
+    margin-right 0.25em
+    line-height 1

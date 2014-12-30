@@ -16,6 +16,8 @@
   > button
   > input
   > textarea
+  > .bordered-select
+  > .bordered-select > select
   .stacked-form-cell
     display block
     width 100%
@@ -288,7 +290,9 @@ form.is-validated
   input[type='checkbox']
     visibility hidden
     &:checked + label:after
-      opacity 1
+      opacity 1 !important
+.artsy-checkbox + label
+  user-select none
 
 // Auto-complete
 .autocomplete-input-container

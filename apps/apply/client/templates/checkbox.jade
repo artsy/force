@@ -1,0 +1,5 @@
+mixin checkbox(name, copy)
+  .artsy-checkbox
+    input( type='checkbox', name= name, id= name, checked=(form.get(name) ? true : undefined) )
+    label( for= name )
+  label( for= name )= copy

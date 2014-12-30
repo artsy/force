@@ -36,3 +36,13 @@ gap = 20px
 
 .grid-4-up
   grid-4-up(20px)
+
+.body-responsive
+  @media (min-width: 320px) and (max-width: 480px)
+    .grid-item
+      width 100%
+      margin (gap / 4) 0 !important
+      &:first-child
+        margin-top 0 !important
+      &:last-child
+        margin-bottom 0 !important
