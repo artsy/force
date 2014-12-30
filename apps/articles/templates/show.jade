@@ -21,23 +21,24 @@ block body
         #articles-slideshow-inner
           include carousel
     for section, i in article.get('sections')
-      case section.type
-        when 'text'
-          .articles-section-text!= section.body
-        when 'image'
-          figure.articles-section-image
-            img( src=resize(section.url, { width: 1100 }) )
-            if section.caption
-              figcaption!= section.caption
-        when 'artworks'
-          .articles-section-artworks.is-loading( data-layout=section.layout )
-            .loading-spinner
-            ul
-              for id in section.ids
-                li( data-id=id )
-        when 'video'
-          .articles-section-video
-            != embedVideo(section.url)
+      .articles-section-container
+        case section.type
+          when 'text'
+            .articles-section-text!= section.body
+          when 'image'
+            figure.articles-section-image
+              img( src=resize(section.url, { width: 1100 }) )
+              if section.caption
+                figcaption!= section.caption
+          when 'artworks'
+            .articles-section-artworks.is-loading( data-layout=section.layout )
+              .loading-spinner
+              ul
+                for id in section.ids
+                  li( data-id=id )
+          when 'video'
+            .articles-section-video
+              != embedVideo(section.url)
     .articles-social.add-bottom
       h2.articles-social__header Share this article
       +share(article.get('title'), article.get('thumbnail_image'))

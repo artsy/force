@@ -21,8 +21,8 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
     @renderSlideshow() if @slideshowArtworks?.length
     @renderArtworks()
     @breakCaptions()
-    if $(@article.get 'lead_paragraph').text().trim() is ''
-      @$('#articles-lead-paragraph').hide()
+    if $(@article.get 'lead_paragraph').text().trim() isnt ''
+      @$('#articles-lead-paragraph').show()
 
   renderSlideshow: =>
     @$('.artwork-item').each -> $(this).width $(this).find('img').width()

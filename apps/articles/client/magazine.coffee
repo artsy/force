@@ -18,7 +18,7 @@ module.exports.MagazineView = class MagazineView extends Backbone.View
   renderArticles: =>
     @$('#articles-magazine-feed-list').html(
       html = feedTemplate
-        articles: @articles.models
+        articles: @articles.feed()
         crop: crop
         moment: moment
         sd: sd

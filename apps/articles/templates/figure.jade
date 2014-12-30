@@ -14,4 +14,8 @@ mixin article-figure(article, w, feed)
         .aaf-author Artsy Editorial
         if feed
           .aaf-share
-            +share(article.get('title'), article.get('thumbnail_image'))
+            +share(
+              article.get('title'),
+              article.get('thumbnail_image'),
+              sd.APP_URL + '/article/' + article.get('slug')
+            )

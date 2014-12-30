@@ -15,8 +15,8 @@ embedVideo = require 'embed-video'
     success: (articles) ->
       res.locals.sd.ARTICLES = articles.toJSON()
       res.render 'magazine',
-        featuredArticles: featuredArticles = articles.where(tier: 1).slice(0, 4)
-        articlesFeed: articles.reject (a) -> a in featuredArticles
+        featuredArticles: articles.featured()
+        articlesFeed: articles.feed()
 
 @show = (req, res, next) ->
   new Article(id: req.params.slug).fetchWithRelated
