@@ -1,0 +1,11 @@
+extends ../../../components/main_layout/templates/minimal_header
+
+block head
+  include meta
+
+append locals
+  - assetPackage = 'apply'
+
+block body
+  #partner-application-page.main-layout-container
+    //- Rendered client-side

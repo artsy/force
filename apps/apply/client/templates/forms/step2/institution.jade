@@ -1,0 +1,14 @@
+include ../../checkbox
+
+form.stacked-form
+  .paf-checkbox-set
+    .stacked-form-cell: +checkbox('interest-promoting-collections', 'Promoting collections')
+    .stacked-form-cell: +checkbox('interest-promoting-exhibitions', 'Promoting exhibitions')
+    .stacked-form-cell: +checkbox('interest-ecommerce-limited-editions', 'E-Commerce for limited editions')
+    .stacked-form-cell: +checkbox('interest-artsy-cms-and-ipad', 'Artsy CMS + iPad App')
+    .stacked-form-cell: +checkbox('interest-artsy-education', 'Artsy education')
+    .stacked-form-cell: +checkbox('interest-benefit-auctions', 'Benefit aucitons')
+
+  textarea.bordered-input( placeholder='Any other partnership goals?', name='goals' )= form.get('goals')
+
+  button.avant-garde-button-black Next

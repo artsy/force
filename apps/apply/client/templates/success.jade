@@ -1,0 +1,27 @@
+header.partner-application-header
+  h1
+    | Thanks
+    if form.has('first_name')
+      = ', '
+      | #{form.get('first_name')}
+    | !
+
+  .pah-success
+    p.pah-success-message
+      i.icon-check
+      | Your application
+      if form.has('name')
+        = ' '
+        | for #{form.get('name')}
+      = ' '
+      | has been submitted.
+    p
+      | Our Gallery Partnerships Team will review your application. If there is an opportunity to partner, you will hear from us directly.
+    p
+      | Need to contact us regarding your application? Email us at
+      = ' '
+      a.faux-underline( href='mailto:partners@artsy.net' ) partners@artsy.net
+
+    hr.is-invisible
+
+    a.avant-garde-button-black( href='/' ) Return to Artsy

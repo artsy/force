@@ -1,0 +1,14 @@
+include ../../checkbox
+
+form.stacked-form
+  .paf-checkbox-set
+    .stacked-form-cell: +checkbox('interest-profile', 'Gallery proile page')
+    .stacked-form-cell: +checkbox('interest-promotion', 'Promote artists & shows')
+    .stacked-form-cell: +checkbox('interest-folio', 'Artsy Folio (iPad / iPhone app)')
+    .stacked-form-cell: +checkbox('interest-exposure', 'International exposure')
+    .stacked-form-cell: +checkbox('interest-reach', 'Reach new clients')
+    .stacked-form-cell: +checkbox('interest-editorial', 'Editorial coverage')
+
+  textarea.bordered-input( placeholder='Any other partnership goals?', name='goals' )= form.get('goals')
+
+  button.avant-garde-button-black Next
