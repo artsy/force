@@ -44,30 +44,24 @@ block content
     article.sg-component
       h3 Default Checkbox
       .sg-component-rendered
-        .sg-display
-          .artsy-checkbox
-            input( type='checkbox', id='my-attribute-0', checked )
+        .artsy-checkbox.sg-display
+          .artsy-checkbox--checkbox
+            input( type='checkbox', id='my-attribute-0' )
             label( for='my-attribute-0' )
-          label( for='my-attribute-0' ) Remember me
-        hr
-        .artsy-checkbox.sg-display
-          input( type='checkbox', id='my-attribute-1', checked )
+          label.artsy-checkbox--label( for='my-attribute-0' ) Remember me
+        .artsy-checkbox.sg-display: .artsy-checkbox--checkbox
+          input( type='checkbox', id='my-attribute-1' )
           label( for='my-attribute-1' )
-        .artsy-checkbox.sg-display
-          input( type='checkbox', id='my-attribute-2' )
-          label( for='my-attribute-2' )
-        .artsy-checkbox.sg-display
-          input( type='checkbox', id='my-attribute-3' )
-          label( for='my-attribute-3', data-label='Remember me' )
       pre: code
         | .artsy-checkbox
-        |   input( type='checkbox', id='my-attribute', checked )
-        |   label( for='my-attribute' )
-        | label( for='my-attribute' ) Remember me
+        |   .artsy-checkbox--checkbox
+        |     input( type='checkbox', id='my-attribute-0' )
+        |     label( for='my-attribute-0' )
+        |   label.artsy-checkbox--label( for='my-attribute-0' ) Remember me
       pre: code
-        | .artsy-checkbox
-        |   input( type='checkbox', id='my-attribute', checked )
-        |   label( for='my-attribute', data-label='Remember me' )
+        | .artsy-checkbox: .artsy-checkbox--checkbox
+        |   input( type='checkbox', id='my-attribute-1' )
+        |   label( for='my-attribute-1' )
 
     article.sg-component
       h3 Results list

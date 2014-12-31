@@ -243,17 +243,21 @@ form.is-validated
     &:invalid
       @extends .bordered-input.is-error
 
+checkbox-size = 20px
+
 .artsy-checkbox
   display inline-block
-  width 20px
-  height @width
+  line-height checkbox-size
+  &:hover .artsy-checkbox--checkbox > label:after
+    opacity 0.1
+.artsy-checkbox--checkbox
+  display inline-block
+  width checkbox-size
+  height checkbox-size
   position relative
   background gray-lighter-color
   user-select none
-  + label
-    margin-left 10px
-    cursor pointer
-  label
+  > label
     cursor pointer
     position absolute
     top 2px
@@ -261,16 +265,6 @@ form.is-validated
     bottom @top
     left @top
     background-color white
-    // Text label
-    &:before
-      display block
-      content attr(data-label)
-      white-space nowrap
-      margin-left 150%
-      line-height 20px
-      vertical-align middle
-      garamond()
-      font-size default-garamond-font-size
     // Check
     &:after
       content ''
@@ -285,14 +279,14 @@ form.is-validated
       opacity 0
       transform rotate(-45deg) translateZ(0)
       transition opacity 0.25s
-    &:hover::after
-      opacity 0.1
-  input[type='checkbox']
+  > input[type='checkbox']
     visibility hidden
     &:checked + label:after
       opacity 1 !important
-.artsy-checkbox + label
+.artsy-checkbox--label
   user-select none
+  margin-left 10px
+  cursor pointer
 
 // Auto-complete
 .autocomplete-input-container
