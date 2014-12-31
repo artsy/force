@@ -14,15 +14,21 @@ block body
 
     form.stacked-form
       each emailDisplay, emailType in emailTypes
-        .stacked-form-cell: .artsy-checkbox
-          input( id=emailType, name=emailType, type='checkbox' )
-          label( for=emailType, data-label=emailDisplay )
+        .stacked-form-cell
+          .artsy-checkbox
+            .artsy-checkbox--checkbox
+              input( id= emailType, name= emailType, type='checkbox' )
+              label( for= emailType )
+            label.artsy-checkbox--label( for= emailType )= emailDisplay
 
       hr
 
-      .unsubscribe-check-all.stacked-form-cell: .artsy-checkbox
-        input( id='selectAll', name='selectAll', type='checkbox' )
-        label( for='selectAll', data-label='Select All' )
+      .unsubscribe-check-all.stacked-form-cell
+        .artsy-checkbox
+          .artsy-checkbox--checkbox
+            input( id='selectAll', name='selectAll', type='checkbox' )
+            label( for='selectAll' )
+          label.artsy-checkbox--label( for='selectAll' ) Select All
 
       hr
 

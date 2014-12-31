@@ -1,11 +1,15 @@
 h2 Works
 
 .artwork-filter-for-sale.artsy-checkbox
-  input(
-    type='checkbox', name='for-sale', id='for-sale'
-    checked=(filter.selected.has('price_range') ? 'checked' : undefined)
-  )
-  label( for='for-sale', data-label="Only For Sale (#{filter.forSaleCount()})" )
+  .artsy-checkbox--checkbox
+    input(
+      type='checkbox', name='for-sale', id='for-sale'
+      checked=(filter.selected.has('price_range') ? 'checked' : undefined)
+    )
+    label( for='for-sale' )
+  label.artsy-checkbox--label( for='for-sale' )
+    | Only For Sale
+    span.artwork-filter-count (#{filter.forSaleCount()})
 
 for criteria, key in filter.root.criteria()
   section
