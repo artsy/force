@@ -1,4 +1,5 @@
-{ track } = require '../../../lib/analytics.coffee'
+_ = require 'underscore'
+{ track, snowplowStruct } = require '../../../lib/analytics.coffee'
 
 module.exports = (router) ->
   { state, form } = router
@@ -16,3 +17,4 @@ module.exports = (router) ->
 
   state.on 'change:state', (state, value) ->
     track.funnel 'Submitted partner application form', state: value
+    snowplowStruct 'partner_application', 'submit', null, 'partner_application', null, _.extend({}, state.pick('mode'), form.pick('name', 'first_name', 'last_name'))
