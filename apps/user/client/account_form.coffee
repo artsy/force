@@ -11,7 +11,6 @@ module.exports = class AccountForm extends Backbone.View
   events:
     'click .settings-toggle-service': 'toggleService'
     'click .settings-toggle-password': 'togglePasswordForm'
-    'click .settings-checkbox-label': 'toggleCheckbox'
 
   initialize: (options = {}) ->
     { @userEdit } = options
@@ -38,9 +37,6 @@ module.exports = class AccountForm extends Backbone.View
           $button.attr 'data-state', null
     else
       window.location = "/users/auth/#{service}?redirect-to=#{encodeURIComponent(location.href)}"
-
-  toggleCheckbox: (e) ->
-    $(e.currentTarget).siblings().find('label').click()
 
   setupForms: ->
     # Changing your password logs you out so we direct to login after changing password

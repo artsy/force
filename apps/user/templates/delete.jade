@@ -14,9 +14,11 @@ block body
             //- Rendered client-side
 
           form.stacked-form
-            #user-delete-confirm.settings-split
-              .ss-left.settings-checkbox-label I understand that this will permanently delete my account and cannot be undone.
-              .ss-right: .artsy-checkbox
+            #user-delete-confirm.settings-split.artsy-checkbox
+              .ss-left
+                label( for='user_delete_confirm' ).artsy-checkbox--label.settings-checkbox-label
+                  | I understand that this will permanently delete my account and cannot be undone.
+              .ss-right: .artsy-checkbox--checkbox
                 input(
                   type='checkbox'
                   id='user_delete_confirm'

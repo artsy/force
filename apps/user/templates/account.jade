@@ -1,3 +1,17 @@
+mixin checkbox(name, label)
+  .settings-split.artsy-checkbox
+    .ss-left
+      label.settings-checkbox-label.artsy-checkbox--label( for= name )
+        = label
+    .ss-right: .artsy-checkbox--checkbox
+      input(
+        type='checkbox'
+        id= name
+        name= name
+        checked= user.checked(name)
+      )
+      label( for= name )
+
 .grouped-section
   .gs-header: h2 Information
   .gs-body: .gs-constrain
@@ -115,66 +129,12 @@
   .gs-header: h2 Email
   .gs-body: .gs-constrain
     #settings-email-preferences: form
-      .settings-split
-        .ss-left.settings-checkbox-label Weekly featured content from Artsy
-        .ss-right: .artsy-checkbox
-          input(
-            type='checkbox'
-            id='receive_weekly_email'
-            name='receive_weekly_email'
-            checked= user.checked('receive_weekly_email')
-          )
-          label( for='receive_weekly_email' )
-      .settings-split
-        .ss-left.settings-checkbox-label Weekly personalized email
-        .ss-right: .artsy-checkbox
-          input(
-            type='checkbox'
-            id='receive_personalized_email'
-            name='receive_personalized_email'
-            checked= user.checked('receive_personalized_email')
-          )
-          label( for='receive_personalized_email' )
-      .settings-split
-        .ss-left.settings-checkbox-label When I have new followers
-        .ss-right: .artsy-checkbox
-          input(
-            type='checkbox'
-            id='receive_follow_users_email'
-            name='receive_follow_users_email'
-            checked= user.checked('receive_follow_users_email')
-          )
-          label( for='receive_follow_users_email' )
-      .settings-split
-        .ss-left.settings-checkbox-label Occasional buying opportunities
-        .ss-right: .artsy-checkbox
-          input(
-            type='checkbox'
-            id='receive_offer_emails'
-            name='receive_offer_emails'
-            checked= user.checked('receive_offer_emails')
-          )
-          label( for='receive_offer_emails' )
-      .settings-split
-        .ss-left.settings-checkbox-label Personalized Artists and Artworks Emails
-        .ss-right: .artsy-checkbox
-          input(
-            type='checkbox'
-            id='receive_personalized_artists_email'
-            name='receive_personalized_artists_email'
-            checked= user.checked('receive_personalized_artists_email')
-          )
-          label( for='receive_personalized_artists_email' )
-      .settings-split
-        .ss-left.settings-checkbox-label Personalized Show Guide
-        .ss-right: .artsy-checkbox
-          input(
-            type='checkbox'
-            id='receive_personalized_show_email'
-            name='receive_personalized_show_email'
-            checked= user.checked('receive_personalized_show_email')
-          )
-          label( for='receive_personalized_show_email' )
+      +checkbox('receive_weekly_email', 'Weekly featured content from Artsy')
+      +checkbox('receive_personalized_email', 'Weekly personalized email')
+      +checkbox('receive_follow_users_email', 'When I have new followers')
+      +checkbox('receive_offer_emails', 'Occasional buying opportunities')
+      +checkbox('receive_personalized_artists_email', 'Personalized Artists and Artworks Emails')
+      +checkbox('receive_personalized_show_email', 'Personalized Show Guide')
 
       hr.is-invisible
 

@@ -1,10 +1,11 @@
 .artwork-contact-form-attendance
   .artsy-checkbox
-    input( type='checkbox', name='attending', id='artwork-contact-form-attending' )
-    label( for='artwork-contact-form-attending' )
-  label( for='artwork-contact-form-attending' )
-    | I will attend #{attendance.get('name')}
-    span.help-tooltip(
-      data-anchor='bottom-right'
-      data-message="This artwork is part of the art fair—#{attendance.get('name')}. Providing this information to us and the gallery will facilitate your inquiry and enable more customized service."
-    )
+    .artsy-checkbox--checkbox
+      input( type='checkbox', name='attending', id='artwork-contact-form-attending' )
+      label( for='artwork-contact-form-attending' )
+    label.artsy-checkbox--label( for='artwork-contact-form-attending' )
+      | I will attend #{attendance.get('name')}
+      span.help-tooltip(
+        data-anchor='bottom-right'
+        data-message="This artwork is part of the art fair—#{attendance.get('name')}. Providing this information to us and the gallery will facilitate your inquiry and enable more customized service."
+      )

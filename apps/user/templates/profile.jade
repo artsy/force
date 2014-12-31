@@ -60,12 +60,13 @@ else
     .gs-body: .gs-constrain
       #settings-profile-advanced
         form
-          .settings-split
-            .ss-left.settings-checkbox-label
-              | Enable Public Favorites
-              br
-              em Allows others to view the artworks you save
-            .ss-right: .artsy-checkbox
+          .settings-split.artsy-checkbox
+            .ss-left
+              label( for='profile-favorites' ).artsy-checkbox--label.settings-checkbox-label
+                | Enable Public Favorites
+                br
+                em Allows others to view the artworks you save
+            .ss-right: .artsy-checkbox--checkbox
               input(
                 type='checkbox'
                 id='profile-favorites'
