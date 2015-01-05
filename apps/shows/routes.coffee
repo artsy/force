@@ -2,20 +2,20 @@ _ = require 'underscore'
 Q = require 'q'
 Items = require '../../collections/items'
 PartnerShows = require '../../collections/partner_shows'
-cities = require '../../components/locations/cities'
-featuredCities = require '../../components/locations/featured_cities'
+{ Cities } = require 'places'
+{ FeaturedCities } = require 'places'
 
 @index = (req, res) ->
   shows = new Items [], id: '530ebe92139b21efd6000071', item_type: 'PartnerShow'
   render = ->
     res.render 'index',
-      cities: cities
-      featuredCities: featuredCities
+      cities: Cities
+      featuredCities: FeaturedCities
       shows: shows.take 8 # 2, 3, 3
   shows.fetch success: render, error: render
 
 @city = (req, res, next) ->
-  city = _.findWhere(cities, slug: req.params.city)
+  city = _.findWhere(Cities, slug: req.params.city)
   return next() unless city?
 
   criteria = (status) ->
@@ -41,8 +41,8 @@ featuredCities = require '../../components/locations/featured_cities'
 
     res.render 'city',
       city: city
-      cities: cities
-      featuredCities: featuredCities
+      cities: Cities
+      featuredCities: FeaturedCities
       opening: opening.true or []
       upcoming: opening.false or []
       current: current.models
