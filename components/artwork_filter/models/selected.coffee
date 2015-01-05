@@ -11,7 +11,7 @@ module.exports = class Selected extends Backbone.Model
       @unset attribute, options
 
   labels: (map) ->
-    _.map(@attributes, (key, type) =>
+    _.map(_.omit(@attributes, 'sort'), (key, type) =>
       return 'For Sale' if key is '-1:1000000000000'
       map[type][key].name
     ).join ', '
