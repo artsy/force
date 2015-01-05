@@ -50,7 +50,6 @@
     "embed-video": "*",
     "connect-timeout": "*",
     "newrelic": "*",
-
     "browserify": "*",
     "stylus": "*",
     "jadeify": "*",
@@ -83,6 +82,7 @@
     "node-inspector": "*",
     "imagesloaded": "*",
     "scroll-frame": "*",
-    "dompurify": "*"
+    "dompurify": "*",
+    "places": "git://github.com/artsy/places"
   }
 }
