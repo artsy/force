@@ -100,6 +100,7 @@ kinds = require '../favorites_follows/kinds'
   fair.fetchPrimarySets
     error: res.backboneError
     success: (primarySets) =>
+      res.locals.sd.PRIMARY_SET = primarySets.toJSON()
       res.locals.primarySets = primarySets
       end = (data) ->
         res.locals[k] = v for k, v of data

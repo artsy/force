@@ -1,4 +1,8 @@
-if primarySets.where({ key: 'editorial' }).length
+- primarySets.findWhere({ key: 'editorial' }).set('items', [primarySets.findWhere({ key: 'editorial' }).get('items')[0]])
+- primarySets.findWhere({ key: 'curator' }).set('items', [primarySets.findWhere({ key: 'curator' }).get('items')[0]])
+- total = primarySets.findWhere({ key: 'editorial' }).get('items').models.length
+- total += primarySets.findWhere({ key: 'curator' }).get('items').models.length
+if total > 4
   .fair-overview-post-container
     h2.overview-section-heading Read Highlights from the Fair
     .posts-left-side
@@ -19,8 +23,6 @@ if primarySets.where({ key: 'editorial' }).length
               h2.section-heading= item.get('title')
               if item.get('subtitle')
                 .section-subheading= item.get('subtitle')
-
-if primarySets.where({ key: 'curator' }).length
   .fair-overview-curator
     h2.overview-section-heading-small Art world insiders share their selections
     .curator-picks-container
@@ -33,3 +35,9 @@ if primarySets.where({ key: 'curator' }).length
               .section-subheading= item.get('subtitle')
     .overview-posts-link-container
       a.overview-posts-link( href=profile.href() + "/posts") See All Posts
+else if total == 3
+  h1 3 Layout
+else if total == 2
+  h1 2 Layout
+else if total == 1
+  h1 1 Layout
