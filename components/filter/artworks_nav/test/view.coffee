@@ -23,33 +23,12 @@ describe 'FilterArtworksNav', ->
     benv.teardown()
 
   it 'renders counts', ->
-    @view.counts.set {
-      price_range: { "-1:1000": 51 }
-      dimension: { "24": 38 }
-    }
+    @view.counts.set
+      price_range: '-1:1000000000000': name: '-1:1000000000000', count: 51
+      dimension: '24': name: '24', count: 38
     @view.renderCounts()
-    @view.$el.html().should.containEql '51'
-    @view.$el.html().should.containEql '38'
-
-  it 'limits counts to the top 10', ->
-    @view.counts.clear()
-    @view.counts.set {
-      dimension:
-        "a": 11
-        "b": 21
-        "c": 31
-        "d": 41
-        "e": 51
-        "f": 61
-        "g": 71
-        "h": 81
-        "i": 91
-        "j": 101
-        "k": 115
-        "l": 121
-    }
-    @view.renderCounts()
-    @view.$el.html().should.not.containEql '11'
+    @view.$el.html().should.containEql '(51)'
+    @view.$el.html().should.containEql '(38)'
 
   it 'renders without errors', ->
     @view.$el.html().should.not.containEql 'undefined'
