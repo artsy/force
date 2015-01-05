@@ -34,3 +34,7 @@ module.exports =
       signup: null
       register: 'Sign up to follow galleries and museums'
       login: 'Login to follow galleries and museums'
+    '/works-for-you':
+      signup: null
+      register: null
+      login: 'Login to see works by artists you follow'
