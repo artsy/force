@@ -30,3 +30,7 @@ module.exports =
 
   'andreas-gursky':
     title: 'Andreas Gursky - Photographs, Biography & more on Artsy'
+
+  'zaria-forman':
+    title: 'Zaria Forman - Prints & paintings for sale (with prices) on Artsy'
+    description: 'Find the best collection of Zaria Forman art, including paintings & prints for sale. Explore her biography, current shows, and articles. Zaria Forman’s pristine, photorealist paintings'
