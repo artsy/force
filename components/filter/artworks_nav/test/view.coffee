@@ -32,3 +32,26 @@ describe 'FilterArtworksNav', ->
 
   it 'renders without errors', ->
     @view.$el.html().should.not.containEql 'undefined'
+
+  describe '#minCount', ->
+    it 'returns a minimum count threshold', ->
+      @view.counts.clear()
+      @view.counts.set
+        foobar:
+          baz: name: 'Baz', count: 42
+          qux: name: 'Qux', count: 1
+        dimension:
+          a: name: 'A', count: 11
+          b: name: 'B', count: 21
+          c: name: 'C', count: 31
+          d: name: 'D', count: 41
+          e: name: 'E', count: 51
+          f: name: 'F', count: 61
+          g: name: 'G', count: 71
+          h: name: 'H', count: 81
+          i: name: 'I', count: 91
+          j: name: 'J', count: 101
+          k: name: 'K', count: 115
+          l: name: 'L', count: 121
+
+      @view.minCount().should.equal 41
