@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 modes = require '../modes.coffee'
-countries = require '../countries.coffee'
+{ Countries } = require 'places'
 Form = require '../../../../components/mixins/form.coffee'
 template = -> require('../templates/step1.jade') arguments...
 usTemplate = -> require('../templates/forms/step1/us.jade') arguments...
@@ -41,7 +41,7 @@ module.exports = class Step1View extends Backbone.View
     @$('.paf-type-select').val @state.mode().value
     # Render type-specific sub-form
     @$('#paf-form').html formTemplates[@state.get('mode')]
-      state: @state, form: @form, countries: countries
+      state: @state, form: @form, countries: Countries
 
   submit: (e) ->
     return unless @validateForm()
