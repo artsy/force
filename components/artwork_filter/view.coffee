@@ -3,6 +3,7 @@ Backbone = require 'backbone'
 Filter = require './models/filter.coffee'
 ArtworkColumns = require './collections/artwork_columns.coffee'
 ArtworkColumnsView = require '../artwork_columns/view.coffee'
+BorderedPulldown = require '../bordered_pulldown/view.coffee'
 mediator = require '../../lib/mediator.coffee'
 template = -> require('./templates/index.jade') arguments...
 filterTemplate = -> require('./templates/filter.jade') arguments...
@@ -14,6 +15,7 @@ module.exports = class ArtworkFilterView extends Backbone.View
     'click .artwork-filter-remove': 'removeCriteria'
     'click input[type="checkbox"]': 'toggleBoolean'
     'click #artwork-see-more': 'clickSeeMore'
+    'click .bordered-pulldown-options a': 'selectSort'
 
   initialize: ({ @mode }) ->
     @artworks = new ArtworkColumns [], modelId: @model.id
@@ -90,6 +92,13 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @filter.by $target.data('key'), $target.data('value')
     @trigger 'navigate'
 
+  selectSort: (e) ->
+    e.preventDefault()
+    $target = $(e.currentTarget)
+    @filter.by 'sort', $target.data('sort')
+    @sort = $target.text()
+    @trigger 'navigate'
+
   removeCriteria: (e) ->
     e.preventDefault()
     @filter.deselect $(e.currentTarget).data('key')
@@ -105,7 +114,8 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @$button.text("See More (#{@remaining})")[visibility]()
 
   renderHeader: ->
-    @$header.html headerTemplate(filter: @filter, artist: @model)
+    @$header.html headerTemplate(filter: @filter, artist: @model, sortVal: @sort)
+    @headerSortView = new BorderedPulldown el: @$('.bordered-pulldown')
 
   renderColumns: ->
     if @artworks.params.get('page') > 1
