@@ -54,4 +54,6 @@ describe 'FilterArtworksNav', ->
           k: name: 'K', count: 115
           l: name: 'L', count: 121
 
-      @view.minCount().should.equal 41
+      @view.minCount('foobar').should.equal 1
+      @view.minCount('dimension').should.equal 31
+      @view.minCount('dimension', 3).should.equal 101

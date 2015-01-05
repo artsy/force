@@ -7,12 +7,15 @@ module.exports = class FilterArtworksNav extends Backbone.View
     _.extend @, options
     @listenTo @counts, 'sync', @renderCounts
 
-  minCount: (n = 10) ->
-    _.pluck(_.extend({}, _.map(@counts.attributes, (children, parent) -> children)...), 'count')
-      .sort((a, b) -> b - a)[n - 1]
+  minCount: (attr, n = 10) ->
+    _.last _.take _.pluck(@counts.get(attr), 'count').sort((a, b) -> b - a), n
 
   renderCounts: ->
     for parent, children of @counts.attributes
+      threshold = @minCount parent
       for child, { count } of children
-        @$("a[data-attr='#{parent}'][data-val='#{child}']").show()
-          .find(".filter-dropdown-count").text "(#{_s.numberFormat(count)})"
+        $criterion = @$("a[data-attr='#{parent}'][data-val='#{child}']")
+        if threshold <= count
+          $criterion.show().find('.filter-dropdown-count').text "(#{_s.numberFormat(count)})"
+        else
+          $criterion.hide()
