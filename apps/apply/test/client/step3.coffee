@@ -2,9 +2,9 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 { resolve } = require 'path'
-State = require '../models/state'
-Form = require '../models/form'
-Step3View = benv.requireWithJadeify resolve(__dirname, '../views/step3'), ['template']
+State = require '../../client/models/state'
+Form = require '../../client/models/form'
+Step3View = benv.requireWithJadeify resolve(__dirname, '../../client/views/step3'), ['template']
 
 describe 'Step3View', ->
   before (done) ->
