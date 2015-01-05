@@ -68,6 +68,15 @@ describe 'FilterArtworksView', ->
       @view.nextPage()
       @view.params.get('page').should.equal 1
 
+  describe '#reset', ->
+
+    it 'fetches the correct counts', ->
+      @view.params.set related_gene: 'photography', medium: 'digital-print'
+      @view.reset()
+      Backbone.sync.args[1][2].data.should.eql
+        related_gene: 'photography'
+        medium: 'digital-print'
+
   describe '#render', ->
 
     it 'renders the columns view', ->
