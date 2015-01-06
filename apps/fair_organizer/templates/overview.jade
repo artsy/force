@@ -1,0 +1,61 @@
+extends ../../../components/main_layout/templates/index
+
+block head
+  include ../../../components/main_layout/templates/profile_meta
+
+append locals
+  - assetPackage = 'fair_organizer'
+
+block body
+  if coverImage && coverImage.hasImage('wide')
+    .fair-organizer-feature-image( style="background-image: url(#{profile.coverImage().imageUrl('wide')})" )
+
+  #fair-organizer-page
+    .fair-organizer-top
+      .fair-organizer-top__left
+        .fair-organizer-top__icon
+          img.large-profile-image( alt=fair.get('name'), title=fair.get('name'), src=profile.icon().imageUrl('square') )
+        .fair-organizer-top__header
+          h1 Preview The Armory
+          h1 Show 2015 on Artsy
+        .fair-organizer-top__sub-header Discover and collect works before the fair opens
+        if user
+          .fair-organizer-top__notify.avant-garde-button-black Get notified
+
+        .fair-organizer-top__countdown
+          .fair-organizer-top__countdown__headline Fair preview opens in:
+          .fair-organizer-top__countdown__clock
+            //- rendered via client
+
+      .fair-organizer-top__right
+        .fair-organizer-top__right__header-img( style="background-image: url(" + fair.imageUrl('large_rectangle') + ")" )
+
+    .fair-organizer-content
+      .fair-organizer-content__left
+        .fair-organizer-content__header About The Armory Show
+        .fair-organizer-content__date
+          p New York City
+          p March 6 - 9, 2014
+        .fair-organizer-content__copy The Armory Show, a leading international contemporary and modern art fair and one of the most important annual art events in New York, takes place every March on Piers 92 &amp; 94 in central Manhattan. The Armory Show is devoted to showcasing the most important artworks of the 20th and 21st centuries. In its sixteen years the fair has become an international institution, combining a selection of the world's leading galleries with an exceptional program of arts events and exhibitions throughout New York during the celebrated Armory Arts Week.
+
+      .fair-organizer-content__right
+        .fair-organizer-content__header Revisit Previous Fairs
+        .fair-organizer-content__section.fair-organizer-content__section--past-fairs
+          //- pls hold for data
+
+        .fair-organizer-content__header Latest from The Armory Show
+        .fair-organizer-content__section.fair-organizer-content__section--articles
+          //- same here
+          .avant-garde-button-white.is-block Show More
+
+        .fair-organizer-content__header Get the App
+        .fair-organizer-content__section.fair-organizer-content__section--app
+          .mobile-section-iphone &nbsp;
+          a(href="https://iphone.artsy.net/")
+            .fair-organizer-content__section--app__copy
+              | Going to the fair?
+              br
+              i Download Artsy for iPhone
+              br
+              | — Your personal guide to The Armory Show
+
