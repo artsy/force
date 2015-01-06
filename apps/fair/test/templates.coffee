@@ -149,6 +149,9 @@ describe 'Fair', ->
       @$template.root().find('.fair-search-results .search-result').length.should.equal 1
 
   describe 'overview', ->
+
+    { fair, coverImage, profile, primarySets, nestedFilteredSearchColumns } = {}
+
     before ->
       fair = new Fair (fabricate 'fair', about: 'about the fair')
       coverImage = new CoverImage(image_versions: ['wide'], image_url: "foo/wide.jpg")
@@ -275,6 +278,25 @@ describe 'Fair', ->
       $('.fair-search-options-column').length.should.equal 2
       $('.fair-search-options-column a').length.should.equal 4
       $('.fair-search-options-column').text().should.containEql 'Contemporary/Modern'
+
+    it 'renders a 3 grid layout with less editorial', ->
+      eSet = primarySets.findWhere(key: 'editorial')
+      cSet = primarySets.findWhere(key: 'curator')
+      eSet.get('items').reset(eSet.get('items').first(2))
+      cSet.get('items').reset(cSet.get('items').first(1))
+      $ = cheerio.load render('overview')
+        sd:
+          APP_URL: 'http://localhost:5000'
+          ASSET_PATH: 'http://localhost:5000'
+          CURRENT_PATH: '/cool-fair'
+          PROFILE: fabricate 'fair_profile'
+          FAIR: fabricate 'fair'
+        fair: fair
+        profile: profile
+        filteredSearchColumns: nestedFilteredSearchColumns
+        coverImage: coverImage
+        primarySets: primarySets
+      $.html('.fair-overview-post-container').should.containEql 'fair-editorial-3-up'
 
   describe 'exhibitors columns', ->
     before ->

@@ -1,9 +1,8 @@
 - eSet = primarySets.findWhere({ key: 'editorial' })
 - cSet = primarySets.findWhere({ key: 'curator' })
-- combined = eSet.get('items').models.concat(cSet.get('items').models)
-- total = combined.length
+- combinedItems = eSet.get('items').models.concat(cSet.get('items').models)
 
-if total >= 4
+if combinedItems.length >= 4
   .fair-overview-post-container
     h2.overview-section-heading Read Highlights from the Fair
     .posts-left-side
@@ -36,33 +35,33 @@ if total >= 4
               .section-subheading= item.get('subtitle')
     .overview-posts-link-container
       a.overview-posts-link( href=profile.href() + "/posts") See All Posts
-else if total == 3
+else if combinedItems.length == 3
   .fair-overview-post-container
     h2.overview-section-heading Read Highlights from the Fair
     #fair-editorial-3-up
-      for item in combined
+      for item in combinedItems
         article.grid-item
           a( href=item.get('href') )
             img( src=item.imageUrl('large_rectangle') )
             h2= item.get('title')
             h3= item.get('subtitle')
-else if total == 2
+else if combinedItems.length == 2
   .fair-overview-post-container
     h2.overview-section-heading Read Highlights from the Fair
     #fair-editorial-2-up
-      for item in combined
+      for item in combinedItems
         article
           a( href=item.get('href') )
             img( src=item.imageUrl('large_rectangle') )
             .fair-editorial-2-up-right
               h2= item.get('title')
               h3= item.get('subtitle')
-else if total == 1
+else if combinedItems.length == 1
   .fair-overview-post-container
     #fair-editorial-1-up
       article
-        a( href=combined[0].get('href') )
+        a( href=combinedItems[0].get('href') )
           .fair-editorial-1-up-left
-            h2= combined[0].get('title')
-            h3= combined[0].get('subtitle')
-          img( src=combined[0].imageUrl('large_rectangle') )
+            h2= combinedItems[0].get('title')
+            h3= combinedItems[0].get('subtitle')
+          img( src=combinedItems[0].imageUrl('large_rectangle') )
