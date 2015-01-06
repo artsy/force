@@ -15,6 +15,7 @@ getFairData = [
   (req, res, next) -> next() unless req.timedout
 ]
 
+app.get '/the-armory-show-temp', getFairData, routes.fairLanding
 app.get '/:id', getFairData, routes.overview
 app.get '/:id/overview', getFairData, routes.overview
 app.get '/:id/posts', getFairData, routes.fairPosts
@@ -28,3 +29,4 @@ app.get '/:id/following/:type', getFairData, routes.follows
 app.get '/:id/favorites', getFairData, routes.favorites
 # Handle microgravity urls that get crawled by google
 app.get '/:id/programming', getFairData, routes.overview
+
