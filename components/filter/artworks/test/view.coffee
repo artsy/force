@@ -70,7 +70,7 @@ describe 'FilterArtworksView', ->
 
   describe '#reset', ->
 
-    it 'fetches the correct counts', ->
+    xit 'fetches the correct counts', ->
       @view.params.set related_gene: 'photography', medium: 'digital-print'
       @view.reset()
       Backbone.sync.args[1][2].data.should.eql
