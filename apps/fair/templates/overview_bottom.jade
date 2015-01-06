@@ -1,8 +1,9 @@
-- primarySets.findWhere({ key: 'editorial' }).set('items', [primarySets.findWhere({ key: 'editorial' }).get('items')[0]])
-- primarySets.findWhere({ key: 'curator' }).set('items', [primarySets.findWhere({ key: 'curator' }).get('items')[0]])
-- total = primarySets.findWhere({ key: 'editorial' }).get('items').models.length
-- total += primarySets.findWhere({ key: 'curator' }).get('items').models.length
-if total > 4
+- eSet = primarySets.findWhere({ key: 'editorial' })
+- cSet = primarySets.findWhere({ key: 'curator' })
+- combined = eSet.get('items').models.concat(cSet.get('items').models)
+- total = combined.length
+
+if total >= 4
   .fair-overview-post-container
     h2.overview-section-heading Read Highlights from the Fair
     .posts-left-side
@@ -36,8 +37,32 @@ if total > 4
     .overview-posts-link-container
       a.overview-posts-link( href=profile.href() + "/posts") See All Posts
 else if total == 3
-  h1 3 Layout
+  .fair-overview-post-container
+    h2.overview-section-heading Read Highlights from the Fair
+    #fair-editorial-3-up
+      for item in combined
+        article.grid-item
+          a( href=item.get('href') )
+            img( src=item.imageUrl('large_rectangle') )
+            h2= item.get('title')
+            h3= item.get('subtitle')
 else if total == 2
-  h1 2 Layout
+  .fair-overview-post-container
+    h2.overview-section-heading Read Highlights from the Fair
+    #fair-editorial-2-up
+      for item in combined
+        article
+          a( href=item.get('href') )
+            img( src=item.imageUrl('large_rectangle') )
+            .fair-editorial-2-up-right
+              h2= item.get('title')
+              h3= item.get('subtitle')
 else if total == 1
-  h1 1 Layout
+  .fair-overview-post-container
+    #fair-editorial-1-up
+      article
+        a( href=combined[0].get('href') )
+          .fair-editorial-1-up-left
+            h2= combined[0].get('title')
+            h3= combined[0].get('subtitle')
+          img( src=combined[0].imageUrl('large_rectangle') )
