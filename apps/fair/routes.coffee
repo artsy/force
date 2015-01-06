@@ -6,6 +6,11 @@ cache = require '../../lib/cache'
 kinds = require '../favorites_follows/kinds'
 { crop, fill } = require '../../components/resizer'
 
+@fairLanding = (req, res, next) ->
+  return next() unless res.locals.sd.FAIR
+  res.locals.sd.BODY_CLASS = 'body-transparent-header'
+  res.render 'landing'
+
 @overview = (req, res, next) ->
   return next() unless res.locals.sd.FAIR
   # TODO: Dependent on attribute of fair
