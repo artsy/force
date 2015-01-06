@@ -1,4 +1,8 @@
-if primarySets.where({ key: 'editorial' }).length
+- eSet = primarySets.findWhere({ key: 'editorial' })
+- cSet = primarySets.findWhere({ key: 'curator' })
+- combinedItems = eSet.get('items').models.concat(cSet.get('items').models)
+
+if combinedItems.length >= 4
   .fair-overview-post-container
     h2.overview-section-heading Read Highlights from the Fair
     .posts-left-side
@@ -19,8 +23,6 @@ if primarySets.where({ key: 'editorial' }).length
               h2.section-heading= item.get('title')
               if item.get('subtitle')
                 .section-subheading= item.get('subtitle')
-
-if primarySets.where({ key: 'curator' }).length
   .fair-overview-curator
     h2.overview-section-heading-small Art world insiders share their selections
     .curator-picks-container
@@ -33,3 +35,33 @@ if primarySets.where({ key: 'curator' }).length
               .section-subheading= item.get('subtitle')
     .overview-posts-link-container
       a.overview-posts-link( href=profile.href() + "/posts") See All Posts
+else if combinedItems.length == 3
+  .fair-overview-post-container
+    h2.overview-section-heading Read Highlights from the Fair
+    #fair-editorial-3-up
+      for item in combinedItems
+        article.grid-item
+          a( href=item.get('href') )
+            img( src=item.imageUrl('large_rectangle') )
+            h2= item.get('title')
+            h3= item.get('subtitle')
+else if combinedItems.length == 2
+  .fair-overview-post-container
+    h2.overview-section-heading Read Highlights from the Fair
+    #fair-editorial-2-up
+      for item in combinedItems
+        article
+          a( href=item.get('href') )
+            img( src=item.imageUrl('large_rectangle') )
+            .fair-editorial-2-up-right
+              h2= item.get('title')
+              h3= item.get('subtitle')
+else if combinedItems.length == 1
+  .fair-overview-post-container
+    #fair-editorial-1-up
+      article
+        a( href=combinedItems[0].get('href') )
+          .fair-editorial-1-up-left
+            h2= combinedItems[0].get('title')
+            h3= combinedItems[0].get('subtitle')
+          img( src=combinedItems[0].imageUrl('large_rectangle') )

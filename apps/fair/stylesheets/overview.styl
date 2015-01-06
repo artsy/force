@@ -1,8 +1,11 @@
+@import '../../../components/stylus_lib'
+
 browse-container-width = 663px
 browse-container-height = 442px
 overview-container-height = (browse-container-height / 2)
 small-section-height = (browse-container-height / 2)
 left-column-width = 200px
+gutter-size = 30px
 
 .feature-image
   position absolute
@@ -347,3 +350,50 @@ left-column-width = 200px
     margin-bottom: 5px
   .auction-clock-closed
     display none
+
+#fair-editorial-3-up, #fair-editorial-2-up, , #fair-editorial-1-up
+  a
+    text-decoration none
+  h2
+    font-size 24px
+    margin gutter-size 0 5px 0
+    line-height 1.4em
+  h3
+    avant-garde()
+    font-size 11px
+
+#fair-editorial-3-up
+  grid-3-up(20px, gutter-size)
+  padding-bottom 40px
+  .grid-item
+    img
+      width 100%
+
+#fair-editorial-2-up
+  padding-bottom 40px
+  article
+    width 50%
+    display inline-block
+    vertical-align top
+    &:first-child
+      padding-right gutter-size
+      border-right 1px solid gray-lighter-color
+    &:last-child
+      padding-left gutter-size
+    img, .fair-editorial-2-up-right
+      display inline-block
+      vertical-align top
+      width 50%
+    .fair-editorial-2-up-right
+      padding-left gutter-size
+
+#fair-editorial-1-up
+  margin-left left-column-width
+  padding gutter-size 0
+  .fair-editorial-1-up-left, img
+    display inline-block
+    vertical-align middle
+    width 50%
+  .fair-editorial-1-up-left h2
+    font-size gutter-size
+    padding-right 100px
