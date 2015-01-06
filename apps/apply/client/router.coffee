@@ -20,6 +20,10 @@ module.exports = class PartnerApplicationRouter extends Backbone.Router
     @$el = $('#partner-application-page')
     @state = new State
     @form = new Form
+    @listenTo @state, 'change:mode', @updateType
+
+  updateType: (state, type) ->
+    @form.set '00NC0000004hoNU', state.mode().type
 
   execute: ->
     @view?.remove()

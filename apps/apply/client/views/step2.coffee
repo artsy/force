@@ -2,6 +2,7 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 modes = require '../modes.coffee'
 Form = require '../../../../components/mixins/form.coffee'
+Checkboxes = require './checkboxes.coffee'
 template = -> require('../templates/step2.jade') arguments...
 formTemplates =
   gallery: -> require('../templates/forms/step2/partner.jade') arguments...
@@ -11,6 +12,7 @@ formTemplates =
 
 module.exports = class Step2View extends Backbone.View
   _.extend @prototype, Form
+  _.extend @prototype, Checkboxes
 
   events:
     'click button': 'submit'

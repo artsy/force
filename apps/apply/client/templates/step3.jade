@@ -6,23 +6,22 @@ header.partner-application-header
 
 form.partner-application-form.stacked-form
   .grid-2-up
-    .grid-item: +checkbox('learned-from-art-fair', 'Art Fair')
-    .grid-item: +checkbox('learned-from-artsy-staff', 'Artsy Staff')
-    .grid-item: +checkbox('learned-from-gallery', 'Gallery')
-    .grid-item: +checkbox('learned-from-collector-patron', 'Collector / Patron')
-    .grid-item: +checkbox('learned-from-artist', 'Artist')
-    .grid-item: +checkbox('learned-from-museum-institution', 'Museum / Institution')
-    .grid-item: +checkbox('learned-from-online-search', 'Online Search')
-    .grid-item: +checkbox('learned-from-press', 'Press')
-    .grid-item: +checkbox('learned-from-advertisement', 'Advertisement')
-    .grid-item: +checkbox('learned-from-other', 'Other')
+    .grid-item: +checkbox('00NC0000005RGgW', 'Art Fair', 'Art Fair')
+    .grid-item: +checkbox('00NC0000005RGgW', 'Artsy Staff', 'Artsy Staff')
+    .grid-item: +checkbox('00NC0000005RGgW', 'Gallery', 'Gallery')
+    .grid-item: +checkbox('00NC0000005RGgW', 'Collector / Patron', 'Collector / Patron')
+    .grid-item: +checkbox('00NC0000005RGgW', 'Artist', 'Artist')
+    .grid-item: +checkbox('00NC0000005RGgW', 'Museum / Institution', 'Museum / Institution')
+    .grid-item: +checkbox('00NC0000005RGgW', 'Online Search', 'Online Search')
+    .grid-item: +checkbox('00NC0000005RGgW', 'Press', 'Press')
+    .grid-item: +checkbox('00NC0000005RGgW', 'Advertisement', 'Advertisement')
+    .grid-item: +checkbox('00NC0000005RGgW', 'Other', 'Other')
 
-  textarea.bordered-input( placeholder='Please provide more detail on your above selection', name='learned-from-detail' )
-    = form.get('learned-from-detail')
+  textarea.bordered-input( placeholder='Please provide more detail on your above selection', name='00NC0000005RGgl' )
+    = form.get('00NC0000005RGgl')
 
   p.is-center-aligned Is there anything else you would like to add that is relevant to your application?
 
-  textarea.bordered-input( name='anything-else' )
-    = form.get('anything-else')
+  textarea.bordered-input( name='00NC0000005RGgg' )= form.get('00NC0000005RGgg')
 
   button.avant-garde-button-black Finish

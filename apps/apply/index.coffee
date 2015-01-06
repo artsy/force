@@ -7,3 +7,4 @@ app.set 'view engine', 'jade'
 
 app.get '/apply', routes.index
 app.get '/apply/*', routes.index
+app.post '/apply/form', routes.form
