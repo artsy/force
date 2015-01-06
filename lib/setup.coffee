@@ -218,6 +218,8 @@ module.exports = (app) ->
   app.use require "../apps/favorites_follows"
   app.use require "../apps/unsubscribe"
   app.use require "../apps/unsupported_browser"
+  # Temporary, until we update gravity and data
+  app.use require "../apps/fair_organizer"
   # Profile middleware and apps that use profiles
   app.use require "../apps/profile"
   app.use require "../apps/user_profile"

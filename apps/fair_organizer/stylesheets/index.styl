@@ -1,8 +1,24 @@
+@import '../../../components/stylus_lib'
+
 left-column-width = 400px
+browse-container-width = 663px
+browse-container-height = 442px
 
 #fair-organizer-page
   margin 0px auto
   width feed-max-width
+
+.fair-organizer-feature-image
+  position absolute
+  top 0px
+  left 0px
+  width 100%
+  height 600px
+  min-width feed-max-width
+  background linear-gradient(to bottom, #ffffff 0%, #e4e4e4 100%)
+  background-size cover
+  @media screen and (max-width: 1024px)
+    min-width 1124px
 
 .fair-organizer-top
   position relative
@@ -97,3 +113,4 @@ left-column-width = 400px
     vertical-align top
     margin-top 30px
     line-height 30px
+    text-decoration none

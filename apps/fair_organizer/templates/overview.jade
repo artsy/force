@@ -4,11 +4,11 @@ block head
   include ../../../components/main_layout/templates/profile_meta
 
 append locals
-  - assetPackage = 'fair'
+  - assetPackage = 'fair_organizer'
 
 block body
   if coverImage && coverImage.hasImage('wide')
-    .feature-image( style="background-image: url(#{profile.coverImage().imageUrl('wide')})" )
+    .fair-organizer-feature-image( style="background-image: url(#{profile.coverImage().imageUrl('wide')})" )
 
   #fair-organizer-page
     .fair-organizer-top
@@ -16,7 +16,7 @@ block body
         .fair-organizer-top__icon
           img.large-profile-image( alt=fair.get('name'), title=fair.get('name'), src=profile.icon().imageUrl('square') )
         .fair-organizer-top__header
-          h1 Preview the Armory
+          h1 Preview The Armory
           h1 Show 2015 on Artsy
         .fair-organizer-top__sub-header Discover and collect works before the fair opens
         if user
@@ -24,6 +24,8 @@ block body
 
         .fair-organizer-top__countdown
           .fair-organizer-top__countdown__headline Fair preview opens in:
+          .fair-organizer-top__countdown__clock
+
 
       .fair-organizer-top__right
         .fair-organizer-top__right__header-img( style="background-image: url(" + fair.imageUrl('large_rectangle') + ")" )
@@ -49,7 +51,8 @@ block body
         .fair-organizer-content__header Get the App
         .fair-organizer-content__section.fair-organizer-content__section--app
           .mobile-section-iphone &nbsp;
-          .fair-organizer-content__section--app__copy
+          a(href="https://iphone.artsy.net/")
+            .fair-organizer-content__section--app__copy
               | Going to the fair?
               br
               i Download Artsy for iPhone
