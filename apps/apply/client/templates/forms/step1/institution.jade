@@ -1,18 +1,18 @@
 form.stacked-form
-  input.bordered-input( type='text', name='name', value= form.get('name'), placeholder='Museum / Institution Name', required )
+  input.bordered-input( type='text', name='company', value= form.get('company'), placeholder='Museum / Institution Name', required )
 
   .grid-3-up
     .grid-item: input.bordered-input.is-block( type='text', name='first_name', value= form.get('first_name'), placeholder='First Name', required )
     .grid-item: input.bordered-input.is-block( type='text', name='last_name', value= form.get('last_name'), placeholder='Last Name', required  )
     .grid-item: input.bordered-input.is-block( type='text', name='title', value= form.get('title'), placeholder='Title at org.' )
 
-  input.bordered-input( type='text', name='phone_number', value= form.get('phone_number'), placeholder='Phone Number' )
+  input.bordered-input( type='text', name='phone', value= form.get('phone'), placeholder='Phone Number' )
 
   input.bordered-input( type='email', name='email', value= form.get('email'), placeholder='E-mail', required )
 
-  input.bordered-input( type='url', name='website', value= form.get('website'), placeholder='Website of museum / institution', required )
+  input.bordered-input( type='url', name='URL', value= form.get('URL'), placeholder='Website of museum / institution', required )
 
-  label.bordered-select: select.paf-country-select
+  label.bordered-select: select.paf-country-select( name='country' )
     option Country
     for country in countries
       option( value= country )= country

@@ -7,7 +7,7 @@ header.partner-application-header
     | We will use this information to evaluate a potential partnership with your organization.
 
 .partner-application-form.stacked-form
-  label.bordered-select: select.paf-type-select
+  label.bordered-select: select.paf-type-select( name='type' )
     for mode in modes
       option( value= mode.value )= mode.copy
 

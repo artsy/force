@@ -36,23 +36,19 @@ describe 'Step1View', ->
 
   it 'renders the relevant form when an org type is selected', ->
     @state.set 'mode', 'gallery'
-    @view.$('input[name="name"]').attr('placeholder').should.equal 'Gallery Name'
+    @view.$('input[name="company"]').attr('placeholder').should.equal 'Gallery Name'
     @view.$('input[name="title"]').attr('placeholder').should.equal 'Title at Gallery'
-    @view.$('input[name="website"]').length.should.equal 0
+    @view.$('input[name="URL"]').length.should.equal 0
     @state.set 'mode', 'institution'
-    @view.$('input[name="name"]').attr('placeholder').should.equal 'Museum / Institution Name'
-    @view.$('input[name="website"]').length.should.equal 1
+    @view.$('input[name="company"]').attr('placeholder').should.equal 'Museum / Institution Name'
+    @view.$('input[name="URL"]').length.should.equal 1
 
   it 'changes the address forms when the country is changed', (done) ->
     @state.set 'mode', 'institution'
     @view.selectCountry $.Event(currentTarget: val: 'United States')
     _.defer =>
-      @view.$('input[name="zip_code"]').length.should.equal 1
       @view.$('input[name="state"]').length.should.equal 1
-      @view.$('input[name="postal_code"]').length.should.equal 0
       @view.selectCountry $.Event(currentTarget: val: 'Canada')
       _.defer =>
-        @view.$('input[name="zip_code"]').length.should.equal 0
         @view.$('input[name="state"]').length.should.equal 0
-        @view.$('input[name="postal_code"]').length.should.equal 1
         done()
