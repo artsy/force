@@ -1,6 +1,7 @@
 _ = require 'underscore'
+Q = require 'q'
 Backbone = require 'backbone'
-{ parse } = require("url")
+{ parse } = require 'url'
 
 ARTSY_URL = ''
 
@@ -53,3 +54,52 @@ module.exports.methods =
             options.success @
           error: options.error
       error: options.error
+
+  # For paginated routes, this will fetch the first page along with the total count
+  # then fetch every remaining page in parallel
+  #
+  # @param {Object} options Backbone sync options like `success` and `error`
+
+  fetchUntilEndInParallel: (options = {}) ->
+    dfd = Q.defer()
+
+    { success, error } = options # Pull out original success and error callbacks
+
+    { size } = options.data = _.defaults (options.data or {}), total_count: 1, size: 10
+
+    options.remove = false
+
+    options.error = =>
+      dfd.reject arguments...
+      error? arguments...
+
+    options.success = (collection, response, opts) =>
+      total = parseInt(
+        # Count when server-side
+        opts?.res?.headers?['x-total-count'] or
+        # Count when client-side
+        opts?.xhr?.getResponseHeader?('X-Total-Count') or
+        # Fallback
+        0
+      )
+
+      if response.length >= total # Return if already at the end or no total
+        dfd.resolve this
+        success? this
+      else
+        remaining = Math.ceil(total / size) - 1
+
+        Q.allSettled(_.times(remaining, (n) =>
+          @fetch _.extend _.omit(options, 'success', 'error'), {
+            data: _.extend _.omit(options.data, 'total_count'), { page: n + 2 }
+          }
+        )).then(=>
+          dfd.resolve this
+          success? this
+        , =>
+          dfd.reject this
+          error? this
+        ).done()
+
+    @fetch options
+    dfd.promise
