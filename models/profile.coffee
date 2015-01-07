@@ -63,6 +63,14 @@ module.exports = class Profile extends Backbone.Model
   isGallery: -> _.contains @GALLERY_OWNER_TYPES, @get('owner_type')
   isPartner: -> @isGallery() or @isInstitution()
   isFairOranizer: -> @get('owner_type') == 'FairOrganizer'
+  isFairOrOranizer: -> @isFairOranizer() || @isFair()
+  isFair: -> @get('owner_type') == 'Fair'
+
+  ownerHasId: ->
+    @get('owner').default_fair_id? || @get('owner').default_profile_id?
+
+  ownerId: ->
+    @get('owner').default_fair_id || @get('owner').default_profile_id
 
   profileType: ->
     if @isUser()
