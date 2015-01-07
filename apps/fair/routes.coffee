@@ -95,7 +95,7 @@ kinds = require '../favorites_follows/kinds'
 # Fetches and caches fair data to be used across the fair app
 @fetchFairData = (req, res, next) ->
   profile = res.locals.profile
-  return next() unless profile?.isFairOrOranizer() and profile?.ownerHasId()
+  return next() unless profile?.isFairOrOrganizer() and profile?.ownerHasId()
   fair = new Fair id: profile.ownerId()
   fair.fetchPrimarySets
     error: res.backboneError

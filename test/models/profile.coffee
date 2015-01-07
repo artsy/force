@@ -71,6 +71,16 @@ describe 'Profile', ->
     it "returns the profile owner's display name", ->
       @profile.displayName().should.equal @profile.get('owner').name
 
+  describe '#isFairOrOrganizer', ->
+
+    it "returns true if the profile belongs to either a Fair or a Fair Organizer", ->
+      @profile.set 'owner_type', 'Fair'
+      @profile.isFairOrOrganizer().should.be.true
+      @profile.set 'owner_type', 'FairOrganizer'
+      @profile.isFairOrOrganizer().should.be.true
+      @profile.set 'owner_type', 'User'
+      @profile.isFairOrOrganizer().should.be.false
+
   describe '#isPartner', ->
 
     it "returns true if the profile does not belong to a User or Admin", ->
