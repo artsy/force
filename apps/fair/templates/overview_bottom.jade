@@ -1,6 +1,6 @@
 - eSet = primarySets.findWhere({ key: 'editorial' })
 - cSet = primarySets.findWhere({ key: 'curator' })
-- combinedItems = eSet.get('items').models.concat(cSet.get('items').models)
+- combinedItems = (eSet ? eSet.get('items').models : []).concat(cSet ? cSet.get('items').models : [])
 
 if combinedItems.length >= 4
   .fair-overview-post-container
