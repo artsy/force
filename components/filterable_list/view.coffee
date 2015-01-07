@@ -68,7 +68,7 @@ module.exports = class FilterableListView extends Backbone.View
     if @filter.has('group_by') then @groupedItemsRender() else @flatItemsRender()
 
   template: ->
-    return "<div class='loading-spinner'></div>" unless @collection.length
+    return unless @collection.length
     [
       $(@filtersTemplate(filter: @filter))
       $(@itemsTemplate()).html(@itemsRender())
