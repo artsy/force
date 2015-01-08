@@ -3,7 +3,7 @@ rewire = require 'rewire'
 sinon = require 'sinon'
 robots = rewire '../../../lib/middleware/robots'
 
-describe 'flashMiddleware', ->
+describe 'robots middleware', ->
 
   beforeEach ->
     robots.__set__ 'APP_URL', 'https://www.artsy.net'
