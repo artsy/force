@@ -7,6 +7,7 @@
 
 module.exports = (req, res, next) ->
   if parse(APP_URL).host.match('www') and not req.get('host').match('www')
+    res.session = null
     res.redirect 301, APP_URL + req.url
   else
     next()
