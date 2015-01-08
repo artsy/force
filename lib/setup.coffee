@@ -38,6 +38,7 @@ hstsMiddleware = require './middleware/hsts'
 unsupportedBrowserCheck = require "./middleware/unsupported_browser"
 flash = require 'connect-flash'
 flashMiddleware = require './middleware/flash'
+robotsMiddleware = require './middleware/robots'
 bodyParser = require 'body-parser'
 cookieParser = require 'cookie-parser'
 session = require 'cookie-session'
@@ -185,6 +186,7 @@ module.exports = (app) ->
   app.use escapedFragmentMiddleware
   app.use logger('dev')
   app.use unsupportedBrowserCheck
+  app.get '/robots.txt', robotsMiddleware
 
   # Mount apps
   app.use require "../apps/home"
