@@ -45,15 +45,15 @@ mixin 4editorial()
           h2.section-heading= item.get('title')
           if item.get('subtitle')
             .section-subheading= item.get('subtitle')
-  .posts-right-side
-    for item in eSet.get('items').models.slice(1, 4)
-      a.small-post( href=item.get('href') )
-        .small-post-img-container
-          img( src=item.imageUrl('medium_rectangle') )
-        .post-text
-          h2.section-heading= item.get('title')
-          if item.get('subtitle')
-            .section-subheading= item.get('subtitle')
+    .posts-right-side
+      for item in eSet.get('items').models.slice(1, 4)
+        a.small-post( href=item.get('href') )
+          .small-post-img-container
+            img( src=item.imageUrl('medium_rectangle') )
+          .post-text
+            h2.section-heading= item.get('title')
+            if item.get('subtitle')
+              .section-subheading= item.get('subtitle')
 
 if combinedItems.length >= 4
   case eSet.get('items').length
