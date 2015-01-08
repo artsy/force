@@ -59,7 +59,10 @@ module.exports = class FilterArtworksView extends Backbone.View
     @counts.on 'sync', @renderCounts
     @params.on 'change:price_range change:dimension change:medium change:sort reset', @throttledReset
     @params.on 'change:page', =>
-      @artworks.fetch { data: @params.toJSON(), remove: false }
+      @artworks.fetch
+        remove: false
+        data: @params.toJSON()
+        success: => @counts.fetch data: @params.pick('related_gene', 'price_range', 'dimension', 'medium', 'sort')
 
     $.onInfiniteScroll @nextPage
 
