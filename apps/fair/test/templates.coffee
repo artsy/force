@@ -270,8 +270,7 @@ describe 'Fair', ->
       $('.container-right .small-section').length.should.equal 2
       $('.container-left .small-section').length.should.equal 2
       $('.fair-overview-curator .small-section').length.should.equal 2
-      $('.fair-overview-post-container .large-post').length.should.equal 1
-      $('.fair-overview-post-container .small-post').length.should.equal 1
+      $('#fair-editorial-2-up article').length.should.equal 2
 
     it 'renders nested gene names without errors', ->
       $ = cheerio.load @nestedTemplate
