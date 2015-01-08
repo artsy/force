@@ -17,3 +17,9 @@ describe 'ensure www middleware', ->
     @res.redirect.args[0][0].should.equal 301
     @res.redirect.args[0][1]
       .should.equal 'https://www.artsy.net/artist/andy-warhol?foo=bar'
+
+  it 'doesnt care if the url is the same', ->
+    robots.__set__ 'APP_URL', 'https://artsy.net'
+    robots @req, @res, @next
+    @res.redirect.called.should.not.be.ok
+    @next.called.should.be.ok
