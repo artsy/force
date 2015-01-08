@@ -144,6 +144,7 @@ module.exports = (app) ->
   app.use bodyParser.urlencoded(extended: true)
   app.use cookieParser()
   app.use session
+    cookie: secure: true
     secret: SESSION_SECRET
     domain: COOKIE_DOMAIN
     key: SESSION_COOKIE_KEY
