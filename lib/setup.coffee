@@ -32,6 +32,7 @@ proxySitemaps = require './middleware/proxy_sitemaps'
 localsMiddleware = require './middleware/locals'
 micrositeMiddleware = require './middleware/microsite'
 ensureSSL = require './middleware/ensure_ssl'
+ensureWWW = require './middleware/ensure_www'
 escapedFragmentMiddleware = require './middleware/escaped_fragment'
 sameOriginMiddleware = require './middleware/same_origin'
 hstsMiddleware = require './middleware/hsts'
@@ -174,6 +175,7 @@ module.exports = (app) ->
   app.use redirectMobile
   app.use proxyReflection
   app.use ensureSSL
+  app.use ensureWWW
 
   # General helpers and express middleware
   app.use flash()
