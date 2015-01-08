@@ -13,6 +13,11 @@ module.exports = ->
   setupReferrerTracking()
   setupKioskMode()
   syncAuth()
+  removeOldCookies()
+
+removeOldCookies = ->
+  Cookies.expire('force.sess', domain: '.artsy.net')
+  Cookies.expire('force.sess.sig', domain: '.artsy.net')
 
 ensureFreshUser = (data) ->
   return unless sd.CURRENT_USER
