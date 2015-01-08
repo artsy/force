@@ -1,10 +1,12 @@
 extends ../../../components/main_layout/templates/index
 
+append locals
+  - assetPackage = 'fair_organizer'
+  - bodyClass = 'body-transparent-header'
+
 block head
   include ../../../components/main_layout/templates/profile_meta
 
-append locals
-  - assetPackage = 'fair_organizer'
 
 block body
   if coverImage && coverImage.hasImage('wide')

@@ -9,7 +9,7 @@ kinds = require '../favorites_follows/kinds'
 
 @overview = (req, res, next) ->
   return next() unless res.locals.sd.FAIR
-  res.locals.sd.BODY_CLASS = 'body-transparent-header'
+  res.locals.sd.HEADER_CLASS = 'force-position-absolute'
   res.render 'overview'
 
 # !! this is extremely temporary until we push the gravity fair organizer updates
