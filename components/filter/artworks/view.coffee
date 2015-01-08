@@ -53,13 +53,19 @@ module.exports = class FilterArtworksView extends Backbone.View
 
     # Reset gets called on many events, debounce so only the last one gets called
     @throttledReset = _.debounce @reset, 200
+    # Fetch counts a single time after the initial artworks are fetched
+    @initialCountSync = _.once =>
+      @counts.fetch data: @params.pick('related_gene', 'price_range', 'dimension', 'medium', 'sort')
 
     # Hook up events on the artworks, params, and counts
     @artworks.on 'sync', @render
     @counts.on 'sync', @renderCounts
     @params.on 'change:price_range change:dimension change:medium change:sort reset', @throttledReset
     @params.on 'change:page', =>
-      @artworks.fetch { data: @params.toJSON(), remove: false }
+      @artworks.fetch
+        remove: false
+        data: @params.toJSON()
+        success: @initialCountSync
 
     $.onInfiniteScroll @nextPage
 
