@@ -8,7 +8,7 @@ describe 'ensure www middleware', ->
   beforeEach ->
     robots.__set__ 'APP_URL', 'https://www.artsy.net'
     @req = { url: '/artist/andy-warhol?foo=bar' }
-    @res = redirect: sinon.stub()
+    @res = redirect: sinon.stub(), clearCookie: sinon.stub()
     @next = sinon.stub()
 
   it 'redirects to www if thats the app url', ->
