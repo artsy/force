@@ -118,7 +118,7 @@ module.exports = class Fair extends Backbone.Model
       error: options.error
 
   itemsToColumns: (items, numberOfColumns=2) ->
-    maxRows = Math.floor(items.length / numberOfColumns)
+    maxRows = Math.ceil(items.length / numberOfColumns)
     for i in [0...numberOfColumns]
       items[(i * maxRows)...((i + 1) * maxRows)]
 
