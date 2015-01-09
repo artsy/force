@@ -45,3 +45,22 @@ describe 'Fair', ->
       urls[3].should.match /// api/v1/fair/.*/sections ///
       urls[4].should.match /// api/v1/fair/.*/partners ///
       urls[5].should.match /// api/v1/fair/.*/artists ///
+
+  describe '#itemsToColumns', ->
+
+    it 'doesnt chop off items', ->
+      items = [
+        {
+          name: '20th Century Design',
+          href: '/fog-fair-design-plus-art/browse/artworks?related_gene=20th-century-design'
+        }
+        {
+          name: 'Contemporary Design',
+          href: '/fog-fair-design-plus-art/browse/artworks?related_gene=contemporary-design'
+        }
+        {
+          name: 'West Coast Galleries',
+          href: '/fog-fair-design-plus-art/browse/artworks?related_gene=west-coast-galleries'
+        }
+      ]
+      _.flatten(@fair.itemsToColumns(items, 2)).length.should.equal 3
