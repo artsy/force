@@ -42,6 +42,9 @@ module.exports = class Fair extends Backbone.Model
   formatLocation: ->
     @location()?.get('city')
 
+  formatYear: ->
+    moment(@get('start_at')).year()
+
   formatDates: ->
     DateHelpers.timespanInWords @get('start_at'), @get('end_at')
 
