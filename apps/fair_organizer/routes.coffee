@@ -25,6 +25,8 @@ representation = (fair) ->
 @fetchFairData = (req, res, next) ->
   data = {}
   data.access_token = req.user.get('accessToken') if req.user
+
+  # manually fetching the profile here, since we don't want to override /the-armory-show just yet
   new Profile(id: 'the-armory-show').fetch
     data: data
     success: (profile) ->
@@ -39,6 +41,9 @@ representation = (fair) ->
       fair.fetch
         error: res.backboneError
         success: =>
+          # go to normal fair page when this fair switches to open
+          return next() if fair.get('auctionState') is 'open'
+
           # This is the specific-to-armory part
           # Eventually we will fetch the organizer's past fairs here.
           armory2013 = new Fair id: 'the-armory-show-2013'
