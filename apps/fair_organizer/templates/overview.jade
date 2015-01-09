@@ -43,7 +43,9 @@ block body
       .fair-organizer-content__right
         .fair-organizer-content__header Revisit Previous Fairs
         .fair-organizer-content__section.fair-organizer-content__section--past-fairs
-          //- pls hold for data
+          for fair in pastFairs
+            include fair
+            include fair
 
         .fair-organizer-content__header Latest from The Armory Show
         .fair-organizer-content__section.fair-organizer-content__section--articles
