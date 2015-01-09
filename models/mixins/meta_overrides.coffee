@@ -34,3 +34,38 @@ module.exports =
   'zaria-forman':
     title: 'Zaria Forman - Prints & paintings for sale (with prices) on Artsy'
     description: 'Find the best collection of Zaria Forman art, including paintings & prints for sale. Explore her biography, current shows, and articles. Zaria Forman’s pristine, photorealist paintings'
+
+  'william-eggleston':
+    title: 'William Eggleston - Photographs, Prints & More on Artsy'
+    description: 'Browse the best of William Eggleston photography, including artwork & prints for sale, upcoming shows, his biography, and exclusive William Eggleston articles.'
+
+  'paul-strand':
+    title: 'Paul Strand (Photographer) - His Works, Bio & Shows on Artsy'
+    description: 'Paul Strand was one of the defining masters of early American modernist photography. In the early 20th century Strand began taking the photographs for which...'
+
+  'damien-hirst':
+    title: 'Damien Hirst - View his Artworks, Biography & Shows on Artsy'
+    description: 'Browse the best of Damien Hirst, including his works & prints for sale, shows, collections, exclusive articles, and related artists. Damien Hirst first came to public attention in London...'
+
+  'alexander-calder':
+    title: 'Alexander Calder - View 182 Artworks, his bio & more on Artsy'
+    description: 'American artist Alexander Calder changed the course of modern art by developing a method of bending and twisting wire to create three-dimensional “drawings in space.” '
+
+  'takashi-murakami':
+    title: 'Takashi Murakami Art - [145] Artworks, Prints & more on Artsy'
+    description: "Find the best of Takashi Murakami's art, including prints, paintings & sculptures. Read his biography & browse his latest shows & exclusive articles on Artsy."
+
+  'riusuke-fukahori':
+    title: 'Riusuke Fukahori artwork for sale (with prices) on Artsy'
+
+  'jean-michel-basquiat':
+    title: 'Jean-Michel Basquiat - Artworks, Biography & Related artists'
+    description: 'A poet, musician, and graffiti prodigy in late-1970s New York, Jean-Michel Basquiat had honed his signature painting style of obsessive scribbling, elusive symbols...'
+
+  'kiki-kogelnik':
+    title: 'Kiki Kogelnik - Paintings, Prints, Biography & Shows on Artsy'
+    description: 'Browse the best of Kiki Kogelnik (Austrian, 1935-1997), including her artworks, current shows, biography, and exclusive Kiki Kogelnik articles.'
+
+  'sister-mary-corita-kent':
+    title: 'Sister Mary Corita Kent - Her Artworks & Biography on Artsy'
+    description: 'Browse the best of Sister Mary Corita Kent, including her biography, artwork for sale, exclusive Corita Kent articles & more. A contemporary of Andy Warhol and Ed Ruscha...'
