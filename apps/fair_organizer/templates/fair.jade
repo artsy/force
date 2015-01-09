@@ -7,5 +7,5 @@
           - var representations = fair.representation.slice(4,6)
           for representation in representations
             .fair-small-image
-              div( style="background-image: url(#{representation.imageUrl('small_square')});" )
+              .fair-small-image__inner( style="background-image: url(#{representation.imageUrl('small_square')});" )
     .past-fairs--fair-year #{fair.formatYear()}

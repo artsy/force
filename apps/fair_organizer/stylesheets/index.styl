@@ -38,7 +38,6 @@ browse-container-height = 442px
 
 .fair-organizer-top__sub-header, .fair-organizer-top__notify, .fair-organizer-top__countdown
   margin-bottom 20px
-  font-size 18px
 
 .fair-organizer-top__left
   width left-column-width
@@ -97,6 +96,7 @@ browse-container-height = 442px
 
 .fair-organizer-content__section
   margin 15px 0 30px
+  padding 20px 0
   border-bottom 1px solid gray-lightest-color
   border-top 1px solid gray-lightest-color
 
@@ -104,48 +104,51 @@ browse-container-height = 442px
   display inline-block
   position relative
   width 50%
-  padding-top 200px
+  height 200px
 
-  .past-fairs--fair-year
-    avant-garde()
-    color white
-    font-size 18px
-    position absolute
-    bottom 10px
-    left 15px
+  a
+    display inline-block
 
-  .past-fairs--fair-image-grid__inner
-    position absolute
-    width 100%
-    height 100%
-    top 0
-    left 0
+.past-fairs--fair-year
+  avant-garde()
+  color white
+  font-size 18px
+  position absolute
+  bottom 10px
+  left 15px
 
-  .fair-large-image-left
-    float left
-    height 100%
-    width 200px
-    background-size cover
-    background-position center
+.past-fairs--fair-image-grid__inner
+  position absolute
+  width 100%
+  height 100%
+  top 0
+  left 0
 
-  .fair-small-images-right
-    float left
-    width 30%
-    height 100%
-    position relative
-    background-size cover
-    background-position center
+.fair-large-image-left
+  float left
+  height 100%
+  width 200px
+  background-size cover
+  background-position center
 
-  .fair-small-image
-    width 100%
-    height 50%
-    position relative
+.fair-small-images-right
+  float left
+  width 30%
+  height 100%
+  position relative
+  background-size cover
+  background-position center
 
-    div
-      height 100%
-      width 100%
-      background-position center center
-      background-size cover
+.fair-small-image
+  width 100%
+  height 50%
+  position relative
+
+.fair-small-image__inner
+  height 100%
+  width 100%
+  background-position center center
+  background-size cover
 
 .fair-organizer-content__section--app
   border-bottom 1px solid gray-lightest-color
