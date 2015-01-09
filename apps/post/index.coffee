@@ -9,5 +9,6 @@ app = module.exports = express()
 app.set 'views', __dirname
 app.set 'view engine', 'jade'
 
+app.get '/post', routes.redirectToGravity
 app.get '/post/:id', routes.index
 app.get '/post/:id/*', routes.index

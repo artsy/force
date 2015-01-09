@@ -170,7 +170,6 @@ module.exports = (app) ->
 
   # Proxy / redirect requests before they even have to deal with Force routing
   # (This must be after the auth middleware to be able to proxy auth routes)
-  app.use proxyGravity.app
   app.use proxySitemaps.app
   app.use redirectMobile
   app.use proxyReflection

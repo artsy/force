@@ -1,5 +1,6 @@
 Post = require '../../models/post.coffee'
 Profile = require '../../models/profile.coffee'
+{ API_URL } = require '../../config'
 
 render = (res, post, profile) ->
   if post
@@ -29,3 +30,6 @@ render = (res, post, profile) ->
           render res, post
       else
         res.redirect post.href()
+
+@redirectToGravity = (req, res, next) ->
+  res.redirect API_URL + '/post'

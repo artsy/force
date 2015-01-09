@@ -38,8 +38,3 @@ describe 'Setup', ->
     request.get('http://localhost:5000/api/v1/me').end (res) ->
       res.body.name.should.equal 'Craig'
       done()
-
-  it 'proxies authed routes', (done) ->
-    request.get('http://localhost:5000/post?test-login=true').end (res) ->
-      res.body.token.should.equal 'footoken'
-      done()
