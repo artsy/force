@@ -11,8 +11,7 @@ module.exports = class FilterArtworksNav extends Backbone.View
     counts = _.compact _.pluck @counts.get(attr), 'count'
     counts = _.compact _.pluck @counts.get(attr), 'c' unless counts.length
     counts = _.compact _.values @counts.get(attr) unless counts.length
-    minCount = _.last _.take counts.sort((a, b) -> b - a), n
-    minCount
+    _.last _.take counts.sort((a, b) -> b - a), n
 
   renderCounts: ->
     for parent, children of @counts.attributes
