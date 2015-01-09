@@ -19,6 +19,9 @@ representation = (fair) ->
   res.locals.sd.HEADER_CLASS = 'force-position-absolute'
   res.render 'overview'
 
+#
+# For now this is specific to the Armory Show, eventually can be adapted to suit any fair organizer.
+#
 @fetchFairData = (req, res, next) ->
   data = {}
   data.access_token = req.user.get('accessToken') if req.user
@@ -36,12 +39,14 @@ representation = (fair) ->
       fair.fetch
         error: res.backboneError
         success: =>
+          # This is the specific-to-armory part
+          # Eventually we will fetch the organizer's past fairs here.
           armory2013 = new Fair id: 'the-armory-show-2013'
           # armory2014 = new Fair id: 'the-armory-show-2014'
 
           pastFairs = [armory2013] # leave 2014 off for now
 
-          # fetch the fair and its representation to get the two small images
+          # fetch the past fairs and their respective representations to get the two small images
           promises = _.compact _.flatten [
             _.map pastFairs, (fair)-> fair.fetch cache: true
             _.map pastFairs, representation
