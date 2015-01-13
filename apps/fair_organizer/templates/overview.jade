@@ -7,7 +7,6 @@ append locals
 block head
   include ../../../components/main_layout/templates/profile_meta
 
-
 block body
   if coverImage && coverImage.hasImage('wide')
     .fair-organizer-feature-image( style="background-image: url(#{profile.coverImage().imageUrl('wide')})" )
@@ -48,8 +47,9 @@ block body
 
         .fair-organizer-content__header Latest from The Armory Show
         .fair-organizer-content__section.fair-organizer-content__section--articles
-          //- loop articles here
-          .avant-garde-button-white.is-block Show More
+          #fair-organizer-articles
+            include ./articles
+          .avant-garde-button-white.is-block#fair-organizer-more-articles Show More
 
         .fair-organizer-content__header Get the App
         .fair-organizer-content__section.fair-organizer-content__section--app
