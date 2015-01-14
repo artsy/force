@@ -50,7 +50,7 @@ representation = (fair) ->
           armory2013 = new Fair id: 'the-armory-show-2013'
           armory2014 = new Fair id: 'the-armory-show-2014'
 
-          pastFairs = [armory2013, armory2014]
+          pastFairs = [armory2014, armory2013]
           articles = new Articles()
 
           # fetch the past fairs and their respective representations to get the two small images
