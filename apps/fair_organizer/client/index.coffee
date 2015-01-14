@@ -46,7 +46,7 @@ module.exports.init = ->
     modelName: "Fair"
     model: @fair
     el: $('.fair-organizer-top__countdown__clock')
-    closedText: 'Fair Closed'
+    closedText: 'TBA'
   @clock.start()
   new FairOrganizerView
     articles: new Articles(sd.ARTICLES)
