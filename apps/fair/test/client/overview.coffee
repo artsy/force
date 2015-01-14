@@ -35,7 +35,7 @@ xdescribe 'ForYouView', ->
     it "renders personalized artist list", ->
       view = new @OverviewView
         el: $("""<div>
-            <div class='auction-clock'></div>
+            <div class='clock'></div>
             <div class='container-left'><div class='large-section-subheading'></div></div>
             </div>""")
         fair: @fair

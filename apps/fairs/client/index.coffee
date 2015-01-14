@@ -1,7 +1,7 @@
 _ = require 'underscore'
 sd = require('sharify').data
 Fairs = require '../../../collections/fairs.coffee'
-Clock = require '../../../components/auction_clock/view.coffee'
+Clock = require '../../../components/clock/view.coffee'
 
 module.exports.init = ->
   $clocks = $('.fpff-clock')

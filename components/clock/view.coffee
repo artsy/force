@@ -9,13 +9,12 @@ UNIT_MAP =
   'minutes': 'min'
   'seconds': 'sec'
 
-module.exports = class AuctionClockView extends Backbone.View
+module.exports = class ClockView extends Backbone.View
 
   modelName: 'Auction'
 
-  initialize: (options) ->
-    if options.modelName
-      @modelName = options.modelName
+  initialize: ({ @closedText, @modelName }) ->
+    @closedText ?= 'Online Bidding Closed'
 
   start: ->
     @model.calculateOffsetTimes
@@ -35,14 +34,14 @@ module.exports = class AuctionClockView extends Backbone.View
         @$('.clock-header').html "#{@modelName} closes in:"
         @toDate = @model.get 'offsetEndAtMoment'
       when 'closed'
-        @$el.html "<div class='clock-header auction-clock-closed'>Online Bidding Closed</div>"
+        @$el.html "<div class='clock-header clock-closed'>#{@closedText}</div>"
         return
     @renderClock()
     @interval = setInterval @renderClock, 1000
 
   renderClock: =>
     @model.updateState()
-    @$('.auction-clock-value').html _.compact((for unit, label of UNIT_MAP
+    @$('.clock-value').html _.compact((for unit, label of UNIT_MAP
       diff = moment.duration(@toDate?.diff(moment()))[unit]()
 
       # Don't display '00' if we have 0 months

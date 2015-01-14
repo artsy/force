@@ -5,7 +5,7 @@ CurrentUser = require '../../../models/current_user.coffee'
 FeatureRouter = require './router.coffee'
 FilterView = require './filter.coffee'
 SaleArtworkView = require '../../../components/artwork_item/views/sale_artwork.coffee'
-AuctionClockView = require '../../../components/auction_clock/view.coffee'
+ClockView = require '../../../components/clock/view.coffee'
 trackArtworkImpressions = require('../../../components/analytics/impression_tracking.coffee').trackArtworkImpressions
 Sale = require '../../../models/sale.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
@@ -133,10 +133,10 @@ module.exports = class FeatureView extends Backbone.View
       sale: sale
       registered: @currentUser?.get('registered_to_bid')?
     @$('#feature-auction-info-countdown-container').html auctionCountdownTemplate(sale: sale)
-    @setupAuctionClock sale
+    @setupClock sale
 
-  setupAuctionClock: (sale) ->
-    @clock = new AuctionClockView
+  setupClock: (sale) ->
+    @clock = new ClockView
       modelName: 'Auction'
       model: sale
       el: @$('.auction-info-countdown')

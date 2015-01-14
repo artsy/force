@@ -8,7 +8,7 @@ mixin article-figure(article, width, showDate, showShare)
       figcaption
         if showDate
           time.article-figure-date
-            = moment(article.get('updated_at')).format('MMMM Do')
+            = moment(article.get('published_at')).format('MMMM Do')
         .article-figure-title= article.get('thumbnail_title')
         //- TODO: Hack for now, we need to save author data on the article.
         .article-figure-author Artsy Editorial

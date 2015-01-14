@@ -6,7 +6,7 @@
     .fair-dates= fair.formatDates()
     if profile.get('bio')
       .profile-bio!= profile.mdToHtml('bio') + ' '
-    include ../../../components/auction_clock/template
+    include ../../../components/clock/template
   .fair-overview-right
     a.fair-overview-browse( href=profile.href() + "/browse" )
       .fair-overview-browse-image( style="background-image: url(" + fair.imageUrl('large_rectangle') + ")" )

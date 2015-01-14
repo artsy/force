@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
-Clock = require '../../../components/auction_clock/view.coffee'
+Clock = require '../../../components/clock/view.coffee'
 FeedItems = require '../../../components/feed/collections/feed_items.coffee'
 FeedView = require '../../../components/feed/client/feed.coffee'
 Artists = require '../../../collections/artists.coffee'
@@ -39,7 +39,7 @@ module.exports = class Overview extends Backbone.View
     @clock = new Clock
       modelName: "Fair"
       model: @fair
-      el: @$('.auction-clock')
+      el: @$('.clock')
     @clock.start()
 
   renderFollowedArtistList: ->

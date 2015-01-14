@@ -4,7 +4,8 @@ moment = require 'moment'
 sd = require('sharify').data
 Fair = require '../../../models/fair.coffee'
 Articles = require '../../../collections/articles.coffee'
-Clock = require '../../../components/auction_clock/view.coffee'
+Clock = require '../../../components/clock/view.coffee'
+mediator = require '../../../lib/mediator.coffee'
 { resize, crop } = require '../../../components/resizer/index.coffee'
 articlesTemplate = -> require('../templates/articles.jade') arguments...
 
@@ -31,6 +32,7 @@ module.exports.FairOrganizerView = class FairOrganizerView extends Backbone.View
 
   events:
     'click #fair-organizer-more-articles': 'moreArticles'
+    'click .fair-organizer-top__notify': 'onGetNotified'
 
   moreArticles: ->
     @articles.fetch
@@ -40,12 +42,17 @@ module.exports.FairOrganizerView = class FairOrganizerView extends Backbone.View
         published: true
         offset: 10 * (@page += 1)
 
+  onGetNotified: ->
+    mediator.trigger 'open:auth', mode: 'login'
+    false
+
 module.exports.init = ->
   @fair = new Fair sd.FAIR
   @clock = new Clock
     modelName: "Fair"
     model: @fair
     el: $('.fair-organizer-top__countdown__clock')
+    closedText: 'TBA'
   @clock.start()
   new FairOrganizerView
     articles: new Articles(sd.ARTICLES)

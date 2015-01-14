@@ -8,7 +8,7 @@ ClockView = require '../view.coffee'
 Sale = require '../../../models/sale'
 { fabricate } = require 'antigravity'
 
-describe 'AuctionClockView', ->
+describe 'ClockView', ->
 
   before (done) ->
     benv.setup =>
@@ -51,7 +51,7 @@ describe 'AuctionClockView', ->
       @view.model.calculateOffsetTimes()
       Backbone.sync.args[0][2].success { time: moment().format("YYYY-MM-DD HH:mm:ss ZZ") }
 
-      @view.$el.html '<div class="auction-clock-value"></div>'
+      @view.$el.html '<div class="clock-value"></div>'
       @view.render()
       @view.$el.html().should.containEql 'days'
       @view.$el.html().should.containEql 'months'
@@ -66,7 +66,7 @@ describe 'AuctionClockView', ->
       @view.model.calculateOffsetTimes()
       Backbone.sync.args[0][2].success { time: moment().format("YYYY-MM-DD HH:mm:ss ZZ") }
 
-      @view.$el.html '<div class="auction-clock-value"></div>'
+      @view.$el.html '<div class="clock-value"></div>'
       @view.render()
       @view.$el.html().should.containEql 'days'
       @view.$el.html().should.not.containEql 'months'

@@ -2,7 +2,7 @@ _ = require 'underscore'
 sd = require('sharify').data
 Sales = require '../../../collections/sales.coffee'
 Artworks = require '../../../collections/artworks.coffee'
-Clock = require '../../../components/auction_clock/view.coffee'
+Clock = require '../../../components/clock/view.coffee'
 ModalPageView = require '../../../components/modal/page.coffee'
 
 module.exports.init = ->
