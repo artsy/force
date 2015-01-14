@@ -20,8 +20,9 @@ block body
           h1 Preview The Armory
           h1 Show 2015 on Artsy
         .fair-organizer-top__sub-header Discover and collect works before the fair opens
-        if user
-          .fair-organizer-top__notify.avant-garde-button-black Get notified
+        if !user
+          a.fair-organizer-top__notify.avant-garde-button-black(
+            href='/log_in', data-mode='login' ) Get notified
 
         .fair-organizer-top__countdown
           .fair-organizer-top__countdown__headline Fair preview opens in:

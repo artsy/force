@@ -5,6 +5,7 @@ sd = require('sharify').data
 Fair = require '../../../models/fair.coffee'
 Articles = require '../../../collections/articles.coffee'
 Clock = require '../../../components/clock/view.coffee'
+mediator = require '../../../lib/mediator.coffee'
 { resize, crop } = require '../../../components/resizer/index.coffee'
 articlesTemplate = -> require('../templates/articles.jade') arguments...
 
@@ -31,6 +32,7 @@ module.exports.FairOrganizerView = class FairOrganizerView extends Backbone.View
 
   events:
     'click #fair-organizer-more-articles': 'moreArticles'
+    'click .fair-organizer-top__notify': 'onGetNotified'
 
   moreArticles: ->
     @articles.fetch
@@ -39,6 +41,10 @@ module.exports.FairOrganizerView = class FairOrganizerView extends Backbone.View
         author_id: sd.AUTHOR_ID
         published: true
         offset: 10 * (@page += 1)
+
+  onGetNotified: ->
+    mediator.trigger 'open:auth', mode: 'login'
+    false
 
 module.exports.init = ->
   @fair = new Fair sd.FAIR
