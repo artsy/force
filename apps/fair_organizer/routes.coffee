@@ -4,6 +4,7 @@ Profile = require '../../models/profile.coffee'
 Fair = require '../../models/fair.coffee'
 cache = require '../../lib/cache'
 OrderedSets = require '../../collections/ordered_sets'
+Articles = require '../../collections/articles'
 
 representation = (fair) ->
   dfd = Q.defer()
@@ -50,18 +51,29 @@ representation = (fair) ->
           # armory2014 = new Fair id: 'the-armory-show-2014'
 
           pastFairs = [armory2013] # leave 2014 off for now
+          articles = new Articles()
 
           # fetch the past fairs and their respective representations to get the two small images
           promises = _.compact _.flatten [
             _.map pastFairs, (fair)-> fair.fetch cache: true
             _.map pastFairs, representation
+            # TODO: Update Positron & wire up to actual fair organizer & not
+            # hardcoded to The Armory Show 2013.
+            articles.fetch(
+              cache: true
+              data:
+                published: true
+                author_id: (res.locals.sd.AUTHOR_ID = '530c0a4a8b3b81d77100001a')
+            )
           ]
 
           Q.allSettled(promises).then(->
             res.locals.sd.FAIR = fair.toJSON()
+            res.locals.sd.ARTICLES = articles.toJSON()
             res.locals.fair = fair
             res.locals.coverImage = profile.coverImage()
             res.locals.pastFairs = pastFairs
+            res.locals.articles = articles.models
             next()
           ).done()
 

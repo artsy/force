@@ -1,0 +1,21 @@
+include ../share/template
+
+mixin article-figure(article, width, showDate, showShare)
+  figure.article-figure
+    a.article-figure-container( href='/article/' + article.get('slug') )
+      .article-figure-img( style='background-image: url(' + crop(article.get('thumbnail_image'), {
+        width: width, height: Math.round(width / 1.7), quality: 90 }) + ')' )
+      figcaption
+        if showDate
+          time.article-figure-date
+            = moment(article.get('updated_at')).format('MMMM Do')
+        .article-figure-title= article.get('thumbnail_title')
+        //- TODO: Hack for now, we need to save author data on the article.
+        .article-figure-author Artsy Editorial
+    if showShare
+      .article-figure-share
+        +share(
+          article.get('title'),
+          article.get('thumbnail_image'),
+          sd.APP_URL + '/article/' + article.get('slug')
+        )

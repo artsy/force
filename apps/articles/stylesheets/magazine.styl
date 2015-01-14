@@ -11,50 +11,23 @@
   display inline-block
   vertical-align top
   padding-right 15px
-  figure
-    height 420px
-  figcaption
-    background white
-    padding-top 30px
-    position absolute
-    bottom -48px
-    width 560px
-    left calc(50% \- (@width / 2))
-    text-align center
-  .aaf-title
-    position relative
-    top -3px
-  .articles-article-figure
+  .article-figure
     height 100%
-
-.aaf-title
-  font-size headline-font-size
-  line-height headline-line-height
-
-.aaf-author
-  avant-garde()
-  font-size 12px
-  margin-top 8px
-
-.aaf-img
-  position absolute
-  top 0
-  left 0
-  width 100%
-  height 100%
-  background gray-lightest-color center center
-  background-size cover
-
-.aaf-date
-  color gray-dark-color
-  display block
-  margin-bottom 7px
-  font-size 17px
-
-.articles-article-figure
-  position relative
-  a
-    text-decoration none
+    figcaption
+      background white
+      position absolute
+      top calc(100% \- 50px)
+      width 560px
+      text-align center
+      padding 24px
+      left calc(50% \- (@width / 2))
+  .article-figure-img
+    position absolute
+    top 0
+    left 0
+    width 100%
+    height 100%
+    z-index -1
 
 #articles-magazine-featured-aside, #articles-magazine-feed
   width 33%
@@ -62,44 +35,33 @@
   vertical-align top
   padding-left (gutter-size / 2)
   figure
-    margin-bottom 30px
-    height 120px
-    &:last-child
-      margin-bottom 0
-  img
-    width 100%
-    padding-right (gutter-size / 2)
-  figcaption
-    padding-left 50%
-    display inline-block
-    vertical-align top
-  img
-    display inline-block
-    vertical-align top
-  .aaf-title
+    margin-bottom gutter-size
+
+#articles-magazine-featured-aside
+  figure:last-child
+    margin-bottom 0
+  .article-figure-title
     font-size 22px
     line-height 27px
     overflow hidden
-  .aaf-author
-    color gray-darkest-color
-  .aaf-img
-    width calc(50% \- (gutter-size / 2))
-  .articles-article-figure
-    display table
-    figcaption
-      display table-cell
-      vertical-align middle
+  .article-figure-container
+    min-height 100px
+  .article-figure figcaption
+    padding-left 15px
+
+#articles-magazine-feed
+  figure
+    padding-bottom gutter-size
+    border-bottom 1px solid gray-lighter-color
+    &:first-child
+      margin-top gutter-size
+    .article-figure-container
+      min-height 200px
+    .article-figure-share
+      bottom 16px
 
 #articles-magazine-featured-aside
   margin-left 66%
-  figcaption
-    display table-cell
-    vertical-align middle
-  figure
-    display block
-  a
-    height 100%
-    display table
 
 #articles-magazine-featured-aside, #articles-magazine-primary-article
   margin-top 40px
@@ -114,33 +76,6 @@
     font-size 14px
     border-bottom 1px solid gray-lighter-color
     padding-bottom (gutter-size - 17)
-  figure
-    height 250px
-    border-bottom 1px solid gray-lighter-color
-    width 100%
-    margin-bottom 0
-  .aaf-img
-    width golden-ratio-small-percent
-    min-height 200px
-    height calc(100% \- ((gutter-size - 10) * 2))
-    top (gutter-size - 10)
-  .aaf-title
-    font-size headline-font-size
-    line-height headline-line-height
-    padding-right 80px
-    max-height none
-  .aaf-share
-    position absolute
-    right 0
-    bottom 8px
-    a
-      display none
-    a[data-service=twitter], a[data-service=facebook]
-      display inline-block
-  figcaption
-    width 100% - golden-ratio-small-percent
-    padding (gutter-size - 10) 0
-    padding-left gutter-size
   button
     margin-top gutter-size
 
