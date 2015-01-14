@@ -2,7 +2,7 @@ include ../share/template
 
 mixin article-figure(article, width, showDate, showShare)
   figure.article-figure
-    a( href='/article/' + article.get('slug') )
+    a.article-figure-container( href='/article/' + article.get('slug') )
       .article-figure-img( style='background-image: url(' + crop(article.get('thumbnail_image'), {
         width: width, height: Math.round(width / 1.7), quality: 90 }) + ')' )
       figcaption

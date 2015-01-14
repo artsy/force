@@ -1,14 +1,16 @@
 @import '../stylus_lib'
 
 .article-figure
-	a
-		text-decoration none
-		display table
-		width 100%
-		min-height 150px
+	position relative
 	figcaption
 		width (100% - golden-ratio-small-percent)
 		padding-left 30px
+
+.article-figure-container
+	text-decoration none
+	display table
+	width 100%
+	min-height 150px
 
 .article-figure figcaption, .article-figure-img
 	display table-cell
@@ -28,8 +30,16 @@
 	margin-bottom 7px
 	color gray-dark-color
 	margin-bottom 6px
+	display block
 
 .article-figure-author
 	avant-garde()
 	font-size 12px
-	margin-top 2px
+	margin-top 8px
+
+.article-figure-share
+	position absolute
+	bottom 0
+	right 0
+	.share-to-pinterest
+		display none

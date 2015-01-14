@@ -1,4 +1,5 @@
 extends ../../../components/main_layout/templates/index
+include ../../../components/article_figure/mixin
 include ./share
 
 block head
@@ -46,14 +47,4 @@ block body
     h1 What to Read Next
     ul#articles-footer-list
       for article in footerArticles
-        li
-          .articles-footer-list-left
-            a( href="/article/#{article.get('slug')}" )
-              img( src=resize(article.get('thumbnail_image'), { width: 300 }) )
-          .articles-footer-list-right
-            h2
-              a( href="/article/#{article.get('slug')}" )
-                = article.get('thumbnail_title')
-            //- TODO: Hack for now, we need to save author data on the
-            //- Positron article to avoid fetches every time.
-            h3: a( href="/editorial" ) By Artsy Editorial
+        +article-figure(article, 220, false, false)
