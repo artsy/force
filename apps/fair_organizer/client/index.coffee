@@ -4,7 +4,7 @@ moment = require 'moment'
 sd = require('sharify').data
 Fair = require '../../../models/fair.coffee'
 Articles = require '../../../collections/articles.coffee'
-Clock = require '../../../components/auction_clock/view.coffee'
+Clock = require '../../../components/clock/view.coffee'
 { resize, crop } = require '../../../components/resizer/index.coffee'
 articlesTemplate = -> require('../templates/articles.jade') arguments...
 
@@ -46,6 +46,7 @@ module.exports.init = ->
     modelName: "Fair"
     model: @fair
     el: $('.fair-organizer-top__countdown__clock')
+    closedText: 'Fair Closed'
   @clock.start()
   new FairOrganizerView
     articles: new Articles(sd.ARTICLES)

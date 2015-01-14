@@ -48,9 +48,9 @@ representation = (fair) ->
           # This is the specific-to-armory part
           # Eventually we will fetch the organizer's past fairs here.
           armory2013 = new Fair id: 'the-armory-show-2013'
-          # armory2014 = new Fair id: 'the-armory-show-2014'
+          armory2014 = new Fair id: 'the-armory-show-2014'
 
-          pastFairs = [armory2013] # leave 2014 off for now
+          pastFairs = [armory2013, armory2014]
           articles = new Articles()
 
           # fetch the past fairs and their respective representations to get the two small images

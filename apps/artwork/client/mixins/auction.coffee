@@ -1,5 +1,5 @@
 _ = require 'underscore'
-AuctionClockView = require '../../../../components/auction_clock/view.coffee'
+ClockView = require '../../../../components/clock/view.coffee'
 BidderPositions = require '../../../../collections/bidder_positions.coffee'
 SaleArtwork = require '../../../../models/sale_artwork.coffee'
 AuctionDetailView = require '../auction_detail.coffee'
@@ -15,12 +15,12 @@ module.exports =
     # (via 'Buy Now')
     @$('.artwork-detail').addClass 'is-auction'
 
-  setupAuctionClock: ->
-    @clock = new AuctionClockView
+  setupClock: ->
+    @clock = new ClockView
       modelName: 'Auction'
       model: @auction
-      el: @$auctionClock = @$('#artwork-auction-clock')
-    @$auctionClock.addClass 'is-fade-in'
+      el: @$Clock = @$('#artwork-clock')
+    @$Clock.addClass 'is-fade-in'
     @clock.start()
 
   setupSaleArtwork: ->
@@ -32,7 +32,7 @@ module.exports =
 
   setupAuctionDetailView: ->
     $.when.apply(null, _.compact([
-      @setupAuctionClock()
+      @setupClock()
       @setupAuctionUser()
       @setupSaleArtwork()
       @setupBidderPositions()
