@@ -316,6 +316,25 @@ describe 'Fair', ->
         primarySets: primarySets
       $.html('.fair-overview-post-container').should.containEql 'fair-editorial-2-up'
 
+    it 'renders a editorial even when missing a set w/ >= 4 items', ->
+      eSet = primarySets.findWhere(key: 'editorial')
+      cSet = primarySets.findWhere(key: 'curator')
+      cSet.get('items').reset([{},{},{},{},{}])
+      primarySets.remove(eSet)
+      $ = cheerio.load render('overview')
+        sd:
+          APP_URL: 'http://localhost:5000'
+          ASSET_PATH: 'http://localhost:5000'
+          CURRENT_PATH: '/cool-fair'
+          PROFILE: fabricate 'fair_profile'
+          FAIR: fabricate 'fair'
+        fair: fair
+        profile: profile
+        filteredSearchColumns: nestedFilteredSearchColumns
+        coverImage: coverImage
+        primarySets: primarySets
+      $.html().should.containEql 'fair-overview-curator'
+
   describe 'exhibitors columns', ->
     before ->
       partnerShow = new FeedItem fabricate('show',
