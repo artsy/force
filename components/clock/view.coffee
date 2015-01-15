@@ -19,14 +19,14 @@ module.exports = class ClockView extends Backbone.View
   start: ->
     @model.calculateOffsetTimes
       success: =>
-        @model.on('change:auctionState', ->
+        @model.on('change:clockState', ->
           clearInterval @interval
           window.location.reload()
         )
         @render()
 
   render: =>
-    switch @model.get('auctionState')
+    switch @model.get('clockState')
       when 'preview'
         @$('.clock-header').html "#{@modelName} opens in:"
         @toDate = @model.get 'offsetStartAtMoment'

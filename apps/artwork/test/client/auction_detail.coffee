@@ -28,7 +28,7 @@ describe 'AuctionDetailView', ->
     @saleArtwork = new SaleArtwork fabricate 'sale_artwork', minimum_next_bid_cents: 500000, low_estimate_cents: 600000, high_estimate_cents: 800000, reserve_status: 'no_reserve'
     @auction = new Sale fabricate 'sale'
 
-    @auction.set 'auctionState', 'open'
+    @auction.set 'clockState', 'open'
 
     @view = new AuctionDetailView(
       user: @user = new CurrentUser fabricate 'user'
@@ -56,13 +56,13 @@ describe 'AuctionDetailView', ->
     it 'does not display what it does not have', ->
       @view.$('.artwork-bidder-position-status').length.should.not.be.ok
       @view.$('.typed-bordered-input').length.should.be.ok
-      @auction.set('auctionState', 'closed')
+      @auction.set('clockState', 'closed')
       @view.render()
       @view.$('.typed-bordered-input').length.should.not.be.ok
 
     describe 'renders the appropriate bid button', ->
       it 'handles an undefined user, during auction preview', ->
-        @auction.set 'auctionState', 'preview'
+        @auction.set 'clockState', 'preview'
         @view.user = undefined
         @auction.__bidButtonState__ = undefined
         @view.render()
@@ -71,7 +71,7 @@ describe 'AuctionDetailView', ->
         _.isUndefined($button.attr 'disabled').should.be.ok
 
       it 'handles an unregistered user, during auction preview', ->
-        @auction.set 'auctionState', 'preview'
+        @auction.set 'clockState', 'preview'
         @user.set 'registered_to_bid', false
         @auction.__bidButtonState__ = undefined
         @view.render()
@@ -80,7 +80,7 @@ describe 'AuctionDetailView', ->
         _.isUndefined($button.attr 'disabled').should.be.ok
 
       it 'handles a registered user, during auction preview', ->
-        @auction.set 'auctionState', 'preview'
+        @auction.set 'clockState', 'preview'
         @user.set 'registered_to_bid', true
         @auction.__bidButtonState__ = undefined
         @view.render()
@@ -91,7 +91,7 @@ describe 'AuctionDetailView', ->
         $button.attr('class').should.containEql 'is-disabled'
 
       it 'handles open auctions', ->
-        @auction.set 'auctionState', 'open'
+        @auction.set 'clockState', 'open'
         @auction.__bidButtonState__ = undefined
         @view.render()
         $button = @view.$('.abf-button')
@@ -99,7 +99,7 @@ describe 'AuctionDetailView', ->
         _.isUndefined($button.attr 'disabled').should.be.ok
 
       it 'handles closed auctions', ->
-        @auction.set 'auctionState', 'closed'
+        @auction.set 'clockState', 'closed'
         @auction.__bidButtonState__ = undefined
         @view.render()
         $button = @view.$('.abf-button')

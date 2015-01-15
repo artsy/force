@@ -43,7 +43,7 @@ representation = (fair) ->
         error: res.backboneError
         success: =>
           # go to normal fair page when this fair switches to open
-          return next() if fair.get('auctionState') is 'open'
+          return next() if fair.get('clockState') is 'open'
 
           # This is the specific-to-armory part
           # Eventually we will fetch the organizer's past fairs here.

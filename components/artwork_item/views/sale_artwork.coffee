@@ -16,10 +16,10 @@ module.exports = class SaleArtworkView extends Backbone.View
     { @currentUser, @sale } = options
 
     if @sale?.isAuction()
-      if @sale.has 'auctionState'
-        @setupAuctionState()
+      if @sale.has 'clockState'
+        @setupclockState()
       else
-        @listenTo @sale, 'change:auctionState', @setupAuctionState
+        @listenTo @sale, 'change:clockState', @setupclockState
 
   # Appends ?auction_id=<auction_id> to all artwork links
   appendAuctionId: ->
@@ -54,7 +54,7 @@ module.exports = class SaleArtworkView extends Backbone.View
   hideBuyNowButtons: ->
     @$('.artwork-item-buy-now').hide()
 
-  setupAuctionState: ->
+  setupclockState: ->
     if @sale.isOpen()
       @appendAuctionId()
     else

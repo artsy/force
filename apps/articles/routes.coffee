@@ -3,6 +3,7 @@ sd = require('sharify').data
 Article = require '../../models/article'
 Articles = require '../../collections/articles'
 embedVideo = require 'embed-video'
+{ POST_TO_ARTICLE_SLUGS } = require '../../config'
 
 @magazine = (req, res, next) ->
   new Articles().fetch
@@ -33,3 +34,8 @@ embedVideo = require 'embed-video'
         slideshowArtworks: slideshowArtworks
         author: author
         embedVideo: embedVideo
+
+@redirectPost = (req, res, next) ->
+  console.log typeof POST_TO_ARTICLE_SLUGS, POST_TO_ARTICLE_SLUGS, req.params.id
+  return next() unless req.params.id in POST_TO_ARTICLE_SLUGS
+  res.redirect "/article/#{req.params.id}"
