@@ -56,7 +56,7 @@ mixin 4editorial()
               .section-subheading= item.get('subtitle')
 
 if combinedItems.length >= 4
-  case eSet.get('items').length
+  case eSet && eSet.get('items').length
     when 4
       +4editorial()
     when 3
