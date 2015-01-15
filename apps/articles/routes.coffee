@@ -36,6 +36,5 @@ embedVideo = require 'embed-video'
         embedVideo: embedVideo
 
 @redirectPost = (req, res, next) ->
-  console.log typeof POST_TO_ARTICLE_SLUGS, POST_TO_ARTICLE_SLUGS, req.params.id
   return next() unless req.params.id in POST_TO_ARTICLE_SLUGS
   res.redirect "/article/#{req.params.id}"

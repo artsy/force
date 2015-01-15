@@ -16,7 +16,7 @@ module.exports =
       error: options?.error
 
   updateState: ->
-    @set('auctionState', (
+    @set('clockState', (
       if moment().isAfter(@get 'offsetEndAtMoment')
         'closed'
       else if moment().isAfter(@get 'offsetStartAtMoment') and moment().isBefore(@get 'offsetEndAtMoment')
