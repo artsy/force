@@ -58,7 +58,7 @@ representation = (fair) ->
             _.map pastFairs, (fair)-> fair.fetch cache: true
             _.map pastFairs, representation
             # TODO: Update Positron & wire up to actual fair organizer & not
-            # hardcoded to The Armory Show 2013.
+            # hardcoded to The Armory Show 2014.
             articles.fetch(
               cache: true
               data:
