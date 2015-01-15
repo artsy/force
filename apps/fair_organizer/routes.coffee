@@ -63,7 +63,7 @@ representation = (fair) ->
               cache: true
               data:
                 published: true
-                author_id: (res.locals.sd.AUTHOR_ID = '530c0a4a8b3b81d77100001a')
+                author_id: (res.locals.sd.AUTHOR_ID = '54b706957261694f37e20100')
             )
           ]
 
