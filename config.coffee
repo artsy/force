@@ -68,6 +68,7 @@ module.exports =
   SHOW_AUCTIONS_IN_HEADER: true
   API_REQUEST_TIMEOUT: 5000
   POST_TO_ARTICLE_SLUGS: []
+  HEAPDUMP: false
 
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or
