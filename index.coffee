@@ -6,7 +6,7 @@
 
 require 'newrelic'
 
-{ PORT, NODE_ENV } = require "./config"
+{ PORT, NODE_ENV, HEAPDUMP } = require "./config"
 
 express = require "express"
 setup = require "./lib/setup"
@@ -14,6 +14,15 @@ cache = require './lib/cache'
 
 app = module.exports = express()
 app.set 'view engine', 'jade'
+
+# Write heapdumps to /public every 15mins so they can be downloaded
+if HEAPDUMP
+  heapdump = require 'heapdump'
+  i = 0
+  write = ->
+    heapdump.writeSnapshot "#{__dirname}/public/heapdumps/#{i+=1}.heapsnapshot"
+  setInterval write, 1000 * 60 * 15
+  write()
 
 # Attempt to connect to Redis. If it fails, no worries, the app will move on
 # without caching.

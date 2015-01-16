@@ -83,6 +83,7 @@
     "imagesloaded": "*",
     "scroll-frame": "*",
     "dompurify": "*",
-    "places": "git://github.com/artsy/places"
+    "places": "git://github.com/artsy/places",
+    "heapdump": "*"
   }
 }
