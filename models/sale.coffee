@@ -33,7 +33,7 @@ module.exports = class Sale extends Backbone.Model
         error: options?.error
 
   updateState: ->
-    @set('auctionState', (
+    @set('clockState', (
       if moment().isAfter(@get 'offsetEndAtMoment')
         'closed'
       else if moment().isAfter(@get 'offsetStartAtMoment') and moment().isBefore(@get 'offsetEndAtMoment')
@@ -59,7 +59,7 @@ module.exports = class Sale extends Backbone.Model
 
   # NOTE
   # auction_state helpers are used serverside of if updateState hasn't been run
-  # auctionState used after updateState is run
+  # clockState used after updateState is run
   isRegisterable: ->
     @isAuction() and _.include(['preview', 'open'], @get('auction_state'))
 
@@ -73,13 +73,13 @@ module.exports = class Sale extends Backbone.Model
     @isAuction() and _.include(['preview'], @get('auction_state'))
 
   isOpen: ->
-    @get('auctionState') is 'open'
+    @get('clockState') is 'open'
 
   isPreview: ->
-    @get('auctionState') is 'preview'
+    @get('clockState') is 'preview'
 
   isClosed: ->
-    @get('auctionState') is 'closed'
+    @get('clockState') is 'closed'
 
   # @param {CurrentUser, Artwork (optional)}
   # @return {Object}

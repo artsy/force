@@ -48,6 +48,10 @@ module.exports.FairOrganizerView = class FairOrganizerView extends Backbone.View
 
 module.exports.init = ->
   @fair = new Fair sd.FAIR
+  # HACK: Hardcode 2015 show dates
+  @fair.set
+    start_at: '2015-03-05T12:00:00+00:00'
+    end_at: '2015-03-08T19:00:00+00:00'
   @clock = new Clock
     modelName: "Fair"
     model: @fair
