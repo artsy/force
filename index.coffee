@@ -5,15 +5,10 @@
 #
 
 require 'newrelic'
-
-{ PORT, NODE_ENV, HEAPDUMP } = require "./config"
-
+{ PORT, NODE_ENV, HEAPDUMP, TESTING_MEMORY_LEAK } = require "./config"
 express = require "express"
 setup = require "./lib/setup"
 cache = require './lib/cache'
-
-app = module.exports = express()
-app.set 'view engine', 'jade'
 
 # Write heapdumps to /public every 15mins so they can be downloaded
 if HEAPDUMP
@@ -21,8 +16,22 @@ if HEAPDUMP
   i = 0
   write = ->
     heapdump.writeSnapshot "#{__dirname}/public/heapdumps/#{i+=1}.heapsnapshot"
-  setInterval write, 1000 * 60 * 15
+  setInterval write, 1000 * 60
   write()
+
+if TESTING_MEMORY_LEAK
+  Backbone = require 'backbone'
+  sharify = require 'sharify'
+  _sharify = sharify
+  Backbone.Collection::_addReference = ->
+  sharify = (req, res, next) ->
+    res.once 'end', ->
+      res.locals.sharify = null
+      res.locals.sd = null
+    _sharify req, res, next
+
+app = module.exports = express()
+app.set 'view engine', 'jade'
 
 # Attempt to connect to Redis. If it fails, no worries, the app will move on
 # without caching.
