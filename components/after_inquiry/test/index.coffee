@@ -87,6 +87,7 @@ describe 'AfterInquiry', ->
 
         describe 'logged out', ->
           beforeEach ->
+            location.assign = sinon.stub()
             @user.needsOnboarding = true
 
           describe 'and it was not yet sent', ->
@@ -97,7 +98,7 @@ describe 'AfterInquiry', ->
               $.ajax.args[0][0].type.should.equal 'post'
               $.ajax.args[0][0].data.message.
                 should.equal 'Thanks for creating your account Foo Bar.<br>Take 60 seconds to personalize your experience'
-              window.location.should.equal '/personalize'
+              location.assign.args[0][0].should.equal '/personalize'
 
           describe 'and it was sent successfully', ->
             beforeEach ->
@@ -115,7 +116,7 @@ describe 'AfterInquiry', ->
               $.ajax.args[0][0].type.should.equal 'post'
               $.ajax.args[0][0].data.message.
                 should.equal 'Thanks for creating your account Foo Bar.<br>Take 60 seconds to personalize your experience'
-              window.location.should.equal '/personalize'
+              location.assign.args[0][0].should.equal '/personalize'
 
         describe 'logged in', ->
           describe 'and it was not yet sent', ->

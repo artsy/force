@@ -159,3 +159,7 @@ it('should format html elements', function() {
     assert.equal(format(t), 'CLICK ME');
   }
 });
+
+it('should correctly indent', function() {
+  assert.equal(format({ a: { b: 'abc' }, d: 'abc'}, { maxLineLength: 0 }), '{\n  a: {\n    b: \'abc\'\n  },\n  d: \'abc\'\n}')
+});

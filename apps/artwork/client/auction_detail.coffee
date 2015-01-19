@@ -23,7 +23,7 @@ module.exports = class AuctionDetailView extends Backbone.View
     else
       @$('button').attr 'data-state', 'loading'
       if (val = @validate @$('input').val())
-        window.location = "#{@$('form').attr('action')}?bid=#{val}"
+        location.assign "#{@$('form').attr('action')}?bid=#{val}"
       else
         @displayValidationError()
 

@@ -1,6 +1,6 @@
-var assert = require('assert');
 var Reporter = require('../base').Reporter;
 var EncoderBuffer = require('../base').EncoderBuffer;
+var assert = require('minimalistic-assert');
 
 // Supported tags
 var tags = [

@@ -258,7 +258,11 @@ Deps.prototype.getTransforms = function (file, pkg, opts) {
             
             var r = require(res);
             if (typeof r !== 'function') {
-                return cb(new Error('transform not a function'));
+                return cb(new Error(
+                    'Unexpected ' + typeof r + ' exported by the '
+                    + JSON.stringify(res) + ' package. '
+                    + 'Expected a transform function.'
+                ));
             }
             
             var trs = r(file, trOpts);

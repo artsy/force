@@ -3,6 +3,20 @@
 var acorn = require('acorn');
 var walk = require('acorn/util/walk');
 
+//polyfill for https://github.com/marijnh/acorn/pull/195
+walk.base.ExportDeclaration = function (node, st, c) {
+  c(node.declaration, st);
+};
+walk.base.ImportDeclaration = function (node, st, c) {
+  node.specifiers.forEach(function (specifier) {
+    c(specifier, st);
+  });
+};
+walk.base.ImportSpecifier = function (node, st, c) {
+};
+walk.base.ImportBatchSpecifier = function (node, st, c) {
+};
+
 function isScope(node) {
   return node.type === 'FunctionExpression' || node.type === 'FunctionDeclaration' || node.type === 'Program';
 }
@@ -62,6 +76,19 @@ function findGlobals(source) {
     'TryStatement': function (node) {
       node.handler.body.locals = node.handler.body.locals || {};
       node.handler.body.locals[node.handler.param.name] = true;
+    },
+    'ImportSpecifier': function (node) {
+      var id = node.name ? node.name : node.id;
+      if (id.type === 'Identifier') {
+        ast.locals = ast.locals || {};
+        ast.locals[id.name] = true;
+      }
+    },
+    'ImportBatchSpecifier': function (node) {
+      if (node.name.type === 'Identifier') {
+        ast.locals = ast.locals || {};
+        ast.locals[node.name.name] = true;
+      }
     }
   });
   walk.ancestor(ast, {

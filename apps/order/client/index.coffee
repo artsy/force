@@ -16,7 +16,7 @@ module.exports.OrderRouter = class OrderRouter extends Backbone.Router
       model: new Order(sd.ORDER)
       el: $('#order-page')
       success: ->
-        window.location = '/order/checkout?stop_microgravity_redirect=true'
+        location.assign '/order/checkout?stop_microgravity_redirect=true'
 
   checkout: ->
     new CheckoutForm

@@ -131,11 +131,11 @@ describe 'AuctionDetailView', ->
 
   describe '#submit', ->
     it 'submits the form', ->
-      location = window.location
+      location.assign = sinon.stub()
       @view.$('input').val('5000')
       @view.$('form').submit()
-      window.location.should.equal "/feature/#{@auction.id}/bid/#{@saleArtwork.id}?bid=500000"
-      window.location = location
+      location.assign.args[0][0].should
+        .equal "/feature/#{@auction.id}/bid/#{@saleArtwork.id}?bid=500000"
 
     it 'triggers sign up if not logged in', ->
       @view.user = undefined

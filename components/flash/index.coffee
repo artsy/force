@@ -54,7 +54,7 @@ module.exports = class FlashMessage extends Backbone.View
     this
 
   maybeRedirect: ->
-    window.location = @href if @href
+    location.assign @href if @href
 
   close: =>
     mediator.off null, null, this

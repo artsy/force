@@ -15,7 +15,7 @@ module.exports = class AuctionResultsRouter extends Backbone.Router
     'artist/:artist_id/auction-result/:id': 'details'
 
   initialize: ->
-    @originalPath = window.location.pathname
+    @originalPath = location.pathname
     mediator.on 'modal:closed', @return
 
     @artist = new Artist sd.ARTIST

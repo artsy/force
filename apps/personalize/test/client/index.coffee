@@ -12,6 +12,7 @@ describe 'PersonalizeRouter', ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'
       Backbone.$ = $
+      location.assign = sinon.stub()
       sinon.stub _, 'defer', (cb) -> cb()
       { @PersonalizeRouter, init } = mod = rewire '../../client/index'
       mod.__set__ 'Transition', fade: (@fadeStub = sinon.stub())
@@ -74,4 +75,4 @@ describe 'PersonalizeRouter', ->
 
       @router.user.save.called.should.be.ok
 
-      window.location.should.equal @router.redirectLocation()
+      location.assign.args[0][0].should.equal @router.redirectLocation()

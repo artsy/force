@@ -1,4 +1,4 @@
-var util = require('util');
+var inherits = require('inherits');
 
 function Reporter(options) {
   this._reporterState = {
@@ -79,7 +79,7 @@ function ReporterError(path, msg) {
   this.path = path;
   this.rethrow(msg);
 };
-util.inherits(ReporterError, Error);
+inherits(ReporterError, Error);
 
 ReporterError.prototype.rethrow = function rethrow(msg) {
   this.message = msg + ' at: ' + (this.path || '(shallow)');
