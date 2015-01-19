@@ -28,7 +28,7 @@ if HEAPDUMP
   i = 0
   write = ->
     heapdump.writeSnapshot "#{__dirname}/public/heapdumps/#{i+=1}.heapsnapshot"
-  setInterval write, 1000 * 60
+  setInterval write, 1000 * 60 * 10
   write()
 
 app = module.exports = express()
