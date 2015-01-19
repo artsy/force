@@ -51,6 +51,7 @@ fs = require 'graceful-fs'
 artsyError = require 'artsy-error-handler'
 cache = require './cache'
 timeout = require 'connect-timeout'
+bucketAssets = require 'bucket-assets'
 
 # Setup sharify constants & require dependencies that use sharify data
 sharify.data =
@@ -177,6 +178,7 @@ module.exports = (app) ->
   app.use ensureWWW
 
   # General helpers and express middleware
+  app.use bucketAssets()
   app.use flash()
   app.use flashMiddleware
   app.use localsMiddleware

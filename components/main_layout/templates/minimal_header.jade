@@ -9,8 +9,8 @@ html
   head
     include head
     block head
-    link( type='text/css', rel='stylesheet', href=(sd.ASSET_PATH + 'main_layout' + sd.CSS_EXT) )
-    link( type='text/css', rel='stylesheet', href=(sd.ASSET_PATH + assetPackage + sd.CSS_EXT) )
+    link( type='text/css', rel='stylesheet', href=asset('/assets/main_layout.css') )
+    link( type='text/css', rel='stylesheet', href=asset('/assets/' + assetPackage + '.css') )
   body( class=bodyClass )
     include ../header/templates/index
     include ../../modal/template
@@ -18,6 +18,6 @@ html
       block body
     #scripts
       include scripts
-      script( src=(sd.ASSET_PATH + 'main_layout' + sd.JS_EXT) )
-      script( src=(sd.ASSET_PATH + assetPackage + sd.JS_EXT) )
+      script( src=asset('/assets/main_layout.js') )
+      script( src=asset('/assets/' + assetPackage + '.js') )
       block scripts
