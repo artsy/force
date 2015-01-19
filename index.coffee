@@ -6,6 +6,18 @@
 
 require 'newrelic'
 { PORT, NODE_ENV, HEAPDUMP, TESTING_MEMORY_LEAK } = require "./config"
+
+if TESTING_MEMORY_LEAK
+  Backbone = require 'backbone'
+  sharify = require 'sharify'
+  _sharify = sharify
+  Backbone.Collection::_addReference = ->
+  sharify = (req, res, next) ->
+    res.once 'end', ->
+      res.locals.sharify = null
+      res.locals.sd = null
+    _sharify req, res, next
+
 express = require "express"
 setup = require "./lib/setup"
 cache = require './lib/cache'
@@ -18,17 +30,6 @@ if HEAPDUMP
     heapdump.writeSnapshot "#{__dirname}/public/heapdumps/#{i+=1}.heapsnapshot"
   setInterval write, 1000 * 60
   write()
-
-if TESTING_MEMORY_LEAK
-  Backbone = require 'backbone'
-  sharify = require 'sharify'
-  _sharify = sharify
-  Backbone.Collection::_addReference = ->
-  sharify = (req, res, next) ->
-    res.once 'end', ->
-      res.locals.sharify = null
-      res.locals.sd = null
-    _sharify req, res, next
 
 app = module.exports = express()
 app.set 'view engine', 'jade'
