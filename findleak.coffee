@@ -15,7 +15,6 @@ if HEAPDUMP
   heapdump = require 'heapdump'
   i = 0
   write = ->
-    console.log JSON.stringify(sharify.data)?.length
     heapdump.writeSnapshot "#{__dirname}/public/heapdumps/#{i+=1}.heapsnapshot"
   setInterval write, 1000 * 60
   write()
