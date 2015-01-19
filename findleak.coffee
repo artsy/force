@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
 sharify = require 'sharify'
-{ HEAPDUMP, TESTING_MEMORY_LEAK } = require "./config"}
+{ HEAPDUMP, TESTING_MEMORY_LEAK } = require "./config"
 
 if TESTING_MEMORY_LEAK
   _sharify = sharify
