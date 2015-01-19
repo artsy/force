@@ -66,7 +66,7 @@ function Agent(options) {
     var name = self.getName(options);
     debug('agent.on(free)', name);
 
-    if (!socket.destroyed && self.requests[name] && self.requests[name].length) {
+    if (!self.isSocketDestroyed(socket) && self.requests[name] && self.requests[name].length) {
       self.requests[name].shift().onSocket(socket);
       if (self.requests[name].length === 0) {
         // don't leak
@@ -77,7 +77,7 @@ function Agent(options) {
       // If there are no pending requests, then put it in
       // the freeSockets pool, but only if we're allowed to do so.
       var req = socket._httpMessage;
-      if (req && req.shouldKeepAlive && !socket.destroyed && self.options.keepAlive) {
+      if (req && req.shouldKeepAlive && !self.isSocketDestroyed(socket) && self.options.keepAlive) {
         var freeSockets = self.freeSockets[name];
         var freeLen     = freeSockets ? freeSockets.length : 0;
         var count       = freeLen;
@@ -132,6 +132,11 @@ exports.Agent = Agent;
 Agent.defaultMaxSockets = Infinity;
 
 Agent.prototype.createConnection = net.createConnection;
+
+Agent.prototype.isSocketDestroyed = function(socket) {
+    // Different Node versions have different names for the property
+    return socket.destroyed || socket._destroyed;
+};
 
 // Get the key for a given set of request options
 Agent.prototype.getName = function(options) {
@@ -264,13 +269,13 @@ Agent.prototype.createSocket = function(req, options) {
 
 Agent.prototype.removeSocket = function(s, options) {
   var name = this.getName(options);
-  debug('removeSocket', name, 'destroyed:', s.destroyed);
+  debug('removeSocket', name, 'destroyed:', this.isSocketDestroyed(s));
   var sets = [this.sockets];
 
   this.emit('yakaa_remove', s);
 
   // If the socket was destroyed, remove it from the free buffers too.
-  if (s.destroyed)
+  if (this.isSocketDestroyed(s))
     sets.push(this.freeSockets);
 
   sets.forEach(function(sockets) {

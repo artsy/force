@@ -12,6 +12,7 @@ describe 'OrderRouter', ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
+      location.assign = sinon.stub()
       { OrderRouter } = mod = benv.require resolve(__dirname, '../../client/index')
       stubChildClasses mod, this, ['ShippingForm', 'CheckoutForm'], []
       @router = new OrderRouter
@@ -25,4 +26,5 @@ describe 'OrderRouter', ->
     it 'tells force to stay in force for Martsy', ->
       @router.shipping()
       @ShippingForm.args[0][0].success()
-      window.location.should.containEql "/order/checkout?stop_microgravity_redirect=true"
+      location.assign.args[0][0].should
+        .containEql "/order/checkout?stop_microgravity_redirect=true"

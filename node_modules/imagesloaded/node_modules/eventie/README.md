@@ -26,7 +26,7 @@ Install with [Component :nut_and_bolt:](https://github.com/component/component) 
 
 ## IE 8
 
-eventie add support for `event.target` and [`.handleEvent` method](https://developer.mozilla.org/en-US/docs/DOM/EventListener#handleEvent(\)) for Internet Explorer 8.
+eventie add support for `event.target` and [`.handleEvent` method](https://developer.mozilla.org/en-US/docs/DOM/EventListener#handleEvent\(\)) for Internet Explorer 8.
 
 ## MIT license
 

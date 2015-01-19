@@ -1,0 +1,99 @@
+{
+  "name": "coveralls",
+  "description": "takes json-cov output into stdin and POSTs to coveralls.io",
+  "keywords": [
+    "coverage",
+    "coveralls"
+  ],
+  "version": "2.11.2",
+  "bugs": {
+    "url": "https://github.com/cainus/node-coveralls/issues"
+  },
+  "scripts": {
+    "test": "make test"
+  },
+  "bin": {
+    "coveralls": "./bin/coveralls.js"
+  },
+  "maintainers": [
+    {
+      "name": "cainus",
+      "email": "gregg@caines.ca"
+    }
+  ],
+  "contributors": [
+    {
+      "name": "Alan Gutierrez",
+      "email": "alan@prettyrobots.com",
+      "url": "http://www.prettyrobots.com/"
+    },
+    {
+      "name": "Kir Belevich",
+      "url": "https://github.com/svg"
+    },
+    {
+      "name": "elliotcable",
+      "email": "github@elliottcable.name",
+      "url": "http://elliottcable.name/"
+    },
+    {
+      "name": "Slotos",
+      "email": "slotos@gmail.com",
+      "url": "http://slotos.net"
+    },
+    {
+      "name": "mattjmorrison",
+      "email": "mattjmorrison@mattjmorrison.com",
+      "url": "http://mattjmorrison.com"
+    },
+    {
+      "name": "Arpad Borsos",
+      "email": "arpad.borsos@googlemail.com",
+      "url": "http://swatinem.de/"
+    }
+  ],
+  "dependencies": {
+    "js-yaml": "3.0.1",
+    "lcov-parse": "0.0.6",
+    "log-driver": "1.2.4",
+    "request": "2.40.0"
+  },
+  "devDependencies": {
+    "sinon-restore": "1.0.0",
+    "mocha-lcov-reporter": "0.0.1",
+    "mocha": "1.8.1",
+    "should": "1.1.0",
+    "istanbul": "0.2.10",
+    "jshint": "2.1.3"
+  },
+  "engines": {
+    "node": ">=0.8.6"
+  },
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/cainus/node-coveralls.git"
+  },
+  "author": {
+    "name": "Gregg Caines"
+  },
+  "license": "BSD",
+  "gitHead": "e38fc9a941b7ac41cd613e1758fb0e533db404a4",
+  "homepage": "https://github.com/cainus/node-coveralls",
+  "_id": "coveralls@2.11.2",
+  "_shasum": "d4d982016cb2f9da89d77ab204d86a8537e6a12d",
+  "_from": "coveralls@^2.11.2",
+  "_npmVersion": "1.4.14",
+  "_npmUser": {
+    "name": "cainus",
+    "email": "gregg@caines.ca"
+  },
+  "dist": {
+    "shasum": "d4d982016cb2f9da89d77ab204d86a8537e6a12d",
+    "tarball": "http://registry.npmjs.org/coveralls/-/coveralls-2.11.2.tgz"
+  },
+  "_resolved": "https://registry.npmjs.org/coveralls/-/coveralls-2.11.2.tgz"
+}

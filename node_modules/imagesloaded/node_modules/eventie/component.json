@@ -2,7 +2,7 @@
   "name": "eventie",
   "repo": "desandro/eventie",
   "description": "Event binding helper",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "scripts": ["eventie.js"],
   "main": "eventie.js"
 }

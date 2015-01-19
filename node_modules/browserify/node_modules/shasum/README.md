@@ -8,8 +8,7 @@ var shasum = require('shasum')
 shasum(string || buffer || object)
 ```
 
-Oh yeah, it works in the browser too, with 
-[crypto-browserify](https://npmjs.org/package/crypto-browserify)
+Oh yeah, it works in the browser too, with [browserify](https://npmjs.org/package/browserify)
 
 ## License
 

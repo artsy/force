@@ -67,7 +67,7 @@ module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Rout
       @user.save()
       $.post('/flash', message: 'Thank you for personalizing your profile')
     ]).always =>
-      window.location = @redirectLocation()
+      location.assign @redirectLocation()
 
 module.exports.init = ->
   reonboarding = /reonboarding/.test(window.location.search)

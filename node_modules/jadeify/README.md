@@ -31,13 +31,26 @@ So yeah, now `require`ing any `.jade` files will give you back a template functi
 
 ## Configuration
 
-Optionally, you can configure jadeify by adding a `"jadeify": { ... }` section to your `package.json`. Any options given there will be passed through to [Jade's API][].
-
-You may also pass options as a second argument to `bundle.transform`:
+As with most browserify transforms, you can configure jadeify via the second argument to `bundle.transform`:
 
 ```js
-bundle.transform(require("jadeify"), options);
+bundle.transform(require("jadeify"), { compileDebug: true, pretty: true });
 ```
+
+or inside your `package.json` configuration:
+
+```json
+{
+    "name": "my-spiffy-package",
+    "browserify": {
+        "transform": [
+            ["jadeify", { "compileDebug": true, "pretty": true }]
+        ]
+    }
+}
+```
+
+Any options given to jadeify will be passed through to [Jade's API][].
 
 [Jade]: http://jade-lang.com/
 [browserify]: https://github.com/substack/node-browserify

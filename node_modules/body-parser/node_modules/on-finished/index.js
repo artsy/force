@@ -39,7 +39,7 @@ var defer = typeof setImmediate === 'function'
 
 function onFinished(msg, listener) {
   if (isFinished(msg) !== false) {
-    defer(listener)
+    defer(listener, null, msg)
     return msg
   }
 
@@ -161,7 +161,7 @@ function createListener(msg) {
     listener.queue = null
 
     for (var i = 0; i < queue.length; i++) {
-      queue[i](err)
+      queue[i](err, msg)
     }
   }
 

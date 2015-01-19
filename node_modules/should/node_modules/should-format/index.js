@@ -104,7 +104,7 @@ add('array', function(value, opts) {
 });
 
 function addSpaces(v) {
-  return '  ' + v;
+  return v.split('\n').map(function(vv) { return '  ' + vv; }).join('\n');
 }
 
 function formatObject(value, opts, prefix, props) {
