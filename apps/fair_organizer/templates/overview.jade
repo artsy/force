@@ -39,7 +39,8 @@ block body
         .fair-organizer-content__date
           p #{fair.location().get('city')}
           p #{fair.formatDates()}
-        .fair-organizer-content__copy The Armory Show, a leading international contemporary and modern art fair and one of the most important annual art events in New York, takes place every March on Piers 92 &amp; 94 in central Manhattan. The Armory Show is devoted to showcasing the most important artworks of the 20th and 21st centuries. In its sixteen years the fair has become an international institution, combining a selection of the world's leading galleries with an exceptional program of arts events and exhibitions throughout New York during the celebrated Armory Arts Week.
+        .fair-organizer-content__copy!= fair.mdToHtml('about')
+        .fair-organizer-content__links!= fair.mdToHtml('links')
 
       .fair-organizer-content__right
         .fair-organizer-content__header Revisit Previous Fairs
