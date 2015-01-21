@@ -80,9 +80,9 @@ verify:
 
 # Runs all the necessary build tasks to push to staging or production.
 # Run with `make deploy env=staging` or `make deploy env=production`.
-deploy:
+deploy: assets verify
 	$(BIN)/bucketassets --bucket force-$(env)
 	heroku config:set COMMIT_HASH=$(shell git rev-parse --short HEAD) --app=force-$(env)
-	git push --force git@heroku.com:force-$(env).git master
+	git push --force git@heroku.com:force-$(env).git
 
 .PHONY: test assets
