@@ -91,6 +91,7 @@ sharify.data =
   EMBEDLY_KEY: EMBEDLY_KEY
   DISABLE_IMAGE_PROXY: DISABLE_IMAGE_PROXY
   SHOW_AUCTIONS_IN_HEADER: SHOW_AUCTIONS_IN_HEADER
+  CDN_URL: process.env.CDN_URL
 
 CurrentUser = require '../models/current_user'
 
