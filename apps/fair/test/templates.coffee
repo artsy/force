@@ -34,7 +34,6 @@ describe 'Fair', ->
         CANONICAL_MOBILE_URL: 'http://localhost:5000'
         APP_URL: 'http://localhost:5000'
         API_URL: 'http://localhost:5000'
-        ASSET_PATH: 'http://localhost:5000'
         CSS_EXT: '.css.gz'
         JS_EXT: '.js.gz'
         NODE_ENV: 'test'
@@ -63,7 +62,6 @@ describe 'Fair', ->
       sd =
         CANONICAL_MOBILE_URL: 'http://localhost:5000'
         APP_URL: 'http://localhost:5000'
-        ASSET_PATH: 'http://localhost:5000'
         CSS_EXT: '.css.gz'
         JS_EXT: '.js.gz'
         NODE_ENV: 'test'
@@ -93,7 +91,6 @@ describe 'Fair', ->
       sd =
         CANONICAL_MOBILE_URL: 'http://localhost:5000'
         APP_URL: 'http://localhost:5000'
-        ASSET_PATH: 'http://localhost:5000'
         CSS_EXT: '.css.gz'
         JS_EXT: '.js.gz'
         NODE_ENV: 'test'
@@ -220,7 +217,6 @@ describe 'Fair', ->
       @template = render('overview')
         sd:
           APP_URL: 'http://localhost:5000'
-          ASSET_PATH: 'http://localhost:5000'
           CURRENT_PATH: '/cool-fair'
           PROFILE: fabricate 'fair_profile'
           FAIR: fabricate 'fair'
@@ -250,7 +246,6 @@ describe 'Fair', ->
       @nestedTemplate = render('overview')
         sd:
           APP_URL: 'http://localhost:5000'
-          ASSET_PATH: 'http://localhost:5000'
           CURRENT_PATH: '/cool-fair'
           PROFILE: fabricate 'fair_profile'
           FAIR: fabricate 'fair'
@@ -286,7 +281,6 @@ describe 'Fair', ->
       $ = cheerio.load render('overview')
         sd:
           APP_URL: 'http://localhost:5000'
-          ASSET_PATH: 'http://localhost:5000'
           CURRENT_PATH: '/cool-fair'
           PROFILE: fabricate 'fair_profile'
           FAIR: fabricate 'fair'
@@ -305,7 +299,6 @@ describe 'Fair', ->
       $ = cheerio.load render('overview')
         sd:
           APP_URL: 'http://localhost:5000'
-          ASSET_PATH: 'http://localhost:5000'
           CURRENT_PATH: '/cool-fair'
           PROFILE: fabricate 'fair_profile'
           FAIR: fabricate 'fair'
@@ -324,7 +317,6 @@ describe 'Fair', ->
       $ = cheerio.load render('overview')
         sd:
           APP_URL: 'http://localhost:5000'
-          ASSET_PATH: 'http://localhost:5000'
           CURRENT_PATH: '/cool-fair'
           PROFILE: fabricate 'fair_profile'
           FAIR: fabricate 'fair'

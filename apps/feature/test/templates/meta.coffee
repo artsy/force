@@ -9,7 +9,6 @@ describe 'Meta tags', ->
 
     before ->
       @sd =
-        ASSET_PATH: "http://localhost:5000"
         APP_URL: "http://localhost:5000"
       @file = "#{process.cwd()}/apps/feature/templates/meta.jade"
       @feature = new Feature fabricate('feature')

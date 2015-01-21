@@ -5,7 +5,7 @@ jade = require 'jade'
 describe 'Meta tags', ->
   describe 'index', ->
     before ->
-      @sd = ASSET_PATH: 'http://localhost:5000', APP_URL: 'http://localhost:5000'
+      @sd = APP_URL: 'http://localhost:5000'
       @file = "#{process.cwd()}/apps/shows/templates/meta.jade"
       @html = jade.render fs.readFileSync(@file).toString(), sd: @sd
 
@@ -23,7 +23,7 @@ describe 'Meta tags', ->
 
   describe 'city', ->
     before ->
-      @sd = ASSET_PATH: 'http://localhost:5000', APP_URL: 'http://localhost:5000'
+      @sd = APP_URL: 'http://localhost:5000'
       @file = "#{process.cwd()}/apps/shows/templates/meta.jade"
       @html = jade.render fs.readFileSync(@file).toString(), sd: @sd, city: name: 'Cool Place'
 

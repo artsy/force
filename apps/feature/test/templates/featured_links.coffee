@@ -22,7 +22,7 @@ describe 'Featured Links', ->
     benv.teardown()
 
   beforeEach ->
-    @sd = API_URL: 'http://localhost:5000', ASSET_PATH: 'http://localhost:5000'
+    @sd = API_URL: 'http://localhost:5000'
     @set = new FeaturedSet
       owner: fabricate('feature', image_versions: ['wide'])
       id: "52b347c59c18db5aef000208"

@@ -16,7 +16,6 @@ module.exports =
   CANONICAL_MOBILE_URL: 'http://m.artsy.net'
   CMS_URL: 'https://cms.artsy.net'
   ADMIN_URL: 'https://admin.artsy.net'
-  ASSET_PATH: '/assets/'
   SESSION_SECRET: 'change-me'
   SESSION_COOKIE_MAX_AGE: 31536000000
   SESSION_COOKIE_KEY: 'force.sess'

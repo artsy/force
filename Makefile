@@ -66,7 +66,6 @@ assets:
 		mv public/$(file).min.css.gz public/$(file).min.css.cgz; \
 	)
 
-
 # Generate unminified assets for testing and development.
 assets-fast:
 	$(foreach file, $(shell find assets -name '*.coffee' | cut -d '.' -f 1), \
@@ -84,6 +83,6 @@ verify:
 deploy:
 	$(BIN)/bucketassets --bucket force-$(env)
 	heroku config:set COMMIT_HASH=$(shell git rev-parse --short HEAD) --app=force-$(env)
-	git push git@heroku.com:force-$(env).git master
+	git push --force git@heroku.com:force-$(env).git master
 
 .PHONY: test assets

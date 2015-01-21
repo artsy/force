@@ -20,7 +20,7 @@ describe 'Featured Links', ->
     benv.teardown()
 
   beforeEach ->
-    @sd = API_URL: 'http://localhost:5000', ASSET_PATH: 'http://localhost:5000'
+    @sd = API_URL: 'http://localhost:5000'
     @groups = [[
       new Artwork fabricate 'artwork', { artist: fabricate 'artist', { name: 'Matthew Abbott' } }
       new Artwork fabricate 'artwork', { artist: fabricate 'artist', { name: 'Leo Da Vinci' } }

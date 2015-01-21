@@ -11,7 +11,6 @@ describe 'Meta tags', ->
       APP_URL: 'http://localhost:5000'
       CANONICAL_MOBILE_URL: 'http://m.localhost:5000'
       MOBILE_MEDIA_QUERY: 'mobile-media-query'
-      ASSET_PATH: '/assets/'
       FACEBOOK_APP_NAMESPACE: 'artsyinc'
 
   describe 'shareable artwork', ->

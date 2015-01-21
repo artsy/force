@@ -31,7 +31,6 @@ describe 'Auction', ->
       @sd =
         CANONICAL_MOBILE_URL: 'http://localhost:5000'
         API_URL: 'http://localhost:5000'
-        ASSET_PATH: 'http://localhost:5000'
         CSS_EXT: '.css.gz'
         JS_EXT: '.js.gz'
         NODE_ENV: 'test'
