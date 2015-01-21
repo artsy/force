@@ -13,6 +13,7 @@ describe 'TagView', ->
       benv.expose { $: benv.require 'jquery' }
       benv.render resolve(__dirname, '../index.jade'), {
         sd: {}
+        asset: (->)
         tag: new Tag fabricate 'tag'
       }
       Backbone.$ = $

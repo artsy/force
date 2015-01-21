@@ -18,9 +18,9 @@ describe 'Posts', ->
   beforeEach ->
     @sd =
       API_URL: 'http://localhost:5000'
-      ASSET_PATH: 'http://localhost:5000'
     @html = render('template')({
       sd: @sd
+      asset: (->)
     })
 
   describe 'template', ->

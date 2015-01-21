@@ -25,7 +25,7 @@ describe 'FavoritesView', ->
     beforeEach (done) ->
       sinon.stub Backbone, 'sync'
       benv.render resolve(__dirname, '../fixtures/favorites.jade'), {
-        sd: {}
+        sd: {}, asset: (->)
       }, =>
         { FavoritesView, @init } = mod = benv.requireWithJadeify(
           (resolve __dirname, '../../client/favorites'), ['hintTemplate']
@@ -61,7 +61,7 @@ describe 'FavoritesView', ->
     beforeEach (done) ->
       @sync = sinon.stub Backbone, 'sync'
       benv.render resolve(__dirname, '../fixtures/favorites.jade'), {
-        sd: {}
+        sd: {}, asset: (->)
       }, =>
         { FavoritesView, @init } = mod = benv.requireWithJadeify(
           (resolve __dirname, '../../client/favorites'), ['hintTemplate','favoritesStatusTemplate']
@@ -167,7 +167,7 @@ describe 'FavoritesView', ->
     beforeEach (done) ->
       @sync = sinon.stub Backbone, 'sync'
       benv.render resolve(__dirname, '../fixtures/favorites.jade'), {
-        sd: {}
+        sd: {}, asset: (->)
       }, =>
         { FavoritesView, @init } = mod = benv.requireWithJadeify(
           (resolve __dirname, '../../client/favorites'), ['hintTemplate','favoritesStatusTemplate']

@@ -13,7 +13,7 @@ describe 'ClockView', ->
   before (done) ->
     benv.setup =>
       sd.API_URL = 'localhost:3003'
-      sd.ASSET_PATH = 'assets/'
+
       sd.CURRENT_PATH = ""
       benv.expose { $: benv.require 'jquery' }
       sinon.stub Backbone, 'sync'

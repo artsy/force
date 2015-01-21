@@ -25,6 +25,7 @@ describe 'Fairs template', ->
         benv.expose $: benv.require 'jquery'
         benv.render resolve(__dirname, '../templates/index.jade'),
           sd: {}
+          asset: (->)
           featuredFairs: @currentFairs
           currentFairs: @currentFairs
           pastFairs: @pastFairs
@@ -44,6 +45,7 @@ describe 'Fairs template', ->
         benv.expose $: benv.require 'jquery'
         benv.render resolve(__dirname, '../templates/index.jade'),
           sd: {}
+          asset: (->)
           featuredFairs: @pastFairs
           currentFairs: []
           pastFairs: @pastFairs

@@ -24,7 +24,6 @@ describe 'Artwork', ->
       CANONICAL_MOBILE_URL: 'http://localhost:5000'
       APP_URL: 'http://localhost:5000'
       API_URL: 'http://localhost:5000'
-      ASSET_PATH: 'http://localhost:5000/'
       CSS_EXT: '.css.gz'
       JS_EXT: '.js.gz'
       NODE_ENV: 'test'
@@ -40,6 +39,7 @@ describe 'Artwork', ->
         sd: @sd
         artwork: @artwork
         artist: @artist
+        asset: ->
       @$template = cheerio.load template
       @$template.html().should.containEql @artwork.get('title')
       @$template.html().should.containEql @artist.get('name')
@@ -49,6 +49,7 @@ describe 'Artwork', ->
       template = render('index')
         sd: @sd
         artwork: @artwork
+        asset: ->
       @$template = cheerio.load template
       @$template.html().should.containEql @artwork.get('title')
       @$template.html().should.not.containEql undefined
@@ -59,6 +60,7 @@ describe 'Artwork', ->
         sd: @sd
         artwork: @artwork
         artist: @artist
+        asset: ->
       @$template = cheerio.load template
       @$template.html().should.containEql @artwork.get('title')
       @$template.html().should.containEql @artist.get('name')
@@ -69,6 +71,7 @@ describe 'Artwork', ->
       template = render('_detail')
         sd: @sd
         artwork: @artwork
+        asset: ->
       @$template = cheerio.load template
       @$template.html().should.containEql @artwork.get('title')
       @$template.html().should.containEql 'artwork-meta-price'
@@ -80,5 +83,6 @@ describe 'Artwork', ->
         artwork: @artwork
         artist: @artist
         auctionId: 'two-x-two'
+        asset: ->
       @$template = cheerio.load template
       @$template.html().should.not.containEql 'artwork-meta-price'

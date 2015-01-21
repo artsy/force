@@ -14,6 +14,7 @@ describe 'Meta tags', ->
         APP_URL: 'http://localhost:5000'
       @html = jade.render fs.readFileSync(@file).toString(),
         sd: @sd
+        asset: (->)
 
     it 'includes mobile alternate, canonical, twitter card and og tags', ->
       @html.should.containEql "<link rel=\"alternate\" media=\"mobile-media-query\" href=\"http://m.localhost:5000/browse"

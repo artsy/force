@@ -31,7 +31,6 @@ describe 'Auction', ->
       @sd =
         CANONICAL_MOBILE_URL: 'http://localhost:5000'
         API_URL: 'http://localhost:5000'
-        ASSET_PATH: 'http://localhost:5000'
         CSS_EXT: '.css.gz'
         JS_EXT: '.js.gz'
         NODE_ENV: 'test'
@@ -48,6 +47,7 @@ describe 'Auction', ->
         sale: @sale
         monthRange: @order.getMonthRange()
         yearRange: @order.getYearRange()
+        asset: ->
       @$template = $(template)
       @$template.html().should.not.containEql 'undefined'
 
@@ -65,6 +65,7 @@ describe 'Auction', ->
         maxBid: 1234
         monthRange: @order.getMonthRange()
         yearRange: @order.getYearRange()
+        asset: ->
       @$template = $(template)
       @$template.html().should.not.containEql 'undefined'
       @$template.find('.bid-registration-form-contents').length.should.equal 1
@@ -81,6 +82,7 @@ describe 'Auction', ->
         maxBid: 1234
         monthRange: @order.getMonthRange()
         yearRange: @order.getYearRange()
+        asset: ->
       @$template = $(template)
       @$template.html().should.not.containEql 'undefined'
       @$template.find('.bid-registration-form-contents').length.should.equal 0

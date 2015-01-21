@@ -15,6 +15,7 @@ describe 'Meta tags', ->
       @html = jade.render fs.readFileSync(@file).toString(),
         sd: sd
         post: @post
+        asset: (->)
 
     it 'includes canonical url, twitter card, og tags, and title', ->
       @html.should.containEql "<meta property=\"twitter:card\" content=\"summary"
@@ -32,6 +33,7 @@ describe 'Meta tags', ->
       @html = jade.render fs.readFileSync(@file).toString(),
         sd: sd
         post: @post
+        asset: (->)
 
     it 'includes canonical url, twitter card, og tags, and title', ->
       @html.should.containEql "<meta property=\"twitter:card\" content=\"summary_large_image"

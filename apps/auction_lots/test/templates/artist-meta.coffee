@@ -20,6 +20,7 @@ describe 'Meta tags', ->
       @html = jade.render fs.readFileSync(@file).toString(),
         artist: @artist
         sd: @sd
+        asset: (->)
 
     it 'includes mobile alternate, canonical, twitter card and og tags', ->
       @html.should.containEql "<meta property=\"twitter:card\" content=\"summary"
@@ -36,6 +37,7 @@ describe 'Meta tags', ->
       @html = jade.render fs.readFileSync(@file).toString(),
         artist: @artist
         sd: @sd
+        asset: (->)
 
     it 'includes og:image and twitter card', ->
       @html.should.containEql "<meta property=\"og:image\" content=\"http://localhost:5000/artist/pablo-picasso"

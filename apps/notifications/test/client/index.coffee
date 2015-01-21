@@ -25,7 +25,7 @@ describe 'NotificationsView', ->
     sinon.stub Backbone, 'sync'
     sinon.stub CurrentUser, 'orNull'
     CurrentUser.orNull.returns new CurrentUser fabricate 'user'
-    benv.render resolve(__dirname, '../../templates/index.jade'), { sd: {} }, =>
+    benv.render resolve(__dirname, '../../templates/index.jade'), { sd: {}, asset: (->) }, =>
       { @NotificationsView, @init } = mod = benv.requireWithJadeify resolve(__dirname, '../../client/index'), ['artistTemplate', 'emptyTemplate']
       stubChildClasses mod, this,
         ['ArtworkColumnsView']

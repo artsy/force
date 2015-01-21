@@ -23,11 +23,11 @@ describe 'Post Templates', ->
     beforeEach ->
       sd =
         API_URL: 'http://localhost:5000'
-        ASSET_PATH: 'http://localhost:5000'
       post = new Post fabricate('post')
       profile = new Profile fabricate 'profile'
       @html = render('index')({
         sd: sd
+        asset: (->)
         post: post
         profile: profile
       })

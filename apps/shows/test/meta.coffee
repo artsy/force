@@ -5,9 +5,9 @@ jade = require 'jade'
 describe 'Meta tags', ->
   describe 'index', ->
     before ->
-      @sd = ASSET_PATH: 'http://localhost:5000', APP_URL: 'http://localhost:5000'
+      @sd = APP_URL: 'http://localhost:5000'
       @file = "#{process.cwd()}/apps/shows/templates/meta.jade"
-      @html = jade.render fs.readFileSync(@file).toString(), sd: @sd
+      @html = jade.render fs.readFileSync(@file).toString(), sd: @sd, asset: ((u) -> u)
 
     it 'includes canonical url, twitter card, og tags, title, description', ->
       @html.should.containEql '<title>Art Gallery Shows and Museum Exhibitions | Artsy</title>'
@@ -17,15 +17,15 @@ describe 'Meta tags', ->
       @html.should.containEql '<meta property="twitter:description" content="Explore all shows on Artsy."/>'
       @html.should.containEql '<link rel="canonical" href="http://localhost:5000/shows"/>'
       @html.should.containEql '<meta property="og:url" content="http://localhost:5000/shows"/>'
-      @html.should.containEql '<meta property="og:image" content="http://localhost:5000/og_image.jpg"/>'
+      @html.should.containEql '<meta property="og:image" content="/images/og_image.jpg"/>'
       @html.should.containEql '<meta property="og:type" content="website"/>'
       @html.should.containEql '<meta property="twitter:card" content="summary"/>'
 
   describe 'city', ->
     before ->
-      @sd = ASSET_PATH: 'http://localhost:5000', APP_URL: 'http://localhost:5000'
+      @sd = APP_URL: 'http://localhost:5000'
       @file = "#{process.cwd()}/apps/shows/templates/meta.jade"
-      @html = jade.render fs.readFileSync(@file).toString(), sd: @sd, city: name: 'Cool Place'
+      @html = jade.render fs.readFileSync(@file).toString(), asset: ((u) -> u), sd: @sd, city: name: 'Cool Place'
 
     it 'includes canonical url, twitter card, og tags, title, description', ->
       @html.should.containEql '<title>Cool Place Art Gallery Shows and Museum Exhibitions | Artsy</title>'
@@ -35,7 +35,7 @@ describe 'Meta tags', ->
       @html.should.containEql '<meta property="twitter:description" content="Explore shows in Cool Place on Artsy."/>'
       @html.should.containEql '<link rel="canonical" href="http://localhost:5000/shows"/>'
       @html.should.containEql '<meta property="og:url" content="http://localhost:5000/shows"/>'
-      @html.should.containEql '<meta property="og:image" content="http://localhost:5000/og_image.jpg"/>'
+      @html.should.containEql '<meta property="og:image" content="/images/og_image.jpg"/>'
       @html.should.containEql '<meta property="og:type" content="website"/>'
       @html.should.containEql '<meta property="twitter:card" content="summary"/>'
       @html.should.containEql '<meta name="fragment" content="!"/>'

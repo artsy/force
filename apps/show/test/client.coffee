@@ -13,7 +13,7 @@ describe 'Partner Show View', ->
   before (done) ->
     benv.setup =>
       sd.API_URL = 'localhost:3003'
-      sd.ASSET_PATH = 'assets/'
+
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       @PartnerShowView = benv.requireWithJadeify resolve(__dirname, '../client/index.coffee'), ['artworkColumns']

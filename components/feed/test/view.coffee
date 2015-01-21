@@ -14,7 +14,7 @@ describe 'FeedView', ->
     benv.setup =>
       sd.APP_URL = 'localhost:3004'
       sd.API_URL = 'localhost:3003'
-      sd.ASSET_PATH = 'assets/'
+
       sd.CURRENT_PATH = ""
       sd.NODE_ENV = 'test'
       sd.GOOGLE_ANALYTICS_ID = 'goog that analytics'

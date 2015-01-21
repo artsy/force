@@ -40,6 +40,7 @@ describe 'BidForm', ->
       saleArtwork: @saleArtwork
       bidderPositions: @bidderPositions
       maxBid: 50
+      asset: (->)
     }, =>
       @view = new BidForm
         el: $('#auction-registration-page')

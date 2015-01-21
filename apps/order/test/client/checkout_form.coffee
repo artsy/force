@@ -26,6 +26,7 @@ describe 'CheckoutForm', ->
     benv.render resolve(__dirname, '../../templates/checkout.jade'), {
       sd: {}
       order: new Order(fabricate 'order')
+      asset: (->)
     }, =>
       @success = false
       @view = new CheckoutForm

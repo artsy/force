@@ -19,7 +19,7 @@ describe 'PasswordResetView', ->
 
   beforeEach (done) ->
     sinon.stub Backbone, 'sync'
-    benv.render resolve(__dirname, '../templates/reset_password.jade'), { sd: {}, reset_password_token: 'secret' }, =>
+    benv.render resolve(__dirname, '../templates/reset_password.jade'), { asset: (->), sd: {}, reset_password_token: 'secret' }, =>
       @view = new PasswordResetView el: $('#reset-password-page')
       done()
 

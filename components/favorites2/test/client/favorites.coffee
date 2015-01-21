@@ -16,7 +16,7 @@ describe 'FavoritesView', ->
       $.fn.hidehover = sinon.stub()
       $.onInfiniteScroll = sinon.stub()
       sinon.stub Backbone, 'sync'
-      benv.render resolve(__dirname, '../fixtures/favorites.jade'), { sd: {} }, =>
+      benv.render resolve(__dirname, '../fixtures/favorites.jade'), { sd: {}, asset: (->) }, =>
         { FavoritesView } = mod = benv.requireWithJadeify(
           resolve(__dirname, '../../client/favorites')
           ['hintTemplate', 'collectionsTemplate']

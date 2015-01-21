@@ -15,7 +15,7 @@ describe 'Unsupported Browser', ->
     @req = { params: {}, body: {} }
     @res =
       render: sinon.stub()
-      locals: { sd: {} }
+      locals: { sd: {}, asset: (->) }
       redirect: sinon.stub()
       cookie: sinon.stub()
 

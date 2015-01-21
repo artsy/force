@@ -16,8 +16,8 @@ describe '#auctionRegistration', ->
       redirect: sinon.stub()
       locals:
         sd:
-          ASSET_PATH: "http://localhost:5000"
           API_URL: 'http://localhost:5000'
+        asset: ->
     @next = sinon.stub()
 
   afterEach ->
@@ -84,7 +84,6 @@ describe '#bid', ->
       redirect: sinon.stub()
       locals:
         sd:
-          ASSET_PATH: "http://localhost:5000"
           API_URL: 'http://localhost:5000'
     @next = sinon.stub()
 

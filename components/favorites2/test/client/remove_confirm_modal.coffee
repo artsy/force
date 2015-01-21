@@ -15,7 +15,7 @@ describe 'RemoveConfirmModal', ->
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       sinon.stub Backbone, 'sync'
-      benv.render resolve(__dirname, '../fixtures/favorites.jade'), { sd: {} }, =>
+      benv.render resolve(__dirname, '../fixtures/favorites.jade'), { sd: {}, asset: (->) }, =>
         RemoveConfirmModal = benv.requireWithJadeify(
           resolve(__dirname, '../../client/remove_confirm_modal')
           ['template']

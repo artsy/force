@@ -14,7 +14,6 @@ describe '#index', ->
       redirect: sinon.stub()
       locals:
         sd:
-          ASSET_PATH: "http://localhost:5000"
           API_URL: 'http://localhost:5000'
 
   afterEach ->

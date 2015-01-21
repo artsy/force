@@ -30,6 +30,7 @@ describe 'Partner Show', ->
         location: @show.location()
         partner: @show.partner()
         sd: sd
+        asset: (->)
         show: @show
         profile: @profile
         installShots: new InstallShots
@@ -53,6 +54,7 @@ describe 'Partner Show', ->
           location: @show.location()
           partner: @show.partner()
           sd: sd
+          asset: (->)
           show: @show
           profile: @profile
           context: 'fair'
@@ -70,6 +72,7 @@ describe 'Partner Show', ->
           location: @show.location()
           partner: @show.partner()
           sd: sd
+          asset: (->)
           show: @show
           profile: @profile
           context: 'fair'
@@ -98,6 +101,7 @@ describe 'Partner Show', ->
         location: @show.location()
         partner: @show.partner()
         sd: sd
+        asset: (->)
         show: @show
         installShots: new InstallShots
       })
@@ -137,6 +141,7 @@ describe 'Partner Show', ->
         location: @show.location()
         partner: @show.partner()
         sd: sd
+        asset: (->)
         show: @show
         installShots: new InstallShots [fabricate 'show_install_shot']
 

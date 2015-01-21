@@ -220,5 +220,5 @@ module.exports = class Post extends Backbone.Model
       sourceOrganization:
         name: 'artsy'
         url: 'https://artsy.net'
-        logo: "#{sd.ASSET_PATH}og_image.jpg"
+        logo: '/images/og_image.jpg'
     }

@@ -27,6 +27,7 @@ describe 'Galleries / Institutions', ->
       benv.expose $: benv.require 'jquery'
       benv.render resolve(__dirname, '../templates/index.jade'), {
         sd: CURRENT_PATH: '/institutions'
+        asset: (->)
         aToZGroup: @aToZGroup
         partnerCount: @profiles.length
         copy: header: 'Institutions, Museums, and Nonprofits', adjective: 'Institutional'

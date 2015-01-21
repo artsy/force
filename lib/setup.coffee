@@ -5,7 +5,7 @@
 #
 
 { API_URL, NODE_ENV, ARTSY_ID, ARTSY_SECRET, SESSION_SECRET,
-  SESSION_COOKIE_MAX_AGE, PORT, ASSET_PATH, FACEBOOK_APP_NAMESPACE,
+  SESSION_COOKIE_MAX_AGE, PORT, FACEBOOK_APP_NAMESPACE,
   MOBILE_MEDIA_QUERY, MOBILE_URL, APP_URL, OPENREDIS_URL, DEFAULT_CACHE_TIME,
   CANONICAL_MOBILE_URL, IMAGES_URL_PREFIX, SECURE_IMAGES_URL,
   GOOGLE_ANALYTICS_ID, MIXPANEL_ID, SNOWPLOW_COLLECTOR_HOST, GOOGLE_SEARCH_CX,
@@ -51,12 +51,12 @@ fs = require 'graceful-fs'
 artsyError = require 'artsy-error-handler'
 cache = require './cache'
 timeout = require 'connect-timeout'
+bucketAssets = require 'bucket-assets'
 
 # Setup sharify constants & require dependencies that use sharify data
 sharify.data =
   JS_EXT: (if ("production" is NODE_ENV or "staging" is NODE_ENV) then ".min.js.cgz" else ".js")
   CSS_EXT: (if ("production" is NODE_ENV or "staging" is NODE_ENV) then ".min.css.cgz" else ".css")
-  ASSET_PATH: ASSET_PATH
   APP_URL: APP_URL
   POSITRON_URL: POSITRON_URL
   API_URL: API_URL
@@ -91,6 +91,7 @@ sharify.data =
   EMBEDLY_KEY: EMBEDLY_KEY
   DISABLE_IMAGE_PROXY: DISABLE_IMAGE_PROXY
   SHOW_AUCTIONS_IN_HEADER: SHOW_AUCTIONS_IN_HEADER
+  CDN_URL: process.env.CDN_URL
 
 CurrentUser = require '../models/current_user'
 
@@ -177,6 +178,7 @@ module.exports = (app) ->
   app.use ensureWWW
 
   # General helpers and express middleware
+  app.use bucketAssets()
   app.use flash()
   app.use flashMiddleware
   app.use localsMiddleware

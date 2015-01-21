@@ -14,7 +14,7 @@ describe 'EditCollectionModal', ->
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       sinon.stub Backbone, 'sync'
-      benv.render resolve(__dirname, '../fixtures/favorites.jade'), { sd: {} }, =>
+      benv.render resolve(__dirname, '../fixtures/favorites.jade'), { sd: {}, asset: (->) }, =>
         EditCollectionModal = benv.requireWithJadeify(
           resolve(__dirname, '../../client/edit_collection_modal')
           ['newTemplate', 'editTemplate']

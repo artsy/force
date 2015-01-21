@@ -31,6 +31,7 @@ describe 'Artist header', ->
 
       benv.render resolve(__dirname, '../templates/index.jade'), {
         sd: CURRENT_PATH: "/artist/#{@artist.id}/shows"
+        asset: (->)
         artist: @artist
         nav: @nav
         carousel: @carousel
@@ -63,6 +64,7 @@ describe 'Artist header', ->
 
       benv.render resolve(__dirname, '../templates/index.jade'), {
         sd: CURRENT_PATH: "/artist/#{@artist.id}/shows"
+        asset: (->)
         artist: @artist
         nav: @nav
         carousel: @carousel
@@ -92,6 +94,7 @@ describe 'Artist header', ->
 
       benv.render resolve(__dirname, '../templates/index.jade'), {
         sd: CURRENT_PATH: "/artist/#{@artist.id}/shows"
+        asset: (->)
         artist: @artist
         nav: @nav
         carousel: @carousel

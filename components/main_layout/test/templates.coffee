@@ -14,7 +14,7 @@ render = ->
 describe 'Main layout template', ->
 
   it 'includes the sharify script', ->
-    render()(sd: {}, sharify: { script: -> 'foobar' }).should.containEql 'foobar'
+    render()(sd: {}, sharify: { script: -> 'foobar' }, asset: (->)).should.containEql 'foobar'
 
 describe 'Meta tags', ->
 
@@ -22,7 +22,6 @@ describe 'Meta tags', ->
 
     before ->
       @sd =
-        ASSET_PATH: "http://localhost:5000"
         API_URL: "http://localhost:5000"
         CURRENT_PATH: '/cool-profile/info'
       @file = resolve __dirname, "../templates/profile_meta.jade"
