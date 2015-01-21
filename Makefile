@@ -81,11 +81,9 @@ verify:
 
 # Runs all the necessary build tasks to push to staging or production.
 # Run with `make deploy env=staging` or `make deploy env=production`.
-deploy: assets verify
-	$(BIN)/bucketassets -d public -b force-$(env)
-	heroku config:add \
-		ASSET_PATH=//$(CDN_DOMAIN_$(env)).cloudfront.net/assets/$(shell git rev-parse --short HEAD)/ \
-		--app=force-$(env)
+deploy:
+	$(BIN)/bucketassets --bucket force-$(env)
+	heroku config:set COMMIT_HASH=$(shell git rev-parse --short HEAD) --app=force-$(env)
 	git push git@heroku.com:force-$(env).git master
 
 .PHONY: test assets
