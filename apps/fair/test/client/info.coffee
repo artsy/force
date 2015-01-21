@@ -28,6 +28,7 @@ describe 'FairInfoView', ->
       sd: { FAIR: fair, PROFILE: profile }
       fair: @fair
       profile: @profile
+      asset: (->)
     }, =>
       $('body').html '<div id="fair"><a class="fair-map-link"></a><img class="map" /></div>'
       @view = new FairInfo { el: $('#fair'), model: @profile, fair: @fair }

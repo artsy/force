@@ -59,6 +59,7 @@ describe 'Artists', ->
         letterRange: ['a', 'b', 'c']
         featuredArtists: @featuredArtists
         featuredGenes: @genes
+        asset: (->)
       )
 
       @$template = cheerio.load template
@@ -111,6 +112,7 @@ describe 'Artists', ->
         letter: 'A'
         letterRange: ['a', 'b', 'c']
         artists: @artistsByLetter
+        asset: (->)
       )
 
       @$template = cheerio.load template

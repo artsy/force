@@ -31,6 +31,7 @@ describe "Shipping Templates", ->
       @template = render('shipping')(
         sd: {}
         order: @order
+        asset: (->)
       )
 
     it "renders the order form", ->
@@ -47,6 +48,7 @@ describe "Shipping Templates", ->
       @template = render('shipping')(
         sd: {}
         order: @order
+        asset: (->)
       )
 
     it "renders the order form", ->
@@ -67,6 +69,7 @@ describe "Checkout Templates", ->
       @template = render('checkout')(
         sd: {}
         order: @order
+        asset: (->)
       )
 
     it "renders the order form", ->
@@ -84,6 +87,7 @@ describe "Checkout Templates", ->
       @template = render('checkout')(
         sd: {}
         order: @order
+        asset: (->)
       )
 
     it "renders the order form", ->
@@ -102,6 +106,7 @@ describe "Complete Templates", ->
     @template = render('complete')(
       sd: {}
       order: @order
+      asset: (->)
     )
 
   it "renders the order form", ->

@@ -22,6 +22,7 @@ describe 'Artist auction lots template', ->
       @auctionLots = new AuctionLots(_.times(10, (-> fabricate 'auction_result')), { state: { totalRecords: 10 }})
       @template = render('artist')(
         sd: {}
+        asset: (->)
         artist: @artist
         auctionLots: @auctionLots
       )
@@ -42,6 +43,7 @@ describe 'Artist auction lots template', ->
       @auctionLots = new AuctionLots(_.times(26, (-> fabricate 'auction_result')), { state: { totalRecords: 26 }})
       @template = render('artist')(
         sd: {}
+        asset: (->)
         artist: @artist
         auctionLots: @auctionLots
       )
@@ -58,6 +60,7 @@ describe 'Artist auction lots template', ->
       @auctionLots = new AuctionLots([fabricate 'auction_result'], { state: { totalRecords: 1 }})
       @template = render('artist')(
         sd: {}
+        asset: (->)
         artist: @artist
         auctionLots: @auctionLots
       )
@@ -72,6 +75,7 @@ describe 'Artist auction lots template', ->
       @user = new CurrentUser fabricate 'user'
       @template = render('artist')(
         sd: {}
+        asset: (->)
         artist: @artist
         auctionLots: @auctionLots
         user: @user

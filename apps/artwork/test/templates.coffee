@@ -39,6 +39,7 @@ describe 'Artwork', ->
         sd: @sd
         artwork: @artwork
         artist: @artist
+        asset: ->
       @$template = cheerio.load template
       @$template.html().should.containEql @artwork.get('title')
       @$template.html().should.containEql @artist.get('name')
@@ -48,6 +49,7 @@ describe 'Artwork', ->
       template = render('index')
         sd: @sd
         artwork: @artwork
+        asset: ->
       @$template = cheerio.load template
       @$template.html().should.containEql @artwork.get('title')
       @$template.html().should.not.containEql undefined
@@ -58,6 +60,7 @@ describe 'Artwork', ->
         sd: @sd
         artwork: @artwork
         artist: @artist
+        asset: ->
       @$template = cheerio.load template
       @$template.html().should.containEql @artwork.get('title')
       @$template.html().should.containEql @artist.get('name')
@@ -68,6 +71,7 @@ describe 'Artwork', ->
       template = render('_detail')
         sd: @sd
         artwork: @artwork
+        asset: ->
       @$template = cheerio.load template
       @$template.html().should.containEql @artwork.get('title')
       @$template.html().should.containEql 'artwork-meta-price'
@@ -79,5 +83,6 @@ describe 'Artwork', ->
         artwork: @artwork
         artist: @artist
         auctionId: 'two-x-two'
+        asset: ->
       @$template = cheerio.load template
       @$template.html().should.not.containEql 'artwork-meta-price'

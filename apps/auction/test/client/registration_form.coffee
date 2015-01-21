@@ -31,6 +31,7 @@ describe 'RegistrationForm', ->
       sale: @sale
       monthRange: @order.getMonthRange()
       yearRange: @order.getYearRange()
+      asset: ->
     }, =>
       @view = new RegistrationForm
         el: $('#auction-registration-page')

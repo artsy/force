@@ -22,6 +22,7 @@ describe 'Profile', ->
     @profile = new Profile fabricate 'profile'
     @html = render('index')({
       sd: @sd
+      asset: (->)
       profile: @profile
     })
 
@@ -37,5 +38,6 @@ describe 'Profile', ->
       }
       render('index')({
         sd: @sd
+        asset: (->)
         profile: @profile
       }).should.not.containEql '<img src=x'

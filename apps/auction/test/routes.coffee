@@ -17,6 +17,7 @@ describe '#auctionRegistration', ->
       locals:
         sd:
           API_URL: 'http://localhost:5000'
+        asset: ->
     @next = sinon.stub()
 
   afterEach ->

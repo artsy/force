@@ -13,6 +13,7 @@ describe 'GeneView', ->
       benv.expose { $: benv.require 'jquery' }
       benv.render resolve(__dirname, '../templates/index.jade'), {
         sd: {}
+        asset: (->)
         gene: new Gene fabricate 'gene'
       }
       Backbone.$ = $

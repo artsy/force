@@ -22,6 +22,7 @@ describe 'Browse', ->
     beforeEach ->
       @template = render()(
         sd: {}
+        asset: (->)
         showBrowseCategories: true
       )
 
@@ -71,6 +72,7 @@ describe 'Browse', ->
 
       @template = render()(
         sd: {}
+        asset: (->)
         featuredGenes: featuredGenes
         popularCategories: popularCategories
         geneCategories: geneCategories
@@ -106,6 +108,7 @@ describe 'Browse', ->
     beforeEach ->
       @template = render()(
         sd: {}
+        asset: (->)
       )
 
     it "does not error", ->

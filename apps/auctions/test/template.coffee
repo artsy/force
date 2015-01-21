@@ -18,6 +18,7 @@ describe 'Auctions template', ->
         benv.expose $: benv.require 'jquery'
         benv.render resolve(__dirname, '../templates/index.jade'),
           sd: {}
+          asset: (->)
           pastAuctions: [@closedSale]
           currentAuctions: [@openSale]
           upcomingAuctions: [@previewSale]

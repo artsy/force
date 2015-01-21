@@ -20,6 +20,7 @@ describe 'Posts', ->
       API_URL: 'http://localhost:5000'
     @html = render('template')({
       sd: @sd
+      asset: (->)
     })
 
   describe 'template', ->

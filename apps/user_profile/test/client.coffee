@@ -19,6 +19,7 @@ describe 'UserProfileView', ->
       benv.render resolve(__dirname, '../templates/index.jade'), {
         profile: profile = new Profile(fabricate 'profile')
         sd: {}
+        asset: (->)
       }, =>
         UserProfileView = benv.require resolve(__dirname, '../client/user_profile')
         stubChildClasses UserProfileView, @,
@@ -88,6 +89,7 @@ describe 'CollectionView', ->
         profile: profile = new Profile(fabricate 'profile')
         collection: new Backbone.Model(name: 'saved-artwork')
         sd: {}
+        asset: (->)
       }, =>
         { CollectionView } = mod = benv.require resolve __dirname, '../client/collection'
         stubChildClasses mod, @, ['ArtworkColumnsView', 'ShareModal', 'FavoritesEmptyStateView'], ['appendArtworks']
@@ -169,6 +171,7 @@ describe 'Slideshow', ->
         profile: profile = new Profile(fabricate 'profile')
         collection: new Backbone.Model(name: 'saved-artwork')
         sd: {}
+        asset: (->)
       }, =>
         Slideshow = require '../client/slideshow'
         @view = new Slideshow

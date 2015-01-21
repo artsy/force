@@ -32,6 +32,7 @@ describe 'Auction results client-side code', ->
       artist: @artist
       artworks: @artworks
       auctionLots: @auctionLots
+      asset: (->)
     }, =>
       AuctionResultsView = benv.requireWithJadeify (resolve __dirname, '../../client/view'), []
 

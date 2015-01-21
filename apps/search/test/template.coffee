@@ -32,6 +32,7 @@ describe 'Search results template', ->
     beforeEach ->
       @template = render('template')(
         sd: {}
+        asset: (->)
         results: @search.models
         term: 'foobar'
         crop: sinon.stub()
@@ -52,6 +53,7 @@ describe 'Search results template', ->
 
       template = render('template')(
         sd: {}
+        asset: (->)
         results: @search.models
         term: 'skull'
         crop: sinon.stub()

@@ -10,6 +10,7 @@ describe 'Meta tags', ->
     @file = "#{process.cwd()}/apps/posts/meta.jade"
     @html = jade.render fs.readFileSync(@file).toString(),
       sd: @sd
+      asset: (->)
 
   it 'includes canonical url, twitter card, og tags, and title', ->
     @html.should.containEql "<meta property=\"twitter:card\" content=\"summary"

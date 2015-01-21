@@ -14,7 +14,7 @@ render = ->
 describe 'Main layout template', ->
 
   it 'includes the sharify script', ->
-    render()(sd: {}, sharify: { script: -> 'foobar' }).should.containEql 'foobar'
+    render()(sd: {}, sharify: { script: -> 'foobar' }, asset: (->)).should.containEql 'foobar'
 
 describe 'Meta tags', ->
 

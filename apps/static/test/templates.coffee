@@ -13,5 +13,5 @@ render = (templateName) ->
 describe 'Future of Art', ->
 
   it 'includes a link to the WSJ article', ->
-    render('future_of_art')(sd: {}, page: new Page()).should
+    render('future_of_art')(sd: {}, asset: (->), page: new Page()).should
       .containEql "online.wsj.com/articles/carter-cleveland"

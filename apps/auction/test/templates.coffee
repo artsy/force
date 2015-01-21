@@ -47,6 +47,7 @@ describe 'Auction', ->
         sale: @sale
         monthRange: @order.getMonthRange()
         yearRange: @order.getYearRange()
+        asset: ->
       @$template = $(template)
       @$template.html().should.not.containEql 'undefined'
 
@@ -64,6 +65,7 @@ describe 'Auction', ->
         maxBid: 1234
         monthRange: @order.getMonthRange()
         yearRange: @order.getYearRange()
+        asset: ->
       @$template = $(template)
       @$template.html().should.not.containEql 'undefined'
       @$template.find('.bid-registration-form-contents').length.should.equal 1
@@ -80,6 +82,7 @@ describe 'Auction', ->
         maxBid: 1234
         monthRange: @order.getMonthRange()
         yearRange: @order.getYearRange()
+        asset: ->
       @$template = $(template)
       @$template.html().should.not.containEql 'undefined'
       @$template.find('.bid-registration-form-contents').length.should.equal 0

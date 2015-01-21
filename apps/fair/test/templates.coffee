@@ -47,6 +47,7 @@ describe 'Fair', ->
         sd: sd
         fair: fair
         profile: profile
+        asset: (->)
       @$template = cheerio.load template
       done()
 
@@ -76,6 +77,7 @@ describe 'Fair', ->
         sd: sd
         fair: fair
         profile: profile
+        asset: (->)
       @$template = cheerio.load template
       done()
 
@@ -136,6 +138,7 @@ describe 'Fair', ->
         results: results
         fairResults: fairResults
         crop: sinon.stub()
+        asset: (->)
       @$template = cheerio.load template
       done()
 
@@ -225,6 +228,7 @@ describe 'Fair', ->
         filteredSearchColumns: filteredSearchColumns
         coverImage: coverImage
         primarySets: primarySets
+        asset: (->)
 
       nestedFilteredSearchOptions = new Backbone.Model {
         related_gene:
@@ -254,6 +258,7 @@ describe 'Fair', ->
         filteredSearchColumns: nestedFilteredSearchColumns
         coverImage: coverImage
         primarySets: primarySets
+        asset: (->)
 
     it 'renders without errors', ->
       $ = cheerio.load @template
@@ -289,6 +294,7 @@ describe 'Fair', ->
         filteredSearchColumns: nestedFilteredSearchColumns
         coverImage: coverImage
         primarySets: primarySets
+        asset: (->)
       $.html('.fair-overview-post-container').should.containEql 'fair-editorial-3-up'
 
     it 'renders a editorial even when missing a set', ->
@@ -307,6 +313,7 @@ describe 'Fair', ->
         filteredSearchColumns: nestedFilteredSearchColumns
         coverImage: coverImage
         primarySets: primarySets
+        asset: (->)
       $.html('.fair-overview-post-container').should.containEql 'fair-editorial-2-up'
 
     it 'renders a editorial even when missing a set w/ >= 4 items', ->
@@ -325,6 +332,7 @@ describe 'Fair', ->
         filteredSearchColumns: nestedFilteredSearchColumns
         coverImage: coverImage
         primarySets: primarySets
+        asset: (->)
       $.html().should.containEql 'fair-overview-curator'
 
   describe 'exhibitors columns', ->

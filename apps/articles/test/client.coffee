@@ -38,6 +38,7 @@ describe 'ArticleView', ->
         ]
         author: new Backbone.Model fabricate 'user'
         sd: {}
+        asset: (->)
         embedVideo: require('embed-video')
         moment: require('moment')
         resize: sinon.stub()
@@ -88,6 +89,7 @@ describe 'MagazineView', ->
         sd: {}
         moment: require('moment')
         resize: sinon.stub()
+        asset: (->)
       }, =>
         done()
 

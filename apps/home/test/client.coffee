@@ -24,6 +24,7 @@ describe 'HeroUnitView', ->
         ]).models
         exploreSections: []
         sd: {}
+        asset: (->)
       }
       Backbone.$ = $
       $.fn.imagesLoaded = ->
@@ -84,6 +85,7 @@ describe 'Homepage init code', ->
         ]).models
         exploreSections: []
         sd: {}
+        asset: (->)
       }, ->
         Backbone.$ = $
         done()

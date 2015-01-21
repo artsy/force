@@ -27,6 +27,7 @@ describe 'Post Templates', ->
       profile = new Profile fabricate 'profile'
       @html = render('index')({
         sd: sd
+        asset: (->)
         post: post
         profile: profile
       })

@@ -42,6 +42,7 @@ describe 'ArtworkView', ->
       sd: {}
       artist: @artist
       artwork: @artwork
+      asset: (->)
     }, =>
       @ArtworkView = mod = benv.requireWithJadeify(
         (resolve __dirname, '../../client/view'),

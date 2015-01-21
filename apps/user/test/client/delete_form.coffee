@@ -19,7 +19,7 @@ describe 'UserDeleteForm', ->
   beforeEach (done) ->
     @user = new CurrentUser fabricate 'user'
     sinon.stub($, 'ajax')
-    benv.render resolve(__dirname, '../../templates/delete.jade'), sd: {}, user: @user, =>
+    benv.render resolve(__dirname, '../../templates/delete.jade'), sd: {}, asset: (->), user: @user, =>
       UserDeleteForm = benv.requireWithJadeify(resolve(__dirname, '../../client/delete_form'), [])
       UserDeleteForm.__set__ 'FlashMessage', (@flashStub = sinon.stub())
       @view = new UserDeleteForm el: $('#settings'), model: @user

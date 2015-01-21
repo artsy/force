@@ -23,6 +23,7 @@ describe 'Unsupported Browser', ->
       UNSUPPORTED_BROWSER_REDIRECT: '/artwork/matthew-abbott-lobby-and-supercomputer'
     @html = render()({
       sd: @sd
+      asset: (->)
     })
 
   it 'renders a message for the unsupported browser', ->

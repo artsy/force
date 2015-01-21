@@ -25,6 +25,7 @@ describe 'Unsubscribe View', ->
       sinon.stub Backbone, 'sync'
       benv.render resolve(__dirname, '../templates/index.jade'), {
         sd: {}
+        asset: (->)
         emailTypes: emailTypes
       }, =>
         UnsubscribeView.__set__ 'sd', { UNSUB_AUTH_TOKEN: 'cat' }

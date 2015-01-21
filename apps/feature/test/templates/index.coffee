@@ -12,6 +12,7 @@ describe 'Partner Show', ->
       @feature = new Feature fabricate('feature', image_versions: ['wide'])
       benv.render resolve(__dirname, '../../templates/index.jade'), {
         sd: @sd
+        asset: (->)
         feature: @feature
       }, => done()
 

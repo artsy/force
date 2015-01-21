@@ -28,7 +28,7 @@ describe 'FollowsView', ->
     beforeEach (done) ->
       sinon.stub Backbone, 'sync'
       benv.render resolve(__dirname, '../fixtures/follows.jade'), {
-        sd: { type: 'artists' }
+        sd: { type: 'artists' }, asset: (->)
       }, =>
         { FollowsView, @init } = mod = benv.requireWithJadeify(
           (resolve __dirname, '../../client/follows'), ['itemTemplate', 'hintTemplate']
@@ -59,7 +59,7 @@ describe 'FollowsView', ->
     beforeEach (done) ->
       sinon.stub Backbone, 'sync'
       benv.render resolve(__dirname, '../fixtures/follows.jade'), {
-        sd: { type: 'artists' }
+        sd: { type: 'artists' }, asset: (->)
       }, =>
         { FollowsView, @init } = mod = benv.requireWithJadeify(
           (resolve __dirname, '../../client/follows'), ['itemTemplate', 'hintTemplate']

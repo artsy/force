@@ -16,7 +16,7 @@ describe 'Meta tags', ->
   describe 'shareable artwork', ->
     beforeEach ->
       @artwork = new Artwork fabricate 'artwork', id: 'foobar', can_share_image: true
-      @html = jade.render fs.readFileSync(@file).toString(), artwork: @artwork, sd: @sd
+      @html = jade.render fs.readFileSync(@file).toString(), artwork: @artwork, sd: @sd, asset: ((u) -> u)
 
     it 'includes mobile alternate, canonical, twitter card, og tags', ->
       @html.should.containEql '<title>Andy Warhol | Skull (1999) | Artsy</title>'
@@ -34,7 +34,7 @@ describe 'Meta tags', ->
   describe 'unshareable artwork', ->
     beforeEach ->
       @artwork = new Artwork fabricate 'artwork', id: 'foobar', can_share_image: false
-      @html = jade.render fs.readFileSync(@file).toString(), artwork: @artwork, sd: @sd
+      @html = jade.render fs.readFileSync(@file).toString(), artwork: @artwork, sd: @sd, asset: ((u) -> u)
 
     it 'includes mobile alternate, canonical, twitter card, og tags; but prevents the artwork image from being included', ->
       @html.should.containEql '<title>Andy Warhol | Skull (1999) | Artsy</title>'
@@ -47,7 +47,7 @@ describe 'Meta tags', ->
       @html.should.containEql '<meta property="og:url" content="http://localhost:5000/artwork/foobar"/>'
       @html.should.containEql '<meta property="og:type" content="artsyinc:artwork"/>'
 
-      @html.should.containEql '<meta property="og:image" content="/assets/icon-152.png"/>'
+      @html.should.containEql '<meta property="og:image" content="/images/icon-152.png"/>'
       @html.should.not.containEql '<meta property="og:image" content="/local/additional_images/4e7cb83e1c80dd00010038e2/1/large.jpg"/>'
 
       @html.should.containEql '<meta property="twitter:card" content="summary"/>'
