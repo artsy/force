@@ -7,8 +7,6 @@
 #
 
 BIN = node_modules/.bin
-CDN_DOMAIN_production = d3df9uo7bhy7ev
-CDN_DOMAIN_staging = dvvrm5xieopg5
 MIN_FILE_SIZE = 1000
 
 # Start the server
