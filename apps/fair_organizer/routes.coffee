@@ -38,7 +38,7 @@ representation = (fair) ->
     complete: ->
       profile = res.locals.profile
       return next() unless profile?.isFairOrOrganizer() and profile?.ownerHasId()
-      fair = new Fair id: profile.ownerId()
+      fair = new Fair id: 'the-armory-show-2015'
       fair.fetch
         error: res.backboneError
         success: =>
