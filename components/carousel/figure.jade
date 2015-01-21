@@ -6,3 +6,5 @@ mixin carouselFigure(figure)
     width= dimensions.width
     height= dimensions.height
   )
+  if figure.get('caption')
+    .carousel-caption= figure.get('caption')
