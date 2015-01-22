@@ -18,3 +18,9 @@ module.exports = (router) ->
   state.on 'change:state', (state, value) ->
     track.funnel 'Submitted partner application form', state: value
     snowplowStruct 'partner_application', 'submit', null, 'partner_application', null, _.extend({}, state.pick('mode'), form.pick('name', 'first_name', 'last_name'))
+
+  $(document).on 'click', '.paf-submit', ->
+    track.funnel 'Clicked submit button on partner application form'
+
+  $(document).on 'click', '.paf-next', ->
+    track.funnel 'Clicked next button on partner application form'
