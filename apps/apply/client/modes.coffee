@@ -3,7 +3,7 @@ module.exports =
     value: 'initial'
     slug: ''
     copy: 'Select Organization Type'
-    type: null
+    type: 'Other'
   gallery:
     value: 'gallery'
     slug: 'gallery'

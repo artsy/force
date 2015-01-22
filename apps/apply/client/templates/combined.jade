@@ -1,0 +1,56 @@
+header.partner-application-header
+  h1 Apply to become an Artsy Partner
+  p
+    | We will use the following information about your organization to help us better assess if you would be a good fit for our program.
+
+#paf-form.partner-application-form: form.stacked-form
+  label.bordered-select: select.paf-type-select( name='type' )
+    for mode in modes
+      option( value= mode.value )
+        = mode.copy
+
+  hr.is-invisible
+
+  .avant-garde-form-label#paf-company-label( for='company' ) Organization Name
+  input.bordered-input( type='text', name='company', value= form.get('company') required )
+
+  .stacked-form-cell: .grid-2-up
+    .grid-item
+      label.avant-garde-form-label( for='first_name' ) First Name
+      input.bordered-input.is-block( type='text', name='first_name', value= form.get('first_name'), required )
+    .grid-item
+      label.avant-garde-form-label( for='last_name' ) Last Name
+      input.bordered-input.is-block( type='text', name='last_name', value= form.get('last_name'), required )
+
+  label.avant-garde-form-label( for='title' ) Title
+  input.bordered-input.is-block( type='text', name='title', value= form.get('title') )
+
+  label.avant-garde-form-label( for='email' ) E-mail
+  input.bordered-input( type='email', name='email', value= form.get('email'), required )
+
+  label.avant-garde-form-label( for='phone' ) Phone
+  input.bordered-input( type='text', name='phone', value= form.get('phone') )
+
+  label.avant-garde-form-label( for='URL' ) Website
+  input.bordered-input( type='url', name='URL', value= form.get('URL') )
+
+  label.avant-garde-form-label( for='street' ) Address
+  input.bordered-input( type='text', name='street', value= form.get('street') )
+
+  .stacked-form-cell: .grid-2-up
+    .grid-item
+      label.avant-garde-form-label( for='city' ) City
+      input.bordered-input.is-block( type='text', name='city', value= form.get('city') )
+    .grid-item
+      label.avant-garde-form-label( for='country' ) Country
+      input.bordered-input.is-block( type='text', name='country', value= form.get('country') )
+
+  label.avant-garde-form-label( for="00NC0000005Qo0v" ) Message to Artsy
+  textarea.bordered-input#00NC0000005Qo0v( name="00NC0000005Qo0v", rows="10", type="text", wrap="soft", placeholder="Additional information about your organization, information about how you would like to partner with Artsy, etc." )
+
+  #paf-subform
+    //- Rendered separately
+
+  hr.is-invisible
+
+  button.avant-garde-button-black.paf-submit Submit

@@ -104,6 +104,20 @@ describe 'Form', ->
       @view.$('form').submit()
       @view.submitStub.callCount.should.equal 2
 
+    describe 'multi-selects', ->
+      beforeEach ->
+        sinon.stub($.fn, 'serializeArray').returns [
+          { name: 'foo', value: 'bar' }
+          { name: 'foo', value: 'baz' }
+          { name: 'foo', value: 'qux' }
+        ]
+
+      afterEach ->
+        $.fn.serializeArray.restore()
+
+      it 'properly handles multiple values on the same key', ->
+        @view.serializeForm().foo.should.eql ['bar', 'baz', 'qux']
+
   describe '#validateForm', ->
     # Note: https://github.com/tmpvar/jsdom/issues/544
     it 'should set a class on the form and call the #checkValidity on the form', ->

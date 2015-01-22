@@ -13,6 +13,7 @@ module.exports = class SplitTest
 
   set: (outcome) ->
     Cookies.set @_key(), outcome
+    unsetProperty @_key() # Force unset
     setProperty _.tap({}, (hsh) => hsh[@_key()] = outcome)
     outcome
 
