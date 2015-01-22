@@ -22,8 +22,6 @@ describe 'FeedbackView', ->
       sinon.stub FeedbackView::, 'open'
       sinon.stub FeedbackView::, 'updatePosition'
       @view = new FeedbackView el: $('body')
-      @view.representatives = new Backbone.Collection [name: 'Foo Bar']
-      @view.representatives.first().iconImageUrl = sinon.stub()
       @view.renderTemplates()
       done()
 
@@ -34,7 +32,6 @@ describe 'FeedbackView', ->
     it 'renders correctly', ->
       html = @view.$el.html()
       html.should.containEql 'Send feedback to Artsy'
-      html.should.containEql 'img alt="Foo Bar"'
 
   describe '#submit', ->
     describe 'Logged out', ->
@@ -67,5 +64,4 @@ describe 'FeedbackView', ->
         @view.$('form').submit()
 
       it 'has the correct data', ->
-        keys = _.keys(_.last(Backbone.sync.args)[1].attributes)
-        keys.should.eql ['url', 'message']
+        _.last(Backbone.sync.args)[1].attributes.should.have.keys 'url', 'message', 'user_name', 'user_email'
