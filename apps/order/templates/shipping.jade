@@ -18,6 +18,13 @@ block body
               input.email.bordered-input( type='email', name='email', value=order.get('email') || '' )
         section.order-form-shipping-address
           include ../../../components/credit_card/templates/shipping_address
+
+        p.order-privacy
+          | By clicking below, you accept our
+          = ' '
+          a( href='/privacy', target='_blank' ) Privacy Policy
+          | .
+
         button.order-form-button.avant-garde-button-black( type='submit') Continue to Checkout
       .order-summary
         include ./summary
