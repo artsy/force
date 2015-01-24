@@ -82,4 +82,5 @@ module.exports = [
   ,{ slug: 'vienna', name: 'Vienna', coords: [48.20817430000001, 16.3738189], sort_order: 1000}
   ,{ slug: 'washington', name: 'Washington', coords: [38.9071923, -77.0368707], sort_order: 1000}
   ,{ slug: 'zurich', name: 'Zürich', coords: [47.36864980000001, 8.5391825], sort_order: 1000}
+  ,{ slug: 'lausanne', name: 'Lausanne', coords: [46.5533142, 6.652495], sort_order: 1000}
 ];
