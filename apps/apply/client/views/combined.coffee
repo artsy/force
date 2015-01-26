@@ -1,6 +1,5 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-modes = require '../modes.coffee'
 Form = require '../../../../components/mixins/form.coffee'
 Checkboxes = require './checkboxes.coffee'
 subformTemplates =
@@ -32,7 +31,7 @@ module.exports = class CombinedView extends Backbone.View
   renderMode: ->
     @renderLabels()
     # Ensure the select box is in the correct state
-    @$('.paf-type-select').val @state.mode().value
+    @$('.paf-type-select').val @state.get('mode')
     # Render type-specific sub-form
     @$('#paf-subform').html subformTemplates[@state.get 'mode']
       state: @state, form: @form
@@ -65,6 +64,6 @@ module.exports = class CombinedView extends Backbone.View
     @state.set 'state', 'error'
 
   render: ->
-    @$el.html template(form: @form, modes: modes)
+    @$el.html template(form: @form, state: @state)
     _.defer => @renderMode()
     this
