@@ -86,9 +86,11 @@
           i.icon-website
           | Visit Website
 
-      if artwork.isDownloadable()
+      if artwork.isDownloadable(user)
         a.artwork-download-button(
-          href= artwork.defaultImageUrl('larger'), target='_blank', download= artwork.downloadableFilename()
+          href= "#{artwork.href()}/download/#{artwork.downloadableFilename()}"
+          target='_blank'
+          download
         )
           i.icon-download
           | Download Image
