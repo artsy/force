@@ -39,7 +39,7 @@ module.exports = class PartnerApplicationRouter extends Backbone.Router
     @splitTest = splitTest 'partner_application_form'
 
   updateType: (state, type) ->
-    @form.set '00NC0000004hoNU', state.mode().type
+    @form.set '00NC0000004hoNU', state.value('type')
 
   execute: ->
     @view?.remove()

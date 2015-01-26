@@ -1,13 +1,11 @@
-- var noun = state.mode().copy !== 'Other' ? state.mode().copy : ''
-
 form.stacked-form
-  input.bordered-input( type='text', name='company', value= form.get('company'), placeholder="#{noun} Name", required )
+  input.bordered-input( type='text', name='company', value= form.get('company'), placeholder= state.copy('company'), required )
 
   .grid-2-up
     .grid-item: input.bordered-input.is-block( type='text', name='first_name', value= form.get('first_name'), placeholder='First Name', required )
     .grid-item: input.bordered-input.is-block( type='text', name='last_name', value= form.get('last_name'), placeholder='Last Name', required  )
 
-  input.bordered-input( type='text', name='title', value= form.get('title'), placeholder="Title #{noun ? ('at ' + noun) : ''}" )
+  input.bordered-input( type='text', name='title', value= form.get('title'), placeholder= state.copy('title') )
 
   input.bordered-input( type='text', name='phone', value= form.get('phone'), placeholder='Phone Number' )
 

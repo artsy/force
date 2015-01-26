@@ -37,7 +37,7 @@ describe 'Step1View', ->
   it 'renders the relevant form when an org type is selected', ->
     @state.set 'mode', 'gallery'
     @view.$('input[name="company"]').attr('placeholder').should.equal 'Gallery Name'
-    @view.$('input[name="title"]').attr('placeholder').should.equal 'Title at Gallery'
+    @view.$('input[name="title"]').attr('placeholder').should.equal 'Title at gallery'
     @view.$('input[name="URL"]').length.should.equal 0
     @state.set 'mode', 'institution'
     @view.$('input[name="company"]').attr('placeholder').should.equal 'Museum / Institution Name'

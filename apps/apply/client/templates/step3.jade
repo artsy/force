@@ -6,16 +6,16 @@ header.partner-application-header
 
 form.partner-application-form.stacked-form
   .grid-2-up
-    .grid-item: +checkbox('00NC0000005RGgW', 'Art Fair', 'Art Fair')
-    .grid-item: +checkbox('00NC0000005RGgW', 'Artsy Staff', 'Artsy Staff')
-    .grid-item: +checkbox('00NC0000005RGgW', 'Gallery', 'Gallery')
-    .grid-item: +checkbox('00NC0000005RGgW', 'Collector / Patron', 'Collector / Patron')
-    .grid-item: +checkbox('00NC0000005RGgW', 'Artist', 'Artist')
-    .grid-item: +checkbox('00NC0000005RGgW', 'Museum / Institution', 'Museum / Institution')
-    .grid-item: +checkbox('00NC0000005RGgW', 'Online Search', 'Online Search')
-    .grid-item: +checkbox('00NC0000005RGgW', 'Press', 'Press')
-    .grid-item: +checkbox('00NC0000005RGgW', 'Advertisement', 'Advertisement')
-    .grid-item: +checkbox('00NC0000005RGgW', 'Other', 'Other')
+    .grid-item: +checkbox('00NC0000005RGgW', (state.get('mode') === 'fair' ? 'Other fairs on Artsy' : 'Art Fair'))
+    .grid-item: +checkbox('00NC0000005RGgW', 'Artsy Staff')
+    .grid-item: +checkbox('00NC0000005RGgW', 'Gallery')
+    .grid-item: +checkbox('00NC0000005RGgW', 'Collector / Patron')
+    .grid-item: +checkbox('00NC0000005RGgW', 'Artist')
+    .grid-item: +checkbox('00NC0000005RGgW', 'Museum / Institution')
+    .grid-item: +checkbox('00NC0000005RGgW', 'Online Search')
+    .grid-item: +checkbox('00NC0000005RGgW', 'Press')
+    .grid-item: +checkbox('00NC0000005RGgW', 'Advertisement')
+    .grid-item: +checkbox('00NC0000005RGgW', 'Other')
 
   textarea.bordered-input( placeholder='Please provide more detail on your above selection', name='00NC0000005RGgl' )
     = form.get('00NC0000005RGgl')

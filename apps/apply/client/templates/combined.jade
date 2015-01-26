@@ -5,9 +5,9 @@ header.partner-application-header
 
 #paf-form.partner-application-form: form.stacked-form
   label.bordered-select: select.paf-type-select( name='type' )
-    for mode in modes
-      option( value= mode.value )
-        = mode.copy
+    for mode, key in state.modes
+      option( value= key )
+        = mode.copy.type
 
   hr.is-invisible
 
