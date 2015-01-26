@@ -107,6 +107,7 @@ module.exports = class ArtworkView extends Backbone.View
     new PartnerLocations $el: @$el, artwork: @artwork
 
   preventRightClick: ->
+    return if @currentUser?.isAdmin()
     (@$artworkImage ?= @$('#the-artwork-image'))
       .on 'contextmenu', (e) ->
         e.preventDefault()
