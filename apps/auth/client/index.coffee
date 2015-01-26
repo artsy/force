@@ -30,7 +30,7 @@ module.exports.PasswordResetView = class PasswordResetView extends Backbone.View
     return if @formIsSubmitting()
     @model.save @serializeForm(),
       success: ->
-        window.location = '/'
+        window.location = '/log_in'
       error: (model, response, options) =>
         @reenableForm()
         @$errors.html @errorMessage(response)
