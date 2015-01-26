@@ -77,11 +77,17 @@ module.exports = class Artwork extends Backbone.Model
   # Can the user download the default image
   #
   # return {Boolean}
-  isDownloadable: ->
-    @defaultImage().get('downloadable')
+  isDownloadable: (user) ->
+    @defaultImage().get('downloadable') or !!user?.isAdmin()
 
   downloadableFilename: ->
-    _s.slugify @toOneLine()
+    _s.slugify(@toOneLine()) + '.jpg'
+
+  downloadableUrl: (user) ->
+    if user?.isAdmin()
+      "#{@url()}/image/#{@defaultImage().id}/original.jpg"
+    else
+      @defaultImageUrl 'larger'
 
   # Are there comparable artworks;
   # such that we can display a link to auction results
