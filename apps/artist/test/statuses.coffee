@@ -35,10 +35,7 @@ describe 'Statuses', ->
       statuses.should.eql {
         artworks: true
         shows: true
-        # In this instance posts return false because of it's
-        # parse methods which do some client-side filtering. Everything
-        # else is going to be purely existential
-        posts: false
+        posts: true
         artists: true
         contemporary: true
         webArticles: true

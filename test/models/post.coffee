@@ -80,14 +80,14 @@ describe 'Post', ->
       post.defaultImage().get('type').should.equal 'PostImage'
 
     it 'returns the first image if there is no PostImage or artwork', ->
-      link = type: 'PostLink', url: 'existy', oembed_json: type: 'photo'
+      link = type: 'PostLink', url: 'existy', oembed_json: type: 'photo', url: 'existy'
       post = new Post(attachments: [link])
-      post.defaultImage().imageUrlFor().should.equal 'existy'
-      post.defaultImage().imageUrl().should.equal 'existy'
+      post.defaultImage().cropUrlFor().should.containEql 'existy'
 
-    it 'returns undefined if there are no attachments', ->
+    it 'returns an empty image if there are no attachments', ->
       post = new Post(attachments: [])
-      _.isUndefined(post.defaultImage()).should.be.ok
+      post.defaultImage().imageUrl().should.containEql 'missing'
+      post.defaultImage().hasImage().should.be.false
 
   describe '#relatedArtists', ->
 
