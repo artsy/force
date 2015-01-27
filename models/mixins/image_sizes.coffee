@@ -71,7 +71,7 @@ module.exports =
     null
 
   resizeUrlFor: ->
-    resizer.resize @imageUrlForMaxSize(), arguments...
+    resizer.resize (@imageUrlForMaxSize() or @get 'image_url'), arguments...
 
   resizeDimensionsFor: ({ width, height }) ->
     ratios = _.compact _.map { width: width, height: height }, (value, dimension) =>
@@ -81,10 +81,10 @@ module.exports =
     height: Math.floor(@get('original_height') * ratio)
 
   cropUrlFor: ->
-    resizer.crop @imageUrlForMaxSize(), arguments...
+    resizer.crop (@imageUrlForMaxSize() or @get 'image_url'), arguments...
 
   fillUrlFor: ->
-    resizer.fill @imageUrlForMaxSize(), arguments...
+    resizer.fill (@imageUrlForMaxSize() or @get 'image_url'), arguments...
 
   aspectRatio: ->
     @get('aspect_ratio')
