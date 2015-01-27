@@ -15,7 +15,7 @@ module.exports = class State extends Backbone.Model
     @mode().copy[key]
 
   value: (key) ->
-    @mode().value[key]
+    @mode().values[key]
 
   route: ->
     "/apply/#{@mode().slug}"
