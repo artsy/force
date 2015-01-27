@@ -75,3 +75,4 @@ module.exports = class PartnerApplicationRouter extends Backbone.Router
   success: ->
     @view = new SuccessView state: @state, form: @form
     @$el.html @view.render().$el
+    $(window).off 'beforeunload'
