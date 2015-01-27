@@ -24,6 +24,10 @@ module.exports = class Step1View extends Backbone.View
     @listenTo @state, 'change:mode', @changeMode
     @listenTo @state, 'change:mode', @renderMode
 
+    @preventNavigation = _.once ->
+      $(window).bind 'beforeunload', ->
+        'Your application has not been submitted yet.'
+
   selectMode: (e) ->
     @state.set 'mode', $(e.currentTarget).val()
 
@@ -43,6 +47,7 @@ module.exports = class Step1View extends Backbone.View
       state: @state, form: @form, countries: Countries
 
   submit: (e) ->
+    @preventNavigation()
     return unless @validateForm()
     e.preventDefault()
     @form.set @serializeForm()
