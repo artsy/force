@@ -55,3 +55,28 @@ describe 'PostAttachments', ->
       @postAttachments.models[1].constructor.name.should.equal 'PostImage'
       @postAttachments.models[2].constructor.name.should.equal 'PostArtwork'
       @postAttachments.models[3].constructor.name.should.equal 'PostEmbed'
+
+  describe '#featuredPostsThumbnail', ->
+    describe 'with a photo PostLink', ->
+      it 'returns a thumbnail', ->
+        new PostAttachments([
+          {
+            id: _.uniqueId()
+            type: 'PostLink'
+            url: 'http://foobar.jpg'
+            oembed_json: type: 'photo', url: 'http://foobar.jpg'
+          }
+        ])
+          .featuredPostsThumbnail().get('image_url').should.containEql '.jpg'
+
+    describe 'with a video PostLink', ->
+      it 'returns a thumbnail', ->
+        new PostAttachments([
+          {
+            id: _.uniqueId()
+            type: 'PostLink'
+            url: 'http://youtube.com/foobar'
+            oembed_json: type: 'video', thumbnail_url: 'http://foobar.jpg'
+          }
+        ])
+          .featuredPostsThumbnail().get('image_url').should.containEql '.jpg'

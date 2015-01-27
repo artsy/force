@@ -45,7 +45,7 @@ describe 'RelatedPostsView', ->
       @view.$el.find('.related-posts-show-all').click()
       html = @view.$el.html()
       html.should.containEql 'href="/post/bitty-the-queen"'
-      @view.$el.find('.related-post').length.should.equal 2
+      @view.$el.find('.related-post').length.should.equal 3
       @view.$el.find('.related-posts-show-all').length.should.equal 0
 
     xdescribe '#addPost', ->
