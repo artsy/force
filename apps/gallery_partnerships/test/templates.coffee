@@ -27,8 +27,8 @@ describe 'Gallery partnerships templates', ->
 
   it 'shows the CTA in nav', ->
     $(render()).find('.gallery-partnerships-section-nav a:last-child')
-      .attr('href').should.equal '/partner-application'
+      .attr('href').should.equal '/apply'
 
   xit 'shows the CTA in the apply section', ->
     $(render()).find('#apply .apply-button')
-      .attr('href').should.equal '/partner-application'
+      .attr('href').should.equal '/apply'
