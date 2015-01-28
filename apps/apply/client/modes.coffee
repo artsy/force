@@ -10,6 +10,7 @@ module.exports =
       type: 'Select Organization Type'
       company: 'Name'
       title: 'Title'
+      success: 'Partnerships Team'
     values:
       type: 'Other'
 
@@ -19,6 +20,7 @@ module.exports =
       type: 'Gallery'
       company: 'Gallery Name'
       title: 'Title at gallery'
+      success: 'Gallery Partnerships Team'
     values:
       type: 'Gallery'
 
@@ -28,6 +30,7 @@ module.exports =
       type: 'Institution'
       company: 'Museum / Institution Name'
       title: 'Title at org.'
+      success: 'Institutions Team'
     values:
       type: 'Museum/Institution'
 
@@ -37,6 +40,7 @@ module.exports =
       type: 'Fair'
       company: 'Fair Name'
       title: 'Title'
+      success: 'Fairs Team'
     values:
       type: 'Art Fair'
 
@@ -46,5 +50,6 @@ module.exports =
       type: 'Other'
       company: 'Name'
       title: 'Title'
+      success: 'Partnerships Team'
     values:
       type: 'Other'

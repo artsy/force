@@ -6,11 +6,11 @@ form.stacked-form
     .grid-item: input.bordered-input.is-block( type='text', name='last_name', value= form.get('last_name'), placeholder='Last Name', required  )
     .grid-item: input.bordered-input.is-block( type='text', name='title', value= form.get('title'), placeholder= state.copy('title') )
 
-  input.bordered-input( type='text', name='phone', value= form.get('phone'), placeholder='Phone Number' )
+  input.bordered-input( type='tel', name='phone', value= form.get('phone'), placeholder='Phone Number' )
 
   input.bordered-input( type='email', name='email', value= form.get('email'), placeholder='E-mail', required )
 
-  input.bordered-input( type='url', name='URL', value= form.get('URL'), placeholder='Website of museum / institution', required )
+  input.bordered-input( type='text', name='URL', value= form.get('URL'), placeholder='Website of museum / institution', required )
 
   label.bordered-select: select.paf-country-select( name='country' )
     option Country
