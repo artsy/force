@@ -62,17 +62,18 @@ module.exports = class PartnerApplicationRouter extends Backbone.Router
     @view = new Step1View state: @state, form: @form
     @$el.html @view.render().$el
 
-  step2: (mode, step) ->
+  step2: (mode) ->
     @state.set step: 2, mode: mode or 'initial'
     @view = new Step2View state: @state, form: @form
     @$el.html @view.render().$el
 
-  step3: (mode, step) ->
+  step3: (mode) ->
     @state.set step: 3, mode: mode or 'initial'
     @view = new Step3View state: @state, form: @form
     @$el.html @view.render().$el
 
-  success: ->
+  success: (mode) ->
+    @state.set mode: mode
     @view = new SuccessView state: @state, form: @form
     @$el.html @view.render().$el
     $(window).off 'beforeunload'
