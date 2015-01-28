@@ -30,7 +30,6 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
     @setupJumpView()
 
     @setup =>
-      @attachScrollHandler()
       @notifications.getFirstPage()?.then @checkIfEmpty
 
   attachScrollHandler: ->
