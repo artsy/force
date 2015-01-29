@@ -22,9 +22,9 @@ if artwork.isContactable()
       input( type='hidden', name='email', value=user.get('email') )
     else
       //- Logged out
-      input.bordered-input( placeholder='Your full name', name='name', required )
-      input.bordered-input( placeholder='Your email address', name='email', type='email', required )
-    textarea.bordered-input( rows='5', name='message', required )
+      input.bordered-input.is-persistplaceholder( placeholder='Your full name', name='name', required )
+      input.bordered-input.is-persistplaceholder( placeholder='Your email address', name='email', type='email', required )
+    textarea.bordered-input.is-persistplaceholder( rows='5', name='message', required )
       = defaultMessage
       = " "
     if user
