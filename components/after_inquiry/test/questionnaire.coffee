@@ -219,7 +219,7 @@ describe 'Questionnaire', ->
           @view.attachLocationSearch.called.should.be.true
           @view.state.get('mode').should.equal 'questionnaire'
           html = @view.$el.html()
-          html.should.containEql 'Final Step'
+          html.should.containEql 'Gallery Introduction'
           @view.$el.hasClass 'fade-in'
           @view.attachBookmarksView.called.should.be.true
 
@@ -229,7 +229,7 @@ describe 'Questionnaire', ->
           @view.attachLocationSearch.called.should.be.true
           @view.state.get('mode').should.equal 'questionnaire'
           html = @view.$el.html()
-          html.should.containEql 'Final Step'
+          html.should.containEql 'Gallery Introduction'
           @view.$el.hasClass 'fade-in'
           @view.attachBookmarksView.called.should.be.false
 
@@ -269,3 +269,22 @@ describe 'Questionnaire', ->
         @view.$('form').submit()
         _.last(Backbone.sync.args)[2].success()
         @view.close.called.should.be.true
+
+  describe 'regardless', ->
+    describe '#renderIntroduction', ->
+      beforeEach ->
+        @view.state.set mode: 'questionnaire'
+
+      describe 'lacks an introduction', ->
+        it 'hides the introduction preview', ->
+          @view.renderIntroduction()
+          @view.$preview.attr('style').should.equal 'display: none;'
+
+      describe 'has an introduction', ->
+        beforeEach ->
+          @view.introduction.set('introduction', 'Foobar is a collector in New York.')
+
+        it 'shows the introduction and renders the text', ->
+          @view.renderIntroduction()
+          @view.$preview.attr('style').should.not.equal 'display: none;'
+          @view.$el.html().should.containEql 'Foobar is a collector in New York.'

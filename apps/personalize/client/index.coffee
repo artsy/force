@@ -16,7 +16,6 @@ views =
   CategoriesView: require './views/categories.coffee'
   BookmarksView: require './views/bookmarks.coffee'
   FavoritesView: require './views/favorites.coffee'
-  IntroductionView: require './views/introduction.coffee'
 
 module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Router
   routes:

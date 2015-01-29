@@ -44,6 +44,8 @@ module.exports = class Questionnaire extends ModalView
     @templateData = user: @user
 
     @state = new Backbone.Model mode: 'initial'
+    @introduction = new Introduction
+
     @listenTo @state, 'change:mode', @reRender
     @listenTo @state, 'change:mode', @logState
 
@@ -78,10 +80,9 @@ module.exports = class Questionnaire extends ModalView
 
     unless @user.id?
       # Generate logged out introduction before sending inquiry
-      introduction = new Introduction
-      introduction.generate @user, @bookmarksView?.bookmarks, @attendance,
+      @introduction.generate @user, @bookmarksView?.bookmarks, @attendance,
         success: =>
-          @inquiry.set 'introduction', introduction.get('introduction')
+          @inquiry.set 'introduction', @introduction.get('introduction')
           mediator.trigger 'inquiry:send'
         error: ->
           mediator.trigger 'inquiry:send'
@@ -152,8 +153,28 @@ module.exports = class Questionnaire extends ModalView
       @once 'rerendered', =>
         @attachBookmarksView() if @user.isCollector()
         @attachLocationSearch()
+        @attachIntroductionPreview()
 
     super
+
+  syncIntroduction: =>
+    @user.set @serializeForm()
+    @introduction.generate @user, @bookmarksView?.bookmarks, @attendance
+
+  renderIntroduction: ->
+    @$preview ?= @$('#after-inquiry-introduction-preview')
+    if @introduction.get('introduction')
+      @$preview.show().find('#after-inquiry-introduction-preview-render')
+        .text "«#{@introduction.get('introduction')}»"
+    else
+      @$preview.hide()
+
+  attachIntroductionPreview: ->
+    @$('input[name="name"], input[name="profession"]').on 'keyup', _.debounce(@syncIntroduction, 500)
+    @listenTo @locationSearchView, 'location:update', @syncIntroduction if @locationSearchView?
+    @listenTo @bookmarksView.bookmarks, 'sync add remove', @syncIntroduction if @bookmarksView?.bookmarks?
+    @listenTo @introduction, 'sync', @renderIntroduction
+    @syncIntroduction()
 
   attachBookmarksView: ->
     @bookmarksView = new BookmarksView

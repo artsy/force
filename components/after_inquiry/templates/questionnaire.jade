@@ -1,39 +1,13 @@
 - collector = user.isCollector()
 
-h1 Final Step:
+h1 Gallery Introduction
 aside
-  | This information will be shared with the gallery to ensure a better response (you can update this info in your profile).
-  .help-tooltip(
-    data-message='Galleries are generally more comforable sharing information when they know more about the person inquiring on the work'
-    data-anchor='top-right'
-  )
+  | When you contact galleries through Artsy, we will include a brief introduction to help galleries provide quick and high quality responses on artwork pricing and availability:
 
 form.stacked-form#after-inquiry-questionnaire-form
-  .stacked-form-cell
-    label.avant-garde-form-label( for='name' ) Full Name
-    input.bordered-input.is-block(
-      placeholder= 'Your full name'
-      value= user.get('name')
-      name= 'name'
-      required
-    )
+  #after-inquiry-introduction-preview.stacked-form-cell
+    label.avant-garde-form-label( for='introduction' ) Introduction
+    #after-inquiry-introduction-preview-render.after-inquiry-introduction-preview
+      //- Rendered elsewhere
 
-  .stacked-form-cell
-    label.avant-garde-form-label Primary Location
-    #after-inquiry-collector-location
-      //- Rendered separately
-
-  .stacked-form-cell
-    if collector
-      label.avant-garde-form-label Artists you collect
-      #after-inquiry-bookmark-artists
-        //- Rendered separately
-    else
-      label.avant-garde-form-label( for='profession' ) Profession
-      input.bordered-input.is-block(
-        placeholder='There’s nothing here, yet'
-        value=user.get('profession')
-        name='profession'
-      )
-
-  button.avant-garde-button-black#after-inquiry-questionnaire-submit Done
+  #questionnaire-form: include partials/edit
