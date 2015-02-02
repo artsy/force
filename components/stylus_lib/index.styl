@@ -165,3 +165,22 @@ grid-2-up(offset, gap)
     > .grid-item
       offset = offset / 2
       width calc('50% - %s' % offset)
+
+// When text-decoration: underline is too clunky
+faux-underline()
+  &
+    display: inline
+    position: relative
+    text-decoration: none
+  &:before
+    content: ''
+    position: absolute
+    left: 0
+    display: inline-block
+    height: 1em
+    width: 100%
+    margin-top: 0.15em
+    border-bottom: 1px solid #777
+    color: rgb(80, 80, 80)
+  &:hover
+    text-decoration: none

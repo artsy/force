@@ -36,5 +36,6 @@ embedVideo = require 'embed-video'
         embedVideo: embedVideo
 
 @redirectPost = (req, res, next) ->
-  return next() unless req.params.id in POST_TO_ARTICLE_SLUGS
-  res.redirect "/article/#{req.params.id}"
+  return next() unless req.params.id in POST_TO_ARTICLE_SLUGS or
+    'Articles' in (req.user?.get('lab_features') or [])
+  res.redirect 301, "/article/#{req.params.id}"
