@@ -8,7 +8,7 @@ render = (res, post, profile) ->
   if profile
     res.locals.sd.PROFILE = profile.toJSON()
 
-  res.render 'templates/index',
+  res.render 'index',
     post: post
     profile: profile
     JSONLD: post.toJSONLD()
@@ -31,5 +31,8 @@ render = (res, post, profile) ->
       else
         res.redirect post.href()
 
-@redirectToGravity = (req, res, next) ->
-  res.redirect API_URL + '/post'
+@post = (req, res, next) ->
+  if req.user?.get('type') is 'Admin' or req.user?.get('has_partner_access')
+    res.redirect API_URL + '/post'
+  else
+    res.render 'deprecated'
