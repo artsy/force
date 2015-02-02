@@ -116,6 +116,15 @@ module.exports = class Carousel extends Backbone.View
   hideDecoys: ->
     @$preDecoys.width() < @$window.width()
 
+  hideDots: ->
+    dotWidth = 11 # Can increase to increase sensitivity/threshold
+    arrowWidth = 100
+    maxDots = Math.floor((@$window.width() - arrowWidth) / dotWidth)
+    maxDots < @length
+
+  toggleDots: ->
+    @$dots[if @hideDots() then 'hide' else 'show']()
+
   # In order to prevent DOM manipulation, the stage has two copies of the figures.
   # For a list of 6 figures (numbered 1 through 6), the rendered list looks like this:
   # [1', 2', 3', 4', 5', 6', 1, 2, 3, 4, 5, 6, 1', 2', 3', 4', 5', 6']
@@ -127,6 +136,8 @@ module.exports = class Carousel extends Backbone.View
   # viewport is large. Another iteration could determine length of the prefix and postfix
   # lists relative to the viewport or based on a param.
   setStops: ->
+    @toggleDots()
+
     if @hideDecoys()
       @noDecoys = true
       @$decoys.hide()
