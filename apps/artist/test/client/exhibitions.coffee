@@ -31,11 +31,28 @@ describe 'ExhibitionListView', ->
   after ->
     benv.teardown()
 
+  describe '#formattedTraveling', ->
+    beforeEach ->
+      @view.preprocessTraveling()
+      @parent = @collection.find (item) ->
+        item.has('children') and
+        item.get('children').length > 2
+      @childless = @collection.find (item) ->
+        not item.has('children')
+
+    it 'formats the travel history correctly', ->
+      $(@view.formattedTraveling(@parent)).text()
+        .should.containEql 'Traveled to Cleveland Museum of Art, Cleveland, OH, United States, 2004; Perez Museum of Art, Miami, FL, United States, 2004;'
+
+    it 'returns an empty string when there are no children', ->
+      $(@view.formattedTraveling(@childless)).text().should.equal ''
+
   describe '#itemTemplate', ->
     beforeEach ->
       @view.render()
 
     it 'renders correctly', ->
       $item = @view.$('.filterable-list-item').first()
-      $item.text().should.containEql 'Ai Weiwei - Circle of Animals/ Zodiac Heads, Los Angeles County Museum of Art, Los Angeles, CA, United States, (Traveling Exhibition).'
-      $item.data('value').should.equal 'solo'
+      $item.text().should.containEql 'Damage Control, Mudam; luxembourg, Luxembourg, Luxembourg.'
+      $item.text().should.containEql 'Traveled to Museum Joanneum, Graz, Austria, 2011;'
+      $item.data('value').should.equal 'group'
