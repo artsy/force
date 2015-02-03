@@ -51,7 +51,8 @@ module.exports = class AuctionDetailView extends Backbone.View
     ).addClass 'is-fade-in'
     @
 
-  openBuyersPremiumModal: ->
+  openBuyersPremiumModal: (e) ->
+    e.preventDefault()
     new ModalPageView
       width: '700px'
       pageId: 'buyers-premium'
