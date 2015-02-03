@@ -13,7 +13,8 @@ hulkCallback = (data) ->
   $.ajax
     type: 'POST'
     url: '/gallery-partnerships/edit'
-    data: data
+    data: JSON.stringify(data)
+    contentType: 'application/json'
     success: -> location.assign '/gallery-partnerships'
     error: -> alert "Whoops. Something went wrong, try again. If it doesn't " +
                     "work ask Craig."
