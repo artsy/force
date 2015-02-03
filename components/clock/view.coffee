@@ -21,7 +21,7 @@ module.exports = class ClockView extends Backbone.View
       success: =>
         @model.on('change:clockState', ->
           clearInterval @interval
-          window.location.reload()
+          location.reload()
         )
         @render()
 
