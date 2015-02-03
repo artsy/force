@@ -34,14 +34,14 @@ if auction.isOpen()
     )
       = auction.bidButtonState(user).label
 
-if auction.isOpen() && artwork.get('acquireable')
+if true || auction.isOpen() && artwork.get('acquireable')
   .artwork-meta-price
     .artwork-meta-price-label.is-not-sold Buy Now Price
     .artwork-meta-price-amount= artwork.priceDisplay()
   a.avant-garde-button-black.artwork-buy-button.artwork-contact-buy-button
     | Buy Now
-  p This work has a&nbsp;
-    a#artwork-buyers-premium-link( href='#' ) Buyer's Premium
+  p#artwork-buyers-premium-link This work has a&nbsp;
+    a( href='#' ) Buyer's Premium
 
 .abf-help
   a( href='/auction-info' )
