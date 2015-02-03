@@ -1,5 +1,5 @@
 _ = require 'underscore'
-window.ModalPageView = require '../../../components/modal/page.coffee'
+ModalPageView = require '../../../components/modal/page.coffee'
 Backbone = require 'backbone'
 mediator = require '../../../lib/mediator.coffee'
 template = -> require('../templates/auction_detail.jade') arguments...
