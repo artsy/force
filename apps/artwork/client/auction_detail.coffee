@@ -1,4 +1,5 @@
 _ = require 'underscore'
+window.ModalPageView = require '../../../components/modal/page.coffee'
 Backbone = require 'backbone'
 mediator = require '../../../lib/mediator.coffee'
 template = -> require('../templates/auction_detail.jade') arguments...
@@ -8,6 +9,7 @@ module.exports = class AuctionDetailView extends Backbone.View
 
   events:
     'submit form': 'submit'
+    'click #artwork-buyers-premium-link': 'openBuyersPremiumModal'
 
   initialize: (options) ->
     { @user, @auction, @saleArtwork, @bidderPositions } = options
@@ -48,3 +50,8 @@ module.exports = class AuctionDetailView extends Backbone.View
       bidderPositions: @bidderPositions
     ).addClass 'is-fade-in'
     @
+
+  openBuyersPremiumModal: ->
+    new ModalPageView
+      width: '700px'
+      pageId: 'buyers-premium'
