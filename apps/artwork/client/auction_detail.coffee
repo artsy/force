@@ -1,15 +1,42 @@
 _ = require 'underscore'
+{ formatMoney } = require 'accounting'
 ModalPageView = require '../../../components/modal/page.coffee'
 Backbone = require 'backbone'
 mediator = require '../../../lib/mediator.coffee'
 template = -> require('../templates/auction_detail.jade') arguments...
+
+class BuyersPremiumModal extends ModalPageView
+
+  initialize: ({ @auction }) ->
+    super width: '700px', pageId: 'buyers-premium'
+
+  isLoaded: ->
+    super
+    max = _.max _.pluck @auction.get('buyers_premium').schedule, 'min_amount_cents'
+    [hammerPerc, portionPerc] = _.pluck @auction.get('buyers_premium').schedule, 'percent'
+    @$('.markdown-content').append """
+      <ul class='artwork-bp-schedule'>
+        <li>
+          <div class='artwork-bp-pre'>On the hammer price up to and including \
+            #{formatMoney(max / 100, '$', 0)}</div>
+          <div class='artwork-bp-dots'></div>
+          <div class='artwork-bp-perc'>#{hammerPerc * 100}%</div>
+        </li>
+        <li>
+          <div class='artwork-bp-pre'>On the portion of the hammer price in excess of \
+            #{formatMoney(max / 100, '$', 0)}</div>
+          <div class='artwork-bp-dots'></div>
+          <div class='artwork-bp-perc'>#{portionPerc * 100}%</div>
+        </li>
+      </ul>
+    """
 
 module.exports = class AuctionDetailView extends Backbone.View
   template: template
 
   events:
     'submit form': 'submit'
-    'click #artwork-buyers-premium-link': 'openBuyersPremiumModal'
+    'click #artwork-buyers-premium-link a': 'openBuyersPremiumModal'
 
   initialize: (options) ->
     { @user, @auction, @saleArtwork, @bidderPositions } = options
@@ -53,6 +80,4 @@ module.exports = class AuctionDetailView extends Backbone.View
 
   openBuyersPremiumModal: (e) ->
     e.preventDefault()
-    new ModalPageView
-      width: '700px'
-      pageId: 'buyers-premium'
+    new BuyersPremiumModal auction: @auction

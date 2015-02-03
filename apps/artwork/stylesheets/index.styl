@@ -213,6 +213,12 @@ artwork-detail-item-height = 36px
     z-index 1
     position relative
 
+#artwork-buyers-premium-link
+  color rgba(0,0,0,0.4)
+  font-size 15px
+  a
+    color currentColor
+
 #modal-buyers-premium
   h2
     garamond()
@@ -223,6 +229,34 @@ artwork-detail-item-height = 36px
     margin 30px 0 10px 0
   p
     font-size 17px
+    line-height 1.3em
+
+.artwork-bp-schedule
+  li
+    font-size 17px
+    padding 15px 0
+    border-bottom 1px solid gray-lightest-color
+    margin-bottom 0 !important
+    display flex
+    justify-content center
+    &:last-child
+      border-bottom 0
+    .artwork-bp-pre
+      padding-right 4px
+    .artwork-bp-perc
+      padding-left 6px
+    .artwork-bp-dots
+      flex 1
+      position relative
+      top 1px
+      overflow hidden
+      font-size 14px
+      &:after
+        content '......................................................' // lolz
+        position absolute
+        left 0
+        width 100%
+
 
 @import './deep_zoom'
 @import './circle_buttons'
