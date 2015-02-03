@@ -34,7 +34,7 @@ if auction.isOpen()
     )
       = auction.bidButtonState(user).label
 
-if true || auction.isOpen() && artwork.get('acquireable')
+if auction.isOpen() && artwork.get('acquireable')
   .artwork-meta-price
     .artwork-meta-price-label.is-not-sold Buy Now Price
     .artwork-meta-price-amount= artwork.priceDisplay()
