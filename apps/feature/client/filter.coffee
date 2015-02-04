@@ -13,10 +13,13 @@ module.exports = class FilterView extends Backbone.View
     'least-bids': (a) ->
       a.get('saleArtwork').get('bidder_positions_count') +
       if a.get('sold') then 0.5 else 0
-    'highest-current-bid': (a) ->
-      - a.get('saleArtwork').get('highest_bid_amount_cents')
-    'lowest-current-bid': (a) ->
-      a.get('saleArtwork').get('highest_bid_amount_cents')
+    'highest-bid': (a) ->
+      - (a.get('saleArtwork').get('highest_bid_amount_cents') or
+         a.get('saleArtwork').get('opening_bid_cents'))
+    'lowest-bid': (a) ->
+      (a.get('saleArtwork').get('highest_bid_amount_cents') or
+       a.get('saleArtwork').get('opening_bid_cents')
+      )
 
   initialize: (options) ->
     @on 'doneFetching', =>
