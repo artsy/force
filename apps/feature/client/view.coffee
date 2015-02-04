@@ -86,7 +86,7 @@ module.exports = class FeatureView extends Backbone.View
     @filterView?.trigger 'doneFetching'
 
   setupArtworkFiltering: (saleArtworksCollection) ->
-    @$('#feature-artworks').before filterTemplate()
+    @$('#feature-artworks').before filterTemplate auction: @sale
 
     @filterView = new FilterView
       el: @$('.feature-artwork-filter')
