@@ -15,6 +15,12 @@ module.exports = class Artworks extends Backbone.Collection
     { @artworkCollection } = options
     @on 'sync', (a, b, jqXHR) => @totalCount = jqXHR?.xhr?.getResponseHeader('X-Total-Count')
 
+  haveAnyBids: ->
+    @select((a) ->
+      a.get('saleArtwork')?.get('bidder_positions_count') or
+      a.get('saleArtwork')?.get('highest_bid_amount_cents')
+    ).length > 0
+
   # Maps each artwork's images into an array of image { width, height } hashes meant to be
   # passed into fillwidth.
   #
