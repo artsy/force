@@ -36,7 +36,7 @@ describe 'RelatedAuctionResultsView', ->
   describe '#render', ->
     it 'renders the results', ->
       @view.$('.related-auction-result').length.should.equal 2
-      @view.$('.rar-thumbnail img').attr('src').should.equal 'http://static1.artsy.net/auction_lots/51d041844c91c616610005a0/original.jpg'
+      @view.$('.rar-thumbnail img').attr('src').should.containEql 'http://static1.artsy.net/auction_lots/51d041844c91c616610005a0/'
       @view.$('.rar-title').first().text().should.equal 'MADONNA PAINTING (1985)'
 
     it 'does not have the price for logged out users', ->
