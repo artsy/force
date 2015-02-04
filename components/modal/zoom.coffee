@@ -20,6 +20,6 @@ module.exports = class ZoomView extends ModalView
   postRender: ->
     @isLoading()
     @$img.on 'load', =>
-      @setWidth "#{@img.width}px"
+      @setDimensions width: "#{@img.width}px"
       @updatePosition()
       @isLoaded()

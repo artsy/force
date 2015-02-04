@@ -25,7 +25,7 @@ module.exports = class ModalView extends Backbone.View
     'click.internal .modal-backdrop': '__announceBackdropClick__'
 
   initialize: (options = {}) ->
-    { @width, @transition, @backdrop } = _.defaults options, width: '400px', transition: 'fade', backdrop: true
+    { @width, @height, @transition, @backdrop } = _.defaults options, width: '400px', transition: 'fade', backdrop: true
 
     _.extend @templateData, autofocus: @autofocus()
 
@@ -85,8 +85,10 @@ module.exports = class ModalView extends Backbone.View
       in: =>
         @updatePosition()
 
-  setWidth: (width) ->
-    @$dialog.css { width: width or @width }
+  setDimensions: (options = {}) ->
+    @$dialog.css
+      width: options.width or @width
+      height: options.height or @height
 
   setup: ->
     backdropClass = if @backdrop then 'has-backdrop' else 'has-nobackdrop'
@@ -113,7 +115,7 @@ module.exports = class ModalView extends Backbone.View
     @$body = @$('.modal-body')
     @$body.html @template(@templateData)
     @$dialog = @$('.modal-dialog')
-    @setWidth()
+    @setDimensions()
 
   postRender: -> #
 
