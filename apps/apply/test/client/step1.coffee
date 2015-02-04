@@ -38,10 +38,10 @@ describe 'Step1View', ->
     @state.set 'mode', 'gallery'
     @view.$('input[name="company"]').attr('placeholder').should.equal 'Gallery Name'
     @view.$('input[name="title"]').attr('placeholder').should.equal 'Title at gallery'
-    @view.$('input[name="URL"]').length.should.equal 0
+    @view.$('input[name="URL"]').attr('placeholder').should.equal 'Website'
     @state.set 'mode', 'institution'
     @view.$('input[name="company"]').attr('placeholder').should.equal 'Museum / Institution Name'
-    @view.$('input[name="URL"]').length.should.equal 1
+    @view.$('input[name="URL"]').attr('placeholder').should.equal 'Website of museum / institution'
 
   it 'changes the address forms when the country is changed', (done) ->
     @state.set 'mode', 'institution'
