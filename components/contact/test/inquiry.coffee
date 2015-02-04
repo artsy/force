@@ -27,6 +27,7 @@ describe 'Inquiry', ->
       sinon.stub @analytics.track, 'funnel'
       sinon.stub Inquiry.prototype, 'open'
       sinon.stub Inquiry.prototype, 'updatePosition'
+      sinon.stub Inquiry.prototype, 'isLoaded'
       sinon.stub(Inquiry.prototype, 'displayAfterInquiryFlow').returns false
       @view = new Inquiry artwork: @artwork, partner: @partner, el: $('body')
       @view.renderTemplates()
@@ -39,8 +40,7 @@ describe 'Inquiry', ->
   describe '#renderTemplates', ->
     it 'has the correct header', ->
       html = @view.$el.html()
-      html.should.containEql 'Foo Bar, an Artsy Specialist, is available'
-      html.should.containEql 'img alt="Foo Bar"'
+      html.should.containEql 'Ask a Specialist'
 
   describe '#submit', ->
     describe 'Logged out', ->
