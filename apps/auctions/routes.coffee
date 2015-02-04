@@ -20,7 +20,7 @@ elligibleFilter = _.partial _.filter, _, ((sale) ->
       Q.allSettled(sales.map (sale) ->
         sale.related().saleArtworks.fetch
           cache: true
-          data: size: 5
+          data: size: 5, sort: 'position'
           success: (collection, response, options) ->
             sale.related().artworks.reset(Artworks.fromSale(collection).models, parse: true)
       ).then(->
