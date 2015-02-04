@@ -91,19 +91,6 @@ describe 'Browse', ->
       @template.should.containEql 'Chinese Art'
       @template.should.containEql 'Color Fields'
 
-    it 'includes partners (static list for now)', ->
-      $ = cheerio.load @template
-      @template.should.containEql 'Browse Partners'
-      $(".bpc-partners a[href='/galleries']").text().should.equal "Galleries A-Z"
-      $(".bpc-partners a[href='/institutions']").text().should.equal "Institutions A-Z"
-      $(".bpc-partners a[href='/sfmoma']").text().should.equal "SFMOMA"
-      $(".bpc-partners a[href='/britishmuseum']").text().should.equal "The British Museum"
-      $(".bpc-partners a[href='/gagosian-gallery']").text().should.equal "Gagosian Gallery"
-      $(".bpc-partners a[href='/pace-gallery']").text().should.equal "Pace Gallery"
-      $(".bpc-partners a[href='/white-cube']").text().should.equal "White Cube"
-      $(".bpc-partners a[href='/acquavella-galleries']").text().should.equal "Acquavella Galleries"
-      $(".bpc-partners a[href='/partners']").text().should.equal "See All"
-
   describe 'with no ordered sets', ->
     beforeEach ->
       @template = render()(

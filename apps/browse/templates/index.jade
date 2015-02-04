@@ -27,26 +27,14 @@ block body
       if popularCategories && popularCategories.at(0).get('items')
         section#browse-page-categories
           .browse-popular-categories
-            .bpc-column.bpc-dynamic
-              .large-garamond-header Browse by Popular Categories
+            h2.large-garamond-header Browse by Popular Categories
+            .bpc-columns
               for categorySet in popularCategories.at(0).get('items').models
-                .bpc-subcolumn
+                .bpc-column
                   h3= categorySet.get('name')
                   for category in categorySet.get('items').models
                     a.highlight-link( href=category.get('href') )
                       = category.get('title')
-            .bpc-column.bpc-partners
-              .large-garamond-header Browse Partners
-              a.highlight-link( href='/galleries') Galleries A-Z
-              a.highlight-link( href='/institutions') Institutions A-Z
-              h3 Featured
-              a.highlight-link( href='/sfmoma' ) SFMOMA
-              a.highlight-link( href='/britishmuseum' ) The British Museum
-              a.highlight-link( href='/gagosian-gallery' ) Gagosian Gallery
-              a.highlight-link( href='/pace-gallery' ) Pace Gallery
-              a.highlight-link( href='/white-cube' ) White Cube
-              a.highlight-link( href='/acquavella-galleries' ) Acquavella Galleries
-              a.highlight-link( href='/partners' ) See All
 
     #browse-filter-header.large-garamond-header Browse Works
     #browse-filter
