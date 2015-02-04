@@ -8,6 +8,9 @@ Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 Artist = require '../../../models/artist'
 Artwork = require '../../../models/artwork'
+SaleArtwork = require '../../../models/sale_artwork'
+User = require '../../../models/user'
+Sale = require '../../../models/sale'
 cheerio = require 'cheerio'
 
 render = (templateName) ->
@@ -86,3 +89,18 @@ describe 'Artwork', ->
         asset: ->
       @$template = cheerio.load template
       @$template.html().should.not.containEql 'artwork-meta-price'
+
+
+    it 'shows buyer premium for open auctions', ->
+      @artwork.set acquireable: false
+      auction = new Sale fabricate 'sale'
+      auction.isOpen = -> true
+      template = render('auction_detail')
+        sd: @sd
+        artwork: @artwork
+        artist: @artist
+        auction: auction
+        saleArtwork: new SaleArtwork fabricate 'sale_artwork'
+        user: new User fabricate 'user'
+        asset: ->
+      template.should.containEql "Buyer's Premium"
