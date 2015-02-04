@@ -40,6 +40,10 @@ module.exports = class AuctionDetailView extends Backbone.View
 
   initialize: (options) ->
     { @user, @auction, @saleArtwork, @bidderPositions } = options
+    @renderLotNumber()
+
+  renderLotNumber: ->
+    $('#artwork-lot-number').html 'Lot ' + num if num = @saleArtwork.get('lot_number')
 
   submit: (e) ->
     e.preventDefault()
