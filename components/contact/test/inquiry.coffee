@@ -22,15 +22,13 @@ describe 'Inquiry', ->
     @artwork = new Artwork fabricate 'artwork'
     @partner = fabricate 'partner'
     benv.render resolve(__dirname, '../templates/index.jade'), {}, =>
-      Inquiry = benv.requireWithJadeify(resolve(__dirname, '../inquiry'), ['formTemplate', 'headerTemplate'])
+      Inquiry = benv.requireWithJadeify(resolve(__dirname, '../inquiry'), ['formTemplate'])
       @analytics = Inquiry.__get__('analytics')
       sinon.stub @analytics.track, 'funnel'
       sinon.stub Inquiry.prototype, 'open'
       sinon.stub Inquiry.prototype, 'updatePosition'
       sinon.stub(Inquiry.prototype, 'displayAfterInquiryFlow').returns false
       @view = new Inquiry artwork: @artwork, partner: @partner, el: $('body')
-      @view.representatives = new Backbone.Collection [name: 'Foo Bar']
-      @view.representatives.first().iconImageUrl = ->
       @view.renderTemplates()
       done()
 

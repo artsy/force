@@ -2,12 +2,8 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 Cookies = require 'cookies-js'
 ContactView = require './view.coffee'
-Representatives = require './collections/representatives.coffee'
 analytics = require('../../lib/analytics.coffee')
-
 formTemplate = -> require('./templates/inquiry_form.jade') arguments...
-headerTemplate = -> require('./templates/inquiry_header.jade') arguments...
-
 { SESSION_ID, API_URL } = require('sharify').data
 
 module.exports = class InquiryView extends ContactView
@@ -19,9 +15,10 @@ module.exports = class InquiryView extends ContactView
     'click.handler .modal-backdrop': undefined
 
   headerTemplate: (locals) ->
-    headerTemplate _.extend locals,
-      representative: @representatives.first()
-      user: @user
+    """
+      <h1 class='modal-h1'>Ask a Specialist</h1>
+      <hr>
+    """
 
   formTemplate: (locals) ->
     formTemplate _.extend locals,
@@ -35,13 +32,12 @@ module.exports = class InquiryView extends ContactView
 
   initialize: (options) ->
     { @artwork } = options
-    @representatives = new Representatives
-    @representatives.fetch().then =>
-      @renderTemplates()
-      @updatePosition()
-      @isLoaded()
-      @focusTextareaAfterCopy()
     super
+    @renderTemplates()
+    @updatePosition()
+    @isLoaded()
+    @focusTextareaAfterCopy()
+
 
   postRender: ->
     @isLoading()

@@ -20,7 +20,7 @@ module.exports = class FilterView extends Backbone.View
 
   initialize: (options) ->
     @on 'doneFetching', =>
-      return @$el.hide() unless @artworks.haveAnyBids()
+      # return @$el.hide() unless @artworks.haveAnyBids()
       @sortArtworks options.startingSort
 
   triggerArtworkFilter: (event) ->
