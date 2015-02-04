@@ -13,10 +13,6 @@ describe 'AuctionLot', ->
     it 'returns a URL to the auction lot', ->
       @lot.href(new Backbone.Model(id: 'foo-bar')).should.equal "/artist/foo-bar/auction-result/#{@lot.id}"
 
-  describe '#imageUrl', ->
-    it 'overwrites the default #imageUrl method to simply replace thumbnail in the string', ->
-      @lot.imageUrl('original').should.equal 'http://static1.artsy.net/auction_lots/51d041844c91c616610005a0/original.jpg'
-
   describe '#toPageTitle', ->
     it 'returns a string usable for the page title', ->
       artist = new Backbone.Model name: 'Foo Bar'

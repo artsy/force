@@ -1,0 +1,16 @@
+extends ../../../components/main_layout/templates/blank
+
+block head
+  include meta
+
+block locals
+  - assetPackage = 'artwork'
+
+block body
+  .responsive-layout-container
+    #artwork-view-in-room-container
+      //- Rendered client-side
+    #artwork-deep-zoom-container
+      //- Rendered client-side
+    #artwork-page.main-layout-container( data-route='show' )
+      include artwork

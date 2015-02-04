@@ -14,10 +14,6 @@ module.exports = class AuctionLot extends Backbone.Model
   href: (artist) ->
     "/artist/#{artist.id}/auction-result/#{@id}"
 
-  # Overwrite #imageUrl because we need to replace thumbnail
-  imageUrl: (version) ->
-    @sslUrl @get('image_url').replace 'thumbnail', version
-
   # @return {Boolean}
   hasImage: ->
     @get('image_url') isnt '/assets/shared/missing_image.png'
