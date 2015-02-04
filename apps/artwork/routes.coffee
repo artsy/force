@@ -7,6 +7,8 @@ defaultMessage = require '../../components/contact/default_message.coffee'
 request = require 'superagent'
 
 @index = (req, res) ->
+  template = if req.query.modal? then 'modal' else 'index'
+
   artwork = new Artwork id: req.params.id
   artwork.fetch
     cache: true
@@ -26,7 +28,7 @@ request = require 'superagent'
             error: res.backboneError
             success: (model, response, options) ->
               res.locals.sd.ARTIST = response
-              res.render 'index',
+              res.render template,
                 artwork: artwork
                 artist: artist
                 tab: req.params.tab
