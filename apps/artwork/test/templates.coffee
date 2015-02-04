@@ -90,6 +90,16 @@ describe 'Artwork', ->
       @$template = cheerio.load template
       @$template.html().should.not.containEql 'artwork-meta-price'
 
+    it 'shows series', ->
+      @artwork.set series: 'Paris'
+      template = render('index')
+        sd: @sd
+        artwork: @artwork
+        artist: @artist
+        auctionId: 'two-x-two'
+        asset: ->
+      @$template = cheerio.load template
+      @$template.html().should.containEql 'From the series Paris'
 
     it 'shows buyer premium for open auctions', ->
       @artwork.set acquireable: false
