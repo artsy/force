@@ -40,6 +40,8 @@ if auction.isOpen() && artwork.get('acquireable')
     .artwork-meta-price-amount= artwork.priceDisplay()
   a.avant-garde-button-black.artwork-buy-button.artwork-contact-buy-button
     | Buy Now
+
+if auction.isOpen()
   p#artwork-buyers-premium-link This work has a&nbsp;
     a( href='#' ) Buyer's Premium
 
