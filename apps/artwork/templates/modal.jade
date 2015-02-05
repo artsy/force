@@ -14,3 +14,9 @@ block body
       //- Rendered client-side
     #artwork-page.main-layout-container( data-route='show' )
       include artwork
+
+      hr.is-invisible
+
+      .is-center-aligned
+        a.avant-garde-button-underlined( href="#{artwork.href()}#more-info", target='_parent' )
+          | More Info
