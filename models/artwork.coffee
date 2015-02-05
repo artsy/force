@@ -388,14 +388,3 @@ module.exports = class Artwork extends Backbone.Model
 
   artistName: ->
     @get('artist')?.name or ''
-
-  fetchAuctionAndContacts: (options) ->
-    @relatedCollections.sales.fetch
-      error: options.error
-      success: (sales) =>
-        auction = sales.findWhere is_auction: true
-        return options.success() unless auction?
-        new Backbone.Collection().fetch
-          error: options.error
-          success: (contacts) =>
-            options.success auction, contacts
