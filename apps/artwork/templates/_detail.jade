@@ -16,8 +16,9 @@
         em= artwork.get('title')
         if artwork.get('date')
           | , #{artwork.get('date')}
-  if artwork.get('series')
-    h2.artwork-detail-series From the series #{artwork.get('series')}
+    if artwork.get('series')
+      h2.artwork-detail-series From the series&nbsp;
+        em= artwork.get('series')
   h2.artwork-detail-medium= artwork.get('medium')
   if artwork.get('manufacturer')
     .artwork-detail-manufacturer
