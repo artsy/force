@@ -1,6 +1,7 @@
 .artwork-meta
-  //- Rendered client-side
   #artwork-lot-number
+    //- Rendered client-side
+
   //- Primary artwork metadata
   h1
     if artist
@@ -16,42 +17,44 @@
         em= artwork.get('title')
         if artwork.get('date')
           | , #{artwork.get('date')}
-  if artwork.get('series')
-    h2.artwork-detail-series From the series #{artwork.get('series')}
-  h2.artwork-detail-medium= artwork.get('medium')
-  if artwork.get('manufacturer')
-    .artwork-detail-manufacturer
-      = artwork.get('manufacturer')
-  unless artwork.isMultipleEditions()
-    .artwork-detail-dimensions
-      .amd-imperial!= artwork.dimensions({ metric: 'in', format: 'superscript' })
-      .amd-metric= artwork.dimensions({ metric: 'cm', format: 'decimal' })
-  if artwork.editionStatus()
-    .artwork-edition-status
-      = artwork.editionStatus()
 
-  //- Image rights/credits
-  if artwork.get('image_rights')
-    .artwork-meta-photo-credit= artwork.get('image_rights')
+  .artwork-detail-secondary-metadata
+    if artwork.get('series')
+      h2.artwork-detail-series From the series #{artwork.get('series')}
+    h2.artwork-detail-medium= artwork.get('medium')
+    if artwork.get('manufacturer')
+      .artwork-detail-manufacturer
+        = artwork.get('manufacturer')
+    unless artwork.isMultipleEditions()
+      .artwork-detail-dimensions
+        .amd-imperial!= artwork.dimensions({ metric: 'in', format: 'superscript' })
+        .amd-metric= artwork.dimensions({ metric: 'cm', format: 'decimal' })
+    if artwork.editionStatus()
+      .artwork-edition-status
+        = artwork.editionStatus()
 
-  //- Edition Sets
-  if artwork.isMultipleEditions()
-    form.artwork-edition-sets
-      for edition, i in artwork.editions.models
-        label.artwork-edition-set
-          if artwork.isEditionAcquireable(edition)
-            .aes-radio
-              input.aes-radio-button(
-                type= 'radio'
-                value= edition.id
-                name= 'edition'
-                checked= i === 0 ? true : undefined
-              )
-          .aes-details
-            .aes-imperial!= edition.dimensions({ metric: 'in', format: 'superscript' })
-            .aes-metric= edition.dimensions({ metric: 'cm', format: 'decimal' })
-            .aes-edition-size= edition.get('editions')
-          .aes-price= edition.priceDisplay()
+    //- Image rights/credits
+    if artwork.get('image_rights')
+      .artwork-meta-photo-credit= artwork.get('image_rights')
+
+    //- Edition Sets
+    if artwork.isMultipleEditions()
+      form.artwork-edition-sets
+        for edition, i in artwork.editions.models
+          label.artwork-edition-set
+            if artwork.isEditionAcquireable(edition)
+              .aes-radio
+                input.aes-radio-button(
+                  type= 'radio'
+                  value= edition.id
+                  name= 'edition'
+                  checked= i === 0 ? true : undefined
+                )
+            .aes-details
+              .aes-imperial!= edition.dimensions({ metric: 'in', format: 'superscript' })
+              .aes-metric= edition.dimensions({ metric: 'cm', format: 'decimal' })
+              .aes-edition-size= edition.get('editions')
+            .aes-price= edition.priceDisplay()
 
   //- Partner link
   unless artwork.isContactable()

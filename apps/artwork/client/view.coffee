@@ -56,7 +56,6 @@ module.exports = class ArtworkView extends Backbone.View
     @setupFollowButton()
     @setupBelowTheFold()
     @setupMainSaveButton()
-    @setupArtworkOverview()
     @setupVideoView()
     @setupPartnerLocations()
     @setupAnnyang()
@@ -129,12 +128,6 @@ module.exports = class ArtworkView extends Backbone.View
   setupEmbeddedInquiryForm: ->
     return if @suppressInquiry
     new ContactView el: @$('#artwork-detail-contact'), model: @artwork
-
-  # Currently, Safari 5 is the only browser we support that doesn't support CSS `Calc`
-  # This is a hack to give the artwork-container a sane max-width using JS as a substitute
-  setupArtworkOverview: ->
-    if navigator?.userAgent.search("Safari") >= 0 and navigator?.userAgent.search("Chrome") < 0
-      @$('.artwork-overview').css 'max-width': @$('.artwork-container').width() - 250
 
   displayZigZag: ->
     (@$inquiryButton = @$('.artwork-contact-button, .artwork-inquiry-button').first())

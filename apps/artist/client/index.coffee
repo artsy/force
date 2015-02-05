@@ -4,6 +4,7 @@ Artist = require '../../../models/artist.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 ArtistRouter = require './router.coffee'
 analytics = require './analytics.coffee'
+attachArtworkModal = require '../../../components/page_modal/index.coffee'
 
 module.exports.init = ->
   analytics.listenToEvents()
@@ -14,5 +15,15 @@ module.exports.init = ->
 
   Backbone.history.start pushState: true
 
-  analytics.trackArtistPageView model
+  if user?.isAdmin?()
+    selectors = [
+      '.carousel-figure a[href^="/artwork"]'
+      '#artwork-section .artwork-item-image-link'
+    ]
 
+    attachArtworkModal selectors.join(', '), {
+      'artist/:id': 'close'
+      'artwork/:id': 'modal'
+    }
+
+  analytics.trackArtistPageView model
