@@ -16,7 +16,12 @@ module.exports.init = ->
   Backbone.history.start pushState: true
 
   if user?.isAdmin?()
-    attachArtworkModal '.carousel-figure, .artwork-item-image-link', {
+    selectors = [
+      '.carousel-figure a[href^="/artwork"]'
+      '#artwork-section .artwork-item-image-link'
+    ]
+
+    attachArtworkModal selectors.join(', '), {
       'artist/:id': 'close'
       'artwork/:id': 'modal'
     }
