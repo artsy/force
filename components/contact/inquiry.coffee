@@ -32,12 +32,16 @@ module.exports = class InquiryView extends ContactView
 
   initialize: (options) ->
     { @artwork } = options
+    @artwork.fetchAuctionAndContacts
+      error: @ready
+      success: (@auction, @contacts) => @ready()
     super
+
+  ready: =>
     @renderTemplates()
     @updatePosition()
     @isLoaded()
     @focusTextareaAfterCopy()
-
 
   postRender: ->
     @isLoading()
@@ -49,7 +53,7 @@ module.exports = class InquiryView extends ContactView
 
     @model.set
       artwork: @artwork.id
-      contact_gallery: false
+      contact_gallery: if @auction? and @contacts?.findWhere(can_contact: true) then yes else no
       session_id: SESSION_ID
       referring_url: Cookies.get('force-referrer')
       landing_url: Cookies.get('force-session-start')
