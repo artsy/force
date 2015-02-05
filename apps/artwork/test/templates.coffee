@@ -99,7 +99,7 @@ describe 'Artwork', ->
         auctionId: 'two-x-two'
         asset: ->
       @$template = cheerio.load template
-      @$template.html().should.containEql 'From the series Paris'
+      @$template.html().should.containEql 'From the series&#xA0;<em>Paris</em>'
 
     it 'shows buyer premium for open auctions', ->
       @artwork.set acquireable: false
