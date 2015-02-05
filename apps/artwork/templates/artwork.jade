@@ -8,17 +8,23 @@ article.artwork-container
         include ../../../components/clock/template
 
     .artwork-image
-      a.artwork-image-zoom(
-        href= "/artwork/#{artwork.id}/zoom"
-        rel= 'nofollow'
-        data-client
-      )
+      mixin artworkImage
         img#the-artwork-image(
           alt= artwork.get('title')
           title= artwork.get('title')
           nopin= artwork.noPinAttr()
           src= artwork.defaultImage().imageUrlFor(640, 640)
         )
+
+      if artwork.defaultImage().canDeepZoom()
+        a.artwork-image-zoom(
+          href= "/artwork/#{artwork.id}/zoom"
+          rel= 'nofollow'
+          data-client
+        )
+          +artworkImage
+      else
+        +artworkImage
 
     if artwork.hasAdditionalImages()
       .artwork-additional-images

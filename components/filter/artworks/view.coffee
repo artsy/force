@@ -74,14 +74,12 @@ module.exports = class FilterArtworksView extends Backbone.View
       _.defer => @params.trigger 'reset'
 
   render: (col, res) =>
-    #
-    # Set a max # of pages at 100
-    # This is temporary until we figure out exactly where the large page requests (page ~3000) are coming from
-    #
+    @giveUpCount ?= 0
+    @giveUpCount++ if res?.length is 0
     @$('.filter-artworks').attr 'data-state',
       if @artworks.length is 0 then 'no-results'
-      else if res.length is 0 then 'finished-paging'
-      else if @params.get('page') > 100 then 'finished-paging'
+      else if @giveUpCount > 100 then 'finished-paging'
+      else if @params.get('page') > 500 then 'finished-paging'
       else ''
     @newColumnsView() unless @columnsView?
     @columnsView.appendArtworks(new Artworks(res).models)
