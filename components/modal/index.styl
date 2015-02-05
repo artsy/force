@@ -81,17 +81,18 @@ body.is-modal
 
 .modal-close
   position absolute
-  top 24px
-  right 27px
-  font-size 65px
+  top 25px
+  right 25px
   cursor pointer
   transition opacity 0.25s
   opacity 0.15
-  font-size 50px
   z-index 2
   prevent-content-shift()
   &:hover
     opacity 1
+  > i
+    font-size 26px
+    line-height @font-size
 
 .modal-dialog
 .modal-body
