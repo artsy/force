@@ -15,9 +15,9 @@ module.exports = class PageModalView extends ModalView
       @retargetLinks()
       @isLoaded()
 
-  # Bounce all links out to the parent if they don't
-  # already have targets
-  retargetLinks: ->
+  contents: ->
     @$('iframe').contents()
-      .find('a:not([target])')
-      .attr('target', '_parent')
+
+  retargetLinks: ->
+    @contents().on 'click', 'a:not([target])', ->
+      $(this).attr 'target', '_parent'
