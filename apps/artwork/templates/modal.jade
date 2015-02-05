@@ -18,5 +18,8 @@ block body
       hr.is-invisible
 
       .is-center-aligned
-        a.avant-garde-button-underlined( href="#{artwork.href()}#more-info", target='_parent' )
+        a.avant-garde-button-underlined(
+          href="#{artwork.href()}?modeless#more-info"
+          target='_parent'
+        )
           | More Info
