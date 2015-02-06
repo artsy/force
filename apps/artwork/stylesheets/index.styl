@@ -86,6 +86,18 @@ artwork-detail-item-height = 36px
   position relative
 
 // Below the fold
+
+// Hack around empty state
+.artwork-related-information
+  padding-top 0
+  border-top none !important
+#artwork-artist-related-extended
+  margin-top 0
+  padding-top 20px
+  border-top 1px solid gray-lighter-color
+  &:empty
+    display none
+
 .ari-container
   margin 20px auto
   text-align center
