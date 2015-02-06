@@ -8,7 +8,6 @@ ShareModal = require '../../../components/share/modal.coffee'
 Transition = require '../../../components/mixins/transition.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 SaveButton = require '../../../components/save_button/view.coffee'
-AddToPostButton = require '../../../components/related_posts/add_to_post_button.coffee'
 RelatedPostsView = require '../../../components/related_posts/view.coffee'
 RelatedArticlesView = require '../../../components/related_articles/view.coffee'
 analytics = require '../../../lib/analytics.coffee'
@@ -44,14 +43,11 @@ module.exports = class ArtworkView extends Backbone.View
 
   initialize: (options) ->
     { @artwork, @artist } = options
+
     @checkQueryStringForAuction()
     @setupEmbeddedInquiryForm()
-    if 'Articles' in (sd.CURRENT_USER?.lab_features or [])
-      @setupRelatedArticles()
-    else
-      @setupRelatedPosts()
-    @setupPostButton()
     @setupCurrentUser()
+    @setupRelatedPosts()
     @setupArtistArtworks()
     @setupFollowButton()
     @setupBelowTheFold()
@@ -222,35 +218,20 @@ module.exports = class ArtworkView extends Backbone.View
     @saved.addRepoArtworks @__saved__
     @saved.syncSavedArtworks()
 
-  setupPostButton: ->
-    new AddToPostButton
-      el: @$('.ari-container')
-      model: @artwork
-      modelName: 'artwork'
-
   setupRelatedPosts: ->
-    @$('.ari-right').css 'min-height', @$('.ari-left').height()
-    @listenTo @artwork.relatedPosts, 'sync', =>
-      if @$('.ari-left').length < 1 and @artwork.relatedPosts.length < 1
-        @$('.artwork-related-information').remove()
-    @artwork.relatedPosts.fetch success: =>
-      if @artwork.relatedPosts.length
-        subView = new RelatedPostsView collection: @artwork.relatedPosts, numToShow: 2
-        @$('#artwork-artist-related-posts-container').html subView.render().$el
+    { method, view } =
+      if @currentUser?.hasLabFeature 'Articles'
+        method: 'relatedArticles', view: RelatedArticlesView
       else
-        @$('#artwork-artist-related-posts-container').remove()
+        method: 'relatedPosts', view: RelatedPostsView
 
-  setupRelatedArticles: ->
-    @$('.ari-right').css 'min-height', @$('.ari-left').height()
-    @listenTo @artwork.relatedArticles, 'sync', =>
-      if @$('.ari-left').length < 1 and @artwork.relatedArticles.length < 1
-        @$('.artwork-related-information').remove()
-    @artwork.relatedArticles.fetch success: =>
-      if @artwork.relatedArticles.length
-        subView = new RelatedArticlesView collection: @artwork.relatedArticles, numToShow: 2
-        @$('#artwork-artist-related-posts-container').html subView.render().$el
-      else
-        @$('#artwork-artist-related-posts-container').remove()
+    @artwork[method].fetch success: (response) =>
+      if response.length
+        subView = new view
+          className: 'ari-cell artwork-related-articles'
+          collection: @artwork[method]
+          numToShow: 2
+        @$('#artwork-artist-related-extended').append subView.render().$el
 
   setupFeatureNavigation: (options) ->
     new FeatureNavigationView
@@ -269,7 +250,7 @@ module.exports = class ArtworkView extends Backbone.View
     @syncSavedArtworks @artwork
 
   setupSaveButton: ($el, artwork, options = {}) ->
-    if @currentUser? and 'Set Management' in @currentUser.get('lab_features')
+    if @currentUser?.hasLabFeature 'Set Management'
       SaveControls = require '../../../components/artwork_item/save_controls.coffee'
       @$('.circle-icon-button-save').after(
         require('../../../components/artwork_item/save_controls_two_btn/templates/artwork_page_button.jade')()
