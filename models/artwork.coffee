@@ -161,7 +161,7 @@ module.exports = class Artwork extends Backbone.Model
   hasDimension: (attr) ->
     parseFloat(@get(attr)) > 0
 
-  # Can the more info toggle be displayed?
+  # Can we show more info
   #
   # return {Boolean}
   hasMoreInfo: ->
@@ -338,12 +338,6 @@ module.exports = class Artwork extends Backbone.Model
 
   isEmbeddableByUser: (user) ->
     user?.hasLabFeature('Embed') and @get('absolutely_embeddable')
-
-  showAboutArtworkHeading: ->
-    @get('blurb') or @get('provenance') or @get('exhibition_history') or @get('signature') or @get('additional_information') or @get('literature')
-
-  hasLeftInfoSection: (user, artist) ->
-    user or @get('blurb') or artist?.get('blurb') or @hasMoreInfo() or @isComparable()
 
   # Sets up related collections and makes them available
   # under an object so we can access/iterate over them later
