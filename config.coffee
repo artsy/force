@@ -69,6 +69,10 @@ module.exports =
   POST_TO_ARTICLE_SLUGS: []
   HEAPDUMP: false
   TESTING_MEMORY_LEAK: false
+  # HAXonHAXonHAX: — Remove after LAMA auction
+  LAMA_LOGO_URL: 'https://s3.amazonaws.com/f.cl.ly/items/1E162f0N3q2f2V03301t/pasted_image_at_2015_02_03_04_55_pm.png'
+  LAMA_ID: 'los-angeles-modern-auctions-lama'
+  LAMA_FEATURE_ID: 'los-angeles-modern-auctions-march-2015'
 
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or
