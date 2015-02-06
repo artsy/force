@@ -17,7 +17,7 @@ block body
       .shows-page-featured-section: include ../../../components/featured_shows/small
 
     if current.length
-      h2.shows-page-header Current Shows in #{city.name}
+      h2.shows-page-header Current Shows in #{city.name} (#{current.state.totalRecords})
       - var shows = current.models
       .shows-page-featured-section
         include ../../../components/featured_shows/small

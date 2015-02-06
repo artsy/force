@@ -15,7 +15,7 @@ module.exports = class PartnerShows extends PageableCollection
 
   parseState: (response, queryParams, state, options) ->
     if options.res
-      totalRecords: parseInt options.res.headers['x-total-count']
+      totalRecords: parseInt(options.res.headers['x-total-count'] or 0)
 
   # Get the running partner shows collection.
   #
