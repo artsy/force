@@ -219,7 +219,7 @@ describe 'Questionnaire', ->
           @view.attachLocationSearch.called.should.be.true
           @view.state.get('mode').should.equal 'questionnaire'
           html = @view.$el.html()
-          html.should.containEql 'Gallery Introduction'
+          html.should.containEql 'Your Artwork Inquiry'
           @view.$el.hasClass 'fade-in'
           @view.attachBookmarksView.called.should.be.true
 
@@ -229,7 +229,7 @@ describe 'Questionnaire', ->
           @view.attachLocationSearch.called.should.be.true
           @view.state.get('mode').should.equal 'questionnaire'
           html = @view.$el.html()
-          html.should.containEql 'Gallery Introduction'
+          html.should.containEql 'Your Artwork Inquiry'
           @view.$el.hasClass 'fade-in'
           @view.attachBookmarksView.called.should.be.false
 
