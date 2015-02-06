@@ -22,14 +22,14 @@ describe 'FeatureNavigationView', ->
     feature = new Backbone.Model(fabricate 'feature')
     view = new FeatureNavigationView model: feature, kind: 'feature'
     html = view.$el.html()
-    html.should.containEql '<a href="/feature/bitty-the-cat">Part of A Feature all about the greatest cat</a>'
+    html.should.containEql '<a href="/feature/bitty-the-cat">Work offered by<br>A Feature all about the greatest cat'
     html.should.containEql 'Go to feature'
 
   it 'renders when there is a valid fair', ->
     fair = new Backbone.Model(fabricate 'fair')
     view = new FeatureNavigationView model: fair, kind: 'fair'
     html = view.$el.html()
-    html.should.containEql '<a href="/the-armory-show">Part of Armory Show 2013</a>'
+    html.should.containEql '<a href="/the-armory-show">Work offered by<br>Armory Show 2013'
     html.should.containEql 'Go to fair'
 
   it 'does not render when there is a invalid fair', ->
