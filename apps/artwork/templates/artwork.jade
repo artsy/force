@@ -1,6 +1,11 @@
 article.artwork-container
   section.artwork-overview
     .artwork-left-section
+
+      //- HAXonHAXonHAX: — Remove after LAMA auction
+      if sd.LAMA_LOGO_URL && artwork.get('partner').id == sd.LAMA_ID
+        img#artwork-auction-logo( src=sd.LAMA_LOGO_URL )
+
       #artwork-feature-navigation
         //- Rendered client-side
       #artwork-clock

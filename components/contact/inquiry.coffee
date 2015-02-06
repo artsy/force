@@ -4,7 +4,7 @@ Cookies = require 'cookies-js'
 ContactView = require './view.coffee'
 analytics = require('../../lib/analytics.coffee')
 formTemplate = -> require('./templates/inquiry_form.jade') arguments...
-{ SESSION_ID, API_URL } = require('sharify').data
+{ SESSION_ID, API_URL } = sd = require('sharify').data
 
 module.exports = class InquiryView extends ContactView
   eligibleForAfterInquiryFlow: true
@@ -47,9 +47,10 @@ module.exports = class InquiryView extends ContactView
       label: analytics.modelNameAndIdToLabel('artwork', @artwork.id)
     analytics.snowplowStruct 'inquiry_introduction', 'submit', @artwork.get('_id'), 'artwork', '0.0'
 
+    isLAMA = @artwork.get('partner').id is sd.LAMA_ID
     @model.set
       artwork: @artwork.id
-      contact_gallery: false
+      contact_gallery: if isLAMA then yes else no
       session_id: SESSION_ID
       referring_url: Cookies.get('force-referrer')
       landing_url: Cookies.get('force-session-start')

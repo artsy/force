@@ -15,7 +15,7 @@
   margin 0
   width 100%
   @media screen and (max-height: 768px)
-    height (@height / 2)
+    height 200px
 
 .feature-content
   position relative
@@ -26,41 +26,30 @@
   min-height 800px
 
 .feature-title
-  width 75%
-  margin 0 auto 25px
   garamond()
   font-size 41px
   line-height 1.25
-  text-align center
-
-.feature-share
-  position absolute
-  top 35px
-  right 0
-  .share-to-pinterest
-    display none
 
 .feature-description
   width 100%
-  margin 0px 0 40px
-  padding 20px 0
-  text-align center
+  padding 0 0 60px 0
   display table
 
 #feature-description-register-container
 #feature-auction-info-countdown-container
 .feature-description-text
-  display table-cell
-  vertical-align top
   &:empty
     display none
 
+#feature-auction-info-countdown-container
+  width 150px
+
 #feature-description-register-container
 #feature-auction-info-countdown-container
-  width 250px
+  width 150px
 .feature-description-text
   font-size 20px
-  padding 0 40px
+  margin-bottom 20px
   p
     line-height 1.33
 
@@ -229,3 +218,27 @@
       color purple-color
       &::before
         border-color purple-color
+
+#feature-top-container
+  display flex
+
+#feature-auction-left
+  padding-right 60px
+  .auction-info-register-button
+    width 250px
+    margin-top 40px
+
+#feature-auction-right
+  min-width 420px
+  img
+    width 150px
+  #feature-auction-info-countdown-container .clock
+    text-align left
+  #feature-auction-info-countdown-container, img, .feature-share
+    display inline-block
+    vertical-align top
+    margin-right 20px
+  .feature-share
+    margin-right 0
+    .share-to-pinterest
+      display none
