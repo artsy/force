@@ -89,28 +89,35 @@ module.exports.track = track =
       # Don't track admins
       return if sd.CURRENT_USER?.type is 'Admin'
 
-      # Format and Send mixpanel event
+      # Setup options
+      defaults =
+        queryString: window?.location.search
+        page: window?.location.pathname
+        referrer: document?.referrer
+        collector_level: sd.CURRENT_USER?.collector_level
+        user_id: sd.CURRENT_USER?.id
+        lab_features: sd.CURRENT_USER?.lab_features
+
+      _.defaults options, defaults
+
+      # Format and send Mixpanel event
       unless typeof mixpanel is 'undefined'
         options.category = categories[kind] or categories.other
 
-        _.defaults options,
-          queryString: window?.location.search
-          page: window?.location.pathname
-          referrer: document?.referrer
-          collector_level: sd.CURRENT_USER?.collector_level
-          user_id: sd.CURRENT_USER?.id
-          lab_features: sd.CURRENT_USER?.lab_features
-
         mixpanel.track? description, options
 
-      # Send google analytics event
-      ga? 'send', {
+      # Format and send Google Analytics event
+      label = options.label or
+        # Stringify any custom options as a fallback label
+        JSON.stringify(_.omit(options, _.flatten([_.keys(defaults), 'category', 'token'])))
+
+      ga? 'send',
         hitType: 'event'
         eventCategory: options.category
         eventAction: description
-        eventLabel: options.label
+        eventLabel: label
         nonInteraction: (if options.category in ['Funnel Progressions', 'Impressions', 'Timing'] then 1 else 0)
-      }
+
     memo
   , {})
 
