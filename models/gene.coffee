@@ -31,7 +31,7 @@ module.exports = class Gene extends Backbone.Model
 
   initialize: ->
     @relatedArtists = new Backbone.Collection [], model: Artist
-    @relatedArtists.url = "#{sd.API_URL}/api/v1/gene/#{@id}/artists"
+    @relatedArtists.url = "#{sd.API_URL}/api/v1/gene/#{@id}/artists?exclude_artists_without_artworks=true"
     @trendingArtists = new Backbone.Collection [], model: Artist
     @trendingArtists.url = "#{sd.API_URL}/api/v1/artists/trending?gene=#{@id}"
 

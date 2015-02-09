@@ -64,8 +64,7 @@ module.exports.GeneView = class GeneView extends Backbone.View
         @renderArtistFillwidth()
 
   fetchRelatedArtists: ->
-    data = { exclude_artists_without_artworks: true }
-    @model.fetchArtists 'related', data: data, success: (artists) =>
+    @model.fetchArtists 'related', success: (artists) =>
       @relatedArtists = artists
       @trigger 'relatedArtistsFetched'
 
