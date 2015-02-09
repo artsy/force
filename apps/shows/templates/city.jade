@@ -1,5 +1,4 @@
 extends ../../../components/main_layout/templates/index
-include ../../../components/pagination/paginator
 
 block head
   include meta
@@ -17,11 +16,10 @@ block body
       .shows-page-featured-section: include ../../../components/featured_shows/small
 
     if current.length
-      h2.shows-page-header Current Shows in #{city.name} (#{current.state.totalRecords})
+      h2.shows-page-header Current Shows in #{city.name}
       - var shows = current.models
       .shows-page-featured-section
         include ../../../components/featured_shows/small
-        +paginate(current.state.currentPage, current.state.totalPages)
 
     if upcoming.length
       h1.shows-page-header Upcoming Shows
