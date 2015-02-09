@@ -57,19 +57,25 @@ representation = (fair) ->
           promises = _.compact _.flatten [
             _.map pastFairs, (fair)-> fair.fetch cache: true
             _.map pastFairs, representation
-            articles.fetch(
-              cache: true
-              data: { published: true, fair_id: fair.get('_id'), sort: '-published_at' }
-            )
           ]
 
           Q.allSettled(promises).then(->
-            res.locals.sd.FAIR = fair.toJSON()
-            res.locals.sd.ARTICLES = articles.toJSON()
-            res.locals.fair = fair
-            res.locals.coverImage = profile.coverImage()
-            res.locals.pastFairs = pastFairs
-            res.locals.articles = articles.models
-            next()
+            fairIds = (fair.get('_id') for fair in pastFairs.concat [fair])
+            articles.fetch
+              cache: true
+              data:
+                published: true
+                fair_ids: fairIds
+                sort: '-published_at'
+              error: res.backboneError
+              success: ->
+                res.locals.sd.FAIR = fair.toJSON()
+                res.locals.sd.FAIR_IDS = fairIds
+                res.locals.sd.ARTICLES = articles.toJSON()
+                res.locals.fair = fair
+                res.locals.coverImage = profile.coverImage()
+                res.locals.pastFairs = pastFairs
+                res.locals.articles = articles.models
+                next()
           ).done()
 
