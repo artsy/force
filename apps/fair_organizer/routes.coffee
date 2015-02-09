@@ -16,7 +16,8 @@ representation = (fair) ->
   dfd.promise
 
 @overview = (req, res, next) ->
-  return next() unless res.locals.sd.FAIR
+  # go to normal fair page when this fair switches to open
+  return next() if not res.locals.fair or res.locals.fair.hasOpened()
   res.locals.sd.HEADER_CLASS = 'force-position-absolute'
   res.render 'overview'
 
@@ -30,6 +31,7 @@ representation = (fair) ->
   # manually fetching the profile here, since we don't want to override /the-armory-show just yet
   new Profile(id: 'the-armory-show').fetch
     data: data
+    cache: true
     success: (profile) ->
       res.locals.profile = profile
       res.locals.sd.PROFILE = profile.toJSON()
@@ -41,10 +43,8 @@ representation = (fair) ->
       fair = new Fair id: 'the-armory-show-2015'
       fair.fetch
         error: res.backboneError
+        cache: true
         success: =>
-          # go to normal fair page when this fair switches to open
-          return next() if fair.get('clockState') is 'open'
-
           # This is the specific-to-armory part
           # Eventually we will fetch the organizer's past fairs here.
           armory2013 = new Fair id: 'the-armory-show-2013'

@@ -39,6 +39,9 @@ module.exports = class Fair extends Backbone.Model
   organizerProfileImage: ->
     @profileImage(@get('organizer').profile_id) if @get('organizer')?.profile_id?
 
+  hasOpened: ->
+    moment().isAfter @get('start_at')
+
   formatLocation: ->
     @location()?.get('city')
 

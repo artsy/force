@@ -19,4 +19,4 @@ getFairData = [
 ]
 
 # just a route to for testing for now
-app.get '/the-armory-show-temp', getFairData, routes.overview
+app.get '/the-armory-show', getFairData, routes.overview
