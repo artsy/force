@@ -31,6 +31,15 @@ describe 'ShowsView', ->
     Backbone.sync.restore()
     @view.remove()
 
+  describe '#initialize', ->
+    it 'fetches shows until the end', ->
+      Backbone.sync.callCount.should.equal 2
+      Backbone.sync.args[0][2].data.page.should.equal 1
+      Backbone.sync.args[0][2].success [fabricate 'show']
+      Backbone.sync.callCount.should.equal 3
+      _.last(Backbone.sync.args)[2].data.page.should.equal 2
+
+
   describe '#render', ->
     it 'renders, sets up the template', ->
       @view.$el.html().should.containEql 'Foo Bar shows on Artsy'

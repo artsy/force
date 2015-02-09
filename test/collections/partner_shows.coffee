@@ -1,8 +1,7 @@
 _ = require 'underscore'
-{ fabricate } = require 'antigravity'
-sd = require('sharify').data
-should = require 'should'
+sinon = require 'sinon'
 Backbone = require 'backbone'
+{ fabricate } = require 'antigravity'
 PartnerShow = require '../../models/partner_show'
 PartnerShows = require '../../collections/partner_shows'
 
@@ -43,3 +42,22 @@ describe 'PartnerShows', ->
       @partnerShows.past().should.have.lengthOf 2
       @partnerShows.past().at(0).get('name').should.equal 'show1'
       @partnerShows.past().at(1).get('name').should.equal 'show6'
+
+  describe '#fetchUntilEnd', ->
+    beforeEach ->
+      sinon.stub Backbone, 'sync'
+      @partnerShows.reset()
+
+    afterEach ->
+      Backbone.sync.restore()
+
+    it 'paginates correctly', ->
+      @partnerShows.fetchUntilEnd()
+      Backbone.sync.args[0][2].data.page.should.equal 1
+      Backbone.sync.args[0][2].success [fabricate 'show']
+      Backbone.sync.args[0][2].data.page.should.equal 2
+      Backbone.sync.args[1][2].success [fabricate 'show']
+      Backbone.sync.args[0][2].data.page.should.equal 3
+      Backbone.sync.args[2][2].success [fabricate 'show']
+      Backbone.sync.args[0][2].data.page.should.equal 4
+      Backbone.sync.args[3][2].success []
