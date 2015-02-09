@@ -1,21 +1,17 @@
 _ = require 'underscore'
 sd = require('sharify').data
 moment = require 'moment'
-PageableCollection = require 'backbone-pageable'
 PartnerShow = require '../models/partner_show.coffee'
+Backbone = require 'backbone'
 { API_URL } = require('sharify').data
 { Fetch } = require 'artsy-backbone-mixins'
 
-module.exports = class PartnerShows extends PageableCollection
+module.exports = class PartnerShows extends Backbone.Collection
   _.extend @prototype, Fetch(API_URL)
 
   model: PartnerShow
 
   url: "#{sd.API_URL}/api/v1/shows"
-
-  parseState: (response, queryParams, state, options) ->
-    if options.res
-      totalRecords: parseInt(options.res.headers['x-total-count'] or 0)
 
   # Get the running partner shows collection.
   #

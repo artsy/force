@@ -30,14 +30,14 @@ PartnerShows = require '../../collections/partner_shows'
 
   upcoming = new PartnerShows
   upcoming.comparator = (show) -> Date.parse(show.get('start_at'))
-  current = new PartnerShows [], state: currentPage: currentPage, pageSize: pageSize
+  current = new PartnerShows
   current.comparator = (show) -> Date.parse(show.get('end_at'))
   past = new PartnerShows
   past.comparator = (show) -> -(Date.parse(show.get('end_at')))
 
   Q.allSettled([
     upcoming.fetch(cache: true, data: criteria('upcoming'))
-    current.fetch(cache: true, data: _.extend({}, criteria('running'), total_count: true))
+    current.fetch(cache: true, data: criteria('running'))
     past.fetch(cache: true, data: criteria('closed'))
   ]).then(->
     opening = upcoming.groupBy (show) -> show.openingThisWeek()
