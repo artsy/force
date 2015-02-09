@@ -11,6 +11,7 @@ Following = require '../../components/follow_button/collection.coffee'
 @setProfile = (req, res, next) ->
   data = {}
   data.access_token = req.user.get('accessToken') if req.user
+  return next() if res.locals.profile
   new Profile(id: req.params.id).fetch
     data: data
     success: (profile) ->
