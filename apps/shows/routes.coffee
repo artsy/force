@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Q = require 'q'
 Items = require '../../collections/items'
-PartnerShows = require '../../collections/partner_shows'
+PartnerShows = require './shows'
 { Cities } = require 'places'
 { FeaturedCities } = require 'places'
 
@@ -30,14 +30,14 @@ PartnerShows = require '../../collections/partner_shows'
 
   upcoming = new PartnerShows
   upcoming.comparator = (show) -> Date.parse(show.get('start_at'))
-  current = new PartnerShows
+  current = new PartnerShows [], state: currentPage: currentPage, pageSize: pageSize
   current.comparator = (show) -> Date.parse(show.get('end_at'))
   past = new PartnerShows
   past.comparator = (show) -> -(Date.parse(show.get('end_at')))
 
   Q.allSettled([
     upcoming.fetch(cache: true, data: criteria('upcoming'))
-    current.fetch(cache: true, data: criteria('running'))
+    current.fetch(cache: true, data: _.extend({}, criteria('running'), total_count: true, sort: 'end_at'))
     past.fetch(cache: true, data: criteria('closed'))
   ]).then(->
     opening = upcoming.groupBy (show) -> show.openingThisWeek()

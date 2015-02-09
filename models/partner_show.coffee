@@ -138,6 +138,14 @@ module.exports = class PartnerShow extends Backbone.Model
   date: (attr) ->
     moment(@get attr)
 
+  isSameYear: (date) ->
+    date.year() is moment().year()
+
+  dateFormatted: (attr, formatString = 'MMM D') ->
+    date = @date attr
+    formatString += ', YYYY' unless @isSameYear(date)
+    date.format formatString
+
   fetchInstallShots: (callbacks) ->
     throw "You must pass a success callback" unless callbacks?.success? and _.isFunction(callbacks.success)
     @installShots = new Backbone.Collection [], { model: InstallShot }

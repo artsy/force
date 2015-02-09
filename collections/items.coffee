@@ -2,12 +2,12 @@ _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
 Item = require '../models/item.coffee'
-PageableCollection = require 'backbone-pageable'
+PageableCollection = require '../components/pageable_collection/index.coffee'
 
 # Collection of Items for an OrderedSet
 module.exports = class Items extends PageableCollection
   mode: 'infinite'
-  queryParams: currentPage: 'page', pageSize: 'size'
+
   state: pageSize: 20
 
   url: =>
