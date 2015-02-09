@@ -37,7 +37,7 @@ PartnerShows = require './shows'
 
   Q.allSettled([
     upcoming.fetch(cache: true, data: criteria('upcoming'))
-    current.fetch(cache: true, data: _.extend({}, criteria('running'), total_count: true))
+    current.fetch(cache: true, data: _.extend({}, criteria('running'), total_count: true, sort: 'end_at'))
     past.fetch(cache: true, data: criteria('closed'))
   ]).then(->
     opening = upcoming.groupBy (show) -> show.openingThisWeek()
