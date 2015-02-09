@@ -2,7 +2,7 @@ _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
 Artwork = require '../models/artwork.coffee'
-PageableCollection = require 'backbone-pageable'
+PageableCollection = require '../components/pageable_collection/index.coffee'
 { API_URL } = require('sharify').data
 
 module.exports = class Notifications extends PageableCollection
@@ -16,9 +16,6 @@ module.exports = class Notifications extends PageableCollection
 
   state:
     pageSize: 10
-
-  queryParams:
-    pageSize: 'size'
 
   initialize: (models, options = {}) ->
     { @userId, @type, @since } = _.defaults(options, @defaults)

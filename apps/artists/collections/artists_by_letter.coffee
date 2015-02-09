@@ -1,7 +1,7 @@
 _ = require 'underscore'
 sd = require('sharify').data
-Artist = require '../../../models/artist'
-PageableCollection = require 'backbone-pageable'
+Artist = require '../../../models/artist.coffee'
+PageableCollection = require '../../../components/pageable_collection/index.coffee'
 
 module.exports = class ArtistsByLetter extends PageableCollection
   url: ->
@@ -11,16 +11,7 @@ module.exports = class ArtistsByLetter extends PageableCollection
 
   range: ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
 
-  state:
-    pageSize: 100
-
-  queryParams:
-    currentPage: 'page'
-    pageSize: 'size'
-
-  parseState: (resp, queryParams, state, options) ->
-    if options.res
-      { totalRecords: parseInt(options.res.headers['x-total-count']) }
+  state: pageSize: 100
 
   initialize: (models, options={}) ->
     { @letter } = options
