@@ -87,7 +87,7 @@ module.exports = class PartnerShowsGridView extends Backbone.View
             shows = current.concat(upcoming, past).slice(0, @numberOfShows)
             return @renderShows featured, shows
 
-          if (not @isCombined) and partnerShows.length == 0
+          if (not @isCombined) or partnerShows.length == 0
             return @renderShows featured, current, upcoming, past
 
         return @initializeShows featured, current, upcoming, past, ++page
