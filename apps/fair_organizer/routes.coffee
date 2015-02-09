@@ -57,13 +57,9 @@ representation = (fair) ->
           promises = _.compact _.flatten [
             _.map pastFairs, (fair)-> fair.fetch cache: true
             _.map pastFairs, representation
-            # TODO: Update Positron & wire up to actual fair organizer & not
-            # hardcoded to The Armory Show 2014.
             articles.fetch(
               cache: true
-              data:
-                published: true
-                author_id: (res.locals.sd.AUTHOR_ID = '54b706957261694f37e20100')
+              data: { published: true, fair_id: fair.get('_id'), sort: '-published_at' }
             )
           ]
 
