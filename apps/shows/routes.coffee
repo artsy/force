@@ -21,13 +21,6 @@ PartnerShows = require './shows'
   currentPage = parseInt req.query.page or 1
   pageSize = 18
 
-  criteria = (status) ->
-    near: city.coords.toString()
-    published_with_eligible_artworks: true
-    status: status
-    sort: '-start_at'
-    size: pageSize
-
   upcoming = new PartnerShows
   upcoming.comparator = (show) -> Date.parse(show.get('start_at'))
   current = new PartnerShows [], state: currentPage: currentPage, pageSize: pageSize
@@ -35,10 +28,16 @@ PartnerShows = require './shows'
   past = new PartnerShows
   past.comparator = (show) -> -(Date.parse(show.get('end_at')))
 
+  criteria =
+    near: city.coords.toString()
+    published_with_eligible_artworks: true
+    sort: '-start_at'
+    size: pageSize
+
   Q.allSettled([
-    upcoming.fetch(cache: true, data: criteria('upcoming'))
-    current.fetch(cache: true, data: _.extend({}, criteria('running'), total_count: true, sort: 'end_at'))
-    past.fetch(cache: true, data: criteria('closed'))
+    upcoming.fetch(cache: true, data: _.defaults(status: 'upcoming', criteria))
+    current.fetch(cache: true, data: _.defaults(status: 'running', total_count: true, sort: 'end_at', criteria))
+    past.fetch(cache: true, data: _.defaults(status: 'closed', criteria))
   ]).then(->
     opening = upcoming.groupBy (show) -> show.openingThisWeek()
 
