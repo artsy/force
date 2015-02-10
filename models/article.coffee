@@ -32,8 +32,14 @@ module.exports = class Article extends Backbone.Model
           cache: true
           url: "#{sd.API_URL}/api/v1/user/#{@get 'author_id'}"
         slideshowArtworks?.map (a) =>
+          dfd = Q.defer()
           a.fetch
             cache: true
             data: access_token: options.accessToken
+            error: ->
+              slideshowArtworks.remove(a)
+              dfd.resolve()
+            success: -> dfd.resolve()
+          dfd
       ]).fail((r) -> options.error null, r).then =>
         options.success this, author, footerArticles, slideshowArtworks
