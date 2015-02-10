@@ -31,9 +31,9 @@ describe 'Carousel', ->
     it 'fetches shows and then install shots if the show is valid', ->
       @carousel.fetchAllInstallShots()
       Backbone.sync.args[0][2].success [
-        fabricate 'show', id: 'foo', images_count: 0, artists: [fabricate('artist')]
-        fabricate 'show', id: 'bar', images_count: 2, artists: [fabricate('artist'), fabricate('artist')]
-        fabricate 'show', id: 'baz', images_count: 3, artists: [fabricate('artist')]
+        fabricate 'show', id: 'foo', images_count: 0
+        fabricate 'show', id: 'bar', images_count: 0
+        fabricate 'show', id: 'baz', images_count: 3
       ]
       Backbone.sync.callCount.should.equal 2
       _.last(Backbone.sync.args)[2].url.should.containEql 'api/v1/partner_show/baz/images'
