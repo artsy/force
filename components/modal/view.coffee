@@ -4,7 +4,6 @@ mediator = require '../../lib/mediator.coffee'
 Transition = require '../mixins/transition.coffee'
 { isTouchDevice } = require '../../components/util/device.coffee'
 Scrollbar = require '../../lib/scrollbar.coffee'
-
 modalTemplate = -> require('./modal.jade') arguments...
 
 module.exports = class ModalView extends Backbone.View
@@ -25,7 +24,12 @@ module.exports = class ModalView extends Backbone.View
     'click.internal .modal-backdrop': '__announceBackdropClick__'
 
   initialize: (options = {}) ->
-    { @width, @height, @transition, @backdrop } = _.defaults options, width: '400px', transition: 'fade', backdrop: true
+    { @dimensions, @width, @transition, @backdrop } = _.defaults options,
+      dimensions: width: '400px'
+      transition: 'fade'
+      backdrop: true
+
+    @dimensions.width = @width if @width
 
     _.extend @templateData, autofocus: @autofocus()
 
@@ -85,10 +89,8 @@ module.exports = class ModalView extends Backbone.View
       in: =>
         @updatePosition()
 
-  setDimensions: (options = {}) ->
-    @$dialog.css
-      width: options.width or @width
-      height: options.height or @height
+  setDimensions: (dimensions) ->
+    @$dialog.css dimensions or @dimensions
 
   setup: ->
     backdropClass = if @backdrop then 'has-backdrop' else 'has-nobackdrop'

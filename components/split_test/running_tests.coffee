@@ -15,3 +15,10 @@ module.exports =
       old: 0.5
       new: 0.5
     edge: 'new'
+
+  artwork_modal:
+    key: 'artwork_modal'
+    outcomes:
+      modal: 0.5
+      modeless: 0.5
+    edge: 'modal'

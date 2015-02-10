@@ -11,7 +11,15 @@ module.exports = class PageModalView extends ModalView
 
   postRender: ->
     @isLoading()
-    @$('iframe').load =>
+
+    @alreadySetup = false
+
+    @$('iframe').load (e) =>
+      if @alreadySetup
+        # Safety net incase this loads more than once
+        return window.location.href = @contents()[0].location.href
+
+      @alreadySetup = true
       @retargetLinks()
       @isLoaded()
 

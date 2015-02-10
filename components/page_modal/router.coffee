@@ -16,7 +16,13 @@ module.exports = class PageModalRouter extends Backbone.Router
     mediator.trigger 'modal:close'
 
   modal: ->
-    new PageModalView src: @__src__(), width: '90%', height: '90%'
+    new PageModalView
+      src: @__src__()
+      dimensions:
+        width: '90%'
+        height: '90%'
+        maxWidth: '1200px'
+        maxHeight: '700px'
 
   __src__: ->
     fragment = "/#{Backbone.history.fragment}"
