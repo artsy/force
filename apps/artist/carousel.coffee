@@ -41,7 +41,7 @@ module.exports = class Carousel
     dfd = Q.defer()
     @artist.related().shows.fetch
       cache: @cache
-      data: size: 10
+      data: size: 10, solo_show: true
       success: (shows) =>
         Q.allSettled(_.map(shows.filter(@isValidShow), @fetchInstallShotsForShow)).then dfd.resolve
       error: dfd.resolve
@@ -49,9 +49,7 @@ module.exports = class Carousel
 
   isValidShow: (show) =>
     # Has some installation shots
-    show.get('images_count') > 0 and
-    # Ensure solo shows
-    show.get('artists').length is 1
+    show.get('images_count') > 0
 
   fetchInstallShotsForShow: (show) =>
     new Backbone.Collection().fetch
