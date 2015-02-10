@@ -1,4 +1,5 @@
 include ../../../components/article_figure/mixin
 
 for article in articles
-	+article-figure(article, 300, true, false)
+  if article.get('thumbnail_image')
+    +article-figure(article, 300, true, false)
