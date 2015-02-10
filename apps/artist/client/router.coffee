@@ -40,7 +40,7 @@ module.exports = class ArtistRouter extends Backbone.Router
     @headerView = new HeaderView _.extend el: $('#artist-page-header'), @options
 
   execute: ->
-    @view?.remove()
+    return if @view? # Sets up a view once, depending on route
     super
     @renderCurrentView()
 
