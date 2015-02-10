@@ -11,7 +11,8 @@ block body
   #shows-page.main-layout-container
     include nav
 
-    if opening.length
+    //- Only display opening if we are on the first page
+    if opening.length && (current.state.currentPage <= 1)
       h1.shows-page-header Opening this week
       - var shows = opening
       .shows-page-featured-section: include ../../../components/featured_shows/small
