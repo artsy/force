@@ -2,8 +2,7 @@ _ = require 'underscore'
 Q = require 'q'
 Items = require '../../collections/items'
 PartnerShows = require './shows'
-{ Cities } = require 'places'
-{ FeaturedCities } = require 'places'
+{ Cities, FeaturedCities } = require 'places'
 
 @index = (req, res) ->
   shows = new Items [], id: '530ebe92139b21efd6000071', item_type: 'PartnerShow'
