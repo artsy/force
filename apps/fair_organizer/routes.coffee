@@ -49,6 +49,8 @@ representation = (fair) ->
           # Eventually we will fetch the organizer's past fairs here.
           armory2013 = new Fair id: 'the-armory-show-2013'
           armory2014 = new Fair id: 'the-armory-show-2014'
+          fairIds = ['505797122a5b7500020006a0', '52617c6c8b3b81f094000013',
+            '54871f8672616970632a0400']
 
           pastFairs = [armory2014, armory2013]
           articles = new Articles()
@@ -57,17 +59,14 @@ representation = (fair) ->
           promises = _.compact _.flatten [
             _.map pastFairs, (fair)-> fair.fetch cache: true
             _.map pastFairs, representation
-            # TODO: Update Positron & wire up to actual fair organizer & not
-            # hardcoded to The Armory Show 2014.
             articles.fetch(
               cache: true
-              data:
-                published: true
-                author_id: (res.locals.sd.AUTHOR_ID = '54b706957261694f37e20100')
+              data: { published: true, fair_ids: fairIds, sort: '-published_at' }
             )
           ]
 
           Q.allSettled(promises).then(->
+            res.locals.sd.FAIR_IDS = fairIds
             res.locals.sd.FAIR = fair.toJSON()
             res.locals.sd.ARTICLES = articles.toJSON()
             res.locals.fair = fair
