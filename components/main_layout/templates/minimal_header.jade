@@ -1,6 +1,6 @@
 //- Override any locals with `append locals`
 block locals
-  - bodyClass = helpers.buildBodyClass(sd, 'body-header-fixed minimal-header')
+  - bodyClass = helpers ? helpers.buildBodyClass(sd, 'body-header-fixed minimal-header') : ''
 
 doctype html
 html
