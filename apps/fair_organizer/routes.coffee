@@ -49,6 +49,8 @@ representation = (fair) ->
           # Eventually we will fetch the organizer's past fairs here.
           armory2013 = new Fair id: 'the-armory-show-2013'
           armory2014 = new Fair id: 'the-armory-show-2014'
+          fairIds = ['505797122a5b7500020006a0', '52617c6c8b3b81f094000013',
+            '54871f8672616970632a0400']
 
           pastFairs = [armory2014, armory2013]
           articles = new Articles()
@@ -57,25 +59,20 @@ representation = (fair) ->
           promises = _.compact _.flatten [
             _.map pastFairs, (fair)-> fair.fetch cache: true
             _.map pastFairs, representation
+            articles.fetch(
+              cache: true
+              data: { published: true, fair_ids: fairIds, sort: '-published_at' }
+            )
           ]
 
           Q.allSettled(promises).then(->
-            fairIds = (fair.get('_id') for fair in pastFairs.concat [fair])
-            articles.fetch
-              cache: true
-              data:
-                published: true
-                fair_ids: fairIds
-                sort: '-published_at'
-              error: res.backboneError
-              success: ->
-                res.locals.sd.FAIR = fair.toJSON()
-                res.locals.sd.FAIR_IDS = fairIds
-                res.locals.sd.ARTICLES = articles.toJSON()
-                res.locals.fair = fair
-                res.locals.coverImage = profile.coverImage()
-                res.locals.pastFairs = pastFairs
-                res.locals.articles = articles.models
-                next()
+            res.locals.sd.FAIR_IDS = fairIds
+            res.locals.sd.FAIR = fair.toJSON()
+            res.locals.sd.ARTICLES = articles.toJSON()
+            res.locals.fair = fair
+            res.locals.coverImage = profile.coverImage()
+            res.locals.pastFairs = pastFairs
+            res.locals.articles = articles.models
+            next()
           ).done()
 
