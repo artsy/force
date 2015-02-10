@@ -1,10 +1,6 @@
 //- Override any locals with `append locals`
 block locals
-  - bodyClass = (sd.HIDE_HEADER ? 'body-header-fixed' : 'body-welcome-header')
-  - bodyClass = bodyClass + (sd.MICROSITE ? ' is-microsite' : '')
-  - bodyClass = bodyClass + (sd.KIOSK_MODE ? ' is-kioskmode' : '')
-  - bodyClass = bodyClass + (sd.EIGEN ? ' body-eigen' : '')
-  - if (sd.IS_RESPONSIVE) bodyClass += ' body-responsive';
+  - bodyClass = helpers.buildBodyClass(sd, (sd.HIDE_HEADER ? 'body-header-fixed' : 'body-welcome-header'));
 
 doctype html
 html( data-useragent=userAgent )
