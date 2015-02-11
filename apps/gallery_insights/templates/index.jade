@@ -1,7 +1,13 @@
 extends ../../../components/main_layout/templates/blank
 
 block head
-  //- Meta...
+  title Artsy Insights for Galleries
+  meta( property='og:title', content='Artsy Insights for Galleries' )
+  meta( name='description', content='Information, insights, inspiration. Exclusively from Artsy.' )
+  meta( name='og:description', content='Information, insights, inspiration. Exclusively from Artsy.' )
+  meta( property='twitter:description', content='Information, insights, inspiration. Exclusively from Artsy.' )
+  link( rel='canonical', href='#{sd.APP_URL}/gallery-insights' )
+  meta( property='og:url', content='#{sd.APP_URL}/gallery-insights' )
 
 append locals
   - assetPackage = 'gallery_insights'
