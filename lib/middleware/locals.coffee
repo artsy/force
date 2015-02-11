@@ -7,12 +7,14 @@ uuid = require 'node-uuid'
 _ = require 'underscore'
 moment = require 'moment'
 { NODE_ENV } = require '../../config'
+helpers = require '../template_helpers'
 
 module.exports = (req, res, next) ->
 
   # Attach libraries to locals
   res.locals._ = _
   res.locals.moment = moment
+  res.locals.helpers = helpers
 
   # Pass the user agent into locals for data-useragent device detection
   res.locals.userAgent = req.get('user-agent')
