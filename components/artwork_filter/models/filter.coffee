@@ -11,6 +11,12 @@ module.exports = class Filter
   booleans:
     'for-sale': price_range: '-1:1000000000000'
 
+  sorts:
+    '-date_added': 'Recently Added'
+    '-date_created': 'Artwork Year (desc.)'
+    'date_created': 'Artwork Year (asc.)'
+    '-merchandisability': 'Relevance'
+
   constructor: ({ @model } = {}) ->
     throw new Error 'Requires a model' unless @model?
     @selected = new Selected
@@ -54,6 +60,9 @@ module.exports = class Filter
   boolean: (name) ->
     [key, value] = _.flatten(_.pairs(@booleans[name]))
     @get(key)?[value]
+
+  currentSort: ->
+    @sorts[@selected.get('sort') or '-date_added']
 
   buildState: ->
     new FilterState { id: @stateId() }, modelId: @model.id
