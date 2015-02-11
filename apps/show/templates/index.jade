@@ -11,7 +11,7 @@ block body
   #show
     include header
 
-    if installShots.length
+    if installShots.length >= 3
       section#show-installation-shot-carousel.show-installation-shot-carousel
         - var carouselFigures = installShots.models
         include ../../../components/carousel/template
