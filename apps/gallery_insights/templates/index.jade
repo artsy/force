@@ -1,0 +1,27 @@
+extends ../../../components/main_layout/templates/blank
+
+block head
+  //- Meta...
+
+append locals
+  - assetPackage = 'gallery_insights'
+
+block body
+  #gallery-insights.gallery-insights.main-layout-container: .responsive-layout-container
+    h1 Artsy Insights for Galleries
+
+    aside Information, insights, inspiration. Exclusively from Artsy.
+
+    p
+      | Stay informed with Artsy’s latest market research, art buying trends & forecasts,
+      | partner case studies, and tools to help you excel. Sign up to receive periodical
+      | insights for galleries.
+
+    .gallery-insights-content
+      .gallery-insights-content-cell
+        include form
+        p Interested in partnering with Artsy?
+        p: a.faux-underline( href='/gallery-partnerships' ) Learn more here
+
+      .gallery-insights-content-cell
+        img.gallery-insights-image( src='iphone.jpg', alt='Artsy Insights for Galleries' )
