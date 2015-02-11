@@ -1,7 +1,5 @@
 (function() {
 
-  var isWebkit = navigator.userAgent.match('WebKit');
-
   // Ignore for unsupported browsers
   if (!window.history && !window.history.pushState) return;
 
@@ -43,39 +41,49 @@
     // Change the history
     history.pushState({ scrollFrame: true, href: location.href }, '', url);
 
-    // Create the iframe modal
+    // Create the wrapper & iframe modal
     var body = document.getElementsByTagName('body')[0];
+    var iOS = navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false;
+    var attributes = [
+      'position: fixed', 'top: 0', 'left: 0','width: 100%', 'height: 100%',
+      'z-index: 10000000', 'background-color: white', 'border: 0'
+    ];
+
+    //only add scrolling fix for ios devices
+    if (iOS){
+      attributes.push('overflow-y: scroll');
+      attributes.push('-webkit-overflow-scrolling: touch');
+    }
+    //create wrapper for iOS scroll fix
+    var wrapper = document.createElement("div");
+    wrapper.setAttribute('style',attributes.join(';'));
     var iframe = document.createElement("iframe");
     iframe.className = 'scroll-frame-iframe'
     iframe.setAttribute('style', [
-      'position: fixed', 'top: 0', 'left: 0', 'width: 100%', 'height: 100%',
-      'z-index: 3', 'background-color: white', 'border: 0'
+      'width: 100%', 'height: 100%', 'position:absolute',
+      'border: 0'
     ].join(';'));
 
-    // Webkit needs to lock the body from scrolling. This isn't a problem in
-    // Firefox, and in fact adding `overflow: hidden` in FF actually causes the
-    // body to scroll to a different place.
-    if (isWebkit) {
-      body.setAttribute('style', 'overflow: hidden;' +
-        (body.getAttribute('style') || ''));
-    }
+    // Lock the body from scrolling & hide the body's scroll bars.
+    body.setAttribute('style', 'overflow: hidden;' +
+      (body.getAttribute('style') || ''));
 
     // Add a class to the body while the iframe loads then append it
     body.className += ' scroll-frame-loading';
     iframe.onload = function() {
       body.className = body.className.replace(' scroll-frame-loading', '');
     }
-    body.appendChild(iframe);
+    wrapper.appendChild(iframe);
+    body.appendChild(wrapper);
     iframe.contentWindow.location.replace(url);
 
-    // On back-button remove the iframe
+    // On back-button remove the wrapper
     var onPopState = function(e) {
       if (location.href != prevHref) return;
-      body.removeChild(iframe);
-      if (isWebkit) {
-        body.setAttribute('style',
-          body.getAttribute('style').replace('overflow: hidden;', ''));
-      }
+      wrapper.removeChild(iframe);
+      body.removeChild(wrapper);
+      body.setAttribute('style',
+        body.getAttribute('style').replace('overflow: hidden;', ''));
       removeEventListener('popstate', onPopState);
     }
     addEventListener('popstate', onPopState);
