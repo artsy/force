@@ -8,3 +8,8 @@ module.exports = class InstallShots extends Backbone.Collection
   _.extend @prototype, Fetch(API_URL)
 
   model: InstallShot
+
+  parse: (response) ->
+    _.filter response, (obj) ->
+      # filter out images without versions
+      obj.image_versions.length
