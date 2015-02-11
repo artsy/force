@@ -11,6 +11,8 @@ Sale = require '../../../models/sale.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 Artworks = require '../../../collections/artworks.coffee'
+Profile = require '../../../models/profile.coffee'
+Partner = require '../../../models/partner.coffee'
 ShareView = require '../../../components/share/view.coffee'
 
 artworkColumns = -> require('../../../components/artwork_columns/template.jade') arguments...
@@ -164,11 +166,25 @@ module.exports = class FeatureView extends Backbone.View
         el: @$(".artwork-item[data-artwork='#{artwork.id}']")
         model: artwork
         sale: sale
+    @renderPartnerLogo artworks
     if @artworkCollection
       @artworkCollection.addRepoArtworks artworks
       @artworkCollection.syncSavedArtworks()
 
-  setupShareButtons: -> new ShareView el: @$('.feature-share')
+  renderPartnerLogo: (artworks) ->
+    partner = artworks?.first()?.get('partner')
+    return if not partner or @renderedPartnerLogo
+    @renderedPartnerLogo = true
+    new Partner(partner).fetch
+      error: => @$('#feature-auction-logo').remove()
+      success: (partner) =>
+        new Profile(id: partner.get 'default_profile_id').fetch
+          error: => @$('#feature-auction-logo').remove()
+          success: (prof) =>
+            @$('#feature-auction-logo').attr 'src', prof.icon().imageUrl()
+
+  setupShareButtons: ->
+    new ShareView el: @$('.feature-share')
 
   getArtworksOrderedByArtist: (collection) ->
     collection.comparator = (model) -> model.get('artist')?.sortable_id

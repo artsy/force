@@ -32,12 +32,16 @@ module.exports = class InquiryView extends ContactView
 
   initialize: (options) ->
     { @artwork } = options
+    @artwork.fetchPartnerAndSales
+      error: @ready
+      success: (@partner, @sales) => @ready()
     super
+
+  ready: =>
     @renderTemplates()
     @updatePosition()
     @isLoaded()
     @focusTextareaAfterCopy()
-
 
   postRender: ->
     @isLoading()
@@ -46,14 +50,13 @@ module.exports = class InquiryView extends ContactView
     analytics.track.funnel 'Sent artwork inquiry',
       label: analytics.modelNameAndIdToLabel('artwork', @artwork.id)
     analytics.snowplowStruct 'inquiry_introduction', 'submit', @artwork.get('_id'), 'artwork', '0.0'
-
-    isLAMA = @artwork.get('partner').id is sd.LAMA_ID
+    contactGallery = if @partner.get('directly_contactable') and \
+      @sales.findWhere(is_auction: true)? then yes else no
     @model.set
       artwork: @artwork.id
-      contact_gallery: if isLAMA then yes else no
+      contact_gallery: contactGallery
       session_id: SESSION_ID
       referring_url: Cookies.get('force-referrer')
       landing_url: Cookies.get('force-session-start')
       inquiry_url: window.location.href
-
     super

@@ -72,6 +72,24 @@ describe 'Inquiry', ->
         events[0][0].should.equal 'Sent artwork inquiry'
         events[1][0].should.equal 'Contact form submitted'
 
+      it 'sends inquiries to galleries if the work is in an auction and ' +
+         'partner is directly contactable', ->
+        @view.sales = new Backbone.Collection [
+          fabricate 'sale', is_auction: true]
+        @view.partner = new Backbone.Model(
+          fabricate 'partner', directly_contactable: true)
+        @view.submit()
+        @view.model.get('contact_gallery').should.be.ok
+
+      it 'does not sends inquiries to artsy if the work is in an auction and ' +
+         'partner is not directly contactable', ->
+        @view.sales = new Backbone.Collection [
+          fabricate 'sale', is_auction: true]
+        @view.partner = new Backbone.Model(
+          fabricate 'partner', directly_contactable: false)
+        @view.submit()
+        @view.model.get('contact_gallery').should.not.be.ok
+
     describe 'Logged in', ->
       beforeEach ->
         @view.user = (@user = new Backbone.Model fabricate 'user')
