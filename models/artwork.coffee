@@ -1,8 +1,10 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
+Q = require 'q'
 sd = require('sharify').data
 Backbone = require 'backbone'
 Edition = require './edition.coffee'
+Partner = require './partner.coffee'
 AdditionalImage = require './additional_image.coffee'
 { compactObject } = require './mixins/compact_object.coffee'
 { Image, Dimensions, Markdown } = require 'artsy-backbone-mixins'
@@ -382,3 +384,10 @@ module.exports = class Artwork extends Backbone.Model
 
   artistName: ->
     @get('artist')?.name or ''
+
+
+  fetchPartnerAndSales: (options) ->
+    Q.allSettled([
+      (partner = new Partner @get 'partner').fetch()
+      (sales = @relatedCollections.sales).fetch()
+    ]).fail(options.error).then -> options.success partner, sales

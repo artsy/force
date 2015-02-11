@@ -1,6 +1,8 @@
 _ = require 'underscore'
 { formatMoney } = require 'accounting'
 ModalPageView = require '../../../components/modal/page.coffee'
+Partner = require '../../../models/partner.coffee'
+Profile = require '../../../models/profile.coffee'
 Backbone = require 'backbone'
 mediator = require '../../../lib/mediator.coffee'
 template = -> require('../templates/auction_detail.jade') arguments...
@@ -40,10 +42,6 @@ module.exports = class AuctionDetailView extends Backbone.View
 
   initialize: (options) ->
     { @user, @auction, @saleArtwork, @bidderPositions } = options
-    @renderLotNumber()
-
-  renderLotNumber: ->
-    $('#artwork-lot-number').html 'Lot ' + num if num = @saleArtwork.get('lot_number')
 
   submit: (e) ->
     e.preventDefault()
@@ -81,7 +79,20 @@ module.exports = class AuctionDetailView extends Backbone.View
       bidderPositions: @bidderPositions
     ).addClass 'is-fade-in'
     @
+    $('#artwork-lot-number').html 'Lot ' + num if num = @saleArtwork.get('lot_number')
+    @renderPartnerLogo()
 
   openBuyersPremiumModal: (e) ->
     e.preventDefault()
     new BuyersPremiumModal auction: @auction
+
+  renderPartnerLogo: ->
+    new Partner(@saleArtwork.artwork().get 'partner').fetch
+      error: => $('#artwork-auction-logo').remove()
+      success: (partner) =>
+        new Profile(id: partner.get 'default_profile_id').fetch
+          error: => $('#artwork-auction-logo').remove()
+          success: (prof) =>
+            $('#artwork-auction-logo').css(
+              'background-image': "url(#{prof.icon().imageUrl()})"
+            )
