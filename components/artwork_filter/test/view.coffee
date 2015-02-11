@@ -126,10 +126,6 @@ describe 'ArtworkFilterView', ->
       @view.$('.artwork-filter-select').last().click()
       @view.filter.selected.attributes.should.eql period: 2010
 
-  describe '#selectSort', ->
-    beforeEach ->
-      Backbone.sync.args[0][2].success fabricate 'artist_filtered_search_suggest'
-
     it 'pulls the sort criteria out of the link and selects it', ->
       @view.$('.bordered-pulldown-options a').first().click()
       @view.filter.selected.attributes.should.eql sort: '-date_added'
