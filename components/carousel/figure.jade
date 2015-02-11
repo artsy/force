@@ -1,10 +1,15 @@
 mixin carouselFigure(figure)
   - var h = height || 480
   - var dimensions = figure.resizeDimensionsFor({ height: h })
+
   img(
     src= figure.imageUrlForHeight(h)
     width= dimensions.width
     height= dimensions.height
+    alt= figure.get('caption')
+    title= figure.get('caption')
   )
+
   if figure.get('caption')
-    .carousel-caption= figure.get('caption')
+    .carousel-caption( style="width: #{dimensions.width}px" )
+      = figure.get('caption')
