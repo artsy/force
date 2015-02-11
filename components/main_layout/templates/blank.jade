@@ -6,17 +6,22 @@ html
   head
     block head
     include head
-    link( type='text/css', rel='stylesheet', href=asset('/assets/main_layout.css') )
+
+    link( type='text/css', rel='stylesheet', href= asset('/assets/main_layout.css') )
     if assetPackage
-      link( type='text/css', rel='stylesheet', href=asset('/assets/' + assetPackage + '.css') )
-  body
+      link( type='text/css', rel='stylesheet', href= asset('/assets/#{assetPackage}.css') )
+
+  body( class= bodyClass )
     include ../../modal/template
     include ../../flash/template
-    #blank-layout-container
-      block body
+
+    #blank-layout-container: block body
+
     #scripts
       include scripts
-      script( src=asset('/assets/main_layout.js') )
+
+      script( src= asset('/assets/main_layout.js') )
       if assetPackage
-        script( src=asset('/assets/' + assetPackage + '.js') )
+        script( src= asset('/assets/#{assetPackage}.js') )
+
       block scripts
