@@ -38,7 +38,6 @@ module.exports = class InquiryView extends ContactView
     super
 
   ready: =>
-    alert 'go'
     @renderTemplates()
     @updatePosition()
     @isLoaded()
