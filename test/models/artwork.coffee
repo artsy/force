@@ -286,6 +286,10 @@ describe 'Artwork', ->
       @artwork.get('partner').website = 'mah-website.com'
       @artwork.partnerLink().should.equal 'mah-website.com'
 
+    it "partner website if profile and profile is private", ->
+      @artwork.get('partner').type = 'Auction'
+      should.strictEqual(undefined, @artwork.partnerLink())
+
   describe '#href', ->
     it 'creates an href for linking to this artwork', ->
       @artwork.href().should.equal "/artwork/#{@artwork.get('id')}"

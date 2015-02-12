@@ -229,7 +229,7 @@ module.exports = class Artwork extends Backbone.Model
 
   partnerLink: ->
     partner = @get 'partner'
-    return unless partner
+    return unless partner and partner.type isnt 'Auction'
     if partner.default_profile_public and partner.default_profile_id
       return "/#{partner.default_profile_id}"
     if partner.website?.length > 0
