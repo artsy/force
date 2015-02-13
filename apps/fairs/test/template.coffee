@@ -36,7 +36,7 @@ describe 'Fairs template', ->
       benv.teardown()
 
     it 'renders correctly', ->
-      $('.aggregate-page-items-featured .aggregate-page-subheader').first().text().should.equal 'Current Fairs'
+      $('#current-fairs h2').text().should.equal 'Current Fairs'
       $('.ap-featured-item').length.should.equal 6
 
   describe 'without current fairs', ->
@@ -56,5 +56,5 @@ describe 'Fairs template', ->
       benv.teardown()
 
     it 'renders correctly', ->
-      $('.aggregate-page-items-featured .aggregate-page-subheader').first().text().should.equal 'Past Fairs'
+      $('#past-fairs h2').text().should.equal 'Past Fairs'
       $('.ap-featured-item').length.should.equal 4
