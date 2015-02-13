@@ -5,6 +5,7 @@ Order = require '../../models/order.coffee'
 Artwork = require '../../models/artwork.coffee'
 SaleArtwork = require '../../models/sale_artwork.coffee'
 BidderPositions = require '../../collections/bidder_positions.coffee'
+buyersPremium = require '../../components/buyers_premium/index.coffee'
 
 registerOrRender = (sale, req, res, next) ->
   req.user.fetchCreditCards
@@ -104,3 +105,11 @@ registerOrRender = (sale, req, res, next) ->
     success: (registered) ->
       res.locals.sd.REGISTERED = registered
       render()
+
+@buyersPremium = (req, res, next) ->
+  new Sale(id: req.params.id).fetch
+    error: res.backboneError
+    success: (auction) ->
+      buyersPremium auction, (err, html) ->
+        return next err if err
+        res.render 'buyers-premium', body: html

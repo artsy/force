@@ -1,6 +1,6 @@
 @import '../stylus_lib'
 
-#modal-buyers-premium
+.buyers-premium
   h2
     garamond()
     letter-spacing 0
@@ -22,11 +22,11 @@
     justify-content center
     &:last-child
       border-bottom 0
-    .artwork-bp-pre
+    .buyers-premium-pre
       padding-right 4px
-    .artwork-bp-perc
+    .buyers-premium-perc
       padding-left 6px
-    .artwork-bp-dots
+    .buyers-premium-dots
       flex 1
       position relative
       top 1px
@@ -37,3 +37,21 @@
         position absolute
         left 0
         width 100%
+
+@media (max-width: 600px)
+  .buyers-premium-schedule li
+    position relative
+    display block
+  .buyers-premium-dots
+    display none
+  .buyers-premium-pre
+    background white
+    display inline
+  .buyers-premium-perc
+    position absolute
+    bottom 15px
+    right 11px
+    z-index -1
+    &:before
+      content '......................................................'
+      margin-right 5px

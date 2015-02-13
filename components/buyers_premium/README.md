@@ -13,8 +13,8 @@ Use the helper
 ````coffeescript
 buyersPremium = require '../components/buyers_premium/index.coffee'
 
-buyersPremium (err, html) ->
-  # res.render 'view, bphtml: html
+buyersPremium auction, (err, html) ->
+  # res.render 'view', bphtml: html
   # or
   # $('.el').html html
 ````
