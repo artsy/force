@@ -25,7 +25,11 @@ for criteria, key in filter.root.criteria()
         class=(active ? 'is-active' : 'is-inactive')
         class=(count ? undefined : 'is-disabled' )
       )
-        a.artwork-filter-select( data-value= criterion.key, data-key= key )
+        a.artwork-filter-select(
+          data-value= criterion.key
+          data-key= key
+          href='?#{key}=#{criterion.key}'
+        )
           span.artwork-filter-label= criterion.label
           span.artwork-filter-count (#{count})
         if active
