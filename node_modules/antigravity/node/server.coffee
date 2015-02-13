@@ -8,6 +8,7 @@ fabricate = require './fabricate'
 fabricate2 = require './fabricate2'
 { spawn } = require 'child_process'
 path = require 'path'
+GRAVITY_URL = process.env.ARTSY_URL or 'http://localhost:5000/__gravity'
 
 gravity = module.exports = express()
 
@@ -177,7 +178,9 @@ gravity.get '/api/current_user', (req, res) ->
   res.send  fabricate2 'current_user'
 
 gravity.get '/api/profiles/:id', (req, res) ->
-  res.send fabricate2 'user_profile'
+  res.send switch req.params.id
+    when 'gagosian-gallery' then fabricate2 'partner_profile'
+    else fabricate2 'user_profile'
 
 gravity.get '/api/user_details/:id', (req, res) ->
   res.send fabricate2 'user_details'
@@ -194,5 +197,21 @@ gravity.get '/api/partners/:id', (req, res) ->
 gravity.get '/api/search', (req, res) ->
   return res.send fabricate2 'empty_search' if req.query.q is 'NoResults'
   res.send fabricate2 'search'
+
+gravity.post '/api/tokens/xapp_token', (req, res) ->
+  res.send { "type": "xapp_token", "token": "foo-token", "_links": {} }
+
+partnersReqCount = 0
+gravity.get '/api/partners', (req, res) ->
+  partnersReqCount++
+  if partnersReqCount < 5
+    json = {
+      _embedded: { partners: [fabricate2('partner')] }
+      _links: { next: href: "#{GRAVITY_URL}/api/partners?cursor=foo-cursor" }
+    }
+  else
+    partnersReqCount = 0
+    json = { _embedded: partners: [] }
+  res.send json
 
 gravity.all '*', (req, res) -> res.send 404, "Not Found."
