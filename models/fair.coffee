@@ -22,7 +22,10 @@ module.exports = class Fair extends Backbone.Model
   urlRoot: "#{sd.API_URL}/api/v1/fair"
 
   href: ->
-    "/#{@get('organizer')?.profile_id}"
+    if @get('default_profile_id')
+      "/#{@get('default_profile_id')}"
+    else
+     "/#{@get('organizer')?.profile_id}"
 
   hasImage: (version = 'wide') ->
     version in (@get('image_versions') || [])
@@ -35,9 +38,6 @@ module.exports = class Fair extends Backbone.Model
     url = "#{sd.API_URL}/api/v1/profile/#{profile_id}/image"
     url = "#{url}?xapp_token=#{sd.ARTSY_XAPP_TOKEN}" if sd.ARTSY_XAPP_TOKEN?
     url
-
-  organizerProfileImage: ->
-    @profileImage(@get('organizer').profile_id) if @get('organizer')?.profile_id?
 
   hasOpened: ->
     moment().isAfter @get('start_at')
@@ -162,11 +162,9 @@ module.exports = class Fair extends Backbone.Model
     @fetch
       error: options.error
       success: =>
-
         # Initialize the data hash with the models/collections that can be fetched in parallel
         data =
           fair: this
-          profile: new Profile id: @get('organizer').profile_id
           filterSuggest: new FilterSuggest id: "fair/#{@get 'id'}"
           sections: null
           exhibitorsAToZGroup: null
@@ -174,16 +172,14 @@ module.exports = class Fair extends Backbone.Model
           galleries: null
 
         # Setup parallel callback
-        after = _.after 5, =>
+        after = _.after 4, =>
           options.success _.extend data,
-            coverImage: data.profile.coverImage()
+            coverImage: @get('profile').coverImage()
             filteredSearchOptions: data.filterSuggest
             filteredSearchColumns: @filteredSearchColumns(
               data.filterSuggest, 2, 'related_gene', 'artworks')
             exhibitorsCount: data.galleries.length
 
-        # Fetch all of the above things in parallel
-        data.profile.fetch(error: options.error, success: after)
         data.filterSuggest.fetch(error: options.error, success: after)
         @fetchSections(error: options.error, success: (x) => data.sections = x; after())
         @fetchExhibitors error: options.error, success: (x, y) =>
@@ -195,14 +191,22 @@ module.exports = class Fair extends Backbone.Model
   isEligible: ->
     @get('has_full_feature') and
     @get('published') and
-    @has('organizer') and
-    # Can be undefined which would cause this whole chain to be undefined
-    @related().profile.get('published') is true
+    @hasStarted()
+    @__related__? and
+    @__related__?.profile?.get('published') is true
 
   isEventuallyEligible: ->
     @get('has_full_feature') and
     @get('published') and
-    (not @has('organizer') or not @related().profile.get('published'))
+    @hasNotStarted()
+    @__related__? and
+    not @__related__?.profile?.get('published')
+
+  hasStarted: ->
+    Date.parse(@get('start_at')) < new Date
+
+  hasNotStarted: ->
+    Date.parse(@get('start_at')) > new Date
 
   isNotOver: ->
     Date.parse(@get('end_at')) > new Date
