@@ -13,19 +13,19 @@ block body
     .aggregate-page-items
       .aggregate-page-items-featured
         if currentFairs.length
-          .aggregate-page-items-featured-set
+          #current-fairs.aggregate-page-items-featured-set
             h2.aggregate-page-subheader Current Fairs
             for fair in currentFairs
               include fair
 
         if pastFairs.length
-          .aggregate-page-items-featured-set
+          #past-fairs.aggregate-page-items-featured-set
             h2.aggregate-page-subheader Past Fairs
             for fair in pastFairs
               include fair
 
       if upcomingFairs.length
-        .aggregate-page-items-upcoming
+        #upcoming-fairs.aggregate-page-items-upcoming
           h2.aggregate-page-subheader Upcoming Fairs
           for fair in upcomingFairs
             .ap-upcoming-item( href= fair.href() )
