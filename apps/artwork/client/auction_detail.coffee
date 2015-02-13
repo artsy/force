@@ -1,37 +1,27 @@
 _ = require 'underscore'
 { formatMoney } = require 'accounting'
-ModalPageView = require '../../../components/modal/page.coffee'
+ModalView = require '../../../components/modal/view.coffee'
+buyersPremium = require '../../../components/buyers_premium/index.coffee'
 Partner = require '../../../models/partner.coffee'
 Profile = require '../../../models/profile.coffee'
 Backbone = require 'backbone'
 mediator = require '../../../lib/mediator.coffee'
 template = -> require('../templates/auction_detail.jade') arguments...
 
-class BuyersPremiumModal extends ModalPageView
+class BuyersPremiumModal extends ModalView
+
+  template: ->
 
   initialize: ({ @auction }) ->
-    super width: '700px', pageId: 'buyers-premium'
+    super width: 700
 
-  isLoaded: ->
-    super
-    max = _.max _.pluck @auction.get('buyers_premium').schedule, 'min_amount_cents'
-    [hammerPerc, portionPerc] = _.pluck @auction.get('buyers_premium').schedule, 'percent'
-    @$('.markdown-content').append """
-      <ul class='artwork-bp-schedule'>
-        <li>
-          <div class='artwork-bp-pre'>On the hammer price up to and including \
-            #{formatMoney(max / 100, '$', 0)}</div>
-          <div class='artwork-bp-dots'></div>
-          <div class='artwork-bp-perc'>#{hammerPerc * 100}%</div>
-        </li>
-        <li>
-          <div class='artwork-bp-pre'>On the portion of the hammer price in excess of \
-            #{formatMoney(max / 100, '$', 0)}</div>
-          <div class='artwork-bp-dots'></div>
-          <div class='artwork-bp-perc'>#{portionPerc * 100}%</div>
-        </li>
-      </ul>
-    """
+  postRender: ->
+    @isLoading()
+    buyersPremium @auction, (err, html) =>
+      @$('.modal-body').html html
+      @updatePosition()
+      @isLoaded()
+
 
 module.exports = class AuctionDetailView extends Backbone.View
   template: template
