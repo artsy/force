@@ -95,8 +95,15 @@ kinds = require '../favorites_follows/kinds'
 # Fetches and caches fair data to be used across the fair app
 @fetchFairData = (req, res, next) ->
   profile = res.locals.profile
-  return next() unless profile?.isFairOrOrganizer() and profile?.ownerHasId()
-  fair = new Fair id: profile.ownerId()
+
+  return next() unless profile?.isFairOrOrganizer()
+
+  fair = new Fair id: profile.fairOwnerId()
+
+  # set the profile that we fetched initially directly to the fair
+  fair.set 'profile', profile
+  res.locals.sd.PROFILE = profile.toJSON()
+
   fair.fetchPrimarySets
     error: res.backboneError
     success: (primarySets) =>
@@ -106,12 +113,10 @@ kinds = require '../favorites_follows/kinds'
         res.locals.mediums = data.filterSuggest.mediumsHash()
         res.locals.sd.EXHIBITORS_COUNT = data.galleries.length
         res.locals.sd.FAIR = data.fair.toJSON()
-        res.locals.sd.PROFILE = data.profile.toJSON()
         next()
       key = "fair:#{req.params.id}"
       cache.getHash key, {
         fair: require '../../models/fair'
-        profile: require '../../models/profile'
         filterSuggest: require '../../models/filter_suggest'
         filteredSearchOptions: require '../../models/filter_suggest'
         filteredSearchColumns: null # Vanilla JS object
