@@ -86,6 +86,7 @@
     "scroll-frame": "*",
     "dompurify": "*",
     "places": "git://github.com/artsy/places",
-    "heapdump": "*"
+    "heapdump": "*",
+    "referer-parser": "0.0.3"
   }
 }

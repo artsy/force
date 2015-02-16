@@ -12,4 +12,8 @@ include ../../bordered_pulldown/mixin
   .artwork-filter-sort-count-pulldown
     +bordered-pulldown(filter.currentSort(), 'Sort by:')
       for label, value in filter.sorts
-        a( data-value= value, data-key='sort' )= label
+        a(
+          data-value= value
+          data-key='sort'
+          href='?sort=#{value}'
+        )= label

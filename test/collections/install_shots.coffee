@@ -1,4 +1,5 @@
 _ = require 'underscore'
+{ fabricate } = require 'antigravity'
 InstallShots = require '../../collections/install_shots'
 
 # A WILD API RESPONSE APPEARS
@@ -13,3 +14,7 @@ describe 'InstallShots', ->
     response.should.have.lengthOf 4
     @installShots.pluck('image_versions').should.eql _.times 3, ->
       ['featured', 'general', 'large', 'larger', 'medium', 'square', 'tall']
+
+  it 'is comformtable there are no vertsions, as well', ->
+    @installShots.reset([{ id: 'bad' }, fabricate 'show_install_shot'], parse: true)
+    @installShots.should.have.lengthOf

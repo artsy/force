@@ -8,17 +8,20 @@ append locals
   - assetPackage = 'articles'
 
 block body
-  #articles-magazine-container
+  #articles-magazine-page.main-layout-container
     if featuredArticles.length
-      header#articles-magazine-header
-        #articles-magazine-primary-article
-          +article-figure(featuredArticles[0], 1000, false, false)
-        aside#articles-magazine-featured-aside
+      header.am-featured
+        .am-featured-hero
+          - article = featuredArticles[0]
+           +article-figure(article, 1000, false, false)
+
+        aside.am-featured-also
           for article in featuredArticles.slice(1)
             +article-figure(article, 300, false, false)
-    #articles-magazine-feed
-      .avant-garde-header Latest Articles
-      #articles-magazine-feed-list
+
+    #articles-magazine-feed.am-feed
+      #articles-magazine-feed-list.am-feed-articles
         - articles = articlesFeed
         include ./feed
+
       button.avant-garde-button-white.is-block Show previous articles
