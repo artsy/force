@@ -66,8 +66,10 @@ module.exports = class Profile extends Backbone.Model
   isFairOrOrganizer: -> @isFairOrganizer() || @isFair()
   isFair: -> @get('owner_type') == 'Fair'
 
+  # Get either the default fair id (from FairOrganizer)
+  # or the id (from Fair)
   fairOwnerId: ->
-    @get('owner').default_fair_id || @get('owner').organizer.default_fair_id
+    @get('owner').default_fair_id || @get('owner').id
 
   profileType: ->
     if @isUser()
