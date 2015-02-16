@@ -1,12 +1,10 @@
 _ = require 'underscore'
-sd = require('sharify').data
-Backbone = require 'backbone'
-Artworks = require '../collections/artworks.coffee'
-Articles = require '../collections/articles.coffee'
 Q = require 'q'
+Backbone = require 'backbone'
+sd = require('sharify').data
+Artworks = require '../collections/artworks.coffee'
 
 module.exports = class Article extends Backbone.Model
-
   urlRoot: "#{sd.POSITRON_URL}/api/articles"
 
   slideshowArtworks: ->
@@ -15,6 +13,8 @@ module.exports = class Article extends Backbone.Model
       { id: item.id })
 
   fetchWithRelated: (options = {}) ->
+    # Deferred require
+    Articles = require '../collections/articles.coffee'
     footerArticles = new Articles
     author = new Backbone.Model
     Q.all(
@@ -43,3 +43,6 @@ module.exports = class Article extends Backbone.Model
           dfd
       ]).fail((r) -> options.error null, r).then =>
         options.success this, author, footerArticles, slideshowArtworks
+
+  isTopTier: ->
+    @get('tier') is 1
