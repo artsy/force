@@ -13,3 +13,4 @@ app.get '/user/edit', routes.settings
 app.get '/collector/edit', routes.settings
 app.get '/user/refresh', routes.refresh
 app.get '/user/delete', routes.delete
+app.get '/settings', (req, res) -> res.redirect '/user/edit'
