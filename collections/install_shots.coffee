@@ -12,4 +12,4 @@ module.exports = class InstallShots extends Backbone.Collection
   parse: (response) ->
     _.filter response, (obj) ->
       # filter out images without versions
-      obj.image_versions.length
+      obj.image_versions?.length
