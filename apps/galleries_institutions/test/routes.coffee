@@ -69,7 +69,7 @@ describe 'Galleries / Institutions routes', ->
 
     it 'hard codes the number of galleries', ->
       @res.render.args[0][0].should.equal 'index'
-      @res.render.args[0][1].partnerCount.should.equal '700+'
+      @res.render.args[0][1].partnerCount.should.equal '600+'
 
   describe '#institutions', ->
     beforeEach ->
