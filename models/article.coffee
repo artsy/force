@@ -43,3 +43,6 @@ module.exports = class Article extends Backbone.Model
           dfd
       ]).fail((r) -> options.error null, r).then =>
         options.success this, author, footerArticles, slideshowArtworks
+
+  isTopTier: ->
+    @get('tier') is 1
