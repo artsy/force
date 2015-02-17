@@ -3,7 +3,7 @@ include ../share/template
 mixin article-figure(article, width, showDate, showShare)
   - var imgUrl = crop(article.get('thumbnail_image'), { width: width, height: Math.round(width / 1.7), quality: 90 })
   figure.article-figure: .article-figure-container
-    a.article-figure-img-container( href="/article/#{article.get('slug')}" )
+    a.article-figure-img-container( href= article.href() )
       .article-figure-img( style="background-image: url(#{imgUrl})" )
 
     figcaption.article-figure-figcaption
@@ -11,12 +11,12 @@ mixin article-figure(article, width, showDate, showShare)
         time.article-figure-date
           = moment(article.get('published_at')).format('MMMM Do')
 
-      a.article-figure-title( href="/article/#{article.get('slug')}" )
+      a.article-figure-title( href= article.href() )
         = article.get('thumbnail_title')
 
       //- TODO: Hack for now, we need to save author data on the article.
       //- (Should be the author's href)
-      a.article-figure-author( href="/article/#{article.get('slug')}" )
+      a.article-figure-author( href= article.href() )
         | Artsy Editorial
 
       if showShare
@@ -24,5 +24,5 @@ mixin article-figure(article, width, showDate, showShare)
           +share(
             article.get('title'),
             article.get('thumbnail_image'),
-            "#{sd.APP_URL}/article/#{article.get('slug')}"
+            'https://www.artsy.net' + article.href()
           )
