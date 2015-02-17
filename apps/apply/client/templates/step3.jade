@@ -11,7 +11,7 @@ form.partner-application-form.stacked-form
     .grid-item: +checkbox('00NC0000005RGgW', 'Gallery')
     .grid-item: +checkbox('00NC0000005RGgW', 'Collector / Patron')
     .grid-item: +checkbox('00NC0000005RGgW', 'Artist')
-    .grid-item: +checkbox('00NC0000005RGgW', 'Museum / Institution')
+    .grid-item: +checkbox('00NC0000005RGgW', (state.get('mode') === 'institution' ? 'Artsy Gallery Insights email' : 'Museum / Institution'))
     .grid-item: +checkbox('00NC0000005RGgW', 'Online Search')
     .grid-item: +checkbox('00NC0000005RGgW', 'Press')
     .grid-item: +checkbox('00NC0000005RGgW', 'Advertisement')
