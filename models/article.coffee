@@ -46,3 +46,6 @@ module.exports = class Article extends Backbone.Model
 
   isTopTier: ->
     @get('tier') is 1
+
+  href: ->
+    "/article/#{@get('slug')}"
