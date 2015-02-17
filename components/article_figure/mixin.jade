@@ -1,7 +1,7 @@
 include ../share/template
 
 mixin article-figure(article, width, showDate, showShare)
-  - var imgUrl = crop(article.get('thumbnail_image'), { width: width, height: Math.round(width / 1.7), quality: 90 })
+  - var imgUrl = article.cropUrlFor('thumbnail_image', { width: width, height: Math.round(width / 1.7), quality: 90 })
   figure.article-figure: .article-figure-container
     a.article-figure-img-container( href= article.href() )
       .article-figure-img( style="background-image: url(#{imgUrl})" )
@@ -9,7 +9,7 @@ mixin article-figure(article, width, showDate, showShare)
     figcaption.article-figure-figcaption
       if showDate
         time.article-figure-date
-          = moment(article.get('published_at')).format('MMMM Do')
+          = article.date('published_at').format('MMMM Do')
 
       a.article-figure-title( href= article.href() )
         = article.get('thumbnail_title')
@@ -20,7 +20,7 @@ mixin article-figure(article, width, showDate, showShare)
         | Artsy Editorial
 
       if showShare
-        .article-figure-share
+        .article-figure-share.js-article-figure-share
           +share(
             article.get('title'),
             article.get('thumbnail_image'),
