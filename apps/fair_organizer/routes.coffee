@@ -39,7 +39,7 @@ representation = (fair) ->
       res.locals.tab = req.params.tab
     complete: ->
       profile = res.locals.profile
-      return next() unless profile?.isFairOrOrganizer() and profile?.ownerHasId()
+      return next() unless profile?.isFairOrOrganizer()
       fair = new Fair id: 'the-armory-show-2015'
       fair.fetch
         error: res.backboneError
