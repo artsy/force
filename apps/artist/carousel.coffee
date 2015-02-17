@@ -26,7 +26,7 @@ module.exports = class Carousel
       ]).then((states) =>
 
         [shots, figures] = worth states
-        @figures.reset shots.concat(figures)
+        @figures.reset (shots or []).concat(figures)
         dfd.resolve @figures
         cache.set cacheKey, JSON.stringify(@figures.toJSON())
 
