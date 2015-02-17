@@ -27,6 +27,14 @@ describe 'Carousel', ->
       Backbone.sync.args[0][2].success []
       Backbone.sync.args[1][2].success [fabricate 'artwork', id: 'iconic-artwork', title: 'Iconic Artwork']
 
+    it 'protects against missing states', ->
+      @carousel.fetch().then (collection) ->
+        collection.last().get('href').should.equal '/artwork/iconic-artwork'
+        collection.last().get('title').should.equal 'Iconic Artwork'
+        done()
+      Backbone.sync.args[0][2].error()
+      Backbone.sync.args[1][2].success [fabricate 'artwork', id: 'iconic-artwork', title: 'Iconic Artwork']
+
   describe '#fetchAllInstallShots', ->
     it 'fetches shows and then install shots if the show is valid', ->
       @carousel.fetchAllInstallShots()
