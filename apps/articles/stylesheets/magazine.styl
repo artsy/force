@@ -59,39 +59,3 @@ gutter-unit = 15px
       line-height 1.2
     .article-figure-author
       font-size 12px
-
-// Feed
-.am-feed
-  width 100%
-  padding 0 (gutter-unit * 2)
-.am-feed-articles
-  margin 50px auto
-  .article-figure-img-container
-    display table-cell
-    padding 0 gutter-unit 0 16%
-    width 50%
-  .article-figure-img
-    display block
-    width 100%
-    // 8:5 ratio
-    padding-bottom 62.5%
-  .article-figure-figcaption
-    width 50%
-    padding 0 10% 0 gutter-unit
-  .article-figure-share
-    right 10%
-
-.am-feed-item
-  block-margins(50px)
-
-  &[data-tier='1']
-    direction rtl
-    .article-figure-img-container
-    .article-figure-figcaption
-      direction ltr
-    .article-figure-img-container
-      padding gutter-unit 0 0 0
-    .article-figure-figcaption
-      padding 0 (gutter-unit * 2) 0 16%
-    .article-figure-share
-      right auto

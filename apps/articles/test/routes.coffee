@@ -38,7 +38,7 @@ describe 'Article routes', ->
 
   describe '#magazine', ->
 
-    it 'fetches published articles and splits them by tier', ->
+    it 'fetches published articles', ->
       routes.magazine @req, @res, @next
       Backbone.sync.args[0][2].success results: [
         { tier: 1, id: 'a' }
@@ -50,7 +50,4 @@ describe 'Article routes', ->
         { tier: 1, id: 'g' }
         { tier: 2, id: 'h' }
       ]
-      _.pluck(@res.render.args[0][1].featuredArticles, 'id').join('')
-        .should.equal 'abcd'
-      _.pluck(@res.render.args[0][1].articlesFeed, 'id').join('')
-        .should.equal 'efgh'
+      @res.render.args[0][1].articles.should.have.lengthOf 8
