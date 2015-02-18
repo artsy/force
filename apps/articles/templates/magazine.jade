@@ -9,7 +9,7 @@ append locals
 
 block body
   #articles-magazine-page.main-layout-container
-    if featuredArticles.length
+    if (featuredArticles = articles.featured()).length
       header.am-featured
         .am-featured-hero
           - article = featuredArticles[0]
@@ -19,9 +19,11 @@ block body
           for article in featuredArticles.slice(1)
             +article-figure(article, 300, false, false)
 
-    #articles-magazine-feed.am-feed
-      #articles-magazine-feed-list.am-feed-articles
-        - articles = articlesFeed
-        include ./feed
+    #articles-magazine-feed.articles-feed
+      .articles-feed-articles.js-articles-feed-articles
+        for article in articles.feed()
+          .articles-feed-item( data-tier= article.get('tier') )
+            include ../../../components/articles_feed/templates/article
 
-      button.avant-garde-button-white.is-block Show previous articles
+      .js-articles-feed-more
+        include ../../../components/articles_feed/templates/button

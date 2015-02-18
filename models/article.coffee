@@ -1,8 +1,10 @@
 _ = require 'underscore'
 Q = require 'q'
 Backbone = require 'backbone'
+moment = require 'moment'
 sd = require('sharify').data
 Artworks = require '../collections/artworks.coffee'
+{ crop, resize } = require '../components/resizer/index.coffee'
 
 module.exports = class Article extends Backbone.Model
   urlRoot: "#{sd.POSITRON_URL}/api/articles"
@@ -46,3 +48,12 @@ module.exports = class Article extends Backbone.Model
 
   isTopTier: ->
     @get('tier') is 1
+
+  href: ->
+    "/article/#{@get('slug')}"
+
+  cropUrlFor: (attr, args...) ->
+    crop @get(attr), args...
+
+  date: (attr) ->
+    moment @get(attr)

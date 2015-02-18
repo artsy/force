@@ -15,9 +15,8 @@ embedVideo = require 'embed-video'
     error: res.backboneError
     success: (articles) ->
       res.locals.sd.ARTICLES = articles.toJSON()
-      res.render 'magazine',
-        featuredArticles: articles.featured()
-        articlesFeed: articles.feed()
+      res.locals.sd.ARTICLES_COUNT = articles.count
+      res.render 'magazine', articles: articles
 
 @show = (req, res, next) ->
   new Article(id: req.params.slug).fetchWithRelated
