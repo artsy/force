@@ -1,7 +1,7 @@
 Backbone = require 'backbone'
 PartnerView = require './view.coffee'
 
-module.exports = class ArtworkRouter extends Backbone.Router
+module.exports = class PartnerRouter extends Backbone.Router
   routes:
                                       #   gallery | institution
     ':id': 'index'                    #      x         x
