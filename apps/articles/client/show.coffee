@@ -25,13 +25,13 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
       @$('#articles-lead-paragraph').show()
 
   renderSlideshow: =>
-    @$('.artwork-item').each -> $(this).width $(this).find('img').width()
     @carouselView = new CarouselView
       el: $('#articles-slideshow-inner')
       height: 500
       align: 'left'
+      hasDimensions: false
     @carouselView.postRender()
-    @$('#articles-slideshow-inner .loading-spinner').hide()
+
     if @article.get('sections')[0].items?.length is 1
       @$('.carousel-controls').hide()
 
