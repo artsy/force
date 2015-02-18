@@ -21,4 +21,5 @@ header.profile-header
             if profile.get('website')
               a.website= profile.getFormattedWebsite()
 
-        .follow-button.avant-garde-button-white
+        unless user && (user.get('default_profile_id') == profile.get('id'))
+          .follow-button.avant-garde-button-white.js-profile-header-follow
