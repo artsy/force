@@ -9,54 +9,69 @@ PoplockitFeed = require '../../../components/feed/client/poplockit_feed.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 Artworks = require '../../../collections/artworks.coffee'
 { CURRENT_PATH } = require('sharify').data
+ArticlesFeedView = require '../../../components/articles_feed/view.coffee'
+Articles = require '../../../collections/articles.coffee'
 
 COLUMN_WIDTH = 300
 
 module.exports = class UserProfileView extends Backbone.View
-
   events:
-    'click a.website': 'handleWebsiteClick'
+    'click a.website': 'openWebsite'
 
   initialize: (options) ->
-    @followProfiles = if CurrentUser.orNull() then new FollowProfiles [] else null
-    @handleFollowButton()
-    @followProfiles?.syncFollows [@model.get('id')]
-    @model.fetchFavorites success: ((@favorites) =>), complete: => @render()
-    @model.fetchPosts success: ((@posts) =>), complete: => @render()
+    @user = CurrentUser.orNull()
 
-  handleWebsiteClick: ->
+    @following = if @user then new FollowProfiles [] else null
+    @setupFollowButton()
+    @following?.syncFollows [@model.get('id')]
+
+    @articles = new Articles
+    @articles.url = "#{@articles.url}?author_id=#{@model.get('owner').id}&published=true"
+
+    $.when(
+      @model.fetchFavorites(success: ((@favorites) =>))
+      if @user?.hasLabFeature('Articles')
+        @articles.fetch()
+      else
+        @model.fetchPosts(success: ((@posts) =>))
+    ).then @render
+
+  openWebsite: ->
     popup = window.open @model.get('website'), '_blank'
     popup.opener = null
 
-  handleFollowButton: ->
-    if sd.CURRENT_USER?.default_profile_id == @model.get('id')
-      @$(".profile-header .follow-button").remove()
-    else
-      new FollowProfileButton
-        el: @$(".profile-header .follow-button")
-        model: @model
-        collection: @followProfiles
+  setupFollowButton: ->
+    new FollowProfileButton
+      el: @$('.js-profile-header-follow')
+      model: @model
+      collection: @following
 
-  render: _.after 2, ->
-    @renderState()
+  render: =>
+    @setState()
     @renderPosts()
     @renderFavorites()
 
-  renderState: ->
+  setState: ->
     @$el.attr('data-has',
       [
-        if @posts?.length then 'posts' else ''
+        if (@articles?.length or @posts?.length) then 'posts' else ''
         if @favorites?.length then 'favorites' else ''
       ].join('')
     )
+
     @$el.attr 'data-path', CURRENT_PATH
 
   renderPosts: ->
-    return unless @posts?.length
-    new PoplockitFeed
-      limitPostBodyHeight: true
-      feedItems: @posts
-      el: @$('#profile-feed')
+    return unless (@articles?.length or @posts?.length)
+
+    if @user?.hasLabFeature('Articles')
+      articlesView = new ArticlesFeedView el: @$('#profile-feed'), collection: @articles
+      articlesView.render()
+    else
+      new PoplockitFeed
+        el: @$('#profile-feed')
+        limitPostBodyHeight: true
+        feedItems: @posts
 
   renderFavorites: ->
     return unless @favorites?.length
