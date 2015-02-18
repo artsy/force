@@ -1,0 +1,42 @@
+@import '../stylus_lib'
+
+.auction-reminder-container
+  height 120px
+  padding 15px
+  display block
+
+.auction-reminder-image
+  height 90px
+  width 90px
+  background-size cover
+  background-position center center
+  background-repeat no-repeat
+  display inline-block
+  vertical-align top
+  margin auto
+  
+
+.auction-reminder-details
+  width 190px
+  padding-left 15px
+  display inline-block
+
+.auction-reminder-clock
+  display inline-block
+  margin 0
+  .clock-header
+    display none
+  .clock-value
+    text-align left
+    margin-top 0px
+    font-size 12px
+    li
+      display inline-block
+    li small
+      text-align center
+      color transparify(#aaa, black)
+
+  opacity 0
+  transition opacity 1s
+  &.is-fade-in
+    opacity 1

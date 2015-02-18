@@ -9,6 +9,7 @@ FeaturedLinks = require '../../../collections/featured_links.coffee'
 PartnerShows = require '../../../collections/partner_shows.coffee'
 HomeAuthRouter = require './auth_router.coffee'
 FeaturedArtworksView = require '../components/featured_artworks/view.coffee'
+AuctionReminder = require '../../../components/auction_reminder/index.coffee'
 featuredLinksTemplate = -> require('../templates/featured_links.jade') arguments...
 featuredShowsTemplate = -> require('../templates/featured_shows.jade') arguments...
 featuredPostsTemplate = -> require('../templates/featured_posts.jade') arguments...
@@ -30,6 +31,8 @@ module.exports.HomeView = class HomeView extends Backbone.View
     @renderFeaturedPosts()
     @renderFeaturedArtists()
     @setupFavoritesOnboardingModal()
+
+    new AuctionReminder()
 
   setupHeroUnits: ->
     new HeroUnitView el: @$el, $mainHeader: $('#main-layout-header')

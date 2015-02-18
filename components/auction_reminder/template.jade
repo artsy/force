@@ -1,0 +1,8 @@
+.auction-reminder-container
+  img.auction-reminder-image(src="#{auctionImage}")
+  .auction-reminder-details
+    p.avant-garde-header-small Closing Soon
+    p.auction-reminder-name #{auction.get('name')}
+    a.avant-garde-header-small(href="") Go To Auction
+  .auction-reminder-clock
+    include ../clock/template
