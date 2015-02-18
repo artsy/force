@@ -19,7 +19,7 @@ block body
       +share(article.get('title'), article.get('thumbnail_image'))
     if article.get('sections')[0].type == 'slideshow'
       #articles-slideshow-container
-        #articles-slideshow-inner
+        #articles-slideshow-inner.carousel
           include carousel
     for section, i in article.get('sections')
       .articles-section-container
