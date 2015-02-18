@@ -3,17 +3,17 @@ PartnerView = require './view.coffee'
 
 module.exports = class ArtworkRouter extends Backbone.Router
   routes:
-                                              #   gallery | institution
-    ':id': 'index'       #      x         x
-    ':id/overview': 'overview'    #      x
-    ':id/shows': 'shows'       #      x         x
-    ':id/artists': 'artists'     #      x
-    ':id/artist/:artistId': 'artists'     #      x
-    ':id/collection': 'collection'  #                x
-    ':id/posts': 'posts'       #      x         x
-    ':id/shop': 'shop'        #                x
-    ':id/contact': 'contact'     #      x
-    ':id/about': 'about'       #                x
+                                      #   gallery | institution
+    ':id': 'index'                    #      x         x
+    ':id/overview': 'overview'        #      x
+    ':id/shows': 'shows'              #      x         x
+    ':id/artists': 'artists'          #      x
+    ':id/artist/:artistId': 'artists' #      x
+    ':id/collection': 'collection'    #                x
+    ':id/posts': 'posts'              #      x         x
+    ':id/shop': 'shop'                #                x
+    ':id/contact': 'contact'          #      x
+    ':id/about': 'about'              #                x
 
   initialize: (options) ->
     { @profile } = options
