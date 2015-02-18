@@ -35,7 +35,7 @@ describe 'UserProfileView', ->
     Backbone.sync.restore()
     benv.teardown()
 
-  describe '#handleWebsiteClick', ->
+  describe '#openWebsite', ->
     beforeEach ->
       @openedWindowSpy = sinon.stub()
       @openedWindowSpy.opener = 1
@@ -43,24 +43,24 @@ describe 'UserProfileView', ->
 
     it 'sets window.opener to null', ->
       @view.model.set 'website', 'http://example.org'
-      @view.handleWebsiteClick()
+      @view.openWebsite()
       @openSpy.called.should.be.ok
       @openSpy.args[0][0].should.equal 'http://example.org'
       @openSpy.args[0][1].should.equal '_blank'
       @openedWindowSpy.opener?.should.be.null
 
-  describe '#renderState', ->
+  describe '#setState', ->
 
     it 'sets the state for just posts', ->
       @view.posts = new Backbone.Collection [{}]
       @view.favorites = null
-      @view.renderState()
+      @view.setState()
       @view.$el.attr('data-has').should.equal 'posts'
 
   it 'sets the state for just favorites', ->
       @view.posts = null
       @view.favorites = new Backbone.Collection [{}]
-      @view.renderState()
+      @view.setState()
       @view.$el.attr('data-has').should.equal 'favorites'
 
   describe '#renderPosts', ->
