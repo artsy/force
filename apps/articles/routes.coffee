@@ -10,8 +10,7 @@ embedVideo = require 'embed-video'
     data:
       published: true
       limit: 50
-      # Artsy Editorial. TODO: When we launch Writer externally drop this.
-      author_id: '503f86e462d56000020002cc'
+      sort: '-published_at'
     error: res.backboneError
     success: (articles) ->
       res.locals.sd.ARTICLES = articles.toJSON()

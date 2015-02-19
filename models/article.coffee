@@ -52,6 +52,9 @@ module.exports = class Article extends Backbone.Model
   href: ->
     "/article/#{@get('slug')}"
 
+  authorHref: ->
+    if @get('author') then "/#{@get('author').profile_handle}" else @href()
+
   cropUrlFor: (attr, args...) ->
     crop @get(attr), args...
 

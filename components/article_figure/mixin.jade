@@ -14,10 +14,8 @@ mixin article-figure(article, width, showDate, showShare)
       a.article-figure-title( href= article.href() )
         = article.get('thumbnail_title')
 
-      //- TODO: Hack for now, we need to save author data on the article.
-      //- (Should be the author's href)
-      a.article-figure-author( href= article.href() )
-        | Artsy Editorial
+      a.article-figure-author( href= article.authorHref() )
+        = article.get('author') ? article.get('author').name : ''
 
       if showShare
         .article-figure-share.js-article-figure-share
