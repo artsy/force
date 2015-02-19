@@ -25,16 +25,16 @@ describe 'FeatureNavigationView', ->
     html.should.containEql '<a href="/feature/bitty-the-cat">Work offered by<br>A Feature all about the greatest cat'
     html.should.containEql 'Go to feature'
 
-  it 'renders when there is a valid fair', ->
+  it 'renders when there is a published fair', ->
     fair = new Backbone.Model(fabricate 'fair')
+    fair.set 'published', true
     view = new FeatureNavigationView model: fair, kind: 'fair'
     html = view.$el.html()
     html.should.containEql '<a href="/the-armory-show">Work offered by<br>Armory Show 2013'
     html.should.containEql 'Go to fair'
 
-  it 'does not render when there is a invalid fair', ->
+  it 'does not render when there is a unpublished fair', ->
     fair = new Backbone.Model(fabricate 'fair')
-    fair.unset 'organizer'
     view = new FeatureNavigationView model: fair, kind: 'fair'
     _.isEmpty(view.$el.html()).should.be.true
 
