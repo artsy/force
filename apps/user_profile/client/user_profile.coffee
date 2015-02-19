@@ -34,7 +34,7 @@ module.exports = class UserProfileView extends Backbone.View
         @articles.fetch()
       else
         @model.fetchPosts(success: ((@posts) =>))
-    ).then @render
+    ).always @render
 
   openWebsite: ->
     popup = window.open @model.get('website'), '_blank'
