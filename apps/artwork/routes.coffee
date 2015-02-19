@@ -35,6 +35,8 @@ request = require 'superagent'
                 auctionId: req.query?.auction_id
                 jsonLD: stringifyJSONForWeb(artwork.toJSONLD())
                 defaultMessage: defaultMessage(artwork)
+                # HACK: Hide auction results for ADAA
+                inADAA: req.query.fair_id is 'adaa-the-art-show-2015'
         else
           res.render 'index',
             artwork: artwork

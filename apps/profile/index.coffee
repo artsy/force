@@ -10,6 +10,8 @@ app = module.exports = express()
 app.set 'views', __dirname
 app.set 'view engine', 'jade'
 
+# HACK: Redirect the "auction" profile to the "user" profile for LAMA
+app.get '/lama', (req, res) -> res.redirect '/los-angeles-modern-auctions-lama'
 app.get '/:id', routes.setProfile
 app.get '/:id/:tab*', routes.setProfile
 app.get '/:id/follow', routes.follow
