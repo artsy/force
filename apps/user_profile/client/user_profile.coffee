@@ -28,13 +28,11 @@ module.exports = class UserProfileView extends Backbone.View
     @articles = new Articles
     @articles.url = "#{@articles.url}?author_id=#{@model.get('owner').id}&published=true"
 
-    $.when(
-      @model.fetchFavorites(success: ((@favorites) =>))
-      if @user?.hasLabFeature('Articles')
-        @articles.fetch()
-      else
-        @model.fetchPosts(success: ((@posts) =>))
-    ).always @render
+    @model.fetchFavorites(success: ((@favorites) =>), complete: => @render())
+    if @user?.hasLabFeature('Articles')
+      @articles.fetch(complete: => @render())
+    else
+      @model.fetchPosts(success: ((@posts) =>), complete: => @render())
 
   openWebsite: ->
     popup = window.open @model.get('website'), '_blank'
@@ -46,7 +44,7 @@ module.exports = class UserProfileView extends Backbone.View
       model: @model
       collection: @following
 
-  render: =>
+  render: _.after 2, ->
     @setState()
     @renderPosts()
     @renderFavorites()
