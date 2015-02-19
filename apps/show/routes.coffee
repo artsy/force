@@ -21,7 +21,7 @@ setReferringContext = (req, res, show) ->
   return unless req.get 'referrer'
   path = parse(req.get 'referrer').pathname
   res.locals.context = (
-    if show.has('fair') and path.match show.get('fair')?.organizer?.profile_id
+    if show.has('fair') and path.match show.get('fair')?.default_profile_id
       'fair'
     else if path.match show.get('partner')?.default_profile_id
       'partner'
