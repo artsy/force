@@ -22,7 +22,7 @@ module.exports.init = ->
   # HACK: Hide auction results for ADAA
   $.ajax
     url: "#{sd.API_URL}/api/v1/related/fairs",
-    data: artwork: 'lucio-fontana-concetto-spaziale-attesa-8'
+    data: artwork: sd.ARTWORK.id
     success: (fairs) ->
       if 'adaa-the-art-show-2015' in (fair.id for fair in fairs)
         $('.artwork-auction-results-button').hide()
