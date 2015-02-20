@@ -6,6 +6,7 @@ HeaderView = require './header/view.coffee'
 FooterView = require './footer/view.coffee'
 sd = require('sharify').data
 analytics = require '../../lib/analytics.coffee'
+AuctionReminderView = require '../auction_reminder/index.coffee'
 
 module.exports = ->
   setupJquery()
@@ -13,6 +14,7 @@ module.exports = ->
   setupReferrerTracking()
   setupKioskMode()
   syncAuth()
+  setupAuctionReminder()
 
 ensureFreshUser = (data) ->
   return unless sd.CURRENT_USER
@@ -86,5 +88,9 @@ setupJquery = ->
   $.ajaxSettings.headers =
     'X-XAPP-TOKEN': sd.ARTSY_XAPP_TOKEN
     'X-ACCESS-TOKEN': sd.CURRENT_USER?.accessToken
+
+setupAuctionReminder = ->
+  unless Cookies.get('closeAuctionReminder')? || window.location.pathname == '/user/edit'
+    new AuctionReminderView()
 
 setupAnalytics()

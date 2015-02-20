@@ -1,8 +1,12 @@
-.auction-reminder-container
-  img.auction-reminder-image(src="#{auctionImage}")
-  .auction-reminder-details
-    p.avant-garde-header-small Closing Soon
-    p.auction-reminder-name #{auction.get('name')}
-    a.avant-garde-header-small(href="") Go To Auction
-  .auction-reminder-clock
-    include ../clock/template
+.modal-dialog
+  header.modal-header
+    a.modal-close: i.icon-close
+  section.modal-body
+    a.auction-reminder-container(href="/feature/#{auction.get('id')}")
+      img.auction-reminder-image(src="#{auctionImage}")
+      .auction-reminder-details
+        p.avant-garde-header-small Closing Soon
+        p.auction-reminder-name #{auction.get('name')}
+        p.avant-garde-header-small Go To Auction
+      .auction-reminder-clock
+        include ../clock/template

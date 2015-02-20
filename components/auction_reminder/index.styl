@@ -22,31 +22,34 @@
   display inline-block
 
 .auction-reminder-clock
+  vertical-align top
+  margin-top 22px
   display inline-block
-  margin 0
   .clock-header
     display none
   .clock-value
+    avant-garde()
     text-align left
-    margin-top 0px
-    font-size 12px
     li
+      margin 2px
       display inline-block
-    li small
+      font-size 17px
+      vertical-align top
+    .auction-clock-element
+      vertical-align bottom
+      display block
+    .auction-clock-element > small
       text-align center
       color transparify(#aaa, black)
+      font-size 9px
+      vertical-align top
 
   opacity 0
   transition opacity 1s
   &.is-fade-in
     opacity 1
 
-// Disable scroll on body when open
-body.is-modal
-  overflow hidden
-
 #modal
-  z-index zindex-modal
   transition opacity 0.25s
   opacity 0
   // Default is a simple fade in
@@ -67,12 +70,6 @@ body.is-modal
         // Avoid transitioning the initial open
         transition all 0.25s, width 0, transform 0.4s
 
-  &.is-loading
-    > .modal-backdrop::before
-      display block
-      content ''
-      spinner(20px, 5px, white)
-
   &.confirm
     .modal-body
       text-align center
@@ -86,40 +83,31 @@ body.is-modal
     .avant-garde-button-black
       width 80%
       margin-top 13px
-      &.bid-close-button
-        margin-top 10px
-
-  .markdown-content
-    padding 60px 80px
 
 .modal-h1
   garamond()
   font-size 22px
 
-#modal
-.modal-backdrop
-  position fixed
-  top 0
-  right 0
-  bottom 0
-  left 0
-
-.modal-backdrop
-  background-color rgba(black, 0.5)
-
 #modal.has-nobackdrop > .modal-backdrop
   background-color transparent
 
 .modal-dialog
+  z-index 1000
   position fixed
   overflow-y auto
   background-color white
   max-width 90%
   max-height 90%
   border 1px solid gray-lighter-color
+  bottom -300px
+  transition bottom 0.3s
   prevent-content-shift()
   &.is-notransition
     transition none !important
+
+.modal-dialog.is-active
+    bottom 40px
+    transition: all 400ms cubic-bezier(0.195, 0.725, 0.580, 1.110)
 
 .modal-close
   position absolute

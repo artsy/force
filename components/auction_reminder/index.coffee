@@ -5,163 +5,78 @@ Sales = require '../../collections/sales.coffee'
 Sale = require '../../models/sale.coffee'
 Artwork = require '../../models/artwork.coffee'
 SaleArtworks = require '../../collections/sale_artworks.coffee'
-ModalView = require '../modal/view.coffee'
 ClockView = require '../clock/view.coffee'
 { API_URL } = require('sharify').data
 mediator = require '../../lib/mediator.coffee'
 Transition = require '../mixins/transition.coffee'
 { isTouchDevice } = require '../../components/util/device.coffee'
-Scrollbar = require '../../lib/scrollbar.coffee'
+Cookies = require 'cookies-js'
 auctionTemplate = -> require('./template.jade') arguments...
-modalTemplate = -> require('./modal_template.jade') arguments...
 
 class AuctionReminderModal extends Backbone.View
 
-  id: 'modal'
-  container: '#modal-container'
-
-  template: ->
-    'Requires a template'
-  modalTemplate: ->
-    modalTemplate()
-
-  templateData: {}
-
   events: ->
-    'click.handler .modal-close': 'close'
+    'click .modal-close': 'close'
 
   initialize: ({ @auction, @auctionImage }) ->
+
+    # Reminder doesn't show on auction page
+    if window.location.pathname == @auction.href()
+      return
+    # Reminder only shows if 24 hours until end
+    auctionEndInHours = moment().diff(@auction.get('end_at'),'hours')
+    if auctionEndInHours < -24
+      console.log auctionEndInHours
+      return
+
     { @dimensions, @width, @transition, @backdrop } = 
       dimensions: width: '500px'
       transition: 'fade'
       backdrop: false
 
-    @dimensions.width = @width if @width
-
-    _.extend @templateData, autofocus: @autofocus()
-
     @resize = _.debounce @updatePosition, 100
 
     @$window = $(window)
-    # @$window.on 'keyup', @escape
     @$window.on 'resize', @resize
 
-    # @scrollbar = new Scrollbar $els: $('#main-layout-header')
-
-    mediator.on 'modal:close', @close, this
-    mediator.on 'modal:opened', @updatePosition, this
+    @$container = $('body')
 
     @open()
 
-  onClickBackdrop: (e) ->
-    @close() if $(e.target).hasClass('modal-backdrop')
-
-  __announceCloseButtonClick__: ->
-    @trigger 'click:close'
-
-  __announceBackdropClick__: ->
-    @trigger 'click:backdrop'
-
-  # escape: (e) ->
-  #   return unless e.which is 27
-
-  #   mediator.trigger 'modal:close'
-
   updatePosition: =>
     @$dialog.css
-      top: ((@$el.height() - @$dialog.height()) - 40) + 'px'
-      left: ((@$el.width() - @$dialog.width()) - 40) + 'px'
-
-  autofocus: ->
-    if isTouchDevice() then undefined else true
-
-  isLoading: ->
-    @$el.addClass 'is-loading'
-    @$dialog.hide().addClass 'is-notransition'
-
-  isLoaded: ->
-    @$el.removeClass 'is-loading'
-    @$dialog.show()
-    _.defer =>
-      @$dialog.removeClass 'is-notransition'
-
-  # Fade out body,
-  # re-render the (presumably changed) template,
-  # then fade back in and re-center
-  reRender: ->
-    Transition.fade @$body,
-      out: =>
-        @$body.html @template(@templateData)
-        @trigger 'rerendered'
-      in: =>
-        @updatePosition()
+      top: ((@$container.height() - @$dialog.height()) - 40) + 'px'
+      left: ((@$container.width() - @$dialog.width()) - 40) + 'px'
 
   setDimensions: (dimensions) ->
     @$dialog.css dimensions or @dimensions
 
-  setup: ->
-    backdropClass = if @backdrop then 'has-backdrop' else 'has-nobackdrop'
-
-    @$el.
-      addClass("is-#{@transition}-in #{backdropClass}").
-      # Render outer
-      html @modalTemplate()
-
-    @renderInner()
-
-    # Display
-    $(@container).html @$el
-
-    @postRender()
-
-    # # Disable scroll on body
-    # @scrollbar.set()
-
-    # Fade in
-    _.defer => @$el.attr 'data-state', 'open'
-
-  renderInner: =>
-    @$body = @$('.modal-body')
-    @$body.html @template(@templateData)
-    @$dialog = @$('.modal-dialog')
-    @setDimensions()
-
-  postRender: -> #
-
   open: =>
-    @setup()
-    mediator.trigger 'modal:opened', { view: this }
-
-    this
+    @$el.
+      addClass("auction-reminder-modal").
+      html auctionTemplate
+        auction: @auction
+        auctionImage: @auctionImage
+    
+    @$dialog = @$('.modal-dialog')
+    @$dialog.addClass("is-active")
+    @setupClock()
+    @setDimensions(@dimensions)
+    @$container.append @$el
+    @updatePosition()
 
   close: (cb) ->
-    @$window.off 'keyup', @escape
     @$window.off 'resize', @resize
 
-    mediator.off null, null, this
-
     @$el.
-      attr('data-state', 'closed').
       one($.support.transition.end, =>
-        # Re-enable scrolling
-        @scrollbar.reset()
-
-        mediator.trigger 'modal:closed', { view: this }
 
         @remove()
 
         cb() if _.isFunction cb
       ).emulateTransitionEnd 250
 
-  postRender: ->
-    @isLoading()
-    @$('.modal-body').html(auctionTemplate 
-      auction: @auction
-      auctionImage: @auctionImage
-    )
-    @setupClock()
-    @updatePosition()
-    @isLoaded()
+    Cookies.set 'closeAuctionReminder', true
 
   setupClock: ->
     @clock = new AuctionClock
@@ -187,8 +102,8 @@ class AuctionClock extends ClockView
       diff = moment.duration(@toDate?.diff(moment()))[unit]()
       """
         <li>
-          #{if diff < 10 then '0' + diff else diff}
-          <small>#{label}</small>
+          <div class="auction-clock-element">#{if diff < 10 then '0' + diff else diff}</div>
+          <div class="auction-clock-element"><small>#{label}</small></div>
         </li>
       """
     )).join '<li>:</li>'
