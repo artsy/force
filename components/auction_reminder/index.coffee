@@ -25,7 +25,7 @@ class AuctionReminderModal extends Backbone.View
       return
     # Reminder only shows if 24 hours until end
     auctionEndInHours = moment().diff(@auction.get('end_at'),'hours')
-    if auctionEndInHours < -24
+    if auctionEndInHours < -240
       console.log auctionEndInHours
       return
 
@@ -34,19 +34,8 @@ class AuctionReminderModal extends Backbone.View
       transition: 'fade'
       backdrop: false
 
-    @resize = _.debounce @updatePosition, 100
-
-    @$window = $(window)
-    @$window.on 'resize', @resize
-
     @$container = $('body')
-
     @open()
-
-  updatePosition: =>
-    @$dialog.css
-      top: ((@$container.height() - @$dialog.height()) - 40) + 'px'
-      left: ((@$container.width() - @$dialog.width()) - 40) + 'px'
 
   setDimensions: (dimensions) ->
     @$dialog.css dimensions or @dimensions
@@ -59,23 +48,14 @@ class AuctionReminderModal extends Backbone.View
         auctionImage: @auctionImage
     
     @$dialog = @$('.modal-dialog')
-    @$dialog.addClass("is-active")
     @setupClock()
-    @setDimensions(@dimensions)
+    @setDimensions()
     @$container.append @$el
-    @updatePosition()
+    activate = => @$dialog.addClass("is-active")
+    _.delay(activate,3000)
 
   close: (cb) ->
-    @$window.off 'resize', @resize
-
-    @$el.
-      one($.support.transition.end, =>
-
-        @remove()
-
-        cb() if _.isFunction cb
-      ).emulateTransitionEnd 250
-
+    @$el.remove()
     Cookies.set 'closeAuctionReminder', true
 
   setupClock: ->

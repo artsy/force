@@ -99,16 +99,15 @@
   max-width 90%
   max-height 90%
   border 1px solid gray-lighter-color
+  right 40px
   bottom -300px
-  transition bottom 0.3s
+  transition all 400ms cubic-bezier(0.195, 0.725, 0.580, 1.110)
   prevent-content-shift()
-  &.is-notransition
-    transition none !important
 
 .modal-dialog.is-active
     bottom 40px
-    transition: all 400ms cubic-bezier(0.195, 0.725, 0.580, 1.110)
-
+    transition bottom 0.3s
+  
 .modal-close
   position absolute
   top 25px
