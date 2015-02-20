@@ -16,8 +16,9 @@ representation = (fair) ->
   dfd.promise
 
 @overview = (req, res, next) ->
-  # go to normal fair page when this fair switches to open
-  return next() if not res.locals.fair or res.locals.fair.hasOpened()
+  # go to normal fair page when this fair switches to open or an admin adds
+  # a microsite=true param
+  return next() if not res.locals.fair or res.locals.fair.hasOpened() or req.query.microsite
   res.locals.sd.HEADER_CLASS = 'force-position-absolute'
   res.render 'overview'
 
