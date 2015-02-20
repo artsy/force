@@ -49,49 +49,8 @@
   &.is-fade-in
     opacity 1
 
-#modal
-  transition opacity 0.25s
-  opacity 0
-  // Default is a simple fade in
-  &[data-state='open'], &.is-open
-    opacity 1
-    > .modal-backdrop > .modal-dialog
-      // Avoid transitioning the initial open
-      transition all 0.25s, width 0
-  // Slide modal dialog in
-  &.is-slide-in
-    > .modal-backdrop > .modal-dialog
-      transform translateY(100px)
-      transition transform 0.4s
-    &[data-state='open'], &.is-open
-      opacity 1
-      > .modal-backdrop > .modal-dialog
-        transform translateY(0)
-        // Avoid transitioning the initial open
-        transition all 0.25s, width 0, transform 0.4s
-
-  &.confirm
-    .modal-body
-      text-align center
-      padding-top 100px
-      padding-bottom 100px
-    .avant-garde-header-center
-      font-size 22px
-    h3
-      margin-top 20px
-      font-size 24px
-    .avant-garde-button-black
-      width 80%
-      margin-top 13px
-
-.modal-h1
-  garamond()
-  font-size 22px
-
-#modal.has-nobackdrop > .modal-backdrop
-  background-color transparent
-
 .modal-dialog
+  width 500px
   z-index 1000
   position fixed
   overflow-y auto
@@ -123,10 +82,3 @@
     font-size 26px
     line-height @font-size
 
-.modal-dialog
-.modal-body
-  transition opacity 0.25s
-  &[data-state='fade-out'], &.is-fade-out
-    opacity 0
-  &[data-state='fade-in'], &.is-fade-in
-    opacity 1

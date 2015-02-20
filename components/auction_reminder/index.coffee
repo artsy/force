@@ -2,14 +2,10 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 moment = require 'moment'
 Sales = require '../../collections/sales.coffee'
-Sale = require '../../models/sale.coffee'
 Artwork = require '../../models/artwork.coffee'
 SaleArtworks = require '../../collections/sale_artworks.coffee'
 ClockView = require '../clock/view.coffee'
 { API_URL } = require('sharify').data
-mediator = require '../../lib/mediator.coffee'
-Transition = require '../mixins/transition.coffee'
-{ isTouchDevice } = require '../../components/util/device.coffee'
 Cookies = require 'cookies-js'
 auctionTemplate = -> require('./template.jade') arguments...
 
@@ -29,16 +25,8 @@ class AuctionReminderModal extends Backbone.View
       console.log auctionEndInHours
       return
 
-    { @dimensions, @width, @transition, @backdrop } = 
-      dimensions: width: '500px'
-      transition: 'fade'
-      backdrop: false
-
     @$container = $('body')
     @open()
-
-  setDimensions: (dimensions) ->
-    @$dialog.css dimensions or @dimensions
 
   open: =>
     @$el.
@@ -49,10 +37,11 @@ class AuctionReminderModal extends Backbone.View
     
     @$dialog = @$('.modal-dialog')
     @setupClock()
-    @setDimensions()
     @$container.append @$el
+
+    #Activate after 5 seconds
     activate = => @$dialog.addClass("is-active")
-    _.delay(activate,3000)
+    _.delay(activate,5000)
 
   close: (cb) ->
     @$el.remove()
