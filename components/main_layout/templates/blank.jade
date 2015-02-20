@@ -2,7 +2,7 @@ block locals
   - bodyClass = helpers ? helpers.buildBodyClass(sd) : ''
 
 doctype html
-html
+html( data-useragent= userAgent )
   head
     block head
     include head
