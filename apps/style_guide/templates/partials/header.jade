@@ -9,3 +9,25 @@ header#main-layout-header: nav.mlh-navbar
         href="/style-guide/#{section}"
         class=activeClass("/style-guide/#{section}")
       )= section
+
+    span.mlh-top-nav-link.hover-pulldown
+      | More
+      .hover-pulldown-menu
+        a( href='#' ) About Artsy
+        a( href='#' ) Artsy for Galleries
+        a( href='#' ) Artsy for Institutions
+        a( href='#' ) Artsy for Education
+        a( href='#' ) Jobs
+        a( href='#' ) Press
+
+  #main-layout-header-right.mlh-navbar-cell
+    span.mlh-top-nav-link.hover-pulldown( data-anchor='right' )
+      | User Name
+      .hover-pulldown-menu
+        span Follows &amp; Favorites
+        a( href='#' ) Artists
+        a( href='#' ) Works
+        a( href='#' ) Galleries
+        hr
+        a( href='#' ) Settings
+        a( href='#' ) Log Out
