@@ -17,6 +17,7 @@ describe 'AuctionReminder', ->
       Backbone.$ = $
       sinon.stub Backbone, 'sync'
       @reminder = new AuctionReminder
+      # AuctionReminder.__set__ 'Cookies', sinon.stub()
       done()
 
   afterEach ->
@@ -40,6 +41,7 @@ describe 'AuctionReminderModal', ->
       sinon.stub Backbone, 'sync'
       @AuctionReminderModal = AuctionReminder.__get__ 'AuctionReminderModal'
       @AuctionReminderModal::open = sinon.stub()
+      # AuctionReminder.__set__ 'Cookies', sinon.stub()
       @auctionImage = "foo.jpg"
       done()
 
