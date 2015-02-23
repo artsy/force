@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 Cookies = require 'cookies-js'
-CurrentUser = require '../../models/current_user.coffee'
+sd = require('sharify').data
 { getProperty, setProperty, unsetProperty } = require '../../lib/analytics.coffee'
 
 module.exports = class SplitTest
@@ -29,7 +29,7 @@ module.exports = class SplitTest
     "is-splittest-#{@key}--#{@outcome()}"
 
   admin: ->
-    CurrentUser.orNull()?.isAdmin()
+    sd.CURRENT_USER?.type is 'Admin'
 
   toss: ->
     _.sample _.flatten _.map @outcomes, (probability, outcome) ->
