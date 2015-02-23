@@ -6,24 +6,24 @@ Sale = require '../../../models/sale.coffee'
 Artwork = require '../../../models/artwork.coffee'
 SaleArtworks = require '../../../collections/sale_artworks.coffee'
 { resolve } = require 'path'
-AuctionReminder = benv.requireWithJadeify resolve(__dirname, '../index'), ['auctionTemplate']
 { fabricate } = require 'antigravity'
 moment = require 'moment'
 
 describe 'AuctionReminder', ->
+
   beforeEach (done) ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
-      sinon.stub Backbone, 'sync'
-      @reminder = new AuctionReminder
-      AuctionReminder.__set__ 'Cookies', sinon.stub()
-      done()
+    sinon.stub Backbone, 'sync'
+    AuctionReminder = benv.requireWithJadeify resolve(__dirname, '../index'), ['auctionTemplate']
+    AuctionReminder.__set__ 'Cookies', { set: (->) }
+    @reminder = new AuctionReminder
+    done()
 
   afterEach ->
     benv.teardown()
     Backbone.sync.restore()
-    AuctionReminder.__set__ 'Cookies', sinon.restore()
 
   describe '#module.exports', ->
     it 'fetches auction and auction image if there is one', ->
@@ -35,24 +35,22 @@ describe 'AuctionReminder', ->
       Backbone.sync.args[0][2].error()
 
 describe 'AuctionReminderModal', ->
+
+
   beforeEach (done) ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
-      sinon.stub Backbone, 'sync'
-      @AuctionReminderModal = AuctionReminder.__get__ 'AuctionReminderModal'
-      @AuctionReminderModal::open = sinon.stub()
-      @cookies = sinon.stub(AuctionReminder.__get__ 'Cookies', 'initialize')
-      # console.log @cookies
-      # sinon.stub(@cookies)
-      @auctionImage = "foo.jpg"
-      done()
+    sinon.stub Backbone, 'sync'
+    AuctionReminder = benv.requireWithJadeify resolve(__dirname, '../index'), ['auctionTemplate']
+    AuctionReminder.__set__ 'Cookies', { set: (->) }
+    @AuctionReminderModal = AuctionReminder.__get__ 'AuctionReminderModal'
+    @AuctionReminderModal::open = sinon.stub()
+    done()
 
   afterEach ->
     benv.teardown()
     Backbone.sync.restore()
-    @cookies.restore()
-
 
   describe '#initialize', ->
 

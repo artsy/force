@@ -43,7 +43,7 @@ class AuctionReminderModal extends Backbone.View
 
   close: (cb) ->
     @$el.remove()
-    Cookies.set 'closeAuctionReminder', true
+    Cookies.set('closeAuctionReminder', true)
 
   setupClock: ->
     @clock = new AuctionClock
