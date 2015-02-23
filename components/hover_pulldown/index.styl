@@ -43,7 +43,18 @@ computed-margin(target-margin)
     opacity 0
     transition opacity 0.25s
 
-  &:hover
+  // Touch optimizations
+  &[data-mode='touch']
+    // Disable transitions
+    &:after
+    .hover-pulldown-menu
+      transition none
+    .hover-pulldown-menu
+      // Slighty overlap menu with tip
+      margin-top (menu-tip-size + (menu-tip-size * 1.5) - 1)
+
+  &[data-mode='hover']:hover
+  &[data-state='active']
     &:after
     .hover-pulldown-menu
       opacity 1
@@ -57,6 +68,7 @@ computed-margin(target-margin)
 .hover-pulldown-menu
   visibility hidden
   position absolute
+  z-index zindex-hover-pulldown
   width menu-width
   left 50%
   top 100%
@@ -97,7 +109,16 @@ computed-margin(target-margin)
     display block
     position absolute
     content ''
-    bottom 100%
     height (menu-tip-size * 3)
-    left 0
     right 0
+    bottom 100%
+    left 0
+
+.hover-pulldown-backdrop
+  position fixed
+  top 0
+  right 0
+  bottom 0
+  left 0
+  z-index (zindex-hover-pulldown - 10)
+  height 100vh
