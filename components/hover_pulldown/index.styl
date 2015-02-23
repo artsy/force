@@ -12,6 +12,7 @@ computed-margin(target-margin)
 .hover-pulldown
   position relative
   display inline-block
+  cursor pointer
 
   // Small tip
   &:before
@@ -86,6 +87,7 @@ computed-margin(target-margin)
     line-height line-height
     color white
     overflow ellipsis
+    cursor pointer
   > a
     display block
     padding 0 default-margin
@@ -122,3 +124,10 @@ computed-margin(target-margin)
   left 0
   z-index (zindex-hover-pulldown - 10)
   height 100vh
+
+// For dark banners and backgrounds
+.body-transparent-header-white
+  .hover-pulldown
+    color white
+    &:before
+      border-top-color white

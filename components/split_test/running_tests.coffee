@@ -15,3 +15,10 @@ module.exports =
       modal: 0.5
       modeless: 0.5
     edge: 'modal'
+
+  redesigned_header:
+    key: 'redesigned_header'
+    outcomes:
+      old: 0.5
+      new: 0.5
+    edge: 'new'
