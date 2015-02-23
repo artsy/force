@@ -1,0 +1,85 @@
+@import '../stylus_lib'
+
+.auction-reminder-container
+  height 120px
+  padding 15px
+  display block
+
+.auction-reminder-image
+  height 90px
+  width 90px
+  background-size cover
+  background-position center center
+  background-repeat no-repeat
+  display inline-block
+  vertical-align top
+  margin auto
+  
+
+.auction-reminder-details
+  width 190px
+  padding-left 15px
+  display inline-block
+
+.auction-reminder-clock
+  vertical-align top
+  margin-top 22px
+  display inline-block
+  .clock-header
+    display none
+  .clock-value
+    avant-garde()
+    text-align left
+    li
+      margin 2px
+      display inline-block
+      font-size 17px
+      vertical-align top
+    .auction-clock-element
+      vertical-align bottom
+      display block
+    .auction-clock-element > small
+      text-align center
+      color transparify(#aaa, black)
+      font-size 9px
+      vertical-align top
+
+  opacity 0
+  transition opacity 1s
+  &.is-fade-in
+    opacity 1
+
+.auction-reminder-modal
+  .modal-dialog
+    width 500px
+    z-index 1000
+    position fixed
+    overflow-y auto
+    background-color white
+    max-width 90%
+    max-height 90%
+    border 1px solid gray-lighter-color
+    right 40px
+    bottom -300px
+    transition all 400ms cubic-bezier(0.195, 0.725, 0.580, 1.110)
+    prevent-content-shift()
+
+  .modal-dialog.is-active
+      bottom 40px
+      transition bottom 0.3s
+    
+  .modal-close
+    position absolute
+    top 25px
+    right 25px
+    cursor pointer
+    transition opacity 0.25s
+    opacity 0.15
+    z-index 2
+    prevent-content-shift()
+    &:hover
+      opacity 1
+    > i
+      font-size 26px
+      line-height @font-size
+
