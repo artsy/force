@@ -17,7 +17,7 @@ getFairData = [
 
 app.get '/:id', getFairData, routes.overview
 app.get '/:id/overview', getFairData, routes.overview
-app.get '/:id/posts', getFairData, routes.fairPosts
+app.get '/:id/articles', getFairData, routes.fairArticles
 app.get '/:id/info', getFairData, routes.info
 app.get '/:id/for-you', getFairData, routes.forYou
 app.get '/:id/search', getFairData, routes.search

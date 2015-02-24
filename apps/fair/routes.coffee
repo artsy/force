@@ -18,7 +18,7 @@ kinds = require '../favorites_follows/kinds'
   res.locals.sd.SECTION = 'info'
   res.render 'index'
 
-@fairPosts = (req, res, next) ->
+@fairArticles = (req, res, next) ->
   return next() unless res.locals.sd.FAIR
   res.locals.sd.SECTION = 'posts'
   res.render 'index'
