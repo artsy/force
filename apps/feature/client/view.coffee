@@ -241,6 +241,6 @@ module.exports = class FeatureView extends Backbone.View
       e.preventDefault()
 
   adjustHeader: =>
-    if !this.isAuction()
+    unless @isAuction()
       @$('#feature-auction-left').attr('id','feature-non-auction-left')
       @$('#feature-auction-right').attr('id','feature-non-auction-right')
