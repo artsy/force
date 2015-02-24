@@ -21,7 +21,7 @@ representation = (fair) ->
 @overview = (req, res, next) ->
   # go to normal fair page when this fair switches to open or an admin adds
   # a microsite=true param
-  return next() if not res.locals.fair or res.locals.fair.hasOpened() or req.query.microsite
+  return next() if not res.locals.fair or res.locals.fair.hasOpened()
   res.locals.sd.HEADER_CLASS = 'force-position-absolute'
   res.render 'overview'
 
@@ -41,7 +41,7 @@ representation = (fair) ->
   # :( :( :(
   fair = new Fair FairFixture
 
-  return next() if moment().isAfter moment('2-25-2015')
+  return next() if moment().isAfter(moment '2-25-2015') or req.query.microsite
 
   profile = new Profile ProfileFixture
 
