@@ -3,7 +3,8 @@ Backbone = require 'backbone'
 sd = require('sharify').data
 FairInfoView = require './info.coffee'
 
-FairPostsView = if 'Articles' in (sd.CURRENT_USER?.lab_features or [])
+FairPostsView = if 'Articles' in (sd.CURRENT_USER?.lab_features or []) \
+                or sd.FAIR.id is 'the-armory-show-2015'
   require './articles.coffee'
 else
   require './posts.coffee'

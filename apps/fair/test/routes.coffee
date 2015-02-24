@@ -41,7 +41,7 @@ describe 'Fair routes', ->
       routes.forYou @req, @res, (next = sinon.stub())
       next.called.should.be.ok
 
-      routes.fairPosts @req, @res, (next = sinon.stub())
+      routes.fairArticles @req, @res, (next = sinon.stub())
       next.called.should.be.ok
 
       routes.favorites @req, @res, (next = sinon.stub())
@@ -74,10 +74,10 @@ describe 'Fair routes', ->
       @res.locals.sd.SECTION.should.equal 'forYou'
       @res.render.args[0][0].should.equal 'index'
 
-  describe '#fairPosts', ->
+  describe '#fairArticles', ->
 
     it 'renders the posts template', ->
-      routes.fairPosts @req, @res
+      routes.fairArticles @req, @res
       @res.locals.sd.SECTION.should.equal 'posts'
       @res.render.args[0][0].should.equal 'index'
 
