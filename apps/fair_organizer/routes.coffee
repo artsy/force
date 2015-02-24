@@ -5,6 +5,9 @@ Fair = require '../../models/fair.coffee'
 cache = require '../../lib/cache'
 OrderedSets = require '../../collections/ordered_sets'
 Articles = require '../../collections/articles'
+ProfileFixture = require './fixtures/profile.json'
+FairFixture = require './fixtures/fair.json'
+moment = require 'moment'
 
 representation = (fair) ->
   dfd = Q.defer()
@@ -29,51 +32,49 @@ representation = (fair) ->
   data = {}
   data.access_token = req.user.get('accessToken') if req.user
 
-  # manually fetching the profile here, since we don't want to override /the-armory-show just yet
-  new Profile(id: 'the-armory-show').fetch
-    data: data
-    cache: true
-    success: (profile) ->
-      res.locals.profile = profile
-      res.locals.sd.PROFILE = profile.toJSON()
-      res.locals.jsonLD = profile.toJSONLD()
-      res.locals.tab = req.params.tab
-    complete: ->
-      profile = res.locals.profile
-      return next() unless profile?.isFairOrOrganizer()
-      fair = new Fair id: 'the-armory-show-2015'
-      fair.fetch
-        error: res.backboneError
-        cache: true
-        success: =>
-          # This is the specific-to-armory part
-          # Eventually we will fetch the organizer's past fairs here.
-          armory2013 = new Fair id: 'the-armory-show-2013'
-          armory2014 = new Fair id: 'the-armory-show-2014'
-          fairIds = ['505797122a5b7500020006a0', '52617c6c8b3b81f094000013',
-            '54871f8672616970632a0400']
+  # TODO: remove this grossness ASAP
+  # -------------------------------
+  # in case you are wondering....
+  # FairOrganizers are not administerable yet
+  # and these are last minute hacks so Fair admins can
+  # update the Armory Show Profile without affecting this page
+  # :( :( :(
+  fair = new Fair FairFixture
 
-          pastFairs = [armory2014, armory2013]
-          articles = new Articles()
+  return next() if moment().isAfter moment('2-25-2015')
 
-          # fetch the past fairs and their respective representations to get the two small images
-          promises = _.compact _.flatten [
-            _.map pastFairs, (fair)-> fair.fetch cache: true
-            _.map pastFairs, representation
-            articles.fetch(
-              cache: true
-              data: { published: true, fair_ids: fairIds, sort: '-published_at' }
-            )
-          ]
+  profile = new Profile ProfileFixture
 
-          Q.allSettled(promises).then(->
-            res.locals.sd.FAIR_IDS = fairIds
-            res.locals.sd.FAIR = fair.toJSON()
-            res.locals.sd.ARTICLES = articles.toJSON()
-            res.locals.fair = fair
-            res.locals.coverImage = profile.coverImage()
-            res.locals.pastFairs = pastFairs
-            res.locals.articles = articles.models
-            next()
-          ).done()
+  res.locals.profile = profile
+  res.locals.sd.PROFILE = profile.toJSON()
+  res.locals.jsonLD = profile.toJSONLD()
+
+  armory2013 = new Fair id: 'the-armory-show-2013'
+  armory2014 = new Fair id: 'the-armory-show-2014'
+  fairIds = ['505797122a5b7500020006a0', '52617c6c8b3b81f094000013',
+    '54871f8672616970632a0400']
+
+  pastFairs = [armory2014, armory2013]
+  articles = new Articles()
+
+  # fetch the past fairs and their respective representations to get the two small images
+  promises = _.compact _.flatten [
+    _.map pastFairs, (fair)-> fair.fetch cache: true
+    _.map pastFairs, representation
+    articles.fetch(
+      cache: true
+      data: { published: true, fair_ids: fairIds, sort: '-published_at' }
+    )
+  ]
+
+  Q.allSettled(promises).then(->
+    res.locals.sd.FAIR_IDS = fairIds
+    res.locals.sd.FAIR = fair.toJSON()
+    res.locals.sd.ARTICLES = articles.toJSON()
+    res.locals.fair = fair
+    res.locals.coverImage = profile.coverImage()
+    res.locals.pastFairs = pastFairs
+    res.locals.articles = articles.models
+    next()
+  ).done()
 
