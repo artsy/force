@@ -49,6 +49,7 @@ module.exports = class FeatureView extends Backbone.View
         @sets = sets
         @$('#feature-sets-container').html setsTemplate(sets: @sets)
         @initializeSale @sets
+        @adjustHeader()
       artworkPageSuccess: @artworkPageSuccess
       artworksSuccess: @doneFetchingSaleArtworks
 
@@ -238,3 +239,8 @@ module.exports = class FeatureView extends Backbone.View
     unless @currentUser
       mediator.trigger 'open:auth', { mode: 'register', copy: 'Sign up to bid on artworks', redirectTo: @sale.registerUrl() }
       e.preventDefault()
+
+  adjustHeader: =>
+    unless @isAuction()
+      @$('#feature-auction-left').attr('id','feature-non-auction-left')
+      @$('#feature-auction-right').attr('id','feature-non-auction-right')
