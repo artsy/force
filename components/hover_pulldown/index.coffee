@@ -1,5 +1,9 @@
 _ = require 'underscore'
 { isTouchDevice } = require '../util/device.coffee'
+Cookies = require 'cookies-js'
+
+transitionLength = 250
+dismissalLimit = 15
 
 activatePulldown = (e) ->
   return if @activated
@@ -19,11 +23,35 @@ activatePulldown = (e) ->
 
       @activated = false
 
+dismissStatic = (e) ->
+  $el = $(this)
+
+  if cookie = $el.data 'cookie'
+    persistCount cookie, dismissalLimit
+
+  _.delay ->
+    $el.removeAttr 'data-state'
+  , transitionLength
+
+tickDismissal = (cookie) ->
+  return unless cookie?
+  n = parseInt(Cookies.get cookie) or 0
+  return if n >= dismissalLimit
+  persistCount cookie, (n + 1)
+
+persistCount = (cookie, n) ->
+  Cookies.set cookie, n, expires: (60 * 60 * 24 * 365)
+
 module.exports = ->
   touch = isTouchDevice()
 
   ($pulldowns = $('.hover-pulldown'))
     .attr 'data-mode', (if touch then 'touch' else 'hover')
+
+  $pulldowns.filter('[data-state="static"]')
+    .mouseenter(dismissStatic)
+    .each ->
+      tickDismissal $(this).data('cookie')
 
   return unless touch
 
