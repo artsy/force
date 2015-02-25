@@ -11,7 +11,8 @@ header#main-layout-header(class= sd.HEADER_CLASS ? sd.HEADER_CLASS : '')
             | museums, and private collections.
       i#main-layout-welcome-logo.icon-logotype
 
-  if sd.REDESIGNED_HEADER === 'new'
+  //- if sd.REDESIGNED_HEADER === 'new'
+  if sd.CURRENT_USER && (sd.CURRENT_USER.type === 'Admin')
     include new
   else
     include old
