@@ -41,7 +41,7 @@ representation = (fair) ->
   # :( :( :(
   fair = new Fair FairFixture
 
-  return next() if moment().isAfter(moment '2-25-2015') or req.query.microsite
+  return next() if moment().isAfter(moment('2-25-2015').add(5, 'hours')) or req.query.microsite
 
   profile = new Profile ProfileFixture
 
