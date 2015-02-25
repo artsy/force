@@ -1,13 +1,11 @@
 @import '../../components/stylus_lib'
 
-font-size = 18px
-line-height = 40px
 default-margin = 30px
 menu-width = 250px
 menu-tip-size = 10px
 
-computed-margin(target-margin)
-  target-margin - (line-height - font-size)
+computed-padding(font-size, target-line-height)
+  (target-line-height - font-size) / 2
 
 .hover-pulldown
   position relative
@@ -61,8 +59,15 @@ computed-margin(target-margin)
       opacity 1
       visibility visible
 
+  &[data-state='static']
+    &:after
+    .hover-pulldown-static
+        opacity 1
+        visibility visible
+
   &[data-anchor='right']
     .hover-pulldown-menu
+    .hover-pulldown-static
       left inherit
       right 10px
 
@@ -75,25 +80,26 @@ computed-margin(target-margin)
   top 100%
   margin-top (menu-tip-size + (menu-tip-size * 1.5))
   margin-left -(menu-width / 2)
-  padding computed-margin(40px) 0 computed-margin(45px) 0
+  padding 25px 0 30px 0
   text-align left
   background-color black
   opacity 0
   transition opacity 0.25s
   > span
-    padding 0 default-margin
+    display block
+    padding computed-padding(11px, 40px) default-margin
     avant-garde()
     font-size 11px
-    line-height line-height
+    line-height 1
     color white
     overflow ellipsis
     cursor pointer
   > a
     display block
-    padding 0 default-margin
+    padding computed-padding(18px, 40px) default-margin
     garamond()
-    font-size font-size
-    line-height line-height
+    font-size 18px
+    line-height 1
     text-transform none
     letter-spacing 0
     color white
@@ -103,7 +109,7 @@ computed-margin(target-margin)
       background-color gray-darkest-color
   > hr
     height 2px
-    margin computed-margin(45px) default-margin
+    margin computed-padding(2px, 40px) default-margin
     background-color gray-darkest-color
 
   // Buffer area
@@ -131,3 +137,14 @@ computed-margin(target-margin)
     color white
     &:before
       border-top-color white
+
+// Persistent tooltip
+.hover-pulldown-static
+  @extends .hover-pulldown-menu
+  padding 25px 0
+  > span
+    @extends .hover-pulldown-menu > a
+    white-space normal
+
+    &:hover
+      background-color transparent
