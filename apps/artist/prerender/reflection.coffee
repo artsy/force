@@ -2,10 +2,11 @@ fs = require 'graceful-fs'
 request = require 'superagent'
 { resolve } = require 'path'
 cache = require '../../../lib/cache'
+{ REFLECTION_URL } = require '../../../config'
 
 module.exports = class Reflection
   url: ->
-    "http://artsy-reflection.s3.amazonaws.com/__reflection/forceartsynet#{@path}"
+    REFLECTION_URL + @path
 
   constructor: ({ @path }) -> #
 
