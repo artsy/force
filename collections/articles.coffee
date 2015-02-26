@@ -18,3 +18,7 @@ module.exports = class Articles extends Backbone.Collection
     featured = @featured()
     @reject (a) ->
       a in featured
+
+  sync: (method, model, options) ->
+    options.headers = 'X-Access-Token': ''
+    super
