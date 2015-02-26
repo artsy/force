@@ -105,6 +105,7 @@ kinds = require '../favorites_follows/kinds'
   res.locals.sd.PROFILE = profile.toJSON()
 
   fair.fetchPrimarySets
+    cache: true
     error: res.backboneError
     success: (primarySets) =>
       res.locals.primarySets = primarySets
