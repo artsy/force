@@ -1,6 +1,9 @@
-for link in artistLinks
+for link in featuredArtists.models
   li.home-featured-artist-link.grid-item
-    a( href=link.get('href') )
-      img( src=crop(link.imageUrl('large_rectangle'), { width: 298, height: 208 }) )
+    a( href= link.get('href') )
+      img(
+        src= link.cropUrlFor({ width: 298, height: 208 })
+        alt= link.get('title')
+      )
       h4= link.get('title')
       h5= link.get('subtitle')
