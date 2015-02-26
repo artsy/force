@@ -1,27 +1,29 @@
 _ = require 'underscore'
 benv = require 'benv'
-Backbone = require 'backbone'
 sinon = require 'sinon'
-HeroUnits = require '../../../collections/hero_units'
-FeaturedLinks = require '../../../collections/featured_links'
-CurrentUser = require '../../../models/current_user'
+Backbone = require 'backbone'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
+Items = require '../../../collections/items'
+HeroUnits = require '../../../collections/hero_units'
+CurrentUser = require '../../../models/current_user'
 
 describe 'HeroUnitView', ->
-
   before (done) ->
     benv.setup =>
-      benv.expose { $: benv.require 'jquery' }
+      benv.expose $: benv.require 'jquery'
+
+      featuredLinks = exploreSections = featuredArtists = featuredPosts =
+        new Items [fabricate 'featured_link'], item_type: 'FeaturedLink'
+      featuredShows = new Items [fabricate 'partner_show'], item_type: 'PartnerShow'
+
       benv.render resolve(__dirname, '../templates/index.jade'), {
-        heroUnits: new HeroUnits([
-          fabricate 'site_hero_unit'
-          fabricate 'site_hero_unit'
-          fabricate 'site_hero_unit'
-        ]).models
-        featuredLinks: new FeaturedLinks([
-          fabricate 'featured_link'
-        ]).models
+        heroUnits: new HeroUnits _.times 3, -> fabricate 'site_hero_unit'
+        featuredLinks: featuredLinks
+        exploreSections: exploreSections
+        featuredArtists: featuredArtists
+        featuredPosts: featuredPosts
+        featuredShows: featuredShows
         exploreSections: []
         sd: {}
         asset: (->)
@@ -73,16 +75,19 @@ describe 'Homepage init code', ->
 
   before (done) ->
     benv.setup =>
-      benv.expose { $: benv.require 'jquery' }
+      benv.expose $: benv.require 'jquery'
+
+      featuredLinks = exploreSections = featuredArtists = featuredPosts =
+        new Items [fabricate 'featured_link'], item_type: 'FeaturedLink'
+      featuredShows = new Items [fabricate 'partner_show'], item_type: 'PartnerShow'
+
       benv.render resolve(__dirname, '../templates/index.jade'), {
-        heroUnits: new HeroUnits([
-          fabricate 'site_hero_unit'
-          fabricate 'site_hero_unit'
-          fabricate 'site_hero_unit'
-        ]).models
-        featuredLinks: new FeaturedLinks([
-          fabricate 'featured_link'
-        ]).models
+        heroUnits: new HeroUnits _.times 3, -> fabricate 'site_hero_unit'
+        featuredLinks: featuredLinks
+        exploreSections: exploreSections
+        featuredArtists: featuredArtists
+        featuredPosts: featuredPosts
+        featuredShows: featuredShows
         exploreSections: []
         sd: {}
         asset: (->)
@@ -94,12 +99,7 @@ describe 'Homepage init code', ->
     benv.teardown()
 
   beforeEach ->
-    { @init, @HomeView } = @mod = benv.requireWithJadeify resolve(__dirname, '../client/index.coffee'), [
-      'featuredLinksTemplate'
-      'featuredShowsTemplate'
-      'featuredPostsTemplate'
-      'featuredArtistsTemplate'
-    ]
+    { @init, @HomeView } = @mod = benv.requireWithJadeify resolve(__dirname, '../client/index.coffee'), []
     global.sd = {}
     @mod.__set__ 'HeroUnitView', ->
     sinon.stub Backbone.history, 'start'
@@ -113,22 +113,7 @@ describe 'Homepage init code', ->
     Backbone.history.start.restore()
     @HomeView::renderArtworks.restore()
 
-  it 'renders featured show', ->
-    Backbone.sync.args[0][2].success [fabricate 'set']
-    _.last(Backbone.sync.args)[2].success [fabricate 'show', name: "Fooshow At Bar"]
-    $('body').html().should.containEql "Fooshow At Bar"
-
-  it 'renders featured posts', ->
-    Backbone.sync.args[1][2].success [fabricate 'set']
-    _.last(Backbone.sync.args)[2].success [fabricate 'post', title: "Retrospect on Andy Foobar"]
-    $('body').html().should.containEql "Retrospect on Andy Foobar"
-
-  it 'renders links', ->
-    Backbone.sync.args[1][2].success [fabricate 'set']
-    _.last(Backbone.sync.args)[2].success [fabricate 'post', title: "Retrospect on Andy Foobar"]
-    $('.home-featured-post-link').first().html().should.containEql '<a>'
-
-  xit 'renders featured artists'
+  it 'renders featured artists'
 
   it 'does not open the signup modal if passed a query param', ->
     mediator = @mod.__get__ 'mediator'

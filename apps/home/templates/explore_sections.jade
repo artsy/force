@@ -1,5 +1,5 @@
 #home-explore-sections.home-explore-sections
-  .grid-3-up: for section in exploreSections
+  .grid-3-up: for section in exploreSections.models
     .grid-item: a.home-explore-section( href= section.get('href') )
       .hes-image: img( src= section.imageUrl('medium_rectangle'), alt= section.get('title') )
       .hes-details

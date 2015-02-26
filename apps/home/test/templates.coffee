@@ -1,7 +1,7 @@
 jade = require 'jade'
 { resolve } = require 'path'
 fs = require 'graceful-fs'
-CurrentUser = require '../../../models/current_user'
+Backbone = require 'backbone'
 
 render = ->
   filename = resolve __dirname, "../templates/index.jade"
@@ -11,6 +11,14 @@ render = ->
   )
 
 describe 'Home template', ->
-
   it "doesn't choke on 0 hero units", ->
-    render()(heroUnits: [], sd: {}, asset: (->), featuredLinks: [], exploreSections: [])
+    render()(
+      sd: {}
+      asset: (->)
+      heroUnits: new Backbone.Collection
+      featuredLinks: new Backbone.Collection
+      featuredShows: new Backbone.Collection
+      featuredPosts: new Backbone.Collection
+      featuredArtists: new Backbone.Collection
+      exploreSections: new Backbone.Collection
+    )

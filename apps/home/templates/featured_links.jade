@@ -1,4 +1,4 @@
-for link in featuredLinks
+for link in featuredLinks.models
   li.home-top-feature-link
     a.htfl-image-link( href=link.get('href') )
       .htfl-image: img( src=link.imageUrl('small_rectangle'), alt=link.get('title') )
