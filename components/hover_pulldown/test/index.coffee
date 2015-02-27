@@ -1,7 +1,6 @@
 benv = require 'benv'
 sinon = require 'sinon'
 rewire = require 'rewire'
-activatePulldowns = rewire '../index'
 
 describe 'activatePulldowns', ->
   describe '#activatePulldown', ->
@@ -23,6 +22,7 @@ describe 'activatePulldowns', ->
 
     describe 'touch devices', ->
       before ->
+        activatePulldowns = rewire '../index'
         activatePulldowns.__set__ 'isTouchDevice', -> true
         activatePulldowns()
 
@@ -52,6 +52,7 @@ describe 'activatePulldowns', ->
 
     describe 'non-touch devices', ->
       before ->
+        activatePulldowns = rewire '../index'
         activatePulldowns.__set__ 'isTouchDevice', -> false
         activatePulldowns()
 
@@ -81,6 +82,7 @@ describe 'activatePulldowns', ->
       benv.teardown()
 
     beforeEach ->
+      activatePulldowns = rewire '../index'
       activatePulldowns.__set__ 'Cookies', @Cookies = set: sinon.stub(), get: sinon.stub()
       activatePulldowns()
 
