@@ -14,7 +14,7 @@ class AuctionReminderModal extends Backbone.View
 
   events: ->
     'click .modal-close': 'close'
-    'click .auction-reminder-container': 'trackAnalytics'
+    'click .auction-reminder-container': 'clickAuctionReminder'
 
   initialize: ({ @auction, @auctionImage }) ->
 
@@ -63,7 +63,8 @@ class AuctionReminderModal extends Backbone.View
     @$Clock.addClass 'is-fade-in'
     @clock.start()
 
-  trackAnalytics: ->
+  clickAuctionReminder: ->
+    Cookies.set('closeAuctionReminder', true)
     analytics.snowplowStruct 'auction_reminder', 'click', @auction.get('id'), 'feature'
 
 class AuctionClock extends ClockView
