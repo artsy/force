@@ -46,10 +46,8 @@ class AuctionReminderModal extends Backbone.View
       _.delay(activate,5000)
 
   close: (cb) ->
-    
-    @$('.modal-dialog').css
-      bottom: "-300px"
-      transition: "all 600ms cubic-bezier(0.065, -0.010, 0.150, 1.130)"
+    @$('.modal-dialog').removeClass('is-spring-in')
+    @$('.modal-dialog').addClass('is-close-out')
 
     Cookies.set('closeAuctionReminder', true)
 
