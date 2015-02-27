@@ -8,6 +8,6 @@
 module.exports = (req, res, next) ->
   protocol = req.get('X-Forwarded-Proto') or req.protocol
   if protocol isnt 'https' and parse(APP_URL).protocol is 'https:'
-    res.redirect APP_URL + req.url
+    res.redirect 301, APP_URL + req.url
   else
     next()

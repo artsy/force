@@ -12,13 +12,13 @@ describe 'Ensure SSL middleware', ->
   it 'redirects Heroku http requests to https', ->
     @req.get = -> 'http:'
     ensureSSL @req, @res
-    @res.redirect.args[0][0].should.equal 'https://foobart.sy/terms'
+    @res.redirect.args[0].should.eql [301, 'https://foobart.sy/terms']
 
   it 'redirects normal http requests to https', ->
     @req.get = -> ''
     @req.protocol = 'http:'
     ensureSSL @req, @res, ->
-    @res.redirect.args[0][0].should.equal 'https://foobart.sy/terms'
+    @res.redirect.args[0].should.eql [301, 'https://foobart.sy/terms']
 
   it 'does not redirect https to https causing an infinite loop', ->
     @req.get = -> 'https'
