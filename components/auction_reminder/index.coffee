@@ -20,7 +20,7 @@ class AuctionReminderModal extends Backbone.View
     if window.location.pathname == @auction.href()
       return
     # Reminder only shows if 24 hours until end
-    if moment(@auction.get('end_at')).diff(moment(),'hours') > 230
+    if moment(@auction.get('end_at')).diff(moment(),'hours') > 23
       return
 
     @$container = $('body')
@@ -37,16 +37,11 @@ class AuctionReminderModal extends Backbone.View
     @setupClock()
     @$container.append @$el
 
-    console.log Cookies.get('firstAuctionReminderSeen')
-
     if Cookies.get('firstAuctionReminderSeen')
-      console.log "seen"
       @$('.modal-dialog').css
         bottom: "40px"
     else
-      console.log "unseen"
       Cookies.set('firstAuctionReminderSeen', true)
-      #Activate after 5 seconds
       activate = => @$dialog.addClass("is-spring-in")
       _.delay(activate,5000)
 
