@@ -65,6 +65,10 @@ computed-padding(font-size, target-line-height)
         opacity 1
         visibility visible
 
+  &[data-state='static'][data-mode='hover']
+    .hover-pulldown-menu
+      transition-delay 0.25s
+
   &[data-anchor='right']
     .hover-pulldown-menu
     .hover-pulldown-static
@@ -145,6 +149,10 @@ computed-padding(font-size, target-line-height)
   > span
     @extends .hover-pulldown-menu > a
     white-space normal
-
+    line-height 1.2
+    transition opacity 0.25s
     &:hover
       background-color transparent
+  &.is-fade-out
+    > span
+      opacity 0
