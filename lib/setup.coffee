@@ -52,6 +52,7 @@ artsyError = require 'artsy-error-handler'
 cache = require './cache'
 timeout = require 'connect-timeout'
 bucketAssets = require 'bucket-assets'
+splitTestMiddleware = require '../components/split_test/middleware'
 
 # Setup sharify constants & require dependencies that use sharify data
 sharify.data =
@@ -190,6 +191,7 @@ module.exports = (app) ->
   app.use logger('dev')
   app.use unsupportedBrowserCheck
   app.get '/robots.txt', robotsMiddleware
+  app.use splitTestMiddleware
 
   # Mount apps
   app.use require "../apps/home"

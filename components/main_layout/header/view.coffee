@@ -10,6 +10,7 @@ analytics = require '../../../lib/analytics.coffee'
 FlashMessage = require '../../flash/index.coffee'
 PublishModal = require '../../publish_modal/view.coffee'
 Profile = require '../../../models/profile.coffee'
+activatePulldowns = require '../../hover_pulldown/index.coffee'
 
 module.exports = class HeaderView extends Backbone.View
   events:
@@ -41,6 +42,8 @@ module.exports = class HeaderView extends Backbone.View
 
     @checkRemoveWelcomeHeader()
     @checkForFlash()
+
+    activatePulldowns()
 
   checkRemoveWelcomeHeader: =>
     if sd.CURRENT_USER or (@$window.scrollTop() > @$welcomeHeader.height())

@@ -58,6 +58,9 @@ module.exports = class ZigZagBanner extends Backbone.View
         @$two.addClass 'is-in'
         _.delay =>
           @$three.addClass 'is-in'
+          _.delay =>
+            @$el.addClass 'is-done'
+          , @segmentTransitionLength
         , @segmentTransitionLength
       , @segmentTransitionLength
 

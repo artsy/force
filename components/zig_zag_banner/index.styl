@@ -13,6 +13,10 @@ two-mask-width = 65px
 three-width = 260px
 three-height = 72px
 
+close-size = 50px
+close-border-width = 3px
+message-padding = ((three-height - close-size) / 2)
+
 .zig-zag-banner
   position absolute
   top 0
@@ -26,8 +30,12 @@ three-height = 72px
   &.zig-zag-backwards
     transform rotateY(180deg)
     .zzb-message
-      width 170px
       transform rotateY(180deg)
+      padding 0 message-padding 0 (message-padding * 1.5)
+
+  &.is-done
+    .zzb-message
+      opacity 1
 
 .zzb-one
 .zzb-two
@@ -94,28 +102,36 @@ three-height = 72px
 // Banner content
 .zzb-message
   position absolute
-  top 13px
+  top 0
   bottom @top
-  right 30px
-  left 70px
-  width 210px
+  left (((three-height - close-size) / 2) + close-size)
+  right 0
+  padding 0 (message-padding * 1.5) 0 message-padding
   garamond()
   text-transform none
   text-align left
   color white
-  line-height 1.25
+  line-height 1.1
   font-size 16px
+  white-space normal
+  letter-spacing 0
+  opacity 0
+  transition opacity 0.5s
+
 .zzb-close
   display block
   position absolute
-  left 11px
-  top 50%
-  transform translateY(-50%)
-  padding 7px 10px
+  top ((three-height - close-size) / 2)
+  left @top
+  width close-size
+  height close-size
   background-color white
   color purple-color
-  font-size 26px
-  border 3px solid purple-color
+  border close-border-width solid purple-color
   cursor pointer
+  text-align center
   &:hover
     border-color white
+  > .icon-close
+    font-size 26px
+    line-height (close-size - (close-border-width * 2))
