@@ -29,9 +29,17 @@ dismissStatic = (e) ->
   if cookie = $el.data 'cookie'
     persistCount cookie, dismissalLimit
 
-  _.delay ->
+  if isTouchDevice()
     $el.removeAttr 'data-state'
-  , transitionLength
+  else
+    targetHeight = $el.find('.hover-pulldown-menu').outerHeight()
+
+    ($static = $el.find('.hover-pulldown-static'))
+      .addClass('is-fade-out')
+      .animate { height: targetHeight }, transitionLength, ->
+        _.delay ->
+          $el.removeAttr 'data-state'
+        , transitionLength
 
 tickDismissal = (cookie) ->
   return unless cookie?
