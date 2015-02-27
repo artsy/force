@@ -61,12 +61,15 @@
     border 1px solid gray-lighter-color
     right 40px
     bottom -300px
-    transition all 400ms cubic-bezier(0.195, 0.725, 0.580, 1.110)
     prevent-content-shift()
-
-  .modal-dialog.is-active
+    
+    &.is-spring-in
       bottom 40px
-      transition bottom 0.3s
+      transition all 500ms cubic-bezier(0.065, -0.010, 0.150, 1.130)
+    
+    &.is-close-out
+      bottom -300px
+      transition all 600ms cubic-bezier(0.065, -0.010, 0.150, 1.130)
     
   .modal-close
     position absolute
@@ -77,9 +80,4 @@
     opacity 0.15
     z-index 2
     prevent-content-shift()
-    &:hover
-      opacity 1
-    > i
-      font-size 26px
-      line-height @font-size
-
+    

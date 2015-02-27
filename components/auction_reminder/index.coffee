@@ -37,12 +37,18 @@ class AuctionReminderModal extends Backbone.View
     @setupClock()
     @$container.append @$el
 
-    #Activate after 5 seconds
-    activate = => @$dialog.addClass("is-active")
-    _.delay(activate,5000)
+    if Cookies.get('firstAuctionReminderSeen')
+      @$('.modal-dialog').css
+        bottom: "40px"
+    else
+      Cookies.set('firstAuctionReminderSeen', true)
+      activate = => @$dialog.addClass("is-spring-in")
+      _.delay(activate,5000)
 
   close: (cb) ->
-    @$el.remove()
+    @$('.modal-dialog').removeClass('is-spring-in')
+    @$('.modal-dialog').addClass('is-close-out')
+
     Cookies.set('closeAuctionReminder', true)
 
   setupClock: ->
