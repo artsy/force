@@ -23,7 +23,7 @@ class AuctionReminderModal extends Backbone.View
     if window.location.pathname == @auction.href()
       return
     # Reminder only shows if 24 hours until end
-    if moment(@auction.get('end_at')).diff(moment(),'hours') > 230
+    if moment(@auction.get('end_at')).diff(moment(),'hours') > 23
       return
 
     @$container = $('body')
