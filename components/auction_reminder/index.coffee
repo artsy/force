@@ -22,7 +22,7 @@ class AuctionReminderModal extends Backbone.View
     if window.location.pathname == @auction.href()
       return
     # Reminder only shows if 24 hours until end
-    if moment(@auction.get('end_at')).diff(moment(),'hours') > 23
+    if moment(@auction.get('end_at')).diff(moment(),'hours') > 230
       return
 
     @$container = $('body')
@@ -63,9 +63,11 @@ class AuctionReminderModal extends Backbone.View
     @$Clock.addClass 'is-fade-in'
     @clock.start()
 
-  clickAuctionReminder: ->
+  clickAuctionReminder: (e)->
+    e.preventDefault()
     Cookies.set('closeAuctionReminder', true)
     analytics.snowplowStruct 'auction_reminder', 'click', @auction.get('id'), 'feature'
+    location.assign(@auction.href())
 
 class AuctionClock extends ClockView
 
