@@ -8,13 +8,14 @@ ClockView = require '../clock/view.coffee'
 { API_URL } = require('sharify').data
 Cookies = require 'cookies-js'
 analytics = require '../../lib/analytics.coffee'
+track = analytics.track
 auctionTemplate = -> require('./template.jade') arguments...
 
 class AuctionReminderModal extends Backbone.View
 
   events: ->
     'click .modal-close': 'close'
-    'click .auction-reminder-container': 'trackAnalytics'
+    'click .auction-reminder-container': 'clickAuctionReminder'
 
   initialize: ({ @auction, @auctionImage }) ->
 
@@ -52,7 +53,7 @@ class AuctionReminderModal extends Backbone.View
     @$('.modal-dialog').addClass('is-close-out')
 
     Cookies.set('closeAuctionReminder', true)
-
+    track.click 'Closed Auction Reminder'
     analytics.snowplowStruct 'auction_reminder', 'dismiss', @auction.get('id'), 'feature'
 
   setupClock: ->
@@ -63,8 +64,12 @@ class AuctionReminderModal extends Backbone.View
     @$Clock.addClass 'is-fade-in'
     @clock.start()
 
-  trackAnalytics: ->
+  clickAuctionReminder: (e)->
+    e.preventDefault()
+    Cookies.set('closeAuctionReminder', true)
+    track.click 'Clicked Auction Reminder'
     analytics.snowplowStruct 'auction_reminder', 'click', @auction.get('id'), 'feature'
+    location.assign(@auction.href())
 
 class AuctionClock extends ClockView
 
