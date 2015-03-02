@@ -59,7 +59,7 @@ module.exports = class Carousel
       error: dfd.reject
       success: (shows) =>
         Q.allSettled(
-          _.map(shows.filter(@isValidShow), @fetchInstallShotsForShow)
+          _.compact _.map(shows.filter(@isValidShow), @fetchInstallShotsForShow)
         ).then((states) =>
           dfd.resolve _.take(worth(states), @installShotsLimit)
         ).done()
@@ -67,7 +67,7 @@ module.exports = class Carousel
     dfd.promise
 
   isValidShow: (show) ->
-    # Has some installation shots
+    # Has some installation shots ... maybe.
     show.get('images_count') > 0
 
   fetchInstallShotsForShow: (show) =>
@@ -80,6 +80,9 @@ module.exports = class Carousel
       url: "#{API_URL}/api/v1/partner_show/#{show.id}/images"
       error: dfd.reject
       success: (shots, response, options) =>
-        dfd.resolve _.extend(shots.first().attributes, title: show.get('title'), href: show.href())
+        if shots.length
+          dfd.resolve _.extend(shots.first().attributes, title: show.get('title'), href: show.href())
+        else
+          dfd.resolve()
 
     dfd.promise

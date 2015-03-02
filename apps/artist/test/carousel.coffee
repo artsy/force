@@ -59,3 +59,23 @@ describe 'Carousel', ->
 
       _.map Backbone.sync.args[1..3], (args) ->
         args[2].success [fabricate 'show_install_shot']
+
+  describe '#fetchInstallShotsForShow', ->
+    it 'is defensive against bad data', (done) ->
+      @carousel.fetchInstallShotsForShow(fabricate 'show').then (shot) ->
+        _.isUndefined(shot).should.be.true
+        done()
+      Backbone.sync.args[0][2].success []
+
+  describe '#fetchIconicWorks', ->
+    it 'fetchs artworks and returns carousel figures', (done) ->
+      @carousel.fetchIconicWorks().then (shots) ->
+        shots.should.have.lengthOf 3
+        shots[0].title.should.equal 'Skull'
+        done()
+
+      Backbone.sync.args[0][2].success [
+        fabricate 'artwork'
+        fabricate 'artwork'
+        fabricate 'artwork'
+      ]
