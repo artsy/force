@@ -13,7 +13,7 @@ describe 'Fair Organization routes', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    @fair = new Fair fabricate 'fair'
+    @fair = new Fair fabricate 'fair', start_at: moment().subtract(1, 'day')
     @req = { params: { id: 'the-armory-show-temp' }, query: {} }
     @res =
       render: sinon.stub()
@@ -28,11 +28,8 @@ describe 'Fair Organization routes', ->
     Backbone.sync.restore()
 
   describe '#all', ->
-
-    xit 'next is called when a fair has already opened', ->
-      # fabricated fair has start_at set to `new Date`
-      # hence fabricated fair should have already 'opened'
-      @fair.hasOpened().should.be.ok
+    it 'next is called when a fair has already opened', ->
+      @fair.hasOpened().should.be.true
       routes.overview @req, @res, (next = sinon.stub())
       next.called.should.be.ok
 
@@ -43,9 +40,8 @@ describe 'Fair Organization routes', ->
       next.called.should.not.be.ok
 
   describe '#overview', ->
-
     it 'nexts to the fair if a microsite param is added', ->
       @req.query.microsite = true
       routes.overview @req, @res, @next
-      @next.called.should.be.ok
-      @res.render.called.should.not.be.ok
+      @next.called.should.be.true
+      @res.render.called.should.be.false
