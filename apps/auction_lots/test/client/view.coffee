@@ -44,7 +44,7 @@ describe 'Auction results client-side code', ->
 
       @view = new AuctionResultsView { el: $('body'), model: new Artist fabricate 'artist' }
 
-  describe '#zoomImage', ->
+  xdescribe '#zoomImage', ->
     it 'should instantiate a new ZoomView when a thumbnail is clicked', ->
       @zoomStub.called.should.not.be.ok
       @view.$('.auction-lot-image-zoom').click()
