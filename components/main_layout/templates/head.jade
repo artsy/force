@@ -6,7 +6,7 @@ link( rel='icon', type='image/png', href=asset('/images/favicon.ico') )
 link( rel='search', type='application/opensearchdescription+xml', href=asset('/images/opensearch.xml'), title='Artsy' )
 
 meta( name='msapplication-config', content=asset('/images/browserconfig.xml') )
-if sd.IS_RESPONSIVE && !userAgent.match('iPad')
+if sd.IS_RESPONSIVE && (userAgent && !userAgent.match('iPad'))
   meta( name='viewport', content='width=device-width, initial-scale=1' )
 else
   meta( name='viewport', content='user-scalable=1, width=1300' )
