@@ -4,8 +4,8 @@ Profile = require '../../../models/profile'
 { fabricate } = require 'antigravity'
 { resolve } = require 'path'
 
-render = ->
-  filename = resolve __dirname, "../templates/index.jade"
+render = (template) ->
+  filename = resolve __dirname, template
   jade.compile(
     fs.readFileSync(filename),
     { filename: filename }
@@ -14,7 +14,7 @@ render = ->
 describe 'Main layout template', ->
 
   it 'includes the sharify script', ->
-    render()(sd: {}, sharify: { script: -> 'foobar' }, asset: (->)).should.containEql 'foobar'
+    render('../templates/index.jade')(sd: {}, sharify: { script: -> 'foobar' }, asset: (->)).should.containEql 'foobar'
 
 describe 'Meta tags', ->
 
@@ -36,3 +36,8 @@ describe 'Meta tags', ->
       @html.should.containEql "<meta property=\"og:url\" content=\"#{@sd.APP_URL}/cool-profile/info"
       @html.should.containEql "<meta property=\"og:title\" content=\"#{@profile.metaTitle()}"
       @html.should.containEql "<meta property=\"og:description\" content=\"#{@profile.metaDescription()}"
+
+describe 'Head template', ->
+  describe 'IS_RESPONSIVE', ->
+    it 'renders whether or not there is a user agent', ->
+      render('../templates/head.jade')(sd: { IS_RESPONSIVE: true }, asset: (->))
