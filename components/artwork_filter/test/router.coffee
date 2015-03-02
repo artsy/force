@@ -15,9 +15,15 @@ describe 'ArtworkFilterRouter', ->
       @ArtworkFilterRouter = rewire '../router'
       ArtworkFilterView = benv.requireWithJadeify resolve(__dirname, '../view'), ['template', 'filterTemplate', 'headerTemplate']
       @ArtworkFilterRouter.__set__ 'ArtworkFilterView', ArtworkFilterView
+      @SplitTest = require '../../split_test/split_test.coffee'
+      @SplitTest.__set__ 'Cookies', sinon.stub()
+      # @setCookieStub = sinon.stub(@SplitTest::,'Cookies')
+      @setStub = sinon.stub(@SplitTest::, 'outcome')
       done()
 
   after ->
+    @setStub.restore()
+    @setCookieStub.restore()
     benv.teardown()
 
   beforeEach ->

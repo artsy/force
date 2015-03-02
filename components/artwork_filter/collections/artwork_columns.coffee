@@ -9,7 +9,7 @@ class Params extends Backbone.Model
     if splitTest('artwork_column_sort').outcome() is 'merchandisability'
       { size: 9, page: 1, sort: '-merchandisability' }
     else
-      { size: 9, page: 1, sort: '-date_added' }
+      { size: 9, page: 1 }
 
   next: ->
     @set 'page', @get('page') + 1
@@ -32,7 +32,7 @@ module.exports = class ArtworkColumns extends Artworks
     @xhr = Artworks::fetch.call this, options
 
   fetchFromBeginning: (options = {}) ->
-    @params.clear().set(@params.defaults)
+    @params.clear().set(@params.defaults())
     @fetch options
 
   nextPage: (options = {}) ->
