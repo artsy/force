@@ -1,4 +1,4 @@
-ArticlesFeedView = require '.../../../components/articles_feed/view.coffee'
+ArticlesFeedView = require '../../../components/articles_feed/view.coffee'
 Articles = require '../../../collections/articles.coffee'
 
 module.exports = class ArticlesAdapter
