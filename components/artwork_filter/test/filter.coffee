@@ -1,18 +1,27 @@
 _ = require 'underscore'
+benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 Artist = require '../../../models/artist'
 { fabricate } = require 'antigravity'
-Filter = require '../models/filter'
 
 describe 'Filter', ->
+
+  before (done) ->
+    benv.setup =>
+      @Filter = require '../models/filter'
+      done()
+
+  after ->
+    benv.teardown()
+
   it 'requires a model', ->
-    (=> new Filter).should.throw 'Requires a model'
+    (=> new @Filter).should.throw 'Requires a model'
 
   beforeEach ->
     sinon.stub(Backbone, 'sync').yieldsTo 'success', fabricate 'artist_filtered_search_suggest'
     artist = new Artist fabricate('artist', id: 'louise-bourgeois')
-    @filter = new Filter model: artist
+    @filter = new @Filter model: artist
 
   afterEach ->
     Backbone.sync.restore()
@@ -69,8 +78,8 @@ describe 'Filter', ->
 
   describe '#toggle', ->
     beforeEach ->
-      sinon.stub Filter::, 'by'
-      sinon.stub Filter::, 'deselect'
+      sinon.stub @Filter::, 'by'
+      sinon.stub @Filter::, 'deselect'
 
     afterEach ->
       @filter.by.restore()
