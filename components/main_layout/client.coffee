@@ -90,7 +90,7 @@ setupJquery = ->
     'X-ACCESS-TOKEN': sd.CURRENT_USER?.accessToken
 
 setupAuctionReminder = ->
-  unless Cookies.get('closeAuctionReminder')? || window.location.pathname == '/user/edit'
-    new AuctionReminderView()
+  if sd.CHECK_FOR_AUCTION_REMINDER and !(Cookies.get('closeAuctionReminder')? or window.location.pathname is '/user/edit')
+    new AuctionReminderView
 
 setupAnalytics()

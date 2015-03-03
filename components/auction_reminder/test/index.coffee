@@ -34,6 +34,11 @@ describe 'AuctionReminder', ->
     it 'returns an error if there are no auctions', ->
       Backbone.sync.args[0][2].error()
 
+    it 'does not error when there are no sales', ->
+      Backbone.sync.callCount.should.equal 1
+      Backbone.sync.args[0][2].success []
+      Backbone.sync.callCount.should.equal 1
+
 describe 'AuctionReminderModal', ->
 
 
@@ -61,7 +66,7 @@ describe 'AuctionReminderModal', ->
         auctionImage: @auctionImage
       )
       _.isUndefined(view.$container).should.equal false
-    
+
     it 'displays if there are less than 24 hours until the end, part two', ->
       auction = new Sale fabricate 'sale', { end_at: moment().add(23,'hours').add(59,'minutes') }
       view = new @AuctionReminderModal(

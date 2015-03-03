@@ -69,6 +69,7 @@ module.exports =
   POST_TO_ARTICLE_SLUGS: []
   HEAPDUMP: false
   TESTING_MEMORY_LEAK: false
+  CHECK_FOR_AUCTION_REMINDER: false
 
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or

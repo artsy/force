@@ -35,7 +35,7 @@ class AuctionReminderModal extends Backbone.View
       html auctionTemplate
         auction: @auction
         auctionImage: @auctionImage
-    
+
     @$dialog = @$('.modal-dialog')
     @setupClock()
     @$container.append @$el
@@ -99,19 +99,18 @@ module.exports = (callBack) ->
     url: "#{API_URL}/api/v1/sales?is_auction=true&published=true&live=true"
     error: callBack
     success: (sales) =>
-      @featuredSale = sales.models[0]
-      saleArtworks = new SaleArtworks
-      saleArtworks.fetch
-        url: "#{API_URL}/api/v1/sale/#{@featuredSale.get('id')}/sale_artworks"
-        error: callBack
-        success: (artworks) =>
-          featuredArtworkId = artworks.models[0].id
-          featuredArtwork = new Artwork id: featuredArtworkId
-          featuredArtwork.fetch
-            error: callBack
-            success: (artwork) =>
-              @featuredImage = artwork.defaultImageUrl()
-              @auctionModal = new AuctionReminderModal(
-                auction: @featuredSale
-                auctionImage: @featuredImage
-              )
+      if (@featuredSale = sales.first())?
+        saleArtworks = new SaleArtworks
+        saleArtworks.fetch
+          url: "#{API_URL}/api/v1/sale/#{@featuredSale.get('id')}/sale_artworks"
+          error: callBack
+          success: (artworks) =>
+            featuredArtworkId = artworks.models[0].id
+            featuredArtwork = new Artwork id: featuredArtworkId
+            featuredArtwork.fetch
+              error: callBack
+              success: (artwork) =>
+                @featuredImage = artwork.defaultImageUrl()
+                @auctionModal = new AuctionReminderModal
+                  auction: @featuredSale
+                  auctionImage: @featuredImage
