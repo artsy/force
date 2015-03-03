@@ -61,7 +61,7 @@ describe 'AuctionReminderModal', ->
         auctionImage: @auctionImage
       )
       _.isUndefined(view.$container).should.equal false
-    
+
     it 'displays if there are less than 24 hours until the end, part two', ->
       auction = new Sale fabricate 'sale', { end_at: moment().add(23,'hours').add(59,'minutes') }
       view = new @AuctionReminderModal(
