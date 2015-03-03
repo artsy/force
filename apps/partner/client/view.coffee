@@ -7,7 +7,12 @@ Profile = require '../../../models/profile.coffee'
 ContactView = require './contact.coffee'
 CollectionView = require './collection.coffee'
 ShowsView = require './shows.coffee'
-PostsView = require './posts.coffee'
+
+PostsView = if 'Articles' in (sd.CURRENT_USER?.lab_features or [])
+  require './articles.coffee'
+else
+  require './posts.coffee'
+
 ArtistsView = require './artists.coffee'
 OverviewView = require './overview.coffee'
 tablistTemplate = -> require('../templates/tablist.jade') arguments...

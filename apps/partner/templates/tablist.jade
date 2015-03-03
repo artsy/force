@@ -1,7 +1,11 @@
 - var id = profile.get('id');
 
+- function hasArticles() {
+-   return sd && sd.CURRENT_USER && sd.CURRENT_USER.lab_features && sd.CURRENT_USER.lab_features.indexOf('Articles') != -1;
+- }
+
 - function transform(section) {
--   var map = { collection: 'works' };
+-   var map = { collection: 'works', posts: (hasArticles() ? 'articles' : 'posts') };
 -   return map[section] || section;
 - }
 
