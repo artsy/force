@@ -2,10 +2,10 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 Cookies = require 'cookies-js'
 sd = require('sharify').data
-{ getProperty, setProperty, unsetProperty } = require '../../lib/analytics.coffee'
+{ getProperty, setProperty, unsetProperty, setDimension } = require '../../lib/analytics.coffee'
 
 module.exports = class SplitTest
-  constructor: ({ @key, @outcomes, @edge }) ->
+  constructor: ({ @key, @outcomes, @edge, @dimension }) ->
     return throw new Error('Your probability values for outcomes must add up to 1.0') if @sum() isnt 1
 
   _key: ->
@@ -15,6 +15,7 @@ module.exports = class SplitTest
     Cookies.set @_key(), outcome
     unsetProperty @_key() # Force unset
     setProperty _.tap({}, (hsh) => hsh[@_key()] = outcome)
+    setDimension @dimension, outcome if @dimension?
     outcome
 
   get: ->
