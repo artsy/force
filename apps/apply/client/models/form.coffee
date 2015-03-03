@@ -8,6 +8,21 @@ module.exports = class Form extends Backbone.Model
   defaults:
     oid: '00DC0000000PWQJ'
 
+  # There are others... but this is just so
+  # we can validate any attributes
+  # coming in over a query string
+  valid: [
+    'company'
+    'email'
+    'first_name'
+    'last_name'
+    'phone'
+    'title'
+  ]
+
+  @validate: (obj) ->
+    _.pick obj, @::valid
+
   save: (attrs, options = {}) ->
     attrs = _.extend {}, @attributes, attrs
     _.each attrs, (val, key) ->

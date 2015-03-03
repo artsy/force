@@ -19,3 +19,13 @@ describe 'Form', ->
       foo: 'bar'
       bar: 'baz;qux;'
     }
+
+  it 'validates attributes', ->
+    Form.validate({
+      first_name: 'foo'
+      last_name: 'bar'
+      utm_whatever: 'baz'
+    }).should.eql {
+      first_name: 'foo'
+      last_name: 'bar'
+    }
