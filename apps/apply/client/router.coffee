@@ -1,5 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
+qs = require 'querystring'
 State = require './models/state.coffee'
 Form = require './models/form.coffee'
 Step1View = require './views/step1.coffee'
@@ -19,8 +20,12 @@ module.exports = class PartnerApplicationRouter extends Backbone.Router
   initialize: ->
     @$el = $('#partner-application-page')
     @state = new State
-    @form = new Form
+    @form = new Form @bootstrap()
     @listenTo @state, 'change:mode', @updateType
+
+  bootstrap: ->
+    data = qs.parse(location.search.replace /^\?/, '')
+    Form.validate data
 
   updateType: (state, type) ->
     @form.set '00NC0000004hoNU', state.value('type')
