@@ -18,6 +18,7 @@ module.exports = class Form extends Backbone.Model
     'last_name'
     'phone'
     'title'
+    'URL'
   ]
 
   @validate: (obj) ->
