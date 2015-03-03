@@ -43,5 +43,7 @@ module.exports = class SplitTest
 
   outcome: ->
     outcome = if (@admin() and @edge?) then @edge else @get()
-    return outcome if outcome
-    @set @toss()
+    if outcome?
+      @set outcome
+    else
+      @set @toss()
