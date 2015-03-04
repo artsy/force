@@ -18,6 +18,7 @@ module.exports =
 
   redesigned_header:
     key: 'redesigned_header'
+    dimension: 'dimension2'
     outcomes:
       old: 0.5
       new: 0.5

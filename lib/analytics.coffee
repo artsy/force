@@ -175,6 +175,11 @@ module.exports.unsetProperty = (property) =>
 module.exports.setProperty = (hash) =>
   mixpanel?.register_once?(hash)
 
+# These need to be set up individually before using. Read this non-sense:
+# https://developers.google.com/analytics/devguides/platform/customdimsmets
+module.exports.setDimension = (index, value) ->
+  ga? 'set', index, value
+
 # Conduct an A/B test by using this helper to determine what path to take.
 # Returns true if the user is in the new feature, returns false if the user
 # is testing the old feature.
