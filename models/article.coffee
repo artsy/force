@@ -21,15 +21,17 @@ module.exports = class Article extends Backbone.Model
     # Deferred require
     Articles = require '../collections/articles.coffee'
     footerArticles = new Articles
-    Q.all(
+    Q.all([
       @fetch()
-      footerArticles.fetch
+      footerArticles.fetch(
         cache: true
         data:
-          # Artsy Editorial. TODO: Smart footer data.
+          # Tier 1 Artsy Editorial articles. TODO: Smart footer data.
           author_id: '503f86e462d56000020002cc'
           published: true
-    ).fail((r) -> options.error null, r).then =>
+          tier: 1
+      )
+    ]).fail((r) -> options.error null, r).then =>
       slideshowArtworks = @slideshowArtworks()
       Q.all(_.compact _.flatten [
         slideshowArtworks?.map (a) =>
