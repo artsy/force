@@ -4,13 +4,13 @@ moment = require 'moment'
 Sales = require '../../collections/sales.coffee'
 Artwork = require '../../models/artwork.coffee'
 SaleArtworks = require '../../collections/sale_artworks.coffee'
-ClockView = require '../clock/view.coffee'
 { API_URL } = require('sharify').data
 Cookies = require 'cookies-js'
 analytics = require '../../lib/analytics.coffee'
 track = analytics.track
 auctionTemplate = -> require('./template.jade') arguments...
 Sale = require '../../models/sale.coffee'
+AuctionClock = require './clock/view.coffee'
 
 class AuctionReminderModal extends Backbone.View
 
@@ -24,9 +24,15 @@ class AuctionReminderModal extends Backbone.View
     if window.location.pathname == @auctionId
       return
     # Reminder only shows if 24 hours until end
-    diff = moment(@auctionEndat.diff(moment(),'hours')
+    diff = moment(@auctionEndat).diff(moment(),'hours')
     if diff > 23
       return
+
+    $('auction-reminder-clock').on 'auctionClosed'
+    @calculateOffsetEndAtMoment (offsetEndAtMoment) =>
+      @offsetEndAtMoment = offsetEndAtMoment
+      debugger
+      console.log "The end at from the callback is " + @offsetEndAtMoment
 
     @$container = $('body')
     @open()
@@ -38,7 +44,6 @@ class AuctionReminderModal extends Backbone.View
         auctionId: @auctionId
         auctionImage: @auctionImage
         auctionName: @auctionName
-
     @$dialog = @$('.modal-dialog')
     @setupClock()
     @$container.append @$el
@@ -47,11 +52,12 @@ class AuctionReminderModal extends Backbone.View
       $('.modal-dialog').removeClass('is-spring-in')
       $('.modal-dialog').addClass('is-close-out')
 
+    # Transition based on if they've seen the reminder already
     if Cookies.get('firstAuctionReminderSeen')
       @$('.modal-dialog').css
         bottom: "40px"
     else
-      cookieValue = "#{@auction.get('name')}|#{@auction.id}|#{@auctionImage}|#{@auction.get('end_at')}"
+      cookieValue = "#{@auctionName}|#{@auctionId}|#{@auctionImage}|#{@auctionEndat}"
       Cookies.set('firstAuctionReminderSeen', cookieValue)
       activate = => @$dialog.addClass("is-spring-in")
       _.delay(activate,5000)
@@ -64,11 +70,21 @@ class AuctionReminderModal extends Backbone.View
     track.click 'Closed Auction Reminder'
     analytics.snowplowStruct 'auction_reminder', 'dismiss', @auctionId, 'feature'
 
+  calculateOffsetEndAtMoment: (callback) ->
+    new Backbone.Model().
+      fetch
+        url: "#{sd.API_URL}/api/v1/system/time"
+        success: (model) =>
+          offset = moment().diff(model.get('time'))
+          endat = moment(@auctionEndat).add(offset)
+          console.log "the endat in the callback is " + endat
+          callback endat
+
   setupClock: ->
+    console.log @offsetEndAtMoment
     @clock = new AuctionClock
-      modelName: 'Auction'
-      model: @auctionId
       el: @$Clock = @$('.auction-reminder-clock')
+      auctionEndat: @offsetEndAtMoment
     @$Clock.addClass 'is-fade-in'
     @clock.start()
 
@@ -78,43 +94,6 @@ class AuctionReminderModal extends Backbone.View
     track.click 'Clicked Auction Reminder'
     analytics.snowplowStruct 'auction_reminder', 'click', @auctionId, 'feature'
     location.assign(@auctionId)
-
-class AuctionClock extends ClockView
-
-  UNIT_MAP =
-    'hours': 'HRS'
-    'minutes': 'MIN'
-    'seconds': 'SEC'
-
-  start: ->
-    @model.calculateOffsetTimes
-      success: =>
-        @model.on('change:clockState', ->
-          clearInterval @interval
-          $('.auction-reminder-clock').trigger('auctionEnded')
-        )
-        @render()
-
-  render: =>
-    switch @model.get('clockState')
-      when 'open'
-        @toDate = @model.get 'offsetEndAtMoment'
-      when 'closed'
-        return
-    @renderClock()
-    @interval = setInterval @renderClock, 1000
-
-  renderClock: =>
-    @model.updateState()
-    @$('.clock-value').html _.compact((for unit, label of UNIT_MAP
-      diff = moment.duration(@toDate?.diff(moment()))[unit]()
-      """
-        <li>
-          <div class="auction-clock-element">#{if diff < 10 then '0' + diff else diff}</div>
-          <div class="auction-clock-element"><small>#{label}</small></div>
-        </li>
-      """
-    )).join '<li>:</li>'
 
 module.exports = (callBack) ->
   if Cookies.get 'firstAuctionReminderSeen'
@@ -132,7 +111,7 @@ module.exports = (callBack) ->
       error: callBack
       success: (sales) =>
         if (@featuredSale = sales.first())?
-          @featuredSale.set('end_at','2015-03-04 15:07:00')
+          @featuredSale.set('end_at','2015-03-04 15:45:00')
           saleArtworks = new SaleArtworks
           saleArtworks.fetch
             url: "#{API_URL}/api/v1/sale/#{@featuredSale.get('id')}/sale_artworks"
@@ -145,5 +124,7 @@ module.exports = (callBack) ->
                 success: (artwork) =>
                   @featuredImage = artwork.defaultImageUrl()
                   new AuctionReminderModal
-                    auction: @featuredSale
+                    auctionName: @featuredSale.get('name')
                     auctionImage: @featuredImage
+                    auctionId: @featuredSale.id
+                    auctionEndat: @featuredSale.get('end_at')
