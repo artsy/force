@@ -22,6 +22,8 @@ embedVideo = require 'embed-video'
     accessToken: req.user?.get('accessToken')
     error: res.backboneError
     success: (article, footerArticles, slideshowArtworks) ->
+      if req.params.slug isnt article.get('slug')
+        return res.redirect "/article/#{article.get 'slug'}"
       res.locals.sd.SLIDESHOW_ARTWORKS = slideshowArtworks?.toJSON()
       res.locals.sd.ARTICLE = article.toJSON()
       res.locals.sd.FOOTER_ARTICLES = footerArticles.toJSON()
