@@ -82,3 +82,9 @@ describe 'ProfileIconUpload', ->
 
     it 'allows the user to remove the image', ->
       @profileIconUpload.$el.hasClass('has-image').should.be.true
+
+    it 'saves the token during the callback', ->
+      @profileIconUpload.onUploadComplete({ token: 'cat' })
+      Backbone.sync.args[0][0].should.equal 'create'
+      Backbone.sync.args[0][1].attributes.gemini_token.should.equal 'cat'
+      Backbone.sync.args[0][1].url().should.containEql '/api/v1/profile/alessandra/icon'
