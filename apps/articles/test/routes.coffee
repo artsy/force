@@ -21,7 +21,17 @@ describe 'Article routes', ->
 
   describe '#show', ->
 
-    it 'fetches an article, its related content, and renders it', ->
+    it 'redirects old slugs', ->
+      @req.params.slug = 'foo'
+      routes.show @req, @res
+      Article::fetchWithRelated.args[0][0].success(
+        new Article(_.extend fixtures.article, title: 'Foo', slug: 'bar')
+        new Articles([_.extend fixtures.article, title: 'Bar'])
+        null
+      )
+      @res.redirect.args[0][0].should.equal '/article/bar'
+
+   it 'fetches an article, its related content, and renders it', ->
       routes.show @req, @res
       Article::fetchWithRelated.args[0][0].success(
         new Article(_.extend fixtures.article, title: 'Foo')
@@ -32,17 +42,6 @@ describe 'Article routes', ->
       @res.render.args[0][1].article.get('title').should.equal 'Foo'
       @res.render.args[0][1].footerArticles[0].get('title')
         .should.equal 'Bar'
-
-
-    it 'redirects old slugs', ->
-      @req.params.slug = 'foo'
-      routes.show @req, @res
-      Article::fetchWithRelated.args[0][0].success(
-        new Article(_.extend fixtures.article, title: 'Foo', slug: 'bar')
-        new Articles([_.extend fixtures.article, title: 'Bar'])
-        null
-      )
-      @res.redirect.args[0][0].should.equal '/article/bar'
 
   describe '#magazine', ->
 
