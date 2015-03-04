@@ -8,12 +8,18 @@ append locals
   - assetPackage = 'artist'
 
 block body
-  include ./carousel
+  - hasCarousel = carousel.figures.length >= 4
 
-  #artist-page.responsive-layout-container: .main-layout-container
-    #artist-page-header: include ./header
-    #artist-page-content.artist-page-content
-      unless tab
-        include ./overview
+  if hasCarousel
+    include ./carousel
+
+  #artist-page.responsive-layout-container(
+    class=(hasCarousel ? 'has-carousel' : 'has-no-carousel')
+  )
+    .main-layout-container
+      #artist-page-header: include ./header
+      #artist-page-content.artist-page-content
+        unless tab
+          include ./overview
 
   include ../../../components/main_layout/templates/json_ld
