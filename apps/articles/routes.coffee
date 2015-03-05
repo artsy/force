@@ -39,7 +39,7 @@ embedVideo = require 'embed-video'
     success: (article) ->
       return next() unless (
         req.params.id in POST_TO_ARTICLE_SLUGS or
-        article.get('fair_id') is '54871f8672616970632a0400' or # In The Armory Show 2015
+        article?.get('fair_id') is '54871f8672616970632a0400' or # In The Armory Show 2015
         'Articles' in (req.user?.get('lab_features') or [])
       )
       res.redirect 301, "/article/#{req.params.id}"
