@@ -31,7 +31,7 @@ describe 'Article routes', ->
       )
       @res.redirect.args[0][0].should.equal '/article/bar'
 
-   it 'fetches an article, its related content, and renders it', ->
+   xit 'fetches an article, its related content, and renders it', ->
       routes.show @req, @res
       Article::fetchWithRelated.args[0][0].success(
         new Article(_.extend fixtures.article, title: 'Foo')
