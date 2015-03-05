@@ -29,7 +29,6 @@ PartnerShows = require './shows'
 
   criteria =
     near: city.coords.toString()
-    published_with_eligible_artworks: true
     sort: '-start_at'
     size: pageSize
 
