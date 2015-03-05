@@ -1,8 +1,8 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-Cookies = require 'cookies-js'
-sd = require('sharify').data
+{ CURRENT_USER, NODE_ENV } = require('sharify').data
 { getProperty, setProperty, unsetProperty, setDimension } = require '../../lib/analytics.coffee'
+IS_TEST_ENV = not _.contains(['production', 'staging', 'development'], NODE_ENV)
 
 module.exports = class SplitTest
   constructor: ({ @key, @outcomes, @edge, @dimension }) ->
@@ -11,18 +11,24 @@ module.exports = class SplitTest
   _key: ->
     "split_test--#{@key}"
 
+  cookies: ->
+    if IS_TEST_ENV
+      set: (->), get: (->), expire: (->)
+    else
+      @__cookies__ ?= require 'cookies-js'
+
   set: (outcome) ->
-    Cookies.set @_key(), outcome
+    @cookies().set @_key(), outcome
     unsetProperty @_key() # Force unset
     setProperty _.tap({}, (hsh) => hsh[@_key()] = outcome)
     setDimension @dimension, outcome if @dimension?
     outcome
 
   get: ->
-    getProperty(@_key()) or Cookies.get(@_key())
+    getProperty(@_key()) or @cookies().get(@_key())
 
   unset: ->
-    Cookies.expire @_key()
+    @cookies().expire @_key()
     unsetProperty @_key()
     location.reload()
 
@@ -30,7 +36,7 @@ module.exports = class SplitTest
     "is-splittest-#{@key}--#{@outcome()}"
 
   admin: ->
-    sd.CURRENT_USER?.type is 'Admin'
+    CURRENT_USER?.type is 'Admin'
 
   toss: ->
     _.sample _.flatten _.map @outcomes, (probability, outcome) ->
