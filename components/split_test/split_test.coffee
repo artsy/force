@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 { CURRENT_USER, NODE_ENV } = require('sharify').data
-{ getProperty, setProperty, unsetProperty, setDimension } = require '../../lib/analytics.coffee'
+{ load, getProperty, setProperty, unsetProperty, setDimension } = require '../../lib/analytics.coffee'
 IS_TEST_ENV = not _.contains(['production', 'staging', 'development'], NODE_ENV)
 
 module.exports = class SplitTest
@@ -19,9 +19,18 @@ module.exports = class SplitTest
 
   set: (outcome) ->
     @cookies().set @_key(), outcome
+
+    # Set for Mixpanel
     unsetProperty @_key() # Force unset
-    setProperty _.tap({}, (hsh) => hsh[@_key()] = outcome)
+    property = _.tap({}, (hsh) => hsh[@_key()] = outcome)
+    if IS_TEST_ENV
+      setProperty property
+    else
+      load -> setProperty property
+
+    # Set for Google Analytics
     setDimension @dimension, outcome if @dimension?
+
     outcome
 
   get: ->
