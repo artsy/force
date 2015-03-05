@@ -30,3 +30,10 @@ module.exports =
       date_added: 0.5
       merchandisability: 0.5
     edge: 'merchandisability'
+
+  gallery_partnerships_apply:
+    key: 'gallery_partnerships_apply'
+    outcomes:
+      inline: 0.5
+      link: 0.5
+    edge: 'inline'

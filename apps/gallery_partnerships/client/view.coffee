@@ -4,6 +4,7 @@ mediator = require '../../../lib/mediator.coffee'
 imagesLoaded = require 'imagesloaded'
 analytics = require '../../../lib/analytics.coffee'
 { resize } = require '../../../components/resizer/index.coffee'
+splitTest = require '../../../components/split_test/index.coffee'
 
 module.exports = class GalleryPartnershipsView extends Backbone.View
   events:
@@ -21,6 +22,12 @@ module.exports = class GalleryPartnershipsView extends Backbone.View
     @setupHeroUnitSlideshow()
     @setupSectionsSlideshow()
     @setupLiaisonsFading()
+    @setupApplySplitTest()
+
+  setupApplySplitTest: ->
+    if splitTest('gallery_partnerships_apply').outcome() is 'inline'
+      # Attach form submission tracking
+      analytics.trackForm '.js-gallery-partnerships-apply-form', 'Submitted inline application form from /gallery-partnerships'
 
   intercept: (e) ->
     e.preventDefault()
