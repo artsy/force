@@ -9,13 +9,6 @@
 #   edge: 'new'
 
 module.exports =
-  artwork_modal:
-    key: 'artwork_modal'
-    outcomes:
-      modal: 0.5
-      modeless: 0.5
-    edge: 'modal'
-
   redesigned_header:
     key: 'redesigned_header'
     dimension: 'dimension2'

@@ -101,7 +101,10 @@
           download
         )
           i.icon-download
-          | Download Image
+          if artwork.defaultImage().get('downloadable')
+            | Download Image
+          else
+            | Admin Download
 
       if user
         if artwork.isEmbeddableByUser(user)
