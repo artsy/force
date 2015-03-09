@@ -52,7 +52,7 @@ setup = (app) ->
   # Setup Artsy Passport
   app.use artsyPassport _.extend config,
     CurrentUser: CurrentUser
-  { loginPath, signupPath, twitterCallbackPath, facebookCallbackPath } = artsyPassport.options
+  { loginPath, signupPath, twitterCallbackPath, facebookCallbackPath, twitterLastStepPath } = artsyPassport.options
 
   # Artsy passport route handlers
   app.post loginPath, (req, res) ->
@@ -61,6 +61,8 @@ setup = (app) ->
     res.redirect '/personalize'
   app.get twitterCallbackPath, (req, res) ->
     if req.query.sign_up then res.redirect('/personalize') else res.redirect('/')
+  app.get twitterLastStepPath, (req, res) ->
+    res.render 'onelaststep'
   app.get facebookCallbackPath, (req, res) ->
     if req.query.sign_up then res.redirect('/personalize') else res.redirect('/')
 

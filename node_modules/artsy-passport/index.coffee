@@ -19,9 +19,6 @@ crypto = require 'crypto'
 # request-level data in the passport callbacks.)
 artsyXappToken = null
 
-secureHash = (value) ->
-  crypto.createHash('sha1').update(value).digest('hex').substr(0, 12)
-
 # Default options
 opts =
   facebookPath: '/users/auth/facebook'
@@ -35,12 +32,11 @@ opts =
   userKeys: ['id', 'type', 'name', 'email', 'phone', 'lab_features',
              'default_profile_id', 'has_partner_access', 'collector_level']
   twitterSignupTempEmail: (token) ->
-    hash = secureHash(token)
+    hash = crypto.createHash('sha1').update(token).digest('hex').substr(0, 12)
     "#{hash}@artsy.tmp"
 
 #
-# Main function that overrides/injects any options, sets up passport, sets up an app to
-# handle routing and injecting locals, and returns that app to be mounted as middleware.
+# Initialization that sets up our mountable express app  & runs Passport config.
 #
 module.exports = (options) =>
   module.exports.options = _.extend opts, options
@@ -48,9 +44,6 @@ module.exports = (options) =>
   initApp()
   app
 
-#
-# Setup the mounted app that routes signup/login and injects necessary locals.
-#
 module.exports.app = app = express()
 
 initApp = ->
@@ -69,122 +62,6 @@ initApp = ->
   app.use addLocals
   app.get '/', ensureEmailFromTwitterSignup
 
-ensureEmailFromTwitterSignup = (req, res, next) ->
-  return next() unless req.user?
-  tmpSuffix = _.last(opts.twitterSignupTempEmail('').split('@'))
-  if req.user.get('email').match tmpSuffix
-    res.redirect opts.twitterLastStepPath
-  else
-    next()
-
-localAuth = (req, res, next) ->
-  passport.authenticate('local', (err, user, info) ->
-    return req.login(user, next) if user
-
-    res.authError = info; next()
-  )(req, res, next)
-
-afterLocalAuth = (req, res ,next) ->
-  if res.authError
-    res.send 403, { success: false, error: res.authError }
-  else if req.xhr and req.user?
-    res.send { success: true, user: req.user.toJSON() }
-  else if req.xhr and not req.user?
-    res.send { success: false, error: "Missing user." }
-  else
-    next()
-
-socialAuth = (provider) ->
-  (req, res, next) ->
-    return next("#{provider} denied") if req.query.denied
-    artsyXappToken = res.locals.artsyXappToken if res.locals.artsyXappToken
-    query = req.query
-    # hash the access token, will act as CSRF when linking a social login to an existing account
-    if req.user?.get('accessToken')
-      state = secureHash req.user.get('accessToken')
-      query = _.extend(query, state: state)
-    passport.authenticate(provider,
-      callbackURL: "#{opts.APP_URL}#{opts[provider + 'CallbackPath']}?#{qs.stringify query}"
-      scope: 'email'
-    )(req, res, next)
-
-# We have to hack around passport by capturing a custom error message that indicates we've
-# created a user in one of passport's social callbacks. If we catch that error then we'll
-# attempt to redirect back to login and strip out the expired Facebook/Twitter credentials.
-socialSignup = (provider) ->
-  (err, req, res, next) ->
-    return next(err) unless err.message is 'artsy-passport: created user from social'
-
-    # Redirect to a social login url stripping out the Facebook/Twitter credentials
-    # (code, oauth_token, etc). This will be seemless for Facebook, but since Twitter has a
-    # ask for permision UI it will mean asking permission twice. It's not apparent yet why
-    # we can't re-use the credentials... without stripping them we get errors from FB & Twitter.
-    querystring = qs.stringify _.omit(req.query, 'code', 'oauth_token', 'oauth_verifier')
-    url = (if provider is 'twitter' then opts.twitterLastStepPath else opts.facebookPath) +
-          '?' + querystring
-    res.redirect url
-
-signup = (req, res, next) ->
-  request.post(opts.SECURE_ARTSY_URL + '/api/v1/user').send(
-    name: req.body.name
-    email: req.body.email
-    password: req.body.password
-    xapp_token: res.locals.artsyXappToken
-  ).end onCreateUser(next)
-
-onCreateUser = (next) ->
-  (err, res) ->
-    if res.status isnt 201
-      errMsg = res.body.message
-    else
-      errMsg = err?.text
-    if errMsg then next(errMsg) else next()
-
-addLocals = (req, res, next) ->
-  if req.user
-    res.locals.user = req.user
-    res.locals.sd?.CURRENT_USER = req.user.toJSON()
-  next()
-
-loginBeforeTwitterLastStep = (req, res, next) ->
-  return next() if req.user
-  passport.authenticate('twitter',
-    callbackURL: "#{opts.APP_URL}#{opts.twitterLastStepPath}"
-  )(req, res, next)
-
-submitTwitterLastStep = (req, res, next) ->
-  return next "No user" unless req.user
-  return next "No email provided" unless req.body.email?
-  request.put("#{opts.SECURE_ARTSY_URL}/api/v1/me").send(
-    email: req.body.email
-    email_confirmation: req.body.email
-    access_token: req.user.get('accessToken')
-  ).end (r) ->
-    err = r.error or r.body?.error_description or r.body?.error
-    err = null if r.text.match 'Error from MailChimp API'
-    return next err if err
-    # To work around an API caching bug we send another empty PUT and
-    # update the current user.
-    request.put("#{opts.SECURE_ARTSY_URL}/api/v1/me").send(
-      access_token: req.user.get('accessToken')
-    ).end (r2) ->
-      err = r.error or r.body?.error_description or r.body?.error
-      err = null if r.text.match 'Error from MailChimp API'
-      return next err if err
-      req.login req.user.set(r2.body), (err) ->
-        return next err if err
-        res.redirect req.query['redirect-to'] or req.body['redirect-to'] or '/'
-
-headerLogin = (req, res, next) ->
-  return next() if req.path is opts.logoutPath
-  if token = req.get('X-Access-Token') or req.query.access_token
-    req.login new opts.CurrentUser(accessToken: token), next
-  else
-    next()
-
-#
-# Setup passport.
-#
 initPassport = ->
   passport.serializeUser serializeUser
   passport.deserializeUser deserializeUser
@@ -194,6 +71,7 @@ initPassport = ->
     clientSecret: opts.FACEBOOK_SECRET
     callbackURL: "#{opts.APP_URL}#{opts.facebookCallbackPath}"
     passReqToCallback: true
+    state: true
   , facebookCallback
   passport.use new TwitterStrategy
     consumerKey: opts.TWITTER_KEY
@@ -214,42 +92,36 @@ artsyCallback = (username, password, done) ->
     password: password
   ).end accessTokenCallback(done)
 
-facebookCallback = (req, accessToken, refreshToken, profile, done) ->
+facebookCallback = (req, token, refreshToken, profile, done) ->
   if req.user
-    if req.query.state != secureHash(req.user.get('accessToken'))
-      done 'Facebook: Invalid State', req.user
-    else
-      request.post("#{opts.SECURE_ARTSY_URL}/api/v1/me/authentications/facebook").query(
-        oauth_token: accessToken
-        access_token: req.user.get 'accessToken'
-      ).end (res) ->
-        err = res.body.error or res.body.message + ': Facebook' if res.error
-        done err, req.user
+    request.post("#{opts.SECURE_ARTSY_URL}/api/v1/me/authentications/facebook").query(
+      oauth_token: token
+      access_token: req.user.get 'accessToken'
+    ).end (res) ->
+      err = res.body.error or res.body.message + ': Facebook' if res.error
+      done err, req.user
   else
     request.get("#{opts.SECURE_ARTSY_URL}/oauth2/access_token").query(
       client_id: opts.ARTSY_ID
       client_secret: opts.ARTSY_SECRET
       grant_type: 'oauth_token'
-      oauth_token: accessToken
+      oauth_token: token
       oauth_provider: 'facebook'
     ).end accessTokenCallback(done,
-      oauth_token: accessToken
+      oauth_token: token
       provider: 'facebook'
       name: profile?.displayName
     )
 
 twitterCallback = (req, token, tokenSecret, profile, done) ->
   if req.user
-    if req.query.state != secureHash(req.user.get('accessToken'))
-      done 'Twitter: Invalid State', req.user
-    else
-      request.post("#{opts.SECURE_ARTSY_URL}/api/v1/me/authentications/twitter").query(
-        oauth_token: token
-        oauth_token_secret: tokenSecret
-        access_token: req.user.get 'accessToken'
-      ).end (res) ->
-        err = res.body.error or res.body.message + ': Twitter' if res.error
-        done err, req.user
+    request.post("#{opts.SECURE_ARTSY_URL}/api/v1/me/authentications/twitter").query(
+      oauth_token: token
+      oauth_token_secret: tokenSecret
+      access_token: req.user.get 'accessToken'
+    ).end (res) ->
+      err = res.body.error or res.body.message + ': Twitter' if res.error
+      done err, req.user
   else
     request.get("#{opts.SECURE_ARTSY_URL}/oauth2/access_token").query(
       client_id: opts.ARTSY_ID
@@ -300,9 +172,145 @@ accessTokenCallback = (done, params) ->
 
     # Other errors
     else
-      console.warn "Error requesting an access token from Artsy: " + res?.text
+      console.warn "Error requesting an access token from Artsy: \n\n" + res?.text
       done err
 
+#
+# Passport's serialize callbacks.
+# Fetches and cachies some user data in the session.
+#
+serializeUser = (user, done) ->
+  user.fetch
+    success: ->
+      keys = ['accessToken'].concat opts.userKeys
+      done null, user.pick(keys)
+    error: (m, e) -> done e.text
+
+deserializeUser = (userData, done) ->
+  done null, new opts.CurrentUser(userData)
+
+#
+# Middleware helpers to control the auth flow specific to Artsy and outside
+# the scope of Passport.js.
+#
+localAuth = (req, res, next) ->
+  passport.authenticate('local', (err, user, info) ->
+    return req.login(user, next) if user
+    res.authError = info
+    next()
+  )(req, res, next)
+
+afterLocalAuth = (req, res ,next) ->
+  if res.authError
+    res.send 403, { success: false, error: res.authError }
+  else if req.xhr and req.user?
+    res.send { success: true, user: req.user.toJSON() }
+  else if req.xhr and not req.user?
+    res.send { success: false, error: "Missing user." }
+  else
+    next()
+
+socialAuth = (provider) ->
+  (req, res, next) ->
+    return next("#{provider} denied") if req.query.denied
+    artsyXappToken = res.locals.artsyXappToken if res.locals.artsyXappToken
+    passport.authenticate(provider, scope: 'email')(req, res, next)
+
+# We have to hack around passport by capturing a custom error message that indicates we've
+# created a user in one of passport's social callbacks. If we catch that error then we'll
+# attempt to redirect back to login and strip out the expired Facebook/Twitter credentials.
+socialSignup = (provider) ->
+  (err, req, res, next) ->
+    return next(err) unless err.message is 'artsy-passport: created user from social'
+    # Redirect to a social login url stripping out the Facebook/Twitter credentials
+    # (code, oauth_token, etc). This will be seemless for Facebook, but since Twitter has a
+    # ask for permision UI it will mean asking permission twice. It's not apparent yet why
+    # we can't re-use the credentials... without stripping them we get errors from FB & Twitter.
+    querystring = qs.stringify _.omit(req.query, 'code', 'oauth_token', 'oauth_verifier')
+    url = (if provider is 'twitter' then opts.twitterLastStepPath else opts.facebookPath) +
+          '?' + querystring
+    res.redirect url
+
+signup = (req, res, next) ->
+  request.post(opts.SECURE_ARTSY_URL + '/api/v1/user').send(
+    name: req.body.name
+    email: req.body.email
+    password: req.body.password
+    xapp_token: res.locals.artsyXappToken
+  ).end onCreateUser(next)
+
+onCreateUser = (next) ->
+  (err, res) ->
+    if res.status isnt 201
+      errMsg = res.body.message
+    else
+      errMsg = err?.text
+    if errMsg then next(errMsg) else next()
+
+#
+# Middleware to add the user to app locals
+#
+addLocals = (req, res, next) ->
+  if req.user
+    res.locals.user = req.user
+    res.locals.sd?.CURRENT_USER = req.user.toJSON()
+  next()
+
+
+#
+# Middleware to allow log in by passing an access token in the headers.
+#
+headerLogin = (req, res, next) ->
+  return next() if req.path is opts.logoutPath
+  if token = req.get('X-Access-Token') or req.query.access_token
+    req.login new opts.CurrentUser(accessToken: token), next
+  else
+    next()
+
+#
+# Twitter last step logic. Used to ensure we have an email from users that
+# sign up with Twitter.
+#
+ensureEmailFromTwitterSignup = (req, res, next) ->
+  return next() unless req.user?
+  tmpSuffix = _.last(opts.twitterSignupTempEmail('').split('@'))
+  if req.user.get('email').match tmpSuffix
+    res.redirect opts.twitterLastStepPath
+  else
+    next()
+
+loginBeforeTwitterLastStep = (req, res, next) ->
+  return next() if req.user
+  passport.authenticate('twitter',
+    callbackURL: "#{opts.APP_URL}#{opts.twitterLastStepPath}"
+  )(req, res, next)
+
+submitTwitterLastStep = (req, res, next) ->
+  return next "No user" unless req.user
+  return next "No email provided" unless req.body.email?
+  request.put("#{opts.SECURE_ARTSY_URL}/api/v1/me").send(
+    email: req.body.email
+    email_confirmation: req.body.email
+    access_token: req.user.get('accessToken')
+  ).end (r) ->
+    err = r.error or r.body?.error_description or r.body?.error
+    err = null if r.text.match 'Error from MailChimp API'
+    return next err if err
+    # To work around an API caching bug we send another empty PUT and
+    # update the current user.
+    request.put("#{opts.SECURE_ARTSY_URL}/api/v1/me").send(
+      access_token: req.user.get('accessToken')
+    ).end (r2) ->
+      err = r.error or r.body?.error_description or r.body?.error
+      err = null if r.text.match 'Error from MailChimp API'
+      return next err if err
+      req.login req.user.set(r2.body), (err) ->
+        return next err if err
+        res.redirect req.query['redirect-to'] or req.body['redirect-to'] or '/'
+
+#
+# Logout helpers.
+#
 destroyAccessToken = (next, accessToken) ->
   if accessToken
     request
@@ -317,16 +325,3 @@ logout = (req, res, next) ->
   accessToken = req.user?.get('accessToken')
   req.logout()
   destroyAccessToken(next, accessToken)
-
-#
-# Serialize user by fetching and caching user data in the session.
-#
-serializeUser = (user, done) ->
-  user.fetch
-    success: ->
-      keys = ['accessToken'].concat opts.userKeys
-      done null, user.pick(keys)
-    error: (m, e) -> done e.text
-
-deserializeUser = (userData, done) ->
-  done null, new opts.CurrentUser(userData)

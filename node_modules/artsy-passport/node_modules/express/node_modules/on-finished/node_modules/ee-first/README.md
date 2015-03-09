@@ -47,6 +47,23 @@ first([
 })
 ```
 
+#### .cancel()
+
+The group of listeners can be cancelled before being invoked and have all the event
+listeners removed from the underlying event emitters.
+
+```js
+var thunk = first([
+  [ee1, 'close', 'end', 'error'],
+  [ee2, 'error']
+], function (err, ee, event, args) {
+  // listener invoked
+})
+
+// cancel and clean up
+thunk.cancel()
+```
+
 [npm-image]: https://img.shields.io/npm/v/ee-first.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/ee-first
 [github-tag]: http://img.shields.io/github/tag/jonathanong/ee-first.svg?style=flat-square

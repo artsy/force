@@ -74,6 +74,8 @@ module.exports =
     test.done()
 
   'detects reserved IPv4 networks': (test) ->
+    test.equal(ipaddr.IPv4.parse('0.0.0.0').range(),         'unspecified')
+    test.equal(ipaddr.IPv4.parse('0.1.0.0').range(),         'unspecified')
     test.equal(ipaddr.IPv4.parse('10.1.0.1').range(),        'private')
     test.equal(ipaddr.IPv4.parse('192.168.2.1').range(),     'private')
     test.equal(ipaddr.IPv4.parse('224.100.0.1').range(),     'multicast')
@@ -206,4 +208,15 @@ module.exports =
     # Fuck yeah. The first byte of Google's IPv6 address is 42. 42!
     test.deepEqual(ipaddr.parse('2a00:1450:8007::68').toByteArray(),
           [42, 0x00, 0x14, 0x50, 0x80, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x68 ])
+    test.done()
+
+  'correctly parses 1 as an IPv4 address': (test) ->
+    test.equal(ipaddr.IPv6.isValid('1'), false)
+    test.equal(ipaddr.IPv4.isValid('1'), true)
+    test.deepEqual(new ipaddr.IPv4([0, 0, 0, 1]), ipaddr.parse('1'))
+    test.done()
+
+  'does not consider a very large or very small number a valid IP address': (test) ->
+    test.equal(ipaddr.isValid('4999999999'), false)
+    test.equal(ipaddr.isValid('-1'), false)
     test.done()

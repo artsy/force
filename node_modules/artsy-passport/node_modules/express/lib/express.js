@@ -3,7 +3,7 @@
  */
 
 var EventEmitter = require('events').EventEmitter;
-var mixin = require('utils-merge');
+var mixin = require('merge-descriptors');
 var proto = require('./application');
 var Route = require('./router/route');
 var Router = require('./router');
@@ -28,8 +28,8 @@ function createApplication() {
     app.handle(req, res, next);
   };
 
-  mixin(app, proto);
-  mixin(app, EventEmitter.prototype);
+  mixin(app, EventEmitter.prototype, false);
+  mixin(app, proto, false);
 
   app.request = { __proto__: req, app: app };
   app.response = { __proto__: res, app: app };
