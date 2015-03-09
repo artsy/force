@@ -14,9 +14,9 @@ describe 'Artsy Passport integration', ->
   it 'can log in and log out with email and password', (done) ->
     Browser.visit 'http://localhost:5000', (e, browser) ->
       browser
-        .fill('email', ARTSY_EMAIL)
-        .fill('password', ARTSY_PASSWORD)
-        .pressButton "Login", ->
+        .fill('#login [name=email]', ARTSY_EMAIL)
+        .fill('#login [name=password]', ARTSY_PASSWORD)
+        .pressButton "#login [type=submit]", ->
           browser.html().should.containEql '<h1>Hello'
           browser.html().should.containEql ARTSY_EMAIL
           browser
@@ -151,6 +151,7 @@ describe 'Artsy Passport methods', ->
       @next = sinon.stub()
 
     it 'creates a user', (done) ->
+      @req.body = email: 'foo@bar.com', email_confirmation: 'foo@bar.com'
       @request.put = (url) ->
         url.should.containEql 'api/v1/me'
         send: (data) ->
@@ -234,24 +235,20 @@ describe 'Artsy Passport methods', ->
       @del.called.should.not.be.ok
       @next.called.should.be.true
 
-  describe '#socialAuth', ->
-    describe 'with user', ->
-      xit 'includes state in the callback url'
+  describe '#initPassport', ->
 
-  describe '#(facebook|twitter)Callback', ->
-    describe 'with user', ->
-      xit 'checks state'
-      xit 'associates a social account'
-
-    describe 'without user', ->
-      xit 'does a login'
-
-  describe '#secureHash', ->
-    before ->
-      @secureHash = @artsyPassport.__get__ 'secureHash'
-
-    it 'hashes data', ->
-      @secureHash('data').should.equal 'a17c9aaa61e8'
-
-    it 'produces a unique hash', ->
-      @secureHash('one').should.not.equal @secureHash('two')
+    it 'uses state: true for Facebook', ->
+      args = []
+      Strategy = @artsyPassport.__get__ 'FacebookStrategy'
+      class FacebookStrategy extends Strategy
+        constructor: ->
+          args = arguments
+          super
+      @artsyPassport.__set__ 'FacebookStrategy', FacebookStrategy
+      @artsyPassport.__set__ 'opts',
+        FACEBOOK_ID: 'foo'
+        FACEBOOK_SECRET: 'bar'
+        TWITTER_KEY: 'bam'
+        TWITTER_SECRET: 'baz'
+      @artsyPassport.__get__('initPassport')()
+      args[0].state.should.equal true

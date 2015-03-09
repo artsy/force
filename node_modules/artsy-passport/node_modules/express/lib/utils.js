@@ -1,14 +1,24 @@
-/**
- * Module dependencies.
+/*!
+ * express
+ * Copyright(c) 2009-2013 TJ Holowaychuk
+ * Copyright(c) 2014-2015 Douglas Christopher Wilson
+ * MIT Licensed
  */
 
+/**
+ * Module dependencies.
+ * @api private
+ */
+
+var contentDisposition = require('content-disposition');
+var contentType = require('content-type');
+var deprecate = require('depd')('express');
 var mime = require('send').mime;
 var basename = require('path').basename;
 var etag = require('etag');
 var proxyaddr = require('proxy-addr');
 var qs = require('qs');
 var querystring = require('querystring');
-var typer = require('media-typer');
 
 /**
  * Return strong ETag for `body`.
@@ -22,9 +32,9 @@ var typer = require('media-typer');
 exports.etag = function (body, encoding) {
   var buf = !Buffer.isBuffer(body)
     ? new Buffer(body, encoding)
-    : body
+    : body;
 
-  return etag(buf, {weak: false})
+  return etag(buf, {weak: false});
 };
 
 /**
@@ -39,9 +49,9 @@ exports.etag = function (body, encoding) {
 exports.wetag = function wetag(body, encoding){
   var buf = !Buffer.isBuffer(body)
     ? new Buffer(body, encoding)
-    : body
+    : body;
 
-  return etag(buf, {weak: true})
+  return etag(buf, {weak: true});
 };
 
 /**
@@ -120,18 +130,8 @@ exports.normalizeTypes = function(types){
  * @api private
  */
 
-exports.contentDisposition = function(filename){
-  var ret = 'attachment';
-  if (filename) {
-    filename = basename(filename);
-    // if filename contains non-ascii characters, add a utf-8 version ala RFC 5987
-    ret = /[^\040-\176]/.test(filename)
-      ? 'attachment; filename="' + encodeURI(filename) + '"; filename*=UTF-8\'\'' + encodeURI(filename)
-      : 'attachment; filename="' + filename + '"';
-  }
-
-  return ret;
-};
+exports.contentDisposition = deprecate.function(contentDisposition,
+  'utils.contentDisposition: use content-disposition npm module instead');
 
 /**
  * Parse accept params `str` returning an
@@ -266,21 +266,23 @@ exports.compileTrust = function(val) {
  * @api private
  */
 
-exports.setCharset = function(type, charset){
-  if (!type || !charset) return type;
+exports.setCharset = function setCharset(type, charset) {
+  if (!type || !charset) {
+    return type;
+  }
 
   // parse type
-  var parsed = typer.parse(type);
+  var parsed = contentType.parse(type);
 
   // set charset
   parsed.parameters.charset = charset;
 
   // format type
-  return typer.format(parsed);
+  return contentType.format(parsed);
 };
 
 /**
- * Return new empty objet.
+ * Return new empty object.
  *
  * @return {Object}
  * @api private

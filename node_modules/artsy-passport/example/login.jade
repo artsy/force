@@ -7,21 +7,23 @@ html(lang="en")
   head
     title Login
   body
-    h1 Login
-    a( href='/users/auth/facebook' ) Login via Facebook
-    br
-    a( href='/users/auth/twitter' ) Login via Twitter
-    form( action='/users/sign_in', method='POST' )
-      h3 Login via Email
-      mixin email-password
-      button( type='submit' ) Login
+    #login
+      h1 Login
+      a( href='/users/auth/facebook' ) Login via Facebook
+      br
+      a( href='/users/auth/twitter' ) Login via Twitter
+      form( action='/users/sign_in', method='POST' )
+        h3 Login via Email
+        mixin email-password
+        button( type='submit' ) Login
     hr
-    h1 Signup
-    a( href='/users/auth/facebook?sign_up=true' ) Signup via Facebook
-    br
-    a( href='/users/auth/twitter?sign_up=true' ) Signup via Twitter
-    form.signup( action='/users/invitation/accept', method='POST' )
-      h3 Signup via Email
-      input( name='name', placeholder='Name...' )
-      mixin email-password
-      button( type='submit' ) Signup
+    #signup
+      h1 Signup
+      a( href='/users/auth/facebook?sign_up=true' ) Signup via Facebook
+      br
+      a( href='/users/auth/twitter?sign_up=true' ) Signup via Twitter
+      form.signup( action='/users/invitation/accept', method='POST' )
+        h3 Signup via Email
+        input( name='name', placeholder='Name...' )
+        mixin email-password
+        button( type='submit' ) Signup
