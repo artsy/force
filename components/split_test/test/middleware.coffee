@@ -4,17 +4,21 @@ rewire = require 'rewire'
 
 describe 'splitTestMiddleware', ->
   before ->
-    @splitTestMiddleware = rewire '../middleware'
-    @splitTestMiddleware.__set__ 'runningTests',
-      header_design:
-        key: 'header_design'
-        outcomes: old: 0, new: 1
-        edge: 'old'
+    benv.setup (done) =>
+      @splitTestMiddleware = rewire '../middleware'
+      @splitTestMiddleware.__set__ 'runningTests',
+        header_design:
+          key: 'header_design'
+          outcomes: old: 0, new: 1
+          edge: 'old'
 
-      some_other_test:
-        key: 'some_other_test'
-        outcomes: old: 1, new: 0
-        edge: 'new'
+        some_other_test:
+          key: 'some_other_test'
+          outcomes: old: 1, new: 0
+          edge: 'new'
+
+  after ->
+    benv.teardown()
 
   beforeEach ->
     @req = cookies: {}

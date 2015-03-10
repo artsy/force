@@ -52,10 +52,20 @@ Route.prototype._handles_method = function _handles_method(method) {
  * @api private
  */
 
-Route.prototype._options = function(){
-  return Object.keys(this.methods).map(function(method) {
-    return method.toUpperCase();
-  });
+Route.prototype._options = function _options() {
+  var methods = Object.keys(this.methods);
+
+  // append automatic head
+  if (this.methods.get && !this.methods.head) {
+    methods.push('head');
+  }
+
+  for (var i = 0; i < methods.length; i++) {
+    // make upper case
+    methods[i] = methods[i].toUpperCase();
+  }
+
+  return methods;
 };
 
 /**
@@ -131,7 +141,6 @@ Route.prototype.dispatch = function(req, res, done){
  */
 
 Route.prototype.all = function(){
-  var self = this;
   var callbacks = utils.flatten([].slice.call(arguments));
   callbacks.forEach(function(fn) {
     if (typeof fn !== 'function') {
@@ -143,16 +152,15 @@ Route.prototype.all = function(){
     var layer = Layer('/', {}, fn);
     layer.method = undefined;
 
-    self.methods._all = true;
-    self.stack.push(layer);
-  });
+    this.methods._all = true;
+    this.stack.push(layer);
+  }, this);
 
-  return self;
+  return this;
 };
 
 methods.forEach(function(method){
   Route.prototype[method] = function(){
-    var self = this;
     var callbacks = utils.flatten([].slice.call(arguments));
 
     callbacks.forEach(function(fn) {
@@ -162,14 +170,14 @@ methods.forEach(function(method){
         throw new Error(msg);
       }
 
-      debug('%s %s', method, self.path);
+      debug('%s %s', method, this.path);
 
       var layer = Layer('/', {}, fn);
       layer.method = method;
 
-      self.methods[method] = true;
-      self.stack.push(layer);
-    });
-    return self;
+      this.methods[method] = true;
+      this.stack.push(layer);
+    }, this);
+    return this;
   };
 });

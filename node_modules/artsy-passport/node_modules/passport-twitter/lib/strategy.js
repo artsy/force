@@ -133,6 +133,10 @@ Strategy.prototype.userProfile = function(token, tokenSecret, params, done) {
       profile.provider = 'twitter';
       profile._raw = body;
       profile._json = json;
+      // NOTE: The "X-Access-Level" header is described here:
+      //       https://dev.twitter.com/oauth/overview/application-permission-model
+      //       https://dev.twitter.com/oauth/overview/application-permission-model-faq
+      profile._accessLevel = res.headers['x-access-level'];
   
       done(null, profile);
     });

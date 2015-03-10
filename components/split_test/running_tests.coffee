@@ -9,15 +9,9 @@
 #   edge: 'new'
 
 module.exports =
-  artwork_modal:
-    key: 'artwork_modal'
-    outcomes:
-      modal: 0.5
-      modeless: 0.5
-    edge: 'modal'
-
   redesigned_header:
     key: 'redesigned_header'
+    dimension: 'dimension2'
     outcomes:
       old: 0.5
       new: 0.5
@@ -29,3 +23,10 @@ module.exports =
       date_added: 0.5
       merchandisability: 0.5
     edge: 'merchandisability'
+
+  gallery_partnerships_apply:
+    key: 'gallery_partnerships_apply'
+    outcomes:
+      inline: 0.5
+      link: 0.5
+    edge: 'inline'

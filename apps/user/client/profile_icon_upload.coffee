@@ -76,8 +76,9 @@ module.exports = class ProfileIconUpload extends Backbone.View
     @$progressIndicator.hide().css 'width', 0
 
   # Render processing message?
-  onUploadComplete: =>
-    @profile.set 'icon', { profileId: @profile.get('id') }
+  onUploadComplete: (resp) =>
+    @profile.set 'icon', { profileId: @profile.get('id'), gemini_token: resp.token }
+    @profile.icon().save()
     @renderUploadedImage()
 
   onProgressUpdate: (e, data) =>

@@ -3,5 +3,9 @@
     for section, i in sections.slice(0, -1)
       a.gallery-partnerships-nav-link.internal( href="/gallery-partnerships/#{section.slug}", data-section=section.title )
         span= section.title
-    a.gallery-partnerships-nav-link.apply.avant-garde-button-black.is-small( href="/apply" )
+    a.gallery-partnerships-nav-link.apply.avant-garde-button-black.is-small(
+      href=((sd.GALLERY_PARTNERSHIPS_APPLY === 'inline') ? '/gallery-partnerships/apply' : '/apply')
+      class=((sd.GALLERY_PARTNERSHIPS_APPLY === 'inline') ? 'internal' : undefined)
+      data-section='Apply'
+    )
       span=sections[sections.length - 1].title
