@@ -63,7 +63,7 @@ describe '#auctionRegistration', ->
       routes.auctionRegistration @req, @res
       Backbone.sync.args[0][2].success fabricate 'sale', name: 'Awesome Sale', is_auction: true, auction_state: 'closed'
 
-      @res.render.args[0][0].should.equal 'registration_error'
+      @res.render.args[0][0].should.equal 'registration-error'
       @res.render.args[0][1].sale.get('name').should.equal 'Awesome Sale'
 
     it '404 if sale is not auction', ->
