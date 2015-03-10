@@ -157,8 +157,7 @@ describe 'Artsy Passport methods', ->
       passport = @artsyPassport.__get__ 'passport'
       sinon.spy passport, 'authenticate'
       @req.user = new Backbone.Model accessToken: 'foobarbaz'
-      @req.query.state = crypto.createHash('sha1').update('foobarbaz')
-        .digest('hex').substr(0, 12)
+      @req.query.state = crypto.createHash('sha1').update('foobarbaz').digest('hex')
       @socialAuth('facebook')(@req, @res, @next)
       passport.authenticate.args[0][0].should.equal 'facebook'
 

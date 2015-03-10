@@ -21,7 +21,7 @@ artsyXappToken = null
 
 # Alias sha1 hashing
 hash = (str) ->
-  crypto.createHash('sha1').update(str).digest('hex').substr(0, 12)
+  crypto.createHash('sha1').update(str).digest('hex')
 
 # Default options
 opts =
@@ -35,7 +35,7 @@ opts =
   logoutPath: '/users/sign_out'
   userKeys: ['id', 'type', 'name', 'email', 'phone', 'lab_features',
              'default_profile_id', 'has_partner_access', 'collector_level']
-  twitterSignupTempEmail: (token) -> "#{hash token}@artsy.tmp"
+  twitterSignupTempEmail: (token) -> "#{hash(token).substr 0, 12}@artsy.tmp"
 
 #
 # Initialization that sets up our mountable express app  & runs Passport config.

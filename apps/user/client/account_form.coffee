@@ -37,8 +37,7 @@ module.exports = class AccountForm extends Backbone.View
           @$('#settings-auth-errors').text response.responseJSON.error
           $button.attr 'data-state', null
     else
-      csrfHash = crypto.createHash('sha1').update(@userEdit.get 'accessToken')
-        .digest('hex').substr(0, 12)
+      csrfHash = crypto.createHash('sha1').update(@userEdit.get 'accessToken').digest('hex')
       location.assign "/users/auth/#{service}?" +
         "redirect-to=#{encodeURIComponent(location.href)}&" +
         "state=#{csrfHash}"
