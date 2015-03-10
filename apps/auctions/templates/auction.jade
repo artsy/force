@@ -2,14 +2,15 @@
   h3.af-name: a( href="/auction/#{auction.id}" )= auction.get('name')
 
   .af-metadata
-    .af-clock( data-id= auction.id )
-      include ../../../components/clock/template
+    if auction.isOpen()
+      .af-clock( data-id= auction.id )
+        include ../../../components/clock/template
 
     .af-stats
       .af-stats-count #{auction.get('eligible_sale_artworks_count')} Works in Auction
       .af-stats-status Bidding #{auction.get('auction_state')}
 
-    if auction.get('auction_state') === 'open'
+    if auction.isOpen()
       a.af-go-button.avant-garde-button-black( href="/auction/#{auction.id}" )
         | Go to auction
 
