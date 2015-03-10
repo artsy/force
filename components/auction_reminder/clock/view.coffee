@@ -12,7 +12,6 @@ module.exports = class AuctionClock extends Backbone.View
   initialize: ({ @auctionEndat }) ->
 
   start: ->
-    console.log "auction clock says auction ends at #{@auctionEndat}"
     @render()
 
   render: =>
@@ -20,6 +19,9 @@ module.exports = class AuctionClock extends Backbone.View
     @interval = setInterval @renderClock, 1000
 
   renderClock: =>
+    if moment.duration(moment(@auctionEndat).diff(moment()))._milliseconds < 0
+      @$el.trigger 'auctionClosed'
+      clearInterval(@interval)
     @$('.clock-value').html _.compact((for unit, label of UNIT_MAP
       diff = moment.duration(moment(@auctionEndat)?.diff(moment()))[unit]()
       """

@@ -28,14 +28,13 @@ class AuctionReminderModal extends Backbone.View
     if diff > 23
       return
 
-    $('auction-reminder-clock').on 'auctionClosed'
-    @calculateOffsetEndAtMoment (offsetEndAtMoment) =>
-      @offsetEndAtMoment = offsetEndAtMoment
-      debugger
-      console.log "The end at from the callback is " + @offsetEndAtMoment
+    @calculateOffsetEndAtMoment (calculatedOffsetEndAtMoment) =>
+      # Reminder only shows if there are at least 10 seconds remaining
+      if moment.duration(moment(calculatedOffsetEndAtMoment).diff(moment()))._milliseconds > 10000
+        @offsetEndAtMoment = moment(calculatedOffsetEndAtMoment)
+        @open()
 
     @$container = $('body')
-    @open()
 
   open: =>
     @$el.
@@ -48,22 +47,24 @@ class AuctionReminderModal extends Backbone.View
     @setupClock()
     @$container.append @$el
 
-    $('.auction-reminder-clock').on 'auctionEnded', ->
+    $('.auction-reminder-clock').on 'auctionClosed', ->
       $('.modal-dialog').removeClass('is-spring-in')
+      $('.modal-dialog').removeClass('is-static-open')
       $('.modal-dialog').addClass('is-close-out')
 
     # Transition based on if they've seen the reminder already
     if Cookies.get('firstAuctionReminderSeen')
-      @$('.modal-dialog').css
-        bottom: "40px"
+      @$('.modal-dialog').addClass('is-static-open')
     else
       cookieValue = "#{@auctionName}|#{@auctionId}|#{@auctionImage}|#{@auctionEndat}"
-      Cookies.set('firstAuctionReminderSeen', cookieValue)
+      cookieExpiration = moment.duration(moment(@offsetEndAtMoment).diff(moment()))._milliseconds
+      Cookies.set('firstAuctionReminderSeen', cookieValue, { expires: cookieExpiration })
       activate = => @$dialog.addClass("is-spring-in")
       _.delay(activate,5000)
 
   close: (cb) ->
     @$('.modal-dialog').removeClass('is-spring-in')
+    $('.modal-dialog').removeClass('is-static-open')
     @$('.modal-dialog').addClass('is-close-out')
 
     Cookies.set('closeAuctionReminder', true)
@@ -73,15 +74,13 @@ class AuctionReminderModal extends Backbone.View
   calculateOffsetEndAtMoment: (callback) ->
     new Backbone.Model().
       fetch
-        url: "#{sd.API_URL}/api/v1/system/time"
+        url: "#{API_URL}/api/v1/system/time"
         success: (model) =>
           offset = moment().diff(model.get('time'))
           endat = moment(@auctionEndat).add(offset)
-          console.log "the endat in the callback is " + endat
           callback endat
 
   setupClock: ->
-    console.log @offsetEndAtMoment
     @clock = new AuctionClock
       el: @$Clock = @$('.auction-reminder-clock')
       auctionEndat: @offsetEndAtMoment
@@ -106,12 +105,10 @@ module.exports = (callBack) ->
   else
     @sales = new Sales
     @sales.fetch
-      # url: "#{API_URL}/api/v1/sales?is_auction=true&published=true&live=true"
-      url: "#{API_URL}/api/v1/sales?is_auction=true&published=true"
+      url: "#{API_URL}/api/v1/sales?is_auction=true&published=true&live=true"
       error: callBack
       success: (sales) =>
         if (@featuredSale = sales.first())?
-          @featuredSale.set('end_at','2015-03-04 15:45:00')
           saleArtworks = new SaleArtworks
           saleArtworks.fetch
             url: "#{API_URL}/api/v1/sale/#{@featuredSale.get('id')}/sale_artworks"
