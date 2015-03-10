@@ -36,7 +36,9 @@ module.exports = class AccountForm extends Backbone.View
           @$('#settings-auth-errors').text response.responseJSON.error
           $button.attr 'data-state', null
     else
-      location.assign "/users/auth/#{service}?redirect-to=#{encodeURIComponent(location.href)}"
+      location.assign "/users/auth/#{service}?" +
+        "redirect-to=#{encodeURIComponent(location.href)}&" +
+        "state=#{@userEdit.get('accessToken').substr(0,7)}"
 
   setupForms: ->
     # Changing your password logs you out so we direct to login after changing password

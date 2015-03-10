@@ -140,6 +140,31 @@ describe 'Artsy Passport methods', ->
       @socialSignup('twitter')({message: 'artsy-passport: created user from social'}, @req, @res, @next)
       @res.redirect.args[0][0].should.containEql '/users/auth/twitter'
 
+
+  describe '#socialAuth', ->
+
+    beforeEach ->
+      opts = @artsyPassport.__get__ 'opts'
+      opts.CurrentUser = ->
+      @socialAuth = @artsyPassport.__get__ 'socialAuth'
+      @err = ''
+      @req = { query: {} }
+      @res = { redirect: sinon.stub(), locals: {} }
+      @next = sinon.stub()
+
+    it 'authenticates if state param is first 7 chars of access token', ->
+      passport = @artsyPassport.__get__ 'passport'
+      sinon.spy passport, 'authenticate'
+      @req.user = new Backbone.Model accessToken: 'foobarbaz'
+      @req.query.state = 'foobarb'
+      @socialAuth('facebook')(@req, @res, @next)
+      passport.authenticate.args[0][0].should.equal 'facebook'
+
+    it 'requires a state param equal to the first 7 chars of the access token', ->
+      @req.user = new Backbone.Model accessToken: 'foobarbaz'
+      @socialAuth('facebook')(@req, @res, @next)
+      @next.args[0][0].toString().should.containEql 'Must pass a `state`'
+
   describe '#submitTwitterLastStep', ->
 
     before ->
