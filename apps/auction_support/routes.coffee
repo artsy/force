@@ -50,7 +50,7 @@ registerOrRender = (sale, req, res, next) ->
 
       # Sale is not registerable yet: render error page
       else if sale.isAuction()
-        res.render 'registration_error',
+        res.render 'registration-error',
           sale: sale
 
       # Sale is not an auction: 404
