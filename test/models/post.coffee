@@ -82,7 +82,7 @@ describe 'Post', ->
     it 'returns the first image if there is no PostImage or artwork', ->
       link = type: 'PostLink', url: 'existy', oembed_json: type: 'photo', url: 'existy'
       post = new Post(attachments: [link])
-      post.defaultImage().cropUrlFor().should.containEql 'existy'
+      post.defaultImage().cropUrlFor(null, 'image_url').should.containEql 'existy'
 
     it 'returns an empty image if there are no attachments', ->
       post = new Post(attachments: [])

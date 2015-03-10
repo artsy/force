@@ -66,12 +66,9 @@ module.exports =
   imageUrlForMaxSize: ->
     sizes = @publicVersions()
     # favor sizes in this order
-    for size in ['larger', 'large', 'tall', 'medium', 'square', 'small']
+    for size in ['source', 'larger', 'large', 'large_rectangle', 'tall', 'medium', 'square', 'small']
       return @imageUrl(size) if _.contains(sizes, size)
     null
-
-  resizeUrlFor: ->
-    resizer.resize (@imageUrlForMaxSize() or @get 'image_url'), arguments...
 
   resizeDimensionsFor: ({ width, height }) ->
     ratios = _.compact _.map { width: width, height: height }, (value, dimension) =>
@@ -80,11 +77,17 @@ module.exports =
     width: Math.floor(@get('original_width') * ratio)
     height: Math.floor(@get('original_height') * ratio)
 
-  cropUrlFor: ->
-    resizer.crop (@imageUrlForMaxSize() or @get 'image_url'), arguments...
+  sourceUrl: (attr) ->
+    @get(attr) or @imageUrlForMaxSize()
 
-  fillUrlFor: ->
-    resizer.fill (@imageUrlForMaxSize() or @get 'image_url'), arguments...
+  resizeUrlFor: (options = {}, attr) ->
+    resizer.resize @sourceUrl(attr), arguments...
+
+  cropUrlFor: (options = {}, attr) ->
+    resizer.crop @sourceUrl(attr), options
+
+  fillUrlFor: (options = {}, attr) ->
+    resizer.fill @sourceUrl(attr), options
 
   aspectRatio: ->
     @get('aspect_ratio')
