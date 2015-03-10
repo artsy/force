@@ -4,6 +4,7 @@ Backbone = require 'backbone'
 { API_URL } = require('sharify').data
 SubForm = require './sub_form.coffee'
 template = -> require('../templates/account.jade') arguments...
+crypto = require 'crypto'
 
 module.exports = class AccountForm extends Backbone.View
   className: 'settings-account-form'
@@ -36,9 +37,11 @@ module.exports = class AccountForm extends Backbone.View
           @$('#settings-auth-errors').text response.responseJSON.error
           $button.attr 'data-state', null
     else
+      csrfHash = crypto.createHash('sha1').update(@userEdit.get 'accessToken')
+        .digest('hex').substr(0, 12)
       location.assign "/users/auth/#{service}?" +
         "redirect-to=#{encodeURIComponent(location.href)}&" +
-        "state=#{@userEdit.get('accessToken').substr(0,7)}"
+        "state=#{csrfHash}"
 
   setupForms: ->
     # Changing your password logs you out so we direct to login after changing password

@@ -216,9 +216,9 @@ socialAuth = (provider) ->
   (req, res, next) ->
     return next("#{provider} denied") if req.query.denied
     artsyXappToken = res.locals.artsyXappToken if res.locals.artsyXappToken
-    if req.user and req.query.state isnt req.user.get('accessToken').substr(0, 7)
-      err = new Error("Must pass a `state` query param equal to the first 7 " +
-        "characters of the user's access token to link their account.")
+    if req.user and req.query.state isnt hash(req.user.get 'accessToken')
+      err = new Error("Must pass a `state` query param equal to a sha1 hash" +
+        "of the user's access token to link their account.")
       return next err
     passport.authenticate(provider, scope: 'email')(req, res, next)
 

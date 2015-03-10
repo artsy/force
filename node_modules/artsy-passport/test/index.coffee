@@ -3,6 +3,7 @@ Browser = require 'zombie'
 rewire = require 'rewire'
 app = require '../example'
 sinon = require 'sinon'
+crypto = require 'crypto'
 { ARTSY_EMAIL, ARTSY_PASSWORD, TWITTER_EMAIL, TWITTER_PASSWORD,
   FACEBOOK_EMAIL, FACEBOOK_PASSWORD } = require '../config'
 
@@ -152,15 +153,16 @@ describe 'Artsy Passport methods', ->
       @res = { redirect: sinon.stub(), locals: {} }
       @next = sinon.stub()
 
-    it 'authenticates if state param is first 7 chars of access token', ->
+    it 'authenticates if state param is sha1 of access token', ->
       passport = @artsyPassport.__get__ 'passport'
       sinon.spy passport, 'authenticate'
       @req.user = new Backbone.Model accessToken: 'foobarbaz'
-      @req.query.state = 'foobarb'
+      @req.query.state = crypto.createHash('sha1').update('foobarbaz')
+        .digest('hex').substr(0, 12)
       @socialAuth('facebook')(@req, @res, @next)
       passport.authenticate.args[0][0].should.equal 'facebook'
 
-    it 'requires a state param equal to the first 7 chars of the access token', ->
+    it 'requires a state param equal to the sha1 of the access token', ->
       @req.user = new Backbone.Model accessToken: 'foobarbaz'
       @socialAuth('facebook')(@req, @res, @next)
       @next.args[0][0].toString().should.containEql 'Must pass a `state`'
