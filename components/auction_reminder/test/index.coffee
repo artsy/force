@@ -17,7 +17,7 @@ describe 'AuctionReminder', ->
       Backbone.$ = $
     sinon.stub Backbone, 'sync'
     AuctionReminder = benv.requireWithJadeify resolve(__dirname, '../index'), ['auctionTemplate']
-    AuctionReminder.__set__ 'Cookies', { set: (->) }
+    AuctionReminder.__set__ 'Cookies', { set: (->), get: (->) }
     @reminder = new AuctionReminder
     done()
 
@@ -51,6 +51,9 @@ describe 'AuctionReminderModal', ->
     AuctionReminder.__set__ 'Cookies', { set: (->) }
     @AuctionReminderModal = AuctionReminder.__get__ 'AuctionReminderModal'
     @AuctionReminderModal::open = sinon.stub()
+    @auctionImage = 'http://google.com/foo.jpg'
+    @auctionName = 'Foo'
+    @auctionID= 'foobar'
     done()
 
   afterEach ->
@@ -60,25 +63,31 @@ describe 'AuctionReminderModal', ->
   describe '#initialize', ->
 
     it 'displays if there are less than 24 hours until the end of the auction', ->
-      auction = new Sale fabricate 'sale', { end_at: moment().add(5,'hours') }
+      # auction = new Sale fabricate 'sale', { end_at: moment().add(5,'hours') }
       view = new @AuctionReminderModal(
-        auction: auction
+        auctionName: @auctionName
+        auctionID: @auctionID
+        auctionEndat: moment().add(5,'hours')
         auctionImage: @auctionImage
       )
       _.isUndefined(view.$container).should.equal false
 
     it 'displays if there are less than 24 hours until the end, part two', ->
-      auction = new Sale fabricate 'sale', { end_at: moment().add(23,'hours').add(59,'minutes') }
+      # auction = new Sale fabricate 'sale', { end_at: moment().add(23,'hours').add(59,'minutes') }
       view = new @AuctionReminderModal(
-        auction: auction
+        auctionName: @auctionName
+        auctionID: @auctionID
+        auctionEndat: moment().add(5,'hours').add(59,'minutes')
         auctionImage: @auctionImage
       )
       _.isUndefined(view.$container).should.equal false
 
     it 'does not display if there are more than 24 hours until the end', ->
-      auction = new Sale fabricate 'sale', { end_at: moment().add(25,'hours') }
+      auction = new Sale fabricate 'sale', { end_at: moment().add(26,'hours') }
       view = new @AuctionReminderModal(
-        auction: auction
+        auctionName: @auctionName
+        auctionID: @auctionID
+        auctionEndat: moment().add(26,'hours')
         auctionImage: @auctionImage
       )
       _.isUndefined(view.$container).should.equal true

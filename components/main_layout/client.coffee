@@ -94,5 +94,4 @@ setupJquery = ->
 setupAuctionReminder = ->
   if sd.CHECK_FOR_AUCTION_REMINDER and !(Cookies.get('closeAuctionReminder')? or window.location.pathname is '/user/edit')
     new AuctionReminderView
-
 setupAnalytics()
