@@ -3,6 +3,7 @@ Q = require 'q'
 Backbone = require 'backbone'
 moment = require 'moment'
 sd = require('sharify').data
+Artwork = require '../models/artwork.coffee'
 Artworks = require '../collections/artworks.coffee'
 { crop, resize } = require '../components/resizer/index.coffee'
 
@@ -11,11 +12,6 @@ module.exports = class Article extends Backbone.Model
 
   defaults:
     sections: [{ type: 'text', body: '' }]
-
-  slideshowArtworks: ->
-    return null unless (slideshow = _.first @get 'sections')?.type is 'slideshow'
-    new Artworks (for item in slideshow.items when item.type is 'artwork'
-      { id: item.id })
 
   fetchWithRelated: (options = {}) ->
     # Deferred require
@@ -32,19 +28,16 @@ module.exports = class Article extends Backbone.Model
           tier: 1
       )
     ]).fail((r) -> options.error null, r).then =>
-      slideshowArtworks = @slideshowArtworks()
-      Q.all(_.compact _.flatten [
-        slideshowArtworks?.map (a) =>
-          dfd = Q.defer()
-          a.fetch
+      slideshowArtworks = new Artworks
+      dfds = []
+      if (slideshow = _.first(@get 'sections')).type is 'slideshow'
+        for item in slideshow.items when item.type is 'artwork'
+          dfds.push new Artwork(id: item.id).fetch
             cache: true
             data: access_token: options.accessToken
-            error: ->
-              slideshowArtworks.remove(a)
-              dfd.resolve()
-            success: -> dfd.resolve()
-          dfd
-      ]).fail((r) -> options.error null, r).then =>
+            success: (artwork) ->
+              slideshowArtworks.add(artwork)
+      Q.all(dfds).fin =>
         options.success this, footerArticles, slideshowArtworks
 
   isTopTier: ->
