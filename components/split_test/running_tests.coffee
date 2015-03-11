@@ -7,6 +7,10 @@
 #     old: 0.8
 #     new: 0.2
 #   edge: 'new'
+#
+# Note: if there are no running tests
+# this should export empty Object
+# module.exports = {}
 
 module.exports =
   redesigned_header:
