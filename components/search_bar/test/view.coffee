@@ -17,7 +17,7 @@ describe 'SearchBarView', ->
         Bloodhound: Bloodhound
       Backbone.$ = $
       location.assign = sinon.stub()
-      benv.render resolve(__dirname, '../template.jade'), {}, =>
+      benv.render resolve(__dirname, '../templates/index.jade'), {}, =>
         @$input = $('#main-layout-search-bar-input')
         @$input.typeahead = sinon.stub()
         @view = new SearchBarView el: $('#main-layout-search-bar-container'), $input: @$input, mode: 'suggest'

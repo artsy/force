@@ -11,7 +11,6 @@ FlashMessage = require '../../flash/index.coffee'
 PublishModal = require '../../publish_modal/view.coffee'
 Profile = require '../../../models/profile.coffee'
 activatePulldowns = require '../../hover_pulldown/index.coffee'
-splitTest = require '../../split_test/index.coffee'
 
 module.exports = class HeaderView extends Backbone.View
   events:
@@ -44,8 +43,7 @@ module.exports = class HeaderView extends Backbone.View
     @checkRemoveWelcomeHeader()
     @checkForFlash()
 
-    if splitTest('redesigned_header').outcome() is 'new'
-      activatePulldowns()
+    activatePulldowns()
 
   checkRemoveWelcomeHeader: =>
     if sd.CURRENT_USER or (@$window.scrollTop() > @$welcomeHeader.height())

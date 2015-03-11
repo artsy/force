@@ -1,0 +1,20 @@
+#main-layout-search-bar-container( itemscope, itemtype='http://schema.org/WebSite' )
+  meta( itemprop='url', content='https://artsy.net' )
+  form( itemprop='potentialAction', itemscope, itemtype='http://schema.org/SearchAction' )
+    meta( itemprop="target", content="https://artsy.net/search?q={search_term}" )
+
+    input#main-layout-search-bar-input.bordered-input(
+      placeholder='Search…'
+      tabindex='1'
+      itemprop='query-input'
+      type='text'
+      name='search_term'
+      value= term
+      required
+    )
+
+    a#main-layout-search-bar-icon.icon-search
+
+    #main-layout-search-bar-spinner: .loading-spinner-small
+    #main-layout-search-bar-feedback.autocomplete-feedback
+      //- Rendered client-side
