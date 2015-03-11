@@ -20,9 +20,24 @@ describe "Article", ->
 
     it 'gets all the related data from the article', (done) ->
       @article.fetchWithRelated
-        success: (article, author, footerArticles, slideshowArtworks) ->
+        success: (article, footerArticles, slideshowArtworks) ->
           article.get('title').should.equal 'Moo'
           done()
       Backbone.sync.args[0][2].success _.extend fixtures.article, title: 'Moo'
       Backbone.sync.args[1][2].success [fixtures.article]
       @dfd.resolve({})
+
+    it 'gets the slideshow artworks', (done) ->
+      @article.fetchWithRelated
+        success: (article, footerArticles, slideshowArtworks) ->
+          slideshowArtworks.first().get('title').should.equal 'foobar'
+          done()
+      Backbone.sync.args[0][2].success _.extend fixtures.article,
+        title: 'Moo'
+        sections: [{ type: 'slideshow', items: [{ type: 'artwork', id: 'foo'}] }]
+      Backbone.sync.args[1][2].success [fixtures.article]
+      Backbone.sync.returns (dfd = Q.defer()).promise
+      @dfd.resolve({})
+      _.defer =>
+        Backbone.sync.args[2][2].success fabricate 'artwork', title: 'foobar'
+        dfd.resolve()
