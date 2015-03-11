@@ -5,17 +5,14 @@ Artworks = require '../../../collections/artworks.coffee'
 splitTest = require '../../split_test/index.coffee'
 
 class Params extends Backbone.Model
-  defaults: ->
-    if splitTest('artwork_column_sort').outcome() is 'merchandisability'
-      { size: 9, page: 1, sort: '-merchandisability' }
-    else
-      { size: 9, page: 1 }
+  defaults: { size: 9, page: 1 }
 
   next: ->
     @set 'page', @get('page') + 1
 
   prev: ->
     @set 'page', @get('page') - 1
+
 
 module.exports = class ArtworkColumns extends Artworks
   url: ->
@@ -24,6 +21,8 @@ module.exports = class ArtworkColumns extends Artworks
   initialize: (models, options = {}) ->
     { @modelId } = options
     @params = new Params
+    if splitTest('artwork_column_sort').outcome() is 'merchandisability'
+      @params.attributes.sort = '-merchandisability'
     super
 
   fetch: (options = {}) ->
@@ -32,7 +31,7 @@ module.exports = class ArtworkColumns extends Artworks
     @xhr = Artworks::fetch.call this, options
 
   fetchFromBeginning: (options = {}) ->
-    @params.clear().set(@params.defaults())
+    @params.clear().set(@params.defaults)
     @fetch options
 
   nextPage: (options = {}) ->
