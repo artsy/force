@@ -69,10 +69,7 @@ module.exports = class Filter
       @sorts[@selected.get('sort') or '-date_added']
 
   getSplitTestResult: ->
-    if splitTest('artwork_column_sort').outcome() is 'merchandisability'
-      return 'merchandisability'
-    else
-      return 'date_added'
+    if splitTest('artwork_column_sort').outcome() is 'merchandisability' then 'merchandisability' else 'date_added'
 
   buildState: ->
     new FilterState { id: @stateId() }, modelId: @model.id
