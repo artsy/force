@@ -1,0 +1,86 @@
+grid-max-thumbnail-size = 350px
+list-max-thumbnail-size = 130px
+list-row-height = (list-max-thumbnail-size + 40px)
+
+.auction-artworks
+  &[data-mode='grid']
+    clearfix()
+    > .auction-artwork
+      float left
+      width 33.33%
+      padding 30px
+      border-bottom 1px solid gray-lighter-color
+      .auction-artwork-image
+        height grid-max-thumbnail-size
+      .auction-artwork-metadata
+      .auction-artwork-primary-information
+        margin 15px 0
+      .auction-artwork-bidding
+        margin-top 15px
+        padding-top 15px
+        // Has a 1px gray for every 3px transparent dotted border
+        background-image linear-gradient(to right, gray-color 25%, transparent 0%)
+        background-position top
+        background-size 4px 1px
+        background-repeat repeat-x
+      .auction-artwork-bid-button
+        width 100%
+        text-align center
+
+  &[data-mode='list']
+    > .auction-artwork
+      clearfix()
+      position relative
+      border-bottom 1px solid gray-lighter-color
+      .auction-artwork-image
+        width 20%
+        img
+          max-width list-max-thumbnail-size
+          max-height list-max-thumbnail-size
+      .auction-artwork-image
+      .auction-artwork-metadata
+        float left
+        height list-row-height
+      .auction-artwork-metadata
+        width 80%
+      .auction-artwork-metadata-inner
+        display table
+        table-layout fixed
+        width 100%
+        height 100%
+        > div
+          width 25%
+          height 100%
+          display table-cell
+          vertical-align middle
+          text-align center
+          padding 0 10px
+          &:first-child
+            text-align left
+          &:last-child
+            text-align right
+
+.auction-artwork-image
+  a
+    display block
+    > img
+      max-width 100%
+      margin auto
+
+.auction-artwork-primary-information
+  > *
+    overflow ellipsis
+  a
+    text-decoration none
+
+.auction-artwork-lot-number
+  avant-garde()
+  font-size 12px
+
+.auction-artwork-artist
+  avant-garde()
+  font-size 16px
+  text-decoration none
+
+.auction-artwork-bidding
+  //

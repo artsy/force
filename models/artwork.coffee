@@ -8,12 +8,14 @@ Partner = require './partner.coffee'
 AdditionalImage = require './additional_image.coffee'
 { compactObject } = require './mixins/compact_object.coffee'
 { Image, Dimensions, Markdown } = require 'artsy-backbone-mixins'
+Relations = require './mixins/relations/artwork.coffee'
 
 module.exports = class Artwork extends Backbone.Model
 
   _.extend @prototype, Image(sd.SECURE_IMAGES_URL)
   _.extend @prototype, Dimensions
   _.extend @prototype, Markdown
+  _.extend @prototype, Relations
 
   urlRoot: ->
     "#{sd.API_URL}/api/v1/artwork"
@@ -384,7 +386,6 @@ module.exports = class Artwork extends Backbone.Model
 
   artistName: ->
     @get('artist')?.name or ''
-
 
   fetchPartnerAndSales: (options) ->
     Q.allSettled([

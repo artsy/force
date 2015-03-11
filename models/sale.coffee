@@ -73,13 +73,17 @@ module.exports = class Sale extends Backbone.Model
     @isAuction() and _.include(['preview'], @get('auction_state'))
 
   isOpen: ->
-    @get('clockState') is 'open'
+    @state() is 'open'
 
   isPreview: ->
-    @get('clockState') is 'preview'
+    @state() is 'preview'
 
   isClosed: ->
-    @get('clockState') is 'closed'
+    @state() is 'closed'
+
+  # We desire a state when accessing from the server
+  state: ->
+    if @has('clockState') then @get('clockState') else @get('auction_state')
 
   # @param {CurrentUser, Artwork (optional)}
   # @return {Object}

@@ -198,6 +198,7 @@ module.exports = (app) ->
   app.use require "../apps/home"
   # Needs to be above artwork and artist routes to support the /type/:id/* routes
   app.use require "../apps/apply"
+  app.use require "../apps/auction"
   app.use require "../apps/auction_lots"
   app.use require "../apps/auction_support"
   app.use require "../apps/auctions"

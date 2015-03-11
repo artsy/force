@@ -16,13 +16,14 @@ Backbone = require 'backbone'
 FeaturedLinks = require '../collections/featured_links.coffee'
 FeaturedSet = require './featured_set.coffee'
 Sale = require './sale.coffee'
-
+ImageSizes = require './mixins/image_sizes.coffee'
 { smartTruncate } = require "../components/util/string.coffee"
 ABM = require 'artsy-backbone-mixins'
 
 module.exports = class Feature extends Backbone.Model
 
   _.extend @prototype, ABM.Image(sd.SECURE_IMAGES_URL)
+  _.extend @prototype, ImageSizes
   _.extend @prototype, ABM.Markdown
   _.extend @prototype, ABM.Feature(sd.API_URL, Sale, Artworks, FeaturedSet, FeaturedLinks)
 
