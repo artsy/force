@@ -13,6 +13,7 @@ class Params extends Backbone.Model
   prev: ->
     @set 'page', @get('page') - 1
 
+
 module.exports = class ArtworkColumns extends Artworks
   url: ->
     "#{API_URL}/api/v1/search/filtered/artist/#{@modelId}"
