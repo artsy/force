@@ -92,21 +92,19 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
 
       # Resize each img, maintaining aspect ratio, until the row fits the
       # width of the container
-      i = 0
-      until widthDiff() < 1
+      for i in [0..999]
         for img in imgs
           resizeHeight img, dir
           break if widthDiff() < 1
-        break if i += 1 > 999
+        break if widthDiff() < 1
 
       # Resize down to accomodate padding
-      i = 0
       totalWhitespace = imgs.length * 30
-      until imgsWidth() <= $list.width() - totalWhitespace
+      for i in [0..999]
         for img in imgs
           resizeHeight img, -1
           break if imgsWidth() <= $list.width() - totalWhitespace
-        break if i += 1 > 999
+        break if imgsWidth() <= $list.width() - totalWhitespace
 
       # Round off sizes
       for img in imgs
