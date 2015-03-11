@@ -7,6 +7,7 @@ FooterView = require './footer/view.coffee'
 sd = require('sharify').data
 analytics = require '../../lib/analytics.coffee'
 AuctionReminderView = require '../auction_reminder/index.coffee'
+setupSplitTests = require '../split_test/setup.coffee'
 
 module.exports = ->
   setupJquery()
@@ -41,8 +42,9 @@ setupAnalytics = ->
   # (not included in test environment).
   return if not mixpanel? or mixpanel is 'undefined'
   analytics(mixpanel: mixpanel, ga: ga)
-  analytics.trackPageview()
   analytics.registerCurrentUser()
+  setupSplitTests()
+  analytics.trackPageview()
 
   # Log a visit once per session
   unless Cookies.get('active_session')?
