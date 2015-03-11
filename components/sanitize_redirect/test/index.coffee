@@ -43,3 +43,12 @@ describe 'sanitizeRedirect', ->
 
   it 'blocks other protocols; redirects to root', ->
     sanitizeRedirect('javascript:alert(1);').should.equal '/'
+
+  it 'blocks malformed URLs (1)', ->
+    sanitizeRedirect('http:/google.com').should.equal '/'
+
+  it 'blocks malformed URLs (2)', ->
+    sanitizeRedirect('https:/google.com').should.equal '/'
+
+  it 'blocks malformed URLs (3)', ->
+    sanitizeRedirect('http:///google.com').should.equal '/'
