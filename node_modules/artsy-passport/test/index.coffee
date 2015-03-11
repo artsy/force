@@ -152,19 +152,29 @@ describe 'Artsy Passport methods', ->
       @req = { query: {} }
       @res = { redirect: sinon.stub(), locals: {} }
       @next = sinon.stub()
+      @passport = @artsyPassport.__get__ 'passport'
+      sinon.spy @passport, 'authenticate'
+
+    afterEach ->
+      @passport.authenticate.restore()
 
     it 'authenticates if state param is sha1 of access token', ->
-      passport = @artsyPassport.__get__ 'passport'
-      sinon.spy passport, 'authenticate'
       @req.user = new Backbone.Model accessToken: 'foobarbaz'
       @req.query.state = crypto.createHash('sha1').update('foobarbaz').digest('hex')
       @socialAuth('facebook')(@req, @res, @next)
-      passport.authenticate.args[0][0].should.equal 'facebook'
+      @passport.authenticate.args[0][0].should.equal 'facebook'
 
     it 'requires a state param equal to the sha1 of the access token', ->
       @req.user = new Backbone.Model accessToken: 'foobarbaz'
+      @req.path = '/users/auth/facebook'
       @socialAuth('facebook')(@req, @res, @next)
       @next.args[0][0].toString().should.containEql 'Must pass a `state`'
+
+    it 'doesnt require a state param for the callback', ->
+      @req.user = new Backbone.Model accessToken: 'foobarbaz'
+      @req.path = '/users/auth/facebook/callback'
+      @socialAuth('facebook')(@req, @res, @next)
+      @passport.authenticate.args[0][0].should.equal 'facebook'
 
   describe '#submitTwitterLastStep', ->
 

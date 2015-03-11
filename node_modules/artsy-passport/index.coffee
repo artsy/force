@@ -216,7 +216,8 @@ socialAuth = (provider) ->
   (req, res, next) ->
     return next("#{provider} denied") if req.query.denied
     artsyXappToken = res.locals.artsyXappToken if res.locals.artsyXappToken
-    if req.user and req.query.state isnt hash(req.user.get 'accessToken')
+    if req.path is opts.facebookPath and req.user and
+       req.query.state isnt hash(req.user.get 'accessToken')
       err = new Error("Must pass a `state` query param equal to a sha1 hash" +
         "of the user's access token to link their account.")
       return next err
