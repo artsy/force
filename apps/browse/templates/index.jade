@@ -8,39 +8,14 @@ append locals
   - bodyClass = bodyClass + ' body-infinite-scroll'
 
 block body
-  #browse-page.main-layout-container
-
-    if showBrowseCategories
-      if featuredGenes && featuredGenes.at(0)
-        section#browse-page-featured-genes
-          - featuredGene = featuredGenes.at(0)
-          .browse-featured-gene-set
-            if featuredGene.get('items').models
-              for gene in featuredGene.get('items').models
-                a.browse-featured-gene( href=gene.get('href') )
-                  img.bfg-image( src=gene.imageUrl('large_rectangle') )
-                  .bfg-title= gene.get('title')
-
-      a#browse-page-see-all.avant-garde-jump-link( href='/categories' ) Browse All Categories
-        i.icon-chevron-small-right
-
-      if popularCategories && popularCategories.at(0).get('items')
-        section#browse-page-categories
-          .browse-popular-categories
-            h2.large-garamond-header Browse by Popular Categories
-            .bpc-columns
-              for categorySet in popularCategories.at(0).get('items').models
-                .bpc-column
-                  h3= categorySet.get('name')
-                  for category in categorySet.get('items').models
-                    a.highlight-link( href=category.get('href') )
-                      = category.get('title')
-
-    #browse-filter-header.large-garamond-header Browse Works
-    #browse-filter
+  #browse-page.browse-page.main-layout-container
+    #browse-filter.browse-filter
       .filter-fixed-header-nav
         .filter-fixed-header-left
-          em.filter-artworks-num &nbsp;Works
+          em
+            span.filter-artworks-num
+            | &nbsp;Works
         include ../../../components/filter/artworks_nav/template
-      #browse-artworks
+
+      #browse-artworks.browse-artworks
         include ../../../components/filter/artworks/template
