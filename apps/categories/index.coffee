@@ -5,5 +5,4 @@ app = module.exports = express()
 app.set 'views', "#{__dirname}/templates"
 app.set 'view engine', 'jade'
 
-app.get '/browse', routes.index
-app.get '/browse/artworks*', routes.index
+app.get '/categories', routes.index
