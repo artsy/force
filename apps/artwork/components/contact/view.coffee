@@ -11,6 +11,7 @@ Form = require '../../../../components/mixins/form.coffee'
 AfterInquiry = require '../../../../components/after_inquiry/mixin.coffee'
 defaultMessage = require '../../../../components/contact/default_message.coffee'
 Introduction = require '../../../../components/introduction/model.coffee'
+Mailcheck = require 'mailcheck'
 attendanceTemplate = -> require('./templates/attendance.jade') arguments...
 
 class Inquiry extends Backbone.Model
@@ -36,6 +37,15 @@ module.exports = class ContactView extends Backbone.View
     @fairs = @model.relatedCollections.fairs
     @listenTo @fairs, 'sync', @renderAttendance
     @cacheSelectors()
+    @setupMailcheck()
+
+  setupMailcheck: ->
+    Mailcheck.run
+      email: $('.js-email-input').value
+      domains: ['gmail.com', 'aol.com', 'hotmail.com']
+      suggested: (element, suggestion) ->
+        debugger
+      empty: (element) ->
 
   cacheSelectors: ->
     @$submit = @$('button')
