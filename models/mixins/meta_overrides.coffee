@@ -14,7 +14,7 @@ module.exports =
     description: 'Chuck Close reinvented painting with his monumental portraits, rendered with exquisite, exacting realism from photographic sources.'
 
   'jeff-koons':
-    title: 'Jeff Koons Art - 118 Artworks, Biography & Articles on Artsy'
+    title: 'Jeff Koons Art - 142 Artworks, Biography & Articles on Artsy'
     description: 'Welcome to the official Jeff Koons page on Artsy. Jeff Koons plays with ideas of taste, pleasure, celebrity, and commerce. “I believe in advertisement and media completely” ...'
 
   'jenny-saville':
