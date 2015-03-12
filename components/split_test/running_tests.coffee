@@ -19,7 +19,7 @@ module.exports =
     outcomes:
       old: 0.5
       new: 0.5
-    edge: 'new'
+    edge: 'old'
 
   artwork_column_sort:
     key: 'artwork_column_sort'
