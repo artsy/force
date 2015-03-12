@@ -17,6 +17,7 @@ describe 'VideoView', ->
         sd: {}
         artist: new Artist fabricate 'artist'
         artwork: @artwork = new Artwork(fabricate 'artwork')
+        asset: (->)
       }, =>
         Backbone.$ = $
         VideoView = require '../../client/video'

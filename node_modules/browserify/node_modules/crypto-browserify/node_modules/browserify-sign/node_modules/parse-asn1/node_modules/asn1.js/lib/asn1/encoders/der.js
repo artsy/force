@@ -1,4 +1,4 @@
-var util = require('util');
+var inherits = require('inherits');
 var Buffer = require('buffer').Buffer;
 
 var asn1 = require('../../asn1');
@@ -28,7 +28,7 @@ DEREncoder.prototype.encode = function encode(data, reporter) {
 function DERNode(parent) {
   base.Node.call(this, 'der', parent);
 }
-util.inherits(DERNode, base.Node);
+inherits(DERNode, base.Node);
 
 DERNode.prototype._encodeComposite = function encodeComposite(tag,
                                                               primitive,

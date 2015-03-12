@@ -22,15 +22,14 @@ describe 'Inquiry', ->
     @artwork = new Artwork fabricate 'artwork'
     @partner = fabricate 'partner'
     benv.render resolve(__dirname, '../templates/index.jade'), {}, =>
-      Inquiry = benv.requireWithJadeify(resolve(__dirname, '../inquiry'), ['formTemplate', 'headerTemplate'])
+      Inquiry = benv.requireWithJadeify(resolve(__dirname, '../inquiry'), ['formTemplate'])
       @analytics = Inquiry.__get__('analytics')
       sinon.stub @analytics.track, 'funnel'
       sinon.stub Inquiry.prototype, 'open'
       sinon.stub Inquiry.prototype, 'updatePosition'
+      sinon.stub Inquiry.prototype, 'isLoaded'
       sinon.stub(Inquiry.prototype, 'displayAfterInquiryFlow').returns false
       @view = new Inquiry artwork: @artwork, partner: @partner, el: $('body')
-      @view.representatives = new Backbone.Collection [name: 'Foo Bar']
-      @view.representatives.first().iconImageUrl = ->
       @view.renderTemplates()
       done()
 
@@ -41,8 +40,7 @@ describe 'Inquiry', ->
   describe '#renderTemplates', ->
     it 'has the correct header', ->
       html = @view.$el.html()
-      html.should.containEql 'Foo Bar, an Artsy Specialist, is available'
-      html.should.containEql 'img alt="Foo Bar"'
+      html.should.containEql 'Ask a Specialist'
 
   describe '#submit', ->
     describe 'Logged out', ->
@@ -73,6 +71,24 @@ describe 'Inquiry', ->
         events = _.last(@analytics.track.funnel.args, 2)
         events[0][0].should.equal 'Sent artwork inquiry'
         events[1][0].should.equal 'Contact form submitted'
+
+      it 'sends inquiries to galleries if the work is in an auction and ' +
+         'partner is directly contactable', ->
+        @view.sales = new Backbone.Collection [
+          fabricate 'sale', is_auction: true]
+        @view.partner = new Backbone.Model(
+          fabricate 'partner', directly_contactable: true)
+        @view.submit()
+        @view.model.get('contact_gallery').should.be.ok
+
+      it 'does not sends inquiries to artsy if the work is in an auction and ' +
+         'partner is not directly contactable', ->
+        @view.sales = new Backbone.Collection [
+          fabricate 'sale', is_auction: true]
+        @view.partner = new Backbone.Model(
+          fabricate 'partner', directly_contactable: false)
+        @view.submit()
+        @view.model.get('contact_gallery').should.not.be.ok
 
     describe 'Logged in', ->
       beforeEach ->

@@ -13,6 +13,12 @@
   &.is-active
     color purple-color
     border-bottom-color purple-light-color
+  &[disabled]
+  &.is-disabled
+  &.is-disabled:hover
+    color gray-dark-color
+    pointer-events none
+    border-bottom-color transparent
 .garamond-tab-separator
   display inline-block
   margin 0 15px -2px 15px
@@ -23,6 +29,9 @@
   background-color gray-darker-color
   &.is-vertical
     transform none
+.garamond-tab-label
+  text-transform none
+  letter-spacing 0
 
 .meta-separator
   @extends .garamond-tab-separator

@@ -102,7 +102,7 @@ function DH(prime, generator,crypto, malleable) {
 		defineError(this, 8);
 	}
 	this._makeNum = function makeNum() {
-		return crypto.randomBytes(192);
+		return crypto.randomBytes(prime.length);
 	};
 }
 DH.prototype.generateKeys = function () {

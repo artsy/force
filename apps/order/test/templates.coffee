@@ -29,9 +29,9 @@ describe "Shipping Templates", ->
     beforeEach ->
       @order = new Order(fabricate 'order')
       @template = render('shipping')(
-        sd:
-          ASSET_PATH: 'localhost:3000'
+        sd: {}
         order: @order
+        asset: (->)
       )
 
     it "renders the order form", ->
@@ -46,9 +46,9 @@ describe "Shipping Templates", ->
       @order = new Order(fabricate 'order')
       @order.set shippingInfo
       @template = render('shipping')(
-        sd:
-          ASSET_PATH: 'localhost:3000'
+        sd: {}
         order: @order
+        asset: (->)
       )
 
     it "renders the order form", ->
@@ -67,9 +67,9 @@ describe "Checkout Templates", ->
     beforeEach ->
       @order = new Order(fabricate 'order')
       @template = render('checkout')(
-        sd:
-          ASSET_PATH: 'localhost:3000'
+        sd: {}
         order: @order
+        asset: (->)
       )
 
     it "renders the order form", ->
@@ -85,9 +85,9 @@ describe "Checkout Templates", ->
       @order.set shippingInfo
 
       @template = render('checkout')(
-        sd:
-          ASSET_PATH: 'localhost:3000'
+        sd: {}
         order: @order
+        asset: (->)
       )
 
     it "renders the order form", ->
@@ -104,9 +104,9 @@ describe "Complete Templates", ->
   beforeEach ->
     @order = new Order(fabricate 'order')
     @template = render('complete')(
-      sd:
-        ASSET_PATH: 'localhost:3000'
+      sd: {}
       order: @order
+      asset: (->)
     )
 
   it "renders the order form", ->

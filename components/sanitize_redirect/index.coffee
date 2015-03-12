@@ -20,8 +20,11 @@ bareHost = (hostname) ->
   return 'internal' unless hostname?
   _.last(hostname.split('.'), subdomainOffset = 2).join '.'
 
+normalizeAddress = (address) ->
+  address.replace /^http(s?):\/+/, 'http://'
+
 safeAddress = (address) ->
-  parsed = parse(address, false, true)
+  parsed = parse(normalizeAddress(address), false, true)
   _.contains(whitelistProtocols, parsed.protocol) and
   _.contains(whitelistHosts, bareHost(parsed.hostname))
 

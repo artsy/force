@@ -15,4 +15,3 @@ module.exports.init = ->
   Backbone.history.start pushState: true
 
   analytics.trackArtistPageView model
-

@@ -28,16 +28,19 @@ module.exports = class SaveControls extends Backbone.View
 
   save: (e) ->
     e?.preventDefault()
+    e?.stopPropagation()
     return @showSignupModal() unless @user
     @savedArtworks.saveArtwork @model
     @$('.overlay-button-save, .circle-icon-button-save').attr 'data-state', 'saved'
 
   remove: (e) ->
     e?.preventDefault()
+    e?.stopPropagation()
     @savedArtworks.removeArtwork @model
     @$('.overlay-button-save, .circle-icon-button-save').attr 'data-state', null
 
   openCollectionModal: (e) ->
     e?.preventDefault()
+    e?.stopPropagation()
     return @showSignupModal() unless @user
     new SaveControlsModal width: 500, model: @model, collections: @collections

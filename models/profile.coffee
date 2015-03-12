@@ -62,7 +62,14 @@ module.exports = class Profile extends Backbone.Model
   isInstitution: -> _.contains @INSTITUTION_OWNER_TYPES, @get('owner_type')
   isGallery: -> _.contains @GALLERY_OWNER_TYPES, @get('owner_type')
   isPartner: -> @isGallery() or @isInstitution()
-  isFairOranizer: -> @get('owner_type') == 'FairOrganizer'
+  isFairOrganizer: -> @get('owner_type') == 'FairOrganizer'
+  isFairOrOrganizer: -> @isFairOrganizer() || @isFair()
+  isFair: -> @get('owner_type') == 'Fair'
+
+  # Get either the default fair id (from FairOrganizer)
+  # or the id (from Fair)
+  fairOwnerId: ->
+    @get('owner').default_fair_id || @get('owner').id
 
   profileType: ->
     if @isUser()
@@ -71,7 +78,7 @@ module.exports = class Profile extends Backbone.Model
       'Institution'
     else if @isGallery()
       'Gallery'
-    else if @isFairOranizer()
+    else if @isFairOrOrganizer()
       'Fair'
 
   isUserClass: ->
@@ -160,8 +167,8 @@ module.exports = class Profile extends Backbone.Model
   metaTitle: (tab) ->
     _.compact([
       (if @displayName() then "#{@displayName()}" else "Profile")
-      (if @isPartner() and !@isFairOranizer() then @partnerMetaTitle(tab) else null)
-      (if @isFairOranizer() then @fairMetaTitle(tab) else null)
+      (if @isPartner() and !@isFairOrganizer() then @partnerMetaTitle(tab) else null)
+      (if @isFairOrganizer() then @fairMetaTitle(tab) else null)
       "Artsy"
     ]).join(" | ")
 
@@ -218,9 +225,9 @@ module.exports = class Profile extends Backbone.Model
       if @displayName() then "#{@displayName()} on Artsy" else "Profile on Artsy"
 
   metaDescription: (tab) ->
-    if @isPartner() and !@isFairOranizer()
+    if @isPartner() and !@isFairOrganizer()
       @partnerMetaDescription(tab)
-    else if @isFairOranizer()
+    else if @isFairOrganizer()
       @fairMetaDescription(tab)
     else
       @profileMetaDescription()

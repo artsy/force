@@ -21,11 +21,15 @@ if auction.isOpen()
     if auction.isOpen() && user
       .abf-validation-error
         | Your bid needs to be at least #{saleArtwork.minBid()}
+      .abf-min-next
+        | Enter #{saleArtwork.minBid()} or higher
       .typed-bordered-input.is-block
         span $
         input.bordered-input( name='bid', autocomplete='off', required )
-      .abf-min-next
-        | Enter #{saleArtwork.minBid()} or higher
+
+    if auction.isOpen()
+      p#artwork-buyers-premium-link This work has a&nbsp;
+        a( href='#' ) Buyer's Premium
 
     button.avant-garde-button-black.abf-button(
       type      = 'submit'
@@ -50,4 +54,4 @@ if auction.isOpen() && artwork.get('acquireable')
   br
   br
   a( href="artwork/#{saleArtwork.id}/ask_specialist", data-client )
-    | Ask an Artsy specialist
+    | Ask a Specialist

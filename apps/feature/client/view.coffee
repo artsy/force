@@ -5,12 +5,14 @@ CurrentUser = require '../../../models/current_user.coffee'
 FeatureRouter = require './router.coffee'
 FilterView = require './filter.coffee'
 SaleArtworkView = require '../../../components/artwork_item/views/sale_artwork.coffee'
-AuctionClockView = require '../../../components/auction_clock/view.coffee'
+ClockView = require '../../../components/clock/view.coffee'
 trackArtworkImpressions = require('../../../components/analytics/impression_tracking.coffee').trackArtworkImpressions
 Sale = require '../../../models/sale.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 Artworks = require '../../../collections/artworks.coffee'
+Profile = require '../../../models/profile.coffee'
+Partner = require '../../../models/partner.coffee'
 ShareView = require '../../../components/share/view.coffee'
 
 artworkColumns = -> require('../../../components/artwork_columns/template.jade') arguments...
@@ -47,6 +49,7 @@ module.exports = class FeatureView extends Backbone.View
         @sets = sets
         @$('#feature-sets-container').html setsTemplate(sets: @sets)
         @initializeSale @sets
+        @adjustHeader()
       artworkPageSuccess: @artworkPageSuccess
       artworksSuccess: @doneFetchingSaleArtworks
 
@@ -86,7 +89,7 @@ module.exports = class FeatureView extends Backbone.View
     @filterView?.trigger 'doneFetching'
 
   setupArtworkFiltering: (saleArtworksCollection) ->
-    @$('#feature-artworks').before filterTemplate()
+    @$('#feature-artworks').before filterTemplate auction: @sale
 
     @filterView = new FilterView
       el: @$('.feature-artwork-filter')
@@ -133,10 +136,10 @@ module.exports = class FeatureView extends Backbone.View
       sale: sale
       registered: @currentUser?.get('registered_to_bid')?
     @$('#feature-auction-info-countdown-container').html auctionCountdownTemplate(sale: sale)
-    @setupAuctionClock sale
+    @setupClock sale
 
-  setupAuctionClock: (sale) ->
-    @clock = new AuctionClockView
+  setupClock: (sale) ->
+    @clock = new ClockView
       modelName: 'Auction'
       model: sale
       el: @$('.auction-info-countdown')
@@ -164,11 +167,25 @@ module.exports = class FeatureView extends Backbone.View
         el: @$(".artwork-item[data-artwork='#{artwork.id}']")
         model: artwork
         sale: sale
+    @renderPartnerLogo artworks
     if @artworkCollection
       @artworkCollection.addRepoArtworks artworks
       @artworkCollection.syncSavedArtworks()
 
-  setupShareButtons: -> new ShareView el: @$('.feature-share')
+  renderPartnerLogo: (artworks) ->
+    partner = artworks?.first()?.get('partner')
+    return if not partner or @renderedPartnerLogo
+    @renderedPartnerLogo = true
+    new Partner(partner).fetch
+      error: => @$('#feature-auction-logo').remove()
+      success: (partner) =>
+        new Profile(id: partner.get 'default_profile_id').fetch
+          error: => @$('#feature-auction-logo').remove()
+          success: (prof) =>
+            @$('#feature-auction-logo').attr 'src', prof.icon().imageUrl()
+
+  setupShareButtons: ->
+    new ShareView el: @$('.feature-share')
 
   getArtworksOrderedByArtist: (collection) ->
     collection.comparator = (model) -> model.get('artist')?.sortable_id
@@ -222,3 +239,8 @@ module.exports = class FeatureView extends Backbone.View
     unless @currentUser
       mediator.trigger 'open:auth', { mode: 'register', copy: 'Sign up to bid on artworks', redirectTo: @sale.registerUrl() }
       e.preventDefault()
+
+  adjustHeader: =>
+    unless @isAuction()
+      @$('#feature-auction-left').attr('id','feature-non-auction-left')
+      @$('#feature-auction-right').attr('id','feature-non-auction-right')

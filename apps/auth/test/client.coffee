@@ -19,7 +19,7 @@ describe 'PasswordResetView', ->
 
   beforeEach (done) ->
     sinon.stub Backbone, 'sync'
-    benv.render resolve(__dirname, '../templates/reset_password.jade'), { sd: {}, reset_password_token: 'secret' }, =>
+    benv.render resolve(__dirname, '../templates/reset_password.jade'), { asset: (->), sd: {}, reset_password_token: 'secret' }, =>
       @view = new PasswordResetView el: $('#reset-password-page')
       done()
 
@@ -34,7 +34,7 @@ describe 'PasswordResetView', ->
     it 'serializes the form and resets the password', ->
       @view.$('[name="password"]').val 'foobarbaz'
       @view.$('[name="password_confirmation"]').val 'foobarbaz'
-      @view.$('form').submit()
+      @view.$('button').click()
       Backbone.sync.args[0][0].should.equal 'update'
       Backbone.sync.args[0][1].attributes.should.eql
         reset_password_token: 'secret'

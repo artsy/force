@@ -2,8 +2,8 @@ try {
   var asn1 = require('asn1.js');
   var rfc3280 = require('asn1.js-rfc3280');
 } catch (e) {
-  var asn1 = require('../..');
-  var rfc3280 = require('../3280');
+  var asn1 = require('../' + '..');
+  var rfc3280 = require('../' + '3280');
 }
 
 var OCSPResponse = asn1.define('OCSPResponse', function() {

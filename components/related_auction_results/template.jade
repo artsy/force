@@ -4,7 +4,7 @@
       .rar-details
         if lot.hasImage()
           figure.rar-thumbnail
-            img( src= lot.imageUrl('original'), alt= lot.get('title') )
+            img( src= lot.imageUrl('thumbnail'), alt= lot.get('title') )
         .rar-metadata
           em.rar-title #{lot.get('title')} #{lot.get('dates_text') ? '(' + lot.get('dates_text') + ')' : ''}
           .rar-medium= lot.get('medium_text')

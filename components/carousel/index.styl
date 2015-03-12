@@ -3,6 +3,7 @@
 height = 480px
 
 .carousel
+  position relative
   width 100%
   margin-bottom 20px
   user-select none
@@ -32,14 +33,15 @@ height = 480px
 .carousel-figure
   display inline-block
   position relative
-  vertical-align bottom
   padding 0 15px
+  vertical-align top
   &.loading img
     opacity 0
 
 .carousel-controls
   clear both
   height 46px
+  user-select none
 .carousel-arrow-left
 .carousel-arrow-right
   border 3px solid transparent
@@ -77,3 +79,10 @@ height = 480px
   &:hover
   &.is-active
     color black
+
+.carousel-caption
+  color gray-dark-color
+  font-size 15px
+  margin-top 10px
+  font-style italic
+  overflow ellipsis

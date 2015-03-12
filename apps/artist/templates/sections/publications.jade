@@ -15,9 +15,9 @@ if STATUSES.merchandisable
               .merchandisable-item-author
                 | by #{book.get('author_name')}
             if book.has('publish_date')
-              .merchandisable-item-publish-date(
-                datetime= book.get('publish_date')
-              ) (#{book.date('publish_date').format('D MMMM YYYY')})
+              .merchandisable-item-publish-date( datetime= book.get('publish_date') )
+                - wholeYear = book.date('publish_date').dayOfYear() === 1
+                | (#{book.date('publish_date').format(wholeYear ? 'YYYY' : 'D MMMM YYYY')})
     else
       .loading-spinner
 

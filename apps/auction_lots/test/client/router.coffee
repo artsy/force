@@ -4,7 +4,7 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 rewire = require 'rewire'
 
-describe 'BrowseRouter', ->
+describe 'AuctionResultsRouter', ->
   before (done) ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'
@@ -22,7 +22,6 @@ describe 'BrowseRouter', ->
 
   describe '#initialize', ->
     it 'sets the original path', ->
-      @router.originalPath.length.should.be.ok
       @router.originalPath.should.be.an.instanceOf String
 
   describe '#details', ->

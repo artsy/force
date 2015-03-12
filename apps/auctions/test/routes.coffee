@@ -29,7 +29,7 @@ describe 'Auctions routes', ->
       Backbone.sync.args[0][2].success(@sales)
       Backbone.sync.callCount.should.equal 5
       Backbone.sync.args[1][1].url().should.containEql '/api/v1/sale/invalid-sale/sale_artworks'
-      Backbone.sync.args[1][2].data.should.eql size: 5
+      Backbone.sync.args[1][2].data.should.eql size: 5, sort: 'position'
       _.defer =>
         @res.locals.sd.CURRENT_AUCTIONS.should.eql [@openSale]
         @res.locals.sd.ARTWORK_DIMENSIONS.should.eql [

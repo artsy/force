@@ -51,3 +51,18 @@ describe 'CarouselView', ->
         lastDecoyPosition: 765
         firstDecoyPosition: -2023
       }
+
+  describe '#hideDots', ->
+    beforeEach ->
+      sinon.stub(@view.$window, 'width').returns 1000
+
+    afterEach ->
+      @view.$window.width.restore()
+
+    it 'returns true if the carousel length is greater than the # of dots that can be displayed', ->
+      @view.length = 10
+      @view.hideDots().should.be.false
+
+    it 'returns false if the carousel length is less than the # of dots that can be displayed', ->
+      @view.length = 100
+      @view.hideDots().should.be.true

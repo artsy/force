@@ -26,6 +26,7 @@ describe 'ShippingForm', ->
     benv.render resolve(__dirname, '../../templates/shipping.jade'), {
       sd: {}
       order: new Order(fabricate 'order')
+      asset: (->)
     }, =>
       @success = false
       @view = new ShippingForm

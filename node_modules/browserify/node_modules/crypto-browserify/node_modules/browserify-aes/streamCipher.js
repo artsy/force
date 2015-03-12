@@ -17,10 +17,9 @@ function StreamCipher(mode, key, iv, decrypt) {
   iv.copy(this._prev);
   this._mode = mode;
 }
-StreamCipher.prototype._transform = function (chunk, _, next) {
-  next(null, this._mode.encrypt(this, chunk, this._decrypt));
+StreamCipher.prototype._update = function (chunk) {
+  return this._mode.encrypt(this, chunk, this._decrypt);
 };
-StreamCipher.prototype._flush = function (next) {
+StreamCipher.prototype._final = function () {
   this._cipher.scrub();
-  next();
 };

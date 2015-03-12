@@ -1,4 +1,7 @@
 .artwork-meta
+  #artwork-lot-number
+    //- Rendered client-side
+
   //- Primary artwork metadata
   h1
     if artist
@@ -14,40 +17,45 @@
         em= artwork.get('title')
         if artwork.get('date')
           | , #{artwork.get('date')}
-  h2.artwork-detail-medium= artwork.get('medium')
-  if artwork.get('manufacturer')
-    .artwork-detail-manufacturer
-      = artwork.get('manufacturer')
-  unless artwork.isMultipleEditions()
-    .artwork-detail-dimensions
-      .amd-imperial!= artwork.dimensions({ metric: 'in', format: 'superscript' })
-      .amd-metric= artwork.dimensions({ metric: 'cm', format: 'decimal' })
-  if artwork.editionStatus()
-    .artwork-edition-status
-      = artwork.editionStatus()
+    if artwork.get('series')
+      h2.artwork-detail-series From the series&nbsp;
+        em= artwork.get('series')
 
-  //- Image rights/credits
-  if artwork.get('image_rights')
-    .artwork-meta-photo-credit= artwork.get('image_rights')
+  .artwork-detail-secondary-metadata
+    h2.artwork-detail-medium= artwork.get('medium')
+    if artwork.get('manufacturer')
+      .artwork-detail-manufacturer
+        = artwork.get('manufacturer')
+    unless artwork.isMultipleEditions()
+      .artwork-detail-dimensions
+        .amd-imperial!= artwork.dimensions({ metric: 'in', format: 'superscript' })
+        .amd-metric= artwork.dimensions({ metric: 'cm', format: 'decimal' })
+    if artwork.editionStatus()
+      .artwork-edition-status
+        = artwork.editionStatus()
 
-  //- Edition Sets
-  if artwork.isMultipleEditions()
-    form.artwork-edition-sets
-      for edition, i in artwork.editions.models
-        label.artwork-edition-set
-          if artwork.isEditionAcquireable(edition)
-            .aes-radio
-              input.aes-radio-button(
-                type= 'radio'
-                value= edition.id
-                name= 'edition'
-                checked= i === 0 ? true : undefined
-              )
-          .aes-details
-            .aes-imperial!= edition.dimensions({ metric: 'in', format: 'superscript' })
-            .aes-metric= edition.dimensions({ metric: 'cm', format: 'decimal' })
-            .aes-edition-size= edition.get('editions')
-          .aes-price= edition.priceDisplay()
+    //- Image rights/credits
+    if artwork.get('image_rights')
+      .artwork-meta-photo-credit= artwork.get('image_rights')
+
+    //- Edition Sets
+    if artwork.isMultipleEditions()
+      form.artwork-edition-sets
+        for edition, i in artwork.editions.models
+          label.artwork-edition-set
+            if artwork.isEditionAcquireable(edition)
+              .aes-radio
+                input.aes-radio-button(
+                  type= 'radio'
+                  value= edition.id
+                  name= 'edition'
+                  checked= i === 0 ? true : undefined
+                )
+            .aes-details
+              .aes-imperial!= edition.dimensions({ metric: 'in', format: 'superscript' })
+              .aes-metric= edition.dimensions({ metric: 'cm', format: 'decimal' })
+              .aes-edition-size= edition.get('editions')
+            .aes-price= edition.priceDisplay()
 
   //- Partner link
   unless artwork.isContactable()
@@ -86,12 +94,17 @@
           i.icon-website
           | Visit Website
 
-      if artwork.isDownloadable()
+      if artwork.isDownloadable(user)
         a.artwork-download-button(
-          href= artwork.defaultImageUrl('larger'), target='_blank', download= artwork.downloadableFilename()
+          href= "#{artwork.href()}/download/#{artwork.downloadableFilename()}"
+          target='_blank'
+          download
         )
           i.icon-download
-          | Download Image
+          if artwork.defaultImage().get('downloadable')
+            | Download Image
+          else
+            | Admin Download
 
       if user
         if artwork.isEmbeddableByUser(user)
@@ -109,6 +122,6 @@
         a( href="#{sd.ADMIN_URL}/artworks/artwork/#{artwork.id}", target='_blank' )
           i.icon-edit
           | Edit
-        a( href="#{sd.ADMIN_URL}/genome/artwork/#{artwork.id}", target='_blank' )
+        a( href="#{sd.GENOME_URL}/genome/artworks?artwork_ids=#{artwork.id}", target='_blank' )
           i.icon-link
           | Genome

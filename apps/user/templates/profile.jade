@@ -8,6 +8,14 @@ if profile.get('private')
           | Enable public profile
 else
   .grouped-section
+    .gs-header &nbsp;
+    .gs-body
+      | Visit your public profile:
+      = ' '
+      a.faux-underline( href= profile.href() )
+        | https://www.artsy.net#{profile.href()}
+
+  .grouped-section
     .gs-header: h2 Your Profile Information
     .gs-body: .gs-constrain
       #settings-profile-information

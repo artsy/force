@@ -1,0 +1,46 @@
+@import '../stylus_lib'
+
+header-font-size = 12px
+value-font-size = 17px
+small-font-size = 9px
+closed-font-size = 13px
+closed-border-size = 2px
+clock-height = (header-font-size + (value-font-size * 2) + small-font-size)
+closed-padding = (((clock-height - closed-font-size) - (closed-border-size * 2)) / 2)
+
+.clock
+  text-transform uppercase
+  text-align center
+  height clock-height
+
+.clock-header
+  font-size header-font-size
+  line-height 1
+
+.clock-value
+  avant-garde()
+  prevent-content-shift()
+  list-style none
+  font-size value-font-size
+  line-height 2
+  li
+    display inline-block
+    margin 0 3px
+    vertical-align top
+    small
+      display block
+      color transparify(gray-dark-color, black)
+      font-size small-font-size
+      line-height 1
+
+.clock-closed
+  position relative
+  padding closed-padding 0
+  avant-garde()
+  font-size closed-font-size
+  line-height 1
+  border-top 2px solid black
+  border-bottom 2px solid black
+  text-align center
+  // Often overwritten unintentionally
+  text-transform uppercase !important

@@ -18,6 +18,7 @@
   > textarea
   > .bordered-select
   > .bordered-select > select
+  > .bordered-multiple-select
   .stacked-form-cell
     display block
     width 100%
@@ -35,7 +36,10 @@
     margin 20px 0 5px 0
     &:first-child
       margin-top 0
-  > label + input
+  label + input,
+  label + textarea,
+  label + .bordered-select,
+  label + .bordered-multiple-select
     margin-top 5px
 
 // Placeholder mixins
@@ -53,6 +57,7 @@ bordered-input-placeholder--autofocus-focus()
   avant-garde()
   display block
   font-size 12px
+  line-height 1.5
   & + input
     margin-top 5px
 
@@ -168,6 +173,11 @@ bordered-select-border-width = 2px
   border-radius 0
   box-shadow none
   background-color white
+  > option
+    padding 5px 5px
+  &.is-block
+    display block
+    width 100%
 
 // Textarea-specific
 textarea.bordered-input

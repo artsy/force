@@ -15,7 +15,7 @@ module.exports = function first(stuff, done) {
 
     for (var j = 1; j < arr.length; j++) {
       var event = arr[j]
-      var fn = listener(event, cleanup)
+      var fn = listener(event, callback)
 
       // listen to the event
       ee.on(event, fn)
@@ -28,8 +28,9 @@ module.exports = function first(stuff, done) {
     }
   }
 
-  return function (fn) {
-    done = fn
+  function callback() {
+    cleanup()
+    done.apply(null, arguments)
   }
 
   function cleanup() {
@@ -38,8 +39,15 @@ module.exports = function first(stuff, done) {
       x = cleanups[i]
       x.ee.removeListener(x.event, x.fn)
     }
-    done.apply(null, arguments)
   }
+
+  function thunk(fn) {
+    done = fn
+  }
+
+  thunk.cancel = cleanup
+
+  return thunk
 }
 
 function listener(event, done) {

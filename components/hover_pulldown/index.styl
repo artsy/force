@@ -1,0 +1,159 @@
+@import '../../components/stylus_lib'
+
+default-margin = 30px
+menu-width = 250px
+menu-tip-size = 10px
+
+computed-padding(font-size, target-line-height)
+  (target-line-height - font-size) / 2
+
+.hover-pulldown
+  position relative
+  display inline-block
+  cursor pointer
+
+  // Small tip
+  &:before
+    size = 4px
+    display block
+    position absolute
+    content ''
+    top 75%
+    left 50%
+    margin-left -(size)
+    background transparent
+    border size solid transparent
+    border-top-color black
+    border-top-width (size * 1.5)
+
+  // Large tip
+  &:after
+    display block
+    position absolute
+    content ''
+    top 100%
+    left 50%
+    margin-left -(menu-tip-size)
+    background transparent
+    border menu-tip-size solid transparent
+    border-bottom-color black
+    border-bottom-width (menu-tip-size * 1.5)
+    visibility hidden
+    opacity 0
+    transition opacity 0.25s
+
+  // Touch optimizations
+  &[data-mode='touch']
+    // Disable transitions
+    &:after
+    .hover-pulldown-menu
+      transition none
+    .hover-pulldown-menu
+      // Slighty overlap menu with tip
+      margin-top (menu-tip-size + (menu-tip-size * 1.5) - 1)
+
+  &[data-mode='hover']:hover
+  &[data-state='active']
+    &:after
+    .hover-pulldown-menu
+      opacity 1
+      visibility visible
+
+  &[data-state='static']
+    &:after
+    .hover-pulldown-static
+        opacity 1
+        visibility visible
+
+  &[data-state='static'][data-mode='hover']
+    .hover-pulldown-menu
+      transition-delay 0.25s
+
+  &[data-anchor='right']
+    .hover-pulldown-menu
+    .hover-pulldown-static
+      left inherit
+      right 10px
+
+.hover-pulldown-menu
+  visibility hidden
+  position absolute
+  z-index zindex-hover-pulldown
+  width menu-width
+  left 50%
+  top 100%
+  margin-top (menu-tip-size + (menu-tip-size * 1.5))
+  margin-left -(menu-width / 2)
+  padding 25px 0 30px 0
+  text-align left
+  background-color black
+  opacity 0
+  transition opacity 0.25s
+  > span
+  .hpm-header
+    display block
+    padding computed-padding(11px, 40px) default-margin
+    avant-garde()
+    font-size 11px
+    line-height 1
+    color white
+    overflow ellipsis
+    cursor pointer
+  > a
+    display block
+    padding computed-padding(18px, 40px) default-margin
+    garamond()
+    font-size 18px
+    line-height 1
+    text-transform none
+    letter-spacing 0
+    color white
+    text-decoration none
+    overflow ellipsis
+    &:hover
+      background-color gray-darkest-color
+  > hr
+    height 2px
+    margin computed-padding(2px, 40px) default-margin
+    background-color gray-darkest-color
+
+  // Buffer area
+  &:before
+    display block
+    position absolute
+    content ''
+    height (menu-tip-size * 3)
+    right 0
+    bottom 100%
+    left 0
+
+.hover-pulldown-backdrop
+  position fixed
+  top 0
+  right 0
+  bottom 0
+  left 0
+  z-index (zindex-hover-pulldown - 10)
+  height 100vh
+
+// For dark banners and backgrounds
+.body-transparent-header-white
+  .hover-pulldown
+    color white
+    &:before
+      border-top-color white
+
+// Persistent tooltip
+.hover-pulldown-static
+  @extends .hover-pulldown-menu
+  padding 25px 0
+  > span
+    @extends .hover-pulldown-menu > a
+    white-space normal
+    line-height 1.2
+    transition opacity 0.25s
+    &:hover
+      background-color transparent
+  &.is-fade-out
+    > span
+      opacity 0

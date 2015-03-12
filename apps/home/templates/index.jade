@@ -8,7 +8,7 @@ block head
 append locals
   - assetPackage = 'home'
   - bodyClass = bodyClass + ' body-no-margins body-header-fixed body-transparent-header'
-  - bodyClass = bodyClass + (heroUnits.length && heroUnits[0].get('menu_color_class') == 'black' ? '-white' : '')
+  - bodyClass = bodyClass + (heroUnits.length && heroUnits.first().get('menu_color_class') == 'black' ? '-white' : '')
 
 block body
   include hero_units
@@ -16,29 +16,38 @@ block body
     #home-hero-units-controls( data-length= heroUnits.length )
       button#home-hero-units-left-arrow.icon-chevron-left
       ul#home-hero-unit-dots
-        for x, i in heroUnits
+        for x, i in heroUnits.models
           li.hhu-dot( class=(i == 0 ? 'hhud-active' : '') )
       button#home-hero-units-right-arrow.icon-chevron-right
-    #home-layout-container.responsive-layout-container
-      .main-layout-container
-        #home-body
-          if exploreSections.length
-            include explore_sections
-          if exploreSections.length
-            h2.home-featured-header Currently on Artsy
-          ul#home-top-featured-links
-            include featured_links
 
-          #home-featured-artworks-section
-            //- Rendered client-side
-          h2.home-featured-header Featured Shows
-          ul#home-featured-shows.home-featured-list
-            li.loading-spinner
-          a.home-browse-all.avant-garde-button-text( href='/shows' ) All Shows
-          h2.home-featured-header Featured Articles
-          ul#home-featured-posts.home-featured-list
-            li.loading-spinner
-          a.home-browse-all.avant-garde-button-text( href='/posts/featured' ) All Posts
-          h2.home-featured-header Featured Artists
-          ul#home-featured-artists.grid-4-up.home-featured-list
-            li.loading-spinner
+    #home-layout-container.responsive-layout-container
+      .main-layout-container: #home-body
+        if exploreSections.length
+          include explore_sections
+        if exploreSections.length
+          h2.home-featured-header Currently on Artsy
+        ul#home-top-featured-links
+          include featured_links
+
+        #home-featured-artworks-section
+          //- Rendered client-side
+
+        h2.home-featured-header Featured Shows
+        ul#home-featured-shows.home-featured-list
+          - shows = featuredShows.take(8)
+          - displayLocation = true
+          include featured_shows
+        a.home-browse-all.avant-garde-button-text( href='/shows' )
+          | All Shows
+
+        h2.home-featured-header Featured Articles
+        ul#home-featured-posts.home-featured-list
+          - postLinks = featuredPosts.take(7)
+          include featured_posts
+        a.home-browse-all.avant-garde-button-text( href='/posts/featured' )
+          | All Posts
+
+        h2.home-featured-header Featured Artists
+        ul#home-featured-artists.grid-4-up.home-featured-list
+          - artistLinks = featuredArtists.take(4)
+          include featured_artists

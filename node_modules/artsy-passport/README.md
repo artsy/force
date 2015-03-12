@@ -135,7 +135,15 @@ _These forms of user will be null if they're not logged in._
 
 ## Contributing
 
-First install node modules `npm install` then write a ./config.coffee that looks something like this:
+Add a `local.artsy.net` entry into your /etc/hosts
+
+````
+127.0.0.1 localhost
+#...
+127.0.0.1 local.artsy.net
+````
+
+Install node modules `npm install` then write a ./config.coffee that looks something like this:
 
 ````coffeescript
 module.exports =
@@ -145,15 +153,17 @@ module.exports =
   TWITTER_SECRET: ''
   ARTSY_ID: ''
   ARTSY_SECRET: ''
-  SECURE_ARTSY_URL: 'https://staging.artsy.net'
+  SECURE_ARTSY_URL: 'https://api.artsy.net'
   APP_URL: 'http://local.artsy.net:3000'
-  # An Artsy user that's linked to facebook and twitter
+  # An Artsy user that's linked to Facebook and Twitter
   ARTSY_EMAIL: 'craig@artsy.net'
-  ARTSY_PASSWORD: '***'
-  TWITTER_EMAIL: 'craig@artsy.net'
-  TWITTER_PASSWORD: '***'
-  FACEBOOK_EMAIL: 'craig@artsy.net'
-  FACEBOOK_PASSWORD: '***'
+  ARTSY_PASSWORD: ''
+  TWITTER_EMAIL: 'craigspaeth@gmail.com'
+  TWITTER_PASSWORD: ''
+  FACEBOOK_EMAIL: 'craigspaeth@gmail.com'
+  FACEBOOK_PASSWORD: ''
 ````
 
-Then you can check the example by running `make example` and opening [localhost:3000](http://localhost:3000). The tests are integration tests that use the example, so once you set this up run `make test` to run tests.
+Then you can check the example by running `make example` and opening [localhost:3000](http://localhost:3000).
+
+The tests are a combination of integration and middleware unit tests. To run the whole suite use `make test`.

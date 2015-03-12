@@ -28,7 +28,7 @@ function StreamCipher(mode, key, iv, decrypt) {
   this._authTag = null;
   this._called = false;
 }
-StreamCipher.prototype._transform = function (chunk, _, next) {
+StreamCipher.prototype._update = function (chunk) {
   if (!this._called && this._alen) {
     var rump = 16 - (this._alen % 16);
     if (rump <16) {
@@ -45,9 +45,9 @@ StreamCipher.prototype._transform = function (chunk, _, next) {
     this._ghash.update(out);
   }
   this._len += chunk.length;
-  next(null, out);
+  return out;
 };
-StreamCipher.prototype._flush = function (next) {
+StreamCipher.prototype._final = function () {
   if (this._decrypt && !this._authTag) {
     throw new Error('Unsupported state or unable to authenticate data');
   }
@@ -60,7 +60,6 @@ StreamCipher.prototype._flush = function (next) {
     this._authTag = tag;
   }
   this._cipher.scrub();
-  next();
 };
 StreamCipher.prototype.getAuthTag = function getAuthTag () {
   if (!this._decrypt && Buffer.isBuffer(this._authTag)) {

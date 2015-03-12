@@ -1,150 +1,61 @@
 @import '../../../components/stylus_lib'
 @import './lib'
 
-#articles-magazine-header
+gutter-unit = 15px
+
+#articles-magazine-page
+  padding 40px 0
   position relative
 
-#articles-magazine-primary-article
-  width 66%
-  height calc(100% \- 40px)
-  position absolute
-  display inline-block
-  vertical-align top
-  padding-right 15px
-  figure
-    height 420px
-  figcaption
-    background white
-    padding-top 30px
-    position absolute
-    bottom -48px
-    width 560px
-    left calc(50% \- (@width / 2))
-    text-align center
-  .aaf-title
-    position relative
-    top -3px
-  .articles-article-figure
-    height 100%
-
-.aaf-title
-  font-size headline-font-size
-  line-height headline-line-height
-
-.aaf-author
-  avant-garde()
-  font-size 12px
-  margin-top 8px
-
-.aaf-img
-  position absolute
-  top 0
-  left 0
-  width 100%
-  height 100%
-  background gray-lightest-color center center
-  background-size cover
-
-.aaf-date
-  color gray-dark-color
-  display block
-  margin-bottom 7px
-  font-size 17px
-
-.articles-article-figure
+// Top structure
+.am-featured
   position relative
-  a
-    text-decoration none
-
-#articles-magazine-featured-aside, #articles-magazine-feed
-  width 33%
-  display inline-block
+  display table
+.am-featured-hero
+.am-featured-also
+  display table-cell
+.am-featured-hero
+  position relative
+  width 60%
   vertical-align top
-  padding-left (gutter-size / 2)
-  figure
-    margin-bottom 30px
-    height 120px
-    &:last-child
-      margin-bottom 0
-  img
-    width 100%
-    padding-right (gutter-size / 2)
-  figcaption
-    padding-left 50%
-    display inline-block
-    vertical-align top
-  img
-    display inline-block
-    vertical-align top
-  .aaf-title
-    font-size 22px
-    line-height 27px
-    overflow hidden
-  .aaf-author
-    color gray-darkest-color
-  .aaf-img
-    width calc(50% \- (gutter-size / 2))
-  .articles-article-figure
-    display table
-    figcaption
-      display table-cell
-      vertical-align middle
+.am-featured-also
+  width 40%
+  padding-top 7.5%
+  padding-left (gutter-unit * 2)
+  vertical-align bottom
 
-#articles-magazine-featured-aside
-  margin-left 66%
-  figcaption
-    display table-cell
-    vertical-align middle
-  figure
+// Hero pullout
+.am-featured-hero
+  .article-figure
+    position static
+  .article-figure-img-container
     display block
-  a
-    height 100%
-    display table
-
-#articles-magazine-featured-aside, #articles-magazine-primary-article
-  margin-top 40px
-
-#articles-magazine-feed
-  margin-top 70px
-  width 66%
-  padding-right (gutter-size * 1.5)
-  padding-left 0
-  margin-bottom 100px
-  .avant-garde-header
-    font-size 14px
-    border-bottom 1px solid gray-lighter-color
-    padding-bottom (gutter-size - 17)
-  figure
-    height 250px
-    border-bottom 1px solid gray-lighter-color
     width 100%
-    margin-bottom 0
-  .aaf-img
-    width golden-ratio-small-percent
-    min-height 200px
-    height calc(100% \- ((gutter-size - 10) * 2))
-    top (gutter-size - 10)
-  .aaf-title
-    font-size headline-font-size
-    line-height headline-line-height
-    padding-right 80px
-    max-height none
-  .aaf-share
+  .article-figure-img
+    background-color black
+    width 100%
+    // 8:5 ratio
+    padding-bottom 62.5%
+  .article-figure-figcaption
+    display block
     position absolute
+    bottom 0
     right 0
-    bottom 8px
-    a
-      display none
-    a[data-service=twitter], a[data-service=facebook]
-      display inline-block
-  figcaption
-    width 100% - golden-ratio-small-percent
-    padding (gutter-size - 10) 0
-    padding-left gutter-size
-  button
-    margin-top gutter-size
+    width 75%
+    height auto
+    padding (gutter-unit * 2) 0 0 (gutter-unit * 2)
+    background-color white
 
-#articles-magazine-container
-  max-width 1200px
-  min-width 900px
-  margin auto
+// Also featured
+.am-featured-also
+  .article-figure
+    block-margins(gutter-unit * 2)
+  .article-figure-img-container
+    width 33.33%
+  .article-figure-figcaption
+    padding-left gutter-unit
+    .article-figure-title
+      font-size 24px
+      line-height 1.2
+    .article-figure-author
+      font-size 12px

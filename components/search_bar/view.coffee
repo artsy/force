@@ -42,6 +42,13 @@ module.exports = class SearchBarView extends Backbone.View
     'keyup input': 'checkSubmission'
     'focus input': 'trackFocusInput'
     'click .empty-item': 'emptyItemClick'
+    'click #main-layout-search-bar-icon': 'iconClick'
+
+  iconClick: (e) ->
+    if @isEmpty()
+      @$input.focus()
+    else
+      @emptyItemClick()
 
   trackFocusInput: ->
     analytics.track.click "Focused on search input"
@@ -80,11 +87,11 @@ module.exports = class SearchBarView extends Backbone.View
     (@$feedback ?= @$('.autocomplete-feedback'))
       .text feedback or @feedbackString()
 
-  shouldDisplaySuggestions: ->
+  isEmpty: ->
     _.isEmpty(_s.trim(@$input.val()))
 
   displaySuggestions: ->
-    if @shouldDisplaySuggestions()
+    if @isEmpty()
       @renderFeedback()
       @$el.addClass 'is-display-suggestions'
 
@@ -153,7 +160,7 @@ module.exports = class SearchBarView extends Backbone.View
       query: @query
       label: analytics.modelNameAndIdToLabel 'user-query', 'query'
     @selected = true
-    window.location = "/search?q=#{@query}"
+    location.assign "/search?q=#{@query}"
 
   selectResult: (e, model) ->
     return @emptyItemClick() unless model
@@ -162,7 +169,7 @@ module.exports = class SearchBarView extends Backbone.View
       label: analytics.modelNameAndIdToLabel model.get('display_model'), model.id
     analytics.snowplowStruct 'search', 'click', model.get('_id'), model.get('display_model'), '0.0', { 'query' : { 'value' : @query }}
     @selected = true
-    window.location = model.href()
+    location.assign model.href()
 
   remove: ->
     mediator.off null, null, this

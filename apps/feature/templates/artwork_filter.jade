@@ -3,5 +3,9 @@
   a( data-id='artist-a-to-z' ) Artist A&#8211;Z
   a( data-id='most-bids' ) Most Bids
   a( data-id='least-bids' ) Least Bids
-  a( data-id='highest-current-bid' ) Highest Current Bid
-  a( data-id='lowest-current-bid' ) Lowest Current Bid
+  if auction.get('auction_state') === 'preview'
+    a( data-id='highest-bid' ) Highest Starting Bid
+    a( data-id='lowest-bid' ) Lowest Starting Bid
+  else
+    a( data-id='highest-bid' ) Highest Bid
+    a( data-id='lowest-bid' ) Lowest Bid

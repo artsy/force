@@ -1,21 +1,55 @@
+# Key of object maps to state's mode field
+# slug: slug that appears in URL
+# copy: map of copy for form fields
+# values: map of values for form fields (sent to Salesforce)
+
 module.exports =
   initial:
-    value: 'initial'
     slug: ''
-    copy: 'Select Organization Type'
+    copy:
+      type: 'Select Organization Type'
+      company: 'Name'
+      title: 'Title'
+      success: 'Partnerships Team'
+    values:
+      type: 'Other'
+
   gallery:
-    value: 'gallery'
     slug: 'gallery'
-    copy: 'Gallery'
+    copy:
+      type: 'Gallery'
+      company: 'Gallery Name'
+      title: 'Title at gallery'
+      success: 'Gallery Partnerships Team'
+    values:
+      type: 'Gallery'
+
   institution:
-    value: 'institution'
     slug: 'institution'
-    copy: 'Institution'
+    copy:
+      type: 'Institution'
+      company: 'Museum / Institution Name'
+      title: 'Title at org.'
+      success: 'Institutions Team'
+    values:
+      type: 'Museum/Institution'
+
   fair:
-    value: 'fair'
     slug: 'fair'
-    copy: 'Fair'
+    copy:
+      type: 'Fair'
+      company: 'Fair Name'
+      title: 'Title'
+      success: 'Fairs Team'
+    values:
+      type: 'Art Fair'
+
   general:
-    value: 'general'
     slug: 'general'
-    copy: 'Other'
+    copy:
+      type: 'Other'
+      company: 'Name'
+      title: 'Title'
+      success: 'Partnerships Team'
+    values:
+      type: 'Other'

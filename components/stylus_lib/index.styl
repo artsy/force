@@ -6,6 +6,7 @@
 //
 
 @import '../../node_modules/nib'
+@import '../../node_modules/nib'
 @import './typography'
 
 // Widths
@@ -22,9 +23,10 @@ default-modal-padding = 30px
 default-icon-font-size = 32px
 
 // Colors
-json('colors.json')
+json('../../node_modules/artsy-ezel-components/stylus_lib/colors.json')
 
 // Z-indexes
+zindex-hover-pulldown = 800
 zindex-jump = 950
 zindex-deepzoom = 1000
 zindex-iframepopover = 1050
@@ -165,3 +167,29 @@ grid-2-up(offset, gap)
     > .grid-item
       offset = offset / 2
       width calc('50% - %s' % offset)
+
+// When text-decoration: underline is too clunky
+faux-underline()
+  &
+    display: inline
+    position: relative
+    text-decoration: none
+  &:before
+    content: ''
+    position: absolute
+    left: 0
+    display: inline-block
+    height: 1em
+    width: 100%
+    margin-top: 0.15em
+    border-bottom: 1px solid #777
+    color: rgb(80, 80, 80)
+  &:hover
+    text-decoration: none
+
+fine-faux-underline()
+  text-decoration none
+  background-image linear-gradient(top, transparent 0, gray-darkest-color 1px, transparent 0)
+  background-size 1px 5px
+  background-repeat repeat-x
+  background-position bottom

@@ -28,8 +28,8 @@ describe 'Home routes', ->
           Backbone.sync.args[2][2].success [fabricate 'featured_link']
           _.defer =>
             @res.render.args[0][0].should.equal 'index'
-            @res.render.args[0][1].heroUnits[0].get('description').should.equal 'Sign up to get updates on your favorite artists'
-            @res.render.args[0][1].heroUnits[1].get('description').should.equal 'My hero'
+            @res.render.args[0][1].heroUnits.at(0).get('description').should.equal 'Sign up to get updates on your favorite artists'
+            @res.render.args[0][1].heroUnits.at(1).get('description').should.equal 'My hero'
             @res.cookie.args[0][0].should.equal 'hide-welcome-hero'
             @res.cookie.args[0][1].should.equal '1'
             done()
@@ -43,7 +43,7 @@ describe 'Home routes', ->
           Backbone.sync.args[2][2].success [fabricate 'featured_link']
           _.defer =>
             @res.render.args[0][0].should.equal 'index'
-            _.last(@res.render.args[0][1].heroUnits).get('description').should.equal 'Sign up to get updates on your favorite artists'
+            @res.render.args[0][1].heroUnits.last().get('description').should.equal 'Sign up to get updates on your favorite artists'
             done()
 
     describe 'logged in', ->
@@ -53,7 +53,7 @@ describe 'Home routes', ->
         Backbone.sync.args[1][2].success [fabricate 'featured_link']
         _.defer =>
           @res.render.args[0][0].should.equal 'index'
-          @res.render.args[0][1].heroUnits[0].get('description').should.equal 'My hero'
+          @res.render.args[0][1].heroUnits.first().get('description').should.equal 'My hero'
           done()
 
   describe '#redirectToSignup', ->

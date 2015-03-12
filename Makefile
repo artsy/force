@@ -7,8 +7,6 @@
 #
 
 BIN = node_modules/.bin
-CDN_DOMAIN_production = d3df9uo7bhy7ev
-CDN_DOMAIN_staging = dvvrm5xieopg5
 MIN_FILE_SIZE = 1000
 
 # Start the server
@@ -22,6 +20,10 @@ sf:
 # Start the server pointing to staging
 ss:
 	APP_URL=http://localhost:5000 APPLICATION_NAME=force-staging API_URL=https://stagingapi.artsy.net foreman start
+
+# Start the server pointing to staging with cache
+ssc:
+	APP_URL=http://localhost:5000 OPENREDIS_URL=redis://127.0.0.1:6379 APPLICATION_NAME=force-staging API_URL=https://stagingapi.artsy.net foreman start
 
 # Start the server pointing to production
 sp:
@@ -66,7 +68,6 @@ assets:
 		mv public/$(file).min.css.gz public/$(file).min.css.cgz; \
 	)
 
-
 # Generate unminified assets for testing and development.
 assets-fast:
 	$(foreach file, $(shell find assets -name '*.coffee' | cut -d '.' -f 1), \
@@ -82,11 +83,8 @@ verify:
 # Runs all the necessary build tasks to push to staging or production.
 # Run with `make deploy env=staging` or `make deploy env=production`.
 deploy: assets verify
-	$(BIN)/bucketassets -d public/assets -b force-$(env)
-	$(BIN)/bucketassets -d public/images -b force-$(env)
-	heroku config:add \
-		ASSET_PATH=//$(CDN_DOMAIN_$(env)).cloudfront.net/assets/$(shell git rev-parse --short HEAD)/ \
-		--app=force-$(env)
-	git push git@heroku.com:force-$(env).git master
+	$(BIN)/bucketassets --bucket force-$(env)
+	heroku config:set COMMIT_HASH=$(shell git rev-parse --short HEAD) --app=force-$(env)
+	git push --force git@heroku.com:force-$(env).git
 
 .PHONY: test assets

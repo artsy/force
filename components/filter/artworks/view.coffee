@@ -53,13 +53,19 @@ module.exports = class FilterArtworksView extends Backbone.View
 
     # Reset gets called on many events, debounce so only the last one gets called
     @throttledReset = _.debounce @reset, 200
+    # Fetch counts a single time after the initial artworks are fetched
+    @initialCountSync = _.once =>
+      @counts.fetch data: @params.pick('related_gene', 'price_range', 'dimension', 'medium', 'sort')
 
     # Hook up events on the artworks, params, and counts
     @artworks.on 'sync', @render
     @counts.on 'sync', @renderCounts
     @params.on 'change:price_range change:dimension change:medium change:sort reset', @throttledReset
     @params.on 'change:page', =>
-      @artworks.fetch { data: @params.toJSON(), remove: false }
+      @artworks.fetch
+        remove: false
+        data: @params.toJSON()
+        success: @initialCountSync
 
     $.onInfiniteScroll @nextPage
 
@@ -68,14 +74,12 @@ module.exports = class FilterArtworksView extends Backbone.View
       _.defer => @params.trigger 'reset'
 
   render: (col, res) =>
-    #
-    # Set a max # of pages at 100
-    # This is temporary until we figure out exactly where the large page requests (page ~3000) are coming from
-    #
+    @giveUpCount ?= 0
+    @giveUpCount++ if res?.length is 0
     @$('.filter-artworks').attr 'data-state',
       if @artworks.length is 0 then 'no-results'
-      else if res.length is 0 then 'finished-paging'
-      else if @params.get('page') > 100 then 'finished-paging'
+      else if @giveUpCount > 100 then 'finished-paging'
+      else if @params.get('page') > 500 then 'finished-paging'
       else ''
     @newColumnsView() unless @columnsView?
     @columnsView.appendArtworks(new Artworks(res).models)
@@ -96,12 +100,7 @@ module.exports = class FilterArtworksView extends Backbone.View
   reset: =>
     @params.set({ page: 1, size: @pageSize }, { silent: true }).trigger('change change:page')
 
-    @counts.fetch
-      data:
-        price_range: @params.get('price_range')
-        dimension: @params.get('dimension')
-        medium: @params.get('medium')
-        sort: @params.get('sort')
+    @counts.fetch data: @params.pick('related_gene', 'price_range', 'dimension', 'medium', 'sort')
 
     @$('.filter-artworks-list').html ''
     _.defer @newColumnsView

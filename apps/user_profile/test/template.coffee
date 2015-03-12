@@ -19,10 +19,10 @@ describe 'Profile', ->
   beforeEach ->
     @sd =
       API_URL: 'http://localhost:5000'
-      ASSET_PATH: 'http://localhost:5000'
     @profile = new Profile fabricate 'profile'
     @html = render('index')({
       sd: @sd
+      asset: (->)
       profile: @profile
     })
 
@@ -38,5 +38,6 @@ describe 'Profile', ->
       }
       render('index')({
         sd: @sd
+        asset: (->)
         profile: @profile
       }).should.not.containEql '<img src=x'

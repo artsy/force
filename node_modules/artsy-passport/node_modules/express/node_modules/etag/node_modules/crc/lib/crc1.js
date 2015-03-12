@@ -5,7 +5,7 @@ Buffer = require('buffer').Buffer;
 
 create = require('./create');
 
-module.exports = create(function(buf, previous) {
+module.exports = create('crc1', function(buf, previous) {
   var accum, byte, crc, _i, _len;
   if (!Buffer.isBuffer(buf)) {
     buf = Buffer(buf);

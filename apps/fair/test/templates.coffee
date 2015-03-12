@@ -34,7 +34,6 @@ describe 'Fair', ->
         CANONICAL_MOBILE_URL: 'http://localhost:5000'
         APP_URL: 'http://localhost:5000'
         API_URL: 'http://localhost:5000'
-        ASSET_PATH: 'http://localhost:5000'
         CSS_EXT: '.css.gz'
         JS_EXT: '.js.gz'
         NODE_ENV: 'test'
@@ -48,6 +47,7 @@ describe 'Fair', ->
         sd: sd
         fair: fair
         profile: profile
+        asset: (->)
       @$template = cheerio.load template
       done()
 
@@ -63,7 +63,6 @@ describe 'Fair', ->
       sd =
         CANONICAL_MOBILE_URL: 'http://localhost:5000'
         APP_URL: 'http://localhost:5000'
-        ASSET_PATH: 'http://localhost:5000'
         CSS_EXT: '.css.gz'
         JS_EXT: '.js.gz'
         NODE_ENV: 'test'
@@ -78,6 +77,7 @@ describe 'Fair', ->
         sd: sd
         fair: fair
         profile: profile
+        asset: (->)
       @$template = cheerio.load template
       done()
 
@@ -93,7 +93,6 @@ describe 'Fair', ->
       sd =
         CANONICAL_MOBILE_URL: 'http://localhost:5000'
         APP_URL: 'http://localhost:5000'
-        ASSET_PATH: 'http://localhost:5000'
         CSS_EXT: '.css.gz'
         JS_EXT: '.js.gz'
         NODE_ENV: 'test'
@@ -139,6 +138,7 @@ describe 'Fair', ->
         results: results
         fairResults: fairResults
         crop: sinon.stub()
+        asset: (->)
       @$template = cheerio.load template
       done()
 
@@ -149,6 +149,9 @@ describe 'Fair', ->
       @$template.root().find('.fair-search-results .search-result').length.should.equal 1
 
   describe 'overview', ->
+
+    { fair, coverImage, profile, primarySets, nestedFilteredSearchColumns } = {}
+
     before ->
       fair = new Fair (fabricate 'fair', about: 'about the fair')
       coverImage = new CoverImage(image_versions: ['wide'], image_url: "foo/wide.jpg")
@@ -217,7 +220,6 @@ describe 'Fair', ->
       @template = render('overview')
         sd:
           APP_URL: 'http://localhost:5000'
-          ASSET_PATH: 'http://localhost:5000'
           CURRENT_PATH: '/cool-fair'
           PROFILE: fabricate 'fair_profile'
           FAIR: fabricate 'fair'
@@ -226,6 +228,7 @@ describe 'Fair', ->
         filteredSearchColumns: filteredSearchColumns
         coverImage: coverImage
         primarySets: primarySets
+        asset: (->)
 
       nestedFilteredSearchOptions = new Backbone.Model {
         related_gene:
@@ -247,7 +250,6 @@ describe 'Fair', ->
       @nestedTemplate = render('overview')
         sd:
           APP_URL: 'http://localhost:5000'
-          ASSET_PATH: 'http://localhost:5000'
           CURRENT_PATH: '/cool-fair'
           PROFILE: fabricate 'fair_profile'
           FAIR: fabricate 'fair'
@@ -256,6 +258,7 @@ describe 'Fair', ->
         filteredSearchColumns: nestedFilteredSearchColumns
         coverImage: coverImage
         primarySets: primarySets
+        asset: (->)
 
     it 'renders without errors', ->
       $ = cheerio.load @template
@@ -267,14 +270,70 @@ describe 'Fair', ->
       $('.container-right .small-section').length.should.equal 2
       $('.container-left .small-section').length.should.equal 2
       $('.fair-overview-curator .small-section').length.should.equal 2
-      $('.fair-overview-post-container .large-post').length.should.equal 1
-      $('.fair-overview-post-container .small-post').length.should.equal 1
+      $('#fair-editorial-2-up article').length.should.equal 2
 
     it 'renders nested gene names without errors', ->
       $ = cheerio.load @nestedTemplate
       $('.fair-search-options-column').length.should.equal 2
       $('.fair-search-options-column a').length.should.equal 4
       $('.fair-search-options-column').text().should.containEql 'Contemporary/Modern'
+
+    it 'renders a 3 grid layout with less editorial', ->
+      eSet = primarySets.findWhere(key: 'editorial')
+      cSet = primarySets.findWhere(key: 'curator')
+      eSet.get('items').reset(eSet.get('items').first(2))
+      cSet.get('items').reset(cSet.get('items').first(1))
+      $ = cheerio.load render('overview')
+        sd:
+          APP_URL: 'http://localhost:5000'
+          CURRENT_PATH: '/cool-fair'
+          PROFILE: fabricate 'fair_profile'
+          FAIR: fabricate 'fair'
+        fair: fair
+        profile: profile
+        filteredSearchColumns: nestedFilteredSearchColumns
+        coverImage: coverImage
+        primarySets: primarySets
+        asset: (->)
+      $.html('.fair-overview-post-container').should.containEql 'fair-editorial-3-up'
+
+    it 'renders a editorial even when missing a set', ->
+      eSet = primarySets.findWhere(key: 'editorial')
+      cSet = primarySets.findWhere(key: 'curator')
+      primarySets.remove(eSet)
+      cSet.get('items').reset([{}, {}])
+      $ = cheerio.load render('overview')
+        sd:
+          APP_URL: 'http://localhost:5000'
+          CURRENT_PATH: '/cool-fair'
+          PROFILE: fabricate 'fair_profile'
+          FAIR: fabricate 'fair'
+        fair: fair
+        profile: profile
+        filteredSearchColumns: nestedFilteredSearchColumns
+        coverImage: coverImage
+        primarySets: primarySets
+        asset: (->)
+      $.html('.fair-overview-post-container').should.containEql 'fair-editorial-2-up'
+
+    it 'renders a editorial even when missing a set w/ >= 4 items', ->
+      eSet = primarySets.findWhere(key: 'editorial')
+      cSet = primarySets.findWhere(key: 'curator')
+      cSet.get('items').reset([{},{},{},{},{}])
+      primarySets.remove(eSet)
+      $ = cheerio.load render('overview')
+        sd:
+          APP_URL: 'http://localhost:5000'
+          CURRENT_PATH: '/cool-fair'
+          PROFILE: fabricate 'fair_profile'
+          FAIR: fabricate 'fair'
+        fair: fair
+        profile: profile
+        filteredSearchColumns: nestedFilteredSearchColumns
+        coverImage: coverImage
+        primarySets: primarySets
+        asset: (->)
+      $.html().should.containEql 'fair-overview-curator'
 
   describe 'exhibitors columns', ->
     before ->

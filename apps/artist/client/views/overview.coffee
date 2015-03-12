@@ -81,7 +81,7 @@ module.exports = class OverviewView extends Backbone.View
   waitForFilter: ->
     dfd = $.Deferred()
     { filter, artworks } = @filterView
-    @listenToOnce artworks, 'sync', dfd.resolve
+    @listenToOnce artworks, 'sync error', dfd.resolve
     dfd.promise()
 
   renderRelatedArtists: (type) ->

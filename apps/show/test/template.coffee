@@ -30,6 +30,7 @@ describe 'Partner Show', ->
         location: @show.location()
         partner: @show.partner()
         sd: sd
+        asset: (->)
         show: @show
         profile: @profile
         installShots: new InstallShots
@@ -53,6 +54,7 @@ describe 'Partner Show', ->
           location: @show.location()
           partner: @show.partner()
           sd: sd
+          asset: (->)
           show: @show
           profile: @profile
           context: 'fair'
@@ -70,6 +72,7 @@ describe 'Partner Show', ->
           location: @show.location()
           partner: @show.partner()
           sd: sd
+          asset: (->)
           show: @show
           profile: @profile
           context: 'fair'
@@ -98,6 +101,7 @@ describe 'Partner Show', ->
         location: @show.location()
         partner: @show.partner()
         sd: sd
+        asset: (->)
         show: @show
         installShots: new InstallShots
       })
@@ -129,7 +133,7 @@ describe 'Partner Show', ->
         $(".artworks-columns").should.have.lengthOf 1
 
 
-  describe 'with installation shots', ->
+  describe 'with 1 installation shot', ->
     beforeEach ->
       @show = new PartnerShow fabricate('show')
       @html = render('index')
@@ -137,10 +141,27 @@ describe 'Partner Show', ->
         location: @show.location()
         partner: @show.partner()
         sd: sd
+        asset: (->)
         show: @show
         installShots: new InstallShots [fabricate 'show_install_shot']
+
+    it 'does not render the carousel', ->
+      $ = cheerio.load @html
+      $('#show-installation-shot-carousel').should.have.lengthOf 0
+
+  describe 'with 3 or more installation shots', ->
+    beforeEach ->
+      @show = new PartnerShow fabricate('show')
+      @html = render('index')
+        fair: @show.fair()
+        location: @show.location()
+        partner: @show.partner()
+        sd: sd
+        asset: (->)
+        show: @show
+        installShots: new InstallShots _.times 3, -> fabricate('show_install_shot')
 
     it 'renders installation shots', ->
       $ = cheerio.load @html
       $('#show-installation-shot-carousel').should.have.lengthOf 1
-      $('.carousel-figure').should.have.lengthOf 3
+      $('.carousel-figure').should.have.lengthOf 9

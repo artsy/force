@@ -151,8 +151,6 @@ describe 'state', ->
         state.next()
         state.get('current_step').should.equal 'artists'
         state.next()
-        state.get('current_step').should.equal 'introduction'
-        state.next()
         state.get('current_step').should.equal 'galleries'
         state.next()
         state.get('current_step').should.equal 'institutions'
@@ -203,8 +201,6 @@ describe 'state', ->
         state.get('current_step').should.equal 'bookmarks'
         state.next()
         state.get('current_step').should.equal 'artists'
-        state.next()
-        state.get('current_step').should.equal 'introduction'
         state.next()
         state.get('current_step').should.equal 'galleries'
         state.next()

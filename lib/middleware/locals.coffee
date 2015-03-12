@@ -7,12 +7,14 @@ uuid = require 'node-uuid'
 _ = require 'underscore'
 moment = require 'moment'
 { NODE_ENV } = require '../../config'
+helpers = require '../template_helpers'
 
 module.exports = (req, res, next) ->
 
   # Attach libraries to locals
   res.locals._ = _
   res.locals.moment = moment
+  res.locals.helpers = helpers
 
   # Pass the user agent into locals for data-useragent device detection
   res.locals.userAgent = req.get('user-agent')
@@ -23,6 +25,7 @@ module.exports = (req, res, next) ->
   res.locals.sd.CURRENT_PATH = parse(req.url).pathname
   res.locals.sd.ARTSY_XAPP_TOKEN = res.locals.artsyXappToken
   res.locals.sd.HIDE_HEADER = req.cookies?['hide-force-header']?
+  res.locals.sd.HIDE_NAV_NOTICE = req.cookies?['hide-nav-notice']
   res.locals.sd.EIGEN = req.headers?['user-agent']?.match('Eigen')?
   res.locals.sd.REQUEST_TIMESTAMP = Date.now()
 

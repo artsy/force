@@ -1,132 +1,58 @@
 _ = require 'underscore'
-routes = require '../routes'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
-CurrentUser = require '../../../models/current_user.coffee'
+routes = require '../routes'
 
-describe '#auctionRegistration', ->
-
+describe '/auction routes', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    @req = { params: { id: 'awesome-sale' } }
-    @res =
-      status: sinon.stub()
-      render: sinon.stub()
-      redirect: sinon.stub()
-      locals:
-        sd:
-          ASSET_PATH: "http://localhost:5000"
-          API_URL: 'http://localhost:5000'
-    @next = sinon.stub()
+
+    @req = params: id: 'foobar'
+    @res = render: sinon.stub(), locals: sd: {}
 
   afterEach ->
     Backbone.sync.restore()
 
-  it 'redirects to login without user', ->
-    routes.auctionRegistration @req, @res
-    @res.redirect.args[0][0].should.equal "/log_in?redirect_uri=/auction-registration/awesome-sale"
+  it 'first fetches the feature', ->
+    routes.index @req, @res
+    Backbone.sync.args[0][2].url.should.containEql '/api/v1/sets/contains?item_type=Sale&item_id=foobar'
 
-  describe 'with current user', ->
+  it 'then fetches the remaining aspects of the auction', (done) ->
+    routes.index @req, @res
+    Backbone.sync.args[0][2].success [{ owner: {} }]
+    _.defer =>
+      Backbone.sync.callCount.should.equal 5
 
-    beforeEach ->
-      @req.user = new CurrentUser()
+      Backbone.sync.args[1][1].url().should.containEql '/api/v1/sale/foobar'
 
-    it 'redirects to success url if sale is registerable and user has already registered', ->
-      routes.auctionRegistration @req, @res
-      Backbone.sync.args[0][2].success fabricate 'sale', name: 'Awesome Sale', is_auction: true, auction_state: 'open'
-      Backbone.sync.args[1][2].success [{foo: 'bar'}]
+      Backbone.sync.args[2][1].url().should.containEql '/api/v1/feature'
 
-      routes.auctionRegistration @req, @res
+      # Start of fetchPartner
+      Backbone.sync.args[3][1].url().should.containEql '/api/v1/sale/foobar/sale_artworks'
+      Backbone.sync.args[3][2].data.should.eql size: 1
 
-      @res.redirect.args[0][0].should.equal "/feature/whtney-art-party/confirm-registration"
+      Backbone.sync.args[4][1].url().should.containEql '/api/v1/sale/foobar/sale_artworks'
+      Backbone.sync.args[4][2].data.should.equal 'total_count=1&size=10'
 
-    it 'renders registration form if sale is registerable and user has no credit cards on file', ->
-      routes.auctionRegistration @req, @res
-      Backbone.sync.args[0][2].success fabricate 'sale', name: 'Awesome Sale', is_auction: true, auction_state: 'open'
-      Backbone.sync.args[1][2].success []
-      Backbone.sync.args[2][2].success []
+      done()
 
-      @res.render.args[0][0].should.equal 'registration'
-      @res.render.args[0][1].sale.get('name').should.equal 'Awesome Sale'
-
-    it 'creates bidder and redirects to sale if sale is registerable and user has credit card on file', ->
-      routes.auctionRegistration @req, @res
-      Backbone.sync.args[0][2].success fabricate 'sale', name: 'Awesome Sale', is_auction: true, auction_state: 'open'
-      Backbone.sync.args[1][2].success []
-      Backbone.sync.args[2][2].success [{foo: 'bar'}]
-      Backbone.sync.args[3][2].success [{}]
-
-      @res.redirect.args[0][0].should.equal "/feature/whtney-art-party/confirm-registration"
-
-    it 'renders registration error page if sale is an auction and is not registerable', ->
-      routes.auctionRegistration @req, @res
-      Backbone.sync.args[0][2].success fabricate 'sale', name: 'Awesome Sale', is_auction: true, auction_state: 'closed'
-
-      @res.render.args[0][0].should.equal 'registration_error'
-      @res.render.args[0][1].sale.get('name').should.equal 'Awesome Sale'
-
-    it '404 if sale is not auction', ->
-      routes.auctionRegistration @req, @res, @next
-      Backbone.sync.args[0][2].success fabricate 'sale', name: 'Awesome Sale', is_auction: false
-
-      @next.args[0][0].status.should.equal 404
-      @next.args[0][0].message.should.equal 'Not Found'
-
-describe '#bid', ->
-
-  beforeEach ->
-    sinon.stub Backbone, 'sync'
-    @req = { params: { id: 'awesome-sale', artwork: 'artwork-id' }, query: { bid: '50000'} }
-    @res =
-      status: sinon.stub()
-      render: sinon.stub()
-      redirect: sinon.stub()
-      locals:
-        sd:
-          ASSET_PATH: "http://localhost:5000"
-          API_URL: 'http://localhost:5000'
-    @next = sinon.stub()
-
-  afterEach ->
-    Backbone.sync.restore()
-
-  it 'redirects to login without user', ->
-    routes.bid @req, @res
-    @res.redirect.args[0][0].should.equal "/log_in?redirect_uri=/feature/awesome-sale/bid/artwork-id"
-
-  describe 'with current user', ->
-
-    beforeEach ->
-      @resolve = (a, b, c, d) =>
-        Backbone.sync.args[0][2].success a or fabricate 'sale', name: 'Awesome Sale', is_auction: true, auction_state: 'open'
-        Backbone.sync.args[1][2].success b or fabricate 'sale_artwork'
-        Backbone.sync.args[2][2].success c or [{foo: 'bar'}]
-        Backbone.sync.args[3][2].success d or [fabricate('bidder_position')]
-      @req.user = new CurrentUser()
-      routes.bid @req, @res, @next
-
-    it 'renders with isRegistered: true if is registered', ->
-      @resolve()
-      @res.render.args[0][0].should.equal 'bid-form'
-      @res.render.args[0][1].isRegistered.should.be.ok
-      @res.render.args[0][1].maxBid.should.equal 500
-
-    it 'renders with isRegistered: true if is not registered', ->
-      @resolve(null, null, [], null)
-      @res.render.args[0][0].should.equal 'bid-form'
-      @res.render.args[0][1].isRegistered.should.not.be.ok
-
-    it '404 if sale is not auction', ->
-      Backbone.sync.args[0][2].success fabricate 'sale', name: 'Awesome Sale', is_auction: false
-      @next.args[0][0].status.should.equal 404
-      @next.args[0][0].message.should.equal 'Not Found'
-
-    it '404 if sale not active', ->
-      Backbone.sync.args[0][2].success fabricate 'sale', name: 'Awesome Sale', is_auction: true, auction_state: 'closed'
-      @next.args[0][0].status.should.equal 404
-      @next.args[0][0].message.should.equal 'Not Found'
-
-    it 'passes the bidder positions', ->
-      @resolve null, null, null, [fabricate 'bidder_position', moo: 'bar']
-      @res.locals.sd.BIDDER_POSITIONS[0].moo.should.equal 'bar'
+  it 'renders the index template', (done) ->
+    routes.index @req, @res
+    Backbone.sync.args[0][2].success [{ owner: {} }]
+    _.defer =>
+      successes = _.map Backbone.sync.args[1..-1], (args) -> args[2].success
+      successes[0]({})
+      successes[1]({})
+      successes[2]([])
+      successes[3]([])
+      _.defer =>
+        @res.render.args[0][0].should.equal 'index'
+        _.keys(@res.render.args[0][1]).should.eql [
+          'auction'
+          'feature'
+          'profile'
+          'artworks'
+          'saleArtworks'
+        ]
+        done()

@@ -1,9 +1,8 @@
 Backbone = require 'backbone'
-Article = require '../models/artist.coffee'
 sd = require('sharify').data
+Article = require '../models/article.coffee'
 
 module.exports = class Articles extends Backbone.Collection
-
   url: "#{sd.POSITRON_URL}/api/articles"
 
   model: Article
@@ -16,4 +15,10 @@ module.exports = class Articles extends Backbone.Collection
     @where(tier: 1).slice(0, 4)
 
   feed: ->
-    @reject (a) => a in @featured()
+    featured = @featured()
+    @reject (a) ->
+      a in featured
+
+  sync: (method, model, options) ->
+    options.headers = 'X-Access-Token': ''
+    super

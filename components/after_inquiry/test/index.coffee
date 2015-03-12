@@ -97,7 +97,7 @@ describe 'AfterInquiry', ->
               $.ajax.args[0][0].type.should.equal 'post'
               $.ajax.args[0][0].data.message.
                 should.equal 'Thanks for creating your account Foo Bar.<br>Take 60 seconds to personalize your experience'
-              window.location.should.equal '/personalize'
+              window.top.location.href.should.containEql '/personalize'
 
           describe 'and it was sent successfully', ->
             beforeEach ->
@@ -115,7 +115,7 @@ describe 'AfterInquiry', ->
               $.ajax.args[0][0].type.should.equal 'post'
               $.ajax.args[0][0].data.message.
                 should.equal 'Thanks for creating your account Foo Bar.<br>Take 60 seconds to personalize your experience'
-              window.location.should.equal '/personalize'
+              window.top.location.href.should.containEql '/personalize'
 
         describe 'logged in', ->
           describe 'and it was not yet sent', ->

@@ -3,5 +3,4 @@ module.exports =
   'weekly_email':               'Weekly Newsletters'
   'follow_users_email':         'User Follow Emails'
   'offer_emails':               'Offer Emails'
-  'personalized_show_email':    'Personalized Show Guide'
-  'personalized_artists_email': 'Personalized Artists and Artworks Emails'
+  'personalized_email':         'Personalized Artists and Artwork Recommendations'

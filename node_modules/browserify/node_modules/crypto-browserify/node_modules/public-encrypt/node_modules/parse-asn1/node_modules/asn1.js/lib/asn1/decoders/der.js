@@ -1,4 +1,4 @@
-var util = require('util');
+var inherits = require('inherits');
 
 var asn1 = require('../../asn1');
 var base = asn1.base;
@@ -30,7 +30,7 @@ DERDecoder.prototype.decode = function decode(data, options) {
 function DERNode(parent) {
   base.Node.call(this, 'der', parent);
 }
-util.inherits(DERNode, base.Node);
+inherits(DERNode, base.Node);
 
 DERNode.prototype._peekTag = function peekTag(buffer, tag) {
   if (buffer.isEmpty())

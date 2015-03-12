@@ -1,6 +1,9 @@
 if lot.hasImage()
-  a.ard-image.auction-lot-image-zoom( href=lot.imageUrl('original'), rel='nofollow' )
-    img( src= lot.imageUrl('original'), alt=lot.get('title') )
+  img.ard-image(
+    src= lot.imageUrl('thumbnail')
+    alt= lot.get('title')
+    onerror='this.style.display="none";'
+  )
 
 .ard-metadata
   dl

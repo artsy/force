@@ -40,16 +40,18 @@ describe 'AccountForm', ->
   describe '#toggleService', ->
     describe 'link', ->
       beforeEach ->
+        @userEdit.set accessToken: 'x-foo-token'
+        location.assign = sinon.stub()
         global.location.href = 'user/edit'
         @view.$('.settings-toggle-service[data-service="twitter"]').click()
 
       it 'links the correct service', ->
-        window.location.should.containEql '/users/auth/twitter?'
+        location.assign.args[0][0].should.containEql '/users/auth/twitter?'
 
       describe '#toggleLinked', ->
         it 'after linking redirects back to the user edit form', ->
-          window.location.should.containEql 'redirect-to='
-          window.location.should.containEql 'user%2Fedit'
+          location.assign.args[0][0].should.containEql 'redirect-to='
+          location.assign.args[0][0].should.containEql 'user%2Fedit'
 
     describe 'unlink', ->
       beforeEach ->

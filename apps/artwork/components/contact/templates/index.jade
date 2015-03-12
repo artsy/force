@@ -22,9 +22,9 @@ if artwork.isContactable()
       input( type='hidden', name='email', value=user.get('email') )
     else
       //- Logged out
-      input.bordered-input( placeholder='Your full name', name='name', required )
-      input.bordered-input( placeholder='Your email address', name='email', type='email', required )
-    textarea.bordered-input( rows='5', name='message', required )
+      input.bordered-input.is-persistplaceholder( placeholder='Your full name', name='name', required )
+      input.bordered-input.is-persistplaceholder( placeholder='Your email address', name='email', type='email', required )
+    textarea.bordered-input.is-persistplaceholder( rows='5', name='message', required )
       = defaultMessage
       = " "
     if user
@@ -33,6 +33,14 @@ if artwork.isContactable()
       //- Rendered client-side
     #artwork-contact-form-attendance
       //- Rendered client-side
+
+    unless user
+      p.artwork-contact-privacy
+        | By clicking below, you accept our
+        = ' '
+        a( href='/privacy', target='_blank' ) Privacy Policy
+        | .
+
     .artwork-contact-button
       button.avant-garde-button-black Request Info
 
@@ -46,4 +54,4 @@ if artwork.get('inquireable')
   p Questions? We are here to help.
   .artwork-inquiry-button
     a( href="/artwork/#{artwork.id}/inquire", rel='nofollow', data-client )
-      | Ask an Artsy Specialist
+      | Ask a Specialist

@@ -13,7 +13,7 @@ xdescribe 'ForYouView', ->
   before (done) ->
     benv.setup =>
       sd.API_URL = 'localhost:3003'
-      sd.ASSET_PATH = 'assets/'
+
       sd.CURRENT_PATH = ""
       sd.CURRENT_USER = "hello"
       sd.NODE_ENV = "test"
@@ -35,7 +35,7 @@ xdescribe 'ForYouView', ->
     it "renders personalized artist list", ->
       view = new @OverviewView
         el: $("""<div>
-            <div class='auction-clock'></div>
+            <div class='clock'></div>
             <div class='container-left'><div class='large-section-subheading'></div></div>
             </div>""")
         fair: @fair

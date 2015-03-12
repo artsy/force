@@ -1,25 +1,29 @@
 .artwork-more-info
+  if artwork.get('blurb')
+    .artwork-blurb
+      != artwork.mdToHtml('blurb')
+
   if artwork.get('provenance')
     .avant-garde-header-small
       | Provenance
     .artwork-blurb.artwork-provenance!= artwork.mdToHtml('provenance')
-  
+
   if artwork.get('exhibition_history')
     .avant-garde-header-small
       | Exhibition History
     .artwork-blurb.artwork-exhibition-history!= artwork.mdToHtml('exhibition_history')
-  
+
   if artwork.get('signature')
     .avant-garde-header-small
       | Signature
     .artwork-blurb.artwork-signature!= artwork.mdToHtml('signature')
-  
+
   if artwork.get('additional_information')
     .avant-garde-header-small
       | Additional Information
     .artwork-blurb.artwork-additional-information!= artwork.mdToHtml('additional_information')
-  
+
   if artwork.get('literature')
-    .avant-garde-header-small 
+    .avant-garde-header-small
       | Literature
     .artwork-blurb.artwork-literature!= artwork.mdToHtml('literature')

@@ -41,7 +41,7 @@ describe 'Fair routes', ->
       routes.forYou @req, @res, (next = sinon.stub())
       next.called.should.be.ok
 
-      routes.fairPosts @req, @res, (next = sinon.stub())
+      routes.fairArticles @req, @res, (next = sinon.stub())
       next.called.should.be.ok
 
       routes.favorites @req, @res, (next = sinon.stub())
@@ -74,10 +74,10 @@ describe 'Fair routes', ->
       @res.locals.sd.SECTION.should.equal 'forYou'
       @res.render.args[0][0].should.equal 'index'
 
-  describe '#fairPosts', ->
+  describe '#fairArticles', ->
 
     it 'renders the posts template', ->
-      routes.fairPosts @req, @res
+      routes.fairArticles @req, @res
       @res.locals.sd.SECTION.should.equal 'posts'
       @res.render.args[0][0].should.equal 'index'
 
@@ -144,8 +144,7 @@ describe '#fetchFairData', ->
     @success = =>
       Fair::fetchPrimarySets.args[0][0].success()
       Fair::fetchOverviewData.args[0][0].success(
-        fair: new Fair(fabricate 'fair', id: 'the-foo-show')
-        profile: new Profile(fabricate 'profile', id: 'thefooshow')
+        fair: new Fair(fabricate 'fair', id: 'the-foo-show' )
         filterSuggest: new FilterSuggest({ "design": 4002, "drawing": 3772 })
         filteredSearchOptions: new FilterSuggest({ "design": 4002, "drawing": 3772 })
         filteredSearchColumns: []
@@ -158,8 +157,11 @@ describe '#fetchFairData', ->
       )
     @cache = routes.__get__ 'cache'
     @cache.setHash = sinon.stub()
+
+    profile = new Profile _.extend fabricate('fair_profile'), { owner_type: 'Fair', id:'thefooshow' }
+
     @req = { params: { id: 'the-foo-show' } }
-    @res = { locals: { sd: {}, profile: new Profile(fabricate('fair_profile')) } }
+    @res = { locals: { sd: {}, profile: profile } }
     @next = sinon.stub()
 
   afterEach ->
@@ -189,4 +191,4 @@ describe '#fetchFairData', ->
     routes.fetchFairData @req, @res, @next
     @success()
     (@cache.setHash.args[0][1].fair?).should.be.ok
-    (@cache.setHash.args[0][1].profile?).should.be.ok
+    (@cache.setHash.args[0][1].filterSuggest?).should.be.ok

@@ -5,7 +5,7 @@
 #
 
 { API_URL, NODE_ENV, ARTSY_ID, ARTSY_SECRET, SESSION_SECRET,
-  SESSION_COOKIE_MAX_AGE, PORT, ASSET_PATH, FACEBOOK_APP_NAMESPACE,
+  SESSION_COOKIE_MAX_AGE, PORT, FACEBOOK_APP_NAMESPACE,
   MOBILE_MEDIA_QUERY, MOBILE_URL, APP_URL, OPENREDIS_URL, DEFAULT_CACHE_TIME,
   CANONICAL_MOBILE_URL, IMAGES_URL_PREFIX, SECURE_IMAGES_URL,
   GOOGLE_ANALYTICS_ID, MIXPANEL_ID, SNOWPLOW_COLLECTOR_HOST, GOOGLE_SEARCH_CX,
@@ -15,7 +15,7 @@
   SENTRY_PUBLIC_DSN, SHOW_AUCTIONS_IN_HEADER, EMPTY_COLLECTION_SET_ID,
   GEMINI_S3_ACCESS_KEY, GEMINI_APP, GEMINI_ACCOUNT_KEY, BIDDER_H1_COPY,
   BIDDER_H2_COPY, APPLICATION_NAME, EMBEDLY_KEY, DISABLE_IMAGE_PROXY,
-  POSITRON_URL } = config = require "../config"
+  POSITRON_URL, CHECK_FOR_AUCTION_REMINDER } = config = require "../config"
 { parse, format } = require 'url'
 _ = require 'underscore'
 express = require "express"
@@ -32,12 +32,14 @@ proxySitemaps = require './middleware/proxy_sitemaps'
 localsMiddleware = require './middleware/locals'
 micrositeMiddleware = require './middleware/microsite'
 ensureSSL = require './middleware/ensure_ssl'
+ensureWWW = require './middleware/ensure_www'
 escapedFragmentMiddleware = require './middleware/escaped_fragment'
 sameOriginMiddleware = require './middleware/same_origin'
 hstsMiddleware = require './middleware/hsts'
 unsupportedBrowserCheck = require "./middleware/unsupported_browser"
 flash = require 'connect-flash'
 flashMiddleware = require './middleware/flash'
+robotsMiddleware = require './middleware/robots'
 bodyParser = require 'body-parser'
 cookieParser = require 'cookie-parser'
 session = require 'cookie-session'
@@ -49,12 +51,13 @@ fs = require 'graceful-fs'
 artsyError = require 'artsy-error-handler'
 cache = require './cache'
 timeout = require 'connect-timeout'
+bucketAssets = require 'bucket-assets'
+splitTestMiddleware = require '../components/split_test/middleware'
 
 # Setup sharify constants & require dependencies that use sharify data
 sharify.data =
   JS_EXT: (if ("production" is NODE_ENV or "staging" is NODE_ENV) then ".min.js.cgz" else ".js")
   CSS_EXT: (if ("production" is NODE_ENV or "staging" is NODE_ENV) then ".min.css.cgz" else ".css")
-  ASSET_PATH: ASSET_PATH
   APP_URL: APP_URL
   POSITRON_URL: POSITRON_URL
   API_URL: API_URL
@@ -89,6 +92,8 @@ sharify.data =
   EMBEDLY_KEY: EMBEDLY_KEY
   DISABLE_IMAGE_PROXY: DISABLE_IMAGE_PROXY
   SHOW_AUCTIONS_IN_HEADER: SHOW_AUCTIONS_IN_HEADER
+  CDN_URL: process.env.CDN_URL
+  CHECK_FOR_AUCTION_REMINDER: CHECK_FOR_AUCTION_REMINDER
 
 CurrentUser = require '../models/current_user'
 
@@ -144,6 +149,7 @@ module.exports = (app) ->
   app.use bodyParser.urlencoded(extended: true)
   app.use cookieParser()
   app.use session
+    cookie: secure: true
     secret: SESSION_SECRET
     domain: COOKIE_DOMAIN
     key: SESSION_COOKIE_KEY
@@ -167,13 +173,14 @@ module.exports = (app) ->
 
   # Proxy / redirect requests before they even have to deal with Force routing
   # (This must be after the auth middleware to be able to proxy auth routes)
-  app.use proxyGravity.app
   app.use proxySitemaps.app
   app.use redirectMobile
   app.use proxyReflection
   app.use ensureSSL
+  app.use ensureWWW
 
   # General helpers and express middleware
+  app.use bucketAssets()
   app.use flash()
   app.use flashMiddleware
   app.use localsMiddleware
@@ -184,26 +191,31 @@ module.exports = (app) ->
   app.use escapedFragmentMiddleware
   app.use logger('dev')
   app.use unsupportedBrowserCheck
+  app.get '/robots.txt', robotsMiddleware
+  app.use splitTestMiddleware
 
   # Mount apps
   app.use require "../apps/home"
   # Needs to be above artwork and artist routes to support the /type/:id/* routes
   app.use require "../apps/apply"
-  app.use require "../apps/auction_lots"
   app.use require "../apps/auction"
+  app.use require "../apps/auction_lots"
+  app.use require "../apps/auction_support"
   app.use require "../apps/auctions"
   app.use require "../apps/artist"
   app.use require "../apps/artists"
   app.use require "../apps/artwork"
   app.use require "../apps/about"
   app.use require "../apps/browse"
+  app.use require "../apps/categories"
   app.use require "../apps/fairs"
   app.use require "../apps/feature"
   app.use require "../apps/flash"
   app.use require "../apps/galleries_institutions"
+  app.use require "../apps/gallery_insights"
   app.use require "../apps/gallery_partnerships"
-  app.use require "../apps/partner_application"
   app.use require "../apps/gene"
+  app.use require "../apps/legacy_routes"
   app.use require "../apps/notifications"
   app.use require "../apps/order"
   app.use require "../apps/personalize"
@@ -218,6 +230,8 @@ module.exports = (app) ->
   app.use require "../apps/favorites_follows"
   app.use require "../apps/unsubscribe"
   app.use require "../apps/unsupported_browser"
+  # Temporary, until we update gravity and data
+  app.use require "../apps/fair_organizer"
   # Profile middleware and apps that use profiles
   app.use require "../apps/profile"
   app.use require "../apps/user_profile"

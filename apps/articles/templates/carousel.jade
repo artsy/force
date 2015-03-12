@@ -7,7 +7,8 @@ mixin carouselFigure(item)
     when 'artwork'
       - artworkSize = 'larger'
       - artwork = slideshowArtworks.findWhere({ _id: item.id })
-      include ../../../components/artwork_item/templates/artwork.jade
+      if artwork
+        include ../../../components/artwork_item/templates/artwork.jade
 
 - carouselFigures = article.get('sections')[0].items
 include ../../../components/carousel/carousel.jade

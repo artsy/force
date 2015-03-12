@@ -2,27 +2,14 @@
 // CSS trick to adjust the border-bottom to make it look like a nicer text-decoration: underline
 //
 
+@import '../../stylus_lib/index'
 underline-margin = 0.4em
 
+.fine-faux-underline
+  fine-faux-underline()
+
 .faux-underline
-  &
-    display: inline
-    position: relative
-    text-decoration: none
-
-  &:before
-    content: ''
-    position: absolute
-    left: 0
-    display: inline-block
-    height: 1em
-    width: 100%
-    margin-top: 0.15em
-    border-bottom: 1px solid #777
-    color: rgb(80, 80, 80)
-
-  &:hover
-    text-decoration: none
+  faux-underline()
 
 .faux-underline-hover
   &

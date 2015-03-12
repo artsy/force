@@ -6,4 +6,8 @@ test:
 cli:
 	node test/cli.js
 
-.PHONY: test
+example:
+	./bin/bucketassets.js
+	node example/app.js
+
+.PHONY: test example

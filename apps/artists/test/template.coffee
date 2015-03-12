@@ -52,7 +52,6 @@ describe 'Artists', ->
           CANONICAL_MOBILE_URL: 'http://localhost:5000'
           API_URL: 'http://localhost:5000'
           APP_URL: 'http://localhost:5000'
-          ASSET_PATH: 'http://localhost:5000/'
           CSS_EXT: '.css.gz'
           JS_EXT: '.js.gz'
           NODE_ENV: 'test'
@@ -60,6 +59,7 @@ describe 'Artists', ->
         letterRange: ['a', 'b', 'c']
         featuredArtists: @featuredArtists
         featuredGenes: @genes
+        asset: (->)
       )
 
       @$template = cheerio.load template
@@ -105,7 +105,6 @@ describe 'Artists', ->
         sd:
           CANONICAL_MOBILE_URL: 'http://localhost:5000'
           APP_URL: 'http://localhost:5000'
-          ASSET_PATH: 'http://localhost:5000'
           CSS_EXT: '.css.gz'
           JS_EXT: '.js.gz'
           NODE_ENV: 'test'
@@ -113,6 +112,7 @@ describe 'Artists', ->
         letter: 'A'
         letterRange: ['a', 'b', 'c']
         artists: @artistsByLetter
+        asset: (->)
       )
 
       @$template = cheerio.load template

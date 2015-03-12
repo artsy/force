@@ -10,8 +10,13 @@ include ../../bordered_pulldown/mixin
 
 .artwork-filter-sort-count
   .artwork-filter-sort-count-pulldown
-    +bordered-pulldown((sortVal || 'Recently Added'), 'Sort by:')
-      a( data-sort='-date_added', href="#" ) Recently Added
-      a( data-sort='-date_created', href="#" ) Artwork Year (desc.)
-      a( data-sort='date_created', href="#" ) Artwork Year (asc.)
-      a( data-sort='-merchandisability', href='#' ) Relevance
+    +bordered-pulldown(filter.currentSort(), 'Sort by:')
+      -var sorts = filter.sorts
+      if filter.getSplitTestResult() == 'merchandisability'
+        - sorts = { '-merchandisability': 'Relevance', '-date_added': 'Recently Added', '-date_created': 'Artwork Year (desc.)', 'date_created': 'Artwork Year (asc.)' }
+      for label, value in sorts
+        a(
+          data-value= value
+          data-key='sort'
+          href='?sort=#{value}'
+        )= label

@@ -43,6 +43,26 @@ block content
         |   a( href='#' ) Current Selection
         |   //- Many, many more options...
 
+    h3 Popovers
+    article.sg-component
+      h3 Popovers
+
+      .sg-component-rendered
+        .popover-parent( style='position: relative; display: inline-block;' )
+          | Hover me
+          .popover
+            strong Hello?
+            p: em Hello.
+      pre: code
+        | # Stylesheet: @import '../components/popovers'
+      pre: code
+        | //- `.popover-parent` has no inherit position attribute but requires a non-static one.
+        | .popover-parent
+        |   | Hover me
+        |   .popover
+        |     strong Hello?
+        |     p: em Hello.
+
     h3 Tooltips
     article.sg-component
       h3 Tooltips

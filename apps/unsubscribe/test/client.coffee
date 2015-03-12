@@ -25,6 +25,7 @@ describe 'Unsubscribe View', ->
       sinon.stub Backbone, 'sync'
       benv.render resolve(__dirname, '../templates/index.jade'), {
         sd: {}
+        asset: (->)
         emailTypes: emailTypes
       }, =>
         UnsubscribeView.__set__ 'sd', { UNSUB_AUTH_TOKEN: 'cat' }
@@ -44,9 +45,9 @@ describe 'Unsubscribe View', ->
 
     it 'correctly passes in the token and selected email types', ->
       @view.$el.find("input[name='selectAll']").prop('checked').should.equal false
-      @view.$el.find("input[name='personalized_artists_email']").click()
+      @view.$el.find("input[name='personalized_email']").click()
       @view.$el.find('button').click()
-      _.last(Backbone.sync.args)[1].attributes.type[0].should.equal 'personalized_artists_email'
+      _.last(Backbone.sync.args)[1].attributes.type[0].should.equal 'personalized_email'
       _.last(Backbone.sync.args)[1].attributes.authentication_token.should.equal 'cat'
 
     it 'correctly passes email type "all" when selectAll has occurred', ->

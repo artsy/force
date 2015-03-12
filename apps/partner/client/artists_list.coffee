@@ -13,10 +13,16 @@ module.exports = class PartnerArtistsListView extends Backbone.View
     @render()
 
   render: ->
-    return @$el.hide() if @collection.length is 0
-    @$el.html template
-      groups: @groupArtists(@collection)
-      linkToPartnerArtist: @linkToPartnerArtist
+    if @collection.length is 0
+      @$el.html """
+        <div class="artists-group artists-group-6-columns">
+          <h2 class="avant-garde-header-center artists-group-label">No Results</h2>
+        </div>
+      """
+    else
+      @$el.html template
+        groups: @groupArtists(@collection)
+        linkToPartnerArtist: @linkToPartnerArtist
 
   groupArtists: (pas) ->
     h = Math.ceil pas.length / @numberOfColumns

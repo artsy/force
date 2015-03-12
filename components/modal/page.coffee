@@ -6,7 +6,9 @@ module.exports = class ModalPageView extends ModalView
   className: 'page-modal'
 
   template: -> """
-    <div class='markdown-content'>#{@page.mdToHtml 'content'}</div>
+    <div class='markdown-content' id='modal-#{@page.get 'id'}'>
+      #{@page.mdToHtml 'content'}
+    </div>
   """
 
   initialize: (options) ->

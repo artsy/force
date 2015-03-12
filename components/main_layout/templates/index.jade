@@ -1,39 +1,41 @@
 //- Override any locals with `append locals`
 block locals
-  - assetPackage = 'all'
-  - bodyClass = (sd.HIDE_HEADER ? 'body-header-fixed' : 'body-welcome-header')
-  - bodyClass = bodyClass + (sd.MICROSITE ? ' is-microsite' : '')
-  - bodyClass = bodyClass + (sd.KIOSK_MODE ? ' is-kioskmode' : '')
-  - bodyClass = bodyClass + (sd.EIGEN ? ' body-eigen' : '')
-  - if (sd.IS_RESPONSIVE) bodyClass += ' body-responsive';
+  - bodyClass = helpers ? helpers.buildBodyClass(sd, (sd.HIDE_HEADER ? 'body-header-fixed' : 'body-welcome-header')) : '';
 
 doctype html
 html( data-useragent=userAgent )
   head
     include head
     block head
-    link( type='text/css', rel='stylesheet', href=(sd.ASSET_PATH + 'main_layout' + sd.CSS_EXT) )
-    link( type='text/css', rel='stylesheet', href=(sd.ASSET_PATH + assetPackage + sd.CSS_EXT) )
+    link( type='text/css', rel='stylesheet', href=asset('/assets/main_layout.css') )
+    if assetPackage
+      link( type='text/css', rel='stylesheet', href=asset('/assets/#{assetPackage}.css') )
     if sd.MICROSITE
-      link( type='text/css', rel='stylesheet', href=(sd.ASSET_PATH + 'microsite' + sd.CSS_EXT) )
+      link( type='text/css', rel='stylesheet', href=asset('/assets/microsite.css') )
   body( class=bodyClass )
     include ../../modal/template
     include ../../flash/template
+
     if sd.MICROSITE || sd.KIOSK_MODE
       include ../header/templates/microsite
     else
       include ../header/templates/index
+
     #main-layout-container.responsive-layout-container
       if sd.MICROSITE
         include ../../../components/microsite/header
       block body
-    #scroll-frame-spinner
-      .loading-spinner
+
+    #scroll-frame-spinner: .loading-spinner
+
+    include ../footer/template
+
     #scripts
       include scripts
-      script( src=(sd.ASSET_PATH + 'main_layout' + sd.JS_EXT) )
-      script( src=(sd.ASSET_PATH + assetPackage + sd.JS_EXT) )
+      script( src=asset('/assets/main_layout.js') )
+      if assetPackage
+        script( src=asset('/assets/#{assetPackage}.js') )
       if sd.MICROSITE
-        script( src=(sd.ASSET_PATH + 'microsite' + sd.JS_EXT) )
+        script( src=asset('/assets/microsite.js') )
       block scripts
-    include ../footer/template
+

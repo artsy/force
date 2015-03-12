@@ -1,106 +1,63 @@
-_ = require 'underscore'
-Feature = require '../../models/feature.coffee'
-Sale = require '../../models/sale.coffee'
-Order = require '../../models/order.coffee'
-Artwork = require '../../models/artwork.coffee'
-SaleArtwork = require '../../models/sale_artwork.coffee'
-BidderPositions = require '../../collections/bidder_positions.coffee'
+Q = require 'q'
+{ API_URL } = require('sharify').data
+Backbone = require 'backbone'
+Sale = require '../../models/sale'
+Feature = require '../../models/feature'
+Profile = require '../../models/profile'
+SaleArtworks = require '../../collections/sale_artworks'
+Artworks = require '../../collections/artworks'
 
-registerOrRender = (sale, req, res, next) ->
-  req.user.fetchCreditCards
-    error: res.backboneError
-    success: (creditCards) ->
-      if creditCards.length > 0
-        req.user.createBidder
-          saleId: sale.get('id')
-          success: ->
-            return res.redirect sale.registrationSuccessUrl()
-          error: ->
-            res.backboneError
-      else
-        order = new Order()
-        res.render 'registration',
-          sale: sale
-          monthRange: order.getMonthRange()
-          yearRange: order.getYearRange()
+determineFeature = (id, err, next) ->
+  new Backbone.Collection().fetch
+    cache: true
+    url: "#{API_URL}/api/v1/sets/contains?item_type=Sale&item_id=#{id}"
+    error: err
+    success: (collection, response, options) ->
+      next collection.first().get('owner')
 
-@auctionRegistration = (req, res, next) ->
-  unless req.user
-    return res.redirect "/log_in?redirect_uri=/auction-registration/#{req.params.id}"
+fetchPartner = (saleArtworks, options = {}) ->
+  dfd = Q.defer()
 
-  new Sale(id: req.params.id).fetch
-    error: res.backboneError
-    success: (sale) ->
-      res.locals.sd.SALE = sale
+  saleArtworks.fetch
+    cache: options.cache
+    data: size: 1
+    error: dfd.resolve
+    success: (collection, response, options) ->
+      return dfd.resolve(new Profile) if collection.length is 0
 
-      # Sale is a registerable auction
-      if sale.isRegisterable()
-        # Check if the user has registered for the sale
-        # If so, redirect back to the feature
-        # If not, render the auction registration page
-        req.user.checkRegisteredForAuction
-          saleId: sale.get('id')
-          error: res.backboneError
-          success: (isRegistered) ->
-            if isRegistered
-              return res.redirect sale.registrationSuccessUrl()
-            else
-              registerOrRender sale, req, res, next
+      { default_profile_id } = collection.first().get('artwork')?.partner
+      profile = new Profile id: default_profile_id
 
-      # Sale is not registerable yet: render error page
-      else if sale.isAuction()
-        res.render 'registration_error',
-          sale: sale
+      profile.fetch
+        cache: options.cache
+        complete: ->
+          dfd.resolve profile
 
-      # Sale is not an auction: 404
-      else
-        err = new Error('Not Found')
-        err.status = 404
-        next err
+  dfd.promise
 
-@bid = (req, res, next) ->
-  unless req.user
-    return res.redirect "/log_in?redirect_uri=/feature/#{req.params.id}/bid/#{req.params.artwork}"
+@index = (req, res) ->
+  id = req.params.id
 
-  # TODO: Refactor this cluster of business and fetching logic into a model/service layer.
-  # Potentitally in Artsy Backbone Mixins for Martsy.
-  sale = new Sale(id: req.params.id)
-  saleArtwork = new SaleArtwork(artwork: new Artwork(id: req.params.artwork), sale: sale)
-  bidderPositions = new BidderPositions(null, { saleArtwork: saleArtwork, sale: sale })
+  determineFeature id, res.backboneError, (owner) ->
+    feature = new Feature id: owner.id
+    auction = new Sale id: id
+    saleArtworks = new SaleArtworks [], id: id
 
-  render = _.after 3, ->
-    res.locals.sd.BIDDER_POSITIONS = bidderPositions.toJSON()
-    res.locals.sd.SALE = sale.toJSON()
-    res.locals.sd.SALE_ARTWORK = saleArtwork.toJSON()
-    res.render 'bid-form',
-      sale: sale
-      artwork: saleArtwork.artwork()
-      saleArtwork: saleArtwork
-      bidderPositions: bidderPositions
-      isRegistered: res.locals.sd.REGISTERED
-      maxBid: (if req.query.bid then ( req.query.bid / 100 ) else '')
-      monthRange: new Order().getMonthRange()
-      yearRange: new Order().getYearRange()
+    Q.all([
+      auction.fetch(cache: true)
+      feature.fetch(cache: true)
+      fetchPartner(saleArtworks, cache: true)
+      saleArtworks.fetchUntilEndInParallel(cache: true)
+    ]).spread((x, y, profile, z) ->
+      artworks = Artworks.fromSale saleArtworks
 
-  sale.fetch
-    error: res.backboneError
-    success: ->
-      if sale.isBidable()
-        render()
-      else
-        err = new Error('Not Found')
-        err.status = 404
-        next err
-  saleArtwork.fetch
-    error: res.backboneError
-    success: ->
-      bidderPositions.fetch
-        data: { access_token: req.user.get('accessToken') }
-        error: res.backboneError
-        success: render
-  req.user.checkRegisteredForAuction
-    saleId: sale.get('id')
-    error: res.backboneError
-    success: (registered) ->
-      res.locals.sd.REGISTERED = registered
-      render()
+      res.locals.sd.AUCTION = auction.toJSON()
+
+      res.render 'index',
+        auction: auction
+        feature: feature
+        profile: profile
+        artworks: artworks
+        saleArtworks: saleArtworks
+
+    ).done()

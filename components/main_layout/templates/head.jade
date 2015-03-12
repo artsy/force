@@ -1,17 +1,17 @@
-link( rel='apple-touch-icon', sizes='76x76', href=(sd.ASSET_PATH + 'icon-76.png') )
-link( rel='apple-touch-icon', sizes='120x120', href=(sd.ASSET_PATH + 'icon-120.png') )
-link( rel='apple-touch-icon', sizes='152x152', href=(sd.ASSET_PATH + 'icon-152.png') )
-link( rel='apple-touch-icon', href=(sd.ASSET_PATH + 'icon-152.png') )
-link( rel='icon', type='image/png', href=(sd.ASSET_PATH + 'favicon.ico') )
-link( rel='search', type='application/opensearchdescription+xml', href=(sd.ASSET_PATH + 'opensearch.xml'), title='Artsy' )
+link( rel='apple-touch-icon', sizes='76x76', href=asset('/images/icon-76.png') )
+link( rel='apple-touch-icon', sizes='120x120', href=asset('/images/icon-120.png') )
+link( rel='apple-touch-icon', sizes='152x152', href=asset('/images/icon-152.png') )
+link( rel='apple-touch-icon', href=asset('/images/icon-152.png') )
+link( rel='icon', type='image/png', href=asset('/images/favicon.ico') )
+link( rel='search', type='application/opensearchdescription+xml', href=asset('/images/opensearch.xml'), title='Artsy' )
 
-meta( name='msapplication-config', content=(sd.ASSET_PATH + 'browserconfig.xml') )
-if sd.IS_RESPONSIVE
+meta( name='msapplication-config', content=asset('/images/browserconfig.xml') )
+if sd.IS_RESPONSIVE && (userAgent && !userAgent.match('iPad'))
   meta( name='viewport', content='width=device-width, initial-scale=1' )
 else
   meta( name='viewport', content='user-scalable=1, width=1300' )
 
-script( src=(sd.ASSET_PATH + 'scroll_frame' + sd.JS_EXT) )
+script( src=asset('/assets/scroll_frame.js') )
 //- Mixpanel wants to include it's script in the head b/c it async downloads
 //- and injects it into the body. Hopefully this stops race conditions b/t
 //- DOM load and mixpanel init.

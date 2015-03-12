@@ -8,6 +8,7 @@ Profile = require '../../models/profile'
 representation = (fair) ->
   dfd = Q.defer()
   sets = new OrderedSets(owner_type: 'Fair', owner_id: fair.id, sort: 'key')
+
   sets.fetchAll(cache: true).then ->
     set = sets.findWhere(key: 'explore')?.get('items')
     fair.representation = set
@@ -18,7 +19,7 @@ representation = (fair) ->
 # see if they are published or not
 profiles = (fairs) ->
   _.compact fairs.map (fair) ->
-    if fair.has('organizer')
+    if fair.get('has_full_feature') is true
       fair.related().profile.fetch(cache: true)
 
 parseGroups = (fairs) ->
@@ -39,7 +40,6 @@ parseGroups = (fairs) ->
     data: sort: '-start_at', size: 50
     success: ->
       Q.allSettled(profiles(fairs)).then(->
-
         { currentFairs, pastFairs, upcomingFairs } = parseGroups(fairs)
 
         featuredFairs = _.flatten [currentFairs, pastFairs]
@@ -55,6 +55,7 @@ parseGroups = (fairs) ->
         ]
 
         Q.allSettled(promises).then(->
+
           res.locals.sd.FAIRS = currentFairs
           res.render 'index',
             featuredFairs: featuredFairs

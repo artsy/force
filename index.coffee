@@ -4,9 +4,10 @@
 # be abstracted into modules under /lib.
 #
 
-require 'newrelic'
-
 { PORT, NODE_ENV } = require "./config"
+require 'newrelic' unless NODE_ENV is 'development'
+
+require './findleak'
 
 express = require "express"
 setup = require "./lib/setup"

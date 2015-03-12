@@ -1,23 +1,26 @@
 //- Override any locals with `append locals`
 block locals
-  - assetPackage = 'all'
-  - bodyClass = 'body-header-fixed minimal-header'
-  - if (sd.IS_RESPONSIVE) bodyClass += ' body-responsive';
+  - bodyClass = helpers ? helpers.buildBodyClass(sd, 'body-header-fixed minimal-header') : ''
 
 doctype html
-html
+html( data-useragent= userAgent )
   head
     include head
     block head
-    link( type='text/css', rel='stylesheet', href=(sd.ASSET_PATH + 'main_layout' + sd.CSS_EXT) )
-    link( type='text/css', rel='stylesheet', href=(sd.ASSET_PATH + assetPackage + sd.CSS_EXT) )
+    link( type='text/css', rel='stylesheet', href=asset('/assets/main_layout.css') )
+    if assetPackage
+      link( type='text/css', rel='stylesheet', href=asset('/assets/#{assetPackage}.css') )
+
   body( class=bodyClass )
     include ../header/templates/index
     include ../../modal/template
+
     #main-layout-container
       block body
+
     #scripts
       include scripts
-      script( src=(sd.ASSET_PATH + 'main_layout' + sd.JS_EXT) )
-      script( src=(sd.ASSET_PATH + assetPackage + sd.JS_EXT) )
+      script( src=asset('/assets/main_layout.js') )
+      if assetPackage
+        script( src=asset('/assets/#{assetPackage}.js') )
       block scripts

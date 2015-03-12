@@ -5,6 +5,7 @@ var merge = require('xtend');
 var path = require('path');
 var fs = require('fs');
 var processPath = require.resolve('process/browser.js');
+var combineSourceMap = require('combine-source-map');
 
 var defaultVars = {
     process: function () {
@@ -89,33 +90,46 @@ module.exports = function (file, opts) {
             }
         });
         
-        this.queue(closeOver(globals, source));
+        this.queue(closeOver(globals, source, file, opts));
         this.queue(null);
     }
 };
 
 module.exports.vars = defaultVars;
 
-function closeOver (globals, src) {
+function closeOver (globals, src, file, opts) {
     var keys = Object.keys(globals);
     if (keys.length === 0) return src;
     var values = keys.map(function (key) { return globals[key] });
     
+    var wrappedSource;
     if (keys.length <= 3) {
-        return '(function (' + keys.join(',') + '){\n'
+        wrappedSource = '(function (' + keys.join(',') + '){\n'
             + src + '\n}).call(this,' + values.join(',') + ')'
         ;
     }
-    // necessary to make arguments[3..6] still work for workerify etc
-    // a,b,c,arguments[3..6],d,e,f...
-    var extra = [ '__argument0', '__argument1', '__argument2', '__argument3' ];
-    var names = keys.slice(0,3).concat(extra).concat(keys.slice(3));
-    values.splice(3, 0,
-        'arguments[3]','arguments[4]',
-        'arguments[5]','arguments[6]'
-    );
-    
-    return '(function (' + names.join(',') + '){\n'
-        + src + '\n}).call(this,' + values.join(',') + ')'
-    ;
+    else {
+      // necessary to make arguments[3..6] still work for workerify etc
+      // a,b,c,arguments[3..6],d,e,f...
+      var extra = [ '__argument0', '__argument1', '__argument2', '__argument3' ];
+      var names = keys.slice(0,3).concat(extra).concat(keys.slice(3));
+      values.splice(3, 0,
+          'arguments[3]','arguments[4]',
+          'arguments[5]','arguments[6]'
+      );
+      wrappedSource = '(function (' + names.join(',') + '){\n'
+        + src + '\n}).call(this,' + values.join(',') + ')';
+    }
+
+    // Generate source maps if wanted. Including the right offset for
+    // the wrapped source.
+    if (!opts.debug) {
+        return wrappedSource;
+    }
+    var sourceFile = path.relative(opts.basedir, file);
+    var sourceMap = combineSourceMap.create().addFile(
+        { sourceFile: sourceFile, source: src},
+        { line: 1 });
+    return combineSourceMap.removeComments(wrappedSource) + "\n"
+        + sourceMap.comment();
 }

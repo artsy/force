@@ -7,10 +7,10 @@ section.galleries-institutions-featured-profiles.grid-4-up
       a.faux-underline( href='/gallery-partnerships' ) Learn&nbsp;More
 
   for profile in featuredProfiles
+    - var partner = profile.get('owner')
     .grid-item.gallery-institutions-profile
       include ../../../components/partner_profile_cover/template
-      - var partner = profile.get('owner')
       .gip-metadata
         h3.gip-name: a( href="/#{profile.id}" )= partner.get('name')
-        .gip-location= partner.get('type')
+        .gip-location( data-id= partner.id ) &hellip;
         button.avant-garde-button-white.is-small.follow-button( data-id= profile.id )

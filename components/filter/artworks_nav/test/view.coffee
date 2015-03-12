@@ -30,6 +30,24 @@ describe 'FilterArtworksNav', ->
     @view.$el.html().should.containEql '(51)'
     @view.$el.html().should.containEql '(38)'
 
+  it 'renders counts for data in form { c: 10 }', ->
+    @view.counts.set
+      price_range: '-1:1000000000000': name: '-1:1000000000000', c: 51
+      dimension: '24': name: '24', count: 38
+    @view.renderCounts()
+    @view.$el.html().should.containEql '(51)'
+    @view.$el.html().should.containEql '(38)'
+
+
+  it 'renders counts for data in form { painting: 10 }', ->
+    @view.counts.set
+      price_range: '-1:1000000000000': 51
+      dimension: '24': 38
+    @view.renderCounts()
+    @view.$el.html().should.containEql '(51)'
+    @view.$el.html().should.containEql '(38)'
+
+
   it 'renders without errors', ->
     @view.$el.html().should.not.containEql 'undefined'
 

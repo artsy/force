@@ -40,8 +40,26 @@ describe 'Fair', ->
       _.last(Backbone.sync.args)[2].success new Backbone.Model fabricate 'profile'
       urls = (_.result(call[1], 'url') or call[2].url for call in Backbone.sync.args)
       urls[0].should.match /// api/v1/fair/.* ///
-      urls[1].should.match /// api/v1/profile ///
-      urls[2].should.match /// api/v1/search/filtered/fair/.*/suggest ///
-      urls[3].should.match /// api/v1/fair/.*/sections ///
-      urls[4].should.match /// api/v1/fair/.*/partners ///
-      urls[5].should.match /// api/v1/fair/.*/artists ///
+      urls[1].should.match /// api/v1/search/filtered/fair/.*/suggest ///
+      urls[2].should.match /// api/v1/fair/.*/sections ///
+      urls[3].should.match /// api/v1/fair/.*/partners ///
+      urls[4].should.match /// api/v1/fair/.*/artists ///
+
+  describe '#itemsToColumns', ->
+
+    it 'doesnt chop off items', ->
+      items = [
+        {
+          name: '20th Century Design',
+          href: '/fog-fair-design-plus-art/browse/artworks?related_gene=20th-century-design'
+        }
+        {
+          name: 'Contemporary Design',
+          href: '/fog-fair-design-plus-art/browse/artworks?related_gene=contemporary-design'
+        }
+        {
+          name: 'West Coast Galleries',
+          href: '/fog-fair-design-plus-art/browse/artworks?related_gene=west-coast-galleries'
+        }
+      ]
+      _.flatten(@fair.itemsToColumns(items, 2)).length.should.equal 3

@@ -1,5 +1,5 @@
 var asn1 = require('../asn1');
-var util = require('util');
+var inherits = require('inherits');
 var vm = require('vm');
 
 var api = exports;
@@ -20,7 +20,7 @@ Entity.prototype._createNamed = function createNamed(base) {
   var named = vm.runInThisContext('(function ' + this.name + '(entity) {\n' +
     '  this._initNamed(entity);\n' +
     '})');
-  util.inherits(named, base);
+  inherits(named, base);
   named.prototype._initNamed = function initnamed(entity) {
     base.call(this, entity);
   };

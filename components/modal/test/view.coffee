@@ -32,8 +32,7 @@ describe 'ModalView', ->
 
   describe '#initialize', ->
     it 'Sets up some sensible defaults', ->
-      @view.width.should.equal '400px'
-      @view.width.should.equal '400px'
+      @view.dimensions.should.eql width: '400px'
 
     it 'Should auto-open', ->
       @openSpy.called.should.be.ok

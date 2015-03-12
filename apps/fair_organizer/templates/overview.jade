@@ -1,0 +1,67 @@
+extends ../../../components/main_layout/templates/index
+
+append locals
+  - assetPackage = 'fair_organizer'
+  - bodyClass = 'body-transparent-header body-header-fixed'
+
+block head
+  include ../../../components/main_layout/templates/profile_meta
+
+block body
+  if coverImage && coverImage.hasImage('wide')
+    .fair-organizer-feature-image( style="background-image: url(#{profile.coverImage().imageUrl('wide')})" )
+
+  #fair-organizer-page
+    .fair-organizer-top
+      .fair-organizer-top__left
+        .fair-organizer-top__icon
+          img.large-profile-image( alt=fair.get('name'), title=fair.get('name'), src=profile.icon().imageUrl('square') )
+        .fair-organizer-top__header
+          h1 Preview The Armory
+          h1 Show 2015 on Artsy
+        .fair-organizer-top__sub-header Discover and collect works before the fair opens
+        if !user
+          a.fair-organizer-top__notify.avant-garde-button-black(
+            href='/log_in', data-mode='login' ) Get notified
+
+        .fair-organizer-top__countdown
+          .fair-organizer-top__countdown__headline Fair preview opens in:
+          .fair-organizer-top__countdown__clock
+            .clock
+              ul.clock-value
+
+      .fair-organizer-top__right
+        .fair-organizer-top__right__header-img( style="background-image: url(" + fair.imageUrl('large_rectangle') + ")" )
+
+    .fair-organizer-content
+      .fair-organizer-content__left
+        .fair-organizer-content__header About The Armory Show
+        .fair-organizer-content__date
+          p #{fair.location().get('city')}
+          p #{fair.formatDates()}
+        .fair-organizer-content__copy!= fair.mdToHtml('about')
+        .fair-organizer-content__links!= fair.mdToHtml('links')
+
+      .fair-organizer-content__right
+        .fair-organizer-content__header Revisit Previous Fairs
+        .fair-organizer-content__section.fair-organizer-content__section--past-fairs
+          for fair in pastFairs
+            include fair
+
+        .fair-organizer-content__header Latest from The Armory Show
+        .fair-organizer-content__section.fair-organizer-content__section--articles
+          #fair-organizer-articles
+            include ./articles
+          .avant-garde-button-white.is-block#fair-organizer-more-articles Show More
+
+        .fair-organizer-content__header Get the App
+        .fair-organizer-content__section.fair-organizer-content__section--app
+          .mobile-section-iphone &nbsp;
+          a(href="https://iphone.artsy.net/")
+            .fair-organizer-content__section--app__copy
+              | Going to the fair?
+              br
+              i Download Artsy for iPhone
+              br
+              | — Your personal guide to The Armory Show
+

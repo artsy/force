@@ -6,86 +6,41 @@ block head
 append locals
   - assetPackage = 'artwork'
 
+
 block body
   #artwork-view-in-room-container
+    //- Rendered client-side
   #artwork-deep-zoom-container
+    //- Rendered client-side
   #artwork-page.main-layout-container( data-route='show' )
-    article.artwork-container
-      section.artwork-overview
-        .artwork-left-section
-          #artwork-feature-navigation
-          #artwork-auction-clock
-            //- Rendered client-side
-            include ../../../components/auction_clock/template
+    include artwork
 
-        .artwork-image
-          a.artwork-image-zoom(
-            href= "/artwork/#{artwork.id}/zoom"
-            rel= 'nofollow'
-            data-client
-          )
-            img#the-artwork-image(
-              alt= artwork.get('title')
-              title= artwork.get('title')
-              nopin= artwork.noPinAttr()
-              src= artwork.defaultImage().imageUrlFor(640, 640)
-            )
+    section#more-info.artwork-related-information
+      #artwork-artist-related-extended.ari-container
+        if artwork.hasMoreInfo() || (artist && artist.get('blurb')) || artwork.isComparable()
+          .ari-cell
+            if artwork.hasMoreInfo()
+              .about-artwork-section
+                h2.avant-garde-header-center About This Artwork
+                include ./_more_info
 
-        if artwork.hasAdditionalImages()
-          .artwork-additional-images
-            for image, i in artwork.images.models
-              a.artwork-additional-image(
-                class= i === 0 ? 'is-active' : 'is-inactive'
-                data-id= image.id
-                data-href= image.imageUrlFor(640, 640)
-              )
-                img(
-                  src= image.imageUrl('small')
-                  alt= "#{artwork.get('title')} (#{i + 1})"
-                )
-
-        .artwork-image-actions
-          a.circle-icon-button-save
-          if artwork.get('can_share_image')
-            a.circle-icon-button-share
-          if artwork.isHangable()
-            a.circle-icon-button-frame(
-              href="/artwork/#{artwork.id}/view-in-room", data-client, rel='nofollow'
-            )
-
-      aside.artwork-detail
-        include ./_detail
-
-    section.artwork-related-information
-      .ari-container
-        if artwork.hasLeftInfoSection(user, artist)
-          .ari-left
-            if artwork.showAboutArtworkHeading()
-              .about-artwork-section( class=(artist && artist.get('blurb') ? 'add-margin-bottom' : ''))
+            if artist && artist.get('blurb')
+              .artwork-artist
                 h2.avant-garde-header-center
-                  | About This Artwork
-                if artwork.get('blurb')
-                  .artwork-blurb
-                    != artwork.mdToHtml('blurb')
-                if artwork.hasMoreInfo()
-                  include ./_more_info
+                  | About
+                  = ' '
+                  a( href= artist.href() )
+                    = artist.get('name')
 
-            if artist
-              if artist.get('blurb')
-                .artwork-artist( data-state=(artist.get('blurb') ? '' : 'pending' ) )
-                  h2.avant-garde-header-center
-                    | About&nbsp;
-                    a( href=artist.href() )= artist.get('name')
+                if artist.get('blurb')
+                  .artwork-artist-blurb
+                    != artist.mdToHtml('blurb')
 
-                  if artist.get('blurb')
-                    .artwork-artist-blurb
-                      != artist.mdToHtml('blurb')
-
-            if artwork.isComparable()
-              a.artwork-auction-results-button.avant-garde-header-small( href="/artwork/#{artwork.id}/auction-results" ) See related auction results
-            a.related-posts-add-button.avant-garde-header-small Add Post
-        #artwork-artist-related-posts-container.ari-right( class=(artwork.hasLeftInfoSection(user, artist) ? "" : "borderless") )
-          //- Rendered client-side
+            if artwork.isComparable() && !inADAA
+              .is-center-aligned
+                a.artwork-auction-results-button.avant-garde-header-small(
+                  href="/artwork/#{artwork.id}/auction-results"
+                ) See related auction results
 
     section#artwork-related-show-section
       //- Rendered client-side
@@ -93,10 +48,14 @@ block body
     if artist
       section#artist-artworks-section
         h2.avant-garde-header-center
-          | More Works by&nbsp;
-          a( href=artist.href() )= artist.get('name')
+          | More Works by
+          = ' '
+          a( href=artist.href() )
+            = artist.get('name')
 
         .artworks-list
+          //- Rendered client-side
+
         .artist-link-container
           a.faux-underline-hover-large(
             href="/artist/#{artist.id}"

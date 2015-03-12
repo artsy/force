@@ -25,7 +25,7 @@ describe 'Feed Templates', ->
       beforeEach ->
         sd.APP_URL = 'localhost:3004'
         sd.API_URL = 'localhost:3003'
-        sd.ASSET_PATH = 'assets/'
+
         @partnerShow = new FeedItem fabricate('show',
           _type: "PartnerShow",
           artists: [fabricate('artist')]
@@ -52,7 +52,7 @@ describe 'Feed Templates', ->
       beforeEach ->
         sd.APP_URL = 'localhost:3004'
         sd.API_URL = 'localhost:3003'
-        sd.ASSET_PATH = 'assets/'
+
         fairLocation =
           display: 'Booth 1234'
 

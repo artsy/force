@@ -18,12 +18,12 @@ describe 'Unsupported Browser', ->
   beforeEach ->
     @ua = uaParser.parseUA 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0; WOW64; Trident/4.0; SLCC1)'
     @sd =
-      ASSET_PATH: '/assets'
       CSS_EXT: '.css'
       BROWSER: @ua
       UNSUPPORTED_BROWSER_REDIRECT: '/artwork/matthew-abbott-lobby-and-supercomputer'
     @html = render()({
       sd: @sd
+      asset: (->)
     })
 
   it 'renders a message for the unsupported browser', ->

@@ -14,9 +14,12 @@ describe 'ArtworkFilterView', ->
       @ArtworkFilterView = benv.requireWithJadeify resolve(__dirname, '../view'), ['template', 'filterTemplate', 'headerTemplate']
       @ArtworkFilterView.__set__ 'ArtworkColumnsView', sinon.stub().returns { length: -> 999 }
       @ArtworkFilterView.__set__ 'BorderedPulldown', sinon.stub()
+      @SplitTest = require '../../split_test/split_test.coffee'
+      @setStub = sinon.stub(@SplitTest::, 'outcome')
       done()
 
   after ->
+    @setStub.restore()
     benv.teardown()
 
   beforeEach ->
@@ -125,10 +128,6 @@ describe 'ArtworkFilterView', ->
       @view.filter.selected.attributes.should.eql medium: 'work-on-paper'
       @view.$('.artwork-filter-select').last().click()
       @view.filter.selected.attributes.should.eql period: 2010
-
-  describe '#selectSort', ->
-    beforeEach ->
-      Backbone.sync.args[0][2].success fabricate 'artist_filtered_search_suggest'
 
     it 'pulls the sort criteria out of the link and selects it', ->
       @view.$('.bordered-pulldown-options a').first().click()

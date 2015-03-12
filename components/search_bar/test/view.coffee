@@ -16,7 +16,8 @@ describe 'SearchBarView', ->
         $: benv.require 'jquery'
         Bloodhound: Bloodhound
       Backbone.$ = $
-      benv.render resolve(__dirname, '../template.jade'), {}, =>
+      location.assign = sinon.stub()
+      benv.render resolve(__dirname, '../templates/index.jade'), {}, =>
         @$input = $('#main-layout-search-bar-input')
         @$input.typeahead = sinon.stub()
         @view = new SearchBarView el: $('#main-layout-search-bar-container'), $input: @$input, mode: 'suggest'
@@ -51,7 +52,7 @@ describe 'SearchBarView', ->
     it 'takes a search result model and sets window.location to the models location', ->
       model = new SearchResult(fabricate('artwork', model: 'artwork'))
       @view.selectResult({}, model)
-      window.location.should.equal model.get 'location'
+      location.assign.args[0][0].should.equal model.get 'location'
 
   describe '#indicateLoading', ->
     beforeEach ->

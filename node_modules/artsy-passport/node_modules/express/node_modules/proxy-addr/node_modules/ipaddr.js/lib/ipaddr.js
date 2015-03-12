@@ -86,6 +86,7 @@
     };
 
     IPv4.prototype.SpecialRanges = {
+      unspecified: [[new IPv4([0, 0, 0, 0]), 8]],
       broadcast: [[new IPv4([255, 255, 255, 255]), 32]],
       multicast: [[new IPv4([224, 0, 0, 0]), 4]],
       linkLocal: [[new IPv4([169, 254, 0, 0]), 16]],
@@ -135,6 +136,9 @@
       })();
     } else if (match = string.match(ipv4Regexes.longValue)) {
       value = parseIntAuto(match[1]);
+      if (value > 0xffffffff || value < 0) {
+        throw new Error("ipaddr: address outside defined range");
+      }
       return ((function() {
         var _i, _results;
         _results = [];
@@ -379,9 +383,9 @@
   };
 
   ipaddr.parse = function(string) {
-    if (ipaddr.IPv6.isIPv6(string)) {
+    if (ipaddr.IPv6.isValid(string)) {
       return ipaddr.IPv6.parse(string);
-    } else if (ipaddr.IPv4.isIPv4(string)) {
+    } else if (ipaddr.IPv4.isValid(string)) {
       return ipaddr.IPv4.parse(string);
     } else {
       throw new Error("ipaddr: the address has neither IPv6 nor IPv4 format");

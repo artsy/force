@@ -1,0 +1,55 @@
+article.artwork-container
+  section.artwork-overview
+    .artwork-left-section
+
+      #artwork-auction-logo
+
+      #artwork-feature-navigation
+        //- Rendered client-side
+      #artwork-clock
+        //- Rendered client-side
+        include ../../../components/clock/template
+
+    .artwork-image
+      mixin artworkImage
+        img#the-artwork-image(
+          alt= artwork.get('title')
+          title= artwork.get('title')
+          nopin= artwork.noPinAttr()
+          src= artwork.defaultImage().imageUrlFor(640, 640)
+        )
+
+      if artwork.defaultImage().canDeepZoom()
+        a.artwork-image-zoom(
+          href= "/artwork/#{artwork.id}/zoom"
+          rel= 'nofollow'
+          data-client
+        )
+          +artworkImage
+      else
+        +artworkImage
+
+    if artwork.hasAdditionalImages()
+      .artwork-additional-images
+        for image, i in artwork.images.models
+          a.artwork-additional-image(
+            class= i === 0 ? 'is-active' : 'is-inactive'
+            data-id= image.id
+            data-href= image.imageUrlFor(640, 640)
+          )
+            img(
+              src= image.imageUrl('small')
+              alt= "#{artwork.get('title')} (#{i + 1})"
+            )
+
+    .artwork-image-actions
+      a.circle-icon-button-save
+      if artwork.get('can_share_image')
+        a.circle-icon-button-share
+      if artwork.isHangable()
+        a.circle-icon-button-frame(
+          href="/artwork/#{artwork.id}/view-in-room", data-client, rel='nofollow'
+        )
+
+  aside.artwork-detail
+    include ./_detail

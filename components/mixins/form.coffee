@@ -33,24 +33,33 @@ module.exports =
     $button ?= @$('button')
     $button.prop 'disabled', false
 
+  serializeCheckboxes: ($checkboxes) ->
+    $checkboxes ?= @$('input:checkbox')
+    _.reduce $checkboxes, (memo, checkbox) ->
+      memo[checkbox.name] = checkbox.checked
+      memo
+    , {}
+
+  serializeInputs: ($form) ->
+    $form ?= @$('form')
+    _.reduce $form.serializeArray(), (memo, input) ->
+      value = _s.trim input.value
+      if memo[input.name]? # Convert to array
+        target = _.flatten [memo[input.name]]
+        target.push value
+        memo[input.name] = target
+      else
+        memo[input.name] = value
+      memo
+    , {}
+
   # Serializes the form object
   #
   # @param {$Object} $form
   # @returns {Object}
   serializeForm: ($form, $checkboxes) ->
-    $form ?= @$('form')
-    $checkboxes ?= @$('input:checkbox')
-
-    booleans = _.reduce $checkboxes, (memo, checkbox) ->
-      memo[checkbox.name] = checkbox.checked
-      memo
-    , {}
-
-    form = _.reduce $form.serializeArray(), (memo, input) ->
-      memo[input.name] = _s.trim input.value
-      memo
-    , {}
-
+    booleans = @serializeCheckboxes $checkboxes
+    form = @serializeInputs $form
     _.extend form, booleans
 
   # Checks for required fileds then sets the data-state to error

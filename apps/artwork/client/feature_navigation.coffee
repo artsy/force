@@ -7,7 +7,7 @@ module.exports = class FeatureNavigationView extends Backbone.View
     @render()
 
   negativeRenderCriteria: ->
-    @kind is 'fair' and not @model.has('organizer') or
+    @kind is 'fair' and not @model.get('published') or
     not @model.has 'name'
 
   checkAndSetHref: ->
@@ -16,8 +16,8 @@ module.exports = class FeatureNavigationView extends Backbone.View
     @href =
       if @kind is 'feature'
         "/feature/#{@model.id}"
-      else if @kind is 'fair' and @model.has('organizer')
-        "/#{@model.get('organizer').profile_id}"
+      else if @kind is 'fair'
+        "/#{@model.get('default_profile_id')}"
       else
         "/#{@model.id}"
 

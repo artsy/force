@@ -1,5 +1,6 @@
 Post = require '../../models/post.coffee'
 Profile = require '../../models/profile.coffee'
+{ API_URL } = require '../../config'
 
 render = (res, post, profile) ->
   if post
@@ -7,7 +8,7 @@ render = (res, post, profile) ->
   if profile
     res.locals.sd.PROFILE = profile.toJSON()
 
-  res.render 'templates/index',
+  res.render 'index',
     post: post
     profile: profile
     JSONLD: post.toJSONLD()
@@ -29,3 +30,9 @@ render = (res, post, profile) ->
           render res, post
       else
         res.redirect post.href()
+
+@post = (req, res, next) ->
+  if req.user?.get('type') is 'Admin' or req.user?.get('has_partner_access')
+    res.redirect API_URL + '/post'
+  else
+    res.render 'deprecated'

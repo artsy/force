@@ -35,21 +35,21 @@ describe 'Image Sizes Mixin', ->
         Backbone.sync.args[0][2].success { time: moment().format("YYYY-MM-DD HH:mm:ss ZZ") }
         @model.get('offsetStartAtMoment').should.eql moment(@model.get('start_at'))
         @model.get('offsetEndAtMoment').should.eql moment(@model.get('end_at'))
-        @model.get('auctionState').should.equal 'preview'
+        @model.get('clockState').should.equal 'preview'
 
       it 'reflects server open state', ->
         @model.calculateOffsetTimes()
         Backbone.sync.args[0][2].success { time: moment().add('minutes', 2).format("YYYY-MM-DD HH:mm:ss ZZ") }
         @model.get('offsetStartAtMoment').should.eql moment(@model.get('start_at')).subtract('minutes', 2)
         @model.get('offsetEndAtMoment').should.eql moment(@model.get('end_at')).subtract('minutes', 2)
-        @model.get('auctionState').should.equal 'open'
+        @model.get('clockState').should.equal 'open'
 
       it 'reflects server closed state', ->
         @model.calculateOffsetTimes()
         Backbone.sync.args[0][2].success { time: moment().add('minutes', 4).format("YYYY-MM-DD HH:mm:ss ZZ") }
         @model.get('offsetStartAtMoment').should.eql moment(@model.get('start_at')).subtract('minutes', 4)
         @model.get('offsetEndAtMoment').should.eql moment(@model.get('end_at')).subtract('minutes', 4)
-        @model.get('auctionState').should.equal 'closed'
+        @model.get('clockState').should.equal 'closed'
 
     describe 'client time open', ->
 
@@ -69,12 +69,12 @@ describe 'Image Sizes Mixin', ->
         Backbone.sync.args[0][2].success { time: moment().subtract('minutes', 2).format("YYYY-MM-DD HH:mm:ss ZZ") }
         @model.get('offsetStartAtMoment').should.eql moment(@model.get('start_at')).add('minutes', 2)
         @model.get('offsetEndAtMoment').should.eql moment(@model.get('end_at')).add('minutes', 2)
-        @model.get('auctionState').should.equal 'preview'
+        @model.get('clockState').should.equal 'preview'
 
       it 'reflects server open state', ->
         @model.calculateOffsetTimes()
         Backbone.sync.args[0][2].success { time: moment().format("YYYY-MM-DD HH:mm:ss ZZ") }
-        @model.get('auctionState').should.equal 'open'
+        @model.get('clockState').should.equal 'open'
         @model.get('offsetStartAtMoment').should.eql moment(@model.get('start_at'))
         @model.get('offsetEndAtMoment').should.eql moment(@model.get('end_at'))
 
@@ -83,7 +83,7 @@ describe 'Image Sizes Mixin', ->
         Backbone.sync.args[0][2].success { time: moment().add('minutes', 2).format("YYYY-MM-DD HH:mm:ss ZZ") }
         @model.get('offsetStartAtMoment').should.eql moment(@model.get('start_at')).subtract('minutes', 2)
         @model.get('offsetEndAtMoment').should.eql moment(@model.get('end_at')).subtract('minutes', 2)
-        @model.get('auctionState').should.equal 'closed'
+        @model.get('clockState').should.equal 'closed'
 
     describe 'client time closed', ->
 
@@ -103,18 +103,18 @@ describe 'Image Sizes Mixin', ->
         Backbone.sync.args[0][2].success { time: moment().subtract('minutes', 4).format("YYYY-MM-DD HH:mm:ss ZZ") }
         @model.get('offsetStartAtMoment').should.eql moment(@model.get('start_at')).add('minutes', 4)
         @model.get('offsetEndAtMoment').should.eql moment(@model.get('end_at')).add('minutes', 4)
-        @model.get('auctionState').should.equal 'preview'
+        @model.get('clockState').should.equal 'preview'
 
       it 'reflects server open state', ->
         @model.calculateOffsetTimes()
         Backbone.sync.args[0][2].success { time: moment().subtract('minutes', 2).format("YYYY-MM-DD HH:mm:ss ZZ") }
         @model.get('offsetStartAtMoment').should.eql moment(@model.get('start_at')).add('minutes', 2)
         @model.get('offsetEndAtMoment').should.eql moment(@model.get('end_at')).add('minutes', 2)
-        @model.get('auctionState').should.equal 'open'
+        @model.get('clockState').should.equal 'open'
 
       it 'reflects server closed state', ->
         @model.calculateOffsetTimes()
         Backbone.sync.args[0][2].success { time: moment().format("YYYY-MM-DD HH:mm:ss ZZ") }
-        @model.get('auctionState').should.equal 'closed'
+        @model.get('clockState').should.equal 'closed'
         @model.get('offsetStartAtMoment').should.eql moment(@model.get('start_at'))
         @model.get('offsetEndAtMoment').should.eql moment(@model.get('end_at'))

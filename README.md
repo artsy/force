@@ -24,7 +24,7 @@ Don't get locked into choosing between single page app or fully server-side rend
 
 Ezel [shares javascript modules that run in the browser and on the server](http://nerds.airbnb.com/isomorphic-javascript-future-web-apps/). This means you can [optimize initial page load](https://blog.twitter.com/2012/improving-performance-twittercom) and SEO by sharing templates that can render on the server or client. This also makes it easy to test all of your code in Node.js using [benv](http://github.com/artsy/benv) and [zombie](http://zombie.labnotes.org/) for robust, fast, and easy to set up tests.
 
-## NOTE: This app is not runnable. 
+## NOTE: This app is not runnable.
 
 Due to image licensing issues we cannot open up the artsy.net API. We are actively working on this. In the meantime, we are putting this up as an example of how we write code and structure our applications at Artsy. We would love any feedback!
 

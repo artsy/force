@@ -14,6 +14,7 @@ module.exports = class FavoritesView extends StepView
 
   events:
     'click .personalize-skip': 'advance'
+    'click .artwork-item-caption a': 'saveArtwork'
 
   initialize: (options) ->
     super
@@ -66,6 +67,11 @@ module.exports = class FavoritesView extends StepView
       _.each $buttonColumns, (buttonColumn, i) ->
         _.delay (=> $(buttonColumn).css 'opacity', 1), (i + 1) * 50
     , 1000
+
+  saveArtwork: (e) ->
+    e.preventDefault()
+    # Should attach to parent container and just delegate to save
+    # do that if/when save controls A/B test ends
 
   render: ->
     @$el.html template(state: @state)

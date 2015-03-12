@@ -33,7 +33,7 @@ module.exports = class Sale extends Backbone.Model
         error: options?.error
 
   updateState: ->
-    @set('auctionState', (
+    @set('clockState', (
       if moment().isAfter(@get 'offsetEndAtMoment')
         'closed'
       else if moment().isAfter(@get 'offsetStartAtMoment') and moment().isBefore(@get 'offsetEndAtMoment')
@@ -59,7 +59,7 @@ module.exports = class Sale extends Backbone.Model
 
   # NOTE
   # auction_state helpers are used serverside of if updateState hasn't been run
-  # auctionState used after updateState is run
+  # clockState used after updateState is run
   isRegisterable: ->
     @isAuction() and _.include(['preview', 'open'], @get('auction_state'))
 
@@ -73,13 +73,17 @@ module.exports = class Sale extends Backbone.Model
     @isAuction() and _.include(['preview'], @get('auction_state'))
 
   isOpen: ->
-    @get('auctionState') is 'open'
+    @state() is 'open'
 
   isPreview: ->
-    @get('auctionState') is 'preview'
+    @state() is 'preview'
 
   isClosed: ->
-    @get('auctionState') is 'closed'
+    @state() is 'closed'
+
+  # We desire a state when accessing from the server
+  state: ->
+    if @has('clockState') then @get('clockState') else @get('auction_state')
 
   # @param {CurrentUser, Artwork (optional)}
   # @return {Object}
@@ -92,6 +96,8 @@ module.exports = class Sale extends Backbone.Model
       label: 'Bid', enabled: true, classes: undefined, href: (@bidUrl(artwork) if artwork)
     else if @isClosed()
       label: 'Online Bidding Closed', enabled: false, classes: 'is-disabled', href: undefined
+    else
+      {}
 
   date: (attr) ->
     moment(@get attr)

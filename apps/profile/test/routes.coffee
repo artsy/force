@@ -3,6 +3,7 @@ _ = require 'underscore'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 routes = require '../routes'
+Profile = require '../../../models/profile.coffee'
 
 describe 'Profile routes', ->
 
@@ -45,3 +46,8 @@ describe 'Profile routes', ->
       @req.user = null
       routes.setProfile @req, @res, next = sinon.stub()
       (_.last(Backbone.sync.args)[2].data.access_token?).should.not.be.ok
+
+    it 'nexts if profile already exists in locals', ->
+      @res.locals.profile = new Profile fabricate 'profile'
+      routes.setProfile @req, @res, next = sinon.stub()
+      next.called.should.be.ok

@@ -1,5 +1,4 @@
-var assert = require('assert');
-var util = require('util');
+var inherits = require('inherits');
 var Reporter = require('../base').Reporter;
 var Buffer = require('buffer').Buffer;
 
@@ -14,7 +13,7 @@ function DecoderBuffer(base, options) {
   this.offset = 0;
   this.length = base.length;
 }
-util.inherits(DecoderBuffer, Reporter);
+inherits(DecoderBuffer, Reporter);
 exports.DecoderBuffer = DecoderBuffer;
 
 DecoderBuffer.prototype.save = function save() {

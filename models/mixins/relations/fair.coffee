@@ -4,7 +4,9 @@ module.exports =
 
     Profile = require '../../../models/profile.coffee'
 
-    profile = new Profile id: @get('organizer')?.profile_id
+    profile_id = @get('default_profile_id') || @get('organizer')?.profile_id
+
+    profile = new Profile id: profile_id
 
     @__related__ =
       profile: profile

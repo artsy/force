@@ -2,15 +2,17 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 { API_URL } = require('sharify').data
 Artworks = require '../../../collections/artworks.coffee'
+splitTest = require '../../split_test/index.coffee'
 
 class Params extends Backbone.Model
-  defaults: size: 9, page: 1
+  defaults: { size: 9, page: 1 }
 
   next: ->
     @set 'page', @get('page') + 1
 
   prev: ->
     @set 'page', @get('page') - 1
+
 
 module.exports = class ArtworkColumns extends Artworks
   url: ->
@@ -19,6 +21,8 @@ module.exports = class ArtworkColumns extends Artworks
   initialize: (models, options = {}) ->
     { @modelId } = options
     @params = new Params
+    if splitTest('artwork_column_sort').outcome() is 'merchandisability'
+      @params.attributes.sort = '-merchandisability'
     super
 
   fetch: (options = {}) ->

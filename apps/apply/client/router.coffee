@@ -1,5 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
+qs = require 'querystring'
 State = require './models/state.coffee'
 Form = require './models/form.coffee'
 Step1View = require './views/step1.coffee'
@@ -19,7 +20,15 @@ module.exports = class PartnerApplicationRouter extends Backbone.Router
   initialize: ->
     @$el = $('#partner-application-page')
     @state = new State
-    @form = new Form
+    @form = new Form @bootstrap()
+    @listenTo @state, 'change:mode', @updateType
+
+  bootstrap: ->
+    data = qs.parse(location.search.replace /^\?/, '')
+    Form.validate data
+
+  updateType: (state, type) ->
+    @form.set '00NC0000004hoNU', state.value('type')
 
   execute: ->
     @view?.remove()
@@ -30,16 +39,18 @@ module.exports = class PartnerApplicationRouter extends Backbone.Router
     @view = new Step1View state: @state, form: @form
     @$el.html @view.render().$el
 
-  step2: (mode, step) ->
+  step2: (mode) ->
     @state.set step: 2, mode: mode or 'initial'
     @view = new Step2View state: @state, form: @form
     @$el.html @view.render().$el
 
-  step3: (mode, step) ->
+  step3: (mode) ->
     @state.set step: 3, mode: mode or 'initial'
     @view = new Step3View state: @state, form: @form
     @$el.html @view.render().$el
 
-  success: ->
+  success: (mode) ->
+    @state.set mode: mode
     @view = new SuccessView state: @state, form: @form
     @$el.html @view.render().$el
+    $(window).off 'beforeunload'

@@ -25,7 +25,9 @@ module.exports = class GooogleSearchResult extends Backbone.Model
     id
 
   href: ->
-    @get('link').replace('https://artsy.net', '').replace('http://artsy.net', '').replace('#!', "")
+    @get('link')
+      .replace(/http(s?):\/\/(w{3}\.)?artsy.net/, '')
+      .replace('#!', '')
 
   imageUrl: ->
     @get('pagemap')?.cse_thumbnail?[0].src or @get('pagemap')?.cse_image?[0].src

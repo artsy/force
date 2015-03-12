@@ -15,6 +15,7 @@ describe 'Favorites and follows tab', ->
     beforeEach ->
       @template = render('follows')(
         sd: { type: 'artists', CURRENT_PATH: '/following/artists' }
+        asset: (->)
         user: new CurrentUser({ lab_features: [] })
       )
 
@@ -34,6 +35,7 @@ describe 'Favorites and follows tab', ->
     beforeEach ->
       @template = render('follows')(
         sd: { type: 'genes', CURRENT_PATH: '/following/genes' }
+        asset: (->)
         user: new CurrentUser({ lab_features: [] })
       )
 
@@ -53,6 +55,7 @@ describe 'Favorites and follows tab', ->
     beforeEach ->
       @template = render('favorites')(
         sd: { CURRENT_PATH: '/favorites' }
+        asset: (->)
         user: new CurrentUser({ lab_features: [] })
       )
 

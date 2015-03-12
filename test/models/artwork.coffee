@@ -61,12 +61,33 @@ describe 'Artwork', ->
       @artwork.setActiveImage(notDefaultImageId)
       @artwork.activeImage().id.should.equal notDefaultImageId
 
+  describe '#downloadableFilename', ->
+    it 'returns a human readable filename', ->
+      @artwork.downloadableFilename().should.equal 'andy-warhol-skull-1999.jpg'
+
+  describe '#downloadableUrl', ->
+    describe 'as a normal user', ->
+      it 'returns the URL to the "larger" file', ->
+        @artwork.downloadableUrl().should.containEql 'larger.jpg'
+        @artwork.downloadableUrl(isAdmin: -> false).should.containEql 'larger.jpg'
+
+    describe 'as an admin', ->
+      it 'returns the URL to the "original" file', ->
+        @artwork.downloadableUrl(isAdmin: -> true).should.containEql 'original.jpg'
+
   describe 'display conditions:', ->
-    it 'can be downloadable', ->
-      @artwork.defaultImage().set 'downloadable', false
-      @artwork.isDownloadable().should.not.be.ok
-      @artwork.defaultImage().set 'downloadable', true
-      @artwork.isDownloadable().should.be.ok
+    describe 'can be downloadable', ->
+      it 'is downloadable if it is downloadable', ->
+        @artwork.defaultImage().set 'downloadable', false
+        @artwork.isDownloadable().should.be.false
+        @artwork.defaultImage().set 'downloadable', true
+        @artwork.isDownloadable().should.be.true
+
+      it 'is downloadable no matter what if the user is an admin', ->
+        @artwork.defaultImage().set 'downloadable', false
+        @artwork.isDownloadable().should.be.false
+        @artwork.isDownloadable(isAdmin: -> false).should.be.false
+        @artwork.isDownloadable(isAdmin: -> true).should.be.true
 
     it 'can be compared', ->
       @artwork.set 'comparables_count', 1
@@ -264,6 +285,10 @@ describe 'Artwork', ->
       @artwork.get('partner').default_profile_id = 'profile-id'
       @artwork.get('partner').website = 'mah-website.com'
       @artwork.partnerLink().should.equal 'mah-website.com'
+
+    it "partner website if profile and profile is private", ->
+      @artwork.get('partner').type = 'Auction'
+      should.strictEqual(undefined, @artwork.partnerLink())
 
   describe '#href', ->
     it 'creates an href for linking to this artwork', ->

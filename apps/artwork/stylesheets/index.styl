@@ -43,13 +43,6 @@ artwork-detail-item-height = 36px
     #artwork-feature-navigation
       opacity 0 !important
 
-.artwork-auction-results-button
-  margin-top 10px
-  margin-right 13px
-
-.related-posts-add-button.avant-garde-header-small
-  padding-left 0
-
 .artwork-left-section
   position absolute
   top 0
@@ -93,50 +86,48 @@ artwork-detail-item-height = 36px
   position relative
 
 // Below the fold
-.ari-left
-.ari-right
-  display inline-block
-  vertical-align top
-  text-align left
-.ari-left
-  width 63%
-  max-width 660px
-  height 100%
-  .posts-add-button
-    margin-left 10px
-.ari-right
-  width 30%
-  padding-left 50px
-  margin-left: 50px
-  border-left 1px solid gray-lighter-color
-  &.borderless
-    border-left 0 solid gray-lighter-color
-    margin-left 0
-    padding-left 0
+
+// Hack around empty state
+.artwork-related-information
+  padding-top 0
+  border-top none !important
+#artwork-artist-related-extended
+  margin-top 0
+  padding-top 20px
+  border-top 1px solid gray-lighter-color
+  &:empty
+    display none
 
 .ari-container
-  width: 86%
+  margin 20px auto
   text-align center
-  margin 0 auto
-
-
-// Bio and related works
-.artwork-artist
-  transition opacity 0.5s
-  &[data-state='pending']
-    opacity 0
-  .avant-garde-header-center a
-    text-decoration none
-
-.artwork-artist-blurb
-.artwork-blurb
-  margin 4px 0 10px
+.ari-cell
+  display inline-block
+  padding 0 40px
+  vertical-align top
+  text-align left
   font-size 17px
   line-height 1.5
+  // The order is important here:
+  &:last-child
+    border-left 1px solid gray-lighter-color
+  &:first-child
+    width 66.666%
+    border-left none
+  &.artwork-related-articles
+    width 33.333%
+
+// Bio and related works
+.artwork-blurb
+.artwork-artist-blurb
+  margin 20px 0
   text-align left
   word-wrap break-word
+  p
+    block-margins(20px)
 
-#artwork-related-show-section, #artist-artworks-section
+#artwork-related-show-section
+#artist-artworks-section
   display none
   opacity 0
   transition opacity 1s
@@ -188,9 +179,9 @@ artwork-detail-item-height = 36px
   border-radius 256px
   background-repeat no-repeat
   background-color white
-  box-shadow 0 10px 24px rgba(0,0,0,0.12)
+  box-shadow 0 10px 24px rgba(black, 0.12)
 
-.auction-clock-closed
+.clock-closed
   display none
 
 .about-artwork-section.add-margin-bottom
@@ -213,12 +204,23 @@ artwork-detail-item-height = 36px
     z-index 1
     position relative
 
+#artwork-buyers-premium-link
+  margin-top 10px
+  font-weight bold
+  font-size 15px
+  a
+    color currentColor
+
+#artwork-lot-number
+  avant-garde()
+  font-size 13px
+  padding-bottom 5px
+
 @import './deep_zoom'
 @import './circle_buttons'
 @import './view_in_room'
 @import './layered_search'
 @import './detail'
-@import './related_posts'
 @import './related_articles'
 @import '../components/contact'
 @import '../components/partner_phone_number'

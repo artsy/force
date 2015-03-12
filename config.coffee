@@ -13,10 +13,10 @@ module.exports =
   POSITRON_URL: 'http://localhost:3005'
   APP_URL: 'http://localhost:3004'
   MOBILE_URL: 'http://localhost:3003'
-  CANONICAL_MOBILE_URL: 'http://m.artsy.net'
+  CANONICAL_MOBILE_URL: 'https://m.artsy.net'
   CMS_URL: 'https://cms.artsy.net'
   ADMIN_URL: 'https://admin.artsy.net'
-  ASSET_PATH: '/assets/'
+  GENOME_URL: 'https://helix.artsy.net'
   SESSION_SECRET: 'change-me'
   SESSION_COOKIE_MAX_AGE: 31536000000
   SESSION_COOKIE_KEY: 'force.sess'
@@ -67,6 +67,10 @@ module.exports =
   GOOGLE_SEARCH_CX: null
   SHOW_AUCTIONS_IN_HEADER: true
   API_REQUEST_TIMEOUT: 5000
+  POST_TO_ARTICLE_SLUGS: []
+  HEAPDUMP: false
+  TESTING_MEMORY_LEAK: false
+  CHECK_FOR_AUCTION_REMINDER: false
 
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or

@@ -1,0 +1,24 @@
+form.stacked-form(
+  action='//artsy.us1.list-manage.com/subscribe/post?u=da84db7e8f0d6bd94b7e0da60&id=95ac2900c4'
+  method='post'
+  target='_blank'
+)
+  .stacked-form-cell
+    label.avant-garde-form-label( for='FNAME' ) First Name
+    input#FNAME.bordered-input.is-block( type='text', name='FNAME' )
+
+  .stacked-form-cell
+    label.avant-garde-form-label( for='LNAME' ) Last Name
+    input#LNAME.bordered-input.is-block( type='text', name='LNAME' )
+
+  .stacked-form-cell
+    label.avant-garde-form-label( for='EMAIL' ) Email
+    input#EMAIL.bordered-input.is-block( type='email', name='EMAIL', required )
+
+  // Mailchimp bot trap
+  div( style='position: absolute; left: -5000px;' )
+    input( type='text', name='b_da84db7e8f0d6bd94b7e0da60_95ac2900c4', tabindex='-1' )
+
+  hr.is-invisible
+
+  button.avant-garde-button-black Sign up

@@ -6,6 +6,8 @@ HeaderView = require './header/view.coffee'
 FooterView = require './footer/view.coffee'
 sd = require('sharify').data
 analytics = require '../../lib/analytics.coffee'
+AuctionReminderView = require '../auction_reminder/index.coffee'
+setupSplitTests = require '../split_test/setup.coffee'
 
 module.exports = ->
   setupJquery()
@@ -13,6 +15,7 @@ module.exports = ->
   setupReferrerTracking()
   setupKioskMode()
   syncAuth()
+  setupAuctionReminder()
 
 ensureFreshUser = (data) ->
   return unless sd.CURRENT_USER
@@ -39,8 +42,9 @@ setupAnalytics = ->
   # (not included in test environment).
   return if not mixpanel? or mixpanel is 'undefined'
   analytics(mixpanel: mixpanel, ga: ga)
-  analytics.trackPageview()
   analytics.registerCurrentUser()
+  setupSplitTests()
+  analytics.trackPageview()
 
   # Log a visit once per session
   unless Cookies.get('active_session')?
@@ -87,4 +91,7 @@ setupJquery = ->
     'X-XAPP-TOKEN': sd.ARTSY_XAPP_TOKEN
     'X-ACCESS-TOKEN': sd.CURRENT_USER?.accessToken
 
+setupAuctionReminder = ->
+  if sd.CHECK_FOR_AUCTION_REMINDER and !(Cookies.get('closeAuctionReminder')? or window.location.pathname is '/user/edit')
+    new AuctionReminderView
 setupAnalytics()

@@ -3,7 +3,7 @@ scrollFrame = require 'scroll-frame'
 FilterArtworksView = require '../../components/filter/artworks/view.coffee'
 { API_URL } = require('sharify').data
 
-module.exports.index = ->
+module.exports.init = ->
   { params } = new FilterArtworksView
     el: $ '#browse-filter'
     artworksUrl: "#{API_URL}/api/v1/search/filtered/main"
@@ -12,7 +12,3 @@ module.exports.index = ->
   Backbone.history.start pushState: true
   scrollFrame '#browse-filter a'
   params.trigger 'reset'
-
-module.exports.categories = ->
-  $('#browse-header .avant-garde-button-text').click ->
-    $("html, body").animate scrollTop: $('#browse-az-header').offset().top

@@ -1,4 +1,33 @@
+_ = require 'underscore'
+{ APP_URL } = require('sharify').data
 Backbone = require 'backbone'
 
 module.exports = class Form extends Backbone.Model
-  url: 'https://formkeep.com/f/7275ed07f08a'
+  url: "#{APP_URL}/apply/form"
+
+  defaults:
+    oid: '00DC0000000PWQJ'
+
+  # There are others... but this is just so
+  # we can validate any attributes
+  # coming in over a query string
+  valid: [
+    'company'
+    'email'
+    'first_name'
+    'last_name'
+    'phone'
+    'title'
+    'URL'
+  ]
+
+  @validate: (obj) ->
+    _.pick obj, @::valid
+
+  save: (attrs, options = {}) ->
+    attrs = _.extend {}, @attributes, attrs
+    _.each attrs, (val, key) ->
+      if _.isArray val
+        attrs[key] = val.join(';') + ';'
+
+    super

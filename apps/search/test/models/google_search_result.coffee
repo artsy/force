@@ -101,3 +101,20 @@ describe 'GoogleSearchResult', ->
           metatags: null
       })
       result.ogType()
+
+  describe '#href', ->
+    beforeEach ->
+      @results = [
+        new GoogleSearchResult link: 'https://artsy.net/artist/cool-artist'
+        new GoogleSearchResult link: 'https://www.artsy.net/artist/cool-artist'
+        new GoogleSearchResult link: 'http://artsy.net/artist/cool-artist'
+        new GoogleSearchResult link: 'http://www.artsy.net/artist/cool-artist'
+      ]
+
+    it 'replaces http, https, www. and bare artsy domains', ->
+      _.invoke(@results, 'href').should.eql [
+        '/artist/cool-artist'
+        '/artist/cool-artist'
+        '/artist/cool-artist'
+        '/artist/cool-artist'
+      ]

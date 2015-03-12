@@ -1,6 +1,5 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-modes = require '../modes.coffee'
 { Countries } = require 'places'
 Form = require '../../../../components/mixins/form.coffee'
 template = -> require('../templates/step1.jade') arguments...
@@ -25,6 +24,10 @@ module.exports = class Step1View extends Backbone.View
     @listenTo @state, 'change:mode', @changeMode
     @listenTo @state, 'change:mode', @renderMode
 
+    @preventNavigation = _.once ->
+      $(window).bind 'beforeunload', ->
+        'Your application has not been submitted yet.'
+
   selectMode: (e) ->
     @state.set 'mode', $(e.currentTarget).val()
 
@@ -38,12 +41,13 @@ module.exports = class Step1View extends Backbone.View
 
   renderMode: ->
     # Ensure the select box is in the correct state
-    @$('.paf-type-select').val @state.mode().value
+    @$('.paf-type-select').val @state.get('mode')
     # Render type-specific sub-form
     @$('#paf-form').html formTemplates[@state.get('mode')]
       state: @state, form: @form, countries: Countries
 
   submit: (e) ->
+    @preventNavigation()
     return unless @validateForm()
     e.preventDefault()
     @form.set @serializeForm()
@@ -53,6 +57,6 @@ module.exports = class Step1View extends Backbone.View
     Backbone.history.navigate "#{@state.route()}/2", trigger: true
 
   render: ->
-    @$el.html template(state: @state, form: @form, modes: modes)
+    @$el.html template(state: @state, form: @form)
     _.defer => @renderMode()
     this

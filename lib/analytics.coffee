@@ -114,6 +114,9 @@ module.exports.track = track =
     memo
   , {})
 
+module.exports.trackForm = (selector, description, options = {}) ->
+  mixpanel?.track_forms? selector, description, options
+
 module.exports.modelNameAndIdToLabel = (modelName, id) ->
   throw new Error('Requires modelName and id') unless modelName? and id?
   "#{_s.capitalize(modelName)}:#{id}"
@@ -174,6 +177,11 @@ module.exports.unsetProperty = (property) =>
 # Code using this function should cope with it returning undefined
 module.exports.setProperty = (hash) =>
   mixpanel?.register_once?(hash)
+
+# These need to be set up individually before using. Read this non-sense:
+# https://developers.google.com/analytics/devguides/platform/customdimsmets
+module.exports.setDimension = (index, value) ->
+  ga? 'set', index, value
 
 # Conduct an A/B test by using this helper to determine what path to take.
 # Returns true if the user is in the new feature, returns false if the user

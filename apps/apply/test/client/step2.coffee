@@ -34,8 +34,8 @@ describe 'Step2View', ->
 
   it 'renders the correct sub-template', (done) ->
     _.defer =>
-      @view.$('input[type="checkbox"]').first().attr('name').should.equal 'interest-profile'
+      @view.$('input[type="checkbox"]').first().attr('value').should.equal 'Gallery profile page'
       @state.set 'mode', 'institution'
       @view.renderMode()
-      @view.$('input[type="checkbox"]').first().attr('name').should.equal 'interest-promoting-collections'
+      @view.$('input[type="checkbox"]').first().attr('value').should.equal 'Promoting collections'
       done()

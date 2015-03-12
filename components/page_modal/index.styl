@@ -1,0 +1,12 @@
+@import '../stylus_lib'
+
+.iframed-page-modal
+  .modal-backdrop
+    background-color rgba(black, 0.2)
+  .modal-body
+    height 100%
+  &.is-loading > .modal-backdrop::before
+    background-color black !important
+
+  iframe
+    vertical-align bottom

@@ -6,21 +6,13 @@
     .fair-dates= fair.formatDates()
     if profile.get('bio')
       .profile-bio!= profile.mdToHtml('bio') + ' '
-    include ../../../components/auction_clock/template
+    include ../../../components/clock/template
   .fair-overview-right
     a.fair-overview-browse( href=profile.href() + "/browse" )
       .fair-overview-browse-image( style="background-image: url(" + fair.imageUrl('large_rectangle') + ")" )
       .fair-overview-browse-heading.overview-heading Browse all exhibitors
       .fair-overview-browse-subheading
         | #{exhibitorsCount} Exhibitors, Updated Daily
-
-  //- Start: Remove anytime after ~12/8/2014
-  if fair.id === 'nada-miami-beach-2014'
-    div#fair-nada-wallpapers( style='position: absolute; bottom: 0; left: 0; width: 175px' )
-      a.faux-underline( href='http://artsywllpprs.com', target='_blank' ) Visit
-      a( href='http://artsywllpprs.com', target='_blank', style='text-decoration: none;' )
-        |  our Artsy Takeover at NADA in collaboration with W A L L P A P E R S
-  //- End: Remove anytime after ~12/8/2014
 
 .fair-overview-below-top-container
   .fair-overview-below-top

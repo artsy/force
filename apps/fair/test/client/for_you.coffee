@@ -14,7 +14,7 @@ describe 'ForYouView', ->
   before (done) ->
     benv.setup =>
       sd.API_URL = 'localhost:3003'
-      sd.ASSET_PATH = 'assets/'
+
       sd.CURRENT_PATH = ""
       sd.NODE_ENV = "test"
       sd.CURRENT_USER = id: 'foo'

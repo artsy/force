@@ -19,20 +19,20 @@ describe 'Step3View', ->
     benv.teardown()
 
   beforeEach ->
-    sinon.stub $, 'ajax'
+    sinon.stub Backbone, 'sync'
     @view = new Step3View state: @state, form: @form
     @view.render()
 
   afterEach ->
-    $.ajax.restore()
+    Backbone.sync.restore()
 
   it 'renders the shell template', ->
     @view.$('.pah-step').first().text().should.equal 'Step 3 of 3'
     @view.$('h1').text().should.equal 'How did you learn about Artsy?'
 
   it 'submits the form', ->
-    @view.$('textarea[name="anything-else"]').val('Nope')
+    @view.$('textarea[name="00NC0000005RGgg"]').val('Nope')
     @view.$('button').click()
-    @form.get('anything-else').should.equal 'Nope'
-    $.ajax.args[0][0].url.should.equal 'https://formkeep.com/f/7275ed07f08a'
-    $.ajax.args[0][0].data['anything-else'].should.equal 'Nope'
+    @form.get('00NC0000005RGgg').should.equal 'Nope'
+    Backbone.sync.args[0][1].url.should.containEql '/apply/form'
+    Backbone.sync.args[0][1].attributes['00NC0000005RGgg'].should.equal 'Nope'

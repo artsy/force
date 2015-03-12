@@ -23,11 +23,19 @@ describe 'proxyToReflection', ->
     proxyToReflection req, @res, @next
     @next.called.should.be.ok
 
-  describe 'with _escaped_fragment_', ->
+  context 'with _escaped_fragment_', ->
+
     paths =
       '/artwork/foo-bar?_escaped_fragment_=': '/artwork/foo-bar'
       '/artwork/foo-bar?a=b&c=d&_escaped_fragment_=': '/artwork/foo-bar%3Fa%3Db%26c%3Dd'
       '/artwork/foo-bar?a=b&c=d%3Ae&_escaped_fragment_=': '/artwork/foo-bar%3Fa%3Db%26c%3Dd%3Ae'
+
+    it 'passes through when relfection returns a 403', ->
+      parsed = parse(source)
+      req = url: parsed.path, query: querystring.parse(parsed.query)
+      proxyToReflection req, @res, @next
+      endStub.args[0][0] status: 403
+      @next.called.should.be.ok
 
     for source, dest of paths
       it "proxies #{source} to #{dest}", ->

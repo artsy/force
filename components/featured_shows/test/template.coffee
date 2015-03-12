@@ -23,7 +23,7 @@ describe 'Featured Shows templates', ->
     shows = new PartnerShows _.times(4, -> fabricate('show'))
     $html = $(render('large')(shows: shows.models))
     $html.find('.featured-shows-featured-show').length.should.equal 4
-    $html.find('.fsfs-running-dates').last().text().should.equal 'Jul 12 – Aug 23'
+    $html.find('.fsfs-running-dates').last().text().should.equal 'Jul 12 – Aug 23, 2013'
 
   it 'optionally displays the location', ->
     shows = new PartnerShows [fabricate 'show']

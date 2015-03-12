@@ -1,26 +1,43 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-Cookies = require 'cookies-js'
-CurrentUser = require '../../models/current_user.coffee'
-{ getProperty, setProperty, unsetProperty } = require '../../lib/analytics.coffee'
+{ CURRENT_USER, NODE_ENV } = require('sharify').data
+{ load, getProperty, setProperty, unsetProperty, setDimension } = require '../../lib/analytics.coffee'
+IS_TEST_ENV = not _.contains(['production', 'staging', 'development'], NODE_ENV)
 
 module.exports = class SplitTest
-  constructor: ({ @key, @outcomes, @edge }) ->
+  constructor: ({ @key, @outcomes, @edge, @dimension }) ->
     return throw new Error('Your probability values for outcomes must add up to 1.0') if @sum() isnt 1
 
   _key: ->
     "split_test--#{@key}"
 
+  cookies: ->
+    if IS_TEST_ENV
+      set: (->), get: (->), expire: (->)
+    else
+      @__cookies__ ?= require 'cookies-js'
+
   set: (outcome) ->
-    Cookies.set @_key(), outcome
-    setProperty _.tap({}, (hsh) => hsh[@_key()] = outcome)
+    @cookies().set @_key(), outcome
+
+    # Set for Mixpanel
+    unsetProperty @_key() # Force unset
+    property = _.tap({}, (hsh) => hsh[@_key()] = outcome)
+    if IS_TEST_ENV
+      setProperty property
+    else
+      load -> setProperty property
+
+    # Set for Google Analytics
+    setDimension @dimension, outcome if @dimension?
+
     outcome
 
   get: ->
-    getProperty(@_key()) or Cookies.get(@_key())
+    getProperty(@_key()) or @cookies().get(@_key())
 
   unset: ->
-    Cookies.expire @_key()
+    @cookies().expire @_key()
     unsetProperty @_key()
     location.reload()
 
@@ -28,7 +45,7 @@ module.exports = class SplitTest
     "is-splittest-#{@key}--#{@outcome()}"
 
   admin: ->
-    CurrentUser.orNull()?.isAdmin()
+    CURRENT_USER?.type is 'Admin'
 
   toss: ->
     _.sample _.flatten _.map @outcomes, (probability, outcome) ->
@@ -41,5 +58,7 @@ module.exports = class SplitTest
 
   outcome: ->
     outcome = if (@admin() and @edge?) then @edge else @get()
-    return outcome if outcome
-    @set @toss()
+    if outcome?
+      @set outcome
+    else
+      @set @toss()

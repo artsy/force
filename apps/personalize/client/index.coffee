@@ -16,7 +16,6 @@ views =
   CategoriesView: require './views/categories.coffee'
   BookmarksView: require './views/bookmarks.coffee'
   FavoritesView: require './views/favorites.coffee'
-  IntroductionView: require './views/introduction.coffee'
 
 module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Router
   routes:
@@ -67,7 +66,7 @@ module.exports.PersonalizeRouter = class PersonalizeRouter extends Backbone.Rout
       @user.save()
       $.post('/flash', message: 'Thank you for personalizing your profile')
     ]).always =>
-      window.location = @redirectLocation()
+      location.assign @redirectLocation()
 
 module.exports.init = ->
   reonboarding = /reonboarding/.test(window.location.search)

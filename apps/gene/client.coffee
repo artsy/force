@@ -64,8 +64,7 @@ module.exports.GeneView = class GeneView extends Backbone.View
         @renderArtistFillwidth()
 
   fetchRelatedArtists: ->
-    data = { exclude_artists_without_artworks: true }
-    @model.fetchArtists 'related', data: data, success: (artists) =>
+    @model.fetchArtists 'related', success: (artists) =>
       @relatedArtists = artists
       @trigger 'relatedArtistsFetched'
 
@@ -82,6 +81,7 @@ module.exports.GeneView = class GeneView extends Backbone.View
 
   artistMode: ->
     @$el.removeClass 'body-infinite-scroll'
+    @$('#gene-filter-artworks-nav a').removeClass 'is-active'
     @$('#gene-filter').attr 'data-state', 'artists'
     @router.navigate "/gene/#{@model.get 'id'}"
     @setupArtistFillwidth()
@@ -90,8 +90,9 @@ module.exports.GeneView = class GeneView extends Backbone.View
 
   artworksMode: =>
     @$el.addClass 'body-infinite-scroll'
+    @$('#gene-filter-all-artists').removeClass 'is-active'
     @$('#gene-filter').attr 'data-state', 'artworks'
-    return unless @$window.scrollTop() > @$('#gene-filter').offset().top
+    return false unless @$window.scrollTop() > @$('#gene-filter').offset().top
     _.defer => @document.scrollTop = @$('#gene-artworks').offset().top - @$('#gene-filter-nav').height() - 50
 
 module.exports.init = ->

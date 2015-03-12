@@ -1,0 +1,13 @@
+include ../../checkbox
+
+form.stacked-form
+  .paf-checkbox-set
+    .stacked-form-cell: +checkbox('00NC0000005RGgM', 'Fair brand promotion')
+    .stacked-form-cell: +checkbox('00NC0000005RGgM', 'Fair profile page')
+    .stacked-form-cell: +checkbox('00NC0000005RGgM', 'Collector reach')
+    .stacked-form-cell: +checkbox('00NC0000005RGgM', 'Exhibitor promotion')
+    .stacked-form-cell: +checkbox('00NC0000005RGgM', 'Editorial Coverage')
+
+  textarea.bordered-input( placeholder='Any other partnership goals?', name='00NC0000005RGgb' )= form.get('00NC0000005RGgb')
+
+  button.avant-garde-button-black.paf-next Next

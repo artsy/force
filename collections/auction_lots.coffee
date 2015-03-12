@@ -1,8 +1,7 @@
 _ = require 'underscore'
 sd = require('sharify').data
-Backbone = require 'backbone'
 AuctionLot = require '../models/auction_lot.coffee'
-PageableCollection = require 'backbone-pageable'
+PageableCollection = require '../components/pageable_collection/index.coffee'
 
 module.exports = class AuctionLots extends PageableCollection
   model: AuctionLot
@@ -18,10 +17,6 @@ module.exports = class AuctionLots extends PageableCollection
   initialize: (models, options = {}) ->
     { @id, @sortBy } = _.defaults(options, sortBy: '-price_realized_dollar,-auction_date')
     super
-
-  parseState: (resp, queryParams, state, options) ->
-    if options.res
-      totalRecords: parseInt options.res.headers['x-total-count']
 
   resultsWithImages: ->
     @filter (auctionLot) ->

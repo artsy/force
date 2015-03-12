@@ -16,7 +16,7 @@ describe 'AboutView', ->
       @AboutView.__set__ 'imagesLoaded', (cb) -> cb()
       $.fn.imagesLoaded = (cb) -> cb()
       $.fn.waypoint = sinon.stub()
-      data = _.extend require('../fixture/content.json'), sd: {}
+      data = _.extend require('../fixture/content.json'), sd: {}, asset: (->)
       benv.render resolve(__dirname, '../../templates/index.jade'), data, =>
         done()
 

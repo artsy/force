@@ -1,6 +1,7 @@
 _ = require 'underscore'
 qs = require 'querystring'
 Backbone = require 'backbone'
+scrollFrame = require 'scroll-frame'
 Notifications = require '../../../collections/notifications.coffee'
 Artworks = require '../../../collections/artworks.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
@@ -30,7 +31,6 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
     @setupJumpView()
 
     @setup =>
-      @attachScrollHandler()
       @notifications.getFirstPage()?.then @checkIfEmpty
 
   attachScrollHandler: ->
@@ -119,7 +119,7 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
       count: artworks.length
 
   publishedAt: (artworks) ->
-    timestamps = _.map artworks.pluck('published_at'), Date.parse
+    timestamps = _.map artworks.pluck('published_changed_at'), Date.parse
     DateHelpers.formatDate _.max(timestamps)
 
   renderColumns: ($el, artworks) ->
@@ -154,4 +154,5 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
 
 module.exports.init = ->
   new NotificationsView el: $('body')
+  scrollFrame '#notifications-feed a'
   require './analytics.coffee'

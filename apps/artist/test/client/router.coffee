@@ -31,14 +31,11 @@ describe 'ArtistRouter', ->
   describe '#execute', ->
     beforeEach ->
       @renderStub = renderStub = sinon.stub()
-      @removeStub = removeStub = sinon.stub()
       class @StubbedView extends Backbone.View
-        remove: -> removeStub()
         render: -> renderStub(); this
       @router.view = new @StubbedView
       @router.headerView = new @StubbedView
 
-    it 'tears down an existing view, renders the new view', ->
+    it 'returns if a view is already rendered', ->
       @router.execute()
-      @removeStub.called.should.be.true
-      @renderStub.called.should.be.true
+      @renderStub.called.should.be.false

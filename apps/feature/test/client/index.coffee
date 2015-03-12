@@ -36,6 +36,7 @@ describe 'FeatureView', ->
     benv.render resolve(__dirname, '../../templates/index.jade'), {
       feature: @feature
       sd: { FEATURE: @feature }
+      asset: (->)
     }, =>
       @view = new @FeatureView
         model: @feature

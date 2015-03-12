@@ -1,17 +1,21 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
+Q = require 'q'
 sd = require('sharify').data
 Backbone = require 'backbone'
 Edition = require './edition.coffee'
+Partner = require './partner.coffee'
 AdditionalImage = require './additional_image.coffee'
 { compactObject } = require './mixins/compact_object.coffee'
 { Image, Dimensions, Markdown } = require 'artsy-backbone-mixins'
+Relations = require './mixins/relations/artwork.coffee'
 
 module.exports = class Artwork extends Backbone.Model
 
   _.extend @prototype, Image(sd.SECURE_IMAGES_URL)
   _.extend @prototype, Dimensions
   _.extend @prototype, Markdown
+  _.extend @prototype, Relations
 
   urlRoot: ->
     "#{sd.API_URL}/api/v1/artwork"
@@ -77,11 +81,17 @@ module.exports = class Artwork extends Backbone.Model
   # Can the user download the default image
   #
   # return {Boolean}
-  isDownloadable: ->
-    @defaultImage().get('downloadable')
+  isDownloadable: (user) ->
+    @defaultImage().get('downloadable') or !!user?.isAdmin()
 
   downloadableFilename: ->
-    _s.slugify @toOneLine()
+    _s.slugify(@toOneLine()) + '.jpg'
+
+  downloadableUrl: (user) ->
+    if user?.isAdmin()
+      "#{@url()}/image/#{@defaultImage().id}/original.jpg"
+    else
+      @defaultImageUrl 'larger'
 
   # Are there comparable artworks;
   # such that we can display a link to auction results
@@ -155,7 +165,7 @@ module.exports = class Artwork extends Backbone.Model
   hasDimension: (attr) ->
     parseFloat(@get(attr)) > 0
 
-  # Can the more info toggle be displayed?
+  # Can we show more info
   #
   # return {Boolean}
   hasMoreInfo: ->
@@ -221,7 +231,7 @@ module.exports = class Artwork extends Backbone.Model
 
   partnerLink: ->
     partner = @get 'partner'
-    return unless partner
+    return unless partner and partner.type isnt 'Auction'
     if partner.default_profile_public and partner.default_profile_id
       return "/#{partner.default_profile_id}"
     if partner.website?.length > 0
@@ -333,12 +343,6 @@ module.exports = class Artwork extends Backbone.Model
   isEmbeddableByUser: (user) ->
     user?.hasLabFeature('Embed') and @get('absolutely_embeddable')
 
-  showAboutArtworkHeading: ->
-    @get('blurb') or @get('provenance') or @get('exhibition_history') or @get('signature') or @get('additional_information') or @get('literature')
-
-  hasLeftInfoSection: (user, artist) ->
-    user or @get('blurb') or artist?.get('blurb') or @hasMoreInfo() or @isComparable()
-
   # Sets up related collections and makes them available
   # under an object so we can access/iterate over them later
   #
@@ -347,6 +351,7 @@ module.exports = class Artwork extends Backbone.Model
     @relatedCollections = _.reduce ['sales', 'fairs', 'features', 'shows'], (memo, aspect) =>
       memo[aspect] = @[aspect] = new Backbone.Collection
       @[aspect].url = "#{sd.API_URL}/api/v1/related/#{aspect}?artwork[]=#{@id}&active=true"
+      @[aspect].url += "&cache_bust=#{Math.random()}" if aspect is 'sales'
       @[aspect].kind = aspect
       memo
     , {}
@@ -381,3 +386,9 @@ module.exports = class Artwork extends Backbone.Model
 
   artistName: ->
     @get('artist')?.name or ''
+
+  fetchPartnerAndSales: (options) ->
+    Q.allSettled([
+      (partner = new Partner @get 'partner').fetch()
+      (sales = @relatedCollections.sales).fetch()
+    ]).fail(options.error).then -> options.success partner, sales

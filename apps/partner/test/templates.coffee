@@ -21,6 +21,7 @@ describe 'Partner header', ->
       @template = render('index')(
         profile: @profile
         sd: APP_URL: 'http://localhost:3004', CURRENT_PATH: '/pace-gallery'
+        asset: (->)
         params: id: 'pace-gallery', artistId: 'yoshitomo-nara'
       )
       @template.should.containEql '<link rel="canonical" href="http://localhost:3004/artist/yoshitomo-nara">'
@@ -29,6 +30,7 @@ describe 'Partner header', ->
       @template = render('index')(
         profile: @profile
         sd: APP_URL: 'http://localhost:3004', CURRENT_PATH: '/pace-gallery'
+        asset: (->)
         params: id: 'pace-gallery'
       )
       @template.should.containEql '<link rel="canonical" href="http://localhost:3004/pace-gallery">'
@@ -37,6 +39,7 @@ describe 'Partner header', ->
       @template = render('index')(
         profile: @profile
         sd: APP_URL: 'http://localhost:3004', CURRENT_PATH: '/pace-gallery', INCLUDE_ESCAPED_FRAGMENT: true
+        asset: (->)
         params: id: 'pace-gallery'
       )
       @template.should.containEql '<meta name="fragment" content="!">'
@@ -47,6 +50,7 @@ describe 'Partner header', ->
         tab: 'overview'
         sd:
           APP_URL: 'http://localhost:3004', CURRENT_PATH: '/pace-gallery', INCLUDE_ESCAPED_FRAGMENT: true
+        asset: (->)
         params: id: 'pace-gallery'
       )
       @template.should.not.containEql '<meta name="fragment" content="!">'
@@ -57,6 +61,7 @@ describe 'Partner header', ->
         profile: @profile
         tab: 'overview'
         sd: APP_URL: 'http://localhost:3004', CURRENT_PATH: '/pace-gallery'
+        asset: (->)
         params: id: 'pace-gallery'
       )
       @template.should.containEql 'class="partner-followers">2,222 Followers'
@@ -67,6 +72,7 @@ describe 'Partner header', ->
         profile: @profile
         tab: 'overview'
         sd: APP_URL: 'http://localhost:3004', CURRENT_PATH: '/pace-gallery'
+        asset: (->)
         params: id: 'pace-gallery'
       )
       @template.should.not.containEql 'partner-followers'

@@ -1,9 +1,8 @@
 _ = require 'underscore'
 Q = require 'q'
 Items = require '../../collections/items'
-PartnerShows = require '../../collections/partner_shows'
-{ Cities } = require 'places'
-{ FeaturedCities } = require 'places'
+PartnerShows = require './shows'
+{ Cities, FeaturedCities } = require 'places'
 
 @index = (req, res) ->
   shows = new Items [], id: '530ebe92139b21efd6000071', item_type: 'PartnerShow'
@@ -18,24 +17,25 @@ PartnerShows = require '../../collections/partner_shows'
   city = _.findWhere(Cities, slug: req.params.city)
   return next() unless city?
 
-  criteria = (status) ->
-    near: city.coords.toString()
-    published_with_eligible_artworks: true
-    status: status
-    sort: '-start_at'
-    size: 18
+  currentPage = parseInt req.query.page or 1
+  pageSize = 18
 
   upcoming = new PartnerShows
   upcoming.comparator = (show) -> Date.parse(show.get('start_at'))
-  current = new PartnerShows
+  current = new PartnerShows [], state: currentPage: currentPage, pageSize: pageSize
   current.comparator = (show) -> Date.parse(show.get('end_at'))
   past = new PartnerShows
   past.comparator = (show) -> -(Date.parse(show.get('end_at')))
 
+  criteria =
+    near: city.coords.toString()
+    sort: '-start_at'
+    size: pageSize
+
   Q.allSettled([
-    upcoming.fetch(cache: true, data: criteria('upcoming'))
-    current.fetch(cache: true, data: criteria('running'))
-    past.fetch(cache: true, data: criteria('closed'))
+    upcoming.fetch(cache: true, data: _.defaults(status: 'upcoming', criteria))
+    current.fetch(cache: true, data: _.defaults(status: 'running', total_count: true, sort: 'end_at', criteria))
+    past.fetch(cache: true, data: _.defaults(status: 'closed', criteria))
   ]).then(->
     opening = upcoming.groupBy (show) -> show.openingThisWeek()
 
@@ -45,6 +45,6 @@ PartnerShows = require '../../collections/partner_shows'
       featuredCities: FeaturedCities
       opening: opening.true or []
       upcoming: opening.false or []
-      current: current.models
-      past: past.models
+      current: current
+      past: past
   ).done()

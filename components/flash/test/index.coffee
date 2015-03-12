@@ -58,6 +58,7 @@ describe 'FlashMessage', ->
 
   describe '#close', ->
     beforeEach ->
+      location.assign = sinon.stub()
       @flash = new FlashMessage message: 'Goodbye world.'
 
     it 'removes the flash message when clicked, leaving the container empty', (done) ->
@@ -71,7 +72,7 @@ describe 'FlashMessage', ->
       flash = new FlashMessage message: 'A caesura', href: '/something/else', autoclose: false
       @flash.$el.on 'transitionend', ->
         _.defer ->
-          window.location.should.equal '/something/else'
+          location.assign.args[0][0].should.equal '/something/else'
           done()
       @flash.$el.click()
 

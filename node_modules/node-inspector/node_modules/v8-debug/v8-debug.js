@@ -29,6 +29,8 @@ function V8Debug() {
     }.bind(this)
   };
 
+  this._processor.extendedProcessDebugJSONRequestAsyncHandles_ = {};
+
   this._processor.extendedProcessDebugJSONRequest_ = function(json_request) {
     var request;  // Current request.
     var response;  // Generated response.
@@ -37,7 +39,11 @@ function V8Debug() {
         // Convert the JSON string to an object.
         request = JSON.parse(json_request);
 
-        if (typeof this.extendedProcessDebugJSONRequestHandles_[request.command] !== 'function') return;
+        var handle = this.extendedProcessDebugJSONRequestHandles_[request.command];
+        var asyncHandle = this.extendedProcessDebugJSONRequestAsyncHandles_[request.command];
+        var asyncResponse;
+
+        if (!handle && !asyncHandle) return;
 
         // Create an initial response.
         response = this.createResponse(request);
@@ -47,9 +53,24 @@ function V8Debug() {
           if (args.maxStringLength !== undefined) {
             response.setOption('maxStringLength', args.maxStringLength);
           }
+          if (args.asyncResponse) {
+            asyncResponse = args.asyncResponse;
+          }
         }
 
-        this.extendedProcessDebugJSONRequestHandles_[request.command].call(this, request, response);
+        if (asyncHandle) {
+          if (asyncResponse) return JSON.stringify(asyncResponse);
+
+          asyncHandle.call(this, request, response, function(error) {
+            execCommand(request.command, {
+              asyncResponse: error || response
+            });
+          }.bind(this));
+
+          return '{"seq":0,"type":"response","success":true}';
+        }
+
+        handle.call(this, request, response);
       } catch (e) {
         // If there is no response object created one (without command).
         if (!response) {
@@ -92,9 +113,15 @@ V8Debug.prototype.registerCommand = function(name, func) {
   this._processor.extendedProcessDebugJSONRequestHandles_[name] = func;
 };
 
+V8Debug.prototype.registerAsync =
+V8Debug.prototype.registerAsyncCommand = function(name, func) {
+  this._processor.extendedProcessDebugJSONRequestAsyncHandles_[name] = func;
+};
+
 V8Debug.prototype.command =
-V8Debug.prototype.execCommand = 
-V8Debug.prototype.emitEvent = function(name, attributes, userdata) {
+V8Debug.prototype.execCommand =
+V8Debug.prototype.emitEvent = execCommand;
+function execCommand(name, attributes, userdata) {
   var message = {
     seq: 1,
     type: 'request',
@@ -119,9 +146,9 @@ V8Debug.prototype.registerEvent = function(name) {
 V8Debug.prototype.get =
 V8Debug.prototype.runInDebugContext = function(script) {
   if (typeof script == 'function') script = script.toString() + '()';
-  
+
   script = /\);$/.test(script) ? script : '(' + script + ');';
-  
+
   return binding.runScript(script);
 };
 

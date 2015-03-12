@@ -38,6 +38,7 @@ describe 'ArticleView', ->
         ]
         author: new Backbone.Model fabricate 'user'
         sd: {}
+        asset: (->)
         embedVideo: require('embed-video')
         moment: require('moment')
         resize: sinon.stub()
@@ -71,48 +72,3 @@ describe 'ArticleView', ->
           title: 'Andy Foobar Flowers'
           _id: '5321b73dc9dc2458c4000196'
       @view.$el.html().should.containEql 'Andy Foobar Flowers'
-
-describe 'MagazineView', ->
-
-  before (done) ->
-    benv.setup =>
-      benv.expose $: benv.require 'jquery'
-      Backbone.$ = $
-      { @MagazineView } = mod = benv.requireWithJadeify(
-        resolve(__dirname, '../client/magazine')
-        ['feedTemplate']
-      )
-      benv.render resolve(__dirname, '../templates/magazine.jade'), @locals = {
-        articlesFeed: []
-        featuredArticles: []
-        sd: {}
-        moment: require('moment')
-        resize: sinon.stub()
-      }, =>
-        done()
-
-  after ->
-    benv.teardown()
-
-  beforeEach ->
-    sinon.stub Backbone, 'sync'
-    @view = new @MagazineView el: $('body'), articles: new Articles
-
-  afterEach ->
-    Backbone.sync.restore()
-
-  describe '#renderArticles', ->
-
-    it 'renders the feed of articles', ->
-      @view.articles.set [fixtures.article, _.extend
-        fixtures.article, thumbnail_title: "Moo"]
-      @view.renderArticles()
-      @view.$el.html().should.containEql 'Moo'
-
-  describe '#moreArticles', ->
-
-    it 'fetches the next page of articles', ->
-      @view.moreArticles()
-      Backbone.sync.args[0][2].data.offset.should.equal 50
-      @view.moreArticles()
-      Backbone.sync.args[1][2].data.offset.should.equal 100

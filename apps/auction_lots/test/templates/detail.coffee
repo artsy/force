@@ -35,6 +35,7 @@ describe 'Detail auction lots template', ->
         artist: @artist
         artworks: @artworks
         auctionLots: @auctionLots
+        asset: (->)
       }, =>
         @$template = $('body')
         @template = @$template.html()

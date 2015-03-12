@@ -28,6 +28,8 @@ figure.artwork-item( data-artwork=artwork.get('id') )
           a.faux-underline-hover( href=artwork.artistLink() )= artwork.artistName()
         else
           = artwork.artistName()
+    if isAuction && artwork.get('saleArtwork') && artwork.get('saleArtwork').get('lot_number')
+      .artwork-item-lot-number Lot #{artwork.get('saleArtwork').get('lot_number')}
     p.artwork-item-title.artwork-item-overflow!= artwork.titleAndYear()
     if artwork.partnerName()
       //- Note: if the <a..> is in a <p..> text-overflow ellipsis doesn't work

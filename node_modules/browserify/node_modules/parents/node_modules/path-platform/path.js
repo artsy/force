@@ -20,6 +20,9 @@
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
+var isWindows = process.platform === 'win32';
+var util = require('util');
+
 var _path = require('path');
 
 // we are new enough we already have this from the system, just export the
@@ -29,40 +32,32 @@ if (_path.posix) {
   return;
 }
 
-var isWindows = process.platform === 'win32';
-var util = require('util');
-
-
 // resolves . and .. elements in a path array with directory names there
-// must be no slashes, empty elements, or device names (c:\) in the array
+// must be no slashes or device names (c:\) in the array
 // (so also no leading and trailing slashes - it does not distinguish
 // relative and absolute paths)
 function normalizeArray(parts, allowAboveRoot) {
-  // if the path tries to go above the root, `up` ends up > 0
-  var up = 0;
-  for (var i = parts.length - 1; i >= 0; i--) {
-    var last = parts[i];
-    if (last === '.') {
-      parts.splice(i, 1);
-    } else if (last === '..') {
-      parts.splice(i, 1);
-      up++;
-    } else if (up) {
-      parts.splice(i, 1);
-      up--;
+  var res = [];
+  for (var i = 0; i < parts.length; i++) {
+    var p = parts[i];
+
+    // ignore empty parts
+    if (!p || p === '.')
+      continue;
+
+    if (p === '..') {
+      if (res.length && res[res.length - 1] !== '..') {
+        res.pop();
+      } else if (allowAboveRoot) {
+        res.push('..');
+      }
+    } else {
+      res.push(p);
     }
   }
 
-  // if the path is allowed to go above the root, restore leading ..s
-  if (allowAboveRoot) {
-    for (; up--; up) {
-      parts.unshift('..');
-    }
-  }
-
-  return parts;
+  return res;
 }
-
 
 // Regex to split a windows path into three parts: [*, device, slash,
 // tail] windows-only
@@ -73,15 +68,10 @@ var splitDeviceRe =
 var splitTailRe =
     /^([\s\S]*?)((?:\.{1,2}|[^\\\/]+?|)(\.[^.\/\\]*|))(?:[\\\/]*)$/;
 
-var normalizeUNCRoot = function(device) {
-  return '\\\\' + device.replace(/^[\\\/]+/, '').replace(/[\\\/]+/g, '\\');
-};
-
-
 var win32 = {};
 
 // Function to split a filename into [root, dir, basename, ext]
-win32.splitPath = function(filename) {
+function win32SplitPath(filename) {
   // Separate device+slash from tail
   var result = splitDeviceRe.exec(filename),
       device = (result[1] || '') + (result[2] || ''),
@@ -92,8 +82,11 @@ win32.splitPath = function(filename) {
       basename = result2[2],
       ext = result2[3];
   return [device, dir, basename, ext];
-};
+}
 
+var normalizeUNCRoot = function(device) {
+  return '\\\\' + device.replace(/^[\\\/]+/, '').replace(/[\\\/]+/g, '\\');
+};
 
 // path.resolve([from ...], to)
 win32.resolve = function() {
@@ -122,7 +115,7 @@ win32.resolve = function() {
     }
 
     // Skip empty and invalid entries
-    if (typeof path !== 'string') {
+    if (!util.isString(path)) {
       throw new TypeError('Arguments to path.resolve must be strings');
     } else if (!path) {
       continue;
@@ -165,13 +158,14 @@ win32.resolve = function() {
   // fails)
 
   // Normalize the tail path
-
-  function f(p) {
-    return !!p;
-  }
-
-  resolvedTail = normalizeArray(resolvedTail.split(/[\\\/]+/).filter(f),
+  resolvedTail = normalizeArray(resolvedTail.split(/[\\\/]+/),
                                 !resolvedAbsolute).join('\\');
+
+  // If device is a drive letter, we'll normalize to lower case.
+  if (resolvedDevice && resolvedDevice.charAt(1) === ':') {
+    resolvedDevice = resolvedDevice[0].toLowerCase() +
+        resolvedDevice.substr(1);
+  }
 
   return (resolvedDevice + (resolvedAbsolute ? '\\' : '') + resolvedTail) ||
          '.';
@@ -192,9 +186,7 @@ win32.normalize = function(path) {
   }
 
   // Normalize the tail path
-  tail = normalizeArray(tail.split(/[\\\/]+/).filter(function(p) {
-    return !!p;
-  }), !isAbsolute).join('\\');
+  tail = normalizeArray(tail.split(/[\\\/]+/), !isAbsolute).join('\\');
 
   if (!tail && !isAbsolute) {
     tail = '.';
@@ -216,15 +208,14 @@ win32.normalize = function(path) {
 win32.isAbsolute = function(path) {
   var result = splitDeviceRe.exec(path),
       device = result[1] || '',
-      isUnc = device && device.charAt(1) !== ':';
+      isUnc = !!device && device.charAt(1) !== ':';
   // UNC paths are always absolute
   return !!result[2] || isUnc;
 };
 
-
 win32.join = function() {
   function f(p) {
-    if (typeof p !== 'string') {
+    if (!util.isString(p)) {
       throw new TypeError('Arguments to path.join must be strings');
     }
     return p;
@@ -279,7 +270,7 @@ win32.relative = function(from, to) {
     }
 
     if (start > end) return [];
-    return arr.slice(start, end - start + 1);
+    return arr.slice(start, end + 1);
   }
 
   var toParts = trim(to.split('\\'));
@@ -313,7 +304,7 @@ win32.relative = function(from, to) {
 
 win32._makeLong = function(path) {
   // Note: this will *probably* throw somewhere.
-  if (typeof path !== 'string')
+  if (!util.isString(path))
     return path;
 
   if (!path) {
@@ -337,7 +328,7 @@ win32._makeLong = function(path) {
 
 
 win32.dirname = function(path) {
-  var result = win32.splitPath(path),
+  var result = win32SplitPath(path),
       root = result[0],
       dir = result[1];
 
@@ -356,7 +347,7 @@ win32.dirname = function(path) {
 
 
 win32.basename = function(path, ext) {
-  var f = win32.splitPath(path)[2];
+  var f = win32SplitPath(path)[2];
   // TODO: make this comparison case-insensitive on windows?
   if (ext && f.substr(-1 * ext.length) === ext) {
     f = f.substr(0, f.length - ext.length);
@@ -366,7 +357,57 @@ win32.basename = function(path, ext) {
 
 
 win32.extname = function(path) {
-  return win32.splitPath(path)[3];
+  return win32SplitPath(path)[3];
+};
+
+
+win32.format = function(pathObject) {
+  if (!util.isObject(pathObject)) {
+    throw new TypeError(
+        "Parameter 'pathObject' must be an object, not " + typeof pathObject
+    );
+  }
+
+  var root = pathObject.root || '';
+
+  if (!util.isString(root)) {
+    throw new TypeError(
+        "'pathObject.root' must be a string or undefined, not " +
+        typeof pathObject.root
+    );
+  }
+
+  var dir = pathObject.dir;
+  var base = pathObject.base || '';
+  if (dir.slice(dir.length - 1, dir.length) === win32.sep) {
+    return dir + base;
+  }
+
+  if (dir) {
+    return dir + win32.sep + base;
+  }
+
+  return base;
+};
+
+
+win32.parse = function(pathString) {
+  if (!util.isString(pathString)) {
+    throw new TypeError(
+        "Parameter 'pathString' must be a string, not " + typeof pathString
+    );
+  }
+  var allParts = win32SplitPath(pathString);
+  if (!allParts || allParts.length !== 4) {
+    throw new TypeError("Invalid path '" + pathString + "'");
+  }
+  return {
+    root: allParts[0],
+    dir: allParts[0] + allParts[1].slice(0, allParts[1].length - 1),
+    base: allParts[2],
+    ext: allParts[3],
+    name: allParts[2].slice(0, allParts[2].length - allParts[3].length)
+  };
 };
 
 
@@ -381,9 +422,9 @@ var splitPathRe =
 var posix = {};
 
 
-posix.splitPath = function(filename) {
+function posixSplitPath(filename) {
   return splitPathRe.exec(filename).slice(1);
-};
+}
 
 
 // path.resolve([from ...], to)
@@ -396,7 +437,7 @@ posix.resolve = function() {
     var path = (i >= 0) ? arguments[i] : process.cwd();
 
     // Skip empty and invalid entries
-    if (typeof path !== 'string') {
+    if (!util.isString(path)) {
       throw new TypeError('Arguments to path.resolve must be strings');
     } else if (!path) {
       continue;
@@ -410,9 +451,8 @@ posix.resolve = function() {
   // handle relative paths to be safe (might happen when process.cwd() fails)
 
   // Normalize the path
-  resolvedPath = normalizeArray(resolvedPath.split('/').filter(function(p) {
-    return !!p;
-  }), !resolvedAbsolute).join('/');
+  resolvedPath = normalizeArray(resolvedPath.split('/'),
+                                !resolvedAbsolute).join('/');
 
   return ((resolvedAbsolute ? '/' : '') + resolvedPath) || '.';
 };
@@ -424,9 +464,7 @@ posix.normalize = function(path) {
       trailingSlash = path.substr(-1) === '/';
 
   // Normalize the path
-  path = normalizeArray(path.split('/').filter(function(p) {
-    return !!p;
-  }), !isAbsolute).join('/');
+  path = normalizeArray(path.split('/'), !isAbsolute).join('/');
 
   if (!path && !isAbsolute) {
     path = '.';
@@ -445,13 +483,21 @@ posix.isAbsolute = function(path) {
 
 // posix version
 posix.join = function() {
-  var paths = Array.prototype.slice.call(arguments, 0);
-  return posix.normalize(paths.filter(function(p, index) {
-    if (typeof p !== 'string') {
+  var path = '';
+  for (var i = 0; i < arguments.length; i++) {
+    var segment = arguments[i];
+    if (!util.isString(segment)) {
       throw new TypeError('Arguments to path.join must be strings');
     }
-    return p;
-  }).join('/'));
+    if (segment) {
+      if (!path) {
+        path += segment;
+      } else {
+        path += '/' + segment;
+      }
+    }
+  }
+  return posix.normalize(path);
 };
 
 
@@ -473,7 +519,7 @@ posix.relative = function(from, to) {
     }
 
     if (start > end) return [];
-    return arr.slice(start, end - start + 1);
+    return arr.slice(start, end + 1);
   }
 
   var fromParts = trim(from.split('/'));
@@ -505,7 +551,7 @@ posix._makeLong = function(path) {
 
 
 posix.dirname = function(path) {
-  var result = posix.splitPath(path),
+  var result = posixSplitPath(path),
       root = result[0],
       dir = result[1];
 
@@ -524,7 +570,7 @@ posix.dirname = function(path) {
 
 
 posix.basename = function(path, ext) {
-  var f = posix.splitPath(path)[2];
+  var f = posixSplitPath(path)[2];
   // TODO: make this comparison case-insensitive on windows?
   if (ext && f.substr(-1 * ext.length) === ext) {
     f = f.substr(0, f.length - ext.length);
@@ -534,7 +580,53 @@ posix.basename = function(path, ext) {
 
 
 posix.extname = function(path) {
-  return posix.splitPath(path)[3];
+  return posixSplitPath(path)[3];
+};
+
+
+posix.format = function(pathObject) {
+  if (!util.isObject(pathObject)) {
+    throw new TypeError(
+        "Parameter 'pathObject' must be an object, not " + typeof pathObject
+    );
+  }
+
+  var root = pathObject.root || '';
+
+  if (!util.isString(root)) {
+    throw new TypeError(
+        "'pathObject.root' must be a string or undefined, not " +
+        typeof pathObject.root
+    );
+  }
+
+  var dir = pathObject.dir ? pathObject.dir + posix.sep : '';
+  var base = pathObject.base || '';
+  return dir + base;
+};
+
+
+posix.parse = function(pathString) {
+  if (!util.isString(pathString)) {
+    throw new TypeError(
+        "Parameter 'pathString' must be a string, not " + typeof pathString
+    );
+  }
+  var allParts = posixSplitPath(pathString);
+  if (!allParts || allParts.length !== 4) {
+    throw new TypeError("Invalid path '" + pathString + "'");
+  }
+  allParts[1] = allParts[1] || '';
+  allParts[2] = allParts[2] || '';
+  allParts[3] = allParts[3] || '';
+
+  return {
+    root: allParts[0],
+    dir: allParts[0] + allParts[1].slice(0, allParts[1].length - 1),
+    base: allParts[2],
+    ext: allParts[3],
+    name: allParts[2].slice(0, allParts[2].length - allParts[3].length)
+  };
 };
 
 
@@ -542,15 +634,10 @@ posix.sep = '/';
 posix.delimiter = ':';
 
 
-var splitPath;
-if (isWindows) {
-  splitPath = win32.splitPath;
+if (isWindows)
   module.exports = win32;
-} else /* posix */ {
-  splitPath = posix.splitPath;
+else /* posix */
   module.exports = posix;
-}
-
 
 module.exports.posix = posix;
 module.exports.win32 = win32;

@@ -14,6 +14,7 @@ describe 'Meta tags', ->
       @show = new PartnerShow fabricate('show')
       @html = jade.render fs.readFileSync(@file).toString(),
         sd: sd
+        asset: (->)
         show: @show
 
     it 'includes canonical url, twitter card, og tags, and title', ->
@@ -29,6 +30,7 @@ describe 'Meta tags', ->
       @show.set 'image_version', []
       @html = jade.render fs.readFileSync(@file).toString(),
         sd: sd
+        asset: (->)
         show: @show
       $ = cheerio.load @html
       $("meta[property='og:image']").length.should.equal 0

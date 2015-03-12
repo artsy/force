@@ -8,10 +8,11 @@ describe 'Partner Show', ->
   before (done) ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'
-      @sd = API_URL: 'http://localhost:5000', ASSET_PATH: 'http://localhost:5000'
+      @sd = API_URL: 'http://localhost:5000'
       @feature = new Feature fabricate('feature', image_versions: ['wide'])
       benv.render resolve(__dirname, '../../templates/index.jade'), {
         sd: @sd
+        asset: (->)
         feature: @feature
       }, => done()
 

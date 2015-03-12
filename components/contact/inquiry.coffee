@@ -2,13 +2,9 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 Cookies = require 'cookies-js'
 ContactView = require './view.coffee'
-Representatives = require './collections/representatives.coffee'
 analytics = require('../../lib/analytics.coffee')
-
 formTemplate = -> require('./templates/inquiry_form.jade') arguments...
-headerTemplate = -> require('./templates/inquiry_header.jade') arguments...
-
-{ SESSION_ID, API_URL } = require('sharify').data
+{ SESSION_ID, API_URL } = sd = require('sharify').data
 
 module.exports = class InquiryView extends ContactView
   eligibleForAfterInquiryFlow: true
@@ -19,9 +15,10 @@ module.exports = class InquiryView extends ContactView
     'click.handler .modal-backdrop': undefined
 
   headerTemplate: (locals) ->
-    headerTemplate _.extend locals,
-      representative: @representatives.first()
-      user: @user
+    """
+      <h1 class='modal-h1'>Ask a Specialist</h1>
+      <hr>
+    """
 
   formTemplate: (locals) ->
     formTemplate _.extend locals,
@@ -35,13 +32,16 @@ module.exports = class InquiryView extends ContactView
 
   initialize: (options) ->
     { @artwork } = options
-    @representatives = new Representatives
-    @representatives.fetch().then =>
-      @renderTemplates()
-      @updatePosition()
-      @isLoaded()
-      @focusTextareaAfterCopy()
+    @artwork.fetchPartnerAndSales
+      error: @ready
+      success: (@partner, @sales) => @ready()
     super
+
+  ready: =>
+    @renderTemplates()
+    @updatePosition()
+    @isLoaded()
+    @focusTextareaAfterCopy()
 
   postRender: ->
     @isLoading()
@@ -50,13 +50,13 @@ module.exports = class InquiryView extends ContactView
     analytics.track.funnel 'Sent artwork inquiry',
       label: analytics.modelNameAndIdToLabel('artwork', @artwork.id)
     analytics.snowplowStruct 'inquiry_introduction', 'submit', @artwork.get('_id'), 'artwork', '0.0'
-
+    contactGallery = if @partner.get('directly_contactable') and \
+      @sales.findWhere(is_auction: true)? then yes else no
     @model.set
       artwork: @artwork.id
-      contact_gallery: false
+      contact_gallery: contactGallery
       session_id: SESSION_ID
       referring_url: Cookies.get('force-referrer')
       landing_url: Cookies.get('force-session-start')
       inquiry_url: window.location.href
-
     super

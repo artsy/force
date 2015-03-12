@@ -11,7 +11,7 @@ if (typeof Int32Array !== 'undefined') {
   TABLE = new Int32Array(TABLE);
 }
 
-module.exports = create(function(buf, previous) {
+module.exports = create('crc-16', function(buf, previous) {
   var byte, crc, _i, _len;
   if (!Buffer.isBuffer(buf)) {
     buf = Buffer(buf);

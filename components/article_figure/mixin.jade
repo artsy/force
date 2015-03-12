@@ -1,0 +1,26 @@
+include ../share/template
+
+mixin article-figure(article, width, showDate, showShare)
+  - var imgUrl = article.cropUrlFor('thumbnail_image', { width: width, height: Math.round(width / 1.7), quality: 90 })
+  figure.article-figure: .article-figure-container
+    a.article-figure-img-container( href= article.href() )
+      .article-figure-img( style="background-image: url(#{imgUrl})" )
+
+    figcaption.article-figure-figcaption
+      if showDate
+        time.article-figure-date
+          = article.date('published_at').format('MMMM Do')
+
+      a.article-figure-title( href= article.href() )
+        = article.get('thumbnail_title')
+
+      a.article-figure-author( href= article.authorHref() )
+        = article.get('author') ? article.get('author').name : ''
+
+      if showShare
+        .article-figure-share.js-article-figure-share
+          +share(
+            article.get('title'),
+            article.get('thumbnail_image'),
+            (sd && sd.APP_URL) + article.href()
+          )
