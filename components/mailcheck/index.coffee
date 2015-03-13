@@ -6,7 +6,7 @@ module.exports.run = (input, hint, br) ->
   input.on 'blur', ->
     input.mailcheck
       suggested: (element, suggestion) ->
-        if !hint.html()
+        if hint.length
           suggestionBreak = if br then "Did you mean: <br><span class='js-suggestion'><a href=''>" else "Did you mean: <span class='js-suggestion'><a href=''>"
           suggestion =  suggestionBreak + suggestion.full + "</a></span>?"
           hint.html(suggestion).fadeIn(150)

@@ -43,5 +43,4 @@ describe 'Mailcheck', ->
       $('#js-mailcheck-input').blur()
       $.fn.mailcheck.args[0][0].suggested '',{address: 'kana', domain: 'gmail.com', full: 'kana@gmail.com'}
       $('.js-suggestion').click()
-      console.log $('#js-mailcheck-input').val()
       $('#js-mailcheck-input').val().should.containEql 'kana@gmail.com'

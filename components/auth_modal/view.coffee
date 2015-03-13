@@ -46,7 +46,7 @@ module.exports = class AuthModalView extends ModalView
 
     @listenTo @state, 'change:mode', @reRender
     @listenTo @state, 'change:mode', @logState
-    @listenTo @state, 'change:mode', @initializeMailcheck
+    @on 'rerendered', @initializeMailcheck
 
     mediator.on 'auth:change:mode', @setMode, this
     mediator.on 'auth:error', @showError
@@ -56,8 +56,7 @@ module.exports = class AuthModalView extends ModalView
 
   initializeMailcheck: ->
     if @state.get('mode') == 'register'
-      mailchecker = -> Mailcheck.run('#js-mailcheck-input-modal','#js-mailcheck-hint-modal',false)
-      _.delay(mailchecker,1000)
+      Mailcheck.run('#js-mailcheck-input-modal','#js-mailcheck-hint-modal',false)
 
   renderCopy: (copy) ->
     attrs = if copy?
