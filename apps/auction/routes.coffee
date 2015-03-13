@@ -42,6 +42,9 @@ fetchPartner = (saleArtworks, options = {}) ->
     feature = new Feature id: owner.id
     auction = new Sale id: id
     saleArtworks = new SaleArtworks [], id: id
+    artworks = new Artworks
+    artworks.comparator = (artwork) ->
+      artwork.related().saleArtwork.get 'lot_number'
 
     Q.all([
       auction.fetch(cache: true)
@@ -49,9 +52,10 @@ fetchPartner = (saleArtworks, options = {}) ->
       fetchPartner(saleArtworks, cache: true)
       saleArtworks.fetchUntilEndInParallel(cache: true)
     ]).spread((x, y, profile, z) ->
-      artworks = Artworks.fromSale saleArtworks
+      artworks.reset Artworks.__fromSale__(saleArtworks)
 
       res.locals.sd.AUCTION = auction.toJSON()
+      res.locals.sd.ARTWORKS = artworks.toJSON()
 
       res.render 'index',
         auction: auction

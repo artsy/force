@@ -1,0 +1,9 @@
+nav.auction-artworks-display-nav.garamond-tablist
+  span.garamond-tab-label Sort by:
+  a.garamond-tab.is-active.js-toggle-artworks-sort( href='#', data-mode='grid', data-sort='default' ) Grid
+  a.garamond-tab.js-toggle-artworks-sort( href='#', data-mode='list', data-sort='name_asc' ) Artists A–Z
+  a.garamond-tab.js-toggle-artworks-sort( href='#', data-mode='list', data-sort='bids_desc' ) Most Bids
+  a.garamond-tab.js-toggle-artworks-sort( href='#', data-mode='list', data-sort='bids_asc' ) Least Bids
+  - qualifier = auction.isPreview() ? 'Starting' : ''
+  a.garamond-tab.js-toggle-artworks-sort( href='#', data-mode='list', data-sort='amount_desc' ) Highest #{qualifier} Bid
+  a.garamond-tab.js-toggle-artworks-sort( href='#', data-mode='list', data-sort='amount_asc' ) Lowest #{qualifier} Bid

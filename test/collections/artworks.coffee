@@ -54,11 +54,11 @@ describe 'Artworks', ->
         artwork: fabricate 'artwork'
         user_notes: "The vomit on this canvas is truely exquisit."
       }]
-      artworks.first().get('saleArtwork').get('user_notes').should.containEql 'vomit'
+      artworks.first().related().saleArtwork.get('user_notes').should.containEql 'vomit'
 
     it 'sets the current bid', ->
       artworks = Artworks.fromSale new Backbone.Collection [{
         artwork: fabricate 'artwork'
         highest_bid_amount_cents: 1000
       }]
-      artworks.first().get('saleArtwork').currentBid().should.containEql '$10'
+      artworks.first().related().saleArtwork.currentBid().should.containEql '$10'
