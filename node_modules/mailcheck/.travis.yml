@@ -1,0 +1,2 @@
+language: javascript
+script: phantomjs spec/lib/run_jasmine_test.coffee spec/spec_runner.html
