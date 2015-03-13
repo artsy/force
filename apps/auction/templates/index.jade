@@ -1,7 +1,7 @@
 extends ../../../components/main_layout/templates/index
 
 block head
-  //-
+  include meta
 
 append locals
   - assetPackage = 'auction'
@@ -32,7 +32,6 @@ block body
           .auction-header-clock.js-auction-clock
             include ../../../components/clock/template
 
-
           .auction-header-register-button
             - button = auction.bidButtonState(user)
             a.avant-garde-button-black.is-block(
@@ -41,13 +40,7 @@ block body
               disabled= !button.enabled
             )= button.label
 
-        //- Bidding ends
-
-        //- Auction Note
-
-        //- Preview
-
-        //- Event
+        //- Additional metadata TBD
 
         .auction-header-metadata-cell
           h3 Contact
@@ -57,24 +50,12 @@ block body
             a.fine-faux-underline.js-specialist-contact-link( href='#' )
               | Contact an Artsy Specialist
 
-    nav.auction-artworks-display-nav.garamond-tablist
-      a.garamond-tab.is-active.js-toggle-artworks-mode( href='#', data-mode='grid' ) Grid
-      a.garamond-tab.js-toggle-artworks-mode( href='#', data-mode='list' ) List
+    section.js-auction-artworks-section
+      include ./nav
 
-      span.garamond-tab-label Sort by:
-      a.garamond-tab.is-active.js-toggle-artworks-sort( href='#', data-sort='position' ) Default
-      a.garamond-tab.js-toggle-artworks-sort( href='#', data-sort='name-asc' ) Artists A–Z
-
-      //- Disable bidding related sorts unless auction is open
-      - disabled = !auction.isOpen()
-      a.garamond-tab.js-toggle-artworks-sort( href='#', data-sort='bids-desc', disabled= disabled ) Most Bids
-      a.garamond-tab.js-toggle-artworks-sort( href='#', data-sort='bids-desc', disabled= disabled ) Least Bids
-      a.garamond-tab.js-toggle-artworks-sort( href='#', data-sort='amount-desc', disabled= disabled ) Highest Bid
-      a.garamond-tab.js-toggle-artworks-sort( href='#', data-sort='amount-asc', disabled= disabled ) Lowest Bid
-
-    section.auction-artworks.js-auction-artworks( data-mode='grid' )
-      for artwork, i in artworks.models
-        include ./artwork
+      section.auction-artworks.js-auction-artworks( data-mode='grid' )
+        for artwork, i in artworks.models
+          include ./artwork/grid
 
     footer.auction-footer
       //- https://github.com/artsy/force/issues/2180
