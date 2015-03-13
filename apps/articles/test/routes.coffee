@@ -13,6 +13,7 @@ describe 'Article routes', ->
     sinon.stub Backbone, 'sync'
     @req = { params: {} }
     @res = { render: sinon.stub(), locals: { sd: {} }, redirect: sinon.stub() }
+    @next = sinon.stub()
     sinon.stub Article.prototype, 'fetchWithRelated'
 
   afterEach ->
@@ -58,3 +59,10 @@ describe 'Article routes', ->
         { tier: 2, id: 'h' }
       ]
       @res.render.args[0][1].articles.should.have.lengthOf 8
+
+  describe '#redirectPost', ->
+
+    it 'lets 404 through', ->
+      routes.redirectPost @req, @res, @next
+      Backbone.sync.args[0][2].error body: status: 404
+      @next.called.should.be.ok
