@@ -12,20 +12,21 @@
 
 .mlh-navbar
   display flex
+  align-items center
 .mlh-navbar-cell
   white-space nowrap
 
 #main-layout-header-left
   flex 1
 #main-layout-header-home-logo
-  float left
+  display inline-block
   width home-logo-size
-  height home-logo-size
-  padding 10px
-  font-size (home-logo-size - 20px) // default-icon-font-size
-  border none
-  &:after
-    border-left none
+  text-align center
+  text-decoration none
+  line-height 0
+  vertical-align middle
+  > i
+    font-size (home-logo-size - 20px) // default-icon-font-size
 #main-layout-header-center
   padding 0 20px
 #main-layout-header-center
@@ -100,8 +101,19 @@
 
 // REDESIGNED_HEADER
 .mlh-navbar.is-search-expanded
+  #main-layout-header-home-logo
+    width inherit
+    padding 0 15px
+  #main-layout-search-bar-container
+    height inherit
+    margin 0
   #main-layout-search-bar-input
-    padding 0 40px 0 15px
+    padding 10px 40px 10px 15px
+  .mlh-nav-link
+  .mlh-top-nav-link
+  .mlh-user-name
+    padding-top 22px
+    padding-bottom @padding-top
 
   main-layout-search-bar-spinner
   #main-layout-search-bar-icon

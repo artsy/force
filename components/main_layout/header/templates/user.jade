@@ -1,0 +1,35 @@
+if user
+  - displayNavNotice = (parseInt(sd.HIDE_NAV_NOTICE) || 0) < 15
+
+  span.mlh-user-name.hover-pulldown(
+    data-anchor='right'
+    data-mode='hover'
+    data-state= (displayNavNotice ? 'static' : undefined)
+    data-cookie= (displayNavNotice ? 'hide-nav-notice' : undefined)
+  )
+    = user.get('name') ? user.get('name') : 'Account'
+
+    if displayNavNotice
+      .hover-pulldown-static
+        span Your follows and favorites are now under your name.
+
+    .hover-pulldown-menu
+      a.hpm-header( href='/following/artists' ) Follows &amp; Favorites
+      a( href='/following/artists' ) Artists
+      a( href='/favorites' ) Works
+      a( href='/following/profiles' ) Galleries
+      hr
+
+      if user.isAdmin()
+        a( href= sd.ADMIN_URL ) Admin
+      if user.isAdmin() || user.get('has_partner_access')
+        a( href= sd.CMS_URL ) CMS
+      if user.isAdmin() || user.get('has_partner_access')
+        hr
+
+      a( href='/user/edit' ) Settings
+      a.mlh-logout Log out
+
+else
+  a.mlh-top-nav-link.mlh-login( href='/log_in' ) Log in
+  a.mlh-top-nav-link.mlh-signup( href='/sign_up' ) Sign up
