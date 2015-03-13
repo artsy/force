@@ -1,27 +1,12 @@
 include ../../../util/activator
 
 header#main-layout-header.force-position-absolute.microsite-header
-  nav.mlh-navbar
+  nav.mlh-navbar( class=(sd.REDESIGNED_HEADER === 'old' ? 'is-search-expanded' : undefined) )
     #main-layout-header-left.mlh-navbar-cell
       if sd.KIOSK_MODE && sd.KIOSK_PAGE
-        a#main-layout-header-home-logo.icon-logo( href= sd.KIOSK_PAGE )
+        a#main-layout-header-home-logo( href= sd.KIOSK_PAGE ): i.icon-logo
       else
-        a#main-layout-header-home-logo.icon-logo( href='/' )
+        a#main-layout-header-home-logo( href='/' ): i.icon-logo
         a.mshr-garamond-nav-link( href='/' ) Back to Artsy.net
-    #microsite-header-right.mlh-navbar-cell
-      if user
-        if profile
-          a.mshr-nav-link( href="#{profile.href()}/favorites" ) Favorites
-        else if sd.KIOSK_MODE
-          a.mshr-nav-link( href="/users/sign_out" ) Sign Out
-        else
-          a.mshr-nav-link( href="/favorites" ) Favorites
-        span.mshr-spacer
-        if user.get('name')
-          a.mshr-nav-link( href="/#{user.get('default_profile_id')}" )= user.get('name')
-        else
-          .mlh-user-name Account
-      else
-        a.mshr-nav-link.mlh-login( href='/log_in' ) Log in
-        span.mshr-spacer
-        a.mshr-nav-link.mlh-signup( href='/sign_up' ) Sign up
+    #main-layout-header-right.mlh-navbar-cell
+      include ./user
