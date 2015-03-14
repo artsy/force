@@ -59,7 +59,7 @@ test-s:
 # Run with `make deploy env=staging` or `make deploy env=production`.
 deploy:
 	$(BIN)/ezel-assets
-	$(BIN)/bucketassets --bucket force-$(env)
+	$(BIN)/bucket-assets --bucket force-$(env)
 	heroku config:set COMMIT_HASH=$(shell git rev-parse --short HEAD) --app=force-$(env)
 	git push --force git@heroku.com:force-$(env).git
 
