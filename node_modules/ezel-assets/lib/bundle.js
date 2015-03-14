@@ -8,14 +8,7 @@ var browserify = require('browserify'),
 module.exports = function(file, options, callback) {
   var start = new Date().getTime();
   console.log('Bundling ' + file + '...');
-
-  // TODO: Use these options in development/test only
-  var b = browserify({
-    insertGlobals: true,
-    noParse: ['jquery'].map(function(lib) {
-      return require.resolve(lib);
-    })
-  }).add(options.assetsDir + file);
+  var b = browserify().add(options.assetsDir + file);
 
   // TODO: Skip uglifify in development/test
   options.transforms.forEach(function(transform) {
