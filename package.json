@@ -86,6 +86,7 @@
     "typeahead.js": "git://github.com/twitter/typeahead.js.git",
     "ua-parser": "*",
     "uglify-js": "*",
+    "uglifyify": "*",
     "underscore": "*",
     "underscore.string": "*",
     "validator": "*",
