@@ -122,6 +122,16 @@ describe('bucketAssets', function() {
     manifest['/folder_with_file/app.js'].should.equal('/folder_with_file/app-72f6c492.js');
   });
 
+  it('uploads a manifest including cgz/gz', function() {
+    bucketAssets.upload({
+      secret: 'foobar',
+      key: 'baz',
+      bucket: 'flare-production'
+    });
+    var manifest = JSON.parse(putBufferStub.args[0][0]);
+    manifest['/app.js.gz'].should.equal('/app-c175c2f2.js.gz');
+  });
+
   it('can join files from all sorts of public' +
      ' folders except in node_modules', function() {
     bucketAssets.upload({
@@ -134,7 +144,10 @@ describe('bucketAssets', function() {
     putFileStub.args[0][1].should.equal('/bar-9b57f0be.js');
     putFileStub.args[1][1].should.equal('/icons/check.svg');
     putFileStub.args[2][1].should.equal('/foo-190774dc.js');
-    putFileStub.args[3][1].should.equal('/baz-842ebc9d.js');
+    putFileStub.args[3][1].should.equal('/app-c175c2f2.css.cgz');
+    putFileStub.args[4][1].should.equal('/app-5e5cf0de.js');
+    putFileStub.args[5][1].should.equal('/app-c175c2f2.js.gz');
+    putFileStub.args[6][1].should.equal('/baz-842ebc9d.js');
   });
 
   it('uploads proper svg mime type', function() {
@@ -175,6 +188,20 @@ describe('bucketAssets', function() {
       emitter.emit('end');
       next.called.should.be.ok
       res.locals.asset('/foo.js').should.equal('http://cdn.com/foo-123.js');
+    });
+
+    it('points to gzipped assets first', function() {
+      bucketAssets.__set__('NODE_ENV', 'production');
+      bucketAssets({ cdnUrl: 'http://cdn.com' })(req, res, next);
+      var emitter = new EventEmitter();
+      next.called.should.not.be.ok
+      getFileStub.args[0][1](null, emitter);
+      emitter.emit('data', JSON.stringify({
+        '/foo.js': '/foo-123.js',
+        '/foo.js.gz': '/foo-456.js.gz'
+      }));
+      emitter.emit('end');
+      res.locals.asset('/foo.js').should.equal('http://cdn.com/foo-456.js.gz');
     });
 
     it('catches S3 errors', function() {
