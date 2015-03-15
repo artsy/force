@@ -2,12 +2,14 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
 FairInfoView = require './info.coffee'
+articlesView = require './articles.coffee'
+postsView = require './posts.coffee'
 
 FairPostsView = if 'Articles' in (sd.CURRENT_USER?.lab_features or []) \
                 or sd.FAIR.id is 'the-armory-show-2015'
-  require './articles.coffee'
+  articlesView
 else
-  require './posts.coffee'
+  postsView
 
 FairSearchView = require './search.coffee'
 ForYouView = require './for_you.coffee'
