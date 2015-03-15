@@ -7,11 +7,13 @@ Profile = require '../../../models/profile.coffee'
 ContactView = require './contact.coffee'
 CollectionView = require './collection.coffee'
 ShowsView = require './shows.coffee'
+articlesView = require './articles.coffee'
+postsView = require './posts.coffee'
 
 PostsView = if 'Articles' in (sd.CURRENT_USER?.lab_features or [])
-  require './articles.coffee'
+  articlesView
 else
-  require './posts.coffee'
+  postsView
 
 ArtistsView = require './artists.coffee'
 OverviewView = require './overview.coffee'
