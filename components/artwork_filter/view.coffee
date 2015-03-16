@@ -3,6 +3,7 @@ Backbone = require 'backbone'
 Filter = require './models/filter.coffee'
 ArtworkColumns = require './collections/artwork_columns.coffee'
 ArtworkColumnsView = require '../artwork_columns/view.coffee'
+ArtworkTableView = require '../artwork_table/view.coffee'
 BorderedPulldown = require '../bordered_pulldown/view.coffee'
 mediator = require '../../lib/mediator.coffee'
 template = -> require('./templates/index.jade') arguments...
@@ -16,6 +17,31 @@ module.exports = class ArtworkFilterView extends Backbone.View
     'click input[type="checkbox"]': 'toggleBoolean'
     'click #artwork-see-more': 'clickSeeMore'
     'click .bordered-pulldown-options a': 'selectCriteria'
+
+  view: ->
+    viewModes =
+      columns: ArtworkColumnsView
+      table: ArtworkTableView
+
+    new viewModes[sd.MODE] @params()
+
+  params: ->
+    viewModes =
+      columns:
+        numberOfColumns: 3
+        gutterWidth: 40
+        maxArtworkHeight: 400
+        isOrdered: false
+        seeMore: false
+        allowDuplicates: true
+        artworkSize: 'tall'
+      table:
+        show: true
+
+    _.extend
+      el: @$artworks
+      collection: @artworks
+    , viewModes[sd.MODE]
 
   initialize: ({ @mode }) ->
     @artworks = new ArtworkColumns [], modelId: @model.id
@@ -53,7 +79,7 @@ module.exports = class ArtworkFilterView extends Backbone.View
     if @mode is 'infinite'
       @handleState @$button, eventName
     else
-      state = @handleState @$columns, eventName
+      state = @handleState @$artworks, eventName
       @$button?.attr 'data-state', state if state
 
   toggleBoolean: (e) ->
@@ -77,11 +103,11 @@ module.exports = class ArtworkFilterView extends Backbone.View
 
   cacheSelectors: ->
     @$siteHeader = $('#main-layout-header')
-    @$columnsSection = @$('#artwork-columns-section')
-    @$columns = @$('#artwork-columns')
+    @$artworksSection = @$('#artwork-section__content')
+    @$artworks = @$('#artwork-section__artworks')
     @$filter = @$('#artwork-filter')
     @$button = @$('#artwork-see-more')
-    @$header = @$('#artwork-columns-header')
+    @$header = @$('#artwork-section__header')
 
   postRender: ->
     @cacheSelectors()
@@ -101,7 +127,7 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @setButtonState()
 
   setButtonState: ->
-    length = @columns?.length() or 0
+    length = @artworksView?.length() or 0
     @remaining = @filter.get('total') - length
     visibility = if length >= @filter.get('total') then 'hide' else 'show'
     @$button.text("See More (#{@remaining})")[visibility]()
@@ -113,19 +139,11 @@ module.exports = class ArtworkFilterView extends Backbone.View
 
   renderColumns: ->
     if @artworks.params.get('page') > 1
-      @columns.appendArtworks @artworks.models
+      @artworksView.appendArtworks @artworks.models
     else
-      @columns?.stopListening()
-      @columns = new ArtworkColumnsView
-        el: @$columns
-        collection: @artworks
-        numberOfColumns: 3
-        gutterWidth: 40
-        maxArtworkHeight: 400
-        isOrdered: false
-        seeMore: false
-        allowDuplicates: true
-        artworkSize: 'tall'
+      @artworksView?.stopListening()
+      @artworksView = @view()
+
     @setState()
 
   pricedFilter: ->
