@@ -51,12 +51,12 @@ block body
             a.fine-faux-underline.js-specialist-contact-link( href='#' )
               | Contact an Artsy Specialist
 
-    section.js-auction-artworks-section
-      include ./nav
-
-      section.auction-artworks.js-auction-artworks( data-mode='grid' )
-        for artwork, i in artworks.models
-          include ./artwork/grid
+    if artworks.length
+      section.js-auction-artworks-section
+        include ./nav
+        section.auction-artworks.js-auction-artworks( data-mode='grid' )
+          for artwork, i in artworks.models
+            include ./artwork/grid
 
     footer.auction-footer
       //- https://github.com/artsy/force/issues/2180
