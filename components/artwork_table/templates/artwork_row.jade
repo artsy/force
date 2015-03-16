@@ -1,0 +1,47 @@
+.artwork-table__row
+  .artwork-table__cell.artwork-table__cell--image
+    - var defaultImage = artwork.defaultImage()
+    - var maxDimension = 150
+
+    img.artwork-item-image(
+      src=defaultImage.imageUrlForWidth(imageWidth)
+      nopin=artwork.noPinAttr()
+      alt=artwork.toAltText()
+      width=defaultImage.maxWidthForWidth(150, maxDimension)
+      height=defaultImage.maxHeightForWidth(150, maxDimension)
+    )
+
+  .artwork-table__cell.artwork-table__cell--caption
+    if artwork.has('artist')
+      p.artwork-item-artist.artwork-item-overflow
+        if artwork.get('artist').public
+          a.faux-underline-hover( href=artwork.artistLink() )= artwork.artistName()
+        else
+          = artwork.artistName()
+      p.artwork-item-title.artwork-item-overflow!= artwork.titleAndYear()
+      p.artwork-item-medium= artwork.get('medium')
+      unless artwork.isMultipleEditions()
+      .artwork-detail-dimensions
+        .amd-imperial!= artwork.dimensions({ metric: 'in', format: 'superscript' })
+        .amd-metric= artwork.dimensions({ metric: 'cm', format: 'decimal' })
+
+  .artwork-table__cell.artwork-table__cell--location
+      if artwork.partnerLink()
+        a.artwork-partner-name( href= artwork.partnerLink() )
+          = artwork.partnerName()
+      else
+        |= artwork.partnerName()
+      span#artwork-partner-locations
+        //- Rendered client-side
+
+  .artwork-table__cell.artwork-table__cell--contact
+    unless auctionId
+      if artwork.isPriceDisplayable()
+        .artwork-meta-price
+          .artwork-meta-price-label( class=(artwork.get('sold') ? 'is-sold' : 'is-not-sold') )
+            = artwork.priceLabel()
+          .artwork-meta-price-amount= artwork.priceDisplay()
+      else
+        if artwork.artworkPageSaleMessage()
+          .artwork-meta-price
+            = artwork.artworkPageSaleMessage()
