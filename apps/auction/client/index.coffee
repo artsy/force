@@ -1,4 +1,5 @@
-{ AUCTION, ARTWORKS, CURRENT_USER, USER } = require('sharify').data
+{ FEATURE, AUCTION, ARTWORKS, CURRENT_USER, USER } = require('sharify').data
+Feature = require '../../../models/feature.coffee'
 Auction = require '../../../models/auction.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 Artworks = require '../../../collections/artworks.coffee'
@@ -10,6 +11,7 @@ ConfirmRegistrationModal = require '../../../components/credit_card/client/confi
 AuctionArtworksView = require './view.coffee'
 
 module.exports.init = ->
+  feature = new Feature FEATURE
   auction = new Auction AUCTION
   artworks = new Artworks ARTWORKS
   user = new CurrentUser USER
@@ -41,3 +43,5 @@ module.exports.init = ->
       mode: 'register'
       copy: 'Sign up to bid on artworks'
       redirectTo: auction.registerUrl()
+
+  require('./analytics.coffee')(feature)

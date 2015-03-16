@@ -73,6 +73,7 @@ setupUser = (user, auction) ->
     ]).spread((x, y, profile, z, user) ->
       artworks.reset Artworks.__fromSale__(saleArtworks)
 
+      res.locals.sd.FEATURE = feature.toJSON()
       res.locals.sd.AUCTION = auction.toJSON()
       res.locals.sd.ARTWORKS = artworks.toJSON()
       res.locals.sd.USER = user.toJSON() if user?
