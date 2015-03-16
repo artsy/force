@@ -11,7 +11,7 @@ sections = require '../sections'
 describe 'Artist routes', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    @req = params: id: 'foo'
+    @req = params: { id: 'foo' }, query: {}
     @res =
       render: sinon.stub()
       redirect: sinon.stub()
