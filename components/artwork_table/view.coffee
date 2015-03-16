@@ -1,6 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 mediator = require '../../lib/mediator.coffee'
+PartnerLocations = require '../../apps/artwork/components/partner_locations/index.coffee'
 
 artworkTable = -> require('./templates/artwork_table.jade') arguments...
 artworkRow = -> require('./templates/artwork_row.jade') arguments...
@@ -24,7 +25,7 @@ module.exports = class ArtworkTableView extends Backbone.View
     "See #{num} More Artwork#{stem}"
 
   length: ->
-    @collection.length
+    @$('.artwork-table__row').length
 
   render: ->
     @$el.html artworkTable
@@ -42,4 +43,5 @@ module.exports = class ArtworkTableView extends Backbone.View
       artwork: artwork
     $renderedArtwork = $(renderedArtwork)
     @$('#artwork-table').append $renderedArtwork
+    @pl = new PartnerLocations $el: $renderedArtwork, artwork: artwork
     $renderedArtwork

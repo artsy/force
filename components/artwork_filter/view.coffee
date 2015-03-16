@@ -73,8 +73,10 @@ module.exports = class ArtworkFilterView extends Backbone.View
     if state = { request: 'loading', sync: 'loaded', error: 'loaded' }[eventName]
       el?.attr 'data-state', state
       state
+
   handleFilterState: (eventName) ->
     @handleState @$filter, eventName
+
   handleArtworksState: (eventName) ->
     if @mode is 'infinite'
       @handleState @$button, eventName
