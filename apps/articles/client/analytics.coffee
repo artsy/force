@@ -9,3 +9,6 @@ $('.articles-social:eq(1) > a').click ->
   analytics.track.click 'Clicked Article Share',
     position: 'bottom'
     service: $(this).attr 'data-service'
+
+$ ->
+  analytics.track.click 'Article page load'
