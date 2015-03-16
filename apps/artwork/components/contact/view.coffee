@@ -2,6 +2,7 @@ _ = require 'underscore'
 _s = require 'underscore.string'
 Backbone = require 'backbone'
 Cookies = require 'cookies-js'
+moment = require 'moment'
 analytics = require '../../../../lib/analytics.coffee'
 { SESSION_ID, API_URL } = require('sharify').data
 CurrentUser = require '../../../../models/current_user.coffee'
@@ -13,15 +14,16 @@ defaultMessage = require '../../../../components/contact/default_message.coffee'
 Introduction = require '../../../../components/introduction/model.coffee'
 Mailcheck = require '../../../../components/mailcheck/index.coffee'
 attendanceTemplate = -> require('./templates/attendance.jade') arguments...
+inquirySentTemplate = -> require('./templates/inquiry_sent.jade') arguments...
+
+class Inquiries extends Backbone.Model
+  url: "#{API_URL}/api/v1/me/artwork_inquiry_requests"
 
 class Inquiry extends Backbone.Model
   url: "#{API_URL}/api/v1/me/artwork_inquiry_request"
 
 class Attendance extends Backbone.Model
   url: "#{API_URL}/api/v1/me/user_fair_action"
-
-class Inquiries extends Backbone.model
-  url: "#{API_URL}/api/v1/me/artwork_inquiry_requests"
 
 module.exports = class ContactView extends Backbone.View
   _.extend @prototype, Form
@@ -33,6 +35,7 @@ module.exports = class ContactView extends Backbone.View
     'submit #artwork-contact-form': 'submit'
     'click button': 'submit'
     'mouseover button': 'hoveredSubmit'
+    'click .artwork-inquiry-send-new': 'showInquiryForm'
 
   initialize: ->
     @user = CurrentUser.orNull() or new LoggedOutUser
@@ -41,6 +44,7 @@ module.exports = class ContactView extends Backbone.View
     @listenTo @fairs, 'sync', @renderAttendance
     @cacheSelectors()
     Mailcheck.run('#js-mailcheck-input-artwork','#js-mailcheck-hint-artwork',true)
+    @checkInquiredArtwork()
 
   cacheSelectors: ->
     @$submit = @$('button')
@@ -114,3 +118,17 @@ module.exports = class ContactView extends Backbone.View
   displayInquirySent: ->
     $('#artwork-inquiry-sent').show()
     $('#artwork-contact-form').hide()
+
+  checkInquiredArtwork: ->
+    @inquiries = new Inquiries
+    @inquiries.fetch
+      success: (inquiries) =>
+        for k,v of inquiries.attributes
+          if v.inquiry_url is window.location.href
+            sent_time = moment(v.created_at).format("MMM D, YYYY")
+            $('#artwork-contact-form').hide()
+            $('#artwork-inquiry-sent').html inquirySentTemplate(sent_time: sent_time)
+
+  showInquiryForm: ->
+    $('#artwork-inquiry-sent').hide()
+    $('#artwork-contact-form').show()
