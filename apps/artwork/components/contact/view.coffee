@@ -20,6 +20,9 @@ class Inquiry extends Backbone.Model
 class Attendance extends Backbone.Model
   url: "#{API_URL}/api/v1/me/user_fair_action"
 
+class Inquiries extends Backbone.model
+  url: "#{API_URL}/api/v1/me/artwork_inquiry_requests"
+
 module.exports = class ContactView extends Backbone.View
   _.extend @prototype, Form
   _.extend @prototype, AfterInquiry
@@ -89,6 +92,7 @@ module.exports = class ContactView extends Backbone.View
 
       @maybeSend @inquiry,
         success: =>
+          @displayInquirySent()
           new FlashMessage message: 'Thank you. Your message has been sent.'
           @$submit.attr('data-state', '').blur()
         error: (model, response, options) =>
@@ -106,3 +110,7 @@ module.exports = class ContactView extends Backbone.View
 
   hoveredSubmit: ->
     analytics.track.hover "Hovered over contact form 'Send' button"
+
+  displayInquirySent: ->
+    $('#artwork-inquiry-sent').show()
+    $('#artwork-contact-form').hide()
