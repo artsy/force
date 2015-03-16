@@ -9,7 +9,9 @@ Artist = require '../../../models/artist'
 describe 'ArtworkFilterView', ->
   before (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
+      benv.expose
+        $: benv.require 'jquery'
+        sd: {MODE: 'columns'}
       Backbone.$ = $
       @ArtworkFilterView = benv.requireWithJadeify resolve(__dirname, '../view'), ['template', 'filterTemplate', 'headerTemplate']
       @ArtworkFilterView.__set__ 'ArtworkColumnsView', sinon.stub().returns { length: -> 999 }
@@ -40,7 +42,7 @@ describe 'ArtworkFilterView', ->
     describe '#render', ->
       it 'renders the container template', ->
         @view.$el.html().should.containEql 'artwork-filter'
-        @view.$el.html().should.containEql 'artwork-columns'
+        @view.$el.html().should.containEql 'artwork-section'
 
     it 'fetches the filter', ->
       Backbone.sync.args[0][1].url().should.containEql '/api/v1/search/filtered/artist/foo-bar/suggest'
@@ -78,18 +80,18 @@ describe 'ArtworkFilterView', ->
 
     describe '#handleArtworksState', ->
       it 'sets the state for the artworks container + button depending on the request event', ->
-        _.isUndefined(@view.$columns.attr 'data-state').should.be.true
+        _.isUndefined(@view.$artworks.attr 'data-state').should.be.true
         @view.artworks.trigger 'request'
-        @view.$columns.attr('data-state').should.equal 'loading'
+        @view.$artworks.attr('data-state').should.equal 'loading'
         @view.$button.attr('data-state').should.equal 'loading'
         @view.artworks.trigger 'sync'
-        @view.$columns.attr('data-state').should.equal 'loaded'
+        @view.$artworks.attr('data-state').should.equal 'loaded'
         @view.$button.attr('data-state').should.equal 'loaded'
         @view.artworks.trigger 'request'
-        @view.$columns.attr('data-state').should.equal 'loading'
+        @view.$artworks.attr('data-state').should.equal 'loading'
         @view.$button.attr('data-state').should.equal 'loading'
         @view.artworks.trigger 'error'
-        @view.$columns.attr('data-state').should.equal 'loaded'
+        @view.$artworks.attr('data-state').should.equal 'loaded'
         @view.$button.attr('data-state').should.equal 'loaded'
 
   describe '#loadNextPage', ->
@@ -177,7 +179,7 @@ describe 'ArtworkFilterView', ->
   describe '#setButtonState', ->
     beforeEach ->
       @columnLength = 0
-      @view.columns = length: => @columnLength
+      @view.artworksView = length: => @columnLength
 
     it 'sets the correct button state when there is 1 remaining artwork', ->
       @view.filter.set 'total', 10
