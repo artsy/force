@@ -1,52 +1,25 @@
-_ = require 'underscore'
-sd = require('sharify').data
-Backbone = require 'backbone'
-CurrentUser = require '../../../models/current_user.coffee'
-Sale = require '../../../models/sale.coffee'
-SaleArtwork = require '../../../models/sale_artwork.coffee'
-BidderPosition = require '../../../models/bidder_position.coffee'
-BidderPositions = require '../../../collections/bidder_positions.coffee'
-RegistrationForm = require './registration_form.coffee'
-BidForm = require './bid_form.coffee'
-
-module.exports.AuctionRouter = class AuctionRouter extends Backbone.Router
-
-  routes:
-    'auction-registration/:id': 'register'
-    'feature/:id/bid/:artwork': 'bid'
-
-  initialize: (options) ->
-    { @sale, @saleArtwork, @registered, @bidderPositions } = options
-
-  register: ->
-    new RegistrationForm
-      el: $('#auction-registration-page')
-      model: @sale
-      success: =>
-        window.location = @sale.registrationSuccessUrl()
-
-  bid: ->
-    if @registered
-      @initBidForm()
-    else
-      new RegistrationForm
-        el: $('#auction-registration-page')
-        model: @sale
-        success: => @initBidForm(true)
-
-  initBidForm: (submitImmediately=false) =>
-    new BidForm
-      el: $('#auction-registration-page')
-      model: @sale
-      saleArtwork: @saleArtwork
-      bidderPositions: @bidderPositions
-      submitImmediately: submitImmediately
+{ AUCTION, ARTWORKS } = require('sharify').data
+Auction = require '../../../models/sale.coffee'
+Artworks = require '../../../collections/artworks.coffee'
+SaleArtworks = require '../../../collections/sale_artworks.coffee'
+ClockView = require '../../../components/clock/view.coffee'
+SpecialistView = require '../../../components/contact/general_specialist.coffee'
+AuctionArtworksView = require './view.coffee'
 
 module.exports.init = ->
-  new AuctionRouter
-    sale: sale = new Sale sd.SALE
-    saleArtwork: saleArtwork = new SaleArtwork sd.SALE_ARTWORK
-    bidderPositions: new BidderPositions(sd.BIDDER_POSITIONS,
-      { sale: sale, saleArtwork: saleArtwork })
-    registered: sd.REGISTERED
-  Backbone.history.start(pushState: true)
+  auction = new Auction AUCTION
+  artworks = new Artworks ARTWORKS
+
+  new AuctionArtworksView el: $('.js-auction-artworks-section'), model: auction, collection: artworks
+
+  # Re-fetch due to cache
+  saleArtworks = new SaleArtworks [], id: auction.id
+  saleArtworks.fetchUntilEndInParallel success: ->
+    artworks.reset Artworks.__fromSale__ saleArtworks
+
+  clock = new ClockView el: $('.js-auction-clock'), model: auction, modelName: 'Auction'
+  clock.start()
+
+  $('.js-specialist-contact-link').click (e) ->
+    e.preventDefault()
+    new SpecialistView

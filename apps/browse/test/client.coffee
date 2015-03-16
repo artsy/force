@@ -1,16 +1,15 @@
 benv = require 'benv'
-Backbone = require 'backbone'
 sinon = require 'sinon'
 rewire = require 'rewire'
+Backbone = require 'backbone'
 { stubChildClasses } = require '../../../test/helpers/stubs'
 
-describe 'AboutRouter', ->
-
+describe 'Browse', ->
   beforeEach (done) ->
     benv.setup =>
-      benv.expose { $: benv.require 'jquery' }
+      benv.expose $: benv.require 'jquery'
       Backbone.$ = $
-      { @index } = mod = rewire '../client.coffee'
+      { @init } = mod = rewire '../client.coffee'
       sinon.stub Backbone.history, 'start'
       stubChildClasses mod, @,
         ['FilterArtworksView', 'scrollFrame']
@@ -23,9 +22,8 @@ describe 'AboutRouter', ->
     benv.teardown()
 
   describe '#index', ->
-
     it 'creates a filter artworks view initializing it by triggering reset', ->
       @FilterArtworksView::params.on 'reset', spy = sinon.spy()
-      @index()
+      @init()
       @FilterArtworksView.args[0][0].artworksUrl.should.containEql 'filtered/main'
       spy.called.should.be.ok

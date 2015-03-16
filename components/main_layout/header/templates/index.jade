@@ -11,7 +11,32 @@ header#main-layout-header(class= sd.HEADER_CLASS ? sd.HEADER_CLASS : '')
             | museums, and private collections.
       i#main-layout-welcome-logo.icon-logotype
 
-  if sd.REDESIGNED_HEADER === 'new'
-    include new
-  else
-    include old
+  nav.mlh-navbar( class=(sd.REDESIGNED_HEADER === 'old' ? 'is-search-expanded' : undefined) )
+    a#main-layout-header-home-logo( href='/', class=activeClass('/') ): i.icon-logo
+    #main-layout-header-left.mlh-navbar-cell
+      include ../../../search_bar/templates/index
+    #main-layout-header-center.mlh-navbar-cell
+      a.mlh-top-nav-link( href='/artists', class= activeClass('/artists') ) Artists
+      a.mlh-top-nav-link( href='/shows', class= activeClass('/shows') ) Shows
+      a.mlh-top-nav-link( href='/galleries', class= activeClass('/galleries') ) Galleries
+      a.mlh-top-nav-link( href='/institutions', class= activeClass('/institutions') ) Museums
+      a.mlh-top-nav-link( href='/art-fairs', class= activeClass('/art-fairs') ) Fairs
+      a.mlh-top-nav-link( href='/auctions', class= activeClass('/auctions') ) Auctions
+
+      if user && user.hasLabFeature('Articles')
+        a.mlh-top-nav-link( href='/magazine', class= activeClass('/magazine') ) Magazine
+      else
+        a.mlh-top-nav-link( href='/posts', class= activeClass('/posts') ) Posts
+
+      span.mlh-top-nav-link.hover-pulldown( data-mode='hover' )
+        | More
+        .hover-pulldown-menu
+          a( href='/about' ) About Artsy
+          a( href='/gallery-partnerships' ) Artsy for Galleries
+          a( href='/pdf/institutions-overview.pdf' ) Artsy for Institutions
+          a( href='/feature/artsy-education' ) Artsy for Education
+          a( href='/about/jobs' ) Jobs
+          a( href='/press' ) Press
+
+    #main-layout-header-right.mlh-navbar-cell
+      include ./user

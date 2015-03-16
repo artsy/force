@@ -60,7 +60,10 @@ module.exports = class Artworks extends Backbone.Collection
   # @param {Collection} saleArtworks Backbone Collection from `/api/v1/sale/:id/sale_artworks`
   # @return The new artworks collection
 
-  @fromSale: (saleArtworks) ->
-    artworks = new Artworks saleArtworks.map (saleArtwork) ->
+  @__fromSale__: (saleArtworks) ->
+    saleArtworks.map (saleArtwork) ->
       _.extend saleArtwork.get('artwork'),
-        saleArtwork: new SaleArtwork saleArtwork.omit('artwork')
+        sale_artwork: saleArtwork.omit('artwork')
+
+  @fromSale: (saleArtworks) ->
+    new Artworks @__fromSale__(saleArtworks)

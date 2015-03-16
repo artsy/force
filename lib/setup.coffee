@@ -15,7 +15,7 @@
   SENTRY_PUBLIC_DSN, SHOW_AUCTIONS_IN_HEADER, EMPTY_COLLECTION_SET_ID,
   GEMINI_S3_ACCESS_KEY, GEMINI_APP, GEMINI_ACCOUNT_KEY, BIDDER_H1_COPY,
   BIDDER_H2_COPY, APPLICATION_NAME, EMBEDLY_KEY, DISABLE_IMAGE_PROXY,
-  POSITRON_URL, CHECK_FOR_AUCTION_REMINDER } = config = require "../config"
+  POSITRON_URL, CHECK_FOR_AUCTION_REMINDER, GENOME_URL } = config = require "../config"
 { parse, format } = require 'url'
 _ = require 'underscore'
 express = require "express"
@@ -74,6 +74,7 @@ sharify.data =
   AUTO_GRAVITY_LOGIN: AUTO_GRAVITY_LOGIN
   GOOGLE_MAPS_API_KEY: GOOGLE_MAPS_API_KEY
   ADMIN_URL: ADMIN_URL
+  GENOME_URL: GENOME_URL
   CMS_URL: CMS_URL
   DELTA_HOST: DELTA_HOST
   ENABLE_AB_TEST: ENABLE_AB_TEST
@@ -198,14 +199,16 @@ module.exports = (app) ->
   app.use require "../apps/home"
   # Needs to be above artwork and artist routes to support the /type/:id/* routes
   app.use require "../apps/apply"
-  app.use require "../apps/auction_lots"
   app.use require "../apps/auction"
+  app.use require "../apps/auction_lots"
+  app.use require "../apps/auction_support"
   app.use require "../apps/auctions"
   app.use require "../apps/artist"
   app.use require "../apps/artists"
   app.use require "../apps/artwork"
   app.use require "../apps/about"
   app.use require "../apps/browse"
+  app.use require "../apps/categories"
   app.use require "../apps/fairs"
   app.use require "../apps/feature"
   app.use require "../apps/flash"
@@ -213,6 +216,7 @@ module.exports = (app) ->
   app.use require "../apps/gallery_insights"
   app.use require "../apps/gallery_partnerships"
   app.use require "../apps/gene"
+  app.use require "../apps/legacy_routes"
   app.use require "../apps/notifications"
   app.use require "../apps/order"
   app.use require "../apps/personalize"

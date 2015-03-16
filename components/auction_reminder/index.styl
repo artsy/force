@@ -14,7 +14,7 @@
   display inline-block
   vertical-align top
   margin auto
-  
+
 
 .auction-reminder-details
   width 190px
@@ -24,6 +24,7 @@
 .auction-reminder-clock
   vertical-align top
   margin-top 22px
+  margin-left 25px
   display inline-block
   .clock-header
     display none
@@ -62,15 +63,21 @@
     right 40px
     bottom -300px
     prevent-content-shift()
-    
+
+    &:hover
+      border 1px solid gray-lightest-color
+
     &.is-spring-in
       bottom 40px
       transition all 500ms cubic-bezier(0.065, -0.010, 0.150, 1.130)
-    
+
     &.is-close-out
       bottom -300px
       transition all 600ms cubic-bezier(0.065, -0.010, 0.150, 1.130)
-    
+
+    &.is-static-open
+      bottom 40px
+
   .modal-close
     position absolute
     top 25px
@@ -80,4 +87,7 @@
     opacity 0.15
     z-index 2
     prevent-content-shift()
-    
+
+    &:hover
+      color gray-color
+

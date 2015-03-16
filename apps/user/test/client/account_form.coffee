@@ -40,6 +40,7 @@ describe 'AccountForm', ->
   describe '#toggleService', ->
     describe 'link', ->
       beforeEach ->
+        @userEdit.set accessToken: 'x-foo-token'
         location.assign = sinon.stub()
         global.location.href = 'user/edit'
         @view.$('.settings-toggle-service[data-service="twitter"]').click()

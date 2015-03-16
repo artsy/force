@@ -1,0 +1,110 @@
+grid-max-thumbnail-size = 350px
+list-max-thumbnail-size = 130px
+list-row-size = (list-max-thumbnail-size + 40px)
+
+.auction-artworks
+  &[data-mode='grid']
+    clearfix()
+  &[data-mode='list']
+    display table
+    width 100%
+
+// Grid artwork
+.auction-grid-artwork
+  float left
+  width 33.33%
+  padding 15px
+  border-bottom 1px solid gray-lighter-color
+  a
+    text-decoration none
+.aga-image
+  height grid-max-thumbnail-size
+  a
+    display block
+    > img
+      max-width 100%
+      margin auto
+.aga-metadata
+  margin 15px 0
+.aga-primary-information
+  > *
+    overflow ellipsis
+.aga-lot-number
+  avant-garde()
+  font-size 12px
+.aga-artist
+  margin-bottom 10px
+  avant-garde()
+  font-size 16px
+  text-decoration none
+.aga-bidding
+  margin-top 15px
+  padding-top 15px
+  // Has a 1px gray for every 3px transparent dotted border
+  background-image linear-gradient(to right, gray-color 25%, transparent 0%)
+  background-position top
+  background-size 4px 1px
+  background-repeat repeat-x
+.aga-bid-button
+  width 100%
+  text-align center
+.aga-bid-status
+  display table
+  width 100%
+  margin-bottom 15px
+.aabs-label
+.aabs-price
+  display table-cell
+  vertical-align middle
+  line-height 1
+.aabs-price
+  text-align right
+  avant-garde()
+  font-size 15px
+
+// List artwork
+.auction-list-artwork
+  display table-row
+  height list-row-size
+  &:last-child
+    border-bottom none
+  > div
+    display table-cell
+    vertical-align middle
+    padding 15px
+    border-bottom 1px solid gray-lighter-color
+    &:last-child
+      text-align right
+    a
+      text-decoration none
+      display block
+      height 100%
+      width 100%
+.ala-image
+  width list-row-size
+  > a
+    display block
+    margin auto
+    > img
+      margin auto
+      max-width list-max-thumbnail-size
+      max-height list-max-thumbnail-size
+.ala-primary-information
+  padding-right 30px !important
+.ala-artist
+  avant-garde()
+  font-size 15px
+.ala-lot-number
+  avant-garde()
+  font-size 13px
+  text-align center
+.ala-current-bid
+  avant-garde()
+  font-size 15px
+.ala-lot-number
+.ala-estimate
+.ala-bid-count
+.ala-bid-status
+.ala-sale-message
+.ala-bid-button
+  white-space nowrap

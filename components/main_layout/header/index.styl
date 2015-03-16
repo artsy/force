@@ -12,20 +12,21 @@
 
 .mlh-navbar
   display flex
+  align-items center
 .mlh-navbar-cell
   white-space nowrap
 
 #main-layout-header-left
   flex 1
 #main-layout-header-home-logo
-  float left
+  display inline-block
   width home-logo-size
-  height home-logo-size
-  padding 10px
-  font-size (home-logo-size - 20px) // default-icon-font-size
-  border none
-  &:after
-    border-left none
+  text-align center
+  text-decoration none
+  line-height 0
+  vertical-align middle
+  > i
+    font-size (home-logo-size - 20px) // default-icon-font-size
 #main-layout-header-center
   padding 0 20px
 #main-layout-header-center
@@ -38,7 +39,7 @@
 .mlh-nav-link
   position relative
   display inline-block
-  padding 16px 10.5px 14px 10.5px
+  padding 16px 10px 14px 10px
   vertical-align middle
   text-decoration none
   font-size 13px
@@ -50,17 +51,14 @@
   &:active
   &:focus
     color purple-color
-// Rightmost username dropdown wrapper
-.mlh-session
-  border-left 1px solid gray-lighter-color
 .mlh-login
   padding-left 20px
 .mlh-signup
   padding-right 20px
 .mlh-user-name
   @extends .mlh-nav-link
-  padding-left 20px
-  padding-right 20px
+  padding-left 30px
+  padding-right @padding-left
   position relative
   min-width 130px
   text-align center
@@ -68,51 +66,6 @@
   white-space nowrap
   &:hover #main-layout-header-user-nav
     display block
-
-// Rightmost username dropdown
-#main-layout-header-user-nav
-  display none
-  position absolute
-  top 0
-  right 0
-  left 0
-  z-index 2
-  background-color white
-  // Faux borders
-  &:before // Left border
-  &:after // Top border
-  a:last-child:after // Bottom border
-    display block
-    content ''
-    position absolute
-    background-color black
-    z-index 3
-  &:before // Left border
-    top 0
-    bottom 0
-    left 0
-    width 3px
-  &:after // Top border
-    top 0
-    left 0
-    width 100%
-    height 3px
-  a
-    display block
-    text-align center
-    width 100%
-    border none
-    border-top 1px solid gray-lighter-color
-    &:first-child
-      border none
-    &:last-child:after // Bottom border
-      bottom 0
-      left 0
-      width 100%
-      height 3px
-    &:hover
-      background-color gray-lightest-color
-      color inherit
 
 // Temporary welcome header
 #main-layout-welcome-header
@@ -142,8 +95,67 @@
   text-align center
   padding 20px 0
 
-
 @media (max-width: 600px)
   .body-responsive #main-layout-header-center
     display none
-    
+
+// REDESIGNED_HEADER
+.mlh-navbar.is-search-expanded
+  #main-layout-header-home-logo
+    width inherit
+    padding 0 15px
+  #main-layout-search-bar-container
+    height inherit
+    margin 0
+  #main-layout-search-bar-input
+    padding 10px 40px 10px 15px
+  .mlh-nav-link
+  .mlh-top-nav-link
+  .mlh-user-name
+    padding-top 22px
+    padding-bottom @padding-top
+
+  main-layout-search-bar-spinner
+  #main-layout-search-bar-icon
+    width 40px
+
+  #main-layout-search-bar-icon
+    left inherit
+    right 0
+    text-align center
+    // Left border
+    &:after
+      content ''
+      display block
+      position absolute
+      top 5px
+      bottom @top
+      left 0
+      width 1px
+      background-color transparify(gray-lighter-color, black)
+
+  #main-layout-search-bar-container.is-loading
+    #main-layout-search-bar-icon
+      color transparent
+
+  #main-layout-header-right
+    // Search will occupy any available space once
+    // `flex 1` is removed from this element
+    flex none
+    // Left border
+    position relative
+    &:after
+      content ''
+      display block
+      position absolute
+      top (home-logo-size / 4)
+      bottom @top
+      left 0
+      width 1px
+      background-color transparify(gray-lighter-color, black)
+
+.body-transparent-header-white
+  .mlh-navbar.is-search-expanded
+    #main-layout-header-right:after
+    #main-layout-search-bar-icon:after
+      background-color rgba(white, 0.3)

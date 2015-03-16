@@ -42,6 +42,13 @@ module.exports = class SearchBarView extends Backbone.View
     'keyup input': 'checkSubmission'
     'focus input': 'trackFocusInput'
     'click .empty-item': 'emptyItemClick'
+    'click #main-layout-search-bar-icon': 'iconClick'
+
+  iconClick: (e) ->
+    if @isEmpty()
+      @$input.focus()
+    else
+      @emptyItemClick()
 
   trackFocusInput: ->
     analytics.track.click "Focused on search input"
@@ -80,11 +87,11 @@ module.exports = class SearchBarView extends Backbone.View
     (@$feedback ?= @$('.autocomplete-feedback'))
       .text feedback or @feedbackString()
 
-  shouldDisplaySuggestions: ->
+  isEmpty: ->
     _.isEmpty(_s.trim(@$input.val()))
 
   displaySuggestions: ->
-    if @shouldDisplaySuggestions()
+    if @isEmpty()
       @renderFeedback()
       @$el.addClass 'is-display-suggestions'
 

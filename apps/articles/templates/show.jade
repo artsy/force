@@ -12,9 +12,9 @@ block body
   #articles-show
     h1.large-garamond-header= article.get('title')
     #articles-lead-paragraph!= article.get('lead_paragraph')
-    h2#articles-show-author
+    #articles-show-author
       a( href="/#{article.get('author').profile_handle}" )= article.get('author').name
-    h2#articles-show-date
+    #articles-show-date
       = moment(article.get('published_at')).format('MMM Do, YYYY h:mm a')
     .articles-social
       +share(article.get('title'), article.get('thumbnail_image'))
