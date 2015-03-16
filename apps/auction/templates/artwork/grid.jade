@@ -1,16 +1,17 @@
 - artist = artwork.related().artist
 - saleArtwork = artwork.related().saleArtwork
+- href = artwork.href() + '?auction_id=' + auction.id
 
 .auction-grid-artwork
   .aga-image: .vam-outer: .vam-inner
-    a( href= artwork.href() ): img(
+    a( href= href ): img(
       src= artwork.defaultImageUrl('medium')
       nopin= artwork.noPinAttr()
       alt= artwork.toAltText()
     )
 
   .aga-metadata
-    a( href= artwork.href() )
+    a( href= href )
       if saleArtwork.has('lot_number')
         .aga-lot-number
           | Lot #{saleArtwork.get('lot_number')}
