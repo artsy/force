@@ -6,6 +6,8 @@ ArtworkColumnsView = require '../artwork_columns/view.coffee'
 ArtworkTableView = require '../artwork_table/view.coffee'
 BorderedPulldown = require '../bordered_pulldown/view.coffee'
 mediator = require '../../lib/mediator.coffee'
+splitTest = require '../../components/split_test/index.coffee'
+
 template = -> require('./templates/index.jade') arguments...
 filterTemplate = -> require('./templates/filter.jade') arguments...
 headerTemplate = -> require('./templates/header.jade') arguments...
@@ -20,14 +22,14 @@ module.exports = class ArtworkFilterView extends Backbone.View
 
   view: ->
     viewModes =
-      columns: ArtworkColumnsView
-      table: ArtworkTableView
+      grid: ArtworkColumnsView
+      list: ArtworkTableView
 
-    new viewModes[sd.MODE] @params()
+    new viewModes[@mode] @params()
 
   params: ->
     viewModes =
-      columns:
+      grid:
         numberOfColumns: 3
         gutterWidth: 40
         maxArtworkHeight: 400
@@ -35,15 +37,17 @@ module.exports = class ArtworkFilterView extends Backbone.View
         seeMore: false
         allowDuplicates: true
         artworkSize: 'tall'
-      table:
+      list:
         show: true
 
     _.extend
       el: @$artworks
       collection: @artworks
-    , viewModes[sd.MODE]
+    , viewModes[@mode]
 
   initialize: ({ @mode }) ->
+    @mode = splitTest('artist_works_view_mode').outcome()
+
     @artworks = new ArtworkColumns [], modelId: @model.id
     @filter = new Filter model: @model
 

@@ -14,8 +14,6 @@ request = require 'superagent'
 cache = require '../../lib/cache'
 
 @index = (req, res) ->
-  mode = req.query.mode || 'columns'
-
   artist = new Artist id: req.params.id
   carousel = new Carousel artist: artist
   statuses = new Statuses artist: artist
@@ -36,7 +34,6 @@ cache = require '../../lib/cache'
         res.locals.sd.ARTIST = artist.toJSON()
         res.locals.sd.TAB = tab = req.params.tab or ''
         res.locals.sd.STATUSES = statuses = statusesRequest.value
-        res.locals.sd.MODE = mode
 
         res.render 'index',
           artist: artist
