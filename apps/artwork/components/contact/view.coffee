@@ -2,6 +2,7 @@ _ = require 'underscore'
 _s = require 'underscore.string'
 Backbone = require 'backbone'
 Cookies = require 'cookies-js'
+moment = require 'moment'
 analytics = require '../../../../lib/analytics.coffee'
 { SESSION_ID, API_URL } = require('sharify').data
 CurrentUser = require '../../../../models/current_user.coffee'
@@ -13,6 +14,10 @@ defaultMessage = require '../../../../components/contact/default_message.coffee'
 Introduction = require '../../../../components/introduction/model.coffee'
 Mailcheck = require '../../../../components/mailcheck/index.coffee'
 attendanceTemplate = -> require('./templates/attendance.jade') arguments...
+inquirySentTemplate = -> require('./templates/inquiry_sent.jade') arguments...
+
+class Inquiries extends Backbone.Collection
+  url: "#{API_URL}/api/v1/me/artwork_inquiry_requests"
 
 class Inquiry extends Backbone.Model
   url: "#{API_URL}/api/v1/me/artwork_inquiry_request"
@@ -30,6 +35,7 @@ module.exports = class ContactView extends Backbone.View
     'submit #artwork-contact-form': 'submit'
     'click button': 'submit'
     'mouseover button': 'hoveredSubmit'
+    'click .artwork-inquiry-send-new': 'showInquiryForm'
 
   initialize: ->
     @user = CurrentUser.orNull() or new LoggedOutUser
@@ -38,6 +44,7 @@ module.exports = class ContactView extends Backbone.View
     @listenTo @fairs, 'sync', @renderAttendance
     @cacheSelectors()
     Mailcheck.run('#js-mailcheck-input-artwork','#js-mailcheck-hint-artwork',true)
+    @checkInquiredArtwork()
 
   cacheSelectors: ->
     @$submit = @$('button')
@@ -89,6 +96,7 @@ module.exports = class ContactView extends Backbone.View
 
       @maybeSend @inquiry,
         success: =>
+          @displayInquirySent()
           new FlashMessage message: 'Thank you. Your message has been sent.'
           @$submit.attr('data-state', '').blur()
         error: (model, response, options) =>
@@ -106,3 +114,23 @@ module.exports = class ContactView extends Backbone.View
 
   hoveredSubmit: ->
     analytics.track.hover "Hovered over contact form 'Send' button"
+
+  displayInquirySent: ->
+    $('#artwork-inquiry-sent-immediate').show()
+    $('#artwork-contact-form').hide()
+
+  checkInquiredArtwork: ->
+    @inquiries = new Inquiries
+    @inquiries.fetch
+      success: (inquiries) =>
+        inquiry = @inquiries.findWhere { inquiry_url: window.location.href }
+        if inquiry
+          sent_time = moment(inquiry.get('created_at')).format("MMM D, YYYY")
+          @$('#artwork-contact-form').hide()
+          @$('#artwork-inquiry-sent')
+            .html(inquirySentTemplate(sent_time: sent_time))
+            .show()
+
+  showInquiryForm: ->
+    $('#artwork-inquiry-sent').hide()
+    $('#artwork-contact-form').show()

@@ -1,7 +1,6 @@
 _ = require 'underscore'
 Q = require 'q'
 { API_URL } = require('sharify').data
-Backbone = require 'backbone'
 Sales = require '../../collections/sales'
 Artworks = require '../../collections/artworks'
 
@@ -38,11 +37,3 @@ elligibleFilter = _.partial _.filter, _, ((sale) ->
           currentAuctions: open
           upcomingAuctions: preview or []
       ).done()
-
-@redirect = (req, res) ->
-  new Backbone.Collection().fetch
-    cache: true
-    url: "#{API_URL}/api/v1/sets/contains?item_type=Sale&item_id=#{req.params.id}"
-    error: res.backboneError
-    success: (collection, response, options) ->
-      res.redirect "/feature/#{collection.first().get('owner').id}"

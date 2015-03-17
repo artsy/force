@@ -10,4 +10,3 @@ app.set 'views', __dirname
 app.set 'view engine', 'jade'
 
 app.get '/feature/:id', routes.index
-app.get '/feature/:id/:tab', routes.index
