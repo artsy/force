@@ -17,7 +17,6 @@ describe 'ArtworkFilterView', ->
       done()
 
   after ->
-    @setStub.restore()
     benv.teardown()
 
   beforeEach ->
