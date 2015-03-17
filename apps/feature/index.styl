@@ -1,11 +1,7 @@
-//
-// Feature styles
-//
-
-#feature
-  .feature-content
-    max-width 1150px
-    margin 0px auto
+.feature-page
+  &.has-image
+    .feature-content
+      margin 60px auto 120px
 
 .feature-image
   background-position center center
@@ -19,11 +15,25 @@
 
 .feature-content
   position relative
-  padding 50px 0 125px
+  margin 120px auto
+  max-width 1150px
+
+.feature-header
+  margin 40px auto
+  position relative
+  > h1
+    padding 0 80px
+    text-align center
+
+.feature-share
+  position absolute
+  top 0
+  right 0
+  > .share-to-pinterest
+      display none
 
 #feature-sets-container
   position relative
-  min-height 800px
 
 .feature-title
   garamond()
@@ -31,35 +41,14 @@
   line-height 1.25
 
 .feature-description
-  width 100%
-  padding 0 0 60px 0
-  display table
-
-#feature-description-register-container
-#feature-auction-info-countdown-container
-.feature-description-text
-  &:empty
-    display none
-
-#feature-auction-info-countdown-container
-  width 150px
-
-#feature-description-register-container
-#feature-auction-info-countdown-container
-  width 150px
-.feature-description-text
   font-size 20px
-  margin-bottom 20px
+  line-height 1.33
+  text-align center
+  margin 0 40px
   p
-    line-height 1.33
-
-.auction-info-header
-  text-transform uppercase
-  letter-spacing 1px
-  font-size 15px
-
-#feature-description-register-container .auction-info-register-button a
-  width 100%
+    margin 20px 0
+    a
+      fine-faux-underline()
 
 .feature-set
   border-bottom 1px solid gray-color
@@ -77,7 +66,7 @@
 .feature-set-description
   font-size 22px
   margin-bottom 30px
-  line-height 133%
+  line-height 1.33
 
 .feature-set-item
   display inline-block
@@ -107,7 +96,7 @@
   width 50%
   vertical-align top
   &:last-of-type
-    padding-right: 0
+    padding-right 0
 
 .feature-set-artist-container
   height 100%
@@ -117,14 +106,14 @@
   padding-bottom 15px
   &.artist-list-truncated
     height 500px
-    padding-bottom 0px
+    padding-bottom 0
     &::before
       height 60px
       width 100%
-      bottom 0px
+      bottom 0
       position absolute
       content ''
-      background linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, #ffffff 100%)
+      background linear-gradient(to bottom, transparent 0%, white 100%)
 
 .featured-set-artist-expand
   avant-garde()
@@ -163,7 +152,9 @@
 
 // models/mixins/layout_style supports 'fifth' and 'sixth' size
 // layouts but this layout does not so we make them all quarter-size
-.feature-set-item-quarter, .feature-set-item-fifth, .feature-set-item-sixth
+.feature-set-item-quarter
+.feature-set-item-fifth
+.feature-set-item-sixth
   margin 0 1%
   width 22.8%
   .feature-set-item-caption
@@ -187,18 +178,19 @@
       display none
 
 #feature-artworks
-  .artwork-item-caption p, .artwork-item-caption p a
+  .artwork-item-caption p
+  .artwork-item-caption p a
     color black
     font-size 17px
   .artwork-item-caption .artwork-item-artist
-    font-size: 28px
-    margin-bottom: 13px
-    display: inline-block
-    margin-top: 10px
-    font-weight: normal
+    font-size 28px
+    margin-bottom 13px
+    display inline-block
+    margin-top 10px
+    font-weight normal
     max-width 100%
     a
-      font-size: 28px
+      font-size 28px
   .artwork-item-partner
     display none
 
@@ -212,50 +204,9 @@
     letter-spacing 1px
     text-transform uppercase
     display inline-block
-    margin 0px 11px
-    line-height: 70%
+    margin 0 11px
+    line-height 70%
     &.active
       color purple-color
       &::before
         border-color purple-color
-
-#feature-top-container
-  display flex
-
-#feature-auction-left
-  padding-right 60px
-  .auction-info-register-button
-    width 250px
-    margin-top 40px
-
-#feature-auction-right
-  min-width 420px
-  img
-    width 150px
-  #feature-auction-info-countdown-container .clock
-    text-align left
-  #feature-auction-info-countdown-container, img, .feature-share
-    display inline-block
-    vertical-align top
-    margin-right 20px
-  .feature-share
-    margin-right 0
-    .share-to-pinterest
-      display none
-
-#feature-non-auction-left
-  margin-left 64px
-  text-align center
-  padding-left 70px
-  padding-right 70px
-  
-#feature-non-auction-right
-  min-width 64px
-  #feature-auction-logo
-    display none
-  #feature-auction-info-countdown-container
-    display none
-  .feature-share
-    margin-right 0
-    .share-to-pinterest
-      display none

@@ -13,8 +13,11 @@ module.exports = class Sale extends Backbone.Model
 
   urlRoot: "#{sd.API_URL}/api/v1/sale"
 
-  href: -> "/feature/#{@get('id')}"
-  registrationSuccessUrl: -> "#{@href()}/confirm-registration"
+  href: ->
+    if @get('is_auction')
+      "/auction/#{@get('id')}"
+    else
+      "/feature/#{@get('id')}"
 
   fetchArtworks: (options = {}) ->
     @artworks = new SaleArtworks [], id: @id
@@ -49,7 +52,7 @@ module.exports = class Sale extends Backbone.Model
     url
 
   bidUrl: (artwork) ->
-    "/feature/#{@id}/bid/#{artwork.id}"
+    "/auction/#{@id}/bid/#{artwork.id}"
 
   redirectUrl: (artwork) ->
     if @isBidable() and artwork?

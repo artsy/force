@@ -23,10 +23,10 @@
   width home-logo-size
   text-align center
   text-decoration none
-  line-height 0
   vertical-align middle
   > i
-    font-size (home-logo-size - 20px) // default-icon-font-size
+    font-size default-icon-font-size
+    line-height home-logo-size
 #main-layout-header-center
   padding 0 20px
 #main-layout-header-center
@@ -39,10 +39,11 @@
 .mlh-nav-link
   position relative
   display inline-block
-  padding 16px 10px 14px 10px
+  padding 15px 10px
   vertical-align middle
   text-decoration none
   font-size 13px
+  line-height 1
   &.is-active
     color purple-color
 .mlh-top-nav-link

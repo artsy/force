@@ -4,7 +4,6 @@ Backbone = require 'backbone'
 FilterStates = require '../collections/filter_states.coffee'
 FilterState = require './filter_state.coffee'
 Selected = require './selected.coffee'
-splitTest = require '../../split_test/index.coffee'
 
 module.exports = class Filter
   _.extend @prototype, Backbone.Events
@@ -63,13 +62,7 @@ module.exports = class Filter
     @get(key)?[value]
 
   currentSort: ->
-    if @getSplitTestResult() is 'merchandisability'
-      @sorts[@selected.get('sort') or '-merchandisability']
-    else
-      @sorts[@selected.get('sort') or '-date_added']
-
-  getSplitTestResult: ->
-    if splitTest('artwork_column_sort').outcome() is 'merchandisability' then 'merchandisability' else 'date_added'
+    @sorts[@selected.get('sort') or '-date_added']
 
   buildState: ->
     new FilterState { id: @stateId() }, modelId: @model.id
