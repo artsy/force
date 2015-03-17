@@ -14,8 +14,6 @@ describe 'ArtworkFilterView', ->
       @ArtworkFilterView = benv.requireWithJadeify resolve(__dirname, '../view'), ['template', 'filterTemplate', 'headerTemplate']
       @ArtworkFilterView.__set__ 'ArtworkColumnsView', sinon.stub().returns { length: -> 999 }
       @ArtworkFilterView.__set__ 'BorderedPulldown', sinon.stub()
-      @SplitTest = require '../../split_test/split_test.coffee'
-      @setStub = sinon.stub(@SplitTest::, 'outcome')
       done()
 
   after ->
