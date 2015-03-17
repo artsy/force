@@ -54,5 +54,5 @@ describe 'AuctionArtworksView', ->
     it 'triggers a sort and re-render', ->
       @view.$('.auction-grid-artwork').should.have.lengthOf 0
       @view.$('.auction-list-artwork').should.have.lengthOf 2
-      @view.$('.auction-list-artwork:first-child a').attr('href').should.equal '/artwork/a-a'
-      @view.$('.auction-list-artwork:last-child a').attr('href').should.equal '/artwork/z-z'
+      @view.$('.auction-list-artwork:first-child a').attr('href').should.containEql '/artwork/a-a'
+      @view.$('.auction-list-artwork:last-child a').attr('href').should.containEql '/artwork/z-z'
