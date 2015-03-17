@@ -123,12 +123,13 @@ module.exports = class ContactView extends Backbone.View
     @inquiries = new Inquiries
     @inquiries.fetch
       success: (inquiries) =>
-        for inquiry in inquiries.models
-          if inquiry.get('inquiry_url') is window.location.href
-            sent_time = moment(inquiry.get('created_at')).format("MMM D, YYYY")
-            $('#artwork-contact-form').hide()
-            $('#artwork-inquiry-sent').html inquirySentTemplate(sent_time: sent_time)
-            $('#artwork-inquiry-sent').show()
+        inquiry = @inquiries.findWhere { inquiry_url: window.location.href }
+        if inquiry
+          sent_time = moment(inquiry.get('created_at')).format("MMM D, YYYY")
+          @$('#artwork-contact-form').hide()
+          @$('#artwork-inquiry-sent')
+            .html(inquirySentTemplate(sent_time: sent_time))
+            .show()
 
   showInquiryForm: ->
     $('#artwork-inquiry-sent').hide()
