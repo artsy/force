@@ -90,5 +90,8 @@ describe 'ContactView', ->
       Backbone.sync.args[2][1].url.should.containEql '/api/v1/me/artwork_inquiry_request'
 
     it 'shows a message if the user has already sent an inquiry', ->
-      @view.checkInquiredArtwork()
-      Backbone.sync.args[1][2].success [fabricate('artwork_inquiry')]
+      console.log Backbone.sync.args[0][1]
+      inquiry = fabricate('artwork_inquiry')
+      _.extend(inquiry,{inquiry_url: 'foo.com'})
+      console.log inquiry
+      Backbone.sync.args[0][2].success [ inquiry ]
