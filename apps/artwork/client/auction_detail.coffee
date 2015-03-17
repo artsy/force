@@ -69,8 +69,20 @@ module.exports = class AuctionDetailView extends Backbone.View
       bidderPositions: @bidderPositions
     ).addClass 'is-fade-in'
     $('#artwork-lot-number').html 'Lot ' + num if num = @saleArtwork.get('lot_number')
-    this
+    @renderPartnerLogo()
+    @
 
   openBuyersPremiumModal: (e) ->
     e.preventDefault()
     new BuyersPremiumModal auction: @auction
+
+  renderPartnerLogo: ->
+    new Partner(@saleArtwork.artwork().get 'partner').fetch
+      error: => $('#artwork-auction-logo').remove()
+      success: (partner) =>
+        new Profile(id: partner.get 'default_profile_id').fetch
+          error: => $('#artwork-auction-logo').remove()
+          success: (prof) =>
+            $('#artwork-auction-logo').css(
+              'background-image': "url(#{prof.icon().imageUrl()})"
+            )

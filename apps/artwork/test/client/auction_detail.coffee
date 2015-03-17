@@ -135,7 +135,7 @@ describe 'AuctionDetailView', ->
       @view.$('input').val('5000')
       @view.$('form').submit()
       location.assign.args[0][0].should
-        .equal "/auction/#{@auction.id}/bid/#{@saleArtwork.id}?bid=500000"
+        .equal "/feature/#{@auction.id}/bid/#{@saleArtwork.id}?bid=500000"
 
     it 'triggers sign up if not logged in', ->
       @view.user = undefined

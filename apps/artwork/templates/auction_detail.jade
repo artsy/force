@@ -17,7 +17,7 @@ if auction.isOpen()
   .abs-amount= saleArtwork.currentBid()
   .abs-count= saleArtwork.formatBidsAndReserve()
 
-  form.artwork-bid-form( action="/auction/#{auction.id}/bid/#{saleArtwork.id}" )
+  form.artwork-bid-form( action="/feature/#{auction.id}/bid/#{saleArtwork.id}" )
     if auction.isOpen() && user
       .abf-validation-error
         | Your bid needs to be at least #{saleArtwork.minBid()}

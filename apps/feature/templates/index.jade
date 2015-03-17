@@ -9,21 +9,28 @@ append locals
   - bodyClass = bodyClass + ' body-no-margins'
 
 block body
-  - hasImage = feature.hasImage() && feature.imageUrl()
-  #feature.feature-page( class= hasImage ? 'has-image' : undefined )
-    if hasImage
+  #feature( data-feature=feature.get('id') )
+    if feature.hasImage() && feature.imageUrl()
       .feature-image( style="background-image: url(#{feature.imageUrl('wide')})" )
 
-    .feature-content.responsive-layout-container
-      header.feature-header
-        h1.feature-title
-          = feature.get('name')
+    .responsive-layout-container
+      .feature-content
 
-        nav.feature-share
-          +share(feature.shareTitle())
-
-        if feature.get('description')
-          .feature-description
-            != feature.mdToHtml('description')
-
-      #feature-sets-container: .loading-spinner
+        #feature-top-container
+          #feature-auction-left
+            h1.feature-title= feature.get('name')
+            //- Requires auctions to have descriptions
+            //- which I assume they do. But this needs to be revisited.
+            if feature.get('description')
+              .feature-description
+                .feature-description-text
+                  != feature.mdToHtml('description')
+                #feature-description-register-container
+                  //- Rendered client-side
+          #feature-auction-right
+            img#feature-auction-logo
+            #feature-auction-info-countdown-container
+              //- Rendered client-side
+            nav.feature-share
+              +share(feature.shareTitle())
+        #feature-sets-container: .loading-spinner

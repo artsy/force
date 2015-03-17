@@ -15,7 +15,7 @@ registerOrRender = (sale, req, res, next) ->
         req.user.createBidder
           saleId: sale.get('id')
           success: ->
-            return res.redirect "/auction/#{sale.id}/confirm-registration"
+            return res.redirect sale.registrationSuccessUrl()
           error: ->
             res.backboneError
       else
@@ -37,14 +37,14 @@ registerOrRender = (sale, req, res, next) ->
       # Sale is a registerable auction
       if sale.isRegisterable()
         # Check if the user has registered for the sale
-        # If so, redirect back to the auction
+        # If so, redirect back to the feature
         # If not, render the auction registration page
         req.user.checkRegisteredForAuction
           saleId: sale.get('id')
           error: res.backboneError
           success: (isRegistered) ->
             if isRegistered
-              return res.redirect "/auction/#{sale.id}/confirm-registration"
+              return res.redirect sale.registrationSuccessUrl()
             else
               registerOrRender sale, req, res, next
 
@@ -61,7 +61,7 @@ registerOrRender = (sale, req, res, next) ->
 
 @bid = (req, res, next) ->
   unless req.user
-    return res.redirect "/log_in?redirect_uri=/auction/#{req.params.id}/bid/#{req.params.artwork}"
+    return res.redirect "/log_in?redirect_uri=/feature/#{req.params.id}/bid/#{req.params.artwork}"
 
   # TODO: Refactor this cluster of business and fetching logic into a model/service layer.
   # Potentitally in Artsy Backbone Mixins for Martsy.
