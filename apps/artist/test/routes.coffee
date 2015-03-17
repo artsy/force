@@ -52,6 +52,16 @@ describe 'Artist routes', ->
         @res.redirect.args[0][0].should.equal '/artist/andy-foobar'
         done()
 
+    it 'sets the mode if either columns or table', (done) ->
+      @res.locals.sd.CURRENT_PATH = '/artist/bar'
+      routes.index @req, @res
+      Backbone.sync.args[0][2].success fabricate 'artist', id: 'andy-foobar'
+      Backbone.sync.args[1][2].success()
+      _.each Backbone.sync.args[2..-1], (args) -> args[2].success()
+      _.defer =>
+        @res.redirect.args[0][0].should.equal '/artist/andy-foobar'
+        done()
+
   describe '#follow', ->
     it 'redirect to artist page without user', ->
       routes.follow @req, @res

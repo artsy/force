@@ -1,3 +1,8 @@
+- var saleArtwork = artwork.related().saleArtwork
+- var defaultImage = artwork.defaultImage()
+- var maxDimension = 150
+- var isAuction = saleArtwork.sale().isAuction() || false
+
 .artwork-table__row
   .artwork-table__cell.artwork-table__cell--image
     - var defaultImage = artwork.defaultImage()
@@ -34,14 +39,59 @@
       span#artwork-partner-locations
         //- Rendered client-side
 
-  .artwork-table__cell.artwork-table__cell--contact
-    unless auctionId
-      if artwork.isPriceDisplayable()
-        .artwork-meta-price
-          .artwork-meta-price-label( class=(artwork.get('sold') ? 'is-sold' : 'is-not-sold') )
-            = artwork.priceLabel()
-          .artwork-meta-price-amount= artwork.priceDisplay()
-      else
-        if artwork.artworkPageSaleMessage()
+  .artwork-table__cell.artwork-table__cell--inquiry
+    .inner
+      unless auctionId
+        if artwork.isPriceDisplayable()
           .artwork-meta-price
-            = artwork.artworkPageSaleMessage()
+            .artwork-meta-price-amount= artwork.priceDisplay()
+        else
+          a.artwork-item-more-info.avant-garde-button-white(
+            href=artwork.href()
+            data-id=artwork.get('_id')
+          ) More Info
+
+      if saleArtwork.id || showBlurbs
+        - var saleArtwork = artwork.related().saleArtwork
+        if artwork.has('blurb') && artwork.get('blurb')
+          .artwork-item-blurb!= artwork.mdToHtml('blurb')
+        else
+          if saleArtwork && saleArtwork.get('user_notes')
+            .artwork-item-blurb!= saleArtwork.mdToHtml('user_notes')
+
+      if saleArtwork.id || showBlurbs
+        a.artwork-item-more-info.avant-garde-button-white(
+          href=artwork.href()
+          data-id=artwork.get('_id')
+        ) More Info
+
+      if isAuction && !artwork.get('sold')
+        a.artwork-item-bid.avant-garde-button-white.is-bottom(
+          href=artwork.href()
+          data-id=artwork.get('_id')
+        ) Bid
+
+        if artwork.get('acquireable')
+          a.artwork-item-buy-now.avant-garde-button-white.is-bottom(
+            href=artwork.href(), data-id=artwork.get('id')
+          ) Buy Now
+
+      if displayPurchase && !isAuction
+        if artwork.get('acquireable')
+          a.artwork-item-buy.avant-garde-button-white.is-bottom(
+            href=artwork.href(), data-id=artwork.get('id')
+          ) Buy
+        else if artwork.get('sold')
+          .artwork-item-sold.avant-garde-button-white Sold
+        else if artwork.isContactable()
+          a.artwork-item-contact-seller.avant-garde-button-white.is-bottom(
+            href=artwork.href(), data-id=artwork.get('id')
+          ) Contact #{artwork.contactLabel()}
+
+      if artwork.collection && artwork.collection.artworkCollection
+        a.artwork-item-collection-name(
+          href=(sd.CURRENT_USER.default_profile_id + '/collection/' +
+                artwork.collection.artworkCollection.get('id'))
+        )
+          = artwork.collection.artworkCollection.get('name')
+

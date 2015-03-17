@@ -1,7 +1,8 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 mediator = require '../../lib/mediator.coffee'
-PartnerLocations = require '../../apps/artwork/components/partner_locations/index.coffee'
+analytics = require '../../lib/analytics.coffee'
+ArtworkRowView = require './client/artwork_row_view.coffee'
 
 artworkTable = -> require('./templates/artwork_table.jade') arguments...
 artworkRow = -> require('./templates/artwork_row.jade') arguments...
@@ -9,6 +10,9 @@ artworkRow = -> require('./templates/artwork_row.jade') arguments...
 module.exports = class ArtworkTableView extends Backbone.View
   seeMore: false
   initialItemCount: 10
+
+  events:
+    'click .artwork-inquire' : 'makeInquiry'
 
   initialize: (options)->
     _.extend @, options
@@ -39,9 +43,6 @@ module.exports = class ArtworkTableView extends Backbone.View
       @appendArtworkRow artwork
 
   appendArtworkRow: (artwork) ->
-    renderedArtwork = artworkRow
-      artwork: artwork
-    $renderedArtwork = $(renderedArtwork)
-    @$('#artwork-table').append $renderedArtwork
-    @pl = new PartnerLocations $el: $renderedArtwork, artwork: artwork
-    $renderedArtwork
+    new ArtworkRowView
+      model: artwork
+      $container: @$('#artwork-table')

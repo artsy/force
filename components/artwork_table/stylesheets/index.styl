@@ -1,7 +1,7 @@
 #artwork-table
   display table
   width 100%
-  height auto
+  height 100%
   table-layout fixed
 
 .artwork-table__row
@@ -25,6 +25,7 @@
 
 .artwork-table__cell--caption
   max-width 250px
+  vertical-align top
 
   .artwork-item-artist
     avant-garde()
@@ -34,4 +35,29 @@
 .artwork-table__cell--location
   max-width 150px
   vertical-align top
+
+.artwork-table__cell--inquiry
+  width 168px
+
+  .inner
+    position relative
+    height 100%
+    width 100%
+
+  .artwork-meta-price
+    garamond()
+    font-size 17px
+    font-weight 600
+    margin-bottom 30px
+
+  .avant-garde-button-white
+    font-size 12px
+    text-align center
+    line-height 1.4
+    width 100%
+    padding 10px
+
+    &.is-bottom
+      position absolute
+      bottom 0
 
