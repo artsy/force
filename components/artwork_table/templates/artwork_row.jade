@@ -7,14 +7,15 @@
   .artwork-table__cell.artwork-table__cell--image
     - var defaultImage = artwork.defaultImage()
     - var maxDimension = 150
-
-    img.artwork-item-image(
-      src=defaultImage.imageUrlForWidth(imageWidth)
-      nopin=artwork.noPinAttr()
-      alt=artwork.toAltText()
-      width=defaultImage.maxWidthForWidth(150, maxDimension)
-      height=defaultImage.maxHeightForWidth(150, maxDimension)
-    )
+    - var imageWidth = 300
+    a(href=artwork.href()).hoverable-image-link
+      img.artwork-item-image(
+        src=defaultImage.imageUrlForWidth(imageWidth)
+        nopin=artwork.noPinAttr()
+        alt=artwork.toAltText()
+        width=defaultImage.maxWidthForWidth(150, maxDimension)
+        height=defaultImage.maxHeightForWidth(150, maxDimension)
+      )
 
   .artwork-table__cell.artwork-table__cell--caption
     if artwork.has('artist')
@@ -35,7 +36,7 @@
         a.artwork-partner-name( href= artwork.partnerLink() )
           = artwork.partnerName()
       else
-        |= artwork.partnerName()
+        | #{artwork.partnerName()}
       span#artwork-partner-locations
         //- Rendered client-side
 
