@@ -16,7 +16,7 @@ Mailcheck = require '../../../../components/mailcheck/index.coffee'
 attendanceTemplate = -> require('./templates/attendance.jade') arguments...
 inquirySentTemplate = -> require('./templates/inquiry_sent.jade') arguments...
 
-class Inquiries extends Backbone.Model
+class Inquiries extends Backbone.Collection
   url: "#{API_URL}/api/v1/me/artwork_inquiry_requests"
 
 class Inquiry extends Backbone.Model
@@ -123,11 +123,12 @@ module.exports = class ContactView extends Backbone.View
     @inquiries = new Inquiries
     @inquiries.fetch
       success: (inquiries) =>
-        for k,v of inquiries.attributes
-          if v.inquiry_url is window.location.href
-            sent_time = moment(v.created_at).format("MMM D, YYYY")
+        for inquiry in inquiries.models
+          if inquiry.get('inquiry_url') is window.location.href
+            sent_time = moment(inquiry.get('created_at')).format("MMM D, YYYY")
             $('#artwork-contact-form').hide()
             $('#artwork-inquiry-sent').html inquirySentTemplate(sent_time: sent_time)
+            $('#artwork-inquiry-sent').show()
 
   showInquiryForm: ->
     $('#artwork-inquiry-sent').hide()
