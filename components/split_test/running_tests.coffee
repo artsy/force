@@ -21,13 +21,6 @@ module.exports =
       new: 0.5
     edge: 'old'
 
-  artwork_column_sort:
-    key: 'artwork_column_sort'
-    outcomes:
-      date_added: 0.5
-      merchandisability: 0.5
-    edge: 'merchandisability'
-
   gallery_partnerships_apply:
     key: 'gallery_partnerships_apply'
     outcomes:
