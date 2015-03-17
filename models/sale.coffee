@@ -13,7 +13,11 @@ module.exports = class Sale extends Backbone.Model
 
   urlRoot: "#{sd.API_URL}/api/v1/sale"
 
-  href: -> "/feature/#{@get('id')}"
+  href: ->
+    if @get('is_auction')
+      "/auction/#{@get('id')}"
+    else
+      "/feature/#{@get('id')}"
 
   fetchArtworks: (options = {}) ->
     @artworks = new SaleArtworks [], id: @id

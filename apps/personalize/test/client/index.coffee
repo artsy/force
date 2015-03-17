@@ -1,3 +1,4 @@
+
 _ = require 'underscore'
 benv = require 'benv'
 Backbone = require 'backbone'
@@ -58,7 +59,7 @@ describe 'PersonalizeRouter', ->
     it 'returns the root path if there is no destination cookie set', ->
       @router.redirectLocation().should.equal '/'
 
-    it 'returns the value of the destination cookie if it is present, and clears it', ->
+    xit 'returns the value of the destination cookie if it is present, and clears it', ->
       Cookies = require 'cookies-js'
       Cookies.set 'destination', (destination = '/foo/bar'), expires: 1000
       @router.redirectLocation().should.equal destination
