@@ -89,9 +89,17 @@ describe 'ContactView', ->
       Backbone.sync.callCount.should.equal 3
       Backbone.sync.args[2][1].url.should.containEql '/api/v1/me/artwork_inquiry_request'
 
-    it 'shows a message if the user has already sent an inquiry', ->
-      console.log Backbone.sync.args[0][1]
-      inquiry = fabricate('artwork_inquiry')
-      _.extend(inquiry,{inquiry_url: 'foo.com'})
-      console.log inquiry
-      Backbone.sync.args[0][2].success [ inquiry ]
+  describe 'messaging for a sent inquiry', ->
+
+    it 'shows a message if the user has sent an inquiry', ->
+      @view.displayInquirySent()
+      $('#artwork-contact-form').attr('style').should.containEql 'display: none;'
+      $('#artwork-inquiry-sent-immediate').attr('style').should.not.containEql 'display: none;'
+
+    it '#checkInquiredArtwork shows the last sent date', ->
+      inquiry = fabricate 'artwork_inquiry_request'
+      _.extend(inquiry, { inquiry_url: 'about:foo.com', created_at: '03-17-2014' })
+      window.location.href = 'foo.com'
+      @view.checkInquiredArtwork()
+      Backbone.sync.args[1][2].success [inquiry]
+      $('#artwork-inquiry-sent').html().should.containEql 'Mar 17, 2014'

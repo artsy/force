@@ -116,17 +116,14 @@ module.exports = class ContactView extends Backbone.View
     analytics.track.hover "Hovered over contact form 'Send' button"
 
   displayInquirySent: ->
-    $('#artwork-inquiry-sent').show()
+    $('#artwork-inquiry-sent-immediate').show()
     $('#artwork-contact-form').hide()
 
   checkInquiredArtwork: ->
-    console.log 'called'
     @inquiries = new Inquiries
     @inquiries.fetch
       success: (inquiries) =>
         for k,v of inquiries.attributes
-          console.log window.location.href
-          console.log v.inquiry_url
           if v.inquiry_url is window.location.href
             sent_time = moment(v.created_at).format("MMM D, YYYY")
             $('#artwork-contact-form').hide()
