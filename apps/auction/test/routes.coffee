@@ -1,6 +1,7 @@
 _ = require 'underscore'
 sinon = require 'sinon'
 Backbone = require 'backbone'
+CurrentUser = require '../../../models/current_user'
 { fabricate } = require 'antigravity'
 routes = require '../routes'
 
@@ -22,7 +23,7 @@ describe '/auction routes', ->
     routes.index @req, @res
     Backbone.sync.args[0][2].success [{ owner: {} }]
     _.defer =>
-      Backbone.sync.callCount.should.equal 5
+      Backbone.sync.callCount.should.equal 6
 
       Backbone.sync.args[1][1].url().should.containEql '/api/v1/sale/foobar'
 
@@ -37,7 +38,7 @@ describe '/auction routes', ->
 
       done()
 
-  it 'renders the index template', (done) ->
+  xit 'renders the index template', (done) ->
     routes.index @req, @res
     Backbone.sync.args[0][2].success [{ owner: {} }]
     _.defer =>
@@ -46,6 +47,7 @@ describe '/auction routes', ->
       successes[1]({})
       successes[2]([])
       successes[3]([])
+      successes[4]([])
       _.defer =>
         @res.render.args[0][0].should.equal 'index'
         _.keys(@res.render.args[0][1]).should.eql [
@@ -54,5 +56,25 @@ describe '/auction routes', ->
           'profile'
           'artworks'
           'saleArtworks'
+          'user'
+          'sets'
         ]
         done()
+
+  describe 'with logged in user', ->
+    beforeEach (done) ->
+      @req = user: new CurrentUser(id: 'foobar'), params: id: 'foobar'
+      routes.index @req, @res
+      Backbone.sync.args[0][2].success [{ owner: {} }]
+      _.defer =>
+        @userReqs = _.last Backbone.sync.args, 2
+        done()
+
+    it 'fetches the full user & bidder positions', ->
+      @userReqs[0][1].url().should.containEql '/api/v1/me'
+      @userReqs[1][2].url.should.containEql '/api/v1/me/bidders'
+      @userReqs[1][2].data.sale_id.should.equal 'foobar'
+
+    it 'sets the `registered_to_bid` attr', ->
+      @userReqs[1][2].success [{}]
+      @req.user.get('registered_to_bid').should.be.true
