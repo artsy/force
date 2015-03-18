@@ -1,13 +1,13 @@
-- var saleArtwork = artwork.related().saleArtwork
-- var defaultImage = artwork.defaultImage()
-- var maxDimension = 150
-- var isAuction = saleArtwork.sale().isAuction() || false
+- saleArtwork = artwork.related().saleArtwork
+- defaultImage = artwork.defaultImage()
+- maxDimension = 150
+- isAuction = saleArtwork.sale().isAuction() || false
 
 .artwork-table__row
   .artwork-table__cell.artwork-table__cell--image
-    - var defaultImage = artwork.defaultImage()
-    - var maxDimension = 150
-    - var imageWidth = 300
+    - defaultImage = artwork.defaultImage()
+    - maxDimension = 150
+    - imageWidth = 300
     a(href=artwork.href()).hoverable-image-link
       img.artwork-item-image(
         src=defaultImage.imageUrlForWidth(imageWidth)
@@ -51,7 +51,7 @@
             ) More Info
 
       if saleArtwork.id || showBlurbs
-        - var saleArtwork = artwork.related().saleArtwork
+        - saleArtwork = artwork.related().saleArtwork
         if artwork.has('blurb') && artwork.get('blurb')
           .artwork-item-blurb!= artwork.mdToHtml('blurb')
         else
