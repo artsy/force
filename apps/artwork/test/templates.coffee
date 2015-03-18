@@ -101,7 +101,7 @@ describe 'Artwork', ->
       @$template = cheerio.load template
       @$template.html().should.containEql 'From the series&#xA0;<em>Paris</em>'
 
-    it 'shows buyer premium for open auctions', ->
+    xit 'shows buyer premium for open auctions', ->
       @artwork.set acquireable: false
       auction = new Sale fabricate 'sale'
       auction.isOpen = -> true
