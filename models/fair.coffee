@@ -82,7 +82,7 @@ module.exports = class Fair extends Backbone.Model
   fetchPrimarySets: (options) ->
     orderedSets = new OrderedSets
     orderedSets
-      .fetchItemsByOwner('Fair', @get('id'), options.cache)
+      .fetchItemsByOwner('Fair', @get('id'), cache: options.cache)
       .done ->
         for set in orderedSets.models
           items = set.get('items').filter (item) ->
