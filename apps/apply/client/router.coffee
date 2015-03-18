@@ -30,9 +30,14 @@ module.exports = class PartnerApplicationRouter extends Backbone.Router
   updateType: (state, type) ->
     @form.set '00NC0000004hoNU', state.value('type')
 
-  execute: ->
+  maybeSetDefaultWebReferrer: ->
+    unless @form.has('00NC0000005RNdW')
+      @form.set '00NC0000005RNdW', 'default'
+
+  execute: (callback, args, name) ->
+    args[0] = null unless _.contains _.keys(@state.modes), args[0]
     @view?.remove()
-    super
+    super(callback, args, name)
 
   step1: (mode) ->
     @state.set step: 1, mode: mode or 'initial'
@@ -40,6 +45,7 @@ module.exports = class PartnerApplicationRouter extends Backbone.Router
     @$el.html @view.render().$el
 
   step2: (mode) ->
+    @maybeSetDefaultWebReferrer()
     @state.set step: 2, mode: mode or 'initial'
     @view = new Step2View state: @state, form: @form
     @$el.html @view.render().$el

@@ -3,7 +3,7 @@
 .gallery-partnerships-section-header.apply
   if sd.GALLERY_PARTNERSHIPS_APPLY === 'link'
     h3= section.heading
-    a.avant-garde-button-black.apply-button( href='/apply' ) Apply
+    a.avant-garde-button-black.apply-button( href='/apply?00NC0000005RNdW=link' ) Apply
     .gallery-partnerships-contact Call us: +1 800 589 1350
 
   else
@@ -16,6 +16,8 @@
         action='/apply/gallery/2'
         method='get'
       )
+        input( type='hidden', name='00NC0000005RNdW', value='inline' )
+
         input.bordered-input( type='text', name='company', placeholder= 'Gallery Name', required )
 
         .stacked-form-cell.grid-3-up

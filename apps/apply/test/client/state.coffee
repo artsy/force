@@ -11,4 +11,3 @@ describe 'State', ->
     it 'returns the appropriate value depending on the current mode', ->
       @state.set 'mode', 'gallery'
       @state.value('type').should.equal 'Gallery'
-
