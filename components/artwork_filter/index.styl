@@ -8,15 +8,15 @@ sidebar-width = 26%
   min-height 500px
   clearfix()
 .artwork-filter
-.artwork-columns-section > .artwork-columns
+.artwork-section__content > .artwork-section__artworks
   transition opacity 0.25s
   &[data-state='loading']
     opacity 0.5
     pointer-events none
-.artwork-columns-section
+.artwork-section__content
 .artwork-filter
   padding 20px 0
-.artwork-columns-section
+.artwork-section__content
   width (100% - sidebar-width)
   float right
   > .artwork-columns
@@ -104,6 +104,6 @@ sidebar-width = 26%
   margin-top -10px
 .artwork-filter-sort-count
   clearfix()
-#artwork-columns-header
+#artwork-section__header
   h2
     float left
