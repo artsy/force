@@ -101,7 +101,7 @@ describe 'Artwork', ->
       @$template = cheerio.load template
       @$template.html().should.containEql 'From the series&#xA0;<em>Paris</em>'
 
-    xit 'shows buyer premium for open auctions', ->
+    it 'shows buyer premium for open auctions with a BP', ->
       @artwork.set acquireable: false
       auction = new Sale fabricate 'sale'
       auction.isOpen = -> true
@@ -114,3 +114,17 @@ describe 'Artwork', ->
         user: new User fabricate 'user'
         asset: ->
       template.should.containEql "Buyer's Premium"
+
+    it 'doesn not show buyer premium for open auctions without a BP', ->
+      @artwork.set acquireable: false
+      auction = new Sale fabricate 'sale', buyers_premium: null
+      auction.isOpen = -> true
+      template = render('auction_detail')
+        sd: @sd
+        artwork: @artwork
+        artist: @artist
+        auction: auction
+        saleArtwork: new SaleArtwork fabricate 'sale_artwork'
+        user: new User fabricate 'user'
+        asset: ->
+      template.should.not.containEql "Buyer's Premium"
