@@ -14,7 +14,6 @@ module.exports.AuctionRouter = class AuctionRouter extends Backbone.Router
   routes:
     'auction-registration/:id': 'register'
     'feature/:id/bid/:artwork': 'bid'
-    'auction/:id/bid/:artwork': 'bid'
 
   initialize: (options) ->
     { @sale, @saleArtwork, @registered, @bidderPositions } = options
@@ -24,7 +23,7 @@ module.exports.AuctionRouter = class AuctionRouter extends Backbone.Router
       el: $('#auction-registration-page')
       model: @sale
       success: =>
-        window.location = "/auction/#{@sale.id}/confirm-registration"
+        window.location = @sale.registrationSuccessUrl()
 
   bid: ->
     if @registered

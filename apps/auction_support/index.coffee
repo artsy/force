@@ -10,5 +10,5 @@ app.set 'views', __dirname + '/templates'
 app.set 'view engine', 'jade'
 
 app.get '/auction-registration/:id', routes.auctionRegistration
-app.get '/auction/:id/bid/:artwork', routes.bid
+app.get '/feature/:id/bid/:artwork', routes.bid
 app.get '/auction/:id/buyers-premium', routes.buyersPremium

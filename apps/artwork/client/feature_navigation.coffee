@@ -2,27 +2,30 @@ Backbone = require 'backbone'
 template = -> require('../templates/feature_navigation.jade') arguments...
 
 module.exports = class FeatureNavigationView extends Backbone.View
-  initialize: ({ @model, @kind }) ->
+  initialize: (options) ->
+    { @model, @kind } = options
     @render()
 
-  fairIsNotPublished: ->
-    (@kind is 'fair') and (not @model.get('published'))
+  negativeRenderCriteria: ->
+    @kind is 'fair' and not @model.get('published') or
+    not @model.has 'name'
 
-  href: ->
-    if @model.get('is_auction')
-      "/auction/#{@model.id}"
-    else if @kind is 'feature'
-      "/feature/#{@model.id}"
-    else if @kind is 'fair'
-      "/#{@model.get('default_profile_id')}"
-    else
-      "/#{@model.id}"
+  checkAndSetHref: ->
+    return false if @negativeRenderCriteria()
 
+    @href =
+      if @kind is 'feature'
+        "/feature/#{@model.id}"
+      else if @kind is 'fair'
+        "/#{@model.get('default_profile_id')}"
+      else
+        "/#{@model.id}"
+
+  # Handles Feature and Fair models
   render: ->
-    unless @fairIsNotPublished() or (not @model.has 'name')
+    if @checkAndSetHref()
       @$el.html template
         model: @model
         kind: @kind
-        href: @href()
-
+        href: @href
     this

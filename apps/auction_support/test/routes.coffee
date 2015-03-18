@@ -39,7 +39,7 @@ describe '#auctionRegistration', ->
 
       routes.auctionRegistration @req, @res
 
-      @res.redirect.args[0][0].should.equal "/auction/whtney-art-party/confirm-registration"
+      @res.redirect.args[0][0].should.equal "/feature/whtney-art-party/confirm-registration"
 
     it 'renders registration form if sale is registerable and user has no credit cards on file', ->
       routes.auctionRegistration @req, @res
@@ -57,7 +57,7 @@ describe '#auctionRegistration', ->
       Backbone.sync.args[2][2].success [{foo: 'bar'}]
       Backbone.sync.args[3][2].success [{}]
 
-      @res.redirect.args[0][0].should.equal "/auction/whtney-art-party/confirm-registration"
+      @res.redirect.args[0][0].should.equal "/feature/whtney-art-party/confirm-registration"
 
     it 'renders registration error page if sale is an auction and is not registerable', ->
       routes.auctionRegistration @req, @res
@@ -92,7 +92,7 @@ describe '#bid', ->
 
   it 'redirects to login without user', ->
     routes.bid @req, @res
-    @res.redirect.args[0][0].should.equal "/log_in?redirect_uri=/auction/awesome-sale/bid/artwork-id"
+    @res.redirect.args[0][0].should.equal "/log_in?redirect_uri=/feature/awesome-sale/bid/artwork-id"
 
   describe 'with current user', ->
 

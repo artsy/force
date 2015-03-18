@@ -1,17 +1,16 @@
 - artist = artwork.related().artist
 - saleArtwork = artwork.related().saleArtwork
-- href = artwork.href() + '?auction_id=' + auction.id
 
 .auction-list-artwork
   .ala-image
-    a( href= href ): img(
+    a( href= artwork.href() ): img(
       src= artwork.defaultImageUrl('medium')
       nopin= artwork.noPinAttr()
       alt= artwork.toAltText()
     )
 
   .ala-primary-information
-    a( href= href )
+    a( href= artwork.href() )
       if artwork.has('artist')
         h4.ala-artist
           = artist.get('name')
@@ -19,24 +18,30 @@
         != artwork.titleAndYear()
 
   if saleArtwork.has('lot_number')
-    .ala-lot-number: a( href= href )
+    .ala-lot-number: a( href= artwork.href() )
       | Lot #{saleArtwork.get('lot_number')}
 
   if auction.isOpen()
-    .ala-bid-status: a( href= href )
+    .ala-bid-status: a( href= artwork.href() )
       strong #{saleArtwork.bidLabel()}:
       = ' '
       span.ala-current-bid
         = saleArtwork.currentBid()
-    .ala-bid-count: a( href= href )
+    .ala-bid-count: a( href= artwork.href() )
       | (#{saleArtwork.bidCount()})
   else
-    .ala-estimate: a( href= href )
+    .ala-estimate: a( href= artwork.href() )
       = saleArtwork.estimate()
     .ala-sale-message
-      a.ala-current-bid( href= href )
+      a.ala-current-bid( href= artwork.href() )
         = artwork.saleMessage()
 
   .ala-bidding
     - button = auction.bidButtonState(user, artwork)
-    .ala-bid-button: include button
+    //- Only when the button is enabled use the black state.
+    //- The disabled black state has been deemed unsuitable for this context...
+    a.ala-bid-button.is-block(
+      href= button.href
+      class= button.enabled ? 'avant-garde-button-black' : 'avant-garde-button'
+      disabled= !button.enabled
+    )= button.label

@@ -1,7 +1,6 @@
 _ = require 'underscore'
 sinon = require 'sinon'
 Backbone = require 'backbone'
-CurrentUser = require '../../../models/current_user'
 { fabricate } = require 'antigravity'
 routes = require '../routes'
 
@@ -55,24 +54,5 @@ describe '/auction routes', ->
           'profile'
           'artworks'
           'saleArtworks'
-          'user'
         ]
         done()
-
-  describe 'with logged in user', ->
-    beforeEach (done) ->
-      @req = user: new CurrentUser(id: 'foobar'), params: id: 'foobar'
-      routes.index @req, @res
-      Backbone.sync.args[0][2].success [{ owner: {} }]
-      _.defer =>
-        @userReqs = _.last Backbone.sync.args, 2
-        done()
-
-    it 'fetches the full user & bidder positions', ->
-      @userReqs[0][1].url().should.containEql '/api/v1/me'
-      @userReqs[1][2].url.should.containEql '/api/v1/me/bidders'
-      @userReqs[1][2].data.sale_id.should.equal 'foobar'
-
-    it 'sets the `registered_to_bid` attr', ->
-      @userReqs[1][2].success [{}]
-      @req.user.get('registered_to_bid').should.be.true

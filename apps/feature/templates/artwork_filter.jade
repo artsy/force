@@ -1,0 +1,11 @@
+.feature-artwork-filter
+  | Sort by:
+  a( data-id='artist-a-to-z' ) Artist A&#8211;Z
+  a( data-id='most-bids' ) Most Bids
+  a( data-id='least-bids' ) Least Bids
+  if auction.get('auction_state') === 'preview'
+    a( data-id='highest-bid' ) Highest Starting Bid
+    a( data-id='lowest-bid' ) Lowest Starting Bid
+  else
+    a( data-id='highest-bid' ) Highest Bid
+    a( data-id='lowest-bid' ) Lowest Bid

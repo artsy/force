@@ -17,7 +17,6 @@ describe 'PersonalizeRouter', ->
       { @PersonalizeRouter, init } = mod = rewire '../../client/index'
       mod.__set__ 'Transition', fade: (@fadeStub = sinon.stub())
       mod.__set__ 'views', LocationView: => render: => $el: 'location'
-      mod.__set__ 'Cookies', @Cookies = set: (->), get: (->), expire: (->)
       sinon.spy @PersonalizeRouter::, 'navigate'
       @router = new @PersonalizeRouter user: new CurrentUser
       done()
@@ -60,8 +59,10 @@ describe 'PersonalizeRouter', ->
       @router.redirectLocation().should.equal '/'
 
     it 'returns the value of the destination cookie if it is present, and clears it', ->
-      @Cookies.get = -> '/foo/bar'
-      @router.redirectLocation().should.equal '/foo/bar'
+      Cookies = require 'cookies-js'
+      Cookies.set 'destination', (destination = '/foo/bar'), expires: 1000
+      @router.redirectLocation().should.equal destination
+      (Cookies.get('destination')).should.equal 'undefined'
 
   describe '#done', ->
     it 'sets the $el state to loading, saves the user, redirects', ->
