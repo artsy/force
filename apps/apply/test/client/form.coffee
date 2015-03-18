@@ -25,9 +25,9 @@ describe 'Form', ->
       first_name: 'foo'
       last_name: 'bar'
       utm_whatever: 'baz'
-      '00NC0000005RNdW': 'inline'
+      '00NC0000005RNfN': 'inline'
     }).should.eql {
       first_name: 'foo'
       last_name: 'bar'
-      '00NC0000005RNdW': 'inline'
+      '00NC0000005RNfN': 'inline'
     }

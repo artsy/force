@@ -19,7 +19,8 @@ module.exports = class Form extends Backbone.Model
     'phone'
     'title'
     'URL'
-    '00NC0000005RNdW' # web_referrer
+    '00NC0000005RNdW' # Web Referrer
+    '00NC0000005RNfN' # Web Test Group
   ]
 
   @validate: (obj) ->

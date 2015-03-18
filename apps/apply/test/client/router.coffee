@@ -17,9 +17,9 @@ describe 'PartnerApplicationRouter', ->
 
     it 'sets the default if it does not exist yet', ->
       @router.maybeSetDefaultWebReferrer()
-      @router.form.get('00NC0000005RNdW').should.equal 'default'
+      @router.form.get('00NC0000005RNfN').should.equal 'default'
 
     it 'does not set if it is already present', ->
-      @router.form.set '00NC0000005RNdW', 'inline'
+      @router.form.set '00NC0000005RNfN', 'inline'
       @router.maybeSetDefaultWebReferrer()
-      @router.form.get('00NC0000005RNdW').should.equal 'inline'
+      @router.form.get('00NC0000005RNfN').should.equal 'inline'
