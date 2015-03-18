@@ -11,9 +11,6 @@ module.exports = class ArtworkTableView extends Backbone.View
   seeMore: false
   initialItemCount: 10
 
-  events:
-    'click .artwork-inquire' : 'makeInquiry'
-
   initialize: (options)->
     _.extend @, options
 

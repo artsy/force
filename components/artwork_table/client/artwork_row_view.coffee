@@ -10,10 +10,15 @@ artworkRow = -> require('../templates/artwork_row.jade') arguments...
 module.exports = class ArtworkRowView extends SaleArtworkView
   displayPurchase: true
 
-  initialize: (options)->
+  initialize: (options = {})->
     { @$container, @model } = options
     @render()
+
     super
+
+    @$('.artwork-table__cell--caption, .artwork-table__cell--image').hover \
+      (=> @$('.hoverable-image-link').addClass 'is-hovered'), \
+      (=> @$('.hoverable-image-link').removeClass 'is-hovered')
 
   render: ->
     renderedArtwork = artworkRow

@@ -19,17 +19,14 @@
 
   .artwork-table__cell.artwork-table__cell--caption
     if artwork.has('artist')
-      p.artwork-item-artist.artwork-item-overflow
-        if artwork.get('artist').public
-          a.faux-underline-hover( href=artwork.artistLink() )= artwork.artistName()
-        else
-          = artwork.artistName()
-      p.artwork-item-title.artwork-item-overflow!= artwork.titleAndYear()
-      p.artwork-item-medium= artwork.get('medium')
-      unless artwork.isMultipleEditions()
-      .artwork-detail-dimensions
-        .amd-imperial!= artwork.dimensions({ metric: 'in', format: 'superscript' })
-        .amd-metric= artwork.dimensions({ metric: 'cm', format: 'decimal' })
+      a(href=artwork.href())
+        p.artwork-item-artist.artwork-item-overflow= artwork.artistName()
+        p.artwork-item-title.artwork-item-overflow!= artwork.titleAndYear()
+        p.artwork-item-medium= artwork.get('medium')
+        unless artwork.isMultipleEditions()
+        .artwork-detail-dimensions
+          .amd-imperial!= artwork.dimensions({ metric: 'in', format: 'superscript' })
+          .amd-metric= artwork.dimensions({ metric: 'cm', format: 'decimal' })
 
   .artwork-table__cell.artwork-table__cell--location
       if artwork.partnerLink()
