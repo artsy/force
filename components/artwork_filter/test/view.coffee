@@ -15,6 +15,7 @@ describe 'ArtworkFilterView', ->
       Backbone.$ = $
       @ArtworkFilterView = benv.requireWithJadeify resolve(__dirname, '../view'), ['template', 'filterTemplate', 'headerTemplate']
       @ArtworkFilterView.__set__ 'ArtworkColumnsView', sinon.stub().returns { length: -> 999 }
+      @ArtworkFilterView.__set__ 'ArtworkTableView', sinon.stub().returns { length: -> 999 }
       @ArtworkFilterView.__set__ 'BorderedPulldown', sinon.stub()
       done()
 
