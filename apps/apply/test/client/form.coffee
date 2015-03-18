@@ -1,6 +1,7 @@
 sinon = require 'sinon'
+rewire = require 'rewire'
 Backbone = require 'backbone'
-Form = require '../../client/models/form'
+Form = rewire '../../client/models/form'
 
 describe 'Form', ->
   before ->
@@ -14,7 +15,7 @@ describe 'Form', ->
 
   it 'serializes data properly for Salesforce', ->
     @form.save foo: 'bar', bar: ['baz', 'qux']
-    Backbone.sync.args[0][1].attributes.should.eql {
+    Backbone.sync.args[0][1].attributes.should.containEql {
       oid: '00DC0000000PWQJ'
       foo: 'bar'
       bar: 'baz;qux;'
