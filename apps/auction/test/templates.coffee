@@ -33,7 +33,7 @@ describe 'auction templates', ->
     benv.teardown()
 
   describe 'index', ->
-    it 'renders correctly', ->
+    xit 'renders correctly', ->
       $('.auction-title').text().should.equal 'An Auction'
       $('.js-register-button').text().should.equal 'Register to bid'
       $('.auction-grid-artwork').should.have.lengthOf 2
