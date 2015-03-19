@@ -55,6 +55,8 @@ module.exports = class Fair extends Backbone.Model
     galleries = new @aToZCollection('show', 'partner')
     galleries.fetchUntilEnd
       url: "#{@url()}/partners"
+      data:
+        private_partners: false
       cache: true
       success: ->
         aToZGroup = galleries.groupByAlphaWithColumns 3
