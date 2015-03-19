@@ -31,8 +31,8 @@ module.exports = class PartnerApplicationRouter extends Backbone.Router
     @form.set '00NC0000004hoNU', state.value('type')
 
   maybeSetDefaultWebReferrer: ->
-    unless @form.has('00NC0000005RNdW')
-      @form.set '00NC0000005RNdW', 'default'
+    unless @form.has('00NC0000005RNfN')
+      @form.set '00NC0000005RNfN', 'default'
 
   execute: (callback, args, name) ->
     args[0] = null unless _.contains _.keys(@state.modes), args[0]

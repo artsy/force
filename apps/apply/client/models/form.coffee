@@ -1,5 +1,5 @@
 _ = require 'underscore'
-{ APP_URL } = require('sharify').data
+{ APP_URL, REFERRER, MEDIUM } = require('sharify').data
 Backbone = require 'backbone'
 
 module.exports = class Form extends Backbone.Model
@@ -7,6 +7,8 @@ module.exports = class Form extends Backbone.Model
 
   defaults:
     oid: '00DC0000000PWQJ'
+    '00NC0000005RNdW': REFERRER
+    '00NC0000005RNfS': MEDIUM
 
   # There are others... but this is just so
   # we can validate any attributes
@@ -19,7 +21,9 @@ module.exports = class Form extends Backbone.Model
     'phone'
     'title'
     'URL'
-    '00NC0000005RNdW' # web_referrer
+    '00NC0000005RNdW' # Web Referrer
+    '00NC0000005RNfS' # Web Medium
+    '00NC0000005RNfN' # Web Test Group
   ]
 
   @validate: (obj) ->
