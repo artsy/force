@@ -39,16 +39,16 @@
 
   .artwork-table__cell.artwork-table__cell--inquiry
     .inner
-      unless auctionId || artwork.get('sold')
-        if artwork.isPriceDisplayable()
+      if (artwork.isPriceDisplayable() || artwork.get('sale_message') == 'Contact For Price')
+        if !artwork.get('sold')
           .artwork-meta-price
             .artwork-meta-price-amount= artwork.priceDisplay()
-        else
-          unless artwork.isContactable()
-            a.artwork-item-more-info.avant-garde-button-white(
-              href=artwork.href()
-              data-id=artwork.get('_id')
-            ) More Info
+      else
+        unless artwork.isContactable()
+          a.artwork-item-more-info.avant-garde-button-white(
+            href=artwork.href()
+            data-id=artwork.get('_id')
+          ) More Info
 
       if saleArtwork.id || showBlurbs
         - saleArtwork = artwork.related().saleArtwork
@@ -83,7 +83,6 @@
         else if artwork.get('sold')
           .artwork-item-sold Sold
         else if artwork.isContactable()
-          a.artwork-item-contact-seller.avant-garde-button-white(
-            class= artwork.isPriceDisplayable() ? 'is-bottom' : '',
-            href=artwork.href(), data-id=artwork.get('id')
+          a.artwork-item-contact-seller.avant-garde-button-white.is-bottom(
+            data-id=artwork.get('id')
           ) Contact #{artwork.contactLabel()}
