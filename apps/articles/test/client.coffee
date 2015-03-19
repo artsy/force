@@ -38,7 +38,7 @@ describe 'ArticleView', ->
               ids: ['5321b73dc9dc2458c4000196', '5321b71c275b24bcaa0001a5'],
               layout: 'overflow_fillwidth'
             }
-        ],
+        ]
         author: new Backbone.Model fabricate 'user'
         sd: {}
         asset: (->)
