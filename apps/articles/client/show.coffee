@@ -12,6 +12,8 @@ artworkItemTemplate = -> require(
 Q = require 'q'
 imagesLoaded = require 'imagesloaded'
 embedVideo = require 'embed-video'
+CurrentUser = require '../../../models/current_user.coffee'
+editTemplate = -> require('../templates/edit.jade') arguments...
 
 module.exports.ArticleView = class ArticleView extends Backbone.View
 
@@ -23,6 +25,7 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
     @breakCaptions()
     if $(@article.get 'lead_paragraph').text().trim() isnt ''
       @$('#articles-lead-paragraph').show()
+    @checkEditable()
 
   renderSlideshow: =>
     @carouselView = new CarouselView
@@ -124,6 +127,15 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
 
       # Remove loading state
       $list.parent().removeClass('is-loading')
+
+  checkEditable: ->
+    @user = CurrentUser.orNull()
+    if @user?.id is @article.get('author_id')
+      edit_url = "#{sd.POSITRON_URL}/articles/" + @article.id + '/edit'
+      @article.get('published') is true ? message = "Previewing Draft" : message = ""
+      @$('#main-layout-container').append(
+        editTemplate message: message, edit_url: edit_url
+        )
 
 module.exports.init = ->
   article = new Article sd.ARTICLE

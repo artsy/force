@@ -4,6 +4,7 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 Article = require '../../../models/article'
 Articles = require '../../../collections/articles'
+CurrentUser = require '../../../models/article'
 fixtures = require '../../../test/helpers/fixtures.coffee'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
@@ -18,8 +19,10 @@ describe 'ArticleView', ->
       Backbone.$ = $
       { @ArticleView } = mod = benv.requireWithJadeify(
         resolve(__dirname, '../client/show')
-        ['artworkItemTemplate']
+        ['artworkItemTemplate', 'editTemplate']
       )
+      mod.__set__ 'CurrentUser', { orNull: ->
+        new CurrentUser _.extend( fabricate('user') , { 'id' : '4d8cd73191a5c50ce210002a' } ) }
       mod.__set__ 'imagesLoaded', sinon.stub()
       stubChildClasses mod, this,
         ['CarouselView']
@@ -72,3 +75,8 @@ describe 'ArticleView', ->
           title: 'Andy Foobar Flowers'
           _id: '5321b73dc9dc2458c4000196'
       @view.$el.html().should.containEql 'Andy Foobar Flowers'
+
+  describe '#checkEditable', ->
+
+    it 'shows the edit button when the author_id matches user', ->
+      $('.article-edit-container').should.be.ok
