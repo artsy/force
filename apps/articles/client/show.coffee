@@ -13,7 +13,7 @@ Q = require 'q'
 imagesLoaded = require 'imagesloaded'
 embedVideo = require 'embed-video'
 CurrentUser = require '../../../models/current_user.coffee'
-
+editTemplate = -> require('../templates/edit.jade') arguments...
 
 module.exports.ArticleView = class ArticleView extends Backbone.View
 
@@ -131,7 +131,11 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
   checkEditable: ->
     @user = CurrentUser.orNull()
     if @user?.id is @article.get('author_id')
-      
+      edit_url = "#{sd.POSITRON_URL}/articles/" + @article.id + '/edit'
+      @article.get('published') is true ? message = "Previewing Draft" : message = ""
+      @$('#main-layout-container').append(
+        editTemplate message: message, edit_url: edit_url
+        )
 
 module.exports.init = ->
   article = new Article sd.ARTICLE
