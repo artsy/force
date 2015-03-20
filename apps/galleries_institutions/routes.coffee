@@ -79,7 +79,6 @@ fetchInstitutions = ->
     aToZGroup = institutions.groupByAlphaWithColumns 3
     res.render 'index',
       aToZGroup: aToZGroup
-      partnerCount: institutions.length
       featuredProfiles: _.take featuredInstitutions.shuffle(), 16
       copy: header: 'Featured Museums and Institutions', adjective: 'Institutional'
   ).done()
