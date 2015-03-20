@@ -30,6 +30,7 @@ module.exports =
 
   artist_works_view_mode:
     key: 'artist_works_view_mode'
+    dimension: 'dimension3'
     outcomes:
       list: 0.5
       grid: 0.5
