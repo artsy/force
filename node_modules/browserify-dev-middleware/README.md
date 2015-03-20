@@ -43,14 +43,16 @@ app.use(require('browserify-dev-middleware')({
 }));
 ````
 
-Or just interact with the bundle directly.
+Or pass any browserify options in
 
 ````javascript
 app.use(require('browserify-dev-middleware')({
   src: '...'
-  intercept: function(bundle) {
-    bundle.transform({ global: true }, require('deamdify'));
-  }
+  noParse: [
+    require.resolve('./test/assets/jquery'),
+    require.resolve('./test/assets/ember')
+  ],
+  insertGlobals: true
 }));
 ````
 

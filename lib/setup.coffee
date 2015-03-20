@@ -126,6 +126,7 @@ module.exports = (app) ->
     app.use require("browserify-dev-middleware")
       src: path.resolve(__dirname, "../")
       transforms: [require("jadeify"), require('caching-coffeeify')]
+      insertGlobals: true
   if "test" is NODE_ENV
     app.use "/__api", require("../test/helpers/integration.coffee").api
     app.use (req, res, next) ->

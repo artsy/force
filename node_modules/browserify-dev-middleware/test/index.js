@@ -23,29 +23,29 @@ describe('browserifyMiddleware', function() {
   });
 
   it('serves browserify files from the specified directory', function(done) {
-    request.get('http://localhost:1234/foo.js').end(function(res){
-      res.text.should.include('function(require,module,exports){');
+    request.get('http://localhost:1234/foo.js').end(function(err, res){
+      res.text.should.containEql('function(require,module,exports){');
       done()
     });
   });
 
   it('serves up some javascript that throws a warning when', function(done) {
-    request.get('http://localhost:1234/bad.js').end(function(res){
-      res.text.should.include('BROWSERIFY COMPILE ERROR:');
+    request.get('http://localhost:1234/bad.js').end(function(err, res){
+      res.text.should.containEql('BROWSERIFY COMPILE ERROR');
       done()
     });
   });
 
   it('compiles coffeescript too', function(done) {
-    request.get('http://localhost:1234/coffee.js').end(function(res){
-      res.text.should.include('MOO BAR TO THE BAZ');
+    request.get('http://localhost:1234/coffee.js').end(function(err, res){
+      res.text.should.containEql('MOO BAR TO THE BAZ');
       done()
     });
   });
 
   it('falls through if the asset doesnt exist', function(done) {
-    request.get('http://localhost:1234/moobar.js').end(function(res){
-      res.text.should.include('Fell through');
+    request.get('http://localhost:1234/moobar.js').end(function(err, res){
+      res.text.should.containEql('Fell through');
       done()
     });
   });
