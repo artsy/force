@@ -36,8 +36,6 @@ fillwidth = ($list, targetHeight, done, apply, gutterSize) ->
       img.width += (img.width / img.height) * dir
       img.height += dir
 
-    console.log $list.width(), imgsWidth()
-
     # Resize all imgs to a uniform height maintaining aspect ratio
     for img in imgs
       img.width = img.width * (targetHeight / img.height)
