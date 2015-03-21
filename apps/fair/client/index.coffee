@@ -2,15 +2,7 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
 FairInfoView = require './info.coffee'
-articlesView = require './articles.coffee'
-postsView = require './posts.coffee'
-
-FairPostsView = if 'Articles' in (sd.CURRENT_USER?.lab_features or []) \
-                or sd.FAIR.id is 'the-armory-show-2015'
-  articlesView
-else
-  postsView
-
+FairArticlesView = require './articles.coffee'
 FairSearchView = require './search.coffee'
 ForYouView = require './for_you.coffee'
 OverviewView = require './overview.coffee'
@@ -29,7 +21,7 @@ module.exports.FairView = class FairView extends Backbone.View
 
   sectionHash:
     info: FairInfoView
-    posts: FairPostsView
+    posts: FairArticlesView
     search: FairSearchView
     browse: FairBrowseRouter
     favorites: FavoritesView
