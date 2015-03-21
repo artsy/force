@@ -90,6 +90,7 @@
     "underscore": "*",
     "underscore.string": "*",
     "validator": "*",
-    "zombie": "*"
+    "zombie": "*",
+    "jquery-fillwidth-lite": "*"
   }
 }
