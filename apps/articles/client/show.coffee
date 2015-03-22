@@ -61,72 +61,17 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
   fillwidth: (el) ->
     return @$(el).parent().removeClass('is-loading') if $(window).width() < 700
     $list = @$(el)
-    $imgs = $list.find('img')
-    imagesLoaded $list[0], =>
-      #
-      # TODO: Open source into fillwidthLite or something
-      #
-
-      # The height we're aiming for the row to be
-      targetHeight = 500
-
-      # Map the image DOM els into objects of dimension data for performance.
-      imgs = $imgs.map(->
-        { width: $(this).width(), height: $(this).height(), $el: $(this) }
-      ).toArray()
-
-      # Helpers to do the mathz.
-      imgsWidth = ->
-        _.reduce _.map(imgs, (i) -> i.width), (m, n) -> m + n
-      widthDiff = ->
-        Math.abs $list.width() - imgsWidth()
-      resizeHeight = (img, dir) ->
-        img.width += (img.width / img.height) * dir
-        img.height += dir
-
-      # Resize all imgs to a uniform height maintaining aspect ratio
-      for img in imgs
-        img.width = img.width * (targetHeight / img.height)
-        img.height = targetHeight
-
-      # Decide whether we need to make the row of imgs smaller or larger to
-      # fit the width of the container
-      dir = if imgsWidth() > $list.width() then -1 else 1
-
-      # Resize each img, maintaining aspect ratio, until the row fits the
-      # width of the container
-      for i in [0..999]
-        for img in imgs
-          resizeHeight img, dir
-          break if widthDiff() < 1
-        break if widthDiff() < 1
-
-      # Resize down to accomodate padding
-      totalWhitespace = imgs.length * 30
-      for i in [0..999]
-        for img in imgs
-          resizeHeight img, -1
-          break if imgsWidth() <= $list.width() - totalWhitespace
-        break if imgsWidth() <= $list.width() - totalWhitespace
-
-      # Round off sizes
-      for img in imgs
-        img.width = Math.floor img.width
-        img.height = Math.floor img.height
-        break if widthDiff() is 0
-
-      # Apply to DOM
-      for img in imgs
-        $li = img.$el.closest('li')
-        $li.css(padding: '0 15px').width(img.width)
-
-      # Make sure the captions line up in case rounding off skewed things
-      tallest = _.max $list.find('.artwork-item-image-container').map(->
-        $(this).height()).toArray()
-      $list.find('.artwork-item-image-container').each -> $(this).height tallest
-
-      # Remove loading state
-      $list.parent().removeClass('is-loading')
+    $list.fillwidthLite
+      gutterSize: 30
+      apply: (img) ->
+        img.$el.closest('li').css(padding: '0 15px').width(img.width)
+      done: ->
+        # Make sure the captions line up in case rounding off skewed things
+        tallest = _.max $list.find('.artwork-item-image-container').map(->
+          $(this).height()).toArray()
+        $list.find('.artwork-item-image-container').each -> $(this).height tallest
+        # Remove loading state
+        $list.parent().removeClass('is-loading')
 
   checkEditable: ->
     @user = CurrentUser.orNull()
