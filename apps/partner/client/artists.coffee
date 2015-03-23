@@ -45,7 +45,7 @@ module.exports = class PartnerArtistsView extends Backbone.View
   fetchAllArtists: ->
     return unless @collection.length is 0
 
-    @collection.url = "#{@partner.url()}/partner_artists"
+    @collection.url = "#{@partner.url()}/partner_artists?display_on_partner_profile=1"
     @collection.fetchUntilEndInParallel success: => @cacheArtists(); @render()
 
   renderArtistsList: ->

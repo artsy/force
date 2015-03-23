@@ -85,3 +85,13 @@ describe 'PartnerArtistsView', ->
 
       it 'uses the cached partner artists instead of fetching again', ->
         @partnerArtists.fetchUntilEnd.called.should.not.be.ok
+
+      it 'passes a parameter to filter partner artists that should not be displayed', ->
+        @view.initialize
+          profile: @profile
+          partner: @partner
+          cache: {}
+          artistsListColumnSize: 4
+          pageSize: 5
+          el: $ 'body'
+        @view.collection.url.indexOf("display_on_partner_profile=1").should.be.greaterThan -1
