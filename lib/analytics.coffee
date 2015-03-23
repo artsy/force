@@ -114,8 +114,11 @@ module.exports.track = track =
     memo
   , {})
 
-module.exports.trackForm = (selector, description, options = {}) ->
-  mixpanel?.track_forms? selector, description, options
+module.exports.trackForms = (selector, description, options = {}) ->
+  mixpanel.track_forms selector, description, options
+
+module.exports.trackLinks = (selector, description, options = {}) ->
+  mixpanel.track_links selector, description, options
 
 module.exports.modelNameAndIdToLabel = (modelName, id) ->
   throw new Error('Requires modelName and id') unless modelName? and id?
