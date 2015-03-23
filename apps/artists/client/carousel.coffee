@@ -1,13 +1,8 @@
 _ = require 'underscore'
-sd = require('sharify').data
 Backbone = require 'backbone'
 imagesLoaded = require 'imagesloaded'
-Artist = require '../../models/artist.coffee'
-analytics = require '../../lib/analytics.coffee'
 
-{ Following, FollowButton } = require '../../components/follow_button/index.coffee'
-
-module.exports.CarouselView = class CarouselView extends Backbone.View
+module.exports = class CarouselView extends Backbone.View
   increment: 2
   active: 0
   events:
@@ -23,9 +18,9 @@ module.exports.CarouselView = class CarouselView extends Backbone.View
     @$el.imagesLoaded?().progress _.once(@updateValues)
 
   updateValues: (e) =>
-    @$panels    ?= @$('.afc-artist')
-    @$images    ?= @$panels.find('img')
-    @$bumpers   ?= @$('.afc-next, .afc-prev')
+    @$panels ?= @$('.afc-artist')
+    @$images ?= @$panels.find('img')
+    @$bumpers ?= @$('.afc-next, .afc-prev')
 
     panelWidth = @$el.width() / @increment
     @positions = _.map @$panels, (panel, i) -> panelWidth * i
@@ -64,21 +59,15 @@ module.exports.CarouselView = class CarouselView extends Backbone.View
     e?.preventDefault()
     if @active is @$images.length - @increment
       @active -= @$images.length
-
     @active += @increment
     @moveToActive()
-
-    analytics.track.click 'Previous page in /artists carousel'
 
   prev: (e) ->
     e?.preventDefault()
     if @active is 0
       @active = @$images.length
-
     @active -= @increment
     @moveToActive()
-
-    analytics.track.click 'Previous page in /artists carousel'
 
   keyUp: (e) ->
     switch e.keyCode
@@ -88,36 +77,3 @@ module.exports.CarouselView = class CarouselView extends Backbone.View
       # right arrow and the l key
       when 39, 76
         @next()
-
-module.exports.ArtistsView = class ArtistsView extends Backbone.View
-  initialize: (options) ->
-    @setupCarouselView()
-
-    @following = new Following(null, kind: 'artist') if sd.CURRENT_USER?
-    @setupFollowing()
-
-  setupCarouselView: ->
-    @carouselView = new CarouselView el: @$('.artists-featured-carousel')
-
-  setupFollowing: ->
-    featuredArtistFollowIds = @setupFollowButtons @$('.artists-featured-carousel .follow-button'), 'Followed from /artists featured'
-    trendingArtistFollowIds = @setupFollowButtons @$('.artists-featured-genes .follow-button'), 'Followed from /artists trending'
-
-    @following?.syncFollows featuredArtistFollowIds.concat(trendingArtistFollowIds)
-
-  # return {Array} array of artist IDs
-  setupFollowButtons: ($buttons, message) ->
-    _.map $buttons, (el) =>
-      id = ($el = $(el)).data 'id'
-      new FollowButton
-        analyticsFollowMessage: message
-        following: @following
-        notes: message
-        model: new Artist id: id
-        modelName: 'artist'
-        el: $el
-      id
-
-module.exports.init = ->
-  $ ->
-    new ArtistsView el: $('body')

@@ -5,6 +5,10 @@ OrderedSets = require '../../collections/ordered_sets'
 Artist = require '../../models/artist'
 ArtistsByLetter = require './collections/artists_by_letter'
 
+# *try* to pull out an artist id from the links
+@parseId = parseId = (string) ->
+  _.last string.match /\/?artist\/([\w-]*)\/?$/
+
 parseGenes = (collection) ->
   collection.chain().
     filter((model) -> model.hasImage('large')). # Exclude artists without images
@@ -27,8 +31,8 @@ parseGenes = (collection) ->
     links = featuredArtists.at(0)
     Q.allSettled(links.get('items').map (link) ->
       # Fetch and relate the artist featured in the link
-      id = link.get('href').replace(/\/?artist\//, '')
-      artist = new Artist(id: id)
+      id = parseId link.get('href')
+      artist = new Artist id: id
       link.set 'artist', artist
       artist.fetch cache: true
     ).then render
