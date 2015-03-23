@@ -3,7 +3,7 @@
     for section, i in sections.slice(0, -1)
       a.gallery-partnerships-nav-link.internal( href="/gallery-partnerships/#{section.slug}", data-section=section.title )
         span= section.title
-    a.gallery-partnerships-nav-link.apply.avant-garde-button-black.is-small(
+    a.gallery-partnerships-nav-link.gallery-partnerships-nav-apply-link.avant-garde-button-black.is-small(
       href=((sd.GALLERY_PARTNERSHIPS_APPLY === 'inline') ? '/gallery-partnerships/apply' : '/apply?00NC0000005RNfN=link')
       class=((sd.GALLERY_PARTNERSHIPS_APPLY === 'inline') ? 'internal' : undefined)
       data-section='Apply'
