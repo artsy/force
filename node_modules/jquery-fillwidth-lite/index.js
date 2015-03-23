@@ -51,7 +51,6 @@
           img.width += (img.width / img.height) * dir;
           return img.height += dir;
         };
-        console.log($list.width(), imgsWidth());
         for (j = 0, len = imgs.length; j < len; j++) {
           img = imgs[j];
           img.width = img.width * (targetHeight / img.height);
