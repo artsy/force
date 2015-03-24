@@ -165,6 +165,7 @@ module.exports.multi = (description, modelName, ids) ->
     # Fire log events at 1/2 second intervals
     ((encodedIds) =>
       _.delay( =>
+        @snowplowStruct 'impression', null, chunk.join(','), modelName
         @trackMulti description, @modelNameAndIdToLabel(modelName, encodedIds)
       , (500 * index) + 1)
     )(@encodeMulti(chunk))
