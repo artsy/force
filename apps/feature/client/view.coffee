@@ -134,7 +134,7 @@ module.exports = class FeatureView extends Backbone.View
   renderAuctionInfo: (sale) ->
     @$('#feature-description-register-container').html auctionRegisterButtonTemplate
       sale: sale
-      registered: @currentUser?.get('registered_to_bid')?
+      registered: @currentUser?.get('registered_to_bid')
     @$('#feature-auction-info-countdown-container').html auctionCountdownTemplate(sale: sale)
     @setupClock sale
 

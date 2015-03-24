@@ -8,7 +8,8 @@ append locals
 
 block body
   #auctions-page.aggregate-page.main-layout-container
-    h1.aggregate-page-header Collect from leading Auctions
+    unless currentAuctions.length
+      include ./placeholder
 
     .aggregate-page-items
       .aggregate-page-items-featured
@@ -18,19 +19,29 @@ block body
             for auction in currentAuctions
               include auction
 
+        if upcomingAuctions.length && !currentAuctions.length
+          .leader-dots-list
+            h2.aggregate-page-subheader Upcoming Auctions
+            for auction in upcomingAuctions
+              .leader-dots-list-item
+                span= auction.get('name')
+                span Opens #{auction.date('start_at').format('MMM D, YYYY')}
+
         if pastAuctions.length
-          .aggregate-page-items-featured-set
+          .leader-dots-list
             h2.aggregate-page-subheader Past Auctions
             for auction in pastAuctions
-              include auction
+              a.leader-dots-list-item( href= auction.href() )
+                span= auction.get('name')
+                span= auction.date('end_at').format('MMM D, YYYY')
 
       .aggregate-page-items-upcoming
         h2.aggregate-page-subheader How Auctions Work
         .ap-upcoming-item
-          a.auctions-learn-link( href='/auction-info' )
+          a.fine-faux-underline.js-auctions-learn-link( href='/auction-info' )
             | Learn about Bidding Increments, Max Bids, Reserves, and more
 
-        if upcomingAuctions.length
+        if upcomingAuctions.length && currentAuctions.length
           h2.aggregate-page-subheader Upcoming Auctions
           for auction in upcomingAuctions
             .ap-upcoming-item

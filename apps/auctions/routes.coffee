@@ -2,42 +2,65 @@ _ = require 'underscore'
 Q = require 'q'
 { API_URL } = require('sharify').data
 Backbone = require 'backbone'
-Sales = require '../../collections/sales'
-Artworks = require '../../collections/artworks'
+Auctions = require '../../collections/auctions'
 
-elligibleFilter = _.partial _.filter, _, ((sale) ->
-  # Reject sales without artworks
-  sale.get('eligible_sale_artworks_count') isnt 0)
+determineFeature = (id, cb) ->
+  new Backbone.Collection().fetch
+    cache: true
+    url: "#{API_URL}/api/v1/sets/contains?item_type=Sale&item_id=#{id}"
+    success: (collection, response, options) ->
+      cb collection.first().get('owner')
+
+setupCurrentAuction = (auction) ->
+  dfd = Q.defer()
+  determineFeature auction.id, (owner) ->
+    (feature = auction.related().feature).set 'id', owner.id
+    feature.fetch(cache: true, success: dfd.resolve, error: dfd.resolve)
+  dfd.promise
+
+setupCurrentAuctions = (auctions) ->
+  dfd = Q.defer()
+  Q.all(_.map(auctions, setupCurrentAuction))
+    .done dfd.resolve
+  dfd.promise
+
+setupUser = (user, auction) ->
+  dfd = Q.defer()
+  if user?
+    user.checkRegisteredForAuction saleId: auction.id, success: (boolean) ->
+      user.set 'registered_to_bid', boolean
+      dfd.resolve user
+  else
+    dfd.resolve user
+  dfd.promise
 
 @index = (req, res) ->
-  sales = new Sales
-  sales.comparator = (sale) -> -(Date.parse(sale.get 'end_at'))
-  sales.fetch
+  auctions = new Auctions
+  auctions.comparator = (auction) ->
+    -(Date.parse auction.get('end_at'))
+
+  auctions.fetch
     cache: true
-    data: is_auction: true, published: true, size: 20, sort: '-created_at'
+    data: published: true, size: 20, sort: '-created_at'
     success: (collection, response, options) ->
-      # Fetch artworks for the sale
-      Q.allSettled(sales.map (sale) ->
-        sale.related().saleArtworks.fetch
-          cache: true
-          data: size: 5, sort: 'position'
-          success: (collection, response, options) ->
-            sale.related().artworks.reset(Artworks.fromSale(collection).models, parse: true)
-      ).then(->
-        { closed, open, preview } = sales.groupBy 'auction_state'
+      [preview, open, closed] = _.map ['preview', 'open', 'closed'], (state) ->
+        auctions.where auction_state: state
 
-        open = elligibleFilter(open) or []
-        closed = elligibleFilter(closed) or []
+      nextAuction = preview[0]
 
-        res.locals.sd.CURRENT_AUCTIONS = open
-        res.locals.sd.ARTWORK_DIMENSIONS = _.map open.concat(closed), (auction) ->
-          id: auction.id, dimensions: auction.related().artworks.fillwidthDimensions(260)
+      res.locals.sd.CURRENT_AUCTIONS = open
+      res.locals.sd.UPCOMING_AUCTIONS = preview
+
+      Q.all([
+        setupCurrentAuctions(open)
+        setupUser(req.user, nextAuction) if nextAuction?
+      ]).done ->
 
         res.render 'index',
           pastAuctions: closed
           currentAuctions: open
-          upcomingAuctions: preview or []
-      ).done()
+          upcomingAuctions: preview
+          nextAuction: nextAuction if nextAuction?
 
 @redirect = (req, res) ->
   new Backbone.Collection().fetch

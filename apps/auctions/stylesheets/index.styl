@@ -1,41 +1,65 @@
 @import '../../../components/stylus_lib'
 
+.af-hero-image
+  width 100%
 .af-name
   margin 20px 0
   font-size 26px
-  > a
-    text-decoration none
-
 .af-metadata
   clearfix()
   margin 20px 0
-
 .af-stats
 .af-clock
   float left
   margin-right 40px
-
 .af-clock .clock-header
   text-transform none
   text-align left
-
+  font-size inherit
 .af-stats-status
   avant-garde()
   font-size 11px
-
 .af-go-button
   float right
 
-artworks-height = 260px
-.af-artworks
-  height artworks-height
-  overflow hidden
-  fade-in()
-  &:hover .af-artwork:after
-    opacity 0.5
-.af-artwork
-  display inline-block
-  margin 0 10px artworks-height 0
+.aggregate-page-items-featured-set
+  margin 0
+
+.leader-dots-list
+  block-margins(30px)
+
+// Preview state
+.auctions-placeholder
+  display table
+  width 100%
+  margin 20px 0
+.auctions-placeholder-metadata
+.auctions-placeholder-hero
+  display table-cell
+  height 100%
+  vertical-align middle
+  text-align center
+.auctions-placeholder-metadata
+  width 33.33%
+  padding 0 50px
+  > h2
+    margin 10px auto
+    font-size 40px
+    line-height 1.25
+  > p
+    margin 10px auto
+    font-size 20px
+    margin 20px 0
+    padding 0 20px
+    line-height 1.5
+  > a
+    white-space nowrap
+.auctions-placeholder-hero
+  width 66.66%
   > img
-    max-width 100%
-    max-height 100%
+    width 100%
+
+.apu-clock
+  margin 20px 0 30px
+  .clock-header
+    display none
