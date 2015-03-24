@@ -2,31 +2,62 @@ _ = require 'underscore'
 benv = require 'benv'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
-Sale = require '../../../models/sale'
+Auction = require '../../../models/sale'
 
 describe 'Auctions template', ->
   before ->
     auctions = [
-      @openSale = new Sale fabricate 'sale', auction_state: 'open', id: 'open-sale'
-      @closedSale = new Sale fabricate 'sale', auction_state: 'closed', id: 'closed-sale'
-      @previewSale = new Sale fabricate 'sale', auction_state: 'preview', id: 'preview-sale'
+      @openAuction = new Auction fabricate 'sale', auction_state: 'open', id: 'open-auction'
+      @closedAuction = new Auction fabricate 'sale', auction_state: 'closed', id: 'closed-auction'
+      @previewAuction = new Auction fabricate 'sale', auction_state: 'preview', id: 'preview-auction'
     ]
 
-  describe 'with auctions', ->
+  describe 'with at least one of every kind of auction', ->
     before (done) ->
       benv.setup =>
         benv.expose $: benv.require 'jquery'
         benv.render resolve(__dirname, '../templates/index.jade'),
           sd: {}
           asset: (->)
-          pastAuctions: [@closedSale]
-          currentAuctions: [@openSale]
-          upcomingAuctions: [@previewSale]
+          pastAuctions: [@closedAuction]
+          currentAuctions: [@openAuction]
+          upcomingAuctions: [@previewAuction]
+          nextAuction: @previewAuction
         done()
 
     after ->
       benv.teardown()
 
     it 'renders correctly', ->
-      $('.af-name').length.should.equal 2
-      $('.ap-upcoming-item').length.should.equal 2
+      $('.auctions-placeholder').should.have.lengthOf 0
+      # Current ("Featured") auctions
+      $('.af-name').should.have.lengthOf 1
+      # Past auctions
+      $('.leader-dots-list-item').should.have.lengthOf 1
+      # 'How auctions work' link & Upcoming auctions
+      $('.ap-upcoming-item').should.have.lengthOf 2
+
+  describe 'without current auctions', ->
+    before (done) ->
+      benv.setup =>
+        benv.expose $: benv.require 'jquery'
+        benv.render resolve(__dirname, '../templates/index.jade'),
+          sd: {}
+          asset: (->)
+          pastAuctions: [@closedAuction]
+          currentAuctions: []
+          upcomingAuctions: [@previewAuction]
+          nextAuction: @previewAuction
+        done()
+
+    after ->
+      benv.teardown()
+
+    it 'renders correctly', ->
+      $('.auctions-placeholder').should.have.lengthOf 1
+      # Current ("Featured") auctions
+      $('.af-name').should.have.lengthOf 0
+      # Upcoming & Past auctions
+      $('.leader-dots-list-item').should.have.lengthOf 2
+      # 'How auctions work' link
+      $('.ap-upcoming-item').should.have.lengthOf 1
