@@ -13,7 +13,7 @@ Meta
 * __CI:__ [Semaphore](https://semaphoreapp.com/artsy/force/); merged PRs to artsy/force#master are automatically deployed to staging; production is manually deployed from semaphore
 * __Point People:__ [@craigspaeth](https://github.com/craigspaeth), [@dzucconi](https://github.com/dzucconi), [@broskoski](https://github.com/broskoski), [@kanaabe](https://github.com/kanaabe)
 
-[![Build Status](https://semaphoreci.com/api/v1/projects/85438675-8a5b-4e53-89b3-b1f28e243f93/380246/badge.png)](https://semaphoreci.com/artsy/force)
+[![Build Status](https://semaphoreci.com/api/v1/projects/260f0d9d-ddb4-4cc5-b54e-619b98fd9d81/382381/badge.svg)](https://semaphoreci.com/artsy/force--2)
 
 Set-Up
 ---

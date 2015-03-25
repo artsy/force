@@ -25,7 +25,7 @@ startServer = (callback) ->
   child.on "message", callback
 closeServer = => child.kill()
 
-describe 'Setup', ->
+xdescribe 'Setup', ->
 
   before (done) ->
     @server = gravity.listen 5001, -> startServer -> done()

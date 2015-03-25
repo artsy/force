@@ -24,7 +24,7 @@ startServer = (callback) ->
   child.on "message", callback
 closeServer = => child.kill()
 
-describe 'Setup', ->
+xdescribe 'Setup', ->
 
   before (done) ->
     @server = s3.listen 5001, -> startServer -> done()
