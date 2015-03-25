@@ -33,11 +33,12 @@ git clone git@github.com:craigspaeth/force.git && cd force
 ```
 npm install
 ```
+- Create a .env file and paste in sensitive configuration. You can find these keys in the Artsy Engineering vault of One Password under "Force.env" or ask someone in #web Slack.
 - Start Force pointing to the staging [Gravity](https://github.com/artsy/gravity) API
 ```
 make ss
 ```
-- Force should now be running at [http://localhost:3003/](http://localhost:3003/)
+- Force should now be running at [http://localhost:5000/](http://localhost:5000/)
 
 Additional docs
 ---

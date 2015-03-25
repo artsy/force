@@ -51,7 +51,7 @@ test:
 
 # Start the integration server for debugging
 test-s:
-	$(BIN)/ezel-assets
+	# $(BIN)/ezel-assets
 	$(BIN)/coffee test/helpers/integration.coffee
 
 # Runs all the necessary build tasks to push to staging or production.

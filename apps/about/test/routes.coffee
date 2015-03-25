@@ -32,7 +32,7 @@ describe 'About2 routes', ->
       @res.render = (tmpl, locals) =>
         locals.foo.should.equal "bar"
         done()
-      @request.get = -> on: -> end: (cb) -> cb { text: '{"foo": "bar"}' }
+      @request.get = -> on: -> end: (cb) -> cb null, { text: '{"foo": "bar"}' }
       routes.index @req, @res
 
   describe '#adminOnly', ->

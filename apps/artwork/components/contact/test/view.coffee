@@ -98,8 +98,7 @@ describe 'ContactView', ->
 
     it '#checkInquiredArtwork shows the last sent date', ->
       inquiry = fabricate 'artwork_inquiry_request'
-      _.extend(inquiry, { inquiry_url: 'about:foo.com', created_at: '03-17-2014' })
-      window.location.href = 'foo.com'
+      _.extend(inquiry, { inquiry_url: location.href, created_at: '03-17-2014' })
       @view.checkInquiredArtwork()
       Backbone.sync.args[1][2].success [inquiry]
       $('#artwork-inquiry-sent').html().should.containEql 'Mar 17, 2014'
