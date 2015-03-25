@@ -123,7 +123,7 @@ module.exports = class ContactView extends Backbone.View
     @inquiries = new Inquiries
     @inquiries.fetch
       success: (inquiries) =>
-        inquiry = @inquiries.findWhere { inquiry_url: window.location.href }
+        inquiry = @inquiries.findWhere { inquiry_url: location.href }
         if inquiry
           sent_time = moment(inquiry.get('created_at')).format("MMM D, YYYY")
           @$('#artwork-contact-form').hide()

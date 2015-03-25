@@ -34,7 +34,7 @@ describe 'proxyToReflection', ->
       parsed = parse(source)
       req = url: parsed.path, query: querystring.parse(parsed.query)
       proxyToReflection req, @res, @next
-      endStub.args[0][0] status: 403
+      endStub.args[0][0] null, status: 403
       @next.called.should.be.ok
 
     for source, dest of paths

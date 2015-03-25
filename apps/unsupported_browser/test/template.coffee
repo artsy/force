@@ -1,7 +1,7 @@
 _ = require 'underscore'
 jade = require 'jade'
 path = require 'path'
-fs = require 'graceful-fs'
+fs = require 'fs'
 sd = require('sharify').data
 cheerio = require 'cheerio'
 uaParser = require 'ua-parser'

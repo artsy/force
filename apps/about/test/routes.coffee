@@ -3,7 +3,7 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 rewire = require 'rewire'
 routes = rewire '../routes'
-fs = require 'graceful-fs'
+fs = require 'fs'
 { EventEmitter } = require 'events'
 { resolve }  = require 'path'
 { fabricate } = require 'antigravity'
@@ -32,7 +32,7 @@ describe 'About2 routes', ->
       @res.render = (tmpl, locals) =>
         locals.foo.should.equal "bar"
         done()
-      @request.get = -> on: -> end: (cb) -> cb { text: '{"foo": "bar"}' }
+      @request.get = -> on: -> end: (cb) -> cb null, { text: '{"foo": "bar"}' }
       routes.index @req, @res
 
   describe '#adminOnly', ->

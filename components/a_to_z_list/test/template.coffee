@@ -2,7 +2,7 @@ _ = require 'underscore'
 { AToZ } = require 'artsy-backbone-mixins'
 Backbone = require 'backbone'
 cheerio = require 'cheerio'
-fs = require 'graceful-fs'
+fs = require 'fs'
 jade = require 'jade'
 path = require 'path'
 

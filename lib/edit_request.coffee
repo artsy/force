@@ -3,10 +3,10 @@
 #
 
 { API_REQUEST_TIMEOUT } = require '../config'
-artsyXappMiddlware = require 'artsy-xapp-middleware'
+artsyXappMiddleware = require 'artsy-xapp-middleware'
 
 module.exports = (req) ->
   req
-    .set('X-XAPP-TOKEN': artsyXappMiddlware.token)
+    .set('X-XAPP-TOKEN': artsyXappMiddleware.token or '')
     .timeout(API_REQUEST_TIMEOUT)
     .on 'error', -> req.abort()

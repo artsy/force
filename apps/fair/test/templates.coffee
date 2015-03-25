@@ -1,7 +1,7 @@
 _ = require 'underscore'
 jade = require 'jade'
 path = require 'path'
-fs = require 'graceful-fs'
+fs = require 'fs'
 Backbone = require 'backbone'
 { AToZ } = require 'artsy-backbone-mixins'
 { fabricate } = require 'antigravity'

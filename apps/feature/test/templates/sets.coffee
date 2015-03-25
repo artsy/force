@@ -1,6 +1,6 @@
 jade = require 'jade'
 path = require 'path'
-fs = require 'graceful-fs'
+fs = require 'fs'
 benv = require 'benv'
 { fabricate } = require 'antigravity'
 FeaturedSet = require '../../../../models/featured_set.coffee'

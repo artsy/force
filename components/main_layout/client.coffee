@@ -84,8 +84,8 @@ setupJquery = ->
   require 'jquery.dotdotdot'
   require 'jquery.poplockit'
   require 'jquery-on-infinite-scroll'
-  require 'jquery-waypoints/waypoints.js'
-  require 'jquery-waypoints/shortcuts/sticky-elements/waypoints-sticky.js'
+  require '../../lib/vendor/waypoints.js'
+  require '../../lib/vendor/waypoints-sticky.js'
   require '../../lib/jquery/hidehover.coffee'
   require('artsy-gemini-upload') $
   require('jquery-fillwidth-lite')($, _, imagesLoaded)

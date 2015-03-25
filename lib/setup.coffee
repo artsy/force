@@ -47,7 +47,7 @@ favicon = require 'serve-favicon'
 logger = require 'morgan'
 editRequest = require './edit_request'
 raven = require 'raven'
-fs = require 'graceful-fs'
+fs = require 'fs'
 artsyError = require 'artsy-error-handler'
 cache = require './cache'
 timeout = require 'connect-timeout'
@@ -128,13 +128,13 @@ module.exports = (app) ->
       transforms: [require("jadeify"), require('caching-coffeeify')]
       insertGlobals: true
   if "test" is NODE_ENV
-    app.use "/__api", require("../test/helpers/integration.coffee").api
     app.use (req, res, next) ->
       return next() unless req.query['test-login']
       req.user = new CurrentUser(
         require('antigravity').fabricate('user', accessToken: 'footoken')
       )
       next()
+    app.use "/__gravity", require("antigravity").server
 
   # Body parser has to be after proxy middleware for
   # node-http-proxy to work with POST/PUT/DELETE

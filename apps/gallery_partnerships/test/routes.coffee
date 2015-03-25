@@ -29,7 +29,7 @@ describe 'Gallery partnerships routes', ->
         tmpl.should.equal 'index'
         locals.foo.should.equal 'bar'
         done()
-      @request.get = -> on: -> end: (cb) -> cb { text: '{"foo": "bar"}' }
+      @request.get = -> on: -> end: (cb) -> cb null, { text: '{"foo": "bar"}' }
       routes.index @req, @res
 
   describe '#adminOnly', ->

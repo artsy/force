@@ -1,5 +1,5 @@
 jade = require 'jade'
-fs = require 'graceful-fs'
+fs = require 'fs'
 Profile = require '../../../models/profile'
 { fabricate } = require 'antigravity'
 { resolve } = require 'path'

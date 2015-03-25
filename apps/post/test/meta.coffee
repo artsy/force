@@ -1,4 +1,4 @@
-fs = require 'graceful-fs'
+fs = require 'fs'
 jade = require 'jade'
 sd = require('sharify').data
 { fabricate } = require 'antigravity'
