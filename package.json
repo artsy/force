@@ -50,7 +50,8 @@
     "twilio": "*",
     "ua-parser": "*",
     "underscore": "*",
-    "underscore.string": "*"
+    "underscore.string": "*",
+    "graceful-fs": "*"
   },
   "devDependencies": {
     "zombie": "*",
