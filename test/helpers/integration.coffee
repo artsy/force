@@ -21,8 +21,10 @@ Browser.debug = true
     @child = spawn "node_modules/.bin/coffee", ["index.coffee"],
       customFds: [0, 1, 2]
       stdio: ["ipc"]
-      env: _.extend process.env,
+      env:
+        PATH: process.env.PATH
         NODE_ENV: 'test'
+        APP_URL: 'http://localhost:5000'
         ARTSY_URL: 'http://localhost:5000/__gravity'
         API_URL: 'http://localhost:5000/__gravity'
         PORT: 5000
