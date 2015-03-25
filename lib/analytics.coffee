@@ -9,6 +9,7 @@ _s = require 'underscore.string'
 sd = require('sharify').data
 qs = require('querystring')
 sparkMd5Hash = require('spark-md5').hash
+Cookies = require '../components/cookies/index.coffee'
 
 module.exports = (options) =>
   return if module.exports.getUserAgent()?.indexOf?('PhantomJS') > -1
@@ -97,6 +98,7 @@ module.exports.track = track =
           queryString: window?.location.search
           page: window?.location.pathname
           referrer: document?.referrer
+          source_referrer: Cookies.get('force-referrer')
           collector_level: sd.CURRENT_USER?.collector_level
           user_id: sd.CURRENT_USER?.id
           lab_features: sd.CURRENT_USER?.lab_features
