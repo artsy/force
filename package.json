@@ -52,7 +52,8 @@
     "underscore": "*",
     "underscore.string": "*",
     "graceful-fs": "*",
-    "spark-md5": "*"
+    "spark-md5": "*",
+    "jade": "*"
   },
   "devDependencies": {
     "zombie": "*",
@@ -73,7 +74,6 @@
     "mocha": "*",
     "nib": "*",
     "imagesloaded": "*",
-    "jade": "*",
     "jquery": "*",
     "jquery-on-infinite-scroll": "*",
     "jquery.dotdotdot": "git://github.com/mzikherman/jquery.dotdotdot.git",

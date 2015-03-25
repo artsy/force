@@ -9,7 +9,7 @@
     },
     "artsy-backbone-mixins": {
       "version": "0.0.20",
-      "from": "../../../var/folders/_m/01nxkz5132sfpqg8cdzc8wl00000gn/T/npm-9898-5a40990d/git-cache-1af53c8cba70/be65bf983ac00d4eda3e967bfe644e7551cba6e7",
+      "from": "../../../var/folders/_m/01nxkz5132sfpqg8cdzc8wl00000gn/T/npm-10783-b6926598/git-cache-646e48af5348/be65bf983ac00d4eda3e967bfe644e7551cba6e7",
       "resolved": "git://github.com/artsy/artsy-backbone-mixins.git#be65bf983ac00d4eda3e967bfe644e7551cba6e7",
       "dependencies": {
         "marked": {
@@ -26,17 +26,17 @@
     },
     "artsy-error-handler": {
       "version": "0.0.2",
-      "from": "../../../var/folders/_m/01nxkz5132sfpqg8cdzc8wl00000gn/T/npm-9898-5a40990d/git-cache-33b79549d44f/991664731c0e6a3e51198fb69dc1d02ecdb98735",
+      "from": "../../../var/folders/_m/01nxkz5132sfpqg8cdzc8wl00000gn/T/npm-10783-b6926598/git-cache-82b94db9ec4b/991664731c0e6a3e51198fb69dc1d02ecdb98735",
       "resolved": "git://github.com/artsy/artsy-error-handler.git#991664731c0e6a3e51198fb69dc1d02ecdb98735"
     },
     "artsy-ezel-components": {
       "version": "0.0.1",
-      "from": "../../../var/folders/_m/01nxkz5132sfpqg8cdzc8wl00000gn/T/npm-9898-5a40990d/git-cache-9823229dfe11/cc5d67ff679531f0e4788e305e98cc0d0219cf71",
+      "from": "../../../var/folders/_m/01nxkz5132sfpqg8cdzc8wl00000gn/T/npm-10783-b6926598/git-cache-342c64fbc2a9/cc5d67ff679531f0e4788e305e98cc0d0219cf71",
       "resolved": "git://github.com/artsy/artsy-ezel-components.git#cc5d67ff679531f0e4788e305e98cc0d0219cf71"
     },
     "artsy-passport": {
       "version": "0.1.9",
-      "from": "../../../var/folders/_m/01nxkz5132sfpqg8cdzc8wl00000gn/T/npm-9898-5a40990d/git-cache-859eb8196279/1d3cf68cb0e9b05f4337d89330346c083d04c28b",
+      "from": "../../../var/folders/_m/01nxkz5132sfpqg8cdzc8wl00000gn/T/npm-10783-b6926598/git-cache-7efb7e955a20/1d3cf68cb0e9b05f4337d89330346c083d04c28b",
       "resolved": "git://github.com/artsy/artsy-passport.git#1d3cf68cb0e9b05f4337d89330346c083d04c28b",
       "dependencies": {
         "express": {
@@ -467,7 +467,7 @@
     },
     "artsy-xapp-middleware": {
       "version": "0.1.2",
-      "from": "../../../var/folders/_m/01nxkz5132sfpqg8cdzc8wl00000gn/T/npm-9898-5a40990d/git-cache-3251190dd606/c2817ddaeb9f84d788b075e7df325c75ef065152",
+      "from": "../../../var/folders/_m/01nxkz5132sfpqg8cdzc8wl00000gn/T/npm-10783-b6926598/git-cache-8af5ccfef84b/c2817ddaeb9f84d788b075e7df325c75ef065152",
       "resolved": "git://github.com/artsy/artsy-xapp-middleware.git#c2817ddaeb9f84d788b075e7df325c75ef065152"
     },
     "backbone": {
@@ -1465,7 +1465,7 @@
     },
     "geoformatter": {
       "version": "0.0.0",
-      "from": "../../../var/folders/_m/01nxkz5132sfpqg8cdzc8wl00000gn/T/npm-9898-5a40990d/git-cache-67b713e57cac/8861ae0a8efb36608a755f5be65360d4ba49ff50",
+      "from": "../../../var/folders/_m/01nxkz5132sfpqg8cdzc8wl00000gn/T/npm-10783-b6926598/git-cache-3cf338c5fefb/8861ae0a8efb36608a755f5be65360d4ba49ff50",
       "resolved": "git://github.com/dzucconi/geo_formatter.git#8861ae0a8efb36608a755f5be65360d4ba49ff50"
     },
     "graceful-fs": {
@@ -1492,6 +1492,143 @@
           "version": "0.0.0",
           "from": "requires-port@>=0.0.0 <1.0.0",
           "resolved": "https://registry.npmjs.org/requires-port/-/requires-port-0.0.0.tgz"
+        }
+      }
+    },
+    "jade": {
+      "version": "1.9.2",
+      "from": "jade@*",
+      "resolved": "https://registry.npmjs.org/jade/-/jade-1.9.2.tgz",
+      "dependencies": {
+        "character-parser": {
+          "version": "1.2.1",
+          "from": "character-parser@1.2.1",
+          "resolved": "https://registry.npmjs.org/character-parser/-/character-parser-1.2.1.tgz"
+        },
+        "commander": {
+          "version": "2.6.0",
+          "from": "commander@>=2.6.0 <2.7.0",
+          "resolved": "https://registry.npmjs.org/commander/-/commander-2.6.0.tgz"
+        },
+        "constantinople": {
+          "version": "3.0.1",
+          "from": "constantinople@>=3.0.1 <3.1.0",
+          "resolved": "https://registry.npmjs.org/constantinople/-/constantinople-3.0.1.tgz",
+          "dependencies": {
+            "acorn-globals": {
+              "version": "1.0.2",
+              "from": "acorn-globals@>=1.0.1 <2.0.0",
+              "resolved": "https://registry.npmjs.org/acorn-globals/-/acorn-globals-1.0.2.tgz",
+              "dependencies": {
+                "acorn": {
+                  "version": "0.11.0",
+                  "from": "acorn@>=0.11.0 <0.12.0",
+                  "resolved": "https://registry.npmjs.org/acorn/-/acorn-0.11.0.tgz"
+                }
+              }
+            }
+          }
+        },
+        "mkdirp": {
+          "version": "0.5.0",
+          "from": "mkdirp@>=0.5.0 <0.6.0",
+          "resolved": "https://registry.npmjs.org/mkdirp/-/mkdirp-0.5.0.tgz",
+          "dependencies": {
+            "minimist": {
+              "version": "0.0.8",
+              "from": "minimist@0.0.8",
+              "resolved": "https://registry.npmjs.org/minimist/-/minimist-0.0.8.tgz"
+            }
+          }
+        },
+        "transformers": {
+          "version": "2.1.0",
+          "from": "transformers@2.1.0",
+          "resolved": "https://registry.npmjs.org/transformers/-/transformers-2.1.0.tgz",
+          "dependencies": {
+            "promise": {
+              "version": "2.0.0",
+              "from": "promise@>=2.0.0 <2.1.0",
+              "resolved": "https://registry.npmjs.org/promise/-/promise-2.0.0.tgz",
+              "dependencies": {
+                "is-promise": {
+                  "version": "1.0.1",
+                  "from": "is-promise@>=1.0.0 <2.0.0",
+                  "resolved": "https://registry.npmjs.org/is-promise/-/is-promise-1.0.1.tgz"
+                }
+              }
+            },
+            "css": {
+              "version": "1.0.8",
+              "from": "css@>=1.0.8 <1.1.0",
+              "resolved": "https://registry.npmjs.org/css/-/css-1.0.8.tgz",
+              "dependencies": {
+                "css-parse": {
+                  "version": "1.0.4",
+                  "from": "css-parse@1.0.4",
+                  "resolved": "https://registry.npmjs.org/css-parse/-/css-parse-1.0.4.tgz"
+                },
+                "css-stringify": {
+                  "version": "1.0.5",
+                  "from": "css-stringify@1.0.5",
+                  "resolved": "https://registry.npmjs.org/css-stringify/-/css-stringify-1.0.5.tgz"
+                }
+              }
+            },
+            "uglify-js": {
+              "version": "2.2.5",
+              "from": "uglify-js@>=2.2.5 <2.3.0",
+              "resolved": "https://registry.npmjs.org/uglify-js/-/uglify-js-2.2.5.tgz",
+              "dependencies": {
+                "source-map": {
+                  "version": "0.1.43",
+                  "from": "source-map@>=0.1.7 <0.2.0",
+                  "resolved": "https://registry.npmjs.org/source-map/-/source-map-0.1.43.tgz",
+                  "dependencies": {
+                    "amdefine": {
+                      "version": "0.1.0",
+                      "from": "amdefine@>=0.0.4",
+                      "resolved": "https://registry.npmjs.org/amdefine/-/amdefine-0.1.0.tgz"
+                    }
+                  }
+                },
+                "optimist": {
+                  "version": "0.3.7",
+                  "from": "optimist@>=0.3.5 <0.4.0",
+                  "resolved": "https://registry.npmjs.org/optimist/-/optimist-0.3.7.tgz",
+                  "dependencies": {
+                    "wordwrap": {
+                      "version": "0.0.2",
+                      "from": "wordwrap@>=0.0.2 <0.1.0",
+                      "resolved": "https://registry.npmjs.org/wordwrap/-/wordwrap-0.0.2.tgz"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "void-elements": {
+          "version": "2.0.1",
+          "from": "void-elements@>=2.0.1 <2.1.0",
+          "resolved": "https://registry.npmjs.org/void-elements/-/void-elements-2.0.1.tgz"
+        },
+        "with": {
+          "version": "4.0.1",
+          "from": "with@>=4.0.0 <4.1.0",
+          "resolved": "https://registry.npmjs.org/with/-/with-4.0.1.tgz",
+          "dependencies": {
+            "acorn": {
+              "version": "0.11.0",
+              "from": "acorn@>=0.11.0 <0.12.0",
+              "resolved": "https://registry.npmjs.org/acorn/-/acorn-0.11.0.tgz"
+            },
+            "acorn-globals": {
+              "version": "1.0.2",
+              "from": "acorn-globals@>=1.0.1 <2.0.0",
+              "resolved": "https://registry.npmjs.org/acorn-globals/-/acorn-globals-1.0.2.tgz"
+            }
+          }
         }
       }
     },
@@ -1691,7 +1828,7 @@
     },
     "places": {
       "version": "0.0.1",
-      "from": "../../../var/folders/_m/01nxkz5132sfpqg8cdzc8wl00000gn/T/npm-9898-5a40990d/git-cache-aebc844e12d4/b157129718dd6ad399d28ae04a7d84d880b4c054",
+      "from": "../../../var/folders/_m/01nxkz5132sfpqg8cdzc8wl00000gn/T/npm-10783-b6926598/git-cache-8d3c2c45452e/b157129718dd6ad399d28ae04a7d84d880b4c054",
       "resolved": "git://github.com/artsy/places#b157129718dd6ad399d28ae04a7d84d880b4c054"
     },
     "q": {
