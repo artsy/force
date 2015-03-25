@@ -5,7 +5,7 @@
 #
 
 { PORT, NODE_ENV, RESTART_INTERVAL } = require "./config"
-require 'newrelic' unless NODE_ENV is 'development'
+require 'newrelic' if NODE_ENV in ['production','staging']
 
 require './findleak'
 
