@@ -51,7 +51,8 @@
     "ua-parser": "*",
     "underscore": "*",
     "underscore.string": "*",
-    "graceful-fs": "*"
+    "graceful-fs": "*",
+    "spark-md5": "*"
   },
   "devDependencies": {
     "zombie": "*",
@@ -62,7 +63,6 @@
     "typeahead.js": "*",
     "sqwish": "*",
     "stylus": "*",
-    "spark-md5": "*",
     "should": "*",
     "sinon": "*",
     "rewire": "*",
