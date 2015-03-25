@@ -1,5 +1,5 @@
 jade = require 'jade'
-fs = require 'graceful-fs'
+fs = require 'fs'
 benv = require 'benv'
 { resolve } = require 'path'
 sinon = require 'sinon'

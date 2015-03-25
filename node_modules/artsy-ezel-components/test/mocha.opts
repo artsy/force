@@ -1,4 +1,0 @@
---require should
---ui bdd
---timeout 10000
---compilers coffee:coffee-script/register

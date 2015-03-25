@@ -9,7 +9,7 @@ request = require 'superagent'
 
 module.exports = (req, res, next) ->
   if req.query._escaped_fragment_?
-    request.get(reflectionUrl(req)).end (resp) ->
+    request.get(reflectionUrl(req)).end (err, resp) ->
       if resp.status is 200 then res.send(resp.text) else next()
   else
     next()

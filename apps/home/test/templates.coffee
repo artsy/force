@@ -1,6 +1,6 @@
 jade = require 'jade'
 { resolve } = require 'path'
-fs = require 'graceful-fs'
+fs = require 'fs'
 Backbone = require 'backbone'
 
 render = ->

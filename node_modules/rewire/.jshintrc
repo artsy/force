@@ -1,6 +1,0 @@
-{
-    "browser": true,
-    "node": true,
-    "expr": true,
-    "globals": ["describe", "it", "before", "after", "beforeEach", "afterEach"]
-}

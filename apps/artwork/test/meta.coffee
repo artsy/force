@@ -1,4 +1,4 @@
-fs = require 'graceful-fs'
+fs = require 'fs'
 jade = require 'jade'
 sinon = require 'sinon'
 Artwork = require '../../../models/artwork'

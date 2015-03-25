@@ -29,6 +29,6 @@ describe 'Setup', ->
     closeServer()
 
   it 'returns an ok status when /system/up pinged', (done) ->
-    request.get('http://localhost:5000/system/up').end (res) ->
+    request.get('http://localhost:5000/system/up').end (err, res) ->
       JSON.parse(res.text).nodejs.should.be.ok
       done()

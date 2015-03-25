@@ -4,7 +4,7 @@
 # be abstracted into modules under /lib.
 #
 
-{ PORT, NODE_ENV } = require "./config"
+{ PORT, NODE_ENV, RESTART_INTERVAL } = require "./config"
 require 'newrelic' unless NODE_ENV is 'development'
 
 require './findleak'
@@ -26,3 +26,6 @@ cache.setup ->
   app.listen PORT, ->
     console.log "Listening on port " + PORT
     process.send? "listening"
+
+# Reboot for memory leak (╥﹏╥)
+setTimeout process.exit, RESTART_INTERVAL

@@ -1,4 +1,4 @@
-fs = require 'graceful-fs'
+fs = require 'fs'
 request = require 'superagent'
 { resolve } = require 'path'
 cache = require '../../../lib/cache'
@@ -18,7 +18,7 @@ module.exports = class Reflection
       return next() if err?
       return cb(cached) if cached?
 
-      @request().end (res) =>
+      @request().end (err, res) =>
         return next() if res.error
         cb (response = @injectAnalytics res.text)
         cache.set @url(), response

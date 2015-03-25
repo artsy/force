@@ -3,7 +3,7 @@ $ = require 'cheerio'
 benv = require 'benv'
 jade = require 'jade'
 path = require 'path'
-fs = require 'graceful-fs'
+fs = require 'fs'
 CurrentUser = require '../../../models/current_user'
 { fabricate } = require 'antigravity'
 

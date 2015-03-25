@@ -50,6 +50,7 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
         artworks = new Artworks artworks
         $el = @$("[data-layout=overflow_fillwidth]" +
           " li[data-id=#{artworks.first().get '_id'}]").parent()
+        console.log 'mooo', $el.length
         return unless $el.length
         @fillwidth $el
 
@@ -59,19 +60,9 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
         $(this).width $(this).children('img').width()
 
   fillwidth: (el) ->
-    return @$(el).parent().removeClass('is-loading') if $(window).width() < 700
     $list = @$(el)
-    $list.fillwidthLite
-      gutterSize: 30
-      apply: (img) ->
-        img.$el.closest('li').css(padding: '0 15px').width(img.width)
-      done: ->
-        # Make sure the captions line up in case rounding off skewed things
-        tallest = _.max $list.find('.artwork-item-image-container').map(->
-          $(this).height()).toArray()
-        $list.find('.artwork-item-image-container').each -> $(this).height tallest
-        # Remove loading state
-        $list.parent().removeClass('is-loading')
+    console.log $list, moo
+    $list.fillwidthLite()
 
   checkEditable: ->
     @user = CurrentUser.orNull()

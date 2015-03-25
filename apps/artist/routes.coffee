@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Q = require 'q'
-fs = require 'graceful-fs'
+fs = require 'fs'
 { resolve } = require 'path'
 Backbone = require 'backbone'
 { stringifyJSONForWeb } = require '../../components/util/json'
