@@ -11,7 +11,7 @@ header#main-layout-header(class= sd.HEADER_CLASS ? sd.HEADER_CLASS : '')
             | museums, and private collections.
       i#main-layout-welcome-logo.icon-logotype
 
-  nav.mlh-navbar( class=(sd.REDESIGNED_HEADER === 'old' ? 'is-search-expanded' : undefined) )
+  nav.mlh-navbar
     a#main-layout-header-home-logo( href='/', class=activeClass('/') ): i.icon-logo
     #main-layout-header-left.mlh-navbar-cell
       include ../../../search_bar/templates/index
