@@ -13,35 +13,27 @@ describe 'Fair Organization routes', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    @fair = new Fair fabricate 'fair', start_at: moment().subtract(1, 'day')
+    @fairOrg = new Fair fabricate 'fair_organizer'
     @req = { params: { id: 'the-armory-show-temp' }, query: {} }
     @res =
       render: sinon.stub()
       redirect: sinon.stub()
       locals:
-        sd: { API_URL: 'http://localhost:5000', FAIR: @fair }
-        fair: @fair
+        sd: { API_URL: 'http://localhost:5000', FAIR_ORG: @fairOrg }
+        fairOrg: @fairOrg
         profile: new Profile(fabricate 'fair_profile')
     @next = sinon.stub()
 
   afterEach ->
     Backbone.sync.restore()
 
-  describe '#all', ->
-    it 'next is called when a fair has already opened', ->
-      @fair.hasOpened().should.be.true
+
+  describe '#overview', ->
+    it 'next is called without a fair org', ->
+      delete @res.locals.fairOrg
       routes.overview @req, @res, (next = sinon.stub())
       next.called.should.be.ok
 
-    it 'renders the page when the fair has not yet opened', ->
-      @res.locals.fair.unset 'start_at'
-      @res.locals.fair.hasOpened().should.not.be.ok
-      routes.overview @req, @res, (next = sinon.stub())
-      next.called.should.not.be.ok
-
-  describe '#overview', ->
-    it 'nexts to the fair if a microsite param is added', ->
-      @req.query.microsite = true
-      routes.overview @req, @res, @next
-      @next.called.should.be.true
-      @res.render.called.should.be.false
+    it 'renders the overview template', ->
+      routes.overview @req, @res
+      @res.render.args[0][0].should.equal 'overview'

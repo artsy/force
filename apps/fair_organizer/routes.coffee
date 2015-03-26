@@ -1,12 +1,12 @@
 _ = require 'underscore'
 Q = require 'q'
 Profile = require '../../models/profile.coffee'
+FairOrganizer = require '../../models/fair_organizer.coffee'
+Fairs = require '../../collections/fairs.coffee'
 Fair = require '../../models/fair.coffee'
 cache = require '../../lib/cache'
 OrderedSets = require '../../collections/ordered_sets'
 Articles = require '../../collections/articles'
-ProfileFixture = require './fixtures/profile.json'
-FairFixture = require './fixtures/fair.json'
 moment = require 'moment'
 
 representation = (fair) ->
@@ -21,60 +21,55 @@ representation = (fair) ->
 @overview = (req, res, next) ->
   # go to normal fair page when this fair switches to open or an admin adds
   # a microsite=true param
-  return next() if not res.locals.fair or res.locals.fair.hasOpened()
+  return next() if not res.locals.fairOrg
   res.locals.sd.HEADER_CLASS = 'force-position-absolute'
   res.render 'overview'
 
-#
-# For now this is specific to the Armory Show, eventually can be adapted to suit any fair organizer.
-#
-@fetchFairData = (req, res, next) ->
-  data = {}
-  data.access_token = req.user.get('accessToken') if req.user
+@fetchFairOrgData = (req, res, next) ->
+  profile = res.locals.profile
 
-  # TODO: remove this grossness ASAP
-  # -------------------------------
-  # in case you are wondering....
-  # FairOrganizers are not administerable yet
-  # and these are last minute hacks so Fair admins can
-  # update the Armory Show Profile without affecting this page
-  # :( :( :(
-  fair = new Fair FairFixture
+  return next() unless profile?.isFairOrganizer()
 
-  return next() if moment().isAfter(moment('2-25-2015').add(5, 'hours')) or req.query.microsite
+  # the fair fair_organizer data is pretty minor,
+  # all of its attributes are included in the initial
+  # profile fetch
+  fairOrg = new FairOrganizer profile.get('owner')
 
-  profile = new Profile ProfileFixture
+  pastFairs = new Fairs
 
-  res.locals.profile = profile
-  res.locals.sd.PROFILE = profile.toJSON()
-  res.locals.jsonLD = profile.toJSONLD()
+  # This grabs all the past fairs by passing fair_organizer_id
+  # to the /fairs endpoing
+  request = pastFairs.fetch
+    data:
+      fair_organizer_id: fairOrg.id
+    success: (models, response, options)->
+      articles = new Articles()
 
-  armory2013 = new Fair id: 'the-armory-show-2013'
-  armory2014 = new Fair id: 'the-armory-show-2014'
-  fairIds = ['505797122a5b7500020006a0', '52617c6c8b3b81f094000013',
-    '54871f8672616970632a0400']
+      # fetch the past fairs and their respective representations
+      # to get the two small images
+      # also, grab all the articles associated with the fair from positron
+      promises = _.compact _.flatten [
+        pastFairs.map representation
+        articles.fetch(
+          cache: true
+          data: { published: true, fair_ids: pastFairs.pluck('_id'), sort: '-published_at' }
+        )
+      ]
 
-  pastFairs = [armory2014, armory2013]
-  articles = new Articles()
-
-  # fetch the past fairs and their respective representations to get the two small images
-  promises = _.compact _.flatten [
-    _.map pastFairs, (fair)-> fair.fetch cache: true
-    _.map pastFairs, representation
-    articles.fetch(
-      cache: true
-      data: { published: true, fair_ids: fairIds, sort: '-published_at' }
-    )
-  ]
-
-  Q.allSettled(promises).then(->
-    res.locals.sd.FAIR_IDS = fairIds
-    res.locals.sd.FAIR = fair.toJSON()
-    res.locals.sd.ARTICLES = articles.toJSON()
-    res.locals.fair = fair
-    res.locals.coverImage = profile.coverImage()
-    res.locals.pastFairs = pastFairs
-    res.locals.articles = articles.models
-    next()
-  ).done()
+      Q.allSettled(promises).then(->
+        res.locals.newestFair = res.locals.sd.FAIR = pastFairs.models[0]
+        res.locals.sd.FAIR_IDS = pastFairs.pluck('_id')
+        res.locals.sd.FAIR_ORGANIZER = fairOrg.toJSON()
+        res.locals.sd.ARTICLES = articles.toJSON()
+        res.locals.fairOrg = fairOrg
+        res.locals.coverImage = profile.coverImage()
+        # pastFairs is the array of links to the previous fairs,
+        # since this should only include fairs that have microsites,
+        # we filter on has_full_feature.
+        # this also allows us to set a fair for the future and
+        # have a countdown to the preview
+        res.locals.pastFairs = pastFairs.filter (model) -> model.get('has_full_feature')
+        res.locals.articles = articles.models
+        next()
+      ).done()
 
