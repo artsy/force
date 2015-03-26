@@ -53,7 +53,8 @@
     "underscore.string": "*",
     "graceful-fs": "*",
     "spark-md5": "*",
-    "jade": "*"
+    "jade": "*",
+    "antigravity": "0.0.0"
   },
   "devDependencies": {
     "zombie": "*",
