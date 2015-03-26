@@ -7,8 +7,8 @@ Meta
 ---
 
 * __State:__ production
-* __Production:__ [https://m.artsy.net/](https://m.artsy.net/) | [Heroku](https://dashboard.heroku.com/apps/force-production/resources)
-* __Staging:__ [https://m-staging.artsy.net/](https://m-staging.artsy.net/) | [Heroku](https://dashboard.heroku.com/apps/force-staging/resources)
+* __Production:__ [https://www.artsy.net/](https://www.artsy.net/) | [Heroku](https://dashboard.heroku.com/apps/force-production/resources)
+* __Staging:__ [https://staging.artsy.net/](https://staging.artsy.net/) | [Heroku](https://dashboard.heroku.com/apps/force-staging/resources)
 * __Github:__ [https://github.com/artsy/force/](https://github.com/artsy/force/)
 * __CI:__ [Semaphore](https://semaphoreapp.com/artsy/force/); merged PRs to artsy/force#master are automatically deployed to staging; production is manually deployed from semaphore
 * __Point People:__ [@craigspaeth](https://github.com/craigspaeth), [@dzucconi](https://github.com/dzucconi), [@broskoski](https://github.com/broskoski), [@kanaabe](https://github.com/kanaabe)
