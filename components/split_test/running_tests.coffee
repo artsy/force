@@ -13,14 +13,6 @@
 # module.exports = {}
 
 module.exports =
-  redesigned_header:
-    key: 'redesigned_header'
-    dimension: 'dimension2'
-    outcomes:
-      old: 0.5
-      new: 0.5
-    edge: 'old'
-
   gallery_partnerships_apply:
     key: 'gallery_partnerships_apply'
     outcomes:
