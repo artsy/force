@@ -12,11 +12,11 @@ app.locals.resize = resize
 app.locals.crop = crop
 app.set 'views', __dirname + '/templates'
 app.set 'view engine', 'jade'
-getFairData = [
+
+getFairOrgData = [
   timeout('25s')
-  routes.fetchFairData
+  routes.fetchFairOrgData
   (req, res, next) -> next() unless req.timedout
 ]
 
-# just a route to for testing for now
-app.get '/the-armory-show', getFairData, routes.overview
+app.get '/:id', getFairOrgData, routes.overview
