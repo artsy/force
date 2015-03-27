@@ -23,7 +23,6 @@ redirect = (req, res, next) ->
   else
     next()
 
-router.get '/article/:id', isResponsive
 router.get '/apply*', isResponsive
 router.get '/gallery-insights*', isResponsive
 router.get '/auction/:id/buyers-premium', isResponsive
