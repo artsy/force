@@ -35,9 +35,10 @@ module.exports.FairOrganizerView = class FairOrganizerView extends Backbone.View
     'click .fair-organizer-top__notify': 'onGetNotified'
 
   moreArticles: ->
+    console.log sd.FAIR_IDS
     @articles.fetch
       remove: false
-      data:
+      data: $.param
         fair_ids: sd.FAIR_IDS
         published: true
         offset: 10 * (@page += 1)
