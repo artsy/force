@@ -9,7 +9,7 @@
     },
     "artsy-backbone-mixins": {
       "version": "0.0.20",
-      "from": "../../../var/folders/_m/01nxkz5132sfpqg8cdzc8wl00000gn/T/npm-10783-b6926598/git-cache-646e48af5348/be65bf983ac00d4eda3e967bfe644e7551cba6e7",
+      "from": "../../../var/folders/50/tmf8zhsx1x10gxpqs9lxh_fr0000gn/T/npm-16384-47ab4c18/git-cache-001d708c3378/be65bf983ac00d4eda3e967bfe644e7551cba6e7",
       "resolved": "git://github.com/artsy/artsy-backbone-mixins.git#be65bf983ac00d4eda3e967bfe644e7551cba6e7",
       "dependencies": {
         "marked": {
@@ -25,18 +25,18 @@
       }
     },
     "artsy-error-handler": {
-      "version": "0.0.2",
-      "from": "../../../var/folders/_m/01nxkz5132sfpqg8cdzc8wl00000gn/T/npm-10783-b6926598/git-cache-82b94db9ec4b/991664731c0e6a3e51198fb69dc1d02ecdb98735",
-      "resolved": "git://github.com/artsy/artsy-error-handler.git#991664731c0e6a3e51198fb69dc1d02ecdb98735"
+      "version": "0.0.3",
+      "from": "../../../var/folders/50/tmf8zhsx1x10gxpqs9lxh_fr0000gn/T/npm-16384-47ab4c18/git-cache-621124011d37/9222bb83aca091456f5336f78ef4272bd57cd181",
+      "resolved": "git://github.com/artsy/artsy-error-handler.git#9222bb83aca091456f5336f78ef4272bd57cd181"
     },
     "artsy-ezel-components": {
-      "version": "0.0.1",
-      "from": "../../../var/folders/_m/01nxkz5132sfpqg8cdzc8wl00000gn/T/npm-10783-b6926598/git-cache-342c64fbc2a9/cc5d67ff679531f0e4788e305e98cc0d0219cf71",
-      "resolved": "git://github.com/artsy/artsy-ezel-components.git#cc5d67ff679531f0e4788e305e98cc0d0219cf71"
+      "version": "0.0.2",
+      "from": "../../../var/folders/50/tmf8zhsx1x10gxpqs9lxh_fr0000gn/T/npm-16384-47ab4c18/git-cache-edcf078ef926/a9e81d625c3e9b4a84217289d48972961e9016f5",
+      "resolved": "git://github.com/artsy/artsy-ezel-components.git#a9e81d625c3e9b4a84217289d48972961e9016f5"
     },
     "artsy-passport": {
       "version": "0.1.9",
-      "from": "../../../var/folders/_m/01nxkz5132sfpqg8cdzc8wl00000gn/T/npm-10783-b6926598/git-cache-7efb7e955a20/1d3cf68cb0e9b05f4337d89330346c083d04c28b",
+      "from": "../../../var/folders/50/tmf8zhsx1x10gxpqs9lxh_fr0000gn/T/npm-16384-47ab4c18/git-cache-9bce648d0b2e/1d3cf68cb0e9b05f4337d89330346c083d04c28b",
       "resolved": "git://github.com/artsy/artsy-passport.git#1d3cf68cb0e9b05f4337d89330346c083d04c28b",
       "dependencies": {
         "express": {
@@ -467,7 +467,7 @@
     },
     "artsy-xapp-middleware": {
       "version": "0.1.2",
-      "from": "../../../var/folders/_m/01nxkz5132sfpqg8cdzc8wl00000gn/T/npm-10783-b6926598/git-cache-8af5ccfef84b/c2817ddaeb9f84d788b075e7df325c75ef065152",
+      "from": "../../../var/folders/50/tmf8zhsx1x10gxpqs9lxh_fr0000gn/T/npm-16384-47ab4c18/git-cache-8a51909877f8/c2817ddaeb9f84d788b075e7df325c75ef065152",
       "resolved": "git://github.com/artsy/artsy-xapp-middleware.git#c2817ddaeb9f84d788b075e7df325c75ef065152"
     },
     "backbone": {
@@ -1325,7 +1325,7 @@
           "dependencies": {
             "async": {
               "version": "0.2.10",
-              "from": "async@>=0.2.9 <0.3.0",
+              "from": "async@>=0.2.6 <0.3.0",
               "resolved": "https://registry.npmjs.org/async/-/async-0.2.10.tgz"
             },
             "deep-equal": {
@@ -1465,7 +1465,7 @@
     },
     "geoformatter": {
       "version": "0.0.0",
-      "from": "../../../var/folders/_m/01nxkz5132sfpqg8cdzc8wl00000gn/T/npm-10783-b6926598/git-cache-3cf338c5fefb/8861ae0a8efb36608a755f5be65360d4ba49ff50",
+      "from": "../../../var/folders/50/tmf8zhsx1x10gxpqs9lxh_fr0000gn/T/npm-16384-47ab4c18/git-cache-8c8c7901dd09/8861ae0a8efb36608a755f5be65360d4ba49ff50",
       "resolved": "git://github.com/dzucconi/geo_formatter.git#8861ae0a8efb36608a755f5be65360d4ba49ff50"
     },
     "graceful-fs": {
@@ -1828,7 +1828,7 @@
     },
     "places": {
       "version": "0.0.1",
-      "from": "../../../var/folders/_m/01nxkz5132sfpqg8cdzc8wl00000gn/T/npm-10783-b6926598/git-cache-8d3c2c45452e/b157129718dd6ad399d28ae04a7d84d880b4c054",
+      "from": "../../../var/folders/50/tmf8zhsx1x10gxpqs9lxh_fr0000gn/T/npm-16384-47ab4c18/git-cache-2be8b2ba4b07/b157129718dd6ad399d28ae04a7d84d880b4c054",
       "resolved": "git://github.com/artsy/places#b157129718dd6ad399d28ae04a7d84d880b4c054"
     },
     "q": {
