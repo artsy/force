@@ -64,5 +64,5 @@ describe 'Article routes', ->
 
     it 'lets 404 through', ->
       routes.redirectPost @req, @res, @next
-      Backbone.sync.args[0][2].error body: status: 404
+      Backbone.sync.args[0][2].error status: 404
       @next.called.should.be.ok
