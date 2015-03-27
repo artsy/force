@@ -64,16 +64,15 @@ module.exports = class Fair extends Backbone.Model
       error: ->
         options?.error()
 
-  fetchArtists: (options) ->
+  fetchArtists: (options = {}) ->
     artists = new @aToZCollection('artist')
     artists.fetchUntilEnd
       url: "#{@url()}/artists"
       cache: true
       success: ->
         aToZGroup = artists.groupByAlphaWithColumns 3
-        options?.success aToZGroup, artists
-      error: ->
-        options?.error()
+        options.success aToZGroup, artists
+      error: options.error
 
   fetchSections: (options) ->
     sections = new Backbone.Collection
