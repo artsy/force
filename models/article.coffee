@@ -6,8 +6,11 @@ sd = require('sharify').data
 Artwork = require '../models/artwork.coffee'
 Artworks = require '../collections/artworks.coffee'
 { crop, resize } = require '../components/resizer/index.coffee'
+Relations = require './mixins/relations/article.coffee'
 
 module.exports = class Article extends Backbone.Model
+  _.extend @prototype, Relations
+
   urlRoot: "#{sd.POSITRON_URL}/api/articles"
 
   defaults:
