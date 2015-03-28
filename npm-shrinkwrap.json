@@ -9,7 +9,7 @@
     },
     "artsy-backbone-mixins": {
       "version": "0.0.20",
-      "from": "../../../var/folders/_m/01nxkz5132sfpqg8cdzc8wl00000gn/T/npm-15246-8bad354d/git-cache-3c562d943820/be65bf983ac00d4eda3e967bfe644e7551cba6e7",
+      "from": "../../../var/folders/50/tmf8zhsx1x10gxpqs9lxh_fr0000gn/T/npm-33511-b0805cc7/git-cache-438dc4877909/be65bf983ac00d4eda3e967bfe644e7551cba6e7",
       "resolved": "git://github.com/artsy/artsy-backbone-mixins.git#be65bf983ac00d4eda3e967bfe644e7551cba6e7",
       "dependencies": {
         "marked": {
@@ -19,24 +19,24 @@
         },
         "qs": {
           "version": "2.4.1",
-          "from": "qs@*",
+          "from": "qs@2.4.1",
           "resolved": "https://registry.npmjs.org/qs/-/qs-2.4.1.tgz"
         }
       }
     },
     "artsy-error-handler": {
       "version": "0.0.3",
-      "from": "../../../var/folders/_m/01nxkz5132sfpqg8cdzc8wl00000gn/T/npm-15246-8bad354d/git-cache-12384426d0b4/9222bb83aca091456f5336f78ef4272bd57cd181",
+      "from": "../../../var/folders/50/tmf8zhsx1x10gxpqs9lxh_fr0000gn/T/npm-33511-b0805cc7/git-cache-2798fed91447/9222bb83aca091456f5336f78ef4272bd57cd181",
       "resolved": "git://github.com/artsy/artsy-error-handler.git#9222bb83aca091456f5336f78ef4272bd57cd181"
     },
     "artsy-ezel-components": {
       "version": "0.0.2",
-      "from": "../../../var/folders/_m/01nxkz5132sfpqg8cdzc8wl00000gn/T/npm-15246-8bad354d/git-cache-47a8d32cda90/a9e81d625c3e9b4a84217289d48972961e9016f5",
+      "from": "../../../var/folders/50/tmf8zhsx1x10gxpqs9lxh_fr0000gn/T/npm-33511-b0805cc7/git-cache-12293b67bfd4/a9e81d625c3e9b4a84217289d48972961e9016f5",
       "resolved": "git://github.com/artsy/artsy-ezel-components.git#a9e81d625c3e9b4a84217289d48972961e9016f5"
     },
     "artsy-passport": {
       "version": "0.1.9",
-      "from": "../../../var/folders/_m/01nxkz5132sfpqg8cdzc8wl00000gn/T/npm-15246-8bad354d/git-cache-7d26ef1b5252/1d3cf68cb0e9b05f4337d89330346c083d04c28b",
+      "from": "../../../var/folders/50/tmf8zhsx1x10gxpqs9lxh_fr0000gn/T/npm-33511-b0805cc7/git-cache-48224a71cfed/1d3cf68cb0e9b05f4337d89330346c083d04c28b",
       "resolved": "git://github.com/artsy/artsy-passport.git#1d3cf68cb0e9b05f4337d89330346c083d04c28b",
       "dependencies": {
         "express": {
@@ -467,7 +467,7 @@
     },
     "artsy-xapp-middleware": {
       "version": "0.1.2",
-      "from": "../../../var/folders/_m/01nxkz5132sfpqg8cdzc8wl00000gn/T/npm-15246-8bad354d/git-cache-b0f839a00df9/c2817ddaeb9f84d788b075e7df325c75ef065152",
+      "from": "../../../var/folders/50/tmf8zhsx1x10gxpqs9lxh_fr0000gn/T/npm-33511-b0805cc7/git-cache-59d50961eac1/c2817ddaeb9f84d788b075e7df325c75ef065152",
       "resolved": "git://github.com/artsy/artsy-xapp-middleware.git#c2817ddaeb9f84d788b075e7df325c75ef065152"
     },
     "backbone": {
@@ -502,7 +502,7 @@
         },
         "debug": {
           "version": "2.1.3",
-          "from": "debug@>=2.1.3 <2.2.0",
+          "from": "debug@>=2.0.0 <3.0.0",
           "resolved": "https://registry.npmjs.org/debug/-/debug-2.1.3.tgz",
           "dependencies": {
             "ms": {
@@ -671,7 +671,7 @@
       "dependencies": {
         "debug": {
           "version": "2.1.3",
-          "from": "debug@>=2.1.0 <2.2.0",
+          "from": "debug@>=2.1.3 <2.2.0",
           "resolved": "https://registry.npmjs.org/debug/-/debug-2.1.3.tgz"
         },
         "http-errors": {
@@ -681,7 +681,7 @@
           "dependencies": {
             "inherits": {
               "version": "2.0.1",
-              "from": "inherits@>=2.0.1 <2.1.0",
+              "from": "inherits@>=2.0.0 <3.0.0",
               "resolved": "https://registry.npmjs.org/inherits/-/inherits-2.0.1.tgz"
             },
             "statuses": {
@@ -739,7 +739,7 @@
         },
         "debug": {
           "version": "2.1.3",
-          "from": "debug@>=2.1.0 <2.2.0",
+          "from": "debug@>=2.1.3 <2.2.0",
           "resolved": "https://registry.npmjs.org/debug/-/debug-2.1.3.tgz",
           "dependencies": {
             "ms": {
@@ -894,7 +894,7 @@
         "path-to-regexp": {
           "version": "0.1.3",
           "from": "path-to-regexp@0.1.3",
-          "resolved": "https://registry.npmjs.org/path-to-regexp/-/path-to-regexp-0.1.3.tgz"
+          "resolved": "http://registry.npmjs.org/path-to-regexp/-/path-to-regexp-0.1.3.tgz"
         },
         "proxy-addr": {
           "version": "1.0.7",
@@ -1451,7 +1451,7 @@
             },
             "pkginfo": {
               "version": "0.3.0",
-              "from": "pkginfo@>=0.3.0 <0.4.0",
+              "from": "pkginfo@>=0.0.0 <1.0.0",
               "resolved": "https://registry.npmjs.org/pkginfo/-/pkginfo-0.3.0.tgz"
             },
             "stack-trace": {
@@ -1465,7 +1465,7 @@
     },
     "geoformatter": {
       "version": "0.0.0",
-      "from": "../../../var/folders/_m/01nxkz5132sfpqg8cdzc8wl00000gn/T/npm-15246-8bad354d/git-cache-597c27daceca/8861ae0a8efb36608a755f5be65360d4ba49ff50",
+      "from": "../../../var/folders/50/tmf8zhsx1x10gxpqs9lxh_fr0000gn/T/npm-33511-b0805cc7/git-cache-7164b3180836/8861ae0a8efb36608a755f5be65360d4ba49ff50",
       "resolved": "git://github.com/dzucconi/geo_formatter.git#8861ae0a8efb36608a755f5be65360d4ba49ff50"
     },
     "graceful-fs": {
@@ -1714,7 +1714,7 @@
         },
         "debug": {
           "version": "2.1.3",
-          "from": "debug@>=2.1.0 <2.2.0",
+          "from": "debug@>=2.1.3 <2.2.0",
           "resolved": "https://registry.npmjs.org/debug/-/debug-2.1.3.tgz",
           "dependencies": {
             "ms": {
@@ -1744,28 +1744,28 @@
       }
     },
     "newrelic": {
-      "version": "1.17.3",
+      "version": "1.18.0",
       "from": "newrelic@*",
-      "resolved": "https://registry.npmjs.org/newrelic/-/newrelic-1.17.3.tgz",
+      "resolved": "https://registry.npmjs.org/newrelic/-/newrelic-1.18.0.tgz",
       "dependencies": {
         "json-stringify-safe": {
           "version": "5.0.0",
-          "from": "json-stringify-safe@^5.0.0",
+          "from": "json-stringify-safe@>=5.0.0 <6.0.0",
           "resolved": "https://registry.npmjs.org/json-stringify-safe/-/json-stringify-safe-5.0.0.tgz"
         },
         "https-proxy-agent": {
           "version": "0.3.5",
-          "from": "https-proxy-agent@^0.3.5",
+          "from": "https-proxy-agent@>=0.3.5 <0.4.0",
           "resolved": "https://registry.npmjs.org/https-proxy-agent/-/https-proxy-agent-0.3.5.tgz",
           "dependencies": {
             "agent-base": {
               "version": "1.0.1",
-              "from": "agent-base@~1.0.1",
+              "from": "agent-base@>=1.0.1 <1.1.0",
               "resolved": "https://registry.npmjs.org/agent-base/-/agent-base-1.0.1.tgz"
             },
             "debug": {
               "version": "1.0.4",
-              "from": "debug@~1.0.0",
+              "from": "debug@>=1.0.0 <1.1.0",
               "resolved": "https://registry.npmjs.org/debug/-/debug-1.0.4.tgz",
               "dependencies": {
                 "ms": {
@@ -1777,29 +1777,29 @@
             },
             "extend": {
               "version": "1.2.1",
-              "from": "extend@~1.2.1",
+              "from": "extend@>=1.2.1 <1.3.0",
               "resolved": "https://registry.npmjs.org/extend/-/extend-1.2.1.tgz"
             }
           }
         },
         "semver": {
-          "version": "4.3.1",
-          "from": "semver@^4.2.0",
-          "resolved": "https://registry.npmjs.org/semver/-/semver-4.3.1.tgz"
+          "version": "4.3.3",
+          "from": "semver@>=4.2.0 <5.0.0",
+          "resolved": "https://registry.npmjs.org/semver/-/semver-4.3.3.tgz"
         },
         "yakaa": {
           "version": "1.0.1",
-          "from": "yakaa@^1.0.1",
+          "from": "yakaa@>=1.0.1 <2.0.0",
           "resolved": "https://registry.npmjs.org/yakaa/-/yakaa-1.0.1.tgz"
         },
         "readable-stream": {
           "version": "1.1.13",
-          "from": "readable-stream@^1.1.13",
+          "from": "readable-stream@>=1.1.13 <2.0.0",
           "resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-1.1.13.tgz",
           "dependencies": {
             "core-util-is": {
               "version": "1.0.1",
-              "from": "core-util-is@~1.0.0",
+              "from": "core-util-is@>=1.0.0 <1.1.0",
               "resolved": "https://registry.npmjs.org/core-util-is/-/core-util-is-1.0.1.tgz"
             },
             "isarray": {
@@ -1809,12 +1809,12 @@
             },
             "string_decoder": {
               "version": "0.10.31",
-              "from": "string_decoder@~0.10.x",
+              "from": "string_decoder@>=0.10.0 <0.11.0",
               "resolved": "https://registry.npmjs.org/string_decoder/-/string_decoder-0.10.31.tgz"
             },
             "inherits": {
               "version": "2.0.1",
-              "from": "inherits@2",
+              "from": "inherits@>=2.0.1 <2.1.0",
               "resolved": "https://registry.npmjs.org/inherits/-/inherits-2.0.1.tgz"
             }
           }
@@ -1828,7 +1828,7 @@
     },
     "places": {
       "version": "0.0.1",
-      "from": "../../../var/folders/_m/01nxkz5132sfpqg8cdzc8wl00000gn/T/npm-15246-8bad354d/git-cache-bf7fa4967e3f/b157129718dd6ad399d28ae04a7d84d880b4c054",
+      "from": "../../../var/folders/50/tmf8zhsx1x10gxpqs9lxh_fr0000gn/T/npm-33511-b0805cc7/git-cache-0690e0099451/b157129718dd6ad399d28ae04a7d84d880b4c054",
       "resolved": "git://github.com/artsy/places#b157129718dd6ad399d28ae04a7d84d880b4c054"
     },
     "q": {
@@ -1980,7 +1980,7 @@
         },
         "debug": {
           "version": "2.1.3",
-          "from": "debug@>=2.0.0 <3.0.0",
+          "from": "debug@>=2.1.3 <2.2.0",
           "resolved": "https://registry.npmjs.org/debug/-/debug-2.1.3.tgz",
           "dependencies": {
             "ms": {

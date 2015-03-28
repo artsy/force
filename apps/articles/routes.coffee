@@ -11,6 +11,7 @@ embedVideo = require 'embed-video'
       published: true
       limit: 50
       sort: '-published_at'
+      featured: true
     error: res.backboneError
     success: (articles) ->
       res.locals.sd.ARTICLES = articles.toJSON()

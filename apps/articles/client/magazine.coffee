@@ -14,5 +14,6 @@ module.exports.init = ->
       limit: 50
       published: true
       author_id: '503f86e462d56000020002cc'
+      featured: true
 
   view.render()
