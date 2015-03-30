@@ -25,7 +25,7 @@ describe 'ArtworkFilterView', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
     @model = new Artist fabricate 'artist', id: 'foo-bar'
-    @view = new @ArtworkFilterView model: @model
+    @view = new @ArtworkFilterView model: @model, mode: 'grid'
 
   afterEach ->
     Backbone.sync.restore()
@@ -55,6 +55,9 @@ describe 'ArtworkFilterView', ->
     it 'removes itself if the initial filter state errors', ->
       Backbone.sync.args[0][2].error {}
       @view.remove.called.should.be.true
+
+    it 'starts in grid mode', ->
+      @view.viewMode.get('mode').should.equal 'grid'
 
   describe '#renderFilter', ->
     beforeEach ->
@@ -173,6 +176,18 @@ describe 'ArtworkFilterView', ->
       @view.$('input[type="checkbox"]').first().click()
       @view.filter.selected.attributes.should.eql {}
       _.last(Backbone.sync.args)[2].data.should.not.containEql price_range: '-1:1000000000000'
+
+  describe '#changeViewMode', ->
+    before ->
+      sinon.spy @ArtworkFilterView::, 'renderColumns'
+
+    it 'sets the view mode when the toggle is clicked', ->
+      @view.$('.icon-list').click()
+      @view.viewMode.get 'mode', 'list'
+
+    it 're-renders the artworks when the view mode is changed', ->
+      @view.viewMode.set 'mode', 'list'
+      @view.renderColumns.called.should.be.true
 
   describe '#setButtonState', ->
     beforeEach ->
