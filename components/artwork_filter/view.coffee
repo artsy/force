@@ -19,13 +19,14 @@ module.exports = class ArtworkFilterView extends Backbone.View
     'click input[type="checkbox"]': 'toggleBoolean'
     'click #artwork-see-more': 'clickSeeMore'
     'click .bordered-pulldown-options a': 'selectCriteria'
+    'click .artwork-filter-view-mode__toggle': 'changeViewMode'
 
   view: ->
     viewModes =
       grid: ArtworkColumnsView
       list: ArtworkTableView
 
-    new viewModes[@mode] @params()
+    new viewModes[@viewMode.get('mode')] @params()
 
   params: ->
     viewModes =
@@ -43,11 +44,12 @@ module.exports = class ArtworkFilterView extends Backbone.View
     _.extend
       el: @$artworks
       collection: @artworks
-    , viewModes[@mode]
+    , viewModes[@viewMode.get('mode')]
 
   initialize: ({ @mode }) ->
     @artworks = new ArtworkColumns [], modelId: @model.id
     @filter = new Filter model: @model
+    @viewMode = new Backbone.Model mode: @mode
 
     @listenTo @artworks, 'all', @handleArtworksState
     @listenTo @artworks, 'sync', @renderColumns
@@ -56,6 +58,9 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @listenTo @filter, 'sync', @renderHeader
     @listenTo @filter.selected, 'change', @fetchArtworksFromBeginning
     @listenTo @filter.selected, 'change', @scrollToTop
+    @listenTo @viewMode, 'change', @renderFilter
+    @listenTo @viewMode, 'change', @renderHeader
+    @listenTo @viewMode, 'change', @renderColumns
 
     @render()
     @filter.fetchRoot
@@ -94,6 +99,10 @@ module.exports = class ArtworkFilterView extends Backbone.View
   clickSeeMore: (e) ->
     e.preventDefault()
     @loadNextPage()
+
+  changeViewMode: (e)->
+    $target = $(e.currentTarget)
+    @viewMode.set 'mode', $target.data('mode')
 
   loadNextPage: (options = {}) ->
     return if @remaining is 0
@@ -137,7 +146,7 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @$button.text("See More (#{@remaining})")[visibility]()
 
   renderHeader: ->
-    @$header.html headerTemplate(filter: @filter, artist: @model)
+    @$header.html headerTemplate(filter: @filter, artist: @model, mode: @viewMode.get('mode'))
     @sortView?.undelegateEvents()
     @sortView = new BorderedPulldown el: @$('.bordered-pulldown')
 
