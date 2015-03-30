@@ -46,8 +46,6 @@ module.exports = class ArtworkFilterView extends Backbone.View
     , viewModes[@mode]
 
   initialize: ({ @mode }) ->
-    @mode = splitTest('artist_works_view_mode').outcome()
-
     @artworks = new ArtworkColumns [], modelId: @model.id
     @filter = new Filter model: @model
 

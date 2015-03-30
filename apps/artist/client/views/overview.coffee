@@ -24,7 +24,7 @@ module.exports = class OverviewView extends Backbone.View
     @sticky = new Sticky
 
   setupArtworkFilter: ->
-    filterRouter = ArtworkFilter.init el: @$('#artwork-section'), model: @model
+    filterRouter = ArtworkFilter.init el: @$('#artwork-section'), model: @model, mode: 'grid'
     @filterView = filterRouter.view
     @subViews.push @filterView
 
