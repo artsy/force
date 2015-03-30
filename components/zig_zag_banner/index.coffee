@@ -47,35 +47,34 @@ module.exports = class ZigZagBanner extends Backbone.View
     existingMargin = parseInt(@$el.css 'marginTop')
     offset = @$target.outerHeight() / 2
     newMargin = offset + existingMargin
-
     @$el.css marginTop: newMargin
+
+  sequence: (arr) ->
+    _.map arr, (fn, i) =>
+      dfd = $.Deferred()
+      _.delay =>
+        dfd.resolve fn()
+      , (@segmentTransitionLength * (i + 1))
+      dfd.promise()
 
   transitionIn: ->
     @render()
     _.defer =>
-      @$one.addClass 'is-in'
-      _.delay =>
-        @$two.addClass 'is-in'
-        _.delay =>
-          @$three.addClass 'is-in'
-          _.delay =>
-            @$el.addClass 'is-done'
-          , @segmentTransitionLength
-        , @segmentTransitionLength
-      , @segmentTransitionLength
+      @sequence [
+        => @$one.addClass 'is-in'
+        => @$two.addClass 'is-in'
+        => @$three.addClass 'is-in'
+        => @$el.addClass 'is-done'
+      ]
 
   transitionOut: ->
     dfd = $.Deferred()
-    @$three.removeClass 'is-in'
-    _.delay =>
-      @$two.removeClass 'is-in'
-      _.delay =>
-        @$one.removeClass 'is-in'
-        _.delay =>
-          dfd.resolve()
-        , @segmentTransitionLength
-      , @segmentTransitionLength
-    , @segmentTransitionLength
+    @sequence([
+      => @$el.removeClass 'is-done'
+      => @$three.removeClass 'is-in'
+      => @$two.removeClass 'is-in'
+      => @$one.removeClass 'is-in'
+    ]).then dfd.resolve
     dfd.promise()
 
   close: (e) ->
