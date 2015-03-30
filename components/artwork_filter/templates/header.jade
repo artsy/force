@@ -9,6 +9,10 @@ h2
 include ../../bordered_pulldown/mixin
 
 .artwork-filter-sort-count
+  .artwork-filter-view-mode
+    .artwork-filter-view-mode__toggle.icon-grid(data-mode="grid" class= mode == 'grid' ? 'is-active' : '')
+    .artwork-filter-view-mode__toggle.icon-list(data-mode="list" class= mode == 'list' ? 'is-active' : '')
+
   .artwork-filter-sort-count-pulldown
     +bordered-pulldown(filter.currentSort(), 'Sort by:')
       for label, value in filter.sorts
