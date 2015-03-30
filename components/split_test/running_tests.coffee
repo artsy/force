@@ -19,11 +19,3 @@ module.exports =
       inline: 0.5
       link: 0.5
     edge: 'inline'
-
-  artist_works_view_mode:
-    key: 'artist_works_view_mode'
-    dimension: 'dimension3'
-    outcomes:
-      list: 0.5
-      grid: 0.5
-    edge: 'list'
