@@ -20,7 +20,7 @@ block body
               include auction
 
         if upcomingAuctions.length && !currentAuctions.length
-          .leader-dots-list
+          .auctions-list.leader-dots-list
             h2.aggregate-page-subheader Upcoming Auctions
             for auction in upcomingAuctions
               .leader-dots-list-item
@@ -28,7 +28,7 @@ block body
                 span Opens #{auction.date('start_at').format('MMM D, YYYY')}
 
         if pastAuctions.length
-          .leader-dots-list
+          .auctions-list.leader-dots-list
             h2.aggregate-page-subheader Past Auctions
             for auction in pastAuctions
               a.leader-dots-list-item( href= auction.href() )

@@ -69,7 +69,7 @@ describe 'CTABarView', ->
         @view.$('.cta-bar-defer').click()
 
       it 'logs the dismissal', ->
-        @setStub.args[0].should.eql ['foobar', true, expires: 31536000]
+        @setStub.args[0].should.eql ['foobar', 1, expires: 31536000]
 
     describe '#previouslyDismissed', ->
       it 'returns false unless it has been dismissed previously', ->
