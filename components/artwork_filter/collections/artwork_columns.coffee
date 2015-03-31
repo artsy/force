@@ -36,4 +36,5 @@ module.exports = class ArtworkColumns extends Artworks
     options.error = _.wrap options.error, (error, collection, response, options) =>
       @params.prev()
       error? collection, response, options
+    options.remove = false
     @fetch options
