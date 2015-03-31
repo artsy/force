@@ -60,7 +60,6 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @listenTo @filter.selected, 'change', @scrollToTop
     @listenTo @viewMode, 'change', @renderFilter
     @listenTo @viewMode, 'change', @renderHeader
-    @listenTo @viewMode, 'change', @renderColumns
 
     @render()
     @filter.fetchRoot
@@ -103,6 +102,7 @@ module.exports = class ArtworkFilterView extends Backbone.View
   changeViewMode: (e)->
     $target = $(e.currentTarget)
     @viewMode.set 'mode', $target.data('mode')
+    @artworksView = @view()
 
   loadNextPage: (options = {}) ->
     return if @remaining is 0
@@ -146,7 +146,7 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @$button.text("See More (#{@remaining})")[visibility]()
 
   renderHeader: ->
-    @$header.html headerTemplate(filter: @filter, artist: @model, mode: @viewMode.get('mode'))
+    @$header?.html headerTemplate(filter: @filter, artist: @model, mode: @viewMode.get('mode'))
     @sortView?.undelegateEvents()
     @sortView = new BorderedPulldown el: @$('.bordered-pulldown')
 
