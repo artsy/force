@@ -1,3 +1,5 @@
+- canRegister = nextAuction && user && !user.get('registered_to_bid')
+
 .auctions-placeholder
   .auctions-placeholder-metadata
     h2 Bid Online in Leading Auctions
@@ -20,12 +22,14 @@
       //- Logged out
       a.avant-garde-button-black.is-block.js-sign-up-button
         | Sign up to be notified
-    else if nextAuction && user && !user.get('registered_to_bid')
+    else if canRegister
       //- Logged in, upcoming auction, not registered to bid
-      a.avant-garde-button-black.is-block(
-        href= nextAuction.registerUrl()
-      )
+      a.avant-garde-button-black.is-block( href= nextAuction.registerUrl() )
         | Register to bid
 
   .auctions-placeholder-hero
-    img( src='/images/auctions-placeholder.jpg', alt='Bid Online in Leading Auctions' )
+    a(
+      href= canRegister ? nextAuction.registerUrl() : '#'
+      class= canRegister ? undefined : 'js-sign-up-button'
+    )
+      img( src='/images/auctions-placeholder.jpg', alt='Bid Online in Leading Auctions' )
