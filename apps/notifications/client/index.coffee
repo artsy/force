@@ -119,8 +119,8 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
       count: artworks.length
 
   publishedAt: (artworks) ->
-    timestamps = _.map artworks.pluck('published_changed_at'), Date.parse
-    DateHelpers.formatDate _.max(timestamps)
+    if (timestamps = _.map _.compact(artworks.pluck('published_changed_at')), Date.parse).length
+      DateHelpers.formatDate _.max(timestamps)
 
   renderColumns: ($el, artworks) ->
     new ArtworkColumnsView

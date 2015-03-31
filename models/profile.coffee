@@ -78,8 +78,10 @@ module.exports = class Profile extends Backbone.Model
       'Institution'
     else if @isGallery()
       'Gallery'
-    else if @isFairOrOrganizer()
+    else if @isFair()
       'Fair'
+    else if @isFairOrganizer()
+      'FairOrganizer'
 
   isUserClass: ->
     if @isUser() && @get('default_icon_version') is 'circle'

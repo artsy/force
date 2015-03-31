@@ -10,6 +10,7 @@ analytics = require '../../lib/analytics.coffee'
 LoggedOutUser = require '../../models/logged_out_user.coffee'
 { templateMap, stateEventMap, successEventMap, routeCopyMap } = require './maps.coffee'
 sanitizeRedirect = require '../sanitize_redirect/index.coffee'
+Mailcheck = require '../mailcheck/index.coffee'
 
 class State extends Backbone.Model
   defaults: mode: 'register'
@@ -39,18 +40,24 @@ module.exports = class AuthModalView extends ModalView
     mode = mode: options.mode if options.mode
     @state = new State mode
 
-    @templateData =
+    @templateData = _.extend {
       copy: @renderCopy(options.copy)
       redirectTo: @redirectTo or location.pathname
+    }, options?.userData
 
     @listenTo @state, 'change:mode', @reRender
     @listenTo @state, 'change:mode', @logState
+    @on 'rerendered', @initializeMailcheck
 
     mediator.on 'auth:change:mode', @setMode, this
     mediator.on 'auth:error', @showError
     mediator.on 'modal:closed', @logClose
 
     @logState()
+
+  initializeMailcheck: ->
+    if @state.get('mode') is 'register'
+      Mailcheck.run('#js-mailcheck-input-modal', '#js-mailcheck-hint-modal', false)
 
   renderCopy: (copy) ->
     attrs = if copy?

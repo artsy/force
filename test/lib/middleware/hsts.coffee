@@ -6,7 +6,7 @@ describe 'HTTP strict transport security middleware', ->
 
   beforeEach ->
     @req = { }
-    @res = { headers: [], setHeader: (name, value) -> @headers[name] = value }
+    @res = { headers: [], set: (name, value) -> @headers[name] = value }
     @next = sinon.stub()
 
   it 'adds Strict-Transport-Security header', ->

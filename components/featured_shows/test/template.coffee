@@ -1,5 +1,5 @@
 _ = require 'underscore'
-fs = require 'graceful-fs'
+fs = require 'fs'
 jade = require 'jade'
 path = require 'path'
 benv = require 'benv'

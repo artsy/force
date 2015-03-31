@@ -52,9 +52,3 @@ describe 'Galleries / Institutions', ->
     it 'includes a count of the featured institutions', ->
       $('.galleries-institutions-count-value').text().should.equal "#{@profiles.length}"
       $('.galleries-institutions-count-label').text().should.equal 'Selected Institutional Partners'
-
-    it 'includes links to galleries and instutions in the header and footer', ->
-      $('.galleries-institutions-nav').length.should.equal 2
-      $('.galleries-institutions-nav a[href="/galleries"]').length.should.equal 2
-      $('.galleries-institutions-nav .is-active').length.should.equal 2
-      $('.galleries-institutions-nav .is-active').attr('href').should.equal '/institutions'

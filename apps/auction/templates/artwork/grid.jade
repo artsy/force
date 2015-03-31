@@ -1,0 +1,46 @@
+- artist = artwork.related().artist
+- saleArtwork = artwork.related().saleArtwork
+- href = artwork.href() + '?auction_id=' + auction.id
+
+.auction-grid-artwork
+  .aga-image: .vam-outer: .vam-inner
+    a( href= href ): img(
+      src= artwork.defaultImageUrl('medium')
+      nopin= artwork.noPinAttr()
+      alt= artwork.toAltText()
+    )
+
+  .aga-metadata
+    a( href= href )
+      if saleArtwork.has('lot_number')
+        .aga-lot-number
+          | Lot #{saleArtwork.get('lot_number')}
+
+      .aga-primary-information
+        if artwork.has('artist')
+          h4.aga-artist
+            = artist.get('name')
+        h3.aga-title
+          != artwork.titleAndYear()
+
+      if saleArtwork.estimate()
+        .aga-estimate
+          = saleArtwork.estimate()
+
+    .aga-bidding
+      .aga-bid-status
+        if auction.isOpen()
+          .aabs-label
+            strong= saleArtwork.bidLabel()
+            = ' '
+            | (#{saleArtwork.bidCount()})
+          .aabs-price
+            = saleArtwork.currentBid()
+        else
+          .aabs-label
+            //-
+          .aabs-price
+            = artwork.saleMessage() || '-'
+
+      - button = auction.bidButtonState(user, artwork)
+      .aga-bid-button: include button

@@ -1,6 +1,6 @@
 jade = require 'jade'
 path = require 'path'
-fs = require 'graceful-fs'
+fs = require 'fs'
 Page = require '../../../models/page'
 
 render = (templateName) ->

@@ -23,10 +23,7 @@ module.exports = class RelatedLinksView extends Backbone.View
     _.map(_.zip(keys, values), @link).join ', '
 
   fnOrAttr: (x) ->
-    try
-      @collection.invoke x
-    catch
-      @collection.pluck x
+    @collection.map (m) -> m[x]?() or m.get(x)
 
   render: ->
     if @collection.length

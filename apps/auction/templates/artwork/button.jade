@@ -1,0 +1,8 @@
+//- Only when the button is enabled use the black state.
+//- The disabled black state has been deemed unsuitable for this context...
+a.is-block.js-bid-button(
+  data-id= artwork.id
+  href= button.href
+  class= button.enabled ? 'avant-garde-button-black' : 'avant-garde-button'
+  disabled= !button.enabled
+)= button.label

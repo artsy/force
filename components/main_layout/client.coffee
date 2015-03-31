@@ -2,6 +2,7 @@ Backbone = require 'backbone'
 Backbone.$ = $
 _ = require 'underscore'
 Cookies = require 'cookies-js'
+imagesLoaded = require 'imagesloaded'
 HeaderView = require './header/view.coffee'
 FooterView = require './footer/view.coffee'
 sd = require('sharify').data
@@ -83,10 +84,11 @@ setupJquery = ->
   require 'jquery.dotdotdot'
   require 'jquery.poplockit'
   require 'jquery-on-infinite-scroll'
-  require 'jquery-waypoints/waypoints.js'
-  require 'jquery-waypoints/shortcuts/sticky-elements/waypoints-sticky.js'
+  require '../../lib/vendor/waypoints.js'
+  require '../../lib/vendor/waypoints-sticky.js'
   require '../../lib/jquery/hidehover.coffee'
   require('artsy-gemini-upload') $
+  require('jquery-fillwidth-lite')($, _, imagesLoaded)
   $.ajaxSettings.headers =
     'X-XAPP-TOKEN': sd.ARTSY_XAPP_TOKEN
     'X-ACCESS-TOKEN': sd.CURRENT_USER?.accessToken

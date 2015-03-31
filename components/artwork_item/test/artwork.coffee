@@ -1,5 +1,5 @@
 cheerio = require 'cheerio'
-fs = require 'graceful-fs'
+fs = require 'fs'
 jade = require 'jade'
 path = require 'path'
 Backbone = require 'backbone'
@@ -103,7 +103,7 @@ describe 'Artwork Item template', ->
       $ = cheerio.load render('artwork')({ artwork: @artwork })
       $('.artwork-item-blurb').should.have.lengthOf 0
 
-      @artwork.set 'saleArtwork', new SaleArtwork fabricate 'sale_artwork'
+      @artwork.related().saleArtwork = new SaleArtwork fabricate 'sale_artwork'
       $ = cheerio.load render('artwork')({ artwork: @artwork })
       $('.artwork-item-blurb').should.have.lengthOf 1
       $('.artwork-item-blurb').text().should.containEql 'This is the blurb'
@@ -131,19 +131,19 @@ describe 'Artwork Item template', ->
   describe 'is auction', ->
     it 'displays a buy now price', ->
       @artwork = new Artwork fabricate 'artwork', { sale_message: '$10,000' }
-      @artwork.set 'saleArtwork', new SaleArtwork fabricate 'sale_artwork'
+      @artwork.set 'sale_artwork', fabricate 'sale_artwork'
       $ = cheerio.load render('artwork')({ artwork: @artwork, isAuction: true })
       $('.artwork-item-buy-now-price').text().should.containEql '$10,000'
 
     it 'displays estimate', ->
       @artwork = new Artwork fabricate 'artwork'
-      @artwork.set 'saleArtwork', new SaleArtwork fabricate 'sale_artwork', { low_estimate_cents: 300000, high_estimate_cents: 700000 }
+      @artwork.set 'sale_artwork', fabricate 'sale_artwork', { low_estimate_cents: 300000, high_estimate_cents: 700000 }
       $ = cheerio.load render('artwork')({ artwork: @artwork, isAuction: true })
       $('.artwork-item-estimate').text().should.containEql 'Estimate: $3,000–$7,000'
 
     it 'displays lot numbers', ->
       @artwork = new Artwork fabricate 'artwork'
-      @artwork.set 'saleArtwork', new SaleArtwork fabricate 'sale_artwork',
+      @artwork.set 'sale_artwork', fabricate 'sale_artwork',
         { low_estimate_cents: 300000, high_estimate_cents: 700000, lot_number: 10 }
       $ = cheerio.load render('artwork')({ artwork: @artwork, isAuction: true })
       $('.artwork-item-lot-number').text().should.containEql 'Lot 10'

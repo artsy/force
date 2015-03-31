@@ -11,6 +11,7 @@ embedVideo = require 'embed-video'
       published: true
       limit: 50
       sort: '-published_at'
+      featured: true
     error: res.backboneError
     success: (articles) ->
       res.locals.sd.ARTICLES = articles.toJSON()
@@ -36,7 +37,7 @@ embedVideo = require 'embed-video'
 @redirectPost = (req, res, next) ->
   new Article(id: req.params.id).fetch
     error: (m, err) ->
-      return next() if err.body.status is 404
+      return next() if err.status is 404
       res.backboneError(arguments...)
     success: (article) ->
       return next() unless (

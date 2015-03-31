@@ -30,9 +30,10 @@ module.exports = class PartnerApplicationRouter extends Backbone.Router
   updateType: (state, type) ->
     @form.set '00NC0000004hoNU', state.value('type')
 
-  execute: ->
+  execute: (callback, args, name) ->
+    args[0] = null unless _.contains _.keys(@state.modes), args[0]
     @view?.remove()
-    super
+    super(callback, args, name)
 
   step1: (mode) ->
     @state.set step: 1, mode: mode or 'initial'

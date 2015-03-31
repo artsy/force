@@ -4,6 +4,7 @@
 - showBlurbs = showBlurbs || false
 - isAuction = isAuction || (set && set.get('type') === 'auction artworks') || false
 - displayPrice != null ? displayPrice : displayPrice = true
+- saleArtwork = artwork.related().saleArtwork
 
 figure.artwork-item( data-artwork=artwork.get('id') )
   .artwork-item-image-container
@@ -28,8 +29,8 @@ figure.artwork-item( data-artwork=artwork.get('id') )
           a.faux-underline-hover( href=artwork.artistLink() )= artwork.artistName()
         else
           = artwork.artistName()
-    if isAuction && artwork.get('saleArtwork') && artwork.get('saleArtwork').get('lot_number')
-      .artwork-item-lot-number Lot #{artwork.get('saleArtwork').get('lot_number')}
+    if isAuction && artwork.related().saleArtwork && artwork.related().saleArtwork.get('lot_number')
+      .artwork-item-lot-number Lot #{artwork.related().saleArtwork.get('lot_number')}
     p.artwork-item-title.artwork-item-overflow!= artwork.titleAndYear()
     if artwork.partnerName()
       //- Note: if the <a..> is in a <p..> text-overflow ellipsis doesn't work
@@ -44,15 +45,14 @@ figure.artwork-item( data-artwork=artwork.get('id') )
       p.artwork-item-sale-price= artwork.saleMessage()
 
     //- Auction estimate
-    if artwork.has('saleArtwork') && isAuction
-      - var saleArtwork = artwork.get('saleArtwork')
+    if saleArtwork.id && isAuction
       - var estimate = saleArtwork.estimate()
       if estimate
         .artwork-item-estimate
           | #{estimate}
 
     //- Auction related pricing information
-    - var displayBidStatus = artwork.has('saleArtwork') && isAuction
+    - var displayBidStatus = saleArtwork.id && isAuction
     - var displayBuyNowPrice = artwork.saleMessage() && displayPrice && isAuction
     if displayBuyNowPrice || displayBidStatus
       .artwork-item-sale-metadata
@@ -61,7 +61,7 @@ figure.artwork-item( data-artwork=artwork.get('id') )
             = artwork.saleMessage()
         else
           if displayBidStatus
-            - var saleArtwork = artwork.get('saleArtwork')
+            - var saleArtwork = artwork.related().saleArtwork
             .artwork-item-auction-bid-status
               | #{saleArtwork.bidLabel()}: #{saleArtwork.currentBid()}
               if saleArtwork.get('bidder_positions_count') >= 1
@@ -72,15 +72,15 @@ figure.artwork-item( data-artwork=artwork.get('id') )
               | Buy Now Price: #{artwork.saleMessage()}
 
     //- In the case of auctions this blurb is usually an estimate
-    if artwork.has('saleArtwork') || showBlurbs
-      - var saleArtwork = artwork.get('saleArtwork')
+    if saleArtwork.id || showBlurbs
+      - var saleArtwork = artwork.related().saleArtwork
       if artwork.has('blurb') && artwork.get('blurb')
         .artwork-item-blurb!= artwork.mdToHtml('blurb')
       else
         if saleArtwork && saleArtwork.get('user_notes')
           .artwork-item-blurb!= saleArtwork.mdToHtml('user_notes')
 
-    if artwork.has('saleArtwork') || showBlurbs
+    if saleArtwork.id || showBlurbs
       a.artwork-item-more-info.avant-garde-button-black.is-tiny(
         href=artwork.href()
         data-id=artwork.get('_id')

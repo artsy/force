@@ -1,11 +1,12 @@
 Q = require 'q'
 { API_URL } = require('sharify').data
 Backbone = require 'backbone'
-Sale = require '../../models/sale'
+Auction = require '../../models/auction'
 Feature = require '../../models/feature'
 Profile = require '../../models/profile'
 SaleArtworks = require '../../collections/sale_artworks'
 Artworks = require '../../collections/artworks'
+OrderedSets = require '../../collections/ordered_sets'
 
 determineFeature = (id, err, next) ->
   new Backbone.Collection().fetch
@@ -35,23 +36,52 @@ fetchPartner = (saleArtworks, options = {}) ->
 
   dfd.promise
 
+setupUser = (user, auction) ->
+  dfd = Q.defer()
+
+  if user?
+    Q.all([
+      user.fetch()
+      user.checkRegisteredForAuction saleId: auction.id, success: (boolean) ->
+        user.set 'registered_to_bid', boolean
+    ]).done ->
+      dfd.resolve user
+  else
+    dfd.resolve user
+
+  dfd.promise
+
 @index = (req, res) ->
   id = req.params.id
 
   determineFeature id, res.backboneError, (owner) ->
     feature = new Feature id: owner.id
-    auction = new Sale id: id
+    auction = new Auction id: id
     saleArtworks = new SaleArtworks [], id: id
+    artworks = new Artworks
+    artworks.comparator = (artwork) ->
+      (saleArtwork = artwork.related().saleArtwork).get('lot_number') or saleArtwork.id
+    sets = new OrderedSets
 
     Q.all([
+
       auction.fetch(cache: true)
       feature.fetch(cache: true)
       fetchPartner(saleArtworks, cache: true)
       saleArtworks.fetchUntilEndInParallel(cache: true)
-    ]).spread((x, y, profile, z) ->
-      artworks = Artworks.fromSale saleArtworks
+      sets.fetchItemsByOwner('Feature', owner.id, {
+        cache: true
+        data: display_on_desktop: true, item_type: 'FeaturedLink'
+      })
+      setupUser(req.user, auction)
 
+    ]).spread((a, b, profile, c, d, user) ->
+      artworks.reset Artworks.__fromSale__(saleArtworks)
+
+      res.locals.sd.FEATURE = feature.toJSON()
       res.locals.sd.AUCTION = auction.toJSON()
+      res.locals.sd.ARTWORKS = artworks.toJSON()
+      res.locals.sd.USER = user.toJSON() if user?
 
       res.render 'index',
         auction: auction
@@ -59,5 +89,7 @@ fetchPartner = (saleArtworks, options = {}) ->
         profile: profile
         artworks: artworks
         saleArtworks: saleArtworks
+        user: user
+        sets: sets
 
     ).done()

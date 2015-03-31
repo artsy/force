@@ -11,7 +11,7 @@ sections = require '../sections'
 describe 'Artist routes', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    @req = params: id: 'foo'
+    @req = params: { id: 'foo' }, get: (->), query: {}
     @res =
       render: sinon.stub()
       redirect: sinon.stub()
@@ -43,6 +43,16 @@ describe 'Artist routes', ->
         done()
 
     it 'redirects to canonical url', (done) ->
+      @res.locals.sd.CURRENT_PATH = '/artist/bar'
+      routes.index @req, @res
+      Backbone.sync.args[0][2].success fabricate 'artist', id: 'andy-foobar'
+      Backbone.sync.args[1][2].success()
+      _.each Backbone.sync.args[2..-1], (args) -> args[2].success()
+      _.defer =>
+        @res.redirect.args[0][0].should.equal '/artist/andy-foobar'
+        done()
+
+    it 'sets the mode if either columns or table', (done) ->
       @res.locals.sd.CURRENT_PATH = '/artist/bar'
       routes.index @req, @res
       Backbone.sync.args[0][2].success fabricate 'artist', id: 'andy-foobar'

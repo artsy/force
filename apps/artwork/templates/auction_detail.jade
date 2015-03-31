@@ -27,7 +27,7 @@ if auction.isOpen()
         span $
         input.bordered-input( name='bid', autocomplete='off', required )
 
-    if auction.isOpen()
+    if auction.isOpen() && auction.get('buyers_premium')
       p#artwork-buyers-premium-link This work has a&nbsp;
         a( href='#' ) Buyer's Premium
 

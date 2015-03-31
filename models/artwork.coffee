@@ -136,8 +136,8 @@ module.exports = class Artwork extends Backbone.Model
   isHangable: ->
     return false if @get('category')?.match /sculpture|installation|design/i
     return false if @hasDimension('depth')
-    return true  if @hasDimension('width') and @hasDimension('height') and not @tooBig()
-    return true  if @hasDimension('diameter')
+    return false if @hasDimension('diameter')
+    return true if @hasDimension('width') and @hasDimension('height') and not @tooBig()
     false
 
   # Should we include a button to contact the partner?

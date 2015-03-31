@@ -11,9 +11,9 @@ header#main-layout-header(class= sd.HEADER_CLASS ? sd.HEADER_CLASS : '')
             | museums, and private collections.
       i#main-layout-welcome-logo.icon-logotype
 
-  nav.mlh-navbar( class=(sd.REDESIGNED_HEADER === 'old' ? 'is-search-expanded' : undefined) )
+  nav.mlh-navbar
+    a#main-layout-header-home-logo( href='/', class=activeClass('/') ): i.icon-logo
     #main-layout-header-left.mlh-navbar-cell
-      a#main-layout-header-home-logo.mlh-top-nav-link.icon-logo( href='/', class=activeClass('/') )
       include ../../../search_bar/templates/index
     #main-layout-header-center.mlh-navbar-cell
       a.mlh-top-nav-link( href='/artists', class= activeClass('/artists') ) Artists
@@ -39,38 +39,4 @@ header#main-layout-header(class= sd.HEADER_CLASS ? sd.HEADER_CLASS : '')
           a( href='/press' ) Press
 
     #main-layout-header-right.mlh-navbar-cell
-      if user
-        - displayNavNotice = (parseInt(sd.HIDE_NAV_NOTICE) || 0) < 15
-
-        span.mlh-user-name.hover-pulldown(
-          data-anchor='right'
-          data-mode='hover'
-          data-state= (displayNavNotice ? 'static' : undefined)
-          data-cookie= (displayNavNotice ? 'hide-nav-notice' : undefined)
-        )
-          = user.get('name') ? user.get('name') : 'Account'
-
-          if displayNavNotice
-            .hover-pulldown-static
-              span Your follows and favorites are now under your name.
-
-          .hover-pulldown-menu
-            a.hpm-header( href='/following/artists' ) Follows &amp; Favorites
-            a( href='/following/artists' ) Artists
-            a( href='/favorites' ) Works
-            a( href='/following/profiles' ) Galleries
-            hr
-
-            if user.isAdmin()
-              a( href= sd.ADMIN_URL ) Admin
-            if user.isAdmin() || user.get('has_partner_access')
-              a( href= sd.CMS_URL ) CMS
-            if user.isAdmin() || user.get('has_partner_access')
-              hr
-
-            a( href='/user/edit' ) Settings
-            a.mlh-logout Log out
-
-      else
-        a.mlh-top-nav-link.mlh-login( href='/log_in' ) Log in
-        a.mlh-top-nav-link.mlh-signup( href='/sign_up' ) Sign up
+      include ./user

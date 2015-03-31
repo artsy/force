@@ -1,7 +1,7 @@
 _ = require 'underscore'
 jade = require 'jade'
 path = require 'path'
-fs = require 'graceful-fs'
+fs = require 'fs'
 
 { fabricate } = require 'antigravity'
 CurrentUser = require '../../../../models/current_user'
@@ -42,11 +42,10 @@ describe 'Microsite template', ->
   it 'does not render the welcome header', ->
     render('microsite')(sd: { HIDE_HEADER: true }, user: undefined).should.not.containEql 'main-layout-welcome-header'
 
-  it 'links to the user profile', ->
+  it 'renders the user nav', ->
     user = new CurrentUser fabricate('user')
     html = render('microsite')(sd: {}, user: user)
     html.should.not.containEql 'main-layout-welcome-header'
-    html.should.containEql user.get('default_profile_id')
     html.should.containEql user.get('name')
 
   it 'works with out user', ->

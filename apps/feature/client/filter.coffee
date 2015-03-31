@@ -9,16 +9,16 @@ module.exports = class FilterView extends Backbone.View
     'artist-a-to-z': (a) ->
       a.get('artist')?.sortable_id
     'most-bids': (a) ->
-      - a.get('saleArtwork').get('bidder_positions_count')
+      - a.related().saleArtwork.get('bidder_positions_count')
     'least-bids': (a) ->
-      a.get('saleArtwork').get('bidder_positions_count') +
+      a.related().saleArtwork.get('bidder_positions_count') +
       if a.get('sold') then 0.5 else 0
     'highest-bid': (a) ->
-      - (a.get('saleArtwork').get('highest_bid_amount_cents') or
-         a.get('saleArtwork').get('opening_bid_cents'))
+      - (a.related().saleArtwork.get('highest_bid_amount_cents') or
+         a.related().saleArtwork.get('opening_bid_cents'))
     'lowest-bid': (a) ->
-      (a.get('saleArtwork').get('highest_bid_amount_cents') or
-       a.get('saleArtwork').get('opening_bid_cents')
+      (a.related().saleArtwork.get('highest_bid_amount_cents') or
+       a.related().saleArtwork.get('opening_bid_cents')
       )
 
   initialize: (options) ->

@@ -15,6 +15,11 @@ describe 'setup', ->
         outcomes: old: 1, new: 0
         edge: 'new'
 
+      local_test:
+        key: 'local_test'
+        outcomes: old: 1, new: 0
+        scope: 'local'
+
   beforeEach ->
     @outcomeSpy = sinon.spy @setup.__get__('SplitTest')::, 'get'
 

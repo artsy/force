@@ -6,8 +6,11 @@ sd = require('sharify').data
 Artwork = require '../models/artwork.coffee'
 Artworks = require '../collections/artworks.coffee'
 { crop, resize } = require '../components/resizer/index.coffee'
+Relations = require './mixins/relations/article.coffee'
 
 module.exports = class Article extends Backbone.Model
+  _.extend @prototype, Relations
+
   urlRoot: "#{sd.POSITRON_URL}/api/articles"
 
   defaults:
@@ -18,8 +21,9 @@ module.exports = class Article extends Backbone.Model
     Articles = require '../collections/articles.coffee'
     footerArticles = new Articles
     Q.all([
-      @fetch()
+      @fetch(error: options.error)
       footerArticles.fetch(
+        error: options.error
         cache: true
         data:
           # Tier 1 Artsy Editorial articles. TODO: Smart footer data.
@@ -27,7 +31,7 @@ module.exports = class Article extends Backbone.Model
           published: true
           tier: 1
       )
-    ]).fail((r) -> options.error null, r).then =>
+    ]).then =>
       slideshowArtworks = new Artworks
       dfds = []
       if (slideshow = _.first(@get 'sections')).type is 'slideshow'

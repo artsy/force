@@ -4,8 +4,9 @@
       h4: a( href=artist.href() )= artist.get('name')
       .notifications-works-added
         | #{count} work#{count === 1 ? undefined : 's'} added
-    .notifications-list-item-timestamp.is-pull-right
-      = publishedAt
+    if publishedAt
+      .notifications-list-item-timestamp.is-pull-right
+        = publishedAt
   .notifications-published-artworks
     //- Rendered separately
   .notifications-see-more

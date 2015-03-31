@@ -29,7 +29,7 @@ module.exports = class PartnerLocations
     _s.toSentence(cities, ', ', ' & ') if cities.length
 
   setupPhoneNumbers: (locations) ->
-    if @artwork.isContactable()
+    if @artwork.isContactable() and @$el.find('#artwork-partner-phone-container').length
       new PartnerPhoneNumberView
         el: @$el.find('#artwork-partner-phone-container')
         collection: locations

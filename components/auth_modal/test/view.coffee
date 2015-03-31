@@ -75,6 +75,10 @@ describe 'AuthModalView', ->
       @view.templateData.redirectTo.should.equal 'foobarbaz'
       @AuthModalView.__set__ 'location', _location
 
+    it 'accepts optional userData that gets passed to the template', ->
+      @view.preInitialize userData: email: 'foo@bar.com'
+      @view.templateData.email.should.containEql 'foo@bar.com'
+
   describe '#submit', ->
     beforeEach ->
       sinon.stub location, 'reload'

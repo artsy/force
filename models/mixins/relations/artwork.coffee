@@ -9,7 +9,7 @@ module.exports =
     SaleArtwork = require '../../sale_artwork.coffee'
 
     artist = new Artist @get('artist')
-    saleArtwork = new SaleArtwork @get('saleArtwork')?.toJSON()
+    saleArtwork = new SaleArtwork @get('sale_artwork')
 
     @__related__ =
       artist: artist

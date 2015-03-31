@@ -1,0 +1,37 @@
+.article-edit-container
+  position fixed
+  display inline-block
+  top 80px
+  right 20px
+
+.article-edit-hover, .article-edit-container:hover .article-edit-default
+  display none
+
+.article-edit-container:hover .article-edit-hover
+  display inline-block
+  .article-edit-message
+    color black
+
+.article-edit-message
+  font-size 11px
+  display inline-block
+  vertical-align middle
+  color red-color
+  avant-garde()
+
+.article-edit-message i, .article-edit-hover i
+  min-width 0 !important
+  width 40px !important
+  height @width
+  padding 4px !important
+  margin 0 7px 0 14px !important
+
+.article-edit-hover i
+  font-size 24px
+  &::before
+    left 5px
+    position relative
+
+.article-edit-button
+  display inline-block
+  vertical-align middle

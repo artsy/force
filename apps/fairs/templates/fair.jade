@@ -15,7 +15,7 @@
     .fpff-fair-name
       = fair.get('name')
     .fpff-location
-      = fair.location().cityStateCountry()
+      = fair.location() && fair.location().cityStateCountry()
     .fpff-date
       = fair.formatDates()
     if fair.isNotOver()

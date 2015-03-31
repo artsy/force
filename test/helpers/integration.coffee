@@ -5,41 +5,39 @@
 # a version of this project server will run on localhost:5000 using a fake
 # API server exposed below a `api`.
 #
+_ = require 'underscore'
 spawn = require("child_process").spawn
 express = require "express"
+Browser = require 'zombie'
+request = require 'superagent'
 
-# Fake API server currently stubbing responses from GitHub's API.
-# You will want to edit this to stub your own API's behavior.
-@api = require('antigravity').server
+# Global Zombie options
+Browser.debug = true
 
-# Spawns a child process with ENV variables that will launch it in "test"
-# mode. This includes an API_URL that points to the fake API server mounted
-# under /__api.
+# Spawns a child process with test .env.test variables
 @startServer = (callback) =>
-  return callback() if @child?
-  envVars =
-    NODE_ENV: "test"
-    API_URL: "http://localhost:5000/__api"
-    APP_URL: 'http://localhost:5000'
-    PORT: 5000
-  envVars[k] = val for k, val of process.env when not envVars[k]?
-  @child = spawn "make", ["s"],
-    customFds: [0, 1, 2]
-    stdio: ["ipc"]
-    env: envVars
-  @child.on "message", -> callback()
-  @child.stdout.on "data", (data) -> console.log data.toString()
+  request.get('http://localhost:5000/__gravity/api/v1/artwork/andy-warhol-skull').end (err, res) =>
+    return callback?() if res?.body?.title
+    @child = spawn "node_modules/.bin/coffee", ["index.coffee"],
+      customFds: [0, 1, 2]
+      stdio: ["ipc"]
+      env:
+        PATH: process.env.PATH
+        NODE_ENV: 'test'
+        APP_URL: 'http://localhost:5000'
+        ARTSY_URL: 'http://localhost:5000/__gravity'
+        API_URL: 'http://localhost:5000/__gravity'
+        PORT: 5000
+    @child.on "message", -> callback?()
+    @child.stdout.pipe process.stdout
+    @child.stderr.pipe process.stdout
 
 # Closes the server child process, used in an `after` hook and on
 # `process.exit` in case the test suite is interupted.
 @closeServer = =>
   @child?.kill()
   @child = null
-
 process.on "exit", @closeServer
 
-# You can debug your integration app and run this app server by running
-# this module directly and opening up localhost:5000.
-# e.g. `coffee test/helpers/integration.coffee`
-return unless module is require.main
-@startServer => @child.stdout.on "data", (data) -> console.log data.toString()
+# Start the test server if run directly
+@startServer() if module is require.main

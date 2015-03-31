@@ -25,7 +25,7 @@ startServer = (callback) ->
   child.on "message", callback
 closeServer = => child.kill()
 
-describe 'Setup', ->
+xdescribe 'Setup', ->
 
   before (done) ->
     @server = gravity.listen 5001, -> startServer -> done()
@@ -35,6 +35,6 @@ describe 'Setup', ->
     closeServer()
 
   it 'proxies certain requests to Gravity if they are supported', (done) ->
-    request.get('http://localhost:5000/api/v1/me').end (res) ->
+    request.get('http://localhost:5000/api/v1/me').end (err, res) ->
       res.body.name.should.equal 'Craig'
       done()

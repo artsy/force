@@ -23,7 +23,8 @@ if artwork.isContactable()
     else
       //- Logged out
       input.bordered-input.is-persistplaceholder( placeholder='Your full name', name='name', required )
-      input.bordered-input.is-persistplaceholder( placeholder='Your email address', name='email', type='email', required )
+      input#js-mailcheck-input-artwork.bordered-input.is-persistplaceholder( placeholder='Your email address', name='email', type='email', required )
+      #js-mailcheck-hint-artwork
     textarea.bordered-input.is-persistplaceholder( rows='5', name='message', required )
       = defaultMessage
       = " "
@@ -43,6 +44,13 @@ if artwork.isContactable()
 
     .artwork-contact-button
       button.avant-garde-button-black Request Info
+
+  #artwork-inquiry-sent-immediate
+    p.artwork-inquiry-bold-header Inquiry Sent
+    p You will receive an email receipt of your inquiry shortly. If you want to follow up with the gallery, simply reply to this email.
+
+  #artwork-inquiry-sent
+    //- Rendered client-side
 
 //- Buy
 if artwork.get('acquireable')
