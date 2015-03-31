@@ -41,11 +41,12 @@
   text-align center
 .auctions-placeholder-metadata
   width 33.33%
-  padding 0 50px
+  padding 0 50px 0 20px
   > h2
-    margin 10px auto
     font-size 40px
     line-height 1.25
+    // Visually center. Due to line-height and hard-edged bottom button
+    margin -((@font-size * (@line-height - 1)) * 2) auto 10px
   > p
     margin 10px auto
     font-size 20px
