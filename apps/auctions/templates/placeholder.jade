@@ -4,7 +4,10 @@
 
     if nextAuction
       //- Has an upcoming auction
-      p Next Upcoming Auction: #{nextAuction.get('name')}
+      p
+        | Next Upcoming Auction:
+        br
+        = nextAuction.get('name')
       .apu-clock.js-apu-clock( data-id= nextAuction.id )
         include ../../../components/clock/template
     else
