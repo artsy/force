@@ -14,6 +14,8 @@ module.exports = (artist, headerView) ->
   ctaHeadline = "Get updates on new shows and works by #{artist.get('name')}."
   modalCopy = "Get the latest new shows and works by #{artist.get('name')}."
 
+  return if outcome is 'control'
+
   if outcome is 'zig_zag'
     return if Cookies.get(name)?
 
