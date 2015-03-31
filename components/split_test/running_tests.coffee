@@ -19,3 +19,10 @@ module.exports =
       inline: 0.5
       link: 0.5
     edge: 'inline'
+
+  artist_cta:
+    key: 'artist_cta'
+    outcomes:
+      zig_zag: 1/3
+      footer_modal_link: 1/3
+      footer_modal_inline: 1/3
