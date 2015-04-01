@@ -7,7 +7,7 @@ rewire = require 'rewire'
 { resolve } = require 'path'
 Artwork = require '../../../models/artwork'
 
-xdescribe 'Inquiry', ->
+describe 'Inquiry', ->
   before (done) ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'
