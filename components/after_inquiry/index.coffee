@@ -4,7 +4,7 @@ FlashMessage = require '../flash/index.coffee'
 mediator = require '../../lib/mediator.coffee'
 Questionnaire = require './questionnaire.coffee'
 analytics = require '../../lib/analytics.coffee'
-Cookies = require 'cookies-js'
+Cookies = require '../cookies'
 
 # The after inquiry flow is composed of a Flash message and
 # a modal Questionnire. This class sets them up and
