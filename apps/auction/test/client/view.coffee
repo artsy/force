@@ -5,9 +5,7 @@ Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 Auction = require '../../../../models/sale'
 Artworks = require '../../../../collections/artworks'
-AuctionArtworksView = benv.requireWithJadeify resolve(__dirname, '../../client/view'), [
-  'template.grid', 'template.list'
-]
+AuctionArtworksView = benv.requireWithJadeify resolve(__dirname, '../../client/view'), ['template']
 
 describe 'AuctionArtworksView', ->
   before (done) ->
@@ -35,9 +33,9 @@ describe 'AuctionArtworksView', ->
     ]
     @view = new AuctionArtworksView el: $('section'), model: @auction, collection: @artworks
 
-  describe '#renderArtworks', ->
+  describe '#render', ->
     it 'renders the default state', ->
-      @view.renderArtworks()
+      @view.render()
       @view.$('.js-auction-artworks').data('mode').should.equal 'grid'
       @view.$('.auction-grid-artwork').should.have.lengthOf 2
 

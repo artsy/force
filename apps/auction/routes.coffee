@@ -7,6 +7,7 @@ Profile = require '../../models/profile'
 SaleArtworks = require '../../collections/sale_artworks'
 Artworks = require '../../collections/artworks'
 OrderedSets = require '../../collections/ordered_sets'
+State = require './models/state'
 
 determineFeature = (id, err, next) ->
   new Backbone.Collection().fetch
@@ -62,6 +63,7 @@ setupUser = (user, auction) ->
     artworks.comparator = (artwork) ->
       (saleArtwork = artwork.related().saleArtwork).get('lot_number') or saleArtwork.id
     sets = new OrderedSets
+    state = new State
 
     Q.all([
 
@@ -91,5 +93,6 @@ setupUser = (user, auction) ->
         saleArtworks: saleArtworks
         user: user
         sets: sets
+        state: state
 
     ).done()
