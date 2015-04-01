@@ -5,6 +5,7 @@ defaultMessage = require '../../components/contact/default_message.coffee'
 { stringifyJSONForWeb } = require '../../components/util/json.coffee'
 { client } = require '../../lib/cache'
 request = require 'superagent'
+SplitTest = require '../../components/split_test/server_split_test'
 
 @index = (req, res) ->
   template = if req.query.modal? then 'modal' else 'index'

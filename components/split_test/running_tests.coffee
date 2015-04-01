@@ -19,3 +19,10 @@ module.exports =
       inline: 0.5
       link: 0.5
     edge: 'inline'
+
+  inquiry_flow:
+    key: 'inquiry_flow'
+    outcomes:
+      original_flow: 0.5
+      updated_flow: 0.5
+    edge: 'updated_flow'

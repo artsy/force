@@ -13,6 +13,7 @@ AfterInquiry = require '../../../../components/after_inquiry/mixin.coffee'
 defaultMessage = require '../../../../components/contact/default_message.coffee'
 Introduction = require '../../../../components/introduction/model.coffee'
 Mailcheck = require '../../../../components/mailcheck/index.coffee'
+splitTest = require '../../../../components/split_test/index.coffee'
 attendanceTemplate = -> require('./templates/attendance.jade') arguments...
 inquirySentTemplate = -> require('./templates/inquiry_sent.jade') arguments...
 
