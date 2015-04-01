@@ -9,6 +9,7 @@ CurrentUser = require '../../../models/current_user'
 Artworks = require '../../../collections/artworks'
 SaleArtworks = require '../../../collections/sale_artworks'
 OrderedSets = require '../../../collections/ordered_sets'
+State = require '../models/state'
 
 describe 'auction templates', ->
   before (done) ->
@@ -25,6 +26,7 @@ describe 'auction templates', ->
         saleArtworks: @saleArtworks = new SaleArtworks _.times 2, -> fabricate 'sale_artwork'
         user: @user = new CurrentUser
         sets: @sets = new OrderedSets
+        state: @state = new State
 
       benv.render resolve(__dirname, '../templates/index.jade'), data, =>
         done()
@@ -33,7 +35,7 @@ describe 'auction templates', ->
     benv.teardown()
 
   describe 'index', ->
-    xit 'renders correctly', ->
+    it 'renders correctly', ->
       $('.auction-title').text().should.equal 'An Auction'
       $('.js-register-button').text().should.equal 'Register to bid'
       $('.auction-grid-artwork').should.have.lengthOf 2
