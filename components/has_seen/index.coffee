@@ -1,4 +1,4 @@
-Cookies = require '../cookies'
+Cookies = require '../cookies/index.coffee'
 
 # Default expires is one year from now in seconds
 module.exports = (name, expires = 31536000) ->

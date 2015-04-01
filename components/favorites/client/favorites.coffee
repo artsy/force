@@ -115,7 +115,7 @@ module.exports.FavoritesView = class FavoritesView extends Backbone.View
 
   renderStatus: () ->
     isPrivate = @savedArtworkCollection.get('private') ? true
-    @$('.favorites-privacy').html $( favoritesStatusTemplate private: isPrivate)
+    @$('.favorites-privacy').html $( favoritesStatusTemplate isPrivate: isPrivate)
 
   # Check the favorites status and show the status dialog instead of
   # sharing window if it's private.

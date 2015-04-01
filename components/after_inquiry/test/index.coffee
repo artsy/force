@@ -14,7 +14,7 @@ describe 'AfterInquiry', ->
       $.support.transition = end: 'transitionend'
       $.fn.emulateTransitionEnd = -> @trigger $.support.transition.end
 
-      @Cookies = require '../../cookies'
+      @Cookies = require '../../cookies/index.coffee'
       @AfterInquiry = rewire '../index'
       @AfterInquiry.__set__ 'Questionnaire', Backbone.View
 
@@ -101,14 +101,18 @@ describe 'AfterInquiry', ->
 
           describe 'and it was sent successfully', ->
             beforeEach ->
+              sinon.stub @Cookies, 'set'
               @inquiry.trigger 'sync'
               mediator.trigger 'modal:closed'
+
+            afterEach ->
+              @Cookies.set.restore()
 
             it 'unbinds the beforeunload handler', ->
               _.isUndefined($._data($(window)[0], 'events')).should.be.ok
 
-            xit 'sets a destination cookie', ->
-              (@Cookies.get('destination')?).should.be.true
+            it 'sets a destination cookie', ->
+              @Cookies.set.args[0][0].should.equal 'destination'
 
             it 'POST a flash message and send the user to onboarding', ->
               $.ajax.args[0][0].url.should.equal '/flash'

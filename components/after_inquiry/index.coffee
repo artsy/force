@@ -4,7 +4,7 @@ FlashMessage = require '../flash/index.coffee'
 mediator = require '../../lib/mediator.coffee'
 Questionnaire = require './questionnaire.coffee'
 analytics = require '../../lib/analytics.coffee'
-Cookies = require '../cookies'
+Cookies = require '../cookies/index.coffee'
 
 # The after inquiry flow is composed of a Flash message and
 # a modal Questionnire. This class sets them up and
@@ -50,7 +50,7 @@ module.exports = class AfterInquiry
   maybeOnboard: =>
     if @user.needsOnboarding
       @$window.off 'beforeunload'
-      Cookies.set('destination', window.location.pathname, expires: 60 * 60 * 24)
+      Cookies.set('destination', location.pathname, expires: 60 * 60 * 24)
       message = "Thanks for creating your account #{@user.get 'name'}.<br>Take 60 seconds to personalize your experience"
       $.post '/flash', message: message, ->
         window.top.location.href = '/personalize'
