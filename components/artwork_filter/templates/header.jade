@@ -11,9 +11,9 @@ include ../../bordered_pulldown/mixin
 .artwork-filter-sort-count
   .artwork-filter-view-mode
     .artwork-filter-view-mode__toggle(data-mode="grid" class= mode == 'grid' ? 'is-active' : '')
-      include ../public/grid.svg
+      include ../../main_layout/public/icons/grid.svg
     .artwork-filter-view-mode__toggle(data-mode="list" class= mode == 'list' ? 'is-active' : '')
-      include ../public/list.svg
+      include ../../main_layout/public/icons/list.svg
 
   .artwork-filter-sort-count-pulldown
     +bordered-pulldown(filter.currentSort(), 'Sort by:')
