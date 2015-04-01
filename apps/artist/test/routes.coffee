@@ -62,6 +62,23 @@ describe 'Artist routes', ->
         @res.redirect.args[0][0].should.equal '/artist/andy-foobar'
         done()
 
+    describe 'with a referrer', ->
+      beforeEach ->
+        @reqRestore = @req
+        @req.get = -> 'https://www.google.com/webhp#q=foobar'
+
+      afterEach ->
+        @req = @reqRestore
+
+      it 'parse the medium and passes it to Sharify', (done) ->
+        routes.index @req, @res
+        Backbone.sync.args[0][2].success fabricate 'artist', id: 'andy-foobar'
+        Backbone.sync.args[1][2].success()
+        _.each Backbone.sync.args[2..-1], (args) -> args[2].success()
+        _.defer =>
+          @res.locals.sd.MEDIUM.should.equal 'search'
+          done()
+
   describe '#follow', ->
     it 'redirect to artist page without user', ->
       routes.follow @req, @res
