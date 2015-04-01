@@ -109,17 +109,21 @@ sidebar-width = 26%
   margin-top -10px
   border 2px solid gray-lighter-color
   height 40px
+  overflow hidden
 .artwork-filter-view-mode__toggle:first-child
   border-right 2px solid gray-lighter-color
 .artwork-filter-view-mode__toggle
   display inline-block
   text-align center
-  line-height 36px
-  padding 0 2px
+  padding 2px 2px
   cursor pointer
-  color gray-lighter-color
-  &.is-active, &:hover
-    color black
+  fill gray-lighter-color
+  overflow hidden
+  svg
+    width 32px
+    display inline-block
+  &.is-active svg, &:hover svg
+    fill black
 #artwork-section__header
   h2
     float left
