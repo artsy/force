@@ -12,15 +12,15 @@ Carousel = require './carousel'
 request = require 'superagent'
 { APPLICATION_NAME } = require '../../config'
 cache = require '../../lib/cache'
-Referrer = require 'referer-parser'
+# Referrer = require 'referer-parser'
 
 @index = (req, res) ->
   artist = new Artist id: req.params.id
   carousel = new Carousel artist: artist
   statuses = new Statuses artist: artist
 
-  referrer = req.get 'Referrer'
-  medium = new Referrer(referrer)?.medium if referrer?
+  # referrer = req.get 'Referrer'
+  # medium = new Referrer(referrer)?.medium if referrer?
 
   Q.allSettled([
     artist.fetch(cache: true)
@@ -38,7 +38,7 @@ Referrer = require 'referer-parser'
         res.locals.sd.ARTIST = artist.toJSON()
         res.locals.sd.TAB = tab = req.params.tab or ''
         res.locals.sd.STATUSES = statuses = statusesRequest.value
-        res.locals.sd.MEDIUM = medium
+        # res.locals.sd.MEDIUM = medium
 
         res.render 'index',
           artist: artist
@@ -47,7 +47,7 @@ Referrer = require 'referer-parser'
           statuses: statuses
           nav: nav
           jsonLD: stringifyJSONForWeb(artist.toJSONLD())
-          medium: medium
+          # medium: medium
 
       else
         res.redirect artist.href()
