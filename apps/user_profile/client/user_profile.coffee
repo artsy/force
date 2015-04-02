@@ -30,7 +30,10 @@ module.exports = class UserProfileView extends Backbone.View
 
     @model.fetchFavorites(success: ((@favorites) =>), complete: => @render())
     if @user?.hasLabFeature('Articles')
-      @articles.fetch(complete: => @render())
+      @articles.fetch
+        data:
+          sort: '-published_at'
+        complete: => @render()
     else
       @model.fetchPosts(success: ((@posts) =>), complete: => @render())
 
