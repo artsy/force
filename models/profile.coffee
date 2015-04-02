@@ -117,19 +117,6 @@ module.exports = class Profile extends Backbone.Model
     }, options.data
     favorites.fetch _.extend options, data: favorites.params
 
-  fetchPosts: (options) ->
-    # Avoid circular dependency by lazy-requiring
-    FeedItems = require '../components/feed/collections/feed_items.coffee'
-    success = options.success
-    url = "#{sd.API_URL}/api/v1/profile/#{@get 'id'}/posts"
-    new FeedItems().fetch _.extend options,
-      url: url
-      data: { size: 3 }
-      error: options.error
-      success: (items) ->
-        items.urlRoot = url if items.length
-        success items
-
   toJSONLD: ->
     compactObject {
       "@context": "http://schema.org"

@@ -46,7 +46,7 @@ module.exports = class ArtworkView extends Backbone.View
     @checkQueryStringForAuction()
     @setupEmbeddedInquiryForm()
     @setupCurrentUser()
-    @setupRelatedPosts()
+    @setupRelatedArticles()
     @setupArtistArtworks()
     @setupFollowButton()
     @setupBelowTheFold()
@@ -217,12 +217,12 @@ module.exports = class ArtworkView extends Backbone.View
     @saved.addRepoArtworks @__saved__
     @saved.syncSavedArtworks()
 
-  setupRelatedPosts: ->
+  setupRelatedArticles: ->
     @artwork.relatedArticles.fetch success: (response) =>
       if response.length
         subView = new RelatedArticlesView
           className: 'ari-cell artwork-related-articles'
-          collection: @artwork[method]
+          collection: @artwork.relatedArticles
           numToShow: 2
         @$('#artwork-artist-related-extended').append subView.render().$el
 
