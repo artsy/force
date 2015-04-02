@@ -30,7 +30,7 @@ positionWelcomeHeroMethod = (req, res) ->
   # homepage:featured-artists
   featuredArtists = new Items [], id: '523089cd139b214d46000568', item_type: 'FeaturedLink'
   # homepage:featured-links
-  featuredPosts = new Items [], id: '5172bbb97695afc60a000001', item_type: 'FeaturedLink'
+  featuredArticles = new Items [], id: '5172bbb97695afc60a000001', item_type: 'FeaturedLink'
   # homepage:featured-shows
   featuredShows = new Items [], id: '530ebe92139b21efd6000071', item_type: 'PartnerShow'
 
@@ -41,7 +41,7 @@ positionWelcomeHeroMethod = (req, res) ->
     featuredLinks.fetch(cache: true)
     exploreSections.fetch(cache: true) unless req.user?
     featuredArtists.fetch(cache: true, cacheTime: timeToCacheInSeconds)
-    featuredPosts.fetch(cache: true, cacheTime: timeToCacheInSeconds)
+    featuredArticles.fetch(cache: true, cacheTime: timeToCacheInSeconds)
     featuredShows.fetch(cache: true, cacheTime: timeToCacheInSeconds)
   ])).then(->
     heroUnits[positionWelcomeHeroMethod(req, res)](welcomeHero) unless req.user?
@@ -51,7 +51,7 @@ positionWelcomeHeroMethod = (req, res) ->
       featuredLinks: featuredLinks
       exploreSections: exploreSections
       featuredArtists: featuredArtists
-      featuredPosts: featuredPosts
+      featuredArticles: featuredArticles
       featuredShows: featuredShows
   ).done()
 

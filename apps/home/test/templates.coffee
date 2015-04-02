@@ -18,7 +18,7 @@ describe 'Home template', ->
       heroUnits: new Backbone.Collection
       featuredLinks: new Backbone.Collection
       featuredShows: new Backbone.Collection
-      featuredPosts: new Backbone.Collection
+      featuredArticles: new Backbone.Collection
       featuredArtists: new Backbone.Collection
       exploreSections: new Backbone.Collection
     )
