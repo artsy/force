@@ -7,14 +7,14 @@
   .profile-header
     border-bottom 0
 
-  // Hide/Show things depending on what combination of favorites/posts the user has
-  &[data-has=posts], &[data-has=''], &[data-has=favorites]
+  // Hide/Show things depending on what combination of favorites/articles the user has
+  &[data-has=articles], &[data-has=''], &[data-has=favorites]
     .garamond-tablist
       display none
   &[data-has=favorites]
     #profile-favorites-header
       display block
-  &[data-has=postsfavorites]
+  &[data-has=articlesfavorites]
     .garamond-tablist
       opacity 1
 
@@ -22,10 +22,11 @@
   &[data-path]
     #profile-spinner
       display none
-  &[data-path*=posts], &:not([data-path*=favorites])[data-has*=posts]
+  &[data-path*=articles], &:not([data-path*=favorites])[data-has*=articles]
     #profile-feed
       display block
-    #profile-tabs a[href*=posts]
+      padding 0 40px
+    #profile-tabs a[href*=articles]
       color purple-color
       border-bottom 1px solid purple-light-color
   &[data-path*=favorites]
@@ -36,11 +37,11 @@
     #profile-tabs a[href*=favorites]
       color purple-color
       border-bottom 1px solid purple-light-color
-  &:not([data-path*=posts]):not([data-path*=favorites])
+  &:not([data-path*=articles]):not([data-path*=favorites])
     &[data-has=favorites]
       #profile-favorites, #profile-favorites-header, #profile-favorites-spinner
         display block
-    &[data-has=posts]
+    &[data-has=articles]
       #profile-feed
         display block
     &[data-has='']

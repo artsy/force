@@ -6,7 +6,6 @@ describe 'Nav', ->
     @nav = new Nav artist: { id: 'foobar' }, statuses:
       artworks: true
       shows: true
-      posts: true
       artists: true
       contemporary: false
       articles: false

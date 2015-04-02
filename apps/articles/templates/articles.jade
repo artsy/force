@@ -2,13 +2,13 @@ extends ../../../components/main_layout/templates/index
 include ../../../components/article_figure/mixin
 
 block head
-  include meta/magazine
+  include meta/articles
 
 append locals
   - assetPackage = 'articles'
 
 block body
-  #articles-magazine-page.main-layout-container
+  #articles-articles-page.main-layout-container
     if (featuredArticles = articles.featured()).length
       header.am-featured
         .am-featured-hero
@@ -19,7 +19,7 @@ block body
           for article in featuredArticles.slice(1)
             +article-figure(article, 300, false, false)
 
-    #articles-magazine-feed.articles-feed
+    #articles-articles-feed.articles-feed
       .articles-feed-articles.js-articles-feed-articles
         for article in articles.feed()
           .articles-feed-item( data-tier= article.get('tier') )

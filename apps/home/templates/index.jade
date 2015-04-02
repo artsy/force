@@ -41,11 +41,11 @@ block body
           | All Shows
 
         h2.home-featured-header Featured Articles
-        ul#home-featured-posts.home-featured-list
-          - postLinks = featuredPosts.take(7)
-          include featured_posts
-        a.home-browse-all.avant-garde-button-text( href='/posts/featured' )
-          | All Posts
+        ul#home-featured-articles.home-featured-list
+          - articleLinks = featuredArticles.take(7)
+          include featured_articles
+        a.home-browse-all.avant-garde-button-text( href='/articles' )
+          | All Articles
 
         h2.home-featured-header Featured Artists
         ul#home-featured-artists.grid-4-up.home-featured-list

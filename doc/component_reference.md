@@ -125,21 +125,10 @@ This component displays linked profile icons with a profile owner's name. Differ
 sizes and orientations can be achieved with CSS. If a common size / style setup emerges,
 it should be added to `components/profile_badge/index.styl`.
 
-Example (see `apps/artist/templates/related_posts.jade`):
 ```jade
-- var profile = post.profile()
-li.artist-related-post
-  a.artist-related-post-content( href="/post/#{post.get('id')}" )
-    if post.get('title')
-      .arpc-title
-        = post.get('title')
-    if post.get('summary')
-      .arpc-body
-        = post.get('summary')
-
-  unless profile.isNew()
-    .artist-related-post-profile
-      include ../../../components/profile_badge/template
+unless profile.isNew()
+  .artist-related-post-profile
+    include ../../../components/profile_badge/template
 ```
 Add a reference to the component's stylus file in the app's asset package and override
 as needed.
