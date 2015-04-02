@@ -13,6 +13,6 @@ describe 'PartnerArtistArtworks', ->
 
   describe '#serialize', ->
 
-    it 'plucks artworks from the PartnerArtistArtwork resluts', ->
+    it 'plucks artworks from the PartnerArtistArtwork results', ->
       @partner_artist_artworks.first.should.equal @artworks.first
 
