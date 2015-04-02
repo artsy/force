@@ -7,14 +7,7 @@ Profile = require '../../../models/profile.coffee'
 ContactView = require './contact.coffee'
 CollectionView = require './collection.coffee'
 ShowsView = require './shows.coffee'
-articlesView = require './articles.coffee'
-postsView = require './posts.coffee'
-
-PostsView = if 'Articles' in (sd.CURRENT_USER?.lab_features or [])
-  articlesView
-else
-  postsView
-
+ArticlesView = require './articles.coffee'
 ArtistsView = require './artists.coffee'
 OverviewView = require './overview.coffee'
 tablistTemplate = -> require('../templates/tablist.jade') arguments...
@@ -27,7 +20,7 @@ sectionToView =
   collection: CollectionView
   shop: CollectionView
   shows: ShowsView
-  posts: PostsView
+  articles: ArticlesView
   artists: ArtistsView
   overview: OverviewView
 
@@ -128,8 +121,8 @@ module.exports = class PartnerView extends Backbone.View
   #
   getSections: ->
     # The order in the array will be used for presentation
-    gallery = ['overview', 'shows', 'artists', 'posts', 'contact']
-    institution = ['shows', 'collection', 'posts', 'shop', 'about']
+    gallery = ['overview', 'shows', 'artists', 'articles', 'contact']
+    institution = ['shows', 'collection', 'articles', 'shop', 'about']
     nonPartnerGallery = ['overview']
 
     if @profile.isGallery()
@@ -149,7 +142,7 @@ module.exports = class PartnerView extends Backbone.View
       collection: => @partner.get('published_not_for_sale_artworks_count') > 0
       contact: => true
       about: => true
-      posts: => @profile.hasPosts()
+      articles: => @profile.hasPosts()
       shop: => @partner.get('published_for_sale_artworks_count') > 0
 
     _.filter sections, (s) -> criteria[s]?()

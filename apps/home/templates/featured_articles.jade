@@ -1,9 +1,6 @@
 for link, i in articleLinks
   - imgUrl = link.imageUrl(i == 0 ? 'large_rectangle' : 'medium_rectangle')
   li.home-featured-article-link
-    - href = link.get('href')
-    if sd.CURRENT_USER && sd.CURRENT_USER.lab_features.indexOf('Articles')
-      - href = href.replace('/article/', '/article/')
     a( href=href )
       .home-featured-cover-img( style="background-image: url(" + imgUrl + ")" )
       h4= link.get('title')

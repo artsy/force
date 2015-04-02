@@ -14,5 +14,4 @@ app.get '/:id/shop', routes.shop
 app.get '/:id/shows', routes.shows
 app.get '/:id/artists', routes.artists
 app.get '/:id/artist/:artistId', routes.artist
-app.get '/:id/posts', routes.posts
-app.get '/:id/articles', routes.posts
+app.get '/:id/articles', routes.articles
