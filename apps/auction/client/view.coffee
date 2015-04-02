@@ -1,12 +1,8 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 AuthModalView = require '../../../components/auth_modal/view.coffee'
-template =
-  grid: -> require('../templates/artwork/grid.jade') arguments...
-  list: -> require('../templates/artwork/list.jade') arguments...
-
-class State extends Backbone.Model
-  defaults: mode: 'grid', sort: 'default'
+State = require '../models/state.coffee'
+template = -> require('../templates/artworks.jade') arguments...
 
 module.exports = class AuctionArtworksView extends Backbone.View
   events:
@@ -16,8 +12,8 @@ module.exports = class AuctionArtworksView extends Backbone.View
   initialize: ({ @user }) ->
     @state = new State
 
-    @listenTo @collection, 'reset', @renderArtworks
-    @listenTo @state, 'change', @renderArtworks
+    @listenTo @collection, 'reset', @render
+    @listenTo @state, 'change', @render
 
   sorts: (artwork) ->
     { saleArtwork, artist } = artwork.related()
@@ -36,10 +32,7 @@ module.exports = class AuctionArtworksView extends Backbone.View
   setState: (e) ->
     e.preventDefault()
 
-    (@$sorts ?= @$('.js-toggle-artworks-sort'))
-      .removeClass 'is-active'
-
-    @state.set $(e.currentTarget).addClass('is-active').data()
+    @state.set $(e.currentTarget).data()
 
   authOrPass: (e) ->
     return if @user.isLoggedIn()
@@ -51,10 +44,9 @@ module.exports = class AuctionArtworksView extends Backbone.View
       copy: 'Sign up to bid'
       redirectTo: $(e.currentTarget).attr('href')
 
-  renderArtwork: (artwork) =>
-    template[@state.get('mode')](auction: @model, artwork: artwork)
-
-  renderArtworks: ->
-    (@$artworks ?= @$('.js-auction-artworks'))
-      .attr('data-mode', @state.get('mode'))
-      .html _.map(@artworks(), @renderArtwork).join ''
+  render: ->
+    @$el.html template
+      state: @state
+      auction: @model
+      artworks: @artworks()
+    this

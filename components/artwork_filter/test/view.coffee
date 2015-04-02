@@ -64,12 +64,12 @@ describe 'ArtworkFilterView', ->
       Backbone.sync.args[0][2].success fabricate 'artist_filtered_search_suggest'
 
     it 'sets the view mode when the toggle is clicked', ->
-      @view.$('.artwork-filter-view-mode__toggle.icon-list').click()
+      @view.$('.artwork-filter-view-mode__toggle[data-mode=list]').click()
       @view.viewMode.get('mode').should.eql 'list'
 
     it 're-renders the artworks when the view mode is changed', ->
       sinon.spy @ArtworkFilterView::, 'view'
-      @view.$('.artwork-filter-view-mode__toggle.icon-list').click()
+      @view.$('.artwork-filter-view-mode__toggle[data-mode=list]').click()
       @ArtworkFilterView::view.called.should.be.true
 
   describe '#renderFilter', ->
