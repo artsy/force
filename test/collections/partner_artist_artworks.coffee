@@ -7,12 +7,13 @@ describe 'PartnerArtistArtworks', ->
 
   beforeEach ->
     @artwork = fabricate 'artwork'
-    @partner_artist_artwork = { artwork: @artwork, partner_artist: fabricate('artist'), position: 1 }
+    @partnerArtistArtwork = { artwork: @artwork, partner_artist: fabricate('artist'), position: 1 }
     @artworks = new Artworks [@artwork]
-    @partner_artist_artworks = new PartnerArtistArtworks [@partner_artist_artworks]
+    @partnerArtistArtworks = new PartnerArtistArtworks [@partnerArtistArtwork]
 
   describe '#serialize', ->
 
     it 'plucks artworks from the PartnerArtistArtwork results', ->
-      @partner_artist_artworks.first.should.equal @artworks.first
+      @partnerArtistArtworks.first().get('artwork').id.should.equal @artworks.first().get('id')
+
 
