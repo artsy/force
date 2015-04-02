@@ -8,7 +8,7 @@ module.exports.init = ->
   articles.reset articles.feed()
 
   view = new ArticlesFeedView
-    el: $('#articles-magazine-feed')
+    el: $('#articles-articles-feed')
     collection: articles
     fetchWith:
       limit: 50
