@@ -1,13 +1,13 @@
 .artist-page-related-posts
-  if artist.related().posts.length
+  if articles.length
     h2.artist-section-header Articles on Artsy
     #artist-page-related-posts-section: .loading-spinner
       //- Rendered client-side
 
-  if artist.related().webArticles.length
+  if webArticles.length
     #artist-page-articles-section
       h2.artist-section-header Articles on the Web
-      .related-posts: for article in articles
+      .related-posts: for article in webArticles
         - var source = article.get('publication_name') || article.get('publisher_name')
         .related-post
           a.rp-image.hoverable-image-link( href= article.get('external_url') )

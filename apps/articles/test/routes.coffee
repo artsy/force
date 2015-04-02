@@ -62,7 +62,7 @@ describe 'Article routes', ->
 
   describe '#redirectPost', ->
 
-    it 'lets 404 through', ->
+    it 'redirects posts to articles', ->
+      @req.params.id = 'foo'
       routes.redirectPost @req, @res, @next
-      Backbone.sync.args[0][2].error status: 404
-      @next.called.should.be.ok
+      @res.redirect.args[0][1].should.containEql 'article/foo' 

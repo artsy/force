@@ -8,7 +8,6 @@ ShareModal = require '../../../components/share/modal.coffee'
 Transition = require '../../../components/mixins/transition.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 SaveButton = require '../../../components/save_button/view.coffee'
-RelatedPostsView = require '../../../components/related_posts/view.coffee'
 RelatedArticlesView = require '../../../components/related_articles/view.coffee'
 analytics = require '../../../lib/analytics.coffee'
 { acquireArtwork } = require '../../../components/acquire/view.coffee'
@@ -219,15 +218,9 @@ module.exports = class ArtworkView extends Backbone.View
     @saved.syncSavedArtworks()
 
   setupRelatedPosts: ->
-    { method, view } =
-      if @currentUser?.hasLabFeature 'Articles'
-        method: 'relatedArticles', view: RelatedArticlesView
-      else
-        method: 'relatedPosts', view: RelatedPostsView
-
-    @artwork[method].fetch success: (response) =>
+    @artwork.relatedArticles.fetch success: (response) =>
       if response.length
-        subView = new view
+        subView = new RelatedArticlesView
           className: 'ari-cell artwork-related-articles'
           collection: @artwork[method]
           numToShow: 2

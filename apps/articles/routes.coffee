@@ -35,14 +35,4 @@ embedVideo = require 'embed-video'
         embedVideo: embedVideo
 
 @redirectPost = (req, res, next) ->
-  new Article(id: req.params.id).fetch
-    error: (m, err) ->
-      return next() if err.status is 404
-      res.backboneError(arguments...)
-    success: (article) ->
-      return next() unless (
-        req.params.id in POST_TO_ARTICLE_SLUGS or
-        article?.get('fair_id') is '54871f8672616970632a0400' or # In The Armory Show 2015
-        'Articles' in (req.user?.get('lab_features') or [])
-      )
-      res.redirect 301, "/article/#{req.params.id}"
+  res.redirect 301, "/article/#{req.params.id}"
