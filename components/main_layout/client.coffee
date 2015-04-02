@@ -82,7 +82,6 @@ setupJquery = ->
   require 'jquery.transition'
   require 'jquery.fillwidth'
   require 'jquery.dotdotdot'
-  require 'jquery.poplockit'
   require 'jquery-on-infinite-scroll'
   require '../../lib/vendor/waypoints.js'
   require '../../lib/vendor/waypoints-sticky.js'
