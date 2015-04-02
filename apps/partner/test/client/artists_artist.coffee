@@ -2,7 +2,7 @@ Backbone = require 'backbone'
 sinon = require 'sinon'
 PartnerArtists = require '../../../../collections/partner_artists.coffee'
 PartnerArtist = require '../../../../models/partner_artist.coffee'
-Artworks = require '../../../../collections/artworks.coffee'
+PartnerArtistArtworks = require '../../../../collections/partner_artist_artworks.coffee'
 _ = require 'underscore'
 benv = require 'benv'
 { resolve } = require 'path'
@@ -22,9 +22,9 @@ describe 'PartnerArtistsArtistView', ->
         PartnerArtistsArtistView.__set__ 'template', @template
 
         # stub the Artworks fetch
-        @Artworks = sinon.stub()
-        @Artworks.returns (@artworks = new Artworks())
-        PartnerArtistsArtistView.__set__ 'Artworks', @Artworks
+        @PartnerArtistArtworks = sinon.stub()
+        @PartnerArtistArtworks.returns (@artworks = new PartnerArtistArtworks())
+        PartnerArtistsArtistView.__set__ 'PartnerArtistArtworks', @PartnerArtistArtworks
 
         # stub the ArtworkColumnsView
         @artworkColumnsView = { appendArtworks: sinon.stub() }
