@@ -9,6 +9,7 @@ module.exports = class ArticlesView extends Backbone.View
   subViews: []
 
   initialize: ->
+    alert 'hi'
     @listenTo @model.related().webArticles, 'sync', @render
     @listenTo @model.related().articles, 'sync', @render
     @model.related().articles.fetch()
@@ -18,13 +19,13 @@ module.exports = class ArticlesView extends Backbone.View
     relatedArticlesView = new RelatedArticlesView
       collection: @model.related().articles
       numToShow: 4
-    @$('#artist-page-related-posts-section').html(
+    @$('#artist-page-related-articles-section').html(
       relatedArticlesView.render().$el
     )
     @subViews.push relatedArticlesView
 
   render: ->
-    @$el.html template2
+    @$el.html template
       artist: @model
       articles: @model.related().articles.models
       webArticles: @model.related().webArticles.models

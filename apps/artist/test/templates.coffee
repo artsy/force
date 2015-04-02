@@ -25,7 +25,7 @@ describe 'Artist header', ->
       @nav = new Nav artist: @artist, statuses:
         artworks: true
         shows: true
-        posts: false
+        articles: false
         artists: false
         contemporary: true
 
@@ -58,7 +58,7 @@ describe 'Artist header', ->
       @nav = new Nav artist: @artist, statuses:
         artworks: false
         shows: true
-        posts: false
+        articles: false
         artists: false
         contemporary: false
 
@@ -88,7 +88,7 @@ describe 'Artist header', ->
       @nav = new Nav artist: @artist, statuses:
         artworks: false
         shows: true
-        posts: false
+        articles: false
         artists: false
         contemporary: false
 

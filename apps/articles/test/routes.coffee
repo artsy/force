@@ -63,6 +63,6 @@ describe 'Article routes', ->
   describe '#redirectPost', ->
 
     it 'redirects posts to articles', ->
-      @req.params.id = 'foo'
+      @req.url = 'post/foo'
       routes.redirectPost @req, @res, @next
-      @res.redirect.args[0][1].should.containEql 'article/foo' 
+      @res.redirect.args[0][1].should.containEql 'article/foo'

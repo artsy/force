@@ -25,7 +25,7 @@ describe 'OverviewView', ->
       artists: length: 0
       contemporary: length: 0
       shows: length: 0
-      posts: length: 0
+      articles: length: 0
     })
     @model = new Artist fabricate 'artist', id: 'foo-bar', published_artworks_count: 1
     filterView = new Backbone.View
