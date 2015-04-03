@@ -81,12 +81,23 @@ module.exports = class ContactView extends Backbone.View
     e.preventDefault()
 
     if INQUIRY_FLOW is 'updated_flow'
-      new ConfirmContactPartnerView
+      @modal = new ConfirmContactPartnerView
         artwork: @model
         partner: @model.get 'partner'
         inputEmail: $('#js-mailcheck-input-artwork').val()
         inputName: $('#artwork-contact-form input:first').val()
         inputMessage: $('#artwork-contact-form textarea').val()
+        success: =>
+          @displayInquirySent()
+          new FlashMessage message: 'Thank you. Your message has been sent.'
+          @$submit.attr('data-state', '').blur()
+        error: (model, response, options) =>
+          @reenableForm()
+          @$('#artwork-contact-form-errors').html @errorMessage(response)
+          @$submit.attr 'data-state', 'error'
+        exit: =>
+          @reenableForm()
+
       return
 
     @$submit.attr 'data-state', 'loading'
