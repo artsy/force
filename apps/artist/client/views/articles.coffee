@@ -9,7 +9,6 @@ module.exports = class ArticlesView extends Backbone.View
   subViews: []
 
   initialize: ->
-    alert 'hi'
     @listenTo @model.related().webArticles, 'sync', @render
     @listenTo @model.related().articles, 'sync', @render
     @model.related().articles.fetch()
