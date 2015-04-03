@@ -9,7 +9,7 @@ CurrentUser = require '../../../models/current_user'
 Artworks = require '../../../collections/artworks'
 SaleArtworks = require '../../../collections/sale_artworks'
 OrderedSets = require '../../../collections/ordered_sets'
-State = require '../models/state'
+State = require '../../../components/auction_artworks/models/state'
 
 describe 'auction templates', ->
   before (done) ->

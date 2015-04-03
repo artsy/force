@@ -1,8 +1,0 @@
-if artworks.length
-  include ./nav
-  section.auction-artworks.js-auction-artworks( data-mode= state.get('mode') )
-    for artwork in artworks
-      if state.get('mode') === 'grid'
-        include ./artwork/grid
-      else
-        include ./artwork/list

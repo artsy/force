@@ -7,7 +7,7 @@ Profile = require '../../models/profile'
 SaleArtworks = require '../../collections/sale_artworks'
 Artworks = require '../../collections/artworks'
 OrderedSets = require '../../collections/ordered_sets'
-State = require './models/state'
+State = require '../../components/auction_artworks/models/state'
 
 determineFeature = (id, err, next) ->
   new Backbone.Collection().fetch
