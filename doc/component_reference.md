@@ -158,7 +158,7 @@ See `apps/artist/stylesheets/index.styl` for an example of a customized layout
     text-align center
 ```
 ##### Uses:
-- Artist Pages - Featured Posts [/artist/andy-warhol](http://artsy.net/artist/andy-warhol)
+- Artist Pages - Featured Articles [/artist/andy-warhol](http://artsy.net/artist/andy-warhol)
 - Partner Shows [/show/333-montezuma-arts-elegy](http://artsy.net/show/333-montezuma-arts-elegy)
 
 ## Suggested Genes
@@ -445,7 +445,7 @@ new PartnerShowButtons
 
 ## Location Search
 
-An autocomplete input that leverages the Google Maps API to get a geocoded location from a user that types in a city. 
+An autocomplete input that leverages the Google Maps API to get a geocoded location from a user that types in a city.
 ![](images/search_location.png)
 
 Check out usage in `apps/personalize`

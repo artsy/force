@@ -2,7 +2,7 @@
 # Feature
 #
 # A feature is a generic model that is used for grouping featued content.
-# A feature could be a group of links to posts, shows, or any other Artsy entity.
+# A feature could be a group of links to articles, shows, or any other Artsy entity.
 # Auctions are also features and add the most plumbing to this general purpose set up.
 #
 # Heavily leveraging @craigspaeth's work from microgravity.
