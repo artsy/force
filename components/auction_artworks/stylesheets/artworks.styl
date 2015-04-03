@@ -2,6 +2,9 @@ grid-max-thumbnail-size = 350px
 list-max-thumbnail-size = 130px
 list-row-size = (list-max-thumbnail-size + 40px)
 
+.auction-artworks-container
+  margin-bottom 60px
+
 .auction-artworks
   &[data-mode='grid']
     clearfix()
@@ -14,6 +17,7 @@ list-row-size = (list-max-thumbnail-size + 40px)
   float left
   width 33.33%
   padding 15px
+  text-align left
   border-bottom 1px solid gray-lighter-color
   a
     text-decoration none
@@ -66,6 +70,7 @@ list-row-size = (list-max-thumbnail-size + 40px)
 .auction-list-artwork
   display table-row
   height list-row-size
+  text-align left
   &:last-child
     border-bottom none
   > div

@@ -2,7 +2,7 @@ mixin videoTemplate(video, posterSize)
   if video.has('subtitle')
     .feature-set-video-caption!= video.mdToHtml('subtitle')
   else
-    video( 
+    video(
       data-id=video.get('id')
       preload='auto'
       poster=video.posterUrl(posterSize)

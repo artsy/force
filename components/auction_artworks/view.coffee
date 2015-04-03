@@ -1,10 +1,11 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-AuthModalView = require '../../../components/auth_modal/view.coffee'
-State = require '../models/state.coffee'
-template = -> require('../templates/artworks.jade') arguments...
+AuthModalView = require '../auth_modal/view.coffee'
+State = require './models/state.coffee'
+template = -> require('./templates/index.jade') arguments...
 
 module.exports = class AuctionArtworksView extends Backbone.View
+  className: 'auction-artworks-container'
   events:
     'click .js-toggle-artworks-sort': 'setState'
     'click .js-bid-button': 'authOrPass'
@@ -12,7 +13,7 @@ module.exports = class AuctionArtworksView extends Backbone.View
   initialize: ({ @user }) ->
     @state = new State
 
-    @listenTo @collection, 'reset', @render
+    @listenTo @collection, 'reset add remove', @render
     @listenTo @state, 'change', @render
 
   sorts: (artwork) ->
@@ -35,7 +36,7 @@ module.exports = class AuctionArtworksView extends Backbone.View
     @state.set $(e.currentTarget).data()
 
   authOrPass: (e) ->
-    return if @user.isLoggedIn()
+    return if @user?.isLoggedIn()
 
     e.preventDefault()
     new AuthModalView

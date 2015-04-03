@@ -3,9 +3,9 @@ benv = require 'benv'
 Backbone = require 'backbone'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
-Auction = require '../../../../models/sale'
-Artworks = require '../../../../collections/artworks'
-AuctionArtworksView = benv.requireWithJadeify resolve(__dirname, '../../client/view'), ['template']
+Auction = require '../../../models/sale'
+Artworks = require '../../../collections/artworks'
+AuctionArtworksView = benv.requireWithJadeify resolve(__dirname, '../view'), ['template']
 
 describe 'AuctionArtworksView', ->
   before (done) ->
