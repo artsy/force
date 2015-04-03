@@ -17,7 +17,7 @@ $ ->
   $.ajax
     url: "#{sd.POSITRON_URL}/api/articles"
     data:
-      partner_id: sd.PROFILE.owner._id
+      partner_id: sd.PROFILE && sd.PROFILE.owner._id
       published: true
       limit: 1
     success: (res) ->
