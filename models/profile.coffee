@@ -103,9 +103,6 @@ module.exports = class Profile extends Backbone.Model
   isCurrentProfile: ->
     sd.CURRENT_USER?.default_profile_id == @get('id')
 
-  hasPosts: ->
-    @get('posts_count') > 0 or @get('reposts_count') > 0
-
   fetchFavorites: (options) ->
     favorites = new Artworks
     favorites.url = "#{sd.API_URL}/api/v1/collection/saved-artwork/artworks"

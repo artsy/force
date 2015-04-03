@@ -142,7 +142,7 @@ module.exports = class PartnerView extends Backbone.View
       collection: => @partner.get('published_not_for_sale_artworks_count') > 0
       contact: => true
       about: => true
-      articles: => @profile.hasPosts()
+      articles: => true
       shop: => @partner.get('published_for_sale_artworks_count') > 0
 
     _.filter sections, (s) -> criteria[s]?()
