@@ -20,8 +20,6 @@ module.exports = class FeatureView extends Backbone.View
     'click .js-register-button': 'authOrPass'
 
   initialize: (options = {}) ->
-    @handleTab options.tab if options.tab
-
     @setupCurrentUser()
 
     @feature = @model
@@ -132,10 +130,6 @@ module.exports = class FeatureView extends Backbone.View
 
   setupShareButtons: ->
     new ShareView el: @$('.js-feature-share')
-
-  handleTab: (tab) ->
-    new FeatureRouter feature: @feature
-    Backbone.history.start pushState: true
 
   authOrPass: (e) =>
     unless @currentUser
