@@ -39,7 +39,7 @@ module.exports = class OverviewView extends Backbone.View
   setupRelatedArticles: ->
     # TODO: Find a way to integrate the toggling of articles UI with the
     # statuses/sections paradigm in the root of this app.
-    @fetches.push @model.related().articles.fetch().then (res) ->
+    @fetches.push @model.related().articles.fetch success: (m, res) ->
       return if res.results.length > 0
       $('#artist-related-articles-section, [href*=articles]').hide()
       $('[href*=articles]').prev().hide()

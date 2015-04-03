@@ -32,6 +32,7 @@ describe 'OverviewView', ->
     filterView.artworks = new Backbone.Collection
     filterView.filter = root: new Backbone.Model
     @OverviewView.__set__ 'ArtworkFilter', init: @artworkFilterInitStub = sinon.stub().returns(view: filterView)
+    @OverviewView::setupRelatedArticles = ->
     @OverviewView.__set__ 'STATUSES', {}
     @OverviewView.__set__ 'lastModified', sinon.stub()
     @view = new @OverviewView model: @model

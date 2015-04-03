@@ -63,13 +63,6 @@ describe 'UserProfileView', ->
       @view.setState()
       @view.$el.attr('data-has').should.equal 'favorites'
 
-  describe '#renderArticles', ->
-
-    it 'adds a pop-lockit feed', ->
-      @view.articles = new Backbone.Collection [{}]
-      @view.renderArticles()
-      @PoplockitFeed.calledWithNew.should.be.ok
-
   describe '#renderFavorites', ->
 
     it 'sets up a artwork columns view', ->

@@ -34,7 +34,6 @@ describe 'Statuses', ->
       statuses.should.eql {
         artworks: true
         shows: true
-        articles: true
         artists: true
         contemporary: true
         webArticles: true
