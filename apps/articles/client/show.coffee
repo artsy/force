@@ -34,7 +34,7 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
       align: 'left'
       hasDimensions: false
     @carouselView.postRender()
-
+    @$('.artwork-item').each (i, item) -> $(item).width $(item).find('img').width()
     if @article.get('sections')[0].items?.length is 1
       @$('.carousel-controls').hide()
 
