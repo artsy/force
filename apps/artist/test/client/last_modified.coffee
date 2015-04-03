@@ -25,10 +25,6 @@ describe 'setupLastModifiedDate', ->
 
   describe 'relevant data', ->
     beforeEach ->
-      @artist.related().posts.add [
-        fabricate('post', last_promoted_at: moment(@baselineDate).subtract(6, 'days').format())
-        fabricate('post', last_promoted_at: moment(@baselineDate).subtract(4, 'days').format())
-      ]
       @artist.related().shows.add [
         fabricate('show', updated_at: moment(@baselineDate).subtract(2, 'days').format()) # June 15
       ]

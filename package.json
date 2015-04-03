@@ -78,7 +78,6 @@
     "jquery-on-infinite-scroll": "*",
     "jquery.dotdotdot": "git://github.com/mzikherman/jquery.dotdotdot.git",
     "jquery.fillwidth": "*",
-    "jquery.poplockit": "*",
     "jquery.transition": "git://github.com/dzucconi/jquery.transition.git",
     "cookies-js": "*",
     "cheerio": "*",

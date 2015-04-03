@@ -18,7 +18,6 @@ module.exports = class Statuses
       Q.allSettled([
         @fetchArtworks()
         @fetchStatus 'shows'
-        @fetchStatus 'posts'
         @fetchStatus 'artists'
         @fetchStatus 'contemporary'
         @fetchStatus 'webArticles'

@@ -63,17 +63,16 @@ describe 'FeedView', ->
         artists: [fabricate('artist')]
         artworks: [fabricate('artwork')]
       )
-      post = new FeedItem fabricate('post', _type: "Post")
       response =
         feed: "shows"
         next: "1390262261:52d09ba39c18db698900091a"
-        results: [partnerShow, post]
+        results: [partnerShow]
 
       @view.fetchMoreItems()
 
       Backbone.sync.args[0][2].success response
 
-      @view.$('.feed-item').length.should.equal 3
+      @view.$('.feed-item').length.should.equal 2
 
       @view.$el.html().should.not.containEql 'undefined'
       @view.$el.html().should.not.containEql "\#{"

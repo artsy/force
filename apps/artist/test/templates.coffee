@@ -25,7 +25,7 @@ describe 'Artist header', ->
       @nav = new Nav artist: @artist, statuses:
         artworks: true
         shows: true
-        posts: false
+        articles: false
         artists: false
         contemporary: true
 
@@ -46,10 +46,9 @@ describe 'Artist header', ->
 
     it 'renders the appropriate nav', ->
       $navLinks = $('.garamond-tablist a')
-      $navLinks.length.should.equal 4
+      $navLinks.length.should.equal 5
       $navLinks.first().text().should.equal 'Overview'
       $navLinks.last().text().should.equal 'Related Artists'
-      $navLinks.text().should.not.containEql 'Articles'
 
   describe 'artist with some artworks (on the overview page)', ->
     beforeEach (done) ->
@@ -58,7 +57,7 @@ describe 'Artist header', ->
       @nav = new Nav artist: @artist, statuses:
         artworks: false
         shows: true
-        posts: false
+        articles: false
         artists: false
         contemporary: false
 
@@ -76,7 +75,7 @@ describe 'Artist header', ->
 
     it 'renders the appropriate nav', ->
       $navLinks = $('.garamond-tablist a')
-      $navLinks.length.should.equal 2
+      $navLinks.length.should.equal 3
       $navLinks.first().text().should.equal 'Overview'
       $navLinks.last().text().should.equal 'Shows'
       $navLinks.text().should.not.containEql 'Works'
@@ -88,7 +87,7 @@ describe 'Artist header', ->
       @nav = new Nav artist: @artist, statuses:
         artworks: false
         shows: true
-        posts: false
+        articles: false
         artists: false
         contemporary: false
 

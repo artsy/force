@@ -54,7 +54,7 @@ describe 'PartnerView', ->
 
       it 'filters and gets the sections needed in the tabs', ->
         sections = @view.getDisplayableSections @view.getSections()
-        sections.should.eql ['shows', 'posts', 'about']
+        sections.should.eql ['shows', 'articles', 'about']
 
     describe '#initializeTablistAndContent', ->
 
@@ -62,7 +62,7 @@ describe 'PartnerView', ->
         sinon.stub @view.partner, "fetch", (options) -> options?.success?()
         @view.initializeTablistAndContent()
         _.last(@tablistTemplate.args)[0].profile.get('id').should.equal @profile.get('id')
-        _.last(@tablistTemplate.args)[0].sections.should.eql ['shows', 'posts', 'about']
+        _.last(@tablistTemplate.args)[0].sections.should.eql ['shows', 'articles', 'about']
 
     describe '#renderSection', ->
 

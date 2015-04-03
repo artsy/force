@@ -42,7 +42,7 @@
   res.locals.sd.SECTION = 'artist'
   res.render 'index', params: req.params
 
-@posts = (req, res, next) ->
+@articles = (req, res, next) ->
   return next() unless res.locals.profile?.isPartner()
-  res.locals.sd.SECTION = 'posts'
+  res.locals.sd.SECTION = 'articles'
   res.render 'index', params: req.params

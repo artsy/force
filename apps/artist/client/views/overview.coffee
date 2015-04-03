@@ -9,7 +9,6 @@ RelatedGenesView = require '../../../../components/related_links/types/artist_ge
 # Main section
 ArtworkFilter = require '../../../../components/artwork_filter/index.coffee'
 # Bottom sections
-RelatedPostsView = require '../../../../components/related_posts/view.coffee'
 RelatedArticlesView = require '../../../../components/related_articles/view.coffee'
 RelatedShowsView = require '../../../../components/related_shows/view.coffee'
 ArtistFillwidthList = require '../../../../components/artist_fillwidth_list/view.coffee'
@@ -37,17 +36,17 @@ module.exports = class OverviewView extends Backbone.View
       @subViews.push subView
       @setupRelatedSection @$('#artist-related-shows-section')
 
-  setupRelatedPosts: ->
-    if STATUSES.posts
-      if 'Articles' in (sd.CURRENT_USER?.lab_features or [])
-        @fetches.push @model.related().articles.fetch()
-        subView = new RelatedArticlesView collection: @model.related().articles, numToShow: 4
-      else
-        @fetches.push @model.related().posts.fetch()
-        subView = new RelatedPostsView collection: @model.related().posts, numToShow: 4
-      @$('#artist-related-posts').html subView.render().$el
-      @subViews.push subView
-      @setupRelatedSection @$('#artist-related-posts-section')
+  setupRelatedArticles: ->
+    # TODO: Find a way to integrate the toggling of articles UI with the
+    # statuses/sections paradigm in the root of this app.
+    @fetches.push @model.related().articles.fetch success: (m, res) ->
+      return if res.results.length > 0
+      $('#artist-related-articles-section, [href*=articles]').hide()
+      $('[href*=articles]').prev().hide()
+    subView = new RelatedArticlesView collection: @model.related().articles, numToShow: 4
+    @$('#artist-related-articles').html subView.render().$el
+    @subViews.push subView
+    @setupRelatedSection @$('#artist-related-articles-section')
 
   setupRelatedGenes: ->
     subView = new RelatedGenesView(el: @$('.artist-related-genes'), id: @model.id)
@@ -106,7 +105,7 @@ module.exports = class OverviewView extends Backbone.View
     # Bottom sections
     @setupRelatedArtists()
     @setupRelatedShows()
-    @setupRelatedPosts()
+    @setupRelatedArticles()
     @setupLastModifiedDate()
 
   render: ->

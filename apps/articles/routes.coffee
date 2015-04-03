@@ -5,7 +5,7 @@ Articles = require '../../collections/articles'
 embedVideo = require 'embed-video'
 { POST_TO_ARTICLE_SLUGS } = require '../../config'
 
-@magazine = (req, res, next) ->
+@articles = (req, res, next) ->
   new Articles().fetch
     data:
       published: true
@@ -16,7 +16,7 @@ embedVideo = require 'embed-video'
     success: (articles) ->
       res.locals.sd.ARTICLES = articles.toJSON()
       res.locals.sd.ARTICLES_COUNT = articles.count
-      res.render 'magazine', articles: articles
+      res.render 'articles', articles: articles
 
 @show = (req, res, next) ->
   new Article(id: req.params.slug).fetchWithRelated
@@ -35,14 +35,4 @@ embedVideo = require 'embed-video'
         embedVideo: embedVideo
 
 @redirectPost = (req, res, next) ->
-  new Article(id: req.params.id).fetch
-    error: (m, err) ->
-      return next() if err.status is 404
-      res.backboneError(arguments...)
-    success: (article) ->
-      return next() unless (
-        req.params.id in POST_TO_ARTICLE_SLUGS or
-        article?.get('fair_id') is '54871f8672616970632a0400' or # In The Armory Show 2015
-        'Articles' in (req.user?.get('lab_features') or [])
-      )
-      res.redirect 301, "/article/#{req.params.id}"
+  res.redirect 301, req.url.replace 'post', 'article'

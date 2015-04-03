@@ -22,11 +22,7 @@ header#main-layout-header(class= sd.HEADER_CLASS ? sd.HEADER_CLASS : '')
       a.mlh-top-nav-link( href='/institutions', class= activeClass('/institutions') ) Museums
       a.mlh-top-nav-link( href='/art-fairs', class= activeClass('/art-fairs') ) Fairs
       a.mlh-top-nav-link( href='/auctions', class= activeClass('/auctions') ) Auctions
-
-      if user && user.hasLabFeature('Articles')
-        a.mlh-top-nav-link( href='/magazine', class= activeClass('/magazine') ) Magazine
-      else
-        a.mlh-top-nav-link( href='/posts', class= activeClass('/posts') ) Posts
+      a.mlh-top-nav-link( href='/articles', class= activeClass('/posts') ) Posts
 
       span.mlh-top-nav-link.hover-pulldown( data-mode='hover' )
         | More

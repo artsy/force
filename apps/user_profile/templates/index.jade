@@ -13,13 +13,13 @@ block body
     include ../../../components/profile_header/template
     header#profile-tabs
       .garamond-tablist
-        a.garamond-tab( href="/#{profile.get('id')}/posts" ) Articles
+        a.garamond-tab( href="/#{profile.get('id')}/articles" ) Articles
         span.garamond-tab-separator
         a.garamond-tab( href="/#{profile.get('id')}/favorites" ) Favorites
       #profile-favorites-header.garamond-header-center Favorites
     #profile-spinner
       .loading-spinner
-    #profile-feed.feed
+    #profile-feed.feed.main-layout-container
     #profile-favorites.main-layout-container
     #profile-favorites-spinner
       .loading-spinner
