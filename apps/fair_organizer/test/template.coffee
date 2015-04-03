@@ -64,6 +64,6 @@ describe 'Fair Organizer', ->
 
     it 'renders without errors', ->
       @$template.html().should.not.containEql 'undefined'
-      @$template.html().should.containEql 'Preview Armory Show Fair Organizer'
+      @$template.html().should.containEql 'Explore Armory Show Fair Organizer'
 
 
