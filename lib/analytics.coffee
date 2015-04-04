@@ -10,6 +10,7 @@ sd = require('sharify').data
 qs = require('querystring')
 sparkMd5Hash = require('spark-md5').hash
 Cookies = require '../components/cookies/index.coffee'
+Grouper = require "../components/util/grouper.coffee"
 
 module.exports = (options) =>
   return if module.exports.getUserAgent()?.indexOf?('PhantomJS') > -1
@@ -149,6 +150,10 @@ module.exports.trackTimeTo = trackTimeTo = (description) ->
 # For multis, each id is hashed to 8 characters + event id, leaving room for 55 ids
 # Going with 50 to be conservative and account for the model name
 maxTrackableMultiIds = 50
+# Browser url length limit is 2048 characters, this is the length that we will allot the
+# artwork ids so that we safely stay under this limit (rest of url for the impression
+# event is 511 chars in this case)
+maxUnhashedTrackableLength = 1300
 
 module.exports.encodeMulti = (ids) ->
   ids = _.compact(ids)
@@ -160,17 +165,22 @@ module.exports.trackMulti = (description, data) =>
 module.exports.multi = (description, modelName, ids) ->
   return unless ids?.length > 0
 
-  # chunk ids by maxTrackableMultiIds
+  # chunk ids by maxTrackableMultiIds and maxUnhashedTrackableLength
   chunkedIds = _.groupBy(ids, (a, b) => return Math.floor(b / maxTrackableMultiIds))
+  snowplowChunkedIds = Grouper.groupByConcatLength(ids, maxUnhashedTrackableLength)
 
   for chunk, index in _.toArray(chunkedIds)
     # Fire log events at 1/2 second intervals
     ((encodedIds) =>
       _.delay( =>
-        @snowplowStruct 'impression', null, chunk.join(','), modelName
         @trackMulti description, @modelNameAndIdToLabel(modelName, encodedIds)
       , (500 * index) + 1)
     )(@encodeMulti(chunk))
+
+  for chunk, index in _.toArray(snowplowChunkedIds)
+    _.delay( =>
+      @snowplowStruct 'impression', null, chunk.join(','), modelName
+    , (500 * index) + 1)
 
 # Code using this function should cope with it returning undefined
 module.exports.getProperty = (property) =>
