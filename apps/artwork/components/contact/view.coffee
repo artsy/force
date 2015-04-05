@@ -13,7 +13,7 @@ AfterInquiry = require '../../../../components/after_inquiry/mixin.coffee'
 defaultMessage = require '../../../../components/contact/default_message.coffee'
 Introduction = require '../../../../components/introduction/model.coffee'
 Mailcheck = require '../../../../components/mailcheck/index.coffee'
-ConfirmContactPartnerView = require '../../../../components/contact/confirm_contact_partner.coffee'
+ConfirmInquiryView = require '../../../../components/contact/confirm_inquiry.coffee'
 attendanceTemplate = -> require('./templates/attendance.jade') arguments...
 inquirySentTemplate = -> require('./templates/inquiry_sent.jade') arguments...
 
@@ -81,7 +81,7 @@ module.exports = class ContactView extends Backbone.View
     e.preventDefault()
 
     if INQUIRY_FLOW is 'updated_flow'
-      @modal = new ConfirmContactPartnerView
+      @modal = new ConfirmInquiryView
         artwork: @model
         partner: @model.get 'partner'
         inputEmail: $('#js-mailcheck-input-artwork').val()

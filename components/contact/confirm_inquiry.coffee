@@ -12,7 +12,7 @@ Form = require '../mixins/form.coffee'
 formTemplate = -> require('./templates/inquiry_form_confirm.jade') arguments...
 headerTemplate = -> require('./templates/inquiry_partner_header.jade') arguments...
 
-module.exports = class ConfirmContactPartnerView extends ContactView
+module.exports = class ConfirmInquiryView extends ContactView
   _.extend @prototype, Form
   _.extend @prototype, AfterInquiry
 

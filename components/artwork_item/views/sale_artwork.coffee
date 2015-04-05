@@ -3,7 +3,9 @@ sd = require('sharify').data
 Backbone = require 'backbone'
 AcquireArtwork = require('../../acquire/view.coffee').acquireArtwork
 ContactPartnerView = require '../../contact/contact_partner.coffee'
+ConfirmInquiryView = require '../../contact/confirm_inquiry.coffee'
 mediator = require '../../../lib/mediator.coffee'
+FlashMessage = require '../../flash/index.coffee'
 
 module.exports = class SaleArtworkView extends Backbone.View
   events:
@@ -28,9 +30,25 @@ module.exports = class SaleArtworkView extends Backbone.View
 
   contactSeller: (e) ->
     e.preventDefault()
-    new ContactPartnerView
-      artwork: @model
-      partner: @model.get 'partner'
+    # TODO: Only show if it's coming from an artist page
+    if sd.INQUIRY_FLOW is 'updated_flow'
+      if @model.isPriceDisplayable()
+        defaultMessage = "I'm interested in this work by #{artwork.get('artist')}. Please contact me to discuss further."
+      else
+        defaultMessage = "Hi. Could you please share the asking price for this work? I'd like to know if it's within my budget."
+      new ConfirmInquiryView
+        artwork: @model
+        partner: @model.get 'partner'
+        inputMessage: defaultMessage
+        success: =>
+          new FlashMessage message: 'Thank you. Your message has been sent.'
+        error: (model, response, options) =>
+          @$('#artwork-contact-form-errors').html @errorMessage(response)
+        exit: ->
+    else
+      new ContactPartnerView
+        artwork: @model
+        partner: @model.get 'partner'
 
   acquire: (e) ->
     e.preventDefault()
