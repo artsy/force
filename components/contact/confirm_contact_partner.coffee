@@ -3,11 +3,9 @@ Backbone = require 'backbone'
 ContactView = require './view.coffee'
 analytics = require('../../lib/analytics.coffee')
 Partner = require '../../models/partner.coffee'
-CurrentUser = require '../../models/current_user.coffee'
 Cookies = require 'cookies-js'
 AfterInquiry = require '../after_inquiry/mixin.coffee'
 Form = require '../mixins/form.coffee'
-LoggedOutUser = require '../../models/logged_out_user.coffee'
 
 { SESSION_ID, API_URL } = require('sharify').data
 
@@ -48,7 +46,6 @@ module.exports = class ConfirmContactPartnerView extends ContactView
     @success = options.success
     @error = options.error
     @exit = options.exit
-    @user ?= CurrentUser.orNull() or new LoggedOutUser
     @artwork = options.artwork
     @inputName = options.inputName
     @inputEmail = options.inputEmail
@@ -68,32 +65,26 @@ module.exports = class ConfirmContactPartnerView extends ContactView
     return unless city = @partner.displayLocations @user?.get('location')?.city
     @$('.contact-location').html ", " + city
 
-  submit: (e) ->
+  submit: (e) =>
     return unless @validateForm()
     return if @formIsSubmitting()
 
     e.preventDefault()
 
-    # @$submit ?= @$('#contact-submit')
-    # @$errors ?= @$('#contact-errors')
-
-    # @$submit.attr 'data-state', 'loading'
     analytics.track.funnel 'Sent artwork inquiry',
       label: analytics.modelNameAndIdToLabel('artwork', @artwork.id)
 
     @$('button').attr 'data-state', 'loading'
     formData = @serializeForm()
-    # @user.set _.pick formData, 'name', 'email'
 
     @model.set _.extend formData,
       artwork: @artwork.id
       contact_gallery: true
-      session_id: if @user?.isLoggedIn() then SESSION_ID else undefined
+      session_id: if @user and @user.isLoggedIn() then undefined else SESSION_ID
       referring_url: Cookies.get('force-referrer')
       landing_url: Cookies.get('force-session-start')
       inquiry_url: window.location.href
-
-    console.log(if @user?.isLoggedIn() then SESSION_ID else undefined)
+      user: @user
 
     @maybeSend @model,
       success: =>
