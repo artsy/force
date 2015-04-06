@@ -27,3 +27,5 @@ module.exports = (artwork) ->
   $document.on 'click', '.artwork-auction-results-button', ->
     track.click "Viewed 'Comparables'"
 
+  $document.on 'click', '#layered-search-results .artwork-item', ->
+    trackSnowplow 'genome', 'click_related_artwork', artwork.get('_id'), 'artwork'
