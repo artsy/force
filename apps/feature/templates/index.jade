@@ -9,28 +9,25 @@ append locals
   - bodyClass = bodyClass + ' body-no-margins'
 
 block body
-  #feature( data-feature=feature.get('id') )
-    if feature.hasImage() && feature.imageUrl()
+  - hasImage = feature.hasImage() && feature.imageUrl()
+  #feature.feature-page( class= hasImage ? 'has-image' : undefined )
+    if hasImage
       .feature-image( style="background-image: url(#{feature.imageUrl('wide')})" )
 
-    .responsive-layout-container
-      .feature-content
+    .feature-content.responsive-layout-container
+      header.feature-header
+        .feature-primary-information
+          h1.feature-title
+            = feature.get('name')
 
-        #feature-top-container
-          #feature-auction-left
-            h1.feature-title= feature.get('name')
-            //- Requires auctions to have descriptions
-            //- which I assume they do. But this needs to be revisited.
-            if feature.get('description')
-              .feature-description
-                .feature-description-text
-                  != feature.mdToHtml('description')
-                #feature-description-register-container
-                  //- Rendered client-side
-          #feature-auction-right
-            img#feature-auction-logo
-            #feature-auction-info-countdown-container
-              //- Rendered client-side
-            nav.feature-share
-              +share(feature.shareTitle())
-        #feature-sets-container: .loading-spinner
+          if feature.get('description')
+            .feature-description
+              != feature.mdToHtml('description')
+
+        .feature-metadata.js-feature-metadata
+          //- Rendered client-side
+
+        //-   nav.feature-share.js-feature-share
+        //-     +share(feature.shareTitle())
+
+      #feature-sets-container: .loading-spinner

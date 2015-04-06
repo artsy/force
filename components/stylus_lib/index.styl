@@ -28,6 +28,7 @@ json('../../node_modules/artsy-ezel-components/stylus_lib/colors.json')
 // Z-indexes
 zindex-hover-pulldown = 800
 zindex-jump = 950
+zindex-primary-nav = 975
 zindex-deepzoom = 1000
 zindex-iframepopover = 1050
 zindex-flash = 1060
@@ -187,9 +188,9 @@ faux-underline()
   &:hover
     text-decoration: none
 
-fine-faux-underline()
+fine-faux-underline(color = gray-darkest-color)
   text-decoration none
-  background-image linear-gradient(top, transparent 0, gray-darkest-color 1px, transparent 0)
+  background-image linear-gradient(top, transparent 0, color 1px, transparent 0)
   background-size 1px 5px
   background-repeat repeat-x
   background-position bottom

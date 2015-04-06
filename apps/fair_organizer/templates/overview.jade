@@ -17,9 +17,8 @@ block body
         .fair-organizer-top__icon
           img.large-profile-image( alt=fairOrg.get('name'), title=fairOrg.get('name'), src=profile.icon().imageUrl('square') )
         .fair-organizer-top__header
-          h1 Preview #{fairOrg.get('name')}
-          h1 on Artsy
-        .fair-organizer-top__sub-header Discover and collect works before the fair opens
+          h1 Explore #{fairOrg.get('name')} on Artsy
+        .fair-organizer-top__sub-header Browse past editions and stay connected with the latest news
         if !user
           a.fair-organizer-top__notify.avant-garde-button-black(
             href='/log_in', data-mode='login' ) Get notified

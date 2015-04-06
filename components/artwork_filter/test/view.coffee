@@ -11,12 +11,12 @@ describe 'ArtworkFilterView', ->
     benv.setup =>
       benv.expose
         $: benv.require 'jquery'
-        sd: {MODE: 'columns'}
+        sd: {}
       Backbone.$ = $
       @ArtworkFilterView = benv.requireWithJadeify resolve(__dirname, '../view'), ['template', 'filterTemplate', 'headerTemplate']
       @ArtworkFilterView.__set__ 'ArtworkColumnsView', sinon.stub().returns { length: -> 999 }
       @ArtworkFilterView.__set__ 'ArtworkTableView', sinon.stub().returns { length: -> 999 }
-      @ArtworkFilterView.__set__ 'BorderedPulldown', sinon.stub()
+      @ArtworkFilterView.__set__ 'BorderedPulldown', sinon.stub().returns { undelegateEvents: -> 1 }
       done()
 
   after ->
@@ -58,6 +58,19 @@ describe 'ArtworkFilterView', ->
 
     it 'starts in grid mode', ->
       @view.viewMode.get('mode').should.equal 'grid'
+
+  describe '#changeViewMode', ->
+    beforeEach ->
+      Backbone.sync.args[0][2].success fabricate 'artist_filtered_search_suggest'
+
+    it 'sets the view mode when the toggle is clicked', ->
+      @view.$('.artwork-filter-view-mode__toggle[data-mode=list]').click()
+      @view.viewMode.get('mode').should.eql 'list'
+
+    it 're-renders the artworks when the view mode is changed', ->
+      sinon.spy @ArtworkFilterView::, 'view'
+      @view.$('.artwork-filter-view-mode__toggle[data-mode=list]').click()
+      @ArtworkFilterView::view.called.should.be.true
 
   describe '#renderFilter', ->
     beforeEach ->
@@ -176,18 +189,6 @@ describe 'ArtworkFilterView', ->
       @view.$('input[type="checkbox"]').first().click()
       @view.filter.selected.attributes.should.eql {}
       _.last(Backbone.sync.args)[2].data.should.not.containEql price_range: '-1:1000000000000'
-
-  describe '#changeViewMode', ->
-    before ->
-      sinon.spy @ArtworkFilterView::, 'renderColumns'
-
-    it 'sets the view mode when the toggle is clicked', ->
-      @view.$('.icon-list').click()
-      @view.viewMode.get 'mode', 'list'
-
-    it 're-renders the artworks when the view mode is changed', ->
-      @view.viewMode.set 'mode', 'list'
-      @view.renderColumns.called.should.be.true
 
   describe '#setButtonState', ->
     beforeEach ->

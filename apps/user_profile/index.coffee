@@ -9,5 +9,5 @@ app.set 'view engine', 'jade'
 app.get '/:profileId/collection/:id', routes.collection
 # Just render the index or pass if it's not a user.
 # Routing is handled client-side.
-for route in ['/:id', '/:id/favorites', '/:id/posts']
+for route in ['/:id', '/:id/favorites', '/:id/articles']
   app.get route, routes.index

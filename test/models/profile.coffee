@@ -201,10 +201,3 @@ describe 'Profile', ->
         items.url.should.containEql 'saved-artwork/artworks'
         done()
       Backbone.sync.args[0][2].success [{ id: 'bar' }]
-
-  describe '#fetchPosts', ->
-
-    it 'fetches posts', ->
-      @profile.set id: 'moobar'
-      @profile.fetchPosts({})
-      Backbone.sync.args[0][2].url.should.containEql 'profile/moobar/posts'

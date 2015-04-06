@@ -78,5 +78,9 @@ describe 'ArticleView', ->
 
   describe '#checkEditable', ->
 
-    it 'shows the edit button when the author_id matches user', ->
-      $('.article-edit-container').should.be.ok
+    it 'shows the edit button when the author_id matches user and the user has \
+        partner access', ->
+      @view.user.set has_partner_access: true
+      @view.article.set author_id: @view.user.id
+      @view.checkEditable()
+      @view.renderedEditButton.should.be.ok

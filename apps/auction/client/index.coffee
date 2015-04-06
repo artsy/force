@@ -8,7 +8,7 @@ ClockView = require '../../../components/clock/view.coffee'
 SpecialistView = require '../../../components/contact/general_specialist.coffee'
 AuthModalView = require '../../../components/auth_modal/view.coffee'
 ConfirmRegistrationModal = require '../../../components/credit_card/client/confirm_registration.coffee'
-AuctionArtworksView = require './view.coffee'
+AuctionArtworksView = require '../../../components/auction_artworks/view.coffee'
 
 module.exports.init = ->
   feature = new Feature FEATURE

@@ -7,23 +7,22 @@ SaleArtwork = require '../../../../models/sale_artwork.coffee'
 Artworks = require '../../../../collections/artworks.coffee'
 Feature = require '../../../../models/feature.coffee'
 Sale = require '../../../../models/sale.coffee'
-
 { stubChildClasses } = require '../../../../test/helpers/stubs'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
 
 describe 'FeatureView', ->
-
   before (done) ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
       @FeatureView = mod = benv.requireWithJadeify(
         (resolve __dirname, '../../client/view'),
-        ['setsTemplate', 'artistsTemplate', 'auctionRegisterButtonTemplate', 'auctionCountdownTemplate', 'filterTemplate', 'artworkColumns']
+        ['setsTemplate', 'auctionMetadataTemplate', 'artworkColumns']
       )
       stubChildClasses @FeatureView, @, ['ArtworkColumnsView'], ['appendArtworks', 'rebalance', 'undelegateEvents']
       @FeatureView.__set__ 'SaleArtworkView', (@saleArtworkViewStub = sinon.stub())
+      @FeatureView.__set__ 'AuctionArtworksView', Backbone.View
       done()
 
   after ->
@@ -57,9 +56,8 @@ describe 'FeatureView', ->
       @view.sale.id.should.equal sale.id
       @view.$el.html().should.containEql 'Explore this bidness'
 
-      # Does not include artwork filter or artist list
-      @view.$el.find('.feature-artwork-filter').length.should.equal 0
-      @view.$el.find('.feature-set-item-artist-list').length.should.equal 0
+      # Does not include artworks
+      @view.$('.artwork-columns-sale').is(':empty').should.be.true
 
     it 'auction without artworks', ->
       sale = new Sale(fabricate 'sale', name: 'Awesome Sale', is_auction: true, auction_state: 'open')
@@ -70,9 +68,8 @@ describe 'FeatureView', ->
       @view.sale.id.should.equal sale.id
       @view.$el.html().should.containEql 'Explore this bidness'
 
-      # Does not include artwork filter or artist list
-      @view.$el.find('.feature-artwork-filter').length.should.equal 0
-      @view.$el.find('.feature-set-item-artist-list').length.should.equal 0
+      # Does not include artworks
+      @view.$('.auction-artworks-container').should.have.lengthOf 0
 
     context 'sale with artworks', ->
       beforeEach ->
@@ -95,10 +92,6 @@ describe 'FeatureView', ->
 
         @view.sale.id.should.equal @sale.id
         @view.$el.html().should.containEql 'Explore this bidness'
-
-        # Does not include artwork filter or artist list
-        @view.$el.find('.feature-artwork-filter').length.should.equal 0
-        @view.$el.find('.feature-set-item-artist-list').length.should.equal 0
 
     context 'auction with artworks', ->
       beforeEach ->
@@ -141,14 +134,7 @@ describe 'FeatureView', ->
       it 'renders without errors', ->
         @view.isAuction().should.be.ok
 
-        @saleArtworkViewStub.callCount.should.equal @callCount + @saleArtworks.length + @saleArtworks.length
+        @saleArtworkViewStub.callCount.should.equal @callCount
 
         @view.sale.id.should.equal @sale.id
         @view.$el.html().should.containEql 'Explore this bidness'
-
-        # Includes artwork filter, artist list and countdown
-        @view.$el.find('.clock-header').length.should.equal 1
-        @view.$el.find('.feature-artwork-filter').length.should.equal 1
-        @view.$el.find('.feature-set-item-artist-list').length.should.equal 1
-        # Artist list should not include artwork w/o artist
-        @view.$el.find('.feature-set-item-artist-link').length.should.equal 2

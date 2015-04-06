@@ -4,8 +4,6 @@ Backbone = require 'backbone'
 CurrentUser = require '../../../models/current_user.coffee'
 FollowProfileButton = require '../../../components/partner_buttons/follow_profile.coffee'
 FollowProfiles = require '../../../collections/follow_profiles.coffee'
-FeedItems = require '../../../components/feed/collections/feed_items.coffee'
-PoplockitFeed = require '../../../components/feed/client/poplockit_feed.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 Artworks = require '../../../collections/artworks.coffee'
 { CURRENT_PATH } = require('sharify').data
@@ -29,10 +27,10 @@ module.exports = class UserProfileView extends Backbone.View
     @articles.url = "#{@articles.url}?author_id=#{@model.get('owner').id}&published=true"
 
     @model.fetchFavorites(success: ((@favorites) =>), complete: => @render())
-    if @user?.hasLabFeature('Articles')
-      @articles.fetch(complete: => @render())
-    else
-      @model.fetchPosts(success: ((@posts) =>), complete: => @render())
+    @articles.fetch
+      data:
+        sort: '-published_at'
+      complete: => @render()
 
   openWebsite: ->
     popup = window.open @model.get('website'), '_blank'
@@ -46,30 +44,22 @@ module.exports = class UserProfileView extends Backbone.View
 
   render: _.after 2, ->
     @setState()
-    @renderPosts()
+    @renderArticles()
     @renderFavorites()
 
   setState: ->
     @$el.attr('data-has',
       [
-        if (@articles?.length or @posts?.length) then 'posts' else ''
+        if (@articles?.length or @articles?.length) then 'articles' else ''
         if @favorites?.length then 'favorites' else ''
       ].join('')
     )
 
     @$el.attr 'data-path', CURRENT_PATH
 
-  renderPosts: ->
-    return unless (@articles?.length or @posts?.length)
-
-    if @user?.hasLabFeature('Articles')
-      articlesView = new ArticlesFeedView el: @$('#profile-feed'), collection: @articles
-      articlesView.render()
-    else
-      new PoplockitFeed
-        el: @$('#profile-feed')
-        limitPostBodyHeight: true
-        feedItems: @posts
+  renderArticles: ->
+    articlesView = new ArticlesFeedView el: @$('#profile-feed'), collection: @articles
+    articlesView.render()
 
   renderFavorites: ->
     return unless @favorites?.length

@@ -1,0 +1,14 @@
+.vam-outer: .vam-inner
+  h3.cta-bar-headline
+    = headline
+
+  if mode === 'link'
+    a.cta-bar-button.avant-garde-button-dark( href='/sign_up' )
+      | Join Artsy Now
+  else
+    form.cta-bar-form
+      input.bordered-input( placeholder='Enter your email', type='email', name='email', required )
+      button.avant-garde-button-dark Join Now
+
+  .cta-bar-defer: a( href='#' )
+    | Maybe Later

@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-template = -> require('./template.jade') arguments...
 Cookies = require 'cookies-js'
+template = -> require('./template.jade') arguments...
 
 module.exports = class ZigZagBanner extends Backbone.View
   className: 'zig-zag-banner'
@@ -20,17 +20,20 @@ module.exports = class ZigZagBanner extends Backbone.View
       throw new Error('You must pass a name, $target, and message')
 
     if @backwards
-      @$el.addClass('zig-zag-backwards').css "margin-left": @$target.width()
+      @$el.addClass('zig-zag-backwards').css marginLeft: @$target.outerWidth()
 
     if @persist
-      if Cookies.get("zig_zag_#{@name}")?
+      if Cookies.get(@cookieName())?
         # Has already seen this... ignore
         return @remove()
       else
         # Will see this once until cookie expires
-        Cookies.set "zig_zag_#{@name}", true, expires: 60 * 60 * 24 * 365
+        Cookies.set @cookieName(), true, expires: 60 * 60 * 24 * 365
 
     @transitionIn()
+
+  cookieName: ->
+    "zig_zag_#{@name}"
 
   render: ->
     @$el.html @template(message: @message)
@@ -47,39 +50,37 @@ module.exports = class ZigZagBanner extends Backbone.View
     existingMargin = parseInt(@$el.css 'marginTop')
     offset = @$target.outerHeight() / 2
     newMargin = offset + existingMargin
-
     @$el.css marginTop: newMargin
 
-  transitionIn: ->
+  delay: (cb) ->
+    _.delay cb, @segmentTransitionLength
+
+  transitionIn: (cb) ->
     @render()
     _.defer =>
-      @$one.addClass 'is-in'
-      _.delay =>
-        @$two.addClass 'is-in'
-        _.delay =>
-          @$three.addClass 'is-in'
-          _.delay =>
-            @$el.addClass 'is-done'
-          , @segmentTransitionLength
-        , @segmentTransitionLength
-      , @segmentTransitionLength
+      @delay =>
+        @$one.addClass 'is-in'
+        @delay =>
+          @$two.addClass 'is-in'
+          @delay =>
+            @$three.addClass 'is-in'
+            @delay =>
+              @$el.addClass 'is-done'
+              @delay(cb) if cb?
 
-  transitionOut: ->
-    dfd = $.Deferred()
-    @$three.removeClass 'is-in'
-    _.delay =>
-      @$two.removeClass 'is-in'
-      _.delay =>
-        @$one.removeClass 'is-in'
-        _.delay =>
-          dfd.resolve()
-        , @segmentTransitionLength
-      , @segmentTransitionLength
-    , @segmentTransitionLength
-    dfd.promise()
+  transitionOut: (cb) ->
+    @delay =>
+      @$el.removeClass 'is-done'
+      @delay =>
+        @$three.removeClass 'is-in'
+        @delay =>
+          @$two.removeClass 'is-in'
+          @delay =>
+            @$one.removeClass 'is-in'
+            @delay(cb) if cb?
 
   close: (e) ->
     e?.preventDefault()
     e?.stopPropagation()
-    @transitionOut().then =>
+    @transitionOut =>
       @remove()

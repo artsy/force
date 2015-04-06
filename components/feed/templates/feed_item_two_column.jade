@@ -11,15 +11,3 @@ article.feed-item.unrendered-feed-item(
     section.feed-column.full-width-column
       include ./feed_item_body_label
       include ./feed_item_artwork_columns
-  else
-    section.feed-column.feed-left-column( style="width: #{textColumnWidth}px")
-      include ./feed_item_body_label
-      .body!= feedItemChildModel.get('body')
-      include ../../post/templates/actions
-    section.feed-column.feed-right-column( style="width: #{imageWidth}px")
-      if feedItem.isPost()
-        include ../../post/templates/media
-      else
-        section.feed-large-artworks
-          for artwork in artworks
-            include ../../artwork_item/templates/artwork

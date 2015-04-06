@@ -6,7 +6,6 @@ describe 'Nav', ->
     @nav = new Nav artist: { id: 'foobar' }, statuses:
       artworks: true
       shows: true
-      posts: true
       artists: true
       contemporary: false
       articles: false
@@ -18,14 +17,13 @@ describe 'Nav', ->
   describe '#sections', ->
     it 'generates the sections of the nav based on the passed in statuses', ->
       _.pluck(@nav.sections(), 'name').should.eql [
-        'Overview', 'Works', 'Articles', 'Shows', 'Related Artists'
+        'Overview', 'Works', 'Shows', 'Related Artists'
       ]
 
     it 'evaluates the href given the artist id', ->
       _.pluck(@nav.sections(), 'href').should.eql [
         '/artist/foobar'
         '/artist/foobar/works'
-        '/artist/foobar/articles'
         '/artist/foobar/shows'
         '/artist/foobar/related-artists'
       ]
@@ -38,10 +36,10 @@ describe 'Nav', ->
   describe '#rels', ->
     it 'generates the next and prev relationships given the current path', ->
       { next, prev } = @nav.rels('/artist/foobar/works')
-      next.href.should.equal '/artist/foobar/articles'
+      next.href.should.equal '/artist/foobar/shows'
       prev.href.should.equal '/artist/foobar'
       { next, prev } = @nav.rels('/artist/foobar/works?with=querystring')
-      next.href.should.equal '/artist/foobar/articles'
+      next.href.should.equal '/artist/foobar/shows'
       prev.href.should.equal '/artist/foobar'
       { next, prev } = @nav.rels('/artist/foobar')
       _.isUndefined(prev).should.be.true

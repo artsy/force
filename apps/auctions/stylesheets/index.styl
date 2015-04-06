@@ -22,17 +22,24 @@
 .af-go-button
   float right
 
+#auctions-page > .aggregate-page-items
+  margin-bottom 30px
+
 .aggregate-page-items-featured-set
   margin 0
 
-.leader-dots-list
+.auctions-list
   block-margins(30px)
+  .leader-dots-list-item
+    font-size 18px
+    &:after
+      font-size 12px
+      line-height 2.2
 
 // Preview state
 .auctions-placeholder
   display table
   width 100%
-  margin 20px 0
 .auctions-placeholder-metadata
 .auctions-placeholder-hero
   display table-cell
@@ -41,11 +48,12 @@
   text-align center
 .auctions-placeholder-metadata
   width 33.33%
-  padding 0 50px
+  padding 0 50px 0 20px
   > h2
-    margin 10px auto
     font-size 40px
     line-height 1.25
+    // Visually center. Due to line-height and hard-edged bottom button
+    margin -((@font-size * (@line-height - 1)) * 2) auto 10px
   > p
     margin 10px auto
     font-size 20px

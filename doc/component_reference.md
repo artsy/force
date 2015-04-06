@@ -125,21 +125,10 @@ This component displays linked profile icons with a profile owner's name. Differ
 sizes and orientations can be achieved with CSS. If a common size / style setup emerges,
 it should be added to `components/profile_badge/index.styl`.
 
-Example (see `apps/artist/templates/related_posts.jade`):
 ```jade
-- var profile = post.profile()
-li.artist-related-post
-  a.artist-related-post-content( href="/post/#{post.get('id')}" )
-    if post.get('title')
-      .arpc-title
-        = post.get('title')
-    if post.get('summary')
-      .arpc-body
-        = post.get('summary')
-
-  unless profile.isNew()
-    .artist-related-post-profile
-      include ../../../components/profile_badge/template
+unless profile.isNew()
+  .artist-related-post-profile
+    include ../../../components/profile_badge/template
 ```
 Add a reference to the component's stylus file in the app's asset package and override
 as needed.
@@ -169,7 +158,7 @@ See `apps/artist/stylesheets/index.styl` for an example of a customized layout
     text-align center
 ```
 ##### Uses:
-- Artist Pages - Featured Posts [/artist/andy-warhol](http://artsy.net/artist/andy-warhol)
+- Artist Pages - Featured Articles [/artist/andy-warhol](http://artsy.net/artist/andy-warhol)
 - Partner Shows [/show/333-montezuma-arts-elegy](http://artsy.net/show/333-montezuma-arts-elegy)
 
 ## Suggested Genes
@@ -456,7 +445,7 @@ new PartnerShowButtons
 
 ## Location Search
 
-An autocomplete input that leverages the Google Maps API to get a geocoded location from a user that types in a city. 
+An autocomplete input that leverages the Google Maps API to get a geocoded location from a user that types in a city.
 ![](images/search_location.png)
 
 Check out usage in `apps/personalize`

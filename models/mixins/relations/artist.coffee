@@ -1,4 +1,4 @@
-{ API_URL, APP_URL } = require('sharify').data
+{ API_URL, APP_URL, POSITRON_URL } = require('sharify').data
 Backbone = require 'backbone'
 
 module.exports =
@@ -7,7 +7,6 @@ module.exports =
 
     # Deferred requires:
     Artist = require '../../artist.coffee'
-    Posts = require '../../../collections/posts.coffee'
     PartnerShows = require '../../../collections/partner_shows.coffee'
     Artworks = require '../../../collections/artworks.coffee'
     WebArticles = Books = require '../../../components/artsypedia/collection.coffee'
@@ -19,9 +18,6 @@ module.exports =
 
     contemporary = new Backbone.Collection [], model: Artist
     contemporary.url = "#{API_URL}/api/v1/related/layer/contemporary/artists?artist[]=#{@id}&exclude_artists_without_artworks=true"
-
-    posts = new Posts
-    posts.url = "#{API_URL}/api/v1/related/posts?artist[]=#{@id}"
 
     shows = new PartnerShows
     shows.url = "#{API_URL}/api/v1/related/shows?artist[]=#{@id}&sort=-end_at&displayable=true"
@@ -40,7 +36,8 @@ module.exports =
     webArticles.url = "#{APP_URL}/artist/data/#{@id}/publications?merchandisable[]=false"
 
     articles = new Articles
-    articles.url += "?artist_id=#{@get '_id'}&published=true"
+    articles.url = =>
+      "#{POSITRON_URL}/api/articles?artist_id=#{@get '_id'}&published=true"
 
     merchandisable = new Books
     merchandisable.url = "#{APP_URL}/artist/data/#{@id}/publications?merchandisable[]=true"
@@ -58,7 +55,6 @@ module.exports =
     @__related__ =
       artists: artists
       contemporary: contemporary
-      posts: posts
       shows: shows
       artworks: artworks
       webArticles: webArticles

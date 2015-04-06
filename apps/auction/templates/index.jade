@@ -51,11 +51,8 @@ block body
             a.fine-faux-underline.js-specialist-contact-link( href='#' )
               | Contact an Artsy Specialist
 
-    if artworks.length
-      section.js-auction-artworks-section
-        include ./nav
-        section.auction-artworks.js-auction-artworks( data-mode='grid' )
-          for artwork, i in artworks.models
-            include ./artwork/grid
+    section.auction-artworks-container.js-auction-artworks-section
+      - artworks = artworks.models
+      include ../../../components/auction_artworks/templates/index
 
     include ./footer

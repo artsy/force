@@ -4,7 +4,7 @@ Backbone = require 'backbone'
 CurrentUser = require '../../../models/current_user.coffee'
 Artist = require '../../../models/artist.coffee'
 Partner = require '../../../models/partner.coffee'
-Artworks = require '../../../collections/artworks.coffee'
+PartnerArtistArtworks = require '../../../collections/partner_artist_artworks.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 BlurbView = require '../../../components/blurb/view.coffee'
 template = -> require('../templates/artists_artist.jade') arguments...
@@ -54,8 +54,8 @@ module.exports = class PartnerArtistsArtistView extends Backbone.View
     return if @isFetching
     @isFetching = true
 
-    artworks = new Artworks()
-    artworks.url = "#{@partner.url()}/artist/#{@artist.get('id')}/artworks"
+    artworks = new PartnerArtistArtworks()
+    artworks.url = "#{@partner.url()}/artist/#{@artist.get('id')}/partner_artist_artworks"
     artworks.fetch
       data: { page: @nextPage, size: @pageSize }
       success: =>

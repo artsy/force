@@ -52,7 +52,6 @@ module.exports = class ConfirmInquiryView extends ContactView
     @inputMessage = options.inputMessage
     @partner = new Partner options.partner
     @partner.locations().fetch complete: =>
-      console.log 'somethings up'
       @renderTemplates()
       @renderLocation()
       @updatePosition()
@@ -61,7 +60,7 @@ module.exports = class ConfirmInquiryView extends ContactView
       @hideCloseButton()
     super
 
-    analytics.track.funnel "Saw confirm inquiry modal", @artwork
+    analytics.track.funnel "Saw confirm inquiry modal", @artwork.attributes
     analytics.snowplowStruct 'confirm_inquiry_modal', 'saw', @artwork.get('id'), 'artwork'
 
   renderLocation: =>
@@ -89,7 +88,7 @@ module.exports = class ConfirmInquiryView extends ContactView
 
     @maybeSend @model,
       success: =>
-        inquirySentAnalytics()
+        @inquirySentAnalytics()
         @close()
         @success()
       error: (model, response, options) =>
@@ -99,9 +98,9 @@ module.exports = class ConfirmInquiryView extends ContactView
 
   inquirySentAnalytics: =>
     analytics.track.funnel 'Sent artwork inquiry',
-      label: analytics.modelNameAndIdToLabel('artwork', @artwork.id)
-    analytics.snowplowStruct 'inquiry', 'submit', @artwork.id, 'artwork', '0.0'
-    analytics.track.funnel "Submit confirm inquiry modal", @artwork
+      label: analytics.modelNameAndIdToLabel('artwork', @artwork.get('id'))
+    analytics.snowplowStruct 'inquiry', 'submit', @artwork.get('id'), 'artwork', '0.0'
+    analytics.track.funnel "Submit confirm inquiry modal", @artwork.attributes
     analytics.snowplowStruct 'confirm_inquiry_modal', 'submit', @artwork.get('id'), 'artwork'
     changed = if @model.get('message') is @inputMessage then 'Did not change' else 'Changed'
     analytics.track.funnel "#{changed} default message"

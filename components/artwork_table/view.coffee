@@ -27,7 +27,8 @@ module.exports = class ArtworkTableView extends Backbone.View
 
   appendArtworks: (artworks) =>
     for artwork in artworks
-      @appendArtworkRow artwork
+      unless @$(".artwork-table__row[data-artwork='#{artwork.id}']").length
+        @appendArtworkRow artwork
 
   appendArtworkRow: (artwork) ->
     new ArtworkRowView

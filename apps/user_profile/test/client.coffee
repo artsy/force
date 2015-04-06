@@ -51,24 +51,17 @@ describe 'UserProfileView', ->
 
   describe '#setState', ->
 
-    it 'sets the state for just posts', ->
-      @view.posts = new Backbone.Collection [{}]
+    it 'sets the state for just articles', ->
+      @view.articles = new Backbone.Collection [{}]
       @view.favorites = null
       @view.setState()
-      @view.$el.attr('data-has').should.equal 'posts'
+      @view.$el.attr('data-has').should.equal 'articles'
 
   it 'sets the state for just favorites', ->
-      @view.posts = null
+      @view.articles = null
       @view.favorites = new Backbone.Collection [{}]
       @view.setState()
       @view.$el.attr('data-has').should.equal 'favorites'
-
-  describe '#renderPosts', ->
-
-    it 'adds a pop-lockit feed', ->
-      @view.posts = new Backbone.Collection [{}]
-      @view.renderPosts()
-      @PoplockitFeed.calledWithNew.should.be.ok
 
   describe '#renderFavorites', ->
 

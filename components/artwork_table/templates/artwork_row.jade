@@ -3,7 +3,7 @@
 - maxDimension = 150
 - isAuction = saleArtwork.sale().isAuction() || false
 
-.artwork-table__row
+.artwork-table__row(data-artwork=artwork.id)
   .artwork-table__cell.artwork-table__cell--image
     - defaultImage = artwork.defaultImage()
     - maxDimension = 150

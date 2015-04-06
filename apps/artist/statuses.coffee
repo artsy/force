@@ -18,7 +18,6 @@ module.exports = class Statuses
       Q.allSettled([
         @fetchArtworks()
         @fetchStatus 'shows'
-        @fetchStatus 'posts'
         @fetchStatus 'artists'
         @fetchStatus 'contemporary'
         @fetchStatus 'webArticles'
@@ -26,6 +25,7 @@ module.exports = class Statuses
         @fetchStatus 'bibliography'
         @fetchStatus 'collections'
         @fetchStatus 'exhibitions'
+        @fetchArticles()
       ]).then((states) =>
 
         @statuses = _.extend {}, _.pluck(states, 'value')...
@@ -33,6 +33,24 @@ module.exports = class Statuses
         cache.setHash cacheKey, @statuses
 
       ).done()
+
+    dfd.promise
+
+  fetchArticles: ->
+    dfd = Q.defer()
+
+    # Writer uses the `_id` to fetch. Since we only have the slug
+    # we can't fetch this in parallel
+    @artist.fetch
+      cache: @cache
+      error: -> dfd.resolve articles: false
+      success: =>
+        @artist.related().articles.fetch
+          cache: @cache
+          data: limit: 1
+          error: -> dfd.resolve articles: false
+          success: (collection, response) ->
+            dfd.resolve articles: !!response?.count
 
     dfd.promise
 

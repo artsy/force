@@ -83,7 +83,7 @@ module.exports = class ContactView extends Backbone.View
 
     if INQUIRY_FLOW is 'updated_flow'
 
-      analytics.track.funnel 'Clicked "Contact Gallery" button', @model
+      analytics.track.funnel 'Clicked "Contact Gallery" button', @model.attributes
       analytics.snowplowStruct 'contact_gallery', 'click', @model.get('id'), 'artwork'
 
       new ConfirmInquiryView
@@ -126,10 +126,10 @@ module.exports = class ContactView extends Backbone.View
           new FlashMessage message: 'Thank you. Your message has been sent.'
           @$submit.attr('data-state', '').blur()
           analytics.track.funnel 'Sent artwork inquiry',
-            label: analytics.modelNameAndIdToLabel('artwork', @model.id)
+            label: analytics.modelNameAndIdToLabel('artwork', @model.get('id'))
           changed = if @inquiry.get('message') is defaultMessage(@model) then 'Did not change' else 'Changed'
           analytics.track.funnel "#{changed} default message"
-          analytics.snowplowStruct 'inquiry', 'submit', @model._id, 'artwork', '0.0',
+          analytics.snowplowStruct 'inquiry', 'submit', @model.get('id'), 'artwork', '0.0',
             { inquiry: { inquiry_id: @inquiry.id }, user: { email: @inquiry.email }}
           analytics.track.funnel 'Contact form submitted', @inquiry.attributes
         error: (model, response, options) =>
@@ -148,6 +148,7 @@ module.exports = class ContactView extends Backbone.View
     @inquiries = new Inquiries
     @inquiries.fetch
       success: (inquiries) =>
+        console.log inquiries
         inquiry = @inquiries.findWhere { inquiry_url: location.href }
         if inquiry
           sent_time = moment(inquiry.get('created_at')).format("MMM D, YYYY")
@@ -163,10 +164,10 @@ module.exports = class ContactView extends Backbone.View
   logAnalytics: ->
     if INQUIRY_FLOW is 'updated_flow'
       if @model.isPriceDisplayable()
-        analytics.track.funnel "Saw price displayable", @model
-        analytics.snowplowStruct 'price_displayable', 'saw', @model._id, 'artwork'
+        analytics.track.funnel "Saw price displayable", @model.attributes
+        analytics.snowplowStruct 'price_displayable', 'saw', @model.get('id'), 'artwork'
       else
-        analytics.track.funnel "Saw contact gallery", @model
-        analytics.snowplowStruct 'contact_for_price', 'saw', @model._id, 'artwork'
+        analytics.track.funnel "Saw contact gallery", @model.attributes
+        analytics.snowplowStruct 'contact_for_price', 'saw', @model.get('id'), 'artwork'
     else
-      analytics.track.funnel "Saw original inquiry flow", @model
+      analytics.track.funnel "Saw original inquiry flow", @model.attributes

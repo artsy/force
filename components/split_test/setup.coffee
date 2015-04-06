@@ -6,4 +6,5 @@ module.exports = ->
   return if _.isEmpty runningTests
 
   for key, configuration of runningTests
-    new SplitTest(configuration)?.outcome()
+    unless configuration.scope is 'local'
+      new SplitTest(configuration)?.outcome()

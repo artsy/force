@@ -9,7 +9,6 @@ Profile = require '../../../models/profile.coffee'
 FollowProfiles = require '../../../collections/follow_profiles.coffee'
 FeedItem = require '../models/feed_item.coffee'
 FeedItemView = require('./feed_item.coffee').FeedItemView
-FeedItemPost = require('../../post/client/feed_item_post.coffee').FeedItemPost
 feedItemsTemplate = -> require('../templates/feed_items.jade') arguments...
 FollowProfileButton = require '../../../apps/partners/client/follow_profiles_button.coffee'
 feedItemsContainerTemplate = -> require('../templates/feed_items_container.jade') arguments...
@@ -138,10 +137,7 @@ module.exports = class FeedView extends Backbone.View
       model: model
       el: $item
       parent: @
-
     new FeedItemView params
-    if model.get('_type') == 'Post'
-      new FeedItemPost params
 
   handleFetchedItems: (items) ->
     return @handleDoneFetching?() unless items.length > 0

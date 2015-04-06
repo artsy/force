@@ -34,8 +34,3 @@ describe 'WorksView', ->
     it 'renders the template', ->
       @view.render()
       @view.$('#artwork-section').length.should.equal 1
-
-  describe '#postRender', ->
-    it 'sets up artwork filter in infinite mode', ->
-      @view.render()
-      @artworkFilterInitStub.args[0][0].mode.should.equal 'infinite'
