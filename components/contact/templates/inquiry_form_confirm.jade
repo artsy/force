@@ -18,12 +18,25 @@ form.contact-form.stacked-form
     input( type='hidden', name='name', value=user.get('name') )
     input( type='hidden', name='email', value=user.get('email') )
   else
-    //- Logged in
-    .stacked-form-cell
-      | From: #{inputName}
-      span.mcf-email  (#{inputEmail})
-    input( type='hidden', name='name', value=inputName )
-    input( type='hidden', name='email', value=inputEmail )
+    if showInputs
+      input.bordered-input.is-persistplaceholder(
+        type= 'text'
+        name= 'name'
+        placeholder= 'Your full name'
+        required
+      )
+      input.bordered-input(
+        type= 'email'
+        name= 'email'
+        placeholder= 'Your email address'
+        required
+      )
+    else
+      .stacked-form-cell
+        | From: #{inputName}
+        span.mcf-email  (#{inputEmail})
+      input( type='hidden', name='name', value=inputName )
+      input( type='hidden', name='email', value=inputEmail )
 
     p.contact-privacy
       | By clicking send, you accept our

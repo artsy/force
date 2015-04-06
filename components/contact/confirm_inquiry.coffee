@@ -31,12 +31,15 @@ module.exports = class ConfirmInquiryView extends ContactView
       user: @user
 
   formTemplate: (locals) =>
+    unless @inputEmail and @inputName then showInputs = true
+    console.log showInputs
     formTemplate _.extend locals,
       artwork: @artwork
       user: @user
       defaultMessage: @inputMessage
       inputEmail: @inputEmail
       inputName: @inputName
+      showInputs: showInputs
 
   defaults: -> _.extend super,
     url: "#{API_URL}/api/v1/me/artwork_inquiry_request"
