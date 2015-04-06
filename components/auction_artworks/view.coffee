@@ -45,9 +45,13 @@ module.exports = class AuctionArtworksView extends Backbone.View
       copy: 'Sign up to bid'
       redirectTo: $(e.currentTarget).attr('href')
 
+  displayBlurbs: ->
+    _.any _.map(@collection.pluck('blurb'), _.negate(_.isEmpty))
+
   render: ->
     @$el.html template
       state: @state
       auction: @model
       artworks: @artworks()
+      displayBlurbs: @displayBlurbs()
     this

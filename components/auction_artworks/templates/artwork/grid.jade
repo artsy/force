@@ -27,6 +27,10 @@
         .aga-estimate
           = saleArtwork.estimate()
 
+      if displayBlurbs
+        .aga-blurb
+          != artwork.mdToHtml('blurb')
+
     .aga-bidding
       .aga-bid-status
         if auction.isOpen()
