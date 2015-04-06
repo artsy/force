@@ -4,10 +4,16 @@ mediator = require '../../../lib/mediator.coffee'
 PartnerLocations = require '../../../apps/artwork/components/partner_locations/index.coffee'
 InquiryView = require "../../contact/inquiry.coffee"
 SaleArtworkView = require '../../artwork_item/views/sale_artwork.coffee'
+ContactPartnerView = require '../../contact/contact_partner.coffee'
+ConfirmInquiryView = require '../../contact/confirm_inquiry.coffee'
+analytics = require '../../../lib/analytics.coffee'
+Form = require '../../mixins/form.coffee'
+FlashMessage = require '../../flash/index.coffee'
 
 artworkRow = -> require('../templates/artwork_row.jade') arguments...
 
 module.exports = class ArtworkRowView extends SaleArtworkView
+  _.extend @prototype, Form
   displayPurchase: true
 
   initialize: (options = {})->
@@ -30,3 +36,29 @@ module.exports = class ArtworkRowView extends SaleArtworkView
     @pl = new PartnerLocations $el: @$el, artwork: @model
 
     return @$el
+
+  contactSeller: (e) ->
+    e.preventDefault()
+    if sd.INQUIRY_FLOW is 'updated_flow'
+      if @model.isPriceDisplayable()
+        defaultMessage = "I'm interested in this work by #{@model.get('artist').name}. Please contact me to discuss further."
+        analytics.track.funnel "Saw price displayable", @model
+        analytics.snowplowStruct 'price_displayable', 'saw', @model._id, 'artwork'
+      else
+        defaultMessage = "Hi. Could you please share the asking price for this work? I'd like to know if it's within my budget."
+        analytics.track.funnel "Saw contact gallery", @model
+        analytics.snowplowStruct 'contact_for_price', 'saw', @model._id, 'artwork'
+      new ConfirmInquiryView
+        artwork: @model
+        partner: @model.get 'partner'
+        inputMessage: defaultMessage
+        success: =>
+          new FlashMessage message: 'Thank you. Your message has been sent.'
+        error: ->
+        exit: ->
+      analytics.track.funnel 'Clicked "Contact Gallery" button', @model
+      analytics.snowplowStruct 'contact_gallery', 'click', @model._id, 'artwork'
+    else
+      new ContactPartnerView
+        artwork: @model
+        partner: @model.get 'partner'

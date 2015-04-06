@@ -30,16 +30,20 @@ if artwork.isContactable()
       input.bordered-input.is-persistplaceholder( placeholder='Your full name', name='name', required )
       input#js-mailcheck-input-artwork.bordered-input.is-persistplaceholder( placeholder='Your email address', name='email', type='email', required )
       #js-mailcheck-hint-artwork
+
     if sd.INQUIRY_FLOW === 'updated_flow'
       if artwork.isPriceDisplayable()
-        - var defaultMessage = "I'm interested in this work by #{artwork.get('artist')}. Please contact me to discuss further."
+        - var defaultMessage = "I'm interested in this work by " + artwork.get('artist').name + ". Please contact me to discuss further."
       else
-        - var defaultMessage = "Hi. Could you please share the asking price for this work? I'd like to know if it's within my budget."
+        -var defaultMessage = "Hi. Could you please share the asking price for this work? I'd like to know if it's within my budget."
+
     textarea.bordered-input.is-persistplaceholder( rows='5', name='message', required )
       = defaultMessage
       = " "
+
     if user && sd.INQUIRY_FLOW === 'original_flow'
       p From: #{user.get('name')}
+
     #artwork-contact-form-errors
       //- Rendered client-side
     #artwork-contact-form-attendance

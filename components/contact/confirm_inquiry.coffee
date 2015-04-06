@@ -18,8 +18,6 @@ module.exports = class ConfirmInquiryView extends ContactView
 
   eligibleForAfterInquiryFlow: true
 
-  # Prevents clicks on the backdrop from closing
-  # the contact form
   events: -> _.extend super,
     'click.handler .modal-backdrop': undefined
     'click .contact-form-cancel': 'close'
@@ -32,7 +30,6 @@ module.exports = class ConfirmInquiryView extends ContactView
 
   formTemplate: (locals) =>
     unless @inputEmail and @inputName then showInputs = true
-    console.log showInputs
     formTemplate _.extend locals,
       artwork: @artwork
       user: @user
@@ -55,6 +52,7 @@ module.exports = class ConfirmInquiryView extends ContactView
     @inputMessage = options.inputMessage
     @partner = new Partner options.partner
     @partner.locations().fetch complete: =>
+      console.log 'somethings up'
       @renderTemplates()
       @renderLocation()
       @updatePosition()
@@ -62,6 +60,9 @@ module.exports = class ConfirmInquiryView extends ContactView
       @focusTextareaAfterCopy()
       @hideCloseButton()
     super
+
+    analytics.track.funnel "Saw confirm inquiry modal", @artwork
+    analytics.snowplowStruct 'confirm_inquiry_modal', 'saw', @artwork.get('id'), 'artwork'
 
   renderLocation: =>
     return if @partner.locations().length > 1
@@ -73,9 +74,6 @@ module.exports = class ConfirmInquiryView extends ContactView
     return if @formIsSubmitting()
 
     e.preventDefault()
-
-    analytics.track.funnel 'Sent artwork inquiry',
-      label: analytics.modelNameAndIdToLabel('artwork', @artwork.id)
 
     @$('button').attr 'data-state', 'loading'
     formData = @serializeForm()
@@ -91,11 +89,20 @@ module.exports = class ConfirmInquiryView extends ContactView
 
     @maybeSend @model,
       success: =>
+        inquirySentAnalytics()
         @close()
         @success()
       error: (model, response, options) =>
-        @error(model, response, options)
+        @reenableForm()
+        @$('#contact-errors').html @errorMessage(response)
+        @error()
 
+  inquirySentAnalytics: =>
+    analytics.track.funnel 'Sent artwork inquiry',
+      label: analytics.modelNameAndIdToLabel('artwork', @artwork.id)
+    analytics.snowplowStruct 'inquiry', 'submit', @artwork.id, 'artwork', '0.0'
+    analytics.track.funnel "Submit confirm inquiry modal", @artwork
+    analytics.snowplowStruct 'confirm_inquiry_modal', 'submit', @artwork.get('id'), 'artwork'
     changed = if @model.get('message') is @inputMessage then 'Did not change' else 'Changed'
     analytics.track.funnel "#{changed} default message"
 
