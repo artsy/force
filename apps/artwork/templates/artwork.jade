@@ -9,11 +9,14 @@ article.artwork-container
 
     .artwork-image
       mixin artworkImage
+        - dimensions = artwork.defaultImage().resizeDimensionsFor({ width: 640, height: 640 })
         img#the-artwork-image(
           alt= artwork.get('title')
           title= artwork.get('title')
           nopin= artwork.noPinAttr()
-          src= artwork.defaultImage().imageUrlFor(640, 640)
+          src= artwork.defaultImage().imageUrl('large')
+          width= dimensions.width
+          height= dimensions.height
         )
 
       if artwork.defaultImage().canDeepZoom()
@@ -32,7 +35,7 @@ article.artwork-container
           a.artwork-additional-image(
             class= i === 0 ? 'is-active' : 'is-inactive'
             data-id= image.id
-            data-href= image.imageUrlFor(640, 640)
+            data-href= image.imageUrl('large')
           )
             img(
               src= image.imageUrl('small')
