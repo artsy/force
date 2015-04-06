@@ -37,16 +37,12 @@ module.exports = class OverviewView extends Backbone.View
       @setupRelatedSection @$('#artist-related-shows-section')
 
   setupRelatedArticles: ->
-    # TODO: Find a way to integrate the toggling of articles UI with the
-    # statuses/sections paradigm in the root of this app.
-    @fetches.push @model.related().articles.fetch success: (m, res) ->
-      return if res.results.length > 0
-      $('#artist-related-articles-section, [href*=articles]').hide()
-      $('[href*=articles]').prev().hide()
-    subView = new RelatedArticlesView collection: @model.related().articles, numToShow: 4
-    @$('#artist-related-articles').html subView.render().$el
-    @subViews.push subView
-    @setupRelatedSection @$('#artist-related-articles-section')
+    if STATUSES.articles
+      @fetches.push @model.related().articles.fetch()
+      subView = new RelatedArticlesView collection: @model.related().articles, numToShow: 4
+      @$('#artist-related-articles').html subView.render().$el
+      @subViews.push subView
+      @setupRelatedSection @$('#artist-related-articles-section')
 
   setupRelatedGenes: ->
     subView = new RelatedGenesView(el: @$('.artist-related-genes'), id: @model.id)

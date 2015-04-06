@@ -46,7 +46,7 @@ describe 'Artist header', ->
 
     it 'renders the appropriate nav', ->
       $navLinks = $('.garamond-tablist a')
-      $navLinks.length.should.equal 5
+      $navLinks.length.should.equal 4
       $navLinks.first().text().should.equal 'Overview'
       $navLinks.last().text().should.equal 'Related Artists'
 
@@ -75,7 +75,7 @@ describe 'Artist header', ->
 
     it 'renders the appropriate nav', ->
       $navLinks = $('.garamond-tablist a')
-      $navLinks.length.should.equal 3
+      $navLinks.length.should.equal 2
       $navLinks.first().text().should.equal 'Overview'
       $navLinks.last().text().should.equal 'Shows'
       $navLinks.text().should.not.containEql 'Works'
