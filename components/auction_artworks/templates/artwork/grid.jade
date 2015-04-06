@@ -1,6 +1,9 @@
 - artist = artwork.related().artist
 - saleArtwork = artwork.related().saleArtwork
-- href = artwork.href() + '?auction_id=' + auction.id
+if auction.isOpen()
+  - href = artwork.href() + '?auction_id=' + auction.id
+else
+  - href = artwork.href()
 
 .auction-grid-artwork
   .aga-image: .vam-outer: .vam-inner
