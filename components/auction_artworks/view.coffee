@@ -15,6 +15,7 @@ module.exports = class AuctionArtworksView extends Backbone.View
 
     @listenTo @collection, 'reset add remove', @render
     @listenTo @state, 'change', @render
+    @listenTo @user, 'change:registered_to_bid', @render
 
   sorts: (artwork) ->
     { saleArtwork, artist } = artwork.related()
@@ -51,6 +52,7 @@ module.exports = class AuctionArtworksView extends Backbone.View
   render: ->
     @$el.html template
       state: @state
+      user: @user
       auction: @model
       artworks: @artworks()
       displayBlurbs: @displayBlurbs()
