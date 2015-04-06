@@ -31,7 +31,7 @@ describe 'AuctionArtworksView', ->
       fabricate 'artwork', id: 'z-z', artist: sortable_id: 'z-z'
       fabricate 'artwork', id: 'a-a', artist: sortable_id: 'a-a'
     ]
-    @view = new AuctionArtworksView el: $('section'), model: @auction, collection: @artworks
+    @view = new AuctionArtworksView el: $('section'), model: @auction, collection: @artworks, user: new Backbone.Model
 
   describe '#render', ->
     it 'renders the default state', ->

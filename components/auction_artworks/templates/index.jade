@@ -2,6 +2,13 @@ if artworks.length
   include ./nav
   section.auction-artworks.js-auction-artworks( data-mode= state.get('mode') )
     for artwork in artworks
+      - artist = artwork.related().artist
+      - saleArtwork = artwork.related().saleArtwork
+      if auction.isOpen()
+        - href = artwork.href() + '?auction_id=' + auction.id
+      else
+        - href = artwork.href()
+
       if state.get('mode') === 'grid'
         include ./artwork/grid
       else
