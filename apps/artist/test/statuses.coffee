@@ -16,7 +16,9 @@ describe 'Statuses', ->
 
   it 'fetches the status of everything', ->
     @statuses.fetch()
-    _.map(Backbone.sync.args, (args) -> args[1].url).should.eql [
+    # Snag all but the last URL, as these are direct fetches
+    urls = _.first(_.map(Backbone.sync.args, (args) -> args[1].url), (Backbone.sync.args.length - 1))
+    urls.should.eql [
       'undefined/api/v1/search/filtered/artist/foobar/suggest'
       'undefined/api/v1/related/shows?artist[]=foobar&sort=-end_at&displayable=true'
       'undefined/api/v1/related/layer/main/artists?artist[]=foobar&exclude_artists_without_artworks=true'
@@ -28,6 +30,16 @@ describe 'Statuses', ->
       'undefined/artist/data/foobar/exhibitions'
     ]
 
+  describe '#fetchArticles', ->
+    it 'fetches the articles status', ->
+      @statuses.fetch()
+      # Fetches the artist first
+      (artistFetch = _.last(Backbone.sync.args))[1].url()
+        .should.containEql '/api/v1/artist/foobar'
+      # Then fetches the articles using the `_id`
+      artistFetch[2].success _id: 'foobar_mongo_id'
+      _.last(Backbone.sync.args)[1].url()
+        .should.containEql '/api/articles?artist_id=foobar_mongo_id&published=true'
 
   it 'resolves with the statuses', (done) ->
     @statuses.fetch().then (statuses) ->
@@ -41,8 +53,13 @@ describe 'Statuses', ->
         bibliography: true
         collections: true
         exhibitions: true
+        articles: true
       }
       done()
     successes = _.map(Backbone.sync.args, (args) -> args[2].success)
+    # Artworks
     successes[0] total: 1
-    _.each(successes[1..-1], (success) -> success([{}]))
+    _.each(successes[1..(Backbone.sync.args.length - 1)], (success) -> success([{}]))
+    # Articles
+    _.last(successes)(_id: 'foobar_mongo_id')
+    _.last(Backbone.sync.args)[2].success(count: 1)

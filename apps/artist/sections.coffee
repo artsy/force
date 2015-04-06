@@ -12,7 +12,7 @@ module.exports = [
   slug: 'articles'
   href: 'artist/:id/articles'
   name: 'Articles'
-  predicate: -> true
+  predicate: ({ articles }) -> articles
 ,
   slug: 'shows'
   href: 'artist/:id/shows'

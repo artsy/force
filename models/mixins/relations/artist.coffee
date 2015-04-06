@@ -1,4 +1,4 @@
-{ API_URL, APP_URL } = require('sharify').data
+{ API_URL, APP_URL, POSITRON_URL } = require('sharify').data
 Backbone = require 'backbone'
 
 module.exports =
@@ -36,7 +36,8 @@ module.exports =
     webArticles.url = "#{APP_URL}/artist/data/#{@id}/publications?merchandisable[]=false"
 
     articles = new Articles
-    articles.url += "?artist_id=#{@get '_id'}&published=true"
+    articles.url = =>
+      "#{POSITRON_URL}/api/articles?artist_id=#{@get '_id'}&published=true"
 
     merchandisable = new Books
     merchandisable.url = "#{APP_URL}/artist/data/#{@id}/publications?merchandisable[]=true"
