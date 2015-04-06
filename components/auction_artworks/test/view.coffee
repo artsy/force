@@ -54,3 +54,9 @@ describe 'AuctionArtworksView', ->
       @view.$('.auction-list-artwork').should.have.lengthOf 2
       @view.$('.auction-list-artwork:first-child a').attr('href').should.containEql '/artwork/a-a'
       @view.$('.auction-list-artwork:last-child a').attr('href').should.containEql '/artwork/z-z'
+
+  describe '#displayBlurbs', ->
+    it 'returns true if any artworks have a blurb', ->
+      @view.displayBlurbs().should.be.false
+      @view.collection.first().set 'blurb', 'Existence!'
+      @view.displayBlurbs().should.be.true
