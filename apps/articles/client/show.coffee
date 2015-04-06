@@ -18,6 +18,7 @@ editTemplate = -> require('../templates/edit.jade') arguments...
 module.exports.ArticleView = class ArticleView extends Backbone.View
 
   initialize: (options) ->
+    @user = CurrentUser.orNull()
     { @article, @slideshowArtworks } = options
     new ShareView el: @$('.articles-social')
     @renderSlideshow() if @slideshowArtworks?.length
@@ -74,13 +75,13 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
         $list.parent().removeClass('is-loading')
 
   checkEditable: ->
-    @user = CurrentUser.orNull()
-    if @user?.id is @article.get('author_id') or
-       @user?.get('email')?.split('@')[0] in sd.EDITORIAL_ADMINS.split(',')
-      edit_url = "#{sd.POSITRON_URL}/articles/" + @article.id + '/edit'
+    if (@user.get('has_partner_access') and @user?.id is @article.get('author_id')) or
+       @user?.get('type') is 'Admin' and @user?.get('email')?.split('@')[0] in sd.EDITORIAL_ADMINS.split(',')
+      editUrl = "#{sd.POSITRON_URL}/articles/" + @article.id + '/edit'
       @article.get('published') is true ? message = "Previewing Draft" : message = ""
+      @renderedEditButton = true
       @$('#main-layout-container').append(
-        editTemplate message: message, edit_url: edit_url
+        editTemplate message: message, edit_url: editUrl
       )
 
 module.exports.init = ->
