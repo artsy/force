@@ -14,20 +14,20 @@ block body
     if hasImage
       .feature-image( style="background-image: url(#{feature.imageUrl('wide')})" )
 
-    .feature-content.responsive-layout-container
-      header.feature-header
-        .feature-primary-information
-          h1.feature-title
-            = feature.get('name')
+    .responsive-layout-container: .main-layout-container.feature-content
+        header.feature-header
+          .feature-primary-information
+            h1.feature-title
+              = feature.get('name')
 
-          if feature.get('description')
-            .feature-description
-              != feature.mdToHtml('description')
+            if feature.get('description')
+              .feature-description
+                != feature.mdToHtml('description')
 
-        .feature-metadata.js-feature-metadata
-          //- Rendered client-side
+          .feature-metadata.js-feature-metadata
+            //- Rendered client-side
 
-        //-   nav.feature-share.js-feature-share
-        //-     +share(feature.shareTitle())
+          //-   nav.feature-share.js-feature-share
+          //-     +share(feature.shareTitle())
 
-      #feature-sets-container: .loading-spinner
+        #feature-sets-container: .loading-spinner
