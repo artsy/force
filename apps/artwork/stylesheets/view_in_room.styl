@@ -5,11 +5,6 @@ wall-height = 43.5%
 
 #artwork-page[data-route-pending='view-in-room']
 #artwork-page[data-route='view-in-room']
-  // Fix position in place
-  .artwork-detail
-    position absolute
-    z-index 1
-    right 0
   // Toggle buttons and additional information
   .artwork-image-actions
   .artwork-view-in-room-link
@@ -22,6 +17,13 @@ wall-height = 43.5%
     display none !important
   .artwork-exit-view-in-room-link
     display block
+  // Visibly toggle without affecting layout
+  .artwork-related-content
+    visibility hidden
+  .artwork-related-content
+  .artwork-overview
+    cursor default
+    pointer-events none
 
 .artwork-view-in-room
   position fixed

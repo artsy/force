@@ -9,17 +9,14 @@ module.exports = (artwork) ->
   $image = $container.find('img')
   imgWidth = $image.width()
   imgHeight = $image.height()
-  image = new Image  # used for canvas
+  image = new Image # used for canvas
   image.src = $('img').attr('src')
   beatDrops = [ 7000, 20600, 28300, 34400 ]
   beatStops = [ 17100, 27600, 30600, 39200 ]
   songEnd = 42000
   canvas = $("<canvas width=#{imgWidth} height=#{imgHeight}>")[0]
   $canvas = $(canvas)
-  $canvas.css
-    'display': 'inline-block'
-    'position': 'absolute'
-  $container.prepend canvas
+  $container.html canvas
   context = canvas.getContext('2d')
   $skrillex = $('#skrillex')
   syncBeats = ->

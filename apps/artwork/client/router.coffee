@@ -41,20 +41,19 @@ module.exports = class ArtworkRouter extends Backbone.Router
     analytics.track.click 'Clicked to zoom in on artwork'
     analytics.snowplowStruct 'artwork', 'zoom', @artwork.get('_id'), 'artwork'
     @baseView.route 'zoom'
-    @view = new DeepZoomView $container: $('#artwork-deep-zoom-container'), artwork: @artwork
-    @view.render()
+    @view = new DeepZoomView
+      artwork: @artwork
+      image: @artwork.related().images.active()
+    $('#artwork-deep-zoom-container').html @view.render().$el
 
   viewInRoom: ->
     analytics.track.click "Entered 'View In Room'"
     analytics.snowplowStruct 'artwork', 'view_in_room', @artwork.get('_id'), 'artwork'
 
-    # The container will collapse so prop up with the original height
-    ($ac = $('.artwork-container')).height($ac.height())
-
     @baseView.route 'view-in-room'
 
     # Ensure we only view the default image in the room
-    if @artwork.activeImage().id isnt @artwork.defaultImage().id
+    unless @artwork.related().images.active().get('is_default')
       $('.artwork-additional-image').first().click()
 
     @view = new ViewInRoomView $container: $('#artwork-view-in-room-container'), $img: $('#the-artwork-image'), artwork: @artwork
