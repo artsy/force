@@ -1,0 +1,18 @@
+- size = 'large'
+- dimensions = image.imageSizeDimensionsFor(size)
+
+.artwork-image
+  a(
+    class= image.canDeepZoom() ? 'artwork-image-zoom' : undefined
+    href= image.canDeepZoom() ? '#{artwork.href()}/zoom' : undefined
+    rel='nofollow'
+    data-client
+  )
+    img#the-artwork-image(
+      alt= artwork.get('title')
+      title= artwork.get('title')
+      nopin= artwork.noPinAttr()
+      src= image.imageUrl('large')
+      width= dimensions.width
+      height= dimensions.height
+    )

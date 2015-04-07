@@ -1,0 +1,17 @@
+include ./image
+
+if images.length > 1
+  .artwork-additional-images
+    for additionalImage, i in images.models
+      a.artwork-additional-image.js-artwork-additional-image(
+        class= additionalImage.id === image.id ? 'is-active' : 'is-inactive'
+        data-id= additionalImage.id
+        data-href= additionalImage.imageUrl('large')
+      )
+        //- Specified as 45px in the CSS
+        - dimensions = additionalImage.resizeDimensionsFor({ height: 45 })
+        img(
+          src= additionalImage.imageUrl('small')
+          width= dimensions.width
+          height= dimensions.height
+        )
