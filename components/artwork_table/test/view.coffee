@@ -68,7 +68,7 @@ describe 'ArtworkRowView', ->
       @ArtworkRowView = benv.requireWithJadeify resolve(
           __dirname, '../client/artwork_row_view.coffee'
         ), ['artworkRow']
-      @ArtworkRowView.__set__ 'sd', { INQUIRY_FLOW : 'updated_flow' }
+      @ArtworkRowView.__set__ 'sd', { INQUIRY_FLOW : 'original_flow' }
 
   after ->
     benv.teardown()
@@ -80,7 +80,6 @@ describe 'ArtworkRowView', ->
     @view = new @ArtworkRowView
       model: @artwork
       $container: $('body')
-      sd: { INQUIRY_FLOW : 'original_flow' }
 
   describe '#render', ->
 

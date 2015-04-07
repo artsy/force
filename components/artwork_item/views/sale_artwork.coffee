@@ -4,7 +4,6 @@ Backbone = require 'backbone'
 AcquireArtwork = require('../../acquire/view.coffee').acquireArtwork
 ContactPartnerView = require '../../contact/contact_partner.coffee'
 mediator = require '../../../lib/mediator.coffee'
-FlashMessage = require '../../flash/index.coffee'
 
 module.exports = class SaleArtworkView extends Backbone.View
   events:
@@ -14,7 +13,7 @@ module.exports = class SaleArtworkView extends Backbone.View
     'click .artwork-item-buy-now': 'acquire'
 
   initialize: (options = {}) ->
-    { @currentUser, @sale, @fromArtistPage } = options
+    { @currentUser, @sale } = options
 
     if @sale?.isAuction()
       if @sale.has 'clockState'
