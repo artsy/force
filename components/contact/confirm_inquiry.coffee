@@ -90,11 +90,11 @@ module.exports = class ConfirmInquiryView extends ContactView
       success: =>
         @inquirySentAnalytics()
         @close()
-        @success()
+        @success?()
       error: (model, response, options) =>
         @reenableForm()
         @$('#contact-errors').html @errorMessage(response)
-        @error()
+        @error?()
 
   inquirySentAnalytics: =>
     analytics.track.funnel 'Sent artwork inquiry',
@@ -109,7 +109,7 @@ module.exports = class ConfirmInquiryView extends ContactView
     @isLoading()
 
   close: =>
-    @exit()
+    @exit?()
     super
 
   hideCloseButton: ->

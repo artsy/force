@@ -7,14 +7,12 @@ SaleArtworkView = require '../../artwork_item/views/sale_artwork.coffee'
 ContactPartnerView = require '../../contact/contact_partner.coffee'
 ConfirmInquiryView = require '../../contact/confirm_inquiry.coffee'
 analytics = require '../../../lib/analytics.coffee'
-Form = require '../../mixins/form.coffee'
 FlashMessage = require '../../flash/index.coffee'
 sd = require('sharify').data
 
 artworkRow = -> require('../templates/artwork_row.jade') arguments...
 
 module.exports = class ArtworkRowView extends SaleArtworkView
-  _.extend @prototype, Form
   displayPurchase: true
 
   initialize: (options = {})->
@@ -55,8 +53,6 @@ module.exports = class ArtworkRowView extends SaleArtworkView
         inputMessage: defaultMessage
         success: =>
           new FlashMessage message: 'Thank you. Your message has been sent.'
-        error: ->
-        exit: ->
       analytics.track.funnel 'Clicked "Contact Gallery" button', @model.attributes
       analytics.snowplowStruct 'contact_gallery', 'click', @model.get('id'), 'artwork'
     else
