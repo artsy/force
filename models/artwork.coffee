@@ -30,44 +30,14 @@ module.exports = class Artwork extends Backbone.Model
 
   parse: (response, options) ->
     @editions = new Backbone.Collection response?.edition_sets, model: Edition
-    @setImagesCollection response?.images
-
-    @setDefaultImage()
-
     response
 
-  setImagesCollection: (images) ->
-    @images = new Backbone.Collection images, model: AdditionalImage, comparator: 'position'
-
-  # Ensure the default image is the first image
-  setDefaultImage: ->
-    @defaultImage().set 'position', 0
-    @images?.sort silent: true
-
   defaultImage: ->
-    # Create an images collection if one doesn't already exist (example: artworks in a post)
-    if @get('images') and not @images
-      @setImagesCollection @get('images')
-
-    # Blank additionalImage is to handle works without images
-    @images?.findWhere(is_default: true) or @images?.first() or new AdditionalImage()
+    @related().images.default() or
+    new AdditionalImage
 
   embedUrl: ->
     "#{sd.ARTWORK_EMBED_URL}#{sd.APP_URL}#{@href()}"
-
-  hasAdditionalImages: ->
-    @images?.length > 1
-
-  # return {Array} images without the default image
-  additionalImages: ->
-    @images?.reject (image) =>
-      image.id is @defaultImage().id
-
-  setActiveImage: (id) ->
-    @__activeImage__ = @images.findWhere id: id
-
-  activeImage: ->
-    @__activeImage__ ?= @defaultImage()
 
   defaultImageUrl: (version = 'medium') ->
     @defaultImage().imageUrl version
