@@ -22,7 +22,7 @@ describe 'ContactView', ->
       @artwork.isContactable = -> true
       @view = new ContactView el: $('body'), model: @artwork
 
-      benv.render resolve(__dirname, '../templates/index.jade'), { artwork: @artwork }, => done()
+      benv.render resolve(__dirname, '../templates/index.jade'), { artwork: @artwork, sd: { 'INQUIRY_FLOW' : 'original_flow' } }, => done()
 
   afterEach ->
     benv.teardown()
@@ -102,3 +102,36 @@ describe 'ContactView', ->
       @view.checkInquiredArtwork()
       Backbone.sync.args[1][2].success [inquiry]
       $('#artwork-inquiry-sent').html().should.containEql 'Mar 17, 2014'
+
+describe 'ContactView with updated_flow', ->
+  beforeEach (done) ->
+    benv.setup =>
+      benv.expose $: benv.require 'jquery'
+      Backbone.$ = $
+
+      ContactView = benv.requireWithJadeify resolve(__dirname, '../view'), ['attendanceTemplate', 'inquirySentTemplate']
+      ContactView::eligibleForAfterInquiryFlow = false
+
+      sinon.stub Backbone, 'sync'
+
+      @artwork = new Artwork fabricate 'artwork'
+      @artwork.isContactable = -> true
+      @view = new ContactView el: $('body'), model: @artwork
+
+      benv.render resolve(__dirname, '../templates/index.jade'), { artwork: @artwork, sd: { 'INQUIRY_FLOW' : 'updated_flow' } }, => done()
+
+  afterEach ->
+    benv.teardown()
+    Backbone.sync.restore()
+
+  describe '#submit', ->
+
+    it 'should hide the form upon successful confirmation', ->
+      @view.$('form').trigger 'submit'
+      Backbone.sync.args[1][2].success()
+      @view.$('#artwork-contact-form').css('display').should.equal 'none'
+
+    it 'should display an error if there is one', ->
+      @view.$('form').trigger 'submit'
+      Backbone.sync.args[1][2].error @artwork, 'There was an error', {}
+      @view.$('#artwork-contact-form-errors').html().should.containEql 'There was an error'

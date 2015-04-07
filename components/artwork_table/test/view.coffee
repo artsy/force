@@ -68,6 +68,7 @@ describe 'ArtworkRowView', ->
       @ArtworkRowView = benv.requireWithJadeify resolve(
           __dirname, '../client/artwork_row_view.coffee'
         ), ['artworkRow']
+      @ArtworkRowView.__set__ 'sd', { INQUIRY_FLOW : 'updated_flow' }
 
   after ->
     benv.teardown()
@@ -79,6 +80,7 @@ describe 'ArtworkRowView', ->
     @view = new @ArtworkRowView
       model: @artwork
       $container: $('body')
+      sd: { INQUIRY_FLOW : 'original_flow' }
 
   describe '#render', ->
 
@@ -89,5 +91,3 @@ describe 'ArtworkRowView', ->
     it 'should add the hover class to an image when the caption is moused over', ->
       @view.$el.find('.artwork-table__cell--caption').trigger 'mouseover'
       @view.$el.find('.hoverable-image-link').attr('class').should.containEql 'is-hovered'
-
-

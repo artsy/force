@@ -2,7 +2,7 @@ _ = require 'underscore'
 _s = require 'underscore.string'
 Partner = require '../../../../models/partner.coffee'
 PartnerPhoneNumberView = require '../partner_phone_number/view.coffee'
-splitTest = require '../../../../components/split_test/index.coffee'
+{ INQUIRY_FLOW } = require('sharify').data
 
 # Sets up the partner phone numbers while simultaneously rendering
 # partner locations, since they are relying on the same data
@@ -22,7 +22,7 @@ module.exports = class PartnerLocations
         "#{locations.length} Locations"
       else
         @renderFirstCities locations, limit
-      text = if splitTest('inquiry_flow').outcome() is 'original_flow' then ", #{locationString}" else "#{locationString}"
+      text = if INQUIRY_FLOW is 'updated_flow' then "#{locationString}" else ", #{locationString}"
       @$el.find('#artwork-partner-locations')
         .text text
 
