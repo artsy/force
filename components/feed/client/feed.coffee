@@ -3,6 +3,7 @@ Backbone = require 'backbone'
 Artworks = require '../../../models/artwork.coffee'
 sd = require('sharify').data
 analytics = require '../../../lib/analytics.coffee'
+mediator = require '../../../lib/mediator.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 FeedItems = require '../collections/feed_items.coffee'
 Profile = require '../../../models/profile.coffee'
@@ -47,6 +48,8 @@ module.exports = class FeedView extends Backbone.View
 
     throttledInfiniteScroll = _.throttle (=> @infiniteScroll()), 250
     @$window.on 'scroll.feed', throttledInfiniteScroll
+
+    mediator.trigger 'infinite:scroll:start'
 
     if @onResize
       throttledOnResize = _.throttle (=> @onResize()), 250
@@ -96,6 +99,7 @@ module.exports = class FeedView extends Backbone.View
 
   # Fetch / create items
   fetchMoreItems: =>
+    console.log 'fetchMoreItems'
     @doneInitializingFeedItems = false
     @waiting = true
     analytics.track.click "Paginating FeedItems"
@@ -104,12 +108,13 @@ module.exports = class FeedView extends Backbone.View
       artworks: true
       sort: @sortOrder
       cursor: @feedItems.cursor
-      success: (items) =>
+      success: (items, response) =>
         numberOfItemsFetched = items.length
         items.removeFlagged()
         @afterFetchCont?(items)
         @handleFetchedItems items.models
         @waiting = false
+        @feedExhausted() unless items.cursor?
       error: => @waiting = false
 
   getFeedItemHtml: (items, opts = {}) ->
@@ -163,12 +168,12 @@ module.exports = class FeedView extends Backbone.View
     return unless @lastItem?.length
 
     top = if @lastItem.offset() then @lastItem.offset().top else 0
+    console.log 'in range', @scrollTop + 1500, top
     if @scrollTop + 1500 > top
       if @$el.is(':visible')
         @fetchMoreItems()
       else
-        # Destroy the feed if it isn't visible (helps with fair filtering)
-        @destroy()
+        @feedExhausted()
     @trackScroll()
 
   scrollPositionsTracked: {}
@@ -180,6 +185,9 @@ module.exports = class FeedView extends Backbone.View
       @scrollPositionsTracked[scrollPosition] = true
       @lastScrollIntervalTracked = scrollPosition
       analytics.track.click "#{@feedName} scroll: #{scrollPosition}"
+
+  feedExhausted: ->
+    mediator.trigger 'infinite:scroll:end'
 
   getFixedWidth: ->
     windowWidth = @$window.innerWidth() || @minWidth
