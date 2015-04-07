@@ -99,7 +99,6 @@ module.exports = class FeedView extends Backbone.View
 
   # Fetch / create items
   fetchMoreItems: =>
-    console.log 'fetchMoreItems'
     @doneInitializingFeedItems = false
     @waiting = true
     analytics.track.click "Paginating FeedItems"
@@ -108,7 +107,7 @@ module.exports = class FeedView extends Backbone.View
       artworks: true
       sort: @sortOrder
       cursor: @feedItems.cursor
-      success: (items, response) =>
+      success: (items) =>
         numberOfItemsFetched = items.length
         items.removeFlagged()
         @afterFetchCont?(items)
