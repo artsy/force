@@ -15,12 +15,12 @@ module.exports = class AuctionArtworksView extends Backbone.View
 
     @listenTo @collection, 'reset add remove', @render
     @listenTo @state, 'change', @render
-    @listenTo @user, 'change:registered_to_bid', @render
+    @listenTo @user, 'change:registered_to_bid', @render if @user
 
   sorts: (artwork) ->
     { saleArtwork, artist } = artwork.related()
 
-    default: saleArtwork.get('lot_number') or saleArtwork.id
+    default: saleArtwork.get('lot_number') or saleArtwork.get('position') or saleArtwork.id
     name_asc: artist.get('sortable_id')
     bids_desc: -(saleArtwork.get('bidder_positions_count'))
     bids_asc: saleArtwork.get('bidder_positions_count')
