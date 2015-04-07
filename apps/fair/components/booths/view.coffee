@@ -7,6 +7,8 @@ BorderedPulldown = require '../../../../components/bordered_pulldown/view.coffee
 qs = require 'querystring'
 FilterNav = require '../../../../components/filter/nav/view.coffee'
 deslugify = require '../../../../components/deslugify/index.coffee'
+mediator = require '../../../../lib/mediator.coffee'
+
 navSectionsTemplate = -> require('./nav_sections.jade') arguments...
 
 module.exports = class BoothsView extends Backbone.View
@@ -42,6 +44,8 @@ module.exports = class BoothsView extends Backbone.View
     # Render the navigation dropdown sections
     @fair.fetchSections success: @renderSections
 
+    mediator.on 'infinite:scroll:end', @hideSpinner, @
+
   renderSections: (sections) =>
     hash = {}
     sections.each (section) -> hash[section.get 'section'] = section.get('section')
@@ -65,7 +69,7 @@ module.exports = class BoothsView extends Backbone.View
     )
 
   renderShows: (items) =>
-    return @$('#fair-booths-spinner').hide() unless items.models.length > 0
+    return @hideSpinner() unless items.length > 0
     items.urlRoot = @shows.url
     @feedView?.destroy()
     @feedView = new ShowsFeed
@@ -74,6 +78,8 @@ module.exports = class BoothsView extends Backbone.View
       additionalParams: @params.toJSON()
       hideSeeMoreButtons: (if @params.get('artist') then true else false)
     @feedView.feedName = 'Fair Feed'
+
+  hideSpinner: ->
     @$('#fair-booths-spinner').hide()
 
   toggleBoothCount: =>
