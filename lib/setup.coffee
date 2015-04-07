@@ -199,6 +199,7 @@ module.exports = (app) ->
   app.use splitTestMiddleware
 
   # Mount apps
+  app.use require "../apps/legacy_routes"
   app.use require "../apps/home"
   # Needs to be above artwork and artist routes to support the /type/:id/* routes
   app.use require "../apps/apply"
@@ -219,7 +220,6 @@ module.exports = (app) ->
   app.use require "../apps/gallery_insights"
   app.use require "../apps/gallery_partnerships"
   app.use require "../apps/gene"
-  app.use require "../apps/legacy_routes"
   app.use require "../apps/notifications"
   app.use require "../apps/order"
   app.use require "../apps/personalize"
