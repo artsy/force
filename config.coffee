@@ -9,6 +9,7 @@ module.exports =
   APPLICATION_NAME: 'force-staging'
   NODE_ENV: 'development'
   PORT: 3004
+  PROXY_API_URL: null
   API_URL: 'http://localhost:3000'
   POSITRON_URL: 'http://localhost:3005'
   APP_URL: 'http://localhost:3004'
