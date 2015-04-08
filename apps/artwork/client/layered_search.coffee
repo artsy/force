@@ -42,12 +42,15 @@ module.exports.Layers = class Layers extends Backbone.Collection
     _.extend options, data: 'artwork[]': @artwork.id
     Backbone.Collection::fetch.call this, options
 
+  parse: (data)->
+    # hide all "for sale" layers, since no one cares about them
+    _.reject data, (layer) -> layer.id is 'for-sale'
+
   # Ensure fairs are always first, followed by 'Most Similar',
   # and that 'For Sale' is always last
   sortMap: (type, id) ->
     return  -1 if (type is 'fair')
     return   0 if (type is 'synthetic') and (id is 'main')
-    return   @length if (type is 'synthetic') and (id is 'for-sale')
     1
 
   comparator: (model) ->
@@ -133,9 +136,8 @@ module.exports.LayeredSearchView = class LayeredSearchView extends Backbone.View
     @selectLayer() # Activate the first tab
 
   render: ->
-    # If only one layer is returned it will be "For sale"
-    # which, on its own, doesn't appear to have useful recommendations
-    return @remove() unless @layers.length > 1
+    # if there are no layers then remove the view
+    return @remove() unless @layers.length
 
     @$el.html template(layers: @layers)
     @postRender()
