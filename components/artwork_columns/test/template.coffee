@@ -55,10 +55,10 @@ describe 'Artwork Columns template', ->
     threeCols = @artworks.groupByColumnsInOrder 3
     $ = cheerio.load render('template')({ artworkColumns: threeCols, setHeight: 200 })
     artwork = @artworks.models[0]
-    imgSrc = $(".artwork-item[data-artwork='#{artwork.get('id')}'] img").attr 'src'
+    imgSrc = $(".artwork-item[data-artwork='#{artwork.get('id')}'] .artwork-item-image").attr 'src'
     imgSrc.should.containEql artwork.defaultImage().imageSizeForHeight 200
 
     $ = cheerio.load render('template')({ artworkColumns: threeCols, setHeight: 400 })
     artwork = @artworks.models[0]
-    imgSrc = $(".artwork-item[data-artwork='#{artwork.get('id')}'] img").attr 'src'
+    imgSrc = $(".artwork-item[data-artwork='#{artwork.get('id')}'] .artwork-item-image").attr 'src'
     imgSrc.should.containEql artwork.defaultImage().imageSizeForHeight 400

@@ -89,17 +89,5 @@ module.exports =
   fillUrlFor: (options = {}, attr) ->
     resizer.fill @sourceUrl(attr), options
 
-  hasDimensions: ->
-    @has('original_width') and
-    @has('original_height')
-
-  factor: (favor = 'width', precision = 3) ->
-    disfavor = if favor is 'width' then 'height' else 'width'
-    if @hasDimensions()
-      factor = @get("original_#{disfavor}") / @get("original_#{favor}")
-      Math.floor(factor * 1000) / 1000
-    else
-      1
-
   aspectRatio: ->
     @get('aspect_ratio')
