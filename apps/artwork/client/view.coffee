@@ -24,6 +24,7 @@ RelatedShowView = require './related_show.coffee'
 ContactView = require '../components/contact/view.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 VideoView = require './video.coffee'
+ImagesView = require '../components/images/view.coffee'
 PartnerLocations = require '../components/partner_locations/index.coffee'
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 detailTemplate = -> require('../templates/_detail.jade') arguments...
@@ -35,7 +36,6 @@ module.exports = class ArtworkView extends Backbone.View
   events:
     'click a[data-client]': 'intercept'
     'click .circle-icon-button-share': 'openShare'
-    'click .artwork-additional-image': 'changeImage'
     'change .aes-radio-button': 'selectEdition'
     'click .artwork-buy-button': 'buy'
     'click .artwork-more-info .avant-garde-header-small': 'toggleMoreInfo'
@@ -55,6 +55,11 @@ module.exports = class ArtworkView extends Backbone.View
     @setupPartnerLocations()
     @setupAnnyang()
     @setupMonocleView()
+
+    new ImagesView
+      el: @$('.js-artwork-images')
+      model: @artwork
+      collection: @artwork.related().images
 
     # Handle all related content
     @setupRelatedLayers()
@@ -306,16 +311,6 @@ module.exports = class ArtworkView extends Backbone.View
       width: '350px'
       media: @artwork.defaultImageUrl('large')
       description: @artwork.toAltText()
-
-  changeImage: (e) ->
-    e.preventDefault()
-    (@$artworkAdditionalImages ?= @$('.artwork-additional-image')).
-      removeClass 'is-active'
-    ($target = $(e.currentTarget)).
-      addClass 'is-active'
-    (@$artworkImage ?= @$('#the-artwork-image')).
-      attr('src', $target.data 'href')
-    @artwork.setActiveImage($target.data 'id')
 
   selectEdition: (e) ->
     @__selectedEdition__ = e.currentTarget.value

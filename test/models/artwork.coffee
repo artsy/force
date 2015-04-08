@@ -13,27 +13,6 @@ describe 'Artwork', ->
   afterEach ->
     Backbone.sync.restore()
 
-  describe '#setDefaultImage', ->
-    it 'sets the default image position to 0', ->
-      defaultImage = @artwork.defaultImage()
-      defaultImage.set 'position', 2
-      @artwork.setDefaultImage()
-      defaultImage.get('position').should.equal 0
-
-    it 'sorts the images and have the default image at the beginning', ->
-      defaultImage = @artwork.defaultImage()
-      defaultImage.set 'position', 2
-      @artwork.images.unshift { position: 3 }
-      @artwork.images.first().get('position').should.equal 3
-      @artwork.setDefaultImage()
-      @artwork.images.first().should.equal defaultImage
-
-  describe '#hasAdditionalImages', ->
-    it 'indicates if there is more than one image', ->
-      @artwork.hasAdditionalImages().should.be.ok
-      @artwork.images.reset()
-      @artwork.hasAdditionalImages().should.not.be.ok
-
   describe '#saleMessage', ->
     it 'formats sold sale message', ->
       @artwork.set sale_message: '$6,000 - Sold', price: '$6,000'
@@ -45,21 +24,6 @@ describe 'Artwork', ->
       it 'returns undefined', ->
         @artwork.set sale_message: 'Contact For Price', price: '$6,000'
         _.isUndefined(@artwork.saleMessage()).should.be.true
-
-  describe '#additionalImages', ->
-    it 'returns an array of image objects sans the defaultImage', ->
-      defaultImage = @artwork.defaultImage()
-      additionalImages = @artwork.additionalImages()
-      additionalImages.length.should.be.ok
-      _.contains(_.pluck(additionalImages, 'id'), defaultImage.id).should.not.be.ok
-
-  describe '#setActiveImage, #activeImage', ->
-    it 'sets the active image and returns it', ->
-      notDefaultImageId = @artwork.images.last().id
-      @artwork.activeImage().id.should.equal @artwork.defaultImage().id
-      @artwork.activeImage().id.should.not.equal notDefaultImageId
-      @artwork.setActiveImage(notDefaultImageId)
-      @artwork.activeImage().id.should.equal notDefaultImageId
 
   describe '#downloadableFilename', ->
     it 'returns a human readable filename', ->
@@ -237,7 +201,7 @@ describe 'Artwork', ->
     # of the images attribute
     it 'works if there are no images', ->
       @artwork.unset('images')
-      @artwork.images.reset()
+      @artwork.related().images.reset()
       @artwork.defaultImageUrl().should.equal @artwork.missingImageUrl()
 
   describe '#defaultImage', ->
