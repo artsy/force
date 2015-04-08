@@ -14,6 +14,12 @@
     margin-bottom 40px
     &:last-child
       margin-bottom 0
+    .artwork-item-image
+      display inline
+      height auto
+      max-height 400px
+      max-width 100%
+      width auto
   .overlay-container
     bottom 12px
 
@@ -31,7 +37,7 @@
     border-left 1px solid gray-lighter-color
     margin-left 0 !important
     margin-right 0 !important
-    width 33.33%
+    width calc(33.33%)
     &:first-child
       margin-right -1px !important
       border-left 0px solid white
@@ -53,3 +59,5 @@
         width 100%
         text-align left
         max-width 260px
+      img
+        max-height 400px
