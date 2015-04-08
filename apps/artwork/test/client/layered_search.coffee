@@ -12,7 +12,7 @@ describe 'Layers, Layer', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
     @artwork = new Artwork fabricate 'artwork'
-    @layers = new Layers artwork: @artwork
+    @layers = new Layers [], artwork: @artwork
 
   afterEach ->
     Backbone.sync.restore()
@@ -27,27 +27,32 @@ describe 'Layers, Layer', ->
       Backbone.sync.args[0][1].artwork.id.should.equal @artwork.id
 
     it 'should be correctly ordered', ->
-      @layers.reset [
+      @layers = new Layers [
         { type: 'synthetic', id: 'for-sale' }
         { type: 'gene', id: 'foobar' }
         { type: 'synthetic', id: 'main' }
         { type: 'gene', id: 'bazqux' }
-      ]
+      ], { artwork: @artwork }
       @layers.first().id.should.equal 'main'
       @layers.last().id.should.equal 'for-sale'
+
+    it 'should not contain any for-sale layers if that is the only layer returned', ->
+      @layers = new Layers [
+        { type: 'synthetic', id: 'for-sale' }
+      ], { parse: true, artwork: @artwork }
+      (@layers.first() is undefined).should.be.true
 
   describe 'with fair', ->
     beforeEach ->
       @fair = new Fair fabricate 'fair'
       @artwork = new Artwork fabricate 'artwork'
-      @layers = new Layers artwork: @artwork, fair: @fair
-      @layers.reset [
+      @layers = new Layers [
         { type: 'synthetic', id: 'for-sale' }
         { type: 'gene', id: 'foobar' }
         { type: 'synthetic', id: 'main' }
         { type: 'fair', id: @fair.id }
         { type: 'gene', id: 'bazqux' }
-      ]
+      ], { artwork: @artwork, fair: @fair, parse: true }
 
     it 'should set up both relationships for the fair', ->
       @layers.fair.id.should.equal @fair.id
@@ -56,7 +61,10 @@ describe 'Layers, Layer', ->
     it 'should be correctly ordered', ->
       @layers.first().id.should.equal @fair.id
       @layers.at(1).id.should.equal 'main'
-      @layers.last().id.should.equal 'for-sale'
+
+    it 'should not contain any for-sale layers', ->
+      for_sale = _.find @layers.models, (layer) -> layer.id is 'for-sale'
+      (for_sale is undefined).should.be.true
 
   describe 'Layer', ->
     beforeEach ->
@@ -176,6 +184,5 @@ describe 'LayeredSearchView', ->
     afterEach ->
       Backbone.sync.restore()
 
-    it 'should have the fair as the first tab', ->
-      @$buttons = @view.$('.layered-search-layer-button')
-      @$buttons.first().text().should.equal "Works from #{@fair.get('name')}"
+    it 'should have the fair as the header', ->
+      @view.$('h2.avant-garde-header-center').first().text().should.equal "Related Artworks at #{@fair.get('name')}"
