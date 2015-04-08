@@ -167,7 +167,6 @@ module.exports = class FeedView extends Backbone.View
     return unless @lastItem?.length
 
     top = if @lastItem.offset() then @lastItem.offset().top else 0
-    console.log 'in range', @scrollTop + 1500, top
     if @scrollTop + 1500 > top
       if @$el.is(':visible')
         @fetchMoreItems()
