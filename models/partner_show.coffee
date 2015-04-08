@@ -263,7 +263,7 @@ module.exports = class PartnerShow extends Backbone.Model
     diff <= soon and diff >= 0
 
   endingIn: ->
-    days = moment(@get('end_at')).diff(Date.new, 'days')
+    days = moment(@get('end_at')).diff(moment().startOf('day'), 'days')
     if days is 0 then 'today' else "in #{days} day#{if days is 1 then '' else 's'}"
 
   isOpeningToday: ->
