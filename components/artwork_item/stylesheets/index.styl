@@ -7,14 +7,21 @@
   margin-bottom 11px
   img
     vertical-align bottom
-    max-width 100%
+
+.artwork-item-image
+  display block
+  background-color gray-color
+  > img
+    position absolute
+    top 0
+    left 0
+    width 100%
     height 100%
 
 .artwork-item-image-link
-  display inline-block
-  overflow hidden
+  display block
   position relative
-  max-width 100%
+  overflow hidden
 
 .artwork-item-caption
   color gray-darker-color
@@ -36,9 +43,6 @@
 
 .artwork-item-artist
   font-weight bold
-
-.artwork-item-image
-  background-color #f2f2f2
 
 .artwork-item-sale-metadata
   margin 20px 0 10px
