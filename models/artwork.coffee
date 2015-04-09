@@ -136,6 +136,7 @@ module.exports = class Artwork extends Backbone.Model
   #
   # return {Boolean}
   hasMoreInfo: ->
+    not _.isEmpty(@get('blurb')) or
     not _.isEmpty(@get('provenance')) or
     not _.isEmpty(@get('exhibition_history')) or
     not _.isEmpty(@get('signature')) or
