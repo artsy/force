@@ -251,7 +251,7 @@ module.exports = class PartnerShow extends Backbone.Model
     if moment(today).day() < 5
       end = moment(today).endOf('week').endOf('day')
     else
-      end = moment(today).endOf('week').add('days', 6).endOf('day')
+      end = moment(today).endOf('week').add(6, 'days').endOf('day')
     start < startAt && end > startAt
 
   startAtDate: ->
