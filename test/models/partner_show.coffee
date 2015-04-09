@@ -156,6 +156,22 @@ describe 'PartnerShow', ->
       @partnerShow.posterImageUrl()
       Backbone.sync.args[0][2].success []
 
+  describe '#openingThisWeek', ->
+    beforeEach -> 
+      @starting = '2015-04-09T04:00:00+00:00'
+      @partnerShow.set 'start_at', @starting
+
+    it 'returns a boolean if the show opens within "this week" (from the prior monday to either the following sunday or the next friday depending on the date)', ->
+      # if today is a tuesday and show is opening on a thursday
+      @today = moment('2015-04-08T04:00:00+00:00')
+      @partnerShow.openingThisWeek().should.be.true
+      # if today is the prior saturday and show is opening on a thursday
+      @today = moment('2015-04-04T04:00:00+00:00')
+      @partnerShow.openingThisWeek(@today).should.be.true
+      # if today is the prior thursday and the show is on the following thursday
+      @today = moment('2015-04-02T04:00:00+00:00')
+      @partnerShow.openingThisWeek(@today).should.be.false
+
   describe '#isEndingSoon', ->
     beforeEach ->
       @ending = '2013-08-23T04:00:00+00:00'

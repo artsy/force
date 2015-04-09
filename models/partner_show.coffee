@@ -245,13 +245,13 @@ module.exports = class PartnerShow extends Backbone.Model
 
   # opens at any time between the previous monday and the next sunday if today is between monday and thursday,
   # if between friday and sunday opens between previous monday and friday of the next week
-  openingThisWeek: ->
-    start = moment().day(1).startOf('day')
+  openingThisWeek: (today = moment()) ->
+    start = moment(today).startOf('week').startOf('day')
     startAt = @startAtDate()
-    if moment().day() < 5
-      end = moment().day(8).startOf('day')
+    if moment(today).day() < 5
+      end = moment(today).endOf('week').endOf('day')
     else
-      end = moment().day(13).startOf('day')
+      end = moment(today).endOf('week').add('days', 6).endOf('day')
     start < startAt && end > startAt
 
   startAtDate: ->
