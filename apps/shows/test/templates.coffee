@@ -35,7 +35,7 @@ describe 'City', ->
 
       it 'displays opening shows', ->
         $('.shows-page-header').map(-> $(this).text()).get().should.eql [
-          'Opening this week', 'Current Shows in Amsterdam (1)'
+          'Opening This Week', 'Current Shows in Amsterdam (1)'
         ]
 
     describe 'on the second page', ->
