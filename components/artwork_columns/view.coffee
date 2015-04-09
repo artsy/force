@@ -167,7 +167,7 @@ module.exports = class ArtworkColumns extends Backbone.View
       displayPrice: @displayPrice
     $renderedArtwork = $(renderedArtwork)
     @$(".artwork-column:eq(#{column})").append $renderedArtwork
-    $renderedArtwork.find('img').css(maxHeight: "#{@maxArtworkHeight}px") if @maxArtworkHeight != 400
+    $renderedArtwork.find('.artwork-item-image-link').css(maxHeight: "#{@maxArtworkHeight}px") if @maxArtworkHeight != 400
     $renderedArtwork
 
   onSeeMoreClick: =>
