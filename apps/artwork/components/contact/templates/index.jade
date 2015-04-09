@@ -33,7 +33,7 @@ if artwork.isContactable()
 
     if sd.INQUIRY_FLOW === 'updated_flow'
       if artwork.isPriceDisplayable()
-        - var defaultMessage = "I'm interested in this work by " + artwork.related().artist.get('name') + ". Please contact me to discuss further."
+        - var defaultMessage = "I'm interested in this work" + (artwork.has('artist') ? ' by ' + artwork.related().artist.get('name') : '') + ". Please contact me to discuss further."
       else
         -var defaultMessage = "Hi. Could you please share the asking price for this work? I'd like to know if it's within my budget."
 

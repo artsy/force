@@ -25,4 +25,4 @@ describe 'index template', ->
     @artwork.set artist: null
     render('index')(_.extend @locals,
       sd: INQUIRY_FLOW: 'updated_flow'
-    )
+    ).should.containEql 'in this work.'
