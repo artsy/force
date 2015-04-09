@@ -1,9 +1,16 @@
 - image = artwork.defaultImage()
 
-.artwork-item-image(
-  style= "padding-bottom: #{image.factor() * 100}%"
-)
-  img(
+unless image.isCropped(artworkSize)
+  .artwork-item-image(
+    style= "padding-bottom: #{image.factor() * 100}%"
+  )
+    img(
+      src= image.imageUrl(artworkSize)
+      nopin= artwork.noPinAttr()
+      alt= artwork.toAltText()
+    )
+else
+  img.artwork-item-image(
     src= image.imageUrl(artworkSize)
     nopin= artwork.noPinAttr()
     alt= artwork.toAltText()
