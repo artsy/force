@@ -11,6 +11,11 @@ module.exports =
     large: width: 640, height: 640
     larger: width: 1024, height: 1024
 
+  croppedSizes: ['square', 'medium_rectangle', 'large_rectangle']
+
+  isCropped: (version) ->
+    _.contains @croppedSizes, version
+
   publicVersions: ->
     _.without(@get('image_versions'), 'normalized')
 
