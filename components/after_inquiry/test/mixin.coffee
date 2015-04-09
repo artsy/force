@@ -123,11 +123,3 @@ describe 'AfterInquiryMixin', ->
         sinon.stub(Backbone, 'sync').yieldsTo 'error'
         @view.inquiryOptions = error: -> done()
         @view.send()
-
-      describe 'isModal', ->
-        it 'discards the success callback', ->
-          sinon.stub(Backbone, 'sync').yieldsTo 'success'
-          @view.inquiryOptions = success: sinon.stub()
-          @view.isModal = true
-          @view.send()
-          @view.inquiryOptions.success.called.should.be.false

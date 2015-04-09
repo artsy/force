@@ -125,17 +125,20 @@ module.exports = class ContactView extends Backbone.View
           @displayInquirySent()
           new FlashMessage message: 'Thank you. Your message has been sent.'
           @$submit.attr('data-state', '').blur()
-          analytics.track.funnel 'Sent artwork inquiry',
-            label: analytics.modelNameAndIdToLabel('artwork', @model.get('id'))
-          changed = if @inquiry.get('message') is defaultMessage(@model) then 'Did not change' else 'Changed'
-          analytics.track.funnel "#{changed} default message"
-          analytics.snowplowStruct 'inquiry', 'submit', @model.get('id'), 'artwork', '0.0',
-            { inquiry: { inquiry_id: @inquiry.id }, user: { email: @inquiry.email }}
-          analytics.track.funnel 'Contact form submitted', @inquiry.attributes
+          @inquirySentAnalytics()
         error: (model, response, options) =>
           @reenableForm()
           @$('#artwork-contact-form-errors').html @errorMessage(response)
           @$submit.attr 'data-state', 'error'
+
+  inquirySentAnalytics: ->
+    analytics.track.funnel 'Sent artwork inquiry',
+      label: analytics.modelNameAndIdToLabel('artwork', @model.get('id'))
+    changed = if @inquiry.get('message').trim() is defaultMessage(@model).trim() then 'Did not change' else 'Changed'
+    analytics.track.funnel "#{changed} default message"
+    analytics.snowplowStruct 'inquiry', 'submit', @model.get('id'), 'artwork', '0.0',
+      { inquiry: { inquiry_id: @inquiry.id }, user: { email: @inquiry.email }}
+    analytics.track.funnel 'Contact form submitted', @inquiry.attributes
 
   hoveredSubmit: ->
     analytics.track.hover "Hovered over contact form 'Send' button"
