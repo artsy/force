@@ -56,35 +56,35 @@ describe 'Artwork', ->
     it 'can be compared', ->
       @artwork.set 'comparables_count', 1
       @artwork.isComparable()
-      @artwork.isComparable().should.be.ok
+      @artwork.isComparable().should.be.true
       @artwork.set 'comparables_count', 0
-      @artwork.isComparable().should.not.be.ok
+      @artwork.isComparable().should.be.false
       @artwork.set { comparables_count: 1, category: 'Architecture' }
-      @artwork.isComparable().should.not.be.ok
+      @artwork.isComparable().should.be.false
 
     it 'can have a price displayed', ->
       sinon.stub(@artwork, 'isMultipleEditions').returns false
       sinon.stub(@artwork, 'isUnavailableButInquireable').returns false
       @artwork.set { price: 'existy', inquireable: true }
-      @artwork.isPriceDisplayable().should.be.ok
+      @artwork.isPriceDisplayable().should.be.true
       @artwork.set { inquireable: false, sold: true }
-      @artwork.isPriceDisplayable().should.be.ok
+      @artwork.isPriceDisplayable().should.be.true
       @artwork.set { inquireable: false, sold: false }
-      @artwork.isPriceDisplayable().should.not.be.ok
+      @artwork.isPriceDisplayable().should.be.false
       @artwork.set { inquireable: true, price: undefined }
-      @artwork.isPriceDisplayable().should.not.be.ok
+      @artwork.isPriceDisplayable().should.be.false
       @artwork.set { inquireable: true, price: 'existy' }
-      @artwork.isPriceDisplayable().should.be.ok
+      @artwork.isPriceDisplayable().should.be.true
       @artwork.isMultipleEditions.restore()
       @artwork.isUnavailableButInquireable.restore()
 
     it 'can have multiple editions', ->
       @artwork.set 'edition_sets', undefined
-      @artwork.isMultipleEditions().should.not.be.ok
+      @artwork.isMultipleEditions().should.be.false
       @artwork.set 'edition_sets', [0]
-      @artwork.isMultipleEditions().should.not.be.ok
+      @artwork.isMultipleEditions().should.be.false
       @artwork.set 'edition_sets', [0, 0]
-      @artwork.isMultipleEditions().should.be.ok
+      @artwork.isMultipleEditions().should.be.true
 
     it 'normalizes dimensions', ->
       @artwork.set dimensions: in: '10 × 200 × 30in'
@@ -126,41 +126,47 @@ describe 'Artwork', ->
 
     it 'can be contacted', ->
       @artwork.set { forsale: true, partner: 'existy', acquireable: false }
-      @artwork.isContactable().should.be.ok
+      @artwork.isContactable().should.be.true
       @artwork.set { forsale: true, partner: 'existy', acquireable: true }
-      @artwork.isContactable().should.not.be.ok
+      @artwork.isContactable().should.be.false
       @artwork.set { forsale: false, partner: 'existy', acquireable: false }
-      @artwork.isContactable().should.not.be.ok
+      @artwork.isContactable().should.be.false
       @artwork.set { forsale: true, partner: undefined, acquireable: false }
-      @artwork.isContactable().should.not.be.ok
+      @artwork.isContactable().should.be.false
 
     it 'might be unavailable... but inquireable', ->
       @artwork.set { forsale: false, inquireable: true, sold: false }
-      @artwork.isUnavailableButInquireable().should.be.ok
+      @artwork.isUnavailableButInquireable().should.be.true
       @artwork.set { forsale: true, inquireable: true, sold: false }
-      @artwork.isUnavailableButInquireable().should.not.be.ok
+      @artwork.isUnavailableButInquireable().should.be.false
       @artwork.set { forsale: false, inquireable: true, sold: true }
-      @artwork.isUnavailableButInquireable().should.not.be.ok
+      @artwork.isUnavailableButInquireable().should.be.false
 
   describe '#hasDimension', ->
     it 'returns true on any attribute vaguely numeric', ->
       @artwork.set { width: 1 }
-      @artwork.hasDimension('width').should.be.ok
+      @artwork.hasDimension('width').should.be.true
       @artwork.set { width: 'nope' }
-      @artwork.hasDimension('width').should.not.be.ok
+      @artwork.hasDimension('width').should.be.false
       @artwork.set { width: '1 nope' }
-      @artwork.hasDimension('width').should.be.ok
+      @artwork.hasDimension('width').should.be.true
       @artwork.set { width: '1 1/2 in' }
-      @artwork.hasDimension('width').should.be.ok
+      @artwork.hasDimension('width').should.be.true
       @artwork.unset 'width'
-      @artwork.hasDimension('width').should.not.be.ok
+      @artwork.hasDimension('width').should.be.false
 
   describe '#hasMoreInfo', ->
     it 'has more info', ->
       @artwork.set { provenance: undefined, exhibition_history: '', signature: '', additional_information: undefined, literature: undefined }
-      @artwork.hasMoreInfo().should.not.be.ok
+      @artwork.hasMoreInfo().should.be.false
       @artwork.set 'literature', 'existy'
-      @artwork.hasMoreInfo().should.be.ok
+      @artwork.hasMoreInfo().should.be.true
+
+    it 'has more info when there is a blurb', ->
+      @artwork.clear()
+      @artwork.hasMoreInfo().should.be.false
+      @artwork.set 'blurb', 'existy'
+      @artwork.hasMoreInfo().should.be.true
 
   describe '#contactLabel', ->
     it 'says to contact the appropriate thing', ->
@@ -186,7 +192,7 @@ describe 'Artwork', ->
       @artwork.editions = new Backbone.Collection
       @artwork.editionStatus().should.equal 'Unique'
       @artwork.set { unique: false }
-      _.isUndefined(@artwork.editionStatus()).should.be.ok
+      _.isUndefined(@artwork.editionStatus()).should.be.true
       @artwork.editions.add { editions: '1 of 5' }
       @artwork.editionStatus().should.equal '1 of 5'
 
