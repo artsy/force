@@ -37,7 +37,6 @@ request = require 'superagent'
               else
                 message = defaultMessage(artwork)
 
-              console.log message
               res.render template,
                 artwork: artwork
                 artist: artist
