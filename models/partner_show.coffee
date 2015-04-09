@@ -243,11 +243,14 @@ module.exports = class PartnerShow extends Backbone.Model
   closed: -> @get('status') is 'closed'
   renderable: -> @get('eligible_artworks_count') > 0 || @get('images_count') > 2
 
-  # opens at any time between the previous and future weekend
+  # opens at any time between the previous monday and future weekend if monday - thursday, if saturday or sunday include to next weekend
   openingThisWeek: ->
-    start = moment().day(-2).startOf('day')
-    end = moment().day(8).startOf('day')
-    startAt = @startAtDate()
+    start = moment().day(1).startOf('day')
+    startAt = moment(@startAtDate())
+    if moment().day() < 5
+      end = moment().day(8).startOf('day')
+    else 
+      end = moment().day(13).startOf('day')
     start < startAt && end > startAt
 
   startAtDate: ->
@@ -259,7 +262,7 @@ module.exports = class PartnerShow extends Backbone.Model
   # Defaults to 5 days
   isEndingSoon: (days = 5) ->
     soon = moment.duration(days, 'days').valueOf()
-    diff = moment(@get('end_at')).diff(Date.new)
+    diff = moment(@endAtDate()).diff(Date.new)
     diff <= soon and diff >= 0
 
   endingIn: ->
@@ -267,7 +270,7 @@ module.exports = class PartnerShow extends Backbone.Model
     if days is 0 then 'today' else "in #{days} day#{if days is 1 then '' else 's'}"
 
   isOpeningToday: ->
-    moment(@get('start_at')).diff(Date.new, 'days') is 0
+    moment(@get('start_at')).diff(moment().startOf('day'), 'days') is 0
 
   performers: ->
     artist.toJSONLDShort() for artist in @artists().models
