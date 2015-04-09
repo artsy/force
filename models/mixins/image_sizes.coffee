@@ -11,6 +11,11 @@ module.exports =
     large: width: 640, height: 640
     larger: width: 1024, height: 1024
 
+  croppedSizes: ['square', 'medium_rectangle', 'large_rectangle']
+
+  isCropped: (version) ->
+    _.contains @croppedSizes, version
+
   publicVersions: ->
     _.without(@get('image_versions'), 'normalized')
 
@@ -88,6 +93,18 @@ module.exports =
 
   fillUrlFor: (options = {}, attr) ->
     resizer.fill @sourceUrl(attr), options
+
+  hasDimensions: ->
+    @has('original_width') and
+    @has('original_height')
+
+  factor: (favor = 'width', precision = 3) ->
+    disfavor = if favor is 'width' then 'height' else 'width'
+    if @hasDimensions()
+      factor = @get("original_#{disfavor}") / @get("original_#{favor}")
+      Math.floor(factor * 1000) / 1000
+    else
+      1
 
   aspectRatio: ->
     @get('aspect_ratio')
