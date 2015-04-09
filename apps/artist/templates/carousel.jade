@@ -2,7 +2,7 @@ mixin carouselFigure(figure)
   - var dimensions = figure.resizeDimensionsFor({ height: 300 })
   a( href= figure.get('href') )
     img(
-      src= figure.imageUrlForHeight(300)
+      src= figure.resizeUrlFor({ height: 300 })
       alt= figure.get('title')
       width= dimensions.width
       height= dimensions.height
