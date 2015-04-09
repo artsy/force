@@ -257,17 +257,17 @@ module.exports = class PartnerShow extends Backbone.Model
     new Date(@get('end_at'))
 
   # Defaults to 5 days
-  isEndingSoon: (days = 5) ->
+  isEndingSoon: (days = 5, today = moment().startOf('day')) ->
     soon = moment.duration(days, 'days').valueOf()
-    diff = moment(@endAtDate()).diff(Date.new)
+    diff = moment(@endAtDate()).diff(today)
     diff <= soon and diff >= 0
 
-  endingIn: ->
-    days = moment(@get('end_at')).diff(moment().startOf('day'), 'days')
+  endingIn: (today = moment().startOf('day')) ->
+    days = moment(@get('end_at')).diff(today, 'days')
     if days is 0 then 'today' else "in #{days} day#{if days is 1 then '' else 's'}"
 
-  isOpeningToday: ->
-    moment(@get('start_at')).diff(moment().startOf('day'), 'days') is 0
+  isOpeningToday: (today = moment().startOf('day')) ->
+    moment(@get('start_at')).diff(today, 'days') is 0
 
   performers: ->
     artist.toJSONLDShort() for artist in @artists().models
