@@ -34,7 +34,4 @@ module.exports =
     not hasSeen('after-inquiry')
 
   send: ->
-    @inquiry.save null, _.pick (@inquiryOptions or {}),
-      # If we are in a modal then we can safely discard the success callback
-      # which would close the modal, as we've already closed the initial modal by now
-      (if @isModal then ['error'] else ['success', 'error'])...
+    @inquiry.save null, _.pick (@inquiryOptions or {}), 'success', 'error'

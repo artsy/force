@@ -8,7 +8,7 @@ ContactPartnerView = require '../../contact/contact_partner.coffee'
 ConfirmInquiryView = require '../../contact/confirm_inquiry.coffee'
 analytics = require '../../../lib/analytics.coffee'
 FlashMessage = require '../../flash/index.coffee'
-sd = require('sharify').data
+{ INQUIRY_FLOW } = require('sharify').data
 
 artworkRow = -> require('../templates/artwork_row.jade') arguments...
 
@@ -38,7 +38,7 @@ module.exports = class ArtworkRowView extends SaleArtworkView
 
   contactSeller: (e) ->
     e.preventDefault()
-    if sd.INQUIRY_FLOW is 'updated_flow'
+    if INQUIRY_FLOW is 'updated_flow'
       if @model.isPriceDisplayable()
         defaultMessage = "I'm interested in this work by #{@model.get('artist').name}. Please contact me to discuss further."
         analytics.track.funnel "Saw price displayable", @model.attributes
