@@ -20,7 +20,7 @@ describe 'ArtworkFilterView', ->
       done()
 
   after ->
-    benv.teardown(false)
+    benv.teardown()
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
