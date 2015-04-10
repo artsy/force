@@ -8,11 +8,12 @@ FilterArtworksNav = require '../artworks_nav/view.coffee'
 FilterFixedHeader = require '../fixed_header/view.coffee'
 FilterRouter = require '../router/index.coffee'
 FilterNav = require '../nav/view.coffee'
-COLUMN_WIDTH = 300
 
 humanize = require('underscore.string').humanize
 
 module.exports = class FilterArtworksView extends Backbone.View
+  aggregations: ['price_range', 'dimension_range', 'medium']
+  columnWidth: 300
 
   pageSize: 10
 
@@ -25,6 +26,32 @@ module.exports = class FilterArtworksView extends Backbone.View
     @artworks = new FilterArtworks
     @params = new Backbone.Model size: @pageSize
 
+    @initSubViews()
+
+    @router = new FilterRouter
+      params: @params
+      urlRoot: @urlRoot
+
+    # Reset gets called on many events, debounce so only the last one gets called
+    @throttledReset = _.debounce @reset, 200
+
+    # Hook up events on the artworks and params
+    @artworks.on 'sync', @render
+    @artworks.on 'sync', @renderCounts
+
+    @params.on 'change:price_range change:dimension_range change:medium change:sort reset', @throttledReset
+    @params.on 'change:page', =>
+      @artworks.fetch
+        remove: false
+        data: @params.toJSON()
+
+    $.onInfiniteScroll @nextPage
+
+    # Ensure things kick off on initialize
+    unless @skipReset
+      _.defer => @params.trigger 'reset'
+
+  initSubViews: ->
     # Add child views/routers passing in necessary models/collections
     new FilterSortCount
       el: @$('.filter-artworks-sort-count')
@@ -37,32 +64,11 @@ module.exports = class FilterArtworksView extends Backbone.View
     new FilterNav
       el: @$('.filter-artworks-nav')
       params: @params
-      highlightAllAttrs: ['price_range', 'dimension', 'medium']
+      highlightAllAttrs: @aggregations
     new FilterFixedHeader
       el: @$('.filter-fixed-header-nav')
       params: @params
       scrollToEl: @$('.filter-artworks-sort-count')
-    @router = new FilterRouter
-      params: @params
-      urlRoot: @urlRoot
-
-    # Reset gets called on many events, debounce so only the last one gets called
-    @throttledReset = _.debounce @reset, 200
-
-    # Hook up events on the artworks, params, and counts
-    @artworks.on 'sync', @render
-    @artworks.on 'sync', @renderCounts
-    @params.on 'change:price_range change:dimensions change:medium change:sort reset', @throttledReset
-    @params.on 'change:page', =>
-      @artworks.fetch
-        remove: false
-        data: @params.toJSON()
-
-    $.onInfiniteScroll @nextPage
-
-    # Ensure things kick off on initialize
-    unless @skipReset
-      _.defer => @params.trigger 'reset'
 
   render: (col, res) =>
     @giveUpCount ?= 0
@@ -72,6 +78,8 @@ module.exports = class FilterArtworksView extends Backbone.View
       else if @giveUpCount > 100 then 'finished-paging'
       else if @params.get('page') > 500 then 'finished-paging'
       else ''
+
+    @artworks.prepareCounts @artworks.counts
     @newColumnsView() unless @columnsView?
     @columnsView.appendArtworks(new FilterArtworks(res.hits).models)
 
@@ -104,11 +112,10 @@ module.exports = class FilterArtworksView extends Backbone.View
       @$('h1.filter-heading').hide()
 
   paramsToHeading: ->
-    _.compact([
-      @artworks.counts?['dimensions']?[@params.get('dimensions')]?.name
-      @artworks.counts?['mediums']?[@params.get('medium')]?.name
-      @artworks.counts?['prices']?[@params.get('price_range')]?.name
-    ]).join(' ')
+    _.compact(
+      _.map @aggregations, (attr) =>
+        @artworks.counts?[attr]?[@params.get(attr)]?.name
+    ).join(' ')
 
   newColumnsView: =>
     @columnsView?.remove()
@@ -117,5 +124,5 @@ module.exports = class FilterArtworksView extends Backbone.View
       el: $el
       collection: new FilterArtworks
       artworkSize: 'tall'
-      numberOfColumns: Math.round $el.width() / COLUMN_WIDTH
+      numberOfColumns: Math.round $el.width() / @columnWidth
       gutterWidth: 40
