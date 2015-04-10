@@ -1,7 +1,7 @@
 FilterArtworks = require '../../collections/filter_artworks'
 
 @index = (req, res) ->
-  # just getting the aggregates
+  # just the aggregates, we don't need the works
   filterArtworks = new FilterArtworks
   filterArtworks.fetch
     cache: true

@@ -6,7 +6,7 @@ mixin filter-dropdown(mainText, plural, attr, values, hrefRoot)
     .filter-nav-active-text
     .icon-arrow-down
     nav
-      a.is-active( data-attr=attr, data-val='', href='' )
+      a( data-attr=attr, data-val='', href='' )
         span.filter-dropdown-text= "All " + plural + "s"
         span.filter-dropdown-count
         span.icon-check

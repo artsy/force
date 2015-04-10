@@ -12,7 +12,7 @@ module.exports = class FilterNav extends Backbone.View
     @setupForceMouseOut()
 
   clearActive: =>
-    @$('.filter-button, .filter-dropdown a, .filter-dropdown').removeClass('is-active')
+    @$('.is-active').removeClass('is-active')
 
   renderActiveParams: =>
     for attr in @params.keys()
@@ -29,7 +29,7 @@ module.exports = class FilterNav extends Backbone.View
 
   highlightDropdownAlls: =>
     @$("a[data-attr][data-val='']").each (i, el) =>
-      $(el).addClass('is-active') unless @params.get $(el).data('attr')
+      $(el).addClass('is-active') unless @params.get($(el).data('attr'))
 
   #
   # Force mouseout event of dropdowns to be triggered on mobile Safaris.

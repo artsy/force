@@ -14,7 +14,6 @@ humanize = require('underscore.string').humanize
 module.exports = class FilterArtworksView extends Backbone.View
   aggregations: ['price_range', 'dimension_range', 'medium']
   columnWidth: 300
-
   pageSize: 10
 
   initialize: (options) ->
