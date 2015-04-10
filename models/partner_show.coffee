@@ -243,11 +243,15 @@ module.exports = class PartnerShow extends Backbone.Model
   closed: -> @get('status') is 'closed'
   renderable: -> @get('eligible_artworks_count') > 0 || @get('images_count') > 2
 
-  # opens at any time between the previous and future weekend
-  openingThisWeek: ->
-    start = moment().day(-2).startOf('day')
-    end = moment().day(8).startOf('day')
+  # opens at any time between the previous monday and the next sunday if today is between monday and thursday,
+  # if between friday and sunday opens between previous monday and friday of the next week
+  openingThisWeek: (today = moment()) ->
+    start = moment(today).startOf('week').startOf('day')
     startAt = @startAtDate()
+    if moment(today).day() < 5
+      end = moment(today).endOf('week').endOf('day')
+    else
+      end = moment(today).endOf('week').add(6, 'days').endOf('day')
     start < startAt && end > startAt
 
   startAtDate: ->
