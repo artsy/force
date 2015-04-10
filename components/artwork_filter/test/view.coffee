@@ -183,7 +183,9 @@ describe 'ArtworkFilterView', ->
       Backbone.sync.args[0][2].success fabricate 'artist_filtered_search_suggest'
 
     it 'fetches the artworks, toggling the boolean filter criteria', ->
+      console.log 'toogle boolean', @view.$el.html()
       @view.$('input[type="checkbox"]').first().click()
+      console.log '@view.filter.selected.attributes', @view.filter.selected.attributes
       @view.filter.selected.attributes.should.eql price_range: '-1:1000000000000'
       _.last(Backbone.sync.args)[2].data.should.eql price_range: '-1:1000000000000'
       @view.$('input[type="checkbox"]').first().click()

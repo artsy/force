@@ -92,6 +92,7 @@ module.exports = class ArtworkFilterView extends Backbone.View
 
   toggleBoolean: (e) ->
     $target = $(e.currentTarget)
+    console.log "$target.attr('name')", $target.attr('name')
     @filter.toggle $target.attr('name'), $target.prop('checked')
     @trigger 'navigate'
 
