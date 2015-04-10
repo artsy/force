@@ -4,9 +4,8 @@ FilterArtworksView = require '../../components/filter2/artworks/view.coffee'
 { API_URL } = require('sharify').data
 
 module.exports.init = ->
-  { params } = new FilterArtworksView
+  new FilterArtworksView
     el: $ '#browse-filter'
     urlRoot: 'browse'
   Backbone.history.start pushState: true
   scrollFrame '#browse-filter a'
-  params.trigger 'reset'
