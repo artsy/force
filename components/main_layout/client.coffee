@@ -9,6 +9,7 @@ sd = require('sharify').data
 analytics = require '../../lib/analytics.coffee'
 AuctionReminderView = require '../auction_reminder/index.coffee'
 setupSplitTests = require '../split_test/setup.coffee'
+listenForInvert = require '../eggs/invert/index.coffee'
 
 module.exports = ->
   setupJquery()
@@ -17,6 +18,7 @@ module.exports = ->
   setupKioskMode()
   syncAuth()
   setupAuctionReminder()
+  listenForInvert()
 
 ensureFreshUser = (data) ->
   return unless sd.CURRENT_USER
