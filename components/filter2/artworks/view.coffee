@@ -111,10 +111,19 @@ module.exports = class FilterArtworksView extends Backbone.View
       @$('h1.filter-heading').hide()
 
   paramsToHeading: ->
-    _.compact(
-      _.map @aggregations, (attr) =>
-        @artworks.counts?[attr]?[@params.get(attr)]?.name
-    ).join(' ')
+    if @params.get('dimension') or
+      @params.get('price_range') or
+      @params.get('medium')
+
+        artworksText = 'artworks'
+        if @params.get('medium')
+          artworksText = humanize(@params.get('medium'))
+
+        _.compact([
+          @artworks.counts?['dimension_range']?[@params.get('dimension_range')]?.name,
+          artworksText,
+          @artworks.counts?['price_range']?[@params.get('price_range')]?.name
+        ]).join(' ')
 
   newColumnsView: =>
     @columnsView?.remove()

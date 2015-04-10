@@ -3,7 +3,7 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 { resolve } = require 'path'
-{ fabricate } = require 'antigravity'
+{ fabricate2 } = require 'antigravity'
 
 describe 'FilterArtworksView', ->
 
@@ -68,17 +68,8 @@ describe 'FilterArtworksView', ->
       @view.nextPage()
       @view.params.get('page').should.equal 1
 
-  describe '#reset', ->
-
-    xit 'fetches the correct counts', ->
-      @view.params.set related_gene: 'photography', medium: 'digital-print'
-      @view.reset()
-      Backbone.sync.args[1][2].data.should.eql
-        related_gene: 'photography'
-        medium: 'digital-print'
-
   describe '#render', ->
 
     it 'renders the columns view', ->
-      @view.render()
+      @view.render({}, fabricate2 'filter_artworks')
       @ArtworkColumnsView::appendArtworks.called.should.be.ok

@@ -9,10 +9,7 @@ module.exports = class FilterArtworksNav extends Backbone.View
     @listenTo @collection, 'sync', @renderFilter
 
   renderFilter: ->
-    html = filterTemplate
-      aggregateLabelMap: @aggregateLabelMap
-      counts: @collection.counts
-
+    html = filterTemplate counts: @collection.counts
     @$el.html html
 
     @renderActiveParams()

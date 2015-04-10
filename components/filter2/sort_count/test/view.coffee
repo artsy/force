@@ -3,6 +3,8 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 { resolve } = require 'path'
+{ fabricate2 } = require 'antigravity'
+FilterArtworks = require '../../../../collections/filter_artworks.coffee'
 
 describe 'FilterSortCount', ->
 
@@ -13,24 +15,23 @@ describe 'FilterSortCount', ->
       FilterSortCount = benv.require resolve(__dirname, '../view')
       @view = new FilterSortCount
         el: $ "<div></div>"
-        counts: new Backbone.Model
         params: new Backbone.Model
+        collection: new FilterArtworks fabricate2('filter_artworks'), parse: true
       done()
 
   afterEach ->
     benv.teardown()
 
   it 'renders the counts', ->
-    @view.counts = new Backbone.Model total: 1001
     @view.$el = $ "<div><div class='filter-sort-count-total'></div></div>"
     @view.renderTotal()
-    @view.$el.html().should.containEql '1,001'
+    @view.$el.html().should.containEql '12,958'
 
   it 'updates the params to sort', ->
     @view.sort target: $ "<div data-sort='-foo'></div>"
     @view.params.get('sort').should.equal '-foo'
 
   it 'renders singulars like a bawse', ->
-    @view.counts.set total: 1
+    @view.collection.counts.total = 1
     @view.renderTotal()
     @view.$el.html().should.not.containEql 'Works'
