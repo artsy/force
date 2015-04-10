@@ -1,10 +1,13 @@
-FilterSuggest = require '../../models/filter_suggest'
+FilterArtworks = require '../../collections/filter_artworks'
 
 @index = (req, res) ->
-  filterSuggest = new FilterSuggest id: 'main'
-  filterSuggest.fetch
+  # just getting the aggregates
+  filterArtworks = new FilterArtworks
+  filterArtworks.fetch
     cache: true
+    data:
+      size: 0
     success: ->
       res.render 'index',
         filterRoot: '/browse/artworks'
-        mediums: filterSuggest.mediumsHash()
+        counts: filterArtworks.counts
