@@ -131,14 +131,14 @@ module.exports = class ArtworkView extends Backbone.View
 
   displayZigZag: ->
     (@$inquiryButton = @$('.artwork-contact-button, .artwork-inquiry-button').first())
-    @$inquiryButton.length and not @artwork.get('acquireable')
+    @$inquiryButton.length and not @artwork.get('acquireable') and @artwork.get('forsale')
 
   setupZigZag: ->
     if @displayZigZag()
       new ZigZagBanner
         persist: true
         name: 'inquiry'
-        message: 'Interested in this work?<br>Request more info here'
+        message: 'Interested in this work?<br>Contact the gallery here'
         $target: @$inquiryButton
 
   deltaTrackPageView: (fair) ->
