@@ -3,7 +3,7 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 { resolve } = require 'path'
-{ fabricate2 } = require 'antigravity'
+{ fabricate2, fabricate } = require 'antigravity'
 
 describe 'FilterArtworksView', ->
 
