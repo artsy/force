@@ -28,22 +28,13 @@ request = require 'superagent'
             error: res.backboneError
             success: (model, response, options) ->
               res.locals.sd.ARTIST = response
-
-              if res.locals.sd.INQUIRY_FLOW is 'updated_flow'
-                if artwork.isPriceDisplayable()
-                  message = "I'm interested in this work" + ( if artwork.has('artist') then ' by ' + artwork.related().artist.get('name') else '') + ". Please contact me to discuss further."
-                else
-                  message = "Hi. Could you please share the asking price for this work? I'd like to know if it's within my budget."
-              else
-                message = defaultMessage(artwork)
-
               res.render template,
                 artwork: artwork
                 artist: artist
                 tab: req.params.tab
                 auctionId: req.query?.auction_id
                 jsonLD: stringifyJSONForWeb(artwork.toJSONLD())
-                defaultMessage: message
+                defaultMessage: defaultMessage(artwork)
                 # HACK: Hide auction results for ADAA
                 inADAA: req.query.fair_id is 'adaa-the-art-show-2015'
         else

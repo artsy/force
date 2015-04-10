@@ -31,8 +31,14 @@ if artwork.isContactable()
       input#js-mailcheck-input-artwork.bordered-input.is-persistplaceholder( placeholder='Your email address', name='email', type='email', required )
       #js-mailcheck-hint-artwork
 
+    if sd.INQUIRY_FLOW === 'updated_flow'
+      if artwork.isPriceDisplayable()
+        - var updatedMessage = "I'm interested in this work" + (artwork.has('artist') ? ' by ' + artwork.related().artist.get('name') : '') + ". Please contact me to discuss further."
+      else
+        -var updatedMessage = "Hi. Could you please share the asking price for this work? I'd like to know if it's within my budget."
+
     textarea.bordered-input.is-persistplaceholder( rows='5', name='message', required )
-      = defaultMessage
+      = (updatedMessage || defaultMessage)
       = " "
 
     if user && sd.INQUIRY_FLOW === 'original_flow'
