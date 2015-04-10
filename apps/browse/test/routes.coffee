@@ -4,7 +4,7 @@ routes = require '../routes'
 
 describe 'Browse routes', ->
   beforeEach ->
-    sinon.stub(Backbone, 'sync').yieldsTo 'success'
+    sinon.stub(Backbone, 'sync')
     @req = {}
     @res = render: sinon.stub()
 
@@ -14,5 +14,4 @@ describe 'Browse routes', ->
   describe '#index', ->
     it 'fetches the filter suggestions and renders the template', ->
       routes.index @req, @res
-      Backbone.sync.args[0][1].url().should.containEql '/api/v1/search/filtered/main/suggest'
-      @res.render.called.should.be.true
+      Backbone.sync.args[0][1].url.should.containEql '/api/v1/filter/artworks'

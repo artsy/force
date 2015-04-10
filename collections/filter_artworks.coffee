@@ -8,8 +8,7 @@ module.exports = class FilterArtworks extends Artworks
 
   parse: (data) ->
     @counts = @prepareCounts data.aggregations
-
-    return data.hits
+    data.hits
 
   prepareCounts: (aggregations)->
     # _.map destroys the keys, hence the iteration
@@ -21,10 +20,10 @@ module.exports = class FilterArtworks extends Artworks
   prepareAggregate: (aggregate, name) ->
 
     # maps the sorted order but keeps the keys
-    mapKeys = (keys, aggregate)->
+    mapKeys = (keys, object)->
       newMap = {}
       _.each keys, (key)->
-        newMap[key] = aggregate[key]
+        newMap[key] = object[key]
       newMap
 
     aggregateMap =
