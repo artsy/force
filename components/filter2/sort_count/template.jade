@@ -7,5 +7,5 @@ include ../../bordered_pulldown/mixin
   .filter-sort-count-pulldown
     +bordered-pulldown((pulldownVal || 'Recently Added'), 'Sort by:')
       a( data-sort='-published_at', href="#" ) Recently Added
-      a( data-sort='-date_created', href="#" ) Artwork Year (desc.)
-      a( data-sort='date_created', href="#" ) Artwork Year (asc.)
+      a( data-sort='-year', href="#" ) Artwork Year (desc.)
+      a( data-sort='year', href="#" ) Artwork Year (asc.)
