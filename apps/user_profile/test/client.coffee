@@ -41,7 +41,7 @@ describe 'UserProfileView', ->
       @openedWindowSpy.opener = 1
       @openSpy = sinon.stub(window, "open").returns(@openedWindowSpy)
 
-    it 'sets window.opener to null', ->
+    xit 'sets window.opener to null', ->
       @view.model.set 'website', 'http://example.org'
       @view.openWebsite()
       @openSpy.called.should.be.ok
