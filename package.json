@@ -83,7 +83,7 @@
     "cheerio": "*",
     "ezel-assets": "*",
     "browserify-dev-middleware": "*",
-    "benv": "*",
+    "benv": "git://github.com/broskoski/benv.git#jsdom3.0",
     "browserify": "*",
     "caching-coffeeify": "*",
     "artsy-gemini-upload": "*",
