@@ -9,7 +9,7 @@ module.exports = class AdditionalImages extends Backbone.Collection
 
   parse: (response) ->
     # Sometimes default aren't in the first position
-    (_.findWhere(response, is_default: true) or _.first(response)).position = 0
+    (_.findWhere(response, is_default: true) or _.first(response))?.position = 0
     response
 
   default: ->
