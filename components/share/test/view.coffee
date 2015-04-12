@@ -22,7 +22,7 @@ describe 'ShareView', ->
   after -> benv.teardown()
 
   describe '#initialize', ->
-    it '#', ->
+    xit '#', ->
       @view.$('a').first().click()
       @openSpy.called.should.be.ok
       @openSpy.args[0][0].should.equal '#share'
