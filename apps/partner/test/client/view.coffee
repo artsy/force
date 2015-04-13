@@ -35,6 +35,7 @@ describe 'PartnerView', ->
         )
 
         @profile = new Profile fabricate 'partner_profile'
+        @partner = new Partner @profile.get('owner')
         @tablistTemplate = sinon.stub()
         @CollectionView = sinon.stub()
         @CollectionView.returns @CollectionView
@@ -43,6 +44,7 @@ describe 'PartnerView', ->
 
         @view = new PartnerView
           model: @profile
+          partner: @partner
           el: $ 'body'
         @view.partner.set 'displayable_shows_count', 1
         done()
