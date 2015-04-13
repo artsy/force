@@ -25,8 +25,6 @@ embedVideo = require 'embed-video'
     success: (article, footerArticles, slideshowArtworks) ->
       if req.params.slug isnt article.get('slug')
         return res.redirect "/article/#{article.get 'slug'}"
-      # slideshowArtworks = slideshowArtworks.where( {published: true } )
-      # console.log slideshowArtworks
       res.locals.sd.SLIDESHOW_ARTWORKS = slideshowArtworks?.toJSON()
       res.locals.sd.ARTICLE = article.toJSON()
       res.locals.sd.FOOTER_ARTICLES = footerArticles.toJSON()
