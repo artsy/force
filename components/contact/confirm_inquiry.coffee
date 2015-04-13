@@ -80,7 +80,7 @@ module.exports = class ConfirmInquiryView extends ContactView
     @model.set _.extend formData,
       artwork: @artwork.id
       contact_gallery: true
-      session_id: if @user and @user.isLoggedIn() then undefined else SESSION_ID
+      session_id: SESSION_ID
       referring_url: Cookies.get('force-referrer')
       landing_url: Cookies.get('force-session-start')
       inquiry_url: window.location.href
@@ -104,8 +104,8 @@ module.exports = class ConfirmInquiryView extends ContactView
     analytics.snowplowStruct 'confirm_inquiry_modal', 'submit', @artwork.get('id'), 'artwork'
     changed = if @model.get('message').trim() is @inputMessage.trim() then 'Did not change' else 'Changed'
     analytics.track.funnel "#{changed} default message"
-    analytics.track.funnel "--split-test_updated_flow", (if @user and @user.isLoggedIn() then @user.get('email') else SESSION_ID)
-    analytics.snowplowStruct '--split-test_updated_flow', 'saw', (if @user and @user.isLoggedIn() then @user.get('email') else SESSION_ID), 'user'
+    analytics.track.funnel "Inquiry: Updated Flow", SESSION_ID
+    analytics.snowplowStruct 'inquiry_updated_flow', 'saw', SESSION_ID, 'user'
 
   postRender: =>
     @isLoading()

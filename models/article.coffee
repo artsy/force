@@ -40,7 +40,7 @@ module.exports = class Article extends Backbone.Model
             cache: true
             data: access_token: options.accessToken
             success: (artwork) ->
-              slideshowArtworks.add(artwork)
+              slideshowArtworks.add(artwork) if artwork.get('published') is true
       Q.all(dfds).fin =>
         options.success this, footerArticles, slideshowArtworks
 
