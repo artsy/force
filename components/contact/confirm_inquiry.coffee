@@ -104,6 +104,8 @@ module.exports = class ConfirmInquiryView extends ContactView
     analytics.snowplowStruct 'confirm_inquiry_modal', 'submit', @artwork.get('id'), 'artwork'
     changed = if @model.get('message').trim() is @inputMessage.trim() then 'Did not change' else 'Changed'
     analytics.track.funnel "#{changed} default message"
+    analytics.track.funnel "--split-test_updated_flow", (if @user and @user.isLoggedIn() then @user.get('email') else SESSION_ID)
+    analytics.snowplowStruct '--split-test_updated_flow', 'saw', (if @user and @user.isLoggedIn() then @user.get('email') else SESSION_ID), 'user'
 
   postRender: =>
     @isLoading()

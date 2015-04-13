@@ -139,6 +139,8 @@ module.exports = class ContactView extends Backbone.View
     analytics.snowplowStruct 'inquiry', 'submit', @model.get('id'), 'artwork', '0.0',
       { inquiry: { inquiry_id: @inquiry.id }, user: { email: @inquiry.email }}
     analytics.track.funnel 'Contact form submitted', @inquiry.attributes
+    analytics.track.funnel "--split-test_original_flow", (if @user and @user.isLoggedIn() then @user.get('email') else SESSION_ID)
+    analytics.snowplowStruct '--split-test_original_flow', 'saw', (if @user and @user.isLoggedIn() then @user.get('email') else SESSION_ID), 'user'
 
   hoveredSubmit: ->
     analytics.track.hover "Hovered over contact form 'Send' button"
