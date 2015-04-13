@@ -97,7 +97,6 @@ module.exports = class PartnerView extends Backbone.View
       @renderSection (@currentSection = @sections?[0]), @sectionViewParams
 
     # hide articles tab if this partner has no articles
-    console.log sd.POSITRON_URL
     $.ajax
       url: "#{sd.POSITRON_URL}/api/articles"
       data:
