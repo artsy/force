@@ -27,5 +27,6 @@ router.get '/apply*', isResponsive
 router.get '/gallery-insights*', isResponsive
 router.get '/auction/:id/buyers-premium', isResponsive
 router.get '/auction-registration/:id', isResponsive
+router.get '/order', isResponsive
 router.use redirect
 module.exports = router

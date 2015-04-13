@@ -7,6 +7,8 @@ block body
   #order-page
     h2.garamond-header-center Purchase
     .order-page-content
+      .order-summary
+        include ./summary
       form.order-form.credit-card-form( method="post" )
         header
           unless user
@@ -26,5 +28,3 @@ block body
           | .
 
         button.order-form-button.avant-garde-button-black( type='submit') Continue to Checkout
-      .order-summary
-        include ./summary

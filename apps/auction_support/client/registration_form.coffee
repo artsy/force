@@ -71,7 +71,7 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
     address_city: @fields.city.el.val()
     address_state: @fields.street.el.val()
     address_zip: @fields.zip.el.val()
-    address_country: @$("select[name='billing_address[country]']").val()
+    address_country: @$("select[name='address[country]']").val()
 
   tokenizeCard: =>
     Stripe.setPublishableKey(sd.STRIPE_PUBLISHABLE_KEY)

@@ -1,6 +1,5 @@
 Backbone = require 'backbone'
 analytics = require '../../../lib/analytics.coffee'
-Marketplace = require '../../../models/marketplace.coffee'
 sd = require('sharify').data
 ShippingForm = require('./shipping_form.coffee')
 { SESSION_ID } = require('sharify').data
@@ -31,29 +30,25 @@ module.exports = class CheckoutForm extends ShippingForm
       conditions: { el: @$('.order-form-conditions input'), validator: @isChecked, message: 'Conditions must be accepted' }
     @internationalizeFields()
 
-  cardCallback: (status, data) =>
-    switch status
-      when 201
-        data = @model.getSessionData(SESSION_ID)
-        data.credit_card_uri = data.id
-        data.provider = 'stripe'
-        @model.save data,
-          url: "#{@model.url()}/submit"
-          success: =>
-            analytics.track.funnel 'Order submitted', label: analytics.modelNameAndIdToLabel('artwork', @model.get('id'))
-            @success()
-            @$el.addClass 'order-page-complete'
-            @$('.checkout-form').hide()
-            @$('.success-form').show()
-            $('body').removeClass 'minimal-header'
-            $('html, body').scrollTop(0)
-          error: (xhr) => @showError "Order submission error"
-        analytics.track.funnel 'Order card validated', label: analytics.modelNameAndIdToLabel('artwork', @model.get('id'))
-      when 400, 403 then @showError "Order card missing or malformed"
-      when 402 then @showError "Order card could not be authorized"
-      when 404 then @showError "Order marketplace invalid"
-      else
-        @showError "Order card - other error"
+  cardCallback: (status, res) =>
+    if status is 200
+      data = @model.getSessionData(SESSION_ID)
+      data.credit_card_uri = res.id
+      data.provider = 'stripe'
+      @model.save data,
+        url: "#{@model.url()}/submit"
+        success: =>
+          analytics.track.funnel 'Order submitted', label: analytics.modelNameAndIdToLabel('artwork', @model.get('id'))
+          @success()
+          @$el.addClass 'order-page-complete'
+          @$('.checkout-form').hide()
+          @$('.success-form').show()
+          $('body').removeClass 'minimal-header'
+          $('html, body').scrollTop(0)
+        error: (m, xhr) => @showError xhr.responseJSON.message
+      analytics.track.funnel 'Order card validated', label: analytics.modelNameAndIdToLabel('artwork', @model.get('id'))
+    else
+      @showError data.error.message
 
   cardData: ->
     name: @fields['name on card'].el.val()
@@ -69,7 +64,8 @@ module.exports = class CheckoutForm extends ShippingForm
 
   tokenizeCard: =>
     Stripe.setPublishableKey(sd.STRIPE_PUBLISHABLE_KEY)
-    Stripe.card.createToken creditCardData, @cardCallback
+    console.log @cardData()
+    Stripe.card.createToken @cardData(), @cardCallback
 
   onSubmit: =>
     return if @$submit.hasClass('is-loading')

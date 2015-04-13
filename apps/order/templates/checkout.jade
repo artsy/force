@@ -5,6 +5,8 @@ append locals
 
 block body
   #order-page
+    .order-summary
+      include ./summary
     .checkout-form
       h2.garamond-header-center Checkout
       .order-page-content
@@ -51,7 +53,5 @@ block body
                 a( href=order.sellersTerms(), target='terms' )= "seller's additional terms"
               | .
           button.order-form-button.avant-garde-button-black( type='submit') Purchase
-        .order-summary
-          include ./summary
     .success-form.order.order-form-hidden
       include ./complete
