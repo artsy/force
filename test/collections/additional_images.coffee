@@ -14,6 +14,10 @@ describe 'AdditionalImages', ->
       @collection.first().get('position').should.equal 0
       @collection.first().get('is_default').should.be.true
 
+    it 'soaks up missing data', ->
+      @collection.set [{}]
+      @collection.parse()
+      
   describe '#default', ->
     it 'returns the default image', ->
       @collection.default().get('is_default').should.be.true
