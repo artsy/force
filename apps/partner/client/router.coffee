@@ -16,9 +16,8 @@ module.exports = class PartnerRouter extends Backbone.Router
     ':id/contact': 'contact'          #      x
     ':id/about': 'about'              #                x
 
-  initialize: (options) ->
-    { @profile } = options
-    @baseView = new PartnerView el: $('#partner'), model: @profile
+  initialize: ({ @profile, @partner }) ->
+    @baseView = new PartnerView el: $('#partner'), model: @profile, partner: @partner
 
   index: ->
     section = 'overview' # default for galleries
