@@ -94,7 +94,7 @@ describe 'ContactPartnerView', ->
         events[0][0].should.equal 'Sent artwork inquiry'
         events[1][0].should.equal 'Contact form submitted'
         events[2][0].should.equal 'Changed default message'
-        events[3][1].should.equal 'craigspaeth@gmail.com'
+        events[3][1].should.equal '1111'
 
   describe '#events', ->
 

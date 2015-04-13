@@ -114,7 +114,7 @@ module.exports = class ContactView extends Backbone.View
       @inquiry.set _.extend formData,
         artwork: @model.id
         contact_gallery: true
-        session_id: if @user.isLoggedIn() then undefined else SESSION_ID
+        session_id: SESSION_ID
         referring_url: Cookies.get('force-referrer')
         landing_url: Cookies.get('force-session-start')
         inquiry_url: window.location.href
@@ -139,8 +139,8 @@ module.exports = class ContactView extends Backbone.View
     analytics.snowplowStruct 'inquiry', 'submit', @model.get('id'), 'artwork', '0.0',
       { inquiry: { inquiry_id: @inquiry.id }, user: { email: @inquiry.email }}
     analytics.track.funnel 'Contact form submitted', @inquiry.attributes
-    analytics.track.funnel "--split-test_original_flow", (if @user and @user.isLoggedIn() then @user.get('email') else SESSION_ID)
-    analytics.snowplowStruct '--split-test_original_flow', 'saw', (if @user and @user.isLoggedIn() then @user.get('email') else SESSION_ID), 'user'
+    analytics.track.funnel "Inquiry: Original Flow", SESSION_ID
+    analytics.snowplowStruct 'inquiry_original_flow', 'saw', SESSION_ID, 'user'
 
   hoveredSubmit: ->
     analytics.track.hover "Hovered over contact form 'Send' button"
