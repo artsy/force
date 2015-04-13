@@ -22,7 +22,7 @@ describe 'ArtworkView', ->
       done()
 
   after ->
-    benv.teardown()
+    benv.teardown false
 
   beforeEach (done) ->
     @artist = new Artist(fabricate 'artist')

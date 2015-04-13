@@ -18,7 +18,7 @@ describe 'Profile pages', ->
   # TODO: 404 is not a shortcut. This should also be a project-level integration test
   # because it deals with the integration of two apps profile & shortcuts.
   xit 'redirects to a shortcut on 404', (done) ->
-    browser = new Browser
+    browser = new zombie
     browser.visit 'http://localhost:5000/404', ->
       browser.wait ->
         # renders the terms page

@@ -1,0 +1,13 @@
+include ../dropdown-mixin
+nav.filter-nav.filter-artworks-nav
+  a.filter-button.filter-nav-all( href=filterRoot ) All Works
+  if counts
+    each filter, name in counts
+      unless name == 'total'
+        +filter-dropdown(
+          aggregateLabelMap[name],
+          aggregateLabelMap[name],
+          name,
+          filter,
+          filterRoot
+        )
