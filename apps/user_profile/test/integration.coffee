@@ -8,7 +8,7 @@ describe 'Profile pages', ->
   after -> closeServer()
 
   xit 'renders the profile page', (done) ->
-    browser = new zombie
+    browser = new Browser
     browser.visit 'http://localhost:5000/alessandra', ->
       browser.wait ->
         browser.html().should.containEql 'Craig Spaeth'
