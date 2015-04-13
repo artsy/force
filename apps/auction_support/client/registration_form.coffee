@@ -56,7 +56,7 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
                 return success()
               @showError "Registration submission error", xhr
         error: (m, xhr) =>
-          @showError xhr.responseJSON.message
+          @showError xhr.responseJSON?.message
       analytics.track.funnel 'Registration card validated'
     else
       @showError data.error.message

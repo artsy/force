@@ -45,10 +45,11 @@ module.exports = class CheckoutForm extends ShippingForm
           @$('.success-form').show()
           $('body').removeClass 'minimal-header'
           $('html, body').scrollTop(0)
-        error: (m, xhr) => @showError xhr.responseJSON.message
+        error: (m, xhr) =>
+          @showError xhr.responseJSON?.message
       analytics.track.funnel 'Order card validated', label: analytics.modelNameAndIdToLabel('artwork', @model.get('id'))
     else
-      @showError data.error.message
+      @showError res.error?.message
 
   cardData: ->
     name: @fields['name on card'].el.val()
@@ -64,7 +65,6 @@ module.exports = class CheckoutForm extends ShippingForm
 
   tokenizeCard: =>
     Stripe.setPublishableKey(sd.STRIPE_PUBLISHABLE_KEY)
-    console.log @cardData()
     Stripe.card.createToken @cardData(), @cardCallback
 
   onSubmit: =>
