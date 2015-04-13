@@ -10,13 +10,12 @@ ModalPageView = require '../../../components/modal/page.coffee'
 
 module.exports = class RegistrationForm extends ErrorHandlingForm
 
-  balanced: false
-
   events:
     'click .registration-form-content .avant-garde-button-black': 'onSubmit'
     'click .bidding-question': 'showBiddingDialog'
 
   initialize: (options) ->
+    @stripe = Stripe
     @success = options.success
     @currentUser = CurrentUser.orNull()
     @$submit = @$('.registration-form-content .avant-garde-button-black')
@@ -64,25 +63,26 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
     else
       @showError "Registration card - other error", response
 
-  cardData: ->
-    name: @fields['name on card'].el.val()
-    card_number: @fields['card number'].el.val()
-    expiration_month: @fields.month.el.first().val()
-    expiration_year: @fields.year.el.last().val()
-    security_code: @fields['security code'].el.val()
-    street_address: @fields.street.el.val()
-    postal_code: @fields.zip.el.val()
-    country: @$("select[name='billing_address[country]']").val()
+  tokenizeViaStripe: =>
+    @stripe.setPublishableKey(sd.STRIPE_PUBLISHABLE_KEY)
+    payload =
+      name: @$('[name=card_name]').val()
+      address_line1: @$('[name=address[street]]').val()
+      address_city: @$('[name=address[city]]').val()
+      address_state: @$('[name=address[region]]').val()
+      address_zip: @$('[name=address[postal_code]]').val()
+      address_country: @$('[name=address[country]]').val()
+      number: @$('[name=card_number]').val()
+      cvc: @$('[name=card_security_code]').val()
+      exp_month: @$('[name=card_expiration_month]').val()
+      exp_year: @$('[name=card_expiration_year]').val()
+    @stripe.card.createToken payload, @handleStripeResponse
 
-  tokenizeCard: =>
-    marketplace = new Marketplace
-    marketplace.fetch
-      success: (marketplace) =>
-        @balanced ||= require('../../../lib/vendor/balanced.js')
-        @balanced.init marketplace.get('uri')
-        @balanced.card.create @cardData(), @cardCallback
-      error: (xhr) =>
-        @showError "Error fetching the balanced marketplace", xhr
+  handleStripeResponse: (status, response) =>
+    if response.error
+      @showError(response.error.message)
+    else
+      console.log arguments
 
   savePhoneNumber: ->
     if @fields.telephone.el.val()?.length > 0

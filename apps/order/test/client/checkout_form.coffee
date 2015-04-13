@@ -75,7 +75,6 @@ describe 'CheckoutForm', ->
       @view.fields.month.el.val '12'
       @view.fields.year.el.val '2015'
       @view.fields.conditions.el.prop('checked', true)
-      @view.balanced.should.not.be.ok
 
       @view.onSubmit()
       _.last(Backbone.sync.args)[2].success { uri: '/v1/marketplaces/TEST-MP7Fs9XluC54HnVAvBKSI3jQ' }
@@ -87,7 +86,6 @@ describe 'CheckoutForm', ->
         data:
           uri: 'super-cool-credit-card-uri'
 
-      @view.balanced.should.be.ok
       _.last(Backbone.sync.args)[2].success {}
       @success.should.equal true
 

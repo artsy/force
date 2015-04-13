@@ -7,8 +7,6 @@ ShippingForm = require('./shipping_form.coffee')
 
 module.exports = class CheckoutForm extends ShippingForm
 
-  balanced: false
-
   events:
     'click .order-form-button': 'onSubmit'
     'click .credit-card-form-checkbox input': 'toggleShippingAddress'
@@ -70,11 +68,9 @@ module.exports = class CheckoutForm extends ShippingForm
     marketplace = new Marketplace
     marketplace.fetch
       success: (marketplace) =>
-        @balanced ||= require('../../../lib/vendor/balanced.js')
-        @balanced.init marketplace.get('uri')
-        @balanced.card.create @cardData(), @cardCallback
+        alert 'create card with stripe'
       error: =>
-        @showError @errors.other, "Error fetching the balanced marketplace"
+        @showError @errors.other, "Error fetching the stripe marketplace"
 
   onSubmit: =>
     return if @$submit.hasClass('is-loading')

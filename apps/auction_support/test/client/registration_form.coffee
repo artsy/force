@@ -39,11 +39,6 @@ describe 'RegistrationForm', ->
         success: =>
           window.location = '/registration/was/successful'
       @view.currentUser = new CurrentUser fabricate 'user'
-      @view.balanced =
-        init: sinon.stub()
-        card:
-          create: (data, cb) ->
-            cb status: 201, data: uri: 'foobar'
       done()
 
   afterEach ->
@@ -90,7 +85,6 @@ describe 'RegistrationForm', ->
 
       Backbone.sync.args[0][1].set uri: (marketplaceUri = '/v1/marketplaces/TEST-FOOBAR')
       Backbone.sync.args[0][2].success()
-      @view.balanced.init.args[0][0].should.equal marketplaceUri
 
       # Saves the credit card
       Backbone.sync.args[2][1].url.should.containEql '/api/v1/me/credit_cards'

@@ -52,7 +52,7 @@ module.exports = class ErrorHandlingForm extends Backbone.View
     else
       message = @errors.other
 
-    # Display balanced errors
+    # Display stripe errors
     message += " #{response.error.additional}" if response?.error?.additional
 
     @$submit.removeClass('is-loading').before "<div class='error'>#{message}</div>"
