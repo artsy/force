@@ -15,7 +15,6 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
     'click .bidding-question': 'showBiddingDialog'
 
   initialize: (options) ->
-    @stripe = Stripe
     @success = options.success
     @currentUser = CurrentUser.orNull()
     @$submit = @$('.registration-form-content .avant-garde-button-black')
@@ -41,11 +40,11 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
       zip: { el: @$('input.postal-code'), validator: @isZip }
     @internationalizeFields()
 
-  cardCallback: (response) =>
-    if response.status == 201
+  cardCallback: (status, data) =>
+    if status is 200
       card = new Backbone.Model
       card.url = "#{sd.API_URL}/api/v1/me/credit_cards"
-      card.save token: response.data.uri,
+      card.save { token: data.id, provider: 'stripe' },
         success: =>
           success = =>
             @success()
@@ -57,32 +56,26 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
               if xhr.responseJSON?.message is 'Sale is already taken.'
                 return success()
               @showError "Registration submission error", xhr
-        error: =>
-          @showError "Error adding your credit card", response
+        error: (m, xhr) =>
+          @showError xhr.responseJSON.message
       analytics.track.funnel 'Registration card validated'
     else
-      @showError "Registration card - other error", response
+      @showError data.error.message
 
   tokenizeViaStripe: =>
-    @stripe.setPublishableKey(sd.STRIPE_PUBLISHABLE_KEY)
-    payload =
-      name: @$('[name=card_name]').val()
-      address_line1: @$('[name=address[street]]').val()
-      address_city: @$('[name=address[city]]').val()
-      address_state: @$('[name=address[region]]').val()
-      address_zip: @$('[name=address[postal_code]]').val()
-      address_country: @$('[name=address[country]]').val()
-      number: @$('[name=card_number]').val()
-      cvc: @$('[name=card_security_code]').val()
-      exp_month: @$('[name=card_expiration_month]').val()
-      exp_year: @$('[name=card_expiration_year]').val()
-    @stripe.card.createToken payload, @handleStripeResponse
-
-  handleStripeResponse: (status, response) =>
-    if response.error
-      @showError(response.error.message)
-    else
-      console.log arguments
+    Stripe.setPublishableKey(sd.STRIPE_PUBLISHABLE_KEY)
+    creditCardData =
+      name: @$('[name="card_name"]').val()
+      address_line1: @$('[name="address[street]"]').val()
+      address_city: @$('[name="address[city]"]').val()
+      address_state: @$('[name="address[region]"]').val()
+      address_zip: @$('[name="address[postal_code]"]').val()
+      address_country: @$('[name="address[country]"]').val()
+      number: @$('[name="card_number"]').val()
+      cvc: @$('[name="card_security_code"]').val()
+      exp_month: @$('[name="card_expiration_month"]').val()
+      exp_year: @$('[name="card_expiration_year"]').val()
+    Stripe.card.createToken creditCardData, @cardCallback
 
   savePhoneNumber: ->
     if @fields.telephone.el.val()?.length > 0
@@ -91,11 +84,9 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
   onSubmit: =>
     return if @$submit.hasClass('is-loading')
     @$submit.addClass 'is-loading'
-
     analytics.track.funnel 'Registration submit billing address'
-
     if @validateForm()
-      @tokenizeCard()
+      @tokenizeViaStripe()
       @savePhoneNumber()
     else
       @showError 'Please review the error(s) above and try again.'
