@@ -1,7 +1,6 @@
 sd = require('sharify').data
 Backbone = require 'backbone'
 analytics = require '../../../lib/analytics.coffee'
-Marketplace = require '../../../models/marketplace.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 ErrorHandlingForm = require('../../../components/credit_card/client/error_handling_form.coffee')
 ModalPageView = require '../../../components/modal/page.coffee'
@@ -62,20 +61,21 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
     else
       @showError data.error.message
 
-  tokenizeViaStripe: =>
+  cardData: ->
+    name: @fields['name on card'].el.val()
+    number: @fields['card number'].el.val()
+    exp_month: @fields.month.el.first().val()
+    exp_year: @fields.year.el.last().val()
+    cvc: @fields['security code'].el.val()
+    address_line1: @fields.street.el.val()
+    address_city: @fields.city.el.val()
+    address_state: @fields.street.el.val()
+    address_zip: @fields.zip.el.val()
+    address_country: @$("select[name='billing_address[country]']").val()
+
+  tokenizeCard: =>
     Stripe.setPublishableKey(sd.STRIPE_PUBLISHABLE_KEY)
-    creditCardData =
-      name: @$('[name="card_name"]').val()
-      address_line1: @$('[name="address[street]"]').val()
-      address_city: @$('[name="address[city]"]').val()
-      address_state: @$('[name="address[region]"]').val()
-      address_zip: @$('[name="address[postal_code]"]').val()
-      address_country: @$('[name="address[country]"]').val()
-      number: @$('[name="card_number"]').val()
-      cvc: @$('[name="card_security_code"]').val()
-      exp_month: @$('[name="card_expiration_month"]').val()
-      exp_year: @$('[name="card_expiration_year"]').val()
-    Stripe.card.createToken creditCardData, @cardCallback
+    Stripe.card.createToken @cardData(), @cardCallback
 
   savePhoneNumber: ->
     if @fields.telephone.el.val()?.length > 0
@@ -86,7 +86,7 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
     @$submit.addClass 'is-loading'
     analytics.track.funnel 'Registration submit billing address'
     if @validateForm()
-      @tokenizeViaStripe()
+      @tokenizeCard()
       @savePhoneNumber()
     else
       @showError 'Please review the error(s) above and try again.'
