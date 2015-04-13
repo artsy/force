@@ -35,7 +35,10 @@ describe 'PartnerShowsGridView', ->
           fabricate('show', { name: 'show7', status: 'upcoming' } ),
           fabricate('show', { name: 'show8' } ),
           fabricate('show', { name: 'show9', status: 'upcoming' } ),
-          fabricate('show', { name: 'show10', status: 'running' } )
+          fabricate('show', { name: 'show10', status: 'running' } ),
+          fabricate('show', { name: 'show11', displayable: false } )
+          fabricate('show', { name: 'show12', status: 'running', displayable: false } )
+          fabricate('show', { name: 'show13', status: 'upcoming', displayable: false } )
         ]
         @partnerShows = new PartnerShows()
         @partnerShows.fetch = (options) =>
@@ -58,6 +61,15 @@ describe 'PartnerShowsGridView', ->
   afterEach -> benv.teardown()
 
   describe '#initializShows', ->
+
+    it 'respects the dispalyable attribute of partner shows', ->
+      new PartnerShowsGridView
+        el: $ '.partner-shows'
+        partner: @partner
+
+      @template.args[0][0].current.should.have.lengthOf 3
+      @template.args[0][0].upcoming.should.have.lengthOf 2
+      @template.args[0][0].past.should.have.lengthOf 4
 
     it 'fetches 1 featued and all other shows and renders them by default', ->
       new PartnerShowsGridView
