@@ -83,7 +83,7 @@ describe 'CheckoutForm', ->
       @view.onSubmit()
       @view.$('.error').text().should.equal ''
       # Just call the cardCallback
-      @view.cardCallback 200, { id: 'super-cool-credit-card-uri' }
+      @view.cardCallback 200, { id: 'super-cool-credit-card-token' }
       _.last(Backbone.sync.args)[2].success {}
       @success.should.equal true
 

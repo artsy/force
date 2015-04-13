@@ -33,7 +33,7 @@ module.exports = class CheckoutForm extends ShippingForm
   cardCallback: (status, res) =>
     if status is 200
       data = @model.getSessionData(SESSION_ID)
-      data.credit_card_uri = res.id
+      data.credit_card_token = res.id
       data.provider = 'stripe'
       @model.save data,
         url: "#{@model.url()}/submit"
