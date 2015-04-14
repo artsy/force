@@ -8,15 +8,14 @@ append locals
   - assetPackage = 'show'
 
 block body
-  #show
+  if installShots.length >= 3
+    section.show-installation-shot-carousel.js-show-installation-shot-carousel
+      - var carouselFigures = installShots.models
+      include ../../../components/carousel/template
+
+  .responsive-layout-container: .main-layout-container
     include header
+    include columns
+    include footer
 
-    if installShots.length >= 3
-      section#show-installation-shot-carousel.show-installation-shot-carousel
-        - var carouselFigures = installShots.models
-        include ../../../components/carousel/template
-
-    section.show-container.show-artworks.artworks-columns
-      .loading-spinner
-
-  include ../../../components/main_layout/templates/json_ld
+include ../../../components/main_layout/templates/json_ld

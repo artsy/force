@@ -1,73 +1,37 @@
-PartnerShow = require '../../models/partner_show'
-Profile = require '../../models/profile'
-{ stringifyJSONForWeb } = require '../../components/util/json.coffee'
-{ parse } = require 'url'
-{ API_URL } = require('sharify').data
 Q = require 'q'
-InstallShots = require '../../collections/install_shots'
+{ stringifyJSONForWeb } = require '../../components/util/json.coffee'
+PartnerShow = require '../../models/partner_show'
 
-render = (res, show, installShots, profile = null) ->
-  res.locals.sd.SHOW = show.toJSON()
-  res.render 'index',
-    fair: show.fair()
-    location: show.location()
-    partner: show.partner()
-    show: show
-    profile: profile
-    installShots: installShots
-    jsonLD: stringifyJSONForWeb(show.toJSONLD())
-
-setReferringContext = (req, res, show) ->
-  return unless req.get 'referrer'
-  path = parse(req.get 'referrer').pathname
-  res.locals.context = (
-    if show.has('fair') and path.match show.get('fair')?.default_profile_id
-      'fair'
-    else if path.match show.get('partner')?.default_profile_id
-      'partner'
-    else if path is '/'
-      'home'
-    else
-      ''
-  )
+err = ->
+  err = new Error 'Not Found'
+  err.status = 404
+  err
 
 @index = (req, res, next) ->
-  show = new PartnerShow(id: req.params.id)
+  show = new PartnerShow id: req.params.id
 
-  installShots = new InstallShots
-  installShots.url = "#{API_URL}/api/v1/partner_show/#{show.id}/images"
-
-  Q.allSettled([
+  Q.all([
     show.fetch(cache: true)
-    installShots.fetchUntilEndInParallel(cache: true, data: default: false)
-  ]).spread((showRequest, installShotsRequest) ->
+    show.related().installShots.fetchUntilEndInParallel(cache: true, data: default: false)
+  ]).then ->
+    unless show.get 'displayable'
+      return next err()
 
-    if showRequest.state is 'rejected'
-      res.backboneError(show, showRequest.reason)
-    else
+    show.rebuild()
 
-      # Proceed as normal...
-      setReferringContext(req, res, show)
+    show.related().artworks.fetchUntilEndInParallel(cache: true).finally ->
 
-      # 404 if show isn't displayable
-      if !show.get('displayable')
-        err = new Error('Not Found')
-        err.status = 404
-        return next err
+      res.locals.sd.SHOW = show.toJSON()
+      res.locals.sd.ARTWORKS = show.related().artworks.toJSON()
 
-      # Redirect to canonical url
-      if show.href() isnt parse(req.originalUrl).pathname and not res.locals.context
-        return res.redirect show.href()
+      res.render 'index',
+        show: show
+        location: show.location()
+        fair: show.related().fair
+        partner: show.related().partner
+        installShots: show.related().installShots
+        artworks: show.related().artworks
+        jsonLD: stringifyJSONForWeb show.toJSONLD()
 
-      if show.partner().isLinkable()
-        profile = new Profile { id: show.get('partner').default_profile_id }
-        profile.fetch
-          cache: true
-          success: (profile) =>
-            render res, show, installShots, profile
-          error: =>
-            # profile is private
-            render res, show, installShots
-      else
-        render res, show, installShots
-  ).done()
+  , ->
+    next err()
