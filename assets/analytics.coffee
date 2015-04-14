@@ -1,0 +1,2 @@
+$ ->
+  require '../analytics/articles.js'
