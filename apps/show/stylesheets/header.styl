@@ -1,0 +1,49 @@
+.show-header
+.show-footer
+  display table
+  position relative
+  width 100%
+  margin 80px 0
+  table-layout fixed
+.show-header-cell
+.show-footer-cell
+  display table-cell
+  width 50%
+  vertical-align top
+  &:first-child
+    padding-right 40px
+  &:last-child
+    padding-left 40px
+
+.show-title
+.show-partner
+  margin 15px 0
+  vertical-align bottom
+  line-height 1.2
+.show-title
+  font-size 37px
+.show-description
+  font-size 17px
+  line-height 1.4
+  > p
+    block-margins(10px)
+
+.show-partner
+  display table
+  width 100%
+  position relative
+  > .entity-with-follow
+  > .show-share
+    display table-cell
+    vertical-align top
+  > .show-share
+    padding-left 30px
+    text-align right
+    > a
+      vertical-align middle
+    // Wondering if we actually show this *anywhere*?
+    > .share-to-pinterest
+      display none
+
+.show-fair-link
+  text-decoration none

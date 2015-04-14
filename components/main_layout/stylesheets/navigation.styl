@@ -171,3 +171,40 @@ dots(times)
       z-index 1
 a.leader-dots-list-item:hover
   color purple-color
+
+entity-height = 17px
+.entity-link
+.entity-follow
+  line-height entity-height
+  vertical-align middle
+.entity-link
+  avant-garde()
+  font-size entity-height
+  text-decoration none
+  &.is-small
+    font-size 13px
+  &:hover
+    text-decoration underline
+.entity-follow
+  &:before
+    iconfont-styling()
+    content '\e629'
+    vertical-align -(entity-height / 2)
+  &:after
+    content 'Follow'
+  &:hover
+  &.is-following
+  &[data-state='following']
+    color purple-color
+  &.is-following
+  &[data-state='following']
+    &:after
+      content 'Following'
+    &:hover
+      color red-color
+      &:after
+        content 'Unfollow'
+    &.is-clicked
+      color purple-color
+      &:after
+        content 'Following'

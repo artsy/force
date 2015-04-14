@@ -1,0 +1,21 @@
+if show.get('press_release') || show.related().artists.length
+  .show-footer
+    .show-footer-row
+      if show.get('press_release')
+        .show-footer-cell
+          h3.show-subheadline
+            | Press Release
+          .show-press-release
+            != show.mdToHtml('press_release')
+
+      .show-footer-cell
+        h3.show-subheadline
+          | Follow Artists In This Show
+
+        - artists = show.related().artists.models
+        include ../components/follow_artists/template
+
+      if !show.get('press_release') && show.related().artists.length
+        //- Force 50% layout
+        .show-footer-cell
+          | &nbsp;
