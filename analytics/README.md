@@ -2,11 +2,11 @@
 
 The /analytics folder contains all of our tracking code using [Segment](https://segment.com/).
 
-This folder contains javascript files that are sandboxed from our application code to clarify our tracking. For the most part you should be able to write tracking code using plain [jQuery](https://jquery.com/) events such as `$('.artwork-item img').click(function() { analytics.track('Clicked artwork image') })`. For the time being his document will function as the go-to place for help writing analytics code, FAQs, etc.
+This folder contains javascript files that are sandboxed from our application code to clarify our tracking. For the time being this document will function as the go-to place for help writing analytics code, FAQs, etc.
 
 ## Tracking 101
 
-To get started with an example lets track a user clicking on the artist name of the artwork page.
+To get started with an example lets show what it would be like to track a user clicking on the artist name in the artwork page.
 
 Open an artist page and right click on the artist name in your browser, then choose "Inspect Element".
 
@@ -57,6 +57,24 @@ $('#artwork-contact-form input:first').focus(function() {
 
 These are called "DOM Events" and we use [jQuery](https://jquery.com/) to provide a simple way to hook into them. You can read the full documenation [here](http://api.jquery.com/category/events/).
 
+## Tracking something really specific beyond vanilla jQuery with custom events
+
+In the case that you need to track something really specific in the lifecycle of the application and you're having a hard time hooking into it with vanilla jQuery you may listen for custom events any web engineer can provide for you.
+
+First submit a pull request with as much of the surrounding tracking code that you can write. In the PR ask a web engineer for exactly what you need to hook into and all of the data you will need from it. e.g. "I want to track when the user create's their first set and I need to know their user id, what they called it, and how long it took from focusing the input to clicking "create"."
+
+If the engineer identifies there truly is a need for a custom event they will follow up with a pull request that emits that custom event on the global `analyticsHooks` object.
+
+````javascript
+analyticsHooks.on('createset', function(data) {
+  analytics.track('User created a set', {
+    userId: data.userId,
+    setName: data.setName,
+    namedSetInMilliseconds: data.createTime - data.focusTime
+  })
+})
+````
+
 ## Tracking only on certain pages
 
 To ensure your analytics code is only run on certain pages you can
@@ -97,7 +115,7 @@ then open your chrome dev tools `cmd + opt + i`, click on the "Console" tab and 
 
 ![](https://s3.amazonaws.com/f.cl.ly/items/2n2v3i2a451L3D290Z46/Image%202015-04-14%20at%201.06.22%20PM.png)
 
-#### Network
+### Network
 
 If `console.log` isn't cutting it and you need to debug exactly what is being sent to Segment, you may want to try inspecting the actual network calls being sent.
 
