@@ -18,9 +18,7 @@ module.exports = class DeepZoomView extends Backbone.View
     'change .dz-slider-range': 'zoomTo'
     'mousemove': 'detectActivity'
 
-  initialize: (options) ->
-    { @artwork, @$container } = options
-
+  initialize: ({ @artwork, @image }) ->
     @zoomTo = _.throttle @_zoomTo, 50
     @detectActivity = _.throttle @_detectActivity, 500
 
@@ -34,12 +32,10 @@ module.exports = class DeepZoomView extends Backbone.View
     ), @inactiveDuration
 
   render: ->
-    return unless (image = @artwork.activeImage()).canDeepZoom()
+    return unless @image.canDeepZoom()
 
     @$el.html(template).
       attr 'data-state', 'loading'
-
-    @$container.html @$el
 
     getScript 'openseadragon', =>
       @viewer = OpenSeadragon
@@ -56,12 +52,12 @@ module.exports = class DeepZoomView extends Backbone.View
         zoomPerScroll: 1.1
         constrainDuringPan: true
         visibilityRatio: 1
-        tileSources: image.deepZoomJson()
+        tileSources: @image.deepZoomJson()
         error: @return
 
       @postRender()
 
-    @
+    this
 
   postRender: ->
     @setupViewer()

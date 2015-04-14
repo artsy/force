@@ -4,29 +4,31 @@ resizer = require '../../components/resizer/index.coffee'
 
 # requires the image mixin
 module.exports =
+  sizes:
+    small: width: 200, height: 200
+    tall: width: 260, height: 800
+    medium: width: Infinity, height: 260
+    large: width: 640, height: 640
+    larger: width: 1024, height: 1024
 
-  sizes: [
-    ['small', { width: 200, height: 200}]
-    ['tall', { width: 260, height: 800}]
-    ['medium', { width: Infinity, height: 260}]
-    ['large', { width: 640, height: 640}]
-    ['larger', { width: 1024, height: 1024}]
-  ]
+  croppedSizes: ['square', 'medium_rectangle', 'large_rectangle']
+
+  isCropped: (version) ->
+    _.contains @croppedSizes, version
 
   publicVersions: ->
     _.without(@get('image_versions'), 'normalized')
 
   # Given a desired width and height, return the image url that won't pixelate
   imageUrlFor: (width, height) ->
-    size = @imageSizeForDimensions width, height
-    if size
+    if size = @imageSizeForDimensions width, height
       return @imageUrl size
     @imageUrlForMaxSize()
 
   imageSizeForDimensions: (width, height) ->
-    for size in @sizes
-      if width <= size[1].width && height <= size[1].height
-        return size[0] if _.indexOf(@get('image_versions'), size[0]) >= 0
+    for key, size of @sizes
+      if width <= size.width and height <= size.height
+        return key if _.contains @get('image_versions'), key
 
   imageSizeForHeight: (height) ->
     @imageSizeForDimensions height * @aspectRatio(), height
@@ -47,7 +49,7 @@ module.exports =
 
   maxHeightForWidth: (width, maxDimension) ->
     aspectRatio = @aspectRatio()
-    maxDimension = maxDimension || @get 'original_height'
+    maxDimension = maxDimension or @get 'original_height'
     if aspectRatio?
       height = Math.round width / @aspectRatio()
       if height > maxDimension then maxDimension else Math.floor(height)
@@ -70,6 +72,9 @@ module.exports =
       return @imageUrl(size) if _.contains(sizes, size)
     null
 
+  imageSizeDimensionsFor: (size) ->
+    @resizeDimensionsFor(@sizes[size])
+
   resizeDimensionsFor: ({ width, height }) ->
     ratios = _.compact _.map { width: width, height: height }, (value, dimension) =>
       value / @get("original_#{dimension}") if value
@@ -88,6 +93,18 @@ module.exports =
 
   fillUrlFor: (options = {}, attr) ->
     resizer.fill @sourceUrl(attr), options
+
+  hasDimensions: ->
+    @has('original_width') and
+    @has('original_height')
+
+  factor: (favor = 'width', precision = 3) ->
+    disfavor = if favor is 'width' then 'height' else 'width'
+    if @hasDimensions()
+      factor = @get("original_#{disfavor}") / @get("original_#{favor}")
+      Math.floor(factor * 1000) / 1000
+    else
+      1
 
   aspectRatio: ->
     @get('aspect_ratio')

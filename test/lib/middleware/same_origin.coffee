@@ -6,7 +6,7 @@ describe 'Same origin middleware', ->
 
   beforeEach ->
     @req = { }
-    @res = { headers: [], setHeader: (name, value) -> @headers[name] = value }
+    @res = { headers: [], set: (name, value) -> @headers[name] = value }
     @next = sinon.stub()
 
   it 'adds x-frame-options header', ->

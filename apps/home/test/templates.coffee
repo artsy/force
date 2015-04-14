@@ -1,6 +1,6 @@
 jade = require 'jade'
 { resolve } = require 'path'
-fs = require 'graceful-fs'
+fs = require 'fs'
 Backbone = require 'backbone'
 
 render = ->
@@ -18,7 +18,7 @@ describe 'Home template', ->
       heroUnits: new Backbone.Collection
       featuredLinks: new Backbone.Collection
       featuredShows: new Backbone.Collection
-      featuredPosts: new Backbone.Collection
+      featuredArticles: new Backbone.Collection
       featuredArtists: new Backbone.Collection
       exploreSections: new Backbone.Collection
     )

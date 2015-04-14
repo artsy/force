@@ -1,5 +1,5 @@
 cheerio = require 'cheerio'
-fs = require 'graceful-fs'
+fs = require 'fs'
 jade = require 'jade'
 path = require 'path'
 Backbone = require 'backbone'

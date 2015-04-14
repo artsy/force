@@ -9,6 +9,8 @@ _s = require 'underscore.string'
 sd = require('sharify').data
 qs = require('querystring')
 sparkMd5Hash = require('spark-md5').hash
+Cookies = require '../components/cookies/index.coffee'
+Grouper = require "../components/util/grouper.coffee"
 
 module.exports = (options) =>
   return if module.exports.getUserAgent()?.indexOf?('PhantomJS') > -1
@@ -97,6 +99,7 @@ module.exports.track = track =
           queryString: window?.location.search
           page: window?.location.pathname
           referrer: document?.referrer
+          source_referrer: Cookies.get('force-referrer')
           collector_level: sd.CURRENT_USER?.collector_level
           user_id: sd.CURRENT_USER?.id
           lab_features: sd.CURRENT_USER?.lab_features
@@ -114,8 +117,11 @@ module.exports.track = track =
     memo
   , {})
 
-module.exports.trackForm = (selector, description, options = {}) ->
-  mixpanel?.track_forms? selector, description, options
+module.exports.trackForms = (selector, description, options = {}) ->
+  mixpanel.track_forms selector, description, options
+
+module.exports.trackLinks = (selector, description, options = {}) ->
+  mixpanel.track_links selector, description, options
 
 module.exports.modelNameAndIdToLabel = (modelName, id) ->
   throw new Error('Requires modelName and id') unless modelName? and id?
@@ -144,6 +150,10 @@ module.exports.trackTimeTo = trackTimeTo = (description) ->
 # For multis, each id is hashed to 8 characters + event id, leaving room for 55 ids
 # Going with 50 to be conservative and account for the model name
 maxTrackableMultiIds = 50
+# Browser url length limit is 2048 characters, this is the length that we will allot the
+# artwork ids so that we safely stay under this limit (rest of url for the impression
+# event is 511 chars in this case)
+maxUnhashedTrackableLength = 1300
 
 module.exports.encodeMulti = (ids) ->
   ids = _.compact(ids)
@@ -155,8 +165,9 @@ module.exports.trackMulti = (description, data) =>
 module.exports.multi = (description, modelName, ids) ->
   return unless ids?.length > 0
 
-  # chunk ids by maxTrackableMultiIds
+  # chunk ids by maxTrackableMultiIds and maxUnhashedTrackableLength
   chunkedIds = _.groupBy(ids, (a, b) => return Math.floor(b / maxTrackableMultiIds))
+  snowplowChunkedIds = Grouper.groupByConcatLength(ids, maxUnhashedTrackableLength)
 
   for chunk, index in _.toArray(chunkedIds)
     # Fire log events at 1/2 second intervals
@@ -165,6 +176,11 @@ module.exports.multi = (description, modelName, ids) ->
         @trackMulti description, @modelNameAndIdToLabel(modelName, encodedIds)
       , (500 * index) + 1)
     )(@encodeMulti(chunk))
+
+  for chunk, index in _.toArray(snowplowChunkedIds)
+    _.delay( =>
+      @snowplowStruct 'impression', null, chunk.join(','), modelName
+    , (500 * index) + 1)
 
 # Code using this function should cope with it returning undefined
 module.exports.getProperty = (property) =>
@@ -182,62 +198,6 @@ module.exports.setProperty = (hash) =>
 # https://developers.google.com/analytics/devguides/platform/customdimsmets
 module.exports.setDimension = (index, value) ->
   ga? 'set', index, value
-
-# Conduct an A/B test by using this helper to determine what path to take.
-# Returns true if the user is in the new feature, returns false if the user
-# is testing the old feature.
-#
-# @param {String} key Mixpanel key
-# @param {Number} percentToNew What percent of users do you want to direct to the new feature?
-
-module.exports.abTest = (key, percentToNew = 0.5) ->
-  return false unless sd.ENABLE_AB_TEST
-
-  property = module.exports.getProperty key
-  if property is 'enabled'
-    true
-  else if property is 'disabled'
-    false
-  else
-    enabledDisabled = if Math.random() < percentToNew then 'enabled' else 'disabled'
-    hash = {}
-    hash[key] = enabledDisabled
-    module.exports.setProperty hash
-    enabledDisabled == 'enabled'
-
-# Conduct an A/B/C/D/etc... test by using this helper to determine what path to take.
-# `paths` is a hash of { label: percent } pairs. e.g. An A/B/C test that tests 20% of users
-# going down "C" and 40% of users take "A" and "B" would be...
-# ````
-# splitTest 'favoriting', { a: 0.4, b: 0.4, c: 0.2 }
-# # returns "a", "b", or "c"
-# ````
-# the keys represent  mixpanel values and can be anything, e.g.
-# ````
-# splitTest 'favoriting', { "hover menu": 0.4, "new modal": 0.4, "old modal": 0.2 }
-# # returns "hover menu", "new modal", or "old modal"
-# ````
-#
-# @param {String} key Mixpanel key
-# @param {Object} paths Mixpanel label: percent pairs
-# @return {String} The label the user is assigned for the split test
-
-module.exports.splitTest = (key, paths) ->
-  return false unless sd.ENABLE_AB_TEST
-
-  sum = _.reduce paths, (m, percent, label) -> m + percent
-  return throw new Error("Your percent values for paths must add up to 1.0") if sum isnt 1
-
-  path = module.exports.getProperty key
-  return path if path
-
-  path = _.sample _.flatten (for label, percent of paths
-    _.times(Math.round(percent * 100), -> label)
-  )
-  hash = {}
-  hash[key] = path
-  module.exports.setProperty hash
-  path
 
 # Calls back when mixpanel has loaded. Useful for pages that do testing on
 # load. Such as AB testing the way a certain page looks.

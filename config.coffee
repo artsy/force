@@ -9,6 +9,7 @@ module.exports =
   APPLICATION_NAME: 'force-staging'
   NODE_ENV: 'development'
   PORT: 3004
+  PROXY_API_URL: null
   API_URL: 'http://localhost:3000'
   POSITRON_URL: 'http://localhost:3005'
   APP_URL: 'http://localhost:3004'
@@ -71,6 +72,8 @@ module.exports =
   HEAPDUMP: false
   TESTING_MEMORY_LEAK: false
   CHECK_FOR_AUCTION_REMINDER: false
+  RESTART_INTERVAL: 1000 * 60 * 60
+  EDITORIAL_ADMINS: 'craig,halley,marina,casey,molly'
 
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or

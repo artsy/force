@@ -78,8 +78,10 @@ module.exports = class Profile extends Backbone.Model
       'Institution'
     else if @isGallery()
       'Gallery'
-    else if @isFairOrOrganizer()
+    else if @isFair()
       'Fair'
+    else if @isFairOrganizer()
+      'FairOrganizer'
 
   isUserClass: ->
     if @isUser() && @get('default_icon_version') is 'circle'
@@ -101,9 +103,6 @@ module.exports = class Profile extends Backbone.Model
   isCurrentProfile: ->
     sd.CURRENT_USER?.default_profile_id == @get('id')
 
-  hasPosts: ->
-    @get('posts_count') > 0 or @get('reposts_count') > 0
-
   fetchFavorites: (options) ->
     favorites = new Artworks
     favorites.url = "#{sd.API_URL}/api/v1/collection/saved-artwork/artworks"
@@ -114,19 +113,6 @@ module.exports = class Profile extends Backbone.Model
       page: 1
     }, options.data
     favorites.fetch _.extend options, data: favorites.params
-
-  fetchPosts: (options) ->
-    # Avoid circular dependency by lazy-requiring
-    FeedItems = require '../components/feed/collections/feed_items.coffee'
-    success = options.success
-    url = "#{sd.API_URL}/api/v1/profile/#{@get 'id'}/posts"
-    new FeedItems().fetch _.extend options,
-      url: url
-      data: { size: 3 }
-      error: options.error
-      success: (items) ->
-        items.urlRoot = url if items.length
-        success items
 
   toJSONLD: ->
     compactObject {

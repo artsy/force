@@ -25,13 +25,14 @@ describe 'OverviewView', ->
       artists: length: 0
       contemporary: length: 0
       shows: length: 0
-      posts: length: 0
+      articles: length: 0
     })
     @model = new Artist fabricate 'artist', id: 'foo-bar', published_artworks_count: 1
     filterView = new Backbone.View
     filterView.artworks = new Backbone.Collection
     filterView.filter = root: new Backbone.Model
     @OverviewView.__set__ 'ArtworkFilter', init: @artworkFilterInitStub = sinon.stub().returns(view: filterView)
+    @OverviewView::setupRelatedArticles = ->
     @OverviewView.__set__ 'STATUSES', {}
     @OverviewView.__set__ 'lastModified', sinon.stub()
     @view = new @OverviewView model: @model

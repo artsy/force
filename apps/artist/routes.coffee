@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Q = require 'q'
-fs = require 'graceful-fs'
+fs = require 'fs'
 { resolve } = require 'path'
 Backbone = require 'backbone'
 { stringifyJSONForWeb } = require '../../components/util/json'
@@ -12,11 +12,15 @@ Carousel = require './carousel'
 request = require 'superagent'
 { APPLICATION_NAME } = require '../../config'
 cache = require '../../lib/cache'
+ReferrerParser = require 'referer-parser'
 
 @index = (req, res) ->
   artist = new Artist id: req.params.id
   carousel = new Carousel artist: artist
   statuses = new Statuses artist: artist
+
+  if (referrer = req.get 'Referrer')?
+    medium = new ReferrerParser(referrer).medium
 
   Q.allSettled([
     artist.fetch(cache: true)
@@ -34,6 +38,7 @@ cache = require '../../lib/cache'
         res.locals.sd.ARTIST = artist.toJSON()
         res.locals.sd.TAB = tab = req.params.tab or ''
         res.locals.sd.STATUSES = statuses = statusesRequest.value
+        res.locals.sd.MEDIUM = medium if medium?
 
         res.render 'index',
           artist: artist

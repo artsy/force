@@ -55,6 +55,8 @@ module.exports = class Fair extends Backbone.Model
     galleries = new @aToZCollection('show', 'partner')
     galleries.fetchUntilEnd
       url: "#{@url()}/partners"
+      data:
+        private_partner: false
       cache: true
       success: ->
         aToZGroup = galleries.groupByAlphaWithColumns 3
@@ -62,16 +64,15 @@ module.exports = class Fair extends Backbone.Model
       error: ->
         options?.error()
 
-  fetchArtists: (options) ->
+  fetchArtists: (options = {}) ->
     artists = new @aToZCollection('artist')
     artists.fetchUntilEnd
       url: "#{@url()}/artists"
       cache: true
       success: ->
         aToZGroup = artists.groupByAlphaWithColumns 3
-        options?.success aToZGroup, artists
-      error: ->
-        options?.error()
+        options.success aToZGroup, artists
+      error: options.error
 
   fetchSections: (options) ->
     sections = new Backbone.Collection
@@ -82,7 +83,7 @@ module.exports = class Fair extends Backbone.Model
   fetchPrimarySets: (options) ->
     orderedSets = new OrderedSets
     orderedSets
-      .fetchItemsByOwner('Fair', @get('id'), options.cache)
+      .fetchItemsByOwner('Fair', @get('id'), cache: options.cache)
       .done ->
         for set in orderedSets.models
           items = set.get('items').filter (item) ->

@@ -45,16 +45,13 @@ describe 'DeepZoomView', ->
       DeepZoomView = benv.requireWithJadeify resolve(__dirname, '../../client/deep_zoom'), ['template']
       DeepZoomView.__set__ 'getScript', (x, cb) -> cb()
 
-      @view = new DeepZoomView $container: $('body'), artwork: @artwork
+      @view = new DeepZoomView artwork: @artwork, image: @artwork.related().images.active()
       done()
 
   afterEach ->
     Backbone.sync.restore()
 
   describe '#initialize', ->
-    it 'has a container', ->
-      @view.$container.length.should.equal 1
-
     it 'has an artwork', ->
       @view.artwork.id.should.equal @artwork.id
 
@@ -66,9 +63,10 @@ describe 'DeepZoomView', ->
     describe 'when artwork#canDeepZoom is false', ->
       it 'returns without rendering', ->
         @view.postRender = sinon.stub()
-        @view.artwork.defaultImage = -> canDeepZoom: -> false
+        imageStub = sinon.stub(@view.image, 'canDeepZoom').returns(false)
         @view.render()
         @view.postRender.called.should.not.be.ok
+        imageStub.restore()
 
     describe 'when artwork#canDeepZoom is true', ->
       beforeEach ->
@@ -79,8 +77,7 @@ describe 'DeepZoomView', ->
         @view.$el.data('state').should.equal 'loading'
 
       it 'renders the template', ->
-        html = @view.$container.html()
-        html.should.containEql 'deep-zoom'
+        html = @view.$el.html()
         html.should.containEql 'dz-slider'
         html.should.containEql 'dz-close'
 

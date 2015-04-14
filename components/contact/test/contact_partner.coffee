@@ -31,6 +31,7 @@ describe 'ContactPartnerView', ->
       sinon.stub ContactPartnerView.prototype, 'open'
       sinon.stub ContactPartnerView.prototype, 'updatePosition'
       sinon.stub(ContactPartnerView.prototype, 'displayAfterInquiryFlow').returns false
+      ContactPartnerView.__set__ 'SESSION_ID', '1111'
       @view = new ContactPartnerView artwork: @artwork, partner: @partner, el: $('body')
       _.last(Backbone.sync.args)[2].complete [fabricate('location')]
       done()
@@ -66,13 +67,16 @@ describe 'ContactPartnerView', ->
         attributes.contact_gallery.should.be.ok # Should contact gallery
 
       it 'tracks the correct event', ->
-        events = _.last(@analytics.track.funnel.args, 3)
+        events = _.last(@analytics.track.funnel.args, 4)
         events[0][0].should.equal 'Sent artwork inquiry'
         events[1][0].should.equal 'Contact form submitted'
+        events[2][0].should.equal 'Changed default message'
+        events[3][1].should.equal '1111'
 
     describe 'Logged in', ->
       beforeEach ->
         @view.user = (@user = new Backbone.Model fabricate 'user')
+        @view.user.isLoggedIn = -> true
         @view.$el.html @view.formTemplate @view.templateData
         @view.$('textarea[name="message"]').val('My message')
         @view.$('form').submit()
@@ -84,6 +88,13 @@ describe 'ContactPartnerView', ->
         attributes.message.should.equal 'My message'
         attributes.artwork.should.equal @view.artwork.id
         attributes.contact_gallery.should.be.ok # Should contact gallery
+
+      it 'tracks the correct event', ->
+        events = _.last(@analytics.track.funnel.args, 4)
+        events[0][0].should.equal 'Sent artwork inquiry'
+        events[1][0].should.equal 'Contact form submitted'
+        events[2][0].should.equal 'Changed default message'
+        events[3][1].should.equal '1111'
 
   describe '#events', ->
 

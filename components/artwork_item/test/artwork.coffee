@@ -1,5 +1,5 @@
 cheerio = require 'cheerio'
-fs = require 'graceful-fs'
+fs = require 'fs'
 jade = require 'jade'
 path = require 'path'
 Backbone = require 'backbone'
@@ -22,17 +22,17 @@ describe 'Artwork Item template', ->
 
     it 'defaults to a medium size artwork image', ->
       $ = cheerio.load render('artwork')({ artwork: @artwork })
-      $('.artwork-item-image').attr('src').should.containEql 'medium'
+      $('img').attr('src').should.containEql 'medium'
 
     it 'can render a specified size', ->
       $ = cheerio.load render('artwork')({ artwork: @artwork, artworkSize: 'large' })
-      $('.artwork-item-image').attr('src').should.containEql 'large'
+      $('img').attr('src').should.containEql 'large'
 
     it 'renders with a fixed with', ->
       $ = cheerio.load render('artwork')({ artwork: @artwork, imageWidth: 500 })
-      $('.artwork-item-image').attr('width').should.equal '500'
-      $('.artwork-item-image').attr('height').should.equal '250'
-      $('.artwork-item-image').attr('src').should.containEql 'medium'
+      $('img').attr('width').should.equal '500'
+      $('img').attr('height').should.equal '250'
+      $('img').attr('src').should.containEql 'medium'
 
   describe 'artwork caption', ->
     beforeEach ->
@@ -82,15 +82,16 @@ describe 'Artwork Item template', ->
       @artwork = new Artwork fabricate 'artwork'
       @html = render('artwork')({ artwork: @artwork })
 
+
     it 'renders a nopin attribute if the artwork is not sharable', ->
       @artwork.set 'can_share_image', false
       $ = cheerio.load render('artwork')({ artwork: @artwork })
-      $('.artwork-item-image').attr('nopin').should.equal 'nopin'
+      $('img').attr('nopin').should.equal 'nopin'
 
     it 'does not render a nopin attribute if the artwork is sharable', ->
       @artwork.set 'can_share_image', true
       $ = cheerio.load render('artwork')({ artwork: @artwork })
-      $('.artwork-item-image[nopin]').should.have.lengthOf 0
+      $('img[nopin]').should.have.lengthOf 0
 
   describe 'blurb', ->
 

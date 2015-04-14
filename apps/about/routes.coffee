@@ -17,7 +17,7 @@ getJSON = (callback) ->
     "http://#{APPLICATION_NAME}.s3.amazonaws.com#{CONTENT_PATH}"
   )
   .on('error', callback)
-  .end (res) ->
+  .end (err, res) ->
     try
       callback null, JSON.parse res.text
     catch e

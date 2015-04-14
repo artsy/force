@@ -33,12 +33,13 @@ block body
             include ../../../components/clock/template
 
           .auction-header-register-button
-            - button = auction.bidButtonState(user)
-            a.avant-garde-button-black.is-block(
-              href= button.href
-              class= button.classes
-              disabled= !button.enabled
-            )= button.label
+            .auction-info-register-button
+              if user && user.get('registered_to_bid')
+                a.avant-garde-button-black.is-block.js-register-button( disabled ) You&rsquo;re Registered to Bid
+              else
+                a.avant-garde-button-black.is-block.js-register-button(
+                  href= auction.registerUrl()
+                ) Register to bid
 
         //- Additional metadata TBD
 
@@ -50,12 +51,8 @@ block body
             a.fine-faux-underline.js-specialist-contact-link( href='#' )
               | Contact an Artsy Specialist
 
-    section.js-auction-artworks-section
-      include ./nav
+    section.auction-artworks-container.js-auction-artworks-section
+      - artworks = artworks.models
+      include ../../../components/auction_artworks/templates/index
 
-      section.auction-artworks.js-auction-artworks( data-mode='grid' )
-        for artwork, i in artworks.models
-          include ./artwork/grid
-
-    footer.auction-footer
-      //- https://github.com/artsy/force/issues/2180
+    include ./footer

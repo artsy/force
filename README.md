@@ -1,38 +1,49 @@
-# Force: The Artsy.net frontend
+Force
+===
 
-This is the public repository for [artsy.net's](https://artsy.net) frontend application. This application renders the html and provides rich interaction for artsy.net
+[Force](https://github.com/artsy/force) is the main desktop website for Artsy. For more information see [this blog post](http://artsy.github.io/blog/2014/09/05/we-open-sourced-our-isomorphic-javascript-website/) and [this blog post](http://artsy.github.io/blog/2013/11/30/rendering-on-the-server-and-client-in-node-dot-js/).
 
- 'Isomorphic' web apps are a very new thing. At Artsy, we would love to share our working version of one with the community. This repo is an example of a large application using the [Ezel](https://github.com/artsy/ezel) boilerplate. Ezel projects share code server/client and render server/client. They grow by breaking up the application into modular [apps](https://github.com/artsy/force-public/tree/master/apps) and reusable [components](https://github.com/artsy/force-public/tree/master/components).
+Meta
+---
 
-Please see the [doc folder](https://github.com/artsy/force-public/tree/master/doc) for help.
+* __State:__ production
+* __Production:__ [https://www.artsy.net/](https://www.artsy.net/) | [Heroku](https://dashboard.heroku.com/apps/force-production/resources)
+* __Staging:__ [https://staging.artsy.net/](https://staging.artsy.net/) | [Heroku](https://dashboard.heroku.com/apps/force-staging/resources)
+* __Github:__ [https://github.com/artsy/force/](https://github.com/artsy/force/)
+* __CI:__ [Semaphore](https://semaphoreapp.com/artsy/force/); merged PRs to artsy/force#master are automatically deployed to staging; production is manually deployed from semaphore
+* __Point People:__ [@craigspaeth](https://github.com/craigspaeth), [@dzucconi](https://github.com/dzucconi), [@broskoski](https://github.com/broskoski), [@kanaabe](https://github.com/kanaabe)
 
-## About Ezel
+[![Build Status](https://semaphoreci.com/api/v1/projects/260f0d9d-ddb4-4cc5-b54e-619b98fd9d81/382381/badge.svg)](https://semaphoreci.com/artsy/force--2)
 
-Ezel makes it easy to write and maintain Backbone apps that run in the browser and on the server using [Node.js](http://nodejs.org/). Built on popular libraries like [Express](http://expressjs.com/), [Backbone](http://backbonejs.org/), and [Browserify](http://browserify.org/), Ezel isn't a framework or library of its own, but rather a boilerplate of libraries and patterns that can be leveraged or abandoned as needed.
+Set-Up
+---
 
-Ezel has three main philosophies...
+- Install [NVM](https://github.com/creationix/nvm)
+- Install Node 0.12
+```
+nvm install 0.12
+nvm alias default 0.12
+```
+- Fork Force to your Github account in the Github UI.
+- Clone your repo locally (substitute your Github username).
+```
+git clone git@github.com:craigspaeth/force.git && cd force
+```
+- Install node modules
+```
+npm install
+```
+- Create a .env file and paste in sensitive configuration. You can find these keys in the Artsy Engineering vault of One Password under "Force.env" or ask someone in #web Slack.
+- Start Force pointing to the staging [Gravity](https://github.com/artsy/gravity) API
+```
+make ss
+```
+- Force should now be running at [http://localhost:5000/](http://localhost:5000/)
 
-### Modularity
+Additional docs
+---
 
-Instead of managing growing complexity in projects by imposing rigid monolithic structure, Ezel encourages breaking your project up into smaller pieces that are easy to maintain and refactor independently.
-
-### Flexiblity
-
-Don't get locked into choosing between single page app or fully server-side rendered pages. Ezel's modular structure and shared server/client code makes it easy to decide what patterns and tools are best on a case by case basis.
-
-### Run on Both Sides
-
-Ezel [shares javascript modules that run in the browser and on the server](http://nerds.airbnb.com/isomorphic-javascript-future-web-apps/). This means you can [optimize initial page load](https://blog.twitter.com/2012/improving-performance-twittercom) and SEO by sharing templates that can render on the server or client. This also makes it easy to test all of your code in Node.js using [benv](http://github.com/artsy/benv) and [zombie](http://zombie.labnotes.org/) for robust, fast, and easy to set up tests.
-
-## NOTE: This app is not runnable.
-
-Due to image licensing issues we cannot open up the artsy.net API. We are actively working on this. In the meantime, we are putting this up as an example of how we write code and structure our applications at Artsy. We would love any feedback!
-
-If you have any questions please feel free to hit us up on twitter: [@craigspaeth](https://twitter.com/craigspaeth), [@dzucconi](https://twitter.com/dzucconi) and [@zamiang](https://twitter.com/zamiang)
-
-### License
-
-MIT License, see [LICENSE](LICENSE.md) for details.
+You can find additional documentation about Force (deployments et c) in this repository's /doc directory.
 
 ````
                   ._,.

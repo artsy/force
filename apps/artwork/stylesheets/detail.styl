@@ -3,10 +3,6 @@ artwork-detail-width = 250px
 artwork-detail-item-height = 36px
 
 .artwork-detail
-  float right
-  width artwork-detail-width
-  margin-bottom 20px
-  padding-left 20px
   font-size 17px
   // Buttons are narrower
   // and always block
@@ -58,8 +54,8 @@ artwork-detail-item-height = 36px
 .artwork-detail-secondary-metadata
   color gray-darker-color
 
-.artwork-detail-medium
-  text-transform lowercase
+.artwork-detail-medium:first-letter
+  text-transform uppercase
 
 .artwork-meta-photo-credit
   margin-top 10px
@@ -249,7 +245,3 @@ artwork-detail-item-height = 36px
       border-color @background-color
       color white
       transition none
-
-#artwork-auction-logo
-  width 140px
-  height 50px //- Hack for LAMA to work around profile icons only being square

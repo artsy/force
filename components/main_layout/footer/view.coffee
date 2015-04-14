@@ -10,11 +10,19 @@ module.exports = class FooterView extends Backbone.View
     'click .mlf-specialist': 'openSpecialist'
 
   initialize: (options) ->
-    mediator.on 'open:feedback', @openFeedback, this
+    mediator.on 'open:feedback', @openFeedback, @
+    mediator.on 'infinite:scroll:start', @hide, @
+    mediator.on 'infinite:scroll:end', @show, @
 
   feedback: (e) ->
     e.preventDefault()
     mediator.trigger 'open:feedback'
+
+  hide: ->
+    @$el.hide()
+
+  show: ->
+    @$el.show()
 
   openFeedback: ->
     new FeedbackView

@@ -8,7 +8,6 @@ ShareModal = require '../../../components/share/modal.coffee'
 Transition = require '../../../components/mixins/transition.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 SaveButton = require '../../../components/save_button/view.coffee'
-RelatedPostsView = require '../../../components/related_posts/view.coffee'
 RelatedArticlesView = require '../../../components/related_articles/view.coffee'
 analytics = require '../../../lib/analytics.coffee'
 { acquireArtwork } = require '../../../components/acquire/view.coffee'
@@ -25,6 +24,7 @@ RelatedShowView = require './related_show.coffee'
 ContactView = require '../components/contact/view.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 VideoView = require './video.coffee'
+ImagesView = require '../components/images/view.coffee'
 PartnerLocations = require '../components/partner_locations/index.coffee'
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 detailTemplate = -> require('../templates/_detail.jade') arguments...
@@ -36,7 +36,6 @@ module.exports = class ArtworkView extends Backbone.View
   events:
     'click a[data-client]': 'intercept'
     'click .circle-icon-button-share': 'openShare'
-    'click .artwork-additional-image': 'changeImage'
     'change .aes-radio-button': 'selectEdition'
     'click .artwork-buy-button': 'buy'
     'click .artwork-more-info .avant-garde-header-small': 'toggleMoreInfo'
@@ -47,7 +46,7 @@ module.exports = class ArtworkView extends Backbone.View
     @checkQueryStringForAuction()
     @setupEmbeddedInquiryForm()
     @setupCurrentUser()
-    @setupRelatedPosts()
+    @setupRelatedArticles()
     @setupArtistArtworks()
     @setupFollowButton()
     @setupBelowTheFold()
@@ -56,6 +55,11 @@ module.exports = class ArtworkView extends Backbone.View
     @setupPartnerLocations()
     @setupAnnyang()
     @setupMonocleView()
+
+    new ImagesView
+      el: @$('.js-artwork-images')
+      model: @artwork
+      collection: @artwork.related().images
 
     # Handle all related content
     @setupRelatedLayers()
@@ -127,14 +131,14 @@ module.exports = class ArtworkView extends Backbone.View
 
   displayZigZag: ->
     (@$inquiryButton = @$('.artwork-contact-button, .artwork-inquiry-button').first())
-    @$inquiryButton.length and not @artwork.get('acquireable')
+    @$inquiryButton.length and not @artwork.get('acquireable') and @artwork.get('forsale')
 
   setupZigZag: ->
     if @displayZigZag()
       new ZigZagBanner
         persist: true
         name: 'inquiry'
-        message: 'Interested in this work?<br>Request more info here'
+        message: 'Interested in this work?<br>Contact the gallery here'
         $target: @$inquiryButton
 
   deltaTrackPageView: (fair) ->
@@ -218,18 +222,12 @@ module.exports = class ArtworkView extends Backbone.View
     @saved.addRepoArtworks @__saved__
     @saved.syncSavedArtworks()
 
-  setupRelatedPosts: ->
-    { method, view } =
-      if @currentUser?.hasLabFeature 'Articles'
-        method: 'relatedArticles', view: RelatedArticlesView
-      else
-        method: 'relatedPosts', view: RelatedPostsView
-
-    @artwork[method].fetch success: (response) =>
+  setupRelatedArticles: ->
+    @artwork.relatedArticles.fetch success: (response) =>
       if response.length
-        subView = new view
+        subView = new RelatedArticlesView
           className: 'ari-cell artwork-related-articles'
-          collection: @artwork[method]
+          collection: @artwork.relatedArticles
           numToShow: 2
         @$('#artwork-artist-related-extended').append subView.render().$el
 
@@ -313,16 +311,6 @@ module.exports = class ArtworkView extends Backbone.View
       width: '350px'
       media: @artwork.defaultImageUrl('large')
       description: @artwork.toAltText()
-
-  changeImage: (e) ->
-    e.preventDefault()
-    (@$artworkAdditionalImages ?= @$('.artwork-additional-image')).
-      removeClass 'is-active'
-    ($target = $(e.currentTarget)).
-      addClass 'is-active'
-    (@$artworkImage ?= @$('#the-artwork-image')).
-      attr('src', $target.data 'href')
-    @artwork.setActiveImage($target.data 'id')
 
   selectEdition: (e) ->
     @__selectedEdition__ = e.currentTarget.value

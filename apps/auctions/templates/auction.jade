@@ -1,5 +1,14 @@
+- feature = auction.related().feature
+
 .ap-featured-item
-  h3.af-name: a( href="/auction/#{auction.id}" )= auction.get('name')
+  a( href= auction.href() )
+    h3.af-name= auction.get('name')
+    if feature.hasImage()
+      img.af-hero-image(
+        src= feature.cropUrlFor({ width: 1200, height: 533 })
+        alt= feature.get('name')
+        title= feature.get('name')
+      )
 
   .af-metadata
     if auction.isOpen()
@@ -11,12 +20,6 @@
       .af-stats-status Bidding #{auction.get('auction_state')}
 
     if auction.isOpen()
-      a.af-go-button.avant-garde-button-black( href="/auction/#{auction.id}" )
+      a.af-go-button.avant-garde-button-black( href= auction.href() )
         | Go to auction
 
-  ul.af-artworks( data-id= auction.id ): a( href="/auction/#{auction.id}" )
-    for artwork in auction.related().artworks.models
-      li.af-artwork.hoverable-image-link: img(
-        src= artwork.defaultImage().imageUrl('medium')
-        alt= artwork.get('title')
-      )

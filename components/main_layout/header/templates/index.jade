@@ -11,7 +11,7 @@ header#main-layout-header(class= sd.HEADER_CLASS ? sd.HEADER_CLASS : '')
             | museums, and private collections.
       i#main-layout-welcome-logo.icon-logotype
 
-  nav.mlh-navbar( class=(sd.REDESIGNED_HEADER === 'old' ? 'is-search-expanded' : undefined) )
+  nav.mlh-navbar
     a#main-layout-header-home-logo( href='/', class=activeClass('/') ): i.icon-logo
     #main-layout-header-left.mlh-navbar-cell
       include ../../../search_bar/templates/index
@@ -22,11 +22,7 @@ header#main-layout-header(class= sd.HEADER_CLASS ? sd.HEADER_CLASS : '')
       a.mlh-top-nav-link( href='/institutions', class= activeClass('/institutions') ) Museums
       a.mlh-top-nav-link( href='/art-fairs', class= activeClass('/art-fairs') ) Fairs
       a.mlh-top-nav-link( href='/auctions', class= activeClass('/auctions') ) Auctions
-
-      if user && user.hasLabFeature('Articles')
-        a.mlh-top-nav-link( href='/magazine', class= activeClass('/magazine') ) Magazine
-      else
-        a.mlh-top-nav-link( href='/posts', class= activeClass('/posts') ) Posts
+      a.mlh-top-nav-link( href='/articles', class= activeClass('/posts') ) Posts
 
       span.mlh-top-nav-link.hover-pulldown( data-mode='hover' )
         | More
@@ -35,6 +31,7 @@ header#main-layout-header(class= sd.HEADER_CLASS ? sd.HEADER_CLASS : '')
           a( href='/gallery-partnerships' ) Artsy for Galleries
           a( href='/pdf/institutions-overview.pdf' ) Artsy for Institutions
           a( href='/feature/artsy-education' ) Artsy for Education
+          a( href='/categories' ) The Art Genome Project
           a( href='/about/jobs' ) Jobs
           a( href='/press' ) Press
 

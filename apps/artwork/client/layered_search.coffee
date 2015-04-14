@@ -35,19 +35,27 @@ module.exports.Layers = class Layers extends Backbone.Collection
   url: "#{API_URL}/api/v1/related/layers"
   model: Layer
 
-  initialize: (options) ->
+  initialize: (models, options) ->
     { @artwork, @fair } = options
 
   fetch: (options = {}) ->
     _.extend options, data: 'artwork[]': @artwork.id
     Backbone.Collection::fetch.call this, options
 
+  parse: (data)->
+    # hide all "for sale" layers if the collection has a fair
+    # or only for-sale works (which appears to be useless on its own)
+    if @fair or data.length is 1
+      _.reject data, (layer) -> layer.id is 'for-sale'
+    else
+      data
+
   # Ensure fairs are always first, followed by 'Most Similar',
   # and that 'For Sale' is always last
   sortMap: (type, id) ->
-    return  -1 if (type is 'fair')
-    return   0 if (type is 'synthetic') and (id is 'main')
-    return   @length if (type is 'synthetic') and (id is 'for-sale')
+    return -1 if (type is 'fair')
+    return  0 if (type is 'synthetic') and (id is 'main')
+    return  @length if (type is 'synthetic') and (id is 'for-sale')
     1
 
   comparator: (model) ->
@@ -64,7 +72,7 @@ module.exports.LayeredSearchView = class LayeredSearchView extends Backbone.View
     @setupLayers()
 
   setupLayers: ->
-    @layers = new Layers artwork: @artwork, fair: @fair
+    @layers = new Layers [], { artwork: @artwork, fair: @fair }
     @layers.fetch
       success: => @render()
       error: => @remove()
@@ -133,9 +141,8 @@ module.exports.LayeredSearchView = class LayeredSearchView extends Backbone.View
     @selectLayer() # Activate the first tab
 
   render: ->
-    # If only one layer is returned it will be "For sale"
-    # which, on its own, doesn't appear to have useful recommendations
-    return @remove() unless @layers.length > 1
+    # if there are no layers then remove the view
+    return @remove() unless @layers.length
 
     @$el.html template(layers: @layers)
     @postRender()

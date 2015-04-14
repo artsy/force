@@ -11,7 +11,7 @@ sections = require '../sections'
 describe 'Artist routes', ->
   beforeEach ->
     sinon.stub Backbone, 'sync'
-    @req = params: id: 'foo'
+    @req = params: { id: 'foo' }, get: (->), query: {}
     @res =
       render: sinon.stub()
       redirect: sinon.stub()
@@ -28,6 +28,7 @@ describe 'Artist routes', ->
       Backbone.sync.args[0][2].success fabricate 'artist', id: 'andy-foobar'
       Backbone.sync.args[1][2].success()
       _.each Backbone.sync.args[2..-1], (args) -> args[2].success()
+      _.last(Backbone.sync.args)[2].success()
       _.defer =>
         @res.render.args[0][0].should.equal 'index'
         @res.render.args[0][1].artist.get('id').should.equal 'andy-foobar'
@@ -38,6 +39,7 @@ describe 'Artist routes', ->
       Backbone.sync.args[0][2].success fabricate 'artist', id: 'andy-foobar'
       Backbone.sync.args[1][2].success()
       _.each Backbone.sync.args[2..-1], (args) -> args[2].success()
+      _.last(Backbone.sync.args)[2].success()
       _.defer =>
         @res.locals.sd.ARTIST.id.should.equal 'andy-foobar'
         done()
@@ -48,9 +50,39 @@ describe 'Artist routes', ->
       Backbone.sync.args[0][2].success fabricate 'artist', id: 'andy-foobar'
       Backbone.sync.args[1][2].success()
       _.each Backbone.sync.args[2..-1], (args) -> args[2].success()
+      _.last(Backbone.sync.args)[2].success()
       _.defer =>
         @res.redirect.args[0][0].should.equal '/artist/andy-foobar'
         done()
+
+    it 'sets the mode if either columns or table', (done) ->
+      @res.locals.sd.CURRENT_PATH = '/artist/bar'
+      routes.index @req, @res
+      Backbone.sync.args[0][2].success fabricate 'artist', id: 'andy-foobar'
+      Backbone.sync.args[1][2].success()
+      _.each Backbone.sync.args[2..-1], (args) -> args[2].success()
+      _.last(Backbone.sync.args)[2].success()
+      _.defer =>
+        @res.redirect.args[0][0].should.equal '/artist/andy-foobar'
+        done()
+
+    describe 'with a referrer', ->
+      beforeEach ->
+        @reqRestore = @req
+        @req.get = -> 'https://www.google.com/webhp#q=foobar'
+
+      afterEach ->
+        @req = @reqRestore
+
+      it 'parse the medium and passes it to Sharify', (done) ->
+        routes.index @req, @res
+        Backbone.sync.args[0][2].success fabricate 'artist', id: 'andy-foobar'
+        Backbone.sync.args[1][2].success()
+        _.each Backbone.sync.args[2..-1], (args) -> args[2].success()
+        _.last(Backbone.sync.args)[2].success()
+        _.defer =>
+          @res.locals.sd.MEDIUM.should.equal 'search'
+          done()
 
   describe '#follow', ->
     it 'redirect to artist page without user', ->

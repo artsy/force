@@ -22,7 +22,6 @@ module.exports = (artist, artworks) ->
   grabDates = ([xs, attr]) -> _.map xs.pluck(attr), Date.parse
 
   date = moment(_.max _.compact _.flatten _.map [
-    [artist.related().posts, 'last_promoted_at']
     [artist.related().shows, 'updated_at']
     [artworks, 'published_at']
   ], grabDates)

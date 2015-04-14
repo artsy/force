@@ -241,13 +241,16 @@ module.exports = class PartnerShow extends Backbone.Model
   upcoming: -> @get('status') is 'upcoming'
   running: -> @get('status') is 'running'
   closed: -> @get('status') is 'closed'
-  renderable: -> @get('eligible_artworks_count') > 0 || @get('images_count') > 2
 
-  # opens at any time between the previous and future weekend
-  openingThisWeek: ->
-    start = moment().day(-2).startOf('day')
-    end = moment().day(8).startOf('day')
+  # opens at any time between the previous monday and the next sunday if today is between monday and thursday,
+  # if between friday and sunday opens between previous monday and friday of the next week
+  openingThisWeek: (today = moment()) ->
+    start = moment(today).startOf('week').startOf('day')
     startAt = @startAtDate()
+    if moment(today).day() < 5
+      end = moment(today).endOf('week').endOf('day')
+    else
+      end = moment(today).endOf('week').add(6, 'days').endOf('day')
     start < startAt && end > startAt
 
   startAtDate: ->
@@ -257,17 +260,17 @@ module.exports = class PartnerShow extends Backbone.Model
     new Date(@get('end_at'))
 
   # Defaults to 5 days
-  isEndingSoon: (days = 5) ->
+  isEndingSoon: (days = 5, today = moment().startOf('day')) ->
     soon = moment.duration(days, 'days').valueOf()
-    diff = moment(@get('end_at')).diff(Date.new)
+    diff = moment(@endAtDate()).diff(today)
     diff <= soon and diff >= 0
 
-  endingIn: ->
-    days = moment(@get('end_at')).diff(Date.new, 'days')
+  endingIn: (today = moment().startOf('day')) ->
+    days = moment(@get('end_at')).diff(today, 'days')
     if days is 0 then 'today' else "in #{days} day#{if days is 1 then '' else 's'}"
 
-  isOpeningToday: ->
-    moment(@get('start_at')).diff(Date.new, 'days') is 0
+  isOpeningToday: (today = moment().startOf('day')) ->
+    moment(@get('start_at')).diff(today, 'days') is 0
 
   performers: ->
     artist.toJSONLDShort() for artist in @artists().models

@@ -7,14 +7,7 @@ Profile = require '../../../models/profile.coffee'
 ContactView = require './contact.coffee'
 CollectionView = require './collection.coffee'
 ShowsView = require './shows.coffee'
-articlesView = require './articles.coffee'
-postsView = require './posts.coffee'
-
-PostsView = if 'Articles' in (sd.CURRENT_USER?.lab_features or [])
-  articlesView
-else
-  postsView
-
+ArticlesView = require './articles.coffee'
 ArtistsView = require './artists.coffee'
 OverviewView = require './overview.coffee'
 tablistTemplate = -> require('../templates/tablist.jade') arguments...
@@ -27,7 +20,7 @@ sectionToView =
   collection: CollectionView
   shop: CollectionView
   shows: ShowsView
-  posts: PostsView
+  articles: ArticlesView
   artists: ArtistsView
   overview: OverviewView
 
@@ -45,9 +38,8 @@ module.exports = class PartnerView extends Backbone.View
     currentSection: 'overview'
 
   initialize: (options={}) ->
-    { @currentSection } = _.defaults options, @defaults
+    { @currentSection, @partner } = _.defaults options, @defaults
     @profile = @model # alias
-    @partner = new Partner @profile.get('owner')
     @listenTo @partner, 'sync', @initializeTablistAndContent
     @initializeCache()
     @initializePartner()
@@ -104,6 +96,18 @@ module.exports = class PartnerView extends Backbone.View
     unless _.contains @sections, @currentSection
       @renderSection (@currentSection = @sections?[0]), @sectionViewParams
 
+    # hide articles tab if this partner has no articles
+    $.ajax
+      url: "#{sd.POSITRON_URL}/api/articles"
+      data:
+        partner_id: sd.PROFILE && sd.PROFILE.owner._id
+        published: true
+        limit: 1
+      success: (res) ->
+        return if res.count > 0
+        $('.partner-tabs [href*=articles]').prev().hide()
+        $('.partner-tabs [href*=articles]').hide()
+
   initializeFollows: ->
     @following = new Following(null, kind: 'profile') if sd.CURRENT_USER?
 
@@ -128,8 +132,8 @@ module.exports = class PartnerView extends Backbone.View
   #
   getSections: ->
     # The order in the array will be used for presentation
-    gallery = ['overview', 'shows', 'artists', 'posts', 'contact']
-    institution = ['shows', 'collection', 'posts', 'shop', 'about']
+    gallery = ['overview', 'shows', 'artists', 'articles', 'contact']
+    institution = ['shows', 'collection', 'articles', 'shop', 'about']
     nonPartnerGallery = ['overview']
 
     if @profile.isGallery()
@@ -149,7 +153,7 @@ module.exports = class PartnerView extends Backbone.View
       collection: => @partner.get('published_not_for_sale_artworks_count') > 0
       contact: => true
       about: => true
-      posts: => @profile.hasPosts()
+      articles: => true
       shop: => @partner.get('published_for_sale_artworks_count') > 0
 
     _.filter sections, (s) -> criteria[s]?()

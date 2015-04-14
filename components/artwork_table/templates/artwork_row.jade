@@ -1,0 +1,88 @@
+- saleArtwork = artwork.related().saleArtwork
+- defaultImage = artwork.defaultImage()
+- maxDimension = 150
+- isAuction = saleArtwork.sale().isAuction() || false
+
+.artwork-table__row(data-artwork=artwork.id)
+  .artwork-table__cell.artwork-table__cell--image
+    - defaultImage = artwork.defaultImage()
+    - maxDimension = 150
+    - imageWidth = 300
+    a(href=artwork.href()).hoverable-image-link
+      img.artwork-item-image(
+        src=defaultImage.imageUrlForWidth(imageWidth)
+        nopin=artwork.noPinAttr()
+        alt=artwork.toAltText()
+        width=defaultImage.maxWidthForWidth(150, maxDimension)
+        height=defaultImage.maxHeightForWidth(150, maxDimension)
+      )
+
+  .artwork-table__cell.artwork-table__cell--caption
+    if artwork.has('artist')
+      a(href=artwork.href())
+        p.artwork-item-artist.artwork-item-overflow= artwork.artistName()
+        p.artwork-item-title.artwork-item-overflow!= artwork.titleAndYear()
+        p.artwork-item-medium= artwork.get('medium')
+        unless artwork.isMultipleEditions()
+        .artwork-detail-dimensions
+          .amd-imperial!= artwork.dimensions({ metric: 'in', format: 'superscript' })
+          .amd-metric= artwork.dimensions({ metric: 'cm', format: 'decimal' })
+
+  .artwork-table__cell.artwork-table__cell--location
+      if artwork.partnerLink()
+        a.artwork-partner-name( href= artwork.partnerLink() )
+          = artwork.partnerName()
+      else
+        | #{artwork.partnerName()}
+      span#artwork-partner-locations
+        //- Rendered client-side
+
+  .artwork-table__cell.artwork-table__cell--inquiry
+    .inner
+      if (artwork.isPriceDisplayable() || artwork.get('sale_message') == 'Contact For Price')
+        if !artwork.get('sold')
+          .artwork-meta-price
+            .artwork-meta-price-amount= artwork.priceDisplay()
+      else
+        unless artwork.isContactable()
+          a.artwork-item-more-info.avant-garde-button-white(
+            href=artwork.href()
+            data-id=artwork.get('_id')
+          ) More Info
+
+      if saleArtwork.id || showBlurbs
+        - saleArtwork = artwork.related().saleArtwork
+        if artwork.has('blurb') && artwork.get('blurb')
+          .artwork-item-blurb!= artwork.mdToHtml('blurb')
+        else
+          if saleArtwork && saleArtwork.get('user_notes')
+            .artwork-item-blurb!= saleArtwork.mdToHtml('user_notes')
+
+      if saleArtwork.id || showBlurbs
+        a.artwork-item-more-info.avant-garde-button-white(
+          href=artwork.href()
+          data-id=artwork.get('_id')
+        ) More Info
+
+      if isAuction && !artwork.get('sold')
+        a.artwork-item-bid.avant-garde-button-white.is-bottom(
+          href=artwork.href()
+          data-id=artwork.get('_id')
+        ) Bid
+
+        if artwork.get('acquireable')
+          a.artwork-item-buy-now.avant-garde-button-white.is-bottom(
+            href=artwork.href(), data-id=artwork.get('id')
+          ) Buy Now
+
+      if displayPurchase && !isAuction
+        if artwork.get('acquireable')
+          a.artwork-item-buy.avant-garde-button-white.is-bottom(
+            href=artwork.href(), data-id=artwork.get('id')
+          ) Buy
+        else if artwork.get('sold')
+          .artwork-item-sold Sold
+        else if artwork.isContactable()
+          a.artwork-item-contact-seller.avant-garde-button-white.is-bottom(
+            data-id=artwork.get('id')
+          ) Contact #{artwork.contactLabel()}

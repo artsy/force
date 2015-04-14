@@ -31,6 +31,8 @@ PartnerShows = require './shows'
     near: city.coords.toString()
     sort: '-start_at'
     size: pageSize
+    displayable: true
+    at_a_fair: false
 
   Q.allSettled([
     upcoming.fetch(cache: true, data: _.defaults(status: 'upcoming', criteria))

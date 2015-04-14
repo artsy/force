@@ -112,3 +112,15 @@ describe 'Image Sizes Mixin', ->
       @model.resizeDimensionsFor(width: 4000).should.eql width: 4000, height: 7510
       @model.resizeDimensionsFor(width: 4000, height: 4000).should.eql width: 2130, height: 4000
       @model.resizeDimensionsFor(height: 4000).should.eql width: 2130, height: 4000
+
+  describe '#factor', ->
+    it 'returns a value that can be multiplied into a percentage for the corresponding value at 1 (100%)', ->
+      @model.set original_height: 2253, original_width: 1200
+      @model.factor('width').should.equal 1.877
+      @model.factor('height').should.equal 0.532
+
+    # This is a very corner case, but apparently possible
+    it 'returns 1 if there are no dimensions', ->
+      @model.unset 'original_width'
+      @model.unset 'original_height'
+      @model.factor('width').should.equal 1

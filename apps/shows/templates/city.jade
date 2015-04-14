@@ -13,12 +13,15 @@ block body
 
     //- Only display opening if we are on the first page
     if opening.length && (current.state.currentPage <= 1)
-      h1.shows-page-header Opening this week
+      h1.shows-page-header Opening This Week
       - var shows = opening
       .shows-page-featured-section: include ../../../components/featured_shows/small
 
     if current.length
-      h2.shows-page-header Current Shows in #{city.name} (#{current.state.totalRecords})
+      h2.shows-page-header
+        | Current Shows in #{city.name}
+        if current.state.totalRecords
+          |  (#{current.state.totalRecords})
       - var shows = current.models
       .shows-page-featured-section
         include ../../../components/featured_shows/small

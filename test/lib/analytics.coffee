@@ -215,49 +215,6 @@ describe 'analytics', ->
             done()
           , 1000
 
-      describe '#splitTest', ->
-
-        beforeEach ->
-          rewiredAnalytics.__set__ 'sd', { ENABLE_AB_TEST: true }
-          rewiredAnalytics.getProperty = -> null
-          @_ = rewiredAnalytics.__get__ '_'
-          sinon.stub @_, 'random'
-
-        afterEach ->
-          @_.random.restore()
-
-        it 'fails if the percents dont add up', ->
-          (-> rewiredAnalytics.splitTest 'foo', { a: 0.1, b: 0.2, c: 0.1 }).should.throw(
-            "Your percent values for paths must add up to 1.0"
-          )
-
-        it 'returns a random path', ->
-          @_.random.returns 30
-          rewiredAnalytics.splitTest('foo', { a: 0.5, b: 0.2, c: 0.3 }).should.equal 'a'
-          @_.random.returns 60
-          rewiredAnalytics.splitTest('foo', { a: 0.5, b: 0.2, c: 0.3 }).should.equal 'b'
-          @_.random.returns 90
-          rewiredAnalytics.splitTest('foo', { a: 0.5, b: 0.2, c: 0.3 }).should.equal 'c'
-
-    describe '#abTest', ->
-
-      it 'returns true if enabled', ->
-        rewiredAnalytics mixpanel: @mixpanelStub, ga: @gaStub, location: { pathname: 'foobar' }
-        rewiredAnalytics.getProperty = -> 'enabled'
-        rewiredAnalytics.__set__ 'sd', { ENABLE_AB_TEST: true }
-        rewiredAnalytics.abTest('foo').should.be.ok
-
-      it 'returns false if disabled', ->
-        rewiredAnalytics mixpanel: @mixpanelStub, ga: @gaStub, location: { pathname: 'foobar' }
-        rewiredAnalytics.getProperty = -> 'disabled'
-        rewiredAnalytics.__set__ 'sd', { ENABLE_AB_TEST: true }
-        rewiredAnalytics.abTest('foo').should.not.be.ok
-
-      it 'returns false if ab test is not enabled', ->
-        rewiredAnalytics mixpanel: @mixpanelStub, ga: @gaStub, location: { pathname: 'foobar' }
-        rewiredAnalytics.__set__ 'sd', { ENABLE_AB_TEST: false }
-        rewiredAnalytics.abTest('foo').should.not.be.ok
-
     describe '#delta', ->
       it 'appends a tracker pixel', ->
         sd.DELTA_HOST = 'testhost'

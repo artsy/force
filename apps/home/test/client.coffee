@@ -13,7 +13,7 @@ describe 'HeroUnitView', ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'
 
-      featuredLinks = exploreSections = featuredArtists = featuredPosts =
+      featuredLinks = exploreSections = featuredArtists = featuredArticles =
         new Items [fabricate 'featured_link'], item_type: 'FeaturedLink'
       featuredShows = new Items [fabricate 'partner_show'], item_type: 'PartnerShow'
 
@@ -22,7 +22,7 @@ describe 'HeroUnitView', ->
         featuredLinks: featuredLinks
         exploreSections: exploreSections
         featuredArtists: featuredArtists
-        featuredPosts: featuredPosts
+        featuredArticles: featuredArticles
         featuredShows: featuredShows
         exploreSections: []
         sd: {}
@@ -77,7 +77,7 @@ describe 'Homepage init code', ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'
 
-      featuredLinks = exploreSections = featuredArtists = featuredPosts =
+      featuredLinks = exploreSections = featuredArtists = featuredArticles =
         new Items [fabricate 'featured_link'], item_type: 'FeaturedLink'
       featuredShows = new Items [fabricate 'partner_show'], item_type: 'PartnerShow'
 
@@ -86,7 +86,7 @@ describe 'Homepage init code', ->
         featuredLinks: featuredLinks
         exploreSections: exploreSections
         featuredArtists: featuredArtists
-        featuredPosts: featuredPosts
+        featuredArticles: featuredArticles
         featuredShows: featuredShows
         exploreSections: []
         sd: {}

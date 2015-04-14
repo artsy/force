@@ -13,7 +13,8 @@ block body
     h1.large-garamond-header= article.get('title')
     #articles-lead-paragraph!= article.get('lead_paragraph')
     #articles-show-author
-      a( href="/#{article.get('author').profile_handle}" )= article.get('author').name
+      a( href="/#{article.related().author.get('profile_handle')}" )
+        = article.related().author.get('name')
     #articles-show-date
       = moment(article.get('published_at')).format('MMM Do, YYYY h:mm a')
     .articles-social

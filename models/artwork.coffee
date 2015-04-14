@@ -23,9 +23,6 @@ module.exports = class Artwork extends Backbone.Model
   bidSuccessUrl: -> "#{@href()}/confirm-bid"
 
   initialize: ->
-    # Defer Post model require to prevent circular dependency
-    @relatedPosts = new Backbone.Collection [], model: require('./post.coffee')
-    @relatedPosts.url = "#{sd.API_URL}/api/v1/related/posts?artwork[]=#{@id}"
     Articles = require '../collections/articles.coffee'
     @relatedArticles = new Articles
     @relatedArticles.url += "?artwork_id=#{@get '_id'}&published=true"
@@ -33,44 +30,14 @@ module.exports = class Artwork extends Backbone.Model
 
   parse: (response, options) ->
     @editions = new Backbone.Collection response?.edition_sets, model: Edition
-    @setImagesCollection response?.images
-
-    @setDefaultImage()
-
     response
 
-  setImagesCollection: (images) ->
-    @images = new Backbone.Collection images, model: AdditionalImage, comparator: 'position'
-
-  # Ensure the default image is the first image
-  setDefaultImage: ->
-    @defaultImage().set 'position', 0
-    @images?.sort silent: true
-
   defaultImage: ->
-    # Create an images collection if one doesn't already exist (example: artworks in a post)
-    if @get('images') and not @images
-      @setImagesCollection @get('images')
-
-    # Blank additionalImage is to handle works without images
-    @images?.findWhere(is_default: true) or @images?.first() or new AdditionalImage()
+    @related().images.default() or
+    new AdditionalImage
 
   embedUrl: ->
     "#{sd.ARTWORK_EMBED_URL}#{sd.APP_URL}#{@href()}"
-
-  hasAdditionalImages: ->
-    @images?.length > 1
-
-  # return {Array} images without the default image
-  additionalImages: ->
-    @images?.reject (image) =>
-      image.id is @defaultImage().id
-
-  setActiveImage: (id) ->
-    @__activeImage__ = @images.findWhere id: id
-
-  activeImage: ->
-    @__activeImage__ ?= @defaultImage()
 
   defaultImageUrl: (version = 'medium') ->
     @defaultImage().imageUrl version
@@ -136,8 +103,8 @@ module.exports = class Artwork extends Backbone.Model
   isHangable: ->
     return false if @get('category')?.match /sculpture|installation|design/i
     return false if @hasDimension('depth')
-    return true  if @hasDimension('width') and @hasDimension('height') and not @tooBig()
-    return true  if @hasDimension('diameter')
+    return false if @hasDimension('diameter')
+    return true if @hasDimension('width') and @hasDimension('height') and not @tooBig()
     false
 
   # Should we include a button to contact the partner?
@@ -169,6 +136,7 @@ module.exports = class Artwork extends Backbone.Model
   #
   # return {Boolean}
   hasMoreInfo: ->
+    not _.isEmpty(@get('blurb')) or
     not _.isEmpty(@get('provenance')) or
     not _.isEmpty(@get('exhibition_history')) or
     not _.isEmpty(@get('signature')) or

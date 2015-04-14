@@ -1,10 +1,12 @@
-h2.avant-garde-header-center Related Artworks
+if layers.fair
+  h2.avant-garde-header-center Related Artworks at #{layers.fair.get('name')}
+else
+  h2.avant-garde-header-center Related Artworks
+
 nav.layered-search-layers
-  for layer in layers.models
-    a.layered-search-layer-button.faux-underline-hover( data-id=layer.id, href=layer.get('more_info_url') )
-      if layer.get('fair')
-        | Works from #{layer.get('fair').get('name')}
-      else
+  unless layers.fair
+    for layer in layers.models
+      a.layered-search-layer-button.faux-underline-hover( data-id=layer.id, href=layer.get('more_info_url') )
         = layer.get('name')
 #layered-search-results.artwork-columns
   #layered-search-results-container: .loading-spinner

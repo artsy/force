@@ -15,7 +15,8 @@
   SENTRY_PUBLIC_DSN, SHOW_AUCTIONS_IN_HEADER, EMPTY_COLLECTION_SET_ID,
   GEMINI_S3_ACCESS_KEY, GEMINI_APP, GEMINI_ACCOUNT_KEY, BIDDER_H1_COPY,
   BIDDER_H2_COPY, APPLICATION_NAME, EMBEDLY_KEY, DISABLE_IMAGE_PROXY,
-  POSITRON_URL, CHECK_FOR_AUCTION_REMINDER, GENOME_URL } = config = require "../config"
+  POSITRON_URL, CHECK_FOR_AUCTION_REMINDER, GENOME_URL,
+  EDITORIAL_ADMINS } = config = require "../config"
 { parse, format } = require 'url'
 _ = require 'underscore'
 express = require "express"
@@ -47,7 +48,7 @@ favicon = require 'serve-favicon'
 logger = require 'morgan'
 editRequest = require './edit_request'
 raven = require 'raven'
-fs = require 'graceful-fs'
+fs = require 'fs'
 artsyError = require 'artsy-error-handler'
 cache = require './cache'
 timeout = require 'connect-timeout'
@@ -95,6 +96,7 @@ sharify.data =
   SHOW_AUCTIONS_IN_HEADER: SHOW_AUCTIONS_IN_HEADER
   CDN_URL: process.env.CDN_URL
   CHECK_FOR_AUCTION_REMINDER: CHECK_FOR_AUCTION_REMINDER
+  EDITORIAL_ADMINS: EDITORIAL_ADMINS
 
 CurrentUser = require '../models/current_user'
 
@@ -126,14 +128,15 @@ module.exports = (app) ->
     app.use require("browserify-dev-middleware")
       src: path.resolve(__dirname, "../")
       transforms: [require("jadeify"), require('caching-coffeeify')]
+      insertGlobals: true
   if "test" is NODE_ENV
-    app.use "/__api", require("../test/helpers/integration.coffee").api
     app.use (req, res, next) ->
       return next() unless req.query['test-login']
       req.user = new CurrentUser(
         require('antigravity').fabricate('user', accessToken: 'footoken')
       )
       next()
+    app.use "/__gravity", require("antigravity").server
 
   # Body parser has to be after proxy middleware for
   # node-http-proxy to work with POST/PUT/DELETE
@@ -196,6 +199,7 @@ module.exports = (app) ->
   app.use splitTestMiddleware
 
   # Mount apps
+  app.use require "../apps/legacy_routes"
   app.use require "../apps/home"
   # Needs to be above artwork and artist routes to support the /type/:id/* routes
   app.use require "../apps/apply"
@@ -216,7 +220,6 @@ module.exports = (app) ->
   app.use require "../apps/gallery_insights"
   app.use require "../apps/gallery_partnerships"
   app.use require "../apps/gene"
-  app.use require "../apps/legacy_routes"
   app.use require "../apps/notifications"
   app.use require "../apps/order"
   app.use require "../apps/personalize"
@@ -226,17 +229,14 @@ module.exports = (app) ->
   app.use require "../apps/shows"
   app.use require "../apps/tag"
   app.use require "../apps/articles"
-  app.use require "../apps/post"
-  app.use require "../apps/posts"
   app.use require "../apps/favorites_follows"
   app.use require "../apps/unsubscribe"
   app.use require "../apps/unsupported_browser"
   # Temporary, until we update gravity and data
-  app.use require "../apps/fair_organizer"
-  # Profile middleware and apps that use profiles
   app.use require "../apps/profile"
   app.use require "../apps/user_profile"
   app.use require "../apps/partner"
+  app.use require "../apps/fair_organizer"
   app.use require "../apps/fair"
   app.use require "../apps/user"
   app.use require "../apps/style_guide"

@@ -9,12 +9,15 @@ h2
 include ../../bordered_pulldown/mixin
 
 .artwork-filter-sort-count
+  .artwork-filter-view-mode
+    .artwork-filter-view-mode__toggle(data-mode="grid" class= mode == 'grid' ? 'is-active' : '')
+      include ../../main_layout/public/icons/grid.svg
+    .artwork-filter-view-mode__toggle(data-mode="list" class= mode == 'list' ? 'is-active' : '')
+      include ../../main_layout/public/icons/list.svg
+
   .artwork-filter-sort-count-pulldown
     +bordered-pulldown(filter.currentSort(), 'Sort by:')
-      -var sorts = filter.sorts
-      if filter.getSplitTestResult() == 'merchandisability'
-        - sorts = { '-merchandisability': 'Relevance', '-date_added': 'Recently Added', '-date_created': 'Artwork Year (desc.)', 'date_created': 'Artwork Year (asc.)' }
-      for label, value in sorts
+      for label, value in filter.sorts
         a(
           data-value= value
           data-key='sort'

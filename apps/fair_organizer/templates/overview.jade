@@ -15,11 +15,10 @@ block body
     .fair-organizer-top
       .fair-organizer-top__left
         .fair-organizer-top__icon
-          img.large-profile-image( alt=fair.get('name'), title=fair.get('name'), src=profile.icon().imageUrl('square') )
+          img.large-profile-image( alt=fairOrg.get('name'), title=fairOrg.get('name'), src=profile.icon().imageUrl('square') )
         .fair-organizer-top__header
-          h1 Preview The Armory
-          h1 Show 2015 on Artsy
-        .fair-organizer-top__sub-header Discover and collect works before the fair opens
+          h1 Explore #{fairOrg.get('name')} on Artsy
+        .fair-organizer-top__sub-header Browse past editions and stay connected with the latest news
         if !user
           a.fair-organizer-top__notify.avant-garde-button-black(
             href='/log_in', data-mode='login' ) Get notified
@@ -31,16 +30,16 @@ block body
               ul.clock-value
 
       .fair-organizer-top__right
-        .fair-organizer-top__right__header-img( style="background-image: url(" + fair.imageUrl('large_rectangle') + ")" )
+        .fair-organizer-top__right__header-img( style="background-image: url(" + newestFair.imageUrl('large_rectangle') + ")" )
 
     .fair-organizer-content
       .fair-organizer-content__left
-        .fair-organizer-content__header About The Armory Show
+        .fair-organizer-content__header About #{fairOrg.get('name')}
         .fair-organizer-content__date
-          p #{fair.location().get('city')}
-          p #{fair.formatDates()}
-        .fair-organizer-content__copy!= fair.mdToHtml('about')
-        .fair-organizer-content__links!= fair.mdToHtml('links')
+          //- p #{newestFair.location().get('city')}
+          p #{newestFair.formatDates()}
+        .fair-organizer-content__copy!= fairOrg.mdToHtml('about')
+        //- .fair-organizer-content__links!= fairOrg.mdToHtml('links')
 
       .fair-organizer-content__right
         .fair-organizer-content__header Revisit Previous Fairs
@@ -48,7 +47,7 @@ block body
           for fair in pastFairs
             include fair
 
-        .fair-organizer-content__header Latest from The Armory Show
+        .fair-organizer-content__header Latest from #{fairOrg.get('name')}
         .fair-organizer-content__section.fair-organizer-content__section--articles
           #fair-organizer-articles
             include ./articles
@@ -63,5 +62,5 @@ block body
               br
               i Download Artsy for iPhone
               br
-              | — Your personal guide to The Armory Show
+              //- | — Your personal guide to #{fairOrg.get('name'}
 

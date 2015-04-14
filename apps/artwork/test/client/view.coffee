@@ -22,7 +22,7 @@ describe 'ArtworkView', ->
       done()
 
   after ->
-    benv.teardown()
+    benv.teardown false
 
   beforeEach (done) ->
     @artist = new Artist(fabricate 'artist')
@@ -274,8 +274,12 @@ describe 'ArtworkView', ->
     describe '#displayZigZag', ->
       beforeEach ->
         @view.$el.append $('<div class="artwork-inquiry-button"></div>')
-      it 'should display as long as the work is not acquireable', ->
-        @view.artwork.set 'acquireable', false
+      it 'should display as long as the work is not acquireable and it is for sale', ->
+        @view.artwork.set { 'acquireable': false, 'forsale': true}
         @view.displayZigZag().should.be.true
-        @view.artwork.set 'acquireable', true
+        @view.artwork.set { 'acquireable': true, 'forsale': true}
+        @view.displayZigZag().should.be.false
+        @view.artwork.set { 'acquireable': false, 'forsale': false}
+        @view.displayZigZag().should.be.false
+        @view.artwork.set { 'acquireable': true, 'forsale': false}
         @view.displayZigZag().should.be.false

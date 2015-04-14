@@ -1,7 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 ArtworkCollection = require './artwork_collection.coffee'
-Post = require './post.coffee'
 Genes = require '../collections/genes.coffee'
 Artists = require '../collections/artists.coffee'
 Artworks = require '../collections/artworks.coffee'

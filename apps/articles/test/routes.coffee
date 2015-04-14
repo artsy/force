@@ -44,10 +44,10 @@ describe 'Article routes', ->
       @res.render.args[0][1].footerArticles[0].get('title')
         .should.equal 'Bar'
 
-  describe '#magazine', ->
+  describe '#articles', ->
 
     it 'fetches published articles', ->
-      routes.magazine @req, @res, @next
+      routes.articles @req, @res, @next
       Backbone.sync.args[0][2].success results: [
         { tier: 1, id: 'a' }
         { tier: 1, id: 'b' }
@@ -62,7 +62,7 @@ describe 'Article routes', ->
 
   describe '#redirectPost', ->
 
-    it 'lets 404 through', ->
+    it 'redirects posts to articles', ->
+      @req.url = 'post/foo'
       routes.redirectPost @req, @res, @next
-      Backbone.sync.args[0][2].error body: status: 404
-      @next.called.should.be.ok
+      @res.redirect.args[0][1].should.containEql 'article/foo'

@@ -1,6 +1,6 @@
 @import '../components/stylus_lib'
 
-banner-box-width = 345px
+banner-box-width = 375px
 banner-box-height = 105px
 // I
 one-width = 150px
@@ -8,9 +8,9 @@ one-height = 56px
 one-arrow-size = 40px
 // II
 two-height = 64px
-two-mask-width = 65px
+two-width = 65px
 // III
-three-width = 260px
+three-width = banner-box-width - (one-width - two-width)
 three-height = 72px
 
 close-size = 50px
@@ -79,7 +79,7 @@ message-padding = ((three-height - close-size) / 2)
   height 100%
   left (banner-box-width - one-width)
   &.is-in
-    width two-mask-width
+    width two-width
   &:after
     display block
     position absolute

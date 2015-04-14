@@ -1,4 +1,4 @@
-fs = require 'graceful-fs'
+fs = require 'fs'
 jade = require 'jade'
 Page = require '../../../models/page'
 { fabricate } = require 'antigravity'

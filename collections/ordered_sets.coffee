@@ -18,14 +18,21 @@ class OrderedSets extends Backbone.Collection
 
   # This could simply be replaced with:
   # new OrderedSets(owner_type: 'your_owner_type', owner_id: 'your_owner_id', sort: 'key')
-  fetchItemsByOwner: (ownerType, ownerId, cache = false) ->
+  fetchItemsByOwner: (ownerType, ownerId, options = {}) ->
+    options = _.defaults options,
+      cache: true
+      data: display_on_desktop: true
+
     dfd = Q.defer()
+
     @fetch
       url: "#{sd.API_URL}/api/v1/sets?owner_type=#{ownerType}&owner_id=#{ownerId}&sort=key"
-      cache: cache
-      data: display_on_desktop: true
+      cache: options.cache
+      data: options.data
+      error: dfd.resolve
       success: =>
-        @fetchSets(cache: cache).then dfd.resolve
+        @fetchSets(cache: options.cache).then dfd.resolve
+
     dfd.promise
 
   fetchSets: (options = {}) ->

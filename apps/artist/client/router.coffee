@@ -11,6 +11,9 @@ ArticlesView = require './views/articles.coffee'
 RelatedArtistsView = require './views/related_artists.coffee'
 PublicationsView = require './views/publications.coffee'
 CollectionsView = require './views/collections.coffee'
+mediator = require '../../../lib/mediator.coffee'
+splitTest = require '../../../components/split_test/index.coffee'
+attachCTA = require './cta.coffee'
 
 module.exports = class ArtistRouter extends Backbone.Router
   routes:
@@ -50,6 +53,11 @@ module.exports = class ArtistRouter extends Backbone.Router
 
   overview: ->
     @view = new OverviewView @options
+    if splitTest('artist_cta').outcome() is 'zig_zag'
+      attachCTA @model
+    else
+      mediator.on 'overview:fetches:complete', =>
+        attachCTA @model
 
   works: ->
     @view = new WorksView @options

@@ -5,6 +5,7 @@
 //
 
 @import '../../stylus_lib'
+@import '../../eggs/invert'
 
 search-bar-input-placeholder-white()
   color white
@@ -18,7 +19,7 @@ search-bar-input-placeholder-white()
     margin-top (main-header-height + content-margin-top)
   #main-layout-header
     position fixed
-    z-index 2
+    z-index zindex-primary-nav
     // Prevent repaints
     force-hardware-acceleration()
     &.force-position-absolute

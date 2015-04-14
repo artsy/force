@@ -9,15 +9,16 @@
         form.auth-form
           .auth-errors
           input.bordered-input.is-block(
-            name='name', type='text', placeholder='Full Name', required, autofocus= autofocus
+            name='name', type='text', placeholder='Full Name', value= name, required, autofocus= autofocus
           )
           input#js-mailcheck-input-modal.bordered-input.is-block(
-            name='email', type='email', placeholder='Email', required
+            name='email', type='email', placeholder='Email', value= email, required
           )
           #js-mailcheck-hint-modal
           input.bordered-input.is-block(
             name= 'password'
             type= 'password'
+            value= password
             placeholder= 'Password'
             autocomplete= 'on'
             pattern= '.{6,}'

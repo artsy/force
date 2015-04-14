@@ -32,14 +32,14 @@ describe 'UserDeleteForm', ->
     it 'disables the submit button until a confirmation is checked', ->
       @view.$confirm.is(':checked').should.be.false
       @view.$button.is(':disabled').should.be.true
-      @view.$confirm.click()
+      @view.$confirm.trigger 'click'
       @view.$confirm.is(':checked').should.be.true
       @view.$button.is(':disabled').should.be.false
 
     it 'allows the user to enter a reason for deleting', ->
       @view.$explanation.val 'Removing an extra test account.'
-      @view.$confirm.click()
-      @view.$button.click()
+      @view.$confirm.trigger 'click'
+      @view.$button.trigger 'click'
       $.ajax.args[0][0].data.explanation.should.equal @view.$explanation.val()
 
   describe '#submit', ->
@@ -47,9 +47,8 @@ describe 'UserDeleteForm', ->
       beforeEach ->
         $.ajax.restore()
         sinon.stub($, 'ajax').yieldsTo("success")
-        @view.$confirm.click()
-        @view.$button.click()
-
+        @view.$confirm.trigger 'click'
+        @view.$button.trigger 'click'
       it 'DELETEs the user', ->
         $.ajax.args[0][0].method.should.equal 'DELETE'
         $.ajax.args[0][0].data.explanation.should.equal ''

@@ -13,3 +13,7 @@ $el.on 'click', '#for-sale', ->
 
 $el.on 'click', '#artwork-see-more', ->
   track.click 'Clicked "See More" for artist artwork filter results'
+
+$el.on 'click', '.artwork-filter-view-mode__toggle', (e)->
+  $target = $(e.currentTarget)
+  track.click "Toggled artwork view mode to #{$target.data('mode')}"

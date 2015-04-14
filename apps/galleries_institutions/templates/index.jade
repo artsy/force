@@ -18,8 +18,6 @@ block body
               = ' '
               span.galleries-institutions-count-label Selected #{copy.adjective} Partners
 
-        include ./nav
-
       h1.galleries-institutions-title
         = copy.header
 
@@ -29,5 +27,3 @@ block body
     if aToZGroup
       section.galleries-institutions-list
         include ../../../components/a_to_z_list/template
-      footer
-        include ./nav

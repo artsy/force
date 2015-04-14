@@ -9,23 +9,23 @@ Artist = require '../../../models/artist'
 describe 'ArtworkFilterView', ->
   before (done) ->
     benv.setup =>
-      benv.expose $: benv.require 'jquery'
+      benv.expose
+        $: benv.require 'jquery'
+        sd: {}
       Backbone.$ = $
       @ArtworkFilterView = benv.requireWithJadeify resolve(__dirname, '../view'), ['template', 'filterTemplate', 'headerTemplate']
       @ArtworkFilterView.__set__ 'ArtworkColumnsView', sinon.stub().returns { length: -> 999 }
-      @ArtworkFilterView.__set__ 'BorderedPulldown', sinon.stub()
-      @SplitTest = require '../../split_test/split_test.coffee'
-      @setStub = sinon.stub(@SplitTest::, 'outcome')
+      @ArtworkFilterView.__set__ 'ArtworkTableView', sinon.stub().returns { length: -> 999 }
+      @ArtworkFilterView.__set__ 'BorderedPulldown', sinon.stub().returns { undelegateEvents: -> 1 }
       done()
 
   after ->
-    @setStub.restore()
     benv.teardown()
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
     @model = new Artist fabricate 'artist', id: 'foo-bar'
-    @view = new @ArtworkFilterView model: @model
+    @view = new @ArtworkFilterView model: @model, mode: 'grid'
 
   afterEach ->
     Backbone.sync.restore()
@@ -40,7 +40,7 @@ describe 'ArtworkFilterView', ->
     describe '#render', ->
       it 'renders the container template', ->
         @view.$el.html().should.containEql 'artwork-filter'
-        @view.$el.html().should.containEql 'artwork-columns'
+        @view.$el.html().should.containEql 'artwork-section'
 
     it 'fetches the filter', ->
       Backbone.sync.args[0][1].url().should.containEql '/api/v1/search/filtered/artist/foo-bar/suggest'
@@ -55,6 +55,22 @@ describe 'ArtworkFilterView', ->
     it 'removes itself if the initial filter state errors', ->
       Backbone.sync.args[0][2].error {}
       @view.remove.called.should.be.true
+
+    it 'starts in grid mode', ->
+      @view.viewMode.get('mode').should.equal 'grid'
+
+  describe '#changeViewMode', ->
+    beforeEach ->
+      Backbone.sync.args[0][2].success fabricate 'artist_filtered_search_suggest'
+
+    it 'sets the view mode when the toggle is clicked', ->
+      @view.$('.artwork-filter-view-mode__toggle[data-mode=list]').click()
+      @view.viewMode.get('mode').should.eql 'list'
+
+    it 're-renders the artworks when the view mode is changed', ->
+      sinon.spy @ArtworkFilterView::, 'view'
+      @view.$('.artwork-filter-view-mode__toggle[data-mode=list]').click()
+      @ArtworkFilterView::view.called.should.be.true
 
   describe '#renderFilter', ->
     beforeEach ->
@@ -78,18 +94,18 @@ describe 'ArtworkFilterView', ->
 
     describe '#handleArtworksState', ->
       it 'sets the state for the artworks container + button depending on the request event', ->
-        _.isUndefined(@view.$columns.attr 'data-state').should.be.true
+        _.isUndefined(@view.$artworks.attr 'data-state').should.be.true
         @view.artworks.trigger 'request'
-        @view.$columns.attr('data-state').should.equal 'loading'
+        @view.$artworks.attr('data-state').should.equal 'loading'
         @view.$button.attr('data-state').should.equal 'loading'
         @view.artworks.trigger 'sync'
-        @view.$columns.attr('data-state').should.equal 'loaded'
+        @view.$artworks.attr('data-state').should.equal 'loaded'
         @view.$button.attr('data-state').should.equal 'loaded'
         @view.artworks.trigger 'request'
-        @view.$columns.attr('data-state').should.equal 'loading'
+        @view.$artworks.attr('data-state').should.equal 'loading'
         @view.$button.attr('data-state').should.equal 'loading'
         @view.artworks.trigger 'error'
-        @view.$columns.attr('data-state').should.equal 'loaded'
+        @view.$artworks.attr('data-state').should.equal 'loaded'
         @view.$button.attr('data-state').should.equal 'loaded'
 
   describe '#loadNextPage', ->
@@ -166,7 +182,7 @@ describe 'ArtworkFilterView', ->
     beforeEach ->
       Backbone.sync.args[0][2].success fabricate 'artist_filtered_search_suggest'
 
-    it 'fetches the artworks, toggling the boolean filter criteria', ->
+    xit 'fetches the artworks, toggling the boolean filter criteria', ->
       @view.$('input[type="checkbox"]').first().click()
       @view.filter.selected.attributes.should.eql price_range: '-1:1000000000000'
       _.last(Backbone.sync.args)[2].data.should.eql price_range: '-1:1000000000000'
@@ -177,7 +193,7 @@ describe 'ArtworkFilterView', ->
   describe '#setButtonState', ->
     beforeEach ->
       @columnLength = 0
-      @view.columns = length: => @columnLength
+      @view.artworksView = length: => @columnLength
 
     it 'sets the correct button state when there is 1 remaining artwork', ->
       @view.filter.set 'total', 10

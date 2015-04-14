@@ -40,9 +40,10 @@ module.exports = class AuthModalView extends ModalView
     mode = mode: options.mode if options.mode
     @state = new State mode
 
-    @templateData =
+    @templateData = _.extend {
       copy: @renderCopy(options.copy)
       redirectTo: @redirectTo or location.pathname
+    }, options?.userData
 
     @listenTo @state, 'change:mode', @reRender
     @listenTo @state, 'change:mode', @logState
@@ -55,8 +56,8 @@ module.exports = class AuthModalView extends ModalView
     @logState()
 
   initializeMailcheck: ->
-    if @state.get('mode') == 'register'
-      Mailcheck.run('#js-mailcheck-input-modal','#js-mailcheck-hint-modal',false)
+    if @state.get('mode') is 'register'
+      Mailcheck.run('#js-mailcheck-input-modal', '#js-mailcheck-hint-modal', false)
 
   renderCopy: (copy) ->
     attrs = if copy?

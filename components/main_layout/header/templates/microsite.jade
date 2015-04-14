@@ -1,7 +1,7 @@
 include ../../../util/activator
 
 header#main-layout-header.force-position-absolute.microsite-header
-  nav.mlh-navbar( class=(sd.REDESIGNED_HEADER === 'old' ? 'is-search-expanded' : undefined) )
+  nav.mlh-navbar
     #main-layout-header-left.mlh-navbar-cell
       if sd.KIOSK_MODE && sd.KIOSK_PAGE
         a#main-layout-header-home-logo( href= sd.KIOSK_PAGE ): i.icon-logo

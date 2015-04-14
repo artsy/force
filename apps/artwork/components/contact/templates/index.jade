@@ -2,12 +2,17 @@
 if artwork.isContactable()
   //- Gallery/Institution link
   if artwork.partnerLink()
-    h2.artwork-detail-header
-      | Contact #{artwork.contactLabel()}
-    .artwork-detail-partner-link
-      a.artwork-partner-name( href= artwork.partnerLink() )
-        = artwork.partnerName()
+    if sd.INQUIRY_FLOW === 'updated_flow'
+      h2.artwork-detail-header= artwork.partnerName()
       span#artwork-partner-locations
+        //- Rendered client-side
+    else
+      h2.artwork-detail-header
+        | Contact #{artwork.contactLabel()}
+      .artwork-detail-partner-link
+        a.artwork-partner-name( href= artwork.partnerLink() )
+          = artwork.partnerName()
+        span#artwork-partner-locations
         //- Rendered client-side
 
   //- Phone number
@@ -25,17 +30,26 @@ if artwork.isContactable()
       input.bordered-input.is-persistplaceholder( placeholder='Your full name', name='name', required )
       input#js-mailcheck-input-artwork.bordered-input.is-persistplaceholder( placeholder='Your email address', name='email', type='email', required )
       #js-mailcheck-hint-artwork
+
+    if sd.INQUIRY_FLOW === 'updated_flow'
+      if artwork.isPriceDisplayable()
+        - var updatedMessage = "I'm interested in this work" + (artwork.has('artist') ? ' by ' + artwork.related().artist.get('name') : '') + ". Please contact me to discuss further."
+      else
+        -var updatedMessage = "Hi. Could you please share the asking price for this work? I'd like to know if it's within my budget."
+
     textarea.bordered-input.is-persistplaceholder( rows='5', name='message', required )
-      = defaultMessage
+      = (updatedMessage || defaultMessage)
       = " "
-    if user
+
+    if user && sd.INQUIRY_FLOW === 'original_flow'
       p From: #{user.get('name')}
+
     #artwork-contact-form-errors
       //- Rendered client-side
     #artwork-contact-form-attendance
       //- Rendered client-side
 
-    unless user
+    if !user && sd.INQUIRY_FLOW === 'original_flow'
       p.artwork-contact-privacy
         | By clicking below, you accept our
         = ' '
@@ -43,7 +57,17 @@ if artwork.isContactable()
         | .
 
     .artwork-contact-button
-      button.avant-garde-button-black Request Info
+      if sd.INQUIRY_FLOW === 'original_flow'
+        button.avant-garde-button-black Request Info
+      else
+        button.avant-garde-button-black Contact Gallery
+
+  #artwork-inquiry-sent-immediate
+    p.artwork-inquiry-bold-header Inquiry Sent
+    p You will receive an email receipt of your inquiry shortly. If you want to follow up with the gallery, simply reply to this email.
+
+  #artwork-inquiry-sent
+    //- Rendered client-side
 
 //- Buy
 if artwork.get('acquireable')
@@ -51,7 +75,7 @@ if artwork.get('acquireable')
     | Buy
 
 //- Contact a specialist link
-if artwork.get('inquireable')
+if (artwork.get('inquireable') && sd.INQUIRY_FLOW === 'original_flow' )
   p Questions? We are here to help.
   .artwork-inquiry-button
     a( href="/artwork/#{artwork.id}/inquire", rel='nofollow', data-client )

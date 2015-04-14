@@ -1,29 +1,25 @@
-_ = require 'underscore'
-sd = require('sharify').data
-Sales = require '../../../collections/sales.coffee'
-Artworks = require '../../../collections/artworks.coffee'
+{ CURRENT_AUCTIONS, UPCOMING_AUCTIONS } = require('sharify').data
+Auctions = require '../../../collections/auctions.coffee'
 Clock = require '../../../components/clock/view.coffee'
 ModalPageView = require '../../../components/modal/page.coffee'
+AuthModalView = require '../../../components/auth_modal/view.coffee'
+
+setupClocks = ($clocks, auctions) ->
+  auctions.map (auction) ->
+    new Clock(modelName: 'Auction', model: auction, el: $clocks.filter("[data-id='#{auction.id}']"))
+      .start()
 
 module.exports.init = ->
-  currentAuctions = new Sales sd.CURRENT_AUCTIONS
+  currentAuctions = new Auctions CURRENT_AUCTIONS
+  setupClocks $('.af-clock'), currentAuctions
 
-  # Setup clocks
-  $clocks = $('.af-clock')
-  currentAuctions.map (auction) ->
-    clock = new Clock modelName: 'Auction', model: auction, el: $clocks.filter("[data-id='#{auction.id}']")
-    clock.start()
+  upcomingAuctions = new Auctions UPCOMING_AUCTIONS
+  setupClocks $('.js-apu-clock'), upcomingAuctions
 
-  # Setup fillwidth
-  $artworks = $('.af-artworks')
-  _.map sd.ARTWORK_DIMENSIONS, ({ id, dimensions }) ->
-    $set = $artworks.filter("[data-id='#{id}']")
-    $set.fillwidth
-      imageDimensions: dimensions
-      afterFillWidth: ->
-        $set.addClass 'is-fade-in'
-
-  # Page modal
-  $('.auctions-learn-link').click (e) ->
+  $('.js-auctions-learn-link').click (e) ->
     e.preventDefault()
     new ModalPageView width: '700px', pageId: 'auction-info'
+
+  $('.js-sign-up-button').click (e) ->
+    e.preventDefault()
+    new AuthModalView width: '500px', mode: 'register'

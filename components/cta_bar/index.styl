@@ -1,0 +1,45 @@
+@import '../stylus_lib'
+
+.cta-bar
+  position fixed
+  right 0
+  bottom 0
+  left 0
+  padding 40px
+  background-color black
+  color white
+  text-align center
+  transform translateY(100%)
+  transition transform 0.5s
+  > *
+    opacity 0
+    transition 1s
+  &[data-state='in']
+    transform translateY(0%)
+    > *
+      opacity 1
+
+.cta-bar-headline
+  font-size 30px
+  line-height 1.2
+.cta-bar-button
+  min-width 340px
+.cta-bar-defer
+  > a
+    color gray-darker-color
+    font-size 17px
+    text-decoration none
+    border-bottom 1px solid darken(gray-darker-color, 25%)
+.cta-bar-button
+.cta-bar-form
+  margin 20px 0
+.cta-bar-form
+  height 50px
+  > input
+  > button
+    height 100%
+    margin 0 5px
+  > input
+    background-color white
+    border none
+    width 340px

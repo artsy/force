@@ -11,7 +11,6 @@ module.exports = class AuctionResultsView extends Backbone.View
   events:
     'click .auction-lot-image-zoom': 'zoomImage'
     'click .auction-lot-sale-signup': 'signUp'
-    'click .auction-lots-feedback-link': 'feedback'
     'click .auction-lot': 'onRowClick'
     'click a[data-client]': 'intercept'
 
@@ -59,10 +58,6 @@ module.exports = class AuctionResultsView extends Backbone.View
   signUp: (e) ->
     e.preventDefault()
     mediator.trigger 'open:auth', mode: 'register', copy: 'Sign up to see full auction records — for free'
-
-  feedback: (e) ->
-    e.preventDefault()
-    mediator.trigger 'open:feedback'
 
   onRowClick: (e) ->
     return if @user

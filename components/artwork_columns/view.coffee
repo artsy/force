@@ -92,12 +92,13 @@ module.exports = class ArtworkColumns extends Backbone.View
     return unless artworks?.length
 
     for artwork in artworks
-      $artwork = if @isOrdered then @addToNextColumn(artwork) else @addToShortestColumn(artwork)
-      new SaveControls
-        collections: @collections
-        artworkCollection: @artworkCollection
-        model: artwork
-        el: $artwork.find('.overlay-container')
+      unless @$(".artwork-item[data-artwork='#{artwork.id}']").length
+        $artwork = if @isOrdered then @addToNextColumn(artwork) else @addToShortestColumn(artwork)
+        new SaveControls
+          collections: @collections
+          artworkCollection: @artworkCollection
+          model: artwork
+          el: $artwork.find('.overlay-container')
     if @artworkCollection
       @artworkCollection.addRepoArtworks @collection
       @artworkCollection.syncSavedArtworks()
@@ -166,7 +167,7 @@ module.exports = class ArtworkColumns extends Backbone.View
       displayPrice: @displayPrice
     $renderedArtwork = $(renderedArtwork)
     @$(".artwork-column:eq(#{column})").append $renderedArtwork
-    $renderedArtwork.find('img').css(maxHeight: "#{@maxArtworkHeight}px") if @maxArtworkHeight != 400
+    $renderedArtwork.find('.artwork-item-image-link').css(maxHeight: "#{@maxArtworkHeight}px") if @maxArtworkHeight != 400
     $renderedArtwork
 
   onSeeMoreClick: =>

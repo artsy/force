@@ -1,4 +1,5 @@
 _ = require 'underscore'
+Cookies = require '../cookies/index.coffee'
 categoriesMap = require './categories.coffee'
 { CURRENT_USER } = require('sharify').data
 
@@ -26,6 +27,7 @@ module.exports =
       category: categoriesMap[options.action]
       page: window?.location.pathname
       referrer: document?.referrer
+      source_referrer: Cookies.get('force-referrer')
       queryString: window?.location.search
       user_id: CURRENT_USER?.id
       lab_features: CURRENT_USER?.lab_features
