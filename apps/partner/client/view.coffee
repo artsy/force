@@ -96,6 +96,18 @@ module.exports = class PartnerView extends Backbone.View
     unless _.contains @sections, @currentSection
       @renderSection (@currentSection = @sections?[0]), @sectionViewParams
 
+    # hide articles tab if this partner has no articles
+    $.ajax
+      url: "#{sd.POSITRON_URL}/api/articles"
+      data:
+        partner_id: sd.PROFILE && sd.PROFILE.owner._id
+        published: true
+        limit: 1
+      success: (res) ->
+        return if res.count > 0
+        $('.partner-tabs [href*=articles]').prev().hide()
+        $('.partner-tabs [href*=articles]').hide()
+
   initializeFollows: ->
     @following = new Following(null, kind: 'profile') if sd.CURRENT_USER?
 

@@ -11,17 +11,3 @@ module.exports = class ArticlesAdapter
     el.addClass view.className
     collection.fetch()
     view
-
-# TODO: Better way to toggle the articles tab
-$ ->
-  $.ajax
-    url: "#{sd.POSITRON_URL}/api/articles"
-    data:
-      sort: '-published_at'
-      partner_id: sd.PROFILE && sd.PROFILE.owner._id
-      published: true
-      limit: 1
-    success: (res) ->
-      return if res.count > 0
-      $('.partner-tabs [href*=articles]').prev().hide()
-      $('.partner-tabs [href*=articles]').hide()
