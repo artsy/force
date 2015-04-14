@@ -22,7 +22,10 @@ module.exports = class PartnerLocations
         "#{locations.length} Locations"
       else
         @renderFirstCities locations, limit
-      text = if INQUIRY_FLOW is 'updated_flow' then "#{locationString}" else ", #{locationString}"
+      if INQUIRY_FLOW is 'updated_flow' and window.location.href.match('/artwork')
+        text = "#{locationString}"
+      else
+        text = ", #{locationString}"
       @$el.find('#artwork-partner-locations')
         .text text
 
