@@ -97,6 +97,7 @@ sharify.data =
   CDN_URL: process.env.CDN_URL
   CHECK_FOR_AUCTION_REMINDER: CHECK_FOR_AUCTION_REMINDER
   EDITORIAL_ADMINS: EDITORIAL_ADMINS
+  SEGMENT_WRITE_KEY: SEGMENT_WRITE_KEY
 
 CurrentUser = require '../models/current_user'
 
