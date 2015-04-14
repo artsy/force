@@ -48,7 +48,7 @@ module.exports =
     slug: 'general'
     copy:
       type: 'Other'
-      company: 'Name'
+      company: 'Organization Name'
       title: 'Title'
       success: 'Partnerships Team'
     values:
