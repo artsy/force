@@ -69,7 +69,7 @@ module.exports = class RegistrationForm extends ErrorHandlingForm
     cvc: @fields['security code'].el.val()
     address_line1: @fields.street.el.val()
     address_city: @fields.city.el.val()
-    address_state: @fields.street.el.val()
+    address_state: @fields.state.el.val()
     address_zip: @fields.zip.el.val()
     address_country: @$("select[name='address[country]']").val()
 
