@@ -4,6 +4,7 @@
 //
 
 $('.articles-social:eq(0) > a').click(function() {
+  console.log('clicked')
   analytics.track('Clicked Article Share', {
     position: 'top',
     service: $(this).attr('data-service')
