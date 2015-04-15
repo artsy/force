@@ -8,7 +8,7 @@ This folder contains javascript files that are sandboxed from our application co
 
 To get started with an example lets show what it would be like to track a user clicking on the artist name in the artwork page.
 
-Open an artist page and right click on the artist name in your browser, then choose "Inspect Element".
+Open an artwork page and right click on the artist name in your browser, then choose "Inspect Element".
 
 ![](https://s3.amazonaws.com/f.cl.ly/items/3W3u210t3Q2T2x0t2M0h/Image%202015-04-14%20at%2012.40.40%20PM.png)
 
@@ -24,7 +24,7 @@ $(".artwork-detail-artist").click(function() {
 })
 ````
 
-If you want to check what's being sent to Segment when you can use `console.log` to log what's happening near your code. Then refresh the page, open chrome dev tools using `cmd + opt + i`, and click on the "Console" tab to see your logs.
+If you want to check what's being sent to Segment use `console.log` to log what's happening near your code. Then refresh the page, open chrome dev tools using `cmd + opt + i`, and click on the "Console" tab to see your logs.
 
 ````javascript
 $(".artwork-detail-artist").click(function() {
@@ -59,7 +59,7 @@ These are called "DOM Events" and we use [jQuery](https://jquery.com/) to provid
 
 ## Tracking structured data from the page
 
-For the occasions when you want to track structured data not available in the HTML of the page, for instance the `id` of an artwork, you may access the global `sd`. `sd` stores global configuration data such as `sd.API_URL`, context specific structured data such as `sd.ARTWORK`, user data such as `sd.SESSION_ID` or `sd.CURRENT_USER`, and may contain data helpful specifically to analytics like `sd.CURRENT_INQUIRY_AB_TEST`.
+For the occasions when you want to track structured data not available in the HTML of the page, for instance the `id` of an artwork, you may access the global `sd`. `sd` stores global configuration data such as `sd.API_URL`, context specific structured data such as `sd.ARTWORK`, user data such as `sd.SESSION_ID` or `sd.CURRENT_USER`, and may contain data helpful specific to analytics like `sd.CURRENT_INQUIRY_AB_TEST`.
 
 ````javascript
 $(".artwork-detail-artist").click(function() {
@@ -69,7 +69,7 @@ $(".artwork-detail-artist").click(function() {
 })
 ````
 
-If there's some structured data that's not available in `sd` please submit a pull request with as much of the surrounding analtyics code possible and make note of the part where you're missing data you need to track. A web engineer will then either likely provide that data on `sd` or provide a "Custom even hook" (which you can read more about below).
+If there's some structured data that's not available in `sd` please submit a pull request with as much of the surrounding analtyics code possible and make note of the part where you're missing data you need to track. A web engineer will then either likely provide that data on `sd` or provide a "Custom event hook" (which you can read more about below).
 
 ## Custom event hooks
 
