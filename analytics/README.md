@@ -57,7 +57,21 @@ $('#artwork-contact-form input:first').focus(function() {
 
 These are called "DOM Events" and we use [jQuery](https://jquery.com/) to provide a simple way to hook into them. You can read the full documenation [here](http://api.jquery.com/category/events/).
 
-## Tracking something really specific beyond vanilla jQuery with custom events
+## Tracking structured data from the page
+
+For the occasions when you want to track structured data not available in the HTML of the page, for instance the `id` of an artwork, you may access the global `sd`. `sd` stores global configuration data such as `sd.API_URL`, context specific structured data such as `sd.ARTWORK`, user data such as `sd.SESSION_ID` or `sd.CURRENT_USER`, and may contain data helpful specifically to analytics like `sd.CURRENT_INQUIRY_AB_TEST`.
+
+````javascript
+$(".artwork-detail-artist").click(function() {
+  analytics.track('Clicked artist name', {
+    viewingArtworkId: sd.ARTWORK.id
+  })
+})
+````
+
+If there's some structured data that's not available in `sd` please submit a pull request with as much of the surrounding analtyics code possible and make note of the part where you're missing data you need to track. A web engineer will then either likely provide that data on `sd` or provide a "Custom even hook" (which you can read more about below).
+
+## Custom event hooks
 
 In the case that you need to track something really specific in the lifecycle of the application and you're having a hard time hooking into it with vanilla jQuery you may listen for custom events any web engineer can provide for you.
 

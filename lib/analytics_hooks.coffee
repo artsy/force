@@ -5,4 +5,4 @@
 
 _ = require 'underscore'
 Backbone = require 'backbone'
-module.exports = _.extend({}, Backbone.Events)
+module.exports = window.analyticsHooks ?= _.extend({}, Backbone.Events)

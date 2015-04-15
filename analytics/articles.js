@@ -3,8 +3,11 @@
 // and potentionally other alternative layout options or more.
 //
 
+analyticsHooks.on('article:fullyloaded', function() {
+  analytics.page()
+})
+
 $('.articles-social:eq(0) > a').click(function() {
-  console.log('clicked')
   analytics.track('Clicked Article Share', {
     position: 'top',
     service: $(this).attr('data-service')
