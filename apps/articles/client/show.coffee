@@ -55,7 +55,7 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
         return unless $el.length
         @fillwidth $el
     ).then =>
-      analyticsHooks.trigger 'article:fullyloaded'
+      analyticsHooks.trigger 'article:fullyloaded', @article.id
 
   breakCaptions: ->
     @$('.articles-section-image').each ->
