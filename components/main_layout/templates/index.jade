@@ -33,10 +33,9 @@ html( data-useragent=userAgent )
     #scripts
       include scripts
       script( src=asset('/assets/main_layout.js') )
-      script( src=asset('/assets/analytics.js') )
       if assetPackage
         script( src=asset('/assets/#{assetPackage}.js') )
       if sd.MICROSITE
         script( src=asset('/assets/microsite.js') )
       block scripts
-
+      script( src=asset('/assets/analytics.js') )
