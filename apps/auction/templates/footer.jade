@@ -1,25 +1,26 @@
-if sets.length
-  footer.auction-footer
-    .auction-articles
-      for set in sets.models
-        for item in set.get('items').models
-          if item.get('title') && item.get('href') && item.get('image_url')
-            a.auction-article( href= item.get('href') )
-              .auction-article-image
-                img( src= item.imageUrl('small_rectangle'), alt= item.get('title') )
-              .auction-article-metadata
-                h4.auction-article-title= item.get('title')
-                h5.auction-article-subtitle= item.get('subtitle')
+footer.auction-footer
+  .auction-articles
+    //- Convert to real articles
+    //-
+    //- for set in sets.models
+    //-   for item in set.get('items').models
+    //-     if item.get('title') && item.get('href') && item.get('image_url')
+    //-       a.auction-article( href= item.get('href') )
+    //-         .auction-article-image
+    //-           img( src= item.imageUrl('small_rectangle'), alt= item.get('title') )
+    //-         .auction-article-metadata
+    //-           h4.auction-article-title= item.get('title')
+    //-           h5.auction-article-subtitle= item.get('subtitle')
 
-    .auction-app-promo-wrapper
-      a.auction-app-promo( href='https://iphone.artsy.net/', target='_blank' )
-        .auction-app-promo-image
-          img(
-            src='/images/promo-iphone.jpg'
-            alt='iPhone'
-          )
-        .auction-app-promo-metadata
-          .auction-app-promo-title
-            | Bid from your phone
-          .auction-app-promo-subtitle
-            | Download Artsy for iPhone
+  .auction-app-promo-wrapper
+    a.auction-app-promo( href='https://iphone.artsy.net/', target='_blank' )
+      .auction-app-promo-image
+        img(
+          src='/images/promo-iphone.jpg'
+          alt='iPhone'
+        )
+      .auction-app-promo-metadata
+        .auction-app-promo-title
+          | Bid from your phone
+        .auction-app-promo-subtitle
+          | Download Artsy for iPhone

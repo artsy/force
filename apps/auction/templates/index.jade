@@ -10,24 +10,19 @@ block body
   .auction-page.main-layout-container
     header.auction-header
       .auction-header-primary
-        if feature.hasImage()
+        if auction.hasImage()
           img.auction-hero-image(
-            src= feature.cropUrlFor({ width: 900, height: 400 })
-            alt= feature.get('name')
-            title= feature.get('name')
+            src= auction.cropUrlFor({ width: 900, height: 400 })
+            alt= auction.get('name')
+            title= auction.get('name')
           )
 
         h1.auction-title
-          = feature.get('name')
+          = auction.get('name')
         .auction-description
-          != feature.mdToHtml('description')
+          != auction.mdToHtml('description')
 
       .auction-header-metadata
-        if profile.icon().has('image_versions')
-          .auction-header-metadata-cell: img(
-            src= profile.icon().resizeUrlFor({ width: 140, height: 100 })
-          )
-
         .auction-header-metadata-cell
           .auction-header-clock.js-auction-clock
             include ../../../components/clock/template
