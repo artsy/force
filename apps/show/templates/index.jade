@@ -1,5 +1,6 @@
 extends ../../../components/main_layout/templates/index
 include ../../../components/share/template
+include ../components/related_shows/mixin
 
 block head
   include meta
@@ -18,4 +19,6 @@ block body
     include columns
     include footer
 
-include ../../../components/main_layout/templates/json_ld
+  +related-shows('Shows in New York City', [show, show])
+
+  include ../../../components/main_layout/templates/json_ld
