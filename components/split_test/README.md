@@ -27,7 +27,7 @@ header_design:
 
 Tests are by default initialized globally meaning as soon as there is a configuration in the running tests file you'll get access to a Sharify variable the same name as your configuration key with the outcome and the test will set itself up client-side.
 
-## Manually initializing a test on the client-side
+## Manually initializing a test on the client-side (optional)
 
 ```coffeescript
 splitTest = require '../../../components/split_test/index.coffee'
@@ -41,7 +41,7 @@ test.cssClass() # => 'is-splittest-header_design--new'
 
 ```
 
-## Forcing a test down a specific path
+## Forcing a test down a specific path (optional)
 
 ### Client-side
 
