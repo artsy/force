@@ -12,21 +12,12 @@ else
   meta( name='viewport', content='user-scalable=1, width=1300' )
 
 script( src=asset('/assets/scroll_frame.js') )
-//- Mixpanel wants to include it's script in the head b/c it async downloads
-//- and injects it into the body. Hopefully this stops race conditions b/t
-//- DOM load and mixpanel init.
-if sd.NODE_ENV != 'test' && sd.BROWSER && sd.BROWSER.family != 'PhantomJS'
-  //- Fonts.com font loader
-  script( type='text/javascript', src='//fast.fonts.net/jsapi/f7f47a40-b25b-44ee-9f9c-cfdfc8bb2741.js' )
+script( type='text/javascript', src='//fast.fonts.net/jsapi/f7f47a40-b25b-44ee-9f9c-cfdfc8bb2741.js' )
 
-  if sd.MIXPANEL_ID
-    include ./mixpanel.html
-    script.
-      mixpanel.init("#{sd.MIXPANEL_ID}")
-  if sd.SNOWPLOW_COLLECTOR_HOST
-    include ./snowplow.html
-    script.
-      snowplow('newTracker', 'cf', "#{sd.SNOWPLOW_COLLECTOR_HOST}", {
-       appId: "#{sd.APPLICATION_NAME}",
-       cookieDomain: 'artsy'
-      });
+if sd.SNOWPLOW_COLLECTOR_HOST
+  include ./snowplow.html
+  script.
+    snowplow('newTracker', 'cf', "#{sd.SNOWPLOW_COLLECTOR_HOST}", {
+     appId: "#{sd.APPLICATION_NAME}",
+     cookieDomain: 'artsy'
+    });

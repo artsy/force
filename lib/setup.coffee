@@ -16,7 +16,7 @@
   GEMINI_S3_ACCESS_KEY, GEMINI_APP, GEMINI_ACCOUNT_KEY, BIDDER_H1_COPY,
   BIDDER_H2_COPY, APPLICATION_NAME, EMBEDLY_KEY, DISABLE_IMAGE_PROXY,
   POSITRON_URL, CHECK_FOR_AUCTION_REMINDER, GENOME_URL,
-  EDITORIAL_ADMINS } = config = require "../config"
+  EDITORIAL_ADMINS, SEGMENT_WRITE_KEY } = config = require "../config"
 { parse, format } = require 'url'
 _ = require 'underscore'
 express = require "express"
@@ -97,6 +97,7 @@ sharify.data =
   CDN_URL: process.env.CDN_URL
   CHECK_FOR_AUCTION_REMINDER: CHECK_FOR_AUCTION_REMINDER
   EDITORIAL_ADMINS: EDITORIAL_ADMINS
+  SEGMENT_WRITE_KEY: SEGMENT_WRITE_KEY
 
 CurrentUser = require '../models/current_user'
 
