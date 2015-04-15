@@ -1,5 +1,11 @@
 form.stacked-form
-  input.bordered-input( type='text', name='company', value= form.get('company'), placeholder= state.copy('company'), required )
+  input.bordered-input(
+    type='text'
+    name='company'
+    value= form.get('company')
+    placeholder= state.copy('company')
+    required= state.get('mode') !== 'general' ? 'required' : undefined
+  )
 
   .grid-2-up
     .grid-item: input.bordered-input.is-block( type='text', name='first_name', value= form.get('first_name'), placeholder='First Name', required )
