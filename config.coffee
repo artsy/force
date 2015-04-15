@@ -36,7 +36,6 @@ module.exports =
   DEFAULT_CACHE_TIME: 3600
   SECURE_IMAGES_URL: null
   IMAGES_URL_PREFIX: 'http://static%d.artsy.net'
-  MIXPANEL_ID: null
   SNOWPLOW_COLLECTOR_HOST: 'snowplow-stream-collector.herokuapp.com'
   GOOGLE_ANALYTICS_ID: null
   COOKIE_DOMAIN: null
