@@ -14,3 +14,6 @@ module.exports = class Auction extends Sale
 
   registrationSuccessUrl: ->
     "#{@href()}/confirm-registration"
+
+  buyersPremiumUrl: ->
+    "#{@href()}/buyers-premium"
