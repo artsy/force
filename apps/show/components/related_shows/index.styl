@@ -1,9 +1,9 @@
 .show-related-shows-container
-  max-width 1200px
-  position relative
-  width 90%
-  // width calc('100% - %s' % (layout-side-margin * 2))
-  margin 0 auto
+  // display none 
+  // max-width 1200px
+  // width 90%
+  // width 
+  // margin 0 auto
 
 .show-related-shows-title 
   font-size 30px
@@ -16,31 +16,40 @@
   margin-bottom 90px
   &:last-child
       margin-bottom 120px
-.show-related-show-container
-  clearfix()
 
 .show-related-show-info
   float left
   max-width 270px
-  height 100%
-
+.show-related-show-info
+  clearfix()
+  
 .show-related-show-show-title
   font-size 30px
   line-height 1.25
-  
-.show-related-show-partner-name
-  avant-garde()
-  font-size 13px
+  margin-bottom 15px
   > a
     text-decoration none 
 
+.show-related-show-running-dates
+  margin-top 15px
+
 .show-related-show-images
-  float left 
-  margin-left 40px 
-  width 890px
+  margin-left 310px 
   max-height 270px
+.show-related-show-images
+  clearfix()
+  
+.show-related-show-image-container
+  height 270px
+  list-style-type none
+  display inline-block 
+  margin-right 6px
 
 .show-related-show-image
-  padding-right 6px
-
-// .show-related-show-running-dates 
+  height 270px
+  
+.hoverable-image-link
+  width 400px
+  
+// images might need to be resized before they come into component, 'hoverable image link'
+// sets their width to 100% and distorts them, need to resize height to 270

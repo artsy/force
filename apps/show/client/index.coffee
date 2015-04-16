@@ -5,6 +5,7 @@ CarouselView = require '../../../components/carousel/view.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 attachFollowArtists = require '../components/follow_artists/index.coffee'
 attachFollowProfile = require '../components/follow_profile/index.coffee'
+RelatedShowsView = require '../components/related_shows/index.coffee'
 
 module.exports.init = ->
   show = new PartnerShow SHOW
@@ -25,8 +26,9 @@ module.exports.init = ->
     artworkSize: 'large'
   artworkColumnsView.$el.addClass 'is-fade-in'
 
+  relatedShowsView = new RelatedShowsView show
+
   attachFollowArtists show.related().artists
 
   attachFollowProfile show.related().profile
-
   new ShareView el: $('.js-show-share')
