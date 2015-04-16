@@ -64,9 +64,3 @@ module.exports = class RelatedShowsView extends Backbone.View
                 resize(artwork.defaultImageUrl('large'), {height: 275})
               $('#related-shows-children').append relatedShowsTemplate(show: show, showImages: resizedArtworks ) 
     dfd.promise
-
-# working on 'hiding' images that overrun - i.e. 'fill row width,'
-# check first image in li, get its offset value, compare to all other components in list, hide any where there's a difference
-  # problem: when to know that all sections are done loading? or to refer to each section as it's appended? 
-
-# alternative to append - build list and then render as one chunk? 
