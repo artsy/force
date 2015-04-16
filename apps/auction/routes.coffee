@@ -24,7 +24,7 @@ setupUser = (user, auction) ->
 
   dfd.promise
 
-@index = (req, res) ->
+@index = (req, res, next) ->
   id = req.params.id
 
   auction = new Auction id: id
@@ -40,7 +40,7 @@ setupUser = (user, auction) ->
     auction.fetch(cache: true)
     saleArtworks.fetchUntilEndInParallel(cache: true)
     setupUser(req.user, auction)
-  ]).spread((a, b, user) ->
+  ]).spread (a, b, user) ->
     artworks.reset Artworks.__fromSale__(saleArtworks)
 
     res.locals.sd.AUCTION = auction.toJSON()
@@ -54,4 +54,7 @@ setupUser = (user, auction) ->
       user: user
       state: state
 
-  ).done()
+  , ->
+    err = new Error 'Not Found'
+    err.status = 404
+    next err
