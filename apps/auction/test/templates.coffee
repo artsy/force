@@ -19,13 +19,10 @@ describe 'auction templates', ->
       data =
         sd: {}
         asset: ->
-        auction: @auction = new Auction fabricate 'auction'
-        feature: @feature = new Feature fabricate 'feature', name: 'An Auction'
-        profile: @profile = new Profile fabricate 'profile'
+        auction: @auction = new Auction fabricate('sale', name: 'An Auction')
         artworks: @artworks = new Artworks _.times 2, -> fabricate 'artwork'
         saleArtworks: @saleArtworks = new SaleArtworks _.times 2, -> fabricate 'sale_artwork'
         user: @user = new CurrentUser
-        sets: @sets = new OrderedSets
         state: @state = new State
 
       benv.render resolve(__dirname, '../templates/index.jade'), data, =>

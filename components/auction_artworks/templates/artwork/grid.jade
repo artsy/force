@@ -13,11 +13,10 @@
           | Lot #{saleArtwork.get('lot_number')}
 
       .aga-primary-information
-        if artwork.has('artist')
-          h4.aga-artist
-            = artist.get('name')
+        h4.aga-artist
+          != artist.get('name') || '&nbsp;'
         h3.aga-title
-          != artwork.titleAndYear()
+          != artwork.titleAndYear() || '&nbsp;'
 
       if saleArtwork.estimate()
         .aga-estimate

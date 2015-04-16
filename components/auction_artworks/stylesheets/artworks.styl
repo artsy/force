@@ -23,6 +23,9 @@ list-row-size = (list-max-thumbnail-size + 40px)
     text-decoration none
 .aga-image
   height grid-max-thumbnail-size
+  // Due to API funny-business the `medium` image version may not be used
+  // It *may* fall back to an image version with unbounded height.
+  overflow-y hidden
   a
     display block
     > img
