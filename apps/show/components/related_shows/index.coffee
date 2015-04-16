@@ -1,28 +1,72 @@
+Q = require 'q'
 _ = require 'underscore'
+sd = require('sharify').data
 Backbone = require 'backbone'
+{ resize } = require '../../../../components/resizer/index.coffee'
 PartnerShows = require '../../../../collections/partner_shows.coffee'
+InstallShots = require '../../../../collections/install_shots.coffee'
 template = -> require('./template.jade') arguments...
+relatedShowsTemplate = -> require('./related_show.jade') arguments...
 { Cities, FeaturedCities } = require 'places'
 
 module.exports = class RelatedShowsView extends Backbone.View
 
-  # options
-  # maybe have a default number of shows that it will add to each section
+  initialize: ( options ) ->
+    @el = options.el 
+    @show = options.model 
+    @title = options.title || "Current Shows in #{@show.formatCity()}"
+    @location = options.model.location().get('coordinates')    
+    @render()
 
-  initialize: (show) ->
-    # determine what city the show is in
-    city = _.findWhere(Cities, slug: 'new-york')
-    # make sure that we're getting a collection of shows, otherwise throw an error
-    @relatedShows = new PartnerShows
-    @relatedShows.fetch 
+  postrender: ->
+    relatedShows = new PartnerShows
+    relatedShows.fetch 
       data:
-        near: city.coords.toString()
+        status: 'running'
+        near: [ @location['lat'], @location['lng'] ].toString()
         sort: '-start_at'
         displayable: true
-        limit: 3
+        size: 10
+        at_a_fair: false
       success: (relatedShows) =>
-        @render()
+        for show in relatedShows.models
+          @fetchInstallShotsForShow(show)
+
   render: -> 
     @$el.html template
-      shows: @relatedShows
+      title: @title
+    @postrender() 
     this
+
+  fetchInstallShotsForShow: (show) =>
+    dfd = Q.defer()
+
+    show.installShots = new InstallShots
+    show.installShots.fetch
+      cache: @cache
+      data: default: false, size: 2
+      url: "#{sd.API_URL}/api/v1/partner_show/#{show.id}/images"
+      error: dfd.reject
+      success: (installShots, response, options) =>
+        if installShots.length
+          resizedInstallShots = for shot in installShots.models
+                resize(shot.get('image_urls')['large'], {height: 275})
+          $('#related-shows-children').append relatedShowsTemplate(show: show, showImages: resizedInstallShots)
+          
+          dfd.resolve 
+        else
+          show.related().artworks.fetch
+            data:
+              size: 2
+            error: dfd.reject  
+            success: (artworks) =>
+              resizedArtworks = for artwork in artworks.models
+                resize(artwork.defaultImageUrl('large'), {height: 275})
+              $('#related-shows-children').append relatedShowsTemplate(show: show, showImages: resizedArtworks ) 
+    dfd.promise
+
+# working on 'hiding' images that overrun - i.e. 'fill row width,'
+# check first image in li, get its offset value, compare to all other components in list, hide any where there's a difference
+  # problem: when to know that all sections are done loading? or to refer to each section as it's appended? 
+
+# alternative to append - build list and then render as one chunk? 

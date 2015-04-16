@@ -1,34 +1,6 @@
 .show-related-shows-container
   .show-related-shows-title 
     = title
-  #show-related-shows
-    
-  for show in shows
-    .show-related-show-container
 
-      .show-related-show-info
-        .show-related-show-show-title
-          a.show-title( href=show.href() )
-            = show.title()
-        .show-related-show-show-partner
-          a.entity-link( href=show.partnerHref() )
-            = show.partnerName() 
-        .show-related-show-running-dates 
-          | #{show.date('start_at').format('MMMM DD')} – #{show.date('end_at').format('MMMM DD')}
-
-      ul.show-related-show-images
-        li.show-related-show-image-container
-          a.hoverable-image-link
-            img.show-related-show-image(
-              src= show.posterImageUrl()
-              alt= show.get('name')
-              onerror='this.style.display="none";'
-            )
-        li.show-related-show-image-container
-          a.hoverable-image-link
-            img.show-related-show-image(
-              src= show.posterImageUrl()
-              alt= show.get('name')
-              onerror='this.style.display="none";'
-            )
-
+  #related-shows-children 
+  //- render client side

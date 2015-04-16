@@ -1,6 +1,6 @@
 extends ../../../components/main_layout/templates/index
 include ../../../components/share/template
-//- include ../components/related_shows/template
+include ../components/related_shows/template
 
 block head
   include meta
@@ -19,6 +19,6 @@ block body
     include columns
     include footer
     #related-shows
-    //- +related-shows('Shows in New York City', [show, show])
+    //- related shows rendered client side
 
   include ../../../components/main_layout/templates/json_ld

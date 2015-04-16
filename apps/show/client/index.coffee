@@ -26,7 +26,9 @@ module.exports.init = ->
     artworkSize: 'large'
   artworkColumnsView.$el.addClass 'is-fade-in'
 
-  relatedShowsView = new RelatedShowsView show
+  relatedShowsView = new RelatedShowsView 
+    model: show
+    el: $('#related-shows')
 
   attachFollowArtists show.related().artists
 
