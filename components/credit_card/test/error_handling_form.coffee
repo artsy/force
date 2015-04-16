@@ -47,6 +47,6 @@ describe 'FavoritesStatusModalView', ->
       @errorHandlingForm.showError 'description', { status: 404 }
       $('.error').text().should.equal 'Registration marketplace invalid.'
 
-    it 'adds balanced errors', ->
+    it 'adds stripe errors', ->
       @errorHandlingForm.showError 'description', { status: 400, error: { additional: 'additional info'} }
       $('.error').text().should.equal 'Your card appears to be missing or malformed. Please try another card or contact support. additional info'
