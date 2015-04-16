@@ -31,7 +31,9 @@ setupUser = (user, auction) ->
   saleArtworks = new SaleArtworks [], id: id
   artworks = new Artworks
   artworks.comparator = (artwork) ->
-    (saleArtwork = artwork.related().saleArtwork).get('lot_number') or saleArtwork.id
+    (saleArtwork = artwork.related().saleArtwork).get('lot_number') or
+    saleArtwork.get('position') or
+    saleArtwork.id
   state = new State
 
   Q.all([
