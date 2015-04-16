@@ -29,3 +29,6 @@ module.exports = (artwork) ->
 
   $document.on 'click', '#layered-search-results .artwork-item', ->
     trackSnowplow 'genome', 'click_related_artwork', artwork.get('_id'), 'artwork'
+
+  $document.on 'click', '#artist-artworks-section .artwork-item', ->
+    trackSnowplow 'artwork', 'click_artwork_by_artist', artwork.get('_id'), 'artwork'

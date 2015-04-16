@@ -5,8 +5,9 @@ Artist = require '../models/artist.coffee'
 { Fetch, AToZ } = require 'artsy-backbone-mixins'
 
 module.exports = class Artists extends Backbone.Collection
-
   _.extend @prototype, AToZ
   _.extend @prototype, Fetch(API_URL)
 
   model: Artist
+
+  comparator: 'sortable_id'

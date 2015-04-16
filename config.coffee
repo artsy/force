@@ -36,7 +36,6 @@ module.exports =
   DEFAULT_CACHE_TIME: 3600
   SECURE_IMAGES_URL: null
   IMAGES_URL_PREFIX: 'http://static%d.artsy.net'
-  MIXPANEL_ID: null
   SNOWPLOW_COLLECTOR_HOST: 'snowplow-stream-collector.herokuapp.com'
   GOOGLE_ANALYTICS_ID: null
   COOKIE_DOMAIN: null
@@ -66,6 +65,7 @@ module.exports =
   SENTRY_PUBLIC_DSN: null
   GOOGLE_SEARCH_KEY: null
   GOOGLE_SEARCH_CX: null
+  SEGMENT_WRITE_KEY: null
   SHOW_AUCTIONS_IN_HEADER: true
   API_REQUEST_TIMEOUT: 5000
   POST_TO_ARTICLE_SLUGS: []

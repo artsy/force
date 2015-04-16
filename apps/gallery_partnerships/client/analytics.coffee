@@ -8,7 +8,7 @@ module.exports = ->
     trackForms '.js-gallery-partnerships-apply-form', 'Submitted inline application form from /gallery-partnerships'
     trackForms '.js-gallery-partnerships-apply-form', '/gallery-partnerships CTA'
   else
-    trackLinks '.gallery-partnerships-nav-apply-link', '/gallery-partnerships CTA'
+    trackLinks '.apply-link-cta', '/gallery-partnerships CTA'
 
   $('.gallery-partnerships-nav-link.internal').click (e) ->
     section = $(e.currentTarget).attr 'data-section'

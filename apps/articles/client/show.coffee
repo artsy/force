@@ -7,6 +7,7 @@ Artwork = require '../../../models/artwork.coffee'
 Artworks = require '../../../collections/artworks.coffee'
 ShareView = require '../../../components/share/view.coffee'
 CarouselView = require '../../../components/carousel/view.coffee'
+analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 artworkItemTemplate = -> require(
   '../../../components/artwork_item/templates/artwork.jade') arguments...
 Q = require 'q'
@@ -40,7 +41,7 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
       @$('.carousel-controls').hide()
 
   renderArtworks: ->
-    for section in @article.get('sections') when section.type is 'artworks'
+    Q.all(for section in @article.get('sections') when section.type is 'artworks'
       Q.all(
         for id in section.ids
           new Artwork(id: id).fetch success: (artwork) =>
@@ -53,6 +54,8 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
           " li[data-id=#{artworks.first().get '_id'}]").parent()
         return unless $el.length
         @fillwidth $el
+    ).then =>
+      analyticsHooks.trigger 'article:fullyloaded', @article.id
 
   breakCaptions: ->
     @$('.articles-section-image').each ->
@@ -75,7 +78,7 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
         $list.parent().removeClass('is-loading')
 
   checkEditable: ->
-    if (@user.get('has_partner_access') and @user?.id is @article.get('author_id')) or
+    if (@user?.get('has_partner_access') and @user?.id is @article.get('author_id')) or
        @user?.get('type') is 'Admin' and @user?.get('email')?.split('@')[0] in sd.EDITORIAL_ADMINS.split(',')
       editUrl = "#{sd.POSITRON_URL}/articles/" + @article.id + '/edit'
       @article.get('published') is true ? message = "Previewing Draft" : message = ""
