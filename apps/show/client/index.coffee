@@ -28,7 +28,7 @@ module.exports.init = ->
 
   relatedShowsView = new RelatedShowsView 
     model: show
-    el: $('#related-shows')
+  $('#related-shows').append relatedShowsView.$el
 
   attachFollowArtists show.related().artists
 

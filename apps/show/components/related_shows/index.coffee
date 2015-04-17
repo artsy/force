@@ -9,10 +9,13 @@ template = -> require('./template.jade') arguments...
 relatedShowsTemplate = -> require('./related_show.jade') arguments...
 { Cities, FeaturedCities } = require 'places'
 
+INSTALL_SHOT_HEIGHT = 275
+
 module.exports = class RelatedShowsView extends Backbone.View
 
+  className: 'show-related-shows-container'
+
   initialize: ( options ) ->
-    @el = options.el 
     @show = options.model 
     @title = options.title || "Current Shows in #{@show.formatCity()}"
     @location = options.model.location().get('coordinates')    
@@ -26,7 +29,7 @@ module.exports = class RelatedShowsView extends Backbone.View
         near: [ @location['lat'], @location['lng'] ].toString()
         sort: '-start_at'
         displayable: true
-        size: 10
+        size: 5
         at_a_fair: false
       success: (relatedShows) =>
         for show in relatedShows.models
@@ -38,21 +41,30 @@ module.exports = class RelatedShowsView extends Backbone.View
     @postrender() 
     this
 
+  fillRowFilter: (images) ->
+    containerWidth = $('.show-related-shows-container').width() - INSTALL_SHOT_HEIGHT
+    totalWidth = 0
+    filteredImages = images.filter (image) ->
+      width = image.get('aspect_ratio') * INSTALL_SHOT_HEIGHT
+      return false if width > containerWidth or !image.get('aspect_ratio')?
+      totalWidth += width
+      totalWidth < containerWidth
+    resizedImages = filteredImages.map (image) ->
+      resize(image.get('image_urls')['large'], {height: INSTALL_SHOT_HEIGHT})
+
+
   fetchInstallShotsForShow: (show) =>
     dfd = Q.defer()
 
     show.installShots = new InstallShots
     show.installShots.fetch
       cache: @cache
-      data: default: false, size: 2
+      data: default: false, size: 5
       url: "#{sd.API_URL}/api/v1/partner_show/#{show.id}/images"
       error: dfd.reject
       success: (installShots, response, options) =>
         if installShots.length
-          resizedInstallShots = for shot in installShots.models
-                resize(shot.get('image_urls')['large'], {height: 275})
-          $('#related-shows-children').append relatedShowsTemplate(show: show, showImages: resizedInstallShots)
-          
+          @$('.related-shows-children').append relatedShowsTemplate(show: show, showImages: @fillRowFilter(installShots))
           dfd.resolve 
         else
           show.related().artworks.fetch
@@ -60,7 +72,7 @@ module.exports = class RelatedShowsView extends Backbone.View
               size: 2
             error: dfd.reject  
             success: (artworks) =>
-              resizedArtworks = for artwork in artworks.models
-                resize(artwork.defaultImageUrl('large'), {height: 275})
-              $('#related-shows-children').append relatedShowsTemplate(show: show, showImages: resizedArtworks ) 
+              artworkImages = artworks.map (artwork) =>
+                artwork.defaultImage()
+              @$('.related-shows-children').append relatedShowsTemplate(show: show, showImages: @fillRowFilter(artworkImages) ) 
     dfd.promise
