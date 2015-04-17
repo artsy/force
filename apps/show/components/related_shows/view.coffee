@@ -6,7 +6,6 @@ Backbone = require 'backbone'
 InstallShots = require '../../../../collections/install_shots.coffee'
 template = -> require('./template.jade') arguments...
 relatedShowsTemplate = -> require('./related_show.jade') arguments...
-{ Cities, FeaturedCities } = require 'places'
 
 INSTALL_SHOT_HEIGHT = 275
 
@@ -16,14 +15,13 @@ module.exports = class RelatedShowsView extends Backbone.View
 
   initialize: ( options ) ->
     @shows = options.collection 
-    @title = options.title || "Current Shows in #{@show.formatCity()}"
+    @title = options.title
     @render()
 
   postrender: ->
     for show in @shows.models
       @fetchShowImages(show)
 
-    
   render: -> 
     @$el.html template
       title: @title
@@ -39,7 +37,6 @@ module.exports = class RelatedShowsView extends Backbone.View
       totalWidth += width
       totalWidth < containerWidth
     resizedImages = filteredImages.map (image) ->
-      console.log image.get('cid')
       resize(image.get('image_urls')['large'], {height: INSTALL_SHOT_HEIGHT})
 
   fetchShowImages: (show) =>
