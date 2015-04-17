@@ -7,6 +7,7 @@ Artwork = require '../models/artwork.coffee'
 Artworks = require '../collections/artworks.coffee'
 { crop, resize } = require '../components/resizer/index.coffee'
 Relations = require './mixins/relations/article.coffee'
+{ stripTags } = require 'underscore.string'
 
 module.exports = class Article extends Backbone.Model
   _.extend @prototype, Relations
@@ -58,3 +59,6 @@ module.exports = class Article extends Backbone.Model
 
   date: (attr) ->
     moment @get(attr)
+
+  strip: (attr) ->
+    stripTags(@get attr)
