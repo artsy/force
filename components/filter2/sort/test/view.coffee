@@ -25,5 +25,5 @@ describe 'Filter / Sort', ->
     benv.teardown()
 
   it 'updates the params to sort', ->
-    @view.sort target: $ "<div data-sort='-foo'></div>"
+    @view.setSort target: $ "<div data-sort='-foo'></div>"
     @view.params.get('sort').should.equal '-foo'
