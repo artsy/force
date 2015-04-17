@@ -1,0 +1,9 @@
+include ../dropdown-mixin
+unless name == 'total'
+  +filter-dropdown(
+    aggregateLabelMap[name],
+    aggregateLabelMap[name],
+    name,
+    filter,
+    filterRoot
+  )
