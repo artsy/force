@@ -25,7 +25,7 @@ module.exports = class DropdownView extends Backbone.View
       data: clonedParams.toJSON()
       success: @renderCounts
 
-  renderCounts: (collection, response) =>
+  renderCounts: (collection) =>
     counts = collection.counts[@facet]
 
     for k, v of counts
@@ -78,7 +78,7 @@ module.exports = class DropdownView extends Backbone.View
 
   hideMenu: (e) ->
     unless navigator.userAgent.match('iPad')
-      $(e.currentTarget).closest('nav').hidehover()
+      @$('.filter-dropdown-nav').hidehover()
 
 
 
