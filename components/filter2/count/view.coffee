@@ -11,7 +11,7 @@ module.exports = class CountView extends Backbone.View
     _s.numberFormat @collection.counts.total.value
 
   updateCounts: ->
-    work = if @totalCount() is 1 then 'Work' else 'Works'
+    work = if @totalCount() is "1" then 'Work' else 'Works'
     @$el.text "#{@totalCount()} #{work}"
 
   updateMeta: ->
