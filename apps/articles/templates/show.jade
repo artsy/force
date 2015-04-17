@@ -11,7 +11,9 @@ append locals
 block body
   #articles-show
     h1.large-garamond-header= article.get('title')
-    #articles-lead-paragraph!= article.get('lead_paragraph')
+    if article.strip('lead_paragraph')
+      #articles-lead-paragraph
+        != article.get('lead_paragraph')
     #articles-show-author
       a( href="/#{article.related().author.get('profile_handle')}" )
         = article.related().author.get('name')

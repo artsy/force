@@ -41,3 +41,10 @@ describe "Article", ->
       _.defer =>
         Backbone.sync.args[2][2].success fabricate 'artwork', title: 'foobar'
         dfd.resolve()
+
+  describe '#strip', ->
+    it 'returns the attr without tags', ->
+      @article.set 'lead_paragraph', '<p><br></p>'
+      @article.strip('lead_paragraph').should.equal ''
+      @article.set 'lead_paragraph', '<p>Existy</p>'
+      @article.strip('lead_paragraph').should.equal 'Existy'
