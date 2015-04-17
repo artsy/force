@@ -28,5 +28,5 @@ module.exports.init = ->
   attachFollowArtists show.related().artists
 
   attachFollowProfile show.related().profile
-
+  
   new ShareView el: $('.js-show-share')
