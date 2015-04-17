@@ -3,7 +3,6 @@ _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
 { resize } = require '../../../../components/resizer/index.coffee'
-PartnerShows = require '../../../../collections/partner_shows.coffee'
 InstallShots = require '../../../../collections/install_shots.coffee'
 template = -> require('./template.jade') arguments...
 relatedShowsTemplate = -> require('./related_show.jade') arguments...
@@ -16,25 +15,15 @@ module.exports = class RelatedShowsView extends Backbone.View
   className: 'show-related-shows-container'
 
   initialize: ( options ) ->
-    @show = options.model 
+    @shows = options.collection 
     @title = options.title || "Current Shows in #{@show.formatCity()}"
-    @location = options.model.location().get('coordinates')    
     @render()
 
   postrender: ->
-    relatedShows = new PartnerShows
-    relatedShows.fetch 
-      data:
-        status: 'running'
-        near: [ @location['lat'], @location['lng'] ].toString()
-        sort: '-start_at'
-        displayable: true
-        size: 5
-        at_a_fair: false
-      success: (relatedShows) =>
-        for show in relatedShows.models
-          @fetchInstallShotsForShow(show)
+    for show in @shows.models
+      @fetchShowImages(show)
 
+    
   render: -> 
     @$el.html template
       title: @title
@@ -50,12 +39,11 @@ module.exports = class RelatedShowsView extends Backbone.View
       totalWidth += width
       totalWidth < containerWidth
     resizedImages = filteredImages.map (image) ->
+      console.log image.get('cid')
       resize(image.get('image_urls')['large'], {height: INSTALL_SHOT_HEIGHT})
 
-
-  fetchInstallShotsForShow: (show) =>
+  fetchShowImages: (show) =>
     dfd = Q.defer()
-
     show.installShots = new InstallShots
     show.installShots.fetch
       cache: @cache

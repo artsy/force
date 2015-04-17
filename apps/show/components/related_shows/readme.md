@@ -4,20 +4,20 @@ This component is used to render a series of related shows as rows in the footer
 
 ## Implementation
 
-Include the stylesheet
-
-assets/foo.styl
+Include the stylesheet in your pages .styl file
 ````
 @import './components/related_shows/index.styl'
 ````
 
-include the mixin template and pass in an array of show models and title to the mixin
+Require in the backbone view and build the view by passing it a collection of shows and a title. You could then, for instance, append to your DOM and it will render.
 
-````jade
-include './components/related_shows/mixin.jade'
-
-.current-shows
-  +related-shows('Current Shows in New York', shows.models)
-.other-shows
-  +related-shows('Other Shows around the World', otherShows.models)
 ````
+RelatedShowsView = require '../components/related_shows/view.coffee'
+
+relatedShowsView = new RelatedShowsView 
+  collection: relatedShows
+  title: 'Current Shows in #{show.formatCity()}'
+
+$('#related-shows').append relatedShowsView.$el
+````
+

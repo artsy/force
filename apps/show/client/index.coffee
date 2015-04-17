@@ -1,11 +1,14 @@
 { SHOW, ARTWORKS } = require('sharify').data
+{ Cities, FeaturedCities } = require 'places'
+_ = require 'underscore'
 PartnerShow = require '../../../models/partner_show.coffee'
+PartnerShows = require '../../../collections/partner_shows.coffee'
 ShareView = require '../../../components/share/view.coffee'
 CarouselView = require '../../../components/carousel/view.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 attachFollowArtists = require '../components/follow_artists/index.coffee'
 attachFollowProfile = require '../components/follow_profile/index.coffee'
-RelatedShowsView = require '../components/related_shows/index.coffee'
+RelatedShowsView = require '../components/related_shows/view.coffee'
 
 module.exports.init = ->
   show = new PartnerShow SHOW
@@ -25,10 +28,6 @@ module.exports.init = ->
     allowDuplicates: true
     artworkSize: 'large'
   artworkColumnsView.$el.addClass 'is-fade-in'
-
-  relatedShowsView = new RelatedShowsView 
-    model: show
-  $('#related-shows').append relatedShowsView.$el
 
   attachFollowArtists show.related().artists
 
