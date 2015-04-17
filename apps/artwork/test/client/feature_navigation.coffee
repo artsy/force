@@ -38,6 +38,13 @@ describe 'FeatureNavigationView', ->
     view = new FeatureNavigationView model: fair, kind: 'fair'
     _.isEmpty(view.$el.html()).should.be.true
 
+  it 'does not render when there is a fair that does not have a full feature', ->
+    fair = new Backbone.Model(fabricate 'fair')
+    view = new FeatureNavigationView model: fair, kind: 'fair'
+    fair.set 'published', true
+    fair.set 'has_full_feature', false
+    _.isEmpty(view.$el.html()).should.be.true
+
   it 'does not fair if the entity does not have a name', ->
     feature = new Backbone.Model(fabricate 'feature')
     feature.unset 'name'

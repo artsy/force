@@ -2,13 +2,13 @@ Backbone = require 'backbone'
 template = -> require('../templates/feature_navigation.jade') arguments...
 
 module.exports = class FeatureNavigationView extends Backbone.View
-  initialize: (options) ->
-    { @model, @kind } = options
+  initialize: ({ @model, @kind }) ->
     @render()
 
   negativeRenderCriteria: ->
     @kind is 'fair' and not @model.get('published') or
-    not @model.has 'name'
+    not @model.has 'name' or
+    not @model.get 'has_full_feature'
 
   checkAndSetHref: ->
     return false if @negativeRenderCriteria()
