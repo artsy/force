@@ -50,3 +50,4 @@ describe 'RelatedShowsView', ->
       @view.$('.show-related-show-running-dates').html().should.containEql 'July 12 – August 23'
     
     xit 'displays the correct number of install shots', ->
+      # this relies on a query to the width of an element on the dom
