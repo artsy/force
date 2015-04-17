@@ -25,8 +25,6 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
     @renderSlideshow() if @slideshowArtworks?.length
     @renderArtworks()
     @breakCaptions()
-    if $(@article.get 'lead_paragraph').text().trim() isnt ''
-      @$('#articles-lead-paragraph').show()
     @checkEditable()
 
   renderSlideshow: =>
