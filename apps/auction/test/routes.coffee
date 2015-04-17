@@ -1,9 +1,10 @@
 _ = require 'underscore'
 sinon = require 'sinon'
+rewire = require 'rewire'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 CurrentUser = require '../../../models/current_user'
-routes = require '../routes'
+routes = rewire '../routes'
 
 describe '/auction routes', ->
   beforeEach ->
@@ -14,7 +15,9 @@ describe '/auction routes', ->
   afterEach ->
     Backbone.sync.restore()
 
-  it 'then fetches the remaining aspects of the auction', (done) ->
+  it 'fetches the auction data and renders the index template', (done) ->
+    routes.__get__('Articles')::fetch = -> super; finally: (cb) -> cb()
+
     routes.index @req, @res
     _.defer =>
       Backbone.sync.callCount.should.equal 2
@@ -23,24 +26,25 @@ describe '/auction routes', ->
       Backbone.sync.args[1][1].url().should.containEql '/api/v1/sale/foobar/sale_artworks'
       Backbone.sync.args[1][2].data.should.equal 'total_count=1&size=10'
 
-      done()
-
-  it 'renders the index template', (done) ->
-    routes.index @req, @res
-    _.defer =>
       successes = _.map Backbone.sync.args[0..-1], (args) -> args[2].success
       successes[0]({})
       successes[1]({})
+
       _.defer =>
-        @res.render.args[0][0].should.equal 'index'
-        _.keys(@res.render.args[0][1]).should.eql [
-          'auction'
-          'artworks'
-          'saleArtworks'
-          'user'
-          'state'
-        ]
-        done()
+        _.last(Backbone.sync.args)[1].url.should.containEql '/api/articles'
+
+        _.defer =>
+          @res.render.args[0][0].should.equal 'index'
+          _.keys(@res.render.args[0][1]).should.eql [
+            'auction'
+            'artworks'
+            'saleArtworks'
+            'articles'
+            'user'
+            'state'
+            'displayBlurbs'
+          ]
+          done()
 
   describe 'with logged in user', ->
     beforeEach (done) ->

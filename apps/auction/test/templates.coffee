@@ -3,12 +3,11 @@ benv = require 'benv'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
 Auction = require '../../../models/auction'
-Feature = require '../../../models/feature'
 Profile = require '../../../models/profile'
 CurrentUser = require '../../../models/current_user'
 Artworks = require '../../../collections/artworks'
 SaleArtworks = require '../../../collections/sale_artworks'
-OrderedSets = require '../../../collections/ordered_sets'
+Articles = require '../../../collections/articles'
 State = require '../../../components/auction_artworks/models/state'
 
 describe 'auction templates', ->
@@ -22,6 +21,7 @@ describe 'auction templates', ->
         auction: @auction = new Auction fabricate('sale', name: 'An Auction')
         artworks: @artworks = new Artworks _.times 2, -> fabricate 'artwork'
         saleArtworks: @saleArtworks = new SaleArtworks _.times 2, -> fabricate 'sale_artwork'
+        articles: @articles = new Articles
         user: @user = new CurrentUser
         state: @state = new State
 
