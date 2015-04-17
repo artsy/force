@@ -1,4 +1,5 @@
 _ = require 'underscore'
+artsyXapp = require 'artsy-xapp'
 Artist = require '../../models/artist'
 Artwork = require '../../models/artwork'
 Artworks = require '../../collections/artworks'
@@ -40,7 +41,7 @@ randomPage = (total, pageSize) ->
       res.locals.sd.ARTIST = response
       render()
 
-  totalCount(res.locals.artsyXappToken, auctionLots.url()).then (total) ->
+  totalCount(artsyXapp.token, auctionLots.url()).then (total) ->
     auctionLots.state.currentPage = randomPage(total, auctionLots.state.pageSize)
     auctionLots.fetch
       cache: true
@@ -52,7 +53,7 @@ randomPage = (total, pageSize) ->
         render()
 
   artworks.url = artist.url() + '/artworks'
-  totalCount(res.locals.artsyXappToken, artworks.url).then (total) ->
+  totalCount(artsyXapp.token, artworks.url).then (total) ->
     artworks.fetch
       cache: true
       error: res.backboneError

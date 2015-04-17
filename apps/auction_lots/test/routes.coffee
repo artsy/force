@@ -20,7 +20,7 @@ describe 'Auction results routes', ->
   describe '#detail', ->
     beforeEach ->
       @req = params: artist_id: 'andy-foobar', id: 'a-lot'
-      @res = status: sinon.stub(), render: sinon.stub(), locals: artsyXappToken: 'token', sd: {}
+      @res = status: sinon.stub(), render: sinon.stub(), locals: sd: {}
       @next = sinon.stub()
 
     it 'makes the appropriate requests', (done) ->
