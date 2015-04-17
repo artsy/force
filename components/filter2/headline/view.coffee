@@ -30,13 +30,8 @@ module.exports = class HeadlineView extends Backbone.View
 
   paramsToHeading: ->
     if @anyFacetsSelected()
-      artworksText = 'artworks'
-
-      if @params.get('medium')
-        artworksText = @collection.counts['medium'][@params.get('medium')].name
-
       _.compact([
         @facetName('dimension_range'),
-        artworksText,
+        (@facetName('medium') || 'artworks'),
         @facetName('price_range')
       ]).join(' ')
