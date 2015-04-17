@@ -67,7 +67,7 @@ module.exports = class DropdownView extends Backbone.View
       @params.set @facet, val
 
     @renderActive e
-    @hideMenu e
+    _.defer => @hideMenu e
 
     false
 
@@ -77,8 +77,8 @@ module.exports = class DropdownView extends Backbone.View
       $(e.currentTarget).addClass('is-active')
 
   hideMenu: (e) ->
-    $(e.currentTarget).parent().hidehover() unless navigator.userAgent.match('iPad')
-
+    unless navigator.userAgent.match('iPad')
+      $(e.currentTarget).closest('nav').hidehover()
 
 
 
