@@ -61,17 +61,15 @@ module.exports = class FilterView extends Backbone.View
       scrollToEl: @$('.filter-artworks-sort-count')
 
   render: (collection, response) =>
-    @giveUpCount++ if response.hits?.length is 0
+    @giveUpCount++ if collection.length is 0
 
     @$('.filter-artworks').attr 'data-state',
-      if @collection.length is 0 then 'finished-paging'
-      else if @giveUpCount > 2 then 'finished-paging'
+      if @giveUpCount > 2 then 'finished-paging'
       else if @params.get('page') > 500 then 'finished-paging'
       else ''
 
-    @collection.prepareCounts @collection.counts
     @newColumnsView() unless @columnsView?
-    @columnsView.appendArtworks(new FilterArtworks(response.hits).models)
+    @columnsView.appendArtworks collection.models
 
   newColumnsView: =>
     @columnsView?.remove()
@@ -97,7 +95,7 @@ module.exports = class FilterView extends Backbone.View
 
     @$('.filter-artworks-list').html ''
 
-    @collection.trigger 'reset'
+    @collection.reset()
 
     _.defer @newColumnsView
 
