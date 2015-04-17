@@ -1,16 +1,8 @@
-footer.auction-footer
-  .auction-articles
-    //- Convert to real articles
-    //-
-    //- for set in sets.models
-    //-   for item in set.get('items').models
-    //-     if item.get('title') && item.get('href') && item.get('image_url')
-    //-       a.auction-article( href= item.get('href') )
-    //-         .auction-article-image
-    //-           img( src= item.imageUrl('small_rectangle'), alt= item.get('title') )
-    //-         .auction-article-metadata
-    //-           h4.auction-article-title= item.get('title')
-    //-           h5.auction-article-subtitle= item.get('subtitle')
+footer.auction-footer( class= articles.length ? 'has-articles' : 'has-no-articles' )
+  if articles.length
+    .auction-articles
+      for article in articles.models
+        include ../../../components/article_figure/template
 
   .auction-app-promo-wrapper
     a.auction-app-promo( href='https://iphone.artsy.net/', target='_blank' )

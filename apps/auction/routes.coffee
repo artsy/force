@@ -1,3 +1,4 @@
+_ = require 'underscore'
 Q = require 'q'
 { API_URL } = require('sharify').data
 Backbone = require 'backbone'
@@ -7,6 +8,7 @@ Profile = require '../../models/profile'
 SaleArtworks = require '../../collections/sale_artworks'
 Artworks = require '../../collections/artworks'
 OrderedSets = require '../../collections/ordered_sets'
+Articles = require '../../collections/articles'
 State = require '../../components/auction_artworks/models/state'
 
 setupUser = (user, auction) ->
@@ -34,6 +36,7 @@ setupUser = (user, auction) ->
     (saleArtwork = artwork.related().saleArtwork).get('lot_number') or
     saleArtwork.get('position') or
     saleArtwork.id
+  articles = new Articles
   state = new State
 
   Q.all([
@@ -41,19 +44,22 @@ setupUser = (user, auction) ->
     saleArtworks.fetchUntilEndInParallel(cache: true)
     setupUser(req.user, auction)
   ]).spread (a, b, user) ->
-    artworks.reset Artworks.__fromSale__(saleArtworks)
+    articles.fetch(cache: true, data: published: true, auction_id: auction.get('_id')).finally ->
 
-    res.locals.sd.AUCTION = auction.toJSON()
-    res.locals.sd.ARTWORKS = artworks.toJSON()
-    res.locals.sd.USER = user.toJSON() if user?
+      artworks.reset Artworks.__fromSale__(saleArtworks)
 
-    res.render 'index',
-      auction: auction
-      artworks: artworks
-      saleArtworks: saleArtworks
-      user: user
-      state: state
+      res.locals.sd.AUCTION = auction.toJSON()
+      res.locals.sd.ARTWORKS = artworks.toJSON()
+      res.locals.sd.USER = user.toJSON() if user?
 
+      res.render 'index',
+        auction: auction
+        artworks: artworks
+        saleArtworks: saleArtworks
+        articles: articles
+        user: user
+        state: state
+        displayBlurbs: _.any _.map(artworks.pluck('blurb'), _.negate(_.isEmpty))
   , ->
     err = new Error 'Not Found'
     err.status = 404

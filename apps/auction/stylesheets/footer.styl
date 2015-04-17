@@ -12,36 +12,10 @@
   padding-right 20px
   &:empty
     display none
-.auction-app-promo-wrapper
-  padding-left 20px
-  border-left 1px solid gray-lighter-color
-
-.auction-article
-  display table
-  width 100%
-  margin 20px auto
-  text-decoration none
-  &:first-child
-    margin-top 0
-  &:last-child
-    margin-bottom 0
-.auction-article-image
-.auction-article-metadata
-  display table-cell
-  height 100%
-  vertical-align middle
-.auction-article-image
-  width 150px
-  > img
-    width 100%
-    height auto
-.auction-article-metadata
-  padding 0 20px
-.auction-article-title
-  margin 10px 0
-  font-size 22px
-.auction-article-subtitle
-  line-height 1.2
+  > .article-figure
+    margin 20px 0
+    .article-figure-figcaption
+      padding-right 30px
 
 .auction-app-promo
   display table
@@ -63,3 +37,13 @@
   line-height 1.2
 .auction-app-promo-subtitle
   font-style italic
+
+.has-articles
+  .auction-app-promo-wrapper
+    padding-left 20px
+    border-left 1px solid gray-lighter-color
+.has-no-articles
+  .auction-app-promo-image > img
+    margin auto
+  .auction-app-promo-wrapper
+    text-align center
