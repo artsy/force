@@ -26,7 +26,6 @@ sharify = require "sharify"
 http = require 'http'
 path = require "path"
 artsyPassport = require 'artsy-passport'
-artsyXappMiddlware = require 'artsy-xapp-middleware'
 redirectMobile = require './middleware/redirect_mobile'
 proxyGravity = require './middleware/proxy_to_gravity'
 proxyReflection = require './middleware/proxy_to_reflection'
@@ -144,13 +143,8 @@ module.exports = (app) ->
   # node-http-proxy to work with POST/PUT/DELETE
   app.all '/api*', proxyGravity.api
 
-  # Setup Artsy XAPP & Passport middleware for authentication along with the
+  # Setup Passport middleware for authentication along with the
   # body/cookie parsing middleware needed for that.
-  app.use artsyXappMiddlware(
-    artsyUrl: API_URL
-    clientId: ARTSY_ID
-    clientSecret: ARTSY_SECRET
-  ) unless app.get('env') is 'test'
   app.use bodyParser.json()
   app.use bodyParser.urlencoded(extended: true)
   app.use cookieParser()

@@ -4,7 +4,8 @@
 # be abstracted into modules under /lib.
 #
 
-{ PORT, NODE_ENV, RESTART_INTERVAL } = require "./config"
+{ PORT, NODE_ENV, RESTART_INTERVAL, API_URL, ARTSY_ID, ARTSY_SECRET } = require "./config"
+artsyXapp = require 'artsy-xapp'
 require 'newrelic' if NODE_ENV in ['production','staging']
 
 require './findleak'
@@ -21,11 +22,14 @@ app.set 'view engine', 'jade'
 cache.setup ->
   setup app
 
-  # Start the server and send a message to IPC for the integration test helper
-  # to hook into.
-  app.listen PORT, ->
-    console.log "Listening on port " + PORT
-    process.send? "listening"
+  # Get an xapp token
+  artsyXapp.init { url: API_URL, id: ARTSY_ID, secret: ARTSY_SECRET }, ->
+
+    # Start the server and send a message to IPC for the integration test helper
+    # to hook into.
+    app.listen PORT, ->
+      console.log "Listening on port " + PORT
+      process.send? "listening"
 
 # Reboot for memory leak (╥﹏╥)
 setTimeout process.exit, RESTART_INTERVAL

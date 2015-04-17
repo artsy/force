@@ -8,6 +8,7 @@ _ = require 'underscore'
 moment = require 'moment'
 { NODE_ENV } = require '../../config'
 helpers = require '../template_helpers'
+artsyXapp = require 'artsy-xapp'
 
 module.exports = (req, res, next) ->
 
@@ -23,7 +24,7 @@ module.exports = (req, res, next) ->
   # and the xapp token.
   res.locals.sd.SESSION_ID = req.session?.id ?= uuid.v1()
   res.locals.sd.CURRENT_PATH = parse(req.url).pathname
-  res.locals.sd.ARTSY_XAPP_TOKEN = res.locals.artsyXappToken
+  res.locals.sd.ARTSY_XAPP_TOKEN = artsyXapp.token
   res.locals.sd.HIDE_HEADER = req.cookies?['hide-force-header']?
   res.locals.sd.HIDE_NAV_NOTICE = req.cookies?['hide-nav-notice']
   res.locals.sd.EIGEN = req.headers?['user-agent']?.match('Eigen')?
