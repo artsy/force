@@ -50,6 +50,25 @@ describe 'Partner Show', ->
     it 'does not render a press release', ->
       @$('.show-press-release').should.have.lengthOf 0
 
+  describe 'a show that is in an unfeatured fair', ->
+    beforeEach ->
+      @show = new PartnerShow fabricate('show')
+      fair = @show.related().fair.set 'has_full_feature', false
+      @html = render('index')
+        sd: {}
+        asset: (->)
+        show: @show
+        location: @show.location()
+        artworks: @show.related().artworks
+        fair: fair
+        partner: @show.related().partner
+        profile: @show.related().profile
+        installShots: @show.related().installShots
+      @$ = cheerio.load @html
+
+    it 'does not render a link for the fair', ->
+      @$('.show-fair-link').should.have.lengthOf 0
+
   describe 'with 1 installation shot', ->
     beforeEach ->
       @show = new PartnerShow fabricate('show')

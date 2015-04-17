@@ -25,8 +25,11 @@ header.show-header
         +share(show.shareTitle())
 
     if show.has('fair')
-      a.show-fair-link( href= fair.href() )
-        = fair.get('name')
+      if fair.isEligible()
+        a.show-fair-link( href= fair.href() )
+          = fair.get('name')
+      else
+        | #{fair.get('name')}
       .show-dates
         = fair.formatDates()
       if show.get('fair_location')
