@@ -56,7 +56,7 @@
     "jade": "*"
   },
   "devDependencies": {
-    "zombie": "*",
+    "zombie": "3.x",
     "jquery-fillwidth-lite": "*",
     "validator": "*",
     "uglifyify": "*",
