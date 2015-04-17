@@ -20,7 +20,7 @@ module.exports = class HeadlineView extends Backbone.View
       ]).join(' | ')
 
     else
-      @$el.hide()
+      @$el.text("").hide()
 
   facetName: (facet)->
     @collection.counts?[facet]?[@params.get(facet)]?.name
@@ -32,6 +32,6 @@ module.exports = class HeadlineView extends Backbone.View
     if @anyFacetsSelected()
       _.compact([
         @facetName('dimension_range'),
-        (@facetName('medium') || 'artworks'),
+        (@facetName('medium') || 'Artworks'),
         @facetName('price_range')
       ]).join(' ')
