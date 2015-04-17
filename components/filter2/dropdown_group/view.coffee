@@ -18,3 +18,5 @@ module.exports = class DropdownGroupView extends Backbone.View
       collection: @collection
       params: @params
       el: @$("#filter-dropdown-#{facet}")
+
+    @subViews[facet].renderActiveParam()

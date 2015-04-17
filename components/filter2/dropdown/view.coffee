@@ -10,8 +10,6 @@ module.exports = class DropdownView extends Backbone.View
     'mouseenter .filter-dropdown': 'adjustMenu'
 
   initialize: ({@collection, @params, @facet, @el, @facets}) ->
-    @renderActiveParam()
-
     @listenTo @collection, 'initial:fetch', @updateCounts
     @listenTo @params, "change:#{@facet}", @renderActiveParam
     @listenTo @params, 'change', @updateCounts
