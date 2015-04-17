@@ -31,5 +31,8 @@ cache.setup ->
       console.log "Listening on port " + PORT
       process.send? "listening"
 
+# Crash if we can't get/refresh an xapp token
+artsyXapp.on 'error', process.exit
+
 # Reboot for memory leak (╥﹏╥)
 setTimeout process.exit, RESTART_INTERVAL
