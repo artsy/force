@@ -842,7 +842,7 @@
                           "dependencies": {
                             "ansi-regex": {
                               "version": "1.1.1",
-                              "from": "ansi-regex@>=1.1.0 <2.0.0",
+                              "from": "ansi-regex@>=1.0.0 <2.0.0",
                               "resolved": "https://registry.npmjs.org/ansi-regex/-/ansi-regex-1.1.1.tgz"
                             },
                             "get-stdin": {
@@ -912,7 +912,7 @@
                         },
                         "xtend": {
                           "version": "4.0.0",
-                          "from": "xtend@>=4.0.0 <5.0.0",
+                          "from": "xtend@>=4.0.0 <4.1.0-0",
                           "resolved": "https://registry.npmjs.org/xtend/-/xtend-4.0.0.tgz"
                         }
                       }
@@ -1809,7 +1809,7 @@
                 },
                 "escodegen": {
                   "version": "1.6.1",
-                  "from": "escodegen@>=1.6.1 <2.0.0",
+                  "from": "escodegen@>=1.4.1 <2.0.0",
                   "resolved": "https://registry.npmjs.org/escodegen/-/escodegen-1.6.1.tgz",
                   "dependencies": {
                     "estraverse": {
@@ -2433,7 +2433,7 @@
                         },
                         "inherits": {
                           "version": "2.0.1",
-                          "from": "inherits@>=2.0.0 <3.0.0",
+                          "from": "inherits@>=2.0.1 <2.1.0",
                           "resolved": "https://registry.npmjs.org/inherits/-/inherits-2.0.1.tgz"
                         }
                       }
@@ -2735,7 +2735,7 @@
                 },
                 "inherits": {
                   "version": "2.0.1",
-                  "from": "inherits@>=2.0.1 <2.1.0",
+                  "from": "inherits@2.0.1",
                   "resolved": "https://registry.npmjs.org/inherits/-/inherits-2.0.1.tgz"
                 }
               }
@@ -2761,7 +2761,7 @@
         },
         "lodash": {
           "version": "3.7.0",
-          "from": "lodash@>=3.6.0 <4.0.0",
+          "from": "lodash@>=3.2.0 <4.0.0",
           "resolved": "https://registry.npmjs.org/lodash/-/lodash-3.7.0.tgz"
         }
       }
@@ -3677,7 +3677,7 @@
         },
         "mkdirp": {
           "version": "0.5.0",
-          "from": "mkdirp@>=0.0.0 <1.0.0",
+          "from": "mkdirp@>=0.5.0 <0.6.0",
           "resolved": "https://registry.npmjs.org/mkdirp/-/mkdirp-0.5.0.tgz",
           "dependencies": {
             "minimist": {
@@ -3785,7 +3785,7 @@
       "dependencies": {
         "through": {
           "version": "2.3.7",
-          "from": "through@>=2.3.4 <2.4.0",
+          "from": "through@>=2.3.6 <3.0.0",
           "resolved": "https://registry.npmjs.org/through/-/through-2.3.7.tgz"
         }
       }
@@ -4023,7 +4023,7 @@
         },
         "mkdirp": {
           "version": "0.5.0",
-          "from": "mkdirp@0.5.0",
+          "from": "mkdirp@>=0.5.0 <0.6.0",
           "resolved": "https://registry.npmjs.org/mkdirp/-/mkdirp-0.5.0.tgz",
           "dependencies": {
             "minimist": {
@@ -4232,7 +4232,7 @@
             },
             "source-map": {
               "version": "0.1.43",
-              "from": "source-map@>=0.1.40 <0.2.0",
+              "from": "source-map@>=0.1.0 <0.2.0",
               "resolved": "https://registry.npmjs.org/source-map/-/source-map-0.1.43.tgz",
               "dependencies": {
                 "amdefine": {
@@ -6554,7 +6554,7 @@
         },
         "request": {
           "version": "2.55.0",
-          "from": "request@>=2.44.0 <3.0.0",
+          "from": "request@>=2.0.0 <3.0.0",
           "resolved": "https://registry.npmjs.org/request/-/request-2.55.0.tgz",
           "dependencies": {
             "bl": {
@@ -6818,7 +6818,7 @@
                     },
                     "xtend": {
                       "version": "4.0.0",
-                      "from": "xtend@>=4.0.0 <5.0.0",
+                      "from": "xtend@>=4.0.0 <4.1.0-0",
                       "resolved": "https://registry.npmjs.org/xtend/-/xtend-4.0.0.tgz"
                     }
                   }
