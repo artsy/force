@@ -9,11 +9,10 @@ module.exports = class SortView extends Backbone.View
 
   initialize: ({@collection, @params, @facets}) ->
     new BorderedPulldown el: @$('.bordered-pulldown')
+    @
 
   setSort: (e) ->
-    e.preventDefault()
-    e.stopPropagation()
-
     @params.set sort: $(e.target).data('sort')
+    false
 
 
