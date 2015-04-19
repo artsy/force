@@ -3,11 +3,12 @@ _s = require 'underscore.string'
 Backbone = require 'backbone'
 FilterArtworks = require '../../../collections/filter_artworks.coffee'
 
+template = -> require('./template.jade') arguments...
+
 module.exports = class DropdownView extends Backbone.View
 
   events:
-    'click a[data-attr]': 'handleSelect'
-    'mouseenter .filter-dropdown': 'adjustMenu'
+    'click a[data-attr]': 'onSelect'
 
   initialize: ({@collection, @params, @facet, @el, @facets}) ->
     @listenTo @collection, 'initial:fetch', @updateCounts
@@ -25,58 +26,25 @@ module.exports = class DropdownView extends Backbone.View
 
   renderCounts: (collection) =>
     counts = collection.counts[@facet]
+    activeText = counts[@params.get(@facet)]?.name
 
-    for k, v of counts
-      $criterion = @$("a[data-attr='#{@facet}'][data-val='#{k}']")
-      $criterion.find('.filter-dropdown-count').text "(#{_s.numberFormat(v.count)})"
-      if v.count > 0
-        $criterion.removeClass('is-disabled')
-      else
-        $criterion.addClass('is-disabled')
+    html = template
+      filter: counts
+      name: @facet
+      filterRoot:  sd.FILTER_ROOT
+      numberFormat: _s.numberFormat
+      params: @params
+      activeText: activeText
 
-  removeActive: ->
-    @$el.removeClass('is-active')
-    @$('a.is-active').removeClass('is-active')
+    old = @$el
+    @setElement html
+    old.replaceWith @$el
+    @delegateEvents()
 
-  renderActiveParam: ->
-    $a = @$("a[data-attr='#{@facet}'][data-val='#{@params.get(@facet)}']")
-    if $a.length
-      $a.addClass('is-active')
-        .closest('.filter-dropdown')
-        .addClass('is-active')
-        .children('.filter-nav-active-text')
-        .text $a.children('.filter-dropdown-text').text()
-
-  adjustMenu: (e) ->
-    $dropdown = $(e.currentTarget)
-    $menu = $dropdown.find('nav')
-    $world = $(document)
-
-    if $dropdown.offset().left + $menu.width() > $world.width()
-      $menu.css left: 'auto', right: 0
-
-  handleSelect: (e) ->
-    val = $(e.currentTarget).data 'val'
-
-    if val is ''
+  onSelect: (e) ->
+    if (val = $(e.currentTarget).data 'val') is ''
       @params.unset @facet
-      @removeActive()
     else
       @params.set @facet, val
 
-    @renderActive e
-    _.defer => @hideMenu e
-
     false
-
-  renderActive: (e) ->
-    _.defer =>
-      @$('a.is-active').removeClass('is-active')
-      $(e.currentTarget).addClass('is-active')
-
-  hideMenu: (e) ->
-    unless navigator.userAgent.match('iPad')
-      @$('.filter-dropdown-nav').hidehover()
-
-
-
