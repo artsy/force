@@ -42,7 +42,7 @@ syncAuth = module.exports.syncAuth = ->
             window.location.reload()
 
 setupAnalytics = ->
-  analytics(mixpanel: mixpanel, ga: ga)
+  analytics(mixpanel: (mixpanel ? null), ga: ga)
   analytics.registerCurrentUser()
   setupSplitTests()
   analytics.trackPageview()
