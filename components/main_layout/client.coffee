@@ -41,9 +41,6 @@ syncAuth = module.exports.syncAuth = ->
             window.location.reload()
 
 setupAnalytics = ->
-  # Initialize analytics & track page view if we included mixpanel
-  # (not included in test environment).
-  return if not mixpanel? or mixpanel is 'undefined'
   analytics(mixpanel: mixpanel, ga: ga)
   analytics.registerCurrentUser()
   setupSplitTests()
