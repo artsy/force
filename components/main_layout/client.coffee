@@ -42,10 +42,11 @@ syncAuth = module.exports.syncAuth = ->
             window.location.reload()
 
 setupAnalytics = ->
-  analytics(mixpanel: (mixpanel ? null), ga: ga)
-  analytics.registerCurrentUser()
-  setupSplitTests()
-  analytics.trackPageview()
+  window.analytics?.ready ->
+    analytics(mixpanel: (mixpanel ? null), ga: ga)
+    analytics.registerCurrentUser()
+    setupSplitTests()
+    analytics.trackPageview()
   # Log a visit once per session
   unless Cookies.get('active_session')?
     Cookies.set 'active_session', true
