@@ -1,11 +1,11 @@
 - var aggregateLabelMap = {'price_range' : 'Price', 'dimension_range' : 'Size', 'medium' : 'Medium'}
 
 mixin filter-dropdown(mainText, plural, attr, values, hrefRoot)
-  .filter-dropdown
+  .filter-dropdown(id="filter-dropdown-#{attr}")
     .filter-nav-main-text= mainText
     .filter-nav-active-text
     .icon-arrow-down
-    nav
+    nav.filter-dropdown-nav
       a( data-attr=attr, data-val='', href='' )
         span.filter-dropdown-text= "All " + plural + "s"
         span.filter-dropdown-count
@@ -22,5 +22,5 @@ mixin filter-dropdown(mainText, plural, attr, values, hrefRoot)
             )
           )
             span.filter-dropdown-text= key.name
-            span.filter-dropdown-count (#{key.count})
+            span.filter-dropdown-count
             span.icon-check

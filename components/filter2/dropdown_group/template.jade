@@ -1,0 +1,5 @@
+nav.filter-nav.filter-artworks-nav
+  a.filter-button.filter-nav-all( href=filterRoot ) All Works
+  if counts
+    each filter, name in counts
+      include ../dropdown/template

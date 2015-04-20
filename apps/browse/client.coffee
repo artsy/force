@@ -1,11 +1,29 @@
+_ = require 'underscore'
 Backbone = require 'backbone'
 scrollFrame = require 'scroll-frame'
-FilterArtworksView = require '../../components/filter2/artworks/view.coffee'
-{ API_URL } = require('sharify').data
+qs = require 'querystring'
+FilterArtworks = require '../../collections/filter_artworks.coffee'
+FilterView = require '../../components/filter2/view.coffee'
+FilterRouter = require '../../components/filter2/router/index.coffee'
 
 module.exports.init = ->
-  new FilterArtworksView
+  queryParams = qs.parse(location.search.replace(/^\?/, ''))
+  params = new Backbone.Model _.extend queryParams, { page: 1, size: 10 }
+  collection = new FilterArtworks
+
+  view = new FilterView
     el: $ '#browse-filter'
+    collection: collection
+    params: params
+
+  router = new FilterRouter
+    params: params
     urlRoot: 'browse'
+
+  collection.fetch
+    data: params.toJSON()
+    success: ->
+      collection.trigger 'initial:fetch'
+
   Backbone.history.start pushState: true
   scrollFrame '#browse-filter a'

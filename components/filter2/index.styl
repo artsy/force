@@ -1,7 +1,5 @@
 @import '../stylus_lib'
-@import './sort_count'
 @import './fixed_header'
-@import './artworks'
 
 tab-height = 46px
 color-transition-duration = 0.2s
@@ -45,6 +43,11 @@ tab-padding = 15px 18px 10px 18px
       position: absolute
       margin-top: -16px
       color black
+
+  .is-disabled
+     background-color gray-dark-color
+     cursor text
+     pointer-events none
   a
     text-decoration none
 
@@ -107,3 +110,46 @@ tab-padding = 15px 18px 10px 18px
 
 .filter-dropdown-text
   text-transform capitalize
+
+.filter-artworks-spinner
+  position relative
+  padding 150px 0
+
+.filter-artworks-no-results
+  padding 150px 0
+  display none
+  text-align center
+  font-style italic
+
+.filter-artworks
+  margin-bottom 150px
+  min-height 800px
+  &[data-state='no-results']
+    .filter-artworks-no-results
+      display block
+    .filter-artworks-list, .filter-artworks-spinner
+      display none
+  &[data-state='finished-paging']
+    .filter-artworks-spinner
+      display none
+
+.filter-artworks-sort-count
+  margin-bottom 30px
+
+.filter-sort-count-pulldown
+  float right
+  margin-top -10px
+
+.filter-sort-count-count
+  float left
+  font-style italic
+
+.filter-sort-count
+  clearfix()
+
+h1.filter-heading
+  margin-bottom 10px
+  display none
+  text-transform capitalize
+  margin-top 0px
+
