@@ -19,6 +19,7 @@ module.exports = ->
   syncAuth()
   setupAuctionReminder()
   listenForInvert()
+  setupAnalytics()
 
 ensureFreshUser = (data) ->
   return unless sd.CURRENT_USER
@@ -41,14 +42,10 @@ syncAuth = module.exports.syncAuth = ->
             window.location.reload()
 
 setupAnalytics = ->
-  # Initialize analytics & track page view if we included mixpanel
-  # (not included in test environment).
-  return if not mixpanel? or mixpanel is 'undefined'
   analytics(mixpanel: mixpanel, ga: ga)
   analytics.registerCurrentUser()
   setupSplitTests()
   analytics.trackPageview()
-
   # Log a visit once per session
   unless Cookies.get('active_session')?
     Cookies.set 'active_session', true
@@ -97,4 +94,3 @@ setupJquery = ->
 setupAuctionReminder = ->
   if sd.CHECK_FOR_AUCTION_REMINDER and !(Cookies.get('closeAuctionReminder')? or window.location.pathname is '/user/edit')
     new AuctionReminderView
-setupAnalytics()
