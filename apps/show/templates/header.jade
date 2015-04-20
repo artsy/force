@@ -1,12 +1,13 @@
 header.show-header
   .show-header-cell
-    h1.show-title.show-headline
+    h1.show-title
       if show.has('fair')
         = partner.get('name')
         br
         em= fair.get('name')
       else
         = show.title()
+
     if show.get('description')
       .show-description
         != show.mdToHtml('description')
@@ -24,20 +25,21 @@ header.show-header
       nav.show-share.js-show-share
         +share(show.shareTitle())
 
-    if show.has('fair')
-      if fair.isEligible()
-        a.show-fair-link( href= fair.href() )
-          = fair.get('name')
+    .show-metadata
+      if show.has('fair')
+        if fair.isEligible()
+          a.show-fair-link( href= fair.href() )
+            = fair.get('name')
+        else
+          | #{fair.get('name')}
+        .show-dates
+          = fair.formatDates()
+        if show.get('fair_location')
+          .show-location
+            = show.get('fair_location').display
       else
-        | #{fair.get('name')}
-      .show-dates
-        = fair.formatDates()
-      if show.get('fair_location')
-        .show-location
-          = show.get('fair_location').display
-    else
-      .show-dates
-        = show.runningDates()
-      if location
-        .show-location
-          = location.singleLine()
+        .show-dates
+          = show.runningDates()
+        if location
+          .show-location
+            = location.singleLine()
