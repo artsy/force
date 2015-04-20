@@ -22,7 +22,7 @@ header#main-layout-header(class= sd.HEADER_CLASS ? sd.HEADER_CLASS : '')
       a.mlh-top-nav-link( href='/institutions', class= activeClass('/institutions') ) Museums
       a.mlh-top-nav-link( href='/art-fairs', class= activeClass('/art-fairs') ) Fairs
       a.mlh-top-nav-link( href='/auctions', class= activeClass('/auctions') ) Auctions
-      a.mlh-top-nav-link( href='/articles', class= activeClass('/posts') ) Posts
+      a.mlh-top-nav-link.js--post-split-test( href='/articles', class= activeClass('/posts') )= sd.POSTS_SECTION_NAME
 
       span.mlh-top-nav-link.hover-pulldown( data-mode='hover' )
         | More
