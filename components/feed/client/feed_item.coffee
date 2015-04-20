@@ -36,11 +36,11 @@ module.exports.FeedItemView = class FeedItemView extends Backbone.View
   fetchMoreArtworks: ->
     @$seeMore ?= @$('.see-more')
     @$seeMore.addClass 'is-loading'
-    @model.toChildModel().fetchArtworks
+    @model.toChildModel().related().artworks.fetch
       success: (artworks) =>
         @$seeMore.remove()
         @$('.feed-large-artworks-columns').html artworkColumns artworkColumns: artworks.groupByColumnsInOrder(4)
-        @setupArtworkSaveControls artworks
+        @setupArtworkSaveControls artworks.models
     false
 
   setupArtworkImpressionTracking: (artworks=@model.artworks().models) ->
