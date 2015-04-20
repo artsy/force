@@ -1,0 +1,14 @@
+.auction-preview-clock.js-auction-clock
+  include ../../../components/clock/template
+
+h1.auction-preview-name
+  = auction.get('name')
+
+.auction-preview-description
+  != auction.mdToHtml('description')
+
+.auction-preview-registration
+  | Register now to be notified when the auction begins
+
+  .auction-preview-registration-button
+    include ./registration_button
