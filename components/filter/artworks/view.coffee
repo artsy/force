@@ -18,6 +18,7 @@ module.exports = class FilterArtworksView extends Backbone.View
 
   initialize: (options) ->
     _.extend @, options
+
     @$window = $(window)
 
     # Set up artworks, a params model that stores the state of the filter
@@ -78,7 +79,7 @@ module.exports = class FilterArtworksView extends Backbone.View
     @giveUpCount++ if res?.length is 0
     @$('.filter-artworks').attr 'data-state',
       if @artworks.length is 0 then 'no-results'
-      else if @giveUpCount > 100 then 'finished-paging'
+      else if @giveUpCount > 5 then 'finished-paging'
       else if @params.get('page') > 500 then 'finished-paging'
       else ''
     @newColumnsView() unless @columnsView?
