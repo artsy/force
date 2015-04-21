@@ -1,6 +1,9 @@
 _ = require 'underscore'
+moment = require 'moment'
 Profile = require '../../models/profile.coffee'
 Fair = require '../../models/fair.coffee'
+Fairs = require '../../collections/fairs.coffee'
+FairOrganizer = require '../../models/fair_organizer.coffee'
 Search = require '../../collections/search.coffee'
 cache = require '../../lib/cache'
 kinds = require '../favorites_follows/kinds'
@@ -96,7 +99,7 @@ kinds = require '../favorites_follows/kinds'
 @fetchFairData = (req, res, next) ->
   profile = res.locals.profile
 
-  return next() unless profile?.isFairOrOrganizer()
+  return next() unless profile?.isFair()
 
   fair = new Fair id: profile.fairOwnerId()
 
@@ -135,3 +138,34 @@ kinds = require '../favorites_follows/kinds'
           success: (data) ->
             cache.setHash key, data
             end data
+
+@fetchFairByOrganizerYear = (req, res, next) ->
+  profile = res.locals.profile
+
+  return next() unless profile?.isFairOrganizer()
+
+  fairOrg = new FairOrganizer profile.get('owner')
+
+  # Get all fairs for the requested fair organizer
+  pastFairs = new Fairs
+  pastFairs.fetch
+    cache: true
+    data:
+      fair_organizer_id: fairOrg.id
+    success: ->
+      # find the fair whose year matches the requested year
+      fair = pastFairs.find (fair) ->
+        fair.formatYear() is parseInt req.params.year
+
+      return next() unless fair
+
+      # if we get a fair, fetch its profile and next to @fetchFairData
+      data = {}
+      data.access_token = req.user.get('accessToken') if req.user
+      new Profile(id: fair.get('default_profile_id')).fetch
+        data: data
+        cache: true
+        cacheTime: 300
+        success: (profile) ->
+          res.locals.profile = profile
+          next()
