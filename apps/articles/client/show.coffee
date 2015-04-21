@@ -53,7 +53,6 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
         return unless $el.length
         @fillwidth $el
     ).then =>
-      console.log 'here a trigger'
       analyticsHooks.trigger 'article:fullyloaded', @article.id
 
   breakCaptions: ->
