@@ -7,7 +7,6 @@ Fair = require '../../models/fair.coffee'
 cache = require '../../lib/cache'
 OrderedSets = require '../../collections/ordered_sets'
 Articles = require '../../collections/articles'
-moment = require 'moment'
 
 representation = (fair) ->
   dfd = Q.defer()
@@ -38,8 +37,8 @@ representation = (fair) ->
   pastFairs = new Fairs
 
   # This grabs all the past fairs by passing fair_organizer_id
-  # to the /fairs endpoing
-  request = pastFairs.fetch
+  # to the /fairs endpoint
+  pastFairs.fetch
     data:
       fair_organizer_id: fairOrg.id
     success: (models, response, options)->
