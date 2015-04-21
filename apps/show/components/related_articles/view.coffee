@@ -21,7 +21,7 @@ module.exports = class RelatedArticlesView extends Backbone.View
 
   events:
     'click .related-articles-show-all': 'showAll'
-# 
+
   showAll: (e) ->
     e.preventDefault()
     @numToShow = @collection.length
