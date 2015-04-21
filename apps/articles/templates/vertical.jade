@@ -1,5 +1,6 @@
 extends ../../../components/main_layout/templates/index
 include ../../../components/article_figure/mixin
+include ../../../components/share/template
 
 block head
   include meta/articles
@@ -8,4 +9,14 @@ append locals
   - assetPackage = 'articles'
 
 block body
+  header.articles-vertical-header.main-layout-container
+    .articles-vertical-header-left
+      a( href='/posts' ) Magazine
+      h1= vertical.get('title')
+      p= vertical.get('description')
+    .articles-vertical-header-right
+      | In Partnership With
+      img( src=vertical.get('partner_logo_url') )
+      hr
+      +share(vertical.get('title') + ' on Artsy')
   include full_feed

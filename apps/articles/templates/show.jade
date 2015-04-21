@@ -10,6 +10,19 @@ append locals
 
 block body
   #articles-show
+    if article.get('vertical_id')
+      header.articles-vertical-show-header.main-layout-container
+        section
+          .articles-vertical-show-header-left
+            h1= vertical.get('title')
+            h2 In Partnership With
+            img( src=vertical.get('partner_logo_url') )
+          .articles-vertical-show-header-right
+            ul
+              for article in featuredVerticalArticles.models
+                li
+                  img( src=article.get('thumbnail_image') )
+                  p= article.get('title')
     h1.large-garamond-header= article.get('title')
     if article.strip('lead_paragraph')
       #articles-lead-paragraph
@@ -50,5 +63,5 @@ block body
   section#articles-footer
     h1 What to Read Next
     ul#articles-footer-list
-      for article in footerArticles
+      for article in footerArticles.models
         +article-figure(article, 220, false, false)

@@ -10,16 +10,17 @@ append locals
 block body
   if verticals.length
     - vertical = verticals.first()
-    header.articles-vertical-header.main-layout-container
-      .articles-vertical-header-thumbnail
+    header.articles-vertical-notice-header.main-layout-container
+      .articles-vertical-notice-header-thumbnail
         img( src=vertical.get('thumbnail_url') )
-        .articles-vertical-header-thumbnail-text
+        .articles-vertical-notice-header-thumbnail-text
           h3 Featured Coverage
           h4= vertical.get('title')
-      if vertical.get('partner_logo_url')
-        .articles-vertical-header-partner-logo
-          p In partnership with
-          img( src= vertical.get('partner_logo_url') )
-      a.articles-vertical-header-explore( href=vertical.get('slug') ) Explore
+      .articles-vertical-notice-header-partner-logo
+        p In partnership with
+        img( src= vertical.get('partner_logo_url') )
+      .articles-vertical-notice-header-explore
+        a( href=vertical.get('slug') ) Explore
+        .icon-chevron-small-right
 
   include full_feed

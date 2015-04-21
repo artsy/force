@@ -1,7 +1,12 @@
+//
+// Styles for everything involved with verticals, including headers on the
+// main feed and in an article page
+//
+
 @import '../../../components/stylus_lib'
 @import './lib'
 
-.articles-vertical-header
+.articles-vertical-notice-header
   width 100%
   border-bottom 1px solid gray-lighter-color
   padding-top 11px
@@ -9,7 +14,7 @@
   flex-direction row
   position relative
 
-.articles-vertical-header-thumbnail
+.articles-vertical-notice-header-thumbnail
   clearfix()
   padding-right gutter-size
   border-right 1px solid gray-lighter-color
@@ -24,13 +29,13 @@
     margin-bottom 5px
   h4
     font-size 30px
-  .articles-vertical-header-thumbnail-text
+  .articles-vertical-notice-header-thumbnail-text
     padding-top (gutter-size / 2)
-  img, .articles-vertical-header-thumbnail-text
+  img, .articles-vertical-notice-header-thumbnail-text
     display inline-block
     vertical-align top
 
-.articles-vertical-header-partner-logo
+.articles-vertical-notice-header-partner-logo
   padding gutter-size
   avant-garde()
   font-size 13px
@@ -41,11 +46,53 @@
     display inline-block
     vertical-align middle
 
-.articles-vertical-header-explore
+.articles-vertical-notice-header-explore
   position absolute
   right 0
   font-size 30px
-  border-bottom 1px solid
-  text-decoration none
-  margin-right 30px
   margin-top gutter-size
+  border-bottom 1px solid
+  margin-right 45px
+  a
+    cursor pointer
+    text-decoration none
+  .icon-chevron-small-right
+    position absolute
+    top -3px
+    right -45px
+    font-size 26px
+
+.articles-vertical-header
+  padding 10px 0 20px 0
+  position relative
+
+.articles-vertical-header-left
+  width 60%
+  h1
+    font-size 40px
+    margin 20px 0 30px 0
+  a, p
+    font-size 20px
+    line-height 1.3em
+  a
+    fine-faux-underline()
+
+.articles-vertical-header-right
+  clearfix()
+  padding-bottom 10px
+  avant-garde()
+  font-size 13px
+  width 250px
+  position absolute
+  right 0
+  top 70px
+  img
+    height 30px
+    margin-left 20px
+    display inline
+    vertical-align middle
+
+.articles-vertical-show-header
+  border-bottom 1px solid gray-lighter-color
+  position relative
+  top -30px
