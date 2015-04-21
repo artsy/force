@@ -8,22 +8,18 @@ append locals
   - assetPackage = 'articles'
 
 block body
-  #articles-articles-page.main-layout-container
-    if (featuredArticles = articles.featured()).length
-      header.am-featured
-        .am-featured-hero
-          - article = featuredArticles[0]
-           +article-figure(article, 1000, false, false)
+  if verticals.length
+    - vertical = verticals.first()
+    header.articles-vertical-header.main-layout-container
+      .articles-vertical-header-thumbnail
+        img( src=vertical.get('thumbnail_url') )
+        .articles-vertical-header-thumbnail-text
+          h3 Featured Coverage
+          h4= vertical.get('title')
+      if vertical.get('partner_logo_url')
+        .articles-vertical-header-partner-logo
+          p In partnership with
+          img( src= vertical.get('partner_logo_url') )
+      a.articles-vertical-header-explore( href=vertical.get('slug') ) Explore
 
-        aside.am-featured-also
-          for article in featuredArticles.slice(1)
-            +article-figure(article, 300, false, false)
-
-    #articles-articles-feed.articles-feed
-      .articles-feed-articles.js-articles-feed-articles
-        for article in articles.feed()
-          .articles-feed-item( data-tier= article.get('tier') )
-            include ../../../components/articles_feed/templates/article
-
-      .js-articles-feed-more
-        include ../../../components/articles_feed/templates/button
+  include full_feed

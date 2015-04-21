@@ -1,0 +1,51 @@
+@import '../../../components/stylus_lib'
+@import './lib'
+
+.articles-vertical-header
+  width 100%
+  border-bottom 1px solid gray-lighter-color
+  padding-top 11px
+  display flex
+  flex-direction row
+  position relative
+
+.articles-vertical-header-thumbnail
+  clearfix()
+  padding-right gutter-size
+  border-right 1px solid gray-lighter-color
+  margin-bottom 20px
+  img
+    height 80px
+    width 120px
+    margin-right gutter-size
+  h3
+    avant-garde()
+    font-size 13px
+    margin-bottom 5px
+  h4
+    font-size 30px
+  .articles-vertical-header-thumbnail-text
+    padding-top (gutter-size / 2)
+  img, .articles-vertical-header-thumbnail-text
+    display inline-block
+    vertical-align top
+
+.articles-vertical-header-partner-logo
+  padding gutter-size
+  avant-garde()
+  font-size 13px
+  img
+    height 30px
+    margin-left 20px
+  p, img
+    display inline-block
+    vertical-align middle
+
+.articles-vertical-header-explore
+  position absolute
+  right 0
+  font-size 30px
+  border-bottom 1px solid
+  text-decoration none
+  margin-right 30px
+  margin-top gutter-size

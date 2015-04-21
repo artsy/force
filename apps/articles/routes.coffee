@@ -1,23 +1,27 @@
 _ = require 'underscore'
+Q = require 'q'
 sd = require('sharify').data
 Article = require '../../models/article'
 Articles = require '../../collections/articles'
 Vertical = require '../../models/vertical'
+Verticals = require '../../collections/verticals'
 embedVideo = require 'embed-video'
 { POST_TO_ARTICLE_SLUGS } = require '../../config'
 
 @articles = (req, res, next) ->
-  new Articles().fetch
-    data:
-      published: true
-      limit: 50
-      sort: '-published_at'
-      featured: true
-    error: res.backboneError
-    success: (articles) ->
-      res.locals.sd.ARTICLES = articles.toJSON()
-      res.locals.sd.ARTICLES_COUNT = articles.count
-      res.render 'articles', articles: articles
+  Q.allSettled([
+    (verticals = new Verticals).fetch()
+    (articles = new Articles).fetch(
+      data:
+        published: true
+        limit: 50
+        sort: '-published_at',
+        featured: true
+    )
+  ]).fail(next).then =>
+    res.locals.sd.ARTICLES = articles.toJSON()
+    res.locals.sd.ARTICLES_COUNT = articles.count
+    res.render 'articles', verticals: verticals, articles: articles
 
 @show = (req, res, next) ->
   new Article(id: req.params.slug).fetchWithRelated
