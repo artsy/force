@@ -33,13 +33,11 @@ module.exports = class FeedItem extends Backbone.Model
 
   artworks: (max) =>
     artworks = new Artworks(@get('artworks'))
-    if max then artworks[..max] else artworks
 
   flagged: -> @get('flagged')
 
   initialArtworks: ->
-    artworks = _.first(@get('artworks'), @get('initialArtworkSize'))
-    new Artworks(artworks)
+    @artworks()
 
   toChildModel: =>
     if @get('_type')
@@ -49,7 +47,7 @@ module.exports = class FeedItem extends Backbone.Model
   isPartnerShow: -> @get('_type') == 'PartnerShow'
 
   formatSeeMoreText: ->
-    num = @get('eligible_artworks_count') - @get('initialArtworkSize')
+    num = @get('artworks').length - @get('initialArtworkSize')
     if num > 0
       stem = if num > 1 then 's' else ''
       "See #{num} More Artwork#{stem}"
