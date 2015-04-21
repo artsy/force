@@ -2,6 +2,7 @@ _ = require 'underscore'
 sd = require('sharify').data
 Article = require '../../models/article'
 Articles = require '../../collections/articles'
+Vertical = require '../../models/vertical'
 embedVideo = require 'embed-video'
 { POST_TO_ARTICLE_SLUGS } = require '../../config'
 
@@ -36,3 +37,14 @@ embedVideo = require 'embed-video'
 
 @redirectPost = (req, res, next) ->
   res.redirect 301, req.url.replace 'post', 'article'
+
+@vertical = (req, res, next) ->
+  new Vertical(id: req.params.slug).fetch
+    error: res.backboneError
+    success: (vertical) ->
+      return next() unless req.params.slug is vertical.get('slug')
+      new Articles().fetch
+        data: vertical_id: vertical.get('id'), published: true
+        error: res.backboneError
+        success: (articles) ->
+          res.render('vertical', vertical: vertical, articles: articles)
