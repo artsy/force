@@ -76,7 +76,7 @@ module.exports = class BoothsView extends Backbone.View
       el: @$('.browse-section.booths .feed')
       feedItems: items
       additionalParams: @params.toJSON()
-      hideSeeMoreButtons: (if @params.get('artist') then true else false)
+      hideSeeMoreButtons: false
     @feedView.feedName = 'Fair Feed'
 
   hideSpinner: ->

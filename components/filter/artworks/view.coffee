@@ -18,6 +18,7 @@ module.exports = class FilterArtworksView extends Backbone.View
 
   initialize: (options) ->
     _.extend @, options
+
     @$window = $(window)
 
     # Set up artworks, a params model that stores the state of the filter

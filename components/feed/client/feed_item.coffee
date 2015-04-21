@@ -14,24 +14,36 @@ trackArtworkImpressions = require("../../analytics/impression_tracking.coffee").
 module.exports.FeedItemView = class FeedItemView extends Backbone.View
 
   events:
-    'click .see-more': 'fetchMoreArtworks'
+    'click .see-more': 'maybeFetchMoreArtworks'
     "click .artwork-item-buy": "acquire"
     "click .artwork-item-contact-seller": "contactSeller"
 
   artworksPage: 1
   artworksPageSize: 8
 
-  initialize: (options) ->
+  initialize: ({@additionalParams, @artworkCollection}) ->
     throw 'requires a model' unless @model
     throw 'requires an $el' unless @$el.length > 0
-    @artworkCollection = options.artworkCollection
+    @hideArtworks()
     _.defer =>
       @setupArtworkSaveControls()
       @setupArtworkImpressionTracking()
 
+  hideArtworks: ->
+    _.each(@model.artworks().rest(@model.get('initialArtworkSize')), ((artwork) =>
+      @$el.find("figure[data-artwork='#{artwork.get('id')}']").hide()))
+
+  showArtworks: ->
+    @$el.find(".artwork-item:not(:visible)").fadeIn('fast')
+    @$el.find(".feed-item-see-more").hide()
+
   moreArtworksClick: (event) =>
     analytics.track.click "Clicked show all artworks on feed item"
     @fetchMoreArtworks $(event.target)
+
+  maybeFetchMoreArtworks: ->
+    return @showArtworks() if @additionalParams.artist?
+    @fetchMoreArtworks()
 
   fetchMoreArtworks: ->
     @$seeMore ?= @$('.see-more')
