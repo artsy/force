@@ -1,5 +1,5 @@
 .past-fairs--fair-image-grid
-  a(href=fair.href())
+  a(href="/#{fairOrg.id}/#{fair.formatYear()}")
     .past-fairs--fair-image-grid__inner
       .fair-large-image-left( style="background-image: url(#{fair.representation.first().imageUrl('large_square')});" )
       .fair-small-images-right
