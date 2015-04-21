@@ -6,6 +6,8 @@ rewire = require 'rewire'
 routes = rewire '../routes'
 CurrentUser = require '../../../models/current_user.coffee'
 Fair = require '../../../models/fair.coffee'
+Fairs = require '../../../collections/fairs.coffee'
+FairOrganizer = require '../../../models/fair_organizer.coffee'
 Profile = require '../../../models/profile.coffee'
 FilterSuggest = require '../../../models/filter_suggest'
 FilteredSearchOptions = require '../../../models/filter_suggest'
@@ -192,3 +194,35 @@ describe '#fetchFairData', ->
     @success()
     (@cache.setHash.args[0][1].fair?).should.be.ok
     (@cache.setHash.args[0][1].filterSuggest?).should.be.ok
+
+describe '#fetchFairByOrganizerYear', ->
+
+  beforeEach ->
+    sinon.stub Backbone, 'sync'
+
+    profile = new Profile _.extend fabricate('fair_organizer_profile'), owner:fabricate('fair_organizer')
+
+    @fairs = [
+      fabricate('fair', start_at: new Date("2-2-2014"), id: '2014', default_profile_id: '2014'),
+      fabricate('fair', start_at: new Date("2-2-2015"), id: '2015', default_profile_id: '2015'),
+      fabricate('fair', start_at: new Date("2-2-2016"), id: '2016', default_profile_id: '2016')
+    ]
+
+    @req = { params: { id: 'the-armory-show', year: '2015' } }
+    @res = { locals: { sd: {}, profile: profile } }
+    @next = sinon.stub()
+
+  afterEach ->
+    Backbone.sync.restore()
+
+  it 'fetches the correct fair by year through the fair organizer', ->
+    routes.fetchFairByOrganizerYear @req, @res, @next
+    Backbone.sync.args[0][2].success @fairs
+    @next.called.should.not.be.ok
+    Backbone.sync.args[1][1].attributes.id.should.equal '2015'
+
+  it 'nexts if the fair organizer does not have a fair with requested year', ->
+    @req = { params: { id: 'the-armory-show', year: '2017' } }
+    routes.fetchFairByOrganizerYear @req, @res, @next
+    Backbone.sync.args[0][2].success @fairs
+    @next.called.should.be.ok
