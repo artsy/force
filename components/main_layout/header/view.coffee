@@ -18,7 +18,6 @@ module.exports = class HeaderView extends Backbone.View
     'click .mlh-signup': 'signup'
     'click .user-nav-profile-link': 'showProfilePrivateDialog'
     'click .mlh-logout': 'logout'
-    'click .js--post-split-test' : 'logAnalytics'
 
   initialize: ({ @$window, @$body }) ->
     @$welcomeHeader = @$('#main-layout-welcome-header')
@@ -115,7 +114,3 @@ module.exports = class HeaderView extends Backbone.View
   checkForFlash: ->
     if sd.FLASH
       new FlashMessage message: sd.FLASH
-
-  logAnalytics: ->
-    analytics.track.click "Clicked posts link with text: #{sd.POSTS_SECTION_NAME}"
-    analytics.snowplowStruct 'posts_link', 'click', sd.POSTS_SECTION_NAME, 'link_name'

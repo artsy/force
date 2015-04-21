@@ -17,3 +17,4 @@ module.exports.init = ->
       featured: true
 
   view.render()
+  analyticsHooks.trigger 'articles:fullyloaded'
