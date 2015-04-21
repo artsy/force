@@ -14,8 +14,15 @@ getFairData = [
   routes.fetchFairData
   (req, res, next) -> next() unless req.timedout
 ]
+getFairByOrganizerYear = [
+  timeout('25s')
+  routes.fetchFairByOrganizerYear
+  routes.fetchFairData
+  (req, res, next) -> next() unless req.timedout
+]
 
 app.get '/:id', getFairData, routes.overview
+app.get '/:id/:year([0-9]{4})', getFairByOrganizerYear, routes.overview
 app.get '/:id/overview', getFairData, routes.overview
 app.get '/:id/articles', getFairData, routes.fairArticles
 app.get '/:id/info', getFairData, routes.info
