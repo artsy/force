@@ -1,0 +1,20 @@
+section.show-installation-shot-carousel.merry-go-round.js-show-installation-shot-carousel
+  .mgr-cells.js-mgr-cells
+    for installShot in installShots.models
+      - dimensions = installShot.resizeDimensionsFor({ height: 300 })
+      .mgr-cell.js-mgr-cell
+        img(
+          src= installShot.imageUrlForHeight(h)
+          width= dimensions.width
+          height= dimensions.height
+          alt= installShot.get('caption')
+          title= installShot.get('caption')
+        )
+
+        if installShot.get('caption')
+          .show-installation-shot-caption( style="width: #{dimensions.width}px" )
+            = installShot.get('caption')
+
+  - length = installShots.length
+  nav.mgr-navigation.js-mgr-navigation
+    include ../../../components/merry_go_round/templates/navigation

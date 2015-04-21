@@ -106,7 +106,7 @@ describe 'Partner Show', ->
 
     it 'renders installation shots', ->
       @$('.show-installation-shot-carousel').should.have.lengthOf 1
-      @$('.carousel-figure').should.have.lengthOf 9
+      @$('.mgr-cell').should.have.lengthOf 3
 
   describe 'with a press release', ->
     beforeEach ->
