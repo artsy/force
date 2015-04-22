@@ -37,7 +37,8 @@ module.exports = class Article extends Backbone.Model
       slideshowArtworks = new Artworks
       dfds = []
       # Get slideshow artworks to render server-side carousel
-      if (slideshow = _.first(@get 'sections')).type is 'slideshow'
+      if @get('sections')?.length and
+         (slideshow = _.first(@get 'sections')).type is 'slideshow'
         for item in slideshow.items when item.type is 'artwork'
           dfds.push new Artwork(id: item.id).fetch
             cache: true
