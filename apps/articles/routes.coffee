@@ -14,25 +14,31 @@ embedVideo = require 'embed-video'
     (articles = new Articles).fetch(
       data:
         published: true
-        limit: 50
+        limit: 502
         sort: '-published_at',
         featured: true
     )
   ]).fail(next).then =>
     res.locals.sd.ARTICLES = articles.toJSON()
     res.locals.sd.ARTICLES_COUNT = articles.count
-    res.render 'articles', verticals: verticals, articles: articles
+    # TODO: For QA purpose we show admins the first vertical regardless.
+    # After VB QA we'll only use the else code.
+    if req.user?.isEditorialAdmin()
+      vertical = verticals.first()
+    else
+      vertical = verticals.running()[0]
+    res.render 'articles', vertical: vertical, articles: articles
 
 @show = (req, res, next) ->
   new Article(id: req.params.slug).fetchWithRelated
     accessToken: req.user?.get('accessToken')
     error: res.backboneError
     success: (data) ->
-      if req.params.slug isnt article.get('slug')
-        return res.redirect "/article/#{article.get 'slug'}"
-      res.locals.sd.SLIDESHOW_ARTWORKS = slideshowArtworks?.toJSON()
-      res.locals.sd.ARTICLE = article.toJSON()
-      res.locals.sd.FOOTER_ARTICLES = footerArticles.toJSON()
+      if req.params.slug isnt data.article.get('slug')
+        return res.redirect "/article/#{data.article.get 'slug'}"
+      res.locals.sd.SLIDESHOW_ARTWORKS = data.slideshowArtworks?.toJSON()
+      res.locals.sd.ARTICLE = data.article.toJSON()
+      res.locals.sd.FOOTER_ARTICLES = data.footerArticles.toJSON()
       res.render 'show', _.extend data, embedVideo: embedVideo
 
 @redirectPost = (req, res, next) ->

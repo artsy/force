@@ -8,8 +8,7 @@ append locals
   - assetPackage = 'articles'
 
 block body
-  if verticals.length
-    - vertical = verticals.first()
+  if vertical
     header.articles-vertical-notice-header.main-layout-container
       .articles-vertical-notice-header-thumbnail
         img( src=vertical.get('thumbnail_url') )
@@ -22,5 +21,4 @@ block body
       .articles-vertical-notice-header-explore
         a( href=vertical.get('slug') ) Explore
         .icon-chevron-small-right
-
   include full_feed

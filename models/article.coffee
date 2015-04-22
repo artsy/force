@@ -47,16 +47,18 @@ module.exports = class Article extends Backbone.Model
       # Get related vertical content if a part of one
       if @get('vertical_id')
         dfds.push (vertical = new Vertical(id: @get('vertical_id'))).fetch()
-        dfds.push (featuredVerticalArticles = new Articles()).fetch(
-          data: vertical_id: @get('vertical_id')
+        dfds.push (verticalArticles = new Articles).fetch(
+          data: vertical_id: @get('vertical_id'), published: true
         )
-      Q.all(dfds).fin =>
-        options.success
+      Q.allSettled(dfds).fin =>
+        options.success(
           article: this
           footerArticles: footerArticles
           slideshowArtworks: slideshowArtworks
           vertical: vertical
-          featuredVerticalArticles: featuredVerticalArticles
+          featuredVerticalArticles: verticalArticles.select (article) ->
+            article.get('id') in vertical.get('featured_article_ids')
+        )
 
   isTopTier: ->
     @get('tier') is 1
