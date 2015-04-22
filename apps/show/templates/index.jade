@@ -9,9 +9,7 @@ append locals
 
 block body
   if installShots.length >= 3
-    section.show-installation-shot-carousel.js-show-installation-shot-carousel
-      - var carouselFigures = installShots.models
-      include ../../../components/carousel/template
+    include carousel
 
   .responsive-layout-container: .main-layout-container
     include header

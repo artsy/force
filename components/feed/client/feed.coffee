@@ -140,6 +140,7 @@ module.exports = class FeedView extends Backbone.View
       currentUser: @currentUser
       model: model
       el: $item
+      additionalParams: @additionalParams
       parent: @
     new FeedItemView params
 
