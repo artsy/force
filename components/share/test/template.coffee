@@ -35,7 +35,3 @@ describe 'Share template', ->
   it 'renders the appropriate link for sharing on Twitter', ->
     @$template.find('.share-to-twitter').length.should.equal 1
     @$template.find('.share-to-twitter').attr('href').should.equal 'https://twitter.com/intent/tweet?original_referer=http%3A%2F%2Fartsy.net%2Fartist%2Fandy-warhol&text=Andy Warhol on Artsy&url=http%3A%2F%2Fartsy.net%2Fartist%2Fandy-warhol&via=artsy'
-
-  it 'renders the appropriate link for sharing on Pinterest', ->
-    @$template.find('.share-to-pinterest').length.should.equal 1
-    @$template.find('.share-to-pinterest').attr('href').should.equal 'https://pinterest.com/pin/create/button/?url=http%3A%2F%2Fartsy.net%2Fartist%2Fandy-warhol&media=warhol.jpg&description=Andy Warhol on Artsy'

@@ -3,7 +3,7 @@
   display table
   position relative
   width 100%
-  margin 80px 0
+  margin 30px 0 80px
   table-layout fixed
 .show-header-cell
 .show-footer-cell
@@ -32,6 +32,8 @@
   display table
   width 100%
   position relative
+  // Roughly line up baseline
+  padding-top 10px
   > .entity-with-follow
   > .show-share
     display table-cell
@@ -41,9 +43,6 @@
     text-align right
     > a
       vertical-align middle
-    // Wondering if we actually show this *anywhere*?
-    > .share-to-pinterest
-      display none
 
 .show-fair-link
   text-decoration none
