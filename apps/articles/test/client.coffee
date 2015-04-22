@@ -25,8 +25,8 @@ describe 'ArticleView', ->
         new CurrentUser _.extend( fabricate('user') , { 'id' : '4d8cd73191a5c50ce210002a' } ) }
       mod.__set__ 'imagesLoaded', sinon.stub()
       stubChildClasses mod, this,
-        ['CarouselView']
-        ['postRender', 'render']
+        ['initCarousel']
+        []
       benv.render resolve(__dirname, '../templates/show.jade'), @locals = {
         footerArticles: []
         slideshowArtworks: null
@@ -62,7 +62,7 @@ describe 'ArticleView', ->
 
     it 'renders the slideshow', ->
       @view.renderSlideshow()
-      @CarouselView.called.should.be.ok
+      @initCarousel.called.should.be.ok
 
   describe '#renderArtworks', ->
 
