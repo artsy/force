@@ -9,6 +9,15 @@
         for article in featuredArticles.slice(1)
           +article-figure(article, 300, false, false)
 
+  if featuredVerticalArticles.length
+    section.articles-featured-vertical-articles
+      h4 Your Guide to The Biennale
+      ul.grid-4-up
+        for article in featuredVerticalArticles
+          li.grid-item
+            img( src=crop(article.get('thumbnail_image'), { width: 70, height: 70 }) )
+            p= article.get('title')
+
   .articles-articles-feed.articles-feed
     .articles-feed-articles.js-articles-feed-articles
       for article in articles.feed()

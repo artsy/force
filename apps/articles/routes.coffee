@@ -14,7 +14,7 @@ embedVideo = require 'embed-video'
     (articles = new Articles).fetch(
       data:
         published: true
-        limit: 502
+        limit: 20
         sort: '-published_at',
         featured: true
     )
@@ -53,4 +53,7 @@ embedVideo = require 'embed-video'
         data: vertical_id: vertical.get('id'), published: true
         error: res.backboneError
         success: (articles) ->
-          res.render('vertical', vertical: vertical, articles: articles)
+          res.render 'vertical',
+            vertical: vertical
+            articles: articles
+            featuredVerticalArticles: articles.featuredToVertical(vertical)
