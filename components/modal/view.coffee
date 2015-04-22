@@ -13,7 +13,12 @@ module.exports = class ModalView extends Backbone.View
   template: ->
     'Requires a template'
   modalTemplate: ->
-    modalTemplate()
+    '<div class="modal-backdrop">
+      <div class="modal-dialog">
+        <header class="modal-header"><a class="modal-close"><i class="icon-close"></i></a></header>
+        <section class="modal-body"></section>
+      </div>
+    </div>'
 
   templateData: {}
 

@@ -7,7 +7,6 @@ module.exports = class ShareView extends Backbone.View
 
   # Pops up the URL and centers the crap out of it
   popUp: (e) ->
-    console.log 'what is happening in here?'
     e.preventDefault()
 
     width = 750

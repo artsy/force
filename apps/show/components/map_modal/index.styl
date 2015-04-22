@@ -2,8 +2,6 @@
   font-size 17px
   line-height 1.4
   text-decoration none
-  &:hover
-    text-decoration underline
   &:before
     iconfont-styling()
     content '\e61c'
@@ -11,6 +9,9 @@
     vertical-align -1px
   &:after
     content 'Map & Full Hours'
+  &:hover
+    &:after
+      text-decoration underline
 
 .modal-body
   padding 35px

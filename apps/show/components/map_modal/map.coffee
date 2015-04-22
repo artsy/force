@@ -1,13 +1,13 @@
 _ = require 'underscore'
 sd = require('sharify').data
-GMaps = require 'gmaps'
+GMaps = -> require('gmaps') arguments...
 ModalView = require '../../../../components/modal/view.coffee'
 
 template = -> require('./map.jade') arguments...
 
 module.exports = class MapModal extends ModalView
 
-  template: template
+  template: -> template arguments...
 
   className: 'map-modal'
 
@@ -16,10 +16,8 @@ module.exports = class MapModal extends ModalView
 
   initialize: (options) ->
     @show = options.show
-    @partner = options.partner
     @templateData =
       show: @show
-      partner: @partner
     super
 
   postRender: -> 

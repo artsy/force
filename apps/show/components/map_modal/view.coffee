@@ -1,7 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 MapModal = require './map.coffee'
-template = -> require('./template.jade') arguments...
 
 module.exports = class MapModalView extends Backbone.View
 
@@ -14,11 +13,10 @@ module.exports = class MapModalView extends Backbone.View
 
   initialize: ( options ) ->
     @show = options.model
+    console.log 'text'
     @render()
 
-  postrender: ->
-
-  render: -> 
+  render: ->
     @$el.html template
     this
 
