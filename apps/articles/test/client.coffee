@@ -4,7 +4,7 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 Article = require '../../../models/article'
 Articles = require '../../../collections/articles'
-CurrentUser = require '../../../models/article'
+CurrentUser = require '../../../models/current_user'
 fixtures = require '../../../test/helpers/fixtures.coffee'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
@@ -28,7 +28,7 @@ describe 'ArticleView', ->
         ['initCarousel']
         []
       benv.render resolve(__dirname, '../templates/show.jade'), @locals = {
-        footerArticles: []
+        footerArticles: new Backbone.Collection
         slideshowArtworks: null
         article: @article = new Article _.extend fixtures.article,
           sections: [

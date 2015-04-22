@@ -9,46 +9,72 @@ append locals
   - assetPackage = 'articles'
 
 block body
-  #articles-show
-    h1.large-garamond-header= article.get('title')
-    if article.strip('lead_paragraph')
-      #articles-lead-paragraph
-        != article.get('lead_paragraph')
-    #articles-show-author
-      a( href="/#{article.related().author.get('profile_handle')}" )
-        = article.related().author.get('name')
-    #articles-show-date
-      = moment(article.get('published_at')).format('MMM Do, YYYY h:mm a')
-    .articles-social
-      +share(article.get('title'), article.get('thumbnail_image'))
+  #articles-show.main-layout-container
 
-    if article.get('sections')[0].type == 'slideshow'
-      include carousel
+    //- Verical header
+    if article.get('vertical_id')
+      header.articles-vertical-show-header
+        section
+          .articles-vertical-show-header-left
+            h2
+              a( href='/' + vertical.get('slug') )= vertical.get('title')
+            h3 In Partnership With
+            img( src=vertical.get('partner_logo_url') )
+          .articles-vertical-show-header-right
+            button.articles-vertical-left-chevron.icon-chevron-small-left
+            ul
+              for article in featuredVerticalArticles.slice(0, 4)
+                li
+                  a( href='/article/' + article.get('slug') )
+                    img( src=resize(article.get('thumbnail_image'), {
+                      height: 80, width: 120 }) )
+                    p= article.get('title')
+            button.articles-vertical-right-chevron.icon-chevron-small-right
 
-    for section, i in article.get('sections')
-      .articles-section-container
-        case section.type
-          when 'text'
-            .articles-section-text!= section.body
-          when 'image'
-            figure.articles-section-image
-              img( src=resize(section.url, { width: 1100 }) )
-              if section.caption
-                figcaption!= section.caption
-          when 'artworks'
-            .articles-section-artworks.is-loading( data-layout=section.layout )
-              .loading-spinner
-              ul
-                for id in section.ids
-                  li( data-id=id )
-          when 'video'
-            .articles-section-video
-              != embedVideo(section.url)
+    #articles-body-container
+
+      //- Article lead content
+      h1.large-garamond-header= article.get('title')
+      if article.strip('lead_paragraph')
+        #articles-lead-paragraph
+          != article.get('lead_paragraph')
+      #articles-show-author
+        a( href="/#{article.related().author.get('profile_handle')}" )
+          = article.related().author.get('name')
+      #articles-show-date
+        = moment(article.get('published_at')).format('MMM Do, YYYY h:mm a')
+      .articles-social
+        +share(article.get('title'), article.get('thumbnail_image'))
+
+      //- Article body content
+      if article.get('sections')[0].type == 'slideshow'
+        include carousel
+      for section, i in article.get('sections')
+        .articles-section-container
+          case section.type
+            when 'text'
+              .articles-section-text!= section.body
+            when 'image'
+              figure.articles-section-image
+                img( src=resize(section.url, { width: 1100 }) )
+                if section.caption
+                  figcaption!= section.caption
+            when 'artworks'
+              .articles-section-artworks.is-loading( data-layout=section.layout )
+                .loading-spinner
+                ul
+                  for id in section.ids
+                    li( data-id=id )
+            when 'video'
+              .articles-section-video
+                != embedVideo(section.url)
+
+    //- Article footer content
     .articles-social.add-bottom
       h2.articles-social__header Share this article
       +share(article.get('title'), article.get('thumbnail_image'))
   section#articles-footer
     h1 What to Read Next
     ul#articles-footer-list
-      for article in footerArticles
+      for article in footerArticles.models
         +article-figure(article, 220, false, false)
