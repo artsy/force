@@ -87,7 +87,6 @@ sharify.data =
   BIDDER_H1_COPY: BIDDER_H1_COPY
   BIDDER_H2_COPY: BIDDER_H2_COPY
   SENTRY_PUBLIC_DSN: SENTRY_PUBLIC_DSN
-  ARTWORK_EMBED_URL: ARTWORK_EMBED_URL
   GOOGLE_SEARCH_CX: GOOGLE_SEARCH_CX
   APPLICATION_NAME: APPLICATION_NAME
   EMBEDLY_KEY: EMBEDLY_KEY
@@ -232,8 +231,8 @@ module.exports = (app) ->
   app.use require "../apps/profile"
   app.use require "../apps/user_profile"
   app.use require "../apps/partner"
-  app.use require "../apps/fair_organizer"
   app.use require "../apps/fair"
+  app.use require "../apps/fair_organizer"
   app.use require "../apps/user"
   app.use require "../apps/style_guide"
   app.use require "../apps/auth"

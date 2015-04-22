@@ -15,6 +15,7 @@ imagesLoaded = require 'imagesloaded'
 embedVideo = require 'embed-video'
 CurrentUser = require '../../../models/current_user.coffee'
 editTemplate = -> require('../templates/edit.jade') arguments...
+initCarousel = require '../../../components/merry_go_round/index.coffee'
 
 module.exports.ArticleView = class ArticleView extends Backbone.View
 
@@ -28,15 +29,7 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
     @checkEditable()
 
   renderSlideshow: =>
-    @carouselView = new CarouselView
-      el: $('#articles-slideshow-inner')
-      height: 500
-      align: 'left'
-      hasDimensions: false
-    @carouselView.postRender()
-    @$('.artwork-item').each (i, item) -> $(item).width $(item).find('img').width()
-    if @article.get('sections')[0].items?.length is 1
-      @$('.carousel-controls').hide()
+    initCarousel $('.js-article-carousel'), imagesLoaded: true
 
   renderArtworks: ->
     Q.all(for section in @article.get('sections') when section.type is 'artworks'
