@@ -48,7 +48,8 @@ block body
 
       //- Article body content
       if article.get('sections')[0].type == 'slideshow'
-        include carousel
+        #articles-show-carousel
+          include carousel
       for section, i in article.get('sections')
         .articles-section-container
           case section.type
