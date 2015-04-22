@@ -21,10 +21,10 @@ block body
       = moment(article.get('published_at')).format('MMM Do, YYYY h:mm a')
     .articles-social
       +share(article.get('title'), article.get('thumbnail_image'))
+
     if article.get('sections')[0].type == 'slideshow'
-      #articles-slideshow-container
-        #articles-slideshow-inner.carousel
-          include carousel
+      include carousel
+
     for section, i in article.get('sections')
       .articles-section-container
         case section.type
