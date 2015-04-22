@@ -36,9 +36,6 @@ module.exports = class Artwork extends Backbone.Model
     @related().images.default() or
     new AdditionalImage
 
-  embedUrl: ->
-    "#{sd.ARTWORK_EMBED_URL}#{sd.APP_URL}#{@href()}"
-
   defaultImageUrl: (version = 'medium') ->
     @defaultImage().imageUrl version
 
@@ -306,10 +303,7 @@ module.exports = class Artwork extends Backbone.Model
     not _.isFunction @saleMessage
 
   showActionsList: (user) ->
-    @get('website') or @isDownloadable() or (user and user.isAdmin()) or @isEmbeddableByUser(user)
-
-  isEmbeddableByUser: (user) ->
-    user?.hasLabFeature('Embed') and @get('absolutely_embeddable')
+    @get('website') or @isDownloadable() or (user and user.isAdmin())
 
   # Sets up related collections and makes them available
   # under an object so we can access/iterate over them later
