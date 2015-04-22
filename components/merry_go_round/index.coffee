@@ -1,5 +1,4 @@
 _ = require 'underscore'
-Flickity = require 'flickity-imagesloaded'
 Backbone = require 'backbone'
 template = -> require('./templates/navigation.jade') arguments...
 
@@ -47,6 +46,8 @@ class MerryGoRoundNavView extends Backbone.View
     super
 
 module.exports = ($el, options = {}) ->
+  Flickity = require 'flickity-imagesloaded'
+
   $flickity = $el.find(options.selector or '.js-mgr-cells')
 
   totalWidth = _.reduce $flickity.find(options.cellSelector or '.js-mgr-cell'), (memo, el) ->
