@@ -146,17 +146,20 @@ kinds = require '../favorites_follows/kinds'
 
   fairOrg = new FairOrganizer profile.get('owner')
 
+  # Get all fairs for the requested fair organizer
   pastFairs = new Fairs
   pastFairs.fetch
     cache: true
     data:
       fair_organizer_id: fairOrg.id
     success: ->
+      # find the fair whose year matches the requested year
       fair = pastFairs.find (fair) ->
         fair.formatYear() is parseInt req.params.year
 
       return next() unless fair
 
+      # if we get a fair, fetch its profile and next to @fetchFairData
       data = {}
       data.access_token = req.user.get('accessToken') if req.user
       new Profile(id: fair.get('default_profile_id')).fetch

@@ -3,7 +3,6 @@ _ = require 'underscore'
 sd = require('sharify').data
 Artworks = require '../collections/artworks.coffee'
 Artwork = require './artwork.coffee'
-EmbeddableCollection = require './embeddable_collection.coffee'
 
 #
 # Lifecycle for determining if artworks belong to this collection:
@@ -48,11 +47,6 @@ module.exports = class ArtworkCollection extends Backbone.Model
   initialize: ->
     throw "userId is required" unless @get('userId')
     @set 'artworks', new Artworks
-
-    # For the embeddable labs feature
-    # The embeddableCollection binds to events on the artworks collection
-    if _.contains(sd.CURRENT_USER?.lab_features, 'Embed')
-      @embeddableCollection = new EmbeddableCollection(artworkCollection: @)
 
   addRepoArtworks: (artworks) ->
     @repoArtworkIds = _.union(@repoArtworkIds, artworks.pluck('id'))
@@ -171,9 +165,6 @@ module.exports = class ArtworkCollection extends Backbone.Model
   processRequests: ->
     return unless @pendingRequests.length > 0
     params = @pendingRequests.pop()
-
-    # Used by the embeddble_collection
-    @trigger 'processingRequest', params
 
     @fetchArtworks
       params: params

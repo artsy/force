@@ -106,17 +106,6 @@
           else
             | Admin Download
 
-      if user
-        if artwork.isEmbeddableByUser(user)
-          a( href= artwork.embedUrl(), target='_blank' )
-            i.icon-code
-            | Embed Image
-        else
-          if user.hasLabFeature('Embed')
-            a( href='https://artsy.wufoo.com/forms/image-request-form/', target='_blank' )
-              i.icon-code
-              | Request Embed Access
-
       //- Administrative actions
       if user && user.isAdmin()
         a( href="#{sd.ADMIN_URL}/artworks/artwork/#{artwork.id}", target='_blank' )

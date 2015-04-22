@@ -36,14 +36,6 @@ describe 'ArtworkCollection', ->
   afterEach ->
     Backbone.sync.restore()
 
-  describe '#initialize', ->
-
-    it 'initializes an embeddable collection for embed labs', ->
-      sd.CURRENT_USER = { lab_features: ['Embed'] }
-      artworkCollection = new ArtworkCollection(userId: @currentUser.get('id'))
-      artworkCollection.embeddableCollection.should.be.ok
-      sd.CURRENT_USER = undefined
-
   describe '#saveArtwork', ->
 
     it 'adds artwork to the saved artworks collection', ->
