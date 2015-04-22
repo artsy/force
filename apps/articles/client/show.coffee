@@ -73,7 +73,7 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
        @user?.id is @article.get('author_id')) or
        @user?.isEditorialAdmin()
       editUrl = "#{sd.POSITRON_URL}/articles/" + @article.id + '/edit'
-      message = if @article.get('published') is true then "Draft" else message
+      message = if @article.get('published') then '' else "Draft"
       @renderedEditButton = true
       @$('#articles-body-container').append(
         editTemplate message: message, edit_url: editUrl
