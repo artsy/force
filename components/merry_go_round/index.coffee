@@ -1,5 +1,5 @@
 _ = require 'underscore'
-Flickity = require 'flickity'
+Flickity = require 'flickity-imagesloaded'
 Backbone = require 'backbone'
 template = -> require('./templates/navigation.jade') arguments...
 
