@@ -31,8 +31,6 @@ module.exports.trackPageview = =>
   # Don't send pageviews for admins
   return if sd.CURRENT_USER?.type is 'Admin'
 
-  console.log "MOOOO", @ga
-
   @ga? 'send', 'pageview'
 
   # Track 15 second bounce rate

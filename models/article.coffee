@@ -56,7 +56,7 @@ module.exports = class Article extends Backbone.Model
           footerArticles: footerArticles
           slideshowArtworks: slideshowArtworks
           vertical: vertical
-          featuredVerticalArticles: verticalArticles.select (article) ->
+          featuredVerticalArticles: verticalArticles?.select (article) ->
             article.get('id') in vertical.get('featured_article_ids')
         )
 

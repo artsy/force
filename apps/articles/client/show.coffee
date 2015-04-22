@@ -76,10 +76,11 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
         $list.parent().removeClass('is-loading')
 
   checkEditable: ->
-    if (@user?.get('has_partner_access') and @user?.id is @article.get('author_id')) or
-       @user.isEditorialAdmin()
+    if (@user?.get('has_partner_access') and
+       @user?.id is @article.get('author_id')) or
+       @user?.isEditorialAdmin()
       editUrl = "#{sd.POSITRON_URL}/articles/" + @article.id + '/edit'
-      @article.get('published') is true ? message = "Previewing Draft" : message = ""
+      message = if @article.get('published') is true then "Previewing Draft" else message
       @renderedEditButton = true
       @$('#articles-body-container').append(
         editTemplate message: message, edit_url: editUrl

@@ -125,4 +125,4 @@ module.exports = class CurrentUser extends User
 
   isEditorialAdmin: ->
     @get('type') is 'Admin' and
-    @get('email')?.split('@')[0] in sd.EDITORIAL_ADMINS.split(',')
+    @get('email')?.split('@')[0] in sd.EDITORIAL_ADMINS?.split(',')

@@ -19,9 +19,10 @@ describe "Article", ->
   describe '#fetchWithRelated', ->
 
     it 'gets all the related data from the article', (done) ->
+      @article.set sections: []
       @article.fetchWithRelated
-        success: (article, footerArticles, slideshowArtworks) ->
-          article.get('title').should.equal 'Moo'
+        success: (data) ->
+          data.article.get('title').should.equal 'Moo'
           done()
       Backbone.sync.args[0][2].success _.extend fixtures.article, title: 'Moo'
       Backbone.sync.args[1][2].success [fixtures.article]
@@ -29,8 +30,8 @@ describe "Article", ->
 
     it 'gets the slideshow artworks', (done) ->
       @article.fetchWithRelated
-        success: (article, footerArticles, slideshowArtworks) ->
-          slideshowArtworks.first().get('title').should.equal 'foobar'
+        success: (data) ->
+          data.slideshowArtworks.first().get('title').should.equal 'foobar'
           done()
       Backbone.sync.args[0][2].success _.extend fixtures.article,
         title: 'Moo'
@@ -42,7 +43,24 @@ describe "Article", ->
         Backbone.sync.args[2][2].success fabricate 'artwork', title: 'foobar'
         dfd.resolve()
 
+    it 'fetches vertical content if need be', ->
+      @article.fetchWithRelated
+        success: (data) ->
+          data.slideshowArtworks.first().get('title').should.equal 'foobar'
+          done()
+      Backbone.sync.args[0][2].success _.extend fixtures.article,
+        title: 'Moo'
+        vertical_id: 'foo'
+      Backbone.sync.args[1][2].success [fixtures.article]
+      Backbone.sync.returns (dfd = Q.defer()).promise
+      @dfd.resolve({})
+      _.defer =>
+        Backbone.sync.args[2][2].success fixtures.vertical
+        Backbone.sync.args[3][2].success [fixtures.articles]
+        dfd.resolve()
+
   describe '#strip', ->
+
     it 'returns the attr without tags', ->
       @article.set 'lead_paragraph', '<p><br></p>'
       @article.strip('lead_paragraph').should.equal ''
