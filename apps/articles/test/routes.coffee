@@ -85,6 +85,10 @@ describe 'Article routes', ->
         @res.render.args[0][1].vertical.get('title').should.equal 'Foo Bar'
         done()
 
+    it 'requests less than 100 pages!', ->
+      routes.articles @req, @res, @next
+      Backbone.sync.args[1][2].data.limit.should.be.below 100
+
   describe '#vertical', ->
 
     it 'renders the vertical with its articles', ->
