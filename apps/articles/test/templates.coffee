@@ -28,6 +28,22 @@ describe 'article show template', ->
       asset: ->
     html.should.containEql 'hi'
 
+  it "renders a vertical article's related footers and stickies", ->
+    html = render('show')
+      article: new Article title: 'hi', sections: [], vertical_id: '92094'
+      footerArticles: new Articles
+      vertical: new Vertical _.extend _.clone(fixtures.vertical), title: 'Moo Bar'
+      featuredVerticalArticles: new Articles([_.extend(fixtures.article, title: 'Featured Vertical Article Title')])
+      allVerticalArticles: new Articles([_.extend(fixtures.article, title: 'Vertical Article Title')])
+      crop: (url) -> url
+      resize: (url) -> url
+      moment: moment
+      sd: {}
+      asset: ->
+    html.should.containEql 'More From Moo Bar'
+    html.should.containEql 'Featured Vertical Article Title'
+    html.should.containEql 'Vertical Article Title'
+
 describe 'article figure template', ->
 
   it 'uses the article url', ->
