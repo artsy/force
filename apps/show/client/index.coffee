@@ -6,6 +6,7 @@ initCarousel = require '../../../components/merry_go_round/index.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 attachFollowArtists = require '../components/follow_artists/index.coffee'
 attachFollowProfile = require '../components/follow_profile/index.coffee'
+MapModal = require '../components/map_modal/map.coffee'
 ZoomView = require '../../../components/modal/zoom.coffee'
 
 module.exports.init = ->
@@ -32,5 +33,7 @@ module.exports.init = ->
   attachFollowArtists show.related().artists
 
   attachFollowProfile show.related().profile
+
+  $('.map-modal-link').click -> new MapModal model: show, width: '820px'
 
   new ShareView el: $('.js-show-share')
