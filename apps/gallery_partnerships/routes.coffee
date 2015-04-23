@@ -8,9 +8,11 @@ client = null
 SplitTest = require '../../components/split_test/server_split_test'
 runningTests = require '../../components/split_test/running_tests'
 
-CONTENT_PATH = '/gallery-partnerships/content.json'
-
 getJSON = (callback) ->
+  if @req.url.match 'gallery-partnerships'
+    CONTENT_PATH = '/gallery-partnerships/content.json'
+  else
+    CONTENT_PATH = '/institution-partnerships/content.json'
   request.get(
     "http://#{APPLICATION_NAME}.s3.amazonaws.com#{CONTENT_PATH}"
   )
@@ -28,6 +30,7 @@ getJSON = (callback) ->
     bucket: APPLICATION_NAME
 
 @index = (req, res, next) ->
+  @req = req
   testConfig = runningTests.gallery_partnerships_apply
   if _.contains _.keys(testConfig.outcomes), req.query.mode
     test = new SplitTest req, res, testConfig
@@ -41,11 +44,12 @@ getJSON = (callback) ->
 @adminOnly = (req, res, next) ->
   if req.user?.get('type') isnt 'Admin'
     res.status 403
-    next new Error "You must be logged in as an admin to edit the gallery partnerships page."
+    next new Error "You must be logged in as an admin to edit this partnerships page."
   else
     next()
 
 @edit = (req, res, next) ->
+  @req = req
   getJSON (err, data) ->
     return next err if err
     res.locals.sd.DATA = data
