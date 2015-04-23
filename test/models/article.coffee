@@ -59,6 +59,18 @@ describe "Article", ->
         Backbone.sync.args[3][2].success [fixtures.articles]
         dfd.resolve()
 
+    it 'works for those rare sectionless articles', (done) ->
+      @article.fetchWithRelated
+        success: (data) ->
+          data.article.get('title').should.equal 'Moo'
+          done()
+      Backbone.sync.args[0][2].success _.extend fixtures.article,
+        title: 'Moo'
+        sections: []
+      Backbone.sync.args[1][2].success [fixtures.article]
+      @dfd.resolve({})
+
+
   describe '#strip', ->
 
     it 'returns the attr without tags', ->

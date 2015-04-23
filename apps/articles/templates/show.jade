@@ -47,7 +47,7 @@ block body
         +share(article.get('title'), article.get('thumbnail_image'))
 
       //- Article body content
-      if article.get('sections')[0].type == 'slideshow'
+      if article.get('sections').length && article.get('sections')[0].type == 'slideshow'
         #articles-show-carousel
           include carousel
       for section, i in article.get('sections')

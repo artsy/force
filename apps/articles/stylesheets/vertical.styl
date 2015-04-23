@@ -148,7 +148,9 @@
       display inline-block
       vertical-align top
       border-left 1px solid gray-lighter-color
-      width 25%
+      width calc(25% \- gutter-size / 2)
+      &:nth-child(2)
+        margin-right gutter-size
 
 .articles-vertical-right-chevron, .articles-vertical-left-chevron
   position absolute
@@ -172,3 +174,28 @@
   vertical-align middle
   display inline-block
   width 50%
+
+.articles-featured-vertical-articles
+  margin gutter-size 0
+  padding 20px 0
+  border-bottom 1px solid gray-lighter-color
+  h4
+    avant-garde()
+    font-size 13px
+    border-bottom 1px solid gray-lighter-color
+    padding-bottom 5px
+    margin-bottom 20px
+  li
+    border-right 1px solid gray-lighter-color
+    &:last-child
+      border 0
+    img
+      width 70px
+      height 70px
+      margin-right 20px
+    p
+      font-size 20px
+      line-height 1.2em
+    img, p
+      display inline-block
+      vertical-align middle
