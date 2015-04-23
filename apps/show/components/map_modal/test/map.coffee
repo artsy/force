@@ -6,30 +6,32 @@ Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 PartnerShow = require '../../../../../models/partner_show.coffee'
 Partner = require '../../../../../models/partner.coffee'
+ModalView = benv.requireWithJadeify resolve(__dirname, '../../../../../components/modal/view'), ['modalTemplate']
+PageModalView= benv.requireWithJadeify resolve(__dirname, '../map'), ['template']
+PageModalView::modalTemplate = ModalView::modalTemplate
 
-describe 'MapModalView', ->
+describe 'PageModalView', ->
 
   beforeEach (done) ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'
       Backbone.$ = $
       sinon.stub Backbone, 'sync'
-      MapModalView = benv.requireWithJadeify resolve(__dirname, '../map.coffee'), ['template']
-      MapModalView.__set__ 'GMaps', class @GMaps
+      PageModalView.__set__ 'GMaps', class @GMaps
         addStyle: ->
         setStyle: ->
         addMarker: sinon.stub()
       @show = new PartnerShow fabricate 'show'
       @show.get('location').coordinates = {lat: 30, lng: 30 }
       @partner = new Partner fabricate 'partner'
-      @view = new MapModalView show: @show, partner: @partner
-      done() 
+      @view = new PageModalView show: @show, partner: @partner
+      done()
 
-  afterEach -> 
+  afterEach ->
     benv.teardown()
     Backbone.sync.restore()
 
-  describe '#initialize', -> 
+  describe '#initialize', ->
     it 'displays the shows information correctly', ->
       @view.$('.map-modal-partner-name').html().should.containEql 'Gagosian Gallery'
       @view.$('.map-modal-partner-location-address').html().should.containEql '529 W 20th St.'
