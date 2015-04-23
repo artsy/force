@@ -1,23 +1,24 @@
 .map-modal-link
-  font-size 17px
-  line-height 1.4
   text-decoration none
   &:before
     iconfont-styling()
     content '\e61c'
-    font-size 14px
-    vertical-align -1px
+    line-height 1.4
+    font-size 13px
+    text-align center
+    border-style solid
+    border-width .15em
+    border-color gray-darker-color
+    border-radius 50%
   &:after
+    margin-left 5px
     content 'Map & Full Hours'
   &:hover
     &:after
       text-decoration underline
 
-.modal-body
+.map-modal-body
   padding 35px
-
-.modal-dialog 
-  min-width 820px
 
 .map-modal-show-information
   width 300px
@@ -25,7 +26,7 @@
   line-height 1.5
   font-size 17px
 
-.map-modal-show-running-dates   
+.map-modal-show-running-dates
 .map-modal-partner-hours
   padding-top 35px
 

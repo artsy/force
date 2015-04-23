@@ -1,13 +1,13 @@
-.map-modal-show-information
-  .map-modal-partner-name
-    a.entity-link( href=show.partnerHref() )
-      = show.partnerName() 
-  .map-modal-partner-location-address
-    = show.location().get('address')
-  .map-modal-partner-location-city
-    = show.location().cityState()
-  .map-modal-partner-location-running-hours
-  .map-modal-show-running-dates 
-    | #{show.date('start_at').format('MMMM DD')} – #{show.date('end_at').format('MMMM DD')}
-    
-#map-modal-show-map
+.map-modal-body
+  .map-modal-show-information
+    .map-modal-partner-name
+      a.entity-link( href=show.partnerHref() )
+        = show.partnerName()
+    .map-modal-partner-location-address
+      = show.location().get('address')
+    .map-modal-partner-location-city
+      = show.location().cityState()
+    .map-modal-partner-location-running-hours
+    .map-modal-show-running-dates
+      | #{show.date('start_at').format('MMMM DD')} – #{show.date('end_at').format('MMMM DD')}
+  #map-modal-show-map
