@@ -71,7 +71,8 @@ module.exports.init = ->
       profile: profile
 
     # Links in the browse section keep your scroll position
-    scrollFrame '#fair-browse a'
+    # unless the browser is Eigen
+    scrollFrame('#fair-browse a') unless sd.EIGEN
 
   # Checks to see if the href is an internal link to:
   # an artwork, artist, show, or post
