@@ -53,7 +53,4 @@ embedVideo = require 'embed-video'
         data: vertical_id: vertical.get('id'), published: true
         error: res.backboneError
         success: (articles) ->
-          res.render 'vertical',
-            vertical: vertical
-            articles: articles
-            featuredVerticalArticles: articles.featuredToVertical(vertical)
+          res.render 'vertical', vertical: vertical, articles: articles
