@@ -14,6 +14,10 @@ module.exports = class Articles extends Backbone.Collection
   featured: ->
     @where(tier: 1).slice(0, 4)
 
+  featuredToVertical: (vertical) ->
+    @select (article) ->
+      article.get('id') in vertical.get('featured_article_ids')
+
   feed: ->
     featured = @featured()
     @reject (a) ->

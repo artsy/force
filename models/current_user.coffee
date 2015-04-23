@@ -122,3 +122,7 @@ module.exports = class CurrentUser extends User
       url: "#{sd.API_URL}/api/v1/bidder"
       success: options?.success
       error: options?.error
+
+  isEditorialAdmin: ->
+    @get('type') is 'Admin' and
+    @get('email')?.split('@')[0] in sd.EDITORIAL_ADMINS?.split(',')

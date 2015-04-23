@@ -4,7 +4,7 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 Article = require '../../../models/article'
 Articles = require '../../../collections/articles'
-CurrentUser = require '../../../models/article'
+CurrentUser = require '../../../models/current_user'
 fixtures = require '../../../test/helpers/fixtures.coffee'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
@@ -25,10 +25,10 @@ describe 'ArticleView', ->
         new CurrentUser _.extend( fabricate('user') , { 'id' : '4d8cd73191a5c50ce210002a' } ) }
       mod.__set__ 'imagesLoaded', sinon.stub()
       stubChildClasses mod, this,
-        ['CarouselView']
-        ['postRender', 'render']
+        ['initCarousel']
+        []
       benv.render resolve(__dirname, '../templates/show.jade'), @locals = {
-        footerArticles: []
+        footerArticles: new Backbone.Collection
         slideshowArtworks: null
         article: @article = new Article _.extend fixtures.article,
           sections: [
@@ -62,7 +62,7 @@ describe 'ArticleView', ->
 
     it 'renders the slideshow', ->
       @view.renderSlideshow()
-      @CarouselView.called.should.be.ok
+      @initCarousel.called.should.be.ok
 
   describe '#renderArtworks', ->
 

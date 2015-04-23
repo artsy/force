@@ -42,7 +42,7 @@ module.exports.FeedItemView = class FeedItemView extends Backbone.View
     @fetchMoreArtworks $(event.target)
 
   maybeFetchMoreArtworks: ->
-    return @showArtworks() if @additionalParams.artist?
+    return @showArtworks() if @additionalParams?.artist?
     @fetchMoreArtworks()
 
   fetchMoreArtworks: ->

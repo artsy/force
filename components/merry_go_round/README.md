@@ -24,6 +24,8 @@ section.js-my-carousel
 initCarousel = require '../../../components/merry_go_round/index.coffee'
 
 carousel = initCarousel $('.js-my-carousel')
+# Pass in additional or overwrite existing options
+# carousel = initCarousel $('.js-my-carousel'), imagesLoaded: true
 
 # Hook into Flickity if need be:
 carousel.flickity.on 'dragStart', -> # Do something

@@ -1,14 +1,23 @@
 mixin carouselFigure(item)
   case item.type
     when 'image'
-      img( src=item.url )
+      img( src= item.url )
     when 'video'
       != embedVideo(item.url)
     when 'artwork'
-      - artworkSize = 'larger'
+      - imageWidth = '500'
       - artwork = slideshowArtworks.findWhere({ _id: item.id })
       if artwork
         include ../../../components/artwork_item/templates/artwork.jade
 
-- carouselFigures = article.get('sections')[0].items
-include ../../../components/carousel/carousel.jade
+.js-article-carousel
+  - items = article.get('sections')[0].items
+  .mgr-cells.js-mgr-cells
+    for item in items
+      .mgr-cell.js-mgr-cell
+        +carouselFigure(item)
+
+  - length = items.length
+  if length > 1
+    nav.mgr-navigation.js-mgr-navigation
+      include ../../../components/merry_go_round/templates/navigation
