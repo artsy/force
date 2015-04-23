@@ -75,7 +75,15 @@ block body
       h2.articles-social__header Share this article
       +share(article.get('title'), article.get('thumbnail_image'))
   section#articles-footer
-    h1 What to Read Next
-    ul#articles-footer-list
-      for article in footerArticles.models
-        +article-figure(article, 220, false, false)
+    if article.get('vertical_id')
+      h1 More From #{vertical.get('title')}
+      ul#articles-footer-list
+        for verticalArticle in allVerticalArticles.models
+          unless article.id === verticalArticle.get('id')
+            +article-figure(verticalArticle, 220, false, false)
+    else
+      h1 What to Read Next
+      ul#articles-footer-list
+        for footerArticle in footerArticles.models
+          unless article.id === footerArticle.get('id')
+            +article-figure(article, 220, false, false)
