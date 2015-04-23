@@ -57,7 +57,7 @@ module.exports = class Article extends Backbone.Model
           footerArticles: footerArticles
           slideshowArtworks: slideshowArtworks
           vertical: vertical
-          featuredVerticalArticles: verticalArticles.featuredToVertical(vertical)
+          featuredVerticalArticles: verticalArticles.featuredToVertical(vertical) if vertical
         )
 
   isTopTier: ->
