@@ -4,7 +4,7 @@ ArticlesFeedView = require '../../../components/articles_feed/view.coffee'
 
 module.exports.init = ->
   articles = new Articles sd.ARTICLES
-  articles.count = sd.ARTICLES_COUNT
+  articles.count = sd.ARTICLES_COUNT + 4
   articles.reset articles.feed()
 
   view = new ArticlesFeedView
@@ -15,5 +15,6 @@ module.exports.init = ->
       published: true
       author_id: '503f86e462d56000020002cc'
       featured: true
+      sort: '-published_at'
 
   view.render()
