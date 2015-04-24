@@ -1,0 +1,201 @@
+//
+// Styles for everything involved with verticals, including headers on the
+// main feed and in an article page.
+//
+
+@import '../../../components/stylus_lib'
+@import './lib'
+
+.articles-vertical-notice-header
+  width 100%
+  border-bottom 1px solid gray-lighter-color
+  padding-top 11px
+  display flex
+  flex-direction row
+  position relative
+
+.articles-vertical-notice-header-thumbnail
+  clearfix()
+  padding-right gutter-size
+  border-right 1px solid gray-lighter-color
+  margin-bottom 20px
+  img
+    height 80px
+    width 120px
+    margin-right gutter-size
+  h3
+    avant-garde()
+    font-size 13px
+    margin-bottom 5px
+  h4
+    font-size 30px
+  .articles-vertical-notice-header-thumbnail-text
+    padding-top (gutter-size / 2)
+  img, .articles-vertical-notice-header-thumbnail-text
+    display inline-block
+    vertical-align top
+
+.articles-vertical-notice-header-partner-logo
+  padding gutter-size
+  avant-garde()
+  font-size 13px
+  img
+    height 30px
+    margin-left 20px
+  p, img
+    display inline-block
+    vertical-align middle
+
+.articles-vertical-notice-header-explore
+  position absolute
+  right 0
+  font-size 30px
+  margin-top gutter-size
+  border-bottom 1px solid
+  margin-right 45px
+  a
+    cursor pointer
+    text-decoration none
+  .icon-chevron-small-right
+    position absolute
+    top -3px
+    right -45px
+    font-size 26px
+
+.articles-vertical-header
+  padding 10px 0 20px 0
+  position relative
+
+.articles-vertical-header-left
+  width 60%
+  h1
+    font-size 40px
+    margin 20px 0 30px 0
+  a, p
+    font-size 20px
+    line-height 1.3em
+  a
+    fine-faux-underline()
+
+.articles-vertical-header-right
+  clearfix()
+  padding-bottom 10px
+  avant-garde()
+  font-size 13px
+  width 250px
+  position absolute
+  right 0
+  top 70px
+  img
+    height 30px
+    margin-left 20px
+    display inline
+    vertical-align middle
+
+.articles-vertical-show-header
+  border-bottom 1px solid gray-lighter-color
+  position relative
+  top -50px
+  padding-bottom 20px
+
+.articles-vertical-show-header-left
+  display inline-block
+  h2, h3
+    text-align left
+  h2
+    font-size 30px
+    margin-bottom 15px
+    a
+      text-decoration none
+  h3
+    font-size 11px
+    avant-garde()
+  img
+    height 30px
+    margin-left 20px
+    vertical-align middle
+  h3, img
+    display inline-block
+
+.articles-vertical-show-header-right
+  padding-left gutter-size - 1
+  overflow hidden
+  position relative
+  &.is-over
+    ul
+      margin-left -100%
+    .articles-vertical-right-chevron
+      opacity 0
+    .articles-vertical-left-chevron
+      opacity 1
+  img
+    width 120px
+    height 80px
+    margin 0 18px 0 gutter-size
+  p
+    font-size 20px
+    line-height 1.2em
+  p, img
+    display inline-block
+    vertical-align middle
+  ul
+    width 200%
+    transition margin-left 0.4s ease-in-out
+    a
+      text-decoration none
+    li
+      padding 20px 0
+      display inline-block
+      vertical-align top
+      border-left 1px solid gray-lighter-color
+      width calc(25% \- gutter-size / 2)
+      &:nth-child(2)
+        margin-right gutter-size
+
+.articles-vertical-right-chevron, .articles-vertical-left-chevron
+  position absolute
+  top 0
+  height 100%
+  background white
+  border 1px solid gray-lighter-color
+  font-size 28px
+  padding 0
+  cursor pointer
+  transition opacity 0.2s ease-in-out 0.2s
+
+.articles-vertical-left-chevron
+  left 0
+  opacity 0
+
+.articles-vertical-right-chevron
+  right 0
+
+.articles-vertical-show-header-left, .articles-vertical-show-header-right
+  vertical-align middle
+  display inline-block
+  width 50%
+
+.articles-featured-vertical-articles
+  margin gutter-size 0
+  padding 20px 0
+  border-bottom 1px solid gray-lighter-color
+  h4
+    avant-garde()
+    font-size 13px
+    border-bottom 1px solid gray-lighter-color
+    padding-bottom 5px
+    margin-bottom 20px
+  li
+    border-right 1px solid gray-lighter-color
+    &:last-child
+      border 0
+    img
+      width 70px
+      height 70px
+      margin-right 20px
+    p
+      font-size 20px
+      line-height 1.2em
+    img, p
+      display inline-block
+      vertical-align middle

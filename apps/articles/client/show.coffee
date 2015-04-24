@@ -15,6 +15,7 @@ imagesLoaded = require 'imagesloaded'
 embedVideo = require 'embed-video'
 CurrentUser = require '../../../models/current_user.coffee'
 editTemplate = -> require('../templates/edit.jade') arguments...
+initCarousel = require '../../../components/merry_go_round/index.coffee'
 
 module.exports.ArticleView = class ArticleView extends Backbone.View
 
@@ -28,15 +29,7 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
     @checkEditable()
 
   renderSlideshow: =>
-    @carouselView = new CarouselView
-      el: $('#articles-slideshow-inner')
-      height: 500
-      align: 'left'
-      hasDimensions: false
-    @carouselView.postRender()
-    @$('.artwork-item').each (i, item) -> $(item).width $(item).find('img').width()
-    if @article.get('sections')[0].items?.length is 1
-      @$('.carousel-controls').hide()
+    initCarousel $('.js-article-carousel'), imagesLoaded: true
 
   renderArtworks: ->
     Q.all(for section in @article.get('sections') when section.type is 'artworks'
@@ -76,14 +69,22 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
         $list.parent().removeClass('is-loading')
 
   checkEditable: ->
-    if (@user?.get('has_partner_access') and @user?.id is @article.get('author_id')) or
-       @user?.get('type') is 'Admin' and @user?.get('email')?.split('@')[0] in sd.EDITORIAL_ADMINS.split(',')
+    if (@user?.get('has_partner_access') and
+       @user?.id is @article.get('author_id')) or
+       @user?.isEditorialAdmin()
       editUrl = "#{sd.POSITRON_URL}/articles/" + @article.id + '/edit'
-      @article.get('published') is true ? message = "Previewing Draft" : message = ""
+      message = if @article.get('published') then '' else "Draft"
       @renderedEditButton = true
-      @$('#main-layout-container').append(
+      @$('#articles-body-container').append(
         editTemplate message: message, edit_url: editUrl
       )
+
+  events:
+    'click .articles-vertical-right-chevron, \
+    .articles-vertical-left-chevron': 'toggleVerticalCarousel'
+
+  toggleVerticalCarousel: (e) ->
+    @$('.articles-vertical-show-header-right').toggleClass('is-over')
 
 module.exports.init = ->
   article = new Article sd.ARTICLE

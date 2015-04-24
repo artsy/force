@@ -1,0 +1,28 @@
+.articles-articles-page.main-layout-container
+  if (featuredArticles = articles.featured()).length
+    header.am-featured
+      .am-featured-hero
+        - article = featuredArticles[0]
+         +article-figure(article, 1000, false, false)
+
+      aside.am-featured-also
+        for article in featuredArticles.slice(1)
+          +article-figure(article, 300, false, false)
+
+  if vertical && articles.featuredToVertical(vertical).length
+    section.articles-featured-vertical-articles
+      h4 Your Guide to The Biennale
+      ul.grid-4-up
+        for article in articles.featuredToVertical(vertical)
+          li.grid-item
+            img( src=crop(article.get('thumbnail_image'), { width: 70, height: 70 }) )
+            p= article.get('title')
+
+  .articles-articles-feed.articles-feed
+    .articles-feed-articles.js-articles-feed-articles
+      for article in articles.feed()
+        .articles-feed-item( data-tier= article.get('tier') )
+          include ../../../components/articles_feed/templates/article
+
+    .js-articles-feed-more
+      include ../../../components/articles_feed/templates/button

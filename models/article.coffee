@@ -4,6 +4,7 @@ Backbone = require 'backbone'
 moment = require 'moment'
 sd = require('sharify').data
 Artwork = require '../models/artwork.coffee'
+Vertical = require '../models/vertical.coffee'
 Artworks = require '../collections/artworks.coffee'
 { crop, resize } = require '../components/resizer/index.coffee'
 Relations = require './mixins/relations/article.coffee'
@@ -35,15 +36,30 @@ module.exports = class Article extends Backbone.Model
     ]).then =>
       slideshowArtworks = new Artworks
       dfds = []
-      if (slideshow = _.first(@get 'sections')).type is 'slideshow'
+      # Get slideshow artworks to render server-side carousel
+      if @get('sections')?.length and
+         (slideshow = _.first(@get 'sections')).type is 'slideshow'
         for item in slideshow.items when item.type is 'artwork'
           dfds.push new Artwork(id: item.id).fetch
             cache: true
             data: access_token: options.accessToken
             success: (artwork) ->
-              slideshowArtworks.add(artwork) if artwork.get('published')
-      Q.all(dfds).fin =>
-        options.success this, footerArticles, slideshowArtworks
+              slideshowArtworks.add(artwork)
+      # Get related vertical content if a part of one
+      if @get('vertical_id')
+        dfds.push (vertical = new Vertical(id: @get('vertical_id'))).fetch()
+        dfds.push (verticalArticles = new Articles).fetch(
+          data: vertical_id: @get('vertical_id'), published: true
+        )
+      Q.allSettled(dfds).fin =>
+        options.success(
+          article: this
+          footerArticles: footerArticles
+          slideshowArtworks: slideshowArtworks
+          vertical: vertical
+          featuredVerticalArticles: verticalArticles.featuredToVertical(vertical) if vertical
+          allVerticalArticles: verticalArticles if vertical
+        )
 
   isTopTier: ->
     @get('tier') is 1
