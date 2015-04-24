@@ -1,4 +1,39 @@
-.show-related-shows-title 
+.show-related-shows-title
   = title
-.related-shows-children 
-//- render client side
+  for show in shows
+    .show-related-show-container
+      .show-related-show-info
+        if show.has('fair')
+          .show-related-show-title
+            a( href=show.partnerHref() )
+              = show.partnerName()
+          .show-related-show-title-fair
+            a( href= show.related().fair.href() )
+              = show.fairName()
+          .show-related-show-partner
+            a.entity-link( href=show.partnerHref() )
+              = show.partnerName()
+          if show.get('fair_location')
+            .show-related-show-fair-booth
+              = show.get('fair_location').display
+        else
+          .show-related-show-title
+            a( href=show.href() )
+              = show.title()
+          .show-related-show-partner
+            a.entity-link( href=show.partnerHref() )
+              = show.partnerName()
+          .show-related-show-running-dates
+            | #{show.date('start_at').format('MMMM DD')} – #{show.date('end_at').format('MMMM DD')}
+
+    //- ul.show-related-show-images
+    //-   if showImages
+    //-     for image in showImages
+    //-       li.show-related-show-image-container
+    //-         a.hoverable-image-link( href=show.href() )
+    //-           img.show-related-show-image(
+    //-             src= image
+    //-             alt= show.get('name')
+    //-             onerror='this.style.display="none";'
+    //-           )
+

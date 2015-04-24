@@ -81,7 +81,6 @@
     "jquery.dotdotdot": "git://github.com/mzikherman/jquery.dotdotdot.git",
     "jquery.fillwidth": "*",
     "jquery.transition": "git://github.com/dzucconi/jquery.transition.git",
-    "gmaps": "*",
     "cookies-js": "*",
     "cheerio": "*",
     "ezel-assets": "*",
