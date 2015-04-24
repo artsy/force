@@ -67,7 +67,8 @@ module.exports = class GalleryPartnershipsView extends Backbone.View
     @$nav.waypoint('sticky')
       # waypoint for the very top section
       .waypoint (direction) ->
-        Backbone.history.navigate('/gallery-partnerships',
+        homeLink = if location.href.match 'gallery' then '/gallery-partnerships' else '/institution-partnerships'
+        Backbone.history.navigate( homeLink ,
           trigger: false, replace: true) if direction is 'up'
 
   setupSectionNavHighlighting: ->
