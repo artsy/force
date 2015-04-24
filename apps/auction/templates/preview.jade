@@ -1,14 +1,48 @@
-.auction-preview-clock.js-auction-clock
-  include ../../../components/clock/template
+//- Cover image here, wider proportions
 
-h1.auction-preview-name
-  = auction.get('name')
+header.auction-header
+  .auction-header-primary
+    h1.auction-title
+      = auction.get('name')
+    .auction-description
+      != auction.mdToHtml('description')
 
-.auction-preview-description
-  != auction.mdToHtml('description')
+    .auction-preview-primary-metadata
+      .auction-header-metadata-cell
+        h3 Contact
+        .auction-header-metadata-cell-contents
+          p
+            | Have questions about this auction?
+            br
+            a.fine-faux-underline.js-specialist-contact-link( href='#' )
+              | Contact an Artsy Specialist
+
+  .auction-header-metadata
+    //- Profile logo here
+
+    .auction-preview-clock.js-auction-clock
+      include ../../../components/clock/template
 
 .auction-preview-registration
   | Register now to be notified when the auction begins
 
   .auction-preview-registration-button
     include ./registration_button
+
+mixin footer-item(options)
+  .auction-preview-footer-item
+    a.auction-preview-footer-item-wrap( href= options.href, target= options.target )
+      .auction-preview-footer-item-image
+        img( src= options.src, alt= options.alt )
+
+      .auction-preview-footer-item-metadata
+        .auction-preview-footer-item-title( class= options.subtitle ? undefined : 'is-large' )
+          = options.title
+        if options.subtitle
+          .auction-preview-footer-item-subtitle
+            = options.subtitle
+
+footer.auction-preview-footer
+  +footer-item({ href: '/auction-info', src: '/images/preview-bidding.jpg', alt: 'How to bid', title: 'How to bid on Artsy' })
+  +footer-item({ href: 'https://iphone.artsy.net/', target: '_blank', src: '/images/preview-iphone.jpg', alt: 'iPhone', title: 'Bid from your phone', subtitle: 'Download Artsy for iPhone' })
+  //- Profile footer item here
