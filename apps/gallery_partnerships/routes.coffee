@@ -39,7 +39,7 @@ getJSON = (callback) ->
 
   getJSON (err, data) ->
     return next err if err
-    res.render 'index', _.extend data, crop: crop
+    res.render 'index', _.extend data, crop: crop, path: @req.url
 
 @adminOnly = (req, res, next) ->
   if req.user?.get('type') isnt 'Admin'

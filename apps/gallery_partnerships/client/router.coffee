@@ -7,6 +7,8 @@ module.exports = class GalleryPartnershipsRouter extends Backbone.Router
   routes:
     'gallery-partnerships': 'toTop'
     'gallery-partnerships/:slug': 'toSection'
+    'institution-partnerships': 'toTop'
+    'institution-partnerships/:slug': 'toSection'
 
   initialize: ->
     @$window = $(window)
