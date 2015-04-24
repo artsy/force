@@ -12,7 +12,7 @@
       alt= artwork.get('title')
       title= artwork.get('title')
       nopin= artwork.noPinAttr()
-      src= image.imageUrl('large')
+      src= image.bestImageUrl(['large', 'larger', 'medium', 'small'])
       width= dimensions.width
       height= dimensions.height
     )
