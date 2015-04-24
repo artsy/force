@@ -14,8 +14,8 @@ embedVideo = require 'embed-video'
     (articles = new Articles).fetch(
       data:
         published: true
-        limit: 20
-        sort: '-published_at',
+        limit: 50
+        sort: '-published_at'
         featured: true
     )
   ]).fail(next).then =>
