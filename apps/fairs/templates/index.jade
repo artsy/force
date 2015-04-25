@@ -30,5 +30,5 @@ block body
           for fair in upcomingFairs
             .ap-upcoming-item( href= fair.href() )
               h3= fair.get('name')
-              .fpfu-location= fair.location().cityStateCountry()
+              .fpfu-location= fair.location() && fair.location().cityStateCountry()
               .fpfu-date= fair.formatDates()
