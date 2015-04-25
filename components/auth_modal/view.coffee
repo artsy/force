@@ -11,6 +11,7 @@ LoggedOutUser = require '../../models/logged_out_user.coffee'
 { templateMap, stateEventMap, successEventMap, routeCopyMap } = require './maps.coffee'
 sanitizeRedirect = require '../sanitize_redirect/index.coffee'
 Mailcheck = require '../mailcheck/index.coffee'
+isEigen = require './eigen.coffee'
 
 class State extends Backbone.Model
   defaults: mode: 'register'
@@ -29,9 +30,12 @@ module.exports = class AuthModalView extends ModalView
     'click #auth-submit': 'submit'
 
   initialize: (options) ->
+    return if isEigen.checkWith options
+
     { @destination } = options
     @redirectTo = sanitizeRedirect(options.redirectTo) if options.redirectTo
     @preInitialize options
+
     super
 
   preInitialize: (options = {}) ->
