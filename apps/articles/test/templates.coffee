@@ -32,9 +32,12 @@ describe 'article show template', ->
     html = render('show')
       article: new Article title: 'hi', sections: [], vertical_id: '92094'
       footerArticles: new Articles
-      vertical: new Vertical _.extend _.clone(fixtures.vertical), title: 'Moo Bar'
-      featuredVerticalArticles: new Articles([_.extend(fixtures.article, title: 'Featured Vertical Article Title')])
-      allVerticalArticles: new Articles([_.extend(fixtures.article, title: 'Vertical Article Title')])
+      vertical: new Vertical _.extend _.clone(fixtures.vertical),
+        title: 'Moo Bar'
+      featuredVerticalArticles: new Articles([_.extend(fixtures.article,
+        title: 'Featured Vertical Article Title')])
+      allVerticalArticles: new Articles([_.extend(fixtures.article,
+        title: 'Vertical Article Title')])
       crop: (url) -> url
       resize: (url) -> url
       moment: moment
@@ -43,6 +46,19 @@ describe 'article show template', ->
     html.should.containEql 'More From Moo Bar'
     html.should.containEql 'Featured Vertical Article Title'
     html.should.containEql 'Vertical Article Title'
+
+  it "renders related footer articles", ->
+    html = render('show')
+      article: new Article title: 'hi', sections: []
+      footerArticles: new Articles [_.extend(_.clone(fixtures.article),
+        thumbnail_title: "This is a footer article"
+        vertical_id: null)]
+      crop: (url) -> url
+      resize: (url) -> url
+      moment: moment
+      sd: {}
+      asset: ->
+    html.should.containEql 'This is a footer article'
 
 describe 'article figure template', ->
 
@@ -63,13 +79,15 @@ describe 'vertical template', ->
       moment: moment
       sd: {}
       asset: ->
-      vertical: new Vertical _.extend _.clone(fixtures.vertical), title: 'Moo Bar'
+      vertical: new Vertical _.extend _.clone(fixtures.vertical),
+        title: 'Moo Bar'
     html.should.containEql 'Moo Bar'
 
   it 'renders featured vertical articles', ->
     html = render('vertical')
       articles: new Articles([
-        _.extend(_.clone(fixtures.article), id: 'foo', title: 'Foo and Bars are Great!')
+        _.extend(_.clone(fixtures.article), id: 'foo',
+            title: 'Foo and Bars are Great!')
         _.extend(_.clone(fixtures.article), id: 'bar')
         _.extend(_.clone(fixtures.article), id: 'baz')
       ])
