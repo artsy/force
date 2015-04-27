@@ -1,5 +1,4 @@
 .map-modal-link
-  text-decoration none
   &:before
     iconfont-styling()
     content '\e61c'
@@ -30,8 +29,18 @@
 .map-modal-partner-hours
   padding-top 35px
 
-#map-modal-show-map
+.map-modal-show-map-container
   overflow hidden
   margin-left 300px
+
+.map-modal-show-map-link
+  padding-top 5px
+  a
+    text-decoration none
+  &:hover a
+    text-decoration underline
+
+#map-modal-show-map
   width 400px
   height 400px
+
