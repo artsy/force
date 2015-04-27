@@ -34,7 +34,7 @@ describe 'FilterableListView', ->
           filter_by: 'type'
           filters:
             catalogue: 'Exhibition Catalogues'
-            review: 'Exhibtion Reviews'
+            review: 'Exhibition Reviews'
             interview: 'Interviews'
             monograph: 'Monographs'
             biography: 'Biographies'
@@ -57,7 +57,7 @@ describe 'FilterableListView', ->
           filter_by: 'type'
           filters:
             catalogue: 'Exhibition Catalogues'
-            review: 'Exhibtion Reviews'
+            review: 'Exhibition Reviews'
             interview: 'Interviews'
             monograph: 'Monographs'
             biography: 'Biographies'
@@ -75,7 +75,7 @@ describe 'FilterableListView', ->
         @view.$('.filterable-list-filter').map(-> $(this).text()).get().should.eql [
           'All'
           'Exhibition Catalogues'
-          'Exhibtion Reviews'
+          'Exhibition Reviews'
           'Interviews'
         ]
 
@@ -105,7 +105,7 @@ describe 'FilterableListView', ->
         filter_by: 'type'
         filters:
           catalogue: 'Exhibition Catalogues'
-          review: 'Exhibtion Reviews'
+          review: 'Exhibition Reviews'
           interview: 'Interviews'
           monograph: 'Monographs'
           biography: 'Biographies'
@@ -122,7 +122,7 @@ describe 'FilterableListView', ->
       @view.$('.filterable-list-filter').map(-> $(this).text()).get().should.eql [
         'All'
         'Exhibition Catalogues'
-        'Exhibtion Reviews'
+        'Exhibition Reviews'
         'Interviews'
       ]
 

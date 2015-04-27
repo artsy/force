@@ -25,7 +25,7 @@ describe 'BiblographyListView', ->
           book: 'Books'
           article: 'Articles'
           catalogue: 'Exhibition Catalogues'
-          review: 'Exhibtion Reviews'
+          review: 'Exhibition Reviews'
           interview: 'Interviews'
           monograph: 'Monographs'
           biography: 'Biographies'

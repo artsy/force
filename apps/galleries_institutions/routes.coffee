@@ -67,7 +67,10 @@ fetchInstitutions = ->
       aToZGroup: aToZGroup
       partnerCount: '600+'
       featuredProfiles: _.take featuredGalleries.shuffle(), 15 # Make room for partnership callout
-      copy: header: 'Featured Galleries', adjective: 'Gallery'
+      copy:
+        header: 'Featured Galleries'
+        adjective: 'Gallery'
+        href: '/gallery-partnerships'
   ).done()
 
 @institutions = (req, res) ->
@@ -80,5 +83,8 @@ fetchInstitutions = ->
     res.render 'index',
       aToZGroup: aToZGroup
       featuredProfiles: _.take featuredInstitutions.shuffle(), 16
-      copy: header: 'Featured Museums and Institutions', adjective: 'Institutional'
+      copy:
+        header: 'Featured Museums and Institutions'
+        adjective: 'Institutional'
+        href: '/pdf/institutions-overview.pdf'
   ).done()
