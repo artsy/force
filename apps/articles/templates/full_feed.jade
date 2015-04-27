@@ -15,8 +15,9 @@
       ul.grid-4-up
         for article in articles.featuredToVertical(vertical)
           li.grid-item
-            img( src=crop(article.get('thumbnail_image'), { width: 70, height: 70 }) )
-            p= article.get('title')
+            a(href="#{article.href()}")
+              img( src=crop(article.get('thumbnail_image'), { width: 70, height: 70 }) )
+              p= article.get('title')
 
   .articles-articles-feed.articles-feed
     .articles-feed-articles.js-articles-feed-articles
