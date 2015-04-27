@@ -10,4 +10,7 @@
     .map-modal-partner-location-running-hours
     .map-modal-show-running-dates
       | #{show.date('start_at').format('MMMM DD')} – #{show.date('end_at').format('MMMM DD')}
-  #map-modal-show-map
+  .map-modal-show-map-container
+    #map-modal-show-map
+    .map-modal-show-map-link
+      a( href=googleMapsLink, target="_blank") View in Google Maps

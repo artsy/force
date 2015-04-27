@@ -2,6 +2,7 @@ _ = require 'underscore'
 sd = require('sharify').data
 GMaps = -> require('gmaps') arguments...
 geo = require '../../../../components/geo/index.coffee'
+{ getMapLink } = require "../../../../components/util/google_maps.coffee"
 ModalView = require '../../../../components/modal/view.coffee'
 
 template = -> require('./map.jade') arguments...
@@ -17,8 +18,11 @@ module.exports = class MapModal extends ModalView
 
   initialize: (options) ->
     @show = options.model
+    mapLinkOptions =
+      q: @show.location().getMapsLocation()
     @templateData =
       show: @show
+      googleMapsLink: getMapLink mapLinkOptions
     super
 
   postRender: ->
@@ -28,6 +32,7 @@ module.exports = class MapModal extends ModalView
         lat: @show.location().get('coordinates').lat
         lng: @show.location().get('coordinates').lng
         zoom: 16
+        disableDefaultUI: true
       map.addStyle {
         styledMapName: "Styled Map"
         styles: [
