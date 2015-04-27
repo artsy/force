@@ -46,7 +46,21 @@ module.exports.init = ->
   city = _.findWhere(Cities, name: show.formatCity())
 
   if show.isFairBooth()
-    console.log show.fairName()
+    # how to get booths from a fair?
+    relatedShows = new PartnerShows
+    relatedShows.fetch
+      data:
+        # fair: show.related().fair.get('id')
+        size: 4
+        displayable: true
+        at_a_fair: true
+      error: (collection, response) =>
+        res.error
+      success: =>
+        relatedShowsView = new RelatedShowsView
+          collection: relatedShows
+          title: "More Booths from #{show.related().fair.get('name')}"
+        $('.related-shows').append relatedShowsView.$el
   else
     relatedShows = new PartnerShows
     featuredShows = new PartnerShows
