@@ -1,4 +1,5 @@
 _ = require 'underscore'
+Q = require 'q'
 { SHOW, ARTWORKS } = require('sharify').data
 { Cities, FeaturedCities } = require 'places'
 PartnerShow = require '../../../models/partner_show.coffee'
@@ -44,21 +45,40 @@ module.exports.init = ->
 
   city = _.findWhere(Cities, name: show.formatCity())
 
-  relatedShows = new PartnerShows
-
-  relatedShows.comparator = (show) -> Date.parse(show.get('end_at'))
-
-  relatedShowsView = new RelatedShowsView
-    criteria:
-      near: city.coords.toString()
-      sort: '-start_at'
-      size: 4
-      displayable: true
-      at_a_fair: false
-      status: 'running'
-    collection: relatedShows
-    title: "Current Shows in #{show.formatCity()}"
-
-  $('.related-shows').append relatedShowsView.$el
+  if show.isFairBooth()
+    console.log show.fairName()
+  else
+    relatedShows = new PartnerShows
+    featuredShows = new PartnerShows
+    Q.allSettled(
+      relatedShows.fetch
+        data:
+          near: city.coords.toString()
+          sort: '-start_at'
+          size: 4
+          displayable: true
+          at_a_fair: false
+          status: 'running'
+        error: (collection, response) =>
+          res.error
+      featuredShows.fetch
+        data:
+          featured: true
+          sort: 'end_at'
+          size: 4
+          displayable: true
+          status: 'running'
+        error: (collection, response) =>
+          res.error
+    ).then( =>
+      relatedShowsView = new RelatedShowsView
+          collection: relatedShows
+          title: "Current Shows in #{show.formatCity()}"
+        $('.related-shows').append relatedShowsView.$el
+      featuredShowsView = new RelatedShowsView
+          collection: featuredShows
+          title: "Featured Shows"
+        $('.featured-shows').append featuredShowsView.$el
+    )
 
   new ShareView el: $('.js-show-share')

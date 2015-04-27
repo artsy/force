@@ -1,4 +1,5 @@
 _ = require 'underscore'
+Q = require 'q'
 sd = require('sharify').data
 moment = require 'moment'
 Backbone = require 'backbone'
@@ -261,3 +262,23 @@ module.exports = class PartnerShow extends Backbone.Model
       "#{type} including #{name}"
     else
       type
+
+  fetchRelatedImages: (show) ->
+    dfd = Q.defer()
+    artworks = new Artworks
+    Q.allSettled([
+      @related().installShots.fetch()
+      artworks.fetch
+        data: { size: 5, published: true }
+        url: "#{@url()}/artworks"
+        cache: true
+    ]).then( =>
+      relatedImages = new Backbone.Collection
+      relatedImages.push @related().installShots.models
+      artworkImages = artworks.map (artwork) =>
+        artwork.defaultImage()
+      relatedImages.push artworkImages
+      @related().relatedImages = relatedImages
+      dfd.resolve()
+    ).done()
+    dfd.promise
