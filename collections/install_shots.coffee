@@ -13,3 +13,6 @@ module.exports = class InstallShots extends Backbone.Collection
     _.filter response, (obj) ->
       # filter out images without versions
       obj.image_versions?.length
+
+  hasCaptions: ->
+    _.any _.map(@pluck('caption'), _.negate _.isEmpty)

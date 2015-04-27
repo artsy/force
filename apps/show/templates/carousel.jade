@@ -1,18 +1,18 @@
-section.show-installation-shot-carousel.merry-go-round.js-show-installation-shot-carousel
+section.show-installation-shot-carousel.merry-go-round.js-show-installation-shot-carousel(
+  class= installShots.hasCaptions() ? 'has-captions' : undefined
+)
   .mgr-cells.js-mgr-cells
     for installShot in installShots.models
-      - dimensions = installShot.resizeDimensionsFor({ height: 300 })
+      - smallDimensions = installShot.resizeDimensionsFor({ height: 300 })
       .mgr-cell.js-mgr-cell
         img(
           src= installShot.imageUrlForHeight(h)
-          width= dimensions.width
-          height= dimensions.height
           alt= installShot.get('caption')
           title= installShot.get('caption')
         )
 
         if installShot.get('caption')
-          .show-installation-shot-caption( style="width: #{dimensions.width}px" )
+          .show-installation-shot-caption( style="width: #{smallDimensions.width}px" )
             = installShot.get('caption')
 
   - length = installShots.length
