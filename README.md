@@ -18,6 +18,7 @@ Meta
 Set-Up
 ---
 
+- Install [Heroku Toolbelt](https://toolbelt.heroku.com/)
 - Install [NVM](https://github.com/creationix/nvm)
 - Install Node 0.12
 ```
