@@ -10,19 +10,21 @@ hulkCallback = (data) ->
   return unless confirm "Are you sure you want to update the gallery " +
                         "partnerships page (these changes can't be undone)?"
   $('.hulk-save').addClass 'is-loading'
+  url = if location.pathname.match 'gallery' then '/gallery-partnerships/edit' else '/institution-partnerships/edit'
   $.ajax
     type: 'POST'
-    url: '/gallery-partnerships/edit'
+    url: url
     data: JSON.stringify(data)
     contentType: 'application/json'
-    success: -> location.assign '/gallery-partnerships'
+    success: -> location.assign( url.replace '/edit', '')
     error: -> alert "Whoops. Something went wrong, try again. If it doesn't " +
                     "work ask Craig."
 
 renderPreview = (data) ->
   renderData = JSON.parse JSON.stringify(data)
+  console.log renderData
   $('#gallery-partnerships-edit-preview').html(
-    sectionsTemplates _.extend(renderData, crop: crop)
+    sectionsTemplates _.extend(renderData, crop: crop, path: location.pathname)
   )
 
 #
@@ -88,7 +90,6 @@ module.exports.init = ->
   $('textarea, input').on 'keyup', _.debounce(->
     renderPreview $.hulkSmash('#gallery-partnerships-edit-hulk')
   , 300)
-
   renderPreview DATA
   initImageUploads()
   setupArrayAddRemove()
