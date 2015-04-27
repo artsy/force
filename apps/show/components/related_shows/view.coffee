@@ -15,7 +15,10 @@ module.exports = class RelatedShowsView extends Backbone.View
   initialize: ( options ) ->
     @title = options.title
     @shows = options.collection
-    Q.allSettled(@shows.models.map (show) ->
+    @listenTo @shows, 'sync', @getShowsImages
+
+  getShowsImages: ->
+    Q.allSettled(@shows.models.map (show) =>
        show.fetchRelatedImages()
     ).then( =>
       window.testShow = @shows.models[1]

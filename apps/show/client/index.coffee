@@ -47,52 +47,42 @@ module.exports.init = ->
 
   if show.isFairBooth()
     # how to get booths from a fair?
-    relatedShows = new PartnerShows
-    relatedShows.fetch
+    relatedFairBooths = new PartnerShows
+    relatedFairBoothsView = new RelatedShowsView
+      collection: relatedFairBooths
+      title: "More Booths from #{show.related().fair.get('name')}"
+    $('.related-shows').html relatedFairBoothsView.render().$el
+    relatedFairBooths.fetch
       data:
         # fair: show.related().fair.get('id')
         size: 4
         displayable: true
         at_a_fair: true
-      error: (collection, response) =>
-        res.error
-      success: =>
-        relatedShowsView = new RelatedShowsView
-          collection: relatedShows
-          title: "More Booths from #{show.related().fair.get('name')}"
-        $('.related-shows').append relatedShowsView.$el
   else
     relatedShows = new PartnerShows
+    relatedShowsView = new RelatedShowsView
+      collection: relatedShows
+      title: "Current Shows in #{show.formatCity()}"
+    $('.related-shows').html relatedShowsView.render().$el
     featuredShows = new PartnerShows
-    Q.allSettled(
-      relatedShows.fetch
-        data:
-          near: city.coords.toString()
-          sort: '-start_at'
-          size: 4
-          displayable: true
-          at_a_fair: false
-          status: 'running'
-        error: (collection, response) =>
-          res.error
-      featuredShows.fetch
-        data:
-          featured: true
-          sort: 'end_at'
-          size: 4
-          displayable: true
-          status: 'running'
-        error: (collection, response) =>
-          res.error
-    ).then( =>
-      relatedShowsView = new RelatedShowsView
-          collection: relatedShows
-          title: "Current Shows in #{show.formatCity()}"
-        $('.related-shows').append relatedShowsView.$el
-      featuredShowsView = new RelatedShowsView
-          collection: featuredShows
-          title: "Featured Shows"
-        $('.featured-shows').append featuredShowsView.$el
-    )
+    featuredShowsView = new RelatedShowsView
+      collection: featuredShows
+      title: "Featured Shows"
+    $('.featured-shows').html featuredShowsView.render().$el
+    relatedShows.fetch
+      data:
+        near: city.coords.toString()
+        sort: '-start_at'
+        size: 4
+        displayable: true
+        at_a_fair: false
+        status: 'running'
+    featuredShows.fetch
+      data:
+        featured: true
+        sort: 'end_at'
+        size: 4
+        displayable: true
+        status: 'running'
 
   new ShareView el: $('.js-show-share')
