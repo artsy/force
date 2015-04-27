@@ -136,6 +136,7 @@ mixin support(section)
             img( src=liaison.src )
             .support-liaison-name= liaison.name
             .support-liaison-location= liaison.location
+            .support-liaison-position= liason.position
     if section.quotes
       .support-quotes
         - q = section.quotes[0]
@@ -145,7 +146,11 @@ mixin support(section)
 
 mixin apply(section)
   .gallery-partnerships-section-header.apply
-    if sd.GALLERY_PARTNERSHIPS_APPLY === 'link'
+    if path === '/institution-partnerships'
+      h3= section.heading
+      a.avant-garde-button-black.apply-button.apply-link-cta( href='/apply' ) Apply
+      .gallery-partnerships-contact Call us: +1 800 589 1350
+    else if sd.GALLERY_PARTNERSHIPS_APPLY === 'link'
       h3= section.heading
       a.avant-garde-button-black.apply-button.apply-link-cta( href='/apply?00NC0000005RNfN=link' ) Apply
       .gallery-partnerships-contact Call us: +1 800 589 1350
@@ -200,7 +205,7 @@ mixin shows(section)
             img( src=g.src )
           .show-gallery-info
             .show-gallery-name= g.name
-            .show-gallerty-title= g.title
+            .show-gallery-title= g.title
             .show-gallery-location-date #{g.location}, #{g.dates}
 
 
