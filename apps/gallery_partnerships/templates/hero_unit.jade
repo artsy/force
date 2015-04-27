@@ -9,4 +9,5 @@
         style="background-image: url(#{crop(image.src, { width: 1120, height: 435, quality: 90 })})"
         class=(i === 0 ? 'is-active' : undefined)
       )
+        .credit= image.credit
   .preamble!= hero.preamble
