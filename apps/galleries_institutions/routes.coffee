@@ -82,9 +82,9 @@ fetchInstitutions = ->
     aToZGroup = institutions.groupByAlphaWithColumns 3
     res.render 'index',
       aToZGroup: aToZGroup
-      featuredProfiles: _.take featuredInstitutions.shuffle(), 16
+      featuredProfiles: _.take featuredInstitutions.shuffle(), 11 # Make room for partnership callout
       copy:
         header: 'Featured Museums and Institutions'
         adjective: 'Institutional'
-        href: '/pdf/institutions-overview.pdf'
+        href: '/institution-partnerships'
   ).done()
