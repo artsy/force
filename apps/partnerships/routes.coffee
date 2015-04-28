@@ -52,7 +52,6 @@ getContentPath = (url) ->
     next()
 
 @edit = (req, res, next) ->
-  @req = req
   getJSON( req.url, (err, data) ->
     return next err if err
     res.locals.sd.DATA = data
