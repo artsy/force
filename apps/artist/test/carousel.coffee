@@ -7,7 +7,7 @@ Carousel = require '../carousel'
 
 describe 'Carousel', ->
   beforeEach ->
-    @artist = new Artist fabricate 'artist', id: 'foobar'
+    @artist = new Artist fabricate 'artist', id: 'foobar', _id: 'bitty'
     @carousel = new Carousel artist: @artist
     sinon.stub Backbone, 'sync'
 
@@ -21,7 +21,7 @@ describe 'Carousel', ->
         collection.last().get('title').should.equal 'Iconic Artwork'
         done()
 
-      Backbone.sync.args[0][1].url.should.containEql '/api/v1/related/shows?artist[]=foobar&sort=-end_at'
+      Backbone.sync.args[0][1].url.should.containEql '/api/v1/related/shows?artist_id=bitty&sort=-end_at'
       Backbone.sync.args[1][1].url.should.containEql '/api/v1/artist/foobar/artworks?published=true'
 
       Backbone.sync.args[0][2].success []

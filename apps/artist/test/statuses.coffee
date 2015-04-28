@@ -7,7 +7,7 @@ Statuses = require '../statuses'
 
 describe 'Statuses', ->
   beforeEach ->
-    @artist = new Artist fabricate 'artist', id: 'foobar'
+    @artist = new Artist fabricate 'artist', id: 'foobar', _id: 'bitty'
     @statuses = new Statuses artist: @artist
     sinon.stub Backbone, 'sync'
 
@@ -20,7 +20,7 @@ describe 'Statuses', ->
     urls = _.first(_.map(Backbone.sync.args, (args) -> args[1].url), (Backbone.sync.args.length - 1))
     urls.should.eql [
       'undefined/api/v1/search/filtered/artist/foobar/suggest'
-      'undefined/api/v1/related/shows?artist[]=foobar&sort=-end_at&displayable=true'
+      'undefined/api/v1/related/shows?artist_id=bitty&sort=-end_at&displayable=true'
       'undefined/api/v1/related/layer/main/artists?artist[]=foobar&exclude_artists_without_artworks=true'
       'undefined/api/v1/related/layer/contemporary/artists?artist[]=foobar&exclude_artists_without_artworks=true'
       'undefined/artist/data/foobar/publications?merchandisable[]=false'
