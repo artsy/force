@@ -1,5 +1,6 @@
 _ = require 'underscore'
 Q = require 'q'
+moment = require 'moment'
 Profile = require '../../models/profile.coffee'
 FairOrganizer = require '../../models/fair_organizer.coffee'
 Fairs = require '../../collections/fairs.coffee'
@@ -39,10 +40,18 @@ representation = (fair) ->
   # This grabs all the past fairs by passing fair_organizer_id
   # to the /fairs endpoint
   pastFairs.fetch
+    cache: true
     data:
-      fair_organizer_id: fairOrg.id
+      fair_organizer_id: fairOrg.get('_id')
     success: (models, response, options)->
       articles = new Articles()
+
+      # find if we have a current fair
+      current = pastFairs.find (fair)->
+        moment().isBetween fair.get('start_at'), fair.get('end_at')
+
+      # redirect to fair if there is a fair currently running.
+      return res.redirect(current.fairOrgHref()) if current
 
       # fetch the past fairs and their respective representations
       # to get the two small images
@@ -51,7 +60,10 @@ representation = (fair) ->
         pastFairs.map representation
         articles.fetch(
           cache: true
-          data: { published: true, fair_ids: pastFairs.pluck('_id'), sort: '-published_at' }
+          data:
+            published: true
+            fair_ids: pastFairs.pluck('_id')
+            sort: '-published_at'
         )
       ]
 
