@@ -86,4 +86,4 @@ block body
       ul#articles-footer-list
         for footerArticle in footerArticles.models
           unless article.id === footerArticle.get('id')
-            +article-figure(article, 220, false, false)
+            +article-figure(footerArticle, 220, false, false)

@@ -11,7 +11,7 @@ describe 'Filter', ->
       filter_by: 'type'
       filters:
         catalogue: 'Exhibition Catalogues'
-        review: 'Exhibtion Reviews'
+        review: 'Exhibition Reviews'
         interview: 'Interviews'
         monograph: 'Monographs'
         biography: 'Biographies'
@@ -25,5 +25,5 @@ describe 'Filter', ->
     it 'returns only the filters needed from the requested filters', ->
       @filter.relevant().should.eql
         catalogue: 'Exhibition Catalogues'
-        review: 'Exhibtion Reviews'
+        review: 'Exhibition Reviews'
         interview: 'Interviews'

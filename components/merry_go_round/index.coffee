@@ -1,67 +1,32 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-template = -> require('./templates/navigation.jade') arguments...
+MerryGoRoundNavView = require './view.coffee'
+MerryGoRoundFlickity = require './wrapper.coffee'
 
-class MerryGoRoundNavView extends Backbone.View
-  tagName: 'nav'
-  className: '.mgr-navigation'
+setup = ($el, options = {}, callback) ->
+  $viewport = $el.find options.selector or '.js-mgr-cells'
+  $navigation = $el.find options.navigationSelector or '.js-mgr-navigation'
+  $cells = $viewport.find options.cellSelector or '.js-mgr-cell'
 
-  events:
-    'click .js-mgr-next': 'next'
-    'click .js-mgr-prev': 'prev'
-    'click .js-mgr-select': 'select'
+  totalWidth = _.reduce $cells, ((memo, el) -> $(el).width() + memo), 0
+  averageWidth = totalWidth / $cells.length
+  options.wrapAround = (totalWidth - averageWidth) >= $(window).width()
 
-  initialize: ({ @flickity }) ->
-    @flickity.on 'cellSelect', @render
-    $(document).on 'keydown.mgr', @keypress
+  {
+    cells: cells = new MerryGoRoundFlickity $viewport, options
+    navigation: new MerryGoRoundNavView flickity: cells.flickity, el: $navigation
+  }
 
-  keypress: (e) =>
-    switch e.keyCode
-      when 37
-        @flickity.previous true
-      when 39
-        @flickity.next true
-
-  next: (e) ->
-    e.preventDefault()
-    @flickity.next true
-
-  prev: (e) ->
-    e.preventDefault()
-    @flickity.previous true
-
-  select: (e) ->
-    e.preventDefault()
-    @flickity.select $(e.currentTarget).data('index')
-
-  render: =>
-    @$el.html template
-      length: @flickity.cells.length
-      index: @flickity.selectedIndex
-    this
-
-  remove: ->
-    $(document).off 'keydown.mgr'
-    @flickity.destroy()
-    super
-
-module.exports = ($el, options = {}) ->
-  Flickity = require 'flickity-imagesloaded'
-
-  $flickity = $el.find(options.selector or '.js-mgr-cells')
-
-  totalWidth = _.reduce $flickity.find(options.cellSelector or '.js-mgr-cell'), (memo, el) ->
-    $(el).width() + memo
-  , 0
-
-  wrapAround = totalWidth >= $(window).width()
-
-  flickity = new Flickity $flickity[0], _.defaults options,
-    cellSelector: '.js-mgr-cell'
-    cellAlign: 'left'
-    wrapAround: wrapAround
-    pageDots: false
-    prevNextButtons: false
-    accessibility: false # Handled on `document`
-
-  new MerryGoRoundNavView flickity: flickity, el: $el.find('.js-mgr-navigation')
+module.exports = ($el, options = {}, callback) ->
+  if options.imagesLoaded
+    dfd = $.Deferred()
+    ($el.find options.selector or '.js-mgr-cells')
+      .imagesLoaded =>
+        instance = setup $el, options, callback
+        dfd.resolve instance
+        callback? instance
+    dfd.promise()
+  else
+    instance = setup $el, options, callback
+    callback? instance
+    instance

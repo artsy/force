@@ -23,11 +23,15 @@ section.js-my-carousel
 ```coffeescript
 initCarousel = require '../../../components/merry_go_round/index.coffee'
 
-carousel = initCarousel $('.js-my-carousel')
+promise = initCarousel $('.js-my-carousel')
 # Pass in additional or overwrite existing options
-# carousel = initCarousel $('.js-my-carousel'), imagesLoaded: true
+# initCarousel $('.js-my-carousel'), imagesLoaded: true
 
 # Hook into Flickity if need be:
-carousel.flickity.on 'dragStart', -> # Do something
-carousel.flickity.on 'staticClick', -> # Do something
+initCarousel $('.js-my-carousel'), {}, (carousel) ->
+  carousel.cells.flickity.on 'dragStart', -> # Do something
+  carousel.cells.flickity.on 'staticClick', -> # Do something
+
+initCarousel($('.js-my-carousel')).then (carousel) ->
+  # Ibid.
 ```

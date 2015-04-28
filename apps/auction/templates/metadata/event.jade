@@ -1,0 +1,8 @@
+if auction.get('event_start_at') && auction.get('event_end_at') && auction.get('event_location')
+  .auction-header-metadata-cell
+    h3 Event
+    .auction-header-metadata-cell-contents
+      p
+        = auction.formatDateRange('event_start_at', 'event_end_at')
+        br
+        = auction.get('event_location')

@@ -1,11 +1,37 @@
+caption-margin = 10px
+caption-font-size = 15px
+caption-height = (caption-margin * 2) + caption-font-size
+
+breakpoint = 700px
+large-size = 400px + caption-height
+small-size = 300px + caption-height
+
 .show-installation-shot-carousel
   padding-top 20px
   img
+    display block
     cursor pointer
+    max-height 100%
+
+  // Set cell heights for different contexts
+  .mgr-cells
+    height large-size
+  .mgr-cell
+    height 100%
+  @media screen and (max-height: breakpoint)
+    .mgr-cells
+      height small-size
+  &.has-captions
+    .mgr-cell
+      height (large-size - caption-height)
+    @media screen and (max-height: breakpoint)
+      .mgr-cell
+        height (small-size - caption-height)
 
 .show-installation-shot-caption
-  margin 5px 0
+  margin caption-margin 0
   color gray-dark-color
-  font-size 15px
+  font-size caption-font-size
+  line-height 1
   font-style italic
   overflow ellipsis

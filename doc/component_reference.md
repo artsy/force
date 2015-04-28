@@ -662,7 +662,7 @@ view = new FilterableListView
   filters:
     # Value -> Label
     catalogue: 'Exhibition Catalogues'
-    review: 'Exhibtion Reviews'
+    review: 'Exhibition Reviews'
     interview: 'Interviews'
     monograph: 'Monographs'
     biography: 'Biographies'

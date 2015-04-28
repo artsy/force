@@ -13,10 +13,13 @@ module.exports.init = ->
   show = new PartnerShow SHOW
   show.related().artworks.reset ARTWORKS
 
-  { flickity } = initCarousel $('.js-show-installation-shot-carousel')
-  flickity.on 'staticClick', (event, pointer, cellElement, cellIndex) ->
-    src = $(cellElement).find('img').attr('src')
-    new ZoomView imgSrc: src
+  initCarousel $('.js-show-installation-shot-carousel'), {
+    setGallerySize: false
+    imagesLoaded: true
+  }, (instance) ->
+    instance.cells.flickity.on 'staticClick', (event, pointer, cellElement, cellIndex) ->
+      src = $(cellElement).find('img').attr('src')
+      new ZoomView imgSrc: src
 
   artworkColumnsView = new ArtworkColumnsView
     el: $('.js-show-artworks-columns')
