@@ -8,7 +8,9 @@ append locals
   - assetPackage = 'show'
 
 block body
-  if installShots.length >= 3
+  - hasCarousel = installShots.length >= 3
+
+  if hasCarousel
     include carousel
 
   .responsive-layout-container: .main-layout-container
