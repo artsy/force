@@ -1,5 +1,5 @@
 mixin network(section)
-  .gallery-partnerships-section-header
+  .partnerships-section-header
     .grid-2-up
       .grid-item
         h2= section.title
@@ -7,7 +7,7 @@ mixin network(section)
       .grid-item
         p.preamble!= section.preamble
 
-  .gallery-partnerships-section-content.network
+  .partnerships-section-content.network
     .grid-4-up
       each g in section.galleries
         .grid-item
@@ -18,7 +18,7 @@ mixin network(section)
             .network-gallery-location= g.location
 
 mixin audience(section)
-  .gallery-partnerships-section-header.audience
+  .partnerships-section-header.audience
     .grid-2-up
       .grid-item
         h2= section.title
@@ -26,7 +26,7 @@ mixin audience(section)
       .grid-item
         p.preamble!= section.preamble
 
-  .gallery-partnerships-section-content.audience
+  .partnerships-section-content.audience
     .audience-map
       img( src=section.images[0].src )
     .audience-quotes
@@ -36,7 +36,7 @@ mixin audience(section)
         .quote-author #{q.author}, #{q.title}
 
 mixin access(section)
-  .gallery-partnerships-section-header
+  .partnerships-section-header
     .grid-2-up
       .grid-item
         h2= section.title
@@ -44,7 +44,7 @@ mixin access(section)
       .grid-item
         p.preamble!= section.preamble
 
-  .gallery-partnerships-section-content
+  .partnerships-section-content
     .browser-images-container
       .browser-frame
         img( src=section.images[0].src )
@@ -54,7 +54,7 @@ mixin access(section)
             img( src=image.src )
 
 mixin visibility(section)
-  .gallery-partnerships-section-header
+  .partnerships-section-header
     .grid-2-up
       .grid-item
         h2= section.title
@@ -62,7 +62,7 @@ mixin visibility(section)
       .grid-item
         p.preamble!= section.preamble
 
-  .gallery-partnerships-section-content
+  .partnerships-section-content
     .browser-images-container
       .browser-frame
         img( src=section.images[0].src )
@@ -72,7 +72,7 @@ mixin visibility(section)
             img( src=image.src )
 
 mixin tools(section)
-  .gallery-partnerships-section-header
+  .partnerships-section-header
     .grid-2-up
       .grid-item
         h2= section.title
@@ -80,7 +80,7 @@ mixin tools(section)
       .grid-item
         p.preamble!= section.preamble
 
-  .gallery-partnerships-section-content
+  .partnerships-section-content
     .browser-images-container
       .browser-frame
         img( src=section.images[0].src )
@@ -90,7 +90,7 @@ mixin tools(section)
             img( src=image.src )
 
 mixin artsy-folio(section)
-  .gallery-partnerships-section-header
+  .partnerships-section-header
     .grid-2-up
       .grid-item
         h2= section.title
@@ -98,7 +98,7 @@ mixin artsy-folio(section)
       .grid-item
         p.preamble!= section.preamble
 
-  .gallery-partnerships-section-content
+  .partnerships-section-content
     .browser-images-container.ipad-images-container
       .browser-frame.ipad-frame
         img( src=section.iPadImages[0].src )
@@ -116,7 +116,7 @@ mixin artsy-folio(section)
             img( src=image.src )
 
 mixin support(section)
-  .gallery-partnerships-section-header
+  .partnerships-section-header
     .grid-2-up
       .grid-item
         h2= section.title
@@ -124,7 +124,7 @@ mixin support(section)
       .grid-item
         p.preamble!= section.preamble
 
-  .gallery-partnerships-section-content
+  .partnerships-section-content
     .support-liaisons( data-liaisons=section.liaisons )
       for liaison in section.liaisons.slice(0, 5)
         .support-liaison
@@ -146,15 +146,15 @@ mixin support(section)
           .quote-author #{q.author}, #{q.title}
 
 mixin apply(section)
-  .gallery-partnerships-section-header.apply
+  .partnerships-section-header.apply
     if path === '/institution-partnerships'
       h3= section.heading
       a.avant-garde-button-black.apply-button.apply-link-cta( href='/apply' ) Apply
-      .gallery-partnerships-contact Call us: +1 800 589 1350
+      .partnerships-contact Call us: +1 800 589 1350
     else if sd.GALLERY_PARTNERSHIPS_APPLY === 'link'
       h3= section.heading
       a.avant-garde-button-black.apply-button.apply-link-cta( href='/apply?00NC0000005RNfN=link' ) Apply
-      .gallery-partnerships-contact Call us: +1 800 589 1350
+      .partnerships-contact Call us: +1 800 589 1350
 
     else
       .gallery-partnerships-apply-form
@@ -187,10 +187,10 @@ mixin apply(section)
             a( href='/privacy' ) Privacy Policy
             | .
 
-          .gallery-partnerships-contact Call us: +1 800 589 1350
+          .partnerships-contact Call us: +1 800 589 1350
 
 mixin shows(section)
-  .gallery-partnerships-section-header
+  .partnerships-section-header
     .grid-2-up
       .grid-item
         h2= section.title
@@ -198,20 +198,20 @@ mixin shows(section)
       .grid-item
         p.preamble!= section.preamble
 
-  .gallery-partnerships-section-content.show
+  .partnerships-section-content.show
     .grid-2-up
       each g in section.shows
         .grid-item
-          a.show-gallery-image.hoverable-image-link( href=g.href )
+          a.show-image.hoverable-image-link( href=g.href )
             img( src=g.src )
-          .show-gallery-info
-            .show-gallery-name= g.name
-            .show-gallery-title= g.title
-            .show-gallery-location-date #{g.location}, #{g.dates}
+          .show-info
+            .show-name= g.name
+            .show-title= g.title
+            .show-location-date #{g.location}, #{g.dates}
 
 
 mixin education(section)
-  .gallery-partnerships-section-header
+  .partnerships-section-header
     .grid-2-up
       .grid-item
         h2= section.title
@@ -219,18 +219,18 @@ mixin education(section)
       .grid-item
         p.preamble!= section.preamble
 
-  .gallery-partnerships-section-content.education
+  .partnerships-section-content.education
     .grid-4-up
       each g in section.institutions
         .grid-item
-          a.education-gallery-image.hoverable-image-link( href=g.href )
+          a.education-image.hoverable-image-link( href=g.href )
             img( src=g.src )
-          .education-gallery-info
-            .education-gallery-name= g.name
-            .education-gallery-location= g.location
+          .education-info
+            .education-name= g.name
+            .education-location= g.location
 
 mixin design(section)
-  .gallery-partnerships-section-header
+  .partnerships-section-header
     .grid-2-up
       .grid-item
         h2= section.title
@@ -238,7 +238,7 @@ mixin design(section)
       .grid-item
         p.preamble!= section.preamble
 
-  .gallery-partnerships-section-content
+  .partnerships-section-content
     .browser-images-container
       .browser-frame
         img( src=section.images[0].src )

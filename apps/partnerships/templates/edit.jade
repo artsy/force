@@ -1,0 +1,14 @@
+extends ../../../components/main_layout/templates/index
+
+block head
+  include meta
+
+append locals
+  - bodyClass = bodyClass + ' body-partnerships-edit'
+  - assetPackage = 'partnerships'
+
+block body
+  h1#partnerships-edit-h1.avant-garde-header-center Edit Partnerships Page
+  #partnerships-edit-container
+    #partnerships-edit-hulk
+    #partnerships-edit-preview.body-partnerships

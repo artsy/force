@@ -4,6 +4,6 @@ require('../lib/vendor/jquery.fileupload.js')
 require('../lib/vendor/jquery.iframe-transport.js')
 $ -> analytics.ready ->
   if location.pathname.match(/\/gallery-partnerships\/edit$/) or location.pathname.match(/\/institution-partnerships\/edit$/)
-    require('../apps/gallery_partnerships/client/edit.coffee').init()
+    require('../apps/partnerships/client/edit.coffee').init()
   else
-    require('../apps/gallery_partnerships/client/index.coffee').init()
+    require('../apps/partnerships/client/index.coffee').init()
