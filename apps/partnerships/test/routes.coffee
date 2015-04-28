@@ -4,7 +4,7 @@ sinon = require 'sinon'
 rewire = require 'rewire'
 routes = rewire '../routes'
 
-describe 'Gallery partnerships routes', ->
+describe 'Partnerships routes', ->
 
   beforeEach ->
     sinon.stub Backbone, 'sync'
@@ -30,6 +30,7 @@ describe 'Gallery partnerships routes', ->
         locals.foo.should.equal 'bar'
         done()
       @request.get = -> on: -> end: (cb) -> cb null, { text: '{"foo": "bar"}' }
+      @req.url = '/gallery-partnerships'
       routes.index @req, @res
 
   describe '#adminOnly', ->
@@ -43,6 +44,7 @@ describe 'Gallery partnerships routes', ->
 
     it 'uploads the file to S3', ->
       @req.body = { foo: 'bar' }
+      @req.url = '/gallery-partnerships'
       routes.upload @req, @res
       @client.putBuffer.args[0][0].toString().should.equal JSON.stringify @req.body
       @client.putBuffer.args[0][3](null, {})

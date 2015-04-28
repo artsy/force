@@ -3,10 +3,12 @@ Backbone = require 'backbone'
 View = require './view.coffee'
 Jump = require '../../../components/jump/view.coffee'
 
-module.exports = class GalleryPartnershipsRouter extends Backbone.Router
+module.exports = class PartnershipsRouter extends Backbone.Router
   routes:
     'gallery-partnerships': 'toTop'
     'gallery-partnerships/:slug': 'toSection'
+    'institution-partnerships': 'toTop'
+    'institution-partnerships/:slug': 'toSection'
 
   initialize: ->
     @$window = $(window)
@@ -22,6 +24,6 @@ module.exports = class GalleryPartnershipsRouter extends Backbone.Router
     @jump.scrollToTop() if @$window.scrollTop() isnt 0
 
   toSection: (slug) ->
-    $nav = $ '.gallery-partnerships-section-nav'
+    $nav = $ '.partnerships-section-nav'
     selector = "##{slug}"
     @jump.scrollToPosition $(selector)?.offset()?.top - $nav.outerHeight() / 2

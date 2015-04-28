@@ -8,9 +8,8 @@ client = null
 SplitTest = require '../../components/split_test/server_split_test'
 runningTests = require '../../components/split_test/running_tests'
 
-CONTENT_PATH = '/gallery-partnerships/content.json'
-
-getJSON = (callback) ->
+getJSON = (url, callback) ->
+  CONTENT_PATH = getContentPath(url)
   request.get(
     "http://#{APPLICATION_NAME}.s3.amazonaws.com#{CONTENT_PATH}"
   )
@@ -20,6 +19,12 @@ getJSON = (callback) ->
       callback null, JSON.parse res.text
     catch e
       callback new Error "Invalid JSON " + e
+
+getContentPath = (url) ->
+  if url.match 'gallery-partnerships'
+    return '/gallery-partnerships/content.json'
+  else
+    return '/institution-partnerships/content.json'
 
 @initClient = ->
   client = knox.createClient
@@ -34,26 +39,29 @@ getJSON = (callback) ->
     test.set req.query.mode
     res.locals.sd[testConfig.key.toUpperCase()] = req.query.mode
 
-  getJSON (err, data) ->
+  getJSON( req.url, (err, data) ->
     return next err if err
-    res.render 'index', _.extend data, crop: crop
+    res.render 'index', _.extend data, crop: crop, path: req.url
+  )
 
 @adminOnly = (req, res, next) ->
   if req.user?.get('type') isnt 'Admin'
     res.status 403
-    next new Error "You must be logged in as an admin to edit the gallery partnerships page."
+    next new Error "You must be logged in as an admin to edit this partnerships page."
   else
     next()
 
 @edit = (req, res, next) ->
-  getJSON (err, data) ->
+  getJSON( req.url, (err, data) ->
     return next err if err
     res.locals.sd.DATA = data
-    res.render 'edit'
+    res.render 'edit', path: req.url
+  )
 
 @upload = (req, res, next) ->
+  @req = req
   buffer = new Buffer JSON.stringify req.body
   headers = { 'Content-Type': 'application/json', 'x-amz-acl': 'public-read' }
-  client.putBuffer buffer, CONTENT_PATH, headers, (err, r) ->
+  client.putBuffer buffer, getContentPath(req.url), headers, (err, r) ->
     return next err if err
     res.send 200, { msg: "success" }

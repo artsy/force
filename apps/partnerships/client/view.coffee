@@ -3,9 +3,9 @@ Backbone = require 'backbone'
 imagesLoaded = require 'imagesloaded'
 { resize } = require '../../../components/resizer/index.coffee'
 
-module.exports = class GalleryPartnershipsView extends Backbone.View
+module.exports = class PartnershipsView extends Backbone.View
   events:
-    'click .gallery-partnerships-nav-link.internal': 'intercept'
+    'click .partnerships-nav-link.internal': 'intercept'
 
   initialize: ->
     @$window = $(window)
@@ -22,10 +22,10 @@ module.exports = class GalleryPartnershipsView extends Backbone.View
     Backbone.history.navigate $(e.currentTarget).attr('href'), trigger: true
 
   cacheSelectors: ->
-    @$nav = @$ '.gallery-partnerships-section-nav'
-    @$sections = @$ '.gallery-partnerships-section'
-    @$heroUnitsContainer = @$ '.gallery-partnerships-hero-unit-images'
-    @$heroUnitsSlides = @$ '.gallery-partnerships-hero-unit-image'
+    @$nav = @$ '.partnerships-section-nav'
+    @$sections = @$ '.partnerships-section'
+    @$heroUnitsContainer = @$ '.partnerships-hero-unit-images'
+    @$heroUnitsSlides = @$ '.partnerships-hero-unit-image'
     @$liaisonsContainer = @$ '.support-liaisons'
 
   #
@@ -61,18 +61,20 @@ module.exports = class GalleryPartnershipsView extends Backbone.View
     liaisons = @$liaisonsContainer.data('liaisons')
     numOfActive = @$liaisonsContainer.children('.support-liaison').length
     indexArray = _.range(liaisons.length)
-    setInterval (=> @swapLiaisons(liaisons, indexArray, numOfActive)), 1200
+    if numOfActive < indexArray
+      setInterval (=> @swapLiaisons(liaisons, indexArray, numOfActive)), 1200
 
   setupStickyNav: ->
     @$nav.waypoint('sticky')
       # waypoint for the very top section
       .waypoint (direction) ->
-        Backbone.history.navigate('/gallery-partnerships',
+        backLink = if location.href.match 'gallery' then '/gallery-partnerships' else '/institution-partnerships'
+        Backbone.history.navigate( backLink ,
           trigger: false, replace: true) if direction is 'up'
 
   setupSectionNavHighlighting: ->
     activateNavLink = (el) =>
-      @$nav.find('.gallery-partnerships-nav-link').removeClass 'is-active'
+      @$nav.find('.partnerships-nav-link').removeClass 'is-active'
       href = $(el).data('href')
       Backbone.history.navigate href, trigger: false, replace: true
       @$nav.find("a[href='#{href}']").addClass 'is-active'

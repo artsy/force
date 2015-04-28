@@ -10,19 +10,20 @@ hulkCallback = (data) ->
   return unless confirm "Are you sure you want to update the gallery " +
                         "partnerships page (these changes can't be undone)?"
   $('.hulk-save').addClass 'is-loading'
+  url = if location.pathname.match 'gallery' then '/gallery-partnerships/edit' else '/institution-partnerships/edit'
   $.ajax
     type: 'POST'
-    url: '/gallery-partnerships/edit'
+    url: url
     data: JSON.stringify(data)
     contentType: 'application/json'
-    success: -> location.assign '/gallery-partnerships'
+    success: -> location.assign( url.replace '/edit', '')
     error: -> alert "Whoops. Something went wrong, try again. If it doesn't " +
                     "work ask Craig."
 
 renderPreview = (data) ->
   renderData = JSON.parse JSON.stringify(data)
-  $('#gallery-partnerships-edit-preview').html(
-    sectionsTemplates _.extend(renderData, crop: crop)
+  $('#partnerships-edit-preview').html(
+    sectionsTemplates _.extend(renderData, crop: crop, path: location.pathname)
   )
 
 #
@@ -38,15 +39,15 @@ initImageUploads = ->
 # Insert a preview before an input and a replace button after it.
 #
 initImageUploadMockup = (input) ->
-  $(input).before("<img src='#{$(input).val()}' class='gallery-partnerships-preview-image'>")
-  $(input).after("<div class='gallery-partnerships-edit-upload-form'>Replace Image</div>")
+  $(input).before("<img src='#{$(input).val()}' class='partnerships-preview-image'>")
+  $(input).after("<div class='partnerships-edit-upload-form'>Replace Image</div>")
 
 #
 # Initialize a Gemini Form for the replace button immediately after an input.
 #
 initImageUploadForm = (input) ->
   new GeminiForm
-    el: $form = $(input).next('.gallery-partnerships-edit-upload-form')
+    el: $form = $(input).next('.partnerships-edit-upload-form')
     onUploadComplete: (res) ->
       url = res.url + $form.find('[name=key]').val()
         .replace('${filename}', encodeURIComponent(res.files[0].name))
@@ -57,7 +58,7 @@ initImageUploadForm = (input) ->
 
 setupArrayAddRemove = ->
   addX = ($el) ->
-    $("<button class='gallery-partnerships-edit-remove'>✖</button>")
+    $("<button class='partnerships-edit-remove'>✖</button>")
       .appendTo($el).click -> $el.remove()
 
   $('.hulk-array').each ->
@@ -73,7 +74,7 @@ setupArrayAddRemove = ->
       addX $clone.insertBefore $(this)
 
 module.exports.init = ->
-  $.hulk '#gallery-partnerships-edit-hulk', DATA, hulkCallback,
+  $.hulk '#partnerships-edit-hulk', DATA, hulkCallback,
     separator: null
     permissions: "values-only"
 
@@ -82,13 +83,12 @@ module.exports.init = ->
   $('.hulk-map-key').prop 'disabled', true
 
   $('button').addClass 'avant-garde-button'
-  $('#gallery-partnerships-edit-hulk *:hidden').remove()
+  $('#partnerships-edit-hulk *:hidden').remove()
 
   # Update the preview when typing in text fields.
   $('textarea, input').on 'keyup', _.debounce(->
-    renderPreview $.hulkSmash('#gallery-partnerships-edit-hulk')
+    renderPreview $.hulkSmash('#partnerships-edit-hulk')
   , 300)
-
   renderPreview DATA
   initImageUploads()
   setupArrayAddRemove()
