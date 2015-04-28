@@ -8,8 +8,8 @@ client = null
 SplitTest = require '../../components/split_test/server_split_test'
 runningTests = require '../../components/split_test/running_tests'
 
-getJSON = (callback) ->
-  CONTENT_PATH = getContentPath @req.url
+getJSON = (url, callback) ->
+  CONTENT_PATH = getContentPath(url)
   request.get(
     "http://#{APPLICATION_NAME}.s3.amazonaws.com#{CONTENT_PATH}"
   )
@@ -22,9 +22,9 @@ getJSON = (callback) ->
 
 getContentPath = (url) ->
   if url.match 'gallery-partnerships'
-    CONTENT_PATH = '/gallery-partnerships/content.json'
+    return '/gallery-partnerships/content.json'
   else
-    CONTENT_PATH = '/institution-partnerships/content.json'
+    return '/institution-partnerships/content.json'
 
 @initClient = ->
   client = knox.createClient
@@ -33,16 +33,16 @@ getContentPath = (url) ->
     bucket: APPLICATION_NAME
 
 @index = (req, res, next) ->
-  @req = req
   testConfig = runningTests.gallery_partnerships_apply
   if _.contains _.keys(testConfig.outcomes), req.query.mode
     test = new SplitTest req, res, testConfig
     test.set req.query.mode
     res.locals.sd[testConfig.key.toUpperCase()] = req.query.mode
 
-  getJSON (err, data) ->
+  getJSON( req.url, (err, data) ->
     return next err if err
-    res.render 'index', _.extend data, crop: crop, path: @req.url
+    res.render 'index', _.extend data, crop: crop, path: req.url
+  )
 
 @adminOnly = (req, res, next) ->
   if req.user?.get('type') isnt 'Admin'
@@ -53,12 +53,14 @@ getContentPath = (url) ->
 
 @edit = (req, res, next) ->
   @req = req
-  getJSON (err, data) ->
+  getJSON( req.url, (err, data) ->
     return next err if err
     res.locals.sd.DATA = data
-    res.render 'edit', path: @req.url
+    res.render 'edit', path: req.url
+  )
 
 @upload = (req, res, next) ->
+  @req = req
   buffer = new Buffer JSON.stringify req.body
   headers = { 'Content-Type': 'application/json', 'x-amz-acl': 'public-read' }
   client.putBuffer buffer, getContentPath(req.url), headers, (err, r) ->

@@ -5,7 +5,7 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 { resolve } = require 'path'
 
-describe 'GalleryPartnershipsView', ->
+describe 'PartnershipsView', ->
   before (done) ->
     benv.setup =>
       benv.expose
@@ -21,9 +21,9 @@ describe 'GalleryPartnershipsView', ->
     benv.teardown()
 
   beforeEach ->
-    @GalleryPartnershipsView = rewire '../../client/view'
-    sinon.stub @GalleryPartnershipsView::, 'initialize'
-    @view = new @GalleryPartnershipsView el: $('body')
+    @PartnershipsView = rewire '../../client/view'
+    sinon.stub @PartnershipsView::, 'initialize'
+    @view = new @PartnershipsView el: $('body')
     @clock = sinon.useFakeTimers()
 
   afterEach ->

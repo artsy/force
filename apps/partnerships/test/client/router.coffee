@@ -4,7 +4,7 @@ rewire = require 'rewire'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 
-describe 'GalleryPartnershipsRouter', ->
+describe 'PartnershipsRouter', ->
   before (done) ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'

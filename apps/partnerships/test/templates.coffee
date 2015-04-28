@@ -12,9 +12,9 @@ render = (opts) ->
   jade.compile(
     fs.readFileSync(filename),
     { filename: filename }
-  )(_.extend require('./fixture/content.json'), { sd: {}, asset: (->), crop: -> }, opts)
+  )(_.extend require('./fixture/content.json'), { sd: {}, asset: (->), crop: (->), path: '/gallery-partnerships' }, opts)
 
-describe 'Gallery partnerships templates', ->
+describe 'Partnerships templates', ->
 
   it 'shows the h1 header', ->
     $(render()).find('h1').html().should.equal 'Artsy for Galleries'
@@ -26,7 +26,7 @@ describe 'Gallery partnerships templates', ->
     ]
 
   it 'shows the CTA in nav', ->
-    $(render()).find('.gallery-partnerships-section-nav a:last-child')
+    $(render()).find('.partnerships-section-nav a:last-child')
       .attr('href').should.containEql '/apply'
 
   xit 'shows the CTA in the apply section', ->
