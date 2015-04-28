@@ -27,6 +27,9 @@ module.exports = class Fair extends Backbone.Model
     else
      "/#{@get('organizer')?.profile_id}"
 
+  fairOrgHref: ->
+    "/#{@get('organizer')?.profile_id}/#{@formatYear()}"
+
   hasImage: (version = 'wide') ->
     version in (@get('image_versions') || [])
 
