@@ -1,6 +1,6 @@
 header.auction-header
   .auction-header-primary
-    if auction.get('image_versions').length
+    if auction.get('image_versions') && auction.get('image_versions').length
       //- 9:4 ratio
       .auction-cover-image.responsive-image-container: img(
         src= auction.cropUrlFor({ width: 1440, height: 640 })

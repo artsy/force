@@ -1,4 +1,4 @@
-if auction.get('image_versions').length
+if auction.get('image_versions') && auction.get('image_versions').length
   // 3:1 ratio
   .auction-preview-cover-image.responsive-image-container: img(
     src= auction.cropUrlFor({ width: 1500, height: 500 })
