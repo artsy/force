@@ -1,11 +1,11 @@
-.gallery-partnerships-hero-unit-header
+.partnerships-hero-unit-header
   h1!= hero.heading
-  .gallery-partnerships-contact Call us: +1 800 589 1350
+  .partnerships-contact Call us: +1 800 589 1350
 
-.gallery-partnerships-hero-unit-content
-  ul.gallery-partnerships-hero-unit-images
+.partnerships-hero-unit-content
+  ul.partnerships-hero-unit-images
     for image, i in hero.images
-      li.gallery-partnerships-hero-unit-image(
+      li.partnerships-hero-unit-image(
         style="background-image: url(#{crop(image.src, { width: 1120, height: 435, quality: 90 })})"
         class=(i === 0 ? 'is-active' : undefined)
       )

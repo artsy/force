@@ -56,7 +56,7 @@ getContentPath = (url) ->
   getJSON (err, data) ->
     return next err if err
     res.locals.sd.DATA = data
-    res.render 'edit'
+    res.render 'edit', path: @req.url
 
 @upload = (req, res, next) ->
   buffer = new Buffer JSON.stringify req.body
