@@ -132,11 +132,12 @@ mixin support(section)
             img( src=liaison.src )
             .support-liaison-name= liaison.name
             .support-liaison-location= liaison.location
+            .support-liaison-position= liaison.position
           .current
             img( src=liaison.src )
             .support-liaison-name= liaison.name
             .support-liaison-location= liaison.location
-            .support-liaison-position= liason.position
+            .support-liaison-position= liaison.position
     if section.quotes
       .support-quotes
         - q = section.quotes[0]
