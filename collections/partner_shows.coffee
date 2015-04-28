@@ -1,7 +1,9 @@
+Q = require 'q'
 _ = require 'underscore'
 sd = require('sharify').data
 moment = require 'moment'
 PartnerShow = require '../models/partner_show.coffee'
+
 Backbone = require 'backbone'
 { API_URL } = require('sharify').data
 { Fetch } = require 'artsy-backbone-mixins'
@@ -46,3 +48,11 @@ module.exports = class PartnerShows extends Backbone.Collection
     # Finally, we'll take a past show ordered by the default
     featurables = @past().filter (show) -> show.get('displayable')
     return featurables[0] if featurables.length
+
+  getShowsRelatedImages: ->
+    Q.allSettled(
+      @map (show) ->
+        show.related().installShots.fetch data: size: 5
+        show.related().artworks.fetch data: size: 5
+    ).then =>
+      @trigger 'shows:fetchedRelatedImages'

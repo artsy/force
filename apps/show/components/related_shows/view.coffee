@@ -5,8 +5,6 @@ Backbone = require 'backbone'
 { resize } = require '../../../../components/resizer/index.coffee'
 PartnerShow = require '../../../../models/partner_show.coffee'
 PartnerShows = require '../../../../collections/partner_shows.coffee'
-
-RelatedImages = require './related_images.coffee'
 template = -> require('./template.jade') arguments...
 
 SHOW_INFO_WIDTH = 320
@@ -15,24 +13,30 @@ module.exports = class RelatedShowsView extends Backbone.View
 
   className: 'show-related-shows-container'
 
-  initialize: ( options ) ->
-    @title = options.title
-    @shows = options.collection
-    @listenTo @shows, 'sync', @getShowsImages
-    return this
-
-  getShowsImages: ->
-    @shows.models.map (show) =>
-      show.related().relatedImages = new RelatedImages [],
-        show: show
-        containerWidth: $('.main-layout-container').width()
-        showInfoWidth: SHOW_INFO_WIDTH
-      @listenTo show.related().relatedImages, 'reset', @render
-      show.related().relatedImages.fetch()
+  initialize: ({ @title }) ->
+    @listenTo @collection, 'sync', @render
+    @listenTo @collection, 'shows:fetchedRelatedImages', @filterRelatedImages
+    @listenTo @collection, 'reset', @render
 
   render: ->
     @$el.html template
       title: @title
-      shows: @shows.models
-    console.log @$el.html()
+      shows: @collection.models
     this
+
+  filterRelatedImages: ->
+    relatedImagesCollection = @collection.map (show) =>
+      show.related().relatedImages = new Backbone.Collection
+      concatenatedArtworks = show.related().installShots.models.concat show.related().artworks.invoke('defaultImage')
+      show.related().relatedImages.add @fillRowFilter(concatenatedArtworks)
+      show
+    @collection.reset relatedImagesCollection
+
+  fillRowFilter: (images) ->
+    containerWidth = $('.show-related-shows-title').width() - SHOW_INFO_WIDTH
+    totalWidth = 0
+    filteredImages = images.filter (image) ->
+      width = image.get('aspect_ratio') * 270
+      return false if width > containerWidth or !image.get('aspect_ratio')?
+      totalWidth += width
+      totalWidth < containerWidth

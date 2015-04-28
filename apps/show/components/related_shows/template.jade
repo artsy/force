@@ -28,11 +28,11 @@ for show in shows
 
     ul.show-related-show-images
       if show.related().relatedImages
-        for image in show.related().relatedImages
+        for image in show.related().relatedImages.models
           li.show-related-show-image-container
             a.hoverable-image-link( href=show.href() )
               img.show-related-show-image(
-                src= image
+                src= image.resizeUrlFor({ height: 270 })
                 alt= show.get('name')
                 onerror='this.style.display="none";'
               )

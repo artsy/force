@@ -46,29 +46,23 @@ module.exports.init = ->
   city = _.findWhere(Cities, name: show.formatCity())
 
   if show.isFairBooth()
-    # how to get booths from a fair?
     relatedFairBooths = new PartnerShows
     relatedFairBoothsView = new RelatedShowsView
       collection: relatedFairBooths
       title: "More Booths from #{show.related().fair.get('name')}"
-    $('.related-shows').html relatedFairBoothsView.render().$el
+      el: $('.related-shows')
     relatedFairBooths.fetch
       data:
-        # fair: show.related().fair.get('id')
+        fair_id: show.related().fair.get('_id')
         size: 4
         displayable: true
-        at_a_fair: true
+      success: -> relatedFairBooths.getShowsRelatedImages()
   else
     relatedShows = new PartnerShows
     relatedShowsView = new RelatedShowsView
       collection: relatedShows
       title: "Current Shows in #{show.formatCity()}"
-    $('.related-shows').html relatedShowsView.$el
-    featuredShows = new PartnerShows
-    featuredShowsView = new RelatedShowsView
-      collection: featuredShows
-      title: "Featured Shows"
-    $('.featured-shows').html featuredShowsView.$el
+      el: $('.related-shows')
     relatedShows.fetch
       data:
         near: city.coords.toString()
@@ -77,6 +71,12 @@ module.exports.init = ->
         displayable: true
         at_a_fair: false
         status: 'running'
+      success: -> relatedShows.getShowsRelatedImages()
+    featuredShows = new PartnerShows
+    featuredShowsView = new RelatedShowsView
+      collection: featuredShows
+      title: "Featured Shows"
+      el: $('.featured-shows')
     featuredShows.fetch
       data:
         featured: true
@@ -84,5 +84,6 @@ module.exports.init = ->
         size: 4
         displayable: true
         status: 'running'
+      success: -> featuredShows.getShowsRelatedImages()
 
   new ShareView el: $('.js-show-share')

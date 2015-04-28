@@ -20,14 +20,11 @@ module.exports =
     installShots = new InstallShots
     installShots.url = "#{API_URL}/api/v1/partner_show/#{@id}/images"
 
-
     partner = new Partner @get('partner')
 
     fair = new Fair @get('fair')
 
     profile = new Profile id: partner.get('default_profile_id')
-
-
 
     @__related__ =
       artworks: artworks
