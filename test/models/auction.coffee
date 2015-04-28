@@ -50,3 +50,24 @@ describe 'Auction', ->
 
     it 'corrects the state', ->
       @auction.get('auction_state').should.equal 'closed'
+
+  describe '#formatDateRange', ->
+    beforeEach ->
+      @clock = sinon.useFakeTimers()
+      @auction = new Auction
+        event_start_at: moment(year: 2000, month: 0, day: 1, hour: 0, minute: 1).format()
+        event_end_at: moment(year: 2000, month: 0, day: 1, hour: 10, minute: 1).format()
+
+    afterEach ->
+      @clock.restore()
+
+    describe 'start and end happen on the same day', ->
+      it 'formats the date range', ->
+        @auction.formatDateRange('event_start_at', 'event_end_at')
+          .should.equal 'Saturday, Jan. 1st 12:01am–10:01am'
+
+    describe 'start and end happen on different days', ->
+      it 'formats the date range', ->
+        @auction.set 'event_end_at', moment(year: 2000, month: 0, day: 3, hour: 10, minute: 1).format()
+        @auction.formatDateRange('event_start_at', 'event_end_at')
+          .should.equal 'Saturday, Jan. 1st 12:01am–Monday, Jan. 3rd 10:01am'
