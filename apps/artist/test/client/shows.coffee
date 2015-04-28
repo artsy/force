@@ -27,7 +27,7 @@ describe 'ShowsView', ->
     @view.render()
 
   afterEach ->
-    _.defer.restore()
+    _.defer.restorstube()
     Backbone.sync.restore()
     @view.remove()
 

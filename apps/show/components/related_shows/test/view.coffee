@@ -1,13 +1,12 @@
 _ = require 'underscore'
-sinon = require 'sinon'
 benv = require 'benv'
+sinon = require 'sinon'
 Backbone = require 'backbone'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
+PartnerShow = require '../../../../../models/partner_show.coffee'
 PartnerShows = require '../../../../../collections/partner_shows.coffee'
-InstallShot = require '../../../../../models/install_shot.coffee'
 RelatedShowsView = benv.requireWithJadeify resolve(__dirname, '../view.coffee'), ['template']
-
 
 describe 'RelatedShowsView', ->
 
@@ -15,36 +14,40 @@ describe 'RelatedShowsView', ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'
       Backbone.$ = $
+      @relatedShows = new PartnerShows
       done()
 
   after ->
-      benv.teardown()
+    benv.teardown()
 
-  beforeEach (done) ->
+  beforeEach ->
     sinon.stub Backbone, 'sync'
-    @relatedShows = new PartnerShows [
-      fabricate 'show',
-        name: 'Test Show'
-        start_at: '2013-07-12T04:00:00+00:00'
-        end_at: '2013-08-23T04:00:00+00:00'
-        partner: fabricate 'partner', name: 'Test Gallery'
-    ]
-    @installShot = new InstallShot fabricate 'show_install_shot'
-    @title = 'Current Shows in Test City'
-    @view = new RelatedShowsView collection: @relatedShows, title: @title
-    done()
+    @view = new RelatedShowsView
+      collection: @relatedShows
+      title: 'Current Shows in Test City'
+      el: $("<div></div>")
+    @relatedShows.fetch()
 
   afterEach ->
     Backbone.sync.restore()
+    @view.remove()
 
   describe '#render', ->
-    it 'has the correct title', ->
-      @view.render
+
+    it 'displays the correct title', ->
+      Backbone.sync.args[0][2].success [fabricate 'show']
+      console.log 'HTMLLLLLLL', @view.$el.html()
       @view.$('.show-related-shows-title').html().should.containEql 'Current Shows in Test City'
 
     it 'displays the information from the show', ->
-      Backbone.sync.args[0][2].success @installShot
-      @view.render
+      relatedShow = new PartnerShow [
+        fabricate 'show',
+          name: 'Test Show'
+          start_at: '2013-07-12T04:00:00+00:00'
+          end_at: '2013-08-23T04:00:00+00:00'
+          partner: fabricate 'partner', name: 'Test Gallery'
+      ]
+      Backbone.sync.args[0][2].success [relatedShow]
       @view.$('.show-related-show-title').html().should.containEql 'Test Show'
       @view.$('.show-related-show-partner').html().should.containEql 'Test Gallery'
       @view.$('.show-related-show-running-dates').html().should.containEql 'July 12 – August 23'

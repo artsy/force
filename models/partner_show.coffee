@@ -265,17 +265,14 @@ module.exports = class PartnerShow extends Backbone.Model
 
   fetchRelatedImages: (show) ->
     dfd = Q.defer()
-    artworks = new Artworks
     Q.allSettled([
       @related().installShots.fetch()
-      artworks.fetch
-        data: { size: 5, published: true }
-        url: "#{@url()}/artworks"
-        cache: true
+      @related().artworks.fetch
+        data: size: 5
     ]).then( =>
       relatedImages = new Backbone.Collection
       relatedImages.push @related().installShots.models
-      artworkImages = artworks.map (artwork) =>
+      artworkImages = @related().artworks.map (artwork) =>
         artwork.defaultImage()
       relatedImages.push artworkImages
       @related().relatedImages = relatedImages

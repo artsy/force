@@ -3,7 +3,10 @@ _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
 { resize } = require '../../../../components/resizer/index.coffee'
+PartnerShow = require '../../../../models/partner_show.coffee'
 PartnerShows = require '../../../../collections/partner_shows.coffee'
+
+RelatedImages = require './related_images.coffee'
 template = -> require('./template.jade') arguments...
 
 SHOW_INFO_WIDTH = 320
@@ -16,30 +19,20 @@ module.exports = class RelatedShowsView extends Backbone.View
     @title = options.title
     @shows = options.collection
     @listenTo @shows, 'sync', @getShowsImages
+    return this
 
   getShowsImages: ->
-    Q.allSettled(@shows.models.map (show) =>
-       show.fetchRelatedImages()
-    ).then( =>
-      window.testShow = @shows.models[1]
-      @shows.models.map (show) =>
-        show.related().relatedImages = @fillRowFilter show.related().relatedImages
-      @render()
-    )
+    @shows.models.map (show) =>
+      show.related().relatedImages = new RelatedImages [],
+        show: show
+        containerWidth: $('.main-layout-container').width()
+        showInfoWidth: SHOW_INFO_WIDTH
+      @listenTo show.related().relatedImages, 'reset', @render
+      show.related().relatedImages.fetch()
 
   render: ->
     @$el.html template
       title: @title
       shows: @shows.models
+    console.log @$el.html()
     this
-
-  fillRowFilter: (images) ->
-    containerWidth = $('.main-layout-container').width() - SHOW_INFO_WIDTH
-    totalWidth = 0
-    filteredImages = images.filter (image) ->
-      width = image.get('aspect_ratio') * SHOW_INFO_WIDTH
-      return false if width > containerWidth or !image.get('aspect_ratio')?
-      totalWidth += width
-      totalWidth < containerWidth
-    resizedImages = filteredImages.map (image) ->
-      image.resizeUrlFor({ height: SHOW_INFO_WIDTH })

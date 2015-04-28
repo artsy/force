@@ -63,12 +63,12 @@ module.exports.init = ->
     relatedShowsView = new RelatedShowsView
       collection: relatedShows
       title: "Current Shows in #{show.formatCity()}"
-    $('.related-shows').html relatedShowsView.render().$el
+    $('.related-shows').html relatedShowsView.$el
     featuredShows = new PartnerShows
     featuredShowsView = new RelatedShowsView
       collection: featuredShows
       title: "Featured Shows"
-    $('.featured-shows').html featuredShowsView.render().$el
+    $('.featured-shows').html featuredShowsView.$el
     relatedShows.fetch
       data:
         near: city.coords.toString()

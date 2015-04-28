@@ -33,7 +33,6 @@ module.exports =
       artworks: artworks
       artists: artists
       installShots: installShots
-      relatedImages: new Backbone.Collection
       partner: partner
       fair: fair
       profile: profile
