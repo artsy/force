@@ -11,12 +11,10 @@ SaveButton = require '../../../components/save_button/view.coffee'
 RelatedArticlesView = require '../../../components/related_articles/view.coffee'
 analytics = require '../../../lib/analytics.coffee'
 { acquireArtwork } = require '../../../components/acquire/view.coffee'
-FeatureNavigationView = require './feature_navigation.coffee'
 BelowTheFoldView = require './below_the_fold.coffee'
 { trackArtworkImpressions } = require '../../../components/analytics/impression_tracking.coffee'
 MonocleView = require './monocles.coffee'
 AnnyangView = require './annyang.coffee'
-BlurbView = require '../../../components/blurb/view.coffee'
 Sale = require '../../../models/sale.coffee'
 ZigZagBanner = require '../../../components/zig_zag_banner/index.coffee'
 Auction = require './mixins/auction.coffee'
@@ -27,6 +25,7 @@ VideoView = require './video.coffee'
 ImagesView = require '../components/images/view.coffee'
 PartnerLocations = require '../components/partner_locations/index.coffee'
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
+RelatedNavigationView = require '../components/related_navigation/view.coffee'
 detailTemplate = -> require('../templates/_detail.jade') arguments...
 auctionPlaceholderTemplate = -> require('../templates/auction_placeholder.jade') arguments...
 
@@ -38,11 +37,8 @@ module.exports = class ArtworkView extends Backbone.View
     'click .circle-icon-button-share': 'openShare'
     'change .aes-radio-button': 'selectEdition'
     'click .artwork-buy-button': 'buy'
-    'click .artwork-more-info .avant-garde-header-small': 'toggleMoreInfo'
 
-  initialize: (options) ->
-    { @artwork, @artist } = options
-
+  initialize: ({ @artwork, @artist }) ->
     @checkQueryStringForAuction()
     @setupEmbeddedInquiryForm()
     @setupCurrentUser()
@@ -55,61 +51,82 @@ module.exports = class ArtworkView extends Backbone.View
     @setupPartnerLocations()
     @setupAnnyang()
     @setupMonocleView()
+    @preventRightClick()
+
+    @artwork.fetch() # Re-fetch incase of caching
+
+    relatedContentFetches = [
+      @artwork.related().sales.fetch()
+      @artwork.related().features.fetch()
+      @artwork.related().fairs.fetch()
+      @artwork.related().shows.fetch()
+    ]
+
+    @listenTo @artwork, 'change:sale_message', @renderDetail
+    @listenTo @artwork, 'change:ecommerce', @renderDetail
+    @listenTo @artwork.related().sales, 'sync', @handleSales
+    @listenTo @artwork.related().fairs, 'sync', @handleFairs
+    @listenTo @artwork.related().shows, 'sync', @handleShows
+
+    $.when.apply(null, relatedContentFetches).done =>
+      relatedCollections = _.values _.pick(@artwork.related(), ['sales', 'features', 'fairs', 'shows'])
+      isAnythingRelated = _.any relatedCollections, (xs) -> xs.length
+      unless isAnythingRelated
+        @belowTheFoldView.setupLayeredSearch()
+
+    relatedNavigationView = new RelatedNavigationView model: @artwork
+    @$('.js-artwork-related-navigation').html relatedNavigationView.render().$el
 
     new ImagesView
       el: @$('.js-artwork-images')
       model: @artwork
       collection: @artwork.related().images
 
-    # Handle all related content
-    @setupRelatedLayers()
-    @on 'related:features', (feature) ->
-      @setupFeatureNavigation model: feature, kind: 'feature'
-    @on 'related:fairs', (fair) ->
-      @belowTheFoldView.setupFair fair
-      @setupFeatureNavigation model: fair, kind: 'fair'
-      @deltaTrackPageView fair
-    @on 'related:sales', (sale) ->
-      @sale = new Sale sale.attributes
-      @$('#artist-artworks-section').remove()
-      @belowTheFoldView.setupSale
-        sale: @sale
-        saved: @saved
-        currentUser: @currentUser
-      @setupAuction @sale if @sale.isAuction()
-    @on 'related:shows', (show) ->
-      @$('#artist-artworks-section').remove()
-      new RelatedShowView
-        el: @$('#artwork-related-show-section')
-        model: show
-        artwork: @artwork
-        currentUser: @currentUser
-    @on 'related:none', ->
-      @belowTheFoldView.setupLayeredSearch()
-    @on 'related:not_auction', ->
+  handleFairs: (fairs) ->
+    return unless fairs.length
+
+    fair = fairs.first()
+
+    @belowTheFoldView.setupFair fair
+
+    $scripts = $('#scripts')
+    analytics.delta 'fair_artist_view', { fair: fair.get('_id'), id: @artist.get('_id') }, $scripts
+    analytics.delta 'fair_partner_view', { fair: fair.get('_id'), id: @artwork.get('partner')._id }, $scripts
+
+  handleSales: (sales) ->
+    return unless sales.length
+
+    unless sales.hasAuctions()
       @setupZigZag()
 
-    # Re-fetch and update detail
-    @artwork.on "change:sale_message", @renderDetail, @
-    @artwork.on "change:ecommerce", @renderDetail, @
-    @artwork.fetch()
+    @sale = sales.first()
+    @$('#artist-artworks-section').remove()
+    @belowTheFoldView.setupSale
+      sale: @sale
+      saved: @saved
+      currentUser: @currentUser
 
-    @preventRightClick()
+    if @sale.isAuction()
+      @setupAuction @sale
 
-  toggleMoreInfo: (e) ->
-    $target = $(e.target)
-    $target.find('.arrow-toggle').toggleClass('active')
-    $blurb = $target.next()
-    $blurb.toggleClass 'is-hidden'
+  handleShows: (shows) ->
+    return unless shows.length
+
+    @$('#artist-artworks-section').remove()
+    new RelatedShowView
+      el: @$('#artwork-related-show-section')
+      model: shows.first()
+      artwork: @artwork
+      currentUser: @currentUser
 
   setupPartnerLocations: ->
     new PartnerLocations $el: @$el, artwork: @artwork
 
   preventRightClick: ->
     return if @currentUser?.isAdmin()
-    (@$artworkImage ?= @$('#the-artwork-image'))
-      .on 'contextmenu', (e) ->
-        e.preventDefault()
+
+    @$('#the-artwork-image').on 'contextmenu', (e) ->
+      e.preventDefault()
 
   checkQueryStringForAuction: ->
     return if @artwork.get('sold')
@@ -140,31 +157,6 @@ module.exports = class ArtworkView extends Backbone.View
         name: 'inquiry'
         message: 'Interested in this work?<br>Contact the gallery here'
         $target: @$inquiryButton
-
-  deltaTrackPageView: (fair) ->
-    el = $('#scripts')
-    analytics.delta 'fair_artist_view', { fair: fair.get('_id'), id: @artist.get('_id') }, el
-    analytics.delta 'fair_partner_view', { fair: fair.get('_id'), id: @artwork.get('partner')._id }, el
-
-  setupRelatedLayers: ->
-    $.when.apply(null, @artwork.fetchRelatedCollections()).then =>
-      # Find the first related collection that has any results
-      relatedCollections = _.filter @artwork.relatedCollections, (xs) -> xs.length
-      if relatedCollections.length
-        for relatedCollection in relatedCollections
-          # Trigger an event and pass on the first result
-          @trigger "related:#{relatedCollection.kind}", relatedCollection.first()
-      else
-        @trigger 'related:none'
-
-      unless @hasAnyAuctions relatedCollections
-        @trigger 'related:not_auction'
-
-  hasAnyAuctions: (relatedCollections) ->
-    return false unless relatedCollections?.length
-    saleCollection = _.find(relatedCollections, (xs) -> xs.kind is 'sales')
-    return false unless saleCollection?.length
-    _.some(saleCollection.pluck 'is_auction')
 
   setupCurrentUser: ->
     @currentUser = CurrentUser.orNull()
@@ -230,13 +222,6 @@ module.exports = class ArtworkView extends Backbone.View
           collection: @artwork.relatedArticles
           numToShow: 2
         @$('#artwork-artist-related-extended').append subView.render().$el
-
-  setupFeatureNavigation: (options) ->
-    new FeatureNavigationView
-      model: options.model
-      kind: options.kind
-      artwork: @artwork
-      el: @$('#artwork-feature-navigation')
 
   setupBelowTheFold: ->
     @belowTheFoldView = new BelowTheFoldView

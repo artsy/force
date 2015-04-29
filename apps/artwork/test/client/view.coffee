@@ -8,8 +8,6 @@ sinon = require 'sinon'
 { stubChildClasses } = require '../../../../test/helpers/stubs'
 Artist = require '../../../../models/artist'
 Artwork = require '../../../../models/artwork'
-Fair = require '../../../../models/fair'
-Sale = require '../../../../models/sale'
 CurrentUser = require '../../../../models/current_user'
 
 describe 'ArtworkView', ->
@@ -51,6 +49,7 @@ describe 'ArtworkView', ->
       @ArtworkView.__set__ 'analytics', { abTest: sinon.stub(), delta: sinon.stub(), track: { click: sinon.stub() } }
       @ArtworkView.__set__ 'ShareModal', (@shareViewStub = sinon.stub())
       @ArtworkView.__set__ 'acquireArtwork', (@acquireArtworkStub = sinon.stub())
+      @ArtworkView.__set__ 'RelatedNavigationView', Backbone.View
 
       stubChildClasses mod, @, ['BlurbView', 'VideoView'], []
 
@@ -113,71 +112,6 @@ describe 'ArtworkView', ->
 
       it 'has a following collection if the user is logged in', ->
         _.isUndefined(@view.following).should.not.be.ok
-
-    describe '#setupRelatedLayers', ->
-      describe 'has no relations', ->
-        beforeEach ->
-          @artwork.fetchRelatedCollections = sinon.stub()
-          @view.belowTheFoldView.setupLayeredSearch = sinon.stub()
-
-        it 'sets up layered search by default', ->
-          @view.setupRelatedLayers()
-          @view.belowTheFoldView.setupLayeredSearch.called.should.be.ok
-
-      describe 'has relations', ->
-        beforeEach ->
-          @view.belowTheFoldView.setupFair = sinon.stub()
-          @view.belowTheFoldView.setupSale = sinon.stub()
-          @view.belowTheFoldView.setupLayeredSearch = sinon.stub()
-          @view.setupFeatureNavigation = sinon.stub()
-          @artwork.fetchRelatedCollections = sinon.stub()
-          @view.deltaTrackPageView = sinon.stub()
-
-          fairs = new Backbone.Collection [new Fair(id: 'i am a fair')]
-          fairs.kind = 'fairs'
-          sales = new Backbone.Collection [new Sale(id: 'i am a sale')]
-          sales.kind = 'sales'
-
-          @artwork.relatedCollections = [sales, fairs]
-
-        it 'sets up for the appropriate relations', ->
-          @view.setupRelatedLayers()
-          @view.belowTheFoldView.setupFair.called.should.be.ok
-          @view.belowTheFoldView.setupFair.args[0][0].get('id').should.equal 'i am a fair'
-          @view.setupFeatureNavigation.called.should.be.ok
-          @view.setupFeatureNavigation.args[0][0].model.get('id').should.equal 'i am a fair'
-          @view.setupFeatureNavigation.args[0][0].kind.should.equal 'fair'
-          @view.belowTheFoldView.setupSale.called.should.be.ok
-          @view.belowTheFoldView.setupSale.args[0][0].sale.get('id').should.equal 'i am a sale'
-          @view.belowTheFoldView.setupSale.args[0][0].saved.constructor.name.should.equal 'ArtworkCollection'
-          @view.deltaTrackPageView.called.should.be.ok
-          @view.deltaTrackPageView.args[0][0].get('id').should.equal 'i am a fair'
-
-        describe 'zig zag', ->
-          beforeEach ->
-            @sales = new Backbone.Collection [new Sale id: 'i am a sale']
-            @sales.kind = 'sales'
-            @artwork.relatedCollections = [@sales]
-            @view.setupZigZag = sinon.stub()
-            @view.setupAuctionDetailView = sinon.stub()
-
-          describe '#hasAnyAuctions', ->
-            it 'returns true or false if there is auction or not', ->
-              @view.hasAnyAuctions(@artwork.relatedCollections).should.be.false
-              @sales.first().set 'is_auction', true
-              @view.hasAnyAuctions(@artwork.relatedCollections).should.be.true
-              @sales.first().set 'is_auction', false
-              @view.hasAnyAuctions(@artwork.relatedCollections).should.be.false
-
-          it 'displays if there is no auction', ->
-            @sales.first().set 'is_auction', false
-            @view.setupRelatedLayers()
-            @view.setupZigZag.called.should.be.true
-
-          it 'does not display if there is an auction', ->
-            @sales.first().set 'is_auction', true
-            @view.setupRelatedLayers()
-            @view.setupZigZag.called.should.be.false
 
     describe '#setupCurrentUser', ->
       it 'initializes the current user, saved artwork collection, and following collection', ->
