@@ -51,7 +51,7 @@ describe 'ArtworkView', ->
       @ArtworkView.__set__ 'acquireArtwork', (@acquireArtworkStub = sinon.stub())
       @ArtworkView.__set__ 'RelatedNavigationView', Backbone.View
 
-      stubChildClasses mod, @, ['BlurbView', 'VideoView'], []
+      stubChildClasses mod, @, ['VideoView'], []
 
       @artworkColumnsView = { appendArtworks: sinon.stub() }
       @ArtworkColumnsView = sinon.stub()
