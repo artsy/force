@@ -7,7 +7,10 @@ FilterRouter = require '../index.coffee'
 describe 'FilterRouter', ->
 
   beforeEach ->
-    @router = new FilterRouter params: new Backbone.Model
+    @router = new FilterRouter
+      params: new Backbone.Model
+      stuckParam: 'stuck'
+      urlRoot: '/artworks'
 
   afterEach ->
     benv.teardown()
@@ -22,6 +25,11 @@ describe 'FilterRouter', ->
     it 'does not include page in the url params', ->
       @router.navigate = sinon.stub()
       @router.params.set { page: '10', foo: 'bar' }
+      @router.navigate.args[0][0].should.containEql '/artworks?foo=bar'
+
+    it 'does not include stuckParam in the url params', ->
+      @router.navigate = sinon.stub()
+      @router.params.set { page: '10', foo: 'bar', stuck: 'onyou' }
       @router.navigate.args[0][0].should.containEql '/artworks?foo=bar'
 
     it 'does not route if no params in the url', ->
