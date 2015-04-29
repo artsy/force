@@ -7,7 +7,6 @@ Artworks = require '../../../collections/artworks.coffee'
 { fabricate } = require 'antigravity'
 { resolve } = require 'path'
 
-
 describe 'ArtworkTableView', ->
 
   before (done) ->
@@ -25,7 +24,6 @@ describe 'ArtworkTableView', ->
       @ArtworkRowView = benv.requireWithJadeify resolve(
           __dirname, '../client/artwork_row_view.coffee'
         ), ['artworkRow']
-
 
       @ArtworkTableView.__set__ 'ArtworkRowView', @ArtworkRowView
 
@@ -62,13 +60,13 @@ describe 'ArtworkRowView', ->
       benv.expose
         $: benv.require 'jquery'
         jQuery: benv.require 'jquery'
+        sd: {}
       Backbone.$ = $
       done()
 
       @ArtworkRowView = benv.requireWithJadeify resolve(
           __dirname, '../client/artwork_row_view.coffee'
         ), ['artworkRow']
-      @ArtworkRowView.__set__ 'sd', { INQUIRY_FLOW : 'original_flow' }
 
   after ->
     benv.teardown()
@@ -82,7 +80,6 @@ describe 'ArtworkRowView', ->
       $container: $('body')
 
   describe '#render', ->
-
     it 'should correctly render an artwork', ->
       @view.$el.find('.artwork-item-title').html().should.equal @artwork.titleAndYear()
       @view.$el.find('.artwork-table__cell--inquiry').html().should.containEql 'More Info'
