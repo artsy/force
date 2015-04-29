@@ -4,23 +4,24 @@ _s = require 'underscore.string'
 
 module.exports = class HeadlineView extends Backbone.View
 
-  initialize: ({@collection, @params, @facets}) ->
+  initialize: ({@collection, @params, @facets, @stuckFacet}) ->
     @listenTo @collection, "initial:fetch", @setHeadline, @
 
     for facet in @facets
       @listenTo @params, "change:#{facet}", @setHeadline, @
+      @listenTo @params, "change:#{facet}", @setTitle, @
 
   setHeadline: ->
-    if headingText = @paramsToHeading()
-      @$el.text(headingText).show()
-
-      document.title = _.compact([
-        _s.capitalize(headingText)
-        "Artsy"
-      ]).join(' | ')
-
+    if @anyFacetsSelected()
+      @$el.text(@paramsToHeading()).show()
     else
       @$el.text("").hide()
+
+  setTitle: ->
+    document.title = _.compact([
+      _s.capitalize @paramsToHeading()
+      "Artsy"
+    ]).join(' | ')
 
   facetName: (facet)->
     @collection.counts?[facet]?[@params.get(facet)]?.name
@@ -28,10 +29,16 @@ module.exports = class HeadlineView extends Backbone.View
   anyFacetsSelected: ->
     _.any @facets, (facet) => @params.has facet
 
+  displayMedium: ->
+    if @stuckFacet
+      @stuckFacet.get('name')
+    else
+      @facetName('medium') || 'Artworks'
+
   paramsToHeading: ->
-    if @anyFacetsSelected()
+    if @anyFacetsSelected() || @stuckFacet
       _.compact([
         @facetName('dimension_range'),
-        (@facetName('medium') || 'Artworks'),
+        (@displayMedium()),
         @facetName('price_range')
       ]).join(' ')

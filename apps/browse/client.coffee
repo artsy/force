@@ -5,6 +5,7 @@ qs = require 'querystring'
 FilterArtworks = require '../../collections/filter_artworks.coffee'
 FilterView = require '../../components/filter2/view.coffee'
 FilterRouter = require '../../components/filter2/router/index.coffee'
+{ FILTER_ROOT } = require('sharify').data
 
 module.exports.init = ->
   queryParams = qs.parse(location.search.replace(/^\?/, ''))
@@ -18,7 +19,7 @@ module.exports.init = ->
 
   router = new FilterRouter
     params: params
-    urlRoot: 'browse'
+    urlRoot: FILTER_ROOT
 
   collection.fetch
     data: params.toJSON()
