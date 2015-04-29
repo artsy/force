@@ -3,19 +3,13 @@ benv = require 'benv'
 rewire = require 'rewire'
 sinon = require 'sinon'
 Backbone = require 'backbone'
-{ resolve } = require 'path'
 
 describe 'PartnershipsView', ->
   before (done) ->
-    benv.setup =>
-      benv.expose
-        $: benv.require 'jquery'
-        crop: sinon.stub()
+    benv.setup ->
+      benv.expose $: benv.require 'jquery'
       Backbone.$ = $
-      $.fn.waypoint = sinon.stub()
-      data = _.extend require('../fixture/content.json'), sd: {}, asset: (->)
-      benv.render resolve(__dirname, '../../templates/index.jade'), data, =>
-        done()
+      done()
 
   after ->
     benv.teardown()

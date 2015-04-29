@@ -8,7 +8,7 @@ mixin tab(options, state)
 
 nav.auction-artworks-display-nav.garamond-tablist
   span.garamond-tab-label Sort by:
-  +tab({ mode: 'grid', sort: 'default', label: 'Grid'}, state)
+  +tab({ mode: 'grid', sort: 'default', label: 'Default' }, state)
   +tab({ mode: 'list', sort: 'name_asc', label: 'Artists A–Z' }, state )
   unless auction.isPreview()
     +tab({ mode: 'list', sort: 'bids_desc', label: 'Most Bids' }, state )

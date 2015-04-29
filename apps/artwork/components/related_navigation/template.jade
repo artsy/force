@@ -1,0 +1,29 @@
+//- Auction
+if feature && sale && sale.get('is_auction')
+  a( href= feature.href() )
+    p
+      | Work offered by
+      br
+      = feature.get('name')
+    .avant-garde-jump-link
+      | Go to auction
+
+//- Sale
+if feature && sale && !sale.get('is_auction')
+  a( href= feature.href() )
+    p
+      | Work offered by
+      br
+      = feature.get('name')
+    .avant-garde-jump-link
+      | Go to sale
+
+//- Fair
+if fair && fair.get('has_full_feature') && fair.get('published')
+  a( href= fair.href() )
+    p
+      | Work offered by
+      br
+      = fair.get('name')
+    .avant-garde-jump-link
+      | Go to fair
