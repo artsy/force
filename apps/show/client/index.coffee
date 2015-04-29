@@ -57,33 +57,33 @@ module.exports.init = ->
         size: 4
         displayable: true
       success: -> relatedFairBooths.getShowsRelatedImages()
-  else
-    relatedShows = new PartnerShows
-    relatedShowsView = new RelatedShowsView
-      collection: relatedShows
-      title: "Current Shows in #{show.formatCity()}"
-      el: $('.js-related-shows')
-    relatedShows.fetch
-      data:
-        near: city.coords.toString()
-        sort: '-start_at'
-        size: 4
-        displayable: true
-        at_a_fair: false
-        status: 'running'
-      success: -> relatedShows.getShowsRelatedImages()
-    featuredShows = new PartnerShows
-    featuredShowsView = new RelatedShowsView
-      collection: featuredShows
-      title: "Featured Shows"
-      el: $('.js-featured-shows')
-    featuredShows.fetch
-      data:
-        featured: true
-        sort: 'end_at'
-        size: 4
-        displayable: true
-        status: 'running'
-      success: -> featuredShows.getShowsRelatedImages()
+  # else
+  #   relatedShows = new PartnerShows
+  #   relatedShowsView = new RelatedShowsView
+  #     collection: relatedShows
+  #     title: "Current Shows in #{show.formatCity()}"
+  #     el: $('.js-related-shows')
+  #   relatedShows.fetch
+  #     data:
+  #       near: city.coords.toString()
+  #       sort: '-start_at'
+  #       size: 4
+  #       displayable: true
+  #       at_a_fair: false
+  #       status: 'running'
+  #     success: -> relatedShows.getShowsRelatedImages()
+  #   featuredShows = new PartnerShows
+  #   featuredShowsView = new RelatedShowsView
+  #     collection: featuredShows
+  #     title: "Featured Shows"
+  #     el: $('.js-featured-shows')
+  #   featuredShows.fetch
+  #     data:
+  #       featured: true
+  #       sort: 'end_at'
+  #       size: 4
+  #       displayable: true
+  #       status: 'running'
+  #     success: -> featuredShows.getShowsRelatedImages()
 
   new ShareView el: $('.js-show-share')
