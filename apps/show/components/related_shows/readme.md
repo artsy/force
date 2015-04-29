@@ -1,6 +1,6 @@
 # RelatedShowsView
 
-This component is used to render a series of related shows as rows in the footer of show pages. 
+This component is used to render a series of related shows as rows in the footer of show pages.
 
 ## Implementation
 
@@ -14,7 +14,7 @@ Require in the backbone view and build the view by passing it a collection of sh
 ````
 RelatedShowsView = require '../components/related_shows/view.coffee'
 
-relatedShowsView = new RelatedShowsView 
+relatedShowsView = new RelatedShowsView
   collection: relatedShows
   title: 'Current Shows in #{show.formatCity()}'
 
