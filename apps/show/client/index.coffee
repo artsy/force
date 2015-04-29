@@ -50,7 +50,7 @@ module.exports.init = ->
     relatedFairBoothsView = new RelatedShowsView
       collection: relatedFairBooths
       title: "More Booths from #{show.related().fair.get('name')}"
-      el: $('.related-shows')
+      el: $('.js-related-shows')
     relatedFairBooths.fetch
       data:
         fair_id: show.related().fair.get('_id')
@@ -62,7 +62,7 @@ module.exports.init = ->
     relatedShowsView = new RelatedShowsView
       collection: relatedShows
       title: "Current Shows in #{show.formatCity()}"
-      el: $('.related-shows')
+      el: $('.js-related-shows')
     relatedShows.fetch
       data:
         near: city.coords.toString()
@@ -76,7 +76,7 @@ module.exports.init = ->
     featuredShowsView = new RelatedShowsView
       collection: featuredShows
       title: "Featured Shows"
-      el: $('.featured-shows')
+      el: $('.js-featured-shows')
     featuredShows.fetch
       data:
         featured: true
