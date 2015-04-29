@@ -34,6 +34,12 @@ block body
     #articles-body-container
 
       //- Article lead content
+      if article.get('hero_section') && article.get('hero_section').type === 'video'
+        .articles-large-format-video
+          != embedVideo(article.get('hero_section').url)
+      if article.get('hero_section') && article.get('hero_section').type === 'image'
+        .articles-large-format-image
+         img( src=article.get('hero_section').url)
       h1.large-garamond-header= article.get('title')
       if article.strip('lead_paragraph')
         #articles-lead-paragraph
