@@ -1,7 +1,6 @@
 _ = require 'underscore'
 { STATUSES } = require('sharify').data
 Backbone = require 'backbone'
-scrollFrame = require 'scroll-frame'
 analytics = require '../../../../lib/analytics.coffee'
 mediator = require '../../../../lib/mediator.coffee'
 Sticky = require '../../../../components/sticky/index.coffee'
@@ -22,8 +21,6 @@ module.exports = class OverviewView extends Backbone.View
 
   initialize: ({ @user }) ->
     @sticky = new Sticky
-
-    scrollFrame 'a.artwork-item-image-link'
 
   setupArtworkFilter: ->
     filterRouter = ArtworkFilter.init el: @$('#artwork-section'), model: @model, mode: 'grid'
