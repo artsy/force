@@ -10,6 +10,8 @@ err = ->
 @index = (req, res, next) ->
   show = new PartnerShow id: req.params.id
 
+  @referrer = req.get 'Referrer'
+
   Q.all([
     show.fetch(cache: true)
     show.related().installShots.fetchUntilEndInParallel(cache: true, data: default: false)
@@ -23,6 +25,7 @@ err = ->
 
       res.locals.sd.SHOW = show.toJSON()
       res.locals.sd.ARTWORKS = show.related().artworks.toJSON()
+      res.locals.sd.REFERRER = @referrer
 
       res.render 'index',
         show: show
@@ -32,6 +35,7 @@ err = ->
         installShots: show.related().installShots
         artworks: show.related().artworks
         jsonLD: stringifyJSONForWeb show.toJSONLD()
+
 
   , ->
     next err()

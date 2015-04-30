@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Q = require 'q'
-{ SHOW, ARTWORKS } = require('sharify').data
+{ SHOW, ARTWORKS, REFERRER } = require('sharify').data
 { Cities, FeaturedCities } = require 'places'
 PartnerShow = require '../../../models/partner_show.coffee'
 PartnerShows = require '../../../collections/partner_shows.coffee'
@@ -9,7 +9,7 @@ initCarousel = require '../../../components/merry_go_round/index.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 attachFollowArtists = require '../components/follow_artists/index.coffee'
 attachFollowProfile = require '../components/follow_profile/index.coffee'
-RelatedShowsView = require '../components/related_shows/view.coffee'
+attachRelatedShows = require '../components/related_shows/index.coffee'
 MapModal = require '../components/map_modal/map.coffee'
 ZoomView = require '../../../components/modal/zoom.coffee'
 
@@ -43,47 +43,18 @@ module.exports.init = ->
 
   $('.map-modal-link').click -> new MapModal model: show, width: '820px'
 
-  city = _.findWhere(Cities, name: show.formatCity())
+  if REFERRER is 'http://localhost:5000/shows'
+    console.log 'is not permalink', REFERRER
+  else
+    console.log 'is permalink', REFERRER
 
   if show.isFairBooth()
-    relatedFairBooths = new PartnerShows
-    relatedFairBoothsView = new RelatedShowsView
-      collection: relatedFairBooths
-      title: "More Booths from #{show.related().fair.get('name')}"
-      el: $('.js-related-shows')
-    relatedFairBooths.fetch
-      data:
-        fair_id: show.related().fair.get('_id')
-        size: 4
-        displayable: true
-      success: -> relatedFairBooths.getShowsRelatedImages()
-  # else
-  #   relatedShows = new PartnerShows
-  #   relatedShowsView = new RelatedShowsView
-  #     collection: relatedShows
-  #     title: "Current Shows in #{show.formatCity()}"
-  #     el: $('.js-related-shows')
-  #   relatedShows.fetch
-  #     data:
-  #       near: city.coords.toString()
-  #       sort: '-start_at'
-  #       size: 4
-  #       displayable: true
-  #       at_a_fair: false
-  #       status: 'running'
-  #     success: -> relatedShows.getShowsRelatedImages()
-  #   featuredShows = new PartnerShows
-  #   featuredShowsView = new RelatedShowsView
-  #     collection: featuredShows
-  #     title: "Featured Shows"
-  #     el: $('.js-featured-shows')
-  #   featuredShows.fetch
-  #     data:
-  #       featured: true
-  #       sort: 'end_at'
-  #       size: 4
-  #       displayable: true
-  #       status: 'running'
-  #     success: -> featuredShows.getShowsRelatedImages()
+    attachRelatedShows 'fair', show
+  else
+    if REFERRER is 'http://localhost:5000/shows'
+      attachRelatedShows 'city', show
+      attachRelatedShows 'featured', show
+    else
+      attachRelatedShows 'gallery', show
 
   new ShareView el: $('.js-show-share')
