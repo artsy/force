@@ -23,6 +23,14 @@ describe 'FavoritesStatusModalView', ->
     afterEach ->
       $('.error').html ''
 
+    it 'handles API param_errors', ->
+      @errorHandlingForm.showError 'description', { responseText: "{ \"type\": \"param_error\", \"message\": \"Meow meow meow\" } " }
+      $('.error').text().should.equal 'Meow meow meow'
+
+    it 'handles generic API errors', ->
+      @errorHandlingForm.showError 'description', { responseText: "{ \"error\": \"This is a boring error message\"}" }
+      $('.error').text().should.equal 'This is a boring error message'
+
     it 'handles API errors', ->
       @errorHandlingForm.showError 'description', { responseText: "{ \"type\": \"payment_error\" }" }
       $('.error').text().should.equal 'Your payment could not be processed. Please try again or contact support.'
