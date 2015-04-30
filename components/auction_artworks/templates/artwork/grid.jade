@@ -23,7 +23,7 @@
           = saleArtwork.estimate()
 
       if displayBlurbs
-        .aga-blurb
+        .aga-blurb( style= maxBlurbHeight ? "height: #{maxBlurbHeight}" : undefined )
           != artwork.mdToHtml('blurb')
 
     .aga-bidding

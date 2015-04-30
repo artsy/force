@@ -1,4 +1,5 @@
 _ = require 'underscore'
+_s = require 'underscore.string'
 Backbone = require 'backbone'
 AuthModalView = require '../auth_modal/view.coffee'
 State = require './models/state.coffee'
@@ -49,11 +50,19 @@ module.exports = class AuctionArtworksView extends Backbone.View
   displayBlurbs: ->
     _.any _.map(@collection.pluck('blurb'), _.negate(_.isEmpty))
 
+  maxBlurbHeight: (displayBlurbs, lineHeight = 22, columnWidth = 50) ->
+    return unless displayBlurbs
+
+    Math.ceil(_.max(_.map @collection.pluck('blurb'), (blurb) ->
+      ((_s.stripTags(blurb).length / columnWidth) * lineHeight) + lineHeight
+    )) + 'px'
+
   render: ->
     @$el.html template
       state: @state
       user: @user
       auction: @model
       artworks: @artworks()
-      displayBlurbs: @displayBlurbs()
+      displayBlurbs: displayBlurbs = @displayBlurbs()
+      maxBlurbHeight: @maxBlurbHeight(displayBlurbs)
     this
