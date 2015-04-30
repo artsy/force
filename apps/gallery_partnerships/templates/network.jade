@@ -1,0 +1,20 @@
+
+- section = sections.filter(function(o){return o.slug == 'network';)[0]
+
+.gallery-partnerships-section-header
+  .grid-2-up
+    .grid-item
+      h2= section.title
+      h3= section.heading
+    .grid-item
+      p.preamble!= section.preamble
+
+.gallery-partnerships-section-content.network
+  .grid-4-up
+    each g in section.galleries
+      .grid-item
+        a.network-gallery-image.hoverable-image-link( href=g.href )
+          img( src=g.src )
+        .network-gallery-info
+          .network-gallery-name= g.name
+          .network-gallery-location= g.location

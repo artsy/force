@@ -44,9 +44,10 @@ block body
       if article.strip('lead_paragraph')
         #articles-lead-paragraph
           != article.get('lead_paragraph')
-      #articles-show-author
-        a( href="/#{article.related().author.get('profile_handle')}" )
-          = article.related().author.get('name')
+      unless (article.get('vertical_id') && article.get('author_id') === '503f86e462d56000020002cc')
+        #articles-show-author
+          a( href="/#{article.related().author.get('profile_handle')}" )
+            = article.related().author.get('name')
       #articles-show-date
         = moment(article.get('published_at')).format('MMM Do, YYYY h:mm a')
       .articles-social
