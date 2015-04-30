@@ -11,6 +11,7 @@ module.exports = class ErrorHandlingForm extends Backbone.View
     missingOrMalformed: "Your card appears to be missing or malformed. Please try another card or contact <a href='mailto:support@artsy.net'>support</a>."
     couldNotAuthorize: "Your card could not be authorized. Please try another card or contact <a href='mailto:support@artsy.net'>support</a>."
     paymentError: "Your payment could not be processed. Please try again or contact <a href='mailto:support@artsy.net'>support</a>."
+    paymentError: "Your payment could not be processed. Please try again or contact <a href='mailto:support@artsy.net'>support</a>."
     other: "There was a problem processing your order. Please try another card or contact <a href='mailto:support@artsy.net'>support</a>."
 
   isChecked: ($el) => $el.is(':checked')
@@ -37,7 +38,13 @@ module.exports = class ErrorHandlingForm extends Backbone.View
   showError: (description, response={}) =>
     if response.responseText?
       errorJson = JSON.parse response.responseText
-      message = if errorJson.type == 'payment_error' then @errors.paymentError else @errors.other
+      switch errorJson.type
+        when 'payment_error'
+          message = @errors.paymentError
+        when 'param_error'
+          message = errorJson.message
+        else
+          message = @errors.other
     else if response.status == 400 or response.status == 403
       message = @errors.missingOrMalformed
       description = "Registration card missing or malformed."
