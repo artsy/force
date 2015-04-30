@@ -28,7 +28,7 @@
       | (#{saleArtwork.bidCount()})
   else
     .ala-estimate: a( href= href )
-      = saleArtwork.estimate()
+      | Estimate: #{saleArtwork.estimate()}
     .ala-sale-message
       a.ala-current-bid( href= href )
         = artwork.saleMessage()

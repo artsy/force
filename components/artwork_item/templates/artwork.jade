@@ -49,7 +49,7 @@ figure.artwork-item( data-artwork=artwork.get('id') )
       - var estimate = saleArtwork.estimate()
       if estimate
         .artwork-item-estimate
-          | #{estimate}
+          | Estimate: #{estimate}
 
     //- Auction related pricing information
     - var displayBidStatus = saleArtwork.id && isAuction
