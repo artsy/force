@@ -10,6 +10,7 @@ ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 attachFollowArtists = require '../components/follow_artists/index.coffee'
 attachFollowProfile = require '../components/follow_profile/index.coffee'
 attachRelatedShows = require '../components/related_shows/index.coffee'
+RelatedArticlesView = require '../components/related_articles/view.coffee'
 MapModal = require '../components/map_modal/map.coffee'
 ZoomView = require '../../../components/modal/zoom.coffee'
 
@@ -51,5 +52,10 @@ module.exports.init = ->
       attachRelatedShows 'featured', show
     else
       attachRelatedShows 'gallery', show
+
+  relatedArticlesView = new RelatedArticlesView
+    collection: show.related().articles
+    numToShow: 3
+  $('.artwork-column').first().prepend relatedArticlesView.$el
 
   new ShareView el: $('.js-show-share')

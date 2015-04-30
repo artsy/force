@@ -11,6 +11,8 @@ module.exports = class RelatedArticlesView extends Backbone.View
   initialize: (options = {}) ->
     { @numToShow } = _.defaults options, @defaults
     @listenTo @collection, 'sync', @render
+    # temporary forced render
+    @render()
 
   render: ->
     @$el.html template
