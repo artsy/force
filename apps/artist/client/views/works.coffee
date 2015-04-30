@@ -1,6 +1,7 @@
 _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
+scrollFrame = require 'scroll-frame'
 mediator = require '../../../../lib/mediator.coffee'
 Sticky = require '../../../../components/sticky/index.coffee'
 Artworks = require '../../../../collections/artworks.coffee'
@@ -13,6 +14,8 @@ module.exports = class WorksView extends Backbone.View
 
   initialize: ({ @user }) ->
     @sticky = new Sticky
+
+    scrollFrame 'a.artwork-item-image-link'
 
   fadeInSection: ($el) ->
     $el.show()
