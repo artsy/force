@@ -20,4 +20,6 @@ app.get '/future-of-art', (req, res) ->
     error: res.backboneError
     success: (page) ->
       res.render 'future_of_art', page: page
-app.use express.static __dirname + "/public"
+
+app.get '/christies-spring-auctions-2015', (req, res) ->
+  res.render 'christies', require './data/christies.json'
