@@ -46,9 +46,15 @@ describe 'SaleArtwork', ->
       @saleArtwork.unset 'high_estimate_cents'
       _.isUndefined(@saleArtwork.estimate()).should.be.ok
       @saleArtwork.set low_estimate_cents: 20000, high_estimate_cents: 30000
-      @saleArtwork.estimate().should.equal 'Estimate: $200–$300'
+      @saleArtwork.estimate().should.equal '$200–$300'
       @saleArtwork.unset 'high_estimate_cents'
-      @saleArtwork.estimate().should.equal 'Estimate: $200'
+      @saleArtwork.estimate().should.equal '$200'
+
+    it 'falls back on to `estimate_cents`', ->
+      @saleArtwork.set low_estimate_cents: 20000, estimate_cents: 60000
+      @saleArtwork.estimate().should.equal '$200'
+      @saleArtwork.unset 'low_estimate_cents'
+      @saleArtwork.estimate().should.equal '$600'
 
   describe '#bidCount', ->
 

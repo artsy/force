@@ -23,19 +23,18 @@ module.exports = class SaleArtwork extends Backbone.Model
   artwork: -> new Artwork(@get('artwork'))
   sale: -> new Sale(@get('sale'))
 
+  money: (attr) ->
+    formatMoney(@get(attr) / 100, '$', 0) if @has attr
+
   currentBid: ->
-    formatMoney(
-      (@get('highest_bid_amount_cents') or @get('opening_bid_cents')) / 100, '$', 0
-    )
+    @money('highest_bid_amount_cents') or @money('opening_bid_cents')
 
   minBid: ->
-    formatMoney @get('minimum_next_bid_cents') / 100, '$', 0
+    @money('minimum_next_bid_cents')
 
   estimate: ->
-    if @has('low_estimate_cents') or @has('high_estimate_cents')
-      high = formatMoney(@get('high_estimate_cents') / 100, '$', 0) if @has 'high_estimate_cents'
-      low = formatMoney(@get('low_estimate_cents') / 100, '$', 0)  if @has 'low_estimate_cents'
-      "Estimate: #{_.compact([low, high]).join '–'}"
+    _.compact([@money('low_estimate_cents'), @money('high_estimate_cents')]).join('–') or
+    @money 'estimate_cents'
 
   # Changes bidAmount to a number in cents
   cleanBidAmount: (bidAmount)->
