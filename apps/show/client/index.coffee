@@ -43,19 +43,10 @@ module.exports.init = ->
 
   $('.map-modal-link').click -> new MapModal model: show, width: '820px'
 
-  console.log 'document referrer', document.referrer
-
-  onSite = /// (http://localhost:5000)+.* ///
-
-  if document.referrer?.match onSite
-    console.log 'is not permalink', document.referrer
-  else
-    console.log 'is permalink', document.referrer
-
   if show.isFairBooth()
     attachRelatedShows 'fair', show
   else
-    if document.referrer?.match onSite
+    if location.search.match "from-show-guide"
       attachRelatedShows 'city', show
       attachRelatedShows 'featured', show
     else

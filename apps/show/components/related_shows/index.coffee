@@ -21,7 +21,7 @@ module.exports = (type, show) ->
       data =  _.extend criteria, fair_id: show.related().fair.get('_id')
       title = "More Booths from #{show.related().fair.get('name')}"
     when 'gallery'
-      data = _.extend criteria, sort: "-end_at"
+      data = _.extend criteria, sort: "-end_at", at_a_fair: true
       relatedShows.url = "#{show.related().partner.url()}/shows"
       title = "Other Shows from #{show.partnerName()}"
     when 'featured'
@@ -29,7 +29,7 @@ module.exports = (type, show) ->
       el = $('.js-featured-shows')
       title = "Featured Shows"
     when 'city'
-      data = _.extend( criteria, ( near: city.coords.toString(), sort: '-start_at' ) )
+      data = _.extend criteria, near: city.coords.toString(), sort: '-start_at'
       title = "Current Shows in #{show.formatCity()}"
 
   new RelatedShows
