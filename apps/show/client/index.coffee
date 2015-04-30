@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Q = require 'q'
-{ SHOW, ARTWORKS, REFERRER } = require('sharify').data
+{ SHOW, ARTWORKS } = require('sharify').data
 { Cities, FeaturedCities } = require 'places'
 PartnerShow = require '../../../models/partner_show.coffee'
 PartnerShows = require '../../../collections/partner_shows.coffee'
@@ -43,17 +43,19 @@ module.exports.init = ->
 
   $('.map-modal-link').click -> new MapModal model: show, width: '820px'
 
+  console.log 'document referrer', document.referrer
+
   onSite = /// (http://localhost:5000)+.* ///
 
-  if REFERRER?.match onSite
-    console.log 'is not permalink', REFERRER
+  if document.referrer?.match onSite
+    console.log 'is not permalink', document.referrer
   else
-    console.log 'is permalink', REFERRER
+    console.log 'is permalink', document.referrer
 
   if show.isFairBooth()
     attachRelatedShows 'fair', show
   else
-    if REFERRER?.match onSite
+    if document.referrer?.match onSite
       attachRelatedShows 'city', show
       attachRelatedShows 'featured', show
     else
