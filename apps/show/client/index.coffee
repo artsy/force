@@ -43,7 +43,9 @@ module.exports.init = ->
 
   $('.map-modal-link').click -> new MapModal model: show, width: '820px'
 
-  if REFERRER is 'http://localhost:5000/shows'
+  onSite = /// (http://localhost:5000)+.* ///
+
+  if REFERRER?.match onSite
     console.log 'is not permalink', REFERRER
   else
     console.log 'is permalink', REFERRER
@@ -51,7 +53,7 @@ module.exports.init = ->
   if show.isFairBooth()
     attachRelatedShows 'fair', show
   else
-    if REFERRER is 'http://localhost:5000/shows'
+    if REFERRER?.match onSite
       attachRelatedShows 'city', show
       attachRelatedShows 'featured', show
     else
