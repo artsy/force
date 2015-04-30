@@ -45,6 +45,7 @@ module.exports = class ErrorHandlingForm extends Backbone.View
           message = errorJson.message
         else
           message = @errors.other
+      message = errorJson.error if errorJson.error?
     else if response.status == 400 or response.status == 403
       message = @errors.missingOrMalformed
       description = "Registration card missing or malformed."
