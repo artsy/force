@@ -60,3 +60,12 @@ describe 'AuctionArtworksView', ->
       @view.displayBlurbs().should.be.false
       @view.collection.first().set 'blurb', 'Existence!'
       @view.displayBlurbs().should.be.true
+
+  describe '#maxBlurbHeight', ->
+    it 'returns a pixel value based on the estimated height of the longest blurb', ->
+      @view.maxBlurbHeight(true).should.equal '22px' # A single line
+      _.isUndefined(@view.maxBlurbHeight(false)).should.be.true
+      @view.collection.first().set 'blurb', 'Existence!'
+      @view.maxBlurbHeight(true).should.equal '27px'
+      @view.collection.last().set 'blurb', 'Existence! Existence! Existence! Existence! Existence! Existence! Existence! Existence! Existence! Existence!'
+      @view.maxBlurbHeight(true).should.equal '70px'
