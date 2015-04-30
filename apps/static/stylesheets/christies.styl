@@ -1,0 +1,90 @@
+.christies-banner-image
+  width 100%
+  height 300px
+  background-color gray-color
+  background-size cover
+  background-position center center
+
+.christies-header
+  margin 50px 0
+  line-height 1.2
+  text-align center
+  > h1
+  > h2
+    margin 15px 0
+  > h1
+    font-size 40px
+  > h2
+    font-size 22px
+
+.christies-featured-editorials
+  margin 50px 0
+  border-top 1px solid gray-lighter-color
+  border-bottom @border-top
+.christies-featured-editorial
+  display table
+  width 100%
+  margin 20px 0
+  text-decoration none
+.christies-featured-editorial-metadata
+.christies-featured-editorial-image
+  display table-cell
+  height 100%
+  vertical-align middle
+.christies-featured-editorial-metadata
+  line-height 1.2
+  > h4
+  > h3
+    margin 10px 0
+  > h4
+    font-size 16px
+  > h3
+    font-size 35px
+.christies-featured-editorial-image
+  text-align right
+  padding 0 50px
+  > img
+    display inline-block
+    vertical-align bottom
+    height 200px
+
+.christies-sale-links
+  margin 50px 0
+.christies-sale-link
+  //
+.christies-sale-link-metadata
+  display block
+  padding 20px 0
+  text-align center
+  text-decoration none
+  > h3
+    margin 10px 0
+    font-size 22px
+  > h4
+    color gray-dark-color
+    font-size 18px
+
+// Mobile
+@media screen and (max-device-width: 480px)
+  .responsive-layout-container
+    margin 0 20px
+
+  .christies-header
+    > h1
+      font-size 33px
+    > h2
+      font-size 18px
+
+  .christies-banner-image
+    height 200px
+
+  .christies-featured-editorial-metadata
+    padding-right 10px
+    > h4
+      font-size 11px
+    > h3
+      font-size 20px
+  .christies-featured-editorial-image
+    padding 0
+    > img
+      height 100px

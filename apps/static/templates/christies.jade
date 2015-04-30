@@ -1,0 +1,47 @@
+extends ../../../components/main_layout/templates/index
+
+block head
+  title #{title} | Artsy
+
+  link( rel='alternate', media= sd.MOBILE_MEDIA_QUERY, href='#{sd.CANONICAL_MOBILE_URL}/#{slug}' )
+  link( rel='canonical', href='#{sd.APP_URL}/#{slug}' )
+
+  meta( property='og:title', content='#{title} | Artsy' )
+  meta( name='description', content= description )
+  meta( name='og:description', content= description )
+  meta( property='twitter:description', content= description )
+  meta( property='og:url', content='#{sd.APP_URL}/#{slug}' )
+  meta( property='og:image', content= asset('/images/og_image.jpg') )
+  meta( property='og:type', content='website' )
+  meta( property='twitter:card', content='summary' )
+
+append locals
+  - assetPackage = 'static'
+  - bodyClass = bodyClass + ' body-no-margins'
+
+block body
+  .christies-banner-image( style='background-image: url("#{banner.src}")')
+    //-
+
+  .responsive-layout-container: .main-layout-container
+    header.christies-header
+      h1= title
+      h2= description
+
+    section.christies-featured-editorials
+      for editorial in editorials
+        a.christies-featured-editorial( href= editorial.href )
+          .christies-featured-editorial-metadata
+            h4.small-caps Featured Editorial
+            h3= editorial.title
+          .christies-featured-editorial-image
+            img( src= editorial.src, alt= editorial.title, title= editorial.title )
+
+    section.christies-sale-links.grid-2-up
+      for sale in sales
+        .christies-sale-link.grid-item
+          a.hoverable-image-link( href= sale.href )
+            img( src= sale.src, alt= sale.title, title= sale.title )
+          a.christies-sale-link-metadata( href= sale.href )
+            h3= sale.title
+            h4= sale.description
