@@ -219,7 +219,7 @@ mixin education(section)
       .grid-item
         p.preamble!= section.preamble
 
-  .partnerships-section-content.education
+  .partnerships-section-content
     .grid-4-up
       each g in section.institutions
         .grid-item
@@ -228,6 +228,7 @@ mixin education(section)
           .education-info
             .education-name= g.name
             .education-location= g.location
+  a.partnerships-all-link(href='/institutions') See All Museums
 
 mixin design(section)
   .partnerships-section-header
