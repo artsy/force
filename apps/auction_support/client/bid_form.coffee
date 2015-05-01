@@ -54,8 +54,8 @@ module.exports = class BidForm extends ErrorHandlingForm
           , 1000
           analytics.track.funnel 'Confirmed bid on bid page'
           trackSnowplow 'bid', 'confirm', @saleArtwork.artwork().get('_id'), 'artwork', undefined, { sale_id: @model.get('_id'), bid_id: model.id }
-        error: (xhr) =>
-          @showError 'Error placing your bid', xhr
+        error: (model, response) =>
+          @showError 'Error placing your bid', response
     else
       @showError "Your bid must be higher than #{@bidderPositions.minBid()}"
 
