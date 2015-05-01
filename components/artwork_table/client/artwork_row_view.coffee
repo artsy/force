@@ -56,6 +56,4 @@ module.exports = class ArtworkRowView extends SaleArtworkView
       analytics.track.funnel 'Clicked "Contact Gallery" button', @model.attributes
       analytics.snowplowStruct 'contact_gallery', 'click', @model.get('id'), 'artwork'
     else
-      new ContactPartnerView
-        artwork: @model
-        partner: @model.get 'partner'
+      new ContactPartnerView artwork: @model, partner: @model.related().partner

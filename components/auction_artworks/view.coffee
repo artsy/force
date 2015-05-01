@@ -8,6 +8,7 @@ template = -> require('./templates/index.jade') arguments...
 
 module.exports = class AuctionArtworksView extends Backbone.View
   className: 'auction-artworks-container'
+
   events:
     'click .js-toggle-artworks-sort': 'setState'
     'click .js-bid-button': 'authOrPass'
@@ -55,7 +56,7 @@ module.exports = class AuctionArtworksView extends Backbone.View
     id = $(e.currentTarget).data 'id'
     artwork = @collection.get id
 
-    new ContactPartnerView artwork: artwork, partner: artwork.related().partner.toJSON()
+    new ContactPartnerView artwork: artwork, partner: artwork.related().partner
 
   displayBlurbs: ->
     _.any _.map(@collection.pluck('blurb'), _.negate(_.isEmpty))
