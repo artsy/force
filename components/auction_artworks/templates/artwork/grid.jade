@@ -20,7 +20,7 @@
 
       if saleArtwork.estimate()
         .aga-estimate
-          | Estimate: #{saleArtwork.estimate()}
+          | #{saleArtwork.estimateLabel()}: #{saleArtwork.estimate()}
 
       if displayBlurbs
         .aga-blurb( style= maxBlurbHeight ? "height: #{maxBlurbHeight}" : undefined )

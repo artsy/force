@@ -30,7 +30,7 @@
     unless auction.isAuctionPromo()
       if saleArtwork.estimate()
         .ala-estimate: a( href= href )
-          | Estimate: #{saleArtwork.estimate()}
+          | #{saleArtwork.estimateLabel()}: #{saleArtwork.estimate()}
 
       if artwork.saleMessage()
         .ala-sale-message
