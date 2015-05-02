@@ -33,5 +33,6 @@ err = ->
         artworks: show.related().artworks
         jsonLD: stringifyJSONForWeb show.toJSONLD()
 
+
   , ->
     next err()
