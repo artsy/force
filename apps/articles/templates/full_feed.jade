@@ -11,7 +11,7 @@
 
   if vertical && articles.featuredToVertical(vertical).length
     section.articles-featured-vertical-articles
-      h4 Your Guide to The Biennale
+      h4= vertical.get('featured_articles_header')
       ul.grid-4-up
         for article in articles.featuredToVertical(vertical)
           li.grid-item
