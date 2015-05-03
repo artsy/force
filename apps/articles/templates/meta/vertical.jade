@@ -1,0 +1,10 @@
+title #{vertical.get('title')} | Artsy
+meta( property="og:title", content="#{vertical.get('title')} | Artsy" )
+meta( name="description", content="Artsy articles featured for #{vertical.get('title')}." )
+meta( property="og:description", content="Artsy articles featured for #{vertical.get('title')}." )
+meta( property="twitter:description", content="Artsy articles featured for #{vertical.get('title')}." )
+link( rel="canonical", href="#{sd.APP_URL}/#{vertical.get('slug')}" )
+meta( property="og:url", content="#{sd.APP_URL}/#{vertical.get('slug')}" )
+meta( property="og:image", content=asset('/images/og_image.jpg') )
+meta( property="og:type", content="website" )
+meta( property="twitter:card", content="summary" )
