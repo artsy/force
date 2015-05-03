@@ -10,14 +10,15 @@ append locals
 block body
   if vertical
     header.articles-vertical-notice-header.main-layout-container
-      .articles-vertical-notice-header-thumbnail
+      a.articles-vertical-notice-header-thumbnail( href=vertical.get('slug') )
         img( src=vertical.get('thumbnail_url') )
         .articles-vertical-notice-header-thumbnail-text
           h3 Featured Coverage
           h4= vertical.get('title')
       .articles-vertical-notice-header-partner-logo
         p In partnership with
-        img( src= vertical.get('partner_logo_url') )
+        a( href=vertical.get('partner_website_url') target='_blank' )
+          img( src= vertical.get('partner_logo_url') )
       .articles-vertical-notice-header-explore
         a( href=vertical.get('slug') ) Explore
         .icon-chevron-small-right
