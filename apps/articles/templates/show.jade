@@ -2,6 +2,17 @@ extends ../../../components/main_layout/templates/index
 include ../../../components/article_figure/mixin
 include ./share
 
+mixin video(video)
+  .articles-video-container
+    if video.cover_image_url
+      .articles-video-cover-image(
+        style=("background-image: url(#{resize(video.cover_image_url, { width: 1100 })})")
+      )
+        button.articles-video-play-button
+          .articles-video-play-button-caret
+    .articles-video
+      != embedVideo(video.url)
+
 block head
   include meta/article
 
@@ -19,7 +30,8 @@ block body
             h2
               a( href='/' + vertical.get('slug') )= vertical.get('title')
             h3 In Partnership With
-            img( src=vertical.get('partner_logo_url') )
+            a( href=vertical.get('partner_website_url') target='_blank' )
+              img( src=vertical.get('partner_logo_url') )
           .articles-vertical-show-header-right
             button.articles-vertical-left-chevron.icon-chevron-small-left
             ul
@@ -35,8 +47,9 @@ block body
 
       //- Article lead content
       if article.get('hero_section') && article.get('hero_section').type === 'video'
-        .articles-large-format-video
-          != embedVideo(article.get('hero_section').url)
+        if article.get('hero_section').cover_image_url
+        .articles-large-format-video-container
+          +video(article.get('hero_section'))
       if article.get('hero_section') && article.get('hero_section').type === 'image'
         .articles-large-format-image
          img( src=article.get('hero_section').url)
@@ -75,7 +88,7 @@ block body
                     li( data-id=id )
             when 'video'
               .articles-section-video
-                != embedVideo(section.url)
+                +video(section)
 
     //- Article footer content
     .articles-social.add-bottom

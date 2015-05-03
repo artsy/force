@@ -82,9 +82,17 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
   events:
     'click .articles-vertical-right-chevron, \
     .articles-vertical-left-chevron': 'toggleVerticalCarousel'
+    'click .articles-video-play-button': 'playVideo'
 
   toggleVerticalCarousel: (e) ->
     @$('.articles-vertical-show-header-right').toggleClass('is-over')
+
+  playVideo: (e) ->
+    $cover = $(e.currentTarget).parent()
+    $iframe = $cover.next('.articles-video').find('iframe')
+    $newIframe = $iframe.clone().attr('src', $iframe.attr('src') + '?autoplay=1')
+    $iframe.replaceWith $newIframe
+    $cover.remove()
 
 module.exports.init = ->
   article = new Article sd.ARTICLE
