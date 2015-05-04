@@ -35,9 +35,9 @@ describe 'article show template', ->
       vertical: new Vertical _.extend _.clone(fixtures.vertical),
         title: 'Moo Bar'
       featuredVerticalArticles: new Articles([_.extend(fixtures.article,
-        title: 'Featured Vertical Article Title')])
+        thumbnail_title: 'Featured Vertical Article Title')])
       allVerticalArticles: new Articles([_.extend(fixtures.article,
-        title: 'Vertical Article Title')])
+        thumbnail_title: 'Vertical Article Title')])
       crop: (url) -> url
       resize: (url) -> url
       moment: moment
