@@ -39,7 +39,8 @@ embedVideo = require 'embed-video'
       res.locals.sd.SLIDESHOW_ARTWORKS = data.slideshowArtworks?.toJSON()
       res.locals.sd.ARTICLE = data.article.toJSON()
       res.locals.sd.FOOTER_ARTICLES = data.footerArticles.toJSON()
-      res.render 'show', _.extend data, embedVideo: embedVideo
+      videoOptions = { query: { title: 0, portrait: 0, badge: 0, byline: 0, showinfo: 0, rel: 0, controls: 2, modestbranding: 1, iv_load_policy: 3, color: "E5E5E5" } }
+      res.render 'show', _.extend data, embedVideo: embedVideo, videoOptions: videoOptions
 
 @redirectPost = (req, res, next) ->
   res.redirect 301, req.url.replace 'post', 'article'

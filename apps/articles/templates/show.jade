@@ -11,7 +11,7 @@ mixin video(video)
         button.articles-video-play-button
           .articles-video-play-button-caret
     .articles-video
-      != embedVideo(video.url)
+      != embedVideo(video.url, videoOptions)
 
 block head
   include meta/article

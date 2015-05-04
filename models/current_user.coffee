@@ -124,5 +124,6 @@ module.exports = class CurrentUser extends User
       error: options?.error
 
   isEditorialAdmin: ->
+    return false unless sd.EDITORIAL_ADMINS?
     @get('type') is 'Admin' and
     @get('email')?.split('@')[0] in sd.EDITORIAL_ADMINS?.split(',')
