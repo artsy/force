@@ -23,7 +23,7 @@ describe 'UserProfileView', ->
       }, =>
         UserProfileView = benv.require resolve(__dirname, '../client/user_profile')
         stubChildClasses UserProfileView, @,
-          ['PoplockitFeed', 'ArtworkColumnsView']
+          ['ArtworkColumnsView']
           ['appendArtworks']
         $.onInfiniteScroll = sinon.stub()
         @view = new UserProfileView

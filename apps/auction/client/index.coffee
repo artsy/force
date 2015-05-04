@@ -28,7 +28,12 @@ module.exports.init = ->
   saleArtworks.fetchUntilEndInParallel success: ->
     artworks.reset Artworks.__fromSale__ saleArtworks
 
-  clock = new ClockView el: $('.js-auction-clock'), model: auction, modelName: 'Auction'
+  clock = new ClockView
+    el: $('.js-auction-clock')
+    model: auction
+    modelName: 'Auction'
+    closedText: 'Auction Closed' if auction.isAuctionPromo()
+
   clock.start()
 
   $('.js-specialist-contact-link').click (e) ->

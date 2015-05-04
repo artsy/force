@@ -36,6 +36,12 @@ module.exports = class SaleArtwork extends Backbone.Model
     _.compact([@money('low_estimate_cents'), @money('high_estimate_cents')]).join('–') or
     @money 'estimate_cents'
 
+  estimateLabel: ->
+    if @has('estimate_cents') and (not @has('low_estimate_cents') or not @has('high_estimate_cents'))
+      'Estimated value'
+    else
+      'Estimate'
+
   # Changes bidAmount to a number in cents
   cleanBidAmount: (bidAmount)->
     if bidAmount

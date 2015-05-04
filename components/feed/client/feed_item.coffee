@@ -91,5 +91,5 @@ module.exports.FeedItemView = class FeedItemView extends Backbone.View
       success: (artwork) =>
           new ContactPartnerView
             artwork: artwork
-            partner: artwork.get('partner')
+            partner: artwork.related().partner
     false
