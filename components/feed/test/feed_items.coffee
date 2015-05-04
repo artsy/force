@@ -65,7 +65,7 @@ describe 'PartnerShow', ->
       @feedItems.removeFlagged()
       @feedItems.length.should.equal 1
 
-    it "includes feedItems by currentUser if they created the post", ->
+    xit "includes feedItems by currentUser if they created the post", ->
       sinon.stub(CurrentUser, 'orNull').returns new CurrentUser fabricate('user', id: 'current-user-id')
       @feedItems.length.should.equal 3
       @feedItems.removeFlagged()
