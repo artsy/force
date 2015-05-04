@@ -53,7 +53,6 @@ setupUser = (user, auction) ->
 
       res.locals.sd.CURRENT_AUCTIONS = open
       res.locals.sd.UPCOMING_AUCTIONS = preview
-      res.locals.sd.PREVIEW_AUCTIONS = promo
 
       Q.all([
         setupCurrentAuctions(open)
