@@ -50,7 +50,14 @@ embedVideo = require 'embed-video'
     success: (vertical) ->
       return next() unless req.params.slug is vertical.get('slug')
       new Articles().fetch
-        data: vertical_id: vertical.get('id'), published: true
+        data:
+          published: true
+          limit: 100
+          sort: '-published_at'
+          vertical_id: vertical.get('id')
         error: res.backboneError
         success: (articles) ->
+          res.locals.sd.ARTICLES = articles.toJSON()
+          res.locals.sd.ARTICLES_COUNT = articles.count
+          res.locals.sd.VERTICAL = vertical.toJSON()
           res.render 'vertical', vertical: vertical, articles: articles

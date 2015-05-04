@@ -4,8 +4,9 @@ ArticlesFeedView = require '../../../components/articles_feed/view.coffee'
 sd = require('sharify').data
 
 module.exports.init = ->
+  return # TODO: Something is screwy with the component & counts
   articles = new Articles sd.ARTICLES
-  articles.count = sd.ARTICLES_COUNT + 4
+  articles.count = sd.ARTICLES_COUNT
   articles.reset articles.feed()
 
   view = new ArticlesFeedView
@@ -14,7 +15,7 @@ module.exports.init = ->
     fetchWith:
       limit: 50
       published: true
-      featured: true
+      vertical_id: sd.VERTICAL.id
       sort: '-published_at'
 
   view.render()
