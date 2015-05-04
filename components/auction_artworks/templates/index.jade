@@ -4,7 +4,7 @@ if artworks.length
     for artwork in artworks
       - artist = artwork.related().artist
       - saleArtwork = artwork.related().saleArtwork
-      if auction.isOpen()
+      if auction.isOpen() && !auction.isAuctionPromo()
         - href = artwork.href() + '?auction_id=' + auction.id
       else
         - href = artwork.href()
