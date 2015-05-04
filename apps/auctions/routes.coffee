@@ -40,10 +40,12 @@ setupUser = (user, auction) ->
     -(Date.parse auction.get('end_at'))
 
   auctions.fetch
-    data: size: 20, sort: '-created_at'
+    cache: true
+    data: published: true, size: 20, sort: '-created_at'
     success: (collection, response, options) ->
       [preview, open, closed] = _.map ['preview', 'open', 'closed'], (state) ->
-        auctions.where auction_state: state
+        auctions.select (auction) ->
+          auction.get('auction_state') is state and !auction.isAuctionPromo()
 
       promo = auctions.select (auction) -> auction.isAuctionPromo()
 
