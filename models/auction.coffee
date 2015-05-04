@@ -43,3 +43,12 @@ module.exports = class Auction extends Sale
       "#{start.format(format)}–#{end.format('h:mma')}"
     else
       "#{start.format(format)}–#{end.format(format)}"
+
+  isPreliminaryAuction: ->
+    # https://github.com/artsy/gravity/pull/8848
+    # Replace with: # @get('sale_type') is 'preliminary auction'
+    @get('is_auction') and @get('is_preliminary')
+
+  isAuctionPromo: ->
+    # https://github.com/artsy/gravity/pull/8848
+    @get('sale_type') is 'auction promo'
