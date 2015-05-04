@@ -44,7 +44,10 @@ setupUser = (user, auction) ->
     data: published: true, size: 20, sort: '-created_at'
     success: (collection, response, options) ->
       [preview, open, closed] = _.map ['preview', 'open', 'closed'], (state) ->
-        auctions.where auction_state: state
+        auctions.select (auction) ->
+          auction.get('auction_state') is state and !auction.isAuctionPromo()
+
+      promo = auctions.select (auction) -> auction.isAuctionPromo()
 
       nextAuction = preview[0]
 
@@ -60,6 +63,7 @@ setupUser = (user, auction) ->
           pastAuctions: closed
           currentAuctions: open
           upcomingAuctions: preview
+          promoAuctions: promo
           nextAuction: nextAuction if nextAuction?
 
 @redirect = (req, res) ->
