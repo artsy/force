@@ -87,7 +87,7 @@ describe 'vertical template', ->
     html = render('vertical')
       articles: new Articles([
         _.extend(_.clone(fixtures.article), id: 'foo',
-            title: 'Foo and Bars are Great!')
+            thumbnail_title: 'Foo and Bars are Great!')
         _.extend(_.clone(fixtures.article), id: 'bar')
         _.extend(_.clone(fixtures.article), id: 'baz')
       ])
