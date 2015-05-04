@@ -17,7 +17,7 @@
           li.grid-item
             a(href="#{article.href()}")
               img( src=crop(article.get('thumbnail_image'), { width: 70, height: 70 }) )
-              p= article.get('title')
+              p= article.get('thumbnail_title')
 
   .articles-articles-feed.articles-feed
     .articles-feed-articles.js-articles-feed-articles
