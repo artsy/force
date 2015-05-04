@@ -27,6 +27,7 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
     @renderArtworks()
     @breakCaptions()
     @checkEditable()
+    @sizeVideo()
 
   renderSlideshow: =>
     initCarousel $('.js-article-carousel'), imagesLoaded: true
@@ -93,6 +94,34 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
     $newIframe = $iframe.clone().attr('src', $iframe.attr('src') + '?autoplay=1')
     $iframe.replaceWith $newIframe
     $cover.remove()
+
+  sizeVideo: ->
+    $videos = @$("iframe[src^='//player.vimeo.com'], iframe[src^='//www.youtube.com']")
+
+    resizeVideo = ->
+      newHeight = $(window).height() - 100
+
+      $videos.each ->
+        $el = $(this)
+        $parent = $el.parent()
+        width = $el.width()
+        ratio = newHeight / $el.height()
+        c_width = $parent.outerWidth()
+        c_height = $parent.outerHeight()
+        width = $el.width() * ratio
+        left = Math.max(0, ((c_width - width) / 2)) + "px"
+        top = Math.max(0, ((c_height - newHeight) / 2)) + "px"
+
+        $el
+          .height(newHeight)
+          .width(width)
+          .css
+            left: left
+            top: top
+
+    $(window).resize(_.debounce(resizeVideo, 100))
+    resizeVideo()
+
 
 module.exports.init = ->
   article = new Article sd.ARTICLE
