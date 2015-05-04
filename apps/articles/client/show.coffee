@@ -95,8 +95,14 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
     $iframe.replaceWith $newIframe
     $cover.remove()
 
+
+
   sizeVideo: ->
     $videos = @$("iframe[src^='//player.vimeo.com'], iframe[src^='//www.youtube.com']")
+
+    calculateAspectRatioFit = (srcWidth, srcHeight, maxWidth, maxHeight) ->
+      ratio = Math.min maxWidth / srcWidth, maxHeight / srcHeight
+      { width: srcWidth*ratio, height: srcHeight*ratio }
 
     resizeVideo = ->
       newHeight = $(window).height() - 100
@@ -104,16 +110,16 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
       $videos.each ->
         $el = $(this)
         $parent = $el.parent()
-        width = $el.width()
-        ratio = newHeight / $el.height()
         c_width = $parent.outerWidth()
         c_height = $parent.outerHeight()
-        width = $el.width() * ratio
+        maxHeight = if (newHeight < c_height) then newHeight else (c_width * .5625)
+        { width, height } = calculateAspectRatioFit $el.width(), $el.height(), $parent.outerWidth(), maxHeight
+
         left = Math.max(0, ((c_width - width) / 2)) + "px"
-        top = Math.max(0, ((c_height - newHeight) / 2)) + "px"
+        top = Math.max(0, ((c_height - height) / 2)) + "px"
 
         $el
-          .height(newHeight)
+          .height(height)
           .width(width)
           .css
             left: left
