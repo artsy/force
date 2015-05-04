@@ -19,13 +19,17 @@ block body
             for auction in currentAuctions
               include auction
 
+        if promoAuctions.length
+          .auctions-list.leader-dots-list
+            h2.aggregate-page-subheader Auction Previews
+            for auction in promoAuctions
+              include small_auction
+
         if upcomingAuctions.length && !currentAuctions.length
           .auctions-list.leader-dots-list
             h2.aggregate-page-subheader Upcoming Auctions
             for auction in upcomingAuctions
-              .leader-dots-list-item
-                span= auction.get('name')
-                span Opens #{auction.date('start_at').format('MMM D, YYYY')}
+              include small_auction
 
         if pastAuctions.length
           .auctions-list.leader-dots-list
