@@ -7,6 +7,10 @@ header.auction-header
         alt= auction.get('name')
       )
 
+    if auction.isAuctionPromo()
+      h4.auction-sub-header
+        | Sale Preview
+
     h1.auction-title
       = auction.get('name')
     .auction-description
@@ -17,9 +21,10 @@ header.auction-header
       .auction-header-clock.js-auction-clock
         include ../../../components/clock/template
 
-      .auction-header-register-button
-        .auction-info-register-button
-          include ./registration_button
+      unless auction.isAuctionPromo()
+        .auction-header-register-button
+          .auction-info-register-button
+            include ./registration_button
 
     include metadata/note
     include metadata/event
