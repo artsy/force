@@ -40,16 +40,18 @@ setupUser = (user, auction) ->
     -(Date.parse auction.get('end_at'))
 
   auctions.fetch
-    cache: true
-    data: published: true, size: 20, sort: '-created_at'
+    data: size: 20, sort: '-created_at'
     success: (collection, response, options) ->
       [preview, open, closed] = _.map ['preview', 'open', 'closed'], (state) ->
         auctions.where auction_state: state
+
+      promo = auctions.select (auction) -> auction.isAuctionPromo()
 
       nextAuction = preview[0]
 
       res.locals.sd.CURRENT_AUCTIONS = open
       res.locals.sd.UPCOMING_AUCTIONS = preview
+      res.locals.sd.PREVIEW_AUCTIONS = promo
 
       Q.all([
         setupCurrentAuctions(open)
@@ -60,6 +62,7 @@ setupUser = (user, auction) ->
           pastAuctions: closed
           currentAuctions: open
           upcomingAuctions: preview
+          promoAuctions: promo
           nextAuction: nextAuction if nextAuction?
 
 @redirect = (req, res) ->
