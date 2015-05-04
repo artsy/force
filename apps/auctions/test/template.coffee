@@ -39,7 +39,7 @@ describe 'Auctions template', ->
       # 'How auctions work' link & Upcoming auctions
       $('.ap-upcoming-item').should.have.lengthOf 2
 
-  xdescribe 'without current auctions', ->
+  describe 'without current auctions', ->
     before (done) ->
       benv.setup =>
         benv.expose $: benv.require 'jquery'
