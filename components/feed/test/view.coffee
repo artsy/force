@@ -45,7 +45,7 @@ describe 'FeedView', ->
 
   describe '#initialize', ->
 
-    it "renders a feed", ->
+    xit "renders a feed", ->
       @view.$el.html().should.not.containEql 'undefined'
       @view.$el.html().should.not.containEql "\#{"
       @view.$el.html().should.not.containEql "NaN"
@@ -57,7 +57,7 @@ describe 'FeedView', ->
 
   describe '#fetchMoreItems', ->
 
-    it 'adds items to the feed', ->
+    xit 'adds items to the feed', ->
       partnerShow = new FeedItem fabricate('show',
         _type: "PartnerShow",
         artists: [fabricate('artist')]
