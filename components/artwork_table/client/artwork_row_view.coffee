@@ -9,6 +9,7 @@ ConfirmInquiryView = require '../../contact/confirm_inquiry.coffee'
 analytics = require '../../../lib/analytics.coffee'
 FlashMessage = require '../../flash/index.coffee'
 { INQUIRY_FLOW } = require('sharify').data
+defaultMessage = require '../../contact/default_message.coffee'
 
 artworkRow = -> require('../templates/artwork_row.jade') arguments...
 
@@ -38,22 +39,11 @@ module.exports = class ArtworkRowView extends SaleArtworkView
 
   contactSeller: (e) ->
     e.preventDefault()
-    if INQUIRY_FLOW is 'updated_flow'
-      if @model.isPriceDisplayable()
-        defaultMessage = "I'm interested in this work by #{@model.get('artist').name}. Please contact me to discuss further."
-        analytics.track.funnel "Saw price displayable", @model.attributes
-        analytics.snowplowStruct 'price_displayable', 'saw', @model.get('id'), 'artwork'
-      else
-        defaultMessage = "Hi. Could you please share the asking price for this work? I'd like to know if it's within my budget."
-        analytics.track.funnel "Saw contact gallery", @model.attributes
-        analytics.snowplowStruct 'contact_for_price', 'saw', @model.get('id'), 'artwork'
-      new ConfirmInquiryView
-        artwork: @model
-        partner: @model.get 'partner'
-        inputMessage: defaultMessage
-        success: =>
-          new FlashMessage message: 'Thank you. Your message has been sent.'
-      analytics.track.funnel 'Clicked "Contact Gallery" button', @model.attributes
-      analytics.snowplowStruct 'contact_gallery', 'click', @model.get('id'), 'artwork'
-    else
-      new ContactPartnerView artwork: @model, partner: @model.related().partner
+    new ConfirmInquiryView
+      artwork: @model
+      partner: @model.get 'partner'
+      inputMessage: defaultMessage(@model, @model.get('partner'))
+      success: =>
+        new FlashMessage message: 'Thank you. Your message has been sent.'
+    analytics.track.funnel 'Clicked "Contact Gallery" button', @model.attributes
+    analytics.snowplowStruct 'contact_gallery', 'click', @model.get('id'), 'artwork'

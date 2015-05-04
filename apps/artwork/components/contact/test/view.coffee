@@ -22,7 +22,7 @@ describe 'ContactView', ->
       @artwork.isContactable = -> true
       @view = new ContactView el: $('body'), model: @artwork
 
-      benv.render resolve(__dirname, '../templates/index.jade'), { artwork: @artwork, sd: { 'INQUIRY_FLOW' : 'original_flow' } }, => done()
+      benv.render resolve(__dirname, '../templates/index.jade'), { artwork: @artwork }, => done()
 
   afterEach ->
     benv.teardown()
@@ -118,7 +118,7 @@ describe 'ContactView with updated_flow', ->
       @artwork.isContactable = -> true
       @view = new ContactView el: $('body'), model: @artwork
 
-      benv.render resolve(__dirname, '../templates/index.jade'), { artwork: @artwork, sd: { 'INQUIRY_FLOW' : 'updated_flow' } }, => done()
+      benv.render resolve(__dirname, '../templates/index.jade'), { artwork: @artwork }, => done()
 
   afterEach ->
     benv.teardown()
