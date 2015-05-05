@@ -43,5 +43,5 @@ block body
           a.christies-sale-link( href=sale.href style='background-image: url("#{sale.src}")')
             .christies-sale-link-metadata
               .opening Opening #{sale.date}
-              h3= sale.title
+              h3!= sale.title
               h4= sale.description
