@@ -31,6 +31,11 @@ describe 'defaultMessage', ->
         defaultMessage(@artwork)
           .should.equal "I'm interested in this work by Foo Bar. Please contact me to discuss further."
 
+      it 'returns correct messaging without artist name', ->
+        @artwork.set 'artist', null
+        defaultMessage(@artwork)
+          .should.equal "I'm interested in this work. Please contact me to discuss further."
+
   describe 'with partner', ->
     beforeEach ->
       @partner = new Partner
