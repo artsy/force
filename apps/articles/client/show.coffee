@@ -91,7 +91,7 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
   playVideo: (e) ->
     $cover = $(e.currentTarget).parent()
     $iframe = $cover.next('.articles-video').find('iframe')
-    $newIframe = $iframe.clone().attr('src', $iframe.attr('src') + '?autoplay=1')
+    $newIframe = $iframe.clone().attr('src', $iframe.attr('src') + '&autoplay=1')
     $iframe.replaceWith $newIframe
     $cover.remove()
 
