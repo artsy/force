@@ -1,13 +1,11 @@
-- feature = auction.related().feature
-
 .ap-featured-item
   a( href= auction.href() )
     h3.af-name= auction.get('name')
-    if feature.hasImage()
+    if auction.hasImage('source')
       img.af-hero-image(
-        src= feature.cropUrlFor({ width: 1200, height: 533 })
-        alt= feature.get('name')
-        title= feature.get('name')
+        src= auction.cropUrlFor({ width: 1200, height: 533 })
+        alt= auction.get('name')
+        title= auction.get('name')
       )
 
   .af-metadata
