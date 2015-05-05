@@ -19,7 +19,7 @@ for show in shows
               = show.get('fair_location').display
       else
         .show-related-show-title
-          a( href=show.href() )
+          a( href=show.href() + (fromShowGuide ? '?from-show-guide=true' : '') )
             = show.title()
         .show-related-show-partner
           a.entity-link( href=show.partnerHref() )
@@ -31,7 +31,7 @@ for show in shows
       if show.related().relatedImages
         for image in show.related().relatedImages.models
           li.show-related-show-image-container
-            a.hoverable-image-link( href=show.href() )
+            a.hoverable-image-link( href=show.href() + (fromShowGuide ? '?from-show-guide=true' : '') )
               img.show-related-show-image(
                 src= image.resizeUrlFor({ height: 270 })
                 alt= show.get('name')

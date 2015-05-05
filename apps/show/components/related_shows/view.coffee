@@ -23,6 +23,7 @@ module.exports = class RelatedShowsView extends Backbone.View
       show.get('displayable') and !show.isFairBooth()
     filteredCollection = new PartnerShows filteredCollection
     @$el.html template
+      fromShowGuide: location.search.match "from-show-guide"
       title: @title
       shows: filteredCollection.models
     this
