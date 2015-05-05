@@ -1,0 +1,41 @@
+{
+  "slug": "christies-spring-auctions-2015",
+  "title": "Christie’s Spring Auctions 2015",
+  "description": "Explore over 500 lots from the premier spring auctions from Christie’s",
+  "banner": {
+    "src": "/images/christies/banner.png"
+  },
+  "editorials": [
+    {
+      "href": "",
+      "src": "/images/christies/picasso.png",
+      "title": "What makes a Picasso Worth $140,000,000?"
+    }
+  ],
+  "sales": [
+    {
+      "href": "",
+      "src": "/images/christies/warhol.png",
+      "title": "Looking Forward to the Past: Evening Sale",
+      "description": "May 11 7:00 PM Lots 1 A - 35 A"
+    },
+    {
+      "href": "",
+      "src": "/images/christies/kapoor.png",
+      "title": "Post-War and Contemporary Art Day Sale: Session I",
+      "description": "May 12 9:00 AM Lots 101 - 322"
+    },
+    {
+      "href": "",
+      "src": "/images/christies/bacon.png",
+      "title": "Post-War and Contemporary Art: Evening Sale",
+      "description": "May 13 6:30 PM Lots 1 B - 85 B"
+    },
+    {
+      "href": "",
+      "src": "/images/christies/calder.png",
+      "title": "Post-War and Contemporary Art Day Sale: Session II",
+      "description": "May 14 9:00 AM Lots 401 - 621"
+    }
+  ]
+}

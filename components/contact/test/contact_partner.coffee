@@ -3,6 +3,7 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 Artwork = require '../../../models/artwork'
+Partner = require '../../../models/partner'
 rewire = require 'rewire'
 { fabricate } = require 'antigravity'
 { resolve } = require 'path'
@@ -20,7 +21,7 @@ describe 'ContactPartnerView', ->
   beforeEach (done) ->
     sinon.stub Backbone, 'sync'
     @artwork = new Artwork fabricate 'artwork'
-    @partner = fabricate 'partner', locations: null
+    @partner = new Partner fabricate 'partner', locations: null
     benv.render resolve(__dirname, '../templates/index.jade'), {}, =>
       ContactPartnerView = benv.requireWithJadeify(resolve(__dirname, '../contact_partner'), ['formTemplate', 'headerTemplate'])
       @analytics = ContactPartnerView.__get__('analytics')

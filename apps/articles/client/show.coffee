@@ -27,6 +27,7 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
     @renderArtworks()
     @breakCaptions()
     @checkEditable()
+    @sizeVideo()
 
   renderSlideshow: =>
     initCarousel $('.js-article-carousel'), imagesLoaded: true
@@ -82,9 +83,51 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
   events:
     'click .articles-vertical-right-chevron, \
     .articles-vertical-left-chevron': 'toggleVerticalCarousel'
+    'click .articles-video-play-button': 'playVideo'
 
   toggleVerticalCarousel: (e) ->
     @$('.articles-vertical-show-header-right').toggleClass('is-over')
+
+  playVideo: (e) ->
+    $cover = $(e.currentTarget).parent()
+    $iframe = $cover.next('.articles-video').find('iframe')
+    $newIframe = $iframe.clone().attr('src', $iframe.attr('src') + '?autoplay=1')
+    $iframe.replaceWith $newIframe
+    $cover.remove()
+
+
+
+  sizeVideo: ->
+    $videos = @$("iframe[src^='//player.vimeo.com'], iframe[src^='//www.youtube.com']")
+
+    calculateAspectRatioFit = (srcWidth, srcHeight, maxWidth, maxHeight) ->
+      ratio = Math.min maxWidth / srcWidth, maxHeight / srcHeight
+      { width: srcWidth*ratio, height: srcHeight*ratio }
+
+    resizeVideo = ->
+      newHeight = $(window).height() - 100
+
+      $videos.each ->
+        $el = $(this)
+        $parent = $el.parent()
+        c_width = $parent.outerWidth()
+        c_height = $parent.outerHeight()
+        maxHeight = if (newHeight < c_height) then newHeight else (c_width * .5625)
+        { width, height } = calculateAspectRatioFit $el.width(), $el.height(), $parent.outerWidth(), maxHeight
+
+        left = Math.max(0, ((c_width - width) / 2)) + "px"
+        top = Math.max(0, ((c_height - height) / 2)) + "px"
+
+        $el
+          .height(height)
+          .width(width)
+          .css
+            left: left
+            top: top
+
+    $(window).resize(_.debounce(resizeVideo, 100))
+    resizeVideo()
+
 
 module.exports.init = ->
   article = new Article sd.ARTICLE

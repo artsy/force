@@ -46,10 +46,9 @@ figure.artwork-item( data-artwork=artwork.get('id') )
 
     //- Auction estimate
     if saleArtwork.id && isAuction
-      - var estimate = saleArtwork.estimate()
-      if estimate
+      if saleArtwork.estimate()
         .artwork-item-estimate
-          | #{estimate}
+          | #{saleArtwork.estimateLabel()}: #{saleArtwork.estimate()}
 
     //- Auction related pricing information
     - var displayBidStatus = saleArtwork.id && isAuction

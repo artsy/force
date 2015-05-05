@@ -42,17 +42,6 @@ html[data-useragent*="iPad"]
   #main-layout-header-home-logo
     border-right 1px solid gray-lighter-color
 
-// Some elements need to break out of the standard side and top margins to fill
-// the full viewport. (Removes all side margins and content-margin-top)
-.body-no-margins
-  #main-layout-container
-    margin-top (welcome-header-height + main-header-height)
-    margin-left 0
-    margin-right 0
-  &.body-header-fixed
-    #main-layout-container
-      margin-top main-header-height
-
 // Simply hides the header
 .body-no-header
   #main-layout-header
@@ -115,9 +104,19 @@ html[data-useragent*="iPad"]
     margin-top 0
     padding 0 layout-side-margin
 
-
 // Loosens up some styling like min-widths so the page can be responsive
 .body-responsive
   min-width inherit
   #main-layout-container
     margin 30px 20px
+
+// Some elements need to break out of the standard side and top margins to fill
+// the full viewport. (Removes all side margins and content-margin-top)
+.body-no-margins
+  #main-layout-container
+    margin-top (welcome-header-height + main-header-height)
+    margin-left 0
+    margin-right 0
+  &.body-header-fixed
+    #main-layout-container
+      margin-top main-header-height

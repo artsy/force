@@ -42,8 +42,5 @@ module.exports =
   posts_section_name:
     key: 'posts_section_name'
     outcomes:
-      magazine: 1/5
+      magazine: 4/5
       editorial: 1/5
-      news: 1/5
-      stories: 1/5
-      posts: 1/5

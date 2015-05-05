@@ -9,6 +9,7 @@ ClockView = require '../../../components/clock/view.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 Artworks = require '../../../collections/artworks.coffee'
+Auction = require '../../../models/auction.coffee'
 ShareView = require '../../../components/share/view.coffee'
 AuctionArtworksView = require '../../../components/auction_artworks/view.coffee'
 artworkColumns = -> require('../../../components/artwork_columns/template.jade') arguments...
@@ -50,7 +51,7 @@ module.exports = class FeatureView extends Backbone.View
         @auctionArtworks.add artworks.models
       else
         view = new AuctionArtworksView
-          model: @sale
+          model: new Auction @sale.toJSON()
           collection: @auctionArtworks = artworks
           user: @currentUser
         @$('#feature-artworks').html view.render().$el

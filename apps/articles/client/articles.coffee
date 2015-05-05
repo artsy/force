@@ -1,6 +1,7 @@
 _ = require 'underscore'
 Articles = require '../../../collections/articles.coffee'
 ArticlesFeedView = require '../../../components/articles_feed/view.coffee'
+sd = require('sharify').data
 
 module.exports.init = ->
   articles = new Articles sd.ARTICLES
@@ -13,7 +14,6 @@ module.exports.init = ->
     fetchWith:
       limit: 50
       published: true
-      author_id: '503f86e462d56000020002cc'
       featured: true
       sort: '-published_at'
 

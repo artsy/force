@@ -14,7 +14,7 @@ module.exports = class FilterView extends Backbone.View
   columnWidth: 300
   facets: ['price_range', 'dimension_range', 'medium']
 
-  initialize: ({@collection, @params}) ->
+  initialize: ({@collection, @params, @stuckFacet}) ->
     @initSubViews()
 
     @listenTo @collection, 'sync', @render
@@ -42,6 +42,7 @@ module.exports = class FilterView extends Backbone.View
       collection: @collection
       params: @params
       facets: @facets
+      stuckFacet: @stuckFacet
 
     new CountView
       el: @$('.filter-sort-count-count')

@@ -9,15 +9,15 @@
         for article in featuredArticles.slice(1)
           +article-figure(article, 300, false, false)
 
-  if vertical && articles.featuredToVertical(vertical).length
+  if sd.CURRENT_PATH != '/articles' && vertical && articles.featuredToVertical(vertical).length
     section.articles-featured-vertical-articles
-      h4 Your Guide to The Biennale
+      h4= vertical.get('featured_articles_header')
       ul.grid-4-up
         for article in articles.featuredToVertical(vertical)
           li.grid-item
             a(href="#{article.href()}")
               img( src=crop(article.get('thumbnail_image'), { width: 70, height: 70 }) )
-              p= article.get('title')
+              p= article.get('thumbnail_title')
 
   .articles-articles-feed.articles-feed
     .articles-feed-articles.js-articles-feed-articles

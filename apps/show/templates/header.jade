@@ -1,4 +1,4 @@
-header.show-header
+header.show-header( class= hasCarousel ? 'has-carousel' : undefined )
   .show-header-cell
     h1.show-title
       if show.has('fair')
@@ -43,4 +43,5 @@ header.show-header
         if location
           .show-location
             = location.singleLine()
-        a.map-modal-link
+            a.map-modal-link
+              include ../components/map_modal/images/map-modal-arrow.svg

@@ -49,7 +49,7 @@ module.exports = class Article extends Backbone.Model
       if @get('vertical_id')
         dfds.push (vertical = new Vertical(id: @get('vertical_id'))).fetch()
         dfds.push (verticalArticles = new Articles).fetch(
-          data: vertical_id: @get('vertical_id'), published: true
+          data: vertical_id: @get('vertical_id'), published: true, limit: 50
         )
       Q.allSettled(dfds).fin =>
         options.success(

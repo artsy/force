@@ -20,26 +20,28 @@
 
       if saleArtwork.estimate()
         .aga-estimate
-          = saleArtwork.estimate()
+          | #{saleArtwork.estimateLabel()}: #{saleArtwork.estimate()}
 
       if displayBlurbs
-        .aga-blurb
+        .aga-blurb( style= maxBlurbHeight ? "height: #{maxBlurbHeight}" : undefined )
           != artwork.mdToHtml('blurb')
 
-    .aga-bidding
-      .aga-bid-status
-        if auction.isOpen()
-          .aabs-label
-            strong= saleArtwork.bidLabel()
-            = ' '
-            | (#{saleArtwork.bidCount()})
-          .aabs-price
-            = saleArtwork.currentBid()
-        else
-          .aabs-label
-            //-
-          .aabs-price
-            != artwork.saleMessage() || '&nbsp;'
+    unless auction.isAuctionPromo() && auction.isClosed()
+      .aga-bidding
+        unless auction.isAuctionPromo()
+          .aga-bid-status
+            if auction.isOpen()
+              .aabs-label
+                strong= saleArtwork.bidLabel()
+                = ' '
+                | (#{saleArtwork.bidCount()})
+              .aabs-price
+                = saleArtwork.currentBid()
+            else
+              .aabs-label
+                //-
+              .aabs-price
+                != artwork.saleMessage() || '&nbsp;'
 
-      - button = auction.bidButtonState(user, artwork)
-      .aga-bid-button: include button
+        - button = auction.bidButtonState(user, artwork)
+        .aga-bid-button: include button

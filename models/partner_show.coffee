@@ -1,4 +1,5 @@
 _ = require 'underscore'
+Q = require 'q'
 sd = require('sharify').data
 moment = require 'moment'
 Backbone = require 'backbone'

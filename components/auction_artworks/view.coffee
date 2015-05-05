@@ -1,14 +1,18 @@
 _ = require 'underscore'
+_s = require 'underscore.string'
 Backbone = require 'backbone'
 AuthModalView = require '../auth_modal/view.coffee'
 State = require './models/state.coffee'
+ContactPartnerView = require '../contact/contact_partner.coffee'
 template = -> require('./templates/index.jade') arguments...
 
 module.exports = class AuctionArtworksView extends Backbone.View
   className: 'auction-artworks-container'
+
   events:
     'click .js-toggle-artworks-sort': 'setState'
     'click .js-bid-button': 'authOrPass'
+    'click .js-inquiry-button': 'inquire'
 
   initialize: ({ @user }) ->
     @state = new State
@@ -46,8 +50,23 @@ module.exports = class AuctionArtworksView extends Backbone.View
       copy: 'Sign up to bid'
       redirectTo: $(e.currentTarget).attr('href')
 
+  inquire: (e) ->
+    e.preventDefault()
+
+    id = $(e.currentTarget).data 'id'
+    artwork = @collection.get id
+
+    new ContactPartnerView artwork: artwork, partner: artwork.related().partner
+
   displayBlurbs: ->
     _.any _.map(@collection.pluck('blurb'), _.negate(_.isEmpty))
+
+  maxBlurbHeight: (displayBlurbs, lineHeight = 22, columnWidth = 50) ->
+    return unless displayBlurbs
+
+    Math.ceil(_.max(_.map @collection.pluck('blurb'), (blurb) ->
+      ((_s.stripTags(blurb).length / columnWidth) * lineHeight) + lineHeight
+    )) + 'px'
 
   render: ->
     @$el.html template
@@ -55,5 +74,6 @@ module.exports = class AuctionArtworksView extends Backbone.View
       user: @user
       auction: @model
       artworks: @artworks()
-      displayBlurbs: @displayBlurbs()
+      displayBlurbs: displayBlurbs = @displayBlurbs()
+      maxBlurbHeight: @maxBlurbHeight(displayBlurbs)
     this

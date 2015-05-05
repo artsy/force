@@ -1,4 +1,9 @@
-//- Cover image here, wider proportions
+if auction.get('image_versions') && auction.get('image_versions').length
+  // 3:1 ratio
+  .auction-preview-cover-image.responsive-image-container: img(
+    src= auction.cropUrlFor({ width: 1500, height: 500 })
+    alt= auction.get('name')
+  )
 
 header.auction-header
   .auction-header-primary
@@ -8,14 +13,8 @@ header.auction-header
       != auction.mdToHtml('description')
 
     .auction-preview-primary-metadata
-      .auction-header-metadata-cell
-        h3 Contact
-        .auction-header-metadata-cell-contents
-          p
-            | Have questions about this auction?
-            br
-            a.fine-faux-underline.js-specialist-contact-link( href='#' )
-              | Contact an Artsy Specialist
+      include metadata/event
+      include metadata/contact
 
   .auction-header-metadata
     //- Profile logo here

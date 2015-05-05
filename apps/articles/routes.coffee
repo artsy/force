@@ -39,7 +39,8 @@ embedVideo = require 'embed-video'
       res.locals.sd.SLIDESHOW_ARTWORKS = data.slideshowArtworks?.toJSON()
       res.locals.sd.ARTICLE = data.article.toJSON()
       res.locals.sd.FOOTER_ARTICLES = data.footerArticles.toJSON()
-      res.render 'show', _.extend data, embedVideo: embedVideo
+      videoOptions = { query: { title: 0, portrait: 0, badge: 0, byline: 0, showinfo: 0, rel: 0, controls: 2, modestbranding: 1, iv_load_policy: 3, color: "E5E5E5" } }
+      res.render 'show', _.extend data, embedVideo: embedVideo, videoOptions: videoOptions
 
 @redirectPost = (req, res, next) ->
   res.redirect 301, req.url.replace 'post', 'article'
@@ -50,7 +51,14 @@ embedVideo = require 'embed-video'
     success: (vertical) ->
       return next() unless req.params.slug is vertical.get('slug')
       new Articles().fetch
-        data: vertical_id: vertical.get('id'), published: true
+        data:
+          published: true
+          limit: 100
+          sort: '-published_at'
+          vertical_id: vertical.get('id')
         error: res.backboneError
         success: (articles) ->
+          res.locals.sd.ARTICLES = articles.toJSON()
+          res.locals.sd.ARTICLES_COUNT = articles.count
+          res.locals.sd.VERTICAL = vertical.toJSON()
           res.render 'vertical', vertical: vertical, articles: articles

@@ -1,20 +1,27 @@
+_s = require 'underscore.string'
+Q = require 'q'
+Backbone = require 'backbone'
 Gene = require '../../models/gene'
+FilterArtworks = require '../../collections/filter_artworks'
 
 @index = (req, res, next) ->
-  new Gene(id: req.params.id).fetch
-    success: (gene) ->
-      res.locals.sd.GENE = gene.toJSON()
+  gene = new Gene(id: req.params.id)
+  filterArtworks = new FilterArtworks
+  params = new Backbone.Model gene: gene.id
 
-      # Do not include fragment meta tag for urls that reflection does not crawl (/gene/:id/artworks*)
-      #
-      # If the head of a page has both a meta fragment and a canonical
-      # tag, google's crawler will use the meta fragment FIRST
-      # (re-crawling with ?_escaped_fragment_=). It then respects the
-      # canonical tag in the escaped_fragment html.
-      includeMetaFragment = !req.originalUrl.match('/artworks')
+  Q.all([
+    gene.fetch(cache: true)
+    filterArtworks.fetch(data: { size: 0, gene: req.params.id } )
+  ]).done ->
+    res.locals.sd.FILTER_ROOT = gene.href() + '/artworks'
+    res.locals.sd.GENE = gene.toJSON()
+    res.locals.sd.FILTER_PARAMS = new Backbone.Model gene: gene.id
 
-      res.render 'index',
-        gene: gene
-        filterRoot: gene.href() + '/artworks'
-        includeMetaFragment: includeMetaFragment
-    error: res.backboneError
+    res.render 'index',
+      gene: gene
+      filterRoot: res.locals.sd.FILTER_ROOT
+      counts: filterArtworks.counts
+      numberFormat: _s.numberFormat
+      params: params
+      activeText: ''
+

@@ -1,6 +1,6 @@
 if saleArtwork.estimate() && !auction.isClosed()
   .artwork-auction-estimate
-    = saleArtwork.estimate()
+    | #{saleArtwork.estimateLabel()}: #{saleArtwork.estimate()}
 
 if auction.isOpen()
   if bidderPositions && bidderPositions.length

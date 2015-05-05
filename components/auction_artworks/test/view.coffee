@@ -3,7 +3,7 @@ benv = require 'benv'
 Backbone = require 'backbone'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
-Auction = require '../../../models/sale'
+Auction = require '../../../models/auction'
 Artworks = require '../../../collections/artworks'
 AuctionArtworksView = benv.requireWithJadeify resolve(__dirname, '../view'), ['template']
 
@@ -26,37 +26,84 @@ describe 'AuctionArtworksView', ->
       </section>
     """
 
-    @auction = new Auction fabricate 'auction'
+    @user = new Backbone.Model
     @artworks = new Artworks [
       fabricate 'artwork', id: 'z-z', artist: sortable_id: 'z-z'
       fabricate 'artwork', id: 'a-a', artist: sortable_id: 'a-a'
     ]
-    @view = new AuctionArtworksView el: $('section'), model: @auction, collection: @artworks, user: new Backbone.Model
 
-  describe '#render', ->
-    it 'renders the default state', ->
-      @view.render()
-      @view.$('.js-auction-artworks').data('mode').should.equal 'grid'
-      @view.$('.auction-grid-artwork').should.have.lengthOf 2
-
-  describe '#setState', ->
+  describe 'default auction', ->
     beforeEach ->
-      @view.$('a[data-sort="name_asc"]').click()
+      @view = new AuctionArtworksView
+        el: $('section')
+        model: @auction = new Auction fabricate 'sale'
+        collection: @artworks
+        user: @user
 
-    it 'sets the view state', ->
-      @view.state.attributes.should.eql mode: 'list', sort: 'name_asc'
+    describe '#render', ->
+      it 'renders the default state', ->
+        @view.render()
+        @view.$('.js-auction-artworks').data('mode').should.equal 'grid'
+        @view.$('.auction-grid-artwork').should.have.lengthOf 2
+        @view.$('.js-bid-button').should.have.lengthOf 2
+        @view.$('.js-inquiry-button').should.have.lengthOf 0
 
-    it 'activates the link', ->
-      @view.$('.is-active').data('sort').should.equal 'name_asc'
+    describe '#setState', ->
+      beforeEach ->
+        @view.$('a[data-sort="name_asc"]').click()
 
-    it 'triggers a sort and re-render', ->
-      @view.$('.auction-grid-artwork').should.have.lengthOf 0
-      @view.$('.auction-list-artwork').should.have.lengthOf 2
-      @view.$('.auction-list-artwork:first-child a').attr('href').should.containEql '/artwork/a-a'
-      @view.$('.auction-list-artwork:last-child a').attr('href').should.containEql '/artwork/z-z'
+      it 'sets the view state', ->
+        @view.state.attributes.should.eql mode: 'list', sort: 'name_asc'
 
-  describe '#displayBlurbs', ->
-    it 'returns true if any artworks have a blurb', ->
-      @view.displayBlurbs().should.be.false
-      @view.collection.first().set 'blurb', 'Existence!'
-      @view.displayBlurbs().should.be.true
+      it 'activates the link', ->
+        @view.$('.is-active').data('sort').should.equal 'name_asc'
+
+      it 'triggers a sort and re-render', ->
+        @view.$('.auction-grid-artwork').should.have.lengthOf 0
+        @view.$('.auction-list-artwork').should.have.lengthOf 2
+        @view.$('.auction-list-artwork:first-child a').attr('href').should.containEql '/artwork/a-a'
+        @view.$('.auction-list-artwork:last-child a').attr('href').should.containEql '/artwork/z-z'
+
+    describe '#displayBlurbs', ->
+      it 'returns true if any artworks have a blurb', ->
+        @view.displayBlurbs().should.be.false
+        @view.collection.first().set 'blurb', 'Existence!'
+        @view.displayBlurbs().should.be.true
+
+    describe '#maxBlurbHeight', ->
+      it 'returns a pixel value based on the estimated height of the longest blurb', ->
+        @view.maxBlurbHeight(true).should.equal '22px' # A single line
+        _.isUndefined(@view.maxBlurbHeight(false)).should.be.true
+        @view.collection.first().set 'blurb', 'Existence!'
+        @view.maxBlurbHeight(true).should.equal '27px'
+        @view.collection.last().set 'blurb', 'Existence! Existence! Existence! Existence! Existence! Existence! Existence! Existence! Existence! Existence!'
+        @view.maxBlurbHeight(true).should.equal '70px'
+
+  describe 'auction promo', ->
+    beforeEach ->
+      @view = new AuctionArtworksView
+        el: $('section')
+        model: @auction = new Auction fabricate 'sale', sale_type: 'auction promo'
+        collection: @artworks
+        user: @user
+
+    describe '#render', ->
+      describe 'isOpen', ->
+        beforeEach ->
+          @auction.set 'auction_state', 'open'
+          @view.render()
+
+        it 'renders correctly', ->
+          @view.$('.auction-grid-artwork').should.have.lengthOf 2
+          @view.$('.js-bid-button').should.have.lengthOf 0
+          @view.$('.js-inquiry-button').should.have.lengthOf 2
+
+      describe 'isClosed', ->
+        beforeEach ->
+          @auction.set 'auction_state', 'closed'
+          @view.render()
+
+        it 'renders correctly', ->
+          @view.$('.auction-grid-artwork').should.have.lengthOf 2
+          @view.$('.js-bid-button').should.have.lengthOf 0
+          @view.$('.js-inquiry-button').should.have.lengthOf 0

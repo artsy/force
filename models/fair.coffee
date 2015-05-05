@@ -27,6 +27,9 @@ module.exports = class Fair extends Backbone.Model
     else
      "/#{@get('organizer')?.profile_id}"
 
+  fairOrgHref: ->
+    "/#{@get('organizer')?.profile_id}/#{@formatYear()}"
+
   hasImage: (version = 'wide') ->
     version in (@get('image_versions') || [])
 
@@ -95,7 +98,13 @@ module.exports = class Fair extends Backbone.Model
   aToZCollection: (namespace) =>
     href = @href()
     class FairSearchResult extends Backbone.Model
-      href: -> "#{href}/browse/#{namespace}/#{@get('id')}"
+      href: ->
+        if namespace is 'show' and @get('partner_show_ids')?[0]
+          "/show/#{@get('partner_show_ids')[0]}"
+        else
+          "#{href}/browse/#{namespace}/#{@get('id')}"
+
+
       displayName: -> @get('name')
       imageUrl: ->
         url = "#{sd.API_URL}/api/v1/profile/#{@get('default_profile_id')}/image"

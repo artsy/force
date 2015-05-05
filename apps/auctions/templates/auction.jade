@@ -1,13 +1,11 @@
-- feature = auction.related().feature
-
 .ap-featured-item
   a( href= auction.href() )
     h3.af-name= auction.get('name')
-    if feature.hasImage()
+    if auction.hasImage('source')
       img.af-hero-image(
-        src= feature.cropUrlFor({ width: 1200, height: 533 })
-        alt= feature.get('name')
-        title= feature.get('name')
+        src= auction.cropUrlFor({ width: 1200, height: 533 })
+        alt= auction.get('name')
+        title= auction.get('name')
       )
 
   .af-metadata
@@ -16,8 +14,8 @@
         include ../../../components/clock/template
 
     .af-stats
+      .af-stats-status(class=auction.isOpen() ? 'is-open' : '') Bidding #{auction.get('auction_state')} on Artsy
       .af-stats-count #{auction.get('eligible_sale_artworks_count')} Works in Auction
-      .af-stats-status Bidding #{auction.get('auction_state')}
 
     if auction.isOpen()
       a.af-go-button.avant-garde-button-black( href= auction.href() )

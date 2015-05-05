@@ -1,17 +1,18 @@
 - displayLocation = displayLocation || false
 - displayContextualLabel = displayContextualLabel || false
 
+
 //- Sometimes a show will have an image_url but not image_versions
 if show.has('image_versions') && show.get('image_versions').length
   li.featured-shows-featured-show.grid-item
-    a.hoverable-image-link( href=show.href() )
+    a.hoverable-image-link( href=show.href() + (fromShowGuide ? '?from-show-guide=true' : '') )
       img.fsfs-cover-image(
         src= show.cropUrlFor({ width: width, height: height })
         alt= show.get('name')
         onerror='this.style.display="none";'
       )
 
-    a.fsfs-metadata( href=show.href() )
+    a.fsfs-metadata( href=show.href() + (fromShowGuide ? '?from-show-guide=true' : '') )
       if displayContextualLabel
         h5.fsfs-contextual-label= show.contextualLabel(artist && artist.get('name'))
       h4.fsfs-partner-name= show.partnerName()

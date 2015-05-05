@@ -35,6 +35,9 @@
   h2
     font-size 28px
     line-height 1.2em
+  h3
+    avant-garde()
+    font-size 13px
 
 #articles-lead-paragraph
   margin 0 auto gutter-size auto
@@ -129,6 +132,7 @@
   width body-width
   margin auto
   margin-bottom 1em
+  position relative
   iframe
     margin auto
     width body-width
@@ -159,3 +163,62 @@
 #articles-show-carousel
   img
     height 350px
+
+.articles-large-format-video-container .articles-video
+  position relative
+  padding-bottom 56.25% /* 16:9 */
+  height 0
+  max-width 1250px
+  margin-bottom 50px
+
+  iframe
+    position absolute
+    top 0
+    left 0
+    width 100%
+    height 100%
+    max-width 100%
+    max-height ((default-max-page-width * .5625) - 50)
+
+.articles-large-format-video-container
+  position relative
+
+.articles-large-format-image
+  max-width 1250px
+  margin-bottom 50px
+  img
+    top 0
+    left 0
+    width 100%
+
+.articles-video-cover-image
+  background center center
+  background-size cover
+  width 100%
+  height 100%
+  position absolute
+  top 0
+  left 0
+  z-index 1
+
+.articles-video-play-button
+  background white
+  width play-button-size + 40px
+  height @width
+  position absolute
+  top "calc(50% - %s)" % (@width / 2)
+  left "calc(50% - %s)" % (@width / 2)
+  z-index 2
+  cursor pointer
+  border 0
+  outline 0
+
+.articles-video-play-button-caret
+  width 0
+  height 0
+  top 14px
+  left 22px
+  position absolute
+  border-top (play-button-size - 10) solid transparent
+  border-bottom (play-button-size - 10) solid transparent
+  border-left play-button-size solid black

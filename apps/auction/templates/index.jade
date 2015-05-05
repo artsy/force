@@ -8,7 +8,7 @@ append locals
 
 block body
   .auction-page.main-layout-container
-    if auction.isPreview()
+    if auction.isPreview() && !auction.isAuctionPromo()
       include ./preview
     else
       include ./auction
