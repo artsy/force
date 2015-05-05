@@ -2,7 +2,6 @@ _ = require 'underscore'
 _s = require 'underscore.string'
 Partner = require '../../../../models/partner.coffee'
 PartnerPhoneNumberView = require '../partner_phone_number/view.coffee'
-{ INQUIRY_FLOW } = require('sharify').data
 
 # Sets up the partner phone numbers while simultaneously rendering
 # partner locations, since they are relying on the same data
@@ -22,7 +21,7 @@ module.exports = class PartnerLocations
         "#{locations.length} Locations"
       else
         @renderFirstCities locations, limit
-      if INQUIRY_FLOW is 'updated_flow' and window.location.href.match('/artwork')
+      if window.location.href.match('/artwork')
         text = "#{locationString}"
       else
         text = ", #{locationString}"
