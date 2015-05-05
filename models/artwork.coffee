@@ -26,7 +26,6 @@ module.exports = class Artwork extends Backbone.Model
     Articles = require '../collections/articles.coffee'
     @relatedArticles = new Articles
     @relatedArticles.url += "?artwork_id=#{@get '_id'}&published=true"
-    @setupRelatedCollections()
 
   parse: (response, options) ->
     @editions = new Backbone.Collection response?.edition_sets, model: Edition
@@ -305,23 +304,6 @@ module.exports = class Artwork extends Backbone.Model
   showActionsList: (user) ->
     @get('website') or @isDownloadable() or (user and user.isAdmin())
 
-  # Sets up related collections and makes them available
-  # under an object so we can access/iterate over them later
-  #
-  # e.g. @relatedCollections['sales'] # => Backbone.Collection
-  setupRelatedCollections: ->
-    @relatedCollections = _.reduce ['sales', 'fairs', 'features', 'shows'], (memo, aspect) =>
-      memo[aspect] = @[aspect] = new Backbone.Collection
-      @[aspect].url = "#{sd.API_URL}/api/v1/related/#{aspect}?artwork[]=#{@id}&active=true"
-      @[aspect].url += "&cache_bust=#{Math.random()}" if aspect is 'sales'
-      @[aspect].kind = aspect
-      memo
-    , {}
-
-  fetchRelatedCollections: (options = {}) ->
-    _.map @relatedCollections, (collection) ->
-      collection.fetch options
-
   toJSONLD: ->
     if @get('artist')
       creator =
@@ -351,6 +333,6 @@ module.exports = class Artwork extends Backbone.Model
 
   fetchPartnerAndSales: (options) ->
     Q.allSettled([
-      (partner = new Partner @get 'partner').fetch()
-      (sales = @relatedCollections.sales).fetch()
+      (partner = @related().partner).fetch()
+      (sales = @related().sales).fetch()
     ]).fail(options.error).then -> options.success partner, sales

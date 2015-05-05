@@ -41,10 +41,13 @@ module.exports = class ContactView extends Backbone.View
   initialize: ->
     @user = CurrentUser.orNull() or new LoggedOutUser
     @inquiry = new Inquiry
-    @fairs = @model.relatedCollections.fairs
-    @listenTo @fairs, 'sync', @renderAttendance
+
+    @listenTo (@fairs = @model.related().fairs), 'sync', @renderAttendance
+
     @cacheSelectors()
-    Mailcheck.run('#js-mailcheck-input-artwork','#js-mailcheck-hint-artwork',true)
+
+    Mailcheck.run '#js-mailcheck-input-artwork', '#js-mailcheck-hint-artwork', true
+
     @checkInquiredArtwork()
 
   cacheSelectors: ->
