@@ -9,7 +9,7 @@ module.exports = class PartnerLocations
   constructor: (options = {}) ->
     { @$el, @artwork } = options
     return unless @artwork.has 'partner'
-    @partner = new Partner(@artwork.get 'partner')
+    @partner = @artwork.related().partner
     @locations = @partner.locations()
     @locations.fetchUntilEnd success: =>
       @renderLocations @locations
