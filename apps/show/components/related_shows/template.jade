@@ -5,17 +5,18 @@ for show in shows
     .show-related-show-info
       if show.has('fair')
         .show-related-show-title
-          a( href=show.partnerHref() )
+          a( href=show.href() )
             = show.partnerName()
         .show-related-show-title-fair
-          a( href= show.related().fair.href() )
+          a( href= show.href() )
             = show.fairName()
         .show-related-show-partner
           a.entity-link( href=show.partnerHref() )
             = show.partnerName()
         if show.get('fair_location')
           .show-related-show-fair-booth
-            = show.get('fair_location').display
+            a( href= show.href() )
+              = show.get('fair_location').display
       else
         .show-related-show-title
           a( href=show.href() )
