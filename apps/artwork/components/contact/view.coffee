@@ -82,23 +82,23 @@ module.exports = class ContactView extends Backbone.View
     analytics.track.funnel 'Clicked "Contact Gallery" button', @model.attributes
     analytics.snowplowStruct 'contact_gallery', 'click', @model.get('id'), 'artwork'
 
-    new ConfirmInquiryView
-      artwork: @model
-      partner: @model.get 'partner'
-      inputEmail: $('#js-mailcheck-input-artwork').val()
-      inputName: $('#artwork-contact-form input:first').val()
-      inputMessage: $('#artwork-contact-form textarea').val()
-      success: =>
-        console.log 'in the success method'
-        @displayInquirySent()
-        new FlashMessage message: 'Thank you. Your message has been sent.'
-        @$submit.attr('data-state', '').blur()
-      error: (model, response, options) =>
-        @reenableForm()
-        @$('#artwork-contact-form-errors').html @errorMessage(response)
-        @$submit.attr 'data-state', 'error'
-      exit: =>
-        @reenableForm()
+    @maybeWaitForAttendance =>
+      new ConfirmInquiryView
+        artwork: @model
+        partner: @model.get 'partner'
+        inputEmail: $('#js-mailcheck-input-artwork').val()
+        inputName: $('#artwork-contact-form input:first').val()
+        inputMessage: $('#artwork-contact-form textarea').val()
+        success: =>
+          @displayInquirySent()
+          new FlashMessage message: 'Thank you. Your message has been sent.'
+          @$submit.attr('data-state', '').blur()
+        error: (model, response, options) =>
+          @reenableForm()
+          @$('#artwork-contact-form-errors').html @errorMessage(response)
+          @$submit.attr 'data-state', 'error'
+        exit: =>
+          @reenableForm()
 
   hoveredSubmit: ->
     analytics.track.hover "Hovered over contact form 'Send' button"
