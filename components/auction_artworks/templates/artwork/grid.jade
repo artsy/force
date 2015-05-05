@@ -18,9 +18,11 @@
         h3.aga-title
           != artwork.titleAndYear() || '&nbsp;'
 
-      if saleArtwork.estimate()
-        .aga-estimate
+      .aga-estimate
+        if saleArtwork.estimate()
           | #{saleArtwork.estimateLabel()}: #{saleArtwork.estimate()}
+        else
+          | &nbsp;
 
       if displayBlurbs
         .aga-blurb( style= maxBlurbHeight ? "height: #{maxBlurbHeight}" : undefined )
