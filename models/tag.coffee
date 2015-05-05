@@ -12,6 +12,8 @@ module.exports = class Tag extends Backbone.Model
 
   urlRoot: "#{API_URL}/api/v1/tag"
 
+  href: -> "/tag/#{@get('id')}"
+
   fetchFilterSuggest: (params, options) ->
     new Backbone.Model().fetch _.extend
       data: params
