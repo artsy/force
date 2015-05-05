@@ -2,7 +2,7 @@ _ = require 'underscore'
 benv = require 'benv'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
-Auction = require '../../../models/sale'
+Auction = require '../../../models/auction'
 
 describe 'Auctions template', ->
   before ->
@@ -10,6 +10,7 @@ describe 'Auctions template', ->
       @openAuction = new Auction fabricate 'sale', auction_state: 'open', id: 'open-auction'
       @closedAuction = new Auction fabricate 'sale', auction_state: 'closed', id: 'closed-auction'
       @previewAuction = new Auction fabricate 'sale', auction_state: 'preview', id: 'preview-auction'
+      @promoAuction = new Auction fabricate 'sale', auction_state: 'open', id: 'promo-sale', eligible_sale_artworks_count: 1, sale_type: 'auction promo'
     ]
 
   describe 'with at least one of every kind of auction', ->
@@ -22,6 +23,7 @@ describe 'Auctions template', ->
           pastAuctions: [@closedAuction]
           currentAuctions: [@openAuction]
           upcomingAuctions: [@previewAuction]
+          promoAuctions: []
           nextAuction: @previewAuction
         done()
 
@@ -37,7 +39,7 @@ describe 'Auctions template', ->
       # 'How auctions work' link & Upcoming auctions
       $('.ap-upcoming-item').should.have.lengthOf 2
 
-  describe 'without current auctions', ->
+  xdescribe 'without current auctions', ->
     before (done) ->
       benv.setup =>
         benv.expose $: benv.require 'jquery'
@@ -47,6 +49,7 @@ describe 'Auctions template', ->
           pastAuctions: [@closedAuction]
           currentAuctions: []
           upcomingAuctions: [@previewAuction]
+          promoAuctions: []
           nextAuction: @previewAuction
         done()
 

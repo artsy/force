@@ -13,14 +13,54 @@
   float left
   margin-right 40px
 .af-clock .clock-header
-  text-transform none
+  text-transform uppercase
   text-align left
   font-size inherit
 .af-stats-status
   avant-garde()
-  font-size 11px
+  font-size 13px
+  &.is-open
+    color #00cc66
 .af-go-button
   float right
+.af-thumbnail
+  display inline-block
+
+.ap-featured-item--small
+  margin-bottom 30px
+  display table
+  width 100%
+
+  a
+    text-decoration none
+
+.ap-featured-item__thumb, .ap-featured-item__title, .ap-featured-item__clock
+  display table-cell
+  width auto
+  vertical-align middle
+
+.ap-featured-item__thumb
+  vertical-align top
+  width 252px
+  height 175px
+  line-height 0
+
+.ap-featured-item__title
+  padding 0 30px
+  max-width 300px
+
+  h3
+    margin 0
+    line-height 32px
+
+.ap-featured-item__clock
+  text-align right
+
+  .af-clock
+    float right
+
+  .af-clock .clock-header
+    text-align right
 
 #auctions-page > .aggregate-page-items
   margin-bottom 30px

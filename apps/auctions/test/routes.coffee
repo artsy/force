@@ -19,6 +19,8 @@ describe 'Auctions routes', ->
         @openAuction = new Auction fabricate 'sale', auction_state: 'open', id: 'open-sale', eligible_sale_artworks_count: 1
         @closedAuction = new Auction fabricate 'sale', auction_state: 'closed', id: 'closed-sale', eligible_sale_artworks_count: 1
         @previewAuction = new Auction fabricate 'sale', auction_state: 'preview', id: 'preview-sale', eligible_sale_artworks_count: 1
+        @previewPromoAuction = new Auction fabricate 'sale', auction_state: 'preview', id: 'preview-promo-sale', eligible_sale_artworks_count: 1, sale_type: 'auction promo'
+        @promoAuction = new Auction fabricate 'sale', auction_state: 'open', id: 'promo-sale', eligible_sale_artworks_count: 1, sale_type: 'auction promo'
       ]
 
     describe 'without user', ->
@@ -49,6 +51,7 @@ describe 'Auctions routes', ->
           @res.render.args[0][1].pastAuctions.should.eql [@closedAuction]
           @res.render.args[0][1].currentAuctions.should.eql [@openAuction]
           @res.render.args[0][1].upcomingAuctions.should.eql [@previewAuction]
+          @res.render.args[0][1].promoAuctions.should.eql [@previewPromoAuction, @promoAuction]
           @res.render.args[0][1].nextAuction.should.eql @previewAuction
           done()
 
