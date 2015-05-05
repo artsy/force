@@ -28,7 +28,7 @@
         .aga-blurb( style= maxBlurbHeight ? "height: #{maxBlurbHeight}" : undefined )
           != artwork.mdToHtml('blurb')
 
-    unless auction.isAuctionPromo() && auction.isClosed()
+    unless auction.isAuctionPromo() && !auction.isAuctionPromoInquirable()
       .aga-bidding
         unless auction.isAuctionPromo()
           .aga-bid-status
