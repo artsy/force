@@ -1,7 +1,7 @@
 _ = require 'underscore'
 { Cities, FeaturedCities } = require 'places'
 PartnerShows = require '../../../../collections/partner_shows.coffee'
-RelatedShows = require './view.coffee'
+RelatedShowsView = require './view.coffee'
 
 module.exports = (type, show) ->
 
@@ -21,7 +21,7 @@ module.exports = (type, show) ->
       data =  _.extend criteria, fair_id: show.related().fair.get('_id')
       title = "More Booths from #{show.related().fair.get('name')}"
     when 'gallery'
-      data = _.extend criteria, sort: "-end_at", at_a_fair: true
+      data = _.extend criteria, sort: '-end_at', size: '8'
       relatedShows.url = "#{show.related().partner.url()}/shows"
       title = "Other Shows from #{show.partnerName()}"
     when 'featured'
@@ -32,11 +32,13 @@ module.exports = (type, show) ->
       data = _.extend criteria, near: city.coords.toString(), sort: '-start_at'
       title = "Current Shows in #{show.formatCity()}"
 
-  new RelatedShows
+  new RelatedShowsView
     collection: relatedShows
     title: title
     el: el
 
   relatedShows.fetch
     data: data
-    success: -> relatedShows.getShowsRelatedImages()
+    success: ->
+      relatedShows.getShowsRelatedImages()
+
