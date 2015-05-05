@@ -3,7 +3,7 @@ _s = require 'underscore.string'
 Backbone = require 'backbone'
 Cookies = require 'cookies-js'
 moment = require 'moment'
-{ SESSION_ID, API_URL, INQUIRY_FLOW } = require('sharify').data
+{ SESSION_ID, API_URL } = require('sharify').data
 CurrentUser = require '../../../../models/current_user.coffee'
 LoggedOutUser = require '../../../../models/logged_out_user.coffee'
 FlashMessage = require '../../../../components/flash/index.coffee'
@@ -89,6 +89,7 @@ module.exports = class ContactView extends Backbone.View
       inputName: $('#artwork-contact-form input:first').val()
       inputMessage: $('#artwork-contact-form textarea').val()
       success: =>
+        console.log 'in the success method'
         @displayInquirySent()
         new FlashMessage message: 'Thank you. Your message has been sent.'
         @$submit.attr('data-state', '').blur()
