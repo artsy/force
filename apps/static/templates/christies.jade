@@ -21,27 +21,27 @@ append locals
 
 block body
   .christies-banner-image( style='background-image: url("#{banner.src}")')
-    //-
+    .responsive-layout-container: .main-layout-container
+      .christies-banner-image__text( style='background-image: url("#{banner.text_src}")')
 
-  .responsive-layout-container: .main-layout-container
-    header.christies-header
-      h1= title
-      h2= description
-
+  .responsive-layout-container: .main-layout-container.main-layout-container--christies
     section.christies-featured-editorials
+      h4.small-caps.christies-section-header Featured Editorial
       for editorial in editorials
         a.christies-featured-editorial( href= editorial.href )
-          .christies-featured-editorial-metadata
-            h4.small-caps Featured Editorial
-            h3= editorial.title
           .christies-featured-editorial-image
             img( src= editorial.src, alt= editorial.title, title= editorial.title )
+          .christies-featured-editorial-metadata
 
-    section.christies-sale-links.grid-2-up
+            h4= editorial.title
+            h5 Artsy Editorial
+
+    section.christies-sale-links
+      h4.small-caps.christies-section-header Featured Sales
       for sale in sales
-        .christies-sale-link.grid-item
-          a.hoverable-image-link( href= sale.href )
-            img( src= sale.src, alt= sale.title, title= sale.title )
-          a.christies-sale-link-metadata( href= sale.href )
-            h3= sale.title
-            h4= sale.description
+        .christies-sale-item
+          a.christies-sale-link( href=sale.href style='background-image: url("#{sale.src}")')
+            .christies-sale-link-metadata
+              .opening Opening #{sale.date}
+              h3!= sale.title
+              h4= sale.description
