@@ -1,5 +1,5 @@
-{ API_URL } = require('sharify').data
-# TEMPORARY FOR FAKING RELATED ARTICLES
+{ API_URL, POSITRON_URL } = require('sharify').data
+Backbone = require 'backbone'
 fixtures = require '../../../test/helpers/fixtures.coffee'
 Backbone = require 'backbone'
 
@@ -20,8 +20,8 @@ module.exports =
 
     artists = new Artists @get('artists')
 
-    articles = new Articles [fixtures.article]
-    articles.url = "#{sd.POSITRON_URL}/api/articles?show_id=#{@get '_id'}&published=true"
+    articles = new Articles
+    articles.url = "#{POSITRON_URL}/api/articles?show_id=#{@get '_id'}&published=true"
 
     installShots = new InstallShots
     installShots.url = "#{API_URL}/api/v1/partner_show/#{@id}/images"
