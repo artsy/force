@@ -14,7 +14,7 @@ describe 'ShowsView', ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'
       Backbone.$ = $
-      @model = new Artist fabricate 'artist', id: 'foo-bar', name: 'Foo Bar', _id: 'bitty'
+      @model = new Artist fabricate 'artist', id: 'foo-bar', name: 'Foo Bar'
       done()
 
   after ->
@@ -46,7 +46,7 @@ describe 'ShowsView', ->
 
   describe '#postRender', ->
     it 'fetches the artist exhibitionHistory', ->
-      _.first(Backbone.sync.args)[1].url.should.containEql '/api/v1/related/shows?artist_id=bitty&sort=-end_at&displayable=true'
+      _.first(Backbone.sync.args)[1].url.should.containEql '/api/v1/related/shows?artist_id=foo-bar&sort=-end_at&displayable=true'
       _.last(Backbone.sync.args)[1].url.should.containEql '/artist/data/foo-bar/exhibitions'
 
   describe '#renderHeader', ->

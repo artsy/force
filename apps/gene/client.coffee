@@ -65,7 +65,7 @@ module.exports.init = ->
   scrollFrame '#gene-filter a'
 
   queryParams = qs.parse(location.search.replace(/^\?/, ''))
-  params = new Backbone.Model _.extend queryParams, { page: 1, size: 10, gene: gene.id }
+  params = new Backbone.Model _.extend queryParams, { page: 1, size: 10, gene_id: gene.id }
 
   collection = new FilterArtworks
 

@@ -313,7 +313,7 @@ module.exports = class Artwork extends Backbone.Model
     @relatedCollections = _.reduce ['sales', 'fairs', 'features', 'shows'], (memo, aspect) =>
       memo[aspect] = @[aspect] = new Backbone.Collection
       if aspect is 'shows'
-        @[aspect].url = "#{sd.API_URL}/api/v1/related/#{aspect}?artwork_id=#{@get('_id')}&active=true"
+        @[aspect].url = "#{sd.API_URL}/api/v1/related/#{aspect}?artwork_id=#{@id}&active=true"
       else
         @[aspect].url = "#{sd.API_URL}/api/v1/related/#{aspect}?artwork[]=#{@id}&active=true"
       @[aspect].url += "&cache_bust=#{Math.random()}" if aspect is 'sales'
