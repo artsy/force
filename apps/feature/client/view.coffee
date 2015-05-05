@@ -51,7 +51,7 @@ module.exports = class FeatureView extends Backbone.View
         @auctionArtworks.add artworks.models
       else
         view = new AuctionArtworksView
-          model: new Auction @sale.toJSON()
+          model: new Auction @sale.toJSON(), parse: true
           collection: @auctionArtworks = artworks
           user: @currentUser
         @$('#feature-artworks').html view.render().$el
