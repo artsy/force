@@ -34,14 +34,37 @@ describe 'RelatedNavigationView', ->
       html.should.containEql 'Go to auction'
 
   describe 'with a related sale', ->
-    beforeEach ->
-      @view.model.related().features.add fabricate 'feature'
-      @view.model.related().sales.add fabricate 'sale', is_auction: false
+    describe 'that is a normal sale', ->
+      beforeEach ->
+        @view.model.related().features.add fabricate 'feature'
+        @view.model.related().sales.add fabricate 'sale', is_auction: false
 
-    it 'renders correctly', ->
-      html = @view.render().$el.html()
-      html.should.containEql 'Work offered by'
-      html.should.containEql 'Go to sale'
+      it 'renders correctly', ->
+        html = @view.render().$el.html()
+        html.should.containEql 'Work offered by'
+        html.should.containEql 'Go to sale'
+
+    describe 'that is an "auction promo"', ->
+      describe 'sans profile', ->
+        beforeEach ->
+          @view.model.related().sales.add fabricate 'sale', is_auction: false, sale_type: 'auction promo', name: 'A Promo'
+
+        it 'renders correctly', ->
+          html = @view.render().$el.html()
+          html.should.containEql 'Work offered by A Promo'
+
+      describe 'with profile', ->
+        beforeEach ->
+          @view.model.related().sales.add fabricate 'sale',
+            is_auction: false
+            sale_type: 'auction promo'
+            name: 'A Promo'
+            profile: fabricate 'profile', owner: name: 'Foo Bar'
+
+        it 'renders correctly', ->
+          html = @view.render().$el.html()
+          html.should.containEql 'Work offered by Foo Bar'
+          html.should.containEql '<img src'
 
   describe 'with a related fair', ->
     describe 'that is linkable', ->

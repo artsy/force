@@ -8,6 +8,23 @@ if feature && sale && sale.get('is_auction')
     .avant-garde-jump-link
       | Go to auction
 
+//- Auction promo
+if sale && sale.isAuctionPromo()
+  a( href= sale.href() )
+    p
+      | Work offered by
+      = ' '
+      if sale.has('profile')
+        = sale.related().profile.displayName()
+      else
+        = sale.get('name')
+
+    if sale.has('profile')
+      p: img( src= sale.related().profile.iconImageUrl() )
+    else
+      .avant-garde-jump-link
+        | Go to sale
+
 //- Sale
 if feature && sale && !sale.get('is_auction')
   a( href= feature.href() )
