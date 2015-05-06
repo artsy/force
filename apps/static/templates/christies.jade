@@ -21,6 +21,7 @@ append locals
 
 block body
   .christies-banner-image( style='background-image: url("#{banner.src}")')
+    .christies-banner-image__logo( style='background-image: url("#{banner.logo_src}")')
     .responsive-layout-container: .main-layout-container
       .christies-banner-image__text( style='background-image: url("#{banner.text_src}")')
 
@@ -41,6 +42,7 @@ block body
       for sale in sales
         .christies-sale-item
           a.christies-sale-link( href=sale.href style='background-image: url("#{sale.src}")')
+            .christies-sale-link-mobile-img: img(src="#{sale.src}")
             .christies-sale-link-metadata
               .opening Opening #{sale.date}
               h3!= sale.title
