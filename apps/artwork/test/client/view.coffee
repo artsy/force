@@ -7,6 +7,7 @@ sinon = require 'sinon'
 { fabricate } = require 'antigravity'
 { stubChildClasses } = require '../../../../test/helpers/stubs'
 Artist = require '../../../../models/artist'
+Artists = require '../../../../collections/artists'
 Artwork = require '../../../../models/artwork'
 CurrentUser = require '../../../../models/current_user'
 
@@ -23,7 +24,8 @@ describe 'ArtworkView', ->
     benv.teardown false
 
   beforeEach (done) ->
-    @artist = new Artist(fabricate 'artist')
+    @artists = new Artists [fabricate 'artist']
+    @artist = @artists.first()
     sinon.stub @artist.related().artworks, 'fetch'
 
     # Interestingly: jQuery "Every attempt is made to convert the string to a
@@ -40,6 +42,7 @@ describe 'ArtworkView', ->
       sd: {}
       artist: @artist
       artwork: @artwork
+      artists: @artists
       asset: (->)
     }, =>
       @ArtworkView = mod = benv.requireWithJadeify(
@@ -70,7 +73,7 @@ describe 'ArtworkView', ->
     beforeEach ->
       @ArtworkView.__set__ 'CurrentUser', { orNull: -> new CurrentUser(fabricate 'user') }
       @ArtworkView.__set__ 'analytics', { track: { impression: (->), click: (->), funnel: (->) } , abTest: (->), snowplowStruct: sinon.stub() }
-      @view = new @ArtworkView el: $('#artwork-page'), artist: @artist, artwork: @artwork
+      @view = new @ArtworkView el: $('#artwork-page'), artist: @artist, artwork: @artwork, artists: @artists
 
     describe '#checkQueryStringForAuction', ->
       it 'renders the auction placeholder when an auction_id is in the query string', ->
@@ -158,10 +161,10 @@ describe 'ArtworkView', ->
 
         @$imageLink.hasClass('is-active').should.be.ok
 
-    describe '#setupFollowButton', ->
+    describe '#setupFollowButtons', ->
       it 'syncs the following collection with the artist id', ->
         syncFollowsSpy = sinon.spy @view.following, 'syncFollows'
-        @view.setupFollowButton()
+        @view.setupFollowButtons()
         syncFollowsSpy.args[0][0].should.containEql @artist.id
 
     describe '#setupVideoView', ->
@@ -199,7 +202,7 @@ describe 'ArtworkView', ->
     beforeEach ->
       @ArtworkView.__set__ 'CurrentUser', { orNull: -> null }
       @ArtworkView.__set__ 'analytics', { track: { impression: (->), click: (->) } , abTest: -> }
-      @view = new @ArtworkView el: $('#artwork-page'), artist: @artist, artwork: @artwork
+      @view = new @ArtworkView el: $('#artwork-page'), artist: @artist, artwork: @artwork, artists: @artists
 
     describe '#initialize', ->
       it 'does not have a following collection if the user is not logged in', ->

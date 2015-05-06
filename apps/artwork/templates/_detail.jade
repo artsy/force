@@ -4,14 +4,17 @@
 
   //- Primary artwork metadata
   h1
-    if artist
-      span.artwork-detail-artist
-        a( href= "/artist/#{artist.id}" )= artist.get('name')
-      .plus-follow-button.artwork-artist-follow-button
-        .icon-follow-circle
-        .follow-button-text
+    if artists.length
+      for artist in artists.models
+        .artwork-detail-artist
+          a.entity-link( href= artist.href() )
+            = artist.get('name')
+          a.entity-follow.artist-follow( data-id= artist.id )
     else if artwork.get('cultural_maker')
-      span.artwork-detail-artist= artwork.get('cultural_maker')
+      .artwork-detail-artist
+        span.entity-link
+          = artwork.get('cultural_maker')
+
     if artwork.get('title')
       span.artwork-detail-title
         em= artwork.get('title')

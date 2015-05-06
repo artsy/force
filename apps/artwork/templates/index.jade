@@ -6,7 +6,6 @@ block head
 append locals
   - assetPackage = 'artwork'
 
-
 block body
   #artwork-view-in-room-container
     //- Rendered client-side
@@ -24,15 +23,14 @@ block body
                 h2.avant-garde-header-center About This Artwork
                 include ./_more_info
 
-            if artist && artist.get('blurb')
-              .artwork-artist
-                h2.avant-garde-header-center
-                  | About
-                  = ' '
-                  a( href= artist.href() )
-                    = artist.get('name')
-
-                if artist.get('blurb')
+            for artist in artists.models
+              if artist.get('blurb')
+                .artwork-artist
+                  h2.avant-garde-header-center
+                    | About
+                    = ' '
+                    a( href= artist.href() )
+                      = artist.get('name')
                   .artwork-artist-blurb
                     != artist.mdToHtml('blurb')
 
