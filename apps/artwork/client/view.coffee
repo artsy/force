@@ -101,12 +101,14 @@ module.exports = class ArtworkView extends Backbone.View
 
     @sale = sales.first()
     @$('#artist-artworks-section').remove()
-    @belowTheFoldView.setupSale
-      sale: @sale
-      saved: @saved
-      currentUser: @currentUser
 
-    if @sale.isAuction()
+    unless @sale.isAuctionPromo() # Replace with auction-artworks view
+      @belowTheFoldView.setupSale
+        sale: @sale
+        saved: @saved
+        currentUser: @currentUser
+
+    if @sale.isAuction() or @sale.isAuctionPromo()
       @setupAuction @sale
 
   handleShows: (shows) ->
