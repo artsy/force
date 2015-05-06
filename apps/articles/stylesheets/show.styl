@@ -96,14 +96,11 @@
   margin auto
   .loading-spinner
     display none
-  li
-    margin-bottom gutter-size
-    &:last-child
-      margin-bottom 0
-  .artwork-item-image-link
-    width 100%
+  .artwork-item-image
+    background transparent
     img
-      width 100%
+      max-width 100%
+      width auto
 
 .articles-section-artworks[data-layout="overflow_fillwidth"]
   width (overflow-width + gutter-size)
@@ -121,8 +118,10 @@
     display inline-block
     vertical-align top
     padding 0
-  .artwork-item-image-container img
+  .artwork-item-image-container
     height auto
+  .artwork-item-image
+    padding-bottom 0
   .artwork-item-caption
     overflow ellipsis
   .overlay-container
