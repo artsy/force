@@ -19,8 +19,10 @@ err = ->
 
     show.rebuild()
 
-    show.related().artworks.fetchUntilEndInParallel(cache: true).finally ->
-
+    Q.all([
+      show.related().fair.related().profile.fetch() if show.get('fair')?
+      show.related().artworks.fetchUntilEndInParallel(cache: true)
+    ]).finally ->
       res.locals.sd.SHOW = show.toJSON()
       res.locals.sd.ARTWORKS = show.related().artworks.toJSON()
 
@@ -32,7 +34,6 @@ err = ->
         installShots: show.related().installShots
         artworks: show.related().artworks
         jsonLD: stringifyJSONForWeb show.toJSONLD()
-
 
   , ->
     next err()
