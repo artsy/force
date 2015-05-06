@@ -3,22 +3,24 @@ if auction.isAuctionPromo()
     .artwork-auction-estimate
       | #{saleArtwork.estimateLabel()}: #{saleArtwork.estimate()}
 
-  if !auction.isPreview()
-    include ../contact/templates/index
-
-  else if auction.isOpen()
+  if auction.isPreview() || auction.isOpen()
     .artwork-auction-promo-sale-message
       | Contact auction house to bid
 
+  if auction.isPreview()
+    include ../contact/templates/index
+
+  else if auction.isOpen()
     .artwork-auction-promo-open-message
       | This auction is currently open. To bid please call the auction house.
 
-    - locations = artwork.related().partner.locations
-    if locations.length
-      include ../partner_phone_number/template
-
   else
     //- Auction is closed. Do nothing.
+
+  //- Later ...
+  //- - locations = artwork.related().partner.locations()
+  //- if locations.length
+  //-   include ../partner_phone_number/template
 
 else
   if saleArtwork.estimate() && !auction.isClosed()

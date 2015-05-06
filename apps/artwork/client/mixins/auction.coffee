@@ -21,6 +21,7 @@ module.exports =
       .addClass if @auction.isAuctionPromo() then 'is-auction-promo' else 'is-auction'
 
   setupClock: ->
+    return if @auction.isAuctionPromo()
     @clock = new ClockView
       modelName: 'Auction'
       model: @auction
