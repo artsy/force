@@ -1,26 +1,31 @@
 _ = require 'underscore'
+sd = require('sharify').data
+Auction = require '../../../../models/auction.coffee'
 ClockView = require '../../../../components/clock/view.coffee'
 BidderPositions = require '../../../../collections/bidder_positions.coffee'
 SaleArtwork = require '../../../../models/sale_artwork.coffee'
-AuctionDetailView = require '../auction_detail.coffee'
+AuctionDetailView = require '../../components/auction_detail/view.coffee'
 
 module.exports =
   setupAuction: (sale) ->
-    @auction = @sale
+    @auction = new Auction @sale.toJSON(), parse: true
+
     @setupAuctionDetailView()
 
     return if @artwork.get 'sold'
+
     # This hides the normal availablity status UI
     # which we just wind up using if the artwork is already sold
     # (via 'Buy Now')
-    @$('.artwork-detail').addClass 'is-auction'
+    @$('.artwork-detail')
+      .addClass if @auction.isAuctionPromo() then 'is-auction-promo' else 'is-auction'
 
   setupClock: ->
     @clock = new ClockView
       modelName: 'Auction'
       model: @auction
-      el: @$Clock = @$('#artwork-clock')
-    @$Clock.addClass 'is-fade-in'
+      el: @$clock = @$('#artwork-clock')
+    @$clock.addClass 'is-fade-in'
     @clock.start()
 
   setupSaleArtwork: ->
@@ -41,11 +46,12 @@ module.exports =
       # if the artwork is already sold (via 'Buy Now')
       unless @artwork.get 'sold'
         @auctionDetailView = new AuctionDetailView(
+          el: @$('#auction-detail')
+          artwork: @artwork
           user: @currentUser
           bidderPositions: @bidderPositions
           saleArtwork: @saleArtwork
           auction: @auction
-          el: @$('#auction-detail')
         ).render()
 
   setupBidderPositions: ->

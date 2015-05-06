@@ -1,6 +1,7 @@
 //- Contact Gallery form
-if artwork.isContactable()
+if artwork.isContactable() || (auction && auction.isAuctionPromo())
   - partner = artwork.related().partner
+
   //- Gallery/Institution link
   if artwork.partnerLink()
 
@@ -42,7 +43,7 @@ if artwork.isContactable()
       //- Rendered client-side
 
     .artwork-contact-button
-      button.avant-garde-button-black Contact Gallery
+      button.avant-garde-button-black
         | Contact #{partner.displayType()}
 
   #artwork-inquiry-sent-immediate
