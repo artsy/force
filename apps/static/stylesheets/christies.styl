@@ -9,6 +9,15 @@
   background-position center center
   position relative
 
+.christies-banner-image__logo
+  position absolute
+  width 100%
+  height 100%
+  background-size 50% auto
+  background-position center center
+  background-repeat no-repeat
+  display none
+
 .christies-banner-image__text
   position absolute
   width 100%
@@ -38,14 +47,19 @@
   margin 50px 0
   float right
   width 30%
-  min-width 250px
-  padding-left 50px
+  min-width 220px
+  padding-left 100px
+
 .christies-featured-editorial
+  display block
   margin 20px 0
   text-decoration none
+  padding-bottom 20px
+
 .christies-featured-editorial-metadata
 .christies-featured-editorial-image
   height 100%
+
 .christies-featured-editorial-metadata
   line-height 1.2
   > h4
@@ -67,10 +81,11 @@
   margin 50px 0
   float left
   width 70%
-  padding-right 30px
+  padding-right 20px
   display table
   border-collapse separate
   vertical-align top
+
 .christies-sale-item
   display table-row
   height 330px
@@ -85,6 +100,9 @@
   text-decoration none
   border-bottom 60px solid #fff
   position relative
+
+.christies-sale-link-mobile-img
+  display none
 
 .christies-sale-link-metadata
   display block
@@ -107,7 +125,7 @@
     font-size 18px
 
 // Mobile
-@media screen and (max-device-width: 480px)
+@media screen and (max-width: 940px)
   .responsive-layout-container
     margin 0 20px
 
@@ -120,13 +138,79 @@
   .christies-banner-image
     height 200px
 
+  .christies-banner-image__logo
+    display block
+
+  .christies-banner-image__text
+    display none
+
+  .christies-section-header
+    text-align center
+
+  .christies-featured-editorials
+    width 100%
+    float none
+    padding-left 0
+
+  .christies-featured-editorial
+    display table
+
+  .christies-featured-editorial-image
+    display table-cell
+    max-width 40%
+    padding-right 30px
+    vertical-align middle
+
   .christies-featured-editorial-metadata
     padding-right 10px
+    max-width 50%
+    display table-cell
+    vertical-align middle
     > h4
-      font-size 11px
-    > h3
       font-size 20px
-  .christies-featured-editorial-image
-    padding 0
-    > img
-      height 100px
+
+  .christies-sale-links
+    float none
+    width 100%
+    padding-right 0px
+
+  .christies-sale-item
+    display table-row
+    height 130px
+    text-align left
+
+  .christies-sale-link
+    display table-cell
+    vertical-align middle
+    background-size 0%
+    background-repeat no-repeat
+    background-position right
+    background-image none
+    text-decoration none
+    border-bottom 20px solid #fff
+    position relative
+
+  .christies-sale-link-mobile-img
+    display block
+    img
+      max-width 100%
+
+  .christies-sale-link-metadata
+    display block
+    padding 20px 0
+    text-align center
+    text-decoration none
+    max-width 100%
+    .opening
+      border 2px solid #000
+      padding 5px 10px
+      avant-garde()
+      font-size 9px
+      display: inline-block
+    > h3
+      margin 10px 0 0
+      font-size 20px
+      line-height 1
+    > h4
+      color gray-dark-color
+      font-size 14px

@@ -4,6 +4,7 @@
   "description": "Explore over 500 lots from the premier spring auctions from Christie’s",
   "banner": {
     "src": "/images/christies/banner.png",
+    "logo_src": "/images/christies/christies-logo.png",
     "text_src": "/images/christies/banner_text.png"
   },
   "editorials": [
@@ -11,6 +12,11 @@
       "href": "/article/artsy-editorial-what-makes-a-picasso-painting-worth-140-million",
       "src": "/images/christies/picasso.png",
       "title": "What makes a Picasso Worth $140,000,000?"
+    },
+    {
+      "href": "/article/artsy-editorial-experts-pick-10-top-notch-lots-at-christie",
+      "src": "/images/christies/onkawara.png",
+      "title": "10 Top-Notch Lots at Christie’s Spring Sales"
     }
   ],
   "sales": [
