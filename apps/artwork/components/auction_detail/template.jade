@@ -1,0 +1,80 @@
+if auction.isAuctionPromo()
+  if saleArtwork.estimate() && (auction.isPreview() || auction.isOpen())
+    .artwork-auction-estimate
+      | #{saleArtwork.estimateLabel()}: #{saleArtwork.estimate()}
+
+  if !auction.isPreview()
+    include ../contact/templates/index
+
+  else if auction.isOpen()
+    .artwork-auction-promo-sale-message
+      | Contact auction house to bid
+
+    .artwork-auction-promo-open-message
+      | This auction is currently open. To bid please call the auction house.
+
+    - locations = artwork.related().partner.locations
+    if locations.length
+      include ../partner_phone_number/template
+
+  else
+    //- Auction is closed. Do nothing.
+
+else
+  if saleArtwork.estimate() && !auction.isClosed()
+    .artwork-auction-estimate
+      | #{saleArtwork.estimateLabel()}: #{saleArtwork.estimate()}
+
+  if auction.isOpen()
+    if bidderPositions && bidderPositions.length
+      .artwork-bidder-position-status(
+        class= bidderPositions.classes()
+      )
+        if (position = bidderPositions.isHighestBidder())
+          | You are currently the highest bidder for this lot with a bid at #{position.currentBid()}
+        else if (position = bidderPositions.isOutbid())
+          | Your max bid of #{position.maxBid()} has been outbid.
+
+  .artwork-bid-status
+    .abs-bid #{saleArtwork.bidLabel()}:
+    .abs-amount= saleArtwork.currentBid()
+    .abs-count= saleArtwork.formatBidsAndReserve()
+
+    form.artwork-bid-form.js-artwork-bid-form( action="/feature/#{auction.id}/bid/#{saleArtwork.id}" )
+      if auction.isOpen() && user
+        .abf-validation-error
+          | Your bid needs to be at least #{saleArtwork.minBid()}
+        .abf-min-next
+          | Enter #{saleArtwork.minBid()} or higher
+        .typed-bordered-input.is-block
+          span $
+          input.bordered-input( name='bid', autocomplete='off', required )
+
+      if auction.isOpen() && auction.get('buyers_premium')
+        p#artwork-buyers-premium-link This work has a&nbsp;
+          a( href='#' ) Buyer's Premium
+
+      button.avant-garde-button-black.abf-button(
+        type      = 'submit'
+        class     = auction.bidButtonState(user).classes
+        disabled  = !auction.bidButtonState(user).enabled
+      )
+        = auction.bidButtonState(user).label
+
+  if auction.isOpen() && artwork.get('acquireable')
+    .artwork-meta-price
+      .artwork-meta-price-label.is-not-sold Buy Now Price
+      .artwork-meta-price-amount= artwork.priceDisplay()
+    a.avant-garde-button-black.artwork-buy-button.artwork-contact-buy-button
+      | Buy Now
+
+  .abf-help
+    a( href='/auction-info' )
+      | How Bidding Works
+    br
+    a( href='/conditions-of-sale' )
+      | Conditions of Sale
+    br
+    br
+    a( href="artwork/#{saleArtwork.id}/ask_specialist", data-client )
+      | Ask a Specialist

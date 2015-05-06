@@ -4,10 +4,11 @@ Backbone = require 'backbone'
 sinon = require 'sinon'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
-CurrentUser = require '../../../../models/current_user'
-SaleArtwork = require '../../../../models/sale_artwork'
-Sale = require '../../../../models/sale'
-BidderPositions = require '../../../../collections/bidder_positions'
+CurrentUser = require '../../../../../models/current_user'
+SaleArtwork = require '../../../../../models/sale_artwork'
+Auction = require '../../../../../models/auction'
+Artwork = require '../../../../../models/artwork'
+BidderPositions = require '../../../../../collections/bidder_positions'
 
 describe 'AuctionDetailView', ->
   before (done) ->
@@ -21,22 +22,23 @@ describe 'AuctionDetailView', ->
 
   beforeEach (done) ->
     sinon.stub Backbone, 'sync'
-    AuctionDetailView = benv.requireWithJadeify resolve(__dirname, '../../client/auction_detail'), ['template']
+    AuctionDetailView = benv.requireWithJadeify resolve(__dirname, '../view'), ['template']
     @triggerSpy = sinon.stub()
     AuctionDetailView.__set__ 'mediator', trigger: @triggerSpy
 
     @saleArtwork = new SaleArtwork fabricate 'sale_artwork', minimum_next_bid_cents: 500000, low_estimate_cents: 600000, high_estimate_cents: 800000, reserve_status: 'no_reserve'
-    @auction = new Sale fabricate 'sale'
+    @auction = new Auction fabricate 'sale'
 
     @auction.set 'clockState', 'open'
 
     @view = new AuctionDetailView(
+      artwork: @artwork = new Artwork fabricate 'artwork'
       user: @user = new CurrentUser fabricate 'user'
       bidderPositions: @bidderPositions = new BidderPositions
       saleArtwork: @saleArtwork
       auction: @auction
-      el: @$el = $('<div></div>')
     ).render()
+
     done()
 
   afterEach ->

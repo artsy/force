@@ -9,8 +9,9 @@ artwork-detail-item-height = 36px
   .avant-garde-button-black
     display block
     width 100%
-    padding 13px 30px 10px
-    &[data-state='loading'], &.is-loading
+    padding 13px
+    &[data-state='loading']
+    &.is-loading
       &::before
         width 20px
         height 5px
@@ -21,6 +22,10 @@ artwork-detail-item-height = 36px
     .artwork-inquiry
     .artwork-contact-button
     #artwork-detail-contact
+      display none
+  &.is-auction-promo
+    // Hide some elements
+    .artwork-meta-price
       display none
   .artwork-detail-header
     avant-garde()

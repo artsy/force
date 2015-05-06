@@ -1,8 +1,12 @@
 //- Contact Gallery form
-if artwork.isContactable()
+if artwork.isContactable() || (auction && auction.isAuctionPromo())
+  - partner = artwork.related().partner
+
   //- Gallery/Institution link
   if artwork.partnerLink()
-    h2.artwork-detail-header= artwork.partnerName()
+
+    h2.artwork-detail-header
+      = partner.get('name')
     span#artwork-partner-locations
       //- Rendered client-side
 
@@ -14,29 +18,40 @@ if artwork.isContactable()
   form#artwork-contact-form
     if user
       //- Logged in
-      input( type='hidden', name='name', value=user.get('name') )
-      input( type='hidden', name='email', value=user.get('email') )
+      input( type='hidden', name='name', value= user.get('name') )
+      input( type='hidden', name='email', value= user.get('email') )
     else
       //- Logged out
       input.bordered-input.is-persistplaceholder( placeholder='Your full name', name='name', required )
-      input#js-mailcheck-input-artwork.bordered-input.is-persistplaceholder( placeholder='Your email address', name='email', type='email', required )
+      input#js-mailcheck-input-artwork.bordered-input.is-persistplaceholder(
+        placeholder='Your email address'
+        name='email'
+        type='email'
+        required
+      )
       #js-mailcheck-hint-artwork
+        //- Rendered elsewhere
 
     textarea.bordered-input.is-persistplaceholder( rows='5', name='message', required )
-      = (defaultMessage)
-      = " "
+      = defaultMessage
+      = ' '
 
     #artwork-contact-form-errors
       //- Rendered client-side
+
     #artwork-contact-form-attendance
       //- Rendered client-side
 
     .artwork-contact-button
-      button.avant-garde-button-black Contact Gallery
+      button.avant-garde-button-black
+        | Contact #{partner.displayType()}
 
   #artwork-inquiry-sent-immediate
-    p.artwork-inquiry-bold-header Inquiry Sent
-    p You will receive an email receipt of your inquiry shortly. If you want to follow up with the gallery, simply reply to this email.
+    p.artwork-inquiry-bold-header
+      | Inquiry Sent
+    p
+      | You will receive an email receipt of your inquiry shortly.
+      | If you want to follow up with the #{partner.displayType().toLowerCase()}, simply reply to this email.
 
   #artwork-inquiry-sent
     //- Rendered client-side
