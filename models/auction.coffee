@@ -49,6 +49,5 @@ module.exports = class Auction extends Sale
     # Replace with: # @get('sale_type') is 'preliminary auction'
     @get('is_auction') and @get('is_preliminary')
 
-  isAuctionPromo: ->
-    # https://github.com/artsy/gravity/pull/8848
-    @get('sale_type') is 'auction promo'
+  isAuctionPromoInquirable: ->
+    @isAuctionPromo and @isPreview()

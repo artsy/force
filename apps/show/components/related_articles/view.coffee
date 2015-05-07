@@ -13,10 +13,11 @@ module.exports = class RelatedArticlesView extends Backbone.View
     @listenTo @collection, 'sync', @render
 
   render: ->
-    @$el.html template
-      articles: @collection.take(@numToShow)
-      remaining: Math.max((@collection.length - @numToShow), 0)
-      crop: crop
+    if @collection.length
+      @$el.html template
+        articles: @collection.take(@numToShow)
+        remaining: Math.max((@collection.length - @numToShow), 0)
+        crop: crop
     this
 
   events:

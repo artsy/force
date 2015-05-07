@@ -4,15 +4,16 @@ footer.auction-footer( class= articles.length ? 'has-articles' : 'has-no-article
       for article in articles.models
         include ../../../components/article_figure/template
 
-  .auction-app-promo-wrapper
-    a.auction-app-promo( href='https://iphone.artsy.net/', target='_blank' )
-      .auction-app-promo-image
-        img(
-          src='/images/promo-iphone.jpg'
-          alt='iPhone'
-        )
-      .auction-app-promo-metadata
-        .auction-app-promo-title
-          | Bid from your phone
-        .auction-app-promo-subtitle
-          | Download Artsy for iPhone
+  unless auction.isAuctionPromo()
+    .auction-app-promo-wrapper
+      a.auction-app-promo( href='https://iphone.artsy.net/', target='_blank' )
+        .auction-app-promo-image
+          img(
+            src='/images/promo-iphone.jpg'
+            alt='iPhone'
+          )
+        .auction-app-promo-metadata
+          .auction-app-promo-title
+            | Bid from your phone
+          .auction-app-promo-subtitle
+            | Download Artsy for iPhone

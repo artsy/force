@@ -18,15 +18,17 @@
         h3.aga-title
           != artwork.titleAndYear() || '&nbsp;'
 
-      if saleArtwork.estimate()
-        .aga-estimate
+      .aga-estimate
+        if saleArtwork.estimate()
           | #{saleArtwork.estimateLabel()}: #{saleArtwork.estimate()}
+        else
+          | &nbsp;
 
       if displayBlurbs
         .aga-blurb( style= maxBlurbHeight ? "height: #{maxBlurbHeight}" : undefined )
           != artwork.mdToHtml('blurb')
 
-    unless auction.isAuctionPromo() && auction.isClosed()
+    unless auction.isAuctionPromo() && !auction.isAuctionPromoInquirable()
       .aga-bidding
         unless auction.isAuctionPromo()
           .aga-bid-status

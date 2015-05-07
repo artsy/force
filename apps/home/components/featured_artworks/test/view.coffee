@@ -33,7 +33,7 @@ describe 'FeaturedArtworks', ->
       it 'renders an empty state', ->
         @view.$('.loading-spinner').length.should.equal 1
         @view.$('.home-browse-all-center a').text().should.equal 'All for sale artworks'
-        @view.$('.home-browse-all-center a').attr('href').should.equal '/browse/artworks?price_range=-1%3A1000000000000'
+        @view.$('.home-browse-all-center a').attr('href').should.equal '/browse/artworks?price_range=*-*'
 
     describe 'after collections are fetched', ->
       describe 'with featured works', ->
@@ -48,7 +48,7 @@ describe 'FeaturedArtworks', ->
           @view.$('.artwork-item').length.should.equal 4
           @view.$('.top-featured-header').text().should.equal 'Featured artworks for sale'
           @view.$('.home-browse-all-center').text().should.equal 'All for sale artworks'
-          @view.$('.home-browse-all-center a').attr('href').should.equal '/browse/artworks?price_range=-1%3A1000000000000'
+          @view.$('.home-browse-all-center a').attr('href').should.equal '/browse/artworks?price_range=*-*'
 
       describe 'with personalized works', ->
         beforeEach ->
