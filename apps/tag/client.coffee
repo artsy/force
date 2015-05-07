@@ -1,23 +1,41 @@
-{ API_URL, TAG } = require('sharify').data
-Tag = require '../../models/tag.coffee'
+_ = require 'underscore'
 Backbone = require 'backbone'
-FilterArtworksView = require '../../components/filter/artworks/view.coffee'
+Tag = require '../../models/tag.coffee'
 scrollFrame = require 'scroll-frame'
-
-module.exports.TagView = class TagView extends Backbone.View
-
-  initialize: ->
-    @filterView = new FilterArtworksView
-      el: $ '#tag-filter'
-      artworksUrl: "#{API_URL}/api/v1/search/filtered/tag/#{@model.get 'id'}"
-      countsUrl: "#{API_URL}/api/v1/search/filtered/tag/#{@model.get 'id'}/suggest"
-      urlRoot: "tag/#{@model.id}"
-      title: "Artwork related to \"#{@model.get('name')}\""
-    @filterView.reset()
+qs = require 'querystring'
+FilterArtworks = require '../../collections/filter_artworks.coffee'
+FilterView = require '../../components/filter2/view.coffee'
+FilterRouter = require '../../components/filter2/router/index.coffee'
+ShareView = require '../../components/share/view.coffee'
+{ API_URL, TAG, FILTER_ROOT } = require('sharify').data
 
 module.exports.init = ->
-  new TagView
-    el: $ 'body'
-    model: tag = new Tag TAG
-  Backbone.history.start pushState: true
+  tag = new Tag TAG
+
+  new ShareView 
+    el: $('#tag-share-buttons')
+
   scrollFrame '#tag-filter a'
+
+  queryParams = qs.parse(location.search.replace(/^\?/, ''))
+  params = new Backbone.Model _.extend queryParams, { page: 1, size: 10, tag_id: tag.id }
+
+  collection = new FilterArtworks
+
+  new FilterView
+    el: $ '#tag-filter'
+    collection: collection
+    params: params
+    stuckFacet: tag
+
+  new FilterRouter
+    params: params
+    urlRoot: FILTER_ROOT
+    stuckParam: 'tag'
+
+  collection.fetch
+    data: params.toJSON()
+    success: ->
+      collection.trigger 'initial:fetch'
+
+  Backbone.history.start pushState: true

@@ -1,8 +1,26 @@
+_s = require 'underscore.string'
+Q = require 'q'
+Backbone = require 'backbone'
 Tag = require '../../models/tag'
+FilterArtworks = require '../../collections/filter_artworks'
 
 @index = (req, res, next) ->
-  new Tag(id: req.params.id).fetch
-    success: (tag) ->
-      res.locals.sharify.data.TAG = tag.toJSON()
-      res.render 'index', tag: tag
-    error: res.backboneError
+  tag = new Tag(id: req.params.id)
+  filterArtworks = new FilterArtworks
+  params = new Backbone.Model tag: tag.id
+
+  Q.all([
+    tag.fetch(cache: true)
+    filterArtworks.fetch(data: { size: 0, tag: req.params.id } )
+  ]).done ->
+    res.locals.sd.FILTER_ROOT = tag.href() + '/artworks'
+    res.locals.sd.TAG = tag.toJSON()
+    res.locals.sd.FILTER_PARAMS = new Backbone.Model tag: tag.id
+
+    res.render 'index',
+      tag: tag
+      filterRoot: res.locals.sd.FILTER_ROOT
+      counts: filterArtworks.counts
+      numberFormat: _s.numberFormat
+      params: params
+      activeText: ''
