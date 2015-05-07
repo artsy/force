@@ -52,7 +52,7 @@
     "artsy-passport": {
       "version": "0.1.9",
       "from": "../../../../../var/folders/b5/v5k85lhj6x190sn4n8h4y5q40000gp/T/npm-69344-cf172516/git-cache-05f8669b4a5a/1d3cf68cb0e9b05f4337d89330346c083d04c28b",
-      "resolved": "git://github.com/artsy/artsy-passport.git#1d3cf68cb0e9b05f4337d89330346c083d04c28b",
+      "resolved": "git://github.com/artsy/artsy-passport.git#c4782c343f10625baa246b5005b53b98c0332fa5",
       "dependencies": {
         "coffee-script": {
           "version": "1.9.1",

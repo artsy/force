@@ -48,6 +48,7 @@ favicon = require 'serve-favicon'
 logger = require 'morgan'
 editRequest = require './edit_request'
 raven = require 'raven'
+artsyXapp = require 'artsy-xapp'
 fs = require 'fs'
 artsyError = require 'artsy-error-handler'
 cache = require './cache'
@@ -156,9 +157,12 @@ module.exports = (app) ->
     # secure uses req.connection.encrypted, but heroku has nginx terminating SSL
     # secureProxy just sets secure=true
     secureProxy: "production" is NODE_ENV or "staging" is NODE_ENV
+
   app.use artsyPassport _.extend config,
     CurrentUser: CurrentUser
+    signupRedirect: '/personalize'
     SECURE_ARTSY_URL: API_URL
+    XAPP_TOKEN: artsyXapp.token
 
   # Static file middleware above apps & redirects to ensure we don't try to
   # fetch /assets/:pkg.js in an attempt to check for profile or redirect assets

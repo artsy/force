@@ -7,6 +7,8 @@ routes = rewire '../routes'
 describe 'Auth routes', ->
   beforeEach ->
     routes.__set__ 'request', del: @del = sinon.stub().returns(send: @send = sinon.stub().returns(end: (cb) -> cb()))
+    routes.__set__ 'sanitizeRedirect', (route) -> route
+
     @req =
       params: {}
       body: {}
@@ -29,6 +31,13 @@ describe 'Auth routes', ->
     it 'renders the reset password page when there is no reset_password_token query param', ->
       routes.resetPassword @req, @res
       @res.render.args[0][0].should.equal 'reset_password'
+
+  describe '#redirectBack', ->
+    it 'redirects to the path set in the session', ->
+      @req.session.redirectTo = '/cabbies-home-page'
+      routes.redirectBack @req, @res, @next
+      @res.redirect.called.should.be.true
+      @res.redirect.args[0][0].should.equal '/cabbies-home-page'
 
   describe '#twitterLastStep', ->
     it 'renders the last step email page', ->

@@ -20,10 +20,9 @@ app.set 'view engine', 'jade'
 # Attempt to connect to Redis. If it fails, no worries, the app will move on
 # without caching.
 cache.setup ->
-  setup app
-
   # Get an xapp token
   artsyXapp.init { url: API_URL, id: ARTSY_ID, secret: ARTSY_SECRET }, ->
+    setup app
 
     # Start the server and send a message to IPC for the integration test helper
     # to hook into.
