@@ -20,7 +20,7 @@ module.exports =
     contemporary.url = "#{API_URL}/api/v1/related/layer/contemporary/artists?artist[]=#{@id}&exclude_artists_without_artworks=true"
 
     shows = new PartnerShows
-    shows.url = "#{API_URL}/api/v1/related/shows?artist_id=#{@id}&sort=-end_at&displayable=true"
+    shows.url = "#{API_URL}/api/v1/related/shows?artist_id=#{@id}&sort=-end_at&displayable=true&size=10"
     shows.comparator = (show) ->
       if show.isFairBooth()
         1
