@@ -1,6 +1,7 @@
-a.avant-garde-button-underlined.show-phone-number( href='#' )
-  | Show Phone Number#{locations.length > 1 ? 's' : ''}
-.partner-phone-numbers
-  for location in locations
-    .partner-phone-number
-      = location.cityPhone()
+if locations.length
+  a.avant-garde-button-underlined.show-phone-number( href='#' )
+    | Show Phone Number#{locations.length > 1 ? 's' : ''}
+  .partner-phone-numbers
+    for location in locations
+      .partner-phone-number
+        = location.cityPhone()
