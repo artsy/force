@@ -1,5 +1,5 @@
-//- Auction
 if feature && sale && sale.get('is_auction')
+  //- Auction
   a( href= feature.href() )
     p
       | Work offered by
@@ -8,8 +8,8 @@ if feature && sale && sale.get('is_auction')
     .avant-garde-jump-link
       | Go to auction
 
-//- Auction promo
-if sale && sale.isAuctionPromo()
+else if sale && sale.isAuctionPromo()
+  //- Auction promo
   a( href= sale.href() )
     p
       | Work offered by
@@ -25,8 +25,8 @@ if sale && sale.isAuctionPromo()
       .avant-garde-jump-link
         | Go to sale
 
-//- Sale
-if feature && sale && !sale.get('is_auction')
+else if feature && sale && !sale.get('is_auction')
+  //- Sale
   a( href= feature.href() )
     p
       | Work offered by
@@ -35,8 +35,8 @@ if feature && sale && !sale.get('is_auction')
     .avant-garde-jump-link
       | Go to sale
 
-//- Fair
-if fair && fair.get('has_full_feature') && fair.get('published')
+else if fair && fair.get('has_full_feature') && fair.get('published')
+  //- Fair
   a( href= fair.href() )
     p
       | Work offered by
