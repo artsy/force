@@ -2,6 +2,7 @@ _ = require 'underscore'
 Q = require 'q'
 { API_URL } = require('sharify').data
 Backbone = require 'backbone'
+Sales = require '../../collections/sales'
 Auctions = require '../../collections/auctions'
 
 determineFeature = (id, cb) ->
@@ -39,15 +40,17 @@ setupUser = (user, auction) ->
   auctions.comparator = (auction) ->
     -(Date.parse auction.get('end_at'))
 
-  auctions.fetch
+  sales = new Sales
+  sales.fetch
     cache: true
-    data: published: true, size: 20, sort: '-created_at'
+    data: published: true, size: 30, sort: '-created_at'
     success: (collection, response, options) ->
-      [preview, open, closed] = _.map ['preview', 'open', 'closed'], (state) ->
-        auctions.select (auction) ->
-          auction.get('auction_state') is state and !auction.isAuctionPromo()
+      [promo, auctions] = _.partition new Auctions(sales.toJSON()).models, (auction) ->
+        auction.isAuctionPromo()
 
-      promo = auctions.select (auction) -> auction.isAuctionPromo()
+      [preview, open, closed] = _.map ['preview', 'open', 'closed'], (state) ->
+        _.select auctions, (auction) ->
+          auction.get('auction_state') is state
 
       nextAuction = preview[0]
 

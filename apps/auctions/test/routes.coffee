@@ -1,3 +1,4 @@
+
 _ = require 'underscore'
 sinon = require 'sinon'
 Backbone = require 'backbone'
@@ -30,13 +31,13 @@ describe 'Auctions routes', ->
       it 'fetches the relevant auction data and renders the index template', (done) ->
         routes.index {}, @res
 
-        Backbone.sync.args[0][1].url.should.containEql '/api/v1/sales?is_auction=true'
-        Backbone.sync.args[0][2].data.should.eql published: true, size: 20, sort: '-created_at'
+        Backbone.sync.args[0][1].url.should.containEql '/api/v1/sales'
+        Backbone.sync.args[0][2].data.should.eql published: true, size: 30, sort: '-created_at'
         Backbone.sync.args[0][2].success @sales
 
         Backbone.sync.callCount.should.equal 2
 
-        @res.locals.sd.CURRENT_AUCTIONS.should.eql [@openAuction]
+        _.pluck(@res.locals.sd.CURRENT_AUCTIONS, 'id').should.eql [@openAuction.id]
 
         # Fetches the set that contains the feature of the open sale
         Backbone.sync.args[1][2].url.should.containEql '/api/v1/sets/contains?item_type=Sale&item_id=open-sale'
@@ -48,11 +49,11 @@ describe 'Auctions routes', ->
 
         _.defer =>
           @res.render.args[0][0].should.equal 'index'
-          @res.render.args[0][1].pastAuctions.should.eql [@closedAuction]
-          @res.render.args[0][1].currentAuctions.should.eql [@openAuction]
-          @res.render.args[0][1].upcomingAuctions.should.eql [@previewAuction]
-          @res.render.args[0][1].promoAuctions.should.eql [@previewPromoAuction, @promoAuction]
-          @res.render.args[0][1].nextAuction.should.eql @previewAuction
+          _.pluck(@res.render.args[0][1].pastAuctions, 'id').should.eql [@closedAuction.id]
+          _.pluck(@res.render.args[0][1].currentAuctions, 'id').should.eql [@openAuction.id]
+          _.pluck(@res.render.args[0][1].upcomingAuctions, 'id').should.eql [@previewAuction.id]
+          _.pluck(@res.render.args[0][1].promoAuctions, 'id').should.eql [@previewPromoAuction.id, @promoAuction.id]
+          @res.render.args[0][1].nextAuction.id.should.eql @previewAuction.id
           done()
 
     describe 'with user', ->
@@ -63,8 +64,8 @@ describe 'Auctions routes', ->
       it 'fetches the relevant auction data in addition to the user bid status and renders the index template', ->
         routes.index @req, @res
 
-        Backbone.sync.args[0][1].url.should.containEql '/api/v1/sales?is_auction=true'
-        Backbone.sync.args[0][2].data.should.eql published: true, size: 20, sort: '-created_at'
+        Backbone.sync.args[0][1].url.should.containEql '/api/v1/sales'
+        Backbone.sync.args[0][2].data.should.eql published: true, size: 30, sort: '-created_at'
         Backbone.sync.args[0][2].success @sales
 
         Backbone.sync.args[1][2].url.should.containEql '/api/v1/sets/contains?item_type=Sale&item_id=open-sale'
