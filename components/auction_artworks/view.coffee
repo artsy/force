@@ -30,6 +30,8 @@ module.exports = class AuctionArtworksView extends Backbone.View
     bids_asc: saleArtwork.get('bidder_positions_count')
     amount_desc: -(saleArtwork.get('highest_bid_amount_cents') or saleArtwork.get('opening_bid_cents'))
     amount_asc: saleArtwork.get('highest_bid_amount_cents') or saleArtwork.get('opening_bid_cents')
+    estimate_asc: saleArtwork.get('high_estimate_cents') or saleArtwork.get('estimate_cents') or saleArtwork.get('low_estimate_cents')
+    estimate_desc: -(saleArtwork.get('high_estimate_cents') or saleArtwork.get('estimate_cents') or saleArtwork.get('low_estimate_cents'))
 
   artworks: ->
     @collection.sortBy (artwork) =>

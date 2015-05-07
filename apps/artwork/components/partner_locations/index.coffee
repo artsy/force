@@ -6,11 +6,12 @@ PartnerPhoneNumberView = require '../partner_phone_number/view.coffee'
 # Sets up the partner phone numbers while simultaneously rendering
 # partner locations, since they are relying on the same data
 module.exports = class PartnerLocations
-  constructor: (options = {}) ->
-    { @$el, @artwork } = options
+  constructor: ({ @$el, @artwork }) ->
     return unless @artwork.has 'partner'
+
     @partner = @artwork.related().partner
-    @locations = @partner.locations()
+    @locations = @partner.related().locations
+
     @locations.fetchUntilEnd success: =>
       @renderLocations @locations
       @setupPhoneNumbers @locations

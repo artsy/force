@@ -3,6 +3,7 @@ mediator = require '../../../../lib/mediator.coffee'
 BuyersPremiumModal = require './buyers_premium_modal.coffee'
 ContactView = require '../contact/view.coffee'
 defaultMessage = require '../../../../components/contact/default_message.coffee'
+PartnerPhoneNumberView = require '../partner_phone_number/view.coffee'
 template = -> require('./template.jade') arguments...
 
 module.exports = class AuctionDetailView extends Backbone.View
@@ -13,6 +14,11 @@ module.exports = class AuctionDetailView extends Backbone.View
     'click #artwork-buyers-premium-link a': 'openBuyersPremiumModal'
 
   initialize: ({ @artwork, @user, @auction, @saleArtwork, @bidderPositions }) ->
+    @partner = @artwork.related().partner
+    @locations = @partner.related().locations
+
+    @partnerPhoneNumberView = new PartnerPhoneNumberView model: @artwork, collection: @locations
+
     if @auction.isAuctionPromo()
       new ContactView el: @$el, model: @artwork
 
@@ -55,6 +61,9 @@ module.exports = class AuctionDetailView extends Backbone.View
 
     $('#artwork-lot-number')
       .html 'Lot ' + num if num = @saleArtwork.get('lot_number')
+
+    @$('.js-artwork-auction-detail-phone-number')
+      .html @partnerPhoneNumberView.render().$el
 
     this
 

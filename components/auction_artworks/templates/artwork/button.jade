@@ -1,6 +1,6 @@
 if auction.isAuctionPromo()
   a.is-block.avant-garde-button-black.js-inquiry-button( data-id= artwork.id )
-    | Contact auction house
+    | Contact #{auction.related().profile.displayName() || 'Auction House'}
 else
   //- Only when the button is enabled use the black state.
   //- The disabled black state has been deemed unsuitable for this context...

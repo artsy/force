@@ -88,6 +88,14 @@ describe 'AuctionArtworksView', ->
         user: @user
 
     describe '#render', ->
+      beforeEach ->
+        @view.render()
+
+      describe 'nav', ->
+        it 'renders the approprate sort options', ->
+          @view.$('.garamond-tab').should.have.lengthOf 4
+          @view.$('.garamond-tab').text().should.equal 'DefaultArtists A–ZHighest EstimateLowest Estimate'
+
       describe 'isPreview', ->
         beforeEach ->
           @auction.set 'auction_state', 'preview'

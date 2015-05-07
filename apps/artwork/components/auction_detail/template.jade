@@ -17,10 +17,8 @@ if auction.isAuctionPromo()
   else
     //- Auction is closed. Do nothing.
 
-  //- Later ...
-  //- - locations = artwork.related().partner.locations()
-  //- if locations.length
-  //-   include ../partner_phone_number/template
+  .artwork-auction-detail-phone-number.js-artwork-auction-detail-phone-number
+    //- Rendered separately
 
 else
   if saleArtwork.estimate() && !auction.isClosed()

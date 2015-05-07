@@ -19,21 +19,16 @@ describe 'PartnerPhoneNumberView', ->
     benv.teardown()
 
   beforeEach ->
-    @removeSpy = sinon.spy PartnerPhoneNumberView::, 'remove'
     @artwork = new Artwork fabricate 'artwork'
     @locations = new PartnerLocations _.times 3, -> fabricate('partner_location')
     @view = new PartnerPhoneNumberView model: @artwork, collection: @locations
-
-  afterEach ->
-    @view.remove.restore()
-
-  describe '#initialize', ->
-    it 'removes itself if there are no phone numbers', ->
-      view = new PartnerPhoneNumberView model: @artwork, collection: new PartnerLocations
-      view.$el.html().should.equal ''
-      view.remove.called.should.be.true
+    @view.render()
 
   describe '#render', ->
+    it 'is renders nothing when the collection is empty', ->
+      view = new PartnerPhoneNumberView model: @artwork, collection: new PartnerLocations
+      view.render().$el.html().should.equal ''
+
     it 'renders all of the phone numbers', ->
       @view.$('.show-phone-number').length.should.equal 1
       @view.$('.partner-phone-number').length.should.equal 3
