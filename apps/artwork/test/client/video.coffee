@@ -16,7 +16,8 @@ describe 'VideoView', ->
       benv.render resolve(__dirname, '../../templates/index.jade'), {
         sd: {}
         artist: new Artist fabricate 'artist'
-        artwork: @artwork = new Artwork(fabricate 'artwork')
+        artwork: @artwork = new Artwork fabricate 'artwork'
+        artists: new Backbone.Collection
         asset: (->)
       }, =>
         Backbone.$ = $

@@ -7,6 +7,7 @@ Backbone = require 'backbone'
 { AToZ } = require 'artsy-backbone-mixins'
 { fabricate } = require 'antigravity'
 Artist = require '../../../models/artist'
+Artists = require '../../../collections/artists'
 Artwork = require '../../../models/artwork'
 SaleArtwork = require '../../../models/sale_artwork'
 User = require '../../../models/user'
@@ -31,8 +32,9 @@ describe 'Artwork', ->
       JS_EXT: '.js.gz'
       NODE_ENV: 'test'
       FACEBOOK_APP_NAMESPACE: 'artsyinc'
-    @artwork = new Artwork (fabricate 'artwork', sale_message: '$6,000')
-    @artist = new Artist (fabricate 'artist')
+    @artwork = new Artwork fabricate 'artwork', sale_message: '$6,000'
+    @artist = new Artist fabricate 'artist'
+    @artists = new Artists [@artist]
     done()
 
   describe 'index template', ->
@@ -42,6 +44,7 @@ describe 'Artwork', ->
         sd: @sd
         artwork: @artwork
         artist: @artist
+        artists: @artists
         asset: ->
       @$template = cheerio.load template
       @$template.html().should.containEql @artwork.get('title')
@@ -52,6 +55,7 @@ describe 'Artwork', ->
       template = render('index')
         sd: @sd
         artwork: @artwork
+        artists: @artists
         asset: ->
       @$template = cheerio.load template
       @$template.html().should.containEql @artwork.get('title')
@@ -63,6 +67,7 @@ describe 'Artwork', ->
         sd: @sd
         artwork: @artwork
         artist: @artist
+        artists: @artists
         asset: ->
       @$template = cheerio.load template
       @$template.html().should.containEql @artwork.get('title')
@@ -74,6 +79,7 @@ describe 'Artwork', ->
       template = render('_detail')
         sd: @sd
         artwork: @artwork
+        artists: @artists
         asset: ->
       @$template = cheerio.load template
       @$template.html().should.containEql @artwork.get('title')
@@ -85,6 +91,7 @@ describe 'Artwork', ->
         sd: @sd
         artwork: @artwork
         artist: @artist
+        artists: @artists
         auctionId: 'two-x-two'
         asset: ->
       @$template = cheerio.load template
@@ -96,6 +103,7 @@ describe 'Artwork', ->
         sd: @sd
         artwork: @artwork
         artist: @artist
+        artists: @artists
         auctionId: 'two-x-two'
         asset: ->
       @$template = cheerio.load template

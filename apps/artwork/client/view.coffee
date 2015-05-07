@@ -38,13 +38,13 @@ module.exports = class ArtworkView extends Backbone.View
     'change .aes-radio-button': 'selectEdition'
     'click .artwork-buy-button': 'buy'
 
-  initialize: ({ @artwork, @artist }) ->
+  initialize: ({ @artwork, @artist, @artists }) ->
     @checkQueryStringForAuction()
     @setupEmbeddedInquiryForm()
     @setupCurrentUser()
     @setupRelatedArticles()
     @setupArtistArtworks()
-    @setupFollowButton()
+    @setupFollowButtons()
     @setupBelowTheFold()
     @setupMainSaveButton()
     @setupVideoView()
@@ -196,10 +196,13 @@ module.exports = class ArtworkView extends Backbone.View
       sd: require('sharify').data
       artwork: @artwork
       artist: @artist
+      artists: @artists
       user: @currentUser
 
-    @followButton.setElement @$('.artwork-artist-follow-button')
-    @following?.syncFollows [@artist.id]
+    # Re-setup buttons
+    _.each @followButtons, (view) ->
+      view.setElement @$(".artist-follow[data-id='#{view.model.id}']")
+    @following.syncFollows(@artists.pluck 'id') if @currentUser
 
   setupArtistArtworkSaveButtons: (artworks) ->
     return unless artworks.length > 0
@@ -251,15 +254,17 @@ module.exports = class ArtworkView extends Backbone.View
         saved: @saved
         model: artwork
 
-  setupFollowButton: ->
-    @followButton = new FollowButton
-      analyticsFollowMessage: 'Followed artist, via artwork info'
-      analyticsUnfollowMessage: 'Unfollowed artist, via artwork info'
-      el: @$('.artwork-artist-follow-button')
-      following: @following
-      modelName: 'artist'
-      model: @artist
-    @following?.syncFollows [@artist.id]
+  setupFollowButtons: ->
+    @followButtons = @artists.map (artist) =>
+      new FollowButton
+        el: @$(".artist-follow[data-id='#{artist.id}']")
+        following: @following
+        modelName: 'artist'
+        model: artist
+        analyticsFollowMessage: 'Followed artist, via artwork info'
+        analyticsUnfollowMessage: 'Unfollowed artist, via artwork info'
+
+    @following.syncFollows(@artists.pluck 'id') if @currentUser?
 
   setupVideoView: ->
     return unless @artwork.get('website')?.match('vimeo|youtu') and
