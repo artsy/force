@@ -59,7 +59,6 @@ representation = (fair) ->
       promises = _.compact _.flatten [
         pastFairs.map representation
         articles.fetch(
-          cache: true
           data:
             published: true
             fair_ids: pastFairs.pluck('_id')

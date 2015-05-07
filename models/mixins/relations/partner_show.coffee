@@ -1,10 +1,13 @@
-{ API_URL } = require('sharify').data
+{ API_URL, POSITRON_URL } = require('sharify').data
+Backbone = require 'backbone'
+fixtures = require '../../../test/helpers/fixtures.coffee'
 Backbone = require 'backbone'
 
 module.exports =
   related: ->
     return @__related__ if @__related__?
 
+    Articles = require '../../../collections/articles.coffee'
     Artworks = require '../../../collections/artworks.coffee'
     Artists = require '../../../collections/artists.coffee'
     InstallShots = require '../../../collections/install_shots.coffee'
@@ -16,6 +19,9 @@ module.exports =
     artworks.url = => "#{@url()}/artworks?published=true"
 
     artists = new Artists @get('artists')
+
+    articles = new Articles
+    articles.url = "#{POSITRON_URL}/api/articles?show_id=#{@get '_id'}&published=true"
 
     installShots = new InstallShots
     installShots.url = "#{API_URL}/api/v1/partner_show/#{@id}/images"
@@ -29,6 +35,7 @@ module.exports =
     @__related__ =
       artworks: artworks
       artists: artists
+      articles: articles
       installShots: installShots
       partner: partner
       fair: fair

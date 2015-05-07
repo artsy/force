@@ -13,8 +13,14 @@ module.exports = class Sale extends Backbone.Model
 
   urlRoot: "#{sd.API_URL}/api/v1/sale"
 
-  href: -> "/feature/#{@get('id')}"
-  registrationSuccessUrl: -> "#{@href()}/confirm-registration"
+  href: ->
+    if @isAuctionPromo()
+      "/sale/#{@id}"
+    else
+      "/feature/#{@id}"
+
+  registrationSuccessUrl: ->
+    "#{@href()}/confirm-registration"
 
   fetchArtworks: (options = {}) ->
     @artworks = new SaleArtworks [], id: @id
@@ -101,3 +107,6 @@ module.exports = class Sale extends Backbone.Model
 
   date: (attr) ->
     moment(@get attr)
+
+  isAuctionPromo: ->
+    @get('sale_type') is 'auction promo'

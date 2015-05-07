@@ -88,6 +88,16 @@ describe 'AuctionArtworksView', ->
         user: @user
 
     describe '#render', ->
+      describe 'isPreview', ->
+        beforeEach ->
+          @auction.set 'auction_state', 'preview'
+          @view.render()
+
+        it 'renders correctly', ->
+          @view.$('.auction-grid-artwork').should.have.lengthOf 2
+          @view.$('.js-bid-button').should.have.lengthOf 0
+          @view.$('.js-inquiry-button').should.have.lengthOf 2
+
       describe 'isOpen', ->
         beforeEach ->
           @auction.set 'auction_state', 'open'
@@ -96,7 +106,7 @@ describe 'AuctionArtworksView', ->
         it 'renders correctly', ->
           @view.$('.auction-grid-artwork').should.have.lengthOf 2
           @view.$('.js-bid-button').should.have.lengthOf 0
-          @view.$('.js-inquiry-button').should.have.lengthOf 2
+          @view.$('.js-inquiry-button').should.have.lengthOf 0
 
       describe 'isClosed', ->
         beforeEach ->

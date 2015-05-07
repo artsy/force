@@ -15,24 +15,30 @@ describe 'ContactView', ->
 
       ContactView = benv.requireWithJadeify resolve(__dirname, '../view'), ['attendanceTemplate', 'inquirySentTemplate']
       ContactView::eligibleForAfterInquiryFlow = false
-
+      ContactView.__set__ 'ConfirmInquiryView', @ConfirmInquiryView = sinon.stub()
       sinon.stub Backbone, 'sync'
 
       @artwork = new Artwork fabricate 'artwork'
       @artwork.isContactable = -> true
       @view = new ContactView el: $('body'), model: @artwork
 
-      benv.render resolve(__dirname, '../templates/index.jade'), { artwork: @artwork, sd: { 'INQUIRY_FLOW' : 'original_flow' } }, => done()
+      benv.render resolve(__dirname, '../templates/index.jade'), { artwork: @artwork }, => done()
 
   afterEach ->
     benv.teardown()
     Backbone.sync.restore()
 
   describe '#submit', ->
-    it 'submits an inquiry to the partner', ->
+
+    it 'should hide the form upon successful confirmation', ->
       @view.$('form').trigger 'submit'
-      _.last(Backbone.sync.args)[1].url.should.containEql '/api/v1/me/artwork_inquiry_request'
-      _.last(Backbone.sync.args)[1].attributes.contact_gallery.should.be.true
+      @ConfirmInquiryView.args[0][0].success()
+      @view.$('#artwork-contact-form').css('display').should.equal 'none'
+
+    it 'should display an error if there is one', ->
+      @view.$('form').trigger 'submit'
+      @ConfirmInquiryView.args[0][0].error @artwork, 'There was an error', {}
+      @view.$('#artwork-contact-form-errors').html().should.containEql 'There was an error'
 
   describe 'is logged out', ->
     describe 'during a fair', ->
@@ -80,14 +86,12 @@ describe 'ContactView', ->
     it 'creates an attendance action before submitting the inquiry', ->
       Backbone.sync.args[1][1].url.should.containEql '/api/v1/me/user_fair_action'
       Backbone.sync.args[1][2].success()
-      Backbone.sync.callCount.should.equal 3
-      Backbone.sync.args[2][1].url.should.containEql '/api/v1/me/artwork_inquiry_request'
+      Backbone.sync.callCount.should.equal 2
 
     it 'still submits the inquiry if the attendance request fails', ->
       Backbone.sync.args[1][1].url.should.containEql '/api/v1/me/user_fair_action'
       Backbone.sync.args[1][2].error()
-      Backbone.sync.callCount.should.equal 3
-      Backbone.sync.args[2][1].url.should.containEql '/api/v1/me/artwork_inquiry_request'
+      Backbone.sync.callCount.should.equal 2
 
   describe 'messaging for a sent inquiry', ->
 
@@ -102,36 +106,3 @@ describe 'ContactView', ->
       @view.checkInquiredArtwork()
       Backbone.sync.args[1][2].success [inquiry]
       $('#artwork-inquiry-sent').html().should.containEql 'Mar 17, 2014'
-
-describe 'ContactView with updated_flow', ->
-  beforeEach (done) ->
-    benv.setup =>
-      benv.expose $: benv.require 'jquery'
-      Backbone.$ = $
-
-      ContactView = benv.requireWithJadeify resolve(__dirname, '../view'), ['attendanceTemplate', 'inquirySentTemplate']
-      ContactView::eligibleForAfterInquiryFlow = false
-
-      sinon.stub Backbone, 'sync'
-
-      @artwork = new Artwork fabricate 'artwork'
-      @artwork.isContactable = -> true
-      @view = new ContactView el: $('body'), model: @artwork
-
-      benv.render resolve(__dirname, '../templates/index.jade'), { artwork: @artwork, sd: { 'INQUIRY_FLOW' : 'updated_flow' } }, => done()
-
-  afterEach ->
-    benv.teardown()
-    Backbone.sync.restore()
-
-  describe '#submit', ->
-
-    it 'should hide the form upon successful confirmation', ->
-      @view.$('form').trigger 'submit'
-      Backbone.sync.args[1][2].success()
-      @view.$('#artwork-contact-form').css('display').should.equal 'none'
-
-    it 'should display an error if there is one', ->
-      @view.$('form').trigger 'submit'
-      Backbone.sync.args[1][2].error @artwork, 'There was an error', {}
-      @view.$('#artwork-contact-form-errors').html().should.containEql 'There was an error'
