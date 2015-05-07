@@ -33,8 +33,10 @@ sanitizeRedirect = require '../../components/sanitize_redirect/index'
   url = req.body['redirect-to'] or
         req.query['redirect-to'] or
         req.param('redirect_uri') or
+        req.session.redirectTo or
         parse(req.get('Referrer') or '').path or
         '/'
+
   res.redirect sanitizeRedirect(url)
 
 @logout = (req, res, next) ->
