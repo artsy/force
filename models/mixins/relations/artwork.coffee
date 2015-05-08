@@ -27,7 +27,7 @@ module.exports =
     fairs = new Fairs
     fairs.url = "#{API_URL}/api/v1/related/fairs?artwork[]=#{@id}&active=true"
     shows = new Shows
-    shows.url = "#{API_URL}/api/v1/related/shows?artwork_id=#{@id}&active=true&size=10"
+    shows.url = "#{API_URL}/api/v1/related/shows?artwork_id=#{@id}&active=true"
 
     @__related__ =
       artist: artist
