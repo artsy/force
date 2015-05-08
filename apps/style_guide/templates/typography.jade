@@ -1,0 +1,17 @@
+extends ./template
+
+block content
+  section.sg-components
+    h2 Typography
+
+    for sizes, fontName in typeSizes
+      .sg-type-specimen
+
+        for styles, size in sizes
+          .sg-type-specimen-sample
+            p( class="#{fontName}-#{size}" )
+              | .#{fontName}-#{size}: #{styles['font-size']} / #{styles['line-height']}
+            hr
+            p: for value, property in styles
+              code #{fontName}-#{size}-#{property}
+              br
