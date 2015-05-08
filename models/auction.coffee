@@ -15,7 +15,10 @@ module.exports = class Auction extends Sale
     response
 
   href: ->
-    "/auction/#{@id}"
+    if @isAuctionPromo()
+      "/sale/#{@id}"
+    else
+      "/auction/#{@id}"
 
   registrationSuccessUrl: ->
     "#{@href()}/confirm-registration"
