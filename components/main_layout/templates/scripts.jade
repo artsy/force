@@ -6,7 +6,6 @@ script( type="text/javascript" ).
 
 //- Other analytics integrations (deprected, TODO: Replace with just Segment)
 if sd.NODE_ENV != 'test' && sd.BROWSER && sd.BROWSER.family != 'PhantomJS'
-  include ./google_analytics.html
   include ./adroll.html
 
 //- Wire up sharify

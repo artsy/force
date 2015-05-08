@@ -48,33 +48,6 @@ describe 'analytics', ->
         @gaStub.args[0][0].should.equal 'create'
         @gaStub.args[0][1].should.equal 'goog that analytics'
 
-    describe '#trackPageview', ->
-
-      beforeEach ->
-        @clock = sinon.useFakeTimers()
-
-      afterEach ->
-        @clock.restore()
-
-      it 'sends a google pageview', ->
-        analytics.trackPageview()
-        @gaStub.args[1][0].should.equal 'send'
-        @gaStub.args[1][1].should.equal 'pageview'
-
-      it 'doesnt let failed analytics mess up js code', ->
-        analytics mixpanel: null, ga: null, location: { pathname: 'foobar' }
-        analytics.trackPageview()
-        analytics.getProperty('foo')
-        analytics.setProperty('foo')
-
-      it 'tracks bounce rates', ->
-        analytics.trackPageview()
-        @gaStub.args.length.should.equal 2
-        @clock.tick 15000
-        _.last(_.last(@gaStub.args)).should.equal 'time on page more than 15 seconds'
-        @clock.tick 165000 # Remaining time to 3 minutes
-        _.last(_.last(@gaStub.args)).should.equal 'time on page more than 3 minutes'
-
     describe '#modelNameAndIdToLabel', ->
 
       it 'capitalizes modelname', ->
@@ -262,15 +235,3 @@ describe 'analytics', ->
       it 'doesnt init ga with the GOOGLE_ANALYTICS_ID', ->
         @gaStub.args.length.should.equal 0
         @gaStub.args.length.should.equal 0
-
-    describe '#trackPageview', ->
-
-      it 'doesnt track pageviews', ->
-        analytics.trackPageview()
-        @gaStub.args.length.should.equal 0
-        @gaStub.args.length.should.equal 0
-
-      it 'doesnt let failed analytics mess up js code', ->
-        analytics mixpanel: null, ga: null, location: { pathname: 'foobar' }
-        analytics.trackPageview()
-        analytics.snowplowStruct()
