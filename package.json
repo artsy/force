@@ -87,7 +87,7 @@
     "ezel-assets": "*",
     "browserify-dev-middleware": "*",
     "benv": "*",
-    "browserify": "<10",
+    "browserify": "*",
     "caching-coffeeify": "*",
     "artsy-gemini-upload": "*",
     "annyang": "git://github.com/mzikherman/annyang.git",
