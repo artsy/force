@@ -7,7 +7,7 @@
 // we send a page view to snowplow here.
 snowplow('trackPageView');
 
-analytics.on('track', function(event, properties, options){
-  snowplow(event, /*consult Will*/);
-})
-
+analytics.on('track', function(event, properties, options) {
+  // consult Will
+  // snowplow(event);
+});
