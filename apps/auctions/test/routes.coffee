@@ -1,4 +1,3 @@
-
 _ = require 'underscore'
 sinon = require 'sinon'
 Backbone = require 'backbone'
@@ -17,11 +16,12 @@ describe 'Auctions routes', ->
   describe '#index', ->
     before ->
       @sales = [
-        @openAuction = new Auction fabricate 'sale', auction_state: 'open', id: 'open-sale', eligible_sale_artworks_count: 1
-        @closedAuction = new Auction fabricate 'sale', auction_state: 'closed', id: 'closed-sale', eligible_sale_artworks_count: 1
-        @previewAuction = new Auction fabricate 'sale', auction_state: 'preview', id: 'preview-sale', eligible_sale_artworks_count: 1
-        @previewPromoAuction = new Auction fabricate 'sale', auction_state: 'preview', id: 'preview-promo-sale', eligible_sale_artworks_count: 1, sale_type: 'auction promo'
-        @promoAuction = new Auction fabricate 'sale', auction_state: 'open', id: 'promo-sale', eligible_sale_artworks_count: 1, sale_type: 'auction promo'
+        @sneakySale = new Auction fabricate 'sale', is_auction: false, auction_state: 'open', id: 'sneaky-sale', eligible_sale_artworks_count: 1
+        @openAuction = new Auction fabricate 'sale', is_auction: true, auction_state: 'open', id: 'open-sale', eligible_sale_artworks_count: 1
+        @closedAuction = new Auction fabricate 'sale', is_auction: true, auction_state: 'closed', id: 'closed-sale', eligible_sale_artworks_count: 1
+        @previewAuction = new Auction fabricate 'sale', is_auction: true, auction_state: 'preview', id: 'preview-sale', eligible_sale_artworks_count: 1
+        @previewPromoAuction = new Auction fabricate 'sale', is_auction: true, auction_state: 'preview', id: 'preview-promo-sale', eligible_sale_artworks_count: 1, sale_type: 'auction promo'
+        @promoAuction = new Auction fabricate 'sale', is_auction: true, auction_state: 'open', id: 'promo-sale', eligible_sale_artworks_count: 1, sale_type: 'auction promo'
       ]
 
     describe 'without user', ->
@@ -35,17 +35,7 @@ describe 'Auctions routes', ->
         Backbone.sync.args[0][2].data.should.eql published: true, size: 30, sort: '-created_at'
         Backbone.sync.args[0][2].success @sales
 
-        Backbone.sync.callCount.should.equal 2
-
-        _.pluck(@res.locals.sd.CURRENT_AUCTIONS, 'id').should.eql [@openAuction.id]
-
-        # Fetches the set that contains the feature of the open sale
-        Backbone.sync.args[1][2].url.should.containEql '/api/v1/sets/contains?item_type=Sale&item_id=open-sale'
-        # Passes down the owner (Feature)
-        Backbone.sync.args[1][2].success [owner: id: 'open-sale-feature-id']
-        # Fetches that feature
-        Backbone.sync.args[2][1].url().should.containEql '/api/v1/feature/open-sale-feature-id'
-        Backbone.sync.args[2][2].success fabricate 'feature'
+        Backbone.sync.callCount.should.equal 1
 
         _.defer =>
           @res.render.args[0][0].should.equal 'index'
@@ -68,14 +58,8 @@ describe 'Auctions routes', ->
         Backbone.sync.args[0][2].data.should.eql published: true, size: 30, sort: '-created_at'
         Backbone.sync.args[0][2].success @sales
 
-        Backbone.sync.args[1][2].url.should.containEql '/api/v1/sets/contains?item_type=Sale&item_id=open-sale'
-        Backbone.sync.args[1][2].success [owner: id: 'open-sale-feature-id']
-
         # Checks to see if you are registered to bid in the upcoming sale
-        Backbone.sync.args[2][2].url.should.containEql '/api/v1/me/bidders'
-        Backbone.sync.args[2][2].data.sale_id.should.equal 'preview-sale'
-        Backbone.sync.args[2][2].success [{}, {}]
+        Backbone.sync.args[1][2].url.should.containEql '/api/v1/me/bidders'
+        Backbone.sync.args[1][2].data.sale_id.should.equal 'preview-sale'
+        Backbone.sync.args[1][2].success [{}, {}]
         @req.user.get('registered_to_bid').should.be.true
-
-        Backbone.sync.args[3][1].url().should.containEql '/api/v1/feature/open-sale-feature-id'
-        Backbone.sync.args[3][2].success fabricate 'feature'
