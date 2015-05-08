@@ -4,6 +4,8 @@
 //
 
 // Track 15 second bounce rate TODO: Refactor to analytics.track
+
+
 setTimeout(function() {
   ga('send', 'event', '15 Seconds', 'time on page more than 15 seconds');
 }, 15000);
