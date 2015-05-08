@@ -8,6 +8,10 @@
         )
   .ap-featured-item__title
     a( href= auction.href() )
+      if auction.has('profile')
+        .ap-featured-item__logo
+          img( src= auction.related().profile.iconImageUrl(), alt= auction.get('name') )
+
       h3.af-name= auction.get('name')
 
   .ap-featured-item__clock
