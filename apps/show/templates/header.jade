@@ -30,6 +30,8 @@ header.show-header( class= hasCarousel ? 'has-carousel' : undefined )
         if fair.isEligible()
           a.show-fair-link( href= fair.href() )
             = fair.get('name')
+            include ../components/map_modal/images/map-modal-arrow.svg
+
         else
           | #{fair.get('name')}
         .show-dates
