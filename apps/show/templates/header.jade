@@ -43,5 +43,6 @@ header.show-header( class= hasCarousel ? 'has-carousel' : undefined )
         if location
           .show-location
             = location.singleLine()
-            a.map-modal-link
-              include ../components/map_modal/images/map-modal-arrow.svg
+            if location.has('coordinates')
+              a.map-modal-link
+                include ../components/map_modal/images/map-modal-arrow.svg
