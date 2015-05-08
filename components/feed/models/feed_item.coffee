@@ -47,7 +47,7 @@ module.exports = class FeedItem extends Backbone.Model
   isPartnerShow: -> @get('_type') == 'PartnerShow'
 
   formatSeeMoreText: ->
-    num = @get('artworks').length - @get('initialArtworkSize')
+    num = @get('eligible_artworks_count') - @get('initialArtworkSize')
     if num > 0
       stem = if num > 1 then 's' else ''
       "See #{num} More Artwork#{stem}"
