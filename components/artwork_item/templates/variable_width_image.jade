@@ -5,13 +5,13 @@ unless image.isCropped(artworkSize)
     style= "padding-bottom: #{image.factor() * 100}%"
   )
     img(
-      src= image.imageUrl(artworkSize)
+      src= image.bestImageUrl([artworkSize, 'tall', 'large', 'larger', 'medium', 'small'])
       nopin= artwork.noPinAttr()
       alt= artwork.toAltText()
     )
 else
   img.artwork-item-image(
-    src= image.imageUrl(artworkSize)
+    src= image.bestImageUrl([artworkSize, 'tall', 'large', 'larger', 'medium', 'small'])
     nopin= artwork.noPinAttr()
     alt= artwork.toAltText()
   )

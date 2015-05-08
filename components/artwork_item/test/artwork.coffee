@@ -17,7 +17,7 @@ render = (template) ->
 describe 'Artwork Item template', ->
 
   describe 'artwork item image', ->
-    before ->
+    beforeEach ->
       @artwork = new Artwork fabricate 'artwork'
 
     it 'defaults to a medium size artwork image', ->
@@ -33,6 +33,11 @@ describe 'Artwork Item template', ->
       $('img').attr('width').should.equal '500'
       $('img').attr('height').should.equal '250'
       $('img').attr('src').should.containEql 'medium'
+
+    it 'falls back to an uncropped size', ->
+      @artwork.defaultImage().set 'image_versions', ['tall', 'medium']
+      $ = cheerio.load render('artwork')({ artwork: @artwork, artworkSize: 'large' })
+      $('img').attr('src').should.containEql 'tall'
 
   describe 'artwork caption', ->
     beforeEach ->
