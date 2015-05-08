@@ -14,7 +14,7 @@ trackArtworkImpressions = require("../../analytics/impression_tracking.coffee").
 module.exports.FeedItemView = class FeedItemView extends Backbone.View
 
   events:
-    'click .see-more': 'maybeFetchMoreArtworks'
+    'click .see-more': 'fetchMoreArtworks'
     "click .artwork-item-buy": "acquire"
     "click .artwork-item-contact-seller": "contactSeller"
 
@@ -41,18 +41,24 @@ module.exports.FeedItemView = class FeedItemView extends Backbone.View
     analytics.track.click "Clicked show all artworks on feed item"
     @fetchMoreArtworks $(event.target)
 
-  maybeFetchMoreArtworks: ->
-    return @showArtworks() if @additionalParams?.artist?
-    @fetchMoreArtworks()
-
   fetchMoreArtworks: ->
     @$seeMore ?= @$('.see-more')
     @$seeMore.addClass 'is-loading'
+    @artworksPage++
     @model.toChildModel().related().artworks.fetch
-      success: (artworks) =>
-        @$seeMore.remove()
+      data:
+        size: @artworksPageSize * @artworksPage
+      success: (artworks, response, options) =>
+        artworksLeft = @model.get('eligible_artworks_count') - artworks.length
+
+        if artworksLeft
+          @$seeMore.html "See #{artworksLeft} more artworks"
+          @$seeMore.removeClass 'is-loading'
+        else
+          @$seeMore.remove()
+
         @$('.feed-large-artworks-columns').html artworkColumns artworkColumns: artworks.groupByColumnsInOrder(4)
-        @setupArtworkSaveControls artworks.models
+        @setupArtworkSaveControls artworks
     false
 
   setupArtworkImpressionTracking: (artworks=@model.artworks().models) ->
