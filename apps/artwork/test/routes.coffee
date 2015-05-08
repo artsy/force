@@ -52,7 +52,7 @@ describe 'Artwork routes', ->
         _.pluck(@res.locals.sd.ARTISTS, 'id')
           .should.eql ['andy-foobar-artist', 'andy-barbaz-artist']
         @res.render.args[0][0].should.equal 'index'
-      done()
+        done()
 
     it 'works with client side routes', (done) ->
       @res.locals.sd.CURRENT_PATH = '/artwork/andy-foobar/inquire'
