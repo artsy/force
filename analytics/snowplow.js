@@ -4,5 +4,5 @@
 //
 
 // Segment automatically includes an analytics.page() call so to mimic that
-// we call send a page view to snowplow here.
+// we send a page view to snowplow here.
 snowplow('trackPageView');
