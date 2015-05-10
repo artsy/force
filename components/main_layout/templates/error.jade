@@ -3,6 +3,9 @@ extends ./index
 block head
   include ./common_head
 
+block locals
+  - asset = asset || function(p){ return p }
+
 block body
   main#error-handler
     if code === 404
