@@ -12,7 +12,12 @@ describe 'CheckoutForm', ->
 
   before (done) ->
     benv.setup =>
-      benv.expose { $: benv.require 'jquery' }
+      benv.expose
+        $: benv.require('jquery')
+        Stripe: @Stripe =
+          setPublishableKey: sinon.stub()
+          card:
+            createToken: sinon.stub()
       sinon.stub global, 'setInterval'
       Backbone.$ = $
       done()
@@ -75,19 +80,10 @@ describe 'CheckoutForm', ->
       @view.fields.month.el.val '12'
       @view.fields.year.el.val '2015'
       @view.fields.conditions.el.prop('checked', true)
-      @view.balanced.should.not.be.ok
-
       @view.onSubmit()
-      _.last(Backbone.sync.args)[2].success { uri: '/v1/marketplaces/TEST-MP7Fs9XluC54HnVAvBKSI3jQ' }
       @view.$('.error').text().should.equal ''
-
       # Just call the cardCallback
-      @view.cardCallback
-        status: 201
-        data:
-          uri: 'super-cool-credit-card-uri'
-
-      @view.balanced.should.be.ok
+      @view.cardCallback 200, { id: 'super-cool-credit-card-token' }
       _.last(Backbone.sync.args)[2].success {}
       @success.should.equal true
 
