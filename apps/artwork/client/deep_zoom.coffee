@@ -1,7 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 Transition = require '../../../components/mixins/transition.coffee'
-getScript = require '../../../lib/get_script.coffee'
 template = -> require('../templates/deep_zoom.jade') arguments...
 
 module.exports = class DeepZoomView extends Backbone.View
@@ -37,7 +36,7 @@ module.exports = class DeepZoomView extends Backbone.View
     @$el.html(template).
       attr 'data-state', 'loading'
 
-    getScript 'openseadragon', =>
+    _.defer =>
       @viewer = OpenSeadragon
         id: @id
         debugMode: false
