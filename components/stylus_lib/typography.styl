@@ -7,7 +7,27 @@ monospace()
 
 // Sizes
 json('./type_sizes.json')
-large-avant-garde-font-size = 24px // Remove this later
+
+// Stylus has *terrible* support for accessing nested hashes as values (? file a bug report)
+sizings = json('./type_sizes.json', { hash: true })
+
+garamond-size(size, mixinFont = false)
+  sizing = sizings.garamond[size]
+  fs = sizing.font-size
+  font-size fs
+  lh = sizing.line-height
+  line-height lh
+  if mixinFont
+    garamond()
+
+avant-garde-size(size, mixinFont = false)
+  sizing = sizings.avant-garde[size]
+  fs = sizing.font-size
+  font-size fs
+  lh = sizing.line-height
+  line-height lh
+  if mixinFont
+    avant-garde()
 
 // Styles
 small-caps()

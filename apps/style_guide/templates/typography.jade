@@ -12,6 +12,5 @@ block content
             p( class="#{fontName}-#{size}" )
               | .#{fontName}-#{size}: #{styles['font-size']} / #{styles['line-height']}
             hr
-            p: for value, property in styles
-              code #{fontName}-#{size}-#{property}
-              br
+            pre
+              | #{fontName}-size('#{size}')
