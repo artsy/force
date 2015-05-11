@@ -5,6 +5,9 @@
 if (location.pathname.match('/gallery-partnerships')) {
 
   analytics.page('Gallery Partnerships');
+  // Explicit page track to snowplow to send the session id for joining
+  // salesforce and snowplow later.
+  snowplow('trackStructEvent', 'partner_application', 'page_view', sd.SESSION_ID);
 
   if (sd.GALLERY_PARTNERSHIPS_APPLY == 'inline'){
     analytics.trackForm(

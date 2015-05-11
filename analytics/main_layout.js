@@ -16,7 +16,6 @@ setTimeout(function() {
   ga('send', 'event', '3 Minutes', 'time on page more than 3 minutes');
 }, 180000);
 
-//Tracking Snowplow page view and session ID. We'll want to refactor if/when
-//we phase out Snowplow.
+// Tracking Snowplow page view and session ID. We'll want to refactor if/when
+// we phase out Snowplow.
 snowplow('trackPageView');
-snowplow('trackStructEvent', 'global', 'pageView', sd.SESSION_ID);
