@@ -3,6 +3,9 @@
 // or any other actions that occur on each page.
 //
 
+// Track pageview
+analytics.page();
+
 // Track 15 second bounce rate TODO: Refactor to analytics.track
 setTimeout(function() {
   ga('send', 'event', '15 Seconds', 'time on page more than 15 seconds');
@@ -17,5 +20,3 @@ setTimeout(function() {
 //we phase out Snowplow.
 snowplow('trackPageView');
 snowplow('trackStructEvent', 'global', 'pageView', sd.SESSION_ID);
-
-
