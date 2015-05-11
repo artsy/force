@@ -25,12 +25,12 @@ module.exports = class PersonalizeState extends Backbone.Model
     current_step: 'collect'
     current_level: 2 # Interested in starting
     __steps__:
-      new_1: ['collect', 'categories', 'favorites', 'artists', 'galleries', 'institutions']
-      new_2: ['collect', 'price_range', 'categories', 'favorites', 'artists', 'galleries', 'institutions']
-      new_3: ['collect', 'price_range', 'bookmarks', 'artists', 'galleries', 'institutions']
-      existing_1: ['collect', 'categories', 'favorites', 'artists', 'galleries', 'institutions']
-      existing_2: ['collect', 'price_range', 'categories', 'favorites', 'artists', 'galleries', 'institutions']
-      existing_3: ['collect', 'price_range', 'bookmarks', 'artists', 'galleries', 'institutions']
+      new_1: ['collect', 'categories', 'favorites', 'artists']
+      new_2: ['collect', 'price_range', 'categories', 'favorites', 'artists']
+      new_3: ['collect', 'price_range', 'bookmarks', 'artists']
+      existing_1: ['collect', 'categories', 'favorites', 'artists']
+      existing_2: ['collect', 'price_range', 'categories', 'favorites', 'artists']
+      existing_3: ['collect', 'price_range', 'bookmarks', 'artists']
 
   initialize: (options = {}) ->
     { @user } = options

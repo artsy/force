@@ -11,12 +11,12 @@ Profile = require '../../../../models/profile'
 Followable = require '../../client/mixins/followable'
 
 SuggestionsView = benv.requireWithJadeify resolve(__dirname, '../../client/views/suggestions'), ['suggestedTemplate']
-GalleriesView = benv.requireWithJadeify resolve(__dirname, '../../client/views/galleries'), ['template']
+# GalleriesView = benv.requireWithJadeify resolve(__dirname, '../../client/views/galleries'), ['template']
 
 # Hack for inherited compiled jade templates
-GalleriesView::suggestedTemplate = SuggestionsView::suggestedTemplate
+# GalleriesView::suggestedTemplate = SuggestionsView::suggestedTemplate
 
-describe 'SuggestionsView', ->
+xdescribe 'SuggestionsView', ->
   before (done) ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'
