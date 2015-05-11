@@ -18,6 +18,8 @@ setup = ($el, options = {}, callback) ->
   }
 
 module.exports = ($el, options = {}, callback) ->
+  return unless $el and $el.length
+
   if options.imagesLoaded
     dfd = $.Deferred()
     ($el.find options.selector or '.js-mgr-cells')

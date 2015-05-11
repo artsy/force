@@ -41,6 +41,12 @@ describe '#initCarousel', ->
       existy(instance.navigation).should.be.true
       done()
 
+  it 'returns without an error if there is no $el', ->
+    initCarousel $('.sorry')
+    true.should.be.true
+    initCarousel()
+    true.should.be.true
+
   describe 'option `imagesLoaded` is `true`', ->
     it 'returns a thennable', (done) ->
       promise = initCarousel $('.js-carousel'), imagesLoaded: true
