@@ -2,7 +2,10 @@
   h3= category.get('title')
   if category.get('image_versions')
     a.hoverable-image-link.personalize-category-image-link
-      img.personalize-category-image( src=category.imageUrl('large_square'), width='400', height='400' )
       .personalize-following-overlay.is-hidden
-        i.icon-with-white-circle.icon-check
+        .personalize-following-darkbg
+        .personalize-following-icon
+          i.icon-with-white-circle.icon-check
+          .personalize-following-text Follow
+      img.personalize-category-image( src=category.imageUrl('large_square'), width='400', height='400' )
   a.avant-garde-button-white.is-block.follow-button( data-id="#{category.get('gene_id')}" )

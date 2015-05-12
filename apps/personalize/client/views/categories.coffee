@@ -2,7 +2,6 @@ _ = require 'underscore'
 StepView = require './step.coffee'
 Items = require '../../../../collections/items.coffee'
 Gene = require '../../../../models/gene.coffee'
-mediator = require '../../../../lib/mediator.coffee'
 { setSkipLabel } = require '../mixins/followable.coffee'
 { FollowButton, Following } = require '../../../../components/follow_button/index.coffee'
 template = -> require('../../templates/categories.jade') arguments...
@@ -30,10 +29,16 @@ module.exports = class CategoriesView extends StepView
     @categories = new Items [], id: @setIds[@state.get('current_level')], item_type: 'FeaturedLink'
     @categories.fetch()
     @listenToOnce @categories, 'sync', @bootstrap
-    mediator.on 'follow-button:follow', (el, model) ->
-      el.prev('.personalize-category-image-link').children('.personalize-following-overlay').removeClass 'is-hidden'
-    mediator.on 'follow-button:unfollow', (el, model) ->
-      el.prev('.personalize-category-image-link').children('.personalize-following-overlay').addClass 'is-hidden'
+    @following.on 'add', (follow) ->
+      $(".follow-button[data-id=#{follow.get('gene').id}]")
+        .parent()
+        .find '.personalize-following-overlay'
+        .removeClass 'is-hidden'
+    @following.on 'remove', (follow) ->
+      $(".follow-button[data-id=#{follow.get('gene').id}]")
+        .parent()
+        .find '.personalize-following-overlay'
+        .addClass 'is-hidden'
 
   bootstrap: ->
     @$('#personalize-categories').html @setupCategories @categories

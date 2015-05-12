@@ -16,6 +16,7 @@ SuggestionsView = benv.requireWithJadeify resolve(__dirname, '../../client/views
 # Hack for inherited compiled jade templates
 # GalleriesView::suggestedTemplate = SuggestionsView::suggestedTemplate
 
+# We are currently not using SuggestionsView
 xdescribe 'SuggestionsView', ->
   before (done) ->
     benv.setup =>
