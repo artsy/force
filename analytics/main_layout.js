@@ -6,14 +6,14 @@
 // Track pageview
 analytics.page();
 
-// Track 15 second bounce rate TODO: Refactor to analytics.track
+// Track 15 second bounce rate
 setTimeout(function() {
-  ga('send', 'event', '15 Seconds', 'time on page more than 15 seconds');
+  analytics.track('time on page more than 15 seconds', { nonInteraction: 1 });
 }, 15000);
 
-// Track 3 Minute bounce rate TODO: Refactor to analytics.track
+// Track 3 Minute bounce rate
 setTimeout(function() {
-  ga('send', 'event', '3 Minutes', 'time on page more than 3 minutes');
+  analytics.track('time on page more than 3 minutes', { nonInteraction: 1 });
 }, 180000);
 
 // Tracking Snowplow page view. TODO: Remove when we phase out Snowplow.
