@@ -30,6 +30,17 @@ module.exports = class CategoriesView extends StepView
     @categories.fetch()
     @listenToOnce @categories, 'sync', @bootstrap
 
+    @listenTo @following, 'add', (follow) ->
+      $(".follow-button[data-id=#{follow.get('gene').id}]")
+        .parent()
+        .find '.personalize-following-overlay'
+        .addClass 'is-clicked'
+    @listenTo @following, 'remove', (follow) ->
+      $(".follow-button[data-id=#{follow.get('gene').id}]")
+        .parent()
+        .find '.personalize-following-overlay'
+        .removeClass 'is-clicked'
+
   bootstrap: ->
     @$('#personalize-categories').html @setupCategories @categories
     @$('#personalize-category-anything-else').show()

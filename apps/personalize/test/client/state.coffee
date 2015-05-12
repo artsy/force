@@ -116,10 +116,6 @@ describe 'state', ->
         state.get('current_step').should.equal 'favorites'
         state.next()
         state.get('current_step').should.equal 'artists'
-        state.next()
-        state.get('current_step').should.equal 'galleries'
-        state.next()
-        state.get('current_step').should.equal 'institutions'
         state.next() # Done
 
       it 'works for a user that is interested in starting to buy art (level 2)', (done) ->
@@ -134,10 +130,6 @@ describe 'state', ->
         state.get('current_step').should.equal 'favorites'
         state.next()
         state.get('current_step').should.equal 'artists'
-        state.next()
-        state.get('current_step').should.equal 'galleries'
-        state.next()
-        state.get('current_step').should.equal 'institutions'
         state.next() # Done
 
       it 'works for a user that buys art (level 3)', (done) ->
@@ -150,10 +142,6 @@ describe 'state', ->
         state.get('current_step').should.equal 'bookmarks'
         state.next()
         state.get('current_step').should.equal 'artists'
-        state.next()
-        state.get('current_step').should.equal 'galleries'
-        state.next()
-        state.get('current_step').should.equal 'institutions'
         state.next() # Done
 
     describe 'existing users (reonboarding)', ->
@@ -167,10 +155,6 @@ describe 'state', ->
         state.get('current_step').should.equal 'favorites'
         state.next()
         state.get('current_step').should.equal 'artists'
-        state.next()
-        state.get('current_step').should.equal 'galleries'
-        state.next()
-        state.get('current_step').should.equal 'institutions'
         state.next() # Done
 
       it 'works for a user that is interested in starting to buy art (level 2)', (done) ->
@@ -185,10 +169,6 @@ describe 'state', ->
         state.get('current_step').should.equal 'favorites'
         state.next()
         state.get('current_step').should.equal 'artists'
-        state.next()
-        state.get('current_step').should.equal 'galleries'
-        state.next()
-        state.get('current_step').should.equal 'institutions'
         state.next() # Done
 
       it 'works for a user that buys art (level 3)', (done) ->
@@ -201,8 +181,4 @@ describe 'state', ->
         state.get('current_step').should.equal 'bookmarks'
         state.next()
         state.get('current_step').should.equal 'artists'
-        state.next()
-        state.get('current_step').should.equal 'galleries'
-        state.next()
-        state.get('current_step').should.equal 'institutions'
         state.next() # Done
