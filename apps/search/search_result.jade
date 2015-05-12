@@ -1,14 +1,11 @@
 a.search-result( href=result.href(), class=result.get('display_model'), data-id=result.get('id') )
   .search-result-thumbnail
     .search-result-thumbnail-fallback
-      if result.get('display_model') == 'Gallery'
-        - var imageSrc = fill(result.imageUrl(), { width: 70, height: 70, color: 'fff' })
-      else
-        - var imageSrc = crop(result.imageUrl(), { width: 70, height: 70 })
       img(
-        src= imageSrc,
-        width='70', height='70',
-        alt= result.get('title'),
+        src= result.imageUrl()
+        width='70'
+        height='70'
+        alt= result.get('title')
         onerror='this.style.display="none";'
       )
   .search-result-info
