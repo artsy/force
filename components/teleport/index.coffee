@@ -1,7 +1,7 @@
 sd = require('sharify').data
 
 # simulates a click for eigen views that don't
-# it when you set window.location
+# like it when you set window.location
 
 module.exports = (location) ->
   a = document.createElement 'a'
