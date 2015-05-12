@@ -36,7 +36,7 @@ module.exports = class DeepZoomView extends Backbone.View
     @$el.html(template).
       attr 'data-state', 'loading'
 
-    _.defer =>
+    $.getScript '/javascripts/openseadragon.min.js', =>
       @viewer = OpenSeadragon
         id: @id
         debugMode: false
@@ -104,6 +104,7 @@ module.exports = class DeepZoomView extends Backbone.View
   # Invoked by the router
   remove: ->
     @viewer?.destroy()
+    @viewer = null # Important
 
     Transition.fade @$el,
       duration: 500

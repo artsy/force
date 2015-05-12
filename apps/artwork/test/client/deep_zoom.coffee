@@ -30,6 +30,7 @@ describe 'DeepZoomView', ->
       Backbone.$ = $
       $.support.transition = { end: 'transitionend' }
       $.fn.emulateTransitionEnd = -> @trigger $.support.transition.end
+      $.getScript = (url, cb) -> cb()
       done()
 
   after ->
