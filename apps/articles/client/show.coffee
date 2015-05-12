@@ -6,7 +6,6 @@ Articles = require '../../../collections/articles.coffee'
 Artwork = require '../../../models/artwork.coffee'
 Artworks = require '../../../collections/artworks.coffee'
 ShareView = require '../../../components/share/view.coffee'
-CarouselView = require '../../../components/carousel/view.coffee'
 analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 artworkItemTemplate = -> require(
   '../../../components/artwork_item/templates/artwork.jade') arguments...

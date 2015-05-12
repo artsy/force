@@ -2,7 +2,7 @@ _ = require 'underscore'
 _s = require 'underscore.string'
 sd = require('sharify').data
 Backbone = require 'backbone'
-CarouselView = require '../../../components/carousel/view.coffee'
+initCarousel = require '../../../components/merry_go_round/index.coffee'
 HeaderView = require './views/header.coffee'
 OverviewView = require './views/overview.coffee'
 WorksView = require './views/works.coffee'
@@ -36,8 +36,7 @@ module.exports = class ArtistRouter extends Backbone.Router
     @user?.initializeDefaultArtworkCollection()
 
   setupCarousel: ->
-    @carouselView = new CarouselView el: $('#artist-carousel'), height: 300, align: 'left'
-    @carouselView.postRender()
+    initCarousel $('.js-artist-carousel')
 
   setupHeaderView: ->
     @headerView = new HeaderView _.extend el: $('#artist-page-header'), @options
