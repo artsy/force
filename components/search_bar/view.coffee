@@ -5,7 +5,6 @@ sd = require('sharify').data
 Search = require './collections/search.coffee'
 mediator = require '../../lib/mediator.coffee'
 analytics = require '../../lib/analytics.coffee'
-{ fill } = require '../resizer/index.coffee'
 itemTemplate = -> require('./templates/item.jade') arguments...
 emptyItemTemplate = -> require('./templates/empty-item.jade') arguments...
 
@@ -99,7 +98,7 @@ module.exports = class SearchBarView extends Backbone.View
     @$el.removeClass 'is-display-suggestions'
 
   suggestionTemplate: (item) =>
-    itemTemplate fill: fill, item: item, displayKind: @displayKind
+    itemTemplate item: item, displayKind: @displayKind
 
   emptyItemTemplate: (options) =>
     if @displayEmptyItem
