@@ -23,7 +23,10 @@ module.exports = class Article extends Backbone.Model
     Articles = require '../collections/articles.coffee'
     footerArticles = new Articles
     Q.all([
-      @fetch(error: options.error)
+      @fetch(
+        error: options.error
+        headers: 'X-Access-Token': options.accessToken or ''
+      )
       footerArticles.fetch(
         error: options.error
         cache: true
