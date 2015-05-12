@@ -1,13 +1,18 @@
-mixin carouselFigure(figure)
-  - var dimensions = figure.resizeDimensionsFor({ height: 300 })
-  a( href= figure.get('href') )
-    img(
-      src= figure.resizeUrlFor({ height: 300 })
-      alt= figure.get('title')
-      width= dimensions.width
-      height= dimensions.height
-    )
+.artist-carousel.js-artist-carousel
+  .mgr-cells.js-mgr-cells
+    for figure in carousel.figures.models
+      .mgr-cell.js-mgr-cell
+        - var dimensions = figure.resizeDimensionsFor({ height: 300 })
+        a( href= figure.get('href') )
+          img(
+            src= figure.resizeUrlFor({ height: 300 })
+            alt= figure.get('title')
+            width= dimensions.width
+            height= dimensions.height
+          )
 
-- var carouselFigures = carousel.figures.models
-#artist-carousel.artist-carousel.carousel
-  include ../../../components/carousel/carousel.jade
+
+  - length = carousel.figures.length
+  if length > 1
+    nav.mgr-navigation.js-mgr-navigation
+      include ../../../components/merry_go_round/templates/navigation

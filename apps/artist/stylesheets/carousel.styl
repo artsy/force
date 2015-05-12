@@ -1,27 +1,14 @@
 artist-header-top-padding = 40px
 carousel-height = 300px
 carousel-top-padding = 20px
-carousel-controls-height = 46px
 
 .artist-carousel
   position relative
   padding-top carousel-top-padding
   height (carousel-height + carousel-top-padding)
   margin-bottom -(artist-header-top-padding / 2)
-  &:empty
-    display none
-  .carousel-figures
-    height carousel-height
-  .carousel-figure > a
-    display block
-    overflow hidden
-    height 100%
-  .carousel-figures-clip
-    min-height inherit
-    height carousel-height
-    img
-      display block
-      height 300px
-  .carousel-dots
-  .loading-spinner
-    display none
+
+.mgr-navigation
+  padding 0 20px
+.mgr-dots
+  visibility hidden
