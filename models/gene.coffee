@@ -46,6 +46,9 @@ module.exports = class Gene extends Backbone.Model
   isSubjectMatter: ->
     @get('type')?.name?.match new RegExp SUBJECT_MATTER_MATCHES.join('|'), 'i'
 
+  mode: ->
+    if @isSubjectMatter() then 'artists' else 'artworks'
+
   fetchFilterSuggest: (params, options) ->
     new Backbone.Model().fetch _.extend
       data: params

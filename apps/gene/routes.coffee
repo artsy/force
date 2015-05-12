@@ -16,12 +16,15 @@ FilterArtworks = require '../../collections/filter_artworks'
     res.locals.sd.FILTER_ROOT = gene.href() + '/artworks'
     res.locals.sd.GENE = gene.toJSON()
     res.locals.sd.FILTER_PARAMS = new Backbone.Model gene: gene.id
+    res.locals.sd.MODE = gene.mode()
+    res.locals.sd.FILTER_COUNTS = counts = filterArtworks.counts
 
     res.render 'index',
       gene: gene
       filterRoot: res.locals.sd.FILTER_ROOT
-      counts: filterArtworks.counts
+      counts: counts
       numberFormat: _s.numberFormat
       params: params
       activeText: ''
+      mode: gene.mode()
 
