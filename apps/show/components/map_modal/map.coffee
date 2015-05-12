@@ -49,7 +49,7 @@ module.exports = class MapModal extends ModalView
       map.addMarker {
         lat: @show.location().get('coordinates').lat
         lng: @show.location().get('coordinates').lng
-        color: 0x873ff0
+        icon: 'http://maps.google.com/mapfiles/ms/icons/purple-dot.png'
       }
 
   selectAll: (e) ->
