@@ -29,16 +29,17 @@ module.exports = class CategoriesView extends StepView
     @categories = new Items [], id: @setIds[@state.get('current_level')], item_type: 'FeaturedLink'
     @categories.fetch()
     @listenToOnce @categories, 'sync', @bootstrap
-    @following.on 'add', (follow) ->
+
+    @listenTo @following, 'add', (follow) ->
       $(".follow-button[data-id=#{follow.get('gene').id}]")
         .parent()
         .find '.personalize-following-overlay'
-        .removeClass 'is-hidden'
-    @following.on 'remove', (follow) ->
+        .addClass 'is-clicked'
+    @listenTo @following, 'remove', (follow) ->
       $(".follow-button[data-id=#{follow.get('gene').id}]")
         .parent()
         .find '.personalize-following-overlay'
-        .addClass 'is-hidden'
+        .removeClass 'is-clicked'
 
   bootstrap: ->
     @$('#personalize-categories').html @setupCategories @categories

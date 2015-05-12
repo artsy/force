@@ -27,7 +27,7 @@ category-size = 400px
   width category-size
 
 .personalize-category-image-link
-  margin 20px 0
+  margin 20px 20px
 
 .personalize-category-image
   width category-size
@@ -64,30 +64,46 @@ category-size = 400px
       margin 0
 
 .personalize-following-overlay
-  &.is-hidden
-    display none
-
-.personalize-following-darkbg
-  position absolute
-  width 400px
-  height 400px
-  background-color black
-  opacity 0.5
-
-.personalize-following-icon
-  position absolute
-  width 400px
-  height 400px
-  padding-top 45%
-  .icon-with-white-circle
-    color white
-    font-size 60px
-    border 2px solid
-    padding 40px
-    border-radius 50%
+  display none
+  position relative
+  .personalize-following-darkbg
+    position absolute
+    width 400px
+    height 400px
+    background-color black
+    opacity 0.5
+  .personalize-following-icon
+    position absolute
+    width 400px
+    height 400px
+    padding-top 45%
   .personalize-following-text
     avant-garde()
     display block
     color white
     font-size 20px
     padding-top 75px
+  &.is-clicked
+    display inline
+    .icon-with-white-circle
+      font-size 60px
+      border 2px transparent
+      padding 40px
+      border-radius 50%
+      background white
+      color gray-darker-color
+    .personalize-following-text:before
+      content 'Following'
+
+.personalize-category-image-link:hover
+  .personalize-following-overlay:not(.is-clicked)
+    display inline
+    .icon-with-white-circle
+      color white
+      fill white
+      font-size 60px
+      border 2px solid
+      padding 40px
+      border-radius 50%
+    .personalize-following-text:before
+      content 'Follow'
