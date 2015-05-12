@@ -10,6 +10,7 @@ ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 attachFollowArtists = require '../components/follow_artists/index.coffee'
 attachFollowProfile = require '../components/follow_profile/index.coffee'
 attachRelatedShows = require '../components/related_shows/index.coffee'
+setupSaveControls = require '../components/save_artworks/index.coffee'
 RelatedArticlesView = require '../components/related_articles/view.coffee'
 MapModal = require '../components/map_modal/map.coffee'
 ZoomView = require '../../../components/modal/zoom.coffee'
@@ -27,17 +28,7 @@ module.exports.init = ->
         src = $(cellElement).find('img').attr('src')
         new ZoomView imgSrc: src
 
-  artworkColumnsView = new ArtworkColumnsView
-    el: $('.js-show-artworks-columns')
-    collection: show.related().artworks
-    numberOfColumns: 3
-    gutterWidth: 80
-    maxArtworkHeight: 400
-    isOrdered: true
-    seeMore: false
-    allowDuplicates: true
-    artworkSize: 'large'
-  artworkColumnsView.$el.addClass 'is-fade-in'
+  setupSaveControls show.related().artworks
 
   attachFollowArtists show.related().artists
 

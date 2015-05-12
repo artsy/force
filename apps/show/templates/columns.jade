@@ -1,4 +1,3 @@
 section.show-artworks-columns.js-show-artworks-columns
-  for artwork in artworks.models
-    - artworkSize = 'large'
-    include ../../../components/artwork_item/templates/artwork.jade
+  - artworkColumns = artworks.groupByColumnsInOrder(3)
+  include ../../../components/artwork_columns/template
