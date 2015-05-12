@@ -220,3 +220,91 @@ describe 'PartnerShow', ->
         new PartnerShow(artists: [0], fair: null).contextualLabel().should.equal 'Solo Show'
         new PartnerShow(artists: [0], fair: 'existy').contextualLabel().should.equal 'Fair Booth'
         new PartnerShow(artists: [0, 0, 0], fair: 'existy').contextualLabel().should.equal 'Fair Booth'
+
+  describe '#daySchedules', ->
+    beforeEach ->
+      @partnerShow = new PartnerShow fabricate 'show',
+        location: fabricate 'partner_location'
+
+    it 'returns true if a show has day schedules', ->
+      @partnerShow.daySchedules().should.be.true
+
+    it 'returns false if a show has no schedules', ->
+      @partnerShow = new PartnerShow fabricate 'show',
+        location: fabricate 'partner_location',
+          day_schedules: []
+      @partnerShow.daySchedules().should.be.false
+
+  describe '#formatDaySchedule', ->
+    beforeEach ->
+      @partnerShow = new PartnerShow fabricate 'show',
+        location: fabricate 'partner_location'
+
+    it 'returns the formatted day schedule for a day of the week with a day schedule', ->
+      @partnerShow.formatDaySchedule('Monday').should.match { start: 'Monday', hours: '10am–7pm' }
+
+    it 'returns the formatted day schedule for a day of the week with no day schedule', ->
+      @partnerShow.formatDaySchedule('Friday').should.match { start: 'Friday', hours: 'Closed' }
+
+  describe '#formatDaySchedules', ->
+    beforeEach ->
+      @partnerShow = new PartnerShow fabricate 'show',
+        location: fabricate 'partner_location'
+
+    it 'returns a formatted string describing the days open and hours for the show', ->
+      @partnerShow.formatDaySchedules().should.match [
+        { hours: '10am–7pm', start: 'Monday' }
+        { hours: '10am–7pm', start: 'Tuesday' }
+        { hours: '10am–7pm', start: 'Wednesday' }
+        { hours: '10am–7pm', start: 'Thursday' }
+        { hours: 'Closed', start: 'Friday' }
+        { hours: 'Closed', start: 'Saturday' }
+        { hours: '10am–7pm', start: 'Sunday' }
+      ]
+
+  describe '#formatModalDaySchedules', ->
+    beforeEach ->
+      @partnerShow = new PartnerShow fabricate 'show',
+        location: fabricate 'partner_location'
+
+    it 'returns a formatted string describing the days open and hours for the show', ->
+      @partnerShow.formatModalDaySchedules().should.match [ days: 'Monday–Thursday, Sunday', hours: '10am–7pm' ]
+
+    it 'returns a correctly formatted string when a show has unusual hours', ->
+      @partnerShow = new PartnerShow fabricate 'show',
+        location: fabricate 'partner_location',
+          day_schedules: [
+            {
+              _id: "5543d893726169750b990100",
+              start_time: 42359,
+              end_time: 68992,
+              day_of_week: "Wednesday"
+            }, {
+              _id: "5543d8937261697591bd0100",
+              start_time: 1800,
+              end_time: 70250,
+              day_of_week: "Monday"
+            }, {
+              _id: "5543d89472616978f1e40100",
+              start_time: 42359,
+              end_time: 68992,
+              day_of_week: "Tuesday"
+            }, {
+              _id: "5543d8947261690f169d0100",
+              start_time: 1800,
+              end_time: 70250,
+              day_of_week: "Saturday"
+            }, {
+              _id: "5543d8947261695aea200200",
+              start_time: 42359,
+              end_time: 68992,
+              day_of_week: "Thursday"
+            }
+          ]
+      @partnerShow.formatModalDaySchedules().should.match [
+        { days: 'Monday, Saturday', hours: '12:30am–7:30pm' }
+        { days: 'Tuesday–Thursday', hours: '11:45am–7:09pm' }
+      ]
+
+
+

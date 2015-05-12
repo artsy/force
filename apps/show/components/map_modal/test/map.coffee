@@ -25,6 +25,7 @@ describe 'PageModalView', ->
         addMarker: sinon.stub()
       @show = new PartnerShow fabricate 'show'
       @show.get('location').coordinates = {lat: 30, lng: 30 }
+      @show.get('location').day_schedules = []
       @partner = new Partner fabricate 'partner'
       @view = new PageModalView model: @show, partner: @partner
       done()
