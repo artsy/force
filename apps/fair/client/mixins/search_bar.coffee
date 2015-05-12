@@ -1,5 +1,6 @@
 SearchBarView = require '../../../../components/search_bar/view.coffee'
 analytics = require '../../../../lib/analytics.coffee'
+teleport = require '../../../../components/teleport/index.coffee'
 
 module.exports =
   setupSearch: (profile, fair) ->
@@ -13,7 +14,8 @@ module.exports =
 
     @searchBarView.on 'search:entered', (term) =>
       analytics.track.click 'Hit enter on fair search'
-      window.location = "#{@model.href()}/search?q=#{term}"
+
+      teleport "#{@model.href()}/search?q=#{term}"
 
     @searchBarView.on 'search:selected', (e, model) ->
       return false unless model and model.get('published')
@@ -22,4 +24,5 @@ module.exports =
         label: analytics.modelNameAndIdToLabel model.get('display_model'), model.id
         query: @query
       @selected = true
-      window.location = model.get 'location'
+
+      teleport model.get 'location'
