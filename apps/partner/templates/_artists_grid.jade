@@ -4,11 +4,11 @@
       h2.avant-garde-header-center.artists-group-label= group.label
       .partner-artists-conatiner
         each pa in group.list
-          if pa.get('published_artworks_count') > 0
+          if pa.get('published_artworks_count') > 0 && pa.get('display_on_partner_profile') === true
             figure.partner-artist( data-artist-id=pa.get('artist').id )
               a.partner-route-link( href=pa.href() )
                 .partner-artist-cover-image
-                  img( src="#{pa.imageUrl('four_thirds')}", alt=pa.get('artist').name ) 
+                  img( src="#{pa.imageUrl('four_thirds')}", alt=pa.get('artist').name )
                   .partner-artist-overlay
                 figurecaption.partner-artist-caption
                   h5.partner-artist-name= pa.get('artist').name
