@@ -14,7 +14,16 @@ render = (template) ->
 describe 'Main layout template', ->
 
   it 'includes the sharify script', ->
-    render('../templates/index.jade')(sd: {}, sharify: { script: -> 'foobar' }, asset: (->)).should.containEql 'foobar'
+    render('../templates/index.jade')(
+      sd: { BROWSER: {} }, sharify: { script: -> 'foobar' }, asset: ((p) -> p)
+    ).should.containEql '/assets/analytics.js'
+
+  it 'excludes analytics for phantom', ->
+    render('../templates/index.jade')(
+      sd: { BROWSER: { family: 'PhantomJS' } }
+      sharify: { script: -> 'foobar' }
+      asset: ((p) -> p)
+    ).should.not.containEql '/assets/analytics.js'
 
 describe 'Meta tags', ->
 
