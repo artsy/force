@@ -97,7 +97,12 @@ kinds = require '../favorites_follows/kinds'
 
 # Fetches and caches fair data to be used across the fair app
 @fetchFairData = (req, res, next) ->
+  console.log 'fetching fair data', res.locals.profile
   profile = res.locals.profile
+
+  console.log 'fairOwnerId', profile.fairOwnerId()
+
+  console.log 'req.params.id', req.params.id
 
   return next() unless profile?.isFair()
 
@@ -168,4 +173,5 @@ kinds = require '../favorites_follows/kinds'
         cacheTime: 300
         success: (profile) ->
           res.locals.profile = profile
+          req.params.id = profile.fairOwnerId()
           next()
