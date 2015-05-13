@@ -149,13 +149,8 @@ mixin apply(section)
   .partnerships-section-header.apply
     if path === '/institution-partnerships'
       h3= section.heading
-      a.avant-garde-button-black.apply-button.apply-link-cta( href='/apply' ) Apply
+      a.avant-garde-button-black.apply-button.apply-link-cta( href='/apply/institution' ) Apply
       .partnerships-contact Call us: +1 800 589 1350
-    else if sd.GALLERY_PARTNERSHIPS_APPLY === 'link'
-      h3= section.heading
-      a.avant-garde-button-black.apply-button.apply-link-cta( href='/apply?00NC0000005RNfN=link' ) Apply
-      .partnerships-contact Call us: +1 800 589 1350
-
     else
       .gallery-partnerships-apply-form
         header
@@ -166,8 +161,6 @@ mixin apply(section)
           action='/apply/gallery/2'
           method='get'
         )
-          input( type='hidden', name='00NC0000005RNfN', value='inline' )
-
           input.bordered-input( type='text', name='company', placeholder= 'Gallery Name', required )
 
           .stacked-form-cell.grid-3-up

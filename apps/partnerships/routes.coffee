@@ -5,8 +5,6 @@ request = require 'superagent'
 client = null
 { S3_KEY, S3_SECRET, APPLICATION_NAME } = require '../../config.coffee'
 { crop } = require '../../components/resizer'
-SplitTest = require '../../components/split_test/server_split_test'
-runningTests = require '../../components/split_test/running_tests'
 
 getJSON = (url, callback) ->
   CONTENT_PATH = getContentPath(url)
@@ -33,16 +31,9 @@ getContentPath = (url) ->
     bucket: APPLICATION_NAME
 
 @index = (req, res, next) ->
-  testConfig = runningTests.gallery_partnerships_apply
-  if _.contains _.keys(testConfig.outcomes), req.query.mode
-    test = new SplitTest req, res, testConfig
-    test.set req.query.mode
-    res.locals.sd[testConfig.key.toUpperCase()] = req.query.mode
-
-  getJSON( req.url, (err, data) ->
+  getJSON req.url, (err, data) ->
     return next err if err
     res.render 'index', _.extend data, crop: crop, path: req.url
-  )
 
 @adminOnly = (req, res, next) ->
   if req.user?.get('type') isnt 'Admin'

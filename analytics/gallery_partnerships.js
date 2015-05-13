@@ -9,15 +9,11 @@ if (location.pathname.match('/gallery-partnerships')) {
   // salesforce and snowplow later.
   snowplow('trackStructEvent', 'partner_application', 'page_view', sd.SESSION_ID);
 
-  if (sd.GALLERY_PARTNERSHIPS_APPLY == 'inline'){
-    analytics.trackForm(
-      $('.js-gallery-partnerships-apply-form')[0],
-      '/gallery-partnerships CTA',
-      {session_id: sd.SESSION_ID}
-    );
-  }else{
-  	analytics.trackLink($('.apply-link-cta')[0], '/gallery-partnerships CTA')
-  }
+  analytics.trackForm(
+    $('.js-gallery-partnerships-apply-form')[0],
+    '/gallery-partnerships CTA',
+    {session_id: sd.SESSION_ID}
+  );
 
   $('.partnerships-nav-link.internal').click(function(e){
     var section = $(e.currentTarget).attr('data-section')
