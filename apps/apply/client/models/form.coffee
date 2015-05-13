@@ -1,5 +1,5 @@
 _ = require 'underscore'
-{ APP_URL, REFERRER, MEDIUM } = require('sharify').data
+{ APP_URL, REFERRER, MEDIUM, SESSION_ID } = require('sharify').data
 Backbone = require 'backbone'
 Cookies = require '../../../../components/cookies/index.coffee'
 
@@ -12,6 +12,7 @@ module.exports = class Form extends Backbone.Model
     '00NC0000005RNfS': MEDIUM
     '00NC0000005RNfN': 'default'
     '00NC0000005ROPB': Cookies.get('force-referrer')
+    '00NC0000005RRYb': SESSION_ID
 
   # There are others... but this is just so
   # we can validate any attributes
