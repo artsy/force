@@ -29,9 +29,7 @@ module.exports.init = ->
         new ZoomView imgSrc: src
 
   setupSaveControls show.related().artworks
-
   attachFollowArtists show.related().artists
-
   attachFollowProfile show.related().profile
 
   $('.map-modal-link').click -> new MapModal model: show, width: '820px'
@@ -45,10 +43,8 @@ module.exports.init = ->
     else
       attachRelatedShows 'gallery', show
 
-  relatedArticlesView = new RelatedArticlesView
-    collection: show.related().articles
-    numToShow: 3
+  relatedArticlesView = new RelatedArticlesView collection: show.related().articles, numToShow: 3
   $('.artwork-column').first().prepend relatedArticlesView.$el
-  collection: show.related().articles.fetch()
+  show.related().articles.fetch()
 
   new ShareView el: $('.js-show-share')

@@ -27,13 +27,14 @@ header.show-header( class= hasCarousel ? 'has-carousel' : undefined )
 
     .show-metadata
       if show.has('fair')
-        if fair.isEligible()
+        //- Temporary naïve check
+        if fair.get('published') && fair.get('has_full_feature')
           a.show-fair-link( href= fair.href() )
             = fair.get('name')
             include ../components/map_modal/images/map-modal-arrow.svg
-
         else
-          | #{fair.get('name')}
+          = fair.get('name')
+
         .show-dates
           = fair.formatDates()
         if show.get('fair_location')
