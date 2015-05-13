@@ -201,16 +201,12 @@ module.exports = class Fair extends Backbone.Model
   isEligible: ->
     @get('has_full_feature') and
     @get('published') and
-    @hasStarted()
-    @__related__? and
-    @__related__?.profile?.get('published') is true
+    @related().profile.get('published')
 
   isEventuallyEligible: ->
     @get('has_full_feature') and
     @get('published') and
-    @hasNotStarted()
-    @__related__? and
-    not @__related__?.profile?.get('published')
+    not @related().profile.get('published')
 
   hasStarted: ->
     Date.parse(@get('start_at')) < new Date
