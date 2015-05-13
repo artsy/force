@@ -3,16 +3,16 @@
     for section, i in sections.slice(0, -1)
       a.partnerships-nav-link.internal( href="#{path}/#{section.slug}", data-section=section.title )
         span= section.title
+
     if path.indexOf('gallery') > 0
-      a.partnerships-nav-link.partnerships-nav-apply-link.avant-garde-button-black.is-small.apply-link-cta(
-        href=((sd.GALLERY_PARTNERSHIPS_APPLY === 'inline') ? '/gallery-partnerships/apply' : '/apply?00NC0000005RNfN=link')
-        class=((sd.GALLERY_PARTNERSHIPS_APPLY === 'inline') ? 'internal' : undefined)
+      a.partnerships-nav-link.internal.partnerships-nav-apply-link.avant-garde-button-black.is-small.apply-link-cta(
+        href='/gallery-partnerships/apply'
         data-section='Apply'
       )
         span=sections[sections.length - 1].title
     else
       a.partnerships-nav-link.partnerships-nav-apply-link.avant-garde-button-black.is-small.apply-link-cta(
-        href=('/apply/institution')
+        href='/apply/institution'
         data-section='Apply'
       )
         span=sections[sections.length - 1].title

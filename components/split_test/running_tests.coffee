@@ -15,13 +15,6 @@
 # module.exports = {}
 
 module.exports =
-  gallery_partnerships_apply:
-    key: 'gallery_partnerships_apply'
-    outcomes:
-      inline: 0.5
-      link: 0.5
-    edge: 'inline'
-
   artist_cta:
     key: 'artist_cta'
     outcomes:
