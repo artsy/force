@@ -27,6 +27,7 @@ module.exports = class MapModal extends ModalView
 
   postRender: ->
     geo.loadGoogleMaps =>
+      image = "/show-purple-google-map-marker.png"
       map = new GMaps
         el: '#map-modal-show-map'
         lat: @show.location().get('coordinates').lat
@@ -46,10 +47,11 @@ module.exports = class MapModal extends ModalView
         mapTypeId: "map_style"
       }
       map.setStyle "map_style"
+
       map.addMarker {
         lat: @show.location().get('coordinates').lat
         lng: @show.location().get('coordinates').lng
-        icon: 'http://maps.google.com/mapfiles/ms/icons/purple-dot.png'
+        icon: image
       }
 
   selectAll: (e) ->
