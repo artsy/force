@@ -1,6 +1,32 @@
 # If this proves to be a successful strategy and grows past $a_reasonable_amount then
 # consider moving this data into the actual API response
 module.exports =
+
+  metaOverrides: (tag) ->
+    metaOverrides[@id]?[tag]
+
+  toPageTitle: ->
+    if title = @metaOverrides('title')
+      title
+    else
+      @defaultMetaTitle?() or (@get('title') or @get('name') + " | Artsy")
+
+  toPageDescription: (length = 200) ->
+    if description = @metaOverrides('description')
+      description
+    else
+      @defaultMetaDescription?(length) or @get('title') or @get('name')
+
+
+metaOverrides =
+  'art-brussels-2015':
+    title: 'Most ballin art fair ever'
+    description: 'act like you know'
+
+  'nada-new-york-2015':
+    title: 'NADA New York 2015 | Artsy is the best'
+    description: 'Explore young galleries and artists to watch at NADA New York on Artsy.net.'
+
   'cindy-sherman':
     title: 'Cindy Sherman - Artworks, Biography & Shows on Artsy'
     description: 'Browse the best of Cindy Sherman, including artwork for sale, her latest shows & events, biography, and exclusive Cindy Sherman articles.'
