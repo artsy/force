@@ -92,7 +92,7 @@ class AuctionReminderModal extends Backbone.View
     Cookies.set('closeAuctionReminder', true)
     track.click 'Clicked Auction Reminder'
     analytics.snowplowStruct 'auction_reminder', 'click', @auctionId, 'feature'
-    location.assign("feature/#{@auctionId}")
+    location.assign("/feature/#{@auctionId}")
 
 module.exports = (callBack) ->
   if Cookies.get 'firstAuctionReminderSeen'
