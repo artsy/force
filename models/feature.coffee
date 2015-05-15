@@ -34,12 +34,6 @@ module.exports = class Feature extends Backbone.Model
   hasImage: (version = 'wide') ->
     version in (@get('image_versions') || [])
 
-  metaTitle: ->
-    "#{@get('name')} | Artsy"
-
-  metaDescription: ->
-    smartTruncate(@mdToHtmlToText('description'))
-
   shareTitle: (truncate = false) ->
     smartTruncate "#{@get('name')} on Artsy #{sd.APP_URL}#{@href()}", 140
 
