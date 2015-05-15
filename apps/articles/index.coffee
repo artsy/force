@@ -19,4 +19,3 @@ app.get '/:id/posts', routes.redirectPost
 app.get '/articles', routes.articles
 app.get '/article/:slug', routes.show
 app.get '/:slug', routes.vertical
-app.get '/:slug', routes.form

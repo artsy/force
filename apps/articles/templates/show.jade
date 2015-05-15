@@ -29,9 +29,12 @@ block body
           .articles-vertical-show-header-left
             h2
               a( href='/' + vertical.get('slug') )= vertical.get('title')
-            h3 In Partnership With
-            a( href=vertical.get('partner_website_url') target='_blank' )
-              img( src=vertical.get('partner_logo_url') )
+            if vertical.get('partner_website_url') && vertical.get('partner_logo_url')
+              h3 In Partnership With
+              a( href=vertical.get('partner_website_url') target='_blank' )
+                img( src=vertical.get('partner_logo_url') )
+            else if vertical.get('slogan')
+              h3= vertical.get('slogan')
           .articles-vertical-show-header-right
             button.articles-vertical-left-chevron.icon-chevron-small-left
             ul
@@ -95,6 +98,8 @@ block body
       +share(article.get('title'), article.get('thumbnail_image'))
   section#articles-footer
     if article.get('vertical_id')
+      .articles-insights-show
+        include gallery_insights_form
       h1 More From #{vertical.get('title')}
       ul#articles-footer-list
         for verticalArticle in allVerticalArticles.models

@@ -62,13 +62,3 @@ embedVideo = require 'embed-video'
           res.locals.sd.ARTICLES_COUNT = articles.count
           res.locals.sd.VERTICAL = vertical.toJSON()
           res.render 'vertical', vertical: vertical, articles: articles
-
-@form = (req, res, next) ->
-  request.post('https://www.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8')
-    .type('form')
-    .send(req.body)
-    .end (err, response) ->
-      if (response.ok)
-        res.send req.body
-      else
-        res.status(response.status).send(req.body)
