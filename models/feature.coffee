@@ -19,6 +19,7 @@ Sale = require './sale.coffee'
 ImageSizes = require './mixins/image_sizes.coffee'
 { smartTruncate } = require "../components/util/string.coffee"
 ABM = require 'artsy-backbone-mixins'
+MetaOverrides = require './mixins/meta_overrides.coffee'
 
 module.exports = class Feature extends Backbone.Model
 
@@ -26,17 +27,12 @@ module.exports = class Feature extends Backbone.Model
   _.extend @prototype, ImageSizes
   _.extend @prototype, ABM.Markdown
   _.extend @prototype, ABM.Feature(sd.API_URL, Sale, Artworks, FeaturedSet, FeaturedLinks)
+  _.extend @prototype, MetaOverrides
 
   urlRoot: -> "#{sd.API_URL}/api/v1/feature"
 
   hasImage: (version = 'wide') ->
     version in (@get('image_versions') || [])
-
-  metaTitle: ->
-    "#{@get('name')} | Artsy"
-
-  metaDescription: ->
-    smartTruncate(@mdToHtmlToText('description'))
 
   shareTitle: (truncate = false) ->
     smartTruncate "#{@get('name')} on Artsy #{sd.APP_URL}#{@href()}", 140

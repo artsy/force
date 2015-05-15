@@ -12,12 +12,14 @@ Profile = require './profile.coffee'
 FilterSuggest = require './filter_suggest.coffee'
 deslugify = require '../components/deslugify/index.coffee'
 Relations = require './mixins/relations/fair.coffee'
+MetaOverrides = require './mixins/meta_overrides.coffee'
 
 module.exports = class Fair extends Backbone.Model
   _.extend @prototype, Relations
   _.extend @prototype, Image(sd.SECURE_IMAGES_URL)
   _.extend @prototype, Markdown
   _.extend @prototype, Clock
+  _.extend @prototype, MetaOverrides
 
   urlRoot: "#{sd.API_URL}/api/v1/fair"
 
@@ -228,3 +230,5 @@ module.exports = class Fair extends Backbone.Model
 
   isPast: ->
     @isEligible() and @isOver()
+
+  

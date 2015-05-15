@@ -21,5 +21,5 @@ describe 'Meta tags', ->
       @html.should.containEql "<meta property=\"twitter:card\" content=\"summary"
       @html.should.containEql "<link rel=\"canonical\" href=\"#{@sd.APP_URL}#{@feature.href()}"
       @html.should.containEql "<meta property=\"og:url\" content=\"#{@sd.APP_URL}#{@feature.href()}"
-      @html.should.containEql "<meta property=\"og:title\" content=\"#{@feature.metaTitle()}"
-      @html.should.containEql "<meta property=\"og:description\" content=\"#{@feature.metaDescription()}"
+      @html.should.containEql "<meta property=\"og:title\" content=\"#{@feature.toPageTitle()}"
+      @html.should.containEql "<meta property=\"og:description\" content=\"#{@feature.toPageDescription()}"

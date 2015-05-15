@@ -1,6 +1,69 @@
 # If this proves to be a successful strategy and grows past $a_reasonable_amount then
 # consider moving this data into the actual API response
 module.exports =
+
+  metaOverrides: (tag) ->
+    metaOverrides[@id]?[tag]
+
+  toPageTitle: ->
+    if title = @metaOverrides('title')
+      title
+    else
+      @defaultMetaTitle?() or (@get('title') or @get('name') + " | Artsy")
+
+  toPageDescription: (length = 200) ->
+    if description = @metaOverrides('description')
+      description
+    else
+      @defaultMetaDescription?(length) or @get('title') or @get('name')
+
+
+metaOverrides =
+
+  'nada-new-york-2015':
+    title: 'NADA New York 2015 | Artsy'
+    description: 'Explore young galleries and artists to watch at NADA New York on Artsy.net.'
+
+  'collective-design-2015':
+    title: 'Collective Design 2015 | Artsy'
+    description: 'Browse Collective Design\'s curated selection of contemporary design and historical pieces online exlucisvely at Artsy.net.'
+
+  'frieze-new-york-2015':
+    title: 'Frieze New York 2015 | Artsy'
+    description: 'Frieze New York brings together contemporary galleries from around the world—browse works from the fair at Artsy.net.'
+
+  '1-54-contemporary-african-art-fair-new-york-2015':
+    title: '1:54 New York 2015 | Artsy'
+    description: 'Explore the first New York pop-up of the London-based 1:54 Contemporary African Art Fair online exclusively at Artsy.net.'
+
+  'art15':
+    title: 'Art15 | Artsy'
+    description: 'Browse the third edition of London\'s global art fair featuring galleries from over 40 countries online exclusively at Artsy.net.'
+
+  'granpalazzo-2015':
+    title: 'GRANPALAZZO 2015 | Artsy'
+    description: 'GRANPALAZZO showcases galleries in Palazzo Rospigliosi, just outside Rome in Zagarolo — explore works from the fair online at Artsy.net.'
+
+  'arteba-2015':
+    title: 'arteBA 2015 | Artsy'
+    description: 'Explore arteBA, Argentina\'s international contemporary art fair in Buenos Aires—featuring galleries from the region—online exclusively at Artsy.net.'
+
+  'loop-barcelona-2015':
+    title: 'LOOP Barcelona 2015 | Artsy'
+    description: 'Browse video art and film work from artists around the world showing at LOOP Barcelona online exclusively at Artsy.net.'
+
+  'design-miami-basel-2015':
+    title: 'Design Miami/ Basel 2015 | Artsy'
+    description: 'Browse Design Miami/ Basel, the global forum for 20th- and 21st-century collectible design at the Messeplatz, online exclusively at Artsy.net.'
+
+  'art-basel-2015':
+    title: 'Art Basel 2015 | Artsy'
+    description: 'Explore Art Basel—see modern and contemporary works from galleries around the world online at Artsy.net.'
+
+  'liste-2015':
+    title: 'LISTE 2015 | Artsy'
+    description: 'Browse young galleries and work by emerging contemporary artists at LISTE online at Artsy.net.'
+
   'cindy-sherman':
     title: 'Cindy Sherman - Artworks, Biography & Shows on Artsy'
     description: 'Browse the best of Cindy Sherman, including artwork for sale, her latest shows & events, biography, and exclusive Cindy Sherman articles.'

@@ -8,12 +8,16 @@ Artworks = require '../collections/artworks.coffee'
 { SECURE_IMAGES_URL } = require('sharify').data
 { compactObject } = require './mixins/compact_object.coffee'
 Relations = require './mixins/relations/artist.coffee'
-metaOverrides = require './mixins/meta_overrides.coffee'
+MetaOverrides = require './mixins/meta_overrides.coffee'
 
 module.exports = class Artist extends Backbone.Model
   _.extend @prototype, Markdown
   _.extend @prototype, Image(SECURE_IMAGES_URL)
   _.extend @prototype, Relations
+  _.extend @prototype, MetaOverrides
+
+  defaultMetaTitle: ->
+    "#{@metaName()} - #{@pageTitleArtworksCount()}, Bio & Shows on Artsy"
 
   urlRoot: ->
     "#{sd.API_URL}/api/v1/artist"
@@ -52,23 +56,12 @@ module.exports = class Artist extends Backbone.Model
       else
         'their'
 
-  metaOverrides: (tag) ->
-    metaOverrides[@id]?[tag]
-
-  toPageTitle: ->
-    if title = @metaOverrides('title')
-      title
-    else
-      "#{@metaName()} - #{@pageTitleArtworksCount()}, Bio & Shows on Artsy"
-
   pageTitleArtworksCount: (threshold = 1) ->
     count = @get('published_artworks_count')
     if count <= threshold or not count? then 'Artworks' else "#{count} Artworks"
 
-  toPageDescription: (length = 200) ->
-    if description = @metaOverrides('description')
-      description
-    else if @inFirstArtistTestGroup()
+  defaultMetaDescription: (length = 200) ->
+    if @inFirstArtistTestGroup()
       smartTruncate(_.compact([
        "Find the latest shows, biography, and artworks for sale by #{@displayName()}"
        (if @get('blurb')?.length > 0 then @mdToHtmlToText('blurb') else undefined)
