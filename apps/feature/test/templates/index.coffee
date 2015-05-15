@@ -4,7 +4,7 @@ Backbone = require 'backbone'
 { resolve }  = require 'path'
 Feature = require '../../../../models/feature'
 
-describe 'Partner Show', ->
+describe 'Feature template', ->
   before (done) ->
     benv.setup =>
       benv.expose $: benv.require 'jquery'
