@@ -4,10 +4,7 @@ Backbone = require 'backbone'
 rewire = require 'rewire'
 { fabricate } = require 'antigravity'
 Artist = rewire '../../models/artist'
-Artist.__set__ 'metaOverrides',
-  'test-artist':
-    title: 'Test Artist title'
-    description: 'Test Artist description'
+
 
 describe 'Artist', ->
 
@@ -115,24 +112,3 @@ describe 'Artist', ->
       @artist.displayFollowers().should.equal '1,000 Followers'
       @artist.unset 'follow_count'
       _.isUndefined(@artist.displayFollowers()).should.be.true
-
-  describe '#toPageTitle', ->
-    it 'renders the correct string', ->
-      @artist.set(id: 'zerg', gender: 'is a social construct', name: 'Zerg').toPageTitle().should.equal 'Zerg - Artworks, Bio & Shows on Artsy'
-
-    it 'supports a custom override', ->
-      @artist.set(id: 'test-artist')
-      @artist.toPageTitle().should.equal 'Test Artist title'
-
-  describe '#toPageDescription', ->
-    it 'renders the correct string for artists a-h', ->
-      @artist.set(id: 'abc').toPageDescription().should.containEql 'Find the latest shows, biography, and artworks for sale by Pablo Picasso. This is Pablo Picasso'
-
-    it 'renders the correct string for artists not in a-h', ->
-      @artist.set(id: 'zerg', gender: 'is a social construct', name: 'Zerg').toPageDescription().should.equal 'Browse the best of Zerg, including artwork for sale, their latest shows & events, biography, and exclusive Zerg articles.'
-      @artist.set(id: 'zerg', gender: 'male', name: 'Zerg').toPageDescription().should.equal 'Browse the best of Zerg, including artwork for sale, his latest shows & events, biography, and exclusive Zerg articles.'
-      @artist.set(id: 'zerg', gender: 'female', name: 'Zerg').toPageDescription().should.equal 'Browse the best of Zerg, including artwork for sale, her latest shows & events, biography, and exclusive Zerg articles.'
-
-    it 'supports a custom override', ->
-      @artist.set(id: 'test-artist')
-      @artist.toPageDescription().should.equal 'Test Artist description'

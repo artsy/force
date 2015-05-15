@@ -60,10 +60,8 @@ module.exports = class Artist extends Backbone.Model
     count = @get('published_artworks_count')
     if count <= threshold or not count? then 'Artworks' else "#{count} Artworks"
 
-  toPageDescription: (length = 200) ->
-    if description = @metaOverrides('description')
-      description
-    else if @inFirstArtistTestGroup()
+  defaultMetaDescription: (length = 200) ->
+    if @inFirstArtistTestGroup()
       smartTruncate(_.compact([
        "Find the latest shows, biography, and artworks for sale by #{@displayName()}"
        (if @get('blurb')?.length > 0 then @mdToHtmlToText('blurb') else undefined)
