@@ -21,12 +21,8 @@ $('.articles-social:eq(1) > a').click(function() {
   })
 })
 
-$('.js--post-split-test').click(function(e) {
-  e.preventDefault();
-  analytics.track("Clicked posts link", {
-    label: sd.POSTS_SECTION_NAME
-  })
-  location.assign($(e.target).attr('href'))
+analytics.trackLink( $('.js--post-split-test') ,"Clicked posts link", {
+  label: sd.POSTS_SECTION_NAME
 })
 
 if (location.pathname.match('/articles')) {
