@@ -21,3 +21,5 @@ block body
       hr
       +share(vertical.get('title') + ' on Artsy')
   include full_feed
+  if vertical.get('slug') == 'gallery-insights-magazine'
+    include gallery_insights_form

@@ -8,7 +8,6 @@
       aside.am-featured-also
         for article in featuredArticles.slice(1)
           +article-figure(article, 300, false, false)
-
   if sd.CURRENT_PATH != '/articles' && vertical && articles.featuredToVertical(vertical).length
     section.articles-featured-vertical-articles
       h4= vertical.get('featured_articles_header')
