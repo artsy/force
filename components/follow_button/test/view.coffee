@@ -1,9 +1,6 @@
-sd = require('sharify').data
 benv = require 'benv'
 Backbone = require 'backbone'
-moment = require 'moment'
 sinon = require 'sinon'
-path = require 'path'
 mediator = require '../../../lib/mediator.coffee'
 Profile = require '../../../models/profile.coffee'
 { Following, FollowButton } = require '../index.coffee'
@@ -13,7 +10,6 @@ describe 'FollowButton', ->
 
   before (done) ->
     benv.setup =>
-      sd.API_URL = 'localhost:3003'
       benv.expose { $: benv.require 'jquery' }
       sinon.stub Backbone, 'sync'
       @mediator = sinon.spy mediator, 'trigger'
