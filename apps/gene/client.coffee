@@ -16,13 +16,14 @@ RelatedGenesView = require '../../components/related_links/types/gene_genes.coff
 { GENE, CURRENT_USER, API_URL, FILTER_ROOT, MODE, FILTER_COUNTS } = require('sharify').data
 
 RelatedArtistsTemplate = -> require('./templates/related_artists.jade') arguments...
-ContentTemplate = -> require('./templates/filter.jade') arguments...
 
 module.exports.GeneView = class GeneView extends Backbone.View
 
   initialize: ({ @user, @relatedArtists, @mode, @params }) ->
     @listenTo @relatedArtists, 'sync', @renderRelatedArtists
-    @listenTo @mode, 'change', @renderContent, @
+    @listenTo @params, 'change', => @mode.set mode: 'artworks'
+    @listenTo @mode, 'change', =>
+      @$('#gene-filter').attr 'data-state', @mode.get('mode')
 
   renderRelatedArtists: (artists) ->
     @$('.related-artists').html(
@@ -30,53 +31,21 @@ module.exports.GeneView = class GeneView extends Backbone.View
         artists: artists.models[...10]
       ).addClass 'is-fade-in'
 
-  renderContent: ->
-    @$('#gene-filter').html(
-      ContentTemplate
-        gene: @model
-        filterRoot: FILTER_ROOT
-        counts: FILTER_COUNTS
-        numberFormat: _s.numberFormat
-        params: @params
-        activeText: ''
-        mode: @mode.get('mode')
-      )
-
-    # "hi" -cab
-    @["#{@mode.get('mode')}Setup"]()
-
-  artistsSetup: ->
-
-
-  artworksSetup: ->
-    collection = new FilterArtworks
-
-    view = new FilterView
-      el: $ '#gene-filter'
-      collection: collection
-      params: @params
-      stuckFacet: @model
-
-    router = new FilterRouter
-      params: @params
-      urlRoot: FILTER_ROOT
-      stuckParam: 'gene'
-
-    collection.fetch
-      data: @params.toJSON()
-      success: ->
-        collection.trigger 'initial:fetch'
+    if @model.mode() is 'artist'
+      new ArtistFillwidthList(
+        collection: @relatedArtists
+        el: $('#gene-artists')
+        user: @user
+      ).fetchAndRender()
 
 module.exports.init = ->
-
-  #
-  # Setup universal gene components
-  #
 
   gene = new Gene GENE
   user = CurrentUser.orNull()
 
   queryParams = qs.parse(location.search.replace(/^\?/, ''))
+
+  location.pathname.indexOf('artworks')
 
   params = new Backbone.Model _.extend queryParams,
     page: 1
@@ -117,4 +86,24 @@ module.exports.init = ->
     el: $('.main-layout-container .related-genes')
     id: gene.id
 
-  scrollFrame '#gene-filter a'
+  scrollFrame '#gene-filter-content a'
+
+  collection = new FilterArtworks
+
+  view = new FilterView
+    el: $ '#gene-filter'
+    collection: collection
+    params: params
+    stuckFacet: gene
+
+  router = new FilterRouter
+    params: params
+    urlRoot: FILTER_ROOT
+    stuckParam: 'gene'
+
+  Backbone.history.start pushState: true
+
+  collection.fetch
+    data: params.toJSON()
+    success: ->
+      collection.trigger 'initial:fetch'
