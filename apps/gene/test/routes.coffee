@@ -35,3 +35,16 @@ describe 'Gene routes', ->
         @res.locals.sd.GENE.id.should.equal 'gene'
         @res.render.args[0][0].should.equal 'index'
         done()
+
+    it 'overrides the view mode if the path is /artworks', (done)->
+      @req.path = '/gene/foo/artworks'
+
+      routes.index @req, @res
+      _.first(Backbone.sync.args)[2].success fabricate 'gene', id: 'gene'
+      _.last(Backbone.sync.args)[2].success fabricate2 'filter_artworks'
+
+      _.defer =>
+        @res.locals.sd.GENE.id.should.equal 'gene'
+        @res.locals.sd.MODE.should.equal 'artworks'
+        @res.render.args[0][0].should.equal 'index'
+        done()
