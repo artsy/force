@@ -24,27 +24,30 @@ block body
 
     //- Verical header
     if article.get('vertical_id')
-      header.articles-vertical-show-header
-        section
-          .articles-vertical-show-header-left
-            h2
-              a( href='/' + vertical.get('slug') )= vertical.get('title')
-            if vertical.get('partner_website_url') && vertical.get('partner_logo_url')
+      if vertical.get('partner_logo_url')
+        header.articles-vertical-show-header
+          section
+            .articles-vertical-show-header-left
+              h2
+                a( href='/' + vertical.get('slug') )= vertical.get('title')
               h3 In Partnership With
               a( href=vertical.get('partner_website_url') target='_blank' )
                 img( src=vertical.get('partner_logo_url') )
-            else if vertical.get('slogan')
-              h3= vertical.get('slogan')
-          .articles-vertical-show-header-right
-            button.articles-vertical-left-chevron.icon-chevron-small-left
-            ul
-              for article in featuredVerticalArticles.slice(0, 4)
-                li
-                  a( href='/article/' + article.get('slug') )
-                    img( src=resize(article.get('thumbnail_image'), {
-                      height: 80, width: 120 }) )
-                    p= article.get('thumbnail_title')
-            button.articles-vertical-right-chevron.icon-chevron-small-right
+            .articles-vertical-show-header-right
+              button.articles-vertical-left-chevron.icon-chevron-small-left
+              ul
+                for article in featuredVerticalArticles.slice(0, 4)
+                  li
+                    a( href='/article/' + article.get('slug') )
+                      img( src=resize(article.get('thumbnail_image'), {
+                        height: 80, width: 120 }) )
+                      p= article.get('thumbnail_title')
+              button.articles-vertical-right-chevron.icon-chevron-small-right
+      else if vertical.get('slogan')
+        header.articles-vertical-show-header-full
+          h2
+            a( href='/' + vertical.get('slug') )= vertical.get('title')
+          .articles-vertical-slogan= vertical.get('slogan')
 
     #articles-body-container
 
