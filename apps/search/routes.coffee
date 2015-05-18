@@ -6,8 +6,11 @@ request = require 'superagent'
 imageUrl = require './components/image_url'
 
 @image = (req, res, next) ->
-  url = imageUrl(req.params.model, req.params.id)
-  req.pipe(request.get(url)).pipe res
+  url = imageUrl req.params.model, req.params.id
+  imgReq = request.get url
+  imgReq.on 'end', ->
+    res.status imgReq.res.statusCode
+  req.pipe(imgReq).pipe res
 
 @index = (req, res) ->
   return res.redirect("/") unless req.query.q
