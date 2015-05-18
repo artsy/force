@@ -22,7 +22,7 @@ ReferrerParser = require 'referer-parser'
   if (referrer = req.get 'Referrer')?
     medium = new ReferrerParser(referrer).medium
 
-  format = res.locals.sd.artist_page_format
+  format = res.locals.sd.ARTIST_PAGE_FORMAT
 
   Q.allSettled([
     artist.fetch(cache: true)
@@ -42,7 +42,7 @@ ReferrerParser = require 'referer-parser'
         res.locals.sd.STATUSES = statuses = statusesRequest.value
         res.locals.sd.MEDIUM = medium if medium?
 
-        res.render "#{version}/index",
+        res.render "#{format}/index",
           artist: artist
           carousel: carousel
           tab: tab
