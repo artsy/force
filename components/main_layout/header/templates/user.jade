@@ -1,17 +1,6 @@
 if user
-  - displayNavNotice = (parseInt(sd.HIDE_NAV_NOTICE) || 0) < 15
-
-  span.mlh-user-name.hover-pulldown(
-    data-anchor='right'
-    data-mode='hover'
-    data-state= (displayNavNotice ? 'static' : undefined)
-    data-cookie= (displayNavNotice ? 'hide-nav-notice' : undefined)
-  )
+  span.mlh-user-name.hover-pulldown( data-anchor='right', data-mode='hover' )
     = user.get('name') ? user.get('name') : 'Account'
-
-    if displayNavNotice
-      .hover-pulldown-static
-        span Your follows and favorites are now under your name.
 
     .hover-pulldown-menu
       a.hpm-header( href='/following/artists' ) Follows &amp; Favorites
