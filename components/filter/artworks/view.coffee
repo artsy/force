@@ -89,9 +89,6 @@ module.exports = class FilterArtworksView extends Backbone.View
     countsFormat = _s.numberFormat @counts.get('total')
     @$('.filter-artworks-num').html countsFormat
 
-    # Update meta description
-    $('meta[name=description]').remove()
-    $('head').append("<meta name='description' content='Collect #{countsFormat} artworks. Purchase online or connect with over 1,500 top galleries.'>")
 
   nextPage: =>
     return if @$('.filter-artworks').is(':hidden') or
