@@ -1,0 +1,100 @@
+@import '../../../components/stylus_lib'
+@require '../../../components/main_layout/stylesheets/buttons'
+@require '../../../components/main_layout/stylesheets/form_elements'
+
+.hulk-editor-wrap
+  position fixed
+  top 0
+  right 0
+  bottom 0
+  left 0
+  background gray-color
+.hulk-editor
+.hulk-preview-iframe
+  overflow-y scroll
+  margin 10px
+  background-color white
+.hulk-editor
+  position absolute
+  top 0
+  right 50%
+  bottom 0
+  left 0
+  padding 10px
+  margin-right 5px
+.hulk-preview-iframe
+  position absolute
+  top 0
+  right 0
+  bottom 0
+  left 50%
+  margin-left 5px
+  > iframe
+    width 100%
+    height 100%
+
+.hulk
+  button
+    @extends .avant-garde-button
+    &.hulk-save
+      @extends .avant-garde-button-black
+      position fixed
+      bottom 0
+      right 0
+      left 0
+      z-index 3
+  input
+  textarea
+    @extends .bordered-input
+  button
+  input
+  textarea
+    display block
+    width 100%
+  input[disabled]
+    avant-garde-size('body', true)
+    border none
+    padding 0
+    color black
+  input[type='file']
+    position relative
+    border none
+    &::after
+      content 'Replace Image'
+      @extends .avant-garde-button-white
+      background white
+      position absolute
+      top 0
+      left 0
+      right 0
+      bottom 0
+      z-index 1
+      text-align center
+      width 100%
+    &:hover::after
+      color purple-color
+
+.hulk-array-element
+  padding 10px
+  border 2px solid gray-lightest-color
+  &:hover
+    border-color gray-dark-color
+
+.hulk-map
+.hulk-map-pair
+.hulk-array-element
+.hulk-collapse-item
+.hulk-preview-image
+.hulk-edit-upload-form
+  block-margins(10px)
+
+.hulk-map-pair > .hulk-map-key
+  margin-bottom 10px
+
+.hulk-preview-image
+  max-width 100%
+
+.hulk-edit-upload-form
+  &.is-loading
+    input[type=file]::after
+      content 'Uploading...'
