@@ -12,13 +12,14 @@ describe 'FollowButton', ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
       sinon.stub Backbone, 'sync'
-      @mediator = sinon.spy mediator, 'trigger'
+      @mediatorSpy = sinon.spy mediator, 'trigger'
       Backbone.$ = $
       done()
 
   after ->
     benv.teardown()
     Backbone.sync.restore()
+    @mediatorSpy.restore()
 
   describe '#toggle without label', ->
     before ->
@@ -29,7 +30,7 @@ describe 'FollowButton', ->
 
     it 'triggers an auth modal with the model name as the label', ->
       @view.$el.click()
-      @mediator.args[0][1].copy.should.equal 'Sign up to follow profiles'
+      @mediatorSpy.args[0][1].copy.should.equal 'Sign up to follow profiles'
 
   describe '#toggle with label', ->
     before ->
@@ -41,6 +42,6 @@ describe 'FollowButton', ->
 
     it 'triggers an auth modal with the passed in label', ->
       @view.$el.click()
-      @mediator.args[1][1].copy.should.equal 'Sign up to follow The Armory Show'
+      @mediatorSpy.args[1][1].copy.should.equal 'Sign up to follow The Armory Show'
 
 
