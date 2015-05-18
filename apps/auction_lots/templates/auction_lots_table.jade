@@ -13,7 +13,7 @@ tbody
     tr.auction-lot( id= "auction-lot-#{lot.id}" )
       td
         .auction-lot-title-container
-          if lot.hasImage()
+          if lot.hasImage('thumbnail')
             a.auction-lot-details-imagelink(
               href= "/artist/#{artist.id}/auction-result/#{lot.id}"
               data-client
