@@ -60,7 +60,7 @@ module.exports.init = ->
 
   following = new Following null, kind: 'profile' if sd.CURRENT_USER
   profile = new Backbone.Model id: fairOrg.get('profile_id')
-  profile.href = => "/#{fairOrg.get('default_profile_id')}"
+  profile.href = => "/#{fairOrg.get('profile_id')}"
 
   new FollowButton
     el: $('#fair-organizer-follow')
@@ -69,4 +69,4 @@ module.exports.init = ->
     modelName: 'profile'
     label: fairOrg.get('name')
 
-  following.syncFollows [fairOrg.get('default_profile_id')]
+  following?.syncFollows [fairOrg.get('profile_id')]
