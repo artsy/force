@@ -3,7 +3,7 @@ Backbone = require 'backbone'
 moment = require 'moment'
 
 UNIT_MAP =
-  'months': 'months'
+  'months': 'mos'
   'days': 'days'
   'hours': 'hrs'
   'minutes': 'min'
