@@ -3,6 +3,7 @@ Backbone = require 'backbone'
 moment = require 'moment'
 sd = require('sharify').data
 Fair = require '../../../models/fair.coffee'
+Profile = require '../../../models/profile.coffee'
 FairOrganizer = require '../../../models/fair_organizer.coffee'
 Articles = require '../../../collections/articles.coffee'
 Clock = require '../../../components/clock/view.coffee'
@@ -59,8 +60,7 @@ module.exports.init = ->
     el: $('body')
 
   following = new Following null, kind: 'profile' if sd.CURRENT_USER
-  profile = new Backbone.Model id: fairOrg.get('profile_id')
-  profile.href = => "/#{fairOrg.get('profile_id')}"
+  profile = new Profile id: fairOrg.get('profile_id')
 
   new FollowButton
     el: $('#fair-organizer-follow')
