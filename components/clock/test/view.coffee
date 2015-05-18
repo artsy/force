@@ -54,7 +54,7 @@ describe 'ClockView', ->
       @view.$el.html '<div class="clock-value"></div>'
       @view.render()
       @view.$el.html().should.containEql 'days'
-      @view.$el.html().should.containEql 'months'
+      @view.$el.html().should.containEql 'mos'
       @view.$el.html().should.not.containEql '00'
 
     it 'excludes months sectoin if sale starts 0 months from now', ->

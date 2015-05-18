@@ -168,4 +168,5 @@ kinds = require '../favorites_follows/kinds'
         cacheTime: 300
         success: (profile) ->
           res.locals.profile = profile
+          req.params.id = profile.fairOwnerId()
           next()

@@ -4,12 +4,15 @@ mediator = require '../../lib/mediator.coffee'
 analytics = require '../../lib/analytics.coffee'
 
 module.exports = class FollowButton extends Backbone.View
+
   events:
     'click': 'toggle'
     'touchstart': () -> @$el.removeClass "no-touch"
 
   initialize: (options) ->
     { @following, @notes, @modelName } = options
+
+    @label = if options.label then options.label else "#{@modelName}s"
 
     return unless @following
 
@@ -39,7 +42,7 @@ module.exports = class FollowButton extends Backbone.View
       analytics.track.funnel 'Triggered sign up form via follow button'
       mediator.trigger 'open:auth',
         mode: 'register'
-        copy: "Sign up to follow #{@modelName}s"
+        copy: "Sign up to follow #{@label}"
         destination: "#{@model.href()}/follow"
       return false
 
