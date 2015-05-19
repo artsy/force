@@ -1,0 +1,17 @@
+extends ../../../components/main_layout/templates/index
+
+block head
+  include meta
+
+append locals
+  - assetPackage = 'artist_new'
+
+block body
+  .artist-page
+    .artist-page-menu
+      include ./menu
+    .artist-page-content
+      unless tab
+        include ./overview
+
+  include ../../../components/main_layout/templates/json_ld

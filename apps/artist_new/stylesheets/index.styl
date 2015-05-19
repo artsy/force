@@ -1,0 +1,50 @@
+@import '../../../components/stylus_lib'
+
+menu-width = 20%
+content-width = 80%
+gutter-width = 60px
+
+#artist-left-menu-page
+  width 100%
+  margin 0 auto
+
+.artist-page
+  clearfix()
+  position relative
+  padding 20px 20px
+.artist-page-menu
+.artist-page-content
+  float left
+  padding-top (gutter-width / 2)
+.artist-page-menu
+  width menu-width
+  padding-right (gutter-width / 2)
+.artist-page-content
+  width content-width
+  padding-left (gutter-width / 2)
+  border-left 1px solid gray-lighter-color
+
+#artist-nav-list
+  margin-top 30px
+  font-size 13px
+
+.artist-header
+  text-align center
+  h1
+    avant-garde-size('l-headline')
+.artist-header-follow-count
+  color gray
+
+#artist-follow-button
+  margin-top 45px
+  width 100%
+
+.artist-page-section
+  margin-bottom 40px
+.artist-page-section__header
+  garamond-size('headline')
+  border-bottom 1px solid gray-color
+.artist-page-section__content
+  position relative
+
+@import './sections'

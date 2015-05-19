@@ -1,0 +1,43 @@
+#artist-page-section-about.artist-page-section
+  h3.artist-page-section__header About
+  .artist-page-section__content
+    .bisected-header
+      if artist.get('blurb')
+        .bisected-header-cell
+          .artist-blurb!= artist.mdToHtml('blurb')
+
+      .bisected-header-cell
+        .artist-related-genes.related-links
+          //- Rendered client-side
+        .artist-related-representations.related-links
+          //- Rendered client-side
+
+#artist-page-section-works.artist-page-section
+  h3.artist-page-section__header Works
+  .artist-page-section__content
+    //- rendered on the client
+
+#artist-page-section-shows.artist-page-section
+  h3.artist-page-section__header Shows on Artsy
+  .artist-page-section__content
+    //- rendered on the client
+
+#artist-page-section-articles.artist-page-section
+  h3.artist-page-section__header Related Articles
+  .artist-page-section__content
+    //- rendered on the client
+
+#artist-page-section-more-info.artist-page-section
+  h3.artist-page-section__header More Info
+  .artist-page-section__content
+    //- rendered on the client
+
+#artist-page-section-related-artists.artist-page-section
+  h3.artist-page-section__header Related Artists
+  .artist-page-section__content
+    //- rendered on the client
+
+#artist-page-section-suggested-artists.artist-page-section
+  h3.artist-page-section__header Suggested Contemporary Artists
+  .artist-page-section__content
+    //- rendered on the client

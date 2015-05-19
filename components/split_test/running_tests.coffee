@@ -30,3 +30,9 @@ module.exports =
     outcomes:
       magazine: 4/5
       editorial: 1/5
+
+  artist_page_format:
+    key: 'artist_page_format'
+    outcomes:
+      old: 1
+      new: 0
