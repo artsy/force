@@ -1,18 +1,17 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-imagesLoaded = require 'imagesloaded'
-{ isRetina, isTouchDevice } = require '../../../components/util/device.coffee'
+{ isTouchDevice } = require '../../../components/util/device.coffee'
 mediator = require '../../../lib/mediator.coffee'
 ZoomView = require '../../../components/modal/zoom.coffee'
 { resize } = require '../../../components/resizer/index.coffee'
 FeedbackView = require '../../../components/contact/feedback.coffee'
+Cycle = require '../../../components/cycle/index.coffee'
 
 module.exports = class AboutView extends Backbone.View
   events:
     'click .about-nav-link': 'intercept'
     'click .about-signup-button': 'signup'
     'submit #about-phone-link': 'submitPhoneLink'
-    'click #about-section5-jobs-all-button': 'displayJobs'
     'click .about-image-zoom': 'zoomImage'
     'click .about-section2-contact-specialist': 'contactSpecialistModal'
 
@@ -26,7 +25,6 @@ module.exports = class AboutView extends Backbone.View
     @setupHeroUnitSlideshow()
     @setupHeroUnits()
     @setupFlipHearts()
-    @setupSkylineSlideshow()
     @setupGenes()
     @setImages()
 
@@ -48,9 +46,6 @@ module.exports = class AboutView extends Backbone.View
     @$heroUnitsContainer = @$('.about-hero-unit-bgs')
     @$heroUnits = @$('.about-hero-unit-bg')
     @$heroUnitNav = @$('.about-nav')
-    @$jobs = @$('#about-section5-jobs')
-    @$skylineContainer = @$('#about-section5-slideshow')
-    @$skylineSlides = @$('.about-section5-slide')
     @$genes = @$('.about-genome-work-gene')
     @$spinner = @$('#about-spinner')
 
@@ -93,33 +88,8 @@ module.exports = class AboutView extends Backbone.View
       , offset: -> -($(this).height() - 1)
 
   setupHeroUnitSlideshow: ->
-    @setupSlideshow @$heroUnitsContainer, @$heroUnits, 'heroUnit'
-
-  setupSkylineSlideshow: ->
-    @setupSlideshow @$skylineContainer, @$skylineSlides, 'skyline', 3000
-
-  setupSlideshow: ($container, $slides, name, speed = 4000) ->
-    @["#{name}Frame"] = 0
-    @["#{name}Interval"] = speed
-    $container.imagesLoaded =>
-      $container.addClass 'is-fade-in'
-      @stepSlide($slides, name)
-      setInterval (=> @stepSlide($slides, name)), @["#{name}Interval"]
-
-  stepSlide: ($slides, name) =>
-    $active = $slides.filter('.is-active')
-      .removeClass('is-active').addClass 'is-deactivating'
-    _.delay (=> $active.removeClass 'is-deactivating'), @["#{name}Interval"] / 2
-    $($slides.get @["#{name}Frame"]).addClass 'is-active'
-    @["#{name}Frame"] = if (@["#{name}Frame"] + 1 < $slides.length)
-      @["#{name}Frame"] + 1
-    else
-      0
-
-  displayJobs: (e) ->
-    e.preventDefault()
-    $(e.currentTarget).addClass 'is-clicked'
-    @$jobs.removeClass 'is-truncated'
+    @heroUnitCycle = new Cycle $el: @$('.about-hero-unit-bgs'), selector: '.about-hero-unit-bg'
+    @heroUnitCycle.start()
 
   setupFlipHearts: ->
     @$("#about-section1-pull-blurb-3-artworks .about-image-container").waypoint
@@ -160,28 +130,21 @@ module.exports = class AboutView extends Backbone.View
     ).then callback
 
   loadSection: ($section) ->
-    setImage = @setImage
     $images = $section.find('img')
-    $images.each -> setImage this
+    $images.each @setImage
     $images.imagesLoaded()
 
-  setImage: (img) ->
-    $img = $(img)
+  setImage: ->
+    $img = $(this)
     src = $img.data 'src'
     $parent = $img.parent()
     $parent.imagesLoaded -> $.waypoints('refresh')
     width = $parent.width()
-    src = if isRetina() then src else resize(src, width: width)
+    src = resize(src, width: width * (window.devicePixelRatio or 1))
     $img.attr 'src', src
 
   setImages: ->
-    setImage = @setImage
-    if isTouchDevice()
-      @$('img').each -> setImage this
-    else
-      @$('img').waypoint ->
-        setImage this
-      , triggerOnce: true, offset: '200%'
+    @$('img').each @setImage
 
   contactSpecialistModal: (e) ->
     e.preventDefault()

@@ -1,21 +1,25 @@
-_ = require 'underscore'
-benv = require 'benv'
-jade = require 'jade'
-path = require 'path'
-fs = require 'fs'
-CurrentUser = require '../../../models/current_user'
-{ fabricate } = require 'antigravity'
 $ = require 'cheerio'
+_ = require 'underscore'
+{ fabricate } = require 'antigravity'
+CurrentUser = require '../../../models/current_user'
+template = require('jade').compileFile(require.resolve '../templates/index.jade')
+fixture = require './fixture/content.json'
+resizer = require '../../../components/resizer'
+data = _.extend {}, asset: (->), sd: {}, fixture, resizer
 
-render = (opts) ->
-  filename = path.resolve __dirname, "../templates/index.jade"
-  jade.compile(
-    fs.readFileSync(filename),
-    { filename: filename }
-  )(_.extend require('./fixture/content.json'), { asset: (->), sd: {}, crop: -> }, opts)
+render = (moreData) ->
+  template _.extend {}, data, moreData
 
 describe 'About templates', ->
+  describe 'logged out', ->
+    it 'displays the sign up CTA', ->
+      $(render()).find('#the-art-world-online').html()
+        .should.containEql 'Sign up to save'
 
-  it 'hides the sign up CTAs for logged out users', ->
-    $(render user: new CurrentUser fabricate 'user')
-      .find('#the-art-world-online').html().should.not.containEql 'Sign up to save'
+  describe 'logged in', ->
+    beforeEach ->
+      @user = new CurrentUser fabricate 'user'
+
+    it 'hides the sign up CTA', ->
+      $(render user: @user).find('#the-art-world-online').html()
+        .should.not.containEql 'Sign up to save'
