@@ -15,7 +15,7 @@ cache = require '../../lib/cache'
 ReferrerParser = require 'referer-parser'
 
 @index = (req, res, next) ->
-  return next() unless res.locals.sd.ARTIST_PAGE_FORMAT is 'new'
+  return next() unless res.locals.sd.ARTIST_PAGE_FORMAT is 'new' or res.locals.sd.NODE_ENV is 'development'
   artist = new Artist id: req.params.id
   carousel = new Carousel artist: artist
   statuses = new Statuses artist: artist
@@ -55,12 +55,12 @@ ReferrerParser = require 'referer-parser'
   ).done()
 
 @tab = (req, res, next) =>
-  return next() unless res.locals.sd.ARTIST_PAGE_FORMAT is 'new'
+  return next() unless res.locals.sd.ARTIST_PAGE_FORMAT is 'new' or res.locals.sd.NODE_ENV is 'development'
   req.params.tab = res.locals.sd.CURRENT_PATH.split('/').pop()
   @index req, res
 
 @follow = (req, res, next) ->
-  return next() unless res.locals.sd.ARTIST_PAGE_FORMAT is 'new'
+  return next() unless res.locals.sd.ARTIST_PAGE_FORMAT is 'new' or res.locals.sd.NODE_ENV is 'development'
   return res.redirect "/artist/#{req.params.id}" unless req.user
   req.user.followArtist req.params.id,
     error: res.backboneError
@@ -68,7 +68,7 @@ ReferrerParser = require 'referer-parser'
       res.redirect "/artist/#{req.params.id}"
 
 @data = (req, res, next) ->
-  return next() unless res.locals.sd.ARTIST_PAGE_FORMAT is 'new'
+  return next() unless res.locals.sd.ARTIST_PAGE_FORMAT is 'new' or res.locals.sd.NODE_ENV is 'development'
   key = url = "http://#{APPLICATION_NAME}.s3.amazonaws.com/data/#{req.params.id}/#{req.params.section}.json"
 
   render = (data) ->

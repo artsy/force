@@ -36,4 +36,3 @@ module.exports =
     outcomes:
       old: 1
       new: 0
-    edge: 'new'
