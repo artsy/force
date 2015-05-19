@@ -10,9 +10,10 @@
     border-top 1px solid gray-color
     avant-garde()
     font-size default-avant-garde-font-size
-
     &:last-child
       border-bottom @border-top
+    &.is-active
+      color purple-color
     &::after
       iconfont-styling()
       content "\e607"
