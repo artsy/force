@@ -8,7 +8,7 @@ module.exports.init = ->
     sticky = new Sticky
     sticky.add $('.js-jobs-category-nav')
 
-  cycle = new Cycle $el: $('.js-jobs-images-cycle'), selector: '.jobs-images-cycle-wrap'
+  cycle = new Cycle $el: $('.js-jobs-images-cycle'), selector: 'img'
   cycle.start()
 
   # Nav scrolling and section highlighting
