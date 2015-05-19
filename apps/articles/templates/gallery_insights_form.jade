@@ -1,18 +1,9 @@
 .articles-insights-container
   .articles-insights-mainheader Artsy Insights for Galleries
   .articles-insights-subheader Recieve periodical insights from Artsy's Gallery Team
-  form(
-    action='//artsy.us1.list-manage.com/subscribe/post?u=da84db7e8f0d6bd94b7e0da60&id=95ac2900c4'
-    method='post'
-    target='_blank'
-  )
-    input.js-articles-insights-input.bordered-input( type='email', name='EMAIL', placeholder= 'Enter Your Email', required )
-
-    if sd.CURRENT_USER
-      input( type='hidden', name='FNAME' value="#{user.firstname}")
-      input( type='hidden', name='LNAME' value="#{user.lastname}")
-    button.avant-garde-button-black Subscribe
-
-    // Mailchimp bot trap
-    div( style='position: absolute; left: -5000px;' )
-      input( type='text', name='b_da84db7e8f0d6bd94b7e0da60_95ac2900c4', tabindex='-1' )
+  .articles-insights-form
+    - var email = ''
+    if sd.CURRENT_USER && sd.CURRENT_USER.email
+      - email = sd.CURRENT_USER.email
+    input.js-articles-insights-input.bordered-input( type='email', name='EMAIL', placeholder= 'Enter Your Email', required value="#{email}")
+    button.avant-garde-button-black.js-articles-insights-subscribe Subscribe

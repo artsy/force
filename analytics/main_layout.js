@@ -18,3 +18,19 @@ setTimeout(function() {
 
 // Tracking Snowplow page view. TODO: Remove when we phase out Snowplow.
 snowplow('trackPageView');
+
+// Signs up a user to the Gallery Insights (New) List
+$('.js-articles-insights-subscribe').click(function(e){
+  var email = $('.js-articles-insights-input').val()
+  var firstName = ''
+  var lastName = ''
+  if(sd.CURRENT_USER.name){
+    firstName = sd.CURRENT_USER.name.split(' ')[0]
+    lastName = sd.CURRENT_USER.name.split(' ')[1]
+  }
+  analytics.identify('db49deabab', {
+    email: email,
+    firstName: firstName,
+    lastName: lastName
+  })
+})

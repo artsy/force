@@ -94,8 +94,6 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
     $iframe.replaceWith $newIframe
     $cover.remove()
 
-
-
   sizeVideo: ->
     $videos = @$("iframe[src^='//player.vimeo.com'], iframe[src^='//www.youtube.com']")
 
@@ -126,7 +124,6 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
 
     $(window).resize(_.debounce(resizeVideo, 100))
     resizeVideo()
-
 
 module.exports.init = ->
   article = new Article sd.ARTICLE
