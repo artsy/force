@@ -34,6 +34,6 @@ module.exports =
   artist_page_format:
     key: 'artist_page_format'
     outcomes:
-      old: 0.5
-      new: 0.5
+      old: 1
+      new: 0
     edge: 'new'
