@@ -6,6 +6,8 @@ module.exports = class Cycle
 
   frame: 0
 
+  started: false
+
   constructor: (options) ->
     { @$el, @selector, @speed } = _.defaults options, @defaults
 
@@ -13,12 +15,13 @@ module.exports = class Cycle
       throw new Error 'selector invalid'
 
     @styles =
-      base: opacity: 0, transition: "opacity #{@speed / 2}ms linear"
+      base: transition: "opacity #{@speed / 2}ms linear", zIndex: 1, opacity: 0
+      resting: opacity: 0, zIndex: 1
       active: opacity: 1, zIndex: 2
-      deactivating: opacity: 0, zIndex: 1
 
   start: ->
     @$el.imagesLoaded =>
+      @$el.addClass 'is-loaded'
       @step()
       @interval = setInterval @step, @speed
 
@@ -26,18 +29,13 @@ module.exports = class Cycle
     clearInterval @interval
 
   step: =>
-    if @started then @$frames.css(@styles.base) else @started = true
-
-    $deactivate = (@$frames.filter('.is-active') or @$frames.first())
-      .removeClass('is-active')
-      .addClass('is-deactivating')
-      .css @styles.deactivating
-
-    _.delay =>
-      $deactivate
-        .removeClass('is-deactivating')
-        .css @styles.base
-    , @speed / 2
+    if @started
+      @$frames.filter('.is-active')
+        .removeClass('is-active')
+        .css @styles.resting
+    else
+      @$frames.css(@styles.base)
+      @started = true
 
     $(@$frames.get @frame)
       .addClass('is-active')
