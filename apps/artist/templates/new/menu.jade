@@ -1,0 +1,19 @@
+header.artist-header
+  h1.avant-garde-header-center= artist.get('name')
+  - var bday = artist.displayNationalityAndBirthdate()
+  - var followCount = artist.displayFollowers()
+  if bday || followCount
+    h2
+      if bday
+        .artist-header-birthdate= bday
+      if followCount
+        .artist-header-follow-count= followCount
+
+button#artist-follow-button.avant-garde-button-black.follow-button
+
+#artist-nav-list.chevron-nav-list
+  for link, i in nav.sections()
+    a(
+      href= link.href
+      class= activeClass(link.href)
+    )= link.name
