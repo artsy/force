@@ -32,28 +32,28 @@ describe 'Cycle', ->
 
     describe 'step', ->
       it 'steps the cycle', ->
+        @cycle.started.should.be.false
+
         # Step #1
         @cycle.step()
+        @cycle.started.should.be.true
 
         @$first.hasClass('is-active').should.be.true
-        @$first.attr('style').should.equal 'opacity: 1; z-index: 2;'
+        @$first.attr('style').should.equal 'z-index: 2; opacity: 1;'
         @$second.hasClass('is-active').should.be.false
-        _.isUndefined(@$second.attr('style')).should.be.true
 
         # Step #2
         @cycle.step()
 
         @$first.hasClass('is-active').should.be.false
-        @$first.hasClass('is-deactivating').should.be.true
-        @$first.attr('style').should.equal 'opacity: 0; z-index: 1;'
+        @$first.attr('style').should.equal 'z-index: 1; opacity: 0;'
         @$second.hasClass('is-active').should.be.true
-        @$second.attr('style').should.equal 'opacity: 1; z-index: 2;'
+        @$second.attr('style').should.equal 'z-index: 2; opacity: 1;'
 
         # Step #3 (loops back around)
         @cycle.step()
 
         @$first.hasClass('is-active').should.be.true
-        @$first.attr('style').should.equal 'opacity: 1; z-index: 2;'
+        @$first.attr('style').should.equal 'z-index: 2; opacity: 1;'
         @$second.hasClass('is-active').should.be.false
-        @$second.hasClass('is-deactivating').should.be.true
-        @$second.attr('style').should.equal 'opacity: 0; z-index: 1;'
+        @$second.attr('style').should.equal 'z-index: 1; opacity: 0;'
