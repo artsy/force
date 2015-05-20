@@ -1,0 +1,11 @@
+a.press-item( href= item.href )
+  .vam-outer: .vam-inner
+    if item.subtitle
+      h4.press-item-subtitle
+        = item.subtitle
+    if item.title
+      h3.press-item-title
+        = item.title
+    if item.description
+      p.press-item-description
+        = item.description
