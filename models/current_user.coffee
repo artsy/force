@@ -106,14 +106,11 @@ module.exports = class CurrentUser extends User
       success: options?.success
 
   checkRegisteredForAuction: (options) ->
-    new Backbone.Collection().fetch
+    new Backbone.Collection().fetch _.extend {}, options,
       url: "#{sd.API_URL}/api/v1/me/bidders"
-      data:
-        access_token: @get('accessToken')
-        sale_id: options.saleId
-      success: (response) ->
-        options?.success response.length > 0
-      error: options?.error
+      data: sale_id: options.saleId, access_token: @get('accessToken')
+      success: _.wrap options.success, (success, collection) ->
+        success collection.length > 0
 
   createBidder: (options) ->
     # For posts and puts, add access_token to model attributes, for gets it goes in the data
