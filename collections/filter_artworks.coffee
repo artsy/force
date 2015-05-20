@@ -4,7 +4,7 @@ Artworks = require '../collections/artworks.coffee'
 { API_URL } = require('sharify').data
 
 module.exports = class FilterArtworks extends Artworks
-  url: "#{API_URL}/api/v1/filter/artworks?aggregations=true"
+  url: "#{API_URL}/api/v1/filter/artworks"
 
   parse: (data) ->
     @counts = @prepareCounts data.aggregations

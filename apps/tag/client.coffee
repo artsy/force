@@ -8,6 +8,7 @@ FilterView = require '../../components/filter2/view.coffee'
 FilterRouter = require '../../components/filter2/router/index.coffee'
 ShareView = require '../../components/share/view.coffee'
 { API_URL, TAG, FILTER_ROOT } = require('sharify').data
+aggregationParams = require './aggregations.coffee'
 
 module.exports.init = ->
   tag = new Tag TAG
@@ -18,7 +19,7 @@ module.exports.init = ->
   scrollFrame '#tag-filter a'
 
   queryParams = qs.parse(location.search.replace(/^\?/, ''))
-  params = new Backbone.Model _.extend queryParams, { page: 1, size: 10, tag_id: tag.id }
+  params = new Backbone.Model _.extend queryParams, { page: 1, size: 10, tag_id: tag.id, aggregations: aggregationParams }
 
   collection = new FilterArtworks
 
