@@ -3,14 +3,6 @@
 .press-page
   padding 40px 0
 
-.press-header
-  display table
-  width 100%
-.press-header-headline
-.press-header-contact
-  display table-cell
-  width 50%
-  vertical-align middle
 .press-header-headline
   garamond-size('xl-headline')
 .press-header-contact
@@ -42,3 +34,24 @@
   margin-bottom 5px
 .press-item-description
   garamond-size('s-body')
+
+@media screen and (max-width: 768px)
+  .responsive-layout-container
+    margin 0
+
+  .press-header-contact
+    text-align left
+
+  .press-tablist
+    margin 40px auto 0
+
+  .press-items-list
+    margin 20px 0 40px 0
+  .press-items
+    width 100%
+  .press-date
+    margin 10px 0
+  .press-item
+    padding 20px 0 !important
+    &::after
+      display none

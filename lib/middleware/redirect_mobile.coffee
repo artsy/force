@@ -30,5 +30,6 @@ router.get '/auction-registration/:id', isResponsive
 router.get '/order', isResponsive
 router.get '/christies-spring-auctions-2015', isResponsive
 router.get '/jobs', isResponsive
+router.get '/press/*', isResponsive
 router.use redirect
 module.exports = router
