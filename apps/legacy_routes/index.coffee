@@ -13,5 +13,6 @@ app.get '/settings', to '/user/edit'
 app.get '/_=_', to '/' # Facebook passport bug, see: https://github.com/jaredhanson/passport-facebook/issues/12#issuecomment-5913711
 app.get '/press', to '/press/press-releases'
 app.get '/about/press', to '/press/press-releases'
-app.get '/about/events', to '/press/in-the-media'
+app.get '/about/page/press', to '/press/press-releases'
+app.get '/about/page/events', to '/press/in-the-media'
 app.get '/about/jobs', to '/jobs'
