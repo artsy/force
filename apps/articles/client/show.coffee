@@ -139,7 +139,7 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
       $('body').append ctaBarView.render().$el
       $('#articles-footer-list').waypoint (direction) ->
         ctaBarView.transitionIn() if direction is 'down'
-      , { offset: 'bottom-in-view' }
+      , { offset: '50%' }
 
 module.exports.init = ->
   article = new Article sd.ARTICLE
