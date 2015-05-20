@@ -23,7 +23,7 @@ module.exports = class CTABarView extends Backbone.View
     persist: true
 
   initialize: (options = {}) ->
-    { @headline, @mode, @name, @persist, @modalOptions, @subheadline } = _.defaults options, @defaults
+    { @headline, @mode, @name, @persist, @modalOptions, @subHeadline, @email } = _.defaults options, @defaults
 
   previouslyDismissed: ->
     @persist and Cookies.get(@name)?
@@ -62,7 +62,8 @@ module.exports = class CTABarView extends Backbone.View
     @$el.html template
       headline: @headline
       mode: @mode
-      subheadline: @subheadline
+      subHeadline: @subHeadline
+      email: @email
     this
 
   close: (e) ->

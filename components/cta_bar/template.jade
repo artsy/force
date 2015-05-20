@@ -5,20 +5,24 @@
       = headline
     a.cta-bar-button.avant-garde-button-dark( href='/sign_up' )
       | Join Artsy Now
+    .cta-bar-defer: a( href='#' )
+      | Maybe Later
   else if mode === 'smaller-with-email'
-    h3.cta-bar-small-headline
-      = headline
-    h2.cta-bar-small-headline
-      = subHeadLine
-    form.cta-bar-form
-      input.bordered-input( placeholder='Enter your email', type='email', name='email', required value="#{email}")
-      button.avant-garde-button-dark Subscribe
+    .cta-bar-small
+      .cta-bar-header
+        h2= headline
+        h3= subHeadline
+      //- Form submission is taken care of via analytics/main_layout.js
+      .cta-bar-small-form
+        input.bordered-input( placeholder='Enter your email', type='email', name='email', required value="#{email}")
+        button.avant-garde-button-dark.js-articles-insights-subscribe Subscribe
+        .cta-bar-defer: a( href='#' )
+          | Close
   else
     h3.cta-bar-headline
       = headline
     form.cta-bar-form
       input.bordered-input( placeholder='Enter your email', type='email', name='email', required )
       button.avant-garde-button-dark Join Now
-
-  .cta-bar-defer: a( href='#' )
-    | Maybe Later
+    .cta-bar-defer: a( href='#' )
+      | Maybe Later

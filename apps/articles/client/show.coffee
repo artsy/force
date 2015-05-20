@@ -131,17 +131,14 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
     ctaBarView = new CTABarView
       headline: 'Artsy Insights for Galleries'
       mode: 'smaller-with-email'
-      name: 'Gallery Insights'
+      name: 'gallery-insights-signup'
       persist: true
-      subheadline: "Recieve periodical insights from Artsy's Gallery Team"
-      email: sd.CURRENT_USER.email or ''
+      subHeadline: "Recieve periodical insights from Artsy's Gallery Team"
+      email: sd.CURRENT_USER?.email or ''
     unless ctaBarView.previouslyDismissed()
       $('body').append ctaBarView.render().$el
       $('#articles-footer-list').waypoint (direction) ->
         ctaBarView.transitionIn() if direction is 'down'
-      , { offset: 'bottom-in-view' }
-      $('#main-layout-footer').waypoint (direction) ->
-        ctaBarView.transitionOut() if direction is 'down'
       , { offset: 'bottom-in-view' }
 
 module.exports.init = ->

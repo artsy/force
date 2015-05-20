@@ -21,10 +21,10 @@ snowplow('trackPageView');
 
 // Signs up a user to the Gallery Insights (New) List
 $('.js-articles-insights-subscribe').click(function(e){
-  var email = $('.js-articles-insights-input').val()
+  var email = $(e.currentTarget).prev('input').val()
   var firstName = ''
   var lastName = ''
-  if(sd.CURRENT_USER.name){
+  if(sd.CURRENT_USER && sd.CURRENT_USER.name){
     firstName = sd.CURRENT_USER.name.split(' ')[0]
     lastName = sd.CURRENT_USER.name.split(' ')[1]
   }
