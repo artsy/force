@@ -20,6 +20,8 @@ module.exports.init = ->
       position = $(selector).offset().top - offset
       $('html, body').animate { scrollTop: position }, 250
 
+  $categories.first().addClass 'is-active'
+
   toggleNavLink = (going, direction) ->
     $categories
       .filter "[href='##{$(this).attr 'id'}']"

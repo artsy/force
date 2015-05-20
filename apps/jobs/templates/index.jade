@@ -9,9 +9,9 @@ append locals
 block body
   .jobs-page.responsive-layout-container: .main-layout-container
     header.jobs-header.bisected-header
-      h1.jobs-header-headline.bisected-header-cell
+      h1.jobs-header-headline.evenly-bisected-header-cell
         = header.headline
-      .jobs-header-description.bisected-header-cell
+      .jobs-header-description.evenly-bisected-header-cell
         = header.description
 
     section.jobs-images-cycle.responsive-image-container.js-jobs-images-cycle
@@ -27,10 +27,10 @@ block body
 
       .jobs-category-items
         for jobs, name in categories
-          ul.jobs-items.js-jobs-items( id="#{name}" )
+          .jobs-items.large-chevron-list.js-jobs-items( id= name )
             for job in jobs
-              li.jobs-item
-                a( href= job.href )
+              a( href= job.href )
+                .jobs-item
                   .jobs-item-metadata
                     h2.jobs-item-title
                       = job.title
