@@ -1,18 +1,12 @@
 _ = require 'underscore'
-Page = require '../../models/page'
-knox = require 'knox'
-request = require 'superagent'
-url = require 'url'
-
 twilio = require 'twilio'
 { TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_NUMBER, IPHONE_APP_COPY } = require '../../config'
 cache = require '../../lib/cache'
-
 resizer = require '../../components/resizer'
 JSONPage = require '../../components/json_page'
-page = new JSONPage name: 'about'
 
 @index = (req, res, next) ->
+  page = new JSONPage name: 'about'
   page.get (err, data) ->
     return next err if err
     res.render 'index', _.extend {}, data, resizer
@@ -30,9 +24,3 @@ page = new JSONPage name: 'about'
       return res.json err.status or 400, { msg: err.message } if err
       cache.set "sms/iphone/#{to}", new Date().getTime().toString(), 600
       res.send 201, { msg: "success", data: data }
-
-@page = (id) ->
-  (req, res) ->
-    new Page(id: id).fetch
-      success: (page) -> res.render 'page', page: page
-      error: res.backboneError
