@@ -1,0 +1,57 @@
+@import '../../../components/stylus_lib'
+
+.press-page
+  padding 40px 0
+
+.press-header-headline
+  garamond-size('xl-headline')
+.press-header-contact
+  garamond-size('l-body')
+  text-align right
+
+.press-tablist
+  margin 80px auto
+  text-align center
+
+.press-items
+  width 75%
+  margin 80px auto
+
+.press-date
+  margin 40px
+  avant-garde-size('l-headline', true)
+
+.press-items-list
+  margin 40px 0 120px 0
+.press-item
+  display block
+  text-decoration none
+.press-item-title
+  garamond-size('headline')
+.press-item-subtitle
+  avant-garde-size('body', true)
+  color gray-dark-color
+  margin-bottom 5px
+.press-item-description
+  garamond-size('s-body')
+
+@media screen and (max-width: 768px)
+  .responsive-layout-container
+    margin 0
+
+  .press-header-contact
+    text-align left
+
+  .press-tablist
+    margin 40px auto 0
+
+  .press-items-list
+    margin 20px 0 40px 0
+  .press-items
+    width 100%
+  .press-date
+    margin 10px 0
+  .press-item
+    padding 20px 0 !important
+    &::after
+      display none

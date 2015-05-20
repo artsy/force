@@ -1,0 +1,10 @@
+extends ../index
+
+block head
+  include meta
+
+block content
+  section.press-items
+    .press-items-list.large-chevron-list
+      for item in items.reverse()
+        include ../item
