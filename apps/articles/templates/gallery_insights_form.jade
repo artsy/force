@@ -1,14 +1,13 @@
 .articles-insights-container
-  .articles-insights-mainheader Artsy Insights for Galleries
-  .articles-insights-subheader Recieve periodical insights from Artsy's Gallery Team
-  .articles-insights-form
-    - var email = ''
-    if sd.CURRENT_USER && sd.CURRENT_USER.email
-      - email = sd.CURRENT_USER.email
-    input.js-articles-insights-input.bordered-input( type='email', name='EMAIL', placeholder= 'Enter Your Email', required value="#{email}")
-    button.avant-garde-button-black.js-articles-insights-subscribe Subscribe
+  .articles-insights
+    .articles-insights-mainheader Artsy Insights for Galleries
+    .articles-insights-subheader Recieve periodical insights from Artsy's Gallery Team
+    .articles-insights-form
+      - var email = ''
+      if sd.CURRENT_USER && sd.CURRENT_USER.email
+        - email = sd.CURRENT_USER.email
+      input.js-articles-insights-input.bordered-input( type='email', name='EMAIL', placeholder= 'Enter Your Email', required value="#{email}")
+      button.avant-garde-button-black.js-articles-insights-subscribe Subscribe
   .articles-insights-thanks
-    .articles-insights-mainheader Almost there...
-    .articles-insights-subheader
-      | We need to confirm your email address. 
-      | To complete the subscription process, please click the link in the email we just sent you.
+    .articles-insights-mainheader Thanks for subscribing!
+    .articles-insights-subheader Please check your email to confirm your subscription.

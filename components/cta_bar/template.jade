@@ -8,16 +8,21 @@
     .cta-bar-defer: a( href='#' )
       | Maybe Later
   else if mode === 'smaller-with-email'
-    .cta-bar-small
-      .cta-bar-header
-        h2= headline
-        h3= subHeadline
-      //- Form submission is taken care of via analytics/main_layout.js
-      .cta-bar-small-form
-        input.bordered-input( placeholder='Enter your email', type='email', name='email', required value="#{email}")
-        button.avant-garde-button-dark.js-articles-insights-subscribe Subscribe
-        .cta-bar-defer: a( href='#' )
-          | Close
+    .cta-bar-container
+      .cta-bar-small
+        .cta-bar-header
+          h2= headline
+          h3= subHeadline
+        //- Form submission is taken care of via analytics/main_layout.js
+        .cta-bar-small-form
+          input.bordered-input( placeholder='Enter your email', type='email', name='email', required value="#{email}")
+          button.avant-garde-button-dark.js-articles-insights-subscribe Subscribe
+          .cta-bar-defer: a( href='#' )
+            | Close
+      .cta-bar-thanks
+        .cta-bar-header
+          h2 Thanks for subscribing!
+          h3 Please check your email to confirm your subscription.
   else
     h3.cta-bar-headline
       = headline

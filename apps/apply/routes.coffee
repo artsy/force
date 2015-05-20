@@ -7,7 +7,7 @@ Referrer = require 'referer-parser'
   res.render 'index'
 
 @form = (req, res, next) ->
-  request.post('')
+  request.post('https://www.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8')
     .type('form')
     .send(req.body)
     .end (err, response) ->
