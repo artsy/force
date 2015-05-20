@@ -4,7 +4,7 @@ nav-width = 200px
 scroll-offset = 40px
 
 .jobs-page
-  padding 40px 0
+  padding 60px 0
 
 .jobs-header
   //
@@ -14,7 +14,7 @@ scroll-offset = 40px
   garamond-size('s-body')
 
 .jobs-images-cycle
-  margin 40px 0
+  margin 40px 0 80px 0
   // 10:4 ratio
   padding-bottom 40%
   opacity 0
@@ -35,6 +35,7 @@ scroll-offset = 40px
   // Pad out for sticky
   padding-top scroll-offset
   margin-top -(scroll-offset)
+  z-index 2
 .jobs-category-items
   margin-left nav-width
 
@@ -59,20 +60,13 @@ scroll-offset = 40px
   margin-top -(scroll-offset) !important
 
 .jobs-item
-  padding 30px 20px
-  border-top 2px solid gray-color
+  display block
+  text-decoration none
   clearfix()
-  &:last-child
-    border-bottom @border-top
-  &:hover
-    background-color gray-lighter-color
-  > a
-    display block
-    text-decoration none
 .jobs-item-metadata
 .jobs-item-description
-  float left
   overflow hidden
+  float left
 .jobs-item-metadata
   width (100% / 3)
 .jobs-item-description

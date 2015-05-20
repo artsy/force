@@ -51,4 +51,9 @@
     block-margins(20px)
     &:first-child
     &:last-child
-      width 100%
+      width 100% !important
+.evenly-bisected-header-cell
+  @extends .bisected-header-cell
+  &:last-child
+  &:first-child
+    width 50%

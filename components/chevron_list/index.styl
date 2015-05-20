@@ -37,8 +37,13 @@
   @extends .large-chevron-list-item
   display block
   padding 40px 80px 40px 40px
-  border-top 2px solid gray-lighter-color
-  &:last-child
-    border-bottom @border-top
+  border-top 1px solid gray-lighter-color
+  border-bottom @border-top
+  margin-top -1px
+  text-decoration none
+  &:first-child
+    margin-top 0
   &:hover
     background-color gray-lightest-color
+    border-color @background-color
+    z-index 1
