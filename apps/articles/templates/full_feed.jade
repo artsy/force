@@ -27,3 +27,6 @@
 
     .js-articles-feed-more
       include ../../../components/articles_feed/templates/button
+  if vertical && vertical.get('slug') == 'gallery-insights-magazine'
+    .articles-insights-vertical
+      include gallery_insights_form

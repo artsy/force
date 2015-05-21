@@ -15,6 +15,7 @@ embedVideo = require 'embed-video'
 CurrentUser = require '../../../models/current_user.coffee'
 editTemplate = -> require('../templates/edit.jade') arguments...
 initCarousel = require '../../../components/merry_go_round/index.coffee'
+CTABarView = require '../../../components/cta_bar/view.coffee'
 
 module.exports.ArticleView = class ArticleView extends Backbone.View
 
@@ -27,6 +28,7 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
     @breakCaptions()
     @checkEditable()
     @sizeVideo()
+    @renderGalleryInsightsCTA() if @article.get('vertical_id') is '55550be07b8a750300db8430'
 
   renderSlideshow: =>
     initCarousel $('.js-article-carousel'), imagesLoaded: true
@@ -94,8 +96,6 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
     $iframe.replaceWith $newIframe
     $cover.remove()
 
-
-
   sizeVideo: ->
     $videos = @$("iframe[src^='//player.vimeo.com'], iframe[src^='//www.youtube.com']")
 
@@ -127,6 +127,19 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
     $(window).resize(_.debounce(resizeVideo, 100))
     resizeVideo()
 
+  renderGalleryInsightsCTA: ->
+    ctaBarView = new CTABarView
+      headline: 'Artsy Insights for Galleries'
+      mode: 'smaller-with-email'
+      name: 'gallery-insights-signup'
+      persist: true
+      subHeadline: "Recieve periodical insights from Artsy's Gallery Team"
+      email: sd.CURRENT_USER?.email or ''
+    unless ctaBarView.previouslyDismissed()
+      $('body').append ctaBarView.render().$el
+      $('#articles-footer-list').waypoint (direction) ->
+        ctaBarView.transitionIn() if direction is 'down'
+      , { offset: '50%' }
 
 module.exports.init = ->
   article = new Article sd.ARTICLE

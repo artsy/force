@@ -16,7 +16,8 @@ module.exports = class Articles extends Backbone.Collection
 
   featuredToVertical: (vertical) ->
     @select (article) ->
-      article.get('id') in vertical.get('featured_article_ids')
+      if vertical.get('featured_article_ids')
+        article.get('id') in vertical.get('featured_article_ids')
 
   feed: ->
     featured = @featured()
