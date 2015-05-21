@@ -64,21 +64,6 @@ describe 'AuctionArtworksView', ->
         @view.$('.auction-list-artwork:first-child a').attr('href').should.containEql '/artwork/a-a'
         @view.$('.auction-list-artwork:last-child a').attr('href').should.containEql '/artwork/z-z'
 
-    describe '#displayBlurbs', ->
-      it 'returns true if any artworks have a blurb', ->
-        @view.displayBlurbs().should.be.false
-        @view.collection.first().set 'blurb', 'Existence!'
-        @view.displayBlurbs().should.be.true
-
-    describe '#maxBlurbHeight', ->
-      it 'returns a pixel value based on the estimated height of the longest blurb', ->
-        @view.maxBlurbHeight(true).should.equal '22px' # A single line
-        _.isUndefined(@view.maxBlurbHeight(false)).should.be.true
-        @view.collection.first().set 'blurb', 'Existence!'
-        @view.maxBlurbHeight(true).should.equal '27px'
-        @view.collection.last().set 'blurb', 'Existence! Existence! Existence! Existence! Existence! Existence! Existence! Existence! Existence! Existence!'
-        @view.maxBlurbHeight(true).should.equal '70px'
-
   describe 'auction promo', ->
     beforeEach ->
       @view = new AuctionArtworksView

@@ -1,4 +1,5 @@
 _ = require 'underscore'
+_s = require 'underscore.string'
 Artwork = require '../models/artwork.coffee'
 Backbone = require 'backbone'
 SaleArtwork = require '../models/sale_artwork.coffee'
@@ -67,3 +68,13 @@ module.exports = class Artworks extends Backbone.Collection
 
   @fromSale: (saleArtworks) ->
     new Artworks @__fromSale__(saleArtworks)
+
+  hasAny: (attr) ->
+    _.any _.map(@pluck(attr), _.negate(_.isEmpty))
+
+  maxBlurbHeight: (displayBlurbs, lineHeight = 22, columnWidth = 50) ->
+    return unless displayBlurbs
+
+    Math.ceil(_.max(_.map @pluck('blurb'), (blurb) ->
+      ((_s.stripTags(blurb).length / columnWidth) * lineHeight) + lineHeight
+    )) + 'px'
