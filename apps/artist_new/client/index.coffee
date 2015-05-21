@@ -1,3 +1,4 @@
+_ = require 'underscore'
 { ARTIST } = require('sharify').data
 Backbone = require 'backbone'
 Artist = require '../../../models/artist.coffee'
@@ -15,6 +16,13 @@ module.exports.init = ->
   analytics artist
 
   scrollFrame 'a.artwork-item-image-link'
+
+  sticky = new Sticky
+  sticky.add $('.artist-page-menu')
+
+  # rebuild the sticky menu when ajax events stop firing
+  # defer to wait after render
+  $(document).on 'ajaxStop', => _.defer => sticky.rebuild()
 
   router = new ArtistRouter model: artist, user: user
   Backbone.history.start pushState: true
