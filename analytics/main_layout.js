@@ -30,8 +30,9 @@ $('.js-articles-insights-subscribe').click(function(e){
   }
   analytics.identify('95ac2900c4', {
     email: email,
-    firstName: firstName,
-    lastName: lastName
+    FNAME: firstName,
+    LNAME: lastName,
+    MMERGE3: 'Opt-in (artsy.net)'
   })
   $('.articles-insights').fadeOut()
   $('.articles-insights-thanks').fadeIn()
