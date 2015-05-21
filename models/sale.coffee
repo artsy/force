@@ -14,10 +14,10 @@ module.exports = class Sale extends Backbone.Model
   urlRoot: "#{sd.API_URL}/api/v1/sale"
 
   href: ->
-    if @isAuctionPromo()
+    if @isSale()
       "/sale/#{@id}"
     else
-      "/feature/#{@id}"
+      "/auction/#{@id}"
 
   registrationSuccessUrl: ->
     "#{@href()}/confirm-registration"
@@ -110,3 +110,7 @@ module.exports = class Sale extends Backbone.Model
 
   isAuctionPromo: ->
     @get('sale_type') is 'auction promo'
+
+  isSale: ->
+    not @isAuction() and
+    not @isAuctionPromo()

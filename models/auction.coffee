@@ -14,12 +14,6 @@ module.exports = class Auction extends Sale
     response.auction_state = @calculateAuctionState response.start_at, response.end_at
     response
 
-  href: ->
-    if @isAuctionPromo()
-      "/sale/#{@id}"
-    else
-      "/auction/#{@id}"
-
   registrationSuccessUrl: ->
     "#{@href()}/confirm-registration"
 
