@@ -4,8 +4,14 @@ _ = require 'underscore'
 module.exports = class Sticky
   constructor: ->
     @$window = $(window)
+    @$document = $(document)
+
     return if Stickyfill?
     require './vendor/stickyfill.js'
+
+    # rebuild the sticky menu when ajax events stop firing
+    # defer to wait after render
+    @$document.on 'ajaxStop', => _.defer => @rebuild()
 
   add: ($el) ->
     _.defer =>

@@ -20,9 +20,5 @@ module.exports.init = ->
   sticky = new Sticky
   sticky.add $('.artist-page-menu')
 
-  # rebuild the sticky menu when ajax events stop firing
-  # defer to wait after render
-  $(document).on 'ajaxStop', => _.defer => sticky.rebuild()
-
   router = new ArtistRouter model: artist, user: user
   Backbone.history.start pushState: true
