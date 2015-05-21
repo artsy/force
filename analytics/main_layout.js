@@ -11,6 +11,7 @@ setTimeout(function() {
   analytics.track('time on page more than 15 seconds', { category: '15 Seconds' });
 }, 15000);
 
+
 // Track 3 Minute bounce rate
 setTimeout(function() {
   analytics.track('time on page more than 3 minutes', { category: '3 Minutes' });
