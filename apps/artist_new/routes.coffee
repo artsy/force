@@ -14,7 +14,7 @@ request = require 'superagent'
 cache = require '../../lib/cache'
 ReferrerParser = require 'referer-parser'
 
-@index = (req, res, next) =>
+@index = (req, res, next) ->
   return next() unless res.locals.sd.ARTIST_PAGE_FORMAT is 'new' or res.locals.sd.NODE_ENV is 'development'
   artist = new Artist id: req.params.id
   carousel = new Carousel artist: artist
