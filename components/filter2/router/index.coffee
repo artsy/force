@@ -13,7 +13,7 @@ module.exports = class FilterRouter extends Backbone.Router
     @route "#{@urlRoot}/artworks*", 'artworks'
 
   navigateParams: =>
-    params = qs.stringify(_.omit @params.toJSON(), 'page', 'size', @stuckParam)
+    params = qs.stringify(_.omit @params.toJSON(), 'page', 'size', 'aggregations', @stuckParam)
     # Only add '/artworks' to the url if there are params
     # Do not redirect from /gene/:id to gene/:id/artworks on pageload
     if params?.length > 0

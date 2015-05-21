@@ -1,17 +1,21 @@
 _s = require 'underscore.string'
 Q = require 'q'
+qs = require 'qs'
 Backbone = require 'backbone'
 Gene = require '../../models/gene'
 FilterArtworks = require '../../collections/filter_artworks'
+aggregationParams = require './aggregations.coffee'
 
 @index = (req, res, next) ->
   gene = new Gene(id: req.params.id)
-  filterArtworks = new FilterArtworks
   params = new Backbone.Model gene: gene.id
+  filterArtworks = new FilterArtworks
+  filterData = { size: 0, gene_id: req.params.id, aggregations: aggregationParams }
+  formattedFilterData = decodeURIComponent qs.stringify(filterData, { arrayFormat: 'brackets' })
 
   Q.all([
     gene.fetch(cache: true)
-    filterArtworks.fetch(data: { size: 0, gene: req.params.id } )
+    filterArtworks.fetch(data: formattedFilterData)
   ]).done ->
     # override mode if path is set
     if _s.contains req.path, 'artworks'

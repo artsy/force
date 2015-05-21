@@ -14,6 +14,7 @@ ArtistFillwidthList = require '../../components/artist_fillwidth_list/view.coffe
 RelatedGenesView = require '../../components/related_links/types/gene_genes.coffee'
 { Following, FollowButton } = require '../../components/follow_button/index.coffee'
 { GENE, CURRENT_USER, API_URL, FILTER_ROOT, MODE, FILTER_COUNTS } = require('sharify').data
+aggregationParams = require './aggregations.coffee'
 
 RelatedArtistsTemplate = -> require('./templates/related_artists.jade') arguments...
 
@@ -51,6 +52,7 @@ module.exports.init = ->
     page: 1
     size: 10
     gene_id: gene.id
+    aggregations: aggregationParams
 
   view = new GeneView
     user: user
