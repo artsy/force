@@ -6,10 +6,11 @@ FilterArtworks = require '../../collections/filter_artworks.coffee'
 FilterView = require '../../components/filter2/view.coffee'
 FilterRouter = require '../../components/filter2/router/index.coffee'
 { FILTER_ROOT } = require('sharify').data
+aggregationParams = require './aggregations.coffee'
 
 module.exports.init = ->
   queryParams = qs.parse(location.search.replace(/^\?/, ''))
-  params = new Backbone.Model _.extend queryParams, { page: 1, size: 10 }
+  params = new Backbone.Model _.extend queryParams, { page: 1, size: 10, aggregations: aggregationParams }
   collection = new FilterArtworks
 
   view = new FilterView
