@@ -11,18 +11,19 @@ gutter-width = 60px
 .artist-page
   clearfix()
   position relative
-  padding 20px 20px
+  padding 0px 20px
 .artist-page-menu
 .artist-page-content
   float left
-  padding-top (gutter-width / 2)
 .artist-page-menu
   width menu-width
   padding-right (gutter-width / 2)
+  padding-top (gutter-width / 2)
 .artist-page-content
   width content-width
   padding-left (gutter-width / 2)
   border-left 1px solid gray-lighter-color
+  margin-top (gutter-width / 2)
 
 #artist-nav-list
   margin-top 30px
@@ -41,10 +42,20 @@ gutter-width = 60px
 
 .artist-page-section
   margin-bottom 40px
-.artist-page-section__header
+.artist-section-header
   garamond-size('headline')
-  border-bottom 1px solid gray-color
+  margin-bottom (gutter-width / 2)
 .artist-page-section__content
   position relative
+
+.artist-page--overview .artist-section-header
+  border-bottom 1px solid gray-color
+
+#artist-page-section-articles
+#artist-page-section-shows
+#artist-page-section-artists
+#artist-page-section-contemporary
+  display none
+  fade-in()
 
 @import './sections'
