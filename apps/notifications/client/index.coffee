@@ -22,7 +22,7 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
     @cacheSelectors()
 
     @user = CurrentUser.orNull()
-    @notifications = new Notifications null, since: 30, type: 'ArtworkPublished', userId: @user.get('id')
+    @notifications = new Notifications null, since: 30, type: 'ArtworkPublished'
 
     @listenTo @notifications, 'request', @indicateLoading
     @listenTo @notifications, 'sync', @appendArtworks

@@ -31,7 +31,7 @@ describe 'FeaturedArtworks', ->
       it 'creates and fetches both collections', ->
         @collection.fetch()
         Backbone.sync.callCount.should.equal 2
-        Backbone.sync.args[0][2].url.should.containEql '/api/v1/notifications'
+        Backbone.sync.args[0][2].url.should.containEql '/api/v1/me/notifications'
         Backbone.sync.args[1][2].url.should.containEql '/api/v1/sets?key=homepage:featured-artworks'
 
     describe '#takeResponse', ->

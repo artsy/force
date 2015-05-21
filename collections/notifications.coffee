@@ -8,7 +8,7 @@ PageableCollection = require '../components/pageable_collection/index.coffee'
 module.exports = class Notifications extends PageableCollection
   model: Artwork
 
-  url: "#{sd.API_URL}/api/v1/notifications"
+  url: "#{sd.API_URL}/api/v1/me/notifications"
 
   defaults:
     type: 'ArtworkPublished'
@@ -18,10 +18,10 @@ module.exports = class Notifications extends PageableCollection
     pageSize: 10
 
   initialize: (models, options = {}) ->
-    { @userId, @type, @since } = _.defaults(options, @defaults)
+    { @type, @since } = _.defaults(options, @defaults)
 
   fetch: (options = {}) ->
-    options.data = _.defaults (options.data or {}), user_id: @userId, type: @type, since: @since
+    options.data = _.defaults (options.data or {}), type: @type, since: @since
     PageableCollection::fetch.call this, options
 
   groupedByArtist: ->

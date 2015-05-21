@@ -17,7 +17,7 @@ module.exports = class FeaturedArtworks extends Backbone.Collection
 
   fetchPersonalized: ->
     return unless @user
-    @personalized = new Notifications [], userId: @user.id, state: pageSize: @limit
+    @personalized = new Notifications [], state: pageSize: @limit
     @personalized.fetch()
 
   takeResponse: ->
