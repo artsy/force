@@ -22,6 +22,23 @@ module.exports = class Sale extends Backbone.Model
   registrationSuccessUrl: ->
     "#{@href()}/confirm-registration"
 
+  buyersPremiumUrl: ->
+    "#{@href()}/buyers-premium"
+
+  registerUrl: (redirectUrl) ->
+    url = "/auction-registration/#{@id}"
+    url += "?redirect_uri=#{redirectUrl}" if redirectUrl
+    url
+
+  bidUrl: (artwork) ->
+    "#{@href()}/bid/#{artwork.id}"
+
+  redirectUrl: (artwork) ->
+    if @isBidable() and artwork?
+      @bidUrl artwork
+    else
+      @href()
+
   fetchArtworks: (options = {}) ->
     @artworks = new SaleArtworks [], id: @id
     @artworks.fetchUntilEnd options
@@ -47,21 +64,6 @@ module.exports = class Sale extends Backbone.Model
       else if moment().isBefore(@get 'offsetStartAtMoment')
         'preview'
     ))
-
-  registerUrl: (redirectUrl) ->
-    url = "/auction-registration/#{@id}"
-    if redirectUrl
-      url += "?redirect_uri=#{redirectUrl}"
-    url
-
-  bidUrl: (artwork) ->
-    "/feature/#{@id}/bid/#{artwork.id}"
-
-  redirectUrl: (artwork) ->
-    if @isBidable() and artwork?
-      @bidUrl artwork
-    else
-      @href()
 
   # NOTE
   # auction_state helpers are used serverside of if updateState hasn't been run

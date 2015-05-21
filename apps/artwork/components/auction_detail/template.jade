@@ -40,7 +40,7 @@ else
     .abs-amount= saleArtwork.currentBid()
     .abs-count= saleArtwork.formatBidsAndReserve()
 
-    form.artwork-bid-form.js-artwork-bid-form( action="/feature/#{auction.id}/bid/#{saleArtwork.id}" )
+    form.artwork-bid-form.js-artwork-bid-form( action= auction.bidUrl(saleArtwork) )
       if auction.isOpen() && user
         .abf-validation-error
           | Your bid needs to be at least #{saleArtwork.minBid()}
@@ -55,9 +55,9 @@ else
           a( href='#' ) Buyer's Premium
 
       button.avant-garde-button-black.abf-button(
-        type      = 'submit'
-        class     = auction.bidButtonState(user).classes
-        disabled  = !auction.bidButtonState(user).enabled
+        type= 'submit'
+        class= auction.bidButtonState(user).classes
+        disabled= !auction.bidButtonState(user).enabled
       )
         = auction.bidButtonState(user).label
 
