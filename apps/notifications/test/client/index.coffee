@@ -44,7 +44,7 @@ describe 'NotificationsView', ->
 
     describe '#initialize', ->
       it 'makes the right API call', ->
-        _.last(Backbone.sync.args)[2].url.should.containEql '/api/v1/notifications'
+        _.last(Backbone.sync.args)[2].url.should.containEql '/api/v1/me/notifications'
         _.last(Backbone.sync.args)[2].data.should.containEql type: 'ArtworkPublished', since: 30, page: 1, size: 10
 
       it 'groups and renders properly', ->
