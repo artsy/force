@@ -14,7 +14,8 @@ request = require 'superagent'
 cache = require '../../lib/cache'
 ReferrerParser = require 'referer-parser'
 
-@index = (req, res, next) ->
+@index = (req, res, next) =>
+  console.log 'next', next
   return next() unless res.locals.sd.ARTIST_PAGE_FORMAT is 'new' or res.locals.sd.NODE_ENV is 'development'
   artist = new Artist id: req.params.id
   carousel = new Carousel artist: artist
@@ -57,7 +58,7 @@ ReferrerParser = require 'referer-parser'
 @tab = (req, res, next) =>
   return next() unless res.locals.sd.ARTIST_PAGE_FORMAT is 'new' or res.locals.sd.NODE_ENV is 'development'
   req.params.tab = res.locals.sd.CURRENT_PATH.split('/').pop()
-  @index req, res
+  @index req, res, next
 
 @follow = (req, res, next) ->
   return next() unless res.locals.sd.ARTIST_PAGE_FORMAT is 'new' or res.locals.sd.NODE_ENV is 'development'
