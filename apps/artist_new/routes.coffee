@@ -40,6 +40,7 @@ ReferrerParser = require 'referer-parser'
         res.locals.sd.TAB = tab = req.params.tab or ''
         res.locals.sd.STATUSES = statuses = statusesRequest.value
         res.locals.sd.MEDIUM = medium if medium?
+        res.locals.sd.IMAGES = carousel.figures
 
         res.render "index",
           artist: artist
