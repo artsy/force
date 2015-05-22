@@ -25,8 +25,8 @@ module.exports.init = ->
       imagesLoaded: true
     }, (instance) ->
       instance.cells.flickity.on 'staticClick', (event, pointer, cellElement, cellIndex) ->
-        src = $(cellElement).find('img').attr('src')
-        new ZoomView imgSrc: src
+        if src = $(cellElement).find('img').attr('src')
+          new ZoomView imgSrc: src
 
   setupSaveControls show.related().artworks
   attachFollowArtists show.related().artists
