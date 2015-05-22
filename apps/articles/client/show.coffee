@@ -85,6 +85,7 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
     'click .articles-vertical-right-chevron, \
     .articles-vertical-left-chevron': 'toggleVerticalCarousel'
     'click .articles-video-play-button': 'playVideo'
+    'click .js-articles-insights-subscribe': 'subscribeGalleryInsights'
 
   toggleVerticalCarousel: (e) ->
     @$('.articles-vertical-show-header-right').toggleClass('is-over')
@@ -140,6 +141,30 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
       $('#articles-footer-list').waypoint (direction) ->
         ctaBarView.transitionIn() if direction is 'down'
       , { offset: '50%' }
+
+  subscribeGalleryInsights: (e) ->
+    @$(e.currentTarget).addClass 'is-loading'
+    $.ajax
+      type: 'POST'
+      url: '/articles/form'
+      data:
+        email: $(e.currentTarget).prev('input').val()
+        fname: sd.CURRENT_USER?.name?.split(' ')[0] or= ''
+        lname: sd.CURRENT_USER?.name?.split(' ')[1] or= ''
+      error: (xhr) ->
+        @$(e.currentTarget).removeClass 'is-loading'
+        console.log xhr
+        # DO SOMETHING HERE.
+      success: (res) =>
+        @$(e.currentTarget).removeClass 'is-loading'
+        @$('.articles-insights').fadeOut()
+        @$('.articles-insights-thanks').fadeIn()
+        @$('.cta-bar-small').fadeOut( ->
+          @$('.cta-bar-thanks').fadeIn()
+        )
+        setTimeout( ->
+          @$('.cta-bar-defer').click()
+        ,2000)
 
 module.exports.init = ->
   article = new Article sd.ARTICLE

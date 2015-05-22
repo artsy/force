@@ -18,26 +18,3 @@ setTimeout(function() {
 
 // Tracking Snowplow page view. TODO: Remove when we phase out Snowplow.
 snowplow('trackPageView');
-
-// Signs up a user to the Gallery Insights (New) List
-$('.js-articles-insights-subscribe').click(function(e){
-  var email = $(e.currentTarget).prev('input').val()
-  var firstName = ''
-  var lastName = ''
-  if(sd.CURRENT_USER && sd.CURRENT_USER.name){
-    firstName = sd.CURRENT_USER.name.split(' ')[0]
-    lastName = sd.CURRENT_USER.name.split(' ')[1]
-  }
-  analytics.identify('95ac2900c4', {
-    email: email,
-    FNAME: firstName,
-    LNAME: lastName,
-    MMERGE3: 'Opt-in (artsy.net)'
-  })
-  $('.articles-insights').fadeOut()
-  $('.articles-insights-thanks').fadeIn()
-  $('.cta-bar-small').fadeOut(function(){
-    $('.cta-bar-thanks').fadeIn()
-  })
-  setTimeout(function(){$('.cta-bar-defer').click()}, 2000)
-})

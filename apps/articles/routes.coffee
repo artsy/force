@@ -6,6 +6,7 @@ Articles = require '../../collections/articles'
 Vertical = require '../../models/vertical'
 Verticals = require '../../collections/verticals'
 embedVideo = require 'embed-video'
+request = require 'superagent'
 { POST_TO_ARTICLE_SLUGS } = require '../../config'
 
 @articles = (req, res, next) ->
@@ -62,3 +63,22 @@ embedVideo = require 'embed-video'
           res.locals.sd.ARTICLES_COUNT = articles.count
           res.locals.sd.VERTICAL = vertical.toJSON()
           res.render 'vertical', vertical: vertical, articles: articles
+
+@form = (req, res, next) ->
+  request.post('https://us1.api.mailchimp.com/2.0/lists/subscribe')
+    .send(
+      apikey: sd.MAILCHIMP_KEY
+      id: '95ac2900c4'
+      email: email: req.body.email
+      send_welcome: true
+      merge_vars:
+        MMERGE1: req.body.fname
+        MMERGE2: req.body.lname
+        MMERGE3: 'Opt-in (artsy.net)'
+      double_optin: false
+      send_welcome: true
+    ).end (err, response) ->
+      if (response.ok)
+        res.send req.body
+      else
+        res.status(response.status).send(req.body)
