@@ -65,13 +65,13 @@ describe '/auction routes', ->
       @req = user: new CurrentUser(id: 'foobar'), params: id: 'foobar'
       routes.index @req, @res, @next
       _.defer =>
-        @userReq = _.last Backbone.sync.args
+        @userReqs = _.last Backbone.sync.args, 2
         done()
 
     it 'fetches the bidder positions', ->
-      @userReq[2].url.should.containEql '/api/v1/me/bidders'
-      @userReq[2].data.sale_id.should.equal 'foobar'
+      @userReqs[1][2].url.should.containEql '/api/v1/me/bidders'
+      @userReqs[1][2].data.sale_id.should.equal 'foobar'
 
     it 'sets the `registered_to_bid` attr', ->
-      @userReq[2].success ['existy']
+      @userReqs[1][2].success ['existy']
       @req.user.get('registered_to_bid').should.be.true

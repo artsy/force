@@ -12,18 +12,18 @@ Articles = require '../../collections/articles'
 State = require '../../components/auction_artworks/models/state'
 
 setupUser = (user, auction) ->
-  Q.promise (resolve) ->
-    if user?
+  if user?
+    Q.all [
+      user.fetch() # Complete-fetch required to get at bidder number
       user.checkRegisteredForAuction
         saleId: auction.id
         success: (boolean) ->
           user.set 'registered_to_bid', boolean
         error: ->
           user.set 'registered_to_bid', false
-        complete: ->
-          resolve user
-    else
-      resolve()
+    ]
+  else
+    Q.resolve()
 
 @index = (req, res, next) ->
   id = req.params.id
