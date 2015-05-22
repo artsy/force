@@ -5,7 +5,7 @@ template = -> require('./template.jade') arguments...
 module.exports = class RelatedNavigationView extends Backbone.View
   className: 'artwork-related-navigation'
 
-  aspects: ['sales', 'features', 'fairs']
+  aspects: ['sales', 'fairs']
 
   initialize: ->
     _.map @aspects, (aspect) =>

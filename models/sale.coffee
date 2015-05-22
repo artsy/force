@@ -14,13 +14,30 @@ module.exports = class Sale extends Backbone.Model
   urlRoot: "#{sd.API_URL}/api/v1/sale"
 
   href: ->
-    if @isAuctionPromo()
+    if @isSale()
       "/sale/#{@id}"
     else
-      "/feature/#{@id}"
+      "/auction/#{@id}"
 
   registrationSuccessUrl: ->
     "#{@href()}/confirm-registration"
+
+  buyersPremiumUrl: ->
+    "#{@href()}/buyers-premium"
+
+  registerUrl: (redirectUrl) ->
+    url = "/auction-registration/#{@id}"
+    url += "?redirect_uri=#{redirectUrl}" if redirectUrl
+    url
+
+  bidUrl: (artwork) ->
+    "#{@href()}/bid/#{artwork.id}"
+
+  redirectUrl: (artwork) ->
+    if @isBidable() and artwork?
+      @bidUrl artwork
+    else
+      @href()
 
   fetchArtworks: (options = {}) ->
     @artworks = new SaleArtworks [], id: @id
@@ -47,21 +64,6 @@ module.exports = class Sale extends Backbone.Model
       else if moment().isBefore(@get 'offsetStartAtMoment')
         'preview'
     ))
-
-  registerUrl: (redirectUrl) ->
-    url = "/auction-registration/#{@id}"
-    if redirectUrl
-      url += "?redirect_uri=#{redirectUrl}"
-    url
-
-  bidUrl: (artwork) ->
-    "/feature/#{@id}/bid/#{artwork.id}"
-
-  redirectUrl: (artwork) ->
-    if @isBidable() and artwork?
-      @bidUrl artwork
-    else
-      @href()
 
   # NOTE
   # auction_state helpers are used serverside of if updateState hasn't been run
@@ -110,3 +112,7 @@ module.exports = class Sale extends Backbone.Model
 
   isAuctionPromo: ->
     @get('sale_type') is 'auction promo'
+
+  isSale: ->
+    not @isAuction() and
+    not @isAuctionPromo()

@@ -40,4 +40,4 @@ sanitizeRedirect = require '../../components/sanitize_redirect/index'
   res.redirect sanitizeRedirect(url)
 
 @logout = (req, res, next) ->
-  res.send 200, { msg: "success" }
+  res.status(200).send msg: 'success'

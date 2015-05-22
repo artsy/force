@@ -61,7 +61,7 @@ registerOrRender = (sale, req, res, next) ->
 
 @bid = (req, res, next) ->
   unless req.user
-    return res.redirect "/log_in?redirect_uri=/feature/#{req.params.id}/bid/#{req.params.artwork}"
+    return res.redirect "/log_in?redirect_uri=/auction/#{req.params.id}/bid/#{req.params.artwork}"
 
   # TODO: Refactor this cluster of business and fetching logic into a model/service layer.
   # Potentitally in Artsy Backbone Mixins for Martsy.

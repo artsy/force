@@ -14,18 +14,6 @@ module.exports = class Auction extends Sale
     response.auction_state = @calculateAuctionState response.start_at, response.end_at
     response
 
-  href: ->
-    if @isAuctionPromo()
-      "/sale/#{@id}"
-    else
-      "/auction/#{@id}"
-
-  registrationSuccessUrl: ->
-    "#{@href()}/confirm-registration"
-
-  buyersPremiumUrl: ->
-    "#{@href()}/buyers-premium"
-
   calculateAuctionState: (start_at, end_at, offset = 0) ->
     start = moment(start_at).add(offset, 'milliseconds')
     end = moment(end_at).add(offset, 'milliseconds')

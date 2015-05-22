@@ -43,8 +43,8 @@ describe 'SaleView', ->
       text.should.containEql 'Whitney Art Party'
     it 'has a container for the artwork columns', ->
       @view.$('#sale-artwork-columns').length.should.be.ok
-    it 'links to the feature', ->
-      @view.$('a').attr('href').should.equal '/feature/whtney-art-party'
+    it 'links to the sale', ->
+      @view.$('a').attr('href').should.equal '/sale/whtney-art-party'
     it 'renders sale artwork columns', ->
       saleArtwork = new Backbone.Model(fabricate 'sale_artwork')
       # A bug with the comparator means you can't add to this collection (FWIW)

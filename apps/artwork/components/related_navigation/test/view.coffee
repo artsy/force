@@ -25,7 +25,6 @@ describe 'RelatedNavigationView', ->
 
   describe 'with a related auction', ->
     beforeEach ->
-      @view.model.related().features.add fabricate 'feature'
       @view.model.related().sales.add fabricate 'sale', is_auction: true
 
     it 'renders correctly', ->
@@ -36,7 +35,6 @@ describe 'RelatedNavigationView', ->
   describe 'with a related sale', ->
     describe 'that is a normal sale', ->
       beforeEach ->
-        @view.model.related().features.add fabricate 'feature'
         @view.model.related().sales.add fabricate 'sale', is_auction: false
 
       it 'renders correctly', ->

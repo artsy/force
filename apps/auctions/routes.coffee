@@ -1,19 +1,22 @@
 _ = require 'underscore'
 Q = require 'q'
 { API_URL } = require('sharify').data
-Backbone = require 'backbone'
 Sales = require '../../collections/sales'
 Auctions = require '../../collections/auctions'
 
 setupUser = (user, auction) ->
-  dfd = Q.defer()
-  if user?
-    user.checkRegisteredForAuction saleId: auction.id, success: (boolean) ->
-      user.set 'registered_to_bid', boolean
-      dfd.resolve user
-  else
-    dfd.resolve user
-  dfd.promise
+  Q.promise (resolve) ->
+    if user?
+      user.checkRegisteredForAuction
+        saleId: auction.id
+        success: (boolean) ->
+          user.set 'registered_to_bid', boolean
+        error: ->
+          user.set 'registered_to_bid', false
+        complete: ->
+          resolve user
+    else
+      resolve()
 
 @index = (req, res) ->
   auctions = new Auctions
@@ -46,11 +49,3 @@ setupUser = (user, auction) ->
           upcomingAuctions: preview
           promoAuctions: promo
           nextAuction: nextAuction if nextAuction?
-
-@redirect = (req, res) ->
-  new Backbone.Collection().fetch
-    cache: true
-    url: "#{API_URL}/api/v1/sets/contains?item_type=Sale&item_id=#{req.params.id}"
-    error: res.backboneError
-    success: (collection, response, options) ->
-      res.redirect "/feature/#{collection.first().get('owner').id}"

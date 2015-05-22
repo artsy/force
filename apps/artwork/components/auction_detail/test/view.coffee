@@ -28,7 +28,7 @@ describe 'AuctionDetailView', ->
     AuctionDetailView.__set__ 'PartnerPhoneNumberView', Backbone.View
 
     @saleArtwork = new SaleArtwork fabricate 'sale_artwork', minimum_next_bid_cents: 500000, low_estimate_cents: 600000, high_estimate_cents: 800000, reserve_status: 'no_reserve'
-    @auction = new Auction fabricate 'sale'
+    @auction = new Auction fabricate 'sale', is_auction: true
 
     @auction.set 'clockState', 'open'
 
@@ -138,7 +138,7 @@ describe 'AuctionDetailView', ->
       @view.$('input').val('5000')
       @view.$('form').submit()
       location.assign.args[0][0].should
-        .equal "/feature/#{@auction.id}/bid/#{@saleArtwork.id}?bid=500000"
+        .equal "/auction/#{@auction.id}/bid/#{@saleArtwork.id}?bid=500000"
 
     it 'triggers sign up if not logged in', ->
       @view.user = undefined
