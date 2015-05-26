@@ -1,9 +1,11 @@
 _ = require 'underscore'
-{ STATUSES } = require('sharify').data
+{ STATUSES, IMAGES } = require('sharify').data
 Backbone = require 'backbone'
 analytics = require '../../../../lib/analytics.coffee'
 mediator = require '../../../../lib/mediator.coffee'
 # Sub-header
+AdditionalImages = require '../../../../collections/additional_images.coffee'
+ImageModule = require '../../../../components/image_module/index.coffee'
 RelatedGenesView = require '../../../../components/related_links/types/artist_genes.coffee'
 # Main section
 ArtworkFilter = require '../../../../components/artwork_filter/index.coffee'
@@ -93,9 +95,13 @@ module.exports = class OverviewView extends Backbone.View
     else
       $section.remove()
 
+  setupImageModule: ->
+    ImageModule @$('.js-image-module'), new AdditionalImages(IMAGES)
+
   postRender: ->
     # Sub-header
     @setupRelatedGenes()
+    @setupImageModule()
     # Main section
     @setupArtworkFilter()
     # Bottom sections
