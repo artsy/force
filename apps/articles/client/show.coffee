@@ -28,7 +28,6 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
     @breakCaptions()
     @checkEditable()
     @sizeVideo()
-    @renderGalleryInsightsCTA() if @article.get('vertical_id') is '55550be07b8a750300db8430'
 
   renderSlideshow: =>
     initCarousel $('.js-article-carousel'), imagesLoaded: true
@@ -127,44 +126,6 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
 
     $(window).resize(_.debounce(resizeVideo, 100))
     resizeVideo()
-
-  renderGalleryInsightsCTA: ->
-    ctaBarView = new CTABarView
-      headline: 'Artsy Insights for Galleries'
-      mode: 'smaller-with-email'
-      name: 'gallery-insights-signup'
-      persist: true
-      subHeadline: "Recieve periodical insights from Artsy's Gallery Team"
-      email: sd.CURRENT_USER?.email or ''
-    unless ctaBarView.previouslyDismissed()
-      $('body').append ctaBarView.render().$el
-      $('#articles-footer-list').waypoint (direction) ->
-        ctaBarView.transitionIn() if direction is 'down'
-      , { offset: '50%' }
-
-  subscribeGalleryInsights: (e) ->
-    @$(e.currentTarget).addClass 'is-loading'
-    $.ajax
-      type: 'POST'
-      url: '/articles/form'
-      data:
-        email: $(e.currentTarget).prev('input').val()
-        fname: sd.CURRENT_USER?.name?.split(' ')[0] or= ''
-        lname: sd.CURRENT_USER?.name?.split(' ')[1] or= ''
-      error: (xhr) ->
-        @$(e.currentTarget).removeClass 'is-loading'
-        console.log xhr
-        # DO SOMETHING HERE.
-      success: (res) =>
-        @$(e.currentTarget).removeClass 'is-loading'
-        @$('.articles-insights').fadeOut()
-        @$('.articles-insights-thanks').fadeIn()
-        @$('.cta-bar-small').fadeOut( ->
-          @$('.cta-bar-thanks').fadeIn()
-        )
-        setTimeout( ->
-          @$('.cta-bar-defer').click()
-        ,2000)
 
 module.exports.init = ->
   article = new Article sd.ARTICLE
