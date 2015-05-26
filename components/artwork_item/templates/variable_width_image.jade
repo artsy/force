@@ -1,9 +1,7 @@
 - image = artwork.defaultImage()
 
-unless image.isCropped(artworkSize)
-  .artwork-item-image(
-    style= "padding-bottom: #{image.factor() * 100}%"
-  )
+if !image.isCropped(artworkSize) && image.hasDimensions()
+  .artwork-item-image( style= "padding-bottom: #{image.factor() * 100}%" )
     img(
       src= image.bestImageUrl([artworkSize, 'tall', 'large', 'larger', 'medium', 'small'])
       nopin= artwork.noPinAttr()
