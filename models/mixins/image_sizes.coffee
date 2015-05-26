@@ -102,7 +102,8 @@ module.exports =
     disfavor = if favor is 'width' then 'height' else 'width'
     if @hasDimensions()
       factor = @get("original_#{disfavor}") / @get("original_#{favor}")
-      Math.floor(factor * 1000) / 1000
+      x = Math.pow 10, precision
+      Math.floor(factor * x) / x
     else
       1
 
