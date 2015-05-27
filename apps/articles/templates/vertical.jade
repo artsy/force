@@ -14,7 +14,7 @@ block body
       a( href='/posts' ) Magazine
       h1= vertical.get('title')
       p!= vertical.mdToHtml('description')
-    unless vertical.get('slug') == 'gallery-insights-magazine'
+    if vertical.get('partner_logo_url')
       .articles-vertical-header-right
         | In Partnership With
         a( href=vertical.get('partner_website_url') target='_blank' )

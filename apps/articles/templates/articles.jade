@@ -15,10 +15,11 @@ block body
         .articles-vertical-notice-header-thumbnail-text
           h3 Featured Coverage
           h4= vertical.get('title')
-      .articles-vertical-notice-header-partner-logo
-        p In partnership with
-        a( href=vertical.get('partner_website_url') target='_blank' )
-          img( src= vertical.get('partner_logo_url') )
+      if vertical.get('partner_logo_url')
+        .articles-vertical-notice-header-partner-logo
+          p In partnership with
+          a( href=vertical.get('partner_website_url') target='_blank' )
+            img( src= vertical.get('partner_logo_url') )
       .articles-vertical-notice-header-explore
         a( href=vertical.get('slug') ) Explore
         .icon-chevron-small-right
