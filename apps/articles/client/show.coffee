@@ -84,7 +84,6 @@ module.exports.ArticleView = class ArticleView extends Backbone.View
     'click .articles-vertical-right-chevron, \
     .articles-vertical-left-chevron': 'toggleVerticalCarousel'
     'click .articles-video-play-button': 'playVideo'
-    'click .js-articles-insights-subscribe': 'subscribeGalleryInsights'
 
   toggleVerticalCarousel: (e) ->
     @$('.articles-vertical-show-header-right').toggleClass('is-over')

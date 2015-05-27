@@ -3,7 +3,13 @@ sd = require('sharify').data
 CTABarView = require '../../../components/cta_bar/view.coffee'
 
 module.exports.init = ->
-  if sd.ARTICLE?.vertical_id is '55550be07b8a750300db8430' or sd.VERTICAL?.id is '55550be07b8a750300db8430'
+  if (sd.ARTICLE?.vertical_id is '55550be07b8a750300db8430' or sd.VERTICAL?.id is '55550be07b8a750300db8430') and sd.MAILCHIMP_SUBSCRIBED is false
+
+    #Show input forms
+    $('.articles-insights-show').show()
+    $('.articles-insights-vertical').show()
+
+    # CTA Bar
     ctaBarView = new CTABarView
       headline: 'Artsy Insights for Galleries'
       mode: 'smaller-with-email'
@@ -20,6 +26,7 @@ module.exports.init = ->
         ctaBarView.transitionIn() if direction is 'down'
       , { offset: '50%' }
 
+    # Subscribe click
     $('.js-articles-insights-subscribe').click (e)->
       $(e.currentTarget).addClass 'is-loading'
       $.ajax

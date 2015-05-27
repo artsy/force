@@ -41,6 +41,7 @@ request = require 'superagent'
       res.locals.sd.ARTICLE = data.article.toJSON()
       res.locals.sd.FOOTER_ARTICLES = data.footerArticles.toJSON()
       videoOptions = { query: { title: 0, portrait: 0, badge: 0, byline: 0, showinfo: 0, rel: 0, controls: 2, modestbranding: 1, iv_load_policy: 3, color: "E5E5E5" } }
+      res.locals.sd.MAILCHIMP_SUBSCRIBED = res.mailchimp_subscribed
       res.render 'show', _.extend data, embedVideo: embedVideo, videoOptions: videoOptions
 
 @redirectPost = (req, res, next) ->
@@ -62,6 +63,7 @@ request = require 'superagent'
           res.locals.sd.ARTICLES = articles.toJSON()
           res.locals.sd.ARTICLES_COUNT = articles.count
           res.locals.sd.VERTICAL = vertical.toJSON()
+          res.locals.sd.MAILCHIMP_SUBSCRIBED = res.mailchimp_subscribed
           res.render 'vertical', vertical: vertical, articles: articles
 
 @form = (req, res, next) ->
@@ -82,3 +84,18 @@ request = require 'superagent'
         res.send req.body
       else
         res.status(response.status).send(req.body)
+
+@subscribed = (req, res, next) ->
+  if res.locals.sd.CURRENT_USER?.email?
+    request.get('https://us1.api.mailchimp.com/2.0/lists/member-info')
+      .query(
+        apikey: sd.MAILCHIMP_KEY
+        id: '95ac2900c4'
+      ).query("emails[0][email]=#{res.locals.sd.CURRENT_USER.email}").end (err, response) ->
+        if response.body.success_count is 1
+          res.mailchimp_subscribed = true
+        else
+          res.mailchimp_subscribed = false
+  else
+    res.mailchimp_subscribed = false
+  next()
