@@ -38,7 +38,7 @@ block body
               ul
                 for article in featuredVerticalArticles.slice(0, 4)
                   li
-                    a( href='/article/' + article.get('slug') )
+                    a( href=article.href() )
                       img( src=resize(article.get('thumbnail_image'), {
                         height: 80, width: 120 }) )
                       p= article.get('thumbnail_title')
