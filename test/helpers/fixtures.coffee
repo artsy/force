@@ -7,7 +7,7 @@ moment = require 'moment'
   slug: 'vennice-biennale'
   partner_logo_url: 'http://gemini.herokuapp.com/123/miaart-banner.jpg'
   thumbnail_url: 'http://gemini.herokuapp.com/123/miaart-banner.jpg'
-  featured_article_ids: [ '5522d03ae8e369060053d953' ]
+  featured_links: [{ title: 'foo', thumbnail_url: 'bar.jpg', url: 'foo.com' }]
 
 @article =
   id: '54276766fd4f50996aeca2b8'

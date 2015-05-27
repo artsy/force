@@ -82,23 +82,3 @@ describe 'vertical template', ->
       vertical: new Vertical _.extend _.clone(fixtures.vertical),
         title: 'Moo Bar'
     html.should.containEql 'Moo Bar'
-
-  it 'renders featured vertical articles', ->
-    html = render('vertical')
-      articles: new Articles([
-        _.extend(_.clone(fixtures.article), id: 'foo',
-            thumbnail_title: 'Foo and Bars are Great!')
-        _.extend(_.clone(fixtures.article), id: 'bar')
-        _.extend(_.clone(fixtures.article), id: 'baz')
-      ])
-      crop: (url) -> url
-      moment: moment
-      sd: {}
-      asset: ->
-      vertical: new Vertical _.extend _.clone(fixtures.vertical),
-        title: 'Moo Bar'
-        featured_article_ids: ['foo', 'bar']
-    $ = cheerio.load html
-    $('.articles-featured-vertical-articles').html()
-      .should.containEql 'Foo and Bars are Great!'
-
