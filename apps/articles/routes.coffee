@@ -42,7 +42,7 @@ embedVideo = require 'embed-video'
 
 @vertical = (req, res, next) ->
   new Vertical(id: req.params.slug).fetch
-    error: res.backboneError
+    error: -> next()
     success: (vertical) ->
       return next() unless req.params.slug is vertical.get('slug')
       new Articles().fetch
