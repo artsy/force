@@ -123,6 +123,9 @@ mixin support(section)
         h3= section.heading
       .grid-item
         p.preamble!= section.preamble
+          if path.indexOf('gallery') > 0
+            |  You can also read and subscribe to our 
+            a(href='/gallery-insights-magazine') Gallery Insights Newsletter
 
   .partnerships-section-content
     .support-liaisons( data-liaisons=section.liaisons )
@@ -195,7 +198,7 @@ mixin shows(section)
       each g in section.shows
         .grid-item
           a.show-image.hoverable-image-link( href=g.href )
-            img( src=g.src )
+            img( src=crop(g.src, { height: 350, width: 550} ) )
           .show-info
             .show-name= g.name
             .show-title= g.title

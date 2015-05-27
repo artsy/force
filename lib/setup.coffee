@@ -17,7 +17,7 @@
   BIDDER_H2_COPY, APPLICATION_NAME, EMBEDLY_KEY, DISABLE_IMAGE_PROXY,
   POSITRON_URL, CHECK_FOR_AUCTION_REMINDER, GENOME_URL,
   EDITORIAL_ADMINS, STRIPE_PUBLISHABLE_KEY,
-  SEGMENT_WRITE_KEY } = config = require "../config"
+  SEGMENT_WRITE_KEY, MAILCHIMP_KEY } = config = require "../config"
 { parse, format } = require 'url'
 _ = require 'underscore'
 express = require "express"
@@ -98,6 +98,7 @@ sharify.data =
   EDITORIAL_ADMINS: EDITORIAL_ADMINS
   STRIPE_PUBLISHABLE_KEY: STRIPE_PUBLISHABLE_KEY
   SEGMENT_WRITE_KEY: SEGMENT_WRITE_KEY
+  MAILCHIMP_KEY: MAILCHIMP_KEY
 
 CurrentUser = require '../models/current_user'
 
