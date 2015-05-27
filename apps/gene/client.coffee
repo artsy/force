@@ -46,8 +46,6 @@ module.exports.init = ->
 
   queryParams = qs.parse(location.search.replace(/^\?/, ''))
 
-  location.pathname.indexOf('artworks')
-
   params = new Backbone.Model _.extend queryParams,
     page: 1
     size: 10

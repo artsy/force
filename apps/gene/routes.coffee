@@ -1,4 +1,3 @@
-_s = require 'underscore.string'
 Q = require 'q'
 qs = require 'qs'
 Backbone = require 'backbone'
@@ -35,7 +34,6 @@ aggregationParams = require './aggregations.coffee'
       gene: gene
       filterRoot: res.locals.sd.FILTER_ROOT
       counts: counts
-      numberFormat: _s.numberFormat
       params: params
       activeText: ''
       mode: mode
