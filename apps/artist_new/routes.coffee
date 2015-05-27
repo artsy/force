@@ -13,12 +13,14 @@ aggregationParams = require './aggregations.coffee'
 Artist = require '../../models/artist'
 Statuses = require './statuses'
 sections = require './sections'
+Carousel = require './carousel'
 Nav = require './nav'
 cache = require '../../lib/cache'
 
 @index = (req, res, next) ->
   return next() unless res.locals.sd.ARTIST_PAGE_FORMAT is 'new' or res.locals.sd.NODE_ENV is 'development'
   artist = new Artist id: req.params.id
+  carousel = new Carousel artist: artist
   statuses = new Statuses artist: artist
   params = new Backbone.Model artist_id: artist.id
   filterData = { size: 0, artist_id: req.params.id, aggregations: aggregationParams }
@@ -31,8 +33,9 @@ cache = require '../../lib/cache'
   Q.allSettled([
     artist.fetch(cache: true)
     statuses.fetch(cache: true)
+    carousel.fetch(cache: true)
     filterArtworks.fetch(data: formattedFilterData)
-  ]).spread((artistRequest, statusesRequest, filterArtworksRequest) ->
+  ]).spread((artistRequest, statusesRequest, carouselRequest,  filterArtworksRequest) ->
 
     nav = new Nav artist: artist, statuses: statusesRequest.value
 
@@ -47,12 +50,14 @@ cache = require '../../lib/cache'
         res.locals.sd.MEDIUM = medium if medium?
         res.locals.sd.FILTER_ROOT = artist.href() + '/artworks'
         res.locals.sd.FILTER_COUNTS = counts = filterArtworks.counts
+        res.locals.sd.IMAGES = carousel.figures
 
         res.render "index",
           artist: artist
           tab: tab
           statuses: statuses
           nav: nav
+          carousel: carousel
           filterRoot: res.locals.sd.FILTER_ROOT
           counts: counts
           activeText: ''

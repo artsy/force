@@ -9,17 +9,17 @@
     },
     "annyang": {
       "version": "1.1.0",
-      "from": "git://github.com/mzikherman/annyang.git#cde8373079aa8cdfbfb676a2412eeca8104e1e3e",
+      "from": "../../../../../var/folders/85/kd4rsx057wbd106rlknnbrw00000gp/T/npm-71498-ccf39954/git-cache-c7b4beb2fa15/cde8373079aa8cdfbfb676a2412eeca8104e1e3e",
       "resolved": "git://github.com/mzikherman/annyang.git#cde8373079aa8cdfbfb676a2412eeca8104e1e3e"
     },
     "antigravity": {
       "version": "0.1.1",
-      "from": "git://github.com/artsy/antigravity.git#e3baa5a8aba2063c816b5ba63c27d10e950711cc",
+      "from": "../../../../../var/folders/85/kd4rsx057wbd106rlknnbrw00000gp/T/npm-71498-ccf39954/git-cache-36eff3f65de2/e3baa5a8aba2063c816b5ba63c27d10e950711cc",
       "resolved": "git://github.com/artsy/antigravity.git#e3baa5a8aba2063c816b5ba63c27d10e950711cc"
     },
     "artsy-backbone-mixins": {
       "version": "0.0.20",
-      "from": "git://github.com/artsy/artsy-backbone-mixins.git#53651eb7fb7c4ec3121831f2d786a27d359fa44d",
+      "from": "../../../../../var/folders/85/kd4rsx057wbd106rlknnbrw00000gp/T/npm-71498-ccf39954/git-cache-96e1edc40681/53651eb7fb7c4ec3121831f2d786a27d359fa44d",
       "resolved": "git://github.com/artsy/artsy-backbone-mixins.git#53651eb7fb7c4ec3121831f2d786a27d359fa44d",
       "dependencies": {
         "marked": {
@@ -31,12 +31,12 @@
     },
     "artsy-error-handler": {
       "version": "0.0.5",
-      "from": "git://github.com/artsy/artsy-error-handler.git#5cad6bfcd962e03de60f988971db2f4dbeaa7aef",
+      "from": "../../../../../var/folders/85/kd4rsx057wbd106rlknnbrw00000gp/T/npm-71498-ccf39954/git-cache-1dc6a3f3d512/5cad6bfcd962e03de60f988971db2f4dbeaa7aef",
       "resolved": "git://github.com/artsy/artsy-error-handler.git#5cad6bfcd962e03de60f988971db2f4dbeaa7aef"
     },
     "artsy-ezel-components": {
       "version": "0.0.2",
-      "from": "git://github.com/artsy/artsy-ezel-components.git#a9e81d625c3e9b4a84217289d48972961e9016f5",
+      "from": "../../../../../var/folders/85/kd4rsx057wbd106rlknnbrw00000gp/T/npm-71498-ccf39954/git-cache-7d178890919c/a9e81d625c3e9b4a84217289d48972961e9016f5",
       "resolved": "git://github.com/artsy/artsy-ezel-components.git#a9e81d625c3e9b4a84217289d48972961e9016f5"
     },
     "artsy-gemini-upload": {
@@ -46,7 +46,7 @@
     },
     "artsy-passport": {
       "version": "0.1.10",
-      "from": "git://github.com/artsy/artsy-passport.git#e0aff4ee5d3a94da1e3f93a3f026bff3d49e6dc3",
+      "from": "../../../../../var/folders/85/kd4rsx057wbd106rlknnbrw00000gp/T/npm-71498-ccf39954/git-cache-c971a39cebfb/e0aff4ee5d3a94da1e3f93a3f026bff3d49e6dc3",
       "resolved": "git://github.com/artsy/artsy-passport.git#e0aff4ee5d3a94da1e3f93a3f026bff3d49e6dc3",
       "dependencies": {
         "passport": {
@@ -152,7 +152,7 @@
     },
     "artsy-xapp": {
       "version": "1.0.3",
-      "from": "git://github.com/artsy/artsy-xapp.git#b7cb5f326451b3c4ab6d9f3d19e847c986dcf9b9",
+      "from": "../../../../../var/folders/85/kd4rsx057wbd106rlknnbrw00000gp/T/npm-71498-ccf39954/git-cache-7228700e2f46/b7cb5f326451b3c4ab6d9f3d19e847c986dcf9b9",
       "resolved": "git://github.com/artsy/artsy-xapp.git#b7cb5f326451b3c4ab6d9f3d19e847c986dcf9b9"
     },
     "backbone": {
@@ -3252,9 +3252,14 @@
         }
       }
     },
+    "freewall": {
+      "version": "1.0.8",
+      "from": "freewall@*",
+      "resolved": "https://registry.npmjs.org/freewall/-/freewall-1.0.8.tgz"
+    },
     "geoformatter": {
       "version": "0.0.0",
-      "from": "git://github.com/dzucconi/geo_formatter.git#8861ae0a8efb36608a755f5be65360d4ba49ff50",
+      "from": "../../../../../var/folders/85/kd4rsx057wbd106rlknnbrw00000gp/T/npm-71498-ccf39954/git-cache-a7071a8851a5/8861ae0a8efb36608a755f5be65360d4ba49ff50",
       "resolved": "git://github.com/dzucconi/geo_formatter.git#8861ae0a8efb36608a755f5be65360d4ba49ff50"
     },
     "gmaps": {
@@ -3472,7 +3477,7 @@
     },
     "jquery.dotdotdot": {
       "version": "0.0.1",
-      "from": "git://github.com/mzikherman/jquery.dotdotdot.git#2a48fde57c6a187dad3c9db54439f3408ba3b56a",
+      "from": "../../../../../var/folders/85/kd4rsx057wbd106rlknnbrw00000gp/T/npm-71498-ccf39954/git-cache-07c69f1b7bfb/2a48fde57c6a187dad3c9db54439f3408ba3b56a",
       "resolved": "git://github.com/mzikherman/jquery.dotdotdot.git#2a48fde57c6a187dad3c9db54439f3408ba3b56a"
     },
     "jquery.fillwidth": {
@@ -3482,7 +3487,7 @@
     },
     "jquery.transition": {
       "version": "0.1.1",
-      "from": "git://github.com/dzucconi/jquery.transition.git#9e1ced2d91227d54d6cc2627a4a6a32c341b2434",
+      "from": "../../../../../var/folders/85/kd4rsx057wbd106rlknnbrw00000gp/T/npm-71498-ccf39954/git-cache-1054083c3dd6/9e1ced2d91227d54d6cc2627a4a6a32c341b2434",
       "resolved": "git://github.com/dzucconi/jquery.transition.git#9e1ced2d91227d54d6cc2627a4a6a32c341b2434"
     },
     "knox": {
@@ -5688,7 +5693,7 @@
     },
     "places": {
       "version": "0.0.1",
-      "from": "git://github.com/artsy/places.git#b157129718dd6ad399d28ae04a7d84d880b4c054",
+      "from": "../../../../../var/folders/85/kd4rsx057wbd106rlknnbrw00000gp/T/npm-71498-ccf39954/git-cache-5a084a2d33ee/b157129718dd6ad399d28ae04a7d84d880b4c054",
       "resolved": "git://github.com/artsy/places.git#b157129718dd6ad399d28ae04a7d84d880b4c054"
     },
     "q": {
@@ -5698,7 +5703,7 @@
     },
     "qs": {
       "version": "2.4.2",
-      "from": "qs@*",
+      "from": "https://registry.npmjs.org/qs/-/qs-2.4.2.tgz",
       "resolved": "https://registry.npmjs.org/qs/-/qs-2.4.2.tgz"
     },
     "raven": {
