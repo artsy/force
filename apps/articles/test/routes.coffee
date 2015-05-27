@@ -101,6 +101,11 @@ describe 'Article routes', ->
       @res.render.args[0][0].should.equal 'vertical'
       @res.render.args[0][1].vertical.get('title').should.equal vert.title
 
+    it 'nexts for an error b/c it uses a root url that should be passed on', ->
+      routes.vertical @req, @res, @next
+      Backbone.sync.args[0][2].error()
+      @next.called.should.be.ok
+
   describe '#redirectPost', ->
 
     it 'redirects posts to articles', ->
