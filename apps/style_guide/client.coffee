@@ -1,5 +1,7 @@
 _ = require 'underscore'
 activatePulldowns = require '../../components/hover_pulldown/index.coffee'
+InquiryQuestionnaire = require '../../components/inquiry_questionnaire/index.coffee'
+
 
 module.exports.init = ->
   $('.sg-component-rendered a:not([disabled])').click (e) ->
@@ -16,3 +18,6 @@ module.exports.init = ->
     $toggle.attr 'data-state': if $toggle.is "[data-state='on']" then 'off' else 'on'
 
   activatePulldowns()
+
+  if location.pathname is '/style-guide/stage'
+    new InquiryQuestionnaire
