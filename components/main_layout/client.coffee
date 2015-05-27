@@ -7,6 +7,7 @@ HeaderView = require './header/view.coffee'
 FooterView = require './footer/view.coffee'
 sd = require('sharify').data
 analytics = require '../../lib/analytics.coffee'
+templateLibraries = require '../../lib/template_libraries.coffee'
 AuctionReminderView = require '../auction_reminder/index.coffee'
 setupSplitTests = require '../split_test/setup.coffee'
 listenForInvert = require '../eggs/invert/index.coffee'
@@ -87,9 +88,12 @@ setupJquery = ->
   require '../../lib/jquery/hidehover.coffee'
   require('artsy-gemini-upload') $
   require('jquery-fillwidth-lite')($, _, imagesLoaded)
+
   $.ajaxSettings.headers =
     'X-XAPP-TOKEN': sd.ARTSY_XAPP_TOKEN
     'X-ACCESS-TOKEN': sd.CURRENT_USER?.accessToken
+
+  window[key] = helper for key, helper of templateLibraries
 
 setupAuctionReminder = ->
   if sd.CHECK_FOR_AUCTION_REMINDER and !(Cookies.get('closeAuctionReminder')? or window.location.pathname is '/user/edit')
