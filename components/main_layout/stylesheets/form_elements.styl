@@ -54,12 +54,15 @@ bordered-input-placeholder--autofocus-focus()
   opacity 1
 
 .avant-garde-form-label
-  avant-garde()
   display block
-  font-size 12px
-  line-height 1.5
+  avant-garde-size('s-headline', true)
   & + input
     margin-top 5px
+  > span
+    garamond-size('l-caption', true)
+    text-transform none
+    letter-spacing 0
+    color gray-darker-color
 
 .bordered-input
   margin 0
