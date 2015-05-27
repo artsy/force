@@ -10,25 +10,40 @@ CountView = require './count/view.coffee'
 SortView = require './sort/view.coffee'
 
 module.exports = class FilterView extends Backbone.View
-  giveUpCount: 0
-  columnWidth: 300
-  facets: ['price_range', 'dimension_range', 'medium']
+  defaults:
+    giveUpCount: 0
+    columnWidth: 300
+    includeFixedHeader: true
+    facets: ['price_range', 'dimension_range', 'medium']
+    noInfiniteScroll: false
 
-  initialize: ({@collection, @params, @stuckFacet}) ->
+  events:
+    'click .filter-artworks-see-more' : 'nextPage'
+
+  initialize: (options) ->
+    { @collection, @params, @stuckFacet } = options
+    { @giveUpCount,
+      @columnWidth,
+      @includeFixedHeader,
+      @facets,
+      @noInfiniteScroll } = _.defaults options, @defaults
+
     @initSubViews()
 
     @listenTo @collection, 'sync', @render
 
     @listenTo @params, 'change:page', =>
+      @$('.filter-artworks').addClass 'is-loading'
       @collection.fetch
         remove: false
         data: @params.toJSON()
+        complete: => @$('.filter-artworks').removeClass 'is-loading'
 
     @listenTo @params, "change:sort", @reset
     for facet in @facets
       @listenTo @params, "change:#{facet}", @reset
 
-    $.onInfiniteScroll @nextPage
+    $.onInfiniteScroll(@nextPage) unless @noInfiniteScroll
 
   initSubViews: ->
     new DropdownGroupView
@@ -56,16 +71,17 @@ module.exports = class FilterView extends Backbone.View
       params: @params
       facets: @facets
 
-    new FilterFixedHeader
-      el: @$('.filter-fixed-header-nav')
-      params: @params
-      scrollToEl: @$('.filter-artworks-sort-count')
+    if @includeFixedHeader
+      new FilterFixedHeader
+        el: @$('.filter-fixed-header-nav')
+        params: @params
+        scrollToEl: @$('.filter-artworks-sort-count')
 
   render: (collection, response) =>
     @giveUpCount++ if response.hits.length is 0
 
     @$('.filter-artworks').attr 'data-state',
-      if @giveUpCount > 2 then 'finished-paging'
+      if @giveUpCount is 1 then 'finished-paging'
       else if @params.get('page') > 500 then 'finished-paging'
       else ''
 

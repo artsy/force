@@ -1,9 +1,9 @@
-- var aggregateLabelMap = {'price_range' : 'Price', 'dimension_range' : 'Size', 'medium' : 'Medium'}
+- var aggregateLabelMap = {'price_range' : 'Price', 'dimension_range' : 'Size', 'medium' : 'Medium', 'period' : 'Time Period', 'gallery' : 'Gallery', 'institution' : 'Institution' }
 
 unless name == 'total'
   .filter-dropdown(
     id="filter-dropdown-#{name}"
-    class= params.has(name) ? 'is-active' : ''
+    class= ( params.has(name) && activeText ) ? 'is-active' : ''
   )
     .filter-nav-main-text= aggregateLabelMap[name]
     .filter-nav-active-text= activeText
@@ -33,5 +33,5 @@ unless name == 'total'
             class=extraClasses.join(' ')
           )
             span.filter-dropdown-text= key.name
-            span.filter-dropdown-count (#{numberFormat(key.count)})
+            span.filter-dropdown-count (#{_s.numberFormat(key.count)})
             span.icon-check

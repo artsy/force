@@ -1,6 +1,6 @@
 include ../bordered_pulldown/mixin
 
-.filter-artworks
+.filter-artworks(class=noInfiniteScroll ? 'filter-artworks-no-infinite-scroll' : '')
   .filter-artworks-sort-count
     .filter-sort-count
       h1.filter-heading.large-garamond-header
@@ -12,5 +12,10 @@ include ../bordered_pulldown/mixin
           a( data-sort='-year', href="#" ) Artwork Year (desc.)
           a( data-sort='year', href="#" ) Artwork Year (asc.)
   .filter-artworks-list
+
   .filter-artworks-spinner
     .loading-spinner
+
+  if noInfiniteScroll
+    .filter-artworks-see-more
+      .avant-garde-button-text See More
