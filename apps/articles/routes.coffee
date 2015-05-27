@@ -21,7 +21,7 @@ embedVideo = require 'embed-video'
   ]).fail(next).then =>
     res.locals.sd.ARTICLES = articles.toJSON()
     res.locals.sd.ARTICLES_COUNT = articles.count
-    vertical = verticals.running()[0]
+    vertical = verticals.running()?[0]
     res.render 'articles', vertical: vertical, articles: articles
 
 @show = (req, res, next) ->
