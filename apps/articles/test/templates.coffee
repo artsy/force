@@ -28,25 +28,6 @@ describe 'article show template', ->
       asset: ->
     html.should.containEql 'hi'
 
-  it "renders a vertical article's related footers and stickies", ->
-    html = render('show')
-      article: new Article title: 'hi', sections: [], vertical_id: '92094'
-      footerArticles: new Articles
-      vertical: new Vertical _.extend _.clone(fixtures.vertical),
-        title: 'Moo Bar'
-      featuredVerticalArticles: new Articles([_.extend(fixtures.article,
-        thumbnail_title: 'Featured Vertical Article Title')])
-      allVerticalArticles: new Articles([_.extend(fixtures.article,
-        thumbnail_title: 'Vertical Article Title')])
-      crop: (url) -> url
-      resize: (url) -> url
-      moment: moment
-      sd: {}
-      asset: ->
-    html.should.containEql 'More From Moo Bar'
-    html.should.containEql 'Featured Vertical Article Title'
-    html.should.containEql 'Vertical Article Title'
-
   it "renders related footer articles", ->
     html = render('show')
       article: new Article title: 'hi', sections: []
@@ -82,23 +63,3 @@ describe 'vertical template', ->
       vertical: new Vertical _.extend _.clone(fixtures.vertical),
         title: 'Moo Bar'
     html.should.containEql 'Moo Bar'
-
-  it 'renders featured vertical articles', ->
-    html = render('vertical')
-      articles: new Articles([
-        _.extend(_.clone(fixtures.article), id: 'foo',
-            thumbnail_title: 'Foo and Bars are Great!')
-        _.extend(_.clone(fixtures.article), id: 'bar')
-        _.extend(_.clone(fixtures.article), id: 'baz')
-      ])
-      crop: (url) -> url
-      moment: moment
-      sd: {}
-      asset: ->
-      vertical: new Vertical _.extend _.clone(fixtures.vertical),
-        title: 'Moo Bar'
-        featured_article_ids: ['foo', 'bar']
-    $ = cheerio.load html
-    $('.articles-featured-vertical-articles').html()
-      .should.containEql 'Foo and Bars are Great!'
-

@@ -38,16 +38,3 @@ describe 'Articles', ->
         { tier: 2, id: 'boom' }
       ]
       _.pluck(@articles.featured(), 'id').join('').should.equal 'foobarquxmoo'
-
-  describe '#featuredToVertical', ->
-
-    it 'pulls out articles featured to a vertical', ->
-      @articles.set [
-        { tier: 1, id: 'foo' }
-        { tier: 1, id: 'bar' }
-        { tier: 2, id: 'baz' }
-        { tier: 2, id: 'boom' }
-      ]
-      _.pluck(@articles.featuredToVertical(
-        new Backbone.Model(featured_article_ids: ['bar', 'baz'])
-      ), 'id').join('').should.equal 'barbaz'
