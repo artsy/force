@@ -1,0 +1,20 @@
+h1.iq-headline
+  | Please complete profile information to be shared with the gallery.
+  | You only need to fill this out once.
+
+form.stacked-form
+  label.avant-garde-form-label( for='profession' )
+    | Profession <span>(Optional)</span>
+  input.bordered-input( name='profession', id='profession' )
+
+  label.avant-garde-form-label( for='location' )
+    | Location <span>(Optional)</span>
+  input.bordered-input( name='location', id='location' )
+
+  label.avant-garde-form-label( for='phone' )
+    | Phone Number <span>(Optional)</span>
+  input.bordered-input( name='phone', id='phone', type='tel' )
+
+  hr.is-invisible
+
+  button.avant-garde-button-black( type='submit' ) Next

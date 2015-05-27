@@ -17,6 +17,12 @@ module.exports = class ModalView extends Backbone.View
 
   templateData: {}
 
+  __defaults__:
+    transition: 'fade'
+    backdrop: true
+    dimensions:
+      width: '400px'
+
   events: ->
     'click.handler .modal-backdrop': 'onClickBackdrop'
     'click.handler .modal-close': 'close'
@@ -24,10 +30,7 @@ module.exports = class ModalView extends Backbone.View
     'click.internal .modal-backdrop': '__announceBackdropClick__'
 
   initialize: (options = {}) ->
-    { @dimensions, @width, @transition, @backdrop } = _.defaults options,
-      dimensions: width: '400px'
-      transition: 'fade'
-      backdrop: true
+    { @dimensions, @width, @transition, @backdrop } = _.defaults options, @__defaults__
 
     @dimensions.width = @width if @width
 
