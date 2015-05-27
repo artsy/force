@@ -1,4 +1,5 @@
 Q = require 'q'
+_s = require 'underscore.string'
 qs = require 'qs'
 Backbone = require 'backbone'
 Gene = require '../../models/gene'
