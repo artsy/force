@@ -1,0 +1,1 @@
+module.exports = ['price_range', 'gallery', 'medium', 'institution', 'period', 'total']

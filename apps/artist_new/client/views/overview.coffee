@@ -1,17 +1,20 @@
 _ = require 'underscore'
-{ STATUSES } = require('sharify').data
+qs = require 'qs'
+{ STATUSES, FILTER_COUNTS } = require('sharify').data
 Backbone = require 'backbone'
 analytics = require '../../../../lib/analytics.coffee'
 mediator = require '../../../../lib/mediator.coffee'
 # Sub-header
 RelatedGenesView = require '../../../../components/related_links/types/artist_genes.coffee'
 # Main section
-ArtworkFilter = require '../../../../components/artwork_filter/index.coffee'
+WorksView = require './works.coffee'
 # Bottom sections
 RelatedArticlesView = require '../../../../components/related_articles/view.coffee'
 RelatedShowsView = require '../../../../components/related_shows/view.coffee'
 ArtistFillwidthList = require '../../../../components/artist_fillwidth_list/view.coffee'
 lastModified = require './last_modified.coffee'
+aggregationParams = require '../../aggregations.coffee'
+
 template = -> require('../../templates/overview.jade') arguments...
 
 module.exports = class OverviewView extends Backbone.View
@@ -19,12 +22,21 @@ module.exports = class OverviewView extends Backbone.View
   fetches: []
   className: 'artist-page--overview'
 
-  initialize: ({ @user }) ->
+  initialize: ({ @model, @user }) ->
+    queryParams =  qs.parse(location.search.replace(/^\?/, ''))
+
+    @params = new Backbone.Model _.extend queryParams,
+      artist_id: @model.id
+      aggregations: aggregationParams
+      page: 1
 
   setupArtworkFilter: ->
-    filterRouter = ArtworkFilter.init el: @$('#artist-page-section-works .artist-page-section__content'), model: @model, mode: 'grid'
-    @filterView = filterRouter.view
-    @subViews.push @filterView
+    @worksView = new WorksView
+      el: @$('#artist-page-section-works')
+      model: @model
+      noInfiniteScroll: true
+
+    @worksView.render()
 
   setupRelatedShows: ->
     if STATUSES.shows
@@ -71,12 +83,12 @@ module.exports = class OverviewView extends Backbone.View
     @fetches.push @waitForFilter()
     $.when.apply(null, @fetches).then =>
       mediator.trigger 'overview:fetches:complete'
-      lastModified @model, @filterView.artworks
+      lastModified @model, @worksView.collection
 
   waitForFilter: ->
     dfd = $.Deferred()
-    { filter, artworks } = @filterView
-    @listenToOnce artworks, 'sync error', dfd.resolve
+    { collection } = @worksView
+    @listenToOnce collection, 'sync error', dfd.resolve
     dfd.promise()
 
   renderRelatedArtists: (type) ->
@@ -105,7 +117,10 @@ module.exports = class OverviewView extends Backbone.View
     @setupLastModifiedDate()
 
   render: ->
-    @$el.html template(artist: @model)
+    @$el.html template
+      artist: @model
+      params: @params
+      counts: FILTER_COUNTS
     _.defer => @postRender()
     this
 
