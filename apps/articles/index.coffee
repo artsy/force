@@ -17,6 +17,6 @@ app.get '/posts', routes.redirectPost
 app.get '/post/:id', routes.redirectPost
 app.get '/:id/posts', routes.redirectPost
 app.get '/articles', routes.articles
-app.get '/article/:slug', routes.subscribed, routes.show
-app.get '/:slug', routes.subscribed, routes.vertical
+app.get '/article/:slug', routes.show
+app.get '/:slug', routes.vertical
 app.post '/articles/form', routes.form

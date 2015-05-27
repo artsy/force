@@ -38,8 +38,8 @@ module.exports.init = ->
           lname: sd.CURRENT_USER?.name?.split(' ')[1] or= ''
         error: (xhr) ->
           $(e.currentTarget).removeClass 'is-loading'
-          $('.articles-insights-subheader').text(xhr.statusText)
-          $('.cta-bar-header h3').text(xhr.statusText)
+          $('.articles-insights-subheader').text(xhr.responseText)
+          $('.cta-bar-header h3').text(xhr.responseText)
         success: (res) =>
           $(e.currentTarget).removeClass 'is-loading'
           $('.articles-insights').fadeOut()
@@ -48,5 +48,5 @@ module.exports.init = ->
             $('.cta-bar-thanks').fadeIn()
           )
           setTimeout( ->
-            $('.cta-bar-defer').click()
+            ctaBarView.close()
           ,2000)
