@@ -1,5 +1,4 @@
 _ = require 'underscore'
-_s = require 'underscore.string'
 Backbone = require 'backbone'
 FilterArtworks = require '../../../collections/filter_artworks.coffee'
 
@@ -34,7 +33,6 @@ module.exports = class DropdownView extends Backbone.View
       filter: counts
       name: @facet
       filterRoot:  sd.FILTER_ROOT
-      numberFormat: _s.numberFormat
       params: @params
       activeText: activeText
 
