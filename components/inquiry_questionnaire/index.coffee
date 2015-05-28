@@ -8,7 +8,7 @@ stateMap = require './map.coffee'
 module.exports = class InquiryQuestionnaire extends ModalView
   className: 'inquiry-questionnaire'
 
-  defaults: _.extend {}, ModalView::defaults,
+  __defaults__: _.extend {}, ModalView::__defaults__,
     dimensions: width: '500px', height: '520px'
 
   initialize: ->
