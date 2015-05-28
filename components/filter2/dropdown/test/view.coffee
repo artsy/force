@@ -13,6 +13,7 @@ describe 'Filter / Dropdown', ->
       benv.expose
         $: benv.require 'jquery'
         _s: require('underscore.string')
+        filterLabelMap: require '../label_map.coffee'
         sd:
           FILTER_ROOT: '/browse'
       Backbone.$ = $
@@ -32,9 +33,9 @@ describe 'Filter / Dropdown', ->
   it 'renders properly', ->
     @view.renderCounts @view.collection
 
-    @view.$('.filter-nav-main-text').text().should.equal 'Price'
+    @view.$('.filter-nav-main-text').text().should.equal 'price'
     @view.$('.filter-nav-active-text').text().should.equal ''
-    @view.$('.filter-dropdown-nav > a').first().text().should.equal 'All Prices'
+    @view.$('.filter-dropdown-nav > a').first().text().should.equal 'All prices'
     @view.$('.filter-dropdown-nav > a:nth-child(2) .filter-dropdown-text').text().should.equal 'Under $1,000'
     @view.$('.filter-dropdown-nav > a:nth-child(2) .filter-dropdown-count').text().should.equal '(535)'
 
