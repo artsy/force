@@ -9,7 +9,7 @@ _ = require 'underscore.string'
 moment = require 'moment'
 { NODE_ENV } = require '../../config'
 helpers = require '../template_helpers'
-templateLibraries = require '../template_libraries'
+templateModules = require '../template_modules'
 artsyXapp = require 'artsy-xapp'
 
 module.exports = (req, res, next) ->
@@ -18,7 +18,7 @@ module.exports = (req, res, next) ->
   res.locals._ = _
   res.locals.moment = moment
   res.locals.helpers = helpers
-  res.locals[key] = helper for key, helper of templateLibraries
+  res.locals[key] = helper for key, helper of templateModules
 
   # Pass the user agent into locals for data-useragent device detection
   res.locals.userAgent = req.get('user-agent')

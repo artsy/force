@@ -7,7 +7,7 @@ HeaderView = require './header/view.coffee'
 FooterView = require './footer/view.coffee'
 sd = require('sharify').data
 analytics = require '../../lib/analytics.coffee'
-templateLibraries = require '../../lib/template_libraries.coffee'
+templateModules = require '../../lib/template_modules.coffee'
 AuctionReminderView = require '../auction_reminder/index.coffee'
 setupSplitTests = require '../split_test/setup.coffee'
 listenForInvert = require '../eggs/invert/index.coffee'
@@ -93,7 +93,7 @@ setupJquery = ->
     'X-XAPP-TOKEN': sd.ARTSY_XAPP_TOKEN
     'X-ACCESS-TOKEN': sd.CURRENT_USER?.accessToken
 
-  window[key] = helper for key, helper of templateLibraries
+  window[key] = helper for key, helper of templateModules
 
 setupAuctionReminder = ->
   if sd.CHECK_FOR_AUCTION_REMINDER and !(Cookies.get('closeAuctionReminder')? or window.location.pathname is '/user/edit')
