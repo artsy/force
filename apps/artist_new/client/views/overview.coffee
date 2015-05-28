@@ -98,6 +98,7 @@ module.exports = class OverviewView extends Backbone.View
     if @model.related()[type].length
       @setupRelatedSection $section
       collection = new Backbone.Collection(@model.related()[type].take 5)
+      collection.url = @model.related()[type].url
       subView = new ArtistFillwidthList
         el: @$("#artist-page-section-#{type} .artist-page-section__content")
         collection: collection

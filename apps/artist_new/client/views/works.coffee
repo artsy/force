@@ -61,7 +61,3 @@ module.exports = class WorksView extends Backbone.View
 
   postRender: ->
     @setupArtworkFilter()
-
-  remove: ->
-    $(window).off 'infiniteScroll'
-    _.invoke @subViews, 'remove'
