@@ -43,6 +43,7 @@ describe 'Artist header', ->
         counts: @filterArtworks.counts
         activeText: ''
         params: new Backbone.Model
+        filterLabelMap: require '../../../components/filter2/dropdown/label_map.coffee'
         _s: _s
       }, done
 
@@ -82,6 +83,7 @@ describe 'Artist header', ->
         counts: @filterArtworks.counts
         activeText: ''
         params: new Backbone.Model
+        filterLabelMap: require '../../../components/filter2/dropdown/label_map.coffee'
         _s: _s
       }, done
 
@@ -120,6 +122,7 @@ describe 'Artist header', ->
         counts: @filterArtworks.counts
         activeText: ''
         params: new Backbone.Model
+        filterLabelMap: require '../../../components/filter2/dropdown/label_map.coffee'
         _s: _s
       }, done
 
