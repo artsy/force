@@ -1,12 +1,10 @@
-_ = require 'underscore'
 Q = require 'q'
 { API_URL } = require('sharify').data
-Sales = require '../../collections/sales'
 Auctions = require '../../collections/auctions'
 
 setupUser = (user, auction) ->
   Q.promise (resolve) ->
-    if user?
+    if user? and auction?
       user.checkRegisteredForAuction
         saleId: auction.id
         success: (boolean) ->
@@ -18,34 +16,24 @@ setupUser = (user, auction) ->
     else
       resolve()
 
-@index = (req, res) ->
+@index = (req, res, next) ->
   auctions = new Auctions
   auctions.url = "#{API_URL}/api/v1/sales" # Sans is_auction param due to promo sales
   auctions.comparator = (auction) ->
     -(Date.parse auction.get('end_at'))
-  auctions.fetch
+
+  auctions.fetch(
     cache: true
     data: published: true, size: 30, sort: '-created_at'
-    success: (collection, response, options) ->
-      [preview, open, closed] = _.map ['preview', 'open', 'closed'], (state) ->
-        auctions.select (auction) ->
-          auction.isAuction() and
-          auction.get('auction_state') is state and
-          not auction.isAuctionPromo()
-
-      promo = auctions.select (auction) -> auction.isAuctionPromo()
-
-      nextAuction = preview[0]
-
-      Q.all([
-        setupUser(req.user, nextAuction) if nextAuction?
-      ]).done ->
-        res.locals.sd.CURRENT_AUCTIONS = open
-        res.locals.sd.UPCOMING_AUCTIONS = preview
-
-        res.render 'index',
-          pastAuctions: closed
-          currentAuctions: open
-          upcomingAuctions: preview
-          promoAuctions: promo
-          nextAuction: nextAuction if nextAuction?
+  ).then(->
+    setupUser(req.user, auctions.next())
+  ).then(->
+    res.render 'index',
+      pastAuctions: auctions.closeds()
+      currentAuctions: res.locals.sd.CURRENT_AUCTIONS = auctions.opens()
+      upcomingAuctions: res.locals.sd.UPCOMING_AUCTIONS = auctions.previews()
+      promoAuctions: auctions.currentAuctionPromos()
+      nextAuction: auctions.next()
+  )
+  .catch(next)
+  .done()

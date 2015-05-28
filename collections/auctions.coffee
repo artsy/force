@@ -6,3 +6,30 @@ module.exports = class Auctions extends Sales
   model: Auction
 
   url: "#{API_URL}/api/v1/sales?is_auction=true"
+
+  previews: ->
+    @select (auction) ->
+      auction.isAuction() and
+      auction.isPreview()
+
+  opens: ->
+    @select (auction) ->
+      auction.isAuction() and
+      auction.isOpen()
+
+  closeds: ->
+    @select (auction) ->
+      # Includes auction promos
+      auction.isClosed()
+
+  auctions: ->
+    @select (auction) ->
+      auction.isAuction()
+
+  currentAuctionPromos: ->
+    @select (auction) ->
+      auction.isAuctionPromo() and
+      not auction.isClosed()
+
+  next: ->
+    @previews()[0]

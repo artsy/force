@@ -4,7 +4,7 @@
   width 100%
 .af-name
   margin 20px 0
-  font-size 26px
+  garamond-size('headline')
 .af-metadata
   clearfix()
   margin 20px 0
@@ -17,10 +17,12 @@
   text-align left
   font-size inherit
 .af-stats-status
-  avant-garde()
-  font-size 13px
+  avant-garde-size('body', true)
+  margin-bottom 5px
   &.is-open
     color #00cc66
+.af-stats-count
+  garamond-size('s-body')
 .af-go-button
   float right
 .af-thumbnail
@@ -76,7 +78,7 @@
 .auctions-list
   block-margins(30px)
   .leader-dots-list-item
-    font-size 18px
+    garamond-size('l-body')
     &:after
       font-size 12px
       line-height 2.2
@@ -95,16 +97,13 @@
   width 33.33%
   padding 0 50px 0 20px
   > h2
-    font-size 40px
-    line-height 1.25
+    garamond-size('l-headline')
     // Visually center. Due to line-height and hard-edged bottom button
     margin -((@font-size * (@line-height - 1)) * 2) auto 10px
   > p
-    margin 10px auto
-    font-size 20px
     margin 20px 0
     padding 0 20px
-    line-height 1.5
+    garamond-size('l-body')
   > a
     white-space nowrap
 .auctions-placeholder-hero
