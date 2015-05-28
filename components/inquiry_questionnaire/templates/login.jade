@@ -1,0 +1,43 @@
+h1.iq-headline
+  | Please log in to save information to your profile.
+
+if user.has('email')
+  p.iq-body
+    | Your email is <span>#{user.get('email')}</span>
+
+hr
+
+form.stacked-form
+  label.avant-garde-form-label( for='password' )
+    | Enter your password
+  input.bordered-input(
+    id='password'
+    name='password'
+    type='password'
+    placeholder='Password'
+    autocomplete='on'
+    pattern='.{6,}'
+    title='6 characters minimum'
+    autofocus= autofocus
+    required
+  )
+
+  button.avant-garde-button-black( type='submit' )
+    | Log in
+
+  .auth-form-options
+    .artsy-checkbox
+      .artsy-checkbox--checkbox
+        input( id='remember_me', name='remember_me', type='checkbox', value='1', checked )
+        label( for='remember_me' )
+      label.artsy-checkbox--label( for='remember_me' ) Remember me
+    a.faux-underline.auth-toggle Forgot Password?
+
+  hr.horizontal-rule-or
+
+  button.auth-login-facebook.avant-garde-button-black( href='/users/auth/facebook' )
+    i.icon-facebook
+    | Log in with Facebook
+  button.auth-login-twitter.avant-garde-button-black( href='/users/auth/twitter' )
+    i.icon-twitter
+    | Log in with Twitter

@@ -1,7 +1,7 @@
 _ = require 'underscore'
 activatePulldowns = require '../../components/hover_pulldown/index.coffee'
 InquiryQuestionnaire = require '../../components/inquiry_questionnaire/index.coffee'
-
+Artwork = require '../../models/artwork.coffee'
 
 module.exports.init = ->
   $('.sg-component-rendered a:not([disabled])').click (e) ->
@@ -20,4 +20,5 @@ module.exports.init = ->
   activatePulldowns()
 
   if location.pathname is '/style-guide/stage'
-    new InquiryQuestionnaire
+    artwork = new Artwork partner: name: 'Gagosian Gallery'
+    new InquiryQuestionnaire artwork: artwork
