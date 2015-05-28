@@ -1,5 +1,10 @@
 nav.filter-nav.filter-artworks-nav
-  a.filter-button.filter-nav-all( href=filterRoot ) All Works
+  a.filter-button.filter-nav-only-for-sale(class=params.get('price_range') == '*-*' ? 'is-active' : '' )
+    .artsy-checkbox--checkbox
+      input( type='checkbox', id='only-for-sale' checked=( params.get('price_range') == '*-*' ? 'checked' : undefined ) )
+      label( for='only-for-sale' )
+    label( for='only-for-sale' ) Only for sale
+
   if counts
     each filter, name in counts
       include ../dropdown/template

@@ -1,33 +1,41 @@
 _ = require 'underscore'
 Q = require 'q'
+qs = require 'qs'
 fs = require 'fs'
+request = require 'superagent'
 { resolve } = require 'path'
 Backbone = require 'backbone'
+ReferrerParser = require 'referer-parser'
+FilterArtworks = require '../../collections/filter_artworks'
+{ APPLICATION_NAME } = require '../../config'
 { stringifyJSONForWeb } = require '../../components/util/json'
+aggregationParams = require './aggregations.coffee'
 Artist = require '../../models/artist'
 Statuses = require './statuses'
 sections = require './sections'
-Nav = require './nav'
 Carousel = require './carousel'
-request = require 'superagent'
-{ APPLICATION_NAME } = require '../../config'
+Nav = require './nav'
 cache = require '../../lib/cache'
-ReferrerParser = require 'referer-parser'
 
 @index = (req, res, next) ->
   return next() unless res.locals.sd.ARTIST_PAGE_FORMAT is 'new' or res.locals.sd.NODE_ENV is 'development'
   artist = new Artist id: req.params.id
   carousel = new Carousel artist: artist
   statuses = new Statuses artist: artist
+  params = new Backbone.Model artist_id: artist.id
+  filterData = { size: 0, artist_id: req.params.id, aggregations: aggregationParams }
+  formattedFilterData = decodeURIComponent qs.stringify(filterData, { arrayFormat: 'brackets' })
+  filterArtworks = new FilterArtworks
 
   if (referrer = req.get 'Referrer')?
     medium = new ReferrerParser(referrer).medium
 
   Q.allSettled([
     artist.fetch(cache: true)
-    carousel.fetch(cache: true)
     statuses.fetch(cache: true)
-  ]).spread((artistRequest, carouselRequest, statusesRequest) ->
+    carousel.fetch(cache: true)
+    filterArtworks.fetch(data: formattedFilterData, cache: true, cacheTime: 3000)
+  ]).spread((artistRequest, statusesRequest, carouselRequest,  filterArtworksRequest) ->
 
     nav = new Nav artist: artist, statuses: statusesRequest.value
 
@@ -40,14 +48,20 @@ ReferrerParser = require 'referer-parser'
         res.locals.sd.TAB = tab = req.params.tab or ''
         res.locals.sd.STATUSES = statuses = statusesRequest.value
         res.locals.sd.MEDIUM = medium if medium?
+        res.locals.sd.FILTER_ROOT = artist.href() + '/artworks'
+        res.locals.sd.FILTER_COUNTS = counts = filterArtworks.counts
         res.locals.sd.IMAGES = carousel.figures
 
         res.render "index",
           artist: artist
-          carousel: carousel
           tab: tab
           statuses: statuses
           nav: nav
+          carousel: carousel
+          filterRoot: res.locals.sd.FILTER_ROOT
+          counts: counts
+          activeText: ''
+          params: params
           jsonLD: stringifyJSONForWeb(artist.toJSONLD())
 
       else

@@ -1,5 +1,4 @@
 _ = require 'underscore'
-_s = require 'underscore.string'
 Backbone = require 'backbone'
 FilterArtworks = require '../../../collections/filter_artworks.coffee'
 
@@ -13,7 +12,9 @@ module.exports = class DropdownView extends Backbone.View
   initialize: ({@collection, @params, @facet, @el, @facets}) ->
     @listenTo @collection, 'initial:fetch', @updateCounts
     @listenTo @params, "change:#{@facet}", @renderActiveParam
-    @listenTo @params, 'change', @updateCounts
+
+    for facet in @facets
+      @listenTo @params, "change:#{facet}", @updateCounts
 
   updateCounts: ->
     # we need a copy of the params without this facet and
@@ -32,7 +33,6 @@ module.exports = class DropdownView extends Backbone.View
       filter: counts
       name: @facet
       filterRoot:  sd.FILTER_ROOT
-      numberFormat: _s.numberFormat
       params: @params
       activeText: activeText
 

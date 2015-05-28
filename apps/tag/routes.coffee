@@ -1,4 +1,3 @@
-_s = require 'underscore.string'
 Q = require 'q'
 qs = require 'qs'
 Backbone = require 'backbone'
@@ -24,6 +23,5 @@ aggregationParams = require './aggregations.coffee'
       tag: tag
       filterRoot: res.locals.sd.FILTER_ROOT
       counts: filterArtworks.counts
-      numberFormat: _s.numberFormat
       params: params
       activeText: ''

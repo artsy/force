@@ -19,6 +19,10 @@ tab-padding = 15px 18px 10px 18px
   &:hover, &:focus, &:active, &.is-active
     color purple-color
 
+  .artsy-checkbox--checkbox
+    margin-right 15px
+    top -1px
+
 .filter-button, .filter-dropdown
   display inline-block
   border 1px solid gray-lighter-color
@@ -62,7 +66,7 @@ tab-padding = 15px 18px 10px 18px
     position absolute
     top (tab-height - 1)
     left 0
-    width 320px
+    width 300px
     display none
     border-top 1px solid gray-darkest-color
   a
@@ -76,6 +80,7 @@ tab-padding = 15px 18px 10px 18px
     padding tab-padding
     transition background-color color-transition-duration
     position relative
+    text-transform capitalize
     .icon-check
       content "\e627"
       font-size 16px
@@ -124,13 +129,20 @@ tab-padding = 15px 18px 10px 18px
 .filter-artworks
   margin-bottom 150px
   min-height 800px
+  &.filter-artworks-no-infinite-scroll
+    margin-bottom 50px
+    .filter-artworks-spinner
+      display none
+  &.filter-artworks-no-infinite-scroll.is-loading
+    .filter-artworks-spinner
+      display block
   &[data-state='no-results']
     .filter-artworks-no-results
       display block
-    .filter-artworks-list, .filter-artworks-spinner
+    .filter-artworks-list, .filter-artworks-spinner, .filter-artworks-see-more
       display none
   &[data-state='finished-paging']
-    .filter-artworks-spinner
+    .filter-artworks-spinner, .filter-artworks-see-more
       display none
 
 .filter-artworks-sort-count
@@ -152,4 +164,9 @@ h1.filter-heading
   display none
   text-transform capitalize
   margin-top 0px
+
+.filter-artworks-see-more
+  cursor pointer
+  text-align center
+  margin-top 50px
 

@@ -1,4 +1,3 @@
-_s = require 'underscore.string'
 qs = require 'qs'
 Backbone = require 'backbone'
 FilterArtworks = require '../../collections/filter_artworks'
@@ -17,6 +16,5 @@ aggregationParams = require './aggregations.coffee'
       res.render 'index',
         filterRoot: res.locals.sd.FILTER_ROOT
         counts: filterArtworks.counts
-        numberFormat: _s.numberFormat
         params: new Backbone.Model
         activeText: ''
