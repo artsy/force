@@ -1,17 +1,4 @@
 extends ../../../components/main_layout/templates/index
-include ../../../components/article_figure/mixin
-include ./share
-
-mixin video(video)
-  .articles-video-container
-    if video.cover_image_url
-      .articles-video-cover-image(
-        style=("background-image: url(#{resize(video.cover_image_url, { width: 1100 })})")
-      )
-        button.articles-video-play-button
-          .articles-video-play-button-caret
-    .articles-video
-      != embedVideo(video.url, videoOptions)
 
 block head
   include meta/article
@@ -45,56 +32,11 @@ block body
                     p= link.title
             button.articles-vertical-right-chevron.icon-chevron-small-right
 
+    //- Article body
     #articles-body-container
+      include ../../../components/article/templates/index
 
-      //- Article lead content
-      if article.get('hero_section') && article.get('hero_section').type === 'video'
-        if article.get('hero_section').cover_image_url
-        .articles-large-format-video-container
-          +video(article.get('hero_section'))
-      if article.get('hero_section') && article.get('hero_section').type === 'image'
-        .articles-large-format-image
-         img( src=article.get('hero_section').url)
-      h1.large-garamond-header= article.get('title')
-      if article.strip('lead_paragraph')
-        #articles-lead-paragraph
-          != article.get('lead_paragraph')
-      #articles-show-author
-        a( href="/#{article.related().author.get('profile_handle')}" )
-          = article.related().author.get('name')
-      #articles-show-date
-        = moment(article.get('published_at')).format('MMM Do, YYYY h:mm a')
-      .articles-social
-        +share(article.get('title'), article.get('thumbnail_image'))
-
-      //- Article body content
-      if article.get('sections').length && article.get('sections')[0].type == 'slideshow'
-        #articles-show-carousel
-          include carousel
-      for section, i in article.get('sections')
-        .articles-section-container
-          case section.type
-            when 'text'
-              .articles-section-text!= section.body
-            when 'image'
-              figure.articles-section-image
-                img( src=resize(section.url, { width: 1100 }) )
-                if section.caption
-                  figcaption!= section.caption
-            when 'artworks'
-              .articles-section-artworks.is-loading( data-layout=section.layout )
-                .loading-spinner
-                ul
-                  for id in section.ids
-                    li( data-id=id )
-            when 'video'
-              .articles-section-video
-                +video(section)
-
-    //- Article footer content
-    .articles-social.add-bottom
-      h2.articles-social__header Share this article
-      +share(article.get('title'), article.get('thumbnail_image'))
+  //- Article footer content
   section#articles-footer
     if article.get('vertical_id')
       if article.get('vertical_id') == '55550be07b8a750300db8430'

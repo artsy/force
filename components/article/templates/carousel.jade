@@ -8,7 +8,7 @@ mixin carouselFigure(item)
       - imageWidth = '500'
       - artwork = slideshowArtworks.findWhere({ _id: item.id })
       if artwork
-        include ../../../components/artwork_item/templates/artwork.jade
+        include ../../artwork_item/templates/artwork.jade
 
 .js-article-carousel
   - items = article.get('sections')[0].items
@@ -20,4 +20,4 @@ mixin carouselFigure(item)
   - length = items.length
   if length > 1
     nav.mgr-navigation.js-mgr-navigation
-      include ../../../components/merry_go_round/templates/navigation
+      include ../../merry_go_round/templates/navigation

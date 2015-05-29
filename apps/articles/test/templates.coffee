@@ -16,31 +16,6 @@ render = (templateName) ->
     { filename: filename }
   )
 
-describe 'article show template', ->
-
-  it 'renders sectionless articles', ->
-    html = render('show')
-      article: new Article title: 'hi', sections: []
-      footerArticles: new Articles
-      crop: (url) -> url
-      moment: moment
-      sd: {}
-      asset: ->
-    html.should.containEql 'hi'
-
-  it "renders related footer articles", ->
-    html = render('show')
-      article: new Article title: 'hi', sections: []
-      footerArticles: new Articles [_.extend(_.clone(fixtures.article),
-        thumbnail_title: "This is a footer article"
-        vertical_id: null)]
-      crop: (url) -> url
-      resize: (url) -> url
-      moment: moment
-      sd: {}
-      asset: ->
-    html.should.containEql 'This is a footer article'
-
 describe 'article figure template', ->
 
   it 'uses the article url', ->
@@ -63,3 +38,18 @@ describe 'vertical template', ->
       vertical: new Vertical _.extend _.clone(fixtures.vertical),
         title: 'Moo Bar'
     html.should.containEql 'Moo Bar'
+
+describe 'show template', ->
+
+  it "renders related footer articles", ->
+    html = render('show')
+      article: new Article title: 'hi', sections: []
+      footerArticles: new Articles [_.extend(_.clone(fixtures.article),
+        thumbnail_title: "This is a footer article"
+        vertical_id: null)]
+      crop: (url) -> url
+      resize: (url) -> url
+      moment: moment
+      sd: {}
+      asset: ->
+    html.should.containEql 'This is a footer article'

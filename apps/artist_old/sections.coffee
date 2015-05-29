@@ -14,6 +14,11 @@ module.exports = [
   name: 'Articles'
   predicate: ({ articles }) -> articles
 ,
+  slug: 'biography'
+  href: 'artist/:id/biography'
+  name: 'Biography'
+  predicate: ({ articles }) -> articles
+,
   slug: 'shows'
   href: 'artist/:id/shows'
   name: 'Shows'
