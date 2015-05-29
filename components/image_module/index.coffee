@@ -9,7 +9,7 @@ dimensions = ($el) ->
 module.exports = ($el, images) ->
   [width, height] = dimensions $el
 
-  max = width: ((width / 3) * 2), height: height
+  max = width: ((width / 2)), height: height
   $el.html template(images: images.models, max: max)
 
   selector = '.image-module-image'
