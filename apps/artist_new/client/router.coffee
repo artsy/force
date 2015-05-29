@@ -56,11 +56,8 @@ module.exports = class ArtistRouter extends Backbone.Router
 
   overview: ->
     @view = new OverviewView @options
-    if splitTest('artist_cta').outcome() is 'zig_zag'
+    mediator.on 'overview:fetches:complete', =>
       attachCTA @model
-    else
-      mediator.on 'overview:fetches:complete', =>
-        attachCTA @model
 
   works: ->
     @view = new WorksView @options
