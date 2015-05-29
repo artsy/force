@@ -9,17 +9,20 @@ dimensions = ($el) ->
 module.exports = ($el, images) ->
   [width, height] = dimensions $el
 
-  max = width: ((width / 2)), height: height
-  $el.html template(images: images.models, max: max)
+  if images.length > 2
+    max = width: ((width / 2)), height: height
+    $el.html template(images: images.models, max: max)
 
-  selector = '.image-module-image'
+    selector = '.image-module-image'
 
-  wall = new Freewall $el
-  wall.reset
-    selector: selector
-    animate: false
-    cellW: Math.ceil(width / 3)
-    cellH: Math.ceil(height / 2)
-    onResize: ->
-      @fitZone dimensions($el)...
-  wall.fitZone dimensions($el)...
+    wall = new Freewall $el
+    wall.reset
+      selector: selector
+      animate: false
+      cellW: Math.ceil(width / 3)
+      cellH: Math.ceil(height / 2)
+      onResize: ->
+        @fitZone dimensions($el)...
+    wall.fitZone dimensions($el)...
+  else
+    $el.addClass 'is-hidden'
