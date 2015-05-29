@@ -6,4 +6,8 @@ if (location.pathname.match('/artist')) {
     tab = $(e.target).text();
     analytics.track('Clicked artist page tab', { tab: tab });
   });
+
+  $('.artist-image-module a').click(function(e){
+    analytics.track('Clicked artwork on artist page image module');
+  });
 }
