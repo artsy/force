@@ -25,7 +25,6 @@ module.exports = class ArtworkRouter extends Backbone.Router
 
   initialize: ({ @artwork, @artist, @artists }) ->
     @baseView = new ArtworkView el: $('#artwork-page'), artwork: @artwork, artist: @artist, artists: @artists
-    # mediator.on 'overview:fetches:complete', =>
 
   # Called prior to any of the routing callbacks
   execute: ->
