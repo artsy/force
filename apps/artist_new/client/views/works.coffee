@@ -45,7 +45,7 @@ module.exports = class WorksView extends Backbone.View
     router = new FilterRouter
       params: @params
       urlRoot: window.location.pathname
-      stuckParam: 'artist'
+      stuckParam: 'artist_id'
 
   render: ->
     @$el.html template
