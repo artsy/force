@@ -36,6 +36,7 @@ module.exports = class CTABarView extends Backbone.View
     _.defer =>
       @$el.attr 'data-state', state
       _.delay(cb, @transitionLength) if cb?
+      $("#cta-bar-form-input").focus()
     this
 
   transitionIn: (cb) ->
