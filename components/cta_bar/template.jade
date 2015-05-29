@@ -14,7 +14,7 @@
           h2= headline
           h3= subHeadline
         .cta-bar-small-form
-          input.bordered-input( placeholder='Enter your email', type='email', name='email', required value="#{email}")
+          input.bordered-input( id ="cta-bar-form-input" placeholder='Enter your email', type='email', name='email', required value="#{email}")
           button.avant-garde-button-dark.js-articles-insights-subscribe Subscribe
           .cta-bar-defer: a( href='#' )
             | Close
@@ -26,7 +26,7 @@
     h3.cta-bar-headline
       = headline
     form.cta-bar-form
-      input.bordered-input( placeholder='Enter your email', type='email', name='email', required )
+      input.bordered-input( id="cta-bar-form-input" placeholder='Enter your email', type='email', name='email', required )
       button.avant-garde-button-dark Join Now
     .cta-bar-defer: a( href='#' )
       | Maybe Later
