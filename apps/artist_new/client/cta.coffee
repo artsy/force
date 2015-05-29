@@ -7,7 +7,7 @@ splitTest = require '../../../components/split_test/index.coffee'
 { track, snowplowStruct } = require '../../../lib/analytics.coffee'
 
 module.exports = (artist) ->
-  return unless MEDIUM is 'search' and not CURRENT_USER?
+  # return unless MEDIUM is 'search' and not CURRENT_USER?
 
   name = 'artist_cta'
   outcome = splitTest('artist_cta').outcome()
@@ -58,7 +58,7 @@ module.exports = (artist) ->
       unless ctaBarView.previouslyDismissed()
         $('body').append ctaBarView.render().$el
 
-        $('#artwork-section').waypoint (direction) ->
+        $('#artist-page-section-works').waypoint (direction) ->
           ctaBarView.transitionIn() if direction is 'down'
         , { offset: 'bottom-in-view' }
 
