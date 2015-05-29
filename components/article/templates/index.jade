@@ -20,7 +20,7 @@ mixin video(video)
       +video(article.get('hero_section'))
   if article.get('hero_section') && article.get('hero_section').type === 'image'
     .article-large-format-image
-     img( src=article.get('hero_section').url)
+     img( src=resize(article.get('hero_section').url, { width: 1250 }) )
   h1.large-garamond-header= article.get('title')
   if article.strip('lead_paragraph')
     .article-lead-paragraph
