@@ -54,6 +54,7 @@ describe 'Statuses', ->
         collections: true
         exhibitions: true
         articles: true
+        biography: false
       }
       done()
     successes = _.map(Backbone.sync.args, (args) -> args[2].success)
