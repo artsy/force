@@ -15,6 +15,7 @@ BelowTheFoldView = require './below_the_fold.coffee'
 { trackArtworkImpressions } = require '../../../components/analytics/impression_tracking.coffee'
 MonocleView = require './monocles.coffee'
 AnnyangView = require './annyang.coffee'
+CTAView = require './cta.coffee'
 Sale = require '../../../models/sale.coffee'
 ZigZagBanner = require '../../../components/zig_zag_banner/index.coffee'
 Auction = require './mixins/auction.coffee'
@@ -52,6 +53,7 @@ module.exports = class ArtworkView extends Backbone.View
     @setupAnnyang()
     @setupMonocleView()
     @preventRightClick()
+    @setupCTAView()
 
     @artwork.fetch() # Re-fetch incase of caching
 
@@ -280,6 +282,9 @@ module.exports = class ArtworkView extends Backbone.View
     @$('.artwork-image').append("<div class='monocle-zoom'></div>")
     @$('.monocle-zoom').css('background-image', "url(#{@artwork.defaultImage().imageUrl('larger')})")
     new MonocleView artwork: @artwork, el: @$('.artwork-image')
+
+  setupCTAView: ->
+    new CTA @artist
 
   route: (route) ->
     # Initial server rendered route is 'show'

@@ -12,7 +12,6 @@ RelatedArtistsView = require './views/related_artists.coffee'
 PublicationsView = require './views/publications.coffee'
 CollectionsView = require './views/collections.coffee'
 mediator = require '../../../lib/mediator.coffee'
-# splitTest = require '../../../components/split_test/index.coffee'
 attachCTA = require './cta.coffee'
 
 module.exports = class ArtistRouter extends Backbone.Router
