@@ -9,7 +9,7 @@
         form.auth-form
           .auth-errors
           input#js-mailcheck-input-modal.bordered-input.is-block(
-            name='email', type='email', placeholder='Email', value= email, required
+            name='email', type='email', placeholder='Email', value= email, required, autofocus= autofocus
           )
           #js-mailcheck-hint-modal
           input.bordered-input.is-block(
@@ -23,7 +23,7 @@
             required
           )
           input.bordered-input.is-block(
-            name='name', type='text', placeholder='Full Name', value= name, required, autofocus= autofocus
+            name='name', type='text', placeholder='Full Name', value= name, required
           )
           button#auth-submit.avant-garde-button-black.is-block Join Artsy
 
