@@ -4,3 +4,4 @@ $ -> analytics.ready ->
   require '../analytics/articles.js'
   require '../analytics/gallery_partnerships.js'
   require '../analytics/artworks_filter.js'
+  require '../analytics/artist_page.js'
