@@ -1,7 +1,6 @@
 { MEDIUM, CURRENT_USER } = require('sharify').data
 AuthModalView = require '../../../components/auth_modal/view.coffee'
 CTABarView = require '../../../components/cta_bar/view.coffee'
-{ track, snowplowStruct } = require '../../../lib/analytics.coffee'
 
 module.exports = (artist) ->
   return unless MEDIUM is 'search' and not CURRENT_USER?

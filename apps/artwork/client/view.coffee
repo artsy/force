@@ -284,7 +284,7 @@ module.exports = class ArtworkView extends Backbone.View
     new MonocleView artwork: @artwork, el: @$('.artwork-image')
 
   setupCTAView: ->
-    new CTA @artist
+    new CTAView @artist
 
   route: (route) ->
     # Initial server rendered route is 'show'
