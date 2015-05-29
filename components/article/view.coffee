@@ -21,7 +21,7 @@ module.exports = class ArticleView extends Backbone.View
   initialize: (options) ->
     @user = CurrentUser.orNull()
     { @article } = options
-    new ShareView el: @$('.articles-social')
+    new ShareView el: @$('.article-social')
     @renderSlideshow()
     @renderArtworks()
     @breakCaptions()
@@ -48,7 +48,7 @@ module.exports = class ArticleView extends Backbone.View
     )
 
   breakCaptions: ->
-    @$('.articles-section-image').each ->
+    @$('.article-section-image').each ->
       imagesLoaded $(this), =>
         $(this).width $(this).children('img').width()
 
@@ -81,14 +81,14 @@ module.exports = class ArticleView extends Backbone.View
   events:
     'click .articles-vertical-right-chevron, \
     .articles-vertical-left-chevron': 'toggleVerticalCarousel'
-    'click .articles-video-play-button': 'playVideo'
+    'click .article-video-play-button': 'playVideo'
 
   toggleVerticalCarousel: (e) ->
     @$('.articles-vertical-show-header-right').toggleClass('is-over')
 
   playVideo: (e) ->
     $cover = $(e.currentTarget).parent()
-    $iframe = $cover.next('.articles-video').find('iframe')
+    $iframe = $cover.next('.article-video').find('iframe')
     $newIframe = $iframe.clone().attr('src', $iframe.attr('src') + '&autoplay=1')
     $iframe.replaceWith $newIframe
     $cover.remove()

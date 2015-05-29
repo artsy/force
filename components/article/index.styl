@@ -1,6 +1,5 @@
 @import '../stylus_lib'
 
-// TODO: Clean up with apps/articles/stylesheets/lib
 headline-font-size = 30px
 headline-line-height = 38px
 headline2-font-size = 30px
@@ -19,29 +18,20 @@ play-button-size = 30px
   text-align center
   margin-bottom gutter-size
 
-#articles-lead-paragraph
+.article-lead-paragraph
   margin 0 auto gutter-size auto
 
-#articles-slideshow-container
-  height artwork-height + 200
-  margin-bottom gutter-size
-  img
-    height artwork-height
-  iframe
-    height artwork-height
-    width 888px
-
-#articles-show-author, .articles-social
+.article-author, .article-social
   vertical-align middle
 
-#articles-show-author, #articles-show-date
+.article-author, .article-date
   text-align center
   a
     text-decoration none
     &:hover
       border-bottom 2px solid
 
-#articles-lead-paragraph, .articles-section-text
+.article-lead-paragraph, .article-section-text
   font-size 20px
   line-height 27px
   width body-width
@@ -60,27 +50,27 @@ play-button-size = 30px
     avant-garde()
     font-size 13px
 
-#articles-show-date
+.article-date
   avant-garde()
   font-size 11px
   margin-bottom 5px
   color gray-darker-color
 
-#articles-show-author
+.article-author
   avant-garde()
   font-size default-avant-garde-font-size
 
-.articles-social
+.article-social
   text-align center
   padding 10px 0 20px 0
-  .articles-social__header
+  .article-social__header
     avant-garde()
     font-size default-avant-garde-font-size
     margin-bottom 10px
   &.add-bottom
     margin gutter-size auto (gutter-size * 3)
 
-.articles-section-image
+.article-section-image
   width overflow-width
   margin auto
   img
@@ -93,11 +83,11 @@ play-button-size = 30px
     color gray-dark-color
     text-align left
 
-.articles-section-artworks
+.article-section-artworks
   position relative
   min-height (body-width * .33)
 
-.articles-section-artworks[data-layout="column_width"]
+.article-section-artworks[data-layout="column_width"]
   width body-width
   margin auto
   .loading-spinner
@@ -108,7 +98,7 @@ play-button-size = 30px
       max-width 100%
       width auto
 
-.articles-section-artworks[data-layout="overflow_fillwidth"]
+.article-section-artworks[data-layout="overflow_fillwidth"]
   width (overflow-width + gutter-size)
   margin 0 auto
   text-align center
@@ -136,7 +126,7 @@ play-button-size = 30px
   .overlay-container
     display none
 
-.articles-section-video
+.article-section-video
   width body-width
   margin auto
   margin-bottom 1em
@@ -146,15 +136,14 @@ play-button-size = 30px
     width body-width
     height (9 / 16 * body-width)
 
-
-.articles-section-container
+.article-section-container
   margin (gutter-size * 1.5) 0
 
-#articles-show-carousel
+.article-carousel
   img
     height 350px
 
-.articles-large-format-video-container .articles-video
+.article-large-format-video-container .article-video
   position relative
   padding-bottom 56.25% /* 16:9 */
   height 0
@@ -170,10 +159,10 @@ play-button-size = 30px
     max-width 100%
     max-height ((default-max-page-width * .5625) - 50)
 
-.articles-large-format-video-container
+.article-large-format-video-container
   position relative
 
-.articles-large-format-image
+.article-large-format-image
   max-width 1250px
   margin-bottom 50px
   img
@@ -181,7 +170,7 @@ play-button-size = 30px
     left 0
     width 100%
 
-.articles-video-cover-image
+.article-video-cover-image
   background center center
   background-size cover
   width 100%
@@ -191,7 +180,7 @@ play-button-size = 30px
   left 0
   z-index 1
 
-.articles-video-play-button
+.article-video-play-button
   background white
   width play-button-size + 40px
   height @width
@@ -203,7 +192,7 @@ play-button-size = 30px
   border 0
   outline 0
 
-.articles-video-play-button-caret
+.article-video-play-button-caret
   width 0
   height 0
   top 14px

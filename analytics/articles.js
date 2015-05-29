@@ -3,14 +3,14 @@
 // and potentionally other alternative layout options or more.
 //
 
-$('.articles-social:eq(0) > a').click(function() {
+$('.article-social:eq(0) > a').click(function() {
   analytics.track('Clicked Article Share', {
     position: 'top',
     service: $(this).attr('data-service')
   })
 })
 
-$('.articles-social:eq(1) > a').click(function() {
+$('.article-social:eq(1) > a').click(function() {
   analytics.track('Clicked Article Share', {
     position: 'bottom',
     service: $(this).attr('data-service')
