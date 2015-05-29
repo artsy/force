@@ -17,17 +17,17 @@ describe 'ArticleView', ->
       benv.expose $: benv.require 'jquery'
       $.fn.imagesLoaded = sinon.stub()
       Backbone.$ = $
-      { @ArticleView } = mod = benv.requireWithJadeify(
-        resolve(__dirname, '../client/show')
+      @ArticleView = benv.requireWithJadeify(
+        resolve(__dirname, '../view')
         ['artworkItemTemplate', 'editTemplate']
       )
-      mod.__set__ 'CurrentUser', { orNull: ->
+      @ArticleView.__set__ 'CurrentUser', { orNull: ->
         new CurrentUser _.extend( fabricate('user') , { 'id' : '4d8cd73191a5c50ce210002a' } ) }
-      mod.__set__ 'imagesLoaded', sinon.stub()
-      stubChildClasses mod, this,
+      @ArticleView.__set__ 'imagesLoaded', sinon.stub()
+      stubChildClasses @ArticleView, this,
         ['initCarousel']
         []
-      benv.render resolve(__dirname, '../templates/show.jade'), @locals = {
+      benv.render resolve(__dirname, '../templates/index.jade'), @locals = {
         footerArticles: new Backbone.Collection
         slideshowArtworks: null
         article: @article = new Article _.extend fixtures.article,

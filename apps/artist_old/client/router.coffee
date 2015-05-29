@@ -11,6 +11,7 @@ ArticlesView = require './views/articles.coffee'
 RelatedArtistsView = require './views/related_artists.coffee'
 PublicationsView = require './views/publications.coffee'
 CollectionsView = require './views/collections.coffee'
+BiographyView = require './views/biography.coffee'
 mediator = require '../../../lib/mediator.coffee'
 splitTest = require '../../../components/split_test/index.coffee'
 attachCTA = require './cta.coffee'
@@ -24,6 +25,7 @@ module.exports = class ArtistRouter extends Backbone.Router
     'artist/:id/collections': 'collections'
     'artist/:id/publications': 'publications'
     'artist/:id/related-artists': 'relatedArtists'
+    'artist/:id/biography': 'biography'
 
   initialize: ({ @model, @user }) ->
     @options = model: @model, user: @user
@@ -75,3 +77,6 @@ module.exports = class ArtistRouter extends Backbone.Router
 
   collections: ->
     @view = new CollectionsView @options
+
+  biography: ->
+    @view = new BiographyView @options

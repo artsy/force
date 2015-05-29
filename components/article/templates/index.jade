@@ -1,0 +1,63 @@
+include ../../article_figure/mixin
+include ./share
+
+mixin video(video)
+  .article-video-container
+    if video.cover_image_url
+      .article-video-cover-image(
+        style=("background-image: url(#{resize(video.cover_image_url, { width: 1100 })})")
+      )
+        button.article-video-play-button
+          .article-video-play-button-caret
+    .article-video
+      != embedVideo(video.url, videoOptions)
+
+.article-container
+  //- Article lead content
+  if article.get('hero_section') && article.get('hero_section').type === 'video'
+    if article.get('hero_section').cover_image_url
+    .article-large-format-video-container
+      +video(article.get('hero_section'))
+  if article.get('hero_section') && article.get('hero_section').type === 'image'
+    .article-large-format-image
+     img( src=article.get('hero_section').url)
+  h1.large-garamond-header= article.get('title')
+  if article.strip('lead_paragraph')
+    .article-lead-paragraph
+      != article.get('lead_paragraph')
+  .article-author
+    a( href="/#{article.related().author.get('profile_handle')}" )
+      = article.related().author.get('name')
+  .article-date
+    = moment(article.get('published_at')).format('MMM Do, YYYY h:mm a')
+  .article-social
+    +share(article.get('title'), article.get('thumbnail_image'))
+
+  //- Article body content
+  if article.get('sections').length && article.get('sections')[0].type == 'slideshow'
+    .article-carousel
+      include carousel
+  for section, i in article.get('sections')
+    .article-section-container
+      case section.type
+        when 'text'
+          .article-section-text!= section.body
+        when 'image'
+          figure.article-section-image
+            img( src=resize(section.url, { width: 1100 }) )
+            if section.caption
+              figcaption!= section.caption
+        when 'artworks'
+          .article-section-artworks.is-loading( data-layout=section.layout )
+            .loading-spinner
+            ul
+              for id in section.ids
+                li( data-id=id )
+        when 'video'
+          .article-section-video
+            +video(section)
+
+  //- Footer social buttons
+  .article-social.add-bottom
+    h2.article-social__header Share this article
+    +share(article.get('title'), article.get('thumbnail_image'))

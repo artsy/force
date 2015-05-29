@@ -38,3 +38,17 @@ describe 'Articles', ->
         { tier: 2, id: 'boom' }
       ]
       _.pluck(@articles.featured(), 'id').join('').should.equal 'foobarquxmoo'
+
+  describe 'biography', ->
+
+    it 'pulls a biography out of the articles', ->
+      @articles.set [
+        { tier: 1, id: 'foo' }
+        { tier: 1, id: 'bar' }
+        { tier: 2, id: 'baz', biography_for_artist_id: 'asdfsa' }
+        { tier: 1, id: 'qux' }
+        { tier: 2, id: 'bam' }
+        { tier: 1, id: 'moo' }
+        { tier: 2, id: 'boom' }
+      ]
+      @articles.biography().id.should.equal 'baz'

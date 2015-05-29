@@ -1,147 +1,13 @@
 @import '../../../components/stylus_lib'
-@import './lib'
 
 #articles-show
   margin-top 120px
-  h1
-    width 900px
-    margin auto
-    font-size 40px
-    line-height 48px
-    text-align center
-    margin-bottom gutter-size
-  #articles-show-author, #articles-show-date
-    text-align center
-    a
-      text-decoration none
-      &:hover
-        border-bottom 2px solid
 
 .body-welcome-header #articles-show
   margin-top 180px
 
-#articles-lead-paragraph, .articles-section-text
-  font-size 20px
-  line-height 27px
-  width body-width
-  margin auto
-  a
-    text-decoration none
-    fine-faux-underline()
-  p
-    margin-bottom 1em
-    &:last-child
-      margin-bottom 0
-  h2
-    font-size 28px
-    line-height 1.2em
-  h3
-    avant-garde()
-    font-size 13px
-
-#articles-lead-paragraph
-  margin 0 auto gutter-size auto
-
-#articles-slideshow-container
-  height artwork-height + 200
-  margin-bottom gutter-size
-  img
-    height artwork-height
-  iframe
-    height artwork-height
-    width 888px
-
-#articles-show-author, .articles-social
-  vertical-align middle
-
-#articles-show-date
-  avant-garde()
-  font-size 11px
-  margin-bottom 5px
-  color gray-darker-color
-
-#articles-show-author
-  avant-garde()
-  font-size default-avant-garde-font-size
-
-.articles-social
-  text-align center
-  padding 10px 0 20px 0
-  .articles-social__header
-    avant-garde()
-    font-size default-avant-garde-font-size
-    margin-bottom 10px
-  &.add-bottom
-    margin gutter-size auto (gutter-size * 3)
-
-.articles-section-image
-  width overflow-width
-  margin auto
-  img
-    max-width 100%
-    display block
-    margin auto
-  figcaption
-    margin-top 10px
-    font-style italic
-    color gray-dark-color
-    text-align left
-
-.articles-section-artworks
-  position relative
-  min-height (body-width * .33)
-
-.articles-section-artworks[data-layout="column_width"]
-  width body-width
-  margin auto
-  .loading-spinner
-    display none
-  .artwork-item-image
-    background transparent
-    img
-      max-width 100%
-      width auto
-
-.articles-section-artworks[data-layout="overflow_fillwidth"]
-  width (overflow-width + gutter-size)
-  margin 0 auto
-  text-align center
-  &.is-loading
-    [data-id]
-      opacity 0
-    height artwork-height
-    .loading-spinner
-      display block
-  .loading-spinner
-    display none
-  [data-id]
-    display inline-block
-    vertical-align top
-    padding 0
-  .artwork-item-image-container
-    height auto
-    img
-      height auto
-      position relative
-  .artwork-item-image
-    padding-bottom 0 !important
-  .artwork-item-caption
-    overflow ellipsis
-  .overlay-container
-    display none
-
-.articles-section-video
-  width body-width
-  margin auto
-  margin-bottom 1em
-  position relative
-  iframe
-    margin auto
-    width body-width
-    height (9 / 16 * body-width)
-
 #articles-footer
-  width body-width
+  width 570px
   margin 80px auto
   h1
     avant-garde()
@@ -151,9 +17,6 @@
     padding-bottom 20px
     border-bottom 1px solid gray-lighter-color
 
-.articles-section-container
-  margin (gutter-size * 1.5) 0
-
 #articles-footer-list figure
   margin-bottom 20px
   padding-bottom 20px
@@ -161,66 +24,3 @@
 
 #articles-body-container
   position relative
-
-#articles-show-carousel
-  img
-    height 350px
-
-.articles-large-format-video-container .articles-video
-  position relative
-  padding-bottom 56.25% /* 16:9 */
-  height 0
-  max-width 1250px
-  margin-bottom 50px
-
-  iframe
-    position absolute
-    top 0
-    left 0
-    width 100%
-    height 100%
-    max-width 100%
-    max-height ((default-max-page-width * .5625) - 50)
-
-.articles-large-format-video-container
-  position relative
-
-.articles-large-format-image
-  max-width 1250px
-  margin-bottom 50px
-  img
-    top 0
-    left 0
-    width 100%
-
-.articles-video-cover-image
-  background center center
-  background-size cover
-  width 100%
-  height 100%
-  position absolute
-  top 0
-  left 0
-  z-index 1
-
-.articles-video-play-button
-  background white
-  width play-button-size + 40px
-  height @width
-  position absolute
-  top "calc(50% - %s)" % (@width / 2)
-  left "calc(50% - %s)" % (@width / 2)
-  z-index 2
-  cursor pointer
-  border 0
-  outline 0
-
-.articles-video-play-button-caret
-  width 0
-  height 0
-  top 14px
-  left 22px
-  position absolute
-  border-top (play-button-size - 10) solid transparent
-  border-bottom (play-button-size - 10) solid transparent
-  border-left play-button-size solid black
