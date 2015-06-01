@@ -1,11 +1,18 @@
 #artist-page-section-works.artist-page-section
   h3.artist-section-header Works
   .artist-page-section__content
-    #artist-filter
-      #artist-filter-nav.filter-fixed-header-nav
-        .filter-fixed-header-left
-            span.filter-artworks-num
-            | &nbsp;Works
-        include ../../../../components/filter2/dropdown_group/template
-      #artist-artworks.artist-artworks
-        include ../../../../components/filter2/template
+    if counts.total.value > 0
+      #artist-filter
+        #artist-filter-nav.filter-fixed-header-nav
+          .filter-fixed-header-left
+              span.filter-artworks-num
+              | &nbsp;Works
+          include ../../../../components/filter2/dropdown_group/template
+        #artist-artworks.artist-artworks
+          include ../../../../components/filter2/template
+    else
+      .artist-header-empty
+        | There are no #{artist.get('name')} works on Artsy yet.
+        br
+        | Follow the artist to get alerts when works are added.
+

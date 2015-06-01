@@ -1,6 +1,7 @@
 jade = require 'jade'
 fs = require 'fs'
 _s = require 'underscore.string'
+_ = require 'underscore'
 benv = require 'benv'
 { resolve } = require 'path'
 sinon = require 'sinon'
@@ -45,6 +46,7 @@ describe 'Artist header', ->
         params: new Backbone.Model
         filterLabelMap: require '../../../components/filter2/dropdown/label_map.coffee'
         _s: _s
+        _: _
       }, done
 
     it 'should not display the no works message if there is more than 0 artworks', ->
@@ -60,7 +62,7 @@ describe 'Artist header', ->
       $navLinks.first().text().should.equal 'Overview'
       $navLinks.last().text().should.equal 'Related Artists'
 
-  describe 'artist with some artworks (on the overview page)', ->
+  describe 'artist with 0 artworks (on the overview page)', ->
     beforeEach (done) ->
       @artist = new Artist fabricate 'artist', published_artworks_count: 0
       @carousel = new Carousel artist: @artist
@@ -71,7 +73,10 @@ describe 'Artist header', ->
         artists: false
         contemporary: false
 
-      @filterArtworks = new FilterArtworks fabricate2('filter_artworks'), { parse: true }
+      artworks = _.clone(fabricate2('filter_artworks'))
+      artworks.aggregations.total.value = 0
+
+      @filterArtworks = new FilterArtworks artworks, { parse: true }
 
       benv.render resolve(__dirname, '../templates/index.jade'), {
         sd: CURRENT_PATH: "/artist/#{@artist.id}/shows"
@@ -85,10 +90,10 @@ describe 'Artist header', ->
         params: new Backbone.Model
         filterLabelMap: require '../../../components/filter2/dropdown/label_map.coffee'
         _s: _s
+        _: _
       }, done
 
-    # pending until there is an empty state
-    xit 'should display the no works message if there is 0 artworks', ->
+    it 'should display the no works message if there is 0 artworks', ->
       @artist.get('published_artworks_count').should.equal 0
       $('body').html().should.containEql "There are no #{@artist.get('name')} works on Artsy yet."
 
@@ -124,6 +129,7 @@ describe 'Artist header', ->
         params: new Backbone.Model
         filterLabelMap: require '../../../components/filter2/dropdown/label_map.coffee'
         _s: _s
+        _: _
       }, done
 
     it 'displays a link to the auction results', ->
