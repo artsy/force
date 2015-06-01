@@ -14,8 +14,7 @@ if (location.pathname.match('/gallery-partnerships')) {
     '/gallery-partnerships CTA',
     {
       session_id: sd.SESSION_ID,
-      user_id: sd.CURRENT_USER.id
-
+      user_id: sd.CURRENT_USER && sd.CURRENT_USER.id 
     }
   );
 
