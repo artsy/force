@@ -93,7 +93,6 @@ describe 'Artist header', ->
         _: _
       }, done
 
-    # pending until there is an empty state
     it 'should display the no works message if there is 0 artworks', ->
       @artist.get('published_artworks_count').should.equal 0
       $('body').html().should.containEql "There are no #{@artist.get('name')} works on Artsy yet."
