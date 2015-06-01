@@ -2,18 +2,14 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 Gene = require '../../models/gene.coffee'
 scrollFrame = require 'scroll-frame'
-qs = require 'querystring'
-_s = require 'underscore.string'
 CurrentUser = require '../../models/current_user.coffee'
-FilterArtworks = require '../../collections/filter_artworks.coffee'
-FilterView = require '../../components/filter2/view.coffee'
-FilterRouter = require '../../components/filter2/router/index.coffee'
 BlurbView = require '../../components/blurb/view.coffee'
 ShareView = require '../../components/share/view.coffee'
 ArtistFillwidthList = require '../../components/artist_fillwidth_list/view.coffee'
 RelatedGenesView = require '../../components/related_links/types/gene_genes.coffee'
 { Following, FollowButton } = require '../../components/follow_button/index.coffee'
-{ GENE, CURRENT_USER, API_URL, FILTER_ROOT, MODE, FILTER_COUNTS } = require('sharify').data
+{ GENE, CURRENT_USER, API_URL, MODE } = require('sharify').data
+{ setupFilter } = require '../../components/filter2/index.coffee'
 aggregationParams = require './aggregations.coffee'
 
 RelatedArtistsTemplate = -> require('./templates/related_artists.jade') arguments...
@@ -40,16 +36,13 @@ module.exports.GeneView = class GeneView extends Backbone.View
       ).fetchAndRender()
 
 module.exports.init = ->
-
   gene = new Gene GENE
   user = CurrentUser.orNull()
 
-  queryParams = qs.parse(location.search.replace(/^\?/, ''))
-
-  params = new Backbone.Model _.extend queryParams,
-    page: 1
-    size: 10
-    gene_id: gene.id
+  { params } = setupFilter
+    el: $ '#gene-filter'
+    stuckFacet: gene
+    stuckParam: 'gene_id'
     aggregations: aggregationParams
 
   view = new GeneView
@@ -88,22 +81,4 @@ module.exports.init = ->
 
   scrollFrame '#gene-filter-content a'
 
-  collection = new FilterArtworks
 
-  view = new FilterView
-    el: $ '#gene-filter'
-    collection: collection
-    params: params
-    stuckFacet: gene
-
-  router = new FilterRouter
-    params: params
-    urlRoot: FILTER_ROOT
-    stuckParam: 'gene_id'
-
-  Backbone.history.start pushState: true
-
-  collection.fetch
-    data: params.toJSON()
-    success: ->
-      collection.trigger 'initial:fetch'

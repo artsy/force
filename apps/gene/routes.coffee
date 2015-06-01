@@ -11,11 +11,9 @@ aggregationParams = require './aggregations.coffee'
   params = new Backbone.Model gene: gene.id
   filterArtworks = new FilterArtworks
   filterData = { size: 0, gene_id: req.params.id, aggregations: aggregationParams }
-  formattedFilterData = decodeURIComponent qs.stringify(filterData, { arrayFormat: 'brackets' })
-
   Q.all([
     gene.fetch(cache: true)
-    filterArtworks.fetch(data: formattedFilterData)
+    filterArtworks.fetch(data: filterData)
   ]).done ->
     # override mode if path is set
     if _s.contains req.path, 'artworks'
@@ -27,7 +25,6 @@ aggregationParams = require './aggregations.coffee'
 
     res.locals.sd.FILTER_ROOT = gene.href() + '/artworks'
     res.locals.sd.GENE = gene.toJSON()
-    res.locals.sd.FILTER_PARAMS = new Backbone.Model gene: gene.id
     res.locals.sd.MODE = mode
     res.locals.sd.FILTER_COUNTS = counts = filterArtworks.counts
 

@@ -24,7 +24,6 @@ cache = require '../../lib/cache'
   statuses = new Statuses artist: artist
   params = new Backbone.Model artist_id: artist.id
   filterData = { size: 0, artist_id: req.params.id, aggregations: aggregationParams }
-  formattedFilterData = decodeURIComponent qs.stringify(filterData, { arrayFormat: 'brackets' })
   filterArtworks = new FilterArtworks
 
   if (referrer = req.get 'Referrer')?
@@ -34,7 +33,7 @@ cache = require '../../lib/cache'
     artist.fetch(cache: true)
     statuses.fetch(cache: true)
     carousel.fetch(cache: true)
-    filterArtworks.fetch(data: formattedFilterData, cache: true, cacheTime: 3000)
+    filterArtworks.fetch(data: filterData, cache: true, cacheTime: 3000)
   ]).spread((artistRequest, statusesRequest, carouselRequest,  filterArtworksRequest) ->
 
     nav = new Nav artist: artist, statuses: statusesRequest.value

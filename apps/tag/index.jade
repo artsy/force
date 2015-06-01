@@ -20,7 +20,7 @@ block body
           h2 About
           .blurb!= tag.mdToHtml('description')
 
-    #tag-filter( data-state='artworks' )
+    #tag-filter
       #tag-filter-nav.filter-fixed-header-nav
         .filter-fixed-header-left
           = tag.get('name')

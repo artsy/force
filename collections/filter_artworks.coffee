@@ -1,10 +1,15 @@
 _ = require 'underscore'
+qs = require 'qs'
 Backbone = require 'backbone'
 Artworks = require '../collections/artworks.coffee'
 { API_URL } = require('sharify').data
 
 module.exports = class FilterArtworks extends Artworks
   url: "#{API_URL}/api/v1/filter/artworks"
+
+  sync: (method, collection, options)->
+    options.data = decodeURIComponent qs.stringify(options.data, { arrayFormat: 'brackets' })
+    super
 
   parse: (data) ->
     @counts = @prepareCounts data.aggregations
@@ -15,7 +20,7 @@ module.exports = class FilterArtworks extends Artworks
     for k, v of aggregations
       aggregations[k] = @prepareAggregate v, k
 
-    delete aggregations['price_range']['*-*']
+    # delete aggregations['price_range']?['*-*']
 
     aggregations
 
