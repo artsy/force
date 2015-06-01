@@ -10,10 +10,9 @@ aggregationParams = require './aggregations.coffee'
   filterArtworks = new FilterArtworks
   params = new Backbone.Model tag: tag.id
   filterData = { size: 0, tag: req.params.id, aggregations: aggregationParams }
-  formattedFilterData = decodeURIComponent qs.stringify(filterData, { arrayFormat: 'brackets' })
   Q.all([
     tag.fetch(cache: true)
-    filterArtworks.fetch(data: formattedFilterData)
+    filterArtworks.fetch(data: filterData)
   ]).done ->
     res.locals.sd.FILTER_ROOT = tag.href() + '/artworks'
     res.locals.sd.TAG = tag.toJSON()
