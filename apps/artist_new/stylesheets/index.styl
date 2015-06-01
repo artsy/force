@@ -4,14 +4,16 @@ menu-width = 20%
 content-width = 80%
 gutter-width = 60px
 
-#artist-left-menu-page
-  width 100%
-  margin 0 auto
+.body-header-fixed-artist-page
+  .responsive-layout-container
+    min-height calc(100% \- 300px)
 
 .artist-page
   clearfix()
   position relative
   padding 0px 20px
+  padding-bottom 200px
+  height 100%
 .artist-page-menu
 .artist-page-content
   float left
@@ -31,12 +33,12 @@ gutter-width = 60px
 
 .artist-image-module
   padding-bottom 50%
-  margin-bottom 30px
+  margin-bottom gutter-width
 
 .artist-header
   text-align center
   h1
-    avant-garde-size('l-headline')
+    avant-garde-size('xl-headline')
 .artist-header-follow-count
   color gray
 
@@ -45,7 +47,7 @@ gutter-width = 60px
   width 100%
 
 .artist-page-section
-  margin-bottom 40px
+  margin-bottom gutter-width
 .artist-section-header
   garamond-size('headline')
   margin-bottom (gutter-width / 2)

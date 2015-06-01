@@ -21,7 +21,7 @@ unless name == 'total'
           - if(key.count == 0) extraClasses.push('is-disabled')
           - if(params.get(attr) == val) extraClasses.push('is-active')
           a(
-            data-attr=attr
+            data-attr=name
             data-val=val
             href=(
               filterRoot && filterRoot.match('booths') ?

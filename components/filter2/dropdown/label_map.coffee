@@ -1,5 +1,4 @@
 # included in /lib/template_modules.coffee
-
 module.exports =
   price_range:
     label: 'price'

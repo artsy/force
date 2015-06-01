@@ -1,5 +1,7 @@
 for image in images
   - dimensions = image.resizeDimensionsFor({ width: max.width, height: max.height })
-  .image-module-image(
+  a.image-module-image.artwork-item-image-link(
     style="width: #{dimensions.width}px; height: #{dimensions.height}px; background-image: url(#{image.imageUrl('large')})"
+    href= image.get('href')
   )
+

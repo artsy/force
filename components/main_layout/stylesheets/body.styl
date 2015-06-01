@@ -49,6 +49,12 @@ html[data-useragent*="iPad"]
   #main-layout-container
     margin-top 0 !important
 
+// same as fixed header but with no annoying 10px extra margin
+.body-header-fixed-no-margin
+  @extend .body-header-fixed
+  #main-layout-container
+    margin-top main-header-height !important
+
 // View in room and home page hero units will sit underneath a transparent
 // header.
 .body-transparent-header-white

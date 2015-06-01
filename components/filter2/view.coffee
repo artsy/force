@@ -16,6 +16,7 @@ module.exports = class FilterView extends Backbone.View
     includeFixedHeader: true
     facets: ['price_range', 'dimension_range', 'medium']
     noInfiniteScroll: false
+    pageSize: 10
 
   events:
     'click .filter-artworks-see-more' : 'nextPage'
@@ -26,7 +27,8 @@ module.exports = class FilterView extends Backbone.View
       @columnWidth,
       @includeFixedHeader,
       @facets,
-      @noInfiniteScroll } = _.defaults options, @defaults
+      @noInfiniteScroll,
+      @pageSize } = _.defaults options, @defaults
 
     @initSubViews()
 
@@ -83,6 +85,7 @@ module.exports = class FilterView extends Backbone.View
     @$('.filter-artworks').attr 'data-state',
       if @giveUpCount is 1 then 'finished-paging'
       else if @params.get('page') > 500 then 'finished-paging'
+      else if response.hits.length < @pageSize then 'finished-paging'
       else ''
 
     @newColumnsView() unless @columnsView?

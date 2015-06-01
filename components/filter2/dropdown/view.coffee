@@ -1,6 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 FilterArtworks = require '../../../collections/filter_artworks.coffee'
+analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 
 template = -> require('./template.jade') arguments...
 
@@ -46,5 +47,7 @@ module.exports = class DropdownView extends Backbone.View
       @params.unset @facet
     else
       @params.set @facet, val
+
+    analyticsHooks.trigger 'artwork_filter:activated', { attr: @facet, value: val }
 
     false
