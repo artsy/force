@@ -25,7 +25,6 @@ aggregationParams = require './aggregations.coffee'
 
     res.locals.sd.FILTER_ROOT = gene.href() + '/artworks'
     res.locals.sd.GENE = gene.toJSON()
-    res.locals.sd.FILTER_PARAMS = new Backbone.Model gene: gene.id
     res.locals.sd.MODE = mode
     res.locals.sd.FILTER_COUNTS = counts = filterArtworks.counts
 

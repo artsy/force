@@ -3,7 +3,7 @@ Backbone = require 'backbone'
 Tag = require '../../models/tag.coffee'
 scrollFrame = require 'scroll-frame'
 ShareView = require '../../components/share/view.coffee'
-{ API_URL, TAG, FILTER_ROOT } = require('sharify').data
+{ TAG } = require('sharify').data
 { setupFilter } = require '../../components/filter2/index.coffee'
 aggregationParams = require './aggregations.coffee'
 
