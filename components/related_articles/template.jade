@@ -7,8 +7,8 @@
           alt= article.get('title')
         )
       .ra-blurb
-        a.ra-author( href="/#{article.get('author').profile_handle}" )
-          | By #{article.get('author').name}
+        a.ra-author( href="/#{article.related().author.get('profile_handle')}" )
+          | By #{article.related().author.get('name')}
         a( href="/article/#{article.get('slug')}" )
           if article.get('thumbnail_title')
             h3.ra-title= article.get('thumbnail_title')
