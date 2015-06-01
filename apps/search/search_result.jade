@@ -11,7 +11,7 @@ a.search-result( href=result.href(), class=result.get('display_model'), data-id=
         )
   .search-result-info
     if result.get('display_model')
-      .search-result-kind= result.get('display_model')
+      .search-result-kind= _s.humanize(result.get('display_model'))
     .search-result-title= result.get('display')
     if result.get('about')
       .search-result-about= result.get('about')

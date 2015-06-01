@@ -1,4 +1,5 @@
 _ = require 'underscore'
+_s = require 'underscore.string'
 jade = require 'jade'
 path = require 'path'
 fs = require 'fs'
@@ -47,6 +48,7 @@ describe 'Fair', ->
         sd: sd
         fair: fair
         profile: profile
+        _s: _s
         asset: (->)
       @$template = cheerio.load template
       done()
@@ -75,6 +77,7 @@ describe 'Fair', ->
       profile = new Profile sd.PROFILE
       template = render('index')
         sd: sd
+        _s: _s
         fair: fair
         profile: profile
         asset: (->)
@@ -133,6 +136,7 @@ describe 'Fair', ->
       fairResults[0].updateForFair fair
       template = render('index')
         sd: sd
+        _s: _s
         fair: fair
         profile: profile
         results: results
