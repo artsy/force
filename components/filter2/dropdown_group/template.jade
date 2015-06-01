@@ -1,5 +1,5 @@
 nav.filter-nav.filter-artworks-nav
-  if counts.price_range && counts.price_range['*-*']
+  unless _.isEmpty(counts.price_range)
     a.filter-button.filter-nav-only-for-sale(class=params.get('price_range') == '*-*' ? 'is-active' : '' )
       .artsy-checkbox--checkbox
         input( type='checkbox', id='only-for-sale' checked=( params.get('price_range') == '*-*' ? 'checked' : undefined ) )
