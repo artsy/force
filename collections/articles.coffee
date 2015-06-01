@@ -19,6 +19,9 @@ module.exports = class Articles extends Backbone.Collection
     @reject (a) ->
       a in featured
 
+  biography: ->
+    @select((article) -> article.get('biography_for_artist_id'))?[0]
+
   sync: (method, model, options) ->
     options.headers = 'X-Access-Token': ''
     super

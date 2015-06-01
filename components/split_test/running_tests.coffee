@@ -15,15 +15,6 @@
 # module.exports = {}
 
 module.exports =
-  artist_cta:
-    key: 'artist_cta'
-    outcomes:
-      zig_zag: 1/4
-      footer_modal_link: 1/4
-      footer_modal_inline: 1/4
-      control: 1/4
-    dimension: 'dimension4'
-    scope: 'local'
 
   posts_section_name:
     key: 'posts_section_name'

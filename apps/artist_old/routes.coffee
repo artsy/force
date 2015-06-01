@@ -27,7 +27,6 @@ ReferrerParser = require 'referer-parser'
     carousel.fetch(cache: true)
     statuses.fetch(cache: true)
   ]).spread((artistRequest, carouselRequest, statusesRequest) ->
-
     nav = new Nav artist: artist, statuses: statusesRequest.value
 
     if artistRequest.state is 'rejected'
