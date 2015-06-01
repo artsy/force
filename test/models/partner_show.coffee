@@ -306,5 +306,3 @@ describe 'PartnerShow', ->
         { days: 'Tuesday–Thursday', hours: '11:45am–7:09pm' }
       ]
 
-
-
