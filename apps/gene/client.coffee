@@ -99,7 +99,7 @@ module.exports.init = ->
   router = new FilterRouter
     params: params
     urlRoot: FILTER_ROOT
-    stuckParam: 'gene'
+    stuckParam: 'gene_id'
 
   Backbone.history.start pushState: true
 
