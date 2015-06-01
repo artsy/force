@@ -21,6 +21,6 @@ describe 'Filter Artworks', ->
 
     it 'should sort the price ranges by value', ->
       _.keys(@artworks.counts.price_range)[0].should.equal "*-*"
-      _.keys(@artworks.counts.price_range)[1].should.equal "1000-5000"
-      _.keys(@artworks.counts.price_range)[2].should.equal "5000-10000"
+      _.keys(@artworks.counts.price_range)[1].should.equal "*-1000"
+      _.keys(@artworks.counts.price_range)[2].should.equal "1000-5000"
 
