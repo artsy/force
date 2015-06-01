@@ -20,7 +20,7 @@ module.exports = class FilterArtworks extends Artworks
     for k, v of aggregations
       aggregations[k] = @prepareAggregate v, k
 
-    delete aggregations['price_range']['*-*']
+    # delete aggregations['price_range']?['*-*']
 
     aggregations
 
