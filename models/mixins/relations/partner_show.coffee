@@ -11,6 +11,7 @@ module.exports =
     Artworks = require '../../../collections/artworks.coffee'
     Artists = require '../../../collections/artists.coffee'
     InstallShots = require '../../../collections/install_shots.coffee'
+    ShowEvents = require '../../../collections/partner_show_events.coffee'
     Partner = require '../../partner.coffee'
     Fair = require '../../fair.coffee'
     Profile = require '../../profile.coffee'
@@ -32,6 +33,8 @@ module.exports =
 
     profile = new Profile id: partner.get('default_profile_id')
 
+    showEvents = new ShowEvents @get('events')
+
     @__related__ =
       artworks: artworks
       artists: artists
@@ -40,6 +43,7 @@ module.exports =
       partner: partner
       fair: fair
       profile: profile
+      showEvents: showEvents
 
   rebuild: ->
     { artists, partner, fair, profile } = @related()
