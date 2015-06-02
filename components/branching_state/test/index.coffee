@@ -1,5 +1,5 @@
-Backbone = require 'backbone'
 _ = require 'underscore'
+Backbone = require 'backbone'
 State = require '../index'
 
 describe 'State', ->
@@ -29,13 +29,13 @@ describe 'State', ->
   describe 'complex path', ->
     beforeEach ->
       @state = new State
-        predicates:
+        decisions:
           first_decision: ->
             false
           second_decision: ->
             true
-          dependent_decision: (dependency) ->
-            dependency
+          dependent_decision: ({ some_dependency }) ->
+            some_dependency
 
         steps: [
           'first'
@@ -62,7 +62,46 @@ describe 'State', ->
         @state.next().should.equal 'second'
         @state.next().should.equal 'false_first' # Makes first_decision
         @state.next().should.equal 'false_true_first' # Makes second_decision
+
         # Inject dependencies at a later time
-        @state.inject 'dependent_decision', false
-        @state.get('predicates').dependent_decision().should.be.false
+        @state.inject some_dependency: false
         @state.next().should.equal 'false_true_false_first' # Makes dependent_decision
+
+    describe '#position; #total', ->
+      beforeEach ->
+        @state = new State
+          decisions:
+            on: ->
+              'and_on'
+
+          steps: [
+            'first'
+            'second'
+            on:
+              and_on: [
+                'third'
+                'fourth'
+              ]
+          ]
+
+      it 'keeps track of the position', ->
+        @state.current().should.equal 'first'
+        @state.position().should.equal 1
+        # `total` can only be reliably displayed when on the terminal leaf of a step tree
+        @state.total().should.equal 3
+        @state.isEnd().should.be.false
+
+        @state.next().should.equal 'second'
+        @state.position().should.equal 2
+        @state.total().should.equal 3
+        @state.isEnd().should.be.false
+
+        @state.next().should.equal 'third'
+        @state.position().should.equal 3
+        @state.total().should.equal 4
+        @state.isEnd().should.be.false
+
+        @state.next().should.equal 'fourth'
+        @state.position().should.equal 4
+        @state.total().should.equal 4
+        @state.isEnd().should.be.true

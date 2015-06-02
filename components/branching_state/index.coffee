@@ -3,10 +3,11 @@ Backbone = require 'backbone'
 
 module.exports = class State extends Backbone.Model
   defaults:
+    moves: 0
     position: 0
     steps: null
     views: null
-    predicates: null
+    decisions: null
 
   current: ->
     return unless @has('steps') and _.isArray(@get 'steps')
@@ -26,26 +27,29 @@ module.exports = class State extends Backbone.Model
   split: (obj) ->
     [_.first(_.keys obj), _.first(_.values obj)]
 
-  objectify: (key, value) ->
-    _.tap({}, (hsh) -> hsh[key] = value)
+  inject: ->
+    @__inject__ = arguments
 
   decide: (key) ->
-    @get('predicates')[key]()
+    @get('decisions')[key](@__inject__...)
 
   next: ->
+    @set('moves', (@get('moves') + 1))
     @set('position', @get('position') + 1) unless @isEnd()
     @current()
+
+  total: ->
+    offset = @get('moves') - @get('position')
+    @get('steps').length + offset
+
+  position: ->
+    @get('moves') + 1
 
   isEnd: ->
     @get('position') is @end()
 
   end: ->
     @get('steps').length - 1
-
-  inject: (decision, deps...) ->
-    fn = @get('predicates')[decision]
-    predicate = @objectify decision, _.partial(fn, deps...)
-    @set 'predicates', _.extend {}, @get('predicates'), predicate
 
   view: ->
     views = @get('views')
