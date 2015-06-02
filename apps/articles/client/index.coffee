@@ -20,11 +20,16 @@ module.exports.init = ->
     unless ctaBarView.previouslyDismissed()
       $('body').append ctaBarView.render().$el
       $('#articles-footer-list').waypoint (direction) ->
-        ctaBarView.transitionIn() if direction is 'down'
+        ctaBarView.transitionIn()
       , { offset: '50%' }
       $('.js-articles-feed-articles').waypoint (direction) ->
         ctaBarView.transitionIn() if direction is 'down'
       , { offset: '50%' }
+      $('.js-articles-feed-articles').waypoint (direction) ->
+        ctaBarView.transitionOut() if direction is 'down'
+        ctaBarView.transitionIn() if direction is 'up'
+        console.log 'hmmm'
+      , { offset: 'bottom-in-view' }
 
     # Subscribe click
     $('.js-articles-insights-subscribe').click (e)->
