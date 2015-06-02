@@ -47,11 +47,6 @@ bordered-input-placeholder()
   garamond()
   font-size default-garamond-font-size
   color gray-dark-color
-  transition opacity 0.5s
-bordered-input-placeholder--focus()
-  opacity 0
-bordered-input-placeholder--autofocus-focus()
-  opacity 1
 
 .avant-garde-form-label
   display block
@@ -75,19 +70,14 @@ bordered-input-placeholder--autofocus-focus()
   background-color transparent
   transition border-color 0.25s
   placeholder(bordered-input-placeholder)
-  &:focus, &:active
+  &:focus
+  &:active
     border-color purple-color
     outline none
     transition border-color 0.5s
-    placeholder(bordered-input-placeholder--focus)
 
   &:disabled
     border dotted 2px gray-lighter-color
-
-  // Autofocused inputs should retain placeholders
-  &[autofocus]:focus
-  &.is-persistplaceholder:focus
-    placeholder(bordered-input-placeholder--autofocus-focus)
 
   &[data-state='error']
   &.is-error
