@@ -28,7 +28,7 @@ module.exports = class VideoView extends Backbone.View
     height = q.height or @$('.artwork-image img').height()
     width = q.width or @$('.artwork-image img').width()
 
-    @$video.find('iframe').replaceWith switch parse(@artwork.get 'website').host
+    @$video.addClass('is-loaded').find('iframe').replaceWith switch parse(@artwork.get 'website').host
       when 'youtu.be'
         id = _.last @artwork.get('website').split('/')
         """
