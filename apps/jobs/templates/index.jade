@@ -12,7 +12,7 @@ block body
       h1.jobs-header-headline.evenly-bisected-header-cell
         = header.headline
       .jobs-header-description.evenly-bisected-header-cell
-        = header.description
+        != markdown(header.description)
 
     section.jobs-images-cycle.responsive-image-container.js-jobs-images-cycle
       for image in images
