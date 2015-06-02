@@ -19,16 +19,19 @@ module.exports.init = ->
       email: sd.CURRENT_USER?.email or ''
     unless ctaBarView.previouslyDismissed()
       $('body').append ctaBarView.render().$el
-      $('#articles-footer-list').waypoint (direction) ->
-        ctaBarView.transitionIn()
-      , { offset: '50%' }
+      $('.article-container').waypoint (direction) ->
+        ctaBarView.transitionIn() if direction is 'down'
+      , { offset: -200 }
+      $('.article-container').waypoint (direction) ->
+        ctaBarView.transitionOut() if direction is 'down'
+        ctaBarView.transitionIn() if direction is 'up'
+      , { offset: 'bottom-in-view' }
       $('.js-articles-feed-articles').waypoint (direction) ->
         ctaBarView.transitionIn() if direction is 'down'
-      , { offset: '50%' }
+      ,{ offset: '50%' }
       $('.js-articles-feed-articles').waypoint (direction) ->
         ctaBarView.transitionOut() if direction is 'down'
         ctaBarView.transitionIn() if direction is 'up'
-        console.log 'hmmm'
       , { offset: 'bottom-in-view' }
 
     # Subscribe click
