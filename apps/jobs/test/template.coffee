@@ -4,7 +4,7 @@ template = require('jade').compileFile(require.resolve '../templates/index.jade'
 fixture = require './fixture'
 fixture.categories = _.groupBy fixture.jobs, 'category'
 resizer = require '../../../components/resizer'
-data = _.extend {}, asset: (->), sd: {}, fixture, resizer
+data = _.extend {}, asset: (->), sd: {}, fixture, resizer, markdown: (->)
 
 describe '/jobs', ->
   describe 'index', ->
