@@ -75,6 +75,7 @@ module.exports =
   EDITORIAL_ADMINS: 'craig,halley,marina,casey,molly'
   STRIPE_PUBLISHABLE_KEY: null
   MAILCHIMP_KEY: null
+  GALLERY_INSIGHTS_SLUG: 'gallery-insights'
 
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or
