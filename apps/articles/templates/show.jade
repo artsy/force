@@ -1,4 +1,5 @@
 extends ../../../components/main_layout/templates/index
+include ./mixin
 
 block head
   include meta/article
@@ -30,6 +31,8 @@ block body
                     img( src=resize(link.thumbnail_url, {
                       height: 80, width: 120 }) )
                     p= link.title
+              //- Fills sticky nav with tier 1 articles if not enough featured links
+              +remainingStickies(vertical, allVerticalArticles, 120, 80)
             button.articles-vertical-right-chevron.icon-chevron-small-right
 
     //- Article body

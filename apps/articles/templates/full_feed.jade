@@ -18,6 +18,7 @@
             a( href="#{link.url}" )
               img( src=crop(link.thumbnail_url, { width: 70, height: 70 }) )
               p= link.title
+        +remainingStickies(vertical, articles, 70, 70)
 
   .articles-articles-feed.articles-feed
     .articles-feed-articles.js-articles-feed-articles
