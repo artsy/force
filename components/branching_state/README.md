@@ -19,10 +19,10 @@ state.next() # => 'third'
 
 ```coffeescript
 configuration =
-  predicates:
-    initial_condition: (x, y) ->
+  decisions:
+    initial_condition: ({ x, y }) ->
       x + y is 2
-    final_condition: (user) ->
+    final_condition: ({ user }) ->
       user.get('collector_level') is 3
 
   steps: [
@@ -42,8 +42,9 @@ configuration =
 state = new State configuration
 
 # Inject dependencies
-state.inject 'initial_condition', 1, 2 # False
-state.inject 'final_condition', new Backbone.Model(collector_level: 3) # True
+[x, y] = [1, 2] # False
+user = new Backbone.Model(collector_level: 3) # True
+state.inject x: x, y: y, user: user
 
 state.current() # => 'third'
 state.next() # => 'second'

@@ -4,7 +4,7 @@ template = -> require('../templates/commercial_interest.jade') arguments...
 module.exports = class CommercialInterest extends StepView
   template: template
 
-  events:
+  __events__:
     'click button': 'serialize'
 
   serialize: (e) ->

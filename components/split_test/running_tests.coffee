@@ -27,4 +27,5 @@ module.exports =
     outcomes:
       old: 0.5
       new: 0.5
+    edge: 'new'
     dimension: 'dimension5'

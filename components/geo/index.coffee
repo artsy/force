@@ -5,16 +5,22 @@ module.exports =
   googleMapsAPI: 'https://maps.googleapis.com/maps/api/js?libraries=places&sensor=true&language=en'
 
   loadGoogleMaps: (cb) ->
-    return cb() if @googleMapsLoaded
+    if @googleMapsLoading? and @googleMapsLoading.state() is 'resolved'
+      cb()
+      return
 
-    @googleMapsLoading = (dfd = $.Deferred()).promise()
+    alreadyLoading = @googleMapsLoading?
 
+    @googleMapsLoading ?= $.Deferred()
+    @googleMapsLoading.then cb
     window.googleMapsCallback = =>
-      dfd.resolve()
-      @googleMapsLoaded = true
-      @googleMapsLoading.then cb
+      @googleMapsLoading.resolve()
 
-    $.getScript @googleMapsAPI + '&callback=googleMapsCallback'
+    return if alreadyLoading
+
+    $.getScript "#{@googleMapsAPI}&callback=googleMapsCallback"
+
+    return
 
   geoIp: (cb) ->
     new Backbone.Model().fetch

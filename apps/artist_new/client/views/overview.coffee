@@ -61,7 +61,10 @@ module.exports = class OverviewView extends Backbone.View
       el: @$('.artist-related-genes')
       id: @model.id
       headerTemplate: _.template '<h2>Known For</h2>'
-    subView.collection.on 'sync', -> mediator.trigger 'related:genes:render'
+    subView.collection.on 'sync', =>
+      unless subView.collection.length and @$('.artist-blurb').text().trim().length
+        @$('#artist-page-section-about').addClass('is-hidden')
+      mediator.trigger 'related:genes:render'
     @subViews.push subView
 
   setupRelatedSection: ($el) ->

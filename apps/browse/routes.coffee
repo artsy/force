@@ -1,4 +1,3 @@
-qs = require 'qs'
 Backbone = require 'backbone'
 FilterArtworks = require '../../collections/filter_artworks'
 aggregationParams = require './aggregations.coffee'
@@ -7,10 +6,9 @@ aggregationParams = require './aggregations.coffee'
   # just the aggregates, we don't need the works
   filterArtworks = new FilterArtworks
   filterData = { size: 0, aggregations: aggregationParams }
-  formattedFilterData = decodeURIComponent qs.stringify(filterData, { arrayFormat: 'brackets' })
   filterArtworks.fetch
     cache: true
-    data: formattedFilterData
+    data: filterData
     success: ->
       res.locals.sd.FILTER_ROOT = '/browse/artworks'
       res.render 'index',

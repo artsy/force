@@ -1,6 +1,13 @@
 @import '../../components/stylus_lib'
 
-.chevron-list-item
+overlapping-border(border-color = gray-lighter-color)
+  border-top 1px solid border-color
+  border-bottom @border-top
+  margin-top -1px
+  &:first-child
+    margin-top 0
+
+chevron()
   position relative
   &::after
     iconfont-styling()
@@ -14,35 +21,38 @@
     transform translateY(-50%)
     transition color 0.125s
 
-.chevron-nav-list a
-  @extends .chevron-list-item
+chevron-item()
+  chevron()
   display block
-  padding 14px 0
   text-decoration none
+
+// Variants
+// --------
+
+// Small
+.small-chevron-list a
+  chevron-item()
+  overlapping-border()
+  padding 15px 5px
+
+// Nav
+.chevron-nav-list a
+  chevron-item()
+  overlapping-border()
   avant-garde-size('m-headline', true)
-  border-top 1px solid gray-color
-  &:last-child
-    border-bottom @border-top
+  padding 14px 0
   &.is-active
     color purple-color
 
-.large-chevron-list-item
-  @extends .chevron-list-item
+// Large
+.large-chevron-list a
+  chevron-item()
+  overlapping-border()
+  padding 40px 80px 40px 40px
   &::after
     content '\e61c'
     font-size 40px
     right 10px
-
-.large-chevron-list a
-  @extends .large-chevron-list-item
-  display block
-  padding 40px 80px 40px 40px
-  border-top 1px solid gray-lighter-color
-  border-bottom @border-top
-  margin-top -1px
-  text-decoration none
-  &:first-child
-    margin-top 0
   &:hover
     background-color gray-lightest-color
     border-color @background-color

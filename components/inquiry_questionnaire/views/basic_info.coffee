@@ -1,4 +1,5 @@
 StepView = require './step.coffee'
+LocationSearch = require '../../../components/location_search/index.coffee'
 template = -> require('../templates/basic_info.jade') arguments...
 
 module.exports = class BasicInfo extends StepView
@@ -10,5 +11,14 @@ module.exports = class BasicInfo extends StepView
   serialize: (e) ->
     e.preventDefault()
     @user.set @serializeForm()
-    alert JSON.stringify(@user.attributes)
-    # @next()
+    @next()
+
+  postRender: ->
+    @locationSearch = new LocationSearch el: @$('.js-location-search'), autofocus: false
+    @locationSearch.render @user.location()?.cityStateCountry()
+    @listenTo @locationSearch, 'location:update', (location) ->
+      @user.setLocation location
+
+  remove: ->
+    @locationSearch.remove()
+    super

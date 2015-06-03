@@ -6,7 +6,7 @@ Geo = require '../index'
 
 describe 'Geo', ->
   before (done) ->
-    benv.setup =>
+    benv.setup ->
       benv.expose
         $: benv.require 'jquery'
         google: maps:
@@ -17,13 +17,13 @@ describe 'Geo', ->
   after ->
     benv.teardown()
 
-  beforeEach ->
-    sinon.stub Backbone, 'sync'
-
-  afterEach ->
-    Backbone.sync.restore()
-
   describe '#locate', ->
+    beforeEach ->
+      sinon.stub Backbone, 'sync'
+
+    afterEach ->
+      Backbone.sync.restore()
+
     it 'calls out to an external IP geolocation service when low accuracy is requested', ->
       Geo.locate(accuracy: 'low')
       Backbone.sync.args[0][2].url.should.equal 'https://freegeoip.net/json/'
@@ -36,28 +36,44 @@ describe 'Geo', ->
 
   describe '#loadGoogleMaps', ->
     beforeEach ->
-      @gs = $.getScript
-
-    afterEach ->
-      $.getScript = @gs
+      Geo.googleMapsLoading = undefined
 
     it 'loads the Google Maps places library and runs the callback', (done) ->
-      $.getScript = (url) ->
-        url.should.equal 'https://maps.googleapis.com/maps/api/js?libraries=places&sensor=true&language=en&callback=googleMapsCallback'
-        window.googleMapsCallback()
+      sinon.stub $, 'getScript', -> window.googleMapsCallback()
+
       _.isUndefined(window.googleMapsCallback).should.be.true
       Geo.loadGoogleMaps ->
         _.isFunction(window.googleMapsCallback).should.be.true
         done()
 
-    it 'only calls $.getScript once', ->
-      Geo.googleMapsLoaded = false
-      getScriptStub = sinon.stub()
-      $.getScript = ->
-        getScriptStub()
+      $.getScript.restore()
+
+    it 'only calls $.getScript once', (done) ->
+      count = sinon.stub()
+      sinon.stub $, 'getScript', ->
+        count()
         window.googleMapsCallback()
+
       Geo.loadGoogleMaps(->)
       Geo.loadGoogleMaps(->)
-      Geo.loadGoogleMaps(->)
-      getScriptStub.callCount.should.equal 1
-      Geo.googleMapsLoaded.should.be.true
+      Geo.loadGoogleMaps ->
+        count.callCount.should.equal 1
+        done()
+
+      $.getScript.restore()
+
+    it 'calls back to all callbacks that get attached', (done) ->
+      count = sinon.stub()
+
+      sinon.stub $, 'getScript', -> window.googleMapsCallback()
+
+      Geo.loadGoogleMaps count
+      Geo.loadGoogleMaps count
+      Geo.loadGoogleMaps count
+      Geo.loadGoogleMaps count
+
+      Geo.loadGoogleMaps ->
+        count.callCount.should.equal 4
+        done()
+
+      $.getScript.restore()
