@@ -34,11 +34,19 @@
           .aga-bid-status
             if auction.isOpen()
               .aabs-label
-                strong= saleArtwork.bidLabel()
-                = ' '
-                | (#{saleArtwork.bidCount()})
+                if artwork.get('acquireable')
+                  strong Buy Now Price
+                else
+                  | <strong>#{saleArtwork.bidLabel()}</strong> (#{saleArtwork.bidCount()})
+
               .aabs-price
-                = saleArtwork.currentBid()
+                if artwork.get('acquireable')
+                  if artwork.get('sold')
+                    | Sold
+                  else
+                    = artwork.saleMessage() || 'Unavailable'
+                else
+                  = saleArtwork.currentBid()
             else
               .aabs-label
                 //-

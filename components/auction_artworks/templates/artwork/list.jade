@@ -20,12 +20,22 @@
 
   if auction.isOpen() && !auction.isAuctionPromo()
     .ala-bid-status: a( href= href )
-      strong #{saleArtwork.bidLabel()}:
-      = ' '
-      span.ala-current-bid
-        = saleArtwork.currentBid()
+        unless artwork.get('acquireable')
+          strong #{saleArtwork.bidLabel()}:
+          = ' '
+
+        span.ala-current-bid
+          if artwork.get('acquireable')
+            unless artwork.get('sold')
+              = artwork.saleMessage() || 'Unavailable'
+          else
+            = saleArtwork.currentBid()
+
     .ala-bid-count: a( href= href )
-      | (#{saleArtwork.bidCount()})
+      if artwork.get('acquireable')
+        | &nbsp;
+      else
+        | (#{saleArtwork.bidCount()})
   else
     .ala-estimate
       if saleArtwork.estimate()
