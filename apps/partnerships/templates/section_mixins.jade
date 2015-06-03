@@ -125,7 +125,7 @@ mixin support(section)
         p.preamble!= section.preamble
           if path.indexOf('gallery') > 0
             |  You can also read and subscribe to our 
-            a(href='/gallery-insights-magazine') Gallery Insights Newsletter
+            a(href='/' + sd.GALLERY_INSIGHTS_SLUG) Gallery Insights Newsletter
 
   .partnerships-section-content
     .support-liaisons( data-liaisons=section.liaisons )
