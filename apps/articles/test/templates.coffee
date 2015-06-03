@@ -39,6 +39,17 @@ describe 'vertical template', ->
         title: 'Moo Bar'
     html.should.containEql 'Moo Bar'
 
+  it 'renders extra stickies if featured ones are missing', ->
+    html = render('vertical')
+      articles: new Articles([_.extend(fixtures.article, tier: 1)])
+      crop: (url) -> url
+      moment: moment
+      sd: {}
+      asset: ->
+      vertical: new Vertical _.extend _.clone(fixtures.vertical),
+        title: 'Moo Bar'
+    html.should.containEql '<li class="grid-item"><a href="/article/foobar">'
+
 describe 'show template', ->
 
   it "renders related footer articles", ->
@@ -53,3 +64,15 @@ describe 'show template', ->
       sd: {}
       asset: ->
     html.should.containEql 'This is a footer article'
+
+  it 'renders extra stickies if featured ones are missing and article is part of a vertical', ->
+    html = render('show')
+      article: new Article title: 'hi', sections: [], vertical_id: '55356a9deca560a0137aa4b7'
+      crop: (url) -> url
+      resize: (url) -> url
+      moment: moment
+      sd: {}
+      asset: ->
+      vertical: new Vertical _.extend _.clone(fixtures.vertical), title: 'Moo Bar'
+      allVerticalArticles: new Articles([_.extend(fixtures.article, tier: 1)])
+    html.should.containEql '<li class="grid-item"><a href="/article/foobar">'
