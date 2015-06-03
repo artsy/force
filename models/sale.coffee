@@ -93,19 +93,36 @@ module.exports = class Sale extends Backbone.Model
   state: ->
     if @has('clockState') then @get('clockState') else @get('auction_state')
 
-  # @param {CurrentUser, Artwork (optional)}
-  # @return {Object}
-  bidButtonState: (user, artwork) ->
-    if @isPreview() and !user?.get('registered_to_bid')
-      label: 'Register to bid', enabled: true, classes: undefined, href: @registerUrl()
+  # Returns an object of button attributes for a given user/artwork combination
+  # corresponding to the action that should be taken given the state of the sale/user/artwork
+  actionButtonState: (user, artwork) ->
+    # 'Contact' button state
+    if @isAuctionPromo()
+      label: "Contact #{@related().profile.displayName() or 'Auction House'}", enabled: true, classes: 'js-inquiry-button'
+
+    # 'Buy Now' button state
+    else if @isOpen() and artwork.get('acquireable') and not artwork.get('sold')
+      label: 'Buy Now', enabled: true, classes: 'js-acquire-button', href: ''
+    else if @isOpen() and artwork.get('acquireable') and artwork.get('sold')
+      label: 'Sold', enabled: false, classes: 'is-disabled', href: ''
+
+    # 'Bid' button state
+    else if @isPreview() and !user?.get('registered_to_bid')
+      label: 'Register to bid', enabled: true, classes: '', href: @registerUrl()
     else if @isPreview() and user?.get('registered_to_bid')
-      label: 'Registered to bid', enabled: false, classes: 'is-success is-disabled', href: undefined
+      label: 'Registered to bid', enabled: false, classes: 'is-success is-disabled', href: ''
     else if @isOpen()
-      label: 'Bid', enabled: true, classes: undefined, href: (@bidUrl(artwork) if artwork)
+      label: 'Bid', enabled: true, classes: 'js-bid-button', href: (@bidUrl(artwork) if artwork)
     else if @isClosed()
-      label: 'Online Bidding Closed', enabled: false, classes: 'is-disabled', href: undefined
+      label: 'Online Bidding Closed', enabled: false, classes: 'is-disabled', href: ''
+
+    # Fallback
+    else if artwork?
+      label: 'View', enabled: true, classes: '', href: artwork.href()
     else
       {}
+
+  bidButtonState: @::actionButtonState
 
   date: (attr) ->
     moment(@get attr)
