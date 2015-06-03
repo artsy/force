@@ -9,7 +9,7 @@
         for article in featuredArticles.slice(1)
           +article-figure(article, 300, false, false)
 
-  if sd.CURRENT_PATH != '/articles' && vertical && vertical.get('featured_links').length
+  if sd.CURRENT_PATH != '/articles' && vertical && vertical.get('featured_links')
     section.articles-featured-vertical-articles
       h4= vertical.get('featured_links_header')
       ul.grid-4-up
