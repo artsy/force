@@ -22,6 +22,7 @@ app.get '/past-terms-8-5-13', routes.vanityUrl('past-terms-8-5-13')
 app.get '/past-privacy-10-29-12', routes.vanityUrl('past-privacy-10-29-12')
 app.get '/rrf-emerging-curator-competition-official-rules', routes.vanityUrl('rrf-emerging-curator-competition-official-rules')
 
+app.get '/page/:id', routes.index
 app.get '/job/:id', routes.index
 # Handle urls like /job/devops-engineer/about
 app.get '/job/:id/*', routes.index
