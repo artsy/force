@@ -73,7 +73,7 @@ module.exports = class FilterNav extends Backbone.View
     false
 
   hideMenu: (e) ->
-    $(e.currentTarget).parent().hidehover() unless navigator.userAgent.match('iPad')
+    $(e.currentTarget).parent().hidehover()
 
   renderActive: (e) ->
     _.defer -> $(e.currentTarget).addClass('is-active')
