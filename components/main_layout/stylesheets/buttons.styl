@@ -91,6 +91,7 @@
   background-color gray-lightest-color
   avant-garde()
   transition background-color 0.25s, color 0.25s
+  border 1px solid transparent
   text-decoration none
   &:focus, &:hover
     outline none
@@ -214,7 +215,7 @@
   border-bottom 2px solid transparent
   display inline-block
   &:focus, &:hover, &:active
-    border-color black
+    border-bottom-color black
     background transparent
   &[data-state='loading'], &.is-loading
     background transparent
@@ -225,7 +226,7 @@
 
 .avant-garde-button-underlined
   @extends .avant-garde-button-text
-  border-color black
+  border-bottom-color black
 
 .stacked-button-menu
   max-width 100%

@@ -1,19 +1,55 @@
 moment = require 'moment'
 sinon = require 'sinon'
 Backbone = require 'backbone'
-Sale = require '../../models/sale'
 { fabricate } = require 'antigravity'
+Sale = require '../../models/sale'
+Artwork = require '../../models/artwork'
 
 describe 'Sale', ->
-
   beforeEach ->
-    @sd =
-      API_URL: 'http://localhost:5000'
-    sinon.stub Backbone, 'sync'
+    @sd = API_URL: 'http://localhost:5000'
     @sale = new Sale fabricate 'sale'
+
+    sinon.stub Backbone, 'sync'
 
   afterEach ->
     Backbone.sync.restore()
+
+  describe 'actionButtonState', ->
+    beforeEach ->
+      @artwork = new Artwork
+      @user = new Backbone.Model
+
+    describe 'contact', ->
+      it 'returns the correct button attributes', ->
+        @sale.set 'sale_type', 'auction promo'
+        @sale.actionButtonState(@user, @artwork).label.should.equal 'Contact Auction House'
+
+    describe 'buy now', ->
+      it 'returns the correct button attributes', ->
+        @sale.set sale_type: 'default', auction_state: 'open'
+        @artwork.set acquireable: true, sold: false
+        @sale.actionButtonState(@user, @artwork).label.should.equal 'Buy Now'
+        @artwork.set 'sold', true
+        @sale.actionButtonState(@user, @artwork).label.should.equal 'Sold'
+
+    describe 'bid', ->
+      it 'returns the correct button attributes', ->
+        @sale.set sale_type: 'default', auction_state: 'preview'
+        @user.set 'registered_to_bid', false
+        @sale.actionButtonState(@user, @artwork).label.should.equal 'Register to bid'
+        @user.set 'registered_to_bid', true
+        @sale.actionButtonState(@user, @artwork).label.should.equal 'Registered to bid'
+        @sale.set 'auction_state', 'open'
+        @sale.actionButtonState(@user, @artwork).label.should.equal 'Bid'
+        @user.set 'registered_to_bid', false
+        @sale.actionButtonState(@user, @artwork).label.should.equal 'Bid'
+        @sale.set 'auction_state', 'closed'
+        @sale.actionButtonState(@user, @artwork).label.should.equal 'Online Bidding Closed'
+
+    describe 'fallback', ->
+      it 'returns the correct button attributes', ->
+        @sale.actionButtonState(null, @artwork).label.should.equal 'View'
 
   describe '#fetchArtworks', ->
 

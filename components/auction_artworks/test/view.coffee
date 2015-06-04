@@ -1,5 +1,6 @@
 _ = require 'underscore'
 benv = require 'benv'
+sinon = require 'sinon'
 Backbone = require 'backbone'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
@@ -36,7 +37,7 @@ describe 'AuctionArtworksView', ->
     beforeEach ->
       @view = new AuctionArtworksView
         el: $('section')
-        model: @auction = new Auction fabricate 'sale'
+        model: @auction = new Auction fabricate 'sale', auction_state: 'open'
         collection: @artworks
         user: @user
 
@@ -63,6 +64,22 @@ describe 'AuctionArtworksView', ->
         @view.$('.auction-list-artwork').should.have.lengthOf 2
         @view.$('.auction-list-artwork:first-child a').attr('href').should.containEql '/artwork/a-a'
         @view.$('.auction-list-artwork:last-child a').attr('href').should.containEql '/artwork/z-z'
+
+    describe '#acquire', ->
+      beforeEach ->
+        sinon.stub Backbone, 'sync'
+
+      afterEach ->
+        Backbone.sync.restore()
+
+      it 'acquires the artwork', ->
+        @artworks.first().set acquireable: true, sold: false
+        @view.render()
+        @view.$('.js-acquire-button').should.have.lengthOf 1
+        @view.$('.js-acquire-button').click()
+
+        Backbone.sync.args[0][2].url.should.containEql '/api/v1/me/order/pending/items'
+        Backbone.sync.args[0][1].attributes.artwork_id.should.equal 'z-z'
 
   describe 'auction promo', ->
     beforeEach ->

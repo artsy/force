@@ -3,6 +3,7 @@ Backbone = require 'backbone'
 AuthModalView = require '../auth_modal/view.coffee'
 State = require './models/state.coffee'
 ContactPartnerView = require '../contact/contact_partner.coffee'
+{ acquireArtwork } = require '../acquire/view.coffee'
 template = -> require('./templates/index.jade') arguments...
 
 module.exports = class AuctionArtworksView extends Backbone.View
@@ -12,6 +13,7 @@ module.exports = class AuctionArtworksView extends Backbone.View
     'click .js-toggle-artworks-sort': 'setState'
     'click .js-bid-button': 'authOrPass'
     'click .js-inquiry-button': 'inquire'
+    'click .js-acquire-button': 'acquire'
 
   initialize: ({ @user }) ->
     @state = new State
@@ -54,10 +56,20 @@ module.exports = class AuctionArtworksView extends Backbone.View
   inquire: (e) ->
     e.preventDefault()
 
-    id = $(e.currentTarget).data 'id'
-    artwork = @collection.get id
+    artwork = @collection.get $(e.currentTarget).data('id')
 
     new ContactPartnerView artwork: artwork, partner: artwork.related().partner
+
+  acquire: (e) ->
+    e.preventDefault()
+
+    $target = $(e.currentTarget).addClass 'is-loading'
+    artwork = @collection.get $target.data('id')
+
+    # Redirect to artwork page if artwork has multiple editions
+    return window.location = artwork.href() if artwork.get 'edition_sets_count' > 1
+
+    acquireArtwork artwork, $target
 
   render: ->
     @$el.html template

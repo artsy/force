@@ -16,8 +16,7 @@ module.exports =
       editionSetId: editionSetId
       success: (response) =>
         location.href = "/order/#{response.get('id')}/resume?token=#{response.get('token')}"
-        $target?.removeClass('loading')
         @acquiring = false
       error: =>
         @acquiring = false
-        $target?.removeClass('loading')
+        $target?.removeClass('is-loading').attr('data-state', 'error')
