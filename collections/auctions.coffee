@@ -20,6 +20,7 @@ module.exports = class Auctions extends Sales
   closeds: ->
     @select (auction) ->
       # Includes auction promos
+      (auction.isAuction() or auction.isAuctionPromo()) and
       auction.isClosed()
 
   auctions: ->
