@@ -1,6 +1,7 @@
 Notice = require '../../notice/index.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 Dismisser = require '../../has_seen/dismisser.coffee'
+mediator = require '../../../lib/mediator.coffee'
 
 pastCutoff = (user) ->
   userCreatedAt = new Date(user.get('created_at')).getTime()
@@ -9,7 +10,10 @@ pastCutoff = (user) ->
 
 module.exports = ->
   if user = CurrentUser.orNull() # Only display if logged in
+
     dismisser = new Dismisser name: 'pp-5-29-15', limit: 5
+    tick = _.after 2, dismisser.tick
+    mediator.on 'session:start', tick
 
     return if dismisser.dismissed()
 
@@ -24,9 +28,7 @@ module.exports = ->
         were recently updated.
       "
 
-      notice.on 'open', ->
-        dismisser.tick()
-      notice.on 'close', ->
-        dismisser.dismiss()
+      notice.on 'open', tick
+      notice.on 'close', dismisser.dismiss
 
       notice.open()

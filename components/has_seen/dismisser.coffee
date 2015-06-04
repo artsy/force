@@ -9,7 +9,7 @@ module.exports = class Dismisser
   constructor: (options = {}) ->
     { @name, @limit, @expires } = _.defaults options, @defaults
 
-  tick: ->
+  tick: =>
     return if @dismissed()
     @persist @get() + 1
 
@@ -19,7 +19,7 @@ module.exports = class Dismisser
   get: ->
     parseInt(Cookies.get @name) or 0
 
-  dismiss: ->
+  dismiss: =>
     @persist @limit
 
   dismissed: ->

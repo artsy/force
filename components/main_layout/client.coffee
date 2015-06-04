@@ -3,6 +3,7 @@ Backbone.$ = $
 _ = require 'underscore'
 Cookies = require 'cookies-js'
 imagesLoaded = require 'imagesloaded'
+mediator = require '../../lib/mediator.coffee'
 HeaderView = require './header/view.coffee'
 FooterView = require './footer/view.coffee'
 sd = require('sharify').data
@@ -50,6 +51,7 @@ setupAnalytics = ->
   # Log a visit once per session
   unless Cookies.get('active_session')?
     Cookies.set 'active_session', true
+    mediator.trigger 'session:start'
     analytics.track.funnel if sd.CURRENT_USER
       'Visited logged in'
     else
