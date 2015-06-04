@@ -1,3 +1,4 @@
+_ = require 'underscore'
 { API_URL } = require('sharify').data
 Sales = require './sales.coffee'
 Auction = require '../models/auction.coffee'
@@ -8,29 +9,41 @@ module.exports = class Auctions extends Sales
   url: "#{API_URL}/api/v1/sales?is_auction=true"
 
   previews: ->
-    @select (auction) ->
-      auction.isAuction() and
-      auction.isPreview()
+    @chain()
+    .select (auction) ->
+      auction.isAuction() and auction.isPreview()
+    .sortBy (auction) ->
+      Date.parse auction.get('start_at')
+    .value()
 
   opens: ->
-    @select (auction) ->
-      auction.isAuction() and
-      auction.isOpen()
+    @chain()
+    .select (auction) ->
+      auction.isAuction() and auction.isOpen()
+    .sortBy (auction) ->
+      -(Date.parse auction.get('end_at'))
+    .value()
 
   closeds: ->
-    @select (auction) ->
+    @chain()
+    .select (auction) ->
       # Includes auction promos
-      (auction.isAuction() or auction.isAuctionPromo()) and
-      auction.isClosed()
+      (auction.isAuction() or auction.isAuctionPromo()) and auction.isClosed()
+    .sortBy (auction) ->
+      -(Date.parse auction.get('end_at'))
+    .value()
 
   auctions: ->
     @select (auction) ->
       auction.isAuction()
 
   currentAuctionPromos: ->
-    @select (auction) ->
-      auction.isAuctionPromo() and
-      not auction.isClosed()
+    @chain()
+    .select (auction) ->
+      auction.isAuctionPromo() and not auction.isClosed()
+    .sortBy (auction) ->
+      -(Date.parse auction.get('end_at'))
+    .value()
 
   next: ->
-    @previews()[0]
+    _.first @previews()

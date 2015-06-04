@@ -19,8 +19,6 @@ setupUser = (user, auction) ->
 @index = (req, res, next) ->
   auctions = new Auctions
   auctions.url = "#{API_URL}/api/v1/sales" # Sans is_auction param due to promo sales
-  auctions.comparator = (auction) ->
-    -(Date.parse auction.get('end_at'))
 
   auctions.fetch(
     cache: true
