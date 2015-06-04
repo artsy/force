@@ -67,7 +67,6 @@ describe 'AuctionDetailView', ->
       it 'handles an undefined user, during auction preview', ->
         @auction.set 'clockState', 'preview'
         @view.user = undefined
-        @auction.__bidButtonState__ = undefined
         @view.render()
         $button = @view.$('.abf-button')
         $button.text().should.equal 'Register to bid'
@@ -76,7 +75,6 @@ describe 'AuctionDetailView', ->
       it 'handles an unregistered user, during auction preview', ->
         @auction.set 'clockState', 'preview'
         @user.set 'registered_to_bid', false
-        @auction.__bidButtonState__ = undefined
         @view.render()
         $button = @view.$('.abf-button')
         $button.text().should.equal 'Register to bid'
@@ -85,7 +83,6 @@ describe 'AuctionDetailView', ->
       it 'handles a registered user, during auction preview', ->
         @auction.set 'clockState', 'preview'
         @user.set 'registered_to_bid', true
-        @auction.__bidButtonState__ = undefined
         @view.render()
         $button = @view.$('.abf-button')
         $button.text().should.equal 'Registered to bid'
@@ -95,7 +92,6 @@ describe 'AuctionDetailView', ->
 
       it 'handles open auctions', ->
         @auction.set 'clockState', 'open'
-        @auction.__bidButtonState__ = undefined
         @view.render()
         $button = @view.$('.abf-button')
         $button.text().should.equal 'Bid'
@@ -103,7 +99,6 @@ describe 'AuctionDetailView', ->
 
       it 'handles closed auctions', ->
         @auction.set 'clockState', 'closed'
-        @auction.__bidButtonState__ = undefined
         @view.render()
         $button = @view.$('.abf-button')
         $button.text().should.equal 'Online Bidding Closed'

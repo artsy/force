@@ -51,5 +51,5 @@
 
   unless auction.isAuctionPromo() && !auction.isAuctionPromoInquirable()
     .ala-bidding
-      - button = auction.bidButtonState(user, artwork)
+      - button = auction.actionButtonState(user, artwork)
       .ala-bid-button: include button

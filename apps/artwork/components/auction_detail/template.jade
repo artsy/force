@@ -56,10 +56,10 @@ else
 
       button.avant-garde-button-black.abf-button(
         type= 'submit'
-        class= auction.bidButtonState(user).classes
-        disabled= !auction.bidButtonState(user).enabled
+        class= auction.actionButtonState(user, artwork).classes
+        disabled= !auction.actionButtonState(user, artwork).enabled
       )
-        = auction.bidButtonState(user).label
+        = auction.actionButtonState(user, artwork).label
 
   if auction.isOpen() && artwork.get('acquireable')
     .artwork-meta-price

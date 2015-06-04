@@ -122,8 +122,6 @@ module.exports = class Sale extends Backbone.Model
     else
       {}
 
-  bidButtonState: @::actionButtonState
-
   date: (attr) ->
     moment(@get attr)
 

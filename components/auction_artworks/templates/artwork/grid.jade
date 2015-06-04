@@ -53,5 +53,5 @@
               .aabs-price
                 != artwork.saleMessage() || '&nbsp;'
 
-        - button = auction.bidButtonState(user, artwork)
+        - button = auction.actionButtonState(user, artwork)
         .aga-bid-button: include button
