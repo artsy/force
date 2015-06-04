@@ -1,44 +1,48 @@
 Backbone = require 'backbone'
 
 module.exports = class Notice extends Backbone.View
-  container: '#main-layout-notice'
   className: 'notice-message'
 
   events:
     'click .notice-message-close': 'close'
 
-  template: -> """
+  template: -> "
     <span>#{@message}</span>
     <a class='notice-message-close icon-close'></a>
-  """
+  "
 
-  initialize: (options = {}) ->
-    throw new Error('You must pass a message option') unless options.message
-    { @message } = options
-    @open()
+  initialize: ({ @message }) -> #
 
   cacheSelectors: ->
-    @$container = $(@container)
-    @$body = $('body')
-    @$layout = $('#main-layout-container')
     @$hero = $('#home-hero-units')
+    @$header = $('#main-layout-header')
+    @$layout = $('#main-layout-container')
+    @$foreground = $('#home-foreground')
+
+  render: ->
+    @$el.html @template()
+    this
 
   open: ->
     @cacheSelectors()
-    @$el.html @template()
-    @$container.prepend @$el
+    @render()
+    @$header.prepend @$el
     @adjustLayout()
+    @trigger 'open'
 
   adjustLayout: ->
     @originalMargin = parseInt(@$layout.css 'margin-top')
-    @height = @$el.outerHeight()
-    @$hero.css 'top', "#{@height}px"
-    @$layout.css 'margin-top', "#{@originalMargin + @height}px"
+    height = @$el.outerHeight()
+    @$hero.css 'top', "#{height}px"
+    @$foreground.css 'margin-top', @$hero.outerHeight() + height
+    @$layout.css 'margin-top', "#{@originalMargin + height}px"
 
   restoreLayout: ->
     @$hero.css 'top', 0
+    @$foreground.css 'margin-top', @$hero.outerHeight()
     @$layout.css 'margin-top', "#{@originalMargin}px"
 
-  close: =>
+  close: ->
     @restoreLayout()
     @remove()
+    @trigger 'close'

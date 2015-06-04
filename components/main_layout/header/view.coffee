@@ -11,6 +11,7 @@ FlashMessage = require '../../flash/index.coffee'
 PublishModal = require '../../publish_modal/view.coffee'
 Profile = require '../../../models/profile.coffee'
 activatePulldowns = require '../../hover_pulldown/index.coffee'
+maybePopUpPolicyNotice = require './policy.coffee'
 
 module.exports = class HeaderView extends Backbone.View
   events:
@@ -21,6 +22,8 @@ module.exports = class HeaderView extends Backbone.View
 
   initialize: ({ @$window, @$body }) ->
     @$welcomeHeader = @$('#main-layout-welcome-header')
+
+    maybePopUpPolicyNotice()
 
     @searchBarView = new SearchBarView
       el: @$('#main-layout-search-bar-container')
