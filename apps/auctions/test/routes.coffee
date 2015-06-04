@@ -17,7 +17,8 @@ describe 'Auctions routes', ->
   describe '#index', ->
     before ->
       @sales = [
-        @sneakySale = new Auction fabricate 'sale', is_auction: false, auction_state: 'open', id: 'sneaky-sale', eligible_sale_artworks_count: 1
+        @sneakyOpenSale = new Auction fabricate 'sale', is_auction: false, auction_state: 'open', id: 'sneaky-open-sale', eligible_sale_artworks_count: 1
+        @sneakyPastSale = new Auction fabricate 'sale', is_auction: false, auction_state: 'closed', id: 'sneaky-past-sale', eligible_sale_artworks_count: 1
 
         @openAuction = new Auction fabricate 'sale', is_auction: true, auction_state: 'open', id: 'open-sale', eligible_sale_artworks_count: 1
         @closedAuction = new Auction fabricate 'sale', is_auction: true, auction_state: 'closed', id: 'closed-sale', eligible_sale_artworks_count: 1
