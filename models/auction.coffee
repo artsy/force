@@ -28,8 +28,8 @@ module.exports = class Auction extends Sale
     @calculateAuctionState _.values(@pick('start_at', 'end_at', 'offset'))...
 
   formatDateRange: (start_attr, end_attr, format = 'dddd, MMM. Do h:mma') ->
-    start = moment @get(start_attr)
-    end = moment @get(end_attr)
+    start = moment.utc @get(start_attr)
+    end = moment.utc @get(end_attr)
     if start.isSame(end, 'day')
       "#{start.format(format)}–#{end.format('h:mma')}"
     else
