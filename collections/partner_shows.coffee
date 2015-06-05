@@ -52,7 +52,7 @@ module.exports = class PartnerShows extends Backbone.Collection
   getShowsRelatedImages: ->
     Q.allSettled(
       @map (show) ->
-        show.related().installShots.fetch data: size: 1
+        show.related().installShots.fetch data: size: 1, default: false
         show.related().artworks.fetch data: size: 5
     ).then =>
       @trigger 'shows:fetchedRelatedImages'
