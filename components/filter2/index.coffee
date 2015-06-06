@@ -10,7 +10,7 @@ FilterRouter = require './router/index.coffee'
 module.exports =
 
   setupFilter: (options) ->
-    { aggregations, el, stuckParam, stuckFacet, hideForSale, includeAllWorks, dontStartHistory } = options
+    { aggregations, el, stuckParam, stuckFacet } = options
 
     queryParams = qs.parse(location.search.replace(/^\?/, ''))
     params = new Backbone.Model _.extend queryParams,
@@ -28,8 +28,6 @@ module.exports =
       collection: collection
       params: params
       stuckFacet: stuckFacet
-      hideForSale: hideForSale
-      includeAllWorks: includeAllWorks
 
     router = new FilterRouter
       params: params
@@ -41,6 +39,6 @@ module.exports =
       success: ->
         collection.trigger 'initial:fetch'
 
-    Backbone.history.start pushState: true unless dontStartHistory
+    Backbone.history.start pushState: true
 
     { params: params, collection: collection, view: view, router: router }

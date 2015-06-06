@@ -10,7 +10,6 @@ module.exports = class BrowseRouter extends Backbone.Router
     ':id/overview(/)': 'booths'
     ':id/browse/artists(/)': 'artists'
     ':id/browse/artist/:artist_id(/)': 'artist'
-    ':id/browse/artworks(/)': 'artworks'
     ':id/browse/booths(/)': 'booths'
     ':id/browse/booths/region/:region(/)': 'boothsRegion'
     ':id/browse/booths/section/:section(/)': 'boothsSection'
@@ -25,11 +24,6 @@ module.exports = class BrowseRouter extends Backbone.Router
       fair: @fair
       profile: @profile
       router: @
-
-    Backbone.history.start pushState: true
-
-  artworks: =>
-    @artworkParams.trigger 'change'
 
   artist: (id, artistId) =>
     @boothParams.set artist: artistId
