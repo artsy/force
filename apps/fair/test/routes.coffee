@@ -1,4 +1,4 @@
-{ fabricate, fabricate2 } = require 'antigravity'
+{ fabricate } = require 'antigravity'
 _ = require 'underscore'
 sinon = require 'sinon'
 Backbone = require 'backbone'
@@ -66,7 +66,6 @@ describe 'Fair routes', ->
 
     it 'renders the overview template', ->
       routes.overview @req, @res
-      _.last(Backbone.sync.args)[2].success fabricate2 'filter_artworks'
       @res.locals.sd.SECTION.should.equal 'overview'
       @res.render.args[0][0].should.equal 'overview'
 
@@ -124,8 +123,8 @@ describe 'Fair routes', ->
 
     it 'renders index', ->
       routes.browse @req, @res
-      _.last(Backbone.sync.args)[2].success fabricate2 'filter_artworks'
       @res.render.args[0][0].should.equal 'index'
+
 
   describe '#showRedirect', ->
 

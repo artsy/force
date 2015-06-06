@@ -5,7 +5,7 @@ path = require 'path'
 fs = require 'fs'
 Backbone = require 'backbone'
 { AToZ } = require 'artsy-backbone-mixins'
-{ fabricate, fabricate2 } = require 'antigravity'
+{ fabricate } = require 'antigravity'
 Fair = require '../../../models/fair'
 Profile = require '../../../models/profile'
 CoverImage = require '../../../models/cover_image'
@@ -16,7 +16,6 @@ Item = require '../../../models/item'
 Items = require '../../../collections/items'
 OrderedSet = require '../../../models/ordered_set'
 OrderedSets = require '../../../collections/ordered_sets'
-FilterArtworks = require '../../../collections/filter_artworks.coffee'
 FeedItem = require '../../../components/feed/models/feed_item'
 cheerio = require 'cheerio'
 sinon = require 'sinon'
@@ -222,8 +221,6 @@ describe 'Fair', ->
       }
 
       filteredSearchColumns = fair.filteredSearchColumns filteredSearchOptions
-      @collection = new FilterArtworks fabricate2('filter_artworks'), parse: true
-      
       @template = render('overview')
         sd:
           APP_URL: 'http://localhost:5000'
@@ -236,11 +233,6 @@ describe 'Fair', ->
         coverImage: coverImage
         primarySets: primarySets
         asset: (->)
-        _: _
-        counts: @collection.counts
-        params: new Backbone.Model
-        filterLabelMap: require '../../../components/filter2/dropdown/label_map.coffee'
-        _s: _s
 
       nestedFilteredSearchOptions = new Backbone.Model {
         related_gene:
@@ -271,11 +263,6 @@ describe 'Fair', ->
         coverImage: coverImage
         primarySets: primarySets
         asset: (->)
-        _: _
-        counts: @collection.counts
-        params: new Backbone.Model
-        filterLabelMap: require '../../../components/filter2/dropdown/label_map.coffee'
-        _s: _s
 
     it 'renders without errors', ->
       $ = cheerio.load @template
@@ -312,11 +299,6 @@ describe 'Fair', ->
         coverImage: coverImage
         primarySets: primarySets
         asset: (->)
-        _: _
-        counts: @collection.counts
-        params: new Backbone.Model
-        filterLabelMap: require '../../../components/filter2/dropdown/label_map.coffee'
-        _s: _s
       $.html('.fair-overview-post-container').should.containEql 'fair-editorial-3-up'
 
     it 'renders a editorial even when missing a set', ->
@@ -336,11 +318,6 @@ describe 'Fair', ->
         coverImage: coverImage
         primarySets: primarySets
         asset: (->)
-        _: _
-        counts: @collection.counts
-        params: new Backbone.Model
-        filterLabelMap: require '../../../components/filter2/dropdown/label_map.coffee'
-        _s: _s
       $.html('.fair-overview-post-container').should.containEql 'fair-editorial-2-up'
 
     it 'renders a editorial even when missing a set w/ >= 4 items', ->
@@ -360,11 +337,6 @@ describe 'Fair', ->
         coverImage: coverImage
         primarySets: primarySets
         asset: (->)
-        _: _
-        counts: @collection.counts
-        params: new Backbone.Model
-        filterLabelMap: require '../../../components/filter2/dropdown/label_map.coffee'
-        _s: _s
       $.html().should.containEql 'fair-overview-curator'
 
   describe 'exhibitors columns', ->

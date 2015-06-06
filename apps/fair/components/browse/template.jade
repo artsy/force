@@ -25,7 +25,8 @@ mixin exhibitors-a-to-z
     .filter-fixed-header-nav
       include ../booths/nav
       label By Work:
-      include ../../../../components/filter2/dropdown_group/template
+      - filterRoot = fair.href() + '/browse/artworks'
+      include ../../../../components/filter/artworks_nav/template
       label By Artists:
       a#fair-filter-all-artists.filter-button(
         href="#{fair.href()}/browse/artists"
@@ -40,7 +41,7 @@ mixin exhibitors-a-to-z
       h1.large-garamond-header
       .artworks
         h1#fair-browse-artworks-header.large-garamond-header
-        include ../../../../components/filter2/template
+        include ../../../../components/filter/artworks/template
     .browse-section.artist
       h1.large-garamond-header
       .feed

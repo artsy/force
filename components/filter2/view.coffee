@@ -16,8 +16,6 @@ module.exports = class FilterView extends Backbone.View
     includeFixedHeader: true
     facets: ['price_range', 'dimension_range', 'medium']
     noInfiniteScroll: false
-    hideForSale: false
-    includeAllWorks: false
     pageSize: 10
 
   events:
@@ -30,8 +28,6 @@ module.exports = class FilterView extends Backbone.View
       @includeFixedHeader,
       @facets,
       @noInfiniteScroll,
-      @hideForSale,
-      @includeAllWorks
       @pageSize } = _.defaults options, @defaults
 
     @initSubViews()
@@ -57,8 +53,6 @@ module.exports = class FilterView extends Backbone.View
       collection: @collection
       params: @params
       facets: @facets
-      hideForSale: @hideForSale
-      includeAllWorks: @includeAllWorks
 
     new HeadlineView
       el: @$('.filter-heading')
