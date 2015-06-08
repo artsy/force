@@ -24,7 +24,7 @@ redirect = (req, res, next) ->
     next()
 
 router.get '/apply*', isResponsive
-router.get /^\/gallery-insights(?!(-magazine))/, isResponsive
+router.get '/gallery-insights/opt-in' , isResponsive
 router.get '/auction/:id/buyers-premium', isResponsive
 router.get '/auction-registration/:id', isResponsive
 router.get '/order', isResponsive
