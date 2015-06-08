@@ -13,7 +13,7 @@ attachRelatedShows = require '../components/related_shows/index.coffee'
 setupSaveControls = require '../components/save_artworks/index.coffee'
 RelatedArticlesView = require '../components/related_articles/view.coffee'
 MapModal = require '../components/map_modal/map.coffee'
-ZoomView = require '../../../components/modal/zoom.coffee'
+zoom = require '../../../components/zoom/index.coffee'
 
 module.exports.init = ->
   show = new PartnerShow SHOW
@@ -26,7 +26,7 @@ module.exports.init = ->
     }, (instance) ->
       instance.cells.flickity.on 'staticClick', (event, pointer, cellElement, cellIndex) ->
         if src = $(cellElement).find('img').attr('src')
-          new ZoomView imgSrc: src
+          zoom src
 
   setupSaveControls show.related().artworks
   attachFollowArtists show.related().artists

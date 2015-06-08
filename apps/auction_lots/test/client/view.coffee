@@ -1,5 +1,3 @@
-_ = require 'underscore'
-rewire = require 'rewire'
 benv = require 'benv'
 Backbone = require 'backbone'
 sinon = require 'sinon'
@@ -12,8 +10,8 @@ Artworks = require '../../../../collections/artworks'
 
 describe 'Auction results client-side code', ->
   before (done) ->
-    benv.setup =>
-      benv.expose { $: benv.require 'jquery' }
+    benv.setup ->
+      benv.expose $: benv.require 'jquery'
       Backbone.$ = $
       done()
 
@@ -36,7 +34,7 @@ describe 'Auction results client-side code', ->
     }, =>
       AuctionResultsView = benv.requireWithJadeify (resolve __dirname, '../../client/view'), []
 
-      AuctionResultsView.__set__ 'ZoomView', @zoomStub = sinon.stub()
+      AuctionResultsView.__set__ 'zoom', @zoomStub = sinon.stub()
       AuctionResultsView.__set__ 'FillwidthView', Backbone.View
       AuctionResultsView.__get__('FillwidthView')::hideSecondRow = (@hideSecondRowStub = sinon.stub())
       AuctionResultsView.__set__ 'mediator', (@mediatorStub = trigger: sinon.stub())
@@ -44,26 +42,26 @@ describe 'Auction results client-side code', ->
 
       @view = new AuctionResultsView { el: $('body'), model: new Artist fabricate 'artist' }
 
-  xdescribe '#zoomImage', ->
-    it 'should instantiate a new ZoomView when a thumbnail is clicked', ->
-      @zoomStub.called.should.not.be.ok
+  describe '#zoomImage', ->
+    it 'should instantiate a new zoom when a thumbnail is clicked', ->
+      @zoomStub.called.should.be.false
       @view.$('.auction-lot-image-zoom').click()
-      @zoomStub.called.should.be.ok
+      @zoomStub.called.should.be.true
 
-    it 'passes the original sized image to the ZoomView', ->
+    it 'passes the original sized image to the zoom', ->
       @view.$('.auction-lot-image-zoom').click()
-      @zoomStub.args[0][0].imgSrc.should.equal @auctionLots.at(0).imageUrl('original')
+      @zoomStub.args[0][0].should.equal @auctionLots.at(0).imageUrl('original')
 
   describe '#onRowClick', ->
     it 'intercepts any clicks to the row if the user is logged out', ->
-      @mediatorStub.trigger.called.should.not.be.ok
+      @mediatorStub.trigger.called.should.be.false
       @view.user = null
       @view.$('.auction-lot').first().click()
       @mediatorStub.trigger.args[0][0].should.equal 'open:auth'
       @mediatorStub.trigger.args[0][1].mode.should.equal 'register'
       @view.$('.auction-lot').first().click()
-      @mediatorStub.trigger.calledTwice.should.be.ok
+      @mediatorStub.trigger.calledTwice.should.be.true
       # 'logged in'
       @view.user = 'existy'
       @view.$('.auction-lot').first().click()
-      @mediatorStub.trigger.calledThrice.should.not.be.ok
+      @mediatorStub.trigger.calledThrice.should.be.false
