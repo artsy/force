@@ -1,10 +1,13 @@
 _ = require 'underscore'
+{ Cities, FeaturedCities } = require 'places'
 PartnerShows = require '../../../../collections/partner_shows.coffee'
 RelatedShowsView = require './view.coffee'
 
 module.exports = (type, show) ->
 
   el = $('.js-related-shows')
+
+  city = _.findWhere(Cities, name: show.formatCity())
 
   criteria =
     sort: 'end_at'
@@ -30,7 +33,6 @@ module.exports = (type, show) ->
       data = _.extend criteria, {
         featured: true
         status: 'running'
-        displayable: true
       }
       el = $('.js-featured-shows')
       title = "Featured Shows"
@@ -38,7 +40,6 @@ module.exports = (type, show) ->
       data = _.extend criteria, {
         near: show.location().getMapsLocation()
         status: 'running'
-        displayable: true
       }
       title = "Current Shows in #{show.formatCity()}"
 
@@ -46,6 +47,8 @@ module.exports = (type, show) ->
     collection: relatedShows
     title: title
     el: el
+    show: show
+    city: city
 
   relatedShows.fetch
     data: data

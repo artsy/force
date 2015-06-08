@@ -12,7 +12,6 @@ module.exports =
     Artists = require '../../../collections/artists.coffee'
     InstallShots = require '../../../collections/install_shots.coffee'
     ShowEvents = require '../../../collections/partner_show_events.coffee'
-    daySchedule = require '../../../models/partner_location_day_schedule.coffee'
     Partner = require '../../partner.coffee'
     Fair = require '../../fair.coffee'
     Profile = require '../../profile.coffee'
@@ -36,9 +35,6 @@ module.exports =
 
     showEvents = new ShowEvents @get('events')
 
-    daySchedule = new daySchedule
-    daySchedule.url = "#{API_URL}/api/v1/partner/:partner_id/location/:location_id/day_schedules"
-
     @__related__ =
       artworks: artworks
       artists: artists
@@ -48,7 +44,6 @@ module.exports =
       fair: fair
       profile: profile
       showEvents: showEvents
-      daySchedule: daySchedule
 
   rebuild: ->
     { artists, partner, fair, profile } = @related()

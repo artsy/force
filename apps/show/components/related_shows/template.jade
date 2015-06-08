@@ -37,4 +37,9 @@ for show in shows
                 alt= show.get('name')
                 onerror='this.style.display="none";'
               )
-
+if fromShowGuide && title != 'Featured Shows' && city
+  a.avant-garde-button-white.show-related-show-show-more-button( href= '/shows/#{city.slug}' )
+    = 'See more shows in ' + city.name
+if show.get('fair_location')
+  a.avant-garde-button-white.show-related-show-show-more-button( href= show.related().fair.href() )
+    = 'See more booths from ' + show.fairName()

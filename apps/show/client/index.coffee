@@ -17,7 +17,6 @@ zoom = require '../../../components/zoom/index.coffee'
 
 module.exports.init = ->
   show = new PartnerShow SHOW
-  window.testShow = show
   show.related().artworks.reset ARTWORKS
 
   if $('.js-show-installation-shot-carousel').length
