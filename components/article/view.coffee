@@ -37,7 +37,7 @@ module.exports = class ArticleView extends Backbone.View
         for id in section.ids
           new Artwork(id: id).fetch success: (artwork) =>
             @$("[data-id=#{artwork.get '_id'}]").html(
-              artworkItemTemplate artwork: artwork, artworkSize: 'larger'
+              artworkItemTemplate artwork: artwork, artworkSize: ['larger', 'large']
             )
       ).spread (artworks...) =>
         artworks = new Artworks artworks

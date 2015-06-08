@@ -39,6 +39,11 @@ describe 'Artwork Item template', ->
       $ = cheerio.load render('artwork')({ artwork: @artwork, artworkSize: 'large' })
       $('img').attr('src').should.containEql 'tall'
 
+    it 'allows arrays in artworkSize and falls back on array', ->
+      @artwork.defaultImage().set 'image_versions', ['tall', 'medium']
+      $ = cheerio.load render('artwork')({ artwork: @artwork, artworkSize: ['large', 'medium'] })
+      $('img').attr('src').should.containEql 'medium'
+
   describe 'artwork caption', ->
     beforeEach ->
       @artwork = new Artwork fabricate 'artwork'
