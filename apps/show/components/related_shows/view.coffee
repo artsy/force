@@ -21,11 +21,12 @@ module.exports = class RelatedShowsView extends Backbone.View
     filteredCollection = @collection.filter (show) ->
       show.get('displayable')
     filteredCollection = new PartnerShows filteredCollection
-    @$el.html template
-      fromShowGuide: location.search.match "from-show-guide"
-      title: @title
-      shows: filteredCollection.models
-    this
+    unless @collection.length is 0
+      @$el.html template
+        fromShowGuide: location.search.match "from-show-guide"
+        title: @title
+        shows: filteredCollection.models
+      this
 
   filterRelatedImages: ->
     relatedImagesCollection = @collection.map (show) =>
