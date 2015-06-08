@@ -24,3 +24,7 @@ describe 'Filter Artworks', ->
       _.keys(@artworks.counts.price_range)[1].should.equal "*-1000"
       _.keys(@artworks.counts.price_range)[2].should.equal "1000-5000"
 
+  describe '#sync', ->
+    it 'should map related_gene to gene_id', ->
+      @artworks.fetch data: related_gene: 'cabbie'
+      Backbone.sync.args[0][2].data.should.equal 'gene_id=cabbie'

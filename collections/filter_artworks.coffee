@@ -5,9 +5,23 @@ Artworks = require '../collections/artworks.coffee'
 { API_URL } = require('sharify').data
 
 module.exports = class FilterArtworks extends Artworks
+  defaults:
+    mapppedParams:
+      # map related gene to gene_id to preserve old links for fairs
+      related_gene: 'gene_id'
+
   url: "#{API_URL}/api/v1/filter/artworks"
 
-  sync: (method, collection, options)->
+  initialize: ( models, options = {} ) ->
+    { @mapppedParams } = _.defaults options, @defaults
+    super
+
+  sync: (method, collection, options) =>
+    for k, v of @mapppedParams
+      if val = options.data[k]
+        options.data[v] = val
+        delete options.data[k]
+
     options.data = decodeURIComponent qs.stringify(options.data, { arrayFormat: 'brackets' })
     super
 

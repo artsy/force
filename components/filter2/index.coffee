@@ -10,7 +10,7 @@ FilterRouter = require './router/index.coffee'
 module.exports =
 
   setupFilter: (options) ->
-    { aggregations, el, stuckParam, stuckFacet, hideForSale, includeAllWorks, dontStartHistory } = options
+    { aggregations, el, stuckParam, stuckFacet, hideForSale, includeAllWorks, dontStartHistory} = options
 
     queryParams = qs.parse(location.search.replace(/^\?/, ''))
     params = new Backbone.Model _.extend queryParams,
