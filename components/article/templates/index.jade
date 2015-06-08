@@ -12,6 +12,12 @@ mixin video(video)
     .article-video
       != embedVideo(video.url, videoOptions)
 
+mixin image(image)
+  figure.article-section-image
+    img( src=resize(image.url, { width: 1100 }) )
+    if image.caption
+      figcaption!= image.caption
+
 .article-container
   //- Article lead content
   if article.get('hero_section') && article.get('hero_section').type === 'video'
@@ -20,7 +26,7 @@ mixin video(video)
       +video(article.get('hero_section'))
   if article.get('hero_section') && article.get('hero_section').type === 'image'
     .article-large-format-image
-     img( src=resize(article.get('hero_section').url, { width: 1250 }) )
+      +image(article.get('hero_section'))
   h1.large-garamond-header= article.get('title')
   if article.strip('lead_paragraph')
     .article-lead-paragraph
@@ -42,17 +48,15 @@ mixin video(video)
       case section.type
         when 'text'
           .article-section-text!= section.body
-        when 'image'
-          figure.article-section-image
-            img( src=resize(section.url, { width: 1100 }) )
-            if section.caption
-              figcaption!= section.caption
         when 'artworks'
           .article-section-artworks.is-loading( data-layout=section.layout )
             .loading-spinner
             ul
               for id in section.ids
                 li( data-id=id )
+        when 'image'
+          .article-section-image
+            +image(section)
         when 'video'
           .article-section-video
             +video(section)
