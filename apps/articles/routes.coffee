@@ -11,7 +11,7 @@ request = require 'superagent'
 
 @articles = (req, res, next) ->
   Q.allSettled([
-    (verticals = new Verticals).fetch()
+    (verticals = new Verticals).fetch(data: featured: true)
     (articles = new Articles).fetch(
       data:
         published: true
