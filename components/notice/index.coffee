@@ -4,11 +4,11 @@ module.exports = class Notice extends Backbone.View
   className: 'notice-message'
 
   events:
-    'click .notice-message-close': 'close'
+    'click .js-notice-message-close': 'close'
 
   template: -> "
     <span>#{@message}</span>
-    <a class='notice-message-close icon-close'></a>
+    <a class='notice-message-close js-notice-message-close icon-close'></a>
   "
 
   initialize: ({ @message }) -> #
