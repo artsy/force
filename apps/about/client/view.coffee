@@ -4,7 +4,7 @@ Backbone = require 'backbone'
 mediator = require '../../../lib/mediator.coffee'
 zoom = require '../../../components/zoom/index.coffee'
 { resize } = require '../../../components/resizer/index.coffee'
-FeedbackView = require '../../../components/contact/feedback.coffee'
+openFeedback = require '../../../components/simple_contact/feedback.coffee'
 Cycle = require '../../../components/cycle/index.coffee'
 
 module.exports = class AboutView extends Backbone.View
@@ -148,7 +148,7 @@ module.exports = class AboutView extends Backbone.View
 
   contactSpecialistModal: (e) ->
     e.preventDefault()
-    new FeedbackView
+    openFeedback()
 
   iphoneScroll: =>
     windowBottom = @$window.scrollTop() + @$window.height()
