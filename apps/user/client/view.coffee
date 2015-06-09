@@ -4,7 +4,7 @@ module.exports = class UserSettingsView extends Backbone.View
   descriptions:
     'user/edit': 'This is your general account information and communication preferences.'
     'collector/edit': 'When you contact galleries through Artsy, this information may be shared with them as a brief introduction.'
-    'profile/edit': 'This information will be public on Artsy if your public profile is enabled. Enabling your public profile also allows others to view your posts on Artsy and the artists you follow.'
+    'profile/edit': 'This information will be public on Artsy if your public profile is enabled. Enabling your public profile also lets others view the number of users that follow you.'
 
   events:
     'click .garamond-tab': 'changeTab'
