@@ -6,12 +6,11 @@ module.exports = class Sticky
     @$window = $(window)
     @$document = $(document)
 
+    @$window.resize _.debounce(_.bind(@rebuild, this), 250)
+    @$document.on 'ajaxStop', => _.defer => @rebuild()
+
     return if Stickyfill?
     require './vendor/stickyfill.js'
-
-    # rebuild the sticky menu when ajax events stop firing
-    # defer to wait after render
-    @$document.on 'ajaxStop', => _.defer => @rebuild()
 
   add: ($el) ->
     _.defer =>
@@ -24,7 +23,7 @@ module.exports = class Sticky
     $el.attr 'style', "position: -webkit-sticky; position: sticky; top: #{@viewportTop()}px"
 
   headerHeight: ->
-    $('#main-layout-header').height()
+    (@$header ?= $('#main-layout-header')).height()
 
   visibleArea: ->
     @$window.height() - @headerHeight()
@@ -33,4 +32,11 @@ module.exports = class Sticky
     if isTouchDevice() then 0 else @headerHeight()
 
   rebuild: ->
-    Stickyfill?.rebuild()
+    return unless Stickyfill?
+
+    top = @viewportTop()
+    Stickyfill.stickies.map (sticky) =>
+      sticky.css.top = top
+      $(sticky.node).css 'top', top
+
+    Stickyfill.rebuild()
