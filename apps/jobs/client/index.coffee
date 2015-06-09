@@ -8,6 +8,10 @@ module.exports.init = ->
     sticky = new Sticky
     sticky.add $('.js-jobs-category-nav')
 
+    # Adjust height for `pp-5-29-15` notice
+    $(document).on 'click', '.js-notice-message-close', ->
+      sticky.rebuild()
+
   cycle = new Cycle $el: $('.js-jobs-images-cycle'), selector: 'img'
   cycle.start()
 
