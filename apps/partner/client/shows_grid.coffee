@@ -20,14 +20,17 @@ module.exports = class PartnerShowsGridView extends Backbone.View
     heading: ''
     seeAll: true
 
+  events:
+    'click .js-partner-shows-more' : 'maybeFetchAndRenderShows'
+
   initialize: (options={}) ->
     { @partner, @numberOfFeatured, @numberOfShows, @isCombined, @heading, @seeAll } = _.defaults options, @defaults
-    @initializeShows()
+    @fetchAndRenderShows()
 
   renderShows: (featured=[], current=[], upcoming=[], past=[]) ->
     numberOfAllShows = _.reduce(arguments, ( (m, n) -> m + n.length ), 0)
     return @$el.hide() if numberOfAllShows is 0
-    console.log featured.concat current, upcoming, past
+
     @ensurePosterImages featured.concat current, upcoming, past
     @$el.html template
       partner: @partner
@@ -58,27 +61,31 @@ module.exports = class PartnerShowsGridView extends Backbone.View
         if size is min then $name.css('word-wrap', 'break-word'); break
       $name.css('visibility', 'visible')
 
-  #
-  # Recursively fetch enough featured/other shows to display.
-  #
-
-  initializeShows: ->
+  fetchAndRenderShows: (page=1)->
     partnerShows = new PartnerShows()
     partnerShows.url = "#{@partner.url()}/shows"
     partnerShows.fetch
-      data: { sort: "-featured,-end_at", size: 100 }
+      data: { sort: "-featured,-end_at", size: 100, page: page }
       success: =>
         featured = if partnerShows.featured() && @numberOfFeatured is 1 then [partnerShows.featured()] else []
         exclude = if featured then featured else []
-        current = _.first(partnerShows.current(exclude).models, 31)
-        upcoming = _.first(partnerShows.upcoming(exclude).models, 31)
-        past = _.first(partnerShows.past(exclude).models, 31)
+
+        @current = partnerShows.current(exclude).models
+        @upcoming = partnerShows.upcoming(exclude).models
+        @past = partnerShows.past(exclude).models
+
         if @isCombined
           # order of getting combined shows: current -> upcoming -> past
-          shows = current.concat(upcoming, past).slice(0, @numberOfShows)
+          shows = @current.concat(@upcoming, @past).slice(0, @numberOfShows)
           return @renderShows featured, shows
         else
-          return @renderShows featured, current, upcoming, past
+          return @renderShows featured, @current, @upcoming, @past
+
+  maybeFetchAndRenderShows: ->
+    console.log 'here?'
+    $('.js-partner-shows-more').hide()
+    $('.partner-shows-container').append 'Hello.'
+
 
   # xinitializeShows: (featured=[], current=[], upcoming=[], past=[], page=1, size=30) ->
   #   partnerShows = new PartnerShows()
