@@ -53,4 +53,8 @@ header.show-header( class= hasCarousel ? 'has-carousel' : undefined )
           .show-events
             each showEvent in show.related().showEvents.models
               .show-event
-                = showEvent.formatEvent()
+                  p
+                    | #{showEvent.eventType()}:
+                    if showEvent.has('title')
+                      em #{showEvent.get('title')},
+                    = showEvent.runningDates()

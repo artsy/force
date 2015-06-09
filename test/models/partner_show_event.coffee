@@ -16,11 +16,17 @@ describe 'PartnerShowEvent', ->
   afterEach ->
     Backbone.sync.restore()
 
-  describe '#formatEvents', ->
+  describe '#eventType', ->
 
-    it 'returns correctly formatted events', ->
-      formattedEvents =  @partnerShow.related().showEvents.invoke 'formatEvent'
+    it 'returns correctly formatted event types', ->
+      formattedEvents =  @partnerShow.related().showEvents.invoke 'eventType'
+      formattedEvents.should.be.match [ 'Opening Reception', 'Event' ]
+
+  describe '#runningDates', ->
+
+    it 'returns correctly formatted running dates', ->
+      formattedEvents =  @partnerShow.related().showEvents.invoke 'runningDates'
       formattedEvents.should.be.match [
-        'Opening Reception: January 7, 8pm - 9pm',
-        'Inez and Vinoodh Gallery Walkthrough: January 8, 7:15pm - January 9, 2am'
+        'January 7th, 8pm - 9pm',
+        'January 8th, 7:15pm - January 9th, 2am'
       ]
