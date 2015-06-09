@@ -1,7 +1,5 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-mediator = require '../../lib/mediator.coffee'
-{ fade } = require '../mixins/transition.coffee'
 template = require './templates/index.coffee'
 
 module.exports = class Modalize extends Backbone.View
@@ -15,8 +13,6 @@ module.exports = class Modalize extends Backbone.View
 
   initialize: (options = {}) ->
     { @subView, @dimensions } = _.defaults options, @defaults
-
-    @listenTo mediator, 'modal:close', @close
 
   state: (state, callback = $.noop) ->
     _.defer =>
