@@ -2,7 +2,7 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 { isTouchDevice } = require '../../../components/util/device.coffee'
 mediator = require '../../../lib/mediator.coffee'
-ZoomView = require '../../../components/modal/zoom.coffee'
+zoom = require '../../../components/zoom/index.coffee'
 { resize } = require '../../../components/resizer/index.coffee'
 FeedbackView = require '../../../components/contact/feedback.coffee'
 Cycle = require '../../../components/cycle/index.coffee'
@@ -30,7 +30,7 @@ module.exports = class AboutView extends Backbone.View
 
   zoomImage: (e) ->
     e.preventDefault()
-    new ZoomView imgSrc: $(e.currentTarget).attr 'href'
+    zoom $(e.currentTarget).attr('href')
 
   signup: (e) ->
     e.preventDefault()

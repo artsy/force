@@ -1,0 +1,78 @@
+@import '../../stylus_lib'
+
+body.is-with-modal
+  overflow hidden
+
+.modalize
+  z-index zindex-modal
+  transition opacity 0.25s
+  opacity 0
+
+  // Fade transition
+  &[data-state='open']
+  &.is-open
+    opacity 1
+    > .modalize-backdrop > .modalize-dialog
+      // Avoid transitioning the initial open
+      transition opacity 0.25s, width 0
+
+  // Loading state
+  &.is-loading
+    .modalize-backdrop::before
+      display block
+      content ''
+      spinner(20px, 5px, white)
+
+    .modalize-dialog
+      opacity 0
+
+.modalize
+  position fixed
+  top 0
+  right 0
+  bottom 0
+  left 0
+
+.modalize-backdrop
+  background-color rgba(black, 0.5)
+  text-align center
+
+.has-nobackdrop > .modalize-backdrop
+  background-color transparent
+
+.modalize-dialog
+  display inline-block
+  position relative
+  text-align left
+  max-width 90%
+  max-height 90%
+  margin 0 auto
+  overflow-y auto
+  background-color white
+  &.is-notransition
+    transition none !important
+
+.modalize-close
+  position absolute
+  top 25px
+  right 25px
+  cursor pointer
+  transition opacity 0.25s
+  opacity 0.15
+  z-index 2
+  prevent-content-shift()
+  &:hover
+    opacity 1
+  > i
+    font-size 26px
+    line-height @font-size
+
+.modalize-dialog
+.modalize-body
+  transition opacity 0.25s
+  &[data-state='fade-out']
+  &.is-fade-out
+    opacity 0
+  &[data-state='fade-in']
+  &.is-fade-in
+    opacity 1
