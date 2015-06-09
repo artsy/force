@@ -27,7 +27,7 @@ module.exports = class PartnerShowsGridView extends Backbone.View
   renderShows: (featured=[], current=[], upcoming=[], past=[]) ->
     numberOfAllShows = _.reduce(arguments, ( (m, n) -> m + n.length ), 0)
     return @$el.hide() if numberOfAllShows is 0
-
+    console.log featured.concat current, upcoming, past
     @ensurePosterImages featured.concat current, upcoming, past
     @$el.html template
       partner: @partner
@@ -61,36 +61,70 @@ module.exports = class PartnerShowsGridView extends Backbone.View
   #
   # Recursively fetch enough featured/other shows to display.
   #
-  initializeShows: (featured=[], current=[], upcoming=[], past=[], page=1, size=30) ->
+
+  initializeShows: ->
     partnerShows = new PartnerShows()
     partnerShows.url = "#{@partner.url()}/shows"
     partnerShows.fetch
-      data: { sort: "-featured,-end_at", page: page, size: size }
+      data: { sort: "-featured,-end_at", size: 100 }
       success: =>
-        if @numberOfFeatured - featured.length > 0
-          f = partnerShows.featured()
-          featured.push f if f? # only add it if it's really something
+        featured = if partnerShows.featured() && @numberOfFeatured is 1 then [partnerShows.featured()] else []
+        exclude = if featured then featured else []
+        current = _.first(partnerShows.current(exclude).models, 31)
+        upcoming = _.first(partnerShows.upcoming(exclude).models, 31)
+        past = _.first(partnerShows.past(exclude).models, 31)
+        if @isCombined
+          # order of getting combined shows: current -> upcoming -> past
+          shows = current.concat(upcoming, past).slice(0, @numberOfShows)
+          return @renderShows featured, shows
+        else
+          return @renderShows featured, current, upcoming, past
 
-        exclude = if f then [f] else []
+  # xinitializeShows: (featured=[], current=[], upcoming=[], past=[], page=1, size=30) ->
+  #   partnerShows = new PartnerShows()
+  #   partnerShows.url = "#{@partner.url()}/shows"
+  #   partnerShows.fetch
+  #     data: { sort: "-featured,-end_at", page: page, size: size }
+  #     success: =>
+  #       console.log "Number of Featured: " + @numberOfFeatured
+  #       console.log "featured.length: " + featured.length
+  #       if @numberOfFeatured - featured.length > 0
+  #         f = partnerShows.featured()
+  #         featured.push f if f? # only add it if it's really something
 
-        current = current.concat partnerShows.current(exclude).models
-        upcoming = upcoming.concat partnerShows.upcoming(exclude).models
-        past = past.concat partnerShows.past(exclude).models
-        numberOfShowsSoFar = current.length + upcoming.length + past.length
+  #       exclude = if f then [f] else []
 
-        if (numberOfShowsSoFar >= @numberOfShows and
-           featured.length >= @numberOfFeatured) or
-           partnerShows.length == 0
+  #       current = current.concat partnerShows.current(exclude).models
+  #       upcoming = upcoming.concat partnerShows.upcoming(exclude).models
+  #       past = past.concat partnerShows.past(exclude).models
+  #       numberOfShowsSoFar = current.length + upcoming.length + past.length
+  #       console.log "Current: " + current
+  #       console.log "Upcoming: " + upcoming
+  #       console.log "Past: " + past
+  #       console.log "numberOfShowsSoFar: " + numberOfShowsSoFar
+  #       console.log "@numberOfShows: " + @numberOfShows
 
-          if @isCombined
-            # order of getting combined shows: current -> upcoming -> past
-            shows = current.concat(upcoming, past).slice(0, @numberOfShows)
-            return @renderShows featured, shows
+  #       # Return
+  #       if (numberOfShowsSoFar >= @numberOfShows and
+  #          featured.length >= @numberOfFeatured) or
+  #          partnerShows.length == 0
+  #         console.log "numberOfShowsSoFar >= @numberOfShows: " + numberOfShowsSoFar >= @numberOfShows
+  #         console.log "featured.length: " + featured.length
+  #         console.log "numberOfFeatured: " + @numberOfFeatured
+  #         console.log "partnerShows.length: " + partnerShows.length
+  #         console.log "@isCombined: " + @isCombined
+  #         if @isCombined
 
-          if (not @isCombined) or partnerShows.length == 0
-            return @renderShows featured, current, upcoming, past
+  #           # order of getting combined shows: current -> upcoming -> past
+  #           shows = current.concat(upcoming, past).slice(0, @numberOfShows)
+  #           console.log 'going to return at combined'
+  #           return @renderShows featured, shows
 
-        return @initializeShows featured, current, upcoming, past, ++page
+  #         if (not @isCombined) or partnerShows.length == 0
+  #           console.log 'going to return at not combined'
+  #           return @renderShows featured, current, upcoming, past
+
+  #       return @initializeShows featured, current, upcoming, past, ++page
 
   ensurePosterImages: (shows) ->
     _.each shows, (show) =>
