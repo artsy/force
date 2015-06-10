@@ -1,6 +1,5 @@
 - image = artwork.defaultImage()
-- artworkSize = artworkSize instanceof Array ? artworkSize : [artworkSize]
-- imageSizes = artworkSize.concat(['tall', 'large', 'larger', 'medium', 'small'])
+- imageSizes = (artworkSize instanceof Array ? artworkSize : [artworkSize]).concat(['tall', 'large', 'larger', 'medium', 'small'])
 
 if !image.isCropped(artworkSize) && image.hasDimensions()
   .artwork-item-image( style= "padding-bottom: #{image.factor() * 100}%" )
