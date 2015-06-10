@@ -9,15 +9,6 @@ module.exports = class Order extends Backbone.Model
 
   urlRoot: -> "#{API_URL}/api/v1/me/order"
 
-  submit: (options = {}) ->
-    model = new Backbone.Model
-      credit_card_uri: options.creditCardUri
-    model.isNew = -> false
-    model.url = "#{@url()}/submit"
-    model.save null,
-      success: options?.success
-      error: options?.error
-
   # Link to sellers' additional terms, if any (max 1)
   sellersTerms: ->
     _.compact(li.sale_conditions_url for li in @get('line_items'))[0]
