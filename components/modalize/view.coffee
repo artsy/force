@@ -42,5 +42,6 @@ module.exports = class Modalize extends Backbone.View
     $('body').removeClass 'is-with-modal'
 
     @state 'close', =>
+      @subView?.remove?()
       @remove()
       callback?()
