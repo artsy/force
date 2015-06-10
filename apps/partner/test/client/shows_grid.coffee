@@ -36,8 +36,8 @@ describe 'PartnerShowsGridView', ->
           fabricate('show', { name: 'show8' } ),
           fabricate('show', { name: 'show9', status: 'upcoming' } ),
           fabricate('show', { name: 'show10', status: 'running' } ),
-          fabricate('show', { name: 'show11', displayable: false } )
-          fabricate('show', { name: 'show12', status: 'running', displayable: false } )
+          fabricate('show', { name: 'show11', displayable: false } ),
+          fabricate('show', { name: 'show12', status: 'running', displayable: false } ),
           fabricate('show', { name: 'show13', status: 'upcoming', displayable: false } )
         ]
         @partnerShows = new PartnerShows()
@@ -45,7 +45,7 @@ describe 'PartnerShowsGridView', ->
           page = options.data.page
           size = options.data.size
           @partnerShows.reset()
-          @partnerShows.add @src.slice (page-1)*size, page*size
+          @partnerShows.add @src
           options.success?()
         @PartnerShows = sinon.stub()
         @PartnerShows.returns @partnerShows
@@ -60,18 +60,19 @@ describe 'PartnerShowsGridView', ->
 
   afterEach -> benv.teardown()
 
-  describe '#initializShows', ->
+  describe '#initializeShows', ->
 
     it 'respects the dispalyable attribute of partner shows', ->
       new PartnerShowsGridView
         el: $ '.partner-shows'
         partner: @partner
 
+      console.log Backbone.sync
       @template.args[0][0].current.should.have.lengthOf 3
       @template.args[0][0].upcoming.should.have.lengthOf 2
       @template.args[0][0].past.should.have.lengthOf 4
 
-    it 'fetches 1 featued and all other shows and renders them by default', ->
+    it 'fetches 1 featured and all other shows and renders them by default', ->
       new PartnerShowsGridView
         el: $ '.partner-shows'
         partner: @partner
@@ -103,3 +104,18 @@ describe 'PartnerShowsGridView', ->
       @template.args[0][0].current.should.have.lengthOf 6
       @template.args[0][0].upcoming.should.have.lengthOf 0
       @template.args[0][0].past.should.have.lengthOf 0
+
+describe '#maybeFetchAndRenderShows', ->
+
+  it 'uses shows from remaining shows if there are enough', ->
+    new PartnerShowsGridView
+      el: $ '.partner-shows'
+      partner: @partner
+      isCombined: false
+      numberOfFeatured: 1
+
+  it 'fetches more shows if there are not enough shows', ->
+    @view = new PartnerShowsGridView
+      el: $ '.partner-shows'
+      partner: @partner
+      isCombined: false

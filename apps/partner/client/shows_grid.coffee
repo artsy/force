@@ -71,12 +71,12 @@ module.exports = class PartnerShowsGridView extends Backbone.View
       success: =>
         @page = @page + 1
         featured = if partnerShows.featured() && @numberOfFeatured is 1 then [partnerShows.featured()] else []
-        exclude = if featured then [featured] else []
+        exclude = if featured then featured else []
         current = partnerShows.current(exclude).models
         upcoming = partnerShows.upcoming(exclude).models
         past = partnerShows.past(exclude).models
 
-        # Save the remaining so we can potentially save a fetch later
+        # Save the remaining shows so we can potentially save a fetch later
         @remainingCurrent = current.slice(30)
         @remainingUpcoming = upcoming.slice(30)
         @remainingPast = past.slice(30)
@@ -89,9 +89,11 @@ module.exports = class PartnerShowsGridView extends Backbone.View
           return @renderShows featured, current, upcoming, past
 
   maybeFetchAndRenderShows: (e) ->
-    $(e.currentTarget).remove()
     type = e.currentTarget.getAttribute 'data-show-type-id'
+    $(e.currentTarget).remove()
+    $(".#{type} .loading-spinner").show()
     shows = @getRemainingShows type
+
     # Try and fetch more shows if there are less than 30
     if shows.length < 30
       moreShows = new PartnerShows()
@@ -104,22 +106,18 @@ module.exports = class PartnerShowsGridView extends Backbone.View
           @remainingCurrent.concat moreShows.current().models
           @remainingUpcoming.concat moreShows.upcoming().models
           @remainingPast.concat moreShows.past().models
-
           shows = @getRemainingShows type #get updated shows list from fetch
           displayMore = if shows.length < 30 then false else true
-          $(".#{type} .partner-shows-container").append showFiguresTemplate
-            shows: shows
-            type: type
-            displayMore: displayMore
-            isFeatured: false
-          @sliceRemaining type
     else
-      $(".#{type} .partner-shows-container").append showFiguresTemplate
-        shows: shows
-        type: type
-        displayMore: true
-        isFeatured: false
-      @sliceRemaining type
+      displayMore = false
+
+    $(".#{type} .loading-spinner").remove()
+    $(".#{type} .partner-shows-container").append showFiguresTemplate
+      shows: shows
+      type: type
+      displayMore: displayMore
+      isFeatured: false
+    @sliceRemaining type
 
   getRemainingShows: (type) ->
     switch type
