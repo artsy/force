@@ -2,6 +2,7 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 PartnerShows = require '../../../collections/partner_shows.coffee'
 template = -> require('../templates/shows_grid.jade') arguments...
+showFiguresTemplate = -> require('../templates/show_figures.jade') arguments...
 
 #
 # Partner shows grid view
@@ -25,7 +26,8 @@ module.exports = class PartnerShowsGridView extends Backbone.View
 
   initialize: (options={}) ->
     { @partner, @numberOfFeatured, @numberOfShows, @isCombined, @heading, @seeAll } = _.defaults options, @defaults
-    @fetchAndRenderShows()
+    @page = 1
+    @initializeShows()
 
   renderShows: (featured=[], current=[], upcoming=[], past=[]) ->
     numberOfAllShows = _.reduce(arguments, ( (m, n) -> m + n.length ), 0)
@@ -61,77 +63,76 @@ module.exports = class PartnerShowsGridView extends Backbone.View
         if size is min then $name.css('word-wrap', 'break-word'); break
       $name.css('visibility', 'visible')
 
-  fetchAndRenderShows: (page=1)->
+  initializeShows: ->
     partnerShows = new PartnerShows()
     partnerShows.url = "#{@partner.url()}/shows"
     partnerShows.fetch
-      data: { sort: "-featured,-end_at", size: 100, page: page }
+      data: { sort: "-featured,-end_at", size: 100, page: @page }
       success: =>
+        @page = @page + 1
         featured = if partnerShows.featured() && @numberOfFeatured is 1 then [partnerShows.featured()] else []
-        exclude = if featured then featured else []
+        exclude = if featured then [featured] else []
+        current = partnerShows.current(exclude).models
+        upcoming = partnerShows.upcoming(exclude).models
+        past = partnerShows.past(exclude).models
 
-        @current = partnerShows.current(exclude).models
-        @upcoming = partnerShows.upcoming(exclude).models
-        @past = partnerShows.past(exclude).models
+        # Save the remaining so we can potentially save a fetch later
+        @remainingCurrent = current.slice(30)
+        @remainingUpcoming = upcoming.slice(30)
+        @remainingPast = past.slice(30)
 
         if @isCombined
           # order of getting combined shows: current -> upcoming -> past
-          shows = @current.concat(@upcoming, @past).slice(0, @numberOfShows)
+          shows = current.concat(upcoming, past).slice(0, @numberOfShows)
           return @renderShows featured, shows
         else
-          return @renderShows featured, @current, @upcoming, @past
+          return @renderShows featured, current, upcoming, past
 
-  maybeFetchAndRenderShows: ->
-    console.log 'here?'
-    $('.js-partner-shows-more').hide()
-    $('.partner-shows-container').append 'Hello.'
+  maybeFetchAndRenderShows: (e) ->
+    $(e.currentTarget).remove()
+    type = e.currentTarget.getAttribute 'data-show-type-id'
+    shows = @getRemainingShows type
+    # Try and fetch more shows if there are less than 30
+    if shows.length < 30
+      moreShows = new PartnerShows()
+      moreShows.url = "#{@partner.url()}/shows"
+      moreShows.fetch
+        data: { sort: "-featured,-end_at", size: 100, page: @page }
+        success: =>
+          @page = @page + 1
 
+          @remainingCurrent.concat moreShows.current().models
+          @remainingUpcoming.concat moreShows.upcoming().models
+          @remainingPast.concat moreShows.past().models
 
-  # xinitializeShows: (featured=[], current=[], upcoming=[], past=[], page=1, size=30) ->
-  #   partnerShows = new PartnerShows()
-  #   partnerShows.url = "#{@partner.url()}/shows"
-  #   partnerShows.fetch
-  #     data: { sort: "-featured,-end_at", page: page, size: size }
-  #     success: =>
-  #       console.log "Number of Featured: " + @numberOfFeatured
-  #       console.log "featured.length: " + featured.length
-  #       if @numberOfFeatured - featured.length > 0
-  #         f = partnerShows.featured()
-  #         featured.push f if f? # only add it if it's really something
+          shows = @getRemainingShows type #get updated shows list from fetch
+          displayMore = if shows.length < 30 then false else true
+          $(".#{type} .partner-shows-container").append showFiguresTemplate
+            shows: shows
+            type: type
+            displayMore: displayMore
+            isFeatured: false
+          @sliceRemaining type
+    else
+      $(".#{type} .partner-shows-container").append showFiguresTemplate
+        shows: shows
+        type: type
+        displayMore: true
+        isFeatured: false
+      @sliceRemaining type
 
-  #       exclude = if f then [f] else []
+  getRemainingShows: (type) ->
+    switch type
+      when 'current' then @remainingCurrent
+      when 'upcoming' then @remainingUpcoming
+      when 'past' then @remainingPast
+      else []
 
-  #       current = current.concat partnerShows.current(exclude).models
-  #       upcoming = upcoming.concat partnerShows.upcoming(exclude).models
-  #       past = past.concat partnerShows.past(exclude).models
-  #       numberOfShowsSoFar = current.length + upcoming.length + past.length
-  #       console.log "Current: " + current
-  #       console.log "Upcoming: " + upcoming
-  #       console.log "Past: " + past
-  #       console.log "numberOfShowsSoFar: " + numberOfShowsSoFar
-  #       console.log "@numberOfShows: " + @numberOfShows
-
-  #       # Return
-  #       if (numberOfShowsSoFar >= @numberOfShows and
-  #          featured.length >= @numberOfFeatured) or
-  #          partnerShows.length == 0
-  #         console.log "numberOfShowsSoFar >= @numberOfShows: " + numberOfShowsSoFar >= @numberOfShows
-  #         console.log "featured.length: " + featured.length
-  #         console.log "numberOfFeatured: " + @numberOfFeatured
-  #         console.log "partnerShows.length: " + partnerShows.length
-  #         console.log "@isCombined: " + @isCombined
-  #         if @isCombined
-
-  #           # order of getting combined shows: current -> upcoming -> past
-  #           shows = current.concat(upcoming, past).slice(0, @numberOfShows)
-  #           console.log 'going to return at combined'
-  #           return @renderShows featured, shows
-
-  #         if (not @isCombined) or partnerShows.length == 0
-  #           console.log 'going to return at not combined'
-  #           return @renderShows featured, current, upcoming, past
-
-  #       return @initializeShows featured, current, upcoming, past, ++page
+  sliceRemaining: (type) ->
+    switch type
+      when 'current' then @remainingCurrent = @remainingCurrent.slice(30)
+      when 'upcoming' then shows = @remainingUpcoming = @remainingUpcoming.slice(30)
+      when 'past' then shows = @remainingPast = @remainingPast.slice(30)
 
   ensurePosterImages: (shows) ->
     _.each shows, (show) =>
