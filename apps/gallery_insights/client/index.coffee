@@ -24,5 +24,5 @@ module.exports.init = ->
         $('.gallery-insights-error').text(xhr.responseText)
       success: (res) =>
         $(e.currentTarget).attr 'data-state', null
-        $('.gallery-insights-form').fadeOut()
-        $('.gallery-insights-thank-you').fadeIn()
+        $('.gallery-insights-form').fadeOut ->
+          $('.gallery-insights-thank-you').fadeIn()
