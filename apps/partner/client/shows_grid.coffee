@@ -102,10 +102,10 @@ module.exports = class PartnerShowsGridView extends Backbone.View
         data: { sort: "-featured,-end_at", size: 100, page: @page }
         success: =>
           @page = @page + 1
-
-          @remainingCurrent.concat moreShows.current().models
-          @remainingUpcoming.concat moreShows.upcoming().models
-          @remainingPast.concat moreShows.past().models
+          # Update all the show types since we are fetching anyway
+          @remainingCurrent = @remainingCurrent.concat moreShows.current().models
+          @remainingUpcoming = @remainingUpcoming.concat moreShows.upcoming().models
+          @remainingPast = @remainingPast.concat moreShows.past().models
           shows = @getRemainingShows type #get updated shows list from fetch
           displayMore = if shows.length < 30 then false else true
     else
