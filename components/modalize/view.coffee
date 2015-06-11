@@ -1,6 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 template = require './templates/index.coffee'
+Scrollbar = require '../scrollbar/index.coffee'
 
 module.exports = class Modalize extends Backbone.View
   className: 'modalize'
@@ -13,6 +14,7 @@ module.exports = class Modalize extends Backbone.View
 
   initialize: (options = {}) ->
     { @subView, @dimensions } = _.defaults options, @defaults
+    @scrollbar = new Scrollbar
 
   state: (state, callback = $.noop) ->
     _.defer =>
@@ -31,7 +33,7 @@ module.exports = class Modalize extends Backbone.View
       .css @dimensions
       .html @subView.render().$el
 
-    $('body').addClass 'is-with-modal'
+    @scrollbar.disable()
 
     @state 'open'
 
@@ -39,7 +41,7 @@ module.exports = class Modalize extends Backbone.View
     @close() if $(e.target).hasClass('js-modalize-backdrop')
 
   close: (callback) ->
-    $('body').removeClass 'is-with-modal'
+    @scrollbar.reenable()
 
     @state 'close', =>
       @subView?.remove?()

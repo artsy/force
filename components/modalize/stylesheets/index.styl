@@ -1,8 +1,5 @@
 @import '../../stylus_lib'
 
-body.is-with-modal
-  overflow hidden
-
 .modalize
   z-index zindex-modal
   transition opacity 0.25s
@@ -27,6 +24,7 @@ body.is-with-modal
       opacity 0
 
 .modalize
+.modalize-backdrop
   position fixed
   top 0
   right 0
@@ -42,10 +40,13 @@ body.is-with-modal
 
 .modalize-dialog
   display inline-block
-  position relative
+  position absolute
+  top 50%
+  left 50%
   text-align left
   max-width 90%
   max-height 90%
+  transform translate(-50%, -50%)
   margin 0 auto
   overflow-y auto
   background-color white
