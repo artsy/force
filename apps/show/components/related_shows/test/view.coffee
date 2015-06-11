@@ -4,6 +4,7 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 { resolve } = require 'path'
 { fabricate } = require 'antigravity'
+{ Cities, FeaturedCities } = require 'places'
 PartnerShow = require '../../../../../models/partner_show.coffee'
 PartnerShows = require '../../../../../collections/partner_shows.coffee'
 RelatedShowsView = benv.requireWithJadeify resolve(__dirname, '../view.coffee'), ['template']
@@ -20,11 +21,15 @@ describe 'RelatedShowsView', ->
     benv.teardown()
 
   beforeEach ->
+    @show = new PartnerShow fabricate 'show'
+    @city = _.findWhere(Cities, name: @show.formatCity())
     @relatedShows = new PartnerShows
     sinon.stub Backbone, 'sync'
     @view = new RelatedShowsView
       collection: @relatedShows
       title: 'Current Shows in Test City'
+      show: @show
+      city: @city
     @relatedShows.fetch()
 
   afterEach ->
