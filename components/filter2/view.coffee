@@ -82,11 +82,15 @@ module.exports = class FilterView extends Backbone.View
   render: (collection, response) =>
     @giveUpCount++ if response.hits.length is 0
 
-    @$('.filter-artworks').attr 'data-state',
+    state =
       if @giveUpCount is 1 then 'finished-paging'
       else if @params.get('page') > 500 then 'finished-paging'
       else if response.hits.length < @pageSize then 'finished-paging'
       else ''
+
+    @$('.filter-artworks').attr 'data-state', state
+
+    @trigger("state:#{state}") if state
 
     @newColumnsView() unless @columnsView?
     @columnsView.appendArtworks collection.models

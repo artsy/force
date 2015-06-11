@@ -37,6 +37,8 @@ module.exports = class WorksView extends Backbone.View
       facets: aggregationParams
       noInfiniteScroll: @noInfiniteScroll
 
+    view.on 'state:finished-paging', @showFooter
+
     @collection.fetch
       data: @params.toJSON()
       success: =>
@@ -61,4 +63,10 @@ module.exports = class WorksView extends Backbone.View
 
   postRender: ->
     @setupArtworkFilter()
-    $('#main-layout-footer').remove()
+    @hideFooter()
+
+  hideFooter: ->
+    $('#main-layout-footer').hide()
+
+  showFooter: ->
+    $('#main-layout-footer').show()
