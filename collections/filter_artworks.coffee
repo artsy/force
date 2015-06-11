@@ -34,8 +34,6 @@ module.exports = class FilterArtworks extends Artworks
     for k, v of aggregations
       aggregations[k] = @prepareAggregate v, k
 
-    # delete aggregations['price_range']?['*-*']
-
     aggregations
 
   prepareAggregate: (aggregate, name) ->
@@ -61,7 +59,10 @@ module.exports = class FilterArtworks extends Artworks
         keys = _.sortBy _.keys(aggregate), (key) -> key
         mapKeys keys, aggregate
       'total': (aggregate) -> aggregate
-      'period': (aggregate) -> aggregate
+      'period': (aggregate) ->
+        for k, v of aggregate
+          aggregate[k].name = "#{aggregate[k].name}s"
+        aggregate
       'gallery': (aggregate) -> aggregate
       'institution': (aggregate) -> aggregate
 

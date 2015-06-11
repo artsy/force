@@ -50,7 +50,15 @@ gutter-width = 60px
   width 100%
 
   &[data-state='following'], &.is-following
-    color #fff
+    color purple-color
+    background-color white
+    border 1px solid gray-color
+
+  &[data-state='following']:hover
+    color red-color
+
+  &[data-state='follow']:hover
+    background-color purple-color
 
 .artist-page-section
   position relative
