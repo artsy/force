@@ -61,3 +61,4 @@ module.exports = class WorksView extends Backbone.View
 
   postRender: ->
     @setupArtworkFilter()
+    $('#main-layout-footer').remove()
