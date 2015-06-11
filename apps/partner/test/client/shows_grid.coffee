@@ -13,10 +13,18 @@ PartnerShowsGridView = rewire '../../client/shows_grid'
 
 describe 'PartnerShowsGridView', ->
 
-  beforeEach (done) ->
+  before (done) ->
     benv.setup =>
       benv.expose { $: benv.require 'jquery' }
       Backbone.$ = $
+      done()
+
+  after ->
+    benv.teardown()
+
+  describe '#initializeShows', ->
+
+    beforeEach (done) ->
       benv.render resolve(__dirname, '../../templates/shows_grid.jade'), {
         partner: { href: -> }
         params: {}
@@ -58,16 +66,11 @@ describe 'PartnerShowsGridView', ->
         @partner = new Partner @profile.get 'owner'
         done()
 
-  afterEach -> benv.teardown()
-
-  describe '#initializeShows', ->
-
     it 'respects the dispalyable attribute of partner shows', ->
       new PartnerShowsGridView
         el: $ '.partner-shows'
         partner: @partner
 
-      console.log Backbone.sync
       @template.args[0][0].current.should.have.lengthOf 3
       @template.args[0][0].upcoming.should.have.lengthOf 2
       @template.args[0][0].past.should.have.lengthOf 4
@@ -107,15 +110,76 @@ describe 'PartnerShowsGridView', ->
 
 describe '#maybeFetchAndRenderShows', ->
 
+  beforeEach (done) ->
+    sinon.stub Backbone, 'sync'
+    benv.render resolve(__dirname, '../../templates/shows_grid.jade'), {
+      partner: { href: -> }
+      params: {}
+    }, =>
+      PartnerShowsGridView = mod = benv.requireWithJadeify(
+          (resolve __dirname, '../../client/shows_grid'), ['template', 'showFiguresTemplate']
+        )
+      @src = [
+        fabricate('show', { name: 'show1' } ),
+        fabricate('show', { name: 'show2', featured: true } ),
+        fabricate('show', { name: 'show3' } ),
+        fabricate('show', { name: 'show4', status: 'running' } ),
+        fabricate('show', { name: 'show5' } ),
+        fabricate('show', { name: 'show6', status: 'running' } ),
+        fabricate('show', { name: 'show7', status: 'upcoming' } ),
+        fabricate('show', { name: 'show8' } ),
+        fabricate('show', { name: 'show9', status: 'upcoming' } ),
+        fabricate('show', { name: 'show10', status: 'running' } ),
+        fabricate('show', { name: 'show11', displayable: false } ),
+        fabricate('show', { name: 'show12', status: 'running', displayable: false } ),
+        fabricate('show', { name: 'show13', status: 'upcoming', displayable: false } ),
+        fabricate('show', { name: 'show14' } ),
+        fabricate('show', { name: 'show15' } ),
+        fabricate('show', { name: 'show16' } ),
+        fabricate('show', { name: 'show17' } ),
+        fabricate('show', { name: 'show18' } ),
+        fabricate('show', { name: 'show19' } ),
+        fabricate('show', { name: 'show20' } ),
+        fabricate('show', { name: 'show21' } ),
+        fabricate('show', { name: 'show22' } ),
+        fabricate('show', { name: 'show23' } ),
+        fabricate('show', { name: 'show24' } ),
+        fabricate('show', { name: 'show25' } ),
+        fabricate('show', { name: 'show26' } ),
+        fabricate('show', { name: 'show27' } ),
+        fabricate('show', { name: 'show28' } ),
+        fabricate('show', { name: 'show29' } ),
+        fabricate('show', { name: 'show30' } ),
+        fabricate('show', { name: 'show31' } ),
+        fabricate('show', { name: 'show32' } ),
+        fabricate('show', { name: 'show33' } ),
+        fabricate('show', { name: 'show34' } ),
+        fabricate('show', { name: 'show35' } )
+      ]
+
+      @partnerShows = new PartnerShows()
+      @partnerShows.fetch = (options) =>
+        page = options.data.page
+        size = options.data.size
+        @partnerShows.reset()
+        @partnerShows.add @src
+        options.success?()
+      @PartnerShows = sinon.stub()
+      @PartnerShows.returns @partnerShows
+      PartnerShowsGridView.__set__ 'PartnerShows', @PartnerShows
+
+      @view = new PartnerShowsGridView
+        el: $ '.partner-shows'
+        partner: @partner
+        isCombined: false
+        numberOfFeatured: 1
+      @profile = new Profile fabricate 'partner_profile'
+      @partner = new Partner @profile.get 'owner'
+      done()
+
   it 'uses shows from remaining shows if there are enough', ->
-    new PartnerShowsGridView
-      el: $ '.partner-shows'
-      partner: @partner
-      isCombined: false
-      numberOfFeatured: 1
+    console.log @view.html()
+    console.log @view.el
 
   it 'fetches more shows if there are not enough shows', ->
-    @view = new PartnerShowsGridView
-      el: $ '.partner-shows'
-      partner: @partner
-      isCombined: false
+    console.log 'hi'
