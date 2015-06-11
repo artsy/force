@@ -1,22 +1,17 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-FeedbackView = require '../../contact/feedback.coffee'
+openFeedback = require '../../simple_contact/feedback.coffee'
 SpecialistView = require '../../contact/general_specialist.coffee'
 mediator = require '../../../lib/mediator.coffee'
 
 module.exports = class FooterView extends Backbone.View
   events:
-    'click .mlf-feedback': 'feedback'
+    'click .mlf-feedback': 'openFeedback'
     'click .mlf-specialist': 'openSpecialist'
 
-  initialize: (options) ->
-    mediator.on 'open:feedback', @openFeedback, @
-    mediator.on 'infinite:scroll:start', @hide, @
-    mediator.on 'infinite:scroll:end', @show, @
-
-  feedback: (e) ->
-    e.preventDefault()
-    mediator.trigger 'open:feedback'
+  initialize: ->
+    @listenTo mediator, 'infinite:scroll:start', @hide
+    @listenTo mediator, 'infinite:scroll:end', @show
 
   hide: ->
     @$el.hide()
@@ -24,8 +19,9 @@ module.exports = class FooterView extends Backbone.View
   show: ->
     @$el.show()
 
-  openFeedback: ->
-    new FeedbackView
+  openFeedback: (e) ->
+    e.preventDefault()
+    openFeedback()
 
   openSpecialist: (e) ->
     e.preventDefault()

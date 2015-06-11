@@ -2,6 +2,9 @@
   //- Rendered client-side... For now.
 
 #artist-page-section-about.artist-page-section
+  if artist.get('auction_lots_count')
+    a#artist-page-auction-results-link.faux-underline( href="/artist/#{artist.id}/auction-results" )
+      | Auction Results for #{artist.get('name')}
   h3.artist-section-header About
   .artist-page-section__content
     .bisected-header
@@ -22,25 +25,5 @@ include ./sections/works.jade
   .artist-page-section__content
     //- rendered on the client
 
-#artist-page-section-articles.artist-page-section
-  h3.artist-section-header Related Articles
-  .artist-page-section__content
-    //- rendered on the client
-
-#artist-page-section-more-info.artist-page-section
-  h3.artist-section-header More Info
-  if artist.get('auction_lots_count')
-    a.faux-underline( href="/artist/#{artist.id}/auction-results" )
-      | Auction Results for #{artist.get('name')}
-  #artist-related-last-modified.artist-page-section__content
-    //- rendered on the client
-
-#artist-page-section-artists.artist-page-section
-  h3.artist-section-header Related Artists
-  .artist-page-section__content
-    //- rendered on the client
-
-#artist-page-section-contemporary.artist-page-section
-  h3.artist-section-header Suggested Contemporary Artists
-  .artist-page-section__content
-    //- rendered on the client
+#artist-related-last-modified.artist-page-section__content
+  //- rendered on the client

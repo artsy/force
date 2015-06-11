@@ -53,7 +53,7 @@ describe 'ModalView', ->
         @view.$dialog.width().should.equal 400
 
       it 'disables scrolling on the document body', ->
-        $('body').hasClass('is-modal').should.be.ok
+        $('body').hasClass('is-scrolling-disabled').should.be.ok
 
       it 'sets the default classes', ->
         classes = @view.$el.attr('class')

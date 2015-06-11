@@ -36,7 +36,6 @@ module.exports = class OverviewView extends Backbone.View
     @worksView = new WorksView
       el: @$('#artist-page-section-works')
       model: @model
-      noInfiniteScroll: true
 
     @worksView.render()
 
@@ -60,7 +59,7 @@ module.exports = class OverviewView extends Backbone.View
     subView = new RelatedGenesView
       el: @$('.artist-related-genes')
       id: @model.id
-      headerTemplate: _.template '<h2>Known For</h2>'
+      headerTemplate: _.template '<h2>Related Categories</h2>'
     subView.collection.on 'sync', =>
       unless subView.collection.length and @$('.artist-blurb').text().trim().length
         @$('#artist-page-section-about').addClass('is-hidden')

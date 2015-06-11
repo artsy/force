@@ -4,7 +4,7 @@
 //
 
 // Track pageview
-analytics.page();
+analytics.page({path: location.pathname});
 
 // Track 15 second bounce rate
 setTimeout(function() {
