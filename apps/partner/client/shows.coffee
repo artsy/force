@@ -19,4 +19,3 @@ module.exports = class PartnerShowsView extends Backbone.View
       el: @$('#partner-shows')
       partner: @partner
       numberOfFeatured: if @profile.isGallery() then 0 else 1
-      numberOfShows: 6
