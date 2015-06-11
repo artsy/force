@@ -1,4 +1,4 @@
-if sd.CURRENT_USER
+if sd.CURRENT_USER && sd.CURRENT_USER.email && sd.CURRENT_USER.name
   - var email = sd.CURRENT_USER.email || ''
   - var fname = sd.CURRENT_USER.name.split(' ')[0] || ''
   - var lname = sd.CURRENT_USER.name.split(' ')[1] || ''
