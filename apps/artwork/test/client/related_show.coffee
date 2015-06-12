@@ -53,3 +53,9 @@ describe 'RelatedShowView', ->
       html.should.containEql 'Other works in show'
       html.should.containEql @view.show.get('partner').name
       @view.$('#artwork-related-show-artworks').length.should.be.ok
+
+    it 'calls the show a booth if its in a fair', ->
+      @view.show.set 'fair', {id: 'cabbies-fair'}
+      @view.render()
+      html = @view.$el.html()
+      html.should.containEql 'Other works in booth'
