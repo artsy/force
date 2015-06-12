@@ -1,0 +1,14 @@
+header.scontact-header
+  h1.scontact-headline
+    | Send message to #{partner.displayType().toLowerCase()}
+
+  hr
+
+  p.scontact-description
+    | To: #{partner.get('name')}
+    span.js-contact-location
+      //- Rendered separately?
+
+hr
+
+include forms/inquiry
