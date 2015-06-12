@@ -76,6 +76,12 @@ describe 'FlashMessage', ->
           done()
       @flash.$el.click()
 
+    it 'accepts a callback', (done) ->
+      flash = new FlashMessage message: 'A caesura', autoclose: false
+      @flash.close ->
+        true.should.be.true
+        done()
+
   describe '#update', ->
     beforeEach ->
       @flash = new FlashMessage message: 'Goodbye world.'
