@@ -119,5 +119,6 @@ module.exports = class Artist extends Backbone.Model
       birthDate: @get('birthday')
       deathDate: @get('deathday')
       additionalType: 'Artist'
-      datePublished: @get('lastModified')
+      datePublished: @get('createdAt')
+      dateModified: @get('lastModified')
     }
