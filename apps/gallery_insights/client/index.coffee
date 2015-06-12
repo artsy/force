@@ -3,12 +3,8 @@ sd = require('sharify').data
 
 module.exports.init = ->
 
-  if sd.MAILCHIMP_SUBSCRIBED
-    $('.gallery-insights-form').hide()
-    $('.gallery-insights-subscribed').show()
-    $('.js-gallery-insights-show-form.is-block').click (e) ->
-      $('.gallery-insights-subscribed').remove()
-      $('.gallery-insights-form').show()
+  $('.js-gallery-insights-show-form').click (e) ->
+    $('.gallery-insights').attr 'data-state', 'unsubscribed'
 
   $('.js-gallery-insights-subscribe').click (e)->
     $(e.currentTarget).attr 'data-state', 'loading'

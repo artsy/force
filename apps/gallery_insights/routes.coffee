@@ -4,7 +4,7 @@ sd = require('sharify').data
 @index = (req, res) ->
   email = res.locals.sd.CURRENT_USER?.email
   subscribed email, (cb) ->
-    res.locals.sd.MAILCHIMP_SUBSCRIBED = cb
+    res.locals.sd.MAILCHIMP_SUBSCRIBED = if cb then 'subscribed' else 'unsubscribed'
     res.render 'index'
 
 subscribed = (email, callback) ->
