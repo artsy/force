@@ -7,8 +7,10 @@ Validator = require './validator.coffee'
 module.exports = class Form
   _.extend @prototype, Backbone.Events
 
-  constructor: ({ @model, @$form, options}) ->
-    { @$submit, @$errors } = _.defaults options or {},
+  constructor: (options = {}) ->
+    { @model, @$form } = options
+
+    { @$submit, @$errors } = _.defaults options,
       $submit: @$form.find('button')
       $errors: @$form.find('.js-form-errors')
 
@@ -16,20 +18,25 @@ module.exports = class Form
     @validator = new Validator @$form
     @errors = new Errors @$form
 
-  submit: (e, options = {}) ->
-    return unless @validator.valid()
-    return if @submitting()
+  start: ->
+    @validator.valid() and not @submitting()
+
+  submit: (e, options = {}, send = 'save') ->
+    return unless @start()
 
     e?.preventDefault()
 
     options.error = _.wrap options.error, (error, args...) =>
-      @state 'error'
-      @reenable false
-      @$errors.text @errors.parse args[1]
+      @error args...
       error? args...
 
     @state 'loading'
-    @model.save @serializer.data(), options
+    @model[send] @serializer.data(), options
+
+  error: (model, response, options) ->
+    @state 'error'
+    @reenable false
+    @$errors.text @errors.parse response
 
   submitting: ->
     return @__submitting__ if @__submitting__

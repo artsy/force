@@ -33,10 +33,29 @@ form.submit()
 @model.get('full_name') # => 'My Name'
 ```
 
+```
+Form = require '../../components/form/index.coffee'
+
+class SomeView extends BackboneView
+  submit: (e) ->
+    form = new Form model: @model, $form: @$('form')
+    return unless form.start()
+
+    e.preventDefault()
+
+    form.state 'loading'
+
+    @model.save form.serializer.data()
+      success: ->
+        form.state 'success'
+      error: ->
+        form.error arguments...
+        alert 'Something went wrong!'
+```
+
 ```coffeescript
 # The other objects can be used independently of the form
 
 serializer = new Serializer $('form')
 serializer.data() # => { full_name: 'My Name', something_else: 'Some other value' }
-
 ```
