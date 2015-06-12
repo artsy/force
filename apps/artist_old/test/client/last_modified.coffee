@@ -27,6 +27,7 @@ describe 'setupLastModifiedDate', ->
     beforeEach ->
       @artist.related().shows.add [
         fabricate('show', updated_at: moment(@baselineDate).subtract(2, 'days').format()) # June 15
+        fabricate('show', updated_at: moment(@baselineDate).subtract(3, 'days').format()) # June 14
       ]
 
     it 'displays last modified date the most recent of the dates in the related data', ->
@@ -35,3 +36,7 @@ describe 'setupLastModifiedDate', ->
       text.should.containEql 'Page Last Modified:'
       text.should.containEql 'June 15th, 2014'
 
+    it 'sets artist attributes properly', ->
+      lastModified @artist, @artworks
+      @artist.get('lastModified').should.eql '2014-06-15T20:49:00.000Z'
+      @artist.get('createdAt').should.eql '2014-06-14T20:49:00.000Z'
