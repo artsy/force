@@ -18,9 +18,9 @@ describe '#index', ->
   it 'sets variable when user is not part of the gallery-insights list', ->
     routes.__set__ 'subscribed', (email, cb) -> cb false
     routes.index {}, @res
-    @res.locals.sd.MAILCHIMP_SUBSCRIBED.should.eql false
+    @res.locals.sd.MAILCHIMP_SUBSCRIBED.should.eql 'unsubscribed'
 
   it 'sets variable when user is part of the gallery-insights list', ->
     routes.__set__ 'subscribed', (email, cb) -> cb true
     routes.index {}, @res
-    @res.locals.sd.MAILCHIMP_SUBSCRIBED.should.eql true
+    @res.locals.sd.MAILCHIMP_SUBSCRIBED.should.eql 'subscribed'
