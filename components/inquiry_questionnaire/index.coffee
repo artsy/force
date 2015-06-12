@@ -1,29 +1,24 @@
-_ = require 'underscore'
-Backbone = require 'backbone'
-ModalView = require '../modal/view.coffee'
-CurrentUser = require '../../models/current_user.coffee'
-LoggedOutUser = require '../../models/logged_out_user.coffee'
-State = require '../branching_state/index.coffee'
-stateMap = require './map.coffee'
+modalize = require '../modalize/index.coffee'
+FlashMessage = require '../flash/index.coffee'
+# We intentionally escape HTML in the template due to an XSS vulnerability.
+# Consciously and manually override that here for this instance:
+FlashMessage::template = -> "<span>#{@message}</span>"
+InquiryQuestionnaireView = require './view.coffee'
 
-module.exports = class InquiryQuestionnaire extends ModalView
-  className: 'inquiry-questionnaire'
+module.exports = (options = {}) ->
+  questionnaire = new InquiryQuestionnaireView options
 
-  __defaults__: _.extend {}, ModalView::__defaults__,
+  modal = modalize questionnaire,
+    className: 'modalize inquiry-questionnaire-modal'
     dimensions: width: '500px', height: '580px'
 
-  initialize: ({ @artwork }) ->
-    @user = CurrentUser.orNull() or new LoggedOutUser
-    @state = new State _.extend stateMap,
-      steps: stateMap.steps[0].prequalify.true
+  modal.open()
 
-    @state.inject user: @user, state: @state
+  questionnaire.state.on 'done', ->
+    modal.close ->
+      new FlashMessage message: '
+        Your inquiry has been sent.<br>
+        Thank you for completing your profile.
+      '
 
-    @listenTo @state, 'change:position', @reRender
-
-    super
-
-  template: ->
-    @view?.remove()
-    @view = @state.view user: @user, state: @state, artwork: @artwork
-    @view.render().$el
+  modal
