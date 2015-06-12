@@ -29,8 +29,10 @@ module.exports = class Modalize extends Backbone.View
     this
 
   postRender: ->
-    @$('.js-modalize-body')
+    @$('.js-modalize-dialog')
       .css @dimensions
+
+    @$('.js-modalize-body')
       .html @subView.render().$el
 
     @scrollbar.disable()

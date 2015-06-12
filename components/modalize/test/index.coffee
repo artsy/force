@@ -36,7 +36,7 @@ describe 'modalize', ->
     it 'sets the correct width', ->
       @modal.open()
       @modal.opened.should.be.true
-      $('.modalize-body').width().should.equal 456
+      $('.modalize-dialog').width().should.equal 456
 
     it 'avoids being double opened', ->
       $('.modalize').should.have.lengthOf 0
