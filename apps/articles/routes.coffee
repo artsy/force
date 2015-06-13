@@ -77,7 +77,7 @@ request = require 'superagent'
   request.post('https://us1.api.mailchimp.com/2.0/lists/subscribe')
     .send(
       apikey: sd.MAILCHIMP_KEY
-      id: '95ac2900c4'
+      id: sd.GALLERY_INSIGHTS_LIST
       email: email: req.body.email
       send_welcome: true
       merge_vars:
@@ -96,6 +96,6 @@ subscribed = (email, callback) ->
   request.get('https://us1.api.mailchimp.com/2.0/lists/member-info')
     .query(
       apikey: sd.MAILCHIMP_KEY
-      id: '95ac2900c4'
+      id: sd.GALLERY_INSIGHTS_LIST
     ).query("emails[0][email]=#{email}").end (err, response) ->
       callback response.body.success_count is 1

@@ -39,7 +39,7 @@ module.exports.init = ->
       $(e.currentTarget).addClass 'is-loading'
       $.ajax
         type: 'POST'
-        url: '/articles/form'
+        url: '/gallery-insights/form'
         data:
           email: $(e.currentTarget).prev('input').val()
           fname: sd.CURRENT_USER?.name?.split(' ')[0] or= ''

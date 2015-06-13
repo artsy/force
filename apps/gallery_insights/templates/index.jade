@@ -13,7 +13,7 @@ append locals
   - assetPackage = 'gallery_insights'
 
 block body
-  #gallery-insights.gallery-insights.main-layout-container: .responsive-layout-container
+  #gallery-insights.gallery-insights.main-layout-container(data-state=sd.MAILCHIMP_SUBSCRIBED): .responsive-layout-container
     h1 Artsy Insights for Galleries
 
     aside Information, insights, inspiration. Exclusively from Artsy.
@@ -22,6 +22,8 @@ block body
       | Stay informed with Artsy’s latest market research, art buying trends & forecasts,
       | partner case studies, and tools to help you excel. Sign up to receive periodical
       | insights for galleries.
+
+    a.avant-garde-button-underlined(href="/#{sd.GALLERY_INSIGHTS_SLUG}") View All Gallery Insights
 
     .gallery-insights-content
       .gallery-insights-content-cell
