@@ -15,7 +15,7 @@ module.exports = class FilterView extends Backbone.View
     columnWidth: 300
     includeFixedHeader: true
     facets: ['price_range', 'dimension_range', 'medium']
-    noInfiniteScroll: false
+    infiniteScroll: true
     pageSize: 10
 
   events:
@@ -27,7 +27,7 @@ module.exports = class FilterView extends Backbone.View
       @columnWidth,
       @includeFixedHeader,
       @facets,
-      @noInfiniteScroll,
+      @infiniteScroll,
       @pageSize } = _.defaults options, @defaults
 
     @initSubViews()
@@ -45,7 +45,7 @@ module.exports = class FilterView extends Backbone.View
     for facet in @facets
       @listenTo @params, "change:#{facet}", @reset
 
-    $.onInfiniteScroll(@nextPage) unless @noInfiniteScroll
+    $.onInfiniteScroll(@nextPage) if @infiniteScroll
 
   initSubViews: ->
     new DropdownGroupView

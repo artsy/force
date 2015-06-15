@@ -10,7 +10,18 @@ FilterRouter = require './router/index.coffee'
 module.exports =
 
   setupFilter: (options) ->
-    { aggregations, el, stuckParam, stuckFacet } = options
+    defaults =
+      startHistory: yes
+      infiniteScroll: true
+      includeFixedHeader: includeFixedHeader
+
+    { aggregations,
+      el,
+      stuckParam,
+      stuckFacet,
+      startHistory,
+      infiniteScroll,
+      includeFixedHeader } = _.defaults options, defaults
 
     queryParams = qs.parse(location.search.replace(/^\?/, ''))
     params = new Backbone.Model _.extend queryParams,
@@ -28,6 +39,8 @@ module.exports =
       collection: collection
       params: params
       stuckFacet: stuckFacet
+      infiniteScroll: infiniteScroll
+      includeFixedHeader: includeFixedHeader
 
     router = new FilterRouter
       params: params
@@ -39,6 +52,6 @@ module.exports =
       success: ->
         collection.trigger 'initial:fetch'
 
-    Backbone.history.start pushState: true
+    Backbone.history.start(pushState: true) if startHistory
 
     { params: params, collection: collection, view: view, router: router }
