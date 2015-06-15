@@ -89,6 +89,6 @@ describe 'FairBrowseView', ->
 
     it 'renders the gene name title and capitalized without trailing numbers', ->
       @view.artworkParams.set related_gene: 'contemporary-abstract-photography-1'
-      @view.$el.html().should.containEql 'Contemporary Abstract Photography'
+      @view.$el.html().should.containEql 'Contemporary abstract photography'
       @view.artworkParams.set related_gene: '20th-century-design'
-      @view.$el.html().should.containEql '20th Century Design'
+      @view.$el.html().should.containEql '20th century design'
