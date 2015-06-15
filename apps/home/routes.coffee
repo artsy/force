@@ -7,6 +7,8 @@ HeroUnits = require '../../collections/hero_units'
 Items = require '../../collections/items'
 { client } = require '../../lib/cache'
 welcomeHero = require './welcome'
+FilterArtworks = require '../../collections/filter_artworks'
+aggregationParams = require './aggregations.coffee'
 
 getRedirectTo = (req) ->
   req.body['redirect-to'] or
@@ -54,6 +56,38 @@ positionWelcomeHeroMethod = (req, res) ->
       featuredArticles: featuredArticles
       featuredShows: featuredShows
   ).done()
+
+@newIndex = (req, res) ->
+  heroUnits = new HeroUnits
+  # homepage:featured-sections
+  featuredLinks = new Items [], id: '529939e2275b245e290004a0', item_type: 'FeaturedLink'
+  # homepage:explore
+  exploreSections = new Items [], id: '54528dc072616942f91f0200', item_type: 'FeaturedLink'
+
+  filterArtworks = new FilterArtworks
+  filterData = { size: 0, aggregations: aggregationParams }
+
+  timeToCacheInSeconds = 300 # 5 Minutes
+
+  Q.allSettled(_.compact([
+    heroUnits.fetch(cache: true, cacheTime: timeToCacheInSeconds)
+    featuredLinks.fetch(cache: true)
+    exploreSections.fetch(cache: true) unless req.user?
+    filterArtworks.fetch(cache: true, data: filterData)
+  ])).then(->
+    heroUnits[positionWelcomeHeroMethod(req, res)](welcomeHero) unless req.user?
+    res.locals.sd.HERO_UNITS = heroUnits.toJSON()
+    res.locals.sd.FILTER_ROOT = '/'
+    res.render 'new_index',
+      heroUnits: heroUnits
+      featuredLinks: featuredLinks
+      exploreSections: exploreSections
+      filterRoot: res.locals.sd.FILTER_ROOT
+      counts: filterArtworks.counts
+      params: new Backbone.Model
+      activeText: ''
+  ).done()
+
 
 @redirectToSignup = (req, res) ->
   res.redirect "/sign_up"
