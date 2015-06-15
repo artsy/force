@@ -3,7 +3,7 @@ sd = require('sharify').data
 Backbone = require 'backbone'
 BoothsView = require '../booths/view.coffee'
 FilterArtworksView = require '../../../../components/filter/artworks/view.coffee'
-deslugify = require '../../../../components/deslugify/index.coffee'
+humanize = require('underscore.string').humanize
 { API_URL, SECTION } = require('sharify').data
 
 module.exports = class FairBrowseView extends Backbone.View
@@ -74,7 +74,7 @@ module.exports = class FairBrowseView extends Backbone.View
   renderArtworksHeader: =>
     @$('#fair-browse-artworks-header').text(
       if @artworkParams.get 'related_gene'
-        geneName = deslugify @artworkParams.get('related_gene')
+        geneName = humanize @artworkParams.get('related_gene')
       else
         ''
     )
