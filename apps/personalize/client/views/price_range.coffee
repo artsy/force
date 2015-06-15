@@ -12,7 +12,9 @@ module.exports = class PriceRangeView extends StepView
 
     (@$flippers ?= $('.flipper')).removeClass 'is-flipped'
 
-    @user.set 'price_range', ($target = $(e.currentTarget)).data('value')
+    $target = $(e.currentTarget)
+    [min, max] = $target.data('value').split ':'
+    @user.set price_range_min: min, price_range_max: max
 
     $target.
       addClass('is-flipped').
