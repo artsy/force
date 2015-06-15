@@ -40,6 +40,10 @@ describe 'state', ->
         @user.set price_range: 'existy'
         @state.completedSteps().should.eql ['price_range']
 
+      it 'doesnt skip when the price range is the default returned by the server', ->
+        @user.set price_range: '-1:1000000000000'
+        @state.completedSteps().should.be.empty
+
       it 'handles some combination of completed steps', ->
         @user.set collector_level: 2
         @state.completedSteps().should.eql ['collect']

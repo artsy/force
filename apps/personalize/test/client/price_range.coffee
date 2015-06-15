@@ -33,7 +33,8 @@ describe 'PriceRangeView', ->
 
     it 'sets the price_range attribute on the user', ->
       @$target.click()
-      @view.user.get('price_range').should.equal '-1:500'
+      @view.user.get('price_range_min').should.equal '-1'
+      @view.user.get('price_range_max').should.equal '500'
 
   describe '#render', ->
     it 'renders the view', ->
