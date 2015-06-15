@@ -1,5 +1,6 @@
 _ = require 'underscore'
 moment = require 'moment'
+Backbone = require 'backbone'
 Profile = require '../../models/profile.coffee'
 Fair = require '../../models/fair.coffee'
 Fairs = require '../../collections/fairs.coffee'
@@ -8,13 +9,28 @@ Search = require '../../collections/search.coffee'
 cache = require '../../lib/cache'
 kinds = require '../favorites_follows/kinds'
 { crop, fill } = require '../../components/resizer'
+FilterArtworks = require '../../collections/filter_artworks'
+aggregationParams = require './components/browse/aggregations.coffee'
 
 @overview = (req, res, next) ->
   return next() unless res.locals.sd.FAIR
+  filterArtworks = new FilterArtworks
+  fair = res.locals.fair
+  params = new Backbone.Model fair: fair.id
+  filterData = { size: 0, fair_id: fair.id, aggregations: aggregationParams }
   # TODO: Dependent on attribute of fair
   res.locals.sd.BODY_CLASS = 'body-transparent-header'
   res.locals.sd.SECTION = 'overview'
-  res.render 'overview'
+  res.locals.sd.FILTER_ROOT = fair.href() + '/browse/artworks'
+  filterArtworks.fetch
+    data: filterData
+    success: -> 
+      res.render 'overview',
+        counts: filterArtworks.counts
+        params: params
+        filterRoot: res.locals.sd.FILTER_ROOT
+        hideForSale: true
+        includeAllWorks: true
 
 @info = (req, res, next) ->
   return next() unless res.locals.sd.FAIR
@@ -28,8 +44,22 @@ kinds = require '../favorites_follows/kinds'
 
 @browse = (req, res, next) ->
   return next() unless res.locals.sd.FAIR
-  res.locals.sd.SECTION = 'browse'
-  res.render 'index'
+  filterArtworks = new FilterArtworks
+  fair = res.locals.fair
+  params = new Backbone.Model fair: fair.id
+  filterData = { size: 0, fair_id: fair.id, aggregations: aggregationParams }
+  filterArtworks.fetch
+    data: filterData
+    success: ->
+      res.locals.sd.SECTION = 'browse'
+      res.locals.sd.FILTER_ROOT = fair.href() + '/browse/artworks'
+
+      res.render 'index',
+        counts: filterArtworks.counts
+        params: params
+        filterRoot: res.locals.sd.FILTER_ROOT
+        hideForSale: true
+        includeAllWorks: true
 
 @forYou = (req, res, next) ->
   return next() unless res.locals.sd.FAIR

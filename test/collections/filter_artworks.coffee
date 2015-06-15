@@ -28,4 +28,3 @@ describe 'Filter Artworks', ->
     it 'should map related_gene to gene_id', ->
       @artworks.fetch data: related_gene: 'cabbie'
       Backbone.sync.args[0][2].data.should.equal 'gene_id=cabbie'
-
