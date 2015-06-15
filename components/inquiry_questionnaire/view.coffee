@@ -24,7 +24,7 @@ module.exports = class InquiryQuestionnaireView extends Backbone.View
           .then -> representatives.trigger 'sync'
 
   render: ->
-    pendingView = @state.view modal: @modal, user: @user, state: @state, artwork: @artwork
+    pendingView = @state.view user: @user, state: @state, artwork: @artwork
 
     @before @state.current(), pendingView
 
