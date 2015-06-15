@@ -8,7 +8,7 @@ module.exports =
     institutional_affliation: require './views/institutional_affliation.coffee'
     auth: require './views/auth.coffee'
     how_can_we_help: require './views/how_can_we_help.coffee'
-    specialist: require '../simple_contact/views/specialist.coffee'
+    specialist: require './views/specialist.coffee'
     contact_partner: require '../simple_contact/views/contact_partner.coffee'
     inquiry: require '../simple_contact/views/inquiry.coffee'
     done: require './views/done.coffee'
@@ -29,6 +29,7 @@ module.exports =
   steps: [
     prequalify:
       true: [
+        'specialist'
         'commercial_interest'
         is_collector:
           true: [
