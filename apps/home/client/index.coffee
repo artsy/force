@@ -20,7 +20,8 @@ module.exports.HomeView = class HomeView extends Backbone.View
 
     @setupHeroUnits()
     @setupFavoritesOnboardingModal()
-    @renderArtworks()
+    if splitTest('homepage_contents').outcome() is 'featured' or @user
+      @renderArtworks()
 
     @setupArtworkFilter() if splitTest('homepage_contents').outcome() is 'artworks'
 
