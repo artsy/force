@@ -29,3 +29,11 @@ module.exports =
       new: 0.5
     edge: 'new'
     dimension: 'dimension5'
+
+  homepage_contents:
+    key: 'homepage_contents'
+    outcomes:
+      featured: 0.5
+      artworks: 0.5
+    edge: 'new'
+    dimension: 'dimension6'
