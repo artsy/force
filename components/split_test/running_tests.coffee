@@ -35,5 +35,5 @@ module.exports =
     outcomes:
       featured: 0.5
       artworks: 0.5
-    edge: 'new'
+    edge: 'artworks'
     dimension: 'dimension6'
