@@ -14,8 +14,11 @@ module.exports = class FlashMessage extends Backbone.View
 
   initialize: (options = {}) ->
     throw new Error('You must pass a message option') unless options.message
+
     { @message, @autoclose, @href } = _.defaults options, autoclose: true
-    mediator.on 'flash:close', @close, this
+
+    @listenTo mediator, 'flash:close', @close
+
     @open()
 
   open: ->
@@ -56,12 +59,12 @@ module.exports = class FlashMessage extends Backbone.View
   maybeRedirect: ->
     location.assign @href if @href
 
-  close: =>
-    mediator.off null, null, this
+  close: (callback) =>
     @$el.
       attr('data-state', 'closed').
       one($.support.transition.end, =>
         @remove()
         @stopTimer()
         @maybeRedirect()
+        callback?()
       ).emulateTransitionEnd 500

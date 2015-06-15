@@ -55,8 +55,8 @@ describe 'Auction', ->
     beforeEach ->
       @clock = sinon.useFakeTimers()
       @auction = new Auction
-        event_start_at: moment(year: 2000, month: 0, day: 1, hour: 0, minute: 1).format()
-        event_end_at: moment(year: 2000, month: 0, day: 1, hour: 10, minute: 1).format()
+        event_start_at: '2000-01-01T00:01:00+00:00'
+        event_end_at: '2000-01-01T10:01:00+00:00'
 
     afterEach ->
       @clock.restore()
@@ -68,6 +68,6 @@ describe 'Auction', ->
 
     describe 'start and end happen on different days', ->
       it 'formats the date range', ->
-        @auction.set 'event_end_at', moment(year: 2000, month: 0, day: 3, hour: 10, minute: 1).format()
+        @auction.set 'event_end_at', '2000-01-03T10:01:00+00:00'
         @auction.formatDateRange('event_start_at', 'event_end_at')
           .should.equal 'Saturday, Jan. 1st 12:01am–Monday, Jan. 3rd 10:01am'

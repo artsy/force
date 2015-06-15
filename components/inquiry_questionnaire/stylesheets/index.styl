@@ -1,10 +1,14 @@
 @import '../../stylus_lib'
 
-.inquiry-questionnaire
-  .modal-close
+.inquiry-questionnaire-modal
+  .modalize-close
     display none
-  .modal-body
+  .modalize-body
+    min-height 100%
     padding 40px 35px
+
+.inquiry-questionnaire
+  height 100%
 
 .iq-steps
   avant-garde-size('s-headline', true)
@@ -34,6 +38,12 @@
   margin 10px 0
   garamond-size('s-body')
 
+.iq-body
+  margin 20px 0
+  garamond-size('s-body')
+  span
+    color gray-darker-color
+
 .iq-form
   margin 20px 0
 
@@ -59,3 +69,25 @@
   text-decoration none
   color gray-darker-color
   garamond-size('s-body')
+
+.iq-auth
+  transition opacity 0.25s
+  height 100%
+  &[data-state='fade-out']
+  &.is-fade-out
+    opacity 0
+  &[data-state='fade-in']
+  &.is-fade-in
+    opacity 1
+
+.iq-auth-logotype
+  display block
+  margin 0 auto
+  text-align center
+  font-size 55px
+  line-height 1
+
+.iq-form-errors
+  color red-color
+  &:first-letter
+    text-transform uppercase

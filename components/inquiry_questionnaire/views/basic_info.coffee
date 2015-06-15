@@ -1,16 +1,18 @@
 StepView = require './step.coffee'
-LocationSearch = require '../../../components/location_search/index.coffee'
+Serializer = require '../../form/serializer.coffee'
+LocationSearch = require '../../location_search/index.coffee'
 template = -> require('../templates/basic_info.jade') arguments...
 
 module.exports = class BasicInfo extends StepView
   template: template
 
-  events:
+  __events__:
     'click button': 'serialize'
 
   serialize: (e) ->
     e.preventDefault()
-    @user.set @serializeForm()
+    serializer = new Serializer @$('form')
+    @user.set serializer.data()
     @next()
 
   postRender: ->
@@ -20,5 +22,5 @@ module.exports = class BasicInfo extends StepView
       @user.setLocation location
 
   remove: ->
-    @locationSearch.remove()
+    @locationSearch?.remove()
     super

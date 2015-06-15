@@ -6,18 +6,24 @@ module.exports =
     galleries_auction_houses: require './views/galleries_auction_houses.coffee'
     art_fairs: require './views/art_fairs.coffee'
     institutional_affliation: require './views/institutional_affliation.coffee'
-    login: require './views/login.coffee'
+    auth: require './views/auth.coffee'
     how_can_we_help: require './views/how_can_we_help.coffee'
+    specialist: require '../simple_contact/views/specialist.coffee'
+    contact_partner: require '../simple_contact/views/contact_partner.coffee'
+    inquiry: require '../simple_contact/views/inquiry.coffee'
+    done: require './views/done.coffee'
 
   decisions:
     prequalify: ({ user }) ->
-      user.set 'prequalified', false
-      true
+      not user.get 'prequalified'
 
     is_collector: ({ user }) ->
       user.isCollector()
 
-    how_can_we_help: ({ state }) ->
+    is_logged_in: ({ user }) ->
+      user.id?
+
+    help_by: ({ state }) ->
       state.get 'value'
 
   steps: [
@@ -27,11 +33,16 @@ module.exports =
         is_collector:
           true: [
             'basic_info'
+            'artists_in_collection'
+            'galleries_auction_houses'
+            'art_fairs'
+            'institutional_affliation'
+            'inquiry'
           ]
           false: [
             'basic_info'
             'how_can_we_help'
-            how_can_we_help:
+            help_by:
               purchase: [
                 'basic_info'
                 'artists_in_collection'
@@ -40,12 +51,11 @@ module.exports =
                 'institutional_affliation'
                 'inquiry'
               ]
-              price: ['ask_specialist']
-              student_research_question: ['ask_specialist']
-              journalist_question: ['contact_gallery']
-              other_question: ['ask_specialist']
+              price: ['specialist']
+              student_research_question: ['specialist']
+              journalist_question: ['contact_partner']
+              other_question: ['specialist']
           ]
-
       ]
 
       false: [
@@ -57,9 +67,15 @@ module.exports =
             'galleries_auction_houses'
             'art_fairs'
             'institutional_affliation'
-            'login'
+            is_logged_in:
+              true: ['done']
+              false: ['auth']
           ]
-          false: ['login']
+          false: [
+            is_logged_in:
+              true: ['done']
+              false: ['auth']
+          ]
       ]
   ]
 

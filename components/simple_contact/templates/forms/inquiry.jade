@@ -1,0 +1,40 @@
+form.scontact-form.stacked-form
+  //- .stacked-form-cell
+  //-   include ./artwork_details
+
+  textarea.bordered-input(
+    name='message'
+    placeholder='Your message to Artsy'
+    rows='7'
+    required
+  )
+    if contactGallery
+      = defaultMessage
+      = "\n\n"
+
+  if user && user.id
+    //- Logged in
+    .scontact-from.stacked-form-cell
+      | From: #{user.get('name')} <span>(#{user.get('email')})</span>
+
+    input( type='hidden', name='name', value= user.get('name') )
+    input( type='hidden', name='email', value= user.get('email') )
+  else
+    input.bordered-input(
+      type='text'
+      name='name'
+      placeholder='Your full name'
+      required
+    )
+    input.bordered-input(
+      type='email'
+      name='email'
+      placeholder='Your email address'
+      required
+    )
+
+    p.scontact-privacy
+      | By clicking send, you accept our <a class='fine-faux-underline' href='/privacy', target='_blank'>Privacy Policy</a>.
+
+  button.avant-garde-button-black
+    | Send

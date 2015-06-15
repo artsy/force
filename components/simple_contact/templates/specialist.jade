@@ -1,0 +1,20 @@
+header.scontact-header
+  h1.scontact-headline
+    | Send message to Artsy
+
+  hr
+
+  if representative
+    .scontact-description.vam-outer
+      .vam-cell
+        | #{representative.get('name')}, an Artsy Specialist,
+        | is available to answer your questions and help you collect through Artsy.
+      .vam-cell: img(
+        src= representative.iconImageUrl()
+        alt= representative.get('name')
+        width='60'
+        height='60'
+      )
+    hr
+
+include forms/feedback

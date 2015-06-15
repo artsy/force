@@ -1,13 +1,14 @@
 h1.iq-headline
   | Please log in to save information to your profile.
 
-if user.has('email')
-  p.iq-body
-    | Your email is <span>#{user.get('email')}</span>
-
-hr
+.iq-body
+  p We found an Artsy account associated with
+  p: span= user.get('email')
 
 form.stacked-form
+  .iq-form-errors.js-form-errors
+    //- Rendered separately
+
   label.avant-garde-form-label( for='password' )
     | Enter your password
   input.bordered-input(
@@ -18,11 +19,11 @@ form.stacked-form
     autocomplete='on'
     pattern='.{6,}'
     title='6 characters minimum'
-    autofocus= autofocus
+    autofocus
     required
   )
 
-  button.avant-garde-button-black( type='submit' )
+  button.avant-garde-button-black.js-form-submit( type='submit' )
     | Log in
 
   .auth-form-options
@@ -30,14 +31,17 @@ form.stacked-form
       .artsy-checkbox--checkbox
         input( id='remember_me', name='remember_me', type='checkbox', value='1', checked )
         label( for='remember_me' )
-      label.artsy-checkbox--label( for='remember_me' ) Remember me
-    a.faux-underline.auth-toggle Forgot Password?
+      label.artsy-checkbox--label( for='remember_me' )
+        | Remember me
+
+    a.fine-faux-underline.js-mode( data-mode='forgot' )
+      | Forgot Password?
 
   hr.horizontal-rule-or
 
-  button.auth-login-facebook.avant-garde-button-black( href='/users/auth/facebook' )
+  a.avant-garde-button-black( href='/users/auth/facebook', target='_blank' )
     i.icon-facebook
     | Log in with Facebook
-  button.auth-login-twitter.avant-garde-button-black( href='/users/auth/twitter' )
+  a.avant-garde-button-black( href='/users/auth/twitter', target='_blank' )
     i.icon-twitter
     | Log in with Twitter
