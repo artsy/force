@@ -6,6 +6,7 @@ describe 'splitTestMiddleware', ->
   before ->
     benv.setup (done) =>
       @splitTestMiddleware = rewire '../middleware'
+      @splitTestMiddleware.__set__ 'qs', require('qs')
       @splitTestMiddleware.__set__ 'runningTests',
         header_design:
           key: 'header_design'
@@ -40,6 +41,21 @@ describe 'splitTestMiddleware', ->
     it 'drops the tests into the edge outcomes', (done) ->
       @splitTestMiddleware @req, @res, =>
         @res.locals.sd.should.eql HEADER_DESIGN: 'old', SOME_OTHER_TEST: 'new'
+        done()
+
+  describe 'when admin, with overriding params', ->
+    beforeEach ->
+      @res = cookie: sinon.stub(), locals: sd: {}
+      @req =
+        cookies: {}
+        user: isAdmin: -> true
+        query:
+          split_test:
+            header_design: 'new'
+
+    it 'sets the tests to the query', (done) ->
+      @splitTestMiddleware @req, @res, =>
+        @res.locals.sd.should.eql HEADER_DESIGN: 'new', SOME_OTHER_TEST: 'new'
         done()
 
   describe 'no tests', ->

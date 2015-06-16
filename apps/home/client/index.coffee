@@ -1,10 +1,15 @@
 Backbone = require 'backbone'
+scrollFrame = require 'scroll-frame'
 Cookies = require 'cookies-js'
 mediator = require '../../../lib/mediator.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 HeroUnitView = require './hero_unit_view.coffee'
 HomeAuthRouter = require './auth_router.coffee'
 FeaturedArtworksView = require '../components/featured_artworks/view.coffee'
+splitTest = require '../../../components/split_test/index.coffee'
+JumpView = require '../../../components/jump/view.coffee'
+{ setupFilter } = require '../../../components/filter2/index.coffee'
+aggregationParams = require '../aggregations.coffee'
 
 module.exports.HomeView = class HomeView extends Backbone.View
   initialize: (options) ->
@@ -16,7 +21,10 @@ module.exports.HomeView = class HomeView extends Backbone.View
 
     @setupHeroUnits()
     @setupFavoritesOnboardingModal()
-    @renderArtworks()
+    if splitTest('homepage_contents').outcome() is 'featured' or @user
+      @renderArtworks()
+
+    @setupArtworkFilter() if splitTest('homepage_contents').outcome() is 'artworks'
 
   setupHeroUnits: ->
     new HeroUnitView el: @$el, $mainHeader: $('#main-layout-header')
@@ -26,6 +34,21 @@ module.exports.HomeView = class HomeView extends Backbone.View
     return if parseInt(Cookies.get 'favorites_onboarding_dismiss_count') >= 2
     OnboardingModal = require '../../../components/favorites2/client/onboarding_modal.coffee'
     new OnboardingModal width: 1000
+
+  setupArtworkFilter: ->
+    setupFilter
+      el: $ '#home-artworks-filter'
+      aggregations: aggregationParams
+      startHistory: no
+      includeFixedHeader: no
+
+    scrollFrame '#home-artworks a'
+
+    @jump = new JumpView
+      direction: 'bottom'
+      threshold: $(window).height()
+      position: @$('#home-artworks-filter').offset().top
+    @$el.append @jump.$el
 
   renderArtworks: ->
     subView = new FeaturedArtworksView user: @user

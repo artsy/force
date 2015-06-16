@@ -105,6 +105,7 @@ describe 'Homepage init code', ->
     sinon.stub Backbone.history, 'start'
     sinon.stub Backbone, 'sync'
     sinon.stub @HomeView::, 'renderArtworks'
+    sinon.stub @HomeView::, 'setupArtworkFilter'
     @init()
 
   afterEach ->
