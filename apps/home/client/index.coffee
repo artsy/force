@@ -7,6 +7,7 @@ HeroUnitView = require './hero_unit_view.coffee'
 HomeAuthRouter = require './auth_router.coffee'
 FeaturedArtworksView = require '../components/featured_artworks/view.coffee'
 splitTest = require '../../../components/split_test/index.coffee'
+JumpView = require '../../../components/jump/view.coffee'
 { setupFilter } = require '../../../components/filter2/index.coffee'
 aggregationParams = require '../aggregations.coffee'
 
@@ -42,6 +43,12 @@ module.exports.HomeView = class HomeView extends Backbone.View
       includeFixedHeader: no
 
     scrollFrame '#home-artworks a'
+
+    @jump = new JumpView
+      direction: 'bottom'
+      threshold: $(window).height()
+      position: @$('#home-artworks-filter').offset().top
+    @$el.append @jump.$el
 
   renderArtworks: ->
     subView = new FeaturedArtworksView user: @user

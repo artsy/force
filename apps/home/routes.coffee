@@ -59,8 +59,6 @@ positionWelcomeHeroMethod = (req, res) ->
 
 @newIndex = (req, res) ->
   heroUnits = new HeroUnits
-  # homepage:featured-sections
-  featuredLinks = new Items [], id: '529939e2275b245e290004a0', item_type: 'FeaturedLink'
   # homepage:explore
   exploreSections = new Items [], id: '54528dc072616942f91f0200', item_type: 'FeaturedLink'
 
@@ -71,7 +69,6 @@ positionWelcomeHeroMethod = (req, res) ->
 
   Q.allSettled(_.compact([
     heroUnits.fetch(cache: true, cacheTime: timeToCacheInSeconds)
-    featuredLinks.fetch(cache: true)
     exploreSections.fetch(cache: true) unless req.user?
     filterArtworks.fetch(cache: true, data: filterData)
   ])).then(->
@@ -80,7 +77,6 @@ positionWelcomeHeroMethod = (req, res) ->
     res.locals.sd.FILTER_ROOT = '/'
     res.render 'new_index',
       heroUnits: heroUnits
-      featuredLinks: featuredLinks
       exploreSections: exploreSections
       filterRoot: res.locals.sd.FILTER_ROOT
       counts: filterArtworks.counts
