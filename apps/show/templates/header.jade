@@ -60,4 +60,4 @@ header.show-header( class= hasCarousel ? 'has-carousel' : undefined )
                   if showEvent.get('title')
                     em #{showEvent.get('title')},
                     = ' '
-                  = showEvent.runningDates()
+                  = showEvent.formatDateRange('start_at', 'end_at')
