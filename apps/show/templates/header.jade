@@ -49,12 +49,15 @@ header.show-header( class= hasCarousel ? 'has-carousel' : undefined )
             if location.has('coordinates')
               a.map-modal-link
                 include ../components/map_modal/images/map-modal-arrow.svg
+
         if show.has('events')
           .show-events
             each showEvent in show.related().showEvents.models
               .show-event
-                  p
-                    | #{showEvent.eventType()}:
-                    if showEvent.has('title')
-                      em #{showEvent.get('title')},
-                    = showEvent.runningDates()
+                p
+                  | #{showEvent.eventType()}:
+                  = ' '
+                  if showEvent.get('title')
+                    em #{showEvent.get('title')},
+                    = ' '
+                  = showEvent.runningDates()
