@@ -14,10 +14,15 @@ setupSaveControls = require '../components/save_artworks/index.coffee'
 RelatedArticlesView = require '../components/related_articles/view.coffee'
 MapModal = require '../components/map_modal/map.coffee'
 zoom = require '../../../components/zoom/index.coffee'
+openShowEvents = require '../components/events_modal/index.coffee'
 
 module.exports.init = ->
   show = new PartnerShow SHOW
   show.related().artworks.reset ARTWORKS
+
+  $('.js-open-show-events').click (e) ->
+    e.preventDefault()
+    openShowEvents(model: show, collection: show.related().showEvents)
 
   if $('.js-show-installation-shot-carousel').length
     initCarousel $('.js-show-installation-shot-carousel'), {

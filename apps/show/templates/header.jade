@@ -54,7 +54,7 @@ header.show-header( class= hasCarousel ? 'has-carousel' : undefined )
           .show-events
             each showEvent in show.related().showEvents.models
               .show-event
-                p
+                a.js-open-show-events( href='#' )
                   | #{showEvent.eventType()}:
                   = ' '
                   if showEvent.get('title')
