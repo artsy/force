@@ -43,6 +43,7 @@ module.exports = class FilterView extends Backbone.View
         complete: => @$('.filter-artworks').removeClass 'is-loading'
 
     @listenTo @params, "change:sort", @reset
+    @listenTo @params, "change:for_sale", @reset
     for facet in @facets
       @listenTo @params, "change:#{facet}", @reset
 
