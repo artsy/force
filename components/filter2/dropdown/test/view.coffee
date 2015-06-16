@@ -36,6 +36,6 @@ describe 'Filter / Dropdown', ->
     @view.$('.filter-nav-main-text').text().should.equal 'price'
     @view.$('.filter-nav-active-text').text().should.equal ''
     @view.$('.filter-dropdown-nav > a').first().text().should.equal 'All prices'
-    @view.$('.filter-dropdown-nav > a:nth-child(2) .filter-dropdown-text').text().should.equal 'for Sale'
-    @view.$('.filter-dropdown-nav > a:nth-child(2) .filter-dropdown-count').text().should.equal '(5,647)'
+    @view.$('.filter-dropdown-nav > a:nth-child(2) .filter-dropdown-text').text().should.equal 'Under $1,000'
+    @view.$('.filter-dropdown-nav > a:nth-child(2) .filter-dropdown-count').text().should.equal '(535)'
 
