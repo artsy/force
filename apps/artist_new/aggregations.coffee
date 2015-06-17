@@ -1,1 +1,1 @@
-module.exports = ['price_range', 'medium', 'period', 'total', 'gallery', 'institution']
+module.exports = ['price_range', 'medium', 'period', 'total', 'gallery', 'institution', 'for_sale']
