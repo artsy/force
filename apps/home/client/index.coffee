@@ -44,10 +44,15 @@ module.exports.HomeView = class HomeView extends Backbone.View
 
     scrollFrame '#home-artworks a'
 
+    if @user
+      position = @$('#home-artworks-section').offset().top
+    else
+      position = @$('#home-featured-artworks-section').offset().top + @$('#home-featured-artworks-section').outerHeight()
+
     @jump = new JumpView
       direction: 'bottom'
       threshold: $(window).height()
-      position: @$('#home-artworks-filter').offset().top
+      position: position
     @$el.append @jump.$el
 
   renderArtworks: ->

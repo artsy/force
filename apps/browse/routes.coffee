@@ -7,7 +7,6 @@ aggregationParams = require './aggregations.coffee'
   filterArtworks = new FilterArtworks
   filterData = { size: 0, aggregations: aggregationParams }
   filterArtworks.fetch
-    cache: true
     data: filterData
     success: ->
       res.locals.sd.FILTER_ROOT = '/browse/artworks'
