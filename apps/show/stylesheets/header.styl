@@ -33,12 +33,20 @@
   > p
     block-margins(10px)
 
+.show-location > .show-entity-link
+  margin-left 0.5em
 
 .show-events
   margin-top 20px
-.show-event
-  > a
-    text-decoration none
+
+.show-entity-link
+  text-decoration none
+  > i
+    line-height 0
+    margin 0 -(default-icon-font-size / 4)
+    vertical-align -(garamond-s-body-font-size / 2)
+  > span
+    inline-block-margins(0.5em)
     &:hover
       fine-faux-underline()
 
@@ -57,13 +65,3 @@
     text-align right
     > a
       vertical-align middle
-
-.show-fair-link
-  text-decoration none
-  svg
-    height 23px
-    width 23px
-    vertical-align -7px
-  &:hover
-    text-decoration underline
-
