@@ -74,9 +74,9 @@ describe 'Artist header', ->
         contemporary: false
 
       artworks = _.clone(fabricate2('filter_artworks'))
-      delete artworks.aggregations.total
 
       @filterArtworks = new FilterArtworks artworks, { parse: true }
+      @filterArtworks.counts = null
 
       benv.render resolve(__dirname, '../templates/index.jade'), {
         sd: CURRENT_PATH: "/artist/#{@artist.id}/shows"
