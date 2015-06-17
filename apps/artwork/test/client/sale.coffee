@@ -22,29 +22,30 @@ describe 'SaleView', ->
     SaleView = benv.requireWithJadeify resolve(__dirname, '../../client/sale'), ['template', 'artworkColumnsTemplate']
 
     @artwork = new Artwork fabricate 'artwork'
-    @sale = new Sale(fabricate 'sale')
+    @sale = new Sale fabricate 'sale'
 
-    @sale.fetchArtworks = sinon.stub().yieldsTo 'success', new Backbone.Collection
+    sinon.stub(@sale.related().saleArtworks, 'fetchUntilEndInParallel')
+      .yieldsTo 'success', new Backbone.Collection
 
-    @view = new SaleView el: $('<div></div>'), sale: @sale, saved: {}
+    @view = new SaleView sale: @sale, saved: {}
     done()
 
   afterEach ->
     Backbone.sync.restore()
-
-  describe '#initialize', ->
-    it 'sets up artworks on success', ->
-      @view.artworks.constructor.name.should.equal 'Artworks'
+    @sale.related().saleArtworks.fetchUntilEndInParallel.restore()
 
   describe '#rendered', ->
     it 'has the correct title', ->
       text = @view.$('h2').text()
       text.should.containEql 'Works from'
       text.should.containEql 'Whitney Art Party'
+
     it 'has a container for the artwork columns', ->
       @view.$('#sale-artwork-columns').length.should.be.ok
+
     it 'links to the sale', ->
       @view.$('a').attr('href').should.equal '/sale/whtney-art-party'
+
     it 'renders sale artwork columns', ->
       saleArtwork = new Backbone.Model(fabricate 'sale_artwork')
       # A bug with the comparator means you can't add to this collection (FWIW)
