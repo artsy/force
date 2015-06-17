@@ -1,7 +1,7 @@
 #artist-page-section-works.artist-page-section
   h3.artist-section-header Works
   .artist-page-section__content
-    if counts.total.value > 0
+    if counts && counts.total.value > 0
       #artist-filter
         #artist-filter-nav.filter-fixed-header-nav
           .filter-fixed-header-left

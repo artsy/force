@@ -33,7 +33,7 @@ cache = require '../../lib/cache'
     artist.fetch(cache: true)
     statuses.fetch(cache: true)
     carousel.fetch(cache: true)
-    filterArtworks.fetch(data: filterData, cache: true, cacheTime: 3000)
+    filterArtworks.fetch(data: filterData)
   ]).spread((artistRequest, statusesRequest, carouselRequest,  filterArtworksRequest) ->
 
     nav = new Nav artist: artist, statuses: statusesRequest.value
