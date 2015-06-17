@@ -74,7 +74,7 @@ describe 'Artist header', ->
         contemporary: false
 
       artworks = _.clone(fabricate2('filter_artworks'))
-      artworks.aggregations.total.value = 0
+      delete artworks.aggregations.total
 
       @filterArtworks = new FilterArtworks artworks, { parse: true }
 
