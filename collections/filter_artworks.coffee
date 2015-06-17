@@ -68,5 +68,6 @@ module.exports = class FilterArtworks extends Artworks
         aggregate
       'gallery': (aggregate) -> aggregate
       'institution': (aggregate) -> aggregate
+      'for_sale': (aggregate) -> aggregate
 
     aggregateMap[name]? aggregate
