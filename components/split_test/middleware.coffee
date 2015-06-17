@@ -8,7 +8,7 @@ module.exports = (req, res, next) ->
       test = new SplitTest req, res, configuration
       res.locals.sd[key.toUpperCase()] = test.outcome()
 
-    if req.query?.split_test and req.user?.isAdmin()
+    if req.query?.split_test
       test = new SplitTest req, res, configuration
       params = qs.parse req.query?.split_test
       for k, v of params
