@@ -17,6 +17,8 @@ module.exports = class DropdownView extends Backbone.View
     for facet in @facets
       @listenTo @params, "change:#{facet}", @updateCounts
 
+    @listenTo @params, "change:for_sale", @updateCounts
+
   updateCounts: ->
     # we need a copy of the params without this facet and
     # we don't need results, just counts

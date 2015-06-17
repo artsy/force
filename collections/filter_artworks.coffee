@@ -34,6 +34,9 @@ module.exports = class FilterArtworks extends Artworks
     for k, v of aggregations
       aggregations[k] = @prepareAggregate v, k
 
+    # remove this inferior for sale filter now, pls
+    delete aggregations['price_range']?['*-*']
+
     aggregations
 
   prepareAggregate: (aggregate, name) ->
