@@ -1,7 +1,5 @@
 _ = require 'underscore'
-fs = require 'fs'
 jade = require 'jade'
-path = require 'path'
 cheerio = require 'cheerio'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
@@ -12,12 +10,40 @@ Artwork = require '../../../models/artwork'
 Artworks = require '../../../collections/artworks'
 
 render = (templateName) ->
-  filename = path.resolve __dirname, "../templates/#{templateName}.jade"
-  jade.compile(fs.readFileSync(filename), filename: filename)
+  jade.compileFile(require.resolve "../templates/#{templateName}.jade")
+
+describe 'metadata', ->
+  describe 'events', ->
+    describe 'with multiple events', ->
+      it 'renders correctly', ->
+        { events } = fabricate 'show'
+        events.should.have.lengthOf 2
+        show = new PartnerShow events: events
+        html = render('metadata/events') show: show
+        html.should.containEql 'js-open-show-events'
+        html.should.containEql 'Multiple events for this show'
+
+    describe 'a single events, with a description', ->
+      it 'renders correctly', ->
+        { events } = fabricate 'show'
+        show = new PartnerShow events: [_.extend {}, events[0], description: 'Existy']
+        html = render('metadata/events') show: show
+        html.should.containEql 'js-open-show-events'
+        html.should.not.containEql 'Multiple events for this show'
+        html.should.containEql 'Opening Reception'
+
+    describe 'a single events, without a description', ->
+      it 'renders correctly', ->
+        { events } = fabricate 'show'
+        show = new PartnerShow events: [_.extend {}, events[0], description: null]
+        html = render('metadata/events') show: show
+        html.should.not.containEql 'js-open-show-events'
+        html.should.not.containEql 'Multiple events for this show'
+        html.should.containEql 'Opening Reception'
 
 describe 'Partner Show', ->
   describe 'an average show', ->
-    beforeEach ->
+    before ->
       @show = new PartnerShow fabricate('show')
       @html = render('index')
         sd: {}
@@ -51,7 +77,7 @@ describe 'Partner Show', ->
       @$('.show-press-release').should.have.lengthOf 0
 
   describe 'a show that is in an unfeatured fair', ->
-    beforeEach ->
+    before ->
       @show = new PartnerShow fabricate('show')
       fair = @show.related().fair.set 'has_full_feature', false
       @html = render('index')
@@ -70,7 +96,7 @@ describe 'Partner Show', ->
       @$('.show-fair-link').should.have.lengthOf 0
 
   describe 'with 1 installation shot', ->
-    beforeEach ->
+    before ->
       @show = new PartnerShow fabricate('show')
       @show.related().installShots.reset [fabricate 'show_install_shot']
       @html = render('index')
@@ -89,7 +115,7 @@ describe 'Partner Show', ->
       @$('.show-installation-shot-carousel').should.have.lengthOf 0
 
   describe 'with 3 or more installation shots', ->
-    beforeEach ->
+    before ->
       @show = new PartnerShow fabricate('show')
       @show.related().installShots.reset _.times 3, -> fabricate 'show_install_shot'
       @html = render('index')
@@ -109,7 +135,7 @@ describe 'Partner Show', ->
       @$('.mgr-cell').should.have.lengthOf 3
 
   describe 'with a press release', ->
-    beforeEach ->
+    before ->
       @show = new PartnerShow fabricate('show', press_release: '*Existy*')
       @html = render('index')
         sd: {}

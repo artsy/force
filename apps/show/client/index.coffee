@@ -37,7 +37,8 @@ module.exports.init = ->
   attachFollowArtists show.related().artists
   attachFollowProfile show.related().profile
 
-  $('.map-modal-link').click -> new MapModal model: show, width: '820px'
+  $('.js-open-map-modal').click ->
+    new MapModal model: show, width: '820px'
 
   if show.isFairBooth()
     attachRelatedShows 'fair', show

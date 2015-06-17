@@ -27,37 +27,11 @@ header.show-header( class= hasCarousel ? 'has-carousel' : undefined )
 
     .show-metadata
       if show.has('fair')
-        //- Temporary naïve check
-        if fair.get('published') && fair.get('has_full_feature')
-          a.show-fair-link( href= fair.href() )
-            = fair.get('name')
-            include ../components/map_modal/images/map-modal-arrow.svg
-        else
-          = fair.get('name')
-
-        .show-dates
-          = fair.formatDates()
-        if show.get('fair_location')
-          .show-location
-            = show.get('fair_location').display
+        include metadata/fair
       else
         .show-dates
           = show.runningDates()
         if location
-          .show-location
-            = location.singleLine()
-            if location.has('coordinates')
-              a.map-modal-link
-                include ../components/map_modal/images/map-modal-arrow.svg
-
-        if show.has('events')
-          .show-events
-            each showEvent in show.related().showEvents.models
-              .show-event
-                a.js-open-show-events( href='#' )
-                  | #{showEvent.eventType()}:
-                  = ' '
-                  if showEvent.get('title')
-                    em #{showEvent.get('title')},
-                    = ' '
-                  = showEvent.formatDateRange('start_at', 'end_at')
+          include metadata/location
+        if show.related().showEvents.length
+          include metadata/events
