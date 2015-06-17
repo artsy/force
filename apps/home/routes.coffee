@@ -70,7 +70,7 @@ positionWelcomeHeroMethod = (req, res) ->
   Q.allSettled(_.compact([
     heroUnits.fetch(cache: true, cacheTime: timeToCacheInSeconds)
     exploreSections.fetch(cache: true) unless req.user?
-    filterArtworks.fetch(cache: true, data: filterData)
+    filterArtworks.fetch(data: filterData)
   ])).then(->
     heroUnits[positionWelcomeHeroMethod(req, res)](welcomeHero) unless req.user?
     res.locals.sd.HERO_UNITS = heroUnits.toJSON()
