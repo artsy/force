@@ -15,7 +15,7 @@ module.exports = class HeadlineView extends Backbone.View
     @listenTo @params, "change:for_sale", @setHeadline, @
 
   setHeadline: ->
-    if @anyFacetsSelected()
+    if @anyFacetsSelected() || @stuckFacet
       @$el.text(@paramsToHeading()).show()
     else
       @$el.text("").hide()
@@ -32,11 +32,18 @@ module.exports = class HeadlineView extends Backbone.View
   anyFacetsSelected: ->
     @params.get('for_sale') is 'true' || _.any @facets, (facet) => @params.has facet
 
+  humanizeMedium: ->
+    # replace the 'slash' in 'film-slash-video'
+    _s.humanize(@params.get('medium')).replace('slash', '/')
+
   displayMedium: ->
     if @stuckFacet
-      @stuckFacet.get('name')
+      if @params.has('medium')
+        @humanizeMedium()
+      else
+        @stuckFacet.get('name')
     else
-      @facetName('medium') || 'Artworks'
+      @humanizeMedium() || 'Artworks'
 
   displayForSale: ->
     "For Sale" if @params.get('for_sale') is 'true'
