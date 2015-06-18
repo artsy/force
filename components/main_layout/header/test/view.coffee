@@ -31,20 +31,6 @@ describe 'HeaderView', ->
 
   after -> benv.teardown()
 
-  it 'hides the welcome header on scroll', ->
-    @$window.on.args[0][0].should.equal 'scroll.welcome-header'
-    @$window.on.args[0][1].should.equal @view.checkRemoveWelcomeHeader
-
-  describe '#hideWelcomeHeader', ->
-    beforeEach ->
-      @view.$welcomeHeader = height: (-> 50), remove: sinon.stub()
-
-    it 'hides the welcome header when scrolling past the search bar', ->
-      @view.$window.scrollTop = -> 55
-      @view.checkRemoveWelcomeHeader()
-      $('body').hasClass('body-header-fixed').should.be.ok
-      @view.$window.off.called.should.be.ok
-
   describe '#openAuth', ->
     it 'opens with custom copy', ->
       @view.openAuth copy: 'Sign up to foo bar'
