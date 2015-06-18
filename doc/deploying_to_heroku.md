@@ -21,4 +21,7 @@ heroku config:set APP_URL=http://new_app_name.herokuapp.com --app new_app_name
 heroku config:set S3_BUCKET=new_app_name --app new_app_name
 heroku config:set APPLICATION_NAME=new_app_name --app new_app_name
 heroku config:set CDN_URL=https://new_app_name.s3.amazonaws.com --app new_app_name
+
 ```
+
+At this point you should be good to go!

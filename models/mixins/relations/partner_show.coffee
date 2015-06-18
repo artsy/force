@@ -46,8 +46,9 @@ module.exports =
       showEvents: showEvents
 
   rebuild: ->
-    { artists, partner, fair, profile } = @related()
+    { artists, partner, fair, profile, showEvents } = @related()
     artists.reset @get('artists'), silent: true
     partner.set @get('partner'), silent: true
     fair.set @get('fair'), silent: true
     profile.set 'id', partner.get('default_profile_id'), silent: true
+    showEvents.reset @get('events'), silent: true

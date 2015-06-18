@@ -1,8 +1,8 @@
 nav.filter-nav.filter-artworks-nav
-  if ! _.isEmpty(counts.price_range) && ! hideForSale 
-    a.filter-button.filter-nav-only-for-sale(class=params.get('price_range') == '*-*' ? 'is-active' : '' )
+  if ! _.isEmpty(counts.price_range) && ! hideForSale
+    a.filter-button.filter-nav-only-for-sale(class=params.get('for_sale') == 'true' ? 'is-active' : '' )
       .artsy-checkbox--checkbox
-        input( type='checkbox', id='only-for-sale' checked=( params.get('price_range') == '*-*' ? 'checked' : undefined ) )
+        input( type='checkbox', id='only-for-sale' checked=( params.get('for_sale') == 'true' ? 'checked' : undefined ) )
         label( for='only-for-sale' )
       label( for='only-for-sale' ) Only for sale
 

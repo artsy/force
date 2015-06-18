@@ -1,4 +1,4 @@
-unless name == 'total'
+unless name == 'total' || name == 'for_sale'
   .filter-dropdown(
     id="filter-dropdown-#{name}"
     class= ( params.has(name) && activeText ) ? 'is-active' : ''

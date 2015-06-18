@@ -12,11 +12,8 @@ aggregationParams = require '../../aggregations.coffee'
 template = -> require('../../templates/sections/works.jade') arguments...
 
 module.exports = class WorksView extends Backbone.View
-  defaults:
-    noInfiniteScroll: false
 
   initialize: (options)->
-    { @noInfiniteScroll } = _.defaults options, @defaults
     @collection = new FilterArtworks []
 
     queryParams =  qs.parse(location.search.replace(/^\?/, ''))
@@ -35,7 +32,6 @@ module.exports = class WorksView extends Backbone.View
       stuckFacet: @model
       includeFixedHeader: false
       facets: aggregationParams
-      noInfiniteScroll: @noInfiniteScroll
 
     view.on 'state:finished-paging', @showFooter
 
@@ -57,7 +53,6 @@ module.exports = class WorksView extends Backbone.View
       numberFormat: _s.numberFormat
       params: @params
       activeText: ''
-      noInfiniteScroll: @noInfiniteScroll
     _.defer => @postRender()
     this
 

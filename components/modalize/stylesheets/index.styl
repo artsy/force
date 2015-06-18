@@ -32,22 +32,19 @@
   left 0
 
 .modalize-backdrop
+  display flex
+  align-items center
   background-color rgba(black, 0.5)
-  text-align center
 
 .has-nobackdrop > .modalize-backdrop
   background-color transparent
 
 .modalize-dialog
-  display inline-block
-  position absolute
-  top 50%
-  left 50%
-  text-align left
+  position relative
+  margin 0 auto
   max-width 90%
   max-height 90%
-  transform translate(-50%, -50%)
-  margin 0 auto
+  text-align left
   overflow-y auto
   background-color white
   &.is-notransition

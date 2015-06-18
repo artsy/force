@@ -12,6 +12,7 @@ module.exports = (artist) ->
   ctaBarView = new CTABarView
     headline: ctaHeadline
     name: name
+    mode: ''
     persist: true
     modalOptions:
       copy: modalCopy

@@ -11,6 +11,9 @@ module.exports = class HeadlineView extends Backbone.View
       @listenTo @params, "change:#{facet}", @setHeadline, @
       @listenTo @params, "change:#{facet}", @setTitle, @
 
+    @listenTo @params, "change:for_sale", @setTitle, @
+    @listenTo @params, "change:for_sale", @setHeadline, @
+
   setHeadline: ->
     if @anyFacetsSelected()
       @$el.text(@paramsToHeading()).show()
@@ -27,7 +30,7 @@ module.exports = class HeadlineView extends Backbone.View
     @collection.counts?[facet]?[@params.get(facet)]?.name
 
   anyFacetsSelected: ->
-    _.any @facets, (facet) => @params.has facet
+    @params.get('for_sale') is 'true' || _.any @facets, (facet) => @params.has facet
 
   displayMedium: ->
     if @stuckFacet
@@ -35,10 +38,14 @@ module.exports = class HeadlineView extends Backbone.View
     else
       @facetName('medium') || 'Artworks'
 
+  displayForSale: ->
+    "For Sale" if @params.get('for_sale') is 'true'
+
   paramsToHeading: ->
     if @anyFacetsSelected() || @stuckFacet
       _.compact([
         @facetName('dimension_range'),
         (@displayMedium()),
-        @facetName('price_range')
+        @facetName('price_range'),
+        @displayForSale()
       ]).join(' ')

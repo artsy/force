@@ -25,7 +25,6 @@ module.exports = (type, show) ->
     when 'gallery'
       data = _.extend criteria, {
         sort: '-start_at'
-        status: "upcoming"
       }
       relatedShows.url = "#{show.related().partner.url()}/shows"
       title = "Other Shows from #{show.partnerName()}"

@@ -8,3 +8,9 @@ analyticsHooks.on('artwork_filter:activated', function(data) {
     value: data.val
   });
 });
+
+analyticsHooks.on('artwork_filter:new_page', function(data) {
+  analytics.track('Artworks filter / Scrolled to new page', {
+    page: data.page
+  });
+});

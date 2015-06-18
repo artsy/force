@@ -13,7 +13,7 @@ module.exports = class DropdownGroupView extends Backbone.View
     for facet in @facets
       @initSubView facet
 
-    @listenTo @params, 'change:price_range', @checkForSale
+    @listenTo @params, 'change:for_sale', @checkForSale
     @checkForSale()
 
   # init subview and add to subview hash
@@ -26,7 +26,7 @@ module.exports = class DropdownGroupView extends Backbone.View
       el: @$("#filter-dropdown-#{facet}")
 
   checkForSale: ->
-    if @params.get('price_range') is '*-*'
+    if @params.get('for_sale') is 'true'
       @$('#only-for-sale').prop 'checked', true
       @$('.filter-nav-only-for-sale').addClass('is-active')
     else
@@ -34,9 +34,9 @@ module.exports = class DropdownGroupView extends Backbone.View
       @$('.filter-nav-only-for-sale').removeClass('is-active')
 
   toggleForSale: ->
-    if @params.get('price_range') is '*-*'
-      @params.unset 'price_range'
+    if @params.get('for_sale') is 'true'
+      @params.unset 'for_sale'
     else
-      @params.set 'price_range', '*-*'
+      @params.set 'for_sale', 'true'
 
     false

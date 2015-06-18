@@ -2,6 +2,7 @@ _ = require 'underscore'
 _s = require 'underscore.string'
 Backbone = require 'backbone'
 FilterArtworks = require '../../collections/filter_artworks.coffee'
+analyticsHooks = require '../../lib/analytics_hooks.coffee'
 ArtworkColumnsView = require '../artwork_columns/view.coffee'
 DropdownGroupView = require './dropdown_group/view.coffee'
 FilterFixedHeader = require './fixed_header/view.coffee'
@@ -15,9 +16,9 @@ module.exports = class FilterView extends Backbone.View
     columnWidth: 300
     includeFixedHeader: true
     facets: ['price_range', 'dimension_range', 'medium']
-    noInfiniteScroll: false
     hideForSale: false
     includeAllWorks: false
+    infiniteScroll: true
     pageSize: 10
 
   events:
@@ -29,9 +30,9 @@ module.exports = class FilterView extends Backbone.View
       @columnWidth,
       @includeFixedHeader,
       @facets,
-      @noInfiniteScroll,
       @hideForSale,
       @includeAllWorks
+      @infiniteScroll,
       @pageSize } = _.defaults options, @defaults
 
     @initSubViews()
@@ -46,10 +47,11 @@ module.exports = class FilterView extends Backbone.View
         complete: => @$('.filter-artworks').removeClass 'is-loading'
 
     @listenTo @params, "change:sort", @reset
+    @listenTo @params, "change:for_sale", @reset
     for facet in @facets
       @listenTo @params, "change:#{facet}", @reset
 
-    $.onInfiniteScroll(@nextPage) unless @noInfiniteScroll
+    $.onInfiniteScroll(@nextPage) if @infiniteScroll
 
   initSubViews: ->
     new DropdownGroupView
@@ -115,6 +117,8 @@ module.exports = class FilterView extends Backbone.View
     return if @$('.filter-artworks').is(':hidden') or
               @$('.filter-artworks').attr('data-state') is 'finished-paging'
     @params.set page: (@params.get('page') + 1) or 1
+
+    analyticsHooks.trigger 'artwork_filter:new_page', { page: @params.get('page') }
 
   reset: =>
     @params.

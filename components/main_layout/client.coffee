@@ -75,7 +75,7 @@ setupReferrerTracking = ->
     Cookies.set 'force-session-start', window.location.href
 
 setupViews = ->
-  new HeaderView el: $('#main-layout-header'), $window: $(window), $body: $('body')
+  new HeaderView el: $('#main-layout-header')
   new FooterView el: $('#main-layout-footer')
 
 setupJquery = ->
