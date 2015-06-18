@@ -14,11 +14,13 @@ module.exports =
     Features = require '../../../collections/features.coffee'
     Fairs = require '../../../collections/fairs.coffee'
     Shows = require '../../../collections/partner_shows.coffee'
+    Artists = require '../../../collections/artists.coffee'
 
     artist = new Artist @get('artist')
     saleArtwork = new SaleArtwork @get('sale_artwork')
     partner = new Partner @get('partner')
     images = new AdditionalImages @get('images'), parse: true
+    artists = new Artists @get('artists')
 
     sales = new Sales
     sales.url = "#{API_URL}/api/v1/related/sales?artwork[]=#{@id}&active=true&cache_bust=#{Math.random()}"
@@ -38,3 +40,4 @@ module.exports =
       features: features
       fairs: fairs
       shows: shows
+      artists: artists
