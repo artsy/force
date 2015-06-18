@@ -5,6 +5,8 @@ path = require 'path'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 Artwork = require '../../../models/artwork'
+Artists = require '../../../collections/artists'
+Artist = require '../../../models/artist'
 SaleArtwork = require '../../../models/sale_artwork'
 
 render = (template) ->
@@ -47,6 +49,9 @@ describe 'Artwork Item template', ->
   describe 'artwork caption', ->
     beforeEach ->
       @artwork = new Artwork fabricate 'artwork'
+      @artist = new Artist fabricate 'artist'
+      @artist2= new Artist fabricate 'artist', {name: 'Kana', public: true}
+      @artwork.related().artists = new Artists @artist
       @html = render('artwork')({ artwork: @artwork })
 
     it 'displays the artwork title and year', ->
@@ -56,14 +61,21 @@ describe 'Artwork Item template', ->
 
     it 'displays the artist name if available', ->
       $ = cheerio.load @html
-      $('.artwork-item-artist').text().should.equal @artwork.artistName()
+      $('.artwork-item-artist').text().should.equal @artist.displayName()
       $('.artwork-item-artist a').should.have.lengthOf 0
 
-    it 'links to the artist if it\'s public', ->
-      @artwork.get('artist').public = true
+    it 'displays multiple artists if there are any', ->
+      @artwork.related().artists = new Artists [@artist, @artist2]
+      @artist.set 'public', true
       $ = cheerio.load render('artwork')({ artwork: @artwork })
-      $('.artwork-item-artist a').text().should.equal @artwork.artistName()
-      $('.artwork-item-artist a').attr('href').should.equal @artwork.artistLink()
+      $('.artwork-item-artist').text().should.equal 'Pablo PicassoKana'
+      $('.artwork-item-artist a').should.have.lengthOf 2
+
+    it 'links to the artist if it\'s public', ->
+      @artist.set 'public', true
+      $ = cheerio.load render('artwork')({ artwork: @artwork })
+      $('.artwork-item-artist a').text().should.equal @artist.displayName()
+      $('.artwork-item-artist a').attr('href').should.equal @artist.href()
 
     it 'links to the partner name', ->
       @artwork.get('partner').default_profile_public = true
