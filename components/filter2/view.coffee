@@ -25,7 +25,7 @@ module.exports = class FilterView extends Backbone.View
     'click .filter-artworks-see-more' : 'nextPage'
 
   initialize: (options) ->
-    { @collection, @params, @stuckFacet } = options
+    { @collection, @params, @stuckFacet, @stuckParam } = options
     { @giveUpCount,
       @columnWidth,
       @includeFixedHeader,

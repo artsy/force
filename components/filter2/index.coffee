@@ -43,6 +43,7 @@ module.exports =
       collection: collection
       params: params
       stuckFacet: stuckFacet
+      stuckParam: stuckParam
       hideForSale: hideForSale
       includeAllWorks: includeAllWorks
       infiniteScroll: infiniteScroll
