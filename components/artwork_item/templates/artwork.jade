@@ -23,7 +23,7 @@ figure.artwork-item( data-artwork=artwork.get('id') )
       else
         include ../save_controls/template
   figcaption.artwork-item-caption
-    if artwork.get('artists').length
+    if artwork.related().artists.length
       p.artwork-item-artist.artwork-item-overflow
         for artist in artwork.related().artists.models
           if artist.get('public')
