@@ -18,7 +18,7 @@ header.auction-header
 
   .auction-header-metadata
     .auction-header-metadata-cell
-      .auction-header-clock.js-auction-clock
+      .auction-header-clock.js-auction-clock( data-id= auction.id )
         include ../../../components/clock/template
 
       unless auction.isAuctionPromo()
