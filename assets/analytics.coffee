@@ -7,3 +7,5 @@ $ -> analytics.ready ->
   require '../analytics/gallery_partnerships.js'
   require '../analytics/artworks_filter.js'
   require '../analytics/artist_page.js'
+  require '../analytics/home.js'
+
