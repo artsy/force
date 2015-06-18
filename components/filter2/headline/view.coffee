@@ -15,7 +15,6 @@ module.exports = class HeadlineView extends Backbone.View
     @listenTo @params, "change:for_sale", @setHeadline, @
 
     @stuckFacet = null if @stuckParam is 'fair_id'
-    console.log 'stuckFacet', @stuckFacet, @stuckParam
 
   setHeadline: ->
     if @anyFacetsSelected() || @stuckFacet
