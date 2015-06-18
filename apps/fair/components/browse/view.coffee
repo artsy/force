@@ -38,7 +38,7 @@ module.exports = class FairBrowseView extends Backbone.View
       aggregations: aggregationParams
       hideForSale: true
       includeAllWorks: true
-      dontStartHistory: true
+      startHistory: false
 
     @artworkParams = params
 
