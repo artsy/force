@@ -72,7 +72,7 @@ module.exports = class Artworks extends Backbone.Collection
   hasAny: (attr) ->
     _.any _.map(@pluck(attr), _.negate(_.isEmpty))
 
-  maxBlurbHeight: (displayBlurbs, lineHeight = 22, columnWidth = 50) ->
+  maxBlurbHeight: (displayBlurbs, lineHeight = 25.5, columnWidth = 50) ->
     return unless displayBlurbs
 
     Math.ceil(_.max(_.map @pluck('blurb'), (blurb) ->

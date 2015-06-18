@@ -71,9 +71,9 @@ describe 'Artworks', ->
 
   describe '#maxBlurbHeight', ->
     it 'returns a pixel value based on the estimated height of the longest blurb', ->
-      @artworks.maxBlurbHeight(true).should.equal '22px' # A single line
+      @artworks.maxBlurbHeight(true).should.equal '26px' # A single line
       _.isUndefined(@artworks.maxBlurbHeight(false)).should.be.true
       @artworks.first().set 'blurb', 'Existence!'
-      @artworks.maxBlurbHeight(true).should.equal '27px'
+      @artworks.maxBlurbHeight(true).should.equal '31px'
       @artworks.last().set 'blurb', 'Existence! Existence! Existence! Existence! Existence! Existence! Existence! Existence! Existence! Existence!'
-      @artworks.maxBlurbHeight(true).should.equal '70px'
+      @artworks.maxBlurbHeight(true).should.equal '82px'
