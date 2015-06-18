@@ -1,6 +1,5 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-Cookies = require 'cookies-js'
 SearchBarView = require '../../search_bar/view.coffee'
 AuthModalView = require '../../auth_modal/view.coffee'
 mediator = require '../../../lib/mediator.coffee'
@@ -12,6 +11,7 @@ PublishModal = require '../../publish_modal/view.coffee'
 Profile = require '../../../models/profile.coffee'
 activatePulldowns = require '../../hover_pulldown/index.coffee'
 maybePopUpPolicyNotice = require './policy.coffee'
+dealWithWelcomeBanner = require '../../welcome_banner/index.coffee'
 
 module.exports = class HeaderView extends Backbone.View
   events:
@@ -20,10 +20,9 @@ module.exports = class HeaderView extends Backbone.View
     'click .user-nav-profile-link': 'showProfilePrivateDialog'
     'click .mlh-logout': 'logout'
 
-  initialize: ({ @$window, @$body }) ->
-    @$welcomeHeader = @$('#main-layout-welcome-header')
-
+  initialize: ->
     maybePopUpPolicyNotice()
+    dealWithWelcomeBanner()
 
     @searchBarView = new SearchBarView
       el: @$('#main-layout-search-bar-container')
@@ -36,22 +35,11 @@ module.exports = class HeaderView extends Backbone.View
     @searchBarView.on 'search:entered', (term) -> window.location = "/search?q=#{term}"
     @searchBarView.on 'search:selected', @searchBarView.selectResult
 
-    if isTouchDevice()
-      @removeWelcomeHeader()
-    else unless sd.HIDE_HEADER # Already hidden
-      @$window.on 'scroll.welcome-header', @checkRemoveWelcomeHeader
-
     mediator.on 'open:auth', @openAuth, @
 
-    @checkRemoveWelcomeHeader()
     @checkForFlash()
 
     activatePulldowns()
-
-  checkRemoveWelcomeHeader: =>
-    if sd.CURRENT_USER or (@$window.scrollTop() > @$welcomeHeader.height())
-      unless $('body').hasClass 'is-microsite'
-        @removeWelcomeHeader()
 
   showProfilePrivateDialog: (event) =>
     # Displaying the dialog on tap causes confusion on touch devices
@@ -83,15 +71,6 @@ module.exports = class HeaderView extends Backbone.View
 
   openAuth: (options) ->
     @modal = new AuthModalView _.extend({ width: '500px' }, options)
-
-  removeWelcomeHeader: ->
-    @$body.addClass 'body-header-fixed'
-    @$window.off '.welcome-header'
-
-    unless isTouchDevice()
-      @$window.scrollTop(0)
-
-    Cookies.set 'hide-force-header', true, expires: 60 * 60 * 24 * 365
 
   signup: (e) ->
     e.preventDefault()
