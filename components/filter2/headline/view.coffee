@@ -4,7 +4,7 @@ _s = require 'underscore.string'
 
 module.exports = class HeadlineView extends Backbone.View
 
-  initialize: ({@collection, @params, @facets, @stuckFacet}) ->
+  initialize: ({@collection, @params, @facets, @stuckFacet, @stuckParam}) ->
     @listenTo @collection, "initial:fetch", @setHeadline, @
 
     for facet in @facets
@@ -13,6 +13,8 @@ module.exports = class HeadlineView extends Backbone.View
 
     @listenTo @params, "change:for_sale", @setTitle, @
     @listenTo @params, "change:for_sale", @setHeadline, @
+
+    @stuckFacet = null if @stuckParam is 'fair_id'
 
   setHeadline: ->
     if @anyFacetsSelected() || @stuckFacet

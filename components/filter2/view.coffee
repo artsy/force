@@ -68,6 +68,7 @@ module.exports = class FilterView extends Backbone.View
       params: @params
       facets: @facets
       stuckFacet: @stuckFacet
+      stuckParam: @stuckParam
 
     new CountView
       el: @$('.filter-sort-count-count')

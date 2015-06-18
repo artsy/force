@@ -3,7 +3,9 @@ benv = require 'benv'
 sinon = require 'sinon'
 Backbone = require 'backbone'
 { resolve } = require 'path'
-{ fabricate2 } = require 'antigravity'
+{ fabricate, fabricate2 } = require 'antigravity'
+Fair = require '../../../../models/fair.coffee'
+Gene = require '../../../../models/gene.coffee'
 FilterArtworks = require '../../../../collections/filter_artworks.coffee'
 
 describe 'Filter / Headline', ->
@@ -18,6 +20,8 @@ describe 'Filter / Headline', ->
         params: new Backbone.Model
         collection: new FilterArtworks fabricate2('filter_artworks'), parse: true
         facets: ['price_range', 'dimension_range', 'medium']
+        stuckParam: 'fair_id'
+        stuckFacet: new Fair fabricate 'fair'
 
       done()
 
@@ -30,9 +34,9 @@ describe 'Filter / Headline', ->
       medium: 'film-slash-video'
       dimension_range: '*-24.0'
 
-    @view.$el.text().should.equal 'Small Film/Video Under $1,000'
+    @view.$el.text().should.equal 'Small Film / video Under $1,000'
 
-  it 'says artwork if no medium is available', ->
+  it 'says artwork if no medium is available and does not treat fair as a stuck param', ->
     @view.params.set
       price_range: '*-1000'
       dimension_range: '*-24.0'
@@ -41,3 +45,11 @@ describe 'Filter / Headline', ->
 
   it 'says nothing if no params are set', ->
     @view.$el.text().should.equal ''
+
+  it 'uses a stuckFacet in place of a medium', ->
+    @view.stuckFacet = new Gene fabricate 'gene'
+    @view.params.set
+      price_range: '*-1000'
+      dimension_range: '*-24.0'
+
+    @view.$el.text().should.equal 'Small Pop Art Under $1,000'
