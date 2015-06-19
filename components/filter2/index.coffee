@@ -14,6 +14,8 @@ module.exports =
       startHistory: yes
       infiniteScroll: true
       includeFixedHeader: includeFixedHeader
+      includeAllWorks: false
+      hideForSale: false
 
     { aggregations,
       el,
@@ -21,7 +23,9 @@ module.exports =
       stuckFacet,
       startHistory,
       infiniteScroll,
-      includeFixedHeader } = _.defaults options, defaults
+      includeFixedHeader,
+      includeAllWorks,
+      hideForSale } = _.defaults options, defaults
 
     queryParams = qs.parse(location.search.replace(/^\?/, ''))
     params = new Backbone.Model _.extend queryParams,
@@ -39,6 +43,9 @@ module.exports =
       collection: collection
       params: params
       stuckFacet: stuckFacet
+      stuckParam: stuckParam
+      hideForSale: hideForSale
+      includeAllWorks: includeAllWorks
       infiniteScroll: infiniteScroll
       includeFixedHeader: includeFixedHeader
 

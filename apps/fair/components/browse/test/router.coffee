@@ -11,6 +11,7 @@ describe 'BrowseRouter', ->
       benv.expose { $: require('jquery') }
       FilterRouter = benv.require resolve(__dirname, '../router.coffee')
       FilterRouter.__set__ 'FairBrowseView', @FairBrowseView = sinon.stub()
+      sinon.stub Backbone.history, 'start'
       @router = new FilterRouter
         fair: new Backbone.Model
         profile: new Backbone.Model
@@ -19,6 +20,7 @@ describe 'BrowseRouter', ->
 
   afterEach ->
     benv.teardown()
+    Backbone.history.start.restore()
 
   describe '#initialize', ->
 
