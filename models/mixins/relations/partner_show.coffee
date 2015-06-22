@@ -1,11 +1,11 @@
 { API_URL, POSITRON_URL } = require('sharify').data
 Backbone = require 'backbone'
-fixtures = require '../../../test/helpers/fixtures.coffee'
-Backbone = require 'backbone'
 
 module.exports =
   related: ->
     return @__related__ if @__related__?
+
+    @on 'sync', @rebuild
 
     Articles = require '../../../collections/articles.coffee'
     Artworks = require '../../../collections/artworks.coffee'
