@@ -5,6 +5,8 @@ module.exports =
   related: ->
     return @__related__ if @__related__?
 
+    @on 'sync', @rebuild
+
     Articles = require '../../../collections/articles.coffee'
     Artworks = require '../../../collections/artworks.coffee'
     Artists = require '../../../collections/artists.coffee'
