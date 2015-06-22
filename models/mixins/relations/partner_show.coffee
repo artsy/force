@@ -1,7 +1,5 @@
 { API_URL, POSITRON_URL } = require('sharify').data
 Backbone = require 'backbone'
-fixtures = require '../../../test/helpers/fixtures.coffee'
-Backbone = require 'backbone'
 
 module.exports =
   related: ->
