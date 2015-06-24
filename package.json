@@ -30,6 +30,7 @@
     "dompurify": "0.6.2",
     "embed-video": "*",
     "express": "*",
+    "express-uncapitalize": "^1.0.0",
     "flickity": "^1.0.0",
     "flickity-imagesloaded": "^1.0.0",
     "forever": "*",
