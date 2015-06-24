@@ -1,12 +1,5 @@
-StepView = require './step.coffee'
-template = -> require('../templates/placeholder.jade') arguments...
+Backbone = require 'backbone'
 
-module.exports = class Done extends StepView
-  template: template
-
-  __events__:
-    'click button': 'done'
-
-  done: (e) ->
-    e.preventDefault()
+module.exports = class Done extends Backbone.View
+  initialize: ({ @state }) ->
     @state.trigger 'done'

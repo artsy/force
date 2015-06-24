@@ -15,18 +15,8 @@ module.exports = class InquiryQuestionnaireView extends Backbone.View
 
     @listenTo @state, 'change:position', @render
 
-  before: (step, view) ->
-    switch step
-      when 'specialist'
-        (representatives = view.representatives)
-          .fetch()
-          .then -> representatives.first().fetch()
-          .then -> representatives.trigger 'sync'
-
   render: ->
-    pendingView = @state.view modal: @modal, user: @user, state: @state, artwork: @artwork
-
-    @before @state.current(), pendingView
+    pendingView = @state.view user: @user, state: @state, artwork: @artwork
 
     debug @state
 

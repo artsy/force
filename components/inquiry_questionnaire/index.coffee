@@ -14,6 +14,9 @@ module.exports = (options = {}) ->
 
   modal.open()
 
+  questionnaire.state.on 'abort', ->
+    modal.close()
+
   questionnaire.state.on 'done', ->
     modal.close ->
       new FlashMessage message: '

@@ -16,7 +16,7 @@ module.exports = class Auth extends StepView
     'click .js-mode': 'change'
     'click button': 'submit'
 
-  initialize: ({ @modal, @user, @state, @artwork }) ->
+  initialize: ({ @user, @state, @artwork }) ->
     @mode = new Backbone.Model mode: 'login'
     @listenTo @mode, 'change:mode', @render
 
