@@ -29,7 +29,6 @@ module.exports =
   steps: [
     prequalify:
       true: [
-        'specialist'
         'commercial_interest'
         is_collector:
           true: [

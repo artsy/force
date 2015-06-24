@@ -1,5 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
+{ SESSION_ID } = require('sharify').data
 Geo = require './mixins/geo.coffee'
 
 # Base User model for shared functionality between
@@ -16,4 +17,11 @@ module.exports = class User extends Backbone.Model
     @get('collector_level') >= 3
 
   isLoggedIn: ->
-    @id?
+    @__isLoggedIn__
+
+  @instantiate: ->
+    CurrentUser = require './current_user.coffee'
+    LoggedOutUser = require './logged_out_user.coffee'
+
+    CurrentUser.orNull() or
+    new LoggedOutUser session_id: SESSION_ID
