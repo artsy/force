@@ -2,8 +2,7 @@ _ = require 'underscore'
 activatePulldowns = require '../../components/hover_pulldown/index.coffee'
 openInquiryQuestionnaireFor = require '../../components/inquiry_questionnaire/index.coffee'
 Artwork = require '../../models/artwork.coffee'
-CurrentUser = require '../../models/current_user.coffee'
-LoggedOutUser = require '../../models/logged_out_user.coffee'
+User = require '../../models/user.coffee'
 
 module.exports.init = ->
   $('.sg-component-rendered a:not([disabled])').click (e) ->
@@ -23,8 +22,8 @@ module.exports.init = ->
 
   if location.pathname is '/style-guide/stage'
     artwork = new Artwork partner: name: 'Gagosian Gallery'
-    user = CurrentUser.orNull() or new LoggedOutUser
+    user = User.instantiate()
 
     $('.js-open').click (e) ->
-      user.set email: 'damonzucconi@gmail.com', prequalified: !$(this).data('prequalify')
+      user.set name: 'Damon Zucconi', email: 'damon@artsymail.com', prequalified: !$(this).data('prequalify')
       openInquiryQuestionnaireFor user: user, artwork: artwork

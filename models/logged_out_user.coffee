@@ -1,38 +1,40 @@
 _ = require 'underscore'
-sd = require('sharify').data
 Backbone = require 'backbone'
+{ API_URL } = require('sharify').data
 User = require './user.coffee'
 
-# Since this model gets initialized in a logged out state,
-# to persist any changes to it we have to manually inject
-# the access token after a login takes place
-injectToken = (success) ->
-  _.wrap success, (success, model, response, options) ->
-    $.ajaxSettings.headers = _.extend ($.ajaxSettings.headers or {}),
-      'X-ACCESS-TOKEN': response.user.accessToken
-    success model, response, options
-
 module.exports = class LoggedOutUser extends User
+  __isLoggedIn__: false
+
   url: ->
-    "#{sd.API_URL}/api/v1/me"
+    # It's possible to login a LoggedOutUser and then
+    # persist any data that was saved in an AnonymousSession over to the
+    # newly authenticated User before refreshing or... whatever.
+    if @isLoggedIn()
+      "#{API_URL}/api/v1/me"
+    else
+      "#{API_URL}/api/v1/me/anonymous_session"
 
   login: (options = {}) ->
-    settings = _.defaults options,
-      url: '/users/sign_in'
-      success: injectToken -> location.reload()
-    new Backbone.Model().save (@pick 'email', 'password'), settings
+    new Backbone.Model()
+      .save @pick('email', 'password'), _.extend {}, options,
+        url: '/users/sign_in'
+        success: _.wrap options.success, (success, model, response, options) =>
+          @__isLoggedIn__ = true
+          $.ajaxSettings.headers = _.extend ($.ajaxSettings.headers or {}),
+            'X-ACCESS-TOKEN': response.user.accessToken
+          success? model, response, options
 
   signup: (options = {}) ->
-    success = options.success
-    settings = _.defaults options,
-      url: "#{sd.API_URL}/api/v1/user"
-    settings.success = => @login(success: success)
-    new Backbone.Model().save (@pick 'name', 'email', 'password'), settings
+    new Backbone.Model()
+      .save @pick('name', 'email', 'password'), _.extend {}, options,
+        url: "#{API_URL}/api/v1/user"
+        success: =>
+          @login(_.pick options, 'success')
 
-  # Alias #signup
   register: @::signup
 
   forgot: (options = {}) ->
-    settings = _.defaults options,
-      url: "#{sd.API_URL}/api/v1/users/send_reset_password_instructions"
-    new Backbone.Model().save (@pick 'email'), settings
+    new Backbone.Model()
+      .save (@pick 'email'), _.extend {}, options,
+        url: "#{API_URL}/api/v1/users/send_reset_password_instructions"
