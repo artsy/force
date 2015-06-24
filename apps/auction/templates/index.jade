@@ -8,7 +8,12 @@ append locals
 
 block body
   .auction-page.main-layout-container
-    if auction.isPreview() && !auction.isAuctionPromo()
-      include ./preview
-    else
-      include ./auction
+    include header
+
+    section.auction-artworks-container.js-auction-artworks-section
+      - artworks = artworks.models
+      include ../../../components/auction_artworks/templates/index
+
+    section.below-auction-artworks
+      include associated_auction
+      include footer

@@ -48,6 +48,7 @@ describe '/auction routes', ->
         'state'
         'displayBlurbs'
         'maxBlurbHeight'
+        'footerItems'
       ]
       done()
 

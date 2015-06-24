@@ -4,6 +4,13 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 { fabricate } = require 'antigravity'
 CurrentUser = require '../../../models/current_user.coffee'
+moment = require 'moment'
+openSale = fabricate 'sale',
+  name: 'Awesome Sale'
+  is_auction: true
+  auction_state: 'open'
+  start_at: moment().subtract(1, 'minutes').format()
+  end_at: moment().add(3, 'minutes').format()
 
 describe '#auctionRegistration', ->
 
@@ -34,7 +41,8 @@ describe '#auctionRegistration', ->
 
     it 'redirects to success url if sale is registerable and user has already registered', ->
       routes.auctionRegistration @req, @res
-      Backbone.sync.args[0][2].success fabricate 'sale', name: 'Awesome Sale', is_auction: true, auction_state: 'open'
+      Backbone.sync.args[0][2].success openSale
+
       Backbone.sync.args[1][2].success [{foo: 'bar'}]
 
       routes.auctionRegistration @req, @res
@@ -43,7 +51,7 @@ describe '#auctionRegistration', ->
 
     it 'renders registration form if sale is registerable and user has no credit cards on file', ->
       routes.auctionRegistration @req, @res
-      Backbone.sync.args[0][2].success fabricate 'sale', name: 'Awesome Sale', is_auction: true, auction_state: 'open'
+      Backbone.sync.args[0][2].success openSale
       Backbone.sync.args[1][2].success []
       Backbone.sync.args[2][2].success []
 
@@ -52,7 +60,7 @@ describe '#auctionRegistration', ->
 
     it 'creates bidder and redirects to sale if sale is registerable and user has credit card on file', ->
       routes.auctionRegistration @req, @res
-      Backbone.sync.args[0][2].success fabricate 'sale', name: 'Awesome Sale', is_auction: true, auction_state: 'open'
+      Backbone.sync.args[0][2].success openSale
       Backbone.sync.args[1][2].success []
       Backbone.sync.args[2][2].success [{foo: 'bar'}]
       Backbone.sync.args[3][2].success [{}]
@@ -98,7 +106,7 @@ describe '#bid', ->
 
     beforeEach ->
       @resolve = (a, b, c, d) =>
-        Backbone.sync.args[0][2].success a or fabricate 'sale', name: 'Awesome Sale', is_auction: true, auction_state: 'open'
+        Backbone.sync.args[0][2].success a or openSale
         Backbone.sync.args[1][2].success b or fabricate 'sale_artwork'
         Backbone.sync.args[2][2].success c or [{foo: 'bar'}]
         Backbone.sync.args[3][2].success d or [fabricate('bidder_position')]

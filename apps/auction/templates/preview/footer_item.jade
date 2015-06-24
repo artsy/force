@@ -1,0 +1,12 @@
+.auction-preview-footer-item
+  a.auction-preview-footer-item-wrap( href= item.href, target= item.target )
+    .auction-preview-footer-item-image
+      img( src= item.src, alt= item.alt )
+
+    .auction-preview-footer-item-metadata
+      .auction-preview-footer-item-title( class= item.subtitle ? undefined : 'is-large' )
+        = item.title
+
+      if item.subtitle
+        .auction-preview-footer-item-subtitle
+          = item.subtitle

@@ -10,6 +10,7 @@ Artworks = require '../../collections/artworks'
 OrderedSets = require '../../collections/ordered_sets'
 Articles = require '../../collections/articles'
 State = require '../../components/auction_artworks/models/state'
+footerItems = require './footer_items'
 
 setupUser = (user, auction) ->
   if user?
@@ -55,7 +56,12 @@ setupUser = (user, auction) ->
     res.locals.sd.ARTWORKS = artworks.toJSON()
     res.locals.sd.USER = user.toJSON() if user?
 
-    res.render 'index',
+    template = if auction.isPreview() and not auction.isAuctionPromo()
+      'preview/index'
+    else
+      'index'
+
+    res.render template,
       auction: auction
       artworks: artworks
       saleArtworks: saleArtworks
@@ -64,6 +70,7 @@ setupUser = (user, auction) ->
       state: state
       displayBlurbs: displayBlurbs = artworks.hasAny('blurb')
       maxBlurbHeight: artworks.maxBlurbHeight(displayBlurbs)
+      footerItems: footerItems
   ).catch(->
     err = new Error 'Not Found'
     err.status = 404

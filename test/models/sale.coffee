@@ -15,6 +15,47 @@ describe 'Sale', ->
   afterEach ->
     Backbone.sync.restore()
 
+  describe '#calculateAuctionState', ->
+    before ->
+      # moment#unix returns seconds
+      # sinon#useFakeTimers accepts milliseconds
+      now = moment([2010, 0, 15]).unix() * 1000
+      @clock = sinon.useFakeTimers now
+
+    after ->
+      @clock.restore()
+
+    it 'returns with the correct state (closed)', ->
+      start = moment().subtract(1, 'minutes').format()
+      end = moment().subtract(3, 'minutes').format()
+      @sale.calculateAuctionState(start, end).should.equal 'closed'
+
+    it 'returns with the correct state (preview)', ->
+      start = moment().add(1, 'minutes').format()
+      end = moment().add(3, 'minutes').format()
+      @sale.calculateAuctionState(start, end).should.equal 'preview'
+
+    it 'returns with the correct state (open)', ->
+      start = moment().subtract(1, 'minutes').format()
+      end = moment().add(3, 'minutes').format()
+      @sale.calculateAuctionState(start, end).should.equal 'open'
+
+    it 'accomdates offsets', ->
+      start = moment().subtract(1, 'seconds').format()
+      end = moment().add(1, 'seconds').format()
+      @sale.calculateAuctionState(start, end, 0).should.equal 'open'
+      @sale.calculateAuctionState(start, end, -999).should.equal 'open'
+      @sale.calculateAuctionState(start, end, -1000).should.equal 'closed'
+
+  describe '#parse', ->
+    it 'corrects the state', ->
+      staleSale = new Sale
+        auction_state: 'open' # An incorrect state 'returned from the server'
+        start_at: moment().subtract(1, 'minutes').format()
+        end_at: moment().subtract(3, 'minutes').format()
+      , parse: true
+      staleSale.get('auction_state').should.equal 'closed'
+
   describe 'actionButtonState', ->
     beforeEach ->
       @artwork = new Artwork
