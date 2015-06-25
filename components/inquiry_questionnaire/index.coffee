@@ -15,7 +15,14 @@ module.exports = (options = {}) ->
     dimensions: width: '500px', height: '580px'
 
   modal.load (done) ->
-    user.fetch().then done
+    user.fetch().then ->
+      if user.id?
+        # We have an existing anonymous session
+        # or a logged in user
+        done()
+      else
+        # Create an anonymous session before continuing
+        user.save().then done
 
   questionnaire.state.on 'abort', ->
     modal.close()
