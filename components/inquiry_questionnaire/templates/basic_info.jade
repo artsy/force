@@ -9,7 +9,7 @@ h1.iq-headline
 form.iq-form.stacked-form
   label.avant-garde-form-label( for='profession' )
     | Profession <span>(Optional)</span>
-  input.bordered-input( name='profession', id='profession' )
+  input.bordered-input( name='profession', id='profession', value= user.get('profession') )
 
   label.avant-garde-form-label( for='location' )
     | Location <span>(Optional)</span>
@@ -18,7 +18,7 @@ form.iq-form.stacked-form
 
   label.avant-garde-form-label( for='phone' )
     | Phone Number <span>(Optional)</span>
-  input.bordered-input( name='phone', id='phone', type='tel' )
+  input.bordered-input( name='phone', id='phone', type='tel', value= user.get('phone') )
 
   hr.is-invisible
 

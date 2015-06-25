@@ -15,7 +15,7 @@ module.exports = class LoggedOutUser extends User
     else if @id?
       "#{API_URL}/api/v1/me/anonymous_session/#{@id}"
     else
-      "#{API_URL}/api/v1/me/anonymous_sessions"
+      "#{API_URL}/api/v1/me/anonymous_session"
 
   fetch: (options = {}) ->
     if @isLoggedIn() or @id?
@@ -27,7 +27,8 @@ module.exports = class LoggedOutUser extends User
           url: "#{API_URL}/api/v1/me/anonymous_sessions"
           data: _.extend options.data or {}, @pick('email', 'session_id')
           success: _.wrap options.success, (success, args...) =>
-            @set args[0].first().toJSON()
+            collection = args[0]
+            @set collection.first().toJSON() if collection.length
             success? args...
 
   login: (options = {}) ->

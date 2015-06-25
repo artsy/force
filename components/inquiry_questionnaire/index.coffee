@@ -6,13 +6,16 @@ FlashMessage::template = -> "<span>#{@message}</span>"
 InquiryQuestionnaireView = require './view.coffee'
 
 module.exports = (options = {}) ->
+  { user } = options
+
   questionnaire = new InquiryQuestionnaireView options
 
   modal = modalize questionnaire,
     className: 'modalize inquiry-questionnaire-modal'
     dimensions: width: '500px', height: '580px'
 
-  modal.open()
+  modal.load (done) ->
+    user.fetch().then done
 
   questionnaire.state.on 'abort', ->
     modal.close()
