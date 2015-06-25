@@ -1,19 +1,34 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-{ API_URL } = require('sharify').data
+{ API_URL, SESSION_ID } = require('sharify').data
 User = require './user.coffee'
 
 module.exports = class LoggedOutUser extends User
   __isLoggedIn__: false
 
+  defaults:
+    session_id: SESSION_ID
+
   url: ->
-    # It's possible to login a LoggedOutUser and then
-    # persist any data that was saved in an AnonymousSession over to the
-    # newly authenticated User before refreshing or... whatever.
     if @isLoggedIn()
       "#{API_URL}/api/v1/me"
+    else if @id?
+      "#{API_URL}/api/v1/me/anonymous_session/#{@id}"
     else
-      "#{API_URL}/api/v1/me/anonymous_session"
+      "#{API_URL}/api/v1/me/anonymous_sessions"
+
+  fetch: (options = {}) ->
+    if @isLoggedIn() or @id?
+      options.data = _.extend options.data or {}, @pick('email', 'session_id')
+      super options
+    else
+      new Backbone.Collection()
+        .fetch _.extend {}, options,
+          url: "#{API_URL}/api/v1/me/anonymous_sessions"
+          data: _.extend options.data or {}, @pick('email', 'session_id')
+          success: _.wrap options.success, (success, args...) =>
+            @set args[0].first().toJSON()
+            success? args...
 
   login: (options = {}) ->
     new Backbone.Model()
@@ -36,5 +51,5 @@ module.exports = class LoggedOutUser extends User
 
   forgot: (options = {}) ->
     new Backbone.Model()
-      .save (@pick 'email'), _.extend {}, options,
+      .save @pick('email'), _.extend {}, options,
         url: "#{API_URL}/api/v1/users/send_reset_password_instructions"
