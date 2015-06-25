@@ -1,24 +1,31 @@
 @import '../../../components/stylus_lib'
 
 #notifications-page
-  padding 40px 0
+  padding-top 50px
   position relative
 
 #notifications-header
-  margin 20px 0
+  margin-bottom 80px
   h1
-    font-size 24px
+    garamond-size('xl-headline')
+
+#notifications-filter
+  position absolute
+  width 300px
   .artsy-checkbox
     display block
-    margin-top 20px
+    margin 32px 0px
+
+.notifications-sub-header
+  font-size 25px
+
+#notifications-works
+  float right
+  width 800px
 
 #notifications-feed-spinner
   position relative
   height 250px
-
-#notifications-manage-follow
-  text-align right
-  font-size default-avant-garde-font-size
 
 .notifications-list-item
   margin 20px 0
@@ -33,10 +40,6 @@
   a
     text-decoration none
 
-.notifications-list-item-timestamp
-  float right
-
-.notifications-list-item-timestamp
 .notifications-works-added
   color gray-darker-color
 

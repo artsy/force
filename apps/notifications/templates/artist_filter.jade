@@ -1,0 +1,6 @@
+for artist in artists.models
+  a(href="#{artist.href()}")
+    .filter-artist-name
+      = artist.get('artist').name
+    .filter-artist-count
+      | (#{artist.get('artist').published_artworks_count})
