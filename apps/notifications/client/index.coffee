@@ -3,7 +3,9 @@ qs = require 'querystring'
 Backbone = require 'backbone'
 scrollFrame = require 'scroll-frame'
 Notifications = require '../../../collections/notifications.coffee'
+Following = require '../../../components/follow_button/collection.coffee'
 Artworks = require '../../../collections/artworks.coffee'
+Artists = require '../../../collections/artists.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 Artist = require '../../../models/artist.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
@@ -11,6 +13,7 @@ DateHelpers = require '../../../components/util/date_helpers.coffee'
 JumpView = require '../../../components/jump/view.coffee'
 artistTemplate = -> require('../templates/artist.jade') arguments...
 emptyTemplate = -> require('../templates/empty.jade') arguments...
+artistFilterTemplate = -> require('../templates/artist_filter.jade') arguments...
 
 module.exports.NotificationsView = class NotificationsView extends Backbone.View
   columnViews: []
@@ -23,6 +26,7 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
 
     @user = CurrentUser.orNull()
     @notifications = new Notifications null, since: 30, type: 'ArtworkPublished'
+    @fetchAndRenderFollowingArtists()
 
     @listenTo @notifications, 'request', @indicateLoading
     @listenTo @notifications, 'sync', @appendArtworks
@@ -55,6 +59,7 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
     @$spinner = @$('#notifications-feed-spinner')
     @$feed = @$('#notifications-feed')
     @$pins = @$('#notifications-pins')
+    @$filternav = @$('#notifications-filter')
 
   scrollToPins: ->
     @jump.scrollToPosition @pinsOffset ?= @$pins.offset().top - $('#main-layout-header').height()
@@ -151,6 +156,15 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
 
   checkIfEmpty: =>
     @$feed.html(emptyTemplate()) if @isEmpty()
+
+  fetchAndRenderFollowingArtists: ->
+      url = "#{sd.API_URL}/api/v1/me/follow/artists"
+      followingArtists = new Artists()
+      followingArtists.fetchUntilEnd
+        url: url
+        success: =>
+          if followingArtists.length
+            @$filternav.append artistFilterTemplate(artists: followingArtists)
 
 module.exports.init = ->
   new NotificationsView el: $('body')
