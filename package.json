@@ -34,7 +34,6 @@
     "flickity": "^1.0.0",
     "flickity-imagesloaded": "^1.0.0",
     "forever": "*",
-    "freewall": "^1.0.8",
     "geoformatter": "git://github.com/dzucconi/geo_formatter.git",
     "graceful-fs": "*",
     "heapdump": "*",
