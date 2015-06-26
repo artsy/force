@@ -6,7 +6,7 @@ Artist = require '../../../models/artist'
 
 describe 'Meta tags', ->
   before ->
-    @file = "#{process.cwd()}/apps/artist_old/templates/meta.jade"
+    @file = "#{process.cwd()}/apps/artist/templates/meta.jade"
     @sd =
       APP_URL: 'http://localhost:5000'
       CANONICAL_MOBILE_URL: 'http://m.localhost:5000'
