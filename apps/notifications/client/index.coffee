@@ -20,6 +20,7 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
 
   events:
     'click #for-sale': 'toggleForSale'
+    'click .filter-artist' : 'toggleArtist'
 
   initialize: ->
     @cacheSelectors()
@@ -128,6 +129,7 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
       DateHelpers.formatDate _.max(timestamps)
 
   renderColumns: ($el, artworks) ->
+    console.log artworks
     new ArtworkColumnsView
       el: $el
       collection: artworks
@@ -151,6 +153,13 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
       success: => @$feed.show()
     )?.then @checkIfEmpty
 
+  toggleArtist: (e) ->
+    @artist = new Artist id: $(e.currentTarget).attr('data-artist')
+    @$feed.hide()
+    @$pins.hide()
+    @artist.fetchArtworks
+      success: => @renderColumns @$('#notifications-works'), @artist.related().artworks
+
   isEmpty: ->
     !@notifications.length and (!@pinnedArtworks?.length is !@forSale)
 
@@ -159,12 +168,13 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
 
   fetchAndRenderFollowingArtists: ->
       url = "#{sd.API_URL}/api/v1/me/follow/artists"
-      followingArtists = new Artists()
-      followingArtists.fetchUntilEnd
+      @followingArtists = new Artists()
+      @followingArtists.fetchUntilEnd
         url: url
         success: =>
-          if followingArtists.length
-            @$filternav.append artistFilterTemplate(artists: followingArtists)
+          if @followingArtists.length
+            console.log @followingArtists
+            @$filternav.append artistFilterTemplate(artists: @followingArtists)
 
 module.exports.init = ->
   new NotificationsView el: $('body')
