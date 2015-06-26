@@ -129,7 +129,6 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
       DateHelpers.formatDate _.max(timestamps)
 
   renderColumns: ($el, artworks) ->
-    console.log artworks
     new ArtworkColumnsView
       el: $el
       collection: artworks
@@ -158,7 +157,12 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
     @$feed.hide()
     @$pins.hide()
     @artist.fetchArtworks
-      success: => @renderColumns @$('#notifications-works'), @artist.related().artworks
+      success: =>
+        if @artist.related().artworks.length
+          @renderColumns @$('#notifications-works'), @artist.related().artworks
+        else
+          console.log 'yeah there is nothing here'
+          @$('#notifications-works').html(emptyTemplate())
 
   isEmpty: ->
     !@notifications.length and (!@pinnedArtworks?.length is !@forSale)
@@ -173,7 +177,6 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
         url: url
         success: =>
           if @followingArtists.length
-            console.log @followingArtists
             @$filternav.append artistFilterTemplate(artists: @followingArtists)
 
 module.exports.init = ->
