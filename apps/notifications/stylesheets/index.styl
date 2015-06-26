@@ -1,8 +1,10 @@
 @import '../../../components/stylus_lib'
 
+menu-width = 20%
+content-width = 80%
+
 #notifications-page
   padding-top 50px
-  position relative
 
 #notifications-header
   margin-bottom 80px
@@ -10,18 +12,27 @@
     garamond-size('xl-headline')
 
 #notifications-filter
-  position absolute
-  width 300px
+  float left
+  width menu-width
   .artsy-checkbox
     display block
     margin 32px 0px
+  .filter-artist
+    display block
+  .filter-artist-count
+    display inline
+    color gray-dark-color
+  .filter-artist-name
+    text-decoration none
+    display inline
+    line-height 2em
 
 .notifications-sub-header
   font-size 25px
 
 #notifications-works
-  float right
-  width 800px
+  float left
+  width content-width
 
 #notifications-feed-spinner
   position relative
