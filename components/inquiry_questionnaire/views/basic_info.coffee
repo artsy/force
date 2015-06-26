@@ -12,7 +12,7 @@ module.exports = class BasicInfo extends StepView
   serialize: (e) ->
     e.preventDefault()
     serializer = new Serializer @$('form')
-    @user.set serializer.data()
+    @user.save serializer.data()
     @next()
 
   postRender: ->

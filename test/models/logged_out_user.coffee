@@ -90,7 +90,7 @@ describe 'LoggedOutUser', ->
         user = new LoggedOutUser
         user.save foo: 'bar'
         Backbone.sync.args[0][1].url().should.containEql '/api/v1/me/anonymous_session'
-        Backbone.sync.args[0][1].attributes.should.eql foo: 'bar'
+        Backbone.sync.args[0][1].attributes.foo.should.eql 'bar'
 
     describe 'behavior immediately following login', ->
       beforeEach ->
@@ -103,4 +103,56 @@ describe 'LoggedOutUser', ->
         user = new LoggedOutUser
         user.save foo: 'bar'
         Backbone.sync.args[0][1].url().should.containEql '/api/v1/me'
-        Backbone.sync.args[0][1].attributes.should.eql foo: 'bar'
+        Backbone.sync.args[0][1].attributes.foo.should.eql 'bar'
+
+  describe '#fetch', ->
+    beforeEach ->
+      sinon.stub Backbone, 'sync'
+      @user = new LoggedOutUser email: 'cab@example.com'
+
+    afterEach ->
+      Backbone.sync.restore()
+
+    describe 'default behavior', ->
+      it 'tries to find the anonymous session on the first fetch', ->
+        @user.fetch()
+        Backbone.sync.args[0][2].url.should.containEql '/api/v1/me/anonymous_sessions'
+        Backbone.sync.args[0][2].data.should.have.keys 'email', 'session_id'
+
+      it 'yields to the success option and sets the attributes using the first model in the response', (done) ->
+        @user.fetch success: =>
+          @user.get('phone').should.equal '666-666-6666'
+          done()
+        Backbone.sync.args[0][2].success [
+          { phone: '666-666-6666' }
+          { phone: '555-555-5555' }
+        ]
+
+      it 'yields to the error option', (done) ->
+        @user.fetch error: (collection, response) ->
+          response.error.should.eql 'existy'
+          done()
+        Backbone.sync.args[0][2].error error: 'existy'
+
+      it 'fetches the session directly once it has the ID', (done) ->
+        @user.fetch success: =>
+          @user.fetch success: ->
+            true.should.be.true
+            done()
+          Backbone.sync.args[1][1].url().should.containEql '/api/v1/me/anonymous_session/foobar'
+          Backbone.sync.args[1][2].success()
+        Backbone.sync.args[0][2].success [id: 'foobar']
+
+    describe 'after login', ->
+      beforeEach ->
+        sinon.stub(LoggedOutUser::, 'isLoggedIn').returns true
+
+      afterEach ->
+        @user.isLoggedIn.restore()
+
+      it 'fetches through the /me endpoint if the user is logged in', (done) ->
+        @user.fetch success: =>
+          @user.id.should.equal 'foobar'
+          done()
+        Backbone.sync.args[0][1].url().should.containEql '/api/v1/me'
+        Backbone.sync.args[0][2].success id: 'foobar'
