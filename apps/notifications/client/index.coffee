@@ -161,7 +161,6 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
         if @artist.related().artworks.length
           @renderColumns @$('#notifications-works'), @artist.related().artworks
         else
-          console.log 'yeah there is nothing here'
           @$('#notifications-works').html(emptyTemplate())
 
   isEmpty: ->
