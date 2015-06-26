@@ -17,7 +17,7 @@ module.exports = class Items extends PageableCollection
 
   model: (attrs, options) =>
     # Add types as needed:
-    switch (@item_type or attrs.item_type)
+    switch (@item_type or attrs?.item_type)
       when 'OrderedSet'
         OrderedSet = require '../models/ordered_set.coffee'
         new OrderedSet attrs, options
