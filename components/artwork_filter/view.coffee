@@ -47,7 +47,7 @@ module.exports = class ArtworkFilterView extends Backbone.View
     , viewModes[@viewMode.get('mode')]
 
   initialize: ({ @mode }) ->
-    @artworks = new ArtworkColumns [], modelId: @model.id
+    @artworks = new ArtworkColumns [], artistId: @model.id
     @filter = new Filter model: @model
     @viewMode = new Backbone.Model mode: @mode
 
@@ -62,6 +62,7 @@ module.exports = class ArtworkFilterView extends Backbone.View
     @listenTo @viewMode, 'change', @renderHeader
 
     @render()
+
     @filter.fetchRoot
       success: (model, response, options) =>
         mediator.trigger 'artwork_filter:filter:sync', model
@@ -92,7 +93,6 @@ module.exports = class ArtworkFilterView extends Backbone.View
 
   toggleBoolean: (e) ->
     $target = $(e.currentTarget)
-    console.log "$target.attr('name')", $target.attr('name')
     @filter.toggle $target.attr('name'), $target.prop('checked')
     @trigger 'navigate'
 
@@ -100,7 +100,7 @@ module.exports = class ArtworkFilterView extends Backbone.View
     e.preventDefault()
     @loadNextPage()
 
-  changeViewMode: (e)->
+  changeViewMode: (e) ->
     $target = $(e.currentTarget)
     @viewMode.set 'mode', $target.data('mode')
     @artworksView = @view()

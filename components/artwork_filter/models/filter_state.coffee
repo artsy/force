@@ -8,10 +8,10 @@ sectionMap = require '../sections.coffee'
 
 module.exports = class FilterState extends Backbone.Model
   url: ->
-    "#{API_URL}/api/v1/search/filtered/artist/#{@modelId}/suggest"
+    "#{API_URL}/api/v1/search/filtered/artist/#{@artistId}/suggest"
 
-  initialize: (attributes, { @modelId }) ->
-    throw new Error 'Requires an modelId' unless @modelId?
+  initialize: (attributes, { @artistId }) ->
+    throw new Error 'Requires an artistId' unless @artistId?
 
   criteria: ->
     _.reduce _.keys(@attributes), (criteria, x) =>

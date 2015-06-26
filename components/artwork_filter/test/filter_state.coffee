@@ -4,7 +4,7 @@ FilterState = require '../models/filter_state'
 
 describe 'FilterState', ->
   beforeEach ->
-    @filterState = new FilterState fabricate('artist_filtered_search_suggest'), modelId: _.uniqueId()
+    @filterState = new FilterState fabricate('artist_filtered_search_suggest'), artistId: _.uniqueId()
 
   describe '#criteria', ->
     it 'selects the filter sections from the response', ->
