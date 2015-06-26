@@ -10,7 +10,7 @@ Artwork = require '../../../models/artwork'
 describe 'ArtworkFilterRouter', ->
   before (done) ->
     benv.setup =>
-      benv.expose $: require 'jquery'
+      benv.expose $: benv.require 'jquery'
       Backbone.$ = $
       @ArtworkFilterRouter = rewire '../router'
       ArtworkFilterView = benv.requireWithJadeify resolve(__dirname, '../view'), ['template', 'filterTemplate', 'headerTemplate']

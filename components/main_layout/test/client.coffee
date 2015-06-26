@@ -10,7 +10,7 @@ describe 'Layout init code', ->
 
   beforeEach (done) ->
     benv.setup =>
-      benv.expose { $: require('jquery'), mixpanel: {}, ga: {} }
+      benv.expose { $: benv.require('jquery'), mixpanel: {}, ga: {} }
       sinon.stub $, 'ajax'
       { @syncAuth } = mod = benv.require resolve(__dirname, '../client')
       mod.__set__ 'setupAnalytics', sinon.stub()
