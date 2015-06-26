@@ -10,7 +10,7 @@ CurrentUser = require '../../../models/current_user'
 describe 'AfterInquiryMixin', ->
   before (done) ->
     benv.setup =>
-      benv.expose $: require 'jquery'
+      benv.expose $: benv.require 'jquery'
       Backbone.$ = $
       done()
 
