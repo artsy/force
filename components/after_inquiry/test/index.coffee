@@ -9,7 +9,7 @@ LoggedOutUser = require '../../../models/logged_out_user'
 describe 'AfterInquiry', ->
   before (done) ->
     benv.setup =>
-      benv.expose $: require 'jquery'
+      benv.expose $: benv.require 'jquery'
       Backbone.$ = $
       $.support.transition = end: 'transitionend'
       $.fn.emulateTransitionEnd = -> @trigger $.support.transition.end

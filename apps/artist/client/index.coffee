@@ -1,21 +1,18 @@
-_ = require 'underscore'
 { ARTIST } = require('sharify').data
 Backbone = require 'backbone'
-Artist = require '../../../models/artist.coffee'
 scrollFrame = require 'scroll-frame'
-Sticky = require '../../../components/sticky/index.coffee'
+Artist = require '../../../models/artist.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 ArtistRouter = require './router.coffee'
+{ track } = require '../../../lib/analytics.coffee'
 
 module.exports.init = ->
   artist = new Artist ARTIST
-
   user = CurrentUser.orNull()
 
   scrollFrame 'a.artwork-item-image-link'
 
-  sticky = new Sticky
-  sticky.add $('.artist-page-menu')
-
   router = new ArtistRouter model: artist, user: user
   Backbone.history.start pushState: true
+
+  track.impression 'Artist page', id: artist.id

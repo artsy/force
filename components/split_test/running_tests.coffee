@@ -22,14 +22,6 @@ module.exports =
       magazine: 4/5
       editorial: 1/5
 
-  artist_page_format:
-    key: 'artist_page_format'
-    outcomes:
-      old: 0.5
-      new: 0.5
-    edge: 'new'
-    dimension: 'dimension5'
-
   homepage_contents:
     key: 'homepage_contents'
     outcomes:

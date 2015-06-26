@@ -13,7 +13,7 @@ render = (templateName) ->
 describe 'Featured Sets', ->
   before (done) ->
     benv.setup =>
-      benv.expose $: require 'jquery'
+      benv.expose $: benv.require 'jquery'
       done()
 
   after ->
