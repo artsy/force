@@ -15,10 +15,10 @@ class Params extends Backbone.Model
 
 module.exports = class ArtworkColumns extends Artworks
   url: ->
-    "#{API_URL}/api/v1/search/filtered/artist/#{@modelId}"
+    "#{API_URL}/api/v1/search/filtered/artist/#{@artistId}"
 
   initialize: (models, options = {}) ->
-    { @modelId } = options
+    { @artistId } = options
     @params = new Params
     super
 

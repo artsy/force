@@ -35,7 +35,7 @@ module.exports = class Filter
     return priced if priced?
     return if @fetchingPriced
     @fetchingPriced = true
-    filterState = new FilterState { id: pricedId }, modelId: @model.id
+    filterState = new FilterState { id: pricedId }, artistId: @model.id
     filterState.fetch data: @booleans['for-sale'], success: (model, response, options) =>
       @fetchingPriced = false
       @filterStates.add model
@@ -65,7 +65,7 @@ module.exports = class Filter
     @sorts[@selected.get('sort') or '-date_added']
 
   buildState: ->
-    new FilterState { id: @stateId() }, modelId: @model.id
+    new FilterState { id: @stateId() }, artistId: @model.id
 
   fetchState: (filterState, options = {}) ->
     @fetch filterState, options
