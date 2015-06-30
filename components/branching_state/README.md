@@ -7,7 +7,7 @@ Useful object for configuring and managing multi-step, stateful views.
 ```coffeescript
 state = new State steps: ['first', 'second', 'third']
 
-state.on 'change:position', (position) -> #
+state.on 'next', (position) -> #
 
 state.current() # => 'first'
 state.next() # => 'second'

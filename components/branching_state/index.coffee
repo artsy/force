@@ -36,6 +36,7 @@ module.exports = class State extends Backbone.Model
   next: ->
     @set('moves', (@get('moves') + 1))
     @set('position', @get('position') + 1) unless @isEnd()
+    @trigger 'next'
     @current()
 
   total: ->
