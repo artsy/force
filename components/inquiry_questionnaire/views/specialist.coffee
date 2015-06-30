@@ -1,8 +1,10 @@
 SpecialistView = require '../../simple_contact/views/specialist.coffee'
 
 module.exports = class Specialist extends SpecialistView
-  initialize: ({ @state }) ->
+  initialize: (options = {}) ->
     super
+
+    { @state } = options
 
     @representatives.fetch()
       .then => @representatives.first().fetch()
