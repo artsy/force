@@ -34,7 +34,7 @@ module.exports = class Form
       error? args...
 
     @state 'loading'
-    @model[send] @serializer.data(), options
+    @model[send] @data(), options
 
   error: (model, response, options) ->
     @state 'error'
@@ -59,3 +59,6 @@ module.exports = class Form
 
   state: (state) ->
     @$submit.attr 'data-state', state
+
+  data: ->
+    @serializer.data()
