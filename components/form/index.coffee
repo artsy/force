@@ -10,6 +10,9 @@ module.exports = class Form
   constructor: (options = {}) ->
     { @model, @$form } = options
 
+    throw new Error 'requires `model`' unless @model?
+    throw new Error 'requires `$form`' unless @$form?
+
     { @$submit, @$errors } = _.defaults options,
       $submit: @$form.find('button')
       $errors: @$form.find('.js-form-errors')
