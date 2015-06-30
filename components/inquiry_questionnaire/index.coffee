@@ -14,6 +14,8 @@ module.exports = (options = {}) ->
     className: 'modalize inquiry-questionnaire-modal'
     dimensions: width: '500px', height: '580px'
 
+  modal.view.$el.off 'click', '.js-modalize-backdrop'
+
   modal.load (done) ->
     user.fetch
       success: ->
