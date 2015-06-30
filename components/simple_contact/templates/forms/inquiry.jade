@@ -1,6 +1,11 @@
 form.scontact-form.stacked-form
-  //- .stacked-form-cell
-  //-   include ./artwork_details
+  .stacked-form-cell
+    input( type='hidden', name='artwork', value= artwork.id )
+
+    .scontact-artwork-details
+      img( src=artwork.defaultImageUrl() )
+      p= artwork.artistName()
+      p!= artwork.titleAndYear()
 
   textarea.bordered-input(
     name='message'
