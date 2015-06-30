@@ -1,4 +1,5 @@
 SpecialistView = require '../../simple_contact/views/specialist.coffee'
+StepView = require './step.coffee'
 
 module.exports = class Specialist extends SpecialistView
   initialize: (options = {}) ->
@@ -11,3 +12,10 @@ module.exports = class Specialist extends SpecialistView
       .then => @render()
 
     @listenTo @model, 'sync', -> @state.next()
+
+  autofocus: StepView::autofocus
+
+  render: ->
+    super
+    @autofocus()
+    this
