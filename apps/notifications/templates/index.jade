@@ -18,12 +18,21 @@ block body
           input( type='checkbox', id='for-sale' )
           label( for='for-sale' )
         label.artsy-checkbox--label( for='for-sale' ) Only For Sale
+      .notifications-artist-list
+        for artist in artists.models
+          include filter_artist
+      #notifications-search-container.autocomplete-input-container.is-block
+        .notifications-search-header Follow More Artists
+        input#notifications-search.bordered-input(
+          type='text', placeholder='Search Artists', autofocus=autofocus
+        )
+        .autocomplete-loading-indicator: .loading-spinner-small
     #notifications-works
-      .notifications-sub-header Recently Added Works
       //- Rendered client-side
+      .notifications-sub-header Recently Added Works
+      #notifications-pins
       #notifications-feed
-    //- #notifications-pins
-    //-   //- Rendered client-side
-    //- #notifications-feed
-    //-   //- Rendered client-side
-    //- #notifications-feed-spinner: .loading-spinner
+      #notifications-feed-spinner: .loading-spinner
+    #notifications-artist-works
+      //- Rendered client-side
+    #notifications-artist-works-spinner: .loading-spinner

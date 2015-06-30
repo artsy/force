@@ -3,9 +3,9 @@ _s = require 'underscore.string'
 sd = require('sharify').data
 Backbone = require 'backbone'
 Artworks = require '../collections/artworks.coffee'
-{ Markdown, Image } = require 'artsy-backbone-mixins'
+{ Markdown, Image, Fetch } = require 'artsy-backbone-mixins'
 { smartTruncate } = require '../components/util/string.coffee'
-{ SECURE_IMAGES_URL } = require('sharify').data
+{ SECURE_IMAGES_URL, API_URL } = require('sharify').data
 { compactObject } = require './mixins/compact_object.coffee'
 Relations = require './mixins/relations/artist.coffee'
 MetaOverrides = require './mixins/meta_overrides.coffee'
@@ -15,6 +15,7 @@ module.exports = class Artist extends Backbone.Model
   _.extend @prototype, Image(SECURE_IMAGES_URL)
   _.extend @prototype, Relations
   _.extend @prototype, MetaOverrides
+  _.extend @prototype, Fetch(API_URL)
 
   defaultMetaTitle: ->
     "#{@metaName()} - #{@pageTitleArtworksCount()}, Bio & Shows on Artsy"

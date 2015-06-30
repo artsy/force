@@ -11,29 +11,32 @@ Artist = require '../../../models/artist.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 DateHelpers = require '../../../components/util/date_helpers.coffee'
 JumpView = require '../../../components/jump/view.coffee'
+SearchBarView = require '../../../components/search_bar/view.coffee'
 artistTemplate = -> require('../templates/artist.jade') arguments...
 emptyTemplate = -> require('../templates/empty.jade') arguments...
-artistFilterTemplate = -> require('../templates/artist_filter.jade') arguments...
+filterArtistTemplate = -> require('../templates/filter_artist.jade') arguments...
 
 module.exports.NotificationsView = class NotificationsView extends Backbone.View
   columnViews: []
 
   events:
     'click #for-sale': 'toggleForSale'
-    'click .filter-artist' : 'toggleArtist'
+    'click .filter-artist-name' : 'toggleArtist'
+    'click .filter-artist-clear' : 'clearArtistWorks'
 
   initialize: ->
     @cacheSelectors()
 
     @user = CurrentUser.orNull()
     @notifications = new Notifications null, since: 30, type: 'ArtworkPublished'
-    @fetchAndRenderFollowingArtists()
 
     @listenTo @notifications, 'request', @indicateLoading
     @listenTo @notifications, 'sync', @appendArtworks
     @listenTo @notifications, 'sync', @concealLoading
 
     @setupJumpView()
+    @following = new Following [], kind: 'artist'
+    @setupSearch()
 
     @setup =>
       @notifications.getFirstPage()?.then @checkIfEmpty
@@ -59,11 +62,18 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
   cacheSelectors: ->
     @$spinner = @$('#notifications-feed-spinner')
     @$feed = @$('#notifications-feed')
+    @$works = @$('#notifications-works')
     @$pins = @$('#notifications-pins')
     @$filternav = @$('#notifications-filter')
+    @$artistworks = @$('#notifications-artist-works')
+    @$artistSpinner = @$('#notifications-artist-works-spinner')
+    @$selectedArtist = @$('.filter-artist[data-state=selected]')
 
   scrollToPins: ->
     @jump.scrollToPosition @pinsOffset ?= @$pins.offset().top - $('#main-layout-header').height()
+
+  scrollToArtistWorks: ->
+    @jump.scrollToPosition @artistworksOffset ?= @$artistworks.offset().top
 
   setup: (cb) ->
     { artist_id } = @params()
@@ -153,15 +163,22 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
     )?.then @checkIfEmpty
 
   toggleArtist: (e) ->
-    @artist = new Artist id: $(e.currentTarget).attr('data-artist')
-    @$feed.hide()
-    @$pins.hide()
-    @artist.fetchArtworks
+    @$selectedArtist.attr 'data-state', null
+    @$selectedArtist = @$(e.currentTarget).parent()
+    @artist = new Artist id: @$selectedArtist.attr('data-artist')
+    @$selectedArtist.attr 'data-state', 'selected'
+    @$works.hide()
+    @$artistworks.hide()
+    @$artistSpinner.show()
+    @scrollToArtistWorks()
+    @artist.related().artworks.fetchUntilEnd
       success: =>
+        @$artistSpinner.hide()
         if @artist.related().artworks.length
-          @renderColumns @$('#notifications-works'), @artist.related().artworks
+          @renderColumns @$artistworks, @artist.related().artworks
         else
-          @$('#notifications-works').html(emptyTemplate())
+          @$artistworks.html emptyTemplate()
+        @$artistworks.show()
 
   isEmpty: ->
     !@notifications.length and (!@pinnedArtworks?.length is !@forSale)
@@ -169,14 +186,26 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
   checkIfEmpty: =>
     @$feed.html(emptyTemplate()) if @isEmpty()
 
-  fetchAndRenderFollowingArtists: ->
-      url = "#{sd.API_URL}/api/v1/me/follow/artists"
-      @followingArtists = new Artists()
-      @followingArtists.fetchUntilEnd
-        url: url
-        success: =>
-          if @followingArtists.length
-            @$filternav.append artistFilterTemplate(artists: @followingArtists)
+  clearArtistWorks: (e) ->
+    @$selectedArtist.attr 'data-state', null
+    @$artistworks.hide()
+    @$works.show()
+
+  setupSearch: (options = {}) ->
+    @searchBarView = new SearchBarView
+      mode: 'artists'
+      el: @$('#notifications-search-container')
+      $input: @$searchInput ?= @$('#notifications-search')
+      autoselect: true
+      displayKind: false
+
+    @listenTo @searchBarView, 'search:selected', @follow
+
+  follow: (e, model) ->
+    @searchBarView?.clear()
+    debugger
+    @$('.notifications-artist-list').prepend filterArtistTemplate, artist: model
+    @following.follow model.get('id')
 
 module.exports.init = ->
   new NotificationsView el: $('body')

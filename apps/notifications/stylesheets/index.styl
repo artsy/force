@@ -26,17 +26,29 @@ content-width = 80%
     text-decoration none
     display inline
     line-height 2em
+  .filter-artist-clear
+    display none
+  .filter-artist[data-state=selected]
+    .filter-artist-clear
+      display inline
+      text-decoration underline
+      cursor pointer
+    .filter-artist-name, .filter-artist-count, .filter-artist-clear
+      color purple-color
 
 .notifications-sub-header
   font-size 25px
 
-#notifications-works
+#notifications-works, #notifications-artist-works
   float left
   width content-width
 
 #notifications-feed-spinner
   position relative
   height 250px
+
+#notifications-artist-works-spinner
+  display none
 
 .notifications-list-item
   margin 20px 0
@@ -59,3 +71,11 @@ content-width = 80%
   text-align right
   a
     font-size 13px
+
+#notifications-search-container
+  avant-garde('body')
+  width 100%
+  margin-top 40px
+  padding-right 7%
+  input
+    margin-top 20px
