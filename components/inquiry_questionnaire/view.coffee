@@ -13,7 +13,7 @@ module.exports = class InquiryQuestionnaireView extends Backbone.View
     @state = new State map
     @state.inject user: @user, state: @state
 
-    @listenTo @state, 'change:position', @render
+    @listenTo @state, 'next', @render
 
   render: ->
     pendingView = @state.view user: @user, state: @state, artwork: @artwork
