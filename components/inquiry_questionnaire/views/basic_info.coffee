@@ -1,5 +1,5 @@
 StepView = require './step.coffee'
-Serializer = require '../../form/serializer.coffee'
+Form = require '../../form/index.coffee'
 LocationSearch = require '../../location_search/index.coffee'
 template = -> require('../templates/basic_info.jade') arguments...
 
@@ -10,14 +10,23 @@ module.exports = class BasicInfo extends StepView
     'click button': 'serialize'
 
   serialize: (e) ->
+    form = new Form model: @user, $form: @$('form')
+
+    return unless form.start()
+
     e.preventDefault()
-    serializer = new Serializer @$('form')
-    @user.save serializer.data()
-    @next()
+
+    form.submit e, {}, 'set' # Remove `set` once anon session is fixed
+    @next() # Remove, ibid
 
   postRender: ->
-    @locationSearch = new LocationSearch el: @$('.js-location-search'), autofocus: false
+    @locationSearch = new LocationSearch
+      el: @$('.js-location-search')
+      autofocus: false
+      required: !@user.get('prequalified')
+
     @locationSearch.render @user.location()?.cityStateCountry()
+
     @listenTo @locationSearch, 'location:update', (location) ->
       @user.setLocation location
 

@@ -8,17 +8,34 @@ h1.iq-headline
 
 form.iq-form.stacked-form
   label.avant-garde-form-label( for='profession' )
-    | Profession <span>(Optional)</span>
-  input.bordered-input( name='profession', id='profession', value= user.get('profession') )
+    | Profession
+    if user.get('prequalified')
+      span (Optional)
+  input.bordered-input(
+    name='profession'
+    id='profession'
+    value= user.get('profession')
+    required= !user.get('prequalified')
+  )
 
   label.avant-garde-form-label( for='location' )
-    | Location <span>(Optional)</span>
+    | Location
+    if user.get('prequalified')
+      span (Optional)
   .js-location-search
     //- Rendered separately
 
   label.avant-garde-form-label( for='phone' )
-    | Phone Number <span>(Optional)</span>
-  input.bordered-input( name='phone', id='phone', type='tel', value= user.get('phone') )
+    | Phone Number
+    if user.get('prequalified')
+      span (Optional)
+  input.bordered-input(
+    name='phone'
+    id='phone'
+    type='tel'
+    value= user.get('phone')
+    required= !user.get('prequalified')
+  )
 
   button.avant-garde-button-black.iq-next( type='submit' ) Next
 
