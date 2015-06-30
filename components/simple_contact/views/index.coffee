@@ -10,8 +10,8 @@ module.exports = class ContactView extends Backbone.View
   events:
     'click button': 'submit'
 
-  initialize: ->
-    @user = CurrentUser.orNull()
+  initialize: (options = {}) ->
+    @user = options.user or CurrentUser.orNull()
 
   submit: (e) ->
     @form ?= new Form model: @model, $form: @$('form')
