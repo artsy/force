@@ -4,10 +4,6 @@ script( type="text/javascript" ).
   analytics.load("#{sd.SEGMENT_WRITE_KEY}");
   }}();
 
-//- Other analytics integrations (deprected, TODO: Replace with just Segment)
-if sd.NODE_ENV != 'test' && sd.BROWSER && sd.BROWSER.family != 'PhantomJS'
-  include ./adroll.html
-
 //- Wire up sharify
 if sharify
   != sharify.script()
