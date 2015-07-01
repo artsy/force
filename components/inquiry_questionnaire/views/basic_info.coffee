@@ -11,13 +11,8 @@ module.exports = class BasicInfo extends StepView
 
   serialize: (e) ->
     form = new Form model: @user, $form: @$('form')
-
-    return unless form.start()
-
-    e.preventDefault()
-
-    form.submit e, {}, 'set' # Remove `set` once anon session is fixed
-    @next() # Remove, ibid
+    form.submit e, success: =>
+      @next()
 
   postRender: ->
     @locationSearch = new LocationSearch
