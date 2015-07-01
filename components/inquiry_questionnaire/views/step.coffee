@@ -1,5 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
+{ isTouchDevice } = require '../../util/device.coffee'
 
 module.exports = class StepView extends Backbone.View
   __events__: null
@@ -21,12 +22,18 @@ module.exports = class StepView extends Backbone.View
     e.preventDefault()
     @state.trigger 'abort'
 
+  autofocus: ->
+    unless isTouchDevice()
+      _.defer =>
+        @$el.find('input:visible, textarea:visible').first().focus()
+
   render: ->
     @$el.html @template
       user: @user
       state: @state
       artwork: @artwork
     @postRender()
+    @autofocus()
     this
 
   postRender: -> #

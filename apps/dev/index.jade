@@ -1,0 +1,26 @@
+extends ../../components/main_layout/templates/blank
+
+append locals
+  - assetPackage = 'dev'
+
+block body
+  if NODE_ENV === 'development' || NODE_ENV === 'staging'
+    .debug.js-debug
+      | ...
+
+    hr.is-invisible
+
+  .main-layout-container
+    pre.debug
+      | LOGGED_IN: #{user ? 'true' : 'false' }
+      | NODE_ENV: #{NODE_ENV}
+      | APPLICATION_NAME: #{APPLICATION_NAME}
+      | API_URL: #{API_URL}
+
+    if (NODE_ENV === 'development' || NODE_ENV === 'staging') && API_URL === 'https://stagingapi.artsy.net'
+      hr.is-invisible
+
+      .is-center-aligned: nav.garamond-tablist
+        a.js-open( data-prequalify='false' ) Open Default
+        span.garamond-tab-separator
+        a.js-open( data-prequalify='true' ) Open Prequalifcation

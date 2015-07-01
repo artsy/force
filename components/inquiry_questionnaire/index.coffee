@@ -14,15 +14,21 @@ module.exports = (options = {}) ->
     className: 'modalize inquiry-questionnaire-modal'
     dimensions: width: '500px', height: '580px'
 
+  modal.view.$el.off 'click', '.js-modalize-backdrop'
+
   modal.load (done) ->
-    user.fetch().then ->
-      if user.id?
-        # We have an existing anonymous session
-        # or a logged in user
-        done()
-      else
-        # Create an anonymous session before continuing
-        user.save().then done
+    # Try to get a location incase one doesn't exist,
+    # don't wait for it though
+    user.approximateLocation()
+    user.fetch
+      success: ->
+        if user.id?
+          # We have an existing anonymous session
+          # or a logged in user
+          done()
+        else
+          # Create an anonymous session before continuing
+          user.save().then done
 
   questionnaire.state.on 'abort', ->
     modal.close()

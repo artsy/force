@@ -4,16 +4,9 @@ fs = require 'graceful-fs'
 sections = require './sections'
 colors = require '../../components/stylus_lib/colors.json'
 typeSizes = require '../../components/stylus_lib/type_sizes.json'
-{ Markdown } = require 'artsy-backbone-mixins'
-mdToHtml = (string) ->
-  Markdown.mdToHtml.apply { get: -> string }, [null, sanitize: false]
 
 @index = (req, res) ->
   res.redirect "/style-guide/#{sections[0]}"
-
-@logic = (req, res) ->
-  md = fs.readFileSync(resolve(__dirname, 'logic.md'), 'utf8')
-  res.render 'logic', html: mdToHtml(md), sections: sections
 
 @section = (req, res, next) ->
   if _.contains(sections, req.params.section) or req.params.section is 'stage'

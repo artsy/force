@@ -1,9 +1,7 @@
-_ = require 'underscore'
 Backbone = require 'backbone'
-ModalView = require '../modal/view.coffee'
 State = require '../branching_state/index.coffee'
-map = require './map.coffee'
 { fade } = require '../mixins/transition.coffee'
+map = require './map.coffee'
 debug = require './debug.coffee'
 
 module.exports = class InquiryQuestionnaireView extends Backbone.View
@@ -12,8 +10,7 @@ module.exports = class InquiryQuestionnaireView extends Backbone.View
   initialize: ({ @user, @artwork, prequalify }) ->
     @state = new State map
     @state.inject user: @user, state: @state
-
-    @listenTo @state, 'change:position', @render
+    @listenTo @state, 'next', @render
 
   render: ->
     pendingView = @state.view user: @user, state: @state, artwork: @artwork

@@ -1,16 +1,24 @@
 form.scontact-form.stacked-form
-  //- .stacked-form-cell
-  //-   include ./artwork_details
+  .stacked-form-cell
+    input( type='hidden', name='artwork', value= artwork.id )
 
-  textarea.bordered-input(
-    name='message'
-    placeholder='Your message to Artsy'
-    rows='7'
-    required
-  )
-    if contactGallery
-      = defaultMessage
-      = "\n\n"
+    .scontact-artwork-details
+      img( src=artwork.defaultImageUrl() )
+      p= artwork.artistName()
+      p!= artwork.titleAndYear()
+
+  .stacked-form-cell
+    label.avant-garde-form-label
+      | Your message
+    textarea.bordered-input.is-block(
+      name='message'
+      placeholder='Your message'
+      rows='5'
+      required
+    )
+      if contactGallery
+        = defaultMessage
+        = "\n\n"
 
   if user && user.id
     //- Logged in

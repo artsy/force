@@ -7,8 +7,11 @@ header.scontact-header
   if representative
     .scontact-description.vam-outer
       .vam-cell
-        | #{representative.get('name')}, an Artsy Specialist,
-        | is available to answer your questions and help you collect through Artsy.
+        if name = representative.related().owner.get('name')
+          | #{representative.related().owner.get('name')}, an Artsy Specialist,
+        else
+          | An Artsy Specialist
+        |  is available to answer your questions and help you collect through Artsy.
       .vam-cell: img(
         src= representative.iconImageUrl()
         alt= representative.get('name')

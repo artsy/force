@@ -1,15 +1,7 @@
-@import '../../node_modules/artsy-ezel-components/stylus_lib/typography'
-
-// Typefaces
-monospace()
-  font-family 'Menlo', 'Monaco', 'Andale Mono', 'lucida console', 'Courier New', 'monospace'
-  font-smoothing antialiased
-
-// Sizes
-json('./type_sizes.json')
-
-// Stylus has *terrible* support for accessing nested hashes as values (? file a bug report)
 sizings = json('./type_sizes.json', { hash: true })
+
+default-avant-garde-font-size = sizings.avant-garde.body.font-size
+default-garamond-font-size = sizings.garamond.s-body.font-size
 
 garamond-size(size, mixinFont = false)
   sizing = sizings.garamond[size]
@@ -20,7 +12,7 @@ garamond-size(size, mixinFont = false)
   if mixinFont
     garamond()
 
-avant-garde-size(size, mixinFont = false)
+avant-garde-size(size, mixinFont = true)
   sizing = sizings.avant-garde[size]
   fs = sizing.font-size
   font-size fs
@@ -29,7 +21,20 @@ avant-garde-size(size, mixinFont = false)
   if mixinFont
     avant-garde()
 
-// Styles
+monospace()
+  font-family 'Menlo', 'Monaco', 'Andale Mono', 'Lucida Console', 'Courier New', 'monospace'
+  font-smoothing antialiased
+
+avant-garde()
+  font-family 'ITC Avant Garde Gothic W04', 'Times New Roman', 'Times', 'serif'
+  font-smoothing antialiased
+  text-transform uppercase
+  letter-spacing 1px
+
+garamond()
+  font-family 'Adobe Garamond W08', 'Helvetica', 'sans-serif'
+  font-smoothing antialiased
+
 small-caps()
   text-transform uppercase
   letter-spacing 1px

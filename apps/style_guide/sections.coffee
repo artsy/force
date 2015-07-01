@@ -1,6 +1,6 @@
 module.exports = [
-  'colors'
   'typography'
+  'colors'
   'layout'
   'navigation'
   'forms'
