@@ -29,7 +29,6 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
 
     @user = CurrentUser.orNull()
     @notifications = new Notifications null, since: 30, type: 'ArtworkPublished'
-    @fetchAndRenderFollowingArtists()
 
     @listenTo @notifications, 'request', @indicateLoading
     @listenTo @notifications, 'sync', @appendArtworks
@@ -204,8 +203,11 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
 
   follow: (e, model) ->
     @searchBarView?.clear()
-    debugger
-    @$('.notifications-artist-list').prepend filterArtistTemplate, artist: model
+    @$('.notifications-artist-list').prepend filterArtistTemplate
+      artist:
+        id: model.get('id')
+        name: model.get('name')
+        published_artworks_count: model.get('published_artworks_count')
     @following.follow model.get('id')
 
 module.exports.init = ->
