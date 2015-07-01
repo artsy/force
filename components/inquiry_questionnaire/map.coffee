@@ -9,7 +9,6 @@ module.exports =
     auth: require './views/auth.coffee'
     how_can_we_help: require './views/how_can_we_help.coffee'
     specialist: require './views/specialist.coffee'
-    contact_partner: require '../simple_contact/views/contact_partner.coffee'
     inquiry: require './views/inquiry.coffee'
     done: require './views/done.coffee'
 
@@ -69,7 +68,7 @@ module.exports =
                 'done'
               ]
               journalist_question: [
-                'contact_partner'
+                'inquiry' # Should be contact_partner?
                 'done'
               ]
               other_question: [
