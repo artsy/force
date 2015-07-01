@@ -1,0 +1,6 @@
+for artist in artists.models
+  .filter-artist(data-artist="#{artist.get('artist').id}")
+    a.filter-artist-name
+      = artist.get('artist').name
+    .filter-artist-count
+      |  (#{artist.get('artist').published_artworks_count})

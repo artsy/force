@@ -29,6 +29,7 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
 
     @user = CurrentUser.orNull()
     @notifications = new Notifications null, since: 30, type: 'ArtworkPublished'
+    @fetchAndRenderFollowingArtists()
 
     @listenTo @notifications, 'request', @indicateLoading
     @listenTo @notifications, 'sync', @appendArtworks
