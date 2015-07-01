@@ -17,6 +17,9 @@ module.exports = (options = {}) ->
   modal.view.$el.off 'click', '.js-modalize-backdrop'
 
   modal.load (done) ->
+    # Try to get a location incase one doesn't exist,
+    # don't wait for it though
+    user.approximateLocation()
     user.fetch
       success: ->
         if user.id?
@@ -26,9 +29,6 @@ module.exports = (options = {}) ->
         else
           # Create an anonymous session before continuing
           user.save().then done
-      error: ->
-        console.log 'Nothing really works, does it?'
-        done()
 
   questionnaire.state.on 'abort', ->
     modal.close()
