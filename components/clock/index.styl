@@ -1,17 +1,17 @@
 @import '../stylus_lib'
 
-header-font-size = 12px
-value-font-size = 17px
+header-font-size = garamond-s-body-font-size
+value-font-size = avant-garde-l-headline-font-size
 small-font-size = 9px
-closed-font-size = 13px
+closed-font-size = avant-garde-body-font-size
 closed-border-size = 2px
 clock-height = (header-font-size + (value-font-size * 2) + small-font-size)
 closed-padding = (((clock-height - closed-font-size) - (closed-border-size * 2)) / 2)
 
 .clock
-  text-transform uppercase
-  text-align center
+  display inline-block
   height clock-height
+  text-align left
 
 .clock-header
   font-size header-font-size
@@ -25,8 +25,9 @@ closed-padding = (((clock-height - closed-font-size) - (closed-border-size * 2))
   line-height 2
   li
     display inline-block
-    margin 0 3px
     vertical-align top
+    inline-block-margins(3px)
+
     small
       display block
       color transparify(gray-dark-color, black)
@@ -40,7 +41,7 @@ closed-padding = (((clock-height - closed-font-size) - (closed-border-size * 2))
   font-size closed-font-size
   line-height 1
   border-top 2px solid black
-  border-bottom 2px solid black
+  border-bottom @border-top
   text-align center
   // Often overwritten unintentionally
   text-transform uppercase !important
