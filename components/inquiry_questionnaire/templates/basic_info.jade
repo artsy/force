@@ -8,9 +8,7 @@ h1.iq-headline
 
 form.iq-form.stacked-form
   label.avant-garde-form-label( for='profession' )
-    | Profession
-    if user.get('prequalified')
-      span (Optional)
+    | Profession <span>(#{user.get('prequalified') ? 'Optional' : 'Required'})</span>
   input.bordered-input(
     name='profession'
     id='profession'
@@ -19,16 +17,12 @@ form.iq-form.stacked-form
   )
 
   label.avant-garde-form-label( for='location' )
-    | Location
-    if user.get('prequalified')
-      span (Optional)
+    | Location <span>(#{user.get('prequalified') ? 'Optional' : 'Required'})</span>
   .js-location-search
     //- Rendered separately
 
   label.avant-garde-form-label( for='phone' )
-    | Phone Number
-    if user.get('prequalified')
-      span (Optional)
+    | Phone Number <span>(#{user.get('prequalified') ? 'Optional' : 'Required'})</span>
   input.bordered-input(
     name='phone'
     id='phone'
