@@ -5,8 +5,8 @@ section.personalize-step( data-step='price_range' )
   for price in prices
     .flipper( data-value= price.value )
       .flipper-card
-        .flipper-face.is-front= price.display
-        .flipper-face.is-back= price.display
+        .flipper-face.is-front: span= price.display
+        .flipper-face.is-back: span= price.display
   aside
     | This information will be used to customize recommendations for you on Artsy.
     | You can change your answer later if your preferences change.
