@@ -72,8 +72,8 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
   scrollToPins: ->
     @jump.scrollToPosition @pinsOffset ?= @$pins.offset().top - $('#main-layout-header').height()
 
-  scrollToArtistWorks: ->
-    @jump.scrollToPosition @artistworksOffset ?= @$artistworks.offset().top
+  scrollToTop: ->
+    @jump.scrollToPosition 0
 
   setup: (cb) ->
     { artist_id } = @params()
@@ -154,31 +154,9 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
         $.waypoints 'destroy'
 
   toggleForSale: (e) ->
-    @forSale = $(e.currentTarget).prop('checked')
     @$feed.hide()
     @$pins.hide() # Only relevant on initial load
-    @notifications.getFirstPage(
-      data: for_sale: @forSale
-      success: => @$feed.show()
-    )?.then @checkIfEmpty
-
-  toggleArtist: (e) ->
-    @$selectedArtist.attr 'data-state', null
-    @$selectedArtist = @$(e.currentTarget).parent()
-    @artist = new Artist id: @$selectedArtist.attr('data-artist')
-    @$selectedArtist.attr 'data-state', 'selected'
-    @$works.hide()
-    @$artistworks.hide()
-    @$artistSpinner.show()
-    @scrollToArtistWorks()
-    @artist.related().artworks.fetchUntilEnd
-      success: =>
-        @$artistSpinner.hide()
-        if @artist.related().artworks.length
-          @renderColumns @$artistworks, @artist.related().artworks
-        else
-          @$artistworks.html emptyTemplate()
-        @$artistworks.show()
+    @reloadFeedWorks()
 
   isEmpty: ->
     !@notifications.length and (!@pinnedArtworks?.length is !@forSale)
@@ -186,10 +164,40 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
   checkIfEmpty: =>
     @$feed.html(emptyTemplate()) if @isEmpty()
 
+  toggleArtist: (e) ->
+    @$selectedArtist.attr 'data-state', null
+    @$selectedArtist = @$(e.currentTarget).parent()
+    @$selectedArtist.attr 'data-state', 'selected'
+    @$works.hide()
+    @$artistworks.hide()
+    @$artistSpinner.show()
+    @scrollToTop()
+
+    @artist = new Artist id: @$selectedArtist.attr('data-artist')
+    sale = if @forSale then 'for-sale' else ''
+    @artist.related().artworks.fetch
+      data:
+        filter: sale
+      success: =>
+        console.log @artist.related().artworks
+        @$artistSpinner.hide()
+        if @artist.related().artworks.length
+          @renderColumns @$artistworks, @artist.related().artworks
+        else
+          @$artistworks.html emptyTemplate()
+        @$artistworks.show()
+
+  reloadFeedWorks: ->
+    @forSale = $('.artsy-checkbox input').prop('checked')
+    @notifications.getFirstPage(
+      data: for_sale: @forSale
+      success: => @$feed.show()
+    )?.then @checkIfEmpty
+
   clearArtistWorks: (e) ->
     @$selectedArtist.attr 'data-state', null
     @$artistworks.hide()
-    @$works.show()
+    @reloadFeedWorks()
 
   setupSearch: (options = {}) ->
     @searchBarView = new SearchBarView
@@ -203,12 +211,13 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
 
   follow: (e, model) ->
     @searchBarView?.clear()
+    @following.follow model.get('id')
     @$('.notifications-artist-list').prepend filterArtistTemplate
       artist:
         id: model.get('id')
         name: model.get('name')
         published_artworks_count: model.get('published_artworks_count')
-    @following.follow model.get('id')
+    @$(".filter-artist[data-artist=#{model.get('id')}]").children('.filter-artist-name').click()
 
 module.exports.init = ->
   new NotificationsView el: $('body')
