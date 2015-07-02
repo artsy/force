@@ -1,11 +1,11 @@
 header.scontact-header
   h1.scontact-headline
-    | Send message to #{partner.displayType().toLowerCase()}
+    | Send message to #{artwork.related().partner.displayType().toLowerCase()}
 
   hr
 
   p.scontact-description
-    | To: #{partner.get('name')}
+    | To: #{artwork.related().partner.get('name')}
     span.js-contact-location
       //- Rendered separately?
 

@@ -6,6 +6,39 @@ block content
   section.sg-components
     h2 Components
 
+    h3 Clock
+    article.sg-component
+      .sg-component-rendered
+        //- We really need to be able to pass this a moment object for server-side rendering...
+
+        .clock
+          .clock-header
+            | Auction opens in:
+          ul.clock-value
+            li
+              | 08
+              small days
+            li :
+            li
+              | 00
+              small hrs
+            li :
+            li
+              | 19
+              small min
+            li :
+            li
+              | 06
+              small sec
+
+        hr
+
+        .clock
+          .clock-header.clock-closed
+            | Online Bidding Closed
+
+
+
     h3 Pulldown menus
     article.sg-component
       h3 Bordered Pulldown

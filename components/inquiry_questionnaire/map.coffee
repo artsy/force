@@ -9,8 +9,7 @@ module.exports =
     auth: require './views/auth.coffee'
     how_can_we_help: require './views/how_can_we_help.coffee'
     specialist: require './views/specialist.coffee'
-    contact_partner: require '../simple_contact/views/contact_partner.coffee'
-    inquiry: require '../simple_contact/views/inquiry.coffee'
+    inquiry: require './views/inquiry.coffee'
     done: require './views/done.coffee'
 
   decisions:
@@ -21,10 +20,15 @@ module.exports =
       user.isCollector()
 
     is_logged_in: ({ user }) ->
-      user.id?
+      user.isLoggedIn()
 
     help_by: ({ state }) ->
       state.get 'value'
+
+    has_basic_info: ({ user }) ->
+      user.has('profession') and
+      user.has('location') and
+      user.has('phone')
 
   steps: [
     prequalify:
@@ -38,23 +42,39 @@ module.exports =
             'art_fairs'
             'institutional_affliation'
             'inquiry'
+            'done'
           ]
           false: [
-            'basic_info'
             'how_can_we_help'
             help_by:
-              purchase: [
-                'basic_info'
-                'artists_in_collection'
-                'galleries_auction_houses'
-                'art_fairs'
-                'institutional_affliation'
-                'inquiry'
+              price: [
+                'specialist'
+                'done'
               ]
-              price: ['specialist']
-              student_research_question: ['specialist']
-              journalist_question: ['contact_partner']
-              other_question: ['specialist']
+              purchase: [
+                has_basic_info:
+                  true: [
+                    'inquiry'
+                    'done'
+                  ]
+                  false: [
+                    'basic_info'
+                    'inquiry'
+                    'done'
+                  ]
+              ]
+              student_research_question: [
+                'specialist'
+                'done'
+              ]
+              journalist_question: [
+                'inquiry' # Should be contact_partner?
+                'done'
+              ]
+              other_question: [
+                'specialist'
+                'done'
+              ]
           ]
       ]
 

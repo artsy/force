@@ -7,9 +7,10 @@ Icon = require './icon.coffee'
 Artworks = require '../collections/artworks.coffee'
 { Markdown } = require 'artsy-backbone-mixins'
 { compactObject } = require './mixins/compact_object.coffee'
+Relations = require './mixins/relations/profile.coffee'
 
 module.exports = class Profile extends Backbone.Model
-
+  _.extend @prototype, Relations
   _.extend @prototype, Markdown
 
   GALLERY_OWNER_TYPES: ['PartnerGallery']

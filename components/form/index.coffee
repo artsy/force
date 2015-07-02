@@ -10,6 +10,9 @@ module.exports = class Form
   constructor: (options = {}) ->
     { @model, @$form } = options
 
+    throw new Error 'requires `model`' unless @model?
+    throw new Error 'requires `$form`' unless @$form?
+
     { @$submit, @$errors } = _.defaults options,
       $submit: @$form.find('button')
       $errors: @$form.find('.js-form-errors')
@@ -31,7 +34,7 @@ module.exports = class Form
       error? args...
 
     @state 'loading'
-    @model[send] @serializer.data(), options
+    @model[send] @data(), options
 
   error: (model, response, options) ->
     @state 'error'
@@ -56,3 +59,6 @@ module.exports = class Form
 
   state: (state) ->
     @$submit.attr 'data-state', state
+
+  data: ->
+    @serializer.data()

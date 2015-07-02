@@ -16,6 +16,7 @@ module.exports =
       includeFixedHeader: includeFixedHeader
       includeAllWorks: false
       hideForSale: false
+      forSale: 'true' 
 
     { aggregations,
       el,
@@ -25,12 +26,14 @@ module.exports =
       infiniteScroll,
       includeFixedHeader,
       includeAllWorks,
+      forSale,
       hideForSale } = _.defaults options, defaults
 
     queryParams = qs.parse(location.search.replace(/^\?/, ''))
     params = new Backbone.Model _.extend queryParams,
       page: 1
       size: 10
+      for_sale: forSale
       aggregations: aggregations
 
     if stuckParam
