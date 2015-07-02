@@ -20,3 +20,4 @@ module.exports.init = ->
     stuckFacet: tag
     stuckParam: 'tag_id'
     aggregations: aggregationParams
+    forSale: 'false'

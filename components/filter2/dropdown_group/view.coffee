@@ -35,7 +35,7 @@ module.exports = class DropdownGroupView extends Backbone.View
 
   toggleForSale: ->
     if @params.get('for_sale') is 'true'
-      @params.unset 'for_sale'
+      @params.set 'for_sale', 'false'
     else
       @params.set 'for_sale', 'true'
 

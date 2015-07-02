@@ -44,6 +44,7 @@ module.exports.init = ->
     stuckFacet: gene
     stuckParam: 'gene_id'
     aggregations: aggregationParams
+    forSale: 'false'
 
   view = new GeneView
     user: user
