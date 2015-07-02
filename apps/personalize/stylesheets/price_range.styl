@@ -16,11 +16,7 @@
   margin 10px
   width 120px
   height @width
-  line-height @width
   text-align center
-  avant-garde()
-  font-size 13px
-  overflow ellipsis
   cursor pointer
   &.is-flipped > .flipper-card
     transform rotateX(-180deg)
@@ -51,3 +47,12 @@
     background-color purple-color
     border-color purple-color
     color white
+  > span
+    position absolute
+    top 50%
+    left 0
+    right 0
+    avant-garde-size('body', true)
+    text-align center
+    padding 0 5px
+    transform translateY(-50%)
