@@ -9,6 +9,7 @@ Notifications = require '../../../../collections/notifications.coffee'
 Artworks = require '../../../../collections/artworks.coffee'
 CurrentUser = require '../../../../models/current_user.coffee'
 Artist = require '../../../../models/artist.coffee'
+Artists = require '../../../../collections/artists.coffee'
 { stubChildClasses } = require '../../../../test/helpers/stubs'
 
 describe 'NotificationsView', ->
@@ -25,13 +26,15 @@ describe 'NotificationsView', ->
     sinon.stub Backbone, 'sync'
     sinon.stub CurrentUser, 'orNull'
     CurrentUser.orNull.returns new CurrentUser fabricate 'user'
-    benv.render resolve(__dirname, '../../templates/index.jade'), { sd: {}, asset: (->) }, =>
-      { @NotificationsView, @init } = mod = benv.requireWithJadeify resolve(__dirname, '../../client/index'), ['artistTemplate', 'emptyTemplate']
+    artists = new Artists [ {artist: fabricate('artist')} ]
+    benv.render resolve(__dirname, '../../templates/index.jade'), { sd: {}, asset: (->) , artists: artists }, =>
+      { @NotificationsView, @init } = mod = benv.requireWithJadeify resolve(__dirname, '../../client/index'), ['artistTemplate', 'emptyTemplate', 'filterArtistTemplate']
       stubChildClasses mod, this,
         ['ArtworkColumnsView']
         ['render']
       $.fn.waypoint = sinon.stub()
       $.waypoints = sinon.stub()
+      sinon.stub @NotificationsView::, 'setupSearch'
       done()
 
   afterEach ->
@@ -71,6 +74,36 @@ describe 'NotificationsView', ->
           since: 30
           page: 1
           size: 10
+
+  describe '#toggleArtist, #clearArtistWorks', ->
+    beforeEach ->
+      @view = new @NotificationsView el: $('body')
+
+    it 'selects the artist when clicked', ->
+      @view.$('.filter-artist-name').click()
+      @view.$('.filter-artist').attr('data-state').should.containEql 'selected'
+
+    it 'clears artist and shows feed without for_sale selected', ->
+      @view.$('.filter-artist-name').click()
+      @view.$('.filter-artist-clear').click()
+      _.last(Backbone.sync.args)[2].data.for_sale.should.be.false
+
+    it 'clears artist and shows feed with for_sale selected', ->
+      @view.$('.artsy-checkbox--checkbox input').prop 'checked', true
+      @view.$('.filter-artist-name').click()
+      @view.$('.filter-artist-clear').click()
+      _.last(Backbone.sync.args)[2].data.for_sale.should.be.true
+
+    it 'fetches the artist\'s works with for_sale filter off', ->
+      @view.$('.filter-artist-name').click()
+      _.last(Backbone.sync.args)[1].url.should.containEql '/api/v1/artist/'
+      _.last(Backbone.sync.args)[2].data.filter[0].should.not.containEql 'for_sale'
+
+    it 'fetches the artist\'s works with for_sale filter on', ->
+      @view.$('.artsy-checkbox--checkbox input').prop 'checked', true
+      @view.$('.filter-artist-name').click()
+      _.last(Backbone.sync.args)[1].url.should.containEql '/api/v1/artist/'
+      _.last(Backbone.sync.args)[2].data.filter[0].should.containEql 'for_sale'
 
   describe 'with an artist_id param', ->
     beforeEach ->
