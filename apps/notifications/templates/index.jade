@@ -22,8 +22,8 @@ block body
         for artist in artists.models
           - var artist = artist.get('artist')
           include filter_artist
+      .notifications-search-header Follow More Artists
       #notifications-search-container.autocomplete-input-container.is-block
-        .notifications-search-header Follow More Artists
         input#notifications-search.bordered-input(
           type='text', placeholder='Search Artists', autofocus=autofocus
         )

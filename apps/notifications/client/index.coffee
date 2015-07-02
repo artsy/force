@@ -45,6 +45,9 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
     @$feed.waypoint (direction) =>
       @nextPage() if direction is 'down'
     , { offset: 'bottom-in-view' }
+    @$artistworks.waypoint (direction) =>
+      @nextPage() if direction is 'down'
+    , { offset: 'bottom-in-view' }
 
   params: ->
     qs.parse(location.search.substring(1))
@@ -153,16 +156,21 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
       unless response.length
         $.waypoints 'destroy'
 
-  toggleForSale: (e) ->
-    @$feed.hide()
-    @$pins.hide() # Only relevant on initial load
-    @reloadFeedWorks()
+  nextPageArtist: =>
+    @artist.related().artworks.getNextPage()?.then (response) ->
+      unless response.length
+        $.waypoints 'destroy'
 
   isEmpty: ->
     !@notifications.length and (!@pinnedArtworks?.length is !@forSale)
 
   checkIfEmpty: =>
     @$feed.html(emptyTemplate()) if @isEmpty()
+
+  toggleForSale: (e) ->
+    @$works.hide()
+    @$pins.hide() # Only relevant on initial load
+    @reloadFeedWorks()
 
   toggleArtist: (e) ->
     @$selectedArtist.attr 'data-state', null
@@ -172,30 +180,35 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
     @$artistworks.hide()
     @$artistSpinner.show()
     @scrollToTop()
-
-    @artist = new Artist id: @$selectedArtist.attr('data-artist')
-    sale = if @forSale then 'for-sale' else ''
-    @artist.related().artworks.fetch
-      data:
-        filter: sale
-      success: =>
-        console.log @artist.related().artworks
-        @$artistSpinner.hide()
-        if @artist.related().artworks.length
-          @renderColumns @$artistworks, @artist.related().artworks
-        else
-          @$artistworks.html emptyTemplate()
-        @$artistworks.show()
+    @reloadFeedWorks()
 
   reloadFeedWorks: ->
     @forSale = $('.artsy-checkbox input').prop('checked')
-    @notifications.getFirstPage(
-      data: for_sale: @forSale
-      success: => @$feed.show()
-    )?.then @checkIfEmpty
+    if @$selectedArtist.length
+      @$works.hide()
+      @artist = new Artist id: @$selectedArtist.attr('data-artist')
+      sale = if @forSale then 'for_sale' else ''
+      @artist.related().artworks.fetchUntilEnd
+        data:
+          filter: [sale]
+        success: =>
+          console.log @artist.related().artworks
+          @$artistSpinner.hide()
+          if @artist.related().artworks.length
+            @renderColumns @$artistworks, @artist.related().artworks
+          else
+            @$artistworks.html emptyTemplate()
+          @$artistworks.show()
+    else
+      @$artistworks.hide()
+      @notifications.getFirstPage(
+        data: for_sale: @forSale
+        success: => @$works.show()
+      )?.then @checkIfEmpty
 
   clearArtistWorks: (e) ->
     @$selectedArtist.attr 'data-state', null
+    @$selectedArtist = ''
     @$artistworks.hide()
     @reloadFeedWorks()
 

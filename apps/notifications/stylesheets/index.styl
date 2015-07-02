@@ -13,7 +13,7 @@ content-width = 80%
 
 #notifications-filter
   float left
-  width menu-width
+  min-width menu-width
   .artsy-checkbox
     display block
     margin 32px 0px
@@ -41,7 +41,9 @@ content-width = 80%
 
 #notifications-works, #notifications-artist-works
   float left
-  width content-width
+  position absolute
+  width 900px
+  margin-left 15%
 
 #notifications-feed-spinner
   position relative
@@ -72,10 +74,13 @@ content-width = 80%
   a
     font-size 13px
 
-#notifications-search-container
+.notifications-search-header
   avant-garde('body')
-  width 100%
-  margin-top 40px
-  padding-right 7%
-  input
-    margin-top 20px
+  margin 40px 0 20px 0
+// #notifications-search-container
+//   avant-garde('body')
+//   width 100%
+//   margin-top 40px
+//   padding-right 7%
+//   .notifications-search-header
+//     margin-bottom 20px
