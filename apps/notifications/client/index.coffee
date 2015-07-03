@@ -29,13 +29,13 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
 
     @user = CurrentUser.orNull()
     @notifications = new Notifications null, since: 30, type: 'ArtworkPublished'
+    @following = new Following [], kind: 'artist'
 
     @listenTo @notifications, 'request', @indicateLoading
     @listenTo @notifications, 'sync', @appendArtworks
     @listenTo @notifications, 'sync', @concealLoading
 
     @setupJumpView()
-    @following = new Following [], kind: 'artist'
     @setupSearch()
 
     @setup =>
@@ -45,8 +45,8 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
     @$feed.waypoint (direction) =>
       @nextPage() if direction is 'down'
     , { offset: 'bottom-in-view' }
-    @$artistworks.waypoint (direction) =>
-      @nextPage() if direction is 'down'
+    @$artistFeed.waypoint (direction) =>
+      @nextArtistPage() if direction is 'down'
     , { offset: 'bottom-in-view' }
 
   params: ->
@@ -68,7 +68,7 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
     @$works = @$('#notifications-works')
     @$pins = @$('#notifications-pins')
     @$filternav = @$('#notifications-filter')
-    @$artistworks = @$('#notifications-artist-works')
+    @$artistFeed = @$('#notifications-artist-feed')
     @$artistSpinner = @$('#notifications-artist-works-spinner')
 
   scrollToPins: ->
@@ -84,7 +84,6 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
 
     @pinnedArtist = new Artist id: artist_id
     @pinnedArtworks = @pinnedArtist.related().artworks
-    console.log artist_id
 
     $.when.apply(null, [
       @pinnedArtist.fetch()
@@ -152,12 +151,15 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
       maxArtworkHeight: 600
 
   nextPage: =>
-    @notifications.getNextPage()?.then (response) ->
+    @notifications.getNextPage(
+      data: for_sale: @forSale
+    )?.then (response) ->
       unless response.length
         $.waypoints 'destroy'
 
   nextArtistPage: =>
     @artist.related().artworks.getNextPage()?.then (response) ->
+      data: filter: @forSaleArtist
       unless response.length
         $.waypoints 'destroy'
 
@@ -168,46 +170,47 @@ module.exports.NotificationsView = class NotificationsView extends Backbone.View
     @$feed.html(emptyTemplate()) if @isEmpty()
 
   toggleForSale: (e) ->
-    @$pins.hide() # Only relevant on initial load
-    @$works.hide()
     @reloadFeedWorks()
 
   toggleArtist: (e) ->
     if @$selectedArtist then @$selectedArtist.attr 'data-state', null
     @$selectedArtist = @$(e.currentTarget).parent()
     @$selectedArtist.attr 'data-state', 'selected'
-    @$works.hide()
-    @$artistworks.hide()
-    @scrollToTop()
     @reloadFeedWorks()
 
   clearArtistWorks: (e) ->
     @$selectedArtist.attr 'data-state', null
     @$selectedArtist = ''
-    @$artistworks.hide()
     @reloadFeedWorks()
 
-  reloadFeedWorks: ->
+  reloadFeedWorks: =>
     @forSale = $('.artsy-checkbox input').prop('checked')
+    @$pins.hide()
+    @$feed.hide()
+    @$artistFeed.hide()
+    @scrollToTop()
+
+    # Artist filter selected
     if @$selectedArtist?.length
       @$artistSpinner.show()
       @artist = new Artist id: @$selectedArtist.attr('data-artist')
-      sale = if @forSale then 'for_sale' else ''
+      @forSaleArtist = if @forSale then 'for_sale' else ''
       @artist.related().artworks.fetchUntilEnd
         data:
-          filter: [sale]
+          filter: [@forSaleArtist]
         success: =>
           @$artistSpinner.hide()
           if @artist.related().artworks.length
-            @renderColumns @$artistworks, @artist.related().artworks
+            @renderColumns @$artistFeed, @artist.related().artworks
           else
-            @$artistworks.html emptyTemplate()
-          @$artistworks.show()
+            @$artistFeed.html emptyTemplate()
+          @$artistFeed.show()
+    # Regular feed with for_sale? toggle
     else
-      @$artistworks.hide()
+      @$spinner.show()
       @notifications.getFirstPage(
         data: for_sale: @forSale
-        success: => @$works.show()
+        success: => @$feed.show()
       )?.then @checkIfEmpty
 
   setupSearch: (options = {}) ->
